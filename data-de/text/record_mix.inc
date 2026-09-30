@@ -1,6 +1,6 @@
-UnusedMixRecordsPromptText: @ 81A099F
+Text_WouldYouLikeToMixRecords: @ 81A099F
     .string "Möchtest du deine Rekorde mit\n"
     .string "anderen TRAINERN austauschen?$"
 
-UnusedMixRecordsSeeYouAgainText: @ 81A09D2
+Text_WeHopeToSeeYouAgain: @ 81A09D2
     .string "Komm bald wieder!$"
