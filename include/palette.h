@@ -48,7 +48,6 @@ struct PaletteFadeControl
 };
 
 extern struct PaletteFadeControl gPaletteFade;
-extern u32 gPlttBufferTransferPending;
 extern u8 gPaletteDecompressionBuffer[];
 extern u16 gPlttBufferUnfaded[];
 extern u16 gPlttBufferFaded[];
@@ -61,12 +60,12 @@ u8 UpdatePaletteFade(void);
 void ResetPaletteFade(void);
 void ReadPlttIntoBuffers(void);
 bool8 BeginNormalPaletteFade(u32, s8, u8, u8, u16);
-void unref_sub_8073D84(u8, u32 *);
-void ResetPaletteStructByUid(u16);
-void ResetPaletteStruct(u8);
+void PaletteStruct_Run(u8, u32 *);
+void PaletteStruct_ResetById(u16);
+void PaletteStruct_Reset(u8);
 void ResetPaletteFadeControl(void);
-void unref_sub_8074168(u16);
-void unref_sub_8074194(u16);
+void PaletteStruct_SetUnusedFlag(u16);
+void PaletteStruct_ClearUnusedFlag(u16);
 void InvertPlttBuffer(u32);
 void TintPlttBuffer(u32, s8, s8, s8);
 void UnfadePlttBuffer(u32);

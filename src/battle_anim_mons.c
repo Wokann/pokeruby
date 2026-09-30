@@ -742,7 +742,7 @@ static void UNUSED TranslateSpriteToBattleAttackerPos(struct Sprite *sprite)
 
 static void UNUSED EndUnkPaletteAnim(struct Sprite *sprite)
 {
-    ResetPaletteStructByUid(sprite->data[5]);
+    PaletteStruct_ResetById(sprite->data[5]);
     DestroySpriteAndMatrix(sprite);
 }
 
