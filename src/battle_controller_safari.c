@@ -50,9 +50,9 @@ extern void HandleIntroSlide();
 extern bool8 TryHandleLaunchBattleTableAnimation();
 
 #if ENGLISH
-#define SUB_812BB10_TILE_DATA_OFFSET 440
+#define SAFARI_ACTION_PROMPT_TILE_OFFSET 440
 #elif GERMAN
-#define SUB_812BB10_TILE_DATA_OFFSET 444
+#define SAFARI_ACTION_PROMPT_TILE_OFFSET 444
 #endif
 
 // this file's functions
@@ -498,7 +498,7 @@ void SafariHandleChooseAction(void)
     ActionSelectionCreateCursorAt(gActionSelectionCursor[gActiveBattler], 0);
     BattleStringExpandPlaceholdersToDisplayedString(BattleText_PlayerMenu);
 
-    Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gDisplayedStringBattle, SUB_812BB10_TILE_DATA_OFFSET, 2, 35);
+    Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gDisplayedStringBattle, SAFARI_ACTION_PROMPT_TILE_OFFSET, 2, 35);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
 }
 
