@@ -4063,14 +4063,14 @@ void SetContestMoveTargetBattler(u16 move)
 {
     switch (gBattleMoves[move].target)
     {
-    case TARGET_UNK2:
-    case TARGET_USER:
+    case MOVE_TARGET_USER_OR_SELECTED:
+    case MOVE_TARGET_USER:
         gBattlerTarget = 2;
         break;
-    case TARGET_SELECTED_POKEMON:
-    case TARGET_RANDOM:
-    case TARGET_BOTH_ENEMIES:
-    case TARGET_ALL_EXCEPT_USER:
+    case MOVE_TARGET_SELECTED:
+    case MOVE_TARGET_RANDOM:
+    case MOVE_TARGET_BOTH:
+    case MOVE_TARGET_FOES_AND_ALLY:
     default:
         gBattlerTarget = 3;
         break;

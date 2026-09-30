@@ -293,15 +293,6 @@
 #define B_WAIT_TIME_MED   48
 #define B_WAIT_TIME_SHORT 32
 
-#define TARGET_SELECTED_POKEMON 0
-#define TARGET_SPECIAL          (1 << 0)
-#define TARGET_UNK2             (1 << 1)
-#define TARGET_RANDOM           (1 << 2)
-#define TARGET_BOTH_ENEMIES     (1 << 3)
-#define TARGET_USER             (1 << 4)
-#define TARGET_ALL_EXCEPT_USER  (1 << 5)
-#define TARGET_ENEMY_SIDE       (1 << 6)
-
 #define F_MAKES_CONTACT           (1 << 0)
 #define F_AFFECTED_BY_PROTECT     (1 << 1)
 #define F_AFFECTED_BY_MAGIC_COAT  (1 << 2)
