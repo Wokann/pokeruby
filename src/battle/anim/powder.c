@@ -1,6 +1,7 @@
 #include "global.h"
 #include "trig.h"
 #include "battle_anim.h"
+#include "battle_anim_internal.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -69,21 +70,23 @@ const struct SpriteTemplate gPoisonPowderParticleSpriteTemplate =
 // arg 5: wave speed
 static void AnimMovePowderParticle(struct Sprite *sprite)
 {
-    sprite->x += gBattleAnimArgs[0];
-    sprite->y += gBattleAnimArgs[1];
-    sprite->data[0] = gBattleAnimArgs[2];
-    sprite->data[1] = gBattleAnimArgs[3];
+    CMD_ARGS(x, y, duration, yVelocity, waveAmplitude, waveSpeed);
+
+    sprite->x += cmd->x;
+    sprite->y += cmd->y;
+    sprite->data[0] = cmd->duration;
+    sprite->data[1] = cmd->yVelocity;
 
     if (GetBattlerSide(gBattleAnimAttacker))
     {
-        sprite->data[3] = -gBattleAnimArgs[4];
+        sprite->data[3] = -cmd->waveAmplitude;
     }
     else
     {
-        sprite->data[3] = gBattleAnimArgs[4];
+        sprite->data[3] = cmd->waveAmplitude;
     }
 
-    sprite->data[4] = gBattleAnimArgs[5];
+    sprite->data[4] = cmd->waveSpeed;
     sprite->callback = AnimMovePowderParticle_Step;
 }
 
