@@ -51,7 +51,7 @@ extern u8 gEffectBattler;
 extern u8 gBattlerFainted;
 extern s32 gBattleMoveDamage;
 extern u16 gBattlerPartyIndexes[4];
-extern u16 gChosenMovesByBanks[4];
+extern u16 gChosenMoveByBattler[4];
 extern s32 gTakenDmg[4];
 extern u8 gTakenDmgByBattler[4];
 extern u8 gMoveResultFlags;
@@ -1352,7 +1352,7 @@ void TryClearRageStatuses(void)
     int i;
     for (i = 0; i < gBattlersCount; i++)
     {
-        if (gBattleMons[i].status2 & STATUS2_RAGE && gChosenMovesByBanks[i] != MOVE_RAGE)
+        if (gBattleMons[i].status2 & STATUS2_RAGE && gChosenMoveByBattler[i] != MOVE_RAGE)
             gBattleMons[i].status2 &= ~(STATUS2_RAGE);
     }
 }
@@ -3376,13 +3376,13 @@ void TryCombineMoves(void)
                     bank++;
                 else
                 {
-                    if (sCombinedMoves[i].move1 == gChosenMovesByBanks[bank] && sCombinedMoves[i].move2 == gChosenMovesByBanks[bank + 2])
+                    if (sCombinedMoves[i].move1 == gChosenMoveByBattler[bank] && sCombinedMoves[i].move2 == gChosenMoveByBattler[bank + 2])
                     {
                         gSideTimers[GetBattlerPosition(bank) & 1].field3 = (bank) | ((bank + 2) << 4);
                         gSideTimers[GetBattlerPosition(bank) & 1].field4 = sCombinedMoves[i].newMove;
                         gSideStatuses[GetBattlerPosition(bank) & 1] |= SIDE_STATUS_X4;
                     }
-                    if (sCombinedMoves[i].move1 == gChosenMovesByBanks[bank + 2] && sCombinedMoves[i].move2 == gChosenMovesByBanks[bank])
+                    if (sCombinedMoves[i].move1 == gChosenMoveByBattler[bank + 2] && sCombinedMoves[i].move2 == gChosenMoveByBattler[bank])
                     {
                         gSideTimers[GetBattlerPosition(bank) & 1].field3 = (bank + 2) | ((bank) << 4);
                         gSideTimers[GetBattlerPosition(bank) & 1].field4 = sCombinedMoves[i].newMove;
