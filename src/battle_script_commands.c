@@ -113,7 +113,7 @@ extern u16 gChosenMove; //last used move in battle
 extern u8 gBattlerInMenuId;
 extern u8 gChosenActionByBattler[4];
 extern u16 gLastPrintedMoves[4]; //last used moves 2, used by sketch
-extern u16 gLastResultingMoves[4]; //last used moves by banks, another one
+extern u16 gLastResultingMoves[4]; //last used moves by battlers, another one
 extern u8 gCurrentTurnActionNumber;
 extern u16 gTrappingMoves[];
 
@@ -140,17 +140,17 @@ void RecordItemEffectBattle(u8 battler, u8 itemEffect);
 static bool8 IsTwoTurnsMove(u16 move);
 static void TrySetDestinyBondToHappen(void);
 static void CheckWonderGuardAndLevitate(void);
-u8 GetBattlerPosition(u8 bank);
-u8 GetBattlerSide(u8 bank);
-u8 GetBattlerForBattleScript(u8 bankValue);
+u8 GetBattlerPosition(u8 battler);
+u8 GetBattlerSide(u8 battler);
+u8 GetBattlerForBattleScript(u8 caseId);
 s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 sideStatus, u16 powerOverride, u8 typeOverride, u8 battlerIdAtk, u8 battlerIdDef);
-static u8 AttacksThisTurn(u8 bank, u16 move); //Note: returns 1 if it's a charging turn, otherwise 2
+static u8 AttacksThisTurn(u8 battler, u16 move); //Note: returns 1 if it's a charging turn, otherwise 2
 void UndoEffectsAfterFainting(void);
 void BattleStopLowHpSound(void);
 void PlayBGM(u16 songID);
 void MonGainEVs(struct Pokemon*, u16 defeatedSpecies);
 extern u8 gBattleBufferB[4][0x200];
-void HandleLowHpMusicChange(struct Pokemon*, u8 bank);
+void HandleLowHpMusicChange(struct Pokemon*, u8 battler);
 bool8 IsTradedMon(struct Pokemon*);
 void BattleScriptPop(void);
 void SwitchInClearSetData(void);
@@ -173,14 +173,14 @@ void AddMoney(u32* moneySaveblock, u32 to_give);
 u8 CountAliveMonsInBattle(u8 caseId);
 u8 IsRunningFromBattleImpossible(void);
 u8 GetMoveTarget(u16 move, u8 targetbyte); //get target of move
-u8 CastformDataTypeChange(u8 bank);
+u8 CastformDataTypeChange(u8 battler);
 u8 Overworld_GetMapTypeOfSaveblockLocation(void);
 u8 CalculatePlayerPartyCount(void);
 u16 Sqrt(u32 num);
 void SetOutlineCursorPosition(u8 a1, u8 a2);
-u8 CheckMoveLimitations(u8 bank, u8 unusable_moves, u8 flags);
+u8 CheckMoveLimitations(u8 battler, u8 unusable_moves, u8 flags);
 bool8 IsLinkDoubleBattle(void);
-void SwitchPartyOrderLinkMulti(u8 bank, u8 partyID, u8 r2);
+void SwitchPartyOrderLinkMulti(u8 battler, u8 partyID, u8 r2);
 
 //extern BattleScripts
 extern u8 BattleScript_MoveEnd[];
@@ -3146,7 +3146,7 @@ static void Cmd_dofaintanimation(void)
 
 static void Cmd_cleareffectsonfaint(void)
 {
-    //Clears things like attraction or trapping to other banks
+    //Clears things like attraction or trapping to other battlers
     if (gBattleControllerExecFlags == 0)
     {
         gActiveBattler = GetBattlerForBattleScript(T2_READ_8(gBattlescriptCurrInstr + 1));
@@ -3160,10 +3160,10 @@ static void Cmd_cleareffectsonfaint(void)
 
 static void Cmd_jumpifstatus(void)
 {
-    u8 bank = GetBattlerForBattleScript(T2_READ_8(gBattlescriptCurrInstr + 1));
+    u8 battler = GetBattlerForBattleScript(T2_READ_8(gBattlescriptCurrInstr + 1));
     u32 flags = T2_READ_32(gBattlescriptCurrInstr + 2);
     void* jump_loc = T2_READ_PTR(gBattlescriptCurrInstr + 6);
-    if (gBattleMons[bank].status1 & flags && gBattleMons[bank].hp)
+    if (gBattleMons[battler].status1 & flags && gBattleMons[battler].hp)
         gBattlescriptCurrInstr = jump_loc;
     else
         gBattlescriptCurrInstr += 10;
@@ -3453,7 +3453,7 @@ static void Cmd_getexp(void)
                         i = 0x149;
                     }
 
-                    // get exp getter bank
+                    // get exp getter battler
                     if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
                     {
                         if (!(gBattlerPartyIndexes[2] != gBattleStruct->expGetterMonId) && !(gAbsentBattlerFlags & gBitTable[2]))
@@ -4006,11 +4006,11 @@ static void Cmd_call(void)
     gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
 }
 
-static void Cmd_jumpiftype2(void) //u8 bank, u8 type, *ptr
+static void Cmd_jumpiftype2(void) //u8 battler, u8 type, *ptr
 {
-    u8 bank = GetBattlerForBattleScript(T1_READ_8(gBattlescriptCurrInstr + 1));
+    u8 battler = GetBattlerForBattleScript(T1_READ_8(gBattlescriptCurrInstr + 1));
 
-    if (T1_READ_8(gBattlescriptCurrInstr + 2) == gBattleMons[bank].type1 || T1_READ_8(gBattlescriptCurrInstr + 2) == gBattleMons[bank].type2)
+    if (T1_READ_8(gBattlescriptCurrInstr + 2) == gBattleMons[battler].type1 || T1_READ_8(gBattlescriptCurrInstr + 2) == gBattleMons[battler].type2)
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 3);
     else
         gBattlescriptCurrInstr += 7;
@@ -4324,7 +4324,7 @@ void Cmd_moveend(void)
             break;
         case ATK49_STATUS_IMMUNITY_ABILITIES: //status immunities
             if (AbilityBattleEffects(ABILITYEFFECT_IMMUNITY, 0, 0, 0, 0))
-                effect = TRUE; //it loops through 4 banks, so we increment after its done with all banks
+                effect = TRUE; //it loops through 4 battlers, so we increment after its done with all battlers
             else
                 gBattleStruct->moveendState++;
             break;
@@ -4772,7 +4772,7 @@ void ChooseMonToSendOut(u8 slotId)
     MarkBattlerForControllerExec(gActiveBattler);
 }
 
-bool8 HasNoMonsToSwitch(u8 bank, u8, u8);
+bool8 HasNoMonsToSwitch(u8 battler, u8, u8);
 
 static void Cmd_openpartyscreen(void)
 {
@@ -6360,12 +6360,12 @@ static void Cmd_nop(void)
     gBattlescriptCurrInstr++;
 }
 
-bool8 UproarWakeUpCheck(u8 bank)
+bool8 UproarWakeUpCheck(u8 battler)
 {
     int i;
     for (i = 0; i < gBattlersCount; i++)
     {
-        if (!(gBattleMons[i].status2 & STATUS2_UPROAR) || gBattleMons[bank].ability == ABILITY_SOUNDPROOF) //wtf gamefreak, you should check this only once, not every time in a loop...
+        if (!(gBattleMons[i].status2 & STATUS2_UPROAR) || gBattleMons[battler].ability == ABILITY_SOUNDPROOF) //wtf gamefreak, you should check this only once, not every time in a loop...
             continue;
         gBattleStruct->battler = i;
         if (gBattlerTarget == 0xFF)
@@ -7940,7 +7940,7 @@ static bool8 IsMoveUnchoosable(u16 move)
         return 0;
 }
 
-static u8 AttacksThisTurn(u8 bank, u16 move) //Note: returns 1 if it's a charging turn, otherwise 2
+static u8 AttacksThisTurn(u8 battler, u16 move) //Note: returns 1 if it's a charging turn, otherwise 2
 {
     //first argument is unused
     u8 effect;
@@ -8982,11 +8982,11 @@ static void Cmd_tryimprison(void)
     }
     else
     {
-        u8 bank;
+        u8 battler;
         PressurePPLoseOnUsingImprison(gBattlerAttacker);
-        for (bank = 0; bank < gBattlersCount; bank++)
+        for (battler = 0; battler < gBattlersCount; battler++)
         {
-            if (r8 != GetBattlerSide(bank))
+            if (r8 != GetBattlerSide(battler))
             {
                 int j;
                 for (j = 0; j < 4; j++)
@@ -8994,7 +8994,7 @@ static void Cmd_tryimprison(void)
                     int k;
                     for (k = 0; k < 4; k++)
                     {
-                        if (gBattleMons[gBattlerAttacker].moves[j] == gBattleMons[bank].moves[k] && gBattleMons[gBattlerAttacker].moves[j])
+                        if (gBattleMons[gBattlerAttacker].moves[j] == gBattleMons[battler].moves[k] && gBattleMons[gBattlerAttacker].moves[j])
                             break;
                     }
                     if (k != 4)
@@ -9008,7 +9008,7 @@ static void Cmd_tryimprison(void)
                 }
             }
         }
-        if (bank == gBattlersCount)
+        if (battler == gBattlersCount)
             gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     }
 }
