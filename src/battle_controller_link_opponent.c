@@ -229,7 +229,7 @@ void nullsub_47(void)
 {
 }
 
-void SetBankFuncToLinkOpponentBufferRunCommand(void)
+void SetControllerToLinkOpponent(void)
 {
     gBattlerControllerFuncs[gActiveBattler] = sub_803752C;
 }
@@ -238,7 +238,7 @@ void sub_803752C(void)
 {
     if (gBattleControllerExecFlags & gBitTable[gActiveBattler])
     {
-        if (gBattleBufferA[gActiveBattler][0] <= 0x38)
+        if (gBattleBufferA[gActiveBattler][0] <= CONTROLLER_TERMINATOR_NOP)
             gLinkOpponentBufferCommands[gBattleBufferA[gActiveBattler][0]]();
         else
             LinkOpponentBufferExecCompleted();
@@ -540,8 +540,8 @@ void LinkOpponentBufferExecCompleted(void)
     {
         u8 playerId = GetMultiplayerId();
 
-        PrepareBufferDataTransferLink(2, 4, &playerId);
-        gBattleBufferA[gActiveBattler][0] = 0x38;
+        PrepareBufferDataTransferLink(B_COMM_CONTROLLER_IS_DONE, 4, &playerId);
+        gBattleBufferA[gActiveBattler][0] = CONTROLLER_TERMINATOR_NOP;
     }
     else
     {

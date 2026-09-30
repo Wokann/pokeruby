@@ -297,10 +297,12 @@ union MultiBuffers
     struct MultiBattlePokemonTx multiBattleMons[3];
 };
 
+#define BATTLE_BUFFER_LINK_SIZE 0x1000
+
 // Used internally
 struct LinkBattleCommunicationHeader
 {
-    u8 state;
+    u8 bufferId;
     u8 activeBattler;
     u8 battlerAttacker;
     u8 battlerTarget;
@@ -322,8 +324,8 @@ struct ChooseMoveStruct {
 struct BattleStruct /* 0x2000000 */
 {
     u8 filler00000[0x14000];
-    /*0x14000*/ u8 linkSend[0x1000];
-    /*0x15000*/ u8 linkRecv[0x1000];
+    /*0x14000*/ u8 linkSend[BATTLE_BUFFER_LINK_SIZE];
+    /*0x15000*/ u8 linkRecv[BATTLE_BUFFER_LINK_SIZE];
     /*0x16000*/ u8 turnEffectsTracker;
     /*0x16001*/ u8 turnEffectsBattlerId;
     /*0x16002*/ u8 animTurn;
@@ -564,33 +566,33 @@ typedef void (*BattleCmdFunc)(void);
 extern u8 gBattleTextBuff1[];
 
 //function declarations of buffer emits
-void BtlController_EmitGetMonData(u8 buffID, u8 request, u8 c);    //0x0
-void BtlController_EmitGetRawMonData(u8 a, u8 b, u8 c); //0x1
-void BtlController_EmitSetMonData(u8 a, u8 request, u8 c, u8 bytes, void *data);  //0x2
-void BtlController_EmitSwitchInAnim(u8 a, u8 b, u8 c); //0x5
-void BtlController_EmitReturnMonToBall(u8 a, u8 b); //0x6
-void BtlController_EmitTrainerSlide(u8 a); //0x8
-void BtlController_EmitFaintAnimation(u8 a);  //0xA
-void BtlController_EmitBallThrowAnim(u8 a, u8 shakes);  //0xD
+void BtlController_EmitGetMonData(u8 bufferId, u8 requestId, u8 monToCheck);    //0x0
+void BtlController_EmitGetRawMonData(u8 bufferId, u8 monId, u8 bytes); //0x1
+void BtlController_EmitSetMonData(u8 bufferId, u8 requestId, u8 monToCheck, u8 bytes, void *data);  //0x2
+void BtlController_EmitSwitchInAnim(u8 bufferId, u8 partyId, bool8 dontClearSubstituteBit); //0x5
+void BtlController_EmitReturnMonToBall(u8 bufferId, bool8 skipAnim); //0x6
+void BtlController_EmitTrainerSlide(u8 bufferId); //0x8
+void BtlController_EmitFaintAnimation(u8 bufferId);  //0xA
+void BtlController_EmitBallThrowAnim(u8 bufferId, u8 caseId);  //0xD
 //void BtlController_EmitMoveAnimation(u8 a, u16 move, u8 turn, u16 power, s32 dmg, u8 happiness, void *disable_struct); //0xF
-void BtlController_EmitPrintString(u8 a, u16 stringID);  //0x10
+void BtlController_EmitPrintString(u8 bufferId, u16 stringId);  //0x10
 //void BtlController_EmitPrintSelectionString(u8 a, u16 stringID); //0x11
-void BtlController_EmitChoosePokemon(u8 a, u8 b, u8 c, u8 d, u8 *e); //0x16
+void BtlController_EmitChoosePokemon(u8 bufferId, u8 caseId, u8 slotId, u8 abilityId, u8 *data); //0x16
 //void BtlController_EmitHealthBarUpdate(u8 a, u16 b); //0x18; Had to declare the second arg as u16 because s16 wont match in atk0b
 //void BtlController_EmitExpUpdate(u8 a, u8 b, u16 c); //0x19
-void BtlController_EmitStatusIconUpdate(u8 a, u32 b, u32 c); //0x1A
-void BtlController_EmitStatusAnimation(u8 a, u8 b, u32 c); //0x1B
-void BtlController_EmitStatusXor(u8 a, u8 b); //0x1C
-void BtlController_EmitHitAnimation(u8 a); //0x29
-void BtlController_EmitPlaySE(u8 a, u16 sound); //0x2B
-void BtlController_EmitPlayFanfareOrBGM(u8 a, u16 sound);    //0x2C
-void BtlController_EmitFaintingCry(u8 a); //0x2D
+void BtlController_EmitStatusIconUpdate(u8 bufferId, u32 status1, u32 status2); //0x1A
+void BtlController_EmitStatusAnimation(u8 bufferId, bool8 status2, u32 status); //0x1B
+void BtlController_EmitStatusXor(u8 bufferId, u8 value); //0x1C
+void BtlController_EmitHitAnimation(u8 bufferId); //0x29
+void BtlController_EmitPlaySE(u8 bufferId, u16 songId); //0x2B
+void BtlController_EmitPlayFanfareOrBGM(u8 bufferId, u16 songId);    //0x2C
+void BtlController_EmitFaintingCry(u8 bufferId); //0x2D
 void BtlController_EmitIntroSlide(u8 bufferId, u8 environmentId); //0x2E
-void BtlController_EmitHidePartyStatusSummary(u8 a);  //0x31
-void BtlController_EmitSpriteInvisibility(u8 a, u8 b); //0x33
-void BtlController_EmitBattleAnimation(u8 a, u8 b, u16 c); //0x34
-void BtlController_EmitResetActionMoveSelection(u8 a, u8 b); //0x36
-void BtlController_EmitEndLinkBattle(u8 a, u8 b); //0x37
+void BtlController_EmitHidePartyStatusSummary(u8 bufferId);  //0x31
+void BtlController_EmitSpriteInvisibility(u8 bufferId, bool8 isInvisible); //0x33
+void BtlController_EmitBattleAnimation(u8 bufferId, u8 animationId, u16 argument); //0x34
+void BtlController_EmitResetActionMoveSelection(u8 bufferId, u8 caseId); //0x36
+void BtlController_EmitEndLinkBattle(u8 bufferId, u8 battleOutcome); //0x37
 
 void MarkBattlerForControllerExec(u8 bank);
 
@@ -614,6 +616,8 @@ extern u8 gLastHitBy[MAX_BATTLERS_COUNT];
 extern u8 gDisplayedStringBattle[];
 
 extern u16 gBattleTypeFlags;
+extern u32 gUnusedFirstBattleVar1;
+extern u8 gUnusedFirstBattleVar2;
 extern u32 gDebugBattleTrainerAiFlags;
 extern u8 gDebugBattleFlags;
 extern u16 gTrainerBattleOpponent;
@@ -691,9 +695,7 @@ void AI_CalcDmg(u8, u8);
 u8 TypeCalc(u16 move, u8 bank_atk, u8 bank_def);
 u8 GetBattlerTurnOrderNum(u8 bank);
 
-// asm/battle_5.o
 void BattleControllerDummy(void);
-void SetBankFuncToPlayerBufferRunCommand(void);
 void sub_802C098();
 void Task_PlayerController_RestoreBgmAfterCry(u8);
 void CB2_SetUpReshowBattleScreenAfterMenu(void);
@@ -711,14 +713,11 @@ void CopyBattleSpriteInvisibility(u8 battler);
 void HandleLowHpMusicChange(struct Pokemon *, u8);
 void sub_8032638();
 void ClearTemporarySpeciesSpriteData(u8 battler, bool8 dontClearSubstitute);
-void SetBankFuncToOpponentBufferRunCommand(void);
 void BattleStopLowHpSound(void);
 void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform);
 void SetBattlerShadowSpriteCallback(u8 battler, u16 species);
 void LoadBattleMonGfxAndAnimate(u8, u8, u8);
 void ClearBehindSubstituteBit(u8 battler);
-
-void SetBankFuncToLinkOpponentBufferRunCommand(void);
 
 void GameClear(void);
 

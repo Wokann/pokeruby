@@ -242,7 +242,7 @@ void nullsub_45(void)
 {
 }
 
-void SetBankFuncToOpponentBufferRunCommand(void)
+void SetControllerToOpponent(void)
 {
     gBattlerControllerFuncs[gActiveBattler] = OpponentBufferRunCommand;
 }
@@ -251,7 +251,7 @@ void OpponentBufferRunCommand(void)
 {
     if (gBattleControllerExecFlags & gBitTable[gActiveBattler])
     {
-        if (gBattleBufferA[gActiveBattler][0] <= 0x38)
+        if (gBattleBufferA[gActiveBattler][0] <= CONTROLLER_TERMINATOR_NOP)
             gOpponentBufferCommands[gBattleBufferA[gActiveBattler][0]]();
         else
             OpponentBufferExecCompleted();
