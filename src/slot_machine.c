@@ -3798,8 +3798,6 @@ static void CreateReelTimePikachuAuraSprites(void)
     sSlotMachine->reelTimePikachuAuraSpriteIds[1] = spriteId;
 }
 
-static const u8 gUnknown_083ECC58[2]; // don't remove this until decompiled through sInitialReelPositions
-
 static void SpriteCB_ReelTimePikachuAura(struct Sprite *sprite)
 {
     u8 auraBrightnesses[] = {16, 0};
