@@ -1,6 +1,7 @@
 #include "global.h"
 #include "trig.h"
 #include "battle_anim.h"
+#include "battle_anim_internal.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -69,11 +70,13 @@ const struct SpriteTemplate gConstrictBindingSpriteTemplate =
 
 static void AnimConstrictBinding(struct Sprite *sprite)
 {
+    CMD_ARGS(initialX, initialY, affineAnimation, squeezes);
+
     InitSpritePosToAnimTarget(sprite, FALSE);
     sprite->affineAnimPaused = 1;
-    StartSpriteAffineAnim(sprite, gBattleAnimArgs[2]);
-    sprite->data[6] = gBattleAnimArgs[2];
-    sprite->data[7] = gBattleAnimArgs[3];
+    StartSpriteAffineAnim(sprite, cmd->affineAnimation);
+    sprite->data[6] = cmd->affineAnimation;
+    sprite->data[7] = cmd->squeezes;
     sprite->callback = AnimConstrictBinding_Step1;
 }
 
