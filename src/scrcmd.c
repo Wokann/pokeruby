@@ -379,11 +379,11 @@ bool8 ScrCmd_setorcopyvar(struct ScriptContext *ctx)
     return FALSE;
 }
 
-u8 Compare(u16 a1, u16 a2)
+u8 Compare(u16 a, u16 b)
 {
-    if (a1 < a2)
+    if (a < b)
         return 0;
-    if (a1 == a2)
+    if (a == b)
         return 1;
     return 2;
 }
