@@ -9,7 +9,7 @@
 #include "string_util.h"
 #include "text.h"
 
-const u16 gUnusedPokemonSizeRecordPalette[] = INCBIN_U16("graphics/unknown/unknown_3D17EC.gbapal");
+const u16 gUnusedPokemonSizeRecordPalette[] = INCBIN_U16("graphics/pokedex/size_record_unused.gbapal");
 
 struct UnknownStruct
 {
