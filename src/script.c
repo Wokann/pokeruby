@@ -362,7 +362,7 @@ void ClearRamScript(void)
     CpuFill32(0, &gSaveBlock1.ramScript, sizeof(struct RamScript));
 }
 
-bool8 InitRamScript(const u8 *script, u16 scriptSize, u8 mapGroup, u8 mapNum, u8 localId)
+bool8 InitRamScript(const u8 *script, u16 scriptSize, u8 mapGroup, u8 mapNum, u8 objectId)
 {
     struct RamScriptData *scriptData = &gSaveBlock1.ramScript.data;
 
@@ -374,13 +374,13 @@ bool8 InitRamScript(const u8 *script, u16 scriptSize, u8 mapGroup, u8 mapNum, u8
     scriptData->magic = RAM_SCRIPT_MAGIC;
     scriptData->mapGroup = mapGroup;
     scriptData->mapNum = mapNum;
-    scriptData->localId = localId;
+    scriptData->localId = objectId;
     memcpy(scriptData->script, script, scriptSize);
     gSaveBlock1.ramScript.checksum = CalculateRamScriptChecksum();
     return TRUE;
 }
 
-const u8 *GetRamScript(u8 localId, const u8 *script)
+const u8 *GetRamScript(u8 objectId, const u8 *script)
 {
     struct RamScriptData *scriptData = &gSaveBlock1.ramScript.data;
     gRamScriptRetAddr = NULL;
@@ -390,7 +390,7 @@ const u8 *GetRamScript(u8 localId, const u8 *script)
         return script;
     if (scriptData->mapNum != gSaveBlock1.location.mapNum)
         return script;
-    if (scriptData->localId != localId)
+    if (scriptData->localId != objectId)
         return script;
     if (CalculateRamScriptChecksum() != gSaveBlock1.ramScript.checksum)
     {

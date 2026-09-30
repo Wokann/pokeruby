@@ -47,7 +47,7 @@ void RunOnDiveWarpMapScript(void);
 bool8 TryRunOnFrameMapScript(void);
 void TryRunOnWarpIntoMapScript(void);
 void ClearRamScript(void);
-bool8 InitRamScript(const u8 *script, u16 scriptSize, u8 mapGroup, u8 mapNum, u8 localId);
-const u8 *GetRamScript(u8 localId, const u8 *script);
+bool8 InitRamScript(const u8 *script, u16 scriptSize, u8 mapGroup, u8 mapNum, u8 objectId);
+const u8 *GetRamScript(u8 objectId, const u8 *script);
 
 #endif // GUARD_SCRIPT_H
