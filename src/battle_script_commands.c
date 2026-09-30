@@ -162,11 +162,11 @@ u16 GiveMoveToBattleMon(struct BattlePokemon *mon, u16 move);
 void IncrementGameStat(u8 index);
 u8 GetScaledHPFraction(s16 hp, s16 maxhp, u8 scale);
 u16 GetPokedexHeightWeight(u16 national_num, u8 heightweight);
-u8 CreateOutlineCursor(u8 a1, u16 a2, u8 a3, u16 a4, u8 a5);
+u8 CreateOutlineCursor(u8 subpriority, u16 paletteTag, u8 tileIndex, u16 color, u8 width);
 void DestroyMenuCursor(void);
 void UpdateBattleYesNoCursor(void);
 u8 GetMoveSlotToReplace(void);
-void HandleBattleWindow(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0);
+void HandleBattleWindow(u8 xStart, u8 yStart, u8 xEnd, u8 yEnd, u8 flags);
 void nullsub_6(void);
 void BattleMainCB2(void);
 void AddMoney(u32* moneySaveblock, u32 to_give);
@@ -177,10 +177,10 @@ u8 CastformDataTypeChange(u8 battler);
 u8 Overworld_GetMapTypeOfSaveblockLocation(void);
 u8 CalculatePlayerPartyCount(void);
 u16 Sqrt(u32 num);
-void SetOutlineCursorPosition(u8 a1, u8 a2);
+void SetOutlineCursorPosition(u8 x, u8 y);
 u8 CheckMoveLimitations(u8 battler, u8 unusable_moves, u8 flags);
 bool8 IsLinkDoubleBattle(void);
-void SwitchPartyOrderLinkMulti(u8 battler, u8 partyID, u8 r2);
+void SwitchPartyOrderLinkMulti(u8 battler, u8 partyId, u8 partySlot);
 
 //extern BattleScripts
 extern u8 BattleScript_MoveEnd[];
@@ -9555,45 +9555,45 @@ static void Cmd_displaydexinfo(void)
     }
 }
 
-void HandleBattleWindow(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0)
+void HandleBattleWindow(u8 xStart, u8 yStart, u8 xEnd, u8 yEnd, u8 flags)
 {
-    int i;
-    int j;
+    int destY;
+    int destX;
     int tile;
 
-    for (i = r1; i <= r3; i++)
+    for (destY = yStart; destY <= yEnd; destY++)
     {
-        for (j = r0; j <= r2; j++)
+        for (destX = xStart; destX <= xEnd; destX++)
         {
-            u16 * dest = ((u16 *)(BG_VRAM + (24 * 0x800) + (0x2 * j) + (0x40 * i)));
-            if (i == r1)
+            u16 *dest = ((u16 *)(BG_VRAM + (24 * 0x800) + (0x2 * destX) + (0x40 * destY)));
+            if (destY == yStart)
             {
-                if (j == r0)
+                if (destX == xStart)
                     tile = 0x1022;
-                else if (j == r2)
+                else if (destX == xEnd)
                     tile = 0x1024;
                 else
                     tile = 0x1023;
             }
-            else if (i == r3)
+            else if (destY == yEnd)
             {
-                if (j == r0)
+                if (destX == xStart)
                     tile = 0x1028;
-                else if (j == r2)
+                else if (destX == xEnd)
                     tile = 0x102A;
                 else
                     tile = 0x1029;
             }
             else
             {
-                if (j == r0)
+                if (destX == xStart)
                     tile = 0x1025;
-                else if (j == r2)
+                else if (destX == xEnd)
                     tile = 0x1027;
                 else
                     tile = 0x1026;
             }
-            if (sp0)
+            if (flags)
                 tile = 0;
             *dest = tile;
         }

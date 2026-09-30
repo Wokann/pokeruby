@@ -65,7 +65,7 @@ struct UnknownStruct8
     u8 unk1A;
 };
 
-extern void HandleBattleWindow(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0);
+extern void HandleBattleWindow(u8 xStart, u8 yStart, u8 xEnd, u8 yEnd, u8 flags);
 
 extern struct SpriteTemplate gCreatingSpriteTemplate;
 extern const u8 sText_DebugFlyingMonHeight[];
