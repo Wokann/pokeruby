@@ -30,7 +30,7 @@
 #define BOX3_Y_OFFSET  0
 
 const u32 gObjectEventPic_MovingBox[] = INCBIN_U32("graphics/object_events/pics/misc/moving_box.4bpp");
-const u16 gObjectEventPal_MovingBox[] = INCBIN_U16("graphics/object_events/palettes/19.gbapal");
+const u16 gObjectEventPal_MovingBox[] = INCBIN_U16("graphics/object_events/palettes/moving_box.gbapal");
 
 static const s8 sTruckCamera_HorizontalTable[] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, -1, -1, -1, 0};
 

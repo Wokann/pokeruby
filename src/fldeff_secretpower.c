@@ -25,9 +25,9 @@ static const u16 sSecretPowerCave_Pal[] = INCBIN_U16("graphics/field_effects/pal
 static const u8 sSecretPowerShrub_Gfx[] = INCBIN_U8("graphics/field_effects/pics/secret_power_shrub.4bpp");
 static const u8 sSecretPowerTree_Gfx[] = INCBIN_U8("graphics/field_effects/pics/secret_power_tree.4bpp");
 static const u16 sSecretPowerPlant_Pal[] = INCBIN_U16("graphics/field_effects/palettes/secret_power_plant.gbapal");
-const u8 gSandPillar0_Gfx[] = INCBIN_U8("graphics/field_effect_objects/pics/sand_pillar/0.4bpp");
-const u8 gSandPillar1_Gfx[] = INCBIN_U8("graphics/field_effect_objects/pics/sand_pillar/1.4bpp");
-const u8 gSandPillar2_Gfx[] = INCBIN_U8("graphics/field_effect_objects/pics/sand_pillar/2.4bpp");
+const u8 gSandPillar0_Gfx[] = INCBIN_U8("graphics/field_effects/pics/sand_pillar/0.4bpp");
+const u8 gSandPillar1_Gfx[] = INCBIN_U8("graphics/field_effects/pics/sand_pillar/1.4bpp");
+const u8 gSandPillar2_Gfx[] = INCBIN_U8("graphics/field_effects/pics/sand_pillar/2.4bpp");
 
 static const struct OamData sOam_SecretPower =
 {

@@ -19,7 +19,7 @@
 
 void ScanlineEffect_Clear(void);
 
-extern const struct OamData gFieldOamData_32x32;
+extern const struct OamData gObjectEventBaseOam_32x32;
 
 #define PALTAG_UNUSED_MUGSHOT 0x100A
 
@@ -435,7 +435,7 @@ static const struct SpriteTemplate sSpriteTemplate_Pokeball =
 {
     .tileTag = TAG_NONE,
     .paletteTag = FLDEFF_PAL_TAG_POKEBALL_TRAIL,
-    .oam = &gFieldOamData_32x32,
+    .oam = &gObjectEventBaseOam_32x32,
     .anims = sSpriteAnimTable_Pokeball,
     .images = sSpriteImage_Pokeball,
     .affineAnims = sSpriteAffineAnimTable_Pokeball,
@@ -502,7 +502,7 @@ static const struct SpriteTemplate sSpriteTemplate_UnusedLass =
     .callback = SpriteCB_MugshotTrainerPic
 };
 
-static const u16 sFieldEffectPal_Pokeball[] = INCBIN_U16("graphics/field_effect_objects/palettes/10.gbapal");
+static const u16 sFieldEffectPal_Pokeball[] = INCBIN_U16("graphics/field_effects/palettes/pokeball.gbapal");
 
 const struct SpritePalette gSpritePalette_Pokeball =
 {

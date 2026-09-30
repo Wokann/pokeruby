@@ -88,11 +88,11 @@ gFieldEffectScript_Shadow: @ 81D9C46
 	end
 
 gFieldEffectScript_TallGrass: @ 81D9C4C
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo1, FldEff_TallGrass
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_TallGrass
 	end
 
 gFieldEffectScript_Ripple: @ 81D9C56
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo1, FldEff_Ripple
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_Ripple
 	end
 
 gFieldEffectScript_FieldMoveShowMon: @ 81D9C60
@@ -100,7 +100,7 @@ gFieldEffectScript_FieldMoveShowMon: @ 81D9C60
 	end
 
 gFieldEffectScript_Ash: @ 81D9C66
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo1, FldEff_Ash
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_Ash
 	end
 
 gFieldEffectScript_SurfBlob: @ 81D9C70
@@ -120,7 +120,7 @@ gFieldEffectScript_UseSecretPowerCave: @ 81D9C86
 	end
 
 gFieldEffectScript_JumpTallGrass: @ 81D9C8C
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo1, FldEff_JumpTallGrass
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_JumpTallGrass
 	end
 
 gFieldEffectScript_SandFootprints: @ 81D9C96
@@ -140,19 +140,19 @@ gFieldEffectScript_JumpSmallSplash: @ 81D9CB4
 	end
 
 gFieldEffectScript_LongGrass: @ 81D9CBE
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo1, FldEff_LongGrass
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_LongGrass
 	end
 
 gFieldEffectScript_JumpLongGrass: @ 81D9CC8
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo1, FldEff_JumpLongGrass
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_JumpLongGrass
 	end
 
 gFieldEffectScript_UnusedGrass: @ 81D9CD2
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo1, FldEff_UnusedGrass
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_UnusedGrass
 	end
 
 gFieldEffectScript_UnusedGrass2: @ 81D9CDC
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo1, FldEff_UnusedGrass2
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_UnusedGrass2
 	end
 
 gFieldEffectScript_UnusedSand: @ 81D9CE6
@@ -237,11 +237,11 @@ gFieldEffectScript_SandPile: @ 81D9D75
 	end
 
 gFieldEffectScript_ShortGrass: @ 81D9D7F
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo1, FldEff_ShortGrass
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_ShortGrass
 	end
 
 gFieldEffectScript_HotSpringsWater: @ 81D9D89
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo1, FldEff_HotSpringsWater
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_HotSpringsWater
 	end
 
 gFieldEffectScript_UseWaterfall: @ 81D9D93

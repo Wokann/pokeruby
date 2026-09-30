@@ -74,7 +74,7 @@ struct ReflectionPaletteSet
 extern const u16 gObjectEventPal_MovingBox[];
 
 extern const u32 gObjectEventPic_MovingBox[32];
-extern const struct SpriteFrameImage gObjectEventPicTable_PechaBerryTree[];
+extern const struct SpriteFrameImage sPicTable_PechaBerryTree[];
 
 extern const u8 gFieldEffectPic_CutGrass[];
 extern const u16 gFieldEffectPal_CutGrass[];

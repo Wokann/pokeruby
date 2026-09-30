@@ -1,5 +1,5 @@
 OBJEVENTGFXDIR := graphics/object_events/pics
-FIELDEFFGFXDIR := graphics/field_effect_objects/pics
+FIELDEFFGFXDIR := graphics/field_effects/pics
 FIELDEFFECTGFXDIR := graphics/field_effects/pics
 
 $(OBJEVENTGFXDIR)/berry_trees/aguav.4bpp: %.4bpp: %.png
@@ -494,7 +494,7 @@ $(FIELDEFFGFXDIR)/arrow.4bpp: %.4bpp: %.png
 $(FIELDEFFGFXDIR)/ash.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
 
-$(FIELDEFFGFXDIR)/berry_tree_growth_sparkle.4bpp: %.4bpp: %.png
+$(FIELDEFFGFXDIR)/sparkle.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
 
 $(FIELDEFFGFXDIR)/bike_tire_tracks.4bpp: %.4bpp: %.png
@@ -584,5 +584,5 @@ $(FIELDEFFGFXDIR)/unused_sand.4bpp: %.4bpp: %.png
 $(FIELDEFFGFXDIR)/water_surfacing.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
 
-$(FIELDEFFGFXDIR)/unused_grass.4bpp: %.4bpp: %.png
+$(FIELDEFFGFXDIR)/unused_grass_3.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 2

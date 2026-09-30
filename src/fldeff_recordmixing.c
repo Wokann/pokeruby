@@ -3,7 +3,7 @@
 #include "fldeff_recordmixing.h"
 #include "sprite.h"
 
-extern const struct OamData gFieldOamData_32x8;
+extern const struct OamData gObjectEventBaseOam_32x8;
 
 static const u8 sRecordMixLights_Gfx0[] = INCBIN_U8("graphics/field_effects/pics/record_mix_lights_0.4bpp");
 static const u8 sRecordMixLights_Gfx1[] = INCBIN_U8("graphics/field_effects/pics/record_mix_lights_1.4bpp");
@@ -37,7 +37,7 @@ static const struct SpriteTemplate sSpriteTemplate_RecordMixLights =
 {
     .tileTag = 0xFFFF,
     .paletteTag = 0x1000,
-    .oam = &gFieldOamData_32x8,
+    .oam = &gObjectEventBaseOam_32x8,
     .anims = sAnimTable_RecordMixLights,
     .images = sPicTable_RecordMixLights,
     .affineAnims = gDummySpriteAffineAnimTable,
