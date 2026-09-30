@@ -338,7 +338,7 @@ static const union AnimCmd *const sAnims_RectCursorEnd[] =
 
 void CreateRectangleCursorSprites(void)
 {
-    struct SpriteTemplate spriteTemplate_83DBCAC =
+    struct SpriteTemplate spriteTemplate =
     {
         .tileTag = 1,
         .paletteTag = 1,
@@ -350,17 +350,17 @@ void CreateRectangleCursorSprites(void)
     };
     u8 spriteId;
 
-    spriteId = CreateSprite(&spriteTemplate_83DBCAC, 0, 0, 3);
+    spriteId = CreateSprite(&spriteTemplate, 0, 0, 3);
     gEasyChatScreen->rectangleCursorPrimarySprite = &gSprites[spriteId];
 
-    spriteTemplate_83DBCAC.anims = sAnims_RectCursorMiddle;
-    spriteTemplate_83DBCAC.callback = SpriteCB_RectangleCursorMiddle;
-    spriteId = CreateSprite(&spriteTemplate_83DBCAC, 0, 0, 4);
+    spriteTemplate.anims = sAnims_RectCursorMiddle;
+    spriteTemplate.callback = SpriteCB_RectangleCursorMiddle;
+    spriteId = CreateSprite(&spriteTemplate, 0, 0, 4);
     gEasyChatScreen->rectangleCursorMiddleSprite = &gSprites[spriteId];
 
-    spriteTemplate_83DBCAC.anims = sAnims_RectCursorEnd;
-    spriteTemplate_83DBCAC.callback = SpriteCB_RectangleCursorEnd;
-    spriteId = CreateSprite(&spriteTemplate_83DBCAC, 0, 0, 5);
+    spriteTemplate.anims = sAnims_RectCursorEnd;
+    spriteTemplate.callback = SpriteCB_RectangleCursorEnd;
+    spriteId = CreateSprite(&spriteTemplate, 0, 0, 5);
     gEasyChatScreen->rectangleCursorEndSprite = &gSprites[spriteId];
 
     gEasyChatScreen->rectangleCursorPrimarySprite->data[0] = 0;
@@ -651,7 +651,7 @@ static const union AnimCmd *const sAnims_PageScrollButtons[] =
 
 void CreateScrollIndicatorSprites(void)
 {
-    struct SpriteTemplate spriteTemplate_83DBD18 =
+    struct SpriteTemplate spriteTemplate =
     {
         .tileTag = 2,
         .paletteTag = 0,
@@ -666,18 +666,18 @@ void CreateScrollIndicatorSprites(void)
 
     for (i = 0; i < 2; i++)
     {
-        spriteId = CreateSprite(&spriteTemplate_83DBD18, 0, 84 + i * 72 , 0);
+        spriteId = CreateSprite(&spriteTemplate, 0, 84 + i * 72 , 0);
         gEasyChatScreen->scrollIndicatorSprites[i] = &gSprites[spriteId];
         gEasyChatScreen->scrollIndicatorSprites[i]->data[0] = i;
         gEasyChatScreen->scrollIndicatorSprites[i]->vFlip = i;
     }
 
-    spriteTemplate_83DBD18.tileTag = 3;
-    spriteTemplate_83DBD18.anims = sAnims_PageScrollButtons;
+    spriteTemplate.tileTag = 3;
+    spriteTemplate.anims = sAnims_PageScrollButtons;
 
     for (i = 0; i < 2; i++)
     {
-        spriteId = CreateSprite(&spriteTemplate_83DBD18, 142 + i * 40, 88, 0);
+        spriteId = CreateSprite(&spriteTemplate, 142 + i * 40, 88, 0);
         gEasyChatScreen->pageScrollButtonSprites[i] = &gSprites[spriteId];
         gEasyChatScreen->pageScrollButtonSprites[i]->data[0] = i;
         gEasyChatScreen->pageScrollButtonSprites[i]->oam.shape = 1;
