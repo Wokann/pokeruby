@@ -33,8 +33,8 @@ bool8 CheckObjectGraphicsInFrontOfPlayer(u8 graphicsId)
     u8 objEventId;
 
     GetXYCoordsOneStepInFrontOfPlayer(&gPlayerFacingPosition.x, &gPlayerFacingPosition.y);
-    gPlayerFacingPosition.height = PlayerGetElevation();
-    objEventId = GetObjectEventIdByXYZ(gPlayerFacingPosition.x, gPlayerFacingPosition.y, gPlayerFacingPosition.height);
+    gPlayerFacingPosition.elevation = PlayerGetElevation();
+    objEventId = GetObjectEventIdByXYZ(gPlayerFacingPosition.x, gPlayerFacingPosition.y, gPlayerFacingPosition.elevation);
     if (gObjectEvents[objEventId].graphicsId != graphicsId)
     {
         return FALSE;

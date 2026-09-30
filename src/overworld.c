@@ -1214,8 +1214,8 @@ static void DoCB1_Overworld(u16 newKeys, u16 heldKeys)
     struct FieldInput fieldInput;
 
     UpdatePlayerAvatarTransitionState();
-    ClearPlayerFieldInput(&fieldInput);
-    GetPlayerFieldInput(&fieldInput, newKeys, heldKeys);
+    FieldClearPlayerInput(&fieldInput);
+    FieldGetPlayerInput(&fieldInput, newKeys, heldKeys);
     if (!ArePlayerFieldControlsLocked())
     {
         if (ProcessPlayerFieldInput(&fieldInput) == 1)
@@ -2304,7 +2304,7 @@ void LoadCableClubPlayer(int linkPlayerId, int selfId, struct CableClubPlayer *t
     GetLinkPlayerCoords(linkPlayerId, &x, &y);
     trainer->pos.x = x;
     trainer->pos.y = y;
-    trainer->pos.height = GetLinkPlayerElevation(linkPlayerId);
+    trainer->pos.elevation = GetLinkPlayerElevation(linkPlayerId);
     trainer->metatileBehavior = MapGridGetMetatileBehaviorAt(x, y);
 }
 
@@ -2355,7 +2355,7 @@ const u8 *TryInteractWithPlayer(struct CableClubPlayer *trainer)
     pos = trainer->pos;
     pos.x += gDirectionToVectors[trainer->facing].x;
     pos.y += gDirectionToVectors[trainer->facing].y;
-    pos.height = 0;
+    pos.elevation = ELEVATION_TRANSITION;
     linkPlayerId = GetLinkPlayerIdAt(pos.x, pos.y);
 
     if (linkPlayerId != MAX_LINK_PLAYERS)

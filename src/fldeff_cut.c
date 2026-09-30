@@ -109,7 +109,7 @@ void Debug_SetUpFieldMove_Cut(void)
         for (j = 0; j < 3; j++)
         {
             x = j - 1 + gPlayerFacingPosition.x;
-            if (MapGridGetElevationAt(x, y) == gPlayerFacingPosition.height)
+            if (MapGridGetElevationAt(x, y) == gPlayerFacingPosition.elevation)
             {
                 metatileBehavior = MapGridGetMetatileBehaviorAt(x, y);
                 if (MetatileBehavior_IsPokeGrass(metatileBehavior) == TRUE
@@ -150,7 +150,7 @@ bool8 SetUpFieldMove_Cut(void)
             for (j = 0; j < CUT_NORMAL_SIDE; j++)
             {
                 x = j - 1 + gPlayerFacingPosition.x;
-                if (MapGridGetElevationAt(x, y) == gPlayerFacingPosition.height)
+                if (MapGridGetElevationAt(x, y) == gPlayerFacingPosition.elevation)
                 {
                     tileBehavior = MapGridGetMetatileBehaviorAt(x, y);
                     if(MetatileBehavior_IsPokeGrass(tileBehavior) == TRUE
@@ -222,7 +222,7 @@ bool8 FldEff_CutGrass(void)
         for (j = 0; j < CUT_NORMAL_SIDE; j++)
         {
             x = j - 1 + gPlayerFacingPosition.x;
-            if (MapGridGetElevationAt(x, y) == (s8)gPlayerFacingPosition.height)
+            if (MapGridGetElevationAt(x, y) == (s8)gPlayerFacingPosition.elevation)
             {
                 tileBehavior = MapGridGetMetatileBehaviorAt(x, y);
                 if (MetatileBehavior_IsCuttableGrass(tileBehavior) == TRUE)
