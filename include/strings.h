@@ -185,7 +185,7 @@ extern const u8 OtherText_Store[];
 extern const u8 gOtherText_Check[];
 extern const u8 gOtherText_None[];
 
-extern const u8 gOtherText_ThreeQuestions2[];
+extern const u8 gText_ThreeMarks[];
 
 extern const u8 gText_FiveMarks[];
 extern const u8 gOtherText_Slash[];
@@ -244,10 +244,10 @@ extern const u8 gOtherText_RepelLingers[];
 extern const u8 gOtherText_UsedFlute[];
 extern const u8 gOtherText_UsedRepel[];
 extern const u8 gOtherText_BoxIsFull[];
-extern const u8 gOtherText_Size[];
-extern const u8 gOtherText_Firm[];
+extern const u8 gText_SizeSlash[];
+extern const u8 gText_FirmSlash[];
 
-extern const u8 gContestStatsText_Unknown1[];
+extern const u8 gText_Var1DotVar2[];
 
 extern const u8 ContestStatsText_VerySoft[];
 extern const u8 ContestStatsText_Soft[];

@@ -44,7 +44,7 @@ extern u8 gBerryCheck_Pal[];
 extern u8 gBerryTag_Gfx[];
 extern u8 gBerryTag_Tilemap[];
 
-static const u8 *const sBerryFirmnessText[] =
+static const u8 *const sBerryFirmnessStrings[] =
 {
     ContestStatsText_VerySoft,
     ContestStatsText_Soft,
@@ -301,7 +301,7 @@ static void PrintAllBerryData(void)
     sizeMajor = size / 100;
 #endif
 
-    Menu_PrintText(gOtherText_Size, 11, 7);
+    Menu_PrintText(gText_SizeSlash, 11, 7);
     if (berryInfo->size != 0)
     {
 #ifdef UNITS_IMPERIAL
@@ -311,18 +311,18 @@ static void PrintAllBerryData(void)
         ConvertIntToDecimalStringN(gStringVar1, berryInfo->size / 10, STR_CONV_MODE_LEFT_ALIGN, 2);
         ConvertIntToDecimalStringN(gStringVar2, berryInfo->size % 10, STR_CONV_MODE_LEFT_ALIGN, 2);
 #endif
-        Menu_PrintText(gContestStatsText_Unknown1, 16, 7);
+        Menu_PrintText(gText_Var1DotVar2, 16, 7);
     }
     else
     {
-        Menu_PrintText(gOtherText_ThreeQuestions2, 16, 7);
+        Menu_PrintText(gText_ThreeMarks, 16, 7);
     }
 
-    Menu_PrintText(gOtherText_Firm, 11, 9);
+    Menu_PrintText(gText_FirmSlash, 11, 9);
     if (berryInfo->firmness != 0)
-        Menu_PrintText(sBerryFirmnessText[berryInfo->firmness - 1], 16, 9);
+        Menu_PrintText(sBerryFirmnessStrings[berryInfo->firmness - 1], 16, 9);
     else
-        Menu_PrintText(gOtherText_ThreeQuestions2, 16, 9);
+        Menu_PrintText(gText_ThreeMarks, 16, 9);
 }
 
 static void CreateFlavorCircleSprites(u8 berry)

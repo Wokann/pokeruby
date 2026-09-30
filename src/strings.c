@@ -172,7 +172,7 @@ const u8 OtherText_Store[] = _("STORE");
 const u8 gOtherText_Check[] = _("CHECK");
 const u8 gOtherText_None[] = _("NONE");
 
-const u8 gOtherText_ThreeQuestions2[] = _("???");
+const u8 gText_ThreeMarks[] = _("???");
 
 const u8 gText_FiveMarks[] = _("?????");
 const u8 gOtherText_Slash[] = _("/");
@@ -240,10 +240,10 @@ const u8 gOtherText_RepelLingers[] = _("But the effects of a REPEL lingered\nfro
 const u8 gOtherText_UsedFlute[] = _("{PLAYER} used the\n{STR_VAR_2}.\pWild POKéMON will be lured.{PAUSE_UNTIL_PRESS}");
 const u8 gOtherText_UsedRepel[] = _("{PLAYER} used the\n{STR_VAR_2}.\pWild POKéMON will be repelled.{PAUSE_UNTIL_PRESS}");
 const u8 gOtherText_BoxIsFull[] = _("The BOX is full.{PAUSE_UNTIL_PRESS}");
-const u8 gOtherText_Size[] = _("SIZE /");
-const u8 gOtherText_Firm[] = _("FIRM /");
+const u8 gText_SizeSlash[] = _("SIZE /");
+const u8 gText_FirmSlash[] = _("FIRM /");
 
-const u8 gContestStatsText_Unknown1[] = _("{STR_VAR_1}.{STR_VAR_2}”");
+const u8 gText_Var1DotVar2[] = _("{STR_VAR_1}.{STR_VAR_2}”");
 
 const u8 ContestStatsText_VerySoft[] = _("Very soft");
 const u8 ContestStatsText_Soft[] = _("Soft");
@@ -1100,7 +1100,7 @@ const u8 OtherText_Store[] = _("GEBEN");
 const u8 gOtherText_Check[] = _("PRÜFEN");
 const u8 gOtherText_None[] = _("KEINES");
 
-const u8 gOtherText_ThreeQuestions2[] = _("???");
+const u8 gText_ThreeMarks[] = _("???");
 
 const u8 gText_FiveMarks[] = _("?????");
 const u8 gOtherText_Slash[] = _("/");
@@ -1168,10 +1168,10 @@ const u8 gOtherText_RepelLingers[] = _("Aber SCHUTZ wirkt doch\nnoch!{PAUSE_UNTI
 const u8 gOtherText_UsedFlute[] = _("{PLAYER} setzt\n{STR_VAR_2} ein.\pWilde POKéMON werden angezogen.{PAUSE_UNTIL_PRESS}");
 const u8 gOtherText_UsedRepel[] = _("{PLAYER} setzt\n{STR_VAR_2} ein.\pWilde POKéMON werden abgehalten.{PAUSE_UNTIL_PRESS}");
 const u8 gOtherText_BoxIsFull[] = _("Die BOXEN sind voll.{PAUSE_UNTIL_PRESS}");
-const u8 gOtherText_Size[] = _("MASS:");
-const u8 gOtherText_Firm[] = _("GÜTE:");
+const u8 gText_SizeSlash[] = _("MASS:");
+const u8 gText_FirmSlash[] = _("GÜTE:");
 
-const u8 gContestStatsText_Unknown1[] = _("{STR_VAR_1},{STR_VAR_2} cm");
+const u8 gText_Var1DotVar2[] = _("{STR_VAR_1},{STR_VAR_2} cm");
 
 const u8 ContestStatsText_VerySoft[] = _("Sehr weich");
 const u8 ContestStatsText_Soft[] = _("Weich");
