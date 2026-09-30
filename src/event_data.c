@@ -5,6 +5,7 @@
 #define TEMP_FLAGS_SIZE 0x4
 #define DAILY_FLAGS_SIZE 0x8
 #define TEMP_VARS_SIZE 0x20
+#define SPECIAL_FLAGS_SIZE (NUM_SPECIAL_FLAGS / 8)
 
 EWRAM_DATA u16 gSpecialVar_0x8000 = 0;
 EWRAM_DATA u16 gSpecialVar_0x8001 = 0;
@@ -21,7 +22,7 @@ EWRAM_DATA u16 gSpecialVar_0x800B = 0;
 EWRAM_DATA u16 gSpecialVar_Result = 0;
 EWRAM_DATA u16 gSpecialVar_LastTalked = 0;
 EWRAM_DATA u16 gSpecialVar_Facing = 0;
-EWRAM_DATA u8 gUnknown_0202E8E2[16] = {0};
+EWRAM_DATA u8 gSpecialFlags[SPECIAL_FLAGS_SIZE] = {0};
 
 extern u16 *gSpecialVars[];
 
@@ -29,7 +30,7 @@ void InitEventData(void)
 {
     memset(gSaveBlock1.flags, 0, sizeof(gSaveBlock1.flags));
     memset(gSaveBlock1.vars, 0, sizeof(gSaveBlock1.vars));
-    memset(gUnknown_0202E8E2, 0, sizeof(gUnknown_0202E8E2));
+    memset(gSpecialFlags, 0, sizeof(gSpecialFlags));
 }
 
 void ClearTempFieldEventData(void)
@@ -146,10 +147,10 @@ u8 *GetFlagPointer(u16 id)
     if (id == 0)
         return 0;
 
-    if (id < 0x4000)
+    if (id < SPECIAL_FLAGS_START)
         return &gSaveBlock1.flags[id / 8];
 
-    return &gUnknown_0202E8E2[(id - 0x4000) / 8];
+    return &gSpecialFlags[(id - SPECIAL_FLAGS_START) / 8];
 }
 
 u8 FlagSet(u16 id)
