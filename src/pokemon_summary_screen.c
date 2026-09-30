@@ -59,11 +59,11 @@ static void ClearInfoPageText(void);
 static void ClearSkillsPageText(void);
 static void ClearMoveNamesAndPP(void);
 extern u8 CreateMonSprite(struct Pokemon *);
-static void SummaryScreen_PrintColoredIntPixelCoords(s32, u8, u8, u8, u8, u16, s32);
+static void SummaryScreen_PrintColoredIntPixelCoords(s32 value, u8 colorId, u8 digits, u8 mode, u8 left, u16 top, s32 clipLeft);
 static void PrintMonSpeciesLevelAndGender(struct Pokemon *);
 static void PokemonSummaryScreen_PrintTrainerMemo(struct Pokemon *, u8, u8);
 static void PokemonSummaryScreen_PrintEggTrainerMemo(struct Pokemon *, u8, u8);
-static void SummaryScreen_PrintColoredTextPixelCoords(const u8 *, u8, u8, u16, s32);
+static void SummaryScreen_PrintColoredTextPixelCoords(const u8 *text, u8 colorId, u8 left, u16 top, s32 clipLeft);
 static void SummaryScreen_PrintColoredTextCentered(const u8 *, u8, u8, u8, u16);
 static void PrintHeldItemName(u16, u8, u8);
 static void PrintRibbonCount(struct Pokemon *);
@@ -77,38 +77,38 @@ static bool8 CanReplaceMove(u8);
 static void ShowCantForgetHMsWindow(u8, u8);
 static void CloseMoveSelectMode(u8);
 static void Task_HandleInput_MovePositionSwitch(u8);
-static void ExitMovePositionSwitchMode(u8, s8);
-static void SetMainMoveSelectorColor(u8);
+static void ExitMovePositionSwitchMode(u8 taskId, s8 swapMoves);
+static void SetMainMoveSelectorColor(u8 which);
 static void SetTaskWaitForLinkRecv(int);
 static void Task_HandleInput_MoveSelect(u8);
 static void Task_HandleInput(u8);
-static void DestroyMoveSelectorSprites(u8);
-static void TilemapFiveMovesDisplay(u8);
-static void CreateMoveSelectorSprites(u8);
+static void DestroyMoveSelectorSprites(u8 firstArrayId);
+static void TilemapFiveMovesDisplay(u8 remove);
+static void CreateMoveSelectorSprites(u8 idArrayStart);
 void DrawPagination(void);
-static void PrintMoveDetailLabels(u8);
+static void PrintMoveDetailLabels(u8 moveIndex);
 static void PrintNewMoveDetailsOrCancelText(struct Pokemon *);
 static void HidePageSpecificSprites(void);
 static void Task_SlideAppealJamWindow(u8);
 static void Task_SlidePowerAccWindow(u8);
 extern void Task_ChangeSummaryMon(u8);
-extern s8 AdvanceMonIndex(s8);
+extern s8 AdvanceMonIndex(s8 delta);
 extern s8 AdvanceMultiBattleMonIndex(s8);
 static bool8 RefreshSummaryScreen(void);
 static void CreateCaughtBallSprite(struct Pokemon *);
 static u8 LoadMonGfxAndSprite(struct Pokemon *, u8 *);
 static void DrawPokerusCuredSymbol(struct Pokemon *);
-static void PositionStatusSlidingWindow(s8);
+static void PositionStatusSlidingWindow(s8 slideSpeed);
 static void PrintMonInfo(struct Pokemon *);
 static void HandlePageChangeInput(u8, s8);
 static void ChangeSelectedMove(u8 taskId, s8 direction, u8 *moveIndexPtr);
-static void PositionAppealJamSlidingWindow(s8, u8);
-static void PositionPowerAccSlidingWindow(s8, u8);
+static void PositionAppealJamSlidingWindow(s8 slideSpeed, u8 moveIndex);
+static void PositionPowerAccSlidingWindow(s8 slideSpeed, u8 moveIndex);
 static void SummaryScreen_PrintPokemonInfo(struct Pokemon *);
 static void SummaryScreen_PrintPokemonSkills(struct Pokemon *);
-static void SetSpriteInvisibility(u8, u8);
-static void KeepMoveSelectorVisible(u8 a);
-static void SetTypeSpritePosAndPal(u8, u8, u8, u8);
+static void SetSpriteInvisibility(u8 spriteArrayId, u8 invisible);
+static void KeepMoveSelectorVisible(u8 firstSpriteId);
+static void SetTypeSpritePosAndPal(u8 typeId, u8 x, u8 y, u8 spriteArrayId);
 static u16 GetMonMove(struct Pokemon *, u8);
 static void PrintMovePowerAndAccuracy(u16);
 void DrawContestMoveHearts(u16);
@@ -119,7 +119,7 @@ static void CopyMonToSummaryStruct(struct Pokemon *);
 static void SpriteCB_MoveSelector(struct Sprite *sprite);
 static void SpriteCB_Pokemon(struct Sprite *);
 static void PrintMoveDetails(struct Pokemon *, u8 *);
-static void DestroySpriteInArray(u8);
+static void DestroySpriteInArray(u8 spriteArrayId);
 static u8 *SummaryScreen_SetTextColor(u8 *, u8);
 static u8 *SummaryScreen_CopyColoredString(u8 *, const u8 *, u8);
 static void PrintGenderSymbol(struct Pokemon *, u8, u8);
@@ -1182,14 +1182,14 @@ void Task_WaitForMoveSwapRefresh(u8 taskId)
     }
 }
 
-static void ExitMovePositionSwitchMode(u8 taskId, s8 b)
+static void ExitMovePositionSwitchMode(u8 taskId, s8 swapMoves)
 {
     PlaySE(SE_SELECT);
 
     DestroyMoveSelectorSprites(19);
     SetMainMoveSelectorColor(0);
 
-    if (b == 1)
+    if (swapMoves == 1)
     {
         if (pssData.firstMoveIndex != pssData.secondMoveIndex)
         {
@@ -1219,20 +1219,20 @@ static void ChangeSelectedMove(u8 taskId, s8 direction, u8 *moveIndexPtr)
 {
     s8 i;
     s8 newMoveIndex;
-    s8 var;
-    bool8 bln;
+    s8 maxMoveIndex;
+    bool8 shouldPrintMoveDetails;
 
-    bln = TRUE;
+    shouldPrintMoveDetails = TRUE;
     PlaySE(SE_SELECT);
     newMoveIndex = *moveIndexPtr;
-    var = (s8)gTasks[taskId].data[0];
+    maxMoveIndex = (s8)gTasks[taskId].data[0];
     for (i = 0; i < MAX_MON_MOVES; i++)
     {
         newMoveIndex += direction;
-        if (newMoveIndex > var)
+        if (newMoveIndex > maxMoveIndex)
             newMoveIndex = 0;
         else if (newMoveIndex < 0)
-            newMoveIndex = var;
+            newMoveIndex = maxMoveIndex;
 
         if (GetMonMove(&pssData.currentMon, newMoveIndex) != 0 || newMoveIndex == MAX_MON_MOVES)
             break;
@@ -1246,7 +1246,7 @@ static void ChangeSelectedMove(u8 taskId, s8 direction, u8 *moveIndexPtr)
         PositionPowerAccSlidingWindow(2, newMoveIndex);
         PositionAppealJamSlidingWindow(2, newMoveIndex);
         gTasks[taskId].data[13] = 0;
-        bln = FALSE;
+        shouldPrintMoveDetails = FALSE;
     }
     if (*moveIndexPtr != MAX_MON_MOVES
         && newMoveIndex == MAX_MON_MOVES
@@ -1263,7 +1263,7 @@ static void ChangeSelectedMove(u8 taskId, s8 direction, u8 *moveIndexPtr)
     else
         KeepMoveSelectorVisible(1);
 
-    if (bln)
+    if (shouldPrintMoveDetails)
         PrintMoveDetails(&pssData.currentMon, moveIndexPtr);
     SetTaskWaitForLinkRecv(taskId);
 }
@@ -1390,9 +1390,9 @@ void PssScrollLeft(u8 taskId)
     case 1:
         if (pssData.bgDisplayOrder == 0)
         {
-            int var2 = gBattle_BG1_X - 0x20;
-            gBattle_BG1_X = var2;
-            if (var2 << 16 == 0)
+            int nextBgX = gBattle_BG1_X - 0x20;
+            gBattle_BG1_X = nextBgX;
+            if (nextBgX << 16 == 0)
             {
                 REG_BG1CNT = (REG_BG1CNT & 0xFFFC) + 2;
                 REG_BG2CNT = (REG_BG2CNT & 0xFFFC) + 1;
@@ -1401,9 +1401,9 @@ void PssScrollLeft(u8 taskId)
         }
         else
         {
-            int var2 = gBattle_BG2_X - 0x20;
-            gBattle_BG2_X = var2;
-            if (var2 << 16 == 0)
+            int nextBgX = gBattle_BG2_X - 0x20;
+            gBattle_BG2_X = nextBgX;
+            if (nextBgX << 16 == 0)
             {
                 REG_BG1CNT = (REG_BG1CNT & 0xFFFC) + 1;
                 REG_BG2CNT = (REG_BG2CNT & 0xFFFC) + 2;
@@ -1584,7 +1584,7 @@ static void HandlePageChangeInput(u8 taskId, s8 direction)
 
 void ChangeSummaryPokemon(u8 taskId, s8 direction)
 {
-    s8 var3;
+    s8 newMonIndex;
 
     if (pssData.isBoxMon == TRUE)
     {
@@ -1603,21 +1603,21 @@ void ChangeSummaryPokemon(u8 taskId, s8 direction)
                 direction = 3;
         }
 
-        var3 = AdvanceStorageMonIndex(pssData.monList.boxMons, pssData.curMonIndex, pssData.maxMonIndex, direction);
+        newMonIndex = AdvanceStorageMonIndex(pssData.monList.boxMons, pssData.curMonIndex, pssData.maxMonIndex, direction);
     }
     else
     {
         if (MenuHelpers_IsLinkActive() == TRUE && IsLinkDoubleBattle() == TRUE)
         {
-            var3 = AdvanceMultiBattleMonIndex(direction);
+            newMonIndex = AdvanceMultiBattleMonIndex(direction);
         }
         else
         {
-            var3 = AdvanceMonIndex(direction);
+            newMonIndex = AdvanceMonIndex(direction);
         }
     }
 
-    if (var3 != -1)
+    if (newMonIndex != -1)
     {
         PlaySE(SE_SELECT);
         if (GetMonStatusAndPokerus(&pssData.currentMon))
@@ -1625,34 +1625,34 @@ void ChangeSummaryPokemon(u8 taskId, s8 direction)
             PositionStatusSlidingWindow(-2);
         }
 
-        pssData.curMonIndex = var3;
+        pssData.curMonIndex = newMonIndex;
         pssData.savedTaskFunc = gTasks[taskId].func;
         gTasks[taskId].func = Task_ChangeSummaryMon;
     }
 }
 
-s8 AdvanceMonIndex(s8 a)
+s8 AdvanceMonIndex(s8 delta)
 {
     struct Pokemon *mons = pssData.monList.partyMons;
-    s8 r6 = 0;
+    s8 indexDelta = 0;
     
     if (pssData.currPageIndex == PSS_PAGE_INFO)
     {
-        if (a == -1 && pssData.curMonIndex == 0)
+        if (delta == -1 && pssData.curMonIndex == 0)
             return -1;
-        if (a == 1 && pssData.curMonIndex >= pssData.maxMonIndex)
+        if (delta == 1 && pssData.curMonIndex >= pssData.maxMonIndex)
             return -1;
-        return pssData.curMonIndex + a;
+        return pssData.curMonIndex + delta;
     }
 
     // unlike Emerald, the do while needs to be inversed in order to match
     while (1)
     {
-        r6 += a;
-        if (pssData.curMonIndex + r6 < 0 || pssData.curMonIndex + r6 > pssData.maxMonIndex)
+        indexDelta += delta;
+        if (pssData.curMonIndex + indexDelta < 0 || pssData.curMonIndex + indexDelta > pssData.maxMonIndex)
             return -1;
-        if (GetMonData(&mons[pssData.curMonIndex + r6], MON_DATA_IS_EGG) == 0)
-            return pssData.curMonIndex + r6;
+        if (GetMonData(&mons[pssData.curMonIndex + indexDelta], MON_DATA_IS_EGG) == 0)
+            return pssData.curMonIndex + indexDelta;
     }
 }
 
@@ -2240,9 +2240,9 @@ static void ClearSkillsPageText(void)
     Menu_EraseWindowRect(23, 16, 28, 17);
 }
 
-static void PrintMoveDetailLabels(u8 a)
+static void PrintMoveDetailLabels(u8 moveIndex)
 {
-    if (pssData.newMove != 0 || a != 4)
+    if (pssData.newMove != 0 || moveIndex != 4)
     {
         if (pssData.currPageIndex == PSS_PAGE_BATTLE_MOVES)
         {
@@ -3026,7 +3026,7 @@ void Task_SlideStatusWindow(u8 taskId)
     }
 }
 
-static void PositionStatusSlidingWindow(s8 a)
+static void PositionStatusSlidingWindow(s8 slideSpeed)
 {
     u8 newTaskId;
 
@@ -3034,9 +3034,9 @@ static void PositionStatusSlidingWindow(s8 a)
     DestroySpriteInArray(29);
 
     newTaskId = CreateTask(Task_SlideStatusWindow, 0);
-    gTasks[newTaskId].data[0] = a;
+    gTasks[newTaskId].data[0] = slideSpeed;
 
-    if (a < 0)
+    if (slideSpeed < 0)
         gTasks[newTaskId].data[1] = 10;
     else
         gTasks[newTaskId].data[1] = 0;
@@ -3286,7 +3286,7 @@ _080A1484: .4byte gOtherText_Status\n\
 
 // Related to re-drawing the summary area underneath the pokemon's picture
 // in all of the summary screen tabs.
-static void PositionPowerAccSlidingWindow(s8 a, u8 b)
+static void PositionPowerAccSlidingWindow(s8 slideSpeed, u8 moveIndex)
 {
     u8 taskId;
 
@@ -3297,15 +3297,15 @@ static void PositionPowerAccSlidingWindow(s8 a, u8 b)
     if (taskId == 0xFF)
         taskId = CreateTask(Task_SlidePowerAccWindow, 0);
 
-    gTasks[taskId].data[0] = a;
+    gTasks[taskId].data[0] = slideSpeed;
 
-    if (a < 0)
+    if (slideSpeed < 0)
         gTasks[taskId].data[1] = 10;
     else
         gTasks[taskId].data[1] = 0;
 
     gTasks[taskId].data[2] = 0;
-    gTasks[taskId].data[3] = b;
+    gTasks[taskId].data[3] = moveIndex;
 }
 
 NAKED
@@ -3480,7 +3480,7 @@ _080A1650: .4byte gOtherText_Status\n\
     .syntax divided\n");
 }
 
-static void PositionAppealJamSlidingWindow(s8 a, u8 b)
+static void PositionAppealJamSlidingWindow(s8 slideSpeed, u8 moveIndex)
 {
     u8 taskId;
 
@@ -3491,25 +3491,25 @@ static void PositionAppealJamSlidingWindow(s8 a, u8 b)
     if (taskId == 0xFF)
         taskId = CreateTask(Task_SlideAppealJamWindow, 0);
 
-    gTasks[taskId].data[0] = a;
+    gTasks[taskId].data[0] = slideSpeed;
 
-    if (a < 0)
+    if (slideSpeed < 0)
         gTasks[taskId].data[1] = 10;
     else
         gTasks[taskId].data[1] = 0;
 
     gTasks[taskId].data[2] = 0;
-    gTasks[taskId].data[3] = b;
+    gTasks[taskId].data[3] = moveIndex;
 }
 
 // not enough registers allocated (need to allocate r8 and r9)
 #ifdef NONMATCHING
-static void TilemapFiveMovesDisplay(u8 a)
+static void TilemapFiveMovesDisplay(u8 remove)
 {
     u8 i;
     u16 *vramAddr = (u16 *)(VRAM + 0x6AD4);
 
-    if (a == 0)
+    if (remove == 0)
     {
         for (i = 0; i < 20; i++)
         {
@@ -3531,7 +3531,7 @@ static void TilemapFiveMovesDisplay(u8 a)
 
     vramAddr = (u16 *)(VRAM + 0x5AD4);
 
-    if (a == 0)
+    if (remove == 0)
     {
         for (i = 0; i < 20; i++)
         {
@@ -3552,7 +3552,7 @@ static void TilemapFiveMovesDisplay(u8 a)
 }
 #else
 NAKED
-static void TilemapFiveMovesDisplay(u8 a)
+static void TilemapFiveMovesDisplay(u8 remove)
 {
     asm(".syntax unified\n\
     push {r4-r7,lr}\n\
@@ -3761,18 +3761,18 @@ static void ResetSpriteIds(void)
         sSummaryScreenSpriteIds[i] = 0xFF;
 }
 
-static void DestroySpriteInArray(u8 a)
+static void DestroySpriteInArray(u8 spriteArrayId)
 {
-    if (sSummaryScreenSpriteIds[a] != 0xFF)
+    if (sSummaryScreenSpriteIds[spriteArrayId] != 0xFF)
     {
-        DestroySprite(&gSprites[sSummaryScreenSpriteIds[a]]);
-        sSummaryScreenSpriteIds[a] = 0xFF;
+        DestroySprite(&gSprites[sSummaryScreenSpriteIds[spriteArrayId]]);
+        sSummaryScreenSpriteIds[spriteArrayId] = 0xFF;
     }
 }
 
-static void SetSpriteInvisibility(u8 a, u8 invisible)
+static void SetSpriteInvisibility(u8 spriteArrayId, u8 invisible)
 {
-    gSprites[sSummaryScreenSpriteIds[a]].invisible = invisible;
+    gSprites[sSummaryScreenSpriteIds[spriteArrayId]].invisible = invisible;
 }
 
 static void CreateMoveTypeIcons(void)
@@ -3788,18 +3788,18 @@ static void CreateMoveTypeIcons(void)
     }
 }
 
-static void SetTypeSpritePosAndPal(u8 animNum, u8 x, u8 y, u8 d)
+static void SetTypeSpritePosAndPal(u8 typeId, u8 x, u8 y, u8 spriteArrayId)
 {
-    StartSpriteAnim(&gSprites[sSummaryScreenSpriteIds[d]], animNum);
+    StartSpriteAnim(&gSprites[sSummaryScreenSpriteIds[spriteArrayId]], typeId);
 
-    gSprites[sSummaryScreenSpriteIds[d]].oam.paletteNum = sMoveTypeToOamPaletteNum[animNum];
-    gSprites[sSummaryScreenSpriteIds[d]].x = x + 16;
-    gSprites[sSummaryScreenSpriteIds[d]].y = y + 8;
+    gSprites[sSummaryScreenSpriteIds[spriteArrayId]].oam.paletteNum = sMoveTypeToOamPaletteNum[typeId];
+    gSprites[sSummaryScreenSpriteIds[spriteArrayId]].x = x + 16;
+    gSprites[sSummaryScreenSpriteIds[spriteArrayId]].y = y + 8;
 
-    SetSpriteInvisibility(d, 0);
+    SetSpriteInvisibility(spriteArrayId, 0);
 }
 
-static void CreateMoveSelectorSprites(u8 a)
+static void CreateMoveSelectorSprites(u8 idArrayStart)
 {
     u8 i;
     s16 x;
@@ -3807,47 +3807,47 @@ static void CreateMoveSelectorSprites(u8 a)
 
     if (pssData.currPageIndex >= PSS_PAGE_BATTLE_MOVES)
     {
-        if (a == 9)
+        if (idArrayStart == 9)
             subPriority = 1;
 
         for (i = 0; i < 10; i++)
         {
             x = (i * 16) + 0x58;
-            sSummaryScreenSpriteIds[a + i] = CreateSprite(&sMoveSelectorSpriteTemplate, x, 40, subPriority);
+            sSummaryScreenSpriteIds[idArrayStart + i] = CreateSprite(&sMoveSelectorSpriteTemplate, x, 40, subPriority);
 
             if (i == 0)
-                StartSpriteAnim(&gSprites[sSummaryScreenSpriteIds[a]], 4);
+                StartSpriteAnim(&gSprites[sSummaryScreenSpriteIds[idArrayStart]], 4);
             else if (i == 9)
-                StartSpriteAnim(&gSprites[sSummaryScreenSpriteIds[a + i]], 5);
+                StartSpriteAnim(&gSprites[sSummaryScreenSpriteIds[idArrayStart + i]], 5);
             else
-                StartSpriteAnim(&gSprites[sSummaryScreenSpriteIds[a + i]], 6);
+                StartSpriteAnim(&gSprites[sSummaryScreenSpriteIds[idArrayStart + i]], 6);
 
-            gSprites[sSummaryScreenSpriteIds[a + i]].callback = SpriteCB_MoveSelector;
-            gSprites[sSummaryScreenSpriteIds[a + i]].data[0] = a;
-            gSprites[sSummaryScreenSpriteIds[a + i]].data[1] = 0;
+            gSprites[sSummaryScreenSpriteIds[idArrayStart + i]].callback = SpriteCB_MoveSelector;
+            gSprites[sSummaryScreenSpriteIds[idArrayStart + i]].data[0] = idArrayStart;
+            gSprites[sSummaryScreenSpriteIds[idArrayStart + i]].data[1] = 0;
         }
     }
 }
 
-static void DestroyMoveSelectorSprites(u8 a)
+static void DestroyMoveSelectorSprites(u8 firstArrayId)
 {
     u8 i;
 
     for (i = 0; i < 10; i++)
-        DestroySpriteInArray(a + i);
+        DestroySpriteInArray(firstArrayId + i);
 }
 
-static void SetMainMoveSelectorColor(u8 a)
+static void SetMainMoveSelectorColor(u8 which)
 {
     u8 i;
-    a *= 3;
+    which *= 3;
 
-    StartSpriteAnim(&gSprites[sSummaryScreenSpriteIds[9]], a + 4);
+    StartSpriteAnim(&gSprites[sSummaryScreenSpriteIds[9]], which + 4);
 
     for (i = 0; i < 8; i++)
-        StartSpriteAnim(&gSprites[sSummaryScreenSpriteIds[10 + i]], a + 6);
+        StartSpriteAnim(&gSprites[sSummaryScreenSpriteIds[10 + i]], which + 6);
 
-    StartSpriteAnim(&gSprites[sSummaryScreenSpriteIds[18]], a + 5);
+    StartSpriteAnim(&gSprites[sSummaryScreenSpriteIds[18]], which + 5);
 }
 
 static void SpriteCB_MoveSelector(struct Sprite *sprite)
@@ -3873,12 +3873,12 @@ static void SpriteCB_MoveSelector(struct Sprite *sprite)
         sprite->y2 = pssData.secondMoveIndex * 16;
 }
 
-static void KeepMoveSelectorVisible(u8 a)
+static void KeepMoveSelectorVisible(u8 firstSpriteId)
 {
     u8 r3;
 
-    a *= 10;
-    for (r3 = a; r3 < a + 10; r3++)
+    firstSpriteId *= 10;
+    for (r3 = firstSpriteId; r3 < firstSpriteId + 10; r3++)
     {
         gSprites[sMoveSelectorSpriteIds[r3]].data[1] = 0;
         gSprites[sMoveSelectorSpriteIds[r3]].invisible = FALSE;
@@ -4022,10 +4022,10 @@ static u8 *SummaryScreen_CopyColoredString(u8 *dest, const u8 *src, u8 id)
     return dest;
 }
 
-static void SummaryScreen_PrintColoredTextPixelCoords(const u8 *text, u8 id, u8 left, u16 top, s32 e)
+static void SummaryScreen_PrintColoredTextPixelCoords(const u8 *text, u8 colorId, u8 left, u16 top, s32 clipLeft)
 {
-    SummaryScreen_CopyColoredString(gStringVar4, text, id);
-    Menu_PrintTextPixelCoords(gStringVar4, left, top, (bool8)e);
+    SummaryScreen_CopyColoredString(gStringVar4, text, colorId);
+    Menu_PrintTextPixelCoords(gStringVar4, left, top, (bool8)clipLeft);
 }
 
 static void SummaryScreen_PrintColoredTextCentered(const u8 *text, u8 id, u8 left, u8 top, u16 width)
@@ -4034,10 +4034,10 @@ static void SummaryScreen_PrintColoredTextCentered(const u8 *text, u8 id, u8 lef
     MenuPrint_Centered(gStringVar4, left, top, width);
 }
 
-static void SummaryScreen_PrintColoredIntPixelCoords(s32 value, u8 id, u8 n, u8 mode, u8 left, u16 top, s32 e)
+static void SummaryScreen_PrintColoredIntPixelCoords(s32 value, u8 colorId, u8 digits, u8 mode, u8 left, u16 top, s32 clipLeft)
 {
-    ConvertIntToDecimalStringN(gStringVar1, value, mode, n);
-    SummaryScreen_PrintColoredTextPixelCoords(gStringVar1, id, left, top, e);
+    ConvertIntToDecimalStringN(gStringVar1, value, mode, digits);
+    SummaryScreen_PrintColoredTextPixelCoords(gStringVar1, colorId, left, top, clipLeft);
 }
 
 static void SummaryScreen_PrintColoredText(const u8 *text, u8 id, u8 left, u8 top)
