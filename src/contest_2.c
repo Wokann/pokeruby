@@ -4059,7 +4059,7 @@ void SetBattleTargetSpritePosition(void)
     sprite->invisible = TRUE;
 }
 
-void SelectContestMoveBankTarget(u16 move)
+void SetContestMoveTargetBattler(u16 move)
 {
     switch (gBattleMoves[move].target)
     {

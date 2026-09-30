@@ -729,7 +729,7 @@ void Task_DebugPlayMoveAnimation(u8 taskId)
 	    sContestantStatus[gContestPlayerMonIndex].currMove = gTasks[taskId].data[1];
 	    SetMoveSpecificAnimData(gContestPlayerMonIndex);
 	    SetMoveAnimAttackerData(gContestPlayerMonIndex);
-	    SelectContestMoveBankTarget(gTasks[taskId].data[1]);
+	    SetContestMoveTargetBattler(gTasks[taskId].data[1]);
 	    DoMoveAnim(gTasks[taskId].data[1]);
 	    gTasks[taskId].data[3] = 0;
 	    gTasks[taskId].data[0]++;
@@ -974,7 +974,7 @@ void Task_DoAppeals(u8 taskId)
 
             SetMoveSpecificAnimData(sContest.currentContestant);
             SetMoveAnimAttackerData(sContest.currentContestant);
-            SelectContestMoveBankTarget(move);
+            SetContestMoveTargetBattler(move);
             DoMoveAnim(move);
             gTasks[taskId].data[0] = 8;
         }

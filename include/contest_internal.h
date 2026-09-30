@@ -150,6 +150,6 @@ void ClearMoveAnimData(u8 contestant);
 void SetMoveAnimAttackerData(u8 contestant);
 void CreateInvisibleBattleTargetSprite(void);
 void SetBattleTargetSpritePosition(void);
-void SelectContestMoveBankTarget(u16);
+void SetContestMoveTargetBattler(u16);
 
 #endif //GUARD_CONTEST_INTERNAL_H
