@@ -131,8 +131,8 @@ extern u8 BattleScript_MoveEffectRecoil[];
 
 //extern functions
 u8 AtkCanceller_UnableToUseMove(void);
-void PressurePPLose(u8 bank_atk, u8 bank_def, u16 move);
-void CancelMultiTurnMoves(u8 bank);
+void PressurePPLose(u8 target, u8 attacker, u16 move);
+void CancelMultiTurnMoves(u8 battler);
 void BattleScriptPush(const u8* BS_ptr);
 void BattleScriptPushCursor(void);
 void RecordAbilityBattle(u8 battler, u8 abilityId);
@@ -1335,7 +1335,7 @@ static void Cmd_ppreduce(void)
             break;
         case MOVE_TARGET_BOTH:
         case MOVE_TARGET_OPPONENTS_FIELD:
-            ppToDeduct += AbilityBattleEffects(ABILITYEFFECT_COUNT_OTHER_SIZE, gBattlerAttacker, ABILITY_PRESSURE, 0, 0);
+            ppToDeduct += AbilityBattleEffects(ABILITYEFFECT_COUNT_OTHER_SIDE, gBattlerAttacker, ABILITY_PRESSURE, 0, 0);
             break;
         default:
             if (gBattlerAttacker != gBattlerTarget && gBattleMons[gBattlerTarget].ability == ABILITY_PRESSURE)
@@ -3187,7 +3187,7 @@ static void Cmd_jumpifability(void)
     void* jumpPtr = T2_READ_PTR(gBattlescriptCurrInstr + 3);
     if (T2_READ_8(gBattlescriptCurrInstr + 1) == 8)
     {
-        battlerId = AbilityBattleEffects(ABILITYEFFECT_CHECK_BANK_SIDE, gBattlerAttacker, ability, 0, 0);
+        battlerId = AbilityBattleEffects(ABILITYEFFECT_CHECK_BATTLER_SIDE, gBattlerAttacker, ability, 0, 0);
         if (battlerId)
         {
             gLastUsedAbility = ability;
@@ -8983,7 +8983,7 @@ static void Cmd_tryimprison(void)
     else
     {
         u8 bank;
-        PressurePPLoseOnUsingImprision(gBattlerAttacker);
+        PressurePPLoseOnUsingImprison(gBattlerAttacker);
         for (bank = 0; bank < gBattlersCount; bank++)
         {
             if (r8 != GetBattlerSide(bank))

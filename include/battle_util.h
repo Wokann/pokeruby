@@ -54,15 +54,15 @@
 
 void TryClearRageStatuses(void);
 void BattleScriptPush(const u8* BS_ptr);
-void PressurePPLoseOnUsingImprision(u8 bankAtk);
-void PressurePPLoseOnUsingPerishSong(u8 bankAtk);
+void PressurePPLoseOnUsingImprison(u8 attacker);
+void PressurePPLoseOnUsingPerishSong(u8 attacker);
 void MarkBattlerReceivedLinkData(u8);
-void CancelMultiTurnMoves(u8 bank);
-bool8 WasUnableToUseMove(u8 bank);
-void PrepareStringBattle(u16 stringId, u8 bank);
+void CancelMultiTurnMoves(u8 battler);
+bool8 WasUnableToUseMove(u8 battler);
+void PrepareStringBattle(u16 stringId, u8 battler);
 void ResetSentPokesToOpponentValue(void);
-void OpponentSwitchInResetSentPokesToOpponentValue(u8 bank);
-void UpdateSentPokesToOpponentValue(u8 bank);
+void OpponentSwitchInResetSentPokesToOpponentValue(u8 battler);
+void UpdateSentPokesToOpponentValue(u8 battler);
 bool8 HandleWishPerishSongOnTurnEnd(void);
 void BattleScriptExecute(const u8* BS_ptr);
 void BattleScriptPushCursorAndCallback(u8* BS_ptr);
