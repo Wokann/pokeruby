@@ -1631,7 +1631,7 @@ void GetSecretBaseNearbyMapName(void)
 
 u16 GetBattleTowerSinglesStreak(void)
 {
-    return GetGameStat(GAME_STAT_BATTLE_TOWER_BEST_STREAK);
+    return GetGameStat(GAME_STAT_BATTLE_TOWER_SINGLES_STREAK);
 }
 
 void BufferEReaderTrainerName(void)

@@ -1169,7 +1169,7 @@ void SetBattleTowerProperty(void)
     case 9:
         break;
     case 10:
-        SetGameStat(GAME_STAT_BATTLE_TOWER_BEST_STREAK, gSaveBlock2.battleTower.bestBattleTowerWinStreak);
+        SetGameStat(GAME_STAT_BATTLE_TOWER_SINGLES_STREAK, gSaveBlock2.battleTower.bestBattleTowerWinStreak);
         break;
     case 11:
         if (gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] != 3)
@@ -1219,7 +1219,7 @@ void CallBattleTowerFunc(void)
         gSpecialVar_Result = GetCurrentBattleTowerWinStreak(battleTowerLevelType);
         break;
     case 10:
-        SetGameStat(GAME_STAT_BATTLE_TOWER_BEST_STREAK, gSaveBlock2.battleTower.bestBattleTowerWinStreak);
+        SetGameStat(GAME_STAT_BATTLE_TOWER_SINGLES_STREAK, gSaveBlock2.battleTower.bestBattleTowerWinStreak);
         break;
     case 11:
         ResetBattleTowerStreak(battleTowerLevelType);
@@ -1257,7 +1257,7 @@ static void SaveCurrentWinStreak(void)
     if (gSaveBlock2.battleTower.recordWinStreaks[0] > gSaveBlock2.battleTower.recordWinStreaks[1])
     {
         streak = gSaveBlock2.battleTower.recordWinStreaks[0];
-        SetGameStat(GAME_STAT_BATTLE_TOWER_BEST_STREAK, streak);
+        SetGameStat(GAME_STAT_BATTLE_TOWER_SINGLES_STREAK, streak);
 
         if (streak > 9999)
             gSaveBlock2.battleTower.bestBattleTowerWinStreak = 9999;
@@ -1267,7 +1267,7 @@ static void SaveCurrentWinStreak(void)
     else
     {
         streak = gSaveBlock2.battleTower.recordWinStreaks[1];
-        SetGameStat(GAME_STAT_BATTLE_TOWER_BEST_STREAK, streak);
+        SetGameStat(GAME_STAT_BATTLE_TOWER_SINGLES_STREAK, streak);
 
         if (streak > 9999)
             gSaveBlock2.battleTower.bestBattleTowerWinStreak = 9999;
