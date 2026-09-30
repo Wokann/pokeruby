@@ -4036,7 +4036,7 @@ void TryDoEventsBeforeFirstTurn(void)
         gBattleStruct->turnEffectsBattlerId = 0;
         gBattleStruct->wishPerishSongState = 0;
         gBattleStruct->wishPerishSongBattlerId = 0;
-        gBattleStruct->cmd49StateTracker = 0;
+        gBattleStruct->moveendState = 0;
         gBattleStruct->faintedActionsState = 0;
         gBattleStruct->turnCountersTracker = 0;
         gMoveResultFlags = 0;
@@ -4092,7 +4092,7 @@ void BattleTurnPassed(void)
     gHitMarker &= ~0x100000;
     gBattleStruct->animTurn = 0;
     gBattleStruct->animTargetsHit = 0;
-    gBattleStruct->cmd49StateTracker = 0;
+    gBattleStruct->moveendState = 0;
     gBattleMoveDamage = 0;
     gMoveResultFlags = 0;
     for (i = 0; i < 5; i++)
@@ -4140,7 +4140,7 @@ u8 IsRunningFromBattleImpossible(void)
         if (side != GetBattlerSide(i)
          && gBattleMons[i].ability == ABILITY_SHADOW_TAG)
         {
-            gBattleStruct->scriptingActive = i;
+            gBattleStruct->battler = i;
             gLastUsedAbility = gBattleMons[i].ability;
             gBattleCommunication[5] = 2;
             return 2;
@@ -4151,7 +4151,7 @@ u8 IsRunningFromBattleImpossible(void)
          && gBattleMons[gActiveBattler].type2 != 2
          && gBattleMons[i].ability == ABILITY_ARENA_TRAP)
         {
-            gBattleStruct->scriptingActive = i;
+            gBattleStruct->battler = i;
             gLastUsedAbility = gBattleMons[i].ability;
             gBattleCommunication[5] = 2;
             return 2;
@@ -4160,7 +4160,7 @@ u8 IsRunningFromBattleImpossible(void)
     i = AbilityBattleEffects(15, gActiveBattler, ABILITY_MAGNET_PULL, 0, 0);
     if (i != 0 && (gBattleMons[gActiveBattler].type1 == 8 || gBattleMons[gActiveBattler].type2 == 8))
     {
-        gBattleStruct->scriptingActive = i - 1;
+        gBattleStruct->battler = i - 1;
         gLastUsedAbility = gBattleMons[i - 1].ability;
         gBattleCommunication[5] = 2;
         return 2;
@@ -5362,7 +5362,7 @@ void HandleAction_Switch(void)
 
     PREPARE_MON_NICK_BUFFER(gBattleTextBuff1, gBattlerAttacker, gSharedMem[BSTRUCT_OFF(battlerPartyIndexes) + gBattlerAttacker])
 
-    gBattleStruct->scriptingActive = gBattlerAttacker;
+    gBattleStruct->battler = gBattlerAttacker;
     gBattlescriptCurrInstr = BattleScript_ActionSwitch;
     gCurrentActionFuncId = B_ACTION_EXEC_SCRIPT;
 
@@ -5393,7 +5393,7 @@ void HandleAction_UseItem(void)
     else
     {
 
-        switch (gSharedMem[BSTRUCT_OFF(AI_usedItemType) + ((gBattleStruct->scriptingActive = gBattlerAttacker) / 2)])
+        switch (gSharedMem[BSTRUCT_OFF(AI_usedItemType) + ((gBattleStruct->battler = gBattlerAttacker) / 2)])
         {
         case AI_ITEM_FULL_RESTORE:
         case AI_ITEM_HEAL_HP:
@@ -5682,7 +5682,7 @@ void HandleAction_ActionFinished(void)
     gLastHitByType[gBattlerAttacker] = 0;
     gBattleStruct->dynamicMoveType = 0;
     gDynamicBasePower = 0;
-    gBattleStruct->cmd49StateTracker = 0;
+    gBattleStruct->moveendState = 0;
     gBattleCommunication[3] = 0;
     gBattleCommunication[4] = 0;
     gBattleStruct->multihitMoveEffect = 0;

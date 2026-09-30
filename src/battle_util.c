@@ -221,7 +221,7 @@ u8 GetBattlerForBattleScript(u8 caseId)
         ret = 0;
         break;
     case BS_GET_SCRIPTING_BANK:
-        ret = gBattleStruct->scriptingActive;
+        ret = gBattleStruct->battler;
         break;
     case BS_GET_gBank1:
         ret = gBank1;
@@ -472,7 +472,7 @@ u8 TrySetCantSelectMoveBattleScript(void) //msg can't select a move
 
     if (gDisableStructs[gActiveBattler].disabledMove == move && move)
     {
-        gBattleStruct->scriptingActive = gActiveBattler;
+        gBattleStruct->battler = gActiveBattler;
         gCurrentMove = move;
         gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingDisabledMove;
         limitations++;
@@ -1483,7 +1483,7 @@ u8 AtkCanceller_UnableToUseMove(void)
             if (gDisableStructs[gBattlerAttacker].disabledMove == gCurrentMove && gDisableStructs[gBattlerAttacker].disabledMove != 0)
             {
                 gProtectStructs[gBattlerAttacker].usedDisabledMove = 1;
-                gBattleStruct->scriptingActive = gBattlerAttacker;
+                gBattleStruct->battler = gBattlerAttacker;
                 CancelMultiTurnMoves(gBattlerAttacker);
                 gBattlescriptCurrInstr = BattleScript_MoveUsedIsDisabled;
                 gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
@@ -1557,7 +1557,7 @@ u8 AtkCanceller_UnableToUseMove(void)
         case 11: // infatuation
             if (gBattleMons[gBattlerAttacker].status2 & STATUS2_INFATUATION)
             {
-                gBattleStruct->scriptingActive = CountTrailingZeroBits((gBattleMons[gBattlerAttacker].status2 & STATUS2_INFATUATION) >> 0x10);
+                gBattleStruct->battler = CountTrailingZeroBits((gBattleMons[gBattlerAttacker].status2 & STATUS2_INFATUATION) >> 0x10);
                 if (Random() & 1)
                     BattleScriptPushCursor();
                 else
@@ -1795,7 +1795,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                     {
                         gBattleWeather = (B_WEATHER_RAIN_TEMPORARY | B_WEATHER_RAIN_PERMANENT);
                         gBattleStruct->animArg1 = B_ANIM_RAIN_CONTINUES;
-                        gBattleStruct->scriptingActive = bank;
+                        gBattleStruct->battler = bank;
                         effect++;
                     }
                     break;
@@ -1804,7 +1804,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                     {
                         gBattleWeather = (B_WEATHER_SANDSTORM_PERMANENT | B_WEATHER_SANDSTORM_TEMPORARY);
                         gBattleStruct->animArg1 = B_ANIM_SANDSTORM_CONTINUES;
-                        gBattleStruct->scriptingActive = bank;
+                        gBattleStruct->battler = bank;
                         effect++;
                     }
                     break;
@@ -1813,7 +1813,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                     {
                         gBattleWeather = (B_WEATHER_SUN_PERMANENT | B_WEATHER_SUN_TEMPORARY);
                         gBattleStruct->animArg1 = B_ANIM_SUN_CONTINUES;
-                        gBattleStruct->scriptingActive = bank;
+                        gBattleStruct->battler = bank;
                         effect++;
                     }
                     break;
@@ -1829,7 +1829,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                 {
                     gBattleWeather = (B_WEATHER_RAIN_PERMANENT | B_WEATHER_RAIN_TEMPORARY);
                     BattleScriptPushCursorAndCallback(BattleScript_DrizzleActivates);
-                    gBattleStruct->scriptingActive = bank;
+                    gBattleStruct->battler = bank;
                     effect++;
                 }
                 break;
@@ -1838,7 +1838,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                 {
                     gBattleWeather = (B_WEATHER_SANDSTORM_PERMANENT | B_WEATHER_SANDSTORM_TEMPORARY);
                     BattleScriptPushCursorAndCallback(BattleScript_SandstreamActivates);
-                    gBattleStruct->scriptingActive = bank;
+                    gBattleStruct->battler = bank;
                     effect++;
                 }
                 break;
@@ -1847,7 +1847,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                 {
                     gBattleWeather = (B_WEATHER_SUN_PERMANENT | B_WEATHER_SUN_TEMPORARY);
                     BattleScriptPushCursorAndCallback(BattleScript_DroughtActivates);
-                    gBattleStruct->scriptingActive = bank;
+                    gBattleStruct->battler = bank;
                     effect++;
                 }
                 break;
@@ -1863,7 +1863,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                 if (effect != 0)
                 {
                     BattleScriptPushCursorAndCallback(BattleScript_CastformChange);
-                    gBattleStruct->scriptingActive = bank;
+                    gBattleStruct->battler = bank;
                     gBattleStruct->formToChangeInto = effect - 1;
                 }
                 break;
@@ -1884,7 +1884,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                         if (effect != 0)
                         {
                             BattleScriptPushCursorAndCallback(BattleScript_CastformChange);
-                            gBattleStruct->scriptingActive = target1;
+                            gBattleStruct->battler = target1;
                             gBattleStruct->formToChangeInto = effect - 1;
                             break;
                         }
@@ -1928,7 +1928,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                         gBattleMons[bank].status1 = 0;
                         // BUG: The nightmare status does not get cleared here. This was fixed in Emerald.
                         //gBattleMons[bank].status2 &= ~(STATUS2_NIGHTMARE);
-                        gBattleStruct->scriptingActive = gActiveBattler = bank;
+                        gBattleStruct->battler = gActiveBattler = bank;
                         BattleScriptPushCursorAndCallback(BattleScript_ShedSkinActivates);
                         BtlController_EmitSetMonData(0, REQUEST_STATUS_BATTLE, 0, 4, &gBattleMons[bank].status1);
                         MarkBattlerForControllerExec(gActiveBattler);
@@ -1942,7 +1942,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                         gBattleStruct->animArg1 = 0x11;
                         gBattleStruct->animArg2 = 0;
                         BattleScriptPushCursorAndCallback(BattleScript_SpeedBoostActivates);
-                        gBattleStruct->scriptingActive = bank;
+                        gBattleStruct->battler = bank;
                         effect++;
                     }
                     break;
@@ -2339,7 +2339,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                         }
                         BattleScriptPushCursor();
                         gBattlescriptCurrInstr = BattleScript_AbilityCuredStatus;
-                        gBattleStruct->scriptingActive = bank;
+                        gBattleStruct->battler = bank;
                         gActiveBattler = bank;
                         BtlController_EmitSetMonData(0, REQUEST_STATUS_BATTLE, 0, 4, &gBattleMons[gActiveBattler].status1);
                         MarkBattlerForControllerExec(gActiveBattler);
@@ -2358,7 +2358,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                         if (effect)
                         {
                             BattleScriptPushCursorAndCallback(BattleScript_CastformChange);
-                            gBattleStruct->scriptingActive = bank;
+                            gBattleStruct->battler = bank;
                             gBattleStruct->formToChangeInto = effect - 1;
                             return effect;
                         }
@@ -2374,7 +2374,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                 if (gBattleStruct->synchronizeMoveEffect == 6)
                     gBattleStruct->synchronizeMoveEffect = 2;
                 gBattleCommunication[MOVE_EFFECT_BYTE] = gBattleStruct->synchronizeMoveEffect + 0x40;
-                gBattleStruct->scriptingActive = gBattlerTarget;
+                gBattleStruct->battler = gBattlerTarget;
                 BattleScriptPushCursor();
                 gBattlescriptCurrInstr = BattleScript_SynchronizeActivates;
                 gHitMarker |= HITMARKER_STATUS_ABILITY_EFFECT;
@@ -2389,7 +2389,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                 if (gBattleStruct->synchronizeMoveEffect == 6)
                     gBattleStruct->synchronizeMoveEffect = 2;
                 gBattleCommunication[MOVE_EFFECT_BYTE] = gBattleStruct->synchronizeMoveEffect;
-                gBattleStruct->scriptingActive = gBattlerAttacker;
+                gBattleStruct->battler = gBattlerAttacker;
                 BattleScriptPushCursor();
                 gBattlescriptCurrInstr = BattleScript_SynchronizeActivates;
                 gHitMarker |= HITMARKER_STATUS_ABILITY_EFFECT;
@@ -2458,7 +2458,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                     {
                         BattleScriptPushCursorAndCallback(BattleScript_TraceActivates);
                         gStatuses3[i] &= ~(STATUS3_TRACE);
-                        gBattleStruct->scriptingActive = i;
+                        gBattleStruct->battler = i;
 
                         gBattleTextBuff1[0] = 0xFD;
                         gBattleTextBuff1[1] = 4;
@@ -2701,7 +2701,7 @@ u8 ItemBattleEffects(u8 caseID, u8 bank, bool8 moveTurn)
             }
             if (effect)
             {
-                gBattleStruct->scriptingActive = bank;
+                gBattleStruct->battler = bank;
                 gPotentialItemEffectBattler = bank;
                 gActiveBattler = gBattlerAttacker = bank;
                 BattleScriptExecute(BattleScript_WhiteHerbEnd2);
@@ -2774,7 +2774,7 @@ u8 ItemBattleEffects(u8 caseID, u8 bank, bool8 moveTurn)
                 }
                 if (effect)
                 {
-                    gBattleStruct->scriptingActive = bank;
+                    gBattleStruct->battler = bank;
                     gPotentialItemEffectBattler = bank;
                     gActiveBattler = gBattlerAttacker = bank;
                     BattleScriptExecute(BattleScript_WhiteHerbEnd2);
@@ -3135,7 +3135,7 @@ u8 ItemBattleEffects(u8 caseID, u8 bank, bool8 moveTurn)
             }
             if (effect)
             {
-                gBattleStruct->scriptingActive = bank;
+                gBattleStruct->battler = bank;
                 gPotentialItemEffectBattler = bank;
                 gActiveBattler = gBattlerAttacker = bank;
                 switch (effect)
@@ -3283,7 +3283,7 @@ u8 ItemBattleEffects(u8 caseID, u8 bank, bool8 moveTurn)
                 }
                 if (effect)
                 {
-                    gBattleStruct->scriptingActive = bank;
+                    gBattleStruct->battler = bank;
                     gPotentialItemEffectBattler = bank;
                     BattleScriptPushCursor();
                     gBattlescriptCurrInstr = BattleScript_WhiteHerbRet;
@@ -3293,7 +3293,7 @@ u8 ItemBattleEffects(u8 caseID, u8 bank, bool8 moveTurn)
             }
             if (effect)
             {
-                gBattleStruct->scriptingActive = bank;
+                gBattleStruct->battler = bank;
                 gPotentialItemEffectBattler = bank;
                 gActiveBattler = bank;
                 BtlController_EmitSetMonData(0, REQUEST_STATUS_BATTLE, 0, 4, &gBattleMons[gActiveBattler].status1);
@@ -3330,7 +3330,7 @@ u8 ItemBattleEffects(u8 caseID, u8 bank, bool8 moveTurn)
                 {
                     gLastUsedItem = atkItem;
                     gPotentialItemEffectBattler = gBattlerAttacker;
-                    gBattleStruct->scriptingActive = gBattlerAttacker;
+                    gBattleStruct->battler = gBattlerAttacker;
                     gBattleMoveDamage = (gSpecialStatuses[gBattlerTarget].dmg / atkQuality) * -1;
                     if (gBattleMoveDamage == 0)
                         gBattleMoveDamage = -1;

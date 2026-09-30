@@ -806,7 +806,7 @@ void BtlController_EmitPrintString(u8 bufferId, u16 stringId)
     stringInfo->originallyUsedMove = gChosenMove;
     stringInfo->lastItem = gLastUsedItem;
     stringInfo->lastAbility = gLastUsedAbility;
-    stringInfo->scrActive = gBattleStruct->scriptingActive;
+    stringInfo->scrActive = gBattleStruct->battler;
     stringInfo->bakScriptPartyIdx = gBattleStruct->scriptPartyIdx;
     stringInfo->hpScale = gBattleStruct->hpScale;
     stringInfo->itemEffectBattler = gPotentialItemEffectBattler;
@@ -838,7 +838,7 @@ void BtlController_EmitPrintSelectionString(u8 bufferId, u16 stringId)
     stringInfo->originallyUsedMove = gChosenMove;
     stringInfo->lastItem = gLastUsedItem;
     stringInfo->lastAbility = gLastUsedAbility;
-    stringInfo->scrActive = gBattleStruct->scriptingActive;
+    stringInfo->scrActive = gBattleStruct->battler;
     stringInfo->bakScriptPartyIdx = gBattleStruct->scriptPartyIdx;
 
     for (i = 0; i < MAX_BATTLERS_COUNT; i++)

@@ -202,7 +202,7 @@ void BufferStringBattle(u16 stringID)
     gBattleMsgDataPtr = (struct BattleMsgData *)(&gBattleBufferA[gActiveBattler][4]);
     gLastUsedItem = gBattleMsgDataPtr->lastItem;
     gLastUsedAbility = gBattleMsgDataPtr->lastAbility;
-    gBattleStruct->scriptingActive = gBattleMsgDataPtr->scrActive;
+    gBattleStruct->battler = gBattleMsgDataPtr->scrActive;
     gBattleStruct->scriptPartyIdx = gBattleMsgDataPtr->bakScriptPartyIdx;
     gBattleStruct->hpScale = gBattleMsgDataPtr->hpScale;
     gPotentialItemEffectBattler = gBattleMsgDataPtr->itemEffectBattler;
@@ -320,7 +320,7 @@ void BufferStringBattle(u16 stringID)
         }
         break;
     case 3: // switch-in msg
-        if (GetBattlerSide(gBattleStruct->scriptingActive) == B_SIDE_PLAYER)
+        if (GetBattlerSide(gBattleStruct->battler) == B_SIDE_PLAYER)
         {
             if (gBattleStruct->hpScale == 0 || gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
                 stringPtr = BattleText_SentOutSingle7;
@@ -623,7 +623,7 @@ u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst)
                 HANDLE_NICKNAME_STRING_CASE(gActiveBattler, gBattlerPartyIndexes[gActiveBattler])
                 break;
             case B_TXT_SCR_ACTIVE_NAME_WITH_PREFIX: // scripting active bank name with prefix
-                HANDLE_NICKNAME_STRING_CASE(gBattleStruct->scriptingActive, gBattlerPartyIndexes[gBattleStruct->scriptingActive])
+                HANDLE_NICKNAME_STRING_CASE(gBattleStruct->battler, gBattlerPartyIndexes[gBattleStruct->battler])
                 break;
             case B_TXT_CURRENT_MOVE: // current move name
                 if (gBattleMsgDataPtr->currentMove >= NUM_MOVES)
@@ -677,7 +677,7 @@ u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst)
                 toCpy = gAbilityNames[sBattlerAbilities[gBattlerTarget]];
                 break;
             case B_TXT_SCR_ACTIVE_ABILITY: // scripting active ability
-                toCpy = gAbilityNames[sBattlerAbilities[gBattleStruct->scriptingActive]];
+                toCpy = gAbilityNames[sBattlerAbilities[gBattleStruct->battler]];
                 break;
             case B_TXT_EFF_ABILITY: // effect bank ability
                 toCpy = gAbilityNames[sBattlerAbilities[gEffectBattler]];
@@ -737,7 +737,7 @@ u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst)
                 toCpy = gLinkPlayers[GetBattlerMultiplayerId(3 ^ gLinkPlayers[multiplayerId].id)].name;
                 break;
             case B_TXT_LINK_SCR_TRAINER_NAME: // link scripting active name
-                toCpy = gLinkPlayers[GetBattlerMultiplayerId(gBattleStruct->scriptingActive)].name;
+                toCpy = gLinkPlayers[GetBattlerMultiplayerId(gBattleStruct->battler)].name;
                 break;
             case B_TXT_PLAYER_NAME: // player name
                 toCpy = gSaveBlock2.playerName;
@@ -746,7 +746,7 @@ u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst)
                 toCpy = GetTrainerLoseText();
                 break;
             case B_TXT_22: // ?
-                HANDLE_NICKNAME_STRING_CASE(gBattleStruct->scriptingActive, gBattleStruct->scriptPartyIdx)
+                HANDLE_NICKNAME_STRING_CASE(gBattleStruct->battler, gBattleStruct->scriptPartyIdx)
                 break;
             case B_TXT_PC_CREATOR_NAME: // lanette pc
                 if (FlagGet(FLAG_SYS_PC_LANETTE))
