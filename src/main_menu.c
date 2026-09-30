@@ -224,7 +224,7 @@ u32 InitMainMenu(u8 a1)
     ResetTasks();
     ResetSpriteData();
     FreeAllSpritePalettes();
-    Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
+    Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
     InitMenuWindow((struct WindowTemplate *)&gMenuTextWindowTemplate);
 
     if (a1)
@@ -740,7 +740,7 @@ void PrintBadgeCount(void)
 
 static void Task_NewGameBirchSpeech_Init(u8 taskId)
 {
-    Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
+    Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
     InitMenuWindow((struct WindowTemplate *)&gMenuTextWindowTemplate);
     REG_WIN0H = 0;
     REG_WIN0V = 0;
@@ -1363,7 +1363,7 @@ void CB2_NewGameBirchSpeech_ReturnFromNamingScreen()
     FreeAllSpritePalettes();
     AddBirchSpeechObjects(taskId);
 
-    Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
+    Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
     InitMenuWindow((struct WindowTemplate *)&gMenuTextWindowTemplate);
 
     if (gSaveBlock2.playerGender != MALE)

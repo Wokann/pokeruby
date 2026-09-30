@@ -577,8 +577,8 @@ static void Task_Hof_WaitToDisplayMon(u8 taskId)
 
 static void Task_Hof_SetMonDisplayTask(u8 taskId)
 {
-    Text_LoadWindowTemplate(&gWindowTemplate_81E7198);
-    InitMenuWindow(&gWindowTemplate_81E7198);
+    Text_LoadWindowTemplate(&gHallOfFameAndLinkWindowTemplate);
+    InitMenuWindow(&gHallOfFameAndLinkWindowTemplate);
     gTasks[taskId].func = Task_Hof_DisplayMon;
 }
 
@@ -709,8 +709,8 @@ static void Task_Hof_WaitToDisplayPlayer(u8 taskId)
 static void Task_Hof_DisplayPlayer(u8 taskId)
 {
     REG_DISPCNT = 0x1940;
-    Text_LoadWindowTemplate(&gWindowTemplate_81E71B4);
-    InitMenuWindow(&gWindowTemplate_81E71B4);
+    Text_LoadWindowTemplate(&gHallOfFameAndOptionMenuWindowTemplate);
+    InitMenuWindow(&gHallOfFameAndOptionMenuWindowTemplate);
 
     gTasks[taskId].tPlayerSpriteID = HallOfFame_LoadTrainerPic(gSaveBlock2.playerGender, 120, 72, 6);
     gTasks[taskId].tFrameCount = 120;
@@ -854,8 +854,8 @@ static void Task_HofPC_CopySaveData(u8 taskId)
             *(vram1 + i) = i + 3;
             *(vram2 + i) = i + 20;
         }
-        Text_LoadWindowTemplate(&gWindowTemplate_81E7198);
-        InitMenuWindow(&gWindowTemplate_81E7198);
+        Text_LoadWindowTemplate(&gHallOfFameAndLinkWindowTemplate);
+        InitMenuWindow(&gHallOfFameAndLinkWindowTemplate);
         gTasks[taskId].func = Task_HofPC_DrawSpritesPrintText;
     }
 }
@@ -1239,8 +1239,8 @@ static void LoadHofGfx(void)
     gReservedSpritePaletteCount = 8;
     LoadCompressedSpriteSheet(&sSpriteSheet_Confetti);
     LoadCompressedSpritePalette(&sSpritePalette_Confetti);
-    Text_LoadWindowTemplate(&gWindowTemplate_81E71B4);
-    InitMenuWindow(&gWindowTemplate_81E71B4);
+    Text_LoadWindowTemplate(&gHallOfFameAndOptionMenuWindowTemplate);
+    InitMenuWindow(&gHallOfFameAndOptionMenuWindowTemplate);
 }
 
 static void SetHofBgDisplayRegs(void)

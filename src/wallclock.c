@@ -588,7 +588,7 @@ static void LoadWallClockGraphics(void)
     FreeAllSpritePalettes();
     LoadCompressedSpriteSheet(&sSpriteSheet_ClockHand[0]);
     LoadSpritePalettes(sSpritePalettes_Clock);
-    Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
+    Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
     InitMenuWindow(&gMenuTextWindowTemplate);
 }
 

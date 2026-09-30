@@ -794,8 +794,8 @@ static void InitSlotMachine(void)
 
 static void SlotMachineSetup_InitMenuWindow(void)
 {
-    Text_LoadWindowTemplate(&gWindowTemplate_81E7128);
-    InitMenuWindow(&gWindowTemplate_81E7128);
+    Text_LoadWindowTemplate(&gSlotMachineMainWindowTemplate);
+    InitMenuWindow(&gSlotMachineMainWindowTemplate);
 }
 
 static void SlotMachineSetup_InitPalsSpritesTasks(void)
@@ -3355,7 +3355,7 @@ static void InfoBox_DrawWindowAndText(struct Task *task)
 {
     DestroyDigitalDisplayScene();
     LoadInfoBoxTilemap();
-    BasicInitMenuWindow(&gWindowTemplate_81E7144);
+    BasicInitMenuWindow(&gSlotMachineInfoBoxWindowTemplate);
     Menu_PrintTextPixelCoords(gOtherText_ReelTime, 10, 32, 1);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
     task->tState++;
@@ -3373,7 +3373,7 @@ static void InfoBox_WaitInput(struct Task *task)
 static void InfoBox_RestoreSlotMachineDisplay(struct Task *task)
 {
     Menu_EraseScreen();
-    BasicInitMenuWindow(&gWindowTemplate_81E7128);
+    BasicInitMenuWindow(&gSlotMachineMainWindowTemplate);
     LoadMenuAndReelOverlayTilemaps();
     CreateDigitalDisplayScene(task->tDigDisplayId);
     LoadPikaPowerMeter(sSlotMachine->pikaPowerBolts);

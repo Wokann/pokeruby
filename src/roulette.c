@@ -791,7 +791,7 @@ void CB2_LoadRoulette(void)
         gMain.state++;
         break;
     case 2:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
+        Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
         InitMenuWindow(&gMenuTextWindowTemplate);
         LoadPalette(sWheel_Pal, 0, 0x1c0);
         gMain.state++;

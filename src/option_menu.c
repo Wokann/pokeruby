@@ -100,11 +100,11 @@ void CB2_InitOptionMenu(void)
         gMain.state++;
         break;
     case 2:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E71B4);
+        Text_LoadWindowTemplate(&gHallOfFameAndOptionMenuWindowTemplate);
         gMain.state++;
         break;
     case 3:
-        MultistepInitMenuWindowBegin(&gWindowTemplate_81E71B4);
+        MultistepInitMenuWindowBegin(&gHallOfFameAndOptionMenuWindowTemplate);
         gMain.state++;
         break;
     case 4:

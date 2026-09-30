@@ -133,7 +133,7 @@ static bool8 SetupClearSaveDataScreen(void)
         ResetTasks();
         ResetSpriteData();
 
-        Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
+        Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
         InitMenuWindow(&gMenuTextWindowTemplate);
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, FADE_COLOR_WHITE);
 

@@ -1575,7 +1575,7 @@ static bool32 LoadMapInStepsLink(u8 *state)
     case 4:
         InitCurrentFlashLevelScanlineEffect();
         InitOverworldGraphicsRegisters();
-        Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
+        Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
         InitMenuWindow(&gMenuTextWindowTemplate);
         (*state)++;
         break;
@@ -1641,7 +1641,7 @@ bool32 LoadMapInStepsLocal(u8 *state, u32 a2)
     case 4:
         InitCurrentFlashLevelScanlineEffect();
         InitOverworldGraphicsRegisters();
-        Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
+        Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
         InitMenuWindow(&gMenuTextWindowTemplate);
         (*state)++;
         break;
@@ -1731,7 +1731,7 @@ bool32 ReturnToFieldLink(u8 *state)
     case 3:
         InitCurrentFlashLevelScanlineEffect();
         InitOverworldGraphicsRegisters();
-        Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
+        Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
         InitMenuWindow(&gMenuTextWindowTemplate);
         (*state)++;
         break;
@@ -1797,7 +1797,7 @@ void InitViewGraphics(void)
 {
     InitCurrentFlashLevelScanlineEffect();
     InitOverworldGraphicsRegisters();
-    Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
+    Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
     InitMenuWindow(&gMenuTextWindowTemplate);
     mapdata_load_assets_to_gpu_and_full_redraw();
 }

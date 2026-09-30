@@ -1416,8 +1416,8 @@ void CB2_InitPokedex(void)
         ResetPaletteFade();
         FreeAllSpritePalettes();
         gReservedSpritePaletteCount = 8;
-        Text_LoadWindowTemplate(&gWindowTemplate_81E7048);
-        InitMenuWindow(&gWindowTemplate_81E7048);
+        Text_LoadWindowTemplate(&gPokedexListWindowTemplate);
+        InitMenuWindow(&gPokedexListWindowTemplate);
         gMain.state++;
         break;
     case 2:
@@ -1937,8 +1937,8 @@ static bool8 LoadPokedexListPage(u8 page)
         gMain.state++;
         break;
     case 2:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E7048);
-        InitMenuWindow(&gWindowTemplate_81E7048);
+        Text_LoadWindowTemplate(&gPokedexListWindowTemplate);
+        InitMenuWindow(&gPokedexListWindowTemplate);
         LZ77UnCompVram(gPokedexNoBall_Gfx, (void *)(VRAM + 0xFF80));
         gMain.state++;
         break;
@@ -2955,8 +2955,8 @@ static void Task_InitPageScreenMultistep(u8 taskId)
         gMain.state++;
         break;
     case 3:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E7064);
-        InitMenuWindow(&gWindowTemplate_81E7064);
+        Text_LoadWindowTemplate(&gPokedexInfoWindowTemplate);
+        InitMenuWindow(&gPokedexInfoWindowTemplate);
         gMain.state++;
         break;
     case 4:
@@ -3209,8 +3209,8 @@ static void Task_InitCryScreenMultistep(u8 taskId)
         gMain.state++;
         break;
     case 3:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E702C);
-        InitMenuWindow(&gWindowTemplate_81E702C);
+        Text_LoadWindowTemplate(&gPokedexSubscreenWindowTemplate);
+        InitMenuWindow(&gPokedexSubscreenWindowTemplate);
         ResetPaletteFade();
         gMain.state++;
         break;
@@ -3400,8 +3400,8 @@ static void Task_InitSizeScreenMultistep(u8 taskId)
             // This only needs to be 25 chars long (31 in German).
             u8 string[40];  //I hope this is the correct size
 
-            Text_LoadWindowTemplate(&gWindowTemplate_81E702C);
-            InitMenuWindow(&gWindowTemplate_81E702C);
+            Text_LoadWindowTemplate(&gPokedexSubscreenWindowTemplate);
+            InitMenuWindow(&gPokedexSubscreenWindowTemplate);
             string[0] = EOS;
             StringAppend(string, gDexText_SizeComparedTo);
             StringAppend(string, gSaveBlock2.playerName);
@@ -3862,8 +3862,8 @@ static void Task_DisplayCaughtMonDexPage(u8 taskId)
         gTasks[taskId].tState++;
         break;
     case 2:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E7064);
-        InitMenuWindow(&gWindowTemplate_81E7064);
+        Text_LoadWindowTemplate(&gPokedexInfoWindowTemplate);
+        InitMenuWindow(&gPokedexInfoWindowTemplate);
         DmaClear16(3, (void *)(VRAM + 0xC000), 0x200);
         gTasks[taskId].tState++;
         break;
@@ -4821,8 +4821,8 @@ static void Task_LoadSearchMenu(u8 taskId)
         }
         break;
     case 1:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E7064);
-        InitMenuWindow(&gWindowTemplate_81E7064);
+        Text_LoadWindowTemplate(&gPokedexInfoWindowTemplate);
+        InitMenuWindow(&gPokedexInfoWindowTemplate);
         LoadCompressedSpriteSheet(&sInterfaceSpriteSheet[0]);
         LoadSpritePalettes(sInterfaceSpritePalette);
         CreateSearchParameterScrollArrows(taskId);

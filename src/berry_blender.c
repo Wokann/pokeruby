@@ -189,7 +189,7 @@ extern u8 byte_3002A68;
 extern const u8 gUnknown_08E6C100[];
 extern const u8 gUnknown_08E6C920[];
 extern const u8 gUnknown_08E6D354[];
-extern const struct WindowTemplate gWindowTemplate_81E6F68;
+extern const struct WindowTemplate gBerryBlenderWindowTemplate;
 extern const struct Berry gBerries[];
 
 extern const u8 gBerryBlenderArrowTiles[];
@@ -895,8 +895,8 @@ static void CB2_LoadBerryBlender(void)
         ResetSpriteData();
         FreeAllSpritePalettes();
         SetVBlankCallback(NULL);
-        Text_LoadWindowTemplate(&gWindowTemplate_81E6F68);
-        InitMenuWindow(&gWindowTemplate_81E6F68);
+        Text_LoadWindowTemplate(&gBerryBlenderWindowTemplate);
+        InitMenuWindow(&gBerryBlenderWindowTemplate);
         gBerryBlenderData->field_0++;
         gBerryBlenderData->field_140 = 0;
         gBerryBlenderData->field_13E = 0;
@@ -1073,8 +1073,8 @@ static void CB2_StartBlenderLink(void)
         FreeAllSpritePalettes();
         ResetTasks();
         SetVBlankCallback(VBlankCB0_BerryBlender);
-        Text_LoadWindowTemplate(&gWindowTemplate_81E6F68);
-        InitMenuWindow(&gWindowTemplate_81E6F68);
+        Text_LoadWindowTemplate(&gBerryBlenderWindowTemplate);
+        InitMenuWindow(&gBerryBlenderWindowTemplate);
         gLinkType = LINKTYPE_BERRY_BLENDER;
         gBerryBlenderData->field_0++;
         gBerryBlenderData->field_4E = 0;
@@ -1276,8 +1276,8 @@ static void InitBlenderBgs(void)
 
     SetVBlankCallback(VBlankCB0_BerryBlender);
 
-    Text_LoadWindowTemplate(&gWindowTemplate_81E6F68);
-    InitMenuWindow(&gWindowTemplate_81E6F68);
+    Text_LoadWindowTemplate(&gBerryBlenderWindowTemplate);
+    InitMenuWindow(&gBerryBlenderWindowTemplate);
 
     gLinkType = LINKTYPE_BERRY_BLENDER;
 

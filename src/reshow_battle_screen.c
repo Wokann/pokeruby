@@ -63,9 +63,9 @@ static void CB2_ReshowBattleScreenAfterMenu(void)
     {
     case 0:
         ScanlineEffect_Clear();
-        Text_LoadWindowTemplate(&gWindowTemplate_81E6C58);
+        Text_LoadWindowTemplate(&gStandardBattleWindowTemplate);
         ResetPaletteFade();
-        Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gWindowTemplate_81E6C58);
+        Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gStandardBattleWindowTemplate);
         gBattle_BG0_X = 0;
         gBattle_BG0_Y = 0;
         gBattle_BG1_X = 0;

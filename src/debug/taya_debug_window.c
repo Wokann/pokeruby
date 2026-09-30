@@ -861,8 +861,8 @@ void TayaDebugRibbon_Init(void)
                 eTayaMonData.data[i][j] = 0;
         }
     }
-    Text_LoadWindowTemplate(&gWindowTemplate_81E7224);
-    InitMenuWindow(&gWindowTemplate_81E7224);
+    Text_LoadWindowTemplate(&gPokenavRegionMapWindowTemplate);
+    InitMenuWindow(&gPokenavRegionMapWindowTemplate);
     Menu_EraseScreen();
     Menu_DrawStdWindowFrame(0, 0, 29, 3);
     Menu_PrintText(sText_TayaRibbon_Select, 1, 1);

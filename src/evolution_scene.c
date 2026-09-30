@@ -195,7 +195,7 @@ void EvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, bool8 canStopEvo, u
     REG_WININ = 0;
     REG_WINOUT = 0;
 
-    Text_LoadWindowTemplate(&gWindowTemplate_81E6C58);
+    Text_LoadWindowTemplate(&gStandardBattleWindowTemplate);
     ResetPaletteFade();
 
     gBattle_BG0_X = 0;
@@ -207,7 +207,7 @@ void EvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, bool8 canStopEvo, u
     gBattle_BG3_X = 256;
     gBattle_BG3_Y = 0;
 
-    Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gWindowTemplate_81E6C58);
+    Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gStandardBattleWindowTemplate);
     gBattleEnvironment = BATTLE_ENVIRONMENT_PLAIN;
 
     InitBattleBgsVideo();
@@ -304,7 +304,7 @@ static void CB2_EvolutionSceneLoadGraphics(void)
     REG_WIN1V = 0;
     REG_WININ = 0;
     REG_WINOUT = 0;
-    Text_LoadWindowTemplate(&gWindowTemplate_81E6C58);
+    Text_LoadWindowTemplate(&gStandardBattleWindowTemplate);
     ResetPaletteFade();
     gBattle_BG0_X = 0;
     gBattle_BG0_Y = 0;
@@ -315,7 +315,7 @@ static void CB2_EvolutionSceneLoadGraphics(void)
     gBattle_BG3_X = 256;
     gBattle_BG3_Y = 0;
 
-    Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gWindowTemplate_81E6C58);
+    Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gStandardBattleWindowTemplate);
     gBattleEnvironment = BATTLE_ENVIRONMENT_PLAIN;
 
     InitBattleBgsVideo();
@@ -371,8 +371,8 @@ static void CB2_TradeEvolutionSceneLoadGraphics(void)
         gMain.state++;
         break;
     case 1:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E6F84);
-        Text_InitWindowWithTemplate(&gTradeAnim->window, &gWindowTemplate_81E6F84);
+        Text_LoadWindowTemplate(&gBattleMessageWindowTemplate);
+        Text_InitWindowWithTemplate(&gTradeAnim->window, &gBattleMessageWindowTemplate);
         gMain.state++;
         break;
     case 2:

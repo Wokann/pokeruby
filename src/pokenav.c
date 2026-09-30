@@ -320,10 +320,10 @@ bool8 LoadPokenavMenuGfxStep(u8 menuType)
         ResetPokenavBgOffsets();
         break;
     case 1:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E7224);
+        Text_LoadWindowTemplate(&gPokenavRegionMapWindowTemplate);
         break;
     case 2:
-        MultistepInitMenuWindowBegin(&gWindowTemplate_81E7224);
+        MultistepInitMenuWindowBegin(&gPokenavRegionMapWindowTemplate);
         break;
     case 3:
         if (!MultistepInitMenuWindowContinue())
@@ -560,10 +560,10 @@ bool8 LoadPokenavRegionMapGfxStep(void)
         ResetPokenavBgOffsets();
         break;
     case 1:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E7224);
+        Text_LoadWindowTemplate(&gPokenavRegionMapWindowTemplate);
         break;
     case 2:
-        MultistepInitMenuWindowBegin(&gWindowTemplate_81E7224);
+        MultistepInitMenuWindowBegin(&gPokenavRegionMapWindowTemplate);
         break;
     case 3:
         if (!MultistepInitMenuWindowContinue())
@@ -907,7 +907,7 @@ bool8 LoadConditionGraphScreenStep(void)
         break;
     case 11:
         LoadPalette(gConditionGraphData_Pal, 0x30, 0x20);
-        LoadPalette(gUnknownPalette_81E6692, 0xB0, 0x20);
+        LoadPalette(gPokenavShared_Pal, 0xB0, 0x20);
         LoadPalette(&gPokenavConditionMenu2_Pal[2], 0xB1, 0x2);
         LoadPalette(&gPokenavConditionMenu2_Pal[16], 0xB5, 0x2);
         LoadPalette(&gPokenavConditionMenu2_Pal[30], 0xBF, 0x2);
@@ -1014,7 +1014,7 @@ bool8 LoadPokenavListScreenStep(void)
         {
             LoadPalette(gPokenavConditionSearch2_Pal, 0x30, 0x20);
             gPlttBufferUnfaded[0] = gPokenavConditionSearch2_Pal[5];
-            LoadPalette(gUnknownPalette_81E6692, 0xB0, 0x20);
+            LoadPalette(gPokenavShared_Pal, 0xB0, 0x20);
             LoadPalette(&gPokenavList_Pal[1], 0xB1, 0x2);
             LoadPalette(&gPokenavList_Pal[8], 0xB5, 0x2);
             LoadPalette(&gPokenavConditionSearch2_Pal[5], 0xBF, 0x2);
@@ -1023,7 +1023,7 @@ bool8 LoadPokenavListScreenStep(void)
         {
             LoadPalette(gPokenavRibbonsList_Pal, 0x30, 0x20);
             gPlttBufferUnfaded[0] = gPokenavRibbonsList_Pal[5];
-            LoadPalette(gUnknownPalette_81E6692, 0xB0, 0x20);
+            LoadPalette(gPokenavShared_Pal, 0xB0, 0x20);
             LoadPalette(&gPokenavList_Pal[1], 0xB1, 0x2);
             LoadPalette(&gPokenavList_Pal[8], 0xB5, 0x2);
             LoadPalette(&gPokenavRibbonsList_Pal[5], 0xBF, 0x2);
@@ -1532,7 +1532,7 @@ bool8 LoadRibbonsSummaryScreenStep(void)
         LoadPalette(gPokenavRibbonView_Pal, 0x20, 0x20);
         LoadPalette(gPokenavRibbonsSummary_Pal, 0xF0, 0x20);
         LoadPalette(gPokenavRibbonIconPalettes[0], 0x30, 0xA0);
-        LoadPalette(gUnknownPalette_81E6692, 0xB0, 0x20);
+        LoadPalette(gPokenavShared_Pal, 0xB0, 0x20);
         LoadPalette(gPokenavRibbonsSummary_Pal + 0xF, 0xBF, 0x2);
         break;
     case 13:
@@ -1762,7 +1762,7 @@ bool8 LoadPokeblockConditionGraphScreenStep(void)
         break;
     case 7:
         LoadPalette(gConditionGraphData_Pal, 0x30, 0x20);
-        LoadPalette(gUnknownPalette_81E6692, 0xB0, 0x20);
+        LoadPalette(gPokenavShared_Pal, 0xB0, 0x20);
         LoadPalette(&gPokenavConditionMenu2_Pal[2], 0xB1, 0x2);
         LoadPalette(&gPokenavConditionMenu2_Pal[16], 0xB5, 0x2);
         LoadPalette(&gPokenavConditionMenu2_Pal[30], 0xBF, 0x2);

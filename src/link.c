@@ -1285,8 +1285,8 @@ void CB2_LinkError(void)
     FillPalette(0, 0, 2);
     ResetTasks();
     SetVBlankCallback(VBlankCB_LinkTest);
-    Text_LoadWindowTemplate(&gWindowTemplate_81E7198);
-    InitMenuWindow((struct WindowTemplate *)&gWindowTemplate_81E7198);
+    Text_LoadWindowTemplate(&gHallOfFameAndLinkWindowTemplate);
+    InitMenuWindow((struct WindowTemplate *)&gHallOfFameAndLinkWindowTemplate);
     Menu_EraseScreen();
     REG_BLDALPHA = 0;
     REG_BG0VOFS = 0;

@@ -259,7 +259,7 @@ void WatanabeDebug_InitScreen(void)
     FreeAllSpritePalettes();
     LoadSpriteSheet(sWatanabeDebugSpriteBrowserSpriteSheets);
     LoadSpritePalette(sWatanabeDebugSpriteBrowserSpritePalettes);
-    Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
+    Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
     InitMenuWindow(&gMenuTextWindowTemplate);
 }
 

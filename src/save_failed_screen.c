@@ -129,7 +129,7 @@ static void CB2_SaveFailedScreen(void)
         ResetPaletteFade();
         LoadPalette(&gBirchBagGrass_Pal, 0, sizeof(gBirchBagGrass_Pal));
         LoadPalette(&sSaveFailedClockPal, 0x100, sizeof(sSaveFailedClockPal));
-        Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
+        Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
         InitMenuWindow(&gMenuTextWindowTemplate);
         Menu_DrawStdWindowFrame(13, CLOCK_WIN_TOP, 16, CLOCK_WIN_TOP + 3); // clock window
         Menu_DrawStdWindowFrame(1, MSG_WIN_TOP, 28, 19); // message window

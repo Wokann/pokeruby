@@ -304,7 +304,7 @@ void CB2_ChooseStarter(void)
     LoadCompressedSpriteSheet(&sSpriteSheet_PokeballSelect[0]);
     LoadCompressedSpriteSheet(&sSpriteSheet_StarterCircle[0]);
     LoadSpritePalettes(sSpritePalettes_StarterChoose);
-    Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
+    Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
     InitMenuWindow(&gMenuTextWindowTemplate);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
 

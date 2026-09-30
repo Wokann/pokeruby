@@ -251,7 +251,7 @@ void CB2_InitBattleInternal(void)
     }
     //ScanlineEffect_SetParams(gIntroScanlineParams16Bit.totalPoints, gIntroScanlineParams16Bit.round1Points, gIntroScanlineParams16Bit.random);
     ScanlineEffect_SetParams(gIntroScanlineParams16Bit);
-    Text_LoadWindowTemplate(&gWindowTemplate_81E6C58);
+    Text_LoadWindowTemplate(&gStandardBattleWindowTemplate);
     ResetPaletteFade();
     gBattle_BG0_X = 0;
     gBattle_BG0_Y = 0;
@@ -269,9 +269,9 @@ void CB2_InitBattleInternal(void)
     gBattleEnvironment = BattleSetup_GetEnvironmentId();
 #endif
 
-    Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gWindowTemplate_81E6C58);
-    Text_InitWindowWithTemplate(&gUnknown_030041D0, &gWindowTemplate_81E71D0);
-    Text_InitWindowWithTemplate(&gUnknown_03004250, &gWindowTemplate_81E71EC);
+    Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gStandardBattleWindowTemplate);
+    Text_InitWindowWithTemplate(&gUnknown_030041D0, &gLinkBattleResultWindowTemplateBg1);
+    Text_InitWindowWithTemplate(&gUnknown_03004250, &gLinkBattleResultWindowTemplateBg2);
     InitBattleBgsVideo();
     LoadBattleTextboxAndBackground();
     ResetSpriteData();
@@ -1297,7 +1297,7 @@ void CB2_InitEndLinkBattle(void)
         gScanlineEffectRegBuffers[0][i] = 0xFF10;
         gScanlineEffectRegBuffers[1][i] = 0xFF10;
     }
-    Text_LoadWindowTemplate(&gWindowTemplate_81E6C58);
+    Text_LoadWindowTemplate(&gStandardBattleWindowTemplate);
     ResetPaletteFade();
     gBattle_BG0_X = 0;
     gBattle_BG0_Y = 0;
@@ -1308,9 +1308,9 @@ void CB2_InitEndLinkBattle(void)
     gBattle_BG3_X = 0;
     gBattle_BG3_Y = 0;
 
-    Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gWindowTemplate_81E6C58);
-    Text_InitWindowWithTemplate(&gUnknown_030041D0, &gWindowTemplate_81E71D0);
-    Text_InitWindowWithTemplate(&gUnknown_03004250, &gWindowTemplate_81E71EC);
+    Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gStandardBattleWindowTemplate);
+    Text_InitWindowWithTemplate(&gUnknown_030041D0, &gLinkBattleResultWindowTemplateBg1);
+    Text_InitWindowWithTemplate(&gUnknown_03004250, &gLinkBattleResultWindowTemplateBg2);
     InitBattleBgsVideo();
     LoadCompressedPalette(gBattleTextboxPalette, 0, 64);
     ApplyPlayerChosenFrameToBattleMenu();
@@ -1469,8 +1469,8 @@ void CB2_InitDebugBattlePartyEditor(void)
 	ResetTasks();
 	ResetSpriteData();
 	ScanlineEffect_Stop();
-	Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
-	Text_InitWindowWithTemplate(&gUnknown_Debug_03004370, &gWindowTemplate_81E6C3C);
+	Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
+	Text_InitWindowWithTemplate(&gUnknown_Debug_03004370, &gMenuTextWindowLoadTemplate);
 	gUnknown_Debug_03004360 = 0;
 	gUnknown_Debug_030043A0 = 0;
 	gUnknown_Debug_030043A4 = 0;
@@ -2598,7 +2598,7 @@ void InitDebugFlyingMonSpriteOffsetEditor(void)
 	REG_WIN1V = 0;
 	REG_WININ = 0;
 	REG_WINOUT = 0;
-	Text_LoadWindowTemplate(&gWindowTemplate_81E6C58);
+	Text_LoadWindowTemplate(&gStandardBattleWindowTemplate);
 	ResetPaletteFade();
 	gBattle_BG0_X = 0;
 	gBattle_BG0_Y = DISPLAY_HEIGHT;
@@ -2616,7 +2616,7 @@ void InitDebugFlyingMonSpriteOffsetEditor(void)
 	FreeAllSpritePalettes();
 	gReservedSpritePaletteCount = 4;
 	gCurrentMove = 1;
-	Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gWindowTemplate_81E6C58);
+	Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gStandardBattleWindowTemplate);
 	DecompressPicFromTable(
 	  &gMonFrontPicTable[gCurrentMove],
 	  gMonFrontPicCoords[gCurrentMove].coords,

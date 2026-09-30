@@ -149,8 +149,8 @@ void LoadContestBgAfterMoveAnim(void)
 
 void InitContestWindows(void)
 {
-    Text_LoadWindowTemplate(&gWindowTemplate_81E6FD8);
-    Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gWindowTemplate_81E6FD8);
+    Text_LoadWindowTemplate(&gContestWindowTemplate);
+    Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gContestWindowTemplate);
     Text_InitWindowWithTemplate(&gMenuWindow, &gContestMenuWindowTemplate);
 }
 
@@ -158,7 +158,7 @@ void LoadContestPalettes(void)
 {
     u8 i;
 
-    LoadFontDefaultPalette(&gWindowTemplate_81E6FD8);
+    LoadFontDefaultPalette(&gContestWindowTemplate);
     FillPalette(0, 0, 2);
     for (i = 10; i < 14; i++)
         LoadPalette(gPlttBufferUnfaded + 241, 240 + i, 2);

@@ -1337,10 +1337,10 @@ void CB2_OpenFlyMap(void)
         FreeAllSpritePalettes();
         break;
     case 1:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E7224);
+        Text_LoadWindowTemplate(&gPokenavRegionMapWindowTemplate);
         break;
     case 2:
-        InitMenuWindow(&gWindowTemplate_81E7224);
+        InitMenuWindow(&gPokenavRegionMapWindowTemplate);
         Menu_EraseScreen();
         break;
     case 3:

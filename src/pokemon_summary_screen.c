@@ -903,21 +903,21 @@ static bool8 DecompressGraphics(void)
 
 static void SummaryScreen_LoadPalettes(void)
 {
-    LoadPalette(gUnknownPalette_81E6692 + 14, 129, 2);
-    LoadPalette(gUnknownPalette_81E6692 + 15, 136, 2);
-    LoadPalette(gUnknownPalette_81E6692 + 14, 143, 2);
-    LoadPalette(gUnknownPalette_81E6692 + 15, 137, 2);
-    LoadPalette(gUnknownPalette_81E6692 + 6,  209, 4);
-    LoadPalette(gUnknownPalette_81E6692 + 10, 211, 4);
-    LoadPalette(gUnknownPalette_81E6692 + 14, 213, 4);
-    LoadPalette(gUnknownPalette_81E6692 + 6,  215, 4);
-    LoadPalette(gUnknownPalette_81E6692 + 4,  217, 4);
-    LoadPalette(gUnknownPalette_81E6692 + 8,  219, 4);
-    LoadPalette(gUnknownPalette_81E6692 + 2,  221, 2);
-    LoadPalette(gUnknownPalette_81E6692 + 3,  222, 2);
-    LoadPalette(gUnknownPalette_81E6692 + 1,  223, 2);
+    LoadPalette(gPokenavShared_Pal + 14, 129, 2);
+    LoadPalette(gPokenavShared_Pal + 15, 136, 2);
+    LoadPalette(gPokenavShared_Pal + 14, 143, 2);
+    LoadPalette(gPokenavShared_Pal + 15, 137, 2);
+    LoadPalette(gPokenavShared_Pal + 6,  209, 4);
+    LoadPalette(gPokenavShared_Pal + 10, 211, 4);
+    LoadPalette(gPokenavShared_Pal + 14, 213, 4);
+    LoadPalette(gPokenavShared_Pal + 6,  215, 4);
+    LoadPalette(gPokenavShared_Pal + 4,  217, 4);
+    LoadPalette(gPokenavShared_Pal + 8,  219, 4);
+    LoadPalette(gPokenavShared_Pal + 2,  221, 2);
+    LoadPalette(gPokenavShared_Pal + 3,  222, 2);
+    LoadPalette(gPokenavShared_Pal + 1,  223, 2);
     LoadPalette(gFontDefaultPalette,          240, 32);
-    LoadPalette(gUnknownPalette_81E6692 + 3,  249, 2);
+    LoadPalette(gPokenavShared_Pal + 3,  249, 2);
 }
 
 static void BeginCloseSummaryScreen(u8 taskId)

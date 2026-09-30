@@ -272,8 +272,8 @@ static void InitMatsudaDebugMenuDisplay(void)
 {
     REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP;
     REG_DISPCNT |= DISPCNT_OBJ_ON | DISPCNT_BG0_ON;
-    Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
-    Text_InitWindowWithTemplate(&gMenuWindow, &gWindowTemplate_81E6C3C);
+    Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
+    Text_InitWindowWithTemplate(&gMenuWindow, &gMenuTextWindowLoadTemplate);
     REG_MOSAIC = 0;
     REG_BLDCNT = 0;
     REG_BLDALPHA = 0;
@@ -295,7 +295,7 @@ static void LoadMatsudaDebugMenuGraphics(void)
     u8 paletteText[] = _("{HIGHLIGHT WHITE2} ");
     DmaFill32Large(3, 0, (void *)VRAM, VRAM_SIZE, 0x1000);
     RenderTextHandleBold((void *)VRAM, paletteText);
-    LoadFontDefaultPalette(&gWindowTemplate_81E6C3C);
+    LoadFontDefaultPalette(&gMenuTextWindowLoadTemplate);
 }
 
 //const u8 gMatsudaDebugMenu_UnknownByteArray[] = {0xFC, 0x02, 0x0F, 0x00, 0xFF};

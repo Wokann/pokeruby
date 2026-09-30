@@ -1038,10 +1038,10 @@ void CB2_StartCreateTradeMenu(void)
 static void DrawTradeMenuText(void)
 {
     u8 playerId;
-    DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, sMenuTextTileBuffers[0], gSaveBlock2.playerName, 0xC);
+    DrawTextWindowAndBufferTiles(&gTradeMenuTextWindowTemplate, sMenuTextTileBuffers[0], gSaveBlock2.playerName, 0xC);
     playerId = GetMultiplayerId();
-    DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, sMenuTextTileBuffers[3], gLinkPlayers[playerId ^ 1].name, 0xC);
-    DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, sMenuTextTileBuffers[6], sActionTexts[0], 0x8);
+    DrawTextWindowAndBufferTiles(&gTradeMenuTextWindowTemplate, sMenuTextTileBuffers[3], gLinkPlayers[playerId ^ 1].name, 0xC);
+    DrawTextWindowAndBufferTiles(&gTradeMenuTextWindowTemplate, sMenuTextTileBuffers[6], sActionTexts[0], 0x8);
     DrawBottomRowText(sActionTexts[1], sMenuTextTileBuffers[8], 0x14);
     nullsub_5(3, 0);
 }
@@ -1110,8 +1110,8 @@ static void CB2_CreateTradeMenu(void)
             InitTradeTilemapBuffer(&sTradeMenu->tilemapBuffer, BG_SCREEN_ADDR(5));
             SetVBlankCallback(VBlankCB_TradeMenu);
             InitMenuWindow(&gMenuTextWindowTemplate);
-            Text_LoadWindowTemplate(&gWindowTemplate_81E6F84);
-            Text_InitWindowWithTemplate(&sTradeMenu->window, &gWindowTemplate_81E6F84);
+            Text_LoadWindowTemplate(&gBattleMessageWindowTemplate);
+            Text_InitWindowWithTemplate(&sTradeMenu->window, &gBattleMessageWindowTemplate);
             sTradeMenu->textWindowBaseTileNum = TextWindow_SetBaseTileNum(20);
             TextWindow_LoadStdFrameGraphics(&sTradeMenu->window);
             Menu_EraseScreen();
@@ -1290,8 +1290,8 @@ static void CB2_ReturnToTradeMenu(void)
             InitTradeTilemapBuffer(&sTradeMenu->tilemapBuffer, BG_SCREEN_ADDR(5));
             SetVBlankCallback(VBlankCB_TradeMenu);
             InitMenuWindow(&gMenuTextWindowTemplate);
-            Text_LoadWindowTemplate(&gWindowTemplate_81E6F84);
-            Text_InitWindowWithTemplate(&sTradeMenu->window, &gWindowTemplate_81E6F84);
+            Text_LoadWindowTemplate(&gBattleMessageWindowTemplate);
+            Text_InitWindowWithTemplate(&sTradeMenu->window, &gBattleMessageWindowTemplate);
             sTradeMenu->textWindowBaseTileNum = TextWindow_SetBaseTileNum(20);
             TextWindow_LoadStdFrameGraphics(&sTradeMenu->window);
             Menu_EraseScreen();
@@ -2839,7 +2839,7 @@ u8 GetMonNicknameWidth(u8 *str, u8 whichParty, u8 partyIdx)
         GetMonGender(&gEnemyParty[partyIdx]);
         GetMonData(&gEnemyParty[partyIdx], MON_DATA_LEVEL);
     }
-    return Text_GetStringWidthFromWindowTemplate(&gWindowTemplate_81E7294, str);
+    return Text_GetStringWidthFromWindowTemplate(&gTradeNicknameWindowTemplate, str);
 }
 
 void BufferMovesString(u8 *str, u8 whichParty, u8 partyIdx)
@@ -2893,7 +2893,7 @@ static void PrintPartyNicknames(u8 whichParty)
         GetMonData(pokemon, MON_DATA_NICKNAME, nickname);
         StringCopy10(string + 6, nickname);
         GetMonGender(pokemon);
-        string[5] = (50 - Text_GetStringWidthFromWindowTemplate(&gWindowTemplate_81E7294, string + 6)) / 2;
+        string[5] = (50 - Text_GetStringWidthFromWindowTemplate(&gTradeNicknameWindowTemplate, string + 6)) / 2;
         Text_InitWindowAndPrintText(&sTradeMenu->window, string, sTradeMenu->textWindowBaseTileNum + 22 * 6 * whichParty + 22 * i, gTradeMonSpriteCoords[i + 6 * whichParty][0], gTradeMonSpriteCoords[i + 6 * whichParty][1]);
     }
 }
@@ -2967,7 +2967,7 @@ static void PrintPartyNicknames(u8 whichParty)
                     "\tbl GetMonGender\n"
                     "\tmov r1, sp\n"
                     "\tadds r1, 0x22\n"
-                    "\tldr r0, _0804A518 @ =gWindowTemplate_81E7294\n"
+                    "\tldr r0, _0804A518 @ =gTradeNicknameWindowTemplate\n"
                     "\tbl Text_GetStringWidthFromWindowTemplate\n"
                     "\tlsls r0, 24\n"
                     "\tlsrs r0, 24\n"
@@ -3024,7 +3024,7 @@ static void PrintPartyNicknames(u8 whichParty)
                     "\tbx r0\n"
                     "\t.align 2, 0\n"
                     "_0804A514: .4byte gEnemyParty\n"
-                    "_0804A518: .4byte gWindowTemplate_81E7294");
+                    "_0804A518: .4byte gTradeNicknameWindowTemplate");
 }
 #endif
 
@@ -3291,7 +3291,7 @@ static bool8 LoadUISpriteGfx(void)
 
 static void DrawBottomRowText(const u8 *str, u8 *dest, u8 unused)
 {
-    DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, dest, str, unused);
+    DrawTextWindowAndBufferTiles(&gTradeMenuTextWindowTemplate, dest, str, unused);
 }
 
 // replacing [whichParty] with [0]/[1] depending on case compiles better code
@@ -3587,8 +3587,8 @@ void CB2_LinkTrade(void)
             FreeAllSpritePalettes();
             SetVBlankCallback(VBlankCB_TradeAnim);
             ClearLinkTimeoutTimer();
-            Text_LoadWindowTemplate(&gWindowTemplate_81E6F84);
-            Text_InitWindowWithTemplate(&gTradeAnim->window, &gWindowTemplate_81E6F84);
+            Text_LoadWindowTemplate(&gBattleMessageWindowTemplate);
+            Text_InitWindowWithTemplate(&gTradeAnim->window, &gBattleMessageWindowTemplate);
             gTradeAnim->textWindowBaseTileNum = TextWindow_SetBaseTileNum(2);
             //
             // start of nonmatching here?
@@ -3743,7 +3743,7 @@ NAKED void CB2_LinkTrade(void)
                     "\tldr r0, _0804B578 @ =VBlankCB_TradeAnim\n"
                     "\tbl SetVBlankCallback\n"
                     "\tbl ClearLinkTimeoutTimer\n"
-                    "\tldr r4, _0804B57C @ =gWindowTemplate_81E6F84\n"
+                    "\tldr r4, _0804B57C @ =gBattleMessageWindowTemplate\n"
                     "\tadds r0, r4, 0\n"
                     "\tbl Text_LoadWindowTemplate\n"
                     "\tldr r0, [r6]\n"
@@ -3840,7 +3840,7 @@ NAKED void CB2_LinkTrade(void)
                     "_0804B570: .4byte gTradeAnim\n"
                     "_0804B574: .4byte gSharedMem + 0x1F000\n"
                     "_0804B578: .4byte VBlankCB_TradeAnim\n"
-                    "_0804B57C: .4byte gWindowTemplate_81E6F84\n"
+                    "_0804B57C: .4byte gBattleMessageWindowTemplate\n"
                     "_0804B580: .4byte gLinkType\n"
                     "_0804B584: .4byte 0x00001144\n"
                     "_0804B588: .4byte gMain\n"
@@ -4092,8 +4092,8 @@ void CB2_InitInGameTrade(void)
             FreeAllSpritePalettes();
             SetVBlankCallback(VBlankCB_TradeAnim);
             ClearLinkTimeoutTimer();
-            Text_LoadWindowTemplate(&gWindowTemplate_81E717C);
-            Text_InitWindowWithTemplate(&gTradeAnim->window, &gWindowTemplate_81E717C);
+            Text_LoadWindowTemplate(&gTradeAnimationWindowTemplate);
+            Text_InitWindowWithTemplate(&gTradeAnim->window, &gTradeAnimationWindowTemplate);
             gTradeAnim->textWindowBaseTileNum = TextWindow_SetBaseTileNum(2);
             TextWindow_LoadStdFrameGraphics(&gTradeAnim->window);
             Menu_EraseScreen();

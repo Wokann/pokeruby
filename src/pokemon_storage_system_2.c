@@ -1446,12 +1446,12 @@ static void InitPalettesAndSprites(void)
     LoadPalette(gPSSMenu2_Pal, 0x00, 0x20);
     LoadPalette(sPSSMenuHeader_Pal1, 0xB0, 0x20);
     LoadPalette(sPSSMenuHeader_Pal2, 0xC0, 0x20);
-    LoadPalette(gUnknownPalette_81E6692 +  1, 0xF1, 0x02);
-    LoadPalette(gUnknownPalette_81E6692 +  1, 0xF2, 0x02);
-    LoadPalette(gUnknownPalette_81E6692 +  5, 0xF3, 0x02);
-    LoadPalette(gUnknownPalette_81E6692 + 12, 0xF4, 0x04);
-    LoadPalette(gUnknownPalette_81E6692 + 10, 0xF6, 0x04);
-    LoadPalette(gUnknownPalette_81E6692 +  2, 0xFF, 0x02);
+    LoadPalette(gPokenavShared_Pal +  1, 0xF1, 0x02);
+    LoadPalette(gPokenavShared_Pal +  1, 0xF2, 0x02);
+    LoadPalette(gPokenavShared_Pal +  5, 0xF3, 0x02);
+    LoadPalette(gPokenavShared_Pal + 12, 0xF4, 0x04);
+    LoadPalette(gPokenavShared_Pal + 10, 0xF6, 0x04);
+    LoadPalette(gPokenavShared_Pal +  2, 0xFF, 0x02);
     LoadSpritePalette(&sWaveformSpritePalette);
     CreateDisplayMonSprite();
     CreateMarkingComboSprite();

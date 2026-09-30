@@ -655,11 +655,11 @@ bool8 InitPartyMenu(void)
         gMain.state++;
         break;
     case 7:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E6C90);
+        Text_LoadWindowTemplate(&gPartyMenuWindowTemplate);
         gMain.state++;
         break;
     case 8:
-        Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gWindowTemplate_81E6C90);
+        Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gPartyMenuWindowTemplate);
         MultistepInitWindowTileData(&gWindowTemplate_Contest_MoveDescription, 1);
         gMain.state++;
         break;
@@ -690,7 +690,7 @@ bool8 InitPartyMenu(void)
             gMain.state++;
         break;
     case 13:
-        MultistepInitMenuWindowBegin(&gWindowTemplate_81E6CC8);
+        MultistepInitMenuWindowBegin(&gPartyMenuMenuWindowTemplate);
         gMain.state++;
         break;
     case 14:
@@ -2566,7 +2566,7 @@ void SetHeldItemIconVisibility(u8 taskId, u8 monIndex)
 void PartyMenuDoPrintMonNickname(u8 monIndex, int b, const u8 *nameBuffer)
 {
     CpuFastFill(0, gTileBufferPtr, 0x400);
-    Text_InitWindow8004E3C((struct WindowTemplate *)&gWindowTemplate_81E6CAC, gTileBufferPtr, nameBuffer);
+    Text_InitWindow8004E3C((struct WindowTemplate *)&gPartyMenuMonDataWindowTemplate, gTileBufferPtr, nameBuffer);
     CpuFastCopy(gTileBufferPtr, OBJ_VRAM1 + (monIndex * 0x400), 0x200);
 }
 
@@ -2657,7 +2657,7 @@ void PartyMenuDoPrintLevel(u8 monIndex, u8 menuLayout, u8 level)
     ConvertIntToDecimalStringSimple(&stringVar[3], level);
 
     CpuFastFill(0, gTileBufferPtr + 0x100, 0x80);
-    Text_InitWindow8004E3C((struct WindowTemplate *)&gWindowTemplate_81E6CAC, gTileBufferPtr, gStringVar1);
+    Text_InitWindow8004E3C((struct WindowTemplate *)&gPartyMenuMonDataWindowTemplate, gTileBufferPtr, gStringVar1);
     CpuFastCopy(gTileBufferPtr + 0x100, OBJ_VRAM1 + 0x200 + (monIndex * 0x400), 0x80);
 }
 
@@ -2734,7 +2734,7 @@ void PartyMenuDoPrintHP(u8 monIndex, u8 b, u16 currentHP, u16 maxHP)
 
     AlignInt1InMenuWindow(++textPtr, maxHP, 35, 1);
     CpuFastFill(0, gTileBufferPtr + 0x100, 0x100);
-    Text_InitWindow8004E3C((struct WindowTemplate *)&gWindowTemplate_81E6CAC, gTileBufferPtr, gStringVar1);
+    Text_InitWindow8004E3C((struct WindowTemplate *)&gPartyMenuMonDataWindowTemplate, gTileBufferPtr, gStringVar1);
     CpuFastCopy(gTileBufferPtr + 0x100, OBJ_VRAM1 + 0x300 + (monIndex * 0x400), 0x100);
 }
 

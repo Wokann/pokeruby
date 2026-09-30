@@ -243,7 +243,7 @@ static const u32 sDownArrowTiles[] = INCBIN_U32("graphics/fonts/down_arrow.4bpp"
 #include "data/text/font3_widths.h"
 // clang-format on
 
-const u16 gUnknownPalette_81E6692[] = INCBIN_U16("graphics/fonts/unknown_81E6692.gbapal");
+const u16 gPokenavShared_Pal[] = INCBIN_U16("graphics/pokenav/shared.gbapal");
 const u16 gFontDefaultPalette[] = INCBIN_U16("graphics/fonts/default.gbapal");
 
 const u8 sBlankTile[8] = { 0, 0, 0, 0, 0, 0, 0, 0, };
@@ -493,7 +493,7 @@ static const ShiftGlyphTileShadowedFunc sShiftGlyphTileShadowedFuncs[] =
     ShiftGlyphTile_ShadowedFont_Width8,
 };
 
-const struct WindowTemplate gWindowTemplate_81E6C3C =
+const struct WindowTemplate gMenuTextWindowLoadTemplate =
 {
     0, // BG number
     2, // BG character base block
@@ -514,7 +514,7 @@ const struct WindowTemplate gWindowTemplate_81E6C3C =
     BG_SCREEN_ADDR(31), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6C58 =
+const struct WindowTemplate gStandardBattleWindowTemplate =
 {
     0, // BG number
     0, // BG character base block
@@ -535,7 +535,7 @@ const struct WindowTemplate gWindowTemplate_81E6C58 =
     BG_SCREEN_ADDR(24), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6C74 =
+const struct WindowTemplate gBoldTextWindowTemplate =
 {
     0, // BG number
     0, // BG character base block
@@ -556,7 +556,7 @@ const struct WindowTemplate gWindowTemplate_81E6C74 =
     NULL, // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6C90 =
+const struct WindowTemplate gPartyMenuWindowTemplate =
 {
     0, // BG number
     1, // BG character base block
@@ -577,7 +577,7 @@ const struct WindowTemplate gWindowTemplate_81E6C90 =
     BG_SCREEN_ADDR(30), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6CAC =
+const struct WindowTemplate gPartyMenuMonDataWindowTemplate =
 {
     0, // BG number
     0, // BG character base block
@@ -598,7 +598,7 @@ const struct WindowTemplate gWindowTemplate_81E6CAC =
     NULL, // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6CC8 =
+const struct WindowTemplate gPartyMenuMenuWindowTemplate =
 {
     2, // BG number
     2, // BG character base block
@@ -661,7 +661,7 @@ const struct WindowTemplate gPSSWindowTemplate =
     BG_SCREEN_ADDR(31), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6D1C =
+const struct WindowTemplate gUnusedPSSWindowTemplate =
 {
     1, // BG number
     0, // BG character base block
@@ -1103,7 +1103,7 @@ const struct WindowTemplate gNamingScreenTextEntryWindowTemplate =
     BG_SCREEN_ADDR(30), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6F68 =
+const struct WindowTemplate gBerryBlenderWindowTemplate =
 {
     0, // BG number
     2, // BG character base block
@@ -1124,7 +1124,7 @@ const struct WindowTemplate gWindowTemplate_81E6F68 =
     BG_SCREEN_ADDR(13), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6F84 =
+const struct WindowTemplate gBattleMessageWindowTemplate =
 {
     0, // BG number
     2, // BG character base block
@@ -1166,7 +1166,7 @@ const struct WindowTemplate gContestResultsWindowTemplate =
     BG_SCREEN_ADDR(24), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6FBC =
+const struct WindowTemplate gUnusedWindowTemplate1 =
 {
     0, // BG number
     0, // BG character base block
@@ -1187,7 +1187,7 @@ const struct WindowTemplate gWindowTemplate_81E6FBC =
     BG_SCREEN_ADDR(30), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6FD8 =
+const struct WindowTemplate gContestWindowTemplate =
 {
     0, // BG number
     0, // BG character base block
@@ -1229,7 +1229,7 @@ const struct WindowTemplate gContestMenuWindowTemplate =
     BG_SCREEN_ADDR(24), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E7010 =
+const struct WindowTemplate gUnusedWindowTemplate2 =
 {
     0, // BG number
     0, // BG character base block
@@ -1250,7 +1250,7 @@ const struct WindowTemplate gWindowTemplate_81E7010 =
     BG_SCREEN_ADDR(30), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E702C =
+const struct WindowTemplate gPokedexSubscreenWindowTemplate =
 {
     3, // BG number
     2, // BG character base block
@@ -1271,7 +1271,7 @@ const struct WindowTemplate gWindowTemplate_81E702C =
     BG_SCREEN_ADDR(15), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E7048 =
+const struct WindowTemplate gPokedexListWindowTemplate =
 {
     2, // BG number
     2, // BG character base block
@@ -1292,7 +1292,7 @@ const struct WindowTemplate gWindowTemplate_81E7048 =
     BG_SCREEN_ADDR(14), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E7064 =
+const struct WindowTemplate gPokedexInfoWindowTemplate =
 {
     2, // BG number
     2, // BG character base block
@@ -1439,7 +1439,7 @@ const struct WindowTemplate gPokenavListInfoWindowTemplate =
     BG_SCREEN_ADDR(31), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E7128 =
+const struct WindowTemplate gSlotMachineMainWindowTemplate =
 {
     0, // BG number
     2, // BG character base block
@@ -1460,7 +1460,7 @@ const struct WindowTemplate gWindowTemplate_81E7128 =
     BG_SCREEN_ADDR(31), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E7144 =
+const struct WindowTemplate gSlotMachineInfoBoxWindowTemplate =
 {
     0, // BG number
     2, // BG character base block
@@ -1502,7 +1502,7 @@ const struct WindowTemplate gWindowTemplate_ContestPainting =
     BG_SCREEN_ADDR(10), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E717C =
+const struct WindowTemplate gTradeAnimationWindowTemplate =
 {
     0, // BG number
     3, // BG character base block
@@ -1523,7 +1523,7 @@ const struct WindowTemplate gWindowTemplate_81E717C =
     BG_SCREEN_ADDR(31), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E7198 =
+const struct WindowTemplate gHallOfFameAndLinkWindowTemplate =
 {
     0, // BG number
     2, // BG character base block
@@ -1544,7 +1544,7 @@ const struct WindowTemplate gWindowTemplate_81E7198 =
     BG_SCREEN_ADDR(15), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E71B4 =
+const struct WindowTemplate gHallOfFameAndOptionMenuWindowTemplate =
 {
     0, // BG number
     2, // BG character base block
@@ -1565,7 +1565,7 @@ const struct WindowTemplate gWindowTemplate_81E71B4 =
     BG_SCREEN_ADDR(15), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E71D0 =
+const struct WindowTemplate gLinkBattleResultWindowTemplateBg1 =
 {
     1, // BG number
     1, // BG character base block
@@ -1586,7 +1586,7 @@ const struct WindowTemplate gWindowTemplate_81E71D0 =
     BG_SCREEN_ADDR(28), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E71EC =
+const struct WindowTemplate gLinkBattleResultWindowTemplateBg2 =
 {
     2, // BG number
     1, // BG character base block
@@ -1628,7 +1628,7 @@ const struct WindowTemplate gWindowTemplate_Credits =
     BG_SCREEN_ADDR(28), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E7224 =
+const struct WindowTemplate gPokenavRegionMapWindowTemplate =
 {
     0, // BG number
     0, // BG character base block
@@ -1670,7 +1670,7 @@ const struct WindowTemplate gMoveRelearnerMenuFramesWindowTemplate =
     BG_SCREEN_ADDR(30), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E725C =
+const struct WindowTemplate gTradeMenuTextWindowTemplate =
 {
     0, // BG number
     0, // BG character base block
@@ -1712,7 +1712,7 @@ const struct WindowTemplate gContestResultsTextWindowTemplate =
     NULL, // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E7294 =
+const struct WindowTemplate gTradeNicknameWindowTemplate =
 {
     0, // BG number
     0, // BG character base block
@@ -2372,24 +2372,24 @@ u8 Text_InitWindowAndPrintChar(struct Window *win, u8 c, u16 tileDataStartOffset
 
 void RenderTextHandleBold(u8 *tileData, const u8 *text)
 {
-    Text_InitWindow8004E3C(&gWindowTemplate_81E6C74, tileData, text);
+    Text_InitWindow8004E3C(&gBoldTextWindowTemplate, tileData, text);
 }
 
 u8 GetBoldTextWidth(u8 *str)
 {
-    return Text_GetStringWidthFromWindowTemplate((struct WindowTemplate *)&gWindowTemplate_81E6C74, str);
+    return Text_GetStringWidthFromWindowTemplate((struct WindowTemplate *)&gBoldTextWindowTemplate, str);
 }
 
 u8 *AlignBoldTextInteger(u8 *dest, s32 value, u8 alignAmount, u8 alignType)
 {
-    sTempWindow.template = (struct WindowTemplate *)&gWindowTemplate_81E6C74;
+    sTempWindow.template = (struct WindowTemplate *)&gBoldTextWindowTemplate;
     Text_InitWindow(&sTempWindow, 0, 0, 0, 0);
     return AlignInt2(&sTempWindow, dest, value, alignAmount, alignType);
 }
 
 u8 *AlignBoldTextString(u8 *dest, const u8 *src, u8 alignAmount, u8 alignType)
 {
-    sTempWindow.template = (struct WindowTemplate *)&gWindowTemplate_81E6C74;
+    sTempWindow.template = (struct WindowTemplate *)&gBoldTextWindowTemplate;
     Text_InitWindow(&sTempWindow, src, 0, 0, 0);
     return AlignString(&sTempWindow, dest, src, alignAmount, alignType);
 }
@@ -2519,9 +2519,9 @@ static u8 UpdateWindowText(struct Window *win)
 }
 
 #if defined(ENGLISH)
-#define SUB_800374C_LINE_LENGTH 26
+#define BATTLE_TEXT_LINE_LENGTH 26
 #elif defined(GERMAN)
-#define SUB_800374C_LINE_LENGTH 27
+#define BATTLE_TEXT_LINE_LENGTH 27
 #endif
 
 u8 Text_UpdateWindowInBattle(struct Window *win)
@@ -2529,7 +2529,7 @@ u8 Text_UpdateWindowInBattle(struct Window *win)
     u8 retVal;
 
     sWaitType = WAIT_TYPE_BATTLE;
-    sLineLength = SUB_800374C_LINE_LENGTH;
+    sLineLength = BATTLE_TEXT_LINE_LENGTH;
     retVal = UpdateWindowText(win);
     sLineLength = 26;
     sWaitType = WAIT_TYPE_NORMAL;
@@ -3452,7 +3452,7 @@ static u8 GetGlyphWidth(struct Window *win, u32 glyph)
 u8 GetExtCtrlCodeLength(u8 code)
 {
     u8 length = 0;
-    if (code <= 0x16)
+    if (code <= EXT_CTRL_CODE_ENG)
         length = sExtCtrlCodeLengths[code];
     return length;
 }
@@ -3640,21 +3640,21 @@ u8 GetStringWidth(struct Window *win, const u8 *s)
             case 7:
                 win->fontNum = win->template->fontNum;
                 break;
-            case 0x11:
+            case EXT_CTRL_CODE_CLEAR:
                 width += s[i + 1];
                 break;
-            case 0x12:
-            case 0x13:
+            case EXT_CTRL_CODE_SKIP:
+            case EXT_CTRL_CODE_CLEAR_TO:
                 if (width < s[i + 1])
                     width = s[i + 1];
                 break;
-            case 0x14:
+            case EXT_CTRL_CODE_MIN_LETTER_SPACING:
                 win->spacing = s[i + 1];
                 break;
-            case 0x15:
+            case EXT_CTRL_CODE_JPN:
                 win->language = LANGUAGE_JAPANESE;
                 break;
-            case 0x16:
+            case EXT_CTRL_CODE_ENG:
                 win->language = GAME_LANGUAGE;
                 break;
             }
