@@ -4,7 +4,8 @@
 // Exported type declarations
 
 #define MAX_BARD_SOUNDS_PER_WORD 6
-#define BARD_SOUND_ID_NONE 0xFF
+#define NUM_BARD_PITCH_TABLES_PER_SIZE 5
+#define PHONEME_ID_NONE 0xFF
 
 struct BardSoundTemplate
 {

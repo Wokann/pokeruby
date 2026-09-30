@@ -632,7 +632,7 @@ static void BardSing(struct Task *task, struct BardSong *song)
             case 0:
                 if (song->timer == 0)  // Timer has expired. Move to next sound
                 {
-                    if (song->soundIndex == MAX_BARD_SOUNDS_PER_WORD || sound->songId == BARD_SOUND_ID_NONE)
+                    if (song->soundIndex == MAX_BARD_SOUNDS_PER_WORD || sound->songId == PHONEME_ID_NONE)
                     {
                         song->state = 0xFE;
                         break;

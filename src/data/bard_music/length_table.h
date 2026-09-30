@@ -1,7 +1,7 @@
 #ifndef GUARD_LENGTH_TABLE_H
 #define GUARD_LENGTH_TABLE_H
 
-const int gBardSoundLengthTable[] = {
+static const int sPhonemeLengths[] = {
     0x09, 0x16, 0x0f, 0x10,
     0x27, 0x15, 0x09, 0x1e,
     0x18, 0x0f, 0x19, 0x0c,

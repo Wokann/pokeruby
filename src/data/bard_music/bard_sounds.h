@@ -25,7 +25,7 @@
 #include "trendysaying.h"
 #include "pokemon_2.h"
 
-const struct BardSoundTemplate (*const gBardSoundTemplatesTable[])[MAX_BARD_SOUNDS_PER_WORD] = {
+static const struct BardSoundTemplate (*const sBardSoundTemplatesTable[])[MAX_BARD_SOUNDS_PER_WORD] = {
     gBardSoundTemplates_Pokemon,
     gBardSoundTemplates_Trainer,
     gBardSoundTemplates_Status,
