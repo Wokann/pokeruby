@@ -1,6 +1,7 @@
 #include "global.h"
 #include "trig.h"
 #include "battle_anim.h"
+#include "battle_anim_internal.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -19,9 +20,9 @@ BSS_DATA struct FrenzyPlantRootData sFrenzyPlantRootData;
 BSS_DATA u16 gUnusedOverheatData[6];
 BSS_DATA u32 filler_0300073c;
 
-static void AnimIngrainRoot(struct Sprite* sprite);
+static void AnimIngrainRoot(struct Sprite *sprite);
 static void AnimFrenzyPlantRoot(struct Sprite *sprite);
-static void AnimRootFlickerOut(struct Sprite* sprite);
+static void AnimRootFlickerOut(struct Sprite *sprite);
 
 // roots
 // Used by Ingrain and Frenzy Plant.
@@ -90,17 +91,19 @@ const struct SpriteTemplate gFrenzyPlantRootSpriteTemplate =
     .callback = AnimFrenzyPlantRoot,
 };
 
-static void AnimIngrainRoot(struct Sprite* sprite)
+static void AnimIngrainRoot(struct Sprite *sprite)
 {
+    CMD_ARGS(offsetX, offsetY, subpriorityM30, animation, duration);
+
     if (!sprite->data[0])
     {
         sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
         sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);
-        sprite->x2 = gBattleAnimArgs[0];
-        sprite->y2 = gBattleAnimArgs[1];
-        sprite->subpriority = gBattleAnimArgs[2] + 30;
-        StartSpriteAnim(sprite, gBattleAnimArgs[3]);
-        sprite->data[2] = gBattleAnimArgs[4];
+        sprite->x2 = cmd->offsetX;
+        sprite->y2 = cmd->offsetY;
+        sprite->subpriority = cmd->subpriorityM30 + 30;
+        StartSpriteAnim(sprite, cmd->animation);
+        sprite->data[2] = cmd->duration;
         sprite->data[0]++;
         if ((sprite->y + sprite->y2) > 120)
         {
@@ -112,6 +115,8 @@ static void AnimIngrainRoot(struct Sprite* sprite)
 
 static void AnimFrenzyPlantRoot(struct Sprite *sprite)
 {
+    CMD_ARGS(interpolatePercent, offsetX, offsetY, subpriorityM30, animation, duration);
+
     s16 attackerX = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
     s16 attackerY = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
     s16 targetX = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
@@ -119,13 +124,13 @@ static void AnimFrenzyPlantRoot(struct Sprite *sprite)
 
     targetX -= attackerX;
     targetY -= attackerY;
-    sprite->x = attackerX + targetX * gBattleAnimArgs[0] / 100;
-    sprite->y = attackerY + targetY * gBattleAnimArgs[0] / 100;
-    sprite->x2 = gBattleAnimArgs[1];
-    sprite->y2 = gBattleAnimArgs[2];
-    sprite->subpriority = gBattleAnimArgs[3] + 30;
-    StartSpriteAnim(sprite, gBattleAnimArgs[4]);
-    sprite->data[2] = gBattleAnimArgs[5];
+    sprite->x = attackerX + targetX * cmd->interpolatePercent / 100;
+    sprite->y = attackerY + targetY * cmd->interpolatePercent / 100;
+    sprite->x2 = cmd->offsetX;
+    sprite->y2 = cmd->offsetY;
+    sprite->subpriority = cmd->subpriorityM30 + 30;
+    StartSpriteAnim(sprite, cmd->animation);
+    sprite->data[2] = cmd->duration;
     sprite->callback = AnimRootFlickerOut;
     sFrenzyPlantRootData.startX = sprite->x;
     sFrenzyPlantRootData.startY = sprite->y;
@@ -133,7 +138,7 @@ static void AnimFrenzyPlantRoot(struct Sprite *sprite)
     sFrenzyPlantRootData.targetY = targetY;
 }
 
-static void AnimRootFlickerOut(struct Sprite* sprite)
+static void AnimRootFlickerOut(struct Sprite *sprite)
 {
     if (++sprite->data[0] > (sprite->data[2] - 10))
         sprite->invisible = sprite->data[0] % 2;
