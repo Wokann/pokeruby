@@ -236,7 +236,7 @@ static void DecrementFeederStepCounters(void)
     }
 }
 
-bool8 GetInFrontFeederPokeblockAndSteps(void)
+bool32 GetInFrontFeederPokeblockAndSteps(void)
 {
     GetPokeblockFeederInFront();
 

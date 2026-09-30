@@ -20,6 +20,6 @@ struct Pokeblock *SafariZoneGetActivePokeblock(void);
 void SafariZoneActivatePokeblockFeeder(u8 pkblId);
 
 // Used by Ruby's debug menu.
-bool8 GetInFrontFeederPokeblockAndSteps(void);
+bool32 GetInFrontFeederPokeblockAndSteps(void);
 
 #endif // GUARD_SAFARI_ZONE_H
