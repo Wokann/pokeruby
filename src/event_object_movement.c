@@ -1418,14 +1418,14 @@ static u8 TrySpawnObjectEventTemplate(const struct ObjectEventTemplate *objectEv
 
 u8 SpawnSpecialObjectEvent(struct ObjectEventTemplate *objectEventTemplate)
 {
-    s16 x;
-    s16 y;
+    s16 cameraX;
+    s16 cameraY;
 
-    GetObjectEventMovingCameraOffset(&x, &y);
-    return TrySpawnObjectEventTemplate(objectEventTemplate, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, x, y);
+    GetObjectEventMovingCameraOffset(&cameraX, &cameraY);
+    return TrySpawnObjectEventTemplate(objectEventTemplate, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, cameraX, cameraY);
 }
 
-u8 SpawnSpecialObjectEventParameterized(u8 graphicsId, u8 movementType, u8 localId, s16 x, s16 y, u8 elevation)
+u8 SpawnSpecialObjectEventParameterized(u8 graphicsId, u8 movementBehavior, u8 localId, s16 x, s16 y, u8 elevation)
 {
     struct ObjectEventTemplate objectEventTemplate;
 
@@ -1437,7 +1437,7 @@ u8 SpawnSpecialObjectEventParameterized(u8 graphicsId, u8 movementType, u8 local
     objectEventTemplate.x = x;
     objectEventTemplate.y = y;
     objectEventTemplate.elevation = elevation;
-    objectEventTemplate.movementType = movementType;
+    objectEventTemplate.movementType = movementBehavior;
     objectEventTemplate.movementRangeX = 0;
     objectEventTemplate.movementRangeY = 0;
     objectEventTemplate.trainerType = TRAINER_TYPE_NONE;
@@ -1448,16 +1448,16 @@ u8 SpawnSpecialObjectEventParameterized(u8 graphicsId, u8 movementType, u8 local
 u8 TrySpawnObjectEvent(u8 localId, u8 mapNum, u8 mapGroup)
 {
     const struct ObjectEventTemplate *objectEventTemplate;
-    s16 x;
-    s16 y;
+    s16 cameraX;
+    s16 cameraY;
 
     objectEventTemplate = GetObjectEventTemplateByLocalIdAndMap(localId, mapNum, mapGroup);
     if (objectEventTemplate == NULL)
     {
         return OBJECT_EVENTS_COUNT;
     }
-    GetObjectEventMovingCameraOffset(&x, &y);
-    return TrySpawnObjectEventTemplate(objectEventTemplate, mapNum, mapGroup, x, y);
+    GetObjectEventMovingCameraOffset(&cameraX, &cameraY);
+    return TrySpawnObjectEventTemplate(objectEventTemplate, mapNum, mapGroup, cameraX, cameraY);
 }
 
 void CopyObjectGraphicsInfoToSpriteTemplate(u16 graphicsId, void (*callback)(struct Sprite *), struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables)
