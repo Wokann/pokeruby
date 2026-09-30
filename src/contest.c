@@ -310,7 +310,7 @@ u8 SetupContestGraphics(u8 *a)
         LZDecompressVram(gContestGfx, (void *)(VRAM + 0xD000));
         break;
     case 4:
-        LZDecompressVram(gContestBgmap, (void *)(VRAM + 0xE000));
+        LZDecompressVram(gContestBgTilemap, (void *)(VRAM + 0xE000));
         DmaCopy32Defvars(3, (void *)(VRAM + 0xE000), eContestTempSave.savedJunk, 0x800);
         break;
     case 5:

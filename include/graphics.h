@@ -48,7 +48,7 @@ extern const u8 gBerryBlenderOuter_Tilemap[];
 
 extern const u8 gContestPalette[];
 extern const u8 gContestGfx[];
-extern const u8 gContestBgmap[];
+extern const u8 gContestBgTilemap[];
 extern const u8 gContestCurtainTilemap[];
 extern const u8 gContestMiscGfx[];
 extern const u8 gContestAudienceGfx[];

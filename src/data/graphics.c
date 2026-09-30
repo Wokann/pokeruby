@@ -219,9 +219,9 @@ const u8 gBattleAnimSpritePal_PinkGlove[] = INCBIN_U8("graphics/battle_anims/spr
 const u8 gBattleAnimUnused_Unknown1[] = INCBIN_U8("graphics/battle_anims/unused/unknown_1.bin");
 const u8 gBattleAnimUnused_Unknown2[] = INCBIN_U8("graphics/battle_anims/unused/unknown_2.bin");
 const u8 gBattleAnimUnused_Unknown3[] = INCBIN_U8("graphics/battle_anims/unused/unknown_3.bin");
-const u8 unused_line_sketch_2[] = INCBIN_U8("graphics/unused/line_sketch_2.8bpp.lz");
-const u8 gUnknown_08D0D070[] = INCBIN_U8("graphics/unknown/unknown_D0D070.bin");
-const u8 unused_line_sketch_2_tilemap[] = INCBIN_U8("graphics/unused/line_sketch_2.bin.lz");
+const u8 gBattleAnimUnusedGfx_LineSketch2[] = INCBIN_U8("graphics/battle_anims/unused/line_sketch_2.8bpp.lz");
+const u8 gBattleAnimUnusedPal_LineSketch2[] = INCBIN_U8("graphics/battle_anims/unused/line_sketch_2_palette.bin");
+const u8 gBattleAnimUnusedTilemap_LineSketch2[] = INCBIN_U8("graphics/battle_anims/unused/line_sketch_2.bin.lz");
 const u8 gBattleAnimSpriteGfx_BlueLines[] = INCBIN_U8("graphics/battle_anims/sprites/blue_lines.4bpp.lz");
 const u8 gBattleAnimSpritePal_BlueLines[] = INCBIN_U8("graphics/battle_anims/sprites/blue_lines.gbapal.lz");
 const u8 gBattleAnimSpritePal_Impact3[] = INCBIN_U8("graphics/battle_anims/sprites/impact_3.gbapal.lz");
@@ -306,8 +306,8 @@ const u8 unused_gfx_ball_display_unused_extra[] = INCBIN_U8("graphics/battle_int
 const u8 unused_gfx_status2[] = INCBIN_U8("graphics/battle_interface/status2.4bpp");// these three duplicate sets of graphics are for the opponent pokemon and are also for use in double battles. they use dynamic palettes so coloring them is an extreme headache and wont be done for now.
 const u8 unused_gfx_status3[] = INCBIN_U8("graphics/battle_interface/status3.4bpp");
 const u8 unused_gfx_status4[] = INCBIN_U8("graphics/battle_interface/status4.4bpp");
-const u8 unused_gfx_unknown_D12FEC[] = INCBIN_U8("graphics/unknown/unknown_D12FEC.4bpp");
-const u8 unused_gfx_unknown_D1300C[] = INCBIN_U8("graphics/unknown/unknown_D1300C.4bpp");
+const u8 gBattleInterfaceGfx_HealthboxDoublesFrameEnd[] = INCBIN_U8("graphics/battle_interface/healthbox_doubles_frameend.4bpp");
+const u8 gBattleInterfaceGfx_HealthboxDoublesFrameEndBar[] = INCBIN_U8("graphics/battle_interface/healthbox_doubles_frameend_bar.4bpp");
 
 const u8 gBattleAnimSpriteGfx_FurySwipes[] = INCBIN_U8("graphics/battle_anims/sprites/fury_swipes.4bpp.lz");
 const u8 gBattleAnimSpritePal_FurySwipes[] = INCBIN_U8("graphics/battle_anims/sprites/fury_swipes.gbapal.lz");
@@ -359,7 +359,7 @@ const u8 gContestPalette[] = INCBIN_U8("graphics/unused/old_contest_2.gbapal.lz"
 
 const u8 gContestGfx[] = INCBIN_U8("graphics/unused/old_contest_2.bin.lz");
 
-const u8 gContestBgmap[] = INCBIN_U8("graphics/unknown/unknown_D17424.bin.lz");
+const u8 gContestBgTilemap[] = INCBIN_U8("graphics/contest/bgmap.bin.lz");
 const u8 gJPContestInterfaceTilemap[] = INCBIN_U8("graphics/contest/japanese/interface.bin.lz");
 const u8 gJPContestAudienceTilemap[] = INCBIN_U8("graphics/contest/japanese/audience.bin.lz");
 
