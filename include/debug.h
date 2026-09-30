@@ -7,7 +7,7 @@ struct MysteryEventDebugDataSource {
 };
 
 // start_menu_debug
-void DebugMenu_8077048(void);
+void DebugMenu_OpenMainMenu(void);
 
 // cable_car debug menu
 bool8 DebugOpenMiscMenu(void);

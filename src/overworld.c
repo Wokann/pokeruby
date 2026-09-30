@@ -1136,7 +1136,7 @@ u8 GetCurrentMapBattleScene(void)
 
 #if DEBUG
 
-void debug_sub_8076B68(void);
+void DebugMenu_InitTestMenu(void);
 
 void debug_sub_80589D8(void);
 
@@ -1154,7 +1154,7 @@ void CB2_InitTestMenu(void)
     ScanlineEffect_Stop();
     Text_LoadWindowTemplate(&gMenuTextWindowTemplate);
     InitMenuWindow(&gMenuTextWindowTemplate);
-    debug_sub_8076B68();
+    DebugMenu_InitTestMenu();
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
     REG_IE |= 1;
     REG_DISPCNT = DISPCNT_OBJ_ON | DISPCNT_BG0_ON | DISPCNT_OBJ_1D_MAP;
@@ -1302,7 +1302,7 @@ void CB2_NewGame(void)
 
 #if DEBUG
 
-void debug_sub_8058C00(void)
+void CB2_DebugFieldStart(void)
 {
     FieldClearVBlankHBlankCallbacks();
     StopMapMusic();

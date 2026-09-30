@@ -220,6 +220,6 @@ void SetPlayerFacingDirection(u8, u8);
 void CB2_ReturnToFieldFromMultiplayer(void);
 
 void CB2_InitTestMenu(void);
-void debug_sub_8058C00(void);
+void CB2_DebugFieldStart(void);
 
 #endif // GUARD_ROM4_H

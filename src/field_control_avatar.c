@@ -277,7 +277,7 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
     if (input->debugStartButton)
     {
         PlaySE(SE_WIN_OPEN);
-        DebugMenu_8077048();
+        DebugMenu_OpenMainMenu();
         return TRUE;
     }
 #endif
