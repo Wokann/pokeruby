@@ -4020,28 +4020,28 @@ static void AnimTask_GlareEyeDots_Step(u8 taskId)
     }
 }
 
-static void GetGlareEyeDotCoords(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, s16 *x, s16 *y)
+static void GetGlareEyeDotCoords(s16 startX, s16 startY, s16 endX, s16 endY, u8 pairMax, u8 pairNum, s16 *x, s16 *y)
 {
     int x2;
     int y2;
 
-    if (arg5 == 0)
+    if (pairNum == 0)
     {
-        *x = arg0;
-        *y = arg1;
+        *x = startX;
+        *y = startY;
         return;
     }
 
-    if (arg5 >= arg4)
+    if (pairNum >= pairMax)
     {
-        *x = arg2;
-        *y = arg3;
+        *x = endX;
+        *y = endY;
         return;
     }
 
-    arg4--;
-    x2 = (arg0 << 8) + arg5 * (((arg2 - arg0) << 8) / arg4);
-    y2 = (arg1 << 8) + arg5 * (((arg3 - arg1) << 8) / arg4);
+    pairMax--;
+    x2 = (startX << 8) + pairNum * (((endX - startX) << 8) / pairMax);
+    y2 = (startY << 8) + pairNum * (((endY - startY) << 8) / pairMax);
     *x = x2 >> 8;
     *y = y2 >> 8;
 }
