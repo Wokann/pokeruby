@@ -520,8 +520,8 @@ static void ReelTime_ExplodeMachine(struct Task *task);
 static void ReelTime_WaitExplode(struct Task *task);
 static void ReelTime_WaitSmoke(struct Task *task);
 static void ReelTime_EndFailure(struct Task *task);
-static void LoadReelTimeWindowTilemap(s16 x, s16 tilemapOffset);
-static void ClearReelTimeWindowTilemap(s16 x);
+static void LoadReelTimeWindowTilemap(s16 tilemapColumn, s16 tilemapOffset);
+static void ClearReelTimeWindowTilemap(s16 tilemapColumn);
 static void OpenInfoBox(u8 digDisplayId);
 static bool8 IsInfoBoxClosed(void);
 static void Task_InfoBox(u8 taskId);
@@ -570,7 +570,7 @@ static void LoadSlotMachineGfx(void);
 static void LoadReelBackground(void);
 static void LoadMenuGfx(void);
 static void LoadMenuAndReelOverlayTilemaps(void);
-static void SetReelButtonTilemap(s16 x, u16 topLeft, u16 topRight, u16 bottomLeft, u16 bottomRight);
+static void SetReelButtonTilemap(s16 offset, u16 topLeft, u16 topRight, u16 bottomLeft, u16 bottomRight);
 static void LoadInfoBoxTilemap(void);
 
 #if DEBUG
@@ -3282,24 +3282,24 @@ static void ReelTime_EndFailure(struct Task *task)
 
 static const u16 sReelTimeWindow_Tilemap[];
 
-static void LoadReelTimeWindowTilemap(s16 x, s16 tilemapOffset)
+static void LoadReelTimeWindowTilemap(s16 tilemapColumn, s16 tilemapOffset)
 {
     s16 i;
 
     for (i = 4; i < 15; i++)
     {
         u16 tile = sReelTimeWindow_Tilemap[tilemapOffset + (i - 4) * 20];
-        ((u16 *)BG_SCREEN_ADDR(28))[32 * i + x] = tile;
+        ((u16 *)BG_SCREEN_ADDR(28))[32 * i + tilemapColumn] = tile;
     }
 }
 
-static void ClearReelTimeWindowTilemap(s16 x)
+static void ClearReelTimeWindowTilemap(s16 tilemapColumn)
 {
     s16 i;
 
     for (i = 4; i < 15; i++)
     {
-        ((u16 *)BG_SCREEN_ADDR(28))[32 * i + x] = 0;
+        ((u16 *)BG_SCREEN_ADDR(28))[32 * i + tilemapColumn] = 0;
     }
 }
 
@@ -4441,14 +4441,14 @@ static void LoadSlotMachineReelOverlay(void)
     }
 }
 
-static void SetReelButtonTilemap(s16 x, u16 topLeft, u16 topRight, u16 bottomLeft, u16 bottomRight)
+static void SetReelButtonTilemap(s16 offset, u16 topLeft, u16 topRight, u16 bottomLeft, u16 bottomRight)
 {
     u16 *vram = BG_SCREEN_ADDR(29);
 
-    vram[15 * 32 + x] = topLeft;
-    vram[15 * 32 + 1 + x] = topRight;
-    vram[16 * 32 + x] = bottomLeft;
-    vram[16 * 32 + 1 + x] = bottomRight;
+    vram[15 * 32 + offset] = topLeft;
+    vram[15 * 32 + 1 + offset] = topRight;
+    vram[16 * 32 + offset] = bottomLeft;
+    vram[16 * 32 + 1 + offset] = bottomRight;
 }
 
 static void LoadInfoBoxTilemap(void)
