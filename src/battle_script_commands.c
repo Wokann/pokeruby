@@ -6705,7 +6705,7 @@ static void atk8D_setmultihitcounter(void)
 
 static void atk8E_initmultihitstring(void)
 {
-    PREPARE_BYTE_NUMBER_BUFFER(gBattleStruct->unk160E0, 1, 0);
+    PREPARE_BYTE_NUMBER_BUFFER(gBattleStruct->multihitString, 1, 0);
     gBattlescriptCurrInstr++;
 }
 
@@ -9331,7 +9331,7 @@ static void atkEC_pursuitrelated(void)
         gCurrentMove = MOVE_PURSUIT;
         gBattlescriptCurrInstr += 5;
         gBattleStruct->animTurn = 1;
-        gBattleStruct->unk160A7 = gBattlerAttacker;
+        gBattleStruct->pursuitDoublesAttacker = gBattlerAttacker;
         gBattlerAttacker = gActiveBattler;
     }
     else

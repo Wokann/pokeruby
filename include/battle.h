@@ -81,7 +81,7 @@ struct DisableStruct
     /*0x0B*/ u8 disableTimer1 : 4;
     /*0x0B*/ u8 disableTimer2 : 4;
     /*0x0C*/ u8 encoredMovePos;
-    /*0x0D*/ u8 unkD;
+    /*0x0D*/ u8 filler_D;
     /*0x0E*/ u8 encoreTimer1 : 4;
     /*0x0E*/ u8 encoreTimer2 : 4;
     /*0x0F*/ u8 perishSongTimer1 : 4;
@@ -386,7 +386,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x160A4*/ u8 animArg1;
     /*0x160A5*/ u8 animArg2;
     /*0x160A6*/ u8 absentBattlerFlags;
-    /*0x160A7*/ u8 unk160A7;
+    /*0x160A7*/ u8 pursuitDoublesAttacker;
     /*0x160A8*/ u8 wallyBattleState;
     /*0x160A9*/ u8 wallyMovesState;
     /*0x160AA*/ u8 wallyWaitFrames;
@@ -416,7 +416,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x160DD*/ u8 intimidateBank;
     /*0x160DE*/ u8 unk160DE;
     /*0x160DF*/ u8 unk160DF;
-    /*0x160E0*/ u8 unk160E0[6];
+    /*0x160E0*/ u8 multihitString[6];
     /*0x160E6*/ bool8 overworldWeatherDone;
     /*0x160E7*/ u8 atkCancellerTracker;
     /*0x160E8*/ u16 choicedMove[MAX_BATTLERS_COUNT];
