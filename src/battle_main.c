@@ -4580,140 +4580,140 @@ void SwapTurnOrder(u8 a, u8 b)
 // 0 = first mon moves first
 // 1 = second mon moves first
 // 2 = second mon moves first because it won a 50/50 roll
-u8 GetWhoStrikesFirst(u8 bank1, u8 bank2, bool8 ignoreMovePriorities)
+u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
 {
-    int bank1SpeedMultiplier, bank2SpeedMultiplier;
-    u32 bank1AdjustedSpeed, bank2AdjustedSpeed;
-    u8 heldItemEffect;
-    u8 heldItemEffectParam;
-    u16 bank1Move;
-    u16 bank2Move;
+    int speedMultiplierBattler1, speedMultiplierBattler2;
+    u32 speedBattler1, speedBattler2;
+    u8 holdEffect;
+    u8 holdEffectParam;
+    u16 moveBattler1;
+    u16 moveBattler2;
     u8 strikesFirst = 0;
 
     // Check for abilities that boost speed in weather.
     if (WEATHER_HAS_EFFECT)
     {
-        if ((gBattleMons[bank1].ability == ABILITY_SWIFT_SWIM && (gBattleWeather & B_WEATHER_RAIN))
-            || (gBattleMons[bank1].ability == ABILITY_CHLOROPHYLL && (gBattleWeather & B_WEATHER_SUN)))
-            bank1SpeedMultiplier = 2;
+        if ((gBattleMons[battler1].ability == ABILITY_SWIFT_SWIM && (gBattleWeather & B_WEATHER_RAIN))
+            || (gBattleMons[battler1].ability == ABILITY_CHLOROPHYLL && (gBattleWeather & B_WEATHER_SUN)))
+            speedMultiplierBattler1 = 2;
         else
-            bank1SpeedMultiplier = 1;
+            speedMultiplierBattler1 = 1;
 
-        if ((gBattleMons[bank2].ability == ABILITY_SWIFT_SWIM && (gBattleWeather & B_WEATHER_RAIN))
-            || (gBattleMons[bank2].ability == ABILITY_CHLOROPHYLL && (gBattleWeather & B_WEATHER_SUN)))
-            bank2SpeedMultiplier = 2;
+        if ((gBattleMons[battler2].ability == ABILITY_SWIFT_SWIM && (gBattleWeather & B_WEATHER_RAIN))
+            || (gBattleMons[battler2].ability == ABILITY_CHLOROPHYLL && (gBattleWeather & B_WEATHER_SUN)))
+            speedMultiplierBattler2 = 2;
         else
-            bank2SpeedMultiplier = 1;
+            speedMultiplierBattler2 = 1;
     }
     else
     {
-        bank1SpeedMultiplier = 1;
-        bank2SpeedMultiplier = 1;
+        speedMultiplierBattler1 = 1;
+        speedMultiplierBattler2 = 1;
     }
 
     // Calculate adjusted speed for first mon.
-    bank1AdjustedSpeed = (gBattleMons[bank1].speed * bank1SpeedMultiplier)
-        * gStatStageRatios[gBattleMons[bank1].statStages[STAT_STAGE_SPEED]][0] / gStatStageRatios[gBattleMons[bank1].statStages[STAT_STAGE_SPEED]][1];
+    speedBattler1 = (gBattleMons[battler1].speed * speedMultiplierBattler1)
+        * gStatStageRatios[gBattleMons[battler1].statStages[STAT_STAGE_SPEED]][0] / gStatStageRatios[gBattleMons[battler1].statStages[STAT_STAGE_SPEED]][1];
 
-    if (gBattleMons[bank1].item == ITEM_ENIGMA_BERRY)
+    if (gBattleMons[battler1].item == ITEM_ENIGMA_BERRY)
     {
-        heldItemEffect = gEnigmaBerries[bank1].holdEffect;
-        heldItemEffectParam = gEnigmaBerries[bank1].holdEffectParam;
+        holdEffect = gEnigmaBerries[battler1].holdEffect;
+        holdEffectParam = gEnigmaBerries[battler1].holdEffectParam;
     }
     else
     {
-        heldItemEffect = GetItemHoldEffect(gBattleMons[bank1].item);
-        heldItemEffectParam = GetItemHoldEffectParam(gBattleMons[bank1].item);
+        holdEffect = GetItemHoldEffect(gBattleMons[battler1].item);
+        holdEffectParam = GetItemHoldEffectParam(gBattleMons[battler1].item);
     }
 
     // Only give badge speed boost to the player's mon.
-    if (!(gBattleTypeFlags & BATTLE_TYPE_LINK) && FlagGet(FLAG_BADGE03_GET) && GetBattlerSide(bank1) == 0)
-        bank1AdjustedSpeed = (bank1AdjustedSpeed * 110) / 100;
+    if (!(gBattleTypeFlags & BATTLE_TYPE_LINK) && FlagGet(FLAG_BADGE03_GET) && GetBattlerSide(battler1) == 0)
+        speedBattler1 = (speedBattler1 * 110) / 100;
 
-    if (heldItemEffect == HOLD_EFFECT_MACHO_BRACE)
-        bank1AdjustedSpeed /= 2;
+    if (holdEffect == HOLD_EFFECT_MACHO_BRACE)
+        speedBattler1 /= 2;
 
-    if (gBattleMons[bank1].status1 & STATUS1_PARALYSIS)
-        bank1AdjustedSpeed /= 4;
+    if (gBattleMons[battler1].status1 & STATUS1_PARALYSIS)
+        speedBattler1 /= 4;
 
-    if (heldItemEffect == HOLD_EFFECT_QUICK_CLAW && gRandomTurnNumber < (heldItemEffectParam * 0xFFFF) / 100)
-        bank1AdjustedSpeed = UINT_MAX;
+    if (holdEffect == HOLD_EFFECT_QUICK_CLAW && gRandomTurnNumber < (holdEffectParam * 0xFFFF) / 100)
+        speedBattler1 = UINT_MAX;
 
     // Calculate adjusted speed for second mon.
-    bank2AdjustedSpeed = gBattleMons[bank2].speed * bank2SpeedMultiplier
-        * gStatStageRatios[gBattleMons[bank2].statStages[STAT_STAGE_SPEED]][0] / gStatStageRatios[gBattleMons[bank2].statStages[STAT_STAGE_SPEED]][1];
+    speedBattler2 = gBattleMons[battler2].speed * speedMultiplierBattler2
+        * gStatStageRatios[gBattleMons[battler2].statStages[STAT_STAGE_SPEED]][0] / gStatStageRatios[gBattleMons[battler2].statStages[STAT_STAGE_SPEED]][1];
 
-    if (gBattleMons[bank2].item == ITEM_ENIGMA_BERRY)
+    if (gBattleMons[battler2].item == ITEM_ENIGMA_BERRY)
     {
-        heldItemEffect = gEnigmaBerries[bank2].holdEffect;
-        heldItemEffectParam = gEnigmaBerries[bank2].holdEffectParam;
+        holdEffect = gEnigmaBerries[battler2].holdEffect;
+        holdEffectParam = gEnigmaBerries[battler2].holdEffectParam;
     }
     else
     {
-        heldItemEffect = GetItemHoldEffect(gBattleMons[bank2].item);
-        heldItemEffectParam = GetItemHoldEffectParam(gBattleMons[bank2].item);
+        holdEffect = GetItemHoldEffect(gBattleMons[battler2].item);
+        holdEffectParam = GetItemHoldEffectParam(gBattleMons[battler2].item);
     }
 
     // Only give badge speed boost to the player's mon.
-    if (!(gBattleTypeFlags & BATTLE_TYPE_LINK) && FlagGet(FLAG_BADGE03_GET) && GetBattlerSide(bank2) == 0)
+    if (!(gBattleTypeFlags & BATTLE_TYPE_LINK) && FlagGet(FLAG_BADGE03_GET) && GetBattlerSide(battler2) == 0)
     {
-        bank2AdjustedSpeed = (bank2AdjustedSpeed * 110) / 100;
+        speedBattler2 = (speedBattler2 * 110) / 100;
     }
 
-    if (heldItemEffect == HOLD_EFFECT_MACHO_BRACE)
-        bank2AdjustedSpeed /= 2;
+    if (holdEffect == HOLD_EFFECT_MACHO_BRACE)
+        speedBattler2 /= 2;
 
-    if (gBattleMons[bank2].status1 & STATUS1_PARALYSIS)
-        bank2AdjustedSpeed /= 4;
+    if (gBattleMons[battler2].status1 & STATUS1_PARALYSIS)
+        speedBattler2 /= 4;
 
-    if (heldItemEffect == HOLD_EFFECT_QUICK_CLAW && gRandomTurnNumber < (heldItemEffectParam * 0xFFFF) / 100)
-        bank2AdjustedSpeed = UINT_MAX;
+    if (holdEffect == HOLD_EFFECT_QUICK_CLAW && gRandomTurnNumber < (holdEffectParam * 0xFFFF) / 100)
+        speedBattler2 = UINT_MAX;
 
-    if (ignoreMovePriorities)
+    if (ignoreChosenMoves)
     {
-        bank1Move = MOVE_NONE;
-        bank2Move = MOVE_NONE;
+        moveBattler1 = MOVE_NONE;
+        moveBattler2 = MOVE_NONE;
     }
     else
     {
-        if (gChosenActionByBattler[bank1] == 0)
+        if (gChosenActionByBattler[battler1] == 0)
         {
-            if (gProtectStructs[bank1].noValidMoves)
-                bank1Move = MOVE_STRUGGLE;
+            if (gProtectStructs[battler1].noValidMoves)
+                moveBattler1 = MOVE_STRUGGLE;
             else
-                bank1Move = gBattleMons[bank1].moves[gSharedMem[BSTRUCT_OFF(chosenMovePositions) + bank1]];
+                moveBattler1 = gBattleMons[battler1].moves[gSharedMem[BSTRUCT_OFF(chosenMovePositions) + battler1]];
         }
         else
-            bank1Move = MOVE_NONE;
+            moveBattler1 = MOVE_NONE;
 
-        if (gChosenActionByBattler[bank2] == 0)
+        if (gChosenActionByBattler[battler2] == 0)
         {
-            if (gProtectStructs[bank2].noValidMoves)
-                bank2Move = MOVE_STRUGGLE;
+            if (gProtectStructs[battler2].noValidMoves)
+                moveBattler2 = MOVE_STRUGGLE;
             else
-                bank2Move = gBattleMons[bank2].moves[gSharedMem[BSTRUCT_OFF(chosenMovePositions) + bank2]];
+                moveBattler2 = gBattleMons[battler2].moves[gSharedMem[BSTRUCT_OFF(chosenMovePositions) + battler2]];
         }
         else
-            bank2Move = MOVE_NONE;
+            moveBattler2 = MOVE_NONE;
     }
 
-    if (gBattleMoves[bank1Move].priority != 0 || gBattleMoves[bank2Move].priority != 0)
+    if (gBattleMoves[moveBattler1].priority != 0 || gBattleMoves[moveBattler2].priority != 0)
     {
-        if (gBattleMoves[bank1Move].priority == gBattleMoves[bank2Move].priority)
+        if (gBattleMoves[moveBattler1].priority == gBattleMoves[moveBattler2].priority)
         {
-            if (bank1AdjustedSpeed == bank2AdjustedSpeed && (Random() & 1))
+            if (speedBattler1 == speedBattler2 && (Random() & 1))
                 strikesFirst = 2;
-            else if (bank1AdjustedSpeed < bank2AdjustedSpeed)
+            else if (speedBattler1 < speedBattler2)
                 strikesFirst = 1;
         }
-        else if (gBattleMoves[bank1Move].priority < gBattleMoves[bank2Move].priority)
+        else if (gBattleMoves[moveBattler1].priority < gBattleMoves[moveBattler2].priority)
             strikesFirst = 1;
     }
     else
     {
-        if (bank1AdjustedSpeed == bank2AdjustedSpeed && (Random() & 1))
+        if (speedBattler1 == speedBattler2 && (Random() & 1))
             strikesFirst = 2;
-        else if (bank1AdjustedSpeed < bank2AdjustedSpeed)
+        else if (speedBattler1 < speedBattler2)
             strikesFirst = 1;
     }
 
@@ -4917,7 +4917,7 @@ static void RunTurnActionsFunctions(void)
     }
     else
     {
-        if (gBattleStruct->savedTurnActionNumber != gCurrentTurnActionNumber) // action turn has been done, clear hitmarker bits for another bank
+        if (gBattleStruct->savedTurnActionNumber != gCurrentTurnActionNumber) // action turn has been done, clear hitmarker bits for another battler
         {
             gHitMarker &= ~(HITMARKER_NO_ATTACKSTRING);
             gHitMarker &= ~(HITMARKER_UNABLE_TO_USE_MOVE);
