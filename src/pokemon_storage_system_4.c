@@ -213,7 +213,7 @@ const u8 sWallpaperTiles_Plain[] = INCBIN_U8("graphics/pokemon_storage/plain.4bp
 
 const u8 sWallpaperTilemap_Plain[] = INCBIN_U8("graphics/pokemon_storage/plain.bin.lz");
 
-const u16 sUnusedWallpaperTilemap[] = INCBIN_U16("graphics/unused/tilemap_3BAEF8.bin");
+const u16 sUnusedWallpaperTilemap[] = INCBIN_U16("graphics/pokemon_storage/wallpapers/unused.bin");
 
 const u16 sBoxTitleColors[][2] = {
     {0x1CE7, 0x7FFF},
