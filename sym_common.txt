@@ -182,7 +182,7 @@ SYMBOL(gTotalCameraPixelOffsetX, 4)
 SYMBOL(gObjectEvents, 576)
 
 #if DEBUG
-gUnknown_Debug_03004BC0 = .;
+gDebugActiveObjectEventCount = .;
 . += 0x4;
 #endif
 

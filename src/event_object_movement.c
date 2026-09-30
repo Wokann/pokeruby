@@ -1088,7 +1088,7 @@ extern u8 gReservedSpritePaletteCount;
 extern struct Camera gCamera;
 struct ObjectEvent gObjectEvents[OBJECT_EVENTS_COUNT];
 #if DEBUG
-u8 gUnknown_Debug_03004BC0;
+u8 gDebugActiveObjectEventCount;
 #endif
 
 static void ClearObjectEvent(struct ObjectEvent *objectEvent)
@@ -1107,7 +1107,7 @@ static void ClearAllObjectEvents(void)
     for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
         ClearObjectEvent(&gObjectEvents[i]);
 #if DEBUG
-    gUnknown_Debug_03004BC0 = 0;
+    gDebugActiveObjectEventCount = 0;
 #endif
 }
 
@@ -1252,7 +1252,7 @@ static u8 InitObjectEventStateFromTemplate(const struct ObjectEventTemplate *tem
     }
 
 #if DEBUG
-    gUnknown_Debug_03004BC0++;
+    gDebugActiveObjectEventCount++;
 #endif
     return objectEventId;
 }
@@ -1302,7 +1302,7 @@ static void RemoveObjectEvent(struct ObjectEvent *objectEvent)
     objectEvent->active = FALSE;
     RemoveObjectEventInternal(objectEvent);
 #if DEBUG
-    gUnknown_Debug_03004BC0--;
+    gDebugActiveObjectEventCount--;
 #endif
 }
 
@@ -1366,7 +1366,7 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
     if (spriteId == MAX_SPRITES)
     {
 #if DEBUG
-        gUnknown_Debug_03004BC0--;
+        gDebugActiveObjectEventCount--;
 #endif
         gObjectEvents[objectEventId].active = FALSE;
         return OBJECT_EVENTS_COUNT;
@@ -1615,7 +1615,7 @@ void SpawnObjectEventsOnReturnToField(s16 x, s16 y)
     u8 i;
 
 #if DEBUG
-    gUnknown_Debug_03004BC0 = 0;
+    gDebugActiveObjectEventCount = 0;
 #endif
     ClearPlayerAvatarInfo();
     for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
@@ -1624,7 +1624,7 @@ void SpawnObjectEventsOnReturnToField(s16 x, s16 y)
         {
             SpawnObjectEventOnReturnToField(i, x, y);
 #if DEBUG
-            gUnknown_Debug_03004BC0++;
+            gDebugActiveObjectEventCount++;
 #endif
         }
     }
