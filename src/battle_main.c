@@ -4562,17 +4562,17 @@ void HandleTurnActionSelectionState(void)
     }
 }
 
-void SwapTurnOrder(u8 a, u8 b)
+void SwapTurnOrder(u8 id1, u8 id2)
 {
     int temp;
 
-    temp = gActionsByTurnOrder[a];
-    gActionsByTurnOrder[a] = gActionsByTurnOrder[b];
-    gActionsByTurnOrder[b] = temp;
+    temp = gActionsByTurnOrder[id1];
+    gActionsByTurnOrder[id1] = gActionsByTurnOrder[id2];
+    gActionsByTurnOrder[id2] = temp;
 
-    temp = gBattlerByTurnOrder[a];
-    gBattlerByTurnOrder[a] = gBattlerByTurnOrder[b];
-    gBattlerByTurnOrder[b] = temp;
+    temp = gBattlerByTurnOrder[id1];
+    gBattlerByTurnOrder[id1] = gBattlerByTurnOrder[id2];
+    gBattlerByTurnOrder[id2] = temp;
 }
 
 // Determines which of the two given mons will strike first in a battle.
