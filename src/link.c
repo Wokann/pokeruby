@@ -42,7 +42,7 @@ extern u16 gBattleTypeFlags;
 
 extern u16 gHeldKeyCodeToSend;
 
-extern void SetPlayerBerryData(u8 bank, u16 itemID);
+extern void SetPlayerBerryData(u8 playerId, u16 itemID);
 
 static void InitLinkTestBG(u8, u8, u8, u8);
 void LinkTestScreen();

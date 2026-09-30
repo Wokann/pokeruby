@@ -167,7 +167,7 @@ static u32 sDebug_PokeblockFactorRPM;
 static struct BlenderDebug sBlenderDebug;
 
 // this file's functions
-void SetPlayerBerryData(u8 bank, u16 itemId);
+void SetPlayerBerryData(u8 playerId, u16 itemId);
 
 static void ApplyBlenderCenterAffine(void);
 static void SetBgPos(void);
@@ -2657,10 +2657,10 @@ void SpriteCB_ScoreSymbolBest(struct Sprite* sprite)
         DestroySprite(sprite);
 }
 
-void SetPlayerBerryData(u8 bank, u16 itemId)
+void SetPlayerBerryData(u8 playerId, u16 itemId)
 {
-    gBerryBlenderData->chosenItemId[bank] = itemId;
-    ConvertItemToBlenderBerry(&gBerryBlenderData->blendedBerries[bank], itemId);
+    gBerryBlenderData->chosenItemId[playerId] = itemId;
+    ConvertItemToBlenderBerry(&gBerryBlenderData->blendedBerries[playerId], itemId);
 }
 
 void UnusedTask_WaitForBlenderLinkPlayers(u8 taskID)
