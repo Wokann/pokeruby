@@ -1,5 +1,6 @@
 #include "global.h"
 #include "task.h"
+#include "constants/field_tasks.h"
 #include "main.h"
 #include "constants/vars.h"
 #include "bike.h"
@@ -28,7 +29,7 @@ static void PacifidlogBridgePerStepCallback(u8);
 static void SootopolisGymIcePerStepCallback(u8);
 static void CrackedFloorPerStepCallback(u8);
 
-void (*const gUnknown_08376364[])(u8) = {
+void (*const gPerStepCallbacks[])(u8) = {
     DummyPerStepCallback,
     AshGrassPerStepCallback,
     FortreeBridgePerStepCallback,
@@ -39,29 +40,33 @@ void (*const gUnknown_08376364[])(u8) = {
     CrackedFloorPerStepCallback
 };
 
+#define tCallbackId data[0]
+
 void Task_RunPerStepCallback(u8 taskId)
 {
-    int idx = gTasks[taskId].data[0];
-    gUnknown_08376364[idx](taskId);
+    int callbackId = gTasks[taskId].tCallbackId;
+    gPerStepCallbacks[callbackId](taskId);
 }
 
 #define tState           data[0]
 #define tAmbientCryState data[1]
 #define tAmbientCryDelay data[2]
 
+#define TIME_UPDATE_INTERVAL (1 << 12)
+
 static void RunTimeBasedEvents(s16 *data)
 {
     switch (tState)
     {
         case 0:
-            if (gMain.vblankCounter1 & 0x1000)
+            if (gMain.vblankCounter1 & TIME_UPDATE_INTERVAL)
             {
                 DoTimeBasedEvents();
                 tState++;
             }
             break;
         case 1:
-            if (!(gMain.vblankCounter1 & 0x1000))
+            if (!(gMain.vblankCounter1 & TIME_UPDATE_INTERVAL))
             {
                 tState--;
             }
@@ -91,7 +96,7 @@ void SetUpFieldTasks(void)
     if (!FuncIsActiveTask(Task_RunPerStepCallback))
     {
         u8 taskId = CreateTask(Task_RunPerStepCallback, 0x50);
-        gTasks[taskId].data[0] = 0;
+        gTasks[taskId].tCallbackId = STEP_CB_DUMMY;
     }
     if (!FuncIsActiveTask(Task_MuddySlope))
     {
@@ -103,13 +108,13 @@ void SetUpFieldTasks(void)
     }
 }
 
-void ActivatePerStepCallback(u8 callback)
+void ActivatePerStepCallback(u8 callbackId)
 {
     s16 *dataPointer;
     s16 *dataStart;
     s16 zero;
     u8 taskId = FindTaskIdByFunc(Task_RunPerStepCallback);
-    if (taskId != 0xff)
+    if (taskId != TASK_NONE)
     {
         dataStart = gTasks[taskId].data;
         zero = 0;
@@ -118,13 +123,13 @@ void ActivatePerStepCallback(u8 callback)
         {
             *dataPointer-- = zero;
         } while ((int)dataPointer >= (int)dataStart);
-        if (callback >= ARRAY_COUNT(gUnknown_08376364))
+        if (callbackId >= ARRAY_COUNT(gPerStepCallbacks))
         {
-            *dataStart = 0;
+            *dataStart = STEP_CB_DUMMY;
         }
         else
         {
-            *dataStart = callback;
+            *dataStart = callbackId;
         }
     }
 }
@@ -134,18 +139,20 @@ void ResetFieldTasksArgs(void)
     u8 taskId;
     s16 *taskData;
     taskId = FindTaskIdByFunc(Task_RunPerStepCallback);
-    if (taskId != 0xff)
+    if (taskId != TASK_NONE)
     {
         taskData = gTasks[taskId].data;
     }
     taskId = FindTaskIdByFunc(Task_RunTimeBasedEvents);
-    if (taskId != 0xff)
+    if (taskId != TASK_NONE)
     {
         taskData = gTasks[taskId].data;
         taskData[1] = 0;
         taskData[2] = 0;
     }
 }
+
+#undef tCallbackId
 
 static const struct PacifidlogMetatileOffsets sHalfSubmergedBridgeMetatileOffsets[] = {
     { 0,  0, METATILE_ID(Pacifidlog, HalfSubmergedLogs_Vertical0)}, {0, 1, METATILE_ID(Pacifidlog, HalfSubmergedLogs_Vertical1)},
@@ -170,23 +177,23 @@ static const struct PacifidlogMetatileOffsets sFloatingBridgeMetatileOffsets[] =
 
 void DummyPerStepCallback(u8 taskId) {}
 
-static const struct PacifidlogMetatileOffsets *GetPacifidlogBridgeMetatileOffsets(const struct PacifidlogMetatileOffsets *a0, u16 a1)
+static const struct PacifidlogMetatileOffsets *GetPacifidlogBridgeMetatileOffsets(const struct PacifidlogMetatileOffsets *offsets, u16 metatileBehavior)
 {
-    if (MetatileBehavior_IsPacifidlogVerticalLog1(a1))
+    if (MetatileBehavior_IsPacifidlogVerticalLog1(metatileBehavior))
     {
-        return &a0[0 * 2];
+        return &offsets[0 * 2];
     }
-    else if (MetatileBehavior_IsPacifidlogVerticalLog2(a1))
+    else if (MetatileBehavior_IsPacifidlogVerticalLog2(metatileBehavior))
     {
-        return &a0[1 * 2];
+        return &offsets[1 * 2];
     }
-    else if (MetatileBehavior_IsPacifidlogHorizontalLog1(a1))
+    else if (MetatileBehavior_IsPacifidlogHorizontalLog1(metatileBehavior))
     {
-        return &a0[2 * 2];
+        return &offsets[2 * 2];
     }
-    else if (MetatileBehavior_IsPacifidlogHorizontalLog2(a1))
+    else if (MetatileBehavior_IsPacifidlogHorizontalLog2(metatileBehavior))
     {
-        return &a0[3 * 2];
+        return &offsets[3 * 2];
     }
     else
     {
@@ -194,66 +201,66 @@ static const struct PacifidlogMetatileOffsets *GetPacifidlogBridgeMetatileOffset
     }
 }
 
-static void TrySetPacifidlogBridgeMetatiles(const struct PacifidlogMetatileOffsets *offsets, s16 x, s16 y, bool32 flag)
+static void TrySetPacifidlogBridgeMetatiles(const struct PacifidlogMetatileOffsets *offsets, s16 x, s16 y, bool32 redrawMap)
 {
     offsets = GetPacifidlogBridgeMetatileOffsets(offsets, MapGridGetMetatileBehaviorAt(x, y));
     if (offsets)
     {
         MapGridSetMetatileIdAt(x + offsets[0].x, y + offsets[0].y, offsets[0].metatileId);
-        if (flag)
+        if (redrawMap)
         {
             CurrentMapDrawMetatileAt(x + offsets[0].x, y + offsets[0].y);
         }
         MapGridSetMetatileIdAt(x + offsets[1].x, y + offsets[1].y, offsets[1].metatileId);
-        if (flag)
+        if (redrawMap)
         {
             CurrentMapDrawMetatileAt(x + offsets[1].x, y + offsets[1].y);
         }
     }
 }
 
-static void TrySetLogBridgeHalfSubmerged(s16 x, s16 y, bool32 flag)
+static void TrySetLogBridgeHalfSubmerged(s16 x, s16 y, bool32 redrawMap)
 {
-    TrySetPacifidlogBridgeMetatiles(sHalfSubmergedBridgeMetatileOffsets, x, y, flag);
+    TrySetPacifidlogBridgeMetatiles(sHalfSubmergedBridgeMetatileOffsets, x, y, redrawMap);
 }
 
-static void TrySetLogBridgeFullySubmerged(s16 x, s16 y, bool32 flag)
+static void TrySetLogBridgeFullySubmerged(s16 x, s16 y, bool32 redrawMap)
 {
-    TrySetPacifidlogBridgeMetatiles(sFullySubmergedBridgeMetatileOffsets, x, y, flag);
+    TrySetPacifidlogBridgeMetatiles(sFullySubmergedBridgeMetatileOffsets, x, y, redrawMap);
 }
 
-static void TrySetLogBridgeFloating(s16 x, s16 y, bool32 flag)
+static void TrySetLogBridgeFloating(s16 x, s16 y, bool32 redrawMap)
 {
-    TrySetPacifidlogBridgeMetatiles(sFloatingBridgeMetatileOffsets, x, y, flag);
+    TrySetPacifidlogBridgeMetatiles(sFloatingBridgeMetatileOffsets, x, y, redrawMap);
 }
 
-static bool32 ShouldRaisePacifidlogLogs(s16 x1, s16 y1, s16 x2, s16 y2)
+static bool32 ShouldRaisePacifidlogLogs(s16 newX, s16 newY, s16 oldX, s16 oldY)
 {
-    s8 metatileBehavior = MapGridGetMetatileBehaviorAt(x2, y2);
+    s8 metatileBehavior = MapGridGetMetatileBehaviorAt(oldX, oldY);
     if (MetatileBehavior_IsPacifidlogVerticalLog1(metatileBehavior))
     {
-        if (y1 > y2)
+        if (newY > oldY)
         {
             return FALSE;
         }
     }
     else if (MetatileBehavior_IsPacifidlogVerticalLog2(metatileBehavior))
     {
-        if (y1 < y2)
+        if (newY < oldY)
         {
             return FALSE;
         }
     }
     else if (MetatileBehavior_IsPacifidlogHorizontalLog1(metatileBehavior))
     {
-        if (x1 > x2)
+        if (newX > oldX)
         {
             return FALSE;
         }
     }
     else if (MetatileBehavior_IsPacifidlogHorizontalLog2(metatileBehavior))
     {
-        if (x1 < x2)
+        if (newX < oldX)
         {
             return FALSE;
         }
@@ -261,39 +268,46 @@ static bool32 ShouldRaisePacifidlogLogs(s16 x1, s16 y1, s16 x2, s16 y2)
     return TRUE;
 }
 
-static bool32 ShouldSinkPacifidlogLogs(s16 x1, s16 y1, s16 x2, s16 y2)
+static bool32 ShouldSinkPacifidlogLogs(s16 newX, s16 newY, s16 oldX, s16 oldY)
 {
-    s8 metatileBehavior = MapGridGetMetatileBehaviorAt(x1, y1);
+    s8 metatileBehavior = MapGridGetMetatileBehaviorAt(newX, newY);
     if (MetatileBehavior_IsPacifidlogVerticalLog1(metatileBehavior))
     {
-        if (y1 < y2)
+        if (newY < oldY)
         {
             return FALSE;
         }
     }
     else if (MetatileBehavior_IsPacifidlogVerticalLog2(metatileBehavior))
     {
-        if (y1 > y2)
+        if (newY > oldY)
         {
             return FALSE;
         }
     }
     else if (MetatileBehavior_IsPacifidlogHorizontalLog1(metatileBehavior))
     {
-        if (x1 < x2)
+        if (newX < oldX)
         {
             return FALSE;
         }
     }
     else if (MetatileBehavior_IsPacifidlogHorizontalLog2(metatileBehavior))
     {
-        if (x1 > x2)
+        if (newX > oldX)
         {
             return FALSE;
         }
     }
     return TRUE;
 }
+
+#define tState    data[1]
+#define tPrevX    data[2]
+#define tPrevY    data[3]
+#define tToRaiseX data[4]
+#define tToRaiseY data[5]
+#define tDelay    data[6]
 
 static void PacifidlogBridgePerStepCallback(u8 taskId)
 {
@@ -301,39 +315,39 @@ static void PacifidlogBridgePerStepCallback(u8 taskId)
     s16 x, y;
     data = gTasks[taskId].data;
     PlayerGetDestCoords(&x, &y);
-    switch (data[1])
+    switch (tState)
     {
         case 0:
-            data[2] = x;
-            data[3] = y;
+            tPrevX = x;
+            tPrevY = y;
             TrySetLogBridgeFullySubmerged(x, y, TRUE);
-            data[1] = 1;
+            tState = 1;
             break;
         case 1:
-            if (x != data[2] || y != data[3])
+            if (x != tPrevX || y != tPrevY)
             {
-                if (ShouldRaisePacifidlogLogs(x, y, data[2], data[3]))
+                if (ShouldRaisePacifidlogLogs(x, y, tPrevX, tPrevY))
                 {
-                    TrySetLogBridgeHalfSubmerged(data[2], data[3], TRUE);
-                    TrySetLogBridgeFloating(data[2], data[3], FALSE);
-                    data[4] = data[2];
-                    data[5] = data[3];
-                    data[1] = 2;
-                    data[6] = 8;
+                    TrySetLogBridgeHalfSubmerged(tPrevX, tPrevY, TRUE);
+                    TrySetLogBridgeFloating(tPrevX, tPrevY, FALSE);
+                    tToRaiseX = tPrevX;
+                    tToRaiseY = tPrevY;
+                    tState = 2;
+                    tDelay = 8;
                 }
                 else
                 {
-                    data[4] = -1;
-                    data[5] = -1;
+                    tToRaiseX = -1;
+                    tToRaiseY = -1;
                 }
-                if (ShouldSinkPacifidlogLogs(x, y, data[2], data[3]))
+                if (ShouldSinkPacifidlogLogs(x, y, tPrevX, tPrevY))
                 {
                     TrySetLogBridgeHalfSubmerged(x, y, TRUE);
-                    data[1] = 2;
-                    data[6] = 8;
+                    tState = 2;
+                    tDelay = 8;
                 }
-                data[2] = x;
-                data[3] = y;
+                tPrevX = x;
+                tPrevY = y;
                 if (MetatileBehavior_IsPacifidlogLog(MapGridGetMetatileBehaviorAt(x, y)))
                 {
                     PlaySE(SE_PUDDLE);
@@ -341,23 +355,30 @@ static void PacifidlogBridgePerStepCallback(u8 taskId)
             }
             break;
         case 2:
-            if ((--data[6]) == 0)
+            if ((--tDelay) == 0)
             {
                 TrySetLogBridgeFullySubmerged(x, y, TRUE);
-                if (data[4] != -1 && data[5] != -1)
+                if (tToRaiseX != -1 && tToRaiseY != -1)
                 {
-                    TrySetLogBridgeFloating(data[4], data[5], TRUE);
+                    TrySetLogBridgeFloating(tToRaiseX, tToRaiseY, TRUE);
                 }
-                data[1] = 1;
+                tState = 1;
             }
             break;
     }
 }
 
+#undef tState
+#undef tPrevX
+#undef tPrevY
+#undef tToRaiseX
+#undef tToRaiseY
+#undef tDelay
+
 static void TryLowerFortreeBridge(s16 x, s16 y)
 {
-    u8 z = PlayerGetElevation();
-    if (!(z & 0x01))
+    u8 elevation = PlayerGetElevation();
+    if (!(elevation & 0x01))
     {
         switch (MapGridGetMetatileIdAt(x, y))
         {
@@ -373,8 +394,8 @@ static void TryLowerFortreeBridge(s16 x, s16 y)
 
 static void TryRaiseFortreeBridge(s16 x, s16 y)
 {
-    u8 z = PlayerGetElevation();
-    if (!(z & 0x01))
+    u8 elevation = PlayerGetElevation();
+    if (!(elevation & 0x01))
     {
         switch (MapGridGetMetatileIdAt(x, y))
         {
@@ -388,93 +409,107 @@ static void TryRaiseFortreeBridge(s16 x, s16 y)
     }
 }
 
+#define tState      data[1]
+#define tPrevX      data[2]
+#define tPrevY      data[3]
+#define tOldBridgeX data[4]
+#define tOldBridgeY data[5]
+#define tBounceTime data[6]
+
 static void FortreeBridgePerStepCallback(u8 taskId)
 {
     bool8 isFortreeBridgeCur;
     bool8 isFortreeBridgePrev;
-    u8 z, flag;
-    s16 x, y, x2, y2;
+    u8 elevation, onBridgeElevation;
+    s16 x, y, prevX, prevY;
     s16 *data = gTasks[taskId].data;
     PlayerGetDestCoords(&x, &y);
-    switch (data[1])
+    switch (tState)
     {
         default:
             break;
         case 0:
-            data[2] = x;
-            data[3] = y;
+            tPrevX = x;
+            tPrevY = y;
             if (MetatileBehavior_IsFortreeBridge(MapGridGetMetatileBehaviorAt(x, y)))
             {
                 TryLowerFortreeBridge(x, y);
                 CurrentMapDrawMetatileAt(x, y);
             }
-            data[1] = 1;
+            tState = 1;
             break;
         case 1:
-            x2 = data[2];
-            y2 = data[3];
-            if (x == x2 && y == y2)
+            prevX = tPrevX;
+            prevY = tPrevY;
+            if (x == prevX && y == prevY)
             {
                 break;
             }
             isFortreeBridgeCur = MetatileBehavior_IsFortreeBridge(MapGridGetMetatileBehaviorAt(x, y));
-            isFortreeBridgePrev = MetatileBehavior_IsFortreeBridge(MapGridGetMetatileBehaviorAt(x2, y2));
-            z = PlayerGetElevation();
-            flag = 0;
-            if ((u8)(z & 1) == 0)
+            isFortreeBridgePrev = MetatileBehavior_IsFortreeBridge(MapGridGetMetatileBehaviorAt(prevX, prevY));
+            elevation = PlayerGetElevation();
+            onBridgeElevation = FALSE;
+            if ((u8)(elevation & 1) == 0)
             {
-                flag = 1;
+                onBridgeElevation = TRUE;
             }
-            if (flag && (isFortreeBridgeCur == 1 || isFortreeBridgePrev == 1))
+            if (onBridgeElevation && (isFortreeBridgeCur == TRUE || isFortreeBridgePrev == TRUE))
             {
                 PlaySE(SE_BRIDGE_WALK);
             }
             if (isFortreeBridgePrev)
             {
-                TryRaiseFortreeBridge(x2, y2);
-                CurrentMapDrawMetatileAt(x2, y2);
+                TryRaiseFortreeBridge(prevX, prevY);
+                CurrentMapDrawMetatileAt(prevX, prevY);
                 TryLowerFortreeBridge(x, y);
                 CurrentMapDrawMetatileAt(x, y);
             }
-            data[4] = x2;
-            data[5] = y2;
-            data[2] = x;
-            data[3] = y;
+            tOldBridgeX = prevX;
+            tOldBridgeY = prevY;
+            tPrevX = x;
+            tPrevY = y;
             if (!isFortreeBridgePrev)
             {
                 break;
             }
-            data[6] = 16;
-            data[1] = 2;
+            tBounceTime = 16;
+            tState = 2;
             // fallthrough
         case 2:
-            data[6]--;
-            x2 = data[4];
-            y2 = data[5];
-            switch (data[6] % 7)
+            tBounceTime--;
+            prevX = tOldBridgeX;
+            prevY = tOldBridgeY;
+            switch (tBounceTime % 7)
             {
                 case 0:
-                    CurrentMapDrawMetatileAt(x2, y2);
+                    CurrentMapDrawMetatileAt(prevX, prevY);
                 case 1:
                 case 2:
                 case 3:
                     break;
                 case 4:
-                    TryLowerFortreeBridge(x2, y2);
-                    CurrentMapDrawMetatileAt(x2, y2);
-                    TryRaiseFortreeBridge(x2, y2);
+                    TryLowerFortreeBridge(prevX, prevY);
+                    CurrentMapDrawMetatileAt(prevX, prevY);
+                    TryRaiseFortreeBridge(prevX, prevY);
                 case 5:
                 case 6:
                 case 7:
                     break;
             }
-            if (data[6] == 0)
+            if (tBounceTime == 0)
             {
-                data[1] = 1;
+                tState = 1;
             }
             break;
     }
 }
+
+#undef tState
+#undef tPrevX
+#undef tPrevY
+#undef tOldBridgeX
+#undef tOldBridgeY
+#undef tBounceTime
 
 static const u16 sSootopolisGymIceRowVars[] = {
     0,
@@ -505,9 +540,17 @@ static const u16 sSootopolisGymIceRowVars[] = {
     0
 };
 
+#define ICE_PUZZLE_L 3
+#define ICE_PUZZLE_R 13
+#define ICE_PUZZLE_T 6
+#define ICE_PUZZLE_B 19
+
+#define ICE_PUZZLE_WIDTH (ICE_PUZZLE_R - ICE_PUZZLE_L + 1)
+#define ICE_PUZZLE_HEIGHT (ICE_PUZZLE_B - ICE_PUZZLE_T + 1)
+
 static bool32 CoordInIcePuzzleRegion(s16 x, s16 y)
 {
-    if ((u16)(x - 3) < 11 && (u16)(y - 6) < 14 && sSootopolisGymIceRowVars[y])
+    if ((u16)(x - ICE_PUZZLE_L) < ICE_PUZZLE_WIDTH && (u16)(y - ICE_PUZZLE_T) < ICE_PUZZLE_HEIGHT && sSootopolisGymIceRowVars[y])
     {
         return TRUE;
     }
@@ -518,19 +561,19 @@ static void MarkIcePuzzleCoordVisited(s16 x, s16 y)
 {
     if (CoordInIcePuzzleRegion(x, y))
     {
-        *GetVarPointer(sSootopolisGymIceRowVars[y]) |= (1 << (x - 3));
+        *GetVarPointer(sSootopolisGymIceRowVars[y]) |= (1 << (x - ICE_PUZZLE_L));
     }
 }
 
 static bool32 IsIcePuzzleCoordVisited(s16 x, s16 y)
 {
-    u32 var;
+    u32 iceStepMask;
     if (!CoordInIcePuzzleRegion(x, y))
     {
         return FALSE;
     }
-    var = VarGet(sSootopolisGymIceRowVars[y]) << 16;
-    if (((1 << 16) << (x - 3)) & var)
+    iceStepMask = VarGet(sSootopolisGymIceRowVars[y]) << 16;
+    if (((1 << 16) << (x - ICE_PUZZLE_L)) & iceStepMask)
     {
         return TRUE;
     }
@@ -548,85 +591,102 @@ void SetSootopolisGymCrackedIceMetatiles(void)
         {
             if (IsIcePuzzleCoordVisited(x, y) == TRUE)
             {
-                MapGridSetMetatileIdAt(x + 7, y + 7, METATILE_ID(SootopolisGym, Ice_Cracked));
+                MapGridSetMetatileIdAt(x + MAP_OFFSET, y + MAP_OFFSET, METATILE_ID(SootopolisGym, Ice_Cracked));
             }
         }
     }
 }
 
+#define tState data[1]
+#define tPrevX data[2]
+#define tPrevY data[3]
+#define tIceX  data[4]
+#define tIceY  data[5]
+#define tDelay data[6]
+
 static void SootopolisGymIcePerStepCallback(u8 taskId)
 {
     s16 x, y;
     u16 tileBehavior;
-    u16 *var;
+    u16 *iceStepCount;
     s16 *data = gTasks[taskId].data;
-    switch (data[1])
+    switch (tState)
     {
         case 0:
             PlayerGetDestCoords(&x, &y);
-            data[2] = x;
-            data[3] = y;
-            data[1] = 1;
+            tPrevX = x;
+            tPrevY = y;
+            tState = 1;
             break;
         case 1:
             PlayerGetDestCoords(&x, &y);
-            if (x != data[2] || y != data[3])
+            if (x != tPrevX || y != tPrevY)
             {
-                data[2] = x;
-                data[3] = y;
+                tPrevX = x;
+                tPrevY = y;
                 tileBehavior = MapGridGetMetatileBehaviorAt(x, y);
-                var = GetVarPointer(VAR_ICE_STEP_COUNT);
+                iceStepCount = GetVarPointer(VAR_ICE_STEP_COUNT);
                 if (MetatileBehavior_IsThinIce(tileBehavior) == TRUE)
                 {
-                    (*var)++;
-                    data[6] = 4;
-                    data[1] = 2;
-                    data[4] = x;
-                    data[5] = y;
+                    (*iceStepCount)++;
+                    tDelay = 4;
+                    tState = 2;
+                    tIceX = x;
+                    tIceY = y;
                 }
                 else if (MetatileBehavior_IsCrackedIce(tileBehavior) == TRUE)
                 {
-                    *var = 0;
-                    data[6] = 4;
-                    data[1] = 3;
-                    data[4] = x;
-                    data[5] = y;
+                    *iceStepCount = 0;
+                    tDelay = 4;
+                    tState = 3;
+                    tIceX = x;
+                    tIceY = y;
                 }
             }
             break;
         case 2:
-            if (data[6] != 0)
+            if (tDelay != 0)
             {
-                data[6]--;
+                tDelay--;
             }
             else
             {
-                x = data[4];
-                y = data[5];
+                x = tIceX;
+                y = tIceY;
                 PlaySE(SE_ICE_CRACK);
                 MapGridSetMetatileIdAt(x, y, METATILE_ID(SootopolisGym, Ice_Cracked));
                 CurrentMapDrawMetatileAt(x, y);
-                MarkIcePuzzleCoordVisited(x - 7, y - 7);
-                data[1] = 1;
+                MarkIcePuzzleCoordVisited(x - MAP_OFFSET, y - MAP_OFFSET);
+                tState = 1;
             }
             break;
         case 3:
-            if (data[6] != 0)
+            if (tDelay != 0)
             {
-                data[6]--;
+                tDelay--;
             }
             else
             {
-                x = data[4];
-                y = data[5];
+                x = tIceX;
+                y = tIceY;
                 PlaySE(SE_ICE_BREAK);
                 MapGridSetMetatileIdAt(x, y, METATILE_ID(SootopolisGym, Ice_Broken));
                 CurrentMapDrawMetatileAt(x, y);
-                data[1] = 1;
+                tState = 1;
             }
             break;
     }
 }
+
+#undef tState
+#undef tPrevX
+#undef tPrevY
+#undef tIceX
+#undef tIceY
+#undef tDelay
+
+#define tPrevX data[1]
+#define tPrevY data[2]
 
 static void AshGrassPerStepCallback(u8 taskId)
 {
@@ -634,10 +694,10 @@ static void AshGrassPerStepCallback(u8 taskId)
     u16 *ashGatherCount;
     s16 *data = gTasks[taskId].data;
     PlayerGetDestCoords(&x, &y);
-    if (x != data[1] || y != data[2])
+    if (x != tPrevX || y != tPrevY)
     {
-        data[1] = x;
-        data[2] = y;
+        tPrevX = x;
+        tPrevY = y;
         if (MetatileBehavior_IsAshGrass(MapGridGetMetatileBehaviorAt(x, y)))
         {
             if (MapGridGetMetatileIdAt(x, y) == METATILE_ID(Fallarbor, AshGrass))
@@ -660,11 +720,23 @@ static void AshGrassPerStepCallback(u8 taskId)
     }
 }
 
+#undef tPrevX
+#undef tPrevY
+
 static void SetCrackedFloorHoleMetatile(s16 x, s16 y)
 {
     MapGridSetMetatileIdAt(x, y, MapGridGetMetatileIdAt(x, y) == 0x22f ? 0x206 : 0x237);
     CurrentMapDrawMetatileAt(x, y);
 }
+
+#define tPrevX       data[2]
+#define tPrevY       data[3]
+#define tFloor1Delay data[4]
+#define tFloor1X     data[5]
+#define tFloor1Y     data[6]
+#define tFloor2Delay data[7]
+#define tFloor2X     data[8]
+#define tFloor2Y     data[9]
 
 static void CrackedFloorPerStepCallback(u8 taskId)
 {
@@ -673,106 +745,125 @@ static void CrackedFloorPerStepCallback(u8 taskId)
     s16 *data = gTasks[taskId].data;
     PlayerGetDestCoords(&x, &y);
     behavior = MapGridGetMetatileBehaviorAt(x, y);
-    if (data[4] != 0 && (--data[4]) == 0)
+    if (tFloor1Delay != 0 && (--tFloor1Delay) == 0)
     {
-        SetCrackedFloorHoleMetatile(data[5], data[6]);
+        SetCrackedFloorHoleMetatile(tFloor1X, tFloor1Y);
     }
-    if (data[7] != 0 && (--data[7]) == 0)
+    if (tFloor2Delay != 0 && (--tFloor2Delay) == 0)
     {
-        SetCrackedFloorHoleMetatile(data[8], data[9]);
+        SetCrackedFloorHoleMetatile(tFloor2X, tFloor2Y);
     }
     if (MetatileBehavior_IsCrackedFloorHole(behavior))
     {
         VarSet(VAR_ICE_STEP_COUNT, 0); // this var does double duty
     }
-    if ((x != data[2] || y != data[3]))
+    if ((x != tPrevX || y != tPrevY))
     {
-        data[2] = x;
-        data[3] = y;
+        tPrevX = x;
+        tPrevY = y;
         if (MetatileBehavior_IsCrackedFloor(behavior))
         {
-            if (GetPlayerSpeed() != 4)
+            if (GetPlayerSpeed() != PLAYER_SPEED_FASTEST)
             {
                 VarSet(VAR_ICE_STEP_COUNT, 0); // this var does double duty
             }
-            if (data[4] == 0)
+            if (tFloor1Delay == 0)
             {
-                data[4] = 3;
-                data[5] = x;
-                data[6] = y;
+                tFloor1Delay = 3;
+                tFloor1X = x;
+                tFloor1Y = y;
             }
-            else if (data[7] == 0)
+            else if (tFloor2Delay == 0)
             {
-                data[7] = 3;
-                data[8] = x;
-                data[9] = y;
+                tFloor2Delay = 3;
+                tFloor2X = x;
+                tFloor2Y = y;
             }
         }
     }
 }
 
-static const u16 sMuddySlopeAnimationMetatiles[] = {
+#undef tPrevX
+#undef tPrevY
+#undef tFloor1Delay
+#undef tFloor1X
+#undef tFloor1Y
+#undef tFloor2Delay
+#undef tFloor2X
+#undef tFloor2Y
+
+#define tMapId data[0]
+#define tState data[1]
+#define tPrevX data[2]
+#define tPrevY data[3]
+#define SLOPE_DATA_START 4
+#define SLOPE_DATA_END (3 * SLOPE_DATA_SIZE + SLOPE_DATA_START)
+enum
+{
+    SLOPE_TIME,
+    SLOPE_X,
+    SLOPE_Y,
+    SLOPE_DATA_SIZE
+};
+#define tSlopeAnimTime(i) data[(i) * SLOPE_DATA_SIZE + SLOPE_DATA_START + SLOPE_TIME]
+
+static const u16 sMuddySlopeMetatiles[] = {
     METATILE_ID(General, MuddySlope_Frame0),
     METATILE_ID(General, MuddySlope_Frame3),
     METATILE_ID(General, MuddySlope_Frame2),
     METATILE_ID(General, MuddySlope_Frame1)
 };
 
-static void SetMuddySlopeAnimatedMetatile(s16 *counter, s16 x, s16 y)
+#define SLOPE_ANIM_TIME 32
+#define SLOPE_ANIM_STEP_TIME (SLOPE_ANIM_TIME / (int)ARRAY_COUNT(sMuddySlopeMetatiles))
+
+static void SetMuddySlopeMetatile(s16 *data, s16 x, s16 y)
 {
-    u16 tile;
-    if (--(*counter) == 0)
-        tile = METATILE_ID(General, MuddySlope_Frame0);
+    u16 metatileId;
+    if ((--data[SLOPE_TIME]) == 0)
+        metatileId = METATILE_ID(General, MuddySlope_Frame0);
     else
-        tile = sMuddySlopeAnimationMetatiles[*counter / 8];
+        metatileId = sMuddySlopeMetatiles[data[SLOPE_TIME] / SLOPE_ANIM_STEP_TIME];
 
-    MapGridSetMetatileIdAt(x, y, tile);
+    MapGridSetMetatileIdAt(x, y, metatileId);
     CurrentMapDrawMetatileAt(x, y);
-
-    // Immediately set the metatile back to the original muddy slope metatile
-    // but don't actualy draw it on the screen. This is so the underlying metatile
-    // behvior on the map is not changed.
     MapGridSetMetatileIdAt(x, y, METATILE_ID(General, MuddySlope_Frame0));
 }
 
-// Checks for the player traversing on muddy slope metatiles.
-// When the player walks or slides on one, it executes a short animation to
-// make it look like a small mudslide. A maximum of 4 mudslide animations can
-// exist simultaneously.
 void Task_MuddySlope(u8 taskId)
 {
-    s16 x, y, x2, y2;
+    s16 x, y, cameraOffsetX, cameraOffsetY;
     int i;
-    u16 mapIndices;
+    u16 mapId;
     s16 *data = gTasks[taskId].data;
     PlayerGetDestCoords(&x, &y);
-    mapIndices = (gSaveBlock1.location.mapGroup << 8) | gSaveBlock1.location.mapNum;
-    switch (data[1])
+    mapId = (gSaveBlock1.location.mapGroup << 8) | gSaveBlock1.location.mapNum;
+    switch (tState)
     {
         case 0:
-            data[0] = mapIndices;
-            data[2] = x;
-            data[3] = y;
-            data[1] = 1;
-            data[4] = 0;
-            data[7] = 0;
-            data[10] = 0;
-            data[13] = 0;
+            tMapId = mapId;
+            tPrevX = x;
+            tPrevY = y;
+            tState = 1;
+            tSlopeAnimTime(0) = 0;
+            tSlopeAnimTime(1) = 0;
+            tSlopeAnimTime(2) = 0;
+            tSlopeAnimTime(3) = 0;
             break;
         case 1:
-            if (data[2] != x || data[3] != y)
+            if (tPrevX != x || tPrevY != y)
             {
-                data[2] = x;
-                data[3] = y;
+                tPrevX = x;
+                tPrevY = y;
                 if (MetatileBehavior_IsMuddySlope(MapGridGetMetatileBehaviorAt(x, y)))
                 {
-                    for (i = 4; i < 14; i += 3)
+                    for (i = SLOPE_DATA_START; i <= SLOPE_DATA_END; i += SLOPE_DATA_SIZE)
                     {
                         if (data[i] == 0)
                         {
-                            data[i] = 32;
-                            data[i + 1] = x;
-                            data[i + 2] = y;
+                            data[i + SLOPE_TIME] = SLOPE_ANIM_TIME;
+                            data[i + SLOPE_X] = x;
+                            data[i + SLOPE_Y] = y;
                             break;
                         }
                     }
@@ -781,25 +872,35 @@ void Task_MuddySlope(u8 taskId)
             break;
     }
 
-    if (gCamera.active && mapIndices != data[0])
+    if (gCamera.active && mapId != tMapId)
     {
-        data[0] = mapIndices;
-        x2 = gCamera.x;
-        y2 = gCamera.y;
+        tMapId = mapId;
+        cameraOffsetX = gCamera.x;
+        cameraOffsetY = gCamera.y;
     }
     else
     {
-        x2 = 0;
-        y2 = 0;
+        cameraOffsetX = 0;
+        cameraOffsetY = 0;
     }
 
-    for (i = 4; i < 14; i += 3)
+    for (i = SLOPE_DATA_START; i <= SLOPE_DATA_END; i += SLOPE_DATA_SIZE)
     {
-        if (data[i])
+        if (data[i + SLOPE_TIME])
         {
-            data[i + 1] -= x2;
-            data[i + 2] -= y2;
-            SetMuddySlopeAnimatedMetatile(&data[i], data[i + 1], data[i + 2]);
+            data[i + SLOPE_X] -= cameraOffsetX;
+            data[i + SLOPE_Y] -= cameraOffsetY;
+            SetMuddySlopeMetatile(&data[i + SLOPE_TIME], data[i + SLOPE_X], data[i + SLOPE_Y]);
         }
     }
 }
+
+#undef tMapId
+#undef tState
+#undef tPrevX
+#undef tPrevY
+#undef SLOPE_DATA_START
+#undef SLOPE_DATA_END
+#undef tSlopeAnimTime
+#undef SLOPE_ANIM_TIME
+#undef SLOPE_ANIM_STEP_TIME
