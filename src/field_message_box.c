@@ -93,14 +93,14 @@ bool8 ShowFieldAutoScrollMessage(const u8 *message)
     }
 }
 
-bool8 unref_sub_8064BB8(const u8 *message)
+bool8 ForceShowFieldAutoScrollMessage(const u8 *message)
 {
     sMessageBoxMode = FIELD_MESSAGE_BOX_AUTO_SCROLL;
     PrintFieldMessage(message);
     return TRUE;
 }
 
-bool8 unref_sub_8064BD0(const u8 *message)
+bool8 ShowFieldMessageFromBuffer(const u8 *unused)
 {
     if (sMessageBoxMode != FIELD_MESSAGE_BOX_HIDDEN)
     {
@@ -147,7 +147,7 @@ bool8 IsFieldMessageBoxHidden(void)
         return FALSE;
 }
 
-void unref_sub_8064CA0(void)
+void ReplaceFieldMessageWithFrame(void)
 {
     DestroyFieldMessageBoxTask();
     TextWindow_DrawDialogueFrame(&gFieldMessageBoxWindow);
