@@ -2422,14 +2422,14 @@
       "blockdata_filepath": "data/layouts/SafariZone_Southeast/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082EDF30",
-      "name": "UnknownMap_082EDF30_Layout",
+      "id": "LAYOUT_UNUSED_OUTDOOR_AREA",
+      "name": "UnusedOutdoorArea_Layout",
       "width": 58,
       "height": 26,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "0",
-      "border_filepath": "data/layouts/UnknownMap_082EDF30/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082EDF30/map.bin"
+      "border_filepath": "data/layouts/UnusedOutdoorArea/border.bin",
+      "blockdata_filepath": "data/layouts/UnusedOutdoorArea/map.bin"
     },
     {
       "id": "LAYOUT_ROUTE109_SEASHORE_HOUSE",
