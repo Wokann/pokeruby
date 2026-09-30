@@ -77,7 +77,8 @@ LilycoveCity_LilycoveMuseum_1F_Text_StoneTabletWithAncientText:: @ 8187810
 	.string "small characters of an ancient,\l"
 	.string "unreadable language.$"
 
-UnknownString_818788B: @ 818788B
+@ Unused
+LilycoveCity_LilycoveMuseum_1F_Text_WorksOfMagnificence:: @ 818788B
 	.string "Hmmm...\n"
 	.string "What works of great magnificence...$"
 

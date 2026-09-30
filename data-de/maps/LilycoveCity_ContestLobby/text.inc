@@ -28,7 +28,8 @@ LilycoveCity_ContestLobby_Text_Explain4PlayerContest:: @ 81885A7
 	.string "Danach werden die üblichen Regeln\n"
 	.string "des WETTBEWERBS erklärt.$"
 
-UnknownString_81886A8: @ 81886A8
+@ Unused
+LilycoveCity_ContestLobby_Text_ChooseContestAfterLink:: @ 81886A8
 	.string "Sobald ihr per Link verbunden seid,\n"
 	.string "wählt bitte den WETTBEWERB aus.$"
 
@@ -70,14 +71,16 @@ LilycoveCity_ContestLobby_Text_YourMonIsEntryNumX:: @ 8188845
 	.string "teilnehmen.\p"
 	.string "Dein POKéMON hat die Nummer {STR_VAR_2}.$"
 
-UnknownString_8188890: @ 8188890
+@ Unused
+LilycoveCity_ContestLobby_Text_EntryNumberIsAssignedColor:: @ 8188890
 	.string "Nummer {STR_VAR_2} hat diese Farbe für\n"
 	.string "den WETTBEWERB zugewiesen bekommen.$"
 
 LilycoveCity_ContestLobby_Text_ContestBeginShortly:: @ 81888C6
 	.string "Der WETTBEWERB wird bald beginnen.$"
 
-UnknownString_81888E6: @ 81888E6
+@ Unused
+LilycoveCity_ContestLobby_Text_ComeThroughThisWayGoodLuck:: @ 81888E6
 	.string "Bitte hier entlang.\n"
 	.string "Viel Glück!$"
 
@@ -90,7 +93,8 @@ LilycoveCity_ContestLobby_Text_YourPokemonSpurredMeToPaint:: @ 818890F
 	.string "künstlerischen Hochleistung anspornte.\l"
 	.string "Siehst du?$"
 
-UnknownString_81889D0: @ 81889D0
+@ Unused
+LilycoveCity_ContestLobby_Text_ScreenSwitchesToPainting:: @ 81889D0
 	.string "Das Gemälde wird auf den Bildschirm\n"
 	.string "gerufen.$"
 

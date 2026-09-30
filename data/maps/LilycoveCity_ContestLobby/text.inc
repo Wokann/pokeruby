@@ -27,7 +27,8 @@ LilycoveCity_ContestLobby_Text_Explain4PlayerContest:: @ 81885A7
 	.string "After that, the usual CONTEST rules\n"
 	.string "apply.$"
 
-UnknownString_81886A8: @ 81886A8
+@ Unused
+LilycoveCity_ContestLobby_Text_ChooseContestAfterLink:: @ 81886A8
 	.string "Once you have linked up, please choose\n"
 	.string "the CONTEST.$"
 
@@ -68,14 +69,16 @@ LilycoveCity_ContestLobby_Text_YourMonIsEntryNumX:: @ 8188845
 	.string "the CONTEST.\p"
 	.string "Your POKéMON is Entry No. {STR_VAR_2}.$"
 
-UnknownString_8188890: @ 8188890
+@ Unused
+LilycoveCity_ContestLobby_Text_EntryNumberIsAssignedColor:: @ 8188890
 	.string "Entry No. {STR_VAR_2} is assigned this color\n"
 	.string "for this CONTEST.$"
 
 LilycoveCity_ContestLobby_Text_ContestBeginShortly:: @ 81888C6
 	.string "The CONTEST will begin shortly.$"
 
-UnknownString_81888E6: @ 81888E6
+@ Unused
+LilycoveCity_ContestLobby_Text_ComeThroughThisWayGoodLuck:: @ 81888E6
 	.string "Please come through this way.\n"
 	.string "Good luck!$"
 
@@ -88,7 +91,8 @@ LilycoveCity_ContestLobby_Text_YourPokemonSpurredMeToPaint:: @ 818890F
 	.string "painting better than I usually do.\l"
 	.string "Look, see?$"
 
-UnknownString_81889D0: @ 81889D0
+@ Unused
+LilycoveCity_ContestLobby_Text_ScreenSwitchesToPainting:: @ 81889D0
 	.string "The screen switches to display the\n"
 	.string "painting.$"
 

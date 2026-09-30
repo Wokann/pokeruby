@@ -17,12 +17,14 @@ LilycoveCity_PokemonCenter_1F_Text_HaventSeenRottenScoundrels:: @ 818A0A1
 	.string "Ich habe sie in letzter Zeit nicht\n"
 	.string "gesehen.$"
 
-UnknownString_818A10A: @ 818A10A
+@ Unused
+LilycoveCity_PokemonCenter_1F_Text_XAttackToRaiseAttack:: @ 818A10A
 	.string "Ich besorge mir X-ANGRIFF, um meine\n"
 	.string "ATTACKEN im Kampf zu verstärken.\p"
 	.string "Auf diese Weise gewinne ich garantiert.$"
 
-UnknownString_818A168: @ 818A168
+@ Unused
+LilycoveCity_PokemonCenter_1F_Text_FullHealCuresStatusProblems:: @ 818A168
 	.string "HYPERHEILER ist etwas teuer, aber sehr\n"
 	.string "nützlich.\p"
 	.string "Einer davon kann alle Statusprobleme\n"
