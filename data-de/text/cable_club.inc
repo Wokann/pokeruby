@@ -70,7 +70,8 @@ gText_AwaitingLinkup:: @ 81A49B6
 	.string "Verbindungsaufbau...\n"
 	.string "... ... B-Knopf: Abbruch$"
 
-UnknownString_81A49E2: @ 81A49E2
+@ Unused
+CableClub_Text_OkayToSaveProgress:: @ 81A49E2
 	.string "Dein Spiel muss vor Verbindungsaufbau\n"
 	.string "gespeichert werden. Speichern?$"
 
@@ -155,7 +156,8 @@ RecordCorner_Text_TakeSeatAndWait:: @ 81A4DD7
 RecordCorner_Text_ThanksForComing:: @ 81A4DF7
 	.string "Danke für den Besuch!$"
 
-UnknownString_81A4E0A: @ 81A4E0A
+@ Unused
+CableClub_Text_ChoosePokemonForMultiBattle:: @ 81A4E0A
 	.string "Bitte wähle die POKéMON für den\n"
 	.string "MULTIKAMPF.$"
 

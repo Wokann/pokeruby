@@ -72,7 +72,8 @@ gText_AwaitingLinkup:: @ 81A49B6
 	.string "Awaiting linkup...\n"
 	.string "... ... B Button: Cancel$"
 
-UnknownString_81A49E2: @ 81A49E2
+@ Unused
+CableClub_Text_OkayToSaveProgress:: @ 81A49E2
 	.string "Your progress must be saved before\n"
 	.string "linking. Is it okay to save?$"
 
@@ -153,7 +154,8 @@ RecordCorner_Text_TakeSeatAndWait:: @ 81A4DD7
 RecordCorner_Text_ThanksForComing:: @ 81A4DF7
 	.string "Thanks for coming.$"
 
-UnknownString_81A4E0A: @ 81A4E0A
+@ Unused
+CableClub_Text_ChoosePokemonForMultiBattle:: @ 81A4E0A
 	.string "Please choose your POKéMON for the\n"
 	.string "MULTI BATTLE.$"
 
