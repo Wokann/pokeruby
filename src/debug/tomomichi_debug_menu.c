@@ -458,8 +458,8 @@ static const u8 sString_FH_OBJ12[] = _("FH-OBJ12");
 static const u8 sString_FH_OBJ13[] = _("FH-OBJ13");
 static const u8 sString_FH_OBJ14[] = _("FH-OBJ14");
 static const u8 sString_FH_OBJ15[] = _("FH-OBJ15");
-static const u8 sString_Blank_083C1147[] = _("");
-static const u8 sString_Blank_083C1148[] = _("");
+static const u8 sString_FH_OBJ09_15_Empty1[] = _("");
+static const u8 sString_FH_OBJ09_15_Empty2[] = _("");
 
 static const struct MenuAction sMenuActions_ControlFlags_FH_OBJ09_15[] = {
     {sString_FH_OBJ09, DummyMenuAction},
@@ -469,8 +469,8 @@ static const struct MenuAction sMenuActions_ControlFlags_FH_OBJ09_15[] = {
     {sString_FH_OBJ13, DummyMenuAction},
     {sString_FH_OBJ14, DummyMenuAction},
     {sString_FH_OBJ15, DummyMenuAction},
-    {sString_Blank_083C1147, DummyMenuAction},
-    {sString_Blank_083C1148, DummyMenuAction}
+    {sString_FH_OBJ09_15_Empty1, DummyMenuAction},
+    {sString_FH_OBJ09_15_Empty2, DummyMenuAction}
 };
 
 static const u8 sControlFlags_FH_OBJ_CountsArray[] = {9, 7};
@@ -517,8 +517,8 @@ static const u8 sString_FH12[] = _("FHー12");
 static const u8 sString_FH13[] = _("FHー13");
 static const u8 sString_FH14[] = _("FHー14");
 static const u8 sString_FH15[] = _("FHー15");
-static const u8 sString_Blank_083C1286[] = _("");
-static const u8 sString_Blank_083C1287[] = _("");
+static const u8 sString_FH09_15_Empty1[] = _("");
+static const u8 sString_FH09_15_Empty2[] = _("");
 
 static const struct MenuAction sMenuActions_ControlFlags_FH09_15[] = {
     {sString_FH09, DummyMenuAction},
@@ -528,8 +528,8 @@ static const struct MenuAction sMenuActions_ControlFlags_FH09_15[] = {
     {sString_FH13, DummyMenuAction},
     {sString_FH14, DummyMenuAction},
     {sString_FH15, DummyMenuAction},
-    {sString_Blank_083C1286, DummyMenuAction},
-    {sString_Blank_083C1287, DummyMenuAction}
+    {sString_FH09_15_Empty1, DummyMenuAction},
+    {sString_FH09_15_Empty2, DummyMenuAction}
 };
 
 static const u8 sControlFlags_FH_CountsArray[] = {9, 7};
@@ -706,8 +706,8 @@ static const u8 sString_SysFlag_TvLati[] = _("SYSーMOVEーPOKEーNEWS");
 static const u8 sString_SysFlag_ShoalItem[] = _("SYSーASASEーITEM");
 static const u8 sString_SysFlag_BDash[] = _("SYSーBーDASH");
 static const u8 sString_SysFlag_ControlObjectDelete[] = _("SYSーCTRLーOBJーDELETE");
-static const u8 sString_Blank_083C18B4[] = _("");
-static const u8 sString_Blank_083C18B5[] = _("");
+static const u8 sString_SysFlag_Other4_Empty1[] = _("");
+static const u8 sString_SysFlag_Other4_Empty2[] = _("");
 
 static const struct MenuAction sMenuActions_SysFlags_Other4[] = {
     {sString_SysFlag_EncounterUpItem, DummyMenuAction},
@@ -717,8 +717,8 @@ static const struct MenuAction sMenuActions_SysFlags_Other4[] = {
     {sString_SysFlag_ShoalItem, DummyMenuAction},
     {sString_SysFlag_BDash, DummyMenuAction},
     {sString_SysFlag_ControlObjectDelete, DummyMenuAction},
-    {sString_Blank_083C18B4, DummyMenuAction},
-    {sString_Blank_083C18B5, DummyMenuAction}
+    {sString_SysFlag_Other4_Empty1, DummyMenuAction},
+    {sString_SysFlag_Other4_Empty2, DummyMenuAction}
 };
 
 static const u8 sString_SysFlag_SeafloorCavernLandmark[] = _("SYSーARRIVEーSUBMARINECAVE");
@@ -726,10 +726,10 @@ static const u8 sString_SysFlag_BattleTowerLandmark[] = _("SYSーARRIVEーBATTLE
 static const u8 sString_SysFlag_SouthernIslandLandmark[] = _("SYSーARRIVEーISLAND");
 static const u8 sString_SysFlag_PokemonLeagueFly[] = _("SYSーARRIVEーLEAGUE");
 static const u8 sString_SysFlag_SkyPillarLandmark[] = _("SYSーARRIVEーSORANOHASHIRA");
-static const u8 sString_Blank_083C196D[] = _("");
-static const u8 sString_Blank_083C196E[] = _("");
-static const u8 sString_Blank_083C196F[] = _("");
-static const u8 sString_Blank_083C1970[] = _("");
+static const u8 sString_SysFlag_Landmarks_Empty1[] = _("");
+static const u8 sString_SysFlag_Landmarks_Empty2[] = _("");
+static const u8 sString_SysFlag_Landmarks_Empty3[] = _("");
+static const u8 sString_SysFlag_Landmarks_Empty4[] = _("");
 
 static const struct MenuAction sMenuActions_SysFlags_Landmarks[] = {
     {sString_SysFlag_SeafloorCavernLandmark, DummyMenuAction},
@@ -737,10 +737,10 @@ static const struct MenuAction sMenuActions_SysFlags_Landmarks[] = {
     {sString_SysFlag_SouthernIslandLandmark, DummyMenuAction},
     {sString_SysFlag_PokemonLeagueFly, DummyMenuAction},
     {sString_SysFlag_SkyPillarLandmark, DummyMenuAction},
-    {sString_Blank_083C196D, DummyMenuAction},
-    {sString_Blank_083C196E, DummyMenuAction},
-    {sString_Blank_083C196F, DummyMenuAction},
-    {sString_Blank_083C1970, DummyMenuAction}
+    {sString_SysFlag_Landmarks_Empty1, DummyMenuAction},
+    {sString_SysFlag_Landmarks_Empty2, DummyMenuAction},
+    {sString_SysFlag_Landmarks_Empty3, DummyMenuAction},
+    {sString_SysFlag_Landmarks_Empty4, DummyMenuAction}
 };
 
 static const u8 sSysFlagPageCounts[] = {8, 7, 9, 4, 9, 9, 9, 7, 5};
@@ -829,7 +829,7 @@ static const u8 sTrainerFlagPageCounts[] = {8, 4, 1};
 static const u16 sTrainerFlagPageFlags[][9] = {
     {FLAG_DEFEATED_RUSTBORO_GYM, FLAG_DEFEATED_DEWFORD_GYM, FLAG_DEFEATED_MAUVILLE_GYM, FLAG_DEFEATED_LAVARIDGE_GYM, FLAG_DEFEATED_PETALBURG_GYM, FLAG_DEFEATED_FORTREE_GYM, FLAG_DEFEATED_MOSSDEEP_GYM, FLAG_DEFEATED_SOOTOPOLIS_GYM},
     {FLAG_DEFEATED_ELITE_4_SYDNEY, FLAG_DEFEATED_ELITE_4_PHOEBE, FLAG_DEFEATED_ELITE_4_GLACIA, FLAG_DEFEATED_ELITE_4_DRAKE},
-    {0x04E1}
+    {FLAG_UNUSED_0x4E1}
 };
 
 static const u8 sString_VanishFlag_Kecleon[] = DTR("120/119ばんどうろカクレオン", "ROUTE 120/119 KECLEON");
@@ -882,7 +882,7 @@ static const u8 sString_VanishFlag_UnderwaterSubmarineInteraction[] = _("FVーSU
 static const u8 sString_VanishFlag_LilycoveMotelPeople[] = _("FVーGUESTーALLーC106ーR0102");
 static const u8 sString_VanishFlag_RooftopLadyLilycoveMart[] = _("FVーHORIDASIー01ーC106ーR1106");
 static const u8 sString_VanishFlag_TrickHouseEntranceMan[] = _("FVーMIDDLEM1ー01ーR110ーR0101");
-static const u8 sString_VanishFlag_UnknownFlag352[] = _("FVーFUNEー01ーC102ーR0601");
+static const u8 sString_VanishFlag_SlateportCityHarborShip[] = _("FVーFUNEー01ーC102ーR0601");
 static const u8 sString_VanishFlag_LittlerootTownMaysHouseRivalBedroom[] = _("FVーSUPPORTWー01ーT101ーR0202");
 static const u8 sString_VanishFlag_LittlerootTownBrendansHouseRivalBedroom[] = _("FVーSUPPORTMー01ーT101ーR0102");
 
@@ -893,14 +893,14 @@ static const struct MenuAction sMenuActions_VanishFlags_OtherAndSupport[] = {
 	{sString_VanishFlag_LilycoveMotelPeople, DummyMenuAction},
 	{sString_VanishFlag_RooftopLadyLilycoveMart, DummyMenuAction},
 	{sString_VanishFlag_TrickHouseEntranceMan, DummyMenuAction},
-	{sString_VanishFlag_UnknownFlag352, DummyMenuAction},
+	{sString_VanishFlag_SlateportCityHarborShip, DummyMenuAction},
 	{sString_VanishFlag_LittlerootTownMaysHouseRivalBedroom, DummyMenuAction},
 	{sString_VanishFlag_LittlerootTownBrendansHouseRivalBedroom, DummyMenuAction}
 };
 
 static const u8 sString_VanishFlag_Route101BirchPoochyenaBattle[] = _("FVーODAMAKIー01ーFIELDーR101");
 static const u8 sString_VanishFlag_LittlerootTownBirchsLabBirch[] = _("FVーODAMAKIー01ーT101ーR0301");
-static const u8 sString_VanishFlag_UnknownBirch380[] = _("FVーODAMAKIーHYOKAーT101ーR0301");
+static const u8 sString_VanishFlag_LittlerootTownBirchsLabBirchAway[] = _("FVーODAMAKIーHYOKAーT101ーR0301");
 static const u8 sString_VanishFlag_Route101Birch[] = _("FVーODAMAKIーHYOKAーFIELDーR101");
 static const u8 sString_VanishFlag_Route103Birch[] = _("FVーODAMAKIーHYOKAーFIELDーR103");
 static const u8 sString_VanishFlag_BirchChampionsRoom[] = _("FVーODAMAKIー01ーC109ーR0105");
@@ -911,7 +911,7 @@ static const u8 sString_VanishFlag_Route116WandasBoyfriend[] = _("FVーFIGHTER�
 static const struct MenuAction sMenuActions_VanishFlags_BirchAndFighter[] = {
 	{sString_VanishFlag_Route101BirchPoochyenaBattle, DummyMenuAction},
 	{sString_VanishFlag_LittlerootTownBirchsLabBirch, DummyMenuAction},
-	{sString_VanishFlag_UnknownBirch380, DummyMenuAction},
+	{sString_VanishFlag_LittlerootTownBirchsLabBirchAway, DummyMenuAction},
 	{sString_VanishFlag_Route101Birch, DummyMenuAction},
 	{sString_VanishFlag_Route103Birch, DummyMenuAction},
 	{sString_VanishFlag_BirchChampionsRoom, DummyMenuAction},
@@ -926,7 +926,7 @@ static const u8 sString_VanishFlag_MauvilleCityWally[] = _("FVーMITSURUー01ー
 static const u8 sString_VanishFlag_VerdanturfTownWandasHouseWally[] = _("FVーMITSURUー01ーT106ーR0201");
 static const u8 sString_VanishFlag_WallyBattleVictoryRoad[] = _("FVーMITSURUー01ーCAVEーD1301");
 static const u8 sString_VanishFlag_PetalburgGymWally[] = _("FVーMITSURUー01ーC101ーR0201");
-static const u8 sString_VanishFlag_Unknown363[] = _("FVーMITSURUー01ーFIELDーR102");
+static const u8 sString_VanishFlag_Route102Wally[] = _("FVーMITSURUー01ーFIELDーR102");
 static const u8 sString_VanishFlag_WeatherInstitute1FWorkers[] = _("FVーTENKIー01ーR119ーR101");
 static const u8 sString_VanishFlag_WeatherInstitute2FWorkers[] = _("FVーTENKIー01ーR119ーR102");
 
@@ -937,7 +937,7 @@ static const struct MenuAction sMenuActions_VanishFlags_WallyAndWeather[] = {
 	{sString_VanishFlag_VerdanturfTownWandasHouseWally, DummyMenuAction},
 	{sString_VanishFlag_WallyBattleVictoryRoad, DummyMenuAction},
 	{sString_VanishFlag_PetalburgGymWally, DummyMenuAction},
-	{sString_VanishFlag_Unknown363, DummyMenuAction},
+	{sString_VanishFlag_Route102Wally, DummyMenuAction},
 	{sString_VanishFlag_WeatherInstitute1FWorkers, DummyMenuAction},
 	{sString_VanishFlag_WeatherInstitute2FWorkers, DummyMenuAction}
 };
@@ -959,23 +959,23 @@ static const struct MenuAction sMenuActions_VanishFlags_OtherAndSteven[] = {
 };
 
 static const u8 sString_VanishFlag_SeafloorCavernRoom9SleepingLegendary[] = _("FVーPOKE1ー02ーCAVEーD1111");
-static const u8 sString_VanishFlag_Unknown2E1[] = _("FVーPOKE1ー01ーCAVEーD0601");
-static const u8 sString_VanishFlag_Unknown2Ec[] = _("FVーPOKE1ー02ーCAVEーD0601");
+static const u8 sString_VanishFlag_PetalburgWoodsPokemon1[] = _("FVーPOKE1ー01ーCAVEーD0601");
+static const u8 sString_VanishFlag_PetalburgWoodsPokemon2[] = _("FVーPOKE1ー02ーCAVEーD0601");
 static const u8 sString_VanishFlag_Route101Poochyena[] = _("FVーPOKE1ー01ーFIELDーR101");
 static const u8 sString_VanishFlag_LittlerootTownPlayersHouseMachoke1[] = _("FVーPOKE1ー01ーOPENINGーROOM01");
 static const u8 sString_VanishFlag_LittlerootTownPlayersHouseMachoke2[] = _("FVーPOKE1ー02ーOPENINGーROOM01");
-static const u8 sString_VanishFlag_UnknownFlag305[] = _("FVーPOKE1ー01ーCAVEーD2308");
+static const u8 sString_VanishFlag_SkyPillarTopRayquaza[] = _("FVーPOKE1ー01ーCAVEーD2308");
 static const u8 sString_VanishFlag_RusturfTunnelPeeko[] = _("FVーPOKEMONー01ーCAVEーD0201");
 static const u8 sString_VanishFlag_BrineysHousePeeko[] = _("FVーPOKEMONー01ーR104ーR0101");
 
 static const struct MenuAction sMenuActions_VanishFlags_Pokemon[] = {
 	{sString_VanishFlag_SeafloorCavernRoom9SleepingLegendary, DummyMenuAction},
-	{sString_VanishFlag_Unknown2E1, DummyMenuAction},
-	{sString_VanishFlag_Unknown2Ec, DummyMenuAction},
+	{sString_VanishFlag_PetalburgWoodsPokemon1, DummyMenuAction},
+	{sString_VanishFlag_PetalburgWoodsPokemon2, DummyMenuAction},
 	{sString_VanishFlag_Route101Poochyena, DummyMenuAction},
 	{sString_VanishFlag_LittlerootTownPlayersHouseMachoke1, DummyMenuAction},
 	{sString_VanishFlag_LittlerootTownPlayersHouseMachoke2, DummyMenuAction},
-	{sString_VanishFlag_UnknownFlag305, DummyMenuAction},
+	{sString_VanishFlag_SkyPillarTopRayquaza, DummyMenuAction},
 	{sString_VanishFlag_RusturfTunnelPeeko, DummyMenuAction},
 	{sString_VanishFlag_BrineysHousePeeko, DummyMenuAction}
 };
@@ -984,8 +984,8 @@ static const u8 sString_VanishFlag_LittlerootTownMomOutside[] = _("FVーMAMAー0
 static const u8 sString_VanishFlag_LittlerootTownPlayersBedroomMom[] = _("FVーMAMAー01ーOPENINGーROOM02");
 static const u8 sString_VanishFlag_LittlerootTownBrendansHouseMom[] = _("FVーMAMAー01ーT101ーR0101");
 static const u8 sString_VanishFlag_LittlerootTownMaysHouseMom[] = _("FVーMAMAー01ーT101ーR0201");
-static const u8 sString_VanishFlag_Unknown30E[] = _("FVーMAMAー02ーT101ーR0101");
-static const u8 sString_VanishFlag_Unknown30F[] = _("FVーMAMAー02ーT101ーR0201");
+static const u8 sString_VanishFlag_LittlerootTownBrendansHouseMom2[] = _("FVーMAMAー02ーT101ーR0101");
+static const u8 sString_VanishFlag_LittlerootTownMaysHouseMom2[] = _("FVーMAMAー02ーT101ーR0201");
 static const u8 sString_VanishFlag_Route110RivalOnBike[] = _("FVーSUPPORTー02ーFIELDーR110");
 static const u8 sString_VanishFlag_Route119RivalOnBike[] = _("FVーSUPPORTー02ーFIELDーR119");
 static const u8 sString_VanishFlag_LavaridgeTownRivalOnBike[] = _("FVーSUPPORTー02ーFIELDーT104");
@@ -995,8 +995,8 @@ static const struct MenuAction sMenuActions_VanishFlags_MomAndSupport[] = {
 	{sString_VanishFlag_LittlerootTownPlayersBedroomMom, DummyMenuAction},
 	{sString_VanishFlag_LittlerootTownBrendansHouseMom, DummyMenuAction},
 	{sString_VanishFlag_LittlerootTownMaysHouseMom, DummyMenuAction},
-	{sString_VanishFlag_Unknown30E, DummyMenuAction},
-	{sString_VanishFlag_Unknown30F, DummyMenuAction},
+	{sString_VanishFlag_LittlerootTownBrendansHouseMom2, DummyMenuAction},
+	{sString_VanishFlag_LittlerootTownMaysHouseMom2, DummyMenuAction},
 	{sString_VanishFlag_Route110RivalOnBike, DummyMenuAction},
 	{sString_VanishFlag_Route119RivalOnBike, DummyMenuAction},
 	{sString_VanishFlag_LavaridgeTownRivalOnBike, DummyMenuAction}
@@ -1006,7 +1006,7 @@ static const u8 sString_VanishFlag_Route104MrBriney[] = _("FVーHAGIー01ーFIEL
 static const u8 sString_VanishFlag_BrineysHouseMrBriney[] = _("FVーHAGIー01ーR104ーR0101");
 static const u8 sString_VanishFlag_MrBrineyDewfordTown[] = _("FVーHAGIー01ーFIELDーT103");
 static const u8 sString_VanishFlag_Route109MrBriney[] = _("FVーHAGIー01ーFIELDーR109");
-static const u8 sString_VanishFlag_Unknown34F[] = _("FVーHAGIー01ーC102ーR0601");
+static const u8 sString_VanishFlag_SlateportCityHarborMrBriney[] = _("FVーHAGIー01ーC102ーR0601");
 static const u8 sString_VanishFlag_SlateportCitySternsShipyardMrBriney[] = _("FVーHAGIー01ーC102ーR0101");
 static const u8 sString_VanishFlag_RusturfTunnelBriney[] = _("FVーHAGIー01ーCAVEーD0201");
 static const u8 sString_VanishFlag_Route116MrBriney[] = _("FVーHAGIー01ーFIELDーR116");
@@ -1017,7 +1017,7 @@ static const struct MenuAction sMenuActions_VanishFlags_MrBriney[] = {
 	{sString_VanishFlag_BrineysHouseMrBriney, DummyMenuAction},
 	{sString_VanishFlag_MrBrineyDewfordTown, DummyMenuAction},
 	{sString_VanishFlag_Route109MrBriney, DummyMenuAction},
-	{sString_VanishFlag_Unknown34F, DummyMenuAction},
+	{sString_VanishFlag_SlateportCityHarborMrBriney, DummyMenuAction},
 	{sString_VanishFlag_SlateportCitySternsShipyardMrBriney, DummyMenuAction},
 	{sString_VanishFlag_RusturfTunnelBriney, DummyMenuAction},
 	{sString_VanishFlag_Route116MrBriney, DummyMenuAction},
@@ -1050,13 +1050,13 @@ static const u8 sVanishFlagPageCounts[] = {9, 9, 9, 9, 6, 9, 9, 9, 9};
 
 static const u16 sVanishFlagPageFlags[][9] = {
     {FLAG_HIDE_ROUTE_120_KECLEON_BRIDGE_SHADOW, FLAG_HIDE_ROUTE_120_KECLEON_BRIDGE, FLAG_HIDE_ROUTE_120_KECLEON_1, FLAG_HIDE_ROUTE_120_KECLEON_2, FLAG_HIDE_ROUTE_120_KECLEON_3, FLAG_HIDE_ROUTE_120_KECLEON_4, FLAG_HIDE_ROUTE_120_KECLEON_5, FLAG_HIDE_ROUTE_119_KECLEON_1, FLAG_HIDE_ROUTE_119_KECLEON_2},
-    {FLAG_HIDE_BELDUM_BALL_STEVENS_HOUSE, FLAG_HIDE_RUSTBORO_CITY_DEVON_EMPLOYEE, FLAG_HIDE_UNDERWATER_SUBMARINE_INTERACTION, FLAG_HIDE_LILYCOVE_MOTEL_PEOPLE, FLAG_HIDE_ROOFTOP_LADY_LILYCOVE_MART, FLAG_HIDE_TRICK_HOUSE_ENTRANCE_MAN, 0x352, FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM, FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM},
+    {FLAG_HIDE_BELDUM_BALL_STEVENS_HOUSE, FLAG_HIDE_RUSTBORO_CITY_DEVON_EMPLOYEE, FLAG_HIDE_UNDERWATER_SUBMARINE_INTERACTION, FLAG_HIDE_LILYCOVE_MOTEL_PEOPLE, FLAG_HIDE_ROOFTOP_LADY_LILYCOVE_MART, FLAG_HIDE_TRICK_HOUSE_ENTRANCE_MAN, FLAG_HIDE_SLATEPORT_CITY_HARBOR_SHIP, FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM, FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM},
     {FLAG_HIDE_ROUTE_101_BIRCH_POOCHYENA_BATTLE, FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_BIRCH, FLAG_BIRCH_AWAY_FROM_LAB, FLAG_HIDE_ROUTE_101_BIRCH, FLAG_HIDE_ROUTE_103_BIRCH, FLAG_HIDE_BIRCH_CHAMPIONS_ROOM, FLAG_HIDE_RUSTURF_TUNNEL_WANDAS_BOYFRIEND, FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WANDAS_BOYFRIEND, FLAG_HIDE_ROUTE_116_WANDAS_BOYFRIEND},
-    {FLAG_HIDE_PETALBURG_CITY_WALLY, FLAG_HIDE_WALLY_DEFEATED_VICTORY_ROAD, FLAG_HIDE_MAUVILLE_CITY_WALLY, FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WALLY, FLAG_HIDE_WALLY_BATTLE_VICTORY_ROAD, FLAG_HIDE_PETALBURG_GYM_WALLY, FLAG_UNKNOWN_363, FLAG_HIDE_WEATHER_INSTITUTE_1F_WORKERS, FLAG_HIDE_WEATHER_INSTITUTE_2F_WORKERS},
+    {FLAG_HIDE_PETALBURG_CITY_WALLY, FLAG_HIDE_WALLY_DEFEATED_VICTORY_ROAD, FLAG_HIDE_MAUVILLE_CITY_WALLY, FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WALLY, FLAG_HIDE_WALLY_BATTLE_VICTORY_ROAD, FLAG_HIDE_PETALBURG_GYM_WALLY, FLAG_HIDE_ROUTE_102_WALLY, FLAG_HIDE_WEATHER_INSTITUTE_1F_WORKERS, FLAG_HIDE_WEATHER_INSTITUTE_2F_WORKERS},
     {FLAG_HIDE_STEVEN_GRANITE_CAVE, FLAG_HIDE_STEVEN_ROUTE128, FLAG_HIDE_ROUTE_118_STEVEN, FLAG_HIDE_STEVEN_STEVENS_HOUSE, FLAG_HIDE_ROUTE_120_STEVEN, FLAG_HIDE_STEVEN_SOOTOPOLIS},
-    {FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_SLEEPING_LEGENDARY, FLAG_UNKNOWN_2E1, FLAG_UNKNOWN_2EC, FLAG_HIDE_ROUTE_101_POOCHYENA, FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_HOUSE_MACHOKE_1, FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_HOUSE_MACHOKE_2, 0x305, FLAG_HIDE_RUSTURF_TUNNEL_PEEKO, FLAG_HIDE_BRINEYS_HOUSE_PEEKO},
-    {FLAG_HIDE_LITTLEROOT_TOWN_MOM_OUTSIDE, FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_BEDROOM_MOM, FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_MOM, FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MOM, FLAG_UNKNOWN_30E, FLAG_UNKNOWN_30F, FLAG_HIDE_ROUTE_110_RIVAL_ON_BIKE, FLAG_HIDE_ROUTE_119_RIVAL_ON_BIKE, FLAG_HIDE_LAVARIDGE_TOWN_RIVAL_ON_BIKE},
-    {FLAG_HIDE_ROUTE_104_MR_BRINEY, FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY, FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN, FLAG_HIDE_ROUTE_109_MR_BRINEY, FLAG_UNKNOWN_34F, FLAG_HIDE_SLATEPORT_CITY_STERNS_SHIPYARD_MR_BRINEY, FLAG_HIDE_RUSTURF_TUNNEL_BRINEY, FLAG_HIDE_ROUTE_116_MR_BRINEY, FLAG_HIDE_BRINEY_AND_PEEKO_SS_TIDAL},
+    {FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_SLEEPING_LEGENDARY, FLAG_HIDE_PETALBURG_WOODS_POKEMON_1, FLAG_HIDE_PETALBURG_WOODS_POKEMON_2, FLAG_HIDE_ROUTE_101_POOCHYENA, FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_HOUSE_MACHOKE_1, FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_HOUSE_MACHOKE_2, FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA, FLAG_HIDE_RUSTURF_TUNNEL_PEEKO, FLAG_HIDE_BRINEYS_HOUSE_PEEKO},
+    {FLAG_HIDE_LITTLEROOT_TOWN_MOM_OUTSIDE, FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_BEDROOM_MOM, FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_MOM, FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MOM, FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_MOM_2, FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MOM_2, FLAG_HIDE_ROUTE_110_RIVAL_ON_BIKE, FLAG_HIDE_ROUTE_119_RIVAL_ON_BIKE, FLAG_HIDE_LAVARIDGE_TOWN_RIVAL_ON_BIKE},
+    {FLAG_HIDE_ROUTE_104_MR_BRINEY, FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY, FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN, FLAG_HIDE_ROUTE_109_MR_BRINEY, FLAG_HIDE_SLATEPORT_CITY_HARBOR_MR_BRINEY, FLAG_HIDE_SLATEPORT_CITY_STERNS_SHIPYARD_MR_BRINEY, FLAG_HIDE_RUSTURF_TUNNEL_BRINEY, FLAG_HIDE_ROUTE_116_MR_BRINEY, FLAG_HIDE_BRINEY_AND_PEEKO_SS_TIDAL},
     {FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_RIVAL, FLAG_HIDE_RIVAL_CHAMPIONS_ROOM, FLAG_HIDE_RUSTBORO_CITY_RIVAL, FLAG_HIDE_RIVAL_LILYCOVE_MART, FLAG_HIDE_ROUTE_103_RIVAL, FLAG_HIDE_ROUTE_110_RIVAL, FLAG_HIDE_ROUTE_119_RIVAL, FLAG_HIDE_LAVARIDGE_TOWN_RIVAL, FLAG_HIDE_OLDALE_TOWN_RIVAL}
 };
 
@@ -1106,9 +1106,9 @@ static const struct MenuAction sMenuActions_EventFlags_FieldMovesAndDevon[] = {
 };
 
 static const u8 sString_EventFlag_ReceivedBike[] = _("FEーCYCLEー01ーP01ーP01ーC103ーR0201");
-static const u8 sString_EventFlag_UnknownFlag05B[] = _("FEーSCOOPー01ーP01ーFIELDーR115");
-static const u8 sString_EventFlag_UnknownFlag05C[] = _("FEーROPEー01ーP01ーFIELDーR114");
-static const u8 sString_EventFlag_UnknownFlag05D[] = _("FEーKAMAー01ーP01ーFIELDーR119");
+static const u8 sString_EventFlag_Route115Scope[] = _("FEーSCOOPー01ーP01ーFIELDーR115");
+static const u8 sString_EventFlag_Route114Rope[] = _("FEーROPEー01ーP01ーFIELDーR114");
+static const u8 sString_EventFlag_Route119Kama[] = _("FEーKAMAー01ーP01ーFIELDーR119");
 static const u8 sString_EventFlag_ReceivedWailmerPail[] = _("FEーZYOUROーGET");
 static const u8 sString_EventFlag_ReceivedPokeblockCase[] = _("FEーCUBECASEーGET");
 static const u8 sString_EventFlag_ReceivedOldRod[] = _("FEーBORONOTURIZAOーGET");
@@ -1117,9 +1117,9 @@ static const u8 sString_EventFlag_ReceivedSuperRod[] = _("FEーSUGOITURIZAOーGE
 
 static const struct MenuAction sMenuActions_EventFlags_KeyItems[] = {
     {sString_EventFlag_ReceivedBike, DummyMenuAction},
-    {sString_EventFlag_UnknownFlag05B, DummyMenuAction},
-    {sString_EventFlag_UnknownFlag05C, DummyMenuAction},
-    {sString_EventFlag_UnknownFlag05D, DummyMenuAction},
+    {sString_EventFlag_Route115Scope, DummyMenuAction},
+    {sString_EventFlag_Route114Rope, DummyMenuAction},
+    {sString_EventFlag_Route119Kama, DummyMenuAction},
     {sString_EventFlag_ReceivedWailmerPail, DummyMenuAction},
     {sString_EventFlag_ReceivedPokeblockCase, DummyMenuAction},
     {sString_EventFlag_ReceivedOldRod, DummyMenuAction},
@@ -1149,7 +1149,7 @@ static const struct MenuAction sMenuActions_EventFlags_Other1[] = {
     {sString_EventFlag_DefeatedSSTidalTrainers, DummyMenuAction}
 };
 
-static const u8 sString_EventFlag_UnknownFlag06C[] = _("FEーMITSURUー01ーT106ーR0201");
+static const u8 sString_EventFlag_VerdanturfTownWandasHouseWally[] = _("FEーMITSURUー01ーT106ーR0201");
 static const u8 sString_EventFlag_DefeatedWallyVictoryRoad[] = _("FEーMITSURUー01ーCAVEーD1301");
 static const u8 sString_EventFlag_DefeatedWallyMauville[] = _("FEーMITSURUー02ーFIELDーC103");
 static const u8 sString_EventFlag_WallySpeech[] = _("FEーMITSURUー02ーT106ーR0201");
@@ -1160,7 +1160,7 @@ static const u8 sString_EventFlag_UsedRoom4Key[] = _("FEーDOORーOPENー04ーCA
 static const u8 sString_EventFlag_UsedRoom6Key[] = _("FEーDOORーOPENー06ーCAVEーD1712");
 
 static const struct MenuAction sMenuActions_EventFlags_WallyAndDoors[] = {
-    {sString_EventFlag_UnknownFlag06C, DummyMenuAction},
+    {sString_EventFlag_VerdanturfTownWandasHouseWally, DummyMenuAction},
     {sString_EventFlag_DefeatedWallyVictoryRoad, DummyMenuAction},
     {sString_EventFlag_DefeatedWallyMauville, DummyMenuAction},
     {sString_EventFlag_WallySpeech, DummyMenuAction},
@@ -1198,10 +1198,10 @@ static const u8 sString_EventFlag_DeclinedRivalBattleLilycove[] = _("FEーSUPPOR
 static const u8 sString_EventFlag_MetRivalRustboro[] = _("FEーSUPPORTー01ーFIELDーR104");
 static const u8 sString_EventFlag_MetRivalLilycove[] = _("FEーSUPPORTー02ーFIELDーC106");
 static const u8 sString_EventFlag_MetRivalInHouseAfterLilycove[] = _("FEーSUPPORTー01ーT101ーR0202");
-static const u8 sString_EventFlag_UnknownFlag050[] = _("FEーMAMAー01ーP01ーT101ーR0101");
+static const u8 sString_EventFlag_LittlerootTownBrendansHouseMom[] = _("FEーMAMAー01ーP01ーT101ーR0101");
 static const u8 sString_EventFlag_SetWallClock[] = _("FEーCLOCKーSET");
 static const u8 sString_EventFlag_RescuedBirch[] = _("FEーODAMAKIー01ーP01ーT101ーR03");
-static const u8 sString_EventFlag_UnknownFlag055[] = _("FEーPAPAー01ーP01ーC101ーR0201");
+static const u8 sString_EventFlag_PetalburgGymDad[] = _("FEーPAPAー01ーP01ーC101ーR0201");
 
 static const struct MenuAction sMenuActions_EventFlags_SupportAndOther[] = {
     {sString_EventFlag_DefeatedRivalRoute103, DummyMenuAction},
@@ -1209,10 +1209,10 @@ static const struct MenuAction sMenuActions_EventFlags_SupportAndOther[] = {
     {sString_EventFlag_MetRivalRustboro, DummyMenuAction},
     {sString_EventFlag_MetRivalLilycove, DummyMenuAction},
     {sString_EventFlag_MetRivalInHouseAfterLilycove, DummyMenuAction},
-    {sString_EventFlag_UnknownFlag050, DummyMenuAction},
+    {sString_EventFlag_LittlerootTownBrendansHouseMom, DummyMenuAction},
     {sString_EventFlag_SetWallClock, DummyMenuAction},
     {sString_EventFlag_RescuedBirch, DummyMenuAction},
-    {sString_EventFlag_UnknownFlag055, DummyMenuAction}
+    {sString_EventFlag_PetalburgGymDad, DummyMenuAction}
 };
 
 static const u8 sString_EventFlag_ReceivedRedScarf[] = _("FEーDAISUKIーGOODSーFLAG01");
@@ -1220,8 +1220,8 @@ static const u8 sString_EventFlag_ReceivedBlueScarf[] = _("FEーDAISUKIーGOODS�
 static const u8 sString_EventFlag_ReceivedPinkScarf[] = _("FEーDAISUKIーGOODSーFLAG03");
 static const u8 sString_EventFlag_ReceivedGreenScarf[] = _("FEーDAISUKIーGOODSーFLAG04");
 static const u8 sString_EventFlag_ReceivedYellowScarf[] = _("FEーDAISUKIーGOODSーFLAG05");
-static const u8 sString_EventFlag_UnknownFlag053[] = _("FEーBASHAー01ーP01ーFIELDーC101ー");
-static const u8 sString_EventFlag_UnknownFlag054[] = _("FEーBASHAー01ーP02ーFIELDーC101ー");
+static const u8 sString_EventFlag_PetalburgCityBasha1[] = _("FEーBASHAー01ーP01ーFIELDーC101ー");
+static const u8 sString_EventFlag_PetalburgCityBasha2[] = _("FEーBASHAー01ーP02ーFIELDーC101ー");
 static const u8 sString_EventFlag_LinkContestRoomPokeball[] = _("FEーBALLー01ーP01ーSPーCONTEST");
 static const u8 sString_EventFlag_MetRivalMom[] = _("FEーWOMAN2ー01ーP01ーT101ーR0201");
 
@@ -1231,8 +1231,8 @@ static const struct MenuAction sMenuActions_EventFlags_FanClubAndOther[] = {
     {sString_EventFlag_ReceivedPinkScarf, DummyMenuAction},
     {sString_EventFlag_ReceivedGreenScarf, DummyMenuAction},
     {sString_EventFlag_ReceivedYellowScarf, DummyMenuAction},
-    {sString_EventFlag_UnknownFlag053, DummyMenuAction},
-    {sString_EventFlag_UnknownFlag054, DummyMenuAction},
+    {sString_EventFlag_PetalburgCityBasha1, DummyMenuAction},
+    {sString_EventFlag_PetalburgCityBasha2, DummyMenuAction},
     {sString_EventFlag_LinkContestRoomPokeball, DummyMenuAction},
     {sString_EventFlag_MetRivalMom, DummyMenuAction}
 };
@@ -1262,35 +1262,35 @@ static const struct MenuAction sMenuActions_EventFlags_Other2[] = {
 static const u8 sString_EventFlag_BirchAideMet[] = _("FEーSTUDYM1ー01ーP01ーT101R0301");
 static const u8 sString_EventFlag_DeclinedBike[] = _("FEーWORKERM1ー01ーC103ーR0201");
 static const u8 sString_EventFlag_ReceivedSecretPower[] = _("FEーHIMITSUーGET");
-static const u8 sString_Blank_083C318D[] = _("");
-static const u8 sString_Blank_083C318E[] = _("");
-static const u8 sString_Blank_083C318F[] = _("");
-static const u8 sString_Blank_083C3190[] = _("");
-static const u8 sString_Blank_083C3191[] = _("");
-static const u8 sString_Blank_083C3192[] = _("");
+static const u8 sString_EventFlag_Other6_Empty1[] = _("");
+static const u8 sString_EventFlag_Other6_Empty2[] = _("");
+static const u8 sString_EventFlag_Other6_Empty3[] = _("");
+static const u8 sString_EventFlag_Other6_Empty4[] = _("");
+static const u8 sString_EventFlag_Other6_Empty5[] = _("");
+static const u8 sString_EventFlag_Other6_Empty6[] = _("");
 
 static const struct MenuAction sMenuActions_EventFlags_Other6[] = {
     {sString_EventFlag_BirchAideMet, DummyMenuAction},
     {sString_EventFlag_DeclinedBike, DummyMenuAction},
     {sString_EventFlag_ReceivedSecretPower, DummyMenuAction},
-    {sString_Blank_083C318D, DummyMenuAction},
-    {sString_Blank_083C318E, DummyMenuAction},
-    {sString_Blank_083C318F, DummyMenuAction},
-    {sString_Blank_083C3190, DummyMenuAction},
-    {sString_Blank_083C3191, DummyMenuAction},
-    {sString_Blank_083C3192, DummyMenuAction}
+    {sString_EventFlag_Other6_Empty1, DummyMenuAction},
+    {sString_EventFlag_Other6_Empty2, DummyMenuAction},
+    {sString_EventFlag_Other6_Empty3, DummyMenuAction},
+    {sString_EventFlag_Other6_Empty4, DummyMenuAction},
+    {sString_EventFlag_Other6_Empty5, DummyMenuAction},
+    {sString_EventFlag_Other6_Empty6, DummyMenuAction}
 };
 
 static const u8 sEventFlagPageCounts[] = {9, 9, 9, 9, 9, 9, 9, 9, 3};
 
 static const u16 sEventFlagPageFlags[][9] = {
     {FLAG_RECEIVED_HM01, FLAG_RECEIVED_HM_FLY, FLAG_RECEIVED_HM_SURF, FLAG_RECEIVED_HM_STRENGTH, FLAG_RECEIVED_HM05, FLAG_RECEIVED_HM06, FLAG_RETURNED_DEVON_GOODS, FLAG_DEVON_GOODS_STOLEN, FLAG_RECOVERED_DEVON_GOODS},
-    {FLAG_RECEIVED_BIKE, 0x05B, 0x05C, 0x05D, FLAG_RECEIVED_WAILMER_PAIL, FLAG_RECEIVED_POKEBLOCK_CASE, FLAG_RECEIVED_OLD_ROD, FLAG_RECEIVED_GOOD_ROD, FLAG_RECEIVED_SUPER_ROD},
+    {FLAG_RECEIVED_BIKE, FLAG_UNUSED_0x05B, FLAG_UNUSED_0x05C, FLAG_UNUSED_0x05D, FLAG_RECEIVED_WAILMER_PAIL, FLAG_RECEIVED_POKEBLOCK_CASE, FLAG_RECEIVED_OLD_ROD, FLAG_RECEIVED_GOOD_ROD, FLAG_RECEIVED_SUPER_ROD},
     {FLAG_DEFEATED_EVIL_TEAM_MT_CHIMNEY, FLAG_EXCHANGED_SCANNER, FLAG_LEGEND_ESCAPED_SEAFLOOR_CAVERN, FLAG_LEGENDARY_BATTLE_COMPLETED, FLAG_RECEIVED_REPEAT_BALL, FLAG_RECEIVED_SS_TICKET, FLAG_KECLEON_FLED_FORTREE, FLAG_RECEIVED_REVIVED_FOSSIL_MON, FLAG_DEFEATED_SS_TIDAL_TRAINERS},
-    {0x06C, FLAG_DEFEATED_WALLY_VICTORY_ROAD, FLAG_DEFEATED_WALLY_MAUVILLE, FLAG_WALLY_SPEECH, FLAG_DECLINED_WALLY_BATTLE_MAUVILLE, FLAG_USED_ROOM_1_KEY, FLAG_USED_ROOM_2_KEY, FLAG_USED_ROOM_4_KEY, FLAG_USED_ROOM_6_KEY},
+    {FLAG_UNUSED_0x06C, FLAG_DEFEATED_WALLY_VICTORY_ROAD, FLAG_DEFEATED_WALLY_MAUVILLE, FLAG_WALLY_SPEECH, FLAG_DECLINED_WALLY_BATTLE_MAUVILLE, FLAG_USED_ROOM_1_KEY, FLAG_USED_ROOM_2_KEY, FLAG_USED_ROOM_4_KEY, FLAG_USED_ROOM_6_KEY},
     {FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_1, FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_2, FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_3, FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_4, FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_5, FLAG_MOSSDEEP_GYM_SWITCH_1, FLAG_MOSSDEEP_GYM_SWITCH_2, FLAG_MOSSDEEP_GYM_SWITCH_3, FLAG_MOSSDEEP_GYM_SWITCH_4},
-    {FLAG_DEFEATED_RIVAL_ROUTE103, FLAG_DECLINED_RIVAL_BATTLE_LILYCOVE, FLAG_MET_RIVAL_RUSTBORO, FLAG_MET_RIVAL_LILYCOVE, FLAG_MET_RIVAL_IN_HOUSE_AFTER_LILYCOVE, 0x050, FLAG_SET_WALL_CLOCK, FLAG_RESCUED_BIRCH, 0x055},
-    {FLAG_RECEIVED_RED_SCARF, FLAG_RECEIVED_BLUE_SCARF, FLAG_RECEIVED_PINK_SCARF, FLAG_RECEIVED_GREEN_SCARF, FLAG_RECEIVED_YELLOW_SCARF, 0x053, 0x054, FLAG_LINK_CONTEST_ROOM_POKEBALL, FLAG_MET_RIVAL_MOM},
+    {FLAG_DEFEATED_RIVAL_ROUTE103, FLAG_DECLINED_RIVAL_BATTLE_LILYCOVE, FLAG_MET_RIVAL_RUSTBORO, FLAG_MET_RIVAL_LILYCOVE, FLAG_MET_RIVAL_IN_HOUSE_AFTER_LILYCOVE, FLAG_UNUSED_0x050, FLAG_SET_WALL_CLOCK, FLAG_RESCUED_BIRCH, FLAG_UNUSED_0x055},
+    {FLAG_RECEIVED_RED_SCARF, FLAG_RECEIVED_BLUE_SCARF, FLAG_RECEIVED_PINK_SCARF, FLAG_RECEIVED_GREEN_SCARF, FLAG_RECEIVED_YELLOW_SCARF, FLAG_UNUSED_0x053, FLAG_UNUSED_0x054, FLAG_LINK_CONTEST_ROOM_POKEBALL, FLAG_MET_RIVAL_MOM},
     {FLAG_USED_STORAGE_KEY, FLAG_MET_PROF_COSMO, FLAG_RECEIVED_DOLL_LANETTE, FLAG_EVIL_TEAM_ESCAPED_STERN_SPOKE, FLAG_RETURNED_RED_OR_BLUE_ORB, FLAG_ENTERED_ELITE_FOUR, FLAG_RECEIVED_LAVARIDGE_EGG, FLAG_RECEIVED_RUNNING_SHOES, FLAG_RECEIVED_DEVON_SCOPE},
     {FLAG_BIRCH_AIDE_MET, FLAG_DECLINED_BIKE, FLAG_RECEIVED_SECRET_POWER}
 };
@@ -1466,19 +1466,19 @@ static const u8 sString_SaveWorkPart2_ContestLocation[] = _("WKーSCENEーSPーC
 static const u8 sString_SaveWorkPart2_ContestPrizePickup[] = _("WKーSCENEーSPーCONTESTITEM");
 static const u8 sString_SaveWorkPart2_LittlerootIntroState[] = _("WKーSCENEーSPーOPENING");
 static const u8 sString_SaveWorkPart2_SSTidalState[] = _("WKーSCENEーSPーSHIP01");
-static const u8 sString_Blank_083C3824[] = _("");
-static const u8 sString_Blank_083C3825[] = _("");
-static const u8 sString_Blank_083C3826[] = _("");
+static const u8 sString_SaveWorkPart2_SP_Empty1[] = _("");
+static const u8 sString_SaveWorkPart2_SP_Empty2[] = _("");
+static const u8 sString_SaveWorkPart2_SP_Empty3[] = _("");
 
 static const u8 sString_SaveWorkPart2_TrickHouseFoundTrickMaster[] = _("WKーSCENEーR110ーR0101");
 static const u8 sString_SaveWorkPart2_TrickHousePrizePickup[] = _("WKーSCENEーR110ーR0102");
 static const u8 sString_SaveWorkPart2_TrickHouseEnterFromCorridor[] = _("WKーSCENEーR110ーR0103");
 static const u8 sString_SaveWorkPart2_TrickHouseEntranceState[] = _("WKーKARAKURIーDAIOU");
 static const u8 sString_SaveWorkPart2_TrickHouseBeingWatchedState[] = _("WKーSCENEーSHISEN");
-static const u8 sString_Blank_083C3885[] = _("");
-static const u8 sString_Blank_083C3886[] = _("");
-static const u8 sString_Blank_083C3887[] = _("");
-static const u8 sString_Blank_083C3888[] = _("");
+static const u8 sString_SaveWorkPart2_TrickHousePart1_Empty1[] = _("");
+static const u8 sString_SaveWorkPart2_TrickHousePart1_Empty2[] = _("");
+static const u8 sString_SaveWorkPart2_TrickHousePart1_Empty3[] = _("");
+static const u8 sString_SaveWorkPart2_TrickHousePart1_Empty4[] = _("");
 
 static const u8 sString_SaveWorkPart2_TrickHousePuzzle1State[] = _("WKーSCENEーR110ーR0104");
 static const u8 sString_SaveWorkPart2_TrickHousePuzzle2State[] = _("WKーSCENEーR110ーR0105");
@@ -1492,13 +1492,13 @@ static const u8 sString_SaveWorkPart2_TrickHousePuzzle7State2[] = _("WKーSCENE�
 
 static const u8 sString_SaveWorkPart2_BrineyHouseState[] = _("WKーSCENEーR104ーR0101");
 static const u8 sString_SaveWorkPart2_GlassWorkshopState[] = _("WKーSCENEーR113ーR0101");
-static const u8 sString_Blank_083C3968[] = _("");
-static const u8 sString_Blank_083C3969[] = _("");
-static const u8 sString_Blank_083C396A[] = _("");
-static const u8 sString_Blank_083C396B[] = _("");
-static const u8 sString_Blank_083C396C[] = _("");
-static const u8 sString_Blank_083C396D[] = _("");
-static const u8 sString_Blank_083C396E[] = _("");
+static const u8 sString_SaveWorkPart2_RoomRoute_Empty1[] = _("");
+static const u8 sString_SaveWorkPart2_RoomRoute_Empty2[] = _("");
+static const u8 sString_SaveWorkPart2_RoomRoute_Empty3[] = _("");
+static const u8 sString_SaveWorkPart2_RoomRoute_Empty4[] = _("");
+static const u8 sString_SaveWorkPart2_RoomRoute_Empty5[] = _("");
+static const u8 sString_SaveWorkPart2_RoomRoute_Empty6[] = _("");
+static const u8 sString_SaveWorkPart2_RoomRoute_Empty7[] = _("");
 
 static const u8 sString_SaveWorkPart2_SecretBaseInitialized[] = _("WKーSCENEーBASEーGDOODS");
 static const u8 sString_SaveWorkPart2_BoardBrineyBoatState[] = _("WKーSCENEーHAGIーFUNE");
@@ -1512,13 +1512,13 @@ static const u8 sString_SaveWorkPart2_CyclingChallengeState[] = _("WKーSCENEー
 
 static const u8 sString_SaveWorkPart2_WeatherInstituteState[] = _("WKーSCENEーR119ーTENKI");
 static const u8 sString_SaveWorkPart2_SlateportFanClubState[] = _("WKーSCENEー01ーC102ーR0401");
-static const u8 sString_SaveWorkPart2_UnknownVar40BB[] = _("WKーFUTAGOー01ーFIELDーR104");
+static const u8 sString_SaveWorkPart2_Route104TwinsState[] = _("WKーFUTAGOー01ーFIELDーR104");
 static const u8 sString_SaveWorkPart2_BattleTowerBravoTrainerOn[] = _("WKーSCENEーBATTLEーTOWER");
 static const u8 sString_SaveWorkPart2_EReaderTrainerBattleResult[] = _("WKーSCENEーTRーHOUSE");
 static const u8 sString_SaveWorkPart2_WhichFossilRevived[] = _("WKーKASEKIーTYPE");
-static const u8 sString_Blank_083C3A9C[] = _("");
-static const u8 sString_Blank_083C3A9D[] = _("");
-static const u8 sString_Blank_083C3A9E[] = _("");
+static const u8 sString_SaveWorkPart2_Other2_Empty1[] = _("");
+static const u8 sString_SaveWorkPart2_Other2_Empty2[] = _("");
+static const u8 sString_SaveWorkPart2_Other2_Empty3[] = _("");
 
 static const struct MenuAction sMenuActions_SaveWorkPart2_SP[] = {
     {sString_SaveWorkPart2_LinkContestRoomState, DummyMenuAction},
@@ -1527,8 +1527,8 @@ static const struct MenuAction sMenuActions_SaveWorkPart2_SP[] = {
     {sString_SaveWorkPart2_ContestPrizePickup, DummyMenuAction},
     {sString_SaveWorkPart2_LittlerootIntroState, DummyMenuAction},
     {sString_SaveWorkPart2_SSTidalState, DummyMenuAction},
-    {sString_Blank_083C3824, DummyMenuAction},
-    {sString_Blank_083C3825, DummyMenuAction}
+    {sString_SaveWorkPart2_SP_Empty1, DummyMenuAction},
+    {sString_SaveWorkPart2_SP_Empty2, DummyMenuAction}
 };
 
 static const struct MenuAction sMenuActions_SaveWorkPart2_RoomR110Part1TrickHouse[] = {
@@ -1537,10 +1537,10 @@ static const struct MenuAction sMenuActions_SaveWorkPart2_RoomR110Part1TrickHous
     {sString_SaveWorkPart2_TrickHouseEnterFromCorridor, DummyMenuAction},
     {sString_SaveWorkPart2_TrickHouseEntranceState, DummyMenuAction},
     {sString_SaveWorkPart2_TrickHouseBeingWatchedState, DummyMenuAction},
-    {sString_Blank_083C3885, DummyMenuAction},
-    {sString_Blank_083C3886, DummyMenuAction},
-    {sString_Blank_083C3887, DummyMenuAction},
-    {sString_Blank_083C3888, DummyMenuAction}
+    {sString_SaveWorkPart2_TrickHousePart1_Empty1, DummyMenuAction},
+    {sString_SaveWorkPart2_TrickHousePart1_Empty2, DummyMenuAction},
+    {sString_SaveWorkPart2_TrickHousePart1_Empty3, DummyMenuAction},
+    {sString_SaveWorkPart2_TrickHousePart1_Empty4, DummyMenuAction}
 };
 
 static const struct MenuAction sMenuActions_SaveWorkPart2_RoomR110Part2[] = {
@@ -1558,13 +1558,13 @@ static const struct MenuAction sMenuActions_SaveWorkPart2_RoomR110Part2[] = {
 static const struct MenuAction sMenuActions_SaveWorkPart2_RoomRoute[] = {
     {sString_SaveWorkPart2_BrineyHouseState, DummyMenuAction},
     {sString_SaveWorkPart2_GlassWorkshopState, DummyMenuAction},
-    {sString_Blank_083C3968, DummyMenuAction},
-    {sString_Blank_083C3969, DummyMenuAction},
-    {sString_Blank_083C396A, DummyMenuAction},
-    {sString_Blank_083C396B, DummyMenuAction},
-    {sString_Blank_083C396C, DummyMenuAction},
-    {sString_Blank_083C396D, DummyMenuAction},
-    {sString_Blank_083C396E, DummyMenuAction}
+    {sString_SaveWorkPart2_RoomRoute_Empty1, DummyMenuAction},
+    {sString_SaveWorkPart2_RoomRoute_Empty2, DummyMenuAction},
+    {sString_SaveWorkPart2_RoomRoute_Empty3, DummyMenuAction},
+    {sString_SaveWorkPart2_RoomRoute_Empty4, DummyMenuAction},
+    {sString_SaveWorkPart2_RoomRoute_Empty5, DummyMenuAction},
+    {sString_SaveWorkPart2_RoomRoute_Empty6, DummyMenuAction},
+    {sString_SaveWorkPart2_RoomRoute_Empty7, DummyMenuAction}
 };
 
 static const struct MenuAction sMenuActions_SaveWorkPart2_Other1[] = {
@@ -1582,13 +1582,13 @@ static const struct MenuAction sMenuActions_SaveWorkPart2_Other1[] = {
 static const struct MenuAction sMenuActions_SaveWorkPart2_Other2[] = {
     {sString_SaveWorkPart2_WeatherInstituteState, DummyMenuAction},
     {sString_SaveWorkPart2_SlateportFanClubState, DummyMenuAction},
-    {sString_SaveWorkPart2_UnknownVar40BB, DummyMenuAction},
+    {sString_SaveWorkPart2_Route104TwinsState, DummyMenuAction},
     {sString_SaveWorkPart2_BattleTowerBravoTrainerOn, DummyMenuAction},
     {sString_SaveWorkPart2_EReaderTrainerBattleResult, DummyMenuAction},
     {sString_SaveWorkPart2_WhichFossilRevived, DummyMenuAction},
-    {sString_Blank_083C3A9C, DummyMenuAction},
-    {sString_Blank_083C3A9D, DummyMenuAction},
-    {sString_Blank_083C3A9E, DummyMenuAction}
+    {sString_SaveWorkPart2_Other2_Empty1, DummyMenuAction},
+    {sString_SaveWorkPart2_Other2_Empty2, DummyMenuAction},
+    {sString_SaveWorkPart2_Other2_Empty3, DummyMenuAction}
 };
 
 static const u8 sControlWorks_SaveWork_CountsArray[] = {6, 5, 9, 2, 9, 6};
@@ -1599,7 +1599,7 @@ static const u16 sControlWorks_SaveWork_ItemArrays[][9] = {
     {VAR_TRICK_HOUSE_PUZZLE_1_STATE, VAR_TRICK_HOUSE_PUZZLE_2_STATE, VAR_TRICK_HOUSE_PUZZLE_3_STATE, VAR_TRICK_HOUSE_PUZZLE_4_STATE, VAR_TRICK_HOUSE_PUZZLE_5_STATE, VAR_TRICK_HOUSE_PUZZLE_6_STATE, VAR_TRICK_HOUSE_PUZZLE_7_STATE, VAR_TRICK_HOUSE_PUZZLE_8_STATE, VAR_TRICK_HOUSE_PUZZLE_7_STATE_2},
     {VAR_BRINEY_HOUSE_STATE, VAR_GLASS_WORKSHOP_STATE},
     {VAR_SECRET_BASE_INITIALIZED, VAR_BOARD_BRINEY_BOAT_STATE, VAR_BRINEY_LOCATION, VAR_INIT_SECRET_BASE, VAR_LILYCOVE_CONTEST_LOBBY_STATE, VAR_ELITE_4_STATE, VAR_CABLE_CAR_STATION_STATE, VAR_SAFARI_ZONE_STATE, VAR_CYCLING_CHALLENGE_STATE},
-    {VAR_WEATHER_INSTITUTE_STATE, VAR_SLATEPORT_FAN_CLUB_STATE, 0x40BB, VAR_BRAVO_TRAINER_BATTLE_TOWER_ON, VAR_E_READER_TRAINER_BATTLE_RESULT, VAR_WHICH_FOSSIL_REVIVED}
+    {VAR_WEATHER_INSTITUTE_STATE, VAR_SLATEPORT_FAN_CLUB_STATE, VAR_UNUSED_0x40BB, VAR_BRAVO_TRAINER_BATTLE_TOWER_ON, VAR_E_READER_TRAINER_BATTLE_RESULT, VAR_WHICH_FOSSIL_REVIVED}
 };
 
 static const u8 sString_Town[] = DTR("タウン", "TOWN");
@@ -1812,15 +1812,15 @@ static const struct MenuAction sMenuActions_SaveWork_Dungeon[] = {
 static const u8 sControlWorks_SaveWorkPageCounts[] = {8, 9, 9, 9, 9, 7, 6, 9, 9};
 
 static const u16 sControlWorks_SaveWorkPageVars[][9] = {
-    {VAR_LITTLEROOT_TOWN_STATE, VAR_OLDALE_TOWN_STATE, VAR_DEWFORD_TOWN_STATE, VAR_LAVARIDGE_TOWN_STATE, VAR_CURRENT_SECRET_BASE, VAR_VERDANTURF_TOWN_STATE, 0x4056, VAR_OLDALE_RIVAL_STATE},
-    {VAR_PETALBURG_CITY_STATE, VAR_SLATEPORT_CITY_STATE, VAR_MAUVILLE_CITY_STATE, VAR_RUSTBORO_CITY_STATE, VAR_FORTREE_CITY_STATE, 0x405C, 0x405D, VAR_SOOTOPOLIS_CITY_STATE, 0x405F},
-    {VAR_ROUTE101_STATE, VAR_ROUTE102_STATE, VAR_ROUTE103_STATE, 0x4063, 0x4064, 0x4065, 0x4066, 0x4067, 0x4068},
-    {VAR_ROUTE110_STATE, 0x406A, 0x406B, 0x406C, 0x406D, 0x406E, VAR_ROUTE116_STATE, 0x4070, VAR_ROUTE118_STATE},
-    {VAR_ROUTE119_STATE, 0x4073, VAR_ROUTE121_STATE, 0x4075, 0x4076, 0x4077, 0x4078, 0x4079, 0x407A},
-    {VAR_ROUTE128_STATE, 0x407C, 0x407D, 0x407E, 0x407F, 0x4080, 0x4081},
-    {VAR_LITTLEROOT_HOUSES_STATE_MAY, 0x4083, VAR_BIRCH_LAB_STATE, VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, VAR_LITTLEROOT_RIVAL_STATE, VAR_PACIFIDLOG_TM_RECEIVED_DAY},
+    {VAR_LITTLEROOT_TOWN_STATE, VAR_OLDALE_TOWN_STATE, VAR_DEWFORD_TOWN_STATE, VAR_LAVARIDGE_TOWN_STATE, VAR_CURRENT_SECRET_BASE, VAR_VERDANTURF_TOWN_STATE, VAR_PACIFIDLOG_TOWN_STATE, VAR_OLDALE_RIVAL_STATE},
+    {VAR_PETALBURG_CITY_STATE, VAR_SLATEPORT_CITY_STATE, VAR_MAUVILLE_CITY_STATE, VAR_RUSTBORO_CITY_STATE, VAR_FORTREE_CITY_STATE, VAR_LILYCOVE_CITY_STATE, VAR_MOSSDEEP_CITY_STATE, VAR_SOOTOPOLIS_CITY_STATE, VAR_EVER_GRANDE_CITY_STATE},
+    {VAR_ROUTE101_STATE, VAR_ROUTE102_STATE, VAR_ROUTE103_STATE, VAR_ROUTE104_STATE, VAR_ROUTE105_STATE, VAR_ROUTE106_STATE, VAR_ROUTE107_STATE, VAR_ROUTE108_STATE, VAR_ROUTE109_STATE},
+    {VAR_ROUTE110_STATE, VAR_ROUTE111_STATE, VAR_ROUTE112_STATE, VAR_ROUTE113_STATE, VAR_ROUTE114_STATE, VAR_ROUTE115_STATE, VAR_ROUTE116_STATE, VAR_ROUTE117_STATE, VAR_ROUTE118_STATE},
+    {VAR_ROUTE119_STATE, VAR_ROUTE120_STATE, VAR_ROUTE121_STATE, VAR_ROUTE122_STATE, VAR_ROUTE123_STATE, VAR_ROUTE124_STATE, VAR_ROUTE125_STATE, VAR_ROUTE126_STATE, VAR_ROUTE127_STATE},
+    {VAR_ROUTE128_STATE, VAR_ROUTE129_STATE, VAR_ROUTE130_STATE, VAR_ROUTE131_STATE, VAR_ROUTE132_STATE, VAR_ROUTE133_STATE, VAR_ROUTE134_STATE},
+    {VAR_LITTLEROOT_HOUSES_STATE_MAY, VAR_UNUSED_0x4083, VAR_BIRCH_LAB_STATE, VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, VAR_LITTLEROOT_RIVAL_STATE, VAR_PACIFIDLOG_TM_RECEIVED_DAY},
     {VAR_PETALBURG_GYM_STATE, VAR_DEVON_CORP_3F_STATE, VAR_MAUVILLE_GYM_STATE, VAR_LILYCOVE_MUSEUM_2F_STATE, VAR_LILYCOVE_FAN_CLUB_STATE, VAR_SLATEPORT_HARBOR_STATE, VAR_SLATEPORT_MUSEUM_1F_STATE, VAR_FOSSIL_RESURRECTION_STATE, VAR_STEVENS_HOUSE_STATE},
-    {VAR_PETALBURG_WOODS_STATE, VAR_RUSTURF_TUNNEL_STATE, VAR_CAVE_OF_ORIGIN_B4F_STATE, VAR_SEAFLOOR_CAVERN_STATE, 0x40A8, VAR_MT_PYRE_STATE, VAR_NEW_MAUVILLE_STATE, VAR_METEOR_FALLS_STATE, VAR_VICTORY_ROAD_1F_STATE}
+    {VAR_PETALBURG_WOODS_STATE, VAR_RUSTURF_TUNNEL_STATE, VAR_CAVE_OF_ORIGIN_B4F_STATE, VAR_SEAFLOOR_CAVERN_STATE, VAR_UNUSED_0x40A8, VAR_MT_PYRE_STATE, VAR_NEW_MAUVILLE_STATE, VAR_METEOR_FALLS_STATE, VAR_VICTORY_ROAD_1F_STATE}
 };
 
 static const u8 sString_LocalWork_0To8[] = _("LOCALWORK0ー8");

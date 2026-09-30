@@ -18,7 +18,7 @@ SkyPillar_Top_EventScript_Rayquaza:: @ 815F316
 	playmoncry SPECIES_RAYQUAZA, 2
 	delay 40
 	waitmoncry
-	setflag FLAG_HIDE_RAYQUAZA
+	setflag FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartRayquazaBattle
 	waitstate
