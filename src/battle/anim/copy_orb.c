@@ -1,6 +1,7 @@
 #include "global.h"
 #include "trig.h"
 #include "battle_anim.h"
+#include "battle_anim_internal.h"
 #include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
@@ -43,18 +44,19 @@ const struct SpriteTemplate gMimicOrbSpriteTemplate =
 
 static void AnimMimicOrb(struct Sprite *sprite)
 {
+    CMD_ARGS(initialX, initialY);
+
     switch (sprite->data[0])
     {
     case 0:
     {
         if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
         {
-            s16 initialX = gBattleAnimArgs[0];
-            gBattleAnimArgs[0] = -initialX;
+            cmd->initialX *= -1;
         }
 
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X) + gBattleAnimArgs[0];
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + gBattleAnimArgs[1];
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X) + cmd->initialX;
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + cmd->initialY;
         sprite->invisible = TRUE;
         sprite->data[0]++;
         break;
