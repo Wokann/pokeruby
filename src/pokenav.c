@@ -167,13 +167,13 @@ void ResetPokenavBgOffsets(void)
 
 void ResetPokenavSetupStep(void)
 {
-    gPokenavStructPtr->setupStep = 0;
+    gPokenavState->setupStep = 0;
 }
 
 void InitPokenavBackground(void)
 {
-    gPokenavStructPtr->setupStep = 0;
-    if (!gPokenavStructPtr->unk6DAC)
+    gPokenavState->setupStep = 0;
+    if (!gPokenavState->isLinkActive)
     {
         while (LoadPokenavBackgroundStep())
             ;
@@ -182,7 +182,7 @@ void InitPokenavBackground(void)
 
 bool8 LoadPokenavBackgroundStep(void)
 {
-    switch (gPokenavStructPtr->setupStep)
+    switch (gPokenavState->setupStep)
     {
     case 0:
         LZ77UnCompVram(gPokenavHoennMapMisc_Gfx, (void *)VRAM + 0xC000);
@@ -199,15 +199,15 @@ bool8 LoadPokenavBackgroundStep(void)
         InitPokenavPaletteGradient(2);
         break;
     case 4:
-        gPokenavStructPtr->menuVerticalOffset = 0;
+        gPokenavState->menuVerticalOffset = 0;
         REG_BG1HOFS = 0;
         REG_BG1VOFS = 0;
         REG_BG1CNT = 0x1B0C;
-        gPokenavStructPtr->setupStep++;
+        gPokenavState->setupStep++;
     default:
         return FALSE;
     }
-    gPokenavStructPtr->setupStep++;
+    gPokenavState->setupStep++;
     return TRUE;
 }
 
@@ -215,17 +215,17 @@ bool8 SlideMenuHeaderUp(void)
 {
     bool8 retVal = TRUE;
 
-    if (gPokenavStructPtr->menuVerticalOffset == 32)
+    if (gPokenavState->menuVerticalOffset == 32)
         return FALSE;
 
-    gPokenavStructPtr->menuVerticalOffset += 2;
-    if (gPokenavStructPtr->menuVerticalOffset > 31)
+    gPokenavState->menuVerticalOffset += 2;
+    if (gPokenavState->menuVerticalOffset > 31)
     {
-        gPokenavStructPtr->menuVerticalOffset = 32;
+        gPokenavState->menuVerticalOffset = 32;
         retVal = FALSE;
     }
 
-    REG_BG1VOFS = gPokenavStructPtr->menuVerticalOffset;
+    REG_BG1VOFS = gPokenavState->menuVerticalOffset;
     return retVal;
 }
 
@@ -233,17 +233,17 @@ bool8 SlideMenuHeaderDown(void)
 {
     bool8 retVal = TRUE;
 
-    if (gPokenavStructPtr->menuVerticalOffset == 0)
+    if (gPokenavState->menuVerticalOffset == 0)
         return FALSE;
 
-    gPokenavStructPtr->menuVerticalOffset -= 2;
-    if (gPokenavStructPtr->menuVerticalOffset <= 0)
+    gPokenavState->menuVerticalOffset -= 2;
+    if (gPokenavState->menuVerticalOffset <= 0)
     {
-        gPokenavStructPtr->menuVerticalOffset = 0;
+        gPokenavState->menuVerticalOffset = 0;
         retVal = FALSE;
     }
 
-    REG_BG1VOFS = gPokenavStructPtr->menuVerticalOffset;
+    REG_BG1VOFS = gPokenavState->menuVerticalOffset;
     return retVal;
 }
 
@@ -263,7 +263,7 @@ void DrawPokenavBottomToolbar(u8 toolbarId)
         CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 8, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
         break;
     case 2:
-        linkActive = gPokenavStructPtr->unk6DAC;
+        linkActive = gPokenavState->isLinkActive;
         if (!linkActive)
         {
             CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 10, 2, 10, 2);
@@ -303,9 +303,9 @@ void DrawPokenavBottomToolbar(u8 toolbarId)
 
 void InitPokenavMenuGfx(u8 menuType)
 {
-    gPokenavStructPtr->setupStep = 0;
+    gPokenavState->setupStep = 0;
 
-    if (!gPokenavStructPtr->unk6DAC)
+    if (!gPokenavState->isLinkActive)
     {
         while (LoadPokenavMenuGfxStep(menuType))
             ;
@@ -314,7 +314,7 @@ void InitPokenavMenuGfx(u8 menuType)
 
 bool8 LoadPokenavMenuGfxStep(u8 menuType)
 {
-    switch (gPokenavStructPtr->setupStep)
+    switch (gPokenavState->setupStep)
     {
     case 0:
         ResetPokenavBgOffsets();
@@ -359,13 +359,13 @@ bool8 LoadPokenavMenuGfxStep(u8 menuType)
         REG_BG3CNT = 0x1C0B;
         REG_BLDCNT = 0;
 
-        gPokenavStructPtr->setupStep++;
+        gPokenavState->setupStep++;
         return FALSE;
     default:
         return FALSE;
     }
 
-    gPokenavStructPtr->setupStep++;
+    gPokenavState->setupStep++;
     return TRUE;
 }
 
@@ -399,31 +399,31 @@ void StartPokenavPaletteTransition(u8 menuType)
     if (menuType == 2)
         menuType = 1;
 
-    gPokenavStructPtr->paletteGradientTarget = menuType * 30;
-    currentIndex = gPokenavStructPtr->paletteGradientIndex;
+    gPokenavState->paletteGradientTarget = menuType * 30;
+    currentIndex = gPokenavState->paletteGradientIndex;
     targetIndex = menuType * 30;
     if (currentIndex < targetIndex)
-        gPokenavStructPtr->paletteGradientDelta = 2;
+        gPokenavState->paletteGradientDelta = 2;
     else if (currentIndex > targetIndex)
-        gPokenavStructPtr->paletteGradientDelta = -2;
+        gPokenavState->paletteGradientDelta = -2;
     else
-        gPokenavStructPtr->paletteGradientDelta = 0;
+        gPokenavState->paletteGradientDelta = 0;
 }
 
 bool8 UpdatePokenavPaletteTransition(void)
 {
     u16 *gradient;
 
-    if (gPokenavStructPtr->paletteGradientIndex == gPokenavStructPtr->paletteGradientTarget)
+    if (gPokenavState->paletteGradientIndex == gPokenavState->paletteGradientTarget)
     {
         return FALSE;
     }
     else
     {
-        gPokenavStructPtr->paletteGradientIndex = gPokenavStructPtr->paletteGradientDelta + gPokenavStructPtr->paletteGradientIndex;
+        gPokenavState->paletteGradientIndex = gPokenavState->paletteGradientDelta + gPokenavState->paletteGradientIndex;
 
-        gradient = gPokenavStructPtr->palettesCE52;
-        LoadPalette(&gradient[gPokenavStructPtr->paletteGradientIndex], 0x31, 4);
+        gradient = gPokenavState->palettesCE52;
+        LoadPalette(&gradient[gPokenavState->paletteGradientIndex], 0x31, 4);
         return TRUE;
     }
 
@@ -434,8 +434,8 @@ void SetPokenavMenuPalette(u8 menuType)
     if (menuType == 2)
         menuType = 1;
 
-    gPokenavStructPtr->paletteGradientIndex = menuType * 30;
-    LoadPalette(&gPokenavStructPtr->palettesCE52[gPokenavStructPtr->paletteGradientIndex], 0x31, 4);
+    gPokenavState->paletteGradientIndex = menuType * 30;
+    LoadPalette(&gPokenavState->palettesCE52[gPokenavState->paletteGradientIndex], 0x31, 4);
 }
 
 void InitPokenavPaletteGradient(u8 stage)
@@ -448,15 +448,15 @@ void InitPokenavPaletteGradient(u8 stage)
     {
     case 0:
         for (i = 0; i < 62; i++)
-            gPokenavStructPtr->palettesCE52[i] = 0;
+            gPokenavState->palettesCE52[i] = 0;
         break;
     case 1:
-        gradient = gPokenavStructPtr->palettesCE52;
+        gradient = gPokenavState->palettesCE52;
         colors = gPokenavMenuPaletteGradientColors;
         BuildPokenavPaletteGradient(&colors[1], &colors[3], 16, 2, gradient);
         break;
     case 2:
-        gradient = gPokenavStructPtr->palettesCE8E;
+        gradient = gPokenavState->palettesCE8E;
         colors = gPokenavMenuPaletteGradientColors;
         BuildPokenavPaletteGradient(&colors[3], &colors[7], 16, 2, gradient);
         break;
@@ -506,46 +506,46 @@ void BuildPokenavPaletteGradient(const u16 *startColors, const u16 *endColors, u
 
 void UpdatePokenavBg3Scroll(void)
 {
-    gPokenavStructPtr->bg3ScrollFrameCounter = (gPokenavStructPtr->bg3ScrollFrameCounter + 1) & 1;
-    if (gPokenavStructPtr->bg3ScrollFrameCounter)
-        gPokenavStructPtr->bg3ScrollOffset++;
+    gPokenavState->bg3ScrollFrameCounter = (gPokenavState->bg3ScrollFrameCounter + 1) & 1;
+    if (gPokenavState->bg3ScrollFrameCounter)
+        gPokenavState->bg3ScrollOffset++;
 
-    REG_BG3HOFS = gPokenavStructPtr->bg3ScrollOffset;
+    REG_BG3HOFS = gPokenavState->bg3ScrollOffset;
 }
 
 void Task_PokenavBg3Scroll(u8 taskId)
 {
-    if (gTasks[taskId].data[0] == 0 || (gPokenavStructPtr->bg3ScrollOffset & 0x7) != 0)
+    if (gTasks[taskId].data[0] == 0 || (gPokenavState->bg3ScrollOffset & 0x7) != 0)
     {
         UpdatePokenavBg3Scroll();
     }
     else
     {
-        u16 value = gPokenavStructPtr->bg3ScrollOffset & 0x7;
-        gPokenavStructPtr->bg3ScrollOffset = value;
-        gPokenavStructPtr->bg3ScrollFrameCounter = value;
+        u16 value = gPokenavState->bg3ScrollOffset & 0x7;
+        gPokenavState->bg3ScrollOffset = value;
+        gPokenavState->bg3ScrollFrameCounter = value;
         REG_BG3HOFS = value;
     }
 }
 
 void StartPokenavBg3Scroll(void)
 {
-    gPokenavStructPtr->bg3ScrollOffset = 0;
-    gPokenavStructPtr->bg3ScrollFrameCounter = 0;
-    gPokenavStructPtr->bg3ScrollTaskId = CreateTask(Task_PokenavBg3Scroll, 80);
+    gPokenavState->bg3ScrollOffset = 0;
+    gPokenavState->bg3ScrollFrameCounter = 0;
+    gPokenavState->bg3ScrollTaskId = CreateTask(Task_PokenavBg3Scroll, 80);
 }
 
 void StopPokenavBg3Scroll(void)
 {
     if (FuncIsActiveTask(Task_PokenavBg3Scroll))
-        DestroyTask(gPokenavStructPtr->bg3ScrollTaskId);
+        DestroyTask(gPokenavState->bg3ScrollTaskId);
 }
 
 void InitPokenavRegionMapGfx(void)
 {
-    gPokenavStructPtr->setupStep = 0;
+    gPokenavState->setupStep = 0;
 
-    if (gPokenavStructPtr->unk6DAC == 0)
+    if (gPokenavState->isLinkActive == 0)
     {
         while (LoadPokenavRegionMapGfxStep() != 0)
             ;
@@ -554,7 +554,7 @@ void InitPokenavRegionMapGfx(void)
 
 bool8 LoadPokenavRegionMapGfxStep(void)
 {
-    switch (gPokenavStructPtr->setupStep)
+    switch (gPokenavState->setupStep)
     {
     case 0:
         ResetPokenavBgOffsets();
@@ -573,7 +573,7 @@ bool8 LoadPokenavRegionMapGfxStep(void)
         Menu_EraseScreen();
         break;
     case 5:
-        InitRegionMapData(&gPokenavStructPtr->regionMap, gSaveBlock2.regionMapZoom ? TRUE : FALSE);
+        InitRegionMapData(&gPokenavState->regionMap, gSaveBlock2.regionMapZoom ? TRUE : FALSE);
         break;
     case 6:
         if (LoadRegionMapGfx())
@@ -595,14 +595,14 @@ bool8 LoadPokenavRegionMapGfxStep(void)
         UpdateMapSecInfoWindow();
         break;
     case 11:
-        if (!gPokenavStructPtr->regionMap.zoomed)
+        if (!gPokenavState->regionMap.zoomed)
         {
-            gPokenavStructPtr->regionMapBg0YOffset = 160;
+            gPokenavState->regionMapBg0YOffset = 160;
             REG_BG0VOFS = 160;
         }
         else
         {
-            gPokenavStructPtr->regionMapBg0YOffset = 256;
+            gPokenavState->regionMapBg0YOffset = 256;
             REG_BG0VOFS = 0;
         }
 
@@ -614,7 +614,7 @@ bool8 LoadPokenavRegionMapGfxStep(void)
         return FALSE;
     }
 
-    gPokenavStructPtr->setupStep++;
+    gPokenavState->setupStep++;
     return TRUE;
 }
 
@@ -627,13 +627,13 @@ void UpdateMapSecInfoWindow(void)
     u16 mapSecId;
     u8 b;
 
-    switch (gPokenavStructPtr->regionMap.mapSecType)
+    switch (gPokenavState->regionMap.mapSecType)
     {
     case MAPSECTYPE_NONE:
         break;
     case MAPSECTYPE_ROUTE:
     case MAPSECTYPE_BATTLE_TOWER:
-        Menu_PrintTextWithNewlineIndent(gPokenavStructPtr->regionMap.mapSecName, 0x70, top * 8, 0x78, 1);
+        Menu_PrintTextWithNewlineIndent(gPokenavState->regionMap.mapSecName, 0x70, top * 8, 0x78, 1);
         top += 2;
         if (gLinkOpen == TRUE)
         {
@@ -647,8 +647,8 @@ void UpdateMapSecInfoWindow(void)
             for (i = 0; i < 4; i++)
             {
                 const u8 *secName = GetLandmarkName(
-                    gPokenavStructPtr->regionMap.mapSecId,
-                    gPokenavStructPtr->regionMap.posWithinMapSec,
+                    gPokenavState->regionMap.mapSecId,
+                    gPokenavState->regionMap.posWithinMapSec,
                     i);
 
                 if (secName == NULL)
@@ -659,20 +659,20 @@ void UpdateMapSecInfoWindow(void)
         }
         break;
     case MAPSECTYPE_CITY_CANFLY:
-        Menu_PrintTextWithNewlineIndent(gPokenavStructPtr->regionMap.mapSecName, 0x70, top * 8, 0x78, 1);
+        Menu_PrintTextWithNewlineIndent(gPokenavState->regionMap.mapSecName, 0x70, top * 8, 0x78, 1);
         top += 2;
-        mapSecId = gPokenavStructPtr->regionMap.mapSecId;
-        b = gPokenavStructPtr->regionMap.posWithinMapSec;
-        if (gPokenavStructPtr->cityMapTilemapPtrs[mapSecId][b] != NULL)
+        mapSecId = gPokenavState->regionMap.mapSecId;
+        b = gPokenavState->regionMap.posWithinMapSec;
+        if (gPokenavState->cityMapTilemapPtrs[mapSecId][b] != NULL)
         {
             Menu_BlankWindowRect(14, top, 15, 15);
             Menu_BlankWindowRect(26, top, 28, 15);
-            CopyTilemapRect((void *)(VRAM + 0xF800), 16, 6, gPokenavStructPtr->cityMapTilemapPtrs[mapSecId][b], 0, 0, 10, 10, 10);
+            CopyTilemapRect((void *)(VRAM + 0xF800), 16, 6, gPokenavState->cityMapTilemapPtrs[mapSecId][b], 0, 0, 10, 10, 10);
             top += 11;
         }
         break;
     case MAPSECTYPE_CITY_CANTFLY:
-        Menu_PrintTextWithNewlineIndent(gPokenavStructPtr->regionMap.mapSecName, 0x70, top * 8, 0x78, 1);
+        Menu_PrintTextWithNewlineIndent(gPokenavState->regionMap.mapSecName, 0x70, top * 8, 0x78, 1);
         top += 2;
         break;
     }
@@ -681,7 +681,7 @@ void UpdateMapSecInfoWindow(void)
     if (!someBool && top < 16)
         Menu_BlankWindowRect(14, top, 28, 15);
 
-    if (gPokenavStructPtr->regionMap.mapSecType == MAPSECTYPE_CITY_CANFLY)
+    if (gPokenavState->regionMap.mapSecType == MAPSECTYPE_CITY_CANFLY)
         ShowRegionMapCityBanner();
     else
         HideRegionMapCityBanner();
@@ -689,7 +689,7 @@ void UpdateMapSecInfoWindow(void)
 
 void UpdateRegionMapBottomToolbar(void)
 {
-    if (!gPokenavStructPtr->regionMap.zoomed)
+    if (!gPokenavState->regionMap.zoomed)
         DrawPokenavBottomToolbar(8);
     else
         DrawPokenavBottomToolbar(7);
@@ -698,7 +698,7 @@ void UpdateRegionMapBottomToolbar(void)
 bool8 UpdateRegionMapBgYForZoom(bool8 zoomOut)
 {
     bool8 active = TRUE;
-    u16 offset = gPokenavStructPtr->regionMapBg0YOffset;
+    u16 offset = gPokenavState->regionMapBg0YOffset;
 
     if (zoomOut)
     {
@@ -725,7 +725,7 @@ bool8 UpdateRegionMapBgYForZoom(bool8 zoomOut)
         }
     }
 
-    gPokenavStructPtr->regionMapBg0YOffset = offset;
+    gPokenavState->regionMapBg0YOffset = offset;
     REG_BG0VOFS = offset & 0xFF;
 
     return active;
@@ -733,8 +733,8 @@ bool8 UpdateRegionMapBgYForZoom(bool8 zoomOut)
 
 void InitCityMapDecompression(void)
 {
-    gPokenavStructPtr->cityMapSectionIndex = 0;
-    gPokenavStructPtr->cityMapBufferIndex = 0;
+    gPokenavState->cityMapSectionIndex = 0;
+    gPokenavState->cityMapBufferIndex = 0;
     InitRegionMapCityBanner();
 }
 
@@ -744,63 +744,63 @@ bool8 DecompressCityMapsStep(void)
     u8 sectionIndex;
     u16 bufferIndex;
 
-    if (gPokenavStructPtr->cityMapSectionIndex >= 16)
+    if (gPokenavState->cityMapSectionIndex >= 16)
         return FALSE;
 
-    sectionIndex = gPokenavStructPtr->cityMapSectionIndex;
-    bufferIndex = gPokenavStructPtr->cityMapBufferIndex;
+    sectionIndex = gPokenavState->cityMapSectionIndex;
+    bufferIndex = gPokenavState->cityMapBufferIndex;
     for (i = 0; i < 2; i++)
     {
         if (gPokenavCityMaps[sectionIndex][i] != 0)
         {
-            LZ77UnCompVram(gPokenavCityMaps[sectionIndex][i], gPokenavStructPtr->cityMapTilemaps[bufferIndex]);
-            gPokenavStructPtr->cityMapTilemapPtrs[sectionIndex][i] = gPokenavStructPtr->cityMapTilemaps[bufferIndex];
+            LZ77UnCompVram(gPokenavCityMaps[sectionIndex][i], gPokenavState->cityMapTilemaps[bufferIndex]);
+            gPokenavState->cityMapTilemapPtrs[sectionIndex][i] = gPokenavState->cityMapTilemaps[bufferIndex];
             bufferIndex++;
         }
         else
         {
-            gPokenavStructPtr->cityMapTilemapPtrs[sectionIndex][i] = NULL;
+            gPokenavState->cityMapTilemapPtrs[sectionIndex][i] = NULL;
         }
     }
 
-    if (++gPokenavStructPtr->cityMapSectionIndex >= 16)
+    if (++gPokenavState->cityMapSectionIndex >= 16)
         return FALSE;
 
-    gPokenavStructPtr->cityMapBufferIndex = bufferIndex;
+    gPokenavState->cityMapBufferIndex = bufferIndex;
     return TRUE;
 }
 
 void InitRegionMapCityBanner(void)
 {
-    gPokenavStructPtr->cityBannerVisible = 0;
-    gPokenavStructPtr->cityBannerFrame = 47;
-    gPokenavStructPtr->cityBannerState = 0;
-    gPokenavStructPtr->cityBannerDelay = 0;
+    gPokenavState->cityBannerVisible = 0;
+    gPokenavState->cityBannerFrame = 47;
+    gPokenavState->cityBannerState = 0;
+    gPokenavState->cityBannerDelay = 0;
 }
 
 void ShowRegionMapCityBanner(void)
 {
-    gPokenavStructPtr->cityBannerVisible = 1;
-    if (gPokenavStructPtr->cityBannerState == 1)
-        gPokenavStructPtr->cityBannerState = 2;
+    gPokenavState->cityBannerVisible = 1;
+    if (gPokenavState->cityBannerState == 1)
+        gPokenavState->cityBannerState = 2;
 }
 
 void HideRegionMapCityBanner(void)
 {
     CopyTilemapRect((void *)VRAM + 0xF800, 14, 16, gPokenavRegionMapCityBannerBlank, 0, 0, 15, 1, 15);
-    gPokenavStructPtr->cityBannerVisible = 0;
+    gPokenavState->cityBannerVisible = 0;
 }
 
 void DrawRegionMapCityBannerFrame(u8 unused)
 {
-    u16 var1 = 60 - gPokenavStructPtr->cityBannerFrame;
+    u16 var1 = 60 - gPokenavState->cityBannerFrame;
 
     if (var1 > 15)
         var1 = 15;
 
-    if (gPokenavStructPtr->cityBannerVisible != 0)
+    if (gPokenavState->cityBannerVisible != 0)
     {
-        CopyTilemapRect((void *)VRAM + 0xF800, 14, 16, gPokenavRegionMapCityBannerFrames, gPokenavStructPtr->cityBannerFrame, 0, var1, 1, 60);
+        CopyTilemapRect((void *)VRAM + 0xF800, 14, 16, gPokenavRegionMapCityBannerFrames, gPokenavState->cityBannerFrame, 0, var1, 1, 60);
 
         if (var1 < 15)
         {
@@ -814,49 +814,49 @@ void DrawRegionMapCityBannerFrame(u8 unused)
 void UpdateRegionMapCityBanner(void)
 {
     u16 var1;
-    u8 var2 = gPokenavStructPtr->cityBannerState;
+    u8 var2 = gPokenavState->cityBannerState;
 
     switch (var2)
     {
     case 0:
-        var1 = ++gPokenavStructPtr->cityBannerFrame;
+        var1 = ++gPokenavState->cityBannerFrame;
 
         if (var1 > 59)
-            gPokenavStructPtr->cityBannerFrame = var2;
+            gPokenavState->cityBannerFrame = var2;
 
-        DrawRegionMapCityBannerFrame(gPokenavStructPtr->cityBannerVisible);
+        DrawRegionMapCityBannerFrame(gPokenavState->cityBannerVisible);
 
-        switch (gPokenavStructPtr->cityBannerFrame)
+        switch (gPokenavState->cityBannerFrame)
         {
         case 0:
         case 15:
         case 30:
         case 45:
-            gPokenavStructPtr->cityBannerState = 1;
-            gPokenavStructPtr->cityBannerDelay = 0;
+            gPokenavState->cityBannerState = 1;
+            gPokenavState->cityBannerDelay = 0;
             break;
         }
         break;
     case 1:
-        var1 = ++gPokenavStructPtr->cityBannerDelay;
+        var1 = ++gPokenavState->cityBannerDelay;
         if (var1 > 120)
         {
-            gPokenavStructPtr->cityBannerDelay = 0;
-            gPokenavStructPtr->cityBannerState = 0;
+            gPokenavState->cityBannerDelay = 0;
+            gPokenavState->cityBannerState = 0;
         }
         break;
     case 2:
         DrawRegionMapCityBannerFrame(1);
-        gPokenavStructPtr->cityBannerState = 1;
+        gPokenavState->cityBannerState = 1;
         break;
     }
 }
 
 void InitConditionGraphScreen(void)
 {
-    gPokenavStructPtr->setupStep = 0;
+    gPokenavState->setupStep = 0;
 
-    if (gPokenavStructPtr->unk6DAC == 0)
+    if (gPokenavState->isLinkActive == 0)
     {
         while (LoadConditionGraphScreenStep())
             ;
@@ -865,11 +865,11 @@ void InitConditionGraphScreen(void)
 
 bool8 LoadConditionGraphScreenStep(void)
 {
-    switch (gPokenavStructPtr->setupStep)
+    switch (gPokenavState->setupStep)
     {
     case 0:
         ResetPokenavBgOffsets();
-        gPokenavStructPtr->unkD162 = 11;
+        gPokenavState->unkD162 = 11;
         break;
     case 1:
         Text_LoadWindowTemplate(&gPokenavConditionWindowTemplate);
@@ -899,7 +899,7 @@ bool8 LoadConditionGraphScreenStep(void)
         LoadPalette(gPokenavConditionMenu2_Pal, 0x20, 0x20);
         break;
     case 9:
-        if (gPokenavStructPtr->isConditionGraphSearchMode == 1)
+        if (gPokenavState->isConditionGraphSearchMode == 1)
             CopyTilemapRect((void *)VRAM + 0xF000, 0, 5, gPokenavConditionSearchGraphTilemap, 0, 0, 9, 4, 9);
         break;
     case 10:
@@ -914,7 +914,7 @@ bool8 LoadConditionGraphScreenStep(void)
         SetConditionGraphWindowRegs();
         break;
     case 12:
-        PrintConditionGraphMonInfo(gPokenavStructPtr->portraitSlot);
+        PrintConditionGraphMonInfo(gPokenavState->portraitSlot);
         break;
     case 13:
         REG_BG3CNT = 0x1E03;
@@ -926,7 +926,7 @@ bool8 LoadConditionGraphScreenStep(void)
         return FALSE;
     }
 
-    gPokenavStructPtr->setupStep++;
+    gPokenavState->setupStep++;
     return TRUE;
 }
 
@@ -950,22 +950,22 @@ void SetConditionGraphWindowRegs(void)
 
 void PrintConditionGraphMonInfo(u16 portraitSlot)
 {
-    Menu_PrintText(gPokenavStructPtr->unk8829[portraitSlot], 13, 1);
+    Menu_PrintText(gPokenavState->conditionMonNameText[portraitSlot], 13, 1);
 
-    if (gPokenavStructPtr->isConditionGraphSearchMode == 1)
+    if (gPokenavState->isConditionGraphSearchMode == 1)
     {
-        Menu_PrintText(gPokenavStructPtr->unk88E9[portraitSlot], 13, 3);
-        BufferConditionSearchRankText(gPokenavStructPtr->pokenavTextBuffer, gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex].unk2_5);
-        Menu_PrintText(gPokenavStructPtr->pokenavTextBuffer, 1, 6);
+        Menu_PrintText(gPokenavState->conditionMonLocationText[portraitSlot], 13, 3);
+        BufferConditionSearchRankText(gPokenavState->pokenavTextBuffer, gPokenavState->monList[gPokenavState->detailSelectionIndex].rank);
+        Menu_PrintText(gPokenavState->pokenavTextBuffer, 1, 6);
     }
 }
 
 void InitPokenavListScreen(u8 listMode)
 {
-    gPokenavStructPtr->unk306 = 0;
-    gPokenavStructPtr->listMode = listMode;
+    gPokenavState->loadState = 0;
+    gPokenavState->listMode = listMode;
 
-    if (gPokenavStructPtr->unk6DAC == 0)
+    if (gPokenavState->isLinkActive == 0)
     {
         while (LoadPokenavListScreenStep())
             ;
@@ -976,13 +976,13 @@ bool8 LoadPokenavListScreenStep(void)
 {
     const u16 *pointer;
 
-    switch (gPokenavStructPtr->unk306)
+    switch (gPokenavState->loadState)
     {
     case 0:
         ResetPokenavBgOffsets();
 
-        gPokenavStructPtr->isRibbonsList = gPokenavStructPtr->listMode == POKENAV_LIST_RIBBONS;
-        gPokenavStructPtr->unkD162 = 11;
+        gPokenavState->isRibbonsList = gPokenavState->listMode == POKENAV_LIST_RIBBONS;
+        gPokenavState->unkD162 = 11;
         break;
     case 1:
         Text_LoadWindowTemplate(&gPokenavListWindowTemplate);
@@ -1010,7 +1010,7 @@ bool8 LoadPokenavListScreenStep(void)
         LoadPalette(gPokenavList_Pal, 0xF0, 0x20);
         LoadPalette(gPokenavTrainerEyesMisc_Pal, 0x40, 0x20);
 
-        if (gPokenavStructPtr->listMode == POKENAV_LIST_CONDITION_SEARCH)
+        if (gPokenavState->listMode == POKENAV_LIST_CONDITION_SEARCH)
         {
             LoadPalette(gPokenavConditionSearch2_Pal, 0x30, 0x20);
             gPlttBufferUnfaded[0] = gPokenavConditionSearch2_Pal[5];
@@ -1019,7 +1019,7 @@ bool8 LoadPokenavListScreenStep(void)
             LoadPalette(&gPokenavList_Pal[8], 0xB5, 0x2);
             LoadPalette(&gPokenavConditionSearch2_Pal[5], 0xBF, 0x2);
         }
-        else if (gPokenavStructPtr->listMode == POKENAV_LIST_RIBBONS)
+        else if (gPokenavState->listMode == POKENAV_LIST_RIBBONS)
         {
             LoadPalette(gPokenavRibbonsList_Pal, 0x30, 0x20);
             gPlttBufferUnfaded[0] = gPokenavRibbonsList_Pal[5];
@@ -1040,7 +1040,7 @@ bool8 LoadPokenavListScreenStep(void)
         }
         break;
     case 8:
-        if (gPokenavStructPtr->listMode != POKENAV_LIST_TRAINERS_EYES)
+        if (gPokenavState->listMode != POKENAV_LIST_TRAINERS_EYES)
         {
             CopyTilemapRect((void *)VRAM + 0xE800, 0, 5, gPokenavListInfo_Tilemap, 0, 0, 9, 4, 9);
         }
@@ -1066,14 +1066,14 @@ bool8 LoadPokenavListScreenStep(void)
         }
         break;
     case 13:
-        if (gPokenavStructPtr->listMode != POKENAV_LIST_TRAINERS_EYES)
+        if (gPokenavState->listMode != POKENAV_LIST_TRAINERS_EYES)
         {
             PrintPokenavListSelectionInfo();
         }
         else
         {
             PrintTrainerEyesListStats(0);
-            PrintTrainerEyesLocation((u8)gPokenavStructPtr->listSelectedIndex);
+            PrintTrainerEyesLocation((u8)gPokenavState->listSelectedIndex);
         }
         break;
     case 14:
@@ -1082,17 +1082,17 @@ bool8 LoadPokenavListScreenStep(void)
         REG_BG0CNT = 0x1F01;
         REG_BG3VOFS = 0xF8;
 
-        gPokenavStructPtr->listBg3YOffset = 0xF8;
-        gPokenavStructPtr->listTilemapRow = 0;
+        gPokenavState->listBg3YOffset = 0xF8;
+        gPokenavState->listTilemapRow = 0;
 
         REG_BLDCNT = 0;
-        gPokenavStructPtr->setupStep++;
+        gPokenavState->setupStep++;
         return FALSE;
     default:
         return FALSE;
     }
 
-    gPokenavStructPtr->unk306++;
+    gPokenavState->loadState++;
     return TRUE;
 }
 
@@ -1102,25 +1102,25 @@ void BeginPokenavListScroll(s16 rowsToScroll)
     s16 listIndex;
     s16 wrappedTilemapRow;
 
-    gPokenavStructPtr->listScrollPixelsRemaining = rowsToScroll * 16;
-    gPokenavStructPtr->listScrollStep = (rowsToScroll == 1 || rowsToScroll == -1) ? 4 : 8;
+    gPokenavState->listScrollPixelsRemaining = rowsToScroll * 16;
+    gPokenavState->listScrollStep = (rowsToScroll == 1 || rowsToScroll == -1) ? 4 : 8;
     if (rowsToScroll < 0)
     {
-        gPokenavStructPtr->listScrollStep *= -1;
-        tilemapRow = rowsToScroll * 2 + gPokenavStructPtr->listTilemapRow;
-        listIndex = rowsToScroll + gPokenavStructPtr->firstVisibleListIndex;
+        gPokenavState->listScrollStep *= -1;
+        tilemapRow = rowsToScroll * 2 + gPokenavState->listTilemapRow;
+        listIndex = rowsToScroll + gPokenavState->firstVisibleListIndex;
         if (listIndex < 0)
-            listIndex += gPokenavStructPtr->lastListIndex + 1;
+            listIndex += gPokenavState->lastListIndex + 1;
 
         rowsToScroll *= -1;
     }
     else
     {
-        tilemapRow = gPokenavStructPtr->listTilemapRow + 16;
-        listIndex = gPokenavStructPtr->lastVisibleListIndex + 1;
+        tilemapRow = gPokenavState->listTilemapRow + 16;
+        listIndex = gPokenavState->lastVisibleListIndex + 1;
     }
 
-    if (listIndex > gPokenavStructPtr->lastListIndex)
+    if (listIndex > gPokenavState->lastListIndex)
         listIndex = 0;
 
     wrappedTilemapRow = tilemapRow & 0x1F;
@@ -1131,16 +1131,16 @@ bool8 UpdatePokenavListScroll(void)
 {
     if (!PrintPokenavListRowStep())
     {
-        if (gPokenavStructPtr->listScrollPixelsRemaining == 0)
+        if (gPokenavState->listScrollPixelsRemaining == 0)
             return FALSE;
 
-        gPokenavStructPtr->listScrollPixelsRemaining -= gPokenavStructPtr->listScrollStep;
-        gPokenavStructPtr->listBg3YOffset += gPokenavStructPtr->listScrollStep;
-        gPokenavStructPtr->listBg3YOffset &= 0xFF;
-        REG_BG3VOFS = gPokenavStructPtr->listBg3YOffset;
-        if (gPokenavStructPtr->listScrollPixelsRemaining == 0)
+        gPokenavState->listScrollPixelsRemaining -= gPokenavState->listScrollStep;
+        gPokenavState->listBg3YOffset += gPokenavState->listScrollStep;
+        gPokenavState->listBg3YOffset &= 0xFF;
+        REG_BG3VOFS = gPokenavState->listBg3YOffset;
+        if (gPokenavState->listScrollPixelsRemaining == 0)
         {
-            gPokenavStructPtr->listTilemapRow = ((8 + gPokenavStructPtr->listBg3YOffset) & 0xFF) / 8;
+            gPokenavState->listTilemapRow = ((8 + gPokenavState->listBg3YOffset) & 0xFF) / 8;
             return FALSE;
         }
     }
@@ -1150,20 +1150,20 @@ bool8 UpdatePokenavListScroll(void)
 
 void PrintPokenavListSelectionInfo(void)
 {
-    switch (gPokenavStructPtr->listMode)
+    switch (gPokenavState->listMode)
     {
     case POKENAV_LIST_CONDITION_SEARCH:
-        BufferConditionSearchRankText(gPokenavStructPtr->pokenavTextBuffer, gPokenavStructPtr->unk893c[gPokenavStructPtr->listSelectedIndex].unk2_5);
+        BufferConditionSearchRankText(gPokenavState->pokenavTextBuffer, gPokenavState->monList[gPokenavState->listSelectedIndex].rank);
         break;
     case POKENAV_LIST_RIBBONS:
-        BufferRibbonsMonListIndexText(gPokenavStructPtr->pokenavTextBuffer, gPokenavStructPtr->listSelectedIndex + 1);
+        BufferRibbonsMonListIndexText(gPokenavState->pokenavTextBuffer, gPokenavState->listSelectedIndex + 1);
         break;
     default:
         return;
     }
 
     BasicInitMenuWindow(&gPokenavListInfoWindowTemplate);
-    Menu_PrintText(gPokenavStructPtr->pokenavTextBuffer, 1, 6);
+    Menu_PrintText(gPokenavState->pokenavTextBuffer, 1, 6);
 }
 
 void PrintTrainerEyesListStats(u8 drawStep)
@@ -1181,11 +1181,11 @@ void PrintTrainerEyesListStats(u8 drawStep)
         // fall through
     case 2:
         ConvertIntToDecimalStringN(
-            gPokenavStructPtr->pokenavTextBuffer,
-            gPokenavStructPtr->lastListIndex + 1,
+            gPokenavState->pokenavTextBuffer,
+            gPokenavState->lastListIndex + 1,
             STR_CONV_MODE_RIGHT_ALIGN,
             5);
-        MenuPrint_RightAligned(gPokenavStructPtr->pokenavTextBuffer, 10, 11);
+        MenuPrint_RightAligned(gPokenavState->pokenavTextBuffer, 10, 11);
         if (drawStep != 0)
             break;
         // fall through
@@ -1200,11 +1200,11 @@ void PrintTrainerEyesListStats(u8 drawStep)
             numTrainerBattles = 99999;
 
         ConvertIntToDecimalStringN(
-            gPokenavStructPtr->pokenavTextBuffer,
+            gPokenavState->pokenavTextBuffer,
             numTrainerBattles,
             STR_CONV_MODE_RIGHT_ALIGN,
             5);
-        MenuPrint_RightAligned(gPokenavStructPtr->pokenavTextBuffer, 10, 15);
+        MenuPrint_RightAligned(gPokenavState->pokenavTextBuffer, 10, 15);
         break;
     }
 }
@@ -1217,11 +1217,11 @@ void ClearTrainerEyesListStats(void)
 
 void InitPokenavListRows(void)
 {
-    s16 visibleRowCount = (gPokenavStructPtr->lastVisibleListIndex - gPokenavStructPtr->firstVisibleListIndex) + 1;
+    s16 visibleRowCount = (gPokenavState->lastVisibleListIndex - gPokenavState->firstVisibleListIndex) + 1;
     if (visibleRowCount < 8)
         Menu_EraseWindowRect(12, 1, 31, 15);
 
-    QueuePokenavListRows(gPokenavStructPtr->firstVisibleListIndex, 0, visibleRowCount);
+    QueuePokenavListRows(gPokenavState->firstVisibleListIndex, 0, visibleRowCount);
 }
 
 bool8 LoadPokenavListRowsStep(void)
@@ -1231,27 +1231,27 @@ bool8 LoadPokenavListRowsStep(void)
 
 void QueuePokenavListRows(u16 firstListIndex, u16 firstTilemapRow, u16 rowCount)
 {
-    gPokenavStructPtr->listRowToDraw = firstListIndex;
-    gPokenavStructPtr->listTilemapRowToDraw = firstTilemapRow;
-    gPokenavStructPtr->listRowsToDraw = rowCount;
-    gPokenavStructPtr->unk8786 = 0;
+    gPokenavState->listRowToDraw = firstListIndex;
+    gPokenavState->listTilemapRowToDraw = firstTilemapRow;
+    gPokenavState->listRowsToDraw = rowCount;
+    gPokenavState->unk8786 = 0;
 }
 
 bool8 PrintPokenavListRowStep(void)
 {
     s32 wrappedListIndex;
-    if (gPokenavStructPtr->listRowsToDraw == 0)
+    if (gPokenavState->listRowsToDraw == 0)
         return FALSE;
     wrappedListIndex = 0;
     while (1)
     {
-        gPokenavListRowPrinters[gPokenavStructPtr->listMode](gPokenavStructPtr->listRowToDraw, gPokenavStructPtr->listTilemapRowToDraw);
-        if (--gPokenavStructPtr->listRowsToDraw == 0)
+        gPokenavListRowPrinters[gPokenavState->listMode](gPokenavState->listRowToDraw, gPokenavState->listTilemapRowToDraw);
+        if (--gPokenavState->listRowsToDraw == 0)
             return FALSE;
-        if (++gPokenavStructPtr->listRowToDraw > gPokenavStructPtr->lastListIndex)
-            gPokenavStructPtr->listRowToDraw = wrappedListIndex;
-        gPokenavStructPtr->listTilemapRowToDraw += 2;
-        gPokenavStructPtr->listTilemapRowToDraw &= 0x1F;
+        if (++gPokenavState->listRowToDraw > gPokenavState->lastListIndex)
+            gPokenavState->listRowToDraw = wrappedListIndex;
+        gPokenavState->listTilemapRowToDraw += 2;
+        gPokenavState->listTilemapRowToDraw &= 0x1F;
         break;
     }
     return TRUE;
@@ -1259,19 +1259,19 @@ bool8 PrintPokenavListRowStep(void)
 
 void PrintPokenavMonListRow(u16 listIndex, u16 tilemapRow)
 {
-    u8 displayMode = gPokenavStructPtr->isRibbonsList == 0 ? 2 : 1;
-    BufferPokenavMonListRowText(gPokenavStructPtr->pokenavTextBuffer, listIndex, displayMode);
+    u8 displayMode = gPokenavState->isRibbonsList == 0 ? 2 : 1;
+    BufferPokenavMonListRowText(gPokenavState->pokenavTextBuffer, listIndex, displayMode);
     BasicInitMenuWindow(&gPokenavListWindowTemplate);
-    Menu_PrintText(gPokenavStructPtr->pokenavTextBuffer, 13, tilemapRow);
+    Menu_PrintText(gPokenavState->pokenavTextBuffer, 13, tilemapRow);
 }
 
 void PrintTrainerEyesListRow(u16 listIndex, u16 tilemapRow)
 {
-    BufferTrainerEyesListRowText(gPokenavStructPtr->pokenavTextBuffer, listIndex);
+    BufferTrainerEyesListRowText(gPokenavState->pokenavTextBuffer, listIndex);
     tilemapRow &= 0x1F;
     BasicInitMenuWindow(&gPokenavListWindowTemplate);
-    Menu_PrintTextPixelCoords(gPokenavStructPtr->pokenavTextBuffer, 97, tilemapRow * 8, 0);
-    if (listIndex < gPokenavStructPtr->trainerEyesCount && gPokenavStructPtr->trainersEye[listIndex].rematchNo != 0)
+    Menu_PrintTextPixelCoords(gPokenavState->pokenavTextBuffer, 97, tilemapRow * 8, 0);
+    if (listIndex < gPokenavState->trainerEyesCount && gPokenavState->trainersEye[listIndex].rematchNo != 0)
         CopyTilemapRect((void *)VRAM + 0xF000, 29, tilemapRow, gPokenavTrainerEyesRematchIconTilemap, 0, 0, 1, 2, 1);
     else
         CopyTilemapRect((void *)VRAM + 0xF000, 29, tilemapRow, gPokenavTrainerEyesNoRematchIconTilemap, 0, 0, 1, 2, 1);
@@ -1279,48 +1279,48 @@ void PrintTrainerEyesListRow(u16 listIndex, u16 tilemapRow)
 
 void InitTrainerEyesListErase(void)
 {
-    gPokenavStructPtr->trainerEyesRowStep = 0;
-    gPokenavStructPtr->unk306 = 0;
+    gPokenavState->trainerEyesRowStep = 0;
+    gPokenavState->loadState = 0;
 }
 
 bool8 EraseTrainerEyesListStep(void)
 {
     int tilemapRow;
-    if (gPokenavStructPtr->trainerEyesRowStep > 8)
+    if (gPokenavState->trainerEyesRowStep > 8)
     {
         return FALSE;
     }
 
-    if (++gPokenavStructPtr->unk306 > 1)
+    if (++gPokenavState->loadState > 1)
     {
-        gPokenavStructPtr->unk306 = 0;
-        if (gPokenavStructPtr->trainerEyesRowStep < 8)
+        gPokenavState->loadState = 0;
+        if (gPokenavState->trainerEyesRowStep < 8)
         {
-            tilemapRow = (gPokenavStructPtr->listTilemapRow + (gPokenavStructPtr->trainerEyesRowStep * 2)) & 0x1F;
-            if (gPokenavStructPtr->trainerEyesRowStep != gPokenavStructPtr->listCursorRow)
+            tilemapRow = (gPokenavState->listTilemapRow + (gPokenavState->trainerEyesRowStep * 2)) & 0x1F;
+            if (gPokenavState->trainerEyesRowStep != gPokenavState->listCursorRow)
             {
                 BasicInitMenuWindow(&gPokenavListWindowTemplate);
                 Menu_EraseWindowRect(12, tilemapRow, 31, tilemapRow + 1);
             }
 
-            if (!gPokenavStructPtr->trainerEyesRowStep)
+            if (!gPokenavState->trainerEyesRowStep)
                 ClearTrainerEyesListStats();
 
-            gPokenavStructPtr->trainerEyesRowStep++;
+            gPokenavState->trainerEyesRowStep++;
             return TRUE;
         }
         else
         {
             u16 row;
             BasicInitMenuWindow(&gPokenavListWindowTemplate);
-            tilemapRow = (gPokenavStructPtr->listTilemapRow + 16) & 0x1F;
+            tilemapRow = (gPokenavState->listTilemapRow + 16) & 0x1F;
             for (row = 0; row < 8; row++)
             {
                 Menu_EraseWindowRect(12, tilemapRow, 31, tilemapRow + 1);
                 tilemapRow = (tilemapRow + 2) & 0x1F;
             }
 
-            gPokenavStructPtr->trainerEyesRowStep++;
+            gPokenavState->trainerEyesRowStep++;
             return FALSE;
         }
     }
@@ -1332,23 +1332,23 @@ bool8 EraseTrainerEyesListStep(void)
 
 void InitTrainerEyesListRestore(void)
 {
-    gPokenavStructPtr->trainerEyesRowStep = 0;
-    gPokenavStructPtr->unk306 = 0;
+    gPokenavState->trainerEyesRowStep = 0;
+    gPokenavState->loadState = 0;
 }
 
 bool8 RestoreTrainerEyesListStep(void)
 {
-    if (gPokenavStructPtr->trainerEyesRowStep > 7)
+    if (gPokenavState->trainerEyesRowStep > 7)
         return FALSE;
 
-    if (++gPokenavStructPtr->unk306 > 1)
+    if (++gPokenavState->loadState > 1)
     {
-        gPokenavStructPtr->unk306 = 0;
+        gPokenavState->loadState = 0;
         BasicInitMenuWindow(&gPokenavListWindowTemplate);
-        PrintTrainerEyesListRow(gPokenavStructPtr->firstVisibleListIndex + gPokenavStructPtr->trainerEyesRowStep,
-                                gPokenavStructPtr->listTilemapRow + gPokenavStructPtr->trainerEyesRowStep * 2);
+        PrintTrainerEyesListRow(gPokenavState->firstVisibleListIndex + gPokenavState->trainerEyesRowStep,
+                                gPokenavState->listTilemapRow + gPokenavState->trainerEyesRowStep * 2);
 
-        if ((++gPokenavStructPtr->trainerEyesRowStep) > 7)
+        if ((++gPokenavState->trainerEyesRowStep) > 7)
         {
             PrintTrainerEyesListStats(0);
             return FALSE;
@@ -1364,18 +1364,18 @@ void LoadTrainerEyesDescriptionLines(void)
     int trainerEyesId;
     const u8 *curChar;
 
-    gPokenavStructPtr->unk306 = 0;
-    gPokenavStructPtr->trainerEyesRowStep = 0;
-    trainerEyesId = gPokenavStructPtr->trainersEye[gPokenavStructPtr->listSelectedIndex].rematchTableIdx;
-    gPokenavStructPtr->trainerEyeDescriptionLines[0] = gTrainerEyeDescriptions[trainerEyesId];
+    gPokenavState->loadState = 0;
+    gPokenavState->trainerEyesRowStep = 0;
+    trainerEyesId = gPokenavState->trainersEye[gPokenavState->listSelectedIndex].rematchTableIdx;
+    gPokenavState->trainerEyeDescriptionLines[0] = gTrainerEyeDescriptions[trainerEyesId];
 
     // Find the start of the 3 other lines in the Trainer's Eyes description.
-    curChar = gPokenavStructPtr->trainerEyeDescriptionLines[0];
+    curChar = gPokenavState->trainerEyeDescriptionLines[0];
     for (i = 0; i < 3; i++)
     {
         while (*curChar != EOS)
             curChar++;
-        gPokenavStructPtr->trainerEyeDescriptionLines[i + 1] = ++curChar;
+        gPokenavState->trainerEyeDescriptionLines[i + 1] = ++curChar;
     }
 }
 
@@ -1383,17 +1383,17 @@ bool8 PrintTrainerEyesDescriptionStep(void)
 {
     u32 tilemapRow;
 
-    if (gPokenavStructPtr->trainerEyesRowStep == 7)
+    if (gPokenavState->trainerEyesRowStep == 7)
         return FALSE;
-    if (++gPokenavStructPtr->unk306 < 2)
+    if (++gPokenavState->loadState < 2)
         return TRUE;
-    gPokenavStructPtr->unk306 = 0;
+    gPokenavState->loadState = 0;
     BasicInitMenuWindow(&gPokenavListWindowTemplate);
-    tilemapRow = (gPokenavStructPtr->listTilemapRow + 2 + gPokenavStructPtr->trainerEyesRowStep * 2) & 0x1F;
+    tilemapRow = (gPokenavState->listTilemapRow + 2 + gPokenavState->trainerEyesRowStep * 2) & 0x1F;
 #ifndef NONMATCHING
     asm("":::"r2"); // fakematch
 #endif //NONMATCHING
-    switch (gPokenavStructPtr->trainerEyesRowStep)
+    switch (gPokenavState->trainerEyesRowStep)
     {
     default:
         return FALSE;
@@ -1401,52 +1401,52 @@ bool8 PrintTrainerEyesDescriptionStep(void)
         Menu_PrintTextPixelCoords(gOtherText_Strategy, 0x61, tilemapRow * 8, 0);
         break;
     case 1:
-        AlignStringInMenuWindow(gPokenavStructPtr->pokenavTextBuffer, gPokenavStructPtr->trainerEyeDescriptionLines[0], 0x88, 0);
-        Menu_PrintTextPixelCoords(gPokenavStructPtr->pokenavTextBuffer, 0x61, tilemapRow * 8, 0);
+        AlignStringInMenuWindow(gPokenavState->pokenavTextBuffer, gPokenavState->trainerEyeDescriptionLines[0], 0x88, 0);
+        Menu_PrintTextPixelCoords(gPokenavState->pokenavTextBuffer, 0x61, tilemapRow * 8, 0);
         break;
     case 2:
         Menu_PrintTextPixelCoords(gOtherText_TrainersPokemon, 0x61, tilemapRow * 8, 0);
         break;
     case 3:
-        AlignStringInMenuWindow(gPokenavStructPtr->pokenavTextBuffer, gPokenavStructPtr->trainerEyeDescriptionLines[1], 0x88, 0);
-        Menu_PrintTextPixelCoords(gPokenavStructPtr->pokenavTextBuffer, 0x61, tilemapRow * 8, 0);
+        AlignStringInMenuWindow(gPokenavState->pokenavTextBuffer, gPokenavState->trainerEyeDescriptionLines[1], 0x88, 0);
+        Menu_PrintTextPixelCoords(gPokenavState->pokenavTextBuffer, 0x61, tilemapRow * 8, 0);
         break;
     case 4:
         Menu_PrintTextPixelCoords(gOtherText_SelfIntroduction, 0x61, tilemapRow * 8, 0);
         break;
     case 5:
-        AlignStringInMenuWindow(gPokenavStructPtr->pokenavTextBuffer, gPokenavStructPtr->trainerEyeDescriptionLines[2], 0x88, 0);
-        Menu_PrintTextPixelCoords(gPokenavStructPtr->pokenavTextBuffer, 0x61, tilemapRow * 8, 0);
+        AlignStringInMenuWindow(gPokenavState->pokenavTextBuffer, gPokenavState->trainerEyeDescriptionLines[2], 0x88, 0);
+        Menu_PrintTextPixelCoords(gPokenavState->pokenavTextBuffer, 0x61, tilemapRow * 8, 0);
         break;
     case 6:
-        AlignStringInMenuWindow(gPokenavStructPtr->pokenavTextBuffer, gPokenavStructPtr->trainerEyeDescriptionLines[3], 0x88, 0);
-        Menu_PrintTextPixelCoords(gPokenavStructPtr->pokenavTextBuffer, 0x61, tilemapRow * 8, 0);
+        AlignStringInMenuWindow(gPokenavState->pokenavTextBuffer, gPokenavState->trainerEyeDescriptionLines[3], 0x88, 0);
+        Menu_PrintTextPixelCoords(gPokenavState->pokenavTextBuffer, 0x61, tilemapRow * 8, 0);
         return FALSE;
     }
-    gPokenavStructPtr->trainerEyesRowStep++;
+    gPokenavState->trainerEyesRowStep++;
     return TRUE;
 }
 
 void InitTrainerEyesDescriptionErase(void)
 {
-    gPokenavStructPtr->unk306 = 0;
-    gPokenavStructPtr->trainerEyesRowStep = 0;
-    StringFill(gPokenavStructPtr->pokenavTextBuffer, CHAR_SPACE, 16);
+    gPokenavState->loadState = 0;
+    gPokenavState->trainerEyesRowStep = 0;
+    StringFill(gPokenavState->pokenavTextBuffer, CHAR_SPACE, 16);
 }
 
 bool8 EraseTrainerEyesDescriptionStep(void)
 {
     int tilemapRow;
-    if (gPokenavStructPtr->trainerEyesRowStep > 6)
+    if (gPokenavState->trainerEyesRowStep > 6)
         return FALSE;
 
-    if (++gPokenavStructPtr->unk306 > 1)
+    if (++gPokenavState->loadState > 1)
     {
-        gPokenavStructPtr->unk306 = 0;
-        tilemapRow = (gPokenavStructPtr->listTilemapRow + 2 + gPokenavStructPtr->trainerEyesRowStep * 2) & 0x1F;
+        gPokenavState->loadState = 0;
+        tilemapRow = (gPokenavState->listTilemapRow + 2 + gPokenavState->trainerEyesRowStep * 2) & 0x1F;
         BasicInitMenuWindow(&gPokenavListWindowTemplate);
         Menu_EraseWindowRect(12, tilemapRow, 31, tilemapRow + 1);
-        gPokenavStructPtr->trainerEyesRowStep++;
+        gPokenavState->trainerEyesRowStep++;
     }
 
     return TRUE;
@@ -1454,16 +1454,16 @@ bool8 EraseTrainerEyesDescriptionStep(void)
 
 void BeginTrainerEyesDetailEnterScroll(void)
 {
-    s16 rowsToScroll = gPokenavStructPtr->listCursorRow;
-    gPokenavStructPtr->listScrollPixelsRemaining = rowsToScroll * 16;
-    gPokenavStructPtr->listScrollStep = rowsToScroll == 1 ? 4 : 8;
+    s16 rowsToScroll = gPokenavState->listCursorRow;
+    gPokenavState->listScrollPixelsRemaining = rowsToScroll * 16;
+    gPokenavState->listScrollStep = rowsToScroll == 1 ? 4 : 8;
 }
 
 void BeginTrainerEyesDetailExitScroll(void)
 {
-    s16 rowsToScroll = gPokenavStructPtr->listCursorRow * -1;
-    gPokenavStructPtr->listScrollPixelsRemaining = rowsToScroll * 16;
-    gPokenavStructPtr->listScrollStep = rowsToScroll == -1 ? -4 : -8;
+    s16 rowsToScroll = gPokenavState->listCursorRow * -1;
+    gPokenavState->listScrollPixelsRemaining = rowsToScroll * 16;
+    gPokenavState->listScrollStep = rowsToScroll == -1 ? -4 : -8;
 }
 
 bool8 UpdateTrainerEyesDetailScroll(void)
@@ -1473,25 +1473,25 @@ bool8 UpdateTrainerEyesDetailScroll(void)
 
 void PrintTrainerEyesLocation(u8 listIndex)
 {
-    GetMapName(gPokenavStructPtr->pokenavTextBuffer, gPokenavStructPtr->trainersEye[listIndex].regionMapSectionId, 0);
+    GetMapName(gPokenavState->pokenavTextBuffer, gPokenavState->trainersEye[listIndex].regionMapSectionId, 0);
     BasicInitMenuWindow(&gPokenavListInfoWindowTemplate);
-    TruncateTrainerEyesLocationAtControlCode(gPokenavStructPtr->pokenavTextBuffer);
-    AlignStringInMenuWindow(gPokenavStructPtr->trainerEyesLocationTextBuffer, gPokenavStructPtr->pokenavTextBuffer, 88, 2);
-    Menu_PrintText(gPokenavStructPtr->trainerEyesLocationTextBuffer, 0, 5);
+    TruncateTrainerEyesLocationAtControlCode(gPokenavState->pokenavTextBuffer);
+    AlignStringInMenuWindow(gPokenavState->trainerEyesLocationTextBuffer, gPokenavState->pokenavTextBuffer, 88, 2);
+    Menu_PrintText(gPokenavState->trainerEyesLocationTextBuffer, 0, 5);
 }
 
 void RedrawSelectedTrainerEyesListRow(void)
 {
-    PrintTrainerEyesListRow(gPokenavStructPtr->listSelectedIndex, gPokenavStructPtr->listTilemapRow);
+    PrintTrainerEyesListRow(gPokenavState->listSelectedIndex, gPokenavState->listTilemapRow);
 }
 
 bool8 LoadRibbonsSummaryScreenStep(void)
 {
-    switch (gPokenavStructPtr->setupStep)
+    switch (gPokenavState->setupStep)
     {
     case 0:
         ResetPokenavBgOffsets();
-        gPokenavStructPtr->unkD162 = 11;
+        gPokenavState->unkD162 = 11;
         break;
     case 1:
         Text_LoadWindowTemplate(&gPokenavRibbonsSummaryWindowTemplate);
@@ -1514,7 +1514,7 @@ bool8 LoadRibbonsSummaryScreenStep(void)
             return TRUE;
         break;
     case 7:
-        LZ77UnCompWram(gPokenavRibbonsSummaryTilemap, gPokenavStructPtr->ribbonsSummaryTilemap);
+        LZ77UnCompWram(gPokenavRibbonsSummaryTilemap, gPokenavState->ribbonsSummaryTilemap);
         break;
     case 8:
         DrawMonRibbonIcons();
@@ -1542,13 +1542,13 @@ bool8 LoadRibbonsSummaryScreenStep(void)
         REG_BG2CNT = 0x1E02;
         REG_BG3CNT = 0x170B;
         REG_BLDCNT = 0;
-        gPokenavStructPtr->setupStep++;
+        gPokenavState->setupStep++;
         return FALSE;
     default:
         return FALSE;
     }
 
-    gPokenavStructPtr->setupStep++;
+    gPokenavState->setupStep++;
     return TRUE;
 }
 
@@ -1560,20 +1560,20 @@ void DrawMonRibbonIcons(void)
     u8 normalRibbonCount;
 
     offset = 0x8B;
-    normalRibbonCount = gPokenavStructPtr->ribbonCount - gPokenavStructPtr->giftRibbonCount;
+    normalRibbonCount = gPokenavState->ribbonCount - gPokenavState->giftRibbonCount;
 
     for (i = 0; i < 8; i++)
-    CpuFill16(0x2000, &gPokenavStructPtr->ribbonsSummaryTilemap[offset + i * 32], 0x24);
+    CpuFill16(0x2000, &gPokenavState->ribbonsSummaryTilemap[offset + i * 32], 0x24);
 
     for (i = 0; i < normalRibbonCount; i++)
     {
-        ribbonId = gPokenavStructPtr->ribbonIds[i];
+        ribbonId = gPokenavState->ribbonIds[i];
         palette = gPokenavRibbonGfxData[ribbonId][1] + 3;
         tile = gPokenavRibbonGfxData[ribbonId][0] * 2 + 0x10;
-        gPokenavStructPtr->ribbonsSummaryTilemap[offset] = (palette << 12) | tile;
-        gPokenavStructPtr->ribbonsSummaryTilemap[offset + 1] = ((palette << 12) | 0x400) | tile;
-        gPokenavStructPtr->ribbonsSummaryTilemap[offset + 0x20] = (palette << 12) | (tile + 1);
-        gPokenavStructPtr->ribbonsSummaryTilemap[offset + 0x21] = (palette << 12) | 0x400 | (tile + 1);
+        gPokenavState->ribbonsSummaryTilemap[offset] = (palette << 12) | tile;
+        gPokenavState->ribbonsSummaryTilemap[offset + 1] = ((palette << 12) | 0x400) | tile;
+        gPokenavState->ribbonsSummaryTilemap[offset + 0x20] = (palette << 12) | (tile + 1);
+        gPokenavState->ribbonsSummaryTilemap[offset + 0x21] = (palette << 12) | 0x400 | (tile + 1);
 
         if ((i + 1) % 9 == 0)
             offset += 0x30;
@@ -1582,15 +1582,15 @@ void DrawMonRibbonIcons(void)
     }
 
     offset = 0x14B;
-    for (i = 0; i < gPokenavStructPtr->giftRibbonCount; i++)
+    for (i = 0; i < gPokenavState->giftRibbonCount; i++)
     {
-        ribbonId = gPokenavStructPtr->ribbonIds[normalRibbonCount + i];
+        ribbonId = gPokenavState->ribbonIds[normalRibbonCount + i];
         palette = gPokenavRibbonGfxData[ribbonId][1] + 3;
         tile = gPokenavRibbonGfxData[ribbonId][0] * 2 + 0x10;
-        gPokenavStructPtr->ribbonsSummaryTilemap[offset] = (palette << 12) | tile;
-        gPokenavStructPtr->ribbonsSummaryTilemap[offset + 1] = ((palette << 12) | 0x400) | tile;
-        gPokenavStructPtr->ribbonsSummaryTilemap[offset + 0x20] = (palette << 12) | (tile + 1);
-        gPokenavStructPtr->ribbonsSummaryTilemap[offset + 0x21] = (palette << 12) | 0x400 | (tile + 1);
+        gPokenavState->ribbonsSummaryTilemap[offset] = (palette << 12) | tile;
+        gPokenavState->ribbonsSummaryTilemap[offset + 1] = ((palette << 12) | 0x400) | tile;
+        gPokenavState->ribbonsSummaryTilemap[offset + 0x20] = (palette << 12) | (tile + 1);
+        gPokenavState->ribbonsSummaryTilemap[offset + 0x21] = (palette << 12) | 0x400 | (tile + 1);
 
         offset += 2;
     }
@@ -1598,7 +1598,7 @@ void DrawMonRibbonIcons(void)
 
 void CopyRibbonsSummaryTilemapToVram(void)
 {
-    u16 *src = gPokenavStructPtr->ribbonsSummaryTilemap;
+    u16 *src = gPokenavState->ribbonsSummaryTilemap;
     u16 *dest = (u16 *)(VRAM + 0xB800);
     DmaCopy32(3, src, dest, 0x500);
     gPlttBufferUnfaded[0] = *(gPokenavRibbonView_Pal + 14);
@@ -1606,9 +1606,9 @@ void CopyRibbonsSummaryTilemapToVram(void)
 
 void PrintRibbonsSummaryMonInfo(void)
 {
-    Menu_PrintText(gPokenavStructPtr->unk8829[0], 13, 1);
-    BufferRibbonsMonListIndexText(gPokenavStructPtr->pokenavTextBuffer, gPokenavStructPtr->listSelectedIndex + 1);
-    Menu_PrintText(gPokenavStructPtr->pokenavTextBuffer, 1, 5);
+    Menu_PrintText(gPokenavState->conditionMonNameText[0], 13, 1);
+    BufferRibbonsMonListIndexText(gPokenavState->pokenavTextBuffer, gPokenavState->listSelectedIndex + 1);
+    Menu_PrintText(gPokenavState->pokenavTextBuffer, 1, 5);
 }
 
 void ClearRibbonsSummaryDescription(void)
@@ -1627,17 +1627,17 @@ void PrintRibbonsSummaryDescription(void)
     u8 *tileBuffer1 = &gPokenavTileBuffer[0x800];
     u8 *tileBuffer2 = &gPokenavTileBuffer[0xA98];
 
-    if (gPokenavStructPtr->ribbonPageIndex < 3)
+    if (gPokenavState->ribbonPageIndex < 3)
     {
-        gPokenavRibbonDescriptionId = gPokenavStructPtr->ribbonPageIndex * 9 + gPokenavStructPtr->ribbonCursorPos;
-        gPokenavRibbonDescriptionId = gPokenavStructPtr->ribbonIds[gPokenavRibbonDescriptionId];
+        gPokenavRibbonDescriptionId = gPokenavState->ribbonPageIndex * 9 + gPokenavState->ribbonCursorPos;
+        gPokenavRibbonDescriptionId = gPokenavState->ribbonIds[gPokenavRibbonDescriptionId];
         AlignStringInMenuWindow(tileBuffer1, gRibbonDescriptions[gPokenavRibbonDescriptionId][0], 128, 0);
         AlignStringInMenuWindow(tileBuffer2, gRibbonDescriptions[gPokenavRibbonDescriptionId][1], 128, 0);
     }
     else
     {
-        gPokenavRibbonDescriptionId = gPokenavStructPtr->ribbonCount - gPokenavStructPtr->giftRibbonCount;
-        gPokenavRibbonDescriptionId = gPokenavStructPtr->ribbonIds[gPokenavRibbonDescriptionId + gPokenavStructPtr->ribbonCursorPos];
+        gPokenavRibbonDescriptionId = gPokenavState->ribbonCount - gPokenavState->giftRibbonCount;
+        gPokenavRibbonDescriptionId = gPokenavState->ribbonIds[gPokenavRibbonDescriptionId + gPokenavState->ribbonCursorPos];
 
         // FIXME!
         arr = ((u8*)&gSaveBlock1);
@@ -1667,26 +1667,26 @@ void PrintRibbonsSummaryCount(void)
 {
     u8 *buffer;
     Menu_EraseWindowRect(12, 13, 27, 16);
-    buffer = StringCopy(gPokenavStructPtr->pokenavTextBuffer, gOtherText_Ribbons);
+    buffer = StringCopy(gPokenavState->pokenavTextBuffer, gOtherText_Ribbons);
     buffer[0] = CHAR_SPACE;
     buffer++;
     buffer = ConvertIntToDecimalStringN(
         buffer,
-        gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex].unk0,
+        gPokenavState->monList[gPokenavState->detailSelectionIndex].data,
         STR_CONV_MODE_LEFT_ALIGN,
         2);
     buffer[0] = EOS;
-    Menu_PrintText(gPokenavStructPtr->pokenavTextBuffer, 12, 13);
+    Menu_PrintText(gPokenavState->pokenavTextBuffer, 12, 13);
 }
 
 void InitPokenavMonInfoHeaderGfx(void)
 {
-    gPokenavStructPtr->monInfoHeaderGfxStep = 0;
+    gPokenavState->monInfoHeaderGfxStep = 0;
 }
 
 bool8 LoadPokenavMonInfoHeaderGfxStep(u8 forRibbons)
 {
-    switch (gPokenavStructPtr->monInfoHeaderGfxStep)
+    switch (gPokenavState->monInfoHeaderGfxStep)
     {
     case 0:
         break;
@@ -1702,43 +1702,43 @@ bool8 LoadPokenavMonInfoHeaderGfxStep(u8 forRibbons)
         else
             LoadPalette(gPokenavRibbonsMonInfoHeader_Pal, 0xD0, 0x20);
 
-        gPokenavStructPtr->monInfoHeaderXOffset = -80;
+        gPokenavState->monInfoHeaderXOffset = -80;
         REG_BG0CNT = 0x1D0D;
-        gPokenavStructPtr->monInfoHeaderGfxStep++;
+        gPokenavState->monInfoHeaderGfxStep++;
         return FALSE;
     default:
         return FALSE;
     }
 
-    gPokenavStructPtr->monInfoHeaderGfxStep++;
+    gPokenavState->monInfoHeaderGfxStep++;
     return TRUE;
 }
 
 bool8 SlidePokenavMonInfoHeaderIn(void)
 {
-    gPokenavStructPtr->monInfoHeaderXOffset += 0x10;
-    if (gPokenavStructPtr->monInfoHeaderXOffset > 0)
-        gPokenavStructPtr->monInfoHeaderXOffset = 0;
+    gPokenavState->monInfoHeaderXOffset += 0x10;
+    if (gPokenavState->monInfoHeaderXOffset > 0)
+        gPokenavState->monInfoHeaderXOffset = 0;
 
-    return gPokenavStructPtr->monInfoHeaderXOffset != 0;
+    return gPokenavState->monInfoHeaderXOffset != 0;
 }
 
 bool8 SlidePokenavMonInfoHeaderOut(void)
 {
-    gPokenavStructPtr->monInfoHeaderXOffset -= 0x10;
-    if (gPokenavStructPtr->monInfoHeaderXOffset < -0x50)
-        gPokenavStructPtr->monInfoHeaderXOffset = -0x50;
+    gPokenavState->monInfoHeaderXOffset -= 0x10;
+    if (gPokenavState->monInfoHeaderXOffset < -0x50)
+        gPokenavState->monInfoHeaderXOffset = -0x50;
 
-    return gPokenavStructPtr->monInfoHeaderXOffset != -0x50;
+    return gPokenavState->monInfoHeaderXOffset != -0x50;
 }
 
 bool8 LoadPokeblockConditionGraphScreenStep(void)
 {
-    switch (gPokenavStructPtr->setupStep)
+    switch (gPokenavState->setupStep)
     {
     case 0:
         ResetPokenavBgOffsets();
-        gPokenavStructPtr->unkD162 = 2;
+        gPokenavState->unkD162 = 2;
         break;
     case 1:
         InitPokenavMonInfoHeaderGfx();
@@ -1769,7 +1769,7 @@ bool8 LoadPokeblockConditionGraphScreenStep(void)
         SetConditionGraphWindowRegs();
         break;
     case 8:
-        PrintConditionGraphMonInfo(gPokenavStructPtr->portraitSlot);
+        PrintConditionGraphMonInfo(gPokenavState->portraitSlot);
         break;
     case 9:
         REG_BG3CNT = 0x1E03;
@@ -1781,16 +1781,16 @@ bool8 LoadPokeblockConditionGraphScreenStep(void)
         return FALSE;
     }
 
-    gPokenavStructPtr->setupStep++;
+    gPokenavState->setupStep++;
     return TRUE;
 }
 
 void PrintPokeblockMonNature(void)
 {
-    u8 *buffer = gPokenavStructPtr->pokenavTextBuffer;
-    if (gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex].unk3_14)
+    u8 *buffer = gPokenavState->pokenavTextBuffer;
+    if (gPokenavState->monList[gPokenavState->detailSelectionIndex].isValid)
     {
-        u8 nature = GetNature(&gPlayerParty[GetPartyIdFromPokeblockSelection(gPokenavStructPtr->detailSelectionIndex)]);
+        u8 nature = GetNature(&gPlayerParty[GetPartyIdFromPokeblockSelection(gPokenavState->detailSelectionIndex)]);
         buffer = StringCopy(buffer, gOtherText_Nature2);
         AlignStringInMenuWindow(buffer, gNatureNames[nature], 87, 0);
     }
@@ -1799,7 +1799,7 @@ void PrintPokeblockMonNature(void)
         AlignStringInMenuWindow(buffer, gText_EmptyString, 87, 0);
     }
 
-    Menu_PrintTextPixelCoords(gPokenavStructPtr->pokenavTextBuffer, 1, 112, 1);
+    Menu_PrintTextPixelCoords(gPokenavState->pokenavTextBuffer, 1, 112, 1);
 }
 
 void TruncateTrainerEyesLocationAtControlCode(u8 *text)
@@ -1823,8 +1823,8 @@ void UpdateRegionMapLinkLandmarks(void)
     if (ptr[0] == 1)
     {
         const u8 *landmarkName = GetLandmarkName(
-            gPokenavStructPtr->regionMap.mapSecId,
-            gPokenavStructPtr->regionMap.posWithinMapSec,
+            gPokenavState->regionMap.mapSecId,
+            gPokenavState->regionMap.posWithinMapSec,
             ptr[1]);
 
         if (landmarkName)
@@ -1852,8 +1852,8 @@ void StartRegionMapLinkLandmarks(void)
 
 void InitPokenavMenuOptionGfx(void)
 {
-    gPokenavStructPtr->unk306 = 0;
-    if (gPokenavStructPtr->unk6DAC == 0)
+    gPokenavState->loadState = 0;
+    if (gPokenavState->isLinkActive == 0)
         while (LoadPokenavMenuOptionGfxStep());
 }
 
@@ -1861,36 +1861,36 @@ bool8 LoadPokenavMenuOptionGfxStep(void)
 {
     u16 i, j;
 
-    switch (gPokenavStructPtr->unk306)
+    switch (gPokenavState->loadState)
     {
     case 0:
         for (i = 0; i < 6; i++)
         {
             for (j = 0; j < 4; j++)
-                gPokenavStructPtr->menuOptionSprites[i][j] = NULL;
+                gPokenavState->menuOptionSprites[i][j] = NULL;
         }
 
-        gPokenavStructPtr->menuOptionBlendMode = 0;
+        gPokenavState->menuOptionBlendMode = 0;
         break;
     case 1:
-        LZ77UnCompWram(gPokenavMenuOptions_Gfx, gPokenavStructPtr->menuOptionsGfx);
+        LZ77UnCompWram(gPokenavMenuOptions_Gfx, gPokenavState->menuOptionsGfx);
         break;
     case 2:
-        LZ77UnCompWram(gPokenavConditionMenu_Gfx, gPokenavStructPtr->conditionMenuGfx);
+        LZ77UnCompWram(gPokenavConditionMenu_Gfx, gPokenavState->conditionMenuGfx);
         break;
     case 3:
-        LZ77UnCompWram(gPokenavConditionSearch_Gfx, gPokenavStructPtr->conditionSearchGfx);
+        LZ77UnCompWram(gPokenavConditionSearch_Gfx, gPokenavState->conditionSearchGfx);
         return FALSE;
     }
 
-    gPokenavStructPtr->unk306++;
+    gPokenavState->loadState++;
     return TRUE;
 }
 
 void InitPokenavMenuOptionSprites(u8 menuType)
 {
-    gPokenavStructPtr->unk306 = 0;
-    if (gPokenavStructPtr->unk6DAC == 0)
+    gPokenavState->loadState = 0;
+    if (gPokenavState->isLinkActive == 0)
         while (LoadPokenavMenuOptionSpritesStep(menuType));
 }
 
@@ -1902,7 +1902,7 @@ bool8 LoadPokenavMenuOptionSpritesStep(u8 menuType)
     u16 middle;
     u8 spriteId;
 
-    switch (gPokenavStructPtr->unk306)
+    switch (gPokenavState->loadState)
     {
     case 0:
     {
@@ -1923,38 +1923,38 @@ bool8 LoadPokenavMenuOptionSpritesStep(u8 menuType)
         case 0:
             topOffset = 42;
             height = 20;
-            gPokenavStructPtr->menuOptionRowCount = 5;
+            gPokenavState->menuOptionRowCount = 5;
             break;
         case 1:
             topOffset = 56;
             height = 20;
-            gPokenavStructPtr->menuOptionRowCount = 3;
+            gPokenavState->menuOptionRowCount = 3;
             break;
         case 2:
             topOffset = 40;
             height = 16;
-            gPokenavStructPtr->menuOptionRowCount = 6;
+            gPokenavState->menuOptionRowCount = 6;
             break;
         default:
             return FALSE;
         }
 
         animNum = 0;
-        for (i = 0; i < gPokenavStructPtr->menuOptionRowCount; i++)
+        for (i = 0; i < gPokenavState->menuOptionRowCount; i++)
         {
             middle = (height * i) + topOffset - 8;
-            gPokenavStructPtr->menuOptionWin0V[i] = (middle << 8) | (middle + 0x11);
+            gPokenavState->menuOptionWin0V[i] = (middle << 8) | (middle + 0x11);
             if (!menuType)
             {
-                if (gPokenavStructPtr->mainMenuItemIds[i] == 0)
+                if (gPokenavState->mainMenuItemIds[i] == 0)
                 {
                     for (j = 0; j < 4; j++)
-                        gPokenavStructPtr->menuOptionSprites[i][j] = NULL;
+                        gPokenavState->menuOptionSprites[i][j] = NULL;
                     continue;
                 }
                 else
                 {
-                    animNum = (gPokenavStructPtr->mainMenuItemIds[i] - 1) * 4;
+                    animNum = (gPokenavState->mainMenuItemIds[i] - 1) * 4;
                 }
             }
 
@@ -1963,16 +1963,16 @@ bool8 LoadPokenavMenuOptionSpritesStep(u8 menuType)
                 spriteId = CreateSprite(&gPokenavMenuOptionSpriteTemplate, j * 32 + 256, (height * i) + topOffset, 0);
                 if (spriteId == MAX_SPRITES)
                     return FALSE;
-                gPokenavStructPtr->menuOptionSprites[i][j] = &gSprites[spriteId];
-                gPokenavStructPtr->menuOptionSprites[i][j]->data[0] = i;
-                gPokenavStructPtr->menuOptionSprites[i][j]->data[1] = j;
-                gPokenavStructPtr->menuOptionSprites[i][j]->data[2] = j * 32 + 152;
-                gPokenavStructPtr->menuOptionSprites[i][j]->data[3] = j * 32 + 256;
-                StartSpriteAnim(gPokenavStructPtr->menuOptionSprites[i][j], animNum++);
+                gPokenavState->menuOptionSprites[i][j] = &gSprites[spriteId];
+                gPokenavState->menuOptionSprites[i][j]->data[0] = i;
+                gPokenavState->menuOptionSprites[i][j]->data[1] = j;
+                gPokenavState->menuOptionSprites[i][j]->data[2] = j * 32 + 152;
+                gPokenavState->menuOptionSprites[i][j]->data[3] = j * 32 + 256;
+                StartSpriteAnim(gPokenavState->menuOptionSprites[i][j], animNum++);
 
                 if ((menuType == 2 || menuType == 0) && i > 2)
                 {
-                    gPokenavStructPtr->menuOptionSprites[i][j]->oam.paletteNum = IndexOfSpritePaletteTag(0x1);
+                    gPokenavState->menuOptionSprites[i][j]->oam.paletteNum = IndexOfSpritePaletteTag(0x1);
                 }
             }
         }
@@ -1982,19 +1982,19 @@ bool8 LoadPokenavMenuOptionSpritesStep(u8 menuType)
         return FALSE;
     }
 
-    gPokenavStructPtr->unk306++;
+    gPokenavState->loadState++;
     return TRUE;
 }
 
 void StartMenuOptionSpritesSlideIn(void)
 {
     u16 i, j;
-    for (i = 0; i < gPokenavStructPtr->menuOptionRowCount; i++)
+    for (i = 0; i < gPokenavState->menuOptionRowCount; i++)
     {
         for (j = 0; j < 4; j++)
         {
-            if (gPokenavStructPtr->menuOptionSprites[i][j])
-                gPokenavStructPtr->menuOptionSprites[i][j]->callback = SpriteCB_SlideMenuOptionIn;
+            if (gPokenavState->menuOptionSprites[i][j])
+                gPokenavState->menuOptionSprites[i][j]->callback = SpriteCB_SlideMenuOptionIn;
         }
     }
 
@@ -2023,16 +2023,16 @@ void StartMenuOptionSpritesSlideOut(void)
 {
     u16 i, j;
 
-    gPokenavStructPtr->menuOptionExitStep = 0;
+    gPokenavState->menuOptionExitStep = 0;
     StopMenuOptionHighlight();
-    for (i = 0; i < gPokenavStructPtr->menuOptionRowCount; i++)
+    for (i = 0; i < gPokenavState->menuOptionRowCount; i++)
     {
-        if (i != gPokenavStructPtr->menuCursorPos)
+        if (i != gPokenavState->menuCursorPos)
         {
             for (j = 0; j < 4; j++)
             {
-                if (gPokenavStructPtr->menuOptionSprites[i][j])
-                    gPokenavStructPtr->menuOptionSprites[i][j]->callback = SpriteCB_SlideMenuOptionOut;
+                if (gPokenavState->menuOptionSprites[i][j])
+                    gPokenavState->menuOptionSprites[i][j]->callback = SpriteCB_SlideMenuOptionOut;
             }
         }
     }
@@ -2042,14 +2042,14 @@ bool8 UpdateMenuOptionSpritesSlideOut(void)
 {
     u16 j;
 
-    switch (gPokenavStructPtr->menuOptionExitStep)
+    switch (gPokenavState->menuOptionExitStep)
     {
     case 0:
         if (AreOtherMenuOptionSpritesGone())
         {
             for (j = 0; j < 4; j++)
             {
-                struct Sprite *sprite = gPokenavStructPtr->menuOptionSprites[gPokenavStructPtr->menuCursorPos][j];
+                struct Sprite *sprite = gPokenavState->menuOptionSprites[gPokenavState->menuCursorPos][j];
                 sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
                 sprite->affineAnims = gPokenavMenuOptionZoomAffineAnimTable;
                 InitSpriteAffineAnim(sprite);
@@ -2060,7 +2060,7 @@ bool8 UpdateMenuOptionSpritesSlideOut(void)
             }
 
             StartSelectedMenuOptionFadeOut();
-            gPokenavStructPtr->menuOptionExitStep++;
+            gPokenavState->menuOptionExitStep++;
         }
         break;
     case 1:
@@ -2080,18 +2080,18 @@ bool8 UpdateMenuOptionSpritesSlideOut(void)
 
 void UpdateMenuOptionBlendRegisters(void)
 {
-    if (gPokenavStructPtr->menuOptionBlendMode == 1)
+    if (gPokenavState->menuOptionBlendMode == 1)
     {
-        REG_WIN0V = gPokenavStructPtr->menuOptionWin0V[gPokenavStructPtr->menuCursorPos];
-        REG_BLDY = gSineTable[gPokenavStructPtr->menuOptionBlendFrame] >> 5;
-        gPokenavStructPtr->menuOptionBlendFrame += 3;
-        gPokenavStructPtr->menuOptionBlendFrame &= 0x7F;
+        REG_WIN0V = gPokenavState->menuOptionWin0V[gPokenavState->menuCursorPos];
+        REG_BLDY = gSineTable[gPokenavState->menuOptionBlendFrame] >> 5;
+        gPokenavState->menuOptionBlendFrame += 3;
+        gPokenavState->menuOptionBlendFrame &= 0x7F;
     }
-    else if (gPokenavStructPtr->menuOptionBlendMode == 2)
+    else if (gPokenavState->menuOptionBlendMode == 2)
     {
-        REG_BLDALPHA = gPokenavMenuOptionBlendAlphas[gPokenavStructPtr->menuOptionBlendFrame];
-        if (gPokenavStructPtr->menuOptionBlendFrame < 15)
-            gPokenavStructPtr->menuOptionBlendFrame++;
+        REG_BLDALPHA = gPokenavMenuOptionBlendAlphas[gPokenavState->menuOptionBlendFrame];
+        if (gPokenavState->menuOptionBlendFrame < 15)
+            gPokenavState->menuOptionBlendFrame++;
     }
 }
 
@@ -2103,7 +2103,7 @@ void ResetMenuOptionBlendOnPokenavExit(void)
 void EnableMenuOptionHighlightWindow(void)
 {
     REG_WIN0H = 0x77F0;
-    REG_WIN0V = gPokenavStructPtr->menuOptionWin0V[gPokenavStructPtr->menuCursorPos];
+    REG_WIN0V = gPokenavState->menuOptionWin0V[gPokenavState->menuCursorPos];
     REG_WININ = 0x3F;
     REG_WINOUT = 0x1F;
     REG_DISPCNT |= DISPCNT_WIN0_ON;
@@ -2116,10 +2116,10 @@ void DisableMenuOptionHighlightWindow(void)
 
 void StartMenuOptionHighlight(void)
 {
-    if (!gPokenavStructPtr->menuOptionBlendMode)
+    if (!gPokenavState->menuOptionBlendMode)
     {
-        gPokenavStructPtr->menuOptionBlendMode = 1;
-        gPokenavStructPtr->menuOptionBlendFrame = 0;
+        gPokenavState->menuOptionBlendMode = 1;
+        gPokenavState->menuOptionBlendFrame = 0;
         REG_BLDCNT = 0x90;
         REG_BLDY = 0;
         EnableMenuOptionHighlightWindow();
@@ -2128,7 +2128,7 @@ void StartMenuOptionHighlight(void)
 
 void StopMenuOptionHighlight(void)
 {
-    gPokenavStructPtr->menuOptionBlendMode = 0;
+    gPokenavState->menuOptionBlendMode = 0;
     REG_BLDCNT = 0;
     DisableMenuOptionHighlightWindow();
 }
@@ -2137,17 +2137,17 @@ void StartSelectedMenuOptionFadeOut(void)
 {
     u16 j;
 
-    if (!gPokenavStructPtr->menuOptionBlendMode)
+    if (!gPokenavState->menuOptionBlendMode)
     {
         DisableMenuOptionHighlightWindow();
         for (j = 0; j < 4; j++)
         {
-            struct Sprite *sprite = gPokenavStructPtr->menuOptionSprites[gPokenavStructPtr->menuCursorPos][j];
+            struct Sprite *sprite = gPokenavState->menuOptionSprites[gPokenavState->menuCursorPos][j];
             sprite->oam.objMode = ST_OAM_OBJ_BLEND;
         }
 
-        gPokenavStructPtr->menuOptionBlendMode = 2;
-        gPokenavStructPtr->menuOptionBlendFrame = 0;
+        gPokenavState->menuOptionBlendMode = 2;
+        gPokenavState->menuOptionBlendFrame = 0;
         REG_BLDCNT = 0x3F40;
         REG_BLDALPHA = 0x10;
     }
@@ -2155,7 +2155,7 @@ void StartSelectedMenuOptionFadeOut(void)
 
 void StopMenuOptionFadeOut()
 {
-    gPokenavStructPtr->menuOptionBlendMode = 0;
+    gPokenavState->menuOptionBlendMode = 0;
     REG_BLDCNT = 0;
 }
 
@@ -2171,7 +2171,7 @@ void SpriteCB_SlideMenuOptionIn(struct Sprite *sprite)
 
 void SpriteCB_SlideMenuOptionOut(struct Sprite *sprite)
 {
-    if (sprite->data[0] == gPokenavStructPtr->menuCursorPos)
+    if (sprite->data[0] == gPokenavState->menuCursorPos)
     {
         if (sprite->data[5])
         {
@@ -2192,7 +2192,7 @@ void SpriteCB_SlideMenuOptionOut(struct Sprite *sprite)
 
 void SpriteCB_UpdateMenuOptionSelectionOffset(struct Sprite *sprite)
 {
-    if (sprite->data[0] == gPokenavStructPtr->menuCursorPos)
+    if (sprite->data[0] == gPokenavState->menuCursorPos)
     {
         if (sprite->x2 > -16)
             sprite->x2 -= 4;
@@ -2208,11 +2208,11 @@ bool8 AreMenuOptionSpriteOffsetsAtRest(void)
 {
     u16 i, j;
 
-    for (i = 0; i < gPokenavStructPtr->menuItemCount; i++)
+    for (i = 0; i < gPokenavState->menuItemCount; i++)
     {
         for (j = 0; j < 4; j++)
         {
-            struct Sprite *sprite = gPokenavStructPtr->menuOptionSprites[i][j];
+            struct Sprite *sprite = gPokenavState->menuOptionSprites[i][j];
             if (!sprite)
                 return TRUE;
 
@@ -2228,13 +2228,13 @@ bool8 AreOtherMenuOptionSpritesGone(void)
 {
     u16 i, j;
 
-    for (i = 0; i < gPokenavStructPtr->menuOptionRowCount; i++)
+    for (i = 0; i < gPokenavState->menuOptionRowCount; i++)
     {
-        if (i != gPokenavStructPtr->menuCursorPos)
+        if (i != gPokenavState->menuCursorPos)
         {
             for (j = 0; j < 4; j++)
             {
-                struct Sprite *sprite = gPokenavStructPtr->menuOptionSprites[i][j];
+                struct Sprite *sprite = gPokenavState->menuOptionSprites[i][j];
                 if (sprite)
                     return FALSE;
             }
@@ -2250,7 +2250,7 @@ bool8 AreSelectedMenuOptionSpritesGone(void)
 
     for (j = 0; j < 4; j++)
     {
-        struct Sprite *sprite = gPokenavStructPtr->menuOptionSprites[gPokenavStructPtr->menuCursorPos][j];
+        struct Sprite *sprite = gPokenavState->menuOptionSprites[gPokenavState->menuCursorPos][j];
         if (sprite)
             return FALSE;
     }
@@ -2260,7 +2260,7 @@ bool8 AreSelectedMenuOptionSpritesGone(void)
 
 void DestroyMenuOptionSprite(struct Sprite *sprite)
 {
-    gPokenavStructPtr->menuOptionSprites[sprite->data[0]][sprite->data[1]] = NULL;
+    gPokenavState->menuOptionSprites[sprite->data[0]][sprite->data[1]] = NULL;
     if (sprite->affineAnimEnded)
         FreeOamMatrix(sprite->oam.matrixNum);
 
@@ -2272,25 +2272,25 @@ void LoadMenuOptionSpriteSheet(u8 menuType)
     switch (menuType)
     {
     case 0:
-        gPokenavStructPtr->menuOptionSpriteSheet.data = gPokenavStructPtr->menuOptionsGfx;
-        gPokenavStructPtr->menuOptionSpriteSheet.size = sizeof(gPokenavStructPtr->menuOptionsGfx);
-        gPokenavStructPtr->menuOptionSpriteSheet.tag = 0x0;
+        gPokenavState->menuOptionSpriteSheet.data = gPokenavState->menuOptionsGfx;
+        gPokenavState->menuOptionSpriteSheet.size = sizeof(gPokenavState->menuOptionsGfx);
+        gPokenavState->menuOptionSpriteSheet.tag = 0x0;
         break;
     case 1:
-        gPokenavStructPtr->menuOptionSpriteSheet.data = gPokenavStructPtr->conditionMenuGfx;
-        gPokenavStructPtr->menuOptionSpriteSheet.size = sizeof(gPokenavStructPtr->conditionMenuGfx);
-        gPokenavStructPtr->menuOptionSpriteSheet.tag = 0x0;
+        gPokenavState->menuOptionSpriteSheet.data = gPokenavState->conditionMenuGfx;
+        gPokenavState->menuOptionSpriteSheet.size = sizeof(gPokenavState->conditionMenuGfx);
+        gPokenavState->menuOptionSpriteSheet.tag = 0x0;
         break;
     case 2:
-        gPokenavStructPtr->menuOptionSpriteSheet.data = gPokenavStructPtr->conditionSearchGfx;
-        gPokenavStructPtr->menuOptionSpriteSheet.size = sizeof(gPokenavStructPtr->conditionSearchGfx);
-        gPokenavStructPtr->menuOptionSpriteSheet.tag = 0x0;
+        gPokenavState->menuOptionSpriteSheet.data = gPokenavState->conditionSearchGfx;
+        gPokenavState->menuOptionSpriteSheet.size = sizeof(gPokenavState->conditionSearchGfx);
+        gPokenavState->menuOptionSpriteSheet.tag = 0x0;
         break;
     default:
         return;
     }
 
-    LoadSpriteSheet(&gPokenavStructPtr->menuOptionSpriteSheet);
+    LoadSpriteSheet(&gPokenavState->menuOptionSpriteSheet);
 }
 
 void LoadMenuOptionSpritePalettes(u8 menuType)
@@ -2328,7 +2328,7 @@ void CreateRematchBlueLightSprite(void)
 {
     u8 spriteId;
 
-    gPokenavStructPtr->blueLightSprite = NULL;
+    gPokenavState->blueLightSprite = NULL;
     if (DoesSomeoneWantRematchIn(gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum) == TRUE)
     {
         LoadSpriteSheet(&gSpriteSheet_PokenavBlueLight);
@@ -2336,7 +2336,7 @@ void CreateRematchBlueLightSprite(void)
         spriteId = CreateSprite(&gPokenavBlueLightSpriteTemplate, 12, 96, 0);
         if (spriteId != MAX_SPRITES)
         {
-            gPokenavStructPtr->blueLightSprite = &gSprites[spriteId];
+            gPokenavState->blueLightSprite = &gSprites[spriteId];
         }
         else
         {
@@ -2348,12 +2348,12 @@ void CreateRematchBlueLightSprite(void)
 
 void DestroyRematchBlueLightSprite(void)
 {
-    if (gPokenavStructPtr->blueLightSprite)
+    if (gPokenavState->blueLightSprite)
     {
-        DestroySprite(gPokenavStructPtr->blueLightSprite);
+        DestroySprite(gPokenavState->blueLightSprite);
         FreeSpriteTilesByTag(0x19);
         FreeSpritePaletteByTag(0x11);
-        gPokenavStructPtr->blueLightSprite = NULL;
+        gPokenavState->blueLightSprite = NULL;
     }
 }
 
@@ -2368,35 +2368,35 @@ void SpriteCB_BlinkingBlueLight(struct Sprite *sprite)
 
 void InitPokenavMenuHeaderGfx(void)
 {
-    gPokenavStructPtr->unk306 = 0;
-    if (!gPokenavStructPtr->unk6DAC)
+    gPokenavState->loadState = 0;
+    if (!gPokenavState->isLinkActive)
         while(LoadPokenavMenuHeaderGfxStep());
 }
 
 bool8 LoadPokenavMenuHeaderGfxStep(void)
 {
-    switch (gPokenavStructPtr->unk306)
+    switch (gPokenavState->loadState)
     {
     case 0:
-        LZ77UnCompWram(gPokenavMainMenuHeader_Gfx, gPokenavStructPtr->mainMenuHeaderGfx);
+        LZ77UnCompWram(gPokenavMainMenuHeader_Gfx, gPokenavState->mainMenuHeaderGfx);
         break;
     case 1:
-        LZ77UnCompWram(gPokenavConditionMenuHeader_Gfx, gPokenavStructPtr->conditionMenuHeaderGfx);
+        LZ77UnCompWram(gPokenavConditionMenuHeader_Gfx, gPokenavState->conditionMenuHeaderGfx);
         break;
     case 2:
-        LZ77UnCompWram(gPokenavRibbonsHeader_Gfx, gPokenavStructPtr->ribbonsHeaderGfx);
+        LZ77UnCompWram(gPokenavRibbonsHeader_Gfx, gPokenavState->ribbonsHeaderGfx);
         break;
     case 3:
-        LZ77UnCompWram(gPokenavHoennMapHeader_Gfx, gPokenavStructPtr->hoennMapHeaderGfx);
+        LZ77UnCompWram(gPokenavHoennMapHeader_Gfx, gPokenavState->hoennMapHeaderGfx);
         break;
     case 4:
-        LZ77UnCompWram(gPokenavConditionHeaderLabels_Gfx, gPokenavStructPtr->searchHeaderGfx);
+        LZ77UnCompWram(gPokenavConditionHeaderLabels_Gfx, gPokenavState->searchHeaderGfx);
         break;
     case 5:
-        LZ77UnCompWram(gPokenavConditionHeaderLabels2_Gfx, gPokenavStructPtr->smartHeaderGfx);
+        LZ77UnCompWram(gPokenavConditionHeaderLabels2_Gfx, gPokenavState->smartHeaderGfx);
         break;
     case 6:
-        LZ77UnCompWram(gPokenavTrainersEyesHeader_Gfx, gPokenavStructPtr->trainersEyesHeaderGfx);
+        LZ77UnCompWram(gPokenavTrainersEyesHeader_Gfx, gPokenavState->trainersEyesHeaderGfx);
         break;
     case 7:
         LoadSpritePalettes(gPokenavMenuHeaderSpritePalettes);
@@ -2405,7 +2405,7 @@ bool8 LoadPokenavMenuHeaderGfxStep(void)
         return FALSE;
     }
 
-    gPokenavStructPtr->unk306++;
+    gPokenavState->loadState++;
     return TRUE;
 }
 
@@ -2416,63 +2416,63 @@ void LoadPokenavMenuHeaderSpriteSheet(u8 headerType)
     switch (headerType)
     {
     case 0:
-        spriteSheet.data = gPokenavStructPtr->mainMenuHeaderGfx;
-        spriteSheet.size = sizeof(gPokenavStructPtr->mainMenuHeaderGfx);
+        spriteSheet.data = gPokenavState->mainMenuHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavState->mainMenuHeaderGfx);
         spriteSheet.tag = 0x1;
         break;
     case 1:
-        spriteSheet.data = gPokenavStructPtr->conditionMenuHeaderGfx;
-        spriteSheet.size = sizeof(gPokenavStructPtr->conditionMenuHeaderGfx);
+        spriteSheet.data = gPokenavState->conditionMenuHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavState->conditionMenuHeaderGfx);
         spriteSheet.tag = 0x1;
         break;
     case 3:
-        spriteSheet.data = gPokenavStructPtr->trainersEyesHeaderGfx;
-        spriteSheet.size = sizeof(gPokenavStructPtr->trainersEyesHeaderGfx);
+        spriteSheet.data = gPokenavState->trainersEyesHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavState->trainersEyesHeaderGfx);
         spriteSheet.tag = 0x1;
         break;
     case 2:
-        spriteSheet.data = gPokenavStructPtr->ribbonsHeaderGfx;
-        spriteSheet.size = sizeof(gPokenavStructPtr->ribbonsHeaderGfx);
+        spriteSheet.data = gPokenavState->ribbonsHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavState->ribbonsHeaderGfx);
         spriteSheet.tag = 0x1;
         break;
     case 4:
-        spriteSheet.data = gPokenavStructPtr->hoennMapHeaderGfx;
-        spriteSheet.size = sizeof(gPokenavStructPtr->hoennMapHeaderGfx);
+        spriteSheet.data = gPokenavState->hoennMapHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavState->hoennMapHeaderGfx);
         spriteSheet.tag = 0x1;
         break;
     case 5:
-        spriteSheet.data = gPokenavStructPtr->searchHeaderGfx;
-        spriteSheet.size = sizeof(gPokenavStructPtr->searchHeaderGfx);
+        spriteSheet.data = gPokenavState->searchHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavState->searchHeaderGfx);
         spriteSheet.tag = 0x2;
         break;
     case 6:
-        spriteSheet.data = gPokenavStructPtr->partyHeaderGfx;
-        spriteSheet.size = sizeof(gPokenavStructPtr->partyHeaderGfx);
+        spriteSheet.data = gPokenavState->partyHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavState->partyHeaderGfx);
         spriteSheet.tag = 0x2;
         break;
     case 8:
-        spriteSheet.data = gPokenavStructPtr->beautyHeaderGfx;
-        spriteSheet.size = sizeof(gPokenavStructPtr->beautyHeaderGfx);
+        spriteSheet.data = gPokenavState->beautyHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavState->beautyHeaderGfx);
         spriteSheet.tag = 0x2;
         break;
     case 9:
-        spriteSheet.data = gPokenavStructPtr->cuteHeaderGfx;
-        spriteSheet.size = sizeof(gPokenavStructPtr->cuteHeaderGfx);
+        spriteSheet.data = gPokenavState->cuteHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavState->cuteHeaderGfx);
         spriteSheet.tag = 0x2;
         break;
     case 11:
-        spriteSheet.data = gPokenavStructPtr->toughHeaderGfx;
-        spriteSheet.size = sizeof(gPokenavStructPtr->toughHeaderGfx);
+        spriteSheet.data = gPokenavState->toughHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavState->toughHeaderGfx);
         spriteSheet.tag = 0x2;
         break;
     case 10:
-        spriteSheet.data = gPokenavStructPtr->smartHeaderGfx;
-        spriteSheet.size = sizeof(gPokenavStructPtr->smartHeaderGfx);
+        spriteSheet.data = gPokenavState->smartHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavState->smartHeaderGfx);
         spriteSheet.tag = 0x2;
         break;
     case 7:
-        spriteSheet.data = gPokenavStructPtr->coolHeaderGfx;
-        spriteSheet.size = sizeof(gPokenavStructPtr->coolHeaderGfx);
+        spriteSheet.data = gPokenavState->coolHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavState->coolHeaderGfx);
         spriteSheet.tag = 0x2;
         break;
     default:
@@ -2500,21 +2500,21 @@ void CreatePokenavLeftHeaderSprites(u8 headerType)
     case 2:
     case 3:
         initialX = -96;
-        y = 49 - gPokenavStructPtr->menuVerticalOffset;
+        y = 49 - gPokenavState->menuVerticalOffset;
         deltaX = 8;
         endX = 32;
         width = 64;
-        sprites = gPokenavStructPtr->largeHeaderSprites;
+        sprites = gPokenavState->largeHeaderSprites;
         spriteTemplate = headerType != 3 ? &gPokenavLargeHeaderSpriteTemplate : &gPokenavTrainersEyesHeaderSpriteTemplate;
         break;
     case 4:
         initialX = 272;
-        y = 49 - gPokenavStructPtr->menuVerticalOffset;
+        y = 49 - gPokenavState->menuVerticalOffset;
         deltaX = -8;
         endX = 152;
         width = 64;
         spriteTemplate = &gPokenavLargeHeaderSpriteTemplate;
-        sprites = gPokenavStructPtr->largeHeaderSprites;
+        sprites = gPokenavState->largeHeaderSprites;
         break;
     case 5:
     case 6:
@@ -2529,11 +2529,11 @@ void CreatePokenavLeftHeaderSprites(u8 headerType)
             spriteTemplate = &gPokenavSmallHeaderAltSpriteTemplate;
 
         initialX = -96;
-        y = 68 - gPokenavStructPtr->menuVerticalOffset;
+        y = 68 - gPokenavState->menuVerticalOffset;
         deltaX = 8;
         endX = 16;
         width = 32;
-        sprites = gPokenavStructPtr->smallHeaderSprites;
+        sprites = gPokenavState->smallHeaderSprites;
         break;
     default:
         return;
@@ -2550,7 +2550,7 @@ void CreatePokenavLeftHeaderSprites(u8 headerType)
             gSprites[spriteId].data[3] = headerType;
             if (headerType == 4 && i == 1)
             {
-                int anim = !gPokenavStructPtr->regionMap.zoomed ? 1 : 2;
+                int anim = !gPokenavState->regionMap.zoomed ? 1 : 2;
                 StartSpriteAnim(&gSprites[spriteId], anim);
             }
             else
@@ -2607,28 +2607,28 @@ void SpriteCB_SlideLeftHeaderOut(struct Sprite *sprite)
 
 void SpriteCB_UpdateRegionMapHeaderZoom(struct Sprite *sprite)
 {
-    int anim = !gPokenavStructPtr->regionMap.zoomed ? 1 : 2;
+    int anim = !gPokenavState->regionMap.zoomed ? 1 : 2;
     StartSpriteAnim(sprite, anim);
 }
 
 void BeginPokenavLeftHeaderLoad(u8 headerType)
 {
-    gPokenavStructPtr->unk306 = 0;
-    if (!gPokenavStructPtr->unk6DAC)
+    gPokenavState->loadState = 0;
+    if (!gPokenavState->isLinkActive)
         while (LoadPokenavLeftHeaderStep(headerType));
 }
 
 bool8 LoadPokenavLeftHeaderStep(u8 headerType)
 {
-    switch (gPokenavStructPtr->unk306)
+    switch (gPokenavState->loadState)
     {
     case 0:
         LoadPokenavMenuHeaderSpriteSheet(headerType);
-        gPokenavStructPtr->unk306++;
+        gPokenavState->loadState++;
         return TRUE;
     case 1:
         CreatePokenavLeftHeaderSprites(headerType);
-        gPokenavStructPtr->unk306++;
+        gPokenavState->loadState++;
         return FALSE;
     default:
         return FALSE;
@@ -2642,12 +2642,12 @@ void StartPokenavLeftHeaderSlideOut(u8 headerType)
     if (headerType < 5)
     {
         for (i = 0; i < 2; i++)
-            gPokenavStructPtr->largeHeaderSprites[i]->callback = SpriteCB_SlideLeftHeaderOut;
+            gPokenavState->largeHeaderSprites[i]->callback = SpriteCB_SlideLeftHeaderOut;
     }
     else
     {
         for (i = 0; i < 2; i++)
-            gPokenavStructPtr->smallHeaderSprites[i]->callback = SpriteCB_SlideLeftHeaderOut;
+            gPokenavState->smallHeaderSprites[i]->callback = SpriteCB_SlideLeftHeaderOut;
     }
 }
 
@@ -2659,13 +2659,13 @@ void DestroyPokenavLeftHeaderSprites(u8 headerType)
     {
         FreeSpriteTilesByTag(0x1);
         for (i = 0; i < 2; i++)
-            DestroySprite(gPokenavStructPtr->largeHeaderSprites[i]);
+            DestroySprite(gPokenavState->largeHeaderSprites[i]);
     }
     else
     {
         FreeSpriteTilesByTag(0x2);
         for (i = 0; i < 2; i++)
-            DestroySprite(gPokenavStructPtr->smallHeaderSprites[i]);
+            DestroySprite(gPokenavState->smallHeaderSprites[i]);
     }
 }
 
@@ -2683,7 +2683,7 @@ void FreePokenavRegionMapIcons(void)
 
 void SpriteCB_UpdatePokenavPortraitSpriteX(struct Sprite *sprite)
 {
-    sprite->x = gPokenavStructPtr->monInfoHeaderXOffset + 38;
+    sprite->x = gPokenavState->monInfoHeaderXOffset + 38;
 }
 
 void CreateOrUpdatePokenavPortraitSprite(u8 portraitSlot)
@@ -2693,71 +2693,71 @@ void CreateOrUpdatePokenavPortraitSprite(u8 portraitSlot)
     struct SpritePalette spritePalette;
     struct SpriteSheet spriteSheet;
 
-    if (!gPokenavStructPtr->portraitSprite)
+    if (!gPokenavState->portraitSprite)
     {
         spriteSheet = gPokenavPortraitSpriteSheet;
         spriteTemplate = gPokenavPortraitSpriteTemplate;
         spritePalette = gPokenavPortraitSpritePalette;
 
-        spriteSheet.data = gPokenavStructPtr->spriteGfxBuffers[portraitSlot];
-        spritePalette.data = gPokenavStructPtr->portraitPaletteBuffers[portraitSlot];
-        gPokenavStructPtr->portraitPaletteOffset = LoadSpritePalette(&spritePalette);
-        gPokenavStructPtr->portraitTileStart = LoadSpriteSheet(&spriteSheet);
+        spriteSheet.data = gPokenavState->spriteGfxBuffers[portraitSlot];
+        spritePalette.data = gPokenavState->portraitPaletteBuffers[portraitSlot];
+        gPokenavState->portraitPaletteOffset = LoadSpritePalette(&spritePalette);
+        gPokenavState->portraitTileStart = LoadSpriteSheet(&spriteSheet);
 
         spriteId = CreateSprite(&spriteTemplate, 38, 104, 0);
         if (spriteId == MAX_SPRITES)
         {
             FreeSpriteTilesByTag(0x6);
             FreeSpritePaletteByTag(0x6);
-            gPokenavStructPtr->portraitSprite = NULL;
+            gPokenavState->portraitSprite = NULL;
         }
         else
         {
-            gPokenavStructPtr->portraitSprite = &gSprites[spriteId];
-            gPokenavStructPtr->portraitVramDest = (void *)(VRAM + 0x10000) + gPokenavStructPtr->portraitTileStart * 32;
-            gPokenavStructPtr->portraitPaletteOffset = gPokenavStructPtr->portraitPaletteOffset * 16 + 0x100;
+            gPokenavState->portraitSprite = &gSprites[spriteId];
+            gPokenavState->portraitVramDest = (void *)(VRAM + 0x10000) + gPokenavState->portraitTileStart * 32;
+            gPokenavState->portraitPaletteOffset = gPokenavState->portraitPaletteOffset * 16 + 0x100;
         }
     }
     else
     {
-        DmaCopy16Defvars(3, gPokenavStructPtr->spriteGfxBuffers[portraitSlot], gPokenavStructPtr->portraitVramDest, 0x800);
-        LoadPalette(gPokenavStructPtr->portraitPaletteBuffers[portraitSlot], gPokenavStructPtr->portraitPaletteOffset, 0x20);
+        DmaCopy16Defvars(3, gPokenavState->spriteGfxBuffers[portraitSlot], gPokenavState->portraitVramDest, 0x800);
+        LoadPalette(gPokenavState->portraitPaletteBuffers[portraitSlot], gPokenavState->portraitPaletteOffset, 0x20);
     }
 }
 
 void DestroyPokenavPortraitSprite(void)
 {
-    if (gPokenavStructPtr->portraitSprite)
+    if (gPokenavState->portraitSprite)
     {
-        DestroySprite(gPokenavStructPtr->portraitSprite);
+        DestroySprite(gPokenavState->portraitSprite);
         FreeSpriteTilesByTag(0x6);
         FreeSpritePaletteByTag(0x6);
-        gPokenavStructPtr->portraitSprite = NULL;
+        gPokenavState->portraitSprite = NULL;
     }
 }
 
 void CreateOrUpdateTrainerEyesPortrait(u8 portraitSlot)
 {
     CreateOrUpdatePokenavPortraitSprite(portraitSlot);
-    gPokenavStructPtr->trainerEyesPortraitSprite = gPokenavStructPtr->portraitSprite;
-    gPokenavStructPtr->trainerEyesPortraitSprite->callback = SpriteCB_UpdateTrainerEyesPortraitPosition;
+    gPokenavState->trainerEyesPortraitSprite = gPokenavState->portraitSprite;
+    gPokenavState->trainerEyesPortraitSprite->callback = SpriteCB_UpdateTrainerEyesPortraitPosition;
 }
 
 void DestroyTrainerEyesPortrait(void)
 {
-    if (gPokenavStructPtr->trainerEyesPortraitSprite)
+    if (gPokenavState->trainerEyesPortraitSprite)
     {
-        DestroySprite(gPokenavStructPtr->trainerEyesPortraitSprite);
+        DestroySprite(gPokenavState->trainerEyesPortraitSprite);
         FreeSpriteTilesByTag(0x6);
         FreeSpritePaletteByTag(0x6);
-        gPokenavStructPtr->trainerEyesPortraitSprite = NULL;
-        gPokenavStructPtr->portraitSprite = NULL;
+        gPokenavState->trainerEyesPortraitSprite = NULL;
+        gPokenavState->portraitSprite = NULL;
     }
 }
 
 void SpriteCB_UpdateTrainerEyesPortraitPosition(struct Sprite *sprite)
 {
-    sprite->x = gPokenavStructPtr->trainerEyesPortraitXOffset + 40;
+    sprite->x = gPokenavState->trainerEyesPortraitXOffset + 40;
     sprite->y = 104;
 }
 
@@ -2783,17 +2783,17 @@ void CreatePokenavListArrowSprites(u8 paletteType)
     spriteId = CreateSprite(&gPokenavListRightArrowSpriteTemplate, 95, 0, 0);
     if (spriteId == MAX_SPRITES)
     {
-        gPokenavStructPtr->listRightArrowSprite = NULL;
+        gPokenavState->listRightArrowSprite = NULL;
     }
     else
     {
-        gPokenavStructPtr->listRightArrowSprite = &gSprites[spriteId];
+        gPokenavState->listRightArrowSprite = &gSprites[spriteId];
         for (i = 0; i < 2; i++)
         {
             spriteId = CreateSprite(&gPokenavListUpDownArrowSpriteTemplate, 168, i * 128 + 8, 0);
             if (spriteId != MAX_SPRITES)
             {
-                gPokenavStructPtr->listUpDownArrowSprites[i] = &gSprites[spriteId];
+                gPokenavState->listUpDownArrowSprites[i] = &gSprites[spriteId];
                 gSprites[spriteId].invisible = TRUE;
                 gSprites[spriteId].data[0] = 0;
                 gSprites[spriteId].data[1] = 0;
@@ -2804,7 +2804,7 @@ void CreatePokenavListArrowSprites(u8 paletteType)
             }
             else
             {
-                gPokenavStructPtr->listUpDownArrowSprites[i] = NULL;
+                gPokenavState->listUpDownArrowSprites[i] = NULL;
             }
         }
     }
@@ -2814,20 +2814,20 @@ void DestroyPokenavListArrowSprites(void)
 {
     u16 i;
 
-    if (gPokenavStructPtr->listRightArrowSprite)
+    if (gPokenavState->listRightArrowSprite)
     {
-        DestroySprite(gPokenavStructPtr->listRightArrowSprite);
+        DestroySprite(gPokenavState->listRightArrowSprite);
         FreeSpriteTilesByTag(0x9);
         FreeSpritePaletteByTag(0x9);
-        gPokenavStructPtr->listRightArrowSprite = NULL;
+        gPokenavState->listRightArrowSprite = NULL;
     }
 
     for (i = 0; i < 2; i++)
     {
-        if (gPokenavStructPtr->listUpDownArrowSprites[i])
+        if (gPokenavState->listUpDownArrowSprites[i])
         {
-            DestroySprite(gPokenavStructPtr->listUpDownArrowSprites[i]);
-            gPokenavStructPtr->listUpDownArrowSprites[i] = NULL;
+            DestroySprite(gPokenavState->listUpDownArrowSprites[i]);
+            gPokenavState->listUpDownArrowSprites[i] = NULL;
         }
     }
 
@@ -2836,19 +2836,19 @@ void DestroyPokenavListArrowSprites(void)
 
 void SpriteCB_UpdatePokenavListRightArrow(struct Sprite *sprite)
 {
-    sprite->y = gPokenavStructPtr->listCursorRow * 16 + 16;
+    sprite->y = gPokenavState->listCursorRow * 16 + 16;
 }
 
 void SpriteCB_UpdatePokenavListUpDownArrow(struct Sprite *sprite)
 {
-    if (gPokenavStructPtr->hasListScrollArrows)
+    if (gPokenavState->hasListScrollArrows)
     {
         if (sprite->data[4])
         {
             if (!sprite->data[3])
-                sprite->invisible = gPokenavStructPtr->firstVisibleListIndex == 0;
+                sprite->invisible = gPokenavState->firstVisibleListIndex == 0;
             else
-                sprite->invisible = gPokenavStructPtr->lastVisibleListIndex == gPokenavStructPtr->lastListIndex;
+                sprite->invisible = gPokenavState->lastVisibleListIndex == gPokenavState->lastListIndex;
 
             sprite->data[4] = 0;
         }
@@ -2875,32 +2875,32 @@ void RefreshPokenavListArrowVisibility(void)
 
     for (i = 0; i < 2; i++)
     {
-        if (gPokenavStructPtr->listUpDownArrowSprites[i])
-            gPokenavStructPtr->listUpDownArrowSprites[i]->data[4] = 1;
+        if (gPokenavState->listUpDownArrowSprites[i])
+            gPokenavState->listUpDownArrowSprites[i]->data[4] = 1;
     }
 }
 
 void TogglePokenavListArrows(u8 invisible)
 {
-    gPokenavStructPtr->listRightArrowSprite->invisible = invisible;
-    if (gPokenavStructPtr->hasListScrollArrows)
+    gPokenavState->listRightArrowSprite->invisible = invisible;
+    if (gPokenavState->hasListScrollArrows)
     {
         if (invisible == 1)
         {
-            gPokenavStructPtr->listUpDownArrowSprites[0]->invisible = invisible;
-            gPokenavStructPtr->listUpDownArrowSprites[1]->invisible = invisible;
+            gPokenavState->listUpDownArrowSprites[0]->invisible = invisible;
+            gPokenavState->listUpDownArrowSprites[1]->invisible = invisible;
         }
         else
         {
-            gPokenavStructPtr->listUpDownArrowSprites[0]->data[4] = 1;
-            gPokenavStructPtr->listUpDownArrowSprites[1]->data[4] = 1;
+            gPokenavState->listUpDownArrowSprites[0]->data[4] = 1;
+            gPokenavState->listUpDownArrowSprites[1]->data[4] = 1;
         }
     }
 }
 
 void SpriteCB_ConditionPartyPokeball(struct Sprite *sprite)
 {
-    if (sprite->data[0] == gPokenavStructPtr->detailSelectionIndex)
+    if (sprite->data[0] == gPokenavState->detailSelectionIndex)
         StartSpriteAnim(sprite, 0);
     else
         StartSpriteAnim(sprite, 1);
@@ -2908,7 +2908,7 @@ void SpriteCB_ConditionPartyPokeball(struct Sprite *sprite)
 
 void HighlightCurrentPartyIndexPokeball(struct Sprite *sprite)
 {
-    if (gPokenavStructPtr->detailSelectionIndex == gPokenavStructPtr->unk87DA - 1)
+    if (gPokenavState->detailSelectionIndex == gPokenavState->conditionGraphMonCount - 1)
         sprite->oam.paletteNum = IndexOfSpritePaletteTag(0x4);
     else
         sprite->oam.paletteNum = IndexOfSpritePaletteTag(0x5);
@@ -2928,17 +2928,17 @@ void CreateConditionPartyPokeballIndicators(void)
     LoadSpriteSheets(spriteSheets);
     LoadSpritePalettes(spritePalettes);
 
-    for (i = 0; i < gPokenavStructPtr->unk87DA - 1; i++)
+    for (i = 0; i < gPokenavState->conditionGraphMonCount - 1; i++)
     {
         spriteId = CreateSprite(&spriteTemplate, 226, i * 20 + 8, 0);
         if (spriteId != MAX_SPRITES)
         {
-            gPokenavStructPtr->conditionPartyIconSprites[i] = &gSprites[spriteId];
-            gPokenavStructPtr->conditionPartyIconSprites[i]->data[0] = i;
+            gPokenavState->conditionPartyIconSprites[i] = &gSprites[spriteId];
+            gPokenavState->conditionPartyIconSprites[i]->data[0] = i;
         }
         else
         {
-            gPokenavStructPtr->conditionPartyIconSprites[i] = NULL;
+            gPokenavState->conditionPartyIconSprites[i] = NULL;
         }
     }
 
@@ -2949,12 +2949,12 @@ void CreateConditionPartyPokeballIndicators(void)
         spriteId = CreateSprite(&spriteTemplate, 230, i * 20 + 8, 0);
         if (spriteId != MAX_SPRITES)
         {
-            gPokenavStructPtr->conditionPartyIconSprites[i] = &gSprites[spriteId];
-            gPokenavStructPtr->conditionPartyIconSprites[i]->oam.size = 0;
+            gPokenavState->conditionPartyIconSprites[i] = &gSprites[spriteId];
+            gPokenavState->conditionPartyIconSprites[i]->oam.size = 0;
         }
         else
         {
-            gPokenavStructPtr->conditionPartyIconSprites[i] = NULL;
+            gPokenavState->conditionPartyIconSprites[i] = NULL;
         }
     }
 
@@ -2963,13 +2963,13 @@ void CreateConditionPartyPokeballIndicators(void)
     spriteId = CreateSprite(&spriteTemplate, 222, i * 20 + 8, 0);
     if (spriteId != MAX_SPRITES)
     {
-        gPokenavStructPtr->conditionPartyIconSprites[i] = &gSprites[spriteId];
-        gPokenavStructPtr->conditionPartyIconSprites[i]->oam.shape = ST_OAM_H_RECTANGLE;
-        gPokenavStructPtr->conditionPartyIconSprites[i]->oam.size = 2;
+        gPokenavState->conditionPartyIconSprites[i] = &gSprites[spriteId];
+        gPokenavState->conditionPartyIconSprites[i]->oam.shape = ST_OAM_H_RECTANGLE;
+        gPokenavState->conditionPartyIconSprites[i]->oam.size = 2;
     }
     else
     {
-        gPokenavStructPtr->conditionPartyIconSprites[i] = NULL;
+        gPokenavState->conditionPartyIconSprites[i] = NULL;
     }
 }
 
@@ -2979,10 +2979,10 @@ void DestroyConditionPartyPokeballIndicators(void)
 
     for (i = 0; i < 7; i++)
     {
-        if (gPokenavStructPtr->conditionPartyIconSprites[i])
+        if (gPokenavState->conditionPartyIconSprites[i])
         {
-            DestroySprite(gPokenavStructPtr->conditionPartyIconSprites[i]);
-            gPokenavStructPtr->conditionPartyIconSprites[i] = NULL;
+            DestroySprite(gPokenavState->conditionPartyIconSprites[i]);
+            gPokenavState->conditionPartyIconSprites[i] = NULL;
         }
     }
 }
@@ -2991,60 +2991,60 @@ void CreateConditionMonMarkingsSprite(void)
 {
     struct Sprite *sprite;
 
-    gPokenavStructPtr->conditionMarkingsMenu.baseTileTag = 0x1C;
-    gPokenavStructPtr->conditionMarkingsMenu.basePaletteTag = 0x13;
-    InitMonMarkingsMenu(&gPokenavStructPtr->conditionMarkingsMenu);
+    gPokenavState->conditionMarkingsMenu.baseTileTag = 0x1C;
+    gPokenavState->conditionMarkingsMenu.basePaletteTag = 0x13;
+    InitMonMarkingsMenu(&gPokenavState->conditionMarkingsMenu);
     BufferMonMarkingsMenuTiles();
     sprite = CreateMonMarkingAllCombosSprite(27, 21, gPokenavConditionMonMarkingsPalette);
     sprite->oam.priority = 3;
     sprite->x = 192;
     sprite->y = 32;
     sprite->callback = MonMarkingsCallback;
-    gPokenavStructPtr->conditionMonMarkingsSprite = sprite;
+    gPokenavState->conditionMonMarkingsSprite = sprite;
 }
 
 void DestroyConditionMonMarkingsSprite(void)
 {
-    DestroySprite(gPokenavStructPtr->conditionMonMarkingsSprite);
+    DestroySprite(gPokenavState->conditionMonMarkingsSprite);
     FreeSpriteTilesByTag(0x1B);
     FreeSpritePaletteByTag(0x15);
 }
 
 void MonMarkingsCallback(struct Sprite *sprite)
 {
-    StartSpriteAnim(sprite, gPokenavStructPtr->conditionMonMarkings[gPokenavStructPtr->portraitSlot]);
+    StartSpriteAnim(sprite, gPokenavState->conditionMonMarkings[gPokenavState->portraitSlot]);
 }
 
 void OpenConditionMonMarkingsMenu(void)
 {
-    OpenMonMarkingsMenu(gPokenavStructPtr->conditionMonMarkings[gPokenavStructPtr->portraitSlot], 176, 32);
+    OpenMonMarkingsMenu(gPokenavState->conditionMonMarkings[gPokenavState->portraitSlot], 176, 32);
 }
 
 void SaveAndCloseConditionMonMarkingsMenu(void)
 {
-    struct UnkUsePokeblockSub *var0 = &gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex];
-    gPokenavStructPtr->conditionMonMarkings[gPokenavStructPtr->portraitSlot] = gPokenavStructPtr->conditionMarkingsMenu.markings;
-    SetMonMarkings(var0->unk1, var0->partyIdx, gPokenavStructPtr->conditionMarkingsMenu.markings);
+    struct PokenavMonListItem *var0 = &gPokenavState->monList[gPokenavState->detailSelectionIndex];
+    gPokenavState->conditionMonMarkings[gPokenavState->portraitSlot] = gPokenavState->conditionMarkingsMenu.markings;
+    SetMonMarkings(var0->boxId, var0->monId, gPokenavState->conditionMarkingsMenu.markings);
     FreeMonMarkingsMenu();
 }
 
 void InitRibbonIconGfx(void)
 {
-    gPokenavStructPtr->unk306 = 0;
-    if (!gPokenavStructPtr->unk6DAC)
+    gPokenavState->loadState = 0;
+    if (!gPokenavState->isLinkActive)
         while (LoadRibbonIconGfxStep());
 }
 
 bool8 LoadRibbonIconGfxStep(void)
 {
-    switch (gPokenavStructPtr->unk306)
+    switch (gPokenavState->loadState)
     {
     case 0:
-        LZ77UnCompWram(gPokenavRibbonIconsBigHalfGfx, gPokenavStructPtr->ribbonIconHalfGfx);
+        LZ77UnCompWram(gPokenavRibbonIconsBigHalfGfx, gPokenavState->ribbonIconHalfGfx);
         break;
     case 1:
         InitRibbonIconExpansion();
-        gPokenavStructPtr->unk306++;
+        gPokenavState->loadState++;
         // fall through
     case 2:
         if (ExpandRibbonIconGfxStep())
@@ -3054,14 +3054,14 @@ bool8 LoadRibbonIconGfxStep(void)
         return FALSE;
     }
 
-    gPokenavStructPtr->unk306++;
+    gPokenavState->loadState++;
     return TRUE;
 }
 
 void InitRibbonIconExpansion(void)
 {
-    gPokenavStructPtr->ribbonIconLoadIndex = 0;
-    if (!gPokenavStructPtr->unk6DAC)
+    gPokenavState->ribbonIconLoadIndex = 0;
+    if (!gPokenavState->isLinkActive)
         while (ExpandRibbonIconGfxStep());
 }
 
@@ -3070,13 +3070,13 @@ bool8 ExpandRibbonIconGfxStep(void)
     u16 i;
     u8 j, k, l, m;
 
-    if (gPokenavStructPtr->ribbonIconLoadIndex > 11)
+    if (gPokenavState->ribbonIconLoadIndex > 11)
         return FALSE;
 
     for (i = 0; i < 2; i++)
     {
-        u8 *src = &gPokenavStructPtr->ribbonIconHalfGfx[gPokenavStructPtr->ribbonIconLoadIndex][0];
-        u8 *dst = &gPokenavStructPtr->ribbonIconBigGfx[gPokenavStructPtr->ribbonIconLoadIndex][0];
+        u8 *src = &gPokenavState->ribbonIconHalfGfx[gPokenavState->ribbonIconLoadIndex][0];
+        u8 *dst = &gPokenavState->ribbonIconBigGfx[gPokenavState->ribbonIconLoadIndex][0];
         for (j = 0; j < 4; j++)
         {
             CpuFastSet(src, dst, 0x10);
@@ -3103,11 +3103,11 @@ bool8 ExpandRibbonIconGfxStep(void)
             src += 0x60;
         }
 
-        if (++gPokenavStructPtr->ribbonIconLoadIndex > 11)
+        if (++gPokenavState->ribbonIconLoadIndex > 11)
             return FALSE;
     }
 
-    if (gPokenavStructPtr->ribbonIconLoadIndex > 11)
+    if (gPokenavState->ribbonIconLoadIndex > 11)
         return FALSE;
 
     return TRUE;
@@ -3115,25 +3115,25 @@ bool8 ExpandRibbonIconGfxStep(void)
 
 void InitRibbonsSummarySpriteGfx(void)
 {
-    gPokenavStructPtr->unk306 = 0;
-    if (!gPokenavStructPtr->unk6DAC)
+    gPokenavState->loadState = 0;
+    if (!gPokenavState->isLinkActive)
         while (LoadRibbonsSummarySpriteGfxStep());
 }
 
 bool8 LoadRibbonsSummarySpriteGfxStep(void)
 {
-    switch (gPokenavStructPtr->unk306)
+    switch (gPokenavState->loadState)
     {
     case 0:
-        gPokenavStructPtr->bigRibbonSprite = NULL;
-        gPokenavStructPtr->isBigRibbonAnimating = 0;
+        gPokenavState->bigRibbonSprite = NULL;
+        gPokenavState->isBigRibbonAnimating = 0;
         break;
     case 1:
         CreateOrUpdatePokenavPortraitSprite(0);
         break;
     case 2:
         InitRibbonIconSpriteSheets();
-        gPokenavStructPtr->unk306++;
+        gPokenavState->loadState++;
         // fall through
     case 3:
         if (LoadRibbonIconSpriteSheetStep())
@@ -3143,14 +3143,14 @@ bool8 LoadRibbonsSummarySpriteGfxStep(void)
         return FALSE;
     }
 
-    gPokenavStructPtr->unk306++;
+    gPokenavState->loadState++;
     return TRUE;
 }
 
 void InitRibbonIconSpriteSheets(void)
 {
-    gPokenavStructPtr->ribbonIconLoadIndex = 0;
-    if (!gPokenavStructPtr->unk6DAC)
+    gPokenavState->ribbonIconLoadIndex = 0;
+    if (!gPokenavState->isLinkActive)
         while (LoadRibbonIconSpriteSheetStep());
 }
 
@@ -3158,21 +3158,21 @@ bool8 LoadRibbonIconSpriteSheetStep(void)
 {
     struct SpriteSheet spriteSheet;
     struct SpritePalette spritePalette;
-    if (gPokenavStructPtr->ribbonIconLoadIndex > 11)
+    if (gPokenavState->ribbonIconLoadIndex > 11)
         return FALSE;
 
-    spriteSheet.data = &gPokenavStructPtr->ribbonIconBigGfx[gPokenavStructPtr->ribbonIconLoadIndex][0];
+    spriteSheet.data = &gPokenavState->ribbonIconBigGfx[gPokenavState->ribbonIconLoadIndex][0];
     spriteSheet.size = 0x200;
-    spriteSheet.tag = gPokenavStructPtr->ribbonIconLoadIndex + 11;
+    spriteSheet.tag = gPokenavState->ribbonIconLoadIndex + 11;
     LoadSpriteSheet(&spriteSheet);
-    if (gPokenavStructPtr->ribbonIconLoadIndex < 5)
+    if (gPokenavState->ribbonIconLoadIndex < 5)
     {
-        spritePalette.data = gPokenavRibbonIconPalettes[gPokenavStructPtr->ribbonIconLoadIndex];
-        spritePalette.tag = gPokenavStructPtr->ribbonIconLoadIndex + 10;
+        spritePalette.data = gPokenavRibbonIconPalettes[gPokenavState->ribbonIconLoadIndex];
+        spritePalette.tag = gPokenavState->ribbonIconLoadIndex + 10;
         LoadSpritePalette(&spritePalette);
     }
 
-    if (++gPokenavStructPtr->ribbonIconLoadIndex > 11)
+    if (++gPokenavState->ribbonIconLoadIndex > 11)
         return FALSE;
 
     return TRUE;
@@ -3194,9 +3194,9 @@ struct Sprite *CreateBigRibbonSprite(u16 column, u16 row)
     if (row < 3)
         ribbonIndex = column + row * 9;
     else
-        ribbonIndex = column + (gPokenavStructPtr->ribbonCount - gPokenavStructPtr->giftRibbonCount);
+        ribbonIndex = column + (gPokenavState->ribbonCount - gPokenavState->giftRibbonCount);
 
-    ribbonId = gPokenavStructPtr->ribbonIds[ribbonIndex];
+    ribbonId = gPokenavState->ribbonIds[ribbonIndex];
     spriteTemplate = gPokenavBigRibbonSpriteTemplate;
     spriteTemplate.tileTag = gPokenavRibbonGfxData[ribbonId][0] + 11;
     spriteTemplate.paletteTag = gPokenavRibbonGfxData[ribbonId][1] + 10;
@@ -3209,24 +3209,24 @@ struct Sprite *CreateBigRibbonSprite(u16 column, u16 row)
 
 void CreateAndZoomInSelectedRibbon(void)
 {
-    gPokenavStructPtr->bigRibbonSprite = CreateBigRibbonSprite(gPokenavStructPtr->ribbonCursorPos, gPokenavStructPtr->ribbonPageIndex);
-    if (gPokenavStructPtr->bigRibbonSprite)
+    gPokenavState->bigRibbonSprite = CreateBigRibbonSprite(gPokenavState->ribbonCursorPos, gPokenavState->ribbonPageIndex);
+    if (gPokenavState->bigRibbonSprite)
     {
-        StartSpriteAffineAnim(gPokenavStructPtr->bigRibbonSprite, RIBBONANIM_ZOOM_IN);
-        gPokenavStructPtr->isBigRibbonAnimating = 1;
+        StartSpriteAffineAnim(gPokenavState->bigRibbonSprite, RIBBONANIM_ZOOM_IN);
+        gPokenavState->isBigRibbonAnimating = 1;
     }
     else
     {
-        gPokenavStructPtr->isBigRibbonAnimating = 0;
+        gPokenavState->isBigRibbonAnimating = 0;
     }
 }
 
 bool8 IsRibbonZoomInAnimating(void)
 {
-    if (gPokenavStructPtr->isBigRibbonAnimating)
+    if (gPokenavState->isBigRibbonAnimating)
     {
-        gPokenavStructPtr->isBigRibbonAnimating = !gPokenavStructPtr->bigRibbonSprite->affineAnimEnded;
-        return gPokenavStructPtr->isBigRibbonAnimating;
+        gPokenavState->isBigRibbonAnimating = !gPokenavState->bigRibbonSprite->affineAnimEnded;
+        return gPokenavState->isBigRibbonAnimating;
     }
     else
     {
@@ -3236,30 +3236,30 @@ bool8 IsRibbonZoomInAnimating(void)
 
 void ZoomOutSelectedRibbon(void)
 {
-    if (gPokenavStructPtr->bigRibbonSprite)
+    if (gPokenavState->bigRibbonSprite)
     {
-        StartSpriteAffineAnim(gPokenavStructPtr->bigRibbonSprite, RIBBONANIM_ZOOM_OUT);
-        gPokenavStructPtr->isBigRibbonAnimating = 1;
+        StartSpriteAffineAnim(gPokenavState->bigRibbonSprite, RIBBONANIM_ZOOM_OUT);
+        gPokenavState->isBigRibbonAnimating = 1;
     }
     else
     {
-        gPokenavStructPtr->isBigRibbonAnimating = 0;
+        gPokenavState->isBigRibbonAnimating = 0;
     }
 }
 
 bool8 UpdateRibbonZoomOutAndDestroySprite(void)
 {
-    if (gPokenavStructPtr->isBigRibbonAnimating)
+    if (gPokenavState->isBigRibbonAnimating)
     {
-        gPokenavStructPtr->isBigRibbonAnimating = !gPokenavStructPtr->bigRibbonSprite->affineAnimEnded;
-        if (!gPokenavStructPtr->isBigRibbonAnimating)
+        gPokenavState->isBigRibbonAnimating = !gPokenavState->bigRibbonSprite->affineAnimEnded;
+        if (!gPokenavState->isBigRibbonAnimating)
         {
-            FreeOamMatrix(gPokenavStructPtr->bigRibbonSprite->oam.matrixNum);
-            DestroySprite(gPokenavStructPtr->bigRibbonSprite);
-            gPokenavStructPtr->bigRibbonSprite = NULL;
+            FreeOamMatrix(gPokenavState->bigRibbonSprite->oam.matrixNum);
+            DestroySprite(gPokenavState->bigRibbonSprite);
+            gPokenavState->bigRibbonSprite = NULL;
         }
 
-        return gPokenavStructPtr->isBigRibbonAnimating;
+        return gPokenavState->isBigRibbonAnimating;
     }
     else
     {
@@ -3271,11 +3271,11 @@ void FreeRibbonsSummarySprites(void)
 {
     u16 i;
 
-    if (gPokenavStructPtr->bigRibbonSprite)
+    if (gPokenavState->bigRibbonSprite)
     {
-        FreeOamMatrix(gPokenavStructPtr->bigRibbonSprite->oam.matrixNum);
-        DestroySprite(gPokenavStructPtr->bigRibbonSprite);
-        gPokenavStructPtr->bigRibbonSprite = NULL;
+        FreeOamMatrix(gPokenavState->bigRibbonSprite->oam.matrixNum);
+        DestroySprite(gPokenavState->bigRibbonSprite);
+        gPokenavState->bigRibbonSprite = NULL;
     }
 
     for (i = 0; i < 12; i++)
@@ -3298,7 +3298,7 @@ void LoadConditionSparkles(void)
     LoadSpriteSheet(&spriteSheet);
     LoadSpritePalette(&spritePalette);
     for (i = 0; i < 10; i++)
-        gPokenavStructPtr->conditionSparkleSprites[i] = NULL;
+        gPokenavState->conditionSparkleSprites[i] = NULL;
 }
 
 void FreeConditionSparkles(void)
@@ -3313,19 +3313,19 @@ void CreateConditionSparkleSprites(void)
     u8 spriteId;
     u16 i;
     u8 count;
-    struct UnkUsePokeblockSub *mon = &gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex];
+    struct PokenavMonListItem *mon = &gPokenavState->monList[gPokenavState->detailSelectionIndex];
 
-    if (!mon->unk3_14)
+    if (!mon->isValid)
         return;
 
-    count = gPokenavStructPtr->conditionNumSparkles[gPokenavStructPtr->portraitSlot];
+    count = gPokenavState->conditionNumSparkles[gPokenavState->portraitSlot];
     for (i = 0; i < count + 1; i++)
     {
         spriteId = CreateSprite(&gPokenavConditionSparkleSpriteTemplate, 0, 0, 0);
         if (spriteId != MAX_SPRITES)
         {
-            gPokenavStructPtr->conditionSparkleSprites[i] = &gSprites[spriteId];
-            gPokenavStructPtr->conditionSparkleSprites[i]->invisible = TRUE;
+            gPokenavState->conditionSparkleSprites[i] = &gSprites[spriteId];
+            gPokenavState->conditionSparkleSprites[i]->invisible = TRUE;
         }
         else
         {
@@ -3342,11 +3342,11 @@ void DestroyConditionSparkleSprites(void)
 
     for (i = 0; i < 10; i++)
     {
-        if (!gPokenavStructPtr->conditionSparkleSprites[i])
+        if (!gPokenavState->conditionSparkleSprites[i])
             return;
 
-        DestroySprite(gPokenavStructPtr->conditionSparkleSprites[i]);
-        gPokenavStructPtr->conditionSparkleSprites[i] = NULL;
+        DestroySprite(gPokenavState->conditionSparkleSprites[i]);
+        gPokenavState->conditionSparkleSprites[i] = NULL;
     }
 }
 
@@ -3375,13 +3375,13 @@ void SpriteCB_ConditionSparkle_WaitForAllAnim(struct Sprite *sprite)
 
 void SetConditionSparklePosition(struct Sprite *sprite)
 {
-    if (gPokenavStructPtr->portraitSprite)
+    if (gPokenavState->portraitSprite)
     {
-        sprite->x = gPokenavStructPtr->portraitSprite->x
-                         + gPokenavStructPtr->portraitSprite->x2
+        sprite->x = gPokenavState->portraitSprite->x
+                         + gPokenavState->portraitSprite->x2
                          + gPokenavConditionSparkleCoords[sprite->sSparkleId][0];
-        sprite->y = gPokenavStructPtr->portraitSprite->y
-                         + gPokenavStructPtr->portraitSprite->y2
+        sprite->y = gPokenavState->portraitSprite->y
+                         + gPokenavState->portraitSprite->y2
                          + gPokenavConditionSparkleCoords[sprite->sSparkleId][1];
     }
     else
@@ -3431,23 +3431,23 @@ void InitConditionSparkles(u8 count, u8 allowFirstShowAll)
 
     for (i = 0; i < 10; i++)
     {
-        if (gPokenavStructPtr->conditionSparkleSprites[i])
+        if (gPokenavState->conditionSparkleSprites[i])
         {
-            gPokenavStructPtr->conditionSparkleSprites[i]->sSparkleId = i;
-            gPokenavStructPtr->conditionSparkleSprites[i]->sDelayTimer = i * 16 + 1;
-            gPokenavStructPtr->conditionSparkleSprites[i]->sNumExtraSparkles = count;
-            gPokenavStructPtr->conditionSparkleSprites[i]->sCurSparkleId = i;
+            gPokenavState->conditionSparkleSprites[i]->sSparkleId = i;
+            gPokenavState->conditionSparkleSprites[i]->sDelayTimer = i * 16 + 1;
+            gPokenavState->conditionSparkleSprites[i]->sNumExtraSparkles = count;
+            gPokenavState->conditionSparkleSprites[i]->sCurSparkleId = i;
 
             if (!allowFirstShowAll || count != 9)
             {
-                gPokenavStructPtr->conditionSparkleSprites[i]->callback = SpriteCB_ConditionSparkle;
+                gPokenavState->conditionSparkleSprites[i]->callback = SpriteCB_ConditionSparkle;
             }
             else
             {
-                SetConditionSparklePosition(gPokenavStructPtr->conditionSparkleSprites[i]);
+                SetConditionSparklePosition(gPokenavState->conditionSparkleSprites[i]);
                 ShowAllConditionSparkles();
-                gPokenavStructPtr->conditionSparkleSprites[i]->callback = SpriteCB_ConditionSparkle_WaitForAllAnim;
-                gPokenavStructPtr->conditionSparkleSprites[i]->invisible = FALSE;
+                gPokenavState->conditionSparkleSprites[i]->callback = SpriteCB_ConditionSparkle_WaitForAllAnim;
+                gPokenavState->conditionSparkleSprites[i]->invisible = FALSE;
             }
         }
     }
@@ -3459,10 +3459,10 @@ void ShowAllConditionSparkles(void)
 
     for (i = 0; i < 10; i++)
     {
-        if (gPokenavStructPtr->conditionSparkleSprites[i])
+        if (gPokenavState->conditionSparkleSprites[i])
         {
-            SeekSpriteAnim(gPokenavStructPtr->conditionSparkleSprites[i], 0);
-            gPokenavStructPtr->conditionSparkleSprites[i]->invisible = FALSE;
+            SeekSpriteAnim(gPokenavState->conditionSparkleSprites[i], 0);
+            gPokenavState->conditionSparkleSprites[i]->invisible = FALSE;
         }
     }
 }
@@ -3474,8 +3474,8 @@ void ShowAllConditionSparkles(void)
 
 void InitPokenavIconSprite(void)
 {
-    gPokenavStructPtr->unk306 = 0;
-    if (!gPokenavStructPtr->unk6DAC)
+    gPokenavState->loadState = 0;
+    if (!gPokenavState->isLinkActive)
         while (LoadPokenavIconSpriteStep());
 }
 
@@ -3485,16 +3485,16 @@ bool8 LoadPokenavIconSpriteStep(void)
     u8 spriteId;
     struct SpritePalette spritePalette;
 
-    switch (gPokenavStructPtr->unk306)
+    switch (gPokenavState->loadState)
     {
     case 0:
-        LZ77UnCompWram(gPokenavIconGfx, gPokenavStructPtr->spriteGfxScratchBuffer);
+        LZ77UnCompWram(gPokenavIconGfx, gPokenavState->spriteGfxScratchBuffer);
         break;
     case 1:
     {
         struct SpriteSheet spriteSheet = {
-            .data = gPokenavStructPtr->spriteGfxScratchBuffer,
-            .size = sizeof(gPokenavStructPtr->spriteGfxScratchBuffer),
+            .data = gPokenavState->spriteGfxScratchBuffer,
+            .size = sizeof(gPokenavState->spriteGfxScratchBuffer),
             .tag = 0x18,
         };
         LoadSpriteSheet(&spriteSheet);
@@ -3504,33 +3504,33 @@ bool8 LoadPokenavIconSpriteStep(void)
         spritePalette = gPokenavIconSpritePalette;
         LoadSpritePalette(&spritePalette);
         paletteIndex = IndexOfSpritePaletteTag(0x10);
-        gPokenavStructPtr->unk308 = -3 & ~(1 << (paletteIndex + 0x10));
+        gPokenavState->paletteFadeMask = -3 & ~(1 << (paletteIndex + 0x10));
         break;
     case 3:
         spriteId = CreateSprite(&gPokenavIconSpriteTemplate, 218, 14, 0);
         if (spriteId != MAX_SPRITES)
         {
-            gPokenavStructPtr->pokenavIconSprite = &gSprites[spriteId];
-            gPokenavStructPtr->pokenavIconSprite->data[0] = 0;
+            gPokenavState->pokenavIconSprite = &gSprites[spriteId];
+            gPokenavState->pokenavIconSprite->data[0] = 0;
         }
         else
         {
-            gPokenavStructPtr->pokenavIconSprite = NULL;
+            gPokenavState->pokenavIconSprite = NULL;
         }
 
-        gPokenavStructPtr->unk306++;
+        gPokenavState->loadState++;
         return FALSE;
     default:
         return FALSE;
     }
 
-    gPokenavStructPtr->unk306++;
+    gPokenavState->loadState++;
     return TRUE;
 }
 
 void SpriteCB_UpdatePokenavIconPosition(struct Sprite *sprite)
 {
-    sprite->y2 = -gPokenavStructPtr->menuVerticalOffset;
+    sprite->y2 = -gPokenavState->menuVerticalOffset;
     if (sprite->y2 <= -32)
     {
         if (sprite->data[0] == 0)
@@ -3596,12 +3596,12 @@ void CreateTrainerEyesNameSprites(u8 *text)
     u16 i, tileOffset;
     u8 spriteId;
     struct SpriteSheet spriteSheet = {
-        .data = gPokenavStructPtr->spriteGfxBuffers[0],
+        .data = gPokenavState->spriteGfxBuffers[0],
         .size = 0x500,
         .tag = 0x1A,
     };
 
-    BuildTrainerEyesNameSpriteGfx(gPokenavStructPtr->spriteGfxBuffers[0], text);
+    BuildTrainerEyesNameSpriteGfx(gPokenavState->spriteGfxBuffers[0], text);
     LoadSpriteSheet(&spriteSheet);
     LoadSpritePalette(&gPokenavTrainerEyesNameSpritePalette);
 
@@ -3612,11 +3612,11 @@ void CreateTrainerEyesNameSprites(u8 *text)
         if (spriteId != MAX_SPRITES)
         {
             gSprites[spriteId].oam.tileNum += tileOffset;
-            gPokenavStructPtr->trainerEyesNameSprites[i] = &gSprites[spriteId];
+            gPokenavState->trainerEyesNameSprites[i] = &gSprites[spriteId];
         }
         else
         {
-            gPokenavStructPtr->trainerEyesNameSprites[i] = NULL;
+            gPokenavState->trainerEyesNameSprites[i] = NULL;
         }
 
         tileOffset += 8;
@@ -3629,8 +3629,8 @@ void DestroyTrainerEyesNameSprites(void)
 
     for (i = 0; i < 5; i++)
     {
-        if (gPokenavStructPtr->trainerEyesNameSprites[i])
-            DestroySprite(gPokenavStructPtr->trainerEyesNameSprites[i]);
+        if (gPokenavState->trainerEyesNameSprites[i])
+            DestroySprite(gPokenavState->trainerEyesNameSprites[i]);
     }
 
     FreeSpriteTilesByTag(0x1A);
@@ -3641,10 +3641,10 @@ void UpdateTrainerEyesNameSprites(u8 *text)
 {
     u16 tile;
 
-    BuildTrainerEyesNameSpriteGfx(gPokenavStructPtr->spriteGfxBuffers[0], text);
+    BuildTrainerEyesNameSpriteGfx(gPokenavState->spriteGfxBuffers[0], text);
     tile = GetSpriteTileStartByTag(0x1A);
     if (tile != 0xFFFF)
-    DmaCopy32Defvars(3, gPokenavStructPtr->spriteGfxBuffers[0], (void *)(VRAM + 0x10000 + (tile * 32)), 0x500);
+    DmaCopy32Defvars(3, gPokenavState->spriteGfxBuffers[0], (void *)(VRAM + 0x10000 + (tile * 32)), 0x500);
 }
 
 u8 *BufferPokenavMonListRowText(u8 *dst, u16 listIndex, u8 displayMode)
@@ -3670,7 +3670,7 @@ u8 *BufferRibbonsMonListIndexText(u8 *dst, u16 index)
     buffer[1] = 0x11;
     buffer[2] = 1;
     buffer += 3;
-    buffer = AlignInt1InMenuWindow(buffer, gPokenavStructPtr->lastListIndex + 1, 50, 1);
+    buffer = AlignInt1InMenuWindow(buffer, gPokenavState->lastListIndex + 1, 50, 1);
     return buffer;
 }
 
@@ -3703,23 +3703,23 @@ void SetMonMarkings(u16 box, u16 monIndex, u8 markings)
 void BufferConditionGraphMonText(s16 arg0, u8 arg1)
 {
     u8 box;
-    u8 var0 = gPokenavStructPtr->unk893c[arg0].unk3_14;
+    u8 var0 = gPokenavState->monList[arg0].isValid;
     if (var0)
     {
-        BufferPokenavMonListRowText(gPokenavStructPtr->unk8829[arg1], arg0, 0);
-        box = gPokenavStructPtr->unk893c[arg0].unk1;
+        BufferPokenavMonListRowText(gPokenavState->conditionMonNameText[arg1], arg0, 0);
+        box = gPokenavState->monList[arg0].boxId;
         if (box == 14)
-            AlignStringInMenuWindow(gPokenavStructPtr->unk88E9[arg1], gOtherText_InParty, 64, 0);
+            AlignStringInMenuWindow(gPokenavState->conditionMonLocationText[arg1], gOtherText_InParty, 64, 0);
         else
-            AlignStringInMenuWindow(gPokenavStructPtr->unk88E9[arg1], gPokemonStorage.boxNames[box], 64, 0);
+            AlignStringInMenuWindow(gPokenavState->conditionMonLocationText[arg1], gPokemonStorage.boxNames[box], 64, 0);
 
-        gPokenavStructPtr->unk8937[arg1] = 1;
+        gPokenavState->conditionMonIsValid[arg1] = 1;
     }
     else
     {
-        AlignStringInMenuWindow(gPokenavStructPtr->unk8829[arg1], gText_EmptyString, 104, 0);
-        AlignStringInMenuWindow(gPokenavStructPtr->unk88E9[arg1], gText_EmptyString, 64, 0);
-        gPokenavStructPtr->unk8937[arg1] = var0;
+        AlignStringInMenuWindow(gPokenavState->conditionMonNameText[arg1], gText_EmptyString, 104, 0);
+        AlignStringInMenuWindow(gPokenavState->conditionMonLocationText[arg1], gText_EmptyString, 64, 0);
+        gPokenavState->conditionMonIsValid[arg1] = var0;
     }
 }
 
@@ -3729,30 +3729,30 @@ void LoadConditionGraphMonStats(s16 arg0, u8 arg1)
     u16 box;
     u16 monIndex;
 
-    if (gPokenavStructPtr->unk893c[arg0].unk3_14)
+    if (gPokenavState->monList[arg0].isValid)
     {
-        box = gPokenavStructPtr->unk893c[arg0].unk1;
-        monIndex = gPokenavStructPtr->unk893c[arg0].partyIdx;
-        gPokenavStructPtr->unk8ff0[arg1][0] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_COOL, NULL);
-        gPokenavStructPtr->unk8ff0[arg1][1] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_TOUGH, NULL);
-        gPokenavStructPtr->unk8ff0[arg1][2] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_SMART, NULL);
-        gPokenavStructPtr->unk8ff0[arg1][3] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_CUTE, NULL);
-        gPokenavStructPtr->unk8ff0[arg1][4] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_BEAUTY, NULL);
+        box = gPokenavState->monList[arg0].boxId;
+        monIndex = gPokenavState->monList[arg0].monId;
+        gPokenavState->conditionGraph.conditions[arg1][0] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_COOL, NULL);
+        gPokenavState->conditionGraph.conditions[arg1][1] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_TOUGH, NULL);
+        gPokenavState->conditionGraph.conditions[arg1][2] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_SMART, NULL);
+        gPokenavState->conditionGraph.conditions[arg1][3] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_CUTE, NULL);
+        gPokenavState->conditionGraph.conditions[arg1][4] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_BEAUTY, NULL);
 
-        gPokenavStructPtr->conditionNumSparkles[arg1] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_SHEEN, NULL) != 255
+        gPokenavState->conditionNumSparkles[arg1] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_SHEEN, NULL) != 255
                                            ? GetBoxOrPartyMonData(box, monIndex, MON_DATA_SHEEN, NULL) / 29
                                            : 9;
 
-        gPokenavStructPtr->conditionMonMarkings[arg1] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_MARKINGS, NULL);
-        ConditionGraph_CalcPositions(gPokenavStructPtr->unk8ff0[arg1], gPokenavStructPtr->unk9004[arg1]);
+        gPokenavState->conditionMonMarkings[arg1] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_MARKINGS, NULL);
+        ConditionGraph_CalcPositions(gPokenavState->conditionGraph.conditions[arg1], gPokenavState->conditionGraph.savedPositions[arg1]);
     }
     else
     {
         for (i = 0; i < 5; i++)
         {
-            gPokenavStructPtr->unk8ff0[arg1][i] = 0;
-            gPokenavStructPtr->unk9004[arg1][i].unk0 = 0x9B;
-            gPokenavStructPtr->unk9004[arg1][i].unk2 = 0x5B;
+            gPokenavState->conditionGraph.conditions[arg1][i] = 0;
+            gPokenavState->conditionGraph.savedPositions[arg1][i].x = 0x9B;
+            gPokenavState->conditionGraph.savedPositions[arg1][i].y = 0x5B;
         }
     }
 }
@@ -3765,10 +3765,10 @@ void LoadConditionGraphMonGfx(s16 arg0, u8 arg1)
     u16 box;
     u16 monIndex;
 
-    if (gPokenavStructPtr->unk893c[arg0].unk3_14)
+    if (gPokenavState->monList[arg0].isValid)
     {
-        box = gPokenavStructPtr->unk893c[arg0].unk1;
-        monIndex = gPokenavStructPtr->unk893c[arg0].partyIdx;
+        box = gPokenavState->monList[arg0].boxId;
+        monIndex = gPokenavState->monList[arg0].monId;
         species = GetBoxOrPartyMonData(box, monIndex, MON_DATA_SPECIES2, NULL);
         otId = GetBoxOrPartyMonData(box, monIndex, MON_DATA_OT_ID, NULL);
         personality = GetBoxOrPartyMonData(box, monIndex, MON_DATA_PERSONALITY, NULL);
@@ -3777,13 +3777,13 @@ void LoadConditionGraphMonGfx(s16 arg0, u8 arg1)
             &gMonFrontPicTable[species],
             gMonFrontPicCoords[species].coords,
             1,
-            gPokenavStructPtr->spriteGfxScratchBuffer,
-            gPokenavStructPtr->spriteGfxBuffers[arg1],
+            gPokenavState->spriteGfxScratchBuffer,
+            gPokenavState->spriteGfxBuffers[arg1],
             species,
             personality);
 
-        LZ77UnCompWram(GetMonSpritePalFromOtIdPersonality(species, otId, personality), gPokenavStructPtr->portraitPaletteBuffers[arg1]);
-        gPokenavStructPtr->unkD1D6[arg1] = species;
+        LZ77UnCompWram(GetMonSpritePalFromOtIdPersonality(species, otId, personality), gPokenavState->portraitPaletteBuffers[arg1]);
+        gPokenavState->conditionMonSpecies[arg1] = species;
     }
 }
 
@@ -3796,19 +3796,19 @@ void LoadConditionGraphMonData(s16 arg0, u8 arg1)
 
 void ResetPokenavMonList(void)
 {
-    gPokenavStructPtr->unk8FE4 = 0;
+    gPokenavState->monListCount = 0;
 }
 
-void InsertPokenavMonListItem(struct UnkUsePokeblockSub *arg0) // This looks like a sorting algorithm. Proposal: Make local variables min, max, and currPos
+void InsertPokenavMonListItem(struct PokenavMonListItem *arg0) // This looks like a sorting algorithm. Proposal: Make local variables min, max, and currPos
 {
     u16 min, max, currPos;
 
     min = 0;
-    max = gPokenavStructPtr->unk8FE4;
+    max = gPokenavState->monListCount;
     currPos = min + (max - min)/ 2;
     while (max != currPos)
     {
-        if (arg0->unk0 > gPokenavStructPtr->unk893c[currPos].unk0)
+        if (arg0->data > gPokenavState->monList[currPos].data)
             max = currPos;
         else
             min = currPos + 1;
@@ -3816,34 +3816,34 @@ void InsertPokenavMonListItem(struct UnkUsePokeblockSub *arg0) // This looks lik
         currPos = min + (max - min) / 2;
     }
 
-    for ( max = gPokenavStructPtr->unk8FE4; max > currPos; max--)
+    for ( max = gPokenavState->monListCount; max > currPos; max--)
     {
-        gPokenavStructPtr->unk893c[max] = gPokenavStructPtr->unk893c[max - 1];
+        gPokenavState->monList[max] = gPokenavState->monList[max - 1];
     }
 
-    gPokenavStructPtr->unk893c[currPos] = *arg0;
-    gPokenavStructPtr->unk8FE4++;
+    gPokenavState->monList[currPos] = *arg0;
+    gPokenavState->monListCount++;
 }
 
 void FinalizePokenavMonListRanks(void)
 {
     u16 i;
 
-    gPokenavStructPtr->unk893c[0].unk2_5 = 1;
-    for (i = 1; i < gPokenavStructPtr->unk8FE4; i++)
+    gPokenavState->monList[0].rank = 1;
+    for (i = 1; i < gPokenavState->monListCount; i++)
     {
-        if (gPokenavStructPtr->unk893c[i].unk0 == gPokenavStructPtr->unk893c[i - 1].unk0)
-            gPokenavStructPtr->unk893c[i].unk2_5 = gPokenavStructPtr->unk893c[i - 1].unk2_5;
+        if (gPokenavState->monList[i].data == gPokenavState->monList[i - 1].data)
+            gPokenavState->monList[i].rank = gPokenavState->monList[i - 1].rank;
         else
-            gPokenavStructPtr->unk893c[i].unk2_5 = i + 1;
+            gPokenavState->monList[i].rank = i + 1;
     }
 
-    gPokenavStructPtr->listCursorRow = 0;
-    gPokenavStructPtr->firstVisibleListIndex = 0;
-    gPokenavStructPtr->listSelectedIndex = 0;
-    gPokenavStructPtr->lastVisibleListIndex = gPokenavStructPtr->unk8FE4 < 9 ? (gPokenavStructPtr->unk8FE4 - 1) : 7;
-    gPokenavStructPtr->lastListIndex = gPokenavStructPtr->unk8FE4 - 1;
-    gPokenavStructPtr->hasListScrollArrows = gPokenavStructPtr->lastListIndex > 7;
+    gPokenavState->listCursorRow = 0;
+    gPokenavState->firstVisibleListIndex = 0;
+    gPokenavState->listSelectedIndex = 0;
+    gPokenavState->lastVisibleListIndex = gPokenavState->monListCount < 9 ? (gPokenavState->monListCount - 1) : 7;
+    gPokenavState->lastListIndex = gPokenavState->monListCount - 1;
+    gPokenavState->hasListScrollArrows = gPokenavState->lastListIndex > 7;
 }
 
 void LoadConditionGraphMonNeighbors(void)
@@ -3851,27 +3851,27 @@ void LoadConditionGraphMonNeighbors(void)
     s16 var0;
     s16 var1;
 
-    LoadConditionGraphMonData(gPokenavStructPtr->detailSelectionIndex, 0);
+    LoadConditionGraphMonData(gPokenavState->detailSelectionIndex, 0);
     CreateOrUpdatePokenavPortraitSprite(0);
-    if (gPokenavStructPtr->unk87DA == 1)
+    if (gPokenavState->conditionGraphMonCount == 1)
     {
-        gPokenavStructPtr->portraitSlot = 0;
-        gPokenavStructPtr->unk8FEA = 0;
-        gPokenavStructPtr->unk8FEB = 0;
+        gPokenavState->portraitSlot = 0;
+        gPokenavState->nextLoadIdDown = 0;
+        gPokenavState->nextLoadIdUp = 0;
     }
     else
     {
-        gPokenavStructPtr->portraitSlot = 0;
-        gPokenavStructPtr->unk8FEA = 1;
-        gPokenavStructPtr->unk8FEB = 2;
+        gPokenavState->portraitSlot = 0;
+        gPokenavState->nextLoadIdDown = 1;
+        gPokenavState->nextLoadIdUp = 2;
 
-        var0 = gPokenavStructPtr->detailSelectionIndex + 1;
-        if (var0 >= gPokenavStructPtr->unk87DA)
+        var0 = gPokenavState->detailSelectionIndex + 1;
+        if (var0 >= gPokenavState->conditionGraphMonCount)
             var0 = 0;
 
-        var1 = gPokenavStructPtr->detailSelectionIndex - 1;
+        var1 = gPokenavState->detailSelectionIndex - 1;
         if (var1 < 0)
-            var1 = gPokenavStructPtr->unk87DA - 1;
+            var1 = gPokenavState->conditionGraphMonCount - 1;
 
         LoadConditionGraphMonData(var0, 1);
         LoadConditionGraphMonData(var1, 2);
@@ -3882,46 +3882,46 @@ void BuildPartyConditionGraphMonList(void)
 {
     u16 i, j;
 
-    for (i = 0, j = 0; i < gPokenavStructPtr->unk8828; i++)
+    for (i = 0, j = 0; i < gPokenavState->playerPartyCount; i++)
     {
         if (!GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG))
         {
-            gPokenavStructPtr->unk893c[j].unk1 = 14;
-            gPokenavStructPtr->unk893c[j].partyIdx = i;
-            gPokenavStructPtr->unk893c[j].unk2_5 = j + 1;
-            gPokenavStructPtr->unk893c[j].unk3_14 = 1;
+            gPokenavState->monList[j].boxId = 14;
+            gPokenavState->monList[j].monId = i;
+            gPokenavState->monList[j].rank = j + 1;
+            gPokenavState->monList[j].isValid = 1;
             j++;
         }
     }
 
-    gPokenavStructPtr->unk893c[j].unk1 = 0;
-    gPokenavStructPtr->unk893c[j].partyIdx = 0;
-    gPokenavStructPtr->unk893c[j].unk2_5 = 0;
-    gPokenavStructPtr->unk893c[j].unk3_14 = 0;
-    gPokenavStructPtr->detailSelectionIndex = 0;
-    gPokenavStructPtr->unk87DA = j + 1;
+    gPokenavState->monList[j].boxId = 0;
+    gPokenavState->monList[j].monId = 0;
+    gPokenavState->monList[j].rank = 0;
+    gPokenavState->monList[j].isValid = 0;
+    gPokenavState->detailSelectionIndex = 0;
+    gPokenavState->conditionGraphMonCount = j + 1;
     LoadConditionGraphMonNeighbors();
-    gPokenavStructPtr->unk87CB = 1;
+    gPokenavState->canScrollConditionGraph = 1;
 }
 
 void PrepareConditionGraphFromSearchResult(void)
 {
-    gPokenavStructPtr->detailSelectionIndex = gPokenavStructPtr->listSelectedIndex;
+    gPokenavState->detailSelectionIndex = gPokenavState->listSelectedIndex;
     LoadConditionGraphMonNeighbors();
 
-    if (gPokenavStructPtr->lastListIndex == 0)
-        gPokenavStructPtr->unk87CB = 0;
+    if (gPokenavState->lastListIndex == 0)
+        gPokenavState->canScrollConditionGraph = 0;
     else
-        gPokenavStructPtr->unk87CB = 1;
+        gPokenavState->canScrollConditionGraph = 1;
 }
 
 void InitConditionSearchResults(void)
 {
-    gPokenavStructPtr->unk8FE6 = 0;
-    gPokenavStructPtr->unk8FE7 = 0;
+    gPokenavState->monListBuildBoxId = 0;
+    gPokenavState->monListBuildMonId = 0;
     ResetPokenavMonList();
 
-    if (!gPokenavStructPtr->unk6DAC)
+    if (!gPokenavState->isLinkActive)
         while (BuildConditionSearchResultsStep());
 }
 
@@ -3930,54 +3930,54 @@ bool8 BuildConditionSearchResultsStep(void)
     u16 i;
     register int mask asm("r3"); // FIXME
     int nextValue;
-    struct UnkUsePokeblockSub var0;
+    struct PokenavMonListItem var0;
 
-    switch (gPokenavStructPtr->unk8FE6)
+    switch (gPokenavState->monListBuildBoxId)
     {
     default:
-        var0.unk3_14 = 1;
+        var0.isValid = 1;
         for (i = 0; i < 15; i++)
         {
 
-            if (GetBoxMonData(&gPokemonStorage.boxes[gPokenavStructPtr->unk8FE6][gPokenavStructPtr->unk8FE7], MON_DATA_SPECIES)
-                && !GetBoxMonData(&gPokemonStorage.boxes[gPokenavStructPtr->unk8FE6][gPokenavStructPtr->unk8FE7], MON_DATA_IS_EGG))
+            if (GetBoxMonData(&gPokemonStorage.boxes[gPokenavState->monListBuildBoxId][gPokenavState->monListBuildMonId], MON_DATA_SPECIES)
+                && !GetBoxMonData(&gPokemonStorage.boxes[gPokenavState->monListBuildBoxId][gPokenavState->monListBuildMonId], MON_DATA_IS_EGG))
             {
-                var0.unk1 = gPokenavStructPtr->unk8FE6;
-                var0.partyIdx = gPokenavStructPtr->unk8FE7;
-                var0.unk0 = GetBoxMonData(
-                    &gPokemonStorage.boxes[gPokenavStructPtr->unk8FE6][gPokenavStructPtr->unk8FE7],
-                    gPokenavStructPtr->unk87D8);
+                var0.boxId = gPokenavState->monListBuildBoxId;
+                var0.monId = gPokenavState->monListBuildMonId;
+                var0.data = GetBoxMonData(
+                    &gPokemonStorage.boxes[gPokenavState->monListBuildBoxId][gPokenavState->monListBuildMonId],
+                    gPokenavState->conditionSearchMonDataId);
                 InsertPokenavMonListItem(&var0);
             }
 
-            gPokenavStructPtr->unk8FE7++;
+            gPokenavState->monListBuildMonId++;
             mask = 0xFF;
-            if (gPokenavStructPtr->unk8FE7 == 30)
+            if (gPokenavState->monListBuildMonId == 30)
             {
-                gPokenavStructPtr->unk8FE7 = 0;
-                nextValue = gPokenavStructPtr->unk8FE6 + 1;
-                gPokenavStructPtr->unk8FE6 = nextValue;
+                gPokenavState->monListBuildMonId = 0;
+                nextValue = gPokenavState->monListBuildBoxId + 1;
+                gPokenavState->monListBuildBoxId = nextValue;
                 if ((nextValue & mask) == 14)
                     break;
             }
         }
         break;
     case 14:
-        var0.unk3_14 = 1;
-        var0.unk1 = 14;
-        for (i = 0; i < gPokenavStructPtr->unk8828; i++)
+        var0.isValid = 1;
+        var0.boxId = 14;
+        for (i = 0; i < gPokenavState->playerPartyCount; i++)
         {
             if (!GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG))
             {
-                var0.partyIdx = i;
-                var0.unk0 = GetMonData(&gPlayerParty[i], gPokenavStructPtr->unk87D8);
+                var0.monId = i;
+                var0.data = GetMonData(&gPlayerParty[i], gPokenavState->conditionSearchMonDataId);
                 InsertPokenavMonListItem(&var0);
             }
         }
 
         FinalizePokenavMonListRanks();
-        gPokenavStructPtr->unk87DA = gPokenavStructPtr->unk8FE4;
-        gPokenavStructPtr->unk8FE6++;
+        gPokenavState->conditionGraphMonCount = gPokenavState->monListCount;
+        gPokenavState->monListBuildBoxId++;
         break;
     case 15:
         return FALSE;
@@ -3988,7 +3988,7 @@ bool8 BuildConditionSearchResultsStep(void)
 
 void StartConditionGraphMonEnter(void)
 {
-    ConditionGraph_SetNewPositions(gPokenavStructPtr->unk9004[3], gPokenavStructPtr->unk9004[gPokenavStructPtr->portraitSlot]);
+    ConditionGraph_SetNewPositions(gPokenavState->conditionGraph.savedPositions[3], gPokenavState->conditionGraph.savedPositions[gPokenavState->portraitSlot]);
     ConditionGraph_TryUpdate();
 }
 
@@ -4001,8 +4001,8 @@ bool8 UpdateConditionGraphMonEnter(void)
 
 void StartConditionGraphMonExit(void)
 {
-    if (gPokenavStructPtr->isConditionGraphSearchMode || gPokenavStructPtr->detailSelectionIndex != gPokenavStructPtr->unk8828)
-        ConditionGraph_SetNewPositions(gPokenavStructPtr->unk9004[gPokenavStructPtr->portraitSlot], gPokenavStructPtr->unk9004[3]);
+    if (gPokenavState->isConditionGraphSearchMode || gPokenavState->detailSelectionIndex != gPokenavState->playerPartyCount)
+        ConditionGraph_SetNewPositions(gPokenavState->conditionGraph.savedPositions[gPokenavState->portraitSlot], gPokenavState->conditionGraph.savedPositions[3]);
 }
 
 bool8 UpdateConditionGraphMonExit(void)
@@ -4019,71 +4019,71 @@ void BeginConditionGraphMonScroll(u8 arg0)
     u8 var2;
 
     if (arg0)
-        var0 = gPokenavStructPtr->unk8FEB;
+        var0 = gPokenavState->nextLoadIdUp;
     else
-        var0 = gPokenavStructPtr->unk8FEA;
+        var0 = gPokenavState->nextLoadIdDown;
 
-    ConditionGraph_SetNewPositions(gPokenavStructPtr->unk9004[gPokenavStructPtr->portraitSlot], gPokenavStructPtr->unk9004[var0]);
-    var1 = gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex].unk3_14;
+    ConditionGraph_SetNewPositions(gPokenavState->conditionGraph.savedPositions[gPokenavState->portraitSlot], gPokenavState->conditionGraph.savedPositions[var0]);
+    var1 = gPokenavState->monList[gPokenavState->detailSelectionIndex].isValid;
     if (arg0)
     {
-        gPokenavStructPtr->unk8FEB = gPokenavStructPtr->unk8FEA;
-        gPokenavStructPtr->unk8FEA = gPokenavStructPtr->portraitSlot;
-        gPokenavStructPtr->portraitSlot = var0;
-        gPokenavStructPtr->unk8FEC = gPokenavStructPtr->unk8FEB;
+        gPokenavState->nextLoadIdUp = gPokenavState->nextLoadIdDown;
+        gPokenavState->nextLoadIdDown = gPokenavState->portraitSlot;
+        gPokenavState->portraitSlot = var0;
+        gPokenavState->toLoadId = gPokenavState->nextLoadIdUp;
 
-        gPokenavStructPtr->detailSelectionIndex = gPokenavStructPtr->detailSelectionIndex
-                                     ? gPokenavStructPtr->detailSelectionIndex - 1
-                                     : gPokenavStructPtr->unk87DA - 1;
-        gPokenavStructPtr->unk8FEE = gPokenavStructPtr->detailSelectionIndex
-                                     ? gPokenavStructPtr->detailSelectionIndex - 1
-                                     : gPokenavStructPtr->unk87DA - 1;
+        gPokenavState->detailSelectionIndex = gPokenavState->detailSelectionIndex
+                                     ? gPokenavState->detailSelectionIndex - 1
+                                     : gPokenavState->conditionGraphMonCount - 1;
+        gPokenavState->toLoadListIndex = gPokenavState->detailSelectionIndex
+                                     ? gPokenavState->detailSelectionIndex - 1
+                                     : gPokenavState->conditionGraphMonCount - 1;
     }
     else
     {
-        gPokenavStructPtr->unk8FEA = gPokenavStructPtr->unk8FEB;
-        gPokenavStructPtr->unk8FEB = gPokenavStructPtr->portraitSlot;
-        gPokenavStructPtr->portraitSlot = var0;
-        gPokenavStructPtr->unk8FEC = gPokenavStructPtr->unk8FEA;
+        gPokenavState->nextLoadIdDown = gPokenavState->nextLoadIdUp;
+        gPokenavState->nextLoadIdUp = gPokenavState->portraitSlot;
+        gPokenavState->portraitSlot = var0;
+        gPokenavState->toLoadId = gPokenavState->nextLoadIdDown;
 
-        gPokenavStructPtr->detailSelectionIndex = (gPokenavStructPtr->detailSelectionIndex < gPokenavStructPtr->unk87DA - 1)
-                                     ? gPokenavStructPtr->detailSelectionIndex + 1
+        gPokenavState->detailSelectionIndex = (gPokenavState->detailSelectionIndex < gPokenavState->conditionGraphMonCount - 1)
+                                     ? gPokenavState->detailSelectionIndex + 1
                                      : 0;
-        gPokenavStructPtr->unk8FEE = (gPokenavStructPtr->detailSelectionIndex < gPokenavStructPtr->unk87DA - 1)
-                                     ? gPokenavStructPtr->detailSelectionIndex + 1
+        gPokenavState->toLoadListIndex = (gPokenavState->detailSelectionIndex < gPokenavState->conditionGraphMonCount - 1)
+                                     ? gPokenavState->detailSelectionIndex + 1
                                      : 0;
     }
 
-    var2 = gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex].unk3_14;
+    var2 = gPokenavState->monList[gPokenavState->detailSelectionIndex].isValid;
     if (!var1)
-        gPokenavStructPtr->unk87E0 = UpdateConditionGraphScrollToMon;
+        gPokenavState->conditionGraphScrollCallback = UpdateConditionGraphScrollToMon;
     else if (!var2)
-        gPokenavStructPtr->unk87E0 = UpdateConditionGraphScrollToEmpty;
+        gPokenavState->conditionGraphScrollCallback = UpdateConditionGraphScrollToEmpty;
     else
-        gPokenavStructPtr->unk87E0 = UpdateConditionGraphScrollBetweenMons;
+        gPokenavState->conditionGraphScrollCallback = UpdateConditionGraphScrollBetweenMons;
 
-    gPokenavStructPtr->detailTransitionState = 0;
+    gPokenavState->detailTransitionState = 0;
 }
 
 bool8 UpdateConditionGraphMonScroll(void)
 {
-    return gPokenavStructPtr->unk87E0();
+    return gPokenavState->conditionGraphScrollCallback();
 }
 
 bool8 UpdateConditionGraphScrollToMon(void)
 {
-    switch (gPokenavStructPtr->detailTransitionState)
+    switch (gPokenavState->detailTransitionState)
     {
     case 0:
-        CreateOrUpdatePokenavPortraitSprite(gPokenavStructPtr->portraitSlot);
-        PrintConditionGraphMonInfo(gPokenavStructPtr->portraitSlot);
-        gPokenavStructPtr->detailTransitionState++;
+        CreateOrUpdatePokenavPortraitSprite(gPokenavState->portraitSlot);
+        PrintConditionGraphMonInfo(gPokenavState->portraitSlot);
+        gPokenavState->detailTransitionState++;
         // fall through
     case 1:
         if (!UpdateConditionGraphMonEnter())
         {
-            LoadConditionGraphMonData(gPokenavStructPtr->unk8FEE, gPokenavStructPtr->unk8FEC);
-            gPokenavStructPtr->detailTransitionState++;
+            LoadConditionGraphMonData(gPokenavState->toLoadListIndex, gPokenavState->toLoadId);
+            gPokenavState->detailTransitionState++;
         }
         break;
     case 2:
@@ -4095,14 +4095,14 @@ bool8 UpdateConditionGraphScrollToMon(void)
 
 bool8 UpdateConditionGraphScrollToEmpty(void)
 {
-    switch (gPokenavStructPtr->detailTransitionState)
+    switch (gPokenavState->detailTransitionState)
     {
     case 0:
         if (!UpdateConditionGraphMonExit())
         {
-            PrintConditionGraphMonInfo(gPokenavStructPtr->portraitSlot);
-            LoadConditionGraphMonData(gPokenavStructPtr->unk8FEE, gPokenavStructPtr->unk8FEC);
-            gPokenavStructPtr->detailTransitionState++;
+            PrintConditionGraphMonInfo(gPokenavState->portraitSlot);
+            LoadConditionGraphMonData(gPokenavState->toLoadListIndex, gPokenavState->toLoadId);
+            gPokenavState->detailTransitionState++;
         }
         break;
     case 1:
@@ -4114,30 +4114,30 @@ bool8 UpdateConditionGraphScrollToEmpty(void)
 
 bool8 UpdateConditionGraphScrollBetweenMons(void)
 {
-    switch (gPokenavStructPtr->detailTransitionState)
+    switch (gPokenavState->detailTransitionState)
     {
     case 0:
         ConditionGraph_TryUpdate();
         if (!SlidePokenavMonInfoHeaderOut())
         {
-            CreateOrUpdatePokenavPortraitSprite(gPokenavStructPtr->portraitSlot);
-            PrintConditionGraphMonInfo(gPokenavStructPtr->portraitSlot);
-            gPokenavStructPtr->detailTransitionState++;
+            CreateOrUpdatePokenavPortraitSprite(gPokenavState->portraitSlot);
+            PrintConditionGraphMonInfo(gPokenavState->portraitSlot);
+            gPokenavState->detailTransitionState++;
         }
         break;
     case 1:
         if (!UpdateConditionGraphMonEnter())
-            gPokenavStructPtr->detailTransitionState++;
+            gPokenavState->detailTransitionState++;
         break;
     case 2:
-        LoadConditionGraphMonData(gPokenavStructPtr->unk8FEE, gPokenavStructPtr->unk8FEC);
+        LoadConditionGraphMonData(gPokenavState->toLoadListIndex, gPokenavState->toLoadId);
         return FALSE;
     }
 
     return TRUE;
 }
 
-void ConditionGraph_SetNewPositions(struct UnkPokenav11 *arg0, struct UnkPokenav11 *arg1)
+void ConditionGraph_SetNewPositions(struct UCoords16 *arg0, struct UCoords16 *arg1)
 {
     u16 i, j;
     int r5;
@@ -4145,35 +4145,35 @@ void ConditionGraph_SetNewPositions(struct UnkPokenav11 *arg0, struct UnkPokenav
 
     for (i = 0; i < 5; i++)
     {
-        r5 = arg0[i].unk0 << 8;
-        r6 = ((arg1[i].unk0 - arg0[i].unk0) << 8) / 10;
+        r5 = arg0[i].x << 8;
+        r6 = ((arg1[i].x - arg0[i].x) << 8) / 10;
         for (j = 0; j < 9; j++)
         {
-            gPokenavStructPtr->unk9054[j][i].unk0 = (r5 >> 8) + ((r5 >> 7) & 1);
+            gPokenavState->conditionGraph.newPositions[j][i].x = (r5 >> 8) + ((r5 >> 7) & 1);
             r5 += r6;
         }
 
-        gPokenavStructPtr->unk9054[j][i].unk0 = arg1[i].unk0;
-        r5 = arg0[i].unk2 << 8;
-        r6 = ((arg1[i].unk2 - arg0[i].unk2) << 8) / 10;
+        gPokenavState->conditionGraph.newPositions[j][i].x = arg1[i].x;
+        r5 = arg0[i].y << 8;
+        r6 = ((arg1[i].y - arg0[i].y) << 8) / 10;
         for (j = 0; j < 9; j++)
         {
-            gPokenavStructPtr->unk9054[j][i].unk2 = (r5 >> 8) + ((r5 >> 7) & 1);
+            gPokenavState->conditionGraph.newPositions[j][i].y = (r5 >> 8) + ((r5 >> 7) & 1);
             r5 += r6;
         }
 
-        gPokenavStructPtr->unk9054[j][i].unk2 = arg1[i].unk2;
+        gPokenavState->conditionGraph.newPositions[j][i].y = arg1[i].y;
     }
 
-    gPokenavStructPtr->unk9342 = 0;
+    gPokenavState->conditionGraph.updateCounter = 0;
 }
 
 bool8 ConditionGraph_TryUpdate(void)
 {
-    if (gPokenavStructPtr->unk9342 < 10)
+    if (gPokenavState->conditionGraph.updateCounter < 10)
     {
-        ConditionGraph_Update(gPokenavStructPtr->unk9054[gPokenavStructPtr->unk9342++]);
-        return gPokenavStructPtr->unk9342 != 10;
+        ConditionGraph_Update(gPokenavState->conditionGraph.newPositions[gPokenavState->conditionGraph.updateCounter++]);
+        return gPokenavState->conditionGraph.updateCounter != 10;
     }
     else
     {
@@ -4181,7 +4181,7 @@ bool8 ConditionGraph_TryUpdate(void)
     }
 }
 
-void StartPokeblockConditionGraphReset(struct UnkPokenav11 *arg0, struct UnkPokenav11 *arg1)
+void StartPokeblockConditionGraphReset(struct UCoords16 *arg0, struct UCoords16 *arg1)
 {
     ConditionGraph_SetNewPositions(arg0, arg1);
 }
@@ -4191,25 +4191,25 @@ bool8 UpdatePokeblockConditionGraphReset(void)
     return ConditionGraph_TryUpdate();
 }
 
-void ConditionGraph_Update(struct UnkPokenav11 *arg0)
+void ConditionGraph_Update(struct UCoords16 *arg0)
 {
     u16 i;
 
     for (i = 0; i < 5; i++)
-        gPokenavStructPtr->unk911C[i] = arg0[i];
+        gPokenavState->conditionGraph.curPositions[i] = arg0[i];
 
-    gPokenavStructPtr->unk9344 = 1;
+    gPokenavState->conditionGraph.needsDraw = 1;
 }
 
-void ConditionGraph_CalcPositions(u8 *a0, struct UnkPokenav11 a1[])
+void ConditionGraph_CalcPositions(u8 *a0, struct UCoords16 a1[])
 {
     u16 i;
     u8 r2 = gConditionToLineLength[*a0++];
     u8 r7;
     s8 r12;
 
-    a1[0].unk0 = 0x9b;
-    a1[0].unk2 = 0x5b - r2;
+    a1[0].x = 0x9b;
+    a1[0].y = 0x5b - r2;
 
     r7 = 0x40;
     r12 = 0;
@@ -4222,45 +4222,45 @@ void ConditionGraph_CalcPositions(u8 *a0, struct UnkPokenav11 a1[])
         if (r12 == 2)
             r7++;
         r2 = gConditionToLineLength[*a0++];
-        a1[r12].unk0 = ((r2 * gSineTable[r7 + 0x40]) >> 8) + 0x9b;
-        a1[r12].unk2 = 0x5b - ((r2 * gSineTable[r7]) >> 8);
+        a1[r12].x = ((r2 * gSineTable[r7 + 0x40]) >> 8) + 0x9b;
+        a1[r12].y = 0x5b - ((r2 * gSineTable[r7]) >> 8);
 
         if (r12 <= 2 && (r2 != 0x20 || r12 != 2))
-            a1[r12].unk0 = ((r2 * gSineTable[r7 + 0x40]) >> 8) + 0x9c;
+            a1[r12].x = ((r2 * gSineTable[r7 + 0x40]) >> 8) + 0x9c;
     }
 }
 
-void CalcPokeblockConditionGraphPositions(u8 *a0, struct UnkPokenav11 a1[])
+void CalcPokeblockConditionGraphPositions(u8 *a0, struct UCoords16 a1[])
 {
     ConditionGraph_CalcPositions(a0, a1);
 }
 
-void ConditionGraph_CalcLine(u16 * arg1, struct UnkPokenav11 * arg2, struct UnkPokenav11 * arg3, u8 arg4, u16 * arg5)
+void ConditionGraph_CalcLine(u16 * arg1, struct UCoords16 * arg2, struct UCoords16 * arg3, u8 arg4, u16 * arg5)
 {
     u16 i, r8, r10, r0, var_30;
     u16 *ptr;
     s32 r4, var_2C;
 
     var_2C = 0;
-    if (arg2->unk2 < arg3->unk2)
+    if (arg2->y < arg3->y)
     {
-        r10 = arg2->unk2;
-        r0 = arg3->unk2;
-        r4 = arg2->unk0 << 10;
-        var_30 = arg3->unk0;
+        r10 = arg2->y;
+        r0 = arg3->y;
+        r4 = arg2->x << 10;
+        var_30 = arg3->x;
         r8 = r0 - r10;
         if (r8 != 0)
-            var_2C = ((var_30 - arg2->unk0) << 10) / r8;
+            var_2C = ((var_30 - arg2->x) << 10) / r8;
     }
     else
     {
-        r0 = arg2->unk2;
-        r10 = arg3->unk2;
-        r4 = arg3->unk0 << 10;
-        var_30 = arg2->unk0;
+        r0 = arg2->y;
+        r10 = arg3->y;
+        r4 = arg3->x << 10;
+        var_30 = arg2->x;
         r8 = r0 - r10;
         if (r8 != 0)
-            var_2C = ((var_30 - arg3->unk0) << 10) / r8;
+            var_2C = ((var_30 - arg3->x) << 10) / r8;
     }
 
     r8++;
@@ -4286,8 +4286,8 @@ void ConditionGraph_CalcLine(u16 * arg1, struct UnkPokenav11 * arg2, struct UnkP
                 break;
         }
 
-        gPokenavStructPtr->unk9340 = r10 + i;
-        arg1 += (gPokenavStructPtr->unk9340 - 56) * 2;
+        gPokenavState->conditionGraph.bottom = r10 + i;
+        arg1 += (gPokenavState->conditionGraph.bottom - 56) * 2;
         for (; i < r8; i++)
         {
             arg1[arg4] = (r4 >> 10) + ((r4 >> 9) & 1) + arg4;
@@ -4312,8 +4312,8 @@ void ConditionGraph_CalcLine(u16 * arg1, struct UnkPokenav11 * arg2, struct UnkP
             arg1 += 2;
         }
 
-        gPokenavStructPtr->unk9340 = r10 + i;
-        arg5 += (gPokenavStructPtr->unk9340 - 56) * 2;
+        gPokenavState->conditionGraph.bottom = r10 + i;
+        arg5 += (gPokenavState->conditionGraph.bottom - 56) * 2;
         for (; i < r8; i++)
         {
             arg5[arg4] = (r4 >> 10) + ((r4 >> 9) & 1) + arg4;
@@ -4325,11 +4325,11 @@ void ConditionGraph_CalcLine(u16 * arg1, struct UnkPokenav11 * arg2, struct UnkP
     }
     else
     {
-        gPokenavStructPtr->unk9340 = r10;
+        gPokenavState->conditionGraph.bottom = r10;
         arg1 += (r10 - 56) * 2;
         arg5 += (r10 - 56) * 2;
-        arg1[1] = arg2->unk0 + 1;
-        arg5[0] = arg3->unk0;
+        arg1[1] = arg2->x + 1;
+        arg5[0] = arg3->x;
         arg5[1] = 155;
         return;
     }
@@ -4337,93 +4337,93 @@ void ConditionGraph_CalcLine(u16 * arg1, struct UnkPokenav11 * arg2, struct UnkP
     ptr[arg4] = arg4 + var_30;
 }
 
-void ConditionGraph_CalcRightHalf(struct UnkPokenav11 * a0)
+void ConditionGraph_CalcRightHalf(struct UCoords16 * a0)
 {
     u16 i, r6, varMax;
 
-    if (a0[0].unk2 < a0[1].unk2)
+    if (a0[0].y < a0[1].y)
     {
-        r6 = a0[0].unk2;
-        ConditionGraph_CalcLine((u16 *)gPokenavStructPtr->unk9130, &a0[0], &a0[1], 1, NULL);
+        r6 = a0[0].y;
+        ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineRight, &a0[0], &a0[1], 1, NULL);
     }
     else
     {
-        r6 = a0[1].unk2;
-        ConditionGraph_CalcLine((u16 *)gPokenavStructPtr->unk9130, &a0[1], &a0[0], 0, NULL);
+        r6 = a0[1].y;
+        ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineRight, &a0[1], &a0[0], 0, NULL);
     }
-    ConditionGraph_CalcLine((u16 *)gPokenavStructPtr->unk9130, &a0[1], &a0[2], 1, NULL);
+    ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineRight, &a0[1], &a0[2], 1, NULL);
 
-    i = a0[2].unk2 <= a0[3].unk2;
-    ConditionGraph_CalcLine((u16 *)gPokenavStructPtr->unk9130, &a0[2], &a0[3], i, (u16 *)gPokenavStructPtr->unk9238);
+    i = a0[2].y <= a0[3].y;
+    ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineRight, &a0[2], &a0[3], i, (u16 *)gPokenavState->conditionGraph.scanlineLeft);
     for (i = 56; i < r6; i++)
     {
-        gPokenavStructPtr->unk9130[i - 56][0] = 0;
-        gPokenavStructPtr->unk9130[i - 56][1] = 0;
+        gPokenavState->conditionGraph.scanlineRight[i - 56][0] = 0;
+        gPokenavState->conditionGraph.scanlineRight[i - 56][1] = 0;
     }
 
-    for (i = a0[0].unk2; i <= gPokenavStructPtr->unk9340; i++)
-        gPokenavStructPtr->unk9130[i - 56][0] = 155;
+    for (i = a0[0].y; i <= gPokenavState->conditionGraph.bottom; i++)
+        gPokenavState->conditionGraph.scanlineRight[i - 56][0] = 155;
 
-    varMax = max(gPokenavStructPtr->unk9340, a0[2].unk2);
+    varMax = max(gPokenavState->conditionGraph.bottom, a0[2].y);
     for (i = varMax + 1; i < 122; i++)
     {
-        gPokenavStructPtr->unk9130[i - 56][0] = 0;
-        gPokenavStructPtr->unk9130[i - 56][1] = 0;
+        gPokenavState->conditionGraph.scanlineRight[i - 56][0] = 0;
+        gPokenavState->conditionGraph.scanlineRight[i - 56][1] = 0;
     }
 
 //    for (i = 56; i < 122; i++)
 //    {
-//        if (gPokenavStructPtr->unk9130[i - 56][0] == 0 && gPokenavStructPtr->unk9130[i - 56][1] != 0)
-//            gPokenavStructPtr->unk9130[i - 56][0] = 155;
+//        if (gPokenavState->conditionGraph.scanlineRight[i - 56][0] == 0 && gPokenavState->conditionGraph.scanlineRight[i - 56][1] != 0)
+//            gPokenavState->conditionGraph.scanlineRight[i - 56][0] = 155;
 //    }
 }
 
-void ConditionGraph_CalcLeftHalf(struct UnkPokenav11 *arg0)
+void ConditionGraph_CalcLeftHalf(struct UCoords16 *arg0)
 {
     u16 i, r6, varMax;
 
-    if (arg0[0].unk2 < arg0[4].unk2)
+    if (arg0[0].y < arg0[4].y)
     {
-        r6 = arg0[0].unk2;
-        ConditionGraph_CalcLine((u16 *)gPokenavStructPtr->unk9238, &arg0[0], &arg0[4], 0, NULL);
+        r6 = arg0[0].y;
+        ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineLeft, &arg0[0], &arg0[4], 0, NULL);
     }
     else
     {
-        r6 = arg0[4].unk2;
-        ConditionGraph_CalcLine((u16 *)gPokenavStructPtr->unk9238, &arg0[4], &arg0[0], 1, NULL);
+        r6 = arg0[4].y;
+        ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineLeft, &arg0[4], &arg0[0], 1, NULL);
     }
 
-    ConditionGraph_CalcLine((u16 *)gPokenavStructPtr->unk9238, &arg0[4], &arg0[3], 0, NULL);
+    ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineLeft, &arg0[4], &arg0[3], 0, NULL);
 
     for (i = 56; i < r6; i++)
     {
-        gPokenavStructPtr->unk9238[i - 56][0] = 0;
-        gPokenavStructPtr->unk9238[i - 56][1] = 0;
+        gPokenavState->conditionGraph.scanlineLeft[i - 56][0] = 0;
+        gPokenavState->conditionGraph.scanlineLeft[i - 56][1] = 0;
     }
 
-    for (i = arg0[0].unk2; i <= gPokenavStructPtr->unk9340; i++)
-        gPokenavStructPtr->unk9238[i - 56][1] = 155;
+    for (i = arg0[0].y; i <= gPokenavState->conditionGraph.bottom; i++)
+        gPokenavState->conditionGraph.scanlineLeft[i - 56][1] = 155;
 
-    varMax = max(gPokenavStructPtr->unk9340, arg0[3].unk2 + 1);
+    varMax = max(gPokenavState->conditionGraph.bottom, arg0[3].y + 1);
     for (i = varMax; i < 122; i++)
     {
-        gPokenavStructPtr->unk9238[i - 56][0] = 0;
-        gPokenavStructPtr->unk9238[i - 56][1] = 0;
+        gPokenavState->conditionGraph.scanlineLeft[i - 56][0] = 0;
+        gPokenavState->conditionGraph.scanlineLeft[i - 56][1] = 0;
     }
 
 //    for (i = 0; i < 66; i++)
 //    {
-//        if (gPokenavStructPtr->unk9238[i][0] >= gPokenavStructPtr->unk9238[i][1])
+//        if (gPokenavState->conditionGraph.scanlineLeft[i][0] >= gPokenavState->conditionGraph.scanlineLeft[i][1])
 //        {
-//            gPokenavStructPtr->unk9238[i][1] = 0;
-//            gPokenavStructPtr->unk9238[i][0] = 0;
+//            gPokenavState->conditionGraph.scanlineLeft[i][1] = 0;
+//            gPokenavState->conditionGraph.scanlineLeft[i][0] = 0;
 //        }
 //    }
 }
 
 void ConditionGraph_InitResetScanline(void)
 {
-    gPokenavStructPtr->unk9345 = 0;
+    gPokenavState->conditionGraph.scanlineResetState = 0;
 }
 
 extern const struct ScanlineEffectParams gConditionGraphScanlineParams;
@@ -4433,7 +4433,7 @@ bool8 ConditionGraph_ResetScanline(void)
     s32 i;
     struct ScanlineEffectParams params;
 
-    switch (gPokenavStructPtr->unk9345)
+    switch (gPokenavState->conditionGraph.scanlineResetState)
     {
     case 0:
         ScanlineEffect_Clear();
@@ -4444,12 +4444,12 @@ bool8 ConditionGraph_ResetScanline(void)
             gScanlineEffectRegBuffers[1][16 + 2 * i] = 0xEF;
             gScanlineEffectRegBuffers[1][17 + 2 * i] = 0xEF;
         }
-        gPokenavStructPtr->unk9345++;
+        gPokenavState->conditionGraph.scanlineResetState++;
         return TRUE;
     case 1:
         params = gConditionGraphScanlineParams;
         ScanlineEffect_SetParams(params);
-        gPokenavStructPtr->unk9345++;
+        gPokenavState->conditionGraph.scanlineResetState++;
         break;
     }
     return FALSE;
@@ -4465,16 +4465,16 @@ void ConditionGraph_Draw(void)
 {
     u16 i;
 
-    if (gPokenavStructPtr->unk9344)
+    if (gPokenavState->conditionGraph.needsDraw)
     {
-        ConditionGraph_CalcRightHalf(gPokenavStructPtr->unk911C);
-        ConditionGraph_CalcLeftHalf(gPokenavStructPtr->unk911C);
+        ConditionGraph_CalcRightHalf(gPokenavState->conditionGraph.curPositions);
+        ConditionGraph_CalcLeftHalf(gPokenavState->conditionGraph.curPositions);
         for (i = 0; i < 66; i++)
         {
-            gScanlineEffectRegBuffers[1][(i + 55) * 2 + 0] = gScanlineEffectRegBuffers[0][(i + 55) * 2 + 0] = (gPokenavStructPtr->unk9130[i][0] << 8) | (gPokenavStructPtr->unk9130[i][1]);
-            gScanlineEffectRegBuffers[1][(i + 55) * 2 + 1] = gScanlineEffectRegBuffers[0][(i + 55) * 2 + 1] = (gPokenavStructPtr->unk9238[i][0] << 8) | (gPokenavStructPtr->unk9238[i][1]);
+            gScanlineEffectRegBuffers[1][(i + 55) * 2 + 0] = gScanlineEffectRegBuffers[0][(i + 55) * 2 + 0] = (gPokenavState->conditionGraph.scanlineRight[i][0] << 8) | (gPokenavState->conditionGraph.scanlineRight[i][1]);
+            gScanlineEffectRegBuffers[1][(i + 55) * 2 + 1] = gScanlineEffectRegBuffers[0][(i + 55) * 2 + 1] = (gPokenavState->conditionGraph.scanlineLeft[i][0] << 8) | (gPokenavState->conditionGraph.scanlineLeft[i][1]);
         }
-        gPokenavStructPtr->unk9344 = 0;
+        gPokenavState->conditionGraph.needsDraw = 0;
     }
 }
 
@@ -4482,18 +4482,18 @@ void ConditionGraph_DrawAtYOffset(u8 a0)
 {
     u16 i, r5;
 
-    if (gPokenavStructPtr->unk9344)
+    if (gPokenavState->conditionGraph.needsDraw)
     {
-        ConditionGraph_CalcRightHalf(gPokenavStructPtr->unk911C);
-        ConditionGraph_CalcLeftHalf(gPokenavStructPtr->unk911C);
+        ConditionGraph_CalcRightHalf(gPokenavState->conditionGraph.curPositions);
+        ConditionGraph_CalcLeftHalf(gPokenavState->conditionGraph.curPositions);
         r5 = 2 * (55 - a0);
         for (i = 0; i < 66; i ++)
         {
-            gScanlineEffectRegBuffers[1][r5 + 0] = gScanlineEffectRegBuffers[0][r5 + 0] = (gPokenavStructPtr->unk9130[i][0] << 8) | (gPokenavStructPtr->unk9130[i][1]);
-            gScanlineEffectRegBuffers[1][r5 + 1] = gScanlineEffectRegBuffers[0][r5 + 1] = (gPokenavStructPtr->unk9238[i][0] << 8) | (gPokenavStructPtr->unk9238[i][1]);
+            gScanlineEffectRegBuffers[1][r5 + 0] = gScanlineEffectRegBuffers[0][r5 + 0] = (gPokenavState->conditionGraph.scanlineRight[i][0] << 8) | (gPokenavState->conditionGraph.scanlineRight[i][1]);
+            gScanlineEffectRegBuffers[1][r5 + 1] = gScanlineEffectRegBuffers[0][r5 + 1] = (gPokenavState->conditionGraph.scanlineLeft[i][0] << 8) | (gPokenavState->conditionGraph.scanlineLeft[i][1]);
             r5 += 2;
         }
-        gPokenavStructPtr->unk9344 = 0;
+        gPokenavState->conditionGraph.needsDraw = 0;
     }
 }
 
@@ -4523,50 +4523,50 @@ u8 HandlePokenavListDpadInput(void)
 
 u8 PokenavList_MoveCursorUp(void)
 {
-    if (gPokenavStructPtr->listSelectedIndex == 0)
+    if (gPokenavState->listSelectedIndex == 0)
     {
         return 0;
     }
-    if (gPokenavStructPtr->hasListScrollArrows != 0 && gPokenavStructPtr->listCursorRow == 0)
+    if (gPokenavState->hasListScrollArrows != 0 && gPokenavState->listCursorRow == 0)
     {
         BeginPokenavListScroll(-1);
         UpdatePokenavListIndicesAfterScroll(-1);
         return 2;
     }
-    gPokenavStructPtr->listCursorRow--;
-    if (gPokenavStructPtr->hasListScrollArrows == 0 && gPokenavStructPtr->listCursorRow < 0)
+    gPokenavState->listCursorRow--;
+    if (gPokenavState->hasListScrollArrows == 0 && gPokenavState->listCursorRow < 0)
     {
-        gPokenavStructPtr->listCursorRow = gPokenavStructPtr->lastVisibleListIndex;
+        gPokenavState->listCursorRow = gPokenavState->lastVisibleListIndex;
     }
-    gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->firstVisibleListIndex + gPokenavStructPtr->listCursorRow;
-    if (gPokenavStructPtr->listSelectedIndex > gPokenavStructPtr->lastListIndex)
+    gPokenavState->listSelectedIndex = gPokenavState->firstVisibleListIndex + gPokenavState->listCursorRow;
+    if (gPokenavState->listSelectedIndex > gPokenavState->lastListIndex)
     {
-        gPokenavStructPtr->listSelectedIndex -= gPokenavStructPtr->lastListIndex + 1;
+        gPokenavState->listSelectedIndex -= gPokenavState->lastListIndex + 1;
     }
     return 1;
 }
 
 u8 PokenavList_MoveCursorDown(void)
 {
-    if (gPokenavStructPtr->listSelectedIndex == gPokenavStructPtr->lastListIndex)
+    if (gPokenavState->listSelectedIndex == gPokenavState->lastListIndex)
     {
         return 0;
     }
-    if (gPokenavStructPtr->hasListScrollArrows != 0 && gPokenavStructPtr->listCursorRow == 7)
+    if (gPokenavState->hasListScrollArrows != 0 && gPokenavState->listCursorRow == 7)
     {
         BeginPokenavListScroll(1);
         UpdatePokenavListIndicesAfterScroll(1);
         return 2;
     }
-    gPokenavStructPtr->listCursorRow++;
-    if (gPokenavStructPtr->hasListScrollArrows == 0 && gPokenavStructPtr->listCursorRow > gPokenavStructPtr->lastVisibleListIndex)
+    gPokenavState->listCursorRow++;
+    if (gPokenavState->hasListScrollArrows == 0 && gPokenavState->listCursorRow > gPokenavState->lastVisibleListIndex)
     {
-        gPokenavStructPtr->listCursorRow = 0;
+        gPokenavState->listCursorRow = 0;
     }
-    gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->firstVisibleListIndex + gPokenavStructPtr->listCursorRow;
-    if (gPokenavStructPtr->listSelectedIndex > gPokenavStructPtr->lastListIndex)
+    gPokenavState->listSelectedIndex = gPokenavState->firstVisibleListIndex + gPokenavState->listCursorRow;
+    if (gPokenavState->listSelectedIndex > gPokenavState->lastListIndex)
     {
-        gPokenavStructPtr->listSelectedIndex -= gPokenavStructPtr->lastListIndex + 1;
+        gPokenavState->listSelectedIndex -= gPokenavState->lastListIndex + 1;
     }
     return 1;
 }
@@ -4574,13 +4574,13 @@ u8 PokenavList_MoveCursorDown(void)
 u8 PokenavList_PageUp(void)
 {
     s16 r4;
-    if (gPokenavStructPtr->firstVisibleListIndex == 0 || gPokenavStructPtr->hasListScrollArrows == 0)
+    if (gPokenavState->firstVisibleListIndex == 0 || gPokenavState->hasListScrollArrows == 0)
     {
         return 0;
     }
-    if (gPokenavStructPtr->firstVisibleListIndex < 8)
+    if (gPokenavState->firstVisibleListIndex < 8)
     {
-        r4 = -gPokenavStructPtr->firstVisibleListIndex;
+        r4 = -gPokenavState->firstVisibleListIndex;
     }
     else
     {
@@ -4594,11 +4594,11 @@ u8 PokenavList_PageUp(void)
 u8 PokenavList_PageDown(void)
 {
     s16 r4;
-    if (gPokenavStructPtr->lastVisibleListIndex == gPokenavStructPtr->lastListIndex || gPokenavStructPtr->hasListScrollArrows == 0)
+    if (gPokenavState->lastVisibleListIndex == gPokenavState->lastListIndex || gPokenavState->hasListScrollArrows == 0)
     {
         return 0;
     }
-    r4 = gPokenavStructPtr->lastListIndex - gPokenavStructPtr->lastVisibleListIndex;
+    r4 = gPokenavState->lastListIndex - gPokenavState->lastVisibleListIndex;
     if (r4 > 8)
     {
         r4 = 8;
@@ -4610,71 +4610,71 @@ u8 PokenavList_PageDown(void)
 
 void UpdatePokenavListIndicesAfterScroll(s16 a0)
 {
-    gPokenavStructPtr->firstVisibleListIndex += a0;
-    if (gPokenavStructPtr->firstVisibleListIndex > gPokenavStructPtr->lastListIndex)
+    gPokenavState->firstVisibleListIndex += a0;
+    if (gPokenavState->firstVisibleListIndex > gPokenavState->lastListIndex)
     {
-        gPokenavStructPtr->firstVisibleListIndex -= gPokenavStructPtr->lastListIndex + 1;
+        gPokenavState->firstVisibleListIndex -= gPokenavState->lastListIndex + 1;
     }
-    if (gPokenavStructPtr->firstVisibleListIndex < 0)
+    if (gPokenavState->firstVisibleListIndex < 0)
     {
-        gPokenavStructPtr->firstVisibleListIndex += gPokenavStructPtr->lastListIndex + 1;
+        gPokenavState->firstVisibleListIndex += gPokenavState->lastListIndex + 1;
     }
-    gPokenavStructPtr->lastVisibleListIndex += a0;
-    if (gPokenavStructPtr->lastVisibleListIndex > gPokenavStructPtr->lastListIndex)
+    gPokenavState->lastVisibleListIndex += a0;
+    if (gPokenavState->lastVisibleListIndex > gPokenavState->lastListIndex)
     {
-        gPokenavStructPtr->lastVisibleListIndex -= gPokenavStructPtr->lastListIndex + 1;
+        gPokenavState->lastVisibleListIndex -= gPokenavState->lastListIndex + 1;
     }
-    if (gPokenavStructPtr->lastVisibleListIndex < 0)
+    if (gPokenavState->lastVisibleListIndex < 0)
     {
-        gPokenavStructPtr->lastVisibleListIndex += gPokenavStructPtr->lastListIndex + 1;
+        gPokenavState->lastVisibleListIndex += gPokenavState->lastListIndex + 1;
     }
-    gPokenavStructPtr->listSelectedIndex += a0;
-    if (gPokenavStructPtr->listSelectedIndex > gPokenavStructPtr->lastListIndex)
+    gPokenavState->listSelectedIndex += a0;
+    if (gPokenavState->listSelectedIndex > gPokenavState->lastListIndex)
     {
-        gPokenavStructPtr->listSelectedIndex -= gPokenavStructPtr->lastListIndex + 1;
+        gPokenavState->listSelectedIndex -= gPokenavState->lastListIndex + 1;
     }
-    if (gPokenavStructPtr->listSelectedIndex < 0)
+    if (gPokenavState->listSelectedIndex < 0)
     {
-        gPokenavStructPtr->listSelectedIndex += gPokenavStructPtr->lastListIndex + 1;
+        gPokenavState->listSelectedIndex += gPokenavState->lastListIndex + 1;
     }
 }
 
 void RestorePokenavListSelection(void)
 {
-    if (gPokenavStructPtr->hasListScrollArrows != 0)
+    if (gPokenavState->hasListScrollArrows != 0)
     {
-        if (gPokenavStructPtr->detailSelectionIndex < gPokenavStructPtr->lastListIndex - 7)
+        if (gPokenavState->detailSelectionIndex < gPokenavState->lastListIndex - 7)
         {
-            gPokenavStructPtr->listCursorRow = 0;
-            gPokenavStructPtr->firstVisibleListIndex = gPokenavStructPtr->detailSelectionIndex;
-            gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->detailSelectionIndex;
-            gPokenavStructPtr->lastVisibleListIndex = gPokenavStructPtr->firstVisibleListIndex + 7;
-            if (gPokenavStructPtr->lastVisibleListIndex > gPokenavStructPtr->lastListIndex)
+            gPokenavState->listCursorRow = 0;
+            gPokenavState->firstVisibleListIndex = gPokenavState->detailSelectionIndex;
+            gPokenavState->listSelectedIndex = gPokenavState->detailSelectionIndex;
+            gPokenavState->lastVisibleListIndex = gPokenavState->firstVisibleListIndex + 7;
+            if (gPokenavState->lastVisibleListIndex > gPokenavState->lastListIndex)
             {
-                gPokenavStructPtr->lastVisibleListIndex -= gPokenavStructPtr->lastListIndex + 1;
+                gPokenavState->lastVisibleListIndex -= gPokenavState->lastListIndex + 1;
             }
         }
         else
         {
-            gPokenavStructPtr->firstVisibleListIndex = gPokenavStructPtr->lastListIndex - 7;
-            gPokenavStructPtr->lastVisibleListIndex = gPokenavStructPtr->lastListIndex;
-            gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->detailSelectionIndex;
-            gPokenavStructPtr->listCursorRow = 7 - (gPokenavStructPtr->lastListIndex -  gPokenavStructPtr->listSelectedIndex);
+            gPokenavState->firstVisibleListIndex = gPokenavState->lastListIndex - 7;
+            gPokenavState->lastVisibleListIndex = gPokenavState->lastListIndex;
+            gPokenavState->listSelectedIndex = gPokenavState->detailSelectionIndex;
+            gPokenavState->listCursorRow = 7 - (gPokenavState->lastListIndex -  gPokenavState->listSelectedIndex);
         }
     }
     else
     {
-        gPokenavStructPtr->listCursorRow = gPokenavStructPtr->detailSelectionIndex;
-        gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->detailSelectionIndex;
+        gPokenavState->listCursorRow = gPokenavState->detailSelectionIndex;
+        gPokenavState->listSelectedIndex = gPokenavState->detailSelectionIndex;
     }
 }
 
 void InitAnyMonHasRibbonScan(void)
 {
-    gPokenavStructPtr->unk8FE6 = 0;
-    gPokenavStructPtr->unk8FE7 = 0;
-    gPokenavStructPtr->unk8FE8 = 0xFF;
-    if (gPokenavStructPtr->unk6DAC == 0)
+    gPokenavState->monListBuildBoxId = 0;
+    gPokenavState->monListBuildMonId = 0;
+    gPokenavState->hasAnyRibbons = 0xFF;
+    if (gPokenavState->isLinkActive == 0)
     {
         while (AnyMonHasRibbonScanStep())
             ;
@@ -4685,28 +4685,28 @@ bool8 AnyMonHasRibbonScanStep(void)
 {
     u16 i;
 
-    if (gPokenavStructPtr->unk8FE8 != -1)
+    if (gPokenavState->hasAnyRibbons != -1)
         return FALSE;
 
-    switch (gPokenavStructPtr->unk8FE6)
+    switch (gPokenavState->monListBuildBoxId)
     {
     default:
         for (i = 0; i < 10; i++)
         {
-            if (GetBoxMonData(&gPokemonStorage.boxes[gPokenavStructPtr->unk8FE6 + 0][gPokenavStructPtr->unk8FE7], MON_DATA_RIBBON_COUNT) != 0)
+            if (GetBoxMonData(&gPokemonStorage.boxes[gPokenavState->monListBuildBoxId + 0][gPokenavState->monListBuildMonId], MON_DATA_RIBBON_COUNT) != 0)
             {
-                gPokenavStructPtr->unk8FE8 = 1;
+                gPokenavState->hasAnyRibbons = 1;
                 return FALSE;
             }
-            if (GetBoxMonData(&gPokemonStorage.boxes[gPokenavStructPtr->unk8FE6 + 7][gPokenavStructPtr->unk8FE7], MON_DATA_RIBBON_COUNT) != 0)
+            if (GetBoxMonData(&gPokemonStorage.boxes[gPokenavState->monListBuildBoxId + 7][gPokenavState->monListBuildMonId], MON_DATA_RIBBON_COUNT) != 0)
             {
-                gPokenavStructPtr->unk8FE8 = 1;
+                gPokenavState->hasAnyRibbons = 1;
                 return FALSE;
             }
-            if (++gPokenavStructPtr->unk8FE7 >= 30)
+            if (++gPokenavState->monListBuildMonId >= 30)
             {
-                gPokenavStructPtr->unk8FE7 = 0;
-                if (++gPokenavStructPtr->unk8FE6 >= 7)
+                gPokenavState->monListBuildMonId = 0;
+                if (++gPokenavState->monListBuildBoxId >= 7)
                 {
                     break;
                 }
@@ -4716,16 +4716,16 @@ bool8 AnyMonHasRibbonScanStep(void)
     case 8:
         return FALSE;
     case 7:
-        gPokenavStructPtr->unk8FE8 = 0;
+        gPokenavState->hasAnyRibbons = 0;
         for (i = 0; i < 6; i++)
         {
             if (GetMonData(&gPlayerParty[i], MON_DATA_RIBBON_COUNT) != 0)
             {
-                gPokenavStructPtr->unk8FE8 = 1;
+                gPokenavState->hasAnyRibbons = 1;
                 break;
             }
         }
-        gPokenavStructPtr->unk8FE6++;
+        gPokenavState->monListBuildBoxId++;
         return FALSE;
     }
     return TRUE;
@@ -4733,10 +4733,10 @@ bool8 AnyMonHasRibbonScanStep(void)
 
 void InitRibbonsMonList(void)
 {
-    gPokenavStructPtr->unk8FE6 = 0;
-    gPokenavStructPtr->unk8FE7 = 0;
+    gPokenavState->monListBuildBoxId = 0;
+    gPokenavState->monListBuildMonId = 0;
     ResetPokenavMonList();
-    if (gPokenavStructPtr->unk6DAC == 0)
+    if (gPokenavState->isLinkActive == 0)
     {
         while (BuildRibbonsMonListStep())
             ;
@@ -4745,28 +4745,28 @@ void InitRibbonsMonList(void)
 
 bool8 BuildRibbonsMonListStep(void)
 {
-    struct UnkUsePokeblockSub sp0;
+    struct PokenavMonListItem sp0;
     u8 ribbons;
     u16 i;
 
-    switch (gPokenavStructPtr->unk8FE6)
+    switch (gPokenavState->monListBuildBoxId)
     {
     default:
-        sp0.unk3_14 = 1;
+        sp0.isValid = 1;
         for (i = 0; i < 15; i++)
         {
-            ribbons = GetBoxMonData(&gPokemonStorage.boxes[gPokenavStructPtr->unk8FE6][gPokenavStructPtr->unk8FE7 + 0], MON_DATA_RIBBON_COUNT);
+            ribbons = GetBoxMonData(&gPokemonStorage.boxes[gPokenavState->monListBuildBoxId][gPokenavState->monListBuildMonId + 0], MON_DATA_RIBBON_COUNT);
             if (ribbons != 0)
             {
-                sp0.unk1 = gPokenavStructPtr->unk8FE6;
-                sp0.partyIdx = gPokenavStructPtr->unk8FE7;
-                sp0.unk0 = ribbons;
+                sp0.boxId = gPokenavState->monListBuildBoxId;
+                sp0.monId = gPokenavState->monListBuildMonId;
+                sp0.data = ribbons;
                 InsertPokenavMonListItem(&sp0);
             }
-            if (++gPokenavStructPtr->unk8FE7 == 30)
+            if (++gPokenavState->monListBuildMonId == 30)
             {
-                gPokenavStructPtr->unk8FE7 = 0;
-                if (++gPokenavStructPtr->unk8FE6 == 14)
+                gPokenavState->monListBuildMonId = 0;
+                if (++gPokenavState->monListBuildBoxId == 14)
                     break;
             }
         }
@@ -4774,20 +4774,20 @@ bool8 BuildRibbonsMonListStep(void)
     case 15:
         return FALSE;
     case 14:
-        sp0.unk3_14 = 1;
-        sp0.unk1 = 14;
+        sp0.isValid = 1;
+        sp0.boxId = 14;
         for (i = 0; i < 6; i++)
         {
             ribbons = GetMonData(&gPlayerParty[i], MON_DATA_RIBBON_COUNT);
             if (ribbons != 0)
             {
-                sp0.partyIdx = i;
-                sp0.unk0 = ribbons;
+                sp0.monId = i;
+                sp0.data = ribbons;
                 InsertPokenavMonListItem(&sp0);
             }
         }
         FinalizePokenavMonListRanks();
-        gPokenavStructPtr->unk8FE6++;
+        gPokenavState->monListBuildBoxId++;
         return FALSE;
     }
     return TRUE;
@@ -4796,8 +4796,8 @@ bool8 BuildRibbonsMonListStep(void)
 u8 *BufferPokenavMonNameGenderLevelText(u8 *dst, u16 listIndex, u8 displayMode)
 {
     u8 *dest = dst;
-    u8 box = gPokenavStructPtr->unk893c[listIndex].unk1;
-    u8 monNo = gPokenavStructPtr->unk893c[listIndex].partyIdx;
+    u8 box = gPokenavState->monList[listIndex].boxId;
+    u8 monNo = gPokenavState->monList[listIndex].monId;
     u16 species;
     u16 level;
     u8 gender;
@@ -4874,7 +4874,7 @@ u8 *BufferPokenavMonNameGenderLevelText(u8 *dst, u16 listIndex, u8 displayMode)
         dest = ConvertIntToDecimalStringSimple(dest, level);
         if (displayMode == 1)
         {
-            dest = AlignInt1InMenuWindow(dest, gPokenavStructPtr->unk893c[listIndex].unk0, 0x80, 0x01);
+            dest = AlignInt1InMenuWindow(dest, gPokenavState->monList[listIndex].data, 0x80, 0x01);
         }
         else
         {
@@ -4902,13 +4902,13 @@ void InitRibbonsSummaryMonData(void)
     u8 numRibbons;
     u8 numVariants;
 
-    BufferPokenavMonNameGenderLevelText(gPokenavStructPtr->unk8829[0], gPokenavStructPtr->listSelectedIndex, 0);
-    LoadConditionGraphMonGfx(gPokenavStructPtr->listSelectedIndex, 0);
-    gPokenavStructPtr->detailSelectionIndex = gPokenavStructPtr->listSelectedIndex;
-    gPokenavStructPtr->ribbonCount = 0;
+    BufferPokenavMonNameGenderLevelText(gPokenavState->conditionMonNameText[0], gPokenavState->listSelectedIndex, 0);
+    LoadConditionGraphMonGfx(gPokenavState->listSelectedIndex, 0);
+    gPokenavState->detailSelectionIndex = gPokenavState->listSelectedIndex;
+    gPokenavState->ribbonCount = 0;
     ribbonIdBase = 0;
-    ribbonFlags = GetBoxOrPartyMonData(gPokenavStructPtr->unk893c[gPokenavStructPtr->listSelectedIndex].unk1, gPokenavStructPtr->unk893c[gPokenavStructPtr->listSelectedIndex].partyIdx, MON_DATA_RIBBONS, NULL);
-    gPokenavStructPtr->giftRibbonCount = 0;
+    ribbonFlags = GetBoxOrPartyMonData(gPokenavState->monList[gPokenavState->listSelectedIndex].boxId, gPokenavState->monList[gPokenavState->listSelectedIndex].monId, MON_DATA_RIBBONS, NULL);
+    gPokenavState->giftRibbonCount = 0;
     for (i = 0; i < 17; i++)
     {
         switch (gRibbonSummaryMonDataFields[i])
@@ -4929,42 +4929,42 @@ void InitRibbonsSummaryMonData(void)
             break;
         };
         for (j = 0; j < numRibbons; j++)
-            gPokenavStructPtr->ribbonIds[gPokenavStructPtr->ribbonCount++] = ribbonIdBase + j;
+            gPokenavState->ribbonIds[gPokenavState->ribbonCount++] = ribbonIdBase + j;
         if (numRibbons && ribbonIdBase > 24)
-            gPokenavStructPtr->giftRibbonCount++;
+            gPokenavState->giftRibbonCount++;
         ribbonIdBase += numVariants;
     }
-    if (gPokenavStructPtr->ribbonCount != gPokenavStructPtr->giftRibbonCount)
+    if (gPokenavState->ribbonCount != gPokenavState->giftRibbonCount)
     {
-        gPokenavStructPtr->ribbonCursorPos = 0;
-        gPokenavStructPtr->ribbonPageIndex = 0;
+        gPokenavState->ribbonCursorPos = 0;
+        gPokenavState->ribbonPageIndex = 0;
     }
     else
     {
-        gPokenavStructPtr->ribbonCursorPos = 0;
-        gPokenavStructPtr->ribbonPageIndex = 3;
+        gPokenavState->ribbonCursorPos = 0;
+        gPokenavState->ribbonPageIndex = 3;
     }
-    numRibbons = gPokenavStructPtr->ribbonCount - gPokenavStructPtr->giftRibbonCount;
+    numRibbons = gPokenavState->ribbonCount - gPokenavState->giftRibbonCount;
     for (i = 0; i < 3; i++)
     {
         if (numRibbons > 8)
         {
-            gPokenavStructPtr->ribbonPageCounts[i] = 9;
+            gPokenavState->ribbonPageCounts[i] = 9;
             numRibbons -= 9;
         }
         else
         {
-            gPokenavStructPtr->ribbonPageCounts[i] = numRibbons;
+            gPokenavState->ribbonPageCounts[i] = numRibbons;
             numRibbons = 0;
         }
     }
-    gPokenavStructPtr->ribbonPageCounts[i] = gPokenavStructPtr->giftRibbonCount;
+    gPokenavState->ribbonPageCounts[i] = gPokenavState->giftRibbonCount;
 }
 
 u8 HandleRibbonsSummaryCursorInput(void)
 {
-    s8 cursorPos = gPokenavStructPtr->ribbonCursorPos;
-    s8 pageIndex = gPokenavStructPtr->ribbonPageIndex;
+    s8 cursorPos = gPokenavState->ribbonCursorPos;
+    s8 pageIndex = gPokenavState->ribbonPageIndex;
     s8 moved = 1;
     do
     {
@@ -4973,32 +4973,32 @@ u8 HandleRibbonsSummaryCursorInput(void)
             while (pageIndex > 0)
             {
                 pageIndex--;
-                if (gPokenavStructPtr->ribbonPageCounts[pageIndex] != 0)
+                if (gPokenavState->ribbonPageCounts[pageIndex] != 0)
                     break;
             }
-            if (gPokenavStructPtr->ribbonPageCounts[pageIndex] != 0)
+            if (gPokenavState->ribbonPageCounts[pageIndex] != 0)
             {
-                if (cursorPos >= gPokenavStructPtr->ribbonPageCounts[pageIndex])
-                    cursorPos = gPokenavStructPtr->ribbonPageCounts[pageIndex] - 1;
+                if (cursorPos >= gPokenavState->ribbonPageCounts[pageIndex])
+                    cursorPos = gPokenavState->ribbonPageCounts[pageIndex] - 1;
                 break;
             }
-            pageIndex = gPokenavStructPtr->ribbonPageIndex;
+            pageIndex = gPokenavState->ribbonPageIndex;
         }
         if (JOY_REPT(DPAD_DOWN) && pageIndex < 3)
         {
             while (pageIndex < 3)
             {
                 pageIndex++;
-                if (gPokenavStructPtr->ribbonPageCounts[pageIndex] != 0)
+                if (gPokenavState->ribbonPageCounts[pageIndex] != 0)
                     break;
             }
-            if (gPokenavStructPtr->ribbonPageCounts[pageIndex] != 0)
+            if (gPokenavState->ribbonPageCounts[pageIndex] != 0)
             {
-                if (cursorPos >= gPokenavStructPtr->ribbonPageCounts[pageIndex])
-                    cursorPos = gPokenavStructPtr->ribbonPageCounts[pageIndex] - 1;
+                if (cursorPos >= gPokenavState->ribbonPageCounts[pageIndex])
+                    cursorPos = gPokenavState->ribbonPageCounts[pageIndex] - 1;
                 break;
             }
-            pageIndex = gPokenavStructPtr->ribbonPageIndex;
+            pageIndex = gPokenavState->ribbonPageIndex;
         }
         if (JOY_REPT(DPAD_LEFT))
         {
@@ -5010,7 +5010,7 @@ u8 HandleRibbonsSummaryCursorInput(void)
         }
         if (JOY_REPT(DPAD_RIGHT))
         {
-            if (cursorPos < gPokenavStructPtr->ribbonPageCounts[pageIndex] - 1)
+            if (cursorPos < gPokenavState->ribbonPageCounts[pageIndex] - 1)
             {
                 cursorPos++;
                 break;
@@ -5020,10 +5020,10 @@ u8 HandleRibbonsSummaryCursorInput(void)
     } while (0);
     if (moved)
     {
-        if (cursorPos != gPokenavStructPtr->ribbonCursorPos || pageIndex != gPokenavStructPtr->ribbonPageIndex)
+        if (cursorPos != gPokenavState->ribbonCursorPos || pageIndex != gPokenavState->ribbonPageIndex)
         {
-            gPokenavStructPtr->ribbonCursorPos = cursorPos;
-            gPokenavStructPtr->ribbonPageIndex = pageIndex;
+            gPokenavState->ribbonCursorPos = cursorPos;
+            gPokenavState->ribbonPageIndex = pageIndex;
         }
         else
             moved = 0;
@@ -5033,62 +5033,62 @@ u8 HandleRibbonsSummaryCursorInput(void)
 
 void BeginRibbonsSummaryMonSwitch(s8 direction)
 {
-    gPokenavStructPtr->listSelectedIndex += direction;
-    if (gPokenavStructPtr->listSelectedIndex < 0)
+    gPokenavState->listSelectedIndex += direction;
+    if (gPokenavState->listSelectedIndex < 0)
     {
-        gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->lastListIndex;
+        gPokenavState->listSelectedIndex = gPokenavState->lastListIndex;
     }
-    if (gPokenavStructPtr->listSelectedIndex > gPokenavStructPtr->lastListIndex)
+    if (gPokenavState->listSelectedIndex > gPokenavState->lastListIndex)
     {
-        gPokenavStructPtr->listSelectedIndex = 0;
+        gPokenavState->listSelectedIndex = 0;
     }
-    gPokenavStructPtr->detailSelectionDelta = direction;
-    gPokenavStructPtr->detailSelectionIndex = gPokenavStructPtr->listSelectedIndex;
+    gPokenavState->detailSelectionDelta = direction;
+    gPokenavState->detailSelectionIndex = gPokenavState->listSelectedIndex;
     REG_WININ = 0x3F37;
     REG_WINOUT = 0x3F3F;
     REG_WIN0H = 0x58F0;
     REG_WIN0V = 0x2060;
-    gPokenavStructPtr->detailTransitionState = 0;
+    gPokenavState->detailTransitionState = 0;
 }
 
 bool8 UpdateRibbonsSummaryMonSwitch(void)
 {
-    switch (gPokenavStructPtr->detailTransitionState)
+    switch (gPokenavState->detailTransitionState)
     {
     case 0:
         if (!SlidePokenavMonInfoHeaderOut())
         {
-            gPokenavStructPtr->detailTransitionState++;
+            gPokenavState->detailTransitionState++;
         }
         break;
     case 1:
         REG_DISPCNT |= DISPCNT_WIN0_ON;
         ClearRibbonsSummaryDescription();
         InitRibbonsSummaryMonData();
-        gPokenavStructPtr->detailTransitionState++;
+        gPokenavState->detailTransitionState++;
         break;
     case 2:
         DrawMonRibbonIcons();
-        gPokenavStructPtr->detailTransitionState++;
+        gPokenavState->detailTransitionState++;
         break;
     case 3:
         CopyRibbonsSummaryTilemapToVram();
-        gPokenavStructPtr->detailTransitionState++;
+        gPokenavState->detailTransitionState++;
         break;
     case 4:
-        LoadConditionGraphMonGfx(gPokenavStructPtr->listSelectedIndex, 0);
-        gPokenavStructPtr->detailTransitionState++;
+        LoadConditionGraphMonGfx(gPokenavState->listSelectedIndex, 0);
+        gPokenavState->detailTransitionState++;
         break;
     case 5:
         CreateOrUpdatePokenavPortraitSprite(0);
-        gPokenavStructPtr->detailTransitionState++;
+        gPokenavState->detailTransitionState++;
         break;
     case 6:
         if (!SlidePokenavMonInfoHeaderIn())
         {
             PrintRibbonsSummaryMonInfo();
             REG_DISPCNT &= ~DISPCNT_WIN0_ON;
-            gPokenavStructPtr->detailTransitionState++;
+            gPokenavState->detailTransitionState++;
             return FALSE;
         }
         break;

@@ -101,7 +101,7 @@ struct PokenavRibbonIconGfx {
 
 static void (*sPokenavCallbackBeforeLinkWait)(void);
 
-struct UnkPokenavStruct *const gPokenavStructPtr = (struct UnkPokenavStruct *)gSharedMem;
+struct PokenavState *const gPokenavState = (struct PokenavState *)gSharedMem;
 
 extern u16 gKeyRepeatStartDelay;
 
@@ -1122,10 +1122,10 @@ void CB2_InitPokeNav(void)
     default:
         gMain.state = 0;
     case 0:
-        gPokenavStructPtr->unk6DAC = IsOverworldLinkActive();
-        if (!gPokenavStructPtr->unk6DAC)
+        gPokenavState->isLinkActive = IsOverworldLinkActive();
+        if (!gPokenavState->isLinkActive)
         {
-            gPokenavStructPtr->unk6DAB = 0;
+            gPokenavState->isPokenavInitialized = 0;
             gMain.state++;
             SetMainCallback2(&CB2_ContinueInitPokeNav);
         }
@@ -1175,7 +1175,7 @@ void CB2_InitPokeNav(void)
         SetPokenavCallback(&InitPokenavMainMenu);
         break;
     case 14:
-        gPokenavStructPtr->unk6DAB = 1;
+        gPokenavState->isPokenavInitialized = 1;
         PlaySE(SE_POKENAV_ON);
         SetMainCallback2(&CB2_Pokenav);
         SetVBlankCallback(&VBlankCB_Pokenav);
@@ -1188,7 +1188,7 @@ void CB2_InitPokeNav(void)
 
 void CB2_ContinueInitPokeNav(void)
 {
-    while (!gPokenavStructPtr->unk6DAB)
+    while (!gPokenavState->isPokenavInitialized)
         CB2_InitPokeNav();
 }
 
@@ -1197,35 +1197,35 @@ void InitPokenavState(void)
     u16 i;
 
     gKeyRepeatStartDelay = 0x14;
-    gPokenavStructPtr->unk8828 = CalculatePlayerPartyCount();
-    gPokenavStructPtr->mainMenuCursorPos = 0;
-    gPokenavStructPtr->unk9344 = 0;
-    gPokenavStructPtr->portraitSprite = 0;
-    gPokenavStructPtr->trainerEyesPortraitSprite = 0;
+    gPokenavState->playerPartyCount = CalculatePlayerPartyCount();
+    gPokenavState->mainMenuCursorPos = 0;
+    gPokenavState->conditionGraph.needsDraw = 0;
+    gPokenavState->portraitSprite = 0;
+    gPokenavState->trainerEyesPortraitSprite = 0;
 
     for (i = 0; i < 5; ++i)
     {
-        gPokenavStructPtr->unk8ff0[3][i] = 0;
-        gPokenavStructPtr->unk9004[3][i].unk0 = 0x9B;
-        gPokenavStructPtr->unk9004[3][i].unk2 = 0x5B;
+        gPokenavState->conditionGraph.conditions[3][i] = 0;
+        gPokenavState->conditionGraph.savedPositions[3][i].x = 0x9B;
+        gPokenavState->conditionGraph.savedPositions[3][i].y = 0x5B;
     }
 
-    gPokenavStructPtr->regionMap.needUpdateVideoRegs = 0;
+    gPokenavState->regionMap.needUpdateVideoRegs = 0;
     InitPokenavMenuOptions();
 }
 
 void InitPokenavMenuOptions(void)
 {
-    gPokenavStructPtr->mainMenuItemIds[0] = 1;
-    gPokenavStructPtr->mainMenuItemIds[1] = 2;
-    gPokenavStructPtr->mainMenuItemIds[2] = 3;
+    gPokenavState->mainMenuItemIds[0] = 1;
+    gPokenavState->mainMenuItemIds[1] = 2;
+    gPokenavState->mainMenuItemIds[2] = 3;
 
     if (FlagGet(FLAG_SYS_RIBBON_GET))
-        gPokenavStructPtr->mainMenuItemIds[3] = 4;
+        gPokenavState->mainMenuItemIds[3] = 4;
     else
-        gPokenavStructPtr->mainMenuItemIds[3] = 0;
+        gPokenavState->mainMenuItemIds[3] = 0;
 
-    gPokenavStructPtr->mainMenuItemIds[4] = 5;
+    gPokenavState->mainMenuItemIds[4] = 5;
 }
 
 void VBlankCB_Pokenav(void)
@@ -1270,7 +1270,7 @@ void VBlankCB_PokenavOamOnly(void)
 
 void CB2_Pokenav(void)
 {
-    gPokenavStructPtr->callback();
+    gPokenavState->callback();
     AnimateSprites();
     BuildOamBuffer();
     RunTasks();
@@ -1280,87 +1280,87 @@ void CB2_Pokenav(void)
 
 void SetPokenavCallback(void (*callback)(void))
 {
-    gPokenavStructPtr->callback = callback;
-    gPokenavStructPtr->callbackStep = 0;
+    gPokenavState->callback = callback;
+    gPokenavState->callbackStep = 0;
 }
 
 void InitPokenavMainMenu(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         SetVBlankCallback(NULL);
         REG_DISPCNT = 0;
-        gPokenavStructPtr->menuCursorPos = gPokenavStructPtr->mainMenuCursorPos;
-        gPokenavStructPtr->menuItemCount = 5;
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->menuCursorPos = gPokenavState->mainMenuCursorPos;
+        gPokenavState->menuItemCount = 5;
+        gPokenavState->callbackStep++;
         break;
     case 1:
         InitPokenavIconSprite();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 2:
         if (!LoadPokenavIconSpriteStep())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 3:
         CreateRematchBlueLightSprite();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 4:
         InitPokenavBackground();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 5:
         if (!LoadPokenavBackgroundStep())
 		{
 			ResetPokenavSetupStep();
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 6:
         InitPokenavMenuGfx(0);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 7:
         if (!LoadPokenavMenuGfxStep(0))
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 8:
         InitPokenavMenuOptionSprites(0);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
 		// fall through
     case 9:
         if (!LoadPokenavMenuOptionSpritesStep(0))
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 10:
         SetVBlankCallback(&VBlankCB_Pokenav);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 11:
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 12:
         SetPokenavDisplayForScreen(0);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 13:
         if (!gPaletteFade.active)
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 14:
         BeginPokenavLeftHeaderLoad(0);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 15:
         if (!LoadPokenavLeftHeaderStep(0))
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 16:
         StartMenuOptionSpritesSlideIn();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 17:
         if (!UpdateMenuOptionEntryHighlight())
@@ -1378,72 +1378,72 @@ void InitPokenavMainMenu(void)
 
 void RestorePokenavMainMenu(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         if (!SlideMenuHeaderDown())
         {
             SetVBlankCallback(&VBlankCB_PokenavOamOnly);
             SetPokenavDisplayForMenu();
-            gPokenavStructPtr->menuCursorPos = gPokenavStructPtr->mainMenuCursorPos;
-            gPokenavStructPtr->menuItemCount = 5;
+            gPokenavState->menuCursorPos = gPokenavState->mainMenuCursorPos;
+            gPokenavState->menuItemCount = 5;
             ResetPokenavSetupStep();
-            gPokenavStructPtr->callbackStep++;
+            gPokenavState->callbackStep++;
         }
         break;
     case 1:
         InitPokenavMenuGfx(0);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 2:
         if (!LoadPokenavMenuGfxStep(0))
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 3:
         InitPokenavMenuOptionSprites(0);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 4:
         if (!LoadPokenavMenuOptionSpritesStep(0))
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 5:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 6:
-        BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
+        BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 16, 0, RGB(0, 0, 0));
         SetVBlankCallback(&VBlankCB_Pokenav);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 7:
         SetPokenavDisplayForScreen(0);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 8:
         if (!gPaletteFade.active)
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 9:
         CreateRematchBlueLightSprite();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 10:
         BeginPokenavLeftHeaderLoad(0);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 11:
         if (!LoadPokenavLeftHeaderStep(0))
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 12:
         StartMenuOptionSpritesSlideIn();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 13:
         if (!UpdateMenuOptionEntryHighlight())
         {
-            PrintPokenavMenuDescription(0, gPokenavStructPtr->menuCursorPos);
+            PrintPokenavMenuDescription(0, gPokenavState->menuCursorPos);
 			SetPokenavCallback(&HandlePokenavMainMenuInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
@@ -1456,12 +1456,12 @@ void RestorePokenavMainMenu(void)
 
 void ClosePokenavConditionMenu(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         StartPokenavLeftHeaderSlideOut(1);
-        StartPokenavMenuTransition(0, gPokenavStructPtr->mainMenuCursorPos, 0);
-        gPokenavStructPtr->callbackStep++;
+        StartPokenavMenuTransition(0, gPokenavState->mainMenuCursorPos, 0);
+        gPokenavState->callbackStep++;
         break;
     case 1:
         if (!UpdatePokenavMenuTransition())
@@ -1474,21 +1474,21 @@ void HandlePokenavMainMenuInput(void)
 {
     u8 var1;
 
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         if (UpdateMainMenuCursorPos() != 0)
         {
             PlaySE(SE_SELECT);
-            PrintPokenavMenuDescription(0, gPokenavStructPtr->menuCursorPos);
+            PrintPokenavMenuDescription(0, gPokenavState->menuCursorPos);
             PausePokenavCallbackForLink();
         }
         else
         {
             if (JOY_NEW(A_BUTTON))
             {
-                gPokenavStructPtr->mainMenuCursorPos = gPokenavStructPtr->menuCursorPos;
-                switch (gPokenavStructPtr->mainMenuItemIds[gPokenavStructPtr->mainMenuCursorPos] - 1)
+                gPokenavState->mainMenuCursorPos = gPokenavState->menuCursorPos;
+                switch (gPokenavState->mainMenuItemIds[gPokenavState->mainMenuCursorPos] - 1)
                 {
                 case 0:
                     PlaySE(SE_SELECT);
@@ -1499,19 +1499,19 @@ void HandlePokenavMainMenuInput(void)
                     SetPokenavCallback(&OpenPokenavConditionMenu);
                     break;
                 case 4:
-                    gPokenavStructPtr->callbackStep = 1;
+                    gPokenavState->callbackStep = 1;
                     break;
                 case 3:
-                    gPokenavStructPtr->callbackStep = 2;
+                    gPokenavState->callbackStep = 2;
                     break;
                 case 2:
-                    gPokenavStructPtr->callbackStep = 6;
+                    gPokenavState->callbackStep = 6;
                     break;
                 }
             }
             else if (JOY_NEW(B_BUTTON))
             {
-                gPokenavStructPtr->callbackStep = 1;
+                gPokenavState->callbackStep = 1;
             }
         }
         break;
@@ -1521,16 +1521,16 @@ void HandlePokenavMainMenuInput(void)
         break;
     case 2:
         InitAnyMonHasRibbonScan();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 3:
         if (!AnyMonHasRibbonScanStep())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 4:
         if (!Overworld_IsRecvQueueAtMax())
         {
-			if (gPokenavStructPtr->unk8FE8 != 0)
+			if (gPokenavState->hasAnyRibbons != 0)
 			{
 				PlaySE(SE_SELECT);
 				SetPokenavCallback(&OpenRibbonsMonList);
@@ -1539,13 +1539,13 @@ void HandlePokenavMainMenuInput(void)
 			{
 				PlaySE(0x20);
 				PrintPokenavMenuDescription(0, 5);
-				gPokenavStructPtr->callbackStep = 0xFF;
+				gPokenavState->callbackStep = 0xFF;
 			}
 		}
 		break;
     case 6:
         BuildTrainerEyesList();
-        if (gPokenavStructPtr->trainerEyesCount != 0)
+        if (gPokenavState->trainerEyesCount != 0)
         {
             PlaySE(SE_SELECT);
             SetPokenavCallback(&OpenTrainerEyes);
@@ -1554,21 +1554,21 @@ void HandlePokenavMainMenuInput(void)
         {
             PlaySE(0x20);
             PrintPokenavMenuDescription(0, 6);
-            gPokenavStructPtr->callbackStep = 0xFF;
+            gPokenavState->callbackStep = 0xFF;
         }
         break;
     case 0xFF:
         if ((var1 = UpdateMainMenuCursorPos()) != 0)
         {
             PlaySE(SE_SELECT);
-            PrintPokenavMenuDescription(0, gPokenavStructPtr->menuCursorPos);
-            gPokenavStructPtr->callbackStep = 0;
+            PrintPokenavMenuDescription(0, gPokenavState->menuCursorPos);
+            gPokenavState->callbackStep = 0;
             PausePokenavCallbackForLink();
         }
         else if (JOY_NEW(A_BUTTON | B_BUTTON))
 		{
-			PrintPokenavMenuDescription(0, gPokenavStructPtr->menuCursorPos);
-			gPokenavStructPtr->callbackStep = var1;
+			PrintPokenavMenuDescription(0, gPokenavState->menuCursorPos);
+			gPokenavState->callbackStep = var1;
 		}
         break;
     }
@@ -1578,12 +1578,12 @@ void OpenPokenavRegionMap(void)
 {
     u32 var1;
 
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         StartMenuOptionSpritesSlideOut();
         StartPokenavLeftHeaderSlideOut(0);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 1:
         if (!UpdateMenuOptionSpritesSlideOut())
@@ -1593,14 +1593,14 @@ void OpenPokenavRegionMap(void)
             else
 				var1 = 0x8;
             DrawPokenavBottomToolbar(var1);
-            gPokenavStructPtr->callbackStep++;
+            gPokenavState->callbackStep++;
         }
         break;
     case 2:
         if (!SlideMenuHeaderUp())
         {
-            BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-            gPokenavStructPtr->callbackStep++;
+            BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 0, 16, RGB(0, 0, 0));
+            gPokenavState->callbackStep++;
         }
         break;
     case 3:
@@ -1608,45 +1608,45 @@ void OpenPokenavRegionMap(void)
         {
 			SetVBlankCallback(NULL);
 			SetPokenavDisplayForTransition();
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 4:
         DestroyRematchBlueLightSprite();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 5:
         StopPokenavBg3Scroll();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 6:
         InitPokenavRegionMapGfx();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 7:
         if (!LoadPokenavRegionMapGfxStep())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 8:
         BeginPokenavLeftHeaderLoad(0x4);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 9:
         if (!LoadPokenavLeftHeaderStep(0x4))
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 0xA:
         CreatePokenavRegionMapIcons();
         SetVBlankCallback(&VBlankCB_PokenavRegionMap);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 0xB:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 0xC:
-        BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
-        gPokenavStructPtr->callbackStep++;
+        BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 16, 0, RGB(0, 0, 0));
+        gPokenavState->callbackStep++;
         break;
     case 0xD:
         SetPokenavDisplayForScreen(0x1);
@@ -1654,7 +1654,7 @@ void OpenPokenavRegionMap(void)
 		if (gLinkOpen == TRUE)
 			InitDebugHexPrinter((void *)(VRAM + 0x75E0), 0, (void *)(VRAM + 0xF800), 4);
 #endif
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 0xE:
         if (!gPaletteFade.active)
@@ -1665,7 +1665,7 @@ void OpenPokenavRegionMap(void)
 
 void HandleRegionMapInput(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         switch (DoRegionMapInputCallback())
@@ -1678,37 +1678,37 @@ void HandleRegionMapInput(void)
             break;
         case 4:
             PlaySE(SE_SELECT);
-            gPokenavStructPtr->callbackStep = 1;
+            gPokenavState->callbackStep = 1;
             break;
         case 5:
             PlaySE(SE_SELECT);
-            gPokenavStructPtr->callbackStep = 4;
+            gPokenavState->callbackStep = 4;
             break;
         }
         break;
     case 1:
-        if (!gPokenavStructPtr->regionMap.zoomed)
+        if (!gPokenavState->regionMap.zoomed)
         {
             SetRegionMapDataForZoom();
-            gPokenavStructPtr->callbackStep++;
+            gPokenavState->callbackStep++;
         }
         else if (!UpdateRegionMapBgYForZoom(1))
         {
 			SetRegionMapDataForZoom();
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 2:
         if (!UpdateRegionMapZoom())
         {
-			if (!gPokenavStructPtr->regionMap.zoomed)
+			if (!gPokenavState->regionMap.zoomed)
 			{
 				UpdateRegionMapBottomToolbar();
-				gPokenavStructPtr->callbackStep = 0;
+				gPokenavState->callbackStep = 0;
 			}
 			else
 			{
-				gPokenavStructPtr->callbackStep++;
+				gPokenavState->callbackStep++;
 			}
 		}
         break;
@@ -1716,19 +1716,19 @@ void HandleRegionMapInput(void)
         if (!UpdateRegionMapBgYForZoom(0))
         {
 			UpdateRegionMapBottomToolbar();
-			gPokenavStructPtr->callbackStep = 0;
+			gPokenavState->callbackStep = 0;
 		}
         break;
     case 4:
-        BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-        gPokenavStructPtr->callbackStep++;
+        BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 0, 16, RGB(0, 0, 0));
+        gPokenavState->callbackStep++;
         break;
     case 5:
         if (!gPaletteFade.active)
         {
 			FreePokenavRegionMapIcons();
 			StartPokenavLeftHeaderSlideOut(0x4);
-			gSaveBlock2.regionMapZoom = (gPokenavStructPtr->regionMap.zoomed == 1) ? 1 : 0;
+			gSaveBlock2.regionMapZoom = (gPokenavState->regionMap.zoomed == 1) ? 1 : 0;
 			SetPokenavCallback(&RestorePokenavMainMenu);
 		}
 		break;
@@ -1741,12 +1741,12 @@ void HandleRegionMapInput(void)
 
 void OpenPokenavConditionMenu(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         StartPokenavLeftHeaderSlideOut(0);
         StartPokenavMenuTransition(1, 0, 1);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 1:
         if (!UpdatePokenavMenuTransition())
@@ -1757,20 +1757,20 @@ void OpenPokenavConditionMenu(void)
 
 void HandleConditionMenuInput(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         if (UpdateSubmenuCursorPos())
         {
             PlaySE(SE_SELECT);
-            PrintPokenavMenuDescription(1, gPokenavStructPtr->menuCursorPos);
+            PrintPokenavMenuDescription(1, gPokenavState->menuCursorPos);
             PausePokenavCallbackForLink();
         }
         else if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
-            gPokenavStructPtr->conditionMenuCursorPos = gPokenavStructPtr->menuCursorPos;
-            switch (gPokenavStructPtr->conditionMenuCursorPos)
+            gPokenavState->conditionMenuCursorPos = gPokenavState->menuCursorPos;
+            switch (gPokenavState->conditionMenuCursorPos)
             {
             case 0:
                 SetPokenavCallback(&OpenConditionGraphFromParty);
@@ -1786,9 +1786,9 @@ void HandleConditionMenuInput(void)
         else if (JOY_NEW(B_BUTTON))
         {
             PlaySE(SE_SELECT);
-            gPokenavStructPtr->conditionMenuCursorPos = 0x2;
-            gPokenavStructPtr->menuCursorPos = 0x2;
-            gPokenavStructPtr->callbackStep++;
+            gPokenavState->conditionMenuCursorPos = 0x2;
+            gPokenavState->menuCursorPos = 0x2;
+            gPokenavState->callbackStep++;
         }
         break;
     case 1:
@@ -1800,11 +1800,11 @@ void HandleConditionMenuInput(void)
 
 void OpenPokenavConditionSearchMenu(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         StartPokenavMenuTransition(2, 0, 5);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 1:
         if (!UpdatePokenavMenuTransition())
@@ -1815,18 +1815,18 @@ void OpenPokenavConditionSearchMenu(void)
 
 void ReturnToConditionMenu(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         StartPokenavLeftHeaderSlideOut(5);
-        StartPokenavMenuTransition(1, gPokenavStructPtr->conditionMenuCursorPos, 0xC);
-        gPokenavStructPtr->callbackStep++;
+        StartPokenavMenuTransition(1, gPokenavState->conditionMenuCursorPos, 0xC);
+        gPokenavState->callbackStep++;
         break;
     case 1:
         if (!UpdatePokenavMenuTransition())
         {
 			SetPokenavCallback(&HandleConditionMenuInput);
-			PrintPokenavMenuDescription(1, gPokenavStructPtr->menuCursorPos);
+			PrintPokenavMenuDescription(1, gPokenavState->menuCursorPos);
 		}
 		break;
     }
@@ -1834,70 +1834,70 @@ void ReturnToConditionMenu(void)
 
 void RestorePokenavConditionMenu(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         if (!SlideMenuHeaderDown())
         {
 			SetVBlankCallback(&VBlankCB_PokenavOamOnly);
 			SetPokenavDisplayForMenu();
-			gPokenavStructPtr->menuCursorPos = gPokenavStructPtr->conditionMenuCursorPos;
-			gPokenavStructPtr->menuItemCount = 3;
+			gPokenavState->menuCursorPos = gPokenavState->conditionMenuCursorPos;
+			gPokenavState->menuItemCount = 3;
 			ResetPokenavSetupStep();
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 1:
         InitPokenavMenuGfx(1);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
     case 2:
         if (!LoadPokenavMenuGfxStep(1))
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 3:
         InitPokenavMenuOptionSprites(1);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
     case 4:
         if (!LoadPokenavMenuOptionSpritesStep(1))
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 5:
         if (Overworld_IsRecvQueueAtMax()) return;
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 6:
-        BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
+        BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 16, 0, RGB(0, 0, 0));
         SetVBlankCallback(&VBlankCB_Pokenav);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 7:
         SetPokenavDisplayForScreen(0);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 8:
         CreateRematchBlueLightSprite();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 9:
         if (!gPaletteFade.active)
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 10:
         BeginPokenavLeftHeaderLoad(1);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
 		// fall through
     case 11:
         if (!LoadPokenavLeftHeaderStep(1))
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 12:
         StartMenuOptionSpritesSlideIn();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 13:
         if (!UpdateMenuOptionEntryHighlight())
         {
-			PrintPokenavMenuDescription(1, gPokenavStructPtr->menuCursorPos);
+			PrintPokenavMenuDescription(1, gPokenavState->menuCursorPos);
 			SetPokenavCallback(&HandleConditionMenuInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
@@ -1910,49 +1910,49 @@ void RestorePokenavConditionMenu(void)
 
 void HandleConditionSearchMenuInput(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         if (UpdateSubmenuCursorPos())
         {
             PlaySE(SE_SELECT);
-            PrintPokenavMenuDescription(2, gPokenavStructPtr->menuCursorPos);
+            PrintPokenavMenuDescription(2, gPokenavState->menuCursorPos);
             PausePokenavCallbackForLink();
         }
         else if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
-            switch ((s8)gPokenavStructPtr->menuCursorPos)
+            switch ((s8)gPokenavState->menuCursorPos)
             {
             case 0:
-                gPokenavStructPtr->unk87D8 = 22;
+                gPokenavState->conditionSearchMonDataId = 22;
                 break;
             case 1:
-                gPokenavStructPtr->unk87D8 = 23;
+                gPokenavState->conditionSearchMonDataId = 23;
                 break;
             case 2:
-                gPokenavStructPtr->unk87D8 = 24;
+                gPokenavState->conditionSearchMonDataId = 24;
                 break;
             case 3:
-                gPokenavStructPtr->unk87D8 = 33;
+                gPokenavState->conditionSearchMonDataId = 33;
                 break;
             case 4:
-                gPokenavStructPtr->unk87D8 = 47;
+                gPokenavState->conditionSearchMonDataId = 47;
                 break;
             case 5:
                 SetPokenavCallback(&ReturnToConditionMenu);
                 return;
             }
 
-            gPokenavStructPtr->conditionSearchCursorPos = gPokenavStructPtr->menuCursorPos;
-            gPokenavStructPtr->isConditionGraphSearchMode = 1;
+            gPokenavState->conditionSearchCursorPos = gPokenavState->menuCursorPos;
+            gPokenavState->isConditionGraphSearchMode = 1;
             SetPokenavCallback(&OpenConditionSearchResults);
         }
         else if (JOY_NEW(B_BUTTON))
         {
             PlaySE(SE_SELECT);
-            gPokenavStructPtr->menuCursorPos = 0x5;
-            gPokenavStructPtr->callbackStep++;
+            gPokenavState->menuCursorPos = 0x5;
+            gPokenavState->callbackStep++;
         }
         break;
     case 1:
@@ -1964,105 +1964,105 @@ void HandleConditionSearchMenuInput(void)
 
 void ReturnToConditionSearchMenu(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
-        BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-        gPokenavStructPtr->callbackStep++;
+        BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 0, 16, RGB(0, 0, 0));
+        gPokenavState->callbackStep++;
         break;
     case 1:
         if (!gPaletteFade.active)
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 2:
         if (!SlideMenuHeaderDown())
         {
 			SetVBlankCallback(&VBlankCB_PokenavOamOnly);
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 3:
         SetPokenavDisplayForMenu();
         DestroyPokenavListArrowSprites();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 4:
         DestroyPokenavLeftHeaderSprites(0x1);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 5:
         DestroyPokenavLeftHeaderSprites(0x5);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 6:
-        gPokenavStructPtr->menuCursorPos = gPokenavStructPtr->conditionSearchCursorPos;
-        gPokenavStructPtr->menuItemCount = 0x6;
+        gPokenavState->menuCursorPos = gPokenavState->conditionSearchCursorPos;
+        gPokenavState->menuItemCount = 0x6;
         ResetPokenavSetupStep();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 7:
         InitPokenavMenuGfx(0x2);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 8:
         if (!LoadPokenavMenuGfxStep(0x2))
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 9:
         InitPokenavMenuOptionSprites(2);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 10:
         if (!LoadPokenavMenuOptionSpritesStep(2))
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 11:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 12:
-        BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
+        BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 16, 0, RGB(0, 0, 0));
         SetVBlankCallback(&VBlankCB_Pokenav);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 13:
         SetPokenavDisplayForScreen(0);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 14:
         CreateRematchBlueLightSprite();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 15:
         if (!gPaletteFade.active)
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 16:
         BeginPokenavLeftHeaderLoad(0x1);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 17:
         if (!LoadPokenavLeftHeaderStep(0x1))
         {
-			gPokenavStructPtr->unk306 = 0;
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->loadState = 0;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 18:
         BeginPokenavLeftHeaderLoad(0x5);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 19:
         if (!LoadPokenavLeftHeaderStep(0x5))
         {
 			StartMenuOptionSpritesSlideIn();
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 20:
         if (!UpdateMenuOptionEntryHighlight())
 		{
-			PrintPokenavMenuDescription(2, gPokenavStructPtr->menuCursorPos);
+			PrintPokenavMenuDescription(2, gPokenavState->menuCursorPos);
 			SetPokenavCallback(&HandleConditionSearchMenuInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
@@ -2075,26 +2075,26 @@ void ReturnToConditionSearchMenu(void)
 
 void OpenConditionSearchResults(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         StartMenuOptionSpritesSlideOut();
         StartPokenavLeftHeaderSlideOut(0x1);
         StartPokenavLeftHeaderSlideOut(0x5);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 1:
         if (!UpdateMenuOptionSpritesSlideOut())
         {
 			DrawPokenavBottomToolbar(0);
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 2:
         if (!SlideMenuHeaderUp())
         {
-			BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-			gPokenavStructPtr->callbackStep++;
+			BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 0, 16, RGB(0, 0, 0));
+			gPokenavState->callbackStep++;
 		}
         break;
     case 3:
@@ -2103,80 +2103,80 @@ void OpenConditionSearchResults(void)
 			SetVBlankCallback(NULL);
 			SetPokenavDisplayForTransition();
 			StopPokenavBg3Scroll();
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 4:
         DestroyRematchBlueLightSprite();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 5:
         InitConditionSearchResults();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 6:
         if (!BuildConditionSearchResultsStep())
-            gPokenavStructPtr->callbackStep += 2;
+            gPokenavState->callbackStep += 2;
         else
-			gPokenavStructPtr->callbackStep += 1;
+			gPokenavState->callbackStep += 1;
         break;
     case 7:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep--;
+			gPokenavState->callbackStep--;
         break;
     case 8:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 9:
         InitPokenavListScreen(POKENAV_LIST_CONDITION_SEARCH);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 10:
         if (!LoadPokenavListScreenStep())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 11:
         CreatePokenavListArrowSprites(0);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 12:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 13:
-        BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
+        BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 16, 0, RGB(0, 0, 0));
         SetVBlankCallback(&VBlankCB_Pokenav);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 14:
         SetPokenavDisplayForScreen(0x4);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 15:
         if (!gPaletteFade.active)
         {
-			gPokenavStructPtr->unk306 = 0;
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->loadState = 0;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 16:
         BeginPokenavLeftHeaderLoad(0x1);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 17:
         if (!LoadPokenavLeftHeaderStep(0x1))
         {
-			gPokenavStructPtr->unk306 = 0;
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->loadState = 0;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 18:
-        BeginPokenavLeftHeaderLoad(gPokenavStructPtr->conditionSearchCursorPos + 7);
-        gPokenavStructPtr->callbackStep++;
+        BeginPokenavLeftHeaderLoad(gPokenavState->conditionSearchCursorPos + 7);
+        gPokenavState->callbackStep++;
         // fall through
     case 19:
-        if (!LoadPokenavLeftHeaderStep(gPokenavStructPtr->conditionSearchCursorPos + 7))
+        if (!LoadPokenavLeftHeaderStep(gPokenavState->conditionSearchCursorPos + 7))
 		{
 			SetPokenavCallback(&HandleConditionSearchInput);
 #if DEBUG
@@ -2190,7 +2190,7 @@ void OpenConditionSearchResults(void)
 
 void HandleConditionSearchInput(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         switch (HandlePokenavListDpadInput())
@@ -2201,7 +2201,7 @@ void HandleConditionSearchInput(void)
             return;
         case 2:
             PlaySE(SE_SELECT);
-            gPokenavStructPtr->callbackStep++;
+            gPokenavState->callbackStep++;
             return;
         default:
             if (JOY_NEW(A_BUTTON))
@@ -2224,12 +2224,12 @@ void HandleConditionSearchInput(void)
         {
 			PrintPokenavListSelectionInfo();
 			RefreshPokenavListArrowVisibility();
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 2:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep = 0;
+			gPokenavState->callbackStep = 0;
         break;
     }
 #if DEBUG
@@ -2240,42 +2240,42 @@ void HandleConditionSearchInput(void)
 
 void OpenConditionSearchListFromGraph(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         SetVBlankCallback(NULL);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 1:
         SetPokenavDisplayForTransition();
         RestorePokenavListSelection();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 2:
         DrawPokenavBottomToolbar(0);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 3:
         InitPokenavListScreen(POKENAV_LIST_CONDITION_SEARCH);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 4:
         if (!LoadPokenavListScreenStep())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 5:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 6:
         CreatePokenavListArrowSprites(0);
-        BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
+        BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 16, 0, RGB(0, 0, 0));
         SetVBlankCallback(&VBlankCB_Pokenav);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 7:
         SetPokenavDisplayForScreen(0x4);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
 			InitDebugHexPrinter((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
@@ -2290,11 +2290,11 @@ void OpenConditionSearchListFromGraph(void)
 
 void OpenConditionGraphFromSearchResults(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
-        BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-        gPokenavStructPtr->callbackStep++;
+        BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 0, 16, RGB(0, 0, 0));
+        gPokenavState->callbackStep++;
         break;
     case 1:
         if (!gPaletteFade.active)
@@ -2302,35 +2302,35 @@ void OpenConditionGraphFromSearchResults(void)
 			SetVBlankCallback(NULL);
 			SetPokenavDisplayForTransition();
 			DestroyPokenavListArrowSprites();
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 2:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 3:
         PrepareConditionGraphFromSearchResult();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 4:
         InitConditionGraphScreen();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 5:
         if (!LoadConditionGraphScreenStep())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 6:
         CreateConditionMonMarkingsSprite();
         DrawPokenavBottomToolbar(0x2);
-        BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
+        BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 16, 0, RGB(0, 0, 0));
         SetVBlankCallback(VBlankCB_PokenavConditionGraph);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 7:
         SetPokenavDisplayForScreen(0x2);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
 			InitDebugHexPrinter((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF000), 4);
@@ -2345,25 +2345,25 @@ void OpenConditionGraphFromSearchResults(void)
 
 void OpenConditionGraphFromParty(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         StartMenuOptionSpritesSlideOut();
         StartPokenavLeftHeaderSlideOut(0x1);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 1:
         if (!UpdateMenuOptionSpritesSlideOut())
         {
 			DrawPokenavBottomToolbar(0x1);
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 2:
         if (!SlideMenuHeaderUp())
         {
-            BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0x0, 16, RGB(0, 0, 0));
-            gPokenavStructPtr->callbackStep++;
+            BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 0x0, 16, RGB(0, 0, 0));
+            gPokenavState->callbackStep++;
         }
         break;
     case 3:
@@ -2372,59 +2372,59 @@ void OpenConditionGraphFromParty(void)
 			SetVBlankCallback(NULL);
 			SetPokenavDisplayForTransition();
 			StopPokenavBg3Scroll();
-			gPokenavStructPtr->isConditionGraphSearchMode = 0;
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->isConditionGraphSearchMode = 0;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 4:
         DestroyRematchBlueLightSprite();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 5:
-        gPokenavStructPtr->unkD162 = 0x2;
+        gPokenavState->unkD162 = 0x2;
         BuildPartyConditionGraphMonList();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 6:
         InitConditionGraphScreen();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 7:
         if (!LoadConditionGraphScreenStep())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 8:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 9:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 10:
         CreateConditionPartyPokeballIndicators();
-        BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
+        BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 16, 0, RGB(0, 0, 0));
         SetVBlankCallback(&VBlankCB_PokenavConditionGraph);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 11:
         SetPokenavDisplayForScreen(0x2);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 12:
         if (!gPaletteFade.active)
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 13:
         BeginPokenavLeftHeaderLoad(0x1);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
     case 14:
         if (!LoadPokenavLeftHeaderStep(0x1))
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 15:
         BeginPokenavLeftHeaderLoad(0x6);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         // fall through
     case 16:
         if (!LoadPokenavLeftHeaderStep(0x6))
@@ -2454,55 +2454,55 @@ void StartConditionGraphMonExit(void);
 
 void HandleConditionGraphInput(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         StartConditionGraphMonEnter();
         ConditionGraph_InitResetScanline();
-        gPokenavStructPtr->callbackStep = 1;
+        gPokenavState->callbackStep = 1;
         break;
     case 1:
         if (!ConditionGraph_ResetScanline())
-            gPokenavStructPtr->callbackStep = 2;
+            gPokenavState->callbackStep = 2;
         break;
     case 2:
         SetConditionGraphBg2Visible(1);
-        gPokenavStructPtr->callbackStep = 3;
+        gPokenavState->callbackStep = 3;
         break;
     case 3:
         if (!UpdateConditionGraphMonEnter())
         {
             LoadConditionSparkles();
             CreateConditionSparkleSprites();
-            gPokenavStructPtr->callbackStep = 4;
+            gPokenavState->callbackStep = 4;
         }
         break;
     case 4:
         if (JOY_HELD(DPAD_UP))
         {
-            if (gPokenavStructPtr->unk87CB && (
-                gPokenavStructPtr->isConditionGraphSearchMode == 0
-                || gPokenavStructPtr->detailSelectionIndex != 0
+            if (gPokenavState->canScrollConditionGraph && (
+                gPokenavState->isConditionGraphSearchMode == 0
+                || gPokenavState->detailSelectionIndex != 0
             ))
             {
                 PlaySE(SE_SELECT);
                 BeginConditionGraphMonScroll(1);
                 DestroyConditionSparkleSprites();
-                gPokenavStructPtr->callbackStep = 5;
+                gPokenavState->callbackStep = 5;
                 break;
             }
         }
         if (JOY_HELD(DPAD_DOWN))
         {
-            if (gPokenavStructPtr->unk87CB && (
-                gPokenavStructPtr->isConditionGraphSearchMode == 0
-                || gPokenavStructPtr->detailSelectionIndex < gPokenavStructPtr->lastListIndex
+            if (gPokenavState->canScrollConditionGraph && (
+                gPokenavState->isConditionGraphSearchMode == 0
+                || gPokenavState->detailSelectionIndex < gPokenavState->lastListIndex
             ))
             {
                 PlaySE(SE_SELECT);
                 BeginConditionGraphMonScroll(0);
                 DestroyConditionSparkleSprites();
-                gPokenavStructPtr->callbackStep = 5;
+                gPokenavState->callbackStep = 5;
                 break;
             }
         }
@@ -2511,25 +2511,25 @@ void HandleConditionGraphInput(void)
             PlaySE(SE_SELECT);
             StartConditionGraphMonExit();
             DestroyConditionSparkleSprites();
-            gPokenavStructPtr->callbackStep = 9;
+            gPokenavState->callbackStep = 9;
             break;
         }
         if (JOY_NEW(A_BUTTON))
         {
-            if (gPokenavStructPtr->isConditionGraphSearchMode == 0)
+            if (gPokenavState->isConditionGraphSearchMode == 0)
             {
-                if (gPokenavStructPtr->detailSelectionIndex == gPokenavStructPtr->unk87DA - 1)
+                if (gPokenavState->detailSelectionIndex == gPokenavState->conditionGraphMonCount - 1)
                 {
                     PlaySE(SE_SELECT);
-                    gPokenavStructPtr->callbackStep = 9;
+                    gPokenavState->callbackStep = 9;
                 }
             }
             else
             {
-                if (gPokenavStructPtr->unk6DAC == 0)
+                if (gPokenavState->isLinkActive == 0)
                 {
                     PlaySE(SE_SELECT);
-                    gPokenavStructPtr->callbackStep = 7;
+                    gPokenavState->callbackStep = 7;
                 }
             }
             break;
@@ -2539,24 +2539,24 @@ void HandleConditionGraphInput(void)
         if (!UpdateConditionGraphMonScroll())
         {
             CreateConditionSparkleSprites();
-            gPokenavStructPtr->callbackStep = 6;
+            gPokenavState->callbackStep = 6;
         }
         break;
     case 6:
         if (!Overworld_IsRecvQueueAtMax())
-            gPokenavStructPtr->callbackStep = 4;
+            gPokenavState->callbackStep = 4;
         break;
     case 7:
         DrawPokenavBottomToolbar(3);
         OpenConditionMonMarkingsMenu();
-        gPokenavStructPtr->callbackStep = 8;
+        gPokenavState->callbackStep = 8;
         break;
     case 8:
         if (!HandleMonMarkingsMenuInput())
         {
             DrawPokenavBottomToolbar(2);
             SaveAndCloseConditionMonMarkingsMenu();
-            gPokenavStructPtr->callbackStep = 4;
+            gPokenavState->callbackStep = 4;
         }
         break;
     case 9:
@@ -2564,8 +2564,8 @@ void HandleConditionGraphInput(void)
         {
             SetConditionGraphBg2Visible(0);
             DestroyPokenavPortraitSprite();
-            BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB_BLACK);
-            gPokenavStructPtr->callbackStep = 11;
+            BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 0, 16, RGB_BLACK);
+            gPokenavState->callbackStep = 11;
         }
         break;
     case 10:
@@ -2575,7 +2575,7 @@ void HandleConditionGraphInput(void)
         {
             FreeConditionSparkles();
             StopConditionGraphScanlineEffect();
-            if (!gPokenavStructPtr->isConditionGraphSearchMode)
+            if (!gPokenavState->isConditionGraphSearchMode)
             {
                 DestroyConditionPartyPokeballIndicators();
                 DestroyPokenavLeftHeaderSprites(1);
@@ -2599,25 +2599,25 @@ void HandleConditionGraphInput(void)
 
 void OpenRibbonsMonList(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         StartMenuOptionSpritesSlideOut();
         StartPokenavLeftHeaderSlideOut(0);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 1:
         if (!UpdateMenuOptionSpritesSlideOut())
         {
 			DrawPokenavBottomToolbar(0x4);
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 2:
         if (!SlideMenuHeaderUp())
         {
-            BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-            gPokenavStructPtr->callbackStep++;
+            BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 0, 16, RGB(0, 0, 0));
+            gPokenavState->callbackStep++;
         }
         break;
     case 3:
@@ -2626,60 +2626,60 @@ void OpenRibbonsMonList(void)
 			SetVBlankCallback(NULL);
 			SetPokenavDisplayForTransition();
 			StopPokenavBg3Scroll();
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 4:
         DestroyRematchBlueLightSprite();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 5:
         InitRibbonsMonList();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
     case 6:
         if (!BuildRibbonsMonListStep())
-            gPokenavStructPtr->callbackStep += 2;
+            gPokenavState->callbackStep += 2;
         else
-			gPokenavStructPtr->callbackStep += 1;
+			gPokenavState->callbackStep += 1;
         break;
     case 7:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep--;
+			gPokenavState->callbackStep--;
         break;
     case 8:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 9:
         InitPokenavListScreen(POKENAV_LIST_RIBBONS);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
     case 10:
         if (!LoadPokenavListScreenStep())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 11:
         BeginPokenavLeftHeaderLoad(0x2);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
     case 12:
         if (!LoadPokenavLeftHeaderStep(0x2))
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 13:
         CreatePokenavListArrowSprites(0x1);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 14:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 15:
-        BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
+        BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 16, 0, RGB(0, 0, 0));
         SetVBlankCallback(&VBlankCB_Pokenav);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 16:
         SetPokenavDisplayForScreen(0x4);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
 			InitDebugHexPrinter((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
@@ -2694,7 +2694,7 @@ void OpenRibbonsMonList(void)
 
 void HandleRibbonsMonListInput(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         switch (HandlePokenavListDpadInput())
@@ -2705,7 +2705,7 @@ void HandleRibbonsMonListInput(void)
             return;
         case 2:
             PlaySE(SE_SELECT);
-            gPokenavStructPtr->callbackStep++;
+            gPokenavState->callbackStep++;
             return;
         default:
             if (JOY_NEW(A_BUTTON))
@@ -2728,12 +2728,12 @@ void HandleRibbonsMonListInput(void)
         {
 			PrintPokenavListSelectionInfo();
 			RefreshPokenavListArrowVisibility();
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 2:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep = 0;
+			gPokenavState->callbackStep = 0;
         break;
     }
 #if DEBUG
@@ -2744,18 +2744,18 @@ void HandleRibbonsMonListInput(void)
 
 void RibbonsMonMenu_ReturnToMainMenu(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
-        BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-        gPokenavStructPtr->callbackStep++;
+        BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 0, 16, RGB(0, 0, 0));
+        gPokenavState->callbackStep++;
         break;
     case 1:
         if (!gPaletteFade.active)
         {
 			DestroyPokenavListArrowSprites();
 			DestroyPokenavLeftHeaderSprites(0x2);
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 2:
@@ -2767,11 +2767,11 @@ void RibbonsMonMenu_ReturnToMainMenu(void)
 
 void OpenRibbonsSummaryMenu(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
-        BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-        gPokenavStructPtr->callbackStep++;
+        BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 0, 16, RGB(0, 0, 0));
+        gPokenavState->callbackStep++;
         break;
     case 1:
         if (!gPaletteFade.active)
@@ -2779,38 +2779,38 @@ void OpenRibbonsSummaryMenu(void)
 			SetVBlankCallback(NULL);
 			SetPokenavDisplayForTransition();
 			DestroyPokenavListArrowSprites();
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 2:
         InitRibbonsSummaryMonData();
         ResetPokenavSetupStep();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 3:
         if (!LoadRibbonsSummaryScreenStep())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 4:
         DrawPokenavBottomToolbar(0x5);
         InitRibbonsSummarySpriteGfx();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
     case 5:
         if (!LoadRibbonsSummarySpriteGfxStep())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 6:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 7:
-        BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
+        BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 16, 0, RGB(0, 0, 0));
         SetVBlankCallback(&VBlankCB_Pokenav);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 8:
         SetPokenavDisplayForScreen(0x3);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
 			InitDebugHexPrinter((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF000), 4);
@@ -2818,7 +2818,7 @@ void OpenRibbonsSummaryMenu(void)
         break;
     case 9:
         if (!gPaletteFade.active)
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 10:
         if (!SlidePokenavMonInfoHeaderIn())
@@ -2829,30 +2829,30 @@ void OpenRibbonsSummaryMenu(void)
 
 void RibbonsSummaryHandleInput(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         PrintRibbonsSummaryCount();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 1:
-        if (JOY_REPT(0x40) && (gPokenavStructPtr->detailSelectionIndex))
+        if (JOY_REPT(0x40) && (gPokenavState->detailSelectionIndex))
         {
 			PlaySE(SE_SELECT);
             BeginRibbonsSummaryMonSwitch(-1);
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         }
-		else if (JOY_REPT(0x80) && gPokenavStructPtr->detailSelectionIndex < gPokenavStructPtr->lastListIndex)
+		else if (JOY_REPT(0x80) && gPokenavState->detailSelectionIndex < gPokenavState->lastListIndex)
 		{
             PlaySE(SE_SELECT);
             BeginRibbonsSummaryMonSwitch(1);
-            gPokenavStructPtr->callbackStep++;
+            gPokenavState->callbackStep++;
         }
         else if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
             DrawPokenavBottomToolbar(0xB);
-            gPokenavStructPtr->callbackStep = 0x4;
+            gPokenavState->callbackStep = 0x4;
         }
         else if (JOY_NEW(B_BUTTON))
         {
@@ -2862,21 +2862,21 @@ void RibbonsSummaryHandleInput(void)
         break;
     case 2:
         if (!UpdateRibbonsSummaryMonSwitch())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 3:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep = 0;
+			gPokenavState->callbackStep = 0;
         break;
     case 4:
         CreateAndZoomInSelectedRibbon();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 5:
         if (!IsRibbonZoomInAnimating())
 		{
 			PrintRibbonsSummaryDescription();
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 			PausePokenavCallbackForLink();
 		}
         break;
@@ -2886,7 +2886,7 @@ void RibbonsSummaryHandleInput(void)
         case 1:
             PlaySE(SE_SELECT);
             ZoomOutSelectedRibbon();
-            gPokenavStructPtr->callbackStep = 0x7;
+            gPokenavState->callbackStep = 0x7;
             return;
         default:
         case 0:
@@ -2894,20 +2894,20 @@ void RibbonsSummaryHandleInput(void)
             {
                 PlaySE(SE_SELECT);
                 ZoomOutSelectedRibbon();
-                gPokenavStructPtr->callbackStep = 0x8;
+                gPokenavState->callbackStep = 0x8;
             }
             break;
         }
         break;
     case 7:
         if (!UpdateRibbonZoomOutAndDestroySprite())
-			gPokenavStructPtr->callbackStep = 0x4;
+			gPokenavState->callbackStep = 0x4;
         break;
     case 8:
         if (!UpdateRibbonZoomOutAndDestroySprite())
 		{
 			DrawPokenavBottomToolbar(0x5);
-			gPokenavStructPtr->callbackStep = 0;
+			gPokenavState->callbackStep = 0;
 		}
         break;
     }
@@ -2919,11 +2919,11 @@ void RibbonsSummaryHandleInput(void)
 
 void OpenRibbonsMonListFromRibbonsSummary(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
-        BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-        gPokenavStructPtr->callbackStep++;
+        BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 0, 16, RGB(0, 0, 0));
+        gPokenavState->callbackStep++;
         break;
     case 1:
         if (!gPaletteFade.active)
@@ -2932,34 +2932,34 @@ void OpenRibbonsMonListFromRibbonsSummary(void)
 			SetPokenavDisplayForTransition();
 			FreeRibbonsSummarySprites();
 			ResetPokenavSetupStep();
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 2:
         RestorePokenavListSelection();
         InitPokenavListScreen(POKENAV_LIST_RIBBONS);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
     case 3:
         if (!LoadPokenavListScreenStep())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 4:
         DrawPokenavBottomToolbar(0x4);
         CreatePokenavListArrowSprites(0x1);
         SetVBlankCallback(&VBlankCB_Pokenav);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 5:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 6:
-        BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
-        gPokenavStructPtr->callbackStep++;
+        BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 16, 0, RGB(0, 0, 0));
+        gPokenavState->callbackStep++;
         break;
     case 7:
         SetPokenavDisplayForScreen(0x4);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
 			InitDebugHexPrinter((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
@@ -2974,25 +2974,25 @@ void OpenRibbonsMonListFromRibbonsSummary(void)
 
 void OpenTrainerEyes(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         StartMenuOptionSpritesSlideOut();
         StartPokenavLeftHeaderSlideOut(0);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 1:
         if (!UpdateMenuOptionSpritesSlideOut())
         {
 			DrawPokenavBottomToolbar(0x9);
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 2:
         if (!SlideMenuHeaderUp())
         {
-            BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-            gPokenavStructPtr->callbackStep++;
+            BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 0, 16, RGB(0, 0, 0));
+            gPokenavState->callbackStep++;
         }
         break;
     case 3:
@@ -3002,44 +3002,44 @@ void OpenTrainerEyes(void)
 			SetPokenavDisplayForTransition();
 			StopPokenavBg3Scroll();
 			ResetPokenavSetupStep();
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 4:
         DestroyRematchBlueLightSprite();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 5:
         InitPokenavListScreen(POKENAV_LIST_TRAINERS_EYES);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
     case 6:
         if (!LoadPokenavListScreenStep())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 7:
         BeginPokenavLeftHeaderLoad(0x3);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
     case 8:
         if (!LoadPokenavLeftHeaderStep(0x3))
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 9:
         CreatePokenavListArrowSprites(0x2);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 10:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 11:
         InitTrainerEyesBackgroundPulse();
-        BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
+        BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 16, 0, RGB(0, 0, 0));
         SetVBlankCallback(&VBlankCB_PokenavTrainerEyes);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 12:
         SetPokenavDisplayForScreen(0x5);
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
 			InitDebugHexPrinter((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
@@ -3054,18 +3054,18 @@ void OpenTrainerEyes(void)
 
 void HandleTrainerEyesInput(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         switch (HandlePokenavListDpadInput())
         {
         case 1:
             PlaySE(SE_SELECT);
-            PrintTrainerEyesLocation(gPokenavStructPtr->listSelectedIndex);
+            PrintTrainerEyesLocation(gPokenavState->listSelectedIndex);
             return;
         case 2:
             PlaySE(SE_SELECT);
-            gPokenavStructPtr->callbackStep++;
+            gPokenavState->callbackStep++;
             return;
         default:
             if (JOY_NEW(A_BUTTON))
@@ -3086,14 +3086,14 @@ void HandleTrainerEyesInput(void)
     case 1:
         if (!UpdatePokenavListScroll())
         {
-			PrintTrainerEyesLocation(gPokenavStructPtr->listSelectedIndex);
+			PrintTrainerEyesLocation(gPokenavState->listSelectedIndex);
 			RefreshPokenavListArrowVisibility();
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 2:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep = 0;
+			gPokenavState->callbackStep = 0;
         break;
     }
 #if DEBUG
@@ -3104,64 +3104,64 @@ void HandleTrainerEyesInput(void)
 
 void ShowTrainerEyesTrainerInfo(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
         TogglePokenavListArrows(0x1);
         DrawPokenavBottomToolbar(0xA);
         InitTrainerEyesListErase();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 1:
         if (!EraseTrainerEyesListStep())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 2:
         BeginTrainerEyesDetailEnterScroll();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 3:
         if (!UpdateTrainerEyesDetailScroll())
         {
 			SetTrainerEyesDetailWindow(0x1);
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 4:
         PrepareTrainerEyesDetailPortrait();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 5:
         BufferTrainerEyesListRowText((u8 *)(gSharedMem + 0x8788), *(u16 *)(gSharedMem + 0x8788 - 0x1A));
         CreateTrainerEyesNameSprites((u8 *)(gSharedMem + 0x8788));
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 6:
         LoadTrainerEyesDescriptionLines();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
     case 7:
         if (!SlideTrainerEyesPortraitIn() && !PrintTrainerEyesDescriptionStep())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 8:
-        if (JOY_HELD(0x40) && gPokenavStructPtr->detailSelectionIndex)
+        if (JOY_HELD(0x40) && gPokenavState->detailSelectionIndex)
         {
 			PlaySE(SE_SELECT);
 			ChangeTrainerEyesDetailSelection(-1);
-			gPokenavStructPtr->callbackStep = 0x10;
+			gPokenavState->callbackStep = 0x10;
         }
-        else if (JOY_HELD(0x80) && gPokenavStructPtr->detailSelectionIndex < gPokenavStructPtr->lastListIndex)
+        else if (JOY_HELD(0x80) && gPokenavState->detailSelectionIndex < gPokenavState->lastListIndex)
         {
 			PlaySE(SE_SELECT);
 			ChangeTrainerEyesDetailSelection(1);
-			gPokenavStructPtr->callbackStep = 0x10;
+			gPokenavState->callbackStep = 0x10;
         }
 		else if (JOY_NEW(B_BUTTON))
 		{
             PlaySE(SE_SELECT);
             DestroyTrainerEyesNameSprites();
             InitTrainerEyesDescriptionErase();
-            gPokenavStructPtr->callbackStep++;
+            gPokenavState->callbackStep++;
         }
         break;
     case 9:
@@ -3169,28 +3169,28 @@ void ShowTrainerEyesTrainerInfo(void)
         {
 			SetTrainerEyesDetailWindow(0);
 			DestroyTrainerEyesPortrait();
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 10:
         RestorePokenavListSelection();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 11:
         BeginTrainerEyesDetailExitScroll();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 12:
         if (!UpdateTrainerEyesDetailScroll())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 13:
         InitTrainerEyesListRestore();
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
         break;
     case 14:
         if (!RestoreTrainerEyesListStep())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 15:
         DrawPokenavBottomToolbar(0x9);
@@ -3200,22 +3200,22 @@ void ShowTrainerEyesTrainerInfo(void)
         break;
     case 16:
         if (!UpdateTrainerEyesDetailSelection())
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
         break;
     case 17:
         if (!Overworld_IsRecvQueueAtMax())
-			gPokenavStructPtr->callbackStep = 0x8;
+			gPokenavState->callbackStep = 0x8;
         break;
     }
 }
 
 void TrainerEyes_ReturnToMainMenu(void)
 {
-    switch (gPokenavStructPtr->callbackStep)
+    switch (gPokenavState->callbackStep)
     {
     case 0:
-        BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-        gPokenavStructPtr->callbackStep++;
+        BeginNormalPaletteFade(gPokenavState->paletteFadeMask, -1, 0, 16, RGB(0, 0, 0));
+        gPokenavState->callbackStep++;
         break;
     case 1:
         if (!gPaletteFade.active)
@@ -3223,7 +3223,7 @@ void TrainerEyes_ReturnToMainMenu(void)
 			DestroyPokenavListArrowSprites();
 			DestroyPokenavLeftHeaderSprites(0x2);
 			StopTrainerEyesBackgroundPulse();
-			gPokenavStructPtr->callbackStep++;
+			gPokenavState->callbackStep++;
 		}
         break;
     case 2:
@@ -3234,11 +3234,11 @@ void TrainerEyes_ReturnToMainMenu(void)
 
 void ExitPokenav(void)
 {
-    if (!gPokenavStructPtr->callbackStep)
+    if (!gPokenavState->callbackStep)
     {
         PlaySE(0x6F);
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        gPokenavStructPtr->callbackStep++;
+        gPokenavState->callbackStep++;
     }
     else
     {
@@ -3253,10 +3253,10 @@ void ExitPokenav(void)
 void StartPokenavMenuTransition(u8 menuType, u8 cursorPos, u8 gfxId)
 {
     StartMenuOptionSpritesSlideOut();
-    gPokenavStructPtr->transitionMenuType = menuType;
-    gPokenavStructPtr->transitionCursorPos = cursorPos;
-    gPokenavStructPtr->transitionStep = 0;
-    gPokenavStructPtr->transitionGfxId = gfxId;
+    gPokenavState->transitionMenuType = menuType;
+    gPokenavState->transitionCursorPos = cursorPos;
+    gPokenavState->transitionStep = 0;
+    gPokenavState->transitionGfxId = gfxId;
 }
 
 bool8 UpdatePokenavPaletteTransition(void);
@@ -3264,66 +3264,66 @@ void StartPokenavPaletteTransition(u8 menuType);
 
 bool8 UpdatePokenavMenuTransition(void)
 {
-    switch (gPokenavStructPtr->transitionStep)
+    switch (gPokenavState->transitionStep)
     {
     case 0:
         if (!UpdateMenuOptionSpritesSlideOut())
         {
-            if (gPokenavStructPtr->transitionGfxId != 12)
-                gPokenavStructPtr->transitionStep = 1;
+            if (gPokenavState->transitionGfxId != 12)
+                gPokenavState->transitionStep = 1;
             else
-                gPokenavStructPtr->transitionStep = 3;
+                gPokenavState->transitionStep = 3;
         }
         break;
     case 1:
-        BeginPokenavLeftHeaderLoad(gPokenavStructPtr->transitionGfxId);
-        gPokenavStructPtr->transitionStep++;
+        BeginPokenavLeftHeaderLoad(gPokenavState->transitionGfxId);
+        gPokenavState->transitionStep++;
         // fallthrough
     case 2:
-        if (!LoadPokenavLeftHeaderStep(gPokenavStructPtr->transitionGfxId))
-            gPokenavStructPtr->transitionStep++;
+        if (!LoadPokenavLeftHeaderStep(gPokenavState->transitionGfxId))
+            gPokenavState->transitionStep++;
         break;
     case 3:
-        gPokenavStructPtr->menuCursorPos = gPokenavStructPtr->transitionCursorPos;
-        switch (gPokenavStructPtr->transitionMenuType)
+        gPokenavState->menuCursorPos = gPokenavState->transitionCursorPos;
+        switch (gPokenavState->transitionMenuType)
         {
         case 0:
-            gPokenavStructPtr->menuItemCount = 5;
+            gPokenavState->menuItemCount = 5;
             break;
         case 1:
-            gPokenavStructPtr->menuItemCount = 3;
+            gPokenavState->menuItemCount = 3;
             break;
         case 2:
-            gPokenavStructPtr->menuItemCount = 6;
+            gPokenavState->menuItemCount = 6;
             break;
         }
-        InitPokenavMenuOptionSprites(gPokenavStructPtr->transitionMenuType);
-        gPokenavStructPtr->transitionStep++;
+        InitPokenavMenuOptionSprites(gPokenavState->transitionMenuType);
+        gPokenavState->transitionStep++;
         // fallthrough
     case 4:
-        if (!LoadPokenavMenuOptionSpritesStep(gPokenavStructPtr->transitionMenuType))
-            gPokenavStructPtr->transitionStep++;
+        if (!LoadPokenavMenuOptionSpritesStep(gPokenavState->transitionMenuType))
+            gPokenavState->transitionStep++;
         break;
     case 5:
         if (!Overworld_IsRecvQueueAtMax())
-            gPokenavStructPtr->transitionStep++;
+            gPokenavState->transitionStep++;
         break;
     case 6:
         StartMenuOptionSpritesSlideIn();
-        StartPokenavPaletteTransition(gPokenavStructPtr->transitionMenuType);
-        gPokenavStructPtr->transitionStep++;
+        StartPokenavPaletteTransition(gPokenavState->transitionMenuType);
+        gPokenavState->transitionStep++;
         break;
     case 7:
         if (!UpdateMenuOptionEntryHighlight())
         {
-            PrintPokenavMenuDescription(gPokenavStructPtr->transitionMenuType, gPokenavStructPtr->menuCursorPos);
-            gPokenavStructPtr->transitionStep++;
+            PrintPokenavMenuDescription(gPokenavState->transitionMenuType, gPokenavState->menuCursorPos);
+            gPokenavState->transitionStep++;
         }
         break;
     case 8:
         if (!UpdatePokenavPaletteTransition())
         {
-            gPokenavStructPtr->transitionStep++;
+            gPokenavState->transitionStep++;
             return FALSE;
         }
         break;
@@ -3341,18 +3341,18 @@ bool8 UpdateMainMenuCursorPos(void)
     {
         do
         {
-            if (--gPokenavStructPtr->menuCursorPos < 0)
-                gPokenavStructPtr->menuCursorPos = gPokenavStructPtr->menuItemCount - 1;
-        } while (!gPokenavStructPtr->mainMenuItemIds[gPokenavStructPtr->menuCursorPos]);
+            if (--gPokenavState->menuCursorPos < 0)
+                gPokenavState->menuCursorPos = gPokenavState->menuItemCount - 1;
+        } while (!gPokenavState->mainMenuItemIds[gPokenavState->menuCursorPos]);
         return TRUE;
     }
     if (JOY_NEW(DPAD_DOWN))
     {
         do
         {
-            if (++gPokenavStructPtr->menuCursorPos >= gPokenavStructPtr->menuItemCount)
-                gPokenavStructPtr->menuCursorPos = 0;
-        } while (!gPokenavStructPtr->mainMenuItemIds[gPokenavStructPtr->menuCursorPos]);
+            if (++gPokenavState->menuCursorPos >= gPokenavState->menuItemCount)
+                gPokenavState->menuCursorPos = 0;
+        } while (!gPokenavState->mainMenuItemIds[gPokenavState->menuCursorPos]);
         return TRUE;
     }
 #if DEBUG
@@ -3366,14 +3366,14 @@ bool8 UpdateSubmenuCursorPos(void)
 {
     if (JOY_NEW(DPAD_UP))
     {
-        if (--gPokenavStructPtr->menuCursorPos < 0)
-            gPokenavStructPtr->menuCursorPos = gPokenavStructPtr->menuItemCount - 1;
+        if (--gPokenavState->menuCursorPos < 0)
+            gPokenavState->menuCursorPos = gPokenavState->menuItemCount - 1;
         return TRUE;
     }
     if (JOY_NEW(DPAD_DOWN))
     {
-        if (++gPokenavStructPtr->menuCursorPos >= gPokenavStructPtr->menuItemCount)
-            gPokenavStructPtr->menuCursorPos = 0;
+        if (++gPokenavState->menuCursorPos >= gPokenavState->menuItemCount)
+            gPokenavState->menuCursorPos = 0;
         return TRUE;
     }
 #if DEBUG
@@ -3417,13 +3417,13 @@ void SetPokenavDisplayForScreen(u8 screenId)
 
 void PausePokenavCallbackForLink(void)
 {
-    sPokenavCallbackBeforeLinkWait = gPokenavStructPtr->callback;
-    gPokenavStructPtr->callback = &WaitForPokenavLinkQueue;
-    gPokenavStructPtr->callback();
+    sPokenavCallbackBeforeLinkWait = gPokenavState->callback;
+    gPokenavState->callback = &WaitForPokenavLinkQueue;
+    gPokenavState->callback();
 }
 
 void WaitForPokenavLinkQueue(void)
 {
     if (Overworld_IsRecvQueueAtMax() != 0x1)
-        gPokenavStructPtr->callback = sPokenavCallbackBeforeLinkWait;
+        gPokenavState->callback = sPokenavCallbackBeforeLinkWait;
 }

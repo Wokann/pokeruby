@@ -38,42 +38,35 @@ struct UsePokeblockSession {
     /*0x66*/ s16 pokeblockStatBoosts[5];
 };
 
-struct UnkPokenavStruct_Sub3 {
-    /*0x00*/s16 unk0;
+struct PokenavMonListItem {
+    // Ruby stores a condition score or a ribbon count in data, and packs its
+    // list-only rank and validity flag into the remaining two bytes.
+    /*0x0*/ u8 data;
+    /*0x1*/ u8 boxId;
+    /*0x2*/ u16 monId:5;
+    /*0x2*/ u16 rank:9;
+    /*0x3*/ u16 isValid:1;
 };
 
-struct UnkUsePokeblockSub {
-    /*0x0*/ u8 unk0;
-    /*0x1*/ u8 unk1;
-    /*0x2*/ u16 partyIdx:5;
-    /*0x2*/ u16 unk2_5:9;
-    /*0x3*/ u16 unk3_14:1;
+struct ConditionGraph {
+    /*0x000*/ u8 conditions[4][5];
+    /*0x014*/ struct UCoords16 savedPositions[4][5];
+    /*0x064*/ struct UCoords16 newPositions[10][5];
+    /*0x12C*/ struct UCoords16 curPositions[5];
+    /*0x140*/ u16 scanlineRight[66][2];
+    /*0x248*/ u16 scanlineLeft[66][2];
+    /*0x350*/ u16 bottom;
+    /*0x352*/ u16 updateCounter;
+    /*0x354*/ bool8 needsDraw;
+    /*0x355*/ u8 scanlineResetState;
 };
 
-struct UnkPokenav11 {
-    u16 unk0;
-    u16 unk2;
-};
-
-struct UnknownStruct_Pokenav_8FF0 {
-    /*0x000*/ u8 unk0[4][5];
-    /*0x014*/ struct UnkPokenav11 unk14[4][5];
-    /*0x064*/ struct UnkPokenav11 unk64[10][5];
-    /*0x12C*/ struct UnkPokenav11 unk12C[5];
-    /*0x140*/ u16 unk140[66][2];
-    /*0x248*/ u16 unk248[66][2];
-    /*0x350*/ u16 unk350;
-    /*0x352*/ u16 unk352;
-    /*0x354*/ u8 unk354;
-    /*0x355*/ u8 unk355;
-};
-
-struct UnkPokenavStruct {
+struct PokenavState {
     /*0x0000*/ u16 portraitPaletteBuffers[6][0x40];
     /*0x0300*/ void (*callback)(void);
     /*0x0304*/ u16 callbackStep;
-    /*0x0306*/ u16 unk306;
-    /*0x0306*/ int unk308;
+    /*0x0306*/ u16 loadState;
+    /*0x0308*/ int paletteFadeMask;
     /*0x030C*/ s16 menuVerticalOffset;
     /*0x030E*/ s8 menuOptionRowCount;
     /*0x030F*/ u8 menuOptionExitStep;
@@ -106,8 +99,8 @@ struct UnkPokenavStruct {
     /*0x6DA2*/ u16 bg3ScrollOffset;
     /*0x6DA4*/ u16 bg3ScrollTaskId;
     /*0x6DA6*/ u8 filler6DA6[0x5];
-    /*0x6DAB*/ u8 unk6DAB;
-    /*0x6DAC*/ u8 unk6DAC;
+    /*0x6DAB*/ bool8 isPokenavInitialized;
+    /*0x6DAC*/ bool8 isLinkActive;
     /*0x6DAD*/ s8 menuCursorPos;
     /*0x6DAE*/ s8 menuItemCount;
     /*0x6DAF*/ u8 filler6DAF[0x3];
@@ -153,44 +146,34 @@ struct UnkPokenavStruct {
     /*0x87C8*/ u8 isRibbonsList;
     /*0x87C9*/ u8 hasListScrollArrows;
     /*0x87CA*/ u8 listMode;
-    /*0x87CB*/ u8 unk87CB;
+    /*0x87CB*/ bool8 canScrollConditionGraph;
     /*0x87CC*/ struct Sprite *listRightArrowSprite;
     /*0x87D0*/ struct Sprite *listUpDownArrowSprites[2];
-    /*0x87D8*/ u8 unk87D8;
-    /*0x87DA*/ s16 unk87DA;
+    /*0x87D8*/ u8 conditionSearchMonDataId;
+    /*0x87DA*/ s16 conditionGraphMonCount;
     /*0x87DC*/ s16 detailSelectionIndex;
     /*0x87DE*/ u8 detailTransitionState;
-    /*0x87E0*/ bool8 (*unk87E0)(void);
+    /*0x87E0*/ bool8 (*conditionGraphScrollCallback)(void);
     /*0x87E4*/ struct Sprite *conditionPartyIconSprites[7];
     /*0x8800*/ struct Sprite *conditionSparkleSprites[10];
-    /*0x8828*/ u8 unk8828;
-    /*0x8829*/ u8 unk8829[3][64];
-    /*0x88E9*/ u8 unk88E9[3][24];
+    /*0x8828*/ u8 playerPartyCount;
+    /*0x8829*/ u8 conditionMonNameText[3][64];
+    /*0x88E9*/ u8 conditionMonLocationText[3][24];
     /*0x8931*/ u8 conditionNumSparkles[3];
     /*0x8934*/ u8 conditionMonMarkings[3];
-    /*0x8937*/ u8 unk8937[5];
-    /*0x893C*/ struct UnkUsePokeblockSub unk893c[0x1AA];
-    /*0x8FE4*/ u16 unk8FE4;
-    /*0x8FE6*/ u8 unk8FE6;
-    /*0x8FE7*/ u8 unk8FE7;
-    /*0x8FE8*/ s8 unk8FE8;
+    /*0x8937*/ bool8 conditionMonIsValid[5];
+    /*0x893C*/ struct PokenavMonListItem monList[0x1AA];
+    /*0x8FE4*/ u16 monListCount;
+    /*0x8FE6*/ u8 monListBuildBoxId;
+    /*0x8FE7*/ u8 monListBuildMonId;
+    /*0x8FE8*/ s8 hasAnyRibbons;
     /*0x8fe9*/ s8 portraitSlot;
-    /*0x8fea*/ s8 unk8FEA;
-    /*0x8feb*/ s8 unk8FEB;
-    /*0x8fec*/ s8 unk8FEC;
-    /*0x8fee*/ u16 unk8FEE;
+    /*0x8fea*/ s8 nextLoadIdDown;
+    /*0x8feb*/ s8 nextLoadIdUp;
+    /*0x8fec*/ s8 toLoadId;
+    /*0x8fee*/ u16 toLoadListIndex;
 
-    // UnknownStruct_Pokenav_8FF0
-    /*0x8ff0*/ u8 unk8ff0[4][5];
-    /*0x9004*/ struct UnkPokenav11 unk9004[4][5];
-    /*0x9054*/ struct UnkPokenav11 unk9054[10][5];
-    /*0x911C*/ struct UnkPokenav11 unk911C[5];
-    /*0x9130*/ u16 unk9130[66][2];
-    /*0x9238*/ u16 unk9238[66][2];
-    /*0x9340*/ u16 unk9340;
-    /*0x9342*/ u16 unk9342;
-    /*0x9344*/ u8 unk9344;
-    /*0x9345*/ u8 unk9345;
+    /*0x8ff0*/ struct ConditionGraph conditionGraph;
 
     /*0x9348*/ struct Sprite *bigRibbonSprite;
     /*0x934C*/ u16 ribbonsSummaryTilemap[0x280];
@@ -230,7 +213,7 @@ struct UnkPokenavStruct {
     /*0xD162*/ u8 unkD162;
     /*0xD164*/ struct UsePokeblockSession usePokeblockSession;
     /*0xD1D4*/ u8 fillerD1D6[0x2];
-    /*0xD1D6*/ u16 unkD1D6[3];
+    /*0xD1D6*/ u16 conditionMonSpecies[3];
     /*0xD1DC*/ u16 portraitPaletteOffset;
     /*0xD1DE*/ u16 portraitTileStart;
     /*0xD1E0*/ u8 *portraitVramDest;
@@ -238,7 +221,7 @@ struct UnkPokenavStruct {
     /*0x131E4*/ u8 spriteGfxScratchBuffer[0x1000];
 };
 
-extern struct UnkPokenavStruct *const gPokenavStructPtr;
+extern struct PokenavState *const gPokenavState;
 
 bool8 SlidePokenavMonInfoHeaderIn(void);
 bool8 LoadPokeblockConditionGraphScreenStep(void);
@@ -252,9 +235,9 @@ void CreateConditionPartyPokeballIndicators(void);
 void LoadConditionSparkles(void);
 void CreateConditionSparkleSprites(void);
 void BuildPartyConditionGraphMonList(void);
-void ConditionGraph_Update(struct UnkPokenav11*);
-void ConditionGraph_CalcPositions(u8 *a0, struct UnkPokenav11 a1[]);
-void CalcPokeblockConditionGraphPositions(u8 *, struct UnkPokenav11 *);
+void ConditionGraph_Update(struct UCoords16*);
+void ConditionGraph_CalcPositions(u8 *a0, struct UCoords16 a1[]);
+void CalcPokeblockConditionGraphPositions(u8 *, struct UCoords16 *);
 void ConditionGraph_InitResetScanline(void);
 bool8 ConditionGraph_ResetScanline(void);
 void ConditionGraph_DrawAtYOffset(u8);
@@ -262,7 +245,7 @@ void CB2_InitPokeNav(void);
 void BeginConditionGraphMonScroll(bool8);
 void DestroyConditionSparkleSprites(void);
 bool8 UpdateConditionGraphMonScroll(void);
-void StartPokeblockConditionGraphReset(struct UnkPokenav11*, struct UnkPokenav11*);
+void StartPokeblockConditionGraphReset(struct UCoords16*, struct UCoords16*);
 bool8 UpdatePokeblockConditionGraphReset(void);
 void CalculateNumAdditionalSparkles(u8 monIndex);
 void StopConditionGraphScanlineEffect(void);
@@ -409,11 +392,11 @@ void CreateTrainerEyesNameSprites(u8*);
 void DestroyTrainerEyesNameSprites(void);
 u8 *BufferPokenavMonNameGenderLevelText(u8*, u16, u8);
 u8 *BufferConditionSearchRankText(u8 *, u16);
-void ConditionGraph_CalcPositions(u8*, struct UnkPokenav11 *);
+void ConditionGraph_CalcPositions(u8*, struct UCoords16 *);
 void PrepareConditionGraphFromSearchResult(void);
 void InitConditionSearchResults(void);
 bool8 BuildConditionSearchResultsStep(void);
-void ConditionGraph_SetNewPositions(struct UnkPokenav11*, struct UnkPokenav11*);
+void ConditionGraph_SetNewPositions(struct UCoords16*, struct UCoords16*);
 bool8 ConditionGraph_TryUpdate(void);
 bool8 UpdateConditionGraphScrollToMon(void);
 bool8 UpdateConditionGraphScrollToEmpty(void);

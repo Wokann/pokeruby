@@ -146,10 +146,10 @@ static void SpriteCB_UpDown(struct Sprite *);
 
 void ChooseMonToGivePokeblock(struct Pokeblock *pokeblock, MainCallback callback)
 {
-    sInfo = &gPokenavStructPtr->usePokeblockSession;
+    sInfo = &gPokenavState->usePokeblockSession;
     sInfo->pokeblock = pokeblock;
     sInfo->exitCallback = callback;
-    gPokenavStructPtr->unkD162 = 2;
+    gPokenavState->unkD162 = 2;
     SetUsePokeblockCallback(LoadUsePokeblockMenu);
     SetMainCallback2(CB2_UsePokeblockMenu);
 }
@@ -160,7 +160,7 @@ static void CB2_ReturnAndChooseMonToGivePokeblock(void)
     sInfo->exitCallback = sExitCallback;
     gPokeblockMonId = GetSelectionIdFromPartyId(gPokeblockMonId);
     sInfo->monInTopHalf = gPokeblockMonId < 4 ? FALSE : TRUE;
-    gPokenavStructPtr->unkD162 = 2;
+    gPokenavState->unkD162 = 2;
     SetUsePokeblockCallback(LoadUsePokeblockMenu);
     SetMainCallback2(CB2_ReturnToUsePokeblockMenu);
 }
@@ -217,7 +217,7 @@ static void LoadUsePokeblockMenu(void)
     {
         case 0:
             isLinkActive = IsOverworldLinkActive();
-            gPokenavStructPtr->unk6DAC = isLinkActive;
+            gPokenavState->isLinkActive = isLinkActive;
             if ((bool8)isLinkActive == FALSE)
             {
                 sInfo->isMenuLoaded = 0;
@@ -249,9 +249,9 @@ static void LoadUsePokeblockMenu(void)
             }
             break;
         case 6:
-            gPokenavStructPtr->isConditionGraphSearchMode = 0;
-            gPokenavStructPtr->unk87E0 = NULL;
-            gPokenavStructPtr->menuVerticalOffset = 0x20;
+            gPokenavState->isConditionGraphSearchMode = 0;
+            gPokenavState->conditionGraphScrollCallback = NULL;
+            gPokenavState->menuVerticalOffset = 0x20;
             sInfo->mainState++;
             break;
         case 7:
@@ -276,11 +276,11 @@ static void LoadUsePokeblockMenu(void)
             break;
         case 11:
             gKeyRepeatStartDelay = 20;
-            gPokenavStructPtr->unk8828 = CalculatePlayerPartyCount();
-            gPokenavStructPtr->unk9344 = 0;
-            gPokenavStructPtr->portraitSprite = NULL;
+            gPokenavState->playerPartyCount = CalculatePlayerPartyCount();
+            gPokenavState->conditionGraph.needsDraw = 0;
+            gPokenavState->portraitSprite = NULL;
             BuildPartyConditionGraphMonList();
-            gPokenavStructPtr->setupStep = 0;
+            gPokenavState->setupStep = 0;
             sInfo->mainState++;
             break;
         case 12:
@@ -293,7 +293,7 @@ static void LoadUsePokeblockMenu(void)
             break;
         case 13:
             CreateOrUpdatePokenavPortraitSprite(0);
-            gPokenavStructPtr->portraitSprite->y2 = 0xffd8;
+            gPokenavState->portraitSprite->y2 = 0xffd8;
             sInfo->mainState++;
             break;
         case 14:
@@ -314,7 +314,7 @@ static void LoadUsePokeblockMenu(void)
             sInfo->mainState++;
             break;
         case 17:
-            CalcPokeblockConditionGraphPositions(gPokenavStructPtr->unk8ff0[0], gPokenavStructPtr->unk9004[0]);
+            CalcPokeblockConditionGraphPositions(gPokenavState->conditionGraph.conditions[0], gPokenavState->conditionGraph.savedPositions[0]);
             ConditionGraph_InitResetScanline();
             sInfo->mainState++;
             break;
@@ -325,7 +325,7 @@ static void LoadUsePokeblockMenu(void)
             }
             break;
         case 19:
-            ConditionGraph_Update(gPokenavStructPtr->unk9004[0]);
+            ConditionGraph_Update(gPokenavState->conditionGraph.savedPositions[0]);
             sInfo->mainState++;
             break;
         case 20:
@@ -404,7 +404,7 @@ static void UsePokeblockMenu(void)
             else if (JOY_NEW(A_BUTTON))
             {
                 PlaySE(SE_SELECT);
-                if (gPokenavStructPtr->detailSelectionIndex == gPokenavStructPtr->unk87DA - 1)
+                if (gPokenavState->detailSelectionIndex == gPokenavState->conditionGraphMonCount - 1)
                 {
                     sInfo->mainState = 3;
                 }
@@ -472,7 +472,7 @@ static void FeedPokeblockToMon(void)
     switch (sInfo->mainState)
     {
         case 0:
-            gPokeblockMonId = GetPartyIdFromSelectionId(gPokenavStructPtr->detailSelectionIndex);
+            gPokeblockMonId = GetPartyIdFromSelectionId(gPokenavState->detailSelectionIndex);
             sExitCallback = sInfo->exitCallback;
             sPokeblock = sInfo->pokeblock;
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
@@ -493,7 +493,7 @@ static void ShowUsePokeblockMenuForResults(void)
     switch (sInfo->mainState)
     {
         case 0:
-            if (gPokenavStructPtr->detailSelectionIndex != gPokeblockMonId)
+            if (gPokenavState->detailSelectionIndex != gPokeblockMonId)
             {
                 BeginConditionGraphMonScroll(sInfo->monInTopHalf);
                 sInfo->mainState++;
@@ -547,7 +547,7 @@ static void ShowPokeblockResults(void)
     {
         case 0:
             sInfo->mon = &gPlayerParty[0];
-            sInfo->mon = &gPlayerParty[gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex].partyIdx];
+            sInfo->mon = &gPlayerParty[gPokenavState->monList[gPokenavState->detailSelectionIndex].monId];
             DestroyConditionSparkleSprites();
             sInfo->mainState++;
             break;
@@ -557,15 +557,15 @@ static void ShowPokeblockResults(void)
             break;
         case 2:
             CalculateConditionEnhancements();
-            CalcPokeblockConditionGraphPositions(sInfo->conditionsAfterBlock, gPokenavStructPtr->unk9004[3]);
-            StartPokeblockConditionGraphReset(gPokenavStructPtr->unk9004[gPokenavStructPtr->portraitSlot], gPokenavStructPtr->unk9004[3]);
+            CalcPokeblockConditionGraphPositions(sInfo->conditionsAfterBlock, gPokenavState->conditionGraph.savedPositions[3]);
+            StartPokeblockConditionGraphReset(gPokenavState->conditionGraph.savedPositions[gPokenavState->portraitSlot], gPokenavState->conditionGraph.savedPositions[3]);
             LoadAndCreateUpDownSprites();
             sInfo->mainState++;
             break;
         case 3:
             if (!UpdatePokeblockConditionGraphReset())
             {
-                CalculateNumAdditionalSparkles(GetPartyIdFromSelectionId(gPokenavStructPtr->detailSelectionIndex));
+                CalculateNumAdditionalSparkles(GetPartyIdFromSelectionId(gPokenavState->detailSelectionIndex));
                 CreateConditionSparkleSprites();
                 sInfo->timer = 0;
                 sInfo->mainState++;
@@ -614,7 +614,7 @@ static void CloseUsePokeblockMenu(void)
 
 static void AskUsePokeblock(void)
 {
-    GetMonData(&gPlayerParty[GetPartyIdFromSelectionId(gPokenavStructPtr->detailSelectionIndex)], MON_DATA_NICKNAME, sInfo->stringBuffer);
+    GetMonData(&gPlayerParty[GetPartyIdFromSelectionId(gPokenavState->detailSelectionIndex)], MON_DATA_NICKNAME, sInfo->stringBuffer);
     StringGet_Nickname(sInfo->stringBuffer);
     StringAppend(sInfo->stringBuffer, gOtherText_GetsAPokeBlock);
     BasicInitMenuWindow(&gMenuWindowTemplateBg0);
@@ -753,7 +753,7 @@ static void CalculateConditionEnhancements(void)
 {
     u16 i;
     struct Pokemon *mon = gPlayerParty;
-    mon += gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex].partyIdx;
+    mon += gPokenavState->monList[gPokenavState->detailSelectionIndex].monId;
     GetMonConditions(mon, sInfo->conditionsBeforeBlock);
     AddPokeblockToConditions(sInfo->pokeblock, mon);
     GetMonConditions(mon, sInfo->conditionsAfterBlock);
@@ -798,7 +798,7 @@ static void CalculatePokeblockEffectiveness(struct Pokeblock *pokeblock, struct 
 static bool8 IsSheenMaxed(void)
 {
     struct Pokemon *mon = gPlayerParty;
-    mon += gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex].partyIdx;
+    mon += gPokenavState->monList[gPokenavState->detailSelectionIndex].monId;
     if (GetMonData(mon, MON_DATA_SHEEN) == 255)
         return TRUE;
     return FALSE;
