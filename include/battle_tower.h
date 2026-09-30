@@ -93,7 +93,6 @@ struct BattleTowerMon
 
 u16 GetCurrentBattleTowerWinStreak(u8);
 void PutNewBattleTowerRecord(struct BattleTowerRecord *);
-u16 sub_8135D3C(u8);
 void SetEReaderTrainerName(u8*);
 u8 GetEReaderTrainerPicIndex(void);
 u8 GetEReaderTrainerClassNameIndex(void);
