@@ -12,8 +12,8 @@
 #define STD_DLG_FRAME_WIDTH  26
 #define STD_DLG_FRAME_HEIGHT  4
 
-static void LoadTextWindowTiles(u8, void *);
-static void LoadTextWindowPalette(u8, u8);
+static void LoadTextWindowTiles(u8 frameType, void *dest);
+static void LoadTextWindowPalette(u8 frameType, u8 palSlot);
 static void DrawStandardFrame(u16 *dest, u16 baseTileNum, u8 left, u8 top, u8 right, u8 bottom);
 static u16 GetDialogueFrameTilemapEntry(u16 tilemapEntry, u8 x, u8 y, u8 width, u8 height);
 static void DrawDialogueFrame(struct Window *win, u8 left, u8 top, u8 width, u8 height);
@@ -203,7 +203,7 @@ u16 TextWindow_SetDlgFrameBaseTileNum(u16 baseTileNum)
     return baseTileNum + 14;
 }
 
-void unref_sub_80651DC(struct Window *win, u8 *text)
+void TextWindow_PrintDialogueText(struct Window *win, u8 *text)
 {
     Contest_StartTextPrinter(win, text, sDialogueFrameBaseTileNum + 14, 2, 15);
 }
