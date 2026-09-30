@@ -339,7 +339,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x16014*/ u32 painSplitHP;
     /*0x16018*/ u8 expGetterMonId;
     /*0x16019*/ u8 unk16019; // unused
-    /*0x1601A*/ u8 learnMoveState; //also atk5B, statetracker
+    /*0x1601A*/ u8 learnMoveState; // Also used by Cmd_yesnoboxstoplearningmove.
     /*0x1601B*/ u8 wildVictorySong;
     /*0x1601C*/ u8 dynamicMoveType;
     /*0x1601D*/ u8 focusPunchBattlerId;
@@ -581,7 +581,7 @@ void BtlController_EmitBallThrowAnim(u8 bufferId, u8 caseId);  //0xD
 void BtlController_EmitPrintString(u8 bufferId, u16 stringId);  //0x10
 //void BtlController_EmitPrintSelectionString(u8 a, u16 stringID); //0x11
 void BtlController_EmitChoosePokemon(u8 bufferId, u8 caseId, u8 slotId, u8 abilityId, u8 *data); //0x16
-//void BtlController_EmitHealthBarUpdate(u8 a, u16 b); //0x18; Had to declare the second arg as u16 because s16 wont match in atk0b
+//void BtlController_EmitHealthBarUpdate(u8 a, u16 b); //0x18; The second argument must be u16 to match Cmd_healthbarupdate.
 //void BtlController_EmitExpUpdate(u8 a, u8 b, u16 c); //0x19
 void BtlController_EmitStatusIconUpdate(u8 bufferId, u32 status1, u32 status2); //0x1A
 void BtlController_EmitStatusAnimation(u8 bufferId, bool8 status2, u32 status); //0x1B

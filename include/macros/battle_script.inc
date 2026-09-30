@@ -196,9 +196,9 @@
 	.byte \bank
 	.endm
 
-	.macro atk24 address
+	.macro checkteamslost ptr
 	.byte 0x24
-	.4byte \address
+	.4byte \ptr
 	.endm
 
 	.macro movevaluescleanup
@@ -393,11 +393,11 @@
 	.4byte \var_address
 	.endm
 
-	.macro playanimation2 bank, address, int
+	.macro playanimation_var battler, animType, arg
 	.byte 0x46
-	.byte \bank
-	.4byte \address
-	.4byte \int
+	.byte \battler
+	.4byte \animType
+	.4byte \arg
 	.endm
 
 	.macro setgraphicalstatchangevalues
@@ -516,7 +516,7 @@
 	.byte \bank_or_side
 	.endm
 
-	.macro atk57
+	.macro endlinkbattle
 	.byte 0x57
 	.endm
 
@@ -551,12 +551,12 @@
 	.byte 0x5d
 	.endm
 
-	.macro atk5e bank
+	.macro updatebattlermoves battler
 	.byte 0x5e
-	.byte \bank
+	.byte \battler
 	.endm
 
-	.macro atk5f
+	.macro swapattackerwithtarget
 	.byte 0x5f
 	.endm
 
@@ -570,14 +570,14 @@
 	.byte \bank_or_side
 	.endm
 
-	.macro atk62 bank_or_side
+	.macro hidepartystatussummary battler
 	.byte 0x62
-	.byte \bank_or_side
+	.byte \battler
 	.endm
 
-	.macro jumptorandomattack bank
+	.macro jumptocalledmove notChosenMove
 	.byte 0x63
-	.byte \bank
+	.byte \notChosenMove
 	.endm
 
 	.macro statusanimation bank
@@ -674,7 +674,7 @@
 	.byte 0x77
 	.endm
 
-	.macro faintifabilitynotdamp
+	.macro tryexplosion
 	.byte 0x78
 	.endm
 
@@ -954,7 +954,7 @@
 	.byte 0xb5
 	.endm
 
-	.macro happinesstodamagecalculation
+	.macro friendshiptodamagecalculation
 	.byte 0xb6
 	.endm
 
@@ -1037,9 +1037,9 @@
 	.byte 0xc8
 	.endm
 
-	.macro jumpifattackandspecialattackcannotfall address
+	.macro trymemento ptr
 	.byte 0xc9
-	.4byte \address
+	.4byte \ptr
 	.endm
 
 	.macro setforcedtarget
@@ -1054,9 +1054,9 @@
 	.byte 0xcc
 	.endm
 
-	.macro cureifburnedparalysedorpoisoned address
+	.macro cureifburnedparalyzedorpoisoned ptr
 	.byte 0xcd
-	.4byte \address
+	.4byte \ptr
 	.endm
 
 	.macro settorment address
@@ -1123,9 +1123,9 @@
 	.4byte \address
 	.endm
 
-	.macro tryimprision address
+	.macro tryimprison ptr
 	.byte 0xdb
-	.4byte \address
+	.4byte \ptr
 	.endm
 
 	.macro trysetgrudge address
@@ -1203,12 +1203,12 @@
 	.4byte \address
 	.endm
 
-	.macro pursuitrelated address
+	.macro pursuitdoubles ptr
 	.byte 0xec
-	.4byte \address
+	.4byte \ptr
 	.endm
 
-	.macro snatchsetbanks
+	.macro snatchsetbattlers
 	.byte 0xed
 	.endm
 
