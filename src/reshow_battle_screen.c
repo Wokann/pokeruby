@@ -31,8 +31,8 @@ void LoadAndCreateEnemyShadowSprites(void);
 void HBlankCB_Battle(void);
 void BattleLoadOpponentMonSpriteGfx(struct Pokemon *, u8 battler);
 void BattleLoadPlayerMonSpriteGfx(struct Pokemon *, u8 battler);
-void BattleLoadSubstituteOrMonSpriteGfx(u8 bank, u8 loadMonSprite);
-void DecompressTrainerBackPic(u16 a0, u8 bank);
+void BattleLoadSubstituteOrMonSpriteGfx(u8 battler, u8 loadMonSprite);
+void DecompressTrainerBackPic(u16 backPicId, u8 battler);
 
 // this file's functions
 static void CB2_ReshowBattleScreenAfterMenu(void);
