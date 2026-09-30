@@ -33,7 +33,7 @@ extern const u8 gInterfaceGfx_LuxuryBall[];
 extern const u8 gInterfacePal_LuxuryBall[];
 extern const u8 gInterfaceGfx_PremierBall[];
 extern const u8 gInterfacePal_PremierBall[];
-extern const u8 gUnknown_08D030D0[];
+extern const u8 gOpenPokeballGfx[];
 
 extern const u8 gContestPalette[];
 extern const u8 gContestGfx[];

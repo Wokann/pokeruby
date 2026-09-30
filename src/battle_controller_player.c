@@ -118,7 +118,6 @@ extern void FreeMonSpriteAfterSwitchOutAnim(void);
 extern void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *);
 extern u8 GetBattlerSpriteCoord();
 extern u8 GetBattlerSpriteDefault_Y();
-extern u8 DoPokeballSendOutAnimation();
 extern void SwitchIn_TryShinyAnimShowHealthbox(void);
 extern void CompleteOnBankSpritePosX_0(void);
 extern u8 gActiveBattler;
@@ -2345,7 +2344,7 @@ void StartSendOutAnim(u8 bank, u8 b)
     StartSpriteAnim(&gSprites[gBattlerSpriteIds[bank]], gBattleMonForms[bank]);
     gSprites[gBattlerSpriteIds[bank]].invisible = TRUE;
     gSprites[gBattlerSpriteIds[bank]].callback = SpriteCallbackDummy;
-    gSprites[gBattleControllerData[bank]].data[0] = DoPokeballSendOutAnimation(0, 0xFF);
+    gSprites[gBattleControllerData[bank]].data[0] = DoPokeballSendOutAnimation(0, POKEBALL_PLAYER_SENDOUT);
 }
 
 void PlayerHandleReturnMonToBall(void)

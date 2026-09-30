@@ -76,7 +76,6 @@ extern void SetSpritePrimaryCoordsFromSecondaryCoords();
 extern void StartAnimLinearTranslation(struct Sprite *);
 extern void SpriteCB_FreePlayerSpriteLoadMonSprite(struct Sprite *);
 extern void StoreSpriteCallbackInData6();
-extern u8 DoPokeballSendOutAnimation();
 extern u8 GetBattlerSpriteCoord();
 extern u8 GetBattlerSpriteDefault_Y();
 extern u8 GetBattlerSpriteSubpriority();

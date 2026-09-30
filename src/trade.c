@@ -4757,7 +4757,7 @@ static bool8 DoTradeAnim_Cable(void)
             gSprites[gTradeAnim->monSpriteIds[1]].y = gMonFrontPicCoords[gTradeAnim->monSpecies[1]].y_offset + 60;
             gSprites[gTradeAnim->monSpriteIds[1]].x2 = 0;
             gSprites[gTradeAnim->monSpriteIds[1]].y2 = 0;
-            CreatePokeballSprite(gTradeAnim->monSpriteIds[1], gSprites[gTradeAnim->monSpriteIds[1]].oam.paletteNum, 0x78, 0x54, 2, 1, 0x14, 0xfffff);
+            CreatePokeballSpriteToReleaseMon(gTradeAnim->monSpriteIds[1], gSprites[gTradeAnim->monSpriteIds[1]].oam.paletteNum, 0x78, 0x54, 2, 1, 0x14, 0xfffff);
             FreeSpriteOamMatrix(&gSprites[gTradeAnim->bouncingPokeballSpriteId]);
             DestroySprite(&gSprites[gTradeAnim->bouncingPokeballSpriteId]);
             gTradeAnim->state ++;

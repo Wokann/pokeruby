@@ -835,7 +835,7 @@ static void Task_NewGameBirchSpeech_ReleaseAzurill(u8 taskId)
     gSprites[spriteId].y = 72;
     gSprites[spriteId].invisible = FALSE;
     gSprites[spriteId].data[0] = 0;
-    CreatePokeballSprite(spriteId, gSprites[spriteId].oam.paletteNum, 0x70, 0x3A, 0, 0, 0x20, 0x0000FFFF);
+    CreatePokeballSpriteToReleaseMon(spriteId, gSprites[spriteId].oam.paletteNum, 0x70, 0x3A, 0, 0, 0x20, 0x0000FFFF);
     gTasks[taskId].func = Task_NewGameBirchSpeech_WaitForAzurill;
     gTasks[taskId].tFrameCounter = 0;
 }

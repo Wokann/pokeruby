@@ -63,7 +63,6 @@ extern void SpriteCB_FaintSlideAnim(struct Sprite *);
 extern s32 GetBattlerMultiplayerId(u16);
 extern void DecompressTrainerBackPic();
 extern void SpriteCB_TrainerSlideIn(struct Sprite *);
-extern u8 DoPokeballSendOutAnimation();
 extern void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *);
 extern u8 CreateInvisibleSpriteWithCallback();
 extern void BattleLoadPlayerMonSpriteGfx(struct Pokemon *, u8);

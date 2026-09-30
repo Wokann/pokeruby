@@ -62,7 +62,6 @@ extern void BattleLoadOpponentMonSpriteGfx(struct Pokemon *, u8);
 extern u8 GetBattlerPosition(u8);
 extern void SetBattlerShadowSpriteCallback(u8, u16);
 extern void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *);
-extern u8 DoPokeballSendOutAnimation();
 extern void HideBattlerShadowSprite(u8 battler);
 extern u8 GetBattleTowerTrainerFrontSpriteId(void);
 extern void SpriteCB_TrainerSlideIn(struct Sprite *);
@@ -1154,7 +1153,7 @@ static void StartSendOutAnim(u8 a, bool8 b)
     StartSpriteAnim(&gSprites[gBattlerSpriteIds[a]], gBattleMonForms[a]);
     gSprites[gBattlerSpriteIds[a]].invisible = TRUE;
     gSprites[gBattlerSpriteIds[a]].callback = SpriteCallbackDummy;
-    gSprites[gBattleControllerData[a]].data[0] = DoPokeballSendOutAnimation(0, 0xFE);
+    gSprites[gBattleControllerData[a]].data[0] = DoPokeballSendOutAnimation(0, POKEBALL_OPPONENT_SENDOUT);
 }
 
 static void OpponentHandleReturnMonToBall(void)

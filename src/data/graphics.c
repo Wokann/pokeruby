@@ -51,7 +51,7 @@ const u8 gInterfacePal_LuxuryBall[] = INCBIN_U8("graphics/interface/ball/luxury.
 const u8 gInterfaceGfx_PremierBall[] = INCBIN_U8("graphics/interface/ball/premier.4bpp.lz");
 const u8 gInterfacePal_PremierBall[] = INCBIN_U8("graphics/interface/ball/premier.gbapal.lz");
 
-const u8 gUnknown_08D030D0[] = INCBIN_U8("graphics/interface/ball_open.4bpp.lz");
+const u8 gOpenPokeballGfx[] = INCBIN_U8("graphics/interface/ball_open.4bpp.lz");
 const u8 gBlankGfxCompressed[] = INCBIN_U8("graphics/interface/blank.4bpp.lz");
 
 const u8 gBattleAnimSpriteSheet_146[] = INCBIN_U8("graphics/battle_anims/sprites/146.4bpp.lz");
