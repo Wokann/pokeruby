@@ -7537,30 +7537,30 @@ static u8 GetReflectionTypeByMetatileBehavior(u32 behavior)
         return 0;
 }
 
-u8 GetLedgeJumpDirection(s16 x, s16 y, u8 z)
+u8 GetLedgeJumpDirection(s16 x, s16 y, u8 direction)
 {
-    static bool8 (*const unknown_08376040[])(u8) = {
-        MetatileBehavior_IsJumpSouth,
-        MetatileBehavior_IsJumpNorth,
-        MetatileBehavior_IsJumpWest,
-        MetatileBehavior_IsJumpEast,
+    static bool8 (*const ledgeBehaviorFuncs[])(u8) = {
+        [DIR_SOUTH - 1] = MetatileBehavior_IsJumpSouth,
+        [DIR_NORTH - 1] = MetatileBehavior_IsJumpNorth,
+        [DIR_WEST - 1] = MetatileBehavior_IsJumpWest,
+        [DIR_EAST - 1] = MetatileBehavior_IsJumpEast,
     };
 
-    u8 b;
-    u8 index = z;
+    u8 behavior;
+    u8 index = direction;
 
-    if (index == 0)
-        return 0;
-    else if (index > 4)
-        index -= 4;
+    if (index == DIR_NONE)
+        return DIR_NONE;
+    else if (index > DIR_EAST)
+        index -= DIR_EAST;
 
     index--;
-    b = MapGridGetMetatileBehaviorAt(x, y);
+    behavior = MapGridGetMetatileBehaviorAt(x, y);
 
-    if (unknown_08376040[index](b) == 1)
+    if (ledgeBehaviorFuncs[index](behavior) == TRUE)
         return index + 1;
 
-    return 0;
+    return DIR_NONE;
 }
 
 static void SetObjectEventSpriteOamTableForLongGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
