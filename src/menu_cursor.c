@@ -198,7 +198,7 @@ void SetOutlineCursorWidth(u8 a)
     {
         if (i > 0x1F)
         {
-            *r4 = gUnknown_0842F780;
+            *r4 = gOutlineCursorSubsprite_BodyLarge;
             r4->x = r2;
             r2 += 32;
             r5 = a;
@@ -209,14 +209,14 @@ void SetOutlineCursorWidth(u8 a)
             r5 = a;
             if (_a > 0x27 && i > 8)
             {
-                *r4 = gUnknown_0842F780;
+                *r4 = gOutlineCursorSubsprite_BodyLarge;
                 r4->x = (r2 - 32) + (i & ~7);
                 r2 += i & 0x18;
             }
             //_0814AA0A
             else
             {
-                *r4 = gUnknown_0842F788;
+                *r4 = gOutlineCursorSubsprite_BodySmall;
                 r4->x = r2;
                 r2 += 8;
             }
@@ -227,7 +227,7 @@ void SetOutlineCursorWidth(u8 a)
         i = r5;
     }
     //_0814AA3A
-    *r4 = gUnknown_0842F790;
+    *r4 = gOutlineCursorSubsprite_Right;
     r4->x = r2 - 7 + i;
     r7++;
     if (sOutlineCursorSpriteId != 64)
@@ -297,8 +297,8 @@ _0814A99E:\n\
     .align 2, 0\n\
 _0814A9C4: .4byte sMenuCursorSubsprites\n\
 _0814A9C8: .4byte 0x0000ffff\n\
-_0814A9CC: .4byte gUnknown_0842F780\n\
-_0814A9D0: .4byte gUnknown_0842F788\n\
+_0814A9CC: .4byte gOutlineCursorSubsprite_BodyLarge\n\
+_0814A9D0: .4byte gOutlineCursorSubsprite_BodySmall\n\
 _0814A9D4:\n\
     ldr r6, [sp]\n\
     lsls r5, r6, 16\n\
@@ -410,7 +410,7 @@ _0814AA98:\n\
     pop {r0}\n\
     bx r0\n\
     .align 2, 0\n\
-_0814AAA8: .4byte gUnknown_0842F790\n\
+_0814AAA8: .4byte gOutlineCursorSubsprite_Right\n\
 _0814AAAC: .4byte sOutlineCursorSpriteId\n\
 _0814AAB0: .4byte gSprites\n\
 _0814AAB4: .4byte gDynamicOutlineCursorSubspriteTables\n\
@@ -434,7 +434,7 @@ void SetOutlineCursorWidth(u8 a1)
     ldr r2, _0814A9C8 @ =0x0000ffff\n\
     lsrs r0, 24\n\
     str r0, [sp]\n\
-    ldr r0, _0814A9CC @ =gUnknown_0842F780\n\
+    ldr r0, _0814A9CC @ =gOutlineCursorSubsprite_Left\n\
     ldr r1, [r0, 0x4]\n\
     ldr r0, [r0]\n\
     str r0, [r4]\n\
@@ -450,13 +450,13 @@ void SetOutlineCursorWidth(u8 a1)
     asrs r0, 16\n\
     cmp r0, 0x7\n\
     ble _0814AA3E\n\
-    ldr r0, _0814A9D0 @ =gUnknown_0842F788\n\
+    ldr r0, _0814A9D0 @ =gOutlineCursorSubsprite_BodyLarge\n\
     mov r12, r0\n\
     mov r8, r1\n\
     movs r1, 0x8\n\
     negs r1, r1\n\
     mov r10, r1\n\
-    ldr r5, _0814A9D4 @ =gUnknown_0842F790\n\
+    ldr r5, _0814A9D4 @ =gOutlineCursorSubsprite_BodySmall\n\
     mov r9, r5\n\
 _0814A99E:\n\
     lsls r0, r3, 16\n\
@@ -480,9 +480,9 @@ _0814A99E:\n\
     .align 2, 0\n\
 _0814A9C4: .4byte sMenuCursorSubsprites\n\
 _0814A9C8: .4byte 0x0000ffff\n\
-_0814A9CC: .4byte gUnknown_0842F780\n\
-_0814A9D0: .4byte gUnknown_0842F788\n\
-_0814A9D4: .4byte gUnknown_0842F790\n\
+_0814A9CC: .4byte gOutlineCursorSubsprite_Left\n\
+_0814A9D0: .4byte gOutlineCursorSubsprite_BodyLarge\n\
+_0814A9D4: .4byte gOutlineCursorSubsprite_BodySmall\n\
 _0814A9D8:\n\
     ldr r6, [sp]\n\
     lsls r5, r6, 16\n\
@@ -538,7 +538,7 @@ _0814AA24:\n\
     cmp r1, 0x7\n\
     bgt _0814A99E\n\
 _0814AA3E:\n\
-    ldr r5, _0814AAAC @ =gUnknown_0842F798\n\
+    ldr r5, _0814AAAC @ =gOutlineCursorSubsprite_Right\n\
     ldr r0, [r5]\n\
     ldr r1, [r5, 0x4]\n\
     str r0, [r4]\n\
@@ -594,7 +594,7 @@ _0814AA9C:\n\
     pop {r0}\n\
     bx r0\n\
     .align 2, 0\n\
-_0814AAAC: .4byte gUnknown_0842F798\n\
+_0814AAAC: .4byte gOutlineCursorSubsprite_Right\n\
 _0814AAB0: .4byte sOutlineCursorSpriteId\n\
 _0814AAB4: .4byte gSprites\n\
 _0814AAB8: .4byte gDynamicOutlineCursorSubspriteTables\n\
@@ -671,7 +671,7 @@ void SetOutlineCursorWindowSubsprites(int index)
 {
     struct Sprite *spr;
 
-    CpuCopy16(gUnknown_0842F5BC[index], &sMenuCursorSubsprites, 80);
+    CpuCopy16(gOutlineCursorWindowSubspritePointers[index], &sMenuCursorSubsprites, 80);
 
     if (sOutlineCursorSpriteId != 0x40)
     {
