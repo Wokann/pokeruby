@@ -39,21 +39,21 @@ static u8 (*const sDirectionalApproachDistanceFuncs[])(struct ObjectEvent *, s16
 
 bool8 CheckForTrainersWantingBattle(void)
 {
-    u8 objEventId;
+    u8 objectEventId;
 
-    for (objEventId = 0; objEventId < 16; objEventId++)
+    for (objectEventId = 0; objectEventId < 16; objectEventId++)
     {
-        if (gObjectEvents[objEventId].active
-         && (gObjectEvents[objEventId].trainerType == TRAINER_TYPE_NORMAL ||  gObjectEvents[objEventId].trainerType == TRAINER_TYPE_BURIED)
-         && CheckTrainer(objEventId))
+        if (gObjectEvents[objectEventId].active
+         && (gObjectEvents[objectEventId].trainerType == TRAINER_TYPE_NORMAL ||  gObjectEvents[objectEventId].trainerType == TRAINER_TYPE_BURIED)
+         && CheckTrainer(objectEventId))
             return TRUE;
     }
     return FALSE;
 }
 
-static bool8 CheckTrainer(u8 objEventId)
+static bool8 CheckTrainer(u8 objectEventId)
 {
-    const u8 *scriptPtr = GetObjectEventScriptPointerByObjectEventId(objEventId);
+    const u8 *scriptPtr = GetObjectEventScriptPointerByObjectEventId(objectEventId);
 
     if (GetTrainerFlagFromScriptPointer(scriptPtr))
     {
@@ -61,12 +61,12 @@ static bool8 CheckTrainer(u8 objEventId)
     }
     else
     {
-        struct ObjectEvent *trainerObj = &gObjectEvents[objEventId];
+        struct ObjectEvent *trainerObj = &gObjectEvents[objectEventId];
         u8 approachDistance = GetTrainerApproachDistance(trainerObj);
 
         if (approachDistance)
         {
-            ConfigureAndSetUpOneTrainerBattle(objEventId, scriptPtr);
+            ConfigureAndSetUpOneTrainerBattle(objectEventId, scriptPtr);
             InitTrainerApproachTask(trainerObj, approachDistance - 1);
             return TRUE;
         }
