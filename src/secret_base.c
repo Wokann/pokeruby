@@ -647,14 +647,14 @@ u8 GetCurrentSecretBaseIndex(u8 secretBaseId)
     return 0;
 }
 
-u8 *GetSecretBaseName(u8 *dest, u8 secretBaseIndex)
+u8 *GetSecretBaseName(u8 *dest, u8 secretBaseIdx)
 {
     u8 nameLength;
     u8 *str;
 
-    nameLength = GetNameLength(gSaveBlock1.secretBases[secretBaseIndex].playerName);
+    nameLength = GetNameLength(gSaveBlock1.secretBases[secretBaseIdx].playerName);
 
-    str = StringCopyN(dest, gSaveBlock1.secretBases[secretBaseIndex].playerName, nameLength);
+    str = StringCopyN(dest, gSaveBlock1.secretBases[secretBaseIdx].playerName, nameLength);
     str[0] = EOS;
 
 #if ENGLISH
@@ -672,10 +672,10 @@ u8 *GetSecretBaseMapName(u8 *dest)
 
 void CopyCurSecretBaseOwnerName_StrVar1(void)
 {
-    u8 *playerName = gSaveBlock1.secretBases[(u8)VarGet(VAR_CURRENT_SECRET_BASE)].playerName;
+    u8 *trainerName = gSaveBlock1.secretBases[(u8)VarGet(VAR_CURRENT_SECRET_BASE)].playerName;
     u8 *dest = gStringVar1;
-    u8 nameLength = GetNameLength(playerName);
-    u8 *stringEnd = StringCopyN(dest, playerName, nameLength);
+    u8 nameLength = GetNameLength(trainerName);
+    u8 *stringEnd = StringCopyN(dest, trainerName, nameLength);
 
     *stringEnd = EOS;
 }
@@ -690,20 +690,20 @@ bool8 IsSecretBaseRegistered(u8 secretBaseIndex)
 
 static u8 GetAverageEVs(struct Pokemon *pokemon)
 {
-    u16 evSum = GetMonData(pokemon, MON_DATA_HP_EV);
+    u16 evTotal = GetMonData(pokemon, MON_DATA_HP_EV);
 
-    evSum += GetMonData(pokemon, MON_DATA_ATK_EV);
-    evSum += GetMonData(pokemon, MON_DATA_DEF_EV);
-    evSum += GetMonData(pokemon, MON_DATA_SPEED_EV);
-    evSum += GetMonData(pokemon, MON_DATA_SPATK_EV);
-    evSum += GetMonData(pokemon, MON_DATA_SPDEF_EV);
-    return (u8)(evSum / 6);
+    evTotal += GetMonData(pokemon, MON_DATA_ATK_EV);
+    evTotal += GetMonData(pokemon, MON_DATA_DEF_EV);
+    evTotal += GetMonData(pokemon, MON_DATA_SPEED_EV);
+    evTotal += GetMonData(pokemon, MON_DATA_SPATK_EV);
+    evTotal += GetMonData(pokemon, MON_DATA_SPDEF_EV);
+    return (u8)(evTotal / 6);
 }
 
 void SetPlayerSecretBaseParty(void)
 {
     u16 partyIndex;
-    u16 secretBasePartyIndex = 0;
+    u16 partyId = 0;
     struct SecretBaseRecord *secretBase = &gSaveBlock1.secretBases[0];
 
     for (partyIndex = 0; partyIndex < PARTY_SIZE; partyIndex++)
@@ -722,14 +722,14 @@ void SetPlayerSecretBaseParty(void)
         if (GetMonData(&gPlayerParty[partyIndex], MON_DATA_SPECIES) != SPECIES_NONE && !GetMonData(&gPlayerParty[partyIndex], MON_DATA_IS_EGG))
         {
             for (moveIndex = 0; moveIndex < MAX_MON_MOVES; moveIndex++)
-                secretBase->party.moves[secretBasePartyIndex * MAX_MON_MOVES + moveIndex] = GetMonData(&gPlayerParty[partyIndex], MON_DATA_MOVE1 + moveIndex);
+                secretBase->party.moves[partyId * MAX_MON_MOVES + moveIndex] = GetMonData(&gPlayerParty[partyIndex], MON_DATA_MOVE1 + moveIndex);
 
-            secretBase->party.species[secretBasePartyIndex] = GetMonData(&gPlayerParty[partyIndex], MON_DATA_SPECIES);
-            secretBase->party.heldItems[secretBasePartyIndex] = GetMonData(&gPlayerParty[partyIndex], MON_DATA_HELD_ITEM);
-            secretBase->party.levels[secretBasePartyIndex] = GetMonData(&gPlayerParty[partyIndex], MON_DATA_LEVEL);
-            secretBase->party.personality[secretBasePartyIndex] = GetMonData(&gPlayerParty[partyIndex], MON_DATA_PERSONALITY);
-            secretBase->party.EVs[secretBasePartyIndex] = GetAverageEVs(&gPlayerParty[partyIndex]);
-            secretBasePartyIndex++;
+            secretBase->party.species[partyId] = GetMonData(&gPlayerParty[partyIndex], MON_DATA_SPECIES);
+            secretBase->party.heldItems[partyId] = GetMonData(&gPlayerParty[partyIndex], MON_DATA_HELD_ITEM);
+            secretBase->party.levels[partyId] = GetMonData(&gPlayerParty[partyIndex], MON_DATA_LEVEL);
+            secretBase->party.personality[partyId] = GetMonData(&gPlayerParty[partyIndex], MON_DATA_PERSONALITY);
+            secretBase->party.EVs[partyId] = GetAverageEVs(&gPlayerParty[partyIndex]);
+            partyId++;
         }
     }
 }
@@ -760,11 +760,11 @@ void ClosePlayerSecretBaseEntrance(void)
          && gSaveBlock1.secretBases[0].secretBaseId == mapEvents->bgEvents[bgEventIndex].bgUnion.secretBaseId)
         {
             u16 entranceIndex;
-            s16 tileId = MapGridGetMetatileIdAt(mapEvents->bgEvents[bgEventIndex].x + MAP_OFFSET, mapEvents->bgEvents[bgEventIndex].y + MAP_OFFSET);
+            s16 metatileId = MapGridGetMetatileIdAt(mapEvents->bgEvents[bgEventIndex].x + MAP_OFFSET, mapEvents->bgEvents[bgEventIndex].y + MAP_OFFSET);
 
             for (entranceIndex = 0; entranceIndex < ARRAY_COUNT(sSecretBaseEntranceMetatiles); entranceIndex++)
             {
-                if (sSecretBaseEntranceMetatiles[entranceIndex].openMetatileId == tileId)
+                if (sSecretBaseEntranceMetatiles[entranceIndex].openMetatileId == metatileId)
                 {
                     MapGridSetMetatileIdAt(
                         mapEvents->bgEvents[bgEventIndex].x + MAP_OFFSET,
@@ -1140,10 +1140,10 @@ void GoToSecretBasePCRegisterMenu(u8 taskId)
 #undef tMaxShownItems
 #undef tSelectedBaseIndex
 
-static u8 GetSecretBaseOwnerType(u8 secretBaseIndex)
+static u8 GetSecretBaseOwnerType(u8 secretBaseIdx)
 {
-    return (gSaveBlock1.secretBases[secretBaseIndex].playerName[OT_NAME_LENGTH] % 5) 
-        + gSaveBlock1.secretBases[secretBaseIndex].gender * 5;
+    return (gSaveBlock1.secretBases[secretBaseIdx].playerName[OT_NAME_LENGTH] % 5)
+        + gSaveBlock1.secretBases[secretBaseIdx].gender * 5;
 }
 
 const u8 *GetSecretBaseTrainerLoseText(void)
@@ -1194,7 +1194,7 @@ void SetBattledOwnerFromResult(void)
 
 void GetSecretBaseOwnerAndState(void)
 {
-    u16 curBaseIndex = VarGet(VAR_CURRENT_SECRET_BASE);
+    u16 secretBaseIdx = VarGet(VAR_CURRENT_SECRET_BASE);
 
     if (!FlagGet(FLAG_DAILY_SECRET_BASE))
     {
@@ -1206,8 +1206,8 @@ void GetSecretBaseOwnerAndState(void)
         FlagSet(FLAG_DAILY_SECRET_BASE);
     }
 
-    gSpecialVar_0x8004 = GetSecretBaseOwnerType(curBaseIndex);
-    gSpecialVar_Result = gSaveBlock1.secretBases[curBaseIndex].battledOwnerToday;
+    gSpecialVar_0x8004 = GetSecretBaseOwnerType(secretBaseIdx);
+    gSpecialVar_Result = gSaveBlock1.secretBases[secretBaseIdx].battledOwnerToday;
 }
 
 #define tStepCb  data[0]
