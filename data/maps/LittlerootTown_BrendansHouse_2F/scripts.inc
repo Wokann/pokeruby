@@ -13,7 +13,7 @@ LittlerootTown_BrendansHouse_2F_OnTransition:: @ 81527AF
 
 LittlerootTown_BrendansHouse_2F_EventScript_RivalCheckingNotebook:: @ 81527CE
 	setobjectxyperm LOCALID_RIVALS_HOUSE_2F_RIVAL, 1, 2
-	setobjectmovementtype LOCALID_RIVALS_HOUSE_2F_RIVAL, 7
+	setobjectmovementtype LOCALID_RIVALS_HOUSE_2F_RIVAL, MOVEMENT_TYPE_FACE_UP
 	return
 
 LittlerootTown_BrendansHouse_2F_OnWarp:: @ 81527DA

@@ -11,8 +11,8 @@ LittlerootTown_BrendansHouse_1F_OnLoad:: @ 815264B
 	end
 
 LittlerootTown_BrendansHouse_1F_EventScript_SetMovingBoxes:: @ 8152660
-	setmetatile 5, 4, METATILE_BrendansMaysHouse_MovingBox_Open, 1
-	setmetatile 5, 2, METATILE_BrendansMaysHouse_MovingBox_Closed, 1
+	setmetatile 5, 4, METATILE_BrendansMaysHouse_MovingBox_Open, TRUE
+	setmetatile 5, 2, METATILE_BrendansMaysHouse_MovingBox_Closed, TRUE
 	return
 
 LittlerootTown_BrendansHouse_1F_EventScript_CheckShowShoesManual:: @ 8152673
@@ -22,7 +22,7 @@ LittlerootTown_BrendansHouse_1F_EventScript_CheckShowShoesManual:: @ 8152673
 	return
 
 LittlerootTown_BrendansHouse_1F_EventScript_ShowRunningShoesManual:: @ 8152680
-	setmetatile 3, 7, METATILE_BrendansMaysHouse_BookOnTable, 1
+	setmetatile 3, 7, METATILE_BrendansMaysHouse_BookOnTable, TRUE
 	return
 
 LittlerootTown_BrendansHouse_1F_OnTransition:: @ 815268A
@@ -36,17 +36,17 @@ LittlerootTown_BrendansHouse_1F_OnTransition:: @ 815268A
 
 LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToStairs:: @ 81526AC
 	setobjectxyperm LOCALID_PLAYERS_HOUSE_1F_MOM, 8, 4
-	setobjectmovementtype LOCALID_PLAYERS_HOUSE_1F_MOM, 7
+	setobjectmovementtype LOCALID_PLAYERS_HOUSE_1F_MOM, MOVEMENT_TYPE_FACE_UP
 	return
 
 LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToTV:: @ 81526B8
 	setobjectxyperm LOCALID_PLAYERS_HOUSE_1F_MOM, 4, 5
-	setobjectmovementtype LOCALID_PLAYERS_HOUSE_1F_MOM, 7
+	setobjectmovementtype LOCALID_PLAYERS_HOUSE_1F_MOM, MOVEMENT_TYPE_FACE_UP
 	return
 
 LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToDoor:: @ 81526C4
 	setobjectxyperm LOCALID_PLAYERS_HOUSE_1F_MOM, 9, 8
-	setobjectmovementtype LOCALID_PLAYERS_HOUSE_1F_MOM, 7
+	setobjectmovementtype LOCALID_PLAYERS_HOUSE_1F_MOM, MOVEMENT_TYPE_FACE_UP
 	return
 
 LittlerootTown_BrendansHouse_1F_OnFrame:: @ 81526D0
@@ -64,7 +64,7 @@ LittlerootTown_BrendansHouse_1F_EventScript_GoUpstairsToSetClock:: @ 81526FA
 	applymovement LOCALID_PLAYER, LittlerootTown_BrendansHouse_1F_Movement_PushTowardStairs
 	applymovement LOCALID_PLAYERS_HOUSE_1F_MOM, LittlerootTown_BrendansHouse_1F_Movement_PushTowardStairs
 	waitmovement 0
-	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 255, 7, 1
+	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, WARP_ID_NONE, 7, 1
 	waitstate
 	releaseall
 	end

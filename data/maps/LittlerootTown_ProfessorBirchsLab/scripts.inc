@@ -24,7 +24,7 @@ LittlerootTown_ProfessorBirchsLab_OnFrame:: @ 8152CAC
 
 LittlerootTown_ProfessorBirchsLab_EventScript_GiveStarterEvent:: @ 8152CBE
 	lockall
-	bufferleadmonspeciesname 0
+	bufferleadmonspeciesname STR_VAR_1
 	message LittlerootTown_ProfessorBirchsLab_Text_LikeYouToHavePokemon
 	waitmessage
 	playfanfare MUS_OBTAIN_ITEM
@@ -137,19 +137,19 @@ LittlerootTown_ProfessorBirchsLab_EventScript_GivePokedex:: @ 8152DBA
 LittlerootTown_ProfessorBirchsLab_EventScript_MayGivePokeBalls:: @ 8152E13
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_MayGotPokedexTooTakeThese, MSGBOX_DEFAULT
 	giveitem ITEM_POKE_BALL, 5
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	call_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_MayNoRoomForPokeBalls
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_CatchCutePokemonWithPokeBalls, MSGBOX_DEFAULT
-	setvar VAR_RESULT, 0
+	setvar VAR_RESULT, MALE
 	return
 
 LittlerootTown_ProfessorBirchsLab_EventScript_BrendanGivePokeBalls:: @ 8152E40
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BrendanGotPokedexTooTakeThese, MSGBOX_DEFAULT
 	giveitem ITEM_POKE_BALL, 5
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	call_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_BrendanNoRoomForPokeBalls
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_CatchCoolPokemonWithPokeBalls, MSGBOX_DEFAULT
-	setvar VAR_RESULT, 1
+	setvar VAR_RESULT, FEMALE
 	return
 
 LittlerootTown_ProfessorBirchsLab_EventScript_ReceivePokedex:: @ 8152E6D

@@ -42,17 +42,17 @@ LittlerootTown_EventScript_SetTwinPos:: @ 814D583
 	compare VAR_LITTLEROOT_TOWN_STATE, 0
 	goto_if_eq LittlerootTown_EventScript_SetTwinGuardingRoutePos
 	setobjectxyperm LOCALID_LITTLEROOT_TWIN, 10, 1
-	setobjectmovementtype LOCALID_LITTLEROOT_TWIN, 7
+	setobjectmovementtype LOCALID_LITTLEROOT_TWIN, MOVEMENT_TYPE_FACE_UP
 	return
 
 LittlerootTown_EventScript_SetTwinGuardingRoutePos:: @ 814D59A
 	setobjectxyperm LOCALID_LITTLEROOT_TWIN, 7, 2
-	setobjectmovementtype LOCALID_LITTLEROOT_TWIN, 8
+	setobjectmovementtype LOCALID_LITTLEROOT_TWIN, MOVEMENT_TYPE_FACE_DOWN
 	return
 
 LittlerootTown_EventScript_SetMomStandingInFrontOfDoorPos:: @ 814D5A6
 	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MOM_OUTSIDE
-	setobjectmovementtype LOCALID_LITTLEROOT_MOM, 8
+	setobjectmovementtype LOCALID_LITTLEROOT_MOM, MOVEMENT_TYPE_FACE_DOWN
 	checkplayergender
 	compare VAR_RESULT, MALE
 	call_if_eq LittlerootTown_EventScript_SetMomInFrontOfDoorMale
@@ -80,7 +80,7 @@ LittlerootTown_EventScript_StepOffTruckMale:: @ 814D5EF
 	setvar VAR_0x8005, 8
 	call LittlerootTown_EventScript_GoInsideWithMom
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
-	warpsilent MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F, 255, 8, 8
+	warpsilent MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F, WARP_ID_NONE, 8, 8
 	waitstate
 	releaseall
 	end
@@ -91,7 +91,7 @@ LittlerootTown_EventScript_StepOffTruckFemale:: @ 814D60D
 	setvar VAR_0x8005, 8
 	call LittlerootTown_EventScript_GoInsideWithMom
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK
-	warpsilent MAP_LITTLEROOT_TOWN_MAYS_HOUSE_1F, 255, 2, 8
+	warpsilent MAP_LITTLEROOT_TOWN_MAYS_HOUSE_1F, WARP_ID_NONE, 2, 8
 	waitstate
 	releaseall
 	end

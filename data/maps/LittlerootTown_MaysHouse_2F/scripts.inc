@@ -13,7 +13,7 @@ LittlerootTown_MaysHouse_2F_OnTransition:: @ 8152A5B
 
 LittlerootTown_MaysHouse_2F_EventScript_RivalCheckingNotebook:: @ 8152A7A
 	setobjectxyperm LOCALID_RIVALS_HOUSE_2F_RIVAL, 7, 2
-	setobjectmovementtype LOCALID_RIVALS_HOUSE_2F_RIVAL, 7
+	setobjectmovementtype LOCALID_RIVALS_HOUSE_2F_RIVAL, MOVEMENT_TYPE_FACE_UP
 	return
 
 LittlerootTown_MaysHouse_2F_OnWarp:: @ 8152A86
