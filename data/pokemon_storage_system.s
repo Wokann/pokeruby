@@ -11,6 +11,12 @@
 .equiv PSS_CURSOR_AREA_BOX_TITLE, 2
 .equiv PSS_CURSOR_AREA_BUTTONS,   3
 
+@ Tags used by the storage cursor sheets, palettes, and templates.
+.equiv PSS_GFXTAG_CURSOR,        0
+.equiv PSS_GFXTAG_CURSOR_SHADOW, 1
+.equiv PSS_PALTAG_CURSOR,        0xDAC6
+.equiv PSS_PALTAG_CURSOR_ALT,    0xDAD1
+
 gPokeStorageInputHandlers:: @ 83BBBD4
 	poke_storage_input_handler InBoxInput_Normal, PSS_CURSOR_AREA_IN_BOX
 	poke_storage_input_handler HandleInput_InParty, PSS_CURSOR_AREA_IN_PARTY
@@ -20,14 +26,14 @@ gPokeStorageInputHandlers:: @ 83BBBD4
 
 	.align 2
 gPokeStorageCursorSpriteSheets:: @ 83BBBFC
-	obj_tiles gHandCursorTiles, 0x800, 0
-	obj_tiles gHandCursorShadowTiles, 0x80, 1
+	obj_tiles gHandCursorTiles, 0x800, PSS_GFXTAG_CURSOR
+	obj_tiles gHandCursorShadowTiles, 0x80, PSS_GFXTAG_CURSOR_SHADOW
 	null_obj_tiles
 
 	.align 2
 gPokeStorageCursorSpritePalettes:: @ 83BBC14
-	obj_pal gHandCursorPalette, 56006
-	obj_pal gHandCursorAltPalette, 56017
+	obj_pal gHandCursorPalette, PSS_PALTAG_CURSOR
+	obj_pal gHandCursorAltPalette, PSS_PALTAG_CURSOR_ALT
 	null_obj_pal
 
 	.align 2
@@ -68,11 +74,11 @@ gAnims_PokeStorageCursor:: @ 83BBC60
 
 	.align 2
 gSpriteTemplate_PokeStorageCursor:: @ 83BBC70
-	spr_template 0, 56006, gOamData_PokeStorageCursor, gAnims_PokeStorageCursor, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+	spr_template PSS_GFXTAG_CURSOR, PSS_PALTAG_CURSOR, gOamData_PokeStorageCursor, gAnims_PokeStorageCursor, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 
 	.align 2
 gSpriteTemplate_PokeStorageCursorShadow:: @ 83BBC88
-	spr_template 1, 56006, gOamData_PokeStorageCursorShadow, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCB_CursorShadow
+	spr_template PSS_GFXTAG_CURSOR_SHADOW, PSS_PALTAG_CURSOR, gOamData_PokeStorageCursorShadow, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCB_CursorShadow
 
 .if DEBUG
 .if DEBUG_FIX
