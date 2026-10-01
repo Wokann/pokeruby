@@ -225,7 +225,7 @@ static bool8 AddTextCharacter(void);
 static void SquishCursor(void);
 static void Task_HandlePageSwapAnim(u8);
 static void SetPageSwapButtonGfx(u8, struct Sprite *, struct Sprite *);
-static u8 GetTextCaretPosition(void);
+static u8 GetTextEntryPosition(void);
 static u8 GetCharAtKeyboardPos(s16, s16);
 static bool8 TryApplyPrimaryCharacterModifier(void);
 static bool8 TryApplySecondaryCharacterModifier(void);
@@ -474,7 +474,7 @@ static bool8 MainState_HandleInput(struct Task *);
 static bool8 MainState_MoveToOKButton(struct Task *);
 static bool8 MainState_StartPageSwap(struct Task *);
 static bool8 MainState_WaitPageSwap(struct Task *);
-static bool8 MainState_PressedOK(struct Task *);
+static bool8 MainState_PressedOKButton(struct Task *);
 static bool8 MainState_WaitSentToPCMessage(struct Task *);
 static bool8 MainState_FadeOut(struct Task *);
 static bool8 MainState_Exit(struct Task *);
@@ -487,7 +487,7 @@ static bool8 (*const sMainStateFuncs[])(struct Task *) =
     MainState_MoveToOKButton,
     MainState_StartPageSwap,
     MainState_WaitPageSwap,
-    MainState_PressedOK,
+    MainState_PressedOKButton,
     MainState_WaitSentToPCMessage,
     MainState_FadeOut,
     MainState_Exit,
@@ -580,7 +580,7 @@ static bool8 MainState_WaitPageSwap(struct Task *task)
     return FALSE;
 }
 
-static bool8 MainState_PressedOK(struct Task *task)
+static bool8 MainState_PressedOKButton(struct Task *task)
 {
     SaveInputText();
     SetInputState(INPUT_STATE_DISABLED);
@@ -739,13 +739,13 @@ enum
 #define tKeyboardEvent data[1]
 #define tKbFunctionKey data[2]
 
-static void InputState_Disabled(struct Task *);
-static void InputState_Enabled(struct Task *);
+static void Input_Disabled(struct Task *);
+static void Input_Enabled(struct Task *);
 
 static void (*const sInputStateFuncs[])(struct Task *) =
 {
-    InputState_Disabled,
-    InputState_Enabled,
+    Input_Disabled,
+    Input_Enabled,
 };
 
 static void Task_HandleInput(u8);
@@ -775,12 +775,12 @@ static void Task_HandleInput(u8 taskId)
     sInputStateFuncs[gTasks[taskId].tState](&gTasks[taskId]);
 }
 
-static void InputState_Disabled(struct Task *task)
+static void Input_Disabled(struct Task *task)
 {
     task->tKeyboardEvent = INPUT_NONE;
 }
 
-static void InputState_Enabled(struct Task *task)
+static void Input_Enabled(struct Task *task)
 {
     task->tKeyboardEvent = INPUT_NONE;
     if (JOY_NEW(A_BUTTON))
@@ -1436,7 +1436,7 @@ static void SpriteCB_Underscore(struct Sprite *sprite)
     const s16 arr[] = {2, 3, 2, 1};
     u8 caretPosition;
 
-    caretPosition = GetTextCaretPosition();
+    caretPosition = GetTextEntryPosition();
     if (caretPosition != (u8)sprite->data[0])
     {
         sprite->y2 = 0;
@@ -1508,7 +1508,7 @@ static void NamingScreen_CreateMonIcon(void)
     gSprites[spriteId].oam.priority = 3;
 }
 
-static u8 GetTextCaretPosition(void)
+static u8 GetTextEntryPosition(void)
 {
     u8 i;
 
@@ -1631,7 +1631,7 @@ static bool8 TryApplySecondaryCharacterModifier(void)
 
 static void BufferCharacter(u8 ch)
 {
-    u8 index = GetTextCaretPosition();
+    u8 index = GetTextEntryPosition();
 
     sNamingScreen->textBuffer[index] = ch;
 }
