@@ -1472,7 +1472,7 @@ void ClosePokenavConditionMenu(void)
 
 void HandlePokenavMainMenuInput(void)
 {
-    u8 var1;
+    u8 cursorMoved;
 
     switch (gPokenavState->callbackStep)
     {
@@ -1558,7 +1558,7 @@ void HandlePokenavMainMenuInput(void)
         }
         break;
     case 0xFF:
-        if ((var1 = UpdateMainMenuCursorPos()) != 0)
+        if ((cursorMoved = UpdateMainMenuCursorPos()) != 0)
         {
             PlaySE(SE_SELECT);
             PrintPokenavMenuDescription(0, gPokenavState->menuCursorPos);
@@ -1568,7 +1568,7 @@ void HandlePokenavMainMenuInput(void)
         else if (JOY_NEW(A_BUTTON | B_BUTTON))
 		{
 			PrintPokenavMenuDescription(0, gPokenavState->menuCursorPos);
-			gPokenavState->callbackStep = var1;
+			gPokenavState->callbackStep = cursorMoved;
 		}
         break;
     }
@@ -1576,7 +1576,7 @@ void HandlePokenavMainMenuInput(void)
 
 void OpenPokenavRegionMap(void)
 {
-    u32 var1;
+    u32 toolbarId;
 
     switch (gPokenavState->callbackStep)
     {
@@ -1589,10 +1589,10 @@ void OpenPokenavRegionMap(void)
         if (!UpdateMenuOptionSpritesSlideOut())
         {
             if (gSaveBlock2.regionMapZoom)
-                var1 = 0x7;
+                toolbarId = 0x7;
             else
-				var1 = 0x8;
-            DrawPokenavBottomToolbar(var1);
+				toolbarId = 0x8;
+            DrawPokenavBottomToolbar(toolbarId);
             gPokenavState->callbackStep++;
         }
         break;
