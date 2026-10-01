@@ -1701,10 +1701,10 @@ void Task_RestorePlttBufferUnfaded(u8 taskId)
     DmaCopy32Defvars(3, eContestTempSave.cachedPlttBufferUnfaded, gPlttBufferUnfaded, 0x400);
     gTasks[taskId].data[0] = 0;
     gTasks[taskId].data[1] = 2;
-    gTasks[taskId].func = Task_WaitBeforePrintRoundResult;
+    gTasks[taskId].func = Task_WaitPrintRoundResult;
 }
 
-void Task_WaitBeforePrintRoundResult(u8 taskId)
+void Task_WaitPrintRoundResult(u8 taskId)
 {
     if (++gTasks[taskId].data[0] > 2)
     {

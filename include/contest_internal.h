@@ -35,7 +35,7 @@ void Task_ReadyUpdateHeartSliders(u8 taskId);
 void Task_UpdateHeartSliders(u8 taskId);
 void Task_WaitForHeartSliders(u8 taskId);
 void Task_RestorePlttBufferUnfaded(u8 taskId);
-void Task_WaitBeforePrintRoundResult(u8 taskId);
+void Task_WaitPrintRoundResult(u8 taskId);
 void Task_PrintRoundResultText(u8 taskId);
 void Task_WaitPrintRoundResultText(u8 taskId);
 void Task_ReUpdateHeartSliders(u8 taskId);
