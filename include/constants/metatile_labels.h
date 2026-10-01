@@ -228,12 +228,12 @@
 #define METATILE_MauvilleGym_RedBeamV2_On     0x249
 
 // gTileset_MossdeepGym
-#define METATILE_MossdeepGym_RedArrow_Down   0x205
-#define METATILE_MossdeepGym_RedArrow_Left   0x20C
-#define METATILE_MossdeepGym_RedArrow_Right  0x204
-#define METATILE_MossdeepGym_RedArrow_Up     0x20D
-#define METATILE_MossdeepGym_Switch_Down     0x239
-#define METATILE_MossdeepGym_Switch_Up       0x238
+#define METATILE_RSMossdeepGym_RedArrow_Down   0x205
+#define METATILE_RSMossdeepGym_RedArrow_Left   0x20C
+#define METATILE_RSMossdeepGym_RedArrow_Right  0x204
+#define METATILE_RSMossdeepGym_RedArrow_Up     0x20D
+#define METATILE_RSMossdeepGym_Switch_Down     0x239
+#define METATILE_RSMossdeepGym_Switch_Up       0x238
 
 // gTileset_Pacifidlog
 #define METATILE_Pacifidlog_FloatingLogs_Horizontal0       0x250
