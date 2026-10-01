@@ -3875,13 +3875,13 @@ static void SpriteCB_MoveSelector(struct Sprite *sprite)
 
 static void KeepMoveSelectorVisible(u8 firstSpriteId)
 {
-    u8 r3;
+    u8 i;
 
     firstSpriteId *= 10;
-    for (r3 = firstSpriteId; r3 < firstSpriteId + 10; r3++)
+    for (i = firstSpriteId; i < firstSpriteId + 10; i++)
     {
-        gSprites[sMoveSelectorSpriteIds[r3]].data[1] = 0;
-        gSprites[sMoveSelectorSpriteIds[r3]].invisible = FALSE;
+        gSprites[sMoveSelectorSpriteIds[i]].data[1] = 0;
+        gSprites[sMoveSelectorSpriteIds[i]].invisible = FALSE;
     }
 }
 
