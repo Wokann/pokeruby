@@ -543,7 +543,7 @@ static void OpponentHandleGetMonData(void)
 
 static u32 GetOpponentMonData(u8 monId, u8 *dst)
 {
-    struct BattlePokemon battlePokemon;
+    struct BattlePokemon battleMon;
     struct MovePPInfo moveData;
     u8 nickname[20];
     u8 *src;
@@ -554,39 +554,39 @@ static u32 GetOpponentMonData(u8 monId, u8 *dst)
     switch (gBattleBufferA[gActiveBattler][1])
     {
     case 0:
-        battlePokemon.species = GetMonData(&gEnemyParty[monId], MON_DATA_SPECIES);
-        battlePokemon.item = GetMonData(&gEnemyParty[monId], MON_DATA_HELD_ITEM);
+        battleMon.species = GetMonData(&gEnemyParty[monId], MON_DATA_SPECIES);
+        battleMon.item = GetMonData(&gEnemyParty[monId], MON_DATA_HELD_ITEM);
         for (size = 0; size < 4; size++)
         {
-            battlePokemon.moves[size] = GetMonData(&gEnemyParty[monId], MON_DATA_MOVE1 + size);
-            battlePokemon.pp[size] = GetMonData(&gEnemyParty[monId], MON_DATA_PP1 + size);
+            battleMon.moves[size] = GetMonData(&gEnemyParty[monId], MON_DATA_MOVE1 + size);
+            battleMon.pp[size] = GetMonData(&gEnemyParty[monId], MON_DATA_PP1 + size);
         }
-        battlePokemon.ppBonuses = GetMonData(&gEnemyParty[monId], MON_DATA_PP_BONUSES);
-        battlePokemon.friendship = GetMonData(&gEnemyParty[monId], MON_DATA_FRIENDSHIP);
-        battlePokemon.experience = GetMonData(&gEnemyParty[monId], MON_DATA_EXP);
-        battlePokemon.hpIV = GetMonData(&gEnemyParty[monId], MON_DATA_HP_IV);
-        battlePokemon.attackIV = GetMonData(&gEnemyParty[monId], MON_DATA_ATK_IV);
-        battlePokemon.defenseIV = GetMonData(&gEnemyParty[monId], MON_DATA_DEF_IV);
-        battlePokemon.speedIV = GetMonData(&gEnemyParty[monId], MON_DATA_SPEED_IV);
-        battlePokemon.spAttackIV = GetMonData(&gEnemyParty[monId], MON_DATA_SPATK_IV);
-        battlePokemon.spDefenseIV = GetMonData(&gEnemyParty[monId], MON_DATA_SPDEF_IV);
-        battlePokemon.personality = GetMonData(&gEnemyParty[monId], MON_DATA_PERSONALITY);
-        battlePokemon.status1 = GetMonData(&gEnemyParty[monId], MON_DATA_STATUS);
-        battlePokemon.level = GetMonData(&gEnemyParty[monId], MON_DATA_LEVEL);
-        battlePokemon.hp = GetMonData(&gEnemyParty[monId], MON_DATA_HP);
-        battlePokemon.maxHP = GetMonData(&gEnemyParty[monId], MON_DATA_MAX_HP);
-        battlePokemon.attack = GetMonData(&gEnemyParty[monId], MON_DATA_ATK);
-        battlePokemon.defense = GetMonData(&gEnemyParty[monId], MON_DATA_DEF);
-        battlePokemon.speed = GetMonData(&gEnemyParty[monId], MON_DATA_SPEED);
-        battlePokemon.spAttack = GetMonData(&gEnemyParty[monId], MON_DATA_SPATK);
-        battlePokemon.spDefense = GetMonData(&gEnemyParty[monId], MON_DATA_SPDEF);
-        battlePokemon.isEgg = GetMonData(&gEnemyParty[monId], MON_DATA_IS_EGG);
-        battlePokemon.abilityNum = GetMonData(&gEnemyParty[monId], MON_DATA_ABILITY_NUM);
-        battlePokemon.otId = GetMonData(&gEnemyParty[monId], MON_DATA_OT_ID);
+        battleMon.ppBonuses = GetMonData(&gEnemyParty[monId], MON_DATA_PP_BONUSES);
+        battleMon.friendship = GetMonData(&gEnemyParty[monId], MON_DATA_FRIENDSHIP);
+        battleMon.experience = GetMonData(&gEnemyParty[monId], MON_DATA_EXP);
+        battleMon.hpIV = GetMonData(&gEnemyParty[monId], MON_DATA_HP_IV);
+        battleMon.attackIV = GetMonData(&gEnemyParty[monId], MON_DATA_ATK_IV);
+        battleMon.defenseIV = GetMonData(&gEnemyParty[monId], MON_DATA_DEF_IV);
+        battleMon.speedIV = GetMonData(&gEnemyParty[monId], MON_DATA_SPEED_IV);
+        battleMon.spAttackIV = GetMonData(&gEnemyParty[monId], MON_DATA_SPATK_IV);
+        battleMon.spDefenseIV = GetMonData(&gEnemyParty[monId], MON_DATA_SPDEF_IV);
+        battleMon.personality = GetMonData(&gEnemyParty[monId], MON_DATA_PERSONALITY);
+        battleMon.status1 = GetMonData(&gEnemyParty[monId], MON_DATA_STATUS);
+        battleMon.level = GetMonData(&gEnemyParty[monId], MON_DATA_LEVEL);
+        battleMon.hp = GetMonData(&gEnemyParty[monId], MON_DATA_HP);
+        battleMon.maxHP = GetMonData(&gEnemyParty[monId], MON_DATA_MAX_HP);
+        battleMon.attack = GetMonData(&gEnemyParty[monId], MON_DATA_ATK);
+        battleMon.defense = GetMonData(&gEnemyParty[monId], MON_DATA_DEF);
+        battleMon.speed = GetMonData(&gEnemyParty[monId], MON_DATA_SPEED);
+        battleMon.spAttack = GetMonData(&gEnemyParty[monId], MON_DATA_SPATK);
+        battleMon.spDefense = GetMonData(&gEnemyParty[monId], MON_DATA_SPDEF);
+        battleMon.isEgg = GetMonData(&gEnemyParty[monId], MON_DATA_IS_EGG);
+        battleMon.abilityNum = GetMonData(&gEnemyParty[monId], MON_DATA_ABILITY_NUM);
+        battleMon.otId = GetMonData(&gEnemyParty[monId], MON_DATA_OT_ID);
         GetMonData(&gEnemyParty[monId], MON_DATA_NICKNAME, nickname);
-        StringCopy_Nickname(battlePokemon.nickname, nickname);
-        GetMonData(&gEnemyParty[monId], MON_DATA_OT_NAME, battlePokemon.otName);
-        MEMCPY_ALT(&battlePokemon, dst, sizeof(battlePokemon), size, src);
+        StringCopy_Nickname(battleMon.nickname, nickname);
+        GetMonData(&gEnemyParty[monId], MON_DATA_OT_NAME, battleMon.otName);
+        MEMCPY_ALT(&battleMon, dst, sizeof(battleMon), size, src);
         break;
     case 1:
         data16 = GetMonData(&gEnemyParty[monId], MON_DATA_SPECIES);
@@ -844,13 +844,13 @@ static u32 GetOpponentMonData(u8 monId, u8 *dst)
 
 static void OpponentHandleGetRawMonData(void)
 {
-    struct BattlePokemon buffer;
+    struct BattlePokemon battleMon;
     u8 i;
     // TODO: Maybe fix this. Integrating this into MEMSET_ALT is too hard.
     u8 *src = (u8 *)&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]] + gBattleBufferA[gActiveBattler][1];
     u8 *dst;
 
-    MEMSET_ALT(&buffer + gBattleBufferA[gActiveBattler][1], src[i], gBattleBufferA[gActiveBattler][2], i, dst);
+    MEMSET_ALT(&battleMon + gBattleBufferA[gActiveBattler][1], src[i], gBattleBufferA[gActiveBattler][2], i, dst);
     BtlController_EmitDataTransfer(1, gBattleBufferA[gActiveBattler][2], dst);
     OpponentBufferExecCompleted();
 }
@@ -1195,70 +1195,70 @@ static void DoSwitchOutAnimation(void)
 
 static void OpponentHandleDrawTrainerPic(void)
 {
-    u32 trainerPicIndex;
+    u32 trainerPicId;
 
 #if DEBUG
     if (gDebugBattleFlags & 0x10)
     {
-        trainerPicIndex = gSharedMem[BSTRUCT_OFF(debugTrainerPicIndex)];
+        trainerPicId = gSharedMem[BSTRUCT_OFF(debugTrainerPicIndex)];
     }
     else
 #endif
     {
         if (gTrainerBattleOpponent == SECRET_BASE_OPPONENT)
-            trainerPicIndex = GetSecretBaseTrainerPicIndex();
+            trainerPicId = GetSecretBaseTrainerPicIndex();
         else if (gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER)
-            trainerPicIndex = GetBattleTowerTrainerFrontSpriteId();
+            trainerPicId = GetBattleTowerTrainerFrontSpriteId();
         else if (gBattleTypeFlags & BATTLE_TYPE_EREADER_TRAINER)
-            trainerPicIndex = GetEReaderTrainerPicIndex();
+            trainerPicId = GetEReaderTrainerPicIndex();
         else
-            trainerPicIndex = gTrainers[gTrainerBattleOpponent].trainerPic;
+            trainerPicId = gTrainers[gTrainerBattleOpponent].trainerPic;
     }
 
-    DecompressTrainerFrontPic(trainerPicIndex, gActiveBattler);
-    SetMultiuseSpriteTemplateToTrainerBack(trainerPicIndex, GetBattlerPosition(gActiveBattler));
+    DecompressTrainerFrontPic(trainerPicId, gActiveBattler);
+    SetMultiuseSpriteTemplateToTrainerBack(trainerPicId, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gCreatingSpriteTemplate,
       0xB0,
-      40 + 4 * (8 - gTrainerFrontPicCoords[trainerPicIndex].coords),
+      40 + 4 * (8 - gTrainerFrontPicCoords[trainerPicId].coords),
       GetBattlerSpriteSubpriority(gActiveBattler));
     gSprites[gBattlerSpriteIds[gActiveBattler]].x2 = -240;
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[0] = 2;
-    gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = IndexOfSpritePaletteTag(gTrainerFrontPicPaletteTable[trainerPicIndex].tag);
+    gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = IndexOfSpritePaletteTag(gTrainerFrontPicPaletteTable[trainerPicId].tag);
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[5] = gSprites[gBattlerSpriteIds[gActiveBattler]].oam.tileNum;
-    gSprites[gBattlerSpriteIds[gActiveBattler]].oam.tileNum = GetSpriteTileStartByTag(gTrainerFrontPicTable[trainerPicIndex].tag);
-    gSprites[gBattlerSpriteIds[gActiveBattler]].oam.affineParam = trainerPicIndex;
+    gSprites[gBattlerSpriteIds[gActiveBattler]].oam.tileNum = GetSpriteTileStartByTag(gTrainerFrontPicTable[trainerPicId].tag);
+    gSprites[gBattlerSpriteIds[gActiveBattler]].oam.affineParam = trainerPicId;
     gSprites[gBattlerSpriteIds[gActiveBattler]].callback = SpriteCB_TrainerSlideIn;
     gBattlerControllerFuncs[gActiveBattler] = CompleteOnBattlerSpriteCallbackDummy;
 }
 
 static void OpponentHandleTrainerSlide(void)
 {
-    u32 trainerPicIndex;
+    u32 trainerPicId;
 
     if (gTrainerBattleOpponent == SECRET_BASE_OPPONENT)
-        trainerPicIndex = GetSecretBaseTrainerPicIndex();
+        trainerPicId = GetSecretBaseTrainerPicIndex();
     else if (gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER)
-        trainerPicIndex = GetBattleTowerTrainerFrontSpriteId();
+        trainerPicId = GetBattleTowerTrainerFrontSpriteId();
     else if (gBattleTypeFlags & BATTLE_TYPE_EREADER_TRAINER)
-        trainerPicIndex = GetEReaderTrainerPicIndex();
+        trainerPicId = GetEReaderTrainerPicIndex();
     else
-        trainerPicIndex = gTrainers[gTrainerBattleOpponent].trainerPic;
+        trainerPicId = gTrainers[gTrainerBattleOpponent].trainerPic;
 
-    DecompressTrainerFrontPic(trainerPicIndex, gActiveBattler);
-    SetMultiuseSpriteTemplateToTrainerBack(trainerPicIndex, GetBattlerPosition(gActiveBattler));
+    DecompressTrainerFrontPic(trainerPicId, gActiveBattler);
+    SetMultiuseSpriteTemplateToTrainerBack(trainerPicId, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gCreatingSpriteTemplate,
       0xB0,
-      40 + 4 * (8 - gTrainerFrontPicCoords[trainerPicIndex].coords),
+      40 + 4 * (8 - gTrainerFrontPicCoords[trainerPicId].coords),
       0x1E);
     gSprites[gBattlerSpriteIds[gActiveBattler]].x2 = 96;
     gSprites[gBattlerSpriteIds[gActiveBattler]].x += 32;
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[0] = -2;
-    gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = IndexOfSpritePaletteTag(gTrainerFrontPicPaletteTable[trainerPicIndex].tag);
+    gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = IndexOfSpritePaletteTag(gTrainerFrontPicPaletteTable[trainerPicId].tag);
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[5] = gSprites[gBattlerSpriteIds[gActiveBattler]].oam.tileNum;
-    gSprites[gBattlerSpriteIds[gActiveBattler]].oam.tileNum = GetSpriteTileStartByTag(gTrainerFrontPicTable[trainerPicIndex].tag);
-    gSprites[gBattlerSpriteIds[gActiveBattler]].oam.affineParam = trainerPicIndex;
+    gSprites[gBattlerSpriteIds[gActiveBattler]].oam.tileNum = GetSpriteTileStartByTag(gTrainerFrontPicTable[trainerPicId].tag);
+    gSprites[gBattlerSpriteIds[gActiveBattler]].oam.affineParam = trainerPicId;
     gSprites[gBattlerSpriteIds[gActiveBattler]].callback = SpriteCB_TrainerSlideIn;
     gBattlerControllerFuncs[gActiveBattler] = CompleteOnBankSpriteCallbackDummy2;
 }
