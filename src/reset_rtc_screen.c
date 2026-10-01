@@ -67,7 +67,7 @@ struct ResetRtcInputMap
 extern u16 gSaveFileStatus;
 
 void CB2_ResetRtcScreen(void);
-void VBlankCB_ResetRtcScreen(void);
+static void VBlankCB(void);
 void Task_ResetRtcScreen(u8);
 void Task_ResetRtc_SetFinished(u8);
 void Task_ResetRtc_Exit(u8);
@@ -487,7 +487,7 @@ void CB2_InitResetRtcScreen(void)
     Text_LoadWindowTemplate(&gMenuTextWindowTemplate);
     InitMenuWindow(&gMenuTextWindowTemplate);
     REG_DISPCNT = DISPCNT_OBJ_ON | DISPCNT_BG0_ON;
-    SetVBlankCallback(VBlankCB_ResetRtcScreen);
+    SetVBlankCallback(VBlankCB);
     SetMainCallback2(CB2_ResetRtcScreen);
     CreateTask(Task_ResetRtcScreen, 80);
 }
@@ -500,7 +500,7 @@ void CB2_ResetRtcScreen(void)
     UpdatePaletteFade();
 }
 
-void VBlankCB_ResetRtcScreen(void)
+static void VBlankCB(void)
 {
     ProcessSpriteCopyRequests();
     LoadOam();
