@@ -170,7 +170,7 @@ void Task_ShowForgetMovePrompt(u8 taskId);
 void Task_HandleForgetMovePrompt(u8 taskId);
 void Task_FadeToMoveSelectionSummary(u8 taskId);
 void TMMoveUpdateMoveSlot(u8);
-void Task_ShowStopTryingMoveMessage(u8 taskId);
+void StopLearningMovePrompt(u8 taskId);
 void Task_ShowStopTryingMovePrompt(u8 taskId);
 void Task_HandleStopTryingMovePrompt(u8 taskId);
 void Task_AnimatePartyMenuHpRestore(u8 taskId);

@@ -3343,7 +3343,7 @@ void Task_HandleForgetMovePrompt(u8 taskId)
             return;
         if (selection == -1)
             PlaySE(SE_SELECT);
-        Task_ShowStopTryingMoveMessage(taskId);
+        StopLearningMovePrompt(taskId);
     }
 }
 
@@ -3407,7 +3407,7 @@ void Task_WaitToShowStopTryingMoveMessage(u8 taskId)
     }
 }
 
-void Task_ShowStopTryingMoveMessage(u8 taskId)
+void StopLearningMovePrompt(u8 taskId)
 {
     Menu_EraseWindowRect(23, 8, 29, 13);
     StringCopy(gStringVar2, gMoveNames[sPartyMenuAction.moveToLearn]);
