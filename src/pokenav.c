@@ -3782,7 +3782,7 @@ void LoadConditionGraphMonGfx(s16 listId, u8 loadId)
             species,
             personality);
 
-        LZ77UnCompWram(GetMonSpritePalFromOtIdPersonality(species, otId, personality), gPokenavState->portraitPaletteBuffers[loadId]);
+        LZ77UnCompWram(GetMonSpritePalFromSpeciesAndPersonality(species, otId, personality), gPokenavState->portraitPaletteBuffers[loadId]);
         gPokenavState->conditionMonSpecies[loadId] = species;
     }
 }

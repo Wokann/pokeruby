@@ -5333,7 +5333,7 @@ static void Cmd_yesnoboxlearnmove(void)
             else
             {
                 u16 move = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_MOVE1 + move_pos);
-                if (IsHMMove(move))
+                if (IsHMMove2(move))
                 {
                     PrepareStringBattle(0x13F, gActiveBattler);
                     gBattleStruct->learnMoveState = 5;

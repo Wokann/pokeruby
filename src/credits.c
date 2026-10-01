@@ -1590,7 +1590,7 @@ static u8 CreateCreditsMonSprite(u16 species, u16 x, u16 y, u16 position)
         1
     );
 
-    lzPaletteData = GetMonSpritePalFromOtIdPersonality(species, 0, 0xFFFF);
+    lzPaletteData = GetMonSpritePalFromSpeciesAndPersonality(species, 0, 0xFFFF);
     LoadCompressedPalette(lzPaletteData, 0x100 + (position * 16), 0x20);
     PrepareHallOfFameMonPicSpriteTemplate(position, position);
 

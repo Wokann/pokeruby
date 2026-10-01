@@ -1332,7 +1332,7 @@ void SetMovingMonData(u8 boxId, u8 position)
     if (boxId == TOTAL_BOXES_COUNT)
         gPokemonStorageSystemPtr->movingMon = gPlayerParty[sCursorPosition];
     else
-        ExpandBoxMon(gPokemonStorage.boxes[boxId] + position, &gPokemonStorageSystemPtr->movingMon);
+        BoxMonToMon(gPokemonStorage.boxes[boxId] + position, &gPokemonStorageSystemPtr->movingMon);
     PurgeMonOrBoxMon(boxId, position);
     sMovingMonOrigBoxId = boxId;
     sMovingMonOrigBoxPos = position;
@@ -1364,7 +1364,7 @@ void SetShiftedMonData(u8 boxId, u8 position)
     if (boxId == TOTAL_BOXES_COUNT)
         gPokemonStorageSystemPtr->tempMon = gPlayerParty[position];
     else
-        ExpandBoxMon(gPokemonStorage.boxes[boxId] + position, &gPokemonStorageSystemPtr->tempMon);
+        BoxMonToMon(gPokemonStorage.boxes[boxId] + position, &gPokemonStorageSystemPtr->tempMon);
     SetPlacedMonData(boxId, position);
     gPokemonStorageSystemPtr->movingMon = gPokemonStorageSystemPtr->tempMon;
     SetDisplayMonData(&gPokemonStorageSystemPtr->movingMon, PSS_MODE_PARTY);
@@ -1466,7 +1466,7 @@ void InitCanReleaseMonVars(void)
         }
         else
         {
-            ExpandBoxMon(gPokemonStorage.boxes[gPokemonStorage.currentBox] + sCursorPosition, &gPokemonStorageSystemPtr->tempMon);
+            BoxMonToMon(gPokemonStorage.boxes[gPokemonStorage.currentBox] + sCursorPosition, &gPokemonStorageSystemPtr->tempMon);
             gPokemonStorageSystemPtr->releaseBoxId = gPokemonStorage.currentBox;
         }
         gPokemonStorageSystemPtr->releaseBoxPos = sCursorPosition;
@@ -1727,7 +1727,7 @@ void SetDisplayMonData(void *pokemon, u8 mode)
             gPokemonStorageSystemPtr->displayMonLevel = GetMonData(pkmn, MON_DATA_LEVEL);
             gPokemonStorageSystemPtr->displayMonMarkings = GetMonData(pkmn, MON_DATA_MARKINGS);
             gPokemonStorageSystemPtr->displayMonPersonality = GetMonData(pkmn, MON_DATA_PERSONALITY);
-            gPokemonStorageSystemPtr->displayMonPalette = GetMonSpritePal(pkmn);
+            gPokemonStorageSystemPtr->displayMonPalette = GetMonFrontSpritePal(pkmn);
             gender = GetMonGender(pkmn);
             gPokemonStorageSystemPtr->displayMonItemId = GetMonData(pkmn, MON_DATA_HELD_ITEM);
         }
@@ -1745,7 +1745,7 @@ void SetDisplayMonData(void *pokemon, u8 mode)
             gPokemonStorageSystemPtr->displayMonLevel = GetLevelFromBoxMonExp(boxmon);
             gPokemonStorageSystemPtr->displayMonMarkings = GetBoxMonData(boxmon, MON_DATA_MARKINGS);
             gPokemonStorageSystemPtr->displayMonPersonality = GetBoxMonData(boxmon, MON_DATA_PERSONALITY);
-            gPokemonStorageSystemPtr->displayMonPalette = GetMonSpritePalFromOtIdPersonality(gPokemonStorageSystemPtr->displayMonSpecies, otId, gPokemonStorageSystemPtr->displayMonPersonality);
+            gPokemonStorageSystemPtr->displayMonPalette = GetMonSpritePalFromSpeciesAndPersonality(gPokemonStorageSystemPtr->displayMonSpecies, otId, gPokemonStorageSystemPtr->displayMonPersonality);
             gender = GetGenderFromSpeciesAndPersonality(gPokemonStorageSystemPtr->displayMonSpecies, gPokemonStorageSystemPtr->displayMonPersonality);
             gPokemonStorageSystemPtr->displayMonItemId = GetBoxMonData(boxmon, MON_DATA_HELD_ITEM);
         }

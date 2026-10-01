@@ -1770,7 +1770,7 @@ static u16 CreateIntroBattleMonSprite(u16 species, s16 x, s16 y, u16 spriteSlot,
         LoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, (void *)EWRAM, gHallOfFameGfxBufferPtrs[spriteSlot], species, 0, 1);
     else
         LoadSpecialPokePic(&gMonBackPicTable[species], gMonBackPicCoords[species].coords, gMonBackPicCoords[species].y_offset, (void *)EWRAM, gHallOfFameGfxBufferPtrs[spriteSlot], species, 0, 0);
-    lzPaletteData = GetMonSpritePalFromOtIdPersonality(species, 0, 0xFFFF);
+    lzPaletteData = GetMonSpritePalFromSpeciesAndPersonality(species, 0, 0xFFFF);
     LoadCompressedPalette(lzPaletteData, 0x100 + spriteSlot * 0x10, 0x20);
     PrepareHallOfFameMonPicSpriteTemplate(spriteSlot, spriteSlot);
     spriteId = CreateSprite(&gCreatingSpriteTemplate, x, y, (spriteSlot + 1) * 4);

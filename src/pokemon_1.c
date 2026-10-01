@@ -1819,7 +1819,7 @@ void Nakamura_NakaGenderTest_RecalcStats(struct Pokemon *mon)
 #endif
 #endif
 
-void ExpandBoxMon(const struct BoxPokemon *src, struct Pokemon *dest)
+void BoxMonToMon(const struct BoxPokemon *src, struct Pokemon *dest)
 {
     u32 value = 0;
     dest->box = *src;

@@ -1165,12 +1165,12 @@ void PlayMapChosenOrBattleBGM(u16 songId)
         PlayNewMapMusic(GetBattleBGM());
 }
 
-const u8 *GetMonSpritePal(struct Pokemon *mon)
+const u8 *GetMonFrontSpritePal(struct Pokemon *mon)
 {
     u16 species = GetMonData(mon, MON_DATA_SPECIES2, 0);
     u32 otId = GetMonData(mon, MON_DATA_OT_ID, 0);
     u32 personality = GetMonData(mon, MON_DATA_PERSONALITY, 0);
-    return GetMonSpritePalFromOtIdPersonality(species, otId, personality);
+    return GetMonSpritePalFromSpeciesAndPersonality(species, otId, personality);
 }
 
 //Extracts the upper 16 bits of a 32-bit number
@@ -1179,7 +1179,7 @@ const u8 *GetMonSpritePal(struct Pokemon *mon)
 //Extracts the lower 16 bits of a 32-bit number
 #define LOHALF(n) ((n) & 0xFFFF)
 
-const u8 *GetMonSpritePalFromOtIdPersonality(u16 species, u32 otId, u32 personality)
+const u8 *GetMonSpritePalFromSpeciesAndPersonality(u16 species, u32 otId, u32 personality)
 {
     u32 shinyValue;
 
@@ -1225,7 +1225,7 @@ static const u16 sHMMoves[] =
     0xffff
 };
 
-bool32 IsHMMove(u16 move)
+bool32 IsHMMove2(u16 move)
 {
     int i = 0;
     while (sHMMoves[i] != 0xFFFF)
@@ -1343,7 +1343,7 @@ void SetWildMonHeldItem(void)
 
 bool8 IsShinyOtIdPersonality(u32, u32);
 
-bool8 IsShiny(struct Pokemon *mon)
+bool8 IsMonShiny(struct Pokemon *mon)
 {
     u32 otId = GetMonData(mon, MON_DATA_OT_ID, 0);
     u32 personality = GetMonData(mon, MON_DATA_PERSONALITY, 0);

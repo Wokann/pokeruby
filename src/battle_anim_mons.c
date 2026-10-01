@@ -1981,7 +1981,7 @@ u8 CreateAdditionalMonSpriteForMoveAnim(u16 species, bool8 isBackpic, u8 id, s16
 
     if (!isBackpic)
     {
-        LoadCompressedPalette(GetMonSpritePalFromOtIdPersonality(species, trainerId, personality), (palette * 0x10) + 0x100, 0x20);
+        LoadCompressedPalette(GetMonSpritePalFromSpeciesAndPersonality(species, trainerId, personality), (palette * 0x10) + 0x100, 0x20);
         LoadSpecialPokePic(
             &gMonFrontPicTable[species],
             gMonFrontPicCoords[species].coords,
@@ -1995,7 +1995,7 @@ u8 CreateAdditionalMonSpriteForMoveAnim(u16 species, bool8 isBackpic, u8 id, s16
     }
     else
     {
-        LoadCompressedPalette(GetMonSpritePalFromOtIdPersonality(species, trainerId, personality), (palette * 0x10) + 0x100, 0x20);
+        LoadCompressedPalette(GetMonSpritePalFromSpeciesAndPersonality(species, trainerId, personality), (palette * 0x10) + 0x100, 0x20);
         LoadSpecialPokePic(
             &gMonBackPicTable[species],
             gMonBackPicCoords[species].coords,

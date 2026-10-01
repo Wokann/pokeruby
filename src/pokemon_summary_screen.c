@@ -1821,7 +1821,7 @@ static void CopyMonToSummaryStruct(struct Pokemon *mon)
     else
     {
         struct BoxPokemon *mons = sMonSummaryScreen->monList.boxMons;
-        ExpandBoxMon(&mons[sMonSummaryScreen->curMonIndex], mon);
+        BoxMonToMon(&mons[sMonSummaryScreen->curMonIndex], mon);
     }
 }
 
@@ -1999,7 +1999,7 @@ static void SummaryScreen_PlaceTextTile_White(u8 tile, u8 x, u8 y)
 
 bool8 SetMonPicBackgroundPalette(struct Pokemon *mon)
 {
-    if (!IsShiny(mon))
+    if (!IsMonShiny(mon))
     {
         LoadPalette(sDexNumberNormalPalette, 4, 2);
         return FALSE;

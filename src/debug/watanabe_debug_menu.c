@@ -2853,9 +2853,9 @@ void Task_WatanabeDebugHandlePokemonGraphicsInput(u8 taskId)
     {
         gWatanabeGraphicsBrowserState->useShinyPalette ^= 1;
         if (gWatanabeGraphicsBrowserState->useShinyPalette)
-            LoadCompressedPalette(GetMonSpritePalFromOtIdPersonality(gWatanabeGraphicsBrowserState->graphicsId, 0, 0), gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, 0x20);
+            LoadCompressedPalette(GetMonSpritePalFromSpeciesAndPersonality(gWatanabeGraphicsBrowserState->graphicsId, 0, 0), gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, 0x20);
         else
-            LoadCompressedPalette(GetMonSpritePalFromOtIdPersonality(gWatanabeGraphicsBrowserState->graphicsId, 0, 9), gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, 0x20);
+            LoadCompressedPalette(GetMonSpritePalFromSpeciesAndPersonality(gWatanabeGraphicsBrowserState->graphicsId, 0, 9), gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, 0x20);
         CpuCopy16(gPlttBufferUnfaded + gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, gPlttBufferUnfaded + 0x80, 32);
         CpuCopy16(gPlttBufferUnfaded + gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, gPlttBufferFaded + 0x80, 32);
         gTasks[taskId].func = Task_WatanabeDebugRefreshPokemonPalette;
@@ -3060,7 +3060,7 @@ NAKED void Task_WatanabeDebugHandlePokemonGraphicsInput(u8 taskId)
         "\tldrh\tr0, [r1]\n"
         "\tmov\tr1, #0x0\n"
         "\tmov\tr2, #0x0\n"
-        "\tbl\tGetMonSpritePalFromOtIdPersonality\n"
+        "\tbl\tGetMonSpritePalFromSpeciesAndPersonality\n"
         "\tldr\tr1, [r4]\n"
         "\tldrb\tr1, [r1, #0x6]\n"
         "\tlsl\tr1, r1, #0x14\n"
@@ -3079,7 +3079,7 @@ NAKED void Task_WatanabeDebugHandlePokemonGraphicsInput(u8 taskId)
         "\tldrh\tr0, [r1]\n"
         "\tmov\tr1, #0x0\n"
         "\tmov\tr2, #0x9\n"
-        "\tbl\tGetMonSpritePalFromOtIdPersonality\n"
+        "\tbl\tGetMonSpritePalFromSpeciesAndPersonality\n"
         "\tldr\tr1, [r4]\n"
         "\tldrb\tr1, [r1, #0x6]\n"
         "\tlsl\tr1, r1, #0x14\n"
@@ -3462,11 +3462,11 @@ void Task_WatanabeDebugHandleTrainerGraphicsInput(u8 taskId)
         gWatanabeGraphicsBrowserState->useShinyPalette ^= 1;
         if (gWatanabeGraphicsBrowserState->useShinyPalette)
         {
-            LoadCompressedPalette(GetMonSpritePalFromOtIdPersonality(gWatanabeGraphicsBrowserState->graphicsId, 0, 0), gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, 0x20);
+            LoadCompressedPalette(GetMonSpritePalFromSpeciesAndPersonality(gWatanabeGraphicsBrowserState->graphicsId, 0, 0), gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, 0x20);
         }
         else
         {
-            LoadCompressedPalette(GetMonSpritePalFromOtIdPersonality(gWatanabeGraphicsBrowserState->graphicsId, 0, 9), gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, 0x20);
+            LoadCompressedPalette(GetMonSpritePalFromSpeciesAndPersonality(gWatanabeGraphicsBrowserState->graphicsId, 0, 9), gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, 0x20);
         }
         CpuCopy16(gPlttBufferUnfaded + gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, gPlttBufferUnfaded + 0x80, 32);
         CpuCopy16(gPlttBufferUnfaded + gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, gPlttBufferFaded + 0x80, 32);
@@ -3664,7 +3664,7 @@ NAKED void Task_WatanabeDebugHandleTrainerGraphicsInput(u8 taskId)
         "\tldrh\tr0, [r1]\n"
         "\tmov\tr1, #0x0\n"
         "\tmov\tr2, #0x0\n"
-        "\tbl\tGetMonSpritePalFromOtIdPersonality\n"
+        "\tbl\tGetMonSpritePalFromSpeciesAndPersonality\n"
         "\tldr\tr1, [r4]\n"
         "\tldrb\tr1, [r1, #0x6]\n"
         "\tlsl\tr1, r1, #0x14\n"
@@ -3683,7 +3683,7 @@ NAKED void Task_WatanabeDebugHandleTrainerGraphicsInput(u8 taskId)
         "\tldrh\tr0, [r1]\n"
         "\tmov\tr1, #0x0\n"
         "\tmov\tr2, #0x9\n"
-        "\tbl\tGetMonSpritePalFromOtIdPersonality\n"
+        "\tbl\tGetMonSpritePalFromSpeciesAndPersonality\n"
         "\tldr\tr1, [r4]\n"
         "\tldrb\tr1, [r1, #0x6]\n"
         "\tlsl\tr1, r1, #0x14\n"
