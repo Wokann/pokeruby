@@ -1040,7 +1040,7 @@ void CopyBattleTowerTrainerGreeting(void)
 void HandleSpecialTrainerBattleEnd(void)
 {
     s32 i;
-    u16 heldItem;
+    u16 itemBefore;
 
     switch (gSpecialVar_0x8004)
     {
@@ -1049,8 +1049,8 @@ void HandleSpecialTrainerBattleEnd(void)
     case 1:
         for (i = 0; i < PARTY_SIZE; i++)
         {
-            heldItem = GetMonData(&gSaveBlock1.playerParty[i], MON_DATA_HELD_ITEM);
-            SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &heldItem);
+            itemBefore = GetMonData(&gSaveBlock1.playerParty[i], MON_DATA_HELD_ITEM);
+            SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &itemBefore);
         }
         break;
     case 2:
@@ -1074,7 +1074,7 @@ void Task_StartBattleAfterTransition(u8 taskId)
 void DoSpecialTrainerBattle(void)
 {
     s32 i;
-    u16 heldItem;
+    u16 itemBefore;
     u8 transition;
 
     switch (gSpecialVar_0x8004)
@@ -1093,8 +1093,8 @@ void DoSpecialTrainerBattle(void)
     case SPECIAL_BATTLE_SECRET_BASE: // secret base battle
         for (i = 0; i < PARTY_SIZE; i++)
         {
-            heldItem = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
-            SetMonData(&gSaveBlock1.playerParty[i], MON_DATA_HELD_ITEM, &heldItem);
+            itemBefore = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
+            SetMonData(&gSaveBlock1.playerParty[i], MON_DATA_HELD_ITEM, &itemBefore);
         }
 
         CreateTask(Task_StartBattleAfterTransition, 1);
@@ -1249,30 +1249,30 @@ void SetBattleTowerParty(void)
 static void SaveCurrentWinStreak(void)
 {
     u8 levelType = gSaveBlock2.battleTower.battleTowerLevelType;
-    u16 streak = GetCurrentBattleTowerWinStreak(levelType);
+    u16 winStreak = GetCurrentBattleTowerWinStreak(levelType);
 
-    if (gSaveBlock2.battleTower.recordWinStreaks[levelType] < streak)
-        gSaveBlock2.battleTower.recordWinStreaks[levelType] = streak;
+    if (gSaveBlock2.battleTower.recordWinStreaks[levelType] < winStreak)
+        gSaveBlock2.battleTower.recordWinStreaks[levelType] = winStreak;
 
     if (gSaveBlock2.battleTower.recordWinStreaks[0] > gSaveBlock2.battleTower.recordWinStreaks[1])
     {
-        streak = gSaveBlock2.battleTower.recordWinStreaks[0];
-        SetGameStat(GAME_STAT_BATTLE_TOWER_SINGLES_STREAK, streak);
+        winStreak = gSaveBlock2.battleTower.recordWinStreaks[0];
+        SetGameStat(GAME_STAT_BATTLE_TOWER_SINGLES_STREAK, winStreak);
 
-        if (streak > 9999)
+        if (winStreak > 9999)
             gSaveBlock2.battleTower.bestBattleTowerWinStreak = 9999;
         else
-            gSaveBlock2.battleTower.bestBattleTowerWinStreak = streak;
+            gSaveBlock2.battleTower.bestBattleTowerWinStreak = winStreak;
     }
     else
     {
-        streak = gSaveBlock2.battleTower.recordWinStreaks[1];
-        SetGameStat(GAME_STAT_BATTLE_TOWER_SINGLES_STREAK, streak);
+        winStreak = gSaveBlock2.battleTower.recordWinStreaks[1];
+        SetGameStat(GAME_STAT_BATTLE_TOWER_SINGLES_STREAK, winStreak);
 
-        if (streak > 9999)
+        if (winStreak > 9999)
             gSaveBlock2.battleTower.bestBattleTowerWinStreak = 9999;
         else
-            gSaveBlock2.battleTower.bestBattleTowerWinStreak = streak;
+            gSaveBlock2.battleTower.bestBattleTowerWinStreak = winStreak;
     }
 }
 
