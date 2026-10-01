@@ -268,7 +268,7 @@ static void SaveCurrentWinStreak(void);
 static void SetTowerInterviewData(void);
 static void CheckMonBattleTowerBanlist(u16, u16, u16, u8, u8, u16 *, u16 *, u8 *);
 static void ClearEReaderTrainer(struct BattleTowerEReaderTrainer *);
-static void SetBattleTowerRecordChecksum(struct BattleTowerRecord *);
+static void CalcRubyBattleTowerChecksum(struct BattleTowerRecord *);
 static void ClearBattleTowerRecord(struct BattleTowerRecord *);
 
 extern const u8 BattleText_Format3[];
@@ -1308,7 +1308,7 @@ void SaveBattleTowerRecord(void)
     for (i = 0; i < 3; i++)
         ConvertPokemonToBattleTowerPokemon(&gPlayerParty[gSaveBlock2.battleTower.selectedPartyMons[i] - 1], &playerRecord->party[i]);
 
-    SetBattleTowerRecordChecksum(&gSaveBlock2.battleTower.playerRecord);
+    CalcRubyBattleTowerChecksum(&gSaveBlock2.battleTower.playerRecord);
     SaveCurrentWinStreak();
 }
 
@@ -1366,7 +1366,7 @@ void ValidateBattleTowerRecordChecksums(void)
     }
 }
 
-void SetBattleTowerRecordChecksum(struct BattleTowerRecord *record)
+void CalcRubyBattleTowerChecksum(struct BattleTowerRecord *record)
 {
     u32 i;
 
