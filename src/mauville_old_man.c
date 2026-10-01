@@ -325,7 +325,7 @@ static void PrepareSongText(void)
     struct MauvilleManBard *bard = &gSaveBlock1.oldMan.bard;
     u16 songSelection = gSpecialVar_0x8004;  // It's a bit odd to use this temp variable, but it seems needed to match.
     u16 *lyrics;
-    u16 lineNum;
+    u16 paragraphNum;
     u8 *wordEnd;
     u8 *str;
 
@@ -335,7 +335,7 @@ static void PrepareSongText(void)
     wordEnd = gStringVar4;
     str = wordEnd;
     // Put three words on each line
-    for (lineNum = 0; lineNum < 2; lineNum++)
+    for (paragraphNum = 0; paragraphNum < 2; paragraphNum++)
     {
         wordEnd = CopyEasyChatWord(wordEnd, *(lyrics++));
         while (wordEnd != str)
@@ -367,7 +367,7 @@ static void PrepareSongText(void)
             str++;
         }
 
-        if (lineNum == 0)
+        if (paragraphNum == 0)
         {
             *(wordEnd++) = EXT_CTRL_CODE_BEGIN;
             *(wordEnd++) = 15;
@@ -615,11 +615,11 @@ static void BardSing(struct Task *task, struct BardSong *song)
         break;
     case 2:  // Initialize word
         {
-            u16 word = song->lyrics[song->lyricsIndex];
-            const struct BardSoundTemplate *soundTemplates = GetWordSoundTemplates(EC_GROUP(word), EC_INDEX(word));
+            u16 easyChatWord = song->lyrics[song->lyricsIndex];
+            const struct BardSoundTemplate *soundTemplates = GetWordSoundTemplates(EC_GROUP(easyChatWord), EC_INDEX(easyChatWord));
 
             song->length = 0;
-            CalcWordSounds(song, soundTemplates, WORD_TO_PITCH_TABLE_INDEX(word));
+            CalcWordSounds(song, soundTemplates, WORD_TO_PITCH_TABLE_INDEX(easyChatWord));
         }
         break;
     case 3:
@@ -640,9 +640,9 @@ static void BardSing(struct Task *task, struct BardSong *song)
                     song->timer = sound->length;
                     if (sound->songId <= 50)
                     {
-                        u16 num = sound->songId / 3;
+                        u16 phonemeTripletId = sound->songId / 3;
 
-                        m4aSongNumStart(249 + num * 3);
+                        m4aSongNumStart(249 + phonemeTripletId * 3);
                     }
                     song->state = 1;
                 }
@@ -1064,11 +1064,11 @@ static void PrintStoryList(void)
     for (i = 0; i < NUM_STORYTELLER_TALES; i++)
     {
         struct MauvilleManStoryteller *storyteller = &gSaveBlock1.oldMan.storyteller;
-        u8 stat = storyteller->gameStatIDs[i];
+        u8 gameStatID = storyteller->gameStatIDs[i];
 
-        if (stat == 0)
+        if (gameStatID == 0)
             break;
-        Menu_PrintText(GetStoryTitleByStat(stat), 1, 2 + i * 2);
+        Menu_PrintText(GetStoryTitleByStat(gameStatID), 1, 2 + i * 2);
     }
     Menu_PrintText(gPCText_Cancel, 1, 2 + i * 2);
 }
