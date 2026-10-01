@@ -6,7 +6,7 @@ SecretBase_MapScripts:: @ 815F337
     .byte 0
 
 SecretBase_OnResume:: @ 815F34C
-    setstepcallback 6
+    setstepcallback STEP_CB_SECRET_BASE
     end
 
 SecretBase_OnTransition:: @ 815F34F
@@ -47,7 +47,7 @@ SecretBase_EventScript_PCCancel:: @ 815F399
 	end
 
 SecretBase_EventScript_PCMainMenuWithRegister:
-	multichoice 0, 0, MULTI_BASE_PC_WITH_REGISTRY, 0
+	multichoice 0, 0, MULTI_BASE_PC_WITH_REGISTRY, FALSE
 	switch VAR_RESULT
 	case 0, SecretBase_EventScript_PCDecorationMenu
 	case 1, SecretBase_EventScript_PCPackUp
@@ -57,7 +57,7 @@ SecretBase_EventScript_PCMainMenuWithRegister:
 	end
 
 SecretBase_EventScript_PCMainMenuWithoutRegister:
-	multichoice 0, 0, MULTI_BASE_PC_NO_REGISTRY, 0
+	multichoice 0, 0, MULTI_BASE_PC_NO_REGISTRY, FALSE
 	switch VAR_RESULT
 	case 0, SecretBase_EventScript_PCDecorationMenu
 	case 1, SecretBase_EventScript_PCPackUp
@@ -97,7 +97,7 @@ SecretBase_EventScript_RecordMixingPC:: @ 815F43A
 SecretBase_EventScript_PCRegisterMenu:
 	message SecretBase_Text_WhatWouldYouLikeToDo
 	waitmessage
-	multichoice 0, 0, MULTI_REGISTER_MENU, 0
+	multichoice 0, 0, MULTI_REGISTER_MENU, FALSE
 	switch VAR_RESULT
 	case 0, SecretBase_EventScript_PCRegister
 	case 1, SecretBase_EventScript_PCRegistryMenu
