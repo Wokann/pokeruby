@@ -14,7 +14,7 @@ VerdanturfTown_ContestLobby_EventScript_ContestReceptionist:: @ 8153D76
 	special SetContestTrainerGfxIds
 	call Common_EventScript_SetupContestRivalGfxId
 	setvar VAR_CONTEST_LOCATION, CONTEST_LOCATION_VERDANTURF
-	warp MAP_LINK_CONTEST_ROOM1, 255, 7, 5
+	warp MAP_LINK_CONTEST_ROOM1, WARP_ID_NONE, 7, 5
 	waitstate
 	end
 
