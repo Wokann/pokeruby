@@ -240,9 +240,9 @@ bool8 FldEff_CutGrass(void)
     // populate sprite ID array
     for (i = 0; i < CUT_SPRITE_ARRAY_COUNT; i++)
     {
-        eCutGrassSpriteArray[i] = CreateSprite(&sSpriteTemplate_CutGrass,
+        sCutGrassSpriteArrayPtr[i] = CreateSprite(&sSpriteTemplate_CutGrass,
         gSprites[gPlayerAvatar.spriteId].oam.x + 8, gSprites[gPlayerAvatar.spriteId].oam.y + 20, 0);
-        gSprites[eCutGrassSpriteArray[i]].data[2] = 32 * i;
+        gSprites[sCutGrassSpriteArrayPtr[i]].data[2] = 32 * i;
     }
 
     return FALSE;
@@ -387,8 +387,8 @@ static void CutGrassSpriteCallbackEnd(struct Sprite *sprite)
     u8 i;
 
     for (i = 1; i < CUT_SPRITE_ARRAY_COUNT; i++)
-        DestroySprite(&gSprites[eCutGrassSpriteArray[i]]);
-    FieldEffectStop(&gSprites[eCutGrassSpriteArray[0]], FLDEFF_CUT_GRASS);
+        DestroySprite(&gSprites[sCutGrassSpriteArrayPtr[i]]);
+    FieldEffectStop(&gSprites[sCutGrassSpriteArrayPtr[0]], FLDEFF_CUT_GRASS);
     ScriptUnfreezeObjectEvents();
     UnlockPlayerFieldControls();
 }

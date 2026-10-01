@@ -152,7 +152,7 @@ extern u8 gSharedMem[];
 // decoration.c
 #define sDecorationContext              (*(struct DecorationPCContext *)(gSharedMem + 0x1f000))
 
-#define eCutGrassSpriteArray            (gSharedMem + 0x1FFF0) // 8 sprite IDs
+#define sCutGrassSpriteArrayPtr        (gSharedMem + 0x1FFF0) // 8 sprite IDs
 
 // reshow_battle_screen.c
 #define gReshowBattleScreenHelperState  (gSharedMem[0x1FFFE])
