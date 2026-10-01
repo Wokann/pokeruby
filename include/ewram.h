@@ -146,8 +146,8 @@ extern u8 gSharedMem[];
     ((struct Pokemon *)(gSharedMem + 0x1D000))
 
 // pokeblock_feed.c
-#define ePokeblockFeedMonAnimX          ((s16 *)(gSharedMem + 0x1D000))
-#define ePokeblockFeedMonAnimY          ((s16 *)(gSharedMem + 0x1D400))
+#define sPokeblockFeedMonAnimX          ((s16 *)(gSharedMem + 0x1D000))
+#define sPokeblockFeedMonAnimY          ((s16 *)(gSharedMem + 0x1D400))
 
 // decoration.c
 #define sDecorationContext              (*(struct DecorationPCContext *)(gSharedMem + 0x1f000))
@@ -162,12 +162,12 @@ extern u8 gSharedMem[];
 #define ewramBagSetupStep               (gSharedMem[0x1FFFF])
 
 // pokeblock_feed.c
-#define ePokeblockSpriteId              (gSharedMem[0x1FFFC])
-#define ePokeblockFeedCaseSpriteId      (gSharedMem[0x1FFFD])
-#define ePokeblockMonSpriteId           (gSharedMem[0x1FFFE])
+#define sPokeblockFeedPokeblockSpriteId (gSharedMem[0x1FFFC])
+#define sPokeblockFeedCaseSpriteId      (gSharedMem[0x1FFFD])
+#define sPokeblockFeedMonSpriteId       (gSharedMem[0x1FFFE])
 
-// pokeblock.c
-#define ePokeblockCaseSpriteId          (gSharedMem[0x1FFFE])
-#define ePokeblockGfxState              (gSharedMem[0x1FFFF])
+// pokeblock.c, pokeblock_feed.c
+#define sPokeblockMenuCaseSpriteId      (gSharedMem[0x1FFFE])
+#define sPokeblockLoadGfxState          (gSharedMem[0x1FFFF])
 
 #endif

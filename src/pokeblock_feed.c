@@ -613,7 +613,7 @@ static bool8 LoadPokeblockFeedScene(void)
     case 6:
         if (MultistepInitMenuWindowContinue())
         {
-            ePokeblockGfxState = 0;
+            sPokeblockLoadGfxState = 0;
             gMain.state++;
         }
         break;
@@ -624,11 +624,11 @@ static bool8 LoadPokeblockFeedScene(void)
         }
         break;
     case 8:
-        ePokeblockFeedCaseSpriteId = CreatePokeblockCaseSpriteForFeeding();
+        sPokeblockFeedCaseSpriteId = CreatePokeblockCaseSpriteForFeeding();
         gMain.state++;
         break;
     case 9:
-        ePokeblockMonSpriteId = CreateMonSprite(&gPlayerParty[gPokeblockMonId]);
+        sPokeblockFeedMonSpriteId = CreateMonSprite(&gPlayerParty[gPokeblockMonId]);
         gMain.state++;
         break;
     case 10:
@@ -684,13 +684,13 @@ static bool8 LoadMonAndSceneGfx(struct Pokemon* mon)
 {
     u16 species;
     u32 personality, trainerId;
-    switch (ePokeblockGfxState)
+    switch (sPokeblockLoadGfxState)
     {
     case 0:
         species = GetMonData(mon, MON_DATA_SPECIES2);
         personality = GetMonData(mon, MON_DATA_PERSONALITY);
         HandleLoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, (void *)EWRAM, gMonSpriteGfxBufferPtrs[1], species, personality);
-        ePokeblockGfxState++;
+        sPokeblockLoadGfxState++;
         break;
     case 1:
         {
@@ -702,37 +702,37 @@ static bool8 LoadMonAndSceneGfx(struct Pokemon* mon)
             palette = GetMonSpritePalStructFromOtIdPersonality(species, trainerId, personality);
             LoadCompressedSpritePalette(palette);
             SetMultiuseSpriteTemplateToPokemon(palette->tag, 1);
-            ePokeblockGfxState++;
+            sPokeblockLoadGfxState++;
         }
         break;
     case 2:
         LoadCompressedSpriteSheet(&gPokeblockCase_SpriteSheet);
-        ePokeblockGfxState++;
+        sPokeblockLoadGfxState++;
         break;
     case 3:
         LoadCompressedSpritePalette(&gPokeblockCase_SpritePal);
-        ePokeblockGfxState++;
+        sPokeblockLoadGfxState++;
         break;
     case 4:
         LoadCompressedSpriteSheet(&sSpriteSheet_Pokeblock);
-        ePokeblockGfxState++;
+        sPokeblockLoadGfxState++;
         break;
     case 5:
         SetPokeblockSpritePal(gSpecialVar_ItemId);
         LoadCompressedSpritePalette(&sPokeblockSpritePal);
-        ePokeblockGfxState++;
+        sPokeblockLoadGfxState++;
         break;
     case 6:
         LZDecompressVram(gBattleEnvironmentTiles_Building, (void*)(VRAM));
-        ePokeblockGfxState++;
+        sPokeblockLoadGfxState++;
         break;
     case 7:
         LZDecompressVram(gPokeblockFeedBg_Tilemap, (void*)(VRAM + 0xE800));
-        ePokeblockGfxState++;
+        sPokeblockLoadGfxState++;
         break;
     case 8:
         LoadCompressedPalette(gBattleEnvironmentPalette_BattleTower, 0x20, 0x60);
-        ePokeblockGfxState = 0;
+        sPokeblockLoadGfxState = 0;
         return TRUE;
     }
     return FALSE;
@@ -760,13 +760,13 @@ static void Task_HandlePokeblockFeed(u8 taskId)
             CalculateMonAnimLength();
             break;
         case STATE_START_THROW:
-            DoPokeblockCaseThrowEffect(ePokeblockFeedCaseSpriteId, gTasks[taskId].tHorizontalThrow);
+            DoPokeblockCaseThrowEffect(sPokeblockFeedCaseSpriteId, gTasks[taskId].tHorizontalThrow);
             break;
         case STATE_SPAWN_PBLOCK:
-            ePokeblockSpriteId = CreatePokeblockSprite();
+            sPokeblockFeedPokeblockSpriteId = CreatePokeblockSprite();
             break;
         case STATE_START_JUMP:
-            StartMonJumpForPokeblock(ePokeblockMonSpriteId);
+            StartMonJumpForPokeblock(sPokeblockFeedMonSpriteId);
             break;
         case STATE_PRINT_MSG:
             gTasks[taskId].func = Task_PrintAtePokeblockMessage;
@@ -1019,8 +1019,8 @@ static bool8 DoMonAnimStep(void)
 {
     u16 time = sAnimData[ANIMSTATE_MAX_TIME] - sAnimData[ANIMDATA_TIME];
 
-    sMonSpritePtr->x2 = ePokeblockFeedMonAnimX[time];
-    sMonSpritePtr->y2 = ePokeblockFeedMonAnimY[time];
+    sMonSpritePtr->x2 = sPokeblockFeedMonAnimX[time];
+    sMonSpritePtr->y2 = sPokeblockFeedMonAnimY[time];
 
     if (--sAnimData[ANIMDATA_TIME] == 0)
         return TRUE;
@@ -1044,18 +1044,18 @@ static void CalculateMonAnimMovementEnd(void)
 
     for (i = 0; i < time - 1; i++)
     {
-        s16* xPos = &ePokeblockFeedMonAnimX[approachTime + i];
+        s16* xPos = &sPokeblockFeedMonAnimX[approachTime + i];
         s16 xOffset = *xPos - (x);
 
-        s16* yPos = &ePokeblockFeedMonAnimY[approachTime + i];
+        s16* yPos = &sPokeblockFeedMonAnimY[approachTime + i];
         s16 yOffset = *yPos - y;
 
         *xPos -= xOffset * (i + 1) / time;
         *yPos -= yOffset * (i + 1) / time;
     }
 
-    ePokeblockFeedMonAnimX[(approachTime + time) - 1] = x;
-    ePokeblockFeedMonAnimY[(approachTime + time) - 1] = y;
+    sPokeblockFeedMonAnimX[(approachTime + time) - 1] = x;
+    sPokeblockFeedMonAnimY[(approachTime + time) - 1] = y;
 }
 
 static void CalculateMonAnimMovement(void)
@@ -1083,13 +1083,13 @@ static void CalculateMonAnimMovement(void)
 
         if (!negative)
         {
-            ePokeblockFeedMonAnimX[time] = Sin(sAnimData[ANIMDATA_ROT_IDX], sAnimData[ANIMDATA_SIN_AMPLITUDE] + amplitude / 256) + x;
-            ePokeblockFeedMonAnimY[time] = Cos(sAnimData[ANIMDATA_ROT_IDX], sAnimData[ANIMDATA_COS_AMPLITUDE] + amplitude / 256) + y;
+            sPokeblockFeedMonAnimX[time] = Sin(sAnimData[ANIMDATA_ROT_IDX], sAnimData[ANIMDATA_SIN_AMPLITUDE] + amplitude / 256) + x;
+            sPokeblockFeedMonAnimY[time] = Cos(sAnimData[ANIMDATA_ROT_IDX], sAnimData[ANIMDATA_COS_AMPLITUDE] + amplitude / 256) + y;
         }
         else
         {
-            ePokeblockFeedMonAnimX[time] = Sin(sAnimData[ANIMDATA_ROT_IDX], sAnimData[ANIMDATA_SIN_AMPLITUDE] - amplitude / 256) + x;
-            ePokeblockFeedMonAnimY[time] = Cos(sAnimData[ANIMDATA_ROT_IDX], sAnimData[ANIMDATA_COS_AMPLITUDE] - amplitude / 256) + y;
+            sPokeblockFeedMonAnimX[time] = Sin(sAnimData[ANIMDATA_ROT_IDX], sAnimData[ANIMDATA_SIN_AMPLITUDE] - amplitude / 256) + x;
+            sPokeblockFeedMonAnimY[time] = Cos(sAnimData[ANIMDATA_ROT_IDX], sAnimData[ANIMDATA_COS_AMPLITUDE] - amplitude / 256) + y;
         }
 
         sAnimData[ANIMDATA_ROT_IDX] += sAnimData[ANIMDATA_ROT_SPEED];

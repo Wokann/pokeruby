@@ -327,7 +327,7 @@ static bool8 InitPokeblockMenu(void)
         case 10:
             if (MultistepInitMenuWindowContinue())
             {
-                ePokeblockGfxState = 0;
+                sPokeblockLoadGfxState = 0;
                 gMain.state++;
             }
             break;
@@ -345,7 +345,7 @@ static bool8 InitPokeblockMenu(void)
             gMain.state++;
             break;
         case 13:
-            ePokeblockCaseSpriteId = CreatePokeblockCaseSprite(0x38, 0x40, 0);
+            sPokeblockMenuCaseSpriteId = CreatePokeblockCaseSprite(0x38, 0x40, 0);
             gMain.state++;
             break;
         case 14:
@@ -397,27 +397,27 @@ void CB2_InitPokeblockMenu(void)
 
 static bool8 LoadPokeblockMenuGfx(void)
 {
-    switch (ePokeblockGfxState)
+    switch (sPokeblockLoadGfxState)
     {
         case 0:
             LZDecompressVram(gMenuPokeblock_Gfx, BG_CHAR_ADDR(2));
-            ePokeblockGfxState++;
+            sPokeblockLoadGfxState++;
             break;
         case 1:
             LZDecompressWram(gMenuPokeblock_Tilemap, gBGTilemapBuffers[2]);
-            ePokeblockGfxState++;
+            sPokeblockLoadGfxState++;
             break;
         case 2:
             LoadCompressedPalette(gMenuPokeblock_Pal, 0, 0xc0);
-            ePokeblockGfxState++;
+            sPokeblockLoadGfxState++;
             break;
         case 3:
             LoadCompressedSpriteSheet(&gPokeblockCase_SpriteSheet);
-            ePokeblockGfxState++;
+            sPokeblockLoadGfxState++;
             break;
         case 4:
             LoadCompressedSpritePalette(&gPokeblockCase_SpritePal);
-            ePokeblockGfxState = 0;
+            sPokeblockLoadGfxState = 0;
             return TRUE;
     }
     return FALSE;
@@ -638,7 +638,7 @@ static void DrawPokeblockInfo(bool8 isSwapSelection)
 static void OnPokeblockMenuCursorMoved(bool8 isSwapSelection)
 {
     PlaySE(SE_SELECT);
-    gSprites[ePokeblockCaseSpriteId].callback = SpriteCB_ShakePokeblockCase;
+    gSprites[sPokeblockMenuCaseSpriteId].callback = SpriteCB_ShakePokeblockCase;
     DrawPokeblockInfo(isSwapSelection);
 }
 
