@@ -311,7 +311,7 @@ void BattleLoadOpponentMonSpriteGfx(struct Pokemon *mon, u8 battler)
       &gMonFrontPicTable[species],
       gMonFrontPicCoords[species].coords,
       gMonFrontPicCoords[species].y_offset,
-      eBattleInterfaceGfxBuffer,
+      sBattleInterfaceGfxBuffer,
       gMonSpriteGfxBufferPtrs[position],
       species,
       spritePersonality);
@@ -363,7 +363,7 @@ void BattleLoadPlayerMonSpriteGfx(struct Pokemon *mon, u8 battler)
       &gMonBackPicTable[species],
       gMonBackPicCoords[species].coords,
       gMonBackPicCoords[species].y_offset,
-      eBattleInterfaceGfxBuffer,
+      sBattleInterfaceGfxBuffer,
       gMonSpriteGfxBufferPtrs[position],
       species,
       spritePersonality);
@@ -406,7 +406,7 @@ void DecompressTrainerFrontPic(u16 frontPicId, u8 battler)
       &gTrainerFrontPicTable[frontPicId],
       gTrainerFrontPicCoords[frontPicId].coords,
       gTrainerFrontPicCoords[frontPicId].y_offset,
-      eBattleInterfaceGfxBuffer,
+      sBattleInterfaceGfxBuffer,
       gMonSpriteGfxBufferPtrs[position],
       0);
     spriteSheet.data = gMonSpriteGfxBufferPtrs[position];
@@ -425,7 +425,7 @@ void DecompressTrainerBackPic(u16 backPicId, u8 battler)
       &gTrainerBackPicTable[backPicId],
       gTrainerBackPicCoords[backPicId].coords,
       gTrainerBackPicCoords[backPicId].y_offset,
-      eBattleInterfaceGfxBuffer,
+      sBattleInterfaceGfxBuffer,
       gMonSpriteGfxBufferPtrs[position],
       0);
     LoadCompressedPalette(gTrainerBackPicPaletteTable[backPicId].data, 0x100 + battler * 16, 32);
@@ -522,7 +522,7 @@ bool8 BattleLoadAllHealthBoxesGfx(u8 state)
 
 void LoadBattleBarGfx(u8 unused)
 {
-    LZDecompressWram(gBattleInterfaceGfx_HpNumbers, eBattleInterfaceGfxBuffer);
+    LZDecompressWram(gBattleInterfaceGfx_HpNumbers, sBattleInterfaceGfxBuffer);
 }
 
 bool8 BattleInitAllSprites(u8 *state, u8 *battler)
@@ -660,7 +660,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform)
               &gMonBackPicTable[targetSpecies],
               gMonBackPicCoords[targetSpecies].coords,
               gMonBackPicCoords[targetSpecies].y_offset,
-              eBattleInterfaceGfxBuffer,
+              sBattleInterfaceGfxBuffer,
               gMonSpriteGfxBufferPtrs[position],
               targetSpecies,
                 gContestResources__moveAnim.targetPersonality);
@@ -680,7 +680,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform)
                   &gMonBackPicTable[targetSpecies],
                   gMonBackPicCoords[targetSpecies].coords,
                   gMonBackPicCoords[targetSpecies].y_offset,
-                  eBattleInterfaceGfxBuffer,
+                  sBattleInterfaceGfxBuffer,
                   gMonSpriteGfxBufferPtrs[position],
                   targetSpecies,
                   gTransformedPersonalities[battlerAtk]);
@@ -693,7 +693,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform)
                   &gMonFrontPicTable[targetSpecies],
                   gMonFrontPicCoords[targetSpecies].coords,
                   gMonFrontPicCoords[targetSpecies].y_offset,
-                  eBattleInterfaceGfxBuffer,
+                  sBattleInterfaceGfxBuffer,
                   gMonSpriteGfxBufferPtrs[position],
                   targetSpecies,
                   gTransformedPersonalities[battlerAtk]);

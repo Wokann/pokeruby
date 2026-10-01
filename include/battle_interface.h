@@ -8,8 +8,8 @@ struct HealthBarInfo
     s32 maxValue;
     s32 oldValue;
     s32 receivedValue;
-    u32 unkC_0:5;
-    u32 unk10;
+    u32 paletteNum:5;
+    u32 baseTileNum;
 };
 
 enum

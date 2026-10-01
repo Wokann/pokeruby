@@ -10,7 +10,7 @@ extern u8 gSharedMem[];
 #define gDecompressionBuffer            (gSharedMem + 0x1E000)
 
 // battle_interface.c
-#define eBattleInterfaceGfxBuffer       ((u8 *)EWRAM)
+#define sBattleInterfaceGfxBuffer       ((u8 *)EWRAM)
 
 // region_map.c, field_region_map.c
 #define sRegionMapState                 (*(struct RegionMapState *)gSharedMem)
@@ -46,7 +46,7 @@ extern u8 gSharedMem[];
 #define gBattleSpriteInfo                 ((struct BattleSpriteInfo *)    (gSharedMem + 0x17800))
 #define gBattleHealthBoxInfo              ((struct BattleHealthboxInfo *)    (gSharedMem + 0x17810))
 #define gBattleAnimationInfo               (*(struct BattleAnimationInfo *)(gSharedMem + 0x17840))
-#define eBattleBars                       ((struct BattleBar *)(gSharedMem + 0x17850))
+#define sBattleBars                       ((struct BattleBar *)(gSharedMem + 0x17850))
 
 #define eBattleAnimPalBackup_Battle     ((u16 *)(gSharedMem + 0x18000)) // also: shop.c, battle_anim.c
 

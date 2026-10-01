@@ -671,11 +671,11 @@ static void SpriteCB_HealthBoxOther(struct Sprite *sprite)
 
 void SetBattleBarStruct(u8 battler, u8 healthboxSpriteId, u32 maxValue, u32 oldValue, u32 receivedValue)
 {
-    eBattleBars[battler].healthboxSpriteId = healthboxSpriteId;
-    eBattleBars[battler].maxValue = maxValue;
-    eBattleBars[battler].oldValue = oldValue;
-    eBattleBars[battler].receivedValue = receivedValue;
-    eBattleBars[battler].currValue = -0x8000;
+    sBattleBars[battler].healthboxSpriteId = healthboxSpriteId;
+    sBattleBars[battler].maxValue = maxValue;
+    sBattleBars[battler].oldValue = oldValue;
+    sBattleBars[battler].receivedValue = receivedValue;
+    sBattleBars[battler].currValue = -0x8000;
 }
 
 void SetHealthboxSpriteInvisible(u8 healthboxSpriteId)
@@ -826,11 +826,11 @@ void InitBattlerHealthboxCoords(u8 battler)
     *(ptr++) = EXT_CTRL_CODE_CLEAR_TO;
     *(ptr++) = 15;
     *(ptr++) = EOS;
-    RenderTextHandleBold(eBattleInterfaceGfxBuffer, str);
+    RenderTextHandleBold(sBattleInterfaceGfxBuffer, str);
 
     numTiles = 2;
     for (i = 0; i < numTiles; i++)
-        CpuCopy32(&eBattleInterfaceGfxBuffer[i * 64 + 32], levelTextVram[i] + gSprites[healthboxSpriteId].oam.tileNum * TILE_SIZE_4BPP, TILE_SIZE_4BPP);
+        CpuCopy32(&sBattleInterfaceGfxBuffer[i * 64 + 32], levelTextVram[i] + gSprites[healthboxSpriteId].oam.tileNum * TILE_SIZE_4BPP, TILE_SIZE_4BPP);
 }
 
 void UpdateHpTextInHealthbox(u8 healthboxSpriteId, s16 value, u8 maxOrCurrent)
@@ -875,13 +875,13 @@ void UpdateHpTextInHealthbox(u8 healthboxSpriteId, s16 value, u8 maxOrCurrent)
             numTiles = 2;
             ptr = AlignBoldTextInteger(ptr, value, 15, 1);
         }
-        RenderTextHandleBold(eBattleInterfaceGfxBuffer, str);
+        RenderTextHandleBold(sBattleInterfaceGfxBuffer, str);
         //asm(""::"r"(healthboxSpriteId));
         //_080441B6
         for (i = 0; i < numTiles; i++)  // _080440BC
         {
             CpuCopy32(
-                &eBattleInterfaceGfxBuffer[i * 64 + 32],
+                &sBattleInterfaceGfxBuffer[i * 64 + 32],
                 hpTextVram[i] + gSprites[healthboxSpriteId].oam.tileNum * 32,
                 0x20
             );
@@ -925,10 +925,10 @@ static void UpdateHpTextInHealthboxInDoubles(u8 healthboxSpriteId, s16 value, u8
     {
         int healthbarSpriteId = gSprites[healthboxSpriteId].data[5];
 
-        RenderTextHandleBold(eBattleInterfaceGfxBuffer, str);
+        RenderTextHandleBold(sBattleInterfaceGfxBuffer, str);
         for (i = 0; i < numTiles; i++)
         {
-            CpuCopy32((void *)(&eBattleInterfaceGfxBuffer[i * 64 + 32]), hpTextVram[i] + gSprites[healthbarSpriteId].oam.tileNum * 32, 32);
+            CpuCopy32((void *)(&sBattleInterfaceGfxBuffer[i * 64 + 32]), hpTextVram[i] + gSprites[healthbarSpriteId].oam.tileNum * 32, 32);
         }
     }
 }
@@ -943,7 +943,7 @@ void PrintSafariMonInfo(u8 healthboxSpriteId, struct Pokemon *mon)
 
     // TODO: make this a local variable
     memcpy(text, sEmptyDarkGrayHpText_RedHighlight, sizeof(text));
-    barFontGfx = &eBattleInterfaceGfxBuffer[0x520 + GetBattlerPosition(gSprites[healthboxSpriteId].data[6]) * 0x180];
+    barFontGfx = &sBattleInterfaceGfxBuffer[0x520 + GetBattlerPosition(gSprites[healthboxSpriteId].data[6]) * 0x180];
     numTiles = 5;
     nature = GetNature(mon);
     StringCopy(text + 6, gNatureNames[nature]);
@@ -979,14 +979,14 @@ void PrintSafariMonInfo(u8 healthboxSpriteId, struct Pokemon *mon)
     ConvertIntToDecimalStringN(text + 9, gBattleStruct->safariEscapeFactor, 1, 2);
     text[5] = CHAR_SPACE;
     text[8] = CHAR_SLASH;
-    RenderTextHandleBold(eBattleInterfaceGfxBuffer, text);
+    RenderTextHandleBold(sBattleInterfaceGfxBuffer, text);
 
     for (j = 0; j < 5; j++)
     {
         if (j < 2)
         {
             CpuCopy32(
-                &eBattleInterfaceGfxBuffer[j * 64 + 32],
+                &sBattleInterfaceGfxBuffer[j * 64 + 32],
                  ((gSprites[healthbarSpriteId].oam.tileNum + 2 + j) * TILE_SIZE_4BPP) + (void*)(OBJ_VRAM0),
                 32
             );
@@ -994,7 +994,7 @@ void PrintSafariMonInfo(u8 healthboxSpriteId, struct Pokemon *mon)
         else
         {
             CpuCopy32(
-                &eBattleInterfaceGfxBuffer[j * 64 + 32],
+                &sBattleInterfaceGfxBuffer[j * 64 + 32],
                 (void*)(OBJ_VRAM0) + (gSprites[healthbarSpriteId].oam.tileNum + 8 + j - 2) * TILE_SIZE_4BPP, // Must be written as "8 + j - 2" to match
                 32
             );
@@ -1545,7 +1545,7 @@ void SpriteCB_StatusSummaryBalls_OnSwitchout(struct Sprite *sprite)
     ptr[1] = 0x13;
     ptr[2] = 0x37;
     ptr[3] = EOS;
-    ptr = &eBattleInterfaceGfxBuffer[0x520 + GetBattlerPosition(gSprites[healthboxSpriteId].data[6]) * 0x180];
+    ptr = &sBattleInterfaceGfxBuffer[0x520 + GetBattlerPosition(gSprites[healthboxSpriteId].data[6]) * 0x180];
     RenderTextHandleBold(ptr, gDisplayedStringBattle);
 
     i = 0;
@@ -1794,7 +1794,7 @@ static u8 GetStatusIconForBattlerId(u8 statusElementId, u8 battlerId)
     s32 tileIndex;
     u8 *addr;
 
-    barFontGfx = &eBattleInterfaceGfxBuffer[0x520 + GetBattlerPosition(gSprites[healthboxSpriteId].data[6]) * 0x180];
+    barFontGfx = &sBattleInterfaceGfxBuffer[0x520 + GetBattlerPosition(gSprites[healthboxSpriteId].data[6]) * 0x180];
     numTiles = 7;
     RenderTextHandleBold(barFontGfx, BattleText_SafariBalls);
     for (i = 0; i < numTiles; i++)
@@ -1823,10 +1823,10 @@ static u8 GetStatusIconForBattlerId(u8 statusElementId, u8 battlerId)
     ptr = AlignBoldTextInteger(ptr, gNumSafariBalls, 10, 1);
     StringAppend(ptr, BattleText_HighlightRed);
     battlerPosition = GetBattlerPosition(gSprites[healthboxSpriteId].data[6]);
-    ptr = &eBattleInterfaceGfxBuffer[0x520 + battlerPosition * 0x180];
+    ptr = &sBattleInterfaceGfxBuffer[0x520 + battlerPosition * 0x180];
     numTiles = 5;
     RenderTextHandleBold(ptr, gDisplayedStringBattle);
-    ptr = &eBattleInterfaceGfxBuffer[0x520 + battlerPosition * 0x180 + 32];
+    ptr = &sBattleInterfaceGfxBuffer[0x520 + battlerPosition * 0x180 + 32];
     for (i = 6; i < 6 + numTiles; i++)
     {
         CpuCopy32(ptr, OBJ_VRAM0 + (gSprites[healthboxSpriteId].oam.tileNum + 0x18 + MACRO1(i)) * 32, 32);
@@ -1918,24 +1918,24 @@ s32 MoveBattleBar(u8 battler, u8 healthboxSpriteId, u8 whichBar, u8 unused2)
 
     if (whichBar == 0)
     {
-        currentBarValue = CalcNewBarValue(eBattleBars[battler].maxValue, eBattleBars[battler].oldValue, eBattleBars[battler].receivedValue, &eBattleBars[battler].currValue, 6, 1);
+        currentBarValue = CalcNewBarValue(sBattleBars[battler].maxValue, sBattleBars[battler].oldValue, sBattleBars[battler].receivedValue, &sBattleBars[battler].currValue, 6, 1);
     }
     else
     {
         u16 expFraction;
         s32 receivedValue;
 
-        expFraction = GetScaledExpFraction(eBattleBars[battler].oldValue, eBattleBars[battler].receivedValue, eBattleBars[battler].maxValue, 8);
+        expFraction = GetScaledExpFraction(sBattleBars[battler].oldValue, sBattleBars[battler].receivedValue, sBattleBars[battler].maxValue, 8);
         if (expFraction == 0)
             expFraction = 1;
-        receivedValue = eBattleBars[battler].receivedValue;
+        receivedValue = sBattleBars[battler].receivedValue;
         expFraction = ABS(receivedValue / expFraction);
-        currentBarValue = CalcNewBarValue(eBattleBars[battler].maxValue, eBattleBars[battler].oldValue, receivedValue, &eBattleBars[battler].currValue, 8, expFraction);
+        currentBarValue = CalcNewBarValue(sBattleBars[battler].maxValue, sBattleBars[battler].oldValue, receivedValue, &sBattleBars[battler].currValue, 8, expFraction);
     }
     if (whichBar == 1 || (whichBar == 0 && (!gBattleSpriteInfo[battler].hpNumbersNoBars)))
         MoveBattleBarGraphically(battler, whichBar);
     if (currentBarValue == -1)
-        eBattleBars[battler].currValue = 0;
+        sBattleBars[battler].currValue = 0;
     return currentBarValue;
 }
 
@@ -1949,10 +1949,10 @@ static void MoveBattleBarGraphically(u8 battler, u8 whichBar)
     {
     case 0:
         {
-            u8 filledPixelsCount = CalcBarFilledPixels(eBattleBars[battler].maxValue,
-                eBattleBars[battler].oldValue,
-                eBattleBars[battler].receivedValue,
-                &eBattleBars[battler].currValue,
+            u8 filledPixelsCount = CalcBarFilledPixels(sBattleBars[battler].maxValue,
+                sBattleBars[battler].oldValue,
+                sBattleBars[battler].receivedValue,
+                &sBattleBars[battler].currValue,
                 pixelsArray,
                 6);
 
@@ -1965,7 +1965,7 @@ static void MoveBattleBarGraphically(u8 battler, u8 whichBar)
             }
             for (i = 0; i < 6; i++)
             {
-                u8 healthbarSpriteId = gSprites[eBattleBars[battler].healthboxSpriteId].data[5];
+                u8 healthbarSpriteId = gSprites[sBattleBars[battler].healthboxSpriteId].data[5];
                 if (i < 2)
                     CpuCopy32(GetHealthboxElementGfxPtr(barElementId) + pixelsArray[i] * 32, OBJ_VRAM0 + (gSprites[healthbarSpriteId].oam.tileNum + 2 + i) * 32, 32);
                 else
@@ -1977,10 +1977,10 @@ static void MoveBattleBarGraphically(u8 battler, u8 whichBar)
         {
             u8 level;
 
-            CalcBarFilledPixels(eBattleBars[battler].maxValue,
-                eBattleBars[battler].oldValue,
-                eBattleBars[battler].receivedValue,
-                &eBattleBars[battler].currValue,
+            CalcBarFilledPixels(sBattleBars[battler].maxValue,
+                sBattleBars[battler].oldValue,
+                sBattleBars[battler].receivedValue,
+                &sBattleBars[battler].currValue,
                 pixelsArray,
                 8);
             level = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler]], MON_DATA_LEVEL);
@@ -1992,9 +1992,9 @@ static void MoveBattleBarGraphically(u8 battler, u8 whichBar)
             for (i = 0; i < 8; i++)
             {
                 if (i < 4)
-                    CpuCopy32(GetHealthboxElementGfxPtr(0xC) + pixelsArray[i] * 32, OBJ_VRAM0 + (gSprites[eBattleBars[battler].healthboxSpriteId].oam.tileNum + 0x24 + i) * 32, 32);
+                    CpuCopy32(GetHealthboxElementGfxPtr(0xC) + pixelsArray[i] * 32, OBJ_VRAM0 + (gSprites[sBattleBars[battler].healthboxSpriteId].oam.tileNum + 0x24 + i) * 32, 32);
                 else
-                    CpuCopy32(GetHealthboxElementGfxPtr(0xC) + pixelsArray[i] * 32, OBJ_VRAM0 + 0xB80 + (i + gSprites[eBattleBars[battler].healthboxSpriteId].oam.tileNum) * 32, 32);
+                    CpuCopy32(GetHealthboxElementGfxPtr(0xC) + pixelsArray[i] * 32, OBJ_VRAM0 + 0xB80 + (i + gSprites[sBattleBars[battler].healthboxSpriteId].oam.tileNum) * 32, 32);
             }
         }
         break;
@@ -2152,7 +2152,7 @@ static void UpdateHealthBarTiles(struct HealthBarInfo *barInfo, int *currValue, 
 
     CalcBarFilledPixels(barInfo->maxValue, barInfo->oldValue, barInfo->receivedValue, currValue, pixels, 6);
     for (i = 0; i < 6; i++)
-        tiles[i] = (barInfo->unkC_0 << 12) | (barInfo->unk10 + pixels[i]);
+        tiles[i] = (barInfo->paletteNum << 12) | (barInfo->baseTileNum + pixels[i]);
     CpuCopy16(tiles, dest, sizeof(tiles));
 }
 

@@ -2776,23 +2776,23 @@ void PartyMenuDoDrawHPBar(u8 monIndex, u8 menuLayout, u16 currentHP, u16 maxHP)
     u8 hpBarLevel;
     u16 *vramPtr;
     int currValue = -32768;
-    struct HealthBarInfo battleInterface;
-    battleInterface.maxValue = maxHP;
-    battleInterface.oldValue = currentHP;
-    battleInterface.receivedValue = 0;
+    struct HealthBarInfo healthBarInfo;
+    healthBarInfo.maxValue = maxHP;
+    healthBarInfo.oldValue = currentHP;
+    healthBarInfo.receivedValue = 0;
 
     hpBarLevel = GetHPBarLevel(currentHP, maxHP);
     if (hpBarLevel > 2)
-        battleInterface.unkC_0 = 4;
+        healthBarInfo.paletteNum = 4;
     if (hpBarLevel == 2)
-        battleInterface.unkC_0 = 5;
+        healthBarInfo.paletteNum = 5;
     if (hpBarLevel < 2)
-        battleInterface.unkC_0 = 6;
+        healthBarInfo.paletteNum = 6;
 
-    battleInterface.unk10 = 0x100;
+    healthBarInfo.baseTileNum = 0x100;
 
     vramPtr = sPartyMenuHpBarTilemapPtrs[menuLayout][monIndex];
-    UpdateHealthBar(&battleInterface, &currValue, vramPtr, 0);
+    UpdateHealthBar(&healthBarInfo, &currValue, vramPtr, 0);
 
     vramPtr -= 2;
 
@@ -3477,14 +3477,14 @@ s16 UpdatePartyMenuHealthBar(u8 taskId, struct HealthBarInfo *barInfo, s8 hpChan
     barInfo->maxValue = taskData[10];
     barInfo->oldValue = taskData[11];
     barInfo->receivedValue = taskData[12] * hpChangeSign;
-    barInfo->unk10 = 0x100;
+    barInfo->baseTileNum = 0x100;
     hpBarLevel = GetHPBarLevel(ePartyMenu2.pmPartyMenuHpBarValue, barInfo->maxValue);
     if (hpBarLevel > 2)
-        barInfo->unkC_0 = 4;
+        barInfo->paletteNum = 4;
     if (hpBarLevel == 2)
-        barInfo->unkC_0 = 5;
+        barInfo->paletteNum = 5;
     if (hpBarLevel < 2)
-        barInfo->unkC_0 = 6;
+        barInfo->paletteNum = 6;
     vramPtr = sPartyMenuHpBarTilemapPtrs[IsDoubleBattle()][gPartyMenu.selectedMonIndex];
     return UpdateHealthBar(barInfo, (int *)&gPartyMenu.hpBarAnimationState, vramPtr, 0);
 }
