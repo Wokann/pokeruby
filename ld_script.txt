@@ -1222,7 +1222,7 @@ SECTIONS {
         src/libs/agb_flash.o(.rodata);
         src/libs/agb_flash_1m.o(.rodata);
         src/libs/agb_flash_mx.o(.rodata);
-        src/libs/agb_flash_le.o(.rodata);
+        src/agb_flash_le.o(.rodata);
         src/libs/siirtc.o(.rodata);
         *libgcc.a:_udivdi3.o(.rodata);
         *libc.a(.rodata);
