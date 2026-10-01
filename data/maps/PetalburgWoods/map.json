@@ -76,7 +76,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "PetalburgWoods_EventScript_ItemGreatBall",
-      "flag": "FLAG_ITEM_PETALBURG_WOODS_2"
+      "flag": "FLAG_ITEM_PETALBURG_WOODS_GREAT_BALL"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -89,7 +89,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "PetalburgWoods_EventScript_ItemXAttack",
-      "flag": "FLAG_ITEM_PETALBURG_WOODS_1"
+      "flag": "FLAG_ITEM_PETALBURG_WOODS_X_ATTACK"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -102,7 +102,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "PetalburgWoods_EventScript_ItemEther",
-      "flag": "FLAG_ITEM_PETALBURG_WOODS_3"
+      "flag": "FLAG_ITEM_PETALBURG_WOODS_ETHER"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BOY_2",
@@ -167,7 +167,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "PetalburgWoods_EventScript_ItemParalyzeHeal",
-      "flag": "FLAG_ITEM_PETALBURG_WOODS_4"
+      "flag": "FLAG_ITEM_PETALBURG_WOODS_PARALYZE_HEAL"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_GIRL_2",
