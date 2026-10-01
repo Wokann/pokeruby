@@ -215,8 +215,8 @@ MeteorFalls_1F_1R_Movement_PushPlayerOutOfWay:: @ 815C64F
 MeteorFalls_1F_1R_EventScript_MeetProfCozmo:: @ 815C656
 	lock
 	faceplayer
-	goto_if_set FLAG_MET_PROF_COSMO, MeteorFalls_1F_1R_EventScript_CozmoAfterMeeting
-	setflag FLAG_MET_PROF_COSMO
+	goto_if_set FLAG_MET_PROF_COZMO, MeteorFalls_1F_1R_EventScript_CozmoAfterMeeting
+	setflag FLAG_MET_PROF_COZMO
 	msgbox MeteorFalls_1F_1R_Text_MeetProfCozmo, MSGBOX_DEFAULT
 	release
 	end

@@ -172,7 +172,7 @@
 
 #define FLAG_ENCOUNTERED_LATIAS_OR_LATIOS    0xCE
 
-#define FLAG_RECEIVED_BASEMENT_KEY          0xD0
+#define FLAG_GOT_BASEMENT_KEY_FROM_WATTSON   0xD0
 #define FLAG_GOT_TM_THUNDERBOLT_FROM_WATTSON                  0xD1
 
 #define FLAG_RECEIVED_RED_OR_BLUE_ORB       0xD4
@@ -207,7 +207,7 @@
 #define FLAG_USED_ROOM_2_KEY                0xF1
 #define FLAG_USED_ROOM_4_KEY                0xF2
 #define FLAG_USED_ROOM_6_KEY                0xF3
-#define FLAG_MET_PROF_COSMO                 0xF4
+#define FLAG_MET_PROF_COZMO                 0xF4
 #define FLAG_RECEIVED_WAILMER_DOLL          0xF5
 #define FLAG_RECEIVED_CHESTO_BERRY_ROUTE_104 0xF6
 #define FLAG_DEFEATED_SS_TIDAL_TRAINERS     0xF7
