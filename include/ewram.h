@@ -71,7 +71,7 @@ extern u8 gSharedMem[];
 #define namingScreenData                (*(struct NamingScreenData *)(gSharedMem + 0x0))
 #define eSaveSection                    (struct SaveSector *)(gSharedMem + 0x0)
 #define eSlotMachine                    ((struct SlotMachine *)(gSharedMem + 0x0))
-#define ePokemonStorageSystem           (*(struct PokemonStorageSystemData *)(gSharedMem + 0))
+#define sPokemonStorageSystem           (*(struct PokemonStorageSystemData *)(gSharedMem + 0))
 
 #define ewramSavedItemsPocket           ((struct ItemSlot *)(gSharedMem + 0x1E000))  // saved items pocket (for Wally battle)
 #define ewramSavedPokeballsPocket       ((struct ItemSlot *)(gSharedMem + 0x1F000))  // saved Pokeballs pocket (for Wally battle)

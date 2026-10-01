@@ -139,7 +139,7 @@ static const u16 sPSSMenuHeader_Pal1[] = INCBIN_U16("graphics/pokemon_storage/me
 
 static const u16 sPSSMenuHeader_Pal2[] = INCBIN_U16("graphics/pokemon_storage/menu_header2.gbapal");
 
-struct PokemonStorageSystemData *const gPokemonStorageSystemPtr = &ePokemonStorageSystem;
+struct PokemonStorageSystemData *const gPokemonStorageSystemPtr = &sPokemonStorageSystem;
 
 u8 *const gPokeStorageTileBuffer = gTileBuffer;
 
