@@ -177,9 +177,9 @@ void ReceiveDewfordTrendData(struct DewfordTrend *linkedTrends, size_t size, u8 
     u16 players = GetLinkPlayerCount();
 
     for (i = 0; i < players; i++)
-        memcpy(&eLinkedDewfordTrendsBuffer[i * SAVED_TRENDS_COUNT], (u8 *)linkedTrends + i * size, sizeof(struct DewfordTrend) * SAVED_TRENDS_COUNT);
-    src = eLinkedDewfordTrendsBuffer;
-    dst = eSavedDewfordTrendsBuffer;
+        memcpy(&sLinkedDewfordTrendsBuffer[i * SAVED_TRENDS_COUNT], (u8 *)linkedTrends + i * size, sizeof(struct DewfordTrend) * SAVED_TRENDS_COUNT);
+    src = sLinkedDewfordTrendsBuffer;
+    dst = sSavedDewfordTrendsBuffer;
     numTrends = 0;
     for (i = 0; i < players; i++)
     {
@@ -193,16 +193,16 @@ void ReceiveDewfordTrendData(struct DewfordTrend *linkedTrends, size_t size, u8 
             }
             else
             {
-                if (eSavedDewfordTrendsBuffer[idx].trendiness < src->trendiness)
+                if (sSavedDewfordTrendsBuffer[idx].trendiness < src->trendiness)
                 {
-                    eSavedDewfordTrendsBuffer[idx] = *src;
+                    sSavedDewfordTrendsBuffer[idx] = *src;
                 }
             }
             src++;
         }
     }
-    SortTrends(eSavedDewfordTrendsBuffer, numTrends, SORT_MODE_FULL);
-    src = eSavedDewfordTrendsBuffer;
+    SortTrends(sSavedDewfordTrendsBuffer, numTrends, SORT_MODE_FULL);
+    src = sSavedDewfordTrendsBuffer;
     dst = gSaveBlock1.dewfordTrends;
     for (i = 0; i < SAVED_TRENDS_COUNT; i++)
         *(dst++) = *(src++);
@@ -331,7 +331,7 @@ static bool8 IsEasyChatPairEqual(u16 *words1, u16 *words2)
 static s16 GetSavedTrendIndex(struct DewfordTrend *trend, u16 numSaved)
 {
     s16 i;
-    struct DewfordTrend *savedTrends = eSavedDewfordTrendsBuffer;
+    struct DewfordTrend *savedTrends = sSavedDewfordTrendsBuffer;
 
     for (i = 0; i < numSaved; i++)
     {

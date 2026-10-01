@@ -2206,8 +2206,8 @@ void ReceiveTvShowsData(u8 *src, u32 size, u8 playersLinkId)
     union TVShow (*tvShows)[TV_SHOWS_COUNT];
 
     for (i = 0; i < 4; i++)
-        memcpy(eRecordMixTvShows[i], &src[i * size], TV_SHOWS_COUNT * sizeof(TVShow));
-    tvShows = eRecordMixTvShows;
+        memcpy(sRecordMixTvShows[i], &src[i * size], TV_SHOWS_COUNT * sizeof(TVShow));
+    tvShows = sRecordMixTvShows;
     switch (playersLinkId)
     {
     case 0:
@@ -2499,9 +2499,9 @@ void ReceivePokeNewsData(void *src, u32 size, u8 playersLinkId)
     u8 i;
 
     for (i = 0; i < 4; i++)
-        memcpy(eRecordMixPokeNews[i], src + i * size, 64);
+        memcpy(sRecordMixPokeNews[i], src + i * size, 64);
     
-    pokeNews = eRecordMixPokeNews;
+    pokeNews = sRecordMixPokeNews;
     switch (playersLinkId)
     {
     case 0:

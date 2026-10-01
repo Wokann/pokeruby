@@ -93,34 +93,34 @@ void PrepareExchangePacket(void)
     SetPlayerSecretBaseParty();
     DeactivateAllNormalTVShows();
 
-    memcpy(eSentRecord.secretBases, gSecretBasesSave, sizeof(eSentRecord.secretBases));
-    memcpy(eSentRecord.tvShows, gTvShowsSave, sizeof(eSentRecord.tvShows));
-    memcpy(eSentRecord.pokeNews, gPokeNewsSave, sizeof(eSentRecord.pokeNews));
-    memcpy(&eSentRecord.oldMan, gOldManSave, sizeof(eSentRecord.oldMan));
-    memcpy(eSentRecord.dewfordTrends, gDewfordTrendsSave, sizeof(eSentRecord.dewfordTrends));
+    memcpy(sSentRecord.secretBases, gSecretBasesSave, sizeof(sSentRecord.secretBases));
+    memcpy(sSentRecord.tvShows, gTvShowsSave, sizeof(sSentRecord.tvShows));
+    memcpy(sSentRecord.pokeNews, gPokeNewsSave, sizeof(sSentRecord.pokeNews));
+    memcpy(&sSentRecord.oldMan, gOldManSave, sizeof(sSentRecord.oldMan));
+    memcpy(sSentRecord.dewfordTrends, gDewfordTrendsSave, sizeof(sSentRecord.dewfordTrends));
     gRecordMixMail.mail[0] = gSaveBlock1.daycare.misc.mail[0];
     gRecordMixMail.mail[1] = gSaveBlock1.daycare.misc.mail[1];
     InitDaycareMailRecordMixing(gSaveBlock1.daycare.mons, &gRecordMixMail);
-    memcpy(&eSentRecord.daycareMailRecord, gRecordMixMailSave, sizeof(struct RecordMixingDayCareMail));
-    memcpy(&eSentRecord.battleTowerRecord, gBattleTowerSave, sizeof(struct BattleTowerRecord));
+    memcpy(&sSentRecord.daycareMailRecord, gRecordMixMailSave, sizeof(struct RecordMixingDayCareMail));
+    memcpy(&sSentRecord.battleTowerRecord, gBattleTowerSave, sizeof(struct BattleTowerRecord));
 
     if (GetMultiplayerId() == 0)
-        eSentRecord.giftItem = GetRecordMixingGift();
+        sSentRecord.giftItem = GetRecordMixingGift();
 }
 
 void ReceiveExchangePacket(u32 multiplayerId)
 {
-    ReceiveSecretBasesData(eReceivedRecords.secretBases, sizeof(struct PlayerRecords), multiplayerId);
-    ReceiveTvShowsData((u8 *)eReceivedRecords.tvShows, sizeof(struct PlayerRecords), multiplayerId);
-    ReceivePokeNewsData(eReceivedRecords.pokeNews, sizeof(struct PlayerRecords), multiplayerId);
-    ReceiveOldManData((u8 *)&eReceivedRecords.oldMan, sizeof(struct PlayerRecords), multiplayerId);
-    ReceiveDewfordTrendData(eReceivedRecords.dewfordTrends, sizeof(struct PlayerRecords), multiplayerId);
-    ReceiveDaycareMailData(&eReceivedRecords.daycareMailRecord,
+    ReceiveSecretBasesData(sReceivedRecords.secretBases, sizeof(struct PlayerRecords), multiplayerId);
+    ReceiveTvShowsData((u8 *)sReceivedRecords.tvShows, sizeof(struct PlayerRecords), multiplayerId);
+    ReceivePokeNewsData(sReceivedRecords.pokeNews, sizeof(struct PlayerRecords), multiplayerId);
+    ReceiveOldManData((u8 *)&sReceivedRecords.oldMan, sizeof(struct PlayerRecords), multiplayerId);
+    ReceiveDewfordTrendData(sReceivedRecords.dewfordTrends, sizeof(struct PlayerRecords), multiplayerId);
+    ReceiveDaycareMailData(&sReceivedRecords.daycareMailRecord,
         sizeof(struct PlayerRecords),
         multiplayerId,
-        eReceivedRecords.tvShows);
-    ReceiveBattleTowerData(&eReceivedRecords.battleTowerRecord, sizeof(struct PlayerRecords), multiplayerId);
-    ReceiveGiftItem(&eReceivedRecords.giftItem, multiplayerId);
+        sReceivedRecords.tvShows);
+    ReceiveBattleTowerData(&sReceivedRecords.battleTowerRecord, sizeof(struct PlayerRecords), multiplayerId);
+    ReceiveGiftItem(&sReceivedRecords.giftItem, multiplayerId);
 }
 
 #define tCounter data[0]
@@ -295,11 +295,11 @@ void Task_MixingRecordsRecv(u8 taskId)
             task->tState = 0;
             task->tMultiplayerId = GetMultiplayerId_();
             task->func = Task_SendPacket;
-            StorePtrInTaskData(&eSentRecord, &task->tSentRecord);
+            StorePtrInTaskData(&sSentRecord, &task->tSentRecord);
             subTaskId = CreateTask(Task_CopyReceiveBuffer, 0x50);
             task->tCopyTaskId = subTaskId;
             gTasks[subTaskId].tParentTaskId = taskId;
-            StorePtrInTaskData((u8 *)&eReceivedRecords, &gTasks[subTaskId].tRecvRecords);
+            StorePtrInTaskData((u8 *)&sReceivedRecords, &gTasks[subTaskId].tRecvRecords);
         }
         break;
     case 5:        // wait 60 frames
