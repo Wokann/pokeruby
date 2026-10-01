@@ -807,11 +807,11 @@ EventScript_SetBrineyLocation_Route109:: @ 819FD55
 	.include "data/scripts/pc.inc"
 
 Common_EventScript_PokemartSign:: @ 81A00E1
-	msgbox Text_PokemartSign, MSGBOX_SIGN
+	msgbox gText_PokemartSign, MSGBOX_SIGN
 	end
 
 Common_EventScript_PokemonCenterSign:: @ 81A00EA
-	msgbox Text_PokemonCenterSign, MSGBOX_SIGN
+	msgbox gText_PokemonCenterSign, MSGBOX_SIGN
 	end
 
 Common_ShowEasyChatScreen:: @ 81A00F3
@@ -973,7 +973,7 @@ Common_EventScript_NameReceivedPartyMon:: @ 81A0678
 	return
 
 Common_EventScript_PlayerHandedOverTheItem:: @ 81A067F
-	bufferitemname 0, VAR_0x8004
+	bufferitemname STR_VAR_1, VAR_0x8004
 	playfanfare MUS_OBTAIN_TMHM
 	message Text_PlayerHandedOverTheItem
 	waitmessage
@@ -991,11 +991,11 @@ Common_EventScript_PlayerHandedOverTheItem:: @ 81A067F
 	.include "data/text/mart_clerk.inc"
 	.include "data/text/obtain_item.inc"
 
-Text_PokemartSign:: @ 81A0D41
+gText_PokemartSign:: @ 81A0D41
 	.string "“Selected items for your convenience!”\n"
 	.string "POKéMON MART$"
 
-Text_PokemonCenterSign:: @ 81A0D75
+gText_PokemonCenterSign:: @ 81A0D75
 	.string "“Rejuvenate your tired partners!”\n"
 	.string "POKéMON CENTER$"
 
@@ -1046,7 +1046,7 @@ gText_MomOrDadMightLikeThisProgram: @ 81A0E68
 Text_UnusedWhatToDoForFun:: @ 81A0ED6
 	.string "What should I do for fun today?$"
 
-LilycoveCity_DepartmentStoreElevator_Text_WhichFloorWouldYouLike:: @ 81A0EF6
+gText_WhichFloorWouldYouLike:: @ 81A0EF6
 	.string "Welcome to LILYCOVE DEPARTMENT STORE.\p"
 	.string "Which floor would you like?$"
 
@@ -1070,7 +1070,7 @@ gText_SandstormIsVicious:: @ 81A0F93
 	.string "The sandstorm is vicious.\n"
 	.string "It's impossible to keep going.$"
 
-Text_NoRegisteredItem: @ 81A0FCC
+gText_SelectWithoutRegisteredItem:: @ 81A0FCC
 	.string "An item in the BAG can be registered\n"
 	.string "on SELECT for convenience.$"
 
@@ -1148,7 +1148,7 @@ Text_PlayerHandedOverTheItem:: @ 81A1498
 	.string "{STR_VAR_1}.$"
 
 Event_NoRegisteredItem:: @ 81A14AF
-	msgbox Text_NoRegisteredItem, MSGBOX_SIGN
+	msgbox gText_SelectWithoutRegisteredItem, MSGBOX_SIGN
 	end
 
 EventScript_FieldPoison:: @ 81A14B8
