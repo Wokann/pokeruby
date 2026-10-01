@@ -740,8 +740,8 @@ static bool8 LoadMonAndSceneGfx(struct Pokemon* mon)
 
 static void SetPokeblockSpritePal(u8 pokeblockCaseId)
 {
-    u8 color = GetPokeblockData(&gSaveBlock1.pokeblocks[pokeblockCaseId], PBLOCK_COLOR);
-    sPokeblockSpritePal.data = sPokeblocksPals[color - 1];
+    u8 colorId = GetPokeblockData(&gSaveBlock1.pokeblocks[pokeblockCaseId], PBLOCK_COLOR);
+    sPokeblockSpritePal.data = sPokeblocksPals[colorId - 1];
     sPokeblockSpritePal.tag = TAG_POKEBLOCK;
 }
 
