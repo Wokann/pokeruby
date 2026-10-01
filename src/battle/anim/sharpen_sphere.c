@@ -57,7 +57,7 @@ static void AnimSharpenSphere(struct Sprite *sprite)
     sprite->data[2] = 0;
     sprite->data[3] = 0;
     sprite->data[4] = 0;
-    sprite->data[5] = BattleAnimAdjustPanning(SOUND_PAN_ATTACKER_NEG);
+    sprite->data[5] = BattleAnimAdjustPanning(SOUND_PAN_ATTACKER);
     sprite->callback = AnimSharpenSphere_Step;
 }
 

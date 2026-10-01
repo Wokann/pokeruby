@@ -1212,7 +1212,7 @@ static void LinkPartnerHandleFaintAnimation(void)
     {
         gBattleHealthBoxInfo[gActiveBattler].animationState = 0;
         HandleLowHpMusicChange(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
-        PlaySE12WithPanning(SE_FAINT, SOUND_PAN_ATTACKER_NEG);
+        PlaySE12WithPanning(SE_FAINT, SOUND_PAN_ATTACKER);
         gSprites[gBattlerSpriteIds[gActiveBattler]].sSpeedX = 0;
         gSprites[gBattlerSpriteIds[gActiveBattler]].sSpeedY = 5;
         gSprites[gBattlerSpriteIds[gActiveBattler]].callback = SpriteCB_FaintSlideAnim;
@@ -1516,7 +1516,7 @@ static void LinkPartnerHandlePlaySE(void)
     s8 pan;
 
     if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
-        pan = SOUND_PAN_ATTACKER_NEG;
+        pan = SOUND_PAN_ATTACKER;
     else
         pan = SOUND_PAN_TARGET;
     PlaySE12WithPanning(gBattleBufferA[gActiveBattler][1] | (gBattleBufferA[gActiveBattler][2] << 8), pan);

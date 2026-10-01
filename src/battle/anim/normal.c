@@ -1606,9 +1606,9 @@ static void StatsChangeAnimation_Setup(u8 taskId)
     gTasks[taskId].func = StatsChangeAnimation_Step3;
 
     if (aDecrease == FALSE)
-        PlaySE12WithPanning(SE_M_STAT_INCREASE, BattleAnimAdjustPanning2(SOUND_PAN_ATTACKER_NEG));
+        PlaySE12WithPanning(SE_M_STAT_INCREASE, BattleAnimAdjustPanning2(SOUND_PAN_ATTACKER));
     else
-        PlaySE12WithPanning(SE_M_STAT_DECREASE, BattleAnimAdjustPanning2(SOUND_PAN_ATTACKER_NEG));
+        PlaySE12WithPanning(SE_M_STAT_DECREASE, BattleAnimAdjustPanning2(SOUND_PAN_ATTACKER));
 }
 
 static void StatsChangeAnimation_Step3(u8 taskId)

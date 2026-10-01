@@ -646,7 +646,7 @@ void AnimTask_Rollout(u8 taskId)
     task->data[6] = 0;
     task->data[7] = 0;
 
-    pan1 = BattleAnimAdjustPanning(SOUND_PAN_ATTACKER_NEG);
+    pan1 = BattleAnimAdjustPanning(SOUND_PAN_ATTACKER);
     pan2 = BattleAnimAdjustPanning(SOUND_PAN_TARGET);
 
     task->data[13] = pan1;

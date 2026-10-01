@@ -83,6 +83,6 @@ static void AnimItemSteal_Step3(struct Sprite *sprite)
         sprite->y2 = 0;
         sprite->data[0] = 0;
         sprite->callback = AnimItemSteal_Step2;
-        PlaySE12WithPanning(SE_M_BUBBLE2, BattleAnimAdjustPanning(SOUND_PAN_ATTACKER_NEG));
+        PlaySE12WithPanning(SE_M_BUBBLE2, BattleAnimAdjustPanning(SOUND_PAN_ATTACKER));
     }
 }

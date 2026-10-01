@@ -35,7 +35,7 @@ void SoundTask_FireBlast(u8 taskId)
     TASK.tFireBlastLoopSongId = gBattleAnimArgs[0];
     TASK.tFireBlastEndSongId = gBattleAnimArgs[1];
 
-    sourcePan = BattleAnimAdjustPanning(SOUND_PAN_ATTACKER_NEG);
+    sourcePan = BattleAnimAdjustPanning(SOUND_PAN_ATTACKER);
     targetPan = BattleAnimAdjustPanning(SOUND_PAN_TARGET);
     panIncrement = CalculatePanIncrement(sourcePan, targetPan, 2);
 
@@ -179,7 +179,7 @@ static void SoundTask_LoopSEAdjustPanning_Step(u8 taskId)
 void SoundTask_PlayCryWithMode(u8 taskId)
 {
     u16 species = 0;
-    s8 pan = BattleAnimAdjustPanning(SOUND_PAN_ATTACKER_NEG);
+    s8 pan = BattleAnimAdjustPanning(SOUND_PAN_ATTACKER);
 
     if (IsContest())
     {
@@ -230,7 +230,7 @@ void SoundTask_PlayCryWithMode(u8 taskId)
 void SoundTask_PlayHyperVoiceCry(u8 taskId)
 {
     u16 species;
-    s8 pan = BattleAnimAdjustPanning(SOUND_PAN_ATTACKER_NEG);
+    s8 pan = BattleAnimAdjustPanning(SOUND_PAN_ATTACKER);
 
     if (IsContest())
         species = gContestResources__moveAnim.species;

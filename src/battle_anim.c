@@ -2546,7 +2546,7 @@ s8 BattleAnimAdjustPanning(s8 pan)
         if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
             pan = SOUND_PAN_TARGET;
         else
-            pan = SOUND_PAN_ATTACKER_NEG;
+            pan = SOUND_PAN_ATTACKER;
     }
     else if (IsContest())
     {
@@ -2558,14 +2558,14 @@ s8 BattleAnimAdjustPanning(s8 pan)
         if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
         {
             if (pan == SOUND_PAN_TARGET)
-                pan = SOUND_PAN_ATTACKER_NEG;
-            else if (pan != SOUND_PAN_ATTACKER_NEG)
+                pan = SOUND_PAN_ATTACKER;
+            else if (pan != SOUND_PAN_ATTACKER)
                 pan *= -1;
         }
     }
     else if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_OPPONENT)
     {
-        if (pan == SOUND_PAN_ATTACKER_NEG)
+        if (pan == SOUND_PAN_ATTACKER)
             pan = SOUND_PAN_TARGET;
     }
     else
@@ -2575,8 +2575,8 @@ s8 BattleAnimAdjustPanning(s8 pan)
 
     if (pan > SOUND_PAN_TARGET)
         pan = SOUND_PAN_TARGET;
-    else if (pan < SOUND_PAN_ATTACKER_NEG)
-        pan = SOUND_PAN_ATTACKER_NEG;
+    else if (pan < SOUND_PAN_ATTACKER)
+        pan = SOUND_PAN_ATTACKER;
 
     return pan;
 }
@@ -2604,8 +2604,8 @@ s16 KeepPanInRange(s16 panArg, int oldPan)
 
     if (pan > SOUND_PAN_TARGET)
         pan = SOUND_PAN_TARGET;
-    else if (pan < SOUND_PAN_ATTACKER_NEG)
-        pan = SOUND_PAN_ATTACKER_NEG;
+    else if (pan < SOUND_PAN_ATTACKER)
+        pan = SOUND_PAN_ATTACKER;
     return pan;
 }
 
