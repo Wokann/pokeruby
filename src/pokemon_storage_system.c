@@ -687,22 +687,22 @@ static void ChooseBoxMenu_CreateSprites(u8 curBox)
     template.anims = sAnims_ChooseBoxMenu;
     for (i = 0; i < 4; i++)
     {
-        u16 animId;
+        u16 anim;
         spriteId = CreateSprite(&template, 0x7c, 0x50, sChooseBoxMenu->subpriority);
         sChooseBoxMenu->menuSideSprites[i] = gSprites + spriteId;
-        animId = 0;
+        anim = 0;
         if (i & 2)
         {
             sChooseBoxMenu->menuSideSprites[i]->x = 0xc4;
-            animId = 2;
+            anim = 2;
         }
         if (i & 1)
         {
             sChooseBoxMenu->menuSideSprites[i]->y = 0x70;
             sChooseBoxMenu->menuSideSprites[i]->oam.size = 0;
-            animId++;
+            anim++;
         }
-        StartSpriteAnim(sChooseBoxMenu->menuSideSprites[i], animId);
+        StartSpriteAnim(sChooseBoxMenu->menuSideSprites[i], anim);
     }
     for (i = 0; i < 2; i++)
     {
