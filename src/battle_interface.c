@@ -895,13 +895,13 @@ static void UpdateHpTextInHealthboxInDoubles(u8 healthboxSpriteId, s16 value, u8
     u8 *ptr;
     u8 *const *hpTextVram;
     int numTiles;
-    int r4;
+    int battler;
     int i;
 
     // TODO: make this a local variable
     memcpy(str, sEmptyDarkGrayText_TransparentHighlight, sizeof(str));
-    r4 = gSprites[healthboxSpriteId].data[6];
-    if ((gBattleSpriteInfo[r4].hpNumbersNoBars) == 0)
+    battler = gSprites[healthboxSpriteId].data[6];
+    if (gBattleSpriteInfo[battler].hpNumbersNoBars == 0)
         return;
     ptr = str + 6;
     if (maxOrCurrent == 0)
@@ -917,16 +917,19 @@ static void UpdateHpTextInHealthboxInDoubles(u8 healthboxSpriteId, s16 value, u8
         hpTextVram = sDoubleHealthboxMaxHpTextVram;
         numTiles = 2;
         AlignBoldTextInteger(ptr, value, 0xF, 1);
-        if (GetBattlerSide(r4) == 0)
+        if (GetBattlerSide(battler) == 0)
         {
             CpuCopy32(GetHealthboxElementGfxPtr(0x74), OBJ_VRAM0 + (gSprites[healthboxSpriteId].oam.tileNum + 0x34) * 32, 32);
         }
     }
-    r4 = gSprites[healthboxSpriteId].data[5];
-    RenderTextHandleBold(eBattleInterfaceGfxBuffer, str);
-    for (i = 0; i < numTiles; i++)
     {
-        CpuCopy32((void *)(&eBattleInterfaceGfxBuffer[i * 64 + 32]), hpTextVram[i] + gSprites[r4].oam.tileNum * 32, 32);
+        int healthbarSpriteId = gSprites[healthboxSpriteId].data[5];
+
+        RenderTextHandleBold(eBattleInterfaceGfxBuffer, str);
+        for (i = 0; i < numTiles; i++)
+        {
+            CpuCopy32((void *)(&eBattleInterfaceGfxBuffer[i * 64 + 32]), hpTextVram[i] + gSprites[healthbarSpriteId].oam.tileNum * 32, 32);
+        }
     }
 }
 
@@ -1618,24 +1621,25 @@ void SpriteCB_StatusSummaryBalls_OnSwitchout(struct Sprite *sprite)
 
 static void TryAddPokeballIconToHealthbox(u8 healthboxSpriteId, u8 noStatus)
 {
-    u8 r4;
+    u8 battler;
 
     if (gBattleTypeFlags & 0x200)
         return;
     if (gBattleTypeFlags & 8)
         return;
 
-    r4 = gSprites[healthboxSpriteId].data[6];
-    if (GetBattlerSide(r4) != 0)
+    battler = gSprites[healthboxSpriteId].data[6];
+    if (GetBattlerSide(battler) != 0)
     {
-        u16 species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[r4]], MON_DATA_SPECIES);
+        u16 species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[battler]], MON_DATA_SPECIES);
         if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), 1) != 0)
         {
-            r4 = gSprites[healthboxSpriteId].data[5];
+            u8 healthbarSpriteId = gSprites[healthboxSpriteId].data[5];
+
             if (noStatus != 0)
-                CpuCopy32(GetHealthboxElementGfxPtr(0x46), OBJ_VRAM0 + (gSprites[r4].oam.tileNum + 8) * 32, 32);
+                CpuCopy32(GetHealthboxElementGfxPtr(0x46), OBJ_VRAM0 + (gSprites[healthbarSpriteId].oam.tileNum + 8) * 32, 32);
             else
-                CpuFill32(0, OBJ_VRAM0 + (gSprites[r4].oam.tileNum + 8) * 32, 32);
+                CpuFill32(0, OBJ_VRAM0 + (gSprites[healthbarSpriteId].oam.tileNum + 8) * 32, 32);
         }
     }
 }
@@ -1938,54 +1942,60 @@ s32 MoveBattleBar(u8 battler, u8 healthboxSpriteId, u8 whichBar, u8 unused2)
 static void MoveBattleBarGraphically(u8 battler, u8 whichBar)
 {
     u8 pixelsArray[8];
-    u8 r0;
     u8 barElementId;
     u8 i;
 
     switch (whichBar)
     {
     case 0:
-        r0 = CalcBarFilledPixels(eBattleBars[battler].maxValue,
-            eBattleBars[battler].oldValue,
-            eBattleBars[battler].receivedValue,
-            &eBattleBars[battler].currValue,
-            pixelsArray,
-            6);
-        barElementId = 3;
-        if (r0 <= 0x18)
         {
-            barElementId = 0x38;
-            if (r0 > 9)
-                barElementId = 0x2F;
-        }
-        for (i = 0; i < 6; i++)
-        {
-            u8 healthbarSpriteId = gSprites[eBattleBars[battler].healthboxSpriteId].data[5];
-            if (i < 2)
-                CpuCopy32(GetHealthboxElementGfxPtr(barElementId) + pixelsArray[i] * 32, OBJ_VRAM0 + (gSprites[healthbarSpriteId].oam.tileNum + 2 + i) * 32, 32);
-            else
-                CpuCopy32(GetHealthboxElementGfxPtr(barElementId) + pixelsArray[i] * 32, OBJ_VRAM0 + 64 + (i + gSprites[healthbarSpriteId].oam.tileNum) * 32, 32);
+            u8 filledPixelsCount = CalcBarFilledPixels(eBattleBars[battler].maxValue,
+                eBattleBars[battler].oldValue,
+                eBattleBars[battler].receivedValue,
+                &eBattleBars[battler].currValue,
+                pixelsArray,
+                6);
+
+            barElementId = 3;
+            if (filledPixelsCount <= 0x18)
+            {
+                barElementId = 0x38;
+                if (filledPixelsCount > 9)
+                    barElementId = 0x2F;
+            }
+            for (i = 0; i < 6; i++)
+            {
+                u8 healthbarSpriteId = gSprites[eBattleBars[battler].healthboxSpriteId].data[5];
+                if (i < 2)
+                    CpuCopy32(GetHealthboxElementGfxPtr(barElementId) + pixelsArray[i] * 32, OBJ_VRAM0 + (gSprites[healthbarSpriteId].oam.tileNum + 2 + i) * 32, 32);
+                else
+                    CpuCopy32(GetHealthboxElementGfxPtr(barElementId) + pixelsArray[i] * 32, OBJ_VRAM0 + 64 + (i + gSprites[healthbarSpriteId].oam.tileNum) * 32, 32);
+            }
         }
         break;
     case 1:
-        CalcBarFilledPixels(eBattleBars[battler].maxValue,
-            eBattleBars[battler].oldValue,
-            eBattleBars[battler].receivedValue,
-            &eBattleBars[battler].currValue,
-            pixelsArray,
-            8);
-        r0 = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler]], MON_DATA_LEVEL);
-        if (r0 == 100)
         {
+            u8 level;
+
+            CalcBarFilledPixels(eBattleBars[battler].maxValue,
+                eBattleBars[battler].oldValue,
+                eBattleBars[battler].receivedValue,
+                &eBattleBars[battler].currValue,
+                pixelsArray,
+                8);
+            level = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler]], MON_DATA_LEVEL);
+            if (level == 100)
+            {
+                for (i = 0; i < 8; i++)
+                    pixelsArray[i] = 0;
+            }
             for (i = 0; i < 8; i++)
-                pixelsArray[i] = 0;
-        }
-        for (i = 0; i < 8; i++)
-        {
-            if (i < 4)
-                CpuCopy32(GetHealthboxElementGfxPtr(0xC) + pixelsArray[i] * 32, OBJ_VRAM0 + (gSprites[eBattleBars[battler].healthboxSpriteId].oam.tileNum + 0x24 + i) * 32, 32);
-            else
-                CpuCopy32(GetHealthboxElementGfxPtr(0xC) + pixelsArray[i] * 32, OBJ_VRAM0 + 0xB80 + (i + gSprites[eBattleBars[battler].healthboxSpriteId].oam.tileNum) * 32, 32);
+            {
+                if (i < 4)
+                    CpuCopy32(GetHealthboxElementGfxPtr(0xC) + pixelsArray[i] * 32, OBJ_VRAM0 + (gSprites[eBattleBars[battler].healthboxSpriteId].oam.tileNum + 0x24 + i) * 32, 32);
+                else
+                    CpuCopy32(GetHealthboxElementGfxPtr(0xC) + pixelsArray[i] * 32, OBJ_VRAM0 + 0xB80 + (i + gSprites[eBattleBars[battler].healthboxSpriteId].oam.tileNum) * 32, 32);
+            }
         }
         break;
     }
