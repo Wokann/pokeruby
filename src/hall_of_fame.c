@@ -584,8 +584,8 @@ static void Task_Hof_SetMonDisplayTask(u8 taskId)
 
 static void Task_Hof_DisplayMon(u8 taskId)
 {
-    u8 spriteID;
-    s16 xPos, yPos, destX, destY;
+    u8 spriteId;
+    s16 startX, startY, destX, destY;
 
     struct HallofFameTeam* fameTeam = sHofMonPtr;
     u16 currMonId = gTasks[taskId].tDisplayedMonId;
@@ -593,25 +593,25 @@ static void Task_Hof_DisplayMon(u8 taskId)
 
     if (gTasks[taskId].tMonNumber > 3)
     {
-        xPos = sHallOfFame_MonFullTeamPositions[currMonId][0];
-        yPos = sHallOfFame_MonFullTeamPositions[currMonId][1];
+        startX = sHallOfFame_MonFullTeamPositions[currMonId][0];
+        startY = sHallOfFame_MonFullTeamPositions[currMonId][1];
         destX = sHallOfFame_MonFullTeamPositions[currMonId][2];
         destY = sHallOfFame_MonFullTeamPositions[currMonId][3];
     }
     else
     {
-        xPos = sHallOfFame_MonHalfTeamPositions[currMonId][0];
-        yPos = sHallOfFame_MonHalfTeamPositions[currMonId][1];
+        startX = sHallOfFame_MonHalfTeamPositions[currMonId][0];
+        startY = sHallOfFame_MonHalfTeamPositions[currMonId][1];
         destX = sHallOfFame_MonHalfTeamPositions[currMonId][2];
         destY = sHallOfFame_MonHalfTeamPositions[currMonId][3];
     }
 
-    spriteID = HallOfFame_LoadPokemonPic(currMon->species, xPos, yPos, currMonId, currMon->tid, currMon->personality);
-    gSprites[spriteID].data[1] = destX;
-    gSprites[spriteID].data[2] = destY;
-    gSprites[spriteID].data[0] = 0;
-    gSprites[spriteID].callback = SpriteCB_GetOnScreenAndAnimate;
-    gTasks[taskId].tMonSpriteId(currMonId) = spriteID;
+    spriteId = HallOfFame_LoadPokemonPic(currMon->species, startX, startY, currMonId, currMon->tid, currMon->personality);
+    gSprites[spriteId].data[1] = destX;
+    gSprites[spriteId].data[2] = destY;
+    gSprites[spriteId].data[0] = 0;
+    gSprites[spriteId].callback = SpriteCB_GetOnScreenAndAnimate;
+    gTasks[taskId].tMonSpriteId(currMonId) = spriteId;
     Menu_EraseWindowRect(0, 14, 29, 19);
     gTasks[taskId].func = Task_Hof_PrintMonInfoAfterAnimating;
 }
@@ -887,7 +887,7 @@ static void Task_HofPC_DrawSpritesPrintText(u8 taskId)
     {
         if (currMon->species != 0)
         {
-            u16 spriteID;
+            u16 spriteId;
             s16 posX, posY;
             if (gTasks[taskId].tMonNo > 3)
             {
@@ -899,9 +899,9 @@ static void Task_HofPC_DrawSpritesPrintText(u8 taskId)
                 posX = sHallOfFame_MonHalfTeamPositions[i][2];
                 posY = sHallOfFame_MonHalfTeamPositions[i][3];
             }
-            spriteID = HallOfFame_LoadPokemonPic(currMon->species, posX, posY, i, currMon->tid, currMon->personality);
-            gSprites[spriteID].oam.priority = 1;
-            gTasks[taskId].tMonSpriteId(i) = spriteID;
+            spriteId = HallOfFame_LoadPokemonPic(currMon->species, posX, posY, i, currMon->tid, currMon->personality);
+            gSprites[spriteId].oam.priority = 1;
+            gTasks[taskId].tMonSpriteId(i) = spriteId;
         }
         else
             gTasks[taskId].tMonSpriteId(i) = 0xFF;
@@ -937,9 +937,9 @@ static void Task_HofPC_PrintMonInfo(u8 taskId)
 
     for (i = 0; i < 6; i++)
     {
-        u16 spriteID = gTasks[taskId].tMonSpriteId(i);
-        if (spriteID != 0xFF)
-            gSprites[spriteID].oam.priority = 1;
+        u16 spriteId = gTasks[taskId].tMonSpriteId(i);
+        if (spriteId != 0xFF)
+            gSprites[spriteId].oam.priority = 1;
     }
 
     currMonID = gTasks[taskId].tMonSpriteId(gTasks[taskId].tCurrMonId);
@@ -968,11 +968,11 @@ static void Task_HofPC_HandleInput(u8 taskId)
             gTasks[taskId].tCurrTeamNo--;
             for (i = 0; i < 6; i++)
             {
-                u8 spriteID = gTasks[taskId].tMonSpriteId(i);
-                if (spriteID != 0xFF)
+                u8 spriteId = gTasks[taskId].tMonSpriteId(i);
+                if (spriteId != 0xFF)
                 {
-                    FreeSpritePaletteByTag(GetSpritePaletteTagByPaletteNum(gSprites[spriteID].oam.paletteNum));
-                    DestroySprite(&gSprites[spriteID]);
+                    FreeSpritePaletteByTag(GetSpritePaletteTagByPaletteNum(gSprites[spriteId].oam.paletteNum));
+                    DestroySprite(&gSprites[spriteId]);
                 }
             }
             if (gTasks[taskId].tCurrPageNo != 0)
@@ -1330,14 +1330,14 @@ static void SpriteCB_HofConfetti(struct Sprite* sprite)
     else
     {
         u16 rand;
-        u8 tableID;
+        u8 sineIdx;
 
         sprite->y2++;
         sprite->y2 += sprite->data[1];
 
-        tableID = sprite->data[0];
+        sineIdx = sprite->data[0];
         rand = (Random() % 4) + 8;
-        sprite->x2 = rand * gSineTable[tableID] / 256;
+        sprite->x2 = rand * gSineTable[sineIdx] / 256;
 
         sprite->data[0] += 4;
     }
