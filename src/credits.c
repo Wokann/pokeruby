@@ -464,8 +464,8 @@ static void CB2_Credits(void)
 void CB2_StartCreditsSequence(void)
 {
     u8 taskIdA;
-    s16 taskIdC;
-    u8 taskIdB;
+    s16 bikeTaskId;
+    u8 pageTaskId;
     u16 savedIme;
     struct CreditsData *pCreditsData;
 
@@ -487,8 +487,8 @@ void CB2_StartCreditsSequence(void)
             break;
     }
 
-    taskIdC = gTasks[taskIdA].data[TDA_BIKE_SCENE_TASK_ID];
-    gTasks[taskIdC].data[TDC_STATE] = 40;
+    bikeTaskId = gTasks[taskIdA].data[TDA_BIKE_SCENE_TASK_ID];
+    gTasks[bikeTaskId].data[TDC_STATE] = 40;
 
     Text_LoadWindowTemplate(&gWindowTemplate_Credits);
     InitMenuWindow(&gWindowTemplate_Credits);
@@ -498,10 +498,10 @@ void CB2_StartCreditsSequence(void)
 
     REG_BG0VOFS = 0xFFFC;
 
-    taskIdB = CreateTask(Task_UpdatePage, 0);
+    pageTaskId = CreateTask(Task_UpdatePage, 0);
 
-    gTasks[taskIdB].data[TDB_MAIN_TASK_ID] = taskIdA;
-    gTasks[taskIdA].data[TDA_UPDATE_PAGE_TASK_ID] = taskIdB;
+    gTasks[pageTaskId].data[TDB_MAIN_TASK_ID] = taskIdA;
+    gTasks[taskIdA].data[TDA_UPDATE_PAGE_TASK_ID] = pageTaskId;
 
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
 
@@ -540,10 +540,10 @@ static void Task_CreditsMain(u8 taskIdA)
 
     if (gTasks[taskIdA].data[TDA_END_CREDITS])
     {
-        s16 taskIdC;
+        s16 bikeTaskId;
 
-        taskIdC = gTasks[taskIdA].data[TDA_BIKE_SCENE_TASK_ID];
-        gTasks[taskIdC].data[TDC_STATE] = 30;
+        bikeTaskId = gTasks[taskIdA].data[TDA_BIKE_SCENE_TASK_ID];
+        gTasks[bikeTaskId].data[TDC_STATE] = 30;
 
         gTasks[taskIdA].data[TDA_THE_END_DELAY] = 0x100;
         gTasks[taskIdA].func = Task_CreditsTheEnd1;
@@ -996,92 +996,92 @@ static void Task_ShowMons(u8 taskIdD)
     }
 }
 
-void Task_BikeScene(u8 taskIdC)
+void Task_BikeScene(u8 bikeTaskId)
 {
-    switch (gTasks[taskIdC].data[TDC_STATE])
+    switch (gTasks[bikeTaskId].data[TDC_STATE])
     {
     case 0:
-        gIntroCredits_MovingSceneryVOffset = Sin((gTasks[taskIdC].data[TDC_SINE_INDEX] >> 1) & 0x7F, 12);
-        gTasks[taskIdC].data[TDC_SINE_INDEX]++;
+        gIntroCredits_MovingSceneryVOffset = Sin((gTasks[bikeTaskId].data[TDC_SINE_INDEX] >> 1) & 0x7F, 12);
+        gTasks[bikeTaskId].data[TDC_SINE_INDEX]++;
         break;
     case 1:
         if (gIntroCredits_MovingSceneryVOffset != 0)
         {
-            gIntroCredits_MovingSceneryVOffset = Sin((gTasks[taskIdC].data[TDC_SINE_INDEX] >> 1) & 0x7F, 12);
-            gTasks[taskIdC].data[TDC_SINE_INDEX]++;
+            gIntroCredits_MovingSceneryVOffset = Sin((gTasks[bikeTaskId].data[TDC_SINE_INDEX] >> 1) & 0x7F, 12);
+            gTasks[bikeTaskId].data[TDC_SINE_INDEX]++;
         }
         else
         {
-            gSprites[gTasks[taskIdC].data[TDC_PLAYER_SPRITE_ID]].data[0] = 2;
-            gTasks[taskIdC].data[TDC_SINE_INDEX] = 0;
-            gTasks[taskIdC].data[TDC_STATE]++;
+            gSprites[gTasks[bikeTaskId].data[TDC_PLAYER_SPRITE_ID]].data[0] = 2;
+            gTasks[bikeTaskId].data[TDC_SINE_INDEX] = 0;
+            gTasks[bikeTaskId].data[TDC_STATE]++;
         }
         break;
     case 2:
-        if (gTasks[taskIdC].data[TDC_SINE_INDEX] < 64)
+        if (gTasks[bikeTaskId].data[TDC_SINE_INDEX] < 64)
         {
-            gTasks[taskIdC].data[TDC_SINE_INDEX]++;
-            gIntroCredits_MovingSceneryVOffset = Sin(gTasks[taskIdC].data[TDC_SINE_INDEX] & 0x7F, 20);
+            gTasks[bikeTaskId].data[TDC_SINE_INDEX]++;
+            gIntroCredits_MovingSceneryVOffset = Sin(gTasks[bikeTaskId].data[TDC_SINE_INDEX] & 0x7F, 20);
         }
         else
         {
-            gTasks[taskIdC].data[TDC_STATE]++;
+            gTasks[bikeTaskId].data[TDC_STATE]++;
         }
         break;
     case 3:
-        gSprites[gTasks[taskIdC].data[TDC_PLAYER_SPRITE_ID]].data[0] = 3;
-        gSprites[gTasks[taskIdC].data[TDC_RIVAL_SPRITE_ID]].data[0] = 1;
-        gTasks[taskIdC].data[TDC_DELAY] = 120;
-        gTasks[taskIdC].data[TDC_STATE]++;
+        gSprites[gTasks[bikeTaskId].data[TDC_PLAYER_SPRITE_ID]].data[0] = 3;
+        gSprites[gTasks[bikeTaskId].data[TDC_RIVAL_SPRITE_ID]].data[0] = 1;
+        gTasks[bikeTaskId].data[TDC_DELAY] = 120;
+        gTasks[bikeTaskId].data[TDC_STATE]++;
         break;
     case 4:
-        if (gTasks[taskIdC].data[TDC_DELAY] != 0)
+        if (gTasks[bikeTaskId].data[TDC_DELAY] != 0)
         {
-            gTasks[taskIdC].data[TDC_DELAY]--;
+            gTasks[bikeTaskId].data[TDC_DELAY]--;
         }
         else
         {
-            gTasks[taskIdC].data[TDC_SINE_INDEX] = 64;
-            gTasks[taskIdC].data[TDC_STATE]++;
+            gTasks[bikeTaskId].data[TDC_SINE_INDEX] = 64;
+            gTasks[bikeTaskId].data[TDC_STATE]++;
         }
         break;
     case 5:
-        if (gTasks[taskIdC].data[TDC_SINE_INDEX] > 0)
+        if (gTasks[bikeTaskId].data[TDC_SINE_INDEX] > 0)
         {
-            gTasks[taskIdC].data[TDC_SINE_INDEX]--;
-            gIntroCredits_MovingSceneryVOffset = Sin(gTasks[taskIdC].data[TDC_SINE_INDEX] & 0x7F, 20);
+            gTasks[bikeTaskId].data[TDC_SINE_INDEX]--;
+            gIntroCredits_MovingSceneryVOffset = Sin(gTasks[bikeTaskId].data[TDC_SINE_INDEX] & 0x7F, 20);
         }
         else
         {
-            gSprites[gTasks[taskIdC].data[TDC_PLAYER_SPRITE_ID]].data[0] = 1;
-            gTasks[taskIdC].data[TDC_STATE]++;
+            gSprites[gTasks[bikeTaskId].data[TDC_PLAYER_SPRITE_ID]].data[0] = 1;
+            gTasks[bikeTaskId].data[TDC_STATE]++;
         }
         break;
     case 6:
-        gTasks[taskIdC].data[TDC_STATE] = 50;
+        gTasks[bikeTaskId].data[TDC_STATE] = 50;
         break;
     case 10:
-        gSprites[gTasks[taskIdC].data[TDC_RIVAL_SPRITE_ID]].data[0] = 2;
-        gTasks[taskIdC].data[TDC_STATE] = 50;
+        gSprites[gTasks[bikeTaskId].data[TDC_RIVAL_SPRITE_ID]].data[0] = 2;
+        gTasks[bikeTaskId].data[TDC_STATE] = 50;
         break;
     case 20:
-        gSprites[gTasks[taskIdC].data[TDC_PLAYER_SPRITE_ID]].data[0] = 4;
-        gTasks[taskIdC].data[TDC_STATE] = 50;
+        gSprites[gTasks[bikeTaskId].data[TDC_PLAYER_SPRITE_ID]].data[0] = 4;
+        gTasks[bikeTaskId].data[TDC_STATE] = 50;
         break;
     case 30:
-        gSprites[gTasks[taskIdC].data[TDC_PLAYER_SPRITE_ID]].data[0] = 5;
-        gSprites[gTasks[taskIdC].data[TDC_RIVAL_SPRITE_ID]].data[0] = 3;
-        gTasks[taskIdC].data[TDC_STATE] = 50;
+        gSprites[gTasks[bikeTaskId].data[TDC_PLAYER_SPRITE_ID]].data[0] = 5;
+        gSprites[gTasks[bikeTaskId].data[TDC_RIVAL_SPRITE_ID]].data[0] = 3;
+        gTasks[bikeTaskId].data[TDC_STATE] = 50;
         break;
     case 50:
-        gTasks[taskIdC].data[TDC_STATE] = 0;
+        gTasks[bikeTaskId].data[TDC_STATE] = 0;
         break;
     }
 }
 
 void Task_CycleSceneryPalette(u8 taskIdE)
 {
-    s16 taskIdC;
+    s16 bikeTaskId;
 
     switch (gTasks[taskIdE].data[TDE_SCENE_NUM])
     {
@@ -1104,12 +1104,12 @@ void Task_CycleSceneryPalette(u8 taskIdE)
     case SCENE_FOREST_RIVAL_ARRIVE:
         if (gTasks[taskIdE].data[TDE_TIMER] != 0x7FFF)
         {
-            taskIdC = gTasks[gTasks[taskIdE].data[TDE_MAIN_TASK_ID]].data[TDA_BIKE_SCENE_TASK_ID];
+            bikeTaskId = gTasks[gTasks[taskIdE].data[TDE_MAIN_TASK_ID]].data[TDA_BIKE_SCENE_TASK_ID];
 
             // Floor to multiple of 128
-            if ((gTasks[taskIdC].data[TDC_SINE_INDEX] & -128) == 640)
+            if ((gTasks[bikeTaskId].data[TDC_SINE_INDEX] & -128) == 640)
             {
-                gTasks[taskIdC].data[TDC_STATE] = 1;
+                gTasks[bikeTaskId].data[TDC_STATE] = 1;
                 gTasks[taskIdE].data[TDE_TIMER] = 0x7FFF;
             }
         }
@@ -1563,7 +1563,7 @@ static u8 CreateCreditsMonSprite(u16 species, u16 x, u16 y, u16 position)
     u32 personality;
     const u8 *lzPaletteData;
     u8 spriteId;
-    u8 spriteId2;
+    u8 bgSpriteId;
 
     species = NationalPokedexNumToSpecies(species);
     switch (species)
@@ -1601,10 +1601,10 @@ static u8 CreateCreditsMonSprite(u16 species, u16 x, u16 y, u16 position)
     gSprites[spriteId].invisible = TRUE;
     gSprites[spriteId].callback = SpriteCB_CreditsMon;
 
-    spriteId2 = CreateSprite(&sSpriteTemplate_CreditsMonBg, gSprites[spriteId].x, gSprites[spriteId].y, 1);
-    gSprites[spriteId2].sMonSpriteId = spriteId;
+    bgSpriteId = CreateSprite(&sSpriteTemplate_CreditsMonBg, gSprites[spriteId].x, gSprites[spriteId].y, 1);
+    gSprites[bgSpriteId].sMonSpriteId = spriteId;
 
-    StartSpriteAnimIfDifferent(&gSprites[spriteId2], position);
+    StartSpriteAnimIfDifferent(&gSprites[bgSpriteId], position);
 
     return spriteId;
 }
