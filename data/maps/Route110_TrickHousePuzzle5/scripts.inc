@@ -380,7 +380,7 @@ Route110_TrickHousePuzzle5_EventScript_IncorrectAnswer:: @ 8162D90
 	closemessage
 	msgbox Route110_TrickHousePuzzle5_Text_WaitForNextChallenge, MSGBOX_DEFAULT
 	closemessage
-	warp MAP_ROUTE110_TRICK_HOUSE_PUZZLE5, 255, 0, 21
+	warp MAP_ROUTE110_TRICK_HOUSE_PUZZLE5, WARP_ID_NONE, 0, 21
 	waitstate
 	releaseall
 	end

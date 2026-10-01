@@ -65,23 +65,23 @@ Route110_TrickHousePuzzle2_EventScript_Button4:: @ 8161E19
 	end
 
 Route110_TrickHousePuzzle2_EventScript_PressButton1:: @ 8161E2C
-	setmetatile 14, 21, METATILE_TrickHousePuzzle_Button_Pressed, 0
-	setmetatile 1, 12, METATILE_TrickHousePuzzle_Door_Shuttered, 0
+	setmetatile 14, 21, METATILE_TrickHousePuzzle_Button_Pressed, FALSE
+	setmetatile 1, 12, METATILE_TrickHousePuzzle_Door_Shuttered, FALSE
 	return
 
 Route110_TrickHousePuzzle2_EventScript_PressButton2:: @ 8161E3F
-	setmetatile 8, 17, METATILE_TrickHousePuzzle_Button_Pressed, 0
-	setmetatile 12, 13, METATILE_TrickHousePuzzle_Door_Shuttered, 0
+	setmetatile 8, 17, METATILE_TrickHousePuzzle_Button_Pressed, FALSE
+	setmetatile 12, 13, METATILE_TrickHousePuzzle_Door_Shuttered, FALSE
 	return
 
 Route110_TrickHousePuzzle2_EventScript_PressButton3:: @ 8161E52
-	setmetatile 4, 10, METATILE_TrickHousePuzzle_Button_Pressed, 0
-	setmetatile 8, 4, METATILE_TrickHousePuzzle_Door_Shuttered, 0
+	setmetatile 4, 10, METATILE_TrickHousePuzzle_Button_Pressed, FALSE
+	setmetatile 8, 4, METATILE_TrickHousePuzzle_Door_Shuttered, FALSE
 	return
 
 Route110_TrickHousePuzzle2_EventScript_PressButton4:: @ 8161E65
-	setmetatile 5, 2, METATILE_TrickHousePuzzle_Button_Pressed, 0
-	setmetatile 12, 5, METATILE_TrickHousePuzzle_Door_Shuttered, 0
+	setmetatile 5, 2, METATILE_TrickHousePuzzle_Button_Pressed, FALSE
+	setmetatile 12, 5, METATILE_TrickHousePuzzle_Door_Shuttered, FALSE
 	return
 
 Route110_TrickHousePuzzle2_EventScript_Ted:: @ 8161E78

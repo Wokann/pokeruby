@@ -7,7 +7,7 @@ Route110_TrickHousePuzzle1_OnLoad:: @ 8161CFE
 	end
 
 Route110_TrickHousePuzzle1_EventScript_OpenDoor:: @ 8161D0A
-	setmetatile 13, 1, METATILE_TrickHousePuzzle_Stairs_Down, 0
+	setmetatile 13, 1, METATILE_TrickHousePuzzle_Stairs_Down, FALSE
 	end
 
 Route110_TrickHousePuzzle1_EventScript_Scroll:: @ 8161D14
