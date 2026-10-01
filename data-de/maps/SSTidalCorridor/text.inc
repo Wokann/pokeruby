@@ -1,22 +1,20 @@
-SSTidalCorridor_Text_FastCurrentsHopeYouEnjoyVoyage:: @ 8199007
-SSTidalRooms_Text_FastCurrentsHopeYouEnjoyVoyage:: @ 8199007
+SSTidal_Text_FastCurrentsHopeYouEnjoyVoyage:: @ 8199007
 	.string "Diese Fähre ist so konstruiert, dass sie\n"
 	.string "auch durch starke Strömungen\l"
 	.string "fahren kann.\p"
 	.string "Wir hoffen, du genießt die Reise mit\n"
 	.string "uns. Schau dich ruhig auf dem Schiff um.$"
 
-SSTidalCorridor_Text_HopeYouEnjoyVoyage:: @ 8199088
+SSTidal_Text_HopeYouEnjoyVoyage:: @ 8199088
 	.string "Wir hoffen, du genießt die Reise mit\n"
 	.string "uns. Schau dich ruhig auf dem Schiff um.$"
 
-SSTidalCorridor_Text_MadeLandInSlateport:: @ 81990B4
-SSTidalRooms_Text_MadeLandInSlateport:: @ 81990B4
+SSTidal_Text_MadeLandInSlateport:: @ 81990B4
 	.string "Wir gehen in GRAPHITPORT CITY vor\n"
 	.string "Anker. Danke, dass du mit uns gefahren\l"
 	.string "bist.$"
 
-SSTidalRooms_Text_MadeLandInLilycove:: @ 81990F8
+SSTidal_Text_MadeLandInLilycove:: @ 81990F8
 	.string "Wir gehen in SEEGRASULB CITY vor Anker.\n"
 	.string "Danke, dass du mit uns gefahren bist.$"
 

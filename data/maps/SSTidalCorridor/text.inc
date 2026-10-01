@@ -1,20 +1,18 @@
-SSTidalCorridor_Text_FastCurrentsHopeYouEnjoyVoyage:: @ 8199007
-SSTidalRooms_Text_FastCurrentsHopeYouEnjoyVoyage:: @ 8199007
+SSTidal_Text_FastCurrentsHopeYouEnjoyVoyage:: @ 8199007
 	.string "This ferry is built to plow through\n"
 	.string "fast-running currents.\p"
 	.string "We hope you enjoy your voyage with us.\n"
 	.string "Feel free to explore the ship.$"
 
-SSTidalCorridor_Text_HopeYouEnjoyVoyage:: @ 8199088
+SSTidal_Text_HopeYouEnjoyVoyage:: @ 8199088
 	.string "We hope you enjoy your voyage on\n"
 	.string "our ferry.$"
 
-SSTidalCorridor_Text_MadeLandInSlateport:: @ 81990B4
-SSTidalRooms_Text_MadeLandInSlateport:: @ 81990B4
+SSTidal_Text_MadeLandInSlateport:: @ 81990B4
 	.string "We have made land in SLATEPORT CITY.\n"
 	.string "Thank you for sailing with us.$"
 
-SSTidalRooms_Text_MadeLandInLilycove:: @ 81990F8
+SSTidal_Text_MadeLandInLilycove:: @ 81990F8
 	.string "We have made land in LILYCOVE CITY.\n"
 	.string "Thank you for sailing with us.$"
 

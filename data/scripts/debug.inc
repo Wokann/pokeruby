@@ -138,7 +138,7 @@ DebugScript_GiveAllItems:: @ 81C1D46
 	additem ITEM_TM46_THIEF, 99
 	additem ITEM_TM47_STEEL_WING, 99
 	additem ITEM_TM48_SKILL_SWAP, 99
-	additem ITEM_TM49_SNATCH, 99
+	additem ITEM_TM_SNATCH, 99
 	additem ITEM_TM50_OVERHEAT, 99
 	additem ITEM_CHERI_BERRY, 200
 	additem ITEM_CHERI_BERRY, 200
