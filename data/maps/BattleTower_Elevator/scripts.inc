@@ -4,32 +4,32 @@ BattleTower_Elevator_MapScripts:: @ 81607CF
 	.byte 0
 
 BattleTower_Elevator_OnFrame:: @ 81607DA
-	map_script_2 VAR_TEMP_0, 0, BattleTower_Elevator_EventScript_EnterElevator
+	map_script_2 VAR_TEMP_0, FALSE, BattleTower_Elevator_EventScript_EnterElevator
 	.2byte 0
 
 BattleTower_Elevator_EventScript_EnterElevator:: @ 81607E4
-	setvar VAR_TEMP_0, 1
-	applymovement 1, BattleTower_Elevator_Movement_AttendantEnter
+	setvar VAR_TEMP_0, TRUE
+	applymovement LOCALID_BATTLE_TOWER_ELEVATOR_ATTENDANT, BattleTower_Elevator_Movement_AttendantEnter
 	applymovement LOCALID_PLAYER, BattleTower_Elevator_Movement_PlayerEnter
 	waitmovement 0
 	special MoveElevator
 	waitstate
 	delay 64
-	applymovement 1, BattleTower_Elevator_Movement_AttendantExit
+	applymovement LOCALID_BATTLE_TOWER_ELEVATOR_ATTENDANT, BattleTower_Elevator_Movement_AttendantExit
 	applymovement LOCALID_PLAYER, BattleTower_Elevator_Movement_PlayerExit
 	waitmovement 0
-	setvar VAR_TEMP_0, 0
-	warp MAP_BATTLE_TOWER_CORRIDOR, 255, 8, 1
+	setvar VAR_TEMP_0, FALSE
+	warp MAP_BATTLE_TOWER_CORRIDOR, WARP_ID_NONE, 8, 1
 	waitstate
 	end
 
 BattleTower_Elevator_OnWarp:: @ 8160821
-	map_script_2 VAR_TEMP_1, 0, BattleTower_Elevator_EventScript_TurnPlayerNorth
+	map_script_2 VAR_TEMP_1, FALSE, BattleTower_Elevator_EventScript_TurnPlayerNorth
 	.2byte 0
 
 BattleTower_Elevator_EventScript_TurnPlayerNorth:: @ 816082B
-	setvar VAR_TEMP_1, 1
-	turnobject LOCALID_PLAYER, 2
+	setvar VAR_TEMP_1, TRUE
+	turnobject LOCALID_PLAYER, DIR_NORTH
 	end
 
 BattleTower_Elevator_Movement_AttendantEnter:: @ 8160835

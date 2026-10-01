@@ -3,18 +3,18 @@ BattleTower_BattleRoom_MapScripts:: @ 81608DB
 	.byte 0
 
 BattleTower_BattleRoom_OnFrame:: @ 81608E1
-	map_script_2 VAR_TEMP_0, 0, BattleTower_BattleRoom_EventScript_BeginBattle
+	map_script_2 VAR_TEMP_0, FALSE, BattleTower_BattleRoom_EventScript_BeginBattle
 	.2byte 0
 
 BattleTower_BattleRoom_EventScript_BeginBattle:: @ 81608EB
-	setvar VAR_TEMP_0, 1
+	setvar VAR_TEMP_0, TRUE
 	applymovement LOCALID_PLAYER, BattleTower_BattleRoom_Movement_PlayerApproachBattle
 	waitmovement 0
 
 BattleTower_BattleRoom_EventScript_ChallengeTrainer:: @ 81608FA
 	special ChooseNextBattleTowerTrainer
-	addobject 1
-	applymovement 1, BattleTower_BattleRoom_Movement_OpponentEnter
+	addobject LOCALID_BATTLE_TOWER_OPPONENT
+	applymovement LOCALID_BATTLE_TOWER_OPPONENT, BattleTower_BattleRoom_Movement_OpponentEnter
 	waitmovement 0
 	special CopyBattleTowerTrainerGreeting
 	msgbox gStringVar4, MSGBOX_DEFAULT
@@ -26,7 +26,7 @@ BattleTower_BattleRoom_EventScript_ChallengeTrainer:: @ 81608FA
 	special DoSpecialTrainerBattle
 	waitstate
 	switch VAR_RESULT
-	case 1, BattleTower_BattleRoom_EventScript_WonBattle
+	case B_OUTCOME_WON, BattleTower_BattleRoom_EventScript_WonBattle
 	special LoadPlayerParty
 	setvar VAR_0x8004, 0
 	setvar VAR_0x8005, 5
@@ -35,7 +35,7 @@ BattleTower_BattleRoom_EventScript_ChallengeTrainer:: @ 81608FA
 	special SetBattleTowerProperty
 	setvar VAR_0x8004, 3
 	special Script_TryGainNewFanFromCounter
-	warp MAP_BATTLE_TOWER_LOBBY, 255, 6, 6
+	warp MAP_BATTLE_TOWER_LOBBY, WARP_ID_NONE, 6, 6
 	waitstate
 
 BattleTower_BattleRoom_EventScript_WonBattle:: @ 8160961
@@ -43,10 +43,10 @@ BattleTower_BattleRoom_EventScript_WonBattle:: @ 8160961
 	special SetBattleTowerProperty
 	switch VAR_RESULT
 	case 8, BattleTower_BattleRoom_EventScript_CompleteSet
-	applymovement 1, BattleTower_BattleRoom_Movement_OpponentExit
+	applymovement LOCALID_BATTLE_TOWER_OPPONENT, BattleTower_BattleRoom_Movement_OpponentExit
 	waitmovement 0
-	removeobject 1
-	applymovement 2, BattleTower_BattleRoom_Movement_AttendantApproachPlayer
+	removeobject LOCALID_BATTLE_TOWER_OPPONENT
+	applymovement LOCALID_BATTLE_TOWER_BATTLE_ROOM_ATTENDANT, BattleTower_BattleRoom_Movement_AttendantApproachPlayer
 	waitmovement 0
 	applymovement LOCALID_PLAYER, BattleTower_BattleRoom_Movement_PlayerFaceDown
 	waitmovement 0
@@ -83,7 +83,7 @@ BattleTower_BattleRoom_EventScript_ContinueChallenge:: @ 8160A3C
 	closemessage
 	applymovement LOCALID_PLAYER, BattleTower_BattleRoom_Movement_PlayerFaceOpponent
 	waitmovement 0
-	applymovement 2, BattleTower_BattleRoom_Movement_AttendantReturn
+	applymovement LOCALID_BATTLE_TOWER_BATTLE_ROOM_ATTENDANT, BattleTower_BattleRoom_Movement_AttendantReturn
 	waitmovement 0
 	goto BattleTower_BattleRoom_EventScript_ChallengeTrainer
 
@@ -101,7 +101,7 @@ BattleTower_BattleRoom_EventScript_CompleteSet:: @ 8160A56
 	special SetBattleTowerProperty
 	setvar VAR_0x8004, 3
 	special Script_TryGainNewFanFromCounter
-	warp MAP_BATTLE_TOWER_LOBBY, 255, 6, 6
+	warp MAP_BATTLE_TOWER_LOBBY, WARP_ID_NONE, 6, 6
 	waitstate
 
 BattleTower_BattleRoom_EventScript_SaveAndQuit:: @ 8160A94

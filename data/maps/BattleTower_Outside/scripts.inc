@@ -4,7 +4,7 @@ BattleTower_Outside_MapScripts:: @ 8160156
 
 BattleTower_Outside_OnTransition:: @ 816015C
 	setflag FLAG_LANDMARK_BATTLE_TOWER
-	setvar VAR_BRAVO_TRAINER_BATTLE_TOWER_ON, 0
+	setvar VAR_BRAVO_TRAINER_BATTLE_TOWER_ON, FALSE
 	setflag FLAG_HIDE_BATTLE_TOWER_REPORTER
 	end
 
@@ -13,7 +13,7 @@ BattleTower_Outside_EventScript_FerryAttendant:: @ 8160168
 	faceplayer
 	msgbox BattleTower_Outside_Text_MayISeeYourTicket, MSGBOX_DEFAULT
 	checkitem ITEM_SS_TICKET, 1
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq BattleTower_Outside_EventScript_NoTicket
 	message BattleTower_Outside_Text_TicketWhereToGo
 	waitmessage
@@ -21,7 +21,7 @@ BattleTower_Outside_EventScript_FerryAttendant:: @ 8160168
 	end
 
 BattleTower_Outside_EventScript_ChooseFerryDestination:: @ 816018E
-	multichoicedefault 21, 6, MULTI_SSTIDAL_BATTLE_TOWER, 2, 0
+	multichoicedefault 21, 6, MULTI_SSTIDAL_BATTLE_TOWER, 2, FALSE
 	switch VAR_RESULT
 	case 0, BattleTower_Outside_EventScript_SailToSlateport
 	case 1, BattleTower_Outside_EventScript_SailToLilycove
@@ -40,7 +40,7 @@ BattleTower_Outside_EventScript_SailToSlateport:: @ 81601D0
 	goto_if_eq BattleTower_Outside_EventScript_AskDestinationAgain
 	msgbox BattleTower_Outside_Text_BoardFerry, MSGBOX_DEFAULT
 	call BattleTower_Outside_EventScript_BoardFerry
-	warp MAP_SLATEPORT_CITY_HARBOR, 255, 8, 11
+	warp MAP_SLATEPORT_CITY_HARBOR, WARP_ID_NONE, 8, 11
 	waitstate
 	release
 	end
@@ -51,7 +51,7 @@ BattleTower_Outside_EventScript_SailToLilycove:: @ 81601FB
 	goto_if_eq BattleTower_Outside_EventScript_AskDestinationAgain
 	msgbox BattleTower_Outside_Text_BoardFerry, MSGBOX_DEFAULT
 	call BattleTower_Outside_EventScript_BoardFerry
-	warp MAP_LILYCOVE_CITY_HARBOR, 255, 8, 11
+	warp MAP_LILYCOVE_CITY_HARBOR, WARP_ID_NONE, 8, 11
 	waitstate
 	release
 	end
@@ -67,7 +67,7 @@ BattleTower_Outside_EventScript_BoardFerry:: @ 8160232
 	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 30
-	hideobjectat 5, MAP_BATTLE_TOWER_OUTSIDE
+	hideobjectat LOCALID_BATTLE_TOWER_FERRY_ATTENDANT, MAP_BATTLE_TOWER_OUTSIDE
 	setvar VAR_0x8004, 4
 	call Common_EventScript_FerryDepartIsland
 	return

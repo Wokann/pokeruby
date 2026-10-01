@@ -6,36 +6,36 @@ BattleTower_Corridor_MapScripts:: @ 8160845
 BattleTower_Corridor_OnLoad:: @ 8160850
 	compare VAR_0x8006, 1
 	goto_if_eq BattleTower_Corridor_EventScript_OpenRightDoor
-	setmetatile 12, 0, METATILE_BattleTower_CorridorOpenDoor_Top, 0
-	setmetatile 12, 1, METATILE_BattleTower_CorridorOpenDoor_Bottom, 0
+	setmetatile 12, 0, METATILE_BattleTower_CorridorOpenDoor_Top, FALSE
+	setmetatile 12, 1, METATILE_BattleTower_CorridorOpenDoor_Bottom, FALSE
 	end
 
 BattleTower_Corridor_EventScript_OpenRightDoor:: @ 816086E
-	setmetatile 15, 0, METATILE_BattleTower_CorridorOpenDoor_Top, 0
-	setmetatile 15, 1, METATILE_BattleTower_CorridorOpenDoor_Bottom, 0
+	setmetatile 15, 0, METATILE_BattleTower_CorridorOpenDoor_Top, FALSE
+	setmetatile 15, 1, METATILE_BattleTower_CorridorOpenDoor_Bottom, FALSE
 	end
 
 BattleTower_Corridor_OnFrame:: @ 8160881
-	map_script_2 VAR_TEMP_0, 0, BattleTower_Corridor_EventScript_EscortToBattleRoom
+	map_script_2 VAR_TEMP_0, FALSE, BattleTower_Corridor_EventScript_EscortToBattleRoom
 	.2byte 0
 
 BattleTower_Corridor_EventScript_EscortToBattleRoom:: @ 816088B
-	setvar VAR_TEMP_0, 1
+	setvar VAR_TEMP_0, TRUE
 	compare VAR_0x8006, 1
 	goto_if_eq BattleTower_Corridor_EventScript_EscortFromRightDoor
-	applymovement 1, BattleTower_Corridor_Movement_AttendantLeadToBattleRoom
+	applymovement LOCALID_BATTLE_TOWER_CORRIDOR_ATTENDANT, BattleTower_Corridor_Movement_AttendantLeadToBattleRoom
 	applymovement LOCALID_PLAYER, BattleTower_Corridor_Movement_PlayerWalkRightFromLeftDoor
 	waitmovement 0
 	goto BattleTower_Corridor_EventScript_WarpToBattleRoom
 
 BattleTower_Corridor_EventScript_EscortFromRightDoor:: @ 81608B1
-	applymovement 1, BattleTower_Corridor_Movement_AttendantWalkRightFromRightDoor
+	applymovement LOCALID_BATTLE_TOWER_CORRIDOR_ATTENDANT, BattleTower_Corridor_Movement_AttendantWalkRightFromRightDoor
 	applymovement LOCALID_PLAYER, BattleTower_Corridor_Movement_PlayerWalkRightFromRightDoor
 	waitmovement 0
 
 BattleTower_Corridor_EventScript_WarpToBattleRoom:: @ 81608C2
-	setvar VAR_TEMP_0, 0
-	warp MAP_BATTLE_TOWER_BATTLE_ROOM, 255, 4, 8
+	setvar VAR_TEMP_0, FALSE
+	warp MAP_BATTLE_TOWER_BATTLE_ROOM, WARP_ID_NONE, 4, 8
 	waitstate
 	end
 

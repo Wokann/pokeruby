@@ -39,12 +39,12 @@ BattleTower_Lobby_OnTransition:: @ 81602E8
 	end
 
 BattleTower_Lobby_OnWarp:: @ 81602EE
-	map_script_2 VAR_TEMP_1, 0, BattleTower_Lobby_EventScript_TurnPlayerSouth
+	map_script_2 VAR_TEMP_1, FALSE, BattleTower_Lobby_EventScript_TurnPlayerNorth
 	.2byte 0
 
-BattleTower_Lobby_EventScript_TurnPlayerSouth:: @ 81602F8
-	setvar VAR_TEMP_1, 1
-	turnobject LOCALID_PLAYER, 2
+BattleTower_Lobby_EventScript_TurnPlayerNorth:: @ 81602F8
+	setvar VAR_TEMP_1, TRUE
+	turnobject LOCALID_PLAYER, DIR_NORTH
 	end
 
 BattleTower_Lobby_OnFrame:: @ 8160302
@@ -78,7 +78,7 @@ BattleTower_Lobby_EventScript_AwardSevenWins:: @ 8160342
 	compare VAR_RESULT, 6
 	goto_if_eq BattleTower_Lobby_EventScript_CheckPrize
 	special AwardBattleTowerRibbons
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq BattleTower_Lobby_EventScript_CheckPrize
 	message BattleTower_Lobby_Text_ReceivedRibbons
 	waitmessage
@@ -89,7 +89,7 @@ BattleTower_Lobby_EventScript_AwardSevenWins:: @ 8160342
 BattleTower_Lobby_EventScript_CheckPrize:: @ 816037D
 	setvar VAR_0x8004, 8
 	special CallBattleTowerFunc
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq BattleTower_Lobby_EventScript_GivePrize
 	message BattleTower_Lobby_Text_SavingRecord
 	waitmessage
@@ -157,7 +157,7 @@ BattleTower_Lobby_EventScript_FinishChallengeAfterLoss:: @ 8160419
 BattleTower_Lobby_EventScript_ResumeChallenge:: @ 816044B
 	lock
 	faceplayer
-	setvar VAR_BRAVO_TRAINER_BATTLE_TOWER_ON, 1
+	setvar VAR_BRAVO_TRAINER_BATTLE_TOWER_ON, TRUE
 	message BattleTower_Lobby_Text_WelcomeBack
 	waitmessage
 	message BattleTower_Lobby_Text_SavingBeforeEntry
@@ -175,7 +175,7 @@ BattleTower_Lobby_EventScript_ResumeChallenge:: @ 816044B
 	msgbox BattleTower_Lobby_Text_DirectYouToBattleRoom, MSGBOX_DEFAULT
 	closemessage
 	call BattleTower_Lobby_EventScript_EnterElevator
-	warp MAP_BATTLE_TOWER_ELEVATOR, 255, 1, 6
+	warp MAP_BATTLE_TOWER_ELEVATOR, WARP_ID_NONE, 1, 6
 	setvar VAR_TEMP_0, 0
 	waitstate
 
@@ -192,7 +192,7 @@ BattleTower_Lobby_EventScript_Receptionist:: @ 816049E
 BattleTower_Lobby_EventScript_ShowChallengeMenu:: @ 81604BE
 	message BattleTower_Lobby_Text_MakeBattleRoomChallenge
 	waitmessage
-	multichoice 15, 6, MULTI_CHALLENGEINFO, 0
+	multichoice 15, 6, MULTI_CHALLENGEINFO, FALSE
 	switch VAR_RESULT
 	case 0, BattleTower_Lobby_EventScript_ChooseLevel
 	case 1, BattleTower_Lobby_EventScript_ExplainBattleTower
@@ -202,12 +202,12 @@ BattleTower_Lobby_EventScript_ShowChallengeMenu:: @ 81604BE
 BattleTower_Lobby_EventScript_ChooseLevel:: @ 81604FA
 	message BattleTower_Lobby_Text_ChooseLevel50Or100
 	waitmessage
-	multichoice 18, 6, MULTI_LEVEL_MODE, 0
+	multichoice 18, 6, MULTI_LEVEL_MODE, FALSE
 	switch VAR_RESULT
 	case 2, BattleTower_Lobby_EventScript_CancelRegistration
 	case MULTI_B_PRESSED, BattleTower_Lobby_EventScript_CancelRegistration
 	special CheckPartyBattleTowerBanlist
-	compare VAR_0x8004, 1
+	compare VAR_0x8004, TRUE
 	goto_if_eq BattleTower_Lobby_EventScript_ShowEligibilityError
 	setvar VAR_0x8004, 1
 	copyvar VAR_0x8005, VAR_RESULT
@@ -217,7 +217,7 @@ BattleTower_Lobby_EventScript_ChooseLevel:: @ 81604FA
 	fadescreen FADE_TO_BLACK
 	special ChoosePartyForBattleTower
 	waitstate
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq BattleTower_Lobby_EventScript_RestoreParty
 	msgbox BattleTower_Lobby_Text_SaveBeforeEntering, MSGBOX_YESNO
 	switch VAR_RESULT
@@ -243,16 +243,16 @@ BattleTower_Lobby_EventScript_ConfirmChallengeAndSave:: @ 8160587
 	call Common_EventScript_SaveGame
 	setvar VAR_TEMP_0, 5
 	erasebox 0, 0, 15, 10
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq BattleTower_Lobby_EventScript_SaveFailed
 	incrementgamestat GAME_STAT_ENTERED_BATTLE_TOWER
 	special SavePlayerParty
 	special SetBattleTowerParty
-	setvar VAR_BRAVO_TRAINER_BATTLE_TOWER_ON, 1
+	setvar VAR_BRAVO_TRAINER_BATTLE_TOWER_ON, TRUE
 	msgbox BattleTower_Lobby_Text_DirectYouToBattleRoom, MSGBOX_DEFAULT
 	closemessage
 	call BattleTower_Lobby_EventScript_EnterElevator
-	warp MAP_BATTLE_TOWER_ELEVATOR, 255, 1, 6
+	warp MAP_BATTLE_TOWER_ELEVATOR, WARP_ID_NONE, 1, 6
 	setvar VAR_TEMP_0, 0
 	waitstate
 
@@ -291,12 +291,12 @@ BattleTower_Lobby_EventScript_ReleaseReceptionist:: @ 8160662
 	end
 
 BattleTower_Lobby_EventScript_EnterElevator:: @ 8160664
-	applymovement 1, BattleTower_Lobby_Movement_ApproachElevatorDoor
+	applymovement LOCALID_BATTLE_TOWER_LOBBY_RECEPTIONIST, BattleTower_Lobby_Movement_ApproachElevatorDoor
 	applymovement LOCALID_PLAYER, BattleTower_Lobby_Movement_ApproachElevatorDoor
 	waitmovement 0
 	opendoor 6, 1
 	waitdooranim
-	applymovement 1, BattleTower_Lobby_Movement_AttendantEnterElevator
+	applymovement LOCALID_BATTLE_TOWER_LOBBY_RECEPTIONIST, BattleTower_Lobby_Movement_AttendantEnterElevator
 	applymovement LOCALID_PLAYER, BattleTower_Lobby_Movement_PlayerEnterElevator
 	waitmovement 0
 	closedoor 6, 1
@@ -345,9 +345,9 @@ BattleTower_Lobby_EventScript_ReporterAskEasyChat:: @ 81606CC
 	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq BattleTower_Lobby_EventScript_ReporterCanceled
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq BattleTower_Lobby_EventScript_ReporterAccepted
 	end
 
@@ -390,7 +390,7 @@ BattleTower_Lobby_EventScript_AwardMan:: @ 8160733
 	msgbox BattleTower_Lobby_Text_OwnerSilverShieldAward, MSGBOX_DEFAULT
 	setvar VAR_0x8008, DECOR_SILVER_SHIELD
 	givedecoration DECOR_SILVER_SHIELD
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq BattleTower_Lobby_EventScript_DecorationStorageFull
 	setflag FLAG_RECEIVED_SILVER_SHIELD
 	msgbox BattleTower_Lobby_Text_DisplayShield, MSGBOX_DEFAULT
@@ -404,7 +404,7 @@ BattleTower_Lobby_EventScript_GiveGoldShield:: @ 8160773
 	msgbox BattleTower_Lobby_Text_OwnerGoldShieldAward, MSGBOX_DEFAULT
 	setvar VAR_0x8008, DECOR_GOLD_SHIELD
 	givedecoration DECOR_GOLD_SHIELD
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq BattleTower_Lobby_EventScript_DecorationStorageFull
 	setflag FLAG_RECEIVED_GOLD_SHIELD
 	msgbox BattleTower_Lobby_Text_DisplayShield, MSGBOX_DEFAULT
