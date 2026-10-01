@@ -95,8 +95,8 @@ void AnimTask_MoveHeatWaveTargets(u8 taskId)
 
     task->data[12] = GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER ? 1 : -1;
     task->data[13] = IsBattlerSpriteVisible(BATTLE_PARTNER(gBattleAnimTarget)) + 1;
-    task->data[14] = GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
-    task->data[15] = GetAnimBattlerSpriteId(ANIM_BATTLER_DEF_PARTNER);
+    task->data[14] = GetAnimBattlerSpriteId(ANIM_TARGET);
+    task->data[15] = GetAnimBattlerSpriteId(ANIM_DEF_PARTNER);
 
     task->func = AnimTask_MoveHeatWaveTargets_Step;
 }

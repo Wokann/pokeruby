@@ -366,7 +366,7 @@ void AnimTask_EruptionLaunchRocks(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
-    task->tAttackerSpriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    task->tAttackerSpriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
 
     task->tState = 0;
     task->tTimer1 = 0;

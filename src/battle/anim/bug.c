@@ -499,7 +499,7 @@ static void AnimTailGlowOrb(struct Sprite *sprite)
 {
     CMD_ARGS(relativeTo);
 
-    if (cmd->relativeTo == ANIM_BATTLER_ATTACKER)
+    if (cmd->relativeTo == ANIM_ATTACKER)
     {
         sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
         sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) + 18;

@@ -11,7 +11,7 @@
 	.macro createsprite template, anim_battler, subpriority_offset, argv:vararg
     .byte 0x02
     .4byte \template
-    .if \anim_battler == ANIM_BATTLER_TARGET
+    .if \anim_battler == ANIM_TARGET
     .byte 0x80 | (\subpriority_offset & 0x7F)
     .else
     .byte (\subpriority_offset & 0x7F)
@@ -293,11 +293,11 @@
 	.endm
 
 @ createsprite wrappers
-	.macro simple_palette_blend unused_anim_battler=ANIM_BATTLER_ATTACKER, unused_subpriority_offset=2, selector:req, delay:req, initial_blend_y:req, target_blend_y:req, color:req
+	.macro simple_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector:req, delay:req, initial_blend_y:req, target_blend_y:req, color:req
 	createsprite gSimplePaletteBlendSpriteTemplate, \unused_anim_battler, \unused_subpriority_offset, \selector, \delay, \initial_blend_y, \target_blend_y, \color
 	.endm
 
-	.macro complex_palette_blend unused_anim_battler=ANIM_BATTLER_ATTACKER, unused_subpriority_offset=2, selector:req, delay:req, num_blends:req, color1:req, blend_y1:req, color2:req, blend_y2:req
+	.macro complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector:req, delay:req, num_blends:req, color1:req, blend_y1:req, color2:req, blend_y2:req
 	createsprite gComplexPaletteBlendSpriteTemplate, \unused_anim_battler, \unused_subpriority_offset, \selector, \delay, \num_blends, \color1, \blend_y1, \color2, \blend_y2
 	.endm
 
@@ -313,7 +313,7 @@
 	createsprite gFrenzyPlantRootSpriteTemplate, \anim_battler, \subpriority_offset, \interpolate_percent, \offset_x, \offset_y, \subpriority - 30, \animation, \duration
 	.endm
 
-	.macro shake_mon_or_platform unused_anim_battler=ANIM_BATTLER_ATTACKER, unused_subpriority_offset=2, velocity:req, shake_timer:req, shake_duration:req, type:req, battler_selector
+	.macro shake_mon_or_platform unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, velocity:req, shake_timer:req, shake_duration:req, type:req, battler_selector
 	.if \type == SHAKE_MON_X || \type == SHAKE_MON_Y
 	.ifb \battler_selector
 	.error "battler_selector required for SHAKE_MON_X or SHAKE_MON_Y"
@@ -410,11 +410,11 @@
 	createsprite gClampJawSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \animation, 256 * \x_velocity, 256 * \y_velocity, \half_duration
 	.endm
 
-	.macro create_fist_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req, initPosition=ANIM_BATTLER_TARGET
+	.macro create_fist_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req, initPosition=ANIM_TARGET
 	createsprite gFistFootSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration, \initPosition, 0
 	.endm
 
-	.macro create_wide_foot_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req, initPosition=ANIM_BATTLER_TARGET
+	.macro create_wide_foot_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req, initPosition=ANIM_TARGET
 	createsprite gFistFootSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration, \initPosition, 1
 	.endm
 

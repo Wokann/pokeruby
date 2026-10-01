@@ -599,7 +599,7 @@ void AnimTask_ElectricChargingParticles(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
-    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
+    if (gBattleAnimArgs[0] == ANIM_ATTACKER)
     {
         task->data[14] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
         task->data[15] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
@@ -690,7 +690,7 @@ static void AnimElectricChargingParticles(struct Sprite *sprite)
 
 static void AnimGrowingChargeOrb(struct Sprite *sprite)
 {
-    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
+    if (gBattleAnimArgs[0] == ANIM_ATTACKER)
     {
         sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
         sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
@@ -707,7 +707,7 @@ static void AnimGrowingChargeOrb(struct Sprite *sprite)
 
 static void AnimElectricPuff(struct Sprite *sprite)
 {
-    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
+    if (gBattleAnimArgs[0] == ANIM_ATTACKER)
     {
         sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
         sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
@@ -729,7 +729,7 @@ static void AnimVoltTackleOrbSlide(struct Sprite *sprite)
     StartSpriteAffineAnim(sprite, 1);
     sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
     sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
-    sprite->data[6] = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    sprite->data[6] = GetAnimBattlerSpriteId(ANIM_ATTACKER);
     sprite->data[7] = 16;
 
     if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_OPPONENT)
@@ -764,7 +764,7 @@ void AnimTask_VoltTackleAttackerReappear(u8 taskId)
     switch (task->data[0])
     {
     case 0:
-        task->data[15] = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+        task->data[15] = GetAnimBattlerSpriteId(ANIM_ATTACKER);
         task->data[14] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
         if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
         {

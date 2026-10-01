@@ -28,7 +28,7 @@ const union AffineAnimCmd gThrashMoveMonAffineAnimCmds[] =
 void AnimTask_ThrashMoveMonHorizontal(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
-    u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
     task->data[0] = spriteId;
     task->data[1] = 0;
     PrepareAffineAnimInTaskData(task, spriteId, gThrashMoveMonAffineAnimCmds);
@@ -46,7 +46,7 @@ static void AnimTask_ThrashMoveMonHorizontal_Step(u8 taskId)
 void AnimTask_ThrashMoveMonVertical(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
-    task->data[0] = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    task->data[0] = GetAnimBattlerSpriteId(ANIM_ATTACKER);
     task->data[1] = 0;
     task->data[2] = 4;
     task->data[3] = 7;

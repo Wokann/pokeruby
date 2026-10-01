@@ -159,7 +159,7 @@ static void AnimMetronomeFinger_Step(struct Sprite *sprite)
 static void AnimFollowMeFinger(struct Sprite *sprite)
 {
     u8 battler;
-    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
+    if (gBattleAnimArgs[0] == ANIM_ATTACKER)
         battler = gBattleAnimAttacker;
     else
         battler = gBattleAnimTarget;
@@ -217,7 +217,7 @@ static void AnimFollowMeFinger_Step2(struct Sprite *sprite)
 static void AnimTauntFinger(struct Sprite *sprite)
 {
     u8 battler;
-    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
+    if (gBattleAnimArgs[0] == ANIM_ATTACKER)
         battler = gBattleAnimAttacker;
     else
         battler = gBattleAnimTarget;

@@ -324,7 +324,7 @@ static void AnimTask_DigBounceMovement(u8 taskId)
     switch (task->data[0])
     {
     case 0:
-        task->data[10] = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+        task->data[10] = GetAnimBattlerSpriteId(ANIM_ATTACKER);
         task->data[11] = GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker);
         if (task->data[11] == 1)
         {
@@ -389,7 +389,7 @@ static void AnimTask_DigBounceMovement(u8 taskId)
 
 static void AnimTask_DigEndBounceMovementSetInvisible(u8 taskId)
 {
-    u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
     gSprites[spriteId].invisible = TRUE;
     gSprites[spriteId].x2 = 0;
     gSprites[spriteId].y2 = 0;
@@ -422,7 +422,7 @@ static void AnimTask_DigSetVisibleUnderground(u8 taskId)
     switch (task->data[0])
     {
     case 0:
-        task->data[10] = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+        task->data[10] = GetAnimBattlerSpriteId(ANIM_ATTACKER);
         gSprites[task->data[10]].invisible = FALSE;
         gSprites[task->data[10]].x2 = 0;
         gSprites[task->data[10]].y2 = DISPLAY_HEIGHT - gSprites[task->data[10]].y;
@@ -441,7 +441,7 @@ static void AnimTask_DigRiseUpFromHole(u8 taskId)
     switch (task->data[0])
     {
     case 0:
-        task->data[10] = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+        task->data[10] = GetAnimBattlerSpriteId(ANIM_ATTACKER);
         task->data[11] = GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker);
         if (task->data[11] == 1)
             task->data[12] = gBattle_BG1_X;
@@ -527,7 +527,7 @@ static void AnimDirtPlumeParticle(struct Sprite *sprite)
     s8 battler;
     s16 xOffset;
 
-    if (cmd->battlerSelector == ANIM_BATTLER_ATTACKER)
+    if (cmd->battlerSelector == ANIM_ATTACKER)
         battler = gBattleAnimAttacker;
     else
         battler = gBattleAnimTarget;
@@ -566,7 +566,7 @@ static void AnimDigDirtMound(struct Sprite *sprite)
     CMD_ARGS(battlerSelector, tileOffset, duration);
     s8 battler;
 
-    if (cmd->battlerSelector == ANIM_BATTLER_ATTACKER)
+    if (cmd->battlerSelector == ANIM_ATTACKER)
         battler = gBattleAnimAttacker;
     else
         battler = gBattleAnimTarget;
@@ -765,9 +765,9 @@ void AnimTask_PositionFissureBgOnBattler(u8 taskId)
 {
     CMD_ARGS(battlerSelector, taskPriority, completionValue);
     struct Task *task;
-    u8 battler = (cmd->battlerSelector & ANIM_BATTLER_TARGET) ? gBattleAnimTarget : gBattleAnimAttacker;
+    u8 battler = (cmd->battlerSelector & ANIM_TARGET) ? gBattleAnimTarget : gBattleAnimAttacker;
 
-    if (cmd->battlerSelector > ANIM_BATTLER_TARGET)
+    if (cmd->battlerSelector > ANIM_TARGET)
         battler = BATTLE_PARTNER(battler);
 
     task = &gTasks[CreateTask(WaitForFissureCompletion, cmd->taskPriority)];

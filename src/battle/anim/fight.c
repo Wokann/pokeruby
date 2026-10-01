@@ -485,7 +485,7 @@ static void AnimFistOrFootRandomPos(struct Sprite *sprite)
     s16 xMod, yMod;
     s16 x, y;
 
-    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
+    if (gBattleAnimArgs[0] == ANIM_ATTACKER)
         battler = gBattleAnimAttacker;
     else
         battler = gBattleAnimTarget;
@@ -703,7 +703,7 @@ static void AnimDizzyPunchDuck(struct Sprite *sprite)
 
 static void AnimBrickBreakWall(struct Sprite *sprite)
 {
-    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
+    if (gBattleAnimArgs[0] == ANIM_ATTACKER)
     {
         sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
         sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);
@@ -756,7 +756,7 @@ static void AnimBrickBreakWall_Step(struct Sprite *sprite)
 
 static void AnimBrickBreakWallShard(struct Sprite *sprite)
 {
-    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
+    if (gBattleAnimArgs[0] == ANIM_ATTACKER)
     {
         sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X) + gBattleAnimArgs[2];
         sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y) + gBattleAnimArgs[3];
@@ -807,7 +807,7 @@ static void AnimBrickBreakWallShard_Step(struct Sprite *sprite)
 
 static void AnimSuperpowerOrb(struct Sprite *sprite)
 {
-    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
+    if (gBattleAnimArgs[0] == ANIM_ATTACKER)
     {
         sprite->x = GetBattlerSpriteCoord(gBattlerAttacker, BATTLER_COORD_X_2);
         sprite->y = GetBattlerSpriteCoord(gBattlerAttacker, BATTLER_COORD_Y_PIC_OFFSET);
@@ -909,7 +909,7 @@ static void AnimSuperpowerFireball(struct Sprite *sprite)
 {
     u8 battler;
 
-    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
+    if (gBattleAnimArgs[0] == ANIM_ATTACKER)
     {
         sprite->x = GetBattlerSpriteCoord(gBattlerAttacker, BATTLER_COORD_X_2);
         sprite->y = GetBattlerSpriteCoord(gBattlerAttacker, BATTLER_COORD_Y_PIC_OFFSET);
@@ -975,7 +975,7 @@ static void AnimArmThrustHit(struct Sprite *sprite)
 
 static void AnimRevengeScratch(struct Sprite *sprite)
 {
-    if (gBattleAnimArgs[2] == ANIM_BATTLER_ATTACKER)
+    if (gBattleAnimArgs[2] == ANIM_ATTACKER)
         InitSpritePosToAnimAttacker(sprite, FALSE);
     else
         InitSpritePosToAnimTarget(sprite, FALSE);

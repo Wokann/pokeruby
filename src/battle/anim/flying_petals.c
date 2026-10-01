@@ -151,7 +151,7 @@ static void AnimFlyingParticle(struct Sprite *sprite)
         break;
     case 3:
         sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[0];
-        GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
+        GetAnimBattlerSpriteId(ANIM_TARGET);
         sprite->oam.priority = GetBattlerSpriteBGPriority(battler) + 1;
         break;
     }

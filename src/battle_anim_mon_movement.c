@@ -935,7 +935,7 @@ void AnimTask_RotateMonToSideAndRestore(u8 taskId)
     PrepareBattlerSpriteForRotScale(spriteId, ST_OAM_OBJ_NORMAL);
     TASK.data[1] = 0;
     TASK.data[2] = gBattleAnimArgs[0];
-    if (gBattleAnimArgs[2] == ANIM_BATTLER_ATTACKER)
+    if (gBattleAnimArgs[2] == ANIM_ATTACKER)
     {
         if (GetBattlerSide(gBattleAnimAttacker))
         {
@@ -1024,7 +1024,7 @@ void AnimTask_ShakeTargetBasedOnMovePowerOrDmg(u8 taskId)
     TASK.data[12] = 0;
     TASK.data[10] = gBattleAnimArgs[3];
     TASK.data[11] = gBattleAnimArgs[4];
-    TASK.data[7] = GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
+    TASK.data[7] = GetAnimBattlerSpriteId(ANIM_TARGET);
     TASK.data[8] = gSprites[TASK.data[7]].x2;
     TASK.data[9] = gSprites[TASK.data[7]].y2;
     TASK.data[0] = 0;

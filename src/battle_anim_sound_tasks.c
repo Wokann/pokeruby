@@ -183,7 +183,7 @@ void SoundTask_PlayCryWithMode(u8 taskId)
 
     if (IsContest())
     {
-        if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
+        if (gBattleAnimArgs[0] == ANIM_ATTACKER)
             species = gContestResources__moveAnim.species;
         else
             DestroyAnimVisualTask(taskId);
@@ -191,16 +191,16 @@ void SoundTask_PlayCryWithMode(u8 taskId)
     else
     {
         u8 battler;
-        if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
+        if (gBattleAnimArgs[0] == ANIM_ATTACKER)
             battler = gBattleAnimAttacker;
-        else if (gBattleAnimArgs[0] == ANIM_BATTLER_TARGET)
+        else if (gBattleAnimArgs[0] == ANIM_TARGET)
             battler = gBattleAnimTarget;
-        else if (gBattleAnimArgs[0] == ANIM_BATTLER_ATK_PARTNER)
+        else if (gBattleAnimArgs[0] == ANIM_ATK_PARTNER)
             battler = gBattleAnimAttacker ^ 0x2;
         else
             battler = gBattleAnimTarget ^ 0x2;
 
-        if (gBattleAnimArgs[0] == ANIM_BATTLER_TARGET || gBattleAnimArgs[0] == ANIM_BATTLER_DEF_PARTNER)
+        if (gBattleAnimArgs[0] == ANIM_TARGET || gBattleAnimArgs[0] == ANIM_DEF_PARTNER)
         {
             if (!IsBattlerSpriteVisible(battler))
             {

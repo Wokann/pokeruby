@@ -372,7 +372,7 @@ static void AnimTearDrop(struct Sprite *sprite)
     u8 battler;
     s8 xOffset;
 
-    if (cmd->relativeTo == ANIM_BATTLER_ATTACKER)
+    if (cmd->relativeTo == ANIM_ATTACKER)
         battler = gBattleAnimAttacker;
     else
         battler = gBattleAnimTarget;
@@ -900,7 +900,7 @@ void AnimTask_MetallicShine(u8 taskId)
             species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[gBattleAnimAttacker]], MON_DATA_SPECIES);
     }
 
-    spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
     newSpriteId = CreateInvisibleSpriteCopy(gBattleAnimAttacker, spriteId, species);
 
     GetBattleAnimBg1Data(&animBg);
@@ -958,7 +958,7 @@ static void AnimTask_MetallicShine_Step(u8 taskId)
             REG_BLDCNT = 0;
             REG_BLDALPHA = 0;
 
-            spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+            spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
             paletteNum = 16 + gSprites[spriteId].oam.paletteNum;
             if (gTasks[taskIdCopy].data[1] == 0)
                 SetGrayscaleOrOriginalPalette(paletteNum, TRUE);
@@ -988,10 +988,10 @@ void AnimTask_SetGrayscaleOrOriginalPal(u8 taskId)
 
     switch (cmd->battler)
     {
-    case ANIM_BATTLER_ATTACKER:
-    case ANIM_BATTLER_TARGET:
-    case ANIM_BATTLER_ATK_PARTNER:
-    case ANIM_BATTLER_DEF_PARTNER:
+    case ANIM_ATTACKER:
+    case ANIM_TARGET:
+    case ANIM_ATK_PARTNER:
+    case ANIM_DEF_PARTNER:
         spriteId = GetAnimBattlerSpriteId(cmd->battler);
         break;
     case ANIM_PLAYER_LEFT:

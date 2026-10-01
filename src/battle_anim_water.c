@@ -237,7 +237,7 @@ static void AnimWaterGunDroplet(struct Sprite *sprite)
 
 static void AnimSmallBubblePair(struct Sprite *sprite)
 {
-    if (gBattleAnimArgs[3] != ANIM_BATTLER_ATTACKER)
+    if (gBattleAnimArgs[3] != ANIM_ATTACKER)
     {
         InitSpritePosToAnimTarget(sprite, TRUE);
     }
@@ -534,7 +534,7 @@ void AnimTask_WaterSpoutLaunch(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
-    task->data[15] = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    task->data[15] = GetAnimBattlerSpriteId(ANIM_ATTACKER);
     task->data[5] = gSprites[task->data[15]].y;
     task->data[1] = GetWaterSpoutPowerForAnim();
     PrepareBattlerSpriteForRotScale(task->data[15], ST_OAM_OBJ_NORMAL);
@@ -749,7 +749,7 @@ static void AnimTask_WaterSpoutRain_Step(u8 taskId)
             }
             if (task->data[10] != 0 && task->data[13] == 0)
             {
-                gBattleAnimArgs[0] = ANIM_BATTLER_TARGET;
+                gBattleAnimArgs[0] = ANIM_TARGET;
                 gBattleAnimArgs[1] = 0;
                 gBattleAnimArgs[2] = 12;
                 taskId2 = CreateTask(AnimTask_HorizontalShake, 80);
@@ -758,7 +758,7 @@ static void AnimTask_WaterSpoutRain_Step(u8 taskId)
                     gTasks[taskId2].func(taskId2);
                     gAnimVisualTaskCount++;
                 }
-                gBattleAnimArgs[0] = ANIM_BATTLER_DEF_PARTNER;
+                gBattleAnimArgs[0] = ANIM_DEF_PARTNER;
                 taskId2 = CreateTask(AnimTask_HorizontalShake, 80);
                 if (taskId2 != 0xFF)
                 {

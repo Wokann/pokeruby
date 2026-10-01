@@ -399,7 +399,7 @@ u8 GetAnimBattlerSpriteId(u8 animBattler)
 {
     u8 *sprites;
 
-    if (animBattler == ANIM_BATTLER_ATTACKER)
+    if (animBattler == ANIM_ATTACKER)
     {
         if (IsBattlerSpritePresent(gBattleAnimAttacker))
         {
@@ -411,7 +411,7 @@ u8 GetAnimBattlerSpriteId(u8 animBattler)
             return 0xff;
         }
     }
-    else if (animBattler == ANIM_BATTLER_TARGET)
+    else if (animBattler == ANIM_TARGET)
     {
         if (IsBattlerSpritePresent(gBattleAnimTarget))
         {
@@ -423,7 +423,7 @@ u8 GetAnimBattlerSpriteId(u8 animBattler)
             return 0xff;
         }
     }
-    else if (animBattler == ANIM_BATTLER_ATK_PARTNER)
+    else if (animBattler == ANIM_ATK_PARTNER)
     {
         if (!IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2))
             return 0xff;
@@ -1192,7 +1192,7 @@ static bool8 ShouldRotScaleSpeciesBeFlipped(void)
 {
     if (IsContest())
     {
-        if (gSprites[GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER)].data[2] == SPECIES_UNOWN)
+        if (gSprites[GetAnimBattlerSpriteId(ANIM_ATTACKER)].data[2] == SPECIES_UNOWN)
             return FALSE;
         return TRUE;
     }
@@ -1926,7 +1926,7 @@ u8 GetBattlerSpriteSubpriority(u8 battler)
 
     if (IsContest())
     {
-        if (battler == ANIM_BATTLER_ATK_PARTNER)
+        if (battler == ANIM_ATK_PARTNER)
             return 30;
         else
             return 40;
@@ -2291,7 +2291,7 @@ void AnimTask_AttackerPunchWithTrace(u8 taskId)
     u16 dest;
     struct Task *task = &gTasks[taskId];
 
-    task->tBattlerSpriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    task->tBattlerSpriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
     task->tMoveSpeed = (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER) ? -8 : 8;
     task->tState = 0;
     task->tCounter = 0;
@@ -2346,7 +2346,7 @@ static void AnimTask_AttackerPunchWithTrace_Step(u8 taskId)
 
 static void CreateBattlerTrace(struct Task *task, u8 taskId)
 {
-    s16 spriteId = CloneBattlerSpriteWithBlend(ANIM_BATTLER_ATTACKER);
+    s16 spriteId = CloneBattlerSpriteWithBlend(ANIM_ATTACKER);
     if (spriteId >= 0)
     {
         gSprites[spriteId].oam.priority = task->tPriority;

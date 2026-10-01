@@ -18,7 +18,7 @@ static void ClonedMinimizeSprite_Step(struct Sprite *sprite);
 void AnimTask_Minimize(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
-    u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
     task->data[0] = spriteId;
     PrepareBattlerSpriteForRotScale(spriteId, ST_OAM_OBJ_NORMAL);
     task->data[1] = 0;
@@ -100,7 +100,7 @@ static void AnimTask_Minimize_Step(u8 taskId)
 static void CreateMinimizeSprite(struct Task *task, u8 taskId)
 {
     s16 matrixNum; // u16 in Emerald
-    s16 spriteId = CloneBattlerSpriteWithBlend(ANIM_BATTLER_ATTACKER);
+    s16 spriteId = CloneBattlerSpriteWithBlend(ANIM_ATTACKER);
 
     if (spriteId >= 0)
     {

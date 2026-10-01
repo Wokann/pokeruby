@@ -1831,12 +1831,12 @@ static void Cmd_monbg(void)
 
     sBattleAnimScriptPtr++;
     animBattler = T1_READ_8(sBattleAnimScriptPtr);
-    if (animBattler == ANIM_BATTLER_ATTACKER)
-        animBattler = ANIM_BATTLER_ATK_PARTNER;
-    else if (animBattler == ANIM_BATTLER_TARGET)
-        animBattler = ANIM_BATTLER_DEF_PARTNER;
+    if (animBattler == ANIM_ATTACKER)
+        animBattler = ANIM_ATK_PARTNER;
+    else if (animBattler == ANIM_TARGET)
+        animBattler = ANIM_DEF_PARTNER;
 
-    if (animBattler == ANIM_BATTLER_ATTACKER || animBattler == ANIM_BATTLER_ATK_PARTNER)
+    if (animBattler == ANIM_ATTACKER || animBattler == ANIM_ATK_PARTNER)
         battler = gBattleAnimAttacker;
     else
         battler = gBattleAnimTarget;
@@ -1873,7 +1873,7 @@ static void Cmd_monbg(void)
     }
 
     battler = BATTLE_PARTNER(battler);
-    if (animBattler >= ANIM_BATTLER_ATK_PARTNER && IsBattlerSpriteVisible(battler))
+    if (animBattler >= ANIM_ATK_PARTNER && IsBattlerSpriteVisible(battler))
     {
         battlerPosition = GetBattlerPosition(battler);
         battlerPosition += 0xFF;
@@ -2110,12 +2110,12 @@ static void Cmd_clearmonbg(void)
     sBattleAnimScriptPtr++;
     animBattlerId = T1_READ_8(sBattleAnimScriptPtr);
 
-    if (animBattlerId == ANIM_BATTLER_ATTACKER)
-        animBattlerId = ANIM_BATTLER_ATK_PARTNER;
-    else if (animBattlerId == ANIM_BATTLER_TARGET)
-        animBattlerId = ANIM_BATTLER_DEF_PARTNER;
+    if (animBattlerId == ANIM_ATTACKER)
+        animBattlerId = ANIM_ATK_PARTNER;
+    else if (animBattlerId == ANIM_TARGET)
+        animBattlerId = ANIM_DEF_PARTNER;
 
-    if (animBattlerId == ANIM_BATTLER_ATTACKER || animBattlerId == ANIM_BATTLER_ATK_PARTNER)
+    if (animBattlerId == ANIM_ATTACKER || animBattlerId == ANIM_ATK_PARTNER)
         battler = gBattleAnimAttacker;
     else
         battler = gBattleAnimTarget;
@@ -2173,12 +2173,12 @@ static void Cmd_monbg_static(void)
     sBattleAnimScriptPtr++;
     animBattlerId = T1_READ_8(sBattleAnimScriptPtr);
 
-    if (animBattlerId == ANIM_BATTLER_ATTACKER)
-        animBattlerId = ANIM_BATTLER_ATK_PARTNER;
-    else if (animBattlerId == ANIM_BATTLER_TARGET)
-        animBattlerId = ANIM_BATTLER_DEF_PARTNER;
+    if (animBattlerId == ANIM_ATTACKER)
+        animBattlerId = ANIM_ATK_PARTNER;
+    else if (animBattlerId == ANIM_TARGET)
+        animBattlerId = ANIM_DEF_PARTNER;
 
-    if (animBattlerId == ANIM_BATTLER_ATTACKER || animBattlerId == ANIM_BATTLER_ATK_PARTNER)
+    if (animBattlerId == ANIM_ATTACKER || animBattlerId == ANIM_ATK_PARTNER)
         battler = gBattleAnimAttacker;
     else
         battler = gBattleAnimTarget;
@@ -2196,7 +2196,7 @@ static void Cmd_monbg_static(void)
     }
 
     battler = BATTLE_PARTNER(battler);
-    if (animBattlerId > ANIM_BATTLER_TARGET && IsBattlerSpriteVisible(battler))
+    if (animBattlerId > ANIM_TARGET && IsBattlerSpriteVisible(battler))
     {
         battlerPosition = GetBattlerPosition(battler);
         battlerPosition += 0xFF;
@@ -2219,12 +2219,12 @@ static void Cmd_clearmonbg_static(void)
     sBattleAnimScriptPtr++;
     animBattlerId = T1_READ_8(sBattleAnimScriptPtr);
 
-    if (animBattlerId == ANIM_BATTLER_ATTACKER)
-        animBattlerId = ANIM_BATTLER_ATK_PARTNER;
-    else if (animBattlerId == ANIM_BATTLER_TARGET)
-        animBattlerId = ANIM_BATTLER_DEF_PARTNER;
+    if (animBattlerId == ANIM_ATTACKER)
+        animBattlerId = ANIM_ATK_PARTNER;
+    else if (animBattlerId == ANIM_TARGET)
+        animBattlerId = ANIM_DEF_PARTNER;
 
-    if (animBattlerId == ANIM_BATTLER_ATTACKER || animBattlerId == ANIM_BATTLER_ATK_PARTNER)
+    if (animBattlerId == ANIM_ATTACKER || animBattlerId == ANIM_ATK_PARTNER)
         battler = gBattleAnimAttacker;
     else
         battler = gBattleAnimTarget;
@@ -2980,7 +2980,7 @@ static void Cmd_splitbgprio(void)
     wantedBattler = T1_READ_8(sBattleAnimScriptPtr + 1);
     sBattleAnimScriptPtr += 2;
 
-    if (wantedBattler != ANIM_BATTLER_ATTACKER)
+    if (wantedBattler != ANIM_ATTACKER)
         battler = gBattleAnimTarget;
     else
         battler = gBattleAnimAttacker;
@@ -3013,7 +3013,7 @@ static void Cmd_splitbgprio_foes(void)
     sBattleAnimScriptPtr += 2;
     if (GetBattlerSide(gBattleAnimAttacker) != GetBattlerSide(gBattleAnimTarget))
     {
-        if (wantedBattler != ANIM_BATTLER_ATTACKER)
+        if (wantedBattler != ANIM_ATTACKER)
             battler = gBattleAnimTarget;
         else
             battler = gBattleAnimAttacker;
@@ -3063,15 +3063,15 @@ static void Cmd_teamattack_moveback(void)
     if (!IsContest() && IsDoubleBattle()
      && GetBattlerSide(gBattleAnimAttacker) == GetBattlerSide(gBattleAnimTarget))
     {
-        if (wantedBattler == ANIM_BATTLER_ATTACKER)
+        if (wantedBattler == ANIM_ATTACKER)
         {
             priorityRank = GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker);
-            spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+            spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
         }
         else
         {
             priorityRank = GetBattlerSpriteBGPriorityRank(gBattleAnimTarget);
-            spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
+            spriteId = GetAnimBattlerSpriteId(ANIM_TARGET);
         }
         if (spriteId != 0xFF)
         {
@@ -3097,15 +3097,15 @@ static void Cmd_teamattack_movefwd(void)
     if (!IsContest() && IsDoubleBattle()
      && GetBattlerSide(gBattleAnimAttacker) == GetBattlerSide(gBattleAnimTarget))
     {
-        if (wantedBattler == ANIM_BATTLER_ATTACKER)
+        if (wantedBattler == ANIM_ATTACKER)
         {
             priorityRank = GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker);
-            spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+            spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
         }
         else
         {
             priorityRank = GetBattlerSpriteBGPriorityRank(gBattleAnimTarget);
-            spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
+            spriteId = GetAnimBattlerSpriteId(ANIM_TARGET);
         }
         if (spriteId != 0xFF && priorityRank == 2)
         {

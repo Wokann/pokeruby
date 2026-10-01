@@ -20,10 +20,10 @@ static const union AffineAnimCmd sAffineAnims_StretchBattlerUp[] =
 // opponent
 void AnimTask_StretchTargetUp(u8 taskId)
 {
-    u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_TARGET);
     if (++gTasks[taskId].data[0] == 1)
     {
-        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET), sAffineAnims_StretchBattlerUp);
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(ANIM_TARGET), sAffineAnims_StretchBattlerUp);
         gSprites[spriteId].x2 = 4;
     }
     else
@@ -41,10 +41,10 @@ void AnimTask_StretchTargetUp(u8 taskId)
 // player
 void AnimTask_StretchAttackerUp(u8 taskId)
 {
-    u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
     if (++gTasks[taskId].data[0] == 1)
     {
-        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER), sAffineAnims_StretchBattlerUp);
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(ANIM_ATTACKER), sAffineAnims_StretchBattlerUp);
         gSprites[spriteId].x2 = 4;
     }
     else

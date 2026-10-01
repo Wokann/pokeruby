@@ -15,7 +15,7 @@ static void AnimTask_GrowAndGrayscale_Step(u8 taskId);
 
 void AnimTask_GrowAndGrayscale(u8 taskId)
 {
-    u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_TARGET);
     PrepareBattlerSpriteForRotScale(spriteId, ST_OAM_OBJ_BLEND);
     SetSpriteRotScale(spriteId, 0xD0, 0xD0, 0);
     SetGrayscaleOrOriginalPalette(gSprites[spriteId].oam.paletteNum + 16, FALSE);
@@ -27,7 +27,7 @@ static void AnimTask_GrowAndGrayscale_Step(u8 taskId)
 {
     if (--gTasks[taskId].data[0] == -1)
     {
-        u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
+        u8 spriteId = GetAnimBattlerSpriteId(ANIM_TARGET);
         ResetSpriteRotScale(spriteId);
         SetGrayscaleOrOriginalPalette(gSprites[spriteId].oam.paletteNum + 16, TRUE);
         DestroyAnimVisualTask(taskId);

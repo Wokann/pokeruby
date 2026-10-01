@@ -384,7 +384,7 @@ static void AnimRockFragment(struct Sprite *sprite)
 
 static void AnimParticleInVortex(struct Sprite *sprite)
 {
-    if (gBattleAnimArgs[6] == ANIM_BATTLER_ATTACKER)
+    if (gBattleAnimArgs[6] == ANIM_ATTACKER)
         InitSpritePosToAnimAttacker(sprite, FALSE);
     else
         InitSpritePosToAnimTarget(sprite, FALSE);
@@ -652,7 +652,7 @@ void AnimTask_Rollout(u8 taskId)
     task->data[13] = pan1;
     task->data[14] = (pan2 - pan1) / task->data[8];
     task->data[1] = rolloutCounter;
-    task->data[15] = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    task->data[15] = GetAnimBattlerSpriteId(ANIM_ATTACKER);
 
     task->func = AnimTask_Rollout_Step;
 }

@@ -85,7 +85,7 @@ static void AnimConstrictBinding_Step1(struct Sprite *sprite)
     if ((u16)gBattleAnimArgs[7] == 0xFFFF)
     {
         sprite->affineAnimPaused = 0;
-        GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
+        GetAnimBattlerSpriteId(ANIM_TARGET);
         sprite->data[0] = 0x100;
         sprite->callback = AnimConstrictBinding_Step2;
     }
@@ -93,7 +93,7 @@ static void AnimConstrictBinding_Step1(struct Sprite *sprite)
 
 static void AnimConstrictBinding_Step2(struct Sprite *sprite)
 {
-    GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
+    GetAnimBattlerSpriteId(ANIM_TARGET);
     if (!sprite->data[2])
     {
         sprite->data[0] += 11;

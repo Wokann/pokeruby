@@ -501,7 +501,7 @@ static void AnimFlyBallUp(struct Sprite *sprite)
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[1] = gBattleAnimArgs[3];
     sprite->callback = AnimFlyBallUp_Step;
-    gSprites[GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER)].invisible = TRUE;
+    gSprites[GetAnimBattlerSpriteId(ANIM_ATTACKER)].invisible = TRUE;
 }
 
 static void AnimFlyBallUp_Step(struct Sprite *sprite)
@@ -561,7 +561,7 @@ static void AnimFlyBallAttack_Step(struct Sprite *sprite)
     //The below if statement relies on overflow when cast to unsigned whenever x and x2 add up to less than 32.
     if ((u32) (sprite->x + sprite->x2 + 32) > 304 || sprite->y + sprite->y2 > 160)
     {
-        gSprites[GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER)].invisible = FALSE;
+        gSprites[GetAnimBattlerSpriteId(ANIM_ATTACKER)].invisible = FALSE;
         DestroyAnimSprite(sprite);
     }
 }
@@ -974,7 +974,7 @@ static void AnimWhirlwindLine(struct Sprite *sprite)
     u16 offset;
     u8 mult;
 
-    if (gBattleAnimArgs[2] == ANIM_BATTLER_ATTACKER)
+    if (gBattleAnimArgs[2] == ANIM_ATTACKER)
     {
         InitSpritePosToAnimAttacker(sprite, FALSE);
     }
@@ -983,8 +983,8 @@ static void AnimWhirlwindLine(struct Sprite *sprite)
         InitSpritePosToAnimTarget(sprite, FALSE);
     }
 
-    if ((gBattleAnimArgs[2] == ANIM_BATTLER_ATTACKER && GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
-        || (gBattleAnimArgs[2] == ANIM_BATTLER_TARGET && GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER))
+    if ((gBattleAnimArgs[2] == ANIM_ATTACKER && GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+        || (gBattleAnimArgs[2] == ANIM_TARGET && GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER))
     {
         sprite->x += 8;
     }
@@ -1028,7 +1028,7 @@ void AnimTask_DrillPeckHitSplats(u8 taskId)
 
         gBattleAnimArgs[0] = Sin(gTasks[taskId].data[0], -13);
         gBattleAnimArgs[1] = Cos(gTasks[taskId].data[0], -13);
-        gBattleAnimArgs[2] = ANIM_BATTLER_TARGET;
+        gBattleAnimArgs[2] = ANIM_TARGET;
         gBattleAnimArgs[3] = 3;
 
         CreateSpriteAndAnimate(&gFlashingHitSplatSpriteTemplate,
@@ -1051,7 +1051,7 @@ static void AnimBounceBallShrink(struct Sprite *sprite)
     {
         case 0:
             InitSpritePosToAnimAttacker(sprite, TRUE);
-            gSprites[GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER)].invisible = TRUE;
+            gSprites[GetAnimBattlerSpriteId(ANIM_ATTACKER)].invisible = TRUE;
             ++sprite->data[0];
             break;
         case 1:
@@ -1082,7 +1082,7 @@ static void AnimBounceBallLand(struct Sprite *sprite)
             sprite->y2 -= 10;
             if (sprite->y + sprite->y2 < -32)
             {
-                gSprites[GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER)].invisible = FALSE;
+                gSprites[GetAnimBattlerSpriteId(ANIM_ATTACKER)].invisible = FALSE;
                 DestroyAnimSprite(sprite);
             }
     }
@@ -1094,7 +1094,7 @@ static void AnimDiveBall(struct Sprite *sprite)
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[1] = gBattleAnimArgs[3];
     sprite->callback = AnimDiveBall_Step1;
-    gSprites[GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER)].invisible = TRUE;
+    gSprites[GetAnimBattlerSpriteId(ANIM_ATTACKER)].invisible = TRUE;
 }
 
 static void AnimDiveBall_Step1(struct Sprite *sprite)
@@ -1330,12 +1330,12 @@ static void UNUSED AnimTask_SetAttackerVisibility(u8 taskId)
 {
     if (gBattleAnimArgs[0] == 0)
     {
-        u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+        u8 spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
         gSprites[spriteId].invisible = TRUE;
     }
     else
     {
-        u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+        u8 spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
         gSprites[spriteId].invisible = FALSE;
     }
 

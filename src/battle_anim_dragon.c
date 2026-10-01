@@ -257,7 +257,7 @@ static void AnimDragonRageFirePlume(struct Sprite *sprite)
 {
     CMD_ARGS(relativeTo, x, y);
 
-    if (cmd->relativeTo == ANIM_BATTLER_ATTACKER)
+    if (cmd->relativeTo == ANIM_ATTACKER)
     {
         sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
         sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);

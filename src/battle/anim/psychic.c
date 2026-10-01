@@ -581,7 +581,7 @@ static void AnimWallSparkle(struct Sprite *sprite)
         }
         else
         {
-            if (gBattleAnimArgs[2] == ANIM_BATTLER_ATTACKER)
+            if (gBattleAnimArgs[2] == ANIM_ATTACKER)
                 InitSpritePosToAnimAttacker(sprite, respectMonPicOffsets);
             else
                 InitSpritePosToAnimTarget(sprite, respectMonPicOffsets);
@@ -675,7 +675,7 @@ static void AnimQuestionMark_Step2(struct Sprite *sprite)
 void AnimTask_MeditateStretchAttacker(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
-    u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
     task->data[0] = spriteId;
     PrepareAffineAnimInTaskData(task, spriteId, sAffineAnim_MeditateStretchAttacker);
     task->func = AnimTask_MeditateStretchAttacker_Step;
@@ -692,7 +692,7 @@ static void AnimTask_MeditateStretchAttacker_Step(u8 taskId)
 void AnimTask_Teleport(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
-    u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
     task->data[0] = spriteId;
     task->data[1] = 0;
     task->data[2] = 0;
@@ -836,7 +836,7 @@ static void AnimRedX_Step(struct Sprite *sprite)
 
 static void AnimRedX(struct Sprite *sprite)
 {
-    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
+    if (gBattleAnimArgs[0] == ANIM_ATTACKER)
     {
         sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
         sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
@@ -852,7 +852,7 @@ void AnimTask_SkillSwap(u8 taskId)
 
     if (IsContest())
     {
-        if (gBattleAnimArgs[0] == ANIM_BATTLER_TARGET)
+        if (gBattleAnimArgs[0] == ANIM_TARGET)
         {
             task->data[10] = -10;
             task->data[11] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_RIGHT) - 8;
@@ -871,7 +871,7 @@ void AnimTask_SkillSwap(u8 taskId)
     }
     else
     {
-        if (gBattleAnimArgs[0] == ANIM_BATTLER_TARGET)
+        if (gBattleAnimArgs[0] == ANIM_TARGET)
         {
             task->data[10] = -10;
             task->data[11] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_LEFT) + 8;

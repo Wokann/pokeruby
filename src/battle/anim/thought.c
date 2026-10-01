@@ -83,7 +83,7 @@ static void AnimThoughtBubble(struct Sprite *sprite)
 {
     u8 animNum;
     u8 battler;
-    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
+    if (gBattleAnimArgs[0] == ANIM_ATTACKER)
         battler = gBattleAnimAttacker;
     else
         battler = gBattleAnimTarget;

@@ -989,7 +989,7 @@ static void AnimHitSplatBasic(struct Sprite *sprite)
     CMD_ARGS(x, y, relativeTo, animation);
 
     StartSpriteAffineAnim(sprite, cmd->animation);
-    if (cmd->relativeTo == ANIM_BATTLER_ATTACKER)
+    if (cmd->relativeTo == ANIM_ATTACKER)
         InitSpritePosToAnimAttacker(sprite, TRUE);
     else
         InitSpritePosToAnimTarget(sprite, TRUE);
@@ -1003,7 +1003,7 @@ static void AnimHitSplatPersistent(struct Sprite *sprite)
     CMD_ARGS(x, y, relativeTo, animation, duration);
 
     StartSpriteAffineAnim(sprite, cmd->animation);
-    if (cmd->relativeTo == ANIM_BATTLER_ATTACKER)
+    if (cmd->relativeTo == ANIM_ATTACKER)
         InitSpritePosToAnimAttacker(sprite, TRUE);
     else
         InitSpritePosToAnimTarget(sprite, TRUE);
@@ -1031,7 +1031,7 @@ static void AnimHitSplatRandom(struct Sprite *sprite)
         cmd->animation = Random() & 3;
 
     StartSpriteAffineAnim(sprite, cmd->animation);
-    if (cmd->relativeTo == ANIM_BATTLER_ATTACKER)
+    if (cmd->relativeTo == ANIM_ATTACKER)
         InitSpritePosToAnimAttacker(sprite, FALSE);
     else
         InitSpritePosToAnimTarget(sprite, FALSE);
@@ -1061,7 +1061,7 @@ static void AnimCrossImpact(struct Sprite *sprite)
 {
     CMD_ARGS(x, y, relativeTo, duration);
 
-    if (cmd->relativeTo == ANIM_BATTLER_ATTACKER)
+    if (cmd->relativeTo == ANIM_ATTACKER)
         InitSpritePosToAnimAttacker(sprite, TRUE);
     else
         InitSpritePosToAnimTarget(sprite, TRUE);
@@ -1076,7 +1076,7 @@ static void AnimFlashingHitSplat(struct Sprite *sprite)
     CMD_ARGS(x, y, relativeTo, animation);
 
     StartSpriteAffineAnim(sprite, cmd->animation);
-    if (cmd->relativeTo == ANIM_BATTLER_ATTACKER)
+    if (cmd->relativeTo == ANIM_ATTACKER)
         InitSpritePosToAnimAttacker(sprite, TRUE);
     else
         InitSpritePosToAnimTarget(sprite, TRUE);
@@ -1119,13 +1119,13 @@ void AnimTask_BlendBattleAnimPalExclude(u8 taskId)
     case 2:
         selectedPalettes = 0;
         // fall through
-    case ANIM_BATTLER_ATTACKER:
+    case ANIM_ATTACKER:
         animBattlers[0] = gBattleAnimAttacker;
         break;
     case 3:
         selectedPalettes = 0;
         // fall through
-    case ANIM_BATTLER_TARGET:
+    case ANIM_TARGET:
         animBattlers[0] = gBattleAnimTarget;
         break;
     case 4:
@@ -1386,7 +1386,7 @@ void AnimTask_DrawFallingWhiteLinesOnAttacker(u8 taskId)
             species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[gBattleAnimAttacker]], MON_DATA_SPECIES);
     }
 
-    spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
     newSpriteId = CreateInvisibleSpriteCopy(gBattleAnimAttacker, spriteId, species);
     GetBattleAnimBg1Data(&animBg);
     DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x1000);
@@ -1429,7 +1429,7 @@ static void AnimTask_DrawFallingWhiteLinesOnAttacker_Step(u8 taskId)
             REG_DISPCNT ^= DISPCNT_OBJWIN_ON;
             REG_BLDCNT = 0;
             REG_BLDALPHA = 0;
-            sprite = &gSprites[GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER)]; // unused
+            sprite = &gSprites[GetAnimBattlerSpriteId(ANIM_ATTACKER)]; // unused
             sprite = &gSprites[gTasks[taskId].data[0]];
             DestroySprite(sprite);
 

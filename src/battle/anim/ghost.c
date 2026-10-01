@@ -347,7 +347,7 @@ void AnimTask_NightShadeClone(u8 taskId)
     u8 spriteId;
     REG_BLDCNT = BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_ALL;
     REG_BLDALPHA = BLDALPHA_BLEND(0, 16);
-    spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
     PrepareBattlerSpriteForRotScale(spriteId, ST_OAM_OBJ_BLEND);
     SetSpriteRotScale(spriteId, 128, 128, 0);
     gSprites[spriteId].invisible = FALSE;
@@ -383,7 +383,7 @@ static void AnimTask_NightShadeClone_Step2(u8 taskId)
         return;
     }
 
-    spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
     gTasks[taskId].data[0] += 8;
     if (gTasks[taskId].data[0] <= 0xFF)
     {
@@ -524,7 +524,7 @@ void AnimTask_NightmareClone(u8 taskId)
     struct Task *task;
     
     task = &gTasks[taskId];
-    task->data[0] = CloneBattlerSpriteWithBlend(ANIM_BATTLER_TARGET);
+    task->data[0] = CloneBattlerSpriteWithBlend(ANIM_TARGET);
     if (task->data[0] < 0)
     {
         DestroyAnimVisualTask(taskId);
@@ -616,7 +616,7 @@ static void AnimTask_SpiteTargetShadow_Step1(u8 taskId)
         }
         else
         {
-            task->data[0] = CloneBattlerSpriteWithBlend(ANIM_BATTLER_TARGET);
+            task->data[0] = CloneBattlerSpriteWithBlend(ANIM_TARGET);
             if (task->data[0] < 0)
             {
                 FreeSpritePaletteByTag(ANIM_TAG_BENT_SPOON);
@@ -630,7 +630,7 @@ static void AnimTask_SpiteTargetShadow_Step1(u8 taskId)
                 task->data[1] = 0;
                 task->data[2] = 0;
                 task->data[3] = 16;
-                task->data[13] = GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
+                task->data[13] = GetAnimBattlerSpriteId(ANIM_TARGET);
                 task->data[4] = OBJ_PLTT_ID2(gSprites[task->data[13]].oam.paletteNum);
                 if (position == 1)
                     REG_DISPCNT &= ~DISPCNT_BG1_ON;
@@ -712,7 +712,7 @@ static void AnimTask_SpiteTargetShadow_Step3(u8 taskId)
     {
     case 0:
         gScanlineEffect.state = 3;
-        task->data[14] = GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
+        task->data[14] = GetAnimBattlerSpriteId(ANIM_TARGET);
         if (rank == 1)
             REG_DISPCNT &= ~DISPCNT_BG1_ON;
         else

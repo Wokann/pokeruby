@@ -60,7 +60,7 @@ const s8 gSpeedDustPosTable[][2] =
 void AnimTask_AttackerStretchAndDisappear(u8 taskId)
 {
     struct Task* task = &gTasks[taskId];
-    u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
     task->data[0] = spriteId;
     PrepareAffineAnimInTaskData(task, spriteId, gStretchAttackerAffineAnimCmds);
     task->func = AnimTask_AttackerStretchAndDisappear_Step;
@@ -97,7 +97,7 @@ void AnimTask_ExtremeSpeedImpact(u8 taskId)
         task->data[14] = -8;
     }
 
-    task->data[15] = GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
+    task->data[15] = GetAnimBattlerSpriteId(ANIM_TARGET);
     task->func = AnimTask_ExtremeSpeedImpact_Step;
 }
 
@@ -158,7 +158,7 @@ void AnimTask_ExtremeSpeedMonReappear(u8 taskId)
     task->data[4] = 1;
     task->data[13] = 14;
     task->data[14] = 2;
-    task->data[15] = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    task->data[15] = GetAnimBattlerSpriteId(ANIM_ATTACKER);
     task->func = AnimTask_ExtremeSpeedMonReappear_Step;
 }
 
