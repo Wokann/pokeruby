@@ -87,7 +87,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NewMauville_Inside_EventScript_Voltorb1",
-      "flag": "FLAG_HIDE_VOLTORB_1_NEW_MAUVILLE"
+      "flag": "FLAG_HIDE_NEW_MAUVILLE_VOLTORB_1"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -100,7 +100,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NewMauville_Inside_EventScript_Voltorb2",
-      "flag": "FLAG_HIDE_VOLTORB_2_NEW_MAUVILLE"
+      "flag": "FLAG_HIDE_NEW_MAUVILLE_VOLTORB_2"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -113,7 +113,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NewMauville_Inside_EventScript_Voltorb3",
-      "flag": "FLAG_HIDE_VOLTORB_3_NEW_MAUVILLE"
+      "flag": "FLAG_HIDE_NEW_MAUVILLE_VOLTORB_3"
     }
   ],
   "warp_events": [

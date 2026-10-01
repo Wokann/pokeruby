@@ -168,7 +168,7 @@ NewMauville_Inside_EventScript_Voltorb1:: @ 815E900
 	playmoncry SPECIES_VOLTORB, 2
 	delay 40
 	waitmoncry
-	setflag FLAG_HIDE_VOLTORB_1_NEW_MAUVILLE
+	setflag FLAG_HIDE_NEW_MAUVILLE_VOLTORB_1
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	dowildbattle
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
@@ -183,7 +183,7 @@ NewMauville_Inside_EventScript_Voltorb2:: @ 815E91E
 	playmoncry SPECIES_VOLTORB, 2
 	delay 40
 	waitmoncry
-	setflag FLAG_HIDE_VOLTORB_2_NEW_MAUVILLE
+	setflag FLAG_HIDE_NEW_MAUVILLE_VOLTORB_2
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	dowildbattle
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
@@ -198,7 +198,7 @@ NewMauville_Inside_EventScript_Voltorb3:: @ 815E93C
 	playmoncry SPECIES_VOLTORB, 2
 	delay 40
 	waitmoncry
-	setflag FLAG_HIDE_VOLTORB_3_NEW_MAUVILLE
+	setflag FLAG_HIDE_NEW_MAUVILLE_VOLTORB_3
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	dowildbattle
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
