@@ -38,7 +38,7 @@ RustboroCity_House1_EventScript_DeclineTrade:: @ 8157CFB
 	end
 
 RustboroCity_House1_EventScript_NotRequestedMon:: @ 8157D05
-	bufferspeciesname 0, VAR_0x8009
+	bufferspeciesname STR_VAR_1, VAR_0x8009
 	msgbox RustboroCity_House1_Text_ThatIsNoMon, MSGBOX_DEFAULT
 	release
 	end

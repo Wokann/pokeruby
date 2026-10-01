@@ -465,7 +465,7 @@ RustboroCity_EventScript_ReturnGoods:: @ 814C77D
 	call_if_eq RustboroCity_EventScript_EmployeeFacePlayerRight
 	msgbox RustboroCity_Text_YouGotItThankYou, MSGBOX_DEFAULT
 	giveitem ITEM_GREAT_BALL
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	call_if_eq RustboroCity_EventScript_BagFull
 	msgbox RustboroCity_Text_PleaseComeWithMe, MSGBOX_DEFAULT
 	closemessage
@@ -547,9 +547,9 @@ RustboroCity_EventScript_RivalEncounter:: @ 814C8DA
 	faceplayer
 	goto_if_set FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_BrineyHint
 	checkplayergender
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, MALE
 	goto_if_eq RustboroCity_EventScript_MayHiHowsPokedexComing
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, FEMALE
 	goto_if_eq RustboroCity_EventScript_BrendanHiHowsPokedexComing
 	end
 
@@ -567,9 +567,9 @@ RustboroCity_EventScript_BrendanHiHowsPokedexComing:: @ 814C90A
 
 RustboroCity_EventScript_BrineyHint:: @ 814C917
 	checkplayergender
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, MALE
 	goto_if_eq RustboroCity_EventScript_MayBrineyHint
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, FEMALE
 	goto_if_eq RustboroCity_EventScript_BrendanBrineyHint
 	end
 

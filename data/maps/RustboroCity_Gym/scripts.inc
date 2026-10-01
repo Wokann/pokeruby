@@ -26,7 +26,7 @@ RustboroCity_Gym_EventScript_RoxanneDefeated:: @ 81578FE
 
 RustboroCity_Gym_EventScript_GiveRockTomb:: @ 815793C
 	giveitem ITEM_TM39_ROCK_TOMB
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_TM_ROCK_TOMB
 	msgbox RustboroCity_Gym_Text_ExplainRockTomb, MSGBOX_DEFAULT

@@ -10,7 +10,7 @@ RustboroCity_PokemonSchool_EventScript_Blackboard:: @ 81579E2
 RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic:: @ 81579F1
 	message RustboroCity_PokemonSchool_Text_ReadWhichTopic
 	waitmessage
-	multichoicegrid 8, 1, MULTI_STATUS_INFO, 3, 0
+	multichoicegrid 8, 1, MULTI_STATUS_INFO, 3, FALSE
 	switch VAR_RESULT
 	case 0, RustboroCity_PokemonSchool_EventScript_Poison
 	case 1, RustboroCity_PokemonSchool_EventScript_Paralysis
@@ -78,13 +78,13 @@ RustboroCity_PokemonSchool_EventScript_Teacher:: @ 8157ACE
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_QUICK_CLAW, RustboroCity_PokemonSchool_EventScript_GaveQuickClaw
-	compare VAR_FACING, 4
+	compare VAR_FACING, DIR_EAST
 	call_if_eq RustboroCity_PokemonSchool_EventScript_TeacherCheckOnStudentsEast
-	compare VAR_FACING, 3
+	compare VAR_FACING, DIR_WEST
 	call_if_eq RustboroCity_PokemonSchool_EventScript_TeacherCheckOnStudentsWest
 	msgbox RustboroCity_PokemonSchool_Text_StudentsWhoDontStudyGetQuickClaw, MSGBOX_DEFAULT
 	giveitem ITEM_QUICK_CLAW
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	closemessage
 	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown

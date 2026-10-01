@@ -68,10 +68,10 @@ RustboroCity_DevonCorp_2F_EventScript_FossilScientist:: @ 8157564
 	goto_if_eq RustboroCity_DevonCorp_2F_EventScript_StillRegenerating
 	msgbox RustboroCity_DevonCorp_2F_Text_DevelopDeviceToResurrectFossils, MSGBOX_DEFAULT
 	checkitem ITEM_ROOT_FOSSIL, 1
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq RustboroCity_DevonCorp_2F_EventScript_NoticeRootFossil
 	checkitem ITEM_CLAW_FOSSIL, 1
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq RustboroCity_DevonCorp_2F_EventScript_NoticeClawFossil
 	release
 	end
@@ -86,7 +86,7 @@ RustboroCity_DevonCorp_2F_EventScript_NoticeRootFossil:: @ 81575A6
 	msgbox RustboroCity_DevonCorp_2F_Text_WantToBringFossilBackToLife, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq RustboroCity_DevonCorp_2F_EventScript_DeclineGiveFossil
-	bufferitemname 0, ITEM_ROOT_FOSSIL
+	bufferitemname STR_VAR_1, ITEM_ROOT_FOSSIL
 	msgbox RustboroCity_DevonCorp_2F_Text_HandedFossilToResearcher, MSGBOX_DEFAULT
 	removeitem ITEM_ROOT_FOSSIL
 	setvar VAR_FOSSIL_RESURRECTION_STATE, 1
@@ -104,7 +104,7 @@ RustboroCity_DevonCorp_2F_EventScript_NoticeClawFossil:: @ 81575EE
 	msgbox RustboroCity_DevonCorp_2F_Text_WantToBringFossilBackToLife, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq RustboroCity_DevonCorp_2F_EventScript_DeclineGiveFossil
-	bufferitemname 0, ITEM_CLAW_FOSSIL
+	bufferitemname STR_VAR_1, ITEM_CLAW_FOSSIL
 	msgbox RustboroCity_DevonCorp_2F_Text_HandedFossilToResearcher, MSGBOX_DEFAULT
 	removeitem ITEM_CLAW_FOSSIL
 	setvar VAR_FOSSIL_RESURRECTION_STATE, 1
@@ -130,10 +130,10 @@ RustboroCity_DevonCorp_2F_EventScript_FossilMonReady:: @ 815764A
 	end
 
 RustboroCity_DevonCorp_2F_EventScript_LileepReady:: @ 8157661
-	bufferspeciesname 1, SPECIES_LILEEP
+	bufferspeciesname STR_VAR_2, SPECIES_LILEEP
 	msgbox RustboroCity_DevonCorp_2F_Text_FossilizedMonBroughtBackToLife, MSGBOX_DEFAULT
 	getpartysize
-	compare VAR_RESULT, 6
+	compare VAR_RESULT, PARTY_SIZE
 	goto_if_eq RustboroCity_DevonCorp_2F_EventScript_TooManyPokemon
 	copyvar VAR_0x8004, VAR_RESULT
 	setvar VAR_FOSSIL_RESURRECTION_STATE, 0
@@ -150,10 +150,10 @@ RustboroCity_DevonCorp_2F_EventScript_LileepReady:: @ 8157661
 	end
 
 RustboroCity_DevonCorp_2F_EventScript_AnorithReady:: @ 81576B4
-	bufferspeciesname 1, SPECIES_ANORITH
+	bufferspeciesname STR_VAR_2, SPECIES_ANORITH
 	msgbox RustboroCity_DevonCorp_2F_Text_FossilizedMonBroughtBackToLife, MSGBOX_DEFAULT
 	getpartysize
-	compare VAR_RESULT, 6
+	compare VAR_RESULT, PARTY_SIZE
 	goto_if_eq RustboroCity_DevonCorp_2F_EventScript_TooManyPokemon
 	copyvar VAR_0x8004, VAR_RESULT
 	setvar VAR_FOSSIL_RESURRECTION_STATE, 0
