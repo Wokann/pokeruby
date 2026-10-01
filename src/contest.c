@@ -799,10 +799,10 @@ void Task_SelectedMove(u8 taskId)
 {
     if (gIsLinkContest & 1)
     {
-        u16 var = GetChosenMove(gContestPlayerMonIndex);
+        u16 move = GetChosenMove(gContestPlayerMonIndex);
         u8 taskId2;
 
-        sContestantStatus[gContestPlayerMonIndex].currMove = var;
+        sContestantStatus[gContestPlayerMonIndex].currMove = move;
         taskId2 = CreateTask(Task_LinkContest_CommunicateMoveSelections, 0);
         SetTaskFuncWithFollowupFunc(taskId2, Task_LinkContest_CommunicateMoveSelections, Task_EndCommunicateMoveSelections);
         gTasks[taskId].func = TaskDummy1;
