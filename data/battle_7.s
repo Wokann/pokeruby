@@ -9,9 +9,7 @@ gSpriteSheet_EnemyShadow:: @ 81FAF24
 
 	.align 2
 sOamData_EnemyShadow:: @ 81FAF2C
-	.2byte 0x4000
-	.2byte 0x4000
-	.2byte 0x0C00
+	oam_data 0, OAM_AFFINE_NONE, OAM_OBJ_NORMAL, OAM_MOSAIC_OFF, OAM_4BPP, OAM_SIZE_32x8, 0, 0, 0, 3, 0
 
 	.align 2
 gSpriteTemplate_EnemyShadow:: @ 81FAF34

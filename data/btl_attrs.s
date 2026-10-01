@@ -273,15 +273,11 @@ sText_DebugFlyingMonSaveConfirm::
 
 	.align 2
 gOamData_BattleSpriteOpponentSide:: @ 81F96E8
-	.2byte 0x0100
-	.2byte 0xC000
-	.2byte 0x0800
+	oam_data 0, OAM_AFFINE_NORMAL_SIZE, OAM_OBJ_NORMAL, OAM_MOSAIC_OFF, OAM_4BPP, OAM_SIZE_64x64, 0, 0, 0, 2, 0
 
 	.align 2
 gOamData_BattleSpritePlayerSide:: @ 81F96F0
-	.2byte 0x0100
-	.2byte 0xC000
-	.2byte 0x2800
+	oam_data 0, OAM_AFFINE_NORMAL_SIZE, OAM_OBJ_NORMAL, OAM_MOSAIC_OFF, OAM_4BPP, OAM_SIZE_64x64, 0, 0, 0, 2, 2
 
 	.align 2
 sAnim_Unused:: @ 81F96F8

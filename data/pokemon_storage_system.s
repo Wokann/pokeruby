@@ -26,15 +26,11 @@ gPokeStorageCursorSpritePalettes:: @ 83BBC14
 
 	.align 2
 gOamData_PokeStorageCursor:: @ 83BBC2C
-	.2byte 0x0000
-	.2byte 0x8000
-	.2byte 0x0400
+	oam_data 0, OAM_AFFINE_NONE, OAM_OBJ_NORMAL, OAM_MOSAIC_OFF, OAM_4BPP, OAM_SIZE_32x32, 0, 0, 0, 1, 0
 
 	.align 2
 gOamData_PokeStorageCursorShadow:: @ 83BBC34
-	.2byte 0x0000
-	.2byte 0x4000
-	.2byte 0x0800
+	oam_data 0, OAM_AFFINE_NONE, OAM_OBJ_NORMAL, OAM_MOSAIC_OFF, OAM_4BPP, OAM_SIZE_16x16, 0, 0, 0, 2, 0
 
 	.align 2
 gAnim_PokeStorageCursorBouncing:: @ 83BBC3C

@@ -15,9 +15,7 @@ gSmokescreenImpactSpritePalette:: @ 81FAEAC
 
 	.align 2
 gOamData_SmokescreenImpact:: @ 81FAEB4
-	.2byte 0x0000
-	.2byte 0x4000
-	.2byte 0x0400
+	oam_data 0, OAM_AFFINE_NONE, OAM_OBJ_NORMAL, OAM_MOSAIC_OFF, OAM_4BPP, OAM_SIZE_16x16, 0, 0, 0, 1, 0
 
 	.align 2
 gAnim_SmokescreenImpact_0:: @ 81FAEBC

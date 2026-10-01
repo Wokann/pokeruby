@@ -56,6 +56,14 @@
 	.4byte \callback
 	.endm
 
+@ Defines struct OamData using the field layout in include/gba/types.h.
+@ 'size' is an OAM_SIZE_* constant, which contains both shape and size bits.
+	.macro oam_data y, affine_mode, obj_mode, mosaic, bpp, size, x, matrix_num, tile_num, priority, palette_num
+	.2byte (\y) | \affine_mode | \obj_mode | \mosaic | \bpp | ((\size) & 0xffff)
+	.2byte (\x) | ((\matrix_num) << 9) | (((\size) >> 16) & 0xffff)
+	.2byte (\tile_num) | ((\priority) << 10) | ((\palette_num) << 12)
+	.endm
+
 @ Berry trees have a table defining the palette slot used for each of their 5
 @ stages. However, the first 2 stages always use the same slots regardless of
 @ the type of tree and the slots of the last 3 stages always equal each other.
