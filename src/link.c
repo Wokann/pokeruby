@@ -1363,9 +1363,9 @@ bool8 IsLinkConnectionEstablished(void)
     return EXTRACT_CONN_ESTABLISHED(gLinkStatus);
 }
 
-void SetSuppressLinkErrorMessage(bool8 value)
+void SetSuppressLinkErrorMessage(bool8 flag)
 {
-    gSuppressLinkErrorMessage = value;
+    gSuppressLinkErrorMessage = flag;
 }
 
 bool8 HasLinkErrorOccurred(void)
