@@ -12,8 +12,8 @@
 void FieldInitRegionMap(MainCallback callback)
 {
     SetVBlankCallback(NULL);
-    eRegionMapState.buffer.state = 0;
-    eRegionMapState.callback = callback;
+    sRegionMapState.buffer.state = 0;
+    sRegionMapState.callback = callback;
     SetMainCallback2(MCB2_InitRegionMapRegisters);
 }
 
@@ -30,7 +30,7 @@ void MCB2_InitRegionMapRegisters(void)
     REG_BG3VOFS = 0;
     ResetSpriteData();
     FreeAllSpritePalettes();
-    InitRegionMap(&eRegionMapState.regionMap, 0);
+    InitRegionMap(&sRegionMapState.regionMap, 0);
     CreateRegionMapPlayerIcon(0, 0);
     CreateRegionMapCursor(1, 1);
     Text_LoadWindowTemplate(&gMenuWindowTemplateBg0);
@@ -63,15 +63,15 @@ void MCB2_FieldUpdateRegionMap(void)
 
 void FieldUpdateRegionMap(void)
 {
-    switch (eRegionMapState.buffer.state)
+    switch (sRegionMapState.buffer.state)
     {
     case 0:
         REG_DISPCNT = DISPCNT_MODE_1 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG2_ON | DISPCNT_OBJ_ON;
-        eRegionMapState.buffer.state++;
+        sRegionMapState.buffer.state++;
         break;
     case 1:
         if (!gPaletteFade.active)
-            eRegionMapState.buffer.state++;
+            sRegionMapState.buffer.state++;
         break;
     case 2:
         switch (DoRegionMapInputCallback())
@@ -81,18 +81,18 @@ void FieldUpdateRegionMap(void)
             break;
         case MAP_INPUT_A_BUTTON:
         case MAP_INPUT_B_BUTTON:
-            eRegionMapState.buffer.state++;
+            sRegionMapState.buffer.state++;
         }
         break;
     case 3:
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        eRegionMapState.buffer.state++;
+        sRegionMapState.buffer.state++;
         break;
     case 4:
         if (!gPaletteFade.active)
         {
             FreeRegionMapIconResources();
-            SetMainCallback2(eRegionMapState.callback);
+            SetMainCallback2(sRegionMapState.callback);
         }
         break;
     }
@@ -101,6 +101,6 @@ void FieldUpdateRegionMap(void)
 void PrintRegionMapSecName(void)
 {
     Menu_BlankWindowRect(17, 17, 28, 18);
-    if (eRegionMapState.regionMap.mapSecType != MAPSECTYPE_NONE)
-        Menu_PrintText(eRegionMapState.regionMap.mapSecName, 17, 17);
+    if (sRegionMapState.regionMap.mapSecType != MAPSECTYPE_NONE)
+        Menu_PrintText(sRegionMapState.regionMap.mapSecName, 17, 17);
 }

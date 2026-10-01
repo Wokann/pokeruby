@@ -1223,7 +1223,7 @@ static const struct MultiNameFlyDest sMultiNameFlyDestinations[1] =
     {sEverGrandeCityNames, MAPSEC_EVER_GRANDE_CITY, FLAG_SYS_POKEMON_LEAGUE_FLY},
 };
 
-struct RegionMapState *const gRegionMapState = &eRegionMapState;
+struct RegionMapState *const gRegionMapState = &sRegionMapState;
 
 static const struct SpritePalette sFlyTargetIconsSpritePalette = {sFlyTargetIcons_Pal, 2};
 

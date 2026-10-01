@@ -13,7 +13,7 @@ extern u8 gSharedMem[];
 #define eBattleInterfaceGfxBuffer       ((u8 *)EWRAM)
 
 // region_map.c, field_region_map.c
-#define eRegionMapState                 (*(struct RegionMapState *)gSharedMem)
+#define sRegionMapState                 (*(struct RegionMapState *)gSharedMem)
 
 // field_weather.c
 #define eDroughtPaletteData             (*(struct WeatherPaletteData *)gSharedMem)
