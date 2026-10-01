@@ -187,7 +187,7 @@ static const u8 sUnusedLass_Gfx[] = INCBIN_U8("graphics/battle_transitions/unuse
 static const u32 sShrinkingBoxTileset[] = INCBIN_U32("graphics/battle_transitions/shrinking_box.4bpp");
 
 // Ruby keeps this state in its shared EWRAM buffer instead of allocating it.
-static struct TransitionData * const sTransitionData = &TRANSITION_STRUCT;
+static struct TransitionData * const sTransitionData = (struct TransitionData *)(gSharedMem + 0xC000);
 
 static const TaskFunc sTasks_Intro[B_TRANSITION_COUNT] =
 {
@@ -709,7 +709,7 @@ static bool8 Swirl_Init(struct Task* task)
     InitTransitionData();
     ScanlineEffect_Clear();
     BeginNormalPaletteFade(0xFFFFFFFF, 4, 0, 16, RGB(0, 0, 0));
-    SetSinWave(gScanlineEffectRegBuffers[1], TRANSITION_STRUCT.cameraX, 0, 2, 0, 160);
+    SetSinWave(gScanlineEffectRegBuffers[1], sTransitionData->cameraX, 0, 2, 0, 160);
 
     SetVBlankCallback(VBlankCB_Swirl);
     SetHBlankCallback(HBlankCB_Swirl);
@@ -726,11 +726,11 @@ static bool8 Swirl_Init(struct Task* task)
 
 static bool8 Swirl_End(struct Task* task)
 {
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
     task->tSinIndex += 4;
     task->tAmplitude += 8;
 
-    SetSinWave(gScanlineEffectRegBuffers[0], TRANSITION_STRUCT.cameraX, task->tSinIndex, 2, task->tAmplitude, 160);
+    SetSinWave(gScanlineEffectRegBuffers[0], sTransitionData->cameraX, task->tSinIndex, 2, task->tAmplitude, 160);
 
     if (!gPaletteFade.active)
     {
@@ -738,14 +738,14 @@ static bool8 Swirl_End(struct Task* task)
         DestroyTask(taskId);
     }
 
-    TRANSITION_STRUCT.VBlank_DMA++;
+    sTransitionData->VBlank_DMA++;
     return FALSE;
 }
 
 static void VBlankCB_Swirl(void)
 {
     VBlankCB_BattleTransition();
-    if (TRANSITION_STRUCT.VBlank_DMA)
+    if (sTransitionData->VBlank_DMA)
         DmaCopy16(3, gScanlineEffectRegBuffers[0], gScanlineEffectRegBuffers[1], 320);
 }
 
@@ -776,7 +776,7 @@ static bool8 Shuffle_Init(struct Task* task)
     ScanlineEffect_Clear();
 
     BeginNormalPaletteFade(0xFFFFFFFF, 4, 0, 16, RGB(0, 0, 0));
-    memset(gScanlineEffectRegBuffers[1], TRANSITION_STRUCT.cameraY, 0x140);
+    memset(gScanlineEffectRegBuffers[1], sTransitionData->cameraY, 0x140);
 
     SetVBlankCallback(VBlankCB_Shuffle);
     SetHBlankCallback(HBlankCB_Shuffle);
@@ -796,7 +796,7 @@ static bool8 Shuffle_End(struct Task* task)
     u8 i;
     u16 amplitude, sinVal;
 
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
     sinVal = task->tSinVal;
     amplitude = task->tAmplitude >> 8;
     task->tSinVal += 4224;
@@ -805,20 +805,20 @@ static bool8 Shuffle_End(struct Task* task)
     for (i = 0; i < 160; i++, sinVal += 4224)
     {
         u16 sinIndex = sinVal / 256;
-        gScanlineEffectRegBuffers[0][i] = TRANSITION_STRUCT.cameraY + Sin(sinIndex, amplitude);
+        gScanlineEffectRegBuffers[0][i] = sTransitionData->cameraY + Sin(sinIndex, amplitude);
     }
 
     if (!gPaletteFade.active)
         DestroyTask(FindTaskIdByFunc(Task_Shuffle));
 
-    TRANSITION_STRUCT.VBlank_DMA++;
+    sTransitionData->VBlank_DMA++;
     return FALSE;
 }
 
 static void VBlankCB_Shuffle(void)
 {
     VBlankCB_BattleTransition();
-    if (TRANSITION_STRUCT.VBlank_DMA)
+    if (sTransitionData->VBlank_DMA)
         DmaCopy16(3, gScanlineEffectRegBuffers[0], gScanlineEffectRegBuffers[1], 320);
 }
 
@@ -861,12 +861,12 @@ static bool8 BigPokeball_Init(struct Task* task)
     task->tBlendTarget2 = 0;
     task->tSinIndex = 0;
     task->tAmplitude = 0x4000;
-    TRANSITION_STRUCT.WININ = 63;
-    TRANSITION_STRUCT.WINOUT = 0;
-    TRANSITION_STRUCT.WIN0H = 240;
-    TRANSITION_STRUCT.WIN0V = 160;
-    TRANSITION_STRUCT.BLDCNT = 0x3F41;
-    TRANSITION_STRUCT.BLDALPHA = task->tBlendTarget1 * 256; // 16 * 256 = 0x1000
+    sTransitionData->WININ = 63;
+    sTransitionData->WINOUT = 0;
+    sTransitionData->WIN0H = 240;
+    sTransitionData->WIN0V = 160;
+    sTransitionData->BLDCNT = 0x3F41;
+    sTransitionData->BLDALPHA = task->tBlendTarget1 * 256; // 16 * 256 = 0x1000
 
     for (i = 0; i < 160; i++)
     {
@@ -907,13 +907,13 @@ static bool8 BigPokeball_SetGfx(struct Task* task)
 
 static bool8 PatternWeave_Blend1(struct Task* task)
 {
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
     if (task->tBlendDelay == 0 || --task->tBlendDelay == 0)
     {
         task->tBlendTarget2++;
         task->tBlendDelay = 2;
     }
-    TRANSITION_STRUCT.BLDALPHA = (task->tBlendTarget1 << 8) | task->tBlendTarget2;
+    sTransitionData->BLDALPHA = (task->tBlendTarget1 << 8) | task->tBlendTarget2;
     if (task->tBlendTarget2 > 15)
         task->tState++;
     task->tSinIndex += 8;
@@ -921,19 +921,19 @@ static bool8 PatternWeave_Blend1(struct Task* task)
 
     SetSinWave(gScanlineEffectRegBuffers[0], 0, task->tSinIndex, 132, task->tAmplitude >> 8, 160);
 
-    TRANSITION_STRUCT.VBlank_DMA++;
+    sTransitionData->VBlank_DMA++;
     return FALSE;
 }
 
 static bool8 PatternWeave_Blend2(struct Task* task)
 {
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
     if (task->tBlendDelay == 0 || --task->tBlendDelay == 0)
     {
         task->tBlendTarget1--;
         task->tBlendDelay = 2;
     }
-    TRANSITION_STRUCT.BLDALPHA = (task->tBlendTarget1 << 8) | task->tBlendTarget2;
+    sTransitionData->BLDALPHA = (task->tBlendTarget1 << 8) | task->tBlendTarget2;
     if (task->tBlendTarget1 == 0)
         task->tState++;
     task->tSinIndex += 8;
@@ -941,13 +941,13 @@ static bool8 PatternWeave_Blend2(struct Task* task)
 
     SetSinWave(gScanlineEffectRegBuffers[0], 0, task->tSinIndex, 132, task->tAmplitude >> 8, 160);
 
-    TRANSITION_STRUCT.VBlank_DMA++;
+    sTransitionData->VBlank_DMA++;
     return FALSE;
 }
 
 static bool8 PatternWeave_FinishAppear(struct Task* task)
 {
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
     task->tSinIndex += 8;
     task->tAmplitude -= 256;
 
@@ -961,13 +961,13 @@ static bool8 PatternWeave_FinishAppear(struct Task* task)
         task->tVBlankSet = 0;
     }
 
-    TRANSITION_STRUCT.VBlank_DMA++;
+    sTransitionData->VBlank_DMA++;
     return FALSE;
 }
 
 static bool8 PatternWeave_CircularMask(struct Task* task)
 {
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
     if (task->tRadiusDelta < 1024)
         task->tRadiusDelta += 128;
     if (task->tRadius != 0)
@@ -989,7 +989,7 @@ static bool8 PatternWeave_CircularMask(struct Task* task)
         SetVBlankCallback(VBlankCB_CircularMask);
     }
 
-    TRANSITION_STRUCT.VBlank_DMA++;
+    sTransitionData->VBlank_DMA++;
     return FALSE;
 }
 
@@ -997,13 +997,13 @@ static void VBlankCB_SetWinAndBlend(void)
 {
     DmaStop(0);
     VBlankCB_BattleTransition();
-    if (TRANSITION_STRUCT.VBlank_DMA)
+    if (sTransitionData->VBlank_DMA)
         DmaCopy16(3, gScanlineEffectRegBuffers[0], gScanlineEffectRegBuffers[1], 320);
-    REG_WININ = TRANSITION_STRUCT.WININ;
-    REG_WINOUT = TRANSITION_STRUCT.WINOUT;
-    REG_WIN0V = TRANSITION_STRUCT.WIN0V;
-    REG_BLDCNT = TRANSITION_STRUCT.BLDCNT;
-    REG_BLDALPHA = TRANSITION_STRUCT.BLDALPHA;
+    REG_WININ = sTransitionData->WININ;
+    REG_WINOUT = sTransitionData->WINOUT;
+    REG_WIN0V = sTransitionData->WIN0V;
+    REG_BLDCNT = sTransitionData->BLDCNT;
+    REG_BLDALPHA = sTransitionData->BLDALPHA;
 }
 
 static void VBlankCB_PatternWeave(void)
@@ -1153,10 +1153,10 @@ static bool8 ClockwiseWipe_Init(struct Task* task)
     InitTransitionData();
     ScanlineEffect_Clear();
 
-    TRANSITION_STRUCT.WININ = 0;
-    TRANSITION_STRUCT.WINOUT = 63;
-    TRANSITION_STRUCT.WIN0H = -3855;
-    TRANSITION_STRUCT.WIN0V = 160;
+    sTransitionData->WININ = 0;
+    sTransitionData->WINOUT = 63;
+    sTransitionData->WIN0H = -3855;
+    sTransitionData->WIN0V = 160;
 
     for (i = 0; i < 160; i++)
     {
@@ -1164,7 +1164,7 @@ static bool8 ClockwiseWipe_Init(struct Task* task)
     }
 
     SetVBlankCallback(VBlankCB_ClockwiseWipe);
-    TRANSITION_STRUCT.tWipeEndX = 120;
+    sTransitionData->tWipeEndX = 120;
 
     task->tState++;
     return TRUE;
@@ -1172,22 +1172,22 @@ static bool8 ClockwiseWipe_Init(struct Task* task)
 
 static bool8 ClockwiseWipe_TopRight(struct Task* task)
 {
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
 
-    InitBlackWipe(TRANSITION_STRUCT.data, 120, 80, TRANSITION_STRUCT.tWipeEndX, -1, 1, 1);
+    InitBlackWipe(sTransitionData->data, 120, 80, sTransitionData->tWipeEndX, -1, 1, 1);
     do
     {
-        gScanlineEffectRegBuffers[0][TRANSITION_STRUCT.tWipeCurrY] = (TRANSITION_STRUCT.tWipeCurrX + 1) | 0x7800;
-    } while (!UpdateBlackWipe(TRANSITION_STRUCT.data, 1, 1));
+        gScanlineEffectRegBuffers[0][sTransitionData->tWipeCurrY] = (sTransitionData->tWipeCurrX + 1) | 0x7800;
+    } while (!UpdateBlackWipe(sTransitionData->data, 1, 1));
 
-    TRANSITION_STRUCT.tWipeEndX += 16;
-    if (TRANSITION_STRUCT.tWipeEndX >= 240)
+    sTransitionData->tWipeEndX += 16;
+    if (sTransitionData->tWipeEndX >= 240)
     {
-        TRANSITION_STRUCT.tWipeEndY = 0;
+        sTransitionData->tWipeEndY = 0;
         task->tState++;
     }
 
-    TRANSITION_STRUCT.VBlank_DMA++;
+    sTransitionData->VBlank_DMA++;
     return FALSE;
 }
 
@@ -1196,57 +1196,57 @@ static bool8 ClockwiseWipe_Right(struct Task* task)
     s16 start, end;
     vu8 finished = FALSE;
 
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
 
-    InitBlackWipe(TRANSITION_STRUCT.data, 120, 80, 240, TRANSITION_STRUCT.tWipeEndY, 1, 1);
+    InitBlackWipe(sTransitionData->data, 120, 80, 240, sTransitionData->tWipeEndY, 1, 1);
 
     while (1)
     {
-        start = 120, end = TRANSITION_STRUCT.tWipeCurrX + 1;
-        if (TRANSITION_STRUCT.tWipeEndY >= 80)
-            start = TRANSITION_STRUCT.tWipeCurrX, end = 240;
-        gScanlineEffectRegBuffers[0][TRANSITION_STRUCT.tWipeCurrY] = end | (start << 8);
+        start = 120, end = sTransitionData->tWipeCurrX + 1;
+        if (sTransitionData->tWipeEndY >= 80)
+            start = sTransitionData->tWipeCurrX, end = 240;
+        gScanlineEffectRegBuffers[0][sTransitionData->tWipeCurrY] = end | (start << 8);
         if (finished)
             break;
-        finished = UpdateBlackWipe(TRANSITION_STRUCT.data, TRUE, TRUE);
+        finished = UpdateBlackWipe(sTransitionData->data, TRUE, TRUE);
     }
 
-    TRANSITION_STRUCT.tWipeEndY += 8;
-    if (TRANSITION_STRUCT.tWipeEndY >= 160)
+    sTransitionData->tWipeEndY += 8;
+    if (sTransitionData->tWipeEndY >= 160)
     {
-        TRANSITION_STRUCT.tWipeEndX = 240;
+        sTransitionData->tWipeEndX = 240;
         task->tState++;
     }
     else
     {
-        while (TRANSITION_STRUCT.tWipeCurrY < TRANSITION_STRUCT.tWipeEndY)
+        while (sTransitionData->tWipeCurrY < sTransitionData->tWipeEndY)
         {
-            gScanlineEffectRegBuffers[0][++TRANSITION_STRUCT.tWipeCurrY] = end | (start << 8);
+            gScanlineEffectRegBuffers[0][++sTransitionData->tWipeCurrY] = end | (start << 8);
         }
     }
 
-    TRANSITION_STRUCT.VBlank_DMA++;
+    sTransitionData->VBlank_DMA++;
     return FALSE;
 }
 
 static bool8 ClockwiseWipe_Bottom(struct Task* task)
 {
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
 
-    InitBlackWipe(TRANSITION_STRUCT.data, 120, 80, TRANSITION_STRUCT.tWipeEndX, 160, 1, 1);
+    InitBlackWipe(sTransitionData->data, 120, 80, sTransitionData->tWipeEndX, 160, 1, 1);
     do
     {
-        gScanlineEffectRegBuffers[0][TRANSITION_STRUCT.tWipeCurrY] = (TRANSITION_STRUCT.tWipeCurrX << 8) | 0xF0;
-    } while (!UpdateBlackWipe(TRANSITION_STRUCT.data, 1, 1));
+        gScanlineEffectRegBuffers[0][sTransitionData->tWipeCurrY] = (sTransitionData->tWipeCurrX << 8) | 0xF0;
+    } while (!UpdateBlackWipe(sTransitionData->data, 1, 1));
 
-    TRANSITION_STRUCT.tWipeEndX -= 16;
-    if (TRANSITION_STRUCT.tWipeEndX <= 0)
+    sTransitionData->tWipeEndX -= 16;
+    if (sTransitionData->tWipeEndX <= 0)
     {
-        TRANSITION_STRUCT.tWipeEndY = 160;
+        sTransitionData->tWipeEndY = 160;
         task->tState++;
     }
 
-    TRANSITION_STRUCT.VBlank_DMA++;
+    sTransitionData->VBlank_DMA++;
     return FALSE;
 }
 
@@ -1255,61 +1255,61 @@ static bool8 ClockwiseWipe_Left(struct Task* task)
     s16 end, start, temp;
     vu8 finished = FALSE;
 
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
 
-    InitBlackWipe(TRANSITION_STRUCT.data, 120, 80, 0, TRANSITION_STRUCT.tWipeEndY, 1, 1);
+    InitBlackWipe(sTransitionData->data, 120, 80, 0, sTransitionData->tWipeEndY, 1, 1);
 
     while (1)
     {
-        end = gScanlineEffectRegBuffers[0][TRANSITION_STRUCT.tWipeCurrY] & 0xFF, start = TRANSITION_STRUCT.tWipeCurrX;
-        if (TRANSITION_STRUCT.tWipeEndY <= 80)
-            start = 120, end = TRANSITION_STRUCT.tWipeCurrX;
-        gScanlineEffectRegBuffers[0][TRANSITION_STRUCT.tWipeCurrY] = end | (start << 8);
+        end = gScanlineEffectRegBuffers[0][sTransitionData->tWipeCurrY] & 0xFF, start = sTransitionData->tWipeCurrX;
+        if (sTransitionData->tWipeEndY <= 80)
+            start = 120, end = sTransitionData->tWipeCurrX;
+        gScanlineEffectRegBuffers[0][sTransitionData->tWipeCurrY] = end | (start << 8);
         temp = 0;
         if (finished)
             break;
-        finished = UpdateBlackWipe(TRANSITION_STRUCT.data, TRUE, TRUE);
+        finished = UpdateBlackWipe(sTransitionData->data, TRUE, TRUE);
     }
 
-    TRANSITION_STRUCT.tWipeEndY -= 8;
-    if (TRANSITION_STRUCT.tWipeEndY <= 0)
+    sTransitionData->tWipeEndY -= 8;
+    if (sTransitionData->tWipeEndY <= 0)
     {
-        TRANSITION_STRUCT.tWipeEndX = temp;
+        sTransitionData->tWipeEndX = temp;
         task->tState++;
     }
     else
     {
-        while (TRANSITION_STRUCT.tWipeCurrY > TRANSITION_STRUCT.tWipeEndY)
+        while (sTransitionData->tWipeCurrY > sTransitionData->tWipeEndY)
         {
-            gScanlineEffectRegBuffers[0][--TRANSITION_STRUCT.tWipeCurrY] = end | (start << 8);
+            gScanlineEffectRegBuffers[0][--sTransitionData->tWipeCurrY] = end | (start << 8);
         }
     }
 
-    TRANSITION_STRUCT.VBlank_DMA++;
+    sTransitionData->VBlank_DMA++;
     return FALSE;
 }
 
 static bool8 ClockwiseWipe_TopLeft(struct Task* task)
 {
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
 
-    InitBlackWipe(TRANSITION_STRUCT.data, 120, 80, TRANSITION_STRUCT.tWipeEndX, 0, 1, 1);
+    InitBlackWipe(sTransitionData->data, 120, 80, sTransitionData->tWipeEndX, 0, 1, 1);
     do
     {
         s16 start, end;
 
-        start = 120, end = TRANSITION_STRUCT.tWipeCurrX;
-        if (TRANSITION_STRUCT.tWipeCurrX >= 120)
+        start = 120, end = sTransitionData->tWipeCurrX;
+        if (sTransitionData->tWipeCurrX >= 120)
             start = 0, end = 240;
-        gScanlineEffectRegBuffers[0][TRANSITION_STRUCT.tWipeCurrY] = end | (start << 8);
+        gScanlineEffectRegBuffers[0][sTransitionData->tWipeCurrY] = end | (start << 8);
 
-    } while (!UpdateBlackWipe(TRANSITION_STRUCT.data, 1, 1));
+    } while (!UpdateBlackWipe(sTransitionData->data, 1, 1));
 
-    TRANSITION_STRUCT.tWipeEndX += 16;
-    if (TRANSITION_STRUCT.tWipeCurrX > 120)
+    sTransitionData->tWipeEndX += 16;
+    if (sTransitionData->tWipeCurrX > 120)
         task->tState++;
 
-    TRANSITION_STRUCT.VBlank_DMA++;
+    sTransitionData->VBlank_DMA++;
     return FALSE;
 }
 
@@ -1325,11 +1325,11 @@ static void VBlankCB_ClockwiseWipe(void)
 {
     DmaStop(0);
     VBlankCB_BattleTransition();
-    if (TRANSITION_STRUCT.VBlank_DMA != 0)
+    if (sTransitionData->VBlank_DMA != 0)
         DmaCopy16(3, gScanlineEffectRegBuffers[0], gScanlineEffectRegBuffers[1], 320);
-    REG_WININ = TRANSITION_STRUCT.WININ;
-    REG_WINOUT = TRANSITION_STRUCT.WINOUT;
-    REG_WIN0V = TRANSITION_STRUCT.WIN0V;
+    REG_WININ = sTransitionData->WININ;
+    REG_WINOUT = sTransitionData->WINOUT;
+    REG_WIN0V = sTransitionData->WIN0V;
     REG_WIN0H = gScanlineEffectRegBuffers[1][0];
     DmaSet(0, gScanlineEffectRegBuffers[1], &REG_WIN0H, B_TRANS_DMA_FLAGS);
 }
@@ -1353,7 +1353,7 @@ static bool8 Ripple_Init(struct Task* task)
 
     for (i = 0; i < 160; i++)
     {
-        gScanlineEffectRegBuffers[1][i] = TRANSITION_STRUCT.cameraY;
+        gScanlineEffectRegBuffers[1][i] = sTransitionData->cameraY;
     }
 
     SetVBlankCallback(VBlankCB_Ripple);
@@ -1372,7 +1372,7 @@ static bool8 Ripple_Main(struct Task* task)
     s16 amplitude;
     u16 sinVal, speed;
 
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
 
     amplitude = task->tAmplitudeVal >> 8;
     sinVal = task->tSinVal;
@@ -1386,7 +1386,7 @@ static bool8 Ripple_Main(struct Task* task)
         // todo: fix the asm
         s16 sinIndex = sinVal >> 8;
         asm("");
-        gScanlineEffectRegBuffers[0][i] = TRANSITION_STRUCT.cameraY + Sin(sinIndex, amplitude);
+        gScanlineEffectRegBuffers[0][i] = sTransitionData->cameraY + Sin(sinIndex, amplitude);
         asm("");
     }
 
@@ -1399,14 +1399,14 @@ static bool8 Ripple_Main(struct Task* task)
     if (task->tFadeStarted != 0 && !gPaletteFade.active)
         DestroyTask(FindTaskIdByFunc(Task_Ripple));
 
-    TRANSITION_STRUCT.VBlank_DMA++;
+    sTransitionData->VBlank_DMA++;
     return FALSE;
 }
 
 static void VBlankCB_Ripple(void)
 {
     VBlankCB_BattleTransition();
-    if (TRANSITION_STRUCT.VBlank_DMA)
+    if (sTransitionData->VBlank_DMA)
         DmaCopy16(3, gScanlineEffectRegBuffers[0], gScanlineEffectRegBuffers[1], 320);
 }
 
@@ -1438,10 +1438,10 @@ static bool8 Wave_Init(struct Task* task)
     InitTransitionData();
     ScanlineEffect_Clear();
 
-    TRANSITION_STRUCT.WININ = 63;
-    TRANSITION_STRUCT.WINOUT = 0;
-    TRANSITION_STRUCT.WIN0H = 240;
-    TRANSITION_STRUCT.WIN0V = 160;
+    sTransitionData->WININ = 63;
+    sTransitionData->WINOUT = 0;
+    sTransitionData->WIN0H = 240;
+    sTransitionData->WIN0V = 160;
 
     for (i = 0; i < 160; i++)
     {
@@ -1460,7 +1460,7 @@ static bool8 Wave_Main(struct Task* task)
     u16* toStore;
     bool8 finished;
 
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
     toStore = gScanlineEffectRegBuffers[0];
     sinIndex = task->tSinIndex;
     task->tSinIndex += 16;
@@ -1480,7 +1480,7 @@ static bool8 Wave_Main(struct Task* task)
     if (finished)
         task->tState++;
 
-    TRANSITION_STRUCT.VBlank_DMA++;
+    sTransitionData->VBlank_DMA++;
     return FALSE;
 }
 
@@ -1496,11 +1496,11 @@ static void VBlankCB_Wave(void)
 {
     DmaStop(0);
     VBlankCB_BattleTransition();
-    if (TRANSITION_STRUCT.VBlank_DMA != 0)
+    if (sTransitionData->VBlank_DMA != 0)
         DmaCopy16(3, gScanlineEffectRegBuffers[0], gScanlineEffectRegBuffers[1], 320);
-    REG_WININ = TRANSITION_STRUCT.WININ;
-    REG_WINOUT = TRANSITION_STRUCT.WINOUT;
-    REG_WIN0V = TRANSITION_STRUCT.WIN0V;
+    REG_WININ = sTransitionData->WININ;
+    REG_WINOUT = sTransitionData->WINOUT;
+    REG_WIN0V = sTransitionData->WIN0V;
     DmaSet(0, gScanlineEffectRegBuffers[1], &REG_WIN0H, B_TRANS_DMA_FLAGS);
 }
 
@@ -1569,9 +1569,9 @@ static bool8 Mugshot_Init(struct Task* task)
     task->tSinIndex = 0;
     task->tTopBannerX = 1;
     task->tBottomBannerX = 239;
-    TRANSITION_STRUCT.WININ = 63;
-    TRANSITION_STRUCT.WINOUT = 62;
-    TRANSITION_STRUCT.WIN0V = 160;
+    sTransitionData->WININ = 63;
+    sTransitionData->WINOUT = 62;
+    sTransitionData->WIN0V = 160;
 
     for (i = 0; i < 160; i++)
     {
@@ -1618,7 +1618,7 @@ static bool8 Mugshot_ShowBanner(struct Task* task)
     s16 x;
     s32 mergedX;
 
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
 
     toStore = gScanlineEffectRegBuffers[0];
     sinIndex = task->tSinIndex;
@@ -1653,9 +1653,9 @@ static bool8 Mugshot_ShowBanner(struct Task* task)
     if (mergedX == 0xF0)
         task->tState++;
 
-    TRANSITION_STRUCT.BG0HOFS_Lower -= 8;
-    TRANSITION_STRUCT.BG0HOFS_Upper += 8;
-    TRANSITION_STRUCT.VBlank_DMA++;
+    sTransitionData->BG0HOFS_Lower -= 8;
+    sTransitionData->BG0HOFS_Upper += 8;
+    sTransitionData->VBlank_DMA++;
     return FALSE;
 }
 
@@ -1664,7 +1664,7 @@ static bool8 Mugshot_StartOpponentSlide(struct Task* task)
     u8 i;
     u16* toStore;
 
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
 
     for (i = 0, toStore = gScanlineEffectRegBuffers[0]; i < 160; i++, toStore++)
     {
@@ -1675,8 +1675,8 @@ static bool8 Mugshot_StartOpponentSlide(struct Task* task)
     task->tSinIndex = 0;
     task->tTopBannerX = 0;
     task->tBottomBannerX = 0;
-    TRANSITION_STRUCT.BG0HOFS_Lower -= 8;
-    TRANSITION_STRUCT.BG0HOFS_Upper += 8;
+    sTransitionData->BG0HOFS_Lower -= 8;
+    sTransitionData->BG0HOFS_Upper += 8;
 
     SetTrainerPicSlideDirection(task->tOpponentSpriteId, 0);
     SetTrainerPicSlideDirection(task->tPlayerSpriteId, 1);
@@ -1684,14 +1684,14 @@ static bool8 Mugshot_StartOpponentSlide(struct Task* task)
 
     PlaySE(SE_MUGSHOT);
 
-    TRANSITION_STRUCT.VBlank_DMA++;
+    sTransitionData->VBlank_DMA++;
     return FALSE;
 }
 
 static bool8 Mugshot_WaitStartPlayerSlide(struct Task* task)
 {
-    TRANSITION_STRUCT.BG0HOFS_Lower -= 8;
-    TRANSITION_STRUCT.BG0HOFS_Upper += 8;
+    sTransitionData->BG0HOFS_Lower -= 8;
+    sTransitionData->BG0HOFS_Upper += 8;
     if (IsTrainerPicSlideDone(task->tOpponentSpriteId))
     {
         task->tState++;
@@ -1702,11 +1702,11 @@ static bool8 Mugshot_WaitStartPlayerSlide(struct Task* task)
 
 static bool8 Mugshot_WaitPlayerSlide(struct Task* task)
 {
-    TRANSITION_STRUCT.BG0HOFS_Lower -= 8;
-    TRANSITION_STRUCT.BG0HOFS_Upper += 8;
+    sTransitionData->BG0HOFS_Lower -= 8;
+    sTransitionData->BG0HOFS_Upper += 8;
     if (IsTrainerPicSlideDone(task->tPlayerSpriteId))
     {
-        TRANSITION_STRUCT.VBlank_DMA = 0;
+        sTransitionData->VBlank_DMA = 0;
         SetVBlankCallback(NULL);
         DmaStop(0);
         memset(gScanlineEffectRegBuffers[0], 0, 0x140);
@@ -1716,7 +1716,7 @@ static bool8 Mugshot_WaitPlayerSlide(struct Task* task)
         task->tState++;
         task->tTimer = 0;
         task->tFadeSpread = 0;
-        TRANSITION_STRUCT.BLDCNT = 0xBF;
+        sTransitionData->BLDCNT = 0xBF;
         SetVBlankCallback(VBlankCB_MugshotsFadeOut);
     }
     return FALSE;
@@ -1726,10 +1726,10 @@ static bool8 Mugshot_GradualWhiteFade(struct Task* task)
 {
     bool32 active;
 
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
     active = TRUE;
-    TRANSITION_STRUCT.BG0HOFS_Lower -= 8;
-    TRANSITION_STRUCT.BG0HOFS_Upper += 8;
+    sTransitionData->BG0HOFS_Lower -= 8;
+    sTransitionData->BG0HOFS_Upper += 8;
 
     if (task->tFadeSpread < 0x50)
         task->tFadeSpread += 2;
@@ -1759,15 +1759,15 @@ static bool8 Mugshot_GradualWhiteFade(struct Task* task)
     if (task->tFadeSpread == 0x50 && !active)
         task->tState++;
 
-    TRANSITION_STRUCT.VBlank_DMA++;
+    sTransitionData->VBlank_DMA++;
     return FALSE;
 }
 
 static bool8 Mugshot_InitFadeWhiteToBlack(struct Task* task)
 {
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
     BlendPalettes(0xFFFFFFFF, 16, RGB(31, 31, 31));
-    TRANSITION_STRUCT.BLDCNT = 0xFF;
+    sTransitionData->BLDCNT = 0xFF;
     task->tTimer = 0;
 
     task->tState++;
@@ -1776,14 +1776,14 @@ static bool8 Mugshot_InitFadeWhiteToBlack(struct Task* task)
 
 static bool8 Mugshot_FadeToBlack(struct Task* task)
 {
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
 
     task->tTimer++;
     memset(gScanlineEffectRegBuffers[0], task->tTimer, 0x140);
     if (task->tTimer > 15)
         task->tState++;
 
-    TRANSITION_STRUCT.VBlank_DMA++;
+    sTransitionData->VBlank_DMA++;
     return FALSE;
 }
 
@@ -1799,12 +1799,12 @@ static void VBlankCB_Mugshots(void)
 {
     DmaStop(0);
     VBlankCB_BattleTransition();
-    if (TRANSITION_STRUCT.VBlank_DMA != 0)
+    if (sTransitionData->VBlank_DMA != 0)
         DmaCopy16(3, gScanlineEffectRegBuffers[0], gScanlineEffectRegBuffers[1], 320);
-    REG_BG0VOFS = TRANSITION_STRUCT.BG0VOFS;
-    REG_WININ = TRANSITION_STRUCT.WININ;
-    REG_WINOUT = TRANSITION_STRUCT.WINOUT;
-    REG_WIN0V = TRANSITION_STRUCT.WIN0V;
+    REG_BG0VOFS = sTransitionData->BG0VOFS;
+    REG_WININ = sTransitionData->WININ;
+    REG_WINOUT = sTransitionData->WINOUT;
+    REG_WIN0V = sTransitionData->WIN0V;
     DmaSet(0, gScanlineEffectRegBuffers[1], &REG_WIN0H, B_TRANS_DMA_FLAGS);
 }
 
@@ -1812,18 +1812,18 @@ static void VBlankCB_MugshotsFadeOut(void)
 {
     DmaStop(0);
     VBlankCB_BattleTransition();
-    if (TRANSITION_STRUCT.VBlank_DMA != 0)
+    if (sTransitionData->VBlank_DMA != 0)
         DmaCopy16(3, gScanlineEffectRegBuffers[0], gScanlineEffectRegBuffers[1], 320);
-    REG_BLDCNT = TRANSITION_STRUCT.BLDCNT;
+    REG_BLDCNT = sTransitionData->BLDCNT;
     DmaSet(0, gScanlineEffectRegBuffers[1], &REG_BLDY, B_TRANS_DMA_FLAGS);
 }
 
 static void HBlankCB_Mugshots(void)
 {
     if (REG_VCOUNT < 80)
-        REG_BG0HOFS = TRANSITION_STRUCT.BG0HOFS_Lower;
+        REG_BG0HOFS = sTransitionData->BG0HOFS_Lower;
     else
-        REG_BG0HOFS = TRANSITION_STRUCT.BG0HOFS_Upper;
+        REG_BG0HOFS = sTransitionData->BG0HOFS_Upper;
 }
 
 static void Mugshots_CreateTrainerPics(struct Task* task)
@@ -1966,13 +1966,13 @@ static bool8 Slice_Init(struct Task* task)
 
     task->tSpeed = 256;
     task->tAccel = 1;
-    TRANSITION_STRUCT.WININ = 63;
-    TRANSITION_STRUCT.WINOUT = 0;
-    TRANSITION_STRUCT.WIN0V = 160;
+    sTransitionData->WININ = 63;
+    sTransitionData->WINOUT = 0;
+    sTransitionData->WIN0V = 160;
 
     for (i = 0; i < 160; i++)
     {
-        gScanlineEffectRegBuffers[1][i] = TRANSITION_STRUCT.cameraX;
+        gScanlineEffectRegBuffers[1][i] = sTransitionData->cameraX;
         gScanlineEffectRegBuffers[1][160 + i] = 0xF0;
     }
 
@@ -1990,7 +1990,7 @@ static bool8 Slice_Main(struct Task* task)
 {
     u16 i;
 
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
 
     task->tEffectX += (task->tSpeed >> 8);
     if (task->tEffectX > 0xF0)
@@ -2006,12 +2006,12 @@ static bool8 Slice_Main(struct Task* task)
         u16* storeLoc2 = &gScanlineEffectRegBuffers[0][i + 160];
         if (1 & i)
         {
-            *storeLoc1 = TRANSITION_STRUCT.cameraX + task->tEffectX;
+            *storeLoc1 = sTransitionData->cameraX + task->tEffectX;
             *storeLoc2 = 0xF0 - task->tEffectX;
         }
         else
         {
-            *storeLoc1 = TRANSITION_STRUCT.cameraX - task->tEffectX;
+            *storeLoc1 = sTransitionData->cameraX - task->tEffectX;
             *storeLoc2 = (task->tEffectX << 8) | (0xF1);
         }
     }
@@ -2019,7 +2019,7 @@ static bool8 Slice_Main(struct Task* task)
     if (task->tEffectX > 0xEF)
         task->tState++;
 
-    TRANSITION_STRUCT.VBlank_DMA++;
+    sTransitionData->VBlank_DMA++;
     return FALSE;
 }
 
@@ -2035,10 +2035,10 @@ static void VBlankCB_Slice(void)
 {
     DmaStop(0);
     VBlankCB_BattleTransition();
-    REG_WININ = TRANSITION_STRUCT.WININ;
-    REG_WINOUT = TRANSITION_STRUCT.WINOUT;
-    REG_WIN0V = TRANSITION_STRUCT.WIN0V;
-    if (TRANSITION_STRUCT.VBlank_DMA)
+    REG_WININ = sTransitionData->WININ;
+    REG_WINOUT = sTransitionData->WINOUT;
+    REG_WIN0V = sTransitionData->WIN0V;
+    if (sTransitionData->VBlank_DMA)
         DmaCopy16(3, gScanlineEffectRegBuffers[0], gScanlineEffectRegBuffers[1], 640);
     DmaSet(0, &gScanlineEffectRegBuffers[1][160], &REG_WIN0H, B_TRANS_DMA_FLAGS);
 }
@@ -2075,11 +2075,11 @@ static bool8 WhiteBarsFade_Init(struct Task* task)
     InitTransitionData();
     ScanlineEffect_Clear();
 
-    TRANSITION_STRUCT.BLDCNT = 0xBF;
-    TRANSITION_STRUCT.BLDY = 0;
-    TRANSITION_STRUCT.WININ = 0x1E;
-    TRANSITION_STRUCT.WINOUT = 0x3F;
-    TRANSITION_STRUCT.WIN0V = 0xA0;
+    sTransitionData->BLDCNT = 0xBF;
+    sTransitionData->BLDY = 0;
+    sTransitionData->WININ = 0x1E;
+    sTransitionData->WINOUT = 0x3F;
+    sTransitionData->WIN0V = 0xA0;
 
     for (i = 0; i < 160; i++)
     {
@@ -2119,8 +2119,8 @@ static bool8 WhiteBarsFade_StartBars(struct Task* task)
 
 static bool8 WhiteBarsFade_WaitBars(struct Task* task)
 {
-    TRANSITION_STRUCT.VBlank_DMA = 0;
-    if (TRANSITION_STRUCT.counter >= NUM_WHITE_BARS)
+    sTransitionData->VBlank_DMA = 0;
+    if (sTransitionData->counter >= NUM_WHITE_BARS)
     {
         BlendPalettes(0xFFFFFFFF, 16, RGB(31, 31, 31));
         task->tState++;
@@ -2130,16 +2130,16 @@ static bool8 WhiteBarsFade_WaitBars(struct Task* task)
 
 static bool8 WhiteBarsFade_BlendToBlack(struct Task* task)
 {
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
 
     DmaStop(0);
     SetVBlankCallback(0);
     SetHBlankCallback(0);
 
-    TRANSITION_STRUCT.WIN0H = 0xF0;
-    TRANSITION_STRUCT.BLDY = 0;
-    TRANSITION_STRUCT.BLDCNT = 0xFF;
-    TRANSITION_STRUCT.WININ = 0x3F;
+    sTransitionData->WIN0H = 0xF0;
+    sTransitionData->BLDY = 0;
+    sTransitionData->BLDCNT = 0xFF;
+    sTransitionData->WININ = 0x3F;
 
     SetVBlankCallback(VBlankCB_WhiteBarsFade_Blend);
 
@@ -2149,7 +2149,7 @@ static bool8 WhiteBarsFade_BlendToBlack(struct Task* task)
 
 static bool8 WhiteBarsFade_End(struct Task* task)
 {
-   if (++TRANSITION_STRUCT.BLDY > 16)
+   if (++sTransitionData->BLDY > 16)
    {
        FadeScreenBlack();
        DestroyTask(FindTaskIdByFunc(Task_WhiteBarsFade));
@@ -2161,11 +2161,11 @@ static void VBlankCB_WhiteBarsFade(void)
 {
     DmaStop(0);
     VBlankCB_BattleTransition();
-    REG_BLDCNT = TRANSITION_STRUCT.BLDCNT;
-    REG_WININ = TRANSITION_STRUCT.WININ;
-    REG_WINOUT = TRANSITION_STRUCT.WINOUT;
-    REG_WIN0V = TRANSITION_STRUCT.WIN0H;
-    if (TRANSITION_STRUCT.VBlank_DMA)
+    REG_BLDCNT = sTransitionData->BLDCNT;
+    REG_WININ = sTransitionData->WININ;
+    REG_WINOUT = sTransitionData->WINOUT;
+    REG_WIN0V = sTransitionData->WIN0H;
+    if (sTransitionData->VBlank_DMA)
         DmaCopy16(3, gScanlineEffectRegBuffers[0], gScanlineEffectRegBuffers[1], 640);
     DmaSet(0, &gScanlineEffectRegBuffers[1][160], &REG_WIN0H, B_TRANS_DMA_FLAGS);
 }
@@ -2173,12 +2173,12 @@ static void VBlankCB_WhiteBarsFade(void)
 static void VBlankCB_WhiteBarsFade_Blend(void)
 {
     VBlankCB_BattleTransition();
-    REG_BLDY = TRANSITION_STRUCT.BLDY;
-    REG_BLDCNT = TRANSITION_STRUCT.BLDCNT;
-    REG_WININ = TRANSITION_STRUCT.WININ;
-    REG_WINOUT = TRANSITION_STRUCT.WINOUT;
-    REG_WIN0H = TRANSITION_STRUCT.WIN0H;
-    REG_WIN0V = TRANSITION_STRUCT.WIN0V;
+    REG_BLDY = sTransitionData->BLDY;
+    REG_BLDCNT = sTransitionData->BLDCNT;
+    REG_WININ = sTransitionData->WININ;
+    REG_WINOUT = sTransitionData->WINOUT;
+    REG_WIN0H = sTransitionData->WIN0H;
+    REG_WIN0V = sTransitionData->WIN0V;
 }
 
 static void HBlankCB_WhiteBarsFade(void)
@@ -2192,7 +2192,7 @@ static void SpriteCB_WhiteBarFade(struct Sprite* sprite)
     {
         sprite->sDelay--;
         if (sprite->sIsMainSprite)
-            TRANSITION_STRUCT.VBlank_DMA = 1;
+            sTransitionData->VBlank_DMA = 1;
     }
     else
     {
@@ -2216,13 +2216,13 @@ static void SpriteCB_WhiteBarFade(struct Sprite* sprite)
             sprite->sFade = FADE_TARGET;
 
         if (sprite->sIsMainSprite)
-            TRANSITION_STRUCT.VBlank_DMA = 1;
+            sTransitionData->VBlank_DMA = 1;
 
         if (sprite->sFinished)
         {
-            if (sprite->sIsMainSprite == 0 || (TRANSITION_STRUCT.counter >= NUM_WHITE_BARS - 1 && sprite->sDestroyAttempts++ > 7))
+            if (sprite->sIsMainSprite == 0 || (sTransitionData->counter >= NUM_WHITE_BARS - 1 && sprite->sDestroyAttempts++ > 7))
             {
-                TRANSITION_STRUCT.counter++;
+                sTransitionData->counter++;
                 DestroySprite(sprite);
             }
         }
@@ -2306,9 +2306,9 @@ static bool8 AngledWipes_Init(struct Task* task)
     InitTransitionData();
     ScanlineEffect_Clear();
 
-    TRANSITION_STRUCT.WININ = 0x3F;
-    TRANSITION_STRUCT.WINOUT = 0;
-    TRANSITION_STRUCT.WIN0V = 0xA0;
+    sTransitionData->WININ = 0x3F;
+    sTransitionData->WINOUT = 0;
+    sTransitionData->WIN0V = 0xA0;
 
     for (i = 0; i < 160; i++)
     {
@@ -2324,7 +2324,7 @@ static bool8 AngledWipes_Init(struct Task* task)
 
 static bool8 AngledWipes_SetWipeData(struct Task* task)
 {
-    InitBlackWipe(TRANSITION_STRUCT.data,
+    InitBlackWipe(sTransitionData->data,
                 sAngledWipes_MoveData[task->tWipeId][0],
                 sAngledWipes_MoveData[task->tWipeId][1],
                 sAngledWipes_MoveData[task->tWipeId][2],
@@ -2340,37 +2340,37 @@ static bool8 AngledWipes_DoWipe(struct Task* task)
     s16 i;
     bool8 finished;
 
-    TRANSITION_STRUCT.VBlank_DMA = 0;
+    sTransitionData->VBlank_DMA = 0;
 
     for (i = 0, finished = FALSE; i < 16; i++)
     {
-        s16 start = gScanlineEffectRegBuffers[0][TRANSITION_STRUCT.tWipeCurrY] >> 8;
-        s16 end = gScanlineEffectRegBuffers[0][TRANSITION_STRUCT.tWipeCurrY] & 0xFF;
+        s16 start = gScanlineEffectRegBuffers[0][sTransitionData->tWipeCurrY] >> 8;
+        s16 end = gScanlineEffectRegBuffers[0][sTransitionData->tWipeCurrY] & 0xFF;
         if (task->tDir == 0)
         {
-            if (start < TRANSITION_STRUCT.tWipeCurrX)
-                start = TRANSITION_STRUCT.tWipeCurrX;
+            if (start < sTransitionData->tWipeCurrX)
+                start = sTransitionData->tWipeCurrX;
             if (start > end)
                 start = end;
         }
         else
         {
-            if (end > TRANSITION_STRUCT.tWipeCurrX)
-                end = TRANSITION_STRUCT.tWipeCurrX;
+            if (end > sTransitionData->tWipeCurrX)
+                end = sTransitionData->tWipeCurrX;
             if (end <= start)
                 end = start;
         }
-        gScanlineEffectRegBuffers[0][TRANSITION_STRUCT.tWipeCurrY] = end | (start << 8);
+        gScanlineEffectRegBuffers[0][sTransitionData->tWipeCurrY] = end | (start << 8);
         if (finished)
         {
             task->tState++;
             break;
         }
         else
-            finished = UpdateBlackWipe(TRANSITION_STRUCT.data, TRUE, TRUE);
+            finished = UpdateBlackWipe(sTransitionData->data, TRUE, TRUE);
     }
 
-    TRANSITION_STRUCT.VBlank_DMA++;
+    sTransitionData->VBlank_DMA++;
     return FALSE;
 }
 
@@ -2406,11 +2406,11 @@ static void VBlankCB_AngledWipes(void)
 {
     DmaStop(0);
     VBlankCB_BattleTransition();
-    if (TRANSITION_STRUCT.VBlank_DMA)
+    if (sTransitionData->VBlank_DMA)
         DmaCopy16(3, gScanlineEffectRegBuffers[0], gScanlineEffectRegBuffers[1], 320);
-    REG_WININ = TRANSITION_STRUCT.WININ;
-    REG_WINOUT = TRANSITION_STRUCT.WINOUT;
-    REG_WIN0V = TRANSITION_STRUCT.WIN0V;
+    REG_WININ = sTransitionData->WININ;
+    REG_WINOUT = sTransitionData->WINOUT;
+    REG_WIN0V = sTransitionData->WIN0V;
     REG_WIN0H = gScanlineEffectRegBuffers[1][0];
     DmaSet(0, gScanlineEffectRegBuffers[1], &REG_WIN0H, B_TRANS_DMA_FLAGS);
 }
@@ -2504,7 +2504,7 @@ static void InitTransitionData(void)
 {
     struct TransitionData* const* dummy = &sTransitionData;
     memset(*dummy, 0, sizeof(struct TransitionData));
-    GetCameraOffsetWithPan(&TRANSITION_STRUCT.cameraX, &TRANSITION_STRUCT.cameraY);
+    GetCameraOffsetWithPan(&sTransitionData->cameraX, &sTransitionData->cameraY);
 }
 
 static void VBlankCB_BattleTransition(void)

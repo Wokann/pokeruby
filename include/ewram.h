@@ -29,7 +29,6 @@ extern u8 gSharedMem[];
 #define BCOMM(buff, member, blockOff, i)  (gSharedMem[BSTRUCT_OFF(buff) + offsetof(struct LinkBattleCommunicationHeader, member) + blockOff + i])
 
 // battle_transition.c
-#define TRANSITION_STRUCT               (*(struct TransitionData *)   (gSharedMem + 0xC000))
 #define sMugshotDecompBuffer            (&gSharedMem[0xC03C])
 
 #define sCastformPalette                (gSharedMem + 0x16400)
