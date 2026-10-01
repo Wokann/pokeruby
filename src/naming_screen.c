@@ -1068,15 +1068,15 @@ static bool8 PageSwapAnimState_Init(struct Task *task)
 
 static bool8 PageSwapAnimState_1(struct Task *task)
 {
-    u16 *const arr[] =
+    u16 *const vOffsets[] =
     {
         &sNamingScreen->bg2vOffset,
         &sNamingScreen->bg1vOffset
     };
 
     task->tFrameCount += 4;
-    *arr[sNamingScreen->bgToReveal] = Sin(task->tFrameCount, 40);
-    *arr[sNamingScreen->bgToHide] = Sin((task->tFrameCount + 128) & 0xFF, 40);
+    *vOffsets[sNamingScreen->bgToReveal] = Sin(task->tFrameCount, 40);
+    *vOffsets[sNamingScreen->bgToHide] = Sin((task->tFrameCount + 128) & 0xFF, 40);
     if (task->tFrameCount >= 64)
     {
         u8 temp = sNamingScreen->bg1Priority;
@@ -1089,11 +1089,11 @@ static bool8 PageSwapAnimState_1(struct Task *task)
 
 static bool8 PageSwapAnimState_2(struct Task *task)
 {
-    u16 *const arr[] = {&sNamingScreen->bg2vOffset, &sNamingScreen->bg1vOffset};
+    u16 *const vOffsets[] = {&sNamingScreen->bg2vOffset, &sNamingScreen->bg1vOffset};
 
     task->tFrameCount += 4;
-    *arr[sNamingScreen->bgToReveal] = Sin(task->tFrameCount, 40);
-    *arr[sNamingScreen->bgToHide] = Sin((task->tFrameCount + 128) & 0xFF, 40);
+    *vOffsets[sNamingScreen->bgToReveal] = Sin(task->tFrameCount, 40);
+    *vOffsets[sNamingScreen->bgToHide] = Sin((task->tFrameCount + 128) & 0xFF, 40);
     if (task->tFrameCount >= 128)
     {
         u8 temp = sNamingScreen->bgToReveal;
@@ -1260,21 +1260,21 @@ static void SpriteCB_Cursor(struct Sprite *sprite)
 
 static void CreatePageSwapButtonSprites(void)
 {
-    u8 spriteId1;
-    u8 spriteId2;
-    u8 spriteId3;
+    u8 frameSpriteId;
+    u8 textSpriteId;
+    u8 buttonSpriteId;
 
-    spriteId1 = CreateSprite(&sSpriteTemplate_PageSwapFrame, 0xCC, 0x50, 0);
-    sNamingScreen->pageIndicatorSpriteId = spriteId1;
-    SetSubspriteTables(&gSprites[spriteId1], sSubspriteTable_PageSwapFrame);
+    frameSpriteId = CreateSprite(&sSpriteTemplate_PageSwapFrame, 0xCC, 0x50, 0);
+    sNamingScreen->pageIndicatorSpriteId = frameSpriteId;
+    SetSubspriteTables(&gSprites[frameSpriteId], sSubspriteTable_PageSwapFrame);
 
-    spriteId2 = CreateSprite(&sSpriteTemplate_PageSwapText, 0xCC, 0x4C, 1);
-    gSprites[spriteId1].data[6] = spriteId2;
-    SetSubspriteTables(&gSprites[spriteId2], sSubspriteTable_PageSwapText);
+    textSpriteId = CreateSprite(&sSpriteTemplate_PageSwapText, 0xCC, 0x4C, 1);
+    gSprites[frameSpriteId].data[6] = textSpriteId;
+    SetSubspriteTables(&gSprites[textSpriteId], sSubspriteTable_PageSwapText);
 
-    spriteId3 = CreateSprite(&sSpriteTemplate_PageSwapButton, 0xCC, 0x4B, 2);
-    gSprites[spriteId3].oam.priority = 1;
-    gSprites[spriteId1].data[7] = spriteId3;
+    buttonSpriteId = CreateSprite(&sSpriteTemplate_PageSwapButton, 0xCC, 0x4B, 2);
+    gSprites[buttonSpriteId].oam.priority = 1;
+    gSprites[frameSpriteId].data[7] = buttonSpriteId;
 }
 
 enum
