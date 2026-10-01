@@ -24,7 +24,7 @@ SECTIONS {
         *(.bss);
 
         /* .bss.code starts at 0x3000F60 */
-        src/libs/m4a.o(.bss.code);
+        src/m4a.o(.bss.code);
 
         /* COMMON starts at 0x3001760 */
         INCLUDE "sym_common.ld"
@@ -399,11 +399,11 @@ SECTIONS {
     {
         src/libs/libgcnmultiboot.o(.text);
         src/libs/m4a_1.o(.text);
-        src/libs/m4a.o(.text);
-        src/libs/agb_flash.o(.text);
-        src/libs/agb_flash_1m.o(.text);
-        src/libs/agb_flash_mx.o(.text);
-        src/libs/siirtc.o(.text);
+        src/m4a.o(.text);
+        src/agb_flash.o(.text);
+        src/agb_flash_1m.o(.text);
+        src/agb_flash_mx.o(.text);
+        src/siirtc.o(.text);
         src/libs/libagbsyscall.o(.text);
         *libgcc.a:*_call_via_rX*.o(.text);
         *libgcc.a:*_divsi3*.o(.text);
@@ -462,7 +462,7 @@ SECTIONS {
         *libc.a:*libcfunc*.o(.text);
         *libc.a:*syscalls*.o(.text);
         *libc.a:*errno*.o(.text);
-        src/libs/libisagbprn.o(.text);
+        src/libisagbprn.o(.text);
     } =0
 
     .rodata :
@@ -789,7 +789,7 @@ SECTIONS {
         src/menu_cursor.o(.rodata);
         src/mystery_event_msg.o(.rodata);
         data/debug_mystery_event_scripts.o(.rodata);
-        src/libs/m4a_tables.o(.rodata);
+        src/m4a_tables.o(.rodata);
         data/sound_data.o(.rodata);
     } =0
 
@@ -1218,16 +1218,16 @@ SECTIONS {
     lib_rodata :
     ALIGN(4)
     {
-		src/libs/m4a.o(.rodata);
-        src/libs/agb_flash.o(.rodata);
-        src/libs/agb_flash_1m.o(.rodata);
-        src/libs/agb_flash_mx.o(.rodata);
+		src/m4a.o(.rodata);
+        src/agb_flash.o(.rodata);
+        src/agb_flash_1m.o(.rodata);
+        src/agb_flash_mx.o(.rodata);
         src/agb_flash_le.o(.rodata);
-        src/libs/siirtc.o(.rodata);
+        src/siirtc.o(.rodata);
         *libgcc.a:_udivdi3.o(.rodata);
         *libc.a(.rodata);
         *libc.a(.data);
-        src/libs/libisagbprn.o(.rodata);
+        src/libisagbprn.o(.rodata);
     } =0
 
     . = 0x8D00000;
