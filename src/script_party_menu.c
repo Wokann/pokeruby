@@ -276,7 +276,7 @@ void HandleMoveRelearnerPartyMenu(u8 taskId)
 void MoveDeleterChooseMoveToForget(void)
 {
     ShowSelectMovePokemonSummaryScreen(&gPlayerParty[0], gSpecialVar_0x8004, gPlayerPartyCount - 1, CB2_ReturnToField, 0);
-    pssData.mode = PSS_MODE_MOVE_DELETER;
+    sMonSummaryScreen->mode = PSS_MODE_MOVE_DELETER;
     gFieldCallback = FieldCB_ContinueScriptHandleMusic;
 }
 
