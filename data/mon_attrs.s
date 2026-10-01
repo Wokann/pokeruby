@@ -193,13 +193,13 @@ gAnims_MonPic:: @ 81E7C64
 	.4byte sAnim_MonPic_3
 
 @ 81E7C74
-	.include "data/graphics/pokemon/front_pic_coords.inc"
+	.include "data/graphics/pokemon/front_pic_coordinates.inc"
 
 @ 81E8354
 	.include "data/graphics/pokemon/front_pic_table.inc"
 
 @ 81E9114
-	.include "data/graphics/pokemon/back_pic_coords.inc"
+	.include "data/graphics/pokemon/back_pic_coordinates.inc"
 
 @ 81E97F4
 	.include "data/graphics/pokemon/back_pic_table.inc"
@@ -647,7 +647,7 @@ gTrainerFrontAnimsPtrTable:: @ 81EC2A4
 	.4byte sAnims_Drake
 
 @ 81EC3F0
-	.include "data/graphics/trainers/front_pic_coords.inc"
+	.include "data/graphics/trainers/front_pic_coordinates.inc"
 
 @ 81EC53C
 	.include "data/graphics/trainers/front_pic_table.inc"

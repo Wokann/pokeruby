@@ -1767,9 +1767,9 @@ static u16 CreateIntroBattleMonSprite(u16 species, s16 x, s16 y, u16 spriteSlot,
     u8 spriteId;
 
     if (useFrontPic)
-        LoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, (void *)EWRAM, gHallOfFameGfxBufferPtrs[spriteSlot], species, 0, 1);
+        LoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].size, gMonFrontPicCoords[species].y_offset, (void *)EWRAM, gHallOfFameGfxBufferPtrs[spriteSlot], species, 0, 1);
     else
-        LoadSpecialPokePic(&gMonBackPicTable[species], gMonBackPicCoords[species].coords, gMonBackPicCoords[species].y_offset, (void *)EWRAM, gHallOfFameGfxBufferPtrs[spriteSlot], species, 0, 0);
+        LoadSpecialPokePic(&gMonBackPicTable[species], gMonBackPicCoords[species].size, gMonBackPicCoords[species].y_offset, (void *)EWRAM, gHallOfFameGfxBufferPtrs[spriteSlot], species, 0, 0);
     lzPaletteData = GetMonSpritePalFromSpeciesAndPersonality(species, 0, 0xFFFF);
     LoadCompressedPalette(lzPaletteData, 0x100 + spriteSlot * 0x10, 0x20);
     PrepareHallOfFameMonPicSpriteTemplate(spriteSlot, spriteSlot);
@@ -1783,7 +1783,7 @@ static u8 CreateIntroTrainerSprite(u16 trainerPicId, u16 x, u16 y, u16 spriteSlo
 {
     u8 spriteId;
 
-    DecompressPicFromTable(&gTrainerBackPicTable[trainerPicId], gTrainerBackPicCoords[trainerPicId].coords, gTrainerBackPicCoords[trainerPicId].y_offset, (void *)EWRAM, gHallOfFameGfxBufferPtrs[spriteSlot], trainerPicId);
+    DecompressPicFromTable(&gTrainerBackPicTable[trainerPicId], gTrainerBackPicCoords[trainerPicId].size, gTrainerBackPicCoords[trainerPicId].y_offset, (void *)EWRAM, gHallOfFameGfxBufferPtrs[spriteSlot], trainerPicId);
     LoadCompressedPalette(gTrainerBackPicPaletteTable[trainerPicId].data, 0x100 + spriteSlot * 0x10, 0x20);
     PrepareHallOfFameTrainerPicSpriteTemplate(spriteSlot, spriteSlot);
     gCreatingSpriteTemplate.anims = sAnims_IntroTrainer;

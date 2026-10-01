@@ -2756,14 +2756,14 @@ void Task_WatanabeDebugInitPokemonGraphicsBrowser(u8 taskId)
 
 void Task_WatanabeDebugLoadPokemonGraphics(u8 taskId)
 {
-    DecompressPicFromTable(gMonFrontPicTable + gWatanabeGraphicsBrowserState->graphicsId, gMonFrontPicCoords[gWatanabeGraphicsBrowserState->graphicsId].coords, gMonFrontPicCoords[gWatanabeGraphicsBrowserState->graphicsId].y_offset, gMonSpriteGfxBufferPtrs[0], gMonSpriteGfxBufferPtrs[1], gWatanabeGraphicsBrowserState->graphicsId);
+    DecompressPicFromTable(gMonFrontPicTable + gWatanabeGraphicsBrowserState->graphicsId, gMonFrontPicCoords[gWatanabeGraphicsBrowserState->graphicsId].size, gMonFrontPicCoords[gWatanabeGraphicsBrowserState->graphicsId].y_offset, gMonSpriteGfxBufferPtrs[0], gMonSpriteGfxBufferPtrs[1], gWatanabeGraphicsBrowserState->graphicsId);
     LoadCompressedSpritePalette(gMonPaletteTable + gWatanabeGraphicsBrowserState->graphicsId);
     SetMultiuseSpriteTemplateToPokemon(gWatanabeGraphicsBrowserState->graphicsId, 1);
     gWatanabeGraphicsBrowserState->frontSpriteId = CreateSprite(&gCreatingSpriteTemplate, 0x28, 0x28, 0);
     gSprites[gWatanabeGraphicsBrowserState->frontSpriteId].callback = SpriteCB_WatanabeDebugDummy;
     gSprites[gWatanabeGraphicsBrowserState->frontSpriteId].oam.priority = 0;
 
-    DecompressPicFromTable(gMonBackPicTable + gWatanabeGraphicsBrowserState->graphicsId, gMonBackPicCoords[gWatanabeGraphicsBrowserState->graphicsId].coords, gMonBackPicCoords[gWatanabeGraphicsBrowserState->graphicsId].y_offset, gMonSpriteGfxBufferPtrs[0], gMonSpriteGfxBufferPtrs[2], gWatanabeGraphicsBrowserState->graphicsId);
+    DecompressPicFromTable(gMonBackPicTable + gWatanabeGraphicsBrowserState->graphicsId, gMonBackPicCoords[gWatanabeGraphicsBrowserState->graphicsId].size, gMonBackPicCoords[gWatanabeGraphicsBrowserState->graphicsId].y_offset, gMonSpriteGfxBufferPtrs[0], gMonSpriteGfxBufferPtrs[2], gWatanabeGraphicsBrowserState->graphicsId);
     LoadCompressedSpritePalette(gMonPaletteTable + gWatanabeGraphicsBrowserState->graphicsId);
     SetMultiuseSpriteTemplateToPokemon(gWatanabeGraphicsBrowserState->graphicsId, 2);
     gWatanabeGraphicsBrowserState->backSpriteId = CreateSprite(&gCreatingSpriteTemplate, 0x28, 0x78, 0);
@@ -3383,7 +3383,7 @@ void Task_WatanabeDebugInitTrainerGraphicsBrowser(u8 taskId)
 
 void Task_WatanabeDebugLoadTrainerGraphics(u8 taskId)
 {
-    DecompressPicFromTable(gTrainerFrontPicTable + gWatanabeGraphicsBrowserState->graphicsId, gTrainerFrontPicCoords[gWatanabeGraphicsBrowserState->graphicsId].coords, gTrainerFrontPicCoords[gWatanabeGraphicsBrowserState->graphicsId].y_offset, gMonSpriteGfxBufferPtrs[0], gMonSpriteGfxBufferPtrs[1], gWatanabeGraphicsBrowserState->graphicsId);
+    DecompressPicFromTable(gTrainerFrontPicTable + gWatanabeGraphicsBrowserState->graphicsId, gTrainerFrontPicCoords[gWatanabeGraphicsBrowserState->graphicsId].size, gTrainerFrontPicCoords[gWatanabeGraphicsBrowserState->graphicsId].y_offset, gMonSpriteGfxBufferPtrs[0], gMonSpriteGfxBufferPtrs[1], gWatanabeGraphicsBrowserState->graphicsId);
     LoadCompressedSpritePalette(gTrainerFrontPicPaletteTable + gWatanabeGraphicsBrowserState->graphicsId);
     SetMultiuseSpriteTemplateToTrainerBack(gWatanabeGraphicsBrowserState->graphicsId, 1);
     gWatanabeGraphicsBrowserState->frontSpriteId = CreateSprite(&gCreatingSpriteTemplate, 0x28, 0x28, 0);

@@ -1587,7 +1587,7 @@ static void LoadDisplayMonGfx(u16 species, u32 pid)
     {
         if (species != SPECIES_NONE)
         {
-            HandleLoadSpecialPokePic(gMonFrontPicTable + species, gMonFrontPicCoords[species].coords, 1, gPokemonStorageSystemPtr->displayMonPicBuffer, gPokemonStorageSystemPtr->tileBuffer, species, pid);
+            HandleLoadSpecialPokePic(gMonFrontPicTable + species, gMonFrontPicCoords[species].size, 1, gPokemonStorageSystemPtr->displayMonPicBuffer, gPokemonStorageSystemPtr->tileBuffer, species, pid);
             LZ77UnCompWram(gPokemonStorageSystemPtr->displayMonPalette, gPokemonStorageSystemPtr->displayMonPalBuffer);
             CpuCopy32(gPokemonStorageSystemPtr->tileBuffer, gPokemonStorageSystemPtr->displayMonTilePtr, 0x800);
             LoadPalette(gPokemonStorageSystemPtr->displayMonPalBuffer, gPokemonStorageSystemPtr->displayMonPalOffset, 0x20);

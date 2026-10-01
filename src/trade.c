@@ -3556,7 +3556,7 @@ static void LoadTradeMonPic(u8 whichParty, u8 state)
         case 0:
             species = GetMonData(mon, MON_DATA_SPECIES2);
             personality = GetMonData(mon, MON_DATA_PERSONALITY);
-            HandleLoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, gSharedMem, gMonSpriteGfxBufferPtrs[whichParty * 2 + 1], species, personality);
+            HandleLoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].size, gMonFrontPicCoords[species].y_offset, gSharedMem, gMonSpriteGfxBufferPtrs[whichParty * 2 + 1], species, personality);
             LoadCompressedSpritePalette(GetMonSpritePalStruct(mon));
             gTradeAnim->monSpecies[whichParty] = species;
             break;

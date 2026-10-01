@@ -2623,7 +2623,7 @@ void InitDebugFlyingMonSpriteOffsetEditor(void)
 	Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gStandardBattleWindowTemplate);
 	DecompressPicFromTable(
 	  &gMonFrontPicTable[gCurrentMove],
-	  gMonFrontPicCoords[gCurrentMove].coords,
+	  gMonFrontPicCoords[gCurrentMove].size,
 	  gMonFrontPicCoords[gCurrentMove].y_offset,
 	  (void *)EWRAM,
 	  gMonSpriteGfxBufferPtrs[1],
@@ -2683,7 +2683,7 @@ void ReloadDebugFlyingMonSprite(u8 taskId)
 {
     DecompressPicFromTable(
       &gMonFrontPicTable[gCurrentMove],
-      gMonFrontPicCoords[gCurrentMove].coords,
+      gMonFrontPicCoords[gCurrentMove].size,
       gMonFrontPicCoords[gCurrentMove].y_offset,
       (void *)EWRAM,
       gMonSpriteGfxBufferPtrs[1],

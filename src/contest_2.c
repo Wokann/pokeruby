@@ -1033,7 +1033,7 @@ u8 CreateUnusedPlayerContestantSprite(void)
 
     DecompressPicFromTable(
         &gMonFrontPicTable[species],
-        gMonFrontPicCoords[species].coords,
+        gMonFrontPicCoords[species].size,
         gMonFrontPicCoords[species].y_offset,
         (void *)EWRAM,
         gMonSpriteGfxBufferPtrs[1],
@@ -1042,7 +1042,7 @@ u8 CreateUnusedPlayerContestantSprite(void)
     SetMultiuseSpriteTemplateToPokemon(gContestMons[gContestPlayerMonIndex].species, 1);
     spriteId = CreateSprite(
         &gCreatingSpriteTemplate,
-        112, 80 + (8 - gMonFrontPicCoords[gContestMons[gContestPlayerMonIndex].species].coords) * 4,
+        112, 80 + (8 - gMonFrontPicCoords[gContestMons[gContestPlayerMonIndex].species].size) * 4,
         30);
     gSprites[spriteId].oam.paletteNum = 1;
     gSprites[spriteId].callback = SpriteCallbackDummy;
@@ -1059,7 +1059,7 @@ u8 CreateContestantSprite(u16 species, u32 otId, u32 personality)
     species = SanitizeSpecies(species);
     HandleLoadSpecialPokePic(
         &gMonBackPicTable[species],
-        gMonBackPicCoords[species].coords,
+        gMonBackPicCoords[species].size,
         gMonBackPicCoords[species].y_offset,
         (void *)EWRAM,
         gMonSpriteGfxBufferPtrs[0],

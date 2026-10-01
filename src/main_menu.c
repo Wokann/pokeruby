@@ -1422,7 +1422,7 @@ u8 CreateAzurillSprite(u8 x, u8 y)
 {
     DecompressPicFromTable(
         &gMonFrontPicTable[SPECIES_AZURILL],
-        gMonFrontPicCoords[SPECIES_AZURILL].coords,
+        gMonFrontPicCoords[SPECIES_AZURILL].size,
         gMonFrontPicCoords[SPECIES_AZURILL].y_offset,
         gMonSpriteGfxBufferPtrs[0],
         gMonSpriteGfxBufferPtrs[1],

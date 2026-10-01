@@ -1297,7 +1297,7 @@ static u32 HallOfFame_LoadPokemonPic(u16 species, s16 posX, s16 posY, u16 pokeID
     u8 spriteID;
     const u8* pokePal;
 
-    LoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, (void *)EWRAM, gHallOfFameGfxBufferPtrs[pokeID], species, pid, 1);
+    LoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].size, gMonFrontPicCoords[species].y_offset, (void *)EWRAM, gHallOfFameGfxBufferPtrs[pokeID], species, pid, 1);
 
     pokePal = GetMonSpritePalFromSpeciesAndPersonality(species, tid, pid);
     LoadCompressedPalette(pokePal, 16 * pokeID + 256, 0x20);
@@ -1312,7 +1312,7 @@ static u32 HallOfFame_LoadTrainerPic(u16 trainerPicID, s16 posX, s16 posY, u16 s
 {
     u8 spriteID;
 
-    DecompressPicFromTable(&gTrainerFrontPicTable[trainerPicID], gTrainerFrontPicCoords[trainerPicID].coords, gTrainerFrontPicCoords[trainerPicID].y_offset, (void*)EWRAM, gHallOfFameGfxBufferPtrs[spriteSlot], trainerPicID);
+    DecompressPicFromTable(&gTrainerFrontPicTable[trainerPicID], gTrainerFrontPicCoords[trainerPicID].size, gTrainerFrontPicCoords[trainerPicID].y_offset, (void*)EWRAM, gHallOfFameGfxBufferPtrs[spriteSlot], trainerPicID);
 
     LoadCompressedPalette(gTrainerFrontPicPaletteTable[trainerPicID].data, 16 * spriteSlot + 256, 0x20);
     PrepareHallOfFameTrainerPicSpriteTemplate(spriteSlot, spriteSlot);

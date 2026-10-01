@@ -689,7 +689,7 @@ static bool8 LoadMonAndSceneGfx(struct Pokemon* mon)
     case 0:
         species = GetMonData(mon, MON_DATA_SPECIES2);
         personality = GetMonData(mon, MON_DATA_PERSONALITY);
-        HandleLoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, (void *)EWRAM, gMonSpriteGfxBufferPtrs[1], species, personality);
+        HandleLoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].size, gMonFrontPicCoords[species].y_offset, (void *)EWRAM, gMonSpriteGfxBufferPtrs[1], species, personality);
         sPokeblockLoadGfxState++;
         break;
     case 1:

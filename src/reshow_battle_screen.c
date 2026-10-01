@@ -239,7 +239,7 @@ static void CreateBattlerSprite(u8 battler)
         {
             SetMultiuseSpriteTemplateToTrainerBack(gSaveBlock2.playerGender, GetBattlerPosition(0));
             gBattlerSpriteIds[battler] = CreateSprite(&gCreatingSpriteTemplate, 0x50,
-                                                (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].coords) * 4 + 80,
+                                                (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].size) * 4 + 80,
                                                  GetBattlerSpriteSubpriority(0));
             gSprites[gBattlerSpriteIds[battler]].oam.paletteNum = battler;
             gSprites[gBattlerSpriteIds[battler]].callback = SpriteCallbackDummy;
@@ -249,7 +249,7 @@ static void CreateBattlerSprite(u8 battler)
         {
             SetMultiuseSpriteTemplateToTrainerBack(TRAINER_BACK_PIC_WALLY, GetBattlerPosition(0));
             gBattlerSpriteIds[battler] = CreateSprite(&gCreatingSpriteTemplate, 0x50,
-                                                (8 - gTrainerBackPicCoords[2].coords) * 4 + 80,
+                                                (8 - gTrainerBackPicCoords[2].size) * 4 + 80,
                                                  GetBattlerSpriteSubpriority(0));
             gSprites[gBattlerSpriteIds[battler]].oam.paletteNum = battler;
             gSprites[gBattlerSpriteIds[battler]].callback = SpriteCallbackDummy;

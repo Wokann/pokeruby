@@ -11,6 +11,17 @@
 	.2byte 0 @ padding
 	.endm
 
+@ A four-byte MonCoords entry for a Pokémon front or back picture.
+@ Width and height are in pixels; the packed size mirrors Emerald's MON_COORDS_SIZE.
+	.macro mon_pic_coords width, height, y_offset
+	.byte (((\width + 7) / 8) << 4) | ((\height + 7) / 8), \y_offset, 0, 0
+	.endm
+
+@ A four-byte MonCoords entry for a trainer picture.
+	.macro trainer_pic_coords size, y_offset
+	.byte \size, \y_offset, 0, 0
+	.endm
+
 	.macro base_stats hp, attack, defense, speed, sp_attack, sp_defense
 	.byte \hp
 	.byte \attack

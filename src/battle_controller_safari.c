@@ -401,7 +401,7 @@ void SafariHandleDrawTrainerPic(void)
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gCreatingSpriteTemplate,
       80,
-      (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].coords) * 4 + 80,
+      (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].size) * 4 + 80,
       30);
     gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = gActiveBattler;
     gSprites[gBattlerSpriteIds[gActiveBattler]].x2 = DISPLAY_WIDTH;

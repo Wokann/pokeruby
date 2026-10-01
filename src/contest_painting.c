@@ -325,7 +325,7 @@ static void InitContestMonPixels(u16 species, bool8 backPic)
     {
         HandleLoadSpecialPokePic(
             &gMonFrontPicTable[species],
-            gMonFrontPicCoords[species].coords,
+            gMonFrontPicCoords[species].size,
             gMonFrontPicCoords[species].y_offset,
             (void *)EWRAM,
             gMonSpriteGfxBufferPtrs[1],
@@ -338,7 +338,7 @@ static void InitContestMonPixels(u16 species, bool8 backPic)
     {
         HandleLoadSpecialPokePic(
             &gMonBackPicTable[species],
-            gMonBackPicCoords[species].coords,
+            gMonBackPicCoords[species].size,
             gMonBackPicCoords[species].y_offset,
             (void *)EWRAM,
             gMonSpriteGfxBufferPtrs[0],

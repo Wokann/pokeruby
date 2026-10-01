@@ -4593,7 +4593,7 @@ u16 CreateMonSpriteFromNationalDexNumber(u16 nationalNum, s16 x, s16 y, u16 pale
     default:
         DecompressPicFromTable(
           &gMonFrontPicTable[nationalNum],
-          gMonFrontPicCoords[nationalNum].coords,
+          gMonFrontPicCoords[nationalNum].size,
           gMonFrontPicCoords[nationalNum].y_offset,
           (void *)EWRAM,
           sMonOrTrainerPicDecompressDestPtrs[paletteSlot],
@@ -4602,7 +4602,7 @@ u16 CreateMonSpriteFromNationalDexNumber(u16 nationalNum, s16 x, s16 y, u16 pale
     case SPECIES_SPINDA:
         LoadSpecialPokePic(
           &gMonFrontPicTable[nationalNum],
-          gMonFrontPicCoords[nationalNum].coords,
+          gMonFrontPicCoords[nationalNum].size,
           gMonFrontPicCoords[nationalNum].y_offset,
           (void *)EWRAM,
           sMonOrTrainerPicDecompressDestPtrs[paletteSlot],
@@ -4613,7 +4613,7 @@ u16 CreateMonSpriteFromNationalDexNumber(u16 nationalNum, s16 x, s16 y, u16 pale
     case SPECIES_UNOWN:
         LoadSpecialPokePic(
           &gMonFrontPicTable[nationalNum],
-          gMonFrontPicCoords[nationalNum].coords,
+          gMonFrontPicCoords[nationalNum].size,
           gMonFrontPicCoords[nationalNum].y_offset,
           (void *)EWRAM,
           sMonOrTrainerPicDecompressDestPtrs[paletteSlot],
@@ -4635,7 +4635,7 @@ u16 CreateSizeScreenTrainerPic(u16 gender, s16 x, s16 y, u16 paletteNum)
 
     DecompressPicFromTable(
       &gTrainerFrontPicTable[gender],
-      gTrainerFrontPicCoords[gender].coords,
+      gTrainerFrontPicCoords[gender].size,
       gTrainerFrontPicCoords[gender].y_offset,
       (void *)EWRAM,
       sMonOrTrainerPicDecompressDestPtrs[0],

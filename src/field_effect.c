@@ -560,7 +560,7 @@ u8 AddNewGameBirchObject(s16 x, s16 y, u8 subpriority)
 
 u8 CreateMonSprite_PicBox(u16 species, s16 x, s16 y, u8 subpriority)
 {
-    DecompressPicFromTable(&gMonFrontPicTable[species], gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, gMonSpriteGfxBufferPtrs[3], gMonSpriteGfxBufferPtrs[3], species);
+    DecompressPicFromTable(&gMonFrontPicTable[species], gMonFrontPicCoords[species].size, gMonFrontPicCoords[species].y_offset, gMonSpriteGfxBufferPtrs[3], gMonSpriteGfxBufferPtrs[3], species);
     LoadCompressedSpritePalette(&gMonPaletteTable[species]);
     SetMultiuseSpriteTemplateToPokemon(species, 3);
     gCreatingSpriteTemplate.paletteTag = gMonPaletteTable[0].tag;
@@ -572,7 +572,7 @@ u8 CreateMonSprite_FieldMove(u16 species, u32 otId, u32 personality, s16 x, s16 
 {
     const struct CompressedSpritePalette *spritePalette;
 
-    HandleLoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, gMonSpriteGfxBufferPtrs[3], gMonSpriteGfxBufferPtrs[3], species, personality);
+    HandleLoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].size, gMonFrontPicCoords[species].y_offset, gMonSpriteGfxBufferPtrs[3], gMonSpriteGfxBufferPtrs[3], species, personality);
     spritePalette = GetMonSpritePalStructFromOtIdPersonality(species, otId, personality);
     LoadCompressedSpritePalette(spritePalette);
     SetMultiuseSpriteTemplateToPokemon(species, 3);

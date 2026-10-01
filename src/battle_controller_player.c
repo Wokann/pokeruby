@@ -2401,7 +2401,7 @@ void PlayerHandleDrawTrainerPic(void)
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gCreatingSpriteTemplate,
       xOffset + 80,
-      (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].coords) * 4 + 80,
+      (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].size) * 4 + 80,
       GetBattlerSpriteSubpriority(gActiveBattler));
     gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = gActiveBattler;
     gSprites[gBattlerSpriteIds[gActiveBattler]].x2 = 240;
@@ -2417,7 +2417,7 @@ void PlayerHandleTrainerSlide(void)
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gCreatingSpriteTemplate,
       80,
-      (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].coords) * 4 + 80,
+      (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].size) * 4 + 80,
       30);
     gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = gActiveBattler;
     gSprites[gBattlerSpriteIds[gActiveBattler]].x2 = -96;

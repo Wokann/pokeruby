@@ -1842,7 +1842,7 @@ static u8 LoadMonGfxAndSprite(struct Pokemon *mon, u8 *state)
 
         HandleLoadSpecialPokePic(
             &gMonFrontPicTable[species],
-            gMonFrontPicCoords[species].coords,
+            gMonFrontPicCoords[species].size,
             gMonFrontPicCoords[species].y_offset,
             (void *)EWRAM,
             gMonSpriteGfxBufferPtrs[1],

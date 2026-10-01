@@ -1984,7 +1984,7 @@ u8 CreateAdditionalMonSpriteForMoveAnim(u16 species, bool8 isBackpic, u8 id, s16
         LoadCompressedPalette(GetMonSpritePalFromSpeciesAndPersonality(species, trainerId, personality), (palette * 0x10) + 0x100, 0x20);
         LoadSpecialPokePic(
             &gMonFrontPicTable[species],
-            gMonFrontPicCoords[species].coords,
+            gMonFrontPicCoords[species].size,
             gMonFrontPicCoords[species].y_offset,
             (void *)EWRAM,
             (void *)EWRAM,
@@ -1998,7 +1998,7 @@ u8 CreateAdditionalMonSpriteForMoveAnim(u16 species, bool8 isBackpic, u8 id, s16
         LoadCompressedPalette(GetMonSpritePalFromSpeciesAndPersonality(species, trainerId, personality), (palette * 0x10) + 0x100, 0x20);
         LoadSpecialPokePic(
             &gMonBackPicTable[species],
-            gMonBackPicCoords[species].coords,
+            gMonBackPicCoords[species].size,
             gMonBackPicCoords[species].y_offset,
             (void *)EWRAM,
             (void *)EWRAM,
@@ -2145,17 +2145,17 @@ s16 GetBattlerSpriteCoordAttr(u8 battler, u8 attr)
     switch (attr)
     {
     case BATTLER_COORD_ATTR_HEIGHT:
-        return (coords->coords & 0xf) * 8;
+        return (coords->size & 0xf) * 8;
     case BATTLER_COORD_ATTR_WIDTH:
-        return (coords->coords >> 4) * 8;
+        return (coords->size >> 4) * 8;
     case BATTLER_COORD_ATTR_LEFT:
-        return GetBattlerSpriteCoord(battler, BATTLER_COORD_X_2) - ((coords->coords >> 4) * 4);
+        return GetBattlerSpriteCoord(battler, BATTLER_COORD_X_2) - ((coords->size >> 4) * 4);
     case BATTLER_COORD_ATTR_RIGHT:
-        return GetBattlerSpriteCoord(battler, BATTLER_COORD_X_2) + ((coords->coords >> 4) * 4);
+        return GetBattlerSpriteCoord(battler, BATTLER_COORD_X_2) + ((coords->size >> 4) * 4);
     case BATTLER_COORD_ATTR_TOP:
-        return GetBattlerSpriteCoord(battler, BATTLER_COORD_Y_PIC_OFFSET) - ((coords->coords & 0xf) * 4);
+        return GetBattlerSpriteCoord(battler, BATTLER_COORD_Y_PIC_OFFSET) - ((coords->size & 0xf) * 4);
     case BATTLER_COORD_ATTR_BOTTOM:
-        return GetBattlerSpriteCoord(battler, BATTLER_COORD_Y_PIC_OFFSET) + ((coords->coords & 0xf) * 4);
+        return GetBattlerSpriteCoord(battler, BATTLER_COORD_Y_PIC_OFFSET) + ((coords->size & 0xf) * 4);
     case BATTLER_COORD_ATTR_RAW_BOTTOM:
         ret = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y) + 0x1f;
         return ret - coords->y_offset;

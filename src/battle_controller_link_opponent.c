@@ -1240,7 +1240,7 @@ static void LinkOpponentHandleDrawTrainerPic(void)
     SetMultiuseSpriteTemplateToTrainerBack(trainerPicId, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gCreatingSpriteTemplate,
-      176 + xOffset, 40 + 4 * (8 - gTrainerFrontPicCoords[trainerPicId].coords),
+      176 + xOffset, 40 + 4 * (8 - gTrainerFrontPicCoords[trainerPicId].size),
       GetBattlerSpriteSubpriority(gActiveBattler));
     gSprites[gBattlerSpriteIds[gActiveBattler]].x2 = -240;
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[0] = 2;

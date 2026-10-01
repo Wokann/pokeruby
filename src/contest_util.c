@@ -302,7 +302,7 @@ void ShowContestEntryMonPic(void)
         gTasks[taskId].tSpecies = species;
         HandleLoadSpecialPokePic(
           &gMonFrontPicTable[species],
-          gMonFrontPicCoords[species].coords,
+          gMonFrontPicCoords[species].size,
           gMonFrontPicCoords[species].y_offset,
           gMonSpriteGfxBufferPtrs[0],
           gMonSpriteGfxBufferPtrs[1],

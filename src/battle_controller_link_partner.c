@@ -1170,7 +1170,7 @@ static void LinkPartnerHandleDrawTrainerPic(void)
     SetMultiuseSpriteTemplateToTrainerBack(gender, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gCreatingSpriteTemplate,
-      80 + xOffset, 80 + 4 * (8 - gTrainerBackPicCoords[gender].coords),
+      80 + xOffset, 80 + 4 * (8 - gTrainerBackPicCoords[gender].size),
       GetBattlerSpriteSubpriority(gActiveBattler));
     gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = gActiveBattler;
     gSprites[gBattlerSpriteIds[gActiveBattler]].x2 = DISPLAY_WIDTH;

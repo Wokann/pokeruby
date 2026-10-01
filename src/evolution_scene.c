@@ -228,7 +228,7 @@ void EvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, bool8 canStopEvo, u
     trainerId = GetMonData(mon, MON_DATA_OT_ID);
     personality = GetMonData(mon, MON_DATA_PERSONALITY);
     DecompressPicFromTable(&gMonFrontPicTable[currSpecies],
-                             gMonFrontPicCoords[currSpecies].coords,
+                             gMonFrontPicCoords[currSpecies].size,
                              gMonFrontPicCoords[currSpecies].y_offset,
                              (void*)EWRAM,
                              gMonSpriteGfxBufferPtrs[1], currSpecies);
@@ -245,7 +245,7 @@ void EvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, bool8 canStopEvo, u
 
     // postEvo sprite
     DecompressPicFromTable(&gMonFrontPicTable[postEvoSpecies],
-                             gMonFrontPicCoords[postEvoSpecies].coords,
+                             gMonFrontPicCoords[postEvoSpecies].size,
                              gMonFrontPicCoords[postEvoSpecies].y_offset,
                              (void*)EWRAM,
                              gMonSpriteGfxBufferPtrs[3], postEvoSpecies);
@@ -325,7 +325,7 @@ static void CB2_EvolutionSceneLoadGraphics(void)
     gReservedSpritePaletteCount = 4;
 
     DecompressPicFromTable(&gMonFrontPicTable[postEvoSpecies],
-                             gMonFrontPicCoords[postEvoSpecies].coords,
+                             gMonFrontPicCoords[postEvoSpecies].size,
                              gMonFrontPicCoords[postEvoSpecies].y_offset,
                              (void*)EWRAM,
                              gMonSpriteGfxBufferPtrs[3], postEvoSpecies);
@@ -395,7 +395,7 @@ static void CB2_TradeEvolutionSceneLoadGraphics(void)
             u32 trainerId = GetMonData(mon, MON_DATA_OT_ID);
             u32 personality = GetMonData(mon, MON_DATA_PERSONALITY);
             DecompressPicFromTable(&gMonFrontPicTable[postEvoSpecies],
-                                     gMonFrontPicCoords[postEvoSpecies].coords,
+                                     gMonFrontPicCoords[postEvoSpecies].size,
                                      gMonFrontPicCoords[postEvoSpecies].y_offset,
                                      (void*)EWRAM,
                                      gMonSpriteGfxBufferPtrs[3], postEvoSpecies);
@@ -445,7 +445,7 @@ void TradeEvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, u8 preEvoSprit
     trainerId = GetMonData(mon, MON_DATA_OT_ID);
     sEvoInfo.preEvoSpriteId = preEvoSpriteId;
     DecompressPicFromTable(&gMonFrontPicTable[postEvoSpecies],
-                             gMonFrontPicCoords[postEvoSpecies].coords,
+                             gMonFrontPicCoords[postEvoSpecies].size,
                              gMonFrontPicCoords[postEvoSpecies].y_offset,
                              (void*)EWRAM,
                              gMonSpriteGfxBufferPtrs[1], postEvoSpecies);

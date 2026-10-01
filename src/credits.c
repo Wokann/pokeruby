@@ -1581,7 +1581,7 @@ static u8 CreateCreditsMonSprite(u16 species, u16 x, u16 y, u16 position)
 
     LoadSpecialPokePic(
         &gMonFrontPicTable[species],
-        gMonFrontPicCoords[species].coords,
+        gMonFrontPicCoords[species].size,
         gMonFrontPicCoords[species].y_offset,
         (void *)EWRAM,
         gHallOfFameGfxBufferPtrs[position],

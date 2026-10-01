@@ -90,7 +90,7 @@ void LoadTrainerEyesPortraitGfx(u8 slot)
 {
     u16 opponentId = gPokenavState->trainersEye[gPokenavState->listSelectedIndex].opponentId;
     u8 trainerPicId = gTrainers[opponentId].trainerPic;
-    DecompressPicFromTable(&gTrainerFrontPicTable[trainerPicId], gTrainerFrontPicCoords[trainerPicId].coords, 1, gPokenavState->spriteGfxScratchBuffer, gPokenavState->spriteGfxBuffers[slot], trainerPicId);
+    DecompressPicFromTable(&gTrainerFrontPicTable[trainerPicId], gTrainerFrontPicCoords[trainerPicId].size, 1, gPokenavState->spriteGfxScratchBuffer, gPokenavState->spriteGfxBuffers[slot], trainerPicId);
     LZ77UnCompWram(gTrainerFrontPicPaletteTable[trainerPicId].data, gPokenavState->portraitPaletteBuffers[slot]);
 }
 

@@ -1220,7 +1220,7 @@ static void OpponentHandleDrawTrainerPic(void)
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gCreatingSpriteTemplate,
       0xB0,
-      40 + 4 * (8 - gTrainerFrontPicCoords[trainerPicId].coords),
+      40 + 4 * (8 - gTrainerFrontPicCoords[trainerPicId].size),
       GetBattlerSpriteSubpriority(gActiveBattler));
     gSprites[gBattlerSpriteIds[gActiveBattler]].x2 = -240;
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[0] = 2;
@@ -1250,7 +1250,7 @@ static void OpponentHandleTrainerSlide(void)
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gCreatingSpriteTemplate,
       0xB0,
-      40 + 4 * (8 - gTrainerFrontPicCoords[trainerPicId].coords),
+      40 + 4 * (8 - gTrainerFrontPicCoords[trainerPicId].size),
       0x1E);
     gSprites[gBattlerSpriteIds[gActiveBattler]].x2 = 96;
     gSprites[gBattlerSpriteIds[gActiveBattler]].x += 32;

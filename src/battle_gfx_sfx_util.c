@@ -309,7 +309,7 @@ void BattleLoadOpponentMonSpriteGfx(struct Pokemon *mon, u8 battler)
     position = GetBattlerPosition(battler);
     HandleLoadSpecialPokePic(
       &gMonFrontPicTable[species],
-      gMonFrontPicCoords[species].coords,
+      gMonFrontPicCoords[species].size,
       gMonFrontPicCoords[species].y_offset,
       sBattleInterfaceGfxBuffer,
       gMonSpriteGfxBufferPtrs[position],
@@ -361,7 +361,7 @@ void BattleLoadPlayerMonSpriteGfx(struct Pokemon *mon, u8 battler)
     position = GetBattlerPosition(battler);
     HandleLoadSpecialPokePic(
       &gMonBackPicTable[species],
-      gMonBackPicCoords[species].coords,
+      gMonBackPicCoords[species].size,
       gMonBackPicCoords[species].y_offset,
       sBattleInterfaceGfxBuffer,
       gMonSpriteGfxBufferPtrs[position],
@@ -404,7 +404,7 @@ void DecompressTrainerFrontPic(u16 frontPicId, u8 battler)
     position = GetBattlerPosition(battler);
     DecompressPicFromTable(
       &gTrainerFrontPicTable[frontPicId],
-      gTrainerFrontPicCoords[frontPicId].coords,
+      gTrainerFrontPicCoords[frontPicId].size,
       gTrainerFrontPicCoords[frontPicId].y_offset,
       sBattleInterfaceGfxBuffer,
       gMonSpriteGfxBufferPtrs[position],
@@ -423,7 +423,7 @@ void DecompressTrainerBackPic(u16 backPicId, u8 battler)
     position = GetBattlerPosition(battler);
     DecompressPicFromTable(
       &gTrainerBackPicTable[backPicId],
-      gTrainerBackPicCoords[backPicId].coords,
+      gTrainerBackPicCoords[backPicId].size,
       gTrainerBackPicCoords[backPicId].y_offset,
       sBattleInterfaceGfxBuffer,
       gMonSpriteGfxBufferPtrs[position],
@@ -658,7 +658,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform)
             otId = gContestResources__moveAnim.otId;
             HandleLoadSpecialPokePic(
               &gMonBackPicTable[targetSpecies],
-              gMonBackPicCoords[targetSpecies].coords,
+              gMonBackPicCoords[targetSpecies].size,
               gMonBackPicCoords[targetSpecies].y_offset,
               sBattleInterfaceGfxBuffer,
               gMonSpriteGfxBufferPtrs[position],
@@ -678,7 +678,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform)
                 otId = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battlerAtk]], MON_DATA_OT_ID);
                 HandleLoadSpecialPokePic(
                   &gMonBackPicTable[targetSpecies],
-                  gMonBackPicCoords[targetSpecies].coords,
+                  gMonBackPicCoords[targetSpecies].size,
                   gMonBackPicCoords[targetSpecies].y_offset,
                   sBattleInterfaceGfxBuffer,
                   gMonSpriteGfxBufferPtrs[position],
@@ -691,7 +691,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform)
                 otId = GetMonData(&gEnemyParty[gBattlerPartyIndexes[battlerAtk]], MON_DATA_OT_ID);
                 HandleLoadSpecialPokePic(
                   &gMonFrontPicTable[targetSpecies],
-                  gMonFrontPicCoords[targetSpecies].coords,
+                  gMonFrontPicCoords[targetSpecies].size,
                   gMonFrontPicCoords[targetSpecies].y_offset,
                   sBattleInterfaceGfxBuffer,
                   gMonSpriteGfxBufferPtrs[position],

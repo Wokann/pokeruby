@@ -3775,7 +3775,7 @@ void LoadConditionGraphMonGfx(s16 listId, u8 loadId)
 
         HandleLoadSpecialPokePic(
             &gMonFrontPicTable[species],
-            gMonFrontPicCoords[species].coords,
+            gMonFrontPicCoords[species].size,
             1,
             gPokenavState->spriteGfxScratchBuffer,
             gPokenavState->spriteGfxBuffers[loadId],
