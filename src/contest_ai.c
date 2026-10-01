@@ -1720,21 +1720,21 @@ static void ContestAICmd_if_user_doesnt_have_exciting_move(void)
 
 static void ContestAICmd_check_user_has_move(void)
 {
-    int result = 0;
+    int hasMove = 0;
     int i;
-    u16 arg = T1_READ_16(gAIScriptPtr + 1);
+    u16 targetMove = T1_READ_16(gAIScriptPtr + 1);
 
     for(i = 0; i < 4; i++)
     {
         u16 move = gContestMons[eContestAI->contestantId].moves[i];
-        if(move == arg)
+        if(move == targetMove)
         {
-            result = 1;
+            hasMove = 1;
             break;
         }
     }
 
-    eContestAI->scriptResult = result;
+    eContestAI->scriptResult = hasMove;
     gAIScriptPtr += 3;
 }
 
