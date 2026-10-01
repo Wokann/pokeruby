@@ -133,7 +133,7 @@ void ClearSaveData(void)
 {
     u16 i;
 
-    for (i = 0; i < NUM_SECTORS; i++)
+    for (i = 0; i < SECTORS_COUNT; i++)
         EraseFlashSector(i);
 }
 

@@ -2,7 +2,7 @@
 #define GUARD_SAVE_H
 
 // Ruby/Sapphire's save data is Flash 128K, which is 32 save sectors.
-#define NUM_SECTORS 32 // defined in agb_flash but not in a header
+#define SECTORS_COUNT 32 // defined in agb_flash but not in a header
 
 // If the sector's signature field is not this value, it is invalid or empty.
 #define SECTOR_SIGNATURE 0x08012025
