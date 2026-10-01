@@ -46,7 +46,7 @@ EventScript_PkmnCenterNurse_CheckPokerus:: @ 819FDCE
 	end
 
 EventScript_PkmnCenterNurse_ExplainPokerus:: @ 819FDEA
-	message gText_NurseJoy_Pokerus
+	message gText_PokerusExplanation
 	waitmessage
 	setflag FLAG_POKERUS_EXPLAINED
 	return

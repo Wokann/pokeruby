@@ -1113,7 +1113,7 @@ gText_NurseJoy_OkayIllTakeYourPokemon:: @ 81A1245
 	.string "Okay, I'll take your POKéMON for a\n"
 	.string "few seconds.$"
 
-gText_NurseJoy_Pokerus:: @ 81A1275
+gText_PokerusExplanation:: @ 81A1275
 	.string "Your POKéMON may be infected with\n"
 	.string "POKéRUS.\p"
 	.string "Little is known about the POKéRUS\n"
