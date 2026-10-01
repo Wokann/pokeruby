@@ -21,12 +21,12 @@ AncientTomb_OnLoad:: @ 815EFE0
 	end
 
 AncientTomb_EventScript_HideRegiEntrance:: @ 815EFEA
-	setmetatile 7, 19, METATILE_Cave_EntranceCover, 1
-	setmetatile 8, 19, METATILE_Cave_EntranceCover, 1
-	setmetatile 9, 19, METATILE_Cave_EntranceCover, 1
-	setmetatile 7, 20, METATILE_Cave_SealedChamberBraille_Mid, 1
-	setmetatile 8, 20, METATILE_Cave_SealedChamberBraille_Mid, 1
-	setmetatile 9, 20, METATILE_Cave_SealedChamberBraille_Mid, 1
+	setmetatile 7, 19, METATILE_Cave_EntranceCover, TRUE
+	setmetatile 8, 19, METATILE_Cave_EntranceCover, TRUE
+	setmetatile 9, 19, METATILE_Cave_EntranceCover, TRUE
+	setmetatile 7, 20, METATILE_Cave_SealedChamberBraille_Mid, TRUE
+	setmetatile 8, 20, METATILE_Cave_SealedChamberBraille_Mid, TRUE
+	setmetatile 9, 20, METATILE_Cave_SealedChamberBraille_Mid, TRUE
 	return
 
 AncientTomb_EventScript_CaveEntranceMiddle:: @ 815F021
@@ -55,7 +55,7 @@ AncientTomb_EventScript_Registeel:: @ 815F050
 	lock
 	faceplayer
 	waitse
-	playmoncry SPECIES_REGISTEEL, 2
+	playmoncry SPECIES_REGISTEEL, CRY_MODE_ENCOUNTER
 	delay 40
 	waitmoncry
 	setwildbattle SPECIES_REGISTEEL, 40, ITEM_NONE
