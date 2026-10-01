@@ -317,8 +317,8 @@ static void CB2_LoadCableCar(void)
             DmaFill16Large(3, 0, VRAM, VRAM_SIZE, 0x1000);
             DmaFill32Defvars(3, 0, OAM, OAM_SIZE);
             DmaFill16Defvars(3, 0, PLTT, PLTT_SIZE);
-            sCableCar = eCableCar;
-            DmaFill16Large(3, 0, eCableCar, 0x10FC, 0x1000);
+            sCableCar = sCableCarSharedMem;
+            DmaFill16Large(3, 0, sCableCarSharedMem, 0x10FC, 0x1000);
             gMain.state++;
             break;
         case 1:
@@ -342,10 +342,10 @@ static void CB2_LoadCableCar(void)
                 LoadCompressedSpriteSheet(&sSpriteSheets[i]);
             }
             LoadSpritePalettes(sSpritePalettes);
-            LZDecompressWram(sGround_Tilemap, eCableCarTilemapData->groundTilemap);
-            LZDecompressWram(sTrees_Tilemap, eCableCarTilemapData->treesTilemap);
-            LZDecompressWram(sBgMountains_Tilemap, eCableCarTilemapData->bgMountainsTilemap);
-            LZDecompressWram(sPylonPole_Tilemap, eCableCarTilemapData->pylonPoleTilemap);
+            LZDecompressWram(sGround_Tilemap, sCableCarTilemapData->groundTilemap);
+            LZDecompressWram(sTrees_Tilemap, sCableCarTilemapData->treesTilemap);
+            LZDecompressWram(sBgMountains_Tilemap, sCableCarTilemapData->bgMountainsTilemap);
+            LZDecompressWram(sPylonPole_Tilemap, sCableCarTilemapData->pylonPoleTilemap);
             LoadPalette(gCableCarBg_Pal, 0, 0x80);
             LZ77UnCompVram(gCableCarBg_Gfx, (u16 *)BG_VRAM);
             gMain.state++;
@@ -373,22 +373,22 @@ static void CB2_LoadCableCar(void)
             }
             break;
         case 5:
-            CableCarUtil_CopyWrapped((void *)BG_SCREEN_ADDR(29), eCableCarTilemapData->treesTilemap, 0, 17, 32, 15);
-            CableCarUtil_CopyWrapped((void *)BG_SCREEN_ADDR(30), eCableCarTilemapData->bgMountainsTilemap, 0, 0, 30, 20);
+            CableCarUtil_CopyWrapped((void *)BG_SCREEN_ADDR(29), sCableCarTilemapData->treesTilemap, 0, 17, 32, 15);
+            CableCarUtil_CopyWrapped((void *)BG_SCREEN_ADDR(30), sCableCarTilemapData->bgMountainsTilemap, 0, 0, 30, 20);
             CableCarUtil_CopyWrapped(sCableCar->bg3TilemapBuffer, sPylonTop_Tilemap, 0, 0, 5, 2);
-            CableCarUtil_CopyWrapped(sCableCar->bg3TilemapBuffer, eCableCarTilemapData->pylonPoleTilemap, 0, 2, 2, 20);
+            CableCarUtil_CopyWrapped(sCableCar->bg3TilemapBuffer, sCableCarTilemapData->pylonPoleTilemap, 0, 2, 2, 20);
             gMain.state++;
             break;
         case 6:
             InitGroundTilemapData(GOING_DOWN);
-            CableCarUtil_CopyWrapped(sCableCar->bg0TilemapBuffer, eCableCarTilemapData->groundTilemap + 0x48, 0, 14, 12, 3);
-            CableCarUtil_CopyWrapped(sCableCar->bg0TilemapBuffer, eCableCarTilemapData->groundTilemap + 0x6C, 12, 17, 12, 3);
-            CableCarUtil_CopyWrapped(sCableCar->bg0TilemapBuffer, eCableCarTilemapData->groundTilemap + 0x90, 24, 20, 12, 3);
-            CableCarUtil_CopyWrapped(sCableCar->bg0TilemapBuffer, eCableCarTilemapData->groundTilemap + 0x00, 0, 17, 12, 3);
-            CableCarUtil_CopyWrapped(sCableCar->bg0TilemapBuffer, eCableCarTilemapData->groundTilemap + 0x24, 0, 20, 12, 3);
-            CableCarUtil_CopyWrapped(sCableCar->bg0TilemapBuffer, eCableCarTilemapData->groundTilemap + 0x00, 12, 20, 12, 3);
-            CableCarUtil_CopyWrapped(sCableCar->bg0TilemapBuffer, eCableCarTilemapData->groundTilemap + 0x24, 12, 23, 12, 3);
-            CableCarUtil_CopyWrapped(sCableCar->bg0TilemapBuffer, eCableCarTilemapData->groundTilemap + 0x00, 24, 23, 12, 3);
+            CableCarUtil_CopyWrapped(sCableCar->bg0TilemapBuffer, sCableCarTilemapData->groundTilemap + 0x48, 0, 14, 12, 3);
+            CableCarUtil_CopyWrapped(sCableCar->bg0TilemapBuffer, sCableCarTilemapData->groundTilemap + 0x6C, 12, 17, 12, 3);
+            CableCarUtil_CopyWrapped(sCableCar->bg0TilemapBuffer, sCableCarTilemapData->groundTilemap + 0x90, 24, 20, 12, 3);
+            CableCarUtil_CopyWrapped(sCableCar->bg0TilemapBuffer, sCableCarTilemapData->groundTilemap + 0x00, 0, 17, 12, 3);
+            CableCarUtil_CopyWrapped(sCableCar->bg0TilemapBuffer, sCableCarTilemapData->groundTilemap + 0x24, 0, 20, 12, 3);
+            CableCarUtil_CopyWrapped(sCableCar->bg0TilemapBuffer, sCableCarTilemapData->groundTilemap + 0x00, 12, 20, 12, 3);
+            CableCarUtil_CopyWrapped(sCableCar->bg0TilemapBuffer, sCableCarTilemapData->groundTilemap + 0x24, 12, 23, 12, 3);
+            CableCarUtil_CopyWrapped(sCableCar->bg0TilemapBuffer, sCableCarTilemapData->groundTilemap + 0x00, 24, 23, 12, 3);
             gMain.state++;
             break;
         case 7:
@@ -550,7 +550,7 @@ static void Task_AnimateBgGoingUp(u8 taskId)
                 break;
             case 16:
                 CableCarUtil_CopyWrapped(sCableCar->bg3TilemapBuffer, sPylonTop_Tilemap, 0, 0, 5, 2);
-                CableCarUtil_CopyWrapped(sCableCar->bg3TilemapBuffer, eCableCarTilemapData->pylonPoleTilemap, 0, 2, 2, 30);
+                CableCarUtil_CopyWrapped(sCableCar->bg3TilemapBuffer, sCableCarTilemapData->pylonPoleTilemap, 0, 2, 2, 30);
                 sCableCar->bg3VerticalOffset = 64;
                 break;
         }
@@ -576,7 +576,7 @@ static void Task_AnimateBgGoingDown(u8 taskId)
         switch (sCableCar->bg3HorizontalOffset)
         {
             case 176:
-                CableCarUtil_CopyWrapped(sCableCar->bg3TilemapBuffer, eCableCarTilemapData->pylonPoleTilemap, 0, 2, 2, 30);
+                CableCarUtil_CopyWrapped(sCableCar->bg3TilemapBuffer, sCableCarTilemapData->pylonPoleTilemap, 0, 2, 2, 30);
                 break;
             case 16:
                 CableCarUtil_FillWrapped(sCableCar->bg3TilemapBuffer, 0, 2, 0, 3, 2);
@@ -887,7 +887,7 @@ static void CreateCableCarSprites(void)
             SetCurrentAndNextWeatherNoDelay(WEATHER_SUNNY);
             break;
         case TRUE:
-            CableCarUtil_CopyWrapped(sCableCar->bg0TilemapBuffer, eCableCarTilemapData->groundTilemap + 0x24, 0x18, 0x1a, 0x0c, 0x03);
+            CableCarUtil_CopyWrapped(sCableCar->bg0TilemapBuffer, sCableCarTilemapData->groundTilemap + 0x24, 0x18, 0x1a, 0x0c, 0x03);
             spriteId = CreateObjectGraphicsSprite(playerGraphicsIds[gSaveBlock2.playerGender], SpriteCB_Player, 0x80, 0x27, 0x66);
             if (spriteId != MAX_SPRITES)
             {
@@ -967,9 +967,9 @@ static void BufferNextGroundSegment(void)
     {
         for (j = 0; j < ARRAY_COUNT(sCableCar->groundTileBuffer[0]); j++)
         {
-            sCableCar->groundTileBuffer[i][j] = *(eCableCarTilemapData->groundTilemap + (offset++));
-            sCableCar->groundTileBuffer[i + 3][j] = eCableCarTilemapData->groundTilemap[k];
-            sCableCar->groundTileBuffer[i + 6][j] = (eCableCarTilemapData->groundTilemap + 0x24)[k];
+            sCableCar->groundTileBuffer[i][j] = *(sCableCarTilemapData->groundTilemap + (offset++));
+            sCableCar->groundTileBuffer[i + 3][j] = sCableCarTilemapData->groundTilemap[k];
+            sCableCar->groundTileBuffer[i + 6][j] = (sCableCarTilemapData->groundTilemap + 0x24)[k];
             k++;
         }
     }
