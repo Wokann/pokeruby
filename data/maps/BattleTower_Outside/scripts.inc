@@ -5,7 +5,7 @@ BattleTower_Outside_MapScripts:: @ 8160156
 BattleTower_Outside_OnTransition:: @ 816015C
 	setflag FLAG_LANDMARK_BATTLE_TOWER
 	setvar VAR_BRAVO_TRAINER_BATTLE_TOWER_ON, 0
-	setflag FLAG_HIDE_REPORTER_BATTLE_TOWER
+	setflag FLAG_HIDE_BATTLE_TOWER_REPORTER
 	end
 
 BattleTower_Outside_EventScript_FerryAttendant:: @ 8160168
