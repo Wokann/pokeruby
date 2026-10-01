@@ -12,12 +12,12 @@ SlateportCity_ContestHall_EventScript_ContestJudgeSon:: @ 8155555
 SlateportCity_ContestHall_EventScript_GiveTorment:: @ 815555E
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_TM41, SlateportCity_ContestHall_EventScript_ExplainTorment
+	goto_if_set FLAG_RECEIVED_TM_TORMENT, SlateportCity_ContestHall_EventScript_ExplainTorment
 	msgbox SlateportCity_ContestHall_Text_ImLikeMajorlyCheesed, MSGBOX_DEFAULT
 	giveitem ITEM_TM41_TORMENT
 	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
-	setflag FLAG_RECEIVED_TM41
+	setflag FLAG_RECEIVED_TM_TORMENT
 	msgbox SlateportCity_ContestHall_Text_ExplainTorment, MSGBOX_DEFAULT
 	release
 	end

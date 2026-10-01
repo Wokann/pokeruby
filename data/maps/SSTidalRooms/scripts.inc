@@ -4,12 +4,12 @@ SSTidalRooms_MapScripts:: @ 815FF05
 SSTidalRooms_EventScript_SnatchGiver:: @ 815FF06
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_TM49, SSTidalRooms_EventScript_ExplainSnatch
+	goto_if_set FLAG_RECEIVED_TM_SNATCH, SSTidalRooms_EventScript_ExplainSnatch
 	msgbox SSTidalRooms_Text_NotSuspiciousTakeThis, MSGBOX_DEFAULT
 	giveitem ITEM_TM49_SNATCH
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull
-	setflag FLAG_RECEIVED_TM49
+	setflag FLAG_RECEIVED_TM_SNATCH
 	msgbox SSTidalRooms_Text_ExplainSnatch, MSGBOX_DEFAULT
 	release
 	end

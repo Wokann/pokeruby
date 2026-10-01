@@ -4,10 +4,10 @@ SootopolisCity_House1_MapScripts:: @ 815B29A
 SootopolisCity_House1_EventScript_BrickBreakBlackBelt:: @ 815B29B
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_TM31, SootopolisCity_House1_EventScript_ReceivedBrickBreak
+	goto_if_set FLAG_RECEIVED_TM_BRICK_BREAK, SootopolisCity_House1_EventScript_ReceivedBrickBreak
 	msgbox SootopolisCity_House1_Text_DevelopedThisTM, MSGBOX_DEFAULT
 	giveitem ITEM_TM31_BRICK_BREAK
-	setflag FLAG_RECEIVED_TM31
+	setflag FLAG_RECEIVED_TM_BRICK_BREAK
 	msgbox SootopolisCity_House1_Text_ExplainBrickBreak, MSGBOX_DEFAULT
 	release
 	end

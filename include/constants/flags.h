@@ -89,7 +89,7 @@
 
 #define FLAG_MET_HIDDEN_POWER_GIVER         0x76
 
-#define FLAG_RECEIVED_TM31                  0x79
+#define FLAG_RECEIVED_TM_BRICK_BREAK                  0x79
 #define FLAG_RECEIVED_HM_SURF                  0x7A
 #define FLAG_RECEIVED_HM_DIVE                0x7B
 
@@ -133,7 +133,7 @@
 #define FLAG_RECEIVED_TM_BULK_UP                  0xA6
 #define FLAG_RECEIVED_TM_SHOCK_WAVE                  0xA7
 #define FLAG_RECEIVED_TM_OVERHEAT                  0xA8
-#define FLAG_RECEIVED_TM42                  0xA9
+#define FLAG_RECEIVED_TM_FACADE                  0xA9
 #define FLAG_RECEIVED_TM_AERIAL_ACE                  0xAA
 #define FLAG_RECEIVED_TM_CALM_MIND                  0xAB
 #define FLAG_RECEIVED_TM_WATER_PULSE                  0xAC
@@ -197,8 +197,8 @@
 #define FLAG_RECEIVED_TM_ROAR                  0xE7
 #define FLAG_RECEIVED_TM_GIGA_DRAIN                  0xE8
 
-#define FLAG_RECEIVED_TM44                  0xEA
-#define FLAG_RECEIVED_TM45                  0xEB
+#define FLAG_RECEIVED_TM_REST                  0xEA
+#define FLAG_RECEIVED_TM_ATTRACT                  0xEB
 #define FLAG_RECEIVED_GLASS_ORNAMENT        0xEC
 #define FLAG_RECEIVED_SILVER_SHIELD         0xED
 #define FLAG_RECEIVED_GOLD_SHIELD           0xEE
@@ -223,16 +223,16 @@
 #define FLAG_RECEIVED_OLD_ROD               0x101
 #define FLAG_RECEIVED_COIN_CASE             0x102
 #define FLAG_RETURNED_RED_OR_BLUE_ORB       0x103
-#define FLAG_RECEIVED_TM49                  0x104
+#define FLAG_RECEIVED_TM_SNATCH                  0x104
 #define FLAG_RECEIVED_TM_DIG                  0x105
-#define FLAG_RECEIVED_TM09                  0x106
+#define FLAG_RECEIVED_TM_BULLET_SEED                  0x106
 #define FLAG_ENTERED_ELITE_FOUR             0x107
-#define FLAG_RECEIVED_TM10                  0x108
-#define FLAG_RECEIVED_TM41                  0x109
+#define FLAG_RECEIVED_TM_HIDDEN_POWER                  0x108
+#define FLAG_RECEIVED_TM_TORMENT                  0x109
 #define FLAG_RECEIVED_LAVARIDGE_EGG         0x10A
 #define FLAG_RECEIVED_REVIVED_FOSSIL_MON            0x10B
 #define FLAG_SECRET_BASE_REGISTRY_ENABLED   0x10C
-#define FLAG_RECEIVED_TM46                  0x10D
+#define FLAG_RECEIVED_TM_THIEF                  0x10D
 #define FLAG_CONTEST_SKETCH_CREATED         0x10E
 #define FLAG_EVIL_TEAM_ESCAPED_STERN_SPOKE  0x10F
 #define FLAG_RECEIVED_EXP_SHARE             0x110

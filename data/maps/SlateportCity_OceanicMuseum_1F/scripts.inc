@@ -166,7 +166,7 @@ SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGrunt:: @ 8155C3A
 	giveitem ITEM_TM46_THIEF
 	compare VAR_RESULT, 0
 	goto_if_eq SlateportCity_OceanicMuseum_1F_EventScript_NoRoomForThief
-	setflag FLAG_RECEIVED_TM46
+	setflag FLAG_RECEIVED_TM_THIEF
 	msgbox SlateportCity_OceanicMuseum_1F_Text_YouScrewedUpOurPlans, MSGBOX_DEFAULT
 	closemessage
 	compare VAR_FACING, 2
