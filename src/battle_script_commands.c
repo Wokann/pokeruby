@@ -7559,7 +7559,7 @@ static void Cmd_setsubstitute(void)
     gBattlescriptCurrInstr++;
 }
 
-static bool8 IsMoveUncopyable(u16 move)
+static bool8 IsMoveUncopyableByMimic(u16 move)
 {
     int i;
     for (i = 0; sMovesForbiddenToCopy[i] != 0xFFFE && sMovesForbiddenToCopy[i] != move; i++) {}
@@ -7569,7 +7569,7 @@ static bool8 IsMoveUncopyable(u16 move)
 static void Cmd_mimicattackcopy(void)
 {
     gChosenMove = 0xFFFF;
-    if (IsMoveUncopyable(gLastMoves[gBattlerTarget]) || gBattleMons[gBattlerAttacker].status2 & STATUS2_TRANSFORMED
+    if (IsMoveUncopyableByMimic(gLastMoves[gBattlerTarget]) || gBattleMons[gBattlerAttacker].status2 & STATUS2_TRANSFORMED
         || gLastMoves[gBattlerTarget] == 0 || gLastMoves[gBattlerTarget] == 0xFFFF)
     {
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
@@ -7926,7 +7926,7 @@ static bool8 IsTwoTurnsMove(u16 move)
         return 0;
 }
 
-static bool8 IsMoveUnchoosable(u16 move)
+static bool8 IsInvalidForSleepTalkOrAssist(u16 move)
 {
     if (move == 0 || move == MOVE_SLEEP_TALK || move == MOVE_ASSIST || move == MOVE_MIRROR_MOVE || move == MOVE_METRONOME)
         return 1;
@@ -7956,7 +7956,7 @@ static void Cmd_trychoosesleeptalkmove(void)
 
     for (i = 0; i < 4; i++)
     {
-        if (IsMoveUnchoosable(gBattleMons[gBattlerAttacker].moves[i]) || gBattleMons[gBattlerAttacker].moves[i] == MOVE_FOCUS_PUNCH
+        if (IsInvalidForSleepTalkOrAssist(gBattleMons[gBattlerAttacker].moves[i]) || gBattleMons[gBattlerAttacker].moves[i] == MOVE_FOCUS_PUNCH
             || gBattleMons[gBattlerAttacker].moves[i] == MOVE_UPROAR || IsTwoTurnsMove(gBattleMons[gBattlerAttacker].moves[i]))
                 unusable_moves |= gBitTable[i];
     }
@@ -9055,7 +9055,7 @@ static void Cmd_assistattackselect(void)
             s32 i = 0;
             u16 move = GetMonData(&party[monId], MON_DATA_MOVE1 + moveId);
 
-            if (IsMoveUnchoosable(move))
+            if (IsInvalidForSleepTalkOrAssist(move))
                 continue;
             for (; sMovesForbiddenToCopy[i] != ASSIST_FORBIDDEN_END && move != sMovesForbiddenToCopy[i]; ++i);
             if (sMovesForbiddenToCopy[i] != ASSIST_FORBIDDEN_END || move == MOVE_NONE)
