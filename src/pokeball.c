@@ -732,7 +732,7 @@ static void SpriteCB_ReleaseMonFromBall(struct Sprite *sprite)
         struct Pokemon *mon;
         u16 species;
         s8 pan;
-        u16 wantedCry;
+        u16 wantedCryCase;
         u8 taskId;
 
         if (GetBattlerSide(battler) != B_SIDE_PLAYER)
@@ -762,16 +762,16 @@ static void SpriteCB_ReleaseMonFromBall(struct Sprite *sprite)
         }
 
         if (!IsDoubleBattle() || !gBattleAnimationInfo.introAnimActive)
-            wantedCry = 0;
+            wantedCryCase = 0;
         else if (battler == GetBattlerAtPosition(B_POSITION_PLAYER_LEFT) || battler == GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT))
-            wantedCry = 1;
+            wantedCryCase = 1;
         else
-            wantedCry = 2;
+            wantedCryCase = 2;
 
         taskId = CreateTask(Task_PlayCryWhenReleasedFromBall, 3);
         gTasks[taskId].tCryTaskSpecies = species;
         gTasks[taskId].tCryTaskPan = pan;
-        gTasks[taskId].tCryTaskWantedCry = wantedCry;
+        gTasks[taskId].tCryTaskWantedCry = wantedCryCase;
         gTasks[taskId].tCryTaskState = 0;
     }
 
