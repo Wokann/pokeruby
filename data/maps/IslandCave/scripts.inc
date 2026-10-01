@@ -17,25 +17,25 @@ IslandCave_OnLoad:: @ 815EED4
 	end
 
 IslandCave_EventScript_HideRegiEntrance:: @ 815EEDE
-	setmetatile 7, 19, METATILE_Cave_EntranceCover, 1
-	setmetatile 8, 19, METATILE_Cave_EntranceCover, 1
-	setmetatile 9, 19, METATILE_Cave_EntranceCover, 1
-	setmetatile 7, 20, METATILE_Cave_SealedChamberBraille_Mid, 1
-	setmetatile 8, 20, METATILE_Cave_SealedChamberBraille_Mid, 1
-	setmetatile 9, 20, METATILE_Cave_SealedChamberBraille_Mid, 1
+	setmetatile 7, 19, METATILE_Cave_EntranceCover, TRUE
+	setmetatile 8, 19, METATILE_Cave_EntranceCover, TRUE
+	setmetatile 9, 19, METATILE_Cave_EntranceCover, TRUE
+	setmetatile 7, 20, METATILE_Cave_SealedChamberBraille_Mid, TRUE
+	setmetatile 8, 20, METATILE_Cave_SealedChamberBraille_Mid, TRUE
+	setmetatile 9, 20, METATILE_Cave_SealedChamberBraille_Mid, TRUE
 	return
 
 IslandCave_OnTransition:: @ 815EF15
 	setflag FLAG_LANDMARK_ISLAND_CAVE
 	end
 
-S_OpenRegiceChamber:: @ 815EF19
-	setmetatile 7, 19, METATILE_Cave_SealedChamberEntrance_TopLeft, 1
-	setmetatile 8, 19, METATILE_Cave_SealedChamberEntrance_TopMid, 1
-	setmetatile 9, 19, METATILE_Cave_SealedChamberEntrance_TopRight, 1
-	setmetatile 7, 20, METATILE_Cave_SealedChamberEntrance_BottomLeft, 1
-	setmetatile 8, 20, METATILE_Cave_SealedChamberEntrance_BottomMid, 0
-	setmetatile 9, 20, METATILE_Cave_SealedChamberEntrance_BottomRight, 1
+IslandCave_EventScript_OpenRegiEntrance:: @ 815EF19
+	setmetatile 7, 19, METATILE_Cave_SealedChamberEntrance_TopLeft, TRUE
+	setmetatile 8, 19, METATILE_Cave_SealedChamberEntrance_TopMid, TRUE
+	setmetatile 9, 19, METATILE_Cave_SealedChamberEntrance_TopRight, TRUE
+	setmetatile 7, 20, METATILE_Cave_SealedChamberEntrance_BottomLeft, TRUE
+	setmetatile 8, 20, METATILE_Cave_SealedChamberEntrance_BottomMid, FALSE
+	setmetatile 9, 20, METATILE_Cave_SealedChamberEntrance_BottomRight, TRUE
 	special DrawWholeMapView
 	playse SE_BANG
 	setflag FLAG_SYS_BRAILLE_WAIT
@@ -74,7 +74,7 @@ IslandCave_EventScript_Regice:: @ 815EF9D
 	lock
 	faceplayer
 	waitse
-	playmoncry SPECIES_REGICE, 2
+	playmoncry SPECIES_REGICE, CRY_MODE_ENCOUNTER
 	delay 40
 	waitmoncry
 	setwildbattle SPECIES_REGICE, 40, ITEM_NONE
