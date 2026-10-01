@@ -4401,7 +4401,7 @@ BattleScript_ItemHealHP_Ret:: @ 81D9AA7
 	datahpupdate USER
 	return
 
-BattleScript_MoveSelectionChoiceBanded:: @ 81D9AC2
+BattleScript_SelectingNotAllowedMoveChoiceItem:: @ 81D9AC2
 	printselectionstring BATTLE_TEXT_ChoiceBand
 	endselectionscript
 

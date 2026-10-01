@@ -91,7 +91,7 @@ extern u8 BattleScript_SelectingDisabledMove[];
 extern u8 BattleScript_SelectingTormentedMove[];
 extern u8 BattleScript_SelectingNotAllowedMoveTaunt[];
 extern u8 BattleScript_SelectingImprisonedMove[];
-extern u8 BattleScript_MoveSelectionChoiceBanded[];
+extern u8 BattleScript_SelectingNotAllowedMoveChoiceItem[];
 extern u8 BattleScript_SelectingMoveWithNoPP[];
 extern u8 BattleScript_NoMovesLeft[];
 extern u8 BattleScript_WishComesTrue[];
@@ -506,7 +506,7 @@ u8 TrySetCantSelectMoveBattleScript(void) //msg can't select a move
     {
         gCurrentMove = *choicedMove;
         gLastUsedItem = gBattleMons[gActiveBattler].item;
-        gSelectionBattleScripts[gActiveBattler] = BattleScript_MoveSelectionChoiceBanded;
+        gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingNotAllowedMoveChoiceItem;
         limitations++;
     }
     if (gBattleMons[gActiveBattler].pp[gBattleBufferB[gActiveBattler][2]] == 0)
