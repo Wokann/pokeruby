@@ -147,7 +147,7 @@ struct SpecialStatus
     u32 intimidatedMon:1;
     u32 traced:1;
     u32 ppNotAffectedByPressure:1;
-    u32 flag40:1;
+    u32 faintedHasReplacement:1;
     u32 focusBanded:1;
     s32 dmg;
     s32 physicalDmg;
@@ -182,7 +182,7 @@ struct WishFutureKnock
     u8 wishCounter[MAX_BATTLERS_COUNT];
     u8 wishMonId[MAX_BATTLERS_COUNT];
     u8 weatherDuration;
-    u8 knockedOffPokes[2];
+    u8 knockedOffMons[2];
 };
 
 struct AI_ThinkingStruct /* 0x2016800 */
