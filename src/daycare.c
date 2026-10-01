@@ -408,7 +408,7 @@ static void InheritIVs(struct Pokemon *egg, struct DayCare *daycare)
     u8 i;
     u8 selectedIvs[3];
     u8 availableIVs[NUM_STATS];
-    u8 whichParent[ARRAY_COUNT(selectedIvs)];
+    u8 whichParents[ARRAY_COUNT(selectedIvs)];
     u8 iv;
 
     // Initialize a list of IV indices.
@@ -430,7 +430,7 @@ static void InheritIVs(struct Pokemon *egg, struct DayCare *daycare)
     // Determine which parent each of the selected IVs should inherit from.
     for (i = 0; i < ARRAY_COUNT(selectedIvs); i++)
     {
-        whichParent[i] = Random() % 2;
+        whichParents[i] = Random() % 2;
     }
 
     // Set each of inherited IVs on the egg mon.
@@ -439,27 +439,27 @@ static void InheritIVs(struct Pokemon *egg, struct DayCare *daycare)
         switch (selectedIvs[i])
         {
             case 0:
-                iv = GetBoxMonData(&daycare->mons[whichParent[i]], MON_DATA_HP_IV);
+                iv = GetBoxMonData(&daycare->mons[whichParents[i]], MON_DATA_HP_IV);
                 SetMonData(egg, MON_DATA_HP_IV, &iv);
                 break;
             case 1:
-                iv = GetBoxMonData(&daycare->mons[whichParent[i]], MON_DATA_ATK_IV);
+                iv = GetBoxMonData(&daycare->mons[whichParents[i]], MON_DATA_ATK_IV);
                 SetMonData(egg, MON_DATA_ATK_IV, &iv);
                 break;
             case 2:
-                iv = GetBoxMonData(&daycare->mons[whichParent[i]], MON_DATA_DEF_IV);
+                iv = GetBoxMonData(&daycare->mons[whichParents[i]], MON_DATA_DEF_IV);
                 SetMonData(egg, MON_DATA_DEF_IV, &iv);
                 break;
             case 3:
-                iv = GetBoxMonData(&daycare->mons[whichParent[i]], MON_DATA_SPEED_IV);
+                iv = GetBoxMonData(&daycare->mons[whichParents[i]], MON_DATA_SPEED_IV);
                 SetMonData(egg, MON_DATA_SPEED_IV, &iv);
                 break;
             case 4:
-                iv = GetBoxMonData(&daycare->mons[whichParent[i]], MON_DATA_SPATK_IV);
+                iv = GetBoxMonData(&daycare->mons[whichParents[i]], MON_DATA_SPATK_IV);
                 SetMonData(egg, MON_DATA_SPATK_IV, &iv);
                 break;
             case 5:
-                iv = GetBoxMonData(&daycare->mons[whichParent[i]], MON_DATA_SPDEF_IV);
+                iv = GetBoxMonData(&daycare->mons[whichParents[i]], MON_DATA_SPDEF_IV);
                 SetMonData(egg, MON_DATA_SPDEF_IV, &iv);
                 break;
         }
@@ -655,9 +655,9 @@ static u16 DetermineEggSpeciesAndParentSlots(struct DayCare *daycare, u8 *parent
     // Make Ditto the "mother" slot if the other daycare mon is male.
     if (species[parentSlots[1]] == SPECIES_DITTO && GetBoxMonGender(&daycare->mons[parentSlots[0]]) != MON_FEMALE)
     {
-        u8 temp = parentSlots[1];
+        u8 ditto = parentSlots[1];
         parentSlots[1] = parentSlots[0];
-        parentSlots[0] = temp;
+        parentSlots[0] = ditto;
     }
 
     return eggSpecies;
