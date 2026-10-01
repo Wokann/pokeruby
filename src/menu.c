@@ -59,9 +59,9 @@ void CloseMenu(void)
     Menu_DestroyCursor();
 }
 
-void AppendToList(u8 *list, u8 *pindex, u32 value)
+void AppendToList(u8 *list, u8 *pindex, u32 newEntry)
 {
-    list[*pindex] = value;
+    list[*pindex] = newEntry;
     (*pindex)++;
 }
 
