@@ -21,7 +21,7 @@ extern u8 gSharedMem[];
 // battle etc.
 // This overlaps with so many things it's not even funny
 // The actual data starts at 0x02014000
-#define eMultiTxBuffer                  (*(union MultiBuffers *)gSharedMem)
+#define sBattleMultiBuffer              (*(union MultiBuffers *)gSharedMem)
 #define gBattleStruct                   ((struct BattleStruct *)     (gSharedMem + 0x0))
 // This macro ensures that any changes to the battle struct
 // definition will not horribly break things in battle.
@@ -142,7 +142,7 @@ extern u8 gSharedMem[];
 #define sHofMonPtr                      ((struct HallofFameTeam *)(&gSharedMem[0x1C000]))
 #define sHofPCScreenEffect              (*(struct PCScreenEffectStruct *)(gSharedMem + 0x1c000))
 
-#define eMultiBattleSetupPartySendBuffer \
+#define sMultiPartnerPartyBuffer \
     ((struct Pokemon *)(gSharedMem + 0x1D000))
 
 // pokeblock_feed.c

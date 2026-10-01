@@ -333,14 +333,14 @@ void BufferPartyVsScreenHealth_AtStart(void)
         if (species != SPECIES_EGG && hp == 0)
             flags |= 3 << i * 2;
     }
-    eMultiTxBuffer.linkPartnerHeader.vsScreenHealthFlagsLo = flags;
-    eMultiTxBuffer.linkPartnerHeader.vsScreenHealthFlagsHi = flags >> 8;
+    sBattleMultiBuffer.linkPartnerHeader.vsScreenHealthFlagsLo = flags;
+    sBattleMultiBuffer.linkPartnerHeader.vsScreenHealthFlagsHi = flags >> 8;
 }
 
 static void SetPlayerBerryDataInBattleStruct(void)
 {
     s32 i;
-    struct BattleEnigmaBerry * battleBerry = &eMultiTxBuffer.linkPartnerHeader.battleEnigmaBerry;
+    struct BattleEnigmaBerry * battleBerry = &sBattleMultiBuffer.linkPartnerHeader.battleEnigmaBerry;
 
     for (i = 0; i < 7; i++)
         battleBerry->name[i] = gSaveBlock1.enigmaBerry.berry.name[i];
@@ -432,8 +432,8 @@ void CB2_HandleStartBattle(void)
         {
             if (gReceivedRemoteLinkPlayers != 0 && IsLinkTaskFinished())
             {
-                eMultiTxBuffer.linkPartnerHeader.versionSignatureLo = 1;
-                eMultiTxBuffer.linkPartnerHeader.versionSignatureHi = 1;
+                sBattleMultiBuffer.linkPartnerHeader.versionSignatureLo = 1;
+                sBattleMultiBuffer.linkPartnerHeader.versionSignatureHi = 1;
                 BufferPartyVsScreenHealth_AtStart();
                 SetPlayerBerryDataInBattleStruct();
 #if DEBUG
@@ -446,7 +446,7 @@ void CB2_HandleStartBattle(void)
                     }
                 }
 #endif
-                SendBlock(BitmaskAllOtherLinkPlayers(), &eMultiTxBuffer.linkPartnerHeader, sizeof(eMultiTxBuffer.linkPartnerHeader));
+                SendBlock(BitmaskAllOtherLinkPlayers(), &sBattleMultiBuffer.linkPartnerHeader, sizeof(sBattleMultiBuffer.linkPartnerHeader));
                 gBattleCommunication[0] = 1;
             }
         }
@@ -501,7 +501,7 @@ void CB2_HandleStartBattle(void)
             gTasks[taskId].data[1] = 0x10E;
             gTasks[taskId].data[2] = 0x5A;
             gTasks[taskId].data[5] = 0;
-            gTasks[taskId].data[3] = eMultiTxBuffer.linkPartnerHeader.vsScreenHealthFlagsLo | (eMultiTxBuffer.linkPartnerHeader.vsScreenHealthFlagsHi << 8);
+            gTasks[taskId].data[3] = sBattleMultiBuffer.linkPartnerHeader.vsScreenHealthFlagsLo | (sBattleMultiBuffer.linkPartnerHeader.vsScreenHealthFlagsHi << 8);
             gTasks[taskId].data[4] = gBlockRecvBuffer[enemyId][1];
             gBattleCommunication[0]++;
         }
@@ -601,7 +601,7 @@ void PrepareOwnMultiPartnerBuffer(void)
         if (gMultiPartnerParty[i].language != 1)
             PadNameString(nickname, 0);
     }
-    memcpy(eMultiTxBuffer.multiBattleMons, gMultiPartnerParty, 3 * sizeof(struct MultiBattlePokemonTx));
+    memcpy(sBattleMultiBuffer.multiBattleMons, gMultiPartnerParty, 3 * sizeof(struct MultiBattlePokemonTx));
 }
 
 void CB2_PreInitMultiBattle(void)
@@ -638,7 +638,7 @@ void CB2_PreInitMultiBattle(void)
             if (IsLinkTaskFinished())
             {
                 PrepareOwnMultiPartnerBuffer();
-                SendBlock(BitmaskAllOtherLinkPlayers(), eMultiTxBuffer.multiBattleMons, 3 * sizeof(struct MultiBattlePokemonTx));
+                SendBlock(BitmaskAllOtherLinkPlayers(), sBattleMultiBuffer.multiBattleMons, 3 * sizeof(struct MultiBattlePokemonTx));
                 gBattleCommunication[0]++;
             }
         }
@@ -710,11 +710,11 @@ void CB2_HandleStartMultiBattle(void)
 #endif
             if (IsLinkTaskFinished())
             {
-                *(&eMultiTxBuffer.linkPartnerHeader.versionSignatureLo) = 1;
-                *(&eMultiTxBuffer.linkPartnerHeader.versionSignatureHi) = 1;
+                *(&sBattleMultiBuffer.linkPartnerHeader.versionSignatureLo) = 1;
+                *(&sBattleMultiBuffer.linkPartnerHeader.versionSignatureHi) = 1;
                 BufferPartyVsScreenHealth_AtStart();
                 SetPlayerBerryDataInBattleStruct();
-                SendBlock(BitmaskAllOtherLinkPlayers(), &eMultiTxBuffer.linkPartnerHeader, sizeof(eMultiTxBuffer.linkPartnerHeader));
+                SendBlock(BitmaskAllOtherLinkPlayers(), &sBattleMultiBuffer.linkPartnerHeader, sizeof(sBattleMultiBuffer.linkPartnerHeader));
                 gBattleCommunication[0]++;
             }
         }
@@ -770,7 +770,7 @@ void CB2_HandleStartMultiBattle(void)
                 }
             }
             SetAllPlayersBerryData();
-            memcpy(eMultiBattleSetupPartySendBuffer, gPlayerParty, sizeof(struct Pokemon) * 3);
+            memcpy(sMultiPartnerPartyBuffer, gPlayerParty, sizeof(struct Pokemon) * 3);
             taskId = CreateTask(InitLinkBattleVsScreen, 0);
             gTasks[taskId].data[1] = 270;
             gTasks[taskId].data[2] = 90;
@@ -802,7 +802,7 @@ void CB2_HandleStartMultiBattle(void)
     case 2:
             if (IsLinkTaskFinished())
             {
-                SendBlock(BitmaskAllOtherLinkPlayers(), eMultiBattleSetupPartySendBuffer, sizeof(struct Pokemon) * 2);
+                SendBlock(BitmaskAllOtherLinkPlayers(), sMultiPartnerPartyBuffer, sizeof(struct Pokemon) * 2);
                 gBattleCommunication[0]++;
             }
 	}
@@ -866,7 +866,7 @@ void CB2_HandleStartMultiBattle(void)
     case 4:
         if (IsLinkTaskFinished())
         {
-            SendBlock(BitmaskAllOtherLinkPlayers(), eMultiBattleSetupPartySendBuffer + 2, sizeof(struct Pokemon));
+            SendBlock(BitmaskAllOtherLinkPlayers(), sMultiPartnerPartyBuffer + 2, sizeof(struct Pokemon));
             gBattleCommunication[0]++;
         }
         break;
