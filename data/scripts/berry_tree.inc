@@ -1,13 +1,13 @@
 BerryTreeScript:: @ 81A14DD
 	special ObjectEventInteractionGetBerryTreeData
 	switch VAR_0x8004
-	case 255, BerryTree_EventScript_Sparkling
-	case 0, BerryTree_EventScript_CheckSoil
-	case 1, BerryTree_EventScript_CheckBerryStage1
-	case 2, BerryTree_EventScript_CheckBerryStage2
-	case 3, BerryTree_EventScript_CheckBerryStage3
-	case 4, BerryTree_EventScript_CheckBerryStage4
-	case 5, BerryTree_EventScript_CheckBerryFullyGrown
+	case BERRY_STAGE_SPARKLING, BerryTree_EventScript_Sparkling
+	case BERRY_STAGE_NO_BERRY, BerryTree_EventScript_CheckSoil
+	case BERRY_STAGE_PLANTED, BerryTree_EventScript_CheckBerryStage1
+	case BERRY_STAGE_SPROUTED, BerryTree_EventScript_CheckBerryStage2
+	case BERRY_STAGE_TALLER, BerryTree_EventScript_CheckBerryStage3
+	case BERRY_STAGE_FLOWERING, BerryTree_EventScript_CheckBerryStage4
+	case BERRY_STAGE_BERRIES, BerryTree_EventScript_CheckBerryFullyGrown
 	end
 
 BerryTree_EventScript_Sparkling:: @ 81A1533
@@ -22,7 +22,7 @@ BerryTree_EventScript_CheckSoil:: @ 81A153D
 	lock
 	faceplayer
 	specialvar VAR_RESULT, PlayerHasBerries
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq BerryTree_EventScript_WantToPlant
 	message BerryTree_Text_ItsSoftLoamySoil
 	waitmessage
@@ -81,23 +81,25 @@ BerryTree_EventScript_CheckBerryStage4:: @ 81A15BC
 	goto BerryTree_EventScript_WantToWater
 
 BerryTree_EventScript_GetCareAdverb:: @ 81A15CE
-	compare VAR_0x8005, 0
+	@ VAR_0x8005 is the number of times watered.
+	compare VAR_0x8005, FALSE
 	goto_if_eq BerryTree_EventScript_SetAdverbPoor
 	compare VAR_0x8005, 4
 	goto_if_eq BerryTree_EventScript_SetAdverbGreat
-	bufferstring 1, BerryTree_Text_CareAdverbGood
+	bufferstring STR_VAR_2, BerryTree_Text_CareAdverbGood
 	return
 
 BerryTree_EventScript_SetAdverbGreat:: @ 81A15EB
-	bufferstring 1, BerryTree_Text_CareAdverbGreat
+	bufferstring STR_VAR_2, BerryTree_Text_CareAdverbGreat
 	return
 
 BerryTree_EventScript_SetAdverbPoor:: @ 81A15F2
-	bufferstring 1, BerryTree_Text_CareAdverbPoor
+	bufferstring STR_VAR_2, BerryTree_Text_CareAdverbPoor
 	return
 
 BerryTree_EventScript_CheckBerryFullyGrown:: @ 81A15F9
-	buffernumberstring 1, VAR_0x8006
+	@ VAR_0x8006 is the number of berries.
+	buffernumberstring STR_VAR_2, VAR_0x8006
 	lock
 	faceplayer
 	msgbox BerryTree_Text_WantToPick, MSGBOX_YESNO
@@ -145,7 +147,7 @@ BerryTree_EventScript_ItemUsePlantBerry:: @ 81A1654
 
 BerryTree_EventScript_WantToWater:: @ 81A165F
 	checkitem ITEM_WAILMER_PAIL, 1
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq BerryTree_EventScript_DontWater
 	msgbox BerryTree_Text_WantToWater, MSGBOX_YESNO
 	compare VAR_RESULT, YES
