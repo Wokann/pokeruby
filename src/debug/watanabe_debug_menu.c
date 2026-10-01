@@ -2772,7 +2772,7 @@ void Task_WatanabeDebugLoadPokemonGraphics(u8 taskId)
 
     gWatanabeGraphicsBrowserState->iconSpriteId = CreateMonIcon(gWatanabeGraphicsBrowserState->graphicsId, SpriteCB_MonIcon, 0x68, 0x2C, 0, 0);
 
-    PrintFootprint(SpeciesToNationalPokedexNum(gWatanabeGraphicsBrowserState->graphicsId), 2, 0x3fc);
+    DrawFootprint(SpeciesToNationalPokedexNum(gWatanabeGraphicsBrowserState->graphicsId), 2, 0x3fc);
 
     ((u16 *)(VRAM + 0xF858))[0] = 0xF3FC;
     ((u16 *)(VRAM + 0xF858))[1] = 0xF3FD;

@@ -125,7 +125,7 @@ static void Task_DiplomaFadeOut(u8 taskId)
 
 static void DisplayDiplomaText(void)
 {
-    if (CompletedNationalPokedex())
+    if (HasAllMons())
     {
         REG_BG3HOFS = 256;
         StringCopy(gStringVar1, gOtherText_NationalDex);

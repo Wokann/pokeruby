@@ -1283,8 +1283,8 @@ static u8 PrintCryScreenSpeciesName(u16 dexNum, u8 left, u8 top, u8 color);
 static void UnusedPrintMonName(const u8 *name, u8, u8);
 static void PrintMonHeight(u16 height, u8 left, u8 top);
 static void PrintMonWeight(u16 weight, u8 left, u8 top);
-void PrintFootprint(u16 dexNum, u16 charBase, u16 tileOffset);
-static void DrawPokedexDescriptionPageIndicator(u16 screenBase, u16 tileOffset);
+void DrawFootprint(u16 dexNum, u16 charBase, u16 tileOffset);
+static void RS_DrawFootprint(u16 screenBase, u16 tileOffset);
 static u16 GetNextPosition(u8 direction, u16 position, u16 min, u16 max);
 u16 CreateMonSpriteFromNationalDexNumber(u16 dexNum, s16 x, s16 y, u16 paletteNum);
 static void Task_LoadSearchMenu(u8 taskId);
@@ -2949,7 +2949,7 @@ static void Task_LoadInfoScreen(u8 taskId)
     case 1:
         LZ77UnCompVram(gPokedexMenu_Gfx, (void *)VRAM);
         LZ77UnCompVram(gPokedexInfoScreen_Tilemap, (void *)(VRAM + 0x7800));
-        PrintFootprint(sPokedexListItem->dexNum, 2, 0x3FC);
+        DrawFootprint(sPokedexListItem->dexNum, 2, 0x3FC);
         gMain.state++;
         break;
     case 2:
@@ -2978,7 +2978,7 @@ static void Task_LoadInfoScreen(u8 taskId)
             PrintMonHeight(gPokedexEntries[sPokedexListItem->dexNum].height, 16, 7);
             PrintMonWeight(gPokedexEntries[sPokedexListItem->dexNum].weight, 16, 9);
             Menu_PrintText(gPokedexEntries[sPokedexListItem->dexNum].descriptionPage1, 2, 13);
-            DrawPokedexDescriptionPageIndicator(14, 0x3FC);
+            RS_DrawFootprint(14, 0x3FC);
         }
         else
         {
@@ -3860,7 +3860,7 @@ static void Task_DisplayCaughtMonDexPage(u8 taskId)
             temp += 0x2000;
             *(u16 *)(BG_VRAM + 0x7800 + 2 * i) = temp;
         }
-        PrintFootprint(gTasks[taskId].tDexNum, 2, 0x3FC);
+        DrawFootprint(gTasks[taskId].tDexNum, 2, 0x3FC);
         ResetPaletteFade();
         LoadPalette(gPokedexBgHoenn_Pal + 1, 0x21, 0x9E);
         gTasks[taskId].tState++;
@@ -3885,7 +3885,7 @@ static void Task_DisplayCaughtMonDexPage(u8 taskId)
         PrintMonHeight(gPokedexEntries[dexNum].height, 16, 7);
         PrintMonWeight(gPokedexEntries[dexNum].weight, 16, 9);
         Menu_PrintText(gPokedexEntries[dexNum].descriptionPage1, 2, 13);
-        DrawPokedexDescriptionPageIndicator(14, 0x3FC);
+        RS_DrawFootprint(14, 0x3FC);
         gTasks[taskId].tState++;
         break;
     case 4:
@@ -4156,7 +4156,7 @@ bool8 HasAllHoennMons(void)
     return TRUE;
 }
 
-bool16 CompletedNationalPokedex(void)
+bool16 HasAllMons(void)
 {
     u16 i;
 
@@ -4500,7 +4500,7 @@ static void PrintMonWeight(u16 weight, u8 left, u8 top)
 }
 #endif
 
-void PrintFootprint(u16 dexNum, u16 charBase, u16 tileOffset)
+void DrawFootprint(u16 dexNum, u16 charBase, u16 tileOffset)
 {
     u8 tileData[0x80];
     u16 i, j, tileIndex;
@@ -4527,7 +4527,7 @@ void PrintFootprint(u16 dexNum, u16 charBase, u16 tileOffset)
     CpuCopy16((void*)tileData, (void *)(BG_VRAM + charBase * 0x4000 + tileOffset * 0x20), 0x80);
 }
 
-static void DrawPokedexDescriptionPageIndicator(u16 screenBase, u16 tileOffset)
+static void RS_DrawFootprint(u16 screenBase, u16 tileOffset)
 {
     *(u16 *)(BG_VRAM + screenBase * 0x800 + 0x232) = 0xF000 + tileOffset + 0;
     *(u16 *)(BG_VRAM + screenBase * 0x800 + 0x234) = 0xF000 + tileOffset + 1;
