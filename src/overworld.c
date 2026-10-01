@@ -875,7 +875,7 @@ u16 GetCurrLocationDefaultMusic(void)
         return MUS_ROUTE111;
 
     music = GetLocationMusic(&gSaveBlock1.location);
-    if (music != 0x7FFF)
+    if (music != MUS_ROUTE118)
     {
         return music;
     }
@@ -891,7 +891,7 @@ u16 GetCurrLocationDefaultMusic(void)
 u16 GetWarpDestinationMusic(void)
 {
     u16 music = GetLocationMusic(&gWarpDestination);
-    if (music != 0x7FFF)
+    if (music != MUS_ROUTE118)
     {
         return music;
     }
