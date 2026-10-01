@@ -126,7 +126,7 @@ void PartyMenuTryGiveMonHeldItem(u8 taskId, u16 newItem, TaskFunc followupCallba
 void SetMonIconSpriteId(u8 taskId, u8 monIndex, u8 spriteId);
 void CreatePartyMenuHeldItemIcon(u8 taskId, u8 monIndex, u16 item);
 void CreatePartyMenuHeldItemIcons(u8 taskId);
-void DrawHeldItemIconsForTrade(u8 *partyCounts, u8 *partySpriteIds, u8 side);
+void DrawHeldItemIconsForTrade(u8 *partyCounts, u8 *partySpriteIds, u8 whichParty);
 void SetHeldItemIconVisibility(u8 taskId, u8 monIndex);
 void PartyMenuDoPrintMonNickname(u8 monIndex, int menuLayout, const u8 *nameBuffer);
 void PrintPartyMenuMonNickname(u8 monIndex, u8 menuLayout, struct Pokemon *pokemon);

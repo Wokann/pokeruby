@@ -2346,43 +2346,43 @@ void LoadHeldItemIconGraphics(void)
 
 void SpriteCB_HeldItem(struct Sprite *sprite)
 {
-    u8 data7 = sprite->data[7];
+    u8 otherSpriteId = sprite->data[7];
 
-    if (gSprites[data7].invisible)
+    if (gSprites[otherSpriteId].invisible)
     {
         sprite->invisible = TRUE;
     }
     else
     {
         sprite->invisible = FALSE;
-        sprite->x = gSprites[data7].x + gSprites[data7].x2;
-        sprite->y = gSprites[data7].y + gSprites[data7].y2;
+        sprite->x = gSprites[otherSpriteId].x + gSprites[otherSpriteId].x2;
+        sprite->y = gSprites[otherSpriteId].y + gSprites[otherSpriteId].y2;
     }
 }
 
 void CreateHeldItemSpriteForTrade(u8 monIconSpriteId, u8 isMail)
 {
-    u8 subPriority;
-    u8 spriteId;
+    u8 subpriority;
+    u8 newSpriteId;
 
-    subPriority = gSprites[monIconSpriteId].subpriority;
-    spriteId = CreateSprite(&sSpriteTemplate_HeldItemIcon, 0xFA, 0xAA, subPriority - 1);
+    subpriority = gSprites[monIconSpriteId].subpriority;
+    newSpriteId = CreateSprite(&sSpriteTemplate_HeldItemIcon, 0xFA, 0xAA, subpriority - 1);
 
-    gSprites[spriteId].x2 = 4;
-    gSprites[spriteId].y2 = 10;
-    gSprites[spriteId].callback = SpriteCB_HeldItem;
-    gSprites[spriteId].data[7] = monIconSpriteId;
+    gSprites[newSpriteId].x2 = 4;
+    gSprites[newSpriteId].y2 = 10;
+    gSprites[newSpriteId].callback = SpriteCB_HeldItem;
+    gSprites[newSpriteId].data[7] = monIconSpriteId;
 
-    StartSpriteAnim(&gSprites[spriteId], isMail);
-    gSprites[spriteId].callback(&gSprites[spriteId]);
+    StartSpriteAnim(&gSprites[newSpriteId], isMail);
+    gSprites[newSpriteId].callback(&gSprites[newSpriteId]);
 }
 
-void DrawHeldItemIconsForTrade(u8 *partyCounts, u8 *partySpriteIds, u8 side)
+void DrawHeldItemIconsForTrade(u8 *partyCounts, u8 *partySpriteIds, u8 whichParty)
 {
     u16 i;
     u16 heldItem;
 
-    switch (side)
+    switch (whichParty)
     {
     case 0:
         for (i = 0; i < partyCounts[0]; i++)
