@@ -1927,7 +1927,7 @@ bool8 IsBattlerSpriteVisible(u8 battler)
 
 void MoveBattlerSpriteToBG(u8 battler, u8 toBG_2)
 {
-    u8 spriteId;
+    u8 battlerSpriteId;
 
     if (toBG_2 == 0)
     {
@@ -1945,11 +1945,11 @@ void MoveBattlerSpriteToBG(u8 battler, u8 toBG_2)
         REG_BG1CNT_BITFIELD.screenSize = 1;
         REG_BG1CNT_BITFIELD.areaOverflowMode = 0;
 
-        spriteId = gBattlerSpriteIds[battler];
-        gBattle_BG1_X = -(gSprites[spriteId].x + gSprites[spriteId].x2) + 32;
+        battlerSpriteId = gBattlerSpriteIds[battler];
+        gBattle_BG1_X = -(gSprites[battlerSpriteId].x + gSprites[battlerSpriteId].x2) + 32;
         if (IsContest() && IsSpeciesNotUnown(gContestResources__moveAnim.species) != 0)
             gBattle_BG1_X--;
-        gBattle_BG1_Y = -(gSprites[spriteId].y + gSprites[spriteId].y2) + 32;
+        gBattle_BG1_Y = -(gSprites[battlerSpriteId].y + gSprites[battlerSpriteId].y2) + 32;
         gSprites[gBattlerSpriteIds[battler]].invisible = TRUE;
 
         REG_BG1HOFS = gBattle_BG1_X;
@@ -1979,9 +1979,9 @@ void MoveBattlerSpriteToBG(u8 battler, u8 toBG_2)
         REG_BG2CNT_BITFIELD.screenSize = 1;
         REG_BG2CNT_BITFIELD.areaOverflowMode = 0;
 
-        spriteId = gBattlerSpriteIds[battler];
-        gBattle_BG2_X = -(gSprites[spriteId].x + gSprites[spriteId].x2) + 32;
-        gBattle_BG2_Y = -(gSprites[spriteId].y + gSprites[spriteId].y2) + 32;
+        battlerSpriteId = gBattlerSpriteIds[battler];
+        gBattle_BG2_X = -(gSprites[battlerSpriteId].x + gSprites[battlerSpriteId].x2) + 32;
+        gBattle_BG2_Y = -(gSprites[battlerSpriteId].y + gSprites[battlerSpriteId].y2) + 32;
         gSprites[gBattlerSpriteIds[battler]].invisible = TRUE;
 
         REG_BG2HOFS = gBattle_BG2_X;
@@ -2625,13 +2625,13 @@ s16 CalculatePanIncrement(s16 sourcePan, s16 targetPan, s16 incrementPan)
 
 static void Cmd_playsewithpan(void)
 {
-    u16 soundId;
+    u16 songId;
     s8 pan;
 
     sBattleAnimScriptPtr++;
-    soundId = T1_READ_16(sBattleAnimScriptPtr);
+    songId = T1_READ_16(sBattleAnimScriptPtr);
     pan = T1_READ_8(sBattleAnimScriptPtr + 2);
-    PlaySE12WithPanning(soundId, BattleAnimAdjustPanning(pan));
+    PlaySE12WithPanning(songId, BattleAnimAdjustPanning(pan));
     sBattleAnimScriptPtr += 3;
 }
 
