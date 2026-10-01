@@ -555,6 +555,7 @@ gTilesetTiles_CableClub:: @ 822EFA8
 
 	.align 2
 
+gTilesetTiles_UnknownCableClub::
 	.incbin "data/tilesets/secondary/cable_club/unknown_tiles.4bpp"
 
 	.align 2
@@ -1389,6 +1390,7 @@ gTilesetTiles_SecretBase:: @ 824FE78
 
 	.align 2
 
+gTilesetTiles_UnknownSecretBase::
 	.incbin "data/tilesets/primary/secret_base/unknown_tiles.4bpp"
 
 	.align 2
