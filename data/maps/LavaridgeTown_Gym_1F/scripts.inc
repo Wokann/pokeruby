@@ -8,29 +8,29 @@ LavaridgeTown_Gym_1F_OnTransition:: @ 8153694
 	end
 
 LavaridgeTown_Gym_1F_EventScript_SetTrainerTempVars:: @ 815369F
-	setvar VAR_TEMP_B, 0
-	setvar VAR_TEMP_C, 0
-	setvar VAR_TEMP_D, 0
-	setvar VAR_TEMP_E, 0
-	setvar VAR_TEMP_F, 0
+	setvar VAR_TEMP_B, FALSE
+	setvar VAR_TEMP_C, FALSE
+	setvar VAR_TEMP_D, FALSE
+	setvar VAR_TEMP_E, FALSE
+	setvar VAR_TEMP_F, FALSE
 	goto_if_defeated TRAINER_COLE, LavaridgeTown_Gym_1F_EventScript_SetZaneTempVar
-	setvar VAR_TEMP_B, 1
+	setvar VAR_TEMP_B, TRUE
 
 LavaridgeTown_Gym_1F_EventScript_SetZaneTempVar:: @ 81536C6
 	goto_if_defeated TRAINER_ZANE, LavaridgeTown_Gym_1F_EventScript_SetAxleTempVar
-	setvar VAR_TEMP_C, 1
+	setvar VAR_TEMP_C, TRUE
 
 LavaridgeTown_Gym_1F_EventScript_SetAxleTempVar:: @ 81536D4
 	goto_if_defeated TRAINER_AXLE, LavaridgeTown_Gym_1F_EventScript_SetSadieTempVar
-	setvar VAR_TEMP_D, 1
+	setvar VAR_TEMP_D, TRUE
 
 LavaridgeTown_Gym_1F_EventScript_SetSadieTempVar:: @ 81536E2
 	goto_if_defeated TRAINER_SADIE, LavaridgeTown_Gym_1F_EventScript_SetAndyTempVar
-	setvar VAR_TEMP_E, 1
+	setvar VAR_TEMP_E, TRUE
 
 LavaridgeTown_Gym_1F_EventScript_SetAndyTempVar:: @ 81536F0
 	goto_if_defeated TRAINER_ANDY, LavaridgeTown_Gym_1F_EventScript_EndSetTrainerTempVars
-	setvar VAR_TEMP_F, 1
+	setvar VAR_TEMP_F, TRUE
 
 LavaridgeTown_Gym_1F_EventScript_EndSetTrainerTempVars:: @ 81536FE
 	return
