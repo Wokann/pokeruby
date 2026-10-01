@@ -247,16 +247,16 @@ static void DrawMetatileAt(const struct MapLayout *mapLayout, u16 offset, int x,
     DrawMetatile(MapGridGetMetatileLayerTypeAt(x, y), metatiles + metatileId * NUM_TILES_PER_METATILE, offset);
 }
 
-static void DrawMetatile(s32 metatileLayerType, const u16 *metatiles, u16 offset)
+static void DrawMetatile(s32 metatileLayerType, const u16 *tiles, u16 offset)
 {
     switch (metatileLayerType)
     {
     case METATILE_LAYER_TYPE_SPLIT:
         // Draw metatile's bottom layer to the bottom background layer.
-        gBGTilemapBuffers[3][offset] = metatiles[0];
-        gBGTilemapBuffers[3][offset + 1] = metatiles[1];
-        gBGTilemapBuffers[3][offset + 0x20] = metatiles[2];
-        gBGTilemapBuffers[3][offset + 0x21] = metatiles[3];
+        gBGTilemapBuffers[3][offset] = tiles[0];
+        gBGTilemapBuffers[3][offset + 1] = tiles[1];
+        gBGTilemapBuffers[3][offset + 0x20] = tiles[2];
+        gBGTilemapBuffers[3][offset + 0x21] = tiles[3];
 
         // Draw transparent tiles to the middle background layer.
         gBGTilemapBuffers[2][offset] = 0;
@@ -265,23 +265,23 @@ static void DrawMetatile(s32 metatileLayerType, const u16 *metatiles, u16 offset
         gBGTilemapBuffers[2][offset + 0x21] = 0;
 
         // Draw metatile's top layer to the top background layer.
-        gBGTilemapBuffers[1][offset] = metatiles[4];
-        gBGTilemapBuffers[1][offset + 1] = metatiles[5];
-        gBGTilemapBuffers[1][offset + 0x20] = metatiles[6];
-        gBGTilemapBuffers[1][offset + 0x21] = metatiles[7];
+        gBGTilemapBuffers[1][offset] = tiles[4];
+        gBGTilemapBuffers[1][offset + 1] = tiles[5];
+        gBGTilemapBuffers[1][offset + 0x20] = tiles[6];
+        gBGTilemapBuffers[1][offset + 0x21] = tiles[7];
         break;
     case METATILE_LAYER_TYPE_COVERED:
         // Draw metatile's bottom layer to the bottom background layer.
-        gBGTilemapBuffers[3][offset] = metatiles[0];
-        gBGTilemapBuffers[3][offset + 1] = metatiles[1];
-        gBGTilemapBuffers[3][offset + 0x20] = metatiles[2];
-        gBGTilemapBuffers[3][offset + 0x21] = metatiles[3];
+        gBGTilemapBuffers[3][offset] = tiles[0];
+        gBGTilemapBuffers[3][offset + 1] = tiles[1];
+        gBGTilemapBuffers[3][offset + 0x20] = tiles[2];
+        gBGTilemapBuffers[3][offset + 0x21] = tiles[3];
 
         // Draw metatile's top layer to the middle background layer.
-        gBGTilemapBuffers[2][offset] = metatiles[4];
-        gBGTilemapBuffers[2][offset + 1] = metatiles[5];
-        gBGTilemapBuffers[2][offset + 0x20] = metatiles[6];
-        gBGTilemapBuffers[2][offset + 0x21] = metatiles[7];
+        gBGTilemapBuffers[2][offset] = tiles[4];
+        gBGTilemapBuffers[2][offset + 1] = tiles[5];
+        gBGTilemapBuffers[2][offset + 0x20] = tiles[6];
+        gBGTilemapBuffers[2][offset + 0x21] = tiles[7];
 
         // Draw transparent tiles to the top background layer.
         gBGTilemapBuffers[1][offset] = 0;
@@ -297,16 +297,16 @@ static void DrawMetatile(s32 metatileLayerType, const u16 *metatiles, u16 offset
         gBGTilemapBuffers[3][offset + 0x21] = 0x3014;
 
         // Draw metatile's bottom layer to the middle background layer.
-        gBGTilemapBuffers[2][offset] = metatiles[0];
-        gBGTilemapBuffers[2][offset + 1] = metatiles[1];
-        gBGTilemapBuffers[2][offset + 0x20] = metatiles[2];
-        gBGTilemapBuffers[2][offset + 0x21] = metatiles[3];
+        gBGTilemapBuffers[2][offset] = tiles[0];
+        gBGTilemapBuffers[2][offset + 1] = tiles[1];
+        gBGTilemapBuffers[2][offset + 0x20] = tiles[2];
+        gBGTilemapBuffers[2][offset + 0x21] = tiles[3];
 
         // Draw metatile's top layer to the top background layer, which covers object event sprites.
-        gBGTilemapBuffers[1][offset] = metatiles[4];
-        gBGTilemapBuffers[1][offset + 1] = metatiles[5];
-        gBGTilemapBuffers[1][offset + 0x20] = metatiles[6];
-        gBGTilemapBuffers[1][offset + 0x21] = metatiles[7];
+        gBGTilemapBuffers[1][offset] = tiles[4];
+        gBGTilemapBuffers[1][offset + 1] = tiles[5];
+        gBGTilemapBuffers[1][offset + 0x20] = tiles[6];
+        gBGTilemapBuffers[1][offset + 0x21] = tiles[7];
         break;
     }
 }
