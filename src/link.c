@@ -78,7 +78,7 @@ static void LinkCB_ReadyCloseLinkWithJP(void);
 static void LinkCB_Standby(void);
 static void LinkCB_StandbyForAll(void);
 
-static void CheckErrorStatus(void);
+static void TrySetLinkErrorBuffer(void);
 void CB2_PrintErrorMessage(void);
 static u8 IsSioMultiMaster(void);
 static void DisableSerial(void);
@@ -452,7 +452,7 @@ u16 LinkMain2(u16 *heldKeys)
         ProcessRecvCmds(SIO_MULTI_CNT->id);
         if (gLinkCallback)
             gLinkCallback();
-        CheckErrorStatus();
+        TrySetLinkErrorBuffer();
     }
 
     return gLinkStatus;
@@ -1258,7 +1258,7 @@ static void LinkCB_StandbyForAll(void)
     }
 }
 
-static void CheckErrorStatus(void)
+static void TrySetLinkErrorBuffer(void)
 {
     if (gLinkOpen)
     {
