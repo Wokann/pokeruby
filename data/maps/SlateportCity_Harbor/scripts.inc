@@ -3,7 +3,7 @@ SlateportCity_Harbor_MapScripts:: @ 8155F5D
 	.byte 0
 
 SlateportCity_Harbor_OnTransition:: @ 8155F63
-	setescapewarp MAP_SLATEPORT_CITY, 255, 28, 13
+	setescapewarp MAP_SLATEPORT_CITY, WARP_ID_NONE, 28, 13
 	setvar VAR_TEMP_1, 0
 	compare VAR_SLATEPORT_HARBOR_STATE, 1
 	call_if_eq SlateportCity_Harbor_EventScript_ReadyEvilTeamEscapeScene
@@ -174,7 +174,7 @@ SlateportCity_Harbor_EventScript_AskForTicket:: @ 81560D9
 	end
 
 SlateportCity_Harbor_EventScript_ChooseDestination:: @ 81560FD
-	multichoicedefault 18, 6, MULTI_SSTIDAL_SLATEPORT_WITH_BATTLE_TOWER, 2, 0
+	multichoicedefault 18, 6, MULTI_SSTIDAL_SLATEPORT_WITH_BATTLE_TOWER, 2, FALSE
 	switch VAR_RESULT
 	case 0, SlateportCity_Harbor_EventScript_Lilycove
 	case 1, SlateportCity_Harbor_EventScript_BattleTower
@@ -193,7 +193,7 @@ SlateportCity_Harbor_EventScript_Lilycove:: @ 815613F
 	goto_if_eq SlateportCity_Harbor_EventScript_ChooseNewDestination
 	setvar VAR_SS_TIDAL_STATE, SS_TIDAL_BOARD_SLATEPORT
 	call SlateportCity_Harbor_EventScript_BoardFerry
-	warp MAP_SS_TIDAL_CORRIDOR, 255, 1, 10
+	warp MAP_SS_TIDAL_CORRIDOR, WARP_ID_NONE, 1, 10
 	waitstate
 	release
 	end
@@ -203,7 +203,7 @@ SlateportCity_Harbor_EventScript_BattleTower:: @ 8156167
 	compare VAR_RESULT, NO
 	goto_if_eq SlateportCity_Harbor_EventScript_ChooseNewDestination
 	call SlateportCity_Harbor_EventScript_BoardFerry
-	warp MAP_BATTLE_TOWER_OUTSIDE, 255, 19, 23
+	warp MAP_BATTLE_TOWER_OUTSIDE, WARP_ID_NONE, 19, 23
 	waitstate
 	release
 	end
@@ -317,7 +317,7 @@ SlateportCity_Harbor_EventScript_AskToTradeScanner:: @ 81562A7
 	end
 
 SlateportCity_Harbor_EventScript_ChooseScannerTrade:: @ 81562B3
-	multichoice 0, 0, MULTI_STERN_DEEPSEA, 0
+	multichoice 0, 0, MULTI_STERN_DEEPSEA, FALSE
 	switch VAR_RESULT
 	case 0, SlateportCity_Harbor_EventScript_DeepSeaTooth
 	case 1, SlateportCity_Harbor_EventScript_DeepSeaScale
