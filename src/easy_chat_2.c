@@ -2096,20 +2096,20 @@ bool8 IsEasyChatGroupUnlocked(u8 group)
     }
 }
 
-bool8 IsEasyChatIndexAndGroupUnlocked(u8 group, u16 word)
+bool8 IsEasyChatIndexAndGroupUnlocked(u8 groupId, u16 wordIndex)
 {
-    switch (group)
+    switch (groupId)
     {
     case EC_GROUP_TRENDY_SAYING:
-        if (gEasyChatScreen->alphabetGroupIds[2][11 + group] == 0)
+        if (gEasyChatScreen->alphabetGroupIds[2][11 + groupId] == 0)
             return FALSE;
-        return IsTrendySayingUnlocked(word);
+        return IsTrendySayingUnlocked(wordIndex);
     case EC_GROUP_POKEMON:
-        return GetSetPokedexFlag(SpeciesToNationalPokedexNum(word), 0);
+        return GetSetPokedexFlag(SpeciesToNationalPokedexNum(wordIndex), 0);
     case EC_GROUP_EVENTS:
     case EC_GROUP_MOVE_1:
     case EC_GROUP_MOVE_2:
-        if (gEasyChatScreen->alphabetGroupIds[2][11 + group] == 0)
+        if (gEasyChatScreen->alphabetGroupIds[2][11 + groupId] == 0)
             return FALSE;
         return TRUE;
     case EC_GROUP_POKEMON_NATIONAL:
@@ -2119,17 +2119,17 @@ bool8 IsEasyChatIndexAndGroupUnlocked(u8 group, u16 word)
     }
 }
 
-u16 EasyChat_GetNumWordsInGroup(u8 group)
+u16 EasyChat_GetNumWordsInGroup(u8 groupId)
 {
-    switch (group)
+    switch (groupId)
     {
     case EC_GROUP_POKEMON:
         return GetHoennPokedexCount(0);
     case EC_GROUP_TRENDY_SAYING:
         return GetNumTrendySayingsUnlocked();
     default:
-        if (IsEasyChatGroupUnlocked(group))
-            return gEasyChatGroupSizes[group];
+        if (IsEasyChatGroupUnlocked(groupId))
+            return gEasyChatGroupSizes[groupId];
         return FALSE;
     }
 }
@@ -3012,27 +3012,27 @@ u8 EasyChatIsNationalPokedexEnabled(void)
 static u16 GetRandomUnlockedEasyChatPokemon(void)
 {
     u16 *speciesList;
-    u16 local1;
+    u16 index;
     u16 i;
-    u8 topsize;
+    u8 numWords;
 
-    local1 = EasyChat_GetNumWordsInGroup(0);
+    index = EasyChat_GetNumWordsInGroup(EC_GROUP_POKEMON);
 
-    if (local1 == 0)
+    if (index == 0)
         return -1;
 
-    local1 = Random() % local1;
+    index = Random() % index;
     speciesList = (u16 *)gEasyChatGroupWords[EC_GROUP_POKEMON];
-    for (i = 0, topsize = gEasyChatGroupSizes[EC_GROUP_POKEMON]; i < topsize; i++)
+    for (i = 0, numWords = gEasyChatGroupSizes[EC_GROUP_POKEMON]; i < numWords; i++)
     {
         const u16 dexNum = SpeciesToNationalPokedexNum(*speciesList);
         const u8 local2 = GetSetPokedexFlag(dexNum, 0);
 
         if (local2)
         {
-            if (local1 == 0)
+            if (index == 0)
                 return *speciesList & 0x1FF;
-            local1--;
+            index--;
         }
         speciesList++;
     }
