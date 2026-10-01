@@ -752,7 +752,7 @@ void CreateInterviewObjectEvents(u8 personType, u8 frameId)
     LoadSpritePalette(&interviewFramePalette);
     CreateSprite(&sSpriteTemplate_InterviewFrame, x, y, 1);
 
-    spriteId = AddPseudoObjectEvent(
+    spriteId = CreateObjectGraphicsSprite(
       (gSaveBlock2.playerGender == MALE) ? OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL : OBJ_EVENT_GFX_RIVAL_MAY_NORMAL,
       SpriteCallbackDummy, x - 12, y, 0);
     if (spriteId != MAX_SPRITES)
@@ -761,7 +761,7 @@ void CreateInterviewObjectEvents(u8 personType, u8 frameId)
         StartSpriteAnim(&gSprites[spriteId], 3);
     }
 
-    spriteId = AddPseudoObjectEvent(gabbyTyGfxId, SpriteCallbackDummy, x + 12, y, 0);
+    spriteId = CreateObjectGraphicsSprite(gabbyTyGfxId, SpriteCallbackDummy, x + 12, y, 0);
     if (spriteId != MAX_SPRITES)
     {
         gSprites[spriteId].oam.priority = 0;

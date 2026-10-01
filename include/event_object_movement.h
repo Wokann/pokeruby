@@ -367,7 +367,7 @@ u8 GetObjectEventIdByXY(s16, s16);
 void RemoveObjectEventByLocalIdAndMap(u8, u8, u8);
 u8 SpawnSpecialObjectEvent(struct ObjectEventTemplate *);
 u8 TrySpawnObjectEvent(u8, u8, u8);
-u8 AddPseudoObjectEvent(u16 graphicsId, void (*callback)(struct Sprite *), s16 x, s16 y, u8 subpriority);
+u8 CreateObjectGraphicsSprite(u16 graphicsId, void (*callback)(struct Sprite *), s16 x, s16 y, u8 subpriority);
 u8 CreateVirtualObject(u8, u8, s16, s16, u8, u8);
 void TrySpawnObjectEvents(s16, s16);
 void SpawnObjectEventsOnReturnToField(s16 x, s16 y);

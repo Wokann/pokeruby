@@ -463,7 +463,7 @@ static void Shop_AnimViewportObjects(void)
         if (gMartViewportObjects[i][OBJ_EVENT_ID] == 16)
             continue;
 
-        StartSpriteAnim(&gSprites[AddPseudoObjectEvent(
+        StartSpriteAnim(&gSprites[CreateObjectGraphicsSprite(
             gObjectEvents[gMartViewportObjects[i][OBJ_EVENT_ID]].graphicsId,
             SpriteCallbackDummy,
             (u16)gMartViewportObjects[i][X_COORD] * 16 + 8,

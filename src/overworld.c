@@ -2747,7 +2747,7 @@ static void CreateLinkPlayerSprite(u8 linkPlayerId)
     if (linkPlayerObjEvent->active)
     {
         u8 graphicsId = GetRivalAvatarGraphicsIdByStateIdAndGender(PLAYER_AVATAR_STATE_NORMAL, objEvent->singleMovementActive);
-        objEvent->spriteId = AddPseudoObjectEvent(graphicsId, SpriteCB_LinkPlayer, 0, 0, 0);
+        objEvent->spriteId = CreateObjectGraphicsSprite(graphicsId, SpriteCB_LinkPlayer, 0, 0, 0);
         sprite = &gSprites[objEvent->spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->data[0] = linkPlayerId;

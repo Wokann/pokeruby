@@ -864,7 +864,7 @@ static void CreateCableCarSprites(void)
     {
         case FALSE:
         default:
-            spriteId = AddPseudoObjectEvent(playerGraphicsIds[gSaveBlock2.playerGender], SpriteCB_Player, 0xc8, 0x49, 0x66);
+            spriteId = CreateObjectGraphicsSprite(playerGraphicsIds[gSaveBlock2.playerGender], SpriteCB_Player, 0xc8, 0x49, 0x66);
             if (spriteId != MAX_SPRITES)
             {
                 gSprites[spriteId].oam.priority = 2;
@@ -888,7 +888,7 @@ static void CreateCableCarSprites(void)
             break;
         case TRUE:
             CableCarUtil_CopyWrapped(sCableCar->bg0TilemapBuffer, eCableCarTilemapData->groundTilemap + 0x24, 0x18, 0x1a, 0x0c, 0x03);
-            spriteId = AddPseudoObjectEvent(playerGraphicsIds[gSaveBlock2.playerGender], SpriteCB_Player, 0x80, 0x27, 0x66);
+            spriteId = CreateObjectGraphicsSprite(playerGraphicsIds[gSaveBlock2.playerGender], SpriteCB_Player, 0x80, 0x27, 0x66);
             if (spriteId != MAX_SPRITES)
             {
                 gSprites[spriteId].oam.priority = 2;
@@ -919,7 +919,7 @@ static void CreateCableCarSprites(void)
     }
     if ((rval % 64) == 0)
     {
-        spriteId = AddPseudoObjectEvent(hikerGraphicsIds[rval % (ARRAY_COUNT(hikerGraphicsIds) - 1)], hikerCallbacks[GOING_DOWN], hikerCoords[GOING_DOWN][0], hikerCoords[GOING_DOWN][1], 0x6a);
+        spriteId = CreateObjectGraphicsSprite(hikerGraphicsIds[rval % (ARRAY_COUNT(hikerGraphicsIds) - 1)], hikerCallbacks[GOING_DOWN], hikerCoords[GOING_DOWN][0], hikerCoords[GOING_DOWN][1], 0x6a);
         if (spriteId != MAX_SPRITES)
         {
             gSprites[spriteId].oam.priority = 2;
