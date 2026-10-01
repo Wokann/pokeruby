@@ -25,7 +25,7 @@ gMovesWithQuietBGM:: @ 81C7160
 
 	.align 2
 gBattleAnims_Moves:: @ 81C7168
-	.4byte Move_POUND
+	.4byte Move_NONE
 	.4byte Move_POUND
 	.4byte Move_KARATE_CHOP
 	.4byte Move_DOUBLE_SLAP
@@ -144,7 +144,7 @@ gBattleAnims_Moves:: @ 81C7168
 	.4byte Move_FOCUS_ENERGY
 	.4byte Move_BIDE
 	.4byte Move_METRONOME
-	.4byte Move_POUND
+	.4byte Move_MIRROR_MOVE
 	.4byte Move_SELF_DESTRUCT
 	.4byte Move_EGG_BOMB
 	.4byte Move_LICK
@@ -292,7 +292,7 @@ gBattleAnims_Moves:: @ 81C7168
 	.4byte Move_FOCUS_PUNCH
 	.4byte Move_SMELLING_SALT
 	.4byte Move_FOLLOW_ME
-	.4byte Move_ANCIENT_POWER
+	.4byte Move_NATURE_POWER
 	.4byte Move_CHARGE
 	.4byte Move_TAUNT
 	.4byte Move_HELPING_HAND
@@ -430,6 +430,8 @@ gBattleAnims_Special:: @ 81C7778
 	.4byte Special_SubstituteToMon
 	.4byte Special_MonToSubstitute
 
+Move_NONE:
+Move_MIRROR_MOVE:
 Move_POUND: @ 81C7794
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_TARGET
@@ -6861,6 +6863,7 @@ Move_RAZOR_LEAF: @ 81D0DDE
 	blendoff
 	end
 
+Move_NATURE_POWER:
 Move_ANCIENT_POWER: @ 81D0EE5
 	loadspritegfx ANIM_TAG_ROCKS
 	loadspritegfx ANIM_TAG_IMPACT
