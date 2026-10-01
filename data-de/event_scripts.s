@@ -16,6 +16,7 @@
 #include "constants/flags.h"
 #include "constants/game_stat.h"
 #include "constants/items.h"
+#include "constants/tms_hms.h"
 #include "constants/event_objects.h"
 #include "constants/event_object_movement.h"
 #include "constants/layouts.h"
@@ -37,6 +38,7 @@
 #include "constants/party_menu.h"
 #include "constants/pokemon_size_record.h"
 #include "constants/berry.h"
+#include "constants/secret_bases.h"
 #include "constants/script_menu.h"
 #include "constants/field_weather.h"
 	.include "include/macros.inc"
@@ -46,6 +48,7 @@
 	.section script_data, "aw", %progbits
 
 @ 814AE30
+	.set ALLOCATE_SCRIPT_CMD_TABLE, 1
 	.include "data/script_cmd_table.inc"
 
 	.align 2
@@ -69,6 +72,8 @@ gSpecialVars::
 	.4byte gSpecialVar_ContestRank
 	.4byte gSpecialVar_ContestCategory
 
+	.purgem def_special
+	.set ALLOCATE_SPECIAL_TABLE, 1
 	.include "data/specials.inc"
 
 	.align 2
@@ -835,7 +840,8 @@ EventScript_BackupMrBrineyLocation:: @ 81A010C
 	return
 
 	.include "data/scripts/surf.inc"
-	.include "data/scripts/dynamic_npc_graphics.inc"
+	.include "data/scripts/rival_graphics.inc"
+	.include "data/scripts/versioned_object_graphics.inc"
 	.include "data/scripts/set_gym_trainers.inc"
 
 Common_EventScript_ShowBagIsFull:: @ 81A029B
