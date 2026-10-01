@@ -106,7 +106,7 @@ static void BuildNormalStartMenu(void);
 static void BuildSafariZoneStartMenu(void);
 static void BuildLinkModeStartMenu(void);
 static void ShowSafariBallsWindow(void);
-static bool32 PrintStartMenuActions(s16 *a, u32 b);
+static bool32 PrintStartMenuActions(s16 *pIndex, u32 count);
 static bool32 InitStartMenuStep(s16 *a, s16 *b);
 static void StartMenuTask(u8 taskId);
 static u8 HandleStartMenuInput(void);
@@ -135,7 +135,7 @@ static u8 SaveReturnSuccessCallback(void);
 static u8 SaveErrorCallback(void);
 static u8 SaveReturnErrorCallback(void);
 static void VBlankCB_LinkBattleSave(void);
-static bool32 InitSaveWindowAfterLinkBattle(u8 *ptr);
+static bool32 InitSaveWindowAfterLinkBattle(u8 *state);
 static void CB2_SaveAfterLinkBattle(void);
 static void Task_SaveAfterLinkBattle(u8 taskId);
 
@@ -305,23 +305,23 @@ static void ShowSafariBallsWindow(void)
     Menu_PrintText(gOtherText_SafariStock, 1, 1);
 }
 
-//Prints n menu items starting at *index
-static bool32 PrintStartMenuActions(s16 *index, u32 n)
+//Prints count menu items starting at *pIndex
+static bool32 PrintStartMenuActions(s16 *pIndex, u32 count)
 {
-    int _index = *index;
+    int index = *pIndex;
 
     do
     {
-        Menu_PrintText(sStartMenuItems[sCurrentStartMenuActions[_index]].text, 23, 2 + _index * 2);
-        _index++;
-        if (_index >= sNumStartMenuActions)
+        Menu_PrintText(sStartMenuItems[sCurrentStartMenuActions[index]].text, 23, 2 + index * 2);
+        index++;
+        if (index >= sNumStartMenuActions)
         {
-            *index = _index;
+            *pIndex = index;
             return TRUE;
         }
     }
-    while (--n != 0);
-    *index = _index;
+    while (--count != 0);
+    *pIndex = index;
     return FALSE;
 }
 
@@ -847,9 +847,9 @@ static void VBlankCB_LinkBattleSave(void)
     TransferPlttBuffer();
 }
 
-static bool32 InitSaveWindowAfterLinkBattle(u8 *step)
+static bool32 InitSaveWindowAfterLinkBattle(u8 *state)
 {
-    switch (*step)
+    switch (*state)
     {
     case 0:
         REG_DISPCNT = 0;
@@ -884,7 +884,7 @@ static bool32 InitSaveWindowAfterLinkBattle(u8 *step)
     case 4:
         return TRUE;
     }
-    (*step)++;
+    (*state)++;
     return FALSE;
 }
 
@@ -905,32 +905,32 @@ static void CB2_SaveAfterLinkBattle(void)
 
 static void Task_SaveAfterLinkBattle(u8 taskId)
 {
-    s16 *step = gTasks[taskId].data;
+    s16 *state = gTasks[taskId].data;
 
     if (!gPaletteFade.active)
     {
-        switch (*step)
+        switch (*state)
         {
         case 0:
             Menu_DisplayDialogueFrame();
             Menu_PrintText(gSystemText_Saving, 2, 15);
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
-            (*step)++;
+            (*state)++;
             break;
         case 1:
             SetContinueGameWarpStatusToDynamicWarp();
             WriteSaveBlock2();
-            (*step)++;
+            (*state)++;
             break;
         case 2:
             if (!WriteSaveBlock1Sector())
                 break;
             ClearContinueGameWarpStatus2();
-            (*step)++;
+            (*state)++;
             break;
         case 3:
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-            (*step)++;
+            (*state)++;
             break;
         case 4:
             SetMainCallback2(gMain.savedCallback);
