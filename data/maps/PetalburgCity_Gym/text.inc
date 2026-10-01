@@ -346,13 +346,13 @@ PetalburgCity_Gym_Text_JodyIntro:: @ 817B6D4
 PetalburgCity_Gym_Text_JodyDefeat:: @ 817B732
 	.string "But... I went all out!$"
 
-PetalburgCity_Gym_Text_JodiPostBattle:: @ 817B749
+PetalburgCity_Gym_Text_JodyPostBattle:: @ 817B749
 	.string "The way you use your POKéMON...\n"
 	.string "It's like your father's style.\p"
 	.string "Go on through! The GYM LEADER, your\n"
 	.string "father, is waiting!$"
 
-PetalburgCity_Gym_Text_JodiPostBadge:: @ 817B7C0
+PetalburgCity_Gym_Text_JodyPostBadge:: @ 817B7C0
 	.string "Sure, it's fine to make your POKéMON\n"
 	.string "stronger.\p"
 	.string "But what decides the winner?\p"

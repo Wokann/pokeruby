@@ -360,13 +360,13 @@ PetalburgCity_Gym_Text_JodyIntro:: @ 817B6D4
 PetalburgCity_Gym_Text_JodyDefeat:: @ 817B732
 	.string "Aber... Das war wohl nichts!$"
 
-PetalburgCity_Gym_Text_JodiPostBattle:: @ 817B749
+PetalburgCity_Gym_Text_JodyPostBattle:: @ 817B749
 	.string "Wie du deine POKéMON einsetzt...\n"
 	.string "Du bist wie dein Vater.\p"
 	.string "Geh weiter! Der ARENALEITER, dein\n"
 	.string "Vater, erwartet dich bereits!$"
 
-PetalburgCity_Gym_Text_JodiPostBadge:: @ 817B7C0
+PetalburgCity_Gym_Text_JodyPostBadge:: @ 817B7C0
 	.string "Sicher, es ist immer von Vorteil, die\n"
 	.string "POKéMON stärker werden zu lassen.\p"
 	.string "Aber was macht einen Gewinner aus?\p"
