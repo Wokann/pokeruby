@@ -86,8 +86,8 @@ static void SetPartyMenuCursorSpriteId(u8 taskId, u8 spriteId);
 static void ChangeDoubleBattlePartyMenuSelection(u8 spriteId, u8 menuIndex, s8 directionPressed);
 static void ChangeDefaultPartyMenuSelection(u8 spriteId, u8 menuIndex, s8 directionPressed);
 void ChangeLinkDoubleBattlePartyMenuSelection(u8 spriteId, u8 menuIndex, s8 directionPressed);
-static void UpdatePartyMonIconFrameAndBounce(struct Sprite *sprite);
-static void UpdatePartyMonIconFrame(struct Sprite *sprite);
+static void SpriteCB_BouncePartyMonIcon(struct Sprite *sprite);
+static void SpriteCB_UpdatePartyMonIcon(struct Sprite *sprite);
 static void SetPartyMonIconSelected(u8 taskId, u8 monIndex, bool8 selected);
 static u8 GetPartyMenuCursorSpriteId(u8 taskId);
 static void SpriteCB_PartyMonIconSlide(struct Sprite *sprite);
@@ -2058,16 +2058,16 @@ void FinishPartyMenuMonSwitch(u8 taskId)
     gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].y = sPartyMenuMonIconCoords[IsDoubleBattle()][sPartyMenuTwoMonAction.higherMonIndex].y;
     gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].x2 = 0;
     gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].y2 = 0;
-    gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].callback = UpdatePartyMonIconFrame;
+    gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].callback = SpriteCB_UpdatePartyMonIcon;
 
     gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].x = sPartyMenuMonIconCoords[IsDoubleBattle()][sPartyMenuTwoMonAction.lowerMonIndex].x;
     gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].y = sPartyMenuMonIconCoords[IsDoubleBattle()][sPartyMenuTwoMonAction.lowerMonIndex].y;
     gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].x2 = 0;
     gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].y2 = 0;
-    gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].callback = UpdatePartyMonIconFrame;
+    gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].callback = SpriteCB_UpdatePartyMonIcon;
 
     spriteId = GetMonIconSpriteId(sPartyMenuTwoMonAction.partyMenuTaskId, gSprites[sPartyMenuTwoMonAction.currentSelectionSpriteId].data[0]);
-    gSprites[spriteId].callback = UpdatePartyMonIconFrameAndBounce;
+    gSprites[spriteId].callback = SpriteCB_BouncePartyMonIcon;
 
     SwapPokemon(&gPlayerParty[sPartyMenuTwoMonAction.lowerMonIndex], &gPlayerParty[sPartyMenuTwoMonAction.higherMonIndex]);
 
@@ -2093,7 +2093,7 @@ void SpriteCB_PartyMonIconSlide(struct Sprite *sprite)
     {
         sprite->data[0] *= -1;
         sprite->data[2] = 0;
-        sprite->callback = UpdatePartyMonIconFrame;
+        sprite->callback = SpriteCB_UpdatePartyMonIcon;
     }
     else
     {
@@ -2233,7 +2233,7 @@ bool8 LoadPartyMenuGraphics(u8 loadState)
     return isComplete;
 }
 
-void SetMonIconAnimByHP(u8 spriteId, u16 currentHP, u16 maxHP)
+void UpdateHPBar(u8 spriteId, u16 currentHP, u16 maxHP)
 {
     u8 hpBarLevel = GetHPBarLevel(currentHP, maxHP);
     u8 animNum = 0;
@@ -2253,12 +2253,12 @@ void SetMonIconAnimByHP(u8 spriteId, u16 currentHP, u16 maxHP)
     SetPartyHPBarSprite(&gSprites[spriteId], animNum);
 }
 
-void SetMonIconAnim(u8 spriteId, struct Pokemon *pokemon)
+void UpdatePartyMonHPBar(u8 spriteId, struct Pokemon *pokemon)
 {
     u16 currentHP = GetMonData(pokemon, MON_DATA_HP);
     u16 maxHP = GetMonData(pokemon, MON_DATA_MAX_HP);
 
-    SetMonIconAnimByHP(spriteId, currentHP, maxHP);
+    UpdateHPBar(spriteId, currentHP, maxHP);
 }
 
 void CreatePartyMenuMonIcon(u8 taskId, u8 monIndex, u8 menuType, struct Pokemon *pokemon)
@@ -2271,7 +2271,7 @@ void CreatePartyMenuMonIcon(u8 taskId, u8 monIndex, u8 menuType, struct Pokemon 
 
     u8 spriteId = CreateMonIcon(species2, SpriteCB_MonIcon, x, y, 5, personality);
     SetMonIconSpriteId(taskId, monIndex, spriteId);
-    SetMonIconAnim(spriteId, pokemon);
+    UpdatePartyMonHPBar(spriteId, pokemon);
 }
 
 void TryCreatePartyMenuMonIcon(u8 taskId, u8 monIndex, struct Pokemon *pokemon)
@@ -2300,10 +2300,10 @@ void CreateMonIcon_LinkMultiBattle(u8 taskId, u8 monIndex, u8 menuType, struct M
 
     u8 spriteId = CreateMonIcon(pokemon->species, SpriteCB_MonIcon, x, y, 5, pokemon->personality);
     SetMonIconSpriteId(taskId, monIndex, spriteId);
-    SetMonIconAnimByHP(spriteId, pokemon->hp, pokemon->maxhp);
+    UpdateHPBar(spriteId, pokemon->hp, pokemon->maxhp);
 }
 
-void UpdatePartyMonIconFrameAndBounce(struct Sprite *sprite)
+static void SpriteCB_BouncePartyMonIcon(struct Sprite *sprite)
 {
     u8 animCmdIndex = UpdateMonIconFrame(sprite);
 
@@ -2316,7 +2316,7 @@ void UpdatePartyMonIconFrameAndBounce(struct Sprite *sprite)
     }
 }
 
-void UpdatePartyMonIconFrame(struct Sprite *sprite)
+static void SpriteCB_UpdatePartyMonIcon(struct Sprite *sprite)
 {
     UpdateMonIconFrame(sprite);
 }
@@ -2332,9 +2332,9 @@ void SetPartyMonIconSelected(u8 taskId, u8 monIndex, bool8 selected)
         gSprites[spriteId].data[0] = 0;
 
         if (selected == FALSE)
-            gSprites[spriteId].callback = UpdatePartyMonIconFrame;
+            gSprites[spriteId].callback = SpriteCB_UpdatePartyMonIcon;
         else
-            gSprites[spriteId].callback = UpdatePartyMonIconFrameAndBounce;
+            gSprites[spriteId].callback = SpriteCB_BouncePartyMonIcon;
     }
 }
 
@@ -2360,7 +2360,7 @@ void SpriteCB_HeldItem(struct Sprite *sprite)
     }
 }
 
-void CreateHeldItemIcon(u8 monIconSpriteId, u8 isMail)
+void CreateHeldItemSpriteForTrade(u8 monIconSpriteId, u8 isMail)
 {
     u8 subPriority;
     u8 spriteId;
@@ -2377,7 +2377,7 @@ void CreateHeldItemIcon(u8 monIconSpriteId, u8 isMail)
     gSprites[spriteId].callback(&gSprites[spriteId]);
 }
 
-void CreateHeldItemIcons(u8 *partyCounts, u8 *partySpriteIds, u8 side)
+void DrawHeldItemIconsForTrade(u8 *partyCounts, u8 *partySpriteIds, u8 side)
 {
     u16 i;
     u16 heldItem;
@@ -2389,7 +2389,7 @@ void CreateHeldItemIcons(u8 *partyCounts, u8 *partySpriteIds, u8 side)
         {
             heldItem = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
             if (heldItem)
-                CreateHeldItemIcon(partySpriteIds[i], ItemIsMail(heldItem));
+                CreateHeldItemSpriteForTrade(partySpriteIds[i], ItemIsMail(heldItem));
         }
         break;
     case 1:
@@ -2397,7 +2397,7 @@ void CreateHeldItemIcons(u8 *partyCounts, u8 *partySpriteIds, u8 side)
         {
             heldItem = GetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM);
             if (heldItem)
-                CreateHeldItemIcon(partySpriteIds[i + 6], ItemIsMail(heldItem));
+                CreateHeldItemSpriteForTrade(partySpriteIds[i + 6], ItemIsMail(heldItem));
         }
         break;
     }
@@ -3509,7 +3509,7 @@ void Task_AnimatePartyMenuHpRestore(u8 taskId)
             StringExpandPlaceholders(gStringVar4, gOtherText_HPRestoredBy);
         else
             StringExpandPlaceholders(gStringVar4, gOtherText_RegainedHealth);
-        SetMonIconAnim(GetMonIconSpriteId(sPartyMenuAction.menuTaskId, sPartyMenuAction.selectedMonIndex), sPartyMenuAction.selectedMon);
+        UpdatePartyMonHPBar(GetMonIconSpriteId(sPartyMenuAction.menuTaskId, sPartyMenuAction.selectedMonIndex), sPartyMenuAction.selectedMon);
         DrawPartyMenuMonBackgroundAt(&sPartyMenuMonBackgroundCoords[IsDoubleBattle() * 12 + sPartyMenuAction.selectedMonIndex * 2], 7);
         gPartyMenu.backgroundRedrawState = 2;
         DisplayPartyMenuMessage(gStringVar4, 1);
@@ -3536,7 +3536,7 @@ void Task_SoftboiledReduceUserHp(u8 taskId)
         sPartyMenuAction.hpBarAnimationState = 0;
         gTasks[taskId].data[11] -= gTasks[taskId].data[12];
         SetMonData(sPartyMenuAction.selectedMon, MON_DATA_HP, &gTasks[taskId].data[11]);
-        SetMonIconAnim(GetMonIconSpriteId(sPartyMenuAction.menuTaskId, sPartyMenuTwoMonAction.firstSelectedMonSpriteId), sPartyMenuAction.selectedMon);
+        UpdatePartyMonHPBar(GetMonIconSpriteId(sPartyMenuAction.menuTaskId, sPartyMenuTwoMonAction.firstSelectedMonSpriteId), sPartyMenuAction.selectedMon);
         sPartyMenuAction.selectedMonIndex = gSprites[sPartyMenuTwoMonAction.currentSelectionSpriteId].data[0];
         sPartyMenuAction.selectedMon = &gPlayerParty[sPartyMenuAction.selectedMonIndex];
         gTasks[taskId].data[10] = GetMonData(sPartyMenuAction.selectedMon, MON_DATA_MAX_HP);
@@ -4151,7 +4151,7 @@ void RedrawPokemonInfoInMenu(u8 monIndex, struct Pokemon *pokemon)
     PartyMenuTryDrawHPBar(monIndex, pokemon);
 
     icon = GetMonIconSpriteId(sPartyMenuAction.menuTaskId, monIndex);
-    SetMonIconAnim(icon, pokemon);
+    UpdatePartyMonHPBar(icon, pokemon);
 
     DrawPartyMenuMonBackgroundAt(&sPartyMenuMonBackgroundCoords[IsDoubleBattle() * 12 + monIndex * 2], 7);
     gPartyMenu.backgroundRedrawState = 2;

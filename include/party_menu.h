@@ -118,7 +118,7 @@ void StartLinkMultiBattlePartnerMonIconSlide(u8 taskId, u16 species, u8 partnerM
 void OffsetLinkMultiBattlePartnerMonIcon(u8 taskId, u8 monIndex);
 void PrintPartyMenuPromptText(u8 textId, u8 windowType);
 void PartyMenuEraseMsgBoxAndFrame(void);
-void SetMonIconAnim(u8 spriteId, struct Pokemon *pokemon);
+void UpdatePartyMonHPBar(u8 spriteId, struct Pokemon *pokemon);
 void CreatePartyMenuMonIcon(u8 taskId, u8 monIndex, u8 menuType, struct Pokemon *pokemon);
 void TryCreatePartyMenuMonIcon(u8 taskId, u8 monIndex, struct Pokemon *pokemon);
 void LoadHeldItemIconGraphics(void);
@@ -126,7 +126,7 @@ void PartyMenuTryGiveMonHeldItem(u8 taskId, u16 newItem, TaskFunc followupCallba
 void SetMonIconSpriteId(u8 taskId, u8 monIndex, u8 spriteId);
 void CreatePartyMenuHeldItemIcon(u8 taskId, u8 monIndex, u16 item);
 void CreatePartyMenuHeldItemIcons(u8 taskId);
-void CreateHeldItemIcons(u8 *partyCounts, u8 *partySpriteIds, u8 side);
+void DrawHeldItemIconsForTrade(u8 *partyCounts, u8 *partySpriteIds, u8 side);
 void SetHeldItemIconVisibility(u8 taskId, u8 monIndex);
 void PartyMenuDoPrintMonNickname(u8 monIndex, int menuLayout, const u8 *nameBuffer);
 void PrintPartyMenuMonNickname(u8 monIndex, u8 menuLayout, struct Pokemon *pokemon);
