@@ -57,6 +57,14 @@
 .equiv AI_EFFECTIVENESS_x0_25, 10
 .equiv AI_EFFECTIVENESS_x0,   0
 
+@ type effectiveness table
+.equiv TYPE_MUL_NO_EFFECT,       0
+.equiv TYPE_MUL_NOT_EFFECTIVE,   5
+.equiv TYPE_MUL_NORMAL,          10
+.equiv TYPE_MUL_SUPER_EFFECTIVE, 20
+.equiv TYPE_FORESIGHT,           0xFE
+.equiv TYPE_ENDTABLE,            0xFF
+
 @ get_how_powerful_move_is results
 .equiv MOVE_POWER_OTHER,        0
 .equiv MOVE_NOT_MOST_POWERFUL,  1
