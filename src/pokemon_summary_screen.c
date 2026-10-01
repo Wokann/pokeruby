@@ -2717,7 +2717,7 @@ static void PrintGenderSymbol(struct Pokemon *mon, u8 left, u8 top)
     }
 }
 
-u8 GetNumRibbons(struct Pokemon *mon)
+u8 GetRibbonCount(struct Pokemon *mon)
 {
     u8 numRibbons = 0;
     numRibbons += GetMonData(mon, MON_DATA_COOL_RIBBON);
@@ -2743,7 +2743,7 @@ u8 GetNumRibbons(struct Pokemon *mon)
 
 static void PrintRibbonCount(struct Pokemon *mon)
 {
-    u8 numRibbons = GetNumRibbons(mon);
+    u8 numRibbons = GetRibbonCount(mon);
 
     if (numRibbons == 0)
     {
