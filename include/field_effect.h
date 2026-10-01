@@ -37,10 +37,10 @@ void SpriteCB_PokecenterMonitor(struct Sprite *);
 
 void ReturnToFieldFromFlyMapSelect(void);
 
-void PokecenterHealEffect_0(struct Task *);
-void PokecenterHealEffect_1(struct Task *);
-void PokecenterHealEffect_2(struct Task *);
-void PokecenterHealEffect_3(struct Task *);
+void PokecenterHealEffect_Init(struct Task *);
+void PokecenterHealEffect_WaitForBallPlacement(struct Task *);
+void PokecenterHealEffect_WaitForBallFlashing(struct Task *);
+void PokecenterHealEffect_WaitForSoundAndEnd(struct Task *);
 
 void FieldCB_FallWarpExit(void);
 

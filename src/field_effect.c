@@ -220,10 +220,10 @@ static const struct SpriteTemplate sSpriteTemplate_HofMonitorSmall = {
 };
 
 static void (*const sPokecenterHealEffectFuncs[])(struct Task *) = {
-    PokecenterHealEffect_0,
-    PokecenterHealEffect_1,
-    PokecenterHealEffect_2,
-    PokecenterHealEffect_3
+    PokecenterHealEffect_Init,
+    PokecenterHealEffect_WaitForBallPlacement,
+    PokecenterHealEffect_WaitForBallFlashing,
+    PokecenterHealEffect_WaitForSoundAndEnd
 };
 
 static void (*const sHallOfFameRecordEffectFuncs[])(struct Task *) = {
@@ -660,14 +660,14 @@ void Task_PokecenterHeal(u8 taskId)
     sPokecenterHealEffectFuncs[task->data[0]](task);
 }
 
-void PokecenterHealEffect_0(struct Task *task)
+void PokecenterHealEffect_Init(struct Task *task)
 {
     task->data[0]++;
     task->data[6] = CreateGlowingPokeballsEffect(task->data[1], task->data[2], task->data[3], TRUE);
     task->data[7] = PokecenterHealEffectHelper(task->data[4], task->data[5]);
 }
 
-void PokecenterHealEffect_1(struct Task *task)
+void PokecenterHealEffect_WaitForBallPlacement(struct Task *task)
 {
     if (gSprites[task->data[6]].data[0] > 1)
     {
@@ -676,7 +676,7 @@ void PokecenterHealEffect_1(struct Task *task)
     }
 }
 
-void PokecenterHealEffect_2(struct Task *task)
+void PokecenterHealEffect_WaitForBallFlashing(struct Task *task)
 {
     if (gSprites[task->data[6]].data[0] > 4)
     {
@@ -684,7 +684,7 @@ void PokecenterHealEffect_2(struct Task *task)
     }
 }
 
-void PokecenterHealEffect_3(struct Task *task)
+void PokecenterHealEffect_WaitForSoundAndEnd(struct Task *task)
 {
     if (gSprites[task->data[6]].data[0] > 6)
     {
