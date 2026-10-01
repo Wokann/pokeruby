@@ -24,4 +24,7 @@
 #define SS_TIDAL_EXIT_CURRENTS_RIGHT 9
 #define SS_TIDAL_EXIT_CURRENTS_LEFT  10
 
+// Lilycove Trainer Fan Club counter increments
+#define FANCOUNTER_DEFEATED_DRAKE 0
+
 #endif // GUARD_CONSTANTS_FIELD_SPECIALS_H

@@ -46,8 +46,8 @@ EverGrandeCity_ChampionsRoom_EventScript_Steven:: @ 815B805
 
 EverGrandeCity_ChampionsRoom_EventScript_Defeated:: @ 815B821
 	playse SE_DOOR
-	setmetatile 6, 1, METATILE_EliteFour_OpenDoorChampion_Frame, 0
-	setmetatile 6, 2, METATILE_EliteFour_OpenDoorChampion_Opening, 0
+	setmetatile 6, 1, METATILE_EliteFour_OpenDoorChampion_Frame, FALSE
+	setmetatile 6, 2, METATILE_EliteFour_OpenDoorChampion_Opening, FALSE
 	special DrawWholeMapView
 	msgbox EverGrandeCity_ChampionsRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
 	closemessage
@@ -137,7 +137,7 @@ EverGrandeCity_ChampionsRoom_EventScript_BirchArrivesExitForHoF:: @ 815B8F0
 	applymovement LOCALID_PLAYER, EverGrandeCity_ChampionsRoom_Movement_PlayerExit
 	waitmovement 0
 	setflag FLAG_HIDE_PETALBURG_GYM_GREETER
-	warp MAP_EVER_GRANDE_CITY_HALL_OF_FAME, 255, 7, 16
+	warp MAP_EVER_GRANDE_CITY_HALL_OF_FAME, WARP_ID_NONE, 7, 16
 	waitstate
 	releaseall
 	end
