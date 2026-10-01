@@ -9,12 +9,12 @@ SafariZone_Southeast_OnFrame:: @ 8160041
 
 SafariZone_Southeast_EventScript_EnterSafariZone:: @ 816004B
 	lockall
-	setvar VAR_TEMP_1, 0
+	setvar VAR_TEMP_1, FALSE
 	applymovement LOCALID_PLAYER, SafariZone_Southeast_Movement_PlayerEnter
 	waitmovement 0
-	applymovement 1, SafariZone_Southeast_Movement_ExitAttendantBlockDoor
+	applymovement LOCALID_SAFARI_EXIT_ATTENDANT, SafariZone_Southeast_Movement_ExitAttendantBlockDoor
 	waitmovement 0
-	setobjectxyperm 1, 32, 34
+	setobjectxyperm LOCALID_SAFARI_EXIT_ATTENDANT, 32, 34
 	setvar VAR_SAFARI_ZONE_STATE, 0
 	releaseall
 	end
@@ -25,7 +25,7 @@ SafariZone_Southeast_OnTransition:: @ 8160073
 	end
 
 SafariZone_Southeast_EventScript_SetExitAttendantAside:: @ 816007F
-	setobjectxyperm 1, 31, 34
+	setobjectxyperm LOCALID_SAFARI_EXIT_ATTENDANT, 31, 34
 	return
 
 SafariZone_Southeast_Movement_PlayerEnter:: @ 8160087
@@ -52,7 +52,7 @@ SafariZone_Southeast_EventScript_Youngster:: @ 816009E
 SafariZone_Southeast_EventScript_ExitAttendant:: @ 81600A7
 	lock
 	faceplayer
-	compare VAR_TEMP_1, 0
+	compare VAR_TEMP_1, FALSE
 	goto_if_eq SafariZone_Southeast_EventScript_GoodLuck
 	msgbox SafariZone_Southeast_Text_StillHaveTimeExit, MSGBOX_YESNO
 	compare VAR_RESULT, YES
@@ -62,7 +62,7 @@ SafariZone_Southeast_EventScript_ExitAttendant:: @ 81600A7
 	end
 
 SafariZone_Southeast_EventScript_GoodLuck:: @ 81600D1
-	setvar VAR_TEMP_1, 1
+	setvar VAR_TEMP_1, TRUE
 	msgbox SafariZone_Southeast_Text_GoodLuck, MSGBOX_DEFAULT
 	release
 	end
@@ -71,12 +71,12 @@ SafariZone_Southeast_EventScript_ExitEarly:: @ 81600E0
 	msgbox SafariZone_Southeast_Text_ExitEarlyThankYouForPlaying, MSGBOX_DEFAULT
 	closemessage
 	switch VAR_FACING
-	case 2, SafariZone_Southeast_EventScript_ExitEarlyNorth
-	case 4, SafariZone_Southeast_EventScript_ExitEarlyEast
+	case DIR_NORTH, SafariZone_Southeast_EventScript_ExitEarlyNorth
+	case DIR_EAST, SafariZone_Southeast_EventScript_ExitEarlyEast
 	end
 
 SafariZone_Southeast_EventScript_ExitEarlyNorth:: @ 8160105
-	applymovement 1, SafariZone_Southeast_Movement_MoveExitAttendantNorth
+	applymovement LOCALID_SAFARI_EXIT_ATTENDANT, SafariZone_Southeast_Movement_MoveExitAttendantNorth
 	waitmovement 0
 	applymovement LOCALID_PLAYER, SafariZone_Southeast_Movement_PlayerExitNorth
 	waitmovement 0
@@ -84,7 +84,7 @@ SafariZone_Southeast_EventScript_ExitEarlyNorth:: @ 8160105
 	end
 
 SafariZone_Southeast_EventScript_ExitEarlyEast:: @ 816011F
-	applymovement 1, SafariZone_Southeast_Movement_MoveExitAttendantEast
+	applymovement LOCALID_SAFARI_EXIT_ATTENDANT, SafariZone_Southeast_Movement_MoveExitAttendantEast
 	waitmovement 0
 	applymovement LOCALID_PLAYER, SafariZone_Southeast_Movement_PlayerExitEast
 	waitmovement 0
@@ -94,7 +94,7 @@ SafariZone_Southeast_EventScript_ExitEarlyEast:: @ 816011F
 SafariZone_Southeast_EventScript_Exit:: @ 8160139
 	setvar VAR_SAFARI_ZONE_STATE, 1
 	special ExitSafariMode
-	warpdoor MAP_ROUTE121_SAFARI_ZONE_ENTRANCE, 255, 2, 5
+	warpdoor MAP_ROUTE121_SAFARI_ZONE_ENTRANCE, WARP_ID_NONE, 2, 5
 	waitstate
 	end
 
