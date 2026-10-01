@@ -769,7 +769,7 @@ static void CalculatePokeblockEffectiveness(struct Pokeblock *pokeblock, struct 
     s8 i;
     s16 amount;
     s8 boost;
-    s8 taste;
+    s8 flavor;
     sInfo->pokeblockStatBoosts[0] = pokeblock->spicy;
     sInfo->pokeblockStatBoosts[1] = pokeblock->sour;
     sInfo->pokeblockStatBoosts[2] = pokeblock->bitter;
@@ -787,10 +787,10 @@ static void CalculatePokeblockEffectiveness(struct Pokeblock *pokeblock, struct 
         boost = amount / 10;
         if (amount % 10 >= 5) // round to the nearest
             boost++;
-        taste = GetMonFlavorRelation(mon, sConditionToFlavor[i]);
-        if (taste == direction)
+        flavor = GetMonFlavorRelation(mon, sConditionToFlavor[i]);
+        if (flavor == direction)
         {
-            sInfo->pokeblockStatBoosts[i] += boost * taste;
+            sInfo->pokeblockStatBoosts[i] += boost * flavor;
         }
     }
 }
