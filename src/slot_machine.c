@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "constants/songs.h"
 #include "strings2.h"
 #include "overworld.h"
@@ -4406,8 +4407,8 @@ static void LoadMenuGfx(void)
 
     DmaCopyLarge16(3, sSlotMachineGfxBuffer, BG_VRAM, SLOTMACHINE_GFX_TILES * 32, 0x1000);
 
-    LoadPalette(gSlotMachineMenu_Pal, 0, 160);
-    LoadPalette(sUnkPalette, 208, 32);
+    LoadPalette(gSlotMachineMenu_Pal, BG_PLTT_ID(0), 5 * PLTT_SIZE_4BPP);
+    LoadPalette(sUnkPalette, BG_PLTT_ID(13), PLTT_SIZE_4BPP);
 }
 
 static void LoadMenuAndReelOverlayTilemaps(void)
@@ -5896,7 +5897,10 @@ static const u16 *const sPokeballShiningPalTable[] = {
 
 static const u16 *const sDigitalDisplay_Pal = gSlotMachineDigitalDisplay_Pal;
 
-static const u16 sUnkPalette[] = INCBIN_U16("graphics/slot_machine/unknown_palette.bin");
+static const u16 sUnkPalette[16] = {
+    [1] = RGB_WHITEALPHA,
+    [15] = RGB(8, 8, 8),
+};
 
 static const struct SpritePalette sSlotMachineSpritePalettes[] = {
     {gSlotMachineReelSymbols_Pal, PALTAG_REEL},
