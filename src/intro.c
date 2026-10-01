@@ -1927,12 +1927,12 @@ static void SpriteCB_WaterDrop_ReachLeafEnd(struct Sprite *sprite)
     SetOamMatrix(sprite->data[1] + 2, sprite->data[6] + 64, 0, 0, sprite->data[6] + 64);
     if (sprite->data[4] != 64)
     {
-        u16 data4;
+        u16 sinIdx;
 
         sprite->data[4] -= 8;
-        data4 = sprite->data[4];
-        sprite->x2 = gSineTable[(u8)(data4 + 64)] / 64;
-        sprite->y2 = gSineTable[(u8)data4] / 64;
+        sinIdx = sprite->data[4];
+        sprite->x2 = gSineTable[(u8)(sinIdx + 64)] / 64;
+        sprite->y2 = gSineTable[(u8)sinIdx] / 64;
     }
     else
     {
