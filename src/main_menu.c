@@ -120,7 +120,7 @@ static void NewGameBirchSpeech_ShowGenderMenu(u8 left, u8 top);
 static s8 NewGameBirchSpeech_ProcessGenderMenuInput(void);
 static void CreateNameMenu(u8 left, u8 top);
 static s8 NameMenuProcessInput(void);
-static void NewGameBirchSpeech_SetDefaultPlayerName(u8 index);
+static void NewGameBirchSpeech_SetDefaultPlayerName(u8 nameId);
 
 static const u16 sBirchSpeechBgPals[][16] =
 {
@@ -1680,15 +1680,15 @@ static s8 NameMenuProcessInput(void)
     return Menu_ProcessInput();
 }
 
-static void NewGameBirchSpeech_SetDefaultPlayerName(u8 index)
+static void NewGameBirchSpeech_SetDefaultPlayerName(u8 nameId)
 {
     u8 i;
     u8 *name;
 
     if (gSaveBlock2.playerGender == MALE)
-        name = (u8 *) gMalePresetNames[index].text;
+        name = (u8 *) gMalePresetNames[nameId].text;
     else
-        name = (u8 *) gFemalePresetNames[index].text;
+        name = (u8 *) gFemalePresetNames[nameId].text;
 
     for (i = 0; i < 7; i++)
         gSaveBlock2.playerName[i] = name[i];
