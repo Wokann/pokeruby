@@ -8,7 +8,7 @@ SealedChamber_InnerRoom_EventScript_BrailleBackWall:: @ 815F1E8
 	erasebox 0, 0, 29, 19
 	goto_if_set FLAG_REGI_DOORS_OPENED, SealedChamber_InnerRoom_EventScript_NoEffect
 	specialvar VAR_RESULT, CheckRelicanthWailord
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq SealedChamber_InnerRoom_EventScript_NoEffect
 	fadeoutbgm 0
 	playse SE_TRUCK_MOVE

@@ -5,8 +5,8 @@ SealedChamber_OuterRoom_MapScripts:: @ 815F0C6
 	.byte 0
 
 SealedChamber_OuterRoom_OnResume:: @ 815F0D6
-	setdivewarp MAP_UNDERWATER_SEALED_CHAMBER, 255, 12, 44
-	setescapewarp MAP_UNDERWATER_SEALED_CHAMBER, 255, 12, 44
+	setdivewarp MAP_UNDERWATER_SEALED_CHAMBER, WARP_ID_NONE, 12, 44
+	setescapewarp MAP_UNDERWATER_SEALED_CHAMBER, WARP_ID_NONE, 12, 44
 	end
 
 SealedChamber_OuterRoom_OnTransition:: @ 815F0E7
@@ -18,12 +18,12 @@ SealedChamber_OuterRoom_OnLoad:: @ 815F0EB
 	end
 
 SealedChamber_OuterRoom_EventScript_CloseInnerRoomEntrance:: @ 815F0F5
-	setmetatile 9, 1, METATILE_Cave_EntranceCover, 1
-	setmetatile 10, 1, METATILE_Cave_EntranceCover, 1
-	setmetatile 11, 1, METATILE_Cave_EntranceCover, 1
-	setmetatile 9, 2, METATILE_Cave_SealedChamberBraille_Mid, 1
-	setmetatile 10, 2, METATILE_Cave_SealedChamberBraille_Mid, 1
-	setmetatile 11, 2, METATILE_Cave_SealedChamberBraille_Mid, 1
+	setmetatile 9, 1, METATILE_Cave_EntranceCover, TRUE
+	setmetatile 10, 1, METATILE_Cave_EntranceCover, TRUE
+	setmetatile 11, 1, METATILE_Cave_EntranceCover, TRUE
+	setmetatile 9, 2, METATILE_Cave_SealedChamberBraille_Mid, TRUE
+	setmetatile 10, 2, METATILE_Cave_SealedChamberBraille_Mid, TRUE
+	setmetatile 11, 2, METATILE_Cave_SealedChamberBraille_Mid, TRUE
 	return
 
 SealedChamber_OuterRoom_EventScript_BrailleABC:: @ 815F12C
