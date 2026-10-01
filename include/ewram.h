@@ -110,7 +110,7 @@ extern u8 gSharedMem[];
 #define ePokedexCryScreen               (*(struct PokedexCryScreen *)(gSharedMem + 0x1C000))
 #define ePokedexCryMeterNeedle          (*(struct PokedexCryMeterNeedle *)(gSharedMem + 0x1C800))
 
-#define ewram_2010000                   (*(struct TradeEwramStruct *)(gSharedMem + 0x10000))
+#define sTradeSharedMem                  (*(struct TradeSharedMem *)(gSharedMem + 0x10000))
 #define sBerryBlenderGfxBuffer          (&gSharedMem[0x10000])
 #define sSlotMachineGfxBuffer           (void *)(gSharedMem + 0x10000) // slot machine
 #define sSlotMachineReelTimeGfxBuffer   (&gSharedMem[0x13200])

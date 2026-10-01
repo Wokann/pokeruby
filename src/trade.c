@@ -170,7 +170,7 @@ struct SummaryScreenCursorState {
     u8 filler_000a[0xff6];
 };
 
-struct TradeEwramStruct {
+struct TradeSharedMem {
     /*0x00000*/ u8 filler_00000[0x7000];
     /*0x07000*/ struct TradeMenuState tradeMenu;
     /*0x08000*/ struct SummaryScreenCursorState summaryScreenCursorState;
@@ -312,19 +312,19 @@ const u16 sMenuText_Pal[] = INCBIN_U16("graphics/trade/text1.gbapal");
 const u16 sUnusedMenuTextPalette[] = INCBIN_U16("graphics/trade/text2.gbapal");
 
 const struct SpriteSheet sMenuTextSpriteSheets[] = {
-    {ewram_2010000.tileBuffers[ 0], 256, GFXTAG_MENU_TEXT +  0},
-    {ewram_2010000.tileBuffers[ 1], 256, GFXTAG_MENU_TEXT +  1},
-    {ewram_2010000.tileBuffers[ 2], 256, GFXTAG_MENU_TEXT +  2},
-    {ewram_2010000.tileBuffers[ 3], 256, GFXTAG_MENU_TEXT +  3},
-    {ewram_2010000.tileBuffers[ 4], 256, GFXTAG_MENU_TEXT +  4},
-    {ewram_2010000.tileBuffers[ 5], 256, GFXTAG_MENU_TEXT +  5},
-    {ewram_2010000.tileBuffers[ 6], 256, GFXTAG_MENU_TEXT +  6},
-    {ewram_2010000.tileBuffers[ 7], 256, GFXTAG_MENU_TEXT +  7},
-    {ewram_2010000.tileBuffers[ 8], 256, GFXTAG_MENU_TEXT +  8},
-    {ewram_2010000.tileBuffers[ 9], 256, GFXTAG_MENU_TEXT +  9},
-    {ewram_2010000.tileBuffers[10], 256, GFXTAG_MENU_TEXT + 10},
-    {ewram_2010000.tileBuffers[11], 256, GFXTAG_MENU_TEXT + 11},
-    {ewram_2010000.tileBuffers[12], 256, GFXTAG_MENU_TEXT + 12},
+    {sTradeSharedMem.tileBuffers[ 0], 256, GFXTAG_MENU_TEXT +  0},
+    {sTradeSharedMem.tileBuffers[ 1], 256, GFXTAG_MENU_TEXT +  1},
+    {sTradeSharedMem.tileBuffers[ 2], 256, GFXTAG_MENU_TEXT +  2},
+    {sTradeSharedMem.tileBuffers[ 3], 256, GFXTAG_MENU_TEXT +  3},
+    {sTradeSharedMem.tileBuffers[ 4], 256, GFXTAG_MENU_TEXT +  4},
+    {sTradeSharedMem.tileBuffers[ 5], 256, GFXTAG_MENU_TEXT +  5},
+    {sTradeSharedMem.tileBuffers[ 6], 256, GFXTAG_MENU_TEXT +  6},
+    {sTradeSharedMem.tileBuffers[ 7], 256, GFXTAG_MENU_TEXT +  7},
+    {sTradeSharedMem.tileBuffers[ 8], 256, GFXTAG_MENU_TEXT +  8},
+    {sTradeSharedMem.tileBuffers[ 9], 256, GFXTAG_MENU_TEXT +  9},
+    {sTradeSharedMem.tileBuffers[10], 256, GFXTAG_MENU_TEXT + 10},
+    {sTradeSharedMem.tileBuffers[11], 256, GFXTAG_MENU_TEXT + 11},
+    {sTradeSharedMem.tileBuffers[12], 256, GFXTAG_MENU_TEXT + 12},
 };
 
 const struct SpritePalette sSpritePalette_MenuText = {
@@ -1102,7 +1102,7 @@ static void CB2_CreateTradeMenu(void)
     switch (gMain.state)
     {
         case  0:
-            sTradeMenu = &ewram_2010000.tradeMenu;
+            sTradeMenu = &sTradeSharedMem.tradeMenu;
             InitTradeMenuActionQueue();
             ResetSpriteData();
             FreeAllSpritePalettes();
@@ -1127,9 +1127,9 @@ static void CB2_CreateTradeMenu(void)
             sUnusedTradeMenuData[0] = 0;
             gMain.state ++;
             PrintTradeMessage(0);
-            CpuFill16(0, ewram_2010000.tileBuffers, sizeof(ewram_2010000.tileBuffers));
+            CpuFill16(0, sTradeSharedMem.tileBuffers, sizeof(sTradeSharedMem.tileBuffers));
             for (i = 0; i < 13; i ++)
-                sMenuTextTileBuffers[i] = ewram_2010000.tileBuffers[i];
+                sMenuTextTileBuffers[i] = sTradeSharedMem.tileBuffers[i];
             break;
         case  1:
             gLinkType = LINKTYPE_TRADE_CONNECTING;
@@ -1283,7 +1283,7 @@ static void CB2_ReturnToTradeMenu(void)
     switch (gMain.state)
     {
         case  0:
-            sTradeMenu = &ewram_2010000.tradeMenu;
+            sTradeMenu = &sTradeSharedMem.tradeMenu;
             ResetSpriteData();
             FreeAllSpritePalettes();
             ResetTasks();
@@ -1307,7 +1307,7 @@ static void CB2_ReturnToTradeMenu(void)
             sUnusedTradeMenuData[0] = 0;
             gMain.state ++;
             for (i = 0; i < 13; i ++)
-                sMenuTextTileBuffers[i] = ewram_2010000.tileBuffers[i];
+                sMenuTextTileBuffers[i] = sTradeSharedMem.tileBuffers[i];
             break;
         case  1:
             gMain.state ++;
@@ -1367,7 +1367,7 @@ static void CB2_ReturnToTradeMenu(void)
             break;
         case 12:
             CreateTradeMenuActionTextSprites();
-            summaryScreenCursorState = &ewram_2010000.summaryScreenCursorState;
+            summaryScreenCursorState = &sTradeSharedMem.summaryScreenCursorState;
             if (sTradeMenu->cursorPosition < 6)
                 sTradeMenu->cursorPosition = summaryScreenCursorState->cursorPosition;
             else
@@ -3582,7 +3582,7 @@ void CB2_LinkTrade(void)
             REG_DISPCNT = 0;
             ResetTasks();
             CloseLink();
-            gTradeAnim = &ewram_2010000.tradeAnim;
+            gTradeAnim = &sTradeSharedMem.tradeAnim;
             ResetSpriteData();
             FreeAllSpritePalettes();
             SetVBlankCallback(VBlankCB_TradeAnim);
@@ -4087,7 +4087,7 @@ void CB2_InitInGameTrade(void)
             StringCopy(gLinkPlayers[1].name, otName);
             REG_DISPCNT = 0;
             ResetTasks();
-            gTradeAnim = &ewram_2010000.tradeAnim;
+            gTradeAnim = &sTradeSharedMem.tradeAnim;
             ResetSpriteData();
             FreeAllSpritePalettes();
             SetVBlankCallback(VBlankCB_TradeAnim);
@@ -5096,7 +5096,7 @@ static void CB2_SaveAndEndTrade(void)
     switch (gMain.state)
     {
         case 0:
-            gTradeAnim = &ewram_2010000.tradeAnim;
+            gTradeAnim = &sTradeSharedMem.tradeAnim;
             gMain.state ++;
             Text_EraseWindowRect(&gTradeAnim->window, 0, 0, 29, 19);
             StringExpandPlaceholders(gStringVar4, gOtherText_LinkStandby2);
