@@ -222,15 +222,15 @@ static void PrintContestPaintingCaption(u8 contestWinnerId, bool8 isForArtist)
 {
     u8 xPos, yPos;
     u8 *ptr;
-    u8 contestCategory;
+    u8 category;
 
     if (isForArtist == TRUE)
         return;
     ptr = sCaptionBuffer;
-    contestCategory = gContestPaintingWinner->contestCategory;
+    category = gContestPaintingWinner->contestCategory;
     if (contestWinnerId < MUSEUM_CONTEST_WINNERS_START)
     {
-        ptr = StringCopy(ptr, sContestCategoryNames[contestCategory]);
+        ptr = StringCopy(ptr, sContestCategoryNames[category]);
         ptr = StringCopy(ptr, gContestPaintingWinnerTitle);
 #if ENGLISH
         ptr = StringCopy(ptr, gContestPaintingWinner->trainerName);
@@ -255,9 +255,9 @@ static void PrintContestPaintingCaption(u8 contestWinnerId, bool8 isForArtist)
     }
     else
     {
-        ptr = StringCopy(ptr, sMuseumCaptions[contestCategory].prefix);
+        ptr = StringCopy(ptr, sMuseumCaptions[category].prefix);
         ptr = StringCopy_Nickname(ptr, gContestPaintingWinner->monName);
-        ptr = StringCopy(ptr, sMuseumCaptions[contestCategory].suffix);
+        ptr = StringCopy(ptr, sMuseumCaptions[category].suffix);
 
         xPos = 3;
         yPos = 14;
