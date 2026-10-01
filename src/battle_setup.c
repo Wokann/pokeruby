@@ -930,7 +930,7 @@ static u8 TrainerBattleLoadArg8(const u8 *ptr)
     return T1_READ_8(ptr);
 }
 
-static u16 GetCurrentTrainerFlag(void)
+static u16 GetTrainerAFlag(void)
 {
     return TRAINER_FLAG_START + gTrainerBattleOpponent;
 }
@@ -1080,17 +1080,17 @@ u8 GetTrainerBattleMode(void)
 
 bool8 GetTrainerFlag(void)
 {
-    return FlagGet(GetCurrentTrainerFlag());
+    return FlagGet(GetTrainerAFlag());
 }
 
 static void SetBattledTrainerFlag(void)
 {
-    FlagSet(GetCurrentTrainerFlag());
+    FlagSet(GetTrainerAFlag());
 }
 
 static void UNUSED UnusedSetBattledTrainerFlag(void)
 {
-    FlagSet(GetCurrentTrainerFlag()); // duplicate function
+    FlagSet(GetTrainerAFlag()); // duplicate function
 }
 
 bool8 HasTrainerBeenFought(u16 trainerId)
