@@ -3,5 +3,5 @@ Underwater_SootopolisCity_MapScripts:: @ 815CAE4
 	.byte 0
 
 Underwater_SootopolisCity_OnResume:: @ 815CAEA
-	setdivewarp MAP_SOOTOPOLIS_CITY, 255, 29, 53
+	setdivewarp MAP_SOOTOPOLIS_CITY, WARP_ID_NONE, 29, 53
 	end
