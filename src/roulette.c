@@ -768,7 +768,7 @@ void CB2_LoadRoulette(void)
     case 0:
         SetVBlankCallback(NULL);
         ScanlineEffect_Stop();
-        ClearVideoCallbacks();
+        SetVBlankHBlankCallbacksToNull();
         ResetVramOamAndBgCntRegs();
         REG_BG2CNT   = BGCNT_PRIORITY(2) | BGCNT_CHARBASE(1) | BGCNT_256COLOR | BGCNT_SCREENBASE(6) | BGCNT_TXT512x256;
         REG_BG1CNT   = BGCNT_PRIORITY(1) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(4) | BGCNT_TXT512x256;

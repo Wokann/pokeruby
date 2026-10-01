@@ -314,7 +314,7 @@ void ResetVramOamAndBgCntRegs(void)
     DmaClear16(3, PLTT, PLTT_SIZE);
 }
 
-void ClearVideoCallbacks(void)
+void SetVBlankHBlankCallbacksToNull(void)
 {
     SetVBlankCallback(NULL);
     SetHBlankCallback(NULL);

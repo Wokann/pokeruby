@@ -33,7 +33,7 @@ bool8 IsHoldingItemAllowed(u16);
 bool8 IsWritingMailAllowed(u16);
 bool8 MenuHelpers_IsLinkActive(void);
 void ResetVramOamAndBgCntRegs(void);
-void ClearVideoCallbacks(void);
+void SetVBlankHBlankCallbacksToNull(void);
 void ResetScrollIndicatorState(void);
 void InitDecorationMarkerSpriteIds(u8 *, u8);
 void CreateDecorationMarkerSprite(u8, u8 *, s16, s16);

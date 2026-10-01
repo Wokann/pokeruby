@@ -95,7 +95,7 @@ static bool8 InitBerryTagScreen(void)
     switch (gMain.state)
     {
     case 0:
-        ClearVideoCallbacks();
+        SetVBlankHBlankCallbacksToNull();
         ResetVramOamAndBgCntRegs();
         HandleInitBackgrounds();
         REG_BLDCNT = 0;

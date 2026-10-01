@@ -276,7 +276,7 @@ static bool8 InitPokeblockMenu(void)
     switch (gMain.state)
     {
         case  0:
-            ClearVideoCallbacks();
+            SetVBlankHBlankCallbacksToNull();
             ResetVramOamAndBgCntRegs();
             REG_BG2CNT = BGCNT_SCREENBASE(15) | BGCNT_CHARBASE(2) | BGCNT_PRIORITY(2);
             REG_BLDCNT = 0;

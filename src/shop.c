@@ -255,7 +255,7 @@ static void VBlankCB(void)
 
 static void BuyMenuDrawGraphics(void)
 {
-    ClearVideoCallbacks();
+    SetVBlankHBlankCallbacksToNull();
     ScanlineEffect_Stop();
     REG_BG1HOFS = 0;
     REG_BG1VOFS = 0;

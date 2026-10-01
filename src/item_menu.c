@@ -387,7 +387,7 @@ static bool8 SetupBagMultistep(void)
     switch (gMain.state)
     {
     case 0:
-        ClearVideoCallbacks();
+        SetVBlankHBlankCallbacksToNull();
         BagMenu_InitBGs();
         gMain.state++;
         break;

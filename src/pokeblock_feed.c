@@ -584,7 +584,7 @@ static bool8 LoadPokeblockFeedScene(void)
     switch (gMain.state)
     {
     case 0:
-        ClearVideoCallbacks();
+        SetVBlankHBlankCallbacksToNull();
         ResetVramOamAndBgCntRegs();
         HandleInitBackgrounds();
         gMain.state++;
