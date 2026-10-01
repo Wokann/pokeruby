@@ -16,10 +16,10 @@ LilycoveCity_MoveDeletersHouse_EventScript_ChooseMonAndMoveToForget:: @ 8159ADE
 	msgbox LilycoveCity_MoveDeletersHouse_Text_WhichMonShouldForget, MSGBOX_DEFAULT
 	special ChoosePartyMon
 	waitstate
-	compare VAR_0x8004, 255
+	compare VAR_0x8004, PARTY_NOTHING_CHOSEN
 	goto_if_eq LilycoveCity_MoveDeletersHouse_EventScript_ComeAgain
 	special IsSelectedMonEgg
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq LilycoveCity_MoveDeletersHouse_EventScript_EggCantForgetMoves
 	special GetNumMovesSelectedMonHas
 	compare VAR_RESULT, 1
@@ -28,7 +28,7 @@ LilycoveCity_MoveDeletersHouse_EventScript_ChooseMonAndMoveToForget:: @ 8159ADE
 	fadescreen FADE_TO_BLACK
 	special MoveDeleterChooseMoveToForget
 	fadescreen FADE_FROM_BLACK
-	compare VAR_0x8005, 4
+	compare VAR_0x8005, MAX_MON_MOVES
 	goto_if_eq LilycoveCity_MoveDeletersHouse_EventScript_ChooseMonAndMoveToForget
 	special BufferMoveDeleterNicknameAndMove
 	msgbox LilycoveCity_MoveDeletersHouse_Text_MonsMoveShouldBeForgotten, MSGBOX_YESNO

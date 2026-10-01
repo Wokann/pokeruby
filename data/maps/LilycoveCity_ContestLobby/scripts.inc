@@ -21,7 +21,7 @@ LilycoveCity_ContestLobby_EventScript_ContestArtist:: @ 8158898
 	lockall
 	addobject LOCALID_CONTEST_LOBBY_ARTIST
 	applymovement LOCALID_CONTEST_LOBBY_ARTIST, LilycoveCity_ContestLobby_Movement_ArtistApproachPlayer
-	waitmovement 4
+	waitmovement LOCALID_CONTEST_LOBBY_ARTIST
 	applymovement LOCALID_PLAYER, LilycoveCity_ContestLobby_Movement_PlayerFaceArtist
 	waitmovement 0
 	msgbox LilycoveCity_ContestLobby_Text_YourPokemonSpurredMeToPaint, MSGBOX_DEFAULT
@@ -195,7 +195,7 @@ LilycoveCity_ContestLobby_EventScript_LinkContestArtist:: @ 8158A6A
 	lockall
 	addobject LOCALID_CONTEST_LOBBY_LINK_ARTIST
 	applymovement LOCALID_CONTEST_LOBBY_LINK_ARTIST, LilycoveCity_ContestLobby_Movement_LinkArtistApproachPlayer
-	waitmovement 11
+	waitmovement LOCALID_CONTEST_LOBBY_LINK_ARTIST
 	applymovement LOCALID_PLAYER, LilycoveCity_ContestLobby_Movement_PlayerFaceLinkArtist
 	waitmovement 0
 	msgbox LilycoveCity_ContestLobby_Text_YourPokemonSpurredMeToPaint, MSGBOX_DEFAULT
@@ -215,7 +215,7 @@ LilycoveCity_ContestLobby_EventScript_TakePaintingToMuseumLink:: @ 8158AAE
 	special SaveMuseumContestPainting
 	setvar VAR_LILYCOVE_CONTEST_LOBBY_STATE, LILYCOVE_CONTEST_LOBBY_STATE_NONE
 	specialvar VAR_RESULT, GiveMonArtistRibbon
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	call_if_eq LilycoveCity_ContestLobby_EventScript_ReceivedLinkArtistRibbon
 	applymovement LOCALID_CONTEST_LOBBY_LINK_ARTIST, LilycoveCity_ContestLobby_Movement_LinkArtistExit
 	waitmovement 0
@@ -335,7 +335,7 @@ LilycoveCity_ContestLobby_EventScript_TrySaveForLinkContest:: @ 8158BC4
 	return
 
 LilycoveCity_ContestLobby_EventScript_AskEnterLinkContest:: @ 8158BF0
-	multichoice 0, 0, MULTI_ENTERINFO, 0
+	multichoice 0, 0, MULTI_ENTERINFO, FALSE
 	switch VAR_RESULT
 	case 0, LilycoveCity_ContestLobby_EventScript_ChooseLinkContestType
 	case 1, LilycoveCity_ContestLobby_EventScript_ExplainLinkContest
@@ -402,7 +402,7 @@ LilycoveCity_ContestLobby_EventScript_ChooseLinkContestType:: @ 8158CEA
 	call_if_unset FLAG_TEMP_3, LilycoveCity_ContestLobby_EventScript_TrySaveForLinkContest
 	message LilycoveCity_ContestLobby_Text_EnterWhichContest
 	waitmessage
-	multichoice 0, 0, MULTI_CONTEST_TYPE, 0
+	multichoice 0, 0, MULTI_CONTEST_TYPE, FALSE
 	switch VAR_RESULT
 	case CONTEST_CATEGORIES_COUNT, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
 	case MULTI_B_PRESSED, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
@@ -416,11 +416,11 @@ LilycoveCity_ContestLobby_EventScript_TrySetUpLinkContest:: @ 8158D24
 	copyvar VAR_0x8004, VAR_RESULT
 	special TryContestGModeLinkup
 	waitstate
-	compare VAR_RESULT, 3
+	compare VAR_RESULT, LINKUP_DIFF_SELECTIONS
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_CancelLinkDifferentChoices
-	compare VAR_RESULT, 5
+	compare VAR_RESULT, LINKUP_FAILED
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_CancelLinkContest
-	compare VAR_RESULT, 6
+	compare VAR_RESULT, LINKUP_CONNECTION_ERROR
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_CancelLinkError
 	messageautoscroll LilycoveCity_ContestLobby_Text_Transmitting
 	waitmessage
@@ -468,7 +468,7 @@ LilycoveCity_ContestLobby_EventScript_CancelLinkTransmissionError:: @ 8158DC3
 LilycoveCity_ContestLobby_EventScript_StartLinkContest:: @ 8158DD1
 	special GetContestPlayerId
 	addvar VAR_0x8004, 1
-	buffernumberstring 1, 32772
+	buffernumberstring STR_VAR_2, VAR_0x8004
 	messageautoscroll LilycoveCity_ContestLobby_Text_YourMonIsEntryNumX
 	waitmessage
 	addvar VAR_0x8004, -1
@@ -598,31 +598,31 @@ LilycoveCity_ContestLobby_EventScript_WarpToContestHall:: @ 8158F08
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToCoolContestHall:: @ 8158F45
-	setwarp MAP_LINK_CONTEST_ROOM4, 255, 7, 5
+	setwarp MAP_LINK_CONTEST_ROOM4, WARP_ID_NONE, 7, 5
 	special DoContestHallWarp
 	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToBeautyContestHall:: @ 8158F52
-	setwarp MAP_LINK_CONTEST_ROOM2, 255, 7, 5
+	setwarp MAP_LINK_CONTEST_ROOM2, WARP_ID_NONE, 7, 5
 	special DoContestHallWarp
 	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToCuteContestHall:: @ 8158F5F
-	setwarp MAP_LINK_CONTEST_ROOM6, 255, 7, 5
+	setwarp MAP_LINK_CONTEST_ROOM6, WARP_ID_NONE, 7, 5
 	special DoContestHallWarp
 	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToSmartContestHall:: @ 8158F6C
-	setwarp MAP_LINK_CONTEST_ROOM5, 255, 7, 5
+	setwarp MAP_LINK_CONTEST_ROOM5, WARP_ID_NONE, 7, 5
 	special DoContestHallWarp
 	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToToughContestHall:: @ 8158F79
-	setwarp MAP_LINK_CONTEST_ROOM3, 255, 7, 5
+	setwarp MAP_LINK_CONTEST_ROOM3, WARP_ID_NONE, 7, 5
 	special DoContestHallWarp
 	waitstate
 	return

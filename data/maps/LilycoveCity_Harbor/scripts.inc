@@ -3,14 +3,14 @@ LilycoveCity_Harbor_MapScripts:: @ 8159893
 	.byte 0
 
 LilycoveCity_Harbor_OnTransition:: @ 8159899
-	setescapewarp MAP_LILYCOVE_CITY, 255, 12, 33
+	setescapewarp MAP_LILYCOVE_CITY, WARP_ID_NONE, 12, 33
 	end
 
 LilycoveCity_Harbor_EventScript_FerryAttendant:: @ 81598A2
 	lock
 	faceplayer
 	checkitem ITEM_EON_TICKET, 1
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq LilycoveCity_Harbor_EventScript_FerryAttendantLocationAndBoarding
 	goto LilycoveCity_Harbor_EventScript_FerryUnavailable
 	end
@@ -24,7 +24,7 @@ LilycoveCity_Harbor_EventScript_FerryUnavailable:: @ 81598BA
 LilycoveCity_Harbor_EventScript_NoFirstTimeEventTickets:: @ 81598CD
 	msgbox LilycoveCity_Harbor_Text_MayISeeYourTicket, MSGBOX_DEFAULT
 	checkitem ITEM_SS_TICKET, 1
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq LilycoveCity_Harbor_EventScript_NoTicket
 	message LilycoveCity_Harbor_Text_FlashTicketWhereTo
 	waitmessage
@@ -32,7 +32,7 @@ LilycoveCity_Harbor_EventScript_NoFirstTimeEventTickets:: @ 81598CD
 	end
 
 LilycoveCity_Harbor_EventScript_FerryRegularLocationSelect:: @ 81598F1
-	multichoicedefault 18, 6, MULTI_SSTIDAL_LILYCOVE_WITH_BATTLE_TOWER, 2, 0
+	multichoicedefault 18, 6, MULTI_SSTIDAL_LILYCOVE_WITH_BATTLE_TOWER, 2, FALSE
 	switch VAR_RESULT
 	case 0, LilycoveCity_Harbor_EventScript_GoToSlateport
 	case 1, LilycoveCity_Harbor_EventScript_GoToBattleTower
@@ -51,7 +51,7 @@ LilycoveCity_Harbor_EventScript_GoToSlateport:: @ 8159933
 	goto_if_eq LilycoveCity_Harbor_EventScript_FerryDestinationChangeMind
 	setvar VAR_SS_TIDAL_STATE, SS_TIDAL_BOARD_LILYCOVE
 	call LilycoveCity_Harbor_EventScript_BoardFerry
-	warp MAP_SS_TIDAL_CORRIDOR, 255, 1, 10
+	warp MAP_SS_TIDAL_CORRIDOR, WARP_ID_NONE, 1, 10
 	waitstate
 	release
 	end
@@ -61,7 +61,7 @@ LilycoveCity_Harbor_EventScript_GoToBattleTower:: @ 815995B
 	compare VAR_RESULT, NO
 	goto_if_eq LilycoveCity_Harbor_EventScript_FerryDestinationChangeMind
 	call LilycoveCity_Harbor_EventScript_BoardFerry
-	warp MAP_BATTLE_TOWER_OUTSIDE, 255, 19, 23
+	warp MAP_BATTLE_TOWER_OUTSIDE, WARP_ID_NONE, 19, 23
 	waitstate
 	release
 	end
@@ -79,13 +79,13 @@ LilycoveCity_Harbor_EventScript_BoardFerry:: @ 815998A
 	waitmovement 0
 	delay 30
 	hideobjectat VAR_LAST_TALKED, MAP_LILYCOVE_CITY_HARBOR
-	compare VAR_FACING, 2
+	compare VAR_FACING, DIR_NORTH
 	call_if_eq LilycoveCity_Harbor_EventScript_PlayerBoardFerryNorth
-	compare VAR_FACING, 4
+	compare VAR_FACING, DIR_EAST
 	call_if_eq LilycoveCity_Harbor_EventScript_PlayerBoardFerryEast
 	delay 30
 	hideobjectat LOCALID_PLAYER, MAP_PETALBURG_CITY
-	setvar VAR_0x8004, 2
+	setvar VAR_0x8004, LOCALID_LILYCOVE_HARBOR_SS_TIDAL
 	call Common_EventScript_FerryDepart
 	return
 
@@ -125,16 +125,16 @@ LilycoveCity_Harbor_EventScript_FerryAttendantLocationAndBoarding:: @ 81599EE
 	waitmovement 0
 	delay 30
 	removeobject LOCALID_LILYCOVE_HARBOR_FERRY_SAILOR
-	compare VAR_FACING, 2
+	compare VAR_FACING, DIR_NORTH
 	call_if_eq LilycoveCity_Harbor_EventScript_PlayerBoardFerryNorth
-	compare VAR_FACING, 4
+	compare VAR_FACING, DIR_EAST
 	call_if_eq LilycoveCity_Harbor_EventScript_PlayerBoardFerryEast
 	delay 30
 	hideobjectat LOCALID_PLAYER, MAP_PETALBURG_CITY
 	special HealPlayerParty
-	setvar VAR_0x8004, 2
+	setvar VAR_0x8004, LOCALID_LILYCOVE_HARBOR_SS_TIDAL
 	call Common_EventScript_FerryDepart
-	warp MAP_SOUTHERN_ISLAND_EXTERIOR, 255, 13, 22
+	warp MAP_SOUTHERN_ISLAND_EXTERIOR, WARP_ID_NONE, 13, 22
 	waitstate
 	release
 	end

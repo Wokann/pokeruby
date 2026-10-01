@@ -10,7 +10,7 @@ LilycoveCity_LilycoveMuseum_1F_EventScript_Curator:: @ 8158425
 	applymovement LOCALID_MUSEUM_1F_CURATOR, Common_Movement_FacePlayer
 	message LilycoveCity_LilycoveMuseum_1F_Text_ImCuratorHaveYouViewedOurPaintings
 	waitmessage
-	multichoice 20, 8, MULTI_VIEWED_PAINTINGS, 1
+	multichoice 20, 8, MULTI_VIEWED_PAINTINGS, TRUE
 	compare VAR_RESULT, 0
 	goto_if_eq LilycoveCity_LilycoveMuseum_1F_EventScript_SawPaintings
 	compare VAR_RESULT, 1
@@ -49,7 +49,7 @@ LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorNorth:: @ 81584BD
 	lockall
 	applymovement LOCALID_PLAYER, LilycoveCity_LilycoveMuseum_1F_Movement_FollowCuratorNorth
 	waitmovement 0
-	warp MAP_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F, 255, 11, 8
+	warp MAP_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F, WARP_ID_NONE, 11, 8
 	waitstate
 	end
 
@@ -57,7 +57,7 @@ LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorWest:: @ 81584D2
 	lockall
 	applymovement LOCALID_PLAYER, LilycoveCity_LilycoveMuseum_1F_Movement_FollowCuratorWest
 	waitmovement 0
-	warp MAP_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F, 255, 11, 8
+	warp MAP_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F, WARP_ID_NONE, 11, 8
 	waitstate
 	end
 
@@ -65,7 +65,7 @@ LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorEast:: @ 81584E7
 	lockall
 	applymovement LOCALID_PLAYER, LilycoveCity_LilycoveMuseum_1F_Movement_FollowCuratorEast
 	waitmovement 0
-	warp MAP_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F, 255, 11, 8
+	warp MAP_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F, WARP_ID_NONE, 11, 8
 	waitstate
 	end
 

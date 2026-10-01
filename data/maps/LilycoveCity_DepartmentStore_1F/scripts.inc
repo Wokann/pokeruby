@@ -39,7 +39,7 @@ LilycoveCity_DepartmentStore_1F_EventScript_LotteryClerk:: @ 8159D5E
 	call_if_eq LilycoveCity_DepartmentStore_1F_EventScript_TicketMatchPartyMon
 	compare VAR_0x8006, 1
 	call_if_eq LilycoveCity_DepartmentStore_1F_EventScript_TicketMatchPCMon
-	bufferitemname 0, VAR_0x8005
+	bufferitemname STR_VAR_1, VAR_0x8005
 	compare VAR_0x8004, 1
 	call_if_eq LilycoveCity_DepartmentStore_1F_EventScript_TwoDigitMatch
 	compare VAR_0x8004, 2
@@ -49,7 +49,7 @@ LilycoveCity_DepartmentStore_1F_EventScript_LotteryClerk:: @ 8159D5E
 	compare VAR_0x8004, 4
 	call_if_eq LilycoveCity_DepartmentStore_1F_EventScript_FullMatch
 	giveitem VAR_0x8005
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq LilycoveCity_DepartmentStore_1F_EventScript_RecordPrizeNoRoom
 	goto LilycoveCity_DepartmentStore_1F_EventScript_PleaseVisitAgain2
 	end
@@ -111,7 +111,7 @@ LilycoveCity_DepartmentStore_1F_EventScript_NoRoomForPrize:: @ 8159EA7
 LilycoveCity_DepartmentStore_1F_EventScript_GivePrizeFromEarlier:: @ 8159EB1
 	msgbox LilycoveCity_DepartmentStore_1F_Text_PrizeWeveBeenHolding, MSGBOX_DEFAULT
 	giveitem VAR_POKELOT_PRIZE_ITEM
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq LilycoveCity_DepartmentStore_1F_EventScript_NoRoomForPrize
 	setvar VAR_POKELOT_PRIZE_ITEM, ITEM_NONE
 	release
@@ -133,7 +133,7 @@ LilycoveCity_DepartmentStore_1F_EventScript_Azumarill:: @ 8159EF2
 	lock
 	faceplayer
 	waitse
-	playmoncry SPECIES_AZUMARILL, 0
+	playmoncry SPECIES_AZUMARILL, CRY_MODE_NORMAL
 	msgbox LilycoveCity_DepartmentStore_1F_Text_Azumarill, MSGBOX_DEFAULT
 	waitmoncry
 	release

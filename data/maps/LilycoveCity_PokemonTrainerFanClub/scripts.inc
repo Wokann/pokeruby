@@ -71,68 +71,68 @@ LilycoveCity_PokemonTrainerFanClub_EventScript_UpdateFanMemberPositions:: @ 8159
 	special TryLoseFansFromPlayTime
 	setvar VAR_0x8004, 8
 	specialvar VAR_RESULT, IsFanClubMemberFanOfPlayer
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	call_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember1ToFarTable
 	setvar VAR_0x8004, 9
 	specialvar VAR_RESULT, IsFanClubMemberFanOfPlayer
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	call_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember2ToFarTable
 	setvar VAR_0x8004, 10
 	specialvar VAR_RESULT, IsFanClubMemberFanOfPlayer
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	call_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember3ToFarTable
 	setvar VAR_0x8004, 11
 	specialvar VAR_RESULT, IsFanClubMemberFanOfPlayer
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	call_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember4ToFarTable
 	setvar VAR_0x8004, 12
 	specialvar VAR_RESULT, IsFanClubMemberFanOfPlayer
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	call_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember5ToFarTable
 	setvar VAR_0x8004, 13
 	specialvar VAR_RESULT, IsFanClubMemberFanOfPlayer
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	call_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember6ToFarTable
 	setvar VAR_0x8004, 14
 	specialvar VAR_RESULT, IsFanClubMemberFanOfPlayer
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	call_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember7ToFarTable
 	setvar VAR_0x8004, 15
 	specialvar VAR_RESULT, IsFanClubMemberFanOfPlayer
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	call_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember8ToFarTable
 	end
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember1ToFarTable:: @ 81594D5
-	setobjectxyperm 1, 7, 5
+	setobjectxyperm LOCALID_TRAINER_FAN_CLUB_LASS, 7, 5
 	return
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember2ToFarTable:: @ 81594DD
-	setobjectxyperm 3, 3, 4
+	setobjectxyperm LOCALID_TRAINER_FAN_CLUB_POKEFAN_M, 3, 4
 	return
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember3ToFarTable:: @ 81594E5
-	setobjectxyperm 4, 7, 2
+	setobjectxyperm LOCALID_TRAINER_FAN_CLUB_LITTLE_GIRL, 7, 2
 	return
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember4ToFarTable:: @ 81594ED
-	setobjectxyperm 5, 5, 5
+	setobjectxyperm LOCALID_TRAINER_FAN_CLUB_NINJA_BOY, 5, 5
 	return
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember5ToFarTable:: @ 81594F5
-	setobjectxyperm 6, 5, 2
+	setobjectxyperm LOCALID_TRAINER_FAN_CLUB_BOY, 5, 2
 	return
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember6ToFarTable:: @ 81594FD
-	setobjectxyperm 2, 8, 4
+	setobjectxyperm LOCALID_TRAINER_FAN_CLUB_MAN, 8, 4
 	return
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember7ToFarTable:: @ 8159505
-	setobjectxyperm 7, 3, 3
+	setobjectxyperm LOCALID_TRAINER_FAN_CLUB_WOMAN, 3, 3
 	return
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember8ToFarTable:: @ 815950D
-	setobjectxyperm 8, 8, 3
+	setobjectxyperm LOCALID_TRAINER_FAN_CLUB_EXPERT_F, 8, 3
 	return
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_SetFanMemberPositionsForFirstFanMeeting:: @ 8159515
@@ -151,7 +151,7 @@ LilycoveCity_PokemonTrainerFanClub_EventScript_Man:: @ 815952F
 	compare VAR_LILYCOVE_FAN_CLUB_STATE, 0
 	goto_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_ManPlayerNotChampion
 	specialvar VAR_RESULT, IsFanClubMemberFanOfPlayer
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_ManPlayersFan
 	specialvar VAR_RESULT, GetNumFansOfPlayerInTrainerFanClub
 	compare VAR_RESULT, 7
@@ -191,7 +191,7 @@ LilycoveCity_PokemonTrainerFanClub_EventScript_Lass:: @ 81595A6
 	compare VAR_LILYCOVE_FAN_CLUB_STATE, 0
 	goto_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_LassPlayerNotChampion
 	specialvar VAR_RESULT, IsFanClubMemberFanOfPlayer
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_LassPlayersFan
 	specialvar VAR_RESULT, GetNumFansOfPlayerInTrainerFanClub
 	compare VAR_RESULT, 7
@@ -231,7 +231,7 @@ LilycoveCity_PokemonTrainerFanClub_EventScript_PokefanM:: @ 815961D
 	compare VAR_LILYCOVE_FAN_CLUB_STATE, 0
 	goto_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_PokefanMPlayerNotChampion
 	specialvar VAR_RESULT, IsFanClubMemberFanOfPlayer
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_PokefanMPlayersFan
 	specialvar VAR_RESULT, GetNumFansOfPlayerInTrainerFanClub
 	compare VAR_RESULT, 7
@@ -271,7 +271,7 @@ LilycoveCity_PokemonTrainerFanClub_EventScript_LittleGirl:: @ 8159694
 	compare VAR_LILYCOVE_FAN_CLUB_STATE, 0
 	goto_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_LittleGirlPlayerNotChampion
 	specialvar VAR_RESULT, IsFanClubMemberFanOfPlayer
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_LittleGirlPlayersFan
 	specialvar VAR_RESULT, GetNumFansOfPlayerInTrainerFanClub
 	compare VAR_RESULT, 7
@@ -309,7 +309,7 @@ LilycoveCity_PokemonTrainerFanClub_EventScript_NinjaBoy:: @ 815970B
 	setvar VAR_0x8004, 11
 	special BufferFanClubTrainerName
 	specialvar VAR_RESULT, IsFanClubMemberFanOfPlayer
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_NinjaBoyPlayersFan
 	specialvar VAR_RESULT, GetNumFansOfPlayerInTrainerFanClub
 	compare VAR_RESULT, 7
@@ -342,7 +342,7 @@ LilycoveCity_PokemonTrainerFanClub_EventScript_Boy:: @ 815976D
 	setvar VAR_0x8004, 12
 	special BufferFanClubTrainerName
 	specialvar VAR_RESULT, IsFanClubMemberFanOfPlayer
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_BoyPlayersFan
 	specialvar VAR_RESULT, GetNumFansOfPlayerInTrainerFanClub
 	compare VAR_RESULT, 7
@@ -375,7 +375,7 @@ LilycoveCity_PokemonTrainerFanClub_EventScript_Woman:: @ 81597CF
 	setvar VAR_0x8004, 14
 	special BufferFanClubTrainerName
 	specialvar VAR_RESULT, IsFanClubMemberFanOfPlayer
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_WomanPlayersFan
 	specialvar VAR_RESULT, GetNumFansOfPlayerInTrainerFanClub
 	compare VAR_RESULT, 7
@@ -408,7 +408,7 @@ LilycoveCity_PokemonTrainerFanClub_EventScript_ExpertF:: @ 8159831
 	setvar VAR_0x8004, 15
 	special BufferFanClubTrainerName
 	specialvar VAR_RESULT, IsFanClubMemberFanOfPlayer
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq LilycoveCity_PokemonTrainerFanClub_EventScript_ExpertFPlayersFan
 	specialvar VAR_RESULT, GetNumFansOfPlayerInTrainerFanClub
 	compare VAR_RESULT, 7

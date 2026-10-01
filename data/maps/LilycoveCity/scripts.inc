@@ -14,47 +14,47 @@ LilycoveCity_OnTransition:: @ 814CA20
 
 LilycoveCity_OnLoad:: @ 814CA3F
 	.ifndef SAPPHIRE
-	setmetatile 69, 4, METATILE_General_RockWall_WaterBase, 1
-	setmetatile 70, 4, METATILE_Lilycove_AquaHideout_Entrance_TopLeft, 1
-	setmetatile 71, 4, METATILE_Lilycove_AquaHideout_Entrance_TopMid, 1
-	setmetatile 72, 4, METATILE_Lilycove_AquaHideout_Entrance_TopRight, 1
-	setmetatile 69, 5, METATILE_General_RockWall_SandBase, 1
-	setmetatile 70, 5, METATILE_Lilycove_AquaHideout_Entrance_BottomLeft, 1
-	setmetatile 71, 5, METATILE_Lilycove_AquaHideout_Entrance_BottomMid, 0
-	setmetatile 72, 5, METATILE_Lilycove_AquaHideout_Entrance_BottomRight, 1
-	setmetatile 69, 6, METATILE_General_Shore_BottomMid, 0
-	setmetatile 70, 6, METATILE_General_Shore_BottomRight, 0
-	setmetatile 71, 6, METATILE_General_CalmWater, 0
-	setmetatile 72, 6, METATILE_General_Shore_BottomLeft, 0
+	setmetatile 69, 4, METATILE_General_RockWall_WaterBase, TRUE
+	setmetatile 70, 4, METATILE_Lilycove_AquaHideout_Entrance_TopLeft, TRUE
+	setmetatile 71, 4, METATILE_Lilycove_AquaHideout_Entrance_TopMid, TRUE
+	setmetatile 72, 4, METATILE_Lilycove_AquaHideout_Entrance_TopRight, TRUE
+	setmetatile 69, 5, METATILE_General_RockWall_SandBase, TRUE
+	setmetatile 70, 5, METATILE_Lilycove_AquaHideout_Entrance_BottomLeft, TRUE
+	setmetatile 71, 5, METATILE_Lilycove_AquaHideout_Entrance_BottomMid, FALSE
+	setmetatile 72, 5, METATILE_Lilycove_AquaHideout_Entrance_BottomRight, TRUE
+	setmetatile 69, 6, METATILE_General_Shore_BottomMid, FALSE
+	setmetatile 70, 6, METATILE_General_Shore_BottomRight, FALSE
+	setmetatile 71, 6, METATILE_General_CalmWater, FALSE
+	setmetatile 72, 6, METATILE_General_Shore_BottomLeft, FALSE
 	.endif
 	call_if_unset FLAG_EVIL_TEAM_ESCAPED_IN_SUBMARINE, LilycoveCity_EventScript_SetWailmerMetatiles
 	call_if_set FLAG_BADGE07_GET, LilycoveCity_EventScript_RemoveEvilTeamBaseEntrance
 	end
 
 LilycoveCity_EventScript_SetWailmerMetatiles:: @ 814CABE
-	setmetatile 76, 12, METATILE_Lilycove_Wailmer0, 1
-	setmetatile 77, 12, METATILE_Lilycove_Wailmer1, 1
-	setmetatile 76, 13, METATILE_Lilycove_Wailmer2, 1
-	setmetatile 77, 13, METATILE_Lilycove_Wailmer3, 1
-	setmetatile 76, 14, METATILE_Lilycove_Wailmer0_Alt, 1
-	setmetatile 77, 14, METATILE_Lilycove_Wailmer1_Alt, 1
-	setmetatile 76, 15, METATILE_Lilycove_Wailmer2, 1
-	setmetatile 77, 15, METATILE_Lilycove_Wailmer3, 1
-	setmetatile 77, 16, METATILE_Lilycove_Wailmer0_Alt, 1
-	setmetatile 78, 16, METATILE_Lilycove_Wailmer1_Alt, 1
-	setmetatile 77, 17, METATILE_Lilycove_Wailmer2, 1
-	setmetatile 78, 17, METATILE_Lilycove_Wailmer3, 1
+	setmetatile 76, 12, METATILE_Lilycove_Wailmer0, TRUE
+	setmetatile 77, 12, METATILE_Lilycove_Wailmer1, TRUE
+	setmetatile 76, 13, METATILE_Lilycove_Wailmer2, TRUE
+	setmetatile 77, 13, METATILE_Lilycove_Wailmer3, TRUE
+	setmetatile 76, 14, METATILE_Lilycove_Wailmer0_Alt, TRUE
+	setmetatile 77, 14, METATILE_Lilycove_Wailmer1_Alt, TRUE
+	setmetatile 76, 15, METATILE_Lilycove_Wailmer2, TRUE
+	setmetatile 77, 15, METATILE_Lilycove_Wailmer3, TRUE
+	setmetatile 77, 16, METATILE_Lilycove_Wailmer0_Alt, TRUE
+	setmetatile 78, 16, METATILE_Lilycove_Wailmer1_Alt, TRUE
+	setmetatile 77, 17, METATILE_Lilycove_Wailmer2, TRUE
+	setmetatile 78, 17, METATILE_Lilycove_Wailmer3, TRUE
 	return
 
 LilycoveCity_EventScript_RemoveEvilTeamBaseEntrance:: @ 814CB2B
-	setmetatile 69, 4, METATILE_General_RockWall_WaterBase, 1
-	setmetatile 70, 4, METATILE_General_RockWall_WaterBase, 1
-	setmetatile 71, 4, METATILE_General_RockWall_WaterBase, 1
-	setmetatile 72, 4, METATILE_General_RockWall_WaterBase, 1
-	setmetatile 69, 5, METATILE_General_RockWall_SandBase, 1
-	setmetatile 70, 5, METATILE_General_RockWall_SandBase, 1
-	setmetatile 71, 5, METATILE_General_RockWall_SandBase, 1
-	setmetatile 72, 5, METATILE_General_RockWall_SandBase, 1
+	setmetatile 69, 4, METATILE_General_RockWall_WaterBase, TRUE
+	setmetatile 70, 4, METATILE_General_RockWall_WaterBase, TRUE
+	setmetatile 71, 4, METATILE_General_RockWall_WaterBase, TRUE
+	setmetatile 72, 4, METATILE_General_RockWall_WaterBase, TRUE
+	setmetatile 69, 5, METATILE_General_RockWall_SandBase, TRUE
+	setmetatile 70, 5, METATILE_General_RockWall_SandBase, TRUE
+	setmetatile 71, 5, METATILE_General_RockWall_SandBase, TRUE
+	setmetatile 72, 5, METATILE_General_RockWall_SandBase, TRUE
 	return
 
 LilycoveCity_EventScript_BerryGentleman:: @ 814CB74
@@ -66,7 +66,7 @@ LilycoveCity_EventScript_BerryGentleman:: @ 814CB74
 	random 10
 	addvar VAR_RESULT, ITEM_CHERI_BERRY
 	giveitem VAR_RESULT
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_DAILY_RECEIVED_BERRY_LILYCOVE
 	msgbox LilycoveCity_Text_BecauseYoureTrainer, MSGBOX_DEFAULT
@@ -238,9 +238,9 @@ LilycoveCity_EventScript_Rival:: @ 814CD46
 	lock
 	faceplayer
 	checkplayergender
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, MALE
 	goto_if_eq LilycoveCity_EventScript_May
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, FEMALE
 	goto_if_eq LilycoveCity_EventScript_Brendan
 	end
 
@@ -334,11 +334,11 @@ LilycoveCity_EventScript_BattleBrendanMudkip:: @ 814CE96
 
 LilycoveCity_EventScript_DefeatedMay:: @ 814CEA6
 	msgbox LilycoveCity_Text_MayGoingBackToLittleroot, MSGBOX_DEFAULT
-	setvar VAR_RESULT, 0
+	setvar VAR_RESULT, FALSE
 	call_if_set FLAG_BADGE06_GET, LilycoveCity_EventScript_CheckFinalBadge
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	call_if_eq LilycoveCity_EventScript_MayCollectBadges
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	call_if_eq LilycoveCity_EventScript_MayPokemonLeague
 	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM
 	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_PICHU_DOLL
@@ -350,7 +350,7 @@ LilycoveCity_EventScript_CheckFinalBadge:: @ 814CEDE
 	return
 
 LilycoveCity_EventScript_HasFinalBadge:: @ 814CEE8
-	setvar VAR_RESULT, 1
+	setvar VAR_RESULT, TRUE
 	return
 
 LilycoveCity_EventScript_MayCollectBadges:: @ 814CEEE
@@ -368,11 +368,11 @@ LilycoveCity_EventScript_MayBattleTower:: @ 814CF09
 
 LilycoveCity_EventScript_DefeatedBrendan:: @ 814CF12
 	msgbox LilycoveCity_Text_BrendanGoingBackToLittleroot, MSGBOX_DEFAULT
-	setvar VAR_RESULT, 0
+	setvar VAR_RESULT, FALSE
 	call_if_set FLAG_BADGE06_GET, LilycoveCity_EventScript_CheckFinalBadge
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	call_if_eq LilycoveCity_EventScript_BrendanCollectBadges
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	call_if_eq LilycoveCity_EventScript_BrendanPokemonLeague
 	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM
 	goto LilycoveCity_EventScript_RivalFlyAway
