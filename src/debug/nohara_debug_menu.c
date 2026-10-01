@@ -1033,7 +1033,7 @@ bool8 NoharaDebugMenu_SootopolisCity(void)
 {
     FlagSet(FLAG_LEGEND_ESCAPED_SEAFLOOR_CAVERN);
     FlagSet(FLAG_LEGENDARY_BATTLE_COMPLETED);
-    FlagClear(FLAG_HIDE_WALLACE_SOOTOPOLIS_GYM);
+    FlagClear(FLAG_HIDE_SOOTOPOLIS_CITY_GYM_WALLACE);
     CloseMenu();
     return TRUE;
 }
