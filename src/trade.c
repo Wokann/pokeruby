@@ -1536,12 +1536,12 @@ void SetActiveMenuOptions(void)
 static void nullsub_5(u8 a0, u8 a1) {}
 
 // why not just use memcpy?
-static void Trade_Memcpy(void *dataDest, void *dataSrc, u32 size)
+static void Trade_Memcpy(void *dest, void *src, u32 size)
 {
-    u8 *dest = dataDest;
-    u8 *src = dataSrc;
+    u8 *_dest = dest;
+    u8 *_src = src;
     int i;
-    for (i = 0; i < size; i ++) dest[i] = src[i];
+    for (i = 0; i < size; i ++) _dest[i] = _src[i];
 }
 
 static bool8 BufferTradeParties(void)
@@ -1550,7 +1550,7 @@ static bool8 BufferTradeParties(void)
     int i;
     u16 species;
     u8 nickname[11];
-    struct Pokemon *pokemon;
+    struct Pokemon *mon;
 
     SetLinkDebugValues(sTradeMenu->bufferPartyState / 100, sTradeMenu->bufferPartyState % 100);
     switch (sTradeMenu->bufferPartyState)
@@ -1665,16 +1665,16 @@ static bool8 BufferTradeParties(void)
             }
             break;
         case 16:
-            pokemon = gEnemyParty;
+            mon = gEnemyParty;
             for (i = 0; i < PARTY_SIZE; i ++)
             {
-                if ((species = GetMonData(pokemon, MON_DATA_SPECIES)) != SPECIES_NONE && species == SPECIES_SHEDINJA && GetMonData(pokemon, MON_DATA_LANGUAGE) != LANGUAGE_JAPANESE)
+                if ((species = GetMonData(mon, MON_DATA_SPECIES)) != SPECIES_NONE && species == SPECIES_SHEDINJA && GetMonData(mon, MON_DATA_LANGUAGE) != LANGUAGE_JAPANESE)
                 {
-                    GetMonData(pokemon, MON_DATA_NICKNAME, nickname);
+                    GetMonData(mon, MON_DATA_NICKNAME, nickname);
                     if (!StringCompareWithoutExtCtrlCodes(nickname, sText_ShedinjaJP))
-                        SetMonData(pokemon, MON_DATA_NICKNAME, gSpeciesNames[SPECIES_SHEDINJA]);
+                        SetMonData(mon, MON_DATA_NICKNAME, gSpeciesNames[SPECIES_SHEDINJA]);
                 }
-                pokemon ++;
+                mon ++;
             }
             return TRUE;
     }
@@ -2043,13 +2043,13 @@ static u8 CountOtherUsableMons(const u8 *usableMons, u8 partyCount, u8 selectedM
 
 static void CheckMonsBeforeTrade(void)
 {
-    u8 usableMons[12];
+    u8 aliveMons[12];
     int i;
     for (i = 0; i < sTradeMenu->partyCounts[0]; i ++)
     {
-        usableMons[i] = sTradeMenu->isLiveMon[0][i];
+        aliveMons[i] = sTradeMenu->isLiveMon[0][i];
     }
-    if (CountOtherUsableMons(usableMons, sTradeMenu->partyCounts[0], sTradeMenu->cursorPosition) == 0)
+    if (CountOtherUsableMons(aliveMons, sTradeMenu->partyCounts[0], sTradeMenu->cursorPosition) == 0)
     {
         QueueAction(3, 2);
         sTradeMenu->linkData[0] = LINKCMD_READY_CANCEL_TRADE;
@@ -3455,14 +3455,14 @@ static void SpriteCB_GbaScreen(struct Sprite *sprite)
 
 static void SetTradeBGAffine(void)
 {
-    struct BgAffineDstData dest;
-    DoBgAffineSet(&dest, gTradeAnim->texX << 8, gTradeAnim->texY << 8, gTradeAnim->scrX, gTradeAnim->scrY, gTradeAnim->sXY, gTradeAnim->sXY, gTradeAnim->alpha);
-    REG_BG2PA = dest.pa;
-    REG_BG2PB = dest.pb;
-    REG_BG2PC = dest.pc;
-    REG_BG2PD = dest.pd;
-    REG_BG2X = dest.dx;
-    REG_BG2Y = dest.dy;
+    struct BgAffineDstData affine;
+    DoBgAffineSet(&affine, gTradeAnim->texX << 8, gTradeAnim->texY << 8, gTradeAnim->scrX, gTradeAnim->scrY, gTradeAnim->sXY, gTradeAnim->sXY, gTradeAnim->alpha);
+    REG_BG2PA = affine.pa;
+    REG_BG2PB = affine.pb;
+    REG_BG2PC = affine.pc;
+    REG_BG2PD = affine.pd;
+    REG_BG2X = affine.dx;
+    REG_BG2Y = affine.dy;
 }
 
 static void SetTradeGpuRegs(void)
@@ -4856,10 +4856,10 @@ static void CB2_TryLinkTradeEvolution(void)
 
 static void HandleLinkDataReceive(void)
 {
-    u8 blockReceivedStatus;
+    u8 recvStatus;
     TradeGetMultiplayerId();
-    blockReceivedStatus = GetBlockReceivedStatus();
-    if (blockReceivedStatus & 0x01)
+    recvStatus = GetBlockReceivedStatus();
+    if (recvStatus & 0x01)
     {
         if (gBlockRecvBuffer[0][0] == 0xdcba)
         {
@@ -4871,7 +4871,7 @@ static void HandleLinkDataReceive(void)
         }
         ResetBlockReceivedFlag(0);
     }
-    if (blockReceivedStatus & 0x02)
+    if (recvStatus & 0x02)
     {
         if (gBlockRecvBuffer[1][0] == 0xabcd)
         {
@@ -4981,27 +4981,27 @@ static void CreateInGameTradePokemonInternal(u8 whichPlayerMon, u8 whichInGameTr
     struct Mail mail;
     u8 metLocation = 0xFE;
     u8 mailNum;
-    struct Pokemon *mon = &gEnemyParty[0];
+    struct Pokemon *pokemon = &gEnemyParty[0];
 
-    CreateMon(mon, inGameTrade->species, level, 32, TRUE, inGameTrade->personality, TRUE, inGameTrade->otId);
+    CreateMon(pokemon, inGameTrade->species, level, 32, TRUE, inGameTrade->personality, TRUE, inGameTrade->otId);
 
-    SetMonData(mon, MON_DATA_HP_IV, &inGameTrade->ivs[0]);
-    SetMonData(mon, MON_DATA_ATK_IV, &inGameTrade->ivs[1]);
-    SetMonData(mon, MON_DATA_DEF_IV, &inGameTrade->ivs[2]);
-    SetMonData(mon, MON_DATA_SPEED_IV, &inGameTrade->ivs[3]);
-    SetMonData(mon, MON_DATA_SPATK_IV, &inGameTrade->ivs[4]);
-    SetMonData(mon, MON_DATA_SPDEF_IV, &inGameTrade->ivs[5]);
-    SetMonData(mon, MON_DATA_NICKNAME, inGameTrade->nickname);
-    SetMonData(mon, MON_DATA_OT_NAME, inGameTrade->otName);
-    SetMonData(mon, MON_DATA_OT_GENDER, &inGameTrade->otGender);
-    SetMonData(mon, MON_DATA_ABILITY_NUM, &inGameTrade->abilityNum);
-    SetMonData(mon, MON_DATA_BEAUTY, &inGameTrade->conditions[1]);
-    SetMonData(mon, MON_DATA_CUTE, &inGameTrade->conditions[2]);
-    SetMonData(mon, MON_DATA_COOL, &inGameTrade->conditions[0]);
-    SetMonData(mon, MON_DATA_SMART, &inGameTrade->conditions[3]);
-    SetMonData(mon, MON_DATA_TOUGH, &inGameTrade->conditions[4]);
-    SetMonData(mon, MON_DATA_SHEEN, &inGameTrade->sheen);
-    SetMonData(mon, MON_DATA_MET_LOCATION, &metLocation);
+    SetMonData(pokemon, MON_DATA_HP_IV, &inGameTrade->ivs[0]);
+    SetMonData(pokemon, MON_DATA_ATK_IV, &inGameTrade->ivs[1]);
+    SetMonData(pokemon, MON_DATA_DEF_IV, &inGameTrade->ivs[2]);
+    SetMonData(pokemon, MON_DATA_SPEED_IV, &inGameTrade->ivs[3]);
+    SetMonData(pokemon, MON_DATA_SPATK_IV, &inGameTrade->ivs[4]);
+    SetMonData(pokemon, MON_DATA_SPDEF_IV, &inGameTrade->ivs[5]);
+    SetMonData(pokemon, MON_DATA_NICKNAME, inGameTrade->nickname);
+    SetMonData(pokemon, MON_DATA_OT_NAME, inGameTrade->otName);
+    SetMonData(pokemon, MON_DATA_OT_GENDER, &inGameTrade->otGender);
+    SetMonData(pokemon, MON_DATA_ABILITY_NUM, &inGameTrade->abilityNum);
+    SetMonData(pokemon, MON_DATA_BEAUTY, &inGameTrade->conditions[1]);
+    SetMonData(pokemon, MON_DATA_CUTE, &inGameTrade->conditions[2]);
+    SetMonData(pokemon, MON_DATA_COOL, &inGameTrade->conditions[0]);
+    SetMonData(pokemon, MON_DATA_SMART, &inGameTrade->conditions[3]);
+    SetMonData(pokemon, MON_DATA_TOUGH, &inGameTrade->conditions[4]);
+    SetMonData(pokemon, MON_DATA_SHEEN, &inGameTrade->sheen);
+    SetMonData(pokemon, MON_DATA_MET_LOCATION, &metLocation);
 
     mailNum = FALSE;
     if (inGameTrade->heldItem != ITEM_NONE)
@@ -5010,12 +5010,12 @@ static void CreateInGameTradePokemonInternal(u8 whichPlayerMon, u8 whichInGameTr
         {
             GetInGameTradeMail(&mail, inGameTrade);
             gTradeMail[0] = mail;
-            SetMonData(mon, MON_DATA_MAIL, &mailNum);
-            SetMonData(mon, MON_DATA_HELD_ITEM, &inGameTrade->heldItem);
+            SetMonData(pokemon, MON_DATA_MAIL, &mailNum);
+            SetMonData(pokemon, MON_DATA_HELD_ITEM, &inGameTrade->heldItem);
         }
         else
         {
-            SetMonData(mon, MON_DATA_HELD_ITEM, &inGameTrade->heldItem);
+            SetMonData(pokemon, MON_DATA_HELD_ITEM, &inGameTrade->heldItem);
         }
     }
     CalculateMonStats(&gEnemyParty[0]);
