@@ -28,7 +28,7 @@ PetalburgCity_PokemonCenter_1F_EventScript_Woman:: @ 8155233
 	faceplayer
 	msgbox PetalburgCity_PokemonCenter_1F_Text_ManyTypesOfPokemon, MSGBOX_DEFAULT
 	specialvar VAR_RESULT, IsStarterInParty
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq PetalburgCity_PokemonCenter_1F_EventScript_SayStarterTypeInfo
 	release
 	end
