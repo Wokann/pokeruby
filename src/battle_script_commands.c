@@ -4690,9 +4690,9 @@ static void Cmd_switchinanim(void)
 
 static void Cmd_jumpifcantswitch(void)
 {
-    int val, to_cmp;
+    int partyIndex, comparisonIndex;
     register struct Pokemon *party;
-    u8 r7;
+    u8 battlerIn1;
     //0x80 byte is used as a way of telling the function whether to not check status2/status3
     gActiveBattler = GetBattlerForBattleScript(T2_READ_8(gBattlescriptCurrInstr + 1) & 0x7F);
     if (!(T2_READ_8(gBattlescriptCurrInstr + 1) & 0x80)
@@ -4708,18 +4708,18 @@ static void Cmd_jumpifcantswitch(void)
             party = gEnemyParty;
         else
             party = gPlayerParty;
-        val = 0;
+        partyIndex = 0;
         if (GetLinkTrainerFlankId(GetBattlerMultiplayerId(gActiveBattler)) == 1)
-            val = 3;
-        for (to_cmp = val + 3; val < to_cmp; val++)
+            partyIndex = 3;
+        for (comparisonIndex = partyIndex + 3; partyIndex < comparisonIndex; partyIndex++)
         {
-            if (GetMonData(&party[val], MON_DATA_SPECIES) != SPECIES_NONE
-             && !GetMonData(&party[val], MON_DATA_IS_EGG)
-             && GetMonData(&party[val], MON_DATA_HP) != 0
-             && gBattlerPartyIndexes[gActiveBattler] != val)
+            if (GetMonData(&party[partyIndex], MON_DATA_SPECIES) != SPECIES_NONE
+             && !GetMonData(&party[partyIndex], MON_DATA_IS_EGG)
+             && GetMonData(&party[partyIndex], MON_DATA_HP) != 0
+             && gBattlerPartyIndexes[gActiveBattler] != partyIndex)
                 break;
         }
-        if (val == to_cmp)
+        if (partyIndex == comparisonIndex)
             gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 2);
         else
             gBattlescriptCurrInstr += 6;
@@ -4728,31 +4728,31 @@ static void Cmd_jumpifcantswitch(void)
     {
         if (GetBattlerSide(gActiveBattler) == 1)
         {
-            r7 = GetBattlerAtPosition(1);
+            battlerIn1 = GetBattlerAtPosition(1);
             if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
-                to_cmp = GetBattlerAtPosition(3);
+                comparisonIndex = GetBattlerAtPosition(3);
             else
-                to_cmp = r7;
+                comparisonIndex = battlerIn1;
             party = gEnemyParty;
         }
         else
         {
-            r7 = GetBattlerAtPosition(0);
+            battlerIn1 = GetBattlerAtPosition(0);
             if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
-                to_cmp = GetBattlerAtPosition(2);
+                comparisonIndex = GetBattlerAtPosition(2);
             else
-                to_cmp = r7;
+                comparisonIndex = battlerIn1;
             party = gPlayerParty;
         }
-        for (val = 0; val < PARTY_SIZE; val++)
+        for (partyIndex = 0; partyIndex < PARTY_SIZE; partyIndex++)
         {
-            if (GetMonData(&party[val], MON_DATA_HP) != 0
-             && GetMonData(&party[val], MON_DATA_SPECIES) != SPECIES_NONE
-             && !GetMonData(&party[val], MON_DATA_IS_EGG)
-             && val != gBattlerPartyIndexes[r7] && val != gBattlerPartyIndexes[to_cmp])
+            if (GetMonData(&party[partyIndex], MON_DATA_HP) != 0
+             && GetMonData(&party[partyIndex], MON_DATA_SPECIES) != SPECIES_NONE
+             && !GetMonData(&party[partyIndex], MON_DATA_IS_EGG)
+             && partyIndex != gBattlerPartyIndexes[battlerIn1] && partyIndex != gBattlerPartyIndexes[comparisonIndex])
                 break;
         }
-        if (val == 6)
+        if (partyIndex == 6)
             gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 2);
         else
             gBattlescriptCurrInstr += 6;
@@ -5764,77 +5764,77 @@ extern const u8 *const gLvlUpStatStrings[];
 
 static void Cmd_drawlvlupbox(void)
 {
-    s16 r1 = 0;
-    s16 r7 = 0;
+    s16 currentStat = 0;
+    s16 statChange = 0;
     int i;
-    u8 * r5;
+    u8 *text;
     bool32 sign;
     switch (gBattleStruct->drawlvlupboxState)
     {
     case 0:
         HandleBattleWindow(0xB, 0, 0x1D, 0x7, 0);
-        r5 = StringCopy(gStringVar4, BattleText_Format2);
+        text = StringCopy(gStringVar4, BattleText_Format2);
         for (i = 0; i < 6; i++)
         {
             sign = FALSE;
-            r5 = StringAppend(r5, gLvlUpStatStrings[i]);
-            r1 = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], gLevelUpStatBoxStats[i]);
+            text = StringAppend(text, gLvlUpStatStrings[i]);
+            currentStat = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], gLevelUpStatBoxStats[i]);
             switch (i)
             {
             case 0:
-                r7 = r1 - gBattleResources_statsBeforeLvlUp->hp;
+                statChange = currentStat - gBattleResources_statsBeforeLvlUp->hp;
                 break;
             case 1:
-                r7 = r1 - gBattleResources_statsBeforeLvlUp->spAtk;
+                statChange = currentStat - gBattleResources_statsBeforeLvlUp->spAtk;
                 break;
             case 2:
-                r7 = r1 - gBattleResources_statsBeforeLvlUp->atk;
+                statChange = currentStat - gBattleResources_statsBeforeLvlUp->atk;
                 break;
             case 3:
-                r7 = r1 - gBattleResources_statsBeforeLvlUp->spDef;
+                statChange = currentStat - gBattleResources_statsBeforeLvlUp->spDef;
                 break;
             case 4:
-                r7 = r1 - gBattleResources_statsBeforeLvlUp->def;
+                statChange = currentStat - gBattleResources_statsBeforeLvlUp->def;
                 break;
             case 5:
-                r7 = r1 - gBattleResources_statsBeforeLvlUp->spd;
+                statChange = currentStat - gBattleResources_statsBeforeLvlUp->spd;
                 break;
             }
-            if (r7 < 0)
+            if (statChange < 0)
             {
-                r7 = -r7;
+                statChange = -statChange;
                 sign++;
             }
-            r5[0] = EXT_CTRL_CODE_BEGIN;
-            r5[1] = EXT_CTRL_CODE_CLEAR_TO;
-            r5[2] = ((i & 1) * 9 + 5) * 8 + 6;
-            r5 += 3;
+            text[0] = EXT_CTRL_CODE_BEGIN;
+            text[1] = EXT_CTRL_CODE_CLEAR_TO;
+            text[2] = ((i & 1) * 9 + 5) * 8 + 6;
+            text += 3;
             if (sign)
-                r5 = StringCopy(r5, BattleText_Dash);
+                text = StringCopy(text, BattleText_Dash);
             else
-                r5 = StringCopy(r5, BattleText_Plus);
-            r5[0] = EXT_CTRL_CODE_BEGIN;
-            r5[1] = EXT_CTRL_CODE_MIN_LETTER_SPACING;
-            r5[2] = 6;
-            r5 += 3;
-            r5 = ConvertIntToDecimalStringN(r5, r7, STR_CONV_MODE_RIGHT_ALIGN, 2);
-            r5[0] = EXT_CTRL_CODE_BEGIN;
-            r5[1] = EXT_CTRL_CODE_MIN_LETTER_SPACING;
-            r5[2] = 0;
-            r5 += 3;
+                text = StringCopy(text, BattleText_Plus);
+            text[0] = EXT_CTRL_CODE_BEGIN;
+            text[1] = EXT_CTRL_CODE_MIN_LETTER_SPACING;
+            text[2] = 6;
+            text += 3;
+            text = ConvertIntToDecimalStringN(text, statChange, STR_CONV_MODE_RIGHT_ALIGN, 2);
+            text[0] = EXT_CTRL_CODE_BEGIN;
+            text[1] = EXT_CTRL_CODE_MIN_LETTER_SPACING;
+            text[2] = 0;
+            text += 3;
             if (i & 1)
             {
-                r5[0] = CHAR_NEWLINE;
-                r5[1] = EOS;
-                r5 += 1;
+                text[0] = CHAR_NEWLINE;
+                text[1] = EOS;
+                text += 1;
             }
             else
             {
-                r5[0] = EXT_CTRL_CODE_BEGIN;
-                r5[1] = EXT_CTRL_CODE_CLEAR;
-                r5[2] = 8;
-                r5 += 3;
-                *r5 = EOS;
+                text[0] = EXT_CTRL_CODE_BEGIN;
+                text[1] = EXT_CTRL_CODE_CLEAR;
+                text[2] = 8;
+                text += 3;
+                *text = EOS;
             }
         }
         Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gStringVar4, 0x100, 12, 1);
@@ -5845,38 +5845,38 @@ static void Cmd_drawlvlupbox(void)
         if (gMain.newKeys != 0)
         {
             PlaySE(SE_SELECT);
-            r5 = StringCopy(gStringVar4, BattleText_Format2);
+            text = StringCopy(gStringVar4, BattleText_Format2);
             for (i = 0; i < 6; i++)
             {
                 sign = FALSE;
-                r5 = StringAppend(r5, gLvlUpStatStrings[i]);
-                r1 = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], gLevelUpStatBoxStats[i]);
-                r5[0] = EXT_CTRL_CODE_BEGIN;
-                r5[1] = EXT_CTRL_CODE_CLEAR_TO;
-                r5[2] = ((i & 1) * 9 + 5) * 8 + 6;
-                r5 += 3;
-                r5[0] = EXT_CTRL_CODE_BEGIN;
-                r5[1] = EXT_CTRL_CODE_MIN_LETTER_SPACING;
-                r5[2] = 6;
-                r5 += 3;
-                r5 = ConvertIntToDecimalStringN(r5, r1, STR_CONV_MODE_RIGHT_ALIGN, 3);
-                r5[0] = EXT_CTRL_CODE_BEGIN;
-                r5[1] = EXT_CTRL_CODE_MIN_LETTER_SPACING;
-                r5[2] = 0;
-                r5 += 3;
+                text = StringAppend(text, gLvlUpStatStrings[i]);
+                currentStat = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], gLevelUpStatBoxStats[i]);
+                text[0] = EXT_CTRL_CODE_BEGIN;
+                text[1] = EXT_CTRL_CODE_CLEAR_TO;
+                text[2] = ((i & 1) * 9 + 5) * 8 + 6;
+                text += 3;
+                text[0] = EXT_CTRL_CODE_BEGIN;
+                text[1] = EXT_CTRL_CODE_MIN_LETTER_SPACING;
+                text[2] = 6;
+                text += 3;
+                text = ConvertIntToDecimalStringN(text, currentStat, STR_CONV_MODE_RIGHT_ALIGN, 3);
+                text[0] = EXT_CTRL_CODE_BEGIN;
+                text[1] = EXT_CTRL_CODE_MIN_LETTER_SPACING;
+                text[2] = 0;
+                text += 3;
                 if (i & 1)
                 {
-                    r5[0] = CHAR_NEWLINE;
-                    r5[1] = EOS;
-                    r5 += 1;
+                    text[0] = CHAR_NEWLINE;
+                    text[1] = EOS;
+                    text += 1;
                 }
                 else
                 {
-                    r5[0] = EXT_CTRL_CODE_BEGIN;
-                    r5[1] = EXT_CTRL_CODE_CLEAR;
-                    r5[2] = 8;
-                    r5 += 3;
-                    *r5 = EOS;
+                    text[0] = EXT_CTRL_CODE_BEGIN;
+                    text[1] = EXT_CTRL_CODE_CLEAR;
+                    text[2] = 8;
+                    text += 3;
+                    *text = EOS;
                 }
             }
             Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gStringVar4, 0x100, 12, 1);
@@ -6197,38 +6197,38 @@ static void Cmd_tryhealhalfhealth(void)
 
 static void Cmd_trymirrormove(void)
 {
-    u16 r7 = gSharedMem[BSTRUCT_OFF(lastTakenMove) + 2 * gBattlerAttacker + 0] | (gSharedMem[BSTRUCT_OFF(lastTakenMove) + 2 * gBattlerAttacker + 1] << 8);
-    u16 r6 = gSharedMem[BSTRUCT_OFF(lastTakenMoveFrom) + 4 * gBattlerAttacker + 0] | (gSharedMem[BSTRUCT_OFF(lastTakenMoveFrom) + 4 * gBattlerAttacker + 1] << 8);
-    u16 r5 = gSharedMem[BSTRUCT_OFF(lastTakenMoveFrom) + 4 * gBattlerAttacker + 2] | (gSharedMem[BSTRUCT_OFF(lastTakenMoveFrom) + 4 * gBattlerAttacker + 3] << 8);
+    u16 lastTakenMove = gSharedMem[BSTRUCT_OFF(lastTakenMove) + 2 * gBattlerAttacker + 0] | (gSharedMem[BSTRUCT_OFF(lastTakenMove) + 2 * gBattlerAttacker + 1] << 8);
+    u16 lastTakenMoveFrom1 = gSharedMem[BSTRUCT_OFF(lastTakenMoveFrom) + 4 * gBattlerAttacker + 0] | (gSharedMem[BSTRUCT_OFF(lastTakenMoveFrom) + 4 * gBattlerAttacker + 1] << 8);
+    u16 lastTakenMoveFrom2 = gSharedMem[BSTRUCT_OFF(lastTakenMoveFrom) + 4 * gBattlerAttacker + 2] | (gSharedMem[BSTRUCT_OFF(lastTakenMoveFrom) + 4 * gBattlerAttacker + 3] << 8);
 
-    if (r7 != 0 && r7 != 0xFFFF)
+    if (lastTakenMove != 0 && lastTakenMove != 0xFFFF)
     {
         gHitMarker &= ~(HITMARKER_ATTACKSTRING_PRINTED);
-        gCurrentMove = r7;
+        gCurrentMove = lastTakenMove;
         gBattlerTarget = GetMoveTarget(gCurrentMove, 0);
         gBattlescriptCurrInstr = gBattleScriptsForMoveEffects[gBattleMoves[gCurrentMove].effect];
     }
-    else if (r6 != 0 && r5 != 0 && r6 != 0xFFFF && r5 != 0xFFFF)
+    else if (lastTakenMoveFrom1 != 0 && lastTakenMoveFrom2 != 0 && lastTakenMoveFrom1 != 0xFFFF && lastTakenMoveFrom2 != 0xFFFF)
     {
         gHitMarker &= ~(HITMARKER_ATTACKSTRING_PRINTED);
         if (Random() & 1)
-            gCurrentMove = r6;
+            gCurrentMove = lastTakenMoveFrom1;
         else
-            gCurrentMove = r5;
+            gCurrentMove = lastTakenMoveFrom2;
         gBattlerTarget = GetMoveTarget(gCurrentMove, 0);
         gBattlescriptCurrInstr = gBattleScriptsForMoveEffects[gBattleMoves[gCurrentMove].effect];
     }
-    else if (r6 != 0 && r6 != 0xFFFF)
+    else if (lastTakenMoveFrom1 != 0 && lastTakenMoveFrom1 != 0xFFFF)
     {
         gHitMarker &= ~(HITMARKER_ATTACKSTRING_PRINTED);
-        gCurrentMove = r6;
+        gCurrentMove = lastTakenMoveFrom1;
         gBattlerTarget = GetMoveTarget(gCurrentMove, 0);
         gBattlescriptCurrInstr = gBattleScriptsForMoveEffects[gBattleMoves[gCurrentMove].effect];
     }
-    else if (r5 != 0 && r5 != 0xFFFF)
+    else if (lastTakenMoveFrom2 != 0 && lastTakenMoveFrom2 != 0xFFFF)
     {
         gHitMarker &= ~(HITMARKER_ATTACKSTRING_PRINTED);
-        gCurrentMove = r5;
+        gCurrentMove = lastTakenMoveFrom2;
         gBattlerTarget = GetMoveTarget(gCurrentMove, 0);
         gBattlescriptCurrInstr = gBattleScriptsForMoveEffects[gBattleMoves[gCurrentMove].effect];
     }
@@ -7607,32 +7607,32 @@ static void Cmd_mimicattackcopy(void)
 void Cmd_metronome(void)
 {
 #if DEBUG
-    u16 * r3 = (u16 *)&gSharedMem[BSTRUCT_OFF(lastTakenMove) + 8 + (2 * gBattlerAttacker)];
+    u16 *debugMove = (u16 *)&gSharedMem[BSTRUCT_OFF(lastTakenMove) + 8 + (2 * gBattlerAttacker)];
     if (
         gBattleMons[gBattlerAttacker].moves[1] == MOVE_NONE
      && gBattleMons[gBattlerAttacker].moves[2] != MOVE_NONE
      && gBattleMons[gBattlerAttacker].moves[3] != MOVE_NONE
     )
     {
-        if (*r3 == MOVE_NONE)
-            *r3 = gBattleMons[gBattlerAttacker].moves[2];
-        gCurrentMove = *r3;
+        if (*debugMove == MOVE_NONE)
+            *debugMove = gBattleMons[gBattlerAttacker].moves[2];
+        gCurrentMove = *debugMove;
         if (gBattleMons[gBattlerAttacker].moves[2] < gBattleMons[gBattlerAttacker].moves[3])
         {
-            if (*r3 == gBattleMons[gBattlerAttacker].moves[3])
-                *r3 = gBattleMons[gBattlerAttacker].moves[2];
+            if (*debugMove == gBattleMons[gBattlerAttacker].moves[3])
+                *debugMove = gBattleMons[gBattlerAttacker].moves[2];
             else
-                (*r3)++;
+                (*debugMove)++;
         }
         else
         {
             asm("":::"r4"); // Force correct register use
-            if (*r3 == MOVES_COUNT - 1)
-                *r3 = 1;
-            else if (*r3 == gBattleMons[gBattlerAttacker].moves[3])
-                *r3 = gBattleMons[gBattlerAttacker].moves[2];
+            if (*debugMove == MOVES_COUNT - 1)
+                *debugMove = 1;
+            else if (*debugMove == gBattleMons[gBattlerAttacker].moves[3])
+                *debugMove = gBattleMons[gBattlerAttacker].moves[2];
             else
-                (*r3)++;
+                (*debugMove)++;
         }
         gHitMarker &= ~(HITMARKER_ATTACKSTRING_PRINTED);
         asm("":::"r5"); // Force correct register use
@@ -8969,7 +8969,7 @@ static void Cmd_tryswapabilities(void)
 
 static void Cmd_tryimprison(void)
 {
-    u8 r8 = 0;
+    u8 playerSide = 0;
     if ((gStatuses3[gBattlerAttacker] & STATUS3_IMPRISONED_OTHERS))
     {
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
@@ -8980,7 +8980,7 @@ static void Cmd_tryimprison(void)
         PressurePPLoseOnUsingImprison(gBattlerAttacker);
         for (battler = 0; battler < gBattlersCount; battler++)
         {
-            if (r8 != GetBattlerSide(battler))
+            if (playerSide != GetBattlerSide(battler))
             {
                 int j;
                 for (j = 0; j < 4; j++)
