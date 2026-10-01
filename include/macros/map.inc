@@ -6,6 +6,21 @@
 	.byte \map_id & 0xFF  @ map num
 	.endm
 
+	@ Defines a Tileset. Mirrors struct Tileset in include/global.fieldmap.h.
+	.macro tileset name:req, is_compressed:req, is_secondary:req, tiles:req, palettes:req, metatiles:req, metatile_attributes:req, callback:req
+	.align 2
+	.global gTileset_\name\()
+gTileset_\name\():
+	.byte \is_compressed
+	.byte \is_secondary
+	.2byte 0 @ padding
+	.4byte \tiles
+	.4byte \palettes
+	.4byte \metatiles
+	.4byte \metatile_attributes
+	.4byte \callback
+	.endm
+
 	@ Defines a map script. 'type' is any MAP_SCRIPT_* constant (see include/constants/map_scripts.h)
 	.macro map_script type:req, script:req
 	.byte \type

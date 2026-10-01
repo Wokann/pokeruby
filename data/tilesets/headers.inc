@@ -1,695 +1,115 @@
-	.align 2
-
-gTileset_General:: @ 8286CF4
-	.byte TRUE @ is compressed
-	.byte FALSE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_General
-	.4byte gTilesetPalettes_General
-	.4byte gMetatiles_General
-	.4byte gMetatileAttributes_General
-	.4byte InitTilesetAnim_General
-
-	.align 2
-
-gTileset_Petalburg:: @ 8286D0C
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Petalburg
-	.4byte gTilesetPalettes_Petalburg
-	.4byte gMetatiles_Petalburg
-	.4byte gMetatileAttributes_Petalburg
-	.4byte InitTilesetAnim_Petalburg
-
-	.align 2
-
-gTileset_Rustboro:: @ 8286D24
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Rustboro
-	.4byte gTilesetPalettes_Rustboro
-	.4byte gMetatiles_Rustboro
-	.4byte gMetatileAttributes_Rustboro
-	.4byte InitTilesetAnim_Rustboro
-
-	.align 2
-
-gTileset_Dewford:: @ 8286D3C
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Dewford
-	.4byte gTilesetPalettes_Dewford
-	.4byte gMetatiles_Dewford
-	.4byte gMetatileAttributes_Dewford
-	.4byte InitTilesetAnim_Dewford
-
-	.align 2
-
-gTileset_Slateport:: @ 8286D54
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Slateport
-	.4byte gTilesetPalettes_Slateport
-	.4byte gMetatiles_Slateport
-	.4byte gMetatileAttributes_Slateport
-	.4byte InitTilesetAnim_Slateport
-
-	.align 2
-
-gTileset_Mauville:: @ 8286D6C
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Mauville
-	.4byte gTilesetPalettes_Mauville
-	.4byte gMetatiles_Mauville
-	.4byte gMetatileAttributes_Mauville
-	.4byte InitTilesetAnim_Mauville
-
-	.align 2
-
-gTileset_Lavaridge:: @ 8286D84
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Lavaridge
-	.4byte gTilesetPalettes_Lavaridge
-	.4byte gMetatiles_Lavaridge
-	.4byte gMetatileAttributes_Lavaridge
-	.4byte InitTilesetAnim_Lavaridge
-
-	.align 2
-
-gTileset_Fallarbor:: @ 8286D9C
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Fallarbor
-	.4byte gTilesetPalettes_Fallarbor
-	.4byte gMetatiles_Fallarbor
-	.4byte gMetatileAttributes_Fallarbor
-	.4byte InitTilesetAnim_Fallarbor
-
-	.align 2
-
-gTileset_Fortree:: @ 8286DB4
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Fortree
-	.4byte gTilesetPalettes_Fortree
-	.4byte gMetatiles_Fortree
-	.4byte gMetatileAttributes_Fortree
-	.4byte InitTilesetAnim_Fortree
-
-	.align 2
-
-gTileset_Lilycove:: @ 8286DCC
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Lilycove
-	.4byte gTilesetPalettes_Lilycove
-	.4byte gMetatiles_Lilycove
-	.4byte gMetatileAttributes_Lilycove
-	.4byte InitTilesetAnim_Lilycove
-
-	.align 2
-
-gTileset_Mossdeep:: @ 8286DE4
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Mossdeep
-	.4byte gTilesetPalettes_Mossdeep
-	.4byte gMetatiles_Mossdeep
-	.4byte gMetatileAttributes_Mossdeep
-	.4byte InitTilesetAnim_Mossdeep
-
-	.align 2
-
-gTileset_EverGrande:: @ 8286DFC
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_EverGrande
-	.4byte gTilesetPalettes_EverGrande
-	.4byte gMetatiles_EverGrande
-	.4byte gMetatileAttributes_EverGrande
-	.4byte InitTilesetAnim_EverGrande
-
-	.align 2
-
-gTileset_Pacifidlog:: @ 8286E14
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Pacifidlog
-	.4byte gTilesetPalettes_Pacifidlog
-	.4byte gMetatiles_Pacifidlog
-	.4byte gMetatileAttributes_Pacifidlog
-	.4byte InitTilesetAnim_Pacifidlog
-
-	.align 2
-
-gTileset_Sootopolis:: @ 8286E2C
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Sootopolis
-	.4byte gTilesetPalettes_Sootopolis
-	.4byte gMetatiles_Sootopolis
-	.4byte gMetatileAttributes_Sootopolis
-	.4byte InitTilesetAnim_Sootopolis
-
-	.align 2
-
-gTileset_Building:: @ 8286E44
-	.byte TRUE @ is compressed
-	.byte FALSE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Building
-	.4byte gTilesetPalettes_Building
-	.4byte gMetatiles_Building
-	.4byte gMetatileAttributes_Building
-	.4byte InitTilesetAnim_Building
-
-	.align 2
-
-gTileset_Shop:: @ 8286E5C
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Shop
-	.4byte gTilesetPalettes_Shop
-	.4byte gMetatiles_Shop
-	.4byte gMetatileAttributes_Shop
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_PokemonCenter:: @ 8286E74
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_PokemonCenter
-	.4byte gTilesetPalettes_PokemonCenter
-	.4byte gMetatiles_PokemonCenter
-	.4byte gMetatileAttributes_PokemonCenter
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_Cave:: @ 8286E8C
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Cave
-	.4byte gTilesetPalettes_Cave
-	.4byte gMetatiles_Cave
-	.4byte gMetatileAttributes_Cave
-	.4byte InitTilesetAnim_Cave
-
-	.align 2
-
-gTileset_PokemonSchool:: @ 8286EA4
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_PokemonSchool
-	.4byte gTilesetPalettes_PokemonSchool
-	.4byte gMetatiles_PokemonSchool
-	.4byte gMetatileAttributes_PokemonSchool
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_PokemonFanClub:: @ 8286EBC
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_PokemonFanClub
-	.4byte gTilesetPalettes_PokemonFanClub
-	.4byte gMetatiles_PokemonFanClub
-	.4byte gMetatileAttributes_PokemonFanClub
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_Unused1:: @ 8286ED4
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Unused1
-	.4byte gTilesetPalettes_Unused1
-	.4byte gMetatiles_Unused1
-	.4byte gMetatileAttributes_Unused1
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_MeteorFalls:: @ 8286EEC
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_MeteorFalls
-	.4byte gTilesetPalettes_MeteorFalls
-	.4byte gMetatiles_MeteorFalls
-	.4byte gMetatileAttributes_MeteorFalls
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_OceanicMuseum:: @ 8286F04
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_OceanicMuseum
-	.4byte gTilesetPalettes_OceanicMuseum
-	.4byte gMetatiles_OceanicMuseum
-	.4byte gMetatileAttributes_OceanicMuseum
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_CableClub:: @ 8286F1C
-	.byte FALSE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_CableClub
-	.4byte gTilesetPalettes_CableClub
-	.4byte gMetatiles_CableClub
-	.4byte gMetatileAttributes_CableClub
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_SeashoreHouse:: @ 8286F34
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_SeashoreHouse
-	.4byte gTilesetPalettes_SeashoreHouse
-	.4byte gMetatiles_SeashoreHouse
-	.4byte gMetatileAttributes_SeashoreHouse
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_PrettyPetalFlowerShop:: @ 8286F4C
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_PrettyPetalFlowerShop
-	.4byte gTilesetPalettes_PrettyPetalFlowerShop
-	.4byte gMetatiles_PrettyPetalFlowerShop
-	.4byte gMetatileAttributes_PrettyPetalFlowerShop
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_PokemonDayCare:: @ 8286F64
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_PokemonDayCare
-	.4byte gTilesetPalettes_PokemonDayCare
-	.4byte gMetatiles_PokemonDayCare
-	.4byte gMetatileAttributes_PokemonDayCare
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_Facility:: @ 8286F7C
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Facility
-	.4byte gTilesetPalettes_Facility
-	.4byte gMetatiles_Facility
-	.4byte gMetatileAttributes_Facility
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_BikeShop:: @ 8286F94
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_BikeShop
-	.4byte gTilesetPalettes_BikeShop
-	.4byte gMetatiles_BikeShop
-	.4byte gMetatileAttributes_BikeShop
-	.4byte InitTilesetAnim_BikeShop
-
-	.align 2
-
-gTileset_RusturfTunnel:: @ 8286FAC
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_RusturfTunnel
-	.4byte gTilesetPalettes_RusturfTunnel
-	.4byte gMetatiles_RusturfTunnel
-	.4byte gMetatileAttributes_RusturfTunnel
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_SecretBaseBrownCave:: @ 8286FC4
-	.byte FALSE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_SecretBaseBrownCave
-	.4byte gTilesetPalettes_SecretBaseBrownCave
-	.4byte gMetatiles_SecretBaseSecondary
-	.4byte gMetatileAttributes_SecretBaseSecondary
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_SecretBaseTree:: @ 8286FDC
-	.byte FALSE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_SecretBaseTree
-	.4byte gTilesetPalettes_SecretBaseTree
-	.4byte gMetatiles_SecretBaseSecondary
-	.4byte gMetatileAttributes_SecretBaseSecondary
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_SecretBaseShrub:: @ 8286FF4
-	.byte FALSE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_SecretBaseShrub
-	.4byte gTilesetPalettes_SecretBaseShrub
-	.4byte gMetatiles_SecretBaseSecondary
-	.4byte gMetatileAttributes_SecretBaseSecondary
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_SecretBaseBlueCave:: @ 828700C
-	.byte FALSE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_SecretBaseBlueCave
-	.4byte gTilesetPalettes_SecretBaseBlueCave
-	.4byte gMetatiles_SecretBaseSecondary
-	.4byte gMetatileAttributes_SecretBaseSecondary
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_SecretBaseYellowCave:: @ 8287024
-	.byte FALSE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_SecretBaseYellowCave
-	.4byte gTilesetPalettes_SecretBaseYellowCave
-	.4byte gMetatiles_SecretBaseSecondary
-	.4byte gMetatileAttributes_SecretBaseSecondary
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_SecretBaseRedCave:: @ 828703C
-	.byte FALSE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_SecretBaseRedCave
-	.4byte gTilesetPalettes_SecretBaseRedCave
-	.4byte gMetatiles_SecretBaseSecondary
-	.4byte gMetatileAttributes_SecretBaseSecondary
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_InsideOfTruck:: @ 8287054
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_InsideOfTruck
-	.4byte gTilesetPalettes_InsideOfTruck
-	.4byte gMetatiles_InsideOfTruck
-	.4byte gMetatileAttributes_InsideOfTruck
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_Unused2:: @ 828706C
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Unused2
-	.4byte gTilesetPalettes_Unused2
-	.4byte gMetatiles_Unused2
-	.4byte gMetatileAttributes_Unused2
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_Contest:: @ 8287084
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Contest
-	.4byte gTilesetPalettes_Contest
-	.4byte gMetatiles_Contest
-	.4byte gMetatileAttributes_Contest
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_LilycoveMuseum:: @ 828709C
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_LilycoveMuseum
-	.4byte gTilesetPalettes_LilycoveMuseum
-	.4byte gMetatiles_LilycoveMuseum
-	.4byte gMetatileAttributes_LilycoveMuseum
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_BrendansMaysHouse:: @ 82870B4
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_BrendansMaysHouse
-	.4byte gTilesetPalettes_BrendansMaysHouse
-	.4byte gMetatiles_BrendansMaysHouse
-	.4byte gMetatileAttributes_BrendansMaysHouse
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_Lab:: @ 82870CC
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Lab
-	.4byte gTilesetPalettes_Lab
-	.4byte gMetatiles_Lab
-	.4byte gMetatileAttributes_Lab
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_Underwater:: @ 82870E4
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Underwater
-	.4byte gTilesetPalettes_Underwater
-	.4byte gMetatiles_Underwater
-	.4byte gMetatileAttributes_Underwater
-	.4byte InitTilesetAnim_Underwater
-
-	.align 2
-
-gTileset_PetalburgGym:: @ 82870FC
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_PetalburgGym
-	.4byte gTilesetPalettes_PetalburgGym
-	.4byte gMetatiles_PetalburgGym
-	.4byte gMetatileAttributes_PetalburgGym
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_SootopolisGym:: @ 8287114
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_SootopolisGym
-	.4byte gTilesetPalettes_SootopolisGym
-	.4byte gMetatiles_SootopolisGym
-	.4byte gMetatileAttributes_SootopolisGym
-	.4byte InitTilesetAnim_SootopolisGym
-
-	.align 2
-
-gTileset_GenericBuilding:: @ 828712C
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_GenericBuilding
-	.4byte gTilesetPalettes_GenericBuilding
-	.4byte gMetatiles_GenericBuilding
-	.4byte gMetatileAttributes_GenericBuilding
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_MauvilleGameCorner:: @ 8287144
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_MauvilleGameCorner
-	.4byte gTilesetPalettes_MauvilleGameCorner
-	.4byte gMetatiles_MauvilleGameCorner
-	.4byte gMetatileAttributes_MauvilleGameCorner
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_RustboroGym:: @ 828715C
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_RustboroGym
-	.4byte gTilesetPalettes_RustboroGym
-	.4byte gMetatiles_RustboroGym
-	.4byte gMetatileAttributes_RustboroGym
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_DewfordGym:: @ 8287174
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_DewfordGym
-	.4byte gTilesetPalettes_DewfordGym
-	.4byte gMetatiles_DewfordGym
-	.4byte gMetatileAttributes_DewfordGym
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_MauvilleGym:: @ 828718C
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_MauvilleGym
-	.4byte gTilesetPalettes_MauvilleGym
-	.4byte gMetatiles_MauvilleGym
-	.4byte gMetatileAttributes_MauvilleGym
-	.4byte InitTilesetAnim_MauvilleGym
-
-	.align 2
-
-gTileset_LavaridgeGym:: @ 82871A4
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_LavaridgeGym
-	.4byte gTilesetPalettes_LavaridgeGym
-	.4byte gMetatiles_LavaridgeGym
-	.4byte gMetatileAttributes_LavaridgeGym
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_TrickHousePuzzle:: @ 82871BC
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_TrickHousePuzzle
-	.4byte gTilesetPalettes_TrickHousePuzzle
-	.4byte gMetatiles_TrickHousePuzzle
-	.4byte gMetatileAttributes_TrickHousePuzzle
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_FortreeGym:: @ 82871D4
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_FortreeGym
-	.4byte gTilesetPalettes_FortreeGym
-	.4byte gMetatiles_FortreeGym
-	.4byte gMetatileAttributes_FortreeGym
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_MossdeepGym:: @ 82871EC
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_MossdeepGym
-	.4byte gTilesetPalettes_MossdeepGym
-	.4byte gMetatiles_MossdeepGym
-	.4byte gMetatileAttributes_MossdeepGym
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_Ship:: @ 8287204
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_Ship
-	.4byte gTilesetPalettes_Ship
-	.4byte gMetatiles_Ship
-	.4byte gMetatileAttributes_Ship
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_SecretBase:: @ 828721C
-	.byte FALSE @ is compressed
-	.byte FALSE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_SecretBase
-	.4byte gTilesetPalettes_SecretBase
-	.4byte gMetatiles_SecretBasePrimary
-	.4byte gMetatileAttributes_SecretBasePrimary
-	.4byte NULL @ animation callback
-
-	.align 2
-
-gTileset_EliteFour:: @ 8287234
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_EliteFour
-	.4byte gTilesetPalettes_EliteFour
-	.4byte gMetatiles_EliteFour
-	.4byte gMetatileAttributes_EliteFour
-	.4byte InitTilesetAnim_EliteFour
-
-	.align 2
-
-gTileset_BattleTower:: @ 828724C
-	.byte TRUE @ is compressed
-	.byte TRUE @ is secondary tileset
-	.2byte 0 @ padding
-	.4byte gTilesetTiles_BattleTower
-	.4byte gTilesetPalettes_BattleTower
-	.4byte gMetatiles_BattleTower
-	.4byte gMetatileAttributes_BattleTower
-	.4byte NULL @ animation callback
+	tileset General, TRUE, FALSE, gTilesetTiles_General, gTilesetPalettes_General, gMetatiles_General, gMetatileAttributes_General, InitTilesetAnim_General @ 8286CF4
+
+	tileset Petalburg, TRUE, TRUE, gTilesetTiles_Petalburg, gTilesetPalettes_Petalburg, gMetatiles_Petalburg, gMetatileAttributes_Petalburg, InitTilesetAnim_Petalburg @ 8286D0C
+
+	tileset Rustboro, TRUE, TRUE, gTilesetTiles_Rustboro, gTilesetPalettes_Rustboro, gMetatiles_Rustboro, gMetatileAttributes_Rustboro, InitTilesetAnim_Rustboro @ 8286D24
+
+	tileset Dewford, TRUE, TRUE, gTilesetTiles_Dewford, gTilesetPalettes_Dewford, gMetatiles_Dewford, gMetatileAttributes_Dewford, InitTilesetAnim_Dewford @ 8286D3C
+
+	tileset Slateport, TRUE, TRUE, gTilesetTiles_Slateport, gTilesetPalettes_Slateport, gMetatiles_Slateport, gMetatileAttributes_Slateport, InitTilesetAnim_Slateport @ 8286D54
+
+	tileset Mauville, TRUE, TRUE, gTilesetTiles_Mauville, gTilesetPalettes_Mauville, gMetatiles_Mauville, gMetatileAttributes_Mauville, InitTilesetAnim_Mauville @ 8286D6C
+
+	tileset Lavaridge, TRUE, TRUE, gTilesetTiles_Lavaridge, gTilesetPalettes_Lavaridge, gMetatiles_Lavaridge, gMetatileAttributes_Lavaridge, InitTilesetAnim_Lavaridge @ 8286D84
+
+	tileset Fallarbor, TRUE, TRUE, gTilesetTiles_Fallarbor, gTilesetPalettes_Fallarbor, gMetatiles_Fallarbor, gMetatileAttributes_Fallarbor, InitTilesetAnim_Fallarbor @ 8286D9C
+
+	tileset Fortree, TRUE, TRUE, gTilesetTiles_Fortree, gTilesetPalettes_Fortree, gMetatiles_Fortree, gMetatileAttributes_Fortree, InitTilesetAnim_Fortree @ 8286DB4
+
+	tileset Lilycove, TRUE, TRUE, gTilesetTiles_Lilycove, gTilesetPalettes_Lilycove, gMetatiles_Lilycove, gMetatileAttributes_Lilycove, InitTilesetAnim_Lilycove @ 8286DCC
+
+	tileset Mossdeep, TRUE, TRUE, gTilesetTiles_Mossdeep, gTilesetPalettes_Mossdeep, gMetatiles_Mossdeep, gMetatileAttributes_Mossdeep, InitTilesetAnim_Mossdeep @ 8286DE4
+
+	tileset EverGrande, TRUE, TRUE, gTilesetTiles_EverGrande, gTilesetPalettes_EverGrande, gMetatiles_EverGrande, gMetatileAttributes_EverGrande, InitTilesetAnim_EverGrande @ 8286DFC
+
+	tileset Pacifidlog, TRUE, TRUE, gTilesetTiles_Pacifidlog, gTilesetPalettes_Pacifidlog, gMetatiles_Pacifidlog, gMetatileAttributes_Pacifidlog, InitTilesetAnim_Pacifidlog @ 8286E14
+
+	tileset Sootopolis, TRUE, TRUE, gTilesetTiles_Sootopolis, gTilesetPalettes_Sootopolis, gMetatiles_Sootopolis, gMetatileAttributes_Sootopolis, InitTilesetAnim_Sootopolis @ 8286E2C
+
+	tileset Building, TRUE, FALSE, gTilesetTiles_Building, gTilesetPalettes_Building, gMetatiles_Building, gMetatileAttributes_Building, InitTilesetAnim_Building @ 8286E44
+
+	tileset Shop, TRUE, TRUE, gTilesetTiles_Shop, gTilesetPalettes_Shop, gMetatiles_Shop, gMetatileAttributes_Shop, NULL @ 8286E5C
+
+	tileset PokemonCenter, TRUE, TRUE, gTilesetTiles_PokemonCenter, gTilesetPalettes_PokemonCenter, gMetatiles_PokemonCenter, gMetatileAttributes_PokemonCenter, NULL @ 8286E74
+
+	tileset Cave, TRUE, TRUE, gTilesetTiles_Cave, gTilesetPalettes_Cave, gMetatiles_Cave, gMetatileAttributes_Cave, InitTilesetAnim_Cave @ 8286E8C
+
+	tileset PokemonSchool, TRUE, TRUE, gTilesetTiles_PokemonSchool, gTilesetPalettes_PokemonSchool, gMetatiles_PokemonSchool, gMetatileAttributes_PokemonSchool, NULL @ 8286EA4
+
+	tileset PokemonFanClub, TRUE, TRUE, gTilesetTiles_PokemonFanClub, gTilesetPalettes_PokemonFanClub, gMetatiles_PokemonFanClub, gMetatileAttributes_PokemonFanClub, NULL @ 8286EBC
+
+	tileset Unused1, TRUE, TRUE, gTilesetTiles_Unused1, gTilesetPalettes_Unused1, gMetatiles_Unused1, gMetatileAttributes_Unused1, NULL @ 8286ED4
+
+	tileset MeteorFalls, TRUE, TRUE, gTilesetTiles_MeteorFalls, gTilesetPalettes_MeteorFalls, gMetatiles_MeteorFalls, gMetatileAttributes_MeteorFalls, NULL @ 8286EEC
+
+	tileset OceanicMuseum, TRUE, TRUE, gTilesetTiles_OceanicMuseum, gTilesetPalettes_OceanicMuseum, gMetatiles_OceanicMuseum, gMetatileAttributes_OceanicMuseum, NULL @ 8286F04
+
+	tileset CableClub, FALSE, TRUE, gTilesetTiles_CableClub, gTilesetPalettes_CableClub, gMetatiles_CableClub, gMetatileAttributes_CableClub, NULL @ 8286F1C
+
+	tileset SeashoreHouse, TRUE, TRUE, gTilesetTiles_SeashoreHouse, gTilesetPalettes_SeashoreHouse, gMetatiles_SeashoreHouse, gMetatileAttributes_SeashoreHouse, NULL @ 8286F34
+
+	tileset PrettyPetalFlowerShop, TRUE, TRUE, gTilesetTiles_PrettyPetalFlowerShop, gTilesetPalettes_PrettyPetalFlowerShop, gMetatiles_PrettyPetalFlowerShop, gMetatileAttributes_PrettyPetalFlowerShop, NULL @ 8286F4C
+
+	tileset PokemonDayCare, TRUE, TRUE, gTilesetTiles_PokemonDayCare, gTilesetPalettes_PokemonDayCare, gMetatiles_PokemonDayCare, gMetatileAttributes_PokemonDayCare, NULL @ 8286F64
+
+	tileset Facility, TRUE, TRUE, gTilesetTiles_Facility, gTilesetPalettes_Facility, gMetatiles_Facility, gMetatileAttributes_Facility, NULL @ 8286F7C
+
+	tileset BikeShop, TRUE, TRUE, gTilesetTiles_BikeShop, gTilesetPalettes_BikeShop, gMetatiles_BikeShop, gMetatileAttributes_BikeShop, InitTilesetAnim_BikeShop @ 8286F94
+
+	tileset RusturfTunnel, TRUE, TRUE, gTilesetTiles_RusturfTunnel, gTilesetPalettes_RusturfTunnel, gMetatiles_RusturfTunnel, gMetatileAttributes_RusturfTunnel, NULL @ 8286FAC
+
+	tileset SecretBaseBrownCave, FALSE, TRUE, gTilesetTiles_SecretBaseBrownCave, gTilesetPalettes_SecretBaseBrownCave, gMetatiles_SecretBaseSecondary, gMetatileAttributes_SecretBaseSecondary, NULL @ 8286FC4
+
+	tileset SecretBaseTree, FALSE, TRUE, gTilesetTiles_SecretBaseTree, gTilesetPalettes_SecretBaseTree, gMetatiles_SecretBaseSecondary, gMetatileAttributes_SecretBaseSecondary, NULL @ 8286FDC
+
+	tileset SecretBaseShrub, FALSE, TRUE, gTilesetTiles_SecretBaseShrub, gTilesetPalettes_SecretBaseShrub, gMetatiles_SecretBaseSecondary, gMetatileAttributes_SecretBaseSecondary, NULL @ 8286FF4
+
+	tileset SecretBaseBlueCave, FALSE, TRUE, gTilesetTiles_SecretBaseBlueCave, gTilesetPalettes_SecretBaseBlueCave, gMetatiles_SecretBaseSecondary, gMetatileAttributes_SecretBaseSecondary, NULL @ 828700C
+
+	tileset SecretBaseYellowCave, FALSE, TRUE, gTilesetTiles_SecretBaseYellowCave, gTilesetPalettes_SecretBaseYellowCave, gMetatiles_SecretBaseSecondary, gMetatileAttributes_SecretBaseSecondary, NULL @ 8287024
+
+	tileset SecretBaseRedCave, FALSE, TRUE, gTilesetTiles_SecretBaseRedCave, gTilesetPalettes_SecretBaseRedCave, gMetatiles_SecretBaseSecondary, gMetatileAttributes_SecretBaseSecondary, NULL @ 828703C
+
+	tileset InsideOfTruck, TRUE, TRUE, gTilesetTiles_InsideOfTruck, gTilesetPalettes_InsideOfTruck, gMetatiles_InsideOfTruck, gMetatileAttributes_InsideOfTruck, NULL @ 8287054
+
+	tileset Unused2, TRUE, TRUE, gTilesetTiles_Unused2, gTilesetPalettes_Unused2, gMetatiles_Unused2, gMetatileAttributes_Unused2, NULL @ 828706C
+
+	tileset Contest, TRUE, TRUE, gTilesetTiles_Contest, gTilesetPalettes_Contest, gMetatiles_Contest, gMetatileAttributes_Contest, NULL @ 8287084
+
+	tileset LilycoveMuseum, TRUE, TRUE, gTilesetTiles_LilycoveMuseum, gTilesetPalettes_LilycoveMuseum, gMetatiles_LilycoveMuseum, gMetatileAttributes_LilycoveMuseum, NULL @ 828709C
+
+	tileset BrendansMaysHouse, TRUE, TRUE, gTilesetTiles_BrendansMaysHouse, gTilesetPalettes_BrendansMaysHouse, gMetatiles_BrendansMaysHouse, gMetatileAttributes_BrendansMaysHouse, NULL @ 82870B4
+
+	tileset Lab, TRUE, TRUE, gTilesetTiles_Lab, gTilesetPalettes_Lab, gMetatiles_Lab, gMetatileAttributes_Lab, NULL @ 82870CC
+
+	tileset Underwater, TRUE, TRUE, gTilesetTiles_Underwater, gTilesetPalettes_Underwater, gMetatiles_Underwater, gMetatileAttributes_Underwater, InitTilesetAnim_Underwater @ 82870E4
+
+	tileset PetalburgGym, TRUE, TRUE, gTilesetTiles_PetalburgGym, gTilesetPalettes_PetalburgGym, gMetatiles_PetalburgGym, gMetatileAttributes_PetalburgGym, NULL @ 82870FC
+
+	tileset SootopolisGym, TRUE, TRUE, gTilesetTiles_SootopolisGym, gTilesetPalettes_SootopolisGym, gMetatiles_SootopolisGym, gMetatileAttributes_SootopolisGym, InitTilesetAnim_SootopolisGym @ 8287114
+
+	tileset GenericBuilding, TRUE, TRUE, gTilesetTiles_GenericBuilding, gTilesetPalettes_GenericBuilding, gMetatiles_GenericBuilding, gMetatileAttributes_GenericBuilding, NULL @ 828712C
+
+	tileset MauvilleGameCorner, TRUE, TRUE, gTilesetTiles_MauvilleGameCorner, gTilesetPalettes_MauvilleGameCorner, gMetatiles_MauvilleGameCorner, gMetatileAttributes_MauvilleGameCorner, NULL @ 8287144
+
+	tileset RustboroGym, TRUE, TRUE, gTilesetTiles_RustboroGym, gTilesetPalettes_RustboroGym, gMetatiles_RustboroGym, gMetatileAttributes_RustboroGym, NULL @ 828715C
+
+	tileset DewfordGym, TRUE, TRUE, gTilesetTiles_DewfordGym, gTilesetPalettes_DewfordGym, gMetatiles_DewfordGym, gMetatileAttributes_DewfordGym, NULL @ 8287174
+
+	tileset MauvilleGym, TRUE, TRUE, gTilesetTiles_MauvilleGym, gTilesetPalettes_MauvilleGym, gMetatiles_MauvilleGym, gMetatileAttributes_MauvilleGym, InitTilesetAnim_MauvilleGym @ 828718C
+
+	tileset LavaridgeGym, TRUE, TRUE, gTilesetTiles_LavaridgeGym, gTilesetPalettes_LavaridgeGym, gMetatiles_LavaridgeGym, gMetatileAttributes_LavaridgeGym, NULL @ 82871A4
+
+	tileset TrickHousePuzzle, TRUE, TRUE, gTilesetTiles_TrickHousePuzzle, gTilesetPalettes_TrickHousePuzzle, gMetatiles_TrickHousePuzzle, gMetatileAttributes_TrickHousePuzzle, NULL @ 82871BC
+
+	tileset FortreeGym, TRUE, TRUE, gTilesetTiles_FortreeGym, gTilesetPalettes_FortreeGym, gMetatiles_FortreeGym, gMetatileAttributes_FortreeGym, NULL @ 82871D4
+
+	tileset MossdeepGym, TRUE, TRUE, gTilesetTiles_MossdeepGym, gTilesetPalettes_MossdeepGym, gMetatiles_MossdeepGym, gMetatileAttributes_MossdeepGym, NULL @ 82871EC
+
+	tileset Ship, TRUE, TRUE, gTilesetTiles_Ship, gTilesetPalettes_Ship, gMetatiles_Ship, gMetatileAttributes_Ship, NULL @ 8287204
+
+	tileset SecretBase, FALSE, FALSE, gTilesetTiles_SecretBase, gTilesetPalettes_SecretBase, gMetatiles_SecretBasePrimary, gMetatileAttributes_SecretBasePrimary, NULL @ 828721C
+
+	tileset EliteFour, TRUE, TRUE, gTilesetTiles_EliteFour, gTilesetPalettes_EliteFour, gMetatiles_EliteFour, gMetatileAttributes_EliteFour, InitTilesetAnim_EliteFour @ 8287234
+
+	tileset BattleTower, TRUE, TRUE, gTilesetTiles_BattleTower, gTilesetPalettes_BattleTower, gMetatiles_BattleTower, gMetatileAttributes_BattleTower, NULL @ 828724C
