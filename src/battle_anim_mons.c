@@ -1155,8 +1155,8 @@ static void AnimFastTranslateLinearWaitEnd(struct Sprite *sprite)
 
 void InitAnimFastLinearTranslationWithSpeed(struct Sprite *sprite)
 {
-    int v1 = abs(sprite->data[2] - sprite->data[1]) << 4;
-    sprite->data[0] = v1 / sprite->data[0];
+    int xDiff = abs(sprite->data[2] - sprite->data[1]) << 4;
+    sprite->data[0] = xDiff / sprite->data[0];
     InitAnimFastLinearTranslation(sprite);
 }
 
