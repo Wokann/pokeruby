@@ -100,10 +100,10 @@ u8 GetStringLanguage(const u8 *string)
                     *string == CHAR_SLASH ||
                     *string == CHAR_HYPHEN ||
                     *string == CHAR_ELLIPSIS ||
-                    *string == CHAR_DBL_QUOT_LEFT ||
-                    *string == CHAR_DBL_QUOT_RIGHT ||
-                    *string == CHAR_SGL_QUOT_LEFT ||
-                    *string == CHAR_DBL_QUOT_LEFT)) // Most likely a typo, CHAR_SGL_QUOT_RIGHT should be here instead.
+                    *string == CHAR_DBL_QUOTE_LEFT ||
+                    *string == CHAR_DBL_QUOTE_RIGHT ||
+                    *string == CHAR_SGL_QUOTE_LEFT ||
+                    *string == CHAR_DBL_QUOTE_LEFT)) // Most likely a typo, CHAR_SGL_QUOTE_RIGHT should be here instead.
             {
                 string++;
             }

@@ -341,7 +341,7 @@ static void PrepareSongText(void)
         while (wordEnd != str)
         {
             if (*str == CHAR_SPACE)
-                *str = CHAR_SONG_WORD_SEPARATOR;
+                *str = CHAR_BARD_WORD_DELIMIT;
             str++;
         }
 
@@ -352,7 +352,7 @@ static void PrepareSongText(void)
         while (wordEnd != str)
         {
             if (*str == CHAR_SPACE)
-                *str = CHAR_SONG_WORD_SEPARATOR;
+                *str = CHAR_BARD_WORD_DELIMIT;
             str++;
         }
 
@@ -363,7 +363,7 @@ static void PrepareSongText(void)
         while (wordEnd != str)
         {
             if (*str == CHAR_SPACE)
-                *str = CHAR_SONG_WORD_SEPARATOR;
+                *str = CHAR_BARD_WORD_DELIMIT;
             str++;
         }
 
@@ -772,7 +772,7 @@ static void Task_BardSong(u8 taskId)
             task->tState = 2;
             task->tDelay = 8;
         }
-        else if (gStringVar4[task->tCharIndex] == CHAR_SONG_WORD_SEPARATOR)
+        else if (gStringVar4[task->tCharIndex] == CHAR_BARD_WORD_DELIMIT)
         {
             gStringVar4[task->tCharIndex] = CHAR_SPACE;  // restore it back to a space
             Text_PrintWindowSimple(gMenuWindowPtr);
