@@ -64,6 +64,13 @@
 	.2byte (\tile_num) | ((\priority) << 10) | ((\palette_num) << 12)
 	.endm
 
+@ Defines a four-byte TrainerMoney record. The final two bytes preserve
+@ Ruby's existing record padding.
+	.macro trainer_money trainer_class, value
+	.byte \trainer_class, \value
+	.2byte 0 @ padding
+	.endm
+
 @ Berry trees have a table defining the palette slot used for each of their 5
 @ stages. However, the first 2 stages always use the same slots regardless of
 @ the type of tree and the slots of the last 3 stages always equal each other.

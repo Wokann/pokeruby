@@ -100,13 +100,13 @@ extern const u8 BattleText_YesNo[];
 extern u8 gPlayerPartyCount;
 extern u16 gMoveToLearn; //move to learn
 
-struct TrainerReward
+struct TrainerMoney
 {
-    u8 trainerClass;
-    u8 baseMoney;
+    u8 classId;
+    u8 value;
 };
 
-extern const struct TrainerReward gTrainerMoney[];
+extern const struct TrainerMoney gTrainerMoneyTable[];
 extern u16 gRandomMove;
 extern u8* gBattleScriptsForMoveEffects[];
 extern u16 gChosenMove; //last used move in battle
@@ -5484,12 +5484,12 @@ static void Cmd_getmoneyreward(void)
         }
             break;
         }
-        for (; gTrainerMoney[i].trainerClass != 0xFF; i++) {
-            if (gTrainerMoney[i].trainerClass == gTrainers[gTrainerBattleOpponent].trainerClass)
+        for (; gTrainerMoneyTable[i].classId != 0xFF; i++) {
+            if (gTrainerMoneyTable[i].classId == gTrainers[gTrainerBattleOpponent].trainerClass)
                 break;
         }
         party4 = gTrainers[gTrainerBattleOpponent].party.ItemCustomMoves; // Needed to match. Has no effect.
-        moneyReward = 4 * lvl * gBattleStruct->moneyMultiplier * (gBattleTypeFlags & BATTLE_TYPE_DOUBLE ? 2 : 1) * gTrainerMoney[i].baseMoney;
+        moneyReward = 4 * lvl * gBattleStruct->moneyMultiplier * (gBattleTypeFlags & BATTLE_TYPE_DOUBLE ? 2 : 1) * gTrainerMoneyTable[i].value;
     }
 
     AddMoney(&gSaveBlock1.money, moneyReward);
