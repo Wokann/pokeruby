@@ -69,7 +69,7 @@ extern u8 gSharedMem[];
 
 // Non-battle allocations
 #define namingScreenData                (*(struct NamingScreenData *)(gSharedMem + 0x0))
-#define eSaveSection                    (struct SaveSector *)(gSharedMem + 0x0)
+#define gSaveDataBuffer                 (struct SaveSector *)(gSharedMem + 0x0)
 #define eSlotMachine                    ((struct SlotMachine *)(gSharedMem + 0x0))
 #define sPokemonStorageSystem           (*(struct PokemonStorageSystemData *)(gSharedMem + 0))
 

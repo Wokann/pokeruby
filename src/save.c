@@ -179,7 +179,7 @@ static u8 WriteSaveSectorOrSlot(u16 sectorId, const struct SaveSectorLocation *l
     u32 status;
     u16 i;
 
-    gReadWriteSector = eSaveSection;
+    gReadWriteSector = gSaveDataBuffer;
 
     if (sectorId != FULL_SAVE_SLOT)  // write single sector
     {
@@ -242,7 +242,7 @@ static u8 HandleWriteSector(u16 sectorId, const struct SaveSectorLocation *locat
 static u8 HandleWriteSectorNBytes(u8 sectorNum, u8 *data, u16 size)
 {
     u16 i;
-    struct SaveSector *section = eSaveSection;
+    struct SaveSector *section = gSaveDataBuffer;
 
     for (i = 0; i < sizeof(struct SaveSector); i++)
         ((char *)section)[i] = 0;
@@ -271,7 +271,7 @@ static u8 TryWriteSector(u8 sectorNum, u8 *data)
 
 static u32 RestoreSaveBackupVarsAndIncrement(const struct SaveSectorLocation *locations) // locations are unused
 {
-    gReadWriteSector = eSaveSection;
+    gReadWriteSector = gSaveDataBuffer;
     gLastKnownGoodSector = gLastWrittenSector;
     gLastSaveCounter = gSaveCounter;
     gLastWrittenSector++;
@@ -284,7 +284,7 @@ static u32 RestoreSaveBackupVarsAndIncrement(const struct SaveSectorLocation *lo
 
 static u32 RestoreSaveBackupVars(const struct SaveSectorLocation *locations) // locations are unused
 {
-    gReadWriteSector = eSaveSection;
+    gReadWriteSector = gSaveDataBuffer;
     gLastKnownGoodSector = gLastWrittenSector;
     gLastSaveCounter = gSaveCounter;
     gIncrementalSectorId = 0;
@@ -458,7 +458,7 @@ static u8 WriteSectorSignatureByte(u16 sectorId, const struct SaveSectorLocation
 static u8 TryLoadSaveSlot(u16 sectorId, const struct SaveSectorLocation *locations)
 {
     u8 status;
-    gReadWriteSector = eSaveSection;
+    gReadWriteSector = gSaveDataBuffer;
     if (sectorId != FULL_SAVE_SLOT)
     {
         status = SAVE_STATUS_ERROR;
@@ -623,7 +623,7 @@ static u8 GetSaveValidStatus(const struct SaveSectorLocation *locations)
 static u8 TryLoadSaveSector(u8 sectorId, u8 *data, u16 size)
 {
     u16 i;
-    struct SaveSector *section = eSaveSection;
+    struct SaveSector *section = gSaveDataBuffer;
 
     ReadFlashSector(sectorId, section);
     if (section->signature == SECTOR_SIGNATURE)
@@ -675,7 +675,7 @@ void DebugFixSaveChecksums(void)
     const struct SaveSectorLocation *hallOfFameSectorLocations;
     u16 i;
 
-    saveSector = eSaveSection;
+    saveSector = gSaveDataBuffer;
     saveSectorLocations = sSaveSectorLocations;
     for (i = 0; i < NUM_SECTORS_PER_SAVE_SLOT * 2; i++)
     {
@@ -684,7 +684,7 @@ void DebugFixSaveChecksums(void)
         ProgramFlashSectorAndVerify(i, saveSector->data);
     }
 
-    hallOfFameSector = eSaveSection;
+    hallOfFameSector = gSaveDataBuffer;
     hallOfFameSectorLocations = sHallOfFameSectorLocations;
     for (i = 0; i < NUM_HALL_OF_FAME_SECTORS; i++)
     {
@@ -899,7 +899,7 @@ u8 SaveGameAndClearRubySpecialSaveSectors(void)
 u8 TryWriteRubySpecialSaveSector(u8 *data, u16 size)
 {
     u16 i;
-    struct RubySpecialSaveSector *section = (struct RubySpecialSaveSector *)eSaveSection;
+    struct RubySpecialSaveSector *section = (struct RubySpecialSaveSector *)gSaveDataBuffer;
 
     for (i = 0; i < sizeof(struct SaveSector); i++)
         ((char *)section)[i] = 0;
