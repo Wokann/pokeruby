@@ -11,7 +11,7 @@ SootopolisCity_OnLoad:: @ 814D08D
 
 SootopolisCity_EventScript_ExpertBlockCaveOfOrigin:: @ 814D0A0
 	setobjectxyperm LOCALID_SOOTOPOLIS_EXPERT, 31, 18
-	setmetatile 31, 32, METATILE_Sootopolis_GymDoor_Closed, 1
+	setmetatile 31, 32, METATILE_Sootopolis_GymDoor_Closed, TRUE
 	return
 
 SootopolisCity_EventScript_WeatherEventDoorsLocked:: @ 814D0B1
@@ -19,15 +19,15 @@ SootopolisCity_EventScript_WeatherEventDoorsLocked:: @ 814D0B1
 	return
 
 SootopolisCity_EventScript_LockCityDoors:: @ 814D0BB
-	setmetatile 9, 6, METATILE_Sootopolis_Door_Closed, 1
-	setmetatile 9, 17, METATILE_Sootopolis_Door_Closed, 1
-	setmetatile 9, 26, METATILE_Sootopolis_Door_Closed, 1
-	setmetatile 44, 17, METATILE_Sootopolis_Door_Closed, 1
-	setmetatile 8, 35, METATILE_Sootopolis_Door_Closed, 1
-	setmetatile 53, 28, METATILE_Sootopolis_Door_Closed, 1
-	setmetatile 45, 6, METATILE_Sootopolis_Door_Closed, 1
-	setmetatile 48, 25, METATILE_Sootopolis_Door_Closed, 1
-	setmetatile 31, 32, METATILE_Sootopolis_GymDoor_Closed, 1
+	setmetatile 9, 6, METATILE_Sootopolis_Door_Closed, TRUE
+	setmetatile 9, 17, METATILE_Sootopolis_Door_Closed, TRUE
+	setmetatile 9, 26, METATILE_Sootopolis_Door_Closed, TRUE
+	setmetatile 44, 17, METATILE_Sootopolis_Door_Closed, TRUE
+	setmetatile 8, 35, METATILE_Sootopolis_Door_Closed, TRUE
+	setmetatile 53, 28, METATILE_Sootopolis_Door_Closed, TRUE
+	setmetatile 45, 6, METATILE_Sootopolis_Door_Closed, TRUE
+	setmetatile 48, 25, METATILE_Sootopolis_Door_Closed, TRUE
+	setmetatile 31, 32, METATILE_Sootopolis_GymDoor_Closed, TRUE
 	return
 
 SootopolisCity_OnTransition:: @ 814D10D
@@ -57,7 +57,7 @@ SootopolisCity_EventScript_SetStevenOutsideGymPostLegendary:: @ 814D159
 	return
 
 SootopolisCity_OnResume:: @ 814D165
-	setdivewarp MAP_UNDERWATER_SOOTOPOLIS_CITY, 255, 9, 6
+	setdivewarp MAP_UNDERWATER_SOOTOPOLIS_CITY, WARP_ID_NONE, 9, 6
 	end
 
 SootopolisCity_EventScript_CaveOfOriginExpert:: @ 814D16E
@@ -92,7 +92,7 @@ SootopolisCity_EventScript_KiriGiveBerry:: @ 814D19F
 	addvar VAR_RESULT, 20
 	addvar VAR_RESULT, ITEM_CHERI_BERRY
 	giveitem VAR_RESULT
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_DAILY_RECEIVED_BERRY_SOOTOPOLIS
 	msgbox SootopolisCity_Text_GiveYouThisBerryToo, MSGBOX_DEFAULT
@@ -105,7 +105,7 @@ SootopolisCity_EventScript_KiriGiveBerry:: @ 814D19F
 
 SootopolisCity_EventScript_GiveFigyBerry:: @ 814D1FF
 	giveitem ITEM_FIGY_BERRY
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	msgbox SootopolisCity_Text_WhatKindOfWishInYourName, MSGBOX_DEFAULT
 	release
@@ -113,7 +113,7 @@ SootopolisCity_EventScript_GiveFigyBerry:: @ 814D1FF
 
 SootopolisCity_EventScript_GiveIapapaBerry:: @ 814D220
 	giveitem ITEM_IAPAPA_BERRY
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	msgbox SootopolisCity_Text_WhatKindOfWishInYourName, MSGBOX_DEFAULT
 	release

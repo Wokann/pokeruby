@@ -39,7 +39,7 @@ SootopolisCity_BarboachAndShroomishHouse_EventScript_SmallShroomish:: @ 815B45C
 SootopolisCity_BarboachAndShroomishHouse_EventScript_BigShroomish:: @ 815B466
 	msgbox SootopolisCity_BarboachAndShroomishHouse_Text_GoshMightBeBiggerThanBarboach, MSGBOX_DEFAULT
 	giveitem ITEM_ELIXIR
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq SootopolisCity_BarboachAndShroomishHouse_EventScript_NoRoomForElixir1
 	closemessage
 	release
@@ -88,7 +88,7 @@ SootopolisCity_BarboachAndShroomishHouse_EventScript_SmallBarboach:: @ 815B4ED
 SootopolisCity_BarboachAndShroomishHouse_EventScript_BigBarboach:: @ 815B4F7
 	msgbox SootopolisCity_BarboachAndShroomishHouse_Text_WowMightBeBiggerThanShroomish, MSGBOX_DEFAULT
 	giveitem ITEM_ELIXIR
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq SootopolisCity_BarboachAndShroomishHouse_EventScript_NoRoomForElixir2
 	closemessage
 	release

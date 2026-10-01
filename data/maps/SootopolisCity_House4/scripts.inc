@@ -13,7 +13,7 @@ SootopolisCity_House4_EventScript_Azumarill:: @ 815B35F
 	lock
 	faceplayer
 	waitse
-	playmoncry SPECIES_AZUMARILL, 0
+	playmoncry SPECIES_AZUMARILL, CRY_MODE_NORMAL
 	msgbox SootopolisCity_House4_Text_Azumarill, MSGBOX_DEFAULT
 	waitmoncry
 	release

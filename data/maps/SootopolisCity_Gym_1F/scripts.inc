@@ -25,16 +25,16 @@ SootopolisCity_Gym_1F_EventScript_CheckSetStairMetatiles:: @ 815AF2E
 	goto_if_lt SootopolisCity_Gym_1F_EventScript_OpenFirstStairs
 	compare VAR_ICE_STEP_COUNT, 69
 	goto_if_lt SootopolisCity_Gym_1F_EventScript_OpenFirstAndSecondStairs
-	setmetatile 8, 4, METATILE_SootopolisGym_Stairs, 0
-	setmetatile 8, 5, METATILE_SootopolisGym_Stairs, 0
+	setmetatile 8, 4, METATILE_SootopolisGym_Stairs, FALSE
+	setmetatile 8, 5, METATILE_SootopolisGym_Stairs, FALSE
 
 SootopolisCity_Gym_1F_EventScript_OpenFirstAndSecondStairs:: @ 815AF61
-	setmetatile 8, 10, METATILE_SootopolisGym_Stairs, 0
-	setmetatile 8, 11, METATILE_SootopolisGym_Stairs, 0
+	setmetatile 8, 10, METATILE_SootopolisGym_Stairs, FALSE
+	setmetatile 8, 11, METATILE_SootopolisGym_Stairs, FALSE
 
 SootopolisCity_Gym_1F_EventScript_OpenFirstStairs:: @ 815AF73
-	setmetatile 8, 15, METATILE_SootopolisGym_Stairs, 0
-	setmetatile 8, 16, METATILE_SootopolisGym_Stairs, 0
+	setmetatile 8, 15, METATILE_SootopolisGym_Stairs, FALSE
+	setmetatile 8, 16, METATILE_SootopolisGym_Stairs, FALSE
 
 SootopolisCity_Gym_1F_EventScript_StopCheckingStairs:: @ 815AF85
 	return
@@ -107,7 +107,7 @@ SootopolisCity_Gym_1F_EventScript_WallaceDefeated:: @ 815B02D
 
 SootopolisCity_Gym_1F_EventScript_GiveWaterPulse2:: @ 815B056
 	giveitem ITEM_TM03_WATER_PULSE
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	msgbox SootopolisCity_Gym_1F_Text_ExplainWaterPulse, MSGBOX_DEFAULT
 	setflag FLAG_RECEIVED_TM_WATER_PULSE
