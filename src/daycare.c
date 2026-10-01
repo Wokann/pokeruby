@@ -76,7 +76,7 @@ u8 CountPokemonInDaycare(struct DayCare *daycare)
     return count;
 }
 
-void InitDaycareMailRecordMixing(struct BoxPokemon * daycareMons, struct RecordMixingDayCareMail * daycareMail)
+void InitDaycareMailRecordMixing(struct BoxPokemon * daycareMons, struct RecordMixingDaycareMail * daycareMail)
 {
     u8 i;
     u8 numDaycareMons = 0;

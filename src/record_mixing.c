@@ -26,7 +26,7 @@
 #include "tv.h"
 #include "ewram.h"
 
-EWRAM_DATA struct RecordMixingDayCareMail gRecordMixMail = {0};
+EWRAM_DATA struct RecordMixingDaycareMail gRecordMixMail = {0};
 extern u16 gSpecialVar_0x8005;
 
 u32 gRecordStructSize;
@@ -39,7 +39,7 @@ void *gTvShowsSave = &gSaveBlock1.tvShows;
 void *gPokeNewsSave = &gSaveBlock1.pokeNews;
 void *gOldManSave = &gSaveBlock1.oldMan;
 void *gDewfordTrendsSave = &gSaveBlock1.dewfordTrends;
-struct RecordMixingDayCareMail *gRecordMixMailSave = &gRecordMixMail;
+struct RecordMixingDaycareMail *gRecordMixMailSave = &gRecordMixMail;
 struct BattleTowerRecord *gBattleTowerSave = &gSaveBlock2.battleTower.playerRecord;
 
 #define BUFFER_CHUNK_SIZE 200
@@ -58,7 +58,7 @@ struct PlayerRecords
     struct PokeNews pokeNews[POKE_NEWS_COUNT];
     union OldMan oldMan;
     struct DewfordTrend dewfordTrends[SAVED_TRENDS_COUNT];
-    struct RecordMixingDayCareMail daycareMailRecord;
+    struct RecordMixingDaycareMail daycareMailRecord;
     struct BattleTowerRecord battleTowerRecord;
     u16 giftItem;
     u16 filler11CA[0x33];
@@ -84,7 +84,7 @@ void ReceiveBattleTowerData(void *records, size_t recordSize, u8 multiplayerId);
 u8 GetDaycareMailItemId(struct DayCareMail *mail);
 void SwapDaycareMail(u8 *records, size_t recordSize, u8 (*idxs)[2], u8 playerSlot1, u8 playerSlot2);
 u8 CalculateDaycareMailRandSum(const u8 *shows);
-void ReceiveDaycareMailData(struct RecordMixingDayCareMail *records, size_t recordSize, u8 multiplayerId, TVShow *shows);
+void ReceiveDaycareMailData(struct RecordMixingDaycareMail *records, size_t recordSize, u8 multiplayerId, TVShow *shows);
 void ReceiveGiftItem(u16 *item, u8 multiplayerId);
 void Task_DoRecordMixing(u8 taskId);
 
@@ -101,7 +101,7 @@ void PrepareExchangePacket(void)
     gRecordMixMail.mail[0] = gSaveBlock1.daycare.misc.mail[0];
     gRecordMixMail.mail[1] = gSaveBlock1.daycare.misc.mail[1];
     InitDaycareMailRecordMixing(gSaveBlock1.daycare.mons, &gRecordMixMail);
-    memcpy(&sSentRecord.daycareMailRecord, gRecordMixMailSave, sizeof(struct RecordMixingDayCareMail));
+    memcpy(&sSentRecord.daycareMailRecord, gRecordMixMailSave, sizeof(struct RecordMixingDaycareMail));
     memcpy(&sSentRecord.battleTowerRecord, gBattleTowerSave, sizeof(struct BattleTowerRecord));
 
     if (GetMultiplayerId() == 0)
@@ -553,18 +553,18 @@ const u8 gDaycareMailSwapIds_4Player[NUM_SWAP_COMBOS][4] =
     {0, 3, 2, 1},
 };
 
-void ReceiveDaycareMailData(struct RecordMixingDayCareMail *records, size_t recordSize, u8 multiplayerId, TVShow *shows)
+void ReceiveDaycareMailData(struct RecordMixingDaycareMail *records, size_t recordSize, u8 multiplayerId, TVShow *shows)
 {
     {
         u16 i, j;
         u8 linkPlayerCount;
         u8 tableId;
-        struct RecordMixingDayCareMail *mixMail;
+        struct RecordMixingDaycareMail *mixMail;
         u8 playerSlot1, playerSlot2;
         void *idxsPtr;
         u8 unusedArr1[MAX_LINK_PLAYERS];
         u8 unusedArr2[MAX_LINK_PLAYERS];
-        struct RecordMixingDayCareMail *unusedMixMail[MAX_LINK_PLAYERS];
+        struct RecordMixingDaycareMail *unusedMixMail[MAX_LINK_PLAYERS];
         bool8 canHoldItem[MAX_LINK_PLAYERS][2];
         u8 idxs[MAX_LINK_PLAYERS][2];
         u8 numDaycareCanHold;

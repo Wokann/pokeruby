@@ -572,7 +572,7 @@ struct DayCareStepCountersEtc {
     u8 eggCycleStepsRemaining;
 };
 
-struct RecordMixingDayCareMail
+struct RecordMixingDaycareMail
 {
     struct DayCareMail mail[DAYCARE_MON_COUNT];
     u32 numDaycareMons;

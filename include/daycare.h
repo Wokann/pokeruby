@@ -6,7 +6,7 @@
 u8 *GetMonNick(struct Pokemon *, u8 *);
 u8 *GetBoxMonNick(struct BoxPokemon *, u8 *);
 u8 CountPokemonInDaycare(struct DayCare *);
-void InitDaycareMailRecordMixing(struct BoxPokemon *, struct RecordMixingDayCareMail *);
+void InitDaycareMailRecordMixing(struct BoxPokemon *, struct RecordMixingDaycareMail *);
 void Debug_AddDaycareSteps(u16 i);
 u16 GetEggSpecies(u16);
 void TriggerPendingDaycareEgg(void);
