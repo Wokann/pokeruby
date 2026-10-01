@@ -3952,7 +3952,7 @@ void BattleIntroPlayer1SendsOutMonAnimation(void)
     }
 }
 
-void BattleIntroUnusedPlayerSwitchInAnimation(void)
+void BattleIntroSwitchInPlayerMons(void)
 {
     if (gBattleControllerExecFlags == 0)
     {
