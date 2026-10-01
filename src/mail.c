@@ -751,7 +751,7 @@ void Task_DebugMailChooseSpecies(u8 taskId)
 {
     u8 sp0[] = _("{STR_VAR_1}　{STR_VAR_2}");
     u8 sp8[] = DTR("メール{STR_VAR_1}　{STR_VAR_2}", "MAIL{STR_VAR_1} {STR_VAR_2}");
-    bool8 r2 = FALSE;
+    bool8 selectionChanged = FALSE;
 
     if (JOY_NEW(A_BUTTON))
     {
@@ -777,15 +777,15 @@ void Task_DebugMailChooseSpecies(u8 taskId)
     else if (JOY_NEW(DPAD_LEFT | DPAD_DOWN))
     {
         gTasks[taskId].data[0] = (gTasks[taskId].data[0] + 0x19B) % 0x19C;
-        r2 = TRUE;
+        selectionChanged = TRUE;
     }
     else if (JOY_NEW(DPAD_UP | DPAD_RIGHT))
     {
         gTasks[taskId].data[0] = (gTasks[taskId].data[0] + 1) % 0x19C;
-        r2 = TRUE;
+        selectionChanged = TRUE;
     }
 
-    if (r2)
+    if (selectionChanged)
     {
         ConvertIntToDecimalStringN(gStringVar1, gTasks[taskId].data[0], 2, 3);
         StringCopy(gStringVar2, gSpeciesNames[gTasks[taskId].data[0]]);
