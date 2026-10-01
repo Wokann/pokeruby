@@ -67,7 +67,7 @@ static const u8 *const sCompressedDroughtPalettes[] =
     sDroughtPaletteData_3,
     sDroughtPaletteData_4,
     sDroughtPaletteData_5,
-    (u8*)eDroughtPaletteData.droughtColorMaps,
+    (u8*)sDroughtPaletteData.droughtColorMaps,
 };
 
 // This is a pointer to gWeather. All code in this file accesses gWeather directly,
@@ -592,7 +592,7 @@ static void ApplyColorMap(u8 startPalIndex, u8 numPalettes, s8 colorMapIndex)
                     {
                         // Skip gamma shift for this specific color. (Why?)
                         if (gPlttBufferUnfaded[palOffset] != RGB(31, 12, 11))
-                            gPlttBufferFaded[palOffset] = eDroughtPaletteData.droughtColorMaps[colorMapIndex][DROUGHT_COLOR_INDEX(gPlttBufferUnfaded[palOffset])];
+                            gPlttBufferFaded[palOffset] = sDroughtPaletteData.droughtColorMaps[colorMapIndex][DROUGHT_COLOR_INDEX(gPlttBufferUnfaded[palOffset])];
 
                         palOffset++;
                     }
@@ -601,7 +601,7 @@ static void ApplyColorMap(u8 startPalIndex, u8 numPalettes, s8 colorMapIndex)
                 {
                     for (i = 0; i < 16; i++)
                     {
-                        gPlttBufferFaded[palOffset] = eDroughtPaletteData.droughtColorMaps[colorMapIndex][DROUGHT_COLOR_INDEX(gPlttBufferUnfaded[palOffset])];
+                        gPlttBufferFaded[palOffset] = sDroughtPaletteData.droughtColorMaps[colorMapIndex][DROUGHT_COLOR_INDEX(gPlttBufferUnfaded[palOffset])];
                         palOffset++;
                     }
                 }
@@ -697,27 +697,27 @@ static void ApplyDroughtColorMapWithBlend(s8 colorMapIndex, u8 blendCoeff, u16 b
             for (i = 0; i < 16; i++)
             {
                 u32 offset;
-                struct RGBColor color1;
-                struct RGBColor color2;
-                u8 r1, g1, b1;
-                u8 r2, g2, b2;
+                struct RGBColor sourceColor;
+                struct RGBColor droughtColor;
+                u8 sourceRed, sourceGreen, sourceBlue;
+                u8 droughtRed, droughtGreen, droughtBlue;
 
-                color1 = *(struct RGBColor *)&gPlttBufferUnfaded[palOffset];
-                r1 = color1.r;
-                g1 = color1.g;
-                b1 = color1.b;
+                sourceColor = *(struct RGBColor *)&gPlttBufferUnfaded[palOffset];
+                sourceRed = sourceColor.r;
+                sourceGreen = sourceColor.g;
+                sourceBlue = sourceColor.b;
 
-                offset = ((b1 & 0x1E) << 7) | ((g1 & 0x1E) << 3) | ((r1 & 0x1E) >> 1);
-                color2 = *(struct RGBColor *)&eDroughtPaletteData.droughtColorMaps[colorMapIndex][offset];
-                r2 = color2.r;
-                g2 = color2.g;
-                b2 = color2.b;
+                offset = ((sourceBlue & 0x1E) << 7) | ((sourceGreen & 0x1E) << 3) | ((sourceRed & 0x1E) >> 1);
+                droughtColor = *(struct RGBColor *)&sDroughtPaletteData.droughtColorMaps[colorMapIndex][offset];
+                droughtRed = droughtColor.r;
+                droughtGreen = droughtColor.g;
+                droughtBlue = droughtColor.b;
 
-                r2 += ((rBlend - r2) * blendCoeff) >> 4;
-                g2 += ((gBlend - g2) * blendCoeff) >> 4;
-                b2 += ((bBlend - b2) * blendCoeff) >> 4;
+                droughtRed += ((rBlend - droughtRed) * blendCoeff) >> 4;
+                droughtGreen += ((gBlend - droughtGreen) * blendCoeff) >> 4;
+                droughtBlue += ((bBlend - droughtBlue) * blendCoeff) >> 4;
 
-                gPlttBufferFaded[palOffset++] = (b2 << 10) | (g2 << 5) | r2;
+                gPlttBufferFaded[palOffset++] = (droughtBlue << 10) | (droughtGreen << 5) | droughtRed;
             }
         }
     }
@@ -952,17 +952,17 @@ static void LoadDroughtWeatherPalette(u8 *colorMapIndexPtr, u8 *palsOffset)
     if (colorMapIndex < 7)
     {
         colorMapIndex--;
-        LZ77UnCompWram(sCompressedDroughtPalettes[colorMapIndex], eDroughtPaletteData.droughtColorMaps[colorMapIndex]);
+        LZ77UnCompWram(sCompressedDroughtPalettes[colorMapIndex], sDroughtPaletteData.droughtColorMaps[colorMapIndex]);
         if (colorMapIndex == 0)
         {
-            eDroughtPaletteData.droughtColorMaps[colorMapIndex][0] = RGB(1, 1, 1);
+            sDroughtPaletteData.droughtColorMaps[colorMapIndex][0] = RGB(1, 1, 1);
             for (i = 1; i < 0x1000; i++)
-                eDroughtPaletteData.droughtColorMaps[colorMapIndex][i] += eDroughtPaletteData.droughtColorMaps[colorMapIndex][i - 1];
+                sDroughtPaletteData.droughtColorMaps[colorMapIndex][i] += sDroughtPaletteData.droughtColorMaps[colorMapIndex][i - 1];
         }
         else
         {
             for (i = 0; i < 0x1000; i++)
-                eDroughtPaletteData.droughtColorMaps[colorMapIndex][i] += eDroughtPaletteData.droughtColorMaps[colorMapIndex - 1][i];
+                sDroughtPaletteData.droughtColorMaps[colorMapIndex][i] += sDroughtPaletteData.droughtColorMaps[colorMapIndex - 1][i];
         }
         if (++(*colorMapIndexPtr) == 7)
         {

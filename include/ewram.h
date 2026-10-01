@@ -16,7 +16,7 @@ extern u8 gSharedMem[];
 #define sRegionMapState                 (*(struct RegionMapState *)gSharedMem)
 
 // field_weather.c
-#define eDroughtPaletteData             (*(struct WeatherPaletteData *)gSharedMem)
+#define sDroughtPaletteData             (*(struct WeatherPaletteData *)gSharedMem)
 
 // battle etc.
 // This overlaps with so many things it's not even funny
