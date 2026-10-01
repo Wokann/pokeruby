@@ -35,29 +35,29 @@ struct EvoInfo
     u8 evoTaskId;
     u8 delayTimer;
 
-    // Ruby-only unused prototype storage; preserve this EWRAM layout until its
-    // behavior is recovered. Pokeemerald has no corresponding implementation.
-    u8 unk4[0x40];
-    u8 unk44[0x40];
-    u8 unk84[0x40];
+    // Ruby-only unused tile-transition prototype. Keep the field order and
+    // sizes fixed because its naked routines access this EWRAM data by offset.
+    u8 sourceRunCount[0x40];
+    u8 targetRunCount[0x40];
+    u8 transitionCount[0x40];
 
-    u8 unkC4[0x40][0x20];    // 0x20148C4
-    u8 unk8C4[0x40][0x20];   // 0x20150C4
-    u8 unk10C4[0x40][0x20];  // 0x20158C4
-    u8 unk18C4[0x40][0x20];  // 0x20160C4
-    u8 unk20C4[0x40][0x20];  // 0x20168C4
-    u8 unk28C4[0x40][0x20];  // 0x20170C4
-    u8 unk30C4[0x40][0x20];  // 0x20178C4
-    u8 unk38C4[0x40][0x20];  // 0x20180C4
+    u8 startTransitionState[0x40][0x20];
+    u8 endTransitionState[0x40][0x20];
+    u8 sourceRunStartX[0x40][0x20];
+    u8 sourceRunEndX[0x40][0x20];
+    u8 targetRunStartX[0x40][0x20];
+    u8 targetRunEndX[0x40][0x20];
+    u8 currentRunStartX[0x40][0x20];
+    u8 currentRunEndX[0x40][0x20];
 
-    u8 *unk40C4[0x40][0x20];  // 0x20188C4
+    u8 *tileDataPointers[0x40][0x20];
 
-    u16 unk60C4[0x40][0x20];  // 0x201A8C4
-    u16 unk70C4[0x40][0x20];  // 0x201B8C4
-    u16 unk80C4[0x40][0x20];  // 0x201C8C4
-    u16 unk90C4[0x40][0x20];  // 0x201D8C4
+    u16 startProgress[0x40][0x20];
+    u16 endProgress[0x40][0x20];
+    u16 startProgressStep[0x40][0x20];
+    u16 endProgressStep[0x40][0x20];
 
-    u8 unkA0C4; // 0x201E8C4
+    u8 animationTimer;
 };
 
 void EvolutionRenameMon(struct Pokemon *mon, u16 oldSpecies, u16 newSpecies);
@@ -1403,28 +1403,28 @@ void EvoScene_UnusedPrototypeLayout(u8 *a, u8 *b)
 
     for (sp8 = 0; sp8 < 64; sp8++)
     {
-        sEvoInfo.unk84[sp8] = 0;
-        sEvoInfo.round1Points[sp8] = 0;
-        sEvoInfo.unk44[sp8] = 0;
+        sEvoInfo.transitionCount[sp8] = 0;
+        sEvoInfo.sourceRunCount[sp8] = 0;
+        sEvoInfo.targetRunCount[sp8] = 0;
         for (r6 = 0; r6 < 32; r6++)
         {
-            sEvoInfo.unk10C4[sp8][r6] = 0;
-            sEvoInfo.unk18C4[sp8][r6] = 0;
-            sEvoInfo.unk20C4[sp8][r6] = 0;
-            sEvoInfo.unk28C4[sp8][r6] = 0;
-            sEvoInfo.unkC4[sp8][r6] = 0;
-            sEvoInfo.unk8C4[sp8][r6] = 0;
-            sEvoInfo.unk30C4[sp8][r6] = 0;
-            sEvoInfo.unk38C4[sp8][r6] = 0;
+            sEvoInfo.sourceRunStartX[sp8][r6] = 0;
+            sEvoInfo.sourceRunEndX[sp8][r6] = 0;
+            sEvoInfo.targetRunStartX[sp8][r6] = 0;
+            sEvoInfo.targetRunEndX[sp8][r6] = 0;
+            sEvoInfo.startTransitionState[sp8][r6] = 0;
+            sEvoInfo.endTransitionState[sp8][r6] = 0;
+            sEvoInfo.currentRunStartX[sp8][r6] = 0;
+            sEvoInfo.currentRunEndX[sp8][r6] = 0;
 
-            sEvoInfo.unk60C4[sp8][r6] = 0;
-            sEvoInfo.unk70C4[sp8][r6] = 0;
-            sEvoInfo.unk80C4[sp8][r6] = 0;
-            sEvoInfo.unk90C4[sp8][r6] = 0;
+            sEvoInfo.startProgress[sp8][r6] = 0;
+            sEvoInfo.endProgress[sp8][r6] = 0;
+            sEvoInfo.startProgressStep[sp8][r6] = 0;
+            sEvoInfo.endProgressStep[sp8][r6] = 0;
         }
     }
 
-    sEvoInfo.unkA0C4 = 64;
+    sEvoInfo.animationTimer = 64;
     r8 = 0;
     for (sp8 = 0; sp8 < 64; sp8++)
     {
@@ -1434,7 +1434,7 @@ void EvoScene_UnusedPrototypeLayout(u8 *a, u8 *b)
 
         for (r6 = 0; r6 < 64; r6++)
         {
-            sEvoInfo.unk40C4[sp8][r6 >> 1] = r2;
+            sEvoInfo.tileDataPointers[sp8][r6 >> 1] = r2;
             switch (r3)
             {
             case 0:
@@ -1443,14 +1443,14 @@ void EvoScene_UnusedPrototypeLayout(u8 *a, u8 *b)
                 case 0:
                     if (*r2 & 0xF)
                     {
-                        sEvoInfo.unk10C4[sp8][sEvoInfo.round1Points[sp8]] = r6;
+                        sEvoInfo.sourceRunStartX[sp8][sEvoInfo.sourceRunCount[sp8]] = r6;
                         r3 = 1;
                     }
                     break;
                 case 1:
                     if (*r2 & 0xF0)
                     {
-                        sEvoInfo.unk10C4[sp8][sEvoInfo.round1Points[sp8]] = r6;
+                        sEvoInfo.sourceRunStartX[sp8][sEvoInfo.sourceRunCount[sp8]] = r6;
                         r3 = 1;
                     }
                     break;
@@ -1462,16 +1462,16 @@ void EvoScene_UnusedPrototypeLayout(u8 *a, u8 *b)
                  case 0:
                     if (*r2 & 0xF)
                     {
-                        sEvoInfo.unk18C4[sp8][sEvoInfo.round1Points[sp8]] = r6 - 1;
-                        sEvoInfo.round1Points[sp8]++;
+                        sEvoInfo.sourceRunEndX[sp8][sEvoInfo.sourceRunCount[sp8]] = r6 - 1;
+                        sEvoInfo.sourceRunCount[sp8]++;
                         r3 = 0;
                     }
                     break;
                 case 1:
                     if (*r2 & 0xF0)
                     {
-                        sEvoInfo.unk18C4[sp8][sEvoInfo.round1Points[sp8]] = r6 - 1;
-                        sEvoInfo.round1Points[sp8]++;
+                        sEvoInfo.sourceRunEndX[sp8][sEvoInfo.sourceRunCount[sp8]] = r6 - 1;
+                        sEvoInfo.sourceRunCount[sp8]++;
                         r3 = 0;
                     }
                     break;
@@ -1485,8 +1485,8 @@ void EvoScene_UnusedPrototypeLayout(u8 *a, u8 *b)
         }
         if (r3)
         {
-            sEvoInfo.unk18C4[sp8][sEvoInfo.round1Points[sp8]] = r6;
-            sEvoInfo.round1Points[sp8]++;
+            sEvoInfo.sourceRunEndX[sp8][sEvoInfo.sourceRunCount[sp8]] = r6;
+            sEvoInfo.sourceRunCount[sp8]++;
         }
         //_08113D26
         if (!((sp8 + 1) & 7))
@@ -1512,14 +1512,14 @@ void EvoScene_UnusedPrototypeLayout(u8 *a, u8 *b)
                 case 0:
                     if (*r2 & 0xF)
                     {
-                        sEvoInfo.unk20C4[sp8][sEvoInfo.unk44[sp8]] = r6;
+                        sEvoInfo.targetRunStartX[sp8][sEvoInfo.targetRunCount[sp8]] = r6;
                         r3 = 1;
                     }
                     break;
                 case 1:
                     if (*r2 & 0xF0)
                     {
-                        sEvoInfo.unk20C4[sp8][sEvoInfo.unk44[sp8]] = r6;
+                        sEvoInfo.targetRunStartX[sp8][sEvoInfo.targetRunCount[sp8]] = r6;
                         r3 = 1;
                     }
                     break;
@@ -1531,16 +1531,16 @@ void EvoScene_UnusedPrototypeLayout(u8 *a, u8 *b)
                  case 0:
                     if (*r2 & 0xF)
                     {
-                        sEvoInfo.unk28C4[sp8][sEvoInfo.unk44[sp8]] = r6 - 1;
-                        sEvoInfo.unk44[sp8]++;
+                        sEvoInfo.targetRunEndX[sp8][sEvoInfo.targetRunCount[sp8]] = r6 - 1;
+                        sEvoInfo.targetRunCount[sp8]++;
                         r3 = 0;
                     }
                     break;
                 case 1:
                     if (*r2 & 0xF0)
                     {
-                        sEvoInfo.unk28C4[sp8][sEvoInfo.unk44[sp8]] = r6 - 1;
-                        sEvoInfo.unk44[sp8]++;
+                        sEvoInfo.targetRunEndX[sp8][sEvoInfo.targetRunCount[sp8]] = r6 - 1;
+                        sEvoInfo.targetRunCount[sp8]++;
                         r3 = 0;
                     }
                     break;
@@ -1555,8 +1555,8 @@ void EvoScene_UnusedPrototypeLayout(u8 *a, u8 *b)
         }
         if (r3)
         {
-            sEvoInfo.unk28C4[sp8][sEvoInfo.unk44[sp8]] = r6;
-            sEvoInfo.unk44[sp8]++;
+            sEvoInfo.targetRunEndX[sp8][sEvoInfo.targetRunCount[sp8]] = r6;
+            sEvoInfo.targetRunCount[sp8]++;
         }
         //if (!((sp8 + 1) & 7))
         if ((sp8 + 1) % 8 == 0)
@@ -1567,28 +1567,28 @@ void EvoScene_UnusedPrototypeLayout(u8 *a, u8 *b)
 
     for (sp8 = 0; sp8 < 0x40; sp8++)  //_08113E3A
     {
-        if (sEvoInfo.round1Points[sp8] < sEvoInfo.unk44[sp8])
+        if (sEvoInfo.sourceRunCount[sp8] < sEvoInfo.targetRunCount[sp8])
         {
-            for (spC = 0; spC < sEvoInfo.round1Points[sp8]; spC++)
+            for (spC = 0; spC < sEvoInfo.sourceRunCount[sp8]; spC++)
             {
                 sp14 = 0x100;
 
-                for (r6 = 0; r6 < sEvoInfo.unk44[sp8]; r6++)
+                for (r6 = 0; r6 < sEvoInfo.targetRunCount[sp8]; r6++)
                 {
                     s32 r3;
 
                     //_08113EA4
-                    if (sEvoInfo.unk10C4[sp8][spC] > sEvoInfo.unk20C4[sp8][r6])
-                        r3 = sEvoInfo.unk10C4[sp8][spC] - sEvoInfo.unk20C4[sp8][r6];
+                    if (sEvoInfo.sourceRunStartX[sp8][spC] > sEvoInfo.targetRunStartX[sp8][r6])
+                        r3 = sEvoInfo.sourceRunStartX[sp8][spC] - sEvoInfo.targetRunStartX[sp8][r6];
                     else
-                        r3 = sEvoInfo.unk20C4[sp8][r6] - sEvoInfo.unk10C4[sp8][spC];
+                        r3 = sEvoInfo.targetRunStartX[sp8][r6] - sEvoInfo.sourceRunStartX[sp8][spC];
 
-                    if (sEvoInfo.unk18C4[sp8][spC] > sEvoInfo.unk28C4[sp8][spC])
-                        r3 += sEvoInfo.unk18C4[sp8][spC] - sEvoInfo.unk28C4[sp8][spC];
+                    if (sEvoInfo.sourceRunEndX[sp8][spC] > sEvoInfo.targetRunEndX[sp8][spC])
+                        r3 += sEvoInfo.sourceRunEndX[sp8][spC] - sEvoInfo.targetRunEndX[sp8][spC];
                     else
-                        r3 += sEvoInfo.unk28C4[sp8][spC] - sEvoInfo.unk18C4[sp8][spC];
+                        r3 += sEvoInfo.targetRunEndX[sp8][spC] - sEvoInfo.sourceRunEndX[sp8][spC];
 
-                    if (sp14 >= r3 && sEvoInfo.unkC4[sp8][r6] == 0 && sEvoInfo.unk8C4[sp8][r6] == 0)
+                    if (sp14 >= r3 && sEvoInfo.startTransitionState[sp8][r6] == 0 && sEvoInfo.endTransitionState[sp8][r6] == 0)
                     {
                         sp10 = r6;
                         sp14 = r3;
@@ -1599,79 +1599,79 @@ void EvoScene_UnusedPrototypeLayout(u8 *a, u8 *b)
             }
             //_08113F54
 
-            for (r6 = 0; r6 < sEvoInfo.unk44[sp8]; r6++)
+            for (r6 = 0; r6 < sEvoInfo.targetRunCount[sp8]; r6++)
             {
-                if (sEvoInfo.unkC4[sp8][r6] == 0 && sEvoInfo.unk8C4[sp8][r6] == 0)
+                if (sEvoInfo.startTransitionState[sp8][r6] == 0 && sEvoInfo.endTransitionState[sp8][r6] == 0)
                     EvoScene_UnusedPrototypeCenterTransition(r6, sp8);
             }
         }
         //_08113F9E
-        if (sEvoInfo.round1Points[sp8] == sEvoInfo.unk44[sp8])
+        if (sEvoInfo.sourceRunCount[sp8] == sEvoInfo.targetRunCount[sp8])
         {
-            for (r6 = 0; r6 < sEvoInfo.round1Points[sp8]; r6++)
+            for (r6 = 0; r6 < sEvoInfo.sourceRunCount[sp8]; r6++)
                 EvoScene_UnusedPrototypeSetTransition(r6, r6, sp8);
         }
         //_08113FCC
-        if (sEvoInfo.round1Points[sp8] > sEvoInfo.unk44[sp8])
+        if (sEvoInfo.sourceRunCount[sp8] > sEvoInfo.targetRunCount[sp8])
         {
-            for (sp10 = 0; sp10 < sEvoInfo.unk44[sp8]; sp10++)
+            for (sp10 = 0; sp10 < sEvoInfo.targetRunCount[sp8]; sp10++)
             {
                 sp14 = 0x100;
 
-                for (r6 = 0; r6 < sEvoInfo.round1Points[sp8]; r6++)
+                for (r6 = 0; r6 < sEvoInfo.sourceRunCount[sp8]; r6++)
                 {
                     s32 r3;
 
-                    if (sEvoInfo.unk10C4[sp8][r6] > sEvoInfo.unk20C4[sp8][sp10])
-                        r3 = sEvoInfo.unk10C4[sp8][r6] - sEvoInfo.unk20C4[sp8][sp10];
+                    if (sEvoInfo.sourceRunStartX[sp8][r6] > sEvoInfo.targetRunStartX[sp8][sp10])
+                        r3 = sEvoInfo.sourceRunStartX[sp8][r6] - sEvoInfo.targetRunStartX[sp8][sp10];
                     else
-                        r3 = sEvoInfo.unk20C4[sp8][sp10] - sEvoInfo.unk10C4[sp8][r6];
+                        r3 = sEvoInfo.targetRunStartX[sp8][sp10] - sEvoInfo.sourceRunStartX[sp8][r6];
 
-                    if (sEvoInfo.unk18C4[sp8][r6] > sEvoInfo.unk28C4[sp8][sp10])
-                        r3 += sEvoInfo.unk18C4[sp8][r6] - sEvoInfo.unk28C4[sp8][sp10];
+                    if (sEvoInfo.sourceRunEndX[sp8][r6] > sEvoInfo.targetRunEndX[sp8][sp10])
+                        r3 += sEvoInfo.sourceRunEndX[sp8][r6] - sEvoInfo.targetRunEndX[sp8][sp10];
                     else
-                        r3 += sEvoInfo.unk28C4[sp8][sp10] - sEvoInfo.unk18C4[sp8][r6];
+                        r3 += sEvoInfo.targetRunEndX[sp8][sp10] - sEvoInfo.sourceRunEndX[sp8][r6];
 
-                    //r3 = abs(sEvoInfo.unk10C4[sp8][r6] - sEvoInfo.unk20C4[sp8][sp10]);
-                    //r3 += abs(sEvoInfo.unk18C4[sp8][r6] - sEvoInfo.unk28C4[sp8][sp10]);
+                    //r3 = abs(sEvoInfo.sourceRunStartX[sp8][r6] - sEvoInfo.targetRunStartX[sp8][sp10]);
+                    //r3 += abs(sEvoInfo.sourceRunEndX[sp8][r6] - sEvoInfo.targetRunEndX[sp8][sp10]);
 
-                    if (sp14 > r3 && sEvoInfo.unkC4[sp8][r6] == 0)
+                    if (sp14 > r3 && sEvoInfo.startTransitionState[sp8][r6] == 0)
                     {
                         spC = r6;
                         sp14 = r3;
                     }
                 }
                 //_081140C4
-                sEvoInfo.unk30C4[sp8][spC] = sEvoInfo.unk20C4[sp8][sp10];
-                sEvoInfo.unk38C4[sp8][spC] = sEvoInfo.unk28C4[sp8][sp10];
-                sEvoInfo.unkC4[sp8][spC] = 1;
+                sEvoInfo.currentRunStartX[sp8][spC] = sEvoInfo.targetRunStartX[sp8][sp10];
+                sEvoInfo.currentRunEndX[sp8][spC] = sEvoInfo.targetRunEndX[sp8][sp10];
+                sEvoInfo.startTransitionState[sp8][spC] = 1;
             }
             //_08114104
-            for (r6 = 0; r6 < sEvoInfo.round1Points[sp8]; r6++)
+            for (r6 = 0; r6 < sEvoInfo.sourceRunCount[sp8]; r6++)
             {
-                sEvoInfo.unk20C4[sp8][r6] = sEvoInfo.unk30C4[sp8][r6];
-                sEvoInfo.unk28C4[sp8][r6] = sEvoInfo.unk38C4[sp8][r6];
-                if (sEvoInfo.unkC4[sp8][r6] != 0)
+                sEvoInfo.targetRunStartX[sp8][r6] = sEvoInfo.currentRunStartX[sp8][r6];
+                sEvoInfo.targetRunEndX[sp8][r6] = sEvoInfo.currentRunEndX[sp8][r6];
+                if (sEvoInfo.startTransitionState[sp8][r6] != 0)
                 {
-                    sEvoInfo.unkC4[sp8][r6] = 0;
+                    sEvoInfo.startTransitionState[sp8][r6] = 0;
                     EvoScene_UnusedPrototypeSetTransition(r6, r6, sp8);
                 }
                 else
                 {
                     // Ugh, can't get this part right
-                    //u8 *ptr1 = &sEvoInfo.unk10C4[sp8][r6];
-                    //u8 *ptr2 = &sEvoInfo.unk18C4[sp8][r6];
+                    //u8 *ptr1 = &sEvoInfo.sourceRunStartX[sp8][r6];
+                    //u8 *ptr2 = &sEvoInfo.sourceRunEndX[sp8][r6];
                     //s32 r2 = *ptr1 + (*ptr2 - *ptr1) / 2;
 
-                    //u8 r0_ = sEvoInfo.unk10C4[sp8][r6];
-                    //u8 r2_ = sEvoInfo.unk18C4[sp8][r6];
+                    //u8 r0_ = sEvoInfo.sourceRunStartX[sp8][r6];
+                    //u8 r2_ = sEvoInfo.sourceRunEndX[sp8][r6];
                     //s32 r2 = (r0_ - r2_) / 2;
 
-                    s32 r2 = (sEvoInfo.unk18C4[sp8][r6] - sEvoInfo.unk10C4[sp8][r6]);
-                    s32 r2_ = sEvoInfo.unk10C4[sp8][r6];
+                    s32 r2 = (sEvoInfo.sourceRunEndX[sp8][r6] - sEvoInfo.sourceRunStartX[sp8][r6]);
+                    s32 r2_ = sEvoInfo.sourceRunStartX[sp8][r6];
 
-                    sEvoInfo.unk20C4[sp8][r6] = sEvoInfo.unk28C4[sp8][r6] = r2_ + r2 / 2;
-                    sEvoInfo.unk28C4[sp8][r6]++;
+                    sEvoInfo.targetRunStartX[sp8][r6] = sEvoInfo.targetRunEndX[sp8][r6] = r2_ + r2 / 2;
+                    sEvoInfo.targetRunEndX[sp8][r6]++;
                     EvoScene_UnusedPrototypeSetTransition(r6, r6, sp8);
                 }
             }
@@ -2555,56 +2555,56 @@ _081141EC: .4byte gSharedMem + 0x14804\n\
         .syntax divided");
 }
 
-void EvoScene_UnusedPrototypeSetTransition(s32 a, s32 b, s32 c)
+void EvoScene_UnusedPrototypeSetTransition(s32 sourceRunIndex, s32 targetRunIndex, s32 row)
 {
-    u32 r7;
+    u32 distance;
 
-    sEvoInfo.unk30C4[c][b] = sEvoInfo.unk10C4[c][a];
-    sEvoInfo.unk38C4[c][b] = sEvoInfo.unk18C4[c][a];
+    sEvoInfo.currentRunStartX[row][targetRunIndex] = sEvoInfo.sourceRunStartX[row][sourceRunIndex];
+    sEvoInfo.currentRunEndX[row][targetRunIndex] = sEvoInfo.sourceRunEndX[row][sourceRunIndex];
 
-    r7 = 0;
-    if (sEvoInfo.unk10C4[c][a] < sEvoInfo.unk20C4[c][b])
+    distance = 0;
+    if (sEvoInfo.sourceRunStartX[row][sourceRunIndex] < sEvoInfo.targetRunStartX[row][targetRunIndex])
     {
-        sEvoInfo.unkC4[c][b] = 4;
-        r7 = sEvoInfo.unk20C4[c][b] - sEvoInfo.unk10C4[c][a];
+        sEvoInfo.startTransitionState[row][targetRunIndex] = 4;
+        distance = sEvoInfo.targetRunStartX[row][targetRunIndex] - sEvoInfo.sourceRunStartX[row][sourceRunIndex];
     }
-    else if (sEvoInfo.unk10C4[c][a] > sEvoInfo.unk20C4[c][b])
+    else if (sEvoInfo.sourceRunStartX[row][sourceRunIndex] > sEvoInfo.targetRunStartX[row][targetRunIndex])
     {
-        sEvoInfo.unkC4[c][b] = 1;
-        r7 = sEvoInfo.unk10C4[c][a] - sEvoInfo.unk20C4[c][b];
+        sEvoInfo.startTransitionState[row][targetRunIndex] = 1;
+        distance = sEvoInfo.sourceRunStartX[row][sourceRunIndex] - sEvoInfo.targetRunStartX[row][targetRunIndex];
     }
-    sEvoInfo.unk80C4[c][b] = r7 * 16;
+    sEvoInfo.startProgressStep[row][targetRunIndex] = distance * 16;
 
-    r7 = 0;
-    if (sEvoInfo.unk18C4[c][a] < sEvoInfo.unk28C4[c][b])
+    distance = 0;
+    if (sEvoInfo.sourceRunEndX[row][sourceRunIndex] < sEvoInfo.targetRunEndX[row][targetRunIndex])
     {
-        sEvoInfo.unk8C4[c][b] = 3;
-        r7 = sEvoInfo.unk28C4[c][b] - sEvoInfo.unk18C4[c][a];
+        sEvoInfo.endTransitionState[row][targetRunIndex] = 3;
+        distance = sEvoInfo.targetRunEndX[row][targetRunIndex] - sEvoInfo.sourceRunEndX[row][sourceRunIndex];
     }
-    else if (sEvoInfo.unk18C4[c][a] > sEvoInfo.unk28C4[c][b])
+    else if (sEvoInfo.sourceRunEndX[row][sourceRunIndex] > sEvoInfo.targetRunEndX[row][targetRunIndex])
     {
-        sEvoInfo.unk8C4[c][b] = 2;
-        r7 = sEvoInfo.unk18C4[c][a] - sEvoInfo.unk28C4[c][b];
+        sEvoInfo.endTransitionState[row][targetRunIndex] = 2;
+        distance = sEvoInfo.sourceRunEndX[row][sourceRunIndex] - sEvoInfo.targetRunEndX[row][targetRunIndex];
     }
-    sEvoInfo.unk90C4[c][b] = r7 * 16;
+    sEvoInfo.endProgressStep[row][targetRunIndex] = distance * 16;
 
-    sEvoInfo.unk84[c]++;
+    sEvoInfo.transitionCount[row]++;
 }
 
-void EvoScene_UnusedPrototypeCenterTransition(u32 a, u32 b)
+void EvoScene_UnusedPrototypeCenterTransition(u32 runIndex, u32 row)
 {
-    u8 r2 = sEvoInfo.unk28C4[b][a];
-    u8 r3 = sEvoInfo.unk20C4[b][a];
-    s32 r7 = r2 - r3;
+    u8 endX = sEvoInfo.targetRunEndX[row][runIndex];
+    u8 startX = sEvoInfo.targetRunStartX[row][runIndex];
+    s32 distance = endX - startX;
 
-    sEvoInfo.unk30C4[b][a] = sEvoInfo.unk38C4[b][a] = r3 + r7 / 2;
-    sEvoInfo.unkC4[b][a] = 5;
-    sEvoInfo.unk8C4[b][a] = 7;
-    sEvoInfo.unk84[b]++;
-    r7 = sEvoInfo.unk30C4[b][a] - sEvoInfo.unk20C4[b][a];
-    sEvoInfo.unk80C4[b][a] = r7 * 16;
-    r7 = sEvoInfo.unk28C4[b][a] - sEvoInfo.unk38C4[b][a];
-    sEvoInfo.unk90C4[b][a] = r7 * 16;
+    sEvoInfo.currentRunStartX[row][runIndex] = sEvoInfo.currentRunEndX[row][runIndex] = startX + distance / 2;
+    sEvoInfo.startTransitionState[row][runIndex] = 5;
+    sEvoInfo.endTransitionState[row][runIndex] = 7;
+    sEvoInfo.transitionCount[row]++;
+    distance = sEvoInfo.currentRunStartX[row][runIndex] - sEvoInfo.targetRunStartX[row][runIndex];
+    sEvoInfo.startProgressStep[row][runIndex] = distance * 16;
+    distance = sEvoInfo.targetRunEndX[row][runIndex] - sEvoInfo.currentRunEndX[row][runIndex];
+    sEvoInfo.endProgressStep[row][runIndex] = distance * 16;
 }
 
 NAKED
@@ -3832,30 +3832,30 @@ _08114DB0: .4byte gSharedMem + 0x14800\n\
         .syntax divided");
 }
 
-void EvoScene_UnusedPrototypeSetTileNibble(u32 a, u8 b)
+void EvoScene_UnusedPrototypeSetTileNibble(u32 row, u8 tileColumn)
 {
-    u8 *r2 = sEvoInfo.unk40C4[a][b / 2];
+    u8 *tileData = sEvoInfo.tileDataPointers[row][tileColumn / 2];
 
-    if (b % 2 != 0)
-        *r2 |= 0xF0;
+    if (tileColumn % 2 != 0)
+        *tileData |= 0xF0;
     else
-        *r2 |= 0x0F;
+        *tileData |= 0x0F;
 }
 
-void EvoScene_UnusedPrototypeClearTileNibble(u32 a, u8 b)
+void EvoScene_UnusedPrototypeClearTileNibble(u32 row, u8 tileColumn)
 {
-    u8 *r2 = sEvoInfo.unk40C4[a][b / 2];
-    u8 *r1 = r2 + 0x6000;
+    u8 *tileData = sEvoInfo.tileDataPointers[row][tileColumn / 2];
+    u8 *targetTileData = tileData + 0x6000;
 
-    if (b % 2 != 0)
+    if (tileColumn % 2 != 0)
     {
-        if (!(*r1 & 0xF0))
-            *r2 &= 0x0F;
+        if (!(*targetTileData & 0xF0))
+            *tileData &= 0x0F;
     }
     else
     {
-        if (!(*r1 & 0x0F))
-            *r2 &= 0xF0;
+        if (!(*targetTileData & 0x0F))
+            *tileData &= 0xF0;
     }
 }
 
