@@ -1107,18 +1107,18 @@ static u8 GetSurfBlob_HasPlayerOffset(struct Sprite *sprite)
 
 void UpdateSurfBlobFieldEffect(struct Sprite *sprite)
 {
-    struct ObjectEvent *objectEvent;
-    struct Sprite *linkedSprite;
+    struct ObjectEvent *playerObj;
+    struct Sprite *playerSprite;
 
-    objectEvent = &gObjectEvents[sprite->sPlayerObjId];
-    linkedSprite = &gSprites[objectEvent->spriteId];
-    SynchronizeSurfAnim(objectEvent, sprite);
-    SynchronizeSurfPosition(objectEvent, sprite);
-    UpdateBobbingEffect(objectEvent, linkedSprite, sprite);
-    sprite->oam.priority = linkedSprite->oam.priority;
+    playerObj = &gObjectEvents[sprite->sPlayerObjId];
+    playerSprite = &gSprites[playerObj->spriteId];
+    SynchronizeSurfAnim(playerObj, sprite);
+    SynchronizeSurfPosition(playerObj, sprite);
+    UpdateBobbingEffect(playerObj, playerSprite, sprite);
+    sprite->oam.priority = playerSprite->oam.priority;
 }
 
-static void SynchronizeSurfAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+static void SynchronizeSurfAnim(struct ObjectEvent *playerObj, struct Sprite *sprite)
 {
     u8 surfBlobDirectionAnims[] = {
         0, // DIR_NONE
@@ -1129,14 +1129,14 @@ static void SynchronizeSurfAnim(struct ObjectEvent *objectEvent, struct Sprite *
     };
 
     if (!GetSurfBlob_DontSyncAnim(sprite))
-        StartSpriteAnimIfDifferent(sprite, surfBlobDirectionAnims[objectEvent->movementDirection]);
+        StartSpriteAnimIfDifferent(sprite, surfBlobDirectionAnims[playerObj->movementDirection]);
 }
 
-static void SynchronizeSurfPosition(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+static void SynchronizeSurfPosition(struct ObjectEvent *playerObj, struct Sprite *sprite)
 {
     u8 i;
-    s16 x = objectEvent->currentCoords.x;
-    s16 y = objectEvent->currentCoords.y;
+    s16 x = playerObj->currentCoords.x;
+    s16 y = playerObj->currentCoords.y;
     s32 spriteY = sprite->y2;
 
     if (spriteY == 0 && (x != sprite->sPrevX || y != sprite->sPrevY))
@@ -1156,7 +1156,7 @@ static void SynchronizeSurfPosition(struct ObjectEvent *objectEvent, struct Spri
     }
 }
 
-static void UpdateBobbingEffect(struct ObjectEvent *objectEvent, struct Sprite *linkedSprite, struct Sprite *sprite)
+static void UpdateBobbingEffect(struct ObjectEvent *playerObj, struct Sprite *playerSprite, struct Sprite *sprite)
 {
     u16 intervals[] = {3, 7};
     u8 bobState = GetSurfBlob_BobState(sprite);
@@ -1174,14 +1174,14 @@ static void UpdateBobbingEffect(struct ObjectEvent *objectEvent, struct Sprite *
         {
             if (!GetSurfBlob_HasPlayerOffset(sprite))
             {
-                linkedSprite->y2 = sprite->y2;
+                playerSprite->y2 = sprite->y2;
             }
             else
             {
-                linkedSprite->y2 = sprite->sPlayerOffset + sprite->y2;
+                playerSprite->y2 = sprite->sPlayerOffset + sprite->y2;
             }
-            sprite->x = linkedSprite->x;
-            sprite->y = linkedSprite->y + 8;
+            sprite->x = playerSprite->x;
+            sprite->y = playerSprite->y + 8;
         }
     }
 }
