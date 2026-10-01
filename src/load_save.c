@@ -35,7 +35,7 @@ void CheckForFlashMemory(void)
         gFlashMemoryPresent = FALSE;
 }
 
-bool32 GetContinueGameWarpStatus(void)
+bool32 UseContinueGameWarp(void)
 {
     return gSaveBlock2.specialSaveWarp;
 }
@@ -97,13 +97,13 @@ static void LoadObjectEvents(void)
         gObjectEvents[i] = gSaveBlock1.objectEvents[i];
 }
 
-void SaveSerializedGame(void)
+void CopyPartyAndObjectsToSave(void)
 {
     SavePlayerParty();
     SaveObjectEvents();
 }
 
-void LoadSerializedGame(void)
+void CopyPartyAndObjectsFromSave(void)
 {
     LoadPlayerParty();
     LoadObjectEvents();

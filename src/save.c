@@ -710,28 +710,28 @@ u8 HandleSavingData(u8 saveType)
             IncrementGameStat(GAME_STAT_ENTERED_HOF);
         for (i = 0; i < NUM_HALL_OF_FAME_SECTORS; i++)
             HandleWriteSectorNBytes(HALL_OF_FAME_SECTOR + i, sHallOfFameSectorLocations[i].data, sHallOfFameSectorLocations[i].size);
-        SaveSerializedGame();
+        CopyPartyAndObjectsToSave();
         WriteSaveSectorOrSlot(FULL_SAVE_SLOT, sSaveSectorLocations);
         break;
     case SAVE_NORMAL: // normal save. also called by overwriting your own save.
     default:
-        SaveSerializedGame();
+        CopyPartyAndObjectsToSave();
         WriteSaveSectorOrSlot(FULL_SAVE_SLOT, sSaveSectorLocations);
         break;
     case SAVE_LINK: // link save. updates only gSaveBlock1 and gSaveBlock2.
-        SaveSerializedGame();
+        CopyPartyAndObjectsToSave();
         for (i = 0; i < 5; i++)
             WriteSaveSectorOrSlot(i, sSaveSectorLocations);
         break;
     case SAVE_EREADER: // used in mossdeep "game corner" before/after battling old man e-reader trainer
-        SaveSerializedGame();
+        CopyPartyAndObjectsToSave();
         WriteSaveSectorOrSlot(0, sSaveSectorLocations);
         break;
     case SAVE_OVERWRITE_DIFFERENT_FILE: // there is a different file, so overwrite it completely.
         // Erase Hall of Fame.
         for (i = HALL_OF_FAME_SECTOR; i < TOTAL_FLASH_SECTORS; i++)
             EraseFlashSector(i);
-        SaveSerializedGame();
+        CopyPartyAndObjectsToSave();
         WriteSaveSectorOrSlot(FULL_SAVE_SLOT, sSaveSectorLocations);
         break;
     }
@@ -763,7 +763,7 @@ u8 LinkFullSave_Init(void) // trade.s save
 {
     if (gFlashMemoryPresent != TRUE)
         return 1;
-    SaveSerializedGame();
+    CopyPartyAndObjectsToSave();
     RestoreSaveBackupVarsAndIncrement(sSaveSectorLocations);
     return 0;
 }
@@ -800,7 +800,7 @@ u8 WriteSaveBlock2(void)
     if (gFlashMemoryPresent != TRUE)
         return 1;
 
-    SaveSerializedGame();
+    CopyPartyAndObjectsToSave();
     RestoreSaveBackupVars(sSaveSectorLocations);
     HandleReplaceSectorAndVerify(gIncrementalSectorId + 1, sSaveSectorLocations);
     return 0;
@@ -841,7 +841,7 @@ u8 LoadGameSave(u8 saveType)
     case SAVE_NORMAL:
     default:
         status = TryLoadSaveSlot(FULL_SAVE_SLOT, sSaveSectorLocations);
-        LoadSerializedGame();
+        CopyPartyAndObjectsFromSave();
         gSaveFileStatus = status;
         gGameContinueCallback = 0;
         break;

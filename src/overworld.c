@@ -1494,7 +1494,7 @@ void CB2_ContinueSavedGame(void)
     PlayTimeCounter_Start();
     ScriptContext_Init();
     UnlockPlayerFieldControls();
-    if (GetContinueGameWarpStatus() == 1)
+    if (UseContinueGameWarp() == 1)
     {
         ClearContinueGameWarpStatus();
         SetWarpDestinationToContinueGameWarp();
