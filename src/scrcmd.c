@@ -548,17 +548,17 @@ bool8 ScrCmd_checkpcitem(struct ScriptContext *ctx)
 
 bool8 ScrCmd_adddecoration(struct ScriptContext *ctx)
 {
-    u32 decoration = VarGet(ScriptReadHalfword(ctx));
+    u32 decorId = VarGet(ScriptReadHalfword(ctx));
 
-    gSpecialVar_Result = DecorationAdd(decoration);
+    gSpecialVar_Result = DecorationAdd(decorId);
     return FALSE;
 }
 
 bool8 ScrCmd_removedecoration(struct ScriptContext *ctx)
 {
-    u32 decoration = VarGet(ScriptReadHalfword(ctx));
+    u32 decorId = VarGet(ScriptReadHalfword(ctx));
 
-    gSpecialVar_Result = DecorationRemove(decoration);
+    gSpecialVar_Result = DecorationRemove(decorId);
     return FALSE;
 }
 
@@ -1203,11 +1203,11 @@ bool8 ScrCmd_lock(struct ScriptContext *ctx)
 
 bool8 ScrCmd_releaseall(struct ScriptContext *ctx)
 {
-    u8 objectId;
+    u8 playerObjectId;
 
     HideFieldMessageBox();
-    objectId = GetObjectEventIdByLocalIdAndMap(LOCALID_PLAYER, 0, 0);
-    ObjectEventClearHeldMovementIfFinished(&gObjectEvents[objectId]);
+    playerObjectId = GetObjectEventIdByLocalIdAndMap(LOCALID_PLAYER, 0, 0);
+    ObjectEventClearHeldMovementIfFinished(&gObjectEvents[playerObjectId]);
     ScriptMovement_UnfreezeObjectEvents();
     UnfreezeObjectEvents();
     return FALSE;
@@ -1215,13 +1215,13 @@ bool8 ScrCmd_releaseall(struct ScriptContext *ctx)
 
 bool8 ScrCmd_release(struct ScriptContext *ctx)
 {
-    u8 objectId;
+    u8 playerObjectId;
 
     HideFieldMessageBox();
     if (gObjectEvents[gSelectedObjectEvent].active)
         ObjectEventClearHeldMovementIfFinished(&gObjectEvents[gSelectedObjectEvent]);
-    objectId = GetObjectEventIdByLocalIdAndMap(LOCALID_PLAYER, 0, 0);
-    ObjectEventClearHeldMovementIfFinished(&gObjectEvents[objectId]);
+    playerObjectId = GetObjectEventIdByLocalIdAndMap(LOCALID_PLAYER, 0, 0);
+    ObjectEventClearHeldMovementIfFinished(&gObjectEvents[playerObjectId]);
     ScriptMovement_UnfreezeObjectEvents();
     UnfreezeObjectEvents();
     return FALSE;
@@ -1903,11 +1903,11 @@ bool8 ScrCmd_setmetatile(struct ScriptContext *ctx)
     u16 x = VarGet(ScriptReadHalfword(ctx));
     u16 y = VarGet(ScriptReadHalfword(ctx));
     u16 metatileId = VarGet(ScriptReadHalfword(ctx));
-    u16 impassable = VarGet(ScriptReadHalfword(ctx));
+    u16 isImpassable = VarGet(ScriptReadHalfword(ctx));
 
     x += 7;
     y += 7;
-    if (!impassable)
+    if (!isImpassable)
         MapGridSetMetatileIdAt(x, y, metatileId);
     else
         MapGridSetMetatileIdAt(x, y, metatileId | MAPGRID_IMPASSABLE);
