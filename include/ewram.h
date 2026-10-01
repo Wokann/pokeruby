@@ -111,7 +111,7 @@ extern u8 gSharedMem[];
 #define ePokedexCryMeterNeedle          (*(struct PokedexCryMeterNeedle *)(gSharedMem + 0x1C800))
 
 #define ewram_2010000                   (*(struct TradeEwramStruct *)(gSharedMem + 0x10000))
-#define eBerryBlenderGfxBuffer          (&gSharedMem[0x10000])
+#define sBerryBlenderGfxBuffer          (&gSharedMem[0x10000])
 #define eSlotMachineGfxBuffer           (void *)(gSharedMem + 0x10000) // slot machine
 #define eSlotMachineReelTimeGfxBuffer   (&gSharedMem[0x13200])
 #define sEvoInfo                        ((*(struct EvoInfo*)(gSharedMem + 0x14800)))
@@ -124,7 +124,7 @@ extern u8 gSharedMem[];
 #define eCableCar                       ((struct CableCar *)(gSharedMem + 0x17000))
 #define eCableCarTilemapData            ((struct CableCarTilemapData *)(gSharedMem + 0x19000))
 
-#define eBerryBlenderData               (struct BerryBlenderData*)(&gSharedMem[0x18000])
+#define sBerryBlenderSharedMem          ((struct BerryBlender *)(&gSharedMem[0x18000]))
 #define eEggHatchData                   (struct EggHatchData*)(&gSharedMem[0x18000])
 
 // pokemon_summary_screen.c
