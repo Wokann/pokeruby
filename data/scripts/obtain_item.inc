@@ -1,12 +1,15 @@
+.set ITEMID, VAR_0x8000
+.set AMOUNT, VAR_0x8001
+
 Std_ObtainItem: @ 819FDF7
-	additem VAR_0x8000, VAR_0x8001
+	additem ITEMID, AMOUNT
 	copyvar VAR_0x8007, VAR_RESULT
 	call EventScript_ObtainItemMessage
 	return
 
 EventScript_ObtainItemMessage: @ 819FE07
-	bufferitemname 1, VAR_0x8000
-	checkitemtype VAR_0x8000
+	bufferitemname STR_VAR_2, ITEMID
+	checkitemtype ITEMID
 	call EventScript_BufferPocketNameAndTryFanfare
 	compare VAR_0x8007, TRUE
 	call_if_eq EventScript_ObtainedItem
@@ -24,31 +27,31 @@ EventScript_BufferPocketNameAndTryFanfare:
 	end
 
 EventScript_BufferItemsPocket:
-	bufferstdstring 2, STDSTRING_ITEMS
+	bufferstdstring STR_VAR_3, STDSTRING_ITEMS
 	compare VAR_0x8007, TRUE
 	call_if_eq EventScript_PlayFanfareObtainedItem
 	return
 
 EventScript_BufferKeyItemsPocket:
-	bufferstdstring 2, STDSTRING_KEYITEMS
+	bufferstdstring STR_VAR_3, STDSTRING_KEYITEMS
 	compare VAR_0x8007, TRUE
 	call_if_eq EventScript_PlayFanfareObtainedItem
 	return
 
 EventScript_BufferPokeballsPocket:
-	bufferstdstring 2, STDSTRING_POKEBALLS
+	bufferstdstring STR_VAR_3, STDSTRING_POKEBALLS
 	compare VAR_0x8007, TRUE
 	call_if_eq EventScript_PlayFanfareObtainedItem
 	return
 
 EventScript_BufferTMHMsPocket:
-	bufferstdstring 2, STDSTRING_TMHMS
+	bufferstdstring STR_VAR_3, STDSTRING_TMHMS
 	compare VAR_0x8007, TRUE
 	call_if_eq EventScript_PlayFanfareObtainedTMHM
 	return
 
 EventScript_BufferBerriesPocket:
-	bufferstdstring 2, STDSTRING_BERRIES
+	bufferstdstring STR_VAR_3, STDSTRING_BERRIES
 	compare VAR_0x8007, TRUE
 	call_if_eq EventScript_PlayFanfareObtainedItem
 	return
@@ -74,13 +77,13 @@ EventScript_PlayFanfareObtainedTMHM:
 	return
 
 Std_ObtainDecoration: @ 819FEDA
-	adddecoration VAR_0x8000
+	adddecoration ITEMID
 	copyvar VAR_0x8007, VAR_RESULT
 	call EventScript_ObtainDecorationMessage
 	return
 
 EventScript_ObtainDecorationMessage: @ 819FEE8
-	bufferdecorationname 1, VAR_0x8000
+	bufferdecorationname STR_VAR_2, ITEMID
 	compare VAR_0x8007, TRUE
 	call_if_eq EventScript_ObtainedDecor
 	compare VAR_0x8007, FALSE
@@ -104,10 +107,10 @@ Std_FindItem: @ 819FF21
 	lock
 	faceplayer
 	waitse
-	additem VAR_0x8000, VAR_0x8001
+	additem ITEMID, AMOUNT
 	copyvar VAR_0x8007, VAR_RESULT
-	bufferitemname 1, VAR_0x8000
-	checkitemtype VAR_0x8000
+	bufferitemname STR_VAR_2, ITEMID
+	checkitemtype ITEMID
 	call EventScript_BufferPocketNameAndTryFanfare
 	compare VAR_0x8007, TRUE
 	call_if_eq EventScript_PickUpItem
@@ -130,12 +133,12 @@ EventScript_NoRoomToPickUpItem: @ 819FF65
 	setvar VAR_RESULT, FALSE
 	return
 
-EventScript_HiddenItem:: @ 819FF7B
+EventScript_HiddenItemScript:: @ 819FF7B
 	lockall
 	waitse
 	additem VAR_0x8005
 	copyvar VAR_0x8007, VAR_RESULT
-	bufferitemname 1, VAR_0x8005
+	bufferitemname STR_VAR_2, VAR_0x8005
 	checkitemtype VAR_0x8005
 	call EventScript_BufferPocketNameAndTryFanfare
 	compare VAR_0x8007, TRUE

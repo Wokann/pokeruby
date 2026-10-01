@@ -56,7 +56,7 @@ extern u8 SecretBase_EventScript_PC[];
 extern u8 SecretBase_EventScript_RecordMixingPC[];
 extern u8 EventScript_PC[];
 extern u8 EventScript_TestSignpostMsg[];
-extern u8 EventScript_HiddenItem[];
+extern u8 EventScript_HiddenItemScript[];
 extern u8 EventScript_TV[];
 extern u8 ClosedSootopolisDoorScript[];
 extern u8 EventScript_CableBoxResults[];
@@ -437,7 +437,7 @@ static const u8 *GetInteractedBackgroundEventScript(struct MapPosition *position
         gSpecialVar_0x8005 = (u32)bgEvent->bgUnion.script;
         if (FlagGet(gSpecialVar_0x8004) == TRUE)
             return NULL;
-        return EventScript_HiddenItem;
+        return EventScript_HiddenItemScript;
     case BG_EVENT_SECRET_BASE:
         if (direction == DIR_NORTH)
         {
