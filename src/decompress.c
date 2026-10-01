@@ -57,12 +57,12 @@ void LoadCompressedSpritePaletteOverrideBuffer(const struct CompressedSpritePale
     LoadSpritePalette(&dest);
 }
 
-void DecompressPicFromTable(const struct CompressedSpriteSheet *src, u8 coords, u8 yOffset, void *decompBuffer, void *dest, s32 species)
+void DecompressPicFromTable(const struct CompressedSpriteSheet *src, u8 coords, u8 yOffset, void *decompBuffer, void *buffer, s32 species)
 {
     if (species > SPECIES_EGG)
-        LZ77UnCompWram(gMonFrontPicTable[0].data, dest);
+        LZ77UnCompWram(gMonFrontPicTable[0].data, buffer);
     else
-        LZ77UnCompWram(src->data, dest);
+        LZ77UnCompWram(src->data, buffer);
 }
 
 void HandleLoadSpecialPokePic(const struct CompressedSpriteSheet *src, u32 coords, u32 y_offset,
