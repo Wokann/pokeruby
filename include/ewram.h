@@ -131,8 +131,8 @@ extern u8 gSharedMem[];
 #define pssData                         (*(struct PokemonSummaryScreenData *)(gSharedMem + 0x18000))
 
 // roulette.c
-#define ewram18800                      ((u16 *)(gSharedMem + 0x18800))
-#define eRoulette                       ((struct Roulette *)(gSharedMem + 0x19000))
+#define sRouletteGridTilemap            ((u16 *)(gSharedMem + 0x18800))
+#define sRoulette                       ((struct Roulette *)(gSharedMem + 0x19000))
 
 #define sCreditsData                    (*(struct CreditsData *)(gSharedMem + 0x1C000))
 

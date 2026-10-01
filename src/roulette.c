@@ -683,8 +683,8 @@ void CB2_Roulette(void)
 	RunTasks();
 	AnimateSprites();
 	BuildOamBuffer();
-	if (eRoulette->flashUtil.enabled)
-	   RouletteFlash_Run(&eRoulette->flashUtil);
+	if (sRoulette->flashUtil.enabled)
+	   RouletteFlash_Run(&sRoulette->flashUtil);
 }
 
 void VBlankCB_Roulette(void)
@@ -693,20 +693,20 @@ void VBlankCB_Roulette(void)
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
     UpdateWheelPosition();
-    REG_BG1HOFS = 0x200 - eRoulette->gridX;
-    if (eRoulette->shroomishShadowTimer)
-        REG_BLDALPHA = eRoulette->shroomishShadowAlpha;
-    if (eRoulette->updateGridHighlight != 0)
+    REG_BG1HOFS = 0x200 - sRoulette->gridX;
+    if (sRoulette->shroomishShadowTimer)
+        REG_BLDALPHA = sRoulette->shroomishShadowAlpha;
+    if (sRoulette->updateGridHighlight != 0)
     {
         DmaCopy16(3, &gBGTilemapBuffers[1][224], (void *)(VRAM + 0x21c0), 0x340);
-        eRoulette->updateGridHighlight = 0;
+        sRoulette->updateGridHighlight = 0;
     }
-    switch (eRoulette->selectionRectDrawState)
+    switch (sRoulette->selectionRectDrawState)
     {
     case SELECT_STATE_DRAW:
         REG_BG0CNT = (32 * 248);
         DmaCopy16(3, &gBGTilemapBuffers[2][224], (void *)(VRAM + 0xf9c0), 0x340);
-        eRoulette->selectionRectDrawState = SELECT_STATE_UPDATE;
+        sRoulette->selectionRectDrawState = SELECT_STATE_UPDATE;
     break;
     case SELECT_STATE_UPDATE:
         DmaCopy16(3, &gBGTilemapBuffers[2][224], (void *)(VRAM + 0xf9c0), 0x340);
@@ -714,7 +714,7 @@ void VBlankCB_Roulette(void)
     case SELECT_STATE_ERASE:
         REG_BG0CNT = 0x1f08;
         DmaFill16(3, 0, (void *)(VRAM + 0xf9c0), 0x340);
-        eRoulette->selectionRectDrawState = SELECT_STATE_WAIT;
+        sRoulette->selectionRectDrawState = SELECT_STATE_WAIT;
     case SELECT_STATE_WAIT:
         break;
     }
@@ -724,30 +724,30 @@ void InitRouletteTableData(void)
 {
     u8 i;
     u16 bgColors[] = {RGB(24, 4, 10), RGB(10, 19, 6), RGB(24, 4, 10)};
-    memset(eRoulette, 0, sizeof(*eRoulette));
-    eRoulette->tableId = (gSpecialVar_0x8004 & 1);
+    memset(sRoulette, 0, sizeof(*sRoulette));
+    sRoulette->tableId = (gSpecialVar_0x8004 & 1);
     if (gSpecialVar_0x8004 & ROULETTE_SPECIAL_RATE)
-        eRoulette->isSpecialRate = TRUE;
-    eRoulette->wheelSpeed = sRouletteTables[eRoulette->tableId].wheelSpeed;
-    eRoulette->wheelDelay = sRouletteTables[eRoulette->tableId].wheelDelay;
-    eRoulette->minBet = sTableMinBets[eRoulette->tableId + eRoulette->isSpecialRate * 2];
-    eRoulette->unk1 = 1;
-    if (eRoulette->minBet == 1)
+        sRoulette->isSpecialRate = TRUE;
+    sRoulette->wheelSpeed = sRouletteTables[sRoulette->tableId].wheelSpeed;
+    sRoulette->wheelDelay = sRouletteTables[sRoulette->tableId].wheelDelay;
+    sRoulette->minBet = sTableMinBets[sRoulette->tableId + sRoulette->isSpecialRate * 2];
+    sRoulette->unk1 = 1;
+    if (sRoulette->minBet == 1)
         gPlttBufferUnfaded[0] = gPlttBufferUnfaded[81] = gPlttBufferFaded[0] = gPlttBufferFaded[81] = bgColors[0];
     else
         gPlttBufferUnfaded[0] = gPlttBufferUnfaded[81] = gPlttBufferFaded[0] = gPlttBufferFaded[81] = bgColors[1];
-    RouletteFlash_Reset(&eRoulette->flashUtil);
+    RouletteFlash_Reset(&sRoulette->flashUtil);
     for (i = 0; i < NUM_ROULETTE_SLOTS + 1; i++)
-        RouletteFlash_Add(&eRoulette->flashUtil, i, &sFlashData_Colors[i]);
+        RouletteFlash_Add(&sRoulette->flashUtil, i, &sFlashData_Colors[i]);
     for (i = 0; i < PARTY_SIZE; i++)
     {
         switch (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2))
         {
         case SPECIES_SHROOMISH:
-            eRoulette->partySpeciesFlags |= HAS_SHROOMISH;
+            sRoulette->partySpeciesFlags |= HAS_SHROOMISH;
             break;
         case SPECIES_TAILLOW:
-            eRoulette->partySpeciesFlags |= HAS_TAILLOW;
+            sRoulette->partySpeciesFlags |= HAS_TAILLOW;
             break;
         }
     }
@@ -760,7 +760,7 @@ void CB2_LoadRoulette(void)
     u8 taskId;
 
 #if DEBUG
-    gRouletteDebugState = eRoulette;
+    gRouletteDebugState = sRoulette;
 #endif
 
     switch (gMain.state)
@@ -793,7 +793,7 @@ void CB2_LoadRoulette(void)
     case 3:
         InitRouletteTableData();
         ClearBGTilemapBuffers();
-        LZ77UnCompWram(sGrid_Tilemap, (void *)(ewram18800));
+        LZ77UnCompWram(sGrid_Tilemap, (void *)(sRouletteGridTilemap));
         LZ77UnCompVram(sWheel_Tilemap, (void *)(VRAM + 0x3000));
         gMain.state++;
         break;
@@ -832,10 +832,10 @@ void CB2_LoadRoulette(void)
         REG_DISPSTAT |= 8;
         SetVBlankCallback(VBlankCB_Roulette);
         BeginHardwarePaletteFade(255, 0, 16, 0 , 1);
-        taskId = eRoulette->playTaskId = CreateTask(Task_StartPlaying, 0);
+        taskId = sRoulette->playTaskId = CreateTask(Task_StartPlaying, 0);
         gTasks[taskId].tBallNum = BALLS_PER_ROUND;
         gTasks[taskId].tCoins = gSaveBlock1.coins;
-        eRoulette->spinTaskId = CreateTask(Task_SpinWheel, 1);
+        sRoulette->spinTaskId = CreateTask(Task_SpinWheel, 1);
         SetMainCallback2(CB2_Roulette);
         break;
     }
@@ -847,24 +847,24 @@ void Task_SpinWheel(u8 taskId)
     s16 cos;
     s32 cos32;
 
-    if (eRoulette->wheelDelayTimer++ == eRoulette->wheelDelay)
+    if (sRoulette->wheelDelayTimer++ == sRoulette->wheelDelay)
     {
-        eRoulette->wheelDelayTimer = 0;
-        if ((eRoulette->wheelAngle -= eRoulette->wheelSpeed) < 0)
-            eRoulette->wheelAngle = 360 - eRoulette->wheelSpeed;
+        sRoulette->wheelDelayTimer = 0;
+        if ((sRoulette->wheelAngle -= sRoulette->wheelSpeed) < 0)
+            sRoulette->wheelAngle = 360 - sRoulette->wheelSpeed;
     }
-    sin = Sin2(eRoulette->wheelAngle);
-    cos = Cos2(eRoulette->wheelAngle);
+    sin = Sin2(sRoulette->wheelAngle);
+    cos = Cos2(sRoulette->wheelAngle);
     sin = sin / 16;
     cos32 = cos / 16;
-    eRoulette->wheelRotation.d =  cos32;
-    eRoulette->wheelRotation.a =  cos32;
-    eRoulette->wheelRotation.b =  sin;
-    eRoulette->wheelRotation.c = -sin;
+    sRoulette->wheelRotation.d =  cos32;
+    sRoulette->wheelRotation.a =  cos32;
+    sRoulette->wheelRotation.b =  sin;
+    sRoulette->wheelRotation.c = -sin;
 #if DEBUG
     if (gRouletteDebugActive[0] != 0 && JOY_NEW(START_BUTTON))
     {
-        gTasks[eRoulette->playTaskId].func = Task_StopPlaying;
+        gTasks[sRoulette->playTaskId].func = Task_StopPlaying;
         m4aMPlayStop(&gMPlayInfo_SE1);
         m4aMPlayStop(&gMPlayInfo_SE2);
         m4aMPlayStop(&gMPlayInfo_SE3);
@@ -905,7 +905,7 @@ void Task_ContinuePlaying(u8 taskId)
 
 void Task_StopPlaying(u8 taskId)
 {
-    DestroyTask(eRoulette->spinTaskId);
+    DestroyTask(sRoulette->spinTaskId);
     ExitRoulette(taskId);
 }
 
@@ -923,20 +923,20 @@ void UpdateGridSelectionRect(u8 selectionId)
     case COL_MAKUHITA:
         temp0 = (selectionId * 3 + 14);
         FillTilemapRect(&gBGTilemapBuffers[2][0], 0, 14, 7, 16, 13);
-        SetTilemapRect(&gBGTilemapBuffers[2][0], ewram18800 + 0x119, temp0, 7, 3, 13);
+        SetTilemapRect(&gBGTilemapBuffers[2][0], sRouletteGridTilemap + 0x119, temp0, 7, 3, 13);
         break;
     case ROW_ORANGE:
     case ROW_GREEN:
     case ROW_PURPLE:
         temp1 = ((selectionId - 1) / 5 * 3 + 10);
         FillTilemapRect(&gBGTilemapBuffers[2][0], 0, 14, 7, 16, 13);
-        SetTilemapRect(&gBGTilemapBuffers[2][0], ewram18800 + 0x140, 14, temp1, 16, 3);
+        SetTilemapRect(&gBGTilemapBuffers[2][0], sRouletteGridTilemap + 0x140, 14, temp1, 16, 3);
         break;
     default:
         temp0 = (GET_COL(selectionId) * 3 + 14);
         temp1 = ((selectionId - 1) / 5 * 3 + 7);
         FillTilemapRect(&gBGTilemapBuffers[2][0], 0, 14, 7, 16, 13);
-        SetTilemapRect(&gBGTilemapBuffers[2][0], ewram18800 + 0x110, temp0, temp1, 3, 3);
+        SetTilemapRect(&gBGTilemapBuffers[2][0], sRouletteGridTilemap + 0x110, temp0, temp1, 3, 3);
         break;
     }
 }
@@ -946,16 +946,16 @@ void UpdateGridSelection(u8 taskId, bool8 useCurrentBet)
     if (!useCurrentBet)
         SetMultiplierSprite(gTasks[taskId].tSelectionId);
     else
-        SetMultiplierSprite(eRoulette->betSelection[eRoulette->curBallNum]);
+        SetMultiplierSprite(sRoulette->betSelection[sRoulette->curBallNum]);
     UpdateGridSelectionRect(gTasks[taskId].tSelectionId);
 }
 
 void Task_StartHandleBetGridInput(u8 taskId)
 {
-    eRoulette->selectionRectDrawState = SELECT_STATE_DRAW;
+    sRoulette->selectionRectDrawState = SELECT_STATE_DRAW;
     UpdateGridSelectionRect(gTasks[taskId].tSelectionId);
-    eRoulette->wheelDelay = 2;
-    eRoulette->wheelDelayTimer = 0;
+    sRoulette->wheelDelay = 2;
+    sRoulette->wheelDelayTimer = 0;
     gTasks[taskId].func = Task_HandleBetGridInput;
 }
 
@@ -963,16 +963,16 @@ void Task_SelectFirstEmptySquare(u8 taskId)
 {
     s16 i;
 
-    if (eRoulette->hitFlags & F_ORANGE_ROW)
+    if (sRoulette->hitFlags & F_ORANGE_ROW)
     {
         for (i = SQU_GREEN_WYNAUT; i < SQU_GREEN_MAKUHITA; i++)
-            if ((eRoulette->hitFlags & sGridSelections[i].flag) == 0)
+            if ((sRoulette->hitFlags & sGridSelections[i].flag) == 0)
                 break;
     }
     else
     {
         for (i = SQU_ORANGE_WYNAUT; i < ROW_GREEN; i++)
-            if ((eRoulette->hitFlags & sGridSelections[i].flag) == 0)
+            if ((sRoulette->hitFlags & sGridSelections[i].flag) == 0)
                 break;
     }
     gTasks[taskId].tSelectionId = i;
@@ -1053,45 +1053,45 @@ void ProcessBetGridInput(u8 taskId)
         UpdateGridSelection(taskId, FALSE);
         gTasks[taskId].data[1] = headerOffset;
         PlaySE(SE_SELECT);
-        RouletteFlash_Stop(&eRoulette->flashUtil, NO_DELAY);
-        eRoulette->flashUtil.palettes[FLASH_ICON_3].available = FALSE;
-        eRoulette->flashUtil.palettes[FLASH_ICON_2].available = FALSE;
-        eRoulette->flashUtil.palettes[FLASH_ICON].available = FALSE;
+        RouletteFlash_Stop(&sRoulette->flashUtil, NO_DELAY);
+        sRoulette->flashUtil.palettes[FLASH_ICON_3].available = FALSE;
+        sRoulette->flashUtil.palettes[FLASH_ICON_2].available = FALSE;
+        sRoulette->flashUtil.palettes[FLASH_ICON].available = FALSE;
         FlashSelectionOnWheel(gTasks[taskId].tSelectionId);
         for (i = 0; i < 4; i++)
         {
-            gSprites[eRoulette->spriteIds[i + 41]].oam.tileNum =
-            gSprites[eRoulette->spriteIds[i + 41]].sheetTileStart
-            + (*gSprites[eRoulette->spriteIds[i + 41]].anims)->type;
+            gSprites[sRoulette->spriteIds[i + 41]].oam.tileNum =
+            gSprites[sRoulette->spriteIds[i + 41]].sheetTileStart
+            + (*gSprites[sRoulette->spriteIds[i + 41]].anims)->type;
         }
-        if ((u16)(gTasks[taskId].tSelectionId - 1) < COL_MAKUHITA && !(eRoulette->hitFlags & sGridSelections[gTasks[taskId].tSelectionId].flag))
+        if ((u16)(gTasks[taskId].tSelectionId - 1) < COL_MAKUHITA && !(sRoulette->hitFlags & sGridSelections[gTasks[taskId].tSelectionId].flag))
         {
             headerOffset = gTasks[taskId].tSelectionId - 1;
-            gSprites[eRoulette->spriteIds[headerOffset + 41]].oam.tileNum =
-            gSprites[eRoulette->spriteIds[headerOffset + 41]].sheetTileStart
-            + (*gSprites[eRoulette->spriteIds[headerOffset + 41]].anims + 1)->type;
+            gSprites[sRoulette->spriteIds[headerOffset + 41]].oam.tileNum =
+            gSprites[sRoulette->spriteIds[headerOffset + 41]].sheetTileStart
+            + (*gSprites[sRoulette->spriteIds[headerOffset + 41]].anims + 1)->type;
         }
     }
 }
 
 void Task_StartSpin(u8 taskId)
 {
-    eRoulette->selectionRectDrawState = SELECT_STATE_ERASE;
-    if (eRoulette->minBet == 1)
-        eRoulette->wheelDelay = 1;
+    sRoulette->selectionRectDrawState = SELECT_STATE_ERASE;
+    if (sRoulette->minBet == 1)
+        sRoulette->wheelDelay = 1;
     else
-        eRoulette->wheelDelay = 0;
-    eRoulette->wheelDelayTimer = 0;
+        sRoulette->wheelDelay = 0;
+    sRoulette->wheelDelayTimer = 0;
     gTasks[taskId].data[1] = 32;
     gTasks[taskId].func = Task_SlideGridOffscreen;
 }
 
 void Task_PlaceBet(u8 taskId)
 {
-    eRoulette->betSelection[eRoulette->curBallNum] = gTasks[taskId].tSelectionId;
-    gTasks[taskId].tMultiplier = GetMultiplier(eRoulette->betSelection[eRoulette->curBallNum]);
-    SetMultiplierSprite(eRoulette->betSelection[eRoulette->curBallNum]);
-    if ((gTasks[taskId].tCoins -= eRoulette->minBet) < 0)
+    sRoulette->betSelection[sRoulette->curBallNum] = gTasks[taskId].tSelectionId;
+    gTasks[taskId].tMultiplier = GetMultiplier(sRoulette->betSelection[sRoulette->curBallNum]);
+    SetMultiplierSprite(sRoulette->betSelection[sRoulette->curBallNum]);
+    if ((gTasks[taskId].tCoins -= sRoulette->minBet) < 0)
         gTasks[taskId].tCoins = 0;
     SetCreditDigits(gTasks[taskId].tCoins);
     gTasks[taskId].func = Task_StartSpin;
@@ -1118,7 +1118,7 @@ void Task_HandleBetGridInput(u8 taskId)
     }
     if (JOY_NEW(A_BUTTON))
     {
-    if (eRoulette->hitFlags & sGridSelections[gTasks[taskId].tSelectionId].flag)
+    if (sRoulette->hitFlags & sGridSelections[gTasks[taskId].tSelectionId].flag)
             PlaySE(SE_BOO);
         else
         {
@@ -1134,8 +1134,8 @@ void Task_SlideGridOffscreen(u8 taskId)
     {
         if (gTasks[taskId].data[1] > 2)
             gSpriteCoordOffsetX += 2;
-        if ((eRoulette->gridX += 4) == 104)
-            gSprites[eRoulette->spriteIds[25]].callback = &SpriteCallbackDummy;
+        if ((sRoulette->gridX += 4) == 104)
+            gSprites[sRoulette->spriteIds[25]].callback = &SpriteCallbackDummy;
     }
     else
     {
@@ -1149,7 +1149,7 @@ void Task_SlideGridOffscreen(u8 taskId)
 u8 GetRandomForBallTravelDistance(u16 ballNum, u16 rand)
 {
     u8 hourOffset;
-    switch (eRoulette->partySpeciesFlags)
+    switch (sRoulette->partySpeciesFlags)
     {
     case HAS_SHROOMISH:
     case HAS_TAILLOW:
@@ -1162,18 +1162,18 @@ u8 GetRandomForBallTravelDistance(u16 ballNum, u16 rand)
             else
             {
                 const struct RouletteTable *tables = sRouletteTables;
-                return tables[eRoulette->tableId].randDistanceLow / 2;
+                return tables[sRoulette->tableId].randDistanceLow / 2;
             }
         }
         else if (!(rand & 3))
         {
             const struct RouletteTable *tables = sRouletteTables;
-            return tables[eRoulette->tableId].randDistanceLow / 2;
+            return tables[sRoulette->tableId].randDistanceLow / 2;
         }
         else
         {
             const struct RouletteTable *tables = sRouletteTables;
-            return tables[eRoulette->tableId].randDistanceLow;
+            return tables[sRoulette->tableId].randDistanceLow;
         }
         break;
     case HAS_SHROOMISH | HAS_TAILLOW:
@@ -1184,7 +1184,7 @@ u8 GetRandomForBallTravelDistance(u16 ballNum, u16 rand)
             if (ballNum < BALLS_PER_ROUND || (rand & 1))
             {
                 const struct RouletteTable *tables = sRouletteTables;
-                return tables[eRoulette->tableId].randDistanceLow / 2;
+                return tables[sRoulette->tableId].randDistanceLow / 2;
             }
             else
             {
@@ -1194,12 +1194,12 @@ u8 GetRandomForBallTravelDistance(u16 ballNum, u16 rand)
         else if ((rand & 1) && ballNum > BALLS_PER_ROUND)
         {
             const struct RouletteTable *tables = sRouletteTables;
-            return tables[eRoulette->tableId].randDistanceLow / 4;
+            return tables[sRoulette->tableId].randDistanceLow / 4;
         }
         else
         {
             const struct RouletteTable *tables = sRouletteTables;
-            return tables[eRoulette->tableId].randDistanceLow / 2;
+            return tables[sRoulette->tableId].randDistanceLow / 2;
         }
         break;
     case 0:
@@ -1215,7 +1215,7 @@ u8 GetRandomForBallTravelDistance(u16 ballNum, u16 rand)
             else
             {
                 const struct RouletteTable *tables = sRouletteTables;
-                return tables[eRoulette->tableId].randDistanceLow / 2;
+                return tables[sRoulette->tableId].randDistanceLow / 2;
             }
         }
         else if (!(rand & 3))
@@ -1223,12 +1223,12 @@ u8 GetRandomForBallTravelDistance(u16 ballNum, u16 rand)
             if (ballNum > BALLS_PER_ROUND * 2)
             {
                 const struct RouletteTable *tables = sRouletteTables;
-                return tables[eRoulette->tableId].randDistanceLow / 2;
+                return tables[sRoulette->tableId].randDistanceLow / 2;
             }
             else
             {
                 const struct RouletteTable *tables = sRouletteTables;
-                return tables[eRoulette->tableId].randDistanceLow;
+                return tables[sRoulette->tableId].randDistanceLow;
             }
         }
         else if (rand & (1 << 15))
@@ -1236,18 +1236,18 @@ u8 GetRandomForBallTravelDistance(u16 ballNum, u16 rand)
             if (ballNum > BALLS_PER_ROUND * 2)
             {
                 const struct RouletteTable *tables = sRouletteTables;
-                return tables[eRoulette->tableId].randDistanceLow;
+                return tables[sRoulette->tableId].randDistanceLow;
             }
             else
             {
                 const struct RouletteTable *tables = sRouletteTables;
-                return tables[eRoulette->tableId].randDistanceHigh;
+                return tables[sRoulette->tableId].randDistanceHigh;
             }
         }
         else
         {
             const struct RouletteTable *tables = sRouletteTables;
-            return tables[eRoulette->tableId].randDistanceHigh * 2;
+            return tables[sRoulette->tableId].randDistanceHigh * 2;
         }
     }
 }
@@ -1263,10 +1263,10 @@ void Task_InitBallRoll(u8 taskId)
     u16 startAngles[] = {0, 180, 90, 270};
     rand = Random();
     randmod = rand % 100;
-    eRoulette->curBallSpriteId = gTasks[taskId].tBallNum;
-    eRoulette->stuckHitSlot = BALL_STATE_ROLLING;
-    eRoulette->hitSlot = BALL_STATE_ROLLING;
-    eRoulette->ballState = BALL_STATE_ROLLING;
+    sRoulette->curBallSpriteId = gTasks[taskId].tBallNum;
+    sRoulette->stuckHitSlot = BALL_STATE_ROLLING;
+    sRoulette->hitSlot = BALL_STATE_ROLLING;
+    sRoulette->ballState = BALL_STATE_ROLLING;
     randTravelMod = GetRandomForBallTravelDistance(gTasks[taskId].tTotalBallNum, rand);
     randTravelDist = (rand % randTravelMod) - (randTravelMod / 2);
     if (gLocalTime.hours < 13)
@@ -1277,28 +1277,28 @@ void Task_InitBallRoll(u8 taskId)
         startAngleId *= 2;
     else
         startAngleId = (1 - startAngleId) * 2;
-    eRoulette->ballTravelDist = travelDist = sRouletteTables[eRoulette->tableId].baseTravelDist + randTravelDist;
+    sRoulette->ballTravelDist = travelDist = sRouletteTables[sRoulette->tableId].baseTravelDist + randTravelDist;
     travelDist = S16TOPOSFLOAT(travelDist) / 5.0f;
-    eRoulette->ballTravelDistFast = travelDist * 3;
-    eRoulette->ballTravelDistMed = travelDist;
-    eRoulette->ballTravelDistSlow = travelDist;
-    eRoulette->ballAngle = S16TOPOSFLOAT(startAngles[(rand & 1) + startAngleId]);
-    eRoulette->ballAngleSpeed = S16TOPOSFLOAT(sRouletteTables[eRoulette->tableId].ballSpeed);
-    eRoulette->ballAngleAccel = ((eRoulette->ballAngleSpeed * 0.5f) - eRoulette->ballAngleSpeed) / S16TOPOSFLOAT(travelDist * 3);
-    eRoulette->ballDistToCenter = 68.0f;
-    eRoulette->ballFallAccel = 0.0f;
-    eRoulette->ballFallSpeed = -(8.0f / S16TOPOSFLOAT(travelDist * 3));
-    eRoulette->varA0 = 36.0f;
+    sRoulette->ballTravelDistFast = travelDist * 3;
+    sRoulette->ballTravelDistMed = travelDist;
+    sRoulette->ballTravelDistSlow = travelDist;
+    sRoulette->ballAngle = S16TOPOSFLOAT(startAngles[(rand & 1) + startAngleId]);
+    sRoulette->ballAngleSpeed = S16TOPOSFLOAT(sRouletteTables[sRoulette->tableId].ballSpeed);
+    sRoulette->ballAngleAccel = ((sRoulette->ballAngleSpeed * 0.5f) - sRoulette->ballAngleSpeed) / S16TOPOSFLOAT(travelDist * 3);
+    sRoulette->ballDistToCenter = 68.0f;
+    sRoulette->ballFallAccel = 0.0f;
+    sRoulette->ballFallSpeed = -(8.0f / S16TOPOSFLOAT(travelDist * 3));
+    sRoulette->varA0 = 36.0f;
     gTasks[taskId].func = Task_RollBall;
 }
 
 void Task_RollBall(u8 taskId)
 {
     u8 ballSpriteId;
-    eRoulette->ballRolling = TRUE;
-    ballSpriteId = eRoulette->spriteIds[eRoulette->curBallSpriteId];
-    eRoulette->ball = &gSprites[ballSpriteId];
-    eRoulette->ball->callback = SpriteCB_RollBall_Start;
+    sRoulette->ballRolling = TRUE;
+    ballSpriteId = sRoulette->spriteIds[sRoulette->curBallSpriteId];
+    sRoulette->ball = &gSprites[ballSpriteId];
+    sRoulette->ball->callback = SpriteCB_RollBall_Start;
     gTasks[taskId].tBallNum++;
     gTasks[taskId].tTotalBallNum++;
     SetBallCounterNumLeft(BALLS_PER_ROUND - gTasks[taskId].tBallNum);
@@ -1308,24 +1308,24 @@ void Task_RollBall(u8 taskId)
 
 void Task_RecordBallHit(u8 taskId)
 {
-    if (eRoulette->ballState != BALL_STATE_ROLLING)
+    if (sRoulette->ballState != BALL_STATE_ROLLING)
     {
-        if (eRoulette->ballStuck)
+        if (sRoulette->ballStuck)
         {
-            if (eRoulette->ballUnstuck)
+            if (sRoulette->ballUnstuck)
             {
-                eRoulette->ballUnstuck = FALSE;
-                eRoulette->ballStuck = FALSE;
+                sRoulette->ballUnstuck = FALSE;
+                sRoulette->ballStuck = FALSE;
             }
         }
         else
         {
             if (!gTasks[taskId].data[1])
             {
-                bool8 won = IsHitInBetSelection(RecordHit(taskId, eRoulette->hitSlot), eRoulette->betSelection[eRoulette->curBallNum]);
+                bool8 won = IsHitInBetSelection(RecordHit(taskId, sRoulette->hitSlot), sRoulette->betSelection[sRoulette->curBallNum]);
                 gTasks[taskId].tWonBet = won;
                 if (won == TRUE)
-                    RouletteFlash_Enable(&eRoulette->flashUtil, F_FLASH_OUTER_EDGES);
+                    RouletteFlash_Enable(&sRoulette->flashUtil, F_FLASH_OUTER_EDGES);
             }
             if (gTasks[taskId].data[1] < 61)
             {
@@ -1335,7 +1335,7 @@ void Task_RecordBallHit(u8 taskId)
             }
             else
             {
-                DrawGridBackground(eRoulette->betSelection[eRoulette->curBallNum]);
+                DrawGridBackground(sRoulette->betSelection[sRoulette->curBallNum]);
                 ShowHideGridIcons(FALSE, (u8)gTasks[taskId].tWinningSquare);
                 ShowHideGridBalls(FALSE, (u8)gTasks[taskId].tBallNum - 1);
                 gTasks[taskId].data[1] = 32;
@@ -1351,8 +1351,8 @@ void Task_SlideGridOnscreen(u8 taskId)
     {
         if (gTasks[taskId].data[1] > 2)
             gSpriteCoordOffsetX -= 2;
-        if ((eRoulette->gridX -= 4) == 104)
-            gSprites[eRoulette->spriteIds[25]].callback = SpriteCB_GridSquare;
+        if ((sRoulette->gridX -= 4) == 104)
+            gSprites[sRoulette->spriteIds[25]].callback = SpriteCB_GridSquare;
     }
     else
     {
@@ -1474,11 +1474,11 @@ void Task_GivePayout(u8 taskId)
 
 void Task_PrintPayout(u8 taskId)
 {
-    ConvertIntToDecimalStringN((u8 *)&gStringVar1, (eRoulette->minBet * gTasks[taskId].tMultiplier), STR_CONV_MODE_LEFT_ALIGN, 2);
+    ConvertIntToDecimalStringN((u8 *)&gStringVar1, (sRoulette->minBet * gTasks[taskId].tMultiplier), STR_CONV_MODE_LEFT_ALIGN, 2);
     StringExpandPlaceholders((u8 *)&gStringVar4, Roulette_Text_YouveWonXCoins);
     Menu_DrawStdWindowFrame(0, 14, 29, 19);
     Menu_PrintText((u8 *)&gStringVar4, 1, 15);
-    gTasks[taskId].tPayout = (eRoulette->minBet * gTasks[taskId].tMultiplier);
+    gTasks[taskId].tPayout = (sRoulette->minBet * gTasks[taskId].tMultiplier);
     gTasks[taskId].data[7] = 0;
     gTasks[taskId].func = Task_GivePayout;
 }
@@ -1487,11 +1487,11 @@ void Task_PrintPayout(u8 taskId)
 
 void Task_EndTurn(u8 taskId)
 {
-    RouletteFlash_Stop(&eRoulette->flashUtil, NO_DELAY);
-    eRoulette->flashUtil.palettes[FLASH_ICON_3].available = FALSE;
-    eRoulette->flashUtil.palettes[FLASH_ICON_2].available = FALSE;
-    eRoulette->flashUtil.palettes[FLASH_ICON].available = FALSE;
-    gSprites[eRoulette->spriteIds[7 + sGridSelections[gTasks[taskId].tWinningSquare].spriteIdOffset]].invisible = TRUE;
+    RouletteFlash_Stop(&sRoulette->flashUtil, NO_DELAY);
+    sRoulette->flashUtil.palettes[FLASH_ICON_3].available = FALSE;
+    sRoulette->flashUtil.palettes[FLASH_ICON_2].available = FALSE;
+    sRoulette->flashUtil.palettes[FLASH_ICON].available = FALSE;
+    gSprites[sRoulette->spriteIds[7 + sGridSelections[gTasks[taskId].tWinningSquare].spriteIdOffset]].invisible = TRUE;
     gTasks[taskId].func = Task_TryPrintEndTurnMsg;
 }
 
@@ -1499,16 +1499,16 @@ void Task_TryPrintEndTurnMsg(u8 taskId)
 {
     u8 i = 0;
     gTasks[taskId].tSelectionId = i;
-    eRoulette->betSelection[eRoulette->curBallNum] = SELECTION_NONE;
+    sRoulette->betSelection[sRoulette->curBallNum] = SELECTION_NONE;
     DrawGridBackground(SELECTION_NONE);
-    gSprites[eRoulette->spriteIds[48]].invisible = TRUE;
+    gSprites[sRoulette->spriteIds[48]].invisible = TRUE;
     for (i = 0; i < 4; i++)
     {
-        gSprites[eRoulette->spriteIds[i + 41]].oam.tileNum =
-        gSprites[eRoulette->spriteIds[i + 41]].sheetTileStart
-        + (*gSprites[eRoulette->spriteIds[i + 41]].anims)->type;
+        gSprites[sRoulette->spriteIds[i + 41]].oam.tileNum =
+        gSprites[sRoulette->spriteIds[i + 41]].sheetTileStart
+        + (*gSprites[sRoulette->spriteIds[i + 41]].anims)->type;
     }
-    if (!(gTasks[taskId].tCoins < eRoulette->minBet))
+    if (!(gTasks[taskId].tCoins < sRoulette->minBet))
     {
         if (gTasks[taskId].tBallNum == BALLS_PER_ROUND)
         {
@@ -1545,7 +1545,7 @@ void Task_ClearBoard(u8 taskId)
     DrawGridBackground(SELECTION_NONE);
     SetBallCounterNumLeft(BALLS_PER_ROUND);
     for (i = 0; i < NUM_ROULETTE_SLOTS; i++)
-        gSprites[eRoulette->spriteIds[i + 7]].invisible = FALSE;
+        gSprites[sRoulette->spriteIds[i + 7]].invisible = FALSE;
     if (gTasks[taskId].tCoins == 0x270f)
     {
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
@@ -1560,10 +1560,10 @@ void Task_ClearBoard(u8 taskId)
 
 void ExitRoulette(u8 taskId)
 {
-    RouletteFlash_Stop(&eRoulette->flashUtil, NO_DELAY);
-    RouletteFlash_Reset(&eRoulette->flashUtil);
+    RouletteFlash_Stop(&sRoulette->flashUtil, NO_DELAY);
+    RouletteFlash_Reset(&sRoulette->flashUtil);
     gSaveBlock1.coins = gTasks[taskId].tCoins;
-    if (gSaveBlock1.coins < eRoulette->minBet)
+    if (gSaveBlock1.coins < sRoulette->minBet)
         gSpecialVar_0x8004 = TRUE;
     else
         gSpecialVar_0x8004 = FALSE;
@@ -1576,7 +1576,7 @@ void Task_ExitRoulette(u8 taskId) // end roulette ?
     if (UpdatePaletteFade() == 0)
     {
         SetVBlankCallback(NULL);
-        memset(eRoulette, 0, sizeof(*eRoulette));
+        memset(sRoulette, 0, sizeof(*sRoulette));
         gSpriteCoordOffsetX = gSpriteCoordOffsetY = 0;
         ResetVramOamAndBgCntRegs();
         FreeAllSpritePalettes();
@@ -1597,57 +1597,57 @@ void Task_ExitRoulette(u8 taskId) // end roulette ?
 
 void Task_WaitForNextTask(u8 taskId)
 {
-    if (eRoulette->taskWaitDelay == 0 || JOY_NEW(eRoulette->taskWaitKey))
+    if (sRoulette->taskWaitDelay == 0 || JOY_NEW(sRoulette->taskWaitKey))
     {
-        gTasks[taskId].func = eRoulette->nextTask;
-        if (eRoulette->taskWaitKey > 0)
+        gTasks[taskId].func = sRoulette->nextTask;
+        if (sRoulette->taskWaitKey > 0)
             PlaySE(SE_SELECT);
-        eRoulette->nextTask = NULL;
-        eRoulette->taskWaitKey = 0;
-        eRoulette->taskWaitDelay = 0;
+        sRoulette->nextTask = NULL;
+        sRoulette->taskWaitKey = 0;
+        sRoulette->taskWaitDelay = 0;
     }
-    if (eRoulette->taskWaitDelay != NO_DELAY)
-        eRoulette->taskWaitDelay--;
+    if (sRoulette->taskWaitDelay != NO_DELAY)
+        sRoulette->taskWaitDelay--;
 }
 
 void StartTaskAfterDelayOrInput(u8 taskId, TaskFunc task, u16 delay, u16 key)
 {
-    eRoulette->prevTask = gTasks[taskId].func;
+    sRoulette->prevTask = gTasks[taskId].func;
     if (task == NULL)
-        task = eRoulette->prevTask;
-    eRoulette->nextTask = task;
-    eRoulette->taskWaitDelay = delay;
+        task = sRoulette->prevTask;
+    sRoulette->nextTask = task;
+    sRoulette->taskWaitDelay = delay;
     if (delay == NO_DELAY && key == 0)
-        eRoulette->taskWaitKey = NO_DELAY;
+        sRoulette->taskWaitKey = NO_DELAY;
     else
-        eRoulette->taskWaitKey = key;
+        sRoulette->taskWaitKey = key;
     gTasks[taskId].func = Task_WaitForNextTask;
 }
 
 void ResetBallDataForNewSpin(u8 taskId)
 {
     u8 i = 0;
-    eRoulette->unk0 = i;
-    eRoulette->useTaillow = 0;
-    eRoulette->ballStuck = 0;
-    eRoulette->ballUnstuck = 0;
-    eRoulette->ballRolling = 0;
+    sRoulette->unk0 = i;
+    sRoulette->useTaillow = 0;
+    sRoulette->ballStuck = 0;
+    sRoulette->ballUnstuck = 0;
+    sRoulette->ballRolling = 0;
     for (i = 0; i < BALLS_PER_ROUND; i++)
-        eRoulette->betSelection[i] = SELECTION_NONE;
-    eRoulette->curBallNum = SELECTION_NONE;
+        sRoulette->betSelection[i] = SELECTION_NONE;
+    sRoulette->curBallNum = SELECTION_NONE;
     gTasks[taskId].data[1] = 0;
 }
 
 void ResetHits(void)
 {
     u8 i;
-    eRoulette->hitFlags = 0;
+    sRoulette->hitFlags = 0;
     for (i = 0; i < BALLS_PER_ROUND; i++)
-        eRoulette->hitSquares[i] = SELECTION_NONE;
+        sRoulette->hitSquares[i] = SELECTION_NONE;
     for (i = 0; i < NUM_BOARD_POKES; i++)
-        eRoulette->pokeHits[i] = 0;
+        sRoulette->pokeHits[i] = 0;
     for (i = 0; i < NUM_BOARD_COLORS; i++)
-        eRoulette->colorHits[i] = 0;
+        sRoulette->colorHits[i] = 0;
     ShowHideGridBalls(TRUE, -1);
 }
 
@@ -1672,22 +1672,22 @@ u8 RecordHit(u8 taskId, u8 slotId)
     {
         u8 i;
         u8 j;
-        eRoulette->hitSquares[gTasks[taskId].tBallNum - 1] = sRouletteSlots[slotId].gridSquare;
+        sRoulette->hitSquares[gTasks[taskId].tBallNum - 1] = sRouletteSlots[slotId].gridSquare;
         gTasks[taskId].tWinningSquare = sRouletteSlots[slotId].gridSquare;
-        eRoulette->hitFlags |= sRouletteSlots[slotId].flag;
+        sRoulette->hitFlags |= sRouletteSlots[slotId].flag;
         for (i = 0; i < NUM_BOARD_POKES; i++)
         {
             if (sRouletteSlots[slotId].flag & columnFlags[i])
-                eRoulette->pokeHits[i]++;
-            if (eRoulette->pokeHits[i] >= NUM_BOARD_COLORS)
-                eRoulette->hitFlags |= columnFlags[i];
+                sRoulette->pokeHits[i]++;
+            if (sRoulette->pokeHits[i] >= NUM_BOARD_COLORS)
+                sRoulette->hitFlags |= columnFlags[i];
         }
         for (j = 0; j < NUM_BOARD_COLORS; j++)
         {
             if (sRouletteSlots[slotId].flag & rowFlags[j])
-                eRoulette->colorHits[j]++;
-            if (eRoulette->colorHits[j] >= NUM_BOARD_POKES)
-                eRoulette->hitFlags |= rowFlags[j];
+                sRoulette->colorHits[j]++;
+            if (sRoulette->colorHits[j] >= NUM_BOARD_POKES)
+                sRoulette->hitFlags |= rowFlags[j];
         }
         return sRouletteSlots[slotId].gridSquare;
     }
@@ -1733,9 +1733,9 @@ void FlashSelectionOnWheel(u8 selectionId)
     case ROW_GREEN:
     case ROW_PURPLE:
         for (i = selectionId + 1; i < selectionId + 5; i++)
-            if (!(eRoulette->hitFlags & sGridSelections[i].flag))
+            if (!(sRoulette->hitFlags & sGridSelections[i].flag))
                 flashFlags |= sGridSelections[i].flashFlags;
-        RouletteFlash_Enable(&eRoulette->flashUtil, flashFlags &= ~F_FLASH_ICON);
+        RouletteFlash_Enable(&sRoulette->flashUtil, flashFlags &= ~F_FLASH_ICON);
         break;
     default:
     {
@@ -1749,24 +1749,24 @@ void FlashSelectionOnWheel(u8 selectionId)
         switch (GET_COL(selectionId))
         {
             case COL_WYNAUT:
-                palOffset = gSprites[eRoulette->spriteIds[SPR_WHEEL_ICON_ORANGE_WYNAUT]].oam.paletteNum * 16;
+                palOffset = gSprites[sRoulette->spriteIds[SPR_WHEEL_ICON_ORANGE_WYNAUT]].oam.paletteNum * 16;
                 break;
             case COL_AZURILL:
-                palOffset = gSprites[eRoulette->spriteIds[SPR_WHEEL_ICON_GREEN_AZURILL]].oam.paletteNum * 16;
+                palOffset = gSprites[sRoulette->spriteIds[SPR_WHEEL_ICON_GREEN_AZURILL]].oam.paletteNum * 16;
                 break;
             case COL_SKITTY:
-                palOffset = gSprites[eRoulette->spriteIds[SPR_WHEEL_ICON_PURPLE_SKITTY]].oam.paletteNum * 16;
+                palOffset = gSprites[sRoulette->spriteIds[SPR_WHEEL_ICON_PURPLE_SKITTY]].oam.paletteNum * 16;
                 break;
             case COL_MAKUHITA:
-                palOffset = gSprites[eRoulette->spriteIds[SPR_WHEEL_ICON_ORANGE_MAKUHITA]].oam.paletteNum * 16;
+                palOffset = gSprites[sRoulette->spriteIds[SPR_WHEEL_ICON_ORANGE_MAKUHITA]].oam.paletteNum * 16;
                 break;
         }
         if (numSelected == 1)
         {
-            if (!(eRoulette->hitFlags & sGridSelections[selectionId].flag))
+            if (!(sRoulette->hitFlags & sGridSelections[selectionId].flag))
             {
                 iconFlash[GET_ROW_IDX(selectionId)].paletteOffset += palOffset;
-                RouletteFlash_Add(&eRoulette->flashUtil, FLASH_ICON, &iconFlash[GET_ROW_IDX(selectionId)]);
+                RouletteFlash_Add(&sRoulette->flashUtil, FLASH_ICON, &iconFlash[GET_ROW_IDX(selectionId)]);
             }
             else
                 return;
@@ -1776,10 +1776,10 @@ void FlashSelectionOnWheel(u8 selectionId)
             for (i = 0; i < NUM_BOARD_COLORS; i++)
             {
                 u8 columnSlotId = i * ROW_ORANGE + selectionId + ROW_ORANGE;
-                if (!(eRoulette->hitFlags & sGridSelections[columnSlotId].flag))
+                if (!(sRoulette->hitFlags & sGridSelections[columnSlotId].flag))
                 {
                     iconFlash[GET_ROW_IDX(columnSlotId)].paletteOffset += palOffset;
-                    RouletteFlash_Add(&eRoulette->flashUtil, i + FLASH_ICON, &iconFlash[GET_ROW_IDX(columnSlotId)]);
+                    RouletteFlash_Add(&sRoulette->flashUtil, i + FLASH_ICON, &iconFlash[GET_ROW_IDX(columnSlotId)]);
                     if (numSelected == NUM_BOARD_COLORS)
                         flashFlags = sGridSelections[columnSlotId].flashFlags;
                     numSelected--;
@@ -1788,7 +1788,7 @@ void FlashSelectionOnWheel(u8 selectionId)
             if (numSelected != 2)
                 flashFlags = 0;
         }
-        RouletteFlash_Enable(&eRoulette->flashUtil, flashFlags |= sGridSelections[selectionId].flashFlags);
+        RouletteFlash_Enable(&sRoulette->flashUtil, flashFlags |= sGridSelections[selectionId].flashFlags);
         break;
     }
     }
@@ -1803,9 +1803,9 @@ void DrawGridBackground(u8 selectionId)
     vu8 tilemapOffset;
     u8 selectionIds[5];
     u8 numSquares;
-    eRoulette->updateGridHighlight = TRUE;
+    sRoulette->updateGridHighlight = TRUE;
     ShowHideGridIcons(FALSE, SELECTION_NONE);
-    SetTilemapRect(gBGTilemapBuffers[1], (u16 *)ewram18800, 14, 7, 16, 13);
+    SetTilemapRect(gBGTilemapBuffers[1], (u16 *)sRouletteGridTilemap, 14, 7, 16, 13);
     switch (selectionId)
     {
     case SELECTION_NONE:
@@ -1833,9 +1833,9 @@ void DrawGridBackground(u8 selectionId)
         for (j = 0; j < 3; j++)
         {
             y = (sGridSelections[selectionIds[i]].y + j) * 32;
-            gBGTilemapBuffers[1][x + y + 0] = ewram18800[0xD0 + (tilemapOffset + j) * 3 + 0];
-            gBGTilemapBuffers[1][x + y + 1] = ewram18800[0xD0 + (tilemapOffset + j) * 3 + 1];
-            gBGTilemapBuffers[1][x + y + 2] = ewram18800[0xD0 + (tilemapOffset + j) * 3 + 2];
+            gBGTilemapBuffers[1][x + y + 0] = sRouletteGridTilemap[0xD0 + (tilemapOffset + j) * 3 + 0];
+            gBGTilemapBuffers[1][x + y + 1] = sRouletteGridTilemap[0xD0 + (tilemapOffset + j) * 3 + 1];
+            gBGTilemapBuffers[1][x + y + 2] = sRouletteGridTilemap[0xD0 + (tilemapOffset + j) * 3 + 2];
         }
     }
 }
@@ -1849,16 +1849,16 @@ u8 GetMultiplier(u8 selectionId)
     {
     case NUM_BOARD_COLORS:
         selectionId = GET_ROW_IDX(selectionId);
-        if (eRoulette->colorHits[selectionId] >= NUM_BOARD_POKES)
+        if (sRoulette->colorHits[selectionId] >= NUM_BOARD_POKES)
             return 0;
-        return multipliers[eRoulette->colorHits[selectionId] + 1];
+        return multipliers[sRoulette->colorHits[selectionId] + 1];
     case NUM_BOARD_POKES:
         selectionId = GET_COL_IDX(selectionId);
-        if (eRoulette->pokeHits[selectionId] >= NUM_BOARD_COLORS)
+        if (sRoulette->pokeHits[selectionId] >= NUM_BOARD_COLORS)
             return 0;
-        return multipliers[eRoulette->pokeHits[selectionId] + 2];
+        return multipliers[sRoulette->pokeHits[selectionId] + 2];
     case NUM_ROULETTE_SLOTS:
-        if (eRoulette->hitFlags & sGridSelections[selectionId].flag)
+        if (sRoulette->hitFlags & sGridSelections[selectionId].flag)
             return 0;
         return multipliers[4];
     }
@@ -1869,14 +1869,14 @@ void UpdateWheelPosition(void)
 {
     s32 bg2x;
     s32 bg2y;
-    REG_BG2PA = eRoulette->wheelRotation.a;
-    REG_BG2PB = eRoulette->wheelRotation.b;
-    REG_BG2PC = eRoulette->wheelRotation.c;
-    REG_BG2PD = eRoulette->wheelRotation.d;
-    bg2x = 0x7400 - eRoulette->wheelRotation.a * (gSpriteCoordOffsetX + 116)
-                - eRoulette->wheelRotation.b * (gSpriteCoordOffsetY + 80);
-    bg2y = 0x5400 - eRoulette->wheelRotation.c * (gSpriteCoordOffsetX + 116)
-                - eRoulette->wheelRotation.d * (gSpriteCoordOffsetY + 80);
+    REG_BG2PA = sRoulette->wheelRotation.a;
+    REG_BG2PB = sRoulette->wheelRotation.b;
+    REG_BG2PC = sRoulette->wheelRotation.c;
+    REG_BG2PD = sRoulette->wheelRotation.d;
+    bg2x = 0x7400 - sRoulette->wheelRotation.a * (gSpriteCoordOffsetX + 116)
+                - sRoulette->wheelRotation.b * (gSpriteCoordOffsetY + 80);
+    bg2y = 0x5400 - sRoulette->wheelRotation.c * (gSpriteCoordOffsetX + 116)
+                - sRoulette->wheelRotation.d * (gSpriteCoordOffsetY + 80);
     REG_BG2X_L = bg2x;
     REG_BG2X_H = (bg2x & 0xfff0000) >> 16;
     REG_BG2Y_L = bg2y;
