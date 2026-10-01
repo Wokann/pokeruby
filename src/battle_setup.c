@@ -1386,20 +1386,20 @@ static bool8 IsTrainerReadyForRematch_(const struct RematchTrainer *table, u16 t
 static u16 GetRematchTrainerIdFromTable(const struct RematchTrainer *table, u16 trainerId)
 {
     int i;
-    const struct RematchTrainer *rematch;
+    const struct RematchTrainer *trainerEntry;
     s32 rematchTableId = FirstBattleTrainerIdToRematchTableId(table, trainerId);
 
     if (rematchTableId == -1)
         return 0;
-    rematch = &table[rematchTableId];
+    trainerEntry = &table[rematchTableId];
     for (i = 1; i < REMATCHES_COUNT; i++)
     {
-        if (!rematch->trainerIds[i])
-            return rematch->trainerIds[i - 1];
-        if (!HasTrainerBeenFought(rematch->trainerIds[i]))
-            return rematch->trainerIds[i];
+        if (!trainerEntry->trainerIds[i])
+            return trainerEntry->trainerIds[i - 1];
+        if (!HasTrainerBeenFought(trainerEntry->trainerIds[i]))
+            return trainerEntry->trainerIds[i];
     }
-    return rematch->trainerIds[REMATCHES_COUNT - 1];
+    return trainerEntry->trainerIds[REMATCHES_COUNT - 1];
 }
 
 static void ClearTrainerWantRematchState(const struct RematchTrainer *table, u16 trainerId)
