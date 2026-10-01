@@ -78,7 +78,7 @@ extern u8 gSharedMem[];
 
 // party_menu.c
 #define ePartyMenu                      (*(struct PartyMenuTwoMonActionState *)(gSharedMem + 0x1000))
-#define eMoveRelearnerMenu              (struct MoveRelearnerMenu *)(gSharedMem + 0x17000)
+#define sMoveRelearnerMenuSharedMem     (struct MoveRelearnerMenu *)(gSharedMem + 0x17000)
 #define ePartyMenu2                     (*(struct PartyMenuState *)(gSharedMem + 0x1B000))
 #define gPartyMenu                      (*(struct PartyMenuActionState *)(gSharedMem + 0x1C000))
 

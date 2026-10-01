@@ -334,7 +334,7 @@ static void CB2_InitLearnMove(void)
     ResetSpriteData();
     FreeAllSpritePalettes();
     ResetTasks();
-    sMoveRelearnerMenu = eMoveRelearnerMenu;
+    sMoveRelearnerMenu = sMoveRelearnerMenuSharedMem;
     ResetMoveRelearnerMenuState();
     sMoveRelearnerMenu->partyMonIndex = gSpecialVar_0x8004;
     CreateLearnableMovesList();
@@ -369,7 +369,7 @@ void CB2_InitLearnMoveReturnFromSelectMove(void)
     ResetSpriteData();
     FreeAllSpritePalettes();
     ResetTasks();
-    sMoveRelearnerMenu = eMoveRelearnerMenu;
+    sMoveRelearnerMenu = sMoveRelearnerMenuSharedMem;
     CreateLearnableMovesList();
     sMoveRelearnerMenu->forgetMoveIndex = gSpecialVar_0x8005;
     SetVBlankCallback(VBlankCB_MoveRelearner);
