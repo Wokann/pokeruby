@@ -1411,13 +1411,13 @@ void Task_WatanabeDebugHandleTrainerAiInput(u8 taskId)
     {
         PlaySE(SE_SELECT);
         gTrainerBattleOpponent = SECRET_BASE_OPPONENT;
-        eSecretBaseRecord->gender = 0;
-        eSecretBaseRecord->playerName[0] = 0xAC;
-        eSecretBaseRecord->playerName[1] = 0xFF;
-        eSecretBaseRecord->trainerId[0] = 0;
-        eSecretBaseRecord->trainerId[1] = 0;
-        eSecretBaseRecord->trainerId[2] = 0;
-        eSecretBaseRecord->trainerId[3] = 0;
+        sSecretBase->gender = 0;
+        sSecretBase->playerName[0] = 0xAC;
+        sSecretBase->playerName[1] = 0xFF;
+        sSecretBase->trainerId[0] = 0;
+        sSecretBase->trainerId[1] = 0;
+        sSecretBase->trainerId[2] = 0;
+        sSecretBase->trainerId[3] = 0;
         gTasks[taskId].func = Task_WatanabeDebugInitGenderMenu;
     }
     else if (JOY_REPT(DPAD_UP))

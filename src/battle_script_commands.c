@@ -5454,7 +5454,7 @@ static void Cmd_getmoneyreward(void)
 
     if (gTrainerBattleOpponent == SECRET_BASE_OPPONENT)
     {
-        money_to_give = 20 * eSecretBaseRecord->party.levels[0] * gBattleStruct->moneyMultiplier;
+        money_to_give = 20 * sSecretBase->party.levels[0] * gBattleStruct->moneyMultiplier;
     }
     else
     {

@@ -49,7 +49,7 @@ u8 *GetGermanTrainerClassName(s32 trainerSource, u32 trainerId)
     {
     case SECRET_BASE_OPPONENT:
         trainerClassNameIndex = GetSecretBaseTrainerNameIndex();
-        gender = eSecretBaseRecord.gender;
+        gender = sSecretBase->gender;
         if (trainerClassNameIndex == TRAINER_CLASS_SCHOOL_KID)
             return GetGermanSchoolKidTrainerClassName(gender);
         return gTrainerClassNames[trainerClassNameIndex];

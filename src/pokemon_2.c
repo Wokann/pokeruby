@@ -1071,31 +1071,31 @@ void CreateSecretBaseEnemyParty(struct SecretBaseRecord *secretBaseRecord)
     s32 i, j;
 
     ZeroEnemyPartyMons();
-    *eSecretBaseRecord = *secretBaseRecord;
+    *sSecretBase = *secretBaseRecord;
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        if (eSecretBaseRecord->party.species[i])
+        if (sSecretBase->party.species[i])
         {
             CreateMon(&gEnemyParty[i],
-                eSecretBaseRecord->party.species[i],
-                eSecretBaseRecord->party.levels[i],
+                sSecretBase->party.species[i],
+                sSecretBase->party.levels[i],
                 15,
                 1,
-                eSecretBaseRecord->party.personality[i],
+                sSecretBase->party.personality[i],
                 2,
                 0);
 
             // these two SetMonData calls require the (u8 *) cast since SetMonData is declared in this function.
-            SetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM, (u8 *)&eSecretBaseRecord->party.heldItems[i]);
+            SetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM, (u8 *)&sSecretBase->party.heldItems[i]);
 
             for (j = 0; j < NUM_STATS; j++)
-                SetMonData(&gEnemyParty[i], MON_DATA_HP_EV + j, &eSecretBaseRecord->party.EVs[i]);
+                SetMonData(&gEnemyParty[i], MON_DATA_HP_EV + j, &sSecretBase->party.EVs[i]);
 
             for (j = 0; j < MAX_MON_MOVES; j++)
             {
-                SetMonData(&gEnemyParty[i], MON_DATA_MOVE1 + j, (u8 *)&eSecretBaseRecord->party.moves[i * MAX_MON_MOVES + j]);
-                SetMonData(&gEnemyParty[i], MON_DATA_PP1 + j, &gBattleMoves[eSecretBaseRecord->party.moves[i * MAX_MON_MOVES + j]].pp);
+                SetMonData(&gEnemyParty[i], MON_DATA_MOVE1 + j, (u8 *)&sSecretBase->party.moves[i * MAX_MON_MOVES + j]);
+                SetMonData(&gEnemyParty[i], MON_DATA_PP1 + j, &gBattleMoves[sSecretBase->party.moves[i * MAX_MON_MOVES + j]].pp);
             }
         }
     }
@@ -1113,13 +1113,13 @@ static const u8 sSecretBaseTrainerClasses[][5] = {
 
 u8 GetSecretBaseTrainerPicIndex(void)
 {
-    u8 trainerClass = sSecretBaseTrainerClasses[eSecretBaseRecord->gender][eSecretBaseRecord->trainerId[0] % 5];
+    u8 trainerClass = sSecretBaseTrainerClasses[sSecretBase->gender][sSecretBase->trainerId[0] % 5];
     return gTrainerClassToPicIndex[trainerClass];
 }
 
 u8 GetSecretBaseTrainerNameIndex(void)
 {
-    u8 trainerClass = sSecretBaseTrainerClasses[eSecretBaseRecord->gender][eSecretBaseRecord->trainerId[0] % 5];
+    u8 trainerClass = sSecretBaseTrainerClasses[sSecretBase->gender][sSecretBase->trainerId[0] % 5];
     return gTrainerClassToNameIndex[trainerClass];
 }
 
