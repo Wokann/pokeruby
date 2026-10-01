@@ -1363,13 +1363,13 @@ void ZeroEnemyPartyMons(void)
 
 void CreateMon(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 fixedPersonality, u8 otIdType, u32 fixedOtId)
 {
-    u32 arg;
+    u32 mail;
 
     ZeroMonData(mon);
     CreateBoxMon(&mon->box, species, level, fixedIV, hasFixedPersonality, fixedPersonality, otIdType, fixedOtId);
     SetMonData(mon, MON_DATA_LEVEL, &level);
-    arg = 255;
-    SetMonData(mon, MON_DATA_MAIL, &arg);
+    mail = MAIL_NONE;
+    SetMonData(mon, MON_DATA_MAIL, &mail);
     CalculateMonStats(mon);
 }
 
@@ -1553,28 +1553,28 @@ void CreateMonWithEVSpread(struct Pokemon *mon, u16 species, u8 level, u8 fixedI
     s32 i;
     s32 statCount = 0;
     u16 evAmount;
-    u8 temp;
+    u8 evsBits;
 
     CreateMon(mon, species, level, fixedIV, 0, 0, 0, 0);
 
-    temp = evSpread;
+    evsBits = evSpread;
 
     for (i = 0; i < 6; i++)
     {
-        if (temp & 1)
+        if (evsBits & 1)
             statCount++;
-        temp >>= 1;
+        evsBits >>= 1;
     }
 
     evAmount = 510 / statCount;
 
-    temp = 1;
+    evsBits = 1;
 
     for (i = 0; i < 6; i++)
     {
-        if (evSpread & temp)
+        if (evSpread & evsBits)
             SetMonData(mon, MON_DATA_HP_EV + i, &evAmount);
-        temp <<= 1;
+        evsBits <<= 1;
     }
 
     CalculateMonStats(mon);
