@@ -302,7 +302,7 @@ s8 Menu_ProcessInput(void)
 
 s8 Menu_ProcessInputNoWrap(void)
 {
-    u8 cursorPos = gMenu.cursorPos;
+    u8 oldPos = gMenu.cursorPos;
 
     if (JOY_NEW(A_BUTTON))
     {
@@ -321,13 +321,13 @@ s8 Menu_ProcessInputNoWrap(void)
 
     if (JOY_NEW(DPAD_UP))
     {
-        if (cursorPos != Menu_MoveCursorNoWrapAround(-1))
+        if (oldPos != Menu_MoveCursorNoWrapAround(-1))
             PlaySE(SE_SELECT);
         return -2;
     }
     else if (JOY_NEW(DPAD_DOWN))
     {
-        if (cursorPos != Menu_MoveCursorNoWrapAround(1))
+        if (oldPos != Menu_MoveCursorNoWrapAround(1))
             PlaySE(SE_SELECT);
         return -2;
     }
