@@ -1,7 +1,7 @@
 CaveOfOrigin_EventScript_LegendaryCry:: @ 81A04A0
 	lockall
 	waitse
-	playmoncry SPECIES_GROUDON_OR_KYOGRE, 2
+	playmoncry SPECIES_GROUDON_OR_KYOGRE, CRY_MODE_ENCOUNTER
 	waitmoncry
 	setvar VAR_TEMP_5, 1
 	releaseall

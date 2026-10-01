@@ -56,7 +56,7 @@ CaveOfOrigin_B4F_EventScript_StartLegendaryBattle:: @ 815DDD7
 	delay 60
 	setwildbattle SPECIES_GROUDON_OR_KYOGRE, 45, ITEM_NONE
 	waitse
-	playmoncry SPECIES_GROUDON_OR_KYOGRE, 2
+	playmoncry SPECIES_GROUDON_OR_KYOGRE, CRY_MODE_ENCOUNTER
 	delay 40
 	waitmoncry
 	setflag FLAG_SYS_CTRL_OBJ_DELETE

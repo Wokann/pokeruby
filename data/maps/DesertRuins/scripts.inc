@@ -55,7 +55,7 @@ DesertRuins_EventScript_Regirock:: @ 815CB85
 	lock
 	faceplayer
 	waitse
-	playmoncry SPECIES_REGIROCK, 2
+	playmoncry SPECIES_REGIROCK, CRY_MODE_ENCOUNTER
 	delay 40
 	waitmoncry
 	setwildbattle SPECIES_REGIROCK, 40, ITEM_NONE

@@ -3,7 +3,7 @@ Hideout_B1F_EventScript_Electrode1:: @ 81A04FD
 	faceplayer
 	setwildbattle SPECIES_ELECTRODE, 30, ITEM_NONE
 	waitse
-	playmoncry SPECIES_ELECTRODE, 2
+	playmoncry SPECIES_ELECTRODE, CRY_MODE_ENCOUNTER
 	delay 40
 	waitmoncry
 	setflag FLAG_HIDE_ELECTRODE_1_HIDEOUT
@@ -18,7 +18,7 @@ Hideout_B1F_EventScript_Electrode2:: @ 81A051B
 	faceplayer
 	setwildbattle SPECIES_ELECTRODE, 30, ITEM_NONE
 	waitse
-	playmoncry SPECIES_ELECTRODE, 2
+	playmoncry SPECIES_ELECTRODE, CRY_MODE_ENCOUNTER
 	delay 40
 	waitmoncry
 	setflag FLAG_HIDE_ELECTRODE_2_HIDEOUT
