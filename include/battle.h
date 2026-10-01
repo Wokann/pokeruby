@@ -691,7 +691,6 @@ u8 TypeCalc(u16 move, u8 attacker, u8 defender);
 u8 GetBattlerTurnOrderNum(u8 battler);
 
 void BattleControllerDummy(void);
-void HandleInputChooseAction(void);
 void Task_PlayerController_RestoreBgmAfterCry(u8);
 void CB2_SetUpReshowBattleScreenAfterMenu(void);
 void CB2_SetUpReshowBattleScreenAfterMenu2(void);

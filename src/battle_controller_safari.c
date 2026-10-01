@@ -181,6 +181,7 @@ const BattleBufferCmd gSafariBufferCommands[] =
 void SafariBufferExecCompleted(void);
 void CompleteOnSpecialAnimDone(void);
 static void CompleteOnBattlerSpriteCallbackDummy(void);
+static void HandleInputChooseAction(void);
 void SafariBufferRunCommand(void);
 void CompleteWhenChosePokeblock(void);
 
@@ -204,7 +205,7 @@ void SafariBufferRunCommand(void)
     }
 }
 
-void SafariHandleInputChooseAction(void)
+static void HandleInputChooseAction(void)
 {
     if (JOY_NEW(A_BUTTON))
     {
@@ -486,7 +487,7 @@ void SafariHandleChooseAction(void)
     gWindowTemplate_Contest_MoveDescription.paletteNum = 0;
     Text_FillWindowRectDefPalette(&gWindowTemplate_Contest_MoveDescription, 10, 2, 15, 27, 18);
     Text_FillWindowRectDefPalette(&gWindowTemplate_Contest_MoveDescription, 10, 2, 35, 16, 36);
-    gBattlerControllerFuncs[gActiveBattler] = SafariHandleInputChooseAction;
+    gBattlerControllerFuncs[gActiveBattler] = HandleInputChooseAction;
 
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, BattleText_MenuOptionsSafari, 400, 18, 35);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
