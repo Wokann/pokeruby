@@ -25,4 +25,4 @@ sAffineAnims_FlickeringShrinkOrb:: @ 8393184
 
 	.align 2
 sFlickeringShrinkOrbSpriteTemplate:: @ 8393188
-	spr_template ANIM_TAG_UNUSED_ORB, ANIM_TAG_UNUSED_ORB, gOamData_AffineDouble_ObjNormal_16x16, sAnims_FlickeringShrinkOrb, NULL, sAffineAnims_FlickeringShrinkOrb, AnimTranslateLinearAndFlicker_Flipped
+	spr_template ANIM_TAG_ORB, ANIM_TAG_ORB, gOamData_AffineDouble_ObjNormal_16x16, sAnims_FlickeringShrinkOrb, NULL, sAffineAnims_FlickeringShrinkOrb, AnimTranslateLinearAndFlicker_Flipped

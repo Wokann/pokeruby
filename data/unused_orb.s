@@ -18,8 +18,8 @@ sAnims_FlickeringOrb:: @ 8393068
 
 	.align 2
 sFlickeringOrbSpriteTemplate:: @ 839306C
-	spr_template ANIM_TAG_UNUSED_ORB, ANIM_TAG_UNUSED_ORB, gOamData_AffineOff_ObjNormal_16x16, sAnims_FlickeringOrb, NULL, gDummySpriteAffineAnimTable, AnimTranslateLinearAndFlicker
+	spr_template ANIM_TAG_ORB, ANIM_TAG_ORB, gOamData_AffineOff_ObjNormal_16x16, sAnims_FlickeringOrb, NULL, gDummySpriteAffineAnimTable, AnimTranslateLinearAndFlicker
 
 	.align 2
 sFlickeringOrbFlippedSpriteTemplate:: @ 8393084
-	spr_template ANIM_TAG_UNUSED_ORB, ANIM_TAG_UNUSED_ORB, gOamData_AffineOff_ObjNormal_16x16, sAnims_FlickeringOrb, NULL, gDummySpriteAffineAnimTable, AnimTranslateLinearAndFlicker_Flipped
+	spr_template ANIM_TAG_ORB, ANIM_TAG_ORB, gOamData_AffineOff_ObjNormal_16x16, sAnims_FlickeringOrb, NULL, gDummySpriteAffineAnimTable, AnimTranslateLinearAndFlicker_Flipped
