@@ -87,7 +87,7 @@ MossdeepCity_StevensHouse_EventScript_BeldumPokeball:: @ 815AA7C
 	msgbox gText_NicknameReceivedPokemon, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	call_if_eq Common_EventScript_NameReceivedPartyMon
-	setflag FLAG_HIDE_BELDUM_BALL_STEVENS_HOUSE
+	setflag FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_BELDUM_POKEBALL
 	setflag FLAG_RECEIVED_BELDUM
 	releaseall
 	end

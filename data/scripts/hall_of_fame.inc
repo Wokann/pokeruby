@@ -16,7 +16,7 @@ EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags:: @ 819FC13
 	return
 
 EverGrandeCity_HallOfFame_EventScript_ShowStevensBeldum:: @ 819FC5A
-	clearflag FLAG_HIDE_BELDUM_BALL_STEVENS_HOUSE
+	clearflag FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_BELDUM_POKEBALL
 	return
 
 EverGrandeCity_HallOfFame_EventScript_ShowHM08:: @ 819FC5E
