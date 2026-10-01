@@ -209,7 +209,7 @@ const struct CompressedSpritePalette sSpritePalette_Confetti = {gConfetti_Pal, T
 
 const u8 sText_PlayerMonNameColor[] = _("{COLOR RED}");
 const u8 sText_ContestMonNameSeparator[] = _("/");
-const u8 sText_ResultsTextWindowStyle[] = _("{SIZE 3}{COLOR_HIGHLIGHT_SHADOW WHITE2 DARK_GREY LIGHT_BLUE}");
+const u8 sText_ResultsTextWindowStyle[] = _("{FONT 3}{COLOR_HIGHLIGHT_SHADOW WHITE2 DARK_GREY LIGHT_BLUE}");
 
 void InitContestResultsDisplay(void)
 {

@@ -1404,18 +1404,18 @@ void PrintKeyboardGroupNamesRow(u8 *text, u8 row)
 
 static const u8 sAlphabetKeyboardRowsText[][32] =
 {
-	_("{UNKNOWN_14 8} A B C  D E F  {UNKNOWN_14 0}others"),
-	_("{UNKNOWN_14 8} G H I  J K L      "),
-	_("{UNKNOWN_14 8} M N O  P Q R S    "),
-	_("{UNKNOWN_14 8} T U V  W X Y Z    "),
+	_("{MIN_LETTER_SPACING 8} A B C  D E F  {MIN_LETTER_SPACING 0}others"),
+	_("{MIN_LETTER_SPACING 8} G H I  J K L      "),
+	_("{MIN_LETTER_SPACING 8} M N O  P Q R S    "),
+	_("{MIN_LETTER_SPACING 8} T U V  W X Y Z    "),
 };
 
 #else
 
-static const u8 sGermanAlphabetKeyboardRow0[] = _("{UNKNOWN_14 8} A B C  D E F  {UNKNOWN_14 0}mehr");
-static const u8 sGermanAlphabetKeyboardRow1[] = _("{UNKNOWN_14 8} G H I  J K L      ");
-static const u8 sGermanAlphabetKeyboardRow2[] = _("{UNKNOWN_14 8} M N O  P Q R S    ");
-static const u8 sGermanAlphabetKeyboardRow3[] = _("{UNKNOWN_14 8} T U V  W X Y Z    ");
+static const u8 sGermanAlphabetKeyboardRow0[] = _("{MIN_LETTER_SPACING 8} A B C  D E F  {MIN_LETTER_SPACING 0}mehr");
+static const u8 sGermanAlphabetKeyboardRow1[] = _("{MIN_LETTER_SPACING 8} G H I  J K L      ");
+static const u8 sGermanAlphabetKeyboardRow2[] = _("{MIN_LETTER_SPACING 8} M N O  P Q R S    ");
+static const u8 sGermanAlphabetKeyboardRow3[] = _("{MIN_LETTER_SPACING 8} T U V  W X Y Z    ");
 static const u8 *const sAlphabetKeyboardRowsText[] =
 {
     sGermanAlphabetKeyboardRow0,
