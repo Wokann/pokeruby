@@ -401,7 +401,7 @@ static bool8 SetupBagMultistep(void)
         break;
     case 3:
         ClearBGTilemapBuffers();
-        ewramBagSetupStep = 0;
+        sBagMenuGraphicsLoadState = 0;
         gMain.state++;
         break;
     case 4:
@@ -536,33 +536,33 @@ void BagMenu_InitBGs(void)
 
 static bool8 LoadBagGraphicsMultistep(void)
 {
-    switch (ewramBagSetupStep)
+    switch (sBagMenuGraphicsLoadState)
     {
     case 0:
         LZDecompressVram(gBagScreen_Gfx, (void *)(VRAM + 0x4000));
-        ewramBagSetupStep++;
+        sBagMenuGraphicsLoadState++;
         break;
     case 1:
         CpuCopy16(gBagScreen_Tilemap, gBGTilemapBuffers[2], 0x800);
-        ewramBagSetupStep++;
+        sBagMenuGraphicsLoadState++;
         break;
     case 2:
         if (gSaveBlock2.playerGender == MALE || sBagMenuLocation == ITEMMENULOCATION_WALLY)
             LoadCompressedPalette(gBagScreenMale_Pal, 0, 64);
         else
             LoadCompressedPalette(gBagScreenFemale_Pal, 0, 64);
-        ewramBagSetupStep++;
+        sBagMenuGraphicsLoadState++;
         break;
     case 3:
         if (gSaveBlock2.playerGender == MALE || sBagMenuLocation == ITEMMENULOCATION_WALLY)
             LoadCompressedSpriteSheet(&sMaleBagSpriteSheet);
         else
             LoadCompressedSpriteSheet(&sFemaleBagSpriteSheet);
-        ewramBagSetupStep++;
+        sBagMenuGraphicsLoadState++;
         break;
     case 4:
         LoadCompressedSpritePalette(&sBagSpritePalette);
-        ewramBagSetupStep = 0;
+        sBagMenuGraphicsLoadState = 0;
         return TRUE;
     }
     return FALSE;
@@ -2942,8 +2942,8 @@ void DoWallyTutorialBagMenu(void)
     }
 
     // Save player's items
-    memcpy(ewramSavedItemsPocket, gSaveBlock1.bagPocket_Items, sizeof(gSaveBlock1.bagPocket_Items));
-    memcpy(ewramSavedPokeballsPocket, gSaveBlock1.bagPocket_PokeBalls, sizeof(gSaveBlock1.bagPocket_PokeBalls));
+    memcpy(sTempWallyBagItems, gSaveBlock1.bagPocket_Items, sizeof(gSaveBlock1.bagPocket_Items));
+    memcpy(sTempWallyBagPokeBalls, gSaveBlock1.bagPocket_PokeBalls, sizeof(gSaveBlock1.bagPocket_PokeBalls));
 
     // Add Wally's items to the bag
     ClearItemSlots(gSaveBlock1.bagPocket_Items, ARRAY_COUNT(gSaveBlock1.bagPocket_Items));
@@ -2982,8 +2982,8 @@ static void Task_WallyTutorialBagMenu(u8 taskId)
         CloseItemMenu(gBGTilemapBuffers[1]);
 
         // Restore player's items
-        memcpy(gSaveBlock1.bagPocket_Items, ewramSavedItemsPocket, sizeof(gSaveBlock1.bagPocket_Items));
-        memcpy(gSaveBlock1.bagPocket_PokeBalls, ewramSavedPokeballsPocket, sizeof(gSaveBlock1.bagPocket_PokeBalls));
+        memcpy(gSaveBlock1.bagPocket_Items, sTempWallyBagItems, sizeof(gSaveBlock1.bagPocket_Items));
+        memcpy(gSaveBlock1.bagPocket_PokeBalls, sTempWallyBagPokeBalls, sizeof(gSaveBlock1.bagPocket_PokeBalls));
 
         taskData[8] = (u32)CB2_SetUpReshowBattleScreenAfterMenu2 >> 16;
         taskData[9] = (u32)CB2_SetUpReshowBattleScreenAfterMenu2;
@@ -3796,7 +3796,7 @@ static const union AnimCmd *const sBerrySpriteAnimTable[] =
 
 static const struct SpriteFrameImage sBerrySpriteImageTable[] =
 {
-    {ewramBerryPic, 0x800},
+    {sBerryPicGfxBuffer, 0x800},
 };
 
 static void SpriteCB_BerryTag(struct Sprite *);
@@ -3924,7 +3924,7 @@ static void LoadBerryGfx(u8 berryId)
 
     if (berryId == 0x2A && IsEnigmaBerryValid() == TRUE)
     {
-        ArrangeBerryGfx(gSaveBlock1.enigmaBerry.pic, ewramBerryPic);
+        ArrangeBerryGfx(gSaveBlock1.enigmaBerry.pic, sBerryPicGfxBuffer);
         spritePal.data = gSaveBlock1.enigmaBerry.palette;
         spritePal.tag = TAG_BERRY_PIC;
         LoadSpritePalette(&spritePal);
@@ -3934,8 +3934,8 @@ static void LoadBerryGfx(u8 berryId)
         spritePal.data = (u16 *)sBerryPicTable[berryId].lzPalette;
         spritePal.tag = TAG_BERRY_PIC;
         LoadCompressedSpritePalette((struct CompressedSpritePalette *)&spritePal);
-        LZDecompressWram(sBerryPicTable[berryId].lzPic, ewramBerryPicTemp);
-        ArrangeBerryGfx(ewramBerryPicTemp, ewramBerryPic);
+        LZDecompressWram(sBerryPicTable[berryId].lzPic, sBerryPicGfxDecompBuffer);
+        ArrangeBerryGfx(sBerryPicGfxDecompBuffer, sBerryPicGfxBuffer);
     }
 }
 

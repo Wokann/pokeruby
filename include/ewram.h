@@ -73,8 +73,8 @@ extern u8 gSharedMem[];
 #define eSlotMachine                    ((struct SlotMachine *)(gSharedMem + 0x0))
 #define sPokemonStorageSystem           (*(struct PokemonStorageSystemData *)(gSharedMem + 0))
 
-#define ewramSavedItemsPocket           ((struct ItemSlot *)(gSharedMem + 0x1E000))  // saved items pocket (for Wally battle)
-#define ewramSavedPokeballsPocket       ((struct ItemSlot *)(gSharedMem + 0x1F000))  // saved Pokeballs pocket (for Wally battle)
+#define sTempWallyBagItems              ((struct ItemSlot *)(gSharedMem + 0x1E000))
+#define sTempWallyBagPokeBalls          ((struct ItemSlot *)(gSharedMem + 0x1F000))
 
 // party_menu.c
 #define ePartyMenu                      (*(struct PartyMenuTwoMonActionState *)(gSharedMem + 0x1000))
@@ -87,8 +87,8 @@ extern u8 gSharedMem[];
 #define gPlayerPCItemPageInfo           (*(struct PlayerPCItemPageStruct *)(gSharedMem + 0x1FE00))
 
 // item_menu.c
-#define ewramBerryPic                   (gSharedMem + 0x0)
-#define ewramBerryPicTemp               (gSharedMem + 0x1000)
+#define sBerryPicGfxBuffer              (gSharedMem + 0x0)
+#define sBerryPicGfxDecompBuffer        (gSharedMem + 0x1000)
 
 // record_mixing.c
 #define sRecordMixTvShows               ((union TVShow (*)[TV_SHOWS_COUNT])(gSharedMem + 0x7000))
@@ -159,7 +159,7 @@ extern u8 gSharedMem[];
 #define gReshowBattleScreenMainState    (gSharedMem[0x1FFFF])
 
 // item_menu.c
-#define ewramBagSetupStep               (gSharedMem[0x1FFFF])
+#define sBagMenuGraphicsLoadState       (gSharedMem[0x1FFFF])
 
 // pokeblock_feed.c
 #define sPokeblockFeedPokeblockSpriteId (gSharedMem[0x1FFFC])
