@@ -2652,10 +2652,10 @@ void Task_UpdateContestResultBar(u8 taskId)
 
 void TryEnterContestMon(void)
 {
-    u8 eligibility = CanMonParticipateInContest(&gPlayerParty[gContestMonPartyIndex]);
+    u8 eligibility = GetContestEntryEligibility(&gPlayerParty[gContestMonPartyIndex]);
     if (eligibility != 0)
     {
-        Contest_InitAllPokemon(gSpecialVar_ContestCategory, gSpecialVar_ContestRank);
+        SetContestants(gSpecialVar_ContestCategory, gSpecialVar_ContestRank);
         CalculateRound1Points(gSpecialVar_ContestCategory);
     }
     gSpecialVar_Result = eligibility;
@@ -2892,7 +2892,7 @@ void ContestLinkTransfer(u8 category)
 
 void Task_StartCommunication(u8 taskId)
 {
-    Contest_CreatePlayerMon(gContestMonPartyIndex);
+    CreateContestMonFromParty(gContestMonPartyIndex);
     SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateMonsRS, Task_StartCommunicateRngRS);
 }
 

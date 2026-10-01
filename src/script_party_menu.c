@@ -139,7 +139,7 @@ void DrawContestPartyMonStatus(void)
 
     for (i = 0; i < gPlayerPartyCount; i++)
     {
-        switch (CanMonParticipateInContest(&gPlayerParty[i]))
+        switch (GetContestEntryEligibility(&gPlayerParty[i]))
         {
         case 0:
         case 3:

@@ -683,7 +683,7 @@ bool8 IsPlayerLinkLeader(void)
         return FALSE;
 }
 
-void Contest_CreatePlayerMon(u8 partyIndex)
+void CreateContestMonFromParty(u8 partyIndex)
 {
     u8 name[20];
     u16 heldItem;
@@ -775,7 +775,7 @@ void Contest_CreatePlayerMon(u8 partyIndex)
     gContestMons[gContestPlayerMonIndex].tough = tough;
 }
 
-void Contest_InitAllPokemon(u8 contestType, u8 rank)
+void SetContestants(u8 contestType, u8 rank)
 {
     int i, j;
     u8 opponents[ARRAY_COUNT(gContestOpponents) + 1];
@@ -817,11 +817,11 @@ void Contest_InitAllPokemon(u8 contestType, u8 rank)
         opponentsCount--;
     }
 
-    Contest_CreatePlayerMon(gContestMonPartyIndex);
+    CreateContestMonFromParty(gContestMonPartyIndex);
 }
 
 // GetContestAvailability?
-u8 CanMonParticipateInContest(struct Pokemon *pkmn)
+u8 GetContestEntryEligibility(struct Pokemon *pkmn)
 {
     u8 ribbon;
     u8 retVal;

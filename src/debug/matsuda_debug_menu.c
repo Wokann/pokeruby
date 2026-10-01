@@ -143,7 +143,7 @@ u8 MatsudaDebugMenu_CommTest(void)
 
 static void Task_MatsudaDebugMenu_LinkTest_CreatePlayerMon(u8 taskId)
 {
-    Contest_CreatePlayerMon(0);
+    CreateContestMonFromParty(0);
     SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateMonsRS, Task_MatsudaDebugMenu_LinkTest_CommunicateRng);
 }
 
@@ -505,9 +505,9 @@ static void InitMatsudaDebugMenuContest(void)
     gContestMonPartyIndex = 0;
 
     if (!(gContestMons[0].nickname[0]))
-        Contest_InitAllPokemon(0, 0);
+        SetContestants(0, 0);
 
-    Contest_CreatePlayerMon(gContestMonPartyIndex);
+    CreateContestMonFromParty(gContestMonPartyIndex);
 
     for (i = 0; i < 6; i++)
     {
@@ -833,7 +833,7 @@ void AdjustMatsudaDebugContestCategory(struct Sprite *sprite, s8 delta)
     PrintMatsudaDebugContestCategory(contestCategory);
     sprite->data[3] = contestCategory;
     gSpecialVar_ContestCategory = sprite->data[3];
-    Contest_InitAllPokemon(sprite->data[3], gSpecialVar_ContestRank);
+    SetContestants(sprite->data[3], gSpecialVar_ContestRank);
     PrintMatsudaDebugContestantNames(sprite->data[2]);
     PrintMatsudaDebugContestantData(sprite->data[2]);
 }
@@ -847,7 +847,7 @@ void AdjustMatsudaDebugContestRank(struct Sprite *sprite, s8 delta)
     if (gSpecialVar_ContestRank > 3)
         gSpecialVar_ContestRank = 3;
     PrintMatsudaDebugContestRank(gSpecialVar_ContestRank);
-    Contest_InitAllPokemon(gSpecialVar_ContestCategory, gSpecialVar_ContestRank);
+    SetContestants(gSpecialVar_ContestCategory, gSpecialVar_ContestRank);
     PrintMatsudaDebugContestantNames(sprite->data[2]);
     PrintMatsudaDebugContestantData(sprite->data[2]);
 }
@@ -943,7 +943,7 @@ void PrepareContestArtistDebugResult(void)
 
     gContestDebugMode = 1;
     gContestPlayerMonIndex = 3;
-    Contest_CreatePlayerMon(0);
+    CreateContestMonFromParty(0);
 
     for (i = 3; i > -1; i--)
         gContestFinalStandings[i] = 3 - i;
@@ -989,7 +989,7 @@ u8 MatsudaDebugMenu_SetArtMuseumItems(void)
     s32 i;
 
     gContestPlayerMonIndex = 3;
-    Contest_CreatePlayerMon(0);
+    CreateContestMonFromParty(0);
     for (i = 3; i > -1; i--)
         gContestFinalStandings[i] = 3 - i;
     for (gSpecialVar_ContestCategory = 0; gSpecialVar_ContestCategory < 5; gSpecialVar_ContestCategory++)
