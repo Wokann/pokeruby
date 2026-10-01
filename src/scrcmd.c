@@ -296,9 +296,9 @@ bool8 ScrCmd_endram(struct ScriptContext *ctx)
 
 bool8 ScrCmd_setmysteryeventstatus(struct ScriptContext *ctx)
 {
-    u8 value = ScriptReadByte(ctx);
+    u8 status = ScriptReadByte(ctx);
 
-    SetMysteryEventScriptStatus(value);
+    SetMysteryEventScriptStatus(status);
     return FALSE;
 }
 
@@ -1803,9 +1803,9 @@ bool8 ScrCmd_setberrytree(struct ScriptContext *ctx)
 
 bool8 ScrCmd_getpricereduction(struct ScriptContext *ctx)
 {
-    u16 value = VarGet(ScriptReadHalfword(ctx));
+    u16 newsKind = VarGet(ScriptReadHalfword(ctx));
 
-    gSpecialVar_Result = IsPokeNewsActive(value);
+    gSpecialVar_Result = IsPokeNewsActive(newsKind);
     return FALSE;
 }
 
