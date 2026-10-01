@@ -1815,208 +1815,208 @@ Cry_Chimecho:: @ 8638E88
 	.incbin "sound/direct_sound_samples/cries/cry_chimecho.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel7:: @ 8639898
-	.incbin "sound/direct_sound_samples/phonemes/vowel_7.bin"
+DirectSoundWaveData_Phoneme_1:: @ 8639898
+	.incbin "sound/direct_sound_samples/phonemes/01.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel8:: @ 8639EF8
-	.incbin "sound/direct_sound_samples/phonemes/vowel_8.bin"
+DirectSoundWaveData_Phoneme_2:: @ 8639EF8
+	.incbin "sound/direct_sound_samples/phonemes/02.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel9:: @ 863A3DC
-	.incbin "sound/direct_sound_samples/phonemes/vowel_9.bin"
+DirectSoundWaveData_Phoneme_3:: @ 863A3DC
+	.incbin "sound/direct_sound_samples/phonemes/03.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel10:: @ 863AD2C
-	.incbin "sound/direct_sound_samples/phonemes/vowel_10.bin"
+DirectSoundWaveData_Phoneme_4:: @ 863AD2C
+	.incbin "sound/direct_sound_samples/phonemes/04.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel11:: @ 863B79C
-	.incbin "sound/direct_sound_samples/phonemes/vowel_11.bin"
+DirectSoundWaveData_Phoneme_5:: @ 863B79C
+	.incbin "sound/direct_sound_samples/phonemes/05.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel12:: @ 863BABC
-	.incbin "sound/direct_sound_samples/phonemes/vowel_12.bin"
+DirectSoundWaveData_Phoneme_6:: @ 863BABC
+	.incbin "sound/direct_sound_samples/phonemes/06.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel13:: @ 863C744
-	.incbin "sound/direct_sound_samples/phonemes/vowel_13.bin"
+DirectSoundWaveData_Phoneme_7:: @ 863C744
+	.incbin "sound/direct_sound_samples/phonemes/07.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel14:: @ 863CD64
-	.incbin "sound/direct_sound_samples/phonemes/vowel_14.bin"
+DirectSoundWaveData_Phoneme_8:: @ 863CD64
+	.incbin "sound/direct_sound_samples/phonemes/08.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel15:: @ 863D0EC
-	.incbin "sound/direct_sound_samples/phonemes/vowel_15.bin"
+DirectSoundWaveData_Phoneme_9:: @ 863D0EC
+	.incbin "sound/direct_sound_samples/phonemes/09.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel16:: @ 863DED0
-	.incbin "sound/direct_sound_samples/phonemes/vowel_16.bin"
+DirectSoundWaveData_Phoneme_10:: @ 863DED0
+	.incbin "sound/direct_sound_samples/phonemes/10.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel17:: @ 863E840
-	.incbin "sound/direct_sound_samples/phonemes/vowel_17.bin"
+DirectSoundWaveData_Phoneme_11:: @ 863E840
+	.incbin "sound/direct_sound_samples/phonemes/11.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel18:: @ 863EBDC
-	.incbin "sound/direct_sound_samples/phonemes/vowel_18.bin"
+DirectSoundWaveData_Phoneme_12:: @ 863EBDC
+	.incbin "sound/direct_sound_samples/phonemes/12.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel19:: @ 863F390
-	.incbin "sound/direct_sound_samples/phonemes/vowel_19.bin"
+DirectSoundWaveData_Phoneme_13:: @ 863F390
+	.incbin "sound/direct_sound_samples/phonemes/13.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel20:: @ 86400EC
-	.incbin "sound/direct_sound_samples/phonemes/vowel_20.bin"
+DirectSoundWaveData_Phoneme_14:: @ 86400EC
+	.incbin "sound/direct_sound_samples/phonemes/14.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel21:: @ 8640330
-	.incbin "sound/direct_sound_samples/phonemes/vowel_21.bin"
+DirectSoundWaveData_Phoneme_15:: @ 8640330
+	.incbin "sound/direct_sound_samples/phonemes/15.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel22:: @ 8641170
-	.incbin "sound/direct_sound_samples/phonemes/vowel_22.bin"
+DirectSoundWaveData_Phoneme_16:: @ 8641170
+	.incbin "sound/direct_sound_samples/phonemes/16.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel23:: @ 8641AC4
-	.incbin "sound/direct_sound_samples/phonemes/vowel_23.bin"
+DirectSoundWaveData_Phoneme_17:: @ 8641AC4
+	.incbin "sound/direct_sound_samples/phonemes/17.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel24:: @ 8641E18
-	.incbin "sound/direct_sound_samples/phonemes/vowel_24.bin"
+DirectSoundWaveData_Phoneme_18:: @ 8641E18
+	.incbin "sound/direct_sound_samples/phonemes/18.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel25:: @ 864244C
-	.incbin "sound/direct_sound_samples/phonemes/vowel_25.bin"
+DirectSoundWaveData_Phoneme_19:: @ 864244C
+	.incbin "sound/direct_sound_samples/phonemes/19.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel26:: @ 86430B8
-	.incbin "sound/direct_sound_samples/phonemes/vowel_26.bin"
+DirectSoundWaveData_Phoneme_20:: @ 86430B8
+	.incbin "sound/direct_sound_samples/phonemes/20.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel27:: @ 8643650
-	.incbin "sound/direct_sound_samples/phonemes/vowel_27.bin"
+DirectSoundWaveData_Phoneme_21:: @ 8643650
+	.incbin "sound/direct_sound_samples/phonemes/21.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel28:: @ 8644154
-	.incbin "sound/direct_sound_samples/phonemes/vowel_28.bin"
+DirectSoundWaveData_Phoneme_22:: @ 8644154
+	.incbin "sound/direct_sound_samples/phonemes/22.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel29:: @ 8644758
-	.incbin "sound/direct_sound_samples/phonemes/vowel_29.bin"
+DirectSoundWaveData_Phoneme_23:: @ 8644758
+	.incbin "sound/direct_sound_samples/phonemes/23.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel30:: @ 8644950
-	.incbin "sound/direct_sound_samples/phonemes/vowel_30.bin"
+DirectSoundWaveData_Phoneme_24:: @ 8644950
+	.incbin "sound/direct_sound_samples/phonemes/24.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel31:: @ 86452B4
-	.incbin "sound/direct_sound_samples/phonemes/vowel_31.bin"
+DirectSoundWaveData_Phoneme_25:: @ 86452B4
+	.incbin "sound/direct_sound_samples/phonemes/25.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel32:: @ 8646240
-	.incbin "sound/direct_sound_samples/phonemes/vowel_32.bin"
+DirectSoundWaveData_Phoneme_26:: @ 8646240
+	.incbin "sound/direct_sound_samples/phonemes/26.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel33:: @ 8646878
-	.incbin "sound/direct_sound_samples/phonemes/vowel_33.bin"
+DirectSoundWaveData_Phoneme_27:: @ 8646878
+	.incbin "sound/direct_sound_samples/phonemes/27.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel34:: @ 864734C
-	.incbin "sound/direct_sound_samples/phonemes/vowel_34.bin"
+DirectSoundWaveData_Phoneme_28:: @ 864734C
+	.incbin "sound/direct_sound_samples/phonemes/28.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel35:: @ 8648290
-	.incbin "sound/direct_sound_samples/phonemes/vowel_35.bin"
+DirectSoundWaveData_Phoneme_29:: @ 8648290
+	.incbin "sound/direct_sound_samples/phonemes/29.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel36:: @ 8648808
-	.incbin "sound/direct_sound_samples/phonemes/vowel_36.bin"
+DirectSoundWaveData_Phoneme_30:: @ 8648808
+	.incbin "sound/direct_sound_samples/phonemes/30.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel37:: @ 8649654
-	.incbin "sound/direct_sound_samples/phonemes/vowel_37.bin"
+DirectSoundWaveData_Phoneme_31:: @ 8649654
+	.incbin "sound/direct_sound_samples/phonemes/31.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel38:: @ 864A55C
-	.incbin "sound/direct_sound_samples/phonemes/vowel_38.bin"
+DirectSoundWaveData_Phoneme_32:: @ 864A55C
+	.incbin "sound/direct_sound_samples/phonemes/32.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel39:: @ 864B030
-	.incbin "sound/direct_sound_samples/phonemes/vowel_39.bin"
+DirectSoundWaveData_Phoneme_33:: @ 864B030
+	.incbin "sound/direct_sound_samples/phonemes/33.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel40:: @ 864BBC4
-	.incbin "sound/direct_sound_samples/phonemes/vowel_40.bin"
+DirectSoundWaveData_Phoneme_34:: @ 864BBC4
+	.incbin "sound/direct_sound_samples/phonemes/34.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel41:: @ 864C59C
-	.incbin "sound/direct_sound_samples/phonemes/vowel_41.bin"
+DirectSoundWaveData_Phoneme_35:: @ 864C59C
+	.incbin "sound/direct_sound_samples/phonemes/35.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel42:: @ 864CBDC
-	.incbin "sound/direct_sound_samples/phonemes/vowel_42.bin"
+DirectSoundWaveData_Phoneme_36:: @ 864CBDC
+	.incbin "sound/direct_sound_samples/phonemes/36.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel43:: @ 864D6BC
-	.incbin "sound/direct_sound_samples/phonemes/vowel_43.bin"
+DirectSoundWaveData_Phoneme_37:: @ 864D6BC
+	.incbin "sound/direct_sound_samples/phonemes/37.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel44:: @ 864DCF8
-	.incbin "sound/direct_sound_samples/phonemes/vowel_44.bin"
+DirectSoundWaveData_Phoneme_38:: @ 864DCF8
+	.incbin "sound/direct_sound_samples/phonemes/38.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel45:: @ 864E410
-	.incbin "sound/direct_sound_samples/phonemes/vowel_45.bin"
+DirectSoundWaveData_Phoneme_39:: @ 864E410
+	.incbin "sound/direct_sound_samples/phonemes/39.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel46:: @ 864ED4C
-	.incbin "sound/direct_sound_samples/phonemes/vowel_46.bin"
+DirectSoundWaveData_Phoneme_40:: @ 864ED4C
+	.incbin "sound/direct_sound_samples/phonemes/40.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel47:: @ 864F508
-	.incbin "sound/direct_sound_samples/phonemes/vowel_47.bin"
+DirectSoundWaveData_Phoneme_41:: @ 864F508
+	.incbin "sound/direct_sound_samples/phonemes/41.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel48:: @ 864FA6C
-	.incbin "sound/direct_sound_samples/phonemes/vowel_48.bin"
+DirectSoundWaveData_Phoneme_42:: @ 864FA6C
+	.incbin "sound/direct_sound_samples/phonemes/42.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel49:: @ 86507E0
-	.incbin "sound/direct_sound_samples/phonemes/vowel_49.bin"
+DirectSoundWaveData_Phoneme_43:: @ 86507E0
+	.incbin "sound/direct_sound_samples/phonemes/43.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel50:: @ 8650C5C
-	.incbin "sound/direct_sound_samples/phonemes/vowel_50.bin"
+DirectSoundWaveData_Phoneme_44:: @ 8650C5C
+	.incbin "sound/direct_sound_samples/phonemes/44.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel51:: @ 8651148
-	.incbin "sound/direct_sound_samples/phonemes/vowel_51.bin"
+DirectSoundWaveData_Phoneme_45:: @ 8651148
+	.incbin "sound/direct_sound_samples/phonemes/45.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel52:: @ 8651910
-	.incbin "sound/direct_sound_samples/phonemes/vowel_52.bin"
+DirectSoundWaveData_Phoneme_46:: @ 8651910
+	.incbin "sound/direct_sound_samples/phonemes/46.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel53:: @ 865250C
-	.incbin "sound/direct_sound_samples/phonemes/vowel_53.bin"
+DirectSoundWaveData_Phoneme_47:: @ 865250C
+	.incbin "sound/direct_sound_samples/phonemes/47.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel54:: @ 8652884
-	.incbin "sound/direct_sound_samples/phonemes/vowel_54.bin"
+DirectSoundWaveData_Phoneme_48:: @ 8652884
+	.incbin "sound/direct_sound_samples/phonemes/48.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel55:: @ 8653040
-	.incbin "sound/direct_sound_samples/phonemes/vowel_55.bin"
+DirectSoundWaveData_Phoneme_49:: @ 8653040
+	.incbin "sound/direct_sound_samples/phonemes/49.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel56:: @ 8653CA4
-	.incbin "sound/direct_sound_samples/phonemes/vowel_56.bin"
+DirectSoundWaveData_Phoneme_50:: @ 8653CA4
+	.incbin "sound/direct_sound_samples/phonemes/50.bin"
 
 	.align 2
-DirectSoundWaveData_Phoneme_Vowel57:: @ 8654170
-	.incbin "sound/direct_sound_samples/phonemes/vowel_57.bin"
+DirectSoundWaveData_Phoneme_51:: @ 8654170
+	.incbin "sound/direct_sound_samples/phonemes/51.bin"
 
 	.align 2
 DirectSoundWaveData_sc88pro_accordion_duplicate:: @ 8654C20
