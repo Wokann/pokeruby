@@ -51,6 +51,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_VICTORY_ROAD_ENTRANCE_WALLY",
       "graphics_id": "OBJ_EVENT_GFX_WALLY",
       "x": 31,
       "y": 12,
@@ -60,8 +61,8 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "VictoryRoad_1F_EventScript_WallyRematchPostBattle",
-      "flag": "FLAG_HIDE_WALLY_BATTLE_VICTORY_ROAD"
+      "script": "VictoryRoad_1F_EventScript_EntranceWally",
+      "flag": "FLAG_HIDE_VICTORY_ROAD_ENTRANCE_WALLY"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -90,6 +91,7 @@
       "flag": "FLAG_ITEM_VICTORY_ROAD_1F_PP_UP"
     },
     {
+      "local_id": "LOCALID_VICTORY_ROAD_EXIT_WALLY",
       "graphics_id": "OBJ_EVENT_GFX_WALLY",
       "x": 31,
       "y": 9,
@@ -99,8 +101,8 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "VictoryRoad_1F_EventScript_Wally",
-      "flag": "FLAG_HIDE_WALLY_DEFEATED_VICTORY_ROAD"
+      "script": "VictoryRoad_1F_EventScript_ExitWally",
+      "flag": "FLAG_HIDE_VICTORY_ROAD_EXIT_WALLY"
     }
   ],
   "warp_events": [
@@ -148,7 +150,7 @@
       "elevation": 3,
       "var": "VAR_VICTORY_ROAD_1F_STATE",
       "var_value": "0",
-      "script": "VictoryRoad_1F_EventScript_WallyTrigger0"
+      "script": "VictoryRoad_1F_EventScript_WallyBattleTrigger0"
     },
     {
       "type": "trigger",
@@ -157,7 +159,7 @@
       "elevation": 3,
       "var": "VAR_VICTORY_ROAD_1F_STATE",
       "var_value": "0",
-      "script": "VictoryRoad_1F_EventScript_WallyTrigger1"
+      "script": "VictoryRoad_1F_EventScript_WallyBattleTrigger1"
     },
     {
       "type": "trigger",
@@ -166,7 +168,7 @@
       "elevation": 3,
       "var": "VAR_VICTORY_ROAD_1F_STATE",
       "var_value": "0",
-      "script": "VictoryRoad_1F_EventScript_WallyTrigger2"
+      "script": "VictoryRoad_1F_EventScript_WallyBattleTrigger2"
     }
   ],
   "bg_events": [

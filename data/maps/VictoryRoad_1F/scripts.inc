@@ -3,45 +3,45 @@ VictoryRoad_1F_MapScripts:: @ 815DE83
 	.byte 0
 
 VictoryRoad_1F_OnTransition:: @ 815DE89
-	call_if_set FLAG_DEFEATED_WALLY_VICTORY_ROAD, VictoryRoad_1F_EventScript_HideWally
+	call_if_set FLAG_DEFEATED_WALLY_VICTORY_ROAD, VictoryRoad_1F_EventScript_HideEntranceWally
 	end
 
-VictoryRoad_1F_EventScript_HideWally:: @ 815DE93
-	setflag FLAG_HIDE_WALLY_BATTLE_VICTORY_ROAD
+VictoryRoad_1F_EventScript_HideEntranceWally:: @ 815DE93
+	setflag FLAG_HIDE_VICTORY_ROAD_ENTRANCE_WALLY
 	return
 
-VictoryRoad_1F_EventScript_WallyTrigger0:: @ 815DE97
+VictoryRoad_1F_EventScript_WallyBattleTrigger0:: @ 815DE97
 	lockall
-	addobject 4
-	applymovement 4, VictoryRoad_1F_Movement_WallyApproachPlayer0
+	addobject LOCALID_VICTORY_ROAD_ENTRANCE_WALLY
+	applymovement LOCALID_VICTORY_ROAD_ENTRANCE_WALLY, VictoryRoad_1F_Movement_WallyApproachPlayer0
 	waitmovement 0
-	goto VictoryRoad_1F_EventScript_WallyApproachPlayer
+	goto VictoryRoad_1F_EventScript_WallyEntranceBattle
 	end
 
-VictoryRoad_1F_EventScript_WallyTrigger1:: @ 815DEAB
+VictoryRoad_1F_EventScript_WallyBattleTrigger1:: @ 815DEAB
 	lockall
-	addobject 4
-	applymovement 4, VictoryRoad_1F_Movement_WallyApproachPlayer1
+	addobject LOCALID_VICTORY_ROAD_ENTRANCE_WALLY
+	applymovement LOCALID_VICTORY_ROAD_ENTRANCE_WALLY, VictoryRoad_1F_Movement_WallyApproachPlayer1
 	waitmovement 0
-	goto VictoryRoad_1F_EventScript_WallyApproachPlayer
+	goto VictoryRoad_1F_EventScript_WallyEntranceBattle
 	end
 
-VictoryRoad_1F_EventScript_WallyTrigger2:: @ 815DEBF
+VictoryRoad_1F_EventScript_WallyBattleTrigger2:: @ 815DEBF
 	lockall
-	addobject 4
-	applymovement 4, VictoryRoad_1F_Movement_WallyApproachPlayer2
+	addobject LOCALID_VICTORY_ROAD_ENTRANCE_WALLY
+	applymovement LOCALID_VICTORY_ROAD_ENTRANCE_WALLY, VictoryRoad_1F_Movement_WallyApproachPlayer2
 	waitmovement 0
-	goto VictoryRoad_1F_EventScript_WallyApproachPlayer
+	goto VictoryRoad_1F_EventScript_WallyEntranceBattle
 	end
 
-VictoryRoad_1F_EventScript_WallyApproachPlayer:: @ 815DED3
+VictoryRoad_1F_EventScript_WallyEntranceBattle:: @ 815DED3
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	msgbox VictoryRoad_1F_Text_WallyNotGoingToLoseAnymore, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_WALLY_1, VictoryRoad_1F_Text_WallyEntranceDefeat
 	msgbox VictoryRoad_1F_Text_WallyPostEntranceBattle, MSGBOX_DEFAULT
-	clearflag FLAG_HIDE_WALLY_BATTLE_VICTORY_ROAD
-	copyobjectxytoperm 4
+	clearflag FLAG_HIDE_VICTORY_ROAD_ENTRANCE_WALLY
+	copyobjectxytoperm LOCALID_VICTORY_ROAD_ENTRANCE_WALLY
 	setflag FLAG_DEFEATED_WALLY_VICTORY_ROAD
 	setvar VAR_VICTORY_ROAD_1F_STATE, 1
 	releaseall
@@ -86,19 +86,19 @@ VictoryRoad_1F_Movement_WallyApproachPlayer2:: @ 815DF1E
 	walk_right
 	step_end
 
-VictoryRoad_1F_EventScript_WallyRematchPostBattle:: @ 815DF28
+VictoryRoad_1F_EventScript_EntranceWally:: @ 815DF28
 	msgbox VictoryRoad_1F_Text_WallyPostEntranceBattle, MSGBOX_NPC
 	end
 
-VictoryRoad_1F_EventScript_Wally:: @ 815DF31
+VictoryRoad_1F_EventScript_ExitWally:: @ 815DF31
 	trainerbattle_single TRAINER_WALLY_3, VictoryRoad_1F_Text_WallyIntro, VictoryRoad_1F_Text_WallyDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	compare VAR_RESULT, 1
-	goto_if_eq VictoryRoad_1F_EventScript_WallyRematch
+	goto_if_eq VictoryRoad_1F_EventScript_RematchWally
 	msgbox VictoryRoad_1F_Text_WallyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-VictoryRoad_1F_EventScript_WallyRematch:: @ 815DF58
+VictoryRoad_1F_EventScript_RematchWally:: @ 815DF58
 	trainerbattle_rematch TRAINER_WALLY_3, VictoryRoad_1F_Text_WallyIntro, VictoryRoad_1F_Text_WallyDefeat
 	msgbox VictoryRoad_1F_Text_WallyPostBattle, MSGBOX_AUTOCLOSE
 	end
