@@ -1047,17 +1047,17 @@ void ClearPokeblocks(void)
 u8 GetHighestPokeblocksFlavorLevel(const struct Pokeblock *pokeblock)
 {
     u8 contestStat;
-    u8 maxRating;
-    u8 rating = GetPokeblockData(pokeblock, 1);
+    u8 currFlavor;
+    u8 maxFlavor = GetPokeblockData(pokeblock, 1);
     for (contestStat = PBLOCK_SPICY; contestStat < FLAVOR_COUNT; contestStat++)
     {
-        maxRating = GetPokeblockData(pokeblock, contestStat + 1);
-        if (rating < maxRating)
+        currFlavor = GetPokeblockData(pokeblock, contestStat + 1);
+        if (maxFlavor < currFlavor)
         {
-            rating = maxRating;
+            maxFlavor = currFlavor;
         }
     }
-    return rating;
+    return maxFlavor;
 }
 
 u8 GetPokeblocksFeel(const struct Pokeblock *pokeblock)
