@@ -473,7 +473,7 @@ static void CreateMonMarkingsMenuSprites(s16 x, s16 y, u16 baseTileTag, u16 base
         { NULL, 0 }
     };
 
-    struct SpriteTemplate sprTemplate =
+    struct SpriteTemplate template =
     {
         baseTileTag,
         basePaletteTag,
@@ -490,7 +490,7 @@ static void CreateMonMarkingsMenuSprites(s16 x, s16 y, u16 baseTileTag, u16 base
 
     for (i = 0; i < 2; i++)
     {
-        spriteId = CreateSprite(&sprTemplate, x + 32, y + 32, 2);
+        spriteId = CreateSprite(&template, x + 32, y + 32, 2);
         if (spriteId != 64)
         {
             sMenu->windowSprites[i] = &gSprites[spriteId];
@@ -505,15 +505,15 @@ static void CreateMonMarkingsMenuSprites(s16 x, s16 y, u16 baseTileTag, u16 base
 
     sMenu->windowSprites[1]->y = y + 96;
 
-    sprTemplate.tileTag++;
-    sprTemplate.paletteTag++;
-    sprTemplate.anims = sAnims_MenuSprite;
-    sprTemplate.callback = SpriteCB_Marking;
-    sprTemplate.oam = &sOamData_8x8;
+    template.tileTag++;
+    template.paletteTag++;
+    template.anims = sAnims_MenuSprite;
+    template.callback = SpriteCB_Marking;
+    template.oam = &sOamData_8x8;
 
     for (i = 0; i < 4; i++)
     {
-        spriteId = CreateSprite(&sprTemplate, x + 32, y + 16 + 16 * i, 1);
+        spriteId = CreateSprite(&template, x + 32, y + 16 + 16 * i, 1);
         if (spriteId != 64)
         {
             sMenu->markingSprites[i] = &gSprites[spriteId];
@@ -526,9 +526,9 @@ static void CreateMonMarkingsMenuSprites(s16 x, s16 y, u16 baseTileTag, u16 base
         }
     }
 
-    sprTemplate.callback = SpriteCallbackDummy;
+    template.callback = SpriteCallbackDummy;
 
-    spriteId = CreateSprite(&sprTemplate, 0, 0, 1);
+    spriteId = CreateSprite(&template, 0, 0, 1);
 
     if (spriteId != 64)
     {
