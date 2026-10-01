@@ -717,7 +717,7 @@ AI_CheckViability: @ 81DA86D
 	if_effect EFFECT_MIRROR_COAT, AI_CV_MirrorCoat
 	if_effect EFFECT_SKULL_BASH, AI_CV_ChargeUpMove
 	if_effect EFFECT_SOLAR_BEAM, AI_CV_ChargeUpMove
-	if_effect EFFECT_SEMI_INVULNERABLE, AI_CV_Fly
+	if_effect EFFECT_SEMI_INVULNERABLE, AI_CV_SemiInvulnerable
 	if_effect EFFECT_SOFTBOILED, AI_CV_Heal
 	if_effect EFFECT_FAKE_OUT, AI_CV_FakeOut
 	if_effect EFFECT_SPIT_UP, AI_CV_SpitUp
@@ -2255,45 +2255,45 @@ AI_CV_ChargeUpMove_ScoreDown2: @ 81DBA8E
 AI_CV_ChargeUpMove_End: @ 81DBA90
 	end
 
-AI_CV_Fly: @ 81DBA91
-	if_not_move_effect AI_TARGET, EFFECT_PROTECT, AI_CV_Fly_CheckWeather
+AI_CV_SemiInvulnerable: @ 81DBA91
+	if_not_move_effect AI_TARGET, EFFECT_PROTECT, AI_CV_SemiInvulnerable2
 	score -1
-	goto AI_CV_Fly_End
+	goto AI_CV_SemiInvulnerable_End
 
-AI_CV_Fly_CheckWeather: @ 81DBA9F
-	if_status AI_TARGET, STATUS1_TOXIC_POISON, AI_CV_Fly_TryEncourage
-	if_status2 AI_TARGET, STATUS2_CURSED, AI_CV_Fly_TryEncourage
-	if_status3 AI_TARGET, STATUS3_LEECHSEED, AI_CV_Fly_TryEncourage
+AI_CV_SemiInvulnerable2: @ 81DBA9F
+	if_status AI_TARGET, STATUS1_TOXIC_POISON, AI_CV_SemiInvulnerable_TryEncourage
+	if_status2 AI_TARGET, STATUS2_CURSED, AI_CV_SemiInvulnerable_TryEncourage
+	if_status3 AI_TARGET, STATUS3_LEECHSEED, AI_CV_SemiInvulnerable_TryEncourage
 	get_weather
-	if_equal AI_WEATHER_HAIL, AI_CV_Fly_CheckSandstormTypes
-	if_equal AI_WEATHER_SANDSTORM, AI_CV_Fly_CheckIceType
-	goto AI_CV_Fly_CheckLastMove
+	if_equal AI_WEATHER_HAIL, AI_CV_SemiInvulnerable_CheckSandstormTypes
+	if_equal AI_WEATHER_SANDSTORM, AI_CV_SemiInvulnerable_CheckIceType
+	goto AI_CV_SemiInvulnerable5
 
-AI_CV_Fly_CheckSandstormTypes: @ 81DBACF
+AI_CV_SemiInvulnerable_CheckSandstormTypes: @ 81DBACF
 	get_user_type1
-	if_in_bytes AI_CV_SandstormResistantTypes, AI_CV_Fly_TryEncourage
+	if_in_bytes AI_CV_SandstormResistantTypes, AI_CV_SemiInvulnerable_TryEncourage
 	get_user_type2
-	if_in_bytes AI_CV_SandstormResistantTypes, AI_CV_Fly_TryEncourage
-	goto AI_CV_Fly_CheckLastMove
+	if_in_bytes AI_CV_SandstormResistantTypes, AI_CV_SemiInvulnerable_TryEncourage
+	goto AI_CV_SemiInvulnerable5
 
-AI_CV_Fly_CheckIceType: @ 81DBAEA
+AI_CV_SemiInvulnerable_CheckIceType: @ 81DBAEA
 	get_user_type1
-	if_equal TYPE_ICE, AI_CV_Fly_TryEncourage
+	if_equal TYPE_ICE, AI_CV_SemiInvulnerable_TryEncourage
 	get_user_type2
-	if_equal TYPE_ICE, AI_CV_Fly_TryEncourage
+	if_equal TYPE_ICE, AI_CV_SemiInvulnerable_TryEncourage
 
-AI_CV_Fly_CheckLastMove: @ 81DBAFA
-	if_would_go_first USER, AI_CV_Fly_End
+AI_CV_SemiInvulnerable5: @ 81DBAFA
+	if_would_go_first USER, AI_CV_SemiInvulnerable_End
 	get_last_used_bank_move AI_TARGET
 	get_move_effect_from_result
-	if_not_equal EFFECT_LOCK_ON, AI_CV_Fly_TryEncourage
-	goto AI_CV_Fly_End
+	if_not_equal EFFECT_LOCK_ON, AI_CV_SemiInvulnerable_TryEncourage
+	goto AI_CV_SemiInvulnerable_End
 
-AI_CV_Fly_TryEncourage: @ 81DBB0E
-	if_random_less_than 80, AI_CV_Fly_End
+AI_CV_SemiInvulnerable_TryEncourage: @ 81DBB0E
+	if_random_less_than 80, AI_CV_SemiInvulnerable_End
 	score +1
 
-AI_CV_Fly_End: @ 81DBB16
+AI_CV_SemiInvulnerable_End: @ 81DBB16
 	end
 
 AI_CV_SandstormResistantTypes: @ 81DBB17
