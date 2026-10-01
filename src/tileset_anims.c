@@ -1,5 +1,5 @@
 #include "global.h"
-#include "tileset_anim.h"
+#include "tileset_anims.h"
 
 struct TilesetAnimDma
 {

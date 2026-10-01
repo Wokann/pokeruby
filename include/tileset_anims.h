@@ -1,5 +1,5 @@
-#ifndef GUARD_TILESET_ANIM_H
-#define GUARD_TILESET_ANIM_H
+#ifndef GUARD_TILESET_ANIMS_H
+#define GUARD_TILESET_ANIMS_H
 
 void TransferTilesetAnimsBuffer(void);
 void InitTilesetAnimations(void);
@@ -27,4 +27,4 @@ void InitTilesetAnim_EliteFour(void);
 void InitTilesetAnim_MauvilleGym(void);
 void InitTilesetAnim_BikeShop(void);
 
-#endif // GUARD_TILESET_ANIM_H
+#endif // GUARD_TILESET_ANIMS_H

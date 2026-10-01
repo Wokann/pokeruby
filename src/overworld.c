@@ -46,7 +46,7 @@
 #include "sound.h"
 #include "start_menu.h"
 #include "task.h"
-#include "tileset_anim.h"
+#include "tileset_anims.h"
 #include "time_events.h"
 #include "tv.h"
 #include "wild_encounter.h"
