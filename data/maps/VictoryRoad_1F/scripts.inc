@@ -93,7 +93,7 @@ VictoryRoad_1F_EventScript_EntranceWally:: @ 815DF28
 VictoryRoad_1F_EventScript_ExitWally:: @ 815DF31
 	trainerbattle_single TRAINER_WALLY_3, VictoryRoad_1F_Text_WallyIntro, VictoryRoad_1F_Text_WallyDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq VictoryRoad_1F_EventScript_RematchWally
 	msgbox VictoryRoad_1F_Text_WallyPostBattle, MSGBOX_AUTOCLOSE
 	end
