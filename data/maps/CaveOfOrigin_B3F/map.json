@@ -5,7 +5,7 @@
   "music": "MUS_CAVE_OF_ORIGIN",
   "region_map_section": "MAPSEC_CAVE_OF_ORIGIN",
   "requires_flash": true,
-  "weather": "WEATHER_FOG_1",
+  "weather": "WEATHER_FOG_HORIZONTAL",
   "map_type": "MAP_TYPE_UNDERGROUND",
   "show_map_name": true,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",

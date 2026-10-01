@@ -13,11 +13,11 @@ MtPyre_Exterior_EventScript_CheckEnterFromSummit:: @ 815D492
 	return
 
 MtPyre_Exterior_EventScript_EnterFromSummit:: @ 815D4A3
-	setweather WEATHER_FOG_1
+	setweather WEATHER_FOG_HORIZONTAL
 	return
 
 MtPyre_Exterior_EventScript_FogTrigger:: @ 815D4A7
-	setweather WEATHER_FOG_1
+	setweather WEATHER_FOG_HORIZONTAL
 	doweather
 	end
 

@@ -79,7 +79,7 @@ Route120_EventScript_SetWeather:: @ 81516EA
 	return
 
 Route120_EventScript_SetCloudyWeather:: @ 8151711
-	setweather WEATHER_CLOUDS
+	setweather WEATHER_SUNNY_CLOUDS
 	return
 
 Route120_EventScript_SetSunnyWeather:: @ 8151715
@@ -93,7 +93,7 @@ Route120_EventScript_TrySetRainyWeather:: @ 8151719
 	end
 
 Route120_EventScript_SetRainyWeather:: @ 8151735
-	setweather WEATHER_RAIN_LIGHT
+	setweather WEATHER_RAIN
 	return
 
 Route120_EventScript_BerryBeauty:: @ 8151739

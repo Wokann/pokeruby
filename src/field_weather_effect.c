@@ -402,9 +402,9 @@ bool8 Rain_Finish(void)
     switch (gWeatherPtr->finishStep)
     {
     case 0:
-        if (gWeatherPtr->nextWeather == WEATHER_RAIN_LIGHT
-         || gWeatherPtr->nextWeather == WEATHER_RAIN_MED
-         || gWeatherPtr->nextWeather == WEATHER_RAIN_HEAVY)
+        if (gWeatherPtr->nextWeather == WEATHER_RAIN
+         || gWeatherPtr->nextWeather == WEATHER_RAIN_THUNDERSTORM
+         || gWeatherPtr->nextWeather == WEATHER_DOWNPOUR)
         {
             gWeatherPtr->finishStep = 0xFF;
             return FALSE;
@@ -1254,9 +1254,9 @@ bool8 Thunderstorm_Finish(void)
         Thunderstorm_Main();
         if (gWeatherPtr->thunderAllowEnd != 0)
         {
-            if (gWeatherPtr->nextWeather == WEATHER_RAIN_LIGHT
-             || gWeatherPtr->nextWeather == WEATHER_RAIN_MED
-             || gWeatherPtr->nextWeather == WEATHER_RAIN_HEAVY)
+            if (gWeatherPtr->nextWeather == WEATHER_RAIN
+             || gWeatherPtr->nextWeather == WEATHER_RAIN_THUNDERSTORM
+             || gWeatherPtr->nextWeather == WEATHER_DOWNPOUR)
                 return FALSE;
             gWeatherPtr->targetRainSpriteCount = 0;
             gWeatherPtr->finishStep++;
@@ -1347,7 +1347,7 @@ void FogHorizontal_Main(void)
     {
     case 0:
         CreateFogHorizontalSprites();
-        if (gWeatherPtr->currWeather == WEATHER_FOG_1)
+        if (gWeatherPtr->currWeather == WEATHER_FOG_HORIZONTAL)
             Weather_SetTargetBlendCoeffs(12, 8, 3);
         else
             Weather_SetTargetBlendCoeffs(4, 16, 0);
@@ -2404,15 +2404,15 @@ void ResumePausedWeather(void)
 static const u8 sWeatherCycleRoute119[WEATHER_CYCLE_LENGTH] =
 {
     WEATHER_SUNNY,
-    WEATHER_RAIN_LIGHT,
-    WEATHER_RAIN_MED,
-    WEATHER_RAIN_LIGHT,
+    WEATHER_RAIN,
+    WEATHER_RAIN_THUNDERSTORM,
+    WEATHER_RAIN,
 };
 static const u8 sWeatherCycleRoute123[WEATHER_CYCLE_LENGTH] =
 {
     WEATHER_SUNNY,
     WEATHER_SUNNY,
-    WEATHER_RAIN_LIGHT,
+    WEATHER_RAIN,
     WEATHER_SUNNY,
 };
 
@@ -2420,20 +2420,20 @@ static u8 TranslateWeatherNum(u8 weather)
 {
     switch (weather)
     {
-    case WEATHER_NONE:       return WEATHER_NONE;
-    case WEATHER_CLOUDS:     return WEATHER_CLOUDS;
-    case WEATHER_SUNNY:      return WEATHER_SUNNY;
-    case WEATHER_RAIN_LIGHT: return WEATHER_RAIN_LIGHT;
-    case WEATHER_SNOW:       return WEATHER_SNOW;
-    case WEATHER_RAIN_MED:   return WEATHER_RAIN_MED;
-    case WEATHER_FOG_1:      return WEATHER_FOG_1;
+    case WEATHER_NONE:               return WEATHER_NONE;
+    case WEATHER_SUNNY_CLOUDS:       return WEATHER_SUNNY_CLOUDS;
+    case WEATHER_SUNNY:              return WEATHER_SUNNY;
+    case WEATHER_RAIN:               return WEATHER_RAIN;
+    case WEATHER_SNOW:               return WEATHER_SNOW;
+    case WEATHER_RAIN_THUNDERSTORM:  return WEATHER_RAIN_THUNDERSTORM;
+    case WEATHER_FOG_HORIZONTAL:     return WEATHER_FOG_HORIZONTAL;
     case WEATHER_VOLCANIC_ASH:       return WEATHER_VOLCANIC_ASH;
-    case WEATHER_SANDSTORM:  return WEATHER_SANDSTORM;
-    case WEATHER_FOG_2:      return WEATHER_FOG_2;
-    case WEATHER_FOG_3:      return WEATHER_FOG_3;
-    case WEATHER_SHADE:      return WEATHER_SHADE;
-    case WEATHER_DROUGHT:    return WEATHER_DROUGHT;
-    case WEATHER_RAIN_HEAVY: return WEATHER_RAIN_HEAVY;
+    case WEATHER_SANDSTORM:          return WEATHER_SANDSTORM;
+    case WEATHER_FOG_DIAGONAL:       return WEATHER_FOG_DIAGONAL;
+    case WEATHER_UNDERWATER:         return WEATHER_UNDERWATER;
+    case WEATHER_SHADE:              return WEATHER_SHADE;
+    case WEATHER_DROUGHT:            return WEATHER_DROUGHT;
+    case WEATHER_DOWNPOUR:           return WEATHER_DOWNPOUR;
     case WEATHER_UNDERWATER_BUBBLES: return WEATHER_UNDERWATER_BUBBLES;
     case WEATHER_ROUTE119_CYCLE: return sWeatherCycleRoute119[gSaveBlock1.weatherCycleStage];
     case WEATHER_ROUTE123_CYCLE: return sWeatherCycleRoute123[gSaveBlock1.weatherCycleStage];
@@ -2451,6 +2451,6 @@ void UpdateWeatherPerDay(u16 increment)
 static void UpdateRainCounter(u8 newWeather, u8 oldWeather)
 {
     if (newWeather != oldWeather
-     && (newWeather == WEATHER_RAIN_LIGHT || newWeather == WEATHER_RAIN_MED))
+     && (newWeather == WEATHER_RAIN || newWeather == WEATHER_RAIN_THUNDERSTORM))
         IncrementGameStat(GAME_STAT_GOT_RAINED_ON);
 }
