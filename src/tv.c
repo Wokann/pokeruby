@@ -610,16 +610,16 @@ void ResetGabbyAndTy(void)
     gSaveBlock1.gabbyAndTyData.mon2 = 0;
     gSaveBlock1.gabbyAndTyData.lastMove = 0;
     gSaveBlock1.gabbyAndTyData.quote = 0xffff;
-    gSaveBlock1.gabbyAndTyData.valA_0 = 0;
-    gSaveBlock1.gabbyAndTyData.valA_1 = 0;
-    gSaveBlock1.gabbyAndTyData.valA_2 = 0;
-    gSaveBlock1.gabbyAndTyData.valA_3 = 0;
-    gSaveBlock1.gabbyAndTyData.valA_4 = 0;
+    gSaveBlock1.gabbyAndTyData.battleTookMoreThanOneTurn = 0;
+    gSaveBlock1.gabbyAndTyData.playerLostAMon = 0;
+    gSaveBlock1.gabbyAndTyData.playerUsedHealingItem = 0;
+    gSaveBlock1.gabbyAndTyData.playerThrewABall = 0;
+    gSaveBlock1.gabbyAndTyData.onAir = 0;
     gSaveBlock1.gabbyAndTyData.valA_5 = 0;
-    gSaveBlock1.gabbyAndTyData.valB_0 = 0;
-    gSaveBlock1.gabbyAndTyData.valB_1 = 0;
-    gSaveBlock1.gabbyAndTyData.valB_2 = 0;
-    gSaveBlock1.gabbyAndTyData.valB_3 = 0;
+    gSaveBlock1.gabbyAndTyData.battleTookMoreThanOneTurn2 = 0;
+    gSaveBlock1.gabbyAndTyData.playerLostAMon2 = 0;
+    gSaveBlock1.gabbyAndTyData.playerUsedHealingItem2 = 0;
+    gSaveBlock1.gabbyAndTyData.playerThrewABall2 = 0;
     gSaveBlock1.gabbyAndTyData.valB_4 = 0;
     gSaveBlock1.gabbyAndTyData.valB_5 = 0;
     gSaveBlock1.gabbyAndTyData.mapnum = 0;
@@ -637,17 +637,17 @@ void GabbyAndTyBeforeInterview(void)
     gSaveBlock1.gabbyAndTyData.lastMove = gBattleResults.lastUsedMovePlayer;
     if (gSaveBlock1.gabbyAndTyData.battleNum != 0xff)
         gSaveBlock1.gabbyAndTyData.battleNum ++;
-    gSaveBlock1.gabbyAndTyData.valA_0 = gBattleResults.playerMonWasDamaged;
+    gSaveBlock1.gabbyAndTyData.battleTookMoreThanOneTurn = gBattleResults.playerMonWasDamaged;
 
     if (gBattleResults.playerFaintCounter)
-        gSaveBlock1.gabbyAndTyData.valA_1 = 1;
+        gSaveBlock1.gabbyAndTyData.playerLostAMon = 1;
     else
-        gSaveBlock1.gabbyAndTyData.valA_1 = 0;
+        gSaveBlock1.gabbyAndTyData.playerLostAMon = 0;
 
     if (gBattleResults.numHealingItemsUsed)
-        gSaveBlock1.gabbyAndTyData.valA_2 = 1;
+        gSaveBlock1.gabbyAndTyData.playerUsedHealingItem = 1;
     else
-        gSaveBlock1.gabbyAndTyData.valA_2 = 0;
+        gSaveBlock1.gabbyAndTyData.playerUsedHealingItem = 0;
 
     if (!gBattleResults.usedMasterBall)
     {
@@ -655,14 +655,14 @@ void GabbyAndTyBeforeInterview(void)
         {
             if (gBattleResults.catchAttempts[i] != 0)
             {
-                gSaveBlock1.gabbyAndTyData.valA_3 = 1;
+                gSaveBlock1.gabbyAndTyData.playerThrewABall = 1;
                 break;
             }
         }
     }
     else
     {
-        gSaveBlock1.gabbyAndTyData.valA_3 = 1;
+        gSaveBlock1.gabbyAndTyData.playerThrewABall = 1;
     }
 
     TakeGabbyAndTyOffTheAir();
@@ -672,18 +672,18 @@ void GabbyAndTyBeforeInterview(void)
 
 void GabbyAndTyAfterInterview(void)
 {
-    gSaveBlock1.gabbyAndTyData.valB_0 = gSaveBlock1.gabbyAndTyData.valA_0;
-    gSaveBlock1.gabbyAndTyData.valB_1 = gSaveBlock1.gabbyAndTyData.valA_1;
-    gSaveBlock1.gabbyAndTyData.valB_2 = gSaveBlock1.gabbyAndTyData.valA_2;
-    gSaveBlock1.gabbyAndTyData.valB_3 = gSaveBlock1.gabbyAndTyData.valA_3;
-    gSaveBlock1.gabbyAndTyData.valA_4 = 1;
+    gSaveBlock1.gabbyAndTyData.battleTookMoreThanOneTurn2 = gSaveBlock1.gabbyAndTyData.battleTookMoreThanOneTurn;
+    gSaveBlock1.gabbyAndTyData.playerLostAMon2 = gSaveBlock1.gabbyAndTyData.playerLostAMon;
+    gSaveBlock1.gabbyAndTyData.playerUsedHealingItem2 = gSaveBlock1.gabbyAndTyData.playerUsedHealingItem;
+    gSaveBlock1.gabbyAndTyData.playerThrewABall2 = gSaveBlock1.gabbyAndTyData.playerThrewABall;
+    gSaveBlock1.gabbyAndTyData.onAir = 1;
     gSaveBlock1.gabbyAndTyData.mapnum = gMapHeader.regionMapSectionId;
     IncrementGameStat(GAME_STAT_GOT_INTERVIEWED);
 }
 
 void TakeGabbyAndTyOffTheAir(void)
 {
-    gSaveBlock1.gabbyAndTyData.valA_4 = 0;
+    gSaveBlock1.gabbyAndTyData.onAir = 0;
 }
 
 u8 GabbyAndTyGetBattleNum(void)
@@ -696,7 +696,7 @@ u8 GabbyAndTyGetBattleNum(void)
 
 bool8 IsGabbyAndTyShowOnTheAir(void)
 {
-    return gSaveBlock1.gabbyAndTyData.valA_4;
+    return gSaveBlock1.gabbyAndTyData.onAir;
 }
 
 bool8 GabbyAndTyGetLastQuote(void)
@@ -711,13 +711,13 @@ bool8 GabbyAndTyGetLastQuote(void)
 
 u8 GabbyAndTyGetLastBattleTrivia(void)
 {
-    if (!gSaveBlock1.gabbyAndTyData.valB_0)
+    if (!gSaveBlock1.gabbyAndTyData.battleTookMoreThanOneTurn2)
         return 1;
-    if (gSaveBlock1.gabbyAndTyData.valB_3)
+    if (gSaveBlock1.gabbyAndTyData.playerThrewABall2)
         return 2;
-    if (gSaveBlock1.gabbyAndTyData.valB_2)
+    if (gSaveBlock1.gabbyAndTyData.playerUsedHealingItem2)
         return 3;
-    if (gSaveBlock1.gabbyAndTyData.valB_1)
+    if (gSaveBlock1.gabbyAndTyData.playerLostAMon2)
         return 4;
     return 0;
 }
@@ -3275,13 +3275,13 @@ void DoTVShowInSearchOfTrainers(void)
         sTVShowState = 2;
         break;
     case 2:
-        if (gSaveBlock1.gabbyAndTyData.valA_0 == 0)
+        if (gSaveBlock1.gabbyAndTyData.battleTookMoreThanOneTurn == 0)
             sTVShowState = 4;
-        else if (gSaveBlock1.gabbyAndTyData.valA_3 != 0)
+        else if (gSaveBlock1.gabbyAndTyData.playerThrewABall != 0)
             sTVShowState = 5;
-        else if (gSaveBlock1.gabbyAndTyData.valA_2 != 0)
+        else if (gSaveBlock1.gabbyAndTyData.playerUsedHealingItem != 0)
             sTVShowState = 6;
-        else if (gSaveBlock1.gabbyAndTyData.valA_1 != 0)
+        else if (gSaveBlock1.gabbyAndTyData.playerLostAMon != 0)
             sTVShowState = 7;
         else
             sTVShowState = 3;
