@@ -166,7 +166,7 @@ SlateportCity_Harbor_EventScript_FerryAttendant:: @ 81560C4
 SlateportCity_Harbor_EventScript_AskForTicket:: @ 81560D9
 	msgbox SlateportCity_Harbor_Text_MayISeeYourTicket, MSGBOX_DEFAULT
 	checkitem ITEM_SS_TICKET, 1
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq SlateportCity_Harbor_EventScript_NoTicket
 	message SlateportCity_Harbor_Text_FlashedTicketWhereTo
 	waitmessage
@@ -221,9 +221,9 @@ SlateportCity_Harbor_EventScript_BoardFerry:: @ 8156196
 	waitmovement 0
 	delay 30
 	hideobjectat VAR_LAST_TALKED, MAP_SLATEPORT_CITY_HARBOR
-	compare VAR_FACING, 2
+	compare VAR_FACING, DIR_NORTH
 	call_if_eq SlateportCity_Harbor_EventScript_BoardFerryNorth
-	compare VAR_FACING, 4
+	compare VAR_FACING, DIR_EAST
 	call_if_eq SlateportCity_Harbor_EventScript_BoardFerryEast
 	delay 30
 	hideobjectat LOCALID_PLAYER, MAP_PETALBURG_CITY
@@ -298,7 +298,7 @@ SlateportCity_Harbor_EventScript_CaptSternFerryOrScannerComment:: @ 815626F
 	compare VAR_TEMP_1, 1
 	goto_if_eq SlateportCity_Harbor_EventScript_TradedScanner
 	checkitem ITEM_SCANNER, 1
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq SlateportCity_Harbor_EventScript_AskToTradeScanner
 	goto_if_set FLAG_SYS_GAME_CLEAR, SlateportCity_Harbor_EventScript_FerryFinished
 	msgbox SlateportCity_Harbor_Text_WontBeLongBeforeWeFinishFerry, MSGBOX_DEFAULT
@@ -330,7 +330,7 @@ SlateportCity_Harbor_EventScript_DeepSeaTooth:: @ 81562EA
 	compare VAR_RESULT, NO
 	goto_if_eq SlateportCity_Harbor_EventScript_ChooseDifferentTrade
 	giveitem ITEM_DEEP_SEA_TOOTH
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	removeitem ITEM_SCANNER
 	msgbox SlateportCity_Harbor_Text_HandedScannerToStern, MSGBOX_DEFAULT
@@ -343,7 +343,7 @@ SlateportCity_Harbor_EventScript_DeepSeaScale:: @ 815632A
 	compare VAR_RESULT, NO
 	goto_if_eq SlateportCity_Harbor_EventScript_ChooseDifferentTrade
 	giveitem ITEM_DEEP_SEA_SCALE
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	removeitem ITEM_SCANNER
 	msgbox SlateportCity_Harbor_Text_HandedScannerToStern, MSGBOX_DEFAULT

@@ -64,13 +64,13 @@ SlateportCity_Pokemart_EnergyGuru:: @ 814BAD0
 SlateportCity_EventScript_EffortRibbonWoman:: @ 814BAE0
 	lock
 	faceplayer
-	bufferleadmonspeciesname 0
+	bufferleadmonspeciesname STR_VAR_1
 	msgbox SlateportCity_Text_OhYourPokemon, MSGBOX_DEFAULT
 	specialvar VAR_RESULT, LeadMonHasEffortRibbon
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	call_if_eq SlateportCity_EventScript_MonHasEffortRibbon
 	specialvar VAR_RESULT, Special_AreLeadMonEVsMaxedOut
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	call_if_eq SlateportCity_EventScript_MonEVsNotMaxed
 	msgbox SlateportCity_Text_PleaseGiveItThisEffortRibbon, MSGBOX_DEFAULT
 	playfanfare MUS_OBTAIN_ITEM
