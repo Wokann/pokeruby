@@ -4,10 +4,10 @@ Route119_WeatherInstitute_1F_MapScripts:: @ 8163C2A
 
 Route119_WeatherInstitute_1F_OnTransition:: @ 8163C30
 	call Common_EventScript_SetupEvilTeamGfxIds
-	call_if_eq VAR_WEATHER_INSTITUTE_STATE, 0, Route119_WeatherInstitute_1F_EventScript_SetLittleBoyPosition
+	call_if_eq VAR_WEATHER_INSTITUTE_STATE, 0, Route119_WeatherInstitute_1F_EventScript_SetLittleBoyPos
 	end
 
-Route119_WeatherInstitute_1F_EventScript_SetLittleBoyPosition:: @ 8163C41
+Route119_WeatherInstitute_1F_EventScript_SetLittleBoyPos:: @ 8163C41
 	setobjectxyperm LOCALID_WEATHER_INSTITUTE_LITTLE_BOY, 0, 5
 	setobjectmovementtype LOCALID_WEATHER_INSTITUTE_LITTLE_BOY, MOVEMENT_TYPE_FACE_RIGHT
 	return

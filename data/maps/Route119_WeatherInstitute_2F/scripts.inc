@@ -48,15 +48,15 @@ Route119_WeatherInstitute_2F_EventScript_EvilTeamAdminDefeated:: @ 8163D45
 	applymovement LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST, Route119_WeatherInstitute_2F_Movement_Exit
 	waitmovement 0
 	copyobjectxytoperm LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST
-	goto Route119_WeatherInstitute_2F_EventScript_GiveCastform
+	goto Route119_WeatherInstitute_2F_EventScript_ReceiveCastform
 	end
 
-Route119_WeatherInstitute_2F_EventScript_GiveCastform:: @ 8163D7A
+Route119_WeatherInstitute_2F_EventScript_ReceiveCastform:: @ 8163D7A
 	msgbox Route119_WeatherInstitute_2F_Text_ThanksForSavingUs, MSGBOX_DEFAULT
 	getpartysize
 	goto_if_eq VAR_RESULT, PARTY_SIZE, Route119_WeatherInstitute_2F_EventScript_NoRoomForCastform
 	playfanfare MUS_OBTAIN_ITEM
-	message Route119_WeatherInstitute_2F_Text_ReceivedCastform
+	message Route119_WeatherInstitute_2F_Text_PlayerReceivedCastform
 	waitfanfare
 	waitmessage
 	givemon SPECIES_CASTFORM, 25, ITEM_MYSTIC_WATER
@@ -85,5 +85,5 @@ Route119_WeatherInstitute_2F_EventScript_WeatherScientist:: @ 8163DCC
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_CASTFORM, Route119_WeatherInstitute_2F_EventScript_WeatherScientistPostGift
-	goto Route119_WeatherInstitute_2F_EventScript_GiveCastform
+	goto Route119_WeatherInstitute_2F_EventScript_ReceiveCastform
 	end

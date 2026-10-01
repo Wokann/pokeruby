@@ -58,7 +58,7 @@ Route119_WeatherInstitute_2F_Text_NoRoomForCastform:: @ 819F231
 	.string "Oh! Du hast keinen Platz für dieses\n"
 	.string "POKéMON.$"
 
-Route119_WeatherInstitute_2F_Text_ReceivedCastform:: @ 819F267
+Route119_WeatherInstitute_2F_Text_PlayerReceivedCastform:: @ 819F267
 	.string "{PLAYER} erhält FORMEO!$"
 
 Route119_WeatherInstitute_2F_Text_CastformChangesWithWeather:: @ 819F27D

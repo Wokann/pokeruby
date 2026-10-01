@@ -56,7 +56,7 @@ Route119_WeatherInstitute_2F_Text_NoRoomForCastform:: @ 819F231
 	.string "Hm? You don't seem to have any room\n"
 	.string "for this POKéMON.$"
 
-Route119_WeatherInstitute_2F_Text_ReceivedCastform:: @ 819F267
+Route119_WeatherInstitute_2F_Text_PlayerReceivedCastform:: @ 819F267
 	.string "{PLAYER} received CASTFORM!$"
 
 Route119_WeatherInstitute_2F_Text_CastformChangesWithWeather:: @ 819F27D
