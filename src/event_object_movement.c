@@ -160,7 +160,6 @@ static void (*const sCameraObjectFuncs[])(struct Sprite *) = {
 };
 
 #include "data/object_events/object_event_graphics.h"
-#include "data/field_effects/field_effect_object_graphics.h"
 
 // movement type callbacks
 static void (*const sMovementTypeCallbacks[])(struct Sprite *) =
