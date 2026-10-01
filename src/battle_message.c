@@ -475,8 +475,8 @@ extern u8 *GermanStringFormatName(u8 *, const u8 *);
             toCpy = BattleText_Wild;                                  \
         while (*toCpy != EOS)                                           \
         {                                                               \
-            dst[dstId] = *toCpy;                                        \
-            dstId++;                                                    \
+            dst[dstID] = *toCpy;                                        \
+            dstID++;                                                    \
             toCpy++;                                                    \
         }                                                               \
         GetMonData(&gEnemyParty[monIndex], MON_DATA_NICKNAME, text);    \
@@ -496,8 +496,8 @@ extern u8 *GermanStringFormatName(u8 *, const u8 *);
         toCpy = text;                                                   \
         while (*toCpy != EOS)                                           \
         {                                                               \
-            dst[dstId] = *toCpy;                                        \
-            dstId++;                                                    \
+            dst[dstID] = *toCpy;                                        \
+            dstID++;                                                    \
             toCpy++;                                                    \
         }                                                               \
         if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)                     \
@@ -515,7 +515,7 @@ extern u8 *GermanStringFormatName(u8 *, const u8 *);
 
 u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst)
 {
-    u32 dstId = 0; // if they used dstId, why not use srcId as well?
+    u32 dstID = 0; // if they used dstID, why not use srcID as well?
     const u8* toCpy = NULL;
     u8 text[12];
     u8 multiplayerId = GetMultiplayerId();
@@ -794,80 +794,80 @@ u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst)
             //if (toCpy != NULL) really GF, why did you forget about this?
             while (*toCpy != EOS)
             {
-                dst[dstId] = *toCpy;
-                dstId++;
+                dst[dstID] = *toCpy;
+                dstID++;
                 toCpy++;
             }
             if (*src == B_TXT_TRAINER1_LOSE_TEXT)
             {
-                dst[dstId] = EXT_CTRL_CODE_BEGIN;
-                dstId++;
-                dst[dstId] = EXT_CTRL_CODE_PAUSE_UNTIL_PRESS;
-                dstId++;
+                dst[dstID] = EXT_CTRL_CODE_BEGIN;
+                dstID++;
+                dst[dstID] = EXT_CTRL_CODE_PAUSE_UNTIL_PRESS;
+                dstID++;
             }
         }
         else
         {
-            dst[dstId] = *src;
-            dstId++;
+            dst[dstID] = *src;
+            dstID++;
         }
         src++;
     }
-    dst[dstId] = *src;
-    dstId++;
-    return dstId;
+    dst[dstID] = *src;
+    dstID++;
+    return dstID;
 }
 
 static void ExpandBattleTextBuffPlaceholders(u8 *src, u8 *dst)
 {
-    u32 srcId = 1;
+    u32 srcID = 1;
     u32 value = 0;
-    u8 text[12];
+    u8 nickname[12];
     u16 hword;
 
     *dst = EOS;
-    while (src[srcId] != EOS)
+    while (src[srcID] != EOS)
     {
-        switch (src[srcId])
+        switch (src[srcID])
         {
         case B_BUFF_STRING: // battle string
-            hword = T1_READ_16(&src[srcId + 1]);
+            hword = T1_READ_16(&src[srcID + 1]);
 #ifdef GERMAN
             if (hword == 209 || hword == 211)
-                srcId += 3;
+                srcID += 3;
 #endif
             StringAppend(dst, gBattleStringsTable[hword - BATTLESTRINGS_ID_ADDER]);
-            srcId += 3;
+            srcID += 3;
             break;
         case B_BUFF_NUMBER: // int to string
-            switch (src[srcId + 1])
+            switch (src[srcID + 1])
             {
             case 1:
-                value = T1_READ_8(&src[srcId + 3]);
+                value = T1_READ_8(&src[srcID + 3]);
                 break;
             case 2:
-                value = T1_READ_16(&src[srcId + 3]);
+                value = T1_READ_16(&src[srcID + 3]);
                 break;
             case 4:
-                value = T1_READ_32(&src[srcId + 3]);
+                value = T1_READ_32(&src[srcID + 3]);
                 break;
             }
-            ConvertIntToDecimalStringN(dst, value, 0, src[srcId + 2]);
-            srcId += src[srcId + 1] + 3;
+            ConvertIntToDecimalStringN(dst, value, 0, src[srcID + 2]);
+            srcID += src[srcID + 1] + 3;
             break;
         case B_BUFF_MOVE: // move name
-            StringAppend(dst, gMoveNames[T1_READ_16(&src[srcId + 1])]);
-            srcId += 3;
+            StringAppend(dst, gMoveNames[T1_READ_16(&src[srcID + 1])]);
+            srcID += 3;
             break;
         case B_BUFF_TYPE: // type name
-            StringAppend(dst, gTypeNames[src[srcId + 1]]);
-            srcId += 2;
+            StringAppend(dst, gTypeNames[src[srcID + 1]]);
+            srcID += 2;
             break;
         case B_BUFF_MON_NICK_WITH_PREFIX: // poke nick with prefix
 #ifdef ENGLISH
-            if (GetBattlerSide(src[srcId + 1]) == B_SIDE_PLAYER)
+            if (GetBattlerSide(src[srcID + 1]) == B_SIDE_PLAYER)
             {
-                GetMonData(&gPlayerParty[src[srcId + 2]], MON_DATA_NICKNAME, text);
+                GetMonData(&gPlayerParty[src[srcID + 2]], MON_DATA_NICKNAME, nickname);
             }
             else
             {
@@ -875,57 +875,57 @@ static void ExpandBattleTextBuffPlaceholders(u8 *src, u8 *dst)
                     StringAppend(dst, BattleText_Foe);
                 else
                     StringAppend(dst, BattleText_Wild);
-                GetMonData(&gEnemyParty[src[srcId + 2]], MON_DATA_NICKNAME, text);
+                GetMonData(&gEnemyParty[src[srcID + 2]], MON_DATA_NICKNAME, nickname);
             }
-            StringGet_Nickname(text);
-            StringAppend(dst, text);
+            StringGet_Nickname(nickname);
+            StringAppend(dst, nickname);
 #else
-            if (GetBattlerSide(src[srcId + 1]) == B_SIDE_PLAYER)
+            if (GetBattlerSide(src[srcID + 1]) == B_SIDE_PLAYER)
             {
-                GetMonData(&gPlayerParty[src[srcId + 2]], MON_DATA_NICKNAME, text);
-                StringGet_Nickname(text);
-                StringAppend(dst, text);
+                GetMonData(&gPlayerParty[src[srcID + 2]], MON_DATA_NICKNAME, nickname);
+                StringGet_Nickname(nickname);
+                StringAppend(dst, nickname);
             }
             else
             {
-                GetMonData(&gEnemyParty[src[srcId + 2]], MON_DATA_NICKNAME, text);
-                StringGet_Nickname(text);
-                StringAppend(dst, text);
+                GetMonData(&gEnemyParty[src[srcID + 2]], MON_DATA_NICKNAME, nickname);
+                StringGet_Nickname(nickname);
+                StringAppend(dst, nickname);
                 if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
                     StringAppend(dst, BattleText_Foe);
                 else
                     StringAppend(dst, BattleText_Wild);
             }
 #endif
-            srcId += 3;
+            srcID += 3;
             break;
         case B_BUFF_STAT: // stats
-            StringAppend(dst, gStatNamesTable[src[srcId + 1]]);
-            srcId += 2;
+            StringAppend(dst, gStatNamesTable[src[srcID + 1]]);
+            srcID += 2;
             break;
         case B_BUFF_SPECIES: // species name
-            GetSpeciesName(dst, T1_READ_16(&src[srcId + 1]));
-            srcId += 3;
+            GetSpeciesName(dst, T1_READ_16(&src[srcID + 1]));
+            srcID += 3;
             break;
         case B_BUFF_MON_NICK: // poke nick without prefix
-            if (GetBattlerSide(src[srcId + 1]) == B_SIDE_PLAYER)
-                GetMonData(&gPlayerParty[src[srcId + 2]], MON_DATA_NICKNAME, dst);
+            if (GetBattlerSide(src[srcID + 1]) == B_SIDE_PLAYER)
+                GetMonData(&gPlayerParty[src[srcID + 2]], MON_DATA_NICKNAME, dst);
             else
-                GetMonData(&gEnemyParty[src[srcId + 2]], MON_DATA_NICKNAME, dst);
+                GetMonData(&gEnemyParty[src[srcID + 2]], MON_DATA_NICKNAME, dst);
             StringGet_Nickname(dst);
-            srcId += 3;
+            srcID += 3;
             break;
         case B_BUFF_NEGATIVE_FLAVOR: // flavour table
-            StringAppend(dst, gPokeblockWasTooXStringTable[src[srcId + 1]]);
-            srcId += 2;
+            StringAppend(dst, gPokeblockWasTooXStringTable[src[srcID + 1]]);
+            srcID += 2;
             break;
         case B_BUFF_ABILITY: // ability names
-            StringAppend(dst, gAbilityNames[src[srcId + 1]]);
-            srcId += 2;
+            StringAppend(dst, gAbilityNames[src[srcID + 1]]);
+            srcID += 2;
             break;
         case B_BUFF_ITEM: // item name
             {
-                hword = T1_READ_16(&src[srcId + 1]);
+                hword = T1_READ_16(&src[srcID + 1]);
                 if (gBattleTypeFlags & BATTLE_TYPE_LINK)
                 {
                     if (hword == ITEM_ENIGMA_BERRY)
@@ -947,7 +947,7 @@ static void ExpandBattleTextBuffPlaceholders(u8 *src, u8 *dst)
                 }
                 else
                     CopyItemName(hword, dst);
-                srcId += 3;
+                srcID += 3;
             }
             break;
         }
