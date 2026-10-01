@@ -15,7 +15,7 @@ FortreeCity_House1_EventScript_Trader:: @ 8157E13
 	special ChoosePartyMon
 	waitstate
 	copyvar VAR_0x800A, VAR_0x8004
-	compare VAR_0x8004, 255
+	compare VAR_0x8004, PARTY_NOTHING_CHOSEN
 	goto_if_eq FortreeCity_House1_EventScript_DeclineTrade
 	copyvar VAR_0x8005, VAR_0x800A
 	specialvar VAR_RESULT, GetTradeSpecies
@@ -27,7 +27,7 @@ FortreeCity_House1_EventScript_Trader:: @ 8157E13
 	special CreateInGameTradePokemon
 	special DoInGameTradeScene
 	waitstate
-	bufferspeciesname 0, VAR_0x8009
+	bufferspeciesname STR_VAR_1, VAR_0x8009
 	msgbox FortreeCity_House1_Text_PleaseBeNiceToMon, MSGBOX_DEFAULT
 	setflag FLAG_FORTREE_NPC_TRADE_COMPLETED
 	release
@@ -39,7 +39,7 @@ FortreeCity_House1_EventScript_DeclineTrade:: @ 8157E95
 	end
 
 FortreeCity_House1_EventScript_NotRequestedMon:: @ 8157E9F
-	bufferspeciesname 0, VAR_0x8009
+	bufferspeciesname STR_VAR_1, VAR_0x8009
 	msgbox FortreeCity_House1_Text_ThatMonIsntAMon, MSGBOX_DEFAULT
 	release
 	end
@@ -57,7 +57,7 @@ FortreeCity_House1_EventScript_Zigzagoon:: @ 8157EC0
 	lock
 	faceplayer
 	waitse
-	playmoncry SPECIES_ZIGZAGOON, 0
+	playmoncry SPECIES_ZIGZAGOON, CRY_MODE_NORMAL
 	msgbox FortreeCity_House1_Text_Zigzagoon, MSGBOX_DEFAULT
 	waitmoncry
 	release
