@@ -1857,22 +1857,22 @@ u8 GetNumPreliminaryPoints(u8 monIndex, bool8 capPoints)
 // Represented on results board as hearts
 s8 GetNumRound2Points(u8 monIndex, bool8 capPoints)
 {
-    u32 r4;
+    u32 absolutePoints;
     u32 numHearts;
     s16 results;
     s8 points;
 
     results = gContestMonRound2Points[monIndex];
     if (results < 0)
-        r4 = -results << 16;
+        absolutePoints = -results << 16;
     else
-        r4 = results << 16;
-    numHearts = r4 / 80;
+        absolutePoints = results << 16;
+    numHearts = absolutePoints / 80;
     if (numHearts & 0xFFFF)
         numHearts += 0x10000;
 
     numHearts >>= 16;
-    if (numHearts == 0 && r4 != 0)
+    if (numHearts == 0 && absolutePoints != 0)
         numHearts = 1;
 
     if (capPoints && numHearts > 10)
