@@ -56,14 +56,14 @@ static void FieldCallback_FadeFromPartyMenu(void);
 void InitChooseHalfPartyForBattle(void)
 {
     ClearSelectedPartyOrder();
-    ePartyMenu2.battleTowerSelectionMode = 0;
+    gPartyMenu.battleTowerSelectionMode = 0;
     OpenPartyMenu(PARTY_MENU_TYPE_BATTLE_TOWER, 0);
 }
 
 void InitChooseBattleTowerParty(void)
 {
     ClearSelectedPartyOrder();
-    ePartyMenu2.battleTowerSelectionMode = 1;
+    gPartyMenu.battleTowerSelectionMode = 1;
     OpenPartyMenu(PARTY_MENU_TYPE_BATTLE_TOWER, 0);
 }
 
@@ -79,47 +79,47 @@ bool8 SetupBattleTowerPartyMenu(void)
 {
     u8 i;
 
-    switch (ePartyMenu2.pmSetupState)
+    switch (gPartyMenu.pmSetupState)
     {
     case 0:
-        if (ePartyMenu2.pmMonIndex < gPlayerPartyCount)
+        if (gPartyMenu.pmMonIndex < gPlayerPartyCount)
         {
-            TryCreatePartyMenuMonIcon(ePartyMenu2.menuHandlerTaskId,
-                ePartyMenu2.pmMonIndex, &gPlayerParty[ePartyMenu2.pmMonIndex]);
-            ePartyMenu2.pmMonIndex++;
+            TryCreatePartyMenuMonIcon(gPartyMenu.menuHandlerTaskId,
+                gPartyMenu.pmMonIndex, &gPlayerParty[gPartyMenu.pmMonIndex]);
+            gPartyMenu.pmMonIndex++;
         }
         else
         {
-            ePartyMenu2.pmMonIndex = 0;
-            ePartyMenu2.pmSetupState++;
+            gPartyMenu.pmMonIndex = 0;
+            gPartyMenu.pmSetupState++;
         }
         break;
     case 1:
         LoadHeldItemIconGraphics();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 2:
-        CreatePartyMenuHeldItemIcons(ePartyMenu2.menuHandlerTaskId);
-        ePartyMenu2.pmSetupState++;
+        CreatePartyMenuHeldItemIcons(gPartyMenu.menuHandlerTaskId);
+        gPartyMenu.pmSetupState++;
         break;
     case 3:
-        if (CreatePartyMenuCursor(ePartyMenu2.menuHandlerTaskId, ePartyMenu2.pmMonIndex) == 1)
+        if (CreatePartyMenuCursor(gPartyMenu.menuHandlerTaskId, gPartyMenu.pmMonIndex) == 1)
         {
-            ePartyMenu2.pmMonIndex = 0;
-            ePartyMenu2.pmSetupState++;
+            gPartyMenu.pmMonIndex = 0;
+            gPartyMenu.pmSetupState++;
         }
         else
         {
-            ePartyMenu2.pmMonIndex++;
+            gPartyMenu.pmMonIndex++;
         }
         break;
     case 4:
         PartyMenuPrintMonsLevelOrStatus();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 5:
         PrintPartyMenuMonNicknames();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 6:
         for (i = 0; i < gPlayerPartyCount; i++)
@@ -142,18 +142,18 @@ bool8 SetupBattleTowerPartyMenu(void)
                     DrawMonDescriptorStatus(i, 0x7E);
             }
         }
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 7:
-        if (DrawPartyMonBackground(ePartyMenu2.pmMonIndex) == 1)
+        if (DrawPartyMonBackground(gPartyMenu.pmMonIndex) == 1)
         {
-            ePartyMenu2.pmMonIndex = 0;
-            ePartyMenu2.pmSetupState = 0;
+            gPartyMenu.pmMonIndex = 0;
+            gPartyMenu.pmSetupState = 0;
             return TRUE;
         }
         else
         {
-            ePartyMenu2.pmMonIndex++;
+            gPartyMenu.pmMonIndex++;
         }
         break;
     }
@@ -168,7 +168,7 @@ static bool8 IsMonAllowedInBattleTower(struct Pokemon *pkmn)
     if (GetMonData(pkmn, MON_DATA_IS_EGG))
         return FALSE;
 
-    if (ePartyMenu2.battleTowerSelectionMode == 0)
+    if (gPartyMenu.battleTowerSelectionMode == 0)
     {
         if (GetMonData(pkmn, MON_DATA_HP) == 0)
             return FALSE;
@@ -195,7 +195,7 @@ static u8 CheckBattleTowerEntriesAndGetMessage(void)
 {
     u8 i;
 
-    if (ePartyMenu2.battleTowerSelectionMode == 0)
+    if (gPartyMenu.battleTowerSelectionMode == 0)
         return 0xFF;
     if (gSelectedOrderFromParty[2] == 0)
         return 0x11;
@@ -203,14 +203,14 @@ static u8 CheckBattleTowerEntriesAndGetMessage(void)
     {
         u8 j;
 
-        ePartyMenu2.pmBattleTowerSpecies = GetMonData(&gPlayerParty[gSelectedOrderFromParty[i] - 1], MON_DATA_SPECIES);
-        ePartyMenu2.pmBattleTowerHeldItem = GetMonData(&gPlayerParty[gSelectedOrderFromParty[i] - 1], MON_DATA_HELD_ITEM);
+        gPartyMenu.pmBattleTowerSpecies = GetMonData(&gPlayerParty[gSelectedOrderFromParty[i] - 1], MON_DATA_SPECIES);
+        gPartyMenu.pmBattleTowerHeldItem = GetMonData(&gPlayerParty[gSelectedOrderFromParty[i] - 1], MON_DATA_HELD_ITEM);
         for (j = i + 1; j < 3; j++)
         {
-            if (ePartyMenu2.pmBattleTowerSpecies == GetMonData(&gPlayerParty[gSelectedOrderFromParty[j] - 1], MON_DATA_SPECIES))
+            if (gPartyMenu.pmBattleTowerSpecies == GetMonData(&gPlayerParty[gSelectedOrderFromParty[j] - 1], MON_DATA_SPECIES))
                 return 0x12;
-            if (ePartyMenu2.pmBattleTowerHeldItem != 0 &&
-                ePartyMenu2.pmBattleTowerHeldItem == GetMonData(&gPlayerParty[gSelectedOrderFromParty[j] - 1], MON_DATA_HELD_ITEM))
+            if (gPartyMenu.pmBattleTowerHeldItem != 0 &&
+                gPartyMenu.pmBattleTowerHeldItem == GetMonData(&gPlayerParty[gSelectedOrderFromParty[j] - 1], MON_DATA_HELD_ITEM))
                 return 0x13;
         }
     }
@@ -405,11 +405,11 @@ static void CB2_ReturnToBattleTowerPartyMenu(void)
     {
         if (InitPartyMenu() == TRUE)
         {
-            SetPartyMenuCursorSelection(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
-            ChangeBattleTowerPartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
+            SetPartyMenuCursorSelection(gPartyMenu.menuHandlerTaskId, gLastViewedMonIndex);
+            ChangeBattleTowerPartyMenuSelection(gPartyMenu.menuHandlerTaskId, 0);
             GetMonNickname(&gPlayerParty[gLastViewedMonIndex], gStringVar1);
             gLastFieldPokeMenuOpened = gLastViewedMonIndex;
-            ShowBattleTowerEntryPopup(ePartyMenu2.menuHandlerTaskId);
+            ShowBattleTowerEntryPopup(gPartyMenu.menuHandlerTaskId);
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
@@ -433,7 +433,7 @@ static void Task_OpenBattleTowerSummary(u8 taskId)
         u8 summaryMonIndex = gSprites[gTasks[taskId].data[3] >> 8].data[0];
 
         DestroyTask(taskId);
-        ePartyMenu2.unusedResumeAction = 1;
+        gPartyMenu.unusedResumeAction = 1;
         ShowPokemonSummaryScreen(gPlayerParty, summaryMonIndex, gPlayerPartyCount - 1, CB2_InitBattleTowerSummaryReturn, PSS_MODE_NORMAL);
     }
 }
@@ -558,23 +558,23 @@ void Debug_CopyLastThreePartyMonsToMultiPartnerParty(void)
 
 bool8 SetupLinkMultiBattlePartyMenu(void)
 {
-    switch (ePartyMenu2.pmSetupState)
+    switch (gPartyMenu.pmSetupState)
     {
     case 0:
-        CreateLinkMultiBattlePartyMonIcons(ePartyMenu2.menuHandlerTaskId);
-        ePartyMenu2.pmSetupState++;
+        CreateLinkMultiBattlePartyMonIcons(gPartyMenu.menuHandlerTaskId);
+        gPartyMenu.pmSetupState++;
         break;
     case 1:
         LoadHeldItemIconGraphics();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 2:
-        CreateLinkMultiBattleHeldItemIcons(ePartyMenu2.menuHandlerTaskId);
-        ePartyMenu2.pmSetupState++;
+        CreateLinkMultiBattleHeldItemIcons(gPartyMenu.menuHandlerTaskId);
+        gPartyMenu.pmSetupState++;
         break;
     case 3:
         PrintLinkMultiBattlePlayerPartyInfo();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 4:
         DrawLinkMultiBattlePartyMonBackgrounds();
@@ -648,7 +648,7 @@ void HandleLinkMultiBattlePartyMenu(u8 taskId)
         StartLinkMultiBattlePartnerMonIconSlide(taskId, gMultiPartnerParty[1].species, 1);
         StartLinkMultiBattlePartnerMonIconSlide(taskId, gMultiPartnerParty[2].species, 2);
         gTasks[taskId].func = Task_WaitLinkMultiPartnerIcons;
-        ePartyMenu2.backgroundRedrawState = 1;
+        gPartyMenu.backgroundRedrawState = 1;
     }
 }
 
@@ -658,7 +658,7 @@ static void Task_WaitLinkMultiPartnerIcons(u8 taskId)
     if (gTasks[taskId].data[0] == 0)
     {
         gTasks[taskId].func = Task_PrintLinkMultiPartnerPartyInfo;
-        ePartyMenu2.backgroundRedrawState = 2;
+        gPartyMenu.backgroundRedrawState = 2;
         PlaySE(SE_M_HARDEN);
     }
 }
@@ -708,62 +708,62 @@ static void Task_DelayLinkMultiPartyMenuExit(u8 taskId)
 // Exactly the same as SetupBattleTowerPartyMenu except for case 6
 bool8 Unused_SetupBattleTowerPartyMenu(void)
 {
-    switch (ePartyMenu2.pmSetupState)
+    switch (gPartyMenu.pmSetupState)
     {
     case 0:
-        if (ePartyMenu2.pmMonIndex < gPlayerPartyCount)
+        if (gPartyMenu.pmMonIndex < gPlayerPartyCount)
         {
-            TryCreatePartyMenuMonIcon(ePartyMenu2.menuHandlerTaskId,
-                ePartyMenu2.pmMonIndex, &gPlayerParty[ePartyMenu2.pmMonIndex]);
-            ePartyMenu2.pmMonIndex++;
+            TryCreatePartyMenuMonIcon(gPartyMenu.menuHandlerTaskId,
+                gPartyMenu.pmMonIndex, &gPlayerParty[gPartyMenu.pmMonIndex]);
+            gPartyMenu.pmMonIndex++;
         }
         else
         {
-            ePartyMenu2.pmMonIndex = 0;
-            ePartyMenu2.pmSetupState++;
+            gPartyMenu.pmMonIndex = 0;
+            gPartyMenu.pmSetupState++;
         }
         break;
     case 1:
         LoadHeldItemIconGraphics();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 2:
-        CreatePartyMenuHeldItemIcons(ePartyMenu2.menuHandlerTaskId);
-        ePartyMenu2.pmSetupState++;
+        CreatePartyMenuHeldItemIcons(gPartyMenu.menuHandlerTaskId);
+        gPartyMenu.pmSetupState++;
         break;
     case 3:
-        if (CreatePartyMenuCursor(ePartyMenu2.menuHandlerTaskId, ePartyMenu2.pmMonIndex) == 1)
+        if (CreatePartyMenuCursor(gPartyMenu.menuHandlerTaskId, gPartyMenu.pmMonIndex) == 1)
         {
-            ePartyMenu2.pmMonIndex = 0;
-            ePartyMenu2.pmSetupState++;
+            gPartyMenu.pmMonIndex = 0;
+            gPartyMenu.pmSetupState++;
         }
         else
         {
-            ePartyMenu2.pmMonIndex++;
+            gPartyMenu.pmMonIndex++;
         }
         break;
     case 4:
         PartyMenuPrintMonsLevelOrStatus();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 5:
         PrintPartyMenuMonNicknames();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 6:
         DrawPartyMonGenderDescriptorStatuses();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 7:
-        if (DrawPartyMonBackground(ePartyMenu2.pmMonIndex) == 1)
+        if (DrawPartyMonBackground(gPartyMenu.pmMonIndex) == 1)
         {
-            ePartyMenu2.pmMonIndex = 0;
-            ePartyMenu2.pmSetupState = 0;
+            gPartyMenu.pmMonIndex = 0;
+            gPartyMenu.pmSetupState = 0;
             return TRUE;
         }
         else
         {
-            ePartyMenu2.pmMonIndex++;
+            gPartyMenu.pmMonIndex++;
         }
         break;
     }
@@ -886,11 +886,11 @@ static void CB2_ReturnToDaycarePartyMenu(void)
     {
         if (InitPartyMenu() == TRUE)
         {
-            SetPartyMenuCursorSelection(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
-            ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
+            SetPartyMenuCursorSelection(gPartyMenu.menuHandlerTaskId, gLastViewedMonIndex);
+            ChangePartyMenuSelection(gPartyMenu.menuHandlerTaskId, 0);
             GetMonNickname(&gPlayerParty[gLastViewedMonIndex], gStringVar1);
             gLastFieldPokeMenuOpened = gLastViewedMonIndex;
-            ShowDaycareStoragePopup(ePartyMenu2.menuHandlerTaskId);
+            ShowDaycareStoragePopup(gPartyMenu.menuHandlerTaskId);
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
@@ -913,7 +913,7 @@ static void Task_OpenDaycareSummary(u8 taskId)
         u8 summaryMonIndex = gSprites[gTasks[taskId].data[3] >> 8].data[0];
 
         DestroyTask(taskId);
-        ePartyMenu2.unusedResumeAction = 1;
+        gPartyMenu.unusedResumeAction = 1;
         ShowPokemonSummaryScreen(gPlayerParty, summaryMonIndex, gPlayerPartyCount - 1, CB2_InitDaycareSummaryReturn, PSS_MODE_NORMAL);
     }
 }

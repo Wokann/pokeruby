@@ -77,10 +77,10 @@ extern u8 gSharedMem[];
 #define sTempWallyBagPokeBalls          ((struct ItemSlot *)(gSharedMem + 0x1F000))
 
 // party_menu.c
-#define ePartyMenu                      (*(struct PartyMenuTwoMonActionState *)(gSharedMem + 0x1000))
+#define sPartyMenuTwoMonAction        (*(struct PartyMenuTwoMonActionState *)(gSharedMem + 0x1000))
 #define sMoveRelearnerMenuSharedMem     (struct MoveRelearnerMenu *)(gSharedMem + 0x17000)
-#define ePartyMenu2                     (*(struct PartyMenuState *)(gSharedMem + 0x1B000))
-#define gPartyMenu                      (*(struct PartyMenuActionState *)(gSharedMem + 0x1C000))
+#define gPartyMenu                      (*(struct PartyMenu *)(gSharedMem + 0x1B000))
+#define sPartyMenuAction                (*(struct PartyMenuActionState *)(gSharedMem + 0x1C000))
 
 // player_pc.c, party_menu.c
 // Ruby's legacy menu stores this four-byte mailbox paging subset in fixed EWRAM.

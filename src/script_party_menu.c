@@ -70,63 +70,63 @@ void OpenPartyMenuFromScriptContext(u8 taskId)
 
 bool8 SetupContestPartyMenu(void)
 {
-    switch (ePartyMenu2.pmSetupState)
+    switch (gPartyMenu.pmSetupState)
     {
     case 0:
-        if (ePartyMenu2.pmMonIndex < gPlayerPartyCount)
+        if (gPartyMenu.pmMonIndex < gPlayerPartyCount)
         {
-            TryCreatePartyMenuMonIcon(ePartyMenu2.menuHandlerTaskId,
-                ePartyMenu2.pmMonIndex, &gPlayerParty[ePartyMenu2.pmMonIndex]);
-            ePartyMenu2.pmMonIndex++;
+            TryCreatePartyMenuMonIcon(gPartyMenu.menuHandlerTaskId,
+                gPartyMenu.pmMonIndex, &gPlayerParty[gPartyMenu.pmMonIndex]);
+            gPartyMenu.pmMonIndex++;
         }
         else
         {
-            ePartyMenu2.pmMonIndex = 0;
-            ePartyMenu2.pmSetupState++;
+            gPartyMenu.pmMonIndex = 0;
+            gPartyMenu.pmSetupState++;
         }
         break;
     case 1:
         LoadHeldItemIconGraphics();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 2:
-        CreatePartyMenuHeldItemIcons(ePartyMenu2.menuHandlerTaskId);
-        ePartyMenu2.pmSetupState++;
+        CreatePartyMenuHeldItemIcons(gPartyMenu.menuHandlerTaskId);
+        gPartyMenu.pmSetupState++;
         break;
     case 3:
-        if (CreatePartyMenuCursor(ePartyMenu2.menuHandlerTaskId, ePartyMenu2.pmMonIndex) != 1)
+        if (CreatePartyMenuCursor(gPartyMenu.menuHandlerTaskId, gPartyMenu.pmMonIndex) != 1)
         {
-            ePartyMenu2.pmMonIndex++;
+            gPartyMenu.pmMonIndex++;
             break;
         }
         else
         {
-            ePartyMenu2.pmMonIndex = 0;
-            ePartyMenu2.pmSetupState++;
+            gPartyMenu.pmMonIndex = 0;
+            gPartyMenu.pmSetupState++;
             break;
         }
     case 4:
         PartyMenuPrintMonsLevelOrStatus();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 5:
         PrintPartyMenuMonNicknames();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 6:
         DrawContestPartyMonStatus();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 7: // the only case that can return true.
-        if (DrawPartyMonBackground(ePartyMenu2.pmMonIndex) != 1)
+        if (DrawPartyMonBackground(gPartyMenu.pmMonIndex) != 1)
         {
-            ePartyMenu2.pmMonIndex++;
+            gPartyMenu.pmMonIndex++;
             break;
         }
         else
         {
-            ePartyMenu2.pmMonIndex = 0;
-            ePartyMenu2.pmSetupState = 0;
+            gPartyMenu.pmMonIndex = 0;
+            gPartyMenu.pmSetupState = 0;
             return TRUE;
         }
     }
@@ -178,61 +178,61 @@ void HandleSelectPartyMenu(u8 taskId)
 
 bool8 SetupMoveRelearnerPartyMenu(void)
 {
-    switch (ePartyMenu2.pmSetupState)
+    switch (gPartyMenu.pmSetupState)
     {
     case 0:
-        if (ePartyMenu2.pmMonIndex < gPlayerPartyCount)
+        if (gPartyMenu.pmMonIndex < gPlayerPartyCount)
         {
-            TryCreatePartyMenuMonIcon(ePartyMenu2.menuHandlerTaskId,
-                ePartyMenu2.pmMonIndex, &gPlayerParty[ePartyMenu2.pmMonIndex]);
-            ePartyMenu2.pmMonIndex++;
+            TryCreatePartyMenuMonIcon(gPartyMenu.menuHandlerTaskId,
+                gPartyMenu.pmMonIndex, &gPlayerParty[gPartyMenu.pmMonIndex]);
+            gPartyMenu.pmMonIndex++;
         }
         else
         {
-            ePartyMenu2.pmMonIndex = 0;
-            ePartyMenu2.pmSetupState++;
+            gPartyMenu.pmMonIndex = 0;
+            gPartyMenu.pmSetupState++;
         }
         break;
     case 1:
         LoadHeldItemIconGraphics();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 2:
-        CreatePartyMenuHeldItemIcons(ePartyMenu2.menuHandlerTaskId);
-        ePartyMenu2.pmSetupState++;
+        CreatePartyMenuHeldItemIcons(gPartyMenu.menuHandlerTaskId);
+        gPartyMenu.pmSetupState++;
         break;
     case 3:
-        if (CreatePartyMenuCursor(ePartyMenu2.menuHandlerTaskId, ePartyMenu2.pmMonIndex) != 1)
+        if (CreatePartyMenuCursor(gPartyMenu.menuHandlerTaskId, gPartyMenu.pmMonIndex) != 1)
         {
-            ePartyMenu2.pmMonIndex++;
+            gPartyMenu.pmMonIndex++;
         }
         else
         {
-            ePartyMenu2.pmMonIndex = 0;
-            ePartyMenu2.pmSetupState++;
+            gPartyMenu.pmMonIndex = 0;
+            gPartyMenu.pmSetupState++;
         }
         break;
     case 4:
         PartyMenuPrintMonsLevelOrStatus();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 5:
         PrintPartyMenuMonNicknames();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 6:
         DrawMoveRelearnerPartyMonStatus();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 7: // the only case that can return true.
-        if (DrawPartyMonBackground(ePartyMenu2.pmMonIndex) != 1)
+        if (DrawPartyMonBackground(gPartyMenu.pmMonIndex) != 1)
         {
-            ePartyMenu2.pmMonIndex++;
+            gPartyMenu.pmMonIndex++;
         }
         else
         {
-            ePartyMenu2.pmMonIndex = 0;
-            ePartyMenu2.pmSetupState = 0;
+            gPartyMenu.pmMonIndex = 0;
+            gPartyMenu.pmSetupState = 0;
             return TRUE;
         }
     }

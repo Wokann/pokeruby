@@ -47,7 +47,7 @@ struct PartyPopupMenu
 #define pmPartyMenuHpBarValue               data[15]
 
 // Shared state for all of Ruby's old-style party menu layouts.
-struct PartyMenuState
+struct PartyMenu
 {
     struct Pokemon partyBuffer[PARTY_SIZE];
     u8 menuType;

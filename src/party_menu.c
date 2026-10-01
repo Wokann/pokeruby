@@ -524,9 +524,9 @@ void SetPartyMenuSettings(u8 menuType, u8 battleTypeFlags, TaskFunc menuHandlerF
         gBattleTypeFlags = battleTypeFlags;
     }
 
-    ePartyMenu2.menuType = menuType;
-    ePartyMenu2.menuHandler = menuHandlerFunc;
-    ePartyMenu2.promptTextId = textId;
+    gPartyMenu.menuType = menuType;
+    gPartyMenu.menuHandler = menuHandlerFunc;
+    gPartyMenu.promptTextId = textId;
 }
 
 void DoOpenPartyMenu(u8 menuType, u8 battleFlags, TaskFunc menuHandlerFunc, u8 textId)
@@ -543,70 +543,70 @@ void OpenPartyMenu(u8 menuType, u8 battleFlags)
 // This is a Task which is repeatedly called until it eventually returns TRUE when finished.
 bool8 SetupDefaultPartyMenu(void)
 {
-    switch (ePartyMenu2.pmSetupState)
+    switch (gPartyMenu.pmSetupState)
     {
     case 0:
-        if (ePartyMenu2.pmMonIndex < gPlayerPartyCount)
+        if (gPartyMenu.pmMonIndex < gPlayerPartyCount)
         {
-            TryCreatePartyMenuMonIcon(ePartyMenu2.menuHandlerTaskId,
-                ePartyMenu2.pmMonIndex, &gPlayerParty[ePartyMenu2.pmMonIndex]);
-            ePartyMenu2.pmMonIndex++;
+            TryCreatePartyMenuMonIcon(gPartyMenu.menuHandlerTaskId,
+                gPartyMenu.pmMonIndex, &gPlayerParty[gPartyMenu.pmMonIndex]);
+            gPartyMenu.pmMonIndex++;
         }
         else
         {
-            ePartyMenu2.pmMonIndex = 0;
-            ePartyMenu2.pmSetupState++;
+            gPartyMenu.pmMonIndex = 0;
+            gPartyMenu.pmSetupState++;
         }
         break;
     case 1:
         LoadHeldItemIconGraphics();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 2:
-        CreatePartyMenuHeldItemIcons(ePartyMenu2.menuHandlerTaskId);
-        ePartyMenu2.pmSetupState++;
+        CreatePartyMenuHeldItemIcons(gPartyMenu.menuHandlerTaskId);
+        gPartyMenu.pmSetupState++;
         break;
     case 3:
-        if (CreatePartyMenuCursor(ePartyMenu2.menuHandlerTaskId, ePartyMenu2.pmMonIndex) != 1)
+        if (CreatePartyMenuCursor(gPartyMenu.menuHandlerTaskId, gPartyMenu.pmMonIndex) != 1)
         {
-            ePartyMenu2.pmMonIndex++;
+            gPartyMenu.pmMonIndex++;
         }
         else
         {
-            ePartyMenu2.pmMonIndex = 0;
-            ePartyMenu2.pmSetupState++;
+            gPartyMenu.pmMonIndex = 0;
+            gPartyMenu.pmSetupState++;
         }
         break;
     case 4:
         PartyMenuPrintMonsLevelOrStatus();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 5:
         PrintPartyMenuMonNicknames();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 6:
         PartyMenuTryPrintMonsHP();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 7:
         PartyMenuNoOpSetupStep();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 8:
         PartyMenuDrawHPBars();
-        ePartyMenu2.pmSetupState++;
+        gPartyMenu.pmSetupState++;
         break;
     case 9:
-        if (DrawPartyMonBackground(ePartyMenu2.pmMonIndex) == 1)
+        if (DrawPartyMonBackground(gPartyMenu.pmMonIndex) == 1)
         {
-            ePartyMenu2.pmMonIndex = 0;
-            ePartyMenu2.pmSetupState = 0;
+            gPartyMenu.pmMonIndex = 0;
+            gPartyMenu.pmSetupState = 0;
             return TRUE;
         }
         else
         {
-            ePartyMenu2.pmMonIndex++;
+            gPartyMenu.pmMonIndex++;
             break;
         }
     }
@@ -632,9 +632,9 @@ bool8 InitPartyMenu(void)
         break;
     case 2:
         InitPartyMenuGpuRegs();
-        ePartyMenu2.pmSetupState = 0;
-        ePartyMenu2.pmMonIndex = 0;
-        ePartyMenu2.pmUnusedData2 = 0;
+        gPartyMenu.pmSetupState = 0;
+        gPartyMenu.pmMonIndex = 0;
+        gPartyMenu.pmUnusedData2 = 0;
         gMain.state++;
         break;
     case 3:
@@ -642,8 +642,8 @@ bool8 InitPartyMenu(void)
         gMain.state++;
         break;
     case 4:
-        if (ePartyMenu2.menuType != PARTY_MENU_TYPE_BATTLE &&
-            ePartyMenu2.menuType != PARTY_MENU_TYPE_LINK_MULTI_BATTLE)
+        if (gPartyMenu.menuType != PARTY_MENU_TYPE_BATTLE &&
+            gPartyMenu.menuType != PARTY_MENU_TYPE_LINK_MULTI_BATTLE)
             ResetTasks();
         gMain.state++;
         break;
@@ -652,7 +652,7 @@ bool8 InitPartyMenu(void)
         gMain.state++;
         break;
     case 6:
-        ePartyMenu2.menuHandlerTaskId = CreateTask(ePartyMenu2.menuHandler, 0);
+        gPartyMenu.menuHandlerTaskId = CreateTask(gPartyMenu.menuHandler, 0);
         gMain.state++;
         break;
     case 7:
@@ -667,19 +667,19 @@ bool8 InitPartyMenu(void)
     case 9:
         if (MultistepLoadFont())
         {
-            ePartyMenu2.pmSetupState = 1;
+            gPartyMenu.pmSetupState = 1;
             gMain.state++;
         }
         break;
     case 10:
-        if (LoadPartyMenuGraphics(ePartyMenu2.pmSetupState) == TRUE)
+        if (LoadPartyMenuGraphics(gPartyMenu.pmSetupState) == TRUE)
         {
-            ePartyMenu2.pmSetupState = 0;
+            gPartyMenu.pmSetupState = 0;
             gMain.state++;
         }
         else
         {
-            ePartyMenu2.pmSetupState++;
+            gPartyMenu.pmSetupState++;
         }
         break;
     case 11:
@@ -687,7 +687,7 @@ bool8 InitPartyMenu(void)
         gMain.state++;
         break;
     case 12:
-        if (sPartyMenuHandlers[ePartyMenu2.menuType].menuSetup() == TRUE)
+        if (sPartyMenuHandlers[gPartyMenu.menuType].menuSetup() == TRUE)
             gMain.state++;
         break;
     case 13:
@@ -699,7 +699,7 @@ bool8 InitPartyMenu(void)
             gMain.state++;
         break;
     case 15:
-        PrintPartyMenuPromptText(ePartyMenu2.promptTextId, 0);
+        PrintPartyMenuPromptText(gPartyMenu.promptTextId, 0);
         gMain.state++;
         break;
     case 16:
@@ -727,8 +727,8 @@ void CB2_InitPartyMenu(void)
             return;
     }
 
-    if (ePartyMenu2.menuType != PARTY_MENU_TYPE_LINK_MULTI_BATTLE)
-        ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
+    if (gPartyMenu.menuType != PARTY_MENU_TYPE_LINK_MULTI_BATTLE)
+        ChangePartyMenuSelection(gPartyMenu.menuHandlerTaskId, 0);
 
     SetMainCallback2(CB2_PartyMenuMain);
 }
@@ -764,12 +764,12 @@ bool8 IsLinkDoubleBattle()
 // Draws the blue rectangular regions surrounding each of the party mons.
 void ReDrawPartyMonBackgrounds(void)
 {
-    if (ePartyMenu2.backgroundRedrawState)
+    if (gPartyMenu.backgroundRedrawState)
     {
         DmaCopy16Defvars(3, gBGTilemapBuffers[2], (void *)(BG_VRAM + 0x3000), 0x800);
 
-        if (ePartyMenu2.backgroundRedrawState == 2)
-            ePartyMenu2.backgroundRedrawState = 0;
+        if (gPartyMenu.backgroundRedrawState == 2)
+            gPartyMenu.backgroundRedrawState = 0;
     }
 }
 
@@ -960,12 +960,12 @@ bool8 DrawPartyMonBackground(u8 monIndex)
         }
         break;
     case 7:
-        if (ePartyMenu2.menuType == PARTY_MENU_TYPE_BATTLE_TOWER)
+        if (gPartyMenu.menuType == PARTY_MENU_TYPE_BATTLE_TOWER)
             DrawBattleTowerOkButton(1);
         DrawPartyMenuCancelButton(1);
         break;
     case 8:
-        ePartyMenu2.backgroundRedrawState = 2;
+        gPartyMenu.backgroundRedrawState = 2;
         return TRUE;
     }
 
@@ -993,7 +993,7 @@ void DrawLinkMultiBattlePartyMonBackgrounds(void)
     else
         DrawPartyMenuLargeMonBackground(monBackgroundCoords[6], monBackgroundCoords[7], TRUE, 3);
 
-    ePartyMenu2.backgroundRedrawState = 2;
+    gPartyMenu.backgroundRedrawState = 2;
 }
 
 void DrawPartyMenuSmallMonBackground(s16 x, u16 y, u8 paletteNum)
@@ -1341,7 +1341,7 @@ void ChangePartyMenuSelection(u8 taskId, s8 directionPressed)
         if (gSprites[spriteId].data[0] == 7)
             DrawPartyMenuCancelButton(2);
 
-        ePartyMenu2.backgroundRedrawState = 2;
+        gPartyMenu.backgroundRedrawState = 2;
 
         gSprites[spriteId].x = sPartyMenuCursorCoords[PARTY_MENU_LAYOUT_LINK_DOUBLE_BATTLE][gSprites[spriteId].data[0]].x;
         gSprites[spriteId].y = sPartyMenuCursorCoords[PARTY_MENU_LAYOUT_LINK_DOUBLE_BATTLE][gSprites[spriteId].data[0]].y;
@@ -1365,7 +1365,7 @@ void ChangePartyMenuSelection(u8 taskId, s8 directionPressed)
         else
             DrawPartyMenuCancelButton(2);
 
-        ePartyMenu2.backgroundRedrawState = 2;
+        gPartyMenu.backgroundRedrawState = 2;
 
         gSprites[spriteId].x = sPartyMenuCursorCoords[isDoubleBattle][gSprites[spriteId].data[0]].x;
         gSprites[spriteId].y = sPartyMenuCursorCoords[isDoubleBattle][gSprites[spriteId].data[0]].y;
@@ -1682,7 +1682,7 @@ void ChangeBattleTowerPartyMenuSelection(u8 taskId, s8 directionPressed)
     else
         DrawPartyMenuCancelButton(2);
 
-    ePartyMenu2.backgroundRedrawState = 2;
+    gPartyMenu.backgroundRedrawState = 2;
 
     newMenuIndex2 = gSprites[spriteId].data[0];
     SetPartyMonIconSelected(taskId, newMenuIndex2, TRUE);
@@ -1713,7 +1713,7 @@ void SelectBattleTowerOKButton(u8 taskId)
 
         DrawBattleTowerOkButton(2);
 
-        ePartyMenu2.backgroundRedrawState = 2;
+        gPartyMenu.backgroundRedrawState = 2;
         PlaySE(SE_SELECT);
     }
 }
@@ -1790,25 +1790,25 @@ u8 GetCursorSelectionMonId(u8 taskId)
 void SetupDefaultPartyMenuSwitchPokemon(u8 taskId)
 {
     gTasks[taskId].func = TaskDummy;
-    ePartyMenu.partyMenuTaskId = taskId;
+    sPartyMenuTwoMonAction.partyMenuTaskId = taskId;
 
     CreateTask(HandlePartyMenuSwitchPokemonInput, 0);
-    ePartyMenu.firstSelectedMonSpriteId = CreateInvisibleSpriteWithCallback(SpriteCallbackDummy);
+    sPartyMenuTwoMonAction.firstSelectedMonSpriteId = CreateInvisibleSpriteWithCallback(SpriteCallbackDummy);
 
-    CopyPartyMenuCursorSprite(taskId, ePartyMenu.firstSelectedMonSpriteId);
-    ePartyMenu.currentSelectionSpriteId = GetPartyMenuCursorSpriteId(taskId);
+    CopyPartyMenuCursorSprite(taskId, sPartyMenuTwoMonAction.firstSelectedMonSpriteId);
+    sPartyMenuTwoMonAction.currentSelectionSpriteId = GetPartyMenuCursorSpriteId(taskId);
 
-    PrintPartyMenuPromptText(ePartyMenu2.pmTwoMonActionPromptTextId, 0);
+    PrintPartyMenuPromptText(gPartyMenu.pmTwoMonActionPromptTextId, 0);
 
-    DrawPartyMenuMonBackgroundWithStatus(&sPartyMenuMonBackgroundCoords[gSprites[ePartyMenu.firstSelectedMonSpriteId].data[0] * 2], gSprites[ePartyMenu.firstSelectedMonSpriteId].data[0], 6, FALSE);
-    ePartyMenu2.backgroundRedrawState = 2;
+    DrawPartyMenuMonBackgroundWithStatus(&sPartyMenuMonBackgroundCoords[gSprites[sPartyMenuTwoMonAction.firstSelectedMonSpriteId].data[0] * 2], gSprites[sPartyMenuTwoMonAction.firstSelectedMonSpriteId].data[0], 6, FALSE);
+    gPartyMenu.backgroundRedrawState = 2;
 }
 
 // Handles changing the the current mon selection when choosing mons to swap places.
 void ChangePartyMenuSwitchPokemonSelection(u8 taskId, s16 menuDirectionPressed)
 {
-    struct Sprite *firstSelectedMonSprite = &gSprites[ePartyMenu.firstSelectedMonSpriteId];
-    struct Sprite *currentSelectionSprite = &gSprites[ePartyMenu.currentSelectionSpriteId];
+    struct Sprite *firstSelectedMonSprite = &gSprites[sPartyMenuTwoMonAction.firstSelectedMonSpriteId];
+    struct Sprite *currentSelectionSprite = &gSprites[sPartyMenuTwoMonAction.currentSelectionSpriteId];
 
     ChangePartyMenuSelection(taskId, menuDirectionPressed);
 
@@ -1823,23 +1823,23 @@ void HandlePartyMenuSwitchPokemonInput(u8 taskId)
     switch (gMain.newAndRepeatedKeys)
     {
     case DPAD_UP:
-        ChangePartyMenuSwitchPokemonSelection(ePartyMenu.partyMenuTaskId, -1);
+        ChangePartyMenuSwitchPokemonSelection(sPartyMenuTwoMonAction.partyMenuTaskId, -1);
         break;
     case DPAD_DOWN:
-        ChangePartyMenuSwitchPokemonSelection(ePartyMenu.partyMenuTaskId, 1);
+        ChangePartyMenuSwitchPokemonSelection(sPartyMenuTwoMonAction.partyMenuTaskId, 1);
         break;
     case DPAD_LEFT:
-        ChangePartyMenuSwitchPokemonSelection(ePartyMenu.partyMenuTaskId, -2);
+        ChangePartyMenuSwitchPokemonSelection(sPartyMenuTwoMonAction.partyMenuTaskId, -2);
         break;
     case DPAD_RIGHT:
-        ChangePartyMenuSwitchPokemonSelection(ePartyMenu.partyMenuTaskId, 2);
+        ChangePartyMenuSwitchPokemonSelection(sPartyMenuTwoMonAction.partyMenuTaskId, 2);
         break;
     }
 
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(5);
-        gTasks[taskId].func = ePartyMenu.twoMonActionCallback;
+        gTasks[taskId].func = sPartyMenuTwoMonAction.twoMonActionCallback;
         gTasks[taskId].func(taskId);
     }
     else if (gMain.newKeys == B_BUTTON)
@@ -1851,25 +1851,25 @@ void HandlePartyMenuSwitchPokemonInput(u8 taskId)
 
 void FinishTwoMonAction(u8 taskId)
 {
-    DestroySprite(&gSprites[ePartyMenu.firstSelectedMonSpriteId]);
+    DestroySprite(&gSprites[sPartyMenuTwoMonAction.firstSelectedMonSpriteId]);
     PrintPartyMenuPromptText(0, 0);
 
-    ePartyMenu2.backgroundRedrawState = 2;
-    SwitchTaskToFollowupFunc(ePartyMenu.partyMenuTaskId);
+    gPartyMenu.backgroundRedrawState = 2;
+    SwitchTaskToFollowupFunc(sPartyMenuTwoMonAction.partyMenuTaskId);
     DestroyTask(taskId);
 }
 
 void FinishTwoMonActionAfterSwitch(u8 taskId)
 {
-    DrawPartyMenuMonBackgroundWithStatus(&sPartyMenuMonBackgroundCoords[gSprites[ePartyMenu.currentSelectionSpriteId].data[0] * 2], gSprites[ePartyMenu.currentSelectionSpriteId].data[0], 3, TRUE);
-    DrawPartyMenuMonBackgroundWithStatus(&sPartyMenuMonBackgroundCoords[gSprites[ePartyMenu.firstSelectedMonSpriteId].data[0] * 2], gSprites[ePartyMenu.firstSelectedMonSpriteId].data[0], 3, FALSE);
+    DrawPartyMenuMonBackgroundWithStatus(&sPartyMenuMonBackgroundCoords[gSprites[sPartyMenuTwoMonAction.currentSelectionSpriteId].data[0] * 2], gSprites[sPartyMenuTwoMonAction.currentSelectionSpriteId].data[0], 3, TRUE);
+    DrawPartyMenuMonBackgroundWithStatus(&sPartyMenuMonBackgroundCoords[gSprites[sPartyMenuTwoMonAction.firstSelectedMonSpriteId].data[0] * 2], gSprites[sPartyMenuTwoMonAction.firstSelectedMonSpriteId].data[0], 3, FALSE);
     FinishTwoMonAction(taskId);
 }
 
 void ResetTwoMonActionSelection()
 {
-    u8 firstMonIndex = gSprites[ePartyMenu.firstSelectedMonSpriteId].data[0];
-    u8 secondMonIndex = gSprites[ePartyMenu.currentSelectionSpriteId].data[0];
+    u8 firstMonIndex = gSprites[sPartyMenuTwoMonAction.firstSelectedMonSpriteId].data[0];
+    u8 secondMonIndex = gSprites[sPartyMenuTwoMonAction.currentSelectionSpriteId].data[0];
 
     if (firstMonIndex <= 5)
         DrawPartyMenuMonBackgroundWithStatus(&sPartyMenuMonBackgroundCoords[firstMonIndex * 2], firstMonIndex, 3, FALSE);
@@ -1885,8 +1885,8 @@ void CancelTwoMonAction(u8 taskId)
 
 void Task_SwitchSelectedPartyMons(u8 taskId)
 {
-    u8 firstMonIndex = gSprites[ePartyMenu.firstSelectedMonSpriteId].data[0];
-    u8 secondMonIndex = gSprites[ePartyMenu.currentSelectionSpriteId].data[0];
+    u8 firstMonIndex = gSprites[sPartyMenuTwoMonAction.firstSelectedMonSpriteId].data[0];
+    u8 secondMonIndex = gSprites[sPartyMenuTwoMonAction.currentSelectionSpriteId].data[0];
 
     if (firstMonIndex == secondMonIndex || firstMonIndex == 7 || secondMonIndex == 7)
     {
@@ -1901,48 +1901,48 @@ void Task_SwitchSelectedPartyMons(u8 taskId)
 
         if (firstMonIndex > secondMonIndex)
         {
-            ePartyMenu.lowerMonIndex = secondMonIndex;
-            ePartyMenu.higherMonIndex = firstMonIndex;
+            sPartyMenuTwoMonAction.lowerMonIndex = secondMonIndex;
+            sPartyMenuTwoMonAction.higherMonIndex = firstMonIndex;
         }
         else
         {
-            ePartyMenu.lowerMonIndex = firstMonIndex;
-            ePartyMenu.higherMonIndex = secondMonIndex;
+            sPartyMenuTwoMonAction.lowerMonIndex = firstMonIndex;
+            sPartyMenuTwoMonAction.higherMonIndex = secondMonIndex;
         }
 
-        ePartyMenu.lowerMonIconSpriteId = GetMonIconSpriteId(ePartyMenu.partyMenuTaskId, ePartyMenu.lowerMonIndex);
-        ePartyMenu.higherMonIconSpriteId = GetMonIconSpriteId(ePartyMenu.partyMenuTaskId, ePartyMenu.higherMonIndex);
+        sPartyMenuTwoMonAction.lowerMonIconSpriteId = GetMonIconSpriteId(sPartyMenuTwoMonAction.partyMenuTaskId, sPartyMenuTwoMonAction.lowerMonIndex);
+        sPartyMenuTwoMonAction.higherMonIconSpriteId = GetMonIconSpriteId(sPartyMenuTwoMonAction.partyMenuTaskId, sPartyMenuTwoMonAction.higherMonIndex);
 
-        lowerMonIndex = ePartyMenu.lowerMonIndex;
+        lowerMonIndex = sPartyMenuTwoMonAction.lowerMonIndex;
         if (!lowerMonIndex)
         {
-            gSprites[ePartyMenu.lowerMonIconSpriteId].data[0] = -8;
-            gSprites[ePartyMenu.lowerMonIconSpriteId].data[2] = -0xA8;
-            ePartyMenu.lowerMonBackgroundX = lowerMonIndex;
-            ePartyMenu.higherMonBackgroundX = 11;
+            gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].data[0] = -8;
+            gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].data[2] = -0xA8;
+            sPartyMenuTwoMonAction.lowerMonBackgroundX = lowerMonIndex;
+            sPartyMenuTwoMonAction.higherMonBackgroundX = 11;
 
             gTasks[taskId].func = Task_AnimatePartyMenuLeftColumnSwitchOut;
-            ePartyMenu2.backgroundRedrawState = 1;
+            gPartyMenu.backgroundRedrawState = 1;
         }
         else
         {
-            gSprites[ePartyMenu.lowerMonIconSpriteId].data[0] = 8;
-            gSprites[ePartyMenu.lowerMonIconSpriteId].data[2] = 0xA8;
-            ePartyMenu.lowerMonBackgroundX = 11;
-            ePartyMenu.higherMonBackgroundX = 11;
+            gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].data[0] = 8;
+            gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].data[2] = 0xA8;
+            sPartyMenuTwoMonAction.lowerMonBackgroundX = 11;
+            sPartyMenuTwoMonAction.higherMonBackgroundX = 11;
 
             gTasks[taskId].func = Task_AnimatePartyMenuRightColumnSwitchOut;
-            ePartyMenu2.backgroundRedrawState = 1;
+            gPartyMenu.backgroundRedrawState = 1;
         }
 
-        gSprites[ePartyMenu.lowerMonIconSpriteId].callback = SpriteCB_PartyMonIconSlide;
+        gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].callback = SpriteCB_PartyMonIconSlide;
 
-        gSprites[ePartyMenu.higherMonIconSpriteId].data[0] = 8;
-        gSprites[ePartyMenu.higherMonIconSpriteId].data[2] = 0xA8;
-        gSprites[ePartyMenu.higherMonIconSpriteId].callback = SpriteCB_PartyMonIconSlide;
+        gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].data[0] = 8;
+        gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].data[2] = 0xA8;
+        gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].callback = SpriteCB_PartyMonIconSlide;
 
-        gSprites[ePartyMenu.lowerMonIconSpriteId].callback(&gSprites[ePartyMenu.lowerMonIconSpriteId]);
-        gSprites[ePartyMenu.higherMonIconSpriteId].callback(&gSprites[ePartyMenu.higherMonIconSpriteId]);
+        gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].callback(&gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId]);
+        gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].callback(&gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId]);
     }
 }
 
@@ -1955,42 +1955,42 @@ void SwapValues_s16(s16 *first, s16 *second)
 
 void SwapPartyMenuMonIconPositions(void)
 {
-    SwapValues_s16(&gSprites[ePartyMenu.lowerMonIconSpriteId].x, &gSprites[ePartyMenu.higherMonIconSpriteId].x);
-    SwapValues_s16(&gSprites[ePartyMenu.lowerMonIconSpriteId].y, &gSprites[ePartyMenu.higherMonIconSpriteId].y);
-    SwapValues_s16(&gSprites[ePartyMenu.lowerMonIconSpriteId].x2, &gSprites[ePartyMenu.higherMonIconSpriteId].x2);
-    SwapValues_s16(&gSprites[ePartyMenu.lowerMonIconSpriteId].data[0], &gSprites[ePartyMenu.higherMonIconSpriteId].data[0]);
+    SwapValues_s16(&gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].x, &gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].x);
+    SwapValues_s16(&gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].y, &gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].y);
+    SwapValues_s16(&gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].x2, &gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].x2);
+    SwapValues_s16(&gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].data[0], &gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].data[0]);
 
-    gSprites[ePartyMenu.lowerMonIconSpriteId].callback = SpriteCB_PartyMonIconSlide;
-    gSprites[ePartyMenu.higherMonIconSpriteId].callback = SpriteCB_PartyMonIconSlide;
+    gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].callback = SpriteCB_PartyMonIconSlide;
+    gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].callback = SpriteCB_PartyMonIconSlide;
 }
 
 void AnimatePartyMenuLeftColumnSwitchBackgrounds(u8 taskId, bool8 restore)
 {
-    u8 higherMonY = ((ePartyMenu.higherMonIndex - 1) * 3) + 1;
+    u8 higherMonY = ((sPartyMenuTwoMonAction.higherMonIndex - 1) * 3) + 1;
 
-    ClearPartyMenuSmallMonBackground(ePartyMenu.lowerMonBackgroundX, 3);
-    ClearPartyMenuLargeMonBackground(ePartyMenu.higherMonBackgroundX, higherMonY);
+    ClearPartyMenuSmallMonBackground(sPartyMenuTwoMonAction.lowerMonBackgroundX, 3);
+    ClearPartyMenuLargeMonBackground(sPartyMenuTwoMonAction.higherMonBackgroundX, higherMonY);
 
     if (restore == FALSE)
     {
-        ePartyMenu.lowerMonBackgroundX--;
-        ePartyMenu.higherMonBackgroundX++;
+        sPartyMenuTwoMonAction.lowerMonBackgroundX--;
+        sPartyMenuTwoMonAction.higherMonBackgroundX++;
     }
     else
     {
-        ePartyMenu.lowerMonBackgroundX++;
-        ePartyMenu.higherMonBackgroundX--;
+        sPartyMenuTwoMonAction.lowerMonBackgroundX++;
+        sPartyMenuTwoMonAction.higherMonBackgroundX--;
     }
 
-    DrawPartyMenuSmallMonBackground(ePartyMenu.lowerMonBackgroundX, 3, 10);
-    DrawPartyMenuLargeMonBackground(ePartyMenu.higherMonBackgroundX, higherMonY, FALSE, 10);
+    DrawPartyMenuSmallMonBackground(sPartyMenuTwoMonAction.lowerMonBackgroundX, 3, 10);
+    DrawPartyMenuLargeMonBackground(sPartyMenuTwoMonAction.higherMonBackgroundX, higherMonY, FALSE, 10);
 }
 
 void Task_AnimatePartyMenuLeftColumnSwitchOut(u8 taskId)
 {
     AnimatePartyMenuLeftColumnSwitchBackgrounds(taskId, FALSE);
 
-    if (ePartyMenu.lowerMonBackgroundX < -13 && ePartyMenu.higherMonBackgroundX > 32)
+    if (sPartyMenuTwoMonAction.lowerMonBackgroundX < -13 && sPartyMenuTwoMonAction.higherMonBackgroundX > 32)
     {
         SwapPartyMenuMonIconPositions();
         gTasks[taskId].func = Task_AnimatePartyMenuLeftColumnSwitchIn;
@@ -2001,38 +2001,38 @@ void Task_AnimatePartyMenuLeftColumnSwitchIn(u8 taskId)
 {
     AnimatePartyMenuLeftColumnSwitchBackgrounds(taskId, TRUE);
 
-    if (ePartyMenu.lowerMonBackgroundX == 0 && ePartyMenu.higherMonBackgroundX == 11)
+    if (sPartyMenuTwoMonAction.lowerMonBackgroundX == 0 && sPartyMenuTwoMonAction.higherMonBackgroundX == 11)
         gTasks[taskId].func = FinishPartyMenuMonSwitch;
 }
 
 void AnimatePartyMenuRightColumnSwitchBackgrounds(u8 taskId, bool8 restore)
 {
-    u8 lowerMonY = ((ePartyMenu.lowerMonIndex - 1) * 3) + 1;
-    u8 higherMonY = ((ePartyMenu.higherMonIndex - 1) * 3) + 1;
+    u8 lowerMonY = ((sPartyMenuTwoMonAction.lowerMonIndex - 1) * 3) + 1;
+    u8 higherMonY = ((sPartyMenuTwoMonAction.higherMonIndex - 1) * 3) + 1;
 
-    ClearPartyMenuLargeMonBackground(ePartyMenu.lowerMonBackgroundX, lowerMonY);
-    ClearPartyMenuLargeMonBackground(ePartyMenu.higherMonBackgroundX, higherMonY);
+    ClearPartyMenuLargeMonBackground(sPartyMenuTwoMonAction.lowerMonBackgroundX, lowerMonY);
+    ClearPartyMenuLargeMonBackground(sPartyMenuTwoMonAction.higherMonBackgroundX, higherMonY);
 
     if (restore == FALSE)
     {
-        ePartyMenu.lowerMonBackgroundX++;
-        ePartyMenu.higherMonBackgroundX++;
+        sPartyMenuTwoMonAction.lowerMonBackgroundX++;
+        sPartyMenuTwoMonAction.higherMonBackgroundX++;
     }
     else
     {
-        ePartyMenu.lowerMonBackgroundX--;
-        ePartyMenu.higherMonBackgroundX--;
+        sPartyMenuTwoMonAction.lowerMonBackgroundX--;
+        sPartyMenuTwoMonAction.higherMonBackgroundX--;
     }
 
-    DrawPartyMenuLargeMonBackground(ePartyMenu.lowerMonBackgroundX, lowerMonY, FALSE, 10);
-    DrawPartyMenuLargeMonBackground(ePartyMenu.higherMonBackgroundX, higherMonY, FALSE, 10);
+    DrawPartyMenuLargeMonBackground(sPartyMenuTwoMonAction.lowerMonBackgroundX, lowerMonY, FALSE, 10);
+    DrawPartyMenuLargeMonBackground(sPartyMenuTwoMonAction.higherMonBackgroundX, higherMonY, FALSE, 10);
 }
 
 void Task_AnimatePartyMenuRightColumnSwitchOut(u8 taskId)
 {
     AnimatePartyMenuRightColumnSwitchBackgrounds(taskId, FALSE);
 
-    if (ePartyMenu.lowerMonBackgroundX > 32 && ePartyMenu.higherMonBackgroundX > 32)
+    if (sPartyMenuTwoMonAction.lowerMonBackgroundX > 32 && sPartyMenuTwoMonAction.higherMonBackgroundX > 32)
     {
         SwapPartyMenuMonIconPositions();
         gTasks[taskId].func = Task_AnimatePartyMenuRightColumnSwitchIn;
@@ -2043,7 +2043,7 @@ void Task_AnimatePartyMenuRightColumnSwitchIn(u8 taskId)
 {
     AnimatePartyMenuRightColumnSwitchBackgrounds(taskId, TRUE);
 
-    if (ePartyMenu.lowerMonBackgroundX == 11 && ePartyMenu.higherMonBackgroundX == 11)
+    if (sPartyMenuTwoMonAction.lowerMonBackgroundX == 11 && sPartyMenuTwoMonAction.higherMonBackgroundX == 11)
         gTasks[taskId].func = FinishPartyMenuMonSwitch;
 }
 
@@ -2051,35 +2051,35 @@ void FinishPartyMenuMonSwitch(u8 taskId)
 {
     u8 spriteId;
 
-    SetMonIconSpriteId(ePartyMenu.partyMenuTaskId, ePartyMenu.lowerMonIndex, ePartyMenu.higherMonIconSpriteId);
-    SetMonIconSpriteId(ePartyMenu.partyMenuTaskId, ePartyMenu.higherMonIndex, ePartyMenu.lowerMonIconSpriteId);
+    SetMonIconSpriteId(sPartyMenuTwoMonAction.partyMenuTaskId, sPartyMenuTwoMonAction.lowerMonIndex, sPartyMenuTwoMonAction.higherMonIconSpriteId);
+    SetMonIconSpriteId(sPartyMenuTwoMonAction.partyMenuTaskId, sPartyMenuTwoMonAction.higherMonIndex, sPartyMenuTwoMonAction.lowerMonIconSpriteId);
 
-    gSprites[ePartyMenu.lowerMonIconSpriteId].x = sPartyMenuMonIconCoords[IsDoubleBattle()][ePartyMenu.higherMonIndex].x;
-    gSprites[ePartyMenu.lowerMonIconSpriteId].y = sPartyMenuMonIconCoords[IsDoubleBattle()][ePartyMenu.higherMonIndex].y;
-    gSprites[ePartyMenu.lowerMonIconSpriteId].x2 = 0;
-    gSprites[ePartyMenu.lowerMonIconSpriteId].y2 = 0;
-    gSprites[ePartyMenu.lowerMonIconSpriteId].callback = UpdatePartyMonIconFrame;
+    gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].x = sPartyMenuMonIconCoords[IsDoubleBattle()][sPartyMenuTwoMonAction.higherMonIndex].x;
+    gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].y = sPartyMenuMonIconCoords[IsDoubleBattle()][sPartyMenuTwoMonAction.higherMonIndex].y;
+    gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].x2 = 0;
+    gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].y2 = 0;
+    gSprites[sPartyMenuTwoMonAction.lowerMonIconSpriteId].callback = UpdatePartyMonIconFrame;
 
-    gSprites[ePartyMenu.higherMonIconSpriteId].x = sPartyMenuMonIconCoords[IsDoubleBattle()][ePartyMenu.lowerMonIndex].x;
-    gSprites[ePartyMenu.higherMonIconSpriteId].y = sPartyMenuMonIconCoords[IsDoubleBattle()][ePartyMenu.lowerMonIndex].y;
-    gSprites[ePartyMenu.higherMonIconSpriteId].x2 = 0;
-    gSprites[ePartyMenu.higherMonIconSpriteId].y2 = 0;
-    gSprites[ePartyMenu.higherMonIconSpriteId].callback = UpdatePartyMonIconFrame;
+    gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].x = sPartyMenuMonIconCoords[IsDoubleBattle()][sPartyMenuTwoMonAction.lowerMonIndex].x;
+    gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].y = sPartyMenuMonIconCoords[IsDoubleBattle()][sPartyMenuTwoMonAction.lowerMonIndex].y;
+    gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].x2 = 0;
+    gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].y2 = 0;
+    gSprites[sPartyMenuTwoMonAction.higherMonIconSpriteId].callback = UpdatePartyMonIconFrame;
 
-    spriteId = GetMonIconSpriteId(ePartyMenu.partyMenuTaskId, gSprites[ePartyMenu.currentSelectionSpriteId].data[0]);
+    spriteId = GetMonIconSpriteId(sPartyMenuTwoMonAction.partyMenuTaskId, gSprites[sPartyMenuTwoMonAction.currentSelectionSpriteId].data[0]);
     gSprites[spriteId].callback = UpdatePartyMonIconFrameAndBounce;
 
-    SwapPokemon(&gPlayerParty[ePartyMenu.lowerMonIndex], &gPlayerParty[ePartyMenu.higherMonIndex]);
+    SwapPokemon(&gPlayerParty[sPartyMenuTwoMonAction.lowerMonIndex], &gPlayerParty[sPartyMenuTwoMonAction.higherMonIndex]);
 
-    PartyMenuPrintMonLevelOrStatus(ePartyMenu.lowerMonIndex, &gPlayerParty[ePartyMenu.lowerMonIndex]);
-    TryPrintPartyMenuMonNickname(ePartyMenu.lowerMonIndex, &gPlayerParty[ePartyMenu.lowerMonIndex]);
-    PartyMenuTryPrintHP(ePartyMenu.lowerMonIndex, &gPlayerParty[ePartyMenu.lowerMonIndex]);
-    PartyMenuNoOpMonUpdate(ePartyMenu.lowerMonIndex, &gPlayerParty[ePartyMenu.lowerMonIndex]);
+    PartyMenuPrintMonLevelOrStatus(sPartyMenuTwoMonAction.lowerMonIndex, &gPlayerParty[sPartyMenuTwoMonAction.lowerMonIndex]);
+    TryPrintPartyMenuMonNickname(sPartyMenuTwoMonAction.lowerMonIndex, &gPlayerParty[sPartyMenuTwoMonAction.lowerMonIndex]);
+    PartyMenuTryPrintHP(sPartyMenuTwoMonAction.lowerMonIndex, &gPlayerParty[sPartyMenuTwoMonAction.lowerMonIndex]);
+    PartyMenuNoOpMonUpdate(sPartyMenuTwoMonAction.lowerMonIndex, &gPlayerParty[sPartyMenuTwoMonAction.lowerMonIndex]);
 
-    PartyMenuPrintMonLevelOrStatus(ePartyMenu.higherMonIndex, &gPlayerParty[ePartyMenu.higherMonIndex]);
-    TryPrintPartyMenuMonNickname(ePartyMenu.higherMonIndex, &gPlayerParty[ePartyMenu.higherMonIndex]);
-    PartyMenuTryPrintHP(ePartyMenu.higherMonIndex, &gPlayerParty[ePartyMenu.higherMonIndex]);
-    PartyMenuNoOpMonUpdate(ePartyMenu.higherMonIndex, &gPlayerParty[ePartyMenu.higherMonIndex]);
+    PartyMenuPrintMonLevelOrStatus(sPartyMenuTwoMonAction.higherMonIndex, &gPlayerParty[sPartyMenuTwoMonAction.higherMonIndex]);
+    TryPrintPartyMenuMonNickname(sPartyMenuTwoMonAction.higherMonIndex, &gPlayerParty[sPartyMenuTwoMonAction.higherMonIndex]);
+    PartyMenuTryPrintHP(sPartyMenuTwoMonAction.higherMonIndex, &gPlayerParty[sPartyMenuTwoMonAction.higherMonIndex]);
+    PartyMenuNoOpMonUpdate(sPartyMenuTwoMonAction.higherMonIndex, &gPlayerParty[sPartyMenuTwoMonAction.higherMonIndex]);
 
     PartyMenuDrawHPBars();
     FinishTwoMonActionAfterSwitch(taskId);
@@ -2900,11 +2900,11 @@ static void Task_PartyMenuPrintRun(u8 taskId)
 
 void SetPartyMenuItemUseContext(u8 taskId, u16 itemOrMoveId, TaskFunc followupCallback)
 {
-    gPartyMenu.followupCallback = followupCallback;
-    gPartyMenu.menuTaskId = taskId;
-    gPartyMenu.selectedMonIndex = GetCursorSelectionMonId(taskId);
-    gPartyMenu.itemOrMoveId = itemOrMoveId;
-    gPartyMenu.selectedMon = &gPlayerParty[gPartyMenu.selectedMonIndex];
+    sPartyMenuAction.followupCallback = followupCallback;
+    sPartyMenuAction.menuTaskId = taskId;
+    sPartyMenuAction.selectedMonIndex = GetCursorSelectionMonId(taskId);
+    sPartyMenuAction.itemOrMoveId = itemOrMoveId;
+    sPartyMenuAction.selectedMon = &gPlayerParty[sPartyMenuAction.selectedMonIndex];
 }
 
 bool8 PartyMenuUpdateMonHeldItem(struct Pokemon *pkmn, u16 item)
@@ -2934,7 +2934,7 @@ void PartyMenuTryGiveMonHeldItem(u8 taskId, u16 newItem, TaskFunc followupCallba
 
     gTasks[taskId].func = TaskDummy;
     SetPartyMenuItemUseContext(taskId, newItem, followupCallback);
-    currentItem = GetMonData(gPartyMenu.selectedMon, MON_DATA_HELD_ITEM);
+    currentItem = GetMonData(sPartyMenuAction.selectedMon, MON_DATA_HELD_ITEM);
     gPartyMenuActionResult = 0;
     gPartyMenuPreviousHeldItem = 0;
     if (currentItem != 0)
@@ -2946,7 +2946,7 @@ void PartyMenuTryGiveMonHeldItem(u8 taskId, u16 newItem, TaskFunc followupCallba
         }
         else
         {
-            GetMonNickname(gPartyMenu.selectedMon, gStringVar1);
+            GetMonNickname(sPartyMenuAction.selectedMon, gStringVar1);
             CopyItemName(currentItem, gStringVar2);
             StringExpandPlaceholders(gStringVar4, gOtherText_AlreadyHolding);
             DisplayPartyMenuMessage(gStringVar4, 1);
@@ -2957,7 +2957,7 @@ void PartyMenuTryGiveMonHeldItem(u8 taskId, u16 newItem, TaskFunc followupCallba
     }
     else
     {
-        PartyMenuUpdateMonHeldItem(gPartyMenu.selectedMon, newItem);
+        PartyMenuUpdateMonHeldItem(sPartyMenuAction.selectedMon, newItem);
         RemoveBagItem(newItem, 1);
         if (ItemIsMail(newItem))
         {
@@ -2965,7 +2965,7 @@ void PartyMenuTryGiveMonHeldItem(u8 taskId, u16 newItem, TaskFunc followupCallba
         }
         else
         {
-            DisplayGiveHeldItemMessage(gPartyMenu.selectedMonIndex, newItem, 1);
+            DisplayGiveHeldItemMessage(sPartyMenuAction.selectedMonIndex, newItem, 1);
             CreateTask(Task_UpdatePartyMenuHeldItemIconAndFollowup, 5);
         }
     }
@@ -2975,8 +2975,8 @@ void Task_UpdatePartyMenuHeldItemIconAndFollowup(u8 taskId)
 {
     if (gPartyMenuMessage_IsPrinting == 0)
     {
-        SetHeldItemIconVisibility(gPartyMenu.menuTaskId, gPartyMenu.selectedMonIndex);
-        gTasks[gPartyMenu.menuTaskId].func = gPartyMenu.followupCallback;
+        SetHeldItemIconVisibility(sPartyMenuAction.menuTaskId, sPartyMenuAction.selectedMonIndex);
+        gTasks[sPartyMenuAction.menuTaskId].func = sPartyMenuAction.followupCallback;
         DestroyTask(taskId);
     }
 }
@@ -2990,18 +2990,18 @@ void Task_HandleHeldItemReplacement(u8 taskId)
         u16 currentItem;
 
         Menu_EraseWindowRect(23, 8, 29, 13);
-        currentItem = GetMonData(gPartyMenu.selectedMon, MON_DATA_HELD_ITEM);
-        RemoveBagItem(gPartyMenu.itemOrMoveId, 1);
+        currentItem = GetMonData(sPartyMenuAction.selectedMon, MON_DATA_HELD_ITEM);
+        RemoveBagItem(sPartyMenuAction.itemOrMoveId, 1);
         if (AddBagItem(currentItem, 1) == TRUE)
         {
-            PartyMenuUpdateMonHeldItem(gPartyMenu.selectedMon, gPartyMenu.itemOrMoveId);
-            if (ItemIsMail(gPartyMenu.itemOrMoveId))
+            PartyMenuUpdateMonHeldItem(sPartyMenuAction.selectedMon, sPartyMenuAction.itemOrMoveId);
+            if (ItemIsMail(sPartyMenuAction.itemOrMoveId))
             {
-                DisplayTakeHeldItemMessage(gPartyMenu.selectedMonIndex, currentItem, 1);
+                DisplayTakeHeldItemMessage(sPartyMenuAction.selectedMonIndex, currentItem, 1);
             }
             else
             {
-                CopyItemName(gPartyMenu.itemOrMoveId, gStringVar1);
+                CopyItemName(sPartyMenuAction.itemOrMoveId, gStringVar1);
                 StringExpandPlaceholders(gStringVar4, gOtherText_TakenAndReplaced);
                 DisplayPartyMenuMessage(gStringVar4, 1);
             }
@@ -3009,7 +3009,7 @@ void Task_HandleHeldItemReplacement(u8 taskId)
         else
         {
             DisplayPartyMenuMessage(gOtherText_BagFullCannotRemoveItem, 0);
-            AddBagItem(gPartyMenu.itemOrMoveId, 1);
+            AddBagItem(sPartyMenuAction.itemOrMoveId, 1);
         }
     }
     else
@@ -3048,7 +3048,7 @@ void PartyMenuTryGiveMonMail(u8 taskId, TaskFunc followupCallback)
 
     gTasks[taskId].func = TaskDummy;
     SetPartyMenuItemUseContext(taskId, 0, followupCallback);
-    currentItem = GetMonData(gPartyMenu.selectedMon, MON_DATA_HELD_ITEM);
+    currentItem = GetMonData(sPartyMenuAction.selectedMon, MON_DATA_HELD_ITEM);
     gPartyMenuActionResult = 0;
     mailIndex = gPlayerPCItemPageInfo.cursorPos + 6;
     mail = &gSaveBlock1.mail[mailIndex + gPlayerPCItemPageInfo.itemsAbove];
@@ -3060,7 +3060,7 @@ void PartyMenuTryGiveMonMail(u8 taskId, TaskFunc followupCallback)
     }
     else
     {
-        GiveMailToMon(gPartyMenu.selectedMon, mail);
+        GiveMailToMon(sPartyMenuAction.selectedMon, mail);
         ClearMail(mail);
         DisplayPartyMenuMessage(gOtherText_MailTransferredMailbox, 1);
         CreateTask(Task_UpdatePartyMenuHeldItemIconAndFollowup, 5);
@@ -3073,7 +3073,7 @@ void TryTakePartyMonHeldItem(u8 taskId, TaskFunc followupCallback)
 
     gTasks[taskId].func = TaskDummy;
     SetPartyMenuItemUseContext(taskId, 0, followupCallback);
-    currentItem = GetMonData(gPartyMenu.selectedMon, MON_DATA_HELD_ITEM);
+    currentItem = GetMonData(sPartyMenuAction.selectedMon, MON_DATA_HELD_ITEM);
     if (currentItem == 0)
     {
         StringExpandPlaceholders(gStringVar4, gOtherText_NotHoldingAnything);
@@ -3089,9 +3089,9 @@ void TryTakePartyMonHeldItem(u8 taskId, TaskFunc followupCallback)
         if (AddBagItem(currentItem, 1) == TRUE)
         {
             if (ItemIsMail(currentItem) == TRUE)
-                TakeMailFromMon(gPartyMenu.selectedMon);
-            DisplayTakeHeldItemMessage(gPartyMenu.selectedMonIndex, currentItem, 0);
-            SetMonData(gPartyMenu.selectedMon, MON_DATA_HELD_ITEM, itemData);
+                TakeMailFromMon(sPartyMenuAction.selectedMon);
+            DisplayTakeHeldItemMessage(sPartyMenuAction.selectedMonIndex, currentItem, 0);
+            SetMonData(sPartyMenuAction.selectedMon, MON_DATA_HELD_ITEM, itemData);
         }
         else
         {
@@ -3113,7 +3113,7 @@ void DoTakeMail(u8 taskId, TaskFunc followupCallback)
 {
     gTasks[taskId].func = TaskDummy;
     SetPartyMenuItemUseContext(taskId, 0, followupCallback);
-    gPartyMenu.itemOrMoveId = GetMonData(gPartyMenu.selectedMon, MON_DATA_HELD_ITEM);
+    sPartyMenuAction.itemOrMoveId = GetMonData(sPartyMenuAction.selectedMon, MON_DATA_HELD_ITEM);
     DisplayPartyMenuMessage(gOtherText_SendRemovedMailPrompt, 1);
     CreateTask(Task_ConfirmTakeHeldMail, 5);
 }
@@ -3124,9 +3124,9 @@ void Task_LoseMailMessage(u8 taskId)
 
     if (selection == 0)
     {
-        if (AddBagItem(gPartyMenu.itemOrMoveId, 1) == TRUE)
+        if (AddBagItem(sPartyMenuAction.itemOrMoveId, 1) == TRUE)
         {
-            TakeMailFromMon(gPartyMenu.selectedMon);
+            TakeMailFromMon(sPartyMenuAction.selectedMon);
             DisplayPartyMenuMessage(gOtherText_MailTaken, 0);
         }
         else
@@ -3164,7 +3164,7 @@ void Task_TakeHeldMail(u8 taskId)
     if (selection == 0)
     {
         Menu_EraseWindowRect(23, 8, 29, 13);
-        if (TakeMailFromMonAndSave(gPartyMenu.selectedMon) != MAIL_NONE)
+        if (TakeMailFromMonAndSave(sPartyMenuAction.selectedMon) != MAIL_NONE)
             DisplayPartyMenuMessage(gOtherText_MailWasSent, 0);
         else
             DisplayPartyMenuMessage(gOtherText_MailboxIsFull, 0);
@@ -3223,11 +3223,11 @@ extern u8 gIsDebugMode;
 
 void Task_TeamMonTMMove(u8 taskId)
 {
-    GetMonNickname(gPartyMenu.selectedMon, gStringVar1);
-    gPartyMenu.moveToLearn = ItemIdToBattleMoveId(gPartyMenu.itemOrMoveId);
-    StringCopy(gStringVar2, gMoveNames[gPartyMenu.moveToLearn]);
-    ePartyMenu2.pmMoveLearningFromLevelUp = FALSE;
-    if (MonKnowsMove(gPartyMenu.selectedMon, gPartyMenu.moveToLearn))
+    GetMonNickname(sPartyMenuAction.selectedMon, gStringVar1);
+    sPartyMenuAction.moveToLearn = ItemIdToBattleMoveId(sPartyMenuAction.itemOrMoveId);
+    StringCopy(gStringVar2, gMoveNames[sPartyMenuAction.moveToLearn]);
+    gPartyMenu.pmMoveLearningFromLevelUp = FALSE;
+    if (MonKnowsMove(sPartyMenuAction.selectedMon, sPartyMenuAction.moveToLearn))
     {
         StringExpandPlaceholders(gStringVar4, gOtherText_AlreadyKnows);
         DisplayPartyMenuMessage(gStringVar4, 1);
@@ -3239,7 +3239,7 @@ void Task_TeamMonTMMove(u8 taskId)
 #if DEBUG
          !gIsDebugMode &&
 #endif
-         !CanMonLearnTMHM(gPartyMenu.selectedMon, gPartyMenu.itemOrMoveId - 33))
+         !CanMonLearnTMHM(sPartyMenuAction.selectedMon, sPartyMenuAction.itemOrMoveId - 33))
         {
             StringExpandPlaceholders(gStringVar4, gOtherText_NotCompatible);
             DisplayPartyMenuMessage(gStringVar4, 1);
@@ -3247,7 +3247,7 @@ void Task_TeamMonTMMove(u8 taskId)
         }
         else
         {
-            if (GiveMoveToMon(gPartyMenu.selectedMon, gPartyMenu.moveToLearn) != MON_HAS_MAX_MOVES)
+            if (GiveMoveToMon(sPartyMenuAction.selectedMon, sPartyMenuAction.moveToLearn) != MON_HAS_MAX_MOVES)
             {
                 Task_TeamMonTMMove2(taskId);
             }
@@ -3263,12 +3263,12 @@ void Task_TeamMonTMMove(u8 taskId)
 
 void Task_TeamMonTMMove2(u8 taskId)
 {
-    StringCopy(gStringVar2, gMoveNames[gPartyMenu.moveToLearn]);
+    StringCopy(gStringVar2, gMoveNames[sPartyMenuAction.moveToLearn]);
     StringExpandPlaceholders(gStringVar4, gOtherText_LearnedMove);
     DisplayPartyMenuMessage(gStringVar4, 1);
-    AdjustFriendship(gPartyMenu.selectedMon, FRIENDSHIP_EVENT_LEARN_TMHM);
-    if (ePartyMenu2.pmMoveLearningFromLevelUp == FALSE && gPartyMenu.itemOrMoveId < ITEM_HM01_CUT)
-        RemoveBagItem(gPartyMenu.itemOrMoveId, 1);
+    AdjustFriendship(sPartyMenuAction.selectedMon, FRIENDSHIP_EVENT_LEARN_TMHM);
+    if (gPartyMenu.pmMoveLearningFromLevelUp == FALSE && sPartyMenuAction.itemOrMoveId < ITEM_HM01_CUT)
+        RemoveBagItem(sPartyMenuAction.itemOrMoveId, 1);
     gTasks[taskId].func = Task_TeamMonTMMove3;
 }
 
@@ -3287,14 +3287,14 @@ void Task_TeamMonTMMove4(u8 taskId)
     {
         if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
         {
-            SetHeldItemIconVisibility(gPartyMenu.menuTaskId, gPartyMenu.selectedMonIndex);
-            if (ePartyMenu2.pmMoveLearningFromLevelUp == TRUE)
+            SetHeldItemIconVisibility(sPartyMenuAction.menuTaskId, sPartyMenuAction.selectedMonIndex);
+            if (gPartyMenu.pmMoveLearningFromLevelUp == TRUE)
             {
                 TeachMonMoveInPartyMenu(taskId);
             }
             else
             {
-                gTasks[gPartyMenu.menuTaskId].func = gPartyMenu.followupCallback;
+                gTasks[sPartyMenuAction.menuTaskId].func = sPartyMenuAction.followupCallback;
                 DestroyTask(taskId);
             }
         }
@@ -3305,14 +3305,14 @@ void Task_FinishMoveLearningMessage(u8 taskId)
 {
     if (gPartyMenuMessage_IsPrinting == 0)
     {
-        SetHeldItemIconVisibility(gPartyMenu.menuTaskId, gPartyMenu.selectedMonIndex);
-        if (ePartyMenu2.pmMoveLearningFromLevelUp == TRUE)
+        SetHeldItemIconVisibility(sPartyMenuAction.menuTaskId, sPartyMenuAction.selectedMonIndex);
+        if (gPartyMenu.pmMoveLearningFromLevelUp == TRUE)
         {
             TeachMonMoveInPartyMenu(taskId);
         }
         else
         {
-            gTasks[gPartyMenu.menuTaskId].func = gPartyMenu.followupCallback;
+            gTasks[sPartyMenuAction.menuTaskId].func = sPartyMenuAction.followupCallback;
             DestroyTask(taskId);
         }
     }
@@ -3351,7 +3351,7 @@ void Task_OpenMoveSelectionSummary(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        ShowSelectMovePokemonSummaryScreen(gPlayerParty, gPartyMenu.selectedMonIndex, gPlayerPartyCount - 1, CB2_ReturnToPartyMenuForMoveLearning, gPartyMenu.moveToLearn);
+        ShowSelectMovePokemonSummaryScreen(gPlayerParty, sPartyMenuAction.selectedMonIndex, gPlayerPartyCount - 1, CB2_ReturnToPartyMenuForMoveLearning, sPartyMenuAction.moveToLearn);
         DestroyTask(taskId);
     }
 }
@@ -3375,8 +3375,8 @@ void TaughtMove(u8 taskId)
         gTasks[taskId].func = TaskDummy;
         SetPartyMenuItemUseContext(taskId, gSpecialVar_ItemId, Task_ExitPartyMenuToBag);
         moveIndex = GetMoveSlotToReplace();
-        replacedMove = GetMonData(gPartyMenu.selectedMon, MON_DATA_MOVE1 + moveIndex);
-        GetMonNickname(gPartyMenu.selectedMon, gStringVar1);
+        replacedMove = GetMonData(sPartyMenuAction.selectedMon, MON_DATA_MOVE1 + moveIndex);
+        GetMonNickname(sPartyMenuAction.selectedMon, gStringVar1);
         StringCopy(gStringVar2, gMoveNames[replacedMove]);
         StringExpandPlaceholders(gStringVar4, gOtherText_ForgetMove123_2);
         DisplayPartyMenuMessage(gStringVar4, 1);
@@ -3388,8 +3388,8 @@ void TMMoveUpdateMoveSlot(u8 taskId)
 {
     if (gPartyMenuMessage_IsPrinting == 0)
     {
-        RemoveMonPPBonus(gPartyMenu.selectedMon, GetMoveSlotToReplace());
-        SetMonMoveSlot(gPartyMenu.selectedMon, gPartyMenu.moveToLearn, GetMoveSlotToReplace());
+        RemoveMonPPBonus(sPartyMenuAction.selectedMon, GetMoveSlotToReplace());
+        SetMonMoveSlot(sPartyMenuAction.selectedMon, sPartyMenuAction.moveToLearn, GetMoveSlotToReplace());
         Task_TeamMonTMMove2(taskId);
     }
 }
@@ -3400,7 +3400,7 @@ void Task_WaitToShowStopTryingMoveMessage(u8 taskId)
     {
         gTasks[taskId].func = TaskDummy;
         SetPartyMenuItemUseContext(taskId, gSpecialVar_ItemId, Task_ExitPartyMenuToBag);
-        StringCopy(gStringVar2, gMoveNames[gPartyMenu.moveToLearn]);
+        StringCopy(gStringVar2, gMoveNames[sPartyMenuAction.moveToLearn]);
         StringExpandPlaceholders(gStringVar4, gOtherText_StopTryingTo);
         DisplayPartyMenuMessage(gStringVar4, 1);
         CreateTask(Task_ShowStopTryingMovePrompt, 5);
@@ -3410,7 +3410,7 @@ void Task_WaitToShowStopTryingMoveMessage(u8 taskId)
 void Task_ShowStopTryingMoveMessage(u8 taskId)
 {
     Menu_EraseWindowRect(23, 8, 29, 13);
-    StringCopy(gStringVar2, gMoveNames[gPartyMenu.moveToLearn]);
+    StringCopy(gStringVar2, gMoveNames[sPartyMenuAction.moveToLearn]);
     StringExpandPlaceholders(gStringVar4, gOtherText_StopTryingTo);
     DisplayPartyMenuMessage(gStringVar4, 1);
     gTasks[taskId].func = Task_ShowStopTryingMovePrompt;
@@ -3432,8 +3432,8 @@ void Task_HandleStopTryingMovePrompt(u8 taskId)
     if (selection == 0)
     {
         Menu_EraseWindowRect(23, 8, 29, 13);
-        GetMonNickname(gPartyMenu.selectedMon, gStringVar1);
-        StringCopy(gStringVar2, gMoveNames[gPartyMenu.moveToLearn]);
+        GetMonNickname(sPartyMenuAction.selectedMon, gStringVar1);
+        StringCopy(gStringVar2, gMoveNames[sPartyMenuAction.moveToLearn]);
         StringExpandPlaceholders(gStringVar4, gOtherText_DidNotLearnMove2);
         DisplayPartyMenuMessage(gStringVar4, 1);
         gTasks[taskId].func = Task_FinishMoveLearningMessage;
@@ -3445,8 +3445,8 @@ void Task_HandleStopTryingMovePrompt(u8 taskId)
         if (selection == -1)
             PlaySE(SE_SELECT);
         Menu_EraseWindowRect(23, 8, 29, 13);
-        GetMonNickname(gPartyMenu.selectedMon, gStringVar1);
-        StringCopy(gStringVar2, gMoveNames[gPartyMenu.moveToLearn]);
+        GetMonNickname(sPartyMenuAction.selectedMon, gStringVar1);
+        StringCopy(gStringVar2, gMoveNames[sPartyMenuAction.moveToLearn]);
         StringExpandPlaceholders(gStringVar4, gOtherText_WantsToLearn);
         DisplayPartyMenuMessage(gStringVar4, 1);
         gTasks[taskId].func = Task_ShowForgetMovePrompt;
@@ -3478,15 +3478,15 @@ s16 UpdatePartyMenuHealthBar(u8 taskId, struct HealthBarInfo *barInfo, s8 hpChan
     barInfo->oldValue = taskData[11];
     barInfo->receivedValue = taskData[12] * hpChangeSign;
     barInfo->baseTileNum = 0x100;
-    hpBarLevel = GetHPBarLevel(ePartyMenu2.pmPartyMenuHpBarValue, barInfo->maxValue);
+    hpBarLevel = GetHPBarLevel(gPartyMenu.pmPartyMenuHpBarValue, barInfo->maxValue);
     if (hpBarLevel > 2)
         barInfo->paletteNum = 4;
     if (hpBarLevel == 2)
         barInfo->paletteNum = 5;
     if (hpBarLevel < 2)
         barInfo->paletteNum = 6;
-    vramPtr = sPartyMenuHpBarTilemapPtrs[IsDoubleBattle()][gPartyMenu.selectedMonIndex];
-    return UpdateHealthBar(barInfo, (int *)&gPartyMenu.hpBarAnimationState, vramPtr, 0);
+    vramPtr = sPartyMenuHpBarTilemapPtrs[IsDoubleBattle()][sPartyMenuAction.selectedMonIndex];
+    return UpdateHealthBar(barInfo, (int *)&sPartyMenuAction.hpBarAnimationState, vramPtr, 0);
 }
 
 void Task_AnimatePartyMenuHpRestore(u8 taskId)
@@ -3494,34 +3494,34 @@ void Task_AnimatePartyMenuHpRestore(u8 taskId)
     struct HealthBarInfo barInfo;
     u16 hpDelta;
 
-    ePartyMenu2.pmPartyMenuHpBarValue = UpdatePartyMenuHealthBar(taskId, &barInfo, -1);
-    if (ePartyMenu2.pmPartyMenuHpBarValue == -1)
+    gPartyMenu.pmPartyMenuHpBarValue = UpdatePartyMenuHealthBar(taskId, &barInfo, -1);
+    if (gPartyMenu.pmPartyMenuHpBarValue == -1)
     {
-        gPartyMenu.hpBarAnimationState = 0;
+        sPartyMenuAction.hpBarAnimationState = 0;
         if (-barInfo.receivedValue + barInfo.oldValue > barInfo.maxValue)
             hpDelta = barInfo.maxValue - barInfo.oldValue;
         else
             hpDelta = -barInfo.receivedValue;
         gBattleMoveDamage = -hpDelta;
-        GetMonNickname(gPartyMenu.selectedMon, gStringVar1);
+        GetMonNickname(sPartyMenuAction.selectedMon, gStringVar1);
         ConvertIntToDecimalStringN(gStringVar2, hpDelta, 0, 3);
         if (gTasks[taskId].data[14] == 0)
             StringExpandPlaceholders(gStringVar4, gOtherText_HPRestoredBy);
         else
             StringExpandPlaceholders(gStringVar4, gOtherText_RegainedHealth);
-        SetMonIconAnim(GetMonIconSpriteId(gPartyMenu.menuTaskId, gPartyMenu.selectedMonIndex), gPartyMenu.selectedMon);
-        DrawPartyMenuMonBackgroundAt(&sPartyMenuMonBackgroundCoords[IsDoubleBattle() * 12 + gPartyMenu.selectedMonIndex * 2], 7);
-        ePartyMenu2.backgroundRedrawState = 2;
+        SetMonIconAnim(GetMonIconSpriteId(sPartyMenuAction.menuTaskId, sPartyMenuAction.selectedMonIndex), sPartyMenuAction.selectedMon);
+        DrawPartyMenuMonBackgroundAt(&sPartyMenuMonBackgroundCoords[IsDoubleBattle() * 12 + sPartyMenuAction.selectedMonIndex * 2], 7);
+        gPartyMenu.backgroundRedrawState = 2;
         DisplayPartyMenuMessage(gStringVar4, 1);
         hpDelta += barInfo.oldValue;
-        SetMonData(gPartyMenu.selectedMon, MON_DATA_HP, &hpDelta);
-        RemoveBagItem(gPartyMenu.itemOrMoveId, 1);
+        SetMonData(sPartyMenuAction.selectedMon, MON_DATA_HP, &hpDelta);
+        RemoveBagItem(sPartyMenuAction.itemOrMoveId, 1);
         HandleBattleLowHpMusicChange();
         gTasks[taskId].func = Task_WaitForPartyMenuMessageThenFollowup;
     }
     else
     {
-        PartyMenuDoPrintHP(gPartyMenu.selectedMonIndex, IsDoubleBattle(), ePartyMenu2.pmPartyMenuHpBarValue, barInfo.maxValue);
+        PartyMenuDoPrintHP(sPartyMenuAction.selectedMonIndex, IsDoubleBattle(), gPartyMenu.pmPartyMenuHpBarValue, barInfo.maxValue);
     }
 }
 
@@ -3529,26 +3529,26 @@ void Task_SoftboiledReduceUserHp(u8 taskId)
 {
     struct HealthBarInfo barInfo;
 
-    ePartyMenu2.pmPartyMenuHpBarValue = UpdatePartyMenuHealthBar(taskId, &barInfo, 1);
-    if (ePartyMenu2.pmPartyMenuHpBarValue == -1)
+    gPartyMenu.pmPartyMenuHpBarValue = UpdatePartyMenuHealthBar(taskId, &barInfo, 1);
+    if (gPartyMenu.pmPartyMenuHpBarValue == -1)
     {
         PlaySE(SE_USE_ITEM);
-        gPartyMenu.hpBarAnimationState = 0;
+        sPartyMenuAction.hpBarAnimationState = 0;
         gTasks[taskId].data[11] -= gTasks[taskId].data[12];
-        SetMonData(gPartyMenu.selectedMon, MON_DATA_HP, &gTasks[taskId].data[11]);
-        SetMonIconAnim(GetMonIconSpriteId(gPartyMenu.menuTaskId, ePartyMenu.firstSelectedMonSpriteId), gPartyMenu.selectedMon);
-        gPartyMenu.selectedMonIndex = gSprites[ePartyMenu.currentSelectionSpriteId].data[0];
-        gPartyMenu.selectedMon = &gPlayerParty[gPartyMenu.selectedMonIndex];
-        gTasks[taskId].data[10] = GetMonData(gPartyMenu.selectedMon, MON_DATA_MAX_HP);
-        gTasks[taskId].data[11] = GetMonData(gPartyMenu.selectedMon, MON_DATA_HP);
-        gPartyMenu.hpBarAnimationState = -32768;
-        gPartyMenu.afterHpAnimationCallback = gPartyMenu.followupCallback;
+        SetMonData(sPartyMenuAction.selectedMon, MON_DATA_HP, &gTasks[taskId].data[11]);
+        SetMonIconAnim(GetMonIconSpriteId(sPartyMenuAction.menuTaskId, sPartyMenuTwoMonAction.firstSelectedMonSpriteId), sPartyMenuAction.selectedMon);
+        sPartyMenuAction.selectedMonIndex = gSprites[sPartyMenuTwoMonAction.currentSelectionSpriteId].data[0];
+        sPartyMenuAction.selectedMon = &gPlayerParty[sPartyMenuAction.selectedMonIndex];
+        gTasks[taskId].data[10] = GetMonData(sPartyMenuAction.selectedMon, MON_DATA_MAX_HP);
+        gTasks[taskId].data[11] = GetMonData(sPartyMenuAction.selectedMon, MON_DATA_HP);
+        sPartyMenuAction.hpBarAnimationState = -32768;
+        sPartyMenuAction.afterHpAnimationCallback = sPartyMenuAction.followupCallback;
         gTasks[taskId].func = Task_AnimatePartyMenuHpRestore;
-        ePartyMenu2.pmPartyMenuHpBarValue = gTasks[taskId].data[11];
+        gPartyMenu.pmPartyMenuHpBarValue = gTasks[taskId].data[11];
     }
     else
     {
-        PartyMenuDoPrintHP(gPartyMenu.selectedMonIndex, IsDoubleBattle(), ePartyMenu2.pmPartyMenuHpBarValue, barInfo.maxValue);
+        PartyMenuDoPrintHP(sPartyMenuAction.selectedMonIndex, IsDoubleBattle(), gPartyMenu.pmPartyMenuHpBarValue, barInfo.maxValue);
     }
 }
 
@@ -3556,7 +3556,7 @@ void Task_WaitForPartyMenuMessage(u8 taskId)
 {
     if (gPartyMenuMessage_IsPrinting == 0)
     {
-        gTasks[gPartyMenu.menuTaskId].func = gPartyMenu.followupCallback;
+        gTasks[sPartyMenuAction.menuTaskId].func = sPartyMenuAction.followupCallback;
         DestroyTask(taskId);
     }
 }
@@ -3565,7 +3565,7 @@ void Task_WaitForPartyMenuMessageThenFollowup(u8 taskId)
 {
     if (gPartyMenuMessage_IsPrinting == 0)
     {
-        gTasks[gPartyMenu.menuTaskId].func = gPartyMenu.afterHpAnimationCallback;
+        gTasks[sPartyMenuAction.menuTaskId].func = sPartyMenuAction.afterHpAnimationCallback;
         DestroyTask(taskId);
     }
 }
@@ -3682,13 +3682,13 @@ void UseMedicine(u8 taskId, u16 item, TaskFunc followupCallback)
     gTasks[taskId].func = TaskDummy;
     itemEffectTaskId = CreateTask(TaskDummy, 5);
     SetPartyMenuItemUseContext(taskId, item, followupCallback);
-    if (!IsMedicineIneffective(gPartyMenu.selectedMon, item))
+    if (!IsMedicineIneffective(sPartyMenuAction.selectedMon, item))
     {
         isHpRecovery = IsHPRecoveryItem(item);
         if (isHpRecovery == TRUE)
         {
-            gTasks[itemEffectTaskId].data[10] = GetMonData(gPartyMenu.selectedMon, MON_DATA_MAX_HP);
-            gTasks[itemEffectTaskId].data[11] = GetMonData(gPartyMenu.selectedMon, MON_DATA_HP);
+            gTasks[itemEffectTaskId].data[10] = GetMonData(sPartyMenuAction.selectedMon, MON_DATA_MAX_HP);
+            gTasks[itemEffectTaskId].data[11] = GetMonData(sPartyMenuAction.selectedMon, MON_DATA_HP);
             if (gTasks[itemEffectTaskId].data[10] == gTasks[itemEffectTaskId].data[11])
             {
                 isHpRecovery = FALSE;
@@ -3696,7 +3696,7 @@ void UseMedicine(u8 taskId, u16 item, TaskFunc followupCallback)
                 gTasks[itemEffectTaskId].data[11] = 0;
             }
         }
-        hadNoEffect = ExecuteTableBasedItemEffectForPartyMon(gPartyMenu.selectedMonIndex, item, 0);
+        hadNoEffect = ExecuteTableBasedItemEffectForPartyMon(sPartyMenuAction.selectedMonIndex, item, 0);
     }
     else
     {
@@ -3719,28 +3719,28 @@ void UseMedicine(u8 taskId, u16 item, TaskFunc followupCallback)
             PlaySE(SE_USE_ITEM);
         else
             PlaySE(SE_GLASS_FLUTE);
-        statusAndPkrs = GetMonStatusAndPokerus(gPartyMenu.selectedMon);
+        statusAndPkrs = GetMonStatusAndPokerus(sPartyMenuAction.selectedMon);
         if (statusAndPkrs == STATUS_PRIMARY_POKERUS || statusAndPkrs == STATUS_PRIMARY_NONE)
-            PartyMenuUpdateLevelOrStatus(gPartyMenu.selectedMon, gPartyMenu.selectedMonIndex);
+            PartyMenuUpdateLevelOrStatus(sPartyMenuAction.selectedMon, sPartyMenuAction.selectedMonIndex);
         if (isHpRecovery == TRUE)
         {
-            gTasks[itemEffectTaskId].data[12] = GetMonData(gPartyMenu.selectedMon, MON_DATA_HP) - gTasks[itemEffectTaskId].data[11];
-            gPartyMenu.hpBarAnimationState = -32768;
+            gTasks[itemEffectTaskId].data[12] = GetMonData(sPartyMenuAction.selectedMon, MON_DATA_HP) - gTasks[itemEffectTaskId].data[11];
+            sPartyMenuAction.hpBarAnimationState = -32768;
             if (gTasks[itemEffectTaskId].data[11] == 0)
                 gTasks[itemEffectTaskId].data[14] = 1;
             else
                 gTasks[itemEffectTaskId].data[14] = 0;
-            gPartyMenu.afterHpAnimationCallback = gPartyMenu.followupCallback;
+            sPartyMenuAction.afterHpAnimationCallback = sPartyMenuAction.followupCallback;
             gTasks[itemEffectTaskId].func = Task_AnimatePartyMenuHpRestore;
-            ePartyMenu2.pmPartyMenuHpBarValue = gTasks[itemEffectTaskId].data[11];
+            gPartyMenu.pmPartyMenuHpBarValue = gTasks[itemEffectTaskId].data[11];
         }
         else
         {
-            GetMonNickname(gPartyMenu.selectedMon, gStringVar1);
+            GetMonNickname(sPartyMenuAction.selectedMon, gStringVar1);
             if (!IsBlueYellowRedFlute(item))
                 RemoveBagItem(item, 1);
             GetMedicineItemEffectMessage(item);
-            TryPrintPartyMenuMonNickname(gPartyMenu.selectedMonIndex, gPartyMenu.selectedMon);
+            TryPrintPartyMenuMonNickname(sPartyMenuAction.selectedMonIndex, sPartyMenuAction.selectedMon);
             DisplayPartyMenuMessage(gStringVar4, 1);
             gTasks[itemEffectTaskId].func = Task_WaitForPartyMenuMessage;
         }
@@ -3759,13 +3759,13 @@ bool8 IsBlueYellowRedFlute(u16 item)
 
 void DoSacredAshItemEffect(u8 taskId, u16 item, TaskFunc followupCallback)
 {
-    gPartyMenu.followupCallback = followupCallback;
-    gPartyMenu.menuTaskId = taskId;
-    gPartyMenu.itemOrMoveId = item;
-    gPartyMenu.selectedMonIndex = 0;
-    gPartyMenu.afterHpAnimationCallback = FinishSacredAshPartyMonRestore;
-    ePartyMenu2.pmSacredAshRestoreInProgress = FALSE;
-    ePartyMenu2.pmSacredAshHadEffect = FALSE;
+    sPartyMenuAction.followupCallback = followupCallback;
+    sPartyMenuAction.menuTaskId = taskId;
+    sPartyMenuAction.itemOrMoveId = item;
+    sPartyMenuAction.selectedMonIndex = 0;
+    sPartyMenuAction.afterHpAnimationCallback = FinishSacredAshPartyMonRestore;
+    gPartyMenu.pmSacredAshRestoreInProgress = FALSE;
+    gPartyMenu.pmSacredAshHadEffect = FALSE;
     TryUseSacredAshOnNextPartyMon(taskId);
 }
 
@@ -3774,7 +3774,7 @@ void TryUseSacredAshOnNextPartyMon(u8 taskId)
     u8 taskId2;
 
     gTasks[taskId].func = TaskDummy;
-    if (GetMonData(&gPlayerParty[gPartyMenu.selectedMonIndex], MON_DATA_SPECIES) == SPECIES_NONE)
+    if (GetMonData(&gPlayerParty[sPartyMenuAction.selectedMonIndex], MON_DATA_SPECIES) == SPECIES_NONE)
     {
         gTasks[taskId].func = FinishSacredAshPartyMonRestore;
     }
@@ -3784,10 +3784,10 @@ void TryUseSacredAshOnNextPartyMon(u8 taskId)
 
         taskId2 = CreateTask(TaskDummy, 5);
         taskData = gTasks[taskId2].data;
-        gPartyMenu.selectedMon = &gPlayerParty[gPartyMenu.selectedMonIndex];
-        taskData[10] = GetMonData(gPartyMenu.selectedMon, MON_DATA_MAX_HP);
-        taskData[11] = GetMonData(gPartyMenu.selectedMon, MON_DATA_HP);
-        if (ExecuteTableBasedItemEffectForPartyMon(gPartyMenu.selectedMonIndex, gPartyMenu.itemOrMoveId, 0))
+        sPartyMenuAction.selectedMon = &gPlayerParty[sPartyMenuAction.selectedMonIndex];
+        taskData[10] = GetMonData(sPartyMenuAction.selectedMon, MON_DATA_MAX_HP);
+        taskData[11] = GetMonData(sPartyMenuAction.selectedMon, MON_DATA_HP);
+        if (ExecuteTableBasedItemEffectForPartyMon(sPartyMenuAction.selectedMonIndex, sPartyMenuAction.itemOrMoveId, 0))
         {
             DestroyTask(taskId2);
             gTasks[taskId].func = FinishSacredAshPartyMonRestore;
@@ -3797,15 +3797,15 @@ void TryUseSacredAshOnNextPartyMon(u8 taskId)
             gPartyMenuActionResult = 1;
             Menu_EraseWindowRect(WINDOW_LEFT, 14, WINDOW_RIGHT, 19);
             PlaySE(SE_USE_ITEM);
-            PartyMenuUpdateLevelOrStatus(gPartyMenu.selectedMon, gPartyMenu.selectedMonIndex);
-            DrawPartyMenuMonBackgroundAt(&sPartyMenuMonBackgroundCoords[IsDoubleBattle() * 12 + gPartyMenu.selectedMonIndex * 2], 9);
-            ePartyMenu2.backgroundRedrawState = 2;
-            taskData[12] = GetMonData(gPartyMenu.selectedMon, MON_DATA_HP) - taskData[11];
+            PartyMenuUpdateLevelOrStatus(sPartyMenuAction.selectedMon, sPartyMenuAction.selectedMonIndex);
+            DrawPartyMenuMonBackgroundAt(&sPartyMenuMonBackgroundCoords[IsDoubleBattle() * 12 + sPartyMenuAction.selectedMonIndex * 2], 9);
+            gPartyMenu.backgroundRedrawState = 2;
+            taskData[12] = GetMonData(sPartyMenuAction.selectedMon, MON_DATA_HP) - taskData[11];
             taskData[14] = 1;
-            ePartyMenu2.pmSacredAshRestoreInProgress = TRUE;
-            ePartyMenu2.pmSacredAshHadEffect = TRUE;
-            ePartyMenu2.pmPartyMenuHpBarValue = taskData[11];
-            gPartyMenu.hpBarAnimationState = -32768;
+            gPartyMenu.pmSacredAshRestoreInProgress = TRUE;
+            gPartyMenu.pmSacredAshHadEffect = TRUE;
+            gPartyMenu.pmPartyMenuHpBarValue = taskData[11];
+            sPartyMenuAction.hpBarAnimationState = -32768;
             gTasks[taskId2].func = Task_AnimatePartyMenuHpRestore;
         }
     }
@@ -3813,21 +3813,21 @@ void TryUseSacredAshOnNextPartyMon(u8 taskId)
 
 void FinishSacredAshPartyMonRestore(u8 taskId)
 {
-    if (ePartyMenu2.pmSacredAshRestoreInProgress == TRUE)
+    if (gPartyMenu.pmSacredAshRestoreInProgress == TRUE)
     {
-        AddBagItem(gPartyMenu.itemOrMoveId, 1);
-        if (GetMonData(&gPlayerParty[gPartyMenu.selectedMonIndex], MON_DATA_SPECIES) != 0)
+        AddBagItem(sPartyMenuAction.itemOrMoveId, 1);
+        if (GetMonData(&gPlayerParty[sPartyMenuAction.selectedMonIndex], MON_DATA_SPECIES) != 0)
         {
-            DrawPartyMenuMonBackgroundAt(&sPartyMenuMonBackgroundCoords[IsDoubleBattle() * 12 + gPartyMenu.selectedMonIndex * 2], 3);
-            ePartyMenu2.backgroundRedrawState = 2;
+            DrawPartyMenuMonBackgroundAt(&sPartyMenuMonBackgroundCoords[IsDoubleBattle() * 12 + sPartyMenuAction.selectedMonIndex * 2], 3);
+            gPartyMenu.backgroundRedrawState = 2;
         }
-        ePartyMenu2.pmSacredAshRestoreInProgress = FALSE;
+        gPartyMenu.pmSacredAshRestoreInProgress = FALSE;
     }
-    gPartyMenu.selectedMonIndex++;
-    if (gPartyMenu.selectedMonIndex == PARTY_SIZE)
+    sPartyMenuAction.selectedMonIndex++;
+    if (sPartyMenuAction.selectedMonIndex == PARTY_SIZE)
     {
         gPartyMenuActionResult = 0;
-        if (ePartyMenu2.pmSacredAshHadEffect == FALSE)
+        if (gPartyMenu.pmSacredAshHadEffect == FALSE)
         {
             gTasks[taskId].func = TaskDummy;
             DisplayPartyMenuMessage(gOtherText_WontHaveAnyEffect, 1);
@@ -3835,8 +3835,8 @@ void FinishSacredAshPartyMonRestore(u8 taskId)
         }
         else
         {
-            RemoveBagItem(gPartyMenu.itemOrMoveId, 1);
-            gTasks[taskId].func = gPartyMenu.followupCallback;
+            RemoveBagItem(sPartyMenuAction.itemOrMoveId, 1);
+            gTasks[taskId].func = sPartyMenuAction.followupCallback;
         }
         gLastFieldPokeMenuOpened = 0;
     }
@@ -3908,7 +3908,7 @@ void DoPPRecoveryItemEffect(u8 taskId, u16 item, TaskFunc followupCallback)
     {
         PlaySE(SE_SELECT);
         PrintPartyMenuPromptText(10, 3);
-        CreateItemUseMoveMenu(gPartyMenu.selectedMonIndex);
+        CreateItemUseMoveMenu(sPartyMenuAction.selectedMonIndex);
         gTasks[taskId2].func = Task_HandleItemUseMoveMenuInput;
         gMain.newKeys = 0;
     }
@@ -3928,9 +3928,9 @@ void ItemUseMoveMenu_HandleCancel(u8 taskId)
     Menu_DestroyCursor();
     Menu_EraseWindowRect(19, 10, 29, 19);
     if (gMain.inBattle)
-        gTasks[gPartyMenu.menuTaskId].func = HandleBattlePartyMenu;
+        gTasks[sPartyMenuAction.menuTaskId].func = HandleBattlePartyMenu;
     else
-        gTasks[gPartyMenu.menuTaskId].func = Task_HandlePartyMenuItemUseInput;
+        gTasks[sPartyMenuAction.menuTaskId].func = Task_HandlePartyMenuItemUseInput;
     PrintPartyMenuPromptText(3, 0);
     DestroyTask(taskId);
 }
@@ -3939,7 +3939,7 @@ void DoRecoverPP(u8 taskId)
 {
     u16 selectedMove = 0;
 
-    if (ExecuteTableBasedItemEffectForPartyMon(gPartyMenu.selectedMonIndex, gPartyMenu.itemOrMoveId, gTasks[taskId].data[11]))
+    if (ExecuteTableBasedItemEffectForPartyMon(sPartyMenuAction.selectedMonIndex, sPartyMenuAction.itemOrMoveId, gTasks[taskId].data[11]))
     {
         gPartyMenuActionResult = 0;
         PlaySE(SE_SELECT);
@@ -3949,10 +3949,10 @@ void DoRecoverPP(u8 taskId)
     {
         gPartyMenuActionResult = 1;
         PlaySE(SE_USE_ITEM);
-        RemoveBagItem(gPartyMenu.itemOrMoveId, 1);
-        selectedMove = GetMonData(gPartyMenu.selectedMon, MON_DATA_MOVE1 + gTasks[taskId].data[11]);
+        RemoveBagItem(sPartyMenuAction.itemOrMoveId, 1);
+        selectedMove = GetMonData(sPartyMenuAction.selectedMon, MON_DATA_MOVE1 + gTasks[taskId].data[11]);
         StringCopy(gStringVar1, gMoveNames[selectedMove]);
-        GetMedicineItemEffectMessage(gPartyMenu.itemOrMoveId);
+        GetMedicineItemEffectMessage(sPartyMenuAction.itemOrMoveId);
         DisplayPartyMenuMessage(gStringVar4, 1);
     }
     gTasks[taskId].func = Task_WaitForPartyMenuMessage;
@@ -3964,7 +3964,7 @@ void DoPPUpItemEffect(u8 taskId, u16 item, TaskFunc followupCallback)
     SetPartyMenuItemUseContext(taskId, item, followupCallback);
     PlaySE(SE_SELECT);
     PrintPartyMenuPromptText(11, 3);
-    CreateItemUseMoveMenu(gPartyMenu.selectedMonIndex);
+    CreateItemUseMoveMenu(sPartyMenuAction.selectedMonIndex);
     CreateTask(Task_HandleItemUseMoveMenuInput, 5);
     gMain.newKeys = 0;
 }
@@ -4007,11 +4007,11 @@ void DoRareCandyItemEffect(u8 taskId, u16 item, TaskFunc followupCallback)
     gTasks[taskId].func = TaskDummy;
     SetPartyMenuItemUseContext(taskId, item, followupCallback);
 
-    if (GetMonData(gPartyMenu.selectedMon, MON_DATA_LEVEL) != 100)
+    if (GetMonData(sPartyMenuAction.selectedMon, MON_DATA_LEVEL) != 100)
     {
         for (i = 0; i < NUM_STATS; i++)
-            ePartyMenu2.pmStatGrowths[i] = GetMonData(gPartyMenu.selectedMon, sStatDataTypes[i]);
-        noEffect = ExecuteTableBasedItemEffectForPartyMon(gPartyMenu.selectedMonIndex, item, 0);
+            gPartyMenu.pmStatGrowths[i] = GetMonData(sPartyMenuAction.selectedMon, sStatDataTypes[i]);
+        noEffect = ExecuteTableBasedItemEffectForPartyMon(sPartyMenuAction.selectedMonIndex, item, 0);
     }
     else
         noEffect = TRUE;
@@ -4029,10 +4029,10 @@ void DoRareCandyItemEffect(u8 taskId, u16 item, TaskFunc followupCallback)
 
         gPartyMenuActionResult = 1;
         PlayFanfareByFanfareNum(0);
-        RedrawPokemonInfoInMenu(gPartyMenu.selectedMonIndex, gPartyMenu.selectedMon);
+        RedrawPokemonInfoInMenu(sPartyMenuAction.selectedMonIndex, sPartyMenuAction.selectedMon);
         RemoveBagItem(item, 1);
-        GetMonNickname(gPartyMenu.selectedMon, gStringVar1);
-        level = GetMonData(gPartyMenu.selectedMon, MON_DATA_LEVEL);
+        GetMonNickname(sPartyMenuAction.selectedMon, gStringVar1);
+        level = GetMonData(sPartyMenuAction.selectedMon, MON_DATA_LEVEL);
         ConvertIntToDecimalStringN(gStringVar2, level, 0, 3);
         StringExpandPlaceholders(gStringVar4, gOtherText_ElevatedTo);
         DisplayPartyMenuMessage(gStringVar4, 1);
@@ -4078,10 +4078,10 @@ void PrintStatGrowthsInLevelUpWindow(u8 taskId)
         u8 *text;
 #endif
 
-        stat = GetMonData(gPartyMenu.selectedMon, sStatDataTypes[i]);
+        stat = GetMonData(sPartyMenuAction.selectedMon, sStatDataTypes[i]);
 
-        ePartyMenu2.pmStatGrowths[i + NUM_STATS] = stat;
-        ePartyMenu2.pmStatGrowths[i] = stat - ePartyMenu2.pmStatGrowths[i];
+        gPartyMenu.pmStatGrowths[i + NUM_STATS] = stat;
+        gPartyMenu.pmStatGrowths[i] = stat - gPartyMenu.pmStatGrowths[i];
 
         x = (i / 3) * 9 + 11;
         y = ((i % 3) << 1) + 1;
@@ -4095,7 +4095,7 @@ void PrintStatGrowthsInLevelUpWindow(u8 taskId)
         *text++ = EXT_CTRL_CODE_BEGIN;
         *text++ = 0x13;
         *text++ = 0x34;
-        ConvertIntToDecimalStringN(text, ePartyMenu2.pmStatGrowths[i], 1, 2);
+        ConvertIntToDecimalStringN(text, gPartyMenu.pmStatGrowths[i], 1, 2);
         Menu_PrintText(gStringVar1, x + 1, y);
 #else
         Menu_PrintTextPixelCoords(sStatNames[i], (x + 1) * 8, y * 8, 1);
@@ -4106,7 +4106,7 @@ void PrintStatGrowthsInLevelUpWindow(u8 taskId)
         gStringVar1[0] = EXT_CTRL_CODE_BEGIN;
         gStringVar1[1] = 0x14;
         gStringVar1[2] = 0x06;
-        ConvertIntToDecimalStringN(gStringVar1 + 3, ePartyMenu2.pmStatGrowths[i], 1, 2);
+        ConvertIntToDecimalStringN(gStringVar1 + 3, gPartyMenu.pmStatGrowths[i], 1, 2);
         Menu_PrintTextPixelCoords(gStringVar1, (x + 6) * 8 + 12, y * 8, 0);
 #endif
     }
@@ -4123,9 +4123,9 @@ void PrintNewStatsInLevelUpWindow(u8 taskId)
         u32 stat;
         u32 newStatIndex;
 
-        stat = GetMonData(gPartyMenu.selectedMon, sStatDataTypes[i]);
+        stat = GetMonData(sPartyMenuAction.selectedMon, sStatDataTypes[i]);
         newStatIndex = i + 6;
-        ePartyMenu2.pmStatGrowths[newStatIndex] = stat;
+        gPartyMenu.pmStatGrowths[newStatIndex] = stat;
 
         x = ((i / 3) * 9) + 11;
         y = ((i % 3) << 1) + 1;
@@ -4134,7 +4134,7 @@ void PrintNewStatsInLevelUpWindow(u8 taskId)
         gStringVar1[1] = 0x14;
         gStringVar1[2] = 0x06;
 
-        ConvertIntToDecimalStringN(gStringVar1 + 3, ePartyMenu2.pmStatGrowths[newStatIndex], 1, 3);
+        ConvertIntToDecimalStringN(gStringVar1 + 3, gPartyMenu.pmStatGrowths[newStatIndex], 1, 3);
         Menu_PrintTextPixelCoords(gStringVar1, (x + 6) * 8 + 6, y * 8, 0);
     }
 }
@@ -4150,11 +4150,11 @@ void RedrawPokemonInfoInMenu(u8 monIndex, struct Pokemon *pokemon)
     PartyMenuDoPrintHP(monIndex, IsDoubleBattle(), GetMonData(pokemon, MON_DATA_HP), GetMonData(pokemon, MON_DATA_MAX_HP));
     PartyMenuTryDrawHPBar(monIndex, pokemon);
 
-    icon = GetMonIconSpriteId(gPartyMenu.menuTaskId, monIndex);
+    icon = GetMonIconSpriteId(sPartyMenuAction.menuTaskId, monIndex);
     SetMonIconAnim(icon, pokemon);
 
     DrawPartyMenuMonBackgroundAt(&sPartyMenuMonBackgroundCoords[IsDoubleBattle() * 12 + monIndex * 2], 7);
-    ePartyMenu2.backgroundRedrawState = 2;
+    gPartyMenu.backgroundRedrawState = 2;
 }
 
 void Task_RareCandy3(u8 taskId)
@@ -4168,18 +4168,18 @@ void Task_RareCandy3(u8 taskId)
 
             Menu_EraseWindowRect(11, 0, 29, 7);
 
-            learnedMove = MonTryLearningNewMove(gPartyMenu.selectedMon, TRUE);
-            ePartyMenu2.pmMoveLearningFromLevelUp = TRUE;
+            learnedMove = MonTryLearningNewMove(sPartyMenuAction.selectedMon, TRUE);
+            gPartyMenu.pmMoveLearningFromLevelUp = TRUE;
 
             switch (learnedMove)
             {
             case 0:
                 // No move is learned.
-                evolutionSpecies = GetEvolutionTargetSpecies(gPartyMenu.selectedMon, EVO_MODE_NORMAL, 0);
+                evolutionSpecies = GetEvolutionTargetSpecies(sPartyMenuAction.selectedMon, EVO_MODE_NORMAL, 0);
                 if (evolutionSpecies != 0)
                 {
                     gCB2_AfterEvolution = CB2_BagMenuFromStartMenu;
-                    BeginEvolutionScene(gPartyMenu.selectedMon, evolutionSpecies, TRUE, gPartyMenu.selectedMonIndex);
+                    BeginEvolutionScene(sPartyMenuAction.selectedMon, evolutionSpecies, TRUE, sPartyMenuAction.selectedMonIndex);
                     DestroyTask(taskId);
                 }
                 else
@@ -4189,13 +4189,13 @@ void Task_RareCandy3(u8 taskId)
                 break;
             case MON_HAS_MAX_MOVES:
                 // Mon already knows 4 moves.
-                GetMonNickname(gPartyMenu.selectedMon, gStringVar1);
+                GetMonNickname(sPartyMenuAction.selectedMon, gStringVar1);
                 StringCopy(gStringVar2, gMoveNames[gMoveToLearn]);
 
                 StringExpandPlaceholders(gStringVar4, gOtherText_WantsToLearn);
                 DisplayPartyMenuMessage(gStringVar4, 1);
 
-                gPartyMenu.moveToLearn = gMoveToLearn;
+                sPartyMenuAction.moveToLearn = gMoveToLearn;
                 gTasks[taskId].func = Task_ShowForgetMovePrompt;
                 break;
             case MON_ALREADY_KNOWS_MOVE:
@@ -4204,7 +4204,7 @@ void Task_RareCandy3(u8 taskId)
                 break;
             default:
                 // Mon automatically learned a move because it knew less than four moves.
-                GetMonNickname(gPartyMenu.selectedMon, gStringVar1);
+                GetMonNickname(sPartyMenuAction.selectedMon, gStringVar1);
                 StringCopy(gStringVar2, gMoveNames[learnedMove]);
 
                 StringExpandPlaceholders(gStringVar4, gOtherText_LearnedMove);
@@ -4222,16 +4222,16 @@ void TeachMonMoveInPartyMenu(u8 taskId)
     u16 learnedMove;
     u16 evolutionSpecies;
 
-    learnedMove = MonTryLearningNewMove(gPartyMenu.selectedMon, FALSE);
+    learnedMove = MonTryLearningNewMove(sPartyMenuAction.selectedMon, FALSE);
     switch (learnedMove)
     {
     case 0:
         // No move is learned.
-        evolutionSpecies = GetEvolutionTargetSpecies(gPartyMenu.selectedMon, EVO_MODE_NORMAL, 0);
+        evolutionSpecies = GetEvolutionTargetSpecies(sPartyMenuAction.selectedMon, EVO_MODE_NORMAL, 0);
         if (evolutionSpecies != 0)
         {
             gCB2_AfterEvolution = CB2_BagMenuFromStartMenu;
-            BeginEvolutionScene(gPartyMenu.selectedMon, evolutionSpecies, TRUE, gPartyMenu.selectedMonIndex);
+            BeginEvolutionScene(sPartyMenuAction.selectedMon, evolutionSpecies, TRUE, sPartyMenuAction.selectedMonIndex);
             DestroyTask(taskId);
         }
         else
@@ -4241,13 +4241,13 @@ void TeachMonMoveInPartyMenu(u8 taskId)
         break;
     case MON_HAS_MAX_MOVES:
         // Mon already knows 4 moves.
-        GetMonNickname(gPartyMenu.selectedMon, gStringVar1);
+        GetMonNickname(sPartyMenuAction.selectedMon, gStringVar1);
         StringCopy(gStringVar2, gMoveNames[gMoveToLearn]);
 
         StringExpandPlaceholders(gStringVar4, gOtherText_WantsToLearn);
         DisplayPartyMenuMessage(gStringVar4, 1);
 
-        gPartyMenu.moveToLearn = gMoveToLearn;
+        sPartyMenuAction.moveToLearn = gMoveToLearn;
         gTasks[taskId].func = Task_ShowForgetMovePrompt;
         break;
     case MON_ALREADY_KNOWS_MOVE:
@@ -4256,7 +4256,7 @@ void TeachMonMoveInPartyMenu(u8 taskId)
         break;
     default:
         // Mon automatically learned a move because it knew less than four moves.
-        GetMonNickname(gPartyMenu.selectedMon, gStringVar1);
+        GetMonNickname(sPartyMenuAction.selectedMon, gStringVar1);
         StringCopy(gStringVar2, gMoveNames[learnedMove]);
 
         StringExpandPlaceholders(gStringVar4, gOtherText_LearnedMove);
@@ -4269,7 +4269,7 @@ void TeachMonMoveInPartyMenu(u8 taskId)
 
 static void Task_FinishPartyMenuMoveLearning(u8 taskId)
 {
-    gTasks[gPartyMenu.menuTaskId].func = gPartyMenu.followupCallback;
+    gTasks[sPartyMenuAction.menuTaskId].func = sPartyMenuAction.followupCallback;
     DestroyTask(taskId);
 }
 
@@ -4282,7 +4282,7 @@ void DoEvolutionStoneItemEffect(u8 taskId, u16 evolutionStoneItem, TaskFunc foll
 
     gCB2_AfterEvolution = CB2_BagMenuFromStartMenu;
 
-    if (ExecuteTableBasedItemEffectForPartyMon(gPartyMenu.selectedMonIndex, evolutionStoneItem, 0))
+    if (ExecuteTableBasedItemEffectForPartyMon(sPartyMenuAction.selectedMonIndex, evolutionStoneItem, 0))
     {
         gPartyMenuActionResult = 0;
         DisplayPartyMenuMessage(gOtherText_WontHaveAnyEffect, 1);
