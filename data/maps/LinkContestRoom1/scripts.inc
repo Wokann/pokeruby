@@ -382,30 +382,30 @@ LinkContestRoom1_EventScript_ReturnToContestLobby:: @ 815FB64
 
 LinkContestRoom1_EventScript_ReturnToVerdanturfLobby:: @ 815FBA1
 	incrementgamestat GAME_STAT_ENTERED_CONTEST
-	warp MAP_VERDANTURF_TOWN_CONTEST_LOBBY, 255, 5, 4
+	warp MAP_VERDANTURF_TOWN_CONTEST_LOBBY, WARP_ID_NONE, 5, 4
 	waitstate
 	end
 
 LinkContestRoom1_EventScript_ReturnToFallarborLobby:: @ 815FBAD
 	incrementgamestat GAME_STAT_ENTERED_CONTEST
-	warp MAP_FALLARBOR_TOWN_CONTEST_LOBBY, 255, 5, 4
+	warp MAP_FALLARBOR_TOWN_CONTEST_LOBBY, WARP_ID_NONE, 5, 4
 	waitstate
 	end
 
 LinkContestRoom1_EventScript_ReturnToSlateportLobby:: @ 815FBB9
 	incrementgamestat GAME_STAT_ENTERED_CONTEST
-	warp MAP_SLATEPORT_CITY_CONTEST_LOBBY, 255, 5, 4
+	warp MAP_SLATEPORT_CITY_CONTEST_LOBBY, WARP_ID_NONE, 5, 4
 	waitstate
 	end
 
 LinkContestRoom1_EventScript_ReturnToLilycoveLobby:: @ 815FBC5
 	incrementgamestat GAME_STAT_ENTERED_CONTEST
-	warp MAP_LILYCOVE_CITY_CONTEST_LOBBY, 255, 6, 4
+	warp MAP_LILYCOVE_CITY_CONTEST_LOBBY, WARP_ID_NONE, 6, 4
 	waitstate
 	end
 
 LinkContestRoom1_EventScript_ReturnToLinkContestLobby:: @ 815FBD1
-	warp MAP_LILYCOVE_CITY_CONTEST_LOBBY, 255, 7, 4
+	warp MAP_LILYCOVE_CITY_CONTEST_LOBBY, WARP_ID_NONE, 7, 4
 	waitstate
 	end
 
