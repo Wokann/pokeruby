@@ -517,13 +517,13 @@ u8 FindFirstActiveTVShowThatIsNotAMassOutbreak(void);
 
 u8 FindAnyTVShowOnTheAir(void)
 {
-    u8 retval = GetRandomActiveShowIdx();
+    u8 slot = GetRandomActiveShowIdx();
 
-    if (retval == 0xff)
+    if (slot == 0xff)
         return 0xff;
-    if (gSaveBlock1.outbreakPokemonSpecies != 0 && gSaveBlock1.tvShows[retval].common.kind == TVSHOW_MASS_OUTBREAK)
+    if (gSaveBlock1.outbreakPokemonSpecies != 0 && gSaveBlock1.tvShows[slot].common.kind == TVSHOW_MASS_OUTBREAK)
         return FindFirstActiveTVShowThatIsNotAMassOutbreak();
-    return retval;
+    return slot;
 }
 
 u8 CheckForPlayersHouseNews(void);
@@ -798,10 +798,10 @@ static u8 GetStringLanguage(u8 *str)
 void TryPutPokemonTodayOnAir(void)
 {
     u8 i;
-    u16 total;
-    u16 item;
+    u16 ballsUsed;
+    u16 itemLastUsed;
 
-    total = 0;
+    ballsUsed = 0;
     TryPutRandomPokeNewsOnAir();
     TryStartRandomMassOutbreak();
 
@@ -818,30 +818,30 @@ void TryPutPokemonTodayOnAir(void)
             if (sCurTVShowSlot.slot != -1 && IsRecordMixShowAlreadySpawned(TVSHOW_POKEMON_TODAY_CAUGHT) != 1)
             {
                 for (i = 0; i < 11; i++)
-                    total += gBattleResults.catchAttempts[i];
-                if (total != 0 || gBattleResults.usedMasterBall != 0)
+                    ballsUsed += gBattleResults.catchAttempts[i];
+                if (ballsUsed != 0 || gBattleResults.usedMasterBall != 0)
                 {
                     struct TVShowPokemonToday *pokemonToday;
 
-                    total = 0;
+                    ballsUsed = 0;
                     pokemonToday = &gSaveBlock1.tvShows[sCurTVShowSlot.slot].pokemonToday;
                     pokemonToday->kind = TVSHOW_POKEMON_TODAY_CAUGHT;
-                    pokemonToday->active = total;
+                    pokemonToday->active = ballsUsed;
                     if (gBattleResults.usedMasterBall != 0)
                     {
-                        total = 1;
-                        item = ITEM_MASTER_BALL;
+                        ballsUsed = 1;
+                        itemLastUsed = ITEM_MASTER_BALL;
                     }
                     else
                     {
                         for (i = 0; i < 11; i++)
-                            total += gBattleResults.catchAttempts[i];
-                        if (total > 0xff)
-                            total = 0xff;
-                        item = gLastUsedItem;
+                            ballsUsed += gBattleResults.catchAttempts[i];
+                        if (ballsUsed > 0xff)
+                            ballsUsed = 0xff;
+                        itemLastUsed = gLastUsedItem;
                     }
-                    pokemonToday->nBallsUsed = total;
-                    pokemonToday->ball = item;
+                    pokemonToday->nBallsUsed = ballsUsed;
+                    pokemonToday->ball = itemLastUsed;
                     StringCopy(pokemonToday->playerName, gSaveBlock2.playerName);
                     StringCopy(pokemonToday->nickname, gBattleResults.caughtMonNick);
                     pokemonToday->species = gBattleResults.caughtMonSpecies;
@@ -874,16 +874,16 @@ void InitWorldOfMastersShowAttempt(void)
 void TryPutPokemonTodayFailedOnTheAir(void)
 {
     u8 i;
-    u16 total;
+    u16 ballsUsed;
     u8 zero = 0;
 
     if (BernoulliTrial(0xffff) == 0)
     {
-        for (i = 0, total = 0; i < 11; i++)
-            total += gBattleResults.catchAttempts[i];
-        if (total > 0xff)
-            total = 0xff;
-        if (total > 2 && gBattleOutcome == 1)
+        for (i = 0, ballsUsed = 0; i < 11; i++)
+            ballsUsed += gBattleResults.catchAttempts[i];
+        if (ballsUsed > 0xff)
+            ballsUsed = 0xff;
+        if (ballsUsed > 2 && gBattleOutcome == 1)
         {
             sCurTVShowSlot.slot = FindFirstEmptyRecordMixTVShowSlot(gSaveBlock1.tvShows);
             if (sCurTVShowSlot.slot != -1 && IsRecordMixShowAlreadySpawned(TVSHOW_POKEMON_TODAY_FAILED) != 1)
@@ -895,7 +895,7 @@ void TryPutPokemonTodayFailedOnTheAir(void)
                 pokemonTodayFailed->active = zero;
                 pokemonTodayFailed->species = gBattleResults.playerMon1Species;
                 pokemonTodayFailed->species2 = gBattleResults.lastOpponentSpecies;
-                pokemonTodayFailed->nBallsUsed = total;
+                pokemonTodayFailed->nBallsUsed = ballsUsed;
                 pokemonTodayFailed->outcome = gBattleOutcome;
                 pokemonTodayFailed->location = gMapHeader.regionMapSectionId;
                 StringCopy(pokemonTodayFailed->playerName, gSaveBlock2.playerName);
@@ -1510,43 +1510,43 @@ void UpdatePokeNewsCountdown(u16 days)
     CompactPokeNews();
 }
 
-void CopyContestRankToStringVar(u8 strvaridx, u8 rank)
+void CopyContestRankToStringVar(u8 varIdx, u8 rank)
 {
     switch (rank)
     {
     case CONTEST_RANK_NORMAL:
-        StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_NORMAL]);
+        StringCopy(gTVStringVarPtrs[varIdx], gStdStrings[STDSTRING_NORMAL]);
         break;
     case CONTEST_RANK_SUPER:
-        StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_SUPER]);
+        StringCopy(gTVStringVarPtrs[varIdx], gStdStrings[STDSTRING_SUPER]);
         break;
     case CONTEST_RANK_HYPER:
-        StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_HYPER]);
+        StringCopy(gTVStringVarPtrs[varIdx], gStdStrings[STDSTRING_HYPER]);
         break;
     case CONTEST_RANK_MASTER:
-        StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_MASTER]);
+        StringCopy(gTVStringVarPtrs[varIdx], gStdStrings[STDSTRING_MASTER]);
         break;
     }
 }
 
-void CopyContestCategoryToStringVar(u8 strvaridx, u8 category)
+void CopyContestCategoryToStringVar(u8 varIdx, u8 category)
 {
     switch (category)
     {
     case CONTEST_CATEGORY_COOL:
-        StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_COOL]);
+        StringCopy(gTVStringVarPtrs[varIdx], gStdStrings[STDSTRING_COOL]);
         break;
     case CONTEST_CATEGORY_BEAUTY:
-        StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_BEAUTY]);
+        StringCopy(gTVStringVarPtrs[varIdx], gStdStrings[STDSTRING_BEAUTY]);
         break;
     case CONTEST_CATEGORY_CUTE:
-        StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_CUTE]);
+        StringCopy(gTVStringVarPtrs[varIdx], gStdStrings[STDSTRING_CUTE]);
         break;
     case CONTEST_CATEGORY_SMART:
-        StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_SMART]);
+        StringCopy(gTVStringVarPtrs[varIdx], gStdStrings[STDSTRING_SMART]);
         break;
     case CONTEST_CATEGORY_TOUGH:
-        StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_TOUGH]);
+        StringCopy(gTVStringVarPtrs[varIdx], gStdStrings[STDSTRING_TOUGH]);
         break;
     }
 }
@@ -1560,9 +1560,9 @@ void SetContestCategoryStringVarForInterview(void)
 
 void ConvertIntToDecimalString(u8 varIdx, s32 value)
 {
-    size_t log10val = CountDigits(value);
+    size_t nDigits = CountDigits(value);
 
-    ConvertIntToDecimalStringN(gTVStringVarPtrs[varIdx], value, 0, log10val);
+    ConvertIntToDecimalStringN(gTVStringVarPtrs[varIdx], value, 0, nDigits);
 }
 
 size_t CountDigits(int value)
@@ -1625,7 +1625,7 @@ bool8 IsRecordMixShowAlreadySpawned(u8 showIdx)
 void SortPurchasesByQuantity(void)
 {
     u8 i, j;
-    u16 tmpId, tmpAmount;
+    u16 tempItemId, tempQuantity;
 
     for (i = 0; i < SMARTSHOPPER_NUM_ITEMS - 1; i++)
     {
@@ -1633,12 +1633,12 @@ void SortPurchasesByQuantity(void)
         {
             if (gMartPurchaseHistory[i].quantity < gMartPurchaseHistory[j].quantity)
             {
-                tmpId = gMartPurchaseHistory[i].itemId;
-                tmpAmount = gMartPurchaseHistory[i].quantity;
+                tempItemId = gMartPurchaseHistory[i].itemId;
+                tempQuantity = gMartPurchaseHistory[i].quantity;
                 gMartPurchaseHistory[i].itemId = gMartPurchaseHistory[j].itemId;
                 gMartPurchaseHistory[i].quantity = gMartPurchaseHistory[j].quantity;
-                gMartPurchaseHistory[j].itemId = tmpId;
-                gMartPurchaseHistory[j].quantity = tmpAmount;
+                gMartPurchaseHistory[j].itemId = tempItemId;
+                gMartPurchaseHistory[j].quantity = tempQuantity;
             }
         }
     }
@@ -1945,18 +1945,18 @@ void GetRandomWordFromShow(TVShow *show)
 
 u8 GetRandomNameRaterStateFromName(struct TVShowNameRaterShow *show)
 {
-    u16 flagsum = 0;
+    u16 nameSum = 0;
     u8 i = 0;
 
     if (show->pokemonName[0] != 0xFF)
     {
         while (i < 11 && show->pokemonName[i] != 0xFF)
         {
-            flagsum += show->pokemonName[i];
+            nameSum += show->pokemonName[i];
             i++;
         }
     }
-    return flagsum & 0x7;
+    return nameSum & 0x7;
 }
 
 
