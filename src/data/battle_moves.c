@@ -234,7 +234,7 @@ const struct BattleMove gBattleMoves[] = {
     },
 
     [MOVE_FLY] = {
-        .effect = EFFECT_FLY,
+        .effect = EFFECT_SEMI_INVULNERABLE,
         .power = 70,
         .type = TYPE_FLYING,
         .accuracy = 95,
@@ -282,7 +282,7 @@ const struct BattleMove gBattleMoves[] = {
     },
 
     [MOVE_STOMP] = {
-        .effect = EFFECT_FLINCH_HIT_2,
+        .effect = EFFECT_FLINCH_MINIMIZE_HIT,
         .power = 65,
         .type = TYPE_NORMAL,
         .accuracy = 100,
@@ -918,7 +918,7 @@ const struct BattleMove gBattleMoves[] = {
     },
 
     [MOVE_SOLAR_BEAM] = {
-        .effect = EFFECT_SOLARBEAM,
+        .effect = EFFECT_SOLAR_BEAM,
         .power = 120,
         .type = TYPE_GRASS,
         .accuracy = 100,
@@ -1098,7 +1098,7 @@ const struct BattleMove gBattleMoves[] = {
     },
 
     [MOVE_DIG] = {
-        .effect = EFFECT_FLY,
+        .effect = EFFECT_SEMI_INVULNERABLE,
         .power = 60,
         .type = TYPE_GROUND,
         .accuracy = 100,
@@ -3498,7 +3498,7 @@ const struct BattleMove gBattleMoves[] = {
     },
 
     [MOVE_DIVE] = {
-        .effect = EFFECT_FLY,
+        .effect = EFFECT_SEMI_INVULNERABLE,
         .power = 60,
         .type = TYPE_WATER,
         .accuracy = 100,
@@ -3630,7 +3630,7 @@ const struct BattleMove gBattleMoves[] = {
     },
 
     [MOVE_NEEDLE_ARM] = {
-        .effect = EFFECT_FLINCH_HIT_2,
+        .effect = EFFECT_FLINCH_MINIMIZE_HIT,
         .power = 60,
         .type = TYPE_GRASS,
         .accuracy = 100,
@@ -3726,7 +3726,7 @@ const struct BattleMove gBattleMoves[] = {
     },
 
     [MOVE_ASTONISH] = {
-        .effect = EFFECT_FLINCH_HIT_2,
+        .effect = EFFECT_FLINCH_MINIMIZE_HIT,
         .power = 30,
         .type = TYPE_GHOST,
         .accuracy = 100,
@@ -3918,7 +3918,7 @@ const struct BattleMove gBattleMoves[] = {
     },
 
     [MOVE_EXTRASENSORY] = {
-        .effect = EFFECT_FLINCH_HIT_2,
+        .effect = EFFECT_FLINCH_MINIMIZE_HIT,
         .power = 80,
         .type = TYPE_PSYCHIC,
         .accuracy = 100,
@@ -4086,7 +4086,7 @@ const struct BattleMove gBattleMoves[] = {
     },
 
     [MOVE_BOUNCE] = {
-        .effect = EFFECT_FLY,
+        .effect = EFFECT_SEMI_INVULNERABLE,
         .power = 85,
         .type = TYPE_FLYING,
         .accuracy = 85,

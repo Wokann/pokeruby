@@ -716,8 +716,8 @@ AI_CheckViability: @ 81DA86D
 	if_effect EFFECT_PSYCH_UP, AI_CV_PsychUp
 	if_effect EFFECT_MIRROR_COAT, AI_CV_MirrorCoat
 	if_effect EFFECT_SKULL_BASH, AI_CV_ChargeUpMove
-	if_effect EFFECT_SOLARBEAM, AI_CV_ChargeUpMove
-	if_effect EFFECT_FLY, AI_CV_Fly
+	if_effect EFFECT_SOLAR_BEAM, AI_CV_ChargeUpMove
+	if_effect EFFECT_SEMI_INVULNERABLE, AI_CV_Fly
 	if_effect EFFECT_SOFTBOILED, AI_CV_Heal
 	if_effect EFFECT_FAKE_OUT, AI_CV_FakeOut
 	if_effect EFFECT_SPIT_UP, AI_CV_SpitUp
@@ -2984,7 +2984,7 @@ AI_HPAware_DiscouragedEffectsWhenLowHP: @ 81DC024
 	.byte EFFECT_BELLY_DRUM
 	.byte EFFECT_PSYCH_UP
 	.byte EFFECT_MIRROR_COAT
-	.byte EFFECT_SOLARBEAM
+	.byte EFFECT_SOLAR_BEAM
 	.byte EFFECT_ERUPTION
 	.byte EFFECT_TICKLE
 	.byte EFFECT_COSMIC_POWER
