@@ -143,7 +143,7 @@ void ResetCurrentPhrase(void);
 void SaveCurrentPhrase(void);
 bool8 TrySetSelectedWord(void);
 void ResetCurrentPhraseToSaved(void);
-void SetCurrentPhraseWord(u16, u16);
+void SetCurrentPhraseWord(u16 phraseWordIndex, u16 wordId);
 u8 DidPhraseChange(void);
 bool8 IsCurrentPhraseEmpty(void);
 u8 DidPlayerInputMysteryEventPhrase(void);
@@ -445,18 +445,18 @@ void SetUnlockedEasyChatGroups(void)
 void InitAlphabetKeyboardRows(void)
 {
     u8 i;
-    u8 r3;
+    u8 column;
 
     for (i = 0; i < 4; i++)
     {
         const u8 *row = sAlphabetKeyboardRows[i];
 
-        for (r3 = 0; row[r3] != EOS; r3++)
+        for (column = 0; row[column] != EOS; column++)
         {
-            if (row[r3] != CHAR_SPACE)
-                gEasyChatScreen->alphabetGroupIds[i][r3] = row[r3] + 0x46;
+            if (row[column] != CHAR_SPACE)
+                gEasyChatScreen->alphabetGroupIds[i][column] = row[column] + 0x46;
             else
-                gEasyChatScreen->alphabetGroupIds[i][r3] = CHAR_SPACE;
+                gEasyChatScreen->alphabetGroupIds[i][column] = CHAR_SPACE;
         }
     }
 }
@@ -468,22 +468,22 @@ void InitEasyChatPromptText(void)
         gEasyChatScreen->instructionsText1, gEasyChatScreen->instructionsText2,
         gEasyChatScreen->confirmText1, gEasyChatScreen->confirmText2,
     };
-    u8 *r3;
+    u8 *text;
     u16 i;
 
     for (i = 0; i < 2; i++)
     {
         const struct EasyChatPrompt *prompt = &sEasyChatPrompts[sEasyChatPromptPairsByType[gEasyChatScreen->type][i]];
 
-        r3 = StringCopy(pointers[i * 2 + 0], prompt->text1);
+        text = StringCopy(pointers[i * 2 + 0], prompt->text1);
         if (prompt->separateLines)
         {
             StringCopy(pointers[i * 2 + 1], prompt->text2);
         }
         else
         {
-            *r3++ = CHAR_SPACE;
-            StringCopy(r3, prompt->text2);
+            *text++ = CHAR_SPACE;
+            StringCopy(text, prompt->text2);
             *pointers[i * 2 + 1] = EOS;
         }
     }
@@ -492,11 +492,11 @@ void InitEasyChatPromptText(void)
         gEasyChatScreen->unusedTextBuffer[i] = 0;
     gEasyChatScreen->unusedTextBuffer[i] = 0xFF;
 
-    r3 = gEasyChatScreen->unusedTextControlBuffer;
-    r3[0] = EXT_CTRL_CODE_BEGIN;
-    r3[1] = 0x11;
-    r3[2] = 0xE0;
-    r3[3] = 0xFF;
+    text = gEasyChatScreen->unusedTextControlBuffer;
+    text[0] = EXT_CTRL_CODE_BEGIN;
+    text[1] = 0x11;
+    text[2] = 0xE0;
+    text[3] = 0xFF;
 }
 
 // Default profile phrase
@@ -591,28 +591,28 @@ void InitWordSelectSelection(void)
     if (gEasyChatScreen->inAlphabetMode == 0)
     {
         u16 i;
-        u8 r6;
+        u8 groupId;
 
-        r6 = gEasyChatScreen->selectedGroupId;
-        gEasyChatScreen->wordSelectLastRow = (gEasyChatScreen->numUnlockedWordsByGroup[r6] + 1) / 2;
+        groupId = gEasyChatScreen->selectedGroupId;
+        gEasyChatScreen->wordSelectLastRow = (gEasyChatScreen->numUnlockedWordsByGroup[groupId] + 1) / 2;
         for (i = 0; i < gEasyChatScreen->wordSelectLastRow; i++)
             gEasyChatScreen->wordSelectLastColumns[i] = 2;
         i--;
-        gEasyChatScreen->wordSelectLastColumns[i] = gEasyChatScreen->numUnlockedWordsByGroup[r6] % 2;
+        gEasyChatScreen->wordSelectLastColumns[i] = gEasyChatScreen->numUnlockedWordsByGroup[groupId] % 2;
         if (gEasyChatScreen->wordSelectLastColumns[i] == 0)
             gEasyChatScreen->wordSelectLastColumns[i] = 2;
     }
     else
     {
         u16 i;
-        u8 r6;
+        u8 groupId;
 
-        r6 = gEasyChatScreen->selectedGroupId;
-        gEasyChatScreen->wordSelectLastRow = (gEasyChatScreen->numUnlockedWordsByAlphabet[r6] + 1) / 2;
+        groupId = gEasyChatScreen->selectedGroupId;
+        gEasyChatScreen->wordSelectLastRow = (gEasyChatScreen->numUnlockedWordsByAlphabet[groupId] + 1) / 2;
         for (i = 0; i < gEasyChatScreen->wordSelectLastRow; i++)
             gEasyChatScreen->wordSelectLastColumns[i] = 2;
         i--;
-        gEasyChatScreen->wordSelectLastColumns[i] = gEasyChatScreen->numUnlockedWordsByAlphabet[r6] % 2;
+        gEasyChatScreen->wordSelectLastColumns[i] = gEasyChatScreen->numUnlockedWordsByAlphabet[groupId] % 2;
         if (gEasyChatScreen->wordSelectLastColumns[i] == 0)
             gEasyChatScreen->wordSelectLastColumns[i] = 2;
     }
@@ -1251,7 +1251,7 @@ void ClearUnusedField(void)
 bool8 MoveMainCursor(void)
 {
     bool8 pressedUpDown = FALSE;
-    u8 r0;
+    u8 phraseWordIndex;
 
     if (JOY_NEW(START_BUTTON))
     {
@@ -1291,9 +1291,9 @@ bool8 MoveMainCursor(void)
                 gEasyChatScreen->mainCursorColumn = gEasyChatScreen->numColumns - 1;
             if (gEasyChatScreen->mainCursorRow != gEasyChatScreen->numRows)
             {
-                r0 = gEasyChatScreen->mainCursorRow * gEasyChatScreen->numColumns + gEasyChatScreen->mainCursorColumn;
-                if (r0 >= gEasyChatScreen->maxWords)
-                    gEasyChatScreen->mainCursorColumn = r0 - gEasyChatScreen->maxWords;
+                phraseWordIndex = gEasyChatScreen->mainCursorRow * gEasyChatScreen->numColumns + gEasyChatScreen->mainCursorColumn;
+                if (phraseWordIndex >= gEasyChatScreen->maxWords)
+                    gEasyChatScreen->mainCursorColumn = phraseWordIndex - gEasyChatScreen->maxWords;
             }
             return TRUE;
         }
@@ -1311,9 +1311,9 @@ bool8 MoveMainCursor(void)
                 else
                 {
                     gEasyChatScreen->mainCursorColumn = gEasyChatScreen->numColumns - 1;
-                    r0 = gEasyChatScreen->mainCursorRow * gEasyChatScreen->numColumns + gEasyChatScreen->mainCursorColumn;
-                    if (r0 >= gEasyChatScreen->maxWords)
-                        gEasyChatScreen->mainCursorColumn = r0 - gEasyChatScreen->maxWords;
+                    phraseWordIndex = gEasyChatScreen->mainCursorRow * gEasyChatScreen->numColumns + gEasyChatScreen->mainCursorColumn;
+                    if (phraseWordIndex >= gEasyChatScreen->maxWords)
+                        gEasyChatScreen->mainCursorColumn = phraseWordIndex - gEasyChatScreen->maxWords;
                 }
             }
             return TRUE;
@@ -1329,9 +1329,9 @@ bool8 MoveMainCursor(void)
             {
                 if (++gEasyChatScreen->mainCursorColumn >= gEasyChatScreen->numColumns)
                     gEasyChatScreen->mainCursorColumn = 0;
-                r0 = gEasyChatScreen->mainCursorRow * gEasyChatScreen->numColumns + gEasyChatScreen->mainCursorColumn;
-                if (r0 >= gEasyChatScreen->maxWords)
-                    gEasyChatScreen->mainCursorColumn = r0 - gEasyChatScreen->maxWords;
+                phraseWordIndex = gEasyChatScreen->mainCursorRow * gEasyChatScreen->numColumns + gEasyChatScreen->mainCursorColumn;
+                if (phraseWordIndex >= gEasyChatScreen->maxWords)
+                    gEasyChatScreen->mainCursorColumn = phraseWordIndex - gEasyChatScreen->maxWords;
             }
             return TRUE;
         }
@@ -1444,7 +1444,7 @@ bool8 MoveKeyboardCursor(void)
 
     if (pressedLeftRight)
     {
-        s8 r9 = gEasyChatScreen->inButtonWindow;
+        s8 wasInButtonWindow = gEasyChatScreen->inButtonWindow;
 
         gEasyChatScreen->inButtonWindow = (gEasyChatScreen->keyboardColumn == gEasyChatScreen->keyboardLastColumns[gEasyChatScreen->keyboardRow]);
         if (gEasyChatScreen->inButtonWindow != 0)
@@ -1456,7 +1456,7 @@ bool8 MoveKeyboardCursor(void)
                 gEasyChatScreen->keyboardColumn = gEasyChatScreen->keyboardLastColumns[gEasyChatScreen->keyboardRow];
             }
         }
-        else if (r9 != 0)
+        else if (wasInButtonWindow != 0)
         {
             gEasyChatScreen->keyboardRow += gEasyChatScreen->keyboardScrollOffset;
             if (gEasyChatScreen->keyboardColumn != 0)
@@ -1583,21 +1583,21 @@ void SaveCurrentPhrase(void)
 
 bool8 TrySetSelectedWord(void)
 {
-    u16 r4 = gEasyChatScreen->selectedGroupWords[gEasyChatScreen->wordSelectRow][gEasyChatScreen->wordSelectColumn];
+    u16 selectedWord = gEasyChatScreen->selectedGroupWords[gEasyChatScreen->wordSelectRow][gEasyChatScreen->wordSelectColumn];
 
     if (gEasyChatScreen->unusedLongWordLimit != 0
      && gEasyChatScreen->longWordCountsByRow[gEasyChatScreen->mainCursorRow] > 1
-     && GetEasyChatWordStringLength(r4) == 7)
+     && GetEasyChatWordStringLength(selectedWord) == 7)
         return FALSE;
 
-    SetCurrentPhraseWord(gEasyChatScreen->selectedPhraseWord, r4);
+    SetCurrentPhraseWord(gEasyChatScreen->selectedPhraseWord, selectedWord);
     PrintCurrentPhrase();
     return TRUE;
 }
 
 void ResetCurrentPhraseToSaved(void)
 {
-    u16 r5 = 0;
+    u16 wordIndex = 0;
     u16 i;
     u16 j;
 
@@ -1606,57 +1606,57 @@ void ResetCurrentPhraseToSaved(void)
         gEasyChatScreen->longWordCountsByRow[i] = 0;
         for (j = 0; j < gEasyChatScreen->numColumns; j++)
         {
-            gEasyChatScreen->currentPhrase[r5] = gEasyChatScreen->savedPhrase[r5];
+            gEasyChatScreen->currentPhrase[wordIndex] = gEasyChatScreen->savedPhrase[wordIndex];
             gEasyChatScreen->phraseWordSpacing[i][j] = 0;
-            r5++;
+            wordIndex++;
         }
     }
 }
 
-void SetCurrentPhraseWord(u16 a, u16 b)
+void SetCurrentPhraseWord(u16 phraseWordIndex, u16 wordId)
 {
-    u16 r5 = a / gEasyChatScreen->numColumns;
-    u16 r8 = a % gEasyChatScreen->numColumns;
-    u16 r4 = GetEasyChatWordStringLength(gEasyChatScreen->currentPhrase[a]);
-    u16 r3 = GetEasyChatWordStringLength(b);
+    u16 row = phraseWordIndex / gEasyChatScreen->numColumns;
+    u16 column = phraseWordIndex % gEasyChatScreen->numColumns;
+    u16 oldWordLength = GetEasyChatWordStringLength(gEasyChatScreen->currentPhrase[phraseWordIndex]);
+    u16 newWordLength = GetEasyChatWordStringLength(wordId);
 
-    if (r4 == 7)
+    if (oldWordLength == 7)
     {
-        if (r3 != 7)
-            gEasyChatScreen->longWordCountsByRow[r5]--;
+        if (newWordLength != 7)
+            gEasyChatScreen->longWordCountsByRow[row]--;
     }
     else
     {
-        if (r3 == 7)
-            gEasyChatScreen->longWordCountsByRow[r5]++;
+        if (newWordLength == 7)
+            gEasyChatScreen->longWordCountsByRow[row]++;
     }
-    r3 = 0;
-    gEasyChatScreen->phraseWordSpacing[r5][r8] = r3;
-    gEasyChatScreen->currentPhrase[a] = b;
+    newWordLength = 0;
+    gEasyChatScreen->phraseWordSpacing[row][column] = newWordLength;
+    gEasyChatScreen->currentPhrase[phraseWordIndex] = wordId;
 }
 
 u8 DidPhraseChange(void)
 {
-    u16 r8 = 0;
+    u16 changedWordCount = 0;
     u16 i;
-    u8 *r1;
-    u8 *r2;
+    u8 *savedWordText;
+    u8 *currentWordText;
 
     for (i = 0; i < gEasyChatScreen->maxWords; i++)
     {
         CopyEasyChatWordPadded(gEasyChatScreen->wordPrintBuffer, gEasyChatScreen->savedPhrase[i], 0);
         CopyEasyChatWordPadded(gEasyChatScreen->phraseCompareBuffer, gEasyChatScreen->currentPhrase[i], 0);
-        r1 = gEasyChatScreen->wordPrintBuffer;
-        r2 = gEasyChatScreen->phraseCompareBuffer;
-        while (*r1 == *r2 && *r1 != 0xFF)
+        savedWordText = gEasyChatScreen->wordPrintBuffer;
+        currentWordText = gEasyChatScreen->phraseCompareBuffer;
+        while (*savedWordText == *currentWordText && *savedWordText != 0xFF)
         {
-            r1++;
-            r2++;
+            savedWordText++;
+            currentWordText++;
         }
-        if (*r1 != *r2)
-            r8++;
+        if (*savedWordText != *currentWordText)
+            changedWordCount++;
     }
-    return r8;
+    return changedWordCount;
 }
 
 bool8 IsCurrentPhraseEmpty(void)
@@ -1675,21 +1675,21 @@ bool8 IsCurrentPhraseEmpty(void)
 bool8 DidPlayerInputMysteryEventPhrase(void)
 {
     u16 i;
-    u8 *r3;
-    u8 *r4;
+    u8 *inputWordText;
+    u8 *expectedWordText;
 
     for (i = 0; i < 4; i++)
     {
         CopyEasyChatWordPadded(gEasyChatScreen->wordPrintBuffer, gEasyChatScreen->currentPhrase[i], 0);
         CopyEasyChatWordPadded(gEasyChatScreen->phraseCompareBuffer, sMysteryEventPhrase[i], 0);
-        r3 = gEasyChatScreen->wordPrintBuffer;
-        r4 = gEasyChatScreen->phraseCompareBuffer;
-        while (*r3 != 0xFF && *r4 != 0xFF)
+        inputWordText = gEasyChatScreen->wordPrintBuffer;
+        expectedWordText = gEasyChatScreen->phraseCompareBuffer;
+        while (*inputWordText != 0xFF && *expectedWordText != 0xFF)
         {
-            if (*r3++ != *r4++)
+            if (*inputWordText++ != *expectedWordText++)
                 return FALSE;
         }
-        if (*r3 != 0xFF || *r4 != 0xFF)
+        if (*inputWordText != 0xFF || *expectedWordText != 0xFF)
             return FALSE;
     }
     return TRUE;
@@ -1702,7 +1702,7 @@ u8 DidPlayerInputABerryMasterWifePhrase(void)
     for (i = 0; i < 5; i++)
     {
         u8 *ptr;
-        u8 *r3;
+        u8 *wifePhraseText;
 
         ptr = CopyEasyChatWordPadded(gEasyChatScreen->phraseTextBuffer, gEasyChatScreen->currentPhrase[0], 0);
         *ptr++ = CHAR_SPACE;
@@ -1713,13 +1713,13 @@ u8 DidPlayerInputABerryMasterWifePhrase(void)
         CopyEasyChatWordPadded(ptr, sBerryMasterWifePhrases[i][1], 0);
 
         ptr = gEasyChatScreen->phraseTextBuffer;
-        r3 = gEasyChatScreen->berryMasterWifePhraseBuffer;
-        while (*ptr != EOS && *r3 != EOS)
+        wifePhraseText = gEasyChatScreen->berryMasterWifePhraseBuffer;
+        while (*ptr != EOS && *wifePhraseText != EOS)
         {
-            if (*ptr++ != *r3++)
+            if (*ptr++ != *wifePhraseText++)
                 break;
         }
-        if (*ptr == EOS && *r3 == EOS)
+        if (*ptr == EOS && *wifePhraseText == EOS)
             return i + 1;
     }
     return 0;
