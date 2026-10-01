@@ -352,7 +352,7 @@ static void UpdatePartyToFieldOrder(void)
     }
 }
 
-void TrySwitchFirstHealthyPartyMonToFront(void)
+void SwitchAliveMonIntoLeadSlot(void)
 {
     u8 i;
     u8 leadPartyId;
