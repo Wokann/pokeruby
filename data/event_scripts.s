@@ -806,11 +806,11 @@ EventScript_SetBrineyLocation_Route109:: @ 819FD55
 	.include "data/scripts/record_mix.inc"
 	.include "data/scripts/pc.inc"
 
-Common_EventScript_PokemartSign:: @ 81A00E1
+Common_EventScript_ShowPokemartSign:: @ 81A00E1
 	msgbox gText_PokemartSign, MSGBOX_SIGN
 	end
 
-Common_EventScript_PokemonCenterSign:: @ 81A00EA
+Common_EventScript_ShowPokemonCenterSign:: @ 81A00EA
 	msgbox gText_PokemonCenterSign, MSGBOX_SIGN
 	end
 

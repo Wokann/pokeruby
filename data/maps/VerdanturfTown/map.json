@@ -135,7 +135,7 @@
       "y": 3,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
-      "script": "Common_EventScript_PokemartSign"
+      "script": "Common_EventScript_ShowPokemartSign"
     },
     {
       "type": "sign",
@@ -151,7 +151,7 @@
       "y": 3,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
-      "script": "Common_EventScript_PokemonCenterSign"
+      "script": "Common_EventScript_ShowPokemonCenterSign"
     },
     {
       "type": "sign",
@@ -167,7 +167,7 @@
       "y": 3,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
-      "script": "Common_EventScript_PokemartSign"
+      "script": "Common_EventScript_ShowPokemartSign"
     },
     {
       "type": "sign",
@@ -175,7 +175,7 @@
       "y": 3,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
-      "script": "Common_EventScript_PokemonCenterSign"
+      "script": "Common_EventScript_ShowPokemonCenterSign"
     },
     {
       "type": "sign",
