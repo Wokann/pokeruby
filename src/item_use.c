@@ -132,15 +132,15 @@ static void SetUpItemUseCallback(u8 taskId)
     gTasks[taskId].func = HandleItemMenuPaletteFade;
 }
 
-static void ItemMenu_ConfirmNormalFade(u8 var)
+static void ItemMenu_ConfirmNormalFade(u8 taskId)
 {
-    SetUpItemUseCallback(var);
+    SetUpItemUseCallback(taskId);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
 }
 
-static void ItemMenu_ConfirmComplexFade(u8 var)
+static void ItemMenu_ConfirmComplexFade(u8 taskId)
 {
-    SetUpItemUseCallback(var);
+    SetUpItemUseCallback(taskId);
     FadeScreen(1, 0);
 }
 
