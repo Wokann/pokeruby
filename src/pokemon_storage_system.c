@@ -199,7 +199,7 @@ void CopyTilemapRect(u16 *dest, u16 destLeft, u16 destTop, const u16 *src, u16 s
 #define Dma3FillLarge16_(value, dest, size) Dma3FillLarge_(value, dest, size, 16)
 #define Dma3FillLarge32_(value, dest, size) Dma3FillLarge_(value, dest, size, 32)
 
-void UnusedClearTilemapRect(u16 *dest, u16 destLeft, u16 destTop, u16 width, u16 height)
+void UnusedWriteRectDma(u16 *dest, u16 destLeft, u16 destTop, u16 width, u16 height)
 {
     u16 i;
 
