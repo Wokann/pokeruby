@@ -3,5 +3,5 @@ AbandonedShip_Underwater2_MapScripts:: @ 815EB37
 	.byte 0
 
 AbandonedShip_Underwater2_OnResume:: @ 815EB3D
-	setdivewarp MAP_ABANDONED_SHIP_ROOMS_B1F, 255, 13, 7
+	setdivewarp MAP_ABANDONED_SHIP_ROOMS_B1F, WARP_ID_NONE, 13, 7
 	end
