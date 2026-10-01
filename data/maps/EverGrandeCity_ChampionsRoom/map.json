@@ -37,7 +37,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_RIVAL_CHAMPIONS_ROOM"
+      "flag": "FLAG_HIDE_CHAMPIONS_ROOM_RIVAL"
     },
     {
       "local_id": "LOCALID_CHAMPIONS_ROOM_BIRCH",
@@ -51,7 +51,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_BIRCH_CHAMPIONS_ROOM"
+      "flag": "FLAG_HIDE_CHAMPIONS_ROOM_BIRCH"
     }
   ],
   "warp_events": [
