@@ -104,8 +104,8 @@ static void Task_NewGameBirchSpeech_WaitForPlayerShrink(u8 taskId);
 static void Task_NewGameBirchSpeech_FadePlayerToWhite(u8 taskId);
 static void Task_NewGameBirchSpeech_Cleanup(u8 taskId);
 static void CB2_NewGameBirchSpeech_ReturnFromNamingScreen();
-static void SpriteCB_NewGameSpeechDummy(struct Sprite *sprite);
-static void ShrinkPlayerSprite(struct Sprite *sprite);
+static void SpriteCB_Null(struct Sprite *sprite);
+static void SpriteCB_MovePlayerDownWhileShrinking(struct Sprite *sprite);
 static u8 CreateAzurillSprite(u8 x, u8 y);
 static void AddBirchSpeechObjects(u8 taskId);
 static void Task_SpriteFadeOut(u8 taskId);
@@ -116,11 +116,11 @@ static void HandleFloorShadowFadeOut(u8 taskId);
 static void StartBackgroundFadeOut(u8 taskId, u8 interval);
 static void HandleFloorShadowFadeIn(u8 taskId);
 static void StartBackgroundFadeIn(u8 taskId, u8 interval);
-static void CreateGenderMenu(u8 left, u8 top);
-static s8 GenderMenuProcessInput(void);
+static void NewGameBirchSpeech_ShowGenderMenu(u8 left, u8 top);
+static s8 NewGameBirchSpeech_ProcessGenderMenuInput(void);
 static void CreateNameMenu(u8 left, u8 top);
 static s8 NameMenuProcessInput(void);
-static void SetPresetPlayerName(u8 index);
+static void NewGameBirchSpeech_SetDefaultPlayerName(u8 index);
 
 static const u16 sBirchSpeechBgPals[][16] =
 {
@@ -962,7 +962,7 @@ static void Task_NewGameBirchSpeech_WaitToShowGenderMenu(u8 taskId)
 {
     if (BirchSpeechUpdateWindowText())
     {
-        CreateGenderMenu(2, 4);
+        NewGameBirchSpeech_ShowGenderMenu(2, 4);
         gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseGender;
     }
 }
@@ -972,7 +972,7 @@ static void Task_NewGameBirchSpeech_ChooseGender(u8 taskId)
 {
     u8 cursorPos;
 
-    switch (GenderMenuProcessInput())
+    switch (NewGameBirchSpeech_ProcessGenderMenuInput())
     {
     case MALE:
         Menu_DestroyCursor();
@@ -1081,7 +1081,7 @@ static void Task_NewGameBirchSpeech_ProcessNameMenu(u8 taskId)
         Menu_DestroyCursor();
         PlaySE(SE_SELECT);
         Menu_EraseWindowRect(2, 1, 22, 12);
-        SetPresetPlayerName(selection);
+        NewGameBirchSpeech_SetDefaultPlayerName(selection);
         gTasks[taskId].func = Task_NewGameBirchSpeech_SoItsPlayerName;
         break;
     case 0:     //NEW NAME
@@ -1103,7 +1103,7 @@ static void Task_NewGameBirchSpeech_StartNamingScreen(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        SetPresetPlayerName(1);
+        NewGameBirchSpeech_SetDefaultPlayerName(1);
         DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2.playerName, gSaveBlock2.playerGender, 0, 0, CB2_NewGameBirchSpeech_ReturnFromNamingScreen);
     }
 }
@@ -1282,7 +1282,7 @@ static void Task_NewGameBirchSpeech_ShrinkPlayer(u8 taskId)
             gSprites[spriteId].affineAnims = sSpriteAffineAnimTable_PlayerShrink;
             InitSpriteAffineAnim(&gSprites[spriteId]);
             StartSpriteAffineAnim(&gSprites[spriteId], 0);
-            gSprites[spriteId].callback = ShrinkPlayerSprite;
+            gSprites[spriteId].callback = SpriteCB_MovePlayerDownWhileShrinking;
             BeginNormalPaletteFade(0x0000FFFF, 0, 0, 16, RGB(0, 0, 0));
             FadeOutBGM(4);
             gTasks[taskId].func = Task_NewGameBirchSpeech_WaitForPlayerShrink;
@@ -1303,7 +1303,7 @@ static void Task_NewGameBirchSpeech_FadePlayerToWhite(u8 taskId)
     if (!gPaletteFade.active)
     {
         u8 spriteId = gTasks[taskId].tTrainerSpriteId;
-        gSprites[spriteId].callback = SpriteCB_NewGameSpeechDummy;
+        gSprites[spriteId].callback = SpriteCB_Null;
         REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON;
         BeginNormalPaletteFade(0xFFFF0000, 0, 0, 16, FADE_COLOR_WHITE);
         gTasks[taskId].func = Task_NewGameBirchSpeech_Cleanup;
@@ -1407,11 +1407,11 @@ void CB2_NewGameBirchSpeech_ReturnFromNamingScreen()
       DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_ON;
 }
 
-void SpriteCB_NewGameSpeechDummy(struct Sprite *sprite)
+void SpriteCB_Null(struct Sprite *sprite)
 {
 }
 
-void ShrinkPlayerSprite(struct Sprite *sprite)
+void SpriteCB_MovePlayerDownWhileShrinking(struct Sprite *sprite)
 {
     u32 y = (sprite->y << 16) + sprite->data[0] + 0xC000;
     sprite->y = y >> 16;
@@ -1437,27 +1437,27 @@ void AddBirchSpeechObjects(u8 taskId)
     u8 spriteId;
 
     spriteId = AddNewGameBirchObject(136, 60, 1);
-    gSprites[spriteId].callback = SpriteCB_NewGameSpeechDummy;
+    gSprites[spriteId].callback = SpriteCB_Null;
     gSprites[spriteId].oam.priority = 0;
     gSprites[spriteId].invisible = TRUE;
     gTasks[taskId].tBirchSpriteId = spriteId;
 
     spriteId = CreateAzurillSprite(0x68, 0x48);
-    gSprites[spriteId].callback = SpriteCB_NewGameSpeechDummy;
+    gSprites[spriteId].callback = SpriteCB_Null;
     gSprites[spriteId].oam.priority = 0;
     gSprites[spriteId].invisible = TRUE;
     gTasks[taskId].tAzurillSpriteId = spriteId;
 
     //Create Brendan sprite
     spriteId = CreateTrainerSprite(0, 120, 60, 0, &gSharedMem[0x000]);
-    gSprites[spriteId].callback = SpriteCB_NewGameSpeechDummy;
+    gSprites[spriteId].callback = SpriteCB_Null;
     gSprites[spriteId].invisible = TRUE;
     gSprites[spriteId].oam.priority = 0;
     gTasks[taskId].tBrendanSpriteId = spriteId;
 
     //Create May sprite
     spriteId = CreateTrainerSprite(1, 120, 60, 0, &gSharedMem[0x800]);
-    gSprites[spriteId].callback = SpriteCB_NewGameSpeechDummy;
+    gSprites[spriteId].callback = SpriteCB_Null;
     gSprites[spriteId].invisible = TRUE;
     gSprites[spriteId].oam.priority = 0;
     gTasks[taskId].tMaySpriteId = spriteId;
@@ -1648,7 +1648,7 @@ static void StartBackgroundFadeIn(u8 taskId, u8 interval)
 #undef tUpdateInterval
 #undef tFrameCounter
 
-static void CreateGenderMenu(u8 left, u8 top)
+static void NewGameBirchSpeech_ShowGenderMenu(u8 left, u8 top)
 {
     u8 menuLeft, menuTop;
     Menu_DrawStdWindowFrame(left, top, left + 6, top + 5);
@@ -1658,7 +1658,7 @@ static void CreateGenderMenu(u8 left, u8 top)
     InitMenu(0, menuLeft, menuTop, 2, 0, 5);
 }
 
-static s8 GenderMenuProcessInput(void)
+static s8 NewGameBirchSpeech_ProcessGenderMenuInput(void)
 {
     return Menu_ProcessInputNoWrap();
 }
@@ -1680,7 +1680,7 @@ static s8 NameMenuProcessInput(void)
     return Menu_ProcessInput();
 }
 
-static void SetPresetPlayerName(u8 index)
+static void NewGameBirchSpeech_SetDefaultPlayerName(u8 index)
 {
     u8 i;
     u8 *name;
