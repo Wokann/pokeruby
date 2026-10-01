@@ -377,19 +377,19 @@ static bool8 ForcedMovement_None(void)
 static u8 DoForcedMovement(u8 direction, void (*moveFunc)(u8))
 {
     struct PlayerAvatar *playerAvatar = &gPlayerAvatar;
-    u8 collisionType = CheckForPlayerAvatarCollision(direction);
+    u8 collision = CheckForPlayerAvatarCollision(direction);
 
     playerAvatar->flags |= PLAYER_AVATAR_FLAG_FORCED_MOVE;
-    if (collisionType != COLLISION_NONE)
+    if (collision != COLLISION_NONE)
     {
         ForcedMovement_None();
-        if (collisionType <= COLLISION_OBJECT_EVENT)
+        if (collision <= COLLISION_OBJECT_EVENT)
         {
             return 0;
         }
         else
         {
-            if (collisionType == COLLISION_LEDGE_JUMP)
+            if (collision == COLLISION_LEDGE_JUMP)
                 PlayerJumpLedge(direction);
             playerAvatar->flags |= PLAYER_AVATAR_FLAG_FORCED_MOVE;
             playerAvatar->runningState = MOVING;
