@@ -117,8 +117,8 @@ extern u8 gSharedMem[];
 #define sEvoInfo                        ((*(struct EvoInfo*)(gSharedMem + 0x14800)))
 
 // roulette_gfx.c
-#define ewram17000                      (&gSharedMem[0x17000])
-#define ewram17E00                      ((u16 *)(gSharedMem + 0x17E00))
+#define sRouletteShroomishTaillowGfxBuffer (gSharedMem + 0x17000)
+#define sRouletteBallGfxBuffer          (gSharedMem + 0x17E00)
 #define ewram18000                      ((u16 *)(gSharedMem + 0x18000)) // also: shop.c, battle_anim.c
 
 // cable_car.c

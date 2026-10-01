@@ -457,10 +457,10 @@ static const struct OamData sOam_Ball = {
 };
 
 static const struct SpriteFrameImage sBallImages[] = {
-    {(void *)ewram17E00 + 0, 128},
-    {(void *)ewram17E00 + 128, 128},
-    {(void *)ewram17E00 + 0x100, 128},
-    {(void *)ewram17E00 + 0x180, 128}
+    {sRouletteBallGfxBuffer + 0, 128},
+    {sRouletteBallGfxBuffer + 128, 128},
+    {sRouletteBallGfxBuffer + 0x100, 128},
+    {sRouletteBallGfxBuffer + 0x180, 128}
 };
 
 static const union AnimCmd sAnim_Ball_RollFast[] = {
@@ -568,13 +568,13 @@ static const struct OamData sOam_Taillow = {
 };
 
 static const struct SpriteFrameImage sShroomishTaillowImages[] = {
-    {(void *)ewram17000 + 0, 0x200},
-    {(void *)ewram17000 + 0x200, 0x200},
-    {(void *)ewram17000 + 0x400, 0x200},
-    {(void *)ewram17000 + 0x600, 0x200},
-    {(void *)ewram17000 + 0x800, 0x200},
-    {(void *)ewram17000 + 0xa00, 0x200},
-    {(void *)ewram17000 + 0xc00, 0x200}
+    {sRouletteShroomishTaillowGfxBuffer + 0, 0x200},
+    {sRouletteShroomishTaillowGfxBuffer + 0x200, 0x200},
+    {sRouletteShroomishTaillowGfxBuffer + 0x400, 0x200},
+    {sRouletteShroomishTaillowGfxBuffer + 0x600, 0x200},
+    {sRouletteShroomishTaillowGfxBuffer + 0x800, 0x200},
+    {sRouletteShroomishTaillowGfxBuffer + 0xa00, 0x200},
+    {sRouletteShroomishTaillowGfxBuffer + 0xc00, 0x200}
 };
 
 static const union AnimCmd sAnim_Shroomish[] = {
@@ -712,8 +712,8 @@ void LoadOrFreeMiscSpritePalettesAndSheets(bool8 free)
     {
         FreeAllSpritePalettes();
         LoadSpritePalettes(sSpritePalettes);
-        LZ77UnCompWram(sShroomishTaillow_Gfx, ewram17000);
-        LZ77UnCompWram(sBall_Gfx, ewram17E00);
+        LZ77UnCompWram(sShroomishTaillow_Gfx, sRouletteShroomishTaillowGfxBuffer);
+        LZ77UnCompWram(sBall_Gfx, sRouletteBallGfxBuffer);
         LZ77UnCompWram(sShadow_Gfx, ewram18000);
     }
     else
