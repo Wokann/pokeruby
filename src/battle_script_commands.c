@@ -7627,7 +7627,7 @@ void Cmd_metronome(void)
         else
         {
             asm("":::"r4"); // Force correct register use
-            if (*r3 == NUM_MOVES - 1)
+            if (*r3 == MOVES_COUNT - 1)
                 *r3 = 1;
             else if (*r3 == gBattleMons[gBattlerAttacker].moves[3])
                 *r3 = gBattleMons[gBattlerAttacker].moves[2];
@@ -7647,7 +7647,7 @@ void Cmd_metronome(void)
         s32 i;
 
         gCurrentMove = (Random() & 0x1FF) + 1;
-        if (gCurrentMove >= NUM_MOVES)
+        if (gCurrentMove >= MOVES_COUNT)
             continue;
         for (i = 0; i < MAX_MON_MOVES; ++i); // redundant
         i = -1;

@@ -951,7 +951,7 @@ void Task_DoAppeals(u8 taskId)
         {
             ContestClearGeneralTextWindow();
             StringCopy(gStringVar1, gContestMons[contestant].nickname);
-            if (sContestantStatus[contestant].currMove < NUM_MOVES)
+            if (sContestantStatus[contestant].currMove < MOVES_COUNT)
                 StringCopy(gStringVar2, gMoveNames[sContestantStatus[contestant].currMove]);
             else
                 StringCopy(gStringVar2,

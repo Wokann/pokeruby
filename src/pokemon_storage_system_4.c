@@ -1475,7 +1475,7 @@ void InitCanReleaseMonVars(void)
     gPokemonStorageSystemPtr->unresolvedReleaseDive = 0;
     gPokemonStorageSystemPtr->restrictedReleaseMoves[0] = MOVE_SURF;
     gPokemonStorageSystemPtr->restrictedReleaseMoves[1] = MOVE_DIVE;
-    gPokemonStorageSystemPtr->restrictedReleaseMoves[2] = NUM_MOVES;
+    gPokemonStorageSystemPtr->restrictedReleaseMoves[2] = MOVES_COUNT;
     knownMoves = GetMonData(&gPokemonStorageSystemPtr->tempMon, MON_DATA_KNOWN_MOVES, gPokemonStorageSystemPtr->restrictedReleaseMoves);
     gPokemonStorageSystemPtr->unresolvedReleaseSurf = knownMoves & 1;
     gPokemonStorageSystemPtr->unresolvedReleaseDive = (knownMoves >> 1) & 1;
