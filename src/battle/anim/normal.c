@@ -570,13 +570,13 @@ void AnimTask_BlendColorCycleByTag(u8 taskId)
     gTasks[taskId].func = AnimTask_BlendColorCycleByTagLoop;
 }
 
-static void BlendColorCycleByTag(u8 taskId, u8 initialBlendAmount, u8 targetBlendAmount)
+static void BlendColorCycleByTag(u8 taskId, u8 startBlendAmount, u8 targetBlendAmount)
 {
     u8 paletteIndex = IndexOfSpritePaletteTag(gTasks[taskId].tPalTag);
     BeginNormalPaletteFade(
         1 << (paletteIndex + 16),
         gTasks[taskId].tDelay,
-        initialBlendAmount,
+        startBlendAmount,
         targetBlendAmount,
         gTasks[taskId].tBlendColor);
 
@@ -586,26 +586,26 @@ static void BlendColorCycleByTag(u8 taskId, u8 initialBlendAmount, u8 targetBlen
 
 static void AnimTask_BlendColorCycleByTagLoop(u8 taskId)
 {
-    u8 initialBlendAmount, targetBlendAmount;
+    u8 startBlendAmount, targetBlendAmount;
     if (!gPaletteFade.active)
     {
         if (gTasks[taskId].tNumBlends > 0)
         {
             if (gTasks[taskId].tRestoreBlend == FALSE)
             {
-                initialBlendAmount = gTasks[taskId].tInitialBlendY;
+                startBlendAmount = gTasks[taskId].tInitialBlendY;
                 targetBlendAmount = gTasks[taskId].tTargetBlendY;
             }
             else
             {
-                initialBlendAmount = gTasks[taskId].tTargetBlendY;
+                startBlendAmount = gTasks[taskId].tTargetBlendY;
                 targetBlendAmount = gTasks[taskId].tInitialBlendY;
             }
 
             if (gTasks[taskId].tNumBlends == 1)
                 targetBlendAmount = 0;
 
-            BlendColorCycleByTag(taskId, initialBlendAmount, targetBlendAmount);
+            BlendColorCycleByTag(taskId, startBlendAmount, targetBlendAmount);
         }
         else
         {
@@ -1343,7 +1343,7 @@ void AnimTask_DrawFallingWhiteLinesOnAttacker(u8 taskId)
     u16 species;
     int spriteId, newSpriteId;
     u16 loweredPartnerPriority;
-    struct BattleAnimBgData animBg;
+    struct BattleAnimBgData animBgData;
 
     loweredPartnerPriority = FALSE;
     gBattle_WIN0H = 0;
@@ -1388,14 +1388,14 @@ void AnimTask_DrawFallingWhiteLinesOnAttacker(u8 taskId)
 
     spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
     newSpriteId = CreateInvisibleSpriteCopy(gBattleAnimAttacker, spriteId, species);
-    GetBattleAnimBg1Data(&animBg);
-    DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x1000);
-    LZDecompressVram(&gBattleAnimMaskTilemap_Curse, animBg.bgTilemap);
+    GetBattleAnimBg1Data(&animBgData);
+    DmaFill32Defvars(3, 0, animBgData.bgTilemap, 0x1000);
+    LZDecompressVram(&gBattleAnimMaskTilemap_Curse, animBgData.bgTilemap);
     if (IsContest())
-        RelocateBattleBgPal(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, FALSE);
+        RelocateBattleBgPal(animBgData.paletteId, (u16 *)animBgData.bgTilemap, 0, FALSE);
     
-    LZDecompressVram(&gBattleAnimMaskImage_Curse, animBg.bgTiles);
-    LoadPalette(&sCurseLinesPalette, animBg.paletteId * 16 + 1, 2);
+    LZDecompressVram(&gBattleAnimMaskImage_Curse, animBgData.bgTiles);
+    LoadPalette(&sCurseLinesPalette, animBgData.paletteId * 16 + 1, 2);
 
     gBattle_BG1_X = -gSprites[spriteId].x + 32;
     gBattle_BG1_Y = -gSprites[spriteId].y + 32;
@@ -1406,7 +1406,7 @@ void AnimTask_DrawFallingWhiteLinesOnAttacker(u8 taskId)
 
 static void AnimTask_DrawFallingWhiteLinesOnAttacker_Step(u8 taskId)
 {
-    struct BattleAnimBgData animBg;
+    struct BattleAnimBgData animBgData;
     struct Sprite *sprite;
 
     gTasks[taskId].data[10] += 4;
@@ -1433,8 +1433,8 @@ static void AnimTask_DrawFallingWhiteLinesOnAttacker_Step(u8 taskId)
             sprite = &gSprites[gTasks[taskId].data[0]];
             DestroySprite(sprite);
 
-            GetBattleAnimBg1Data(&animBg);
-            DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x800);
+            GetBattleAnimBg1Data(&animBgData);
+            DmaFill32Defvars(3, 0, animBgData.bgTilemap, 0x800);
             if (gTasks[taskId].data[6] == TRUE)
                 gSprites[gBattlerSpriteIds[BATTLE_PARTNER(gBattleAnimAttacker)]].oam.priority++;
 
@@ -1860,7 +1860,7 @@ void StartMonScrollingBgMask(u8 taskId, int unused, u16 scrollSpeed, u8 battler,
 {
     u16 species;
     u8 spriteId, spriteId2;
-    struct BattleAnimBgData animBg;
+    struct BattleAnimBgData animBgData;
     u8 battler2;
 
     spriteId2 = 0;
@@ -1898,13 +1898,13 @@ void StartMonScrollingBgMask(u8 taskId, int unused, u16 scrollSpeed, u8 battler,
     if (includePartner)
         spriteId2 = CreateInvisibleSpriteCopy(battler2, gBattlerSpriteIds[battler2], species);
 
-    GetBattleAnimBg1Data(&animBg);
-    LZDecompressVram(tilemap, animBg.bgTilemap);
+    GetBattleAnimBg1Data(&animBgData);
+    LZDecompressVram(tilemap, animBgData.bgTilemap);
     if (IsContest())
-        RelocateBattleBgPal(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, FALSE);
+        RelocateBattleBgPal(animBgData.paletteId, (u16 *)animBgData.bgTilemap, 0, FALSE);
 
-    LZDecompressVram(gfx, animBg.bgTiles);
-    LoadCompressedPalette(palette, animBg.paletteId << 4, 32);
+    LZDecompressVram(gfx, animBgData.bgTiles);
+    LoadCompressedPalette(palette, animBgData.paletteId << 4, 32);
     gBattle_BG1_X = 0;
     gBattle_BG1_Y = 0;
     gTasks[taskId].data[1] = scrollSpeed;
