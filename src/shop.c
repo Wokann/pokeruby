@@ -207,7 +207,7 @@ static void ShowShopMenuAfterExitingBuyOrSellMenu(u8 taskId)
     DestroyTask(taskId);
 }
 
-static void Task_ReturnToMartMenu(u8 taskId)
+static void Task_ReturnToShopMenu(u8 taskId)
 {
     if (IsWeatherNotFadingIn() == 1)
     {
@@ -221,18 +221,18 @@ static void Task_ReturnToMartMenu(u8 taskId)
 void Shop_FadeReturnToMartMenu(void)
 {
     FadeInFromBlack();
-    CreateTask(Task_ReturnToMartMenu, 0x8);
+    CreateTask(Task_ReturnToShopMenu, 0x8);
 }
 
 void Shop_RunExitSellMenuTask(u8 taskId)
 {
-    Task_ReturnToMartMenu(taskId);
+    Task_ReturnToShopMenu(taskId);
 }
 
 // unused
 void Shop_LoadExitSellMenuTask(u8 taskId)
 {
-    gTasks[taskId].func = Task_ReturnToMartMenu;
+    gTasks[taskId].func = Task_ReturnToShopMenu;
 }
 
 static void MainCB2(void)
