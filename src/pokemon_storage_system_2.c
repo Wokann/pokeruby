@@ -886,7 +886,7 @@ static void Task_WithdrawMon(void)
 
 static void Task_DepositMenu(void)
 {
-    u8 r4;
+    u8 boxId;
 
     switch (gPokemonStorageSystemPtr->state)
     {
@@ -897,9 +897,9 @@ static void Task_DepositMenu(void)
         gPokemonStorageSystemPtr->state++;
         break;
     case 1:
-        r4 = HandleChooseBoxMenuInput();
-        if (r4 == BOXID_NONE_CHOSEN);
-        else if (r4 == BOXID_CANCELED)
+        boxId = HandleChooseBoxMenuInput();
+        if (boxId == BOXID_NONE_CHOSEN);
+        else if (boxId == BOXID_CANCELED)
         {
             ClearBottomWindow();
             DestroyChooseBoxMenuSprites();
@@ -908,7 +908,7 @@ static void Task_DepositMenu(void)
         }
         else
         {
-            if (TryStorePartyMonInBox(r4))
+            if (TryStorePartyMonInBox(boxId))
             {
                 ClearBottomWindow();
                 DestroyChooseBoxMenuSprites();
@@ -920,7 +920,7 @@ static void Task_DepositMenu(void)
                 PrintMessage(PC_TEXT_BOX_IS_FULL);
                 gPokemonStorageSystemPtr->state = 4;
             }
-            gPokeStorageDepositBoxId = r4;
+            gPokeStorageDepositBoxId = boxId;
         }
         break;
     case 2:
@@ -978,13 +978,13 @@ static void Task_ReleaseMon(void)
         {
             while (1)
             {
-                s8 r0 = RunCanReleaseMon();
-                if (r0 == 1)
+                s8 canRelease = RunCanReleaseMon();
+                if (canRelease == 1)
                 {
                     gPokemonStorageSystemPtr->state++;
                     break;
                 }
-                if (r0 == 0)
+                if (canRelease == 0)
                 {
                     gPokemonStorageSystemPtr->state = 8;
                     break;
@@ -1746,16 +1746,16 @@ static void UpdateCloseBoxButtonFlash(void)
 
 static void SetPartySlotTilemaps(void)
 {
-    int i;
+    int partyId;
 
-    for (i = 1; i < PARTY_SIZE; i++)
+    for (partyId = 1; partyId < PARTY_SIZE; partyId++)
     {
-        u16 r1;
-        bool32 r0 = GetMonData(gPlayerParty + i, MON_DATA_SPECIES);
-        if (r0)
-            r0 = TRUE;
-        r1 = r0 ? 12 : 16;
-        CopyTilemapRectFixedWidth(gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 7, (i - 1) * 3 + 1, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, r1, 4, 4, 3);
+        u16 tilemapSourceX;
+        bool32 hasMon = GetMonData(gPlayerParty + partyId, MON_DATA_SPECIES);
+        if (hasMon)
+            hasMon = TRUE;
+        tilemapSourceX = hasMon ? 12 : 16;
+        CopyTilemapRectFixedWidth(gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 7, (partyId - 1) * 3 + 1, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, tilemapSourceX, 4, 4, 3);
     }
 }
 
