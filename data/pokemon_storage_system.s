@@ -5,12 +5,18 @@
 
 	.align 2
 
+@ Assembly mirror of PSS_CURSOR_AREA_* in include/pokemon_storage_system.h.
+.equiv PSS_CURSOR_AREA_IN_BOX,    0
+.equiv PSS_CURSOR_AREA_IN_PARTY,  1
+.equiv PSS_CURSOR_AREA_BOX_TITLE, 2
+.equiv PSS_CURSOR_AREA_BUTTONS,   3
+
 gPokeStorageInputHandlers:: @ 83BBBD4
-	.4byte InBoxInput_Normal, 0
-	.4byte HandleInput_InParty, 1
-	.4byte HandleInput_OnBox, 2
-	.4byte HandleInput_OnButtons, 3
-	.4byte NULL, 0
+	poke_storage_input_handler InBoxInput_Normal, PSS_CURSOR_AREA_IN_BOX
+	poke_storage_input_handler HandleInput_InParty, PSS_CURSOR_AREA_IN_PARTY
+	poke_storage_input_handler HandleInput_OnBox, PSS_CURSOR_AREA_BOX_TITLE
+	poke_storage_input_handler HandleInput_OnButtons, PSS_CURSOR_AREA_BUTTONS
+	poke_storage_input_handler_end
 
 	.align 2
 gPokeStorageCursorSpriteSheets:: @ 83BBBFC

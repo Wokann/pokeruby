@@ -64,6 +64,18 @@
 	.2byte (\tile_num) | ((\priority) << 10) | ((\palette_num) << 12)
 	.endm
 
+@ Defines a PokeStorageInputHandler record from include/pokemon_storage_system.h.
+	.macro poke_storage_input_handler function, cursor_area
+	.4byte \function
+	.byte \cursor_area
+	.fill 3, 1, 0 @ padding
+	.endm
+
+	.macro poke_storage_input_handler_end
+	.4byte NULL
+	.fill 4, 1, 0 @ padding
+	.endm
+
 @ Defines a four-byte TrainerMoney record. The final two bytes preserve
 @ Ruby's existing record padding.
 	.macro trainer_money trainer_class, value
