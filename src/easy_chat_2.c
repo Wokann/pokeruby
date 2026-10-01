@@ -2089,7 +2089,7 @@ bool8 IsEasyChatGroupUnlocked(u8 group)
     case EC_GROUP_MOVE_1:
     case EC_GROUP_MOVE_2:
         return FlagGet(FLAG_SYS_GAME_CLEAR);
-    case EC_GROUP_POKEMON_2:
+    case EC_GROUP_POKEMON_NATIONAL:
         return EasyChatIsNationalPokedexEnabled();
     default:
         return TRUE;
@@ -2104,7 +2104,7 @@ bool8 IsEasyChatIndexAndGroupUnlocked(u8 group, u16 word)
         if (gEasyChatScreen->alphabetGroupIds[2][11 + group] == 0)
             return FALSE;
         return IsTrendySayingUnlocked(word);
-    case EC_GROUP_POKEMON_1:
+    case EC_GROUP_POKEMON:
         return GetSetPokedexFlag(SpeciesToNationalPokedexNum(word), 0);
     case EC_GROUP_EVENTS:
     case EC_GROUP_MOVE_1:
@@ -2112,7 +2112,7 @@ bool8 IsEasyChatIndexAndGroupUnlocked(u8 group, u16 word)
         if (gEasyChatScreen->alphabetGroupIds[2][11 + group] == 0)
             return FALSE;
         return TRUE;
-    case EC_GROUP_POKEMON_2:
+    case EC_GROUP_POKEMON_NATIONAL:
         return EasyChatIsNationalPokedexEnabled();
     default:
         return TRUE;
@@ -2123,7 +2123,7 @@ u16 EasyChat_GetNumWordsInGroup(u8 group)
 {
     switch (group)
     {
-    case EC_GROUP_POKEMON_1:
+    case EC_GROUP_POKEMON:
         return GetHoennPokedexCount(0);
     case EC_GROUP_TRENDY_SAYING:
         return GetNumTrendySayingsUnlocked();
@@ -2377,10 +2377,10 @@ void LoadEasyChatStrings(void)
     u16 group;
     u16 index;
 
-    for (group = 0; group <= EC_GROUP_POKEMON_2; group++)
+    for (group = 0; group <= EC_GROUP_POKEMON_NATIONAL; group++)
     {
-        if (group != EC_GROUP_POKEMON_1
-         && group != EC_GROUP_POKEMON_2
+        if (group != EC_GROUP_POKEMON
+         && group != EC_GROUP_POKEMON_NATIONAL
          && group != EC_GROUP_MOVE_1
          && group != EC_GROUP_MOVE_2)
         {
@@ -2473,8 +2473,8 @@ u8 *CopyEasyChatWordPadded(u8 *dest, u16 word, u16 c)
 
         switch (group)
         {
-        case EC_GROUP_POKEMON_1:
-        case EC_GROUP_POKEMON_2:
+        case EC_GROUP_POKEMON:
+        case EC_GROUP_POKEMON_NATIONAL:
             wordText = StringCopy(dest, gSpeciesNames[index]);
             break;
         case EC_GROUP_MOVE_1:
@@ -2517,8 +2517,8 @@ u16 GetEasyChatWordStringLength(u16 easyChatWord)
 
         switch (groupId)
         {
-        case EC_GROUP_POKEMON_1:
-        case EC_GROUP_POKEMON_2:
+        case EC_GROUP_POKEMON:
+        case EC_GROUP_POKEMON_NATIONAL:
             wordText = gSpeciesNames[index];
             break;
         case EC_GROUP_MOVE_1:
@@ -2554,12 +2554,12 @@ bool8 IsEasyChatWordInvalid(u16 easyChatWord)
         u16 groupId = EC_GROUP(easyChatWord);
         u16 index = EC_INDEX(easyChatWord);
 
-        if (groupId <= EC_GROUP_POKEMON_2)
+        if (groupId <= EC_GROUP_POKEMON_NATIONAL)
         {
             switch (groupId)
             {
-            case EC_GROUP_POKEMON_1:
-            case EC_GROUP_POKEMON_2:
+            case EC_GROUP_POKEMON:
+            case EC_GROUP_POKEMON_NATIONAL:
             case EC_GROUP_MOVE_1:
             case EC_GROUP_MOVE_2:
                 wordList = (u16 *)gEasyChatGroupWords[groupId];
@@ -2588,8 +2588,8 @@ u32 GetEasyChatWordIndexInGroup(s32 group, s32 index)
 
     switch (group)
     {
-    case EC_GROUP_POKEMON_1:
-    case EC_GROUP_POKEMON_2:
+    case EC_GROUP_POKEMON:
+    case EC_GROUP_POKEMON_NATIONAL:
     case EC_GROUP_MOVE_1:
     case EC_GROUP_MOVE_2:
         words = (u16 *)gEasyChatGroupWords[group];
@@ -2633,8 +2633,8 @@ u8 *CopyEasyChatWord(u8 *dest, u16 easyChatWord)
         wordIndex = EC_INDEX(easyChatWord);
         switch (groupId)
         {
-        case EC_GROUP_POKEMON_1: // 0
-        case EC_GROUP_POKEMON_2: // 21
+        case EC_GROUP_POKEMON: // 0
+        case EC_GROUP_POKEMON_NATIONAL: // 21
             dest = StringCopy(dest, gSpeciesNames[wordIndex]);
             break;
         case EC_GROUP_MOVE_1: // 18
@@ -2749,8 +2749,8 @@ u16 UnusedGetEasyChatWordStringLength(u16 arg0)
     word = EC_INDEX(arg0);
     switch (group)
     {
-    case EC_GROUP_POKEMON_1: // 0
-    case EC_GROUP_POKEMON_2: // 21
+    case EC_GROUP_POKEMON: // 0
+    case EC_GROUP_POKEMON_NATIONAL: // 21
         chars = gSpeciesNames[word];
         break;
     case EC_GROUP_MOVE_1: // 18
@@ -2831,8 +2831,8 @@ u16 GetRandomEasyChatWordFromGroup(u16 groupId)
 {
     u16 index = Random() % gEasyChatGroupSizes[groupId];
 
-    if (groupId == EC_GROUP_POKEMON_1
-     || groupId == EC_GROUP_POKEMON_2
+    if (groupId == EC_GROUP_POKEMON
+     || groupId == EC_GROUP_POKEMON_NATIONAL
      || groupId == EC_GROUP_MOVE_1
      || groupId == EC_GROUP_MOVE_2)
     {
@@ -2847,7 +2847,7 @@ u16 GetRandomEasyChatWordFromUnlockedGroup(u16 groupId)
     if (!IsEasyChatGroupUnlocked(groupId))
         return -1;
 
-    if (groupId != EC_GROUP_POKEMON_1)
+    if (groupId != EC_GROUP_POKEMON)
     {
         if (groupId == EC_GROUP_TRENDY_SAYING)
             return GetRandomUnlockedTrendySaying();
@@ -3021,8 +3021,8 @@ static u16 GetRandomUnlockedEasyChatPokemon(void)
         return -1;
 
     local1 = Random() % local1;
-    speciesList = (u16 *)gEasyChatGroupWords[EC_GROUP_POKEMON_1];
-    for (i = 0, topsize = gEasyChatGroupSizes[EC_GROUP_POKEMON_1]; i < topsize; i++)
+    speciesList = (u16 *)gEasyChatGroupWords[EC_GROUP_POKEMON];
+    for (i = 0, topsize = gEasyChatGroupSizes[EC_GROUP_POKEMON]; i < topsize; i++)
     {
         const u16 dexNum = SpeciesToNationalPokedexNum(*speciesList);
         const u8 local2 = GetSetPokedexFlag(dexNum, 0);

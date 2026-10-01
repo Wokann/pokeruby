@@ -463,12 +463,12 @@ static void InitGiddyTaleList(void)
     struct MauvilleManGiddy *giddy = &gSaveBlock1.oldMan.giddy;
     u16 wordGroupsAndCount[][2] =
     {
-        {EC_GROUP_POKEMON_1, 0},
+        {EC_GROUP_POKEMON, 0},
         {EC_GROUP_LIFESTYLE, 0},
         {EC_GROUP_HOBBIES,   0},
         {EC_GROUP_MOVE_1,    0},
         {EC_GROUP_MOVE_2,    0},
-        {EC_GROUP_POKEMON_2, 0}
+        {EC_GROUP_POKEMON_NATIONAL, 0}
     };
     u16 i;
     u16 totalWords;
