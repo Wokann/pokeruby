@@ -598,19 +598,19 @@ void MultiplyInvertedPaletteRGBComponents(u16 i, u8 r, u8 g, u8 b)
     int curRed;
     int curGreen;
     int curBlue;
-    u16 outPal;
+    u16 color;
 
-    outPal = gPlttBufferUnfaded[i];
-    curRed = outPal & 0x1f;
-    curGreen = (outPal & (0x1f << 5)) >> 5;
-    curBlue = (outPal & (0x1f << 10)) >> 10;
+    color = gPlttBufferUnfaded[i];
+    curRed = color & 0x1f;
+    curGreen = (color & (0x1f << 5)) >> 5;
+    curBlue = (color & (0x1f << 10)) >> 10;
     curRed += (((0x1f - curRed) * r) >> 4);
     curGreen += (((0x1f - curGreen) * g) >> 4);
     curBlue += (((0x1f - curBlue) * b) >> 4);
-    outPal = curRed;
-    outPal |= curGreen << 5;
-    outPal |= curBlue << 10;
-    gPlttBufferFaded[i] = outPal;
+    color = curRed;
+    color |= curGreen << 5;
+    color |= curBlue << 10;
+    gPlttBufferFaded[i] = color;
 }
 
 // r, g, b are between 0 and 16
@@ -619,19 +619,19 @@ void MultiplyPaletteRGBComponents(u16 i, u8 r, u8 g, u8 b)
     int curRed;
     int curGreen;
     int curBlue;
-    u16 outPal;
+    u16 color;
 
-    outPal = gPlttBufferUnfaded[i];
-    curRed = outPal & 0x1f;
-    curGreen = (outPal & (0x1f << 5)) >> 5;
-    curBlue = (outPal & (0x1f << 10)) >> 10;
+    color = gPlttBufferUnfaded[i];
+    curRed = color & 0x1f;
+    curGreen = (color & (0x1f << 5)) >> 5;
+    curBlue = (color & (0x1f << 10)) >> 10;
     curRed -= ((curRed * r) >> 4);
     curGreen -= ((curGreen * g) >> 4);
     curBlue -= ((curBlue * b) >> 4);
-    outPal = curRed;
-    outPal |= curGreen << 5;
-    outPal |= curBlue << 10;
-    gPlttBufferFaded[i] = outPal;
+    color = curRed;
+    color |= curGreen << 5;
+    color |= curBlue << 10;
+    gPlttBufferFaded[i] = color;
 }
 
 void Task_PokecenterHeal(u8 taskId);
@@ -920,14 +920,14 @@ static void SpriteCB_PokeballGlow(struct Sprite *sprite)
 
 u8 PokecenterHealEffectHelper(s16 x, s16 y)
 {
-    u8 spriteIdAtEnd;
+    u8 spriteId;
     struct Sprite *sprite;
-    spriteIdAtEnd = CreateSpriteAtEnd(&sSpriteTemplate_PokecenterMonitor, x, y, 0);
-    sprite = &gSprites[spriteIdAtEnd];
+    spriteId = CreateSpriteAtEnd(&sSpriteTemplate_PokecenterMonitor, x, y, 0);
+    sprite = &gSprites[spriteId];
     sprite->oam.priority = 2;
     sprite->invisible = TRUE;
     SetSubspriteTables(sprite, &sSubspriteTable_PokecenterMonitor);
-    return spriteIdAtEnd;
+    return spriteId;
 }
 
 void SpriteCB_PokecenterMonitor(struct Sprite *sprite)
@@ -946,17 +946,17 @@ void SpriteCB_PokecenterMonitor(struct Sprite *sprite)
 
 static void CreateHofMonitorSprite(s16 taskId, s16 x, s16 y, bool8 isSmallMonitor)
 {
-    u8 spriteIdAtEnd;
+    u8 spriteId;
     if (!isSmallMonitor)
     {
-        spriteIdAtEnd = CreateSpriteAtEnd(&sSpriteTemplate_HofMonitorBig, x, y, 0);
-        SetSubspriteTables(&gSprites[spriteIdAtEnd], &sSubspriteTable_HofMonitorBig);
+        spriteId = CreateSpriteAtEnd(&sSpriteTemplate_HofMonitorBig, x, y, 0);
+        SetSubspriteTables(&gSprites[spriteId], &sSubspriteTable_HofMonitorBig);
     } else
     {
-        spriteIdAtEnd = CreateSpriteAtEnd(&sSpriteTemplate_HofMonitorSmall, x, y, 0);
+        spriteId = CreateSpriteAtEnd(&sSpriteTemplate_HofMonitorSmall, x, y, 0);
     }
-    gSprites[spriteIdAtEnd].invisible = TRUE;
-    gSprites[spriteIdAtEnd].data[0] = taskId;
+    gSprites[spriteId].invisible = TRUE;
+    gSprites[spriteId].data[0] = taskId;
 }
 
 static void SpriteCB_HallOfFameMonitor(struct Sprite *sprite)
@@ -1969,7 +1969,7 @@ static void EscapeRopeWarpOutEffect_Init(struct Task *task)
 static void EscapeRopeWarpOutEffect_Spin(struct Task *task)
 {
     struct ObjectEvent *objectEvent;
-    u8 clockwiseDirections[5] = {
+    u8 spinDirections[5] = {
         DIR_SOUTH,
         DIR_WEST,
         DIR_EAST,
@@ -1997,7 +1997,7 @@ static void EscapeRopeWarpOutEffect_Spin(struct Task *task)
         }
         else if (task->tSpinDelay == 0 || (--task->tSpinDelay) == 0)
         {
-            ObjectEventSetHeldMovement(objectEvent, GetFaceDirectionMovementAction(clockwiseDirections[objectEvent->facingDirection]));
+            ObjectEventSetHeldMovement(objectEvent, GetFaceDirectionMovementAction(spinDirections[objectEvent->facingDirection]));
             if (task->tNumTurns < 12)
                 task->tNumTurns++;
 
