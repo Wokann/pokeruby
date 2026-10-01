@@ -306,7 +306,7 @@ void CB2_InitBattleInternal(void)
 
 void BufferPartyVsScreenHealth_AtStart(void)
 {
-    u16 r6 = 0;
+    u16 flags = 0;
     u16 species;
     u16 hp;
     u32 status;
@@ -321,20 +321,20 @@ void BufferPartyVsScreenHealth_AtStart(void)
         if (species == SPECIES_NONE)
             continue;
         if (species != SPECIES_EGG && hp != 0 && status == 0)
-            r6 |= 1 << i * 2;
+            flags |= 1 << i * 2;
 
         if (species == SPECIES_NONE)
             continue;
         if (hp != 0 && (species == SPECIES_EGG || status != 0))
-            r6 |= 2 << i * 2;
+            flags |= 2 << i * 2;
 
         if (species == SPECIES_NONE)
             continue;
         if (species != SPECIES_EGG && hp == 0)
-            r6 |= 3 << i * 2;
+            flags |= 3 << i * 2;
     }
-    eMultiTxBuffer.linkPartnerHeader.vsScreenHealthFlagsLo = r6;
-    eMultiTxBuffer.linkPartnerHeader.vsScreenHealthFlagsHi = r6 >> 8;
+    eMultiTxBuffer.linkPartnerHeader.vsScreenHealthFlagsLo = flags;
+    eMultiTxBuffer.linkPartnerHeader.vsScreenHealthFlagsHi = flags >> 8;
 }
 
 static void SetPlayerBerryDataInBattleStruct(void)
@@ -376,7 +376,7 @@ void SetAllPlayersBerryData(void)
     {
         s32 numPlayers;
         struct BattleEnigmaBerry *src;
-        u8 r4;
+        u8 battler;
 
         if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
             numPlayers = 4;
@@ -385,14 +385,14 @@ void SetAllPlayersBerryData(void)
         for (i = 0; i < numPlayers; i++)
         {
             src = (struct BattleEnigmaBerry *)(gBlockRecvBuffer[i] + 2);
-            r4 = gLinkPlayers[i].id;
+            battler = gLinkPlayers[i].id;
 
             for (j = 0; j < 7; j++)
-                gEnigmaBerries[r4].name[j] = src->name[j];
+                gEnigmaBerries[battler].name[j] = src->name[j];
             for (j = 0; j < 18; j++)
-                gEnigmaBerries[r4].itemEffect[j] = src->itemEffect[j];
-            gEnigmaBerries[r4].holdEffect = src->holdEffect;
-            gEnigmaBerries[r4].holdEffectParam = src->holdEffectParam;
+                gEnigmaBerries[battler].itemEffect[j] = src->itemEffect[j];
+            gEnigmaBerries[battler].holdEffect = src->holdEffect;
+            gEnigmaBerries[battler].holdEffectParam = src->holdEffectParam;
         }
     }
 }
@@ -1019,16 +1019,16 @@ void SpriteCB_DebugBattleInit_Main(struct Sprite *sprite)
         if (sprite->data[4] == 0)
         {
             s32 i;
-            s32 r2;
-            s32 r0;
+            s32 topRowOffset;
+            s32 bottomRowOffset;
 
             sprite->data[4] = 2;
-            r2 = sprite->data[1] + sprite->data[3] * 32;
-            r0 = sprite->data[2] - sprite->data[3] * 32;
+            topRowOffset = sprite->data[1] + sprite->data[3] * 32;
+            bottomRowOffset = sprite->data[2] - sprite->data[3] * 32;
             for (i = 0; i < 29; i += 2)
             {
-                arr[r2 + i] = 0x3D;
-                arr[r0 + i] = 0x3D;
+                arr[topRowOffset + i] = 0x3D;
+                arr[bottomRowOffset + i] = 0x3D;
             }
             sprite->data[3]++;
             if (sprite->data[3] == 21)
@@ -1533,45 +1533,45 @@ void SetDebugBattleMonGender(u8 a)
 // gDebugBattlePartyEditorData 2D array
 void AdjustDebugBattleTwoDigitValue(u8 a)
 {
-	s8 r12 = 0;
-	s8 r7 = gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5];
+	s8 tensDigit = 0;
+	s8 onesDigit = gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5];
 
-	while (r7 >= 10)
+	while (onesDigit >= 10)
 	{
-		r7 -= 10;
-		r12++;
+		onesDigit -= 10;
+		tensDigit++;
 	}
 
 	if (a & 2)
 	{
 		if (a & 1)
-			r12++;
+			tensDigit++;
 		else
-			r12--;
-		if (r12 < 0)
-			r12 = 9;
-		if (r12 > 9)
-			r12 = 0;
+			tensDigit--;
+		if (tensDigit < 0)
+			tensDigit = 9;
+		if (tensDigit > 9)
+			tensDigit = 0;
 	}
 	else
 	{
 		if (a & 1)
-			r7++;
+			onesDigit++;
 		else
-			r7--;
-		if (r7 < 1)
-			r7 = 9;
-		if (r7 > 9)
-			r7 = 1;
+			onesDigit--;
+		if (onesDigit < 1)
+			onesDigit = 9;
+		if (onesDigit > 9)
+			onesDigit = 1;
 	}
 	gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide ^ 1][gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5]
 	= gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5]
-	= r12 * 10 + r7;
+	= tensDigit * 10 + onesDigit;
 }
 
 void CB2_DebugBattlePartyEditor(void)
 {
-    s32 r5;
+    s32 editorValue;
 
     if (gMain.heldKeysRaw == (L_BUTTON | SELECT_BUTTON))
         DoSoftReset();
@@ -1592,10 +1592,10 @@ void CB2_DebugBattlePartyEditor(void)
               gDebugBattlePartyEditorData[0][0 * 5 + 1],
               32,
               0, 0, 0, 0);
-            for (r5 = 0; r5 < 4; r5++)
+            for (editorValue = 0; editorValue < 4; editorValue++)
             {
-                SetMonData(&gPlayerParty[0], MON_DATA_MOVE1 + r5, &gDebugBattlePartyEditorMoves[0][0][r5]);
-                SetMonData(&gPlayerParty[0], MON_DATA_PP1 + r5, &gBattleMoves[gDebugBattlePartyEditorMoves[0][0][r5]].pp);
+                SetMonData(&gPlayerParty[0], MON_DATA_MOVE1 + editorValue, &gDebugBattlePartyEditorMoves[0][0][editorValue]);
+                SetMonData(&gPlayerParty[0], MON_DATA_PP1 + editorValue, &gBattleMoves[gDebugBattlePartyEditorMoves[0][0][editorValue]].pp);
             }
             switch (gDebugBattlePartyEditorData[0][6 * 5 + 0])
             {
@@ -1611,12 +1611,12 @@ void CB2_DebugBattlePartyEditor(void)
         if (gDebugBattlePartyEditorField == 1 && gDebugBattlePartyEditorMonIndex == 6)
         {
             // This is really weird
-            r5 = (gSaveBlock2.optionsBattleSceneOff | (gSaveBlock2.optionsSound << 1));
-            r5++;
-            if (r5 == 4)
-                r5 = 0;
-            gSaveBlock2.optionsBattleSceneOff = (r5 & 1);
-            gSaveBlock2.optionsSound = (r5 & 2) >> 1;
+            editorValue = (gSaveBlock2.optionsBattleSceneOff | (gSaveBlock2.optionsSound << 1));
+            editorValue++;
+            if (editorValue == 4)
+                editorValue = 0;
+            gSaveBlock2.optionsBattleSceneOff = (editorValue & 1);
+            gSaveBlock2.optionsSound = (editorValue & 2) >> 1;
             SetPokemonCryStereo(gSaveBlock2.optionsSound);
             Debug_ShowCurrentBattleAnimationAndSoundOptions();
         }
@@ -1871,7 +1871,7 @@ extern u16 sDebugBattleMoveFieldData[][5];
 
 void CB2_DebugBattleMoveEditor(void)
 {
-	u8 r9 = gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5;
+	u8 partyFieldIndex = gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5;
 
 	if (gMain.heldKeysRaw == (L_BUTTON | SELECT_BUTTON))
 		DoSoftReset();
@@ -1896,30 +1896,30 @@ void CB2_DebugBattleMoveEditor(void)
 	}
 	if (JOY_REPT(B_BUTTON))
 	{
-		gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex]--;
-		if (gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] < sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][4])
-			gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] = sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][3];
+		gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][partyFieldIndex / 5][gDebugBattlePartyEditorMoveIndex]--;
+		if (gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][partyFieldIndex / 5][gDebugBattlePartyEditorMoveIndex] < sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][4])
+			gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][partyFieldIndex / 5][gDebugBattlePartyEditorMoveIndex] = sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][3];
 		DrawDebugBattleMove();
 	}
 	if (JOY_REPT(A_BUTTON))
 	{
-		gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex]++;
-		if (gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] > sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][3])
-			gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] = sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][4];
+		gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][partyFieldIndex / 5][gDebugBattlePartyEditorMoveIndex]++;
+		if (gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][partyFieldIndex / 5][gDebugBattlePartyEditorMoveIndex] > sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][3])
+			gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][partyFieldIndex / 5][gDebugBattlePartyEditorMoveIndex] = sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][4];
 		DrawDebugBattleMove();
 	}
 	if (JOY_REPT(L_BUTTON))
 	{
-		gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] -= 10;
-		while (gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] < sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][4])
-			gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] += sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][3];
+		gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][partyFieldIndex / 5][gDebugBattlePartyEditorMoveIndex] -= 10;
+		while (gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][partyFieldIndex / 5][gDebugBattlePartyEditorMoveIndex] < sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][4])
+			gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][partyFieldIndex / 5][gDebugBattlePartyEditorMoveIndex] += sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][3];
 		DrawDebugBattleMove();
 	}
 	if (JOY_REPT(R_BUTTON))
 	{
-		gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] += 10;
-		while (gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] > sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][3])
-			gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] -= sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][3];
+		gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][partyFieldIndex / 5][gDebugBattlePartyEditorMoveIndex] += 10;
+		while (gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][partyFieldIndex / 5][gDebugBattlePartyEditorMoveIndex] > sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][3])
+			gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][partyFieldIndex / 5][gDebugBattlePartyEditorMoveIndex] -= sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][3];
 		DrawDebugBattleMove();
 	}
 	AnimateSprites();
@@ -1937,32 +1937,32 @@ extern void DebugInitBattleSprites(void);
 
 void StartDebugBattleFromPartyEditor(void)
 {
-	u8 r9 = 0;
-	u8 r6;
+	u8 unownLetter = 0;
+	u8 selectionValue;
 	s32 i;
-	s32 spC;
-	u16 sp10;
+	s32 editorValue;
+	u16 itemIdMinusOne;
 
 	gIsDebugMode = 1;
-	r6 = Random() % 4;
-	StringCopy(gSaveBlock2.playerName, sDebugBattlePlayerNames[r6]);
-	gSaveBlock2.playerGender = r6 >> 1;
+	selectionValue = Random() % 4;
+	StringCopy(gSaveBlock2.playerName, sDebugBattlePlayerNames[selectionValue]);
+	gSaveBlock2.playerGender = selectionValue >> 1;
 	ZeroPlayerPartyMons();
 	ZeroEnemyPartyMons();
 	i = gDebugBattlePartyEditorData[0][30];
-	spC = 0;
+	editorValue = 0;
 	if (i >= 10)
 	{
-		spC = 0;
+		editorValue = 0;
 		while (i >= 10)
 		{
 			i -= 10;
-			spC++;
+			editorValue++;
 		}
 	}
 	gBattleTypeFlags = sDebugBattleTypeFlags[i - 1];
 	gDebugBattleFlags = 8;
-	gBattleEnvironment = spC;
+	gBattleEnvironment = editorValue;
 	if (gBattleTypeFlags & BATTLE_TYPE_SAFARI)
 		EnterSafariMode();
 	if (gDebugBattlePartyEditorData[0][30] >= 2 && gDebugBattlePartyEditorData[0][30] <= 4)
@@ -1977,40 +1977,40 @@ void StartDebugBattleFromPartyEditor(void)
 			{
 			case 0:
 			case 2:
-				r6 = 0;
+				selectionValue = 0;
 				break;
 			case 1:
             case 3:
-				r6 = 0xFE;
+				selectionValue = 0xFE;
 				break;
 			default:
-				r6 = 0xFF;
+				selectionValue = 0xFF;
 				break;
 			}
 			if (gDebugBattlePartyEditorData[0][i] == 0xC9 && i + 5 < 30)
-				r9 = gDebugBattlePartyEditorData[0][i + 7];
+				unownLetter = gDebugBattlePartyEditorData[0][i + 7];
 			else
-				r9 = 0;
+				unownLetter = 0;
 			CreateMonWithGenderNatureLetter(
 				&gEnemyParty[i / 5],
 				gDebugBattlePartyEditorData[0][i],
 				gDebugBattlePartyEditorData[0][i + 1],
 				0,
-				r6,
+				selectionValue,
 				0,
-				r9);
+				unownLetter);
 		}
 		SetMonData(&gEnemyParty[i / 5], MON_DATA_HELD_ITEM, &gDebugBattlePartyEditorData[0][i + 2]);
-		sp10 = gDebugBattlePartyEditorData[0][i + 2] - 1;
-		if (sp10 <= 11)
+		itemIdMinusOne = gDebugBattlePartyEditorData[0][i + 2] - 1;
+		if (itemIdMinusOne <= 11)
 			SetMonData(&gEnemyParty[i / 5], MON_DATA_POKEBALL, &gDebugBattlePartyEditorData[0][i + 2]);
 		if (gDebugBattlePartyEditorData[0][i + 3] != 0 && gDebugBattlePartyEditorData[0][i + 3] != 3)
 		{
 			if (gDebugBattlePartyEditorData[0][i + 3] <= 2)
-				spC = gDebugBattlePartyEditorData[0][i + 3] - 1;
+				editorValue = gDebugBattlePartyEditorData[0][i + 3] - 1;
 			else
-				spC = gDebugBattlePartyEditorData[0][i + 3] - 4;
-			SetMonData(&gEnemyParty[i / 5], MON_DATA_ALT_ABILITY, &spC);
+				editorValue = gDebugBattlePartyEditorData[0][i + 3] - 4;
+			SetMonData(&gEnemyParty[i / 5], MON_DATA_ALT_ABILITY, &editorValue);
 		}
 
 		if (gDebugBattlePartyEditorData[1][i] != 0)
@@ -2019,41 +2019,41 @@ void StartDebugBattleFromPartyEditor(void)
 			{
 			case 0:
 			case 2:
-				r6 = 0;
+				selectionValue = 0;
 				break;
 			case 1:
             case 3:
-				r6 = 0xFE;
+				selectionValue = 0xFE;
 				break;
 			default:
-				r6 = 0xFF;
+				selectionValue = 0xFF;
 				break;
 			}
 			if (gDebugBattlePartyEditorData[1][i] == 0xC9 && i + 5 < 30)
-				r9 = gDebugBattlePartyEditorData[1][i + 7];
+				unownLetter = gDebugBattlePartyEditorData[1][i + 7];
 			else
-				r9 = 0;
+				unownLetter = 0;
 			CreateMonWithGenderNatureLetter(
 				&gPlayerParty[i / 5],
 				gDebugBattlePartyEditorData[1][i],
 				gDebugBattlePartyEditorData[1][i + 1],
 				0,
-				r6,
+				selectionValue,
 				0,
-				r9);
+				unownLetter);
 			gPlayerPartyCount++;
 		}
 		SetMonData(&gPlayerParty[i / 5], MON_DATA_HELD_ITEM, &gDebugBattlePartyEditorData[1][i + 2]);
-		sp10 = gDebugBattlePartyEditorData[0][i + 2] - 1;
-		if (sp10 <= 11)
+		itemIdMinusOne = gDebugBattlePartyEditorData[0][i + 2] - 1;
+		if (itemIdMinusOne <= 11)
 			SetMonData(&gPlayerParty[i / 5], MON_DATA_POKEBALL, &gDebugBattlePartyEditorData[1][i + 2]);
 		if (gDebugBattlePartyEditorData[1][i + 3] != 0 && gDebugBattlePartyEditorData[1][i + 3] != 3)
 		{
 			if (gDebugBattlePartyEditorData[1][i + 3] <= 2)
-				spC = gDebugBattlePartyEditorData[1][i + 3] - 1;
+				editorValue = gDebugBattlePartyEditorData[1][i + 3] - 1;
 			else
-				spC = gDebugBattlePartyEditorData[1][i + 3] - 4;
-			SetMonData(&gPlayerParty[i / 5], MON_DATA_ALT_ABILITY, &spC);
+				editorValue = gDebugBattlePartyEditorData[1][i + 3] - 4;
+			SetMonData(&gPlayerParty[i / 5], MON_DATA_ALT_ABILITY, &editorValue);
 		}
 		if (gDebugBattlePartyEditorData[1][i + 3] > 2)
 		{
@@ -2062,14 +2062,14 @@ void StartDebugBattleFromPartyEditor(void)
 		}
 	}
 
-    for (spC = 0; spC < 6; spC++)
+    for (editorValue = 0; editorValue < 6; editorValue++)
     {
         for (i = 0; i < 4; i++)
         {
-            SetMonData(&gEnemyParty[spC], MON_DATA_MOVE1 + i, &gDebugBattlePartyEditorMoves[0][spC][i]);
-            SetMonData(&gEnemyParty[spC], MON_DATA_PP1 + i, &gBattleMoves[gDebugBattlePartyEditorMoves[0][spC][i]].pp);
-            SetMonData(&gPlayerParty[spC], MON_DATA_MOVE1 + i, &gDebugBattlePartyEditorMoves[1][spC][i]);
-            SetMonData(&gPlayerParty[spC], MON_DATA_PP1 + i, &gBattleMoves[gDebugBattlePartyEditorMoves[1][spC][i]].pp);
+            SetMonData(&gEnemyParty[editorValue], MON_DATA_MOVE1 + i, &gDebugBattlePartyEditorMoves[0][editorValue][i]);
+            SetMonData(&gEnemyParty[editorValue], MON_DATA_PP1 + i, &gBattleMoves[gDebugBattlePartyEditorMoves[0][editorValue][i]].pp);
+            SetMonData(&gPlayerParty[editorValue], MON_DATA_MOVE1 + i, &gDebugBattlePartyEditorMoves[1][editorValue][i]);
+            SetMonData(&gPlayerParty[editorValue], MON_DATA_PP1 + i, &gBattleMoves[gDebugBattlePartyEditorMoves[1][editorValue][i]].pp);
         }
     }
 
@@ -2198,12 +2198,12 @@ extern u8 gDebugBattlePartyEditorMoveIndex;
 
 void DrawAllDebugBattleMoves(void)
 {
-    u8 r5 = gDebugBattlePartyEditorMoveIndex;
+    u8 savedMoveIndex = gDebugBattlePartyEditorMoveIndex;
 
     for (gDebugBattlePartyEditorMoveIndex = 0; gDebugBattlePartyEditorMoveIndex < 4; gDebugBattlePartyEditorMoveIndex++)
         DrawDebugBattleMove();
 
-    gDebugBattlePartyEditorMoveIndex = r5;
+    gDebugBattlePartyEditorMoveIndex = savedMoveIndex;
 }
 
 extern const u8 sText_DebugBattleNoItem[];
@@ -2393,9 +2393,9 @@ void DrawDebugBattlePartyField(u8 a)
 
 void DrawDebugBattleMove(void)
 {
-    u8 r5 = gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5;
+    u8 partyFieldIndex = gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5;
     
-    if (r5 < 30)
+    if (partyFieldIndex < 30)
     {
 // TODO: check other revisions
 #if (ENGLISH && REVISION == 0)
@@ -2410,7 +2410,7 @@ void DrawDebugBattleMove(void)
             sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][1],
             sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][2]);
         Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
-        ConvertIntToDecimalStringN(gBattleTextBuff1, gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r5 / 5][gDebugBattlePartyEditorMoveIndex], 2, 3);
+        ConvertIntToDecimalStringN(gBattleTextBuff1, gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][partyFieldIndex / 5][gDebugBattlePartyEditorMoveIndex], 2, 3);
 // TODO: check other revisions
 #if !(ENGLISH && REVISION == 0)
         Text_InitWindow(
@@ -2422,7 +2422,7 @@ void DrawDebugBattleMove(void)
         Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
         gBattleTextBuff1[0] = B_BUFF_EOS;
 #endif
-        StringAppend(gBattleTextBuff1, gMoveNames[gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r5 / 5][gDebugBattlePartyEditorMoveIndex]]);
+        StringAppend(gBattleTextBuff1, gMoveNames[gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][partyFieldIndex / 5][gDebugBattlePartyEditorMoveIndex]]);
         Text_InitWindow(
             &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
@@ -3406,7 +3406,7 @@ void BattleStartClearSetData(void)
 {
     s32 i;
     u32 j;
-    u8 *r4;
+    u8 *dataPtr;
 
     TurnValuesCleanUp(0);
     SpecialStatusesClear();
@@ -3415,7 +3415,7 @@ void BattleStartClearSetData(void)
     {
         gStatuses3[i] = 0;
 
-        MEMSET_ALT(&gDisableStructs[i], 0, 0x1C, j, r4);
+        MEMSET_ALT(&gDisableStructs[i], 0, 0x1C, j, dataPtr);
         gDisableStructs[i].isFirstTurn = 2;
         sUnusedBattlersArray[i] = 0;
         gLastMoves[i] = 0;
@@ -3431,14 +3431,14 @@ void BattleStartClearSetData(void)
     for (i = 0; i < 2; i++)
     {
         gSideStatuses[i] = 0;
-        MEMSET_ALT(&gSideTimers[i], 0, sizeof(struct SideTimer), j, r4);
+        MEMSET_ALT(&gSideTimers[i], 0, sizeof(struct SideTimer), j, dataPtr);
     }
 
     gBattlerAttacker = 0;
     gBattlerTarget = 0;
     gBattleWeather = 0;
 
-    MEMSET_ALT(&gWishFutureKnock, 0, sizeof(struct WishFutureKnock), i, r4);
+    MEMSET_ALT(&gWishFutureKnock, 0, sizeof(struct WishFutureKnock), i, dataPtr);
 
     gHitMarker = 0;
     if ((gBattleTypeFlags & BATTLE_TYPE_LINK) == 0 && gSaveBlock2.optionsBattleSceneOff == TRUE)
@@ -3517,7 +3517,7 @@ void BattleStartClearSetData(void)
 
 void SwitchInClearSetData(void)
 {
-    struct DisableStruct sp0 = gDisableStructs[gActiveBattler];
+    struct DisableStruct disableStructCopy = gDisableStructs[gActiveBattler];
     s32 i;
     u8 *ptr;
 
@@ -3573,10 +3573,10 @@ void SwitchInClearSetData(void)
 
     if (gBattleMoves[gCurrentMove].effect == EFFECT_BATON_PASS)
     {
-        gDisableStructs[gActiveBattler].substituteHP = sp0.substituteHP;
-        gDisableStructs[gActiveBattler].battlerWithSureHit = sp0.battlerWithSureHit;
-        gDisableStructs[gActiveBattler].perishSongTimer = sp0.perishSongTimer;
-        gDisableStructs[gActiveBattler].perishSongTimerStartValue = sp0.perishSongTimerStartValue;
+        gDisableStructs[gActiveBattler].substituteHP = disableStructCopy.substituteHP;
+        gDisableStructs[gActiveBattler].battlerWithSureHit = disableStructCopy.battlerWithSureHit;
+        gDisableStructs[gActiveBattler].perishSongTimer = disableStructCopy.perishSongTimer;
+        gDisableStructs[gActiveBattler].perishSongTimerStartValue = disableStructCopy.perishSongTimerStartValue;
     }
 
     gDisableStructs[gActiveBattler].isFirstTurn= 2;
