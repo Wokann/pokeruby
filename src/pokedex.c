@@ -4306,13 +4306,13 @@ static void UnusedPrintMonName(const u8 *name, u8 left, u8 top)
 }
 
 #if ENGLISH
-void PrintDecimalNum(u16 value, u8 left, u8 top)
+void PrintDecimalNum(u16 num, u8 left, u8 top)
 {
     u8 str[6];
     bool8 outputted = FALSE;
     u8 result;
 
-    result = value / 1000;
+    result = num / 1000;
     if (result == 0)
     {
         str[0] = CHAR_SPACE;
@@ -4324,7 +4324,7 @@ void PrintDecimalNum(u16 value, u8 left, u8 top)
         outputted = TRUE;
     }
 
-    result = (value % 1000) / 100;
+    result = (num % 1000) / 100;
     if (result == 0 && !outputted)
     {
         str[1] = CHAR_SPACE;
@@ -4336,14 +4336,14 @@ void PrintDecimalNum(u16 value, u8 left, u8 top)
         outputted = TRUE;
     }
 
-    str[2] = CHAR_0 + ((value % 1000) % 100) / 10;
+    str[2] = CHAR_0 + ((num % 1000) % 100) / 10;
     str[3] = CHAR_PERIOD;
-    str[4] = CHAR_0 + ((value % 1000) % 100) % 10;
+    str[4] = CHAR_0 + ((num % 1000) % 100) % 10;
     str[5] = EOS;
     Menu_PrintText(str, left, top);
 }
 #elif GERMAN
-void PrintDecimalNum(u16 value, u8 left, u8 top) {
+void PrintDecimalNum(u16 num, u8 left, u8 top) {
     u8 buffer[8];
     int offset;
     u8 result;
@@ -4356,7 +4356,7 @@ void PrintDecimalNum(u16 value, u8 left, u8 top) {
     buffer[bufferIndex++] = 0x13;
     bufferIndex++;
 
-    result = (value / 1000);
+    result = (num / 1000);
     if (result == 0)
     {
         offset = 6;
@@ -4367,7 +4367,7 @@ void PrintDecimalNum(u16 value, u8 left, u8 top) {
     }
 
 
-    result = (value % 1000) / 100;
+    result = (num % 1000) / 100;
 
     if (result == 0 && offset != 0)
     {
@@ -4378,9 +4378,9 @@ void PrintDecimalNum(u16 value, u8 left, u8 top) {
         buffer[bufferIndex++] = result + CHAR_0;
     }
 
-    buffer[bufferIndex++] = (((value % 1000) % 100) / 10) + CHAR_0;
+    buffer[bufferIndex++] = (((num % 1000) % 100) / 10) + CHAR_0;
     buffer[bufferIndex++] = CHAR_COMMA;
-    buffer[bufferIndex++] = (((value % 1000) % 100) % 10) + CHAR_0;
+    buffer[bufferIndex++] = (((num % 1000) % 100) % 10) + CHAR_0;
 
     buffer[bufferIndex++] = EOS;
     buffer[2] = offset;
