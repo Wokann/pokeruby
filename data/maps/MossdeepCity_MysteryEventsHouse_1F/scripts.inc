@@ -25,13 +25,13 @@ MossdeepCity_MysteryEventsHouse_OnTransition:: @ 815AC84
 
 MossdeepCity_MysteryEventsHouse_EventScript_SetupEReaderChallenge:: @ 815AC9E
 	setvar VAR_TEMP_1, TRUE
-	setobjectxyperm LOCALID_MYSTERY_EVENTS_HOUSE_OLD_MAN, 3, 2
-	setobjectmovementtype LOCALID_MYSTERY_EVENTS_HOUSE_OLD_MAN, MOVEMENT_TYPE_FACE_DOWN
+	setobjectxyperm LOCALID_MYSTERY_EVENTS_OLD_MAN, 3, 2
+	setobjectmovementtype LOCALID_MYSTERY_EVENTS_OLD_MAN, MOVEMENT_TYPE_FACE_DOWN
 	return
 
 MossdeepCity_MysteryEventsHouse_EventScript_RestoreOldManAfterBattle:: @ 815ACAF
-	setobjectxyperm LOCALID_MYSTERY_EVENTS_HOUSE_OLD_MAN, 2, 2
-	setobjectmovementtype LOCALID_MYSTERY_EVENTS_HOUSE_OLD_MAN, MOVEMENT_TYPE_FACE_RIGHT
+	setobjectxyperm LOCALID_MYSTERY_EVENTS_OLD_MAN, 2, 2
+	setobjectmovementtype LOCALID_MYSTERY_EVENTS_OLD_MAN, MOVEMENT_TYPE_FACE_RIGHT
 	return
 
 MossdeepCity_MysteryEventsHouse_OnFrame:: @ 815ACBB
@@ -44,9 +44,9 @@ MossdeepCity_MysteryEventsHouse_EventScript_ResolveEReaderBattle:: @ 815ACD5
 	lockall
 	applymovement LOCALID_PLAYER, MossdeepCity_MysteryEventsHouse_Movement_PlayerStepAway
 	waitmovement 0
-	applymovement LOCALID_MYSTERY_EVENTS_HOUSE_OLD_MAN, MossdeepCity_MysteryEventsHouse_Movement_OldManExit
+	applymovement LOCALID_MYSTERY_EVENTS_OLD_MAN, MossdeepCity_MysteryEventsHouse_Movement_OldManExit
 	waitmovement 0
-	copyobjectxytoperm LOCALID_MYSTERY_EVENTS_HOUSE_OLD_MAN
+	copyobjectxytoperm LOCALID_MYSTERY_EVENTS_OLD_MAN
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	compare VAR_E_READER_TRAINER_BATTLE_RESULT, B_OUTCOME_WON
