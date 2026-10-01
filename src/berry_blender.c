@@ -932,10 +932,10 @@ void SetBerrySpriteData(struct Sprite* sprite, s16 x, s16 y, s16 bounceSpeed, s1
     sprite->callback = SpriteCB_Berry;
 }
 
-static void CreateBlenderBerrySprite(u16 itemId, u8 playerId)
+static void CreateBerrySprite(u16 itemId, u8 playerId)
 {
-    u8 spriteID = CreateSpinningBerrySprite(itemId + 123, 0, 80, playerId & 1);
-    SetBerrySpriteData(&gSprites[spriteID], sBerrySpriteData[playerId][0], sBerrySpriteData[playerId][1], sBerrySpriteData[playerId][2], sBerrySpriteData[playerId][3], sBerrySpriteData[playerId][4]);
+    u8 spriteId = CreateSpinningBerrySprite(itemId + 123, 0, 80, playerId & 1);
+    SetBerrySpriteData(&gSprites[spriteId], sBerrySpriteData[playerId][0], sBerrySpriteData[playerId][1], sBerrySpriteData[playerId][2], sBerrySpriteData[playerId][3], sBerrySpriteData[playerId][4]);
 }
 
 static void ConvertItemToBlenderBerry(struct BlenderBerry* berry, u16 itemId)
@@ -1110,7 +1110,7 @@ static void CB2_StartBlenderLink(void)
         {
             if (gBerryBlenderData->playerToThrowBerry == sPlayerIdMap[gBerryBlenderData->numPlayers - 2][i])
             {
-                CreateBlenderBerrySprite(gBerryBlenderData->chosenItemId[gBerryBlenderData->playerToThrowBerry], i);
+                CreateBerrySprite(gBerryBlenderData->chosenItemId[gBerryBlenderData->playerToThrowBerry], i);
                 break;
             }
         }
@@ -1370,7 +1370,7 @@ static void CB2_StartBlenderLocal(void)
             u32 var = sPlayerIdMap[gBerryBlenderData->numPlayers - 2][i];
             if (gBerryBlenderData->playerToThrowBerry == var)
             {
-                CreateBlenderBerrySprite(gBerryBlenderData->chosenItemId[gBerryBlenderData->playerToThrowBerry], i);
+                CreateBerrySprite(gBerryBlenderData->chosenItemId[gBerryBlenderData->playerToThrowBerry], i);
                 break;
             }
         }
