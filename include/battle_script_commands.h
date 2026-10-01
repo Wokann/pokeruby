@@ -36,9 +36,9 @@
 #define VARIOUS_SET_TELEPORT_OUTCOME            25
 #define VARIOUS_PLAY_TRAINER_DEFEATED_MUSIC     26
 
-#define ATK80_DMG_CHANGE_SIGN                               0
-#define ATK80_DMG_HALF_BY_TWO_NOT_MORE_THAN_HALF_MAX_HP     1
-#define ATK80_DMG_DOUBLED                                   2
+#define DMG_CHANGE_SIGN                                     0
+#define DMG_RECOIL_FROM_MISS                                1
+#define DMG_DOUBLED                                         2
 
 #define STAT_CHANGE_BS_PTR                  0x1
 #define STAT_CHANGE_NOT_PROTECT_AFFECTED    0x20

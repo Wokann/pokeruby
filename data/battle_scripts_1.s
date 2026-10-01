@@ -351,7 +351,7 @@ BattleScript_EffectAbsorb: @ 81D6FFB
 	goto BattleScript_AbsorbUpdateHp
 
 BattleScript_AbsorbLiquidOoze: @ 81D7037
-	manipulatedamage 0
+	manipulatedamage DMG_CHANGE_SIGN
 	setbyte cMULTISTRING_CHOOSER, 1
 
 BattleScript_AbsorbUpdateHp: @ 81D703F
@@ -895,7 +895,7 @@ BattleScript_MoveMissedDoDamage: @ 81D7632
 	damagecalc
 	typecalc
 	adjustnormaldamage
-	manipulatedamage 1
+	manipulatedamage DMG_RECOIL_FROM_MISS
 	bicbyte gMoveResultFlags, MOVE_RESULT_MISSED
 	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
 	healthbarupdate USER
@@ -2018,7 +2018,7 @@ BattleScript_BeatUpLoop: @ 81D8281
 	printstring BATTLE_TEXT_PokeAttack
 	critcalc
 	jumpifbyte NOT_EQUAL, gCritMultiplier, 2, BattleScript_BeatUpAttack
-	manipulatedamage 2
+	manipulatedamage DMG_DOUBLED
 
 BattleScript_BeatUpAttack: @ 81D829C
 	adjustnormaldamage
@@ -3294,7 +3294,7 @@ BattleScript_LeechSeedTurnDrain:: @ 81D904B
 	datahpupdate USER
 	copyword gBattleMoveDamage, gHpDealt
 	jumpifability USER, ABILITY_LIQUID_OOZE, BattleScript_LeechSeedTurnPrintLiquidOoze
-	manipulatedamage 0
+	manipulatedamage DMG_CHANGE_SIGN
 	setbyte cMULTISTRING_CHOOSER, 3
 	goto BattleScript_LeechSeedTurnPrintAndUpdateHp
 
