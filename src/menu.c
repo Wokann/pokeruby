@@ -247,7 +247,7 @@ u8 Menu_MoveCursor(s8 delta)
     return gMenu.cursorPos;
 }
 
-u8 Menu_MoveCursorNoWrap(s8 delta)
+u8 Menu_MoveCursorNoWrapAround(s8 delta)
 {
     s32 newPos = gMenu.cursorPos + delta;
 
@@ -321,18 +321,18 @@ s8 Menu_ProcessInputNoWrap(void)
 
     if (JOY_NEW(DPAD_UP))
     {
-        if (cursorPos != Menu_MoveCursorNoWrap(-1))
+        if (cursorPos != Menu_MoveCursorNoWrapAround(-1))
             PlaySE(SE_SELECT);
         return -2;
     }
     else if (JOY_NEW(DPAD_DOWN))
     {
-        if (cursorPos != Menu_MoveCursorNoWrap(1))
+        if (cursorPos != Menu_MoveCursorNoWrapAround(1))
             PlaySE(SE_SELECT);
         return -2;
     }
 
-    Menu_MoveCursorNoWrap(0);
+    Menu_MoveCursorNoWrapAround(0);
     return -2;
 }
 

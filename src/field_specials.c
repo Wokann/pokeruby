@@ -1122,14 +1122,14 @@ void Task_ElevatorMenu(u8 taskId)
     {
         gScrollableMenuSelection--;
         curMenuPos = Menu_GetCursorPos();
-        Menu_MoveCursorNoWrap(-1);
+        Menu_MoveCursorNoWrapAround(-1);
         ScrollElevatorMenu(curMenuPos, DPAD_UP);
     }
     if (gMain.newKeys == DPAD_DOWN && gScrollableMenuSelection != gScrollableMenuItemCount - 1)
     {
         gScrollableMenuSelection++;
         curMenuPos = Menu_GetCursorPos();
-        Menu_MoveCursorNoWrap(+1);
+        Menu_MoveCursorNoWrapAround(+1);
         ScrollElevatorMenu(curMenuPos, DPAD_DOWN);
     }
     if (JOY_NEW(A_BUTTON))
@@ -1491,14 +1491,14 @@ void Task_GlassWorkshopMenu(u8 taskId)
     {
         gScrollableMenuSelection--;
         prevCursorPos = Menu_GetCursorPos();
-        Menu_MoveCursorNoWrap(-1);
+        Menu_MoveCursorNoWrapAround(-1);
         ScrollGlassWorkshopMenu(prevCursorPos, DPAD_UP);
     }
     if (gMain.newKeys == DPAD_DOWN && gScrollableMenuSelection != gScrollableMenuItemCount - 1)
     {
         gScrollableMenuSelection++;
         prevCursorPos = Menu_GetCursorPos();
-        Menu_MoveCursorNoWrap(1);
+        Menu_MoveCursorNoWrapAround(1);
         ScrollGlassWorkshopMenu(prevCursorPos, DPAD_DOWN);
     }
     if (JOY_NEW(A_BUTTON))

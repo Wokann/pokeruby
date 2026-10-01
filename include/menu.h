@@ -55,7 +55,7 @@ u8 Menu_UpdateWindowText(void);
 u8 Menu_PrintWindowSimple(void);
 void Menu_ClearWindowText(void);
 u8 Menu_MoveCursor(s8);
-u8 Menu_MoveCursorNoWrap(s8);
+u8 Menu_MoveCursorNoWrapAround(s8);
 u8 Menu_GetCursorPos(void);
 s8 Menu_ProcessInput(void);
 s8 Menu_ProcessInputNoWrap(void);
