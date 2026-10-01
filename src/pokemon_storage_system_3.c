@@ -93,7 +93,7 @@ void InitBoxMonSprites(u8 boxId)
 {
     struct BoxPokemon *box = gPokemonStorage.boxes[boxId];
     u16 i;
-    u16 k = 0;
+    u16 count = 0;
     for (i = 0; i < 5; i++)
     {
         u16 j;
@@ -101,11 +101,11 @@ void InitBoxMonSprites(u8 boxId)
         {
             u16 species = GetBoxMonData(box, MON_DATA_SPECIES2);
             if (species != SPECIES_NONE)
-                gPokemonStorageSystemPtr->boxMonsSprites[k] = CreateMonIconSprite(species, GetBoxMonData(box, MON_DATA_PERSONALITY), 24 * j + 0x64, 24 * i + 0x2c, 2, 18 - j);
+                gPokemonStorageSystemPtr->boxMonsSprites[count] = CreateMonIconSprite(species, GetBoxMonData(box, MON_DATA_PERSONALITY), 24 * j + 0x64, 24 * i + 0x2c, 2, 18 - j);
             else
-                gPokemonStorageSystemPtr->boxMonsSprites[k] = NULL;
+                gPokemonStorageSystemPtr->boxMonsSprites[count] = NULL;
             box++;
-            k++;
+            count++;
         }
     }
 }
@@ -324,20 +324,20 @@ void CreatePartyMonsSprites(bool8 visible)
 void CompactPartySprites(void)
 {
     u16 i;
-    u16 count;
+    u16 targetSlot;
 
     gPokemonStorageSystemPtr->numPartyToCompact = 0;
-    for (i = 0, count = 0; i < PARTY_SIZE; i++)
+    for (i = 0, targetSlot = 0; i < PARTY_SIZE; i++)
     {
         if (gPokemonStorageSystemPtr->partySprites[i])
         {
-            if (i != count)
+            if (i != targetSlot)
             {
-                MovePartySpriteToNextSlot(gPokemonStorageSystemPtr->partySprites[i], count);
+                MovePartySpriteToNextSlot(gPokemonStorageSystemPtr->partySprites[i], targetSlot);
                 gPokemonStorageSystemPtr->partySprites[i] = NULL;
                 gPokemonStorageSystemPtr->numPartyToCompact++;
             }
-            count++;
+            targetSlot++;
         }
     }
 }
@@ -430,10 +430,10 @@ void MovePartySprites(s16 yDelta)
     {
         if (gPokemonStorageSystemPtr->partySprites[i])
         {
-            s16 yy;
+            s16 posY;
             gPokemonStorageSystemPtr->partySprites[i]->y += yDelta;
-            yy = gPokemonStorageSystemPtr->partySprites[i]->y + gPokemonStorageSystemPtr->partySprites[i]->y2 + gPokemonStorageSystemPtr->partySprites[i]->centerToCornerVecY;
-            if (yy < -0x10 || yy > 0xb0)
+            posY = gPokemonStorageSystemPtr->partySprites[i]->y + gPokemonStorageSystemPtr->partySprites[i]->y2 + gPokemonStorageSystemPtr->partySprites[i]->centerToCornerVecY;
+            if (posY < -0x10 || posY > 0xb0)
                 gPokemonStorageSystemPtr->partySprites[i]->invisible = TRUE;
             else
                 gPokemonStorageSystemPtr->partySprites[i]->invisible = FALSE;
