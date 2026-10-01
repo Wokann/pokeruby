@@ -117,7 +117,7 @@ MossdeepCity_MysteryEventsHouse_EventScript_ChallengeEReaderTrainer:: @ 815AD59
 	call_if_eq MossdeepCity_MysteryEventsHouse_EventScript_PositionForBattleFacingEast
 	compare VAR_FACING, DIR_WEST
 	call_if_eq MossdeepCity_MysteryEventsHouse_EventScript_PositionForBattleFacingWest
-	warp MAP_MOSSDEEP_CITY_MYSTERY_EVENTS_HOUSE_B1F, 255, 3, 1
+	warp MAP_MOSSDEEP_CITY_MYSTERY_EVENTS_HOUSE_B1F, WARP_ID_NONE, 3, 1
 	waitstate
 	release
 	end

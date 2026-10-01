@@ -34,7 +34,7 @@ MossdeepCity_MysteryEventsHouse_BattleRoom_EventScript_StartEReaderTrainerBattle
 	waitmovement 0
 	special LoadPlayerParty
 	setvar VAR_TEMP_1, TRUE
-	warp MAP_MOSSDEEP_CITY_MYSTERY_EVENTS_HOUSE_1F, 255, 3, 1
+	warp MAP_MOSSDEEP_CITY_MYSTERY_EVENTS_HOUSE_1F, WARP_ID_NONE, 3, 1
 	waitstate
 	releaseall
 	end

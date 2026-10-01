@@ -83,7 +83,7 @@ MossdeepCity_StevensHouse_EventScript_BeldumPokeball:: @ 815AA7C
 	waitfanfare
 	waitmessage
 	givemon SPECIES_BELDUM, 5, ITEM_NONE
-	bufferspeciesname 1, SPECIES_BELDUM
+	bufferspeciesname STR_VAR_2, SPECIES_BELDUM
 	msgbox gText_NicknameReceivedPokemon, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	call_if_eq Common_EventScript_NameReceivedPartyMon

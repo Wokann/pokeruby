@@ -163,7 +163,7 @@ MossdeepCity_Gym_EventScript_ClearSwitch4:: @ 815A71D
 
 MossdeepCity_Gym_EventScript_WarpToEntrance:: @ 815A742
 	lockall
-	warpteleport MAP_MOSSDEEP_CITY_GYM, 255, 14, 29
+	warpteleport MAP_MOSSDEEP_CITY_GYM, WARP_ID_NONE, 14, 29
 	waitstate
 	releaseall
 	end

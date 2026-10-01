@@ -6,7 +6,7 @@ MossdeepCity_SpaceCenter_1F_EventScript_RocketLaunchCounter:: @ 815AB8B
 	faceplayer
 	dotimebasedevents
 	specialvar VAR_RESULT, GetWeekCount
-	buffernumberstring 0, VAR_RESULT
+	buffernumberstring STR_VAR_1, VAR_RESULT
 	compare VAR_RESULT, 0
 	call_if_eq MossdeepCity_SpaceCenter_1F_EventScript_NoLaunchesYet
 	compare VAR_RESULT, 1
