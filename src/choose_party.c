@@ -547,7 +547,7 @@ void Debug_CopyLastThreePartyMonsToMultiPartnerParty(void)
             gMultiPartnerParty[i].personality = GetMonData(&gPlayerParty[3 + i], MON_DATA_PERSONALITY);
             gMultiPartnerParty[i].gender = GetMonGender(&gPlayerParty[3 + i]);
             GetMonData(&gPlayerParty[3 + i], MON_DATA_NICKNAME, gMultiPartnerParty[i].nickname);
-            Text_StripExtCtrlCodes(gMultiPartnerParty[i].nickname);
+            StripExtCtrlCodes(gMultiPartnerParty[i].nickname);
             gMultiPartnerParty[i].language = GetMonData(&gPlayerParty[3 + i], MON_DATA_LANGUAGE);
         }
     }

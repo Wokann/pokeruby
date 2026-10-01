@@ -694,7 +694,7 @@ void Contest_CreatePlayerMon(u8 partyIndex)
     s16 tough;
 
     StringCopy(name, gSaveBlock2.playerName);
-    Text_StripExtCtrlCodes(name);
+    StripExtCtrlCodes(name);
     if (gIsLinkContest & 1)
     {
         u8 temp = name[5];
@@ -714,7 +714,7 @@ void Contest_CreatePlayerMon(u8 partyIndex)
     StringGet_Nickname(name);
     if (gIsLinkContest & 1)
     {
-        Text_StripExtCtrlCodes(name);
+        StripExtCtrlCodes(name);
         if (GetMonData(&gPlayerParty[partyIndex], MON_DATA_LANGUAGE) == LANGUAGE_JAPANESE)
         {
             name[5] = EOS;

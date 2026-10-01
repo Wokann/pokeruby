@@ -848,7 +848,7 @@ void TryPutPokemonTodayOnAir(void)
                     StorePlayerIdInRecordMixShow((TVShow *)pokemonToday);
                     pokemonToday->language = GAME_LANGUAGE;
                     pokemonToday->language2 = GetStringLanguage(pokemonToday->nickname);
-                    Text_StripExtCtrlCodes(pokemonToday->nickname);
+                    StripExtCtrlCodes(pokemonToday->nickname);
                 }
             }
         }
@@ -950,7 +950,7 @@ void InterviewAfter_BravoTrainerPokemonProfile(void)
         StorePlayerIdInNormalShow((TVShow *)bravoTrainerNew);
         bravoTrainerNew->language = GAME_LANGUAGE;
         bravoTrainerNew->pokemonNameLanguage = GetStringLanguage(bravoTrainerNew->pokemonNickname);
-        Text_StripExtCtrlCodes(bravoTrainerNew->pokemonNickname);
+        StripExtCtrlCodes(bravoTrainerNew->pokemonNickname);
     }
 }
 
@@ -1059,7 +1059,7 @@ void PutNameRaterShowOnTheAir(void)
         StorePlayerIdInNormalShow((TVShow *)nameRaterShow);
         nameRaterShow->language = GAME_LANGUAGE;
         nameRaterShow->pokemonNameLanguage = GetStringLanguage(nameRaterShow->pokemonName);
-        Text_StripExtCtrlCodes(nameRaterShow->pokemonName);
+        StripExtCtrlCodes(nameRaterShow->pokemonName);
     }
 }
 
@@ -1122,7 +1122,7 @@ void InterviewAfter_PkmnFanClubOpinions(void)
     StorePlayerIdInNormalShow((TVShow *)fanclubOpinions);
     fanclubOpinions->language = GAME_LANGUAGE;
     fanclubOpinions->pokemonNameLanguage = GetStringLanguage(fanclubOpinions->nickname);
-    Text_StripExtCtrlCodes(fanclubOpinions->nickname);
+    StripExtCtrlCodes(fanclubOpinions->nickname);
 }
 
 void InterviewAfter_Dummy(void)

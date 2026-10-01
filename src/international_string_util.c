@@ -7,7 +7,7 @@ void PadNameString(u8 *dest, u8 padChar)
 {
     u8 length;
 
-    Text_StripExtCtrlCodes(dest);
+    StripExtCtrlCodes(dest);
     length = StringLength(dest);
 
     if (padChar == EXT_CTRL_CODE_BEGIN)
@@ -36,5 +36,5 @@ void ConvertInternationalPlayerName(u8 *str)
     if (StringLength(str) < 6)
         ConvertInternationalString(str, LANGUAGE_JAPANESE);
     else
-        Text_StripExtCtrlCodes(str);
+        StripExtCtrlCodes(str);
 }

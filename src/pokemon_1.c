@@ -1603,7 +1603,7 @@ void CreateBattleTowerMon(struct Pokemon *mon, struct BattleTowerPokemon *src)
         language = GAME_LANGUAGE;
 
     SetMonData(mon, MON_DATA_LANGUAGE, &language);
-    Text_StripExtCtrlCodes(nickname);
+    StripExtCtrlCodes(nickname);
     SetMonData(mon, MON_DATA_NICKNAME, nickname);
     SetMonData(mon, MON_DATA_FRIENDSHIP, &src->friendship);
     SetMonData(mon, MON_DATA_HP_EV, &src->hpEV);

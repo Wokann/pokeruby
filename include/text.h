@@ -177,7 +177,6 @@ void Text_GetTextColors(struct Window *win, u8 *foreground, u8 *background, u8 *
 void Text_InitWindow8004E3C(const struct WindowTemplate *winConfig, u8 *tileData, const u8 *text);
 u8 Text_GetStringWidthFromWindowTemplate(const struct WindowTemplate *winConfig, const u8 *s);
 void ConvertInternationalString(u8 *s, u8 language);
-void Text_StripExtCtrlCodes(u8 *str);
 s32 StringCompareWithoutExtCtrlCodes(const u8 *str1, const u8 *str2);
 u8 Text_PrintWithNewlineIndent(struct Window *win, u8 *dest, const u8 *src, u16 tileDataStartOffset, u8 left, u16 top, u8 width, u32 a8);
 
