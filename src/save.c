@@ -34,7 +34,7 @@ struct RubySpecialSaveSector
 }; // size is 0xFF8
 
 static u8 HandleWriteSector(u16, const struct SaveSectorLocation *);
-static u8 HandleWriteSectorNBytes(u8 sector, u8 *data, u16 size);
+static u8 HandleWriteSectorNBytes(u8 sectorId, u8 *data, u16 size);
 static u8 TryWriteSector(u8, u8 *);
 static u32 RestoreSaveBackupVarsAndIncrement(const struct SaveSectorLocation *location);
 static u32 RestoreSaveBackupVars(const struct SaveSectorLocation *location);
@@ -151,20 +151,20 @@ enum
     CHECK, // unused
 };
 
-static bool32 SetDamagedSectorBits(u8 op, u8 sectorNum)
+static bool32 SetDamagedSectorBits(u8 op, u8 sectorId)
 {
     bool32 retVal = FALSE;
 
     switch (op)
     {
     case ENABLE:
-        gDamagedSaveSectors |= (1 << sectorNum);
+        gDamagedSaveSectors |= (1 << sectorId);
         break;
     case DISABLE:
-        gDamagedSaveSectors &= ~(1 << sectorNum);
+        gDamagedSaveSectors &= ~(1 << sectorId);
         break;
     case CHECK: // unused
-        if (gDamagedSaveSectors & (1 << sectorNum))
+        if (gDamagedSaveSectors & (1 << sectorId))
             retVal = TRUE;
         break;
     }
@@ -212,15 +212,15 @@ static u8 WriteSaveSectorOrSlot(u16 sectorId, const struct SaveSectorLocation *l
 static u8 HandleWriteSector(u16 sectorId, const struct SaveSectorLocation *locations)
 {
     u16 i;
-    u16 sectorNum;
+    u16 sector;
     u8 *data;
     u16 size;
 
     // select sector number
-    sectorNum = sectorId + gLastWrittenSector;
-    sectorNum %= NUM_SECTORS_PER_SAVE_SLOT;
+    sector = sectorId + gLastWrittenSector;
+    sector %= NUM_SECTORS_PER_SAVE_SLOT;
     // select save slot
-    sectorNum += NUM_SECTORS_PER_SAVE_SLOT * (gSaveCounter % 2);
+    sector += NUM_SECTORS_PER_SAVE_SLOT * (gSaveCounter % 2);
 
     data = locations[sectorId].data;
     size = locations[sectorId].size;
@@ -236,35 +236,35 @@ static u8 HandleWriteSector(u16 sectorId, const struct SaveSectorLocation *locat
         gReadWriteSector->data[i] = data[i];
     gReadWriteSector->checksum = CalculateChecksum(data, size);
 
-    return TryWriteSector(sectorNum, gReadWriteSector->data);
+    return TryWriteSector(sector, gReadWriteSector->data);
 }
 
-static u8 HandleWriteSectorNBytes(u8 sectorNum, u8 *data, u16 size)
+static u8 HandleWriteSectorNBytes(u8 sectorId, u8 *data, u16 size)
 {
     u16 i;
-    struct SaveSector *section = gSaveDataBuffer;
+    struct SaveSector *sector = gSaveDataBuffer;
 
     for (i = 0; i < sizeof(struct SaveSector); i++)
-        ((char *)section)[i] = 0;
+        ((char *)sector)[i] = 0;
 
-    section->signature = SECTOR_SIGNATURE;
+    sector->signature = SECTOR_SIGNATURE;
     for (i = 0; i < size; i++)
-        section->data[i] = data[i];
-    section->id = CalculateChecksum(data, size); // though this appears to be incorrect, it might be some sector checksum instead of a whole save checksum and only appears to be relevent to HOF data, if used.
+        sector->data[i] = data[i];
+    sector->id = CalculateChecksum(data, size); // though this appears to be incorrect, it might be some sector checksum instead of a whole save checksum and only appears to be relevent to HOF data, if used.
 
-    return TryWriteSector(sectorNum, section->data);
+    return TryWriteSector(sectorId, sector->data);
 }
 
-static u8 TryWriteSector(u8 sectorNum, u8 *data)
+static u8 TryWriteSector(u8 sector, u8 *data)
 {
-    if (ProgramFlashSectorAndVerify(sectorNum, data) != 0) // is damaged?
+    if (ProgramFlashSectorAndVerify(sector, data) != 0) // is damaged?
     {
-        SetDamagedSectorBits(ENABLE, sectorNum); // set damaged sector bits.
+        SetDamagedSectorBits(ENABLE, sector); // set damaged sector bits.
         return SAVE_STATUS_ERROR;
     }
     else
     {
-        SetDamagedSectorBits(DISABLE, sectorNum); // unset damaged sector bits. it's safe now.
+        SetDamagedSectorBits(DISABLE, sector); // unset damaged sector bits. it's safe now.
         return SAVE_STATUS_OK;
     }
 }
@@ -476,12 +476,12 @@ static u8 CopySaveSlotData(u16 sectorId, const struct SaveSectorLocation *locati
 {
     u16 i;
     u16 checksum;
-    u16 sector = NUM_SECTORS_PER_SAVE_SLOT * (gSaveCounter % 2);
+    u16 slotOffset = NUM_SECTORS_PER_SAVE_SLOT * (gSaveCounter % 2);
     u16 id;
 
     for (i = 0; i < NUM_SECTORS_PER_SAVE_SLOT; i++)
     {
-        ReadFlashSector(i + sector, gReadWriteSector);
+        ReadFlashSector(i + slotOffset, gReadWriteSector);
         id = gReadWriteSector->id;
         if (id == 0)
             gLastWrittenSector = i;
@@ -503,15 +503,15 @@ static u8 GetSaveValidStatus(const struct SaveSectorLocation *locations)
     u16 sector;
     bool8 signatureValid;
     u16 checksum;
-    u32 slot1saveCounter = 0;
-    u32 slot2saveCounter = 0;
-    u8 slot1Status;
-    u8 slot2Status;
-    u32 validSectors;
+    u32 saveSlot1Counter = 0;
+    u32 saveSlot2Counter = 0;
+    u8 saveSlot1Status;
+    u8 saveSlot2Status;
+    u32 validSectorFlags;
     const u32 ALL_SECTORS = (1 << NUM_SECTORS_PER_SAVE_SLOT) - 1;  // bitmask of all saveblock sectors
 
     // check save slot 1.
-    validSectors = 0;
+    validSectorFlags = 0;
     signatureValid = FALSE;
     for (sector = 0; sector < NUM_SECTORS_PER_SAVE_SLOT; sector++)
     {
@@ -522,26 +522,26 @@ static u8 GetSaveValidStatus(const struct SaveSectorLocation *locations)
             checksum = CalculateChecksum(gReadWriteSector->data, locations[gReadWriteSector->id].size);
             if (gReadWriteSector->checksum == checksum)
             {
-                slot1saveCounter = gReadWriteSector->counter;
-                validSectors |= 1 << gReadWriteSector->id;
+                saveSlot1Counter = gReadWriteSector->counter;
+                validSectorFlags |= 1 << gReadWriteSector->id;
             }
         }
     }
 
     if (signatureValid)
     {
-        if (validSectors == ALL_SECTORS)
-            slot1Status = SAVE_STATUS_OK;
+        if (validSectorFlags == ALL_SECTORS)
+            saveSlot1Status = SAVE_STATUS_OK;
         else
-            slot1Status = SAVE_STATUS_ERROR;
+            saveSlot1Status = SAVE_STATUS_ERROR;
     }
     else
     {
-        slot1Status = SAVE_STATUS_EMPTY;
+        saveSlot1Status = SAVE_STATUS_EMPTY;
     }
 
     // check save slot 2.
-    validSectors = 0;
+    validSectorFlags = 0;
     signatureValid = FALSE;
     for (sector = 0; sector < NUM_SECTORS_PER_SAVE_SLOT; sector++)
     {
@@ -552,63 +552,63 @@ static u8 GetSaveValidStatus(const struct SaveSectorLocation *locations)
             checksum = CalculateChecksum(gReadWriteSector->data, locations[gReadWriteSector->id].size);
             if (gReadWriteSector->checksum == checksum)
             {
-                slot2saveCounter = gReadWriteSector->counter;
-                validSectors |= 1 << gReadWriteSector->id;
+                saveSlot2Counter = gReadWriteSector->counter;
+                validSectorFlags |= 1 << gReadWriteSector->id;
             }
         }
     }
 
     if (signatureValid)
     {
-        if (validSectors == ALL_SECTORS)
-            slot2Status = SAVE_STATUS_OK;
+        if (validSectorFlags == ALL_SECTORS)
+            saveSlot2Status = SAVE_STATUS_OK;
         else
-            slot2Status = SAVE_STATUS_ERROR;
+            saveSlot2Status = SAVE_STATUS_ERROR;
     }
     else
     {
-        slot2Status = SAVE_STATUS_EMPTY;
+        saveSlot2Status = SAVE_STATUS_EMPTY;
     }
 
-    if (slot1Status == SAVE_STATUS_OK && slot2Status == SAVE_STATUS_OK)
+    if (saveSlot1Status == SAVE_STATUS_OK && saveSlot2Status == SAVE_STATUS_OK)
     {
         // Choose counter of the most recent save file
-        if ((slot1saveCounter == -1 && slot2saveCounter == 0) || (slot1saveCounter == 0 && slot2saveCounter == -1))
+        if ((saveSlot1Counter == -1 && saveSlot2Counter == 0) || (saveSlot1Counter == 0 && saveSlot2Counter == -1))
         {
-            if ((unsigned)(slot1saveCounter + 1) < (unsigned)(slot2saveCounter + 1))
-                gSaveCounter = slot2saveCounter;
+            if ((unsigned)(saveSlot1Counter + 1) < (unsigned)(saveSlot2Counter + 1))
+                gSaveCounter = saveSlot2Counter;
             else
-                gSaveCounter = slot1saveCounter;
+                gSaveCounter = saveSlot1Counter;
         }
         else
         {
-            if (slot1saveCounter < slot2saveCounter)
-                gSaveCounter = slot2saveCounter;
+            if (saveSlot1Counter < saveSlot2Counter)
+                gSaveCounter = saveSlot2Counter;
             else
-                gSaveCounter = slot1saveCounter;
+                gSaveCounter = saveSlot1Counter;
         }
         return SAVE_STATUS_OK;
     }
 
-    if (slot1Status == SAVE_STATUS_OK)
+    if (saveSlot1Status == SAVE_STATUS_OK)
     {
-        gSaveCounter = slot1saveCounter;
-        if (slot2Status == SAVE_STATUS_ERROR)
+        gSaveCounter = saveSlot1Counter;
+        if (saveSlot2Status == SAVE_STATUS_ERROR)
             return SAVE_STATUS_ERROR;
         else
             return SAVE_STATUS_OK;
     }
 
-    if (slot2Status == SAVE_STATUS_OK)
+    if (saveSlot2Status == SAVE_STATUS_OK)
     {
-        gSaveCounter = slot2saveCounter;
-        if (slot1Status == SAVE_STATUS_ERROR)
+        gSaveCounter = saveSlot2Counter;
+        if (saveSlot1Status == SAVE_STATUS_ERROR)
             return SAVE_STATUS_ERROR;
         else
             return SAVE_STATUS_OK;
     }
 
-    if (slot1Status == SAVE_STATUS_EMPTY && slot2Status == SAVE_STATUS_EMPTY)
+    if (saveSlot1Status == SAVE_STATUS_EMPTY && saveSlot2Status == SAVE_STATUS_EMPTY)
     {
         gSaveCounter = 0;
         gLastWrittenSector = 0;
@@ -623,16 +623,16 @@ static u8 GetSaveValidStatus(const struct SaveSectorLocation *locations)
 static u8 TryLoadSaveSector(u8 sectorId, u8 *data, u16 size)
 {
     u16 i;
-    struct SaveSector *section = gSaveDataBuffer;
+    struct SaveSector *sector = gSaveDataBuffer;
 
-    ReadFlashSector(sectorId, section);
-    if (section->signature == SECTOR_SIGNATURE)
+    ReadFlashSector(sectorId, sector);
+    if (sector->signature == SECTOR_SIGNATURE)
     {
-        u16 checksum = CalculateChecksum(section->data, size);
-        if (section->id == checksum)
+        u16 checksum = CalculateChecksum(sector->data, size);
+        if (sector->id == checksum)
         {
             for (i = 0; i < size; i++)
-                data[i] = section->data[i];
+                data[i] = sector->data[i];
             return SAVE_STATUS_OK;
         }
         else
