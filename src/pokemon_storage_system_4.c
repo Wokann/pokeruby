@@ -46,7 +46,7 @@ EWRAM_DATA struct TilemapTransferQueue *sTilemapTransferQueue = NULL;
 s8 DetermineBoxScrollDirection(u8 boxId);
 void LoadWallpaperGfx(u8 boxId, s8 direction);
 void DrawWallpaper(u16 *buffer, const u16 *tilemap, s8 direction, u8 offset);
-void TrimOldWallpaper(u16 *buffer);
+void TrimOldWallpaper(u16 *dest);
 void InitBoxTitle(u8 boxId);
 void CreateIncomingBoxTitle(u8 boxId, s8 direction);
 void CycleBoxTitleSprites(void);
@@ -390,21 +390,21 @@ bool8 ScrollToBox(void)
 
 s8 DetermineBoxScrollDirection(u8 boxId)
 {
-    u8 curBox = StorageGetCurrentBox();
+    u8 currentBox = StorageGetCurrentBox();
     u8 i;
 
-    for (i = 0; curBox != boxId; i++)
+    for (i = 0; currentBox != boxId; i++)
     {
-        if (++curBox >= TOTAL_BOXES_COUNT)
-            curBox = 0;
+        if (++currentBox >= TOTAL_BOXES_COUNT)
+            currentBox = 0;
     }
     return i <= 6 ? 1 : -1;
 }
 
 void SetWallpaperForCurrentBox(u8 wallpaperId)
 {
-    u8 curBox = StorageGetCurrentBox();
-    gPokemonStorage.wallpaper[curBox] = wallpaperId;
+    u8 boxId = StorageGetCurrentBox();
+    gPokemonStorage.wallpaper[boxId] = wallpaperId;
     gPokemonStorageSystemPtr->wallpaperChangeState = 0;
 }
 
@@ -583,27 +583,27 @@ void DrawWallpaper(u16 *buffer, const u16 *tilemap, s8 direction, u8 offset)
     Clears the lowest line of a wallpaper buffer.
     Depends on stored BG2 X variable in PSS.
 
-    - buffer : Wallpaper buffer.
+    - dest   : Wallpaper buffer.
 */
-void TrimOldWallpaper(u16 *buffer)
+void TrimOldWallpaper(u16 *dest)
 {
     u16 x;
     s16 rectX = ((gPokemonStorageSystemPtr->bg2_X / 8) + 30) & 0x3F;
 
     if (rectX < 32)
-        buffer += rectX + 0x260;
+        dest += rectX + 0x260;
     else
-        buffer += rectX + 0x640;
+        dest += rectX + 0x640;
 
     for (x = 0; x < 44; x++)
     {
-        *buffer++ = 0;
+        *dest++ = 0;
         // Needs to be one statement in order to match.
         rectX = (rectX + 1) & 0x3F;
         if (rectX == 0)
-            buffer -= 0x420;
+            dest -= 0x420;
         if (rectX == 32)
-            buffer += 0x3e0;
+            dest += 0x3e0;
     }
 }
 
@@ -622,7 +622,7 @@ const struct SpriteTemplate sSpriteTemplate_BoxTitle;
 
 void InitBoxTitle(u8 boxId)
 {
-    u8 paletteIndex;
+    u8 tagIndex;
     s16 baseX;
     u16 i;
 
@@ -638,12 +638,12 @@ void InitBoxTitle(u8 boxId)
     gPokemonStorageSystemPtr->boxTitlePal[15] = sBoxTitleColors[wallpaperId][1];
     LoadSpritePalettes(palettes);
     gPokemonStorageSystemPtr->wallpaperPalBits = 0x3f0;
-    paletteIndex = IndexOfSpritePaletteTag(0xdac8);
-    gPokemonStorageSystemPtr->boxTitlePalOffset = 0x10e + 16 * paletteIndex;
-    gPokemonStorageSystemPtr->wallpaperPalBits |= 0x10000 << paletteIndex;
-    paletteIndex = IndexOfSpritePaletteTag(0xdac9);
-    gPokemonStorageSystemPtr->boxTitleAltPalOffset = 0x10e + 16 * paletteIndex;
-    gPokemonStorageSystemPtr->wallpaperPalBits |= 0x10000 << paletteIndex;
+    tagIndex = IndexOfSpritePaletteTag(0xdac8);
+    gPokemonStorageSystemPtr->boxTitlePalOffset = 0x10e + 16 * tagIndex;
+    gPokemonStorageSystemPtr->wallpaperPalBits |= 0x10000 << tagIndex;
+    tagIndex = IndexOfSpritePaletteTag(0xdac9);
+    gPokemonStorageSystemPtr->boxTitleAltPalOffset = 0x10e + 16 * tagIndex;
+    gPokemonStorageSystemPtr->wallpaperPalBits |= 0x10000 << tagIndex;
     DrawBoxTitleText(gPokemonStorageSystemPtr->boxTitleTiles, gPokemonStorage.boxNames[boxId]);
     LoadSpriteSheet(&spriteSheet);
     baseX = GetBoxTitleBaseX(GetStringWidthInMenuWindow(gPokemonStorage.boxNames[boxId]));
@@ -665,7 +665,7 @@ void InitBoxTitle(u8 boxId)
 
 void CreateIncomingBoxTitle(u8 boxId, s8 direction)
 {
-    u16 paletteOffset;
+    u16 palOffset;
     s16 baseX;
     s16 incomingX;
     u16 i;
@@ -676,18 +676,18 @@ void CreateIncomingBoxTitle(u8 boxId, s8 direction)
     if (gPokemonStorageSystemPtr->boxTitleCycleId == 0)
     {
         spriteSheet.tag = 3;
-        paletteOffset = gPokemonStorageSystemPtr->boxTitlePalOffset;
+        palOffset = gPokemonStorageSystemPtr->boxTitlePalOffset;
     }
     else
     {
         spriteSheet.tag = 4;
-        paletteOffset = gPokemonStorageSystemPtr->boxTitlePalOffset;
+        palOffset = gPokemonStorageSystemPtr->boxTitlePalOffset;
         template.tileTag = 4;
         template.paletteTag = 0xdac9;
     }
     DrawBoxTitleText(gPokemonStorageSystemPtr->boxTitleTiles, gPokemonStorage.boxNames[boxId]);
     LoadSpriteSheet(&spriteSheet);
-    LoadPalette(sBoxTitleColors[gPokemonStorage.wallpaper[boxId]], paletteOffset, 0x04);
+    LoadPalette(sBoxTitleColors[gPokemonStorage.wallpaper[boxId]], palOffset, 0x04);
     baseX = GetBoxTitleBaseX(GetStringWidthInMenuWindow(gPokemonStorage.boxNames[boxId]));
     incomingX = baseX + direction * 192;
     for (i = 0; i < 2; i++)
@@ -1374,23 +1374,23 @@ void SetShiftedMonData(u8 boxId, u8 position)
 
 bool8 TryStorePartyMonInBox(u8 boxId)
 {
-    s16 monIdx = GetFirstFreeBoxSpot(boxId);
-    if (monIdx == -1)
+    s16 boxPosition = GetFirstFreeBoxSpot(boxId);
+    if (boxPosition == -1)
         return FALSE;
     if (sIsMonBeingMoved)
     {
-        SetPlacedMonData(boxId, monIdx);
+        SetPlacedMonData(boxId, boxPosition);
         DestroyMovingMonIcon();
         sIsMonBeingMoved = FALSE;
     }
     else
     {
         SetMovingMonData(TOTAL_BOXES_COUNT, sCursorPosition);
-        SetPlacedMonData(boxId, monIdx);
+        SetPlacedMonData(boxId, boxPosition);
         DestroyPartyMonIcon(sCursorPosition);
     }
     if (boxId == StorageGetCurrentBox())
-        CreateBoxMonIconAtPos(monIdx);
+        CreateBoxMonIconAtPos(boxPosition);
     StartSpriteAnim(gPokemonStorageSystemPtr->cursorSprite, PSS_CURSOR_ANIM_STILL);
     return TRUE;
 }
@@ -1473,10 +1473,10 @@ void InitCanReleaseMonVars(void)
     }
     gPokemonStorageSystemPtr->unresolvedReleaseSurf = 0;
     gPokemonStorageSystemPtr->unresolvedReleaseDive = 0;
-    gPokemonStorageSystemPtr->restrictedReleaseMoves[0] = MOVE_SURF;
-    gPokemonStorageSystemPtr->restrictedReleaseMoves[1] = MOVE_DIVE;
-    gPokemonStorageSystemPtr->restrictedReleaseMoves[2] = MOVES_COUNT;
-    knownMoves = GetMonData(&gPokemonStorageSystemPtr->tempMon, MON_DATA_KNOWN_MOVES, gPokemonStorageSystemPtr->restrictedReleaseMoves);
+    gPokemonStorageSystemPtr->restrictedMoveList[0] = MOVE_SURF;
+    gPokemonStorageSystemPtr->restrictedMoveList[1] = MOVE_DIVE;
+    gPokemonStorageSystemPtr->restrictedMoveList[2] = MOVES_COUNT;
+    knownMoves = GetMonData(&gPokemonStorageSystemPtr->tempMon, MON_DATA_KNOWN_MOVES, gPokemonStorageSystemPtr->restrictedMoveList);
     gPokemonStorageSystemPtr->unresolvedReleaseSurf = knownMoves & 1;
     gPokemonStorageSystemPtr->unresolvedReleaseDive = (knownMoves >> 1) & 1;
     if (gPokemonStorageSystemPtr->unresolvedReleaseSurf || gPokemonStorageSystemPtr->unresolvedReleaseDive)
@@ -1503,7 +1503,7 @@ s8 RunCanReleaseMon(void)
             {
                 if (gPokemonStorageSystemPtr->releaseBoxId != TOTAL_BOXES_COUNT || gPokemonStorageSystemPtr->releaseBoxPos != i)
                 {
-                    knownMoves = GetMonData(gPlayerParty + i, MON_DATA_KNOWN_MOVES, gPokemonStorageSystemPtr->restrictedReleaseMoves);
+                    knownMoves = GetMonData(gPlayerParty + i, MON_DATA_KNOWN_MOVES, gPokemonStorageSystemPtr->restrictedMoveList);
                     if (knownMoves & 1)
                         gPokemonStorageSystemPtr->unresolvedReleaseSurf = 0;
                     if (knownMoves & 2)
@@ -1525,7 +1525,7 @@ s8 RunCanReleaseMon(void)
         case 1:
             for (i = 0; i < 5; i++)
             {
-                knownMoves = GetBoxMonData(gPokemonStorage.boxes[gPokemonStorageSystemPtr->releaseCheckBoxId] + gPokemonStorageSystemPtr->releaseCheckBoxPos, MON_DATA_KNOWN_MOVES, gPokemonStorageSystemPtr->restrictedReleaseMoves);
+                knownMoves = GetBoxMonData(gPokemonStorage.boxes[gPokemonStorageSystemPtr->releaseCheckBoxId] + gPokemonStorageSystemPtr->releaseCheckBoxPos, MON_DATA_KNOWN_MOVES, gPokemonStorageSystemPtr->restrictedMoveList);
                 if (knownMoves && (gPokemonStorageSystemPtr->releaseBoxId != gPokemonStorageSystemPtr->releaseCheckBoxId || gPokemonStorageSystemPtr->releaseBoxPos != gPokemonStorageSystemPtr->releaseCheckBoxPos))
                 {
                     if (knownMoves & 1)
@@ -1576,14 +1576,14 @@ void InitSummaryScreenData(void)
     if (sIsMonBeingMoved)
     {
         SaveMovingMon();
-        gPokemonStorageSystemPtr->summaryMon.pokemon = &sSavedMovingMon;
+        gPokemonStorageSystemPtr->summaryMon.mon = &sSavedMovingMon;
         gPokemonStorageSystemPtr->summaryStartPos = 0;
         gPokemonStorageSystemPtr->summaryMaxPos = 0;
         gPokemonStorageSystemPtr->summaryScreenMode = 0;
     }
     else if (sCursorArea == PSS_CURSOR_AREA_IN_PARTY)
     {
-        gPokemonStorageSystemPtr->summaryMon.pokemon = gPlayerParty;
+        gPokemonStorageSystemPtr->summaryMon.mon = gPlayerParty;
         gPokemonStorageSystemPtr->summaryStartPos = sCursorPosition;
         gPokemonStorageSystemPtr->summaryMaxPos = CountPartyMons() - 1;
         gPokemonStorageSystemPtr->summaryScreenMode = 0;
@@ -1712,42 +1712,42 @@ void ReshowDisplayMon(void)
 
 void SetDisplayMonData(void *pokemon, u8 mode)
 {
-    u8 *buf;
+    u8 *txtPtr;
     u16 gender = MON_MALE;
     gPokemonStorageSystemPtr->displayMonItemId = 0;
     if (mode == PSS_MODE_PARTY)
     {
-        struct Pokemon *pkmn = (struct Pokemon *)pokemon;
+        struct Pokemon *mon = (struct Pokemon *)pokemon;
         gPokemonStorageSystemPtr->displayMonSpecies = GetMonData(pokemon, MON_DATA_SPECIES2);
         if (gPokemonStorageSystemPtr->displayMonSpecies != SPECIES_NONE)
         {
-            gPokemonStorageSystemPtr->displayMonIsEgg = GetMonData(pkmn, MON_DATA_IS_EGG);
-            GetMonData(pkmn, MON_DATA_NICKNAME, gPokemonStorageSystemPtr->displayMonName);
+            gPokemonStorageSystemPtr->displayMonIsEgg = GetMonData(mon, MON_DATA_IS_EGG);
+            GetMonData(mon, MON_DATA_NICKNAME, gPokemonStorageSystemPtr->displayMonName);
             StringGet_Nickname(gPokemonStorageSystemPtr->displayMonName);
-            gPokemonStorageSystemPtr->displayMonLevel = GetMonData(pkmn, MON_DATA_LEVEL);
-            gPokemonStorageSystemPtr->displayMonMarkings = GetMonData(pkmn, MON_DATA_MARKINGS);
-            gPokemonStorageSystemPtr->displayMonPersonality = GetMonData(pkmn, MON_DATA_PERSONALITY);
-            gPokemonStorageSystemPtr->displayMonPalette = GetMonFrontSpritePal(pkmn);
-            gender = GetMonGender(pkmn);
-            gPokemonStorageSystemPtr->displayMonItemId = GetMonData(pkmn, MON_DATA_HELD_ITEM);
+            gPokemonStorageSystemPtr->displayMonLevel = GetMonData(mon, MON_DATA_LEVEL);
+            gPokemonStorageSystemPtr->displayMonMarkings = GetMonData(mon, MON_DATA_MARKINGS);
+            gPokemonStorageSystemPtr->displayMonPersonality = GetMonData(mon, MON_DATA_PERSONALITY);
+            gPokemonStorageSystemPtr->displayMonPalette = GetMonFrontSpritePal(mon);
+            gender = GetMonGender(mon);
+            gPokemonStorageSystemPtr->displayMonItemId = GetMonData(mon, MON_DATA_HELD_ITEM);
         }
     }
     else if (mode == PSS_MODE_BOX)
     {
-        struct BoxPokemon *boxmon = (struct BoxPokemon *)pokemon;
+        struct BoxPokemon *boxMon = (struct BoxPokemon *)pokemon;
         gPokemonStorageSystemPtr->displayMonSpecies = GetBoxMonData(pokemon, MON_DATA_SPECIES2);
         if (gPokemonStorageSystemPtr->displayMonSpecies != SPECIES_NONE)
         {
-            u32 otId = GetBoxMonData(boxmon, MON_DATA_OT_ID);
-            gPokemonStorageSystemPtr->displayMonIsEgg = GetBoxMonData(boxmon, MON_DATA_IS_EGG);
-            GetBoxMonData(boxmon, MON_DATA_NICKNAME, gPokemonStorageSystemPtr->displayMonName);
+            u32 otId = GetBoxMonData(boxMon, MON_DATA_OT_ID);
+            gPokemonStorageSystemPtr->displayMonIsEgg = GetBoxMonData(boxMon, MON_DATA_IS_EGG);
+            GetBoxMonData(boxMon, MON_DATA_NICKNAME, gPokemonStorageSystemPtr->displayMonName);
             StringGet_Nickname(gPokemonStorageSystemPtr->displayMonName);
-            gPokemonStorageSystemPtr->displayMonLevel = GetLevelFromBoxMonExp(boxmon);
-            gPokemonStorageSystemPtr->displayMonMarkings = GetBoxMonData(boxmon, MON_DATA_MARKINGS);
-            gPokemonStorageSystemPtr->displayMonPersonality = GetBoxMonData(boxmon, MON_DATA_PERSONALITY);
+            gPokemonStorageSystemPtr->displayMonLevel = GetLevelFromBoxMonExp(boxMon);
+            gPokemonStorageSystemPtr->displayMonMarkings = GetBoxMonData(boxMon, MON_DATA_MARKINGS);
+            gPokemonStorageSystemPtr->displayMonPersonality = GetBoxMonData(boxMon, MON_DATA_PERSONALITY);
             gPokemonStorageSystemPtr->displayMonPalette = GetMonSpritePalFromSpeciesAndPersonality(gPokemonStorageSystemPtr->displayMonSpecies, otId, gPokemonStorageSystemPtr->displayMonPersonality);
             gender = GetGenderFromSpeciesAndPersonality(gPokemonStorageSystemPtr->displayMonSpecies, gPokemonStorageSystemPtr->displayMonPersonality);
-            gPokemonStorageSystemPtr->displayMonItemId = GetBoxMonData(boxmon, MON_DATA_HELD_ITEM);
+            gPokemonStorageSystemPtr->displayMonItemId = GetBoxMonData(boxMon, MON_DATA_HELD_ITEM);
         }
     }
     else
@@ -1764,14 +1764,14 @@ void SetDisplayMonData(void *pokemon, u8 mode)
     }
     else if (gPokemonStorageSystemPtr->displayMonIsEgg)
     {
-        buf = gPokemonStorageSystemPtr->displayMonNameText;
-        buf[0] = EXT_CTRL_CODE_BEGIN;
-        buf[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
-        buf[2] = 0x0F; // WHITE2
-        buf[3] = 0x00; // TRANSPARENT
-        buf[4] = 0x01; // DARK_GREY
-        buf = gPokemonStorageSystemPtr->displayMonNameText + 5;
-        buf = StringCopy(buf, gPokemonStorageSystemPtr->displayMonName);
+        txtPtr = gPokemonStorageSystemPtr->displayMonNameText;
+        txtPtr[0] = EXT_CTRL_CODE_BEGIN;
+        txtPtr[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
+        txtPtr[2] = 0x0F; // WHITE2
+        txtPtr[3] = 0x00; // TRANSPARENT
+        txtPtr[4] = 0x01; // DARK_GREY
+        txtPtr = gPokemonStorageSystemPtr->displayMonNameText + 5;
+        txtPtr = StringCopy(txtPtr, gPokemonStorageSystemPtr->displayMonName);
         gPokemonStorageSystemPtr->displayMonSpeciesName[0] = EOS;
         gPokemonStorageSystemPtr->displayMonGenderLvlText[0] = EOS;
         gPokemonStorageSystemPtr->displayMonItemName[0] = EOS;
@@ -1780,94 +1780,94 @@ void SetDisplayMonData(void *pokemon, u8 mode)
     {
         if (gPokemonStorageSystemPtr->displayMonSpecies == SPECIES_NIDORAN_M || gPokemonStorageSystemPtr->displayMonSpecies == SPECIES_NIDORAN_F)
             gender = MON_GENDERLESS;
-        buf = gPokemonStorageSystemPtr->displayMonNameText;
-        buf[0] = EXT_CTRL_CODE_BEGIN;
-        buf[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
-        buf[2] = 0x0F; // WHITE2
-        buf[3] = 0x00; // TRANSPARENT
-        buf[4] = 0x01; // DARK_GREY
-        buf = gPokemonStorageSystemPtr->displayMonNameText + 5;
-        buf = StringCopy(buf, gPokemonStorageSystemPtr->displayMonName);
-        buf = gPokemonStorageSystemPtr->displayMonSpeciesName;
-        buf[0] = EXT_CTRL_CODE_BEGIN;
-        buf[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
-        buf[2] = 0x0F; // WHITE2
-        buf[3] = 0x00; // TRANSPARENT
-        buf[4] = 0x01; // DARK_GREY
-        buf[5] = EXT_CTRL_CODE_BEGIN;
-        buf[6] = 0x13; // CLEAR_TO
-        buf[7] = 7;
-        buf[8] = CHAR_SLASH;
-        buf = gPokemonStorageSystemPtr->displayMonSpeciesName + 9;
-        buf = StringCopy(buf, gSpeciesNames[gPokemonStorageSystemPtr->displayMonSpecies]);
-        buf[0] = EXT_CTRL_CODE_BEGIN;
-        buf[1] = 0x13; // CLEAR_TO
-        buf[2] = 0x50;
-        buf[3] = EOS;
-        buf = gPokemonStorageSystemPtr->displayMonGenderLvlText;
-        buf[0] = EXT_CTRL_CODE_BEGIN;
-        buf[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
-        buf[2] = 0x0F; // WHITE2
-        buf[3] = 0x00; // TRANSPARENT
-        buf[4] = 0x01; // DARK_GREY
-        buf[5] = EXT_CTRL_CODE_BEGIN;
-        buf[6] = 0x13; // CLEAR_TO
-        buf[7] = 8;
-        buf = gPokemonStorageSystemPtr->displayMonGenderLvlText + 8;
-        buf[0] = 0x34; // LV
-        buf = gPokemonStorageSystemPtr->displayMonGenderLvlText + 9;
-        buf = AlignInt1InMenuWindow(buf, gPokemonStorageSystemPtr->displayMonLevel, 0x22, STR_CONV_MODE_RIGHT_ALIGN);
-        buf[0] = EXT_CTRL_CODE_BEGIN;
-        buf[1] = 0x11; // CLEAR
-        buf[2] = 8;
-        buf += 3;
+        txtPtr = gPokemonStorageSystemPtr->displayMonNameText;
+        txtPtr[0] = EXT_CTRL_CODE_BEGIN;
+        txtPtr[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
+        txtPtr[2] = 0x0F; // WHITE2
+        txtPtr[3] = 0x00; // TRANSPARENT
+        txtPtr[4] = 0x01; // DARK_GREY
+        txtPtr = gPokemonStorageSystemPtr->displayMonNameText + 5;
+        txtPtr = StringCopy(txtPtr, gPokemonStorageSystemPtr->displayMonName);
+        txtPtr = gPokemonStorageSystemPtr->displayMonSpeciesName;
+        txtPtr[0] = EXT_CTRL_CODE_BEGIN;
+        txtPtr[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
+        txtPtr[2] = 0x0F; // WHITE2
+        txtPtr[3] = 0x00; // TRANSPARENT
+        txtPtr[4] = 0x01; // DARK_GREY
+        txtPtr[5] = EXT_CTRL_CODE_BEGIN;
+        txtPtr[6] = 0x13; // CLEAR_TO
+        txtPtr[7] = 7;
+        txtPtr[8] = CHAR_SLASH;
+        txtPtr = gPokemonStorageSystemPtr->displayMonSpeciesName + 9;
+        txtPtr = StringCopy(txtPtr, gSpeciesNames[gPokemonStorageSystemPtr->displayMonSpecies]);
+        txtPtr[0] = EXT_CTRL_CODE_BEGIN;
+        txtPtr[1] = 0x13; // CLEAR_TO
+        txtPtr[2] = 0x50;
+        txtPtr[3] = EOS;
+        txtPtr = gPokemonStorageSystemPtr->displayMonGenderLvlText;
+        txtPtr[0] = EXT_CTRL_CODE_BEGIN;
+        txtPtr[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
+        txtPtr[2] = 0x0F; // WHITE2
+        txtPtr[3] = 0x00; // TRANSPARENT
+        txtPtr[4] = 0x01; // DARK_GREY
+        txtPtr[5] = EXT_CTRL_CODE_BEGIN;
+        txtPtr[6] = 0x13; // CLEAR_TO
+        txtPtr[7] = 8;
+        txtPtr = gPokemonStorageSystemPtr->displayMonGenderLvlText + 8;
+        txtPtr[0] = 0x34; // LV
+        txtPtr = gPokemonStorageSystemPtr->displayMonGenderLvlText + 9;
+        txtPtr = AlignInt1InMenuWindow(txtPtr, gPokemonStorageSystemPtr->displayMonLevel, 0x22, STR_CONV_MODE_RIGHT_ALIGN);
+        txtPtr[0] = EXT_CTRL_CODE_BEGIN;
+        txtPtr[1] = 0x11; // CLEAR
+        txtPtr[2] = 8;
+        txtPtr += 3;
         switch (gender)
         {
             case MON_MALE:
-                buf[0] = EXT_CTRL_CODE_BEGIN;
-                buf[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
-                buf[2] = 0x04; // BLUE
-                buf[3] = 0x00; // TRANSPARENT
-                buf[4] = 0x05; // YELLOW
-                buf[5] = CHAR_MALE;
-                buf += 6;
+                txtPtr[0] = EXT_CTRL_CODE_BEGIN;
+                txtPtr[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
+                txtPtr[2] = 0x04; // BLUE
+                txtPtr[3] = 0x00; // TRANSPARENT
+                txtPtr[4] = 0x05; // YELLOW
+                txtPtr[5] = CHAR_MALE;
+                txtPtr += 6;
                 break;
             case MON_FEMALE:
-                buf[0] = EXT_CTRL_CODE_BEGIN;
-                buf[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
-                buf[2] = 0x06; // CYAN
-                buf[3] = 0x00; // TRANSPARENT
-                buf[4] = 0x07; // MAGENTA
-                buf[5] = CHAR_FEMALE;
-                buf += 6;
+                txtPtr[0] = EXT_CTRL_CODE_BEGIN;
+                txtPtr[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
+                txtPtr[2] = 0x06; // CYAN
+                txtPtr[3] = 0x00; // TRANSPARENT
+                txtPtr[4] = 0x07; // MAGENTA
+                txtPtr[5] = CHAR_FEMALE;
+                txtPtr += 6;
                 break;
         }
-        buf[0] = EOS;
-        buf = gPokemonStorageSystemPtr->displayMonItemName;
+        txtPtr[0] = EOS;
+        txtPtr = gPokemonStorageSystemPtr->displayMonItemName;
         if (gPokemonStorageSystemPtr->displayMonItemId)
         {
-            buf[0] = EXT_CTRL_CODE_BEGIN;
-            buf[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
-            buf[2] = 0x0F; // WHITE2
-            buf[3] = 0x00; // TRANSPARENT
-            buf[4] = 0x01; // DARK_GREY
-            buf = gPokemonStorageSystemPtr->displayMonItemName + 5;
-            buf[0] = EXT_CTRL_CODE_BEGIN;
-            buf[1] = 0x06; // size
-            buf[2] = 0x04;
-            buf = gPokemonStorageSystemPtr->displayMonItemName + 8;
-            buf = StringCopy(buf, GetItemName(gPokemonStorageSystemPtr->displayMonItemId));
-            buf[0] = EXT_CTRL_CODE_BEGIN;
-            buf[1] = 0x07; // UNKNOWN_7;
-            buf += 2;
+            txtPtr[0] = EXT_CTRL_CODE_BEGIN;
+            txtPtr[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
+            txtPtr[2] = 0x0F; // WHITE2
+            txtPtr[3] = 0x00; // TRANSPARENT
+            txtPtr[4] = 0x01; // DARK_GREY
+            txtPtr = gPokemonStorageSystemPtr->displayMonItemName + 5;
+            txtPtr[0] = EXT_CTRL_CODE_BEGIN;
+            txtPtr[1] = 0x06; // size
+            txtPtr[2] = 0x04;
+            txtPtr = gPokemonStorageSystemPtr->displayMonItemName + 8;
+            txtPtr = StringCopy(txtPtr, GetItemName(gPokemonStorageSystemPtr->displayMonItemId));
+            txtPtr[0] = EXT_CTRL_CODE_BEGIN;
+            txtPtr[1] = 0x07; // UNKNOWN_7;
+            txtPtr += 2;
         }
-        buf[0] = EOS;
+        txtPtr[0] = EOS;
     }
 }
 
 u8 InBoxInput_Normal(void)
 {
-    u8 input;
+    u8 retVal;
     s8 cursorArea = sCursorArea;
     s8 cursorPosition = sCursorPosition;
 
@@ -1879,7 +1879,7 @@ u8 InBoxInput_Normal(void)
 
         if (JOY_REPT(DPAD_UP))
         {
-            input = PSS_INPUT_MOVE_CURSOR;
+            retVal = PSS_INPUT_MOVE_CURSOR;
             if (sCursorPosition >= 6)
             {
                 cursorPosition -= 6;
@@ -1893,7 +1893,7 @@ u8 InBoxInput_Normal(void)
         }
         if (JOY_REPT(DPAD_DOWN))
         {
-            input = PSS_INPUT_MOVE_CURSOR;
+            retVal = PSS_INPUT_MOVE_CURSOR;
             cursorPosition += 6;
             if (cursorPosition >= 30)
             {
@@ -1907,7 +1907,7 @@ u8 InBoxInput_Normal(void)
         }
         if (JOY_REPT(DPAD_LEFT))
         {
-            input = PSS_INPUT_MOVE_CURSOR;
+            retVal = PSS_INPUT_MOVE_CURSOR;
             if (sCursorPosition % 6)
                 cursorPosition--;
             else
@@ -1919,7 +1919,7 @@ u8 InBoxInput_Normal(void)
         }
         if (JOY_REPT(DPAD_RIGHT))
         {
-            input = PSS_INPUT_MOVE_CURSOR;
+            retVal = PSS_INPUT_MOVE_CURSOR;
             if ((sCursorPosition + 1) % 6)
                 cursorPosition++;
             else
@@ -1931,7 +1931,7 @@ u8 InBoxInput_Normal(void)
         }
         if (JOY_NEW(START_BUTTON))
         {
-            input = PSS_INPUT_MOVE_CURSOR;
+            retVal = PSS_INPUT_MOVE_CURSOR;
             cursorArea = PSS_CURSOR_AREA_BOX_TITLE;
             cursorPosition = 0;
             break;
@@ -1968,11 +1968,11 @@ u8 InBoxInput_Normal(void)
             ToggleCursorAutoAction();
             return PSS_INPUT_NONE;
         }
-        input = PSS_INPUT_NONE;
+        retVal = PSS_INPUT_NONE;
     } while (0);
-    if (input != PSS_INPUT_NONE)
+    if (retVal != PSS_INPUT_NONE)
         SetCursorPosition(cursorArea, cursorPosition);
-    return input;
+    return retVal;
 }
 
 u8 HandleInput_InParty(void)

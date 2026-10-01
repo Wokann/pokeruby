@@ -305,12 +305,12 @@ struct PokemonStorageSystemData {
     s8 releaseBoxId;
     s8 releaseBoxPos;
     u16 releaseCheckState;
-    u16 restrictedReleaseMoves[3];
+    u16 restrictedMoveList[3];
     u8 summaryMaxPos;
     u8 summaryStartPos;
     u8 summaryScreenMode;
     union {
-        struct Pokemon *pokemon;
+        struct Pokemon *mon;
         struct BoxPokemon *box;
     } summaryMon;
     u8 messageText[18];

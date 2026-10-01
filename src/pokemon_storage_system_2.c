@@ -389,7 +389,7 @@ static void CB2_ChangePokeStorageScreen(void)
     switch (gPokemonStorageSystemPtr->screenChangeType)
     {
     case 0:
-        ShowPokemonSummaryScreen(gPokemonStorageSystemPtr->summaryMon.pokemon, gPokemonStorageSystemPtr->summaryStartPos, gPokemonStorageSystemPtr->summaryMaxPos, CB2_ReturnToPokeStorage, gPokemonStorageSystemPtr->summaryScreenMode);
+        ShowPokemonSummaryScreen(gPokemonStorageSystemPtr->summaryMon.mon, gPokemonStorageSystemPtr->summaryStartPos, gPokemonStorageSystemPtr->summaryMaxPos, CB2_ReturnToPokeStorage, gPokemonStorageSystemPtr->summaryScreenMode);
         break;
     case 1:
         DoNamingScreen(NAMING_SCREEN_BOX, gPokemonStorage.boxNames[gPokemonStorage.currentBox], 0, 0, 0, CB2_ReturnToPokeStorage);
