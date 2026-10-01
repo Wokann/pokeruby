@@ -2,6 +2,7 @@
 #include "field_poison.h"
 #include "field_message_box.h"
 #include "fldeff_poison.h"
+#include "party_menu.h"
 #include "pokemon.h"
 #include "pokemon_summary_screen.h"
 #include "script.h"
@@ -56,7 +57,7 @@ static bool32 MonFaintedFromPoison(u8 partyIdx)
 
     // UB: Too few arguments for function 'GetMonData'
     if (IsMonValidSpecies(pokemon) && GetMonData(pokemon, MON_DATA_HP) == 0
-     && GetPrimaryStatus(GetMonData(pokemon, MON_DATA_STATUS)) == STATUS_PRIMARY_POISON)
+     && GetAilmentFromStatus(GetMonData(pokemon, MON_DATA_STATUS)) == AILMENT_PSN)
         return TRUE;
     else
         return FALSE;
@@ -125,7 +126,7 @@ s32 DoPoisonFieldEffect(void)
         u32 hp;
 
         if (GetMonData(pokemon, MON_DATA_SANITY_HAS_SPECIES) != 0
-         && GetPrimaryStatus(GetMonData(pokemon, MON_DATA_STATUS)) == STATUS_PRIMARY_POISON)
+         && GetAilmentFromStatus(GetMonData(pokemon, MON_DATA_STATUS)) == AILMENT_PSN)
         {
             // decrement HP of poisoned mon
             hp = GetMonData(pokemon, MON_DATA_HP);

@@ -2672,7 +2672,7 @@ void PartyMenuPrintMonLevelOrStatus(u8 monIndex, struct Pokemon *pokemon)
 {
     if (GetMonData(pokemon, MON_DATA_SPECIES) && !GetMonData(pokemon, MON_DATA_IS_EGG))
     {
-        u8 statusAndPkrs = GetMonStatusAndPokerus(pokemon);
+        u8 ailment = GetMonAilment(pokemon);
         u8 menuLayout;
 
         if (IsLinkDoubleBattle() == TRUE)
@@ -2680,8 +2680,8 @@ void PartyMenuPrintMonLevelOrStatus(u8 monIndex, struct Pokemon *pokemon)
         else
             menuLayout = IsDoubleBattle();
 
-        if (statusAndPkrs && statusAndPkrs != STATUS_PRIMARY_POKERUS)
-            PartyMenuPutStatusTilemap(monIndex, menuLayout, statusAndPkrs - 1);
+        if (ailment && ailment != AILMENT_PKRS)
+            PartyMenuPutStatusTilemap(monIndex, menuLayout, ailment - 1);
         else
             PartyMenuPrintLevel(monIndex, menuLayout, pokemon);
 
@@ -3712,15 +3712,15 @@ void UseMedicine(u8 taskId, u16 item, TaskFunc followupCallback)
     }
     else
     {
-        u8 statusAndPkrs;
+        u8 ailment;
 
         gPartyMenuActionResult = 1;
         if (!IsItemFlute(item))
             PlaySE(SE_USE_ITEM);
         else
             PlaySE(SE_GLASS_FLUTE);
-        statusAndPkrs = GetMonStatusAndPokerus(sPartyMenuAction.selectedMon);
-        if (statusAndPkrs == STATUS_PRIMARY_POKERUS || statusAndPkrs == STATUS_PRIMARY_NONE)
+        ailment = GetMonAilment(sPartyMenuAction.selectedMon);
+        if (ailment == AILMENT_PKRS || ailment == AILMENT_NONE)
             PartyMenuUpdateLevelOrStatus(sPartyMenuAction.selectedMon, sPartyMenuAction.selectedMonIndex);
         if (isHpRecovery == TRUE)
         {
@@ -4141,10 +4141,10 @@ void PrintNewStatsInLevelUpWindow(u8 taskId)
 
 void RedrawPokemonInfoInMenu(u8 monIndex, struct Pokemon *pokemon)
 {
-    u8 statusAndPkrs = GetMonStatusAndPokerus(pokemon);
+    u8 ailment = GetMonAilment(pokemon);
     u8 icon;
 
-    if (statusAndPkrs == STATUS_PRIMARY_NONE || statusAndPkrs == STATUS_PRIMARY_POKERUS)
+    if (ailment == AILMENT_NONE || ailment == AILMENT_PKRS)
         PartyMenuUpdateLevelOrStatus(pokemon, monIndex);
 
     PartyMenuDoPrintHP(monIndex, IsDoubleBattle(), GetMonData(pokemon, MON_DATA_HP), GetMonData(pokemon, MON_DATA_MAX_HP));

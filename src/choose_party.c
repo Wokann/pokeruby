@@ -31,7 +31,6 @@ EWRAM_DATA u8 gSelectedOrderFromParty[3] = {0};
 extern u8 CreatePartyMenuCursor(u8, u8);
 extern void PartyMenuPrintMonsLevelOrStatus(void);
 extern void DrawMonDescriptorStatus(u8, u8);
-extern u8 GetMonStatusAndPokerus();
 extern void PartyMenuPrintHP();
 extern bool8 MenuHelpers_IsLinkActive(void);
 
@@ -624,12 +623,12 @@ static void PrintLinkMultiBattlePlayerPartyInfo(void)
     {
         if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) != 0)
         {
-            u8 status;
+            u8 ailment;
 
             PartyMenuPrintHP(i, 3, &gPlayerParty[i]);
-            status = GetMonStatusAndPokerus(&gPlayerParty[i]);
-            if (status && status != STATUS_PRIMARY_POKERUS)
-                PartyMenuPutStatusTilemap(i, 3, status - 1);
+            ailment = GetMonAilment(&gPlayerParty[i]);
+            if (ailment && ailment != AILMENT_PKRS)
+                PartyMenuPutStatusTilemap(i, 3, ailment - 1);
             else
                 PartyMenuPrintLevel(i, 3, &gPlayerParty[i]);
             PartyMenuPrintGenderIcon(i, 3, &gPlayerParty[i]);
@@ -671,16 +670,16 @@ static void Task_PrintLinkMultiPartnerPartyInfo(u8 taskId)
     {
         if (gMultiPartnerParty[i].species != 0)
         {
-            u8 primaryStatus;
+            u8 ailment;
 
             PartyMenuDoPrintHP(i + 3, 3, gMultiPartnerParty[i].hp, gMultiPartnerParty[i].maxhp);
             if (gMultiPartnerParty[i].hp == 0)
-                primaryStatus = STATUS_PRIMARY_FAINTED;
+                ailment = AILMENT_FNT;
             else
-                primaryStatus = GetPrimaryStatus(gMultiPartnerParty[i].status);
+                ailment = GetAilmentFromStatus(gMultiPartnerParty[i].status);
 
-            if (primaryStatus != STATUS_PRIMARY_NONE)
-                PartyMenuPutStatusTilemap(i + 3, 3, primaryStatus - 1);
+            if (ailment != AILMENT_NONE)
+                PartyMenuPutStatusTilemap(i + 3, 3, ailment - 1);
             else
                 PartyMenuDoPrintLevel(i + 3, 3, gMultiPartnerParty[i].level);
             PartyMenuDoPrintGenderIcon(gMultiPartnerParty[i].species, gMultiPartnerParty[i].gender, 3, i + 3, gMultiPartnerParty[i].nickname);

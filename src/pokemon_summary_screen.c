@@ -735,7 +735,7 @@ bool8 LoadGraphics(void)
         break;
     case 12:
         CopyMonToSummaryStruct(&sMonSummaryScreen->currentMon);
-        if (!GetMonStatusAndPokerus(&sMonSummaryScreen->currentMon))
+        if (!GetMonAilment(&sMonSummaryScreen->currentMon))
             PositionStatusSlidingWindow(0);
         else
             PositionStatusSlidingWindow(10);
@@ -1620,7 +1620,7 @@ void ChangeSummaryPokemon(u8 taskId, s8 direction)
     if (newMonIndex != -1)
     {
         PlaySE(SE_SELECT);
-        if (GetMonStatusAndPokerus(&sMonSummaryScreen->currentMon))
+        if (GetMonAilment(&sMonSummaryScreen->currentMon))
         {
             PositionStatusSlidingWindow(-2);
         }
@@ -1737,7 +1737,7 @@ void Task_ChangeSummaryMon(u8 taskId)
         break;
     case 4:
         CopyMonToSummaryStruct(&sMonSummaryScreen->currentMon);
-        if (GetMonStatusAndPokerus(&sMonSummaryScreen->currentMon))
+        if (GetMonAilment(&sMonSummaryScreen->currentMon))
             PositionStatusSlidingWindow(2);
         DrawPokerusCuredSymbol(&sMonSummaryScreen->currentMon);
         gMain.state++;
@@ -3092,7 +3092,7 @@ static void PositionStatusSlidingWindow(s8 slideSpeed)
 //             Menu_EraseWindowRect(0, 14, 9, 18);
 //             PrintMonSpeciesLevelAndGender(sMonSummaryScreen->currentMon);
 
-//             if (GetMonStatusAndPokerus(sMonSummaryScreen->currentMon))
+//             if (GetMonAilment(sMonSummaryScreen->currentMon))
 //             {
 //                 SummaryScreen_PrintColoredText(gOtherText_Status, 13, 1, 18);
 //             }
@@ -3239,7 +3239,7 @@ _080A1410:\n\
     adds r0, r4, 0\n\
     bl PrintMonSpeciesLevelAndGender\n\
     adds r0, r4, 0\n\
-    bl GetMonStatusAndPokerus\n\
+    bl GetMonAilment\n\
     lsls r0, 24\n\
     cmp r0, 0\n\
     beq _080A1444\n\
@@ -3435,7 +3435,7 @@ _080A15DC:\n\
     adds r0, r4, 0\n\
     bl PrintMonSpeciesLevelAndGender\n\
     adds r0, r4, 0\n\
-    bl GetMonStatusAndPokerus\n\
+    bl GetMonAilment\n\
     lsls r0, 24\n\
     cmp r0, 0\n\
     beq _080A1610\n\
@@ -3885,53 +3885,53 @@ static void KeepMoveSelectorVisible(u8 firstSpriteId)
     }
 }
 
-u8 GetPrimaryStatus(u32 status)
+u8 GetAilmentFromStatus(u32 status)
 {
     if (status & (STATUS1_POISON | STATUS1_TOXIC_POISON))
-        return STATUS_PRIMARY_POISON;
+        return AILMENT_PSN;
     if (status & STATUS1_PARALYSIS)
-        return STATUS_PRIMARY_PARALYSIS;
+        return AILMENT_PRZ;
     if (status & STATUS1_SLEEP)
-        return STATUS_PRIMARY_SLEEP;
+        return AILMENT_SLP;
     if (status & STATUS1_FREEZE)
-        return STATUS_PRIMARY_FREEZE;
+        return AILMENT_FRZ;
     if (status & STATUS1_BURN)
-        return STATUS_PRIMARY_BURN;
+        return AILMENT_BRN;
 
-    return STATUS_PRIMARY_NONE;
+    return AILMENT_NONE;
 }
 
-u8 GetMonStatusAndPokerus(struct Pokemon *mon)
+u8 GetMonAilment(struct Pokemon *mon)
 {
-    u8 statusAilment;
+    u8 ailment;
 
     if (GetMonData(mon, MON_DATA_HP) == 0)
-        return STATUS_PRIMARY_FAINTED;
+        return AILMENT_FNT;
 
-    statusAilment = GetPrimaryStatus(GetMonData(mon, MON_DATA_STATUS));
-    if (statusAilment == STATUS_PRIMARY_NONE)
+    ailment = GetAilmentFromStatus(GetMonData(mon, MON_DATA_STATUS));
+    if (ailment == AILMENT_NONE)
     {
         if (!CheckPartyPokerus(mon, 0))
-            return STATUS_PRIMARY_NONE;
+            return AILMENT_NONE;
         else
-            return STATUS_PRIMARY_POKERUS;
+            return AILMENT_PKRS;
     }
 
-    return statusAilment;
+    return ailment;
 }
 
 void CreateSetStatusSprite(void)
 {
     struct Pokemon mon;
-    u8 statusAndPkrs;
-    u8 statusAndPkrs2;
+    u8 ailment;
+    u8 ailmentAnim;
 
     CopyMonToSummaryStruct(&mon);
-    statusAndPkrs = GetMonStatusAndPokerus(&mon);
+    ailment = GetMonAilment(&mon);
 
-    if (statusAndPkrs)
+    if (ailment)
     {
-        statusAndPkrs2 = statusAndPkrs - 1;
+        ailmentAnim = ailment - 1;
     }
     else
     {
@@ -3941,7 +3941,7 @@ void CreateSetStatusSprite(void)
 
     if (sSummaryScreenSpriteIds[29] == 0xFF)
         sSummaryScreenSpriteIds[29] = CreateSprite(&sSpriteTemplate_StatusCondition, 64, 152, 0);
-    StartSpriteAnim(&gSprites[sSummaryScreenSpriteIds[29]], statusAndPkrs2);
+    StartSpriteAnim(&gSprites[sSummaryScreenSpriteIds[29]], ailmentAnim);
 }
 
 static void CreateMonMarkingsSprite(struct Pokemon *mon)

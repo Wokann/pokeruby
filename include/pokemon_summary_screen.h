@@ -62,8 +62,6 @@ struct PokemonSummaryScreenData
 void ShowPokemonSummaryScreen(struct Pokemon *, u8, u8, MainCallback, u8);
 void ShowSelectMovePokemonSummaryScreen(struct Pokemon *, u8, u8, MainCallback, u16);
 u8 GetMoveSlotToReplace(void);
-u8 GetPrimaryStatus(u32);
-u8 GetMonStatusAndPokerus();
 u8 *PokemonSummaryScreen_CopyPokemonLevel(u8 *dest, u8 level);
 u8 DoesMonOTMatchOwner(struct Pokemon *pokemon);
 bool8 CheckPartyPokerus(struct Pokemon *, u8);

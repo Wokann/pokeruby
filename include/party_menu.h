@@ -178,6 +178,8 @@ void Task_SoftboiledReduceUserHp(u8 taskId);
 void Task_WaitForPartyMenuMessage(u8 taskId);
 void Task_WaitForPartyMenuMessageThenFollowup(u8 taskId);
 void PartyMenuUpdateLevelOrStatus(struct Pokemon *, u8);
+u8 GetAilmentFromStatus(u32 status);
+u8 GetMonAilment(struct Pokemon *mon);
 void GetMedicineItemEffectMessage(u16);
 bool8 ExecuteTableBasedItemEffectForPartyMon(u8 monIndex, u16 item, u8 moveIndex);
 void UseMedicine(u8 taskId, u16 item, TaskFunc followupCallback);
