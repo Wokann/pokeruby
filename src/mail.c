@@ -749,8 +749,8 @@ void Task_DebugMailChooseLayout(u8 taskId)
 
 void Task_DebugMailChooseSpecies(u8 taskId)
 {
-    u8 sp0[] = _("{STR_VAR_1}　{STR_VAR_2}");
-    u8 sp8[] = DTR("メール{STR_VAR_1}　{STR_VAR_2}", "MAIL{STR_VAR_1} {STR_VAR_2}");
+    u8 speciesText[] = _("{STR_VAR_1}　{STR_VAR_2}");
+    u8 mailText[] = DTR("メール{STR_VAR_1}　{STR_VAR_2}", "MAIL{STR_VAR_1} {STR_VAR_2}");
     bool8 selectionChanged = FALSE;
 
     if (JOY_NEW(A_BUTTON))
@@ -758,7 +758,7 @@ void Task_DebugMailChooseSpecies(u8 taskId)
         ConvertIntToDecimalStringN(gStringVar1, gSpecialVar_0x8005, 2, 1);
         StringCopy(gStringVar2, gSpeciesNames[gTasks[taskId].data[0]]);
         gSaveBlock1.mail[gSpecialVar_0x8005].species = gTasks[taskId].data[0];
-        StringExpandPlaceholders(gStringVar4, sp8);
+        StringExpandPlaceholders(gStringVar4, mailText);
         Menu_DisplayDialogueFrame();
         Menu_PrintText(gStringVar4, 4, 15);
         DestroyTask(taskId);
@@ -789,7 +789,7 @@ void Task_DebugMailChooseSpecies(u8 taskId)
     {
         ConvertIntToDecimalStringN(gStringVar1, gTasks[taskId].data[0], 2, 3);
         StringCopy(gStringVar2, gSpeciesNames[gTasks[taskId].data[0]]);
-        StringExpandPlaceholders(gStringVar4, sp0);
+        StringExpandPlaceholders(gStringVar4, speciesText);
         Menu_DrawStdWindowFrame(0, 0, 12, 3);
         Menu_PrintText(gStringVar4, 1, 1);
     }
