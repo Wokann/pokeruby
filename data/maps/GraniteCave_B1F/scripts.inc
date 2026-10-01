@@ -6,5 +6,5 @@ GraniteCave_B1F_MapScripts:: @ 815CBDD
 
 GraniteCave_B1F_SetHoleWarp:: @ 815CBED
 	setstepcallback STEP_CB_CRACKED_FLOOR
-	setholewarp MAP_GRANITE_CAVE_B2F, 255, 0, 0
+	setholewarp MAP_GRANITE_CAVE_B2F, WARP_ID_NONE, 0, 0
 	end
