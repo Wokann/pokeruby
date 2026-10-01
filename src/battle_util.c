@@ -85,7 +85,6 @@ bool8 UproarWakeUpCheck(u8 battler);
 bool8 HasNoMonsToSwitch(u8 battler, u8 partyIdBattlerOn1, u8 partyIdBattlerOn2);
 s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 sideStatus, u16 powerOverride, u8 typeOverride, u8 battlerIdAtk, u8 battlerIdDef);
 u8 CountTrailingZeroBits(u32 a);
-u8 GetMoveTarget(u16 move, u8 useMoveTarget);
 void RecordAbilityBattle(u8 battler, u8 abilityId);
 void RecordItemEffectBattle(u8 battler, u8 itemEffect);
 extern u8 BattleScript_SelectingDisabledMove[];
@@ -421,8 +420,8 @@ void OpponentSwitchInResetSentPokesToOpponentValue(u8 battler)
 
     if (GetBattlerSide(battler) == B_SIDE_OPPONENT)
     {
-        u8 id = ((battler & BIT_FLANK) >> 1);
-        gSentPokesToOpponent[id] = 0;
+        u8 flank = ((battler & BIT_FLANK) >> 1);
+        gSentPokesToOpponent[flank] = 0;
 
         for (i = 0; i < gBattlersCount; i += 2)
         {
@@ -430,7 +429,7 @@ void OpponentSwitchInResetSentPokesToOpponentValue(u8 battler)
                 bits |= gBitTable[gBattlerPartyIndexes[i]];
         }
 
-        gSentPokesToOpponent[id] = bits;
+        gSentPokesToOpponent[flank] = bits;
     }
 }
 
@@ -2726,19 +2725,19 @@ u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn)
             case HOLD_EFFECT_RESTORE_PP:
                 if (!moveTurn)
                 {
-                    struct Pokemon* poke;
+                    struct Pokemon *mon;
                     u8 ppBonuses;
                     u16 move;
 
                     if (GetBattlerSide(battler) == 0)
-                        poke = &gPlayerParty[gBattlerPartyIndexes[battler]];
+                        mon = &gPlayerParty[gBattlerPartyIndexes[battler]];
                     else
-                        poke = &gEnemyParty[gBattlerPartyIndexes[battler]];
+                        mon = &gEnemyParty[gBattlerPartyIndexes[battler]];
                     for (i = 0; i < 4; i++)
                     {
-                        move = GetMonData(poke, MON_DATA_MOVE1 + i);
-                        changedPP = GetMonData(poke, MON_DATA_PP1 + i);
-                        ppBonuses = GetMonData(poke, MON_DATA_PP_BONUSES);
+                        move = GetMonData(mon, MON_DATA_MOVE1 + i);
+                        changedPP = GetMonData(mon, MON_DATA_PP1 + i);
+                        ppBonuses = GetMonData(mon, MON_DATA_PP_BONUSES);
                         if (move && changedPP == 0)
                             break;
                     }
@@ -3400,14 +3399,14 @@ void HandleAction_RunBattleScript(void)
         gBattleScriptingCommandsTable[*gBattlescriptCurrInstr]();
 }
 
-u8 GetMoveTarget(u16 move, u8 useMoveTarget) //get move target
+u8 GetMoveTarget(u16 move, u8 setTarget) //get move target
 {
     u8 targetBattler = 0;
     u8 moveTarget;
     u8 side;
 
-    if (useMoveTarget)
-        moveTarget = useMoveTarget - 1;
+    if (setTarget)
+        moveTarget = setTarget - 1;
     else
         moveTarget = gBattleMoves[move].target;
 

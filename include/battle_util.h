@@ -69,5 +69,7 @@ void BattleScriptPushCursorAndCallback(u8* BS_ptr);
 u8 IsMonDisobedient(void);
 bool8 AreAllMovesUnusable(void);
 u8 TrySetCantSelectMoveBattleScript(void);
+u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn);
+u8 GetMoveTarget(u16 move, u8 setTarget);
 
 #endif // GUARD_BATTLE_UTIL_H

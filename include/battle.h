@@ -672,8 +672,6 @@ u8 DoFieldEndTurnEffects(void);
 u8 DoBattlerEndTurnEffects(void);
 u8 HandleFaintedMonActions();
 u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveArg);
-u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn);
-u8 GetMoveTarget(u16 move, u8 useMoveTarget);
 
 // asm/battle_4.o
 void AI_CalcDmg(u8, u8);

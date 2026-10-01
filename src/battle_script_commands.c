@@ -172,7 +172,6 @@ void BattleMainCB2(void);
 void AddMoney(u32* moneySaveblock, u32 to_give);
 u8 CountAliveMonsInBattle(u8 caseId);
 u8 IsRunningFromBattleImpossible(void);
-u8 GetMoveTarget(u16 move, u8 targetbyte); //get target of move
 u8 CastformDataTypeChange(u8 battler);
 u8 GetCurrentMapType(void);
 u8 CalculatePlayerPartyCount(void);
