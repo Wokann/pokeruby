@@ -15,7 +15,7 @@
 static bool8 CheckTrainer(u8);
 static void SetIconSpriteData(struct Sprite *sprite, u16 fieldEffectId, u8 spriteAnimNum);
 static void SpriteCB_TrainerIcons(struct Sprite *sprite);
-static bool8 TrainerCanApproachPlayer(struct ObjectEvent *);
+static u8 GetTrainerApproachDistance(struct ObjectEvent *);
 static void InitTrainerApproachTask(struct ObjectEvent *, u8);
 static bool8 CheckPathBetweenTrainerAndPlayer(struct ObjectEvent *trainerObj, u8 approachDistance, u8 direction);
 static void Task_RunTrainerSeeFuncList(u8 taskId);
@@ -37,7 +37,7 @@ static u8 (*const sDirectionalApproachDistanceFuncs[])(struct ObjectEvent *, s16
     GetTrainerApproachDistanceEast,
 };
 
-bool8 CheckTrainers(void)
+bool8 CheckForTrainersWantingBattle(void)
 {
     u8 objEventId;
 
@@ -62,12 +62,12 @@ static bool8 CheckTrainer(u8 objEventId)
     else
     {
         struct ObjectEvent *trainerObj = &gObjectEvents[objEventId];
-        bool8 canApproach = TrainerCanApproachPlayer(trainerObj);
+        u8 approachDistance = GetTrainerApproachDistance(trainerObj);
 
-        if (canApproach)
+        if (approachDistance)
         {
             ConfigureAndSetUpOneTrainerBattle(objEventId, scriptPtr);
-            InitTrainerApproachTask(trainerObj, (canApproach - 1));
+            InitTrainerApproachTask(trainerObj, approachDistance - 1);
             return TRUE;
         }
         else
@@ -77,7 +77,7 @@ static bool8 CheckTrainer(u8 objEventId)
     }
 }
 
-static bool8 TrainerCanApproachPlayer(struct ObjectEvent *trainerObj)
+static u8 GetTrainerApproachDistance(struct ObjectEvent *trainerObj)
 {
     s16 x, y;
     u8 i;
