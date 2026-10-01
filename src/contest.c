@@ -141,9 +141,9 @@ void LoadContestBgAfterMoveAnim(void)
     LoadContestPalettes();
     for (i = 0; i < 4; i++)
     {
-        u32 var = 5 + i;
+        u32 contestantWindowId = 5 + i;
 
-        LoadPalette(eContestTempSave.cachedWindowPalettes[var], 16 * (5 + gContestantTurnOrder[i]), 16 * sizeof(u16));
+        LoadPalette(eContestTempSave.cachedWindowPalettes[contestantWindowId], 16 * (5 + gContestantTurnOrder[i]), 16 * sizeof(u16));
     }
 }
 
@@ -290,8 +290,8 @@ void Task_ReadyStartLinkContest(u8 taskId)
 
 u8 SetupContestGraphics(u8 *stateVar)
 {
-    u16 sp0[16];
-    u16 sp20[16];
+    u16 tempPalette1[16];
+    u16 tempPalette2[16];
 
     switch (*stateVar)
     {
@@ -315,10 +315,10 @@ u8 SetupContestGraphics(u8 *stateVar)
         break;
     case 5:
         LoadCompressedPalette(gContestInterfaceAudiencePalette, 0, 0x200);
-        CpuCopy32(gPlttBufferUnfaded + 128, sp0, 16 * sizeof(u16));
-        CpuCopy32(gPlttBufferUnfaded + (5 + gContestPlayerMonIndex) * 16, sp20, 16 * sizeof(u16));
-        CpuCopy32(sp20, gPlttBufferUnfaded + 128, 16 * sizeof(u16));
-        CpuCopy32(sp0, gPlttBufferUnfaded + (5 + gContestPlayerMonIndex) * 16, 16 * sizeof(u16));
+        CpuCopy32(gPlttBufferUnfaded + 128, tempPalette1, 16 * sizeof(u16));
+        CpuCopy32(gPlttBufferUnfaded + (5 + gContestPlayerMonIndex) * 16, tempPalette2, 16 * sizeof(u16));
+        CpuCopy32(tempPalette2, gPlttBufferUnfaded + 128, 16 * sizeof(u16));
+        CpuCopy32(tempPalette1, gPlttBufferUnfaded + (5 + gContestPlayerMonIndex) * 16, 16 * sizeof(u16));
         DmaCopy32Defvars(3, gPlttBufferUnfaded, eContestTempSave.cachedWindowPalettes, 0x200);
         LoadContestPalettes();
         break;
