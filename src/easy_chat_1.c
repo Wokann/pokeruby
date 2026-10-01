@@ -403,41 +403,41 @@ void InitEasyChatScreenLayout(void)
 
 void SetUnlockedEasyChatGroups(void)
 {
-    u16 r4 = 0;
-    u16 r7;
-    u16 r5;
+    u16 groupId = 0;
+    u16 row;
+    u16 column;
 
-    for (r7 = 0; ; r7++)
+    for (row = 0; ; row++)
     {
-        for (r5 = 0; r5 < 2; r5++)
+        for (column = 0; column < 2; column++)
         {
-            gEasyChatScreen->unlockedGroupIds[r7][r5] = r4++;
-            if (r4 == 17)
+            gEasyChatScreen->unlockedGroupIds[row][column] = groupId++;
+            if (groupId == EC_GROUP_EVENTS)
                 break;
         }
-        if (r4 == 17)
+        if (groupId == EC_GROUP_EVENTS)
             break;
     }
-    gEasyChatScreen->numUnlockedGroups = 17;
-    while (r4 < 22)
+    gEasyChatScreen->numUnlockedGroups = EC_GROUP_EVENTS;
+    while (groupId < EC_NUM_GROUPS)
     {
-        if (IsEasyChatGroupUnlocked(r4) != 0)
+        if (IsEasyChatGroupUnlocked(groupId) != 0)
         {
-            r5++;
-            if (r5 > 1)
+            column++;
+            if (column > 1)
             {
-                r7++;
-                r5 = 0;
+                row++;
+                column = 0;
             }
-            gEasyChatScreen->unlockedGroupIds[r7][r5] = r4;
-            gEasyChatScreen->optionalGroupUnlocked[r4 - 17] = 1;  // hmm...
+            gEasyChatScreen->unlockedGroupIds[row][column] = groupId;
+            gEasyChatScreen->optionalGroupUnlocked[groupId - EC_GROUP_EVENTS] = 1;
             gEasyChatScreen->numUnlockedGroups++;
         }
         else
         {
-            gEasyChatScreen->optionalGroupUnlocked[r4 - 17] = 0;
+            gEasyChatScreen->optionalGroupUnlocked[groupId - EC_GROUP_EVENTS] = 0;
         }
-        r4++;
+        groupId++;
     }
     gEasyChatScreen->keyboardLastRow = (gEasyChatScreen->numUnlockedGroups + 1) / 2;
 }

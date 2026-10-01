@@ -2377,7 +2377,7 @@ void LoadEasyChatStrings(void)
     u16 group;
     u16 index;
 
-    for (group = 0; group <= EC_GROUP_POKEMON_NATIONAL; group++)
+    for (group = 0; group < EC_NUM_GROUPS; group++)
     {
         if (group != EC_GROUP_POKEMON
          && group != EC_GROUP_POKEMON_NATIONAL
@@ -2554,7 +2554,7 @@ bool8 IsEasyChatWordInvalid(u16 easyChatWord)
         u16 groupId = EC_GROUP(easyChatWord);
         u16 index = EC_INDEX(easyChatWord);
 
-        if (groupId <= EC_GROUP_POKEMON_NATIONAL)
+        if (groupId < EC_NUM_GROUPS)
         {
             switch (groupId)
             {
