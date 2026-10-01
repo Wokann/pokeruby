@@ -892,7 +892,7 @@ static const struct BgEvent *GetBackgroundEventAtPosition(struct MapHeader *mapH
 
 bool8 TryDoDiveWarp(struct MapPosition *position, u16 metatileBehavior)
 {
-    if (gMapHeader.mapType == MAP_TYPE_UNDERWATER && !MetatileBehavior_IsNotSurfacable(metatileBehavior))
+    if (gMapHeader.mapType == MAP_TYPE_UNDERWATER && !MetatileBehavior_IsUnableToEmerge(metatileBehavior))
     {
         if (SetDiveWarpEmerge(position->x - MAP_OFFSET, position->y - MAP_OFFSET))
         {
@@ -922,7 +922,7 @@ u8 TrySetDiveWarp(void)
 
     PlayerGetDestCoords(&x, &y);
     metatileBehavior = MapGridGetMetatileBehaviorAt(x, y);
-    if (gMapHeader.mapType == MAP_TYPE_UNDERWATER && !MetatileBehavior_IsNotSurfacable(metatileBehavior))
+    if (gMapHeader.mapType == MAP_TYPE_UNDERWATER && !MetatileBehavior_IsUnableToEmerge(metatileBehavior))
     {
         if (SetDiveWarpEmerge(x - MAP_OFFSET, y - MAP_OFFSET) == TRUE)
             return 1;

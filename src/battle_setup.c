@@ -692,11 +692,11 @@ s8 BattleSetup_GetEnvironmentId(void)
             return BATTLE_ENVIRONMENT_WATER;
         return BATTLE_ENVIRONMENT_PLAIN;
     }
-    if (MetatileBehavior_IsOceanWater(tileBehavior))
+    if (MetatileBehavior_IsDeepOrOceanWater(tileBehavior))
         return BATTLE_ENVIRONMENT_WATER;
     if (MetatileBehavior_IsSurfableWaterOrUnderwater(tileBehavior))
         return BATTLE_ENVIRONMENT_POND;
-    if (MetatileBehavior_IsMountainTop(tileBehavior))
+    if (MetatileBehavior_IsMountain(tileBehavior))
         return BATTLE_ENVIRONMENT_MOUNTAIN;
     if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING))
     {

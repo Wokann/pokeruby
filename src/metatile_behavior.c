@@ -776,7 +776,7 @@ bool8 MetatileBehavior_IsSecretBaseBreakableDoor(u8 metatileBehavior)
         return FALSE;
 }
 
-bool8 MetatileBehavior_IsSecretBaseMusicNoteMat(u8 metatileBehavior)
+bool8 MetatileBehavior_IsSecretBaseSoundMat(u8 metatileBehavior)
 {
     if (metatileBehavior == MB_SECRET_BASE_MUSIC_NOTE_MAT)
         return TRUE;
@@ -920,7 +920,7 @@ bool8 MetatileBehavior_IsIndoorEncounter(u8 metatileBehavior)
         return FALSE;
 }
 
-bool8 MetatileBehavior_IsMountainTop(u8 metatileBehavior)
+bool8 MetatileBehavior_IsMountain(u8 metatileBehavior)
 {
     if (metatileBehavior == MB_MOUNTAIN_TOP)
         return TRUE;
@@ -938,7 +938,7 @@ bool8 MetatileBehavior_IsDiveable(u8 metatileBehavior)
         return FALSE;
 }
 
-bool8 MetatileBehavior_IsNotSurfacable(u8 metatileBehavior)
+bool8 MetatileBehavior_IsUnableToEmerge(u8 metatileBehavior)
 {
     if (metatileBehavior == MB_NO_SURFACING
      || metatileBehavior == MB_SEAWEED_NO_SURFACING)
@@ -973,7 +973,7 @@ bool8 MetatileBehavior_IsCrackedIce(u8 metatileBehavior)
         return FALSE;
 }
 
-bool8 MetatileBehavior_IsOceanWater(u8 metatileBehavior)
+bool8 MetatileBehavior_IsDeepOrOceanWater(u8 metatileBehavior)
 {
     if (metatileBehavior == MB_OCEAN_WATER
      || metatileBehavior == MB_SEMI_DEEP_WATER
@@ -1079,7 +1079,7 @@ bool8 MetatileBehavior_IsFortreeBridge(u8 metatileBehavior)
         return FALSE;
 }
 
-bool8 MetatileBehavior_IsPacifidlogVerticalLog1(u8 metatileBehavior)
+bool8 MetatileBehavior_IsPacifidlogVerticalLogTop(u8 metatileBehavior)
 {
     if (metatileBehavior == MB_PACIFIDLOG_VERTICAL_LOG_1)
         return TRUE;
@@ -1087,7 +1087,7 @@ bool8 MetatileBehavior_IsPacifidlogVerticalLog1(u8 metatileBehavior)
         return FALSE;
 }
 
-bool8 MetatileBehavior_IsPacifidlogVerticalLog2(u8 metatileBehavior)
+bool8 MetatileBehavior_IsPacifidlogVerticalLogBottom(u8 metatileBehavior)
 {
     if (metatileBehavior == MB_PACIFIDLOG_VERTICAL_LOG_2)
         return TRUE;
@@ -1095,7 +1095,7 @@ bool8 MetatileBehavior_IsPacifidlogVerticalLog2(u8 metatileBehavior)
         return FALSE;
 }
 
-bool8 MetatileBehavior_IsPacifidlogHorizontalLog1(u8 metatileBehavior)
+bool8 MetatileBehavior_IsPacifidlogHorizontalLogLeft(u8 metatileBehavior)
 {
     if (metatileBehavior == MB_PACIFIDLOG_HORIZONTAL_LOG_1)
         return TRUE;
@@ -1103,7 +1103,7 @@ bool8 MetatileBehavior_IsPacifidlogHorizontalLog1(u8 metatileBehavior)
         return FALSE;
 }
 
-bool8 MetatileBehavior_IsPacifidlogHorizontalLog2(u8 metatileBehavior)
+bool8 MetatileBehavior_IsPacifidlogHorizontalLogRight(u8 metatileBehavior)
 {
     if (metatileBehavior == MB_PACIFIDLOG_HORIZONTAL_LOG_2)
         return TRUE;

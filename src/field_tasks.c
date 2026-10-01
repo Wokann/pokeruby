@@ -179,19 +179,19 @@ void DummyPerStepCallback(u8 taskId) {}
 
 static const struct PacifidlogMetatileOffsets *GetPacifidlogBridgeMetatileOffsets(const struct PacifidlogMetatileOffsets *offsets, u16 metatileBehavior)
 {
-    if (MetatileBehavior_IsPacifidlogVerticalLog1(metatileBehavior))
+    if (MetatileBehavior_IsPacifidlogVerticalLogTop(metatileBehavior))
     {
         return &offsets[0 * 2];
     }
-    else if (MetatileBehavior_IsPacifidlogVerticalLog2(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogVerticalLogBottom(metatileBehavior))
     {
         return &offsets[1 * 2];
     }
-    else if (MetatileBehavior_IsPacifidlogHorizontalLog1(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogHorizontalLogLeft(metatileBehavior))
     {
         return &offsets[2 * 2];
     }
-    else if (MetatileBehavior_IsPacifidlogHorizontalLog2(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogHorizontalLogRight(metatileBehavior))
     {
         return &offsets[3 * 2];
     }
@@ -237,28 +237,28 @@ static void TrySetLogBridgeFloating(s16 x, s16 y, bool32 redrawMap)
 static bool32 ShouldRaisePacifidlogLogs(s16 newX, s16 newY, s16 oldX, s16 oldY)
 {
     s8 metatileBehavior = MapGridGetMetatileBehaviorAt(oldX, oldY);
-    if (MetatileBehavior_IsPacifidlogVerticalLog1(metatileBehavior))
+    if (MetatileBehavior_IsPacifidlogVerticalLogTop(metatileBehavior))
     {
         if (newY > oldY)
         {
             return FALSE;
         }
     }
-    else if (MetatileBehavior_IsPacifidlogVerticalLog2(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogVerticalLogBottom(metatileBehavior))
     {
         if (newY < oldY)
         {
             return FALSE;
         }
     }
-    else if (MetatileBehavior_IsPacifidlogHorizontalLog1(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogHorizontalLogLeft(metatileBehavior))
     {
         if (newX > oldX)
         {
             return FALSE;
         }
     }
-    else if (MetatileBehavior_IsPacifidlogHorizontalLog2(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogHorizontalLogRight(metatileBehavior))
     {
         if (newX < oldX)
         {
@@ -271,28 +271,28 @@ static bool32 ShouldRaisePacifidlogLogs(s16 newX, s16 newY, s16 oldX, s16 oldY)
 static bool32 ShouldSinkPacifidlogLogs(s16 newX, s16 newY, s16 oldX, s16 oldY)
 {
     s8 metatileBehavior = MapGridGetMetatileBehaviorAt(newX, newY);
-    if (MetatileBehavior_IsPacifidlogVerticalLog1(metatileBehavior))
+    if (MetatileBehavior_IsPacifidlogVerticalLogTop(metatileBehavior))
     {
         if (newY < oldY)
         {
             return FALSE;
         }
     }
-    else if (MetatileBehavior_IsPacifidlogVerticalLog2(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogVerticalLogBottom(metatileBehavior))
     {
         if (newY > oldY)
         {
             return FALSE;
         }
     }
-    else if (MetatileBehavior_IsPacifidlogHorizontalLog1(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogHorizontalLogLeft(metatileBehavior))
     {
         if (newX < oldX)
         {
             return FALSE;
         }
     }
-    else if (MetatileBehavior_IsPacifidlogHorizontalLog2(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogHorizontalLogRight(metatileBehavior))
     {
         if (newX > oldX)
         {

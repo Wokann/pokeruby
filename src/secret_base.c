@@ -1242,7 +1242,7 @@ void SecretBasePerStepCallback(u8 taskId)
                 PopSecretBaseBalloon(MapGridGetMetatileIdAt(x, y), x, y);
             else if (MetatileBehavior_IsSecretBaseBreakableDoor(metatileBehavior) == TRUE)
                 ShatterSecretBaseBreakableDoor(x, y);
-            else if (MetatileBehavior_IsSecretBaseMusicNoteMat(metatileBehavior) == TRUE)
+            else if (MetatileBehavior_IsSecretBaseSoundMat(metatileBehavior) == TRUE)
                 PlaySecretBaseMusicNoteMatSound(MapGridGetMetatileIdAt(x, y));
         }
         break;
