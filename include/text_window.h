@@ -14,7 +14,7 @@ void TextWindow_LoadStdFrameGraphics(struct Window *win);
 void TextWindow_LoadStdFrameGraphicsOverridePal(struct Window *win, u8 palSlot);
 void TextWindow_LoadStdFrameGraphicsOverrideStyle(struct Window *win, u8 frameType);
 void TextWindow_DrawStdFrame(struct Window *win, u8 left, u8 top, u8 right, u8 bottom);
-const struct FrameGraphics *TextWindow_GetFrameGraphics(u8 frameType);
+const struct FrameGraphics *GetWindowFrameTilesPal(u8 frameType);
 u16 TextWindow_SetDlgFrameBaseTileNum(u16 baseTileNum);
 void TextWindow_PrintDialogueText(struct Window *win, u8 *text);
 void TextWindow_DisplayDialogueFrame(struct Window *win);

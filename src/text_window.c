@@ -134,7 +134,7 @@ void TextWindow_DrawStdFrame(struct Window *win, u8 left, u8 top, u8 right, u8 b
 }
 
 // Returns the tile data and palette for the specified frame type
-const struct FrameGraphics *TextWindow_GetFrameGraphics(u8 frameType)
+const struct FrameGraphics *GetWindowFrameTilesPal(u8 frameType)
 {
     if (frameType > 19)
         return &sTextWindowFrameGraphics[0];
@@ -144,13 +144,13 @@ const struct FrameGraphics *TextWindow_GetFrameGraphics(u8 frameType)
 
 static void LoadTextWindowTiles(u8 frameType, void *dest)
 {
-    const struct FrameGraphics *frameGraphics = TextWindow_GetFrameGraphics(frameType);
+    const struct FrameGraphics *frameGraphics = GetWindowFrameTilesPal(frameType);
     CpuFastCopy(frameGraphics->tiles, dest, 9 * TILE_SIZE_4BPP);
 }
 
 static void LoadTextWindowPalette(u8 frameType, u8 palSlot)
 {
-    const struct FrameGraphics *frameGraphics = TextWindow_GetFrameGraphics(frameType);
+    const struct FrameGraphics *frameGraphics = GetWindowFrameTilesPal(frameType);
     LoadPalette(frameGraphics->palette, 16 * palSlot, 0x20);
 }
 

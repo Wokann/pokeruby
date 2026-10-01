@@ -292,7 +292,7 @@ void InitMonMarkingsMenu(struct MonMarkingsMenu *ptr)
 
 static void BufferMenuWindowTiles(void)
 {
-    const struct FrameGraphics *frame = TextWindow_GetFrameGraphics(gSaveBlock2.optionsWindowFrameType);
+    const struct FrameGraphics *frame = GetWindowFrameTilesPal(gSaveBlock2.optionsWindowFrameType);
     sMenu->frameTiles = frame->tiles;
     sMenu->framePalette = frame->palette;
     sMenu->tileLoadState = 0;
