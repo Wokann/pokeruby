@@ -75,7 +75,7 @@ Route104_MrBrineysHouse_EventScript_SailToDewford:: @ 815BDAB
 	clearflag FLAG_HIDE_ROUTE_104_MR_BRINEY
 	setflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
 	setflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
-	warp MAP_ROUTE104, 255, 13, 51
+	warp MAP_ROUTE104, WARP_ID_NONE, 13, 51
 	waitstate
 	releaseall
 	end
