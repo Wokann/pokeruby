@@ -324,7 +324,7 @@ static void Shop_TryDrawVerticalScrollIndicators(void)
         SetScrollIndicatorArrowInvisibility(BOTTOM_ARROW, VISIBLE);
 }
 
-// what is the point of this function? the tiles always get overwritten by BuyMenuDrawTextboxBG.
+// what is the point of this function? the tiles always get overwritten by BuyMenuCopyMenuBgToBg1TilemapBuffer.
 static void BuyMenuDrawTextboxBG_Old(u16 *array, s16 offset1, s16 offset2)
 {
     array[offset1 + offset2] = 0xC3E1;
@@ -473,7 +473,7 @@ static void Shop_AnimViewportObjects(void)
     }
 }
 
-static void BuyMenuDrawTextboxBG(void)
+static void BuyMenuCopyMenuBgToBg1TilemapBuffer(void)
 {
     s16 i;
     
@@ -486,7 +486,7 @@ static void BuyMenuDrawTextboxBG(void)
 
 static void Shop_InitMenus(int firstItemId, int lastItemId)
 {
-    BuyMenuDrawTextboxBG();
+    BuyMenuCopyMenuBgToBg1TilemapBuffer();
     Shop_DisplayPriceInList(firstItemId, lastItemId, 0);
     InitMenu(0, 0xE, 0x2, 0x8, gMartInfo.cursor, 0xF);
 }
