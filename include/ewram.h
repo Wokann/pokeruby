@@ -30,7 +30,7 @@ extern u8 gSharedMem[];
 
 // battle_transition.c
 #define TRANSITION_STRUCT               (*(struct TransitionData *)   (gSharedMem + 0xC000))
-#define eTransitionMugshotDecompBuff    (&gSharedMem[0xC03C])
+#define sMugshotDecompBuffer            (&gSharedMem[0xC03C])
 
 #define ewram16400                      (gSharedMem + 0x16400)
 
