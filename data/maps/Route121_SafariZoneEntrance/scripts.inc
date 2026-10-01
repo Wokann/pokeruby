@@ -78,7 +78,7 @@ Route121_SafariZoneEntrance_EventScript_TryEnterSafariZone:: @ 815C3B3
 	waitmovement 0
 	special EnterSafariMode
 	setvar VAR_SAFARI_ZONE_STATE, 2
-	warp MAP_SAFARI_ZONE_SOUTHEAST, 255, 32, 33
+	warp MAP_SAFARI_ZONE_SOUTHEAST, WARP_ID_NONE, 32, 33
 	waitstate
 	end
 
