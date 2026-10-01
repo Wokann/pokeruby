@@ -4299,14 +4299,14 @@ void HandleTurnActionSelectionState(void)
                                 struct ChooseMoveStruct moveInfo;
 
                                 moveInfo.species = gBattleMons[gActiveBattler].species;
-                                moveInfo.monType1 = gBattleMons[gActiveBattler].type1;
-                                moveInfo.monType2 = gBattleMons[gActiveBattler].type2;
+                                moveInfo.monTypes[0] = gBattleMons[gActiveBattler].type1;
+                                moveInfo.monTypes[1] = gBattleMons[gActiveBattler].type2;
 
                                 for (i = 0; i < 4; i++)
                                 {
                                     moveInfo.moves[i] = gBattleMons[gActiveBattler].moves[i];
-                                    moveInfo.currentPp[i] = gBattleMons[gActiveBattler].pp[i];
-                                    moveInfo.maxPp[i] = CalculatePPWithBonus(
+                                    moveInfo.currentPP[i] = gBattleMons[gActiveBattler].pp[i];
+                                    moveInfo.maxPP[i] = CalculatePPWithBonus(
                                         gBattleMons[gActiveBattler].moves[i],
                                         gBattleMons[gActiveBattler].ppBonuses,
                                         i);
