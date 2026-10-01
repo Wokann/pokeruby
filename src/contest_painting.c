@@ -117,7 +117,7 @@ static void CreateContestPaintingPicture(u8 contestWinnerId, bool8 isForArtist);
 void SetContestWinnerForPainting(u32 contestWinnerId)
 {
     // probably fakematching
-    struct ContestWinner *curWinner = &eCurContestWinner;
+    struct ContestWinner *curWinner = &gCurContestWinner;
     u8 *saveIdx = (u8*)&gCurContestWinnerSaveIdx;
     u8 *isForArtist = (u8*)&gCurContestWinnerIsForArtist;
     *curWinner = gSaveBlock1.contestWinners[contestWinnerId - 1];
@@ -137,7 +137,7 @@ static void ShowContestPainting(void)
     case 0:
         ScanlineEffect_Stop();
         SetVBlankCallback(NULL);
-        gContestPaintingWinner = &eCurContestWinner;
+        gContestPaintingWinner = &gCurContestWinner;
         InitContestPaintingVars(TRUE);
         InitContestPaintingBg();
         gMain.state++;

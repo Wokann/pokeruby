@@ -54,9 +54,9 @@ extern u8 gSharedMem[];
 #define eUnzippedContestAudience_Gfx    (&gSharedMem[0x15800]) // overlaps other contest vars
 #define gCurContestWinnerSaveIdx         (gSharedMem[0x15DDE])
 #define gCurContestWinnerIsForArtist     (gSharedMem[0x15DDF])
-#define eCurContestWinner               ((*(struct ContestWinner*)(gSharedMem + 0x15DE0)))
+#define gCurContestWinner               (*(struct ContestWinner *)(gSharedMem + 0x15DE0))
 #define eContestPaintingBuffers         ((*(struct ContestPaintingBuffers*)(gSharedMem + 0x15E00)))
-#define eEnableContestDebugging         (gSharedMem[0x18000])
+#define gEnableContestDebugging         (gSharedMem[0x18000])
 #define eContestTempSave                (*(struct ContestTempSave *)(gSharedMem + 0x18004))
 #define sContest                        (*(struct Contest *)(gSharedMem + 0x19204))
 #define sContestantStatus               ((struct ContestantStatus *)(gSharedMem + 0x19260))

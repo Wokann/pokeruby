@@ -213,7 +213,7 @@ void CB2_StartContest(void)
         FreeAllSpritePalettes();
         gReservedSpritePaletteCount = 4;
         //eContestTempSave.unk18000 = 0;
-        eEnableContestDebugging = 0;
+        gEnableContestDebugging = 0;
         ClearBattleMonForms();
         InitContestResources();
         gMain.state++;

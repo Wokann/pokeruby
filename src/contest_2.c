@@ -2897,8 +2897,8 @@ void Unused_EndBlinkingState(u8 contestant, int unused)
 
 void ContestDebugTogglePointTotal(void)
 {
-    eEnableContestDebugging ^= 1;
-    if (eEnableContestDebugging == 0)
+    gEnableContestDebugging ^= 1;
+    if (gEnableContestDebugging == 0)
     {
         u8 i;
 
@@ -2926,7 +2926,7 @@ void ContestDebugDoPrint(void)
     u8 textOffset = 0;
     u8 text[8];
 
-    if (eEnableContestDebugging != 0)
+    if (gEnableContestDebugging != 0)
     {
         u8 i;
         s16 value;
@@ -4131,15 +4131,15 @@ bool8 SaveContestWinner(u8 rank)
     }
     else
     {
-        eCurContestWinner.personality = gContestMons[i].personality;
-        eCurContestWinner.trainerId = gContestMons[i].otId;
-        eCurContestWinner.species = gContestMons[i].species;
-        StringCopy(eCurContestWinner.monName, gContestMons[i].nickname);
+        gCurContestWinner.personality = gContestMons[i].personality;
+        gCurContestWinner.trainerId = gContestMons[i].otId;
+        gCurContestWinner.species = gContestMons[i].species;
+        StringCopy(gCurContestWinner.monName, gContestMons[i].nickname);
         if (gIsLinkContest & 1)
-            StringCopy(eCurContestWinner.trainerName, gLinkPlayers[i].name);
+            StringCopy(gCurContestWinner.trainerName, gLinkPlayers[i].name);
         else
-            StringCopy(eCurContestWinner.trainerName, gContestMons[i].trainerName);
-        eCurContestWinner.contestCategory = captionId;
+            StringCopy(gCurContestWinner.trainerName, gContestMons[i].trainerName);
+        gCurContestWinner.contestCategory = captionId;
     }
     return TRUE;
 }

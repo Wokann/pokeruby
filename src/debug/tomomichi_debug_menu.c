@@ -4473,7 +4473,7 @@ NAKED void PicTest_Redraw(u8 a0)
 
 static void PrepareDebugOverlayBeforeShowingContestPainting(u8 a0)
 {
-    struct ContestWinner *contestEntry = &eCurContestWinner;
+    struct ContestWinner *contestEntry = &gCurContestWinner;
     contestEntry->species = sPicTest_Species;
     contestEntry->trainerId = sPicTest_OTID;
     contestEntry->personality = sPicTest_Personality;
