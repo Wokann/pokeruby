@@ -4376,8 +4376,8 @@ static const struct SpritePalette sSlotMachineSpritePalettes[];
 static void LoadSlotMachineGfx(void)
 {
     LoadReelBackground();
-    LZDecompressWram(gSlotMachineDigitalDisplay_Gfx, eSlotMachineGfxBuffer);
-    LZDecompressWram(sReelTimeGfx, eSlotMachineReelTimeGfxBuffer);
+    LZDecompressWram(gSlotMachineDigitalDisplay_Gfx, sSlotMachineGfxBuffer);
+    LZDecompressWram(sReelTimeGfx, sSlotMachineReelTimeGfxBuffer);
     LoadSpriteSheets(sSlotMachineSpriteSheets);
     LoadSpritePalettes(sSlotMachineSpritePalettes);
 }
@@ -4387,7 +4387,7 @@ static const struct SpriteSheet sReelBackgroundSpriteSheet;
 
 static void LoadReelBackground(void)
 {
-    u8 *dest = eSlotMachineGfxBuffer;
+    u8 *dest = sSlotMachineGfxBuffer;
     u8 i = 0;
     const struct SpriteSheet *sheet = &sReelBackgroundSpriteSheet;
     const u8 *src = sReelBackground_Tilemap;
@@ -4402,9 +4402,9 @@ static void LoadReelBackground(void)
 
 static void LoadMenuGfx(void)
 {
-    LZDecompressWram(gSlotMachineMenu_Gfx, eSlotMachineGfxBuffer);
+    LZDecompressWram(gSlotMachineMenu_Gfx, sSlotMachineGfxBuffer);
 
-    DmaCopyLarge16(3, eSlotMachineGfxBuffer, BG_VRAM, SLOTMACHINE_GFX_TILES * 32, 0x1000);
+    DmaCopyLarge16(3, sSlotMachineGfxBuffer, BG_VRAM, SLOTMACHINE_GFX_TILES * 32, 0x1000);
 
     LoadPalette(gSlotMachineMenu_Pal, 0, 160);
     LoadPalette(sUnkPalette, 208, 32);
@@ -4949,23 +4949,23 @@ static const struct OamData sOam_64x64 = {
 };
 
 static const struct SpriteFrameImage sImageTable_ReelTimePikachu[] = {
-    {eSlotMachineReelTimeGfxBuffer + 0x0000, 0x800},
-    {eSlotMachineReelTimeGfxBuffer + 0x0800, 0x800},
-    {eSlotMachineReelTimeGfxBuffer + 0x1000, 0x800},
-    {eSlotMachineReelTimeGfxBuffer + 0x1800, 0x800},
-    {eSlotMachineReelTimeGfxBuffer + 0x2000, 0x800}
+    {sSlotMachineReelTimeGfxBuffer + 0x0000, 0x800},
+    {sSlotMachineReelTimeGfxBuffer + 0x0800, 0x800},
+    {sSlotMachineReelTimeGfxBuffer + 0x1000, 0x800},
+    {sSlotMachineReelTimeGfxBuffer + 0x1800, 0x800},
+    {sSlotMachineReelTimeGfxBuffer + 0x2000, 0x800}
 };
 
 static const struct SpriteFrameImage sImageTable_ReelTimeMachineAntennae[] = {
-    {eSlotMachineReelTimeGfxBuffer + 0x2800, 0x300}
+    {sSlotMachineReelTimeGfxBuffer + 0x2800, 0x300}
 };
 
 static const struct SpriteFrameImage sImageTable_ReelTimeMachine[] = {
-    {eSlotMachineReelTimeGfxBuffer + 0x2B00, 0x500}
+    {sSlotMachineReelTimeGfxBuffer + 0x2B00, 0x500}
 };
 
 static const struct SpriteFrameImage sImageTable_BrokenReelTimeMachine[] = {
-    {eSlotMachineReelTimeGfxBuffer + 0x3000, 0x600}
+    {sSlotMachineReelTimeGfxBuffer + 0x3000, 0x600}
 };
 
 static const struct SpriteFrameImage sImageTable_ReelTimeNumbers[] = {
@@ -5008,67 +5008,67 @@ static const struct SpriteFrameImage sImageTable_ReelTimeSmoke[] = {
 };
 
 static const struct SpriteFrameImage sImageTable_DigitalDisplay_Reel[] = {
-    {eSlotMachineGfxBuffer + 0x0000, 0x600}
+    {sSlotMachineGfxBuffer + 0x0000, 0x600}
 };
 
 static const struct SpriteFrameImage sImageTable_DigitalDisplay_Time[] = {
-    {eSlotMachineGfxBuffer + 0x0600, 0x200}
+    {sSlotMachineGfxBuffer + 0x0600, 0x200}
 };
 
 static const struct SpriteFrameImage sImageTable_DigitalDisplay_Insert[] = {
-    {eSlotMachineGfxBuffer + 0x0800, 0x200}
+    {sSlotMachineGfxBuffer + 0x0800, 0x200}
 };
 
 static const struct SpriteFrameImage sImageTable_DigitalDisplay_Stop[] = {
-    {eSlotMachineGfxBuffer + 0x0A00, 0x200}
+    {sSlotMachineGfxBuffer + 0x0A00, 0x200}
 };
 
 static const struct SpriteFrameImage sImageTable_DigitalDisplay_Win[] = {
-    {eSlotMachineGfxBuffer + 0x0C00, 0x300}
+    {sSlotMachineGfxBuffer + 0x0C00, 0x300}
 };
 
 static const struct SpriteFrameImage sImageTable_DigitalDisplay_Lose[] = {
-    {eSlotMachineGfxBuffer + 0x1000, 0x400}
+    {sSlotMachineGfxBuffer + 0x1000, 0x400}
 };
 
 static const struct SpriteFrameImage sImageTable_DigitalDisplay_Bonus[] = {
-    {eSlotMachineGfxBuffer + 0x1400, 0x200}
+    {sSlotMachineGfxBuffer + 0x1400, 0x200}
 };
 
 static const struct SpriteFrameImage sImageTable_DigitalDisplay_Big[] = {
-    {eSlotMachineGfxBuffer + 0x1600, 0x300}
+    {sSlotMachineGfxBuffer + 0x1600, 0x300}
 };
 
 static const struct SpriteFrameImage sImageTable_DigitalDisplay_Reg[] = {
-    {eSlotMachineGfxBuffer + 0x1900, 0x300}
+    {sSlotMachineGfxBuffer + 0x1900, 0x300}
 };
 
 static const struct SpriteFrameImage sImageTable_DigitalDisplay_AButton[] = {
-    {eSlotMachineGfxBuffer + 0x1C00, 0x200},
-    {eSlotMachineGfxBuffer + 0x1E00, 0x200},
-    {eSlotMachineGfxBuffer + 0x1E00, 0x200} // is this a typo?
+    {sSlotMachineGfxBuffer + 0x1C00, 0x200},
+    {sSlotMachineGfxBuffer + 0x1E00, 0x200},
+    {sSlotMachineGfxBuffer + 0x1E00, 0x200} // is this a typo?
 };
 
 static const struct SpriteFrameImage sImageTable_DigitalDisplay_Smoke[] = {
-    {eSlotMachineGfxBuffer + 0x2000, 0x280}
+    {sSlotMachineGfxBuffer + 0x2000, 0x280}
 };
 
 static const struct SpriteFrameImage sImageTable_DigitalDisplay_Number[] = {
-    {eSlotMachineGfxBuffer + 0x2280, 0x80},
-    {eSlotMachineGfxBuffer + 0x2300, 0x80},
-    {eSlotMachineGfxBuffer + 0x2380, 0x80},
-    {eSlotMachineGfxBuffer + 0x2400, 0x80},
-    {eSlotMachineGfxBuffer + 0x2480, 0x80}
+    {sSlotMachineGfxBuffer + 0x2280, 0x80},
+    {sSlotMachineGfxBuffer + 0x2300, 0x80},
+    {sSlotMachineGfxBuffer + 0x2380, 0x80},
+    {sSlotMachineGfxBuffer + 0x2400, 0x80},
+    {sSlotMachineGfxBuffer + 0x2480, 0x80}
 };
 
 static const struct SpriteFrameImage sImageTable_DigitalDisplay_Pokeball[] = {
-    {eSlotMachineGfxBuffer + 0x2600, 0x480},
-    {eSlotMachineGfxBuffer + 0x2A80, 0x480}
+    {sSlotMachineGfxBuffer + 0x2600, 0x480},
+    {sSlotMachineGfxBuffer + 0x2A80, 0x480}
 };
 
 static const struct SpriteFrameImage sImageTable_DigitalDisplay_DPad[] = {
-    {eSlotMachineGfxBuffer + 0x2F00, 0x180},
-    {eSlotMachineGfxBuffer + 0x3080, 0x180}
+    {sSlotMachineGfxBuffer + 0x2F00, 0x180},
+    {sSlotMachineGfxBuffer + 0x3080, 0x180}
 };
 
 static const struct SpriteFrameImage sImageTable_PikaPowerBolt[] = {
@@ -5817,15 +5817,15 @@ static const struct SpriteSheet sSlotMachineSpriteSheets[] = {
     {gSlotMachineNumber7Tiles, 0x40, GFXTAG_NUM_7},
     {gSlotMachineNumber8Tiles, 0x40, GFXTAG_NUM_8},
     {gSlotMachineNumber9Tiles, 0x40, GFXTAG_NUM_9},
-    {eSlotMachineGfxBuffer + 0x0A00, 0x200, GFXTAG_STOP},
-    {eSlotMachineGfxBuffer + 0x1400, 0x200, GFXTAG_BONUS},
-    {eSlotMachineGfxBuffer + 0x1600, 0x300, GFXTAG_BIG},
-    {eSlotMachineGfxBuffer + 0x1900, 0x300, GFXTAG_REG},
+    {sSlotMachineGfxBuffer + 0x0A00, 0x200, GFXTAG_STOP},
+    {sSlotMachineGfxBuffer + 0x1400, 0x200, GFXTAG_BONUS},
+    {sSlotMachineGfxBuffer + 0x1600, 0x300, GFXTAG_BIG},
+    {sSlotMachineGfxBuffer + 0x1900, 0x300, GFXTAG_REG},
     {}
 };
 
 static const struct SpriteSheet sReelBackgroundSpriteSheet = {
-    eSlotMachineGfxBuffer + 0x0000, 0x800, GFXTAG_REEL_BG
+    sSlotMachineGfxBuffer + 0x0000, 0x800, GFXTAG_REEL_BG
 };
 
 static const u8 *const sReelBackground_Tilemap = gSlotMachineReelBackground_Tilemap;

@@ -112,8 +112,8 @@ extern u8 gSharedMem[];
 
 #define ewram_2010000                   (*(struct TradeEwramStruct *)(gSharedMem + 0x10000))
 #define sBerryBlenderGfxBuffer          (&gSharedMem[0x10000])
-#define eSlotMachineGfxBuffer           (void *)(gSharedMem + 0x10000) // slot machine
-#define eSlotMachineReelTimeGfxBuffer   (&gSharedMem[0x13200])
+#define sSlotMachineGfxBuffer           (void *)(gSharedMem + 0x10000) // slot machine
+#define sSlotMachineReelTimeGfxBuffer   (&gSharedMem[0x13200])
 #define sEvoInfo                        ((*(struct EvoInfo*)(gSharedMem + 0x14800)))
 
 // roulette_gfx.c
