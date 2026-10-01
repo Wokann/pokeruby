@@ -284,7 +284,7 @@ void BattleAI_HandleItemUseBeforeAISetup(void)
 void BattleAI_SetupAIData(void)
 {
     s32 i;
-    u8 limitations;
+    u8 moveLimitations;
     u8 *data;
 
     // clear AI data and set default move score to 100. strange that they didn't use memset here.
@@ -293,14 +293,14 @@ void BattleAI_SetupAIData(void)
     for (i = 0; i < MAX_MON_MOVES; i++)
         AI_THINKING_STRUCT->score[i] = 100;
 
-    limitations = CheckMoveLimitations(gActiveBattler, 0, 0xFF);
+    moveLimitations = CheckMoveLimitations(gActiveBattler, 0, 0xFF);
 
     // do not consider moves the AI cannot select
     // also, roll simulated RNG for moves that have a degree of
     // randomness.
     for (i = 0; i < MAX_MON_MOVES; i++)
     {
-        if (gBitTable[i] & limitations)
+        if (gBitTable[i] & moveLimitations)
             AI_THINKING_STRUCT->score[i] = 0;
 
         AI_THINKING_STRUCT->simulatedRNG[i] = 100 - (Random() % 16);
