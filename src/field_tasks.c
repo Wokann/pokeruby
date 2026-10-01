@@ -236,29 +236,29 @@ static void TrySetLogBridgeFloating(s16 x, s16 y, bool32 redrawMap)
 
 static bool32 ShouldRaisePacifidlogLogs(s16 newX, s16 newY, s16 oldX, s16 oldY)
 {
-    s8 metatileBehavior = MapGridGetMetatileBehaviorAt(oldX, oldY);
-    if (MetatileBehavior_IsPacifidlogVerticalLogTop(metatileBehavior))
+    s8 oldBehavior = MapGridGetMetatileBehaviorAt(oldX, oldY);
+    if (MetatileBehavior_IsPacifidlogVerticalLogTop(oldBehavior))
     {
         if (newY > oldY)
         {
             return FALSE;
         }
     }
-    else if (MetatileBehavior_IsPacifidlogVerticalLogBottom(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogVerticalLogBottom(oldBehavior))
     {
         if (newY < oldY)
         {
             return FALSE;
         }
     }
-    else if (MetatileBehavior_IsPacifidlogHorizontalLogLeft(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogHorizontalLogLeft(oldBehavior))
     {
         if (newX > oldX)
         {
             return FALSE;
         }
     }
-    else if (MetatileBehavior_IsPacifidlogHorizontalLogRight(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogHorizontalLogRight(oldBehavior))
     {
         if (newX < oldX)
         {
@@ -270,29 +270,29 @@ static bool32 ShouldRaisePacifidlogLogs(s16 newX, s16 newY, s16 oldX, s16 oldY)
 
 static bool32 ShouldSinkPacifidlogLogs(s16 newX, s16 newY, s16 oldX, s16 oldY)
 {
-    s8 metatileBehavior = MapGridGetMetatileBehaviorAt(newX, newY);
-    if (MetatileBehavior_IsPacifidlogVerticalLogTop(metatileBehavior))
+    s8 newBehavior = MapGridGetMetatileBehaviorAt(newX, newY);
+    if (MetatileBehavior_IsPacifidlogVerticalLogTop(newBehavior))
     {
         if (newY < oldY)
         {
             return FALSE;
         }
     }
-    else if (MetatileBehavior_IsPacifidlogVerticalLogBottom(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogVerticalLogBottom(newBehavior))
     {
         if (newY > oldY)
         {
             return FALSE;
         }
     }
-    else if (MetatileBehavior_IsPacifidlogHorizontalLogLeft(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogHorizontalLogLeft(newBehavior))
     {
         if (newX < oldX)
         {
             return FALSE;
         }
     }
-    else if (MetatileBehavior_IsPacifidlogHorizontalLogRight(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogHorizontalLogRight(newBehavior))
     {
         if (newX > oldX)
         {
