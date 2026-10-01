@@ -159,24 +159,24 @@ DirectSoundWaveData_bicycle_bell:: @ 8488F44
 	.incbin "sound/direct_sound_samples/bicycle_bell.bin"
 
 	.align 2
-DirectSoundWaveData_848A8A4:: @ 848A8A4
-	.incbin "sound/direct_sound_samples/synth/848A8A4.bin"
+DirectSoundWaveData_unknown_1:: @ 848A8A4
+	.incbin "sound/direct_sound_samples/unknown_01.bin"
 
 	.align 2
 DirectSoundWaveData_sc88pro_pizzicato_strings:: @ 848BD68
 	.incbin "sound/direct_sound_samples/sc88pro_pizzicato_strings.bin"
 
 	.align 2
-DirectSoundWaveData_machine_sound2:: @ 848C4A4
-	.incbin "sound/direct_sound_samples/synth/machine_sound2.bin"
+DirectSoundWaveData_unknown_2:: @ 848C4A4
+	.incbin "sound/direct_sound_samples/unknown_02.bin"
 
 	.align 2
-DirectSoundWaveData_machine_sound1:: @ 848E094
-	.incbin "sound/direct_sound_samples/synth/machine_sound1.bin"
+DirectSoundWaveData_unknown_3:: @ 848E094
+	.incbin "sound/direct_sound_samples/unknown_03.bin"
 
 	.align 2
-DirectSoundWaveData_848F448:: @ 848F448
-	.incbin "sound/direct_sound_samples/synth/848F448.bin"
+DirectSoundWaveData_unknown_4:: @ 848F448
+	.incbin "sound/direct_sound_samples/unknown_04.bin"
 
 	.align 2
 DirectSoundWaveData_sc88pro_wind:: @ 8491ACC
@@ -187,32 +187,32 @@ DirectSoundWaveData_sc88pro_bubbles:: @ 8492D10
 	.incbin "sound/direct_sound_samples/sc88pro_bubbles.bin"
 
 	.align 2
-DirectSoundWaveData_8493D20:: @ 8493D20
-	.incbin "sound/direct_sound_samples/synth/8493D20.bin"
+DirectSoundWaveData_unknown_5:: @ 8493D20
+	.incbin "sound/direct_sound_samples/unknown_05.bin"
 
 	.align 2
-DirectSoundWaveData_8495028:: @ 8495028
-	.incbin "sound/direct_sound_samples/synth/8495028.bin"
+DirectSoundWaveData_unknown_6:: @ 8495028
+	.incbin "sound/direct_sound_samples/unknown_06.bin"
 
 	.align 2
 DirectSoundWaveData_trinity_30303_mega_bass:: @ 8497134
 	.incbin "sound/direct_sound_samples/trinity_30303_mega_bass.bin"
 
 	.align 2
-DirectSoundWaveData_8499110:: @ 8499110
-	.incbin "sound/direct_sound_samples/synth/8499110.bin"
+DirectSoundWaveData_unknown_7:: @ 8499110
+	.incbin "sound/direct_sound_samples/unknown_07.bin"
 
 	.align 2
-DirectSoundWaveData_849B320:: @ 849B320
-	.incbin "sound/direct_sound_samples/synth/849B320.bin"
+DirectSoundWaveData_unknown_8:: @ 849B320
+	.incbin "sound/direct_sound_samples/unknown_08.bin"
 
 	.align 2
 DirectSoundWaveData_sc88pro_tubular_bell:: @ 849BAEC
 	.incbin "sound/direct_sound_samples/sc88pro_tubular_bell.bin"
 
 	.align 2
-DirectSoundWaveData_849D45C:: @ 849D45C
-	.incbin "sound/direct_sound_samples/synth/849D45C.bin"
+DirectSoundWaveData_unknown_9:: @ 849D45C
+	.incbin "sound/direct_sound_samples/unknown_09.bin"
 
 	.align 2
 DirectSoundWaveData_trinity_big_boned:: @ 849F40C
@@ -227,12 +227,12 @@ DirectSoundWaveData_sc88pro_xylophone:: @ 84A311C
 	.incbin "sound/direct_sound_samples/sc88pro_xylophone.bin"
 
 	.align 2
-DirectSoundWaveData_84A3B50:: @ 84A3B50
-	.incbin "sound/direct_sound_samples/synth/84A3B50.bin"
+DirectSoundWaveData_unknown_10:: @ 84A3B50
+	.incbin "sound/direct_sound_samples/unknown_10.bin"
 
 	.align 2
-DirectSoundWaveData_84A5690:: @ 84A5690
-	.incbin "sound/direct_sound_samples/synth/84A5690.bin"
+DirectSoundWaveData_unknown_11:: @ 84A5690
+	.incbin "sound/direct_sound_samples/unknown_11.bin"
 
 	.align 2
 DirectSoundWaveData_sc88pro_accordion:: @ 84A5F58
