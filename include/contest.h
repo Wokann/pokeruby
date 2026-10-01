@@ -453,11 +453,11 @@ extern u16 gSpecialVar_ContestRank;
 extern u16 gSpecialVar_ContestCategory;
 extern u8 gContestMonPartyIndex;
 
-void SetContestantEffectStringID(u8 a, u8 b);
-void SetContestantEffectStringID2(u8 a, u8 b);
-void MakeContestantNervous(u8 p);
-bool8 Contest_IsMonsTurnDisabled(u8 a);
+void SetContestantEffectStringID(u8 contestant, u8 effectStringId);
+void SetContestantEffectStringID2(u8 contestant, u8 effectStringId);
+void MakeContestantNervous(u8 contestant);
+bool8 Contest_IsMonsTurnDisabled(u8 contestant);
 bool8 IsContestantAllowedToCombo(u8 contestant);
-void SetStartledString(u8 a, u8 b);
+void SetStartledString(u8 contestant, u8 jam);
 
 #endif // GUARD_CONTEST_H
