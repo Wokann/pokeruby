@@ -206,7 +206,7 @@ static void AnimTask_FrozenIceCube_Step1(u8 taskId)
 
 static void AnimTask_FrozenIceCube_Step2(u8 taskId)
 {
-    u8 paletteIndex = IndexOfSpritePaletteTag(ANIM_TAG_ICE_CUBE);
+    u8 palIndex = IndexOfSpritePaletteTag(ANIM_TAG_ICE_CUBE);
 
     if (gTasks[taskId].data[1]++ > 13)
     {
@@ -215,10 +215,10 @@ static void AnimTask_FrozenIceCube_Step2(u8 taskId)
         {
             u16 temp;
 
-            temp = gPlttBufferFaded[OBJ_PLTT_ID(paletteIndex) + 13];
-            gPlttBufferFaded[OBJ_PLTT_ID(paletteIndex) + 13] = gPlttBufferFaded[OBJ_PLTT_ID(paletteIndex) + 14];
-            gPlttBufferFaded[OBJ_PLTT_ID(paletteIndex) + 14] = gPlttBufferFaded[OBJ_PLTT_ID(paletteIndex) + 15];
-            gPlttBufferFaded[OBJ_PLTT_ID(paletteIndex) + 15] = temp;
+            temp = gPlttBufferFaded[OBJ_PLTT_ID(palIndex) + 13];
+            gPlttBufferFaded[OBJ_PLTT_ID(palIndex) + 13] = gPlttBufferFaded[OBJ_PLTT_ID(palIndex) + 14];
+            gPlttBufferFaded[OBJ_PLTT_ID(palIndex) + 14] = gPlttBufferFaded[OBJ_PLTT_ID(palIndex) + 15];
+            gPlttBufferFaded[OBJ_PLTT_ID(palIndex) + 15] = temp;
 
             gTasks[taskId].data[2] = 0;
             gTasks[taskId].data[3]++;
