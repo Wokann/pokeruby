@@ -682,7 +682,7 @@ static void Task_PlayCryWhenReleasedFromBall(u8 taskId)
             gTasks[taskId].tCryTaskFrames--;
             break;
         }
-        PlayCry4(species, pan, 1);
+        PlayCry_ReleaseDouble(species, pan, 1);
         DestroyTask(taskId);
         break;
     case 3:
@@ -711,7 +711,7 @@ static void Task_PlayCryWhenReleasedFromBall(u8 taskId)
             gTasks[taskId].tCryTaskFrames--;
             break;
         }
-        PlayCry4(species, pan, 0);
+        PlayCry_ReleaseDouble(species, pan, 0);
         DestroyTask(taskId);
         break;
     }

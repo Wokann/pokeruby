@@ -1593,7 +1593,7 @@ static void LinkOpponentHandlePlayFanfare(void)
 
 static void LinkOpponentHandleFaintingCry(void)
 {
-    PlayCry3(
+    PlayCry_ByMode(
       GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES),
       25, 5);
     LinkOpponentBufferExecCompleted();

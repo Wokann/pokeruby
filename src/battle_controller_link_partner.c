@@ -1531,7 +1531,7 @@ static void LinkPartnerHandlePlayFanfareOrBGM(void)
 
 static void LinkPartnerHandleFaintingCry(void)
 {
-    PlayCry3(
+    PlayCry_ByMode(
       GetMonData(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES),
       -25, 5);
     LinkPartnerBufferExecCompleted();

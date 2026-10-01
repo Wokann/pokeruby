@@ -302,12 +302,12 @@ void PlayCry_Normal(u16 species, s8 pan)
     RestoreBGMVolumeAfterPokemonCry();
 }
 
-void PlayCry2(u16 species, s8 pan, s8 volume, u8 priority)
+void PlayCry_NormalNoDucking(u16 species, s8 pan, s8 volume, u8 priority)
 {
     PlayCryInternal(species, pan, volume, priority, 0);
 }
 
-void PlayCry3(u16 species, s8 pan, u8 mode)
+void PlayCry_ByMode(u16 species, s8 pan, u8 mode)
 {
     if (mode == 1)
     {
@@ -322,7 +322,7 @@ void PlayCry3(u16 species, s8 pan, u8 mode)
     }
 }
 
-void PlayCry4(u16 species, s8 pan, u8 mode)
+void PlayCry_ReleaseDouble(u16 species, s8 pan, u8 mode)
 {
     if (mode == 1)
     {
@@ -336,7 +336,7 @@ void PlayCry4(u16 species, s8 pan, u8 mode)
     }
 }
 
-void PlayCry5(u16 species, u8 mode)
+void PlayCry_Script(u16 species, u8 mode)
 {
     m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFFFF, 85);
     PlayCryInternal(species, 0, 125, 10, mode);

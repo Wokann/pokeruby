@@ -221,7 +221,7 @@ void SoundTask_PlayCryWithMode(u8 taskId)
         if (mode == ANIM_CRY_MODE_DEFAULT)
             PlayCry_Normal(species, pan);
         else
-            PlayCry3(species, pan, mode);
+            PlayCry_ByMode(species, pan, mode);
     }
 
     DestroyAnimVisualTask(taskId);
@@ -238,7 +238,7 @@ void SoundTask_PlayHyperVoiceCry(u8 taskId)
         species = gAnimBattlerSpecies[gBattleAnimAttacker];
 
     if (species != 0)
-        PlayCry3(species, pan, CRY_MODE_HYPER_VOICE);
+        PlayCry_ByMode(species, pan, CRY_MODE_HYPER_VOICE);
 
     DestroyAnimVisualTask(taskId);
 }

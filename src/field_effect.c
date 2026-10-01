@@ -2662,7 +2662,7 @@ void SpriteCB_FieldMoveMonSlideOnscreen(struct Sprite *sprite)
         sprite->callback = SpriteCB_FieldMoveMonWaitAfterCry;
         if (sprite->data[6])
         {
-            PlayCry2(sprite->data[0], 0, 0x7d, 0xa);
+            PlayCry_NormalNoDucking(sprite->data[0], 0, 0x7d, 0xa);
         } else
         {
             PlayCry_Normal(sprite->data[0], 0);
