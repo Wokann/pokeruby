@@ -29,10 +29,10 @@ static void LinkContest_SendBlock(const void *data, u16 size)
 
 static bool8 LinkContest_GetBlockReceived(u8 playerId)
 {
-    u8 flag = 1 << playerId;
-    if (!(GetBlockReceivedStatus() & flag))
+    u8 mask = 1 << playerId;
+    if (!(GetBlockReceivedStatus() & mask))
         return FALSE;
-    ResetBlockReceivedFlag(flag);
+    ResetBlockReceivedFlag(mask);
     return TRUE;
 }
 
