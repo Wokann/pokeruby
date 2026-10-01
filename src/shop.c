@@ -389,12 +389,12 @@ static void Shop_DrawViewportTiles(void)
 
             if (y != 5 && x != 6)
             {
-                u8 r3 = MapGridGetMetatileLayerTypeAt(facingX + x, facingY + y);
+                u8 metatileLayerType = MapGridGetMetatileLayerTypeAt(facingX + x, facingY + y);
 
                 if (metatileId < 512)
-                    BuyMenuDrawMapMetatile(x, y, (u16 *)gMapHeader.mapLayout->primaryTileset->metatiles + metatileId * 8, r3);
+                    BuyMenuDrawMapMetatile(x, y, (u16 *)gMapHeader.mapLayout->primaryTileset->metatiles + metatileId * 8, metatileLayerType);
                 else
-                    BuyMenuDrawMapMetatile(x, y, (u16 *)gMapHeader.mapLayout->secondaryTileset->metatiles + (metatileId - 512) * 8, r3);
+                    BuyMenuDrawMapMetatile(x, y, (u16 *)gMapHeader.mapLayout->secondaryTileset->metatiles + (metatileId - 512) * 8, metatileLayerType);
             }
             else
             {
@@ -423,7 +423,7 @@ static void Shop_LoadViewportObjects(void)
     s16 facingX, facingY;
     u8 playerHeight;
     u8 y, x;
-    u8 r8 = 0;
+    u8 viewportObjectIndex = 0;
 
     GetXYCoordsOneStepInFrontOfPlayer(&facingX, &facingY);
     playerHeight = PlayerGetElevation();
@@ -437,18 +437,18 @@ static void Shop_LoadViewportObjects(void)
 
             if (objEventId != 16)
             {
-                gMartViewportObjects[r8][OBJ_EVENT_ID] = objEventId;
-                gMartViewportObjects[r8][X_COORD] = x;
-                gMartViewportObjects[r8][Y_COORD] = y;
+                gMartViewportObjects[viewportObjectIndex][OBJ_EVENT_ID] = objEventId;
+                gMartViewportObjects[viewportObjectIndex][X_COORD] = x;
+                gMartViewportObjects[viewportObjectIndex][Y_COORD] = y;
                 if (gObjectEvents[objEventId].facingDirection == DIR_SOUTH)
-                    gMartViewportObjects[r8][ANIM_NUM] = 0;
+                    gMartViewportObjects[viewportObjectIndex][ANIM_NUM] = 0;
                 if (gObjectEvents[objEventId].facingDirection == DIR_NORTH)
-                    gMartViewportObjects[r8][ANIM_NUM] = 1;
+                    gMartViewportObjects[viewportObjectIndex][ANIM_NUM] = 1;
                 if (gObjectEvents[objEventId].facingDirection == DIR_WEST)
-                    gMartViewportObjects[r8][ANIM_NUM] = 2;
+                    gMartViewportObjects[viewportObjectIndex][ANIM_NUM] = 2;
                 if (gObjectEvents[objEventId].facingDirection == DIR_EAST)
-                    gMartViewportObjects[r8][ANIM_NUM] = 3;
-                r8++;
+                    gMartViewportObjects[viewportObjectIndex][ANIM_NUM] = 3;
+                viewportObjectIndex++;
             }
         }
     }
