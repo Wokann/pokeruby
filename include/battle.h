@@ -418,7 +418,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x160DF*/ u8 unk160DF;
     /*0x160E0*/ u8 multihitString[6];
     /*0x160E6*/ bool8 overworldWeatherDone;
-    /*0x160E7*/ u8 atkCancellerTracker;
+    /*0x160E7*/ u8 atkCancelerTracker;
     /*0x160E8*/ u16 choicedMove[MAX_BATTLERS_COUNT];
     /*0x160F0*/ u16 changedItems[MAX_BATTLERS_COUNT];
     /*0x160F8*/ u8 battlerWithAbility;
@@ -679,7 +679,7 @@ void InitDebugBattlePartyEditor(void);
 // asm/battle_3.o
 u8 CheckMoveLimitations(u8 battler, u8 unusableMoves, u8 check);
 u8 DoFieldEndTurnEffects(void);
-u8 TurnBasedEffects(void);
+u8 DoBattlerEndTurnEffects(void);
 u8 HandleFaintedMonActions();
 u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveArg);
 u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn);

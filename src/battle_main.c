@@ -4077,7 +4077,7 @@ void BattleTurnPassed(void)
     {
         if (DoFieldEndTurnEffects() != 0)
             return;
-        if (TurnBasedEffects() != 0)
+        if (DoBattlerEndTurnEffects() != 0)
             return;
     }
     if (HandleFaintedMonActions() != 0)
@@ -5181,7 +5181,7 @@ void HandleAction_UseMove(void)
 
     gCritMultiplier = 1;
     gBattleStruct->dmgMultiplier = 1;
-    gBattleStruct->atkCancellerTracker = 0;
+    gBattleStruct->atkCancelerTracker = 0;
     gMoveResultFlags = 0;
     gMultiHitCounter = 0;
     gBattleCommunication[6] = 0;

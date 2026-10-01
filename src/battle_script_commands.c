@@ -130,7 +130,7 @@ extern u8 BattleScript_MoveEffectPayDay[];
 extern u8 BattleScript_MoveEffectRecoil[];
 
 //extern functions
-u8 AtkCanceller_UnableToUseMove(void);
+u8 AtkCanceler_UnableToUseMove(void);
 void PressurePPLose(u8 target, u8 attacker, u16 move);
 void CancelMultiTurnMoves(u8 battler);
 void BattleScriptPush(const u8* BS_ptr);
@@ -1040,7 +1040,7 @@ static void Cmd_attackcanceler(void)
         gBattlescriptCurrInstr = BattleScript_MoveEnd;
         return;
     }
-    if (AtkCanceller_UnableToUseMove())
+    if (AtkCanceler_UnableToUseMove())
         return;
     if (AbilityBattleEffects(ABILITYEFFECT_MOVES_BLOCK, gBattlerTarget, 0, 0, 0))
         return;
