@@ -1201,7 +1201,7 @@ void ClearBerryTrees(void)
     struct SaveBlock1 *saveBlock1 = &gSaveBlock1;
     struct BerryTree berryTree = gBlankBerryTree;
 
-    for (i = 0; i < MAX_BERRY_TREES; i++)
+    for (i = 0; i < BERRY_TREES_COUNT; i++)
         saveBlock1->berryTrees[i] = berryTree;
 }
 
@@ -1241,7 +1241,7 @@ void BerryTreeTimeUpdate(s32 minutesPassed)
     int i;
     struct BerryTree *tree;
 
-    for (i = 0; i < MAX_BERRY_TREES; i++)
+    for (i = 0; i < BERRY_TREES_COUNT; i++)
     {
         tree = &gSaveBlock1.berryTrees[i];
 
