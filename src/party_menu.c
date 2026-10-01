@@ -3715,7 +3715,7 @@ void UseMedicine(u8 taskId, u16 item, TaskFunc followupCallback)
         u8 statusAndPkrs;
 
         gPartyMenuActionResult = 1;
-        if (!IsBlueYellowRedFlute(item))
+        if (!IsItemFlute(item))
             PlaySE(SE_USE_ITEM);
         else
             PlaySE(SE_GLASS_FLUTE);
@@ -3737,7 +3737,7 @@ void UseMedicine(u8 taskId, u16 item, TaskFunc followupCallback)
         else
         {
             GetMonNickname(sPartyMenuAction.selectedMon, gStringVar1);
-            if (!IsBlueYellowRedFlute(item))
+            if (!IsItemFlute(item))
                 RemoveBagItem(item, 1);
             GetMedicineItemEffectMessage(item);
             TryPrintPartyMenuMonNickname(sPartyMenuAction.selectedMonIndex, sPartyMenuAction.selectedMon);
@@ -3747,7 +3747,7 @@ void UseMedicine(u8 taskId, u16 item, TaskFunc followupCallback)
     }
 }
 
-bool8 IsBlueYellowRedFlute(u16 item)
+bool8 IsItemFlute(u16 item)
 {
     if (item == ITEM_BLUE_FLUTE
      || item == ITEM_RED_FLUTE
