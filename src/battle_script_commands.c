@@ -4645,7 +4645,7 @@ static void Cmd_switchindataupdate(void)
 
     gBattleMons[gActiveBattler].type1 = gBaseStats[gBattleMons[gActiveBattler].species].type1;
     gBattleMons[gActiveBattler].type2 = gBaseStats[gBattleMons[gActiveBattler].species].type2;
-    gBattleMons[gActiveBattler].ability = GetAbilityBySpecies(gBattleMons[gActiveBattler].species, gBattleMons[gActiveBattler].altAbility);
+    gBattleMons[gActiveBattler].ability = GetAbilityBySpecies(gBattleMons[gActiveBattler].species, gBattleMons[gActiveBattler].abilityNum);
 
     // check knocked off item
     i = GetBattlerSide(gActiveBattler);
@@ -8101,7 +8101,7 @@ static void Cmd_healpartystatus(void)
         for (i = 0; i < PARTY_SIZE; i++)
         {
             u16 species = GetMonData(&party[i], MON_DATA_SPECIES2);
-            u8 abilityBit = GetMonData(&party[i], MON_DATA_ALT_ABILITY);
+            u8 abilityNum = GetMonData(&party[i], MON_DATA_ABILITY_NUM);
             if (species != 0 && species != SPECIES_EGG)
             {
                 u8 ability;
@@ -8110,7 +8110,7 @@ static void Cmd_healpartystatus(void)
                 else if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && gBattlerPartyIndexes[gActiveBattler] == i && !(gAbsentBattlerFlags & gBitTable[gActiveBattler]))
                     ability = gBattleMons[gActiveBattler].ability;
                 else
-                    ability = GetAbilityBySpecies(species, abilityBit);
+                    ability = GetAbilityBySpecies(species, abilityNum);
                 if (ability != ABILITY_SOUNDPROOF)
                     to_heal |= (1 << i);
             }
@@ -9193,7 +9193,7 @@ static void Cmd_pickup(void)
         u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2);
         u16 held_item = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
         u8 ability;
-        if (GetMonData(&gPlayerParty[i], MON_DATA_ALT_ABILITY))
+        if (GetMonData(&gPlayerParty[i], MON_DATA_ABILITY_NUM))
             ability = gBaseStats[species].ability2;
         else
             ability = gBaseStats[species].ability1;

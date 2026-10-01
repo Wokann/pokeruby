@@ -581,7 +581,7 @@ static u32 GetOpponentMonData(u8 monId, u8 *dst)
         battlePokemon.spAttack = GetMonData(&gEnemyParty[monId], MON_DATA_SPATK);
         battlePokemon.spDefense = GetMonData(&gEnemyParty[monId], MON_DATA_SPDEF);
         battlePokemon.isEgg = GetMonData(&gEnemyParty[monId], MON_DATA_IS_EGG);
-        battlePokemon.altAbility = GetMonData(&gEnemyParty[monId], MON_DATA_ALT_ABILITY);
+        battlePokemon.abilityNum = GetMonData(&gEnemyParty[monId], MON_DATA_ABILITY_NUM);
         battlePokemon.otId = GetMonData(&gEnemyParty[monId], MON_DATA_OT_ID);
         GetMonData(&gEnemyParty[monId], MON_DATA_NICKNAME, nickname);
         StringCopy_Nickname(battlePokemon.nickname, nickname);

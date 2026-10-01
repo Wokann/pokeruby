@@ -1465,7 +1465,7 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     if (gBaseStats[species].ability2)
     {
         value = personality & 1;
-        SetBoxMonData(boxMon, MON_DATA_ALT_ABILITY, &value);
+        SetBoxMonData(boxMon, MON_DATA_ABILITY_NUM, &value);
     }
 
     GiveBoxMonInitialMoveset(boxMon);
@@ -1613,7 +1613,7 @@ void CreateBattleTowerMon(struct Pokemon *mon, struct BattleTowerPokemon *src)
     SetMonData(mon, MON_DATA_SPATK_EV, &src->spAttackEV);
     SetMonData(mon, MON_DATA_SPDEF_EV, &src->spDefenseEV);
     value = src->abilityNum;
-    SetMonData(mon, MON_DATA_ALT_ABILITY, &value);
+    SetMonData(mon, MON_DATA_ABILITY_NUM, &value);
     value = src->hpIV;
     SetMonData(mon, MON_DATA_HP_IV, &value);
     value = src->attackIV;
@@ -1661,7 +1661,7 @@ void ConvertPokemonToBattleTowerPokemon(struct Pokemon *mon, struct BattleTowerP
     dest->speedIV  = GetMonData(mon, MON_DATA_SPEED_IV, NULL);
     dest->spAttackIV  = GetMonData(mon, MON_DATA_SPATK_IV, NULL);
     dest->spDefenseIV  = GetMonData(mon, MON_DATA_SPDEF_IV, NULL);
-    dest->abilityNum = GetMonData(mon, MON_DATA_ALT_ABILITY, NULL);
+    dest->abilityNum = GetMonData(mon, MON_DATA_ABILITY_NUM, NULL);
     dest->personality = GetMonData(mon, MON_DATA_PERSONALITY, NULL);
     GetMonData(mon, MON_DATA_NICKNAME, dest->nickname);
 }

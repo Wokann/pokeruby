@@ -1781,7 +1781,7 @@ u32 CopyPlayerMonData(u8 monId, u8 *dst)
         battlePokemon.spAttack = GetMonData(&gPlayerParty[monId], MON_DATA_SPATK);
         battlePokemon.spDefense = GetMonData(&gPlayerParty[monId], MON_DATA_SPDEF);
         battlePokemon.isEgg = GetMonData(&gPlayerParty[monId], MON_DATA_IS_EGG);
-        battlePokemon.altAbility = GetMonData(&gPlayerParty[monId], MON_DATA_ALT_ABILITY);
+        battlePokemon.abilityNum = GetMonData(&gPlayerParty[monId], MON_DATA_ABILITY_NUM);
         battlePokemon.otId = GetMonData(&gPlayerParty[monId], MON_DATA_OT_ID);
         GetMonData(&gPlayerParty[monId], MON_DATA_NICKNAME, nickname);
         StringCopy_Nickname(battlePokemon.nickname, nickname);

@@ -2147,7 +2147,7 @@ static void SummaryScreen_PrintPokemonInfo(struct Pokemon *mon)
         if (gBaseStats[species].type1 != gBaseStats[species].type2)
             SetTypeSpritePosAndPal(gBaseStats[species].type2, 160, 48, 1);
 
-        ability = GetAbilityBySpecies(GetMonData(mon, MON_DATA_SPECIES), GetMonData(mon, MON_DATA_ALT_ABILITY));
+        ability = GetAbilityBySpecies(GetMonData(mon, MON_DATA_SPECIES), GetMonData(mon, MON_DATA_ABILITY_NUM));
         SummaryScreen_PrintColoredText(gAbilityNames[ability], 13, 11, 9);
         Menu_PrintText(gAbilityDescriptions[ability], 11, 11);
 

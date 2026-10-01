@@ -2347,7 +2347,7 @@ void WatanabeDebug_CreatePokemon(void)
     SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_POKERUS, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_POKERUS);
 
     SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_HELD_ITEM, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_HELD_ITEM);
-    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_ALT_ABILITY, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_ABILITY_SLOT);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_ABILITY_NUM, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_ABILITY_SLOT);
 
     SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_STATUS, &sWatanabePokemonEditorStatusItems[gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_STATUS]].data.status);
 

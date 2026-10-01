@@ -4994,7 +4994,7 @@ static void CreateInGameTradePokemonInternal(u8 whichPlayerMon, u8 whichInGameTr
     SetMonData(mon, MON_DATA_NICKNAME, inGameTrade->nickname);
     SetMonData(mon, MON_DATA_OT_NAME, inGameTrade->otName);
     SetMonData(mon, MON_DATA_OT_GENDER, &inGameTrade->otGender);
-    SetMonData(mon, MON_DATA_ALT_ABILITY, &inGameTrade->abilityNum);
+    SetMonData(mon, MON_DATA_ABILITY_NUM, &inGameTrade->abilityNum);
     SetMonData(mon, MON_DATA_BEAUTY, &inGameTrade->conditions[1]);
     SetMonData(mon, MON_DATA_CUTE, &inGameTrade->conditions[2]);
     SetMonData(mon, MON_DATA_COOL, &inGameTrade->conditions[0]);

@@ -2010,7 +2010,7 @@ void StartDebugBattleFromPartyEditor(void)
 				editorValue = gDebugBattlePartyEditorData[0][i + 3] - 1;
 			else
 				editorValue = gDebugBattlePartyEditorData[0][i + 3] - 4;
-			SetMonData(&gEnemyParty[i / 5], MON_DATA_ALT_ABILITY, &editorValue);
+			SetMonData(&gEnemyParty[i / 5], MON_DATA_ABILITY_NUM, &editorValue);
 		}
 
 		if (gDebugBattlePartyEditorData[1][i] != 0)
@@ -2053,7 +2053,7 @@ void StartDebugBattleFromPartyEditor(void)
 				editorValue = gDebugBattlePartyEditorData[1][i + 3] - 1;
 			else
 				editorValue = gDebugBattlePartyEditorData[1][i + 3] - 4;
-			SetMonData(&gPlayerParty[i / 5], MON_DATA_ALT_ABILITY, &editorValue);
+			SetMonData(&gPlayerParty[i / 5], MON_DATA_ABILITY_NUM, &editorValue);
 		}
 		if (gDebugBattlePartyEditorData[1][i + 3] > 2)
 		{
@@ -3723,7 +3723,7 @@ void BattleIntroDrawTrainersOrMonsSprites(void)
                 MEMSET_ALT(&gBattleMons[gActiveBattler], gBattleBufferB[gActiveBattler][4 + i], 0x58, i, ptr);
                 gBattleMons[gActiveBattler].type1 = gBaseStats[gBattleMons[gActiveBattler].species].type1;
                 gBattleMons[gActiveBattler].type2 = gBaseStats[gBattleMons[gActiveBattler].species].type2;
-                gBattleMons[gActiveBattler].ability = GetAbilityBySpecies(gBattleMons[gActiveBattler].species, gBattleMons[gActiveBattler].altAbility);
+                gBattleMons[gActiveBattler].ability = GetAbilityBySpecies(gBattleMons[gActiveBattler].species, gBattleMons[gActiveBattler].abilityNum);
 
                 hpOnSwitchout = &gBattleStruct->hpOnSwitchout[GetBattlerSide(gActiveBattler)];
                 *hpOnSwitchout = gBattleMons[gActiveBattler].hp;
