@@ -5,8 +5,8 @@ MtPyre_2F_MapScripts:: @ 815D36E
 	.byte 0
 
 MtPyre_2F_MapScript1_SetHoleWarp:: @ 815D37E
-	setstepcallback 7
-	setholewarp MAP_MT_PYRE_1F, 255, 0, 0
+	setstepcallback STEP_CB_CRACKED_FLOOR
+	setholewarp MAP_MT_PYRE_1F, WARP_ID_NONE, 0, 0
 	end
 
 MtPyre_2F_EventScript_Woman:: @ 815D389

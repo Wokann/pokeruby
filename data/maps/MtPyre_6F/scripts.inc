@@ -4,7 +4,7 @@ MtPyre_6F_MapScripts:: @ 815D447
 MtPyre_6F_EventScript_Valerie:: @ 815D448
 	trainerbattle_single TRAINER_VALERIE_1, MtPyre_6F_Text_ValerieIntro, MtPyre_6F_Text_ValerieDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq MtPyre_6F_EventScript_RematchValerie
 	msgbox MtPyre_6F_Text_ValeriePostBattle, MSGBOX_AUTOCLOSE
 	end
