@@ -4,30 +4,30 @@
 SecretBase_EventScript_CheckEntrance:: @ 81A2C51
 	special GetSecretBaseTypeInFrontOfPlayer
 	special CheckPlayerHasSecretBase
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq SecretBase_EventScript_AlreadyHasSecretBase
 	checkpartymove MOVE_SECRET_POWER
 	setfieldeffectargument 0, VAR_RESULT
-	buffermovename 1, MOVE_SECRET_POWER
-	compare VAR_0x8007, 1
+	buffermovename STR_VAR_2, MOVE_SECRET_POWER
+	compare VAR_0x8007, SECRET_BASE_RED_CAVE
 	goto_if_eq SecretBase_EventScript_Cave
-	compare VAR_0x8007, 2
+	compare VAR_0x8007, SECRET_BASE_BROWN_CAVE
 	goto_if_eq SecretBase_EventScript_Cave
-	compare VAR_0x8007, 3
+	compare VAR_0x8007, SECRET_BASE_BLUE_CAVE
 	goto_if_eq SecretBase_EventScript_Cave
-	compare VAR_0x8007, 4
+	compare VAR_0x8007, SECRET_BASE_YELLOW_CAVE
 	goto_if_eq SecretBase_EventScript_Cave
-	compare VAR_0x8007, 5
+	compare VAR_0x8007, SECRET_BASE_TREE
 	goto_if_eq SecretBase_EventScript_Tree
-	compare VAR_0x8007, 6
+	compare VAR_0x8007, SECRET_BASE_SHRUB
 	goto_if_eq SecretBase_EventScript_Shrub
 	end
 
 SecretBase_EventScript_Cave:
 	lockall
-	compare VAR_RESULT, 6
+	compare VAR_RESULT, PARTY_SIZE
 	goto_if_eq SecretBase_EventScript_CaveNoSecretPower
-	bufferpartymonnick 0, VAR_RESULT
+	bufferpartymonnick STR_VAR_1, VAR_RESULT
 	msgbox SecretBase_Text_IndentUseSecretPower, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_EventScript_CancelOnEntrance
@@ -56,9 +56,9 @@ SecretBase_EventScript_CaveEnter:
 
 SecretBase_EventScript_Tree:
 	lockall
-	compare VAR_RESULT, 6
+	compare VAR_RESULT, PARTY_SIZE
 	goto_if_eq SecretBase_EventScript_TreeNoSecretPower
-	bufferpartymonnick 0, VAR_RESULT
+	bufferpartymonnick STR_VAR_1, VAR_RESULT
 	msgbox SecretBase_Text_TreeUseSecretPower, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_EventScript_CancelOnEntrance
@@ -87,9 +87,9 @@ SecretBase_EventScript_TreeEnter:
 
 SecretBase_EventScript_Shrub:
 	lockall
-	compare VAR_RESULT, 6
+	compare VAR_RESULT, PARTY_SIZE
 	goto_if_eq SecretBase_EventScript_ShrubNoSecretPower
-	bufferpartymonnick 0, VAR_RESULT
+	bufferpartymonnick STR_VAR_1, VAR_RESULT
 	msgbox SecretBase_Text_ClumpUseSecretPower, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_EventScript_CancelOnEntrance
@@ -159,7 +159,7 @@ SecretBase_EventScript_Enter:: @ 81A2E14
 	setvar VAR_INIT_SECRET_BASE, 1
 	playse SE_EXIT
 	special IsCurSecretBaseOwnedByAnotherPlayer
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq SecretBase_EventScript_EnterPlayersBase
 	clearflag FLAG_DECORATION_1
 	special EnterSecretBase
@@ -176,7 +176,7 @@ SecretBase_EventScript_EnterPlayersBase:
 
 SecretBase_EventScript_AlreadyHasSecretBase:
 	checkpartymove MOVE_SECRET_POWER
-	compare VAR_RESULT, 6
+	compare VAR_RESULT, PARTY_SIZE
 	goto_if_eq SecretBase_EventScript_NoSecretPower
 	setfieldeffectargument 0, VAR_RESULT
 	setorcopyvar VAR_0x8004, VAR_RESULT
@@ -195,38 +195,38 @@ SecretBase_EventScript_AlreadyHasSecretBase:
 	msgbox SecretBase_Text_MovingCompletedUseSecretPower, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_EventScript_CancelOnEntrance
-	bufferpartymonnick 0, VAR_0x8004
-	buffermovename 1, MOVE_SECRET_POWER
+	bufferpartymonnick STR_VAR_1, VAR_0x8004
+	buffermovename STR_VAR_2, MOVE_SECRET_POWER
 	msgbox Text_MonUsedFieldMove, MSGBOX_DEFAULT
 	closemessage
 	closemessage
-	compare VAR_0x8007, 1
+	compare VAR_0x8007, SECRET_BASE_RED_CAVE
 	goto_if_eq SecretBase_EventScript_CaveUseSecretPower
-	compare VAR_0x8007, 2
+	compare VAR_0x8007, SECRET_BASE_BROWN_CAVE
 	goto_if_eq SecretBase_EventScript_CaveUseSecretPower
-	compare VAR_0x8007, 3
+	compare VAR_0x8007, SECRET_BASE_BLUE_CAVE
 	goto_if_eq SecretBase_EventScript_CaveUseSecretPower
-	compare VAR_0x8007, 4
+	compare VAR_0x8007, SECRET_BASE_YELLOW_CAVE
 	goto_if_eq SecretBase_EventScript_CaveUseSecretPower
-	compare VAR_0x8007, 5
+	compare VAR_0x8007, SECRET_BASE_TREE
 	goto_if_eq SecretBase_EventScript_TreeUseSecretPower
-	compare VAR_0x8007, 6
+	compare VAR_0x8007, SECRET_BASE_SHRUB
 	goto_if_eq SecretBase_EventScript_ShrubUseSecretPower
 	releaseall
 	end
 
 SecretBase_EventScript_NoSecretPower::
-	compare VAR_0x8007, 1
+	compare VAR_0x8007, SECRET_BASE_RED_CAVE
 	goto_if_eq SecretBase_EventScript_CaveNoSecretPower
-	compare VAR_0x8007, 2
+	compare VAR_0x8007, SECRET_BASE_BROWN_CAVE
 	goto_if_eq SecretBase_EventScript_CaveNoSecretPower
-	compare VAR_0x8007, 3
+	compare VAR_0x8007, SECRET_BASE_BLUE_CAVE
 	goto_if_eq SecretBase_EventScript_CaveNoSecretPower
-	compare VAR_0x8007, 4
+	compare VAR_0x8007, SECRET_BASE_YELLOW_CAVE
 	goto_if_eq SecretBase_EventScript_CaveNoSecretPower
-	compare VAR_0x8007, 5
+	compare VAR_0x8007, SECRET_BASE_TREE
 	goto_if_eq SecretBase_EventScript_TreeNoSecretPower
-	compare VAR_0x8007, 6
+	compare VAR_0x8007, SECRET_BASE_SHRUB
 	goto_if_eq SecretBase_EventScript_ShrubNoSecretPower
 	end
 

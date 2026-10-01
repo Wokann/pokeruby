@@ -38,6 +38,7 @@
 #include "constants/party_menu.h"
 #include "constants/pokemon_size_record.h"
 #include "constants/berry.h"
+#include "constants/secret_bases.h"
 #include "constants/script_menu.h"
 #include "constants/field_weather.h"
 	.include "include/macros.inc"
