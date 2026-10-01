@@ -102,7 +102,7 @@ static void CreateReflectionEffectSprites(void);
 static u8 GetObjectEventIdByLocalIdAndMapInternal(u8, u8, u8);
 static u8 GetObjectEventIdByLocalId(u8);
 static void RemoveObjectEventInternal(struct ObjectEvent *);
-static void MakeSpriteTemplateFromObjectEventTemplate(const struct ObjectEventTemplate *objEventTemplate, struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables);
+static void MakeSpriteTemplateFromObjectEventTemplate(const struct ObjectEventTemplate *objectEventTemplate, struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables);
 static void RemoveObjectEventIfOutsideView(struct ObjectEvent *objectEvent);
 static void SetPlayerAvatarObjectEventIdAndObjectId(u8, u8);
 static void ResetObjectEventFldEffData(struct ObjectEvent *);
@@ -1180,12 +1180,12 @@ u8 GetObjectEventIdByXY(s16 x, s16 y)
     return i;
 }
 
-static u8 GetObjectEventIdByLocalIdAndMapInternal(u8 localId, u8 mapNum, u8 mapGroup)
+static u8 GetObjectEventIdByLocalIdAndMapInternal(u8 localId, u8 mapNum, u8 mapGroupId)
 {
     u8 i;
     for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
     {
-        if (gObjectEvents[i].active && gObjectEvents[i].localId == localId && gObjectEvents[i].mapNum == mapNum && gObjectEvents[i].mapGroup == mapGroup)
+        if (gObjectEvents[i].active && gObjectEvents[i].localId == localId && gObjectEvents[i].mapNum == mapNum && gObjectEvents[i].mapGroup == mapGroupId)
             return i;
     }
 
@@ -1479,9 +1479,9 @@ static void CopyObjectGraphicsInfoToSpriteTemplate_WithMovementType(u16 graphics
     CopyObjectGraphicsInfoToSpriteTemplate(graphicsId, sMovementTypeCallbacks[movementType], spriteTemplate, subspriteTables);
 }
 
-static void MakeSpriteTemplateFromObjectEventTemplate(const struct ObjectEventTemplate *objEventTemplate, struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables)
+static void MakeSpriteTemplateFromObjectEventTemplate(const struct ObjectEventTemplate *objectEventTemplate, struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables)
 {
-    CopyObjectGraphicsInfoToSpriteTemplate_WithMovementType(objEventTemplate->graphicsId, objEventTemplate->movementType, spriteTemplate, subspriteTables);
+    CopyObjectGraphicsInfoToSpriteTemplate_WithMovementType(objectEventTemplate->graphicsId, objectEventTemplate->movementType, spriteTemplate, subspriteTables);
 }
 
 u8 CreateObjectGraphicsSprite(u16 graphicsId, void (*callback)(struct Sprite *), s16 x, s16 y, u8 subpriority)
@@ -2353,21 +2353,21 @@ static struct ObjectEventTemplate *GetBaseTemplateForObjectEvent(struct ObjectEv
 
 void OverrideTemplateCoordsForObjectEvent(struct ObjectEvent *objectEvent)
 {
-    struct ObjectEventTemplate *template = GetBaseTemplateForObjectEvent(objectEvent);
+    struct ObjectEventTemplate *objectEventTemplate = GetBaseTemplateForObjectEvent(objectEvent);
 
-    if (template != NULL)
+    if (objectEventTemplate != NULL)
     {
-        template->x = objectEvent->currentCoords.x - 7;
-        template->y = objectEvent->currentCoords.y - 7;
+        objectEventTemplate->x = objectEvent->currentCoords.x - 7;
+        objectEventTemplate->y = objectEvent->currentCoords.y - 7;
     }
 }
 
 void OverrideMovementTypeForObjectEvent(struct ObjectEvent *objectEvent, u8 movementType)
 {
-    struct ObjectEventTemplate *template = GetBaseTemplateForObjectEvent(objectEvent);
+    struct ObjectEventTemplate *objectEventTemplate = GetBaseTemplateForObjectEvent(objectEvent);
 
-    if (template != NULL)
-        template->movementType = movementType;
+    if (objectEventTemplate != NULL)
+        objectEventTemplate->movementType = movementType;
 }
 
 void TryOverrideObjectEventTemplateCoords(u8 localId, u8 mapNum, u8 mapGroup)
@@ -2446,13 +2446,13 @@ bool8 MovementType_WanderAround_Step3(struct ObjectEvent *objectEvent, struct Sp
 
 bool8 MovementType_WanderAround_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    u8 direction;
+    u8 chosenDirection;
     u8 directions[4];
     memcpy(directions, gStandardDirections, 4);
-    direction = directions[Random() & 3];
-    SetObjectEventDirection(objectEvent, direction);
+    chosenDirection = directions[Random() & 3];
+    SetObjectEventDirection(objectEvent, chosenDirection);
     sprite->data[1] = 5;
-    if (GetCollisionInDirection(objectEvent, direction) != 0)
+    if (GetCollisionInDirection(objectEvent, chosenDirection) != 0)
     {
         sprite->data[1] = 1;
     }
@@ -4480,13 +4480,13 @@ void SetStepAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 anim
     }
 }
 
-static u8 GetDirectionToFace(s16 x1, s16 y1, s16 x2, s16 y2)
+static u8 GetDirectionToFace(s16 x, s16 y, s16 targetX, s16 targetY)
 {
-    if (x1 > x2)
+    if (x > targetX)
         return DIR_WEST;
-    if (x1 < x2)
+    if (x < targetX)
         return DIR_EAST;
-    if (y1 > y2)
+    if (y > targetY)
         return DIR_NORTH;
     return DIR_SOUTH;
 }
