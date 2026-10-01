@@ -75,10 +75,10 @@
 
 #define FLAG_OCEANIC_MUSEUM_MET_REPORTER    0x69
 #define FLAG_RECEIVED_HM_STRENGTH            0x6A
-#define FLAG_RECEIVED_HM06                  0x6B
+#define FLAG_RECEIVED_HM_ROCK_SMASH          0x6B
 #define FLAG_UNUSED_0x06C                  0x6C
 
-#define FLAG_RECEIVED_HM05                  0x6D
+#define FLAG_RECEIVED_HM_FLASH               0x6D
 #define FLAG_RECEIVED_HM_FLY                0x6E
 #define FLAG_MT_PYRE_ORB_STOLEN             0x6F
 #define FLAG_EVIL_TEAM_ESCAPED_IN_SUBMARINE 0x70
@@ -91,7 +91,7 @@
 
 #define FLAG_RECEIVED_TM31                  0x79
 #define FLAG_RECEIVED_HM_SURF                  0x7A
-#define FLAG_RECEIVED_HM08                  0x7B
+#define FLAG_RECEIVED_HM_DIVE                0x7B
 
 #define FLAG_DEFEATED_WALLY_VICTORY_ROAD    0x7E
 #define FLAG_MET_PRETTY_PETAL_SHOP_OWNER    0x7F
@@ -104,7 +104,7 @@
 #define FLAG_PENDING_DAYCARE_EGG            0x86
 #define FLAG_THANKED_FOR_PLAYING_WITH_WALLY 0x87
 
-#define FLAG_RECEIVED_HM01                  0x89
+#define FLAG_RECEIVED_HM_CUT                 0x89
 
 #define FLAG_DEFEATED_EVIL_TEAM_MT_CHIMNEY  0x8B
 #define FLAG_RECEIVED_6_SODA_POP            0x8C
