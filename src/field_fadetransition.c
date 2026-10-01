@@ -48,7 +48,7 @@ static void FillPalBufferBlack(void)
 void WarpFadeInScreen(void)
 {
     u8 previousMapType = GetLastUsedWarpMapType();
-    switch (GetMapPairFadeFromType(previousMapType, Overworld_GetMapTypeOfSaveblockLocation()))
+    switch (GetMapPairFadeFromType(previousMapType, GetCurrentMapType()))
     {
     case 0:
         FadeScreen(FADE_FROM_BLACK, 0);
@@ -68,7 +68,7 @@ void FadeInFromBlack(void)
 
 void WarpFadeOutScreen(void)
 {
-    u8 currentMapType = Overworld_GetMapTypeOfSaveblockLocation();
+    u8 currentMapType = GetCurrentMapType();
     switch (GetMapPairFadeToType(currentMapType, GetDestinationWarpMapHeader()->mapType))
     {
     case 0:

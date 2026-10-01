@@ -55,9 +55,9 @@ u32 GetGameStat(u8 index);
 void SetGameStat(u8, u32);
 // LoadObjEventTemplatesFromHeader
 // LoadSaveblockObjEventScripts
-void Overworld_SetObjEventTemplateCoords(u8, s16, s16);
-void Overworld_SetObjEventTemplateMovementType(u8, u8);
-// mapdata_load_assets_to_gpu_and_full_redraw
+void SetObjEventTemplateCoords(u8, s16, s16);
+void SetObjEventTemplateMovementType(u8, u8);
+// InitMapView
 // ApplyCurrentWarp
 // SetWarpData
 // warp_data_is_not_neg_1
@@ -65,23 +65,23 @@ struct MapHeader * const Overworld_GetMapHeaderByGroupAndId(u16 mapGroup, u16 ma
 struct MapHeader * const GetDestinationWarpMapHeader(void);
 // LoadSaveblockMapHeader
 void WarpIntoMap(void);
-void Overworld_SetWarpDestination(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y);
-void warp1_set_2(s8 mapGroup, s8 mapNum, s8 warpId);
-void saved_warp2_set(int unused, s8 mapGroup, s8 mapNum, s8 warpId);
-void saved_warp2_set_2(int unused, s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y);
+void SetWarpDestination(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y);
+void SetWarpDestinationToMapWarp(s8 mapGroup, s8 mapNum, s8 warpId);
+void SetDynamicWarp(int unused, s8 mapGroup, s8 mapNum, s8 warpId);
+void SetDynamicWarpWithCoords(int unused, s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y);
 void SetWarpDestinationToDynamicWarp(u8 unusedWarpId);
 void SetWarpDestinationToHealLocation(u8 healLocationId);
-void Overworld_SetWarpDestToLastHealLoc(void);
-void Overworld_SetHealLocationWarp(u8);
+void SetWarpDestinationToLastHealLocation(void);
+void SetLastHealLocationWarp(u8);
 void UpdateEscapeWarp(s16 x, s16 y);
 void SetEscapeWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y);
 void SetWarpDestinationToEscapeWarp(void);
 void SetFixedDiveWarp(s8, s8, s8, s8, s8);
 // warp1_set_to_warp2
 void SetFixedHoleWarp(s8, s8, s8, s8, s8);
-void SetFixedHoleWarpAsDestination(s16, s16);
+void SetWarpDestinationToFixedHoleWarp(s16, s16);
 void SetContinueGameWarpToHealLocation(u8 healLocationId);
-void gpu_sync_bg_hide();
+void SetContinueGameWarpToDynamicWarp();
 // GetMapConnection
 bool8 SetDiveWarpEmerge(u16 x, u16 y);
 bool8 SetDiveWarpDive(u16 x, u16 y);
@@ -91,8 +91,8 @@ void StoreInitialPlayerAvatarState(void);
 u16 GetCenterScreenMetatileBehavior(void);
 bool32 Overworld_IsBikingAllowed(void);
 void SetDefaultFlashLevel(void);
-void Overworld_SetFlashLevel(s32 a1);
-u8 Overworld_GetFlashLevel(void);
+void SetFlashLevel(s32 a1);
+u8 GetFlashLevel(void);
 void SetCurrentMapLayout(u16 mapLayoutId);
 // GetLocationMusic
 // GetCurrLocationDefaultMusic
@@ -112,11 +112,11 @@ void Overworld_FadeOutMapMusic(void);
 void UpdateAmbientCry(s16 *, u16 *);
 u8 GetMapTypeByGroupAndId(s8 mapGroup, s8 mapNum);
 // GetMapTypeByWarpData
-u8 Overworld_GetMapTypeOfSaveblockLocation(void);
+u8 GetCurrentMapType(void);
 u8 GetLastUsedWarpMapType(void);
 bool8 IsMapTypeOutdoors(u8 a1);
 bool8 Overworld_MapTypeAllowsTeleportAndFly(u8 a1);
-u8 Overworld_MapTypeIsIndoors(u8);
+u8 IsMapTypeIndoors(u8);
 u8 GetSavedWarpRegionMapSectionId(void);
 u8 GetCurrentRegionMapSectionId(void);
 u8 GetCurrentMapBattleScene(void);

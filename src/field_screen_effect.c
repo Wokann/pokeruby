@@ -144,7 +144,7 @@ static u8 StartUpdateFlashLevelEffect(s32 centerX, s32 centerY, s32 initialFlash
 
 void AnimateFlash(u8 newFlashLevel)
 {
-    u8 curFlashLevel = Overworld_GetFlashLevel();
+    u8 curFlashLevel = GetFlashLevel();
     bool8 fullBrightness = FALSE;
     if (newFlashLevel == 0)
         fullBrightness = TRUE;

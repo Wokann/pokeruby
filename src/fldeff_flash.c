@@ -162,7 +162,7 @@ static bool8 TryDoMapTransition(void)
 {
     u8 i;
     u8 prevMapType = GetLastUsedWarpMapType();
-    u8 curMapType = Overworld_GetMapTypeOfSaveblockLocation();
+    u8 curMapType = GetCurrentMapType();
 
     for (i = 0; sTransitionTypes[i].fromType; i++)
     {

@@ -370,7 +370,7 @@ void SetSecretBaseWarpDestination(void)
 {
     s8 secretBaseGroup = 4 * (sCurSecretBaseId / 10);
 
-    warp1_set_2(MAP_GROUP(MAP_SECRET_BASE_RED_CAVE1), sSecretBaseEntrancePositions[secretBaseGroup], sSecretBaseEntrancePositions[secretBaseGroup + 1]);
+    SetWarpDestinationToMapWarp(MAP_GROUP(MAP_SECRET_BASE_RED_CAVE1), sSecretBaseEntrancePositions[secretBaseGroup], sSecretBaseEntrancePositions[secretBaseGroup + 1]);
 }
 
 #define tState data[0]
@@ -407,7 +407,7 @@ void EnterSecretBase(void)
 {
     CreateTask(Task_EnterSecretBase, 0);
     FadeScreen(1, 0);
-    saved_warp2_set(0, gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, -1);
+    SetDynamicWarp(0, gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, -1);
 }
 
 bool8 SecretBaseMapPopupEnabled(void)
@@ -447,7 +447,7 @@ void Task_EnterNewlyCreatedSecretBase(u8 taskId)
     if (!gPaletteFade.active)
     {
         secretBaseGroup = 4 * (sCurSecretBaseId / 10);
-        Overworld_SetWarpDestination(gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, -1, sSecretBaseEntrancePositions[secretBaseGroup + 2], sSecretBaseEntrancePositions[secretBaseGroup + 3]);
+        SetWarpDestination(gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, -1, sSecretBaseEntrancePositions[secretBaseGroup + 2], sSecretBaseEntrancePositions[secretBaseGroup + 3]);
         WarpIntoMap();
         gFieldCallback = EnterNewlyCreatedSecretBase_StartFadeIn;
         SetMainCallback2(CB2_LoadMap);

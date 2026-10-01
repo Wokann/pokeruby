@@ -2074,7 +2074,7 @@ void SetInitialPositions(u8 taskId)
 void WarpToInitialPosition(u8 taskId)
 {
     DrawWholeMapView();
-    Overworld_SetWarpDestination(gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, -1, gTasks[taskId].tInitialX, gTasks[taskId].tInitialY);
+    SetWarpDestination(gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, -1, gTasks[taskId].tInitialX, gTasks[taskId].tInitialY);
     WarpIntoMap();
 }
 void DecorationMenuAction_Decorate(u8 taskId)

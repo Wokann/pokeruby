@@ -2163,7 +2163,7 @@ static void TeleportWarpOutFieldEffect_End(struct Task *task)
 {
     if (!gPaletteFade.active && BGMusicStopped() == TRUE)
     {
-        Overworld_SetWarpDestToLastHealLoc();
+        SetWarpDestinationToLastHealLocation();
         WarpIntoMap();
         SetMainCallback2(CB2_LoadMap);
         gFieldCallback = FieldCallback_TeleportWarpIn;
@@ -2282,7 +2282,7 @@ void SpriteCB_FieldMoveMonSlideOnscreen(struct Sprite *);
 bool8 FldEff_FieldMoveShowMon(void)
 {
     u8 taskId;
-    if (IsMapTypeOutdoors(Overworld_GetMapTypeOfSaveblockLocation()) == TRUE)
+    if (IsMapTypeOutdoors(GetCurrentMapType()) == TRUE)
     {
         taskId = CreateTask(Task_FieldMoveShowMonOutdoors, 0xff);
     } else

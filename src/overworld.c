@@ -226,7 +226,7 @@ static void DoWhiteOut(void)
     gSaveBlock1.money /= 2;
     HealPlayerParty();
     Overworld_ResetStateAfterWhiteOut();
-    Overworld_SetWarpDestToLastHealLoc();
+    SetWarpDestinationToLastHealLocation();
     WarpIntoMap();
 }
 
@@ -333,7 +333,7 @@ static void LoadSaveblockObjEventScripts(void)
         objectEventTemplates[i].script = gMapHeader.events->objectEvents[i].script;
 }
 
-void Overworld_SetObjEventTemplateCoords(u8 localId, s16 x, s16 y)
+void SetObjEventTemplateCoords(u8 localId, s16 x, s16 y)
 {
     s32 i;
     for (i = 0; i < 64; i++)
@@ -348,7 +348,7 @@ void Overworld_SetObjEventTemplateCoords(u8 localId, s16 x, s16 y)
     }
 }
 
-void Overworld_SetObjEventTemplateMovementType(u8 localId, u8 movementType)
+void SetObjEventTemplateMovementType(u8 localId, u8 movementType)
 {
     s32 i;
 
@@ -363,7 +363,7 @@ void Overworld_SetObjEventTemplateMovementType(u8 localId, u8 movementType)
     }
 }
 
-static void mapdata_load_assets_to_gpu_and_full_redraw(void)
+static void InitMapView(void)
 {
     ResetFieldCamera();
     CopyMapTilesetsToVram(gMapHeader.mapLayout);
@@ -461,22 +461,22 @@ void WarpIntoMap(void)
     SetPlayerCoordsFromWarp();
 }
 
-void Overworld_SetWarpDestination(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
+void SetWarpDestination(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
 {
     SetWarpData(&gWarpDestination, mapGroup, mapNum, warpId, x, y);
 }
 
-void warp1_set_2(s8 mapGroup, s8 mapNum, s8 warpId)
+void SetWarpDestinationToMapWarp(s8 mapGroup, s8 mapNum, s8 warpId)
 {
-    Overworld_SetWarpDestination(mapGroup, mapNum, warpId, -1, -1);
+    SetWarpDestination(mapGroup, mapNum, warpId, -1, -1);
 }
 
-void saved_warp2_set(int unused, s8 mapGroup, s8 mapNum, s8 warpId)
+void SetDynamicWarp(int unused, s8 mapGroup, s8 mapNum, s8 warpId)
 {
     SetWarpData(&gSaveBlock1.dynamicWarp, mapGroup, mapNum, warpId, gSaveBlock1.pos.x, gSaveBlock1.pos.y);
 }
 
-void saved_warp2_set_2(int unused, s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
+void SetDynamicWarpWithCoords(int unused, s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
 {
     SetWarpData(&gSaveBlock1.dynamicWarp, mapGroup, mapNum, warpId, x, y);
 }
@@ -491,15 +491,15 @@ void SetWarpDestinationToHealLocation(u8 healLocationId)
     const struct HealLocation *healLocation = GetHealLocation(healLocationId);
 
     if (healLocation)
-        Overworld_SetWarpDestination(healLocation->mapGroup, healLocation->mapNum, -1, healLocation->x, healLocation->y);
+        SetWarpDestination(healLocation->mapGroup, healLocation->mapNum, -1, healLocation->x, healLocation->y);
 }
 
-void Overworld_SetWarpDestToLastHealLoc(void)
+void SetWarpDestinationToLastHealLocation(void)
 {
     gWarpDestination = gSaveBlock1.lastHealLocation;
 }
 
-void Overworld_SetHealLocationWarp(u8 healLocationId)
+void SetLastHealLocationWarp(u8 healLocationId)
 {
     const struct HealLocation *healLocation = GetHealLocation(healLocationId);
 
@@ -509,7 +509,7 @@ void Overworld_SetHealLocationWarp(u8 healLocationId)
 
 void UpdateEscapeWarp(s16 x, s16 y)
 {
-    u8 currMapType = Overworld_GetMapTypeOfSaveblockLocation();
+    u8 currMapType = GetCurrentMapType();
     u8 destMapType = GetMapTypeByGroupAndId(gWarpDestination.mapGroup, gWarpDestination.mapNum);
     if (IsMapTypeOutdoors(currMapType) && IsMapTypeOutdoors(destMapType) != TRUE)
         SetEscapeWarp(gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, WARP_ID_NONE, x - MAP_OFFSET, y - MAP_OFFSET + 1);
@@ -530,7 +530,7 @@ void SetFixedDiveWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
     SetWarpData(&gFixedDiveWarp, mapGroup, mapNum, warpId, x, y);
 }
 
-static void SetFixedDiveWarpAsDestination(void)
+static void SetWarpDestinationToDiveWarp(void)
 {
     gWarpDestination = gFixedDiveWarp;
 }
@@ -540,12 +540,12 @@ void SetFixedHoleWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
     SetWarpData(&gFixedHoleWarp, mapGroup, mapNum, warpId, x, y);
 }
 
-void SetFixedHoleWarpAsDestination(s16 x, s16 y)
+void SetWarpDestinationToFixedHoleWarp(s16 x, s16 y)
 {
     if (IsDummyWarp(&gFixedHoleWarp) == TRUE)
         gWarpDestination = gLastUsedWarp;
     else
-        Overworld_SetWarpDestination(gFixedHoleWarp.mapGroup, gFixedHoleWarp.mapNum, -1, x, y);
+        SetWarpDestination(gFixedHoleWarp.mapGroup, gFixedHoleWarp.mapNum, -1, x, y);
 }
 
 void SetWarpDestinationToContinueGameWarp(void)
@@ -565,7 +565,7 @@ void SetContinueGameWarpToHealLocation(u8 healLocationId)
         SetWarpData(&gSaveBlock1.warp1, healLocation->mapGroup, healLocation->mapNum, -1, healLocation->x, healLocation->y);
 }
 
-void gpu_sync_bg_hide()
+void SetContinueGameWarpToDynamicWarp()
 {
     gSaveBlock1.warp1 = gSaveBlock1.dynamicWarp;
 }
@@ -592,7 +592,7 @@ static bool8 SetDiveWarp(u8 direction, u16 x, u16 y)
 
     if (connection != NULL)
     {
-        Overworld_SetWarpDestination(connection->mapGroup, connection->mapNum, -1, x, y);
+        SetWarpDestination(connection->mapGroup, connection->mapNum, -1, x, y);
     }
     else
     {
@@ -600,7 +600,7 @@ static bool8 SetDiveWarp(u8 direction, u16 x, u16 y)
         if (IsDummyWarp(&gFixedDiveWarp))
             return FALSE;
 
-        SetFixedDiveWarpAsDestination();
+        SetWarpDestinationToDiveWarp();
     }
 
     return TRUE;
@@ -620,7 +620,7 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
 {
     s32 paletteIndex;
 
-    Overworld_SetWarpDestination(mapGroup, mapNum, -1, -1, -1);
+    SetWarpDestination(mapGroup, mapNum, -1, -1, -1);
     TransitionMapMusic();
     ApplyCurrentWarp();
     LoadCurrentMapData();
@@ -659,7 +659,7 @@ void LoadMapFromWarp(u32 a1)
     LoadCurrentMapData();
     LoadObjEventTemplatesFromHeader();
     isOutdoors = IsMapTypeOutdoors(gMapHeader.mapType);
-    isIndoors = Overworld_MapTypeIsIndoors(gMapHeader.mapType);
+    isIndoors = IsMapTypeIndoors(gMapHeader.mapType);
     ClearTempFieldEventData();
     ResetCyclingRoadChallengeData();
     RestartWildEncounterImmunitySteps();
@@ -708,7 +708,7 @@ void StoreInitialPlayerAvatarState(void)
 static struct InitialPlayerAvatarState *GetInitialPlayerAvatarState(void)
 {
     struct InitialPlayerAvatarState playerStruct;
-    u8 mapType = Overworld_GetMapTypeOfSaveblockLocation();
+    u8 mapType = GetCurrentMapType();
     u16 metatileBehavior = GetCenterScreenMetatileBehavior();
     u8 transitionFlags = GetAdjustedInitialTransitionFlags(&gInitialPlayerAvatarState, metatileBehavior, mapType);
     playerStruct.transitionFlags = transitionFlags;
@@ -800,14 +800,14 @@ void SetDefaultFlashLevel(void)
         gSaveBlock1.flashLevel = gMaxFlashLevel;
 }
 
-void Overworld_SetFlashLevel(s32 flashLevel)
+void SetFlashLevel(s32 flashLevel)
 {
     if (flashLevel < 0 || flashLevel > gMaxFlashLevel)
         flashLevel = 0;
     gSaveBlock1.flashLevel = flashLevel;
 }
 
-u8 Overworld_GetFlashLevel(void)
+u8 GetFlashLevel(void)
 {
     return gSaveBlock1.flashLevel;
 }
@@ -918,7 +918,7 @@ void Overworld_PlaySpecialMapMusic(void)
     {
         if (gSaveBlock1.savedMusic)
             music = gSaveBlock1.savedMusic;
-        else if (Overworld_GetMapTypeOfSaveblockLocation() == MAP_TYPE_UNDERWATER)
+        else if (GetCurrentMapType() == MAP_TYPE_UNDERWATER)
             music = MUS_UNDERWATER;
         else if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING))
             music = MUS_SURF;
@@ -978,7 +978,7 @@ void Overworld_ChangeMusicTo(u16 newMusic)
 u8 GetMapMusicFadeoutSpeed(void)
 {
     const struct MapHeader *mapHeader = GetDestinationWarpMapHeader();
-    if (Overworld_MapTypeIsIndoors(mapHeader->mapType) == TRUE)
+    if (IsMapTypeIndoors(mapHeader->mapType) == TRUE)
         return 2;
     else
         return 4;
@@ -1077,7 +1077,7 @@ u8 GetMapTypeByWarpData(struct WarpData *warp)
     return GetMapTypeByGroupAndId(warp->mapGroup, warp->mapNum);
 }
 
-u8 Overworld_GetMapTypeOfSaveblockLocation(void)
+u8 GetCurrentMapType(void)
 {
     return GetMapTypeByWarpData(&gSaveBlock1.location);
 }
@@ -1110,7 +1110,7 @@ bool8 Overworld_MapTypeAllowsTeleportAndFly(u8 mapType)
         return FALSE;
 }
 
-bool8 Overworld_MapTypeIsIndoors(u8 mapType)
+bool8 IsMapTypeIndoors(u8 mapType)
 {
     if (mapType == MAP_TYPE_INDOOR
      || mapType == MAP_TYPE_SECRET_BASE)
@@ -1537,7 +1537,7 @@ static void VBlankCB_Field(void)
 
 static void InitCurrentFlashLevelScanlineEffect(void)
 {
-    u8 flashLevel = Overworld_GetFlashLevel();
+    u8 flashLevel = GetFlashLevel();
     if (flashLevel)
     {
         WriteFlashScanlineEffectBuffer(flashLevel);
@@ -1799,7 +1799,7 @@ void InitViewGraphics(void)
     InitOverworldGraphicsRegisters();
     Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
     InitMenuWindow(&gMenuTextWindowTemplate);
-    mapdata_load_assets_to_gpu_and_full_redraw();
+    InitMapView();
 }
 
 static void InitOverworldGraphicsRegisters(void)

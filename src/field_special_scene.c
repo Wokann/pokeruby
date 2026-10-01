@@ -289,7 +289,7 @@ bool8 TrySetPortholeWarpDestination(void)
     }
     else
     {
-        Overworld_SetWarpDestination(mapGroup, mapNum, -1, x, y);
+        SetWarpDestination(mapGroup, mapNum, -1, x, y);
         return TRUE;
     }
 }
@@ -382,7 +382,7 @@ void LookThroughPorthole(void)
     FlagSet(FLAG_SYS_CRUISE_MODE);
     FlagSet(FLAG_DONT_TRANSITION_MUSIC);
     FlagSet(FLAG_HIDE_MAP_NAME_POPUP);
-    saved_warp2_set(0, gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, -1);
+    SetDynamicWarp(0, gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, -1);
     TrySetPortholeWarpDestination();
     DoPortholeWarp();
 }

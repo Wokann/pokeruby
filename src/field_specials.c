@@ -714,11 +714,11 @@ void CableCarWarp(void)
 {
     if (gSpecialVar_0x8004 != 0)
     {
-        Overworld_SetWarpDestination(MAP_GROUP(MAP_ROUTE112_CABLE_CAR_STATION), MAP_NUM(MAP_ROUTE112_CABLE_CAR_STATION), -1, 6, 4);
+        SetWarpDestination(MAP_GROUP(MAP_ROUTE112_CABLE_CAR_STATION), MAP_NUM(MAP_ROUTE112_CABLE_CAR_STATION), -1, 6, 4);
     }
     else
     {
-        Overworld_SetWarpDestination(MAP_GROUP(MAP_MT_CHIMNEY_CABLE_CAR_STATION), MAP_NUM(MAP_MT_CHIMNEY_CABLE_CAR_STATION), -1, 6, 4);
+        SetWarpDestination(MAP_GROUP(MAP_MT_CHIMNEY_CABLE_CAR_STATION), MAP_NUM(MAP_MT_CHIMNEY_CABLE_CAR_STATION), -1, 6, 4);
     }
 }
 
@@ -1134,7 +1134,7 @@ void Task_ElevatorMenu(u8 taskId)
     }
     if (JOY_NEW(A_BUTTON))
     {
-        saved_warp2_set_2(0, sElevatorMenuItems[gScrollableMenuSelection].mapGroup, sElevatorMenuItems[gScrollableMenuSelection].mapNum, -1, 2, 1);
+        SetDynamicWarpWithCoords(0, sElevatorMenuItems[gScrollableMenuSelection].mapGroup, sElevatorMenuItems[gScrollableMenuSelection].mapNum, -1, 2, 1);
         if (gSpecialVar_0x8005 == gScrollableMenuSelection)
         {
             gSpecialVar_Result = 0;

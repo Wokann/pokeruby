@@ -130,13 +130,13 @@ void DebugSetNextWarpDestination()
         i = 0;
     }
 
-    Overworld_SetWarpDestination(gDebugWarpDestinations[i][0], gDebugWarpDestinations[i][1], -1, -1, -1);
+    SetWarpDestination(gDebugWarpDestinations[i][0], gDebugWarpDestinations[i][1], -1, -1, -1);
 }
 #endif
 
 void WarpToTruck(void)
 {
-    Overworld_SetWarpDestination(MAP_GROUP(MAP_INSIDE_OF_TRUCK), MAP_NUM(MAP_INSIDE_OF_TRUCK), -1, -1, -1);
+    SetWarpDestination(MAP_GROUP(MAP_INSIDE_OF_TRUCK), MAP_NUM(MAP_INSIDE_OF_TRUCK), -1, -1, -1);
     WarpIntoMap();
 }
 

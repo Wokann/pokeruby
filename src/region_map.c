@@ -1624,7 +1624,7 @@ void CB_ExitFlyMap(void)
                 if (sMapHealLocations[gRegionMapState->regionMap.mapSecId][2] != HEAL_LOCATION_NONE)
                     SetWarpDestinationToHealLocation(sMapHealLocations[gRegionMapState->regionMap.mapSecId][2]);
                 else
-                    warp1_set_2(sMapHealLocations[gRegionMapState->regionMap.mapSecId][0], sMapHealLocations[gRegionMapState->regionMap.mapSecId][1], -1);
+                    SetWarpDestinationToMapWarp(sMapHealLocations[gRegionMapState->regionMap.mapSecId][0], sMapHealLocations[gRegionMapState->regionMap.mapSecId][1], -1);
                 break;
             }
             ReturnToFieldFromFlyMapSelect();

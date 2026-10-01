@@ -174,7 +174,7 @@ u8 CountAliveMonsInBattle(u8 caseId);
 u8 IsRunningFromBattleImpossible(void);
 u8 GetMoveTarget(u16 move, u8 targetbyte); //get target of move
 u8 CastformDataTypeChange(u8 battler);
-u8 Overworld_GetMapTypeOfSaveblockLocation(void);
+u8 GetCurrentMapType(void);
 u8 CalculatePlayerPartyCount(void);
 u16 Sqrt(u32 num);
 void SetOutlineCursorPosition(u8 x, u8 y);
@@ -9402,7 +9402,7 @@ void Cmd_handleballthrow(void)
                     ball_multiplier = 10;
                 break;
             case ITEM_DIVE_BALL:
-                if (Overworld_GetMapTypeOfSaveblockLocation() == 5)
+                if (GetCurrentMapType() == 5)
                     ball_multiplier = 35;
                 else
                     ball_multiplier = 10;
