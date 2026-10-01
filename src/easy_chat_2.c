@@ -159,23 +159,23 @@ void SpriteCB_Cursor(struct Sprite *sprite)
     {
         if (gEasyChatScreen->mainCursorMoved)
         {
-            u16 r5 = gEasyChatScreen->mainCursorRow;
-            u16 r4 = gEasyChatScreen->mainCursorColumn;
-            u16 r7 = 0;
+            u16 row = gEasyChatScreen->mainCursorRow;
+            u16 column = gEasyChatScreen->mainCursorColumn;
+            u16 wordSpacing = 0;
             u16 i;
 
-            for (i = 0; i < r4; i++)
-                r7 += gEasyChatScreen->phraseWordSpacing[r5][i];
+            for (i = 0; i < column; i++)
+                wordSpacing += gEasyChatScreen->phraseWordSpacing[row][i];
 
-            if (r5 == gEasyChatScreen->numRows)
+            if (row == gEasyChatScreen->numRows)
             {
                 sprite->y = 96;
-                sprite->x = (r4 * 7  + 3) * 8 + 4;
+                sprite->x = (column * 7  + 3) * 8 + 4;
             }
             else
             {
-                sprite->y = (gEasyChatScreen->phraseFrameTop + r5 * 2) * 8 + 8;
-                sprite->x = (gEasyChatScreen->phraseFrameLeft + r7 + r4 * 11) * 8 + 4;
+                sprite->y = (gEasyChatScreen->phraseFrameTop + row * 2) * 8 + 8;
+                sprite->x = (gEasyChatScreen->phraseFrameLeft + wordSpacing + column * 11) * 8 + 4;
             }
 
             sprite->x2 = -6;
@@ -558,12 +558,12 @@ void HideScrollIndicatorSprites(void)
 
 void SetScrollIndicatorMode(u8 animNum)
 {
-    s16 r9;
+    s16 indicatorX;
     u16 i;
 
     if (animNum == 0)
     {
-        r9 = 100;
+        indicatorX = 100;
         gEasyChatScreen->scrollOffsetPtr = &gEasyChatScreen->keyboardScrollOffset;
         if (gEasyChatScreen->inAlphabetMode == 0)
             gEasyChatScreen->scrollOffsetMax = gEasyChatScreen->keyboardLastRow - 4;
@@ -572,7 +572,7 @@ void SetScrollIndicatorMode(u8 animNum)
     }
     else
     {
-        r9 = 120;
+        indicatorX = 120;
         gEasyChatScreen->scrollOffsetPtr = &gEasyChatScreen->wordSelectScrollOffset;
         gEasyChatScreen->scrollOffsetMax = gEasyChatScreen->wordSelectLastRow - 4;
         for (i = 0; i < 2; i++)
@@ -587,7 +587,7 @@ void SetScrollIndicatorMode(u8 animNum)
 
     for (i = 0; i < 2; i++)
     {
-        gEasyChatScreen->scrollIndicatorSprites[i]->x = r9;
+        gEasyChatScreen->scrollIndicatorSprites[i]->x = indicatorX;
         gEasyChatScreen->scrollIndicatorSprites[i]->invisible = FALSE;
         gEasyChatScreen->scrollIndicatorSprites[i]->data[1] = 1;
         StartSpriteAnim(gEasyChatScreen->scrollIndicatorSprites[i], animNum);
@@ -1009,40 +1009,40 @@ void InitEasyChatScreenGraphics(void)
 void InitEasyChatFramePaletteBlend(void)
 {
     u16 i;
-    u16 r3;
-    u16 r4;
-    s32 sp0[3];
-    s32 spC[3];
-    s32 sp18[3];
+    u16 colorComponent;
+    u16 blendStep;
+    s32 startColors[3];
+    s32 endColors[3];
+    s32 colorSteps[3];
 
     for (i = 0; i < 3; i++)
     {
-        sp0[0] = R_VAL(*(gMenuWordGroupFrame2_Pal + i + 1)) << 8;
-        spC[0] = R_VAL(*(gMenuWordGroupFrame2_Pal + i + 4)) << 8;
-        sp0[1] = G_VAL(*(gMenuWordGroupFrame2_Pal + i + 1)) << 8;
-        spC[1] = G_VAL(*(gMenuWordGroupFrame2_Pal + i + 4)) << 8;
-        sp0[2] = B_VAL(*(gMenuWordGroupFrame2_Pal + i + 1)) << 8;
-        spC[2] = B_VAL(*(gMenuWordGroupFrame2_Pal + i + 4)) << 8;
+        startColors[0] = R_VAL(*(gMenuWordGroupFrame2_Pal + i + 1)) << 8;
+        endColors[0] = R_VAL(*(gMenuWordGroupFrame2_Pal + i + 4)) << 8;
+        startColors[1] = G_VAL(*(gMenuWordGroupFrame2_Pal + i + 1)) << 8;
+        endColors[1] = G_VAL(*(gMenuWordGroupFrame2_Pal + i + 4)) << 8;
+        startColors[2] = B_VAL(*(gMenuWordGroupFrame2_Pal + i + 1)) << 8;
+        endColors[2] = B_VAL(*(gMenuWordGroupFrame2_Pal + i + 4)) << 8;
 
-        for (r3 = 0; r3 < 3; r3++)
-            sp18[r3] = (spC[r3] - sp0[r3]) / 8;
+        for (colorComponent = 0; colorComponent < 3; colorComponent++)
+            colorSteps[colorComponent] = (endColors[colorComponent] - startColors[colorComponent]) / 8;
 
-        for (r4 = 0; r4 < 8; r4++)
+        for (blendStep = 0; blendStep < 8; blendStep++)
         {
-            gEasyChatScreen->framePaletteBlendColors[i][r4] = RGB_(sp0[0] >> 8, sp0[1] >> 8, sp0[2] >> 8);
-            for (r3 = 0; r3 < 3; r3++)
-                sp0[r3] += sp18[r3];
+            gEasyChatScreen->framePaletteBlendColors[i][blendStep] = RGB_(startColors[0] >> 8, startColors[1] >> 8, startColors[2] >> 8);
+            for (colorComponent = 0; colorComponent < 3; colorComponent++)
+                startColors[colorComponent] += colorSteps[colorComponent];
         }
-        gEasyChatScreen->framePaletteBlendColors[i][r4] = RGB_(spC[0] >> 8, spC[1] >> 8, spC[2] >> 8);
+        gEasyChatScreen->framePaletteBlendColors[i][blendStep] = RGB_(endColors[0] >> 8, endColors[1] >> 8, endColors[2] >> 8);
     }
     gEasyChatScreen->framePaletteBlendIndex = 0;
 }
 
-void UpdateEasyChatFramePaletteBlend(s8 a)
+void UpdateEasyChatFramePaletteBlend(s8 blendDelta)
 {
     u16 i;
 
-    gEasyChatScreen->framePaletteBlendIndex += a;
+    gEasyChatScreen->framePaletteBlendIndex += blendDelta;
     for (i = 0; i < 3; i++)
     {
         gPlttBufferUnfaded[81 + i] = gEasyChatScreen->framePaletteBlendColors[i][gEasyChatScreen->framePaletteBlendIndex];
@@ -1056,9 +1056,9 @@ void ResetEasyChatFramePaletteBlend(void)
     UpdateEasyChatFramePaletteBlend(0);
 }
 
-void SetEasyChatMessageId(u8 a)
+void SetEasyChatMessageId(u8 messageId)
 {
-    sEasyChatMessageId = a;
+    sEasyChatMessageId = messageId;
 }
 
 u8 GetEasyChatMessageId(void)
@@ -1066,16 +1066,16 @@ u8 GetEasyChatMessageId(void)
     return sEasyChatMessageId;
 }
 
-void PrintEasyChatStdText(const u8 *a, u8 b, u8 c, u8 d)
+void PrintEasyChatStdText(const u8 *text, u8 left, u8 top, u8 height)
 {
-    Menu_PrintTextWithNewlineIndentAndClear(a, b * 8, c * 8, 176, d * 8, 1);
+    Menu_PrintTextWithNewlineIndentAndClear(text, left * 8, top * 8, 176, height * 8, 1);
 }
 
-void PrintEasyChatStdMessage(u8 a)
+void PrintEasyChatStdMessage(u8 messageId)
 {
     BasicInitMenuWindow(&gEasyChatMessageWindowTemplate);
 
-    if (a == 10)
+    if (messageId == 10)
     {
         Menu_EraseWindowRect(3, 14, 26, 19);
         SetEasyChatMessageId(10);
@@ -1085,8 +1085,8 @@ void PrintEasyChatStdMessage(u8 a)
     if (GetEasyChatMessageId() == 10)
         Menu_DrawStdWindowFrame(3, 14, 26, 19);
 
-    SetEasyChatMessageId(a);
-    switch (a)
+    SetEasyChatMessageId(messageId);
+    switch (messageId)
     {
     case 0:
         PrintEasyChatStdText(gEasyChatScreen->instructionsText1, 4, 15, 2);
@@ -1137,29 +1137,29 @@ void PrintEasyChatStdMessage(u8 a)
     }
 }
 
-void PrintTitle(u8 a)
+void PrintTitle(u8 type)
 {
-    const u8 *r4;
+    const u8 *titleText;
 
-    switch (a)
+    switch (type)
     {
     case EASY_CHAT_TYPE_PROFILE:
-        r4 = gOtherText_Profile;
+        titleText = gOtherText_Profile;
         break;
     case EASY_CHAT_TYPE_BATTLE_START:
-        r4 = gOtherText_AtBattleStart;
+        titleText = gOtherText_AtBattleStart;
         break;
     case EASY_CHAT_TYPE_BATTLE_WON:
-        r4 = gOtherText_UponWinningBattle;
+        titleText = gOtherText_UponWinningBattle;
         break;
     case EASY_CHAT_TYPE_BATTLE_LOST:
-        r4 = gOtherText_UponLosingBattle;
+        titleText = gOtherText_UponLosingBattle;
         break;
     case EASY_CHAT_TYPE_BARD_SONG:
-        r4 = gOtherText_TheBardsSong;
+        titleText = gOtherText_TheBardsSong;
         break;
     case EASY_CHAT_TYPE_TRENDY_PHRASE:
-        r4 = gOtherText_WhatsHipHappening;
+        titleText = gOtherText_WhatsHipHappening;
         break;
     case EASY_CHAT_TYPE_INTERVIEW:
     case EASY_CHAT_TYPE_FAN_CLUB:
@@ -1167,13 +1167,13 @@ void PrintTitle(u8 a)
     case EASY_CHAT_TYPE_GABBY_AND_TY:
     case EASY_CHAT_TYPE_CONTEST_INTERVIEW:
     case EASY_CHAT_TYPE_BATTLE_TOWER_INTERVIEW:
-        r4 = gOtherText_Interview;
+        titleText = gOtherText_Interview;
         break;
     case EASY_CHAT_TYPE_GOOD_SAYING:
-        r4 = gOtherText_GoodSaying;
+        titleText = gOtherText_GoodSaying;
         break;
     default:
-        r4 = NULL;
+        titleText = NULL;
         break;
     }
 
@@ -1181,9 +1181,9 @@ void PrintTitle(u8 a)
     gEasyChatScreen->titlePrintBuffer[0] = EXT_CTRL_CODE_BEGIN;
     gEasyChatScreen->titlePrintBuffer[1] = 5;
     gEasyChatScreen->titlePrintBuffer[2] = 1;
-    if (r4 != NULL)
+    if (titleText != NULL)
     {
-        AlignStringInMenuWindow(gEasyChatScreen->titlePrintBuffer + 3, r4, 240, 2);
+        AlignStringInMenuWindow(gEasyChatScreen->titlePrintBuffer + 3, titleText, 240, 2);
         Menu_PrintText(gEasyChatScreen->titlePrintBuffer, 0, 0);
     }
     else
@@ -1253,38 +1253,38 @@ void PrintCurrentPhrase(void)
     BasicInitMenuWindow(&gEasyChatMessageWindowTemplate);
 }
 
-void PrintCurrentPhraseWords(u16 a, u16 b)
+void PrintCurrentPhraseWords(u16 top, u16 left)
 {
-    u16 i;
-    u16 j;
-    u16 r10 = 0;
-    u16 r7 = a;
+    u16 row;
+    u16 column;
+    u16 phraseWordIndex = 0;
+    u16 y = top;
 
-    for (i = 0; i < gEasyChatScreen->numRows; i++)
+    for (row = 0; row < gEasyChatScreen->numRows; row++)
     {
-        u16 r6 = b;
+        u16 x = left;
 
-        for (j = 0; j < gEasyChatScreen->numColumns; j++)
+        for (column = 0; column < gEasyChatScreen->numColumns; column++)
         {
-            if (r10 >= gEasyChatScreen->maxWords)
+            if (phraseWordIndex >= gEasyChatScreen->maxWords)
             {
-                Menu_PrintText(sClearPhraseRowText, r6, r7);
+                Menu_PrintText(sClearPhraseRowText, x, y);
                 break;
             }
-            if (gEasyChatScreen->currentPhrase[r10] == 0xFFFF)
+            if (gEasyChatScreen->currentPhrase[phraseWordIndex] == 0xFFFF)
             {
-                CopyTilemapRect((void *)(VRAM + 0x7000), r6, r7, sBlankPhraseWordTilemap, 0, 0, 9, 2, 9);
-                r6 += 11;
+                CopyTilemapRect((void *)(VRAM + 0x7000), x, y, sBlankPhraseWordTilemap, 0, 0, 9, 2, 9);
+                x += 11;
             }
             else
             {
-                CopyEasyChatWordPadded(gEasyChatScreen->wordPrintBuffer, gEasyChatScreen->currentPhrase[r10], 11);
-                Menu_PrintText(gEasyChatScreen->wordPrintBuffer, r6, r7);
-                r6 += gEasyChatScreen->phraseWordSpacing[i][j] + 11;
+                CopyEasyChatWordPadded(gEasyChatScreen->wordPrintBuffer, gEasyChatScreen->currentPhrase[phraseWordIndex], 11);
+                Menu_PrintText(gEasyChatScreen->wordPrintBuffer, x, y);
+                x += gEasyChatScreen->phraseWordSpacing[row][column] + 11;
             }
-            r10++;
+            phraseWordIndex++;
         }
-        r7 += 2;
+        y += 2;
     }
 }
 
@@ -1315,89 +1315,89 @@ void PrintCurrentPhraseAsText(void)
     BasicInitMenuWindow(&gEasyChatMessageWindowTemplate);
 }
 
-void PrintCurrentPhraseAsTextAt(u16 a, u16 b)
+void PrintCurrentPhraseAsTextAt(u16 top, u16 left)
 {
-    u8 i;
-    u8 r7 = 0;
+    u8 row;
+    u8 phraseWordIndex = 0;
 
     asm("":::"r9");
 
-    for (i = 0; i < gEasyChatScreen->numRows; i++)
+    for (row = 0; row < gEasyChatScreen->numRows; row++)
     {
-        u8 r6;
-        u8 *r2 = gEasyChatScreen->phraseTextBuffer;
-        u32 r1;
+        u8 column;
+        u8 *text = gEasyChatScreen->phraseTextBuffer;
+        u32 textWidth;
 
-        for (r6 = 0; r6 < gEasyChatScreen->numColumns; r6++)
+        for (column = 0; column < gEasyChatScreen->numColumns; column++)
         {
-            if (r7 >= gEasyChatScreen->maxWords)
+            if (phraseWordIndex >= gEasyChatScreen->maxWords)
                 break;
-            if (gEasyChatScreen->currentPhrase[r7] != 0xFFFF)
+            if (gEasyChatScreen->currentPhrase[phraseWordIndex] != 0xFFFF)
             {
-                r2 = CopyEasyChatWordPadded(r2, gEasyChatScreen->currentPhrase[r7], 0);
-                *r2++ = CHAR_SPACE;
+                text = CopyEasyChatWordPadded(text, gEasyChatScreen->currentPhrase[phraseWordIndex], 0);
+                *text++ = CHAR_SPACE;
             }
-            r7++;
+            phraseWordIndex++;
         }
 
-        r1 = gEasyChatScreen->numColumns * 11;
-        r2[0] = EXT_CTRL_CODE_BEGIN;
-        r2[1] = 0x13;
-        r2[2] = r1 * 8;
-        r2[3] = EOS;
+        textWidth = gEasyChatScreen->numColumns * 11;
+        text[0] = EXT_CTRL_CODE_BEGIN;
+        text[1] = 0x13;
+        text[2] = textWidth * 8;
+        text[3] = EOS;
 
-        Menu_PrintText(gEasyChatScreen->phraseTextBuffer, b, a);
+        Menu_PrintText(gEasyChatScreen->phraseTextBuffer, left, top);
 
-        a += 2;
+        top += 2;
     }
 }
 
 void ClearPhraseWindow(void)
 {
-    u8 r1;
-    u8 r3;
+    u8 topRow;
+    u8 numRows;
 
     BasicInitMenuWindow(&gEasyChatTitleAndPhraseWindowTemplate);
     switch (gEasyChatScreen->templateId)
     {
     case 4:
-        r1 = 4;
-        r3 = 2;
+        topRow = 4;
+        numRows = 2;
         break;
     case 5:
-        r1 = 3;
-        r3 = 2;
+        topRow = 3;
+        numRows = 2;
         break;
     case 0:
-        r1 = 3;
-        r3 = 2;
+        topRow = 3;
+        numRows = 2;
         break;
     case 1:
-        r1 = 1;
-        r3 = 3;
+        topRow = 1;
+        numRows = 3;
         break;
     case 2:
-        r1 = 4;
-        r3 = 1;
+        topRow = 4;
+        numRows = 1;
         break;
     case 3:
-        r1 = 3;
-        r3 = 1;
+        topRow = 3;
+        numRows = 1;
         break;
     default:
         return;
     }
-    Menu_BlankWindowRect(2, r1, 27, r3 * 2 + r1 - 1);
+    Menu_BlankWindowRect(2, topRow, 27, numRows * 2 + topRow - 1);
     BasicInitMenuWindow(&gEasyChatMessageWindowTemplate);
 }
 
-void PrintKeyboardGroupNamesRow(u8 *a, u8 b)
+void PrintKeyboardGroupNamesRow(u8 *text, u8 row)
 {
-    u8 r4 = (b & 7);
+    u8 visibleRow = row & 7;
 
-    Menu_BlankWindowRect(2, r4 * 2, 31, r4 * 2 + 1);
-    BufferEasyChatGroupNamesRow(a, b);
-    PrintEasyChatTextAt(a, 2, r4 * 2);
+    Menu_BlankWindowRect(2, visibleRow * 2, 31, visibleRow * 2 + 1);
+    BufferEasyChatGroupNamesRow(text, row);
+    PrintEasyChatTextAt(text, 2, visibleRow * 2);
 }
 
 #if ENGLISH
@@ -1459,16 +1459,16 @@ void ResetLowerWindowScroll(void)
     gEasyChatScreen->lowerWindowScrollOffset = 0;
 }
 
-void PrintEasyChatTextAt(const u8 *a, u16 b, u16 c)
+void PrintEasyChatTextAt(const u8 *text, u16 left, u16 top)
 {
-    c &= 0xF;
-    Menu_PrintText(a, b, c);
+    top &= 0xF;
+    Menu_PrintText(text, left, top);
 }
 
-void BufferEasyChatGroupNamesRow(u8 *dest, u16 b)
+void BufferEasyChatGroupNamesRow(u8 *dest, u16 row)
 {
     u16 i;
-    u16 r5 = b * 2;
+    u16 groupIndex = row * 2;
 
     for (i = 0; i < 2; i++)
     {
@@ -1477,9 +1477,9 @@ void BufferEasyChatGroupNamesRow(u8 *dest, u16 b)
         dest[2] = 88 * i;
         dest += 3;
 
-        dest = CopyEasyChatGroupName(dest, gEasyChatScreen->unlockedGroupIds[b][i], 11);
-        r5++;
-        if (r5 >= gEasyChatScreen->numUnlockedGroups)
+        dest = CopyEasyChatGroupName(dest, gEasyChatScreen->unlockedGroupIds[row][i], 11);
+        groupIndex++;
+        if (groupIndex >= gEasyChatScreen->numUnlockedGroups)
             break;
     }
 }
@@ -1493,54 +1493,54 @@ void ClearLowerWindow(void)
         ClearWordSelectRow(i);
 }
 
-void PrintWordSelectRow(u16 a)
+void PrintWordSelectRow(u16 row)
 {
-    u8 *r8;
+    u8 *text;
     u16 i;
 
-    ClearWordSelectRow(a);
+    ClearWordSelectRow(row);
 
-    r8 = gEasyChatScreen->wordPrintBuffer;
-    r8[0] = EXT_CTRL_CODE_BEGIN;
-    r8[1] = 0x11;
-    r8[2] = 0x10;
-    r8 += 3;
+    text = gEasyChatScreen->wordPrintBuffer;
+    text[0] = EXT_CTRL_CODE_BEGIN;
+    text[1] = 0x11;
+    text[2] = 0x10;
+    text += 3;
 
     if (gEasyChatScreen->unusedLongWordLimit != 0)
     {
-        for (i = 0; i < gEasyChatScreen->wordSelectLastColumns[a]; i++)
+        for (i = 0; i < gEasyChatScreen->wordSelectLastColumns[row]; i++)
         {
-            if (GetEasyChatWordStringLength(gEasyChatScreen->selectedGroupWords[a][i]) == 7)
+            if (GetEasyChatWordStringLength(gEasyChatScreen->selectedGroupWords[row][i]) == 7)
                 BasicInitMenuWindow(&gEasyChatWordSelectLongWordWindowTemplate);
             else
                 BasicInitMenuWindow(&gEasyChatInputSelectWindowTemplate);
-            CopyEasyChatWordPadded(r8, gEasyChatScreen->selectedGroupWords[a][i], 9);
-            PrintEasyChatTextAt(gEasyChatScreen->wordPrintBuffer, i * 11 + 4, a * 2);
+            CopyEasyChatWordPadded(text, gEasyChatScreen->selectedGroupWords[row][i], 9);
+            PrintEasyChatTextAt(gEasyChatScreen->wordPrintBuffer, i * 11 + 4, row * 2);
         }
     }
     else
     {
         BasicInitMenuWindow(&gEasyChatInputSelectWindowTemplate);
-        for (i = 0; i < gEasyChatScreen->wordSelectLastColumns[a]; i++)
+        for (i = 0; i < gEasyChatScreen->wordSelectLastColumns[row]; i++)
         {
-            CopyEasyChatWordPadded(r8, gEasyChatScreen->selectedGroupWords[a][i], 9);
-            PrintEasyChatTextAt(gEasyChatScreen->wordPrintBuffer, i * 11 + 4, a * 2);
+            CopyEasyChatWordPadded(text, gEasyChatScreen->selectedGroupWords[row][i], 9);
+            PrintEasyChatTextAt(gEasyChatScreen->wordPrintBuffer, i * 11 + 4, row * 2);
         }
     }
 }
 
-void ClearWordSelectRow(u16 a)
+void ClearWordSelectRow(u16 row)
 {
-    a &= 7;
-    Menu_BlankWindowRect(0, a * 2, 29, a * 2 + 1);
+    row &= 7;
+    Menu_BlankWindowRect(0, row * 2, 29, row * 2 + 1);
 }
 
 void PrintInitialWordSelectText(void)
 {
-    u16 r5 = min(gEasyChatScreen->wordSelectLastRow, 4);
+    u16 rowsToPrint = min(gEasyChatScreen->wordSelectLastRow, 4);
     u16 i;
 
-    for (i = 0; i < r5; i++)
+    for (i = 0; i < rowsToPrint; i++)
         PrintWordSelectRow(gEasyChatScreen->wordSelectScrollOffset + i);
     while (i < 4)
         ClearWordSelectRow(i++);
@@ -1548,51 +1548,51 @@ void PrintInitialWordSelectText(void)
 
 void PrintWordSelectRowsDuringScroll(void)
 {
-    u16 r4;
-    u16 r5;
+    u16 rowsToPrint;
+    u16 row;
 
     if (gEasyChatScreen->lowerWindowScrollChange > 0)
     {
-        r4 = gEasyChatScreen->lowerWindowScrollChange;
-        r5 = gEasyChatScreen->wordSelectScrollOffset + 4;
+        rowsToPrint = gEasyChatScreen->lowerWindowScrollChange;
+        row = gEasyChatScreen->wordSelectScrollOffset + 4;
     }
     else
     {
-        r4 = -gEasyChatScreen->lowerWindowScrollChange;
-        r5 = gEasyChatScreen->wordSelectScrollOffset - r4;
+        rowsToPrint = -gEasyChatScreen->lowerWindowScrollChange;
+        row = gEasyChatScreen->wordSelectScrollOffset - rowsToPrint;
     }
-    while (--r4 != 0xFFFF)
-        PrintWordSelectRow(r5++);
+    while (--rowsToPrint != 0xFFFF)
+        PrintWordSelectRow(row++);
 }
 
 void PrintKeyboardRowsDuringScroll(void)
 {
-    u16 r6;
-    u16 r4;
+    u16 rowsToPrint;
+    u16 row;
     u16 i;
 
     BasicInitMenuWindow(&gEasyChatInputSelectWindowTemplate);
     if (gEasyChatScreen->lowerWindowScrollChange < 0)
     {
-        r6 = -gEasyChatScreen->lowerWindowScrollChange;
-        r4 = gEasyChatScreen->keyboardScrollOffset - r6;
+        rowsToPrint = -gEasyChatScreen->lowerWindowScrollChange;
+        row = gEasyChatScreen->keyboardScrollOffset - rowsToPrint;
     }
     else
     {
-        r6 = gEasyChatScreen->lowerWindowScrollChange;
-        r4 = gEasyChatScreen->keyboardScrollOffset + 4;
+        rowsToPrint = gEasyChatScreen->lowerWindowScrollChange;
+        row = gEasyChatScreen->keyboardScrollOffset + 4;
     }
-    for (i = 0; i < r6; i++)
+    for (i = 0; i < rowsToPrint; i++)
     {
-        PrintKeyboardGroupNamesRow(gEasyChatScreen->groupNamePrintBuffer, r4);
-        r4++;
+        PrintKeyboardGroupNamesRow(gEasyChatScreen->groupNamePrintBuffer, row);
+        row++;
     }
 }
 
-void InitLowerWindowScroll(u8 a)
+void InitLowerWindowScroll(u8 speed)
 {
     gEasyChatScreen->lowerWindowScrollDest = (gEasyChatScreen->lowerWindowScrollOffset + gEasyChatScreen->lowerWindowScrollChange * 16) & 0x7F;
-    gEasyChatScreen->lowerWindowScrollStep = (gEasyChatScreen->lowerWindowScrollChange < 0) ? -a : a;
+    gEasyChatScreen->lowerWindowScrollStep = (gEasyChatScreen->lowerWindowScrollChange < 0) ? -speed : speed;
 }
 
 bool8 UpdateLowerWindowScroll(void)
@@ -2058,19 +2058,19 @@ void CopyLowerWindowAnimRectToVram(void *dst, u16 *rect, struct EasyChatWindowAn
 // Strange...
 void UpdateEasyChatScanlineEffect(void)
 {
-    u16 *r4;
-    u16 r2;
+    u16 *scanlineBuffer;
+    u16 scanlineOffset;
     u16 i;
 
-    r4 = gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer];
-    r4 += 88;
-    r2 = (gEasyChatScreen->lowerWindowScrollOffset - 88) & 0xFF;
+    scanlineBuffer = gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer];
+    scanlineBuffer += 88;
+    scanlineOffset = (gEasyChatScreen->lowerWindowScrollOffset - 88) & 0xFF;
 
     for (i = 0; i < 64; i++)
     {
         if (gEasyChatScreen->lowerWindowScrollOffset + i == 128)
-            r2 = (-i - 88) & 0xFF;
-        *r4++ = r2;
+            scanlineOffset = (-i - 88) & 0xFF;
+        *scanlineBuffer++ = scanlineOffset;
     }
 }
 
@@ -2326,43 +2326,43 @@ _080EB03C: .4byte 0x0000446c\n\
 void SetUnlockedWordsByAlphabet(void)
 {
     u16 i;
-    u16 r9;
-    u16 r6;
-    u16 r5;
-    bool8 r7;
+    u16 unlockedWordIndex;
+    u16 wordListIndex;
+    u16 numWords;
+    bool8 hasUnlockedWord;
 
     for (i = 0; i < 27; i++)
     {
-        u16 word = gEasyChatWordsByLetter[i];
-        u16 sp0 = gEasyChatWordsByLetter[i + 1];
+        u16 firstWordIndex = gEasyChatWordsByLetter[i];
+        u16 nextLetterWordIndex = gEasyChatWordsByLetter[i + 1];
 
         gEasyChatScreen->numUnlockedWordsByAlphabet[i] = 0;
-        r9 = 0;
-        r6 = word;
-        while (r6 < sp0)
+        unlockedWordIndex = 0;
+        wordListIndex = firstWordIndex;
+        while (wordListIndex < nextLetterWordIndex)
         {
-            u16 word = gEasyChatWordsAlphabetized[r6++];
+            u16 wordId = gEasyChatWordsAlphabetized[wordListIndex++];
 
-            if (word > 0xFEFF)
+            if (wordId > 0xFEFF)
             {
-                r5 = word & 0xFF;
-                r7 = FALSE;
-                while (--r5 != 0xFFFF)
+                numWords = wordId & 0xFF;
+                hasUnlockedWord = FALSE;
+                while (--numWords != 0xFFFF)
                 {
-                    word = gEasyChatWordsAlphabetized[r6++];
-                    if (IsEasyChatIndexAndGroupUnlocked(EC_GROUP(word), EC_INDEX(word)) && !r7)
+                    wordId = gEasyChatWordsAlphabetized[wordListIndex++];
+                    if (IsEasyChatIndexAndGroupUnlocked(EC_GROUP(wordId), EC_INDEX(wordId)) && !hasUnlockedWord)
                     {
-                        gEasyChatScreen->alphabetizedWords[i][r9++] = word;
+                        gEasyChatScreen->alphabetizedWords[i][unlockedWordIndex++] = wordId;
                         gEasyChatScreen->numUnlockedWordsByAlphabet[i]++;
-                        r7 = TRUE;
+                        hasUnlockedWord = TRUE;
                     }
                 }
             }
             else
             {
-                if (IsEasyChatIndexAndGroupUnlocked(EC_GROUP(word), EC_INDEX(word)))
+                if (IsEasyChatIndexAndGroupUnlocked(EC_GROUP(wordId), EC_INDEX(wordId)))
                 {
-                    gEasyChatScreen->alphabetizedWords[i][r9++] = word;
+                    gEasyChatScreen->alphabetizedWords[i][unlockedWordIndex++] = wordId;
                     gEasyChatScreen->numUnlockedWordsByAlphabet[i]++;
                 }
             }
@@ -2405,71 +2405,71 @@ void LoadEasyChatStrings(void)
 
 void SetSelectedWordGroup(void)
 {
-    const u16 *sp0;
-    u16 r7;
-    u16 r9;
-    u16 r8;
+    const u16 *groupWordOrder;
+    u16 column;
+    u16 row;
+    u16 wordIndex;
 
     if (gEasyChatScreen->inAlphabetMode == 0)
     {
         u16 group = gEasyChatScreen->selectedGroupId;
 
         gEasyChatScreen->numUnlockedWordsByGroup[group] = 0;
-        r7 = 0;
-        r9 = 0;
-        sp0 = gEasyChatGroupOrders[group];
-        for (r8 = 0; r8 < gEasyChatGroupSizes[gEasyChatScreen->selectedGroupId]; r8++)
+        column = 0;
+        row = 0;
+        groupWordOrder = gEasyChatGroupOrders[group];
+        for (wordIndex = 0; wordIndex < gEasyChatGroupSizes[gEasyChatScreen->selectedGroupId]; wordIndex++)
         {
-            if (IsEasyChatIndexAndGroupUnlocked(group, sp0[r8]))
+            if (IsEasyChatIndexAndGroupUnlocked(group, groupWordOrder[wordIndex]))
             {
-                gEasyChatScreen->selectedGroupWords[r9][r7] = ((group & 0x7F) << 9) | (sp0[r8] & 0x1FF);
+                gEasyChatScreen->selectedGroupWords[row][column] = ((group & 0x7F) << 9) | (groupWordOrder[wordIndex] & 0x1FF);
                 gEasyChatScreen->numUnlockedWordsByGroup[group]++;
-                r7++;
-                if (r7 > 1)
+                column++;
+                if (column > 1)
                 {
-                    r7 = 0;
-                    r9++;
+                    column = 0;
+                    row++;
                 }
             }
         }
     }
     else
     {
-        u8 r2 = gEasyChatScreen->selectedGroupId;
-        u16 r3 = 0;
-        u16 r6 = 0;
-        u16 r5;
+        u8 alphabetGroupId = gEasyChatScreen->selectedGroupId;
+        u16 column = 0;
+        u16 row = 0;
+        u16 wordIndex;
 
-        for (r5 = 0; r5 < gEasyChatScreen->numUnlockedWordsByAlphabet[r2]; r5++)
+        for (wordIndex = 0; wordIndex < gEasyChatScreen->numUnlockedWordsByAlphabet[alphabetGroupId]; wordIndex++)
         {
-            gEasyChatScreen->selectedGroupWords[r6][r3] = gEasyChatScreen->alphabetizedWords[r2][r5];
-            r3++;
-            if (r3 > 1)
+            gEasyChatScreen->selectedGroupWords[row][column] = gEasyChatScreen->alphabetizedWords[alphabetGroupId][wordIndex];
+            column++;
+            if (column > 1)
             {
-                r3 = 0;
-                r6++;
+                column = 0;
+                row++;
             }
         }
     }
 }
 
-u8 *CopyEasyChatWordPadded(u8 *dest, u16 word, u16 c)
+u8 *CopyEasyChatWordPadded(u8 *dest, u16 easyChatWord, u16 totalChars)
 {
     u8 *wordText;
 
-    if (IsEasyChatWordInvalid(word))
+    if (IsEasyChatWordInvalid(easyChatWord))
     {
         wordText = StringCopy(dest, gText_ThreeQuestionMarks);
     }
-    else if (word == 0xFFFF)
+    else if (easyChatWord == 0xFFFF)
     {
         wordText = dest;
         wordText[0] = EOS;  // Why? It's going to get overwritten.
     }
     else
     {
-        u16 group = EC_GROUP(word);
-        u16 index = EC_INDEX(word);
+        u16 group = EC_GROUP(easyChatWord);
+        u16 index = EC_INDEX(easyChatWord);
 
         switch (group)
         {
@@ -2489,7 +2489,7 @@ u8 *CopyEasyChatWordPadded(u8 *dest, u16 word, u16 c)
 
     wordText[0] = EXT_CTRL_CODE_BEGIN;
     wordText[1] = 0x13;
-    wordText[2] = c * 8;
+    wordText[2] = totalChars * 8;
     wordText += 3;
 
     *wordText = EOS;
@@ -2584,7 +2584,7 @@ u32 GetEasyChatWordIndexInGroup(s32 group, s32 index)
 {
     s32 i;
     u16 *words;
-    u32 r7 = 0;
+    u32 wordIndex = 0;
 
     switch (group)
     {
@@ -2597,17 +2597,17 @@ u32 GetEasyChatWordIndexInGroup(s32 group, s32 index)
         {
             if (index == words[i])
             {
-                r7 = i;
+                wordIndex = i;
                 break;
             }
         }
         break;
     default:
-        r7 = index;
+        wordIndex = index;
         break;
     }
 
-    return r7;
+    return wordIndex;
 }
 #endif
 
@@ -2656,173 +2656,174 @@ u8 *CopyEasyChatWord(u8 *dest, u16 easyChatWord)
     }
 }
 
-u8 *ConvertEasyChatWordsToString(u8 *dst, u16 *words, u16 arg2, u16 arg3)
+u8 *ConvertEasyChatWordsToString(u8 *dest, u16 *src, u16 columns, u16 rows)
 {
-    u16 i;
-    u16 n;
+    u16 row;
+    u16 column;
 
-    const u16 i1 = arg2 - 1;
+    const u16 numColumns = columns - 1;
 
-    for (i = 0; i < arg3; i++)
+    for (row = 0; row < rows; row++)
     {
-        u16 word;
+        u16 easyChatWord;
 
-        for (n = 0; n < i1; n++)
+        for (column = 0; column < numColumns; column++)
         {
-            dst = CopyEasyChatWord(dst, words[0]);
+            dest = CopyEasyChatWord(dest, src[0]);
 
-            if (words[0] != 0xFFFF)
+            if (src[0] != 0xFFFF)
             {
-                dst[0] = CHAR_SPACE;
-                dst++;
+                dest[0] = CHAR_SPACE;
+                dest++;
             }
 
-            words++;
+            src++;
         }
 
-        word = words[0];
-        words++;
-        dst = CopyEasyChatWord(dst, word);
+        easyChatWord = src[0];
+        src++;
+        dest = CopyEasyChatWord(dest, easyChatWord);
 
-        dst[0] = CHAR_NEWLINE;
-        dst++;
+        dest[0] = CHAR_NEWLINE;
+        dest++;
     }
 
-    dst--;
-    dst[0] = EOS;
+    dest--;
+    dest[0] = EOS;
 
-    return dst;
+    return dest;
 }
 
-u8 *ConvertEasyChatWordsToStringWithScroll(u8 *dst, u16 *words, u16 arg2, u16 arg3)
+u8 *ConvertEasyChatWordsToStringWithScroll(u8 *dest, u16 *src, u16 columns, u16 rows)
 {
-    u16 i;
-    u16 n;
+    u16 row;
+    u16 column;
 
-    const u16 i1 = arg2 - 1;
+    const u16 numColumns = columns - 1;
 
-    for (i = 0; i < arg3; i++)
+    for (row = 0; row < rows; row++)
     {
-        u16 word;
+        u16 easyChatWord;
 
-        for (n = 0; n < i1; n++)
+        for (column = 0; column < numColumns; column++)
         {
-            dst = CopyEasyChatWord(dst, words[0]);
+            dest = CopyEasyChatWord(dest, src[0]);
 
-            if (words[0] != 0xFFFF)
+            if (src[0] != 0xFFFF)
             {
-                dst[0] = CHAR_SPACE;
-                dst++;
+                dest[0] = CHAR_SPACE;
+                dest++;
             }
 
-            words++;
+            src++;
         }
 
-        word = words[0];
-        words++;
-        dst = CopyEasyChatWord(dst, word);
+        easyChatWord = src[0];
+        src++;
+        dest = CopyEasyChatWord(dest, easyChatWord);
 
         // Only difference with ConvertEasyChatWordsToString
-        dst[0] = (i == 0) ? CHAR_NEWLINE : CHAR_PROMPT_SCROLL;
-        dst++;
+        dest[0] = (row == 0) ? CHAR_NEWLINE : CHAR_PROMPT_SCROLL;
+        dest++;
     }
 
-    dst--;
-    dst[0] = EOS;
+    dest--;
+    dest[0] = EOS;
 
-    return dst;
+    return dest;
 }
 
 
-u16 UnusedGetEasyChatWordStringLength(u16 arg0)
+u16 UnusedGetEasyChatWordStringLength(u16 easyChatWord)
 {
-    const u8 *chars;
+    const u8 *wordText;
     u16 i;
     u16 length;
-    int group, word;
+    int groupId;
+    int wordIndex;
 
 
-    if (arg0 == 0xFFFF)
+    if (easyChatWord == 0xFFFF)
         return 0;
 
-    group = EC_GROUP(arg0);
-    word = EC_INDEX(arg0);
-    switch (group)
+    groupId = EC_GROUP(easyChatWord);
+    wordIndex = EC_INDEX(easyChatWord);
+    switch (groupId)
     {
     case EC_GROUP_POKEMON: // 0
     case EC_GROUP_POKEMON_NATIONAL: // 21
-        chars = gSpeciesNames[word];
+        wordText = gSpeciesNames[wordIndex];
         break;
     case EC_GROUP_MOVE_1: // 18
     case EC_GROUP_MOVE_2: // 19
-        chars = gMoveNames[word];
+        wordText = gMoveNames[wordIndex];
         break;
     default:
-        chars = gEasyChatGroupWords[group];
-        for (i = word - 1; i != 0xFFFF; i--)
+        wordText = gEasyChatGroupWords[groupId];
+        for (i = wordIndex - 1; i != 0xFFFF; i--)
         {
-            while (*chars++ != EOS)
+            while (*wordText++ != EOS)
                 ;
         }
         break;
     }
 
     length = 0;
-    while (*chars != EOS)
+    while (*wordText != EOS)
     {
-        chars++;
+        wordText++;
         length++;
     }
 
     return length;
 }
 
-bool8 CanPhraseFitInXRowsYCols(u16 *arg0, u16 arg1, u16 arg2, u16 arg3)
+bool8 CanPhraseFitInXRowsYCols(u16 *easyChatWords, u16 numRows, u16 numColumns, u16 maxLength)
 {
     return FALSE;
 }
 
-void UnusedClearTvShowEasyChatWords(u8 arg0, u16 arg1)
+void UnusedClearTvShowEasyChatWords(u8 showType, u16 showIndex)
 {
-    u16 *ptr;
-    u16 c;
+    u16 *words;
+    u16 wordCount;
 
     // FIXME: find actual tv shows used
-    switch (arg0)
+    switch (showType)
     {
     case 5:
-        c = 6;
-        ptr = (u16*)((void *)&gSaveBlock1.tvShows[arg1] + 0x04);
+        wordCount = 6;
+        words = (u16*)((void *)&gSaveBlock1.tvShows[showIndex] + 0x04);
         break;
     case 7:
-        c = 2;
-        ptr = (u16*)((void *)&gSaveBlock1.tvShows[arg1] + 0x1C);
+        wordCount = 2;
+        words = (u16*)((void *)&gSaveBlock1.tvShows[showIndex] + 0x1C);
         break;
     case 8:
-        c = 1;
-        ptr = (u16*)((void *)&gSaveBlock1.tvShows[arg1] + 0x02);
+        wordCount = 1;
+        words = (u16*)((void *)&gSaveBlock1.tvShows[showIndex] + 0x02);
         break;
     default:
         return;
     }
 
-    c -= 1;
-    while (c != 0xFFFF)
+    wordCount -= 1;
+    while (wordCount != 0xFFFF)
     {
-        *ptr = -1;
-        ptr++;
-        c -= 1;
+        *words = -1;
+        words++;
+        wordCount -= 1;
     }
 }
 
-void InitializeEasyChatWordArray(u16 *arg0, u16 arg1)
+void InitializeEasyChatWordArray(u16 *words, u16 length)
 {
     u16 i;
 
-    for (i = arg1 - 1; i != 0xFFFF; i--)
+    for (i = length - 1; i != 0xFFFF; i--)
     {
-        *arg0 = 0xFFFF;
-        arg0++;
+        *words = 0xFFFF;
+        words++;
     }
 
 }
