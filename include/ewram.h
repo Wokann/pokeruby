@@ -138,9 +138,9 @@ extern u8 gSharedMem[];
 #define sCreditsData                    (*(struct CreditsData *)(gSharedMem + 0x1C000))
 
 // hall_of_fame.c
-#define eHofGfxPtr                      (gSharedMem + 0x8000)
-#define eHofMonPtr                      (struct HallofFameTeam*)(&gSharedMem[0x1C000])
-#define eHOFPCScreenEffect              (*(struct PCScreenEffectStruct *)(gSharedMem + 0x1c000))
+#define sHofGfxPtr                      (gSharedMem + 0x8000)
+#define sHofMonPtr                      ((struct HallofFameTeam *)(&gSharedMem[0x1C000]))
+#define sHofPCScreenEffect              (*(struct PCScreenEffectStruct *)(gSharedMem + 0x1c000))
 
 #define eMultiBattleSetupPartySendBuffer \
     ((struct Pokemon *)(gSharedMem + 0x1D000))

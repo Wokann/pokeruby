@@ -151,69 +151,69 @@ static const struct OamData sOamData_HallOfFameSprite =
 
 void *const gHallOfFameGfxBufferPtrs[] =
 {
-    eHofGfxPtr + 0x0000,
-    eHofGfxPtr + 0x2000,
-    eHofGfxPtr + 0x4000,
-    eHofGfxPtr + 0x6000,
-    eHofGfxPtr + 0x8000,
-    eHofGfxPtr + 0xC000,
-    eHofGfxPtr + 0x10000
+    sHofGfxPtr + 0x0000,
+    sHofGfxPtr + 0x2000,
+    sHofGfxPtr + 0x4000,
+    sHofGfxPtr + 0x6000,
+    sHofGfxPtr + 0x8000,
+    sHofGfxPtr + 0xC000,
+    sHofGfxPtr + 0x10000
 };
 
 static const struct SpriteFrameImage sHallOfFameMon0SpriteImages[] =
 {
-    {eHofGfxPtr + 0x0000, 0x800},
-    {eHofGfxPtr + 0x800, 0x800},
-    {eHofGfxPtr + 0x1000, 0x800},
-    {eHofGfxPtr + 0x1800, 0x800}
+    {sHofGfxPtr + 0x0000, 0x800},
+    {sHofGfxPtr + 0x800, 0x800},
+    {sHofGfxPtr + 0x1000, 0x800},
+    {sHofGfxPtr + 0x1800, 0x800}
 };
 
 static const struct SpriteFrameImage sHallOfFameMon1SpriteImages[] =
 {
-    {eHofGfxPtr + 0x2000, 0x800},
-    {eHofGfxPtr + 0x2800, 0x800},
-    {eHofGfxPtr + 0x3000, 0x800},
-    {eHofGfxPtr + 0x3800, 0x800}
+    {sHofGfxPtr + 0x2000, 0x800},
+    {sHofGfxPtr + 0x2800, 0x800},
+    {sHofGfxPtr + 0x3000, 0x800},
+    {sHofGfxPtr + 0x3800, 0x800}
 };
 
 static const struct SpriteFrameImage sHallOfFameMon2SpriteImages[] =
 {
-    {eHofGfxPtr + 0x4000, 0x800},
-    {eHofGfxPtr + 0x4800, 0x800},
-    {eHofGfxPtr + 0x5000, 0x800},
-    {eHofGfxPtr + 0x5800, 0x800}
+    {sHofGfxPtr + 0x4000, 0x800},
+    {sHofGfxPtr + 0x4800, 0x800},
+    {sHofGfxPtr + 0x5000, 0x800},
+    {sHofGfxPtr + 0x5800, 0x800}
 };
 
 static const struct SpriteFrameImage sHallOfFameMon3SpriteImages[] =
 {
-    {eHofGfxPtr + 0x6000, 0x800},
-    {eHofGfxPtr + 0x6800, 0x800},
-    {eHofGfxPtr + 0x7000, 0x800},
-    {eHofGfxPtr + 0x7800, 0x800}
+    {sHofGfxPtr + 0x6000, 0x800},
+    {sHofGfxPtr + 0x6800, 0x800},
+    {sHofGfxPtr + 0x7000, 0x800},
+    {sHofGfxPtr + 0x7800, 0x800}
 };
 
 static const struct SpriteFrameImage sHallOfFameMon4SpriteImages[] =
 {
-    {eHofGfxPtr + 0x8000, 0x800},
-    {eHofGfxPtr + 0x8800, 0x800},
-    {eHofGfxPtr + 0x9000, 0x800},
-    {eHofGfxPtr + 0x9800, 0x800}
+    {sHofGfxPtr + 0x8000, 0x800},
+    {sHofGfxPtr + 0x8800, 0x800},
+    {sHofGfxPtr + 0x9000, 0x800},
+    {sHofGfxPtr + 0x9800, 0x800}
 };
 
 static const struct SpriteFrameImage sHallOfFameMon5SpriteImages[] =
 {
-    {eHofGfxPtr + 0xC000, 0x800},
-    {eHofGfxPtr + 0xC800, 0x800},
-    {eHofGfxPtr + 0xD000, 0x800},
-    {eHofGfxPtr + 0xD800, 0x800}
+    {sHofGfxPtr + 0xC000, 0x800},
+    {sHofGfxPtr + 0xC800, 0x800},
+    {sHofGfxPtr + 0xD000, 0x800},
+    {sHofGfxPtr + 0xD800, 0x800}
 };
 
 static const struct SpriteFrameImage sHallOfFameTrainerSpriteImages[] =
 {
-    {eHofGfxPtr + 0x10000, 0x800},
-    {eHofGfxPtr + 0x10800, 0x800},
-    {eHofGfxPtr + 0x11000, 0x800},
-    {eHofGfxPtr + 0x11800, 0x800}
+    {sHofGfxPtr + 0x10000, 0x800},
+    {sHofGfxPtr + 0x10800, 0x800},
+    {sHofGfxPtr + 0x11000, 0x800},
+    {sHofGfxPtr + 0x11800, 0x800}
 };
 
 static const struct SpriteFrameImage *const sHallOfFameSpriteImageTables[7] =
@@ -481,7 +481,7 @@ static void CB2_DoHallOfFameScreenDontSaveData(void)
 static void Task_Hof_InitMonData(u8 taskId)
 {
     u16 i, j;
-    struct HallofFameTeam* fameTeam = eHofMonPtr;
+    struct HallofFameTeam* fameTeam = sHofMonPtr;
 
     gTasks[taskId].tMonNumber = 0; // valid pokes
     for (i = 0; i < 6; i++)
@@ -525,7 +525,7 @@ static void Task_Hof_InitMonData(u8 taskId)
 static void Task_Hof_InitTeamSaveData(u8 taskId)
 {
     u16 i;
-    struct HallofFameTeam* fameTeam = eHofMonPtr;
+    struct HallofFameTeam* fameTeam = sHofMonPtr;
     struct HallofFameTeam* lastSavedTeam = (struct HallofFameTeam *)gDecompressionBuffer;
 
     if (gHasHallOfFameRecords == FALSE)
@@ -587,7 +587,7 @@ static void Task_Hof_DisplayMon(u8 taskId)
     u8 spriteID;
     s16 xPos, yPos, destX, destY;
 
-    struct HallofFameTeam* fameTeam = eHofMonPtr;
+    struct HallofFameTeam* fameTeam = sHofMonPtr;
     u16 currMonId = gTasks[taskId].tDisplayedMonId;
     struct HallofFameMon* currMon = &fameTeam->mon[currMonId];
 
@@ -618,7 +618,7 @@ static void Task_Hof_DisplayMon(u8 taskId)
 
 static void Task_Hof_PrintMonInfoAfterAnimating(u8 taskId)
 {
-    struct HallofFameTeam* fameTeam = eHofMonPtr;
+    struct HallofFameTeam* fameTeam = sHofMonPtr;
     u16 currMonId = gTasks[taskId].tDisplayedMonId;
     struct HallofFameMon* currMon = &fameTeam->mon[currMonId];
 
@@ -634,7 +634,7 @@ static void Task_Hof_PrintMonInfoAfterAnimating(u8 taskId)
 
 static void Task_Hof_TryDisplayAnotherMon(u8 taskId)
 {
-    struct HallofFameTeam* fameTeam = eHofMonPtr;
+    struct HallofFameTeam* fameTeam = sHofMonPtr;
     u16 currMonId = gTasks[taskId].tDisplayedMonId;
     struct HallofFameMon* currMon = &fameTeam->mon[currMonId];
 
@@ -800,9 +800,9 @@ void CB2_DoHallOfFamePC(void)
         REG_BLDY = 0;
         SetHofBgDisplayRegs();
 
-        eHOFPCScreenEffect = sPCScreenEffectTemplate;
+        sHofPCScreenEffect = sPCScreenEffectTemplate;
 
-        StartPCScreenOpenEffect(&eHOFPCScreenEffect);
+        StartPCScreenOpenEffect(&sHofPCScreenEffect);
         gMain.state++;
         break;
     case 4:
@@ -1013,8 +1013,8 @@ static void Task_HofPC_HandleInput(u8 taskId)
 static void Task_HofPC_HandlePaletteOnExit(u8 taskId)
 {
     CpuSet(gPlttBufferFaded, gPlttBufferUnfaded, 0x200);
-    eHOFPCScreenEffect = sPCScreenEffectTemplate;
-    StartPCScreenCloseEffect(&eHOFPCScreenEffect);
+    sHofPCScreenEffect = sPCScreenEffectTemplate;
+    StartPCScreenCloseEffect(&sHofPCScreenEffect);
     gTasks[taskId].func = Task_HofPC_HandleExit;
 }
 
