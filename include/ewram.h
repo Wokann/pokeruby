@@ -39,7 +39,7 @@ extern u8 gSharedMem[];
 #define BATTLE_HISTORY                    ((struct BattleHistory *) (gSharedMem + 0x16A00))
 #define AI_STACK                          ((struct AI_Stack *)         (gSharedMem + 0x16C00))
 #define sSecretBase                       ((struct SecretBaseRecord *)(gSharedMem + 0x17000))
-#define eBattleFlagsArr                   (*(struct ResourceFlags *)(gSharedMem + 0x17100))
+#define sBattleResourceFlags              (*(struct ResourceFlags *)(gSharedMem + 0x17100))
 #define B_BATTLESCRIPTS_STACK             ((struct BattleScriptsStack *)     (gSharedMem + 0x17110))
 #define B_FUNCTION_STACK                  ((struct BattleCallbacksStack *)        (gSharedMem + 0x17140))
 #define gBattleResources_statsBeforeLvlUp ((struct StatsArray *)(gSharedMem + 0x17180))

@@ -438,8 +438,10 @@ struct BattleStruct /* 0x2000000 */
 
 struct ResourceFlags
 {
-    u32 arr[4];
+    u32 flags[4];
 };
+
+#define RESOURCE_FLAG_FLASH_FIRE 1
 
 struct BattleSpriteInfo
 {

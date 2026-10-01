@@ -3425,7 +3425,7 @@ void BattleStartClearSetData(void)
         gLastHitBy[i] = 0xFF;
         gLockedMoves[i] = 0;
         gLastPrintedMoves[i] = 0;
-        eBattleFlagsArr.arr[i] = 0;
+        sBattleResourceFlags.flags[i] = 0;
     }
 
     for (i = 0; i < 2; i++)
@@ -3596,7 +3596,7 @@ void SwitchInClearSetData(void)
     gSharedMem[BSTRUCT_OFF(choicedMove)       + 2 * gActiveBattler + 0] = 0;
     gSharedMem[BSTRUCT_OFF(choicedMove)       + 2 * gActiveBattler + 1] = 0;
 
-    eBattleFlagsArr.arr[gActiveBattler] = 0;
+    sBattleResourceFlags.flags[gActiveBattler] = 0;
 
     gCurrentMove = 0;
 }
@@ -3660,7 +3660,7 @@ void UndoEffectsAfterFainting(void)
     gSharedMem[BSTRUCT_OFF(lastTakenMoveFrom) + 4 * gActiveBattler + 2] = 0;
     gSharedMem[BSTRUCT_OFF(lastTakenMoveFrom) + 4 * gActiveBattler + 3] = 0;
 
-    eBattleFlagsArr.arr[gActiveBattler] = 0;
+    sBattleResourceFlags.flags[gActiveBattler] = 0;
 
     gBattleMons[gActiveBattler].type1 = gBaseStats[gBattleMons[gActiveBattler].species].type1;
     gBattleMons[gActiveBattler].type2 = gBaseStats[gBattleMons[gActiveBattler].species].type2;
