@@ -74,40 +74,40 @@ extern u8 gText_AlreadySavedFile[];
 extern u8 gText_DifferentSaveFile[];
 extern u8 gText_ConfirmSave[];
 
-static u8 StartMenu_PokedexCallback(void);
-static u8 StartMenu_PokemonCallback(void);
-static u8 StartMenu_BagCallback(void);
-static u8 StartMenu_PokenavCallback(void);
-static u8 StartMenu_PlayerCallback(void);
-static u8 StartMenu_SaveCallback(void);
-static u8 StartMenu_OptionCallback(void);
-static u8 StartMenu_ExitCallback(void);
-static u8 StartMenu_RetireCallback(void);
-static u8 StartMenu_PlayerLinkCallback(void);
+static u8 StartMenuPokedexCallback(void);
+static u8 StartMenuPokemonCallback(void);
+static u8 StartMenuBagCallback(void);
+static u8 StartMenuPokeNavCallback(void);
+static u8 StartMenuPlayerNameCallback(void);
+static u8 StartMenuSaveCallback(void);
+static u8 StartMenuOptionCallback(void);
+static u8 StartMenuExitCallback(void);
+static u8 StartMenuSafariZoneRetireCallback(void);
+static u8 StartMenuLinkModePlayerNameCallback(void);
 
 static const struct MenuAction sStartMenuItems[] =
 {
-    { SystemText_Pokedex, StartMenu_PokedexCallback },
-    { SystemText_Pokemon, StartMenu_PokemonCallback },
-    { SystemText_BAG, StartMenu_BagCallback },
-    { SystemText_Pokenav, StartMenu_PokenavCallback },
-    { SystemText_Player, StartMenu_PlayerCallback },
-    { SystemText_Save, StartMenu_SaveCallback },
-    { SystemText_Option, StartMenu_OptionCallback },
-    { SystemText_Exit, StartMenu_ExitCallback },
-    { SystemText_Retire, StartMenu_RetireCallback },
-    { SystemText_Player, StartMenu_PlayerLinkCallback },
+    { SystemText_Pokedex, StartMenuPokedexCallback },
+    { SystemText_Pokemon, StartMenuPokemonCallback },
+    { SystemText_BAG, StartMenuBagCallback },
+    { SystemText_Pokenav, StartMenuPokeNavCallback },
+    { SystemText_Player, StartMenuPlayerNameCallback },
+    { SystemText_Save, StartMenuSaveCallback },
+    { SystemText_Option, StartMenuOptionCallback },
+    { SystemText_Exit, StartMenuExitCallback },
+    { SystemText_Retire, StartMenuSafariZoneRetireCallback },
+    { SystemText_Player, StartMenuLinkModePlayerNameCallback },
 };
 
 //Private functions
 static void BuildStartMenuActions(void);
 static void AddStartMenuAction(u8 action);
-static void BuildStartMenuActions_Normal(void);
-static void BuildStartMenuActions_SafariZone(void);
-static void BuildStartMenuActions_Link(void);
-static void DisplaySafariBallsWindow(void);
-static bool32 PrintStartMenuItemsMultistep(s16 *a, u32 b);
-static bool32 InitStartMenuMultistep(s16 *a, s16 *b);
+static void BuildNormalStartMenu(void);
+static void BuildSafariZoneStartMenu(void);
+static void BuildLinkModeStartMenu(void);
+static void ShowSafariBallsWindow(void);
+static bool32 PrintStartMenuActions(s16 *a, u32 b);
+static bool32 InitStartMenuStep(s16 *a, s16 *b);
 static void StartMenuTask(u8 taskId);
 static u8 HandleStartMenuInput(void);
 static u8 SaveStartCallback(void);
@@ -245,13 +245,13 @@ static void BuildStartMenuActions(void)
 {
     sNumStartMenuActions = 0;
     if (IsOverworldLinkActive() == TRUE)
-        BuildStartMenuActions_Link();
+        BuildLinkModeStartMenu();
     else
     {
         if (GetSafariZoneFlag() == TRUE)
-            BuildStartMenuActions_SafariZone();
+            BuildSafariZoneStartMenu();
         else
-            BuildStartMenuActions_Normal();
+            BuildNormalStartMenu();
     }
 }
 
@@ -260,7 +260,7 @@ static void AddStartMenuAction(u8 action)
     AppendToList(sCurrentStartMenuActions, &sNumStartMenuActions, action);
 }
 
-static void BuildStartMenuActions_Normal(void)
+static void BuildNormalStartMenu(void)
 {
     if (FlagGet(FLAG_SYS_POKEDEX_GET) == TRUE)
         AddStartMenuAction(MENU_ACTION_POKEDEX);
@@ -275,7 +275,7 @@ static void BuildStartMenuActions_Normal(void)
     AddStartMenuAction(MENU_ACTION_EXIT);
 }
 
-static void BuildStartMenuActions_SafariZone(void)
+static void BuildSafariZoneStartMenu(void)
 {
     AddStartMenuAction(MENU_ACTION_RETIRE);
     AddStartMenuAction(MENU_ACTION_POKEDEX);
@@ -286,7 +286,7 @@ static void BuildStartMenuActions_SafariZone(void)
     AddStartMenuAction(MENU_ACTION_EXIT);
 }
 
-static void BuildStartMenuActions_Link(void)
+static void BuildLinkModeStartMenu(void)
 {
     AddStartMenuAction(MENU_ACTION_POKEMON);
     AddStartMenuAction(MENU_ACTION_BAG);
@@ -298,7 +298,7 @@ static void BuildStartMenuActions_Link(void)
 }
 
 //Show number of safari balls left
-static void DisplaySafariBallsWindow(void)
+static void ShowSafariBallsWindow(void)
 {
     AlignInt2InMenuWindow(gStringVar1, gNumSafariBalls, 12, 1);
     Menu_DrawStdWindowFrame(0, 0, 10, 5);
@@ -306,7 +306,7 @@ static void DisplaySafariBallsWindow(void)
 }
 
 //Prints n menu items starting at *index
-static bool32 PrintStartMenuItemsMultistep(s16 *index, u32 n)
+static bool32 PrintStartMenuActions(s16 *index, u32 n)
 {
     int _index = *index;
 
@@ -325,7 +325,7 @@ static bool32 PrintStartMenuItemsMultistep(s16 *index, u32 n)
     return FALSE;
 }
 
-static bool32 InitStartMenuMultistep(s16 *step, s16 *index)
+static bool32 InitStartMenuStep(s16 *step, s16 *index)
 {
     switch (*step)
     {
@@ -340,11 +340,11 @@ static bool32 InitStartMenuMultistep(s16 *step, s16 *index)
         break;
     case 3:
         if (GetSafariZoneFlag())
-            DisplaySafariBallsWindow();
+            ShowSafariBallsWindow();
         (*step)++;
         break;
     case 4:
-        if (PrintStartMenuItemsMultistep(index, 2))
+        if (PrintStartMenuActions(index, 2))
             (*step)++;
         break;
     case 0:
@@ -362,13 +362,13 @@ static void InitStartMenu(void)
     s16 step = 0;
     s16 index = 0;
 
-    while (InitStartMenuMultistep(&step, &index) == FALSE)
+    while (InitStartMenuStep(&step, &index) == FALSE)
         ;
 }
 
 static void StartMenuTask(u8 taskId)
 {
-    if (InitStartMenuMultistep(gTasks[taskId].data, gTasks[taskId].data + 1) == TRUE)
+    if (InitStartMenuStep(gTasks[taskId].data, gTasks[taskId].data + 1) == TRUE)
     {
         *gTasks[taskId].data = 0;
         SwitchTaskToFollowupFunc(taskId);
@@ -428,15 +428,15 @@ static u8 HandleStartMenuInput(void)
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        if (sStartMenuItems[sCurrentStartMenuActions[sStartMenuCursorPos]].func == StartMenu_PokedexCallback)
+        if (sStartMenuItems[sCurrentStartMenuActions[sStartMenuCursorPos]].func == StartMenuPokedexCallback)
         {
             if (GetNationalPokedexCount(0) == 0)
                 return 0;
         }
         gMenuCallback = sStartMenuItems[sCurrentStartMenuActions[sStartMenuCursorPos]].func;
-        if (gMenuCallback != StartMenu_SaveCallback &&
-           gMenuCallback != StartMenu_ExitCallback &&
-           gMenuCallback != StartMenu_RetireCallback)
+        if (gMenuCallback != StartMenuSaveCallback &&
+           gMenuCallback != StartMenuExitCallback &&
+           gMenuCallback != StartMenuSafariZoneRetireCallback)
             FadeScreen(1, 0);
         return 0;
     }
@@ -449,7 +449,7 @@ static u8 HandleStartMenuInput(void)
 }
 
 //When player selects POKEDEX
-static u8 StartMenu_PokedexCallback(void)
+static u8 StartMenuPokedexCallback(void)
 {
     if (!gPaletteFade.active)
     {
@@ -462,7 +462,7 @@ static u8 StartMenu_PokedexCallback(void)
 }
 
 //When player selects POKEMON
-static u8 StartMenu_PokemonCallback(void)
+static u8 StartMenuPokemonCallback(void)
 {
     if (!gPaletteFade.active)
     {
@@ -474,7 +474,7 @@ static u8 StartMenu_PokemonCallback(void)
 }
 
 //When player selects BAG
-static u8 StartMenu_BagCallback(void)
+static u8 StartMenuBagCallback(void)
 {
     if (!gPaletteFade.active)
     {
@@ -486,7 +486,7 @@ static u8 StartMenu_BagCallback(void)
 }
 
 //When player selects POKENAV
-static u8 StartMenu_PokenavCallback(void)
+static u8 StartMenuPokeNavCallback(void)
 {
     if (!gPaletteFade.active)
     {
@@ -498,7 +498,7 @@ static u8 StartMenu_PokenavCallback(void)
 }
 
 //When player selects his/her name
-static u8 StartMenu_PlayerCallback(void)
+static u8 StartMenuPlayerNameCallback(void)
 {
     if (!gPaletteFade.active)
     {
@@ -510,7 +510,7 @@ static u8 StartMenu_PlayerCallback(void)
 }
 
 //When player selects SAVE
-static u8 StartMenu_SaveCallback(void)
+static u8 StartMenuSaveCallback(void)
 {
     Menu_DestroyCursor();
     gMenuCallback = SaveStartCallback;
@@ -518,7 +518,7 @@ static u8 StartMenu_SaveCallback(void)
 }
 
 //When player selects OPTION
-static u8 StartMenu_OptionCallback(void)
+static u8 StartMenuOptionCallback(void)
 {
     if (!gPaletteFade.active)
     {
@@ -531,14 +531,14 @@ static u8 StartMenu_OptionCallback(void)
 }
 
 //When player selects EXIT
-static u8 StartMenu_ExitCallback(void)
+static u8 StartMenuExitCallback(void)
 {
     CloseMenu();
     return 1;
 }
 
 //When player selects RETIRE
-static u8 StartMenu_RetireCallback(void)
+static u8 StartMenuSafariZoneRetireCallback(void)
 {
     CloseMenu();
     SafariZoneRetirePrompt();
@@ -546,7 +546,7 @@ static u8 StartMenu_RetireCallback(void)
 }
 
 //When player selects their name in multiplayer mode
-static u8 StartMenu_PlayerLinkCallback(void)
+static u8 StartMenuLinkModePlayerNameCallback(void)
 {
     if (!gPaletteFade.active)
     {
