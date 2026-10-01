@@ -201,7 +201,7 @@ static void Shop_FadeAndRunBuySellCallback(u8 taskId)
     }
 }
 
-static void ReturnToShopMenuAfterExitingSellMenu(u8 taskId)
+static void ShowShopMenuAfterExitingBuyOrSellMenu(u8 taskId)
 {
     CreateShopMenu(gMartInfo.martType);
     DestroyTask(taskId);
@@ -212,9 +212,9 @@ static void Task_ReturnToMartMenu(u8 taskId)
     if (IsWeatherNotFadingIn() == 1)
     {
         if (gMartInfo.martType == MART_TYPE_2)
-            DisplayItemMessageOnField(taskId, gOtherText_CanIHelpYou, ReturnToShopMenuAfterExitingSellMenu, 0);
+            DisplayItemMessageOnField(taskId, gOtherText_CanIHelpYou, ShowShopMenuAfterExitingBuyOrSellMenu, 0);
         else
-            DisplayItemMessageOnField(taskId, gOtherText_AnythingElse, ReturnToShopMenuAfterExitingSellMenu, 0);
+            DisplayItemMessageOnField(taskId, gOtherText_AnythingElse, ShowShopMenuAfterExitingBuyOrSellMenu, 0);
     }
 }
 
@@ -1198,7 +1198,7 @@ static void ClearItemPurchases(void)
     ClearItemSlots(gMartPurchaseHistory, SMARTSHOPPER_NUM_ITEMS);
 }
 
-void Shop_CreatePokemartMenu(u16 *itemList)
+void CreatePokemartMenu(u16 *itemList)
 {
     CreateShopMenu(MART_TYPE_0);
     SetShopItemsForSale(itemList);
@@ -1206,14 +1206,14 @@ void Shop_CreatePokemartMenu(u16 *itemList)
     SetShopMenuCallback(ScriptContext_Enable);
 }
 
-void Shop_CreateDecorationShop1Menu(u16 *itemList)
+void CreateDecorationShop1Menu(u16 *itemList)
 {
     CreateShopMenu(MART_TYPE_1);
     SetShopItemsForSale(itemList);
     SetShopMenuCallback(ScriptContext_Enable);
 }
 
-void Shop_CreateDecorationShop2Menu(u16 *itemList)
+void CreateDecorationShop2Menu(u16 *itemList)
 {
     CreateShopMenu(MART_TYPE_2);
     SetShopItemsForSale(itemList);
