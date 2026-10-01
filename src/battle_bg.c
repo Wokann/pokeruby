@@ -386,7 +386,7 @@ void LoadBattleTextboxAndBackground(void)
     #endif
 }
 
-static void WriteLinkBattleParticipantPokeballs(u8 taskId, u8 multiplayerId, u8 *dest)
+static void DrawLinkBattleParticipantPokeballs(u8 taskId, u8 multiplayerId, u8 *dest)
 {
     int i;
     u16 pokeballStatuses = 0;
@@ -567,7 +567,7 @@ void InitLinkBattleVsScreen(u8 taskId)
                     gLinkResultWindows[windowId].top,
                     1);
                 Text_PrintWindow8002F44(gLinkResultWindows[windowId].window);
-                WriteLinkBattleParticipantPokeballs(taskId, windowId, gLinkResultWindows[windowId].dest);
+                DrawLinkBattleParticipantPokeballs(taskId, windowId, gLinkResultWindows[windowId].dest);
             }
         } else {
             u8 windowId = 4;
@@ -587,7 +587,7 @@ void InitLinkBattleVsScreen(u8 taskId)
                 gLinkResultWindows[windowId].top,
                 1);
             Text_PrintWindow8002F44(gLinkResultWindows[windowId].window);
-            WriteLinkBattleParticipantPokeballs(taskId, playerId, gLinkResultWindows[windowId].dest);
+            DrawLinkBattleParticipantPokeballs(taskId, playerId, gLinkResultWindows[windowId].dest);
 
             Text_InitWindow8002E4C(
                 gLinkResultWindows[windowId + 1].window,
@@ -597,7 +597,7 @@ void InitLinkBattleVsScreen(u8 taskId)
                 gLinkResultWindows[windowId + 1].top,
                 1);
             Text_PrintWindow8002F44(gLinkResultWindows[windowId + 1].window);
-            WriteLinkBattleParticipantPokeballs(taskId, opponentId, gLinkResultWindows[windowId + 1].dest);
+            DrawLinkBattleParticipantPokeballs(taskId, opponentId, gLinkResultWindows[windowId + 1].dest);
         }
         gTasks[taskId].data[0]++;
         break;
