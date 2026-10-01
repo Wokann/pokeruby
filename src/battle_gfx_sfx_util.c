@@ -286,24 +286,24 @@ bool8 IsBattleSEPlaying(u8 battler)
 
 void BattleLoadOpponentMonSpriteGfx(struct Pokemon *mon, u8 battler)
 {
-    u32 personality;
+    u32 monsPersonality;
     u16 species;
-    u32 spritePersonality;
+    u32 currentPersonality;
     u32 otId;
     u8 position;
     u16 paletteOffset;
     const u8 *lzPaletteData;
 
-    personality = GetMonData(mon, MON_DATA_PERSONALITY);
+    monsPersonality = GetMonData(mon, MON_DATA_PERSONALITY);
     if (gBattleSpriteInfo[battler].transformSpecies == 0)
     {
         species = GetMonData(mon, MON_DATA_SPECIES);
-        spritePersonality = personality;
+        currentPersonality = monsPersonality;
     }
     else
     {
         species = gBattleSpriteInfo[battler].transformSpecies;
-        spritePersonality = gTransformedPersonalities[battler];
+        currentPersonality = gTransformedPersonalities[battler];
     }
     otId = GetMonData(mon, MON_DATA_OT_ID);
     position = GetBattlerPosition(battler);
@@ -314,12 +314,12 @@ void BattleLoadOpponentMonSpriteGfx(struct Pokemon *mon, u8 battler)
       sBattleInterfaceGfxBuffer,
       gMonSpriteGfxBufferPtrs[position],
       species,
-      spritePersonality);
+      currentPersonality);
     paletteOffset = 0x100 + battler * 16;
     if (gBattleSpriteInfo[battler].transformSpecies == 0)
         lzPaletteData = GetMonFrontSpritePal(mon);
     else
-        lzPaletteData = GetMonSpritePalFromSpeciesAndPersonality(species, otId, personality);
+        lzPaletteData = GetMonSpritePalFromSpeciesAndPersonality(species, otId, monsPersonality);
     LZDecompressWram(lzPaletteData, gSharedMem);
     LoadPalette(gSharedMem, paletteOffset, 0x20);
     LoadPalette(gSharedMem, 0x80 + battler * 16, 0x20);
@@ -338,24 +338,24 @@ void BattleLoadOpponentMonSpriteGfx(struct Pokemon *mon, u8 battler)
 
 void BattleLoadPlayerMonSpriteGfx(struct Pokemon *mon, u8 battler)
 {
-    u32 personality;
+    u32 monsPersonality;
     u16 species;
-    u32 spritePersonality;
+    u32 currentPersonality;
     u32 otId;
     u8 position;
     u16 paletteOffset;
     const u8 *lzPaletteData;
 
-    personality = GetMonData(mon, MON_DATA_PERSONALITY);
+    monsPersonality = GetMonData(mon, MON_DATA_PERSONALITY);
     if (gBattleSpriteInfo[battler].transformSpecies == 0)
     {
         species = GetMonData(mon, MON_DATA_SPECIES);
-        spritePersonality = personality;
+        currentPersonality = monsPersonality;
     }
     else
     {
         species = gBattleSpriteInfo[battler].transformSpecies;
-        spritePersonality = gTransformedPersonalities[battler];
+        currentPersonality = gTransformedPersonalities[battler];
     }
     otId = GetMonData(mon, MON_DATA_OT_ID);
     position = GetBattlerPosition(battler);
@@ -366,12 +366,12 @@ void BattleLoadPlayerMonSpriteGfx(struct Pokemon *mon, u8 battler)
       sBattleInterfaceGfxBuffer,
       gMonSpriteGfxBufferPtrs[position],
       species,
-      spritePersonality);
+      currentPersonality);
     paletteOffset = 0x100 + battler * 16;
     if (gBattleSpriteInfo[battler].transformSpecies == 0)
         lzPaletteData = GetMonFrontSpritePal(mon);
     else
-        lzPaletteData = GetMonSpritePalFromSpeciesAndPersonality(species, otId, personality);
+        lzPaletteData = GetMonSpritePalFromSpeciesAndPersonality(species, otId, monsPersonality);
     LZDecompressWram(lzPaletteData, gSharedMem);
     LoadPalette(gSharedMem, paletteOffset, 0x20);
     LoadPalette(gSharedMem, 0x80 + battler * 16, 0x20);
@@ -443,7 +443,7 @@ void FreeTrainerFrontPicPalette(u16 frontPicId)
 
 void BattleLoadAllHealthBoxesGfxAtOnce(void)
 {
-    u8 count;
+    u8 numberOfBattlers;
     u8 i;
 
     LoadSpritePalette(&sSpritePalettes_HealthBoxHealthBar[0]);
@@ -452,7 +452,7 @@ void BattleLoadAllHealthBoxesGfxAtOnce(void)
     {
         LoadCompressedSpriteSheet(&sSpriteSheet_SinglesPlayerHealthbox);
         LoadCompressedSpriteSheet(&sSpriteSheet_SinglesOpponentHealthbox);
-        count = 2;
+        numberOfBattlers = 2;
     }
     else
     {
@@ -460,9 +460,9 @@ void BattleLoadAllHealthBoxesGfxAtOnce(void)
         LoadCompressedSpriteSheet(&sSpriteSheets_DoublesPlayerHealthbox[1]);
         LoadCompressedSpriteSheet(&sSpriteSheets_DoublesOpponentHealthbox[0]);
         LoadCompressedSpriteSheet(&sSpriteSheets_DoublesOpponentHealthbox[1]);
-        count = 4;
+        numberOfBattlers = 4;
     }
-    for (i = 0; i < count; i++)
+    for (i = 0; i < numberOfBattlers; i++)
         LoadCompressedSpriteSheet(&sSpriteSheets_HealthBar[gBattlerPositions[i]]);
 }
 
@@ -937,7 +937,7 @@ void HideBattlerShadowSprite(u8 battler)
 
 void FillAroundBattleWindows(void)
 {
-    u16 *tilePixels = (u16 *)(VRAM + 0x240);
+    u16 *vramPtr = (u16 *)(VRAM + 0x240);
     s32 tile;
     s32 pixelWord;
 
@@ -945,15 +945,15 @@ void FillAroundBattleWindows(void)
     {
         for (pixelWord = 0; pixelWord < 16; pixelWord++)
         {
-            if (!(*tilePixels & 0xF000))
-                *tilePixels |= 0xF000;
-            if (!(*tilePixels & 0x0F00))
-                *tilePixels |= 0x0F00;
-            if (!(*tilePixels & 0x00F0))
-                *tilePixels |= 0x00F0;
-            if (!(*tilePixels & 0x000F))
-                *tilePixels |= 0x000F;
-            tilePixels++;
+            if (!(*vramPtr & 0xF000))
+                *vramPtr |= 0xF000;
+            if (!(*vramPtr & 0x0F00))
+                *vramPtr |= 0x0F00;
+            if (!(*vramPtr & 0x00F0))
+                *vramPtr |= 0x00F0;
+            if (!(*vramPtr & 0x000F))
+                *vramPtr |= 0x000F;
+            vramPtr++;
         }
     }
 }
