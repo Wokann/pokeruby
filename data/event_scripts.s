@@ -839,7 +839,8 @@ EventScript_BackupMrBrineyLocation:: @ 81A010C
 	return
 
 	.include "data/scripts/surf.inc"
-	.include "data/scripts/dynamic_npc_graphics.inc"
+	.include "data/scripts/rival_graphics.inc"
+	.include "data/scripts/versioned_object_graphics.inc"
 	.include "data/scripts/set_gym_trainers.inc"
 
 Common_EventScript_ShowBagIsFull:: @ 81A029B
