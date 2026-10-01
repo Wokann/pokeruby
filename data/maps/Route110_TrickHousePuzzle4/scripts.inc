@@ -3,11 +3,11 @@ Route110_TrickHousePuzzle4_MapScripts:: @ 816274D
 
 Route110_TrickHousePuzzle4_EventScript_Scroll:: @ 816274E
 	lockall
-	goto_if_eq VAR_TRICK_HOUSE_PUZZLE_4_STATE, 0, Route110_TrickHousePuzzle4_EventScript_ReadScroll
+	goto_if_eq VAR_TRICK_HOUSE_PUZZLE_4_STATE, 0, Route110_TrickHousePuzzle4_EventScript_FoundScroll
 	goto Route110_TrickHousePuzzle_EventScript_ReadScrollAgain
 	end
 
-Route110_TrickHousePuzzle4_EventScript_ReadScroll:: @ 8162760
+Route110_TrickHousePuzzle4_EventScript_FoundScroll:: @ 8162760
 	setvar VAR_TRICK_HOUSE_PUZZLE_4_STATE, 1
 	goto Route110_TrickHousePuzzle_EventScript_FoundScroll
 	end
