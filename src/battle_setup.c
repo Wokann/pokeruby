@@ -932,7 +932,7 @@ static u8 TrainerBattleLoadArg8(const u8 *ptr)
 
 static u16 GetTrainerAFlag(void)
 {
-    return TRAINER_FLAG_START + gTrainerBattleOpponent;
+    return TRAINER_FLAGS_START + gTrainerBattleOpponent;
 }
 
 static bool32 IsPlayerDefeated(u32 battleOutcome)
@@ -1063,7 +1063,7 @@ void ConfigureAndSetUpOneTrainerBattle(u8 trainerObjEventId, const u8 *trainerSc
 bool32 GetTrainerFlagFromScriptPointer(const u8 *data)
 {
     u32 flag = TrainerBattleLoadArg16(data + 2);
-    return FlagGet(TRAINER_FLAG_START + flag);
+    return FlagGet(TRAINER_FLAGS_START + flag);
 }
 
 void SetTrainerFacingDirection(void)
@@ -1095,17 +1095,17 @@ static void UNUSED UnusedSetBattledTrainerFlag(void)
 
 bool8 HasTrainerBeenFought(u16 trainerId)
 {
-    return FlagGet(TRAINER_FLAG_START + trainerId);
+    return FlagGet(TRAINER_FLAGS_START + trainerId);
 }
 
 void SetTrainerFlag(u16 trainerId)
 {
-    FlagSet(TRAINER_FLAG_START + trainerId);
+    FlagSet(TRAINER_FLAGS_START + trainerId);
 }
 
 void ClearTrainerFlag(u16 trainerId)
 {
-    FlagClear(TRAINER_FLAG_START + trainerId);
+    FlagClear(TRAINER_FLAGS_START + trainerId);
 }
 
 void BattleSetup_StartTrainerBattle(void)
