@@ -293,12 +293,12 @@
 #define B_WAIT_TIME_MED   48
 #define B_WAIT_TIME_SHORT 32
 
-#define F_MAKES_CONTACT           (1 << 0)
-#define F_AFFECTED_BY_PROTECT     (1 << 1)
-#define F_AFFECTED_BY_MAGIC_COAT  (1 << 2)
-#define F_AFFECTED_BY_SNATCH      (1 << 3)
-#define F_MIRROR_MOVE_COMPATIBLE  (1 << 4)
-#define F_AFFECTED_BY_KINGS_ROCK  (1 << 5)
+#define FLAG_MAKES_CONTACT          (1 << 0)
+#define FLAG_PROTECT_AFFECTED       (1 << 1)
+#define FLAG_MAGIC_COAT_AFFECTED    (1 << 2)
+#define FLAG_SNATCH_AFFECTED        (1 << 3)
+#define FLAG_MIRROR_MOVE_AFFECTED   (1 << 4)
+#define FLAG_KINGS_ROCK_AFFECTED    (1 << 5)
 
 #define AI_ACTION_DONE          0x0001
 #define AI_ACTION_FLEE          0x0002
