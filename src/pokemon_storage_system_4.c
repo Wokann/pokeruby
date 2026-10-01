@@ -1766,10 +1766,10 @@ void SetDisplayMonData(void *pokemon, u8 mode)
     {
         txtPtr = gPokemonStorageSystemPtr->displayMonNameText;
         txtPtr[0] = EXT_CTRL_CODE_BEGIN;
-        txtPtr[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
-        txtPtr[2] = 0x0F; // WHITE2
-        txtPtr[3] = 0x00; // TRANSPARENT
-        txtPtr[4] = 0x01; // DARK_GREY
+        txtPtr[1] = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
+        txtPtr[2] = TEXT_COLOR_WHITE2;
+        txtPtr[3] = TEXT_COLOR_TRANSPARENT;
+        txtPtr[4] = TEXT_COLOR_DARK_GREY;
         txtPtr = gPokemonStorageSystemPtr->displayMonNameText + 5;
         txtPtr = StringCopy(txtPtr, gPokemonStorageSystemPtr->displayMonName);
         gPokemonStorageSystemPtr->displayMonSpeciesName[0] = EOS;
@@ -1782,62 +1782,62 @@ void SetDisplayMonData(void *pokemon, u8 mode)
             gender = MON_GENDERLESS;
         txtPtr = gPokemonStorageSystemPtr->displayMonNameText;
         txtPtr[0] = EXT_CTRL_CODE_BEGIN;
-        txtPtr[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
-        txtPtr[2] = 0x0F; // WHITE2
-        txtPtr[3] = 0x00; // TRANSPARENT
-        txtPtr[4] = 0x01; // DARK_GREY
+        txtPtr[1] = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
+        txtPtr[2] = TEXT_COLOR_WHITE2;
+        txtPtr[3] = TEXT_COLOR_TRANSPARENT;
+        txtPtr[4] = TEXT_COLOR_DARK_GREY;
         txtPtr = gPokemonStorageSystemPtr->displayMonNameText + 5;
         txtPtr = StringCopy(txtPtr, gPokemonStorageSystemPtr->displayMonName);
         txtPtr = gPokemonStorageSystemPtr->displayMonSpeciesName;
         txtPtr[0] = EXT_CTRL_CODE_BEGIN;
-        txtPtr[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
-        txtPtr[2] = 0x0F; // WHITE2
-        txtPtr[3] = 0x00; // TRANSPARENT
-        txtPtr[4] = 0x01; // DARK_GREY
+        txtPtr[1] = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
+        txtPtr[2] = TEXT_COLOR_WHITE2;
+        txtPtr[3] = TEXT_COLOR_TRANSPARENT;
+        txtPtr[4] = TEXT_COLOR_DARK_GREY;
         txtPtr[5] = EXT_CTRL_CODE_BEGIN;
-        txtPtr[6] = 0x13; // CLEAR_TO
+        txtPtr[6] = EXT_CTRL_CODE_CLEAR_TO;
         txtPtr[7] = 7;
         txtPtr[8] = CHAR_SLASH;
         txtPtr = gPokemonStorageSystemPtr->displayMonSpeciesName + 9;
         txtPtr = StringCopy(txtPtr, gSpeciesNames[gPokemonStorageSystemPtr->displayMonSpecies]);
         txtPtr[0] = EXT_CTRL_CODE_BEGIN;
-        txtPtr[1] = 0x13; // CLEAR_TO
+        txtPtr[1] = EXT_CTRL_CODE_CLEAR_TO;
         txtPtr[2] = 0x50;
         txtPtr[3] = EOS;
         txtPtr = gPokemonStorageSystemPtr->displayMonGenderLvlText;
         txtPtr[0] = EXT_CTRL_CODE_BEGIN;
-        txtPtr[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
-        txtPtr[2] = 0x0F; // WHITE2
-        txtPtr[3] = 0x00; // TRANSPARENT
-        txtPtr[4] = 0x01; // DARK_GREY
+        txtPtr[1] = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
+        txtPtr[2] = TEXT_COLOR_WHITE2;
+        txtPtr[3] = TEXT_COLOR_TRANSPARENT;
+        txtPtr[4] = TEXT_COLOR_DARK_GREY;
         txtPtr[5] = EXT_CTRL_CODE_BEGIN;
-        txtPtr[6] = 0x13; // CLEAR_TO
+        txtPtr[6] = EXT_CTRL_CODE_CLEAR_TO;
         txtPtr[7] = 8;
         txtPtr = gPokemonStorageSystemPtr->displayMonGenderLvlText + 8;
-        txtPtr[0] = 0x34; // LV
+        txtPtr[0] = CHAR_LV;
         txtPtr = gPokemonStorageSystemPtr->displayMonGenderLvlText + 9;
         txtPtr = AlignInt1InMenuWindow(txtPtr, gPokemonStorageSystemPtr->displayMonLevel, 0x22, STR_CONV_MODE_RIGHT_ALIGN);
         txtPtr[0] = EXT_CTRL_CODE_BEGIN;
-        txtPtr[1] = 0x11; // CLEAR
+        txtPtr[1] = EXT_CTRL_CODE_CLEAR;
         txtPtr[2] = 8;
         txtPtr += 3;
         switch (gender)
         {
             case MON_MALE:
                 txtPtr[0] = EXT_CTRL_CODE_BEGIN;
-                txtPtr[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
-                txtPtr[2] = 0x04; // BLUE
-                txtPtr[3] = 0x00; // TRANSPARENT
-                txtPtr[4] = 0x05; // YELLOW
+                txtPtr[1] = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
+                txtPtr[2] = TEXT_COLOR_BLUE;
+                txtPtr[3] = TEXT_COLOR_TRANSPARENT;
+                txtPtr[4] = TEXT_COLOR_YELLOW;
                 txtPtr[5] = CHAR_MALE;
                 txtPtr += 6;
                 break;
             case MON_FEMALE:
                 txtPtr[0] = EXT_CTRL_CODE_BEGIN;
-                txtPtr[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
-                txtPtr[2] = 0x06; // CYAN
-                txtPtr[3] = 0x00; // TRANSPARENT
-                txtPtr[4] = 0x07; // MAGENTA
+                txtPtr[1] = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
+                txtPtr[2] = TEXT_COLOR_CYAN;
+                txtPtr[3] = TEXT_COLOR_TRANSPARENT;
+                txtPtr[4] = TEXT_COLOR_MAGENTA;
                 txtPtr[5] = CHAR_FEMALE;
                 txtPtr += 6;
                 break;
@@ -1847,18 +1847,18 @@ void SetDisplayMonData(void *pokemon, u8 mode)
         if (gPokemonStorageSystemPtr->displayMonItemId)
         {
             txtPtr[0] = EXT_CTRL_CODE_BEGIN;
-            txtPtr[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
-            txtPtr[2] = 0x0F; // WHITE2
-            txtPtr[3] = 0x00; // TRANSPARENT
-            txtPtr[4] = 0x01; // DARK_GREY
+            txtPtr[1] = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
+            txtPtr[2] = TEXT_COLOR_WHITE2;
+            txtPtr[3] = TEXT_COLOR_TRANSPARENT;
+            txtPtr[4] = TEXT_COLOR_DARK_GREY;
             txtPtr = gPokemonStorageSystemPtr->displayMonItemName + 5;
             txtPtr[0] = EXT_CTRL_CODE_BEGIN;
-            txtPtr[1] = 0x06; // size
+            txtPtr[1] = EXT_CTRL_CODE_FONT;
             txtPtr[2] = 0x04;
             txtPtr = gPokemonStorageSystemPtr->displayMonItemName + 8;
             txtPtr = StringCopy(txtPtr, GetItemName(gPokemonStorageSystemPtr->displayMonItemId));
             txtPtr[0] = EXT_CTRL_CODE_BEGIN;
-            txtPtr[1] = 0x07; // UNKNOWN_7;
+            txtPtr[1] = EXT_CTRL_CODE_RESET_FONT;
             txtPtr += 2;
         }
         txtPtr[0] = EOS;
