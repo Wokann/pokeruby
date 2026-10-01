@@ -125,7 +125,7 @@ extern u8 gSharedMem[];
 #define eCableCarTilemapData            ((struct CableCarTilemapData *)(gSharedMem + 0x19000))
 
 #define sBerryBlenderSharedMem          ((struct BerryBlender *)(&gSharedMem[0x18000]))
-#define eEggHatchData                   (struct EggHatchData*)(&gSharedMem[0x18000])
+#define sEggHatchSharedMem              ((struct EggHatchData *)(&gSharedMem[0x18000]))
 
 // pokemon_summary_screen.c
 #define pssData                         (*(struct PokemonSummaryScreenData *)(gSharedMem + 0x18000))
