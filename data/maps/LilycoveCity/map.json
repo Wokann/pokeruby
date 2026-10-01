@@ -241,7 +241,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "LilycoveCity_EventScript_Rival",
-      "flag": "FLAG_HIDE_RIVAL_LILYCOVE_MART"
+      "flag": "FLAG_HIDE_LILYCOVE_CITY_RIVAL"
     }
   ],
   "warp_events": [
