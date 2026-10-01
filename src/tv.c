@@ -2277,28 +2277,28 @@ void SetMixedTVShows(TVShow player1[TV_SHOWS_COUNT], TVShow player2[TV_SHOWS_COU
 
 bool8 TryMixTVShow(TVShow *destShows[TV_SHOWS_COUNT], TVShow *srcShows[TV_SHOWS_COUNT], u8 sourcePlayerIdx)
 {
-    u8 result;
+    u8 success;
     u8 group;
     TVShow *dest;
     TVShow *src;
 
     dest = *destShows;
     src = *srcShows;
-    result = FALSE;
+    success = FALSE;
     group = GetTVGroupByShowId(src[sTVShowMixingCurSlot].common.kind);
     switch (group)
     {
     case TVGROUP_NORMAL:
-        result = TryMixNormalTVShow(&dest[sCurTVShowSlot.slot], &src[sTVShowMixingCurSlot], sourcePlayerIdx);
+        success = TryMixNormalTVShow(&dest[sCurTVShowSlot.slot], &src[sTVShowMixingCurSlot], sourcePlayerIdx);
         break;
     case TVGROUP_RECORD_MIX:
-        result = TryMixRecordMixTVShow(&dest[sCurTVShowSlot.slot], &src[sTVShowMixingCurSlot], sourcePlayerIdx);
+        success = TryMixRecordMixTVShow(&dest[sCurTVShowSlot.slot], &src[sTVShowMixingCurSlot], sourcePlayerIdx);
         break;
     case TVGROUP_OUTBREAK:
-        result = TryMixOutbreakTVShow(&dest[sCurTVShowSlot.slot], &src[sTVShowMixingCurSlot], sourcePlayerIdx);
+        success = TryMixOutbreakTVShow(&dest[sCurTVShowSlot.slot], &src[sTVShowMixingCurSlot], sourcePlayerIdx);
         break;
     }
-    if (result == TRUE)
+    if (success == TRUE)
     {
         DeleteTVShowInArrayByIdx(src, sTVShowMixingCurSlot);
         return TRUE;
@@ -2475,15 +2475,15 @@ void DeactivateAllNormalTVShows(void)
 void DeleteExcessMixedShows(void)
 {
     s8 showIdx;
-    s8 count;
-    count = 0;
+    s8 numEmptyMixSlots;
+    numEmptyMixSlots = 0;
 
     for (showIdx = NUM_NORMAL_TVSHOW_SLOTS; showIdx < LAST_TVSHOW_IDX; showIdx++)
     {
         if (gSaveBlock1.tvShows[showIdx].common.kind == TVSHOW_OFF_AIR)
-            count++;
+            numEmptyMixSlots++;
     }
-    for (showIdx = 0; showIdx < NUM_NORMAL_TVSHOW_SLOTS - count; showIdx++)
+    for (showIdx = 0; showIdx < NUM_NORMAL_TVSHOW_SLOTS - numEmptyMixSlots; showIdx++)
         DeleteTVShowInArrayByIdx(gSaveBlock1.tvShows, showIdx + NUM_NORMAL_TVSHOW_SLOTS);
 }
 
