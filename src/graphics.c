@@ -720,8 +720,8 @@ const u8 gBattleAnimSpritePal_Meteor[] = INCBIN_U8("graphics/battle_anims/sprite
 const u8 gBattleAnimSpriteGfx_FlatRock[] = INCBIN_U8("graphics/battle_anims/sprites/flat_rock.4bpp.lz");
 const u8 gBattleAnimSpritePal_FlatRock[] = INCBIN_U8("graphics/battle_anims/sprites/flat_rock.gbapal.lz");
 
-#include "graphics/pokemon.h"
-#include "graphics/trainers.h"
+#include "data/graphics/pokemon.h"
+#include "data/graphics/trainers.h"
 
 const u8 gMonIcon_QuestionMark[] = INCBIN_U8("graphics/pokemon/question_mark/icon.4bpp");
 const u8 gMonFootprint_QuestionMark[] = INCBIN_U8("graphics/pokemon/question_mark/footprint.1bpp");
@@ -935,7 +935,7 @@ const u8 gBerryTag_Gfx[] = INCBIN_U8("graphics/bag/berry_tag.bin.lz");
 const u8 gBerryTag_Tilemap[] = INCBIN_U8("graphics/bag/berry_tag_title.bin.lz");
 const u8 gBerryCheckCircle_Gfx[] = INCBIN_U8("graphics/bag/check_berry_circle.4bpp.lz");
 
-#include "graphics/berries.h"
+#include "data/graphics/berries.h"
 
 const u8 gBattleAnimSpritePal_Shock3[] = INCBIN_U8("graphics/battle_anims/sprites/shock_3.gbapal.lz");
 const u8 gBattleAnimSpriteGfx_Shock3[] = INCBIN_U8("graphics/battle_anims/sprites/shock_3.4bpp.lz");
