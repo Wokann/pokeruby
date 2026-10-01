@@ -216,18 +216,13 @@ struct BattleScriptsStack
 
 struct BattleCallbacksStack
 {
-    void* ptr[8];
+    void (*function[8])(void);
     u8 size;
 };
 
 struct StatsArray
 {
-    u16 hp;
-    u16 atk;
-    u16 def;
-    u16 spd;
-    u16 spAtk;
-    u16 spDef;
+    u16 stats[NUM_STATS];
 };
 
 struct BattleResults
@@ -274,12 +269,6 @@ struct Trainer
     /*0x1C*/ u32 aiFlags;
     /*0x20*/ u8 partySize;
     /*0x24*/ union TrainerMonPtr party;
-};
-
-struct AI_Stack
-{
-    u8 *ptr[8];
-    u8 size;
 };
 
 struct LinkPartnerHeader

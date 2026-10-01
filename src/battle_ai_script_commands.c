@@ -31,7 +31,7 @@ extern u16 gSideStatuses[2];
 extern struct BattlePokemon gBattleMons[MAX_BATTLERS_COUNT];
 extern u8 gCritMultiplier;
 extern u16 gTrainerBattleOpponent;
-extern u8 *gBattleAI_ScriptsTable[];
+extern const u8 *const gBattleAI_ScriptsTable[];
 
 /*
 gAIScriptPtr is a pointer to the next battle AI cmd command to read.
@@ -40,7 +40,7 @@ the number of bytes that the current command had reserved for arguments
 in order to read the next command correctly. refer to battle_ai_scripts.s for the
 AI scripts.
 */
-EWRAM_DATA u8 *gAIScriptPtr = NULL;
+EWRAM_DATA const u8 *gAIScriptPtr = NULL;
 
 static void Cmd_if_random_less_than(void);
 static void Cmd_if_random_greater_than(void);
@@ -307,7 +307,7 @@ void BattleAI_SetupAIData(void)
     }
 
     // clear AI stack.
-    AI_STACK->size = 0;
+    sAIScriptsStack->size = 0;
     gBattlerAttacker = gActiveBattler;
 
     if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
@@ -1879,23 +1879,23 @@ static void Cmd_if_target_not_taunted(void)
         gAIScriptPtr += 5;
 }
 
-void AIStackPushVar(u8 *ptr)
+void AIStackPushVar(const u8 *var)
 {
-    AI_STACK->ptr[AI_STACK->size++] = ptr;
+    sAIScriptsStack->ptr[sAIScriptsStack->size++] = var;
 }
 
 // unused
 void AIStackPushAIPtr(void)
 {
-    AI_STACK->ptr[AI_STACK->size++] = gAIScriptPtr;
+    sAIScriptsStack->ptr[sAIScriptsStack->size++] = gAIScriptPtr;
 }
 
 bool8 AIStackPop(void)
 {
-    if (AI_STACK->size != 0)
+    if (sAIScriptsStack->size != 0)
     {
-        --AI_STACK->size;
-        gAIScriptPtr = AI_STACK->ptr[AI_STACK->size];
+        --sAIScriptsStack->size;
+        gAIScriptPtr = sAIScriptsStack->ptr[sAIScriptsStack->size];
         return TRUE;
     }
     else

@@ -3450,8 +3450,8 @@ void BattleStartClearSetData(void)
     gBattleOutcome = 0;
     gBattleControllerExecFlags = 0;
     gPaydayMoney = 0;
-    (*(u8 *)&B_BATTLESCRIPTS_STACK->size) = 0;
-    (*(u8 *)&B_FUNCTION_STACK->size) = 0;
+    (*(u8 *)&sBattleScriptsStack->size) = 0;
+    (*(u8 *)&sBattleCallbackStack->size) = 0;
 
     for (i = 0; i < 8; i++)
         gBattleCommunication[i] = 0;
@@ -4902,7 +4902,7 @@ void CheckFocusPunch_ClearVarsBeforeTurnStarts(void)
     gBattleCommunication[3] = 0;
     gBattleCommunication[4] = 0;
     gBattleStruct->multihitMoveEffect = 0;
-    B_BATTLESCRIPTS_STACK->size = 0;
+    sBattleScriptsStack->size = 0;
 }
 
 static void RunTurnActionsFunctions(void)
@@ -5152,9 +5152,9 @@ void RunBattleScriptCommands_PopCallbacksStack(void)
 {
     if (gCurrentActionFuncId == 0xB || gCurrentActionFuncId == 0xC)
     {
-        if (B_FUNCTION_STACK->size != 0)
-            B_FUNCTION_STACK->size--;
-        gBattleMainFunc = B_FUNCTION_STACK->ptr[B_FUNCTION_STACK->size];
+        if (sBattleCallbackStack->size != 0)
+            sBattleCallbackStack->size--;
+        gBattleMainFunc = sBattleCallbackStack->function[sBattleCallbackStack->size];
     }
     else
     {
@@ -5689,5 +5689,5 @@ void HandleAction_ActionFinished(void)
     gBattleCommunication[3] = 0;
     gBattleCommunication[4] = 0;
     gBattleStruct->multihitMoveEffect = 0;
-    B_BATTLESCRIPTS_STACK->size = 0;
+    sBattleScriptsStack->size = 0;
 }

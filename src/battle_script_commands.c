@@ -3484,12 +3484,12 @@ static void Cmd_getexp(void)
             gBattleBufferB[gBattleStruct->expGetterBattlerId][0] = 0;
             if (GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_HP) && GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL) != 100)
             {
-                gBattleResources_statsBeforeLvlUp->hp = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_MAX_HP);
-                gBattleResources_statsBeforeLvlUp->atk = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_ATK);
-                gBattleResources_statsBeforeLvlUp->def = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_DEF);
-                gBattleResources_statsBeforeLvlUp->spd = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPEED);
-                gBattleResources_statsBeforeLvlUp->spAtk = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPATK);
-                gBattleResources_statsBeforeLvlUp->spDef = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPDEF);
+                sStatsBeforeLvlUp->stats[STAT_HP] = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_MAX_HP);
+                sStatsBeforeLvlUp->stats[STAT_ATK] = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_ATK);
+                sStatsBeforeLvlUp->stats[STAT_DEF] = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_DEF);
+                sStatsBeforeLvlUp->stats[STAT_SPD] = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPEED);
+                sStatsBeforeLvlUp->stats[STAT_SPATK] = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPATK);
+                sStatsBeforeLvlUp->stats[STAT_SPDEF] = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPDEF);
 
                 gActiveBattler = gBattleStruct->expGetterBattlerId;
 
@@ -3989,9 +3989,9 @@ static void Cmd_end2(void)
 static void Cmd_end3(void) //pops the main function stack
 {
     BattleScriptPop();
-    if (B_FUNCTION_STACK->size)
-        B_FUNCTION_STACK->size--;
-    gBattleMainFunc = B_FUNCTION_STACK->ptr[B_FUNCTION_STACK->size];
+    if (sBattleCallbackStack->size)
+        sBattleCallbackStack->size--;
+    gBattleMainFunc = sBattleCallbackStack->function[sBattleCallbackStack->size];
 }
 
 static void Cmd_call(void)
@@ -5782,22 +5782,22 @@ static void Cmd_drawlvlupbox(void)
             switch (i)
             {
             case 0:
-                statChange = currentStat - gBattleResources_statsBeforeLvlUp->hp;
+                statChange = currentStat - sStatsBeforeLvlUp->stats[STAT_HP];
                 break;
             case 1:
-                statChange = currentStat - gBattleResources_statsBeforeLvlUp->spAtk;
+                statChange = currentStat - sStatsBeforeLvlUp->stats[STAT_SPATK];
                 break;
             case 2:
-                statChange = currentStat - gBattleResources_statsBeforeLvlUp->atk;
+                statChange = currentStat - sStatsBeforeLvlUp->stats[STAT_ATK];
                 break;
             case 3:
-                statChange = currentStat - gBattleResources_statsBeforeLvlUp->spDef;
+                statChange = currentStat - sStatsBeforeLvlUp->stats[STAT_SPDEF];
                 break;
             case 4:
-                statChange = currentStat - gBattleResources_statsBeforeLvlUp->def;
+                statChange = currentStat - sStatsBeforeLvlUp->stats[STAT_DEF];
                 break;
             case 5:
-                statChange = currentStat - gBattleResources_statsBeforeLvlUp->spd;
+                statChange = currentStat - sStatsBeforeLvlUp->stats[STAT_SPD];
                 break;
             }
             if (statChange < 0)

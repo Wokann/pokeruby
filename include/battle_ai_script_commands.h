@@ -21,7 +21,7 @@ u8 BattleAI_ChooseMoveOrAction(void);
 void BattleAI_DoAIProcessing(void);
 void RecordLastUsedMoveByTarget(void);
 void ClearBattlerMoveHistory(u8 battler);
-void AIStackPushVar(u8 *ptr);
+void AIStackPushVar(const u8 *var);
 u8 AIStackPop(void);
 void BattleAI_HandleItemUseBeforeAISetup(void);
 void RecordAbilityBattle(u8 battler, u8 abilityId);

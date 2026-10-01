@@ -450,17 +450,17 @@ void UpdateSentPokesToOpponentValue(u8 battler)
 
 void BattleScriptPush(const u8* BS_ptr)
 {
-    B_BATTLESCRIPTS_STACK->ptr[B_BATTLESCRIPTS_STACK->size++] = BS_ptr;
+    sBattleScriptsStack->ptr[sBattleScriptsStack->size++] = BS_ptr;
 }
 
 void BattleScriptPushCursor(void)
 {
-    B_BATTLESCRIPTS_STACK->ptr[B_BATTLESCRIPTS_STACK->size++] = gBattlescriptCurrInstr;
+    sBattleScriptsStack->ptr[sBattleScriptsStack->size++] = gBattlescriptCurrInstr;
 }
 
 void BattleScriptPop(void)
 {
-    gBattlescriptCurrInstr = B_BATTLESCRIPTS_STACK->ptr[--B_BATTLESCRIPTS_STACK->size];
+    gBattlescriptCurrInstr = sBattleScriptsStack->ptr[--sBattleScriptsStack->size];
 }
 
 u8 TrySetCantSelectMoveBattleScript(void) //msg can't select a move
@@ -2602,7 +2602,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
 void BattleScriptExecute(const u8* BS_ptr)
 {
     gBattlescriptCurrInstr = BS_ptr;
-    B_FUNCTION_STACK->ptr[B_FUNCTION_STACK->size++] = gBattleMainFunc;
+    sBattleCallbackStack->function[sBattleCallbackStack->size++] = gBattleMainFunc;
     gBattleMainFunc = RunBattleScriptCommands_PopCallbacksStack;
     gCurrentActionFuncId = 0;
 }
@@ -2611,7 +2611,7 @@ void BattleScriptPushCursorAndCallback(u8* BS_ptr)
 {
     BattleScriptPushCursor();
     gBattlescriptCurrInstr = BS_ptr;
-    B_FUNCTION_STACK->ptr[B_FUNCTION_STACK->size++] = gBattleMainFunc;
+    sBattleCallbackStack->function[sBattleCallbackStack->size++] = gBattleMainFunc;
     gBattleMainFunc = RunBattleScriptCommands;
 }
 
