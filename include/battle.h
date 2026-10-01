@@ -321,13 +321,13 @@ struct BattleStruct /* 0x2000000 */
     /*0x16003*/ u8 battler;
     /*0x16004*/ u8 wrappedMove[MAX_BATTLERS_COUNT * 2];
     /*0x1600C*/ u8 moveendState;
-    /*0x1600D*/ u8 unk1600D; // unused
+    /*0x1600D*/ u8 unused_0;
     /*0x1600E*/ u8 turnCountersTracker;
     /*0x1600F*/ u8 getexpState;
     /*0x16010*/ u8 moveTarget[MAX_BATTLERS_COUNT];
     /*0x16014*/ u32 painSplitHP;
     /*0x16018*/ u8 expGetterMonId;
-    /*0x16019*/ u8 unk16019; // unused
+    /*0x16019*/ u8 unused_1;
     /*0x1601A*/ u8 learnMoveState; // Also used by Cmd_yesnoboxstoplearningmove.
     /*0x1601B*/ u8 wildVictorySong;
     /*0x1601C*/ u8 dynamicMoveType;
@@ -337,7 +337,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x16020*/ u8 wrappedBy[MAX_BATTLERS_COUNT];
     /*0x16024*/ u16 assistPossibleMoves[PARTY_SIZE * MAX_MON_MOVES];
     /*0x16054*/ u8 battlerPreventingSwitchout;
-    /*0x16055*/ u8 unk16055; // unused
+    /*0x16055*/ u8 unused_2;
     /*0x16056*/ u8 moneyMultiplier;
     /*0x16057*/ u8 savedTurnActionNumber;
     /*0x16058*/ u8 switchInAbilitiesCounter;
@@ -353,7 +353,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x16078*/ u8 runTries;
     /*0x16079*/ u8 caughtMonNick[POKEMON_NAME_LENGTH + 1];
     /*0x16084*/ u8 battleStyle;
-    /*0x16085*/ u8 unk16085;
+    /*0x16085*/ u8 unused_3;
     /*0x16086*/ u8 safariGoNearCounter;
     /*0x16087*/ u8 safariPkblThrowCounter;
     /*0x16088*/ u8 safariEscapeFactor;
@@ -363,7 +363,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x1608C*/ u8 chosenMovePositions[MAX_BATTLERS_COUNT];
     /*0x16090*/ s32 bideDmg;
     /*0x16094*/ u8 stateIdAfterSelScript[4];
-    /*0x16098*/ u8 unk16098[3]; // unused
+    /*0x16098*/ u8 unused_4[3];
     /*0x1609B*/ u8 formToChangeInto;
     /*0x1609C*/ u8 drawlvlupboxState;
     /*0x1609D*/ u8 prevSelectedPartySlot;
@@ -403,8 +403,8 @@ struct BattleStruct /* 0x2000000 */
     /*0x160DA*/ u8 AI_usedItemEffect[2];
     /*0x160DC*/ u8 statAnimPlayed;
     /*0x160DD*/ u8 intimidateBattler;
-    /*0x160DE*/ u8 unk160DE;
-    /*0x160DF*/ u8 unk160DF;
+    /*0x160DE*/ u8 unused_5;
+    /*0x160DF*/ u8 unused_6;
     /*0x160E0*/ u8 multihitString[6];
     /*0x160E6*/ bool8 overworldWeatherDone;
     /*0x160E7*/ u8 atkCancelerTracker;
@@ -417,7 +417,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x160FC*/ u8 turnSideTracker;
     /*0x160FD*/ u8 debugAutoAdvanceState;
     /*0x160FE*/ u8 debugAutoAdvanceTimer;
-    /*0x160FF*/ u8 unk160FF;
+    /*0x160FF*/ u8 unused_7;
 	/*0x16100*/ u16 lastTakenMoveFrom[2 * 4];
     /*0x16110*/ u8 wishPerishSongState;
     /*0x16111*/ u8 wishPerishSongBattlerId;
