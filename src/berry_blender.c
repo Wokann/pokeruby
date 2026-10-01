@@ -3051,7 +3051,7 @@ bool8 PrintBlendingResults(void)
 static void PrintMadePokeblockString(struct Pokeblock* pokeblock, u8* dst)
 {
     u8 text[12];
-    u8 flavourLvl, feel;
+    u8 flavorLvl, feel;
 
     dst[0] = EOS;
     StringCopy(dst, gPokeblockNames[pokeblock->color]);
@@ -3062,11 +3062,11 @@ static void PrintMadePokeblockString(struct Pokeblock* pokeblock, u8* dst)
 #endif
     StringAppend(dst, sNewLineString_0);
 
-    flavourLvl = GetHighestPokeblocksFlavorLevel(pokeblock);
+    flavorLvl = GetHighestPokeblocksFlavorLevel(pokeblock);
     feel = GetPokeblocksFeel(pokeblock);
 
     StringAppend(dst, gOtherText_BlockLevelIs);
-    ConvertIntToDecimalStringN(text, flavourLvl, 0, 3);
+    ConvertIntToDecimalStringN(text, flavorLvl, 0, 3);
     StringAppend(dst, text);
 
     StringAppend(dst, gOtherText_BlockFeelIs);
