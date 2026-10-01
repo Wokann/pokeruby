@@ -191,7 +191,7 @@ static void LoadKeyboardPages(void);
 static void InitializeKeyboardWindows(void);
 static void InitializeTextEntryWindow(void);
 static void DrawTextEntry(void);
-static void CursorInit(void);
+static void CreateCursorSprite(void);
 static void CreatePageSwapButtonSprites(void);
 static void CreateBackOkSprites(void);
 static void CreateTextEntrySprites(void);
@@ -450,7 +450,7 @@ static void LoadGfx(void)
 
 static void CreateSprites(void)
 {
-    CursorInit();
+    CreateCursorSprite();
     CreatePageSwapButtonSprites();
     CreateBackOkSprites();
     CreateTextEntrySprites();
@@ -1128,7 +1128,7 @@ static bool8 PageSwapAnimState_Done(struct Task *task)
 #define sColorIncr  data[6]
 #define sColorDelay data[7]
 
-static void CursorInit(void)
+static void CreateCursorSprite(void)
 {
     sNamingScreen->cursorSpriteId = CreateSprite(&sSpriteTemplate_Cursor, 0, 0, 0);
     gSprites[sNamingScreen->cursorSpriteId].oam.priority = 1;
