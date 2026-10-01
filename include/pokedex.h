@@ -47,7 +47,7 @@ struct PokedexEntry
 extern const struct PokedexEntry gPokedexEntries[];
 
 u16 CreateSizeScreenTrainerPic(u16 gender, s16 x, s16 y, u16 paletteNum);
-u16 CreateMonSpriteFromNationalDexNumber(u16 dexNum, s16 x, s16 y, u16 paletteNum);
+u16 CreateMonSpriteFromNationalDexNumber(u16 nationalNum, s16 x, s16 y, u16 paletteSlot);
 
 void DrawFootprint(u16 dexNum, u16 charBase, u16 screenBase);
 

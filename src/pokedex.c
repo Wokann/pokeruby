@@ -1286,7 +1286,7 @@ static void PrintMonWeight(u16 weight, u8 left, u8 top);
 void DrawFootprint(u16 dexNum, u16 charBase, u16 tileOffset);
 static void RS_DrawFootprint(u16 screenBase, u16 tileOffset);
 static u16 GetNextPosition(u8 direction, u16 position, u16 min, u16 max);
-u16 CreateMonSpriteFromNationalDexNumber(u16 dexNum, s16 x, s16 y, u16 paletteNum);
+u16 CreateMonSpriteFromNationalDexNumber(u16 nationalNum, s16 x, s16 y, u16 paletteSlot);
 static void Task_LoadSearchMenu(u8 taskId);
 static void Task_SwitchToSearchMenuTopBar(u8 taskId);
 static void Task_HandleSearchTopBarInput(u8 taskId);
@@ -2513,51 +2513,51 @@ static void UpdateSelectedMonSpriteId(void)
 
 static u8 TryDoInfoScreenScroll(void)
 {
-    u16 nextMon;
-    u16 selectedMon = sPokedexView->selectedPokemon;
+    u16 nextPokemon;
+    u16 selectedPokemon = sPokedexView->selectedPokemon;
 
-    if (JOY_NEW(DPAD_UP) && selectedMon)
+    if (JOY_NEW(DPAD_UP) && selectedPokemon)
     {
-        nextMon = selectedMon;
-        while (nextMon != 0)
+        nextPokemon = selectedPokemon;
+        while (nextPokemon != 0)
         {
-            nextMon = GetNextPosition(1, nextMon, 0, sPokedexView->pokemonListCount - 1);
+            nextPokemon = GetNextPosition(1, nextPokemon, 0, sPokedexView->pokemonListCount - 1);
 
-            if (sPokedexView->pokedexList[nextMon].seen)
+            if (sPokedexView->pokedexList[nextPokemon].seen)
             {
-                selectedMon = nextMon;
+                selectedPokemon = nextPokemon;
                 break;
             }
         }
 
-        if (sPokedexView->selectedPokemon == selectedMon)
+        if (sPokedexView->selectedPokemon == selectedPokemon)
             return 0;
         else
         {
-            sPokedexView->selectedPokemon = selectedMon;
+            sPokedexView->selectedPokemon = selectedPokemon;
             sPokedexView->pokeBallRotation -= 16;
             return 1;
         }
     }
-    else if (JOY_NEW(DPAD_DOWN) && selectedMon < sPokedexView->pokemonListCount - 1)
+    else if (JOY_NEW(DPAD_DOWN) && selectedPokemon < sPokedexView->pokemonListCount - 1)
     {
-        nextMon = selectedMon;
-        while (nextMon < sPokedexView->pokemonListCount - 1)
+        nextPokemon = selectedPokemon;
+        while (nextPokemon < sPokedexView->pokemonListCount - 1)
         {
-            nextMon = GetNextPosition(0, nextMon, 0, sPokedexView->pokemonListCount - 1);
+            nextPokemon = GetNextPosition(0, nextPokemon, 0, sPokedexView->pokemonListCount - 1);
 
-            if (sPokedexView->pokedexList[nextMon].seen)
+            if (sPokedexView->pokedexList[nextPokemon].seen)
             {
-                selectedMon = nextMon;
+                selectedPokemon = nextPokemon;
                 break;
             }
         }
 
-        if (sPokedexView->selectedPokemon == selectedMon)
+        if (sPokedexView->selectedPokemon == selectedPokemon)
             return 0;
         else
         {
-            sPokedexView->selectedPokemon = selectedMon;
+            sPokedexView->selectedPokemon = selectedPokemon;
             sPokedexView->pokeBallRotation += 16;
             return 1;
         }
@@ -2745,12 +2745,12 @@ static void SpriteCB_MoveMonForInfoScreen(struct Sprite *sprite)
 
 static void SpriteCB_PokedexListMonSprite(struct Sprite *sprite)
 {
-    u8 spriteSlot = sprite->data[1];
+    u8 monId = sprite->data[1];
 
     if (sPokedexView->currentPage != 0 && sPokedexView->currentPage != 3)
     {
         DestroySprite(sprite);
-        sPokedexView->monSpriteIds[spriteSlot] = 0xFFFF;
+        sPokedexView->monSpriteIds[monId] = 0xFFFF;
     }
     else
     {
@@ -2761,7 +2761,7 @@ static void SpriteCB_PokedexListMonSprite(struct Sprite *sprite)
         if (scale > 0xFFFF)
             scale = 0xFFFF;
         SetOamMatrix(sprite->data[1] + 1, 0x100, 0, 0, scale);
-        sprite->oam.matrixNum = spriteSlot + 1;
+        sprite->oam.matrixNum = monId + 1;
 
         if (sprite->data[5] > -64 && sprite->data[5] < 64)
         {
@@ -2776,7 +2776,7 @@ static void SpriteCB_PokedexListMonSprite(struct Sprite *sprite)
         if ((sprite->data[5] <= -64 || sprite->data[5] >= 64) && sprite->data[0] != 0)
         {
             DestroySprite(sprite);
-            sPokedexView->monSpriteIds[spriteSlot] = 0xFFFF;
+            sPokedexView->monSpriteIds[monId] = 0xFFFF;
         }
     }
 }
@@ -4583,49 +4583,49 @@ static void SetSpriteTemplateForSizeComparisonTrainerPic(u16 paletteTag, u8 imag
     gCreatingSpriteTemplate.anims = gTrainerFrontAnimsPtrTable[0];
 }
 
-u16 CreateMonSpriteFromNationalDexNumber(u16 dexNum, s16 x, s16 y, u16 paletteNum)
+u16 CreateMonSpriteFromNationalDexNumber(u16 nationalNum, s16 x, s16 y, u16 paletteSlot)
 {
     u8 spriteId;
 
-    dexNum = NationalPokedexNumToSpecies(dexNum);
-    switch (dexNum)
+    nationalNum = NationalPokedexNumToSpecies(nationalNum);
+    switch (nationalNum)
     {
     default:
         DecompressPicFromTable(
-          &gMonFrontPicTable[dexNum],
-          gMonFrontPicCoords[dexNum].coords,
-          gMonFrontPicCoords[dexNum].y_offset,
+          &gMonFrontPicTable[nationalNum],
+          gMonFrontPicCoords[nationalNum].coords,
+          gMonFrontPicCoords[nationalNum].y_offset,
           (void *)EWRAM,
-          sMonOrTrainerPicDecompressDestPtrs[paletteNum],
-          dexNum);
+          sMonOrTrainerPicDecompressDestPtrs[paletteSlot],
+          nationalNum);
         break;
     case SPECIES_SPINDA:
         LoadSpecialPokePic(
-          &gMonFrontPicTable[dexNum],
-          gMonFrontPicCoords[dexNum].coords,
-          gMonFrontPicCoords[dexNum].y_offset,
+          &gMonFrontPicTable[nationalNum],
+          gMonFrontPicCoords[nationalNum].coords,
+          gMonFrontPicCoords[nationalNum].y_offset,
           (void *)EWRAM,
-          sMonOrTrainerPicDecompressDestPtrs[paletteNum],
-          dexNum,
+          sMonOrTrainerPicDecompressDestPtrs[paletteSlot],
+          nationalNum,
           gSaveBlock2.pokedex.spindaPersonality,
           1);
         break;
     case SPECIES_UNOWN:
         LoadSpecialPokePic(
-          &gMonFrontPicTable[dexNum],
-          gMonFrontPicCoords[dexNum].coords,
-          gMonFrontPicCoords[dexNum].y_offset,
+          &gMonFrontPicTable[nationalNum],
+          gMonFrontPicCoords[nationalNum].coords,
+          gMonFrontPicCoords[nationalNum].y_offset,
           (void *)EWRAM,
-          sMonOrTrainerPicDecompressDestPtrs[paletteNum],
-          dexNum,
+          sMonOrTrainerPicDecompressDestPtrs[paletteSlot],
+          nationalNum,
           gSaveBlock2.pokedex.unownPersonality,
           1);
         break;
     }
-    LoadCompressedPalette(gMonPaletteTable[dexNum].data, 0x100 + paletteNum * 16, 32);
-    SetSpriteTemplateForPokemonPic(paletteNum, paletteNum);
+    LoadCompressedPalette(gMonPaletteTable[nationalNum].data, 0x100 + paletteSlot * 16, 32);
+    SetSpriteTemplateForPokemonPic(paletteSlot, paletteSlot);
     spriteId = CreateSprite(&gCreatingSpriteTemplate, x, y, 0);
-    gSprites[spriteId].oam.paletteNum = paletteNum;
+    gSprites[spriteId].oam.paletteNum = paletteSlot;
     return spriteId;
 }
 
