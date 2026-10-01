@@ -213,7 +213,7 @@ bool8 LoadPokenavBackgroundStep(void)
 
 bool8 SlideMenuHeaderUp(void)
 {
-    bool8 retVal = TRUE;
+    bool8 isSliding = TRUE;
 
     if (gPokenavState->menuVerticalOffset == 32)
         return FALSE;
@@ -222,16 +222,16 @@ bool8 SlideMenuHeaderUp(void)
     if (gPokenavState->menuVerticalOffset > 31)
     {
         gPokenavState->menuVerticalOffset = 32;
-        retVal = FALSE;
+        isSliding = FALSE;
     }
 
     REG_BG1VOFS = gPokenavState->menuVerticalOffset;
-    return retVal;
+    return isSliding;
 }
 
 bool8 SlideMenuHeaderDown(void)
 {
-    bool8 retVal = TRUE;
+    bool8 isSliding = TRUE;
 
     if (gPokenavState->menuVerticalOffset == 0)
         return FALSE;
@@ -240,11 +240,11 @@ bool8 SlideMenuHeaderDown(void)
     if (gPokenavState->menuVerticalOffset <= 0)
     {
         gPokenavState->menuVerticalOffset = 0;
-        retVal = FALSE;
+        isSliding = FALSE;
     }
 
     REG_BG1VOFS = gPokenavState->menuVerticalOffset;
-    return retVal;
+    return isSliding;
 }
 
 void DrawPokenavBottomToolbar(u8 toolbarId)
@@ -471,33 +471,33 @@ void BuildPokenavPaletteGradient(const u16 *startColors, const u16 *endColors, u
 
     for (i = 0; i < colorCount; i++)
     {
-        s32 r1 = Q_24_8(GET_R(*startColors));
-        s32 g1 = Q_24_8(GET_G(*startColors));
-        s32 b1 = Q_24_8(GET_B(*startColors));
-        s32 r2 = Q_24_8(GET_R(*endColors));
-        s32 g2 = Q_24_8(GET_G(*endColors));
-        s32 b2 = Q_24_8(GET_B(*endColors));
-        s32 dr = (r2 - r1) / stepCount;
-        s32 dg = (g2 - g1) / stepCount;
-        s32 db = (b2 - b1) / stepCount;
-        u16 rf, gf, bf;
+        s32 startRed = Q_24_8(GET_R(*startColors));
+        s32 startGreen = Q_24_8(GET_G(*startColors));
+        s32 startBlue = Q_24_8(GET_B(*startColors));
+        s32 endRed = Q_24_8(GET_R(*endColors));
+        s32 endGreen = Q_24_8(GET_G(*endColors));
+        s32 endBlue = Q_24_8(GET_B(*endColors));
+        s32 redIncrement = (endRed - startRed) / stepCount;
+        s32 greenIncrement = (endGreen - startGreen) / stepCount;
+        s32 blueIncrement = (endBlue - startBlue) / stepCount;
+        u16 red, green, blue;
 
         output = gradient;
         for (j = 0; j < stepCount - 1; j++)
         {
-            rf = Q_24_8_TO_INT(r1);
-            gf = Q_24_8_TO_INT(g1);
-            bf = Q_24_8_TO_INT(b1);
-            *output = RGB2(rf, gf, bf);
+            red = Q_24_8_TO_INT(startRed);
+            green = Q_24_8_TO_INT(startGreen);
+            blue = Q_24_8_TO_INT(startBlue);
+            *output = RGB2(red, green, blue);
             output += colorCount;
-            r1 += dr;
-            g1 += dg;
-            b1 += db;
+            startRed += redIncrement;
+            startGreen += greenIncrement;
+            startBlue += blueIncrement;
         }
-        rf = Q_24_8_TO_INT(r2);
-        gf = Q_24_8_TO_INT(g2);
-        bf = Q_24_8_TO_INT(b2);
-        *output = RGB2(rf, gf, bf);
+        red = Q_24_8_TO_INT(endRed);
+        green = Q_24_8_TO_INT(endGreen);
+        blue = Q_24_8_TO_INT(endBlue);
+        *output = RGB2(red, green, blue);
         startColors++;
         endColors++;
         gradient++;
@@ -622,10 +622,10 @@ asm(".include \"constants/gba_constants.inc\"\n");
 
 void UpdateMapSecInfoWindow(void)
 {
-    bool8 someBool = FALSE;
+    bool8 isUsingLinkLandmarks = FALSE;
     u16 top = 4;
     u16 mapSecId;
-    u8 b;
+    u8 mapSecPosition;
 
     switch (gPokenavState->regionMap.mapSecType)
     {
@@ -638,7 +638,7 @@ void UpdateMapSecInfoWindow(void)
         if (gLinkOpen == TRUE)
         {
             StartRegionMapLinkLandmarks();
-            someBool = TRUE;
+            isUsingLinkLandmarks = TRUE;
         }
         else
         {
@@ -646,14 +646,14 @@ void UpdateMapSecInfoWindow(void)
 
             for (i = 0; i < 4; i++)
             {
-                const u8 *secName = GetLandmarkName(
+                const u8 *landmarkName = GetLandmarkName(
                     gPokenavState->regionMap.mapSecId,
                     gPokenavState->regionMap.posWithinMapSec,
                     i);
 
-                if (secName == NULL)
+                if (landmarkName == NULL)
                     break;
-                Menu_PrintTextWithNewlineIndent(secName, 0x70, top * 8, 0x78, 1);
+                Menu_PrintTextWithNewlineIndent(landmarkName, 0x70, top * 8, 0x78, 1);
                 top += 2;
             }
         }
@@ -662,12 +662,12 @@ void UpdateMapSecInfoWindow(void)
         Menu_PrintTextWithNewlineIndent(gPokenavState->regionMap.mapSecName, 0x70, top * 8, 0x78, 1);
         top += 2;
         mapSecId = gPokenavState->regionMap.mapSecId;
-        b = gPokenavState->regionMap.posWithinMapSec;
-        if (gPokenavState->cityMapTilemapPtrs[mapSecId][b] != NULL)
+        mapSecPosition = gPokenavState->regionMap.posWithinMapSec;
+        if (gPokenavState->cityMapTilemapPtrs[mapSecId][mapSecPosition] != NULL)
         {
             Menu_BlankWindowRect(14, top, 15, 15);
             Menu_BlankWindowRect(26, top, 28, 15);
-            CopyTilemapRect((void *)(VRAM + 0xF800), 16, 6, gPokenavState->cityMapTilemapPtrs[mapSecId][b], 0, 0, 10, 10, 10);
+            CopyTilemapRect((void *)(VRAM + 0xF800), 16, 6, gPokenavState->cityMapTilemapPtrs[mapSecId][mapSecPosition], 0, 0, 10, 10, 10);
             top += 11;
         }
         break;
@@ -678,7 +678,7 @@ void UpdateMapSecInfoWindow(void)
     }
 
     // Epic fail by the compiler at optimizing this.
-    if (!someBool && top < 16)
+    if (!isUsingLinkLandmarks && top < 16)
         Menu_BlankWindowRect(14, top, 28, 15);
 
     if (gPokenavState->regionMap.mapSecType == MAPSECTYPE_CITY_CANFLY)
@@ -793,36 +793,36 @@ void HideRegionMapCityBanner(void)
 
 void DrawRegionMapCityBannerFrame(u8 unused)
 {
-    u16 var1 = 60 - gPokenavState->cityBannerFrame;
+    u16 visibleWidth = 60 - gPokenavState->cityBannerFrame;
 
-    if (var1 > 15)
-        var1 = 15;
+    if (visibleWidth > 15)
+        visibleWidth = 15;
 
     if (gPokenavState->cityBannerVisible != 0)
     {
-        CopyTilemapRect((void *)VRAM + 0xF800, 14, 16, gPokenavRegionMapCityBannerFrames, gPokenavState->cityBannerFrame, 0, var1, 1, 60);
+        CopyTilemapRect((void *)VRAM + 0xF800, 14, 16, gPokenavRegionMapCityBannerFrames, gPokenavState->cityBannerFrame, 0, visibleWidth, 1, 60);
 
-        if (var1 < 15)
+        if (visibleWidth < 15)
         {
-            u16 var2 = var1 + 14;
+            u16 wrappedFrameX = visibleWidth + 14;
 
-            CopyTilemapRect((void *)VRAM + 0xF800, var2, 16, gPokenavRegionMapCityBannerFrames, 0, 0, (u16)(15 - var1), 1, 60);
+            CopyTilemapRect((void *)VRAM + 0xF800, wrappedFrameX, 16, gPokenavRegionMapCityBannerFrames, 0, 0, (u16)(15 - visibleWidth), 1, 60);
         }
     }
 }
 
 void UpdateRegionMapCityBanner(void)
 {
-    u16 var1;
-    u8 var2 = gPokenavState->cityBannerState;
+    u16 counter;
+    u8 state = gPokenavState->cityBannerState;
 
-    switch (var2)
+    switch (state)
     {
     case 0:
-        var1 = ++gPokenavState->cityBannerFrame;
+        counter = ++gPokenavState->cityBannerFrame;
 
-        if (var1 > 59)
-            gPokenavState->cityBannerFrame = var2;
+        if (counter > 59)
+            gPokenavState->cityBannerFrame = state;
 
         DrawRegionMapCityBannerFrame(gPokenavState->cityBannerVisible);
 
@@ -838,8 +838,8 @@ void UpdateRegionMapCityBanner(void)
         }
         break;
     case 1:
-        var1 = ++gPokenavState->cityBannerDelay;
-        if (var1 > 120)
+        counter = ++gPokenavState->cityBannerDelay;
+        if (counter > 120)
         {
             gPokenavState->cityBannerDelay = 0;
             gPokenavState->cityBannerState = 0;
@@ -974,7 +974,7 @@ void InitPokenavListScreen(u8 listMode)
 
 bool8 LoadPokenavListScreenStep(void)
 {
-    const u16 *pointer;
+    const u16 *trainerEyesAccentPalette;
 
     switch (gPokenavState->loadState)
     {
@@ -1031,12 +1031,12 @@ bool8 LoadPokenavListScreenStep(void)
         else
         {
             LoadPalette(gPokenavTrainerEyesListBg_Pal, 0x30, 0x20);
-            gPlttBufferUnfaded[0] = *(pointer = &gPokenavTrainerEyesListBg_Pal[5]);
+            gPlttBufferUnfaded[0] = *(trainerEyesAccentPalette = &gPokenavTrainerEyesListBg_Pal[5]);
             LoadPalette(gPokenavTrainerEyesList_Pal, 0x50, 0x20);
             LoadPalette(&gPokenavList_Pal[1], 0xB1, 0x2);
             LoadPalette(&gPokenavList_Pal[8], 0xB5, 0x2);
-            LoadPalette(pointer, 0xBF, 0x2);
-            LoadPalette(pointer, 0x5F, 0x2);
+            LoadPalette(trainerEyesAccentPalette, 0xBF, 0x2);
+            LoadPalette(trainerEyesAccentPalette, 0x5F, 0x2);
         }
         break;
     case 8:
@@ -1623,7 +1623,7 @@ void ClearRibbonsSummaryDescription(void)
 // intended access is.
 void PrintRibbonsSummaryDescription(void)
 {
-    u8 *arr;
+    u8 *saveBlockData;
     u8 *tileBuffer1 = &gPokenavTileBuffer[0x800];
     u8 *tileBuffer2 = &gPokenavTileBuffer[0xA98];
 
@@ -1640,10 +1640,10 @@ void PrintRibbonsSummaryDescription(void)
         gPokenavRibbonDescriptionId = gPokenavState->ribbonIds[gPokenavRibbonDescriptionId + gPokenavState->ribbonCursorPos];
 
         // FIXME!
-        arr = ((u8*)&gSaveBlock1);
+        saveBlockData = (u8 *)&gSaveBlock1;
         asm("ldrh r1, [r5]\n\
             add r0, r0, r1");
-        gPokenavRibbonDescriptionId = arr[0x30F7];
+        gPokenavRibbonDescriptionId = saveBlockData[0x30F7];
         // The bug fix for this code is the following:
         // gPokenavRibbonDescriptionId = gSaveBlock1.giftRibbons[gPokenavRibbonDescriptionId];
         if (gPokenavRibbonDescriptionId)
@@ -1819,23 +1819,23 @@ void TruncateTrainerEyesLocationAtControlCode(u8 *text)
 void UpdateRegionMapLinkLandmarks(void)
 {
     // FIXME r4/r5 swapped
-    register u8 *ptr asm("r5") = gRegionMapLinkLandmarkPrintState;
-    if (ptr[0] == 1)
+    register u8 *landmarkState asm("r5") = gRegionMapLinkLandmarkPrintState;
+    if (landmarkState[0] == 1)
     {
         const u8 *landmarkName = GetLandmarkName(
             gPokenavState->regionMap.mapSecId,
             gPokenavState->regionMap.posWithinMapSec,
-            ptr[1]);
+            landmarkState[1]);
 
         if (landmarkName)
         {
-            Menu_PrintTextWithNewlineIndent(landmarkName, 0x70, 4 * (ptr[1] * 4 + 12), 0x78, 1);
-            if (++ptr[1] != 4)
+            Menu_PrintTextWithNewlineIndent(landmarkName, 0x70, 4 * (landmarkState[1] * 4 + 12), 0x78, 1);
+            if (++landmarkState[1] != 4)
                 return;
         }
 
-        Menu_BlankWindowRect(14, ptr[1] * 2 + 6, 28, 15);
-        ptr[0] = 0;
+        Menu_BlankWindowRect(14, landmarkState[1] * 2 + 6, 28, 15);
+        landmarkState[0] = 0;
     }
 }
 
@@ -3022,9 +3022,9 @@ void OpenConditionMonMarkingsMenu(void)
 
 void SaveAndCloseConditionMonMarkingsMenu(void)
 {
-    struct PokenavMonListItem *var0 = &gPokenavState->monList[gPokenavState->detailSelectionIndex];
+    struct PokenavMonListItem *selectedMon = &gPokenavState->monList[gPokenavState->detailSelectionIndex];
     gPokenavState->conditionMonMarkings[gPokenavState->portraitSlot] = gPokenavState->conditionMarkingsMenu.markings;
-    SetMonMarkings(var0->boxId, var0->monId, gPokenavState->conditionMarkingsMenu.markings);
+    SetMonMarkings(selectedMon->boxId, selectedMon->monId, gPokenavState->conditionMarkingsMenu.markings);
     FreeMonMarkingsMenu();
 }
 
@@ -3700,98 +3700,98 @@ void SetMonMarkings(u16 box, u16 monIndex, u8 markings)
         SetBoxMonData(&gPokemonStorage.boxes[box][monIndex], MON_DATA_MARKINGS, &markings);
 }
 
-void BufferConditionGraphMonText(s16 arg0, u8 arg1)
+void BufferConditionGraphMonText(s16 listId, u8 loadId)
 {
-    u8 box;
-    u8 var0 = gPokenavState->monList[arg0].isValid;
-    if (var0)
+    u8 boxId;
+    u8 isValid = gPokenavState->monList[listId].isValid;
+    if (isValid)
     {
-        BufferPokenavMonListRowText(gPokenavState->conditionMonNameText[arg1], arg0, 0);
-        box = gPokenavState->monList[arg0].boxId;
-        if (box == 14)
-            AlignStringInMenuWindow(gPokenavState->conditionMonLocationText[arg1], gOtherText_InParty, 64, 0);
+        BufferPokenavMonListRowText(gPokenavState->conditionMonNameText[loadId], listId, 0);
+        boxId = gPokenavState->monList[listId].boxId;
+        if (boxId == 14)
+            AlignStringInMenuWindow(gPokenavState->conditionMonLocationText[loadId], gOtherText_InParty, 64, 0);
         else
-            AlignStringInMenuWindow(gPokenavState->conditionMonLocationText[arg1], gPokemonStorage.boxNames[box], 64, 0);
+            AlignStringInMenuWindow(gPokenavState->conditionMonLocationText[loadId], gPokemonStorage.boxNames[boxId], 64, 0);
 
-        gPokenavState->conditionMonIsValid[arg1] = 1;
+        gPokenavState->conditionMonIsValid[loadId] = 1;
     }
     else
     {
-        AlignStringInMenuWindow(gPokenavState->conditionMonNameText[arg1], gText_EmptyString, 104, 0);
-        AlignStringInMenuWindow(gPokenavState->conditionMonLocationText[arg1], gText_EmptyString, 64, 0);
-        gPokenavState->conditionMonIsValid[arg1] = var0;
+        AlignStringInMenuWindow(gPokenavState->conditionMonNameText[loadId], gText_EmptyString, 104, 0);
+        AlignStringInMenuWindow(gPokenavState->conditionMonLocationText[loadId], gText_EmptyString, 64, 0);
+        gPokenavState->conditionMonIsValid[loadId] = isValid;
     }
 }
 
-void LoadConditionGraphMonStats(s16 arg0, u8 arg1)
+void LoadConditionGraphMonStats(s16 listId, u8 loadId)
 {
     u16 i;
-    u16 box;
-    u16 monIndex;
+    u16 boxId;
+    u16 monId;
 
-    if (gPokenavState->monList[arg0].isValid)
+    if (gPokenavState->monList[listId].isValid)
     {
-        box = gPokenavState->monList[arg0].boxId;
-        monIndex = gPokenavState->monList[arg0].monId;
-        gPokenavState->conditionGraph.conditions[arg1][0] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_COOL, NULL);
-        gPokenavState->conditionGraph.conditions[arg1][1] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_TOUGH, NULL);
-        gPokenavState->conditionGraph.conditions[arg1][2] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_SMART, NULL);
-        gPokenavState->conditionGraph.conditions[arg1][3] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_CUTE, NULL);
-        gPokenavState->conditionGraph.conditions[arg1][4] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_BEAUTY, NULL);
+        boxId = gPokenavState->monList[listId].boxId;
+        monId = gPokenavState->monList[listId].monId;
+        gPokenavState->conditionGraph.conditions[loadId][0] = GetBoxOrPartyMonData(boxId, monId, MON_DATA_COOL, NULL);
+        gPokenavState->conditionGraph.conditions[loadId][1] = GetBoxOrPartyMonData(boxId, monId, MON_DATA_TOUGH, NULL);
+        gPokenavState->conditionGraph.conditions[loadId][2] = GetBoxOrPartyMonData(boxId, monId, MON_DATA_SMART, NULL);
+        gPokenavState->conditionGraph.conditions[loadId][3] = GetBoxOrPartyMonData(boxId, monId, MON_DATA_CUTE, NULL);
+        gPokenavState->conditionGraph.conditions[loadId][4] = GetBoxOrPartyMonData(boxId, monId, MON_DATA_BEAUTY, NULL);
 
-        gPokenavState->conditionNumSparkles[arg1] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_SHEEN, NULL) != 255
-                                           ? GetBoxOrPartyMonData(box, monIndex, MON_DATA_SHEEN, NULL) / 29
+        gPokenavState->conditionNumSparkles[loadId] = GetBoxOrPartyMonData(boxId, monId, MON_DATA_SHEEN, NULL) != 255
+                                           ? GetBoxOrPartyMonData(boxId, monId, MON_DATA_SHEEN, NULL) / 29
                                            : 9;
 
-        gPokenavState->conditionMonMarkings[arg1] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_MARKINGS, NULL);
-        ConditionGraph_CalcPositions(gPokenavState->conditionGraph.conditions[arg1], gPokenavState->conditionGraph.savedPositions[arg1]);
+        gPokenavState->conditionMonMarkings[loadId] = GetBoxOrPartyMonData(boxId, monId, MON_DATA_MARKINGS, NULL);
+        ConditionGraph_CalcPositions(gPokenavState->conditionGraph.conditions[loadId], gPokenavState->conditionGraph.savedPositions[loadId]);
     }
     else
     {
         for (i = 0; i < 5; i++)
         {
-            gPokenavState->conditionGraph.conditions[arg1][i] = 0;
-            gPokenavState->conditionGraph.savedPositions[arg1][i].x = 0x9B;
-            gPokenavState->conditionGraph.savedPositions[arg1][i].y = 0x5B;
+            gPokenavState->conditionGraph.conditions[loadId][i] = 0;
+            gPokenavState->conditionGraph.savedPositions[loadId][i].x = 0x9B;
+            gPokenavState->conditionGraph.savedPositions[loadId][i].y = 0x5B;
         }
     }
 }
 
-void LoadConditionGraphMonGfx(s16 arg0, u8 arg1)
+void LoadConditionGraphMonGfx(s16 listId, u8 loadId)
 {
     u16 species;
     u32 otId;
     u32 personality;
-    u16 box;
-    u16 monIndex;
+    u16 boxId;
+    u16 monId;
 
-    if (gPokenavState->monList[arg0].isValid)
+    if (gPokenavState->monList[listId].isValid)
     {
-        box = gPokenavState->monList[arg0].boxId;
-        monIndex = gPokenavState->monList[arg0].monId;
-        species = GetBoxOrPartyMonData(box, monIndex, MON_DATA_SPECIES2, NULL);
-        otId = GetBoxOrPartyMonData(box, monIndex, MON_DATA_OT_ID, NULL);
-        personality = GetBoxOrPartyMonData(box, monIndex, MON_DATA_PERSONALITY, NULL);
+        boxId = gPokenavState->monList[listId].boxId;
+        monId = gPokenavState->monList[listId].monId;
+        species = GetBoxOrPartyMonData(boxId, monId, MON_DATA_SPECIES2, NULL);
+        otId = GetBoxOrPartyMonData(boxId, monId, MON_DATA_OT_ID, NULL);
+        personality = GetBoxOrPartyMonData(boxId, monId, MON_DATA_PERSONALITY, NULL);
 
         HandleLoadSpecialPokePic(
             &gMonFrontPicTable[species],
             gMonFrontPicCoords[species].coords,
             1,
             gPokenavState->spriteGfxScratchBuffer,
-            gPokenavState->spriteGfxBuffers[arg1],
+            gPokenavState->spriteGfxBuffers[loadId],
             species,
             personality);
 
-        LZ77UnCompWram(GetMonSpritePalFromOtIdPersonality(species, otId, personality), gPokenavState->portraitPaletteBuffers[arg1]);
-        gPokenavState->conditionMonSpecies[arg1] = species;
+        LZ77UnCompWram(GetMonSpritePalFromOtIdPersonality(species, otId, personality), gPokenavState->portraitPaletteBuffers[loadId]);
+        gPokenavState->conditionMonSpecies[loadId] = species;
     }
 }
 
-void LoadConditionGraphMonData(s16 arg0, u8 arg1)
+void LoadConditionGraphMonData(s16 listId, u8 loadId)
 {
-    BufferConditionGraphMonText(arg0, arg1);
-    LoadConditionGraphMonStats(arg0, arg1);
-    LoadConditionGraphMonGfx(arg0, arg1);
+    BufferConditionGraphMonText(listId, loadId);
+    LoadConditionGraphMonStats(listId, loadId);
+    LoadConditionGraphMonGfx(listId, loadId);
 }
 
 void ResetPokenavMonList(void)
@@ -3799,29 +3799,29 @@ void ResetPokenavMonList(void)
     gPokenavState->monListCount = 0;
 }
 
-void InsertPokenavMonListItem(struct PokenavMonListItem *arg0) // This looks like a sorting algorithm. Proposal: Make local variables min, max, and currPos
+void InsertPokenavMonListItem(struct PokenavMonListItem *item)
 {
-    u16 min, max, currPos;
+    u16 left, right, insertionIdx;
 
-    min = 0;
-    max = gPokenavState->monListCount;
-    currPos = min + (max - min)/ 2;
-    while (max != currPos)
+    left = 0;
+    right = gPokenavState->monListCount;
+    insertionIdx = left + (right - left) / 2;
+    while (right != insertionIdx)
     {
-        if (arg0->data > gPokenavState->monList[currPos].data)
-            max = currPos;
+        if (item->data > gPokenavState->monList[insertionIdx].data)
+            right = insertionIdx;
         else
-            min = currPos + 1;
+            left = insertionIdx + 1;
 
-        currPos = min + (max - min) / 2;
+        insertionIdx = left + (right - left) / 2;
     }
 
-    for ( max = gPokenavState->monListCount; max > currPos; max--)
+    for (right = gPokenavState->monListCount; right > insertionIdx; right--)
     {
-        gPokenavState->monList[max] = gPokenavState->monList[max - 1];
+        gPokenavState->monList[right] = gPokenavState->monList[right - 1];
     }
 
-    gPokenavState->monList[currPos] = *arg0;
+    gPokenavState->monList[insertionIdx] = *item;
     gPokenavState->monListCount++;
 }
 
@@ -3848,8 +3848,8 @@ void FinalizePokenavMonListRanks(void)
 
 void LoadConditionGraphMonNeighbors(void)
 {
-    s16 var0;
-    s16 var1;
+    s16 nextListIndex;
+    s16 previousListIndex;
 
     LoadConditionGraphMonData(gPokenavState->detailSelectionIndex, 0);
     CreateOrUpdatePokenavPortraitSprite(0);
@@ -3865,16 +3865,16 @@ void LoadConditionGraphMonNeighbors(void)
         gPokenavState->nextLoadIdDown = 1;
         gPokenavState->nextLoadIdUp = 2;
 
-        var0 = gPokenavState->detailSelectionIndex + 1;
-        if (var0 >= gPokenavState->conditionGraphMonCount)
-            var0 = 0;
+        nextListIndex = gPokenavState->detailSelectionIndex + 1;
+        if (nextListIndex >= gPokenavState->conditionGraphMonCount)
+            nextListIndex = 0;
 
-        var1 = gPokenavState->detailSelectionIndex - 1;
-        if (var1 < 0)
-            var1 = gPokenavState->conditionGraphMonCount - 1;
+        previousListIndex = gPokenavState->detailSelectionIndex - 1;
+        if (previousListIndex < 0)
+            previousListIndex = gPokenavState->conditionGraphMonCount - 1;
 
-        LoadConditionGraphMonData(var0, 1);
-        LoadConditionGraphMonData(var1, 2);
+        LoadConditionGraphMonData(nextListIndex, 1);
+        LoadConditionGraphMonData(previousListIndex, 2);
     }
 }
 
@@ -3929,25 +3929,25 @@ bool8 BuildConditionSearchResultsStep(void)
 {
     u16 i;
     register int mask asm("r3"); // FIXME
-    int nextValue;
-    struct PokenavMonListItem var0;
+    int nextBoxId;
+    struct PokenavMonListItem item;
 
     switch (gPokenavState->monListBuildBoxId)
     {
     default:
-        var0.isValid = 1;
+        item.isValid = 1;
         for (i = 0; i < 15; i++)
         {
 
             if (GetBoxMonData(&gPokemonStorage.boxes[gPokenavState->monListBuildBoxId][gPokenavState->monListBuildMonId], MON_DATA_SPECIES)
                 && !GetBoxMonData(&gPokemonStorage.boxes[gPokenavState->monListBuildBoxId][gPokenavState->monListBuildMonId], MON_DATA_IS_EGG))
             {
-                var0.boxId = gPokenavState->monListBuildBoxId;
-                var0.monId = gPokenavState->monListBuildMonId;
-                var0.data = GetBoxMonData(
+                item.boxId = gPokenavState->monListBuildBoxId;
+                item.monId = gPokenavState->monListBuildMonId;
+                item.data = GetBoxMonData(
                     &gPokemonStorage.boxes[gPokenavState->monListBuildBoxId][gPokenavState->monListBuildMonId],
                     gPokenavState->conditionSearchMonDataId);
-                InsertPokenavMonListItem(&var0);
+                InsertPokenavMonListItem(&item);
             }
 
             gPokenavState->monListBuildMonId++;
@@ -3955,23 +3955,23 @@ bool8 BuildConditionSearchResultsStep(void)
             if (gPokenavState->monListBuildMonId == 30)
             {
                 gPokenavState->monListBuildMonId = 0;
-                nextValue = gPokenavState->monListBuildBoxId + 1;
-                gPokenavState->monListBuildBoxId = nextValue;
-                if ((nextValue & mask) == 14)
+                nextBoxId = gPokenavState->monListBuildBoxId + 1;
+                gPokenavState->monListBuildBoxId = nextBoxId;
+                if ((nextBoxId & mask) == 14)
                     break;
             }
         }
         break;
     case 14:
-        var0.isValid = 1;
-        var0.boxId = 14;
+        item.isValid = 1;
+        item.boxId = 14;
         for (i = 0; i < gPokenavState->playerPartyCount; i++)
         {
             if (!GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG))
             {
-                var0.monId = i;
-                var0.data = GetMonData(&gPlayerParty[i], gPokenavState->conditionSearchMonDataId);
-                InsertPokenavMonListItem(&var0);
+                item.monId = i;
+                item.data = GetMonData(&gPlayerParty[i], gPokenavState->conditionSearchMonDataId);
+                InsertPokenavMonListItem(&item);
             }
         }
 
@@ -3994,9 +3994,9 @@ void StartConditionGraphMonEnter(void)
 
 bool8 UpdateConditionGraphMonEnter(void)
 {
-    bool8 var0 = ConditionGraph_TryUpdate();
-    bool8 var1 = SlidePokenavMonInfoHeaderIn();
-    return var0 || var1;
+    bool8 isGraphUpdating = ConditionGraph_TryUpdate();
+    bool8 isHeaderSliding = SlidePokenavMonInfoHeaderIn();
+    return isGraphUpdating || isHeaderSliding;
 }
 
 void StartConditionGraphMonExit(void)
@@ -4007,29 +4007,29 @@ void StartConditionGraphMonExit(void)
 
 bool8 UpdateConditionGraphMonExit(void)
 {
-    bool8 var0 = ConditionGraph_TryUpdate();
-    bool8 var1 = SlidePokenavMonInfoHeaderOut();
-    return var0 || var1;
+    bool8 isGraphUpdating = ConditionGraph_TryUpdate();
+    bool8 isHeaderSliding = SlidePokenavMonInfoHeaderOut();
+    return isGraphUpdating || isHeaderSliding;
 }
 
-void BeginConditionGraphMonScroll(u8 arg0)
+void BeginConditionGraphMonScroll(bool8 moveUp)
 {
-    u16 var0;
-    u8 var1;
-    u8 var2;
+    u16 newLoadId;
+    u8 wasCurrentMonValid;
+    u8 isNewMonValid;
 
-    if (arg0)
-        var0 = gPokenavState->nextLoadIdUp;
+    if (moveUp)
+        newLoadId = gPokenavState->nextLoadIdUp;
     else
-        var0 = gPokenavState->nextLoadIdDown;
+        newLoadId = gPokenavState->nextLoadIdDown;
 
-    ConditionGraph_SetNewPositions(gPokenavState->conditionGraph.savedPositions[gPokenavState->portraitSlot], gPokenavState->conditionGraph.savedPositions[var0]);
-    var1 = gPokenavState->monList[gPokenavState->detailSelectionIndex].isValid;
-    if (arg0)
+    ConditionGraph_SetNewPositions(gPokenavState->conditionGraph.savedPositions[gPokenavState->portraitSlot], gPokenavState->conditionGraph.savedPositions[newLoadId]);
+    wasCurrentMonValid = gPokenavState->monList[gPokenavState->detailSelectionIndex].isValid;
+    if (moveUp)
     {
         gPokenavState->nextLoadIdUp = gPokenavState->nextLoadIdDown;
         gPokenavState->nextLoadIdDown = gPokenavState->portraitSlot;
-        gPokenavState->portraitSlot = var0;
+        gPokenavState->portraitSlot = newLoadId;
         gPokenavState->toLoadId = gPokenavState->nextLoadIdUp;
 
         gPokenavState->detailSelectionIndex = gPokenavState->detailSelectionIndex
@@ -4043,7 +4043,7 @@ void BeginConditionGraphMonScroll(u8 arg0)
     {
         gPokenavState->nextLoadIdDown = gPokenavState->nextLoadIdUp;
         gPokenavState->nextLoadIdUp = gPokenavState->portraitSlot;
-        gPokenavState->portraitSlot = var0;
+        gPokenavState->portraitSlot = newLoadId;
         gPokenavState->toLoadId = gPokenavState->nextLoadIdDown;
 
         gPokenavState->detailSelectionIndex = (gPokenavState->detailSelectionIndex < gPokenavState->conditionGraphMonCount - 1)
@@ -4054,10 +4054,10 @@ void BeginConditionGraphMonScroll(u8 arg0)
                                      : 0;
     }
 
-    var2 = gPokenavState->monList[gPokenavState->detailSelectionIndex].isValid;
-    if (!var1)
+    isNewMonValid = gPokenavState->monList[gPokenavState->detailSelectionIndex].isValid;
+    if (!wasCurrentMonValid)
         gPokenavState->conditionGraphScrollCallback = UpdateConditionGraphScrollToMon;
-    else if (!var2)
+    else if (!isNewMonValid)
         gPokenavState->conditionGraphScrollCallback = UpdateConditionGraphScrollToEmpty;
     else
         gPokenavState->conditionGraphScrollCallback = UpdateConditionGraphScrollBetweenMons;
@@ -4137,32 +4137,32 @@ bool8 UpdateConditionGraphScrollBetweenMons(void)
     return TRUE;
 }
 
-void ConditionGraph_SetNewPositions(struct UCoords16 *arg0, struct UCoords16 *arg1)
+void ConditionGraph_SetNewPositions(struct UCoords16 *oldPositions, struct UCoords16 *newPositions)
 {
     u16 i, j;
-    int r5;
-    int r6;
+    int coord;
+    int increment;
 
     for (i = 0; i < 5; i++)
     {
-        r5 = arg0[i].x << 8;
-        r6 = ((arg1[i].x - arg0[i].x) << 8) / 10;
+        coord = oldPositions[i].x << 8;
+        increment = ((newPositions[i].x - oldPositions[i].x) << 8) / 10;
         for (j = 0; j < 9; j++)
         {
-            gPokenavState->conditionGraph.newPositions[j][i].x = (r5 >> 8) + ((r5 >> 7) & 1);
-            r5 += r6;
+            gPokenavState->conditionGraph.newPositions[j][i].x = (coord >> 8) + ((coord >> 7) & 1);
+            coord += increment;
         }
 
-        gPokenavState->conditionGraph.newPositions[j][i].x = arg1[i].x;
-        r5 = arg0[i].y << 8;
-        r6 = ((arg1[i].y - arg0[i].y) << 8) / 10;
+        gPokenavState->conditionGraph.newPositions[j][i].x = newPositions[i].x;
+        coord = oldPositions[i].y << 8;
+        increment = ((newPositions[i].y - oldPositions[i].y) << 8) / 10;
         for (j = 0; j < 9; j++)
         {
-            gPokenavState->conditionGraph.newPositions[j][i].y = (r5 >> 8) + ((r5 >> 7) & 1);
-            r5 += r6;
+            gPokenavState->conditionGraph.newPositions[j][i].y = (coord >> 8) + ((coord >> 7) & 1);
+            coord += increment;
         }
 
-        gPokenavState->conditionGraph.newPositions[j][i].y = arg1[i].y;
+        gPokenavState->conditionGraph.newPositions[j][i].y = newPositions[i].y;
     }
 
     gPokenavState->conditionGraph.updateCounter = 0;
@@ -4181,9 +4181,9 @@ bool8 ConditionGraph_TryUpdate(void)
     }
 }
 
-void StartPokeblockConditionGraphReset(struct UCoords16 *arg0, struct UCoords16 *arg1)
+void StartPokeblockConditionGraphReset(struct UCoords16 *oldPositions, struct UCoords16 *newPositions)
 {
-    ConditionGraph_SetNewPositions(arg0, arg1);
+    ConditionGraph_SetNewPositions(oldPositions, newPositions);
 }
 
 bool8 UpdatePokeblockConditionGraphReset(void)
@@ -4191,181 +4191,181 @@ bool8 UpdatePokeblockConditionGraphReset(void)
     return ConditionGraph_TryUpdate();
 }
 
-void ConditionGraph_Update(struct UCoords16 *arg0)
+void ConditionGraph_Update(struct UCoords16 *positions)
 {
     u16 i;
 
     for (i = 0; i < 5; i++)
-        gPokenavState->conditionGraph.curPositions[i] = arg0[i];
+        gPokenavState->conditionGraph.curPositions[i] = positions[i];
 
     gPokenavState->conditionGraph.needsDraw = 1;
 }
 
-void ConditionGraph_CalcPositions(u8 *a0, struct UCoords16 a1[])
+void ConditionGraph_CalcPositions(u8 *conditions, struct UCoords16 positions[])
 {
     u16 i;
-    u8 r2 = gConditionToLineLength[*a0++];
-    u8 r7;
-    s8 r12;
+    u8 lineLength = gConditionToLineLength[*conditions++];
+    u8 sinIdx;
+    s8 posIdx;
 
-    a1[0].x = 0x9b;
-    a1[0].y = 0x5b - r2;
+    positions[0].x = 0x9b;
+    positions[0].y = 0x5b - lineLength;
 
-    r7 = 0x40;
-    r12 = 0;
+    sinIdx = 0x40;
+    posIdx = 0;
     for (i = 1; i < 5; i++)
     {
-        r7 += 0x33;
-        r12--;
-        if (r12 < 0)
-            r12 = 4;
-        if (r12 == 2)
-            r7++;
-        r2 = gConditionToLineLength[*a0++];
-        a1[r12].x = ((r2 * gSineTable[r7 + 0x40]) >> 8) + 0x9b;
-        a1[r12].y = 0x5b - ((r2 * gSineTable[r7]) >> 8);
+        sinIdx += 0x33;
+        posIdx--;
+        if (posIdx < 0)
+            posIdx = 4;
+        if (posIdx == 2)
+            sinIdx++;
+        lineLength = gConditionToLineLength[*conditions++];
+        positions[posIdx].x = ((lineLength * gSineTable[sinIdx + 0x40]) >> 8) + 0x9b;
+        positions[posIdx].y = 0x5b - ((lineLength * gSineTable[sinIdx]) >> 8);
 
-        if (r12 <= 2 && (r2 != 0x20 || r12 != 2))
-            a1[r12].x = ((r2 * gSineTable[r7 + 0x40]) >> 8) + 0x9c;
+        if (posIdx <= 2 && (lineLength != 0x20 || posIdx != 2))
+            positions[posIdx].x = ((lineLength * gSineTable[sinIdx + 0x40]) >> 8) + 0x9c;
     }
 }
 
-void CalcPokeblockConditionGraphPositions(u8 *a0, struct UCoords16 a1[])
+void CalcPokeblockConditionGraphPositions(u8 *conditions, struct UCoords16 positions[])
 {
-    ConditionGraph_CalcPositions(a0, a1);
+    ConditionGraph_CalcPositions(conditions, positions);
 }
 
-void ConditionGraph_CalcLine(u16 * arg1, struct UCoords16 * arg2, struct UCoords16 * arg3, u8 arg4, u16 * arg5)
+void ConditionGraph_CalcLine(u16 *scanline, struct UCoords16 *pos1, struct UCoords16 *pos2, bool8 dir, u16 *overflowScanline)
 {
-    u16 i, r8, r10, r0, var_30;
+    u16 i, height, top, bottom, x2;
     u16 *ptr;
-    s32 r4, var_2C;
+    s32 x, xIncrement;
 
-    var_2C = 0;
-    if (arg2->y < arg3->y)
+    xIncrement = 0;
+    if (pos1->y < pos2->y)
     {
-        r10 = arg2->y;
-        r0 = arg3->y;
-        r4 = arg2->x << 10;
-        var_30 = arg3->x;
-        r8 = r0 - r10;
-        if (r8 != 0)
-            var_2C = ((var_30 - arg2->x) << 10) / r8;
+        top = pos1->y;
+        bottom = pos2->y;
+        x = pos1->x << 10;
+        x2 = pos2->x;
+        height = bottom - top;
+        if (height != 0)
+            xIncrement = ((x2 - pos1->x) << 10) / height;
     }
     else
     {
-        r0 = arg2->y;
-        r10 = arg3->y;
-        r4 = arg3->x << 10;
-        var_30 = arg2->x;
-        r8 = r0 - r10;
-        if (r8 != 0)
-            var_2C = ((var_30 - arg3->x) << 10) / r8;
+        bottom = pos1->y;
+        top = pos2->y;
+        x = pos2->x << 10;
+        x2 = pos1->x;
+        height = bottom - top;
+        if (height != 0)
+            xIncrement = ((x2 - pos2->x) << 10) / height;
     }
 
-    r8++;
-    if (arg5 == NULL)
+    height++;
+    if (overflowScanline == NULL)
     {
-        arg1 += (r10 - 56) * 2;
-        for (i = 0; i < r8; i++)
+        scanline += (top - 56) * 2;
+        for (i = 0; i < height; i++)
         {
-            arg1[arg4] = (r4 >> 10) + ((r4 >> 9) & 1) + arg4;
-            r4 += var_2C;
-            arg1 += 2;
+            scanline[dir] = (x >> 10) + ((x >> 9) & 1) + dir;
+            x += xIncrement;
+            scanline += 2;
         }
 
-        ptr = arg1 - 2;
+        ptr = scanline - 2;
     }
-    else if (var_2C > 0)
+    else if (xIncrement > 0)
     {
-        arg5 += (r10 - 56) * 2;
+        overflowScanline += (top - 56) * 2;
         // Less readable than the other loops, but it has to be written this way to match.
-        for (i = 0; i < r8; arg5[arg4] = (r4 >> 10) + ((r4 >> 9) & 1) + arg4, r4 += var_2C, arg5 += 2, i++)
+        for (i = 0; i < height; overflowScanline[dir] = (x >> 10) + ((x >> 9) & 1) + dir, x += xIncrement, overflowScanline += 2, i++)
         {
-            if (r4 >= (155 << 10))
+            if (x >= (155 << 10))
                 break;
         }
 
-        gPokenavState->conditionGraph.bottom = r10 + i;
-        arg1 += (gPokenavState->conditionGraph.bottom - 56) * 2;
-        for (; i < r8; i++)
+        gPokenavState->conditionGraph.bottom = top + i;
+        scanline += (gPokenavState->conditionGraph.bottom - 56) * 2;
+        for (; i < height; i++)
         {
-            arg1[arg4] = (r4 >> 10) + ((r4 >> 9) & 1) + arg4;
-            r4 += var_2C;
-            arg1 += 2;
+            scanline[dir] = (x >> 10) + ((x >> 9) & 1) + dir;
+            x += xIncrement;
+            scanline += 2;
         }
 
-        ptr = arg1 - 2;
+        ptr = scanline - 2;
     }
-    else if (var_2C < 0)
+    else if (xIncrement < 0)
     {
-        arg1 += (r10 - 56) * 2;
-        for (i = 0; i < r8; i++)
+        scanline += (top - 56) * 2;
+        for (i = 0; i < height; i++)
         {
-            arg1[arg4] = (r4 >> 10) + ((r4 >> 9) & 1) + arg4;
-            if (r4 < (155 << 10))
+            scanline[dir] = (x >> 10) + ((x >> 9) & 1) + dir;
+            if (x < (155 << 10))
             {
-                arg1[arg4] = 155;
+                scanline[dir] = 155;
                 break;
             }
-            r4 += var_2C;
-            arg1 += 2;
+            x += xIncrement;
+            scanline += 2;
         }
 
-        gPokenavState->conditionGraph.bottom = r10 + i;
-        arg5 += (gPokenavState->conditionGraph.bottom - 56) * 2;
-        for (; i < r8; i++)
+        gPokenavState->conditionGraph.bottom = top + i;
+        overflowScanline += (gPokenavState->conditionGraph.bottom - 56) * 2;
+        for (; i < height; i++)
         {
-            arg5[arg4] = (r4 >> 10) + ((r4 >> 9) & 1) + arg4;
-            r4 += var_2C;
-            arg5 += 2;
+            overflowScanline[dir] = (x >> 10) + ((x >> 9) & 1) + dir;
+            x += xIncrement;
+            overflowScanline += 2;
         }
 
-        ptr = arg5 - 2;
+        ptr = overflowScanline - 2;
     }
     else
     {
-        gPokenavState->conditionGraph.bottom = r10;
-        arg1 += (r10 - 56) * 2;
-        arg5 += (r10 - 56) * 2;
-        arg1[1] = arg2->x + 1;
-        arg5[0] = arg3->x;
-        arg5[1] = 155;
+        gPokenavState->conditionGraph.bottom = top;
+        scanline += (top - 56) * 2;
+        overflowScanline += (top - 56) * 2;
+        scanline[1] = pos1->x + 1;
+        overflowScanline[0] = pos2->x;
+        overflowScanline[1] = 155;
         return;
     }
 
-    ptr[arg4] = arg4 + var_30;
+    ptr[dir] = dir + x2;
 }
 
-void ConditionGraph_CalcRightHalf(struct UCoords16 * a0)
+void ConditionGraph_CalcRightHalf(struct UCoords16 *positions)
 {
-    u16 i, r6, varMax;
+    u16 i, y, bottom;
 
-    if (a0[0].y < a0[1].y)
+    if (positions[0].y < positions[1].y)
     {
-        r6 = a0[0].y;
-        ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineRight, &a0[0], &a0[1], 1, NULL);
+        y = positions[0].y;
+        ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineRight, &positions[0], &positions[1], 1, NULL);
     }
     else
     {
-        r6 = a0[1].y;
-        ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineRight, &a0[1], &a0[0], 0, NULL);
+        y = positions[1].y;
+        ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineRight, &positions[1], &positions[0], 0, NULL);
     }
-    ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineRight, &a0[1], &a0[2], 1, NULL);
+    ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineRight, &positions[1], &positions[2], 1, NULL);
 
-    i = a0[2].y <= a0[3].y;
-    ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineRight, &a0[2], &a0[3], i, (u16 *)gPokenavState->conditionGraph.scanlineLeft);
-    for (i = 56; i < r6; i++)
+    i = positions[2].y <= positions[3].y;
+    ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineRight, &positions[2], &positions[3], i, (u16 *)gPokenavState->conditionGraph.scanlineLeft);
+    for (i = 56; i < y; i++)
     {
         gPokenavState->conditionGraph.scanlineRight[i - 56][0] = 0;
         gPokenavState->conditionGraph.scanlineRight[i - 56][1] = 0;
     }
 
-    for (i = a0[0].y; i <= gPokenavState->conditionGraph.bottom; i++)
+    for (i = positions[0].y; i <= gPokenavState->conditionGraph.bottom; i++)
         gPokenavState->conditionGraph.scanlineRight[i - 56][0] = 155;
 
-    varMax = max(gPokenavState->conditionGraph.bottom, a0[2].y);
-    for (i = varMax + 1; i < 122; i++)
+    bottom = max(gPokenavState->conditionGraph.bottom, positions[2].y);
+    for (i = bottom + 1; i < 122; i++)
     {
         gPokenavState->conditionGraph.scanlineRight[i - 56][0] = 0;
         gPokenavState->conditionGraph.scanlineRight[i - 56][1] = 0;
@@ -4378,34 +4378,34 @@ void ConditionGraph_CalcRightHalf(struct UCoords16 * a0)
 //    }
 }
 
-void ConditionGraph_CalcLeftHalf(struct UCoords16 *arg0)
+void ConditionGraph_CalcLeftHalf(struct UCoords16 *positions)
 {
-    u16 i, r6, varMax;
+    u16 i, y, bottom;
 
-    if (arg0[0].y < arg0[4].y)
+    if (positions[0].y < positions[4].y)
     {
-        r6 = arg0[0].y;
-        ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineLeft, &arg0[0], &arg0[4], 0, NULL);
+        y = positions[0].y;
+        ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineLeft, &positions[0], &positions[4], 0, NULL);
     }
     else
     {
-        r6 = arg0[4].y;
-        ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineLeft, &arg0[4], &arg0[0], 1, NULL);
+        y = positions[4].y;
+        ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineLeft, &positions[4], &positions[0], 1, NULL);
     }
 
-    ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineLeft, &arg0[4], &arg0[3], 0, NULL);
+    ConditionGraph_CalcLine((u16 *)gPokenavState->conditionGraph.scanlineLeft, &positions[4], &positions[3], 0, NULL);
 
-    for (i = 56; i < r6; i++)
+    for (i = 56; i < y; i++)
     {
         gPokenavState->conditionGraph.scanlineLeft[i - 56][0] = 0;
         gPokenavState->conditionGraph.scanlineLeft[i - 56][1] = 0;
     }
 
-    for (i = arg0[0].y; i <= gPokenavState->conditionGraph.bottom; i++)
+    for (i = positions[0].y; i <= gPokenavState->conditionGraph.bottom; i++)
         gPokenavState->conditionGraph.scanlineLeft[i - 56][1] = 155;
 
-    varMax = max(gPokenavState->conditionGraph.bottom, arg0[3].y + 1);
-    for (i = varMax; i < 122; i++)
+    bottom = max(gPokenavState->conditionGraph.bottom, positions[3].y + 1);
+    for (i = bottom; i < 122; i++)
     {
         gPokenavState->conditionGraph.scanlineLeft[i - 56][0] = 0;
         gPokenavState->conditionGraph.scanlineLeft[i - 56][1] = 0;
@@ -4478,20 +4478,20 @@ void ConditionGraph_Draw(void)
     }
 }
 
-void ConditionGraph_DrawAtYOffset(u8 a0)
+void ConditionGraph_DrawAtYOffset(u8 yOffset)
 {
-    u16 i, r5;
+    u16 i, scanlineOffset;
 
     if (gPokenavState->conditionGraph.needsDraw)
     {
         ConditionGraph_CalcRightHalf(gPokenavState->conditionGraph.curPositions);
         ConditionGraph_CalcLeftHalf(gPokenavState->conditionGraph.curPositions);
-        r5 = 2 * (55 - a0);
+        scanlineOffset = 2 * (55 - yOffset);
         for (i = 0; i < 66; i ++)
         {
-            gScanlineEffectRegBuffers[1][r5 + 0] = gScanlineEffectRegBuffers[0][r5 + 0] = (gPokenavState->conditionGraph.scanlineRight[i][0] << 8) | (gPokenavState->conditionGraph.scanlineRight[i][1]);
-            gScanlineEffectRegBuffers[1][r5 + 1] = gScanlineEffectRegBuffers[0][r5 + 1] = (gPokenavState->conditionGraph.scanlineLeft[i][0] << 8) | (gPokenavState->conditionGraph.scanlineLeft[i][1]);
-            r5 += 2;
+            gScanlineEffectRegBuffers[1][scanlineOffset + 0] = gScanlineEffectRegBuffers[0][scanlineOffset + 0] = (gPokenavState->conditionGraph.scanlineRight[i][0] << 8) | (gPokenavState->conditionGraph.scanlineRight[i][1]);
+            gScanlineEffectRegBuffers[1][scanlineOffset + 1] = gScanlineEffectRegBuffers[0][scanlineOffset + 1] = (gPokenavState->conditionGraph.scanlineLeft[i][0] << 8) | (gPokenavState->conditionGraph.scanlineLeft[i][1]);
+            scanlineOffset += 2;
         }
         gPokenavState->conditionGraph.needsDraw = 0;
     }
@@ -4573,44 +4573,44 @@ u8 PokenavList_MoveCursorDown(void)
 
 u8 PokenavList_PageUp(void)
 {
-    s16 r4;
+    s16 scroll;
     if (gPokenavState->firstVisibleListIndex == 0 || gPokenavState->hasListScrollArrows == 0)
     {
         return 0;
     }
     if (gPokenavState->firstVisibleListIndex < 8)
     {
-        r4 = -gPokenavState->firstVisibleListIndex;
+        scroll = -gPokenavState->firstVisibleListIndex;
     }
     else
     {
-        r4 = -8;
+        scroll = -8;
     }
-    BeginPokenavListScroll(r4);
-    UpdatePokenavListIndicesAfterScroll(r4);
+    BeginPokenavListScroll(scroll);
+    UpdatePokenavListIndicesAfterScroll(scroll);
     return 2;
 }
 
 u8 PokenavList_PageDown(void)
 {
-    s16 r4;
+    s16 scroll;
     if (gPokenavState->lastVisibleListIndex == gPokenavState->lastListIndex || gPokenavState->hasListScrollArrows == 0)
     {
         return 0;
     }
-    r4 = gPokenavState->lastListIndex - gPokenavState->lastVisibleListIndex;
-    if (r4 > 8)
+    scroll = gPokenavState->lastListIndex - gPokenavState->lastVisibleListIndex;
+    if (scroll > 8)
     {
-        r4 = 8;
+        scroll = 8;
     }
-    BeginPokenavListScroll(r4);
-    UpdatePokenavListIndicesAfterScroll(r4);
+    BeginPokenavListScroll(scroll);
+    UpdatePokenavListIndicesAfterScroll(scroll);
     return 2;
 }
 
-void UpdatePokenavListIndicesAfterScroll(s16 a0)
+void UpdatePokenavListIndicesAfterScroll(s16 rowsToScroll)
 {
-    gPokenavState->firstVisibleListIndex += a0;
+    gPokenavState->firstVisibleListIndex += rowsToScroll;
     if (gPokenavState->firstVisibleListIndex > gPokenavState->lastListIndex)
     {
         gPokenavState->firstVisibleListIndex -= gPokenavState->lastListIndex + 1;
@@ -4619,7 +4619,7 @@ void UpdatePokenavListIndicesAfterScroll(s16 a0)
     {
         gPokenavState->firstVisibleListIndex += gPokenavState->lastListIndex + 1;
     }
-    gPokenavState->lastVisibleListIndex += a0;
+    gPokenavState->lastVisibleListIndex += rowsToScroll;
     if (gPokenavState->lastVisibleListIndex > gPokenavState->lastListIndex)
     {
         gPokenavState->lastVisibleListIndex -= gPokenavState->lastListIndex + 1;
@@ -4628,7 +4628,7 @@ void UpdatePokenavListIndicesAfterScroll(s16 a0)
     {
         gPokenavState->lastVisibleListIndex += gPokenavState->lastListIndex + 1;
     }
-    gPokenavState->listSelectedIndex += a0;
+    gPokenavState->listSelectedIndex += rowsToScroll;
     if (gPokenavState->listSelectedIndex > gPokenavState->lastListIndex)
     {
         gPokenavState->listSelectedIndex -= gPokenavState->lastListIndex + 1;
@@ -4745,23 +4745,23 @@ void InitRibbonsMonList(void)
 
 bool8 BuildRibbonsMonListStep(void)
 {
-    struct PokenavMonListItem sp0;
+    struct PokenavMonListItem item;
     u8 ribbons;
     u16 i;
 
     switch (gPokenavState->monListBuildBoxId)
     {
     default:
-        sp0.isValid = 1;
+        item.isValid = 1;
         for (i = 0; i < 15; i++)
         {
             ribbons = GetBoxMonData(&gPokemonStorage.boxes[gPokenavState->monListBuildBoxId][gPokenavState->monListBuildMonId + 0], MON_DATA_RIBBON_COUNT);
             if (ribbons != 0)
             {
-                sp0.boxId = gPokenavState->monListBuildBoxId;
-                sp0.monId = gPokenavState->monListBuildMonId;
-                sp0.data = ribbons;
-                InsertPokenavMonListItem(&sp0);
+                item.boxId = gPokenavState->monListBuildBoxId;
+                item.monId = gPokenavState->monListBuildMonId;
+                item.data = ribbons;
+                InsertPokenavMonListItem(&item);
             }
             if (++gPokenavState->monListBuildMonId == 30)
             {
@@ -4774,16 +4774,16 @@ bool8 BuildRibbonsMonListStep(void)
     case 15:
         return FALSE;
     case 14:
-        sp0.isValid = 1;
-        sp0.boxId = 14;
+        item.isValid = 1;
+        item.boxId = 14;
         for (i = 0; i < 6; i++)
         {
             ribbons = GetMonData(&gPlayerParty[i], MON_DATA_RIBBON_COUNT);
             if (ribbons != 0)
             {
-                sp0.monId = i;
-                sp0.data = ribbons;
-                InsertPokenavMonListItem(&sp0);
+                item.monId = i;
+                item.data = ribbons;
+                InsertPokenavMonListItem(&item);
             }
         }
         FinalizePokenavMonListRanks();
