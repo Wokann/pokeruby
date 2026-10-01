@@ -107,8 +107,8 @@ MauvilleCity_EventScript_BattleWallyPrompt:: @ 814C154
 	goto_if_eq MauvilleCity_EventScript_DeclineWallyBattle
 	closemessage
 	switch VAR_FACING
-	case 2, MauvilleCity_EventScript_WallyAndUncleExitNorth
-	case 4, MauvilleCity_EventScript_WallyAndUncleExitEast
+	case DIR_NORTH, MauvilleCity_EventScript_WallyAndUncleExitNorth
+	case DIR_EAST, MauvilleCity_EventScript_WallyAndUncleExitEast
 	end
 
 MauvilleCity_EventScript_WallyAndUncleExitNorth:: @ 814C187

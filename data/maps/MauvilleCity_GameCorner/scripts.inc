@@ -142,17 +142,17 @@ MauvilleCity_GameCorner_EventScript_ChooseDollPrize:: @ 8156BA6
 
 MauvilleCity_GameCorner_EventScript_TreeckoDoll:: @ 8156BE2
 	setvar VAR_TEMP_1, 1
-	bufferdecorationname 0, DECOR_TREECKO_DOLL
+	bufferdecorationname STR_VAR_1, DECOR_TREECKO_DOLL
 	goto MauvilleCity_GameCorner_EventScript_ConfirmDollPrize
 
 MauvilleCity_GameCorner_EventScript_TorchicDoll:: @ 8156BF0
 	setvar VAR_TEMP_1, 2
-	bufferdecorationname 0, DECOR_TORCHIC_DOLL
+	bufferdecorationname STR_VAR_1, DECOR_TORCHIC_DOLL
 	goto MauvilleCity_GameCorner_EventScript_ConfirmDollPrize
 
 MauvilleCity_GameCorner_EventScript_MudkipDoll:: @ 8156BFE
 	setvar VAR_TEMP_1, 3
-	bufferdecorationname 0, DECOR_MUDKIP_DOLL
+	bufferdecorationname STR_VAR_1, DECOR_MUDKIP_DOLL
 	goto MauvilleCity_GameCorner_EventScript_ConfirmDollPrize
 
 MauvilleCity_GameCorner_EventScript_ConfirmDollPrize:: @ 8156C0C
@@ -169,7 +169,7 @@ MauvilleCity_GameCorner_EventScript_BuyTreeckoDoll:: @ 8156C46
 	checkcoins VAR_TEMP_2
 	compare VAR_TEMP_2, DOLL_COINS
 	goto_if_lt MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForDoll
-	bufferdecorationname 1, DECOR_TREECKO_DOLL
+	bufferdecorationname STR_VAR_2, DECOR_TREECKO_DOLL
 	checkdecorspace DECOR_TREECKO_DOLL
 	compare VAR_RESULT, FALSE
 	goto_if_eq MauvilleCity_GameCorner_EventScript_NoRoomForDoll
@@ -185,7 +185,7 @@ MauvilleCity_GameCorner_EventScript_BuyTorchicDoll:: @ 8156C80
 	checkcoins VAR_TEMP_2
 	compare VAR_TEMP_2, DOLL_COINS
 	goto_if_lt MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForDoll
-	bufferdecorationname 1, DECOR_TORCHIC_DOLL
+	bufferdecorationname STR_VAR_2, DECOR_TORCHIC_DOLL
 	checkdecorspace DECOR_TORCHIC_DOLL
 	compare VAR_RESULT, FALSE
 	goto_if_eq MauvilleCity_GameCorner_EventScript_NoRoomForDoll
@@ -201,7 +201,7 @@ MauvilleCity_GameCorner_EventScript_BuyMudkipDoll:: @ 8156CBA
 	checkcoins VAR_TEMP_2
 	compare VAR_TEMP_2, DOLL_COINS
 	goto_if_lt MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForDoll
-	bufferdecorationname 1, DECOR_MUDKIP_DOLL
+	bufferdecorationname STR_VAR_2, DECOR_MUDKIP_DOLL
 	checkdecorspace DECOR_MUDKIP_DOLL
 	compare VAR_RESULT, FALSE
 	goto_if_eq MauvilleCity_GameCorner_EventScript_NoRoomForDoll
@@ -265,27 +265,27 @@ MauvilleCity_GameCorner_EventScript_ChooseTMPrize:: @ 8156D54
 
 MauvilleCity_GameCorner_EventScript_TMDoubleTeam:: @ 8156DA6
 	setvar VAR_TEMP_1, 1
-	bufferitemname 0, ITEM_TM32_DOUBLE_TEAM
+	bufferitemname STR_VAR_1, ITEM_TM32_DOUBLE_TEAM
 	goto MauvilleCity_GameCorner_EventScript_ConfirmTMPrize
 
 MauvilleCity_GameCorner_EventScript_TMPsychic:: @ 8156DB4
 	setvar VAR_TEMP_1, 2
-	bufferitemname 0, ITEM_TM29_PSYCHIC
+	bufferitemname STR_VAR_1, ITEM_TM29_PSYCHIC
 	goto MauvilleCity_GameCorner_EventScript_ConfirmTMPrize
 
 MauvilleCity_GameCorner_EventScript_TMFlamethrower:: @ 8156DC2
 	setvar VAR_TEMP_1, 3
-	bufferitemname 0, ITEM_TM35_FLAMETHROWER
+	bufferitemname STR_VAR_1, ITEM_TM35_FLAMETHROWER
 	goto MauvilleCity_GameCorner_EventScript_ConfirmTMPrize
 
 MauvilleCity_GameCorner_EventScript_TMThunderbolt:: @ 8156DD0
 	setvar VAR_TEMP_1, 4
-	bufferitemname 0, ITEM_TM24_THUNDERBOLT
+	bufferitemname STR_VAR_1, ITEM_TM24_THUNDERBOLT
 	goto MauvilleCity_GameCorner_EventScript_ConfirmTMPrize
 
 MauvilleCity_GameCorner_EventScript_TMIceBeam:: @ 8156DDE
 	setvar VAR_TEMP_1, 5
-	bufferitemname 0, ITEM_TM13_ICE_BEAM
+	bufferitemname STR_VAR_1, ITEM_TM13_ICE_BEAM
 	goto MauvilleCity_GameCorner_EventScript_ConfirmTMPrize
 
 MauvilleCity_GameCorner_EventScript_ConfirmTMPrize:: @ 8156DEC
@@ -413,7 +413,7 @@ MauvilleCity_GameCorner_EventScript_Girl:: @ 8156F96
 	end
 
 MauvilleCity_GameCorner_EventScript_GiveTreeckoDoll:: @ 8156FDB
-	bufferdecorationname 1, DECOR_TREECKO_DOLL
+	bufferdecorationname STR_VAR_2, DECOR_TREECKO_DOLL
 	checkdecorspace DECOR_TREECKO_DOLL
 	compare VAR_RESULT, FALSE
 	goto_if_eq MauvilleCity_GameCorner_EventScript_NoRoomForStarterDoll
@@ -424,7 +424,7 @@ MauvilleCity_GameCorner_EventScript_GiveTreeckoDoll:: @ 8156FDB
 	end
 
 MauvilleCity_GameCorner_EventScript_GiveTorchicDoll:: @ 8157005
-	bufferdecorationname 1, DECOR_TORCHIC_DOLL
+	bufferdecorationname STR_VAR_2, DECOR_TORCHIC_DOLL
 	checkdecorspace DECOR_TORCHIC_DOLL
 	compare VAR_RESULT, FALSE
 	goto_if_eq MauvilleCity_GameCorner_EventScript_NoRoomForStarterDoll
@@ -435,7 +435,7 @@ MauvilleCity_GameCorner_EventScript_GiveTorchicDoll:: @ 8157005
 	end
 
 MauvilleCity_GameCorner_EventScript_GiveMudkipDoll:: @ 815702F
-	bufferdecorationname 1, DECOR_MUDKIP_DOLL
+	bufferdecorationname STR_VAR_2, DECOR_MUDKIP_DOLL
 	checkdecorspace DECOR_MUDKIP_DOLL
 	compare VAR_RESULT, FALSE
 	goto_if_eq MauvilleCity_GameCorner_EventScript_NoRoomForStarterDoll
