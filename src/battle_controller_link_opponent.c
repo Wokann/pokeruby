@@ -576,7 +576,7 @@ static void LinkOpponentHandleGetMonData(void)
 
 static u32 CopyLinkOpponentMonData(u8 monId, u8 *dst)
 {
-    struct BattlePokemon battlePokemon;
+    struct BattlePokemon battleMon;
     struct MovePPInfo moveData;
     u8 nickname[20];
     u8 *src;
@@ -587,40 +587,40 @@ static u32 CopyLinkOpponentMonData(u8 monId, u8 *dst)
     switch (gBattleBufferA[gActiveBattler][1])
     {
     case 0:
-        battlePokemon.species = GetMonData(&gEnemyParty[monId], MON_DATA_SPECIES);
-        battlePokemon.item = GetMonData(&gEnemyParty[monId], MON_DATA_HELD_ITEM);
+        battleMon.species = GetMonData(&gEnemyParty[monId], MON_DATA_SPECIES);
+        battleMon.item = GetMonData(&gEnemyParty[monId], MON_DATA_HELD_ITEM);
         for (size = 0; size < 4; size++)
         {
-            battlePokemon.moves[size] = GetMonData(&gEnemyParty[monId], MON_DATA_MOVE1 + size);
-            battlePokemon.pp[size] = GetMonData(&gEnemyParty[monId], MON_DATA_PP1 + size);
+            battleMon.moves[size] = GetMonData(&gEnemyParty[monId], MON_DATA_MOVE1 + size);
+            battleMon.pp[size] = GetMonData(&gEnemyParty[monId], MON_DATA_PP1 + size);
         }
-        battlePokemon.ppBonuses = GetMonData(&gEnemyParty[monId], MON_DATA_PP_BONUSES);
-        battlePokemon.friendship = GetMonData(&gEnemyParty[monId], MON_DATA_FRIENDSHIP);
-        battlePokemon.experience = GetMonData(&gEnemyParty[monId], MON_DATA_EXP);
-        battlePokemon.hpIV = GetMonData(&gEnemyParty[monId], MON_DATA_HP_IV);
-        battlePokemon.attackIV = GetMonData(&gEnemyParty[monId], MON_DATA_ATK_IV);
-        battlePokemon.defenseIV = GetMonData(&gEnemyParty[monId], MON_DATA_DEF_IV);
-        battlePokemon.speedIV = GetMonData(&gEnemyParty[monId], MON_DATA_SPEED_IV);
-        battlePokemon.spAttackIV = GetMonData(&gEnemyParty[monId], MON_DATA_SPATK_IV);
-        battlePokemon.spDefenseIV = GetMonData(&gEnemyParty[monId], MON_DATA_SPDEF_IV);
-        battlePokemon.personality = GetMonData(&gEnemyParty[monId], MON_DATA_PERSONALITY);
-        battlePokemon.status1 = GetMonData(&gEnemyParty[monId], MON_DATA_STATUS);
-        battlePokemon.level = GetMonData(&gEnemyParty[monId], MON_DATA_LEVEL);
-        battlePokemon.hp = GetMonData(&gEnemyParty[monId], MON_DATA_HP);
-        battlePokemon.maxHP = GetMonData(&gEnemyParty[monId], MON_DATA_MAX_HP);
-        battlePokemon.attack = GetMonData(&gEnemyParty[monId], MON_DATA_ATK);
-        battlePokemon.defense = GetMonData(&gEnemyParty[monId], MON_DATA_DEF);
-        battlePokemon.speed = GetMonData(&gEnemyParty[monId], MON_DATA_SPEED);
-        battlePokemon.spAttack = GetMonData(&gEnemyParty[monId], MON_DATA_SPATK);
-        battlePokemon.spDefense = GetMonData(&gEnemyParty[monId], MON_DATA_SPDEF);
-        battlePokemon.isEgg = GetMonData(&gEnemyParty[monId], MON_DATA_IS_EGG);
-        battlePokemon.abilityNum = GetMonData(&gEnemyParty[monId], MON_DATA_ABILITY_NUM);
-        battlePokemon.otId = GetMonData(&gEnemyParty[monId], MON_DATA_OT_ID);
+        battleMon.ppBonuses = GetMonData(&gEnemyParty[monId], MON_DATA_PP_BONUSES);
+        battleMon.friendship = GetMonData(&gEnemyParty[monId], MON_DATA_FRIENDSHIP);
+        battleMon.experience = GetMonData(&gEnemyParty[monId], MON_DATA_EXP);
+        battleMon.hpIV = GetMonData(&gEnemyParty[monId], MON_DATA_HP_IV);
+        battleMon.attackIV = GetMonData(&gEnemyParty[monId], MON_DATA_ATK_IV);
+        battleMon.defenseIV = GetMonData(&gEnemyParty[monId], MON_DATA_DEF_IV);
+        battleMon.speedIV = GetMonData(&gEnemyParty[monId], MON_DATA_SPEED_IV);
+        battleMon.spAttackIV = GetMonData(&gEnemyParty[monId], MON_DATA_SPATK_IV);
+        battleMon.spDefenseIV = GetMonData(&gEnemyParty[monId], MON_DATA_SPDEF_IV);
+        battleMon.personality = GetMonData(&gEnemyParty[monId], MON_DATA_PERSONALITY);
+        battleMon.status1 = GetMonData(&gEnemyParty[monId], MON_DATA_STATUS);
+        battleMon.level = GetMonData(&gEnemyParty[monId], MON_DATA_LEVEL);
+        battleMon.hp = GetMonData(&gEnemyParty[monId], MON_DATA_HP);
+        battleMon.maxHP = GetMonData(&gEnemyParty[monId], MON_DATA_MAX_HP);
+        battleMon.attack = GetMonData(&gEnemyParty[monId], MON_DATA_ATK);
+        battleMon.defense = GetMonData(&gEnemyParty[monId], MON_DATA_DEF);
+        battleMon.speed = GetMonData(&gEnemyParty[monId], MON_DATA_SPEED);
+        battleMon.spAttack = GetMonData(&gEnemyParty[monId], MON_DATA_SPATK);
+        battleMon.spDefense = GetMonData(&gEnemyParty[monId], MON_DATA_SPDEF);
+        battleMon.isEgg = GetMonData(&gEnemyParty[monId], MON_DATA_IS_EGG);
+        battleMon.abilityNum = GetMonData(&gEnemyParty[monId], MON_DATA_ABILITY_NUM);
+        battleMon.otId = GetMonData(&gEnemyParty[monId], MON_DATA_OT_ID);
         GetMonData(&gEnemyParty[monId], MON_DATA_NICKNAME, nickname);
-        StringCopy_Nickname(battlePokemon.nickname, nickname);
-        GetMonData(&gEnemyParty[monId], MON_DATA_OT_NAME, battlePokemon.otName);
+        StringCopy_Nickname(battleMon.nickname, nickname);
+        GetMonData(&gEnemyParty[monId], MON_DATA_OT_NAME, battleMon.otName);
 
-        MEMCPY_ALT(&battlePokemon, dst, sizeof(battlePokemon), size, src);
+        MEMCPY_ALT(&battleMon, dst, sizeof(battleMon), size, src);
         break;
     case 1:
         data16 = GetMonData(&gEnemyParty[monId], MON_DATA_SPECIES);
@@ -1435,22 +1435,22 @@ static void LinkOpponentHandleCmd23(void)
 
 static void LinkOpponentHandleHealthBarUpdate(void)
 {
-    s16 hpValue;
+    s16 hpVal;
 
     LoadBattleBarGfx(0);
-    hpValue = gBattleBufferA[gActiveBattler][2] | (gBattleBufferA[gActiveBattler][3] << 8);
-    if (hpValue != 0x7FFF)
+    hpVal = gBattleBufferA[gActiveBattler][2] | (gBattleBufferA[gActiveBattler][3] << 8);
+    if (hpVal != 0x7FFF)
     {
         u32 maxHP = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_MAX_HP);
-        u32 hp = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_HP);
+        u32 curHP = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_HP);
 
-        SetBattleBarStruct(gActiveBattler, gHealthboxSpriteIds[gActiveBattler], maxHP, hp, hpValue);
+        SetBattleBarStruct(gActiveBattler, gHealthboxSpriteIds[gActiveBattler], maxHP, curHP, hpVal);
     }
     else
     {
         u32 maxHP = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_MAX_HP);
 
-        SetBattleBarStruct(gActiveBattler, gHealthboxSpriteIds[gActiveBattler], maxHP, 0, hpValue);
+        SetBattleBarStruct(gActiveBattler, gHealthboxSpriteIds[gActiveBattler], maxHP, 0, hpVal);
     }
     gBattlerControllerFuncs[gActiveBattler] = CompleteOnHealthbarDone;
 }
