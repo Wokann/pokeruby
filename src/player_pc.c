@@ -1323,12 +1323,12 @@ static void Mailbox_DoGiveMailPokeMenu(u8 taskId) // Mailbox_DoGiveMailPokeMenu
 static void Mailbox_UpdateMailListAfterDeposit(void)
 {
     u8 taskId = CreateTask(Mailbox_HandleReturnToProcessInput, 0);
-    u8 oldCount = gPlayerPCItemPageInfo.count;
+    u8 prevCount = gPlayerPCItemPageInfo.count;
 
     gPlayerPCItemPageInfo.count = GetMailboxMailCount();
     Mailbox_CompactMailList();
 
-    if(oldCount != gPlayerPCItemPageInfo.count && gPlayerPCItemPageInfo.count < gPlayerPCItemPageInfo.pageItems + gPlayerPCItemPageInfo.itemsAbove && gPlayerPCItemPageInfo.itemsAbove != 0) // did the count update?
+    if(prevCount != gPlayerPCItemPageInfo.count && gPlayerPCItemPageInfo.count < gPlayerPCItemPageInfo.pageItems + gPlayerPCItemPageInfo.itemsAbove && gPlayerPCItemPageInfo.itemsAbove != 0) // did the count update?
         gPlayerPCItemPageInfo.itemsAbove--;
 
     SetPlayerPCListCount(taskId);
