@@ -1900,7 +1900,7 @@ static bool8 CanReplaceMove(u8 taskId)
 
     CopyMonToSummaryStruct(&mon);
     move = GetMonMove(&mon, pssData.firstMoveIndex);
-    if (IsHMMoveInPartyMenu(move) == TRUE && pssData.mode != PSS_MODE_MOVE_DELETER)
+    if (IsMoveHm(move) == TRUE && pssData.mode != PSS_MODE_MOVE_DELETER)
         return FALSE;
     return TRUE;
 }

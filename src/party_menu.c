@@ -2344,7 +2344,7 @@ void LoadHeldItemIconGraphics(void)
     LoadSpritePalette(&sHeldItemIconSpritePalette);
 }
 
-void SpriteCB_HeldItemIcon(struct Sprite *sprite)
+void SpriteCB_HeldItem(struct Sprite *sprite)
 {
     u8 data7 = sprite->data[7];
 
@@ -2370,7 +2370,7 @@ void CreateHeldItemIcon(u8 a, u8 b)
 
     gSprites[spriteId].x2 = 4;
     gSprites[spriteId].y2 = 10;
-    gSprites[spriteId].callback = SpriteCB_HeldItemIcon;
+    gSprites[spriteId].callback = SpriteCB_HeldItem;
     gSprites[spriteId].data[7] = a;
 
     StartSpriteAnim(&gSprites[spriteId], b);
@@ -3453,7 +3453,7 @@ void Task_HandleStopTryingMovePrompt(u8 taskId)
     }
 }
 
-bool8 IsHMMoveInPartyMenu(u16 move)
+bool8 IsMoveHm(u16 move)
 {
     u8 i;
 
