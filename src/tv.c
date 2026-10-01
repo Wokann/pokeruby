@@ -1421,9 +1421,9 @@ void DoPokeNews(void)
     }
     else
     {
-        u16 value = gSaveBlock1.pokeNews[i].dayCountdown;
+        u16 dayCountdown = gSaveBlock1.pokeNews[i].dayCountdown;
 
-        ConvertIntToDecimalStringN(gStringVar1, value, 0, 1);
+        ConvertIntToDecimalStringN(gStringVar1, dayCountdown, 0, 1);
         gSaveBlock1.pokeNews[i].state = POKENEWS_STATE_INACTIVE;
         ShowFieldMessage(sPokeNewsTextGroup_Upcoming[gSaveBlock1.pokeNews[i].kind]);
     }
@@ -1921,9 +1921,9 @@ s8 FindFirstEmptyRecordMixTVShowSlot(TVShow tvShows[])
     return -1;
 }
 
-bool8 BernoulliTrial(u16 value)
+bool8 BernoulliTrial(u16 ratio)
 {
-    if (Random() <= value)
+    if (Random() <= ratio)
         return FALSE;
     return TRUE;
 }
