@@ -79,7 +79,7 @@ static void ObjectEventExecHeldMovementAction(struct ObjectEvent*, struct Sprite
 static void ObjectEventUpdateSubpriority(struct ObjectEvent*, struct Sprite*);
 static void UpdateObjectEventVisibility(struct ObjectEvent*, struct Sprite*);
 static void UpdateObjectEventOffscreen(struct ObjectEvent*, struct Sprite*);
-static void UpdateObjEventSpriteVisibility(struct ObjectEvent*, struct Sprite*);
+static void UpdateObjectEventSpriteVisibility(struct ObjectEvent*, struct Sprite*);
 static void DoTracksGroundEffect_None(struct ObjectEvent*, struct Sprite*, u8);
 static void DoTracksGroundEffect_Footprints(struct ObjectEvent*, struct Sprite*, u8);
 static void DoTracksGroundEffect_BikeTireTracks(struct ObjectEvent*, struct Sprite*, u8);
@@ -7215,7 +7215,7 @@ static void TryEnableObjectEventAnim(struct ObjectEvent *objectEvent, struct Spr
 static void UpdateObjectEventVisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     UpdateObjectEventOffscreen(objectEvent, sprite);
-    UpdateObjEventSpriteVisibility(objectEvent, sprite);
+    UpdateObjectEventSpriteVisibility(objectEvent, sprite);
 }
 
 static void UpdateObjectEventOffscreen(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7248,7 +7248,7 @@ static void UpdateObjectEventOffscreen(struct ObjectEvent *objectEvent, struct S
     }
 }
 
-static void UpdateObjEventSpriteVisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+static void UpdateObjectEventSpriteVisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     sprite->invisible = FALSE;
     if (objectEvent->invisible || objectEvent->offScreen)
@@ -7923,7 +7923,7 @@ static void (*const sGroundEffectFuncs[])(struct ObjectEvent *objEvent, struct S
     GroundEffect_Seaweed
 };
 
-static void StartTriggeredGroundEffects(struct ObjectEvent *objEvent, struct Sprite *sprite, u32 flags)
+static void DoFlaggedGroundEffects(struct ObjectEvent *objEvent, struct Sprite *sprite, u32 flags)
 {
     u8 i;
     for (i = 0; i < ARRAY_COUNT(sGroundEffectFuncs); i++, flags >>= 1)
@@ -7931,7 +7931,7 @@ static void StartTriggeredGroundEffects(struct ObjectEvent *objEvent, struct Spr
             sGroundEffectFuncs[i](objEvent, sprite);
 }
 
-void FilterOutDisabledCoveringGroundEffects(struct ObjectEvent *objEvent, u32 *flags)
+void filters_out_some_ground_effects(struct ObjectEvent *objEvent, u32 *flags)
 {
     if (objEvent->disableCoveringGroundEffects)
     {
@@ -7963,7 +7963,7 @@ static void DoGroundEffects_OnSpawn(struct ObjectEvent *objEvent, struct Sprite 
         UpdateObjectEventElevationAndPriority(objEvent, sprite);
         GetAllGroundEffectFlags_OnSpawn(objEvent, &flags);
         SetObjectEventSpriteOamTableForLongGrass(objEvent, sprite);
-        StartTriggeredGroundEffects(objEvent, sprite, flags);
+        DoFlaggedGroundEffects(objEvent, sprite, flags);
         objEvent->triggerGroundEffectsOnMove = 0;
         objEvent->disableCoveringGroundEffects = 0;
     }
@@ -7979,8 +7979,8 @@ static void DoGroundEffects_OnBeginStep(struct ObjectEvent *objEvent, struct Spr
         UpdateObjectEventElevationAndPriority(objEvent, sprite);
         GetAllGroundEffectFlags_OnBeginStep(objEvent, &flags);
         SetObjectEventSpriteOamTableForLongGrass(objEvent, sprite);
-        FilterOutDisabledCoveringGroundEffects(objEvent, &flags);
-        StartTriggeredGroundEffects(objEvent, sprite, flags);
+        filters_out_some_ground_effects(objEvent, &flags);
+        DoFlaggedGroundEffects(objEvent, sprite, flags);
         objEvent->triggerGroundEffectsOnMove = 0;
         objEvent->disableCoveringGroundEffects = 0;
     }
@@ -7997,7 +7997,7 @@ static void DoGroundEffects_OnFinishStep(struct ObjectEvent *objEvent, struct Sp
         GetAllGroundEffectFlags_OnFinishStep(objEvent, &flags);
         SetObjectEventSpriteOamTableForLongGrass(objEvent, sprite);
         FilterOutStepOnPuddleGroundEffectIfJumping(objEvent, &flags);
-        StartTriggeredGroundEffects(objEvent, sprite, flags);
+        DoFlaggedGroundEffects(objEvent, sprite, flags);
         objEvent->triggerGroundEffectsOnStop = 0;
         objEvent->landingJump = 0;
     }
