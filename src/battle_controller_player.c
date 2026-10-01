@@ -770,13 +770,7 @@ extern const u8 BattleText_Format[];
 void HandleMoveSwitching(void)
 {
     u8 perMovePPBonuses[4];
-    struct
-    {
-        u16 moves[4];
-        u8 currentPP[4];
-        u8 filler18[8];  // what is this?
-    } moveStruct;
-    //struct ChooseMoveStruct moveStruct;
+    struct ChooseMoveStruct moveStruct;
     u8 totalPPBonuses;
 
     if (JOY_NEW(A_BUTTON | SELECT_BUTTON))
