@@ -99,7 +99,7 @@ static void DoHitAnimBlinkSpriteEffect(void);
 static void SwitchIn_ShowSubstitute(void);
 static void SwitchIn_HandleSoundAndEnd(void);
 static void SwitchIn_ShowHealthbox(void);
-static void SwitchIn_TryShinyAnimShowHealthbox(void);
+static void SwitchIn_TryShinyAnim(void);
 static void CompleteOnFinishedStatusAnimation(void);
 static void CompleteOnFinishedBattleAnimation(void);
 static void OpponentBufferExecCompleted(void);
@@ -485,7 +485,7 @@ static void SwitchIn_ShowHealthbox(void)
     }
 }
 
-static void SwitchIn_TryShinyAnimShowHealthbox(void)
+static void SwitchIn_TryShinyAnim(void)
 {
     if (!gBattleHealthBoxInfo[gActiveBattler].ballAnimActive && !gBattleHealthBoxInfo[gActiveBattler].triedShinyMonAnim)
         TryShinyAnimation(gActiveBattler, &gEnemyParty[gBattlerPartyIndexes[gActiveBattler]]);
@@ -1128,7 +1128,7 @@ static void OpponentHandleSwitchInAnim(void)
     gBattlerPartyIndexes[gActiveBattler] = gBattleBufferA[gActiveBattler][1];
 
     StartSendOutAnim(gActiveBattler, gBattleBufferA[gActiveBattler][2]);
-    gBattlerControllerFuncs[gActiveBattler] = SwitchIn_TryShinyAnimShowHealthbox;
+    gBattlerControllerFuncs[gActiveBattler] = SwitchIn_TryShinyAnim;
 }
 
 static void StartSendOutAnim(u8 battler, bool8 dontClearSubstituteBit)
