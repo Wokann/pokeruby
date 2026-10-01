@@ -206,7 +206,7 @@ bool8 ScriptMenu_YesNo(u8 left, u8 top)
 }
 
 // unused
-bool8 ScriptMenu_IsResultReady(void)
+bool8 IsScriptActive(void)
 {
     if (gSpecialVar_Result == 0xFF)
         return FALSE;
