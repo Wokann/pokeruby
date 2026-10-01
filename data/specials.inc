@@ -1,13 +1,17 @@
-.macro def_special ptr
-.global SPECIAL_\ptr
-.set SPECIAL_\ptr, __special__
-.set __special__, __special__ + 1
-    .4byte \ptr
-    .endm
+	.macro def_special ptr:req
+	.if ALLOCATE_SPECIAL_TABLE
+	.global SPECIAL_\ptr
+	.set SPECIAL_\ptr, __special__
+	.4byte \ptr
+	.endif
+	.set __special__, __special__ + 1
+	.endm
 
 .set __special__, 0
+	.if ALLOCATE_SPECIAL_TABLE
 	.align 2
 gSpecials::
+	.endif
 	def_special HealPlayerParty
 	def_special SetCableClubWarp
 	def_special DoCableClubWarp

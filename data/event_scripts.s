@@ -47,6 +47,7 @@
 	.section script_data, "aw", %progbits
 
 @ 814AE30
+	.set ALLOCATE_SCRIPT_CMD_TABLE, 1
 	.include "data/script_cmd_table.inc"
 
 	.align 2
@@ -70,6 +71,8 @@ gSpecialVars::
 	.4byte gSpecialVar_ContestRank
 	.4byte gSpecialVar_ContestCategory
 
+	.purgem def_special
+	.set ALLOCATE_SPECIAL_TABLE, 1
 	.include "data/specials.inc"
 
 	.align 2
