@@ -1552,7 +1552,7 @@ Cry_Crawdaunt:: @ 85EAAC8
 
 	.align 2
 Cry_Spoink:: @ 85EC380
-	.incbin "sound/direct_sound_samples/cries/cry_spoink.bin"
+	.incbin "sound/direct_sound_samples/cries/spoink.bin"
 
 	.align 2
 Cry_Grumpig:: @ 85ECAC0
