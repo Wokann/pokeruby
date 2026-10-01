@@ -174,7 +174,7 @@ void SetPlayerBerryData(u8 playerId, u16 itemId);
 static void ApplyBlenderCenterAffine(void);
 static void SetBgPos(void);
 static void CB2_LoadBerryBlender(void);
-static void InitLocalPlayers(u8 numOpponents);
+static void InitLocalPlayers(u8 opponentsNum);
 static void UpdateBlenderCenter(void);
 static void CB2_StartBlenderLink(void);
 static void CB2_StartBlenderLocal(void);
@@ -953,15 +953,15 @@ static void ConvertItemToBlenderBerry(struct BlenderBerry* berry, u16 itemId)
     berry->smoothness = berryInfo->smoothness;
 }
 
-static void InitLocalPlayers(u8 numOpponents)
+static void InitLocalPlayers(u8 opponentsNum)
 {
     int i;
-    if (numOpponents)
+    if (opponentsNum)
     {
         for (i = 0; i < 4; i++)
             gLinkPlayers[i].language = GAME_LANGUAGE;
     }
-    switch (numOpponents)
+    switch (opponentsNum)
     {
     case 0:
         gInGameOpponentsNo = 0;
