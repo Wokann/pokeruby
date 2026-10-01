@@ -5,7 +5,7 @@ ContestLobby_EventScript_SpeakToContestReceptionist:: @ 81A4E92
 	call_if_eq VAR_RESULT, FALSE, ContestLobby_EventScript_ResetContestPassPrompt
 	goto_if_ne VAR_CONTEST_PRIZE_PICKUP, FALSE, ContestLobby_EventScript_PickUpPrize
 	goto_if_set FLAG_TEMP_1, ContestLobby_EventScript_AskEnterContest
-	bufferstdstring 0, VAR_0x800B
+	bufferstdstring STR_VAR_1, VAR_0x800B
 	msgbox ContestLobby_Text_RegistrationForRankContests, MSGBOX_DEFAULT
 	checkitem ITEM_CONTEST_PASS
 	goto_if_eq VAR_RESULT, FALSE, ContestLobby_EventScript_NoContestPass
@@ -50,7 +50,7 @@ ContestLobby_EventScript_AlreadyIssuedContestPass:: @ 81A4F44
 ContestLobby_EventScript_PickUpPrize:: @ 81A4F4E
 	msgbox ContestLobby_Text_PokemonWonWeHavePrize, MSGBOX_DEFAULT
 	switch VAR_CONTEST_PRIZE_PICKUP
-	case 4, ContestLobby_EventScript_GiveLuxuryBallAtCounter
+	case CONTEST_PRIZE_LUXURY_BALL, ContestLobby_EventScript_GiveLuxuryBallAtCounter
 	end
 
 ContestLobby_EventScript_GiveLuxuryBallAtCounter:: @ 81A4F67
@@ -180,9 +180,9 @@ ContestLobby_EventScript_EnterMon:: @ 81A513D
 LinkContestRoom1_EventScript_RunContest:: @ 81A514D
 	setvar VAR_0x8006, 0
 	lockall
-	applymovement 14, LinkContestRoom1_Movement_HostFaceUp
+	applymovement LOCALID_CONTESTANT_4, LinkContestRoom1_Movement_Player4FaceUp
 	waitmovement 0
-	applymovement 1, LinkContestRoom1_Movement_FaceDown
+	applymovement LOCALID_CONTEST_MC, LinkContestRoom1_Movement_MCWalkDown
 	waitmovement 0
 	releaseall
 	call LinkContestRoom1_EventScript_SetRankBuffer
@@ -200,69 +200,69 @@ LinkContestRoom1_EventScript_RunContest:: @ 81A514D
 
 LinkContestRoom1_EventScript_SetRankBuffer:: @ 81A51A0
 	switch VAR_CONTEST_RANK
-	case 0, LinkContestRoom1_EventScript_SetNormalRankBuffer
-	case 1, LinkContestRoom1_EventScript_SetSuperRankBuffer
-	case 2, LinkContestRoom1_EventScript_SetHyperRankBuffer
-	case 3, LinkContestRoom1_EventScript_SetMasterRankBuffer
+	case CONTEST_RANK_NORMAL, LinkContestRoom1_EventScript_SetNormalRankBuffer
+	case CONTEST_RANK_SUPER, LinkContestRoom1_EventScript_SetSuperRankBuffer
+	case CONTEST_RANK_HYPER, LinkContestRoom1_EventScript_SetHyperRankBuffer
+	case CONTEST_RANK_MASTER, LinkContestRoom1_EventScript_SetMasterRankBuffer
 	return
 
 LinkContestRoom1_EventScript_SetNormalRankBuffer:: @ 81A51D2
-	setvar VAR_0x8009, 5
+	setvar VAR_0x8009, STDSTRING_NORMAL
 	return
 
 LinkContestRoom1_EventScript_SetSuperRankBuffer:: @ 81A51D8
-	setvar VAR_0x8009, 6
+	setvar VAR_0x8009, STDSTRING_SUPER
 	return
 
 LinkContestRoom1_EventScript_SetHyperRankBuffer:: @ 81A51DE
-	setvar VAR_0x8009, 7
+	setvar VAR_0x8009, STDSTRING_HYPER
 	return
 
 LinkContestRoom1_EventScript_SetMasterRankBuffer:: @ 81A51E4
-	setvar VAR_0x8009, 8
+	setvar VAR_0x8009, STDSTRING_MASTER
 	return
 
 LinkContestRoom1_EventScript_SetCategoryBuffer:: @ 81A51EA
 	switch VAR_CONTEST_CATEGORY
-	case 0, LinkContestRoom1_EventScript_SetCoolCategoryBuffer
-	case 1, LinkContestRoom1_EventScript_SetBeautyCategoryBuffer
-	case 2, LinkContestRoom1_EventScript_SetCuteCategoryBuffer
-	case 3, LinkContestRoom1_EventScript_SetSmartCategoryBuffer
-	case 4, LinkContestRoom1_EventScript_SetToughCategoryBuffer
+	case CONTEST_CATEGORY_COOL, LinkContestRoom1_EventScript_SetCoolCategoryBuffer
+	case CONTEST_CATEGORY_BEAUTY, LinkContestRoom1_EventScript_SetBeautyCategoryBuffer
+	case CONTEST_CATEGORY_CUTE, LinkContestRoom1_EventScript_SetCuteCategoryBuffer
+	case CONTEST_CATEGORY_SMART, LinkContestRoom1_EventScript_SetSmartCategoryBuffer
+	case CONTEST_CATEGORY_TOUGH, LinkContestRoom1_EventScript_SetToughCategoryBuffer
 	return
 
 LinkContestRoom1_EventScript_SetCoolCategoryBuffer:: @ 81A5227
-	setvar VAR_0x8008, 0
+	setvar VAR_0x8008, CONTEST_CATEGORY_COOL
 	return
 
 LinkContestRoom1_EventScript_SetBeautyCategoryBuffer:: @ 81A522D
-	setvar VAR_0x8008, 1
+	setvar VAR_0x8008, CONTEST_CATEGORY_BEAUTY
 	return
 
 LinkContestRoom1_EventScript_SetCuteCategoryBuffer:: @ 81A5233
-	setvar VAR_0x8008, 2
+	setvar VAR_0x8008, CONTEST_CATEGORY_CUTE
 	return
 
 LinkContestRoom1_EventScript_SetSmartCategoryBuffer:: @ 81A5239
-	setvar VAR_0x8008, 3
+	setvar VAR_0x8008, CONTEST_CATEGORY_SMART
 	return
 
 LinkContestRoom1_EventScript_SetToughCategoryBuffer:: @ 81A523F
-	setvar VAR_0x8008, 4
+	setvar VAR_0x8008, CONTEST_CATEGORY_TOUGH
 	return
 
 LinkContestRoom1_EventScript_AnnounceContestOpening:: @ 81A5245
-	bufferstdstring 1, VAR_0x8008
-	bufferstdstring 2, VAR_0x8009
+	bufferstdstring STR_VAR_2, VAR_0x8008
+	bufferstdstring STR_VAR_3, VAR_0x8009
 	call LinkContestRoom1_EventScript_AnnounceContestOpeningAtHall
 	lockall
-	applymovement 1, LinkContestRoom1_Movement_WalkUpFacingLocked
+	applymovement LOCALID_CONTEST_MC, LinkContestRoom1_Movement_MCBackUp
 	waitmovement 0
 	releaseall
 	return
 
 LinkContestRoom1_EventScript_AnnounceContestOpeningAtHall:: @ 81A525F
-	compare VAR_CONTEST_LOCATION, 5
+	compare VAR_CONTEST_LOCATION, CONTEST_LOCATION_LINK
 	goto_if_eq LinkContestRoom1_EventScript_AnnounceContestOpeningOverLink
 	msgbox LinkContestRoom1_Text_OpeningAnnouncement, MSGBOX_SIGN
 	return
@@ -279,7 +279,7 @@ LinkContestRoom1_EventScript_IntroduceContestants:: @ 81A527A
 	call LinkContestRoom1_EventScript_ShowContestantToAudience
 	call LinkContestRoom1_EventScript_ReturnContestantToPlace
 	addvar VAR_0x8006, 1
-	compare VAR_0x8006, 4
+	compare VAR_0x8006, CONTESTANT_COUNT
 	goto_if_ne LinkContestRoom1_EventScript_IntroduceContestants
 	call LinkContestRoom1_EventScript_BeginPrimaryJudging
 	setvar VAR_TEMP_1, 6
@@ -298,48 +298,48 @@ LinkContestRoom1_EventScript_PositionNextContestant:: @ 81A52AE
 
 LinkContestRoom1_EventScript_PositionContestantOne:: @ 81A52DB
 	lockall
-	applymovement 3, LinkContestRoom1_Movement_ContestantOneEnter
+	applymovement LOCALID_CONTESTANT_1, LinkContestRoom1_Movement_Player1WalkToCenter
 	waitmovement 0
 	releaseall
-	setvar VAR_0x800B, 3
+	setvar VAR_0x800B, LOCALID_CONTESTANT_1
 	return
 
 LinkContestRoom1_EventScript_PositionContestantTwo:: @ 81A52ED
 	lockall
-	applymovement 4, LinkContestRoom1_Movement_ContestantTwoEnter
+	applymovement LOCALID_CONTESTANT_2, LinkContestRoom1_Movement_Player2WalkToCenter
 	waitmovement 0
 	releaseall
-	setvar VAR_0x800B, 4
+	setvar VAR_0x800B, LOCALID_CONTESTANT_2
 	return
 
 LinkContestRoom1_EventScript_PositionContestantThree:: @ 81A52FF
 	lockall
-	applymovement 5, LinkContestRoom1_Movement_ContestantThreeEnter
+	applymovement LOCALID_CONTESTANT_3, LinkContestRoom1_Movement_Player3WalkToCenter
 	waitmovement 0
 	releaseall
-	setvar VAR_0x800B, 5
+	setvar VAR_0x800B, LOCALID_CONTESTANT_3
 	return
 
 LinkContestRoom1_EventScript_PositionContestantFour:: @ 81A5311
 	lockall
-	applymovement 14, LinkContestRoom1_Movement_ContestantFourEnter
+	applymovement LOCALID_CONTESTANT_4, LinkContestRoom1_Movement_Player4WalkToCenter
 	waitmovement 0
 	releaseall
-	setvar VAR_0x800B, 14
+	setvar VAR_0x800B, LOCALID_CONTESTANT_4
 	return
 
 LinkContestRoom1_EventScript_IntroduceContestant:: @ 81A5323
 	special BufferContestTrainerAndMonNames
 	addvar VAR_0x8006, 1
-	buffernumberstring 1, VAR_0x8006
+	buffernumberstring STR_VAR_2, VAR_0x8006
 	lockall
-	applymovement VAR_0x800B, LinkContestRoom1_Movement_PauseBeforeEntrance
+	applymovement VAR_0x800B, LinkContestRoom1_Movement_ContestantDelay32
 	waitmovement 0
 	releaseall
-	addobject 13
+	addobject LOCALID_CONTEST_POKEBALL
 	playse SE_LEDGE
 	lockall
-	applymovement VAR_0x800B, LinkContestRoom1_Movement_PauseBeforeEntrance
+	applymovement VAR_0x800B, LinkContestRoom1_Movement_ContestantDelay32
 	waitmovement 0
 	releaseall
 	addvar VAR_0x8006, -1
@@ -349,7 +349,7 @@ LinkContestRoom1_EventScript_IntroduceContestant:: @ 81A5323
 	return
 
 LinkContestRoom1_EventScript_AnnounceContestant:: @ 81A535E
-	compare VAR_CONTEST_LOCATION, 5
+	compare VAR_CONTEST_LOCATION, CONTEST_LOCATION_LINK
 	goto_if_eq LinkContestRoom1_EventScript_AnnounceContestantOverLink
 	message LinkContestRoom1_Text_IntroduceContestant
 	waitmessage
@@ -366,18 +366,18 @@ LinkContestRoom1_EventScript_BeginPrimaryJudging:: @ 81A5377
 	playse SE_M_ENCORE2
 	waitmessage
 	call LinkContestRoom1_EventScript_CheerForWinner
-	applymovement 1, LinkContestRoom1_Movement_FaceRightInPlace
+	applymovement LOCALID_CONTEST_MC, LinkContestRoom1_Movement_MCFaceJudge2
 	waitmovement 0
-	applymovement 2, LinkContestRoom1_Movement_FaceLeftInPlace
+	applymovement LOCALID_CONTEST_JUDGE, LinkContestRoom1_Movement_JudgeFaceMC
 	waitmovement 0
 	delay 20
-	applymovement 1, LinkContestRoom1_Movement_FaceDownInPlace
-	applymovement 2, LinkContestRoom1_Movement_FaceDownInPlace
+	applymovement LOCALID_CONTEST_MC, LinkContestRoom1_Movement_FaceContestants
+	applymovement LOCALID_CONTEST_JUDGE, LinkContestRoom1_Movement_FaceContestants
 	waitmovement 0
 	return
 
 LinkContestRoom1_EventScript_AnnouncePrimaryJudging:: @ 81A53B3
-	compare VAR_CONTEST_LOCATION, 5
+	compare VAR_CONTEST_LOCATION, CONTEST_LOCATION_LINK
 	goto_if_eq LinkContestRoom1_EventScript_AnnouncePrimaryJudgingOverLink
 	msgbox LinkContestRoom1_Text_BeginPrimaryJudging, MSGBOX_DEFAULT
 	return
@@ -388,7 +388,7 @@ LinkContestRoom1_EventScript_AnnouncePrimaryJudgingOverLink:: @ 81A53C7
 	return
 
 LinkContestRoom1_EventScript_AnnounceVoting:: @ 81A53CE
-	compare VAR_CONTEST_LOCATION, 5
+	compare VAR_CONTEST_LOCATION, CONTEST_LOCATION_LINK
 	goto_if_eq LinkContestRoom1_EventScript_AnnounceVotingOverLink
 	message LinkContestRoom1_Text_VotingUnderWay
 	return
@@ -398,40 +398,43 @@ LinkContestRoom1_EventScript_AnnounceVotingOverLink:: @ 81A53DF
 	return
 
 LinkContestRoom1_EventScript_ShowContestantToAudience:: @ 81A53E5
-	applymovement 1, LinkContestRoom1_Movement_FaceLeftAndReset
+	applymovement LOCALID_CONTEST_MC, LinkContestRoom1_Movement_AudienceMemberLookLeft
 	waitmovement 0
 	playse SE_M_ENCORE2
 	call LinkContestRoom1_EventScript_TurnAudienceTowardStage
-	applymovement 9, LinkContestRoom1_Movement_FaceRightAndReset
-	applymovement 12, LinkContestRoom1_Movement_FaceDownAndReset
-	applymovement 7, LinkContestRoom1_Movement_FaceRightAndReset
+	applymovement LOCALID_CONTEST_AUDIENCE_5, LinkContestRoom1_Movement_AudienceMemberLookRight
+	applymovement LOCALID_CONTEST_AUDIENCE_2, LinkContestRoom1_Movement_AudienceMemberLookDown
+	applymovement LOCALID_CONTEST_AUDIENCE_3, LinkContestRoom1_Movement_AudienceMemberLookRight
 	waitmovement 0
-	applymovement 1, LinkContestRoom1_Movement_FaceRightAndReset
+	applymovement LOCALID_CONTEST_MC, LinkContestRoom1_Movement_AudienceMemberLookRight
 	waitmovement 0
-	applymovement 10, LinkContestRoom1_Movement_FaceLeftAndReset
-	applymovement 11, LinkContestRoom1_Movement_FaceDownAndReset
-	applymovement 6, LinkContestRoom1_Movement_FaceUpAndReset
-	applymovement 8, LinkContestRoom1_Movement_FaceLeftAndReset
+	applymovement LOCALID_CONTEST_AUDIENCE_6, LinkContestRoom1_Movement_AudienceMemberLookLeft
+	applymovement LOCALID_CONTEST_AUDIENCE_7, LinkContestRoom1_Movement_AudienceMemberLookDown
+	applymovement LOCALID_CONTEST_AUDIENCE_1, LinkContestRoom1_Movement_AudienceMemberLookUp
+	applymovement LOCALID_CONTEST_AUDIENCE_4, LinkContestRoom1_Movement_AudienceMemberLookLeft
 	waitmovement 0
-	applymovement 1, LinkContestRoom1_Movement_HostTurnRight
+	applymovement LOCALID_CONTEST_MC, LinkContestRoom1_Movement_MCLookAtJudge
 	waitmovement 0
-	applymovement 1, LinkContestRoom1_Movement_HostTurnDown
-	applymovement 2, LinkContestRoom1_Movement_JudgeTurnLeft
+	applymovement LOCALID_CONTEST_MC, LinkContestRoom1_Movement_MCWalkInPlaceDown
+	applymovement LOCALID_CONTEST_JUDGE, LinkContestRoom1_Movement_JudgeLookAtMC
 	waitmovement 0
 	releaseall
 	return
 
 LinkContestRoom1_EventScript_SetAudienceReaction:: @ 81A5455
+	@ VAR_TEMP_0 holds the number of audience heart emotes to display.
+	@ VAR_TEMP_1 through VAR_TEMP_8 mark whether each object audience member
+	@ has already displayed a heart during the current contestant introduction.
 	special GetContestMonCondition
-	compare VAR_CONTEST_LOCATION, 1
+	compare VAR_CONTEST_LOCATION, CONTEST_LOCATION_VERDANTURF
 	call_if_eq LinkContestRoom1_EventScript_SetNormalRankAudienceReaction
-	compare VAR_CONTEST_LOCATION, 2
+	compare VAR_CONTEST_LOCATION, CONTEST_LOCATION_FALLARBOR
 	call_if_eq LinkContestRoom1_EventScript_SetSuperRankAudienceReaction
-	compare VAR_CONTEST_LOCATION, 3
+	compare VAR_CONTEST_LOCATION, CONTEST_LOCATION_SLATEPORT
 	call_if_eq LinkContestRoom1_EventScript_SetHyperRankAudienceReaction
-	compare VAR_CONTEST_LOCATION, 4
+	compare VAR_CONTEST_LOCATION, CONTEST_LOCATION_LILYCOVE
 	call_if_eq LinkContestRoom1_EventScript_SetMasterRankAudienceReaction
-	compare VAR_CONTEST_LOCATION, 5
+	compare VAR_CONTEST_LOCATION, CONTEST_LOCATION_LINK
 	call_if_eq LinkContestRoom1_EventScript_SetLinkContestAudienceReaction
 	setvar VAR_TEMP_1, 9
 	setvar VAR_TEMP_2, 9
@@ -612,7 +615,7 @@ LinkContestRoom1_EventScript_SetEightAudienceHearts:: @ 81A575A
 LinkContestRoom1_EventScript_CheerAudienceOne:: @ 81A5760
 	compare VAR_TEMP_1, 1
 	goto_if_eq LinkContestRoom1_EventScript_AudienceOneDone
-	applymovement 6, LinkContestRoom1_Movement_CheerWithHeart
+	applymovement LOCALID_CONTEST_AUDIENCE_1, LinkContestRoom1_Movement_Heart
 	playse SE_PIN
 	delay 14
 	setvar VAR_TEMP_1, 1
@@ -625,7 +628,7 @@ LinkContestRoom1_EventScript_AudienceOneDone:: @ 81A5783
 LinkContestRoom1_EventScript_CheerAudienceTwo:: @ 81A5784
 	compare VAR_TEMP_2, 1
 	goto_if_eq LinkContestRoom1_EventScript_AudienceTwoDone
-	applymovement 12, LinkContestRoom1_Movement_CheerWithHeart
+	applymovement LOCALID_CONTEST_AUDIENCE_2, LinkContestRoom1_Movement_Heart
 	playse SE_PIN
 	delay 14
 	setvar VAR_TEMP_2, 1
@@ -638,7 +641,7 @@ LinkContestRoom1_EventScript_AudienceTwoDone:: @ 81A57A7
 LinkContestRoom1_EventScript_CheerAudienceThree:: @ 81A57A8
 	compare VAR_TEMP_3, 1
 	goto_if_eq LinkContestRoom1_EventScript_AudienceThreeDone
-	applymovement 7, LinkContestRoom1_Movement_CheerWithHeart
+	applymovement LOCALID_CONTEST_AUDIENCE_3, LinkContestRoom1_Movement_Heart
 	playse SE_PIN
 	delay 14
 	setvar VAR_TEMP_3, 1
@@ -651,7 +654,7 @@ LinkContestRoom1_EventScript_AudienceThreeDone:: @ 81A57CB
 LinkContestRoom1_EventScript_CheerAudienceFour:: @ 81A57CC
 	compare VAR_TEMP_4, 1
 	goto_if_eq LinkContestRoom1_EventScript_AudienceFourDone
-	applymovement 8, LinkContestRoom1_Movement_CheerWithHeart
+	applymovement LOCALID_CONTEST_AUDIENCE_4, LinkContestRoom1_Movement_Heart
 	playse SE_PIN
 	delay 14
 	setvar VAR_TEMP_4, 1
@@ -664,7 +667,7 @@ LinkContestRoom1_EventScript_AudienceFourDone:: @ 81A57EF
 LinkContestRoom1_EventScript_CheerAudienceFive:: @ 81A57F0
 	compare VAR_TEMP_5, 1
 	goto_if_eq LinkContestRoom1_EventScript_AudienceFiveDone
-	applymovement 9, LinkContestRoom1_Movement_CheerWithHeart
+	applymovement LOCALID_CONTEST_AUDIENCE_5, LinkContestRoom1_Movement_Heart
 	playse SE_PIN
 	delay 14
 	setvar VAR_TEMP_5, 1
@@ -677,7 +680,7 @@ LinkContestRoom1_EventScript_AudienceFiveDone:: @ 81A5813
 LinkContestRoom1_EventScript_CheerAudienceSix:: @ 81A5814
 	compare VAR_TEMP_6, 1
 	goto_if_eq LinkContestRoom1_EventScript_AudienceSixDone
-	applymovement 10, LinkContestRoom1_Movement_CheerWithHeart
+	applymovement LOCALID_CONTEST_AUDIENCE_6, LinkContestRoom1_Movement_Heart
 	playse SE_PIN
 	delay 14
 	setvar VAR_TEMP_6, 1
@@ -690,7 +693,7 @@ LinkContestRoom1_EventScript_AudienceSixDone:: @ 81A5837
 LinkContestRoom1_EventScript_CheerAudienceSeven:: @ 81A5838
 	compare VAR_TEMP_7, 1
 	goto_if_eq LinkContestRoom1_EventScript_AudienceSevenDone
-	applymovement 11, LinkContestRoom1_Movement_CheerWithHeart
+	applymovement LOCALID_CONTEST_AUDIENCE_7, LinkContestRoom1_Movement_Heart
 	playse SE_PIN
 	delay 14
 	setvar VAR_TEMP_7, 1
@@ -703,7 +706,7 @@ LinkContestRoom1_EventScript_AudienceSevenDone:: @ 81A585B
 LinkContestRoom1_EventScript_CheerAudienceEight:: @ 81A585C
 	compare VAR_TEMP_8, 1
 	goto_if_eq LinkContestRoom1_EventScript_AudienceEightDone
-	applymovement 15, LinkContestRoom1_Movement_CheerWithHeart
+	applymovement LOCALID_CONTEST_ARTIST, LinkContestRoom1_Movement_Heart
 	playse SE_PIN
 	delay 14
 	setvar VAR_TEMP_8, 1
@@ -716,7 +719,7 @@ LinkContestRoom1_EventScript_AudienceEightDone:: @ 81A587F
 LinkContestRoom1_EventScript_ReturnContestantToPlace:: @ 81A5880
 	closemessage
 	release
-	removeobject 13
+	removeobject LOCALID_CONTEST_POKEBALL
 	special HideContestEntryMonPic
 	switch VAR_0x8006
 	case 0, LinkContestRoom1_EventScript_ReturnContestantOne
@@ -727,54 +730,54 @@ LinkContestRoom1_EventScript_ReturnContestantToPlace:: @ 81A5880
 
 LinkContestRoom1_EventScript_ReturnContestantOne:: @ 81A58BA
 	lockall
-	applymovement VAR_0x800B, LinkContestRoom1_Movement_ContestantOneExit
+	applymovement VAR_0x800B, LinkContestRoom1_Movement_Player1WalkBack
 	waitmovement 0
 	releaseall
 	return
 
 LinkContestRoom1_EventScript_ReturnContestantTwo:: @ 81A58C7
 	lockall
-	applymovement VAR_0x800B, LinkContestRoom1_Movement_ContestantTwoExit
+	applymovement VAR_0x800B, LinkContestRoom1_Movement_Player2WalkBack
 	waitmovement 0
 	releaseall
 	return
 
 LinkContestRoom1_EventScript_ReturnContestantThree:: @ 81A58D4
 	lockall
-	applymovement VAR_0x800B, LinkContestRoom1_Movement_ContestantThreeExit
+	applymovement VAR_0x800B, LinkContestRoom1_Movement_Player3WalkBack
 	waitmovement 0
 	releaseall
 	return
 
 LinkContestRoom1_EventScript_ReturnContestantFour:: @ 81A58E1
 	lockall
-	applymovement VAR_0x800B, LinkContestRoom1_Movement_ContestantFourExit
+	applymovement VAR_0x800B, LinkContestRoom1_Movement_Player4WalkBack
 	waitmovement 0
 	releaseall
 	return
 
 LinkContestRoom1_EventScript_StartSecondaryJudging:: @ 81A58EE
 	lockall
-	applymovement 1, LinkContestRoom1_Movement_FaceAudience
+	applymovement LOCALID_CONTEST_MC, LinkContestRoom1_Movement_FaceContestants2
 	waitmovement 0
 	call LinkContestRoom1_EventScript_AnnounceSecondaryJudging
 	waitmessage
-	applymovement 1, LinkContestRoom1_Movement_WalkLeftFromStage
-	applymovement 2, LinkContestRoom1_Movement_WalkRightFromStage
+	applymovement LOCALID_CONTEST_MC, LinkContestRoom1_Movement_WalkStageLeft
+	applymovement LOCALID_CONTEST_JUDGE, LinkContestRoom1_Movement_WalkStageRight
 	waitmovement 0
 	releaseall
 	setvar VAR_TEMP_9, 1
 	startcontest
 	setvar VAR_TEMP_9, 0
 	lockall
-	applymovement 1, LinkContestRoom1_Movement_WalkRightFromStage
-	applymovement 2, LinkContestRoom1_Movement_WalkLeftFromStage
+	applymovement LOCALID_CONTEST_MC, LinkContestRoom1_Movement_WalkStageRight
+	applymovement LOCALID_CONTEST_JUDGE, LinkContestRoom1_Movement_WalkStageLeft
 	waitmovement 0
 	releaseall
 	return
 
 LinkContestRoom1_EventScript_AnnounceSecondaryJudging:: @ 81A5930
-	compare VAR_CONTEST_LOCATION, 5
+	compare VAR_CONTEST_LOCATION, CONTEST_LOCATION_LINK
 	goto_if_eq LinkContestRoom1_EventScript_AnnounceSecondaryJudgingOverLink
 	msgbox LinkContestRoom1_Text_BeginSecondaryJudging, MSGBOX_SIGN
 	return
@@ -786,11 +789,11 @@ LinkContestRoom1_EventScript_AnnounceSecondaryJudgingOverLink:: @ 81A5944
 LinkContestRoom1_EventScript_AnnounceJudgingResults:: @ 81A594A
 	call LinkContestRoom1_EventScript_AnnounceEndOfJudging
 	call LinkContestRoom1_EventScript_ThankContestants
-	applymovement 1, LinkContestRoom1_Movement_FaceRight
+	applymovement LOCALID_CONTEST_MC, LinkContestRoom1_Movement_MCFaceJudge
 	waitmovement 0
 	call LinkContestRoom1_EventScript_AnnounceWinnerSoon
 	call LinkContestRoom1_EventScript_JudgeAnnouncesWinner
-	applymovement 1, LinkContestRoom1_Movement_FaceDownInPlace
+	applymovement LOCALID_CONTEST_MC, LinkContestRoom1_Movement_FaceContestants
 	waitmovement 0
 	closemessage
 	releaseall
@@ -801,7 +804,7 @@ LinkContestRoom1_EventScript_AnnounceJudgingResults:: @ 81A594A
 	return
 
 LinkContestRoom1_EventScript_AnnounceEndOfJudging:: @ 81A5984
-	compare VAR_CONTEST_LOCATION, 5
+	compare VAR_CONTEST_LOCATION, CONTEST_LOCATION_LINK
 	goto_if_eq LinkContestRoom1_EventScript_AnnounceEndOfJudgingOverLink
 	msgbox LinkContestRoom1_Text_JudgingFinished, MSGBOX_DEFAULT
 	return
@@ -813,7 +816,7 @@ LinkContestRoom1_EventScript_AnnounceEndOfJudgingOverLink:: @ 81A5998
 	return
 
 LinkContestRoom1_EventScript_ThankContestants:: @ 81A59A2
-	compare VAR_CONTEST_LOCATION, 5
+	compare VAR_CONTEST_LOCATION, CONTEST_LOCATION_LINK
 	goto_if_eq LinkContestRoom1_EventScript_ThankContestantsOverLink
 	msgbox LinkContestRoom1_Text_ThankContestants, MSGBOX_DEFAULT
 	return
@@ -825,7 +828,7 @@ LinkContestRoom1_EventScript_ThankContestantsOverLink:: @ 81A59B6
 	return
 
 LinkContestRoom1_EventScript_AnnounceWinnerSoon:: @ 81A59C0
-	compare VAR_CONTEST_LOCATION, 5
+	compare VAR_CONTEST_LOCATION, CONTEST_LOCATION_LINK
 	goto_if_eq LinkContestRoom1_EventScript_AnnounceWinnerSoonOverLink
 	msgbox LinkContestRoom1_Text_WinnerAboutToBeAnnounced, MSGBOX_DEFAULT
 	return
@@ -837,7 +840,7 @@ LinkContestRoom1_EventScript_AnnounceWinnerSoonOverLink:: @ 81A59D4
 	return
 
 LinkContestRoom1_EventScript_JudgeAnnouncesWinner:: @ 81A59DE
-	compare VAR_CONTEST_LOCATION, 5
+	compare VAR_CONTEST_LOCATION, CONTEST_LOCATION_LINK
 	goto_if_eq LinkContestRoom1_EventScript_JudgeAnnouncesWinnerOverLink
 	msgbox LinkContestRoom1_Text_JudgeDeclareWinner, MSGBOX_DEFAULT
 	return
@@ -858,36 +861,36 @@ LinkContestRoom1_EventScript_SetWinnerObject:: @ 81A59FC
 	return
 
 LinkContestRoom1_EventScript_SetWinnerObjectOne:: @ 81A5A31
-	setvar VAR_TEMP_3, 3
+	setvar VAR_TEMP_3, LOCALID_CONTESTANT_1
 	return
 
 LinkContestRoom1_EventScript_SetWinnerObjectTwo:: @ 81A5A37
-	setvar VAR_TEMP_3, 4
+	setvar VAR_TEMP_3, LOCALID_CONTESTANT_2
 	return
 
 LinkContestRoom1_EventScript_SetWinnerObjectThree:: @ 81A5A3D
-	setvar VAR_TEMP_3, 5
+	setvar VAR_TEMP_3, LOCALID_CONTESTANT_3
 	return
 
 LinkContestRoom1_EventScript_SetWinnerObjectFour:: @ 81A5A43
-	setvar VAR_TEMP_3, 14
+	setvar VAR_TEMP_3, LOCALID_CONTESTANT_4
 	return
 
 LinkContestRoom1_EventScript_AnnounceWinner:: @ 81A5A49
 	special BufferContestWinnerTrainerName
 	special BufferContestWinnerMonName
 	addvar VAR_0x8005, 1
-	buffernumberstring 1, VAR_0x8005
+	buffernumberstring STR_VAR_2, VAR_0x8005
 	addvar VAR_0x8005, -1
 	call LinkContestRoom1_EventScript_AnnounceWinnerAtHall
-	applymovement VAR_TEMP_3, LinkContestRoom1_Movement_WalkUpAndFaceDown
+	applymovement VAR_TEMP_3, LinkContestRoom1_Movement_WinningPlayerWalkUp
 	waitmovement 0
 	playse SE_M_ENCORE2
 	setvar VAR_TEMP_1, 0
 	return
 
 LinkContestRoom1_EventScript_AnnounceWinnerAtHall:: @ 81A5A75
-	compare VAR_CONTEST_LOCATION, 5
+	compare VAR_CONTEST_LOCATION, CONTEST_LOCATION_LINK
 	goto_if_eq LinkContestRoom1_EventScript_AnnounceWinnerOverLink
 	msgbox LinkContestRoom1_Text_CongratulateWinner, MSGBOX_DEFAULT
 	return
@@ -900,16 +903,16 @@ LinkContestRoom1_EventScript_AnnounceWinnerOverLink:: @ 81A5A89
 LinkContestRoom1_EventScript_CheerForWinner:: @ 81A5A90
 	addvar VAR_TEMP_1, 1
 	lockall
-	compare VAR_CONTEST_LOCATION, 1
+	compare VAR_CONTEST_LOCATION, CONTEST_LOCATION_VERDANTURF
 	call_if_gt LinkContestRoom1_EventScript_TurnAudienceTowardStage
-	applymovement 9, LinkContestRoom1_Movement_FaceRightAndReset
-	applymovement 12, LinkContestRoom1_Movement_FaceDownAndReset
-	applymovement 7, LinkContestRoom1_Movement_FaceRightAndReset
+	applymovement LOCALID_CONTEST_AUDIENCE_5, LinkContestRoom1_Movement_AudienceMemberLookRight
+	applymovement LOCALID_CONTEST_AUDIENCE_2, LinkContestRoom1_Movement_AudienceMemberLookDown
+	applymovement LOCALID_CONTEST_AUDIENCE_3, LinkContestRoom1_Movement_AudienceMemberLookRight
 	delay 30
-	applymovement 10, LinkContestRoom1_Movement_FaceLeftAndReset
-	applymovement 11, LinkContestRoom1_Movement_FaceDownAndReset
-	applymovement 6, LinkContestRoom1_Movement_FaceUpAndReset
-	applymovement 8, LinkContestRoom1_Movement_FaceLeftAndReset
+	applymovement LOCALID_CONTEST_AUDIENCE_6, LinkContestRoom1_Movement_AudienceMemberLookLeft
+	applymovement LOCALID_CONTEST_AUDIENCE_7, LinkContestRoom1_Movement_AudienceMemberLookDown
+	applymovement LOCALID_CONTEST_AUDIENCE_1, LinkContestRoom1_Movement_AudienceMemberLookUp
+	applymovement LOCALID_CONTEST_AUDIENCE_4, LinkContestRoom1_Movement_AudienceMemberLookLeft
 	compare VAR_TEMP_1, 4
 	goto_if_ne LinkContestRoom1_EventScript_CheerForWinner
 	delay 30
@@ -985,7 +988,7 @@ LinkContestRoom1_EventScript_TurnAudienceTowardStage:: @ 81A5AE4
 	return
 
 LinkContestRoom1_EventScript_AwardContestWinner:: @ 81A5BAB
-	compare VAR_CONTEST_LOCATION, 5
+	compare VAR_CONTEST_LOCATION, CONTEST_LOCATION_LINK
 	goto_if_eq LinkContestRoom1_EventScript_FinishLinkContest
 	call LinkContestRoom1_EventScript_CheckPreviousContestWin
 	goto_if_set FLAG_TEMP_2, LinkContestRoom1_EventScript_FinishContestWithoutPrize
@@ -998,7 +1001,7 @@ LinkContestRoom1_EventScript_AwardContestWinner:: @ 81A5BAB
 	call LinkContestRoom1_EventScript_CheerForWinner
 	delay 30
 	special ShouldReadyContestArtist
-	compare VAR_0x8004, 1
+	compare VAR_0x8004, TRUE
 	goto_if_eq LinkContestRoom1_EventScript_ReadyContestArtist
 	return
 
@@ -1007,13 +1010,13 @@ LinkContestRoom1_EventScript_FinishContestWithoutPrize:: @ 81A5BF6
 	msgbox LinkContestRoom1_Text_CongratulationsCompeteAgain, MSGBOX_SIGN
 	delay 90
 	special ShouldReadyContestArtist
-	compare VAR_0x8004, 1
+	compare VAR_0x8004, TRUE
 	goto_if_eq LinkContestRoom1_EventScript_ReadyContestArtist
 	return
 
 LinkContestRoom1_EventScript_CheckPreviousContestWin:: @ 81A5C12
 	specialvar VAR_RESULT, HasMonWonThisContestBefore
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq LinkContestRoom1_EventScript_CheckPlayerIsWinner
 	return
 
@@ -1024,7 +1027,7 @@ LinkContestRoom1_EventScript_CheckPlayerIsWinner:: @ 81A5C23
 	return
 
 LinkContestRoom1_EventScript_CheckMasterRankPrize:: @ 81A5C32
-	compare VAR_CONTEST_RANK, 3
+	compare VAR_CONTEST_RANK, CONTEST_RANK_MASTER
 	goto_if_eq LinkContestRoom1_EventScript_ReturnAfterPrizeCheck
 	setflag FLAG_TEMP_2
 	return
@@ -1044,7 +1047,7 @@ LinkContestRoom1_EventScript_FinishLinkContest:: @ 81A5C4C
 	delay 60
 	call LinkContestRoom1_EventScript_RecordLinkContestWin
 	special ShouldReadyContestArtist
-	compare VAR_0x8004, 1
+	compare VAR_0x8004, TRUE
 	goto_if_eq LinkContestRoom1_EventScript_ReadyLinkContestArtist
 	closemessage
 	return
@@ -1074,28 +1077,28 @@ LinkContestRoom1_EventScript_MoveWinnerToStage:: @ 81A5C7F
 
 LinkContestRoom1_EventScript_MoveWinnerOneToStage:: @ 81A5CB1
 	lockall
-	applymovement VAR_TEMP_3, LinkContestRoom1_Movement_WinnerOneEnter
+	applymovement VAR_TEMP_3, LinkContestRoom1_Movement_Player1ApproachForPrize
 	waitmovement 0
 	releaseall
 	return
 
 LinkContestRoom1_EventScript_MoveWinnerTwoToStage:: @ 81A5CBE
 	lockall
-	applymovement VAR_TEMP_3, LinkContestRoom1_Movement_WinnerTwoEnter
+	applymovement VAR_TEMP_3, LinkContestRoom1_Movement_Player2ApproachForPrize
 	waitmovement 0
 	releaseall
 	return
 
 LinkContestRoom1_EventScript_MoveWinnerThreeToStage:: @ 81A5CCB
 	lockall
-	applymovement VAR_TEMP_3, LinkContestRoom1_Movement_WinnerOneToStage
+	applymovement VAR_TEMP_3, LinkContestRoom1_Movement_Player3ApproachForPrize
 	waitmovement 0
 	releaseall
 	return
 
 LinkContestRoom1_EventScript_MoveWinnerFourToStage:: @ 81A5CD8
 	lockall
-	applymovement VAR_TEMP_3, LinkContestRoom1_Movement_WinnerTwoToStage
+	applymovement VAR_TEMP_3, LinkContestRoom1_Movement_Player4ApproachForPrize
 	waitmovement 0
 	releaseall
 	return
@@ -1108,25 +1111,25 @@ LinkContestRoom1_EventScript_CheckWinnerPrize:: @ 81A5CE5
 	return
 
 LinkContestRoom1_EventScript_AwardPlayerContestWin:: @ 81A5CFC
-	compare VAR_CONTEST_LOCATION, 2
+	compare VAR_CONTEST_LOCATION, CONTEST_LOCATION_FALLARBOR
 	call_if_eq LinkContestRoom1_EventScript_MarkContestSketchCreated
 	incrementgamestat GAME_STAT_WON_CONTEST
 	specialvar VAR_RESULT, HasMonWonThisContestBefore
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq LinkContestRoom1_EventScript_GiveContestRibbon
-	compare VAR_CONTEST_RANK, 3
+	compare VAR_CONTEST_RANK, CONTEST_RANK_MASTER
 	goto_if_eq LinkContestRoom1_EventScript_GiveLuxuryBallPrize
 	msgbox LinkContestRoom1_Text_CongratulationsCompeteAgain, MSGBOX_SIGN
 	return
 
 LinkContestRoom1_EventScript_DeferContestPrizePickup:: @ 81A5D2D
 	msgbox LinkContestRoom1_Text_PickUpPrizeAtReception, MSGBOX_SIGN
-	setvar VAR_CONTEST_PRIZE_PICKUP, 4
+	setvar VAR_CONTEST_PRIZE_PICKUP, CONTEST_PRIZE_LUXURY_BALL
 	return
 
 LinkContestRoom1_EventScript_GiveLuxuryBallPrize:: @ 81A5D3B
 	giveitem ITEM_LUXURY_BALL
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq LinkContestRoom1_EventScript_DeferContestPrizePickup
 	msgbox LinkContestRoom1_Text_CongratulationsCompeteAgain, MSGBOX_SIGN
 	return
@@ -1145,69 +1148,69 @@ LinkContestRoom1_EventScript_GiveContestRibbon:: @ 81A5D5B
 	releaseall
 	return
 
-LinkContestRoom1_Movement_FaceDown:: @ 81A5D85
+LinkContestRoom1_Movement_MCWalkDown:: @ 81A5D85
 	walk_down
 	step_end
 
-LinkContestRoom1_Movement_WalkUpFacingLocked:: @ 81A5D87
+LinkContestRoom1_Movement_MCBackUp:: @ 81A5D87
 	lock_facing_direction
 	walk_up
 	unlock_facing_direction
 	step_end
 
-LinkContestRoom1_Movement_FaceRight:: @ 81A5D8B
+LinkContestRoom1_Movement_MCFaceJudge:: @ 81A5D8B
 	walk_in_place_faster_right
 	step_end
 
-LinkContestRoom1_Movement_CheerWithHeart:: @ 81A5D8D
+LinkContestRoom1_Movement_Heart:: @ 81A5D8D
 	emote_heart
 	step_end
 
-LinkContestRoom1_Movement_FaceDownInPlace:: @ 81A5D8F
+LinkContestRoom1_Movement_FaceContestants:: @ 81A5D8F
 	walk_in_place_faster_down
 	step_end
 
-LinkContestRoom1_Movement_WalkLeftFromStage:: @ 81A5D91
+LinkContestRoom1_Movement_WalkStageLeft:: @ 81A5D91
 	walk_left
 	walk_left
 	walk_in_place_faster_down
 	step_end
 
-LinkContestRoom1_Movement_WalkRightFromStage:: @ 81A5D95
+LinkContestRoom1_Movement_WalkStageRight:: @ 81A5D95
 	walk_right
 	walk_right
 	walk_in_place_faster_down
 	step_end
 
-LinkContestRoom1_Movement_WalkUpAndFaceDown:: @ 81A5D99
+LinkContestRoom1_Movement_WinningPlayerWalkUp:: @ 81A5D99
 	walk_up
 	walk_in_place_faster_down
 	step_end
 
-LinkContestRoom1_Movement_PauseBeforeEntrance:: @ 81A5D9C
+LinkContestRoom1_Movement_ContestantDelay32:: @ 81A5D9C
 	delay_16
 	delay_16
 	step_end
 
-LinkContestRoom1_Movement_FaceRightInPlace:: @ 81A5D9F
+LinkContestRoom1_Movement_MCFaceJudge2:: @ 81A5D9F
 	walk_in_place_faster_right
 	step_end
 
-LinkContestRoom1_Movement_FaceLeftInPlace:: @ 81A5DA1
+LinkContestRoom1_Movement_JudgeFaceMC:: @ 81A5DA1
 	walk_in_place_faster_left
 	step_end
 
-LinkContestRoom1_Movement_FaceAudience:: @ 81A5DA3
+LinkContestRoom1_Movement_FaceContestants2:: @ 81A5DA3
 	walk_in_place_faster_down
 	step_end
 
-LinkContestRoom1_Movement_WinnerOneToStage:: @ 81A5DA5
+LinkContestRoom1_Movement_Player3ApproachForPrize:: @ 81A5DA5
 	walk_left
 	walk_left
 	walk_up
 	step_end
 
-LinkContestRoom1_Movement_WinnerTwoToStage:: @ 81A5DA9
+LinkContestRoom1_Movement_Player4ApproachForPrize:: @ 81A5DA9
 	walk_left
 	walk_left
 	walk_left
@@ -1215,54 +1218,54 @@ LinkContestRoom1_Movement_WinnerTwoToStage:: @ 81A5DA9
 	walk_up
 	step_end
 
-LinkContestRoom1_Movement_FaceLeftAndReset:: @ 81A5DAF
+LinkContestRoom1_Movement_AudienceMemberLookLeft:: @ 81A5DAF
 	face_left
 	delay_16
 	face_original_direction
 	step_end
 
-LinkContestRoom1_Movement_FaceUpAndReset:: @ 81A5DB3
+LinkContestRoom1_Movement_AudienceMemberLookUp:: @ 81A5DB3
 	face_up
 	delay_16
 	face_original_direction
 	step_end
 
-LinkContestRoom1_Movement_FaceRightAndReset:: @ 81A5DB7
+LinkContestRoom1_Movement_AudienceMemberLookRight:: @ 81A5DB7
 	face_right
 	delay_16
 	face_original_direction
 	step_end
 
-LinkContestRoom1_Movement_FaceDownAndReset:: @ 81A5DBB
+LinkContestRoom1_Movement_AudienceMemberLookDown:: @ 81A5DBB
 	face_down
 	delay_16
 	face_original_direction
 	step_end
 
-LinkContestRoom1_Movement_HostFaceUp:: @ 81A5DBF
+LinkContestRoom1_Movement_Player4FaceUp:: @ 81A5DBF
 	face_up
 	step_end
 
-LinkContestRoom1_Movement_HostTurnRight:: @ 81A5DC1
+LinkContestRoom1_Movement_MCLookAtJudge:: @ 81A5DC1
 	face_up
 	delay_16
 	walk_in_place_faster_right
 	step_end
 
-LinkContestRoom1_Movement_JudgeTurnLeft:: @ 81A5DC5
+LinkContestRoom1_Movement_JudgeLookAtMC:: @ 81A5DC5
 	walk_in_place_faster_left
 	delay_16
 	delay_16
 	walk_in_place_faster_down
 	step_end
 
-LinkContestRoom1_Movement_HostTurnDown:: @ 81A5DCA
+LinkContestRoom1_Movement_MCWalkInPlaceDown:: @ 81A5DCA
 	delay_16
 	delay_16
 	walk_in_place_faster_down
 	step_end
 
-LinkContestRoom1_Movement_ContestantOneEnter:: @ 81A5DCE
+LinkContestRoom1_Movement_Player1WalkToCenter:: @ 81A5DCE
 	walk_up
 	walk_right
 	walk_right
@@ -1270,7 +1273,7 @@ LinkContestRoom1_Movement_ContestantOneEnter:: @ 81A5DCE
 	walk_in_place_faster_up
 	step_end
 
-LinkContestRoom1_Movement_ContestantOneExit:: @ 81A5DD4
+LinkContestRoom1_Movement_Player1WalkBack:: @ 81A5DD4
 	walk_fast_left
 	walk_fast_left
 	walk_fast_left
@@ -1278,31 +1281,31 @@ LinkContestRoom1_Movement_ContestantOneExit:: @ 81A5DD4
 	walk_in_place_faster_up
 	step_end
 
-LinkContestRoom1_Movement_ContestantTwoEnter:: @ 81A5DDA
+LinkContestRoom1_Movement_Player2WalkToCenter:: @ 81A5DDA
 	walk_up
 	walk_right
 	walk_in_place_faster_up
 	step_end
 
-LinkContestRoom1_Movement_ContestantTwoExit:: @ 81A5DDE
+LinkContestRoom1_Movement_Player2WalkBack:: @ 81A5DDE
 	walk_fast_left
 	walk_fast_down
 	walk_in_place_faster_up
 	step_end
 
-LinkContestRoom1_Movement_ContestantThreeEnter:: @ 81A5DE2
+LinkContestRoom1_Movement_Player3WalkToCenter:: @ 81A5DE2
 	walk_up
 	walk_left
 	walk_in_place_faster_up
 	step_end
 
-LinkContestRoom1_Movement_ContestantThreeExit:: @ 81A5DE6
+LinkContestRoom1_Movement_Player3WalkBack:: @ 81A5DE6
 	walk_fast_right
 	walk_fast_down
 	walk_in_place_faster_up
 	step_end
 
-LinkContestRoom1_Movement_ContestantFourEnter:: @ 81A5DEA
+LinkContestRoom1_Movement_Player4WalkToCenter:: @ 81A5DEA
 	walk_up
 	walk_left
 	walk_left
@@ -1310,7 +1313,7 @@ LinkContestRoom1_Movement_ContestantFourEnter:: @ 81A5DEA
 	walk_in_place_faster_up
 	step_end
 
-LinkContestRoom1_Movement_ContestantFourExit:: @ 81A5DF0
+LinkContestRoom1_Movement_Player4WalkBack:: @ 81A5DF0
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right
@@ -1318,12 +1321,12 @@ LinkContestRoom1_Movement_ContestantFourExit:: @ 81A5DF0
 	walk_in_place_faster_up
 	step_end
 
-LinkContestRoom1_Movement_WinnerOneEnter:: @ 81A5DF6
+LinkContestRoom1_Movement_Player1ApproachForPrize:: @ 81A5DF6
 	walk_right
 	walk_right
 	walk_up
 	step_end
 
-LinkContestRoom1_Movement_WinnerTwoEnter:: @ 81A5DFA
+LinkContestRoom1_Movement_Player2ApproachForPrize:: @ 81A5DFA
 	walk_up
 	step_end
