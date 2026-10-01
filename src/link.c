@@ -1166,14 +1166,14 @@ static void LinkCB_ReadyCloseLink(void)
 static void LinkCB_WaitCloseLink(void)
 {
     s32 i;
-    s32 totalCount = GetLinkPlayerCount();
+    s32 linkPlayerCount = GetLinkPlayerCount();
     s32 count = 0;
 
-    for (i = 0; i < totalCount; i++)
+    for (i = 0; i < linkPlayerCount; i++)
         if (gReadyToCloseLink[i])
             count++;
 
-    if (count == totalCount)
+    if (count == linkPlayerCount)
     {
         gBattleTypeFlags &= ~BATTLE_TYPE_LINK_IN_BATTLE;
         gLinkVSyncDisabled = TRUE;
@@ -1186,10 +1186,10 @@ static void LinkCB_WaitCloseLink(void)
 static void LinkCB_WaitCloseLinkWithJP(void)
 {
     s32 i;
-    s32 totalCount = GetLinkPlayerCount();
+    s32 linkPlayerCount = GetLinkPlayerCount();
     s32 count = 0;
 
-    for (i = 0; i < totalCount; i++)
+    for (i = 0; i < linkPlayerCount; i++)
     {
         if (gLinkPlayers[i].language == 1)
             count++;
@@ -1197,7 +1197,7 @@ static void LinkCB_WaitCloseLinkWithJP(void)
             count++;
     }
 
-    if (count == totalCount)
+    if (count == linkPlayerCount)
     {
         gBattleTypeFlags &= ~BATTLE_TYPE_LINK_IN_BATTLE;
         gLinkVSyncDisabled = TRUE;
@@ -1713,24 +1713,24 @@ static bool8 DoHandshake(void)
     else
         REG_SIOMLT_SEND = SLAVE_HANDSHAKE;
 
-    *(u64 *)&gLink.tempRecvBuffer[0] = REG_SIOMLT_RECV;
+    *(u64 *)&gLink.handshakeBuffer[0] = REG_SIOMLT_RECV;
     REG_SIOMLT_RECV = 0;
 
     gLink.handshakeAsMaster = FALSE;
 
     for (i = 0; i < 4; i++)
     {
-        if ((gLink.tempRecvBuffer[i] & ~0x3) == SLAVE_HANDSHAKE
-         || gLink.tempRecvBuffer[i] == MASTER_HANDSHAKE)
+        if ((gLink.handshakeBuffer[i] & ~0x3) == SLAVE_HANDSHAKE
+         || gLink.handshakeBuffer[i] == MASTER_HANDSHAKE)
         {
             playerCount++;
 
-            if (minRecv > gLink.tempRecvBuffer[i] && gLink.tempRecvBuffer[i] != 0)
-                minRecv = gLink.tempRecvBuffer[i];
+            if (minRecv > gLink.handshakeBuffer[i] && gLink.handshakeBuffer[i] != 0)
+                minRecv = gLink.handshakeBuffer[i];
         }
         else
         {
-            if (gLink.tempRecvBuffer[i] != 0xFFFF)
+            if (gLink.handshakeBuffer[i] != 0xFFFF)
                 playerCount = 0;
             break;
         }
@@ -1744,7 +1744,7 @@ static bool8 DoHandshake(void)
     // 3. Player no. 0 is identifying as the master.
     if (gLink.playerCount > 1
      && gLink.playerCount == sHandshakePlayerCount
-     && gLink.tempRecvBuffer[0] == MASTER_HANDSHAKE)
+     && gLink.handshakeBuffer[0] == MASTER_HANDSHAKE)
         return TRUE;
 
     if (gLink.playerCount > 1)
@@ -1759,15 +1759,15 @@ static bool8 DoHandshake(void)
 
 static void DoRecv(void)
 {
-    u16 recvBuffer[4];
+    u16 recv[4];
     u8 i;
 
-    *(u64 *)&recvBuffer[0] = REG_SIOMLT_RECV;
+    *(u64 *)&recv[0] = REG_SIOMLT_RECV;
 
     if (gLink.sendCmdIndex == 0)
     {
         for (i = 0; i < gLink.playerCount; i++)
-            if (gLink.checksum != recvBuffer[i] && sChecksumAvailable)
+            if (gLink.checksum != recv[i] && sChecksumAvailable)
                     gLink.badChecksum = TRUE;
 
         gLink.checksum = 0;
@@ -1784,9 +1784,9 @@ static void DoRecv(void)
         {
             for (i = 0; i < gLink.playerCount; i++)
             {
-                gLink.checksum += recvBuffer[i];
-                sRecvNonzeroCheck |= recvBuffer[i];
-                gLink.recvQueue.data[i][gLink.recvCmdIndex][index] = recvBuffer[i];
+                gLink.checksum += recv[i];
+                sRecvNonzeroCheck |= recv[i];
+                gLink.recvQueue.data[i][gLink.recvCmdIndex][index] = recv[i];
             }
         }
         else

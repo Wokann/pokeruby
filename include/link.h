@@ -149,7 +149,7 @@ struct Link
     u8 state;
     u8 localId; // local multi-player ID
     u8 playerCount;
-    u16 tempRecvBuffer[4];
+    u16 handshakeBuffer[4];
     bool8 receivedNothing;
     s8 serialIntrCounter;
     bool8 handshakeAsMaster;
