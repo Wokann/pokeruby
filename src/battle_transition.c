@@ -1038,11 +1038,11 @@ static void Task_PokeballsTrail(u8 taskId)
 
 static bool8 PokeballsTrail_Init(struct Task* task)
 {
-    u16 *dst1, *dst2;
+    u16 *tilemap, *tileset;
 
-    GetBg0TilesDst(&dst1, &dst2);
-    CpuSet(sPokeballTrail_Tileset, dst2, 0x20);
-    CpuFill32(0, dst1, 0x800);
+    GetBg0TilesDst(&tilemap, &tileset);
+    CpuSet(sPokeballTrail_Tileset, tileset, 0x20);
+    CpuFill32(0, tilemap, 0x800);
     LoadPalette(sFieldEffectPal_Pokeball, 0xF0, 0x20);
 
     task->tState++;
