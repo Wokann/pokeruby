@@ -974,7 +974,7 @@ Common_EventScript_NameReceivedPartyMon:: @ 81A0678
 Common_EventScript_PlayerHandedOverTheItem:: @ 81A067F
 	bufferitemname STR_VAR_1, VAR_0x8004
 	playfanfare MUS_OBTAIN_TMHM
-	message Text_PlayerHandedOverTheItem
+	message gText_PlayerHandedOverTheItem
 	waitmessage
 	waitfanfare
 	removeitem VAR_0x8004, 1
@@ -1151,11 +1151,11 @@ CableClub_Text_RecordCornerUnderPreparation:: @ 81A145C
 	.string "Tut mir schrecklich Leid. Hier wird\n"
 	.string "für den STATISTIKTAUSCH renoviert.$"
 
-Text_PlayerHandedOverTheItem:: @ 81A1498
+gText_PlayerHandedOverTheItem:: @ 81A1498
 	.string "{PLAYER} übergibt\n"
 	.string "{STR_VAR_1}.$"
 
-Event_NoRegisteredItem:: @ 81A14AF
+EventScript_SelectWithoutRegisteredItem:: @ 81A14AF
 	msgbox gText_SelectWithoutRegisteredItem, MSGBOX_SIGN
 	end
 
