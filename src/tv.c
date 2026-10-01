@@ -2130,7 +2130,7 @@ u8 CheckForPlayersHouseNews(void)
         if (gSaveBlock1.location.mapNum != MAP_NUM(MAP_LITTLEROOT_TOWN_MAYS_HOUSE_1F))
             return 0;
     }
-    if (FlagGet(FLAG_SYS_TV_LATI) == 1)
+    if (FlagGet(FLAG_SYS_TV_LATIAS_LATIOS) == 1)
         return 1;
     if (FlagGet(FLAG_SYS_TV_HOME) == 1)
         return 2;

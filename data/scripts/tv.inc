@@ -1,4 +1,4 @@
-EventScript_TV:: @ 81A6E72
+EventScript_TV::
 	lockall
 	incrementgamestat GAME_STAT_WATCHED_TV
 	special ResetTVShowState
@@ -15,7 +15,7 @@ EventScript_TV:: @ 81A6E72
 	goto EventScript_TryDoPokeNews
 	end
 
-EventScript_TryDoTVShow:
+EventScript_TryDoTVShow::
 	specialvar VAR_0x8004, GetRandomActiveShowIdx
 	compare VAR_0x8004, 255
 	goto_if_eq EventScript_MomDadMightLikeThis2
@@ -28,32 +28,35 @@ EventScript_TryDoTVShow:
 	goto_if_ne EventScript_DoTVShow
 	end
 
-EventScript_MomDadMightLikeThis1:
+EventScript_MomDadMightLikeThis1::
 	special GetMomOrDadStringForTVMessage
 	msgbox gText_MomOrDadMightLikeThisProgram, MSGBOX_DEFAULT
 	special TurnOffTVScreen
 	releaseall
 	end
 
-EventScript_PlayersHouseMovie:
+EventScript_PlayersHouseMovie::
 	msgbox PlayersHouse_1F_Text_TheresAMovieOnTV, MSGBOX_DEFAULT
 	releaseall
 	end
 
-EventScript_PlayersHouseLatiNewsFlash:
+@ special InitRoamer is called again when Mom asks for the roamer's color.
+@ That later call overwrites the state initialized here.
+EventScript_PlayersHouseLatiNewsFlash::
 	.ifdef SAPPHIRE
 	msgbox PlayersHouse_1F_Text_LatiasEmergencyNewsFlash, MSGBOX_DEFAULT
 	.else
 	msgbox PlayersHouse_1F_Text_LatiosEmergencyNewsFlash, MSGBOX_DEFAULT
 	.endif
 	special InitRoamer
-	clearflag FLAG_SYS_TV_LATI
+	clearflag FLAG_SYS_TV_LATIAS_LATIOS
 	setflag FLAG_LATIOS_OR_LATIAS_ROAMING
 	special TurnOffTVScreen
 	releaseall
 	end
 
-EventScript_DoTVShow:
+@ VAR_RESULT becomes TRUE when the selected show has printed its final message.
+EventScript_DoTVShow::
 	special DoTVShow
 	waitmessage
 	waitbuttonpress
@@ -62,19 +65,19 @@ EventScript_DoTVShow:
 	goto EventScript_TurnOffTV
 	end
 
-EventScript_TurnOffTV:
+EventScript_TurnOffTV::
 	special TurnOffTVScreen
 	setflag FLAG_SYS_TV_WATCH
 	releaseall
 	end
 
-EventScript_MomDadMightLikeThis2:
+EventScript_MomDadMightLikeThis2::
 	special GetMomOrDadStringForTVMessage
 	msgbox gText_MomOrDadMightLikeThisProgram, MSGBOX_DEFAULT
 	goto EventScript_TurnOffTV
 	end
 
-EventScript_TryDoPokeNews:
+EventScript_TryDoPokeNews::
 	special DoPokeNews
 	compare VAR_RESULT, FALSE
 	goto_if_eq EventScript_TryDoTVShow
@@ -83,7 +86,7 @@ EventScript_TryDoPokeNews:
 	goto EventScript_TurnOffTV
 	end
 
-EventScript_DoInSearchOfTrainers:
+EventScript_DoInSearchOfTrainers::
 	special DoTVShowInSearchOfTrainers
 	waitmessage
 	waitbuttonpress

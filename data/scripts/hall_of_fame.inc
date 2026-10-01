@@ -30,5 +30,5 @@ EverGrandeCity_HallOfFame_EventScript_ReadyReceiveSSTicketEvent:: @ 819FC62
 	return
 
 EverGrandeCity_HallOfFame_EventScript_ReadyLatiTVEvent:: @ 819FC70
-	setflag FLAG_SYS_TV_LATI
+	setflag FLAG_SYS_TV_LATIAS_LATIOS
 	return
