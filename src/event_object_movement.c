@@ -59,7 +59,7 @@ enum {
 
 static u8 ObjectEventCB2_BerryTree(struct ObjectEvent*, struct Sprite*);
 static u8 MovementType_Disguise_Callback(struct ObjectEvent*, struct Sprite*);
-static u8 MovementType_Hidden_Callback(struct ObjectEvent*, struct Sprite*);
+static u8 MovementType_Buried_Callback(struct ObjectEvent*, struct Sprite*);
 static bool8 IsCoordOutsideObjectEventMovementRange(struct ObjectEvent*, s16, s16);
 static bool8 DoesObjectCollideWithObjectAt(struct ObjectEvent*, s16, s16);
 static bool8 IsMetatileDirectionallyImpassable(struct ObjectEvent*, s16, s16, u8);
@@ -78,7 +78,7 @@ static void TryEnableObjectEventAnim(struct ObjectEvent*, struct Sprite*);
 static void ObjectEventExecHeldMovementAction(struct ObjectEvent*, struct Sprite*);
 static void ObjectEventUpdateSubpriority(struct ObjectEvent*, struct Sprite*);
 static void UpdateObjectEventVisibility(struct ObjectEvent*, struct Sprite*);
-static void UpdateObjectEventIsOffscreen(struct ObjectEvent*, struct Sprite*);
+static void UpdateObjectEventOffscreen(struct ObjectEvent*, struct Sprite*);
 static void UpdateObjEventSpriteVisibility(struct ObjectEvent*, struct Sprite*);
 static void DoTracksGroundEffect_None(struct ObjectEvent*, struct Sprite*, u8);
 static void DoTracksGroundEffect_Footprints(struct ObjectEvent*, struct Sprite*, u8);
@@ -119,7 +119,7 @@ static void GetGroundEffectFlags_TallGrassOnBeginStep(struct ObjectEvent *, u32 
 static void GetGroundEffectFlags_LongGrassOnSpawn(struct ObjectEvent *, u32 *);
 static void GetGroundEffectFlags_LongGrassOnBeginStep(struct ObjectEvent *, u32 *);
 static void GetGroundEffectFlags_Tracks(struct ObjectEvent *, u32 *);
-static void GetGroundEffectFlags_SandPile(struct ObjectEvent *, u32 *);
+static void GetGroundEffectFlags_SandHeap(struct ObjectEvent *, u32 *);
 static void GetGroundEffectFlags_ShallowFlowingWater(struct ObjectEvent *, u32 *);
 static void GetGroundEffectFlags_Puddle(struct ObjectEvent *, u32 *);
 static void GetGroundEffectFlags_Ripple(struct ObjectEvent *, u32 *);
@@ -127,7 +127,7 @@ static void GetGroundEffectFlags_ShortGrass(struct ObjectEvent *, u32 *);
 static void GetGroundEffectFlags_HotSprings(struct ObjectEvent *, u32 *);
 static void GetGroundEffectFlags_Seaweed(struct ObjectEvent *, u32 *);
 static void GetGroundEffectFlags_JumpLanding(struct ObjectEvent *, u32 *);
-static u8 ObjectEventCheckForReflectiveSurface(struct ObjectEvent *);
+static u8 ObjectEventGetNearbyReflectionType(struct ObjectEvent *);
 static void DoRippleFieldEffect(struct ObjectEvent *objEvent, struct Sprite *sprite);
 
 const u8 gReflectionEffectPaletteMap[16] = {
@@ -228,7 +228,7 @@ static void (*const sMovementTypeCallbacks[])(struct Sprite *) =
     [MOVEMENT_TYPE_COPY_PLAYER_OPPOSITE_IN_GRASS] = MovementType_CopyPlayerInGrass,
     [MOVEMENT_TYPE_COPY_PLAYER_COUNTERCLOCKWISE_IN_GRASS] = MovementType_CopyPlayerInGrass,
     [MOVEMENT_TYPE_COPY_PLAYER_CLOCKWISE_IN_GRASS] = MovementType_CopyPlayerInGrass,
-    [MOVEMENT_TYPE_BURIED] = MovementType_Hidden,
+    [MOVEMENT_TYPE_BURIED] = MovementType_Buried,
     [MOVEMENT_TYPE_WALK_IN_PLACE_DOWN] = MovementType_WalkInPlace,
     [MOVEMENT_TYPE_WALK_IN_PLACE_UP] = MovementType_WalkInPlace,
     [MOVEMENT_TYPE_WALK_IN_PLACE_LEFT] = MovementType_WalkInPlace,
@@ -1945,7 +1945,7 @@ void PatchObjectPalette(u16 paletteTag, u8 paletteSlot)
     LoadPalette(sObjectEventSpritePalettes[paletteIndex].data, 16 * paletteSlot + 0x100, 0x20);
 }
 
-static void PatchObjectPalettes(const u16 *paletteTags, u8 minSlot, u8 maxSlot)
+static void PatchObjectPaletteRange(const u16 *paletteTags, u8 minSlot, u8 maxSlot)
 {
     while (minSlot < maxSlot)
     {
@@ -2082,7 +2082,7 @@ void UpdateObjectEventCoordsForCameraUpdate(void)
     }
 }
 
-u8 GetObjectEventIdByXYZ(u16 x, u16 y, u8 elevation)
+u8 GetObjectEventIdByPosition(u16 x, u16 y, u8 elevation)
 {
     u8 i;
 
@@ -2370,7 +2370,7 @@ void OverrideMovementTypeForObjectEvent(struct ObjectEvent *objectEvent, u8 move
         template->movementType = movementType;
 }
 
-void TryOverrideTemplateCoordsForObjectEvent(u8 localId, u8 mapNum, u8 mapGroup)
+void TryOverrideObjectEventTemplateCoords(u8 localId, u8 mapNum, u8 mapGroup)
 {
     u8 objectEventId;
 
@@ -2383,7 +2383,7 @@ void InitObjectEventPalettes(u8 reflectionType)
     FreeAndReserveObjectSpritePalettes();
     sCurrentSpecialObjectPaletteTag = OBJ_EVENT_PAL_TAG_NONE;
     sCurrentReflectionType = reflectionType;
-    PatchObjectPalettes(sObjectPaletteTagSets[sCurrentReflectionType], PALSLOT_PLAYER, PALSLOT_NPC_SPECIAL);
+    PatchObjectPaletteRange(sObjectPaletteTagSets[sCurrentReflectionType], PALSLOT_PLAYER, PALSLOT_NPC_SPECIAL);
 }
 
 u16 GetObjectPaletteTag(u8 paletteIndex)
@@ -4276,7 +4276,7 @@ void MovementType_MountainDisguise(struct Sprite *sprite)
     UpdateObjectEventCurrentMovement(&gObjectEvents[sprite->data[0]], sprite, MovementType_Disguise_Callback);
 }
 
-void MovementType_Hidden(struct Sprite *sprite)
+void MovementType_Buried(struct Sprite *sprite)
 {
     if (!sprite->data[7])
     {
@@ -4285,15 +4285,15 @@ void MovementType_Hidden(struct Sprite *sprite)
         sprite->oam.priority = 3;
         sprite->data[7]++;
     }
-    UpdateObjectEventCurrentMovement(&gObjectEvents[sprite->data[0]], sprite, MovementType_Hidden_Callback);
+    UpdateObjectEventCurrentMovement(&gObjectEvents[sprite->data[0]], sprite, MovementType_Buried_Callback);
 }
 
-static bool8 MovementType_Hidden_Callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+static bool8 MovementType_Buried_Callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    return gMovementTypeFuncs_Hidden[sprite->data[1]](objectEvent, sprite);
+    return gMovementTypeFuncs_Buried[sprite->data[1]](objectEvent, sprite);
 }
 
-bool8 MovementType_Hidden_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_Buried_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     ClearObjectEventMovement(objectEvent, sprite);
     return FALSE;
@@ -4623,7 +4623,7 @@ void MoveCoords(u8 direction, s16 *x, s16 *y)
     *y += sDirectionToVectors[direction].y;
 }
 
-void Unref_MovePixelCoords(u8 direction, s16 *x, s16 *y)
+void MoveCoordsInMapCoordIncrement(u8 direction, s16 *x, s16 *y)
 {
     *x += sDirectionToVectors[direction].x << 4;
     *y += sDirectionToVectors[direction].y << 4;
@@ -7214,11 +7214,11 @@ static void TryEnableObjectEventAnim(struct ObjectEvent *objectEvent, struct Spr
 
 static void UpdateObjectEventVisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    UpdateObjectEventIsOffscreen(objectEvent, sprite);
+    UpdateObjectEventOffscreen(objectEvent, sprite);
     UpdateObjEventSpriteVisibility(objectEvent, sprite);
 }
 
-static void UpdateObjectEventIsOffscreen(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+static void UpdateObjectEventOffscreen(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     u16 x, y;
     s16 x2, y2;
@@ -7263,7 +7263,7 @@ static void GetAllGroundEffectFlags_OnSpawn(struct ObjectEvent *objEvent, u32 *f
     GetGroundEffectFlags_Reflection(objEvent, flags);
     GetGroundEffectFlags_TallGrassOnSpawn(objEvent, flags);
     GetGroundEffectFlags_LongGrassOnSpawn(objEvent, flags);
-    GetGroundEffectFlags_SandPile(objEvent, flags);
+    GetGroundEffectFlags_SandHeap(objEvent, flags);
     GetGroundEffectFlags_ShallowFlowingWater(objEvent, flags);
     GetGroundEffectFlags_ShortGrass(objEvent, flags);
     GetGroundEffectFlags_HotSprings(objEvent, flags);
@@ -7276,7 +7276,7 @@ static void GetAllGroundEffectFlags_OnBeginStep(struct ObjectEvent *objEvent, u3
     GetGroundEffectFlags_TallGrassOnBeginStep(objEvent, flags);
     GetGroundEffectFlags_LongGrassOnBeginStep(objEvent, flags);
     GetGroundEffectFlags_Tracks(objEvent, flags);
-    GetGroundEffectFlags_SandPile(objEvent, flags);
+    GetGroundEffectFlags_SandHeap(objEvent, flags);
     GetGroundEffectFlags_ShallowFlowingWater(objEvent, flags);
     GetGroundEffectFlags_Puddle(objEvent, flags);
     GetGroundEffectFlags_ShortGrass(objEvent, flags);
@@ -7287,7 +7287,7 @@ static void GetAllGroundEffectFlags_OnFinishStep(struct ObjectEvent *objEvent, u
 {
     ObjectEventUpdateMetatileBehaviors(objEvent);
     GetGroundEffectFlags_ShallowFlowingWater(objEvent, flags);
-    GetGroundEffectFlags_SandPile(objEvent, flags);
+    GetGroundEffectFlags_SandHeap(objEvent, flags);
     GetGroundEffectFlags_Puddle(objEvent, flags);
     GetGroundEffectFlags_Ripple(objEvent, flags);
     GetGroundEffectFlags_ShortGrass(objEvent, flags);
@@ -7305,7 +7305,7 @@ static void ObjectEventUpdateMetatileBehaviors(struct ObjectEvent *objEvent)
 static void GetGroundEffectFlags_Reflection(struct ObjectEvent *objEvent, u32 *flags)
 {
     u32 reflectionFlags[2] = { GROUND_EFFECT_FLAG_REFLECTION, GROUND_EFFECT_FLAG_ICE_REFLECTION };
-    u8 type = ObjectEventCheckForReflectiveSurface(objEvent);
+    u8 type = ObjectEventGetNearbyReflectionType(objEvent);
 
     if (type)
     {
@@ -7359,7 +7359,7 @@ static void GetGroundEffectFlags_Tracks(struct ObjectEvent *objEvent, u32 *flags
     }
 }
 
-static void GetGroundEffectFlags_SandPile(struct ObjectEvent *objEvent, u32 *flags)
+static void GetGroundEffectFlags_SandHeap(struct ObjectEvent *objEvent, u32 *flags)
 {
     if (MetatileBehavior_IsDeepSand(objEvent->currentMetatileBehavior)
         && MetatileBehavior_IsDeepSand(objEvent->previousMetatileBehavior))
@@ -7491,7 +7491,7 @@ static void GetGroundEffectFlags_JumpLanding(struct ObjectEvent *objEvent, u32 *
     }
 }
 
-static u8 ObjectEventCheckForReflectiveSurface(struct ObjectEvent *objEvent)
+static u8 ObjectEventGetNearbyReflectionType(struct ObjectEvent *objEvent)
 {
     const struct ObjectEventGraphicsInfo *info = GetObjectEventGraphicsInfo(objEvent->graphicsId);
 
@@ -7694,7 +7694,7 @@ void GroundEffect_SpawnOnTallGrass(struct ObjectEvent *objEvent, struct Sprite *
     FieldEffectStart(FLDEFF_TALL_GRASS);
 }
 
-void GroundEffect_MoveOnTallGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_StepOnTallGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
     gFieldEffectArguments[0] = objEvent->currentCoords.x;
     gFieldEffectArguments[1] = objEvent->currentCoords.y;
@@ -7720,7 +7720,7 @@ void GroundEffect_SpawnOnLongGrass(struct ObjectEvent *objEvent, struct Sprite *
     FieldEffectStart(FLDEFF_LONG_GRASS);
 }
 
-void GroundEffect_MoveOnLongGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_StepOnLongGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
     gFieldEffectArguments[0] = objEvent->currentCoords.x;
     gFieldEffectArguments[1] = objEvent->currentCoords.y;
@@ -7821,7 +7821,7 @@ void GroundEffect_StepOnPuddle(struct ObjectEvent *objEvent, struct Sprite *spri
     StartFieldEffectForObjectEvent(FLDEFF_SPLASH, objEvent);
 }
 
-void GroundEffect_SandPile(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_SandHeap(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
     StartFieldEffectForObjectEvent(FLDEFF_SAND_PILE, objEvent);
 }
@@ -7902,9 +7902,9 @@ void GroundEffect_Seaweed(struct ObjectEvent *objEvent, struct Sprite *sprite)
 
 static void (*const sGroundEffectFuncs[])(struct ObjectEvent *objEvent, struct Sprite *sprite) = {
     GroundEffect_SpawnOnTallGrass,
-    GroundEffect_MoveOnTallGrass,
+    GroundEffect_StepOnTallGrass,
     GroundEffect_SpawnOnLongGrass,
-    GroundEffect_MoveOnLongGrass,
+    GroundEffect_StepOnLongGrass,
     GroundEffect_WaterReflection,
     GroundEffect_IceReflection,
     GroundEffect_FlowingWater,
@@ -7912,7 +7912,7 @@ static void (*const sGroundEffectFuncs[])(struct ObjectEvent *objEvent, struct S
     GroundEffect_DeepSandTracks,
     GroundEffect_Ripple,
     GroundEffect_StepOnPuddle,
-    GroundEffect_SandPile,
+    GroundEffect_SandHeap,
     GroundEffect_JumpOnTallGrass,
     GroundEffect_JumpOnLongGrass,
     GroundEffect_JumpOnShallowWater,
@@ -8325,7 +8325,7 @@ bool8 SpriteAnimEnded(struct Sprite *sprite)
         return FALSE;
 }
 
-void UpdateObjectEventSpriteVisibility(struct Sprite *sprite, bool8 invisible)
+void UpdateObjectEventSpriteInvisibility(struct Sprite *sprite, bool8 invisible)
 {
     u16 x, y;
     s16 x2, y2;
@@ -8355,7 +8355,7 @@ void UpdateObjectEventSpriteVisibility(struct Sprite *sprite, bool8 invisible)
 static void SpriteCB_VirtualObject(struct Sprite *sprite)
 {
     SetObjectSubpriorityByElevation(sprite->data[1], sprite, 1);
-    UpdateObjectEventSpriteVisibility(sprite, 0);
+    UpdateObjectEventSpriteInvisibility(sprite, 0);
 }
 
 void TurnVirtualObject(u8 virtualObjId, u8 direction)

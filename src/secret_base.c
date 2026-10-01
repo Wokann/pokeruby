@@ -551,7 +551,7 @@ void InitSecretBaseDecorationSprites(void)
                         FlagClear(gSpecialVar_0x8004 + 0xAE);
                         TrySpawnObjectEvent(gSpecialVar_Result, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
                         TryMoveObjectEventToMapCoords(gSpecialVar_Result, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, gSpecialVar_0x8006, gSpecialVar_0x8007);
-                        TryOverrideTemplateCoordsForObjectEvent(gSpecialVar_Result, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
+                        TryOverrideObjectEventTemplateCoords(gSpecialVar_Result, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
                         gSpecialVar_0x8004 ++;
                     }
                 }

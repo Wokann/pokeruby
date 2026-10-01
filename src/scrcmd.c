@@ -1070,7 +1070,7 @@ bool8 ScrCmd_copyobjectxytoperm(struct ScriptContext *ctx)
 {
     u16 localId = VarGet(ScriptReadHalfword(ctx));
 
-    TryOverrideTemplateCoordsForObjectEvent(localId, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
+    TryOverrideObjectEventTemplateCoords(localId, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
     return FALSE;
 }
 

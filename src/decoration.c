@@ -2209,7 +2209,7 @@ void SetDecoration(void)
             gSpecialVar_0x8007 = sCurDecorMapY;
             TrySpawnObjectEvent(gSpecialVar_0x8005, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
             TryMoveObjectEventToMapCoords(gSpecialVar_0x8005, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, gSpecialVar_0x8006, gSpecialVar_0x8007);
-            TryOverrideTemplateCoordsForObjectEvent(gSpecialVar_0x8005, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
+            TryOverrideObjectEventTemplateCoords(gSpecialVar_0x8005, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
             break;
         }
     }
@@ -2474,7 +2474,7 @@ bool8 CanPlaceDecoration(u8 taskId, const struct Decoration *decoration)
                     {
                         return FALSE;
                     }
-                    behaviorAt = GetObjectEventIdByXYZ(curX, curY, ELEVATION_TRANSITION);
+                    behaviorAt = GetObjectEventIdByPosition(curX, curY, ELEVATION_TRANSITION);
                     if (behaviorAt != ELEVATION_TRANSITION && behaviorAt != OBJECT_EVENTS_COUNT)
                     {
                         return FALSE;
@@ -2499,7 +2499,7 @@ bool8 CanPlaceDecoration(u8 taskId, const struct Decoration *decoration)
                     {
                         return FALSE;
                     }
-                    if (GetObjectEventIdByXYZ(curX, curY, ELEVATION_TRANSITION) != OBJECT_EVENTS_COUNT)
+                    if (GetObjectEventIdByPosition(curX, curY, ELEVATION_TRANSITION) != OBJECT_EVENTS_COUNT)
                     {
                         return FALSE;
                     }
@@ -2519,7 +2519,7 @@ bool8 CanPlaceDecoration(u8 taskId, const struct Decoration *decoration)
                 {
                     return FALSE;
                 }
-                behaviorAt = GetObjectEventIdByXYZ(curX, curY, ELEVATION_TRANSITION);
+                behaviorAt = GetObjectEventIdByPosition(curX, curY, ELEVATION_TRANSITION);
                 if (behaviorAt != ELEVATION_TRANSITION && behaviorAt != OBJECT_EVENTS_COUNT)
                 {
                     return FALSE;
@@ -2564,7 +2564,7 @@ bool8 CanPlaceDecoration(u8 taskId, const struct Decoration *decoration)
                         return FALSE;
                     }
                 }
-                if (GetObjectEventIdByXYZ(curX, curY, ELEVATION_TRANSITION) != OBJECT_EVENTS_COUNT)
+                if (GetObjectEventIdByPosition(curX, curY, ELEVATION_TRANSITION) != OBJECT_EVENTS_COUNT)
                 {
                     return FALSE;
                 }
