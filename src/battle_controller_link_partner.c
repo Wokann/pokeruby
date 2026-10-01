@@ -1373,22 +1373,22 @@ static void LinkPartnerHandleCmd23(void)
 
 static void LinkPartnerHandleHealthBarUpdate(void)
 {
-    s16 hpValue;
+    s16 hpVal;
 
     LoadBattleBarGfx(0);
-    hpValue = gBattleBufferA[gActiveBattler][2] | (gBattleBufferA[gActiveBattler][3] << 8);
-    if (hpValue != INSTANT_HP_BAR_DROP)
+    hpVal = gBattleBufferA[gActiveBattler][2] | (gBattleBufferA[gActiveBattler][3] << 8);
+    if (hpVal != INSTANT_HP_BAR_DROP)
     {
         u32 maxHP = GetMonData(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_MAX_HP);
         u32 curHP = GetMonData(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_HP);
 
-        SetBattleBarStruct(gActiveBattler, gHealthboxSpriteIds[gActiveBattler], maxHP, curHP, hpValue);
+        SetBattleBarStruct(gActiveBattler, gHealthboxSpriteIds[gActiveBattler], maxHP, curHP, hpVal);
     }
     else
     {
         u32 maxHP = GetMonData(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_MAX_HP);
 
-        SetBattleBarStruct(gActiveBattler, gHealthboxSpriteIds[gActiveBattler], maxHP, 0, hpValue);
+        SetBattleBarStruct(gActiveBattler, gHealthboxSpriteIds[gActiveBattler], maxHP, 0, hpVal);
     }
     gBattlerControllerFuncs[gActiveBattler] = CompleteOnHealthbarDone;
 }
