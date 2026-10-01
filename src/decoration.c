@@ -3044,17 +3044,17 @@ void SetDecorSelectionMetatiles(struct PlaceDecorationGraphicsDataBuffer *data)
     }
 }
 
-void SetDecorSelectionBoxOamAttributes(u8 decoShape)
+void SetDecorSelectionBoxOamAttributes(u8 decorShape)
 {
     sDecorSelectorOam.y = 0;
     sDecorSelectorOam.affineMode = 0;
     sDecorSelectorOam.objMode = 0;
     sDecorSelectorOam.mosaic = 0;
     sDecorSelectorOam.bpp = 0;
-    sDecorSelectorOam.shape = sDecorationMovementInfo[decoShape].shape;
+    sDecorSelectorOam.shape = sDecorationMovementInfo[decorShape].shape;
     sDecorSelectorOam.x = 0;
     sDecorSelectorOam.matrixNum = 0;
-    sDecorSelectorOam.size = sDecorationMovementInfo[decoShape].size;
+    sDecorSelectorOam.size = sDecorationMovementInfo[decorShape].size;
     sDecorSelectorOam.tileNum = 0;
     sDecorSelectorOam.priority = 1;
     sDecorSelectorOam.paletteNum = 0;
