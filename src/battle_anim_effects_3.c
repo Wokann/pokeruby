@@ -1478,8 +1478,8 @@ static void AnimLeer(struct Sprite *sprite)
 // This is likely fakematching due to some strange type casting behavior.
 static void AnimLetterZ(struct Sprite *sprite)
 {
-    int var0;
-    int var1;
+    int sineIndex;
+    int signedOffset;
     if (sprite->data[0] == 0)
     {
         SetSpriteCoordsToAnimAttackerCoords(sprite);
@@ -1494,26 +1494,26 @@ static void AnimLetterZ(struct Sprite *sprite)
             }
             else
             {
-                var1 = -gBattleAnimArgs[2];
-                sprite->data[1] = var1;
-                var1 = -gBattleAnimArgs[3];
-                sprite->data[2] = var1;
+                signedOffset = -gBattleAnimArgs[2];
+                sprite->data[1] = signedOffset;
+                signedOffset = -gBattleAnimArgs[3];
+                sprite->data[2] = signedOffset;
             }
         }
         else
         {
-            var1 = -gBattleAnimArgs[2];
-            sprite->data[1] = var1;
+            signedOffset = -gBattleAnimArgs[2];
+            sprite->data[1] = signedOffset;
             sprite->data[2] = gBattleAnimArgs[3];
         }
     }
 
     sprite->data[0]++;
-    var0 = (sprite->data[0] * 20) & 0xFF;
+    sineIndex = (sprite->data[0] * 20) & 0xFF;
     sprite->data[3] += sprite->data[1];
     sprite->data[4] += sprite->data[2];
     sprite->x2 = (sprite->data[3] + (s32)((u32)sprite->data[3] >> 31)) >> 1;
-    sprite->y2 = Sin(var0 & 0xFF, 5) + ((s32)(sprite->data[4] + ((u32)sprite->data[4] >> 31)) >> 1);
+    sprite->y2 = Sin(sineIndex & 0xFF, 5) + ((s32)(sprite->data[4] + ((u32)sprite->data[4] >> 31)) >> 1);
 
     if ((u16)(sprite->x + sprite->x2) > 240)
         DestroyAnimSprite(sprite);
@@ -1910,7 +1910,7 @@ void AnimTask_TormentAttacker(u8 taskId)
 
 static void TormentAttacker_Step(u8 taskId)
 {
-    int var0, var1;
+    int baseX, xOffset;
     s16 x, y;
     u16 i, j;
     u8 spriteId;
@@ -1919,16 +1919,16 @@ static void TormentAttacker_Step(u8 taskId)
     switch (task->data[0])
     {
     case 0:
-        var0 = task->data[2];
+        baseX = task->data[2];
         if (task->data[1] & 1)
         {
-            var1 = task->data[4];
-            x = var0 - var1;
+            xOffset = task->data[4];
+            x = baseX - xOffset;
         }
         else
         {
-            var1 = task->data[4];
-            x = var0 + var1;
+            xOffset = task->data[4];
+            x = baseX + xOffset;
         }
 
         y = task->data[3] + task->data[5];
@@ -3346,14 +3346,14 @@ void AnimTask_AcidArmor(u8 taskId)
 static void AnimTask_AcidArmor_Step(u8 taskId)
 {
     struct Task *task;
-    s16 var1;
-    s16 var2;
+    s16 verticalOffsetAccumulator;
+    s16 verticalOffset;
     s16 bgX, bgY;
-    s16 offset;
-    s16 var0;
-    s16 i;
+    s16 scanlineBufferOffset;
+    s16 scanlineBufferIndex;
+    s16 scanline;
     s16 sineIndex;
-    s16 var3;
+    s16 horizontalOffset;
 
     task = &gTasks[taskId];
     if (GetBattlerSpriteBGPriorityRank(task->data[5]) == 1)
@@ -3370,40 +3370,40 @@ static void AnimTask_AcidArmor_Step(u8 taskId)
     switch (task->data[0])
     {
     case 0:
-        offset = task->data[14] * 2;
-        var1 = 0;
-        var2 = 0;
-        i = 0;
+        scanlineBufferOffset = task->data[14] * 2;
+        verticalOffsetAccumulator = 0;
+        verticalOffset = 0;
+        scanline = 0;
         task->data[1] = (task->data[1] + 2) & 0xFF;
         sineIndex = task->data[1];
         task->data[9] = 0x7E0 / task->data[6];
         task->data[10] = -((task->data[7] * 2) / task->data[9]);
         task->data[11] = task->data[7];
-        var3 = task->data[11] >> 5;
-        task->data[12] = var3;
-        var0 = task->data[14];
-        while (var0 > task->data[13])
+        horizontalOffset = task->data[11] >> 5;
+        task->data[12] = horizontalOffset;
+        scanlineBufferIndex = task->data[14];
+        while (scanlineBufferIndex > task->data[13])
         {
-            gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer][offset + 1] = (i - var2) + bgY;
-            gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer][offset] = bgX + var3 + (gSineTable[sineIndex] >> 5);
+            gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer][scanlineBufferOffset + 1] = (scanline - verticalOffset) + bgY;
+            gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer][scanlineBufferOffset] = bgX + horizontalOffset + (gSineTable[sineIndex] >> 5);
             sineIndex = (sineIndex + 10) & 0xFF;
             task->data[11] += task->data[10];
-            var3 = task->data[11] >> 5;
-            task->data[12] = var3;
+            horizontalOffset = task->data[11] >> 5;
+            task->data[12] = horizontalOffset;
 
-            i++;
-            offset -= 2;
-            var1 += task->data[6];
-            var2 = var1 >> 5;
-            var0--;
+            scanline++;
+            scanlineBufferOffset -= 2;
+            verticalOffsetAccumulator += task->data[6];
+            verticalOffset = verticalOffsetAccumulator >> 5;
+            scanlineBufferIndex--;
         }
 
-        var0 *= 2;
-        while (var0 >= 0)
+        scanlineBufferIndex *= 2;
+        while (scanlineBufferIndex >= 0)
         {
-            gScanlineEffectRegBuffers[0][var0] = bgX + 240;
-            gScanlineEffectRegBuffers[1][var0] = bgX + 240;
-            var0 -= 2;
+            gScanlineEffectRegBuffers[0][scanlineBufferIndex] = bgX + 240;
+            gScanlineEffectRegBuffers[1][scanlineBufferIndex] = bgX + 240;
+            scanlineBufferIndex -= 2;
         }
 
         if (++task->data[6] > 63)
@@ -3468,13 +3468,13 @@ void AnimTask_DeepInhale(u8 taskId)
 
 static void AnimTask_DeepInhale_Step(u8 taskId)
 {
-    u16 var0;
+    u16 shakeFrame;
 
     struct Task *task = &gTasks[taskId];
-    var0 = task->data[0];
+    shakeFrame = task->data[0];
     task->data[0]++;
-    var0 -= 20;
-    if (var0 < 23)
+    shakeFrame -= 20;
+    if (shakeFrame < 23)
     {
         if (++task->data[1] > 1)
         {
@@ -3560,8 +3560,8 @@ static void AnimSmokeBallEscapeCloud(struct Sprite *sprite)
 
 static void AnimTask_SlideMonForFocusBand_Step2(u8 taskId)
 {
-    u16 var0 = 0;
-    u16 var1 = 0;
+    u16 xOffset = 0;
+    u16 yOffset = 0;
 
     gTasks[taskId].data[0]--;
     if ((gTasks[taskId].data[6] & 0x8000) && (--gTasks[taskId].data[1] == -1))
@@ -3589,17 +3589,17 @@ static void AnimTask_SlideMonForFocusBand_Step2(u8 taskId)
         gTasks[taskId].data[1] = gTasks[taskId].data[13];
     }
 
-    var0 = gTasks[taskId].data[7];
-    var1 = gTasks[taskId].data[8];
+    xOffset = gTasks[taskId].data[7];
+    yOffset = gTasks[taskId].data[8];
     if (gTasks[taskId].data[2] & 0x8000)
-        gSprites[gTasks[taskId].data[15]].x2 = gTasks[taskId].data[9] - (var0 >> 8);
+        gSprites[gTasks[taskId].data[15]].x2 = gTasks[taskId].data[9] - (xOffset >> 8);
     else
-        gSprites[gTasks[taskId].data[15]].x2 = gTasks[taskId].data[9] + (var0 >> 8);
+        gSprites[gTasks[taskId].data[15]].x2 = gTasks[taskId].data[9] + (xOffset >> 8);
 
     if (gTasks[taskId].data[3] & 0x8000)
-        gSprites[gTasks[taskId].data[15]].y2 = gTasks[taskId].data[10] - (var1 >> 8);
+        gSprites[gTasks[taskId].data[15]].y2 = gTasks[taskId].data[10] - (yOffset >> 8);
     else
-        gSprites[gTasks[taskId].data[15]].y2 = gTasks[taskId].data[10] + (var1 >> 8);
+        gSprites[gTasks[taskId].data[15]].y2 = gTasks[taskId].data[10] + (yOffset >> 8);
 
     if (gTasks[taskId].data[0] < 1)
     {
@@ -3610,8 +3610,8 @@ static void AnimTask_SlideMonForFocusBand_Step2(u8 taskId)
 
 static void AnimTask_SlideMonForFocusBand_Step1(u8 taskId)
 {
-    u16 var0 = 0;
-    u16 var1 = 0;
+    u16 xOffset = 0;
+    u16 yOffset = 0;
 
     gTasks[taskId].data[0]--;
     if ((gTasks[taskId].data[6] & 0x8000) && (--gTasks[taskId].data[1] == -1))
@@ -3623,7 +3623,7 @@ static void AnimTask_SlideMonForFocusBand_Step1(u8 taskId)
         }
         else
         {
-            gTasks[taskId].data[9] = var0;
+            gTasks[taskId].data[9] = xOffset;
         }
 
         if (gTasks[taskId].data[10] == 0)
@@ -3639,20 +3639,20 @@ static void AnimTask_SlideMonForFocusBand_Step1(u8 taskId)
         gTasks[taskId].data[1] = gTasks[taskId].data[13];
     }
 
-    var0 = (gTasks[taskId].data[2] & 0x7FFF) + gTasks[taskId].data[7];
-    var1 = (gTasks[taskId].data[3] & 0x7FFF) + gTasks[taskId].data[8];
+    xOffset = (gTasks[taskId].data[2] & 0x7FFF) + gTasks[taskId].data[7];
+    yOffset = (gTasks[taskId].data[3] & 0x7FFF) + gTasks[taskId].data[8];
     if (gTasks[taskId].data[2] & 0x8000)
-        gSprites[gTasks[taskId].data[15]].x2 = gTasks[taskId].data[9] - (var0 >> 8);
+        gSprites[gTasks[taskId].data[15]].x2 = gTasks[taskId].data[9] - (xOffset >> 8);
     else
-        gSprites[gTasks[taskId].data[15]].x2 = gTasks[taskId].data[9] + (var0 >> 8);
+        gSprites[gTasks[taskId].data[15]].x2 = gTasks[taskId].data[9] + (xOffset >> 8);
 
     if (gTasks[taskId].data[3] & 0x8000)
-        gSprites[gTasks[taskId].data[15]].y2 = gTasks[taskId].data[10] - (var1 >> 8);
+        gSprites[gTasks[taskId].data[15]].y2 = gTasks[taskId].data[10] - (yOffset >> 8);
     else
-        gSprites[gTasks[taskId].data[15]].y2 = gTasks[taskId].data[10] + (var1 >> 8);
+        gSprites[gTasks[taskId].data[15]].y2 = gTasks[taskId].data[10] + (yOffset >> 8);
 
-    gTasks[taskId].data[7] = var0;
-    gTasks[taskId].data[8] = var1;
+    gTasks[taskId].data[7] = xOffset;
+    gTasks[taskId].data[8] = yOffset;
     if (gTasks[taskId].data[0] < 1)
     {
         gTasks[taskId].data[0] = 30;
