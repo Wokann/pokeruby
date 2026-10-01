@@ -3993,8 +3993,8 @@ static void SpriteCB_DigitalDisplay_Static(struct Sprite *sprite)
 
 static void SpriteCB_DigitalDisplay_Smoke(struct Sprite *sprite)
 {
-    s16 xOffsets[] = {4, -4, 4, -4};
-    s16 yOffsets[] = {4, 4, -4, -4};
+    s16 targetX[] = {4, -4, 4, -4};
+    s16 targetY[] = {4, 4, -4, -4};
 
     if (sprite->data[1]++ >= 16)
     {
@@ -4005,8 +4005,8 @@ static void SpriteCB_DigitalDisplay_Smoke(struct Sprite *sprite)
     sprite->y2 = 0;
     if (sprite->subspriteTableNum != 0)
     {
-        sprite->x2 = xOffsets[sprite->data[6]];
-        sprite->y2 = yOffsets[sprite->data[6]];
+        sprite->x2 = targetX[sprite->data[6]];
+        sprite->y2 = targetY[sprite->data[6]];
     }
 }
 
@@ -4243,16 +4243,16 @@ static void SpriteCB_DigitalDisplay_PokeballShining(struct Sprite *sprite)
 
 static void SpriteCB_DigitalDisplay_RegBonus(struct Sprite *sprite)
 {
-    s16 xOffsets[] = {0, -40, 0, 0, 48, 0, 24, 0};
-    s16 yOffsets[] = {-32, 0, -32, -48, 0, -48, 0, -48};
-    s16 delays[] = {16, 12, 16, 0, 0, 4, 8, 8};
+    s16 letterXOffset[] = {0, -40, 0, 0, 48, 0, 24, 0};
+    s16 letterYOffset[] = {-32, 0, -32, -48, 0, -48, 0, -48};
+    s16 letterDelay[] = {16, 12, 16, 0, 0, 4, 8, 8};
 
     switch (sprite->data[0])
     {
     case 0:
-        sprite->x2 = xOffsets[sprite->data[6]];
-        sprite->y2 = yOffsets[sprite->data[6]];
-        sprite->data[1] = delays[sprite->data[6]];
+        sprite->x2 = letterXOffset[sprite->data[6]];
+        sprite->y2 = letterYOffset[sprite->data[6]];
+        sprite->data[1] = letterDelay[sprite->data[6]];
         sprite->data[0]++;
         // fallthrough
     case 1:
