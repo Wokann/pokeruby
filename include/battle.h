@@ -271,7 +271,7 @@ struct Trainer
     /*0x24*/ union TrainerMonPtr party;
 };
 
-struct LinkPartnerHeader
+struct LinkBattlerHeader
 {
     u8 versionSignatureLo;
     u8 versionSignatureHi;
@@ -282,7 +282,7 @@ struct LinkPartnerHeader
 
 union MultiBuffers
 {
-    struct LinkPartnerHeader linkPartnerHeader;
+    struct LinkBattlerHeader linkBattlerHeader;
     struct MultiBattlePokemonTx multiBattleMons[3];
 };
 

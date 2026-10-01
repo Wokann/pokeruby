@@ -333,14 +333,14 @@ void BufferPartyVsScreenHealth_AtStart(void)
         if (species != SPECIES_EGG && hp == 0)
             flags |= 3 << i * 2;
     }
-    sBattleMultiBuffer.linkPartnerHeader.vsScreenHealthFlagsLo = flags;
-    sBattleMultiBuffer.linkPartnerHeader.vsScreenHealthFlagsHi = flags >> 8;
+    sBattleMultiBuffer.linkBattlerHeader.vsScreenHealthFlagsLo = flags;
+    sBattleMultiBuffer.linkBattlerHeader.vsScreenHealthFlagsHi = flags >> 8;
 }
 
 static void SetPlayerBerryDataInBattleStruct(void)
 {
     s32 i;
-    struct BattleEnigmaBerry * battleBerry = &sBattleMultiBuffer.linkPartnerHeader.battleEnigmaBerry;
+    struct BattleEnigmaBerry * battleBerry = &sBattleMultiBuffer.linkBattlerHeader.battleEnigmaBerry;
 
     for (i = 0; i < 7; i++)
         battleBerry->name[i] = gSaveBlock1.enigmaBerry.berry.name[i];
@@ -397,33 +397,33 @@ void SetAllPlayersBerryData(void)
     }
 }
 
-void TryCorrectShedinjaLanguage(struct Pokemon *pkmn)
+void TryCorrectShedinjaLanguage(struct Pokemon *mon)
 {
     u8 nickname[POKEMON_NAME_LENGTH + 1];
     u8 language = 1;
 
-    if (GetMonData(pkmn, MON_DATA_SPECIES) == SPECIES_SHEDINJA
-     && GetMonData(pkmn, MON_DATA_LANGUAGE) != language)
+    if (GetMonData(mon, MON_DATA_SPECIES) == SPECIES_SHEDINJA
+     && GetMonData(mon, MON_DATA_LANGUAGE) != language)
     {
-        GetMonData(pkmn, MON_DATA_NICKNAME, nickname);
+        GetMonData(mon, MON_DATA_NICKNAME, nickname);
         if (StringCompareWithoutExtCtrlCodes(nickname, gText_ShedinjaJpnName) == 0)
-            SetMonData(pkmn, MON_DATA_LANGUAGE, &language);
+            SetMonData(mon, MON_DATA_LANGUAGE, &language);
     }
 }
 
 void CB2_HandleStartBattle(void)
 {
-    u8 playerId;
-    u8 enemyId;
+    u8 playerMultiplayerId;
+    u8 enemyMultiplayerId;
     s32 id;
 
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
 
-    playerId = GetMultiplayerId();
-    gBattleStruct->multiplayerId = playerId;
-    enemyId = playerId ^ 1;
+    playerMultiplayerId = GetMultiplayerId();
+    gBattleStruct->multiplayerId = playerMultiplayerId;
+    enemyMultiplayerId = playerMultiplayerId ^ 1;
 
     switch (gBattleCommunication[0])
     {
@@ -432,8 +432,8 @@ void CB2_HandleStartBattle(void)
         {
             if (gReceivedRemoteLinkPlayers != 0 && IsLinkTaskFinished())
             {
-                sBattleMultiBuffer.linkPartnerHeader.versionSignatureLo = 1;
-                sBattleMultiBuffer.linkPartnerHeader.versionSignatureHi = 1;
+                sBattleMultiBuffer.linkBattlerHeader.versionSignatureLo = 1;
+                sBattleMultiBuffer.linkBattlerHeader.versionSignatureHi = 1;
                 BufferPartyVsScreenHealth_AtStart();
                 SetPlayerBerryDataInBattleStruct();
 #if DEBUG
@@ -446,7 +446,7 @@ void CB2_HandleStartBattle(void)
                     }
                 }
 #endif
-                SendBlock(BitmaskAllOtherLinkPlayers(), &sBattleMultiBuffer.linkPartnerHeader, sizeof(sBattleMultiBuffer.linkPartnerHeader));
+                SendBlock(BitmaskAllOtherLinkPlayers(), &sBattleMultiBuffer.linkBattlerHeader, sizeof(sBattleMultiBuffer.linkBattlerHeader));
                 gBattleCommunication[0] = 1;
             }
         }
@@ -466,7 +466,7 @@ void CB2_HandleStartBattle(void)
             id = 0;
             if (gBlockRecvBuffer[0][0] == 0x100)
             {
-                if (playerId == 0)
+                if (playerMultiplayerId == 0)
                     gBattleTypeFlags |= 12;
                 else
                     gBattleTypeFlags |= 8;
@@ -476,7 +476,7 @@ void CB2_HandleStartBattle(void)
             {
                 if (gBlockRecvBuffer[0][0] == gBlockRecvBuffer[1][0])
                 {
-                    if (playerId == 0)
+                    if (playerMultiplayerId == 0)
                         gBattleTypeFlags |= 12;
                     else
                         gBattleTypeFlags |= 8;
@@ -486,7 +486,7 @@ void CB2_HandleStartBattle(void)
                 {
                     while (id < 2)
                     {
-                        if (gBlockRecvBuffer[id][0] > 0x0101 && id != playerId)
+                        if (gBlockRecvBuffer[id][0] > 0x0101 && id != playerMultiplayerId)
                             break;
                         id++;
                     }
@@ -501,8 +501,8 @@ void CB2_HandleStartBattle(void)
             gTasks[taskId].data[1] = 0x10E;
             gTasks[taskId].data[2] = 0x5A;
             gTasks[taskId].data[5] = 0;
-            gTasks[taskId].data[3] = sBattleMultiBuffer.linkPartnerHeader.vsScreenHealthFlagsLo | (sBattleMultiBuffer.linkPartnerHeader.vsScreenHealthFlagsHi << 8);
-            gTasks[taskId].data[4] = gBlockRecvBuffer[enemyId][1];
+            gTasks[taskId].data[3] = sBattleMultiBuffer.linkBattlerHeader.vsScreenHealthFlagsLo | (sBattleMultiBuffer.linkBattlerHeader.vsScreenHealthFlagsHi << 8);
+            gTasks[taskId].data[4] = gBlockRecvBuffer[enemyMultiplayerId][1];
             gBattleCommunication[0]++;
         }
         break;
@@ -517,7 +517,7 @@ void CB2_HandleStartBattle(void)
         if ((GetBlockReceivedStatus() & 3) == 3)
         {
             ResetBlockReceivedFlags();
-            memcpy(gEnemyParty, gBlockRecvBuffer[enemyId], sizeof(*gEnemyParty) * 2);
+            memcpy(gEnemyParty, gBlockRecvBuffer[enemyMultiplayerId], sizeof(*gEnemyParty) * 2);
             gBattleCommunication[0]++;
         }
         break;
@@ -532,7 +532,7 @@ void CB2_HandleStartBattle(void)
         if ((GetBlockReceivedStatus() & 3) == 3)
         {
             ResetBlockReceivedFlags();
-            memcpy(gEnemyParty + 2, gBlockRecvBuffer[enemyId], sizeof(*gEnemyParty) * 2);
+            memcpy(gEnemyParty + 2, gBlockRecvBuffer[enemyMultiplayerId], sizeof(*gEnemyParty) * 2);
             gBattleCommunication[0]++;
         }
         break;
@@ -547,7 +547,7 @@ void CB2_HandleStartBattle(void)
         if ((GetBlockReceivedStatus() & 3) == 3)
         {
             ResetBlockReceivedFlags();
-            memcpy(gEnemyParty + 4, gBlockRecvBuffer[enemyId], sizeof(*gEnemyParty) * 2);
+            memcpy(gEnemyParty + 4, gBlockRecvBuffer[enemyMultiplayerId], sizeof(*gEnemyParty) * 2);
             TryCorrectShedinjaLanguage(&gEnemyParty[0]);
             TryCorrectShedinjaLanguage(&gEnemyParty[1]);
             TryCorrectShedinjaLanguage(&gEnemyParty[2]);
@@ -606,13 +606,13 @@ void PrepareOwnMultiPartnerBuffer(void)
 
 void CB2_PreInitMultiBattle(void)
 {
-    u8 multiplayerId;
+    u8 playerMultiplayerId;
     MainCallback *savedCallback;
     u16 *savedBattleTypeFlags;
     s32 i;
 
-    multiplayerId = GetMultiplayerId();
-    gBattleStruct->multiplayerId = multiplayerId;
+    playerMultiplayerId = GetMultiplayerId();
+    gBattleStruct->multiplayerId = playerMultiplayerId;
     // Seriously, Game Freak?
     savedCallback = &gBattleStruct->savedCallback;
     savedBattleTypeFlags = &gBattleStruct->savedBattleTypeFlags;
@@ -651,10 +651,10 @@ void CB2_PreInitMultiBattle(void)
             ResetBlockReceivedFlags();
             for (i = 0; i < 4; i++)
             {
-                if (i != multiplayerId)
+                if (i != playerMultiplayerId)
                 {
-                    if ((!(gLinkPlayers[i].id & 1) && !(gLinkPlayers[multiplayerId].id & 1))
-                     || ((gLinkPlayers[i].id & 1) && (gLinkPlayers[multiplayerId].id & 1)))
+                    if ((!(gLinkPlayers[i].id & 1) && !(gLinkPlayers[playerMultiplayerId].id & 1))
+                     || ((gLinkPlayers[i].id & 1) && (gLinkPlayers[playerMultiplayerId].id & 1)))
                         memcpy(gMultiPartnerParty, gBlockRecvBuffer[i], 3 * sizeof(struct MultiBattlePokemonTx));
                 }
             }
@@ -685,11 +685,11 @@ void CB2_PreInitMultiBattle(void)
 
 void CB2_HandleStartMultiBattle(void)
 {
-    u8 playerId;
+    u8 playerMultiplayerId;
     s32 id;
 
-    playerId = GetMultiplayerId();
-    gBattleStruct->multiplayerId = playerId;
+    playerMultiplayerId = GetMultiplayerId();
+    gBattleStruct->multiplayerId = playerMultiplayerId;
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
@@ -710,11 +710,11 @@ void CB2_HandleStartMultiBattle(void)
 #endif
             if (IsLinkTaskFinished())
             {
-                *(&sBattleMultiBuffer.linkPartnerHeader.versionSignatureLo) = 1;
-                *(&sBattleMultiBuffer.linkPartnerHeader.versionSignatureHi) = 1;
+                *(&sBattleMultiBuffer.linkBattlerHeader.versionSignatureLo) = 1;
+                *(&sBattleMultiBuffer.linkBattlerHeader.versionSignatureHi) = 1;
                 BufferPartyVsScreenHealth_AtStart();
                 SetPlayerBerryDataInBattleStruct();
-                SendBlock(BitmaskAllOtherLinkPlayers(), &sBattleMultiBuffer.linkPartnerHeader, sizeof(sBattleMultiBuffer.linkPartnerHeader));
+                SendBlock(BitmaskAllOtherLinkPlayers(), &sBattleMultiBuffer.linkBattlerHeader, sizeof(sBattleMultiBuffer.linkBattlerHeader));
                 gBattleCommunication[0]++;
             }
         }
@@ -729,7 +729,7 @@ void CB2_HandleStartMultiBattle(void)
             id = 0;
             if (gBlockRecvBuffer[0][0] == 0x100)
             {
-                if (playerId == 0)
+                if (playerMultiplayerId == 0)
                     gBattleTypeFlags |= 12;
                 else
                     gBattleTypeFlags |= 8;
@@ -746,7 +746,7 @@ void CB2_HandleStartMultiBattle(void)
                 }
                 if (i == MAX_LINK_PLAYERS)
                 {
-                    if (playerId == 0)
+                    if (playerMultiplayerId == 0)
                         gBattleTypeFlags |= 12;
                     else
                         gBattleTypeFlags |= 8;
@@ -756,10 +756,10 @@ void CB2_HandleStartMultiBattle(void)
                 {
                     while (id < MAX_LINK_PLAYERS)
                     {
-                        if (gBlockRecvBuffer[id][0] == 0x0101 && id != playerId)
-                            if (id < playerId)
+                        if (gBlockRecvBuffer[id][0] == 0x0101 && id != playerMultiplayerId)
+                            if (id < playerMultiplayerId)
                                 break;
-                        if (gBlockRecvBuffer[id][0] > 0x0101 && id != playerId)
+                        if (gBlockRecvBuffer[id][0] > 0x0101 && id != playerMultiplayerId)
                             break;
                         id++;
                     }
@@ -813,7 +813,7 @@ void CB2_HandleStartMultiBattle(void)
             ResetBlockReceivedFlags();
             for (id = 0; id < MAX_LINK_PLAYERS; id++)
             {
-                if (id == playerId)
+                if (id == playerMultiplayerId)
                 {
                     switch (gLinkPlayers[id].id)
                     {
@@ -829,8 +829,8 @@ void CB2_HandleStartMultiBattle(void)
                 }
                 else
                 {
-                    if ((!(gLinkPlayers[id].id & 1) && !(gLinkPlayers[playerId].id & 1))
-                     || ((gLinkPlayers[id].id & 1) && (gLinkPlayers[playerId].id & 1)))
+                    if ((!(gLinkPlayers[id].id & 1) && !(gLinkPlayers[playerMultiplayerId].id & 1))
+                     || ((gLinkPlayers[id].id & 1) && (gLinkPlayers[playerMultiplayerId].id & 1)))
                     {
                         switch (gLinkPlayers[id].id)
                         {
@@ -876,7 +876,7 @@ void CB2_HandleStartMultiBattle(void)
             ResetBlockReceivedFlags();
             for (id = 0; id < MAX_LINK_PLAYERS; id++)
             {
-                if (id == playerId)
+                if (id == playerMultiplayerId)
                 {
                     switch (gLinkPlayers[id].id)
                     {
@@ -892,8 +892,8 @@ void CB2_HandleStartMultiBattle(void)
                 }
                 else
                 {
-                    if ((!(gLinkPlayers[id].id & 1) && !(gLinkPlayers[playerId].id & 1))
-                     || ((gLinkPlayers[id].id & 1) && (gLinkPlayers[playerId].id & 1)))
+                    if ((!(gLinkPlayers[id].id & 1) && !(gLinkPlayers[playerMultiplayerId].id & 1))
+                     || ((gLinkPlayers[id].id & 1) && (gLinkPlayers[playerMultiplayerId].id & 1)))
                     {
                         switch (gLinkPlayers[id].id)
                         {
