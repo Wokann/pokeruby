@@ -15,7 +15,7 @@ SkyPillar_Top_EventScript_Rayquaza:: @ 815F316
 	faceplayer
 	setwildbattle SPECIES_RAYQUAZA, 70, ITEM_NONE
 	waitse
-	playmoncry SPECIES_RAYQUAZA, 2
+	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
 	delay 40
 	waitmoncry
 	setflag FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA
