@@ -326,8 +326,8 @@ void BattleLoadOpponentMonSpriteGfx(struct Pokemon *mon, u8 battler)
     if (species == SPECIES_CASTFORM)
     {
         paletteOffset = 0x100 + battler * 16;
-        LZDecompressWram(lzPaletteData, ewram16400);
-        LoadPalette(ewram16400 + gBattleMonForms[battler] * 32, paletteOffset, 0x20);
+        LZDecompressWram(lzPaletteData, sCastformPalette);
+        LoadPalette(sCastformPalette + gBattleMonForms[battler] * 32, paletteOffset, 0x20);
     }
     if (gBattleSpriteInfo[battler].transformSpecies != 0)
     {
@@ -378,8 +378,8 @@ void BattleLoadPlayerMonSpriteGfx(struct Pokemon *mon, u8 battler)
     if (species == SPECIES_CASTFORM)
     {
         paletteOffset = 0x100 + battler * 16;
-        LZDecompressWram(lzPaletteData, ewram16400);
-        LoadPalette(ewram16400 + gBattleMonForms[battler] * 32, paletteOffset, 0x20);
+        LZDecompressWram(lzPaletteData, sCastformPalette);
+        LoadPalette(sCastformPalette + gBattleMonForms[battler] * 32, paletteOffset, 0x20);
     }
     if (gBattleSpriteInfo[battler].transformSpecies != 0)
     {
@@ -639,7 +639,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform)
     {
         StartSpriteAnim(&gSprites[gBattlerSpriteIds[battlerAtk]], gBattleAnimationInfo.animArg);
         paletteOffset = 0x100 + battlerAtk * 16;
-        LoadPalette(ewram16400 + gBattleAnimationInfo.animArg * 32, paletteOffset, 32);
+        LoadPalette(sCastformPalette + gBattleAnimationInfo.animArg * 32, paletteOffset, 32);
         gBattleMonForms[battlerAtk] = gBattleAnimationInfo.animArg;
         if (gBattleSpriteInfo[battlerAtk].transformSpecies != SPECIES_NONE)
         {
@@ -706,7 +706,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform)
         LoadPalette(gSharedMem, paletteOffset, 32);
         if (targetSpecies == SPECIES_CASTFORM)
         {
-            u16 *paletteSrc = (u16 *)ewram16400; // TODO: avoid casting?
+            u16 *paletteSrc = (u16 *)sCastformPalette; // TODO: avoid casting?
 
             LZDecompressWram(lzPaletteData, paletteSrc);
             LoadPalette(paletteSrc + gBattleMonForms[battlerDef] * 16, paletteOffset, 32);

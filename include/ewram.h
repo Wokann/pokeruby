@@ -32,7 +32,7 @@ extern u8 gSharedMem[];
 #define TRANSITION_STRUCT               (*(struct TransitionData *)   (gSharedMem + 0xC000))
 #define sMugshotDecompBuffer            (&gSharedMem[0xC03C])
 
-#define ewram16400                      (gSharedMem + 0x16400)
+#define sCastformPalette                (gSharedMem + 0x16400)
 
 // gBattleResources
 #define AI_THINKING_STRUCT                ((struct AI_ThinkingStruct *)(gSharedMem + 0x16800))
