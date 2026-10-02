@@ -116,9 +116,9 @@ const u16 gPokenavMenuPaletteGradientColors[] = INCBIN_U16("graphics/pokenav/men
 
 const u8 gPokenavBg3Scroll_Gfx[] = INCBIN_U8("graphics/pokenav/menu/bg3_scroll.4bpp");
 const u8 gPokenavBg3Scroll_Tilemap[] = INCBIN_U8("graphics/pokenav/menu/bg3_scroll.bin.lz");
-const u16 gPokenavConditionMonInfoHeader_Pal[] = INCBIN_U16("graphics/pokenav/condition/mon_info_header_pal.bin");
+const u16 gPokenavConditionMonInfoHeader_Pal[] = INCBIN_U16("graphics/pokenav/condition/mon_info_header.pal.bin");
 
-const u16 gPokenavRibbonsMonInfoHeader_Pal[] = INCBIN_U16("graphics/pokenav/ribbons/mon_info_pal.bin");
+const u16 gPokenavRibbonsMonInfoHeader_Pal[] = INCBIN_U16("graphics/pokenav/ribbons/mon_info.pal.bin");
 
 const u16 gUnusedPokenav1_Pal[] = INCBIN_U16("graphics/pokenav/unused/palette1.bin");
 
