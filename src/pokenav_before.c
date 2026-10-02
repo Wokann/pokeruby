@@ -498,12 +498,12 @@ const struct SpriteTemplate gPokenavBlueLightSpriteTemplate =
 };
 
 extern const u16 gPokenavMenuOptions3_Pal[];
-extern const u16 gPokenavCondition5_Pal[];
+extern const u16 gPokenavConditionHeader_Pal[];
 
 const struct SpritePalette gPokenavMenuHeaderSpritePalettes[] =
 {
     {gPokenavMenuOptions3_Pal, 2},
-    {gPokenavCondition5_Pal, 3},
+    {gPokenavConditionHeader_Pal, 3},
     {0x0, 0},
 };
 

@@ -50,7 +50,7 @@ extern const u16 gConditionGraphData_Pal[];
 extern const u8 gConditionGraphData_Tilemap[];
 extern const u8 gPokenavConditionSearchGraphTilemap[];
 extern const u8 gPokenavCondition_Tilemap[];
-extern const u8 gPokenavConditionMenu2_Pal[];
+extern const u8 gPokenavConditionView_Pal[];
 extern const u8 gPokenavConditionView_Gfx[];
 extern const u8 gPokenavRegionMapCityBannerFrames[];
 extern const u8 gPokenavRegionMapCityBannerBlank[];
@@ -100,9 +100,9 @@ extern const union AffineAnimCmd *const gPokenavMenuOptionZoomAffineAnimTable[];
 extern const u16 gPokenavMenuOptionBlendAlphas[];
 extern const u16 gPokenavMenuOptions1_Pal[];
 extern const u16 gPokenavMenuOptions2_Pal[];
-extern const u16 gPokenavConditionMenu_Pal[];
-extern const u16 gPokenavCondition6_Pal[];
-extern const u16 gPokenavCondition7_Pal[];
+extern const u16 gPokenavConditionMenuOptions_Pal[];
+extern const u16 gPokenavConditionSearchPrimary_Pal[];
+extern const u16 gPokenavConditionSearchSecondary_Pal[];
 extern const struct SpriteSheet gSpriteSheet_PokenavBlueLight;
 extern const struct SpritePalette gSpritePalette_PokenavBlueLight;
 extern const struct SpriteTemplate gPokenavBlueLightSpriteTemplate;
@@ -896,7 +896,7 @@ bool8 LoadConditionGraphScreenStep(void)
         break;
     case 8:
         LZ77UnCompVram(gPokenavCondition_Tilemap, (void *)VRAM + 0xF000);
-        LoadPalette(gPokenavConditionMenu2_Pal, 0x20, 0x20);
+        LoadPalette(gPokenavConditionView_Pal, 0x20, 0x20);
         break;
     case 9:
         if (gPokenavState->isConditionGraphSearchMode == 1)
@@ -908,9 +908,9 @@ bool8 LoadConditionGraphScreenStep(void)
     case 11:
         LoadPalette(gConditionGraphData_Pal, 0x30, 0x20);
         LoadPalette(gPokenavShared_Pal, 0xB0, 0x20);
-        LoadPalette(&gPokenavConditionMenu2_Pal[2], 0xB1, 0x2);
-        LoadPalette(&gPokenavConditionMenu2_Pal[16], 0xB5, 0x2);
-        LoadPalette(&gPokenavConditionMenu2_Pal[30], 0xBF, 0x2);
+        LoadPalette(&gPokenavConditionView_Pal[2], 0xB1, 0x2);
+        LoadPalette(&gPokenavConditionView_Pal[16], 0xB5, 0x2);
+        LoadPalette(&gPokenavConditionView_Pal[30], 0xBF, 0x2);
         SetConditionGraphWindowRegs();
         break;
     case 12:
@@ -1752,7 +1752,7 @@ bool8 LoadPokeblockConditionGraphScreenStep(void)
         break;
     case 4:
         LZ77UnCompVram(gPokenavCondition_Tilemap, (void *)(VRAM + 0xF000));
-        LoadPalette(gPokenavConditionMenu2_Pal, 0x20, 0x20);
+        LoadPalette(gPokenavConditionView_Pal, 0x20, 0x20);
         break;
     case 5:
         CopyTilemapRect((void *)VRAM + 0xF000, 0, 13, gPokenavPokeblockGraphTilemap, 0, 0, 12, 4, 12);
@@ -1763,9 +1763,9 @@ bool8 LoadPokeblockConditionGraphScreenStep(void)
     case 7:
         LoadPalette(gConditionGraphData_Pal, 0x30, 0x20);
         LoadPalette(gPokenavShared_Pal, 0xB0, 0x20);
-        LoadPalette(&gPokenavConditionMenu2_Pal[2], 0xB1, 0x2);
-        LoadPalette(&gPokenavConditionMenu2_Pal[16], 0xB5, 0x2);
-        LoadPalette(&gPokenavConditionMenu2_Pal[30], 0xBF, 0x2);
+        LoadPalette(&gPokenavConditionView_Pal[2], 0xB1, 0x2);
+        LoadPalette(&gPokenavConditionView_Pal[16], 0xB5, 0x2);
+        LoadPalette(&gPokenavConditionView_Pal[30], 0xBF, 0x2);
         SetConditionGraphWindowRegs();
         break;
     case 8:
@@ -2307,14 +2307,14 @@ void LoadMenuOptionSpritePalettes(u8 menuType)
         spritePalette.tag = 0x1;
         break;
     case 1:
-        spritePalette.data = gPokenavConditionMenu_Pal;
+        spritePalette.data = gPokenavConditionMenuOptions_Pal;
         spritePalette.tag = 0x0;
         break;
     case 2:
-        spritePalette.data = gPokenavCondition6_Pal;
+        spritePalette.data = gPokenavConditionSearchPrimary_Pal;
         spritePalette.tag = 0;
         LoadSpritePalette(&spritePalette);
-        spritePalette.data = gPokenavCondition7_Pal;
+        spritePalette.data = gPokenavConditionSearchSecondary_Pal;
         spritePalette.tag = 0x1;
         break;
     default:

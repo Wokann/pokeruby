@@ -1027,21 +1027,21 @@ const u8 gPokenavRegionMapZoomTiles_Gfx[] = INCBIN_U8("graphics/pokenav/region_m
 const u16 gPokenavHoennMap1_Pal[] = INCBIN_U16("graphics/pokenav/map_menu.gbapal");
 const u8 gPokenavRegionMapZoomTiles_Pal[] = INCBIN_U8("graphics/pokenav/region_map/zoom_tiles.gbapal");
 const u8 gPokenavConditionMenu_Gfx[] = INCBIN_U8("graphics/pokenav/options/condition_menu.4bpp.lz");
-const u16 gPokenavConditionMenu_Pal[] = INCBIN_U16("graphics/pokenav/condition1.gbapal");
+const u16 gPokenavConditionMenuOptions_Pal[] = INCBIN_U16("graphics/pokenav/options/condition_menu.gbapal");
 const u8 gPokenavConditionMenuHeader_Gfx[] = INCBIN_U8("graphics/pokenav/left_headers/condition.4bpp.lz");
-const u8 gPokenavConditionView_Gfx[] = INCBIN_U8("graphics/pokenav/condition_view.4bpp.lz");
-const u8 gPokenavConditionMenu2_Pal[] = INCBIN_U8("graphics/pokenav/condition2.gbapal");
+const u8 gPokenavConditionView_Gfx[] = INCBIN_U8("graphics/pokenav/condition/view.4bpp.lz");
+const u8 gPokenavConditionView_Pal[] = INCBIN_U8("graphics/pokenav/condition/view.gbapal");
 const u8 gPokenavConditionHeaderLabels_Gfx[] = INCBIN_U8("graphics/pokenav/left_headers/condition_labels_1.4bpp.lz");
 const u8 gPokenavConditionCancel_Gfx[] = INCBIN_U8("graphics/pokenav/condition/cancel.4bpp");
 const u8 gPokenavConditionPokeball_Pal[] = INCBIN_U8("graphics/pokenav/condition/pokeball.gbapal");//
 const u16 gPokenavConditionCancel_Pal[] = INCBIN_U16("graphics/pokenav/condition/cancel.gbapal");
 const u8 gPokenavConditionHeaderLabels2_Gfx[] = INCBIN_U8("graphics/pokenav/left_headers/condition_labels_2.4bpp.lz");
 const u8 gMonMarkingsMenu_Gfx[] = INCBIN_U8("graphics/interface/mon_markings_menu.4bpp");
-const u16 gPokenavCondition5_Pal[] = INCBIN_U16("graphics/pokenav/condition5.gbapal");
+const u16 gPokenavConditionHeader_Pal[] = INCBIN_U16("graphics/pokenav/left_headers/condition.gbapal");
 const u8 gPokenavConditionSearch_Gfx[] = INCBIN_U8("graphics/pokenav/options/condition_search_labels.4bpp.lz");
-const u16 gPokenavCondition6_Pal[] = INCBIN_U16("graphics/pokenav/condition6.gbapal");
+const u16 gPokenavConditionSearchPrimary_Pal[] = INCBIN_U16("graphics/pokenav/options/condition_search.gbapal");
 // another palette thats impossible to leave as native pal file due to 0xFFFF instead of 0x7FFF.
-const u16 gPokenavCondition7_Pal[] = INCBIN_U16("graphics/pokenav/condition7.bin");
+const u16 gPokenavConditionSearchSecondary_Pal[] = INCBIN_U16("graphics/pokenav/options/condition_search_secondary.pal.bin");
 const u8 gPokenavTrainersEyesHeader_Gfx[] = INCBIN_U8("graphics/pokenav/left_headers/trainers_eyes.4bpp.lz");
 const u8 gPokenavRibbonsHeader_Gfx[] = INCBIN_U8("graphics/pokenav/left_headers/ribbons.4bpp.lz");
 
