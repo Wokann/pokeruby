@@ -279,7 +279,7 @@ SECTIONS {
         src/battle_anim_ice.o(.text);
         src/battle/anim/fight.o(.text);
         src/battle/anim/poison.o(.text);
-        src/battle/anim/flying.o(.text);
+        src/battle_anim_flying.o(.text);
         src/battle/anim/psychic.o(.text);
         src/battle/anim/bug.o(.text);
         src/battle/anim/rock.o(.text);
@@ -696,7 +696,7 @@ SECTIONS {
         src/battle_anim_ice.o(.rodata);
         src/battle/anim/fight.o(.rodata);
         src/battle/anim/poison.o(.rodata);
-        src/battle/anim/flying.o(.rodata);
+        src/battle_anim_flying.o(.rodata);
         src/battle/anim/psychic.o(.rodata);
         src/battle/anim/bug.o(.rodata);
         src/battle/anim/rock.o(.rodata);
