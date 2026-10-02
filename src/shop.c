@@ -28,6 +28,41 @@
 #include "field_camera.h"
 #include "ewram.h"
 
+enum
+{
+    MART_TYPE_NORMAL,
+    MART_TYPE_DECOR,
+    MART_TYPE_DECOR2,
+};
+
+// Shop view window NPC info.
+enum
+{
+    OBJ_EVENT_ID,
+    X_COORD,
+    Y_COORD,
+    ANIM_NUM,
+};
+
+enum
+{
+    SHOP_BUY,
+    SHOP_SELL,
+    SHOP_EXIT,
+};
+
+struct MartInfo
+{
+    /* 0x0 */ void (*callback)(void);
+    /* 0x4 */ const u16 *itemList;
+    /* 0x8 */ u8 itemCount;
+    /* 0x9 */ u8 cursor;
+    /* 0xA */ u8 numChoices;
+    /* 0xB */ u8 choicesAbove;
+    /* 0xC */ u8 martType;
+    /* 0xD */ u8 curItemCount;
+};
+
 extern bool8 SellMenu_QuantityRoller(u8, u8);
 
 extern u8 gBuyMenuFrame_Gfx[];
@@ -58,7 +93,7 @@ static void Shop_LoadViewportObjects(void);
 static void Shop_AnimViewportObjects(void);
 
 // iwram
-static struct MartInfo gMartInfo;
+static struct MartInfo sMartInfo;
 
 // ewram
 EWRAM_DATA u32 gMartTotalCost = 0;
@@ -90,41 +125,41 @@ static const struct YesNoFuncTable sShopPurchaseYesNoFuncs[] =
 static u8 CreateShopMenu(u8 martType)
 {
     LockPlayerFieldControls();
-    gMartInfo.martType = martType;
-    gMartInfo.cursor = 0;
+    sMartInfo.martType = martType;
+    sMartInfo.cursor = 0;
 
-    if (martType == MART_TYPE_0)
+    if (martType == MART_TYPE_NORMAL)
     {
-        gMartInfo.numChoices = 2;
+        sMartInfo.numChoices = 2;
         Menu_DrawStdWindowFrame(0, 0, 10, 7);
         Menu_PrintItemsReordered(1, 1, 3, sBuySellQuitMenuActions, gMartBuySellOptionList);
     }
     else
     {
-        gMartInfo.numChoices = 1;
+        sMartInfo.numChoices = 1;
         Menu_DrawStdWindowFrame(0, 0, 10, 5);
         Menu_PrintItemsReordered(1, 1, 2, sBuySellQuitMenuActions, gMartBuyNoSellOptionList);
     }
-    InitMenu(0, 1, 1, gMartInfo.numChoices + 1, 0, 9); // add 1 for cancel
+    InitMenu(0, 1, 1, sMartInfo.numChoices + 1, 0, 9); // add 1 for cancel
 
     return CreateTask(Task_DoBuySellMenu, 8);
 }
 
 static void SetShopMenuCallback(void *callbackPtr)
 {
-    gMartInfo.callback = callbackPtr;
+    sMartInfo.callback = callbackPtr;
 }
 
 static void SetShopItemsForSale(const u16 *items)
 {
     u16 i = 0;
 
-    gMartInfo.itemList = items;
-    gMartInfo.itemCount = 0;
+    sMartInfo.itemList = items;
+    sMartInfo.itemCount = 0;
 
-    while (gMartInfo.itemList[i])
+    while (sMartInfo.itemList[i])
     {
-        gMartInfo.itemCount++;
+        sMartInfo.itemCount++;
         i++;
     }
 }
@@ -135,27 +170,27 @@ static void Task_DoBuySellMenu(u8 taskId)
 
     if (JOY_REPT(DPAD_UP))
     {
-        if (gMartInfo.cursor) // can move cursor up?
+        if (sMartInfo.cursor) // can move cursor up?
         {
             PlaySE(SE_SELECT);
-            gMartInfo.cursor = Menu_MoveCursor(-1);
+            sMartInfo.cursor = Menu_MoveCursor(-1);
         }
     }
     else if (JOY_REPT(DPAD_DOWN))
     {
-        if (gMartInfo.cursor != gMartInfo.numChoices) // can move cursor down?
+        if (sMartInfo.cursor != sMartInfo.numChoices) // can move cursor down?
         {
             PlaySE(SE_SELECT);
-            gMartInfo.cursor = Menu_MoveCursor(1);
+            sMartInfo.cursor = Menu_MoveCursor(1);
         }
     }
     else if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        if (gMartInfo.martType == MART_TYPE_0)
-            sBuySellQuitMenuActions[gMartBuySellOptionList[gMartInfo.cursor]].func(taskIdConst);
+        if (sMartInfo.martType == MART_TYPE_NORMAL)
+            sBuySellQuitMenuActions[gMartBuySellOptionList[sMartInfo.cursor]].func(taskIdConst);
         else
-            sBuySellQuitMenuActions[gMartBuyNoSellOptionList[gMartInfo.cursor]].func(taskIdConst);
+            sBuySellQuitMenuActions[gMartBuyNoSellOptionList[sMartInfo.cursor]].func(taskIdConst);
     }
     else if (JOY_NEW(B_BUTTON))
     {
@@ -188,8 +223,8 @@ static void Task_HandleShopMenuQuit(u8 taskId)
     UnlockPlayerFieldControls();
     DestroyTask(taskId);
 
-    if (gMartInfo.callback)
-        gMartInfo.callback(); // run the callback if it exists.
+    if (sMartInfo.callback)
+        sMartInfo.callback(); // run the callback if it exists.
 }
 
 static void Shop_FadeAndRunBuySellCallback(u8 taskId)
@@ -203,7 +238,7 @@ static void Shop_FadeAndRunBuySellCallback(u8 taskId)
 
 static void ShowShopMenuAfterExitingBuyOrSellMenu(u8 taskId)
 {
-    CreateShopMenu(gMartInfo.martType);
+    CreateShopMenu(sMartInfo.martType);
     DestroyTask(taskId);
 }
 
@@ -211,7 +246,7 @@ static void Task_ReturnToShopMenu(u8 taskId)
 {
     if (IsWeatherNotFadingIn() == 1)
     {
-        if (gMartInfo.martType == MART_TYPE_2)
+        if (sMartInfo.martType == MART_TYPE_DECOR2)
             DisplayItemMessageOnField(taskId, gOtherText_CanIHelpYou, ShowShopMenuAfterExitingBuyOrSellMenu, 0);
         else
             DisplayItemMessageOnField(taskId, gOtherText_AnythingElse, ShowShopMenuAfterExitingBuyOrSellMenu, 0);
@@ -276,8 +311,8 @@ static void BuyMenuDrawGraphics(void)
     Text_LoadWindowTemplate(&gMenuWindowTemplate);
     InitMenuWindow(&gMenuWindowTemplate);
     Shop_DrawViewport();
-    gMartInfo.cursor = 0;
-    gMartInfo.choicesAbove = 0;
+    sMartInfo.cursor = 0;
+    sMartInfo.choicesAbove = 0;
     Menu_EraseWindowRect(0, 0, 0x20, 0x20);
     DrawMoneyBox(gSaveBlock1.money, 0, 0);
     Shop_InitMenus(0, 7);
@@ -303,7 +338,7 @@ static void DrawFirstMartScrollIndicators(void)
 {
     ResetScrollIndicatorState();
 
-    if (gMartInfo.itemCount >= 8)
+    if (sMartInfo.itemCount >= 8)
     {
         CreateScrollIndicatorArrow(TOP_ARROW, 172, 12);
         CreateScrollIndicatorArrow(BOTTOM_ARROW, 172, 148);
@@ -313,12 +348,12 @@ static void DrawFirstMartScrollIndicators(void)
 
 static void Shop_TryDrawVerticalScrollIndicators(void)
 {
-    if (gMartInfo.choicesAbove == 0)
+    if (sMartInfo.choicesAbove == 0)
         SetScrollIndicatorArrowInvisibility(TOP_ARROW, INVISIBLE);
     else
         SetScrollIndicatorArrowInvisibility(TOP_ARROW, VISIBLE);
 
-    if (gMartInfo.choicesAbove + 7 >= gMartInfo.itemCount)
+    if (sMartInfo.choicesAbove + 7 >= sMartInfo.itemCount)
         SetScrollIndicatorArrowInvisibility(BOTTOM_ARROW, INVISIBLE);
     else
         SetScrollIndicatorArrowInvisibility(BOTTOM_ARROW, VISIBLE);
@@ -488,7 +523,7 @@ static void Shop_InitMenus(int firstItemId, int lastItemId)
 {
     BuyMenuCopyMenuBgToBg1TilemapBuffer();
     Shop_DisplayPriceInList(firstItemId, lastItemId, 0);
-    InitMenu(0, 0xE, 0x2, 0x8, gMartInfo.cursor, 0xF);
+    InitMenu(0, 0xE, 0x2, 0x8, sMartInfo.cursor, 0xF);
 }
 
 // after printing the item quantity and price, restore the textbox tiles before the Yes/No prompt.
@@ -510,8 +545,8 @@ static void Shop_PrintItemDesc(void)
 
 static void Shop_DisplayPriceInCheckoutWindow(u8 taskId)
 {
-    u16 itemListIndex = gMartInfo.choicesAbove + gMartInfo.cursor;
-    u16 itemId = gMartInfo.itemList[itemListIndex];
+    u16 itemListIndex = sMartInfo.choicesAbove + sMartInfo.cursor;
+    u16 itemId = sMartInfo.itemList[itemListIndex];
     u32 price = (GetItemPrice(itemId) >> IsPokeNewsActive(POKENEWS_SLATEPORT));
 
     PrintMoneyAmount(gTasks[taskId].tItemCount * price, 6, 6, 11);
@@ -584,15 +619,15 @@ static void Shop_DisplayPriceInList(int firstItemId, int lastItemId, bool32 hasC
 {
     u8 i;
 
-    for (i = firstItemId; i <= lastItemId && gMartInfo.choicesAbove + i < gMartInfo.itemCount; i++)
+    for (i = firstItemId; i <= lastItemId && sMartInfo.choicesAbove + i < sMartInfo.itemCount; i++)
     {
-        if (gMartInfo.martType == MART_TYPE_0)
-            Shop_DisplayNormalPriceInList(gMartInfo.itemList[gMartInfo.choicesAbove + i], (i << 1) + 2, hasControlCode);
+        if (sMartInfo.martType == MART_TYPE_NORMAL)
+            Shop_DisplayNormalPriceInList(sMartInfo.itemList[sMartInfo.choicesAbove + i], (i << 1) + 2, hasControlCode);
         else
-            Shop_DisplayDecorationPriceInList(gMartInfo.itemList[gMartInfo.choicesAbove + i], (i << 1) + 2, hasControlCode);
+            Shop_DisplayDecorationPriceInList(sMartInfo.itemList[sMartInfo.choicesAbove + i], (i << 1) + 2, hasControlCode);
     }
 
-    if (i != 8 && gMartInfo.choicesAbove + i == gMartInfo.itemCount)
+    if (i != 8 && sMartInfo.choicesAbove + i == sMartInfo.itemCount)
     {
         Menu_BlankWindowRect(0xE, (i << 1) + 2, 0x1C, (i << 1) + 3);
         Menu_PrintText(gText_Cancel, 0xE, (i << 1) + 2);
@@ -601,16 +636,16 @@ static void Shop_DisplayPriceInList(int firstItemId, int lastItemId, bool32 hasC
 
 static void Shop_PrintItemDescText(void)
 {
-    if (gMartInfo.choicesAbove + gMartInfo.cursor != gMartInfo.itemCount)
+    if (sMartInfo.choicesAbove + sMartInfo.cursor != sMartInfo.itemCount)
     {
-        if (gMartInfo.martType == MART_TYPE_0)
+        if (sMartInfo.martType == MART_TYPE_NORMAL)
         {
-            Menu_PrintTextWithNewlineIndentAndClear(GetItemDescription(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]),
+            Menu_PrintTextWithNewlineIndentAndClear(GetItemDescription(sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor]),
                 0x4, 0x68, 0x68, 0x30, 0);
         }
         else
         {
-            Menu_PrintTextWithNewlineIndentAndClear(gDecorations[gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]].description,
+            Menu_PrintTextWithNewlineIndentAndClear(gDecorations[sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor]].description,
                 0x4, 0x68, 0x68, 0x30, 0);
         }
     }
@@ -624,10 +659,10 @@ static void Shop_DoPremierBallCheck(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
     {
-        Shop_DisplayPriceInList(gMartInfo.cursor, gMartInfo.cursor, 0);
+        Shop_DisplayPriceInList(sMartInfo.cursor, sMartInfo.cursor, 0);
         PlaySE(SE_SELECT);
 
-        if (gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor] == ITEM_POKE_BALL && gTasks[taskId].tItemCount >= 10 && AddBagItem(ITEM_PREMIER_BALL, 1) == TRUE)
+        if (sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor] == ITEM_POKE_BALL && gTasks[taskId].tItemCount >= 10 && AddBagItem(ITEM_PREMIER_BALL, 1) == TRUE)
             DisplayItemMessageOnField(taskId, gOtherText_FreePremierBall, Task_ReturnToBuyMenu, 0xC3E1);
         else
             Task_ReturnToBuyMenu(taskId);
@@ -645,7 +680,7 @@ static void Shop_DoItemTransaction(u8 taskId)
 
 static void Shop_DoPricePrintAndReturnToBuyMenu(u8 taskId)
 {
-    Shop_DisplayPriceInList(gMartInfo.cursor, gMartInfo.cursor, 0);
+    Shop_DisplayPriceInList(sMartInfo.cursor, sMartInfo.cursor, 0);
     Task_ReturnToBuyMenu(taskId);
 }
 
@@ -658,9 +693,9 @@ static void Task_DoItemPurchase(u8 taskId)
 
     if (IsEnoughMoney(gSaveBlock1.money, gMartTotalCost))
     {
-        if (gMartInfo.martType == MART_TYPE_0)
+        if (sMartInfo.martType == MART_TYPE_NORMAL)
         {
-            if (AddBagItem(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor], gTasks[taskId].tItemCount))
+            if (AddBagItem(sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor], gTasks[taskId].tItemCount))
             {
                 DisplayItemMessageOnField(taskId, gOtherText_HereYouGo, Shop_DoItemTransaction, 0xC3E1);
                 Task_UpdatePurchaseHistory(taskId);
@@ -670,11 +705,11 @@ static void Task_DoItemPurchase(u8 taskId)
                 DisplayItemMessageOnField(taskId, gOtherText_NoRoomFor, Shop_DoPricePrintAndReturnToBuyMenu, 0xC3E1);
             }
         }
-        else // a normal mart is only type 0, so types 1 and 2 are decoration marts.
+        else // MART_TYPE_NORMAL is the only regular mart; the others sell decorations.
         {
-            if (DecorationAdd(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]))
+            if (DecorationAdd(sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor]))
             {
-                if (gMartInfo.martType == MART_TYPE_1)
+                if (sMartInfo.martType == MART_TYPE_DECOR)
                     DisplayItemMessageOnField(taskId, gOtherText_HereYouGo2, Shop_DoItemTransaction, 0xC3E1);
                 else
                     DisplayItemMessageOnField(taskId, gOtherText_HereYouGo3, Shop_DoItemTransaction, 0xC3E1);
@@ -701,7 +736,7 @@ static void Shop_DoYesNoPurchase(u8 taskId)
 
 static void Task_CancelItemPurchase(u8 taskId)
 {
-    Shop_DisplayPriceInList(gMartInfo.cursor, gMartInfo.cursor, 0);
+    Shop_DisplayPriceInList(sMartInfo.cursor, sMartInfo.cursor, 0);
     Menu_EraseWindowRect(0x7, 0x8, 0xD, 0xD);
     FillBgTilemapRect(gBGTilemapBuffers[1], 0x8, 0x9, 0x4, 0x4, 0);
     Task_ReturnToBuyMenu(taskId);
@@ -709,17 +744,17 @@ static void Task_CancelItemPurchase(u8 taskId)
 
 static void Shop_PrintPrice(u8 taskId)
 {
-    if (SellMenu_QuantityRoller(taskId, gMartInfo.curItemCount) == TRUE)
+    if (SellMenu_QuantityRoller(taskId, sMartInfo.curItemCount) == TRUE)
         Shop_DisplayPriceInCheckoutWindow(taskId);
 
     if (JOY_NEW(A_BUTTON))
     {
-        gMartTotalCost = (GetItemPrice(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]) >> IsPokeNewsActive(POKENEWS_SLATEPORT)) * gTasks[taskId].tItemCount; // set total cost of your purchase.
+        gMartTotalCost = (GetItemPrice(sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor]) >> IsPokeNewsActive(POKENEWS_SLATEPORT)) * gTasks[taskId].tItemCount; // set total cost of your purchase.
         Menu_EraseWindowRect(0, 0xA, 0xD, 0xD);
         FillBgTilemapRect(gBGTilemapBuffers[1], 0x1, 0xB, 0xC, 0x2, 0);
         BuyMenuDrawTextboxBG_Restore();
         Shop_DrawViewportTiles();
-        CopyItemName(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor], gStringVar1);
+        CopyItemName(sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor], gStringVar1);
         ConvertIntToDecimalStringN(gStringVar2, gTasks[taskId].tItemCount, 0, 0x2);
         ConvertIntToDecimalStringN(gStringVar3, gMartTotalCost, 0, 0x8);
         StringExpandPlaceholders(gStringVar4, gOtherText_ThatWillBe);
@@ -727,7 +762,7 @@ static void Shop_PrintPrice(u8 taskId)
     }
     else if (JOY_NEW(B_BUTTON))
     {
-        Shop_DisplayPriceInList(gMartInfo.cursor, gMartInfo.cursor, 0);
+        Shop_DisplayPriceInList(sMartInfo.cursor, sMartInfo.cursor, 0);
         Task_ReturnToBuyMenu(taskId);
     }
 }
@@ -741,11 +776,11 @@ static void Shop_UpdateCurItemCountToMax(u8 taskId)
     Menu_DrawStdWindowFrame(0, 0xA, 0xD, 0xD);
     Shop_DisplayPriceInCheckoutWindow(taskId);
 
-    var = gSaveBlock1.money / (GetItemPrice(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]) >> IsPokeNewsActive(POKENEWS_SLATEPORT));
+    var = gSaveBlock1.money / (GetItemPrice(sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor]) >> IsPokeNewsActive(POKENEWS_SLATEPORT));
     if (var > 99)
-        gMartInfo.curItemCount = 99;
+        sMartInfo.curItemCount = 99;
     else
-        gMartInfo.curItemCount = var;
+        sMartInfo.curItemCount = var;
 
     gTasks[taskId].func = Shop_PrintPrice;
 }
@@ -1031,13 +1066,13 @@ static void Shop_DoCursorAction(u8 taskId)
     {
         if (JOY_REPT(DPAD_ANY) == DPAD_UP) // only up can be pressed
         {
-            if (gMartInfo.cursor == 0)
+            if (sMartInfo.cursor == 0)
             {
-                if (gMartInfo.choicesAbove == 0) // if there are no choices above, dont bother
+                if (sMartInfo.choicesAbove == 0) // if there are no choices above, dont bother
                     return;
 
                 PlaySE(SE_SELECT);
-                gMartInfo.choicesAbove--; // since cursor is at the top and there are choices above the top, scroll the menu up by updating choicesAbove.
+                sMartInfo.choicesAbove--; // since cursor is at the top and there are choices above the top, scroll the menu up by updating choicesAbove.
                 Shop_MoveItemListUp();
                 Shop_DisplayPriceInList(0, 0, 0);
                 Shop_PrintItemDescText();
@@ -1046,28 +1081,28 @@ static void Shop_DoCursorAction(u8 taskId)
             else // if the cursor is not 0, choicesAbove cannot be updated yet since the cursor is at the top of the menu, so update cursor.
             {
                 PlaySE(SE_SELECT);
-                gMartInfo.cursor = Menu_MoveCursor(-1); // move cursor up
+                sMartInfo.cursor = Menu_MoveCursor(-1); // move cursor up
                 Shop_PrintItemDescText();
             }
         }
         else if (JOY_REPT(DPAD_ANY) == DPAD_DOWN) // only down can be pressed
         {
-            if (gMartInfo.cursor == 7) // are you at the bottom of the menu?
+            if (sMartInfo.cursor == 7) // are you at the bottom of the menu?
             {
-                if (gMartInfo.choicesAbove + gMartInfo.cursor == gMartInfo.itemCount) // are you at cancel?
+                if (sMartInfo.choicesAbove + sMartInfo.cursor == sMartInfo.itemCount) // are you at cancel?
                     return;
 
                 PlaySE(SE_SELECT);
-                gMartInfo.choicesAbove++;
+                sMartInfo.choicesAbove++;
                 Shop_MoveItemListDown();
                 Shop_DisplayPriceInList(7, 7, 0);
                 Shop_PrintItemDescText();
                 Shop_TryDrawVerticalScrollIndicators();
             }
-            else if (gMartInfo.cursor != gMartInfo.itemCount)
+            else if (sMartInfo.cursor != sMartInfo.itemCount)
             {
                 PlaySE(SE_SELECT);
-                gMartInfo.cursor = Menu_MoveCursor(1);
+                sMartInfo.cursor = Menu_MoveCursor(1);
                 Shop_PrintItemDescText();
             }
         }
@@ -1075,32 +1110,32 @@ static void Shop_DoCursorAction(u8 taskId)
         {
             PlaySE(SE_SELECT);
 
-            if (gMartInfo.choicesAbove + gMartInfo.cursor != gMartInfo.itemCount) // did you not hit CANCEL?
+            if (sMartInfo.choicesAbove + sMartInfo.cursor != sMartInfo.itemCount) // did you not hit CANCEL?
             {
                 PauseScrollIndicatorArrow(TOP_ARROW);
                 PauseScrollIndicatorArrow(BOTTOM_ARROW);
                 SetScrollIndicatorArrowInvisibility(BOTTOM_ARROW, INVISIBLE);
-                Shop_DisplayPriceInList(gMartInfo.cursor, gMartInfo.cursor, 1);
+                Shop_DisplayPriceInList(sMartInfo.cursor, sMartInfo.cursor, 1);
                 Menu_DestroyCursor();
                 Menu_EraseWindowRect(0, 0xC, 0xD, 0x13);
 
-                if (gMartInfo.martType == MART_TYPE_0)
+                if (sMartInfo.martType == MART_TYPE_NORMAL)
                 {
-                    gMartTotalCost = (GetItemPrice(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]) >> IsPokeNewsActive(POKENEWS_SLATEPORT)); // set 1x price
+                    gMartTotalCost = (GetItemPrice(sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor]) >> IsPokeNewsActive(POKENEWS_SLATEPORT)); // set 1x price
                     if (!IsEnoughMoney(gSaveBlock1.money, gMartTotalCost))
                     {
                         DisplayItemMessageOnField(taskId, gOtherText_NotEnoughMoney, Shop_DoPricePrintAndReturnToBuyMenu, 0xC3E1); // tail merge
                     }
                     else // _080B42BA
                     {
-                        CopyItemName(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor], gStringVar1);
+                        CopyItemName(sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor], gStringVar1);
                         StringExpandPlaceholders(gStringVar4, gOtherText_HowManyYouWant);
                         DisplayItemMessageOnField(taskId, gStringVar4, Shop_UpdateCurItemCountToMax, 0xC3E1);                    
                     }
                 }
                 else // _080B428C
                 {
-                    gMartTotalCost = gDecorations[gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]].price;
+                    gMartTotalCost = gDecorations[sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor]].price;
 
                     if (!IsEnoughMoney(gSaveBlock1.money, gMartTotalCost))
                     {
@@ -1108,10 +1143,10 @@ static void Shop_DoCursorAction(u8 taskId)
                     }
                     else
                     {    
-                        StringCopy(gStringVar1, gDecorations[gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]].name);
+                        StringCopy(gStringVar1, gDecorations[sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor]].name);
                         ConvertIntToDecimalStringN(gStringVar2, gMartTotalCost, 0, 0x8);
 
-                        if (gMartInfo.martType == MART_TYPE_1)
+                        if (sMartInfo.martType == MART_TYPE_DECOR)
                             StringExpandPlaceholders(gStringVar4, gOtherText_ThatWillBe2);
                         else
                             StringExpandPlaceholders(gStringVar4, gOtherText_ThatWillBe3);
@@ -1171,7 +1206,7 @@ static void Task_UpdatePurchaseHistory(u8 taskId)
 
     for (i = 0; i < 3; i++)
     {
-        if (gMartPurchaseHistory[i].itemId == gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]
+        if (gMartPurchaseHistory[i].itemId == sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor]
          && gMartPurchaseHistory[i].quantity != 0)
         {
             if (gMartPurchaseHistory[i].quantity + gTasks[taskId].tItemCount > 255)
@@ -1184,7 +1219,7 @@ static void Task_UpdatePurchaseHistory(u8 taskId)
 
     if (gMartPurchaseHistoryId < SMARTSHOPPER_NUM_ITEMS)
     {
-        gMartPurchaseHistory[gMartPurchaseHistoryId].itemId = gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor];
+        gMartPurchaseHistory[gMartPurchaseHistoryId].itemId = sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor];
         gMartPurchaseHistory[gMartPurchaseHistoryId].quantity = gTasks[taskId].tItemCount;
         gMartPurchaseHistoryId++;
     }
@@ -1198,24 +1233,24 @@ static void ClearItemPurchases(void)
     ClearItemSlots(gMartPurchaseHistory, SMARTSHOPPER_NUM_ITEMS);
 }
 
-void CreatePokemartMenu(u16 *itemList)
+void CreatePokemartMenu(const u16 *itemList)
 {
-    CreateShopMenu(MART_TYPE_0);
+    CreateShopMenu(MART_TYPE_NORMAL);
     SetShopItemsForSale(itemList);
     ClearItemPurchases();
     SetShopMenuCallback(ScriptContext_Enable);
 }
 
-void CreateDecorationShop1Menu(u16 *itemList)
+void CreateDecorationShop1Menu(const u16 *itemList)
 {
-    CreateShopMenu(MART_TYPE_1);
+    CreateShopMenu(MART_TYPE_DECOR);
     SetShopItemsForSale(itemList);
     SetShopMenuCallback(ScriptContext_Enable);
 }
 
-void CreateDecorationShop2Menu(u16 *itemList)
+void CreateDecorationShop2Menu(const u16 *itemList)
 {
-    CreateShopMenu(MART_TYPE_2);
+    CreateShopMenu(MART_TYPE_DECOR2);
     SetShopItemsForSale(itemList);
     SetShopMenuCallback(ScriptContext_Enable);
 }
@@ -1224,7 +1259,7 @@ void CreateDecorationShop2Menu(u16 *itemList)
 
 void Debug_OpenUnusedShop(void)
 {
-    CreateShopMenu(MART_TYPE_0);
+    CreateShopMenu(MART_TYPE_NORMAL);
     SetShopItemsForSale(sUnusedShopItems);
     SetShopMenuCallback(NULL);
 }
