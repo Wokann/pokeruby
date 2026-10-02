@@ -2397,7 +2397,7 @@ extern const u8 gMonBackPic_Chimecho[];
 extern const u8 gMonShinyPalette_Chimecho[];
 extern const u8 gMonIcon_Chimecho[];
 extern const u8 gMonFootprint_Chimecho[];
-extern const u8 gMonPic_Egg[];
+extern const u8 gMonStillFrontPic_Egg[];
 extern const u8 gMonPalette_Egg[];
 extern const u8 gMonFrontPic_UnownB[];
 extern const u8 gMonBackPic_UnownB[];
