@@ -128,22 +128,22 @@ static const u16 sIntro1Bg_Pal[][16] =
     INCBIN_U16("graphics/intro/intro1_bgpal15.gbapal"),
     INCBIN_U16("graphics/intro/intro1_bgpal16.gbapal"),
 };
-static const u8 sIntro1Bg0_Tilemap[] = INCBIN_U8("graphics/intro/intro1_bg0_map.bin.lz");
-static const u8 sIntro1Bg1_Tilemap[] = INCBIN_U8("graphics/intro/intro1_bg1_map.bin.lz");
-static const u8 sIntro1Bg2_Tilemap[] = INCBIN_U8("graphics/intro/intro1_bg2_map.bin.lz");
-static const u8 sIntro1Bg3_Tilemap[] = INCBIN_U8("graphics/intro/intro1_bg3_map.bin.lz");
+static const u8 sIntro1Bg0_Tilemap[] = INCBIN_U8("graphics/intro/scene_1/bg0_map.bin.lz");
+static const u8 sIntro1Bg1_Tilemap[] = INCBIN_U8("graphics/intro/scene_1/bg1_map.bin.lz");
+static const u8 sIntro1Bg2_Tilemap[] = INCBIN_U8("graphics/intro/scene_1/bg2_map.bin.lz");
+static const u8 sIntro1Bg3_Tilemap[] = INCBIN_U8("graphics/intro/scene_1/bg3_map.bin.lz");
 static const u8 sIntro1Bg_Gfx[] = INCBIN_U8("graphics/intro/introgfx.4bpp.lz");
-static const u16 sIntroPokeball_Pal[] = INCBIN_U16("graphics/intro/intro3_pokeball.gbapal");
-static const u8 sIntroPokeball_Tilemap[] = INCBIN_U8("graphics/intro/intro3_pokeball_map.bin.lz");
-static const u8 sIntroPokeball_Gfx[] = INCBIN_U8("graphics/intro/intro3_pokeball.8bpp.lz");
-static const u16 sIntroStreaks_Pal[] = INCBIN_U16("graphics/intro/intro3_streaks.gbapal");
-static const u8 sIntroStreaks_Gfx[] = INCBIN_U8("graphics/intro/intro3_streaks.4bpp.lz");
-static const u8 sIntroStreaks_Tilemap[] = INCBIN_U8("graphics/intro/intro3_streaks_map.bin.lz");
+static const u16 sIntroPokeball_Pal[] = INCBIN_U16("graphics/intro/scene_3/pokeball.gbapal");
+static const u8 sIntroPokeball_Tilemap[] = INCBIN_U8("graphics/intro/scene_3/pokeball_map.bin.lz");
+static const u8 sIntroPokeball_Gfx[] = INCBIN_U8("graphics/intro/scene_3/pokeball.8bpp.lz");
+static const u16 sIntroStreaks_Pal[] = INCBIN_U16("graphics/intro/scene_3/streaks.gbapal");
+static const u8 sIntroStreaks_Gfx[] = INCBIN_U8("graphics/intro/scene_3/streaks.4bpp.lz");
+static const u8 sIntroStreaks_Tilemap[] = INCBIN_U8("graphics/intro/scene_3/streaks_map.bin.lz");
 static const u16 sIntroBattleBurst_Pal[] = INCBIN_U16("graphics/intro/intro3_misc1.gbapal");
 static const u16 sIntroBattleAttack_Pal[] = INCBIN_U16("graphics/intro/intro3_misc2.gbapal");
 static const u8 sIntroBattleEffects_Gfx[] = INCBIN_U8("graphics/intro/intro3_misc.4bpp.lz");
-static const u16 sIntroLati_Pal[] = INCBIN_U16("graphics/intro/intro1_eon.gbapal");
-static const u8 sIntroLati_Gfx[] = INCBIN_U8("graphics/intro/intro1_eon.4bpp.lz");
+static const u16 sIntroLati_Pal[] = INCBIN_U16("graphics/intro/scene_1/lati.gbapal");
+static const u8 sIntroLati_Gfx[] = INCBIN_U8("graphics/intro/scene_1/lati.4bpp.lz");
 static const struct OamData sOamData_WaterDrop =
 {
     .y = 160,
