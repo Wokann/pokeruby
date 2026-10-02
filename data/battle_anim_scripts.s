@@ -692,7 +692,7 @@ Move_FLAME_WHEEL: @ 81C7E62
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, 24, 0, 0, 6
 	delay 4
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 8, 1
-	createvisualtask AnimTask_BlendMonInAndOut, 3, ANIM_TARGET, 31, 12, 1, 1
+	createvisualtask AnimTask_BlendMonInAndOut, 3, ANIM_TARGET, RGB_RED, 12, 1, 1
 	playsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_TARGET
 	call FireSpreadEffect
 	delay 7
@@ -1225,7 +1225,7 @@ Move_HIDDEN_POWER: @ 81C8BBC
 	createvisualtask AnimTask_ScaleMonAndRestore, 5, -7, -7, 11, ANIM_ATTACKER, 0
 	waitforvisualfinish
 	delay 30
-	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_ATTACKER, 20479, 12, 5, 1
+	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_ATTACKER, RGB(31, 31, 19), 12, 5, 1
 	delay 4
 	createvisualtask AnimTask_ScaleMonAndRestore, 5, -7, -7, 11, ANIM_ATTACKER, 0
 	playsewithpan SE_M_REVERSAL, SOUND_PAN_ATTACKER
@@ -2749,7 +2749,7 @@ Move_RAGE: @ 81CB27C
 	loadspritegfx ANIM_TAG_ANGER
 	monbg ANIM_TARGET
 	setalpha 12, 8
-	createvisualtask AnimTask_BlendMonInAndOut, 3, ANIM_ATTACKER, 31, 10, 0, 2
+	createvisualtask AnimTask_BlendMonInAndOut, 3, ANIM_ATTACKER, RGB_RED, 10, 0, 2
 	createsprite gAngerMarkSpriteTemplate, ANIM_ATTACKER, 2, 0, -20, -28
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_ATTACKER
 	delay 20
@@ -3016,7 +3016,7 @@ Move_SUPER_FANG: @ 81CB75A
 	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_ATTACKER, 3, 0, 48, 1
-	createvisualtask AnimTask_BlendMonInAndOut, 2, ANIM_ATTACKER, 1247, 12, 4, 1
+	createvisualtask AnimTask_BlendMonInAndOut, 2, ANIM_ATTACKER, RGB(31, 6, 1), 12, 4, 1
 	waitforvisualfinish
 	delay 20
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 4
@@ -3084,7 +3084,7 @@ Move_NIGHTMARE: @ 81CB8A3
 	waitbgfadein
 	end
 NightmareInContest:
-	createvisualtask AnimTask_BlendMonInAndOut, 2, ANIM_ATTACKER, 32767, 10, 2, 1
+	createvisualtask AnimTask_BlendMonInAndOut, 2, ANIM_ATTACKER, RGB_WHITE, 10, 2, 1
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_ATTACKER, 3, 0, 32, 1
 	playsewithpan SE_M_NIGHTMARE, SOUND_PAN_TARGET
 	waitforvisualfinish
@@ -3165,7 +3165,7 @@ Move_FORESIGHT: @ 81CB9ED
 	delay 24
 	playsewithpan SE_M_SKETCH, SOUND_PAN_TARGET
 	delay 10
-	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_TARGET, 32767, 12, 2, 1
+	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_TARGET, RGB_WHITE, 12, 2, 1
 	playsewithpan SE_M_DETECT, SOUND_PAN_TARGET
 	waitforvisualfinish
 	blendoff
@@ -3495,7 +3495,7 @@ Move_TORMENT: @ 81CC0AE
 	loadspritegfx ANIM_TAG_THOUGHT_BUBBLE
 	createvisualtask AnimTask_TormentAttacker, 2
 	waitforvisualfinish
-	createvisualtask AnimTask_BlendMonInAndOut, 2, ANIM_TARGET, 31, 10, 1, 1
+	createvisualtask AnimTask_BlendMonInAndOut, 2, ANIM_TARGET, RGB_RED, 10, 1, 1
 	createsprite gAngerMarkSpriteTemplate, ANIM_TARGET, 2, 1, -20, -28
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_TARGET
 	delay 20
@@ -3628,7 +3628,7 @@ Move_HELPING_HAND: @ 81CC2BF
 	delay 20
 	playsewithpan SE_M_ENCORE, 0
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATK_PARTNER, 3, 0, 10, 1
-	createvisualtask AnimTask_BlendMonInAndOut, 2, ANIM_ATK_PARTNER, 1023, 12, 1, 1
+	createvisualtask AnimTask_BlendMonInAndOut, 2, ANIM_ATK_PARTNER, RGB_YELLOW, 12, 1, 1
 	end
 
 Move_ASSIST: @ 81CC332
@@ -3690,7 +3690,7 @@ Move_RECYCLE: @ 81CC45E
 	createsprite gRecycleSpriteTemplate, ANIM_ATTACKER, 2
 	loopsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER, 24, 3
 	waitforvisualfinish
-	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_ATTACKER, 32767, 12, 2, 1
+	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_ATTACKER, RGB_WHITE, 12, 2, 1
 	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	blendoff
