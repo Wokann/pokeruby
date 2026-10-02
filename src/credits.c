@@ -262,7 +262,7 @@ const u8 sTheEnd_LetterMap_I[] = {
 #ifdef GERMAN
 #include "data/credits_de.h"
 #else
-#include "data/credits_en.h"
+#include "data/credits.h"
 #endif
 
 const u8 sMonSpritePos[][2] =

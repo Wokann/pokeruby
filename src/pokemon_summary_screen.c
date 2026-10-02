@@ -166,8 +166,8 @@ EWRAM_DATA u8 gLastViewedMonIndex = 0;
 EWRAM_DATA struct Sprite *sMarkingsSprite = NULL;
 
 #if ENGLISH
-#include "data/text/move_descriptions_en.h"
-#include "data/text/nature_names_en.h"
+#include "data/text/move_descriptions.h"
+#include "data/text/nature_names.h"
 #elif GERMAN
 #include "data/text/move_descriptions_de.h"
 #include "data/text/nature_names_de.h"

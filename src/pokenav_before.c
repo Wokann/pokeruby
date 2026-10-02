@@ -158,8 +158,8 @@ const u8 gPokenavDeviceOutline_Tilemap[] = INCBIN_U8("graphics/pokenav/device_ou
 #include "data/region_map/city_map_tilemaps.h"
 
 #ifdef ENGLISH
-#include "data/text/ribbon_descriptions_en.h"
-#include "data/text/gift_ribbon_descriptions_en.h"
+#include "data/text/ribbon_descriptions.h"
+#include "data/text/gift_ribbon_descriptions.h"
 #include "data/text/trainer_eye_descriptions_en.h"
 #elif GERMAN
 #include "data/text/ribbon_descriptions_de.h"
