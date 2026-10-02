@@ -6,6 +6,132 @@
 
 
 static void SpriteCB_SmokescreenImpactMain(struct Sprite *);
+void SpriteCB_SmokescreenImpact(struct Sprite *);
+void SpriteCB_SetInvisible(struct Sprite *);
+
+extern const u8 gSmokescreenImpactTiles[];
+extern const u8 gSmokescreenImpactPalette[];
+extern const u8 gEnemyMonShadow_Gfx[];
+
+#define TAG_SMOKESCREEN 55019
+#define PALTAG_SHADOW 55039
+#define GFXTAG_SHADOW 55129
+
+const struct CompressedSpriteSheet gSmokescreenImpactSpriteSheet =
+{
+    .data = gSmokescreenImpactTiles,
+    .size = 0x180,
+    .tag = TAG_SMOKESCREEN,
+};
+
+const struct CompressedSpritePalette gSmokescreenImpactSpritePalette =
+{
+    .data = gSmokescreenImpactPalette,
+    .tag = TAG_SMOKESCREEN,
+};
+
+const struct OamData gOamData_SmokescreenImpact =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+const union AnimCmd gAnim_SmokescreenImpact_0[] =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(4, 4),
+    ANIMCMD_FRAME(8, 4),
+    ANIMCMD_END
+};
+
+const union AnimCmd gAnim_SmokescreenImpact_1[] =
+{
+    ANIMCMD_FRAME(0, 4, .hFlip = TRUE),
+    ANIMCMD_FRAME(4, 4, .hFlip = TRUE),
+    ANIMCMD_FRAME(8, 4, .hFlip = TRUE),
+    ANIMCMD_END
+};
+
+const union AnimCmd gAnim_SmokescreenImpact_2[] =
+{
+    ANIMCMD_FRAME(0, 4, .vFlip = TRUE),
+    ANIMCMD_FRAME(4, 4, .vFlip = TRUE),
+    ANIMCMD_FRAME(8, 4, .vFlip = TRUE),
+    ANIMCMD_END
+};
+
+const union AnimCmd gAnim_SmokescreenImpact_3[] =
+{
+    ANIMCMD_FRAME(0, 4, .hFlip = TRUE, .vFlip = TRUE),
+    ANIMCMD_FRAME(4, 4, .hFlip = TRUE, .vFlip = TRUE),
+    ANIMCMD_FRAME(8, 4, .hFlip = TRUE, .vFlip = TRUE),
+    ANIMCMD_END
+};
+
+const union AnimCmd *const gAnims_SmokescreenImpact[] =
+{
+    gAnim_SmokescreenImpact_0,
+    gAnim_SmokescreenImpact_1,
+    gAnim_SmokescreenImpact_2,
+    gAnim_SmokescreenImpact_3,
+};
+
+const struct SpriteTemplate gSmokescreenImpactSpriteTemplate =
+{
+    .tileTag = TAG_SMOKESCREEN,
+    .paletteTag = TAG_SMOKESCREEN,
+    .oam = &gOamData_SmokescreenImpact,
+    .anims = gAnims_SmokescreenImpact,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_SmokescreenImpact,
+};
+
+const struct CompressedSpriteSheet gSpriteSheet_EnemyShadow =
+{
+    .data = gEnemyMonShadow_Gfx,
+    .size = 0x80,
+    .tag = GFXTAG_SHADOW,
+};
+
+const struct OamData sOamData_EnemyShadow =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x8),
+    .tileNum = 0,
+    .priority = 3,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+const struct SpriteTemplate gSpriteTemplate_EnemyShadow =
+{
+    .tileTag = GFXTAG_SHADOW,
+    .paletteTag = PALTAG_SHADOW,
+    .oam = &sOamData_EnemyShadow,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_SetInvisible,
+};
 
 #define sActiveSprites data[0]
 #define sPersist       data[1]
