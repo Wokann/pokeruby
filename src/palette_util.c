@@ -1,6 +1,5 @@
 #include "global.h"
 #include "palette_util.h"
-#include "roulette.h"
 
 static u8 RouletteFlash_FadePalette(struct RouletteFlashPalette *palette);
 static u8 RouletteFlash_FlashPalette(struct RouletteFlashPalette *palette);
