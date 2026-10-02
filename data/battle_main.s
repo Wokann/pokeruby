@@ -308,10 +308,7 @@ sAffineAnims_Unused:: @ 81F971C
 	.include "data/trainer_money.inc"
 
 @ 81F99CC
-	.include "data/text/ability_descriptions.inc"
-
-@ 81FA248
-	.include "data/text/ability_names.inc"
+	.include "data/text/abilities.inc"
 
 	.align 2
 gTurnActionsFuncsTable:: @ 81FA640
