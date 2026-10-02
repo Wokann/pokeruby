@@ -50,6 +50,8 @@
 #include "constants/battle_string_ids.h"
 #include "constants/trainers.h"
 
+#define BATTLE_MAIN_DATA __attribute__((section(".rodata.battle_main")))
+
 struct UnknownStruct7
 {
     u8 unk0;
@@ -139,8 +141,6 @@ extern u8 gMoveResultFlags;
 extern u8 BattleScript_FocusPunchSetUp[];
 extern u16 gDynamicBasePower;
 extern u8 gCurrentTurnActionNumber;
-extern void (* const gTurnActionsFuncsTable[])(void);
-extern void (* const gEndTurnFuncsTable[])(void);
 extern u8* gBattlescriptCurrInstr;
 extern u8 BattleScript_LinkBattleWonOrLost[];
 extern u8 BattleScript_PayDayMoneyAndPickUpItems[];
@@ -178,11 +178,107 @@ void SetActionsAndBattlersTurnOrder(void);
 static void TurnValuesCleanUp(u8);
 void SpecialStatusesClear(void);
 static void RunTurnActionsFunctions(void);
-void HandleEndTurn_FinishBattle();
+void HandleEndTurn_FinishBattle(void);
 static void FreeResetData_ReturnToOvOrDoEvolutions(void);
 void TryEvolvePokemon(void);
 static void ReturnFromBattleToOverworld(void);
 static void WaitForEvoSceneToFinish(void);
+void HandleAction_UseMove(void);
+void HandleAction_UseItem(void);
+void HandleAction_Switch(void);
+void HandleAction_Run(void);
+void HandleAction_WatchesCarefully(void);
+void HandleAction_SafariZoneBallThrow(void);
+void HandleAction_ThrowPokeblock(void);
+void HandleAction_GoNear(void);
+void HandleAction_SafariZoneRun(void);
+void HandleAction_WallyBallThrow(void);
+void HandleAction_RunBattleScript(void);
+void HandleAction_TryFinish(void);
+void HandleAction_ActionFinished(void);
+void HandleAction_NothingIsFainted(void);
+void HandleEndTurn_ContinueBattle(void);
+void HandleEndTurn_BattleWon(void);
+void HandleEndTurn_BattleLost(void);
+void HandleEndTurn_RanFromBattle(void);
+void HandleEndTurn_MonFled(void);
+
+void (*const gTurnActionsFuncsTable[])(void) BATTLE_MAIN_DATA =
+{
+    [B_ACTION_USE_MOVE]               = HandleAction_UseMove,
+    [B_ACTION_USE_ITEM]               = HandleAction_UseItem,
+    [B_ACTION_SWITCH]                 = HandleAction_Switch,
+    [B_ACTION_RUN]                    = HandleAction_Run,
+    [B_ACTION_SAFARI_WATCH_CAREFULLY] = HandleAction_WatchesCarefully,
+    [B_ACTION_SAFARI_BALL]            = HandleAction_SafariZoneBallThrow,
+    [B_ACTION_SAFARI_POKEBLOCK]       = HandleAction_ThrowPokeblock,
+    [B_ACTION_SAFARI_GO_NEAR]         = HandleAction_GoNear,
+    [B_ACTION_SAFARI_RUN]             = HandleAction_SafariZoneRun,
+    [B_ACTION_WALLY_THROW]            = HandleAction_WallyBallThrow,
+    [B_ACTION_EXEC_SCRIPT]            = HandleAction_RunBattleScript,
+    [B_ACTION_TRY_FINISH]             = HandleAction_TryFinish,
+    [B_ACTION_FINISHED]               = HandleAction_ActionFinished,
+    [B_ACTION_NOTHING_FAINTED]        = HandleAction_NothingIsFainted,
+};
+
+void (*const gEndTurnFuncsTable[])(void) BATTLE_MAIN_DATA =
+{
+    [0]                           = HandleEndTurn_ContinueBattle,
+    [B_OUTCOME_WON]               = HandleEndTurn_BattleWon,
+    [B_OUTCOME_LOST]              = HandleEndTurn_BattleLost,
+    [B_OUTCOME_DREW]              = HandleEndTurn_BattleLost,
+    [B_OUTCOME_RAN]               = HandleEndTurn_RanFromBattle,
+    [B_OUTCOME_PLAYER_TELEPORTED] = HandleEndTurn_FinishBattle,
+    [B_OUTCOME_MON_FLED]          = HandleEndTurn_MonFled,
+    [B_OUTCOME_CAUGHT]            = HandleEndTurn_FinishBattle,
+    [B_OUTCOME_NO_SAFARI_BALLS]   = HandleEndTurn_FinishBattle,
+};
+
+const u8 gStatusConditionString_PoisonJpn[] BATTLE_MAIN_DATA = _("どく$$$$$");
+const u8 gStatusConditionString_SleepJpn[] BATTLE_MAIN_DATA = _("ねむり$$$$");
+const u8 gStatusConditionString_ParalysisJpn[] BATTLE_MAIN_DATA = _("まひ$$$$$");
+const u8 gStatusConditionString_BurnJpn[] BATTLE_MAIN_DATA = _("やけど$$$$");
+const u8 gStatusConditionString_IceJpn[] BATTLE_MAIN_DATA = _("こおり$$$$");
+const u8 gStatusConditionString_ConfusionJpn[] BATTLE_MAIN_DATA = _("こんらん$$$");
+const u8 gStatusConditionString_LoveJpn[] BATTLE_MAIN_DATA = _("メロメロ$$$");
+
+const u8 *const gStatusConditionStringsTable[][2] BATTLE_MAIN_DATA =
+{
+    {gStatusConditionString_PoisonJpn, gText_Poison},
+    {gStatusConditionString_SleepJpn, gText_Sleep},
+    {gStatusConditionString_ParalysisJpn, gText_Paralysis},
+    {gStatusConditionString_BurnJpn, gText_Burn},
+    {gStatusConditionString_IceJpn, gText_Ice},
+    {gStatusConditionString_ConfusionJpn, gText_Confusion},
+    {gStatusConditionString_LoveJpn, gText_Love},
+};
+
+const u8 gPkblToEscapeFactor[][3] BATTLE_MAIN_DATA =
+{
+    {0, 0, 0},
+    {3, 5, 0},
+    {2, 3, 0},
+    {1, 2, 0},
+    {1, 1, 0},
+};
+
+const u8 gGoNearCounterToCatchFactor[] BATTLE_MAIN_DATA = {4, 3, 2, 1};
+const u8 gGoNearCounterToEscapeFactor[] BATTLE_MAIN_DATA = {4, 4, 4, 4};
+
+const u16 gSoundMovesTable[] BATTLE_MAIN_DATA =
+{
+    MOVE_GROWL,
+    MOVE_ROAR,
+    MOVE_SING,
+    MOVE_SUPERSONIC,
+    MOVE_SCREECH,
+    MOVE_SNORE,
+    MOVE_UPROAR,
+    MOVE_METAL_SOUND,
+    MOVE_GRASS_WHISTLE,
+    MOVE_HYPER_VOICE,
+    0xFFFF,
+};
 
 
 u16 gBattle_BG0_X;
