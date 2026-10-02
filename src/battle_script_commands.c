@@ -248,20 +248,8 @@ extern u8 BattleScript_GrudgeTakesPP[];
 
 #define DEFENDER_IS_PROTECTED ((gProtectStructs[gBattlerTarget].protected && gBattleMoves[gCurrentMove].flags & FLAG_PROTECT_AFFECTED))
 
-//array entries for battle communication
-#define MOVE_EFFECT_BYTE    0x3
-#define MULTISTRING_CHOOSER 0x5
-#define MSG_DISPLAY         0x7
-
 #define TYPE_FORESIGHT  0xFE
 #define TYPE_ENDTABLE   0xFF
-
-#define CMP_EQUAL               0x0
-#define CMP_NOT_EQUAL           0x1
-#define CMP_GREATER_THAN        0x2
-#define CMP_LESS_THAN           0x3
-#define CMP_COMMON_BITS         0x4
-#define CMP_NO_COMMON_BITS      0x5
 
 #define uBYTE0_16(value)(( (u8) (((u16)(value) & (0x000000FF)) >> 0x00)))
 #define uBYTE1_16(value)(( (u8) (((u16)(value) & (0x0000FF00)) >> 0x08)))
@@ -4692,9 +4680,8 @@ static void Cmd_jumpifcantswitch(void)
     int partyIndex, comparisonIndex;
     register struct Pokemon *party;
     u8 battlerIn1;
-    //0x80 byte is used as a way of telling the function whether to not check status2/status3
-    gActiveBattler = GetBattlerForBattleScript(T2_READ_8(gBattlescriptCurrInstr + 1) & 0x7F);
-    if (!(T2_READ_8(gBattlescriptCurrInstr + 1) & 0x80)
+    gActiveBattler = GetBattlerForBattleScript(T2_READ_8(gBattlescriptCurrInstr + 1) & ~SWITCH_IGNORE_ESCAPE_PREVENTION);
+    if (!(T2_READ_8(gBattlescriptCurrInstr + 1) & SWITCH_IGNORE_ESCAPE_PREVENTION)
         && ((gBattleMons[gActiveBattler].status2 & (STATUS2_WRAPPED | STATUS2_ESCAPE_PREVENTION))
             || (gStatuses3[gActiveBattler] & STATUS3_ROOTED)))
     {
@@ -6475,6 +6462,9 @@ static void Cmd_negativedamage(void)
     gBattlescriptCurrInstr++;
 }
 
+#define STAT_CHANGE_WORKED      0
+#define STAT_CHANGE_DIDNT_WORK  1
+
 static u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr)
 {
     bool8 certain = FALSE;
@@ -6503,7 +6493,7 @@ static u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr)
         if (gSideTimers[GET_BATTLER_SIDE(gActiveBattler)].mistTimer
             && !certain && gCurrentMove != MOVE_CURSE)
         {
-            if (flags == STAT_CHANGE_BS_PTR)
+            if (flags == STAT_CHANGE_ALLOW_PTR)
             {
                 if (gSpecialStatuses[gActiveBattler].statLowered)
                 {
@@ -6529,7 +6519,7 @@ static u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr)
                   || gBattleMons[gActiveBattler].ability == ABILITY_WHITE_SMOKE)
                  && !certain && gCurrentMove != MOVE_CURSE)
         {
-            if (flags == STAT_CHANGE_BS_PTR)
+            if (flags == STAT_CHANGE_ALLOW_PTR)
             {
                 if (gSpecialStatuses[gActiveBattler].statLowered)
                 {
@@ -6550,7 +6540,7 @@ static u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr)
         else if (gBattleMons[gActiveBattler].ability == ABILITY_KEEN_EYE
                  && !certain && statId == STAT_STAGE_ACC)
         {
-            if (flags == STAT_CHANGE_BS_PTR)
+            if (flags == STAT_CHANGE_ALLOW_PTR)
             {
                 BattleScriptPush(BS_ptr);
                 gBattleStruct->battler = gActiveBattler;
@@ -6563,7 +6553,7 @@ static u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr)
         else if (gBattleMons[gActiveBattler].ability == ABILITY_HYPER_CUTTER
                  && !certain && statId == STAT_STAGE_ATK)
         {
-            if (flags == STAT_CHANGE_BS_PTR)
+            if (flags == STAT_CHANGE_ALLOW_PTR)
             {
                 BattleScriptPush(BS_ptr);
                 gBattleStruct->battler = gActiveBattler;
@@ -6636,10 +6626,10 @@ static u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr)
     if (gBattleMons[gActiveBattler].statStages[statId] > 0xC)
         gBattleMons[gActiveBattler].statStages[statId] = 0xC;
 
-    if (gBattleCommunication[MULTISTRING_CHOOSER] == 2 && flags & STAT_CHANGE_BS_PTR)
+    if (gBattleCommunication[MULTISTRING_CHOOSER] == 2 && flags & STAT_CHANGE_ALLOW_PTR)
         gMoveResultFlags |= MOVE_RESULT_MISSED;
 
-    if (gBattleCommunication[MULTISTRING_CHOOSER] == 2 && !(flags & STAT_CHANGE_BS_PTR))
+    if (gBattleCommunication[MULTISTRING_CHOOSER] == 2 && !(flags & STAT_CHANGE_ALLOW_PTR))
         return STAT_CHANGE_DIDNT_WORK;
 
     return STAT_CHANGE_WORKED;

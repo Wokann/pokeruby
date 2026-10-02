@@ -197,11 +197,6 @@ extern u8 BattleScript_IgnoresAndUsesRandomMove[]; //disobedient, uses a random 
 extern u8 BattleScript_IgnoresAndFallsAsleep[]; //disobedient, went to sleep
 extern u8 BattleScript_IgnoresAndHitsItself[];
 
-//array entries for battle communication
-#define MOVE_EFFECT_BYTE    0x3
-#define MULTISTRING_CHOOSER 0x5
-#define MSG_DISPLAY         0x7
-
 u8 GetBattlerForBattleScript(u8 caseId)
 {
     u8 ret = 0;

@@ -137,8 +137,8 @@
 	.set VARIOUS_SET_TELEPORT_OUTCOME, 25
 	.set VARIOUS_PLAY_TRAINER_DEFEATED_MUSIC, 26
 	
-@ jumpifcant switch flag argument
-	.set ATK4F_DONT_CHECK_STATUSES, 0x80
+@ Cmd_jumpifcantswitch
+	.set SWITCH_IGNORE_ESCAPE_PREVENTION, (1 << 7)
 
 @ cases for moveend command
 	.set MOVEEND_RAGE, 0

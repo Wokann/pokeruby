@@ -1752,7 +1752,7 @@ BattleScript_EffectBatonPass: @ 81D7F7C
 	attackcanceler
 	attackstring
 	ppreduce
-	jumpifcantswitch ATK4F_DONT_CHECK_STATUSES | USER, BattleScript_ButItFailed
+	jumpifcantswitch SWITCH_IGNORE_ESCAPE_PREVENTION | USER, BattleScript_ButItFailed
 	attackanimation
 	waitanimation
 	openpartyscreen USER, BattleScript_ButItFailed
