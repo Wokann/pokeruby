@@ -210,7 +210,7 @@ struct PokenavState {
     /*0xD15E*/ u8 trainerEyesPulseFrameCounter;
     /*0xD15F*/ u8 trainerEyesPulseState;
     /*0xD160*/ u16 setupStep;
-    /*0xD162*/ u8 unkD162;
+    /*0xD162*/ u8 unusedD162;
     /*0xD164*/ struct UsePokeblockSession usePokeblockSession;
     /*0xD1D4*/ u8 fillerD1D6[0x2];
     /*0xD1D6*/ u16 conditionMonSpecies[3];

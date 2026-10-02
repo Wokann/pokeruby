@@ -869,7 +869,7 @@ bool8 LoadConditionGraphScreenStep(void)
     {
     case 0:
         ResetPokenavBgOffsets();
-        gPokenavState->unkD162 = 11;
+        gPokenavState->unusedD162 = 11;
         break;
     case 1:
         Text_LoadWindowTemplate(&gPokenavConditionWindowTemplate);
@@ -982,7 +982,7 @@ bool8 LoadPokenavListScreenStep(void)
         ResetPokenavBgOffsets();
 
         gPokenavState->isRibbonsList = gPokenavState->listMode == POKENAV_LIST_RIBBONS;
-        gPokenavState->unkD162 = 11;
+        gPokenavState->unusedD162 = 11;
         break;
     case 1:
         Text_LoadWindowTemplate(&gPokenavListWindowTemplate);
@@ -1491,7 +1491,7 @@ bool8 LoadRibbonsSummaryScreenStep(void)
     {
     case 0:
         ResetPokenavBgOffsets();
-        gPokenavState->unkD162 = 11;
+        gPokenavState->unusedD162 = 11;
         break;
     case 1:
         Text_LoadWindowTemplate(&gPokenavRibbonsSummaryWindowTemplate);
@@ -1738,7 +1738,7 @@ bool8 LoadPokeblockConditionGraphScreenStep(void)
     {
     case 0:
         ResetPokenavBgOffsets();
-        gPokenavState->unkD162 = 2;
+        gPokenavState->unusedD162 = 2;
         break;
     case 1:
         InitPokenavMonInfoHeaderGfx();

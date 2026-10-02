@@ -2381,7 +2381,7 @@ void OpenConditionGraphFromParty(void)
         gPokenavState->callbackStep++;
         break;
     case 5:
-        gPokenavState->unkD162 = 0x2;
+        gPokenavState->unusedD162 = 0x2;
         BuildPartyConditionGraphMonList();
         gPokenavState->callbackStep++;
         break;

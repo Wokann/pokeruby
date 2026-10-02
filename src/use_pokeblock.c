@@ -149,7 +149,7 @@ void ChooseMonToGivePokeblock(struct Pokeblock *pokeblock, MainCallback callback
     sInfo = &gPokenavState->usePokeblockSession;
     sInfo->pokeblock = pokeblock;
     sInfo->exitCallback = callback;
-    gPokenavState->unkD162 = 2;
+    gPokenavState->unusedD162 = 2;
     SetUsePokeblockCallback(LoadUsePokeblockMenu);
     SetMainCallback2(CB2_UsePokeblockMenu);
 }
@@ -160,7 +160,7 @@ static void CB2_ReturnAndChooseMonToGivePokeblock(void)
     sInfo->exitCallback = sExitCallback;
     gPokeblockMonId = GetSelectionIdFromPartyId(gPokeblockMonId);
     sInfo->monInTopHalf = gPokeblockMonId < 4 ? FALSE : TRUE;
-    gPokenavState->unkD162 = 2;
+    gPokenavState->unusedD162 = 2;
     SetUsePokeblockCallback(LoadUsePokeblockMenu);
     SetMainCallback2(CB2_ReturnToUsePokeblockMenu);
 }
