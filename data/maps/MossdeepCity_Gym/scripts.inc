@@ -68,8 +68,7 @@ MossdeepCity_Gym_EventScript_TateAndLizaDefeated:: @ 815A594
 
 MossdeepCity_Gym_EventScript_GiveCalmMind2:: @ 815A5C6
 	giveitem ITEM_TM04
-	compare VAR_RESULT, FALSE
-	goto_if_eq Common_EventScript_ShowBagIsFull
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	msgbox MossdeepCity_Gym_Text_ExplainCalmMind, MSGBOX_DEFAULT
 	setflag FLAG_RECEIVED_TM_CALM_MIND
 	release

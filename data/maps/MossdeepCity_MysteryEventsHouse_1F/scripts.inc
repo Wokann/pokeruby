@@ -6,8 +6,7 @@ MossdeepCity_MysteryEventsHouse_1F_MapScripts:: @ 815AC52
 
 MossdeepCity_MysteryEventsHouse_OnLoad:: @ 815AC62
 	special ValidateEReaderTrainer
-	compare VAR_RESULT, TRUE
-	call_if_eq MossdeepCity_MysteryEventsHouse_EventScript_CloseDoorForMissingEReaderTrainer
+	call_if_eq VAR_RESULT, TRUE, MossdeepCity_MysteryEventsHouse_EventScript_CloseDoorForMissingEReaderTrainer
 	end
 
 MossdeepCity_MysteryEventsHouse_EventScript_CloseDoorForMissingEReaderTrainer:: @ 815AC71
@@ -17,10 +16,8 @@ MossdeepCity_MysteryEventsHouse_EventScript_CloseDoorForMissingEReaderTrainer:: 
 
 MossdeepCity_MysteryEventsHouse_OnTransition:: @ 815AC84
 	special ValidateEReaderTrainer
-	compare VAR_RESULT, FALSE
-	call_if_eq MossdeepCity_MysteryEventsHouse_EventScript_SetupEReaderChallenge
-	compare VAR_E_READER_TRAINER_BATTLE_RESULT, FALSE
-	call_if_ne MossdeepCity_MysteryEventsHouse_EventScript_RestoreOldManAfterBattle
+	call_if_eq VAR_RESULT, FALSE, MossdeepCity_MysteryEventsHouse_EventScript_SetupEReaderChallenge
+	call_if_ne VAR_E_READER_TRAINER_BATTLE_RESULT, FALSE, MossdeepCity_MysteryEventsHouse_EventScript_RestoreOldManAfterBattle
 	end
 
 MossdeepCity_MysteryEventsHouse_EventScript_SetupEReaderChallenge:: @ 815AC9E
@@ -49,12 +46,9 @@ MossdeepCity_MysteryEventsHouse_EventScript_ResolveEReaderBattle:: @ 815ACD5
 	copyobjectxytoperm LOCALID_MYSTERY_EVENTS_OLD_MAN
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
-	compare VAR_E_READER_TRAINER_BATTLE_RESULT, B_OUTCOME_WON
-	call_if_eq MossdeepCity_MysteryEventsHouse_EventScript_ShowEReaderBattleWon
-	compare VAR_E_READER_TRAINER_BATTLE_RESULT, B_OUTCOME_LOST
-	call_if_eq MossdeepCity_MysteryEventsHouse_EventScript_ShowEReaderBattleLost
-	compare VAR_E_READER_TRAINER_BATTLE_RESULT, B_OUTCOME_DREW
-	call_if_eq MossdeepCity_MysteryEventsHouse_EventScript_ShowEReaderBattleTie
+	call_if_eq VAR_E_READER_TRAINER_BATTLE_RESULT, B_OUTCOME_WON, MossdeepCity_MysteryEventsHouse_EventScript_ShowEReaderBattleWon
+	call_if_eq VAR_E_READER_TRAINER_BATTLE_RESULT, B_OUTCOME_LOST, MossdeepCity_MysteryEventsHouse_EventScript_ShowEReaderBattleLost
+	call_if_eq VAR_E_READER_TRAINER_BATTLE_RESULT, B_OUTCOME_DREW, MossdeepCity_MysteryEventsHouse_EventScript_ShowEReaderBattleTie
 	special LoadPlayerParty
 	setvar VAR_E_READER_TRAINER_BATTLE_RESULT, FALSE
 	releaseall
@@ -84,8 +78,7 @@ MossdeepCity_MysteryEventsHouse_Movement_OldManExit:: @ 815AD3F
 MossdeepCity_MysteryEventsHouse_EventScript_OldMan:: @ 815AD42
 	lock
 	faceplayer
-	compare VAR_TEMP_1, TRUE
-	goto_if_eq MossdeepCity_MysteryEventsHouse_EventScript_ChallengeEReaderTrainer
+	goto_if_eq VAR_TEMP_1, TRUE, MossdeepCity_MysteryEventsHouse_EventScript_ChallengeEReaderTrainer
 	msgbox MossdeepCity_MysteryEventsHouse_Text_OldManGreeting, MSGBOX_DEFAULT
 	release
 	end
@@ -94,29 +87,22 @@ MossdeepCity_MysteryEventsHouse_EventScript_ChallengeEReaderTrainer:: @ 815AD59
 	special SavePlayerParty
 	special BufferEReaderTrainerName
 	msgbox MossdeepCity_MysteryEventsHouse_Text_ChallengeVisitingTrainer, MSGBOX_YESNO
-	compare VAR_RESULT, NO
-	goto_if_eq MossdeepCity_MysteryEventsHouse_EventScript_DeclineEReaderTrainerBattle
+	goto_if_eq VAR_RESULT, NO, MossdeepCity_MysteryEventsHouse_EventScript_DeclineEReaderTrainerBattle
 	call MossdeepCity_MysteryEventsHouse_EventScript_PrepareEReaderBattle
-	compare VAR_RESULT, FALSE
-	goto_if_eq MossdeepCity_MysteryEventsHouse_EventScript_DeclineEReaderTrainerBattle
+	goto_if_eq VAR_RESULT, FALSE, MossdeepCity_MysteryEventsHouse_EventScript_DeclineEReaderTrainerBattle
 	msgbox MossdeepCity_MysteryEventsHouse_Text_SaveYourProgress, MSGBOX_YESNO
-	compare VAR_RESULT, NO
-	call_if_eq MossdeepCity_MysteryEventsHouse_EventScript_DeclineEReaderTrainerBattle
+	call_if_eq VAR_RESULT, NO, MossdeepCity_MysteryEventsHouse_EventScript_DeclineEReaderTrainerBattle
 	special LoadPlayerParty
 	call Common_EventScript_SaveGame
-	compare VAR_RESULT, FALSE
-	goto_if_eq MossdeepCity_MysteryEventsHouse_EventScript_DeclineEReaderTrainerBattle
+	goto_if_eq VAR_RESULT, FALSE, MossdeepCity_MysteryEventsHouse_EventScript_DeclineEReaderTrainerBattle
 	erasebox 0, 0, 15, 10
 	special SavePlayerParty
 	special ReducePlayerPartyToSelectedMons
 	msgbox MossdeepCity_MysteryEventsHouse_Text_HopeToSeeAGoodMatch, MSGBOX_DEFAULT
 	closemessage
-	compare VAR_FACING, DIR_NORTH
-	call_if_eq MossdeepCity_MysteryEventsHouse_EventScript_PositionForBattleFacingNorth
-	compare VAR_FACING, DIR_EAST
-	call_if_eq MossdeepCity_MysteryEventsHouse_EventScript_PositionForBattleFacingEast
-	compare VAR_FACING, DIR_WEST
-	call_if_eq MossdeepCity_MysteryEventsHouse_EventScript_PositionForBattleFacingWest
+	call_if_eq VAR_FACING, DIR_NORTH, MossdeepCity_MysteryEventsHouse_EventScript_PositionForBattleFacingNorth
+	call_if_eq VAR_FACING, DIR_EAST, MossdeepCity_MysteryEventsHouse_EventScript_PositionForBattleFacingEast
+	call_if_eq VAR_FACING, DIR_WEST, MossdeepCity_MysteryEventsHouse_EventScript_PositionForBattleFacingWest
 	warp MAP_MOSSDEEP_CITY_MYSTERY_EVENTS_HOUSE_B1F, WARP_ID_NONE, 3, 1
 	waitstate
 	release

@@ -7,10 +7,8 @@ MossdeepCity_SpaceCenter_1F_EventScript_RocketLaunchCounter:: @ 815AB8B
 	dotimebasedevents
 	specialvar VAR_RESULT, GetWeekCount
 	buffernumberstring STR_VAR_1, VAR_RESULT
-	compare VAR_RESULT, 0
-	call_if_eq MossdeepCity_SpaceCenter_1F_EventScript_NoLaunchesYet
-	compare VAR_RESULT, 1
-	call_if_ge MossdeepCity_SpaceCenter_1F_EventScript_ShowLaunchNumber
+	call_if_eq VAR_RESULT, 0, MossdeepCity_SpaceCenter_1F_EventScript_NoLaunchesYet
+	call_if_ge VAR_RESULT, 1, MossdeepCity_SpaceCenter_1F_EventScript_ShowLaunchNumber
 	closemessage
 	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	waitmovement 0
@@ -35,8 +33,7 @@ MossdeepCity_SpaceCenter_1F_EventScript_SunStoneMan:: @ 815ABD5
 	goto_if_set FLAG_RECEIVED_SUN_STONE_MOSSDEEP, MossdeepCity_SpaceCenter_1F_EventScript_GaveSunStone
 	msgbox MossdeepCity_SpaceCenter_1F_Text_FoundThisYouCanHaveIt, MSGBOX_DEFAULT
 	giveitem ITEM_SUN_STONE
-	compare VAR_RESULT, FALSE
-	goto_if_eq Common_EventScript_ShowBagIsFull
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_SUN_STONE_MOSSDEEP
 	msgbox MossdeepCity_SpaceCenter_1F_Text_HoennFamousForMeteorShowers, MSGBOX_DEFAULT
 	release

@@ -13,8 +13,7 @@ MossdeepCity_StevensHouse_EventScript_HideStevensNote:: @ 815A9DF
 	return
 
 MossdeepCity_StevensHouse_OnTransition:: @ 815A9E9
-	compare VAR_STEVENS_HOUSE_STATE, 1
-	call_if_eq MossdeepCity_StevensHouse_EventScript_SetStevenPos
+	call_if_eq VAR_STEVENS_HOUSE_STATE, 1, MossdeepCity_StevensHouse_EventScript_SetStevenPos
 	end
 
 MossdeepCity_StevensHouse_EventScript_SetStevenPos:: @ 815A9F5
@@ -71,11 +70,9 @@ MossdeepCity_StevensHouse_Movement_StevenReturn:: @ 815AA76
 MossdeepCity_StevensHouse_EventScript_BeldumPokeball:: @ 815AA7C
 	lockall
 	msgbox MossdeepCity_StevensHouse_Text_TakeBallContainingBeldum, MSGBOX_YESNO
-	compare VAR_RESULT, NO
-	goto_if_eq MossdeepCity_StevensHouse_EventScript_LeaveBeldum
+	goto_if_eq VAR_RESULT, NO, MossdeepCity_StevensHouse_EventScript_LeaveBeldum
 	getpartysize
-	compare VAR_RESULT, PARTY_SIZE
-	goto_if_eq MossdeepCity_StevensHouse_EventScript_GiveBeldum
+	goto_if_eq VAR_RESULT, PARTY_SIZE, MossdeepCity_StevensHouse_EventScript_GiveBeldum
 	copyvar VAR_0x8004, VAR_RESULT
 	removeobject LOCALID_STEVENS_HOUSE_BALL
 	playfanfare MUS_OBTAIN_ITEM
@@ -85,8 +82,7 @@ MossdeepCity_StevensHouse_EventScript_BeldumPokeball:: @ 815AA7C
 	givemon SPECIES_BELDUM, 5, ITEM_NONE
 	bufferspeciesname STR_VAR_2, SPECIES_BELDUM
 	msgbox gText_NicknameReceivedPokemon, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	call_if_eq Common_EventScript_NameReceivedPartyMon
+	call_if_eq VAR_RESULT, YES, Common_EventScript_NameReceivedPartyMon
 	setflag FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_BELDUM_POKEBALL
 	setflag FLAG_RECEIVED_BELDUM
 	releaseall
