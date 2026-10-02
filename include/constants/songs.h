@@ -289,7 +289,7 @@
 #define MUS_ABANDONED_SHIP           381 // MUS_DAN02
 #define MUS_FORTREE                  382 // MUS_MACHI_S3
 #define MUS_BIRCH_LAB                383 // MUS_ODAMAKI
-#define MUS_B_TOWER                  384 // MUS_B_TOWER
+#define MUS_B_TOWER_RS               384 // MUS_B_TOWER
 #define MUS_ENCOUNTER_SWIMMER        385 // MUS_SWIMEYE
 #define MUS_CAVE_OF_ORIGIN           386 // MUS_DAN03
 #define MUS_OBTAIN_BERRY             387 // MUS_ME_KINOMI
@@ -314,7 +314,7 @@
 #define MUS_MT_CHIMNEY               406 // MUS_TOZAN
 #define MUS_ENCOUNTER_FEMALE         407 // MUS_GIRLEYE
 #define MUS_LILYCOVE                 408 // MUS_MINAMO
-#define MUS_ROUTE111                 409 // MUS_ASHROAD
+#define MUS_DESERT                   409 // MUS_ASHROAD
 #define MUS_HELP                     410 // MUS_EVENT0
 #define MUS_UNDERWATER               411 // MUS_DEEPDEEP
 #define MUS_VICTORY_TRAINER          412 // MUS_KACHI1
