@@ -1,7 +1,7 @@
 	.align 2
 gTrainerFrontPicPaletteTable:: @ 81EC7D4
-	obj_pal gTrainerPalette_Brendan, 0
-	obj_pal gTrainerPalette_May, 1
+	obj_pal gTrainerPalette_RubySapphireBrendan, 0
+	obj_pal gTrainerPalette_RubySapphireMay, 1
 	obj_pal gTrainerPalette_Lass, 2
 	obj_pal gTrainerPalette_Youngster, 3
 	obj_pal gTrainerPalette_Hiker, 4
@@ -29,8 +29,8 @@ gTrainerFrontPicPaletteTable:: @ 81EC7D4
 	obj_pal gTrainerPalette_YoungCouple, 26
 	obj_pal gTrainerPalette_Guitarist, 27
 	obj_pal gTrainerPalette_Gentleman, 28
-	obj_pal gTrainerPalette_Steven, 29
-	obj_pal gTrainerPalette_Maxie, 30
+	obj_pal gTrainerPalette_ChampionSteven, 29
+	obj_pal gTrainerPalette_MagmaLeaderMaxie, 30
 	obj_pal gTrainerPalette_RunningTriathleteF, 31
 	obj_pal gTrainerPalette_RunningTriathleteM, 32
 	obj_pal gTrainerPalette_BattleGirl, 33
@@ -70,16 +70,16 @@ gTrainerFrontPicPaletteTable:: @ 81EC7D4
 	obj_pal gTrainerPalette_AquaAdminM, 67
 	obj_pal gTrainerPalette_AquaAdminF, 68
 	obj_pal gTrainerPalette_UnusedAqua, 69
-	obj_pal gTrainerPalette_Archie, 70
-	obj_pal gTrainerPalette_Roxanne, 71
-	obj_pal gTrainerPalette_Brawly, 72
-	obj_pal gTrainerPalette_Wattson, 73
-	obj_pal gTrainerPalette_Flannery, 74
-	obj_pal gTrainerPalette_Norman, 75
-	obj_pal gTrainerPalette_Winona, 76
-	obj_pal gTrainerPalette_TateAndLiza, 77
-	obj_pal gTrainerPalette_Wallace, 78
-	obj_pal gTrainerPalette_Sidney, 79
-	obj_pal gTrainerPalette_Phoebe, 80
-	obj_pal gTrainerPalette_Glacia, 81
-	obj_pal gTrainerPalette_Drake, 82
+	obj_pal gTrainerPalette_AquaLeaderArchie, 70
+	obj_pal gTrainerPalette_LeaderRoxanne, 71
+	obj_pal gTrainerPalette_LeaderBrawly, 72
+	obj_pal gTrainerPalette_LeaderWattson, 73
+	obj_pal gTrainerPalette_LeaderFlannery, 74
+	obj_pal gTrainerPalette_LeaderNorman, 75
+	obj_pal gTrainerPalette_LeaderWinona, 76
+	obj_pal gTrainerPalette_LeaderTateAndLiza, 77
+	obj_pal gTrainerPalette_LeaderWallace, 78
+	obj_pal gTrainerPalette_EliteFourSidney, 79
+	obj_pal gTrainerPalette_EliteFourPhoebe, 80
+	obj_pal gTrainerPalette_EliteFourGlacia, 81
+	obj_pal gTrainerPalette_EliteFourDrake, 82
