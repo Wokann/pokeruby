@@ -131,7 +131,7 @@ static const u16 sBirchSpeechBgPals[][16] =
 static const u8 gBirchIntroShadowGfx[] = INCBIN_U8("graphics/birch_speech/shadow.4bpp.lz");
 static const u8 sBirchSpeechBgMap[] = INCBIN_U8("graphics/birch_speech/map.bin.lz");
 static const u16 sBirchSpeechBgGradientPal[] = INCBIN_U16("graphics/birch_speech/bg2.gbapal");
-static const u16 gMainMenuPalette[] = INCBIN_U16("graphics/misc/main_menu.gbapal");
+static const u16 sMainMenuBgPal[] = INCBIN_U16("graphics/interface/main_menu_bg.gbapal");
 
 static const union AffineAnimCmd sSpriteAffineAnim_PlayerShrink[] =
 {
@@ -219,7 +219,7 @@ u32 InitMainMenu(bool8 returningFromOptionsMenu)
     DmaFill16(3, 0, (void *)(PLTT + 2), PLTT_SIZE - 2);
 
     ResetPaletteFade();
-    LoadPalette(gMainMenuPalette, 0, 32);
+    LoadPalette(sMainMenuBgPal, 0, 32);
     ScanlineEffect_Stop();
     ResetTasks();
     ResetSpriteData();
