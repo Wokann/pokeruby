@@ -1792,7 +1792,7 @@ void PrintPokeblockMonNature(void)
     {
         u8 nature = GetNature(&gPlayerParty[GetPartyIdFromPokeblockSelection(gPokenavState->detailSelectionIndex)]);
         buffer = StringCopy(buffer, gOtherText_Nature2);
-        AlignStringInMenuWindow(buffer, gNatureNames[nature], 87, 0);
+        AlignStringInMenuWindow(buffer, gNatureNamePointers[nature], 87, 0);
     }
     else
     {

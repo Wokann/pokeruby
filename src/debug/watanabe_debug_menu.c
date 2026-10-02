@@ -2185,7 +2185,7 @@ u8 WatanabeDebug_FormatPokemonField(u8 *text, u8 fieldId, u8 textColor)
                 WatanabeDebug_CopyText(text + 10, sText_WatanabePokemonEditorOff, 4);
             break;
         case WATANABE_POKEMON_CREATOR_VALUE_NATURE:
-            WatanabeDebug_CopyText(text + 10, gNatureNames[gWatanabePokemonCreatorState->values[fieldId]], 5);
+            WatanabeDebug_CopyText(text + 10, gNatureNamePointers[gWatanabePokemonCreatorState->values[fieldId]], 5);
             break;
     }
     return 0;

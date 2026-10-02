@@ -4,7 +4,7 @@
 #include "main.h"
 #include "task.h"
 
-extern const u8 *const gNatureNames[];
+extern const u8 *const gNatureNamePointers[];
 extern u8 gLastViewedMonIndex;
 
 // The Pokemon Summary Screen can operate in different modes. Certain features,
