@@ -1317,11 +1317,11 @@
 	.endm
 	
 	.macro chosenstatus1animation battler:req, status:req
-	chosenstatusanimation \battler 0x0 \status
+	chosenstatusanimation \battler FALSE \status
 	.endm
 	
 	.macro chosenstatus2animation battler:req, status:req
-	chosenstatusanimation \battler, 0x1, \status
+	chosenstatusanimation \battler, TRUE, \status
 	.endm
 	
 	.macro sethword dst:req, value:req
@@ -1357,29 +1357,29 @@
 	.endm
 	
 	.macro jumpifmove move:req, jumpptr:req
-	jumpifhalfword EQUAL, gCurrentMove, \move, \jumpptr
+	jumpifhalfword CMP_EQUAL, gCurrentMove, \move, \jumpptr
 	.endm
 
 	.macro jumpifnotmove move:req, jumpptr:req
-	jumpifhalfword NOT_EQUAL, gCurrentMove, \move, \jumpptr
+	jumpifhalfword CMP_NOT_EQUAL, gCurrentMove, \move, \jumpptr
 	.endm
 	
 	.macro jumpifstatus3 battler:req, status:req, jumpptr:req
-	jumpifstatus3condition \battler, \status, 0x0, \jumpptr
+	jumpifstatus3condition \battler, \status, FALSE, \jumpptr
 	.endm
 	
 	.macro jumpifnostatus3 battler:req, status:req, jumpptr:req
-	jumpifstatus3condition \battler, \status, 0x1, \jumpptr
+	jumpifstatus3condition \battler, \status, TRUE, \jumpptr
 	.endm
 	
 	.macro jumpifmovehadnoeffect jumpptr:req
-	jumpifbyte COMMON_BITS, gMoveResultFlags, MOVE_RESULT_MISSED | MOVE_RESULT_DOESNT_AFFECT_FOE | MOVE_RESULT_FAILED, \jumpptr
+	jumpifbyte CMP_COMMON_BITS, gMoveResultFlags, MOVE_RESULT_MISSED | MOVE_RESULT_DOESNT_AFFECT_FOE | MOVE_RESULT_FAILED, \jumpptr
 	.endm
 	
 	.macro jumpifbattletype flags:req, jumpptr:req
-	jumpifhalfword COMMON_BITS, gBattleTypeFlags, \flags, \jumpptr
+	jumpifhalfword CMP_COMMON_BITS, gBattleTypeFlags, \flags, \jumpptr
 	.endm
 	
 	.macro jumpifnotbattletype flags:req, jumpptr:req
-	jumpifhalfword NO_COMMON_BITS, gBattleTypeFlags, \flags, \jumpptr
+	jumpifhalfword CMP_NO_COMMON_BITS, gBattleTypeFlags, \flags, \jumpptr
 	.endm

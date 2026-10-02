@@ -330,7 +330,6 @@
 	.set EFFECT_RAPIDSPIN, 0x23
 	.set EFFECT_REMOVE_PARALYSIS, 0x24
 	.set EFFECT_ATK_DEF_DOWN, 0x25
-	.set EFFECT_RECOIL_33_PARALYSIS, 0x26
 	.set EFFECT_ATK_PLUS_2, 0x27
 	.set EFFECT_DEF_PLUS_2, 0x28
 	.set EFFECT_SPD_PLUS_2, 0x29
@@ -422,6 +421,10 @@
 
 	.set PARTY_SCREEN_OPTIONAL, (1 << 7)
 
+@ shared global constants used by battle scripts
+	.set PARTY_SIZE, 6
+	.set OPTIONS_BATTLE_STYLE_SET, 1
+
 @ cases for moveend command
 	.set MOVEEND_RAGE, 0
 	.set MOVEEND_DEFROST, 1
@@ -458,7 +461,7 @@
 	.equiv sANIM_TARGETS_HIT,  gSharedMem + 0x160A1
 	.equiv sANIM_ARG1,         gSharedMem + 0x160A4
 	.equiv sANIM_ARG2,         gSharedMem + 0x160A5
-	.equiv sFIELD_1B,          gSharedMem + 0x160DC
+	.equiv sSTAT_ANIM_PLAYED,  gSharedMem + 0x160DC
 	.equiv sTRIPLE_KICK_POWER, gSharedMem + 0x160DE
 	.equiv sMULTIHIT_STRING,   gSharedMem + 0x160E0
 	.equiv sBANK_WITH_ABILITY, gSharedMem + 0x160F8
