@@ -70,13 +70,13 @@ extern u8 *const gMonSpriteGfxBufferPtrs[];
 //extern u8 (*const gMonSpriteGfxBufferPtrs[])[0x800];
 extern const struct BattleMove gBattleMoves[];
 
-// data/graphics/trainers/front_pic_coordinates.inc
+// data/trainer_graphics/front_pic_coordinates.inc
 extern const struct MonCoords gTrainerFrontPicCoords[];
 
-// data/graphics/trainers/front_pic_table.inc
+// data/trainer_graphics/front_pic_table.inc
 extern const struct CompressedSpriteSheet gTrainerFrontPicTable[];
 
-// data/graphics/trainers/front_pic_palette_table.inc
+// data/trainer_graphics/front_pic_palette_table.inc
 extern const struct CompressedSpritePalette gTrainerFrontPicPaletteTable[];
 
 

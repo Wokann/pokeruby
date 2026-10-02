@@ -647,13 +647,13 @@ gTrainerFrontAnimsPtrTable:: @ 81EC2A4
 	.4byte sAnims_Drake
 
 @ 81EC3F0
-	.include "data/graphics/trainers/front_pic_coordinates.inc"
+	.include "data/trainer_graphics/front_pic_coordinates.inc"
 
 @ 81EC53C
-	.include "data/graphics/trainers/front_pic_table.inc"
+	.include "data/trainer_graphics/front_pic_table.inc"
 
 @ 81EC7D4
-	.include "data/graphics/trainers/front_pic_palette_table.inc"
+	.include "data/trainer_graphics/front_pic_palette_table.inc"
 
 	.align 2
 sAnimCmd_Brendan_1:: @ 81ECA6C
