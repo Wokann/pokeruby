@@ -112,6 +112,7 @@ extern const u8 deuOtherText_ForgotAndLearned[];
 
 static void Task_WaitForFadeOut(u8);
 static void CB2_InitLearnMove(void);
+static void CB2_InitLearnMoveReturnFromSelectMove(void);
 static void CB2_MoveRelearnerMain(void);
 static void DoMoveRelearnerMain(void);
 static void DrawLearnMoveMenuWindow(void);
@@ -124,6 +125,7 @@ static void CreateMoveRelearnerUiSprites(void);
 static void CreateLearnableMovesList(void);
 static void HandleInput(void);
 static void DrawMoveSelectionWindow(void);
+static void PrintMoveInfo(u16, const u8 *);
 static void DrawMoveInfoWindow(bool8, int);
 static void RedrawMoveInfoWindow(void);
 static void SpriteCB_MoveRelearnerUiSprite(struct Sprite *);
@@ -363,7 +365,7 @@ static void CB2_InitLearnMove(void)
     SetMainCallback2(CB2_MoveRelearnerMain);
 }
 
-void CB2_InitLearnMoveReturnFromSelectMove(void)
+static void CB2_InitLearnMoveReturnFromSelectMove(void)
 {
     ResetSpriteData();
     FreeAllSpritePalettes();
@@ -1034,7 +1036,7 @@ static const u8 sMoveInfoTextCoords[7][3] =
 static const u8 sBattleMoveInfoCoordIds[] = {0, 1, 2, 3};
 static const u8 sContestMoveInfoCoordIds[] = {4, 5, 6};
 
-void PrintMoveInfo(u16 moveId, const u8 *moveInfoCoords)
+static void PrintMoveInfo(u16 moveId, const u8 *moveInfoCoords)
 {
     u8 str[0x34];
     u8 numHearts;
