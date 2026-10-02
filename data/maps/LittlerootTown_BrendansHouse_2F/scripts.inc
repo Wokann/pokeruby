@@ -5,8 +5,7 @@ LittlerootTown_BrendansHouse_2F_MapScripts:: @ 81527A4
 
 LittlerootTown_BrendansHouse_2F_OnTransition:: @ 81527AF
 	call_if_unset FLAG_DEFEATED_RIVAL_ROUTE103, LittlerootTown_BrendansHouse_2F_EventScript_RivalCheckingNotebook
-	compare VAR_LITTLEROOT_INTRO_STATE, 4
-	call_if_eq PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet
+	call_if_eq VAR_LITTLEROOT_INTRO_STATE, 4, PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet
 	call SecretBase_EventScript_SetDecorationFlags
 	setvar VAR_SECRET_BASE_INITIALIZED, 0
 	end
@@ -22,17 +21,14 @@ LittlerootTown_BrendansHouse_2F_OnWarp:: @ 81527DA
 
 LittlerootTown_BrendansHouse_2F_EventScript_CheckInitDecor:: @ 81527E4
 	checkplayergender
-	compare VAR_RESULT, MALE
-	goto_if_eq SecretBase_EventScript_InitDecorations
+	goto_if_eq VAR_RESULT, MALE, SecretBase_EventScript_InitDecorations
 	end
 
 PlayersHouse_2F_EventScript_Bookshelf:: @ 81527F1
 	lockall
 	checkplayergender
-	compare VAR_RESULT, MALE
-	goto_if_eq PlayersHouse_2F_EventScript_PlayerBookshelf
-	compare VAR_RESULT, FEMALE
-	goto_if_eq RivalsHouse_2F_EventScript_PictureBookshelf
+	goto_if_eq VAR_RESULT, MALE, PlayersHouse_2F_EventScript_PlayerBookshelf
+	goto_if_eq VAR_RESULT, FEMALE, RivalsHouse_2F_EventScript_PictureBookshelf
 	end
 
 PlayersHouse_2F_EventScript_PlayerBookshelf:: @ 815280A
@@ -48,10 +44,8 @@ RivalsHouse_2F_EventScript_PictureBookshelf:: @ 8152814
 LittlerootTown_BrendansHouse_2F_EventScript_PC:: @ 815281E
 	lockall
 	checkplayergender
-	compare VAR_RESULT, MALE
-	goto_if_eq LittlerootTown_BrendansHouse_2F_EventScript_CheckPlayersPC
-	compare VAR_RESULT, FEMALE
-	goto_if_eq LittlerootTown_BrendansHouse_2F_EventScript_CheckRivalsPC
+	goto_if_eq VAR_RESULT, MALE, LittlerootTown_BrendansHouse_2F_EventScript_CheckPlayersPC
+	goto_if_eq VAR_RESULT, FEMALE, LittlerootTown_BrendansHouse_2F_EventScript_CheckRivalsPC
 	end
 
 LittlerootTown_BrendansHouse_2F_EventScript_CheckPlayersPC:: @ 8152837

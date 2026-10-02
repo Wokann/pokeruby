@@ -5,8 +5,7 @@ LittlerootTown_BrendansHouse_1F_MapScripts:: @ 815263B
 	.byte 0
 
 LittlerootTown_BrendansHouse_1F_OnLoad:: @ 815264B
-	compare VAR_LITTLEROOT_INTRO_STATE, 6
-	call_if_lt LittlerootTown_BrendansHouse_1F_EventScript_SetMovingBoxes
+	call_if_lt VAR_LITTLEROOT_INTRO_STATE, 6, LittlerootTown_BrendansHouse_1F_EventScript_SetMovingBoxes
 	call_if_set FLAG_RECEIVED_RUNNING_SHOES, LittlerootTown_BrendansHouse_1F_EventScript_CheckShowShoesManual
 	end
 
@@ -17,8 +16,7 @@ LittlerootTown_BrendansHouse_1F_EventScript_SetMovingBoxes:: @ 8152660
 
 LittlerootTown_BrendansHouse_1F_EventScript_CheckShowShoesManual:: @ 8152673
 	checkplayergender
-	compare VAR_RESULT, MALE
-	goto_if_eq LittlerootTown_BrendansHouse_1F_EventScript_ShowRunningShoesManual
+	goto_if_eq VAR_RESULT, MALE, LittlerootTown_BrendansHouse_1F_EventScript_ShowRunningShoesManual
 	return
 
 LittlerootTown_BrendansHouse_1F_EventScript_ShowRunningShoesManual:: @ 8152680
@@ -26,12 +24,9 @@ LittlerootTown_BrendansHouse_1F_EventScript_ShowRunningShoesManual:: @ 8152680
 	return
 
 LittlerootTown_BrendansHouse_1F_OnTransition:: @ 815268A
-	compare VAR_LITTLEROOT_INTRO_STATE, 3
-	call_if_eq LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToDoor
-	compare VAR_LITTLEROOT_INTRO_STATE, 5
-	call_if_eq LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToStairs
-	compare VAR_LITTLEROOT_INTRO_STATE, 6
-	call_if_eq LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToTV
+	call_if_eq VAR_LITTLEROOT_INTRO_STATE, 3, LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToDoor
+	call_if_eq VAR_LITTLEROOT_INTRO_STATE, 5, LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToStairs
+	call_if_eq VAR_LITTLEROOT_INTRO_STATE, 6, LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToTV
 	end
 
 LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToStairs:: @ 81526AC

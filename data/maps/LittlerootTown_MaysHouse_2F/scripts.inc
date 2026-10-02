@@ -5,8 +5,7 @@ LittlerootTown_MaysHouse_2F_MapScripts:: @ 8152A50
 
 LittlerootTown_MaysHouse_2F_OnTransition:: @ 8152A5B
 	call_if_unset FLAG_DEFEATED_RIVAL_ROUTE103, LittlerootTown_MaysHouse_2F_EventScript_RivalCheckingNotebook
-	compare VAR_LITTLEROOT_INTRO_STATE, 4
-	call_if_eq PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet
+	call_if_eq VAR_LITTLEROOT_INTRO_STATE, 4, PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet
 	call SecretBase_EventScript_SetDecorationFlags
 	setvar VAR_SECRET_BASE_INITIALIZED, 0
 	end
@@ -22,18 +21,15 @@ LittlerootTown_MaysHouse_2F_OnWarp:: @ 8152A86
 
 LittlerootTown_MaysHouse_2F_EventScript_CheckInitDecor:: @ 8152A90
 	checkplayergender
-	compare VAR_RESULT, FEMALE
-	goto_if_eq SecretBase_EventScript_InitDecorations
+	goto_if_eq VAR_RESULT, FEMALE, SecretBase_EventScript_InitDecorations
 	end
 
 RivalsHouse_2F_EventScript_Rival:: @ 8152A9D
 	lockall
 	goto_if_set FLAG_MET_RIVAL_LILYCOVE, RivalsHouse_2F_EventScript_RivalPostLilycove
 	checkplayergender
-	compare VAR_RESULT, MALE
-	call_if_eq RivalsHouse_2F_EventScript_May
-	compare VAR_RESULT, FEMALE
-	call_if_eq RivalsHouse_2F_EventScript_Brendan
+	call_if_eq VAR_RESULT, MALE, RivalsHouse_2F_EventScript_May
+	call_if_eq VAR_RESULT, FEMALE, RivalsHouse_2F_EventScript_Brendan
 	playse SE_EXIT
 	removeobject VAR_LAST_TALKED
 	setvar VAR_LITTLEROOT_RIVAL_STATE, 3
@@ -54,12 +50,9 @@ RivalsHouse_2F_EventScript_May:: @ 8152AD4
 	waitmovement 0
 	msgbox RivalsHouse_2F_Text_MayWhoAreYou, MSGBOX_DEFAULT
 	closemessage
-	compare VAR_FACING, DIR_EAST
-	call_if_eq RivalsHouse_2F_EventScript_MayMoveForPlayerFacingEast
-	compare VAR_FACING, DIR_NORTH
-	call_if_eq RivalsHouse_2F_EventScript_MayMoveForPlayerFacingNorth
-	compare VAR_FACING, DIR_WEST
-	call_if_eq RivalsHouse_2F_EventScript_MayMoveForPlayerFacingWest
+	call_if_eq VAR_FACING, DIR_EAST, RivalsHouse_2F_EventScript_MayMoveForPlayerFacingEast
+	call_if_eq VAR_FACING, DIR_NORTH, RivalsHouse_2F_EventScript_MayMoveForPlayerFacingNorth
+	call_if_eq VAR_FACING, DIR_WEST, RivalsHouse_2F_EventScript_MayMoveForPlayerFacingWest
 	return
 
 RivalsHouse_2F_EventScript_MayMoveForPlayerFacingEast:: @ 8152B29
@@ -88,12 +81,9 @@ RivalsHouse_2F_EventScript_Brendan:: @ 8152B4A
 	waitmovement 0
 	msgbox RivalsHouse_2F_Text_BrendanWhoAreYou, MSGBOX_DEFAULT
 	closemessage
-	compare VAR_FACING, DIR_EAST
-	call_if_eq RivalsHouse_2F_EventScript_BrendanMoveForPlayerFacingEastOrNorth
-	compare VAR_FACING, DIR_NORTH
-	call_if_eq RivalsHouse_2F_EventScript_BrendanMoveForPlayerFacingEastOrNorth
-	compare VAR_FACING, DIR_WEST
-	call_if_eq RivalsHouse_2F_EventScript_BrendanMoveForPlayerFacingWest
+	call_if_eq VAR_FACING, DIR_EAST, RivalsHouse_2F_EventScript_BrendanMoveForPlayerFacingEastOrNorth
+	call_if_eq VAR_FACING, DIR_NORTH, RivalsHouse_2F_EventScript_BrendanMoveForPlayerFacingEastOrNorth
+	call_if_eq VAR_FACING, DIR_WEST, RivalsHouse_2F_EventScript_BrendanMoveForPlayerFacingWest
 	return
 
 RivalsHouse_2F_EventScript_BrendanMoveForPlayerFacingEastOrNorth:: @ 8152B9F
@@ -110,10 +100,8 @@ RivalsHouse_2F_EventScript_RivalPostLilycove:: @ 8152BB5
 	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
 	waitmovement 0
 	checkplayergender
-	compare VAR_RESULT, MALE
-	call_if_eq RivalsHouse_2F_EventScript_MayPostLilycove
-	compare VAR_RESULT, FEMALE
-	call_if_eq RivalsHouse_2F_EventScript_BrendanPostLilycove
+	call_if_eq VAR_RESULT, MALE, RivalsHouse_2F_EventScript_MayPostLilycove
+	call_if_eq VAR_RESULT, FEMALE, RivalsHouse_2F_EventScript_BrendanPostLilycove
 	setflag FLAG_MET_RIVAL_IN_HOUSE_AFTER_LILYCOVE
 	releaseall
 	end
@@ -187,10 +175,8 @@ RivalsHouse_2F_Movement_BrendanLeaveForPlayerFacingEastOrNorth:: @ 8152C30
 LittlerootTown_MaysHouse_2F_EventScript_PC:: @ 8152C39
 	lockall
 	checkplayergender
-	compare VAR_RESULT, MALE
-	goto_if_eq LittlerootTown_MaysHouse_2F_EventScript_CheckRivalsPC
-	compare VAR_RESULT, FEMALE
-	goto_if_eq LittlerootTown_MaysHouse_2F_EventScript_CheckPlayersPC
+	goto_if_eq VAR_RESULT, MALE, LittlerootTown_MaysHouse_2F_EventScript_CheckRivalsPC
+	goto_if_eq VAR_RESULT, FEMALE, LittlerootTown_MaysHouse_2F_EventScript_CheckPlayersPC
 	end
 
 LittlerootTown_MaysHouse_2F_EventScript_CheckRivalsPC:: @ 8152C52

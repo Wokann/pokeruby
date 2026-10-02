@@ -5,8 +5,7 @@ LittlerootTown_MaysHouse_1F_MapScripts:: @ 8152879
 	.byte 0
 
 LittlerootTown_MaysHouse_1F_OnLoad:: @ 8152889
-	compare VAR_LITTLEROOT_INTRO_STATE, 6
-	call_if_lt LittlerootTown_MaysHouse_1F_EventScript_SetMovingBoxes
+	call_if_lt VAR_LITTLEROOT_INTRO_STATE, 6, LittlerootTown_MaysHouse_1F_EventScript_SetMovingBoxes
 	call_if_set FLAG_RECEIVED_RUNNING_SHOES, LittlerootTown_MaysHouse_1F_EventScript_CheckShowShoesManual
 	end
 
@@ -17,8 +16,7 @@ LittlerootTown_MaysHouse_1F_EventScript_SetMovingBoxes:: @ 815289E
 
 LittlerootTown_MaysHouse_1F_EventScript_CheckShowShoesManual:: @ 81528B1
 	checkplayergender
-	compare VAR_RESULT, FEMALE
-	goto_if_eq LittlerootTown_MaysHouse_1F_EventScript_ShowRunningShoesManual
+	goto_if_eq VAR_RESULT, FEMALE, LittlerootTown_MaysHouse_1F_EventScript_ShowRunningShoesManual
 	return
 
 LittlerootTown_MaysHouse_1F_EventScript_ShowRunningShoesManual:: @ 81528BE
@@ -26,12 +24,9 @@ LittlerootTown_MaysHouse_1F_EventScript_ShowRunningShoesManual:: @ 81528BE
 	return
 
 LittlerootTown_MaysHouse_1F_OnTransition:: @ 81528C8
-	compare VAR_LITTLEROOT_INTRO_STATE, 3
-	call_if_eq LittlerootTown_MaysHouse_1F_EventScript_MoveMomToDoor
-	compare VAR_LITTLEROOT_INTRO_STATE, 5
-	call_if_eq LittlerootTown_MaysHouse_1F_EventScript_MoveMomToStairs
-	compare VAR_LITTLEROOT_INTRO_STATE, 6
-	call_if_eq LittlerootTown_MaysHouse_1F_EventScript_MoveMomToTV
+	call_if_eq VAR_LITTLEROOT_INTRO_STATE, 3, LittlerootTown_MaysHouse_1F_EventScript_MoveMomToDoor
+	call_if_eq VAR_LITTLEROOT_INTRO_STATE, 5, LittlerootTown_MaysHouse_1F_EventScript_MoveMomToStairs
+	call_if_eq VAR_LITTLEROOT_INTRO_STATE, 6, LittlerootTown_MaysHouse_1F_EventScript_MoveMomToTV
 	end
 
 LittlerootTown_MaysHouse_1F_EventScript_MoveMomToStairs:: @ 81528EA
@@ -116,10 +111,8 @@ LittlerootTown_MaysHouse_1F_Movement_RivalMomApproach:: @ 81529C0
 LittlerootTown_MaysHouse_1F_EventScript_ShowGymReportIfPlayerFemale:: @ 81529C7
 	lockall
 	checkplayergender
-	compare VAR_RESULT, MALE
-	call_if_eq LittlerootTown_MaysHouse_1F_EventScript_ReturnIfPlayerMale
-	compare VAR_RESULT, FEMALE
-	call_if_eq LittlerootTown_MaysHouse_1F_EventScript_ShowPetalburgGymReport
+	call_if_eq VAR_RESULT, MALE, LittlerootTown_MaysHouse_1F_EventScript_ReturnIfPlayerMale
+	call_if_eq VAR_RESULT, FEMALE, LittlerootTown_MaysHouse_1F_EventScript_ShowPetalburgGymReport
 	releaseall
 	end
 
@@ -135,8 +128,7 @@ RivalsHouse_1F_EventScript_RivalMom:: @ 81529EB
 	faceplayer
 	goto_if_set FLAG_DEFEATED_RIVAL_ROUTE103, RivalsHouse_1F_EventScript_GoHomeEverySoOften
 	goto_if_set FLAG_RIVAL_LEFT_FOR_ROUTE103, RivalsHouse_1F_EventScript_RivalIsOutSomewhere
-	compare VAR_LITTLEROOT_RIVAL_STATE, 3
-	goto_if_eq RivalsHouse_1F_EventScript_WhereHasHusbandGone
+	goto_if_eq VAR_LITTLEROOT_RIVAL_STATE, 3, RivalsHouse_1F_EventScript_WhereHasHusbandGone
 	special GetRivalSonDaughterString
 	msgbox RivalsHouse_1F_Text_RivalIsUpstairsIThink, MSGBOX_DEFAULT
 	release

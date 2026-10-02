@@ -30,10 +30,8 @@ LittlerootTown_ProfessorBirchsLab_EventScript_GiveStarterEvent:: @ 8152CBE
 	playfanfare MUS_OBTAIN_ITEM
 	waitfanfare
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_WhyNotGiveNicknameToMon, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_NicknameStarter
-	compare VAR_RESULT, NO
-	goto_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_GoSeeRival
+	goto_if_eq VAR_RESULT, YES, LittlerootTown_ProfessorBirchsLab_EventScript_NicknameStarter
+	goto_if_eq VAR_RESULT, NO, LittlerootTown_ProfessorBirchsLab_EventScript_GoSeeRival
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_NicknameStarter:: @ 8152CEA
@@ -44,10 +42,8 @@ LittlerootTown_ProfessorBirchsLab_EventScript_NicknameStarter:: @ 8152CEA
 
 LittlerootTown_ProfessorBirchsLab_EventScript_GoSeeRival:: @ 8152CFA
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_MightBeGoodIdeaToGoSeeRival, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_AgreeToSeeRival
-	compare VAR_RESULT, NO
-	goto_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_DeclineSeeingRival
+	goto_if_eq VAR_RESULT, YES, LittlerootTown_ProfessorBirchsLab_EventScript_AgreeToSeeRival
+	goto_if_eq VAR_RESULT, NO, LittlerootTown_ProfessorBirchsLab_EventScript_DeclineSeeingRival
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_AgreeToSeeRival:: @ 8152D19
@@ -59,10 +55,8 @@ LittlerootTown_ProfessorBirchsLab_EventScript_AgreeToSeeRival:: @ 8152D19
 
 LittlerootTown_ProfessorBirchsLab_EventScript_DeclineSeeingRival:: @ 8152D2B
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_DontBeThatWay, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_AgreeToSeeRival
-	compare VAR_RESULT, NO
-	goto_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_DeclineSeeingRival
+	goto_if_eq VAR_RESULT, YES, LittlerootTown_ProfessorBirchsLab_EventScript_AgreeToSeeRival
+	goto_if_eq VAR_RESULT, NO, LittlerootTown_ProfessorBirchsLab_EventScript_DeclineSeeingRival
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_GivePokedexEvent:: @ 8152D4A
@@ -85,8 +79,7 @@ LittlerootTown_ProfessorBirchsLab_Movement_PlayerEnterLabForPokedex:: @ 8152D5B
 LittlerootTown_ProfessorBirchsLab_EventScript_Aide:: @ 8152D63
 	lock
 	faceplayer
-	compare VAR_BIRCH_LAB_STATE, 3
-	goto_if_ge LittlerootTown_ProfessorBirchsLab_EventScript_AideReceivedStarter
+	goto_if_ge VAR_BIRCH_LAB_STATE, 3, LittlerootTown_ProfessorBirchsLab_EventScript_AideReceivedStarter
 	goto_if_set FLAG_BIRCH_AIDE_MET, LittlerootTown_ProfessorBirchsLab_EventScript_AideAlreadyMet
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BirchAwayOnFieldwork, MSGBOX_DEFAULT
 	setflag FLAG_BIRCH_AIDE_MET
@@ -107,8 +100,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_Birch:: @ 8152D9A
 	lock
 	faceplayer
 	goto_if_unset FLAG_BIRCH_AWAY_FROM_LAB, ProfBirch_EventScript_AskRatePokedex
-	compare VAR_BIRCH_LAB_STATE, 5
-	goto_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_PokemonAwait
+	goto_if_eq VAR_BIRCH_LAB_STATE, 5, LittlerootTown_ProfessorBirchsLab_EventScript_PokemonAwait
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BirchRivalRoute103, MSGBOX_DEFAULT
 	release
 	end
@@ -122,10 +114,8 @@ LittlerootTown_ProfessorBirchsLab_EventScript_GivePokedex:: @ 8152DBA
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	checkplayergender
-	compare VAR_RESULT, MALE
-	call_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_MayGivePokeBalls
-	compare VAR_RESULT, FEMALE
-	call_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_BrendanGivePokeBalls
+	call_if_eq VAR_RESULT, MALE, LittlerootTown_ProfessorBirchsLab_EventScript_MayGivePokeBalls
+	call_if_eq VAR_RESULT, FEMALE, LittlerootTown_ProfessorBirchsLab_EventScript_BrendanGivePokeBalls
 	setvar VAR_BIRCH_LAB_STATE, 5
 	setflag FLAG_ADVENTURE_STARTED
 	setvar VAR_OLDALE_TOWN_STATE, 1
@@ -137,8 +127,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_GivePokedex:: @ 8152DBA
 LittlerootTown_ProfessorBirchsLab_EventScript_MayGivePokeBalls:: @ 8152E13
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_MayGotPokedexTooTakeThese, MSGBOX_DEFAULT
 	giveitem ITEM_POKE_BALL, 5
-	compare VAR_RESULT, FALSE
-	call_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_MayNoRoomForPokeBalls
+	call_if_eq VAR_RESULT, FALSE, LittlerootTown_ProfessorBirchsLab_EventScript_MayNoRoomForPokeBalls
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_CatchCutePokemonWithPokeBalls, MSGBOX_DEFAULT
 	setvar VAR_RESULT, MALE
 	return
@@ -146,8 +135,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_MayGivePokeBalls:: @ 8152E13
 LittlerootTown_ProfessorBirchsLab_EventScript_BrendanGivePokeBalls:: @ 8152E40
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BrendanGotPokedexTooTakeThese, MSGBOX_DEFAULT
 	giveitem ITEM_POKE_BALL, 5
-	compare VAR_RESULT, FALSE
-	call_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_BrendanNoRoomForPokeBalls
+	call_if_eq VAR_RESULT, FALSE, LittlerootTown_ProfessorBirchsLab_EventScript_BrendanNoRoomForPokeBalls
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_CatchCoolPokemonWithPokeBalls, MSGBOX_DEFAULT
 	setvar VAR_RESULT, FEMALE
 	return
@@ -186,10 +174,8 @@ LittlerootTown_ProfessorBirchsLab_EventScript_Rival:: @ 8152EA3
 	lock
 	faceplayer
 	checkplayergender
-	compare VAR_RESULT, MALE
-	call_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_MayWhereShouldIGoNext
-	compare VAR_RESULT, FEMALE
-	call_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_BrendanWhereShouldIGoNext
+	call_if_eq VAR_RESULT, MALE, LittlerootTown_ProfessorBirchsLab_EventScript_MayWhereShouldIGoNext
+	call_if_eq VAR_RESULT, FEMALE, LittlerootTown_ProfessorBirchsLab_EventScript_BrendanWhereShouldIGoNext
 	release
 	end
 
