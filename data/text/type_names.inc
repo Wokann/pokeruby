@@ -1,19 +1,19 @@
 gTypeNames:: @ 81F9870
-	.string "NORMAL$", 7
-	.string "FIGHT$", 7
-	.string "FLYING$", 7
-	.string "POISON$", 7
-	.string "GROUND$", 7
-	.string "ROCK$", 7
-	.string "BUG$", 7
-	.string "GHOST$", 7
-	.string "STEEL$", 7
-	.string "???$", 7
-	.string "FIRE$", 7
-	.string "WATER$", 7
-	.string "GRASS$", 7
-	.string "ELECTR$", 7
-	.string "PSYCHC$", 7
-	.string "ICE$", 7
-	.string "DRAGON$", 7
-	.string "DARK$", 7
+	.string "NORMAL$", 7 @ TYPE_NORMAL
+	.string "FIGHT$", 7 @ TYPE_FIGHTING
+	.string "FLYING$", 7 @ TYPE_FLYING
+	.string "POISON$", 7 @ TYPE_POISON
+	.string "GROUND$", 7 @ TYPE_GROUND
+	.string "ROCK$", 7 @ TYPE_ROCK
+	.string "BUG$", 7 @ TYPE_BUG
+	.string "GHOST$", 7 @ TYPE_GHOST
+	.string "STEEL$", 7 @ TYPE_STEEL
+	.string "???$", 7 @ TYPE_MYSTERY
+	.string "FIRE$", 7 @ TYPE_FIRE
+	.string "WATER$", 7 @ TYPE_WATER
+	.string "GRASS$", 7 @ TYPE_GRASS
+	.string "ELECTR$", 7 @ TYPE_ELECTRIC
+	.string "PSYCHC$", 7 @ TYPE_PSYCHIC
+	.string "ICE$", 7 @ TYPE_ICE
+	.string "DRAGON$", 7 @ TYPE_DRAGON
+	.string "DARK$", 7 @ TYPE_DARK

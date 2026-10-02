@@ -157,7 +157,7 @@ extern struct SpriteTemplate gCreatingSpriteTemplate;
 extern const struct CompressedSpriteSheet gTrainerFrontPicTable[];
 extern const struct MonCoords gTrainerFrontPicCoords[];
 extern const struct PokedexEntry gPokedexEntries[];
-extern const u8 gTypeNames[][7];
+extern const u8 gTypeNames[NUMBER_OF_MON_TYPES][TYPE_NAME_LENGTH + 1];
 
 static EWRAM_DATA struct PokedexView *sPokedexView = NULL;
 static EWRAM_DATA u16 sLastSelectedPokemon = 0;

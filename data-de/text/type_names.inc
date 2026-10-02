@@ -1,19 +1,19 @@
 gTypeNames:: @ 81F9870
-	.string "NORMAL$", 7
-	.string "KAMPF$", 7
-	.string "FLUG$", 7
-	.string "GIFT$", 7
-	.string "BODEN$", 7
-	.string "GEST.$", 7
-	.string "KÄFER$", 7
-	.string "GEIST$", 7
-	.string "STAHL$", 7
-	.string "???$", 7
-	.string "FEUER$", 7
-	.string "WASSER$", 7
-	.string "PFLAN.$", 7
-	.string "ELEK.$", 7
-	.string "PSYCHO$", 7
-	.string "EIS$", 7
-	.string "DRA.$", 7
-	.string "UNL.$", 7
+	.string "NORMAL$", 7 @ TYPE_NORMAL
+	.string "KAMPF$", 7 @ TYPE_FIGHTING
+	.string "FLUG$", 7 @ TYPE_FLYING
+	.string "GIFT$", 7 @ TYPE_POISON
+	.string "BODEN$", 7 @ TYPE_GROUND
+	.string "GEST.$", 7 @ TYPE_ROCK
+	.string "KÄFER$", 7 @ TYPE_BUG
+	.string "GEIST$", 7 @ TYPE_GHOST
+	.string "STAHL$", 7 @ TYPE_STEEL
+	.string "???$", 7 @ TYPE_MYSTERY
+	.string "FEUER$", 7 @ TYPE_FIRE
+	.string "WASSER$", 7 @ TYPE_WATER
+	.string "PFLAN.$", 7 @ TYPE_GRASS
+	.string "ELEK.$", 7 @ TYPE_ELECTRIC
+	.string "PSYCHO$", 7 @ TYPE_PSYCHIC
+	.string "EIS$", 7 @ TYPE_ICE
+	.string "DRA.$", 7 @ TYPE_DRAGON
+	.string "UNL.$", 7 @ TYPE_DARK

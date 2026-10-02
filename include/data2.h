@@ -2,6 +2,8 @@
 #define GUARD_DATA2_H
 
 #include "constants/abilities.h"
+#include "constants/global.h"
+#include "constants/pokemon.h"
 #include "sprite.h"
 #include "battle.h"
 
@@ -44,7 +46,7 @@ extern const u8 gSpeciesNames[][11];
 extern const u8 gMoveNames[][13];
 extern const u8 gAbilityNames[][ABILITY_NAME_LENGTH + 1];
 extern const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT];
-extern const u8 gTypeNames[][7];
+extern const u8 gTypeNames[NUMBER_OF_MON_TYPES][TYPE_NAME_LENGTH + 1];
 extern const struct ScanlineEffectParams gIntroScanlineParams16Bit;
 extern const u8 gText_ShedinjaJpnName[];
 extern const struct CompressedSpriteSheet gSmokescreenImpactSpriteSheet;

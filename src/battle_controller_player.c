@@ -1618,7 +1618,7 @@ void MoveSelectionDisplayPPNumber(void)
 }
 
 extern const u8 BattleText_ForgetMove[];
-extern const u8 gTypeNames[][7];
+extern const u8 gTypeNames[NUMBER_OF_MON_TYPES][TYPE_NAME_LENGTH + 1];
 
 void MoveSelectionDisplayMoveType(void)
 {

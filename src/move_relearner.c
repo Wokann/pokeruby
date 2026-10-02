@@ -103,7 +103,7 @@ extern u8 gTileBuffer[];
 extern const struct WindowTemplate gMenuTextWindowTemplate;
 extern const struct WindowTemplate gMoveRelearnerMenuFramesWindowTemplate;
 extern const u8 *const gContestEffectStrings[];
-extern const u8 gTypeNames[][7];
+extern const u8 gTypeNames[NUMBER_OF_MON_TYPES][TYPE_NAME_LENGTH + 1];
 extern const u8 *const gContestCategoryNames[];
 
 #ifdef GERMAN
