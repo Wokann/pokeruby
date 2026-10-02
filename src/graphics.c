@@ -1006,15 +1006,15 @@ const u16 gNamingScreenMenu_Pal[][16] =
 
 const u8 gNamingScreenBackground_Tilemap[] = INCBIN_U8("graphics/naming_screen/background.bin");
 const u8 gPokedexMenu_Gfx[] = INCBIN_U8("graphics/pokedex/menu.4bpp.lz");
-const u8 gPokedexInterface_Gfx[] = INCBIN_U8("graphics/pokedex/menu2.4bpp.lz");
-const u16 gPokedexBgHoenn_Pal[] = INCBIN_U16("graphics/pokedex/menu1.gbapal");
-const u16 gPokedexCaughtScreen_Pal[] = INCBIN_U16("graphics/pokedex/menu2.gbapal");
+const u8 gPokedexInterface_Gfx[] = INCBIN_U8("graphics/pokedex/interface.4bpp.lz");
+const u16 gPokedexBgHoenn_Pal[] = INCBIN_U16("graphics/pokedex/bg_hoenn.gbapal");
+const u16 gPokedexCaughtScreen_Pal[] = INCBIN_U16("graphics/pokedex/caught_screen.gbapal");
 
 const u8 gPokedexAreaScreenAreaUnknown_Gfx[] = INCBIN_U8("graphics/pokedex/area_unknown.4bpp.lz");
 const u16 gPokedexAreaScreenAreaUnknown_Pal[] = INCBIN_U16("graphics/pokedex/area_unknown.gbapal");
 
-const u8 gPokedexSearchMenu_Gfx[] = INCBIN_U8("graphics/pokedex/menu_search.4bpp.lz");
-const u16 gPokedexSearchMenu_Pal[] = INCBIN_U16("graphics/pokedex/menu3.gbapal");
+const u8 gPokedexSearchMenu_Gfx[] = INCBIN_U8("graphics/pokedex/search_menu.4bpp.lz");
+const u16 gPokedexSearchMenu_Pal[] = INCBIN_U16("graphics/pokedex/search_menu.gbapal");
 
 const u8 gPokenavMainMenuHeader_Gfx[] = INCBIN_U8("graphics/pokenav/left_headers/main_menu.4bpp.lz");
 const u8 gPokenavMenuOptions_Gfx[] = INCBIN_U8("graphics/pokenav/options/main_menu_labels.4bpp.lz");
@@ -1149,11 +1149,11 @@ const u16 gMonIconPalettes[][16] =
 };
 
 const u8 gPokedexList_Tilemap[] = INCBIN_U8("graphics/pokedex/list.bin.lz");
-const u8 gPokedexStartMenuMain_Tilemap[] = INCBIN_U8("graphics/pokedex/pokedex_list_menu.bin.lz");
-const u8 gPokedexStartMenuSearchResults_Tilemap[] = INCBIN_U8("graphics/pokedex/pokedex_listing_menu.bin.lz");
-const u8 gPokedexScreenSelectBarMain_Tilemap[] = INCBIN_U8("graphics/pokedex/pokedex_navbar.bin.lz");
-const u8 gPokedexScreenSelectBarSubmenu_Tilemap[] = INCBIN_U8("graphics/pokedex/pokedex_navbar_3.bin.lz");
-const u8 gPokedexInfoScreen_Tilemap[] = INCBIN_U8("graphics/pokedex/pokedex_detail_layout.bin.lz");
+const u8 gPokedexStartMenuMain_Tilemap[] = INCBIN_U8("graphics/pokedex/start_menu_main.bin.lz");
+const u8 gPokedexStartMenuSearchResults_Tilemap[] = INCBIN_U8("graphics/pokedex/start_menu_search_results.bin.lz");
+const u8 gPokedexScreenSelectBarMain_Tilemap[] = INCBIN_U8("graphics/pokedex/screen_select_bar_main.bin.lz");
+const u8 gPokedexScreenSelectBarSubmenu_Tilemap[] = INCBIN_U8("graphics/pokedex/screen_select_bar_submenu.bin.lz");
+const u8 gPokedexInfoScreen_Tilemap[] = INCBIN_U8("graphics/pokedex/info_screen.bin.lz");
 const u8 gPokedexSearchMenuNational_Tilemap[] = INCBIN_U8("graphics/pokedex/search_menu_national.bin.lz");
 
 const u8 gBagScreenLabels_Tilemap[] = INCBIN_U8("graphics/bag/menu_labels.bin");

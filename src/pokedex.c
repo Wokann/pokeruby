@@ -169,11 +169,11 @@ IntrCallback gPokedexVBlankCB;
 
 static u8 LoadSearchMenu(void);
 
-static const u16 sPokedexSearchResultsPalette[] = INCBIN_U16("graphics/pokedex/search.gbapal");
-static const u16 sPokedexBgNationalPalette[] = INCBIN_U16("graphics/pokedex/national.gbapal");
+static const u16 sPokedexSearchResultsPalette[] = INCBIN_U16("graphics/pokedex/search_results_bg.gbapal");
+static const u16 sPokedexBgNationalPalette[] = INCBIN_U16("graphics/pokedex/bg_national.gbapal");
 const u8 gUnusedPokedexPadding[0xA4] = {0};
-static const u8 sPokedexCryScreen_Tilemap[] = INCBIN_U8("graphics/pokedex/pokedex_cry_layout.bin.lz");
-static const u8 sPokedexSizeScreen_Tilemap[] = INCBIN_U8("graphics/pokedex/pokedex_size_layout.bin.lz");
+static const u8 sPokedexCryScreen_Tilemap[] = INCBIN_U8("graphics/pokedex/cry_screen.bin.lz");
+static const u8 sPokedexSizeScreen_Tilemap[] = INCBIN_U8("graphics/pokedex/size_screen.bin.lz");
 #if ENGLISH
 static const u8 sPokedexNoBall_Gfx[] = INCBIN_U8("graphics/pokedex/noball.4bpp.lz");
 #define gPokedexNoBall_Gfx sPokedexNoBall_Gfx
