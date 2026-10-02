@@ -51,7 +51,7 @@ enum
 };
 
 extern struct ToneData gCryTable[];
-extern struct ToneData gCryTable2[];
+extern struct ToneData gCryTable_Reverse[];
 
 static EWRAM_DATA u8 sIsFastForwarding = 0;
 static EWRAM_DATA u8 sDriverTest_IsCryPlaying = 0;
@@ -543,25 +543,25 @@ void Task_ProcessDriverTestInput(u8 taskId)
         {
         case 0:
             if (sDriverTest_Reverse)
-                sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable2[(128 * 0) + toneIndex]);
+                sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable_Reverse[(128 * 0) + toneIndex]);
             else
                 sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable[(128 * 0) + toneIndex]);
             break;
         case 1:
             if (sDriverTest_Reverse)
-                sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable2[(128 * 1) + toneIndex]);
+                sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable_Reverse[(128 * 1) + toneIndex]);
             else
                 sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable[(128 * 1) + toneIndex]);
             break;
         case 2:
             if (sDriverTest_Reverse)
-                sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable2[(128 * 2) + toneIndex]);
+                sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable_Reverse[(128 * 2) + toneIndex]);
             else
                 sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable[(128 * 2) + toneIndex]);
             break;
         case 3:
             if (sDriverTest_Reverse)
-                sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable2[(128 * 3) + toneIndex]);
+                sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable_Reverse[(128 * 3) + toneIndex]);
             else
                 sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable[(128 * 3) + toneIndex]);
             break;
