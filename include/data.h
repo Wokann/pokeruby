@@ -11,6 +11,13 @@
 
 struct ScanlineEffectParams;
 
+enum
+{
+    BATTLER_AFFINE_NORMAL,
+    BATTLER_AFFINE_EMERGE,
+    BATTLER_AFFINE_RETURN,
+};
+
 struct MonCoords
 {
     // This would use a bitfield, but CreateAdditionalMonSpriteForMoveAnim
