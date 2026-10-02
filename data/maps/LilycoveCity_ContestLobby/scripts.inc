@@ -30,10 +30,8 @@ LilycoveCity_ContestLobby_EventScript_ContestArtist:: @ 8158898
 	showcontestpainting CONTEST_WINNER_ARTIST
 	lockall
 	msgbox LilycoveCity_ContestLobby_Text_ShouldITakePaintingToMuseum, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_TakePaintingToMuseum
-	compare VAR_RESULT, NO
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_ConfirmDontTakePainting
+	goto_if_eq VAR_RESULT, YES, LilycoveCity_ContestLobby_EventScript_TakePaintingToMuseum
+	goto_if_eq VAR_RESULT, NO, LilycoveCity_ContestLobby_EventScript_ConfirmDontTakePainting
 	releaseall
 	end
 
@@ -43,8 +41,7 @@ LilycoveCity_ContestLobby_EventScript_TakePaintingToMuseum:: @ 81588DE
 	special SaveMuseumContestPainting
 	setvar VAR_LILYCOVE_CONTEST_LOBBY_STATE, LILYCOVE_CONTEST_LOBBY_STATE_NONE
 	specialvar VAR_RESULT, GiveMonArtistRibbon
-	compare VAR_RESULT, TRUE
-	call_if_eq LilycoveCity_ContestLobby_EventScript_ReceivedArtistRibbon
+	call_if_eq VAR_RESULT, TRUE, LilycoveCity_ContestLobby_EventScript_ReceivedArtistRibbon
 	applymovement LOCALID_CONTEST_LOBBY_ARTIST, LilycoveCity_ContestLobby_Movement_ArtistExit
 	waitmovement 0
 	removeobject LOCALID_CONTEST_LOBBY_ARTIST
@@ -55,8 +52,7 @@ LilycoveCity_ContestLobby_EventScript_TakePaintingToMuseum:: @ 81588DE
 
 LilycoveCity_ContestLobby_EventScript_ConfirmDontTakePainting:: @ 8158918
 	msgbox LilycoveCity_ContestLobby_Text_TakeHomeButIdLikeToTakeToMuseum, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_TakePaintingToMuseum
+	goto_if_eq VAR_RESULT, YES, LilycoveCity_ContestLobby_EventScript_TakePaintingToMuseum
 	msgbox LilycoveCity_ContestLobby_Text_FineThatsTheWayItIs, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_CONTEST_LOBBY_ARTIST, LilycoveCity_ContestLobby_Movement_ArtistExit
@@ -203,10 +199,8 @@ LilycoveCity_ContestLobby_EventScript_LinkContestArtist:: @ 8158A6A
 	fadescreen FADE_TO_BLACK
 	showcontestpainting CONTEST_WINNER_ARTIST
 	msgbox LilycoveCity_ContestLobby_Text_ShouldITakePaintingToMuseum, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_TakePaintingToMuseumLink
-	compare VAR_RESULT, NO
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_ConfirmDontTakePaintingLink
+	goto_if_eq VAR_RESULT, YES, LilycoveCity_ContestLobby_EventScript_TakePaintingToMuseumLink
+	goto_if_eq VAR_RESULT, NO, LilycoveCity_ContestLobby_EventScript_ConfirmDontTakePaintingLink
 	end
 
 LilycoveCity_ContestLobby_EventScript_TakePaintingToMuseumLink:: @ 8158AAE
@@ -215,8 +209,7 @@ LilycoveCity_ContestLobby_EventScript_TakePaintingToMuseumLink:: @ 8158AAE
 	special SaveMuseumContestPainting
 	setvar VAR_LILYCOVE_CONTEST_LOBBY_STATE, LILYCOVE_CONTEST_LOBBY_STATE_NONE
 	specialvar VAR_RESULT, GiveMonArtistRibbon
-	compare VAR_RESULT, TRUE
-	call_if_eq LilycoveCity_ContestLobby_EventScript_ReceivedLinkArtistRibbon
+	call_if_eq VAR_RESULT, TRUE, LilycoveCity_ContestLobby_EventScript_ReceivedLinkArtistRibbon
 	applymovement LOCALID_CONTEST_LOBBY_LINK_ARTIST, LilycoveCity_ContestLobby_Movement_LinkArtistExit
 	waitmovement 0
 	removeobject LOCALID_CONTEST_LOBBY_LINK_ARTIST
@@ -227,8 +220,7 @@ LilycoveCity_ContestLobby_EventScript_TakePaintingToMuseumLink:: @ 8158AAE
 
 LilycoveCity_ContestLobby_EventScript_ConfirmDontTakePaintingLink:: @ 8158AE8
 	msgbox LilycoveCity_ContestLobby_Text_TakeHomeButIdLikeToTakeToMuseum, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_TakePaintingToMuseumLink
+	goto_if_eq VAR_RESULT, YES, LilycoveCity_ContestLobby_EventScript_TakePaintingToMuseumLink
 	msgbox LilycoveCity_ContestLobby_Text_FineThatsTheWayItIs, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_CONTEST_LOBBY_LINK_ARTIST, LilycoveCity_ContestLobby_Movement_LinkArtistExit
@@ -303,8 +295,7 @@ LilycoveCity_ContestLobby_Movement_LinkArtistReturnToPlayer:: @ 8158B7C
 LilycoveCity_ContestLobby_EventScript_LinkContestReceptionist:: @ 8158B85
 	lockall
 	checkitem ITEM_CONTEST_PASS, 1
-	compare VAR_RESULT, FALSE
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_RegistrationsFromFourNeedContestPass
+	goto_if_eq VAR_RESULT, FALSE, LilycoveCity_ContestLobby_EventScript_RegistrationsFromFourNeedContestPass
 	goto_if_set FLAG_TEMP_2, LilycoveCity_ContestLobby_EventScript_ShowLinkContestPrompt
 	message ContestHall_Text_OnlyRegister4Players
 	waitmessage
@@ -325,12 +316,10 @@ LilycoveCity_ContestLobby_EventScript_RegistrationsFromFourNeedContestPass:: @ 8
 
 LilycoveCity_ContestLobby_EventScript_TrySaveForLinkContest:: @ 8158BC4
 	msgbox LilycoveCity_ContestLobby_Text_ProgressWillBeSaved, MSGBOX_YESNO
-	compare VAR_RESULT, NO
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_CancelEnterContest
+	goto_if_eq VAR_RESULT, NO, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
 	call Common_EventScript_SaveGame
 	erasebox 0, 0, 15, 9
-	compare VAR_RESULT, FALSE
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_CancelEnterContest
+	goto_if_eq VAR_RESULT, FALSE, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
 	setflag FLAG_TEMP_3
 	return
 
@@ -358,19 +347,13 @@ LilycoveCity_ContestLobby_EventScript_ChooseLinkContestMon:: @ 8158C42
 	msgbox LilycoveCity_ContestLobby_Text_EnterWhichPokemon1, MSGBOX_DEFAULT
 	setvar VAR_CONTEST_RANK, CONTEST_RANK_NORMAL
 	choosecontestmon
-	compare VAR_0x8004, PARTY_NOTHING_CHOSEN
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_ChooseLinkContestType
+	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, LilycoveCity_ContestLobby_EventScript_ChooseLinkContestType
 	special TryEnterContestMon
-	compare VAR_RESULT, CANT_ENTER_CONTEST
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_LinkCantEnterLowRank
-	compare VAR_RESULT, CAN_ENTER_CONTEST_EQUAL_RANK
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_EnterMonForLinkContest
-	compare VAR_RESULT, CAN_ENTER_CONTEST_HIGH_RANK
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_EnterMonForLinkContest
-	compare VAR_RESULT, CANT_ENTER_CONTEST_EGG
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_LinkCantEnterEgg
-	compare VAR_RESULT, CANT_ENTER_CONTEST_FAINTED
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_LinkCantEnterFainted
+	goto_if_eq VAR_RESULT, CANT_ENTER_CONTEST, LilycoveCity_ContestLobby_EventScript_LinkCantEnterLowRank
+	goto_if_eq VAR_RESULT, CAN_ENTER_CONTEST_EQUAL_RANK, LilycoveCity_ContestLobby_EventScript_EnterMonForLinkContest
+	goto_if_eq VAR_RESULT, CAN_ENTER_CONTEST_HIGH_RANK, LilycoveCity_ContestLobby_EventScript_EnterMonForLinkContest
+	goto_if_eq VAR_RESULT, CANT_ENTER_CONTEST_EGG, LilycoveCity_ContestLobby_EventScript_LinkCantEnterEgg
+	goto_if_eq VAR_RESULT, CANT_ENTER_CONTEST_FAINTED, LilycoveCity_ContestLobby_EventScript_LinkCantEnterFainted
 	end
 
 LilycoveCity_ContestLobby_EventScript_LinkCantEnterLowRank:: @ 8158C96
@@ -415,12 +398,9 @@ LilycoveCity_ContestLobby_EventScript_TrySetUpLinkContest:: @ 8158D24
 	waitmessage
 	copyvar VAR_0x8004, VAR_RESULT
 	special TryContestGModeLinkup
-	compare VAR_RESULT, LINKUP_DIFF_SELECTIONS
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_CancelLinkDifferentChoices
-	compare VAR_RESULT, LINKUP_FAILED
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_CancelLinkContest
-	compare VAR_RESULT, LINKUP_CONNECTION_ERROR
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_CancelLinkError
+	goto_if_eq VAR_RESULT, LINKUP_DIFF_SELECTIONS, LilycoveCity_ContestLobby_EventScript_CancelLinkDifferentChoices
+	goto_if_eq VAR_RESULT, LINKUP_FAILED, LilycoveCity_ContestLobby_EventScript_CancelLinkContest
+	goto_if_eq VAR_RESULT, LINKUP_CONNECTION_ERROR, LilycoveCity_ContestLobby_EventScript_CancelLinkError
 	messageautoscroll LilycoveCity_ContestLobby_Text_Transmitting
 	waitmessage
 	contestlinktransfer
@@ -564,8 +544,7 @@ LilycoveCity_ContestLobby_Movement_LinkReceptionistFacePlayer:: @ 8158EAE
 
 LilycoveCity_ContestLobby_EventScript_ContestReceptionist:: @ 8158EB0
 	specialvar VAR_RESULT, IsContestDebugActive
-	compare VAR_RESULT, TRUE
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_SetDebug
+	goto_if_eq VAR_RESULT, TRUE, LilycoveCity_ContestLobby_EventScript_SetDebug
 	setvar VAR_0x800B, STDSTRING_MASTER
 	setvar VAR_CONTEST_RANK, CONTEST_RANK_MASTER
 	call ContestLobby_EventScript_SpeakToContestReceptionist

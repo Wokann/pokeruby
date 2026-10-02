@@ -11,10 +11,8 @@ LilycoveCity_LilycoveMuseum_1F_EventScript_Curator:: @ 8158425
 	message LilycoveCity_LilycoveMuseum_1F_Text_ImCuratorHaveYouViewedOurPaintings
 	waitmessage
 	multichoice 20, 8, MULTI_VIEWED_PAINTINGS, TRUE
-	compare VAR_RESULT, 0
-	goto_if_eq LilycoveCity_LilycoveMuseum_1F_EventScript_SawPaintings
-	compare VAR_RESULT, 1
-	goto_if_eq LilycoveCity_LilycoveMuseum_1F_EventScript_NotYet
+	goto_if_eq VAR_RESULT, 0, LilycoveCity_LilycoveMuseum_1F_EventScript_SawPaintings
+	goto_if_eq VAR_RESULT, 1, LilycoveCity_LilycoveMuseum_1F_EventScript_NotYet
 	end
 
 LilycoveCity_LilycoveMuseum_1F_EventScript_NotYet:: @ 815844F
@@ -23,10 +21,8 @@ LilycoveCity_LilycoveMuseum_1F_EventScript_NotYet:: @ 815844F
 
 LilycoveCity_LilycoveMuseum_1F_EventScript_SawPaintings:: @ 8158458
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_HaveYouAnInterestInPaintings, MSGBOX_YESNO
-	compare VAR_RESULT, NO
-	goto_if_eq LilycoveCity_LilycoveMuseum_1F_EventScript_NotInterested
-	compare VAR_RESULT, YES
-	goto_if_eq LilycoveCity_LilycoveMuseum_1F_EventScript_InterestedInPaintings
+	goto_if_eq VAR_RESULT, NO, LilycoveCity_LilycoveMuseum_1F_EventScript_NotInterested
+	goto_if_eq VAR_RESULT, YES, LilycoveCity_LilycoveMuseum_1F_EventScript_InterestedInPaintings
 	end
 
 LilycoveCity_LilycoveMuseum_1F_EventScript_NotInterested:: @ 8158477
