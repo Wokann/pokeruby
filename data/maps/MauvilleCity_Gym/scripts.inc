@@ -93,7 +93,7 @@ MauvilleCity_Gym_EventScript_WattsonDefeated:: @ 81565DB
 	end
 
 MauvilleCity_Gym_EventScript_GiveShockWave:: @ 815661D
-	giveitem ITEM_TM34_SHOCK_WAVE
+	giveitem ITEM_TM34
 	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	msgbox MauvilleCity_Gym_Text_ExplainShockWave, MSGBOX_DEFAULT

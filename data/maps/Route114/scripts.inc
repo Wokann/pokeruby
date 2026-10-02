@@ -28,7 +28,7 @@ Route114_EventScript_RoarGentleman:: @ 8150782
 	faceplayer
 	goto_if_set FLAG_RECEIVED_TM_ROAR, Route114_EventScript_ReceivedRoar
 	msgbox Route114_Text_AllMyMonDoesIsRoarTakeThis, MSGBOX_DEFAULT
-	giveitem ITEM_TM05_ROAR
+	giveitem ITEM_TM05
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_TM_ROAR
 	msgbox Route114_Text_ExplainRoar, MSGBOX_DEFAULT

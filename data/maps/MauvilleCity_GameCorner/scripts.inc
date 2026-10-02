@@ -265,27 +265,27 @@ MauvilleCity_GameCorner_EventScript_ChooseTMPrize:: @ 8156D54
 
 MauvilleCity_GameCorner_EventScript_TMDoubleTeam:: @ 8156DA6
 	setvar VAR_TEMP_1, 1
-	bufferitemname STR_VAR_1, ITEM_TM32_DOUBLE_TEAM
+	bufferitemname STR_VAR_1, ITEM_TM32
 	goto MauvilleCity_GameCorner_EventScript_ConfirmTMPrize
 
 MauvilleCity_GameCorner_EventScript_TMPsychic:: @ 8156DB4
 	setvar VAR_TEMP_1, 2
-	bufferitemname STR_VAR_1, ITEM_TM29_PSYCHIC
+	bufferitemname STR_VAR_1, ITEM_TM29
 	goto MauvilleCity_GameCorner_EventScript_ConfirmTMPrize
 
 MauvilleCity_GameCorner_EventScript_TMFlamethrower:: @ 8156DC2
 	setvar VAR_TEMP_1, 3
-	bufferitemname STR_VAR_1, ITEM_TM35_FLAMETHROWER
+	bufferitemname STR_VAR_1, ITEM_TM35
 	goto MauvilleCity_GameCorner_EventScript_ConfirmTMPrize
 
 MauvilleCity_GameCorner_EventScript_TMThunderbolt:: @ 8156DD0
 	setvar VAR_TEMP_1, 4
-	bufferitemname STR_VAR_1, ITEM_TM24_THUNDERBOLT
+	bufferitemname STR_VAR_1, ITEM_TM24
 	goto MauvilleCity_GameCorner_EventScript_ConfirmTMPrize
 
 MauvilleCity_GameCorner_EventScript_TMIceBeam:: @ 8156DDE
 	setvar VAR_TEMP_1, 5
-	bufferitemname STR_VAR_1, ITEM_TM13_ICE_BEAM
+	bufferitemname STR_VAR_1, ITEM_TM13
 	goto MauvilleCity_GameCorner_EventScript_ConfirmTMPrize
 
 MauvilleCity_GameCorner_EventScript_ConfirmTMPrize:: @ 8156DEC
@@ -304,11 +304,11 @@ MauvilleCity_GameCorner_EventScript_BuyTMDoubleTeam:: @ 8156E3C
 	checkcoins VAR_TEMP_2
 	compare VAR_TEMP_2, TM_DOUBLE_TEAM_COINS
 	goto_if_lt MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForTM
-	checkitemspace ITEM_TM32_DOUBLE_TEAM, 1
+	checkitemspace ITEM_TM32, 1
 	compare VAR_RESULT, FALSE
 	goto_if_eq MauvilleCity_GameCorner_EventScript_NoRoomForTM
 	removecoins TM_DOUBLE_TEAM_COINS
-	additem ITEM_TM32_DOUBLE_TEAM
+	additem ITEM_TM32
 	updatecoinsbox 0, 0
 	playse SE_SHOP
 	msgbox MauvilleCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
@@ -319,11 +319,11 @@ MauvilleCity_GameCorner_EventScript_BuyTMPsychic:: @ 8156E76
 	checkcoins VAR_TEMP_2
 	compare VAR_TEMP_2, TM_PSYCHIC_COINS
 	goto_if_lt MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForTM
-	checkitemspace ITEM_TM29_PSYCHIC, 1
+	checkitemspace ITEM_TM29, 1
 	compare VAR_RESULT, FALSE
 	goto_if_eq MauvilleCity_GameCorner_EventScript_NoRoomForTM
 	removecoins TM_PSYCHIC_COINS
-	additem ITEM_TM29_PSYCHIC
+	additem ITEM_TM29
 	updatecoinsbox 0, 0
 	playse SE_SHOP
 	msgbox MauvilleCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
@@ -334,11 +334,11 @@ MauvilleCity_GameCorner_EventScript_BuyTMFlamethrower:: @ 8156EB0
 	checkcoins VAR_TEMP_2
 	compare VAR_TEMP_2, TM_FLAMETHROWER_COINS
 	goto_if_lt MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForTM
-	checkitemspace ITEM_TM35_FLAMETHROWER, 1
+	checkitemspace ITEM_TM35, 1
 	compare VAR_RESULT, FALSE
 	goto_if_eq MauvilleCity_GameCorner_EventScript_NoRoomForTM
 	removecoins TM_FLAMETHROWER_COINS
-	additem ITEM_TM35_FLAMETHROWER
+	additem ITEM_TM35
 	updatecoinsbox 0, 0
 	playse SE_SHOP
 	msgbox MauvilleCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
@@ -349,11 +349,11 @@ MauvilleCity_GameCorner_EventScript_BuyTMThunderbolt:: @ 8156EEA
 	checkcoins VAR_TEMP_2
 	compare VAR_TEMP_2, TM_THUNDERBOLT_COINS
 	goto_if_lt MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForTM
-	checkitemspace ITEM_TM24_THUNDERBOLT, 1
+	checkitemspace ITEM_TM24, 1
 	compare VAR_RESULT, FALSE
 	goto_if_eq MauvilleCity_GameCorner_EventScript_NoRoomForTM
 	removecoins TM_THUNDERBOLT_COINS
-	additem ITEM_TM24_THUNDERBOLT
+	additem ITEM_TM24
 	updatecoinsbox 0, 0
 	playse SE_SHOP
 	msgbox MauvilleCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
@@ -364,11 +364,11 @@ MauvilleCity_GameCorner_EventScript_BuyTMIceBeam:: @ 8156F24
 	checkcoins VAR_TEMP_2
 	compare VAR_TEMP_2, TM_ICE_BEAM_COINS
 	goto_if_lt MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForTM
-	checkitemspace ITEM_TM13_ICE_BEAM, 1
+	checkitemspace ITEM_TM13, 1
 	compare VAR_RESULT, FALSE
 	goto_if_eq MauvilleCity_GameCorner_EventScript_NoRoomForTM
 	removecoins TM_ICE_BEAM_COINS
-	additem ITEM_TM13_ICE_BEAM
+	additem ITEM_TM13
 	updatecoinsbox 0, 0
 	playse SE_SHOP
 	msgbox MauvilleCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT

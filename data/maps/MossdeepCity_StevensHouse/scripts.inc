@@ -38,7 +38,7 @@ MossdeepCity_StevensHouse_EventScript_StevenGivesDive:: @ 815AA0B
 	applymovement LOCALID_STEVENS_HOUSE_STEVEN, MossdeepCity_StevensHouse_Movement_StevenApproachPlayer
 	waitmovement 0
 	msgbox MossdeepCity_StevensHouse_Text_YouveEarnedHMDive, MSGBOX_DEFAULT
-	giveitem ITEM_HM08_DIVE
+	giveitem ITEM_HM08
 	setflag FLAG_RECEIVED_HM_DIVE
 	setflag FLAG_OMIT_DIVE_FROM_STEVEN_LETTER
 	msgbox MossdeepCity_StevensHouse_Text_ExplainDive, MSGBOX_DEFAULT
@@ -123,6 +123,6 @@ MossdeepCity_StevensHouse_EventScript_LetterWithoutDive:: @ 815AB16
 	end
 
 MossdeepCity_StevensHouse_EventScript_DiveItemBall:: @ 815AB20
-	finditem ITEM_HM08_DIVE
+	finditem ITEM_HM08
 	setflag FLAG_RECEIVED_HM_DIVE
 	end

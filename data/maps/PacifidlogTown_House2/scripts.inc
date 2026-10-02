@@ -41,7 +41,7 @@ PacifidlogTown_House2_EventScript_ClearReceivedFanClubTM:: @ 81541E8
 
 PacifidlogTown_House2_EventScript_GiveReturn:: @ 81541EC
 	msgbox PacifidlogTown_House2_Text_AdoringPokemonTakeThis, MSGBOX_DEFAULT
-	giveitem ITEM_TM27_RETURN
+	giveitem ITEM_TM27
 	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_FANCLUB_TM_THIS_WEEK
@@ -57,7 +57,7 @@ PacifidlogTown_House2_EventScript_PutInEffort:: @ 815421B
 
 PacifidlogTown_House2_EventScript_GiveFrustration:: @ 8154225
 	msgbox PacifidlogTown_House2_Text_ViciousPokemonTakeThis, MSGBOX_DEFAULT
-	giveitem ITEM_TM21_FRUSTRATION
+	giveitem ITEM_TM21
 	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_FANCLUB_TM_THIS_WEEK

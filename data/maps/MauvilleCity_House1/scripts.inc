@@ -6,7 +6,7 @@ MauvilleCity_House1_EventScript_RockSmashHMMan:: @ 81569FD
 	faceplayer
 	goto_if_set FLAG_RECEIVED_HM_ROCK_SMASH, MauvilleCity_House1_EventScript_ReceivedRockSmash
 	msgbox MauvilleCity_House1_Text_TakeHMRockSmash, MSGBOX_DEFAULT
-	giveitem ITEM_HM06_ROCK_SMASH
+	giveitem ITEM_HM06
 	setflag FLAG_RECEIVED_HM_ROCK_SMASH
 	msgbox MauvilleCity_House1_Text_ExplainRockSmash, MSGBOX_DEFAULT
 	release

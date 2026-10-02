@@ -6,7 +6,7 @@ SootopolisCity_House1_EventScript_BrickBreakBlackBelt:: @ 815B29B
 	faceplayer
 	goto_if_set FLAG_RECEIVED_TM_BRICK_BREAK, SootopolisCity_House1_EventScript_ReceivedBrickBreak
 	msgbox SootopolisCity_House1_Text_DevelopedThisTM, MSGBOX_DEFAULT
-	giveitem ITEM_TM31_BRICK_BREAK
+	giveitem ITEM_TM31
 	setflag FLAG_RECEIVED_TM_BRICK_BREAK
 	msgbox SootopolisCity_House1_Text_ExplainBrickBreak, MSGBOX_DEFAULT
 	release

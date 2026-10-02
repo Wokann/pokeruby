@@ -3193,7 +3193,7 @@ void Task_ConfirmTakeHeldMail(u8 taskId)
 
 u16 ItemIdToBattleMoveId(u16 item)
 {
-    u16 machineNumber = item - ITEM_TM01_FOCUS_PUNCH;
+    u16 machineNumber = item - ITEM_TM01;
     return sTmHmMoves[machineNumber];
 }
 
@@ -3267,7 +3267,7 @@ void Task_TeamMonTMMove2(u8 taskId)
     StringExpandPlaceholders(gStringVar4, gText_PkmnLearnedMove3);
     DisplayPartyMenuMessage(gStringVar4, 1);
     AdjustFriendship(sPartyMenuAction.selectedMon, FRIENDSHIP_EVENT_LEARN_TMHM);
-    if (gPartyMenu.pmMoveLearningFromLevelUp == FALSE && sPartyMenuAction.itemOrMoveId < ITEM_HM01_CUT)
+    if (gPartyMenu.pmMoveLearningFromLevelUp == FALSE && sPartyMenuAction.itemOrMoveId < ITEM_HM01)
         RemoveBagItem(sPartyMenuAction.itemOrMoveId, 1);
     gTasks[taskId].func = Task_TeamMonTMMove3;
 }

@@ -163,7 +163,7 @@ SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGrunt:: @ 8155C3A
 	applymovement LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT, Common_Movement_Delay48
 	waitmovement 0
 	msgbox SlateportCity_OceanicMuseum_1F_Text_RememberMeTakeThis, MSGBOX_DEFAULT
-	giveitem ITEM_TM46_THIEF
+	giveitem ITEM_TM46
 	compare VAR_RESULT, FALSE
 	goto_if_eq SlateportCity_OceanicMuseum_1F_EventScript_NoRoomForThief
 	setflag FLAG_RECEIVED_TM_THIEF

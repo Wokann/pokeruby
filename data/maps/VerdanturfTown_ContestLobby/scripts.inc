@@ -103,7 +103,7 @@ VerdanturfTown_ContestLobby_EventScript_GirlGivesTM45:: @ 8153E47
 	faceplayer
 	goto_if_set FLAG_RECEIVED_TM_ATTRACT, VerdanturfTown_ContestLobby_EventScript_GirlAfterGivingTM45
 	msgbox VerdanturfTown_ContestLobby_Text_GirlGivesTM45, MSGBOX_DEFAULT
-	giveitem ITEM_TM45_ATTRACT
+	giveitem ITEM_TM45
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_TM_ATTRACT
 	release

@@ -20,7 +20,7 @@ PetalburgCity_WallysHouse_EventScript_GiveHMSurfAfterVictoryRoad:: @ 81543F7
 
 PetalburgCity_WallysHouse_EventScript_GiveHMSurf:: @ 8154406
 	msgbox PetalburgCity_WallysHouse_Text_WallyHasBecomeHealthy, MSGBOX_DEFAULT
-	giveitem ITEM_HM_SURF
+	giveitem ITEM_HM03
 	setflag FLAG_RECEIVED_HM_SURF
 	msgbox PetalburgCity_WallysHouse_Text_SurfGoAllSortsOfPlaces, MSGBOX_DEFAULT
 	release

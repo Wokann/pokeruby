@@ -43,7 +43,7 @@ Route110_EventScript_ItemDireHit:: @ 81B14BB
 	end
 
 Route111_EventScript_ItemTMSandstorm:: @ 81B14C8
-	finditem ITEM_TM_SANDSTORM
+	finditem ITEM_TM37
 	end
 
 Route111_EventScript_ItemStardust:: @ 81B14D5
@@ -79,7 +79,7 @@ Route115_EventScript_ItemSuperPotion:: @ 81B1530
 	end
 
 Route115_EventScript_ItemTMFocusPunch:: @ 81B153D
-	finditem ITEM_TM01_FOCUS_PUNCH
+	finditem ITEM_TM01
 	end
 
 Route115_EventScript_ItemIron:: @ 81B154A
@@ -291,11 +291,11 @@ FieryPath_EventScript_ItemFireStone:: @ 81B17E1
 	end
 
 FieryPath_EventScript_ItemTMToxic:: @ 81B17EE
-	finditem ITEM_TM06_TOXIC
+	finditem ITEM_TM06
 	end
 
 MeteorFalls_1F_1R_EventScript_ItemTMIronTail:: @ 81B17FB
-	finditem ITEM_TM23_IRON_TAIL
+	finditem ITEM_TM23
 	end
 
 MeteorFalls_1F_1R_EventScript_ItemFullHeal:: @ 81B1808
@@ -311,7 +311,7 @@ MeteorFalls_1F_1R_EventScript_ItemPPUP:: @ 81B1822
 	end
 
 MeteorFalls_B1F_2R_EventScript_ItemTMDragonClaw:: @ 81B182F
-	finditem ITEM_TM02_DRAGON_CLAW
+	finditem ITEM_TM02
 	end
 
 NewMauville_Inside_EventScript_ItemUltraBall:: @ 81B183C
@@ -347,7 +347,7 @@ AbandonedShip_Rooms2_B1F_EventScript_ItemDiveBall:: @ 81B1897
 	end
 
 AbandonedShip_Room_B1F_EventScript_ItemTMIceBeam:: @ 81B18A4
-	finditem ITEM_TM13_ICE_BEAM
+	finditem ITEM_TM13
 	end
 
 AbandonedShip_Rooms2_1F_EventScript_ItemRevive:: @ 81B18B1
@@ -371,15 +371,15 @@ AbandonedShip_HiddenFloorRooms_EventScript_ItemWaterStone:: @ 81B18E5
 	end
 
 AbandonedShip_HiddenFloorRooms_EventScript_ItemTMRainDance:: @ 81B18F2
-	finditem ITEM_TM18_RAIN_DANCE
+	finditem ITEM_TM18
 	end
 
 ScorchedSlab_EventScript_ItemTMSunnyDay:: @ 81B18FF
-	finditem ITEM_TM11_SUNNY_DAY
+	finditem ITEM_TM11
 	end
 
 SafariZone_Northwest_EventScript_ItemTMSolarBeam:: @ 81B190C
-	finditem ITEM_TM22_SOLARBEAM
+	finditem ITEM_TM22
 	end
 
 SafariZone_Northeast_EventScript_ItemCalcium:: @ 81B1919
@@ -407,7 +407,7 @@ MtPyre_5F_EventScript_ItemLaxIncense:: @ 81B195A
 	end
 
 MtPyre_6F_EventScript_ItemTMShadowBall:: @ 81B1967
-	finditem ITEM_TM30_SHADOW_BALL
+	finditem ITEM_TM30
 	end
 
 MtPyre_Exterior_EventScript_ItemMaxPotion:: @ 81B1974
@@ -415,7 +415,7 @@ MtPyre_Exterior_EventScript_ItemMaxPotion:: @ 81B1974
 	end
 
 MtPyre_Exterior_EventScript_ItemTMSkillSwap:: @ 81B1981
-	finditem ITEM_TM48_SKILL_SWAP
+	finditem ITEM_TM48
 	end
 
 AquaHideout_B1F_EventScript_ItemMasterBall:: @ 81B198E
@@ -463,7 +463,7 @@ ShoalCave_LowTideStairsRoom_EventScript_ItemIceHeal:: @ 81B1A10
 	end
 
 ShoalCave_LowTideIceRoom_EventScript_ItemTMHail:: @ 81B1A1D
-	finditem ITEM_TM07_HAIL
+	finditem ITEM_TM07
 	end
 
 ShoalCave_LowTideIceRoom_EventScript_ItemNeverMeltIce:: @ 81B1A2A
@@ -471,11 +471,11 @@ ShoalCave_LowTideIceRoom_EventScript_ItemNeverMeltIce:: @ 81B1A2A
 	end
 
 SeafloorCavern_Room9_EventScript_ItemTMEarthquake:: @ 81B1A37
-	finditem ITEM_TM26_EARTHQUAKE
+	finditem ITEM_TM26
 	end
 
 CaveOfOrigin_B3F_EventScript_ItemHMWaterfall:: @ 81B1A44
-	finditem ITEM_HM07_WATERFALL
+	finditem ITEM_HM07
 	end
 
 Route110_TrickHousePuzzle1_EventScript_ItemOrangeMail:: @ 81B1A51
@@ -523,7 +523,7 @@ VictoryRoad_1F_EventScript_ItemPPUp:: @ 81B1AD3
 	end
 
 VictoryRoad_B1F_EventScript_ItemTMPsychic:: @ 81B1AE0
-	finditem ITEM_TM29_PSYCHIC
+	finditem ITEM_TM29
 	end
 
 VictoryRoad_B1F_EventScript_ItemFullRestore:: @ 81B1AED
@@ -535,5 +535,5 @@ VictoryRoad_B2F_EventScript_ItemFullHeal:: @ 81B1AFA
 	end
 
 EventScript_UnusedItemHMDive:: @ 81B1B07
-	finditem ITEM_HM08_DIVE
+	finditem ITEM_HM08
 	end

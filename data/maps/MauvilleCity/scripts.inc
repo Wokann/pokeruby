@@ -298,7 +298,7 @@ MauvilleCity_EventScript_BegunNewMauville:: @ 814C332
 
 MauvilleCity_EventScript_CompletedNewMauville:: @ 814C33C
 	msgbox MauvilleCity_Text_WattsonThanksTakeTM, MSGBOX_DEFAULT
-	giveitem ITEM_TM24_THUNDERBOLT
+	giveitem ITEM_TM24
 	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_GOT_TM_THUNDERBOLT_FROM_WATTSON

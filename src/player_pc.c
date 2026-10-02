@@ -878,7 +878,7 @@ static void ItemStorage_DrawTMHMEntry(struct ItemSlot *itemSlot, u8 y, int isSwa
 {
     ItemStorage_DrawItemName(itemSlot, y, isSwapSelected);
 
-    if(itemSlot->itemId < ITEM_HM01_CUT)
+    if(itemSlot->itemId < ITEM_HM01)
         ItemStorage_DrawItemQuantity(itemSlot->quantity, STR_CONV_MODE_RIGHT_ALIGN, y, 3, isSwapSelected);
     else
         ItemStorage_DrawItemVoidQuantity(y); // HMs do not have a quantity.

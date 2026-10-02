@@ -402,7 +402,7 @@ PetalburgCity_Gym_EventScript_NormanBattle:: @ 81549D6
 	end
 
 PetalburgCity_Gym_EventScript_GiveFacade2:: @ 8154A2C
-	giveitem ITEM_TM_FACADE
+	giveitem ITEM_TM42
 	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_TM_FACADE

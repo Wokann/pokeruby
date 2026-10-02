@@ -6,7 +6,7 @@ SSTidalRooms_EventScript_SnatchGiver:: @ 815FF06
 	faceplayer
 	goto_if_set FLAG_RECEIVED_TM_SNATCH, SSTidalRooms_EventScript_ExplainSnatch
 	msgbox SSTidalRooms_Text_NotSuspiciousTakeThis, MSGBOX_DEFAULT
-	giveitem ITEM_TM_SNATCH
+	giveitem ITEM_TM49
 	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_TM_SNATCH

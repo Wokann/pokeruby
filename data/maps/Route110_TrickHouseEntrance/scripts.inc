@@ -369,7 +369,7 @@ Route110_TrickHouseEntrance_EventScript_GivePuzzle4Reward:: @ 8161452
 	end
 
 Route110_TrickHouseEntrance_EventScript_GivePuzzle5Reward:: @ 816147E
-	giveitem ITEM_TM12_TAUNT
+	giveitem ITEM_TM12
 	goto_if_eq VAR_RESULT, TRUE, Route110_TrickHouseEntrance_EventScript_GotReward
 	call_if_eq VAR_RESULT, FALSE, Common_EventScript_BagIsFull
 	msgbox Route110_TrickHouseEntrance_Text_DidYouNotComeToClaimReward, MSGBOX_DEFAULT

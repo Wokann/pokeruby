@@ -106,7 +106,7 @@ SootopolisCity_Gym_1F_EventScript_WallaceDefeated:: @ 815B02D
 	end
 
 SootopolisCity_Gym_1F_EventScript_GiveWaterPulse2:: @ 815B056
-	giveitem ITEM_TM03_WATER_PULSE
+	giveitem ITEM_TM03
 	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	msgbox SootopolisCity_Gym_1F_Text_ExplainWaterPulse, MSGBOX_DEFAULT

@@ -128,7 +128,7 @@ size_t BuildDebugMysteryEventCheriBerryGiftScript(u8 *dest)
 
 size_t BuildDebugMysteryEventFocusPunchGiftScript(u8 *dest)
 {
-    return BuildDebugMysteryEventRecordMixingGiftScript(dest, ITEM_TM01_FOCUS_PUNCH);
+    return BuildDebugMysteryEventRecordMixingGiftScript(dest, ITEM_TM01);
 }
 
 extern u8 gDebugMysteryEventEnigmaBerryScript[];

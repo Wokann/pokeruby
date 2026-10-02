@@ -8,7 +8,7 @@ Route111_EventScript_SecretPowerMan:: @ 81A3858
 	end
 
 Route111_EventScript_GiveSecretPower:: @ 81A3877
-	giveitem ITEM_TM_SECRET_POWER
+	giveitem ITEM_TM43
 	goto_if_eq VAR_RESULT, FALSE, Route111_EventScript_NoRoomForSecretPower
 	msgbox Route111_Text_ExplainSecretPower, MSGBOX_DEFAULT
 	closemessage
