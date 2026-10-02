@@ -5,10 +5,10 @@ const u16 gBattleTextboxTiles[] = INCBIN_U16("graphics/battle_interface/textbox.
 const u16 gBattleTextboxPalette[] = INCBIN_U16("graphics/battle_interface/textbox.gbapal.lz");
 const u16 gBattleTextboxTilemap[] = INCBIN_U16("graphics/battle_interface/textbox_map.bin");
 
-const u8 gMonFrontPic_CircledQuestionMark[] = INCBIN_U8("graphics/pokemon/circled_question_mark/front.4bpp.lz");
-const u8 gMonBackPic_CircledQuestionMark[] = INCBIN_U8("graphics/pokemon/circled_question_mark/back.4bpp.lz");
-const u16 gMonPalette_CircledQuestionMark[] = INCBIN_U16("graphics/pokemon/circled_question_mark/normal.gbapal.lz");
-const u16 gMonShinyPalette_CircledQuestionMark[] = INCBIN_U16("graphics/pokemon/circled_question_mark/shiny.gbapal.lz");
+const u8 gMonFrontPic_CircledQuestionMark[] = INCBIN_U8("graphics/pokemon/question_mark/circled/front.4bpp.lz");
+const u8 gMonBackPic_CircledQuestionMark[] = INCBIN_U8("graphics/pokemon/question_mark/circled/back.4bpp.lz");
+const u16 gMonPalette_CircledQuestionMark[] = INCBIN_U16("graphics/pokemon/question_mark/circled/normal.gbapal.lz");
+const u16 gMonShinyPalette_CircledQuestionMark[] = INCBIN_U16("graphics/pokemon/question_mark/circled/shiny.gbapal.lz");
 
 // The test menu debug battle tileset. This uses the old Crystal
 // charmap and rendering method (it uses tiles instead of text).
