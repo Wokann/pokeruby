@@ -441,6 +441,10 @@
 	createvisualtask AnimTask_ShrinkTargetCopy, \priority, \unk0, \unk1
 	.endm
 
+	.macro create_leaf_blade_task priority=5
+	createvisualtask AnimTask_LeafBlade, \priority
+	.endm
+
 	.macro blend_color_cycle priority=2, selector:req, delay:req, num_blends:req, initial_blend_y:req, target_blend_y:req, color:req
 	createvisualtask AnimTask_BlendColorCycle, \priority, \selector, \delay, \num_blends, \initial_blend_y, \target_blend_y, \color
 	.endm

@@ -4497,7 +4497,7 @@ Move_CALM_MIND: @ 81CD6F7
 Move_LEAF_BLADE: @ 81CD775
 	loadspritegfx ANIM_TAG_LEAF
 	loadspritegfx ANIM_TAG_CROSS_IMPACT
-	createvisualtask AnimTask_LeafBlade, 5
+	create_leaf_blade_task
 	delay 2
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
 	playsewithpan SE_M_CUT, SOUND_PAN_TARGET
