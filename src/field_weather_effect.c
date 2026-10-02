@@ -13,8 +13,8 @@
 
 const u16 gCloudsWeatherPalette[] = INCBIN_U16("graphics/weather/1.gbapal");
 const u16 gSandstormWeatherPalette[] = INCBIN_U16("graphics/weather/2.gbapal");
-const u8 gWeatherFogDiagonalTiles[] = INCBIN_U8("graphics/weather/fog2.4bpp");
-const u8 gWeatherFogHorizontalTiles[] = INCBIN_U8("graphics/weather/fog1.4bpp");
+const u8 gWeatherFogDiagonalTiles[] = INCBIN_U8("graphics/weather/fog_diagonal.4bpp");
+const u8 gWeatherFogHorizontalTiles[] = INCBIN_U8("graphics/weather/fog_horizontal.4bpp");
 const u8 gWeatherCloudTiles[] = INCBIN_U8("graphics/weather/cloud.4bpp");
 const u8 gWeatherSnow1Tiles[] = INCBIN_U8("graphics/weather/snow0.4bpp");
 const u8 gWeatherSnow2Tiles[] = INCBIN_U8("graphics/weather/snow1.4bpp");

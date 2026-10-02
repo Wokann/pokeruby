@@ -202,7 +202,7 @@ static const u8 *const sDebugText_Weather[] =
 
 #endif
 
-const u16 gFogPalette[] = INCBIN_U16("graphics/weather/0.gbapal");
+const u16 gFogPalette[] = INCBIN_U16("graphics/weather/fog.gbapal");
 
 void StartWeather(void)
 {
