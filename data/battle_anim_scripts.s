@@ -2102,7 +2102,7 @@ Move_MEAN_LOOK: @ 81CA31A
 
 Move_ROCK_THROW: @ 81CA35F
 	loadspritegfx ANIM_TAG_ROCKS
-	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_TARGET, 2, 6, 1, 15, 1
+	shake_mon_or_platform unused_anim_battler=ANIM_TARGET, velocity=6, shake_timer=1, shake_duration=15, type=SHAKE_BG_Y
 	createsprite gFallingRockSpriteTemplate, ANIM_TARGET, 2, 0, 1, 0, 0
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	delay 6
@@ -2124,7 +2124,7 @@ Move_ROCK_THROW: @ 81CA35F
 Move_ROCK_SLIDE: @ 81CA3EB
 	loadspritegfx ANIM_TAG_ROCKS
 	monbg ANIM_DEF_PARTNER
-	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_ATTACKER, 2, 7, 1, 11, 1
+	shake_mon_or_platform velocity=7, shake_timer=1, shake_duration=11, type=SHAKE_BG_Y
 	createsprite gFallingRockSpriteTemplate, ANIM_TARGET, 2, -5, 1, -5, 1
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	delay 2
@@ -2908,7 +2908,7 @@ Move_BARRAGE: @ 81CB533
 	createvisualtask AnimTask_BarrageBall, 3
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
 	delay 24
-	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_ATTACKER, 2, 8, 1, 40, 1
+	shake_mon_or_platform velocity=8, shake_timer=1, shake_duration=40, type=SHAKE_BG_Y
 	createvisualtask AnimTask_ShakeMon, 3, ANIM_TARGET, 0, 4, 20, 1
 	createvisualtask AnimTask_ShakeMon, 3, ANIM_DEF_PARTNER, 0, 4, 20, 1
 	loopsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET, 8, 2
@@ -3658,7 +3658,7 @@ Move_SUPERPOWER: @ 81CC3A3
 	createsprite gSuperpowerOrbSpriteTemplate, ANIM_TARGET, 2, ANIM_ATTACKER
 	playsewithpan SE_M_MEGA_KICK, SOUND_PAN_ATTACKER
 	delay 20
-	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_ATTACKER, 2, 4, 1, 180, 1
+	shake_mon_or_platform velocity=4, shake_timer=1, shake_duration=180, type=SHAKE_BG_Y
 	createvisualtask SoundTask_PlaySE2WithPanning, 5, SE_M_EARTHQUAKE, 0
 	delay 40
 	createsprite gSuperpowerRockSpriteTemplate, ANIM_ATTACKER, 41, 200, 96, 1, 120
