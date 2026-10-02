@@ -105,7 +105,7 @@ $(MENUGFXDIR)/wordgroup_frame.4bpp: GFX_OPTS := -num_tiles 65
 
 $(MENUGFXDIR)/party_menu_misc.4bpp: GFX_OPTS := -num_tiles 116
 
-$(MENUGFXDIR)/status_screen.4bpp: GFX_OPTS := -num_tiles 217
+graphics/summary_screen/tiles.4bpp: GFX_OPTS := -num_tiles 217
 
 $(MENUGFXDIR)/mon_markings_menu.4bpp: GFX_OPTS := -num_tiles 41
 
