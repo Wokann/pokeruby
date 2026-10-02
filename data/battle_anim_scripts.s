@@ -1662,12 +1662,12 @@ Explosion1:
 Move_DEFENSE_CURL: @ 81C977C
 	loadspritegfx ANIM_TAG_ECLIPSING_ORB
 	loopsewithpan SE_M_TRI_ATTACK, SOUND_PAN_ATTACKER, 18, 3
-	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_ATTACKER, FALSE
+	set_grayscale_pal battler=ANIM_ATTACKER
 	createvisualtask AnimTask_DefenseCurlDeformMon, 5
 	waitforvisualfinish
 	createsprite gEclipsingOrbSpriteTemplate, ANIM_ATTACKER, 2, 0, 6, 0, 1
 	waitforvisualfinish
-	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_ATTACKER, TRUE
+	set_original_pal battler=ANIM_ATTACKER
 	waitforvisualfinish
 	end
 
@@ -2964,7 +2964,7 @@ SkyAttackUnleash:
 	monbg ANIM_ATTACKER
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 0, 0, 16, RGB_WHITE
 	delay 4
-	createvisualtask AnimTask_AttackerFadeToInvisible, 5, 0
+	attacker_fade_to_invisible priority=5, step_delay=0
 	waitforvisualfinish
 	createvisualtask SoundTask_PlaySE2WithPanning, 5, 238, -64
 	createsprite gSkyAttackBirdSpriteTemplate, ANIM_TARGET, 2
@@ -2972,7 +2972,7 @@ SkyAttackUnleash:
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 10, 0, 18, 1
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, 141, 63
 	delay 20
-	createvisualtask AnimTask_AttackerFadeFromInvisible, 5, 1
+	attacker_fade_from_invisible priority=5, step_delay=1
 	delay 2
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 0, 15, 0, RGB_WHITE
 	waitforvisualfinish
@@ -3877,13 +3877,13 @@ Move_CAMOUFLAGE: @ 81CC8D2
 	setalpha 16, 0
 	createvisualtask AnimTask_SetCamouflageBlend, 5, F_PAL_ATTACKER, 3, 0, 14
 	delay 16
-	createvisualtask AnimTask_AttackerFadeToInvisible, 2, 4
+	attacker_fade_to_invisible step_delay=4
 	playsewithpan SE_M_FAINT_ATTACK, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	delay 8
 	createvisualtask AnimTask_SetCamouflageBlend, 5, F_PAL_ATTACKER, 0, 0, 0
 	waitforvisualfinish
-	createvisualtask AnimTask_AttackerFadeFromInvisible, 2, 1
+	attacker_fade_from_invisible step_delay=1
 	waitforvisualfinish
 	blendoff
 	clearmonbg ANIM_ATK_PARTNER
@@ -10476,7 +10476,7 @@ General_SmokeballEscape: @ 81D6690
 	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_ATTACKER, 124, 2, 14, -20, 30
 	delay 4
 	playsewithpan SE_BALL_OPEN, SOUND_PAN_TARGET
-	createvisualtask AnimTask_AttackerFadeToInvisible, 2, 2
+	attacker_fade_to_invisible step_delay=2
 	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_ATTACKER, 123, 3, 4, 4, 30
 	delay 14
 	playsewithpan SE_BALL_OPEN, SOUND_PAN_TARGET
