@@ -1276,8 +1276,8 @@
 	various \bank, VARIOUS_GET_MOVE_TARGET
 	.endm
 
-	.macro various4 bank
-	various \bank, 4
+	.macro getbattlerfainted bank
+	various \bank, VARIOUS_GET_BATTLER_FAINTED
 	.endm
 
 	.macro resetintrimidatetracebits bank

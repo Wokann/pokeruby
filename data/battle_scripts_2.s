@@ -6,6 +6,9 @@
 	.include "include/macros.inc"
 	.include "include/macros/battle_script.inc"
 	.include "constants/constants.inc"
+@ Prevent the C macros from substituting the script aliases below.
+#undef MOVE_EFFECT_AFFECTS_USER
+#undef MOVE_EFFECT_CERTAIN
 	.include "constants/battle_script_constants.inc"
 
 	.section script_data, "aw", %progbits

@@ -1,6 +1,7 @@
 #include "global.h"
 #include "constants/abilities.h"
 #include "constants/battle_move_effects.h"
+#include "constants/battle_script_commands.h"
 #include "constants/hold_effects.h"
 #include "constants/items.h"
 #include "constants/moves.h"
@@ -5186,7 +5187,7 @@ void HandleAction_UseMove(void)
     gBattleStruct->atkCancelerTracker = 0;
     gMoveResultFlags = 0;
     gMultiHitCounter = 0;
-    gBattleCommunication[6] = 0;
+    gBattleCommunication[MISS_TYPE] = B_MSG_MISSED;
     gCurrMovePos = gChosenMovePos = gSharedMem[BSTRUCT_OFF(chosenMovePositions) + gBattlerAttacker];
 
     // choose move

@@ -107,27 +107,37 @@
 	.set EFFECT_NOTHING_3E, 0x3E
 	.set EFFECT_NOTHING_3F, 0x3F
 	
-	.set AFFECTS_USER, 0x40
-	.set CERTAIN, 0x80
+	.set MOVE_EFFECT_AFFECTS_USER, 0x40
+	.set MOVE_EFFECT_CERTAIN, 0x80
 	
 @ accuracy calc
 	.set NO_ACC_CALC, 0xFFFE
 	.set NO_ACC_CALC_CHECK_LOCK_ON, 0xFFFF
 	.set ACC_CURR_MOVE, 0x0
 
-@ bank values
-	.set EFFECT_BANK, 0x2
-	.set GBANK_1, 0x3
-	.set ATTACKER_WITH_PARTNER, 0x4 @ only for cmd98
-	.set BANK0, 0x7
-	.set SCRIPTING_BANK, 0xA
-	.set OPPONENT1, 0xC
+@ battler values for battle scripts
+	.set BS_TARGET, 0
+	.set BS_ATTACKER, 1
+	.set BS_EFFECT_BATTLER, 2
+	.set BS_FAINTED, 3
+	.set BS_ATTACKER_WITH_PARTNER, 4
+	.set BS_FAINTED_LINK_MULTIPLE_1, 5
+	.set BS_FAINTED_LINK_MULTIPLE_2, 6
+	.set BS_BATTLER_0, 7
+	.set BS_ATTACKER_SIDE, 8
+	.set BS_NOT_ATTACKER_SIDE, 9
+	.set BS_SCRIPTING, 10
+	.set BS_PLAYER1, 11
+	.set BS_OPPONENT1, 12
+	.set BS_PLAYER2, 13
+	.set BS_OPPONENT2, 14
 	
 @ various
 	.set VARIOUS_CANCEL_MULTI_TURN_MOVES, 0
 	.set VARIOUS_SET_MAGIC_COAT_TARGET, 1
 	.set VARIOUS_IS_RUNNING_IMPOSSIBLE, 2
 	.set VARIOUS_GET_MOVE_TARGET, 3
+	.set VARIOUS_GET_BATTLER_FAINTED, 4
 	.set VARIOUS_RESET_INTIMIDATE_TRACE_BITS, 5
 	.set VARIOUS_UPDATE_CHOICE_MOVE_ON_LVL_UP, 6
 	.set VARIOUS_EMIT_YESNOBOX, 13
@@ -139,6 +149,28 @@
 	
 @ Cmd_jumpifcantswitch
 	.set SWITCH_IGNORE_ESCAPE_PREVENTION, (1 << 7)
+
+@ Cmd_statbuffchange
+	.set STAT_CHANGE_ALLOW_PTR, (1 << 0)
+	.set STAT_CHANGE_NOT_PROTECT_AFFECTED, (1 << 5)
+
+@ stat change flags for Cmd_playstatchangeanimation
+	.set STAT_CHANGE_NEGATIVE, (1 << 0)
+	.set STAT_CHANGE_BY_TWO, (1 << 1)
+	.set STAT_CHANGE_MULTIPLE_STATS, (1 << 2)
+	.set STAT_CHANGE_CANT_PREVENT, (1 << 3)
+
+@ stat flags for Cmd_playstatchangeanimation
+	.set BIT_HP, (1 << 0)
+	.set BIT_ATK, (1 << 1)
+	.set BIT_DEF, (1 << 2)
+	.set BIT_SPEED, (1 << 3)
+	.set BIT_SPATK, (1 << 4)
+	.set BIT_SPDEF, (1 << 5)
+	.set BIT_ACC, (1 << 6)
+	.set BIT_EVASION, (1 << 7)
+
+	.set PARTY_SCREEN_OPTIONAL, (1 << 7)
 
 @ cases for moveend command
 	.set MOVEEND_RAGE, 0
@@ -184,6 +216,7 @@
 
 
 @ battle communication struct
+	.set MISS_TYPE, 6
 	.equiv cEFFECT_CHOOSER, gBattleCommunication + 3
 	.equiv cMULTISTRING_CHOOSER, gBattleCommunication + 5
-	.equiv cMISS_TYPE, gBattleCommunication + 6
+	.equiv cMISS_TYPE, gBattleCommunication + MISS_TYPE

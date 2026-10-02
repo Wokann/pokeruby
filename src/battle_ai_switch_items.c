@@ -111,7 +111,7 @@ static bool8 FindMonThatAbsorbsOpponentsMove(void)
         return FALSE;
     if (gLastLandedMoves[gActiveBattler] == 0)
         return FALSE;
-    if (gLastLandedMoves[gActiveBattler] == 0xFFFF)
+    if (gLastLandedMoves[gActiveBattler] == MOVE_UNAVAILABLE)
         return FALSE;
     if (gBattleMoves[gLastLandedMoves[gActiveBattler]].power == 0)
         return FALSE;
@@ -189,7 +189,7 @@ static bool8 ShouldSwitchIfNaturalCure(void)
     if (gBattleMons[gActiveBattler].hp < gBattleMons[gActiveBattler].maxHP / 2)
         return FALSE;
 
-    if ((gLastLandedMoves[gActiveBattler] == 0 || gLastLandedMoves[gActiveBattler] == 0xFFFF) && Random() & 1)
+    if ((gLastLandedMoves[gActiveBattler] == 0 || gLastLandedMoves[gActiveBattler] == MOVE_UNAVAILABLE) && Random() & 1)
     {
         gSharedMem[BSTRUCT_OFF(AI_monToSwitchIntoId) + (GetBattlerPosition(gActiveBattler) / 2)] = 6;
         BtlController_EmitTwoReturnValues(1, B_ACTION_SWITCH, 0);
@@ -291,7 +291,7 @@ static bool8 FindMonWithFlagsAndSuperEffective(u8 flags, u8 moduloPercent)
 
     if (gLastLandedMoves[gActiveBattler] == 0)
         return FALSE;
-    if (gLastLandedMoves[gActiveBattler] == 0xFFFF)
+    if (gLastLandedMoves[gActiveBattler] == MOVE_UNAVAILABLE)
         return FALSE;
     if (gLastHitBy[gActiveBattler] == 0xFF)
         return FALSE;

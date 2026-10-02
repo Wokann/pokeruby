@@ -1,15 +1,6 @@
 #ifndef GUARD_BATTLE_UTIL_H
 #define GUARD_BATTLE_UTIL_H
 
-#define BS_TARGET           0
-#define BS_ATTACKER         1
-#define BS_EFFECT_BATTLER   2
-#define BS_SCRIPTING        10
-#define BS_PLAYER1          11
-#define BS_OPPONENT1        12
-#define BS_PLAYER2          13
-#define BS_OPPONENT2        14
-
 #define MOVE_LIMITATION_ZEROMOVE                (1 << 0)
 #define MOVE_LIMITATION_PP                      (1 << 1)
 #define MOVE_LIMITATION_DISABLED                (1 << 2)
