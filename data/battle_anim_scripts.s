@@ -8377,8 +8377,8 @@ Move_HYPER_BEAM: @ 81D31EA
 	simple_palette_blend selector=F_PAL_BG, delay=4, initial_blend_y=16, target_blend_y=0, color=RGB_BLACK
 	end
 HyperBeamOrbs:
-	createsprite gHyperBeamOrbSpriteTemplate, ANIM_TARGET, 2
-	createsprite gHyperBeamOrbSpriteTemplate, ANIM_TARGET, 2
+	create_hyper_beam_orb_sprite ANIM_TARGET, 2
+	create_hyper_beam_orb_sprite ANIM_TARGET, 2
 	delay 1
 	return
 

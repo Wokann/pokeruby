@@ -554,6 +554,10 @@
 	createsprite gSolarBeamBigOrbSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration, \animation
 	.endm
 
+	.macro create_hyper_beam_orb_sprite anim_battler:req, subpriority_offset:req
+	createsprite gHyperBeamOrbSpriteTemplate, \anim_battler, \subpriority_offset
+	.endm
+
 	.macro create_present_sprite anim_battler:req, subpriority_offset:req, initial_x:req, initial_y:req, unk2:req, unk3:req, unk4:req
 	createsprite gPresentSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y, \unk2, \unk3, \unk4
 	.endm
