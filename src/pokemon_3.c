@@ -52,7 +52,6 @@ extern u16 gTrainerBattleOpponent;
 extern u16 gBattleTypeFlags;
 extern u32 gTMHMLearnsets[][2];
 extern u8 gBattleMonForms[];
-extern const u8 BattleText_Wally[];
 extern u8 gLastUsedAbility;
 extern const u8 BattleText_PreventedSwitch[];
 extern u16 gBattlerPartyIndexes[];
@@ -1136,7 +1135,7 @@ u16 GetBattleBGM(void)
         case TRAINER_CLASS_CHAMPION:
             return MUS_VS_CHAMPION;
         case TRAINER_CLASS_POKEMON_TRAINER_3:
-            if (!StringCompare(gTrainers[gTrainerBattleOpponent].trainerName, BattleText_Wally))
+            if (!StringCompare(gTrainers[gTrainerBattleOpponent].trainerName, gText_BattleWallyName))
                 return MUS_VS_TRAINER;
             return MUS_VS_RIVAL;
         case TRAINER_CLASS_ELITE_FOUR:

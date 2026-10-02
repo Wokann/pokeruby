@@ -51,7 +51,6 @@ extern struct SpriteTemplate gCreatingSpriteTemplate;
 extern u8 gAnimMoveTurn;
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern u8 gBattleControllerData[];
-extern const u8 BattleText_WallyMenu[];
 extern const u8 BattleText_MenuOptions[];
 
 extern void BtlController_EmitTwoReturnValues(u8, u8, u16);
@@ -1260,7 +1259,7 @@ static void WallyHandleChooseAction(void)
     for (i = 0; i < 4; i++)
         ActionSelectionDestroyCursorAt(i);
     ActionSelectionCreateCursorAt(0, 0);
-    BattleStringExpandPlaceholdersToDisplayedString(BattleText_WallyMenu);
+    BattleStringExpandPlaceholdersToDisplayedString(gText_WhatWillWallyDo);
 #ifdef ENGLISH
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gDisplayedStringBattle, 440, 2, 35);
 #else

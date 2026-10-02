@@ -2,6 +2,7 @@
 #include "constants/hold_effects.h"
 #include "constants/moves.h"
 #include "battle.h"
+#include "battle_message.h"
 #include "battle_util.h"
 #include "data2.h"
 #include "event_data.h"
@@ -38,7 +39,6 @@ extern struct PokemonStorage gPokemonStorage;
 
 EWRAM_DATA struct SpriteTemplate gCreatingSpriteTemplate = {0};
 
-extern u8 gBadEggNickname[];
 extern const struct SpriteTemplate gBattlerSpriteTemplates[];
 //array of pointers to arrays of pointers to union AnimCmd (We probably need to typedef this.)
 extern u8 gTrainerClassToPicIndex[];
@@ -337,7 +337,7 @@ u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, u8 *data)
     {
         if (boxMon->isBadEgg)
         {
-            StringCopy(data, gBadEggNickname);
+            StringCopy(data, gText_BadEgg);
             retVal = StringLength(data);
         }
         else if (boxMon->isEgg)
