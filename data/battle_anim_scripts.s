@@ -3459,7 +3459,7 @@ Move_HEAT_WAVE: @ 81CBFC6
 	loadspritegfx ANIM_TAG_FLYING_DIRT
 	createvisualtask AnimTask_BlendParticle, 5, 10261, 0, 6, 6, RGB_RED
 	createvisualtask AnimTask_LoadSandstormBackground, 5, TRUE
-	createvisualtask AnimTask_BlendBackground, 6, 6, 31
+	createvisualtask AnimTask_BlendBackground, 6, 6, RGB_RED
 	panse SE_M_HEAT_WAVE, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
 	delay 4
 	createvisualtask AnimTask_MoveHeatWaveTargets, 5
