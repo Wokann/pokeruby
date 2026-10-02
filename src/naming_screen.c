@@ -2338,8 +2338,8 @@ static const struct SpritePalette sSpritePalettes[] = {
     {}
 };
 
-static const u16 sKeyboardLower_Tilemap[] = INCBIN_U16("graphics/naming_screen/lower_keyboard_map.bin");
+static const u16 sKeyboardLower_Tilemap[] = INCBIN_U16("graphics/naming_screen/keyboard_lower.bin");
 
-static const u16 sKeyboardUpper_Tilemap[] = INCBIN_U16("graphics/naming_screen/upper_keyboard_map.bin");
+static const u16 sKeyboardUpper_Tilemap[] = INCBIN_U16("graphics/naming_screen/keyboard_upper.bin");
 
-static const u16 sKeyboardSymbols_Tilemap[] = INCBIN_U16("graphics/naming_screen/others_keyboard_map.bin");
+static const u16 sKeyboardSymbols_Tilemap[] = INCBIN_U16("graphics/naming_screen/keyboard_symbols.bin");

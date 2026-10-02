@@ -975,20 +975,20 @@ const u8 gMailTilemap_Fab[] = INCBIN_U8("graphics/mail/fab/map.bin.lz");
 const u8 gMailTilemap_Retro[] = INCBIN_U8("graphics/mail/retro/map.bin.lz");
 
 const u8 gNamingScreenBackButton_Gfx[] = INCBIN_U8("graphics/naming_screen/back_button.4bpp");
-const u8 gNamingScreenInputArrow_Gfx[] = INCBIN_U8("graphics/naming_screen/right_pointing_triangle.4bpp");
+const u8 gNamingScreenInputArrow_Gfx[] = INCBIN_U8("graphics/naming_screen/input_arrow.4bpp");
 const u8 gNamingScreenOKButton_Gfx[] = INCBIN_U8("graphics/naming_screen/ok_button.4bpp");
 const u8 gNamingScreenUnderscore_Gfx[] = INCBIN_U8("graphics/naming_screen/underscore.4bpp");
-const u8 gNamingScreenPageSwapFrame_Gfx[] = INCBIN_U8("graphics/naming_screen/change_keyboard_box.4bpp");
-const u8 gNamingScreenPageSwapButton_Gfx[] = INCBIN_U8("graphics/naming_screen/change_keyboard_button.4bpp");
+const u8 gNamingScreenPageSwapFrame_Gfx[] = INCBIN_U8("graphics/naming_screen/page_swap_frame.4bpp");
+const u8 gNamingScreenPageSwapButton_Gfx[] = INCBIN_U8("graphics/naming_screen/page_swap_button.4bpp");
 
 asm(".space 128");
 
-const u8 gNamingScreenPageSwapOthers_Gfx[] = INCBIN_U8("graphics/naming_screen/others_text.4bpp");
+const u8 gNamingScreenPageSwapOthers_Gfx[] = INCBIN_U8("graphics/naming_screen/page_swap_others.4bpp");
 const u8 gNamingScreenCursor_Gfx[] = INCBIN_U8("graphics/naming_screen/cursor.4bpp");
-const u8 gNamingScreenCursorSquished_Gfx[] = INCBIN_U8("graphics/naming_screen/active_cursor_small.4bpp");
-const u8 gNamingScreenCursorFilled_Gfx[] = INCBIN_U8("graphics/naming_screen/active_cursor_big.4bpp");
-const u8 gNamingScreenPageSwapLower_Gfx[] = INCBIN_U8("graphics/naming_screen/lower_text.4bpp");
-const u8 gNamingScreenPageSwapUpper_Gfx[] = INCBIN_U8("graphics/naming_screen/upper_text.4bpp");
+const u8 gNamingScreenCursorSquished_Gfx[] = INCBIN_U8("graphics/naming_screen/cursor_squished.4bpp");
+const u8 gNamingScreenCursorFilled_Gfx[] = INCBIN_U8("graphics/naming_screen/cursor_filled.4bpp");
+const u8 gNamingScreenPageSwapLower_Gfx[] = INCBIN_U8("graphics/naming_screen/page_swap_lower.4bpp");
+const u8 gNamingScreenPageSwapUpper_Gfx[] = INCBIN_U8("graphics/naming_screen/page_swap_upper.4bpp");
 
 asm(".space 352");
 
@@ -996,12 +996,12 @@ const u8 gNamingScreenMenu_Gfx[] = INCBIN_U8("graphics/naming_screen/menu.4bpp")
 
 const u16 gNamingScreenMenu_Pal[][16] =
 {
-    INCBIN_U16("graphics/naming_screen/0.gbapal"),
-    INCBIN_U16("graphics/naming_screen/1.gbapal"),
-    INCBIN_U16("graphics/naming_screen/2.gbapal"),
-    INCBIN_U16("graphics/naming_screen/3.gbapal"),
-    INCBIN_U16("graphics/naming_screen/4.gbapal"),
-    INCBIN_U16("graphics/naming_screen/5.gbapal"),
+    INCBIN_U16("graphics/naming_screen/menu.gbapal"),
+    INCBIN_U16("graphics/naming_screen/page_swap_upper.gbapal"),
+    INCBIN_U16("graphics/naming_screen/page_swap_lower.gbapal"),
+    INCBIN_U16("graphics/naming_screen/page_swap_others.gbapal"),
+    INCBIN_U16("graphics/naming_screen/buttons.gbapal"),
+    INCBIN_U16("graphics/naming_screen/cursor.gbapal"),
 };
 
 const u8 gNamingScreenBackground_Tilemap[] = INCBIN_U8("graphics/naming_screen/background.bin");
