@@ -958,10 +958,8 @@ Movement_UnusedBoardFerry:
 	step_end
 
 Common_EventScript_FerryDepartIsland:: @ 81A047C
-	compare VAR_FACING, DIR_SOUTH
-	call_if_eq Ferry_EventScript_DepartIslandSouth
-	compare VAR_FACING, DIR_WEST
-	call_if_eq Ferry_EventScript_DepartIslandWest
+	call_if_eq VAR_FACING, DIR_SOUTH, Ferry_EventScript_DepartIslandSouth
+	call_if_eq VAR_FACING, DIR_WEST, Ferry_EventScript_DepartIslandWest
 	delay 30
 	hideobjectat LOCALID_PLAYER, 0
 	call Common_EventScript_FerryDepart
@@ -1158,8 +1156,7 @@ EventScript_SelectWithoutRegisteredItem:: @ 81A14AF
 EventScript_FieldPoison:: @ 81A14B8
 	lockall
 	special TryFieldPoisonWhiteOut
-	compare VAR_RESULT, FLDPSN_WHITEOUT
-	goto_if_eq EventScript_FieldWhiteOut
+	goto_if_eq VAR_RESULT, FLDPSN_WHITEOUT, EventScript_FieldWhiteOut
 	releaseall
 	end
 
