@@ -179,8 +179,8 @@ const u16 sTmHmMoves[] =
 
 static u8 *const sPartyMenuTileBuffer = gTileBuffer;
 
-static const u8 sHeldItemIconGfx[] = INCBIN_U8("graphics/interface/hold_icons.4bpp");
-static const u16 sHeldItemIconPal[] = INCBIN_U16("graphics/interface/hold_icons.gbapal");
+static const u8 sHeldItemIconGfx[] = INCBIN_U8("graphics/party_menu/hold_icons.4bpp");
+static const u16 sHeldItemIconPal[] = INCBIN_U16("graphics/party_menu/hold_icons.gbapal");
 
 static const struct SpriteSheet sHeldItemIconSpriteSheet = {
     sHeldItemIconGfx,
