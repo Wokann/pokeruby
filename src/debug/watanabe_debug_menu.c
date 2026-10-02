@@ -2211,7 +2211,7 @@ void WatanabeDebug_SetPokemonCreatorValue(u32 value, u8 fieldId)
             break;
         case WATANABE_POKEMON_CREATOR_VALUE_LEVEL:
             gWatanabePokemonCreatorState->values[fieldId] = value;
-            gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_EXPERIENCE] = gExperienceTables[gBaseStats[NationalPokedexNumToSpecies(gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_NATIONAL_DEX_NUM])].growthRate][value];
+            gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_EXPERIENCE] = gExperienceTables[gSpeciesInfo[NationalPokedexNumToSpecies(gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_NATIONAL_DEX_NUM])].growthRate][value];
             WatanabeDebug_RecreatePokemon();
             break;
         case WATANABE_POKEMON_CREATOR_VALUE_EXPERIENCE:

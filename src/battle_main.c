@@ -1508,7 +1508,7 @@ void FillDebugBattleTextBuffer(u8 a, u8 b)
 
 void SetDebugBattleMonGender(u8 a)
 {
-	switch (gBaseStats[gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMonIndex * 5]].genderRatio)
+	switch (gSpeciesInfo[gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMonIndex * 5]].genderRatio)
 	{
 	case 0:
 		gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMonIndex * 5 + 4] = 2;
@@ -2451,7 +2451,7 @@ void DrawDebugBattleAbilities(u8 a)
             sDebugBattleAbilityFieldData[1],
             sDebugBattleAbilityFieldData[2]);
         Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
-        StringCopy(gBattleTextBuff1, gAbilityNames[gBaseStats[gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][a]].ability1]);
+        StringCopy(gBattleTextBuff1, gAbilityNames[gSpeciesInfo[gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][a]].abilities[0]]);
         Text_InitWindow(
             &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
@@ -2472,7 +2472,7 @@ void DrawDebugBattleAbilities(u8 a)
             sDebugBattleAbilityFieldData[4],
             sDebugBattleAbilityFieldData[5]);
         Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
-        StringCopy(gBattleTextBuff1, gAbilityNames[gBaseStats[gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][a]].ability2]);
+        StringCopy(gBattleTextBuff1, gAbilityNames[gSpeciesInfo[gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][a]].abilities[1]]);
         Text_InitWindow(
             &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
@@ -2702,7 +2702,7 @@ void ChangeDebugFlyingMonSpecies(s8 a, u8 taskId)
             gCurrentMove = 411;
         if (gCurrentMove == 411)
             gCurrentMove = 1;
-    } while (gBaseStats[gCurrentMove].type1 != 2 && gBaseStats[gCurrentMove].type2 != 2);
+    } while (gSpeciesInfo[gCurrentMove].types[0] != 2 && gSpeciesInfo[gCurrentMove].types[1] != 2);
     DrawDebugFlyingMonSpecies();
     DrawDebugFlyingMonSpriteOffset(taskId);
     ReloadDebugFlyingMonSprite(taskId);
@@ -3465,7 +3465,7 @@ void BattleStartClearSetData(void)
     gBattleStruct->runTries = 0;
     gBattleStruct->safariGoNearCounter = 0;
     gBattleStruct->safariPkblThrowCounter = 0;
-    gBattleStruct->safariCatchFactor = gBaseStats[GetMonData(&gEnemyParty[0], MON_DATA_SPECIES)].catchRate * 100 / 1275;
+    gBattleStruct->safariCatchFactor = gSpeciesInfo[GetMonData(&gEnemyParty[0], MON_DATA_SPECIES)].catchRate * 100 / 1275;
     gBattleStruct->safariEscapeFactor = 3;
     gBattleStruct->wildVictorySong = 0;
     gBattleStruct->moneyMultiplier = 1;
@@ -3661,8 +3661,8 @@ void UndoEffectsAfterFainting(void)
 
     sBattleResourceFlags.flags[gActiveBattler] = 0;
 
-    gBattleMons[gActiveBattler].type1 = gBaseStats[gBattleMons[gActiveBattler].species].type1;
-    gBattleMons[gActiveBattler].type2 = gBaseStats[gBattleMons[gActiveBattler].species].type2;
+    gBattleMons[gActiveBattler].type1 = gSpeciesInfo[gBattleMons[gActiveBattler].species].types[0];
+    gBattleMons[gActiveBattler].type2 = gSpeciesInfo[gBattleMons[gActiveBattler].species].types[1];
 }
 
 void BattleIntroGetMonsData(void)
@@ -3720,8 +3720,8 @@ void BattleIntroDrawTrainersOrMonsSprites(void)
                 u16 *hpOnSwitchout;
 
                 MEMSET_ALT(&gBattleMons[gActiveBattler], gBattleBufferB[gActiveBattler][4 + i], 0x58, i, ptr);
-                gBattleMons[gActiveBattler].type1 = gBaseStats[gBattleMons[gActiveBattler].species].type1;
-                gBattleMons[gActiveBattler].type2 = gBaseStats[gBattleMons[gActiveBattler].species].type2;
+                gBattleMons[gActiveBattler].type1 = gSpeciesInfo[gBattleMons[gActiveBattler].species].types[0];
+                gBattleMons[gActiveBattler].type2 = gSpeciesInfo[gBattleMons[gActiveBattler].species].types[1];
                 gBattleMons[gActiveBattler].ability = GetAbilityBySpecies(gBattleMons[gActiveBattler].species, gBattleMons[gActiveBattler].abilityNum);
 
                 hpOnSwitchout = &gBattleStruct->hpOnSwitchout[GetBattlerSide(gActiveBattler)];

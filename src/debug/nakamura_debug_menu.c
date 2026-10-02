@@ -996,7 +996,7 @@ static void NakaGenderTest_AdjustLevel(u8 partySlot, s8 levelDelta)
             sNakaGenderTestData[partySlot].level = 1;
         if (sNakaGenderTestData[partySlot].level < 1)
             sNakaGenderTestData[partySlot].level = 100;
-        SetMonData(gPlayerParty + partySlot, MON_DATA_EXP, gExperienceTables[gBaseStats[sNakaGenderTestData[partySlot].species].growthRate] + sNakaGenderTestData[partySlot].level);
+        SetMonData(gPlayerParty + partySlot, MON_DATA_EXP, gExperienceTables[gSpeciesInfo[sNakaGenderTestData[partySlot].species].growthRate] + sNakaGenderTestData[partySlot].level);
 // TODO: check other revisions
 #if (ENGLISH && REVISION == 0)
         CalculateMonStats(gPlayerParty + partySlot);
@@ -1168,7 +1168,7 @@ static u8 NakaGenderTest_ForceRerollPokemon(u8 partySlot)
 {
     u16 species = GetMonData(gPlayerParty + partySlot, MON_DATA_SPECIES);
     u8 gender = GetMonGender(gPlayerParty + partySlot);
-    u8 ratio = gBaseStats[species].genderRatio;
+    u8 ratio = gSpeciesInfo[species].genderRatio;
     u32 personality;
 
     if (ratio == MON_MALE || ratio == MON_FEMALE || ratio ==  MON_GENDERLESS)
