@@ -26,49 +26,49 @@ extern u8 gBattlerSpriteIds[];
 extern u8 gDoingBattleAnim;
 extern u8 gHealthboxSpriteIds[];
 
-#define GFX_TAG_POKEBALL    55000
-#define GFX_TAG_GREATBALL   55001
-#define GFX_TAG_SAFARIBALL  55002
-#define GFX_TAG_ULTRABALL   55003
-#define GFX_TAG_MASTERBALL  55004
-#define GFX_TAG_NETBALL     55005
-#define GFX_TAG_DIVEBALL    55006
-#define GFX_TAG_NESTBALL    55007
-#define GFX_TAG_REPEATBALL  55008
-#define GFX_TAG_TIMERBALL   55009
-#define GFX_TAG_LUXURYBALL  55010
-#define GFX_TAG_PREMIERBALL 55011
+#define GFX_TAG_POKE_BALL    55000
+#define GFX_TAG_GREAT_BALL   55001
+#define GFX_TAG_SAFARI_BALL  55002
+#define GFX_TAG_ULTRA_BALL   55003
+#define GFX_TAG_MASTER_BALL  55004
+#define GFX_TAG_NET_BALL     55005
+#define GFX_TAG_DIVE_BALL    55006
+#define GFX_TAG_NEST_BALL    55007
+#define GFX_TAG_REPEAT_BALL  55008
+#define GFX_TAG_TIMER_BALL   55009
+#define GFX_TAG_LUXURY_BALL  55010
+#define GFX_TAG_PREMIER_BALL 55011
 
 static const struct CompressedSpriteSheet sBallSpriteSheets[] =
 {
-    {gInterfaceGfx_PokeBall,    384, GFX_TAG_POKEBALL},
-    {gInterfaceGfx_GreatBall,   384, GFX_TAG_GREATBALL},
-    {gInterfaceGfx_SafariBall,  384, GFX_TAG_SAFARIBALL},
-    {gInterfaceGfx_UltraBall,   384, GFX_TAG_ULTRABALL},
-    {gInterfaceGfx_MasterBall,  384, GFX_TAG_MASTERBALL},
-    {gInterfaceGfx_NetBall,     384, GFX_TAG_NETBALL},
-    {gInterfaceGfx_DiveBall,    384, GFX_TAG_DIVEBALL},
-    {gInterfaceGfx_NestBall,    384, GFX_TAG_NESTBALL},
-    {gInterfaceGfx_RepeatBall,  384, GFX_TAG_REPEATBALL},
-    {gInterfaceGfx_TimerBall,   384, GFX_TAG_TIMERBALL},
-    {gInterfaceGfx_LuxuryBall,  384, GFX_TAG_LUXURYBALL},
-    {gInterfaceGfx_PremierBall, 384, GFX_TAG_PREMIERBALL},
+    {gBallGfx_Poke,    384, GFX_TAG_POKE_BALL},
+    {gBallGfx_Great,   384, GFX_TAG_GREAT_BALL},
+    {gBallGfx_Safari,  384, GFX_TAG_SAFARI_BALL},
+    {gBallGfx_Ultra,   384, GFX_TAG_ULTRA_BALL},
+    {gBallGfx_Master,  384, GFX_TAG_MASTER_BALL},
+    {gBallGfx_Net,     384, GFX_TAG_NET_BALL},
+    {gBallGfx_Dive,    384, GFX_TAG_DIVE_BALL},
+    {gBallGfx_Nest,    384, GFX_TAG_NEST_BALL},
+    {gBallGfx_Repeat,  384, GFX_TAG_REPEAT_BALL},
+    {gBallGfx_Timer,   384, GFX_TAG_TIMER_BALL},
+    {gBallGfx_Luxury,  384, GFX_TAG_LUXURY_BALL},
+    {gBallGfx_Premier, 384, GFX_TAG_PREMIER_BALL},
 };
 
 static const struct CompressedSpritePalette sBallSpritePalettes[] =
 {
-    {gInterfacePal_PokeBall,    GFX_TAG_POKEBALL},
-    {gInterfacePal_GreatBall,   GFX_TAG_GREATBALL},
-    {gInterfacePal_SafariBall,  GFX_TAG_SAFARIBALL},
-    {gInterfacePal_UltraBall,   GFX_TAG_ULTRABALL},
-    {gInterfacePal_MasterBall,  GFX_TAG_MASTERBALL},
-    {gInterfacePal_NetBall,     GFX_TAG_NETBALL},
-    {gInterfacePal_DiveBall,    GFX_TAG_DIVEBALL},
-    {gInterfacePal_NestBall,    GFX_TAG_NESTBALL},
-    {gInterfacePal_RepeatBall,  GFX_TAG_REPEATBALL},
-    {gInterfacePal_TimerBall,   GFX_TAG_TIMERBALL},
-    {gInterfacePal_LuxuryBall,  GFX_TAG_LUXURYBALL},
-    {gInterfacePal_PremierBall, GFX_TAG_PREMIERBALL},
+    {gBallPal_Poke,    GFX_TAG_POKE_BALL},
+    {gBallPal_Great,   GFX_TAG_GREAT_BALL},
+    {gBallPal_Safari,  GFX_TAG_SAFARI_BALL},
+    {gBallPal_Ultra,   GFX_TAG_ULTRA_BALL},
+    {gBallPal_Master,  GFX_TAG_MASTER_BALL},
+    {gBallPal_Net,     GFX_TAG_NET_BALL},
+    {gBallPal_Dive,    GFX_TAG_DIVE_BALL},
+    {gBallPal_Nest,    GFX_TAG_NEST_BALL},
+    {gBallPal_Repeat,  GFX_TAG_REPEAT_BALL},
+    {gBallPal_Timer,   GFX_TAG_TIMER_BALL},
+    {gBallPal_Luxury,  GFX_TAG_LUXURY_BALL},
+    {gBallPal_Premier, GFX_TAG_PREMIER_BALL},
 };
 
 static const struct OamData sBallOamData =
@@ -188,8 +188,8 @@ static void SpriteCB_BallThrow(struct Sprite *sprite);
 const struct SpriteTemplate gBallSpriteTemplates[] =
 {
     {
-        .tileTag = GFX_TAG_POKEBALL,
-        .paletteTag = GFX_TAG_POKEBALL,
+        .tileTag = GFX_TAG_POKE_BALL,
+        .paletteTag = GFX_TAG_POKE_BALL,
         .oam = &sBallOamData,
         .anims = sBallAnimSequences,
         .images = NULL,
@@ -197,8 +197,8 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .callback = SpriteCB_BallThrow,
     },
     {
-        .tileTag = GFX_TAG_GREATBALL,
-        .paletteTag = GFX_TAG_GREATBALL,
+        .tileTag = GFX_TAG_GREAT_BALL,
+        .paletteTag = GFX_TAG_GREAT_BALL,
         .oam = &sBallOamData,
         .anims = sBallAnimSequences,
         .images = NULL,
@@ -206,8 +206,8 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .callback = SpriteCB_BallThrow,
     },
     {
-        .tileTag = GFX_TAG_SAFARIBALL,
-        .paletteTag = GFX_TAG_SAFARIBALL,
+        .tileTag = GFX_TAG_SAFARI_BALL,
+        .paletteTag = GFX_TAG_SAFARI_BALL,
         .oam = &sBallOamData,
         .anims = sBallAnimSequences,
         .images = NULL,
@@ -215,8 +215,8 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .callback = SpriteCB_BallThrow,
     },
     {
-        .tileTag = GFX_TAG_ULTRABALL,
-        .paletteTag = GFX_TAG_ULTRABALL,
+        .tileTag = GFX_TAG_ULTRA_BALL,
+        .paletteTag = GFX_TAG_ULTRA_BALL,
         .oam = &sBallOamData,
         .anims = sBallAnimSequences,
         .images = NULL,
@@ -224,8 +224,8 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .callback = SpriteCB_BallThrow,
     },
     {
-        .tileTag = GFX_TAG_MASTERBALL,
-        .paletteTag = GFX_TAG_MASTERBALL,
+        .tileTag = GFX_TAG_MASTER_BALL,
+        .paletteTag = GFX_TAG_MASTER_BALL,
         .oam = &sBallOamData,
         .anims = sBallAnimSequences,
         .images = NULL,
@@ -233,8 +233,8 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .callback = SpriteCB_BallThrow,
     },
     {
-        .tileTag = GFX_TAG_NETBALL,
-        .paletteTag = GFX_TAG_NETBALL,
+        .tileTag = GFX_TAG_NET_BALL,
+        .paletteTag = GFX_TAG_NET_BALL,
         .oam = &sBallOamData,
         .anims = sBallAnimSequences,
         .images = NULL,
@@ -242,8 +242,8 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .callback = SpriteCB_BallThrow,
     },
     {
-        .tileTag = GFX_TAG_DIVEBALL,
-        .paletteTag = GFX_TAG_DIVEBALL,
+        .tileTag = GFX_TAG_DIVE_BALL,
+        .paletteTag = GFX_TAG_DIVE_BALL,
         .oam = &sBallOamData,
         .anims = sBallAnimSequences,
         .images = NULL,
@@ -251,8 +251,8 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .callback = SpriteCB_BallThrow,
     },
     {
-        .tileTag = GFX_TAG_NESTBALL,
-        .paletteTag = GFX_TAG_NESTBALL,
+        .tileTag = GFX_TAG_NEST_BALL,
+        .paletteTag = GFX_TAG_NEST_BALL,
         .oam = &sBallOamData,
         .anims = sBallAnimSequences,
         .images = NULL,
@@ -260,8 +260,8 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .callback = SpriteCB_BallThrow,
     },
     {
-        .tileTag = GFX_TAG_REPEATBALL,
-        .paletteTag = GFX_TAG_REPEATBALL,
+        .tileTag = GFX_TAG_REPEAT_BALL,
+        .paletteTag = GFX_TAG_REPEAT_BALL,
         .oam = &sBallOamData,
         .anims = sBallAnimSequences,
         .images = NULL,
@@ -269,8 +269,8 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .callback = SpriteCB_BallThrow,
     },
     {
-        .tileTag = GFX_TAG_TIMERBALL,
-        .paletteTag = GFX_TAG_TIMERBALL,
+        .tileTag = GFX_TAG_TIMER_BALL,
+        .paletteTag = GFX_TAG_TIMER_BALL,
         .oam = &sBallOamData,
         .anims = sBallAnimSequences,
         .images = NULL,
@@ -278,8 +278,8 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .callback = SpriteCB_BallThrow,
     },
     {
-        .tileTag = GFX_TAG_LUXURYBALL,
-        .paletteTag = GFX_TAG_LUXURYBALL,
+        .tileTag = GFX_TAG_LUXURY_BALL,
+        .paletteTag = GFX_TAG_LUXURY_BALL,
         .oam = &sBallOamData,
         .anims = sBallAnimSequences,
         .images = NULL,
@@ -287,8 +287,8 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .callback = SpriteCB_BallThrow,
     },
     {
-        .tileTag = GFX_TAG_PREMIERBALL,
-        .paletteTag = GFX_TAG_PREMIERBALL,
+        .tileTag = GFX_TAG_PREMIER_BALL,
+        .paletteTag = GFX_TAG_PREMIER_BALL,
         .oam = &sBallOamData,
         .anims = sBallAnimSequences,
         .images = NULL,

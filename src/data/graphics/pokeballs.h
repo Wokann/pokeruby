@@ -1,0 +1,37 @@
+const u8 gBallGfx_Poke[] = INCBIN_U8("graphics/balls/poke.4bpp.lz");
+const u8 gBallPal_Poke[] = INCBIN_U8("graphics/balls/poke.gbapal.lz");
+
+const u8 gBallGfx_Great[] = INCBIN_U8("graphics/balls/great.4bpp.lz");
+const u8 gBallPal_Great[] = INCBIN_U8("graphics/balls/great.gbapal.lz");
+
+const u8 gBallGfx_Safari[] = INCBIN_U8("graphics/balls/safari.4bpp.lz");
+const u8 gBallPal_Safari[] = INCBIN_U8("graphics/balls/safari.gbapal.lz");
+
+const u8 gBallGfx_Ultra[] = INCBIN_U8("graphics/balls/ultra.4bpp.lz");
+const u8 gBallPal_Ultra[] = INCBIN_U8("graphics/balls/ultra.gbapal.lz");
+
+const u8 gBallGfx_Master[] = INCBIN_U8("graphics/balls/master.4bpp.lz");
+const u8 gBallPal_Master[] = INCBIN_U8("graphics/balls/master.gbapal.lz");
+
+const u8 gBallGfx_Net[] = INCBIN_U8("graphics/balls/net.4bpp.lz");
+const u8 gBallPal_Net[] = INCBIN_U8("graphics/balls/net.gbapal.lz");
+
+const u8 gBallGfx_Dive[] = INCBIN_U8("graphics/balls/dive.4bpp.lz");
+const u8 gBallPal_Dive[] = INCBIN_U8("graphics/balls/dive.gbapal.lz");
+
+const u8 gBallGfx_Nest[] = INCBIN_U8("graphics/balls/nest.4bpp.lz");
+const u8 gBallPal_Nest[] = INCBIN_U8("graphics/balls/nest.gbapal.lz");
+
+const u8 gBallGfx_Repeat[] = INCBIN_U8("graphics/balls/repeat.4bpp.lz");
+const u8 gBallPal_Repeat[] = INCBIN_U8("graphics/balls/repeat.gbapal.lz");
+
+const u8 gBallGfx_Timer[] = INCBIN_U8("graphics/balls/timer.4bpp.lz");
+const u8 gBallPal_Timer[] = INCBIN_U8("graphics/balls/timer.gbapal.lz");
+
+const u8 gBallGfx_Luxury[] = INCBIN_U8("graphics/balls/luxury.4bpp.lz");
+const u8 gBallPal_Luxury[] = INCBIN_U8("graphics/balls/luxury.gbapal.lz");
+
+const u8 gBallGfx_Premier[] = INCBIN_U8("graphics/balls/premier.4bpp.lz");
+const u8 gBallPal_Premier[] = INCBIN_U8("graphics/balls/premier.gbapal.lz");
+
+const u8 gOpenPokeballGfx[] = INCBIN_U8("graphics/balls/open.4bpp.lz");

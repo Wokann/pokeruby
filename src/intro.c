@@ -3,6 +3,7 @@
 #include "intro.h"
 #include "data2.h"
 #include "decompress.h"
+#include "graphics.h"
 #include "hall_of_fame.h"
 #include "intro_credits_graphics.h"
 #include "libgncmultiboot.h"
@@ -25,8 +26,6 @@
 extern struct SpriteTemplate gCreatingSpriteTemplate;
 extern u16 gSaveFileStatus;
 extern u8 gReservedSpritePaletteCount;
-extern const u8 gInterfaceGfx_PokeBall[];
-extern const u8 gInterfacePal_PokeBall[];
 extern const u8 gIntroCopyright_Gfx[];
 extern const u16 gIntroCopyright_Pal[];
 extern const u16 gIntroCopyright_Tilemap[];
@@ -856,7 +855,7 @@ static const struct SpriteTemplate sSpriteTemplate_IntroBattleFlash =
 };
 static const struct CompressedSpriteSheet sSpriteSheet_IntroBattlePokeball[] =
 {
-    {gInterfaceGfx_PokeBall, 0x100, GFXTAG_INTRO_BATTLE_POKEBALL},
+    {gBallGfx_Poke, 0x100, GFXTAG_INTRO_BATTLE_POKEBALL},
     {NULL},
 };
 static const struct CompressedSpriteSheet sSpriteSheet_IntroBattleEffects[] =
@@ -866,7 +865,7 @@ static const struct CompressedSpriteSheet sSpriteSheet_IntroBattleEffects[] =
 };
 static const struct CompressedSpritePalette sSpritePalette_IntroBattlePokeball[] =
 {
-    {gInterfacePal_PokeBall, PALTAG_INTRO_BATTLE_POKEBALL},
+    {gBallPal_Poke, PALTAG_INTRO_BATTLE_POKEBALL},
     {NULL},
 };
 static const struct SpritePalette sSpritePalettes_IntroBattleEffects[] =

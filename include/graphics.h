@@ -8,31 +8,31 @@ struct BattleAnimBackground
     void *tilemap;
 };
 
-// data/graphics.s
-extern const u8 gInterfaceGfx_PokeBall[];
-extern const u8 gInterfacePal_PokeBall[];
-extern const u8 gInterfaceGfx_GreatBall[];
-extern const u8 gInterfacePal_GreatBall[];
-extern const u8 gInterfaceGfx_SafariBall[];
-extern const u8 gInterfacePal_SafariBall[];
-extern const u8 gInterfaceGfx_UltraBall[];
-extern const u8 gInterfacePal_UltraBall[];
-extern const u8 gInterfaceGfx_MasterBall[];
-extern const u8 gInterfacePal_MasterBall[];
-extern const u8 gInterfaceGfx_NetBall[];
-extern const u8 gInterfacePal_NetBall[];
-extern const u8 gInterfaceGfx_DiveBall[];
-extern const u8 gInterfacePal_DiveBall[];
-extern const u8 gInterfaceGfx_NestBall[];
-extern const u8 gInterfacePal_NestBall[];
-extern const u8 gInterfaceGfx_RepeatBall[];
-extern const u8 gInterfacePal_RepeatBall[];
-extern const u8 gInterfaceGfx_TimerBall[];
-extern const u8 gInterfacePal_TimerBall[];
-extern const u8 gInterfaceGfx_LuxuryBall[];
-extern const u8 gInterfacePal_LuxuryBall[];
-extern const u8 gInterfaceGfx_PremierBall[];
-extern const u8 gInterfacePal_PremierBall[];
+// src/data/graphics/pokeballs.h, included by src/graphics.c
+extern const u8 gBallGfx_Poke[];
+extern const u8 gBallPal_Poke[];
+extern const u8 gBallGfx_Great[];
+extern const u8 gBallPal_Great[];
+extern const u8 gBallGfx_Safari[];
+extern const u8 gBallPal_Safari[];
+extern const u8 gBallGfx_Ultra[];
+extern const u8 gBallPal_Ultra[];
+extern const u8 gBallGfx_Master[];
+extern const u8 gBallPal_Master[];
+extern const u8 gBallGfx_Net[];
+extern const u8 gBallPal_Net[];
+extern const u8 gBallGfx_Dive[];
+extern const u8 gBallPal_Dive[];
+extern const u8 gBallGfx_Nest[];
+extern const u8 gBallPal_Nest[];
+extern const u8 gBallGfx_Repeat[];
+extern const u8 gBallPal_Repeat[];
+extern const u8 gBallGfx_Timer[];
+extern const u8 gBallPal_Timer[];
+extern const u8 gBallGfx_Luxury[];
+extern const u8 gBallPal_Luxury[];
+extern const u8 gBallGfx_Premier[];
+extern const u8 gBallPal_Premier[];
 extern const u8 gOpenPokeballGfx[];
 
 extern const u8 gBerryBlenderPlayerArrow_Gfx[];
