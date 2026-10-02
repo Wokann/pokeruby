@@ -14,8 +14,8 @@
 #define MENU_TEXT_SPRITE_X_OFFSET 32
 #endif
 
-static const u16 sMonMarkings_Pal[] = INCBIN_U16("graphics/misc/mon_markings.gbapal");
-static const u8 sMonMarkings_Gfx[] = INCBIN_U8("graphics/misc/mon_markings.4bpp");
+static const u16 sMonMarkings_Pal[] = INCBIN_U16("graphics/interface/mon_markings.gbapal");
+static const u8 sMonMarkings_Gfx[] = INCBIN_U8("graphics/interface/mon_markings.4bpp");
 
 static const struct OamData sOamData_MenuWindow =
 {
