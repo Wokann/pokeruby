@@ -935,44 +935,7 @@ const u8 gRouletteCredit_Gfx[] = INCBIN_U8("graphics/roulette/credit.4bpp.lz");
 const u8 gRouletteNumbers_Gfx[] = INCBIN_U8("graphics/roulette/numbers.4bpp.lz");
 const u8 gRouletteMultiplier_Gfx[] = INCBIN_U8("graphics/roulette/multiplier.4bpp.lz");
 
-const u16 gMailPalette_Orange[] = INCBIN_U16("graphics/mail/orange/palette.gbapal");
-const u16 gMailPalette_Harbor[] = INCBIN_U16("graphics/mail/harbor/palette.gbapal");
-const u16 gMailPalette_Glitter[] = INCBIN_U16("graphics/mail/glitter/palette.gbapal");
-const u16 gMailPalette_Mech[] = INCBIN_U16("graphics/mail/mech/palette.gbapal");
-const u16 gMailPalette_Wood[] = INCBIN_U16("graphics/mail/wood/palette.gbapal");
-const u16 gMailPalette_Wave[] = INCBIN_U16("graphics/mail/wave/palette.gbapal");
-const u16 gMailPalette_Bead[] = INCBIN_U16("graphics/mail/bead/palette.gbapal");
-const u16 gMailPalette_Shadow[] = INCBIN_U16("graphics/mail/shadow/palette.gbapal");
-const u16 gMailPalette_Tropic[] = INCBIN_U16("graphics/mail/tropic/palette.gbapal");
-const u16 gMailPalette_Dream[] = INCBIN_U16("graphics/mail/dream/palette.gbapal");
-const u16 gMailPalette_Fab[] = INCBIN_U16("graphics/mail/fab/palette.gbapal");
-const u16 gMailPalette_Retro[] = INCBIN_U16("graphics/mail/retro/palette.gbapal");
-
-const u8 gMailTiles_Orange[] = INCBIN_U8("graphics/mail/orange/tiles.4bpp.lz");
-const u8 gMailTiles_Harbor[] = INCBIN_U8("graphics/mail/harbor/tiles.4bpp.lz");
-const u8 gMailTiles_Glitter[] = INCBIN_U8("graphics/mail/glitter/tiles.4bpp.lz");
-const u8 gMailTiles_Mech[] = INCBIN_U8("graphics/mail/mech/tiles.4bpp.lz");
-const u8 gMailTiles_Wood[] = INCBIN_U8("graphics/mail/wood/tiles.4bpp.lz");
-const u8 gMailTiles_Wave[] = INCBIN_U8("graphics/mail/wave/tiles.4bpp.lz");
-const u8 gMailTiles_Bead[] = INCBIN_U8("graphics/mail/bead/tiles.4bpp.lz");
-const u8 gMailTiles_Shadow[] = INCBIN_U8("graphics/mail/shadow/tiles.4bpp.lz");
-const u8 gMailTiles_Tropic[] = INCBIN_U8("graphics/mail/tropic/tiles.4bpp.lz");
-const u8 gMailTiles_Dream[] = INCBIN_U8("graphics/mail/dream/tiles.4bpp.lz");
-const u8 gMailTiles_Fab[] = INCBIN_U8("graphics/mail/fab/tiles.4bpp.lz");
-const u8 gMailTiles_Retro[] = INCBIN_U8("graphics/mail/retro/tiles.4bpp.lz");
-
-const u8 gMailTilemap_Orange[] = INCBIN_U8("graphics/mail/orange/map.bin.lz");
-const u8 gMailTilemap_Harbor[] = INCBIN_U8("graphics/mail/harbor/map.bin.lz");
-const u8 gMailTilemap_Glitter[] = INCBIN_U8("graphics/mail/glitter/map.bin.lz");
-const u8 gMailTilemap_Mech[] = INCBIN_U8("graphics/mail/mech/map.bin.lz");
-const u8 gMailTilemap_Wood[] = INCBIN_U8("graphics/mail/wood/map.bin.lz");
-const u8 gMailTilemap_Wave[] = INCBIN_U8("graphics/mail/wave/map.bin.lz");
-const u8 gMailTilemap_Bead[] = INCBIN_U8("graphics/mail/bead/map.bin.lz");
-const u8 gMailTilemap_Shadow[] = INCBIN_U8("graphics/mail/shadow/map.bin.lz");
-const u8 gMailTilemap_Tropic[] = INCBIN_U8("graphics/mail/tropic/map.bin.lz");
-const u8 gMailTilemap_Dream[] = INCBIN_U8("graphics/mail/dream/map.bin.lz");
-const u8 gMailTilemap_Fab[] = INCBIN_U8("graphics/mail/fab/map.bin.lz");
-const u8 gMailTilemap_Retro[] = INCBIN_U8("graphics/mail/retro/map.bin.lz");
+#include "data/graphics/mail.h"
 
 const u8 gNamingScreenBackButton_Gfx[] = INCBIN_U8("graphics/naming_screen/back_button.4bpp");
 const u8 gNamingScreenInputArrow_Gfx[] = INCBIN_U8("graphics/naming_screen/input_arrow.4bpp");
