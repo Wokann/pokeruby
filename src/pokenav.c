@@ -37,15 +37,15 @@ EWRAM_DATA u16 gPokenavRibbonDescriptionId = 0;
 extern const u8 gPokenavTrainerEyesList_Pal[];
 extern const u16 gPokenavTrainerEyesListBg_Pal[];
 extern const u16 gPokenavRibbonsList_Pal[];
-extern const u8 gPokenavList_Tilemap[];
+extern const u8 gPokenavListBackground_Tilemap[];
 extern const u8 gPokenavTrainerEyesMisc_Gfx[];
 extern const u8 gPokenavTrainerEyesListBottom_Tilemap[];
 extern const u8 gPokenavTrainerEyesListTop_Tilemap[];
 extern const u8 gPokenavListInfo_Tilemap[];
-extern const u16 gPokenavConditionSearch2_Pal[];
+extern const u16 gPokenavConditionSearchList_Pal[];
 extern const u8 gPokenavTrainerEyesMisc_Pal[];
-extern const u16 gPokenavList_Pal[];
-extern const u8 gPokenavConditionSearch2_Gfx[];
+extern const u16 gPokenavListBackground_Pal[];
+extern const u8 gPokenavListRow_Gfx[];
 extern const u16 gConditionGraphData_Pal[];
 extern const u8 gConditionGraphData_Tilemap[];
 extern const u8 gPokenavConditionSearchGraphTilemap[];
@@ -1000,32 +1000,32 @@ bool8 LoadPokenavListScreenStep(void)
         Menu_EraseScreen();
         break;
     case 5:
-        LZ77UnCompVram(gPokenavList_Tilemap, (void *)VRAM + 0xE800);
+        LZ77UnCompVram(gPokenavListBackground_Tilemap, (void *)VRAM + 0xE800);
         break;
     case 6:
-        LZ77UnCompVram(gPokenavConditionSearch2_Gfx, (void *)VRAM + 0x8000);
+        LZ77UnCompVram(gPokenavListRow_Gfx, (void *)VRAM + 0x8000);
         break;
     case 7:
-        LoadPalette(gPokenavList_Pal, 0xB0, 0x20);
-        LoadPalette(gPokenavList_Pal, 0xF0, 0x20);
+        LoadPalette(gPokenavListBackground_Pal, 0xB0, 0x20);
+        LoadPalette(gPokenavListBackground_Pal, 0xF0, 0x20);
         LoadPalette(gPokenavTrainerEyesMisc_Pal, 0x40, 0x20);
 
         if (gPokenavState->listMode == POKENAV_LIST_CONDITION_SEARCH)
         {
-            LoadPalette(gPokenavConditionSearch2_Pal, 0x30, 0x20);
-            gPlttBufferUnfaded[0] = gPokenavConditionSearch2_Pal[5];
+            LoadPalette(gPokenavConditionSearchList_Pal, 0x30, 0x20);
+            gPlttBufferUnfaded[0] = gPokenavConditionSearchList_Pal[5];
             LoadPalette(gPokenavShared_Pal, 0xB0, 0x20);
-            LoadPalette(&gPokenavList_Pal[1], 0xB1, 0x2);
-            LoadPalette(&gPokenavList_Pal[8], 0xB5, 0x2);
-            LoadPalette(&gPokenavConditionSearch2_Pal[5], 0xBF, 0x2);
+            LoadPalette(&gPokenavListBackground_Pal[1], 0xB1, 0x2);
+            LoadPalette(&gPokenavListBackground_Pal[8], 0xB5, 0x2);
+            LoadPalette(&gPokenavConditionSearchList_Pal[5], 0xBF, 0x2);
         }
         else if (gPokenavState->listMode == POKENAV_LIST_RIBBONS)
         {
             LoadPalette(gPokenavRibbonsList_Pal, 0x30, 0x20);
             gPlttBufferUnfaded[0] = gPokenavRibbonsList_Pal[5];
             LoadPalette(gPokenavShared_Pal, 0xB0, 0x20);
-            LoadPalette(&gPokenavList_Pal[1], 0xB1, 0x2);
-            LoadPalette(&gPokenavList_Pal[8], 0xB5, 0x2);
+            LoadPalette(&gPokenavListBackground_Pal[1], 0xB1, 0x2);
+            LoadPalette(&gPokenavListBackground_Pal[8], 0xB5, 0x2);
             LoadPalette(&gPokenavRibbonsList_Pal[5], 0xBF, 0x2);
         }
         else
@@ -1033,8 +1033,8 @@ bool8 LoadPokenavListScreenStep(void)
             LoadPalette(gPokenavTrainerEyesListBg_Pal, 0x30, 0x20);
             gPlttBufferUnfaded[0] = *(trainerEyesAccentPalette = &gPokenavTrainerEyesListBg_Pal[5]);
             LoadPalette(gPokenavTrainerEyesList_Pal, 0x50, 0x20);
-            LoadPalette(&gPokenavList_Pal[1], 0xB1, 0x2);
-            LoadPalette(&gPokenavList_Pal[8], 0xB5, 0x2);
+            LoadPalette(&gPokenavListBackground_Pal[1], 0xB1, 0x2);
+            LoadPalette(&gPokenavListBackground_Pal[8], 0xB5, 0x2);
             LoadPalette(trainerEyesAccentPalette, 0xBF, 0x2);
             LoadPalette(trainerEyesAccentPalette, 0x5F, 0x2);
         }

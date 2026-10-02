@@ -127,9 +127,9 @@ const u8 gPokenavPokeblockGraphTilemap[] = INCBIN_U8("graphics/pokenav/condition
 const u16 gConditionGraphData_Pal[] = INCBIN_U16("graphics/pokenav/condition/graph_data.gbapal");
 const u16 gPokenavRibbonsList_Pal[] = INCBIN_U16("graphics/pokenav/ribbons/list_ui.gbapal");
 
-const u16 gPokenavConditionSearch2_Pal[] = INCBIN_U16("graphics/pokenav/condition_search2.gbapal");
+const u16 gPokenavConditionSearchList_Pal[] = INCBIN_U16("graphics/pokenav/list/row.gbapal");
 
-const u16 gPokenavList_Pal[] = INCBIN_U16("graphics/pokenav/list.gbapal");
+const u16 gPokenavListBackground_Pal[] = INCBIN_U16("graphics/pokenav/list/background.gbapal");
 
 const u16 gUnusedPokenav2_Pal[] = INCBIN_U16("graphics/pokenav/unused/palette2.bin");
 
