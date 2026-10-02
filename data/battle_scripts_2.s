@@ -3,8 +3,8 @@
 #include "constants/items.h"
 #include "constants/songs.h"
 #include "constants/game_stat.h"
-	.include "include/macros.inc"
-	.include "include/macros/battle_script.inc"
+	.include "asm/macros.inc"
+	.include "asm/macros/battle_script.inc"
 	.include "constants/constants.inc"
 @ Prevent the C macros from substituting the script aliases below.
 #undef MOVE_EFFECT_AFFECTS_USER

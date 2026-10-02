@@ -4,7 +4,7 @@
 #include "constants/moves.h"
 #include "constants/pokemon.h"
 #include "constants/species.h"
-	.include "include/macros.inc"
+	.include "asm/macros.inc"
 	.include "constants/constants.inc"
 
 	.macro battler_pic_frame index

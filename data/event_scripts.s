@@ -43,8 +43,8 @@
 #include "constants/secret_bases.h"
 #include "constants/script_menu.h"
 #include "constants/field_weather.h"
-	.include "include/macros.inc"
-	.include "include/macros/event.inc"
+	.include "asm/macros.inc"
+	.include "asm/macros/event.inc"
 	.include "constants/constants.inc"
 
 	.section script_data, "aw", %progbits

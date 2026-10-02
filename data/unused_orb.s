@@ -1,5 +1,5 @@
 #include "constants/battle_anim.h"
-	.include "include/macros.inc"
+	.include "asm/macros.inc"
 	.include "constants/constants.inc"
 
 	.section .rodata

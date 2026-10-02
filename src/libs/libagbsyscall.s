@@ -1,4 +1,4 @@
-	.include "include/macros.inc"
+	.include "asm/macros.inc"
 	.syntax unified
 
 	.text

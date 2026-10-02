@@ -8,7 +8,7 @@
 // These are defined as assembler symbols in constants/misc_constants.inc.
 #undef POKEMON_NAME_LENGTH
 #undef MOVE_NAME_LENGTH
-	.include "include/macros.inc"
+	.include "asm/macros.inc"
 	.include "constants/constants.inc"
 
 	.section .rodata
