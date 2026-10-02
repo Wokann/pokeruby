@@ -202,8 +202,15 @@ $(BATTRANSGFXDIR)/vs_frame.4bpp: GFX_OPTS := -num_tiles 16
 #### Contest ####
 
 CONTESTGFXDIR := graphics/contest
+JPCONTESTGFXDIR := graphics/contest/japanese
 
 $(CONTESTGFXDIR)/nextturn.4bpp: GFX_OPTS := -num_tiles 8
+
+$(JPCONTESTGFXDIR)/composite_1.4bpp: $(JPCONTESTGFXDIR)/frame_1.4bpp $(JPCONTESTGFXDIR)/floor.4bpp $(JPCONTESTGFXDIR)/frame_2.4bpp $(JPCONTESTGFXDIR)/symbols.4bpp $(JPCONTESTGFXDIR)/meter.4bpp $(JPCONTESTGFXDIR)/letters.4bpp $(JPCONTESTGFXDIR)/numbers.4bpp
+	@cat $(JPCONTESTGFXDIR)/frame_1.4bpp $(JPCONTESTGFXDIR)/floor.4bpp $(JPCONTESTGFXDIR)/frame_2.4bpp $(JPCONTESTGFXDIR)/symbols.4bpp $(JPCONTESTGFXDIR)/meter.4bpp $(JPCONTESTGFXDIR)/letters.4bpp $(JPCONTESTGFXDIR)/numbers.4bpp >$@
+
+$(JPCONTESTGFXDIR)/composite_2.4bpp: $(JPCONTESTGFXDIR)/interface.4bpp $(JPCONTESTGFXDIR)/audience.4bpp
+	@cat $(JPCONTESTGFXDIR)/interface.4bpp $(JPCONTESTGFXDIR)/audience.4bpp >$@
 
 
 #### Picture Frame ####
@@ -254,12 +261,6 @@ $(UNUSEDGFXDIR)/redyellowgreen_frame.bin: $(UNUSEDGFXDIR)/red_frame.bin $(UNUSED
 	@cat $(UNUSEDGFXDIR)/red_frame.bin $(UNUSEDGFXDIR)/yellow_frame.bin $(UNUSEDGFXDIR)/green_frame.bin $(UNUSEDGFXDIR)/blank_frame.bin >$@
 
 $(UNUSEDGFXDIR)/color_frames.4bpp: GFX_OPTS := -num_tiles 353
-
-$(UNUSEDGFXDIR)/old_contest.4bpp: $(UNUSEDGFXDIR)/old_contest_frame_1.4bpp $(UNUSEDGFXDIR)/old_contest_floor.4bpp $(UNUSEDGFXDIR)/old_contest_frame_2.4bpp $(UNUSEDGFXDIR)/old_contest_symbols.4bpp $(UNUSEDGFXDIR)/old_contest_meter.4bpp $(UNUSEDGFXDIR)/old_contest_classes.4bpp $(UNUSEDGFXDIR)/old_contest_numbers.4bpp
-	@cat $(UNUSEDGFXDIR)/old_contest_frame_1.4bpp $(UNUSEDGFXDIR)/old_contest_floor.4bpp $(UNUSEDGFXDIR)/old_contest_frame_2.4bpp $(UNUSEDGFXDIR)/old_contest_symbols.4bpp $(UNUSEDGFXDIR)/old_contest_meter.4bpp $(UNUSEDGFXDIR)/old_contest_classes.4bpp $(UNUSEDGFXDIR)/old_contest_numbers.4bpp >$@
-
-$(UNUSEDGFXDIR)/old_contest_2.4bpp: $(UNUSEDGFXDIR)/old_contest_2_1.4bpp $(UNUSEDGFXDIR)/old_contest_2_2.4bpp
-	@cat $(UNUSEDGFXDIR)/old_contest_2_1.4bpp $(UNUSEDGFXDIR)/old_contest_2_2.4bpp >$@
 
 $(UNUSEDGFXDIR)/obi_palpak1.gbapal: $(UNUSEDGFXDIR)/old_pal1.gbapal $(UNUSEDGFXDIR)/old_pal2.gbapal $(UNUSEDGFXDIR)/old_pal3.gbapal
 	@cat $(UNUSEDGFXDIR)/old_pal1.gbapal $(UNUSEDGFXDIR)/old_pal2.gbapal $(UNUSEDGFXDIR)/old_pal3.gbapal >$@

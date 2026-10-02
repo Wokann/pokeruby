@@ -321,14 +321,14 @@ const u8 gBattleAnimSpriteGfx_Smoke2[] = INCBIN_U8("graphics/battle_anims/sprite
 const u8 gBattleAnimSpriteGfx_BlueFlames[] = INCBIN_U8("graphics/battle_anims/sprites/blue_flames.4bpp.lz");
 const u8 gBattleAnimSpritePal_BlueFlames[] = INCBIN_U8("graphics/battle_anims/sprites/blue_flames.gbapal.lz");
 const u8 gBattleAnimSpriteGfx_BlueFlames2[] = INCBIN_U8("graphics/battle_anims/sprites/blue_flames_2.4bpp.lz");
-const u8 gUnusedGfx_OldContest[] = INCBIN_U8("graphics/unused/old_contest.4bpp.lz");
-const u8 gUnusedPal_OldContest[] = INCBIN_U8("graphics/unused/old_contest.gbapal.lz");
-const u8 gUnusedTilemap_OldContest[] = INCBIN_U8("graphics/unused/old_contest.bin.lz");
+const u8 gJPContestGfx1[] = INCBIN_U8("graphics/contest/japanese/composite_1.4bpp.lz");
+const u8 gJPContestPal[] = INCBIN_U8("graphics/contest/japanese/palette.gbapal.lz");
+const u8 gJPContestBgTilemap[] = INCBIN_U8("graphics/contest/japanese/bg.bin.lz");
 const u8 gJPContestWindowsTilemap[] = INCBIN_U8("graphics/contest/japanese/windows.bin.lz");
 
 const u8 gContestNumbers_UnusedGfx[] = INCBIN_U8("graphics/unused/numbers.4bpp.lz");
 const u8 gContestNumbers_UnusedPal[] = INCBIN_U8("graphics/unused/numbers.gbapal.lz");
-const u8 gUnusedGfx_OldContest2[] = INCBIN_U8("graphics/unused/old_contest_2.4bpp.lz");
+const u8 gJPContestGfx2[] = INCBIN_U8("graphics/contest/japanese/composite_2.4bpp.lz");
 const u8 gContestInterfaceAudiencePalette[] = INCBIN_U8("graphics/contest/interface.gbapal.lz");
 
 const u8 gContestAudienceTilemap[] = INCBIN_U8("graphics/contest/audience.bin.lz");
