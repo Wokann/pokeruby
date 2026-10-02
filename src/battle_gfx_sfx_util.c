@@ -23,6 +23,16 @@
 #include "ewram.h"
 #include "graphics.h"
 
+#define BATTLE_GFX_SFX_UTIL_DATA __attribute__((section(".rodata.battle_gfx_sfx_util")))
+
+u8 *const gMonSpriteGfxBufferPtrs[] BATTLE_GFX_SFX_UTIL_DATA =
+{
+    gSharedMem + 0x8000,
+    gSharedMem + 0xA000,
+    gSharedMem + 0xC000,
+    gSharedMem + 0xE000,
+};
+
 extern u8 gBattleBufferA[][0x200];
 extern u8 gActiveBattler;
 extern u8 gBattlersCount;
