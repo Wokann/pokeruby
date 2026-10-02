@@ -2538,7 +2538,7 @@ extern const u16 gRouletteUnused3_Pal[];
 extern const u16 gRouletteUnused4_Pal[];
 #endif //ENGLISH
 
-static const u8 sBall_Gfx[] = INCBIN_U8("graphics/roulette/ball.4bpp.lz");
+ALIGNED(4) static const u8 sBall_Gfx[] = INCBIN_U8("graphics/roulette/ball.4bpp.lz");
 const u8 gRouletteBallCounter_Gfx[] = INCBIN_U8("graphics/roulette/ball_counter.4bpp.lz");
 static const u8 sShroomishTaillow_Gfx[] = INCBIN_U8("graphics/roulette/roulette_tilt.4bpp.lz");
 const u8 gRouletteGridIcons_Gfx[] = INCBIN_U8("graphics/roulette/grid_icons.4bpp.lz");

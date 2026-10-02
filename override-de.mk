@@ -14,7 +14,7 @@ $(BAGGFXDIR)/check_berry.4bpp: $(BAGGFXDIR)/check_berry.png
 $(INTROGFXDIR)/copyright.4bpp: $(INTROGFXDIR)/copyright.png
 	$(GBAGFX) $< $@ -num_tiles 47
 
-$(MISCGFXDIR)/end_copyright.4bpp: $(MISCGFXDIR)/end_copyright.png
+graphics/credits/the_end_copyright.4bpp: graphics/credits/the_end_copyright.png
 	$(GBAGFX) $< $@ -num_tiles 92
 
 #
