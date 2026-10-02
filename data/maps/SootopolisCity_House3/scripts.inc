@@ -5,8 +5,7 @@ SootopolisCity_House3_EventScript_Woman:: @ 815B31A
 	lock
 	faceplayer
 	msgbox SootopolisCity_House3_Text_WallaceHasManyFansDoYou, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq SootopolisCity_House3_EventScript_HaveFans
+	goto_if_eq VAR_RESULT, YES, SootopolisCity_House3_EventScript_HaveFans
 	msgbox SootopolisCity_House3_Text_LonesomeTryWorkingHarder, MSGBOX_DEFAULT
 	release
 	end

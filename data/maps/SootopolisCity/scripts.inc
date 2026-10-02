@@ -40,8 +40,7 @@ SootopolisCity_EventScript_SetWeather:: @ 814D123
 	call Common_EventScript_SetLegendaryWeather
 	setobjectxyperm LOCALID_SOOTOPOLIS_CAVE_ENTRANCE_WOMAN_1, 29, 19
 	setobjectxyperm LOCALID_SOOTOPOLIS_CAVE_ENTRANCE_WOMAN_2, 33, 19
-	compare VAR_SOOTOPOLIS_CITY_STATE, 1
-	call_if_eq SootopolisCity_EventScript_SetStevenWallaceInitialPositions
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 1, SootopolisCity_EventScript_SetStevenWallaceInitialPositions
 	return
 
 SootopolisCity_EventScript_SetStevenWallaceInitialPositions:: @ 814D142
@@ -92,37 +91,31 @@ SootopolisCity_EventScript_KiriGiveBerry:: @ 814D19F
 	addvar VAR_RESULT, 20
 	addvar VAR_RESULT, ITEM_CHERI_BERRY
 	giveitem VAR_RESULT
-	compare VAR_RESULT, FALSE
-	goto_if_eq Common_EventScript_ShowBagIsFull
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_DAILY_RECEIVED_BERRY_SOOTOPOLIS
 	msgbox SootopolisCity_Text_GiveYouThisBerryToo, MSGBOX_DEFAULT
 	random 2
-	compare VAR_RESULT, 0
-	goto_if_eq SootopolisCity_EventScript_GiveFigyBerry
-	compare VAR_RESULT, 1
-	goto_if_eq SootopolisCity_EventScript_GiveIapapaBerry
+	goto_if_eq VAR_RESULT, 0, SootopolisCity_EventScript_GiveFigyBerry
+	goto_if_eq VAR_RESULT, 1, SootopolisCity_EventScript_GiveIapapaBerry
 	end
 
 SootopolisCity_EventScript_GiveFigyBerry:: @ 814D1FF
 	giveitem ITEM_FIGY_BERRY
-	compare VAR_RESULT, FALSE
-	goto_if_eq Common_EventScript_ShowBagIsFull
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	msgbox SootopolisCity_Text_WhatKindOfWishInYourName, MSGBOX_DEFAULT
 	release
 	end
 
 SootopolisCity_EventScript_GiveIapapaBerry:: @ 814D220
 	giveitem ITEM_IAPAPA_BERRY
-	compare VAR_RESULT, FALSE
-	goto_if_eq Common_EventScript_ShowBagIsFull
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	msgbox SootopolisCity_Text_WhatKindOfWishInYourName, MSGBOX_DEFAULT
 	release
 	end
 
 SootopolisCity_EventScript_KiriReceivedBerry:: @ 814D241
 	msgbox SootopolisCity_Text_LikeSeasonBornIn, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq SootopolisCity_EventScript_KiriLikeSeasonBornIn
+	goto_if_eq VAR_RESULT, YES, SootopolisCity_EventScript_KiriLikeSeasonBornIn
 	msgbox SootopolisCity_Text_OhDoesntMatter, MSGBOX_DEFAULT
 	release
 	end

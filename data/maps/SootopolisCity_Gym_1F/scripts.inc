@@ -19,12 +19,9 @@ SootopolisCity_Gym_1F_OnLoad:: @ 815AF25
 	end
 
 SootopolisCity_Gym_1F_EventScript_CheckSetStairMetatiles:: @ 815AF2E
-	compare VAR_ICE_STEP_COUNT, 8
-	goto_if_lt SootopolisCity_Gym_1F_EventScript_StopCheckingStairs
-	compare VAR_ICE_STEP_COUNT, 28
-	goto_if_lt SootopolisCity_Gym_1F_EventScript_OpenFirstStairs
-	compare VAR_ICE_STEP_COUNT, 69
-	goto_if_lt SootopolisCity_Gym_1F_EventScript_OpenFirstAndSecondStairs
+	goto_if_lt VAR_ICE_STEP_COUNT, 8, SootopolisCity_Gym_1F_EventScript_StopCheckingStairs
+	goto_if_lt VAR_ICE_STEP_COUNT, 28, SootopolisCity_Gym_1F_EventScript_OpenFirstStairs
+	goto_if_lt VAR_ICE_STEP_COUNT, 69, SootopolisCity_Gym_1F_EventScript_OpenFirstAndSecondStairs
 	setmetatile 8, 4, METATILE_SootopolisGym_Stairs, FALSE
 	setmetatile 8, 5, METATILE_SootopolisGym_Stairs, FALSE
 
@@ -107,8 +104,7 @@ SootopolisCity_Gym_1F_EventScript_WallaceDefeated:: @ 815B02D
 
 SootopolisCity_Gym_1F_EventScript_GiveWaterPulse2:: @ 815B056
 	giveitem ITEM_TM03
-	compare VAR_RESULT, FALSE
-	goto_if_eq Common_EventScript_ShowBagIsFull
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	msgbox SootopolisCity_Gym_1F_Text_ExplainWaterPulse, MSGBOX_DEFAULT
 	setflag FLAG_RECEIVED_TM_WATER_PULSE
 	release
