@@ -5,6 +5,7 @@
 #include "constants/global.h"
 #include "constants/moves.h"
 #include "constants/pokemon.h"
+#include "constants/species.h"
 #include "sprite.h"
 #include "battle.h"
 
@@ -40,7 +41,7 @@ extern const union AnimCmd *const *const gTrainerBackAnimsPtrTable[];
 extern const struct MonCoords gTrainerBackPicCoords[];
 extern const struct CompressedSpriteSheet gTrainerBackPicTable[];
 extern const struct CompressedSpritePalette gTrainerBackPicPaletteTable[];
-extern const u8 gEnemyMonElevation[];
+extern const u8 gEnemyMonElevation[NUM_SPECIES];
 extern const u8 gTrainerClassNames[][13];
 extern const struct Trainer gTrainers[];
 extern const u8 gSpeciesNames[][POKEMON_NAME_LENGTH + 1];

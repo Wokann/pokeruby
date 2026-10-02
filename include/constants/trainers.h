@@ -190,11 +190,12 @@ enum {
     TRAINER_PIC_DRAKE,
 };
 
-enum {
-    TRAINER_BACK_PIC_BRENDAN,
-    TRAINER_BACK_PIC_MAY,
-    TRAINER_BACK_PIC_WALLY,
-};
+// The player back pics are assumed to alternate according to the gender values (MALE/FEMALE)
+#define TRAINER_BACK_PIC_BRENDAN 0
+#define TRAINER_BACK_PIC_MAY     1
+#define TRAINER_BACK_PIC_WALLY   2
+
+#define TRAINER_BACK_PIC_SIZE 0x2000
 
 enum {
     TRAINER_CLASS_POKEMON_TRAINER_1,
