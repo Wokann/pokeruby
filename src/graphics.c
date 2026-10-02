@@ -875,10 +875,10 @@ const u8 gSummaryPage_Info_Tilemap[] = INCBIN_U8("graphics/interface/pokemon_inf
 const u8 gBagMaleTiles[] = INCBIN_U8("graphics/bag/bag_male.4bpp.lz");
 const u8 gBagFemaleTiles[] = INCBIN_U8("graphics/bag/bag_female.4bpp.lz");
 const u8 gBagPalette[] = INCBIN_U8("graphics/bag/bag.gbapal.lz");
-const u8 gBagScreen_Gfx[] = INCBIN_U8("graphics/interface/bag_screen.4bpp.lz");
-const u8 gBagScreenMale_Pal[] = INCBIN_U8("graphics/interface/bag_screen_male.gbapal.lz");
-const u8 gBagScreenFemale_Pal[] = INCBIN_U8("graphics/interface/bag_screen_female.gbapal.lz");
-const u8 gBagScreen_Tilemap[] = INCBIN_U8("graphics/interface/bag_screen.bin");
+const u8 gBagScreen_Gfx[] = INCBIN_U8("graphics/bag/menu.4bpp.lz");
+const u8 gBagScreenMale_Pal[] = INCBIN_U8("graphics/bag/menu_male.gbapal.lz");
+const u8 gBagScreenFemale_Pal[] = INCBIN_U8("graphics/bag/menu_female.gbapal.lz");
+const u8 gBagScreen_GfxTileMap[] = INCBIN_U8("graphics/bag/menu.bin");
 const u8 gBuyMenuFrame_Gfx[] = INCBIN_U8("graphics/interface/mart_frame.4bpp.lz");
 const u8 gShopMenuMoney_Pal[] = INCBIN_U8("graphics/shop/money.gbapal.lz");
 const u8 gBuyMenuFrame_Tilemap[] = INCBIN_U8("graphics/interface/mart_frame.bin.lz");
@@ -1156,7 +1156,7 @@ const u8 gPokedexScreenSelectBarSubmenu_Tilemap[] = INCBIN_U8("graphics/pokedex/
 const u8 gPokedexInfoScreen_Tilemap[] = INCBIN_U8("graphics/pokedex/pokedex_detail_layout.bin.lz");
 const u8 gPokedexSearchMenuNational_Tilemap[] = INCBIN_U8("graphics/pokedex/search_menu_national.bin.lz");
 
-const u8 gBagScreenLabels_Tilemap[] = INCBIN_U8("graphics/interface/bag_screen_labels.bin");
+const u8 gBagScreenLabels_Tilemap[] = INCBIN_U8("graphics/bag/menu_labels.bin");
 
 const u16 gSlotMachineReelSymbols_Pal[] = INCBIN_U16("graphics/slot_machine/reel_symbols.gbapal");
 const u16 gSlotMachineReelTimePikachu_Pal[] = INCBIN_U16("graphics/slot_machine/reel_time_pikachu.gbapal");

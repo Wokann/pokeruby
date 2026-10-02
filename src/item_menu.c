@@ -543,7 +543,7 @@ static bool8 LoadBagGraphicsMultistep(void)
         sBagMenuGraphicsLoadState++;
         break;
     case 1:
-        CpuCopy16(gBagScreen_Tilemap, gBGTilemapBuffers[2], 0x800);
+        CpuCopy16(gBagScreen_GfxTileMap, gBGTilemapBuffers[2], 0x800);
         sBagMenuGraphicsLoadState++;
         break;
     case 2:
@@ -747,7 +747,7 @@ static void Task_AnimateBagPocketSwitch(u8 taskId)
 
 static void CopyBagScreenTilemap(u16 *tilemap)
 {
-    CpuCopy16(gBagScreen_Tilemap, tilemap, 0x800);
+    CpuCopy16(gBagScreen_GfxTileMap, tilemap, 0x800);
 }
 
 static void FillBagItemListRows(u16 *tilemap, u8 startRow, u8 endRow, u8 tile)
