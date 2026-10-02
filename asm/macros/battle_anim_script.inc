@@ -415,7 +415,7 @@
 @ createvisualtask wrappers
 	.macro metallic_shine priority=5, permanent:req, color
 	.ifb \color
-	createvisualtask AnimTask_MetallicShine, \priority, \permanent, FALSE, rgb(0, 0, 0)
+	createvisualtask AnimTask_MetallicShine, \priority, \permanent, FALSE, RGB_BLACK
 	.else
 	createvisualtask AnimTask_MetallicShine, \priority, \permanent, TRUE, \color
 	.endif
