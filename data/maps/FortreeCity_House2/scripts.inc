@@ -20,8 +20,7 @@ FortreeCity_House2_EventScript_HiddenPowerGiver:: @ 81580B4
 	case 0, FortreeCity_House2_EventScript_WrongGuess
 	msgbox FortreeCity_House2_Text_YourHiddenPowerHasAwoken, MSGBOX_DEFAULT
 	giveitem ITEM_TM10
-	compare VAR_RESULT, FALSE
-	goto_if_eq Common_EventScript_ShowBagIsFull
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_TM_HIDDEN_POWER
 	msgbox FortreeCity_House2_Text_ExplainHiddenPower, MSGBOX_DEFAULT
 	release
