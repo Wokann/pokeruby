@@ -13,38 +13,38 @@
 
 	.align 2
 gContestAI_ScriptsTable:: @ 81DC118
-	.4byte AI_CheckBadMove
-	.4byte AI_CheckCombo
-	.4byte AI_CheckBoring
-	.4byte AI_CheckExcitement
-	.4byte AI_CheckOrder
-	.4byte AI_CheckGoodMove
-	.4byte AI_Erratic
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
-	.4byte AI_Nothing
+	.4byte AI_CheckBadMove      @ CONTEST_AI_CHECK_BAD_MOVE
+	.4byte AI_CheckCombo        @ CONTEST_AI_CHECK_COMBO
+	.4byte AI_CheckBoring       @ CONTEST_AI_CHECK_BORING
+	.4byte AI_CheckExcitement   @ CONTEST_AI_CHECK_EXCITEMENT
+	.4byte AI_CheckOrder        @ CONTEST_AI_CHECK_ORDER
+	.4byte AI_CheckGoodMove     @ CONTEST_AI_CHECK_GOOD_MOVE
+	.4byte AI_Erratic           @ CONTEST_AI_ERRATIC
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_1
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_2
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_3
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_4
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_5
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_6
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_7
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_8
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_9
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_10
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_11
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_12
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_13
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_14
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_15
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_16
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_17
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_18
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_19
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_20
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_21
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_22
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_23
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_24
+	.4byte AI_Nothing           @ CONTEST_AI_DUMMY_25
 
 @ Unreferenced AI routine to encourage moves that improve condition on the first
 @ turn. Additionally, it checks the appeal order of the user and the effect
