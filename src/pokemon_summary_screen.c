@@ -511,7 +511,7 @@ static const struct SpriteTemplate sSpriteTemplate_StatusCondition =
     .callback = SpriteCallbackDummy,
 };
 
-static const u16 sMarkings_Pal[] = INCBIN_U16("graphics/summary_screen/mon_markings.gbapal");
+static const u16 sMarkings_Pal[] = INCBIN_U16("graphics/summary_screen/markings.gbapal");
 
 #if ENGLISH
 static const u16 gSummaryScreenTextTiles[] = INCBIN_U16("graphics/summary_screen/text.4bpp");
