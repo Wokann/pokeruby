@@ -7,35 +7,39 @@
 	.include "include/macros.inc"
 	.include "constants/constants.inc"
 
+	.macro battler_pic_frame index
+	obj_frame_tiles gSharedMem + 0x8000 + MON_PIC_SIZE * \index, MON_PIC_SIZE
+	.endm
+
 	.section .rodata
 
 	.align 2
 gBattlerPicTable_PlayerLeft:: @ 81E7A10
-	obj_frame_tiles gSharedMem + 0x8000, MON_PIC_SIZE
-	obj_frame_tiles gSharedMem + 0x8800, MON_PIC_SIZE
-	obj_frame_tiles gSharedMem + 0x9000, MON_PIC_SIZE
-	obj_frame_tiles gSharedMem + 0x9800, MON_PIC_SIZE
+	battler_pic_frame 0
+	battler_pic_frame 1
+	battler_pic_frame 2
+	battler_pic_frame 3
 
 	.align 2
 gBattlerPicTable_OpponentLeft:: @ 81E7A30
-	obj_frame_tiles gSharedMem + 0xA000, MON_PIC_SIZE
-	obj_frame_tiles gSharedMem + 0xA800, MON_PIC_SIZE
-	obj_frame_tiles gSharedMem + 0xB000, MON_PIC_SIZE
-	obj_frame_tiles gSharedMem + 0xB800, MON_PIC_SIZE
+	battler_pic_frame 4
+	battler_pic_frame 5
+	battler_pic_frame 6
+	battler_pic_frame 7
 
 	.align 2
 gBattlerPicTable_PlayerRight:: @ 81E7A50
-	obj_frame_tiles gSharedMem + 0xC000, MON_PIC_SIZE
-	obj_frame_tiles gSharedMem + 0xC800, MON_PIC_SIZE
-	obj_frame_tiles gSharedMem + 0xD000, MON_PIC_SIZE
-	obj_frame_tiles gSharedMem + 0xD800, MON_PIC_SIZE
+	battler_pic_frame 8
+	battler_pic_frame 9
+	battler_pic_frame 10
+	battler_pic_frame 11
 
 	.align 2
 gBattlerPicTable_OpponentRight:: @ 81E7A70
-	obj_frame_tiles gSharedMem + 0xE000, MON_PIC_SIZE
-	obj_frame_tiles gSharedMem + 0xE800, MON_PIC_SIZE
-	obj_frame_tiles gSharedMem + 0xF000, MON_PIC_SIZE
-	obj_frame_tiles gSharedMem + 0xF800, MON_PIC_SIZE
+	battler_pic_frame 12
+	battler_pic_frame 13
+	battler_pic_frame 14
+	battler_pic_frame 15
 
 	.align 2
 sAnim_GeneralFrame0:: @ 81E7A90
