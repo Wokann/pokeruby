@@ -179,7 +179,7 @@ static void CB2_WipeSave(void)
         }
 
         Menu_DrawStdWindowFrame(1, MSG_WIN_TOP, 28, 19);
-        Menu_PrintText(gSystemText_CheckCompleteSaveAttempt, 2, MSG_WIN_TOP + 1);
+        Menu_PrintText(gText_CheckCompleted, 2, MSG_WIN_TOP + 1);
         HandleSavingData(sSaveFailedType);
 
         if (gDamagedSaveSectors != 0)
@@ -205,9 +205,9 @@ static void CB2_WipeSave(void)
 
         // no callback exists, so the game cannot continue.
         if (gGameContinueCallback == 0)
-            Menu_PrintText(gSystemText_SaveCompletedGameEnd, 2, MSG_WIN_TOP + 1);
+            Menu_PrintText(gText_SaveCompleteGameCannotContinue, 2, MSG_WIN_TOP + 1);
         else // callback exists, so continue
-            Menu_PrintText(gSystemText_SaveCompletedPressA, 2, MSG_WIN_TOP + 1);
+            Menu_PrintText(gText_SaveCompletePressA, 2, MSG_WIN_TOP + 1);
     }
 
     SetMainCallback2(CB2_FadeAndReturnToTitleScreen);

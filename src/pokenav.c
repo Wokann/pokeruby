@@ -1175,7 +1175,7 @@ void PrintTrainerEyesListStats(u8 drawStep)
     {
     case 0:
     case 1:
-        MenuPrint_RightAligned(gOtherText_NumberRegistered, 10, 9);
+        MenuPrint_RightAligned(gText_NumberRegistered, 10, 9);
         if (drawStep != 0)
             break;
         // fall through
@@ -1190,7 +1190,7 @@ void PrintTrainerEyesListStats(u8 drawStep)
             break;
         // fall through
     case 3:
-        MenuPrint_RightAligned(gOtherText_NumberBattles, 10, 13);
+        MenuPrint_RightAligned(gText_NumberOfBattles, 10, 13);
         if (drawStep != 0)
             break;
         // fall through
@@ -1667,7 +1667,7 @@ void PrintRibbonsSummaryCount(void)
 {
     u8 *buffer;
     Menu_EraseWindowRect(12, 13, 27, 16);
-    buffer = StringCopy(gPokenavState->pokenavTextBuffer, gOtherText_Ribbons);
+    buffer = StringCopy(gPokenavState->pokenavTextBuffer, gText_Ribbons);
     buffer[0] = CHAR_SPACE;
     buffer++;
     buffer = ConvertIntToDecimalStringN(
@@ -1791,7 +1791,7 @@ void PrintPokeblockMonNature(void)
     if (gPokenavState->monList[gPokenavState->detailSelectionIndex].isValid)
     {
         u8 nature = GetNature(&gPlayerParty[GetPartyIdFromPokeblockSelection(gPokenavState->detailSelectionIndex)]);
-        buffer = StringCopy(buffer, gOtherText_Nature2);
+        buffer = StringCopy(buffer, gText_NatureSlash);
         AlignStringInMenuWindow(buffer, gNatureNamePointers[nature], 87, 0);
     }
     else
@@ -3654,7 +3654,7 @@ u8 *BufferPokenavMonListRowText(u8 *dst, u16 listIndex, u8 displayMode)
 
 u8 *BufferConditionSearchRankText(u8 *dst, u16 rank)
 {
-    return AlignInt1InMenuWindow(StringCopy(dst, gOtherText_Number), rank, 56, 1);
+    return AlignInt1InMenuWindow(StringCopy(dst, gText_Number2), rank, 56, 1);
 }
 
 u8 *BufferRibbonsMonListIndexText(u8 *dst, u16 index)
@@ -3709,7 +3709,7 @@ void BufferConditionGraphMonText(s16 listId, u8 loadId)
         BufferPokenavMonListRowText(gPokenavState->conditionMonNameText[loadId], listId, 0);
         boxId = gPokenavState->monList[listId].boxId;
         if (boxId == 14)
-            AlignStringInMenuWindow(gPokenavState->conditionMonLocationText[loadId], gOtherText_InParty, 64, 0);
+            AlignStringInMenuWindow(gPokenavState->conditionMonLocationText[loadId], gText_InParty, 64, 0);
         else
             AlignStringInMenuWindow(gPokenavState->conditionMonLocationText[loadId], gPokemonStorage.boxNames[boxId], 64, 0);
 

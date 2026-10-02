@@ -46,11 +46,11 @@ extern u8 gBerryTag_Tilemap[];
 
 static const u8 *const sBerryFirmnessStrings[] =
 {
-    ContestStatsText_VerySoft,
-    ContestStatsText_Soft,
-    ContestStatsText_Hard,
-    ContestStatsText_VeryHard,
-    ContestStatsText_SuperHard,
+    gBerryFirmnessString_VerySoft,
+    gBerryFirmnessString_Soft,
+    gBerryFirmnessString_Hard,
+    gBerryFirmnessString_VeryHard,
+    gBerryFirmnessString_SuperHard,
 };
 
 static void CB2_BerryTagScreen(void);
@@ -286,7 +286,7 @@ static void PrintAllBerryData(void)
     Menu_PrintText(berryInfo->name, 14, 4);
 #elif GERMAN
     StringCopy(buffer, berryInfo->name);
-    StringAppend(buffer, gOtherText_Berry2);
+    StringAppend(buffer, gText_Berry2);
     Menu_PrintText(buffer, 14, 4);
 #endif
 

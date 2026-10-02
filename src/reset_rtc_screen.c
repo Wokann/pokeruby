@@ -524,7 +524,7 @@ void Task_ShowResetRtcPrompt(u8 taskId)
     case 0:
         Menu_EraseScreen();
         Menu_DrawStdWindowFrame(0, 0, 20, 10);
-        Menu_PrintText(gSystemText_PresentTime, 1, 1);
+        Menu_PrintText(gText_PresentTime, 1, 1);
         PrintTime(
             1,
             3,
@@ -532,7 +532,7 @@ void Task_ShowResetRtcPrompt(u8 taskId)
             gLocalTime.hours,
             gLocalTime.minutes,
             gLocalTime.seconds);
-        Menu_PrintText(gSystemText_PreviousTime, 1, 5);
+        Menu_PrintText(gText_PreviousTime, 1, 5);
         PrintTime(
             1,
             7,
@@ -540,7 +540,7 @@ void Task_ShowResetRtcPrompt(u8 taskId)
             gSaveBlock2.lastBerryTreeUpdate.hours,
             gSaveBlock2.lastBerryTreeUpdate.minutes,
             gSaveBlock2.lastBerryTreeUpdate.seconds);
-        ShowMessage(gSystemText_ResetRTCPrompt);
+        ShowMessage(gText_ResetRTCConfirmCancel);
         tPromptState++;
     case 1:
         if (JOY_NEW(B_BUTTON))
@@ -591,7 +591,7 @@ void Task_ResetRtcScreen(u8 taskId)
         {
             if (gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_CORRUPT)
             {
-                ShowMessage(gSystemText_NoSaveFileNoTime);
+                ShowMessage(gText_NoSaveFileCantSetTime);
                 tState = MAINSTATE_WAIT_EXIT;
             }
             else
@@ -606,7 +606,7 @@ void Task_ResetRtcScreen(u8 taskId)
         if (gTasks[tSubTaskId].isActive != TRUE)
         {
             Menu_EraseScreen();
-            ShowMessage(gSystemText_PleaseResetTime);
+            ShowMessage(gText_PleaseResetTime);
             gLocalTime = gSaveBlock2.lastBerryTreeUpdate;
             tSubTaskId = CreateTask(Task_ResetRtc_Init, 80);
             tState = MAINSTATE_WAIT_SET_TIME;
@@ -632,7 +632,7 @@ void Task_ResetRtcScreen(u8 taskId)
                 gSaveBlock2.lastBerryTreeUpdate = gLocalTime;
                 VarSet(VAR_DAYS, gLocalTime.days);
                 DisableResetRTC();
-                ShowMessage(gSystemText_ClockResetDataSave);
+                ShowMessage(gText_ClockHasBeenReset);
                 tState = MAINSTATE_SAVE;
             }
         }
@@ -640,7 +640,7 @@ void Task_ResetRtcScreen(u8 taskId)
     case MAINSTATE_SAVE:
         if (TrySavingData(SAVE_NORMAL) == SAVE_STATUS_OK)
         {
-            ShowMessage(gSystemText_SaveCompleted);
+            ShowMessage(gText_SaveCompleted);
             PlaySE(SE_DING_DONG);
         }
         else

@@ -730,7 +730,7 @@ static void Task_Hof_WaitAndPrintPlayerInfo(u8 taskId)
             Menu_DrawStdWindowFrame(1, 2, 15, 9);
             HallOfFame_PrintPlayerInfo(1, 2);
             Menu_DrawStdWindowFrame(2, 14, 27, 19);
-            Menu_PrintText(gMenuText_HOFCongratulations, 4, 15);
+            Menu_PrintText(gText_LeagueChamp, 4, 15);
             gTasks[taskId].func = Task_Hof_ExitOnKeyPressed;
         }
     }
@@ -1068,7 +1068,7 @@ static void HallOfFame_PrintMonInfo(struct HallofFameMon* currMon, u8 x, u8 y)
         monData = SpeciesToPokedexNum(currMon->species);
         if (monData != 0xFFFF)
         {
-            stringPtr = StringCopy(stringPtr, gOtherText_Number2);
+            stringPtr = StringCopy(stringPtr, gText_Number);
             ConvertIntToDecimalStringN(stringPtr, monData, 2, 3);
         }
     }
@@ -1130,7 +1130,7 @@ static void HallOfFame_PrintMonInfo(struct HallofFameMon* currMon, u8 x, u8 y)
 
         monData = currMon->lvl;
 
-        stringPtr = StringCopy(gStringVar1, gOtherText_Level3);
+        stringPtr = StringCopy(gStringVar1, gText_Level);
 
         stringPtr[0] = EXT_CTRL_CODE_BEGIN;
         stringPtr[1] = 0x14;
@@ -1148,7 +1148,7 @@ static void HallOfFame_PrintMonInfo(struct HallofFameMon* currMon, u8 x, u8 y)
 
         monData = currMon->tid;
 
-        stringPtr = StringCopy(gStringVar1, gOtherText_IDNumber);
+        stringPtr = StringCopy(gStringVar1, gText_IdNumberSlash);
         ConvertIntToDecimalStringN(stringPtr, monData, 2, 5);
 
         Menu_PrintText(gStringVar1, x + 13, y + 3);
@@ -1170,7 +1170,7 @@ static void HallOfFame_PrintPlayerInfo(u8 x, u8 y)
     ConvertIntToDecimalStringN(gStringVar1, visibleTid, 2, 5);
 
     MenuPrint_RightAligned(gStringVar1, x + 14, y + 3);
-    Menu_PrintText(gMainMenuString_Time, x + 1, y + 5);
+    Menu_PrintText(gText_Time, x + 1, y + 5);
 
     stringPtr = ConvertIntToDecimalStringSimple(gStringVar1, gSaveBlock2.playTimeHours);
     stringPtr[0] = CHAR_SPACE;

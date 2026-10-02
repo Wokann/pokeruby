@@ -337,8 +337,8 @@ static void CreatePCMultichoice(void)
     u8 numChoices;
 
 #if ENGLISH
-    u16 playersPCWidth = GetStringWidthInTilesForScriptMenu(gPCText_PlayersPC);
-    if (playersPCWidth > GetStringWidthInTilesForScriptMenu(gPCText_SomeonesPC))
+    u16 playersPCWidth = GetStringWidthInTilesForScriptMenu(gText_PlayersPC);
+    if (playersPCWidth > GetStringWidthInTilesForScriptMenu(gText_SomeonesPC))
         width = playersPCWidth;
     else
         width = 8;
@@ -348,13 +348,13 @@ static void CreatePCMultichoice(void)
     s32 optionIndex;
 
     if (FlagGet(FLAG_SYS_PC_LANETTE))
-        pcOptionWidths[optionCount++] = GetStringWidthInTilesForScriptMenu(gPCText_LanettesPC);
+        pcOptionWidths[optionCount++] = GetStringWidthInTilesForScriptMenu(gText_LanettesPC);
     else
-        pcOptionWidths[optionCount++] = GetStringWidthInTilesForScriptMenu(gPCText_SomeonesPC);
-    pcOptionWidths[optionCount++] = GetStringWidthInTilesForScriptMenu(gPCText_PlayersPC);
-    pcOptionWidths[optionCount++] = GetStringWidthInTilesForScriptMenu(gPCText_LogOff);
+        pcOptionWidths[optionCount++] = GetStringWidthInTilesForScriptMenu(gText_SomeonesPC);
+    pcOptionWidths[optionCount++] = GetStringWidthInTilesForScriptMenu(gText_PlayersPC);
+    pcOptionWidths[optionCount++] = GetStringWidthInTilesForScriptMenu(gText_LogOff);
     if (FlagGet(FLAG_SYS_GAME_CLEAR))
-        pcOptionWidths[optionCount++] = GetStringWidthInTilesForScriptMenu(gPCText_HallOfFame);
+        pcOptionWidths[optionCount++] = GetStringWidthInTilesForScriptMenu(gText_HallOfFame);
 
     width = 0;
     for (optionIndex = 0; optionIndex < optionCount; optionIndex++)
@@ -368,22 +368,22 @@ static void CreatePCMultichoice(void)
     {
         numChoices = 4;
         Menu_DrawStdWindowFrame(0, 0, width + 2, 9);
-        Menu_PrintText(gPCText_HallOfFame, 1, 5);
-        Menu_PrintText(gPCText_LogOff, 1, 7);
+        Menu_PrintText(gText_HallOfFame, 1, 5);
+        Menu_PrintText(gText_LogOff, 1, 7);
     }
     else
     {
         numChoices = 3;
         Menu_DrawStdWindowFrame(0, 0, width + 2, 7);
-        Menu_PrintText(gPCText_LogOff, 1, 5);
+        Menu_PrintText(gText_LogOff, 1, 5);
     }
 
     if (FlagGet(FLAG_SYS_PC_LANETTE)) // player met lanette?
-        Menu_PrintText(gPCText_LanettesPC, 1, 1);
+        Menu_PrintText(gText_LanettesPC, 1, 1);
     else
-        Menu_PrintText(gPCText_SomeonesPC, 1, 1);
+        Menu_PrintText(gText_SomeonesPC, 1, 1);
 
-    Menu_PrintText(gPCText_PlayersPC, 1, 3);
+    Menu_PrintText(gText_PlayersPC, 1, 3);
     InitMenu(0, 1, 1, numChoices, 0, width + 1);
     StartScriptMenuTask(0, 0, width + 2, 2 * numChoices + 1, 0, numChoices);
 }

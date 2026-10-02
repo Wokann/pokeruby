@@ -106,9 +106,9 @@ EWRAM_DATA u8 gEscalatorAnimTaskId = 0; // This really should be in fldeff_escal
 // rodata
 static const struct MenuAction2 sBuySellQuitMenuActions[] =
 {
-    { MartText_Buy, Task_HandleShopMenuBuy },
-    { MartText_Sell, Task_HandleShopMenuSell },
-    { MartText_Quit2, Task_HandleShopMenuQuit },
+    { gText_ShopBuy, Task_HandleShopMenuBuy },
+    { gText_ShopSell, Task_HandleShopMenuSell },
+    { gText_ShopQuit, Task_HandleShopMenuQuit },
 };
 
 static const u8 gMartBuySellOptionList[] = {SHOP_BUY, SHOP_SELL, SHOP_EXIT};
@@ -247,9 +247,9 @@ static void Task_ReturnToShopMenu(u8 taskId)
     if (IsWeatherNotFadingIn() == 1)
     {
         if (sMartInfo.martType == MART_TYPE_DECOR2)
-            DisplayItemMessageOnField(taskId, gOtherText_CanIHelpYou, ShowShopMenuAfterExitingBuyOrSellMenu, 0);
+            DisplayItemMessageOnField(taskId, gText_CanIHelpWithAnythingElse, ShowShopMenuAfterExitingBuyOrSellMenu, 0);
         else
-            DisplayItemMessageOnField(taskId, gOtherText_AnythingElse, ShowShopMenuAfterExitingBuyOrSellMenu, 0);
+            DisplayItemMessageOnField(taskId, gText_AnythingElseICanHelp, ShowShopMenuAfterExitingBuyOrSellMenu, 0);
     }
 }
 
@@ -554,7 +554,7 @@ static void Shop_DisplayPriceInCheckoutWindow(u8 taskId)
     gStringVar1[1] = 0x14;
     gStringVar1[2] = 0x6;
     ConvertIntToDecimalStringN(&gStringVar1[3], gTasks[taskId].tItemCount, 1, 2);
-    Menu_PrintText(gOtherText_xString1, 1, 11);
+    Menu_PrintText(gText_xVar1, 1, 11);
     FillBgTilemapRect(gBGTilemapBuffers[1], 1, 11, 12, 2, 0xC3E1);
 }
 
@@ -651,7 +651,7 @@ static void Shop_PrintItemDescText(void)
     }
     else
     {
-        Menu_PrintTextWithNewlineIndentAndClear(gOtherText_QuitShopping, 0x4, 0x68, 0x68, 0x30, 0);
+        Menu_PrintTextWithNewlineIndentAndClear(gText_QuitShopping, 0x4, 0x68, 0x68, 0x30, 0);
     }
 }
 
@@ -663,7 +663,7 @@ static void Shop_DoPremierBallCheck(u8 taskId)
         PlaySE(SE_SELECT);
 
         if (sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor] == ITEM_POKE_BALL && gTasks[taskId].tItemCount >= 10 && AddBagItem(ITEM_PREMIER_BALL, 1) == TRUE)
-            DisplayItemMessageOnField(taskId, gOtherText_FreePremierBall, Task_ReturnToBuyMenu, 0xC3E1);
+            DisplayItemMessageOnField(taskId, gText_ThrowInPremierBall, Task_ReturnToBuyMenu, 0xC3E1);
         else
             Task_ReturnToBuyMenu(taskId);
     }
@@ -697,7 +697,7 @@ static void Task_DoItemPurchase(u8 taskId)
         {
             if (AddBagItem(sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor], gTasks[taskId].tItemCount))
             {
-                DisplayItemMessageOnField(taskId, gOtherText_HereYouGo, Shop_DoItemTransaction, 0xC3E1);
+                DisplayItemMessageOnField(taskId, gText_HereYouGoThankYou, Shop_DoItemTransaction, 0xC3E1);
                 Task_UpdatePurchaseHistory(taskId);
             }
             else
@@ -710,20 +710,20 @@ static void Task_DoItemPurchase(u8 taskId)
             if (DecorationAdd(sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor]))
             {
                 if (sMartInfo.martType == MART_TYPE_DECOR)
-                    DisplayItemMessageOnField(taskId, gOtherText_HereYouGo2, Shop_DoItemTransaction, 0xC3E1);
+                    DisplayItemMessageOnField(taskId, gText_ThankYouIllSendItHome, Shop_DoItemTransaction, 0xC3E1);
                 else
-                    DisplayItemMessageOnField(taskId, gOtherText_HereYouGo3, Shop_DoItemTransaction, 0xC3E1);
+                    DisplayItemMessageOnField(taskId, gText_ThanksIllSendItHome, Shop_DoItemTransaction, 0xC3E1);
             }
             else
             {
-                StringExpandPlaceholders(gStringVar4, gOtherText_SpaceForIsFull);
+                StringExpandPlaceholders(gStringVar4, gText_SpaceForVar1Full);
                 DisplayItemMessageOnField(taskId, gStringVar4, Shop_DoPricePrintAndReturnToBuyMenu, 0xC3E1);
             }
         }
     }
     else
     {
-        DisplayItemMessageOnField(taskId, gOtherText_NotEnoughMoney, Shop_DoPricePrintAndReturnToBuyMenu, 0xC3E1);
+        DisplayItemMessageOnField(taskId, gText_YouDontHaveMoney, Shop_DoPricePrintAndReturnToBuyMenu, 0xC3E1);
     }
 }
 
@@ -757,7 +757,7 @@ static void Shop_PrintPrice(u8 taskId)
         CopyItemName(sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor], gStringVar1);
         ConvertIntToDecimalStringN(gStringVar2, gTasks[taskId].tItemCount, 0, 0x2);
         ConvertIntToDecimalStringN(gStringVar3, gMartTotalCost, 0, 0x8);
-        StringExpandPlaceholders(gStringVar4, gOtherText_ThatWillBe);
+        StringExpandPlaceholders(gStringVar4, gText_Var1AndYouWantedVar2);
         DisplayItemMessageOnField(taskId, gStringVar4, Shop_DoYesNoPurchase, 0xC3E1);
     }
     else if (JOY_NEW(B_BUTTON))
@@ -1124,12 +1124,12 @@ static void Shop_DoCursorAction(u8 taskId)
                     gMartTotalCost = (GetItemPrice(sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor]) >> IsPokeNewsActive(POKENEWS_SLATEPORT)); // set 1x price
                     if (!IsEnoughMoney(gSaveBlock1.money, gMartTotalCost))
                     {
-                        DisplayItemMessageOnField(taskId, gOtherText_NotEnoughMoney, Shop_DoPricePrintAndReturnToBuyMenu, 0xC3E1); // tail merge
+                        DisplayItemMessageOnField(taskId, gText_YouDontHaveMoney, Shop_DoPricePrintAndReturnToBuyMenu, 0xC3E1); // tail merge
                     }
                     else // _080B42BA
                     {
                         CopyItemName(sMartInfo.itemList[sMartInfo.choicesAbove + sMartInfo.cursor], gStringVar1);
-                        StringExpandPlaceholders(gStringVar4, gOtherText_HowManyYouWant);
+                        StringExpandPlaceholders(gStringVar4, gText_Var1CertainlyHowMany2);
                         DisplayItemMessageOnField(taskId, gStringVar4, Shop_UpdateCurItemCountToMax, 0xC3E1);                    
                     }
                 }
@@ -1139,7 +1139,7 @@ static void Shop_DoCursorAction(u8 taskId)
 
                     if (!IsEnoughMoney(gSaveBlock1.money, gMartTotalCost))
                     {
-                        DisplayItemMessageOnField(taskId, gOtherText_NotEnoughMoney, Shop_DoPricePrintAndReturnToBuyMenu, 0xC3E1); // tail merge
+                        DisplayItemMessageOnField(taskId, gText_YouDontHaveMoney, Shop_DoPricePrintAndReturnToBuyMenu, 0xC3E1); // tail merge
                     }
                     else
                     {    
@@ -1147,9 +1147,9 @@ static void Shop_DoCursorAction(u8 taskId)
                         ConvertIntToDecimalStringN(gStringVar2, gMartTotalCost, 0, 0x8);
 
                         if (sMartInfo.martType == MART_TYPE_DECOR)
-                            StringExpandPlaceholders(gStringVar4, gOtherText_ThatWillBe2);
+                            StringExpandPlaceholders(gStringVar4, gText_Var1IsItThatllBeVar2);
                         else
-                            StringExpandPlaceholders(gStringVar4, gOtherText_ThatWillBe3);
+                            StringExpandPlaceholders(gStringVar4, gText_YouWantedVar1ThatllBeVar2);
                         DisplayItemMessageOnField(taskId, gStringVar4, Shop_DoYesNoPurchase, 0xC3E1);
                     }
                 }

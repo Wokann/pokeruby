@@ -943,9 +943,9 @@ static void NakaGenderTest_PrintSpeciesGender(u8 i)
 
     gender = GetMonGender(gPlayerParty + i);
     if (gender == MON_MALE)
-        Menu_PrintText(gOtherText_MaleSymbol2, 23, 2 * i + 1);
+        Menu_PrintText(gText_MaleSymbol, 23, 2 * i + 1);
     else if (gender == MON_FEMALE)
-        Menu_PrintText(gOtherText_FemaleSymbol2, 23, 2 * i + 1);
+        Menu_PrintText(gText_FemaleSymbol, 23, 2 * i + 1);
     else
         Menu_PrintText(sp0, 23, 2 * i + 1);
 }
@@ -1229,37 +1229,37 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
 
     if (pkblk[0] >= 50)
     {
-        StringCopy(dest, ContestStatsText_GoldPokeBlock);
+        StringCopy(dest, gText_GoldPokeblock);
         return PBLOCK_CLR_GOLD;
     }
 
     if (pkblk[1] >= 50)
     {
-        StringCopy(dest, ContestStatsText_GoldPokeBlock);
+        StringCopy(dest, gText_GoldPokeblock);
         return PBLOCK_CLR_GOLD;
     }
 
     if (pkblk[2] >= 50)
     {
-        StringCopy(dest, ContestStatsText_GoldPokeBlock);
+        StringCopy(dest, gText_GoldPokeblock);
         return PBLOCK_CLR_GOLD;
     }
 
     if (pkblk[3] >= 50)
     {
-        StringCopy(dest, ContestStatsText_GoldPokeBlock);
+        StringCopy(dest, gText_GoldPokeblock);
         return PBLOCK_CLR_GOLD;
     }
 
     if (pkblk[4] >= 50)
     {
-        StringCopy(dest, ContestStatsText_GoldPokeBlock);
+        StringCopy(dest, gText_GoldPokeblock);
         return PBLOCK_CLR_GOLD;
     }
 
     if (numGoodFlavors == 4)
     {
-        StringCopy(dest, ContestStatsText_WhitePokeBlock);
+        StringCopy(dest, gText_WhitePokeblock);
         return PBLOCK_CLR_WHITE;
     }
 
@@ -1271,13 +1271,13 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
     }
     if (numLowFlavors == 3 || numNeutralFlavors == 5 || numBadFlavors == 4)
     {
-        StringCopy(dest, ContestStatsText_BlackPokeBlock);
+        StringCopy(dest, gText_BlackPokeblock);
         return PBLOCK_CLR_BLACK;
     }
 
     if (numGoodFlavors == 3)
     {
-        StringCopy(dest, ContestStatsText_GrayPokeBlock);
+        StringCopy(dest, gText_GrayPokeblock);
         return PBLOCK_CLR_GRAY;
     }
 
@@ -1301,31 +1301,31 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
 
         if (lastNonzeroFlavor == 0)
         {
-            StringCopy(dest, ContestStatsText_PurplePokeBlock);
+            StringCopy(dest, gText_PurplePokeblock);
             return PBLOCK_CLR_PURPLE;
         }
 
         if (lastNonzeroFlavor == 1)
         {
-            StringCopy(dest, ContestStatsText_IndigoPokeBlock);
+            StringCopy(dest, gText_IndigoPokeblock);
             return PBLOCK_CLR_INDIGO;
         }
 
         if (lastNonzeroFlavor == 2)
         {
-            StringCopy(dest, ContestStatsText_BrownPokeBlock);
+            StringCopy(dest, gText_BrownPokeblock);
             return PBLOCK_CLR_BROWN;
         }
 
         if (lastNonzeroFlavor == 3)
         {
-            StringCopy(dest, ContestStatsText_LiteBluePokeBlock);
+            StringCopy(dest, gText_LiteBluePokeblock);
             return PBLOCK_CLR_LITE_BLUE;
         }
 
         if (lastNonzeroFlavor == 4)
         {
-            StringCopy(dest, ContestStatsText_OlivePokeBlock);
+            StringCopy(dest, gText_OlivePokeblock);
             return PBLOCK_CLR_OLIVE;
         }
     }
@@ -1334,31 +1334,31 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
     {
         if (pkblk[0] != 0)
         {
-            StringCopy(dest, ContestStatsText_RedPokeBlock);
+            StringCopy(dest, gText_RedPokeblock);
             return PBLOCK_CLR_RED;
         }
 
         if (pkblk[1] != 0)
         {
-            StringCopy(dest, ContestStatsText_BluePokeBlock);
+            StringCopy(dest, gText_BluePokeblock);
             return PBLOCK_CLR_BLUE;
         }
 
         if (pkblk[2] != 0)
         {
-            StringCopy(dest, ContestStatsText_PinkPokeBlock);
+            StringCopy(dest, gText_PinkPokeblock);
             return PBLOCK_CLR_PINK;
         }
 
         if (pkblk[3] != 0)
         {
-            StringCopy(dest, ContestStatsText_GreenPokeBlock);
+            StringCopy(dest, gText_GreenPokeblock);
             return PBLOCK_CLR_GREEN;
         }
 
         if (pkblk[4] != 0)
         {
-            StringCopy(dest, ContestStatsText_YellowPokeBlock);
+            StringCopy(dest, gText_YellowPokeblock);
             return PBLOCK_CLR_YELLOW;
         }
     }
@@ -1449,7 +1449,7 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "\tcmp\tr0, #0x31\n"
         "\tble\t._334\t@cond_branch\n"
         "._333:\n"
-        "\tldr\tr1, ._336       @ ContestStatsText_GoldPokeBlock\n"
+        "\tldr\tr1, ._336       @ gText_GoldPokeblock\n"
         "\tadd\tr0, r6, #0\n"
         "\tbl\tStringCopy\n"
         "\tmov\tr0, #0xe\n"
@@ -1457,11 +1457,11 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "._337:\n"
         "\t.align\t2, 0\n"
         "._336:\n"
-        "\t.word\tContestStatsText_GoldPokeBlock\n"
+        "\t.word\tgText_GoldPokeblock\n"
         "._334:\n"
         "\tcmp\tr7, #0x4\n"
         "\tbne\t._338\t@cond_branch\n"
-        "\tldr\tr1, ._340       @ ContestStatsText_WhitePokeBlock\n"
+        "\tldr\tr1, ._340       @ gText_WhitePokeblock\n"
         "\tadd\tr0, r6, #0\n"
         "\tbl\tStringCopy\n"
         "\tmov\tr0, #0xd\n"
@@ -1469,7 +1469,7 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "._341:\n"
         "\t.align\t2, 0\n"
         "._340:\n"
-        "\t.word\tContestStatsText_WhitePokeBlock\n"
+        "\t.word\tgText_WhitePokeblock\n"
         "._338:\n"
         "\tmov\tr3, #0x0\n"
         "\tmov\tr5, #0x0\n"
@@ -1497,7 +1497,7 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "\tcmp\tr4, #0x4\n"
         "\tbne\t._346\t@cond_branch\n"
         "._345:\n"
-        "\tldr\tr1, ._348       @ ContestStatsText_BlackPokeBlock\n"
+        "\tldr\tr1, ._348       @ gText_BlackPokeblock\n"
         "\tadd\tr0, r6, #0\n"
         "\tbl\tStringCopy\n"
         "\tmov\tr0, #0xc\n"
@@ -1505,11 +1505,11 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "._349:\n"
         "\t.align\t2, 0\n"
         "._348:\n"
-        "\t.word\tContestStatsText_BlackPokeBlock\n"
+        "\t.word\tgText_BlackPokeblock\n"
         "._346:\n"
         "\tcmp\tr7, #0x3\n"
         "\tbne\t._350\t@cond_branch\n"
-        "\tldr\tr1, ._352       @ ContestStatsText_GrayPokeBlock\n"
+        "\tldr\tr1, ._352       @ gText_GrayPokeblock\n"
         "\tadd\tr0, r6, #0\n"
         "\tbl\tStringCopy\n"
         "\tmov\tr0, #0xb\n"
@@ -1517,7 +1517,7 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "._353:\n"
         "\t.align\t2, 0\n"
         "._352:\n"
-        "\t.word\tContestStatsText_GrayPokeBlock\n"
+        "\t.word\tgText_GrayPokeblock\n"
         "._350:\n"
         "\tcmp\tr7, #0x2\n"
         "\tbeq\t._354\t@cond_branch\n"
@@ -1562,7 +1562,7 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "._360:\n"
         "\tcmp\tr2, #0\n"
         "\tbne\t._361\t@cond_branch\n"
-        "\tldr\tr1, ._363       @ ContestStatsText_PurplePokeBlock\n"
+        "\tldr\tr1, ._363       @ gText_PurplePokeblock\n"
         "\tadd\tr0, r6, #0\n"
         "\tbl\tStringCopy\n"
         "\tmov\tr0, #0x6\n"
@@ -1570,11 +1570,11 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "._364:\n"
         "\t.align\t2, 0\n"
         "._363:\n"
-        "\t.word\tContestStatsText_PurplePokeBlock\n"
+        "\t.word\tgText_PurplePokeblock\n"
         "._361:\n"
         "\tcmp\tr2, #0x1\n"
         "\tbne\t._365\t@cond_branch\n"
-        "\tldr\tr1, ._367       @ ContestStatsText_IndigoPokeBlock\n"
+        "\tldr\tr1, ._367       @ gText_IndigoPokeblock\n"
         "\tadd\tr0, r6, #0\n"
         "\tbl\tStringCopy\n"
         "\tmov\tr0, #0x7\n"
@@ -1582,11 +1582,11 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "._368:\n"
         "\t.align\t2, 0\n"
         "._367:\n"
-        "\t.word\tContestStatsText_IndigoPokeBlock\n"
+        "\t.word\tgText_IndigoPokeblock\n"
         "._365:\n"
         "\tcmp\tr2, #0x2\n"
         "\tbne\t._369\t@cond_branch\n"
-        "\tldr\tr1, ._371       @ ContestStatsText_BrownPokeBlock\n"
+        "\tldr\tr1, ._371       @ gText_BrownPokeblock\n"
         "\tadd\tr0, r6, #0\n"
         "\tbl\tStringCopy\n"
         "\tmov\tr0, #0x8\n"
@@ -1594,11 +1594,11 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "._372:\n"
         "\t.align\t2, 0\n"
         "._371:\n"
-        "\t.word\tContestStatsText_BrownPokeBlock\n"
+        "\t.word\tgText_BrownPokeblock\n"
         "._369:\n"
         "\tcmp\tr2, #0x3\n"
         "\tbne\t._373\t@cond_branch\n"
-        "\tldr\tr1, ._375       @ ContestStatsText_LiteBluePokeBlock\n"
+        "\tldr\tr1, ._375       @ gText_LiteBluePokeblock\n"
         "\tadd\tr0, r6, #0\n"
         "\tbl\tStringCopy\n"
         "\tmov\tr0, #0x9\n"
@@ -1606,11 +1606,11 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "._376:\n"
         "\t.align\t2, 0\n"
         "._375:\n"
-        "\t.word\tContestStatsText_LiteBluePokeBlock\n"
+        "\t.word\tgText_LiteBluePokeblock\n"
         "._373:\n"
         "\tcmp\tr2, #0x4\n"
         "\tbne\t._377\t@cond_branch\n"
-        "\tldr\tr1, ._379       @ ContestStatsText_OlivePokeBlock\n"
+        "\tldr\tr1, ._379       @ gText_OlivePokeblock\n"
         "\tadd\tr0, r6, #0\n"
         "\tbl\tStringCopy\n"
         "\tmov\tr0, #0xa\n"
@@ -1618,7 +1618,7 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "._380:\n"
         "\t.align\t2, 0\n"
         "._379:\n"
-        "\t.word\tContestStatsText_OlivePokeBlock\n"
+        "\t.word\tgText_OlivePokeblock\n"
         "._377:\n"
         "\tcmp\tr7, #0x1\n"
         "\tbeq\t._381\t@cond_branch\n"
@@ -1631,7 +1631,7 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "\tldsh\tr0, [r0, r1]\n"
         "\tcmp\tr0, #0\n"
         "\tbeq\t._383\t@cond_branch\n"
-        "\tldr\tr1, ._385       @ ContestStatsText_RedPokeBlock\n"
+        "\tldr\tr1, ._385       @ gText_RedPokeblock\n"
         "\tadd\tr0, r6, #0\n"
         "\tbl\tStringCopy\n"
         "\tmov\tr0, #0x1\n"
@@ -1639,13 +1639,13 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "._386:\n"
         "\t.align\t2, 0\n"
         "._385:\n"
-        "\t.word\tContestStatsText_RedPokeBlock\n"
+        "\t.word\tgText_RedPokeblock\n"
         "._383:\n"
         "\tmov\tr0, sp\n"
         "\tldrh\tr0, [r0, #0x2]\n"
         "\tcmp\tr0, #0\n"
         "\tbeq\t._387\t@cond_branch\n"
-        "\tldr\tr1, ._389       @ ContestStatsText_BluePokeBlock\n"
+        "\tldr\tr1, ._389       @ gText_BluePokeblock\n"
         "\tadd\tr0, r6, #0\n"
         "\tbl\tStringCopy\n"
         "\tmov\tr0, #0x2\n"
@@ -1653,14 +1653,14 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "._390:\n"
         "\t.align\t2, 0\n"
         "._389:\n"
-        "\t.word\tContestStatsText_BluePokeBlock\n"
+        "\t.word\tgText_BluePokeblock\n"
         "._387:\n"
         "\tmov\tr0, sp\n"
         "\tmov\tr4, #0x4\n"
         "\tldsh\tr0, [r0, r4]\n"
         "\tcmp\tr0, #0\n"
         "\tbeq\t._391\t@cond_branch\n"
-        "\tldr\tr1, ._393       @ ContestStatsText_PinkPokeBlock\n"
+        "\tldr\tr1, ._393       @ gText_PinkPokeblock\n"
         "\tadd\tr0, r6, #0\n"
         "\tbl\tStringCopy\n"
         "\tmov\tr0, #0x3\n"
@@ -1668,14 +1668,14 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "._394:\n"
         "\t.align\t2, 0\n"
         "._393:\n"
-        "\t.word\tContestStatsText_PinkPokeBlock\n"
+        "\t.word\tgText_PinkPokeblock\n"
         "._391:\n"
         "\tmov\tr0, sp\n"
         "\tmov\tr1, #0x6\n"
         "\tldsh\tr0, [r0, r1]\n"
         "\tcmp\tr0, #0\n"
         "\tbeq\t._395\t@cond_branch\n"
-        "\tldr\tr1, ._397       @ ContestStatsText_GreenPokeBlock\n"
+        "\tldr\tr1, ._397       @ gText_GreenPokeblock\n"
         "\tadd\tr0, r6, #0\n"
         "\tbl\tStringCopy\n"
         "\tmov\tr0, #0x4\n"
@@ -1683,14 +1683,14 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "._398:\n"
         "\t.align\t2, 0\n"
         "._397:\n"
-        "\t.word\tContestStatsText_GreenPokeBlock\n"
+        "\t.word\tgText_GreenPokeblock\n"
         "._395:\n"
         "\tmov\tr0, sp\n"
         "\tmov\tr4, #0x8\n"
         "\tldsh\tr0, [r0, r4]\n"
         "\tcmp\tr0, #0\n"
         "\tbeq\t._399\t@cond_branch\n"
-        "\tldr\tr1, ._401       @ ContestStatsText_YellowPokeBlock\n"
+        "\tldr\tr1, ._401       @ gText_YellowPokeblock\n"
         "\tadd\tr0, r6, #0\n"
         "\tbl\tStringCopy\n"
         "\tmov\tr0, #0x5\n"
@@ -1698,7 +1698,7 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "._402:\n"
         "\t.align\t2, 0\n"
         "._401:\n"
-        "\t.word\tContestStatsText_YellowPokeBlock\n"
+        "\t.word\tgText_YellowPokeblock\n"
         "._399:\n"
         "\tldr\tr1, ._403       @ gText_FiveMarks\n"
         "\tadd\tr0, r6, #0\n"
@@ -1836,12 +1836,12 @@ static void SetPokeblock_Init(void)
 
     Menu_DrawStdWindowFrame(0, 0, 12, 15);
     SetPokeblock_RecomputeAndPrintColor();
-    Menu_PrintText(gContestStatsText_Spicy, 2, 3);
-    Menu_PrintText(gContestStatsText_Dry, 2, 5);
-    Menu_PrintText(gContestStatsText_Sweet, 2, 7);
-    Menu_PrintText(gContestStatsText_Bitter, 2, 9);
-    Menu_PrintText(gContestStatsText_Sour, 2, 11);
-    Menu_PrintText(gContestStatsText_Tasty, 2, 13);
+    Menu_PrintText(gText_Spicy, 2, 3);
+    Menu_PrintText(gText_Dry, 2, 5);
+    Menu_PrintText(gText_Sweet, 2, 7);
+    Menu_PrintText(gText_Bitter, 2, 9);
+    Menu_PrintText(gText_Sour, 2, 11);
+    Menu_PrintText(gText_Tasty, 2, 13);
 
     for (i = 0; i < 6; i++)
         SetPokeblock_PrintFlavorValue(i);
@@ -1960,7 +1960,7 @@ static const u8 sText_TotalEvs[] = DTR("どりょくち　ごうけい", "EV TOT
 static void EVTest_Init(void)
 {
     Menu_DrawStdWindowFrame(0, 0, 22, 19);
-    Menu_PrintText(gOtherText_Slash, 11, 1);
+    Menu_PrintText(gText_Slash, 11, 1);
     Menu_PrintText(sText_HpEvs, 2, 3);
     Menu_PrintText(sText_AttackEvs, 2, 5);
     Menu_PrintText(sText_DefenseEvs, 2, 7);

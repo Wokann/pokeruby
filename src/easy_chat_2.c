@@ -1097,42 +1097,42 @@ void PrintEasyChatStdMessage(u8 messageId)
         PrintEasyChatStdText(gEasyChatScreen->confirmText2, 4, 17, 2);
         break;
     case 2:
-        PrintEasyChatStdText(gOtherText_TextDeletedConfirmPage1, 4, 15, 2);
-        PrintEasyChatStdText(gOtherText_TextDeletedConfirmPage2, 4, 17, 2);
+        PrintEasyChatStdText(gText_AllTextBeingEditedWill, 4, 15, 2);
+        PrintEasyChatStdText(gText_BeDeletedThatOkay, 4, 17, 2);
         break;
     case 3:
         switch (gEasyChatScreen->type)
         {
         case EASY_CHAT_TYPE_TRENDY_PHRASE:
-            PrintEasyChatStdText(gOtherText_QuitGivingInfo, 4, 15, 4);
+            PrintEasyChatStdText(gText_QuitGivingInfo, 4, 15, 4);
             break;
         case EASY_CHAT_TYPE_MAIL:
-            PrintEasyChatStdText(gOtherText_StopGivingMail, 4, 15, 4);
+            PrintEasyChatStdText(gText_StopGivingPkmnMail2, 4, 15, 4);
             break;
         default:
-            PrintEasyChatStdText(gOtherText_QuitEditing, 4, 15, 4);
+            PrintEasyChatStdText(gText_QuitEditing2, 4, 15, 4);
             break;
         }
         break;
     case 4:
-        PrintEasyChatStdText(gOtherText_EditedTextNoSavePage1, 4, 15, 2);
-        PrintEasyChatStdText(gOtherText_EditedTextNoSavePage2, 4, 17, 2);
+        PrintEasyChatStdText(gText_EditedTextWillNotBeSaved, 4, 15, 2);
+        PrintEasyChatStdText(gText_IsThatOkay, 4, 17, 2);
         break;
     case 5:
-        PrintEasyChatStdText(gOtherText_EnterAPhraseOrWord, 4, 15, 4);
+        PrintEasyChatStdText(gText_PleaseEnterPhraseOrWord, 4, 15, 4);
         break;
     case 6:
-        PrintEasyChatStdText(gOtherText_TextNoDelete, 4, 15, 4);
+        PrintEasyChatStdText(gText_EntireTextCantBeDeleted, 4, 15, 4);
         break;
     case 7:
-        PrintEasyChatStdText(gOtherText_OnlyOnePhrase, 4, 15, 2);
+        PrintEasyChatStdText(gText_OnlyOnePhrase, 4, 15, 2);
         PrintEasyChatStdText(gOtherText_OriginalSongRestored, 4, 17, 2);
         break;
     case 8:
-        PrintEasyChatStdText(gOtherText_TrendyAlready, 4, 15, 4);
+        PrintEasyChatStdText(gText_ThatsTrendyAlready, 4, 15, 4);
         break;
     case 9:
-        PrintEasyChatStdText(gOtherText_CombineTwoPhrases, 4, 15, 4);
+        PrintEasyChatStdText(gText_CombineTwoWordsOrPhrases3, 4, 15, 4);
         break;
     }
 }
@@ -1144,7 +1144,7 @@ void PrintTitle(u8 type)
     switch (type)
     {
     case EASY_CHAT_TYPE_PROFILE:
-        titleText = gOtherText_Profile;
+        titleText = gText_Profile;
         break;
     case EASY_CHAT_TYPE_BATTLE_START:
         titleText = gOtherText_AtBattleStart;
@@ -1156,10 +1156,10 @@ void PrintTitle(u8 type)
         titleText = gOtherText_UponLosingBattle;
         break;
     case EASY_CHAT_TYPE_BARD_SONG:
-        titleText = gOtherText_TheBardsSong;
+        titleText = gText_TheBardsSong;
         break;
     case EASY_CHAT_TYPE_TRENDY_PHRASE:
-        titleText = gOtherText_WhatsHipHappening;
+        titleText = gText_WhatsHipAndHappening;
         break;
     case EASY_CHAT_TYPE_INTERVIEW:
     case EASY_CHAT_TYPE_FAN_CLUB:
@@ -1167,10 +1167,10 @@ void PrintTitle(u8 type)
     case EASY_CHAT_TYPE_GABBY_AND_TY:
     case EASY_CHAT_TYPE_CONTEST_INTERVIEW:
     case EASY_CHAT_TYPE_BATTLE_TOWER_INTERVIEW:
-        titleText = gOtherText_Interview;
+        titleText = gText_Interview;
         break;
     case EASY_CHAT_TYPE_GOOD_SAYING:
-        titleText = gOtherText_GoodSaying;
+        titleText = gText_GoodSaying;
         break;
     default:
         titleText = NULL;

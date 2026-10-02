@@ -1120,9 +1120,9 @@ const u8 *GetMapNameGeneric(u8 *dest, u16 mapSecId)
     switch (mapSecId)
     {
     case MAPSEC_DYNAMIC:
-        return StringCopy(dest, gOtherText_Ferry);
+        return StringCopy(dest, gText_Ferry);
     case MAPSEC_SECRET_BASE:
-        return StringCopy(dest, gOtherText_SecretBase);
+        return StringCopy(dest, gText_SecretBase);
     default:
         return GetMapName(dest, mapSecId, 0);
     }
@@ -1131,7 +1131,7 @@ const u8 *GetMapNameGeneric(u8 *dest, u16 mapSecId)
 const u8 *GetMapNameHandleEvilTeamHideout(u8 *dest, u16 mapSecId)
 {
     if (mapSecId == MAPSEC_EVIL_TEAM_HIDEOUT)
-        return StringCopy(dest, gOtherText_Hideout);
+        return StringCopy(dest, gText_Hideout);
     else
         return GetMapNameGeneric(dest, mapSecId);
 }
@@ -1206,8 +1206,8 @@ static const u8 sMapHealLocations[][3] =
 
 static const u8 *const sEverGrandeCityNames[] =
 {
-    OtherText_PokeLeague,
-    OtherText_PokeCenter,
+    gText_PokemonLeague,
+    gText_PokemonCenter,
 };
 
 struct MultiNameFlyDest
@@ -1359,7 +1359,7 @@ void CB2_OpenFlyMap(void)
         break;
     case 6:
         LoadPalette(sRegionMapFramePal, 16, 32);
-        Menu_PrintTextPixelCoords(gOtherText_FlyToWhere, 1, 0x90, 1);
+        Menu_PrintTextPixelCoords(gText_FlyToWhere, 1, 0x90, 1);
         break;
     case 7:
         LoadFlyDestIcons();

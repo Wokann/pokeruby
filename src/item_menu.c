@@ -178,16 +178,16 @@ static void HandlePopupMenuAction_Confirm(u8);
 
 static const struct MenuAction2 sItemMenuActions[] =
 {
-    {OtherText_Use,                   HandlePopupMenuAction_UseOnField},
-    {OtherText_Toss,                  HandlePopupMenuAction_Toss},
+    {gMenuText_Use,                   HandlePopupMenuAction_UseOnField},
+    {gMenuText_Toss,                  HandlePopupMenuAction_Toss},
     {gText_Cancel,   ItemMenu_Cancel},
-    {OtherText_Register,              HandlePopupMenuAction_Register},
-    {OtherText_Use,                   HandlePopupMenuAction_UseInBattle},
+    {gMenuText_Register,              HandlePopupMenuAction_Register},
+    {gMenuText_Use,                   HandlePopupMenuAction_UseInBattle},
     {gText_Cancel,   ItemMenu_CancelBattle},
-    {OtherText_Give2,                 HandlePopupMenuAction_Give},
-    {OtherText_CheckTag,              HandlePopupMenuAction_CheckTag},
+    {gMenuText_Give,                 HandlePopupMenuAction_Give},
+    {gMenuText_CheckTag,              HandlePopupMenuAction_CheckTag},
     {gOtherText_CancelWithTerminator, NULL},
-    {OtherText_Confirm,               HandlePopupMenuAction_Confirm},
+    {gMenuText_Confirm,               HandlePopupMenuAction_Confirm},
 };
 
 static const u8 sItemMenuChoicesTable[][6] =
@@ -1149,7 +1149,7 @@ static bool8 PrintCloseBagListEntry(u8 itemPos, int printMode)
         if (sBagMenuLocation == ITEMMENULOCATION_BERRY_BLENDER)
             return TRUE;
         y = itemPos * 2 + 2;
-        AlignStringInMenuWindow(gStringVar1, gOtherText_CloseBag, 0x78, 0);
+        AlignStringInMenuWindow(gStringVar1, gText_CloseBag, 0x78, 0);
         Menu_PrintText(gStringVar1, 14, y);
         tilemap = gBGTilemapBuffers[2] + 14 + y * 32;
         tilemap[0] = 0x4F;
@@ -1460,10 +1460,10 @@ static const u8 *GetFirstItemMenuActionText(u16 itemId)
     if (TestPlayerAvatarFlags(6))
     {
         if (itemId == ITEM_MACH_BIKE || itemId == ITEM_ACRO_BIKE)
-            return gOtherText_Walk;
+            return gMenuText_Walk;
     }
     if (ItemIsMail(itemId) == TRUE)
-        return gOtherText_Check;
+        return gMenuText_Check;
     return sItemMenuActions[sItemMenuActionList[0]].text;
 }
 
@@ -2322,7 +2322,7 @@ static void HandlePopupMenuAction_Give(u8 taskId)
     {
         DestroyBagListCursor();
         ClearBagItemDescription();
-        DisplayCannotUseItemMessage(taskId, gOtherText_CantWriteMail, Task_CloseItemUseMessage, 1);
+        DisplayCannotUseItemMessage(taskId, gText_CantWriteMail, Task_CloseItemUseMessage, 1);
     }
     else if (GetItemImportance(gSpecialVar_ItemId) == 0)
     {
@@ -2379,7 +2379,7 @@ static void OnItemSelect_Party(u8 taskId)
     {
         DestroyBagListCursor();
         ClearBagItemDescription();
-        DisplayCannotUseItemMessage(taskId, gOtherText_CantWriteMail, Task_CloseItemUseMessage, 1);
+        DisplayCannotUseItemMessage(taskId, gText_CantWriteMail, Task_CloseItemUseMessage, 1);
     }
     else if (IsHoldingItemAllowed(gSpecialVar_ItemId) == 0)
     {
@@ -2430,12 +2430,12 @@ static void OnItemSelect_Shop(u8 taskId)
     CopyItemName(gSpecialVar_ItemId, gStringVar2);
     if (GetItemPrice(gSpecialVar_ItemId) == 0)
     {
-        StringExpandPlaceholders(gStringVar4, gOtherText_CantBuyThat);
+        StringExpandPlaceholders(gStringVar4, gText_CantBuyKeyItem);
         DisplayCannotUseItemMessage(taskId, gStringVar4, Task_CloseSellErrorMessage, 1);
     }
     else
     {
-        StringExpandPlaceholders(gStringVar4, gOtherText_HowManyToSell);
+        StringExpandPlaceholders(gStringVar4, gText_HowManyToSell);
         DisplayCannotUseItemMessage(taskId, gStringVar4, Task_SetSellQuantity, 1);
     }
 }
@@ -2500,7 +2500,7 @@ static void SellItemYes(u8 taskId)
     Menu_EraseWindowRect(7, 6, 13, 12);
     ClearBgTilemapRect(gBGTilemapBuffers[1], 7, 6, 6, 6);
     CopyItemName(gSpecialVar_ItemId, gStringVar2);
-    StringExpandPlaceholders(gStringVar4, gOtherText_SoldItem);
+    StringExpandPlaceholders(gStringVar4, gText_TurnedOverVar1ForVar2);
     DisplayCannotUseItemMessage(taskId, gStringVar4, Task_SellItem, 1);
     RemoveCurrentBagItemQuantity(taskId);
 }
@@ -2531,7 +2531,7 @@ static void Task_BuyHowManyDialogueHandleInput(u8 taskId)
         Menu_EraseWindowRect(0, 10, 13, 13);
         ClearBgTilemapRect(gBGTilemapBuffers[1], 0, 10, 13, 3);
         ConvertIntToDecimalStringN(gStringVar1, GetItemPrice(gSpecialVar_ItemId) / 2 * gTasks[taskId].data[1], STR_CONV_MODE_LEFT_ALIGN, 6);
-        StringExpandPlaceholders(gStringVar4, gOtherText_CanPay);
+        StringExpandPlaceholders(gStringVar4, gText_ICanPayVar1);
         DisplayCannotUseItemMessage(taskId, gStringVar4, AskToSellItem, 1);
     }
     else if (JOY_NEW(B_BUTTON))
@@ -3064,10 +3064,10 @@ static void UpdateBagItemDescription(void)
             PrintBagDescriptionLine(gOtherText_HowManyToDeposit, printer->textLine);
             break;
         case 7:
-            PrintBagDescriptionLine(gOtherText_DepositedItems, printer->textLine);
+            PrintBagDescriptionLine(gText_DepositedVar2Var1s, printer->textLine);
             break;
         case 8:
-            PrintBagDescriptionLine(gOtherText_NoRoomForItems, printer->textLine);
+            PrintBagDescriptionLine(gText_NoRoomForItems, printer->textLine);
             break;
         case 9:
             PrintBagDescriptionLine(gOtherText_CantStoreSomeoneItem, printer->textLine);

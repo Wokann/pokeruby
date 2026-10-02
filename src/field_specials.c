@@ -113,7 +113,7 @@ static void DetermineCyclingRoadResults(u32 numFrames, u8 numBikeCollisions)
     }
     else
     {
-        StringCopy(gStringVar1, gOtherText_99Times);
+        StringCopy(gStringVar1, gText_99TimesPlus);
     }
 
     if (numFrames < 3600)
@@ -121,11 +121,11 @@ static void DetermineCyclingRoadResults(u32 numFrames, u8 numBikeCollisions)
         ConvertIntToDecimalStringN(gStringVar2, numFrames / 60, STR_CONV_MODE_RIGHT_ALIGN, 2);
         gStringVar2[2] = CHAR_DECIMAL_SEPARATOR;
         ConvertIntToDecimalStringN(&gStringVar2[3], ((numFrames % 60) * 100) / 60, STR_CONV_MODE_LEADING_ZEROS, 2);
-        StringAppend(gStringVar2, gOtherText_Seconds);
+        StringAppend(gStringVar2, gText_SpaceSeconds);
     }
     else
     {
-        StringCopy(gStringVar2, gOtherText_1Minute);
+        StringCopy(gStringVar2, gText_1MinutePlus);
     }
 
     result = 0;
@@ -685,11 +685,11 @@ void GetPlayerBigGuyGirlString(void)
 {
     if (gSaveBlock2.playerGender == MALE)
     {
-        StringCopy(gStringVar1, gOtherText_BigGuy);
+        StringCopy(gStringVar1, gText_BigGuy);
     }
     else
     {
-        StringCopy(gStringVar1, gOtherText_BigGirl);
+        StringCopy(gStringVar1, gText_BigGirl);
     }
 }
 
@@ -697,11 +697,11 @@ void GetRivalSonDaughterString(void)
 {
     if (gSaveBlock2.playerGender == MALE)
     {
-        StringCopy(gStringVar1, gOtherText_Daughter);
+        StringCopy(gStringVar1, gText_Daughter);
     }
     else
     {
-        StringCopy(gStringVar1, gOtherText_Son);
+        StringCopy(gStringVar1, gText_Son);
     }
 }
 
@@ -1003,22 +1003,22 @@ static void UpdateElevatorWindowLights(struct Task *);
 void CloseScrollableMenu(void);
 
 static const u8 *const sDeptStoreFloorNames[] = {
-    OtherText_1F,
-    OtherText_2F,
-    OtherText_3F,
-    OtherText_4F,
-    OtherText_5F,
-    OtherText_6F,
-    OtherText_7F,
-    OtherText_8F,
-    OtherText_9F,
-    OtherText_10F,
-    OtherText_11F,
-    OtherText_B1F,
-    OtherText_B2F,
-    OtherText_B3F,
-    OtherText_B4F,
-    OtherText_Rooftop
+    gText_1F,
+    gText_2F,
+    gText_3F,
+    gText_4F,
+    gText_5F,
+    gText_6F,
+    gText_7F,
+    gText_8F,
+    gText_9F,
+    gText_10F,
+    gText_11F,
+    gText_B1F,
+    gText_B2F,
+    gText_B3F,
+    gText_B4F,
+    gText_Rooftop
 };
 
 void SetDeptStoreFloor(void)
@@ -1111,7 +1111,7 @@ static void ShowElevatorMenu(void)
 void ShowDeptStoreElevatorFloorSelect(void)
 {
     Menu_DrawStdWindowFrame(20, 0, 29, 5);
-    MenuPrint_Centered(gOtherText_NowOn, 21, 1, 64);
+    MenuPrint_Centered(gText_ElevatorNowOn, 21, 1, 64);
     MenuPrint_Centered(sDeptStoreFloorNames[gSpecialVar_0x8005], 21, 3, 64);
 }
 
@@ -1450,13 +1450,13 @@ void IsGrassTypeInParty(void)
 }
 
 const u8 *const sGlassWorkshopMenuItems[] = {
-    OtherText_BlueFlute,
-    OtherText_YellowFlute,
-    OtherText_RedFlute,
-    OtherText_WhiteFlute,
-    OtherText_BlackFlute,
-    OtherText_PrettyChair,
-    OtherText_PrettyDesk,
+    gText_BlueFlute,
+    gText_YellowFlute,
+    gText_RedFlute,
+    gText_WhiteFlute,
+    gText_BlackFlute,
+    gText_PrettyChair,
+    gText_PrettyDesk,
     gText_Cancel
 };
 
@@ -2165,25 +2165,25 @@ void BufferFanClubTrainerName_(void *linkRecords, u8 whichLinkTrainer, u8 whichN
         switch (whichNPCTrainer)
         {
             case 0:
-                StringCopy(gStringVar1, gOtherText_Wallace);
+                StringCopy(gStringVar1, gText_Wallace);
                 break;
             case 1:
-                StringCopy(gStringVar1, gOtherText_Steven);
+                StringCopy(gStringVar1, gText_Steven);
                 break;
             case 2:
-                StringCopy(gStringVar1, gOtherText_Brawly);
+                StringCopy(gStringVar1, gText_Brawly);
                 break;
             case 3:
-                StringCopy(gStringVar1, gOtherText_Winona);
+                StringCopy(gStringVar1, gText_Winona);
                 break;
             case 4:
-                StringCopy(gStringVar1, gOtherText_Phoebe);
+                StringCopy(gStringVar1, gText_Phoebe);
                 break;
             case 5:
-                StringCopy(gStringVar1, gOtherText_Glacia);
+                StringCopy(gStringVar1, gText_Glacia);
                 break;
             default:
-                StringCopy(gStringVar1, gOtherText_Wallace);
+                StringCopy(gStringVar1, gText_Wallace);
                 break;
         }
     }

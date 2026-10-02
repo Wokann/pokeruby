@@ -146,8 +146,8 @@ static const union AffineAnimCmd *const sSpriteAffineAnimTable_PlayerShrink[] =
 
 static const struct MenuAction sMenuActions_Gender[] =
 {
-    {gBirchText_Boy, NULL},
-    {gBirchText_Girl, NULL},
+    {gText_BirchBoy, NULL},
+    {gText_BirchGirl, NULL},
 };
 
 static const struct MenuAction gMalePresetNames[] =
@@ -350,7 +350,7 @@ void Task_MainMenuCheckBattery(u8 taskId)
         else
         {
             Menu_DrawStdWindowFrame(2, 14, 27, 19);
-            MenuPrintMessage(gBatteryDryMessage, 3, 15);
+            MenuPrintMessage(gText_BatteryRunDry, 3, 15);
             REG_WIN0H = WIN_RANGE(17, 223);
             REG_WIN0V = WIN_RANGE(113, 159);
             gTasks[taskId].func = Task_WaitForBatteryDryErrorWindow;
@@ -403,28 +403,28 @@ void Task_DisplayMainMenu(u8 taskId)
         case HAS_NO_SAVED_GAME:
         default:
             Menu_DrawStdWindowFrame(1, 0, 28, 3);
-            PrintMainMenuItem(gMainMenuString_NewGame, 2, 1);
+            PrintMainMenuItem(gText_MainMenuNewGame, 2, 1);
             Menu_DrawStdWindowFrame(1, 4, 28, 7);
-            PrintMainMenuItem(gMainMenuString_Option, 2, 5);
+            PrintMainMenuItem(gText_MainMenuOption, 2, 5);
             break;
         case HAS_SAVED_GAME:
             Menu_DrawStdWindowFrame(1, 0, 28, 7);
-            PrintMainMenuItem(gMainMenuString_Continue, 2, 1);
+            PrintMainMenuItem(gText_MainMenuContinue, 2, 1);
             Menu_DrawStdWindowFrame(1, 8, 28, 11);
-            PrintMainMenuItem(gMainMenuString_NewGame, 2, 9);
+            PrintMainMenuItem(gText_MainMenuNewGame, 2, 9);
             Menu_DrawStdWindowFrame(1, 12, 28, 15);
-            PrintMainMenuItem(gMainMenuString_Option, 2, 13);
+            PrintMainMenuItem(gText_MainMenuOption, 2, 13);
             PrintSaveFileInfo();
             break;
         case HAS_MYSTERY_EVENT:
             Menu_DrawStdWindowFrame(1, 0, 28, 7);
-            PrintMainMenuItem(gMainMenuString_Continue, 2, 1);
+            PrintMainMenuItem(gText_MainMenuContinue, 2, 1);
             Menu_DrawStdWindowFrame(1, 8, 28, 11);
-            PrintMainMenuItem(gMainMenuString_NewGame, 2, 9);
+            PrintMainMenuItem(gText_MainMenuNewGame, 2, 9);
             Menu_DrawStdWindowFrame(1, 12, 28, 15);
-            PrintMainMenuItem(gMainMenuString_MysteryEvents, 2, 13);
+            PrintMainMenuItem(gText_MainMenuMysteryEvents, 2, 13);
             Menu_DrawStdWindowFrame(1, 16, 28, 19);
-            PrintMainMenuItem(gMainMenuString_Option, 2, 0x11);
+            PrintMainMenuItem(gText_MainMenuOption, 2, 0x11);
             PrintSaveFileInfo();
             break;
         }
@@ -684,7 +684,7 @@ void PrintSaveFileInfo(void)
 
 void PrintPlayerName(void)
 {
-    Menu_PrintText(gMainMenuString_Player, 2, 3);
+    Menu_PrintText(gText_Player, 2, 3);
     Menu_PrintText(gSaveBlock2.playerName, 9, 3);
 }
 
@@ -694,12 +694,12 @@ void PrintPlayTime(void)
     u8 alignedPlayTime[32];
 
 #if defined(ENGLISH)
-    Menu_PrintText(gMainMenuString_Time, 16, 3);
+    Menu_PrintText(gText_Time, 16, 3);
     FormatPlayTime(playTime, gSaveBlock2.playTimeHours, gSaveBlock2.playTimeMinutes, 1);
     AlignStringInMenuWindow(alignedPlayTime, playTime, 48, 1);
     Menu_PrintText(alignedPlayTime, 22, 3);
 #elif defined(GERMAN)
-    Menu_PrintTextPixelCoords(gMainMenuString_Time, 124, 24, TRUE);
+    Menu_PrintTextPixelCoords(gText_Time, 124, 24, TRUE);
     FormatPlayTime(playTime, gSaveBlock2.playTimeHours, gSaveBlock2.playTimeMinutes, 1);
     AlignStringInMenuWindow(alignedPlayTime, playTime, 40, 1);
     Menu_PrintText(alignedPlayTime, 23, 3);
@@ -710,7 +710,7 @@ void PrintPokedexCount(void)
 {
     u8 buffer[16];
 
-    Menu_PrintText(gMainMenuString_Pokedex, 2, 5);
+    Menu_PrintText(gText_Pokedex, 2, 5);
     AlignInt1InMenuWindow(buffer, GetPokedexSeenCount(), 18, 0);
     Menu_PrintText(buffer, 9, 5);
 }
@@ -720,9 +720,9 @@ void PrintBadgeCount(void)
     u8 buffer[16];
 
 #if defined(ENGLISH)
-    Menu_PrintText(gMainMenuString_Badges, 16, 5);
+    Menu_PrintText(gText_Badges, 16, 5);
 #elif defined(GERMAN)
-    Menu_PrintTextPixelCoords(gMainMenuString_Badges, 124, 40, TRUE);
+    Menu_PrintTextPixelCoords(gText_Badges, 124, 40, TRUE);
 #endif
     ConvertIntToDecimalStringSimple(buffer, GetBadgeCount());
     Menu_PrintTextPixelCoords(buffer, 205, 40, 1);

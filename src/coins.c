@@ -45,7 +45,7 @@ void PrintCoinsString(s32 coinAmount, u8 digitCount, u8 x, u8 y)
     stringVar[2] = (digitCount - StringLength(coinString)) * 6;
     stringVar += 3;
     StringCopy(stringVar, coinString);
-    Menu_PrintText(gOtherText_Coins2, x, y);
+    Menu_PrintText(gText_Coins, x, y);
 }
 
 u16 GetCoins(void)

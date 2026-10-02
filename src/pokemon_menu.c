@@ -122,15 +122,15 @@ void (*gPostMenuFieldCallback)(void);
 
 static const struct MenuAction2 sPokemonMenuActions[] =
 {
-    {OtherText_Summary,             PokemonMenu_Summary},
-    {OtherText_Switch2,             PokemonMenu_Switch},
-    {OtherText_Item,                PokemonMenu_Item},
+    {gText_Summary5,             PokemonMenu_Summary},
+    {gText_Switch2,             PokemonMenu_Switch},
+    {gText_Item,                PokemonMenu_Item},
     {gText_Cancel, PokemonMenu_Cancel},
-    {OtherText_Give2,               PokemonMenu_GiveItem},
-    {OtherText_Take2,               PokemonMenu_TakeItem},
-    {OtherText_Take,                PokemonMenu_TakeMail},
-    {OtherText_Mail,                PokemonMenu_Mail},
-    {OtherText_Read2,               PokemonMenu_ReadMail},
+    {gMenuText_Give,               PokemonMenu_GiveItem},
+    {gText_Take,               PokemonMenu_TakeItem},
+    {gText_Take2,                PokemonMenu_TakeMail},
+    {gText_Mail,                PokemonMenu_Mail},
+    {gText_Read2,               PokemonMenu_ReadMail},
     {gText_Cancel, PokemonMenu_CancelSubmenu},
     {gMoveNames[MOVE_CUT],          PokemonMenu_FieldMove},
     {gMoveNames[MOVE_FLASH],        PokemonMenu_FieldMove},

@@ -175,12 +175,12 @@ EWRAM_DATA struct Sprite *sMarkingsSprite = NULL;
 
 static const u8 * const sPageHeaderTexts[] = {
     gText_EmptyString,
-    OtherText_PokeInfo,
-    OtherText_PokeSkills,
-    OtherText_BattleMoves,
-    OtherText_ContestMoves,
-    OtherText_Switch,
-    OtherText_Info,
+    gText_PkmnInfo,
+    gText_PkmnSkills,
+    gText_BattleMoves,
+    gText_ContestMoves,
+    gText_Switch,
+    gText_Info,
     gText_Cancel,
 };
 
@@ -1983,7 +1983,7 @@ static void ShowCantForgetHMsWindow(u8 taskId, u8 moveIndex)
     PositionPowerAccSlidingWindow(-2, 4);
     PositionAppealJamSlidingWindow(-2, 4);
     Menu_EraseWindowRect(11, 15, 28, 18);
-    Menu_PrintText(gOtherText_CantForgetHMs, 11, 15);
+    Menu_PrintText(gText_HMMovesCantBeForgotten2, 11, 15);
 
     gTasks[taskId].func = Task_HandleInputCantForgetHMsMoves;
 }
@@ -2081,7 +2081,7 @@ static void HidePageSpecificSprites(void)
 
 static void SummaryScreen_PrintPokemonInfoLabels(void)
 {
-    Menu_PrintText(gOtherText_Type2, 11, 6);
+    Menu_PrintText(gText_TypeSlash, 11, 6);
     SummaryScreen_PlaceTextTile_White(0, 22, 4);
     SummaryScreen_PlaceTextTile_White(2, 23, 4);
 }
@@ -2103,7 +2103,7 @@ static void SummaryScreen_PrintPokemonInfo(struct Pokemon *mon)
     {
         buffer = gStringVar1;
         buffer = SummaryScreen_SetTextColor(buffer, 13);
-        buffer = StringCopy(buffer, gOtherText_OriginalTrainer);
+        buffer = StringCopy(buffer, gText_OTSlash);
         buffer = StringCopy(buffer, gText_FiveMarks);
         buffer[0] = EXT_CTRL_CODE_BEGIN;
         buffer[1] = 0x13;
@@ -2116,13 +2116,13 @@ static void SummaryScreen_PrintPokemonInfo(struct Pokemon *mon)
 
         friendship = GetMonData(mon, MON_DATA_FRIENDSHIP);
         if (friendship <= 5)
-            Menu_PrintText(gOtherText_EggAbout, 11, 9);
+            Menu_PrintText(gText_EggAboutToHatch, 11, 9);
         else if (friendship <= 10)
-            Menu_PrintText(gOtherText_EggSoon, 11, 9);
+            Menu_PrintText(gText_EggWillHatchSoon, 11, 9);
         else if (friendship <= 40)
-            Menu_PrintText(gOtherText_EggSomeTime, 11, 9);
+            Menu_PrintText(gText_EggWillTakeSomeTime, 11, 9);
         else
-            Menu_PrintText(gOtherText_EggLongTime, 11, 9);
+            Menu_PrintText(gText_EggWillTakeALongTime, 11, 9);
 
         PokemonSummaryScreen_PrintEggTrainerMemo(mon, 11, 14);
     }
@@ -2134,7 +2134,7 @@ static void SummaryScreen_PrintPokemonInfo(struct Pokemon *mon)
 
         buffer = gStringVar1;
         buffer = SummaryScreen_SetTextColor(buffer, 13);
-        buffer = StringCopy(buffer, gOtherText_OriginalTrainer);
+        buffer = StringCopy(buffer, gText_OTSlash);
 
         if (GetMonData(mon, MON_DATA_OT_GENDER) == MALE)
             buffer = SummaryScreen_SetTextColor(buffer, 9);
@@ -2179,16 +2179,16 @@ static void ClearInfoPageText(void)
 
 static void SummaryScreen_PrintPokemonSkillsLabels(void)
 {
-    SummaryScreen_PrintColoredText(gOtherText_ExpPoints, 13, 11, 14);
-    SummaryScreen_PrintColoredText(gOtherText_NextLv, 13, 11, 16);
-    Menu_PrintText(gOtherText_Terminator18, 21, 16);
+    SummaryScreen_PrintColoredText(gText_ExpPoints, 13, 11, 14);
+    SummaryScreen_PrintColoredText(gText_NextLv, 13, 11, 16);
+    Menu_PrintText(gText_EmptyString8, 21, 16);
 
-    SummaryScreen_PrintColoredTextCentered(gOtherText_HP, 13, 11, 7, 42);
-    SummaryScreen_PrintColoredTextCentered(gOtherText_Attack, 13, 11, 9, 42);
-    SummaryScreen_PrintColoredTextCentered(gOtherText_Defense, 13, 11, 11, 42);
-    SummaryScreen_PrintColoredTextCentered(gOtherText_SpAtk, 13, 22, 7, 36);
-    SummaryScreen_PrintColoredTextCentered(gOtherText_SpDef, 13, 22, 9, 36);
-    SummaryScreen_PrintColoredTextCentered(gOtherText_Speed, 13, 22, 11, 36);
+    SummaryScreen_PrintColoredTextCentered(gText_HP4, 13, 11, 7, 42);
+    SummaryScreen_PrintColoredTextCentered(gText_Attack3, 13, 11, 9, 42);
+    SummaryScreen_PrintColoredTextCentered(gText_Defense3, 13, 11, 11, 42);
+    SummaryScreen_PrintColoredTextCentered(gText_SpAtk4, 13, 22, 7, 36);
+    SummaryScreen_PrintColoredTextCentered(gText_SpDef4, 13, 22, 9, 36);
+    SummaryScreen_PrintColoredTextCentered(gText_Speed2, 13, 22, 11, 36);
 }
 
 static void SummaryScreen_PrintPokemonSkills(struct Pokemon *mon)
@@ -2254,13 +2254,13 @@ static void PrintMoveDetailLabels(u8 moveIndex)
     {
         if (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES)
         {
-            SummaryScreen_PrintColoredText(gOtherText_Power2, 13, 1, 15);
-            SummaryScreen_PrintColoredText(gOtherText_Accuracy2, 13, 1, 17);
+            SummaryScreen_PrintColoredText(gText_Power, 13, 1, 15);
+            SummaryScreen_PrintColoredText(gText_Accuracy2, 13, 1, 17);
         }
         else
         {
-            SummaryScreen_PrintColoredText(gOtherText_Appeal2, 13, 1, 15);
-            SummaryScreen_PrintColoredText(gOtherText_Jam2, 13, 1, 17);
+            SummaryScreen_PrintColoredText(gText_Appeal, 13, 1, 15);
+            SummaryScreen_PrintColoredText(gText_Jam, 13, 1, 17);
         }
     }
 }
@@ -2282,8 +2282,8 @@ static void PrintMoveNamesAndPP(struct Pokemon *mon)
         if (move == 0)
         {
             SetSpriteInvisibility(i, 1);
-            SummaryScreen_PrintColoredText(gOtherText_OneDash, 13, 15, (2 * i) + 4);
-            Menu_PrintText(gOtherText_TwoDashes, 26, (2 * i) + 4);
+            SummaryScreen_PrintColoredText(gText_OneDash, 13, 15, (2 * i) + 4);
+            Menu_PrintText(gText_TwoDashes, 26, (2 * i) + 4);
         }
         else
         {
@@ -2417,7 +2417,7 @@ static void PrintMovePowerAndAccuracy(u16 move)
         if (gBattleMoves[move].power <= 1)
         {
             buffer = gStringVar1;
-            buffer = AlignStringInMenuWindow(buffer, gOtherText_ThreeDashes2, 21, 1);
+            buffer = AlignStringInMenuWindow(buffer, gText_ThreeDashes, 21, 1);
             Menu_PrintText(gStringVar1, 7, 15);
         }
         else
@@ -2430,7 +2430,7 @@ static void PrintMovePowerAndAccuracy(u16 move)
         if (gBattleMoves[move].accuracy == 0)
         {
             buffer = gStringVar1;
-            buffer = AlignStringInMenuWindow(buffer, gOtherText_ThreeDashes2, 21, 1);
+            buffer = AlignStringInMenuWindow(buffer, gText_ThreeDashes, 21, 1);
             Menu_PrintText(gStringVar1, 7, 17);
         }
         else
@@ -2712,11 +2712,11 @@ static void PrintGenderSymbol(struct Pokemon *mon, u8 left, u8 top)
             Menu_EraseWindowRect(left, top, left, bottom);
             return;
         case MON_MALE:
-            genderSymbol = gOtherText_MaleSymbol2;
+            genderSymbol = gText_MaleSymbol;
             color = 11;
             break;
         case MON_FEMALE:
-            genderSymbol = gOtherText_FemaleSymbol2;
+            genderSymbol = gText_FemaleSymbol;
             color = 12;
             break;
         }
@@ -2755,7 +2755,7 @@ static void PrintRibbonCount(struct Pokemon *mon)
 
     if (numRibbons == 0)
     {
-        StringCopy(gStringVar1, gOtherText_None);
+        StringCopy(gStringVar1, gText_None);
     }
     else
     {
@@ -2784,7 +2784,7 @@ static void PrintHeldItemName(u16 itemId, u8 left, u8 top)
      && (sMonSummaryScreen->curMonIndex == 1 || sMonSummaryScreen->curMonIndex == 4 || sMonSummaryScreen->curMonIndex == 5))
         StringCopy(gStringVar1, GetItemName(itemId));
     else if (itemId == 0)
-        StringCopy(gStringVar1, gOtherText_None);
+        StringCopy(gStringVar1, gText_None);
     else
         CopyItemName(itemId, gStringVar1);
 
@@ -3028,7 +3028,7 @@ void Task_SlideStatusWindow(u8 taskId)
     if (data[0] == 0 || data[1] <= 0 || data[1] >= 10)
     {
         if (data[1] >= 10)
-            SummaryScreen_PrintColoredText(gOtherText_Status, 13, 1, 18);
+            SummaryScreen_PrintColoredText(gText_Status, 13, 1, 18);
         CreateSetStatusSprite();
         DestroyTask(taskId);
     }
@@ -3102,7 +3102,7 @@ static void PositionStatusSlidingWindow(s8 slideSpeed)
 
 //             if (GetMonAilment(sMonSummaryScreen->currentMon))
 //             {
-//                 SummaryScreen_PrintColoredText(gOtherText_Status, 13, 1, 18);
+//                 SummaryScreen_PrintColoredText(gText_Status, 13, 1, 18);
 //             }
 
 //             DestroyTask(taskId);
@@ -3251,7 +3251,7 @@ _080A1410:\n\
     lsls r0, 24\n\
     cmp r0, 0\n\
     beq _080A1444\n\
-    ldr r0, _080A1484 @ =gOtherText_Status\n\
+    ldr r0, _080A1484 @ =gText_Status\n\
     movs r1, 0xD\n\
     movs r2, 0x1\n\
     movs r3, 0x12\n\
@@ -3288,7 +3288,7 @@ _080A1470:\n\
     bx r0\n\
     .align 2, 0\n\
 _080A1480: .4byte gSharedMem + 0x18000\n\
-_080A1484: .4byte gOtherText_Status\n\
+_080A1484: .4byte gText_Status\n\
     .syntax divided\n");
 }
 
@@ -3447,7 +3447,7 @@ _080A15DC:\n\
     lsls r0, 24\n\
     cmp r0, 0\n\
     beq _080A1610\n\
-    ldr r0, _080A1650 @ =gOtherText_Status\n\
+    ldr r0, _080A1650 @ =gText_Status\n\
     movs r1, 0xD\n\
     movs r2, 0x1\n\
     movs r3, 0x12\n\
@@ -3484,7 +3484,7 @@ _080A163C:\n\
     bx r0\n\
     .align 2, 0\n\
 _080A164C: .4byte gSharedMem + 0x18000\n\
-_080A1650: .4byte gOtherText_Status\n\
+_080A1650: .4byte gText_Status\n\
     .syntax divided\n");
 }
 

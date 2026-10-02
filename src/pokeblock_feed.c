@@ -807,11 +807,11 @@ static void Task_PrintAtePokeblockMessage(u8 taskId)
     PokeblockCopyName(pokeblock, gStringVar2);
 
     if (gPokeblockGain == 0)
-        StringExpandPlaceholders(gStringVar4, gContestStatsText_NormallyAte);
+        StringExpandPlaceholders(gStringVar4, gText_Var1AteTheVar2);
     else if (gPokeblockGain > 0)
-        StringExpandPlaceholders(gStringVar4, gContestStatsText_HappilyAte);
+        StringExpandPlaceholders(gStringVar4, gText_Var1HappilyAteVar2);
     else
-        StringExpandPlaceholders(gStringVar4, gContestStatsText_DisdainfullyAte);
+        StringExpandPlaceholders(gStringVar4, gText_Var1DisdainfullyAteVar2);
 
     MenuPrintMessage(gStringVar4, 1, 15);
     gTasks[taskId].func = Task_WaitForAtePokeblockMessage;

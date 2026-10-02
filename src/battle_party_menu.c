@@ -89,10 +89,10 @@ enum
 
 static const struct MenuAction2 sBattlePartyMenuActions[] =
 {
-    {OtherText_Summary,             Task_BattlePartyMenuSummary},
+    {gText_Summary5,             Task_BattlePartyMenuSummary},
     {gText_Cancel, Task_BattlePartyMenuCancel},
-    {OtherText_Shift,               Task_BattlePartyMenuShift},
-    {OtherText_SendOut,             Task_BattlePartyMenuShift},
+    {gText_Shift,               Task_BattlePartyMenuShift},
+    {gText_SendOut,             Task_BattlePartyMenuShift},
 };
 static const u8 sBattlePartyMenuShiftActions[] =
 {
@@ -693,7 +693,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
     {
         PartyMenuEraseMsgBoxAndFrame();
         StringCopy(gStringVar1, GetTrainerPartnerName());
-        StringExpandPlaceholders(gStringVar4, gOtherText_CantSwitchPokeWithYours);
+        StringExpandPlaceholders(gStringVar4, gText_CantSwitchWithAlly);
         DisplayPartyMenuMessage(gStringVar4, 0);
         gTasks[taskId].func = Task_WaitBattlePartyErrorMessage;
         return;
@@ -702,7 +702,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
     {
         PartyMenuEraseMsgBoxAndFrame();
         GetMonNickname(&gPlayerParty[partySelection], gStringVar1);
-        StringExpandPlaceholders(gStringVar4, gOtherText_NoEnergyLeft);
+        StringExpandPlaceholders(gStringVar4, gText_PkmnHasNoEnergy);
         DisplayPartyMenuMessage(gStringVar4, 0);
         gTasks[taskId].func = Task_WaitBattlePartyErrorMessage;
         return;
@@ -714,7 +714,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
         {
             PartyMenuEraseMsgBoxAndFrame();
             GetMonNickname(&gPlayerParty[partySelection], gStringVar1);
-            StringExpandPlaceholders(gStringVar4, gOtherText_AlreadyBattle);
+            StringExpandPlaceholders(gStringVar4, gText_PkmnAlreadyInBattle);
             DisplayPartyMenuMessage(gStringVar4, 0);
             gTasks[taskId].func = Task_WaitBattlePartyErrorMessage;
             return;
@@ -723,7 +723,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
     if (GetMonData(&gPlayerParty[partySelection], MON_DATA_IS_EGG))
     {
         PartyMenuEraseMsgBoxAndFrame();
-        StringExpandPlaceholders(gStringVar4, gOtherText_EGGCantBattle);
+        StringExpandPlaceholders(gStringVar4, gText_EggCantBattle);
         DisplayPartyMenuMessage(gStringVar4, 0);
         gTasks[taskId].func = Task_WaitBattlePartyErrorMessage;
         return;
@@ -732,7 +732,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
     {
         PartyMenuEraseMsgBoxAndFrame();
         GetMonNickname(&gPlayerParty[partySelection], gStringVar1);
-        StringExpandPlaceholders(gStringVar4, gOtherText_AlreadySelected);
+        StringExpandPlaceholders(gStringVar4, gText_PkmnAlreadySelected);
         DisplayPartyMenuMessage(gStringVar4, 0);
         gTasks[taskId].func = Task_WaitBattlePartyErrorMessage;
         return;
@@ -753,7 +753,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
         PartyMenuEraseMsgBoxAndFrame();
         battlerPartyId = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[currentBattler]);
         GetMonNickname(&gPlayerParty[battlerPartyId], gStringVar1);
-        StringExpandPlaceholders(gStringVar4, gOtherText_CantBeSwitched);
+        StringExpandPlaceholders(gStringVar4, gText_PkmnCantSwitchOut);
         DisplayPartyMenuMessage(gStringVar4, 0);
         gTasks[taskId].func = Task_WaitBattlePartyErrorMessage;
         return;

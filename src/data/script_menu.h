@@ -1,29 +1,29 @@
 // multichoice lists
 static const struct MenuAction MultichoiceList_BrineyOnDewford[] =
 {
-    {OtherText_Petalburg, NULL},
-    {OtherText_Slateport, NULL},
+    {gText_Petalburg, NULL},
+    {gText_Slateport, NULL},
     {gText_Cancel, NULL},
 };
 static const struct MenuAction MultichoiceList_EnterInfo[] =
 {
-    {OtherText_Enter, NULL},
-    {OtherText_Info3, NULL},
+    {gText_Enter2, NULL},
+    {gText_Info2, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_ContestInfo[] =
 {
-    {OtherText_WhatsAContest, NULL},
-    {OtherText_TypesOfContest, NULL},
-    {OtherText_Ranks, NULL},
+    {gText_WhatsAContest, NULL},
+    {gText_TypesOfContests, NULL},
+    {gText_Ranks, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_ContestType[] =
 {
     {OtherText_CoolContest, NULL},
-    {OtherText_BeautyContest, NULL},
+    {gText_BeautyContest, NULL},
     {OtherText_CuteContest, NULL},
     {OtherText_SmartContest, NULL},
     {OtherText_ToughContest, NULL},
@@ -32,82 +32,82 @@ static const struct MenuAction MultichoiceList_ContestType[] =
 
 static const struct MenuAction MultichoiceList_BasePCWithRegistry[] =
 {
-    {OtherText_Decoration, NULL},
-    {OtherText_PackUp, NULL},
-    {OtherText_Registry, NULL},
+    {gText_Decoration2, NULL},
+    {gText_PackUp, NULL},
+    {gText_Registry, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_BasePCNoRegistry[] =
 {
-    {OtherText_Decoration, NULL},
-    {OtherText_PackUp, NULL},
+    {gText_Decoration2, NULL},
+    {gText_PackUp, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_RegisterMenu[] =
 {
-    {OtherText_Register, NULL},
-    {OtherText_Registry, NULL},
-    {OtherText_Information, NULL},
+    {gMenuText_Register, NULL},
+    {gText_Registry, NULL},
+    {gText_Information, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_Bike[] =
 {
-    {OtherText_Mach, NULL},
-    {OtherText_Acro, NULL},
+    {gText_Mach, NULL},
+    {gText_Acro, NULL},
 };
 
 static const struct MenuAction MultichoiceList_StatusInfo[] =
 {
-    {OtherText_Poison, NULL},
-    {OtherText_Paralysis, NULL},
-    {OtherText_Sleep, NULL},
-    {OtherText_Burn, NULL},
-    {OtherText_Frozen, NULL},
+    {gText_Psn, NULL},
+    {gText_Par, NULL},
+    {gText_Slp, NULL},
+    {gText_Brn, NULL},
+    {gText_Frz, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_BrineyOffDewford[] =
 {
-    {OtherText_Dewford, NULL},
+    {gText_Dewford, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_ViewedPaintings[] =
 {
-    {OtherText_SawIt, NULL},
-    {OtherText_NotYet, NULL},
+    {gText_SawIt, NULL},
+    {gText_NotYet, NULL},
 };
 
 static const struct MenuAction MultichoiceList_YesNoInfo[] =
 {
-    {OtherText_Yes, NULL},
-    {OtherText_No, NULL},
-    {OtherText_Info3, NULL},
+    {gText_Yes, NULL},
+    {gText_No, NULL},
+    {gText_Info2, NULL},
 };
 
 static const struct MenuAction MultichoiceList_BattleMode[] =
 {
-    {OtherText_SingleBattle, NULL},
-    {OtherText_DoubleBattle, NULL},
-    {OtherText_MultiBattle, NULL},
+    {gText_SingleBattle, NULL},
+    {gText_DoubleBattle, NULL},
+    {gText_MultiBattle, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_SSTidalLittlerootSlateportLilycove[] =
 {
-    {OtherText_Littleroot, NULL},
-    {OtherText_Slateport, NULL},
-    {OtherText_Lilycove, NULL},
+    {gText_Littleroot, NULL},
+    {gText_Slateport, NULL},
+    {gText_Lilycove, NULL},
 };
 
 static const struct MenuAction MultichoiceList_YesNoInfo2[] =
 {
-    {OtherText_Yes, NULL},
-    {OtherText_No, NULL},
-    {OtherText_Info3, NULL},
+    {gText_Yes, NULL},
+    {gText_No, NULL},
+    {gText_Info2, NULL},
 };
 
 static const struct MenuAction MultichoiceList_ChallengeInfo[] =
@@ -119,7 +119,7 @@ static const struct MenuAction MultichoiceList_ChallengeInfo[] =
 
 static const struct MenuAction MultichoiceList_LevelMode[] =
 {
-    {OtherText_Lv50_2, NULL},
+    {gText_Lv50, NULL},
     {OtherText_Lv100_2, NULL},
     {gText_Cancel, NULL},
 };
@@ -239,50 +239,50 @@ static const struct MenuAction MultichoiceList_VendingMachine[] =
 
 static const struct MenuAction MultichoiceList_MachBikeInfo[] =
 {
-    {OtherText_HowToRide, NULL},
-    {OtherText_HowToTurn, NULL},
-    {OtherText_SandySlopes, NULL},
+    {gText_HowToRide, NULL},
+    {gText_HowToTurn, NULL},
+    {gText_SandySlopes, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_AcroBikeInfo[] =
 {
-    {OtherText_Wheelies, NULL},
-    {OtherText_BunnyHops, NULL},
+    {gText_Wheelies, NULL},
+    {gText_BunnyHops, NULL},
     {OtherText_Jumping, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_Satisfaction[] =
 {
-    {OtherText_Satisfied, NULL},
-    {OtherText_Dissatisfied, NULL},
+    {gText_Satisfied, NULL},
+    {gText_Dissatisfied, NULL},
 };
 
 static const struct MenuAction MultichoiceList_SternDeepSea[] =
 {
-    {OtherText_Deepseatooth, NULL},
-    {OtherText_Deepseascale, NULL},
+    {gText_DeepSeaTooth, NULL},
+    {gText_DeepSeaScale, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_UnusedAshVendor[] =
 {
-    {OtherText_BlueFlute2, NULL},
-    {OtherText_YellowFlute2, NULL},
-    {OtherText_RedFlute2, NULL},
-    {OtherText_WhiteFlute2, NULL},
-    {OtherText_BlackFlute2, NULL},
-    {OtherText_GlassChair, NULL},
-    {OtherText_GlassDesk, NULL},
+    {gText_BlueFlute2, NULL},
+    {gText_YellowFlute2, NULL},
+    {gText_RedFlute2, NULL},
+    {gText_WhiteFlute2, NULL},
+    {gText_BlackFlute2, NULL},
+    {gText_GlassChair, NULL},
+    {gText_GlassDesk, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_GameCornerDolls[] =
 {
-    {OtherText_TreeckoDoll, NULL},
-    {OtherText_TorchicDoll, NULL},
-    {OtherText_MudkipDoll, NULL},
+    {gText_TreeckoDollAndPrice, NULL},
+    {gText_TorchicDollAndPrice, NULL},
+    {gText_MudkipDollAndPrice, NULL},
     {gText_Cancel, NULL},
 };
 
@@ -298,8 +298,8 @@ static const struct MenuAction MultichoiceList_GameCornerTMs[] =
 
 static const struct MenuAction MultichoiceList_GameCornerCoins[] =
 {
-    {OtherText_50Coins, NULL},
-    {OtherText_500Coins, NULL},
+    {gText_50CoinsAndPrice, NULL},
+    {gText_500CoinsAndPrice, NULL},
     {gText_Cancel, NULL},
 };
 
@@ -311,27 +311,27 @@ static const struct MenuAction MultichoiceList_HowsFishing[] =
 
 static const struct MenuAction MultichoiceList_SSTidalSlateportWithBattleTower[] =
 {
-    {OtherText_Lilycove, NULL},
+    {gText_Lilycove, NULL},
     {OtherText_BattleTower, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_SSTidalBattleTower[] =
 {
-    {OtherText_Slateport, NULL},
-    {OtherText_Lilycove, NULL},
+    {gText_Slateport, NULL},
+    {gText_Lilycove, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_RightLeft[] =
 {
-    {OtherText_Right, NULL},
-    {OtherText_Left, NULL},
+    {gText_Right, NULL},
+    {gText_Left, NULL},
 };
 
 static const struct MenuAction MultichoiceList_SSTidalLilycoveWithBattleTower[] =
 {
-    {OtherText_Slateport, NULL},
+    {gText_Slateport, NULL},
     {OtherText_BattleTower, NULL},
     {gText_Cancel, NULL},
 };
@@ -347,108 +347,108 @@ static const struct MenuAction MultichoiceList_Floors[] =
 
 static const struct MenuAction MultichoiceList_ShardsR[] =
 {
-    {OtherText_RedShard, NULL},
+    {gText_RedShard, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_ShardsY[] =
 {
-    {OtherText_YellowShard, NULL},
+    {gText_YellowShard, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_ShardsRY[] =
 {
-    {OtherText_RedShard, NULL},
-    {OtherText_YellowShard, NULL},
+    {gText_RedShard, NULL},
+    {gText_YellowShard, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_ShardsB[] =
 {
-    {OtherText_BlueShard, NULL},
+    {gText_BlueShard, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_ShardsRB[] =
 {
-    {OtherText_RedShard, NULL},
-    {OtherText_BlueShard, NULL},
+    {gText_RedShard, NULL},
+    {gText_BlueShard, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_ShardsYB[] =
 {
-    {OtherText_YellowShard, NULL},
-    {OtherText_BlueShard, NULL},
+    {gText_YellowShard, NULL},
+    {gText_BlueShard, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_ShardsRYB[] =
 {
-    {OtherText_RedShard, NULL},
-    {OtherText_YellowShard, NULL},
-    {OtherText_BlueShard, NULL},
+    {gText_RedShard, NULL},
+    {gText_YellowShard, NULL},
+    {gText_BlueShard, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_ShardsG[] =
 {
-    {OtherText_GreenShard, NULL},
+    {gText_GreenShard, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_ShardsRG[] =
 {
-    {OtherText_RedShard, NULL},
-    {OtherText_GreenShard, NULL},
+    {gText_RedShard, NULL},
+    {gText_GreenShard, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_ShardsYG[] =
 {
-    {OtherText_YellowShard, NULL},
-    {OtherText_GreenShard, NULL},
+    {gText_YellowShard, NULL},
+    {gText_GreenShard, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_ShardsRYG[] =
 {
-    {OtherText_RedShard, NULL},
-    {OtherText_YellowShard, NULL},
-    {OtherText_GreenShard, NULL},
+    {gText_RedShard, NULL},
+    {gText_YellowShard, NULL},
+    {gText_GreenShard, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_ShardsBG[] =
 {
-    {OtherText_BlueShard, NULL},
-    {OtherText_GreenShard, NULL},
+    {gText_BlueShard, NULL},
+    {gText_GreenShard, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_ShardsRBG[] =
 {
-    {OtherText_RedShard, NULL},
-    {OtherText_BlueShard, NULL},
-    {OtherText_GreenShard, NULL},
+    {gText_RedShard, NULL},
+    {gText_BlueShard, NULL},
+    {gText_GreenShard, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_ShardsYBG[] =
 {
-    {OtherText_YellowShard, NULL},
-    {OtherText_BlueShard, NULL},
-    {OtherText_GreenShard, NULL},
+    {gText_YellowShard, NULL},
+    {gText_BlueShard, NULL},
+    {gText_GreenShard, NULL},
     {gText_Cancel, NULL},
 };
 
 static const struct MenuAction MultichoiceList_ShardsRYBG[] =
 {
-    {OtherText_RedShard, NULL},
-    {OtherText_YellowShard, NULL},
-    {OtherText_BlueShard, NULL},
-    {OtherText_GreenShard, NULL},
+    {gText_RedShard, NULL},
+    {gText_YellowShard, NULL},
+    {gText_BlueShard, NULL},
+    {gText_GreenShard, NULL},
     {gText_Cancel, NULL},
 };
 
@@ -542,23 +542,23 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
 
 const u8 *const gStdStrings[] =
 {
-    [STDSTRING_COOL]      = OtherText_Cool2,
-    [STDSTRING_BEAUTY]    = OtherText_Beauty3,
-    [STDSTRING_CUTE]      = OtherText_Cute2,
-    [STDSTRING_SMART]     = OtherText_Smart2,
-    [STDSTRING_TOUGH]     = OtherText_Tough2,
-    [STDSTRING_NORMAL]    = OtherText_Normal,
-    [STDSTRING_SUPER]     = OtherText_Super,
-    [STDSTRING_HYPER]     = OtherText_Hyper,
-    [STDSTRING_MASTER]    = OtherText_Master,
-    [STDSTRING_COOL2]     = OtherText_Cool3,
-    [STDSTRING_BEAUTY2]   = OtherText_Beauty4,
-    [STDSTRING_CUTE2]     = OtherText_Cute3,
-    [STDSTRING_SMART2]    = OtherText_Smart3,
-    [STDSTRING_TOUGH2]    = OtherText_Tough3,
-    [STDSTRING_ITEMS]     = OtherText_Items,
-    [STDSTRING_KEYITEMS]  = OtherText_KeyItems,
+    [STDSTRING_COOL]      = gText_Cool,
+    [STDSTRING_BEAUTY]    = gText_Beauty,
+    [STDSTRING_CUTE]      = gText_Cute,
+    [STDSTRING_SMART]     = gText_Smart,
+    [STDSTRING_TOUGH]     = gText_Tough,
+    [STDSTRING_NORMAL]    = gText_Normal,
+    [STDSTRING_SUPER]     = gText_Super,
+    [STDSTRING_HYPER]     = gText_Hyper,
+    [STDSTRING_MASTER]    = gText_Master,
+    [STDSTRING_COOL2]     = gText_Cool2,
+    [STDSTRING_BEAUTY2]   = gText_Beauty2,
+    [STDSTRING_CUTE2]     = gText_Cute2,
+    [STDSTRING_SMART2]    = gText_Smart2,
+    [STDSTRING_TOUGH2]    = gText_Tough2,
+    [STDSTRING_ITEMS]     = gText_Items,
+    [STDSTRING_KEYITEMS]  = gText_Key_Items,
     [STDSTRING_POKEBALLS] = OtherText_Balls,
-    [STDSTRING_TMHMS]     = OtherText_TMsHMs,
-    [STDSTRING_BERRIES]   = OtherText_Berries,
+    [STDSTRING_TMHMS]     = gText_TMs_Hms,
+    [STDSTRING_BERRIES]   = gText_Berries2,
 };

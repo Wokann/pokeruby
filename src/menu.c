@@ -46,8 +46,8 @@ EWRAM_DATA u16 gMenuMessageBoxContentTileOffset = 0;
 
 const struct MenuAction gMenuYesNoItems[] =
 {
-    { OtherText_Yes, NULL },
-    { OtherText_No, NULL },
+    { gText_Yes, NULL },
+    { gText_No, NULL },
 };
 
 void CloseMenu(void)

@@ -113,7 +113,7 @@ static void Task_ChooseNewMonForSoftboiled(u8 taskId) {
 static void CantUseSoftboiledOnMon(u8 taskId) {
     gPartyMenuActionResult = 0;
     PartyMenuEraseMsgBoxAndFrame();
-    DisplayPartyMenuMessage(gOtherText_CantUseOnPoke, 1);
+    DisplayPartyMenuMessage(gText_CantBeUsedOnPkmn, 1);
     gTasks[taskId].func = Task_ChooseNewMonForSoftboiled;
 }
 

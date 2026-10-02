@@ -460,17 +460,17 @@ static const u8 *ExpandPlaceholder_StringVar3(void)
 static const u8 *ExpandPlaceholder_KunChan(void)
 {
     if (gSaveBlock2.playerGender == MALE)
-        return gExpandedPlaceholder_Kun;
+        return gText_ExpandedPlaceholder_Kun;
     else
-        return gExpandedPlaceholder_Chan;
+        return gText_ExpandedPlaceholder_Chan;
 }
 
 static const u8 *ExpandPlaceholder_RivalName(void)
 {
     if (gSaveBlock2.playerGender == MALE)
-        return gExpandedPlaceholder_May;
+        return gText_ExpandedPlaceholder_May;
     else
-        return gExpandedPlaceholder_Brendan;
+        return gText_ExpandedPlaceholder_Brendan;
 }
 
 #define VERSION_DEPENDENT_PLACEHOLDER_LIST \
@@ -484,11 +484,11 @@ static const u8 *ExpandPlaceholder_RivalName(void)
 
 #ifdef SAPPHIRE
 #define X(ph, r, s) \
-static const u8 *ExpandPlaceholder_##ph(void) { return gExpandedPlaceholder_##s; }
+static const u8 *ExpandPlaceholder_##ph(void) { return gText_ExpandedPlaceholder_##s; }
 VERSION_DEPENDENT_PLACEHOLDER_LIST
 #else
 #define X(ph, r, s) \
-static const u8 *ExpandPlaceholder_##ph(void) { return gExpandedPlaceholder_##r; }
+static const u8 *ExpandPlaceholder_##ph(void) { return gText_ExpandedPlaceholder_##r; }
 VERSION_DEPENDENT_PLACEHOLDER_LIST
 #endif
 
@@ -517,7 +517,7 @@ const u8 *GetExpandedPlaceholder(u32 id)
     };
 
     if (id >= ARRAY_COUNT(funcs))
-        return gExpandedPlaceholder_Empty;
+        return gText_ExpandedPlaceholder_Empty;
     else
         return funcs[id]();
 }

@@ -1551,27 +1551,27 @@ const struct Decoration gDecorations[] = {
 #endif
 
 static const u8 *const sDecorationCategoryNames[] = {
-    SecretBaseText_Desk,
-    SecretBaseText_Chair,
-    SecretBaseText_Plant,
-    SecretBaseText_Ornament,
-    SecretBaseText_Mat,
-    SecretBaseText_Poster,
-    SecretBaseText_Doll,
-    SecretBaseText_Cushion
+    gText_Desk,
+    gText_Chair,
+    gText_Plant,
+    gText_Ornament,
+    gText_Mat,
+    gText_Poster,
+    gText_Doll,
+    gText_Cushion
 };
 
 static const struct MenuAction2 sDecorationMainMenuActions[] = {
-    {SecretBaseText_Decorate, DecorationMenuAction_Decorate},
-    {SecretBaseText_PutAway, DecorationMenuAction_PutAway},
-    {SecretBaseText_Toss, DecorationMenuAction_Toss},
+    {gText_Decorate, DecorationMenuAction_Decorate},
+    {gText_PutAway, DecorationMenuAction_PutAway},
+    {gText_Toss2, DecorationMenuAction_Toss},
     {gText_Exit, DecorationMenuAction_Cancel}
 };
 
 static const u8 *const sSecretBasePCMenuItemDescriptions[] = {
-    SecretBaseText_PutOutDecor,
-    SecretBaseText_StoreChosenDecor,
-    SecretBaseText_ThrowAwayDecor,
+    gText_PutOutSelectedDecorItem,
+    gText_StoreChosenDecorInPC,
+    gText_ThrowAwayUnwantedDecors,
     gText_GoBackPrevMenu
 };
 
@@ -1778,7 +1778,7 @@ void HandleDecorationCategoriesMenuInput(u8 taskId)
                 {
                     Menu_DestroyCursor();
                     Menu_EraseWindowRect(0, 0, 14, 19);
-                    DisplayItemMessageOnField(taskId, gSecretBaseText_NoDecors, ReturnToDecorationCategoriesAfterInvalidSelection, 0);
+                    DisplayItemMessageOnField(taskId, gText_NoDecorations, ReturnToDecorationCategoriesAfterInvalidSelection, 0);
                 }
             } else
             {
@@ -2201,7 +2201,7 @@ void DecorationMenuAction_Decorate(u8 taskId)
 {
     if (!GetNumOwnedDecorations())
     {
-        DisplayItemMessageOnField(taskId, gSecretBaseText_NoDecors, ReturnToDecorationActionsAfterInvalidSelection, 0);
+        DisplayItemMessageOnField(taskId, gText_NoDecorations, ReturnToDecorationActionsAfterInvalidSelection, 0);
     } else
     {
         gTasks[taskId].tDecorationMenuCommand = DECOR_MENU_PLACE;
@@ -2354,7 +2354,7 @@ void DecorationItemsMenuAction_AttemptPlace(u8 taskId)
     {
         RemoveDecorationItemsWindow();
         RemoveDecorationItemsOtherWindows();
-        DisplayItemMessageOnField(taskId, gSecretBaseText_DecorCantPlace, ReturnToDecorationItemsAfterInvalidSelection, 0);
+        DisplayItemMessageOnField(taskId, gText_CantPlaceInRoom, ReturnToDecorationItemsAfterInvalidSelection, 0);
     } else if (IsSelectedDecorInThePC() == TRUE)
     {
         if (HasDecorationSpace() == TRUE)
@@ -2380,7 +2380,7 @@ void DecorationItemsMenuAction_AttemptPlace(u8 taskId)
     {
         RemoveDecorationItemsWindow();
         RemoveDecorationItemsOtherWindows();
-        DisplayItemMessageOnField(taskId, gSecretBaseText_InUseAlready, ReturnToDecorationItemsAfterInvalidSelection, 0);
+        DisplayItemMessageOnField(taskId, gText_InUseAlready, ReturnToDecorationItemsAfterInvalidSelection, 0);
     }
 }
 
@@ -2525,7 +2525,7 @@ void AttemptCancelPlaceDecoration(u8 taskId)
     gSprites[sDecor_CameraSpriteObjectIdx1].data[7] = 1;
     gSprites[sDecor_CameraSpriteObjectIdx2].data[7] = 1;
     ResetCursorMovement();
-    DisplayItemMessageOnField(taskId, gSecretBaseText_CancelDecorating, CancelDecoratingPrompt, 0);
+    DisplayItemMessageOnField(taskId, gText_CancelDecorating, CancelDecoratingPrompt, 0);
 }
 
 bool8 IsBlockDecorationOnNormalLayer(u8 metatileBehavior, u16 layerType)
@@ -2698,11 +2698,11 @@ void AttemptPlaceDecoration_(u8 taskId)
 {
     if (CanPlaceDecoration(taskId, &gDecorations[gCurDecorationItems[gCurDecorationIndex]]) == TRUE)
     {
-        DisplayItemMessageOnField(taskId, gSecretBaseText_PlaceItHere, PlaceDecorationPrompt, 0);
+        DisplayItemMessageOnField(taskId, gText_PlaceItHere, PlaceDecorationPrompt, 0);
     } else
     {
         PlaySE(SE_FAILURE);
-        DisplayItemMessageOnField(taskId, gSecretBaseText_CantBePlacedHere, CantPlaceDecorationPrompt, 0);
+        DisplayItemMessageOnField(taskId, gText_CantBePlacedHere, CantPlaceDecorationPrompt, 0);
     }
 }
 
@@ -3218,7 +3218,7 @@ void DecorationMenuAction_PutAway(u8 taskId)
         gTasks[taskId].func = Task_ContinuePuttingAwayDecorations;
     } else
     {
-        DisplayItemMessageOnField(taskId, gSecretBaseText_NoDecorInUse, ReturnToDecorationActionsAfterInvalidSelection, 0);
+        DisplayItemMessageOnField(taskId, gText_NoDecorationsInUse, ReturnToDecorationActionsAfterInvalidSelection, 0);
     }
 }
 
@@ -3322,7 +3322,7 @@ void Task_PutAwayDecoration(u8 taskId)
             if (IsWeatherNotFadingIn() == TRUE)
             {
                 gTasks[taskId].tDecorationContextIndex = -1;
-                DisplayItemMessageOnField(taskId, gSecretBaseText_DecorReturned, ContinuePuttingAwayDecorationsPrompt, 0);
+                DisplayItemMessageOnField(taskId, gText_DecorationReturnedToPC, ContinuePuttingAwayDecorationsPrompt, 0);
             }
             break;
     }
@@ -3418,7 +3418,7 @@ void AttemptCancelPutAwayDecoration(u8 taskId)
     ResetCursorMovement();
     gSprites[sDecor_CameraSpriteObjectIdx1].invisible = FALSE;
     gSprites[sDecor_CameraSpriteObjectIdx1].callback = SpriteCallbackDummy;
-    DisplayItemMessageOnField(taskId, gSecretBaseText_StopPuttingAwayDecor, StopPuttingAwayDecorationsPrompt, 0);
+    DisplayItemMessageOnField(taskId, gText_StopPuttingAwayDecorations, StopPuttingAwayDecorationsPrompt, 0);
 }
 
 void AttemptPutAwayDecoration_(u8 taskId)
@@ -3428,7 +3428,7 @@ void AttemptPutAwayDecoration_(u8 taskId)
     AttemptMarkDecorUnderCursorForRemoval(taskId);
     if (sCurDecorSelectedInRearrangement != 0)
     {
-        DisplayItemMessageOnField(taskId, gSecretBaseText_ReturnDecor, ReturnDecorationPrompt, 0);
+        DisplayItemMessageOnField(taskId, gText_ReturnDecorationToPC, ReturnDecorationPrompt, 0);
     } else
     {
         data = gTasks[taskId].data;
@@ -3438,10 +3438,10 @@ void AttemptPutAwayDecoration_(u8 taskId)
         {
             gSprites[sDecor_CameraSpriteObjectIdx1].invisible = FALSE;
             gSprites[sDecor_CameraSpriteObjectIdx1].callback = SpriteCallbackDummy;
-            DisplayItemMessageOnField(taskId, gSecretBaseText_StopPuttingAwayDecor, StopPuttingAwayDecorationsPrompt, 0);
+            DisplayItemMessageOnField(taskId, gText_StopPuttingAwayDecorations, StopPuttingAwayDecorationsPrompt, 0);
         } else
         {
-            DisplayItemMessageOnField(taskId, gSecretBaseText_NoDecor, ContinuePuttingAwayDecorationsPrompt, 0);
+            DisplayItemMessageOnField(taskId, gText_NoDecorationHere, ContinuePuttingAwayDecorationsPrompt, 0);
         }
     }
 }
@@ -3726,7 +3726,7 @@ void DecorationMenuAction_Toss(u8 taskId)
 {
     if (!GetNumOwnedDecorations())
     {
-        DisplayItemMessageOnField(taskId, gSecretBaseText_NoDecors, ReturnToDecorationActionsAfterInvalidSelection, 0);
+        DisplayItemMessageOnField(taskId, gText_NoDecorations, ReturnToDecorationActionsAfterInvalidSelection, 0);
     } else
     {
         gTasks[taskId].tDecorationMenuCommand = DECOR_MENU_TOSS;
@@ -3739,7 +3739,7 @@ void OpenDecorationTradeCategories(u8 taskId)
 {
     if (!GetNumOwnedDecorations())
     {
-        DisplayItemMessageOnField(taskId, gSecretBaseText_NoDecors, ReturnToDecorationActionsAfterInvalidSelection, 0);
+        DisplayItemMessageOnField(taskId, gText_NoDecorations, ReturnToDecorationActionsAfterInvalidSelection, 0);
     } else
     {
         gTasks[taskId].tDecorationMenuCommand = DECOR_MENU_SELL;
@@ -3755,11 +3755,11 @@ void DecorationItemsMenuAction_AttemptToss(u8 taskId)
     if (IsSelectedDecorInThePC() == TRUE)
     {
         StringCopy(gStringVar1, gDecorations[gCurDecorationItems[gCurDecorationIndex]].name);
-        StringExpandPlaceholders(gStringVar4, gSecretBaseText_WillBeDiscarded);
+        StringExpandPlaceholders(gStringVar4, gText_DecorationWillBeDiscarded);
         DisplayItemMessageOnField(taskId, gStringVar4, TossDecorationPrompt, 0);
     } else
     {
-        DisplayItemMessageOnField(taskId, gSecretBaseText_DecorInUse, ReturnToDecorationItemsAfterInvalidSelection, 0);
+        DisplayItemMessageOnField(taskId, gText_CantThrowAwayInUse, ReturnToDecorationItemsAfterInvalidSelection, 0);
     }
 }
 
@@ -3775,5 +3775,5 @@ void TossDecoration(u8 taskId)
     SetRecycledDecoration(gCurDecorationItems[gCurDecorationIndex]);
     gCurDecorationItems[gCurDecorationIndex] = DECOR_NONE;
     RefreshDecorationItemsAfterToss(taskId);
-    DisplayItemMessageOnField(taskId, gSecretBaseText_DecorThrownAway, ReturnToDecorationItemsAfterInvalidSelection, 0);
+    DisplayItemMessageOnField(taskId, gText_DecorationThrownAway, ReturnToDecorationItemsAfterInvalidSelection, 0);
 }

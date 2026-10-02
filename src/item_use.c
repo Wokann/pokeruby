@@ -180,7 +180,7 @@ static void DisplayDadsAdviceCannotUseItemMessage(u8 taskId, u8 isUsingRegistere
 
 static void DisplayCannotDismountBikeMessage(u8 taskId, u8 isUsingRegisteredKeyItemOnField)
 {
-    DisplayCannotUseItemMessage(taskId, isUsingRegisteredKeyItemOnField, gOtherText_CantGetOffBike);
+    DisplayCannotUseItemMessage(taskId, isUsingRegisteredKeyItemOnField, gText_CantDismountBike);
 }
 
 u8 CheckIfItemIsTMHMOrEvolutionStone(u16 itemId)
@@ -645,7 +645,7 @@ void ItemUseOutOfBattle_PokeblockCase(u8 taskId)
 void ItemUseOutOfBattle_CoinCase(u8 taskId)
 {
     ConvertIntToDecimalStringN(gStringVar1, GetCoins(), 0, 4);
-    StringExpandPlaceholders(gStringVar4, gOtherText_Coins3);
+    StringExpandPlaceholders(gStringVar4, gText_CoinCase);
 
     if (!gTasks[taskId].tUsingRegisteredKeyItem)
     {
@@ -783,9 +783,9 @@ void ItemUseOutOfBattle_TMHM(u8 taskId)
     Menu_EraseWindowRect(0, 13, 13, 20);
 
     if (gSpecialVar_ItemId >= ITEM_HM01_CUT)
-        DisplayItemMessageOnField(taskId, gOtherText_BootedHM, BootUpSoundTMHM, 1); // HM
+        DisplayItemMessageOnField(taskId, gText_BootedUpHM, BootUpSoundTMHM, 1); // HM
     else
-        DisplayItemMessageOnField(taskId, gOtherText_BootedTM, BootUpSoundTMHM, 1); // TM
+        DisplayItemMessageOnField(taskId, gText_BootedUpTM, BootUpSoundTMHM, 1); // TM
 }
 
 static void BootUpSoundTMHM(u8 taskId)
@@ -799,7 +799,7 @@ static void Task_ShowTMHMContainedMessage(u8 taskId)
     if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
     {
         StringCopy(gStringVar1, gMoveNames[ItemIdToBattleMoveId(gSpecialVar_ItemId)]);
-        StringExpandPlaceholders(gStringVar4, gOtherText_ContainsMove);
+        StringExpandPlaceholders(gStringVar4, gText_TMHMContainedVar1);
         DisplayItemMessageOnField(taskId, gStringVar4, UseTMHMYesNo, 1);
     }
 }
@@ -822,7 +822,7 @@ static void RemoveUsedItem(void)
     RemoveBagItem(gSpecialVar_ItemId, 1);
     UpdateCurrentBagItemSlot();
     CopyItemName(gSpecialVar_ItemId, gStringVar2);
-    StringExpandPlaceholders(gStringVar4, gOtherText_UsedItem);
+    StringExpandPlaceholders(gStringVar4, gText_PlayerUsedVar2);
 }
 
 void ItemUseOutOfBattle_Repel(u8 taskId)
@@ -861,7 +861,7 @@ void ItemUseOutOfBattle_BlackWhiteFlute(u8 taskId)
         FlagSet(FLAG_SYS_ENC_UP_ITEM);
         FlagClear(FLAG_SYS_ENC_DOWN_ITEM);
         PrepareFluteUseMessage();
-        StringExpandPlaceholders(gStringVar4, gOtherText_UsedFlute);
+        StringExpandPlaceholders(gStringVar4, gText_UsedVar2WildLured);
         gTasks[taskId].func = Task_UsedBlackWhiteFlute;
         gTasks[taskId].tItemUseTimer = 0;
     }
@@ -870,7 +870,7 @@ void ItemUseOutOfBattle_BlackWhiteFlute(u8 taskId)
         FlagSet(FLAG_SYS_ENC_DOWN_ITEM);
         FlagClear(FLAG_SYS_ENC_UP_ITEM);
         PrepareFluteUseMessage();
-        StringExpandPlaceholders(gStringVar4, gOtherText_UsedRepel);
+        StringExpandPlaceholders(gStringVar4, gText_UsedVar2WildRepelled);
         gTasks[taskId].func = Task_UsedBlackWhiteFlute;
         gTasks[taskId].tItemUseTimer = 0;
     }
@@ -928,7 +928,7 @@ void ItemUseInBattle_PokeBall(u8 taskId)
     else
     {
         Menu_EraseWindowRect(0, 13, 13, 20);
-        DisplayItemMessageOnField(taskId, gOtherText_BoxIsFull, CleanUpItemMenuMessage, 1);
+        DisplayItemMessageOnField(taskId, gText_BoxFull, CleanUpItemMenuMessage, 1);
     }
 }
 
@@ -956,7 +956,7 @@ void ItemUseInBattle_StatIncrease(u8 taskId)
 
     if (ExecuteTableBasedItemEffect(&gPlayerParty[partyId], gSpecialVar_ItemId, partyId, 0) != FALSE)
     {
-        DisplayItemMessageOnField(taskId, gOtherText_WontHaveAnyEffect, CleanUpItemMenuMessage, 1);
+        DisplayItemMessageOnField(taskId, gText_WontHaveEffect, CleanUpItemMenuMessage, 1);
     }
     else
     {
@@ -1007,12 +1007,12 @@ void ItemUseInBattle_UnusedConfusionCure(u8 taskId)
     {
         RemoveBagItem(gSpecialVar_ItemId, 1);
         GetMonNickname(&gPlayerParty[0], gStringVar1);
-        StringExpandPlaceholders(gStringVar4, gOtherText_SnapConfusion);
+        StringExpandPlaceholders(gStringVar4, gText_PkmnSnappedOutOfConfusion);
         DisplayItemMessageOnField(taskId, gStringVar4, CloseBagMenuForBattle, 1);
     }
     else
     {
-        DisplayItemMessageOnField(taskId, gOtherText_WontHaveAnyEffect, CleanUpItemMenuMessage, 1);
+        DisplayItemMessageOnField(taskId, gText_WontHaveEffect, CleanUpItemMenuMessage, 1);
     }
 }
 

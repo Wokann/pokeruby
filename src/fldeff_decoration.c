@@ -346,12 +346,12 @@ void InteractWithShieldOrTVDecoration(void)
     {
     case METATILE_SecretBase_GoldShield_Base1:
         ConvertIntToDecimalStringN(gStringVar1, 100, STR_CONV_MODE_LEFT_ALIGN, 3);
-        StringCopy(gStringVar2, gSecretBaseText_GoldRank);
+        StringCopy(gStringVar2, gText_Gold);
         gSpecialVar_Result = 0;
         break;
     case METATILE_SecretBase_SilverShield_Base1:
         ConvertIntToDecimalStringN(gStringVar1, 50, STR_CONV_MODE_LEFT_ALIGN, 2);
-        StringCopy(gStringVar2, gSecretBaseText_SilverRank);
+        StringCopy(gStringVar2, gText_Silver);
         gSpecialVar_Result = 0;
         break;
     case METATILE_SecretBase_TV:

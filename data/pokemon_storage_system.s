@@ -95,35 +95,35 @@ gText_DebugPokeStorageSet:: @ 0x83E6268
 gPokeStorageMenuTexts:: @ 83BBCA0
 	.4byte PCText_Cancel2
 	.4byte PCText_Deposit
-	.4byte PCText_Withdraw
-	.4byte PCText_Move
+	.4byte gPCText_Withdraw
+	.4byte gPCText_Move
 	.4byte PCText_Switch
-	.4byte PCText_Place
-	.4byte PCText_Summary
-	.4byte PCText_Release
-	.4byte PCText_Mark
-	.4byte PCText_Jump
-	.4byte PCText_Wallpaper
-	.4byte PCText_Name
-	.4byte PCText_Scenery1
-	.4byte PCText_Scenery2
-	.4byte PCText_Scenery3
-	.4byte PCText_Etc
-	.4byte PCText_Forest
-	.4byte PCText_City
-	.4byte PCText_Desert
-	.4byte PCText_Savanna
-	.4byte PCText_Crag
-	.4byte PCText_Volcano
-	.4byte PCText_Snow
-	.4byte PCText_Cave
-	.4byte PCText_Beach
-	.4byte PCText_Seafloor
-	.4byte PCText_River
-	.4byte PCText_Sky
-	.4byte PCText_Polka
-	.4byte PCText_PokeCenter
-	.4byte PCText_Machine
+	.4byte gPCText_Place
+	.4byte gPCText_Summary
+	.4byte gPCText_Release
+	.4byte gPCText_Mark
+	.4byte gPCText_Jump
+	.4byte gPCText_Wallpaper
+	.4byte gPCText_Name
+	.4byte gPCText_Scenery1
+	.4byte gPCText_Scenery2
+	.4byte gPCText_Scenery3
+	.4byte gPCText_Etcetera
+	.4byte gPCText_Forest
+	.4byte gPCText_City
+	.4byte gPCText_Desert
+	.4byte gPCText_Savanna
+	.4byte gPCText_Crag
+	.4byte gPCText_Volcano
+	.4byte gPCText_Snow
+	.4byte gPCText_Cave
+	.4byte gPCText_Beach
+	.4byte gPCText_Seafloor
+	.4byte gPCText_River
+	.4byte gPCText_Sky
+	.4byte gPCText_PolkaDot
+	.4byte gPCText_Pokecenter
+	.4byte gPCText_Machine
 	.4byte PCText_Plain
 .if DEBUG
 	.4byte gText_DebugPokeStorageSet

@@ -26,10 +26,10 @@ EWRAM_DATA static u8 sPreviousBoxOption = 0;
 EWRAM_DATA static struct ChooseBoxMenu *sChooseBoxMenu = NULL;
 
 static const struct StorageMenuText sMainMenuTexts[] = {
-    {PCText_WithdrawPoke, PCText_MovePokeToParty},
-    {PCText_DepositPoke,  PCText_StorePokeInBox},
-    {PCText_MovePoke,     PCText_OrganizeBoxesParty},
-    {PCText_SeeYa,        PCText_ReturnToPrevMenu}
+    {gText_WithdrawPokemon, gText_WithdrawMonDescription},
+    {gText_DepositPokemon,  gText_DepositMonDescription},
+    {gText_MovePokemon,     gText_MoveMonDescription},
+    {gText_SeeYa,        gText_SeeYaDescription}
 };
 
 #if DEBUG
@@ -314,13 +314,13 @@ static void Task_PCMainMenu(u8 taskId)
                     if (task->tInput == PC_MENU_OPTION_WITHDRAW && CountPartyMons() == PARTY_SIZE)
                     {
                         ClearBottomWindow();
-                        Menu_PrintText(gPCText_PartyFull2, 2, 15);
+                        Menu_PrintText(gText_PartyFull, 2, 15);
                         task->tState = PC_MAIN_MENU_STATE_ERROR_MSG;
                     }
                     else if (task->tInput == PC_MENU_OPTION_DEPOSIT && CountPartyMons() == 1)
                     {
                         ClearBottomWindow();
-                        Menu_PrintText(gPCText_OnlyOne, 2, 15);
+                        Menu_PrintText(gText_JustOnePkmn, 2, 15);
                         task->tState = PC_MAIN_MENU_STATE_ERROR_MSG;
                     }
                     else
@@ -419,7 +419,7 @@ void ResetPokemonStorageSystem(void)
     }
     for (boxId = 0; boxId < TOTAL_BOXES_COUNT; boxId++)
     {
-        u8 *dest = StringCopy(gPokemonStorage.boxNames[boxId], gPCText_BOX);
+        u8 *dest = StringCopy(gPokemonStorage.boxNames[boxId], gText_Box);
         ConvertIntToDecimalStringN(dest, boxId + 1, STR_CONV_MODE_LEFT_ALIGN, 2);
     }
     for (boxId = 0; boxId < TOTAL_BOXES_COUNT; boxId++)

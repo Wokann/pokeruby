@@ -49,11 +49,11 @@ static const u8 sConditionToFlavor[] =
 
 static const u8 *const sConditionNames[] =
 {
-    OtherText_Coolness,
-    OtherText_Toughness,
-    OtherText_Smartness,
-    OtherText_Cuteness,
-    OtherText_Beauty
+    gText_Coolness,
+    gText_Toughness,
+    gText_Smartness,
+    gText_Cuteness,
+    gText_Beauty3
 };
 
 static const struct SpriteSheet sSpriteSheet_UpDown = {
@@ -616,7 +616,7 @@ static void AskUsePokeblock(void)
 {
     GetMonData(&gPlayerParty[GetPartyIdFromSelectionId(gPokenavState->detailSelectionIndex)], MON_DATA_NICKNAME, sInfo->stringBuffer);
     StringGet_Nickname(sInfo->stringBuffer);
-    StringAppend(sInfo->stringBuffer, gOtherText_GetsAPokeBlock);
+    StringAppend(sInfo->stringBuffer, gText_GetsAPokeBlockQuestion);
     BasicInitMenuWindow(&gMenuWindowTemplateBg0);
     Menu_DrawStdWindowFrame(0, 16, 29, 19);
     Menu_PrintText(sInfo->stringBuffer, 1, 17);
@@ -704,11 +704,11 @@ void BufferEnhancedText(u8 *dest, u8 condition, s16 enhancement)
             { u8 unusedVar = -unusedVar; } // see water.c for a similar behavior
 
         StringCopy(dest, sConditionNames[condition]);
-        StringAppend(dest, gOtherText_WasEnhanced);
+        StringAppend(dest, gText_WasEnhanced);
     }
     else
     {
-        StringCopy(dest, gOtherText_NothingChanged);
+        StringCopy(dest, gText_NothingChanged);
     }
 }
 

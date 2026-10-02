@@ -143,29 +143,29 @@ void (*const sPokeblockCaseExitCallbacks[])(void) =
 const u8 *const gPokeblockNames[] =
 {
     NULL,
-    ContestStatsText_RedPokeBlock,
-    ContestStatsText_BluePokeBlock,
-    ContestStatsText_PinkPokeBlock,
-    ContestStatsText_GreenPokeBlock,
-    ContestStatsText_YellowPokeBlock,
-    ContestStatsText_PurplePokeBlock,
-    ContestStatsText_IndigoPokeBlock,
-    ContestStatsText_BrownPokeBlock,
-    ContestStatsText_LiteBluePokeBlock,
-    ContestStatsText_OlivePokeBlock,
-    ContestStatsText_GrayPokeBlock,
-    ContestStatsText_BlackPokeBlock,
-    ContestStatsText_WhitePokeBlock,
-    ContestStatsText_GoldPokeBlock
+    gText_RedPokeblock,
+    gText_BluePokeblock,
+    gText_PinkPokeblock,
+    gText_GreenPokeblock,
+    gText_YellowPokeblock,
+    gText_PurplePokeblock,
+    gText_IndigoPokeblock,
+    gText_BrownPokeblock,
+    gText_LiteBluePokeblock,
+    gText_OlivePokeblock,
+    gText_GrayPokeblock,
+    gText_BlackPokeblock,
+    gText_WhitePokeblock,
+    gText_GoldPokeblock
 };
 
 const struct MenuAction2 sPokeblockMenuActions[] =
 {
-    {OtherText_Use,     PokeblockAction_UseOnField},
-    {OtherText_Toss,    PokeblockAction_Toss},
+    {gMenuText_Use,     PokeblockAction_UseOnField},
+    {gMenuText_Toss,    PokeblockAction_Toss},
     {gText_Cancel, PokeblockAction_Cancel},
-    {OtherText_Use,     PokeblockAction_UseInBattle},
-    {OtherText_Use,     PokeblockAction_UseOnPokeblockFeeder},
+    {gMenuText_Use,     PokeblockAction_UseInBattle},
+    {gMenuText_Use,     PokeblockAction_UseOnPokeblockFeeder},
 };
 
 const u8 sActionsOnField[] = {PKBL_USE_ON_FIELD, PKBL_TOSS, PKBL_CANCEL};
@@ -479,11 +479,11 @@ static void DrawPokeblockMenuTitleText(void)
 static void DrawPokeblockInfoLabels(void)
 {
     BasicInitMenuWindow(&gPokeblockCaseWindowTemplate);
-    Menu_PrintText(gContestStatsText_Spicy,   2, 13);
-    Menu_PrintText(gContestStatsText_Dry,     2, 15);
-    Menu_PrintText(gContestStatsText_Sweet,   2, 17);
-    Menu_PrintText(gContestStatsText_Bitter,  8, 13);
-    Menu_PrintText(gContestStatsText_Sour,    8, 15);
+    Menu_PrintText(gText_Spicy,   2, 13);
+    Menu_PrintText(gText_Dry,     2, 15);
+    Menu_PrintText(gText_Sweet,   2, 17);
+    Menu_PrintText(gText_Bitter,  8, 13);
+    Menu_PrintText(gText_Sour,    8, 15);
 }
 
 static void PrintPokeblockList(u8 scrollOffset)
@@ -497,7 +497,7 @@ static void PrintPokeblockList(u8 scrollOffset)
         y = (i - scrollOffset) << 1;
         if (i == sPokeblockMenuState.itemsNo)
         {
-            text = AlignStringInMenuWindow(gStringVar1, gContestStatsText_StowCase, 0x78, 0);
+            text = AlignStringInMenuWindow(gStringVar1, gText_StowCase, 0x78, 0);
             Menu_PrintText(gStringVar1, 15, y + 1);
             if (i != scrollOffset + 8)
             {
@@ -899,7 +899,7 @@ static void ShowTossPokeblockPrompt(u8 taskId)
     Menu_DestroyCursor();
     Menu_EraseWindowRect(7, 4, 13, 11);
     StringCopy(gStringVar1, gPokeblockNames[gSaveBlock1.pokeblocks[sPokeblockMenuState.selectedRow + sPokeblockMenuState.scrollOffset].color]);
-    StringExpandPlaceholders(gStringVar4, gContestStatsText_ThrowAwayPrompt);
+    StringExpandPlaceholders(gStringVar4, gText_ThrowAwayVar1);
     DisplayItemMessageOnField(taskId, gStringVar4, CreateTossPokeblockYesNoMenu, 0);
 }
 
@@ -919,7 +919,7 @@ static void TossedPokeblockMessage(u8 taskId)
 {
     Menu_EraseWindowRect(7, 6, 13, 11);
     TryClearPokeblock(sPokeblockMenuState.selectedRow + sPokeblockMenuState.scrollOffset);
-    StringExpandPlaceholders(gStringVar4, gContestStatsText_WasThrownAway);
+    StringExpandPlaceholders(gStringVar4, gText_Var1ThrownAway);
     DisplayItemMessageOnField(taskId, gStringVar4, RefreshPokeblockListAfterToss, 0);
     CompactPokeblockSlots();
     SetMenuItemsCountAndMaxShowed();
