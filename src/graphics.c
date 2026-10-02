@@ -1303,8 +1303,8 @@ const u8 gPokenavListInfo_Tilemap[] = INCBIN_U8("graphics/pokenav/list/info.bin"
 const u8 gPokenavTrainerEyesListBottom_Tilemap[] = INCBIN_U8("graphics/pokenav/trainers_eyes/list_bottom.bin");
 const u8 gPokenavTrainerEyesListTop_Tilemap[] = INCBIN_U8("graphics/pokenav/trainers_eyes/list_top.bin");
 const u8 gConditionGraphData_Tilemap[] = INCBIN_U8("graphics/pokenav/condition/graph_data.bin.lz");
-const u8 gPokenavMonInfoHeaderTilemap[] = INCBIN_U8("graphics/pokenav/mon_info_header.bin.lz");
-const u8 gPokenavMonInfoHeader_Gfx[] = INCBIN_U8("graphics/pokenav/mon_info_header.4bpp");
+const u8 gPokenavMonInfoHeaderTilemap[] = INCBIN_U8("graphics/pokenav/mon_info/header.bin.lz");
+const u8 gPokenavMonInfoHeader_Gfx[] = INCBIN_U8("graphics/pokenav/mon_info/header.4bpp");
 const u8 gDialogueFrame_Gfx[] = INCBIN_U8("graphics/text_window/message_box.4bpp");
 
 const u16 gTradeMenu_Pal[] = INCBIN_U16("graphics/trade/menu.gbapal", "graphics/trade/stripes.gbapal", "graphics/trade/stripes.gbapal");
