@@ -181,7 +181,7 @@ static const u8 sPokedexNoBall_Gfx[] = INCBIN_U8("graphics/pokedex/noball.4bpp.l
 extern const u8 gPokedexNoBall_Gfx[];
 #endif
 
-#include "data/pokedex_orders.h"
+#include "data/pokemon/pokedex_orders.h"
 static const struct OamData sOamData_ScrollBar =
 {
     .y = 160,
