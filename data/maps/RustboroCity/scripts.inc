@@ -359,14 +359,10 @@ RustboroCity_EventScript_HelpGetGoodsTrigger3:: @ 814C644
 	end
 
 RustboroCity_EventScript_EmployeeAskToGetGoods:: @ 814C650
-	compare VAR_TEMP_1, 0
-	call_if_eq RustboroCity_EventScript_EmployeeFacePlayerUp1
-	compare VAR_TEMP_1, 1
-	call_if_eq RustboroCity_EventScript_EmployeeFacePlayerLeft1
-	compare VAR_TEMP_1, 2
-	call_if_eq RustboroCity_EventScript_EmployeeFacePlayerDown1
-	compare VAR_TEMP_1, 3
-	call_if_eq RustboroCity_EventScript_EmployeeApproachPlayerDown1
+	call_if_eq VAR_TEMP_1, 0, RustboroCity_EventScript_EmployeeFacePlayerUp1
+	call_if_eq VAR_TEMP_1, 1, RustboroCity_EventScript_EmployeeFacePlayerLeft1
+	call_if_eq VAR_TEMP_1, 2, RustboroCity_EventScript_EmployeeFacePlayerDown1
+	call_if_eq VAR_TEMP_1, 3, RustboroCity_EventScript_EmployeeApproachPlayerDown1
 	setflag FLAG_INTERACTED_WITH_DEVON_EMPLOYEE_GOODS_STOLEN
 	setvar VAR_RUSTBORO_CITY_STATE, 3
 	copyobjectxytoperm LOCALID_RUSTBORO_DEVON_EMPLOYEE
@@ -453,20 +449,14 @@ RustboroCity_EventScript_ReturnGoodsTrigger3:: @ 814C771
 	end
 
 RustboroCity_EventScript_ReturnGoods:: @ 814C77D
-	compare VAR_TEMP_1, 0
-	call_if_eq RustboroCity_EventScript_EmployeeFacePlayerUp2
-	compare VAR_TEMP_1, 1
-	call_if_eq RustboroCity_EventScript_EmployeeFacePlayerLeft2
-	compare VAR_TEMP_1, 2
-	call_if_eq RustboroCity_EventScript_EmployeeFacePlayerDown2
-	compare VAR_TEMP_1, 3
-	call_if_eq RustboroCity_EventScript_EmployeeApproachPlayerDown2
-	compare VAR_TEMP_1, 4
-	call_if_eq RustboroCity_EventScript_EmployeeFacePlayerRight
+	call_if_eq VAR_TEMP_1, 0, RustboroCity_EventScript_EmployeeFacePlayerUp2
+	call_if_eq VAR_TEMP_1, 1, RustboroCity_EventScript_EmployeeFacePlayerLeft2
+	call_if_eq VAR_TEMP_1, 2, RustboroCity_EventScript_EmployeeFacePlayerDown2
+	call_if_eq VAR_TEMP_1, 3, RustboroCity_EventScript_EmployeeApproachPlayerDown2
+	call_if_eq VAR_TEMP_1, 4, RustboroCity_EventScript_EmployeeFacePlayerRight
 	msgbox RustboroCity_Text_YouGotItThankYou, MSGBOX_DEFAULT
 	giveitem ITEM_GREAT_BALL
-	compare VAR_RESULT, FALSE
-	call_if_eq RustboroCity_EventScript_BagFull
+	call_if_eq VAR_RESULT, FALSE, RustboroCity_EventScript_BagFull
 	msgbox RustboroCity_Text_PleaseComeWithMe, MSGBOX_DEFAULT
 	closemessage
 	setflag FLAG_RETURNED_DEVON_GOODS
@@ -547,10 +537,8 @@ RustboroCity_EventScript_RivalEncounter:: @ 814C8DA
 	faceplayer
 	goto_if_set FLAG_MET_RIVAL_RUSTBORO, RustboroCity_EventScript_BrineyHint
 	checkplayergender
-	compare VAR_RESULT, MALE
-	goto_if_eq RustboroCity_EventScript_MayHiHowsPokedexComing
-	compare VAR_RESULT, FEMALE
-	goto_if_eq RustboroCity_EventScript_BrendanHiHowsPokedexComing
+	goto_if_eq VAR_RESULT, MALE, RustboroCity_EventScript_MayHiHowsPokedexComing
+	goto_if_eq VAR_RESULT, FEMALE, RustboroCity_EventScript_BrendanHiHowsPokedexComing
 	end
 
 RustboroCity_EventScript_MayHiHowsPokedexComing:: @ 814C8FD
@@ -567,10 +555,8 @@ RustboroCity_EventScript_BrendanHiHowsPokedexComing:: @ 814C90A
 
 RustboroCity_EventScript_BrineyHint:: @ 814C917
 	checkplayergender
-	compare VAR_RESULT, MALE
-	goto_if_eq RustboroCity_EventScript_MayBrineyHint
-	compare VAR_RESULT, FEMALE
-	goto_if_eq RustboroCity_EventScript_BrendanBrineyHint
+	goto_if_eq VAR_RESULT, MALE, RustboroCity_EventScript_MayBrineyHint
+	goto_if_eq VAR_RESULT, FEMALE, RustboroCity_EventScript_BrendanBrineyHint
 	end
 
 RustboroCity_EventScript_MayBrineyHint:: @ 814C92F

@@ -5,8 +5,7 @@ RustboroCity_DevonCorp_3F_MapScripts:: @ 8157711
 	.byte 0
 
 RustboroCity_DevonCorp_3F_OnTransition:: @ 8157721
-	compare VAR_DEVON_CORP_3F_STATE, 0
-	call_if_eq RustboroCity_DevonCorp_3F_EventScript_SetEmployeePos
+	call_if_eq VAR_DEVON_CORP_3F_STATE, 0, RustboroCity_DevonCorp_3F_EventScript_SetEmployeePos
 	end
 
 RustboroCity_DevonCorp_3F_EventScript_SetEmployeePos:: @ 815772D
@@ -158,8 +157,7 @@ RustboroCity_DevonCorp_3F_EventScript_MrStone:: @ 815783B
 RustboroCity_DevonCorp_3F_EventScript_GiveExpShare:: @ 8157864
 	msgbox RustboroCity_DevonCorp_3F_Text_ThankYouForDeliveringLetter, MSGBOX_DEFAULT
 	giveitem ITEM_EXP_SHARE
-	compare VAR_RESULT, FALSE
-	goto_if_eq Common_EventScript_ShowBagIsFull
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_EXP_SHARE
 	msgbox RustboroCity_DevonCorp_3F_Text_ExplainExpShare, MSGBOX_DEFAULT
 	closemessage

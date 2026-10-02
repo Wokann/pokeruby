@@ -19,15 +19,13 @@ RustboroCity_Gym_EventScript_RoxanneDefeated:: @ 81578FE
 	addvar VAR_PETALBURG_GYM_STATE, 1
 	setvar VAR_0x8008, 1
 	call Common_EventScript_SetGymTrainers
-	compare VAR_PETALBURG_GYM_STATE, 6
-	call_if_eq Common_EventScript_ReadyPetalburgGymForBattle
+	call_if_eq VAR_PETALBURG_GYM_STATE, 6, Common_EventScript_ReadyPetalburgGymForBattle
 	goto RustboroCity_Gym_EventScript_GiveRockTomb
 	end
 
 RustboroCity_Gym_EventScript_GiveRockTomb:: @ 815793C
 	giveitem ITEM_TM39
-	compare VAR_RESULT, FALSE
-	goto_if_eq Common_EventScript_ShowBagIsFull
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_TM_ROCK_TOMB
 	msgbox RustboroCity_Gym_Text_ExplainRockTomb, MSGBOX_DEFAULT
 	release
