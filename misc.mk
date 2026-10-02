@@ -223,7 +223,7 @@ MISCGFXDIR := graphics/misc
 
 $(MISCGFXDIR)/hall_of_fame.4bpp: GFX_OPTS := -num_tiles 37
 
-$(MISCGFXDIR)/end_copyright.4bpp: GFX_OPTS := -num_tiles 90
+graphics/credits/the_end_copyright.4bpp: GFX_OPTS := -num_tiles 90
 
 STARTERCHOOSEGFXDIR := graphics/starter_choose
 

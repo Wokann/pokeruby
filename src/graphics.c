@@ -1316,7 +1316,7 @@ const u8 gTradeMonBoxTilemap[] = INCBIN_U8("graphics/trade/mon_box_map.bin");
 const u8 gTradeCursor_Gfx[] = INCBIN_U8("graphics/trade/selected_mon.4bpp");
 
 const u8 gTradeUnused_Tilemap[] = INCBIN_U8("graphics/trade/unused.bin");
-const u8 gCreditsCopyrightEnd_Gfx[] = INCBIN_U8("graphics/misc/end_copyright.4bpp.lz");
+const u8 gCreditsCopyrightEnd_Gfx[] = INCBIN_U8("graphics/credits/the_end_copyright.4bpp.lz");
 const u8 gDecoration10000_Gfx[] = INCBIN_U8("graphics/misc/decoration_10000.4bpp");
 
 #ifdef ENGLISH
