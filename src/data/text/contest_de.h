@@ -421,41 +421,41 @@ const u8 gText_Contest_Hesitancy[] = _("Zögern");
 
 const u8 gText_Contest_Fear[] = _("Furcht");
 
-const u8 ContestString_Coolness[] = _("Coolness");
-const u8 ContestString_Beauty2[] = _("Schönheit");
-const u8 ContestString_Cuteness[] = _("Anmut");
-const u8 ContestString_Smartness[] = _("Klugheit");
-const u8 ContestString_Toughness[] = _("Stärke");
+const u8 gText_Contest_Coolness[] = _("Coolness");
+const u8 gText_Contest_Beauty[] = _("Schönheit");
+const u8 gText_Contest_Cuteness[] = _("Anmut");
+const u8 gText_Contest_Smartness[] = _("Klugheit");
+const u8 gText_Contest_Toughness[] = _("Stärke");
 
-const u8 *const gContestCategoryStrings[] = {
-    ContestString_Coolness,
-        ContestString_Beauty2,
-        ContestString_Cuteness,
-        ContestString_Smartness,
-        ContestString_Toughness,
+static const u8 *const sContestConditions[] = {
+    [CONTEST_CATEGORY_COOL]   = gText_Contest_Coolness,
+    [CONTEST_CATEGORY_BEAUTY] = gText_Contest_Beauty,
+    [CONTEST_CATEGORY_CUTE]   = gText_Contest_Cuteness,
+    [CONTEST_CATEGORY_SMART]  = gText_Contest_Smartness,
+    [CONTEST_CATEGORY_TOUGH]  = gText_Contest_Toughness,
 };
 
 const u8 gText_Tension[] = _("SPANNUNG:");
 
-const u8 ContestString_CoolMove[] = _("COOLE Att.");
+const u8 gText_CoolMove[] = _("COOLE Att.");
 
-const u8 ContestString_BeautyMove[] = _("SCHÖNE Att.");
+const u8 gText_BeautyMove[] = _("SCHÖNE Att.");
 
-const u8 ContestString_CuteMove[] = _("ANMUT-Att.");
+const u8 gText_CuteMove[] = _("ANMUT-Att.");
 
-const u8 ContestString_SmartMove[] = _("KLUGE Att.");
+const u8 gText_SmartMove[] = _("KLUGE Att.");
 
-const u8 ContestString_ToughMove[] = _("STARKE Att.");
+const u8 gText_ToughMove[] = _("STARKE Att.");
 
-const u8 ContestString_UnknownMoveType[] = _("???");
+const u8 gText_3QuestionMarks[] = _("???");
 
-const u8 *const sInvalidContestMoveNames[] = {
-    ContestString_CoolMove,
-        ContestString_BeautyMove,
-        ContestString_CuteMove,
-        ContestString_SmartMove,
-        ContestString_ToughMove,
-        ContestString_UnknownMoveType,
+static const u8 *const sInvalidContestMoveNames[] = {
+    [CONTEST_CATEGORY_COOL]    = gText_CoolMove,
+    [CONTEST_CATEGORY_BEAUTY]  = gText_BeautyMove,
+    [CONTEST_CATEGORY_CUTE]    = gText_CuteMove,
+    [CONTEST_CATEGORY_SMART]   = gText_SmartMove,
+    [CONTEST_CATEGORY_TOUGH]   = gText_ToughMove,
+    [CONTEST_CATEGORIES_COUNT] = gText_3QuestionMarks,
 };
 
 // unused?

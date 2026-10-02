@@ -66,8 +66,8 @@ extern const u8 ContestString_GotCrowdGoing[];
 extern const u8 ContestString_CantAppealNextTurn[];
 extern const u8 ContestString_CrowdWatches[];
 extern const u8 ContestString_Ignored2[];
-extern const u8 *const gContestCategoryStrings[];
-extern const u8 *const sInvalidContestMoveNames[];
+static const u8 *const sContestConditions[];
+static const u8 *const sInvalidContestMoveNames[];
 extern const u8 gText_ContestComboMove[];
 extern const u8 gText_ContestRepeatedMove[];
 
@@ -1341,7 +1341,7 @@ void Task_DoAppeals(u8 taskId)
             }
             else
             {
-                StringCopy(gStringVar3, gContestCategoryStrings[gContestMoves[sContestantStatus[contestant].currMove].contestCategory]);
+                StringCopy(gStringVar3, sContestConditions[gContestMoves[sContestantStatus[contestant].currMove].contestCategory]);
             }
             if (r4 > 0)
             {
