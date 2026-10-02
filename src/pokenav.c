@@ -110,8 +110,8 @@ extern const u8 gPokenavMainMenuHeader_Gfx[];
 extern const u8 gPokenavConditionMenuHeader_Gfx[];
 extern const u8 gPokenavRibbonsHeader_Gfx[];
 extern const u8 gPokenavHoennMapHeader_Gfx[];
-extern const u8 gPokenavConditionHeaderLabels_Gfx[];
-extern const u8 gPokenavConditionHeaderLabels2_Gfx[];
+extern const u8 gPokenavLeftHeadersSearchPartyBeautyCute_Gfx[];
+extern const u8 gPokenavLeftHeadersSmartToughCool_Gfx[];
 extern const u8 gPokenavTrainersEyesHeader_Gfx[];
 extern const struct SpritePalette gPokenavMenuHeaderSpritePalettes[];
 extern const struct SpriteTemplate gPokenavSmallHeaderSpriteTemplate;
@@ -2390,10 +2390,10 @@ bool8 LoadPokenavMenuHeaderGfxStep(void)
         LZ77UnCompWram(gPokenavHoennMapHeader_Gfx, gPokenavState->hoennMapHeaderGfx);
         break;
     case 4:
-        LZ77UnCompWram(gPokenavConditionHeaderLabels_Gfx, gPokenavState->searchHeaderGfx);
+        LZ77UnCompWram(gPokenavLeftHeadersSearchPartyBeautyCute_Gfx, gPokenavState->searchHeaderGfx);
         break;
     case 5:
-        LZ77UnCompWram(gPokenavConditionHeaderLabels2_Gfx, gPokenavState->smartHeaderGfx);
+        LZ77UnCompWram(gPokenavLeftHeadersSmartToughCool_Gfx, gPokenavState->smartHeaderGfx);
         break;
     case 6:
         LZ77UnCompWram(gPokenavTrainersEyesHeader_Gfx, gPokenavState->trainersEyesHeaderGfx);
