@@ -53,7 +53,7 @@
 #define FLAG_UNUSED_0x054                  0x54
 #define FLAG_UNUSED_0x055                  0x55
 
-#define FLAG_LINK_CONTEST_ROOM_POKEBALL     0x56
+#define FLAG_HIDE_LINK_CONTEST_ROOM_POKE_BALL 0x56
 #define FLAG_MET_RIVAL_MOM                  0x57
 #define FLAG_BIRCH_AIDE_MET                 0x58
 #define FLAG_DECLINED_BIKE                  0x59
