@@ -2202,7 +2202,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Scientist2 = {
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Man7 = {
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_DevonEmployee = {
     .tileTag = TAG_NONE,
     .paletteTag = OBJ_EVENT_PAL_TAG_NPC_2,
     .bridgeReflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
@@ -2217,7 +2217,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Man7 = {
     .oam = &gObjectEventBaseOam_16x32,
     .subspriteTables = sOamTables_16x32,
     .anims = sAnimTable_Standard,
-    .images = sPicTable_Man7,
+    .images = sPicTable_DevonEmployee,
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 
@@ -3741,7 +3741,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Maxie = {
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kyogre1 = {
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KyogreFront = {
     .tileTag = TAG_NONE,
     .paletteTag = OBJ_EVENT_PAL_TAG_NPC_4,
     .bridgeReflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
@@ -3756,11 +3756,11 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kyogre1 = {
     .oam = &gObjectEventBaseOam_32x32,
     .subspriteTables = sOamTables_32x32,
     .anims = sAnimTable_Standard,
-    .images = sPicTable_Kyogre,
+    .images = sPicTable_KyogreFront,
     .affineAnims = sAffineAnimTable_KyogreGroudon,
 };
 
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Groudon1 = {
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_GroudonFront = {
     .tileTag = TAG_NONE,
     .paletteTag = OBJ_EVENT_PAL_TAG_NPC_3,
     .bridgeReflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
@@ -3775,7 +3775,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Groudon1 = {
     .oam = &gObjectEventBaseOam_32x32,
     .subspriteTables = sOamTables_32x32,
     .anims = sAnimTable_Standard,
-    .images = sPicTable_Groudon,
+    .images = sPicTable_GroudonFront,
     .affineAnims = sAffineAnimTable_KyogreGroudon,
 };
 
@@ -3874,7 +3874,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Skitty = {
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kecleon1 = {
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kecleon = {
     .tileTag = TAG_NONE,
     .paletteTag = OBJ_EVENT_PAL_TAG_NPC_3,
     .bridgeReflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
@@ -3893,9 +3893,9 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kecleon1 = {
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kyogre2 = {
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KyogreAsleep = {
     .tileTag = TAG_NONE,
-    .paletteTag = OBJ_EVENT_PAL_TAG_KYOGRE_2,
+    .paletteTag = OBJ_EVENT_PAL_TAG_KYOGRE,
     .bridgeReflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
     .size = 512,
     .width = 32,
@@ -3908,13 +3908,13 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kyogre2 = {
     .oam = &gObjectEventBaseOam_32x32,
     .subspriteTables = sOamTables_32x32,
     .anims = sAnimTable_Standard,
-    .images = sPicTable_Kyogre,
+    .images = sPicTable_KyogreFront,
     .affineAnims = sAffineAnimTable_KyogreGroudon,
 };
 
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Groudon2 = {
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_GroudonAsleep = {
     .tileTag = TAG_NONE,
-    .paletteTag = OBJ_EVENT_PAL_TAG_GROUDON_2,
+    .paletteTag = OBJ_EVENT_PAL_TAG_GROUDON,
     .bridgeReflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
     .size = 512,
     .width = 32,
@@ -3927,7 +3927,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Groudon2 = {
     .oam = &gObjectEventBaseOam_32x32,
     .subspriteTables = sOamTables_32x32,
     .anims = sAnimTable_Standard,
-    .images = sPicTable_Groudon,
+    .images = sPicTable_GroudonFront,
     .affineAnims = sAffineAnimTable_KyogreGroudon,
 };
 
@@ -4026,7 +4026,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Wingull = {
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kecleon2 = {
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KecleonBridgeShadow = {
     .tileTag = TAG_NONE,
     .paletteTag = OBJ_EVENT_PAL_TAG_NPC_3,
     .bridgeReflectionPaletteTag = OBJ_EVENT_PAL_TAG_BRIDGE_REFLECTION,

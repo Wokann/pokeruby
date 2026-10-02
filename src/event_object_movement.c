@@ -425,9 +425,9 @@ const u8 gInitialMovementTypeFacingDirections[] = {
 #define OBJ_EVENT_PAL_TAG_MOVING_BOX              0x1112
 #define OBJ_EVENT_PAL_TAG_CABLE_CAR               0x1113
 #define OBJ_EVENT_PAL_TAG_SSTIDAL                 0x1114
-#define OBJ_EVENT_PAL_TAG_KYOGRE_2                0x1116
+#define OBJ_EVENT_PAL_TAG_KYOGRE                0x1116
 #define OBJ_EVENT_PAL_TAG_KYOGRE_REFLECTION       0x1117
-#define OBJ_EVENT_PAL_TAG_GROUDON_2               0x1118
+#define OBJ_EVENT_PAL_TAG_GROUDON               0x1118
 #define OBJ_EVENT_PAL_TAG_GROUDON_REFLECTION      0x1119
 #define OBJ_EVENT_PAL_TAG_SUBMARINE_SHADOW        0x111A
 
@@ -464,9 +464,9 @@ const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_MovingBox, OBJ_EVENT_PAL_TAG_MOVING_BOX},
     {gObjectEventPal_CableCar, OBJ_EVENT_PAL_TAG_CABLE_CAR},
     {gObjectEventPal_SSTidal, OBJ_EVENT_PAL_TAG_SSTIDAL},
-    {gObjectEventPal_Kyogre2, OBJ_EVENT_PAL_TAG_KYOGRE_2},
+    {gObjectEventPal_Kyogre, OBJ_EVENT_PAL_TAG_KYOGRE},
     {gObjectEventPal_KyogreReflection, OBJ_EVENT_PAL_TAG_KYOGRE_REFLECTION},
-    {gObjectEventPal_Groudon2, OBJ_EVENT_PAL_TAG_GROUDON_2},
+    {gObjectEventPal_Groudon, OBJ_EVENT_PAL_TAG_GROUDON},
     {gObjectEventPal_GroudonReflection, OBJ_EVENT_PAL_TAG_GROUDON_REFLECTION},
     {gObjectEventPal_SubmarineShadow, OBJ_EVENT_PAL_TAG_SUBMARINE_SHADOW},
     {NULL,                  0x0000},
@@ -550,14 +550,14 @@ static const u16 sReflectionPaletteTags_SubmarineShadow[] = {
     OBJ_EVENT_PAL_TAG_SUBMARINE_SHADOW,
 };
 
-static const u16 sReflectionPaletteTags_Kyogre2[] = {
+static const u16 sReflectionPaletteTags_Kyogre[] = {
     OBJ_EVENT_PAL_TAG_KYOGRE_REFLECTION,
     OBJ_EVENT_PAL_TAG_KYOGRE_REFLECTION,
     OBJ_EVENT_PAL_TAG_KYOGRE_REFLECTION,
     OBJ_EVENT_PAL_TAG_KYOGRE_REFLECTION,
 };
 
-static const u16 sReflectionPaletteTags_Groudon2[] = {
+static const u16 sReflectionPaletteTags_Groudon[] = {
     OBJ_EVENT_PAL_TAG_GROUDON_REFLECTION,
     OBJ_EVENT_PAL_TAG_GROUDON_REFLECTION,
     OBJ_EVENT_PAL_TAG_GROUDON_REFLECTION,
@@ -580,8 +580,8 @@ static const struct ReflectionPaletteSet sSpecialObjectReflectionPaletteSets[] =
     {OBJ_EVENT_PAL_TAG_MOVING_BOX, sReflectionPaletteTags_MovingBox},
     {OBJ_EVENT_PAL_TAG_CABLE_CAR, sReflectionPaletteTags_CableCar},
     {OBJ_EVENT_PAL_TAG_SSTIDAL, sReflectionPaletteTags_SSTidal},
-    {OBJ_EVENT_PAL_TAG_KYOGRE_2, sReflectionPaletteTags_Kyogre2},
-    {OBJ_EVENT_PAL_TAG_GROUDON_2, sReflectionPaletteTags_Groudon2},
+    {OBJ_EVENT_PAL_TAG_KYOGRE, sReflectionPaletteTags_Kyogre},
+    {OBJ_EVENT_PAL_TAG_GROUDON, sReflectionPaletteTags_Groudon},
     {OBJ_EVENT_PAL_TAG_NPC_3, sReflectionPaletteTags_InvisibleKecleon},
     {OBJ_EVENT_PAL_TAG_SUBMARINE_SHADOW, sReflectionPaletteTags_SubmarineShadow},
     {OBJ_EVENT_PAL_TAG_NONE, NULL},

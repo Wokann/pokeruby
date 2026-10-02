@@ -1126,16 +1126,16 @@ const struct SpriteFrameImage sPicTable_Scientist2[] = {
     overworld_frame(gObjectEventPic_Scientist2, 2, 4, 8)
 };
 
-const struct SpriteFrameImage sPicTable_Man7[] = {
-    overworld_frame(gObjectEventPic_Man7, 2, 4, 0),
-    overworld_frame(gObjectEventPic_Man7, 2, 4, 1),
-    overworld_frame(gObjectEventPic_Man7, 2, 4, 2),
-    overworld_frame(gObjectEventPic_Man7, 2, 4, 3),
-    overworld_frame(gObjectEventPic_Man7, 2, 4, 4),
-    overworld_frame(gObjectEventPic_Man7, 2, 4, 5),
-    overworld_frame(gObjectEventPic_Man7, 2, 4, 6),
-    overworld_frame(gObjectEventPic_Man7, 2, 4, 7),
-    overworld_frame(gObjectEventPic_Man7, 2, 4, 8)
+const struct SpriteFrameImage sPicTable_DevonEmployee[] = {
+    overworld_frame(gObjectEventPic_DevonEmployee, 2, 4, 0),
+    overworld_frame(gObjectEventPic_DevonEmployee, 2, 4, 1),
+    overworld_frame(gObjectEventPic_DevonEmployee, 2, 4, 2),
+    overworld_frame(gObjectEventPic_DevonEmployee, 2, 4, 3),
+    overworld_frame(gObjectEventPic_DevonEmployee, 2, 4, 4),
+    overworld_frame(gObjectEventPic_DevonEmployee, 2, 4, 5),
+    overworld_frame(gObjectEventPic_DevonEmployee, 2, 4, 6),
+    overworld_frame(gObjectEventPic_DevonEmployee, 2, 4, 7),
+    overworld_frame(gObjectEventPic_DevonEmployee, 2, 4, 8)
 };
 
 const struct SpriteFrameImage sPicTable_AquaMemberM[] = {
@@ -1716,7 +1716,7 @@ const struct SpriteFrameImage sPicTable_Maxie[] = {
     overworld_frame(gObjectEventPic_Maxie, 2, 4, 8)
 };
 
-const struct SpriteFrameImage sPicTable_Kyogre[] = {
+const struct SpriteFrameImage sPicTable_KyogreFront[] = {
     overworld_frame(gObjectEventPic_Kyogre, 4, 4, 0),
     overworld_frame(gObjectEventPic_Kyogre, 4, 4, 0),
     overworld_frame(gObjectEventPic_Kyogre, 4, 4, 0),
@@ -1728,7 +1728,7 @@ const struct SpriteFrameImage sPicTable_Kyogre[] = {
     overworld_frame(gObjectEventPic_Kyogre, 4, 4, 1)
 };
 
-const struct SpriteFrameImage sPicTable_Groudon[] = {
+const struct SpriteFrameImage sPicTable_GroudonFront[] = {
     overworld_frame(gObjectEventPic_Groudon, 4, 4, 0),
     overworld_frame(gObjectEventPic_Groudon, 4, 4, 0),
     overworld_frame(gObjectEventPic_Groudon, 4, 4, 0),

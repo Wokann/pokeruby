@@ -162,7 +162,7 @@
       "flag": "FLAG_HIDE_RUSTBORO_CITY_EVIL_TEAM_GRUNT"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_7",
+      "graphics_id": "OBJ_EVENT_GFX_DEVON_EMPLOYEE",
       "x": 13,
       "y": 34,
       "elevation": 3,

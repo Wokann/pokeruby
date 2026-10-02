@@ -117,7 +117,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_MayUnderwater;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_MovingBox;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_CableCar;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Scientist2;
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Man7;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_DevonEmployee;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_AquaMemberM;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_AquaMemberF;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_MagmaMemberM;
@@ -198,22 +198,22 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BrendanDecorating;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_MayDecorating;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Archie;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Maxie;
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kyogre1;
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Groudon1;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KyogreFront;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_GroudonFront;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Fossil;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Regirock;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Regice;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Registeel;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Skitty;
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kecleon1;
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kyogre2;
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Groudon2;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kecleon;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KyogreAsleep;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_GroudonAsleep;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Rayquaza;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Zigzagoon;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Pikachu;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Azumarill;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Wingull;
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Kecleon2;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KecleonBridgeShadow;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TuberMSwimming;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Azurill;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Mom;
@@ -337,7 +337,7 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_MOVING_BOX] =                &gObjectEventGraphicsInfo_MovingBox,
     [OBJ_EVENT_GFX_CABLE_CAR] =                 &gObjectEventGraphicsInfo_CableCar,
     [OBJ_EVENT_GFX_SCIENTIST_2] =               &gObjectEventGraphicsInfo_Scientist2,
-    [OBJ_EVENT_GFX_MAN_7] =                     &gObjectEventGraphicsInfo_Man7,
+    [OBJ_EVENT_GFX_DEVON_EMPLOYEE] =                     &gObjectEventGraphicsInfo_DevonEmployee,
     [OBJ_EVENT_GFX_AQUA_MEMBER_M] =             &gObjectEventGraphicsInfo_AquaMemberM,
     [OBJ_EVENT_GFX_AQUA_MEMBER_F] =             &gObjectEventGraphicsInfo_AquaMemberF,
     [OBJ_EVENT_GFX_MAGMA_MEMBER_M] =            &gObjectEventGraphicsInfo_MagmaMemberM,
@@ -418,22 +418,22 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_MAY_DECORATING] =            &gObjectEventGraphicsInfo_MayDecorating,
     [OBJ_EVENT_GFX_ARCHIE] =                    &gObjectEventGraphicsInfo_Archie,
     [OBJ_EVENT_GFX_MAXIE] =                     &gObjectEventGraphicsInfo_Maxie,
-    [OBJ_EVENT_GFX_KYOGRE_1] =                  &gObjectEventGraphicsInfo_Kyogre1,
-    [OBJ_EVENT_GFX_GROUDON_1] =                 &gObjectEventGraphicsInfo_Groudon1,
+    [OBJ_EVENT_GFX_KYOGRE_FRONT] =                  &gObjectEventGraphicsInfo_KyogreFront,
+    [OBJ_EVENT_GFX_GROUDON_FRONT] =                 &gObjectEventGraphicsInfo_GroudonFront,
     [OBJ_EVENT_GFX_FOSSIL] =                    &gObjectEventGraphicsInfo_Fossil,
     [OBJ_EVENT_GFX_REGIROCK] =                  &gObjectEventGraphicsInfo_Regirock,
     [OBJ_EVENT_GFX_REGICE] =                    &gObjectEventGraphicsInfo_Regice,
     [OBJ_EVENT_GFX_REGISTEEL] =                 &gObjectEventGraphicsInfo_Registeel,
     [OBJ_EVENT_GFX_SKITTY] =                    &gObjectEventGraphicsInfo_Skitty,
-    [OBJ_EVENT_GFX_KECLEON_1] =                 &gObjectEventGraphicsInfo_Kecleon1,
-    [OBJ_EVENT_GFX_KYOGRE_2] =                  &gObjectEventGraphicsInfo_Kyogre2,
-    [OBJ_EVENT_GFX_GROUDON_2] =                 &gObjectEventGraphicsInfo_Groudon2,
+    [OBJ_EVENT_GFX_KECLEON] =                 &gObjectEventGraphicsInfo_Kecleon,
+    [OBJ_EVENT_GFX_KYOGRE_ASLEEP] =                  &gObjectEventGraphicsInfo_KyogreAsleep,
+    [OBJ_EVENT_GFX_GROUDON_ASLEEP] =                 &gObjectEventGraphicsInfo_GroudonAsleep,
     [OBJ_EVENT_GFX_RAYQUAZA] =                  &gObjectEventGraphicsInfo_Rayquaza,
     [OBJ_EVENT_GFX_ZIGZAGOON] =                 &gObjectEventGraphicsInfo_Zigzagoon,
     [OBJ_EVENT_GFX_PIKACHU] =                   &gObjectEventGraphicsInfo_Pikachu,
     [OBJ_EVENT_GFX_AZUMARILL] =                 &gObjectEventGraphicsInfo_Azumarill,
     [OBJ_EVENT_GFX_WINGULL] =                   &gObjectEventGraphicsInfo_Wingull,
-    [OBJ_EVENT_GFX_KECLEON_2] =                 &gObjectEventGraphicsInfo_Kecleon2,
+    [OBJ_EVENT_GFX_KECLEON_BRIDGE_SHADOW] =                 &gObjectEventGraphicsInfo_KecleonBridgeShadow,
     [OBJ_EVENT_GFX_TUBER_M_SWIMMING] =          &gObjectEventGraphicsInfo_TuberMSwimming,
     [OBJ_EVENT_GFX_AZURILL] =                   &gObjectEventGraphicsInfo_Azurill,
     [OBJ_EVENT_GFX_MOM] =                       &gObjectEventGraphicsInfo_Mom,
