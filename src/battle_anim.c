@@ -1651,9 +1651,9 @@ static void Cmd_createsprite(void)
         sBattleAnimScriptPtr += 2;
     }
 
-    if (argVar & 0x80)
+    if (argVar & ANIMSPRITE_IS_TARGET)
     {
-        argVar ^= 0x80;
+        argVar ^= ANIMSPRITE_IS_TARGET;
         if (argVar >= 0x40)
             argVar -= 0x40;
         else

@@ -2659,7 +2659,7 @@ DigSetUp:
 	loadspritegfx ANIM_TAG_DIRT_MOUND
 	createsprite gDirtMoundSpriteTemplate, ANIM_ATTACKER, 1, 0, 0, 180
 	createsprite gDirtMoundSpriteTemplate, ANIM_ATTACKER, 1, 0, 1, 180
-	monbg_22 ANIM_ATTACKER
+	monbg_static ANIM_ATTACKER
 	delay 1
 	createvisualtask AnimTask_DigDownMovement, 2, 0
 	delay 6
@@ -2669,7 +2669,7 @@ DigSetUp:
 	call DigThrowDirt
 	call DigThrowDirt
 	waitforvisualfinish
-	clearmonbg_23 ANIM_ATTACKER
+	clearmonbg_static ANIM_ATTACKER
 	delay 1
 	createvisualtask AnimTask_DigDownMovement, 2, 1
 	goto DigEnd
@@ -3519,11 +3519,11 @@ Move_MEMENTO: @ 81CC0F2
 	delay 12
 	setalpha 0, 16
 	delay 1
-	monbg_22 ANIM_TARGET
+	monbg_static ANIM_TARGET
 	createvisualtask AnimTask_MoveTargetMementoShadow, 5
 	playsewithpan SE_M_PSYBEAM, SOUND_PAN_TARGET
 	waitforvisualfinish
-	clearmonbg_23 ANIM_TARGET
+	clearmonbg_static ANIM_TARGET
 	delay 1
 	blendoff
 	delay 1

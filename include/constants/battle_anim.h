@@ -407,6 +407,9 @@
 // Most tasks return a value to gBattleAnimArgs[7].
 #define ARG_RET_ID 0x7
 
+// For createsprite macro to use internally
+#define ANIMSPRITE_IS_TARGET (1 << 7)
+
 // Ruby's Magnitude power check stores its result in argument 15.
 #define ARG_MAGNITUDE_POWER_RESULT 0xF
 
