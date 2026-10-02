@@ -11,10 +11,8 @@ EventScript_ObtainItemMessage: @ 819FE07
 	bufferitemname STR_VAR_2, ITEMID
 	checkitemtype ITEMID
 	call EventScript_BufferPocketNameAndTryFanfare
-	compare VAR_0x8007, TRUE
-	call_if_eq EventScript_ObtainedItem
-	compare VAR_0x8007, FALSE
-	call_if_eq EventScript_NoRoomForItem
+	call_if_eq VAR_0x8007, TRUE, EventScript_ObtainedItem
+	call_if_eq VAR_0x8007, FALSE, EventScript_NoRoomForItem
 	return
 
 EventScript_BufferPocketNameAndTryFanfare:
@@ -28,39 +26,34 @@ EventScript_BufferPocketNameAndTryFanfare:
 
 EventScript_BufferItemsPocket:
 	bufferstdstring STR_VAR_3, STDSTRING_ITEMS
-	compare VAR_0x8007, TRUE
-	call_if_eq EventScript_PlayFanfareObtainedItem
+	call_if_eq VAR_0x8007, TRUE, EventScript_PlayFanfareObtainedItem
 	return
 
 EventScript_BufferKeyItemsPocket:
 	bufferstdstring STR_VAR_3, STDSTRING_KEYITEMS
-	compare VAR_0x8007, TRUE
-	call_if_eq EventScript_PlayFanfareObtainedItem
+	call_if_eq VAR_0x8007, TRUE, EventScript_PlayFanfareObtainedItem
 	return
 
 EventScript_BufferPokeballsPocket:
 	bufferstdstring STR_VAR_3, STDSTRING_POKEBALLS
-	compare VAR_0x8007, TRUE
-	call_if_eq EventScript_PlayFanfareObtainedItem
+	call_if_eq VAR_0x8007, TRUE, EventScript_PlayFanfareObtainedItem
 	return
 
 EventScript_BufferTMHMsPocket:
 	bufferstdstring STR_VAR_3, STDSTRING_TMHMS
-	compare VAR_0x8007, TRUE
-	call_if_eq EventScript_PlayFanfareObtainedTMHM
+	call_if_eq VAR_0x8007, TRUE, EventScript_PlayFanfareObtainedTMHM
 	return
 
 EventScript_BufferBerriesPocket:
 	bufferstdstring STR_VAR_3, STDSTRING_BERRIES
-	compare VAR_0x8007, TRUE
-	call_if_eq EventScript_PlayFanfareObtainedItem
+	call_if_eq VAR_0x8007, TRUE, EventScript_PlayFanfareObtainedItem
 	return
 
 EventScript_ObtainedItem: @ 819FEB7
 	message gText_ObtainedTheItem
 	waitfanfare
 	waitmessage
-	msgbox gText_PutItemInPocket
+	msgbox gText_PutItemInPocket, MSGBOX_DEFAULT
 	setvar VAR_RESULT, TRUE
 	return
 
@@ -84,10 +77,8 @@ Std_ObtainDecoration: @ 819FEDA
 
 EventScript_ObtainDecorationMessage: @ 819FEE8
 	bufferdecorationname STR_VAR_2, ITEMID
-	compare VAR_0x8007, TRUE
-	call_if_eq EventScript_ObtainedDecor
-	compare VAR_0x8007, FALSE
-	call_if_eq EventScript_NoRoomForDecor
+	call_if_eq VAR_0x8007, TRUE, EventScript_ObtainedDecor
+	call_if_eq VAR_0x8007, FALSE, EventScript_NoRoomForDecor
 	return
 
 EventScript_ObtainedDecor: @ 819FF03
@@ -95,7 +86,7 @@ EventScript_ObtainedDecor: @ 819FF03
 	message gText_ObtainedTheDecor
 	waitfanfare
 	waitmessage
-	msgbox gText_TheDecorWasTransferredToThePC
+	msgbox gText_TheDecorWasTransferredToThePC, MSGBOX_DEFAULT
 	setvar VAR_RESULT, TRUE
 	return
 
@@ -112,10 +103,8 @@ Std_FindItem: @ 819FF21
 	bufferitemname STR_VAR_2, ITEMID
 	checkitemtype ITEMID
 	call EventScript_BufferPocketNameAndTryFanfare
-	compare VAR_0x8007, TRUE
-	call_if_eq EventScript_PickUpItem
-	compare VAR_0x8007, FALSE
-	call_if_eq EventScript_NoRoomToPickUpItem
+	call_if_eq VAR_0x8007, TRUE, EventScript_PickUpItem
+	call_if_eq VAR_0x8007, FALSE, EventScript_NoRoomToPickUpItem
 	release
 	return
 
@@ -124,12 +113,12 @@ EventScript_PickUpItem: @ 819FF52
 	message gText_PlayerFoundOneItem
 	waitfanfare
 	waitmessage
-	msgbox gText_PutItemInPocket
+	msgbox gText_PutItemInPocket, MSGBOX_DEFAULT
 	return
 
 EventScript_NoRoomToPickUpItem: @ 819FF65
-	msgbox gText_ObtainedTheItem
-	msgbox gText_TooBadBagIsFull
+	msgbox gText_ObtainedTheItem, MSGBOX_DEFAULT
+	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
 	setvar VAR_RESULT, FALSE
 	return
 
@@ -141,24 +130,22 @@ EventScript_HiddenItemScript:: @ 819FF7B
 	bufferitemname STR_VAR_2, VAR_0x8005
 	checkitemtype VAR_0x8005
 	call EventScript_BufferPocketNameAndTryFanfare
-	compare VAR_0x8007, TRUE
-	goto_if_eq EventScript_PickUpHiddenItem
-	compare VAR_0x8007, FALSE
-	goto_if_eq EventScript_NoRoomToPickUpHiddenItem
+	goto_if_eq VAR_0x8007, TRUE, EventScript_PickUpHiddenItem
+	goto_if_eq VAR_0x8007, FALSE, EventScript_NoRoomToPickUpHiddenItem
 	end
 
 EventScript_PickUpHiddenItem:
 	message gText_PlayerFoundOneItem
 	waitfanfare
 	waitmessage
-	msgbox gText_PutItemInPocket
+	msgbox gText_PutItemInPocket, MSGBOX_DEFAULT
 	special SetHiddenItemFlag
 	releaseall
 	end
 
 EventScript_NoRoomToPickUpHiddenItem:
-	msgbox gText_PlayerFoundOneItem
-	msgbox gText_TooBadBagIsFull
+	msgbox gText_PlayerFoundOneItem, MSGBOX_DEFAULT
+	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
 	setvar VAR_RESULT, FALSE
 	releaseall
 	end
