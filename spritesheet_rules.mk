@@ -156,13 +156,13 @@ $(OBJEVENTGFXDIR)/people/may/watering.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 4 -mheight 4
 
 
-$(OBJEVENTGFXDIR)/people/aqua_member_f.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/team_aqua/aqua_member_f.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/aqua_member_m.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/team_aqua/aqua_member_m.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/archie.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/team_aqua/archie.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
 $(OBJEVENTGFXDIR)/people/artist.4bpp: %.4bpp: %.png
@@ -189,7 +189,7 @@ $(OBJEVENTGFXDIR)/people/boy_4.4bpp: %.4bpp: %.png
 $(OBJEVENTGFXDIR)/people/boy_5.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/brawly.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/gym_leaders/brawly.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
 $(OBJEVENTGFXDIR)/people/bug_catcher.4bpp: %.4bpp: %.png
@@ -213,7 +213,7 @@ $(OBJEVENTGFXDIR)/people/cycling_triathlete_f.4bpp: %.4bpp: %.png
 $(OBJEVENTGFXDIR)/people/cycling_triathlete_m.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 4 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/drake.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/elite_four/drake.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
 $(OBJEVENTGFXDIR)/people/fat_man.4bpp: %.4bpp: %.png
@@ -222,7 +222,7 @@ $(OBJEVENTGFXDIR)/people/fat_man.4bpp: %.4bpp: %.png
 $(OBJEVENTGFXDIR)/people/fisherman.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/flannery.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/gym_leaders/flannery.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
 $(OBJEVENTGFXDIR)/people/gentleman.4bpp: %.4bpp: %.png
@@ -237,7 +237,7 @@ $(OBJEVENTGFXDIR)/people/girl_2.4bpp: %.4bpp: %.png
 $(OBJEVENTGFXDIR)/people/girl_3.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/glacia.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/elite_four/glacia.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
 $(OBJEVENTGFXDIR)/people/hex_maniac.4bpp: %.4bpp: %.png
@@ -267,13 +267,13 @@ $(OBJEVENTGFXDIR)/people/little_girl_1.4bpp: %.4bpp: %.png
 $(OBJEVENTGFXDIR)/people/little_girl_2.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
 
-$(OBJEVENTGFXDIR)/people/liza.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/gym_leaders/liza.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/magma_member_f.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/team_magma/magma_member_f.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/magma_member_m.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/team_magma/magma_member_m.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
 $(OBJEVENTGFXDIR)/people/man_1.4bpp: %.4bpp: %.png
@@ -309,13 +309,13 @@ $(OBJEVENTGFXDIR)/people/mauville_old_man_1.4bpp: %.4bpp: %.png
 $(OBJEVENTGFXDIR)/people/mauville_old_man_2.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/maxie.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/team_magma/maxie.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
 $(OBJEVENTGFXDIR)/people/mom.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/norman.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/gym_leaders/norman.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
 $(OBJEVENTGFXDIR)/people/nurse.4bpp: %.4bpp: %.png
@@ -333,7 +333,7 @@ $(OBJEVENTGFXDIR)/people/old_woman_1.4bpp: %.4bpp: %.png
 $(OBJEVENTGFXDIR)/people/old_woman_2.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/phoebe.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/elite_four/phoebe.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
 $(OBJEVENTGFXDIR)/people/picnicker.4bpp: %.4bpp: %.png
@@ -357,7 +357,7 @@ $(OBJEVENTGFXDIR)/people/reporter_m.4bpp: %.4bpp: %.png
 $(OBJEVENTGFXDIR)/people/rooftop_sale_woman.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/roxanne.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/gym_leaders/roxanne.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
 $(OBJEVENTGFXDIR)/people/running_triathlete_f.4bpp: %.4bpp: %.png
@@ -378,7 +378,7 @@ $(OBJEVENTGFXDIR)/people/scientist_1.4bpp: %.4bpp: %.png
 $(OBJEVENTGFXDIR)/people/scientist_2.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/sidney.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/elite_four/sidney.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
 $(OBJEVENTGFXDIR)/people/steven.4bpp: %.4bpp: %.png
@@ -390,7 +390,7 @@ $(OBJEVENTGFXDIR)/people/swimmer_f.4bpp: %.4bpp: %.png
 $(OBJEVENTGFXDIR)/people/swimmer_m.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/tate.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/gym_leaders/tate.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
 $(OBJEVENTGFXDIR)/people/teala.4bpp: %.4bpp: %.png
@@ -411,10 +411,10 @@ $(OBJEVENTGFXDIR)/people/wallace.4bpp: %.4bpp: %.png
 $(OBJEVENTGFXDIR)/people/wally.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/wattson.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/gym_leaders/wattson.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/winona.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/gym_leaders/winona.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
 $(OBJEVENTGFXDIR)/people/woman_1.4bpp: %.4bpp: %.png
