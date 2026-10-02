@@ -310,7 +310,7 @@ const union AnimCmd *const sAnims_MenuText[] = {
     sAnim_MenuText_5
 };
 
-const u16 sMenuText_Pal[] = INCBIN_U16("graphics/trade/text1.gbapal");
+const u16 sMenuText_Pal[] = INCBIN_U16("graphics/trade/text.gbapal");
 const u16 sUnusedMenuTextPalette[] = INCBIN_U16("graphics/trade/text2.gbapal");
 
 const struct SpriteSheet sMenuTextSpriteSheets[] = {
@@ -596,8 +596,8 @@ const u8 sSelectedMonLevelGenderCoords[][2] = {
     { 0,  0}
 };
 
-const u16 sPokeball_Pal[] = INCBIN_U16("graphics/trade/ball.gbapal");
-const u32 sPokeball_Gfx[] = INCBIN_U32("graphics/trade/ball.4bpp");
+const u16 sPokeball_Pal[] = INCBIN_U16("graphics/trade/pokeball.gbapal");
+const u32 sPokeball_Gfx[] = INCBIN_U32("graphics/trade/pokeball.4bpp");
 const u16 gTradeGba2_Pal[][16] = {
     INCBIN_U16("graphics/trade/unused1.gbapal"),
     INCBIN_U16("graphics/trade/gba.gbapal"),
@@ -609,21 +609,21 @@ const u16 gTradeGba2_Pal[][16] = {
 const u32 gTradeGba_Gfx[] = INCBIN_U32("graphics/trade/gba.4bpp");
 const u32 gUnusedTradeGbaShadow_Gfx[] = INCBIN_U32("graphics/trade/shadow.4bpp");
 const u32 sPokeballSymbol_Gfx[] = INCBIN_U32("graphics/trade/pokeball_symbol.8bpp");
-const u16 gTradePlatform_Tilemap[] = INCBIN_U16("graphics/trade/shadow_map.bin");
-const u16 sGbaMapCable[] = INCBIN_U16("graphics/trade/gba_map.bin");
-const u16 sCableCloseup_Map[] = INCBIN_U16("graphics/trade/cable_closeup_map.bin");
+const u16 gTradePlatform_Tilemap[] = INCBIN_U16("graphics/trade/platform.bin");
+const u16 sGbaMapCable[] = INCBIN_U16("graphics/trade/gba_map_cable.bin");
+const u16 sCableCloseup_Map[] = INCBIN_U16("graphics/trade/crossing_highlight_cable.bin");
 const u16 sPokeballSymbol_Map[] = INCBIN_U16("graphics/trade/pokeball_symbol_map.bin");
-const u16 sUnusedPal1[] = INCBIN_U16("graphics/trade/unused1_duplicate.gbapal");
+const u16 sUnusedPal1[] = INCBIN_U16("graphics/trade/unused1.gbapal");
 const u16 sCableEnd_Pal[] = INCBIN_U16("graphics/trade/cable_end.gbapal");
 const u16 sUnusedPal2[] = INCBIN_U16("graphics/trade/unused2.gbapal");
 const u16 sEmptyPal[16] = {};
-const u16 sLinkMon_Pal[] = INCBIN_U16("graphics/trade/glow.gbapal");
-const u32 sLinkMonGlow_Gfx[] = INCBIN_U32("graphics/trade/glow1.4bpp");
-const u32 sLinkMonShadow_Gfx[] = INCBIN_U32("graphics/trade/glow2.4bpp");
+const u16 sLinkMon_Pal[] = INCBIN_U16("graphics/trade/link_mon.gbapal");
+const u32 sLinkMonGlow_Gfx[] = INCBIN_U32("graphics/trade/link_mon_glow.4bpp");
+const u32 sLinkMonShadow_Gfx[] = INCBIN_U32("graphics/trade/link_mon_shadow.4bpp");
 const u32 sCableEnd_Gfx[] = INCBIN_U32("graphics/trade/cable_end.4bpp");
 const u32 sGbaScreen_Gfx[] = INCBIN_U32("graphics/trade/gba_screen.4bpp");
 const u32 sGbaAffine_Gfx[] = INCBIN_U32("graphics/trade/gba_affine.8bpp");
-const u16 sGbaAffineMapCable[] = INCBIN_U16("graphics/trade/gba_affine_map.bin");
+const u16 sGbaAffineMapCable[] = INCBIN_U16("graphics/trade/gba_affine_map_cable.bin");
 
 const struct OamData sOamData_Pokeball = {
     .affineMode = 1,

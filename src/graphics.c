@@ -1309,11 +1309,11 @@ const u8 gDialogueFrame_Gfx[] = INCBIN_U8("graphics/text_window/message_box.4bpp
 
 const u16 gTradeMenu_Pal[] = INCBIN_U16("graphics/trade/menu.gbapal", "graphics/trade/stripes.gbapal", "graphics/trade/stripes.gbapal");
 
-const u16 gTradeCursor_Pal[] = INCBIN_U16("graphics/trade/selected_mon.gbapal");
+const u16 gTradeCursor_Pal[] = INCBIN_U16("graphics/trade/cursor.gbapal");
 const u8 gTradeMenu_Gfx[] = INCBIN_U8("graphics/trade/menu.4bpp");
 const u8 gTradeMenu_Tilemap[] = INCBIN_U8("graphics/trade/menu_map.bin");
-const u8 gTradeMonBoxTilemap[] = INCBIN_U8("graphics/trade/mon_box_map.bin");
-const u8 gTradeCursor_Gfx[] = INCBIN_U8("graphics/trade/selected_mon.4bpp");
+const u8 gTradeMonBoxTilemap[] = INCBIN_U8("graphics/trade/menu_mon_box.bin");
+const u8 gTradeCursor_Gfx[] = INCBIN_U8("graphics/trade/cursor.4bpp");
 
 const u8 gTradeUnused_Tilemap[] = INCBIN_U8("graphics/trade/unused.bin");
 const u8 gCreditsCopyrightEnd_Gfx[] = INCBIN_U8("graphics/credits/the_end_copyright.4bpp.lz");
