@@ -52,7 +52,7 @@
     },
     {
       "local_id": "LOCALID_DEWFORD_HALL_EXPERT_M",
-      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN_1",
+      "graphics_id": "OBJ_EVENT_GFX_EXPERT_M",
       "x": 9,
       "y": 3,
       "elevation": 0,

@@ -119,7 +119,7 @@
       "flag": "FLAG_HIDE_OTHER_TEAM_MT_CHIMNEY"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_OLD_WOMAN_2",
+      "graphics_id": "OBJ_EVENT_GFX_OLD_WOMAN",
       "x": 16,
       "y": 37,
       "elevation": 3,
@@ -328,7 +328,7 @@
       "flag": "FLAG_HIDE_EVIL_TEAM_MT_CHIMNEY"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_OLD_WOMAN_1",
+      "graphics_id": "OBJ_EVENT_GFX_EXPERT_F",
       "x": 16,
       "y": 18,
       "elevation": 3,

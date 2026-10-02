@@ -22,20 +22,20 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_FatMan;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_PokefanF;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Man1;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Woman2;
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OldMan1;
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OldWoman1;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ExpertM;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ExpertF;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Man2;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Woman3;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_PokefanM;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Woman4;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Cook;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_LinkReceptionist;
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OldMan2;
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OldWoman2;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OldMan;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OldWoman;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Camper;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Picnicker;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Man3;
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Woman7;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Woman5;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Youngster;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BugCatcher;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_PsychicM;
@@ -242,20 +242,20 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_POKEFAN_F] =                 &gObjectEventGraphicsInfo_PokefanF,
     [OBJ_EVENT_GFX_MAN_1] =                     &gObjectEventGraphicsInfo_Man1,
     [OBJ_EVENT_GFX_WOMAN_2] =                   &gObjectEventGraphicsInfo_Woman2,
-    [OBJ_EVENT_GFX_OLD_MAN_1] =                 &gObjectEventGraphicsInfo_OldMan1,
-    [OBJ_EVENT_GFX_OLD_WOMAN_1] =               &gObjectEventGraphicsInfo_OldWoman1,
+    [OBJ_EVENT_GFX_EXPERT_M] =                 &gObjectEventGraphicsInfo_ExpertM,
+    [OBJ_EVENT_GFX_EXPERT_F] =               &gObjectEventGraphicsInfo_ExpertF,
     [OBJ_EVENT_GFX_MAN_2] =                     &gObjectEventGraphicsInfo_Man2,
     [OBJ_EVENT_GFX_WOMAN_3] =                   &gObjectEventGraphicsInfo_Woman3,
     [OBJ_EVENT_GFX_POKEFAN_M] =                 &gObjectEventGraphicsInfo_PokefanM,
     [OBJ_EVENT_GFX_WOMAN_4] =                   &gObjectEventGraphicsInfo_Woman4,
     [OBJ_EVENT_GFX_COOK] =                      &gObjectEventGraphicsInfo_Cook,
     [OBJ_EVENT_GFX_LINK_RECEPTIONIST] =         &gObjectEventGraphicsInfo_LinkReceptionist,
-    [OBJ_EVENT_GFX_OLD_MAN_2] =                 &gObjectEventGraphicsInfo_OldMan2,
-    [OBJ_EVENT_GFX_OLD_WOMAN_2] =               &gObjectEventGraphicsInfo_OldWoman2,
+    [OBJ_EVENT_GFX_OLD_MAN] =                 &gObjectEventGraphicsInfo_OldMan,
+    [OBJ_EVENT_GFX_OLD_WOMAN] =               &gObjectEventGraphicsInfo_OldWoman,
     [OBJ_EVENT_GFX_CAMPER] =                    &gObjectEventGraphicsInfo_Camper,
     [OBJ_EVENT_GFX_PICNICKER] =                 &gObjectEventGraphicsInfo_Picnicker,
     [OBJ_EVENT_GFX_MAN_3] =                     &gObjectEventGraphicsInfo_Man3,
-    [OBJ_EVENT_GFX_WOMAN_7] =                   &gObjectEventGraphicsInfo_Woman7,
+    [OBJ_EVENT_GFX_WOMAN_5] =                   &gObjectEventGraphicsInfo_Woman5,
     [OBJ_EVENT_GFX_YOUNGSTER] =                 &gObjectEventGraphicsInfo_Youngster,
     [OBJ_EVENT_GFX_BUG_CATCHER] =               &gObjectEventGraphicsInfo_BugCatcher,
     [OBJ_EVENT_GFX_PSYCHIC_M] =                 &gObjectEventGraphicsInfo_PsychicM,

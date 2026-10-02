@@ -39,7 +39,7 @@
       "flag": "FLAG_HIDE_LILYCOVE_MUSEUM_PATRON_2"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN_1",
+      "graphics_id": "OBJ_EVENT_GFX_EXPERT_M",
       "x": 7,
       "y": 3,
       "elevation": 3,

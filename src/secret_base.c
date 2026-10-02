@@ -130,7 +130,7 @@ static const u8 sSecretBaseOwnerGfxIds[] = {
     OBJ_EVENT_GFX_GIRL_3,
     OBJ_EVENT_GFX_WOMAN_2,
     OBJ_EVENT_GFX_PICNICKER,
-    OBJ_EVENT_GFX_WOMAN_7,
+    OBJ_EVENT_GFX_WOMAN_5,
 };
 
 extern u8 SecretBase_EventScript_Enter[];

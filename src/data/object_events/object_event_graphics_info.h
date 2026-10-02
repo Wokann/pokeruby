@@ -416,7 +416,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Woman2 = {
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OldMan1 = {
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ExpertM = {
     .tileTag = TAG_NONE,
     .paletteTag = OBJ_EVENT_PAL_TAG_NPC_4,
     .bridgeReflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
@@ -431,11 +431,11 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OldMan1 = {
     .oam = &gObjectEventBaseOam_16x32,
     .subspriteTables = sOamTables_16x32,
     .anims = sAnimTable_Standard,
-    .images = sPicTable_OldMan1,
+    .images = sPicTable_ExpertM,
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OldWoman1 = {
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ExpertF = {
     .tileTag = TAG_NONE,
     .paletteTag = OBJ_EVENT_PAL_TAG_NPC_4,
     .bridgeReflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
@@ -450,7 +450,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OldWoman1 = {
     .oam = &gObjectEventBaseOam_16x32,
     .subspriteTables = sOamTables_16x32,
     .anims = sAnimTable_Standard,
-    .images = sPicTable_OldWoman1,
+    .images = sPicTable_ExpertF,
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 
@@ -568,7 +568,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_LinkReceptionist =
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OldMan2 = {
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OldMan = {
     .tileTag = TAG_NONE,
     .paletteTag = OBJ_EVENT_PAL_TAG_NPC_4,
     .bridgeReflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
@@ -583,11 +583,11 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OldMan2 = {
     .oam = &gObjectEventBaseOam_16x32,
     .subspriteTables = sOamTables_16x32,
     .anims = sAnimTable_Standard,
-    .images = sPicTable_OldMan2,
+    .images = sPicTable_OldMan,
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OldWoman2 = {
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OldWoman = {
     .tileTag = TAG_NONE,
     .paletteTag = OBJ_EVENT_PAL_TAG_NPC_3,
     .bridgeReflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
@@ -602,7 +602,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OldWoman2 = {
     .oam = &gObjectEventBaseOam_16x32,
     .subspriteTables = sOamTables_16x32,
     .anims = sAnimTable_Standard,
-    .images = sPicTable_OldWoman2,
+    .images = sPicTable_OldWoman,
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 
@@ -663,7 +663,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Man3 = {
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Woman7 = {
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Woman5 = {
     .tileTag = TAG_NONE,
     .paletteTag = OBJ_EVENT_PAL_TAG_NPC_2,
     .bridgeReflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
@@ -678,7 +678,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Woman7 = {
     .oam = &gObjectEventBaseOam_16x32,
     .subspriteTables = sOamTables_16x32,
     .anims = sAnimTable_Standard,
-    .images = sPicTable_Woman7,
+    .images = sPicTable_Woman5,
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 

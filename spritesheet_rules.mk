@@ -321,16 +321,16 @@ $(OBJEVENTGFXDIR)/people/gym_leaders/norman.4bpp: %.4bpp: %.png
 $(OBJEVENTGFXDIR)/people/nurse.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/old_man_1.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/expert_m.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/old_man_2.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/old_man.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/old_woman_1.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/expert_f.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/old_woman_2.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/old_woman.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
 $(OBJEVENTGFXDIR)/people/elite_four/phoebe.4bpp: %.4bpp: %.png
@@ -435,7 +435,7 @@ $(OBJEVENTGFXDIR)/people/woman_4.4bpp: %.4bpp: %.png
 $(OBJEVENTGFXDIR)/people/link_receptionist.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/woman_7.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/woman_5.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
 $(OBJEVENTGFXDIR)/people/woman_8.4bpp: %.4bpp: %.png

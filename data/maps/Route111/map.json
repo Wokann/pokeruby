@@ -71,7 +71,7 @@
     },
     {
       "local_id": "LOCALID_ROUTE111_VICKY",
-      "graphics_id": "OBJ_EVENT_GFX_OLD_WOMAN_1",
+      "graphics_id": "OBJ_EVENT_GFX_EXPERT_F",
       "x": 13,
       "y": 113,
       "elevation": 0,
@@ -428,7 +428,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_7",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
       "x": 11,
       "y": 12,
       "elevation": 3,

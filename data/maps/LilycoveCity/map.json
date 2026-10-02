@@ -101,7 +101,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN_1",
+      "graphics_id": "OBJ_EVENT_GFX_EXPERT_M",
       "x": 35,
       "y": 37,
       "elevation": 5,
@@ -114,7 +114,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_OLD_WOMAN_1",
+      "graphics_id": "OBJ_EVENT_GFX_EXPERT_F",
       "x": 34,
       "y": 37,
       "elevation": 5,
@@ -127,7 +127,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN_1",
+      "graphics_id": "OBJ_EVENT_GFX_EXPERT_M",
       "x": 57,
       "y": 17,
       "elevation": 3,

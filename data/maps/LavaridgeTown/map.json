@@ -18,7 +18,7 @@
   ],
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_OLD_WOMAN_1",
+      "graphics_id": "OBJ_EVENT_GFX_EXPERT_F",
       "x": 8,
       "y": 7,
       "elevation": 3,
@@ -31,7 +31,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN_1",
+      "graphics_id": "OBJ_EVENT_GFX_EXPERT_M",
       "x": 5,
       "y": 1,
       "elevation": 3,
@@ -44,7 +44,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN_2",
+      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN",
       "x": 5,
       "y": 8,
       "elevation": 3,
@@ -124,7 +124,7 @@
       "flag": "FLAG_HIDE_LAVARIDGE_TOWN_RIVAL"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_OLD_WOMAN_1",
+      "graphics_id": "OBJ_EVENT_GFX_EXPERT_F",
       "x": 4,
       "y": 7,
       "elevation": 3,
