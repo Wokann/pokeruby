@@ -497,12 +497,12 @@ const struct SpriteTemplate gPokenavBlueLightSpriteTemplate =
     .callback = SpriteCB_BlinkingBlueLight,
 };
 
-extern const u16 gPokenavMenuOptions3_Pal[];
+extern const u16 gPokenavMainMenuHeader_Pal[];
 extern const u16 gPokenavConditionHeader_Pal[];
 
 const struct SpritePalette gPokenavMenuHeaderSpritePalettes[] =
 {
-    {gPokenavMenuOptions3_Pal, 2},
+    {gPokenavMainMenuHeader_Pal, 2},
     {gPokenavConditionHeader_Pal, 3},
     {0x0, 0},
 };

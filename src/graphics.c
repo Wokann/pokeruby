@@ -1018,9 +1018,9 @@ const u16 gPokedexSearchMenu_Pal[] = INCBIN_U16("graphics/pokedex/search_menu.gb
 
 const u8 gPokenavMainMenuHeader_Gfx[] = INCBIN_U8("graphics/pokenav/left_headers/main_menu.4bpp.lz");
 const u8 gPokenavMenuOptions_Gfx[] = INCBIN_U8("graphics/pokenav/options/main_menu_labels.4bpp.lz");
-const u16 gPokenavMenuOptions1_Pal[] = INCBIN_U16("graphics/pokenav/pokenav1.gbapal");
-const u16 gPokenavMenuOptions2_Pal[] = INCBIN_U16("graphics/pokenav/pokenav2.gbapal");
-const u16 gPokenavMenuOptions3_Pal[] = INCBIN_U16("graphics/pokenav/pokenav3.gbapal");
+const u16 gPokenavMainMenuOptionsPrimary_Pal[] = INCBIN_U16("graphics/pokenav/options/main_menu_primary.gbapal");
+const u16 gPokenavMainMenuOptionsSecondary_Pal[] = INCBIN_U16("graphics/pokenav/options/main_menu_secondary.gbapal");
+const u16 gPokenavMainMenuHeader_Pal[] = INCBIN_U16("graphics/pokenav/left_headers/main_menu.gbapal");
 const u8 gPokenavHoennMapHeader_Gfx[] = INCBIN_U8("graphics/pokenav/left_headers/hoenn_map.4bpp.lz");
 const u8 gPokenavHoennMapMisc_Gfx[] = INCBIN_U8("graphics/pokenav/map_misc2.4bpp.lz");
 const u8 gPokenavRegionMapZoomTiles_Gfx[] = INCBIN_U8("graphics/pokenav/region_map/zoom_tiles.4bpp.lz");

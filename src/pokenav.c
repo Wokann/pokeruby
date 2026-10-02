@@ -98,8 +98,8 @@ extern const u8 gPokenavConditionSearch_Gfx[];
 extern const struct SpriteTemplate gPokenavMenuOptionSpriteTemplate;
 extern const union AffineAnimCmd *const gPokenavMenuOptionZoomAffineAnimTable[];
 extern const u16 gPokenavMenuOptionBlendAlphas[];
-extern const u16 gPokenavMenuOptions1_Pal[];
-extern const u16 gPokenavMenuOptions2_Pal[];
+extern const u16 gPokenavMainMenuOptionsPrimary_Pal[];
+extern const u16 gPokenavMainMenuOptionsSecondary_Pal[];
 extern const u16 gPokenavConditionMenuOptions_Pal[];
 extern const u16 gPokenavConditionSearchPrimary_Pal[];
 extern const u16 gPokenavConditionSearchSecondary_Pal[];
@@ -2300,10 +2300,10 @@ void LoadMenuOptionSpritePalettes(u8 menuType)
     switch (menuType)
     {
     case 0:
-        spritePalette.data = gPokenavMenuOptions1_Pal;
+        spritePalette.data = gPokenavMainMenuOptionsPrimary_Pal;
         spritePalette.tag = 0;
         LoadSpritePalette(&spritePalette);
-        spritePalette.data = gPokenavMenuOptions2_Pal;
+        spritePalette.data = gPokenavMainMenuOptionsSecondary_Pal;
         spritePalette.tag = 0x1;
         break;
     case 1:
