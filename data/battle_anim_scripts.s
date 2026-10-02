@@ -4118,12 +4118,12 @@ Move_CRUSH_CLAW: @ 81CCF3B
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 6, 4
 	delay 4
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 18, 1
-	createsprite gClawSlashSpriteTemplate, ANIM_TARGET, 2, -10, -10, 0
-	createsprite gClawSlashSpriteTemplate, ANIM_TARGET, 2, -10, 10, 0
+	create_claw_slash_sprite ANIM_TARGET, 2, x=-10, y=-10, animation=0
+	create_claw_slash_sprite ANIM_TARGET, 2, x=-10, y=10, animation=0
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
 	delay 12
-	createsprite gClawSlashSpriteTemplate, ANIM_TARGET, 2, 10, -10, 1
-	createsprite gClawSlashSpriteTemplate, ANIM_TARGET, 2, 10, 10, 1
+	create_claw_slash_sprite ANIM_TARGET, 2, x=10, y=-10, animation=1
+	create_claw_slash_sprite ANIM_TARGET, 2, x=10, y=10, animation=1
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
 	waitforvisualfinish
 	waitforvisualfinish
@@ -4512,7 +4512,7 @@ Move_LEAF_BLADE: @ 81CD775
 	setalpha 12, 8
 	delay 12
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 8, 0, 18, 1
-	createsprite gCrossImpactSpriteTemplate, ANIM_TARGET, 2, 0, 0, 1, 36
+	create_cross_impact_sprite ANIM_TARGET, 2, x=0, y=0, relative_to=ANIM_TARGET, duration=36
 	playsewithpan SE_M_LEER, SOUND_PAN_TARGET
 	waitforvisualfinish
 	clearmonbg ANIM_TARGET
@@ -10412,8 +10412,8 @@ Status_Clamp:
 	monbg ANIM_TARGET
 	setalpha 12, 8
 	playsewithpan SE_M_VICEGRIP, SOUND_PAN_TARGET
-	createsprite gClampJawSpriteTemplate, ANIM_ATTACKER, 2, -32, 0, 2, 819, 0, 10
-	createsprite gClampJawSpriteTemplate, ANIM_ATTACKER, 2, 32, 0, 6, -819, 0, 10
+	create_clamp_jaw_sprite ANIM_ATTACKER, 2, x=-32, y=0, animation=2, x_velocity=32/10, y_velocity=0, half_duration=10
+	create_clamp_jaw_sprite ANIM_ATTACKER, 2, x=32, y=0, animation=6, x_velocity=-32/10, y_velocity=0, half_duration=10
 	delay 10
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 1, 2
 	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 3, 0, 5, 1
