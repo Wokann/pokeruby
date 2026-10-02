@@ -131,11 +131,11 @@ const struct MenuAction sDebugMiscMenuActions[] =
 
 #endif
 
-static const u8 sGround_Tilemap[] = INCBIN_U8("graphics/misc/cable_car_mt_chimney_map.bin.lz");
+static const u8 sGround_Tilemap[] = INCBIN_U8("graphics/cable_car/ground.bin.lz");
 
-static const u8 sTrees_Tilemap[] = INCBIN_U8("graphics/misc/cable_car_tree_map.bin.lz");
+static const u8 sTrees_Tilemap[] = INCBIN_U8("graphics/cable_car/trees.bin.lz");
 
-static const u8 sBgMountains_Tilemap[] = INCBIN_U8("graphics/misc/cable_car_mountain_map.bin.lz");
+static const u8 sBgMountains_Tilemap[] = INCBIN_U8("graphics/cable_car/bg_mountains.bin.lz");
 
 static const u16 sPylonTop_Tilemap[] = {
     0x3000,
@@ -150,7 +150,7 @@ static const u16 sPylonTop_Tilemap[] = {
     0x3009
 };
 
-static const u8 sPylonPole_Tilemap[] = INCBIN_U8("graphics/misc/cable_car_pylon_stem_map.bin.lz");
+static const u8 sPylonPole_Tilemap[] = INCBIN_U8("graphics/cable_car/pylon_pole.bin.lz");
 
 static const struct CompressedSpriteSheet sSpriteSheets[] = {
     { gCableCar_Gfx,      0x800, TAG_CABLE_CAR },
