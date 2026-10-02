@@ -303,6 +303,10 @@
 	createsprite gTrickBagSpriteTemplate, \anim_battler, \subpriority_offset, \initial_y, \wave_offset
 	.endm
 
+	.macro create_ingrain_root_sprite anim_battler:req, subpriority_offset:req, offset_x:req, offset_y:req, subpriority:req, animation:req, duration:req
+	createsprite gIngrainRootSpriteTemplate, \anim_battler, \subpriority_offset, \offset_x, \offset_y, \subpriority - 30, \animation, \duration
+	.endm
+
 	.macro create_frenzy_plant_root_sprite anim_battler:req, subpriority_offset:req, interpolate_percent:req, offset_x:req, offset_y:req, subpriority:req, animation:req, duration:req
 	createsprite gFrenzyPlantRootSpriteTemplate, \anim_battler, \subpriority_offset, \interpolate_percent, \offset_x, \offset_y, \subpriority - 30, \animation, \duration
 	.endm
