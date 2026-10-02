@@ -11,7 +11,7 @@
 #define BLDCNT_TGT1_BD       (1 << 5)
 #define BLDCNT_EFFECT_DARKEN (3 << 6)
 	.include "include/macros.inc"
-	.include "include/macros/battle_anim.inc"
+	.include "include/macros/battle_anim_script.inc"
 	.include "constants/constants.inc"
 
 
