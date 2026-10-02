@@ -293,6 +293,9 @@
 #define B_WAIT_TIME_MED   48
 #define B_WAIT_TIME_SHORT 32
 
+#define FLEE_ITEM    1
+#define FLEE_ABILITY 2
+
 #define FLAG_MAKES_CONTACT          (1 << 0)
 #define FLAG_PROTECT_AFFECTED       (1 << 1)
 #define FLAG_MAGIC_COAT_AFFECTED    (1 << 2)

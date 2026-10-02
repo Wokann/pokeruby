@@ -3634,7 +3634,7 @@ void UndoEffectsAfterFainting(void)
     gProtectStructs[gActiveBattler].confusionSelfDmg = 0;
     gProtectStructs[gActiveBattler].targetNotAffected = 0;
     gProtectStructs[gActiveBattler].chargingTurn = 0;
-    gProtectStructs[gActiveBattler].fleeFlag = 0;
+    gProtectStructs[gActiveBattler].fleeType = 0;
     gProtectStructs[gActiveBattler].usedImprisonedMove = 0;
     gProtectStructs[gActiveBattler].loveImmobility = 0;
     gProtectStructs[gActiveBattler].usedDisabledMove = 0;
@@ -5001,15 +5001,15 @@ void HandleEndTurn_RanFromBattle(void)
 {
     gCurrentActionFuncId = 0;
 
-    switch (gProtectStructs[gBattlerAttacker].fleeFlag)
+    switch (gProtectStructs[gBattlerAttacker].fleeType)
     {
     default:
         gBattlescriptCurrInstr = BattleScript_GotAwaySafely;
         break;
-    case 1:
+    case FLEE_ITEM:
         gBattlescriptCurrInstr = BattleScript_SmokeBallEscape;
         break;
-    case 2:
+    case FLEE_ABILITY:
         gBattlescriptCurrInstr = BattleScript_RanAwayUsingMonAbility;
         break;
     }
@@ -5467,13 +5467,13 @@ bool8 TryRunFromBattle(u8 battler)
     if (holdEffect == HOLD_EFFECT_CAN_ALWAYS_RUN)
     {
         gLastUsedItem = gBattleMons[battler].item ;
-        gProtectStructs[battler].fleeFlag = 1;
+        gProtectStructs[battler].fleeType = FLEE_ITEM;
         effect++;
     }
     else if (gBattleMons[battler].ability == ABILITY_RUN_AWAY)
     {
         gLastUsedAbility = ABILITY_RUN_AWAY;
-        gProtectStructs[battler].fleeFlag = 2;
+        gProtectStructs[battler].fleeType = FLEE_ABILITY;
         effect++;
     }
     else
