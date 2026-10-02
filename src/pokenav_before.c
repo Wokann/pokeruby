@@ -207,8 +207,8 @@ void (*const gPokenavListRowPrinters[])(u16, u16) =
     [POKENAV_LIST_TRAINERS_EYES] = PrintTrainerEyesListRow,
 };
 
-const u16 gPokenavIconPalette[] = INCBIN_U16("graphics/pokenav/icon.gbapal");
-const u8 gPokenavIconGfx[] = INCBIN_U8("graphics/pokenav/icon.4bpp.lz");
+const u16 gPokenavSpinningIcon_Pal[] = INCBIN_U16("graphics/pokenav/nav_icon.gbapal");
+const u8 gPokenavSpinningIcon_Gfx[] = INCBIN_U8("graphics/pokenav/nav_icon.4bpp.lz");
 const u8 gPokenavConditionPokeball_Gfx[] = INCBIN_U8("graphics/pokenav/condition/pokeball.4bpp");
 const u8 gPokenavConditionPokeballPlaceholder_Gfx[] = INCBIN_U8("graphics/pokenav/condition/pokeball_placeholder.4bpp");
 const u16 gPokenavConditionSparkle_Pal[] = INCBIN_U16("graphics/pokenav/condition/sparkle.gbapal");
@@ -986,9 +986,9 @@ const struct SpriteTemplate gPokenavConditionSparkleSpriteTemplate =
     .callback = SpriteCB_ConditionSparkle,
 };
 
-const struct SpritePalette gPokenavIconSpritePalette = {gPokenavIconPalette, 16};
+const struct SpritePalette gPokenavSpinningIconSpritePalette = {gPokenavSpinningIcon_Pal, 16};
 
-const union AnimCmd gPokenavIconAnim[] =
+const union AnimCmd gPokenavSpinningIconAnim[] =
 {
     ANIMCMD_FRAME(0, 12),
     ANIMCMD_FRAME(16, 12),
@@ -1001,12 +1001,12 @@ const union AnimCmd gPokenavIconAnim[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gPokenavIconAnims[] =
+const union AnimCmd *const gPokenavSpinningIconAnims[] =
 {
-    gPokenavIconAnim,
+    gPokenavSpinningIconAnim,
 };
 
-const struct OamData gPokenavIconOam =
+const struct OamData gPokenavSpinningIconOam =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -1023,17 +1023,17 @@ const struct OamData gPokenavIconOam =
     .affineParam = 0,
 };
 
-void SpriteCB_UpdatePokenavIconPosition(struct Sprite *);
+void SpriteCB_UpdatePokenavSpinningIconPosition(struct Sprite *);
 
-const struct SpriteTemplate gPokenavIconSpriteTemplate =
+const struct SpriteTemplate gPokenavSpinningIconSpriteTemplate =
 {
     .tileTag = 24,
     .paletteTag = 16,
-    .oam = &gPokenavIconOam,
-    .anims = gPokenavIconAnims,
+    .oam = &gPokenavSpinningIconOam,
+    .anims = gPokenavSpinningIconAnims,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCB_UpdatePokenavIconPosition,
+    .callback = SpriteCB_UpdatePokenavSpinningIconPosition,
 };
 
 const struct SpritePalette gPokenavTrainerEyesNameSpritePalette = {gPokenavTrainerEyesNamePalette, 18};
@@ -1296,11 +1296,11 @@ void InitPokenavMainMenu(void)
         gPokenavState->callbackStep++;
         break;
     case 1:
-        InitPokenavIconSprite();
+        InitPokenavSpinningIconSprite();
         gPokenavState->callbackStep++;
         // fall through
     case 2:
-        if (!LoadPokenavIconSpriteStep())
+        if (!LoadPokenavSpinningIconSpriteStep())
 			gPokenavState->callbackStep++;
         break;
     case 3:

@@ -136,9 +136,9 @@ extern const struct SpriteSheet gPokenavConditionSparkleSpriteSheet;
 extern const struct SpritePalette gPokenavConditionSparkleSpritePalette;
 extern const struct SpriteTemplate gPokenavConditionSparkleSpriteTemplate;
 extern const s16 gPokenavConditionSparkleCoords[][2];
-extern const u8 gPokenavIconGfx[];
-extern const struct SpritePalette gPokenavIconSpritePalette;
-extern const struct SpriteTemplate gPokenavIconSpriteTemplate;
+extern const u8 gPokenavSpinningIcon_Gfx[];
+extern const struct SpritePalette gPokenavSpinningIconSpritePalette;
+extern const struct SpriteTemplate gPokenavSpinningIconSpriteTemplate;
 extern const struct SpritePalette gPokenavTrainerEyesNameSpritePalette;
 extern const struct SpriteTemplate gPokenavTrainerEyesNameSpriteTemplate;
 
@@ -3472,14 +3472,14 @@ void ShowAllConditionSparkles(void)
 #undef sNumExtraSparkles
 #undef sCurSparkleId
 
-void InitPokenavIconSprite(void)
+void InitPokenavSpinningIconSprite(void)
 {
     gPokenavState->loadState = 0;
     if (!gPokenavState->isLinkActive)
-        while (LoadPokenavIconSpriteStep());
+        while (LoadPokenavSpinningIconSpriteStep());
 }
 
-bool8 LoadPokenavIconSpriteStep(void)
+bool8 LoadPokenavSpinningIconSpriteStep(void)
 {
     u8 paletteIndex;
     u8 spriteId;
@@ -3488,7 +3488,7 @@ bool8 LoadPokenavIconSpriteStep(void)
     switch (gPokenavState->loadState)
     {
     case 0:
-        LZ77UnCompWram(gPokenavIconGfx, gPokenavState->spriteGfxScratchBuffer);
+        LZ77UnCompWram(gPokenavSpinningIcon_Gfx, gPokenavState->spriteGfxScratchBuffer);
         break;
     case 1:
     {
@@ -3501,21 +3501,21 @@ bool8 LoadPokenavIconSpriteStep(void)
         break;
     }
     case 2:
-        spritePalette = gPokenavIconSpritePalette;
+        spritePalette = gPokenavSpinningIconSpritePalette;
         LoadSpritePalette(&spritePalette);
         paletteIndex = IndexOfSpritePaletteTag(0x10);
         gPokenavState->paletteFadeMask = -3 & ~(1 << (paletteIndex + 0x10));
         break;
     case 3:
-        spriteId = CreateSprite(&gPokenavIconSpriteTemplate, 218, 14, 0);
+        spriteId = CreateSprite(&gPokenavSpinningIconSpriteTemplate, 218, 14, 0);
         if (spriteId != MAX_SPRITES)
         {
-            gPokenavState->pokenavIconSprite = &gSprites[spriteId];
-            gPokenavState->pokenavIconSprite->data[0] = 0;
+            gPokenavState->spinningPokenavSprite = &gSprites[spriteId];
+            gPokenavState->spinningPokenavSprite->data[0] = 0;
         }
         else
         {
-            gPokenavState->pokenavIconSprite = NULL;
+            gPokenavState->spinningPokenavSprite = NULL;
         }
 
         gPokenavState->loadState++;
@@ -3528,7 +3528,7 @@ bool8 LoadPokenavIconSpriteStep(void)
     return TRUE;
 }
 
-void SpriteCB_UpdatePokenavIconPosition(struct Sprite *sprite)
+void SpriteCB_UpdatePokenavSpinningIconPosition(struct Sprite *sprite)
 {
     sprite->y2 = -gPokenavState->menuVerticalOffset;
     if (sprite->y2 <= -32)
