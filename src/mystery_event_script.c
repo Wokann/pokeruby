@@ -23,16 +23,16 @@ extern ScrCmdFunc gMysteryEventScriptCmdTableEnd[];
 
 // 0x1 in English FRLG, 0x2 in English Ruby/Sapphire, and 0x4 in German Ruby/Sapphire.
 #if ENGLISH
-#define LANGUAGE_MASK (1 << 1)
+#define MEVENT_LANGUAGE_MASK (1 << 1)
 #elif GERMAN
-#define LANGUAGE_MASK (1 << 2)
+#define MEVENT_LANGUAGE_MASK (1 << 2)
 #endif
 
 // 0x1 in FireRed, 0x2 in LeafGreen, 0x80 in Ruby, and 0x100 in Sapphire.
 #ifdef SAPPHIRE
-#define VERSION_MASK (1 << 8)
+#define MEVENT_VERSION_MASK (1 << 8)
 #else
-#define VERSION_MASK (1 << 7)
+#define MEVENT_VERSION_MASK (1 << 7)
 #endif
 
 #define mScriptBase data[0]
@@ -40,31 +40,30 @@ extern ScrCmdFunc gMysteryEventScriptCmdTableEnd[];
 #define mStatus data[2]
 #define mValid data[3]
 
+#define MEVENT_GAME_MASK_RUBY_SAPPHIRE (1 << 2)
+
 // These offsets describe the Ruby e-Reader debug script header. Emerald has
 // no corresponding relocatable debug templates.
-#define ME_SCRIPT_CMD_CHECKCOMPAT 1
-#define ME_SCRIPT_CMD_CHECKSUM 15
-#define ME_SCRIPT_CMD_CRC 16
-#define ME_SCRIPT_CHECK_COMMAND_OFFSET 0x11
-#define ME_SCRIPT_CHECK_VALUE_OFFSET 0x12
-#define ME_SCRIPT_CHECK_DATA_START_OFFSET 0x16
-#define ME_SCRIPT_CHECK_DATA_END_OFFSET 0x1A
+#define MEVENT_SCRIPT_COMMAND_OFFSET 0
+#define MEVENT_SCRIPT_CHECK_COMPAT_COMMAND_OFFSET 0x11
+#define MEVENT_SCRIPT_CHECK_VALUE_OFFSET 0x12
+#define MEVENT_SCRIPT_CHECK_DATA_START_OFFSET 0x16
+#define MEVENT_SCRIPT_CHECK_DATA_END_OFFSET 0x1A
 
 static EWRAM_DATA struct ScriptContext sMysteryEventScriptContext = {0};
 
 static bool32 CheckCompatibility(u16 languageMask1, u32 languageMask2, u16 gameMask, u32 versionMask)
 {
-    if (!(languageMask1 & LANGUAGE_MASK))
+    if (!(languageMask1 & MEVENT_LANGUAGE_MASK))
         return FALSE;
 
-    if (!(languageMask2 & LANGUAGE_MASK))
+    if (!(languageMask2 & MEVENT_LANGUAGE_MASK))
         return FALSE;
 
-    // 0x1 in FRLG, 0x4 in Emerald
-    if (!(gameMask & 0x4))
+    if (!(gameMask & MEVENT_GAME_MASK_RUBY_SAPPHIRE))
         return FALSE;
 
-    if (!(versionMask & VERSION_MASK))
+    if (!(versionMask & MEVENT_VERSION_MASK))
         return FALSE;
 
     return TRUE;
@@ -136,15 +135,15 @@ bool8 TrySetMysteryEventScriptChecksum(u8 *script, const u8 *sourceScript)
 {
     int sourceScriptAddress = (int)sourceScript;
 
-    if (script[0] == ME_SCRIPT_CMD_CHECKCOMPAT
-     && script[ME_SCRIPT_CHECK_COMMAND_OFFSET] == ME_SCRIPT_CMD_CHECKSUM
-     && !ReadMysteryEventScriptWord(script + ME_SCRIPT_CHECK_VALUE_OFFSET))
+    if (script[MEVENT_SCRIPT_COMMAND_OFFSET] == MEVENT_SCRIPT_CMD_CHECK_COMPAT
+     && script[MEVENT_SCRIPT_CHECK_COMPAT_COMMAND_OFFSET] == MEVENT_SCRIPT_CMD_CHECKSUM
+     && !ReadMysteryEventScriptWord(script + MEVENT_SCRIPT_CHECK_VALUE_OFFSET))
     {
-        int dataStart = ReadMysteryEventScriptWord(script + ME_SCRIPT_CHECK_DATA_START_OFFSET) - sourceScriptAddress + (int)script;
-        int dataEnd = ReadMysteryEventScriptWord(script + ME_SCRIPT_CHECK_DATA_END_OFFSET) - sourceScriptAddress + (int)script;
+        int dataStart = ReadMysteryEventScriptWord(script + MEVENT_SCRIPT_CHECK_DATA_START_OFFSET) - sourceScriptAddress + (int)script;
+        int dataEnd = ReadMysteryEventScriptWord(script + MEVENT_SCRIPT_CHECK_DATA_END_OFFSET) - sourceScriptAddress + (int)script;
         int checksum = CalcByteArraySum((u8 *)dataStart, dataEnd - dataStart);
 
-        WriteMysteryEventScriptWord(script + ME_SCRIPT_CHECK_VALUE_OFFSET, checksum);
+        WriteMysteryEventScriptWord(script + MEVENT_SCRIPT_CHECK_VALUE_OFFSET, checksum);
         return TRUE;
     }
 
@@ -155,15 +154,15 @@ bool8 TrySetMysteryEventScriptCRC(u8 *script, const u8 *sourceScript)
 {
     int sourceScriptAddress = (int)sourceScript;
 
-    if (script[0] == ME_SCRIPT_CMD_CHECKCOMPAT
-     && script[ME_SCRIPT_CHECK_COMMAND_OFFSET] == ME_SCRIPT_CMD_CRC
-     && !ReadMysteryEventScriptWord(script + ME_SCRIPT_CHECK_VALUE_OFFSET))
+    if (script[MEVENT_SCRIPT_COMMAND_OFFSET] == MEVENT_SCRIPT_CMD_CHECK_COMPAT
+     && script[MEVENT_SCRIPT_CHECK_COMPAT_COMMAND_OFFSET] == MEVENT_SCRIPT_CMD_CRC
+     && !ReadMysteryEventScriptWord(script + MEVENT_SCRIPT_CHECK_VALUE_OFFSET))
     {
-        int dataStart = ReadMysteryEventScriptWord(script + ME_SCRIPT_CHECK_DATA_START_OFFSET) - sourceScriptAddress + (int)script;
-        int dataEnd = ReadMysteryEventScriptWord(script + ME_SCRIPT_CHECK_DATA_END_OFFSET) - sourceScriptAddress + (int)script;
+        int dataStart = ReadMysteryEventScriptWord(script + MEVENT_SCRIPT_CHECK_DATA_START_OFFSET) - sourceScriptAddress + (int)script;
+        int dataEnd = ReadMysteryEventScriptWord(script + MEVENT_SCRIPT_CHECK_DATA_END_OFFSET) - sourceScriptAddress + (int)script;
         int crc = CalcCRC16((u8 *)dataStart, dataEnd - dataStart);
 
-        WriteMysteryEventScriptWord(script + ME_SCRIPT_CHECK_VALUE_OFFSET, crc);
+        WriteMysteryEventScriptWord(script + MEVENT_SCRIPT_CHECK_VALUE_OFFSET, crc);
         return TRUE;
     }
 

@@ -18,20 +18,20 @@
 	.section .rodata
 
 .ifdef ENGLISH
-    .set mysteryEventLanguageMask, 2
+    .set MEVENT_LANGUAGE_MASK, 2
 .else @ GERMAN
-    .set mysteryEventLanguageMask, 4
+    .set MEVENT_LANGUAGE_MASK, 4
 .endif @ GERMAN
 
 .ifdef SAPPHIRE
-    .set mysteryEventVersionMask, 0x100
+    .set MEVENT_VERSION_MASK, 0x100
 .else @ RUBY
-    .set mysteryEventVersionMask, 0x80
+    .set MEVENT_VERSION_MASK, 0x80
 .endif @ RUBY
 
 gDebugMysteryEventEonTicketScript::
-	me_checkcompat gDebugMysteryEventEonTicketScript, mysteryEventLanguageMask, mysteryEventLanguageMask, 0x4, mysteryEventVersionMask
-	me_crc 0x0, sDebugMysteryEventEonTicketPayload, sDebugMysteryEventEonTicketPayloadEnd
+	me_checkcompat gDebugMysteryEventEonTicketScript, MEVENT_LANGUAGE_MASK, MEVENT_LANGUAGE_MASK, MEVENT_GAME_MASK_RUBY_SAPPHIRE, MEVENT_VERSION_MASK
+	me_crc MEVENT_CHECK_VALUE_UNSET, sDebugMysteryEventEonTicketPayload, sDebugMysteryEventEonTicketPayloadEnd
 sDebugMysteryEventEonTicketPayload:
 	me_initramscript MAP_PETALBURG_CITY_GYM, 0x1, sDebugMysteryEventEonTicketRamScript, sDebugMysteryEventEonTicketRamScriptEnd
 	me_setrecordmixinggift 0x1, 0x5, ITEM_EON_TICKET
@@ -131,17 +131,17 @@ sDebugMysteryEventEonTicketResultScript:
 	compare VAR_RESULT, 0x0
 	vgoto_if 0x1, sDebugMysteryEventEonTicketBagFull
 	vbuffermessage sText_DebugMysteryEventEonTicketCollect
-	setmysteryeventstatus 0x2
+	setmysteryeventstatus MEVENT_STATUS_SUCCESS
 	end
 
 sDebugMysteryEventEonTicketAlreadyUsed:
 	vbuffermessage sText_DebugMysteryEventEonTicketAlreadyUsed
-	setmysteryeventstatus 0x3
+	setmysteryeventstatus MEVENT_STATUS_FAILURE
 	end
 
 sDebugMysteryEventEonTicketBagFull:
 	vbuffermessage sText_DebugMysteryEventEonTicketBagFull
-	setmysteryeventstatus 0x3
+	setmysteryeventstatus MEVENT_STATUS_FAILURE
 	end
 
 .ifdef ENGLISH
@@ -162,8 +162,8 @@ sDebugMysteryEventEonTicketPayloadEnd:
 gDebugMysteryEventEonTicketScriptEnd::
 
 gDebugMysteryEventEnigmaBerryScript::
-	me_checkcompat gDebugMysteryEventEnigmaBerryScript, mysteryEventLanguageMask, mysteryEventLanguageMask, 0x4, mysteryEventVersionMask
-	me_checksum 0x0, sDebugMysteryEventEnigmaBerryPayload, sDebugMysteryEventEnigmaBerryPayloadEnd
+	me_checkcompat gDebugMysteryEventEnigmaBerryScript, MEVENT_LANGUAGE_MASK, MEVENT_LANGUAGE_MASK, MEVENT_GAME_MASK_RUBY_SAPPHIRE, MEVENT_VERSION_MASK
+	me_checksum MEVENT_CHECK_VALUE_UNSET, sDebugMysteryEventEnigmaBerryPayload, sDebugMysteryEventEnigmaBerryPayloadEnd
 sDebugMysteryEventEnigmaBerryPayload:
 	me_setenigmaberry gDebugMysteryEventEnigmaBerryData
 	me_end
@@ -175,10 +175,10 @@ sDebugMysteryEventEnigmaBerryPayloadEnd:
 gDebugMysteryEventEnigmaBerryScriptEnd::
 
 gDebugMysteryEventPokemonScript::
-	me_checkcompat gDebugMysteryEventPokemonScript, mysteryEventLanguageMask, mysteryEventLanguageMask, 0x4, mysteryEventVersionMask
+	me_checkcompat gDebugMysteryEventPokemonScript, MEVENT_LANGUAGE_MASK, MEVENT_LANGUAGE_MASK, MEVENT_GAME_MASK_RUBY_SAPPHIRE, MEVENT_VERSION_MASK
 	me_runscript sDebugMysteryEventPokemonGiftResultScript
-	me_setmsg 0x2, sText_DebugMysteryEventPokemonGiftReceived
-	me_setmsg 0x3, sText_DebugMysteryEventPokemonGiftPartyFull
+	me_setmsg MEVENT_STATUS_SUCCESS, sText_DebugMysteryEventPokemonGiftReceived
+	me_setmsg MEVENT_STATUS_FAILURE, sText_DebugMysteryEventPokemonGiftPartyFull
 	me_end
 
 sDebugMysteryEventPokemonGiftResultScript:
@@ -187,11 +187,11 @@ sDebugMysteryEventPokemonGiftResultScript:
 	compare VAR_RESULT, 0x6
 	vgoto_if 0x1, sDebugMysteryEventPokemonGiftPartyFull
 	givemon SPECIES_LUVDISC, 15, ITEM_BERRY_JUICE
-	setmysteryeventstatus 0x2
+	setmysteryeventstatus MEVENT_STATUS_SUCCESS
 	end
 
 sDebugMysteryEventPokemonGiftPartyFull:
-	setmysteryeventstatus 0x3
+	setmysteryeventstatus MEVENT_STATUS_FAILURE
 	end
 
 .ifdef ENGLISH
@@ -214,8 +214,8 @@ sText_DebugMysteryEventPokemonGiftPartyFull:
 .endif @ GERMAN
 
 gDebugMysteryEventSpecialRibbonScript::
-	me_checkcompat gDebugMysteryEventSpecialRibbonScript, mysteryEventLanguageMask, mysteryEventLanguageMask, 0x4, mysteryEventVersionMask
-	me_crc 0x0, sDebugMysteryEventSpecialRibbonPayload, sDebugMysteryEventSpecialRibbonPayloadEnd
+	me_checkcompat gDebugMysteryEventSpecialRibbonScript, MEVENT_LANGUAGE_MASK, MEVENT_LANGUAGE_MASK, MEVENT_GAME_MASK_RUBY_SAPPHIRE, MEVENT_VERSION_MASK
+	me_crc MEVENT_CHECK_VALUE_UNSET, sDebugMysteryEventSpecialRibbonPayload, sDebugMysteryEventSpecialRibbonPayloadEnd
 sDebugMysteryEventSpecialRibbonPayload:
 	me_giveribbon 0x0, 0x1
 	me_end
@@ -224,8 +224,8 @@ sDebugMysteryEventSpecialRibbonPayloadEnd:
 gDebugMysteryEventSpecialRibbonScriptEnd::
 
 gDebugMysteryEventNationalDexScript::
-	me_checkcompat gDebugMysteryEventNationalDexScript, mysteryEventLanguageMask, mysteryEventLanguageMask, 0x4, mysteryEventVersionMask
-	me_crc 0x0, sDebugMysteryEventNationalDexPayload, sDebugMysteryEventNationalDexPayloadEnd
+	me_checkcompat gDebugMysteryEventNationalDexScript, MEVENT_LANGUAGE_MASK, MEVENT_LANGUAGE_MASK, MEVENT_GAME_MASK_RUBY_SAPPHIRE, MEVENT_VERSION_MASK
+	me_crc MEVENT_CHECK_VALUE_UNSET, sDebugMysteryEventNationalDexPayload, sDebugMysteryEventNationalDexPayloadEnd
 sDebugMysteryEventNationalDexPayload:
 	me_givenationaldex
 	me_end
@@ -234,8 +234,8 @@ sDebugMysteryEventNationalDexPayloadEnd:
 gDebugMysteryEventNationalDexScriptEnd::
 
 gDebugMysteryEventRareWordScript::
-	me_checkcompat gDebugMysteryEventRareWordScript, mysteryEventLanguageMask, mysteryEventLanguageMask, 0x4, mysteryEventVersionMask
-	me_crc 0x0, sDebugMysteryEventRareWordPayload, sDebugMysteryEventRareWordPayloadEnd
+	me_checkcompat gDebugMysteryEventRareWordScript, MEVENT_LANGUAGE_MASK, MEVENT_LANGUAGE_MASK, MEVENT_GAME_MASK_RUBY_SAPPHIRE, MEVENT_VERSION_MASK
+	me_crc MEVENT_CHECK_VALUE_UNSET, sDebugMysteryEventRareWordPayload, sDebugMysteryEventRareWordPayloadEnd
 sDebugMysteryEventRareWordPayload:
 	me_addrareword 0x1
 	me_end
@@ -244,8 +244,8 @@ sDebugMysteryEventRareWordPayloadEnd:
 gDebugMysteryEventRareWordScriptEnd::
 
 gDebugMysteryEventPokemonGiftScript::
-	me_checkcompat gDebugMysteryEventPokemonGiftScript, mysteryEventLanguageMask, mysteryEventLanguageMask, 0x4, mysteryEventVersionMask
-	me_crc 0x0, sDebugMysteryEventPokemonGiftPayload, sDebugMysteryEventPokemonGiftPayloadEnd
+	me_checkcompat gDebugMysteryEventPokemonGiftScript, MEVENT_LANGUAGE_MASK, MEVENT_LANGUAGE_MASK, MEVENT_GAME_MASK_RUBY_SAPPHIRE, MEVENT_VERSION_MASK
+	me_crc MEVENT_CHECK_VALUE_UNSET, sDebugMysteryEventPokemonGiftPayload, sDebugMysteryEventPokemonGiftPayloadEnd
 sDebugMysteryEventPokemonGiftPayload:
 	me_givepokemon gDebugMysteryEventPokemonGiftData
 	me_end
@@ -260,7 +260,7 @@ sDebugMysteryEventPokemonGiftPayloadEnd:
 gDebugMysteryEventPokemonGiftScriptEnd::
 
 gDebugMysteryEventEReaderTrainerScript::
-	me_checkcompat gDebugMysteryEventEReaderTrainerScript, mysteryEventLanguageMask, mysteryEventLanguageMask, 0x4, mysteryEventVersionMask
+	me_checkcompat gDebugMysteryEventEReaderTrainerScript, MEVENT_LANGUAGE_MASK, MEVENT_LANGUAGE_MASK, MEVENT_GAME_MASK_RUBY_SAPPHIRE, MEVENT_VERSION_MASK
 	me_addtrainer gDebugMysteryEventEReaderTrainerData
 	me_end
 
@@ -269,18 +269,18 @@ gDebugMysteryEventEReaderTrainerData::
 gDebugMysteryEventEReaderTrainerScriptEnd::
 
 gDebugMysteryEventResetRtcScript::
-	me_checkcompat gDebugMysteryEventResetRtcScript, mysteryEventLanguageMask, mysteryEventLanguageMask, 0x4, mysteryEventVersionMask
+	me_checkcompat gDebugMysteryEventResetRtcScript, MEVENT_LANGUAGE_MASK, MEVENT_LANGUAGE_MASK, MEVENT_GAME_MASK_RUBY_SAPPHIRE, MEVENT_VERSION_MASK
 	me_enableresetrtc
 	me_end
 gDebugMysteryEventResetRtcScriptEnd::
 
 gDebugMysteryEventGanlonBerryScript::
-	me_checkcompat gDebugMysteryEventGanlonBerryScript, mysteryEventLanguageMask, mysteryEventLanguageMask, 0x4, mysteryEventVersionMask
-	me_checksum 0x0, sDebugMysteryEventGanlonBerryPayload, sDebugMysteryEventGanlonBerryPayloadEnd
+	me_checkcompat gDebugMysteryEventGanlonBerryScript, MEVENT_LANGUAGE_MASK, MEVENT_LANGUAGE_MASK, MEVENT_GAME_MASK_RUBY_SAPPHIRE, MEVENT_VERSION_MASK
+	me_checksum MEVENT_CHECK_VALUE_UNSET, sDebugMysteryEventGanlonBerryPayload, sDebugMysteryEventGanlonBerryPayloadEnd
 sDebugMysteryEventGanlonBerryPayload:
 	me_initramscript MAP_PETALBURG_CITY_GYM, 0x1, sDebugMysteryEventGanlonBerryRamScript, sDebugMysteryEventGanlonBerryRamScriptEnd
-	me_setmsg 0xff, sText_DebugMysteryEventGanlonBerryCollect
-	me_setstatus 0x2
+	me_setmsg MEVENT_STATUS_FF, sText_DebugMysteryEventGanlonBerryCollect
+	me_setstatus MEVENT_STATUS_SUCCESS
 	me_end
 
 .ifdef ENGLISH
@@ -333,8 +333,8 @@ sDebugMysteryEventGanlonBerryRamScriptEnd:
 gDebugMysteryEventGanlonBerryScriptEnd::
 
 gDebugMysteryEventRegisteelDollScript::
-	me_checkcompat gDebugMysteryEventRegisteelDollScript, mysteryEventLanguageMask, mysteryEventLanguageMask, 0x4, mysteryEventVersionMask
-	me_crc 0x0, sDebugMysteryEventRegisteelDollPayload, sDebugMysteryEventRegisteelDollPayloadEnd
+	me_checkcompat gDebugMysteryEventRegisteelDollScript, MEVENT_LANGUAGE_MASK, MEVENT_LANGUAGE_MASK, MEVENT_GAME_MASK_RUBY_SAPPHIRE, MEVENT_VERSION_MASK
+	me_crc MEVENT_CHECK_VALUE_UNSET, sDebugMysteryEventRegisteelDollPayload, sDebugMysteryEventRegisteelDollPayloadEnd
 sDebugMysteryEventRegisteelDollPayload:
 	me_runscript sDebugMysteryEventRegisteelDollResultScript
 	me_end
@@ -346,12 +346,12 @@ sDebugMysteryEventRegisteelDollResultScript:
 	compare VAR_RESULT, 0x0
 	vgoto_if 0x1, sDebugMysteryEventRegisteelDollNoRoom
 	vbuffermessage sText_DebugMysteryEventRegisteelDollReceived
-	setmysteryeventstatus 0x2
+	setmysteryeventstatus MEVENT_STATUS_SUCCESS
 	end
 
 sDebugMysteryEventRegisteelDollNoRoom:
 	vbuffermessage sText_DebugMysteryEventRegisteelDollNoRoom
-	setmysteryeventstatus 0x3
+	setmysteryeventstatus MEVENT_STATUS_FAILURE
 	end
 
 .ifdef ENGLISH
@@ -373,8 +373,8 @@ sDebugMysteryEventRegisteelDollPayloadEnd:
 gDebugMysteryEventRegisteelDollScriptEnd::
 
 gDebugMysteryEventRecordMixingGiftScript::
-	me_checkcompat gDebugMysteryEventRecordMixingGiftScript, mysteryEventLanguageMask, mysteryEventLanguageMask, 0x4, mysteryEventVersionMask
-	me_crc 0x0, gDebugMysteryEventRecordMixingGiftData, gDebugMysteryEventRecordMixingGiftDataEnd
+	me_checkcompat gDebugMysteryEventRecordMixingGiftScript, MEVENT_LANGUAGE_MASK, MEVENT_LANGUAGE_MASK, MEVENT_GAME_MASK_RUBY_SAPPHIRE, MEVENT_VERSION_MASK
+	me_crc MEVENT_CHECK_VALUE_UNSET, gDebugMysteryEventRecordMixingGiftData, gDebugMysteryEventRecordMixingGiftDataEnd
 gDebugMysteryEventRecordMixingGiftData::
 	me_setrecordmixinggift 0x1, 0x3, ITEM_POTION
 	me_end
