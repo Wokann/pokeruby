@@ -2207,9 +2207,9 @@ const struct SpriteTemplate sSpriteTemplate_JudgeSpeechBubble = {
 };
 
 #if defined(ENGLISH)
-#include "data/text/contest_en.h"
+#include "data/contest_text_tables.h"
 #elif defined(GERMAN)
-#include "data/text/contest_de.h"
+#include "data/contest_text_tables_de.h"
 #endif //ENGLISH
 
 UNUSED
