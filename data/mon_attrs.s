@@ -562,89 +562,89 @@ sAnims_Drake:: @ 81EC2A0
 
 	.align 2
 gTrainerFrontAnimsPtrTable:: @ 81EC2A4
-	.4byte sAnims_Brendan
-	.4byte sAnims_May
-	.4byte sAnims_Lass
-	.4byte sAnims_Youngster
-	.4byte sAnims_Hiker
-	.4byte sAnims_Beauty
-	.4byte sAnims_Fisherman
-	.4byte sAnims_Lady
-	.4byte sAnims_CyclingTriathleteM
-	.4byte sAnims_AquaGruntM
-	.4byte sAnims_Twins
-	.4byte sAnims_SwimmerF
-	.4byte sAnims_BugCatcher
-	.4byte sAnims_SchoolKidM
-	.4byte sAnims_RichBoy
-	.4byte sAnims_SrAndJr
-	.4byte sAnims_BlackBelt
-	.4byte sAnims_Wally
-	.4byte sAnims_AquaGruntF
-	.4byte sAnims_TuberF
-	.4byte sAnims_HexManiac
-	.4byte sAnims_PokemonBreederF
-	.4byte sAnims_MagmaGruntM
-	.4byte sAnims_MagmaGruntF
-	.4byte sAnims_Interviewer
-	.4byte sAnims_TuberM
-	.4byte sAnims_YoungCouple
-	.4byte sAnims_Guitarist
-	.4byte sAnims_Gentleman
-	.4byte sAnims_Steven
-	.4byte sAnims_Maxie
-	.4byte sAnims_RunningTriathleteF
-	.4byte sAnims_RunningTriathleteM
-	.4byte sAnims_BattleGirl
-	.4byte sAnims_CyclingTriathleteF
-	.4byte sAnims_SwimmerM
-	.4byte sAnims_PokefanF
-	.4byte sAnims_ExpertM
-	.4byte sAnims_ExpertF
-	.4byte sAnims_SwimmingTriathleteM
-	.4byte sAnims_SwimmingTriathleteF
-	.4byte sAnims_DragonTamer
-	.4byte sAnims_BirdKeeper
-	.4byte sAnims_NinjaBoy
-	.4byte sAnims_ParasolLady
-	.4byte sAnims_BugManiac
-	.4byte sAnims_Sailor
-	.4byte sAnims_Collector
-	.4byte sAnims_PokemonBreederM
-	.4byte sAnims_PokemonRangerM
-	.4byte sAnims_PokemonRangerF
-	.4byte sAnims_MagmaAdminM
-	.4byte sAnims_MagmaAdminF
-	.4byte sAnims_AromaLady
-	.4byte sAnims_RuinManiac
-	.4byte sAnims_CoolTrainerM
-	.4byte sAnims_CoolTrainerF
-	.4byte sAnims_Pokemaniac
-	.4byte sAnims_Kindler
-	.4byte sAnims_Camper
-	.4byte sAnims_Picnicker
-	.4byte sAnims_PsychicM
-	.4byte sAnims_PsychicF
-	.4byte sAnims_SchoolKidF
-	.4byte sAnims_PokefanM
-	.4byte sAnims_SisAndBro
-	.4byte sAnims_OldCouple
-	.4byte sAnims_AquaAdminM
-	.4byte sAnims_AquaAdminF
-	.4byte sAnims_UnusedAqua
-	.4byte sAnims_Archie
-	.4byte sAnims_Roxanne
-	.4byte sAnims_Brawly
-	.4byte sAnims_Wattson
-	.4byte sAnims_Flannery
-	.4byte sAnims_Norman
-	.4byte sAnims_Winona
-	.4byte sAnims_TateAndLiza
-	.4byte sAnims_Wallace
-	.4byte sAnims_Sidney
-	.4byte sAnims_Phoebe
-	.4byte sAnims_Glacia
-	.4byte sAnims_Drake
+	.4byte sAnims_Brendan @ TRAINER_PIC_BRENDAN
+	.4byte sAnims_May @ TRAINER_PIC_MAY
+	.4byte sAnims_Lass @ TRAINER_PIC_LASS
+	.4byte sAnims_Youngster @ TRAINER_PIC_YOUNGSTER
+	.4byte sAnims_Hiker @ TRAINER_PIC_HIKER
+	.4byte sAnims_Beauty @ TRAINER_PIC_BEAUTY
+	.4byte sAnims_Fisherman @ TRAINER_PIC_FISHERMAN
+	.4byte sAnims_Lady @ TRAINER_PIC_LADY
+	.4byte sAnims_CyclingTriathleteM @ TRAINER_PIC_CYCLING_TRIATHLETE_M
+	.4byte sAnims_AquaGruntM @ TRAINER_PIC_AQUA_GRUNT_M
+	.4byte sAnims_Twins @ TRAINER_PIC_TWINS
+	.4byte sAnims_SwimmerF @ TRAINER_PIC_SWIMMER_F
+	.4byte sAnims_BugCatcher @ TRAINER_PIC_BUG_CATCHER
+	.4byte sAnims_SchoolKidM @ TRAINER_PIC_SCHOOL_KID_M
+	.4byte sAnims_RichBoy @ TRAINER_PIC_RICH_BOY
+	.4byte sAnims_SrAndJr @ TRAINER_PIC_SR_AND_JR
+	.4byte sAnims_BlackBelt @ TRAINER_PIC_BLACK_BELT
+	.4byte sAnims_Wally @ TRAINER_PIC_WALLY
+	.4byte sAnims_AquaGruntF @ TRAINER_PIC_AQUA_GRUNT_F
+	.4byte sAnims_TuberF @ TRAINER_PIC_TUBER_F
+	.4byte sAnims_HexManiac @ TRAINER_PIC_HEX_MANIAC
+	.4byte sAnims_PokemonBreederF @ TRAINER_PIC_POKEMON_BREEDER_F
+	.4byte sAnims_MagmaGruntM @ TRAINER_PIC_MAGMA_GRUNT_M
+	.4byte sAnims_MagmaGruntF @ TRAINER_PIC_MAGMA_GRUNT_F
+	.4byte sAnims_Interviewer @ TRAINER_PIC_INTERVIEWER
+	.4byte sAnims_TuberM @ TRAINER_PIC_TUBER_M
+	.4byte sAnims_YoungCouple @ TRAINER_PIC_YOUNG_COUPLE
+	.4byte sAnims_Guitarist @ TRAINER_PIC_GUITARIST
+	.4byte sAnims_Gentleman @ TRAINER_PIC_GENTLEMAN
+	.4byte sAnims_Steven @ TRAINER_PIC_STEVEN
+	.4byte sAnims_Maxie @ TRAINER_PIC_MAXIE
+	.4byte sAnims_RunningTriathleteF @ TRAINER_PIC_RUNNING_TRIATHLETE_F
+	.4byte sAnims_RunningTriathleteM @ TRAINER_PIC_RUNNING_TRIATHLETE_M
+	.4byte sAnims_BattleGirl @ TRAINER_PIC_BATTLE_GIRL
+	.4byte sAnims_CyclingTriathleteF @ TRAINER_PIC_CYCLING_TRIATHLETE_F
+	.4byte sAnims_SwimmerM @ TRAINER_PIC_SWIMMER_M
+	.4byte sAnims_PokefanF @ TRAINER_PIC_POKEFAN_F
+	.4byte sAnims_ExpertM @ TRAINER_PIC_EXPERT_M
+	.4byte sAnims_ExpertF @ TRAINER_PIC_EXPERT_F
+	.4byte sAnims_SwimmingTriathleteM @ TRAINER_PIC_SWIMMING_TRIATHLETE_M
+	.4byte sAnims_SwimmingTriathleteF @ TRAINER_PIC_SWIMMING_TRIATHLETE_F
+	.4byte sAnims_DragonTamer @ TRAINER_PIC_DRAGON_TAMER
+	.4byte sAnims_BirdKeeper @ TRAINER_PIC_BIRD_KEEPER
+	.4byte sAnims_NinjaBoy @ TRAINER_PIC_NINJA_BOY
+	.4byte sAnims_ParasolLady @ TRAINER_PIC_PARASOL_LADY
+	.4byte sAnims_BugManiac @ TRAINER_PIC_BUG_MANIAC
+	.4byte sAnims_Sailor @ TRAINER_PIC_SAILOR
+	.4byte sAnims_Collector @ TRAINER_PIC_COLLECTOR
+	.4byte sAnims_PokemonBreederM @ TRAINER_PIC_POKEMON_BREEDER_M
+	.4byte sAnims_PokemonRangerM @ TRAINER_PIC_POKEMON_RANGER_M
+	.4byte sAnims_PokemonRangerF @ TRAINER_PIC_POKEMON_RANGER_F
+	.4byte sAnims_MagmaAdminM @ TRAINER_PIC_MAGMA_ADMIN_M
+	.4byte sAnims_MagmaAdminF @ TRAINER_PIC_MAGMA_ADMIN_F
+	.4byte sAnims_AromaLady @ TRAINER_PIC_AROMA_LADY
+	.4byte sAnims_RuinManiac @ TRAINER_PIC_RUIN_MANIAC
+	.4byte sAnims_CoolTrainerM @ TRAINER_PIC_COOL_TRAINER_M
+	.4byte sAnims_CoolTrainerF @ TRAINER_PIC_COOL_TRAINER_F
+	.4byte sAnims_Pokemaniac @ TRAINER_PIC_POKEMANIAC
+	.4byte sAnims_Kindler @ TRAINER_PIC_KINDLER
+	.4byte sAnims_Camper @ TRAINER_PIC_CAMPER
+	.4byte sAnims_Picnicker @ TRAINER_PIC_PICNICKER
+	.4byte sAnims_PsychicM @ TRAINER_PIC_PSYCHIC_M
+	.4byte sAnims_PsychicF @ TRAINER_PIC_PSYCHIC_F
+	.4byte sAnims_SchoolKidF @ TRAINER_PIC_SCHOOL_KID_F
+	.4byte sAnims_PokefanM @ TRAINER_PIC_POKEFAN_M
+	.4byte sAnims_SisAndBro @ TRAINER_PIC_SIS_AND_BRO
+	.4byte sAnims_OldCouple @ TRAINER_PIC_OLD_COUPLE
+	.4byte sAnims_AquaAdminM @ TRAINER_PIC_AQUA_ADMIN_M
+	.4byte sAnims_AquaAdminF @ TRAINER_PIC_AQUA_ADMIN_F
+	.4byte sAnims_UnusedAqua @ TRAINER_PIC_UNUSED_AQUA
+	.4byte sAnims_Archie @ TRAINER_PIC_ARCHIE
+	.4byte sAnims_Roxanne @ TRAINER_PIC_ROXANNE
+	.4byte sAnims_Brawly @ TRAINER_PIC_BRAWLY
+	.4byte sAnims_Wattson @ TRAINER_PIC_WATTSON
+	.4byte sAnims_Flannery @ TRAINER_PIC_FLANNERY
+	.4byte sAnims_Norman @ TRAINER_PIC_NORMAN
+	.4byte sAnims_Winona @ TRAINER_PIC_WINONA
+	.4byte sAnims_TateAndLiza @ TRAINER_PIC_TATE_AND_LIZA
+	.4byte sAnims_Wallace @ TRAINER_PIC_WALLACE
+	.4byte sAnims_Sidney @ TRAINER_PIC_SIDNEY
+	.4byte sAnims_Phoebe @ TRAINER_PIC_PHOEBE
+	.4byte sAnims_Glacia @ TRAINER_PIC_GLACIA
+	.4byte sAnims_Drake @ TRAINER_PIC_DRAKE
 
 @ 81EC3F0
 	.include "data/trainer_graphics/front_pic_coordinates.inc"
@@ -699,6 +699,6 @@ sBackAnims_Wally:: @ 81ECAC4
 
 	.align 2
 gTrainerBackAnimsPtrTable:: @ 81ECACC
-	.4byte sBackAnims_Brendan
-	.4byte sBackAnims_May
-	.4byte sBackAnims_Wally
+	.4byte sBackAnims_Brendan @ TRAINER_BACK_PIC_BRENDAN
+	.4byte sBackAnims_May @ TRAINER_BACK_PIC_MAY
+	.4byte sBackAnims_Wally @ TRAINER_BACK_PIC_WALLY
