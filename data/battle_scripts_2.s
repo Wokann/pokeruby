@@ -15,47 +15,50 @@
 
 	.align 2
 gBattlescriptsForBallThrow:: @ 81D9E48
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_SafariBallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
-	.4byte BattleScript_BallThrow
+	.4byte BattleScript_BallThrow        @ ITEM_NONE
+	.4byte BattleScript_BallThrow        @ ITEM_MASTER_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_ULTRA_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_GREAT_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_POKE_BALL
+	.4byte BattleScript_SafariBallThrow  @ ITEM_SAFARI_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_NET_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_DIVE_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_NEST_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_REPEAT_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_TIMER_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_LUXURY_BALL
+	.4byte BattleScript_BallThrow        @ ITEM_PREMIER_BALL
 
+	.align 2
 gBattlescriptsForUsingItem:: @ 81D9E7C
 	.4byte BattleScript_PlayerUsesItem
-	.4byte BattleScript_OpponentUsesHealItem
-	.4byte BattleScript_OpponentUsesHealItem
-	.4byte BattleScript_OpponentUsesStatusCureItem
-	.4byte BattleScript_OpponentUsesXItem
-	.4byte BattleScript_OpponentUsesGuardSpec
+	.4byte BattleScript_OpponentUsesHealItem        @ AI_ITEM_FULL_RESTORE
+	.4byte BattleScript_OpponentUsesHealItem        @ AI_ITEM_HEAL_HP
+	.4byte BattleScript_OpponentUsesStatusCureItem  @ AI_ITEM_CURE_CONDITION
+	.4byte BattleScript_OpponentUsesXItem           @ AI_ITEM_X_STAT
+	.4byte BattleScript_OpponentUsesGuardSpec       @ AI_ITEM_GUARD_SPECS
 
+	.align 2
 gBattlescriptsForRunningByItem:: @ 81D9E94
 	.4byte BattleScript_RunByUsingItem
 
+	.align 2
 gBattlescriptsForSafariActions:: @ 81D9E98
 	.4byte BattleScript_ActionWatchesCarefully
 	.4byte BattleScript_ActionGetNear
 	.4byte BattleScript_ActionThrowPokeblock
 	.4byte BattleScript_ActionWallyThrow
 
-BattleScript_BallThrow: @ 81D9EA8
+BattleScript_BallThrow:: @ 81D9EA8
 	jumpifhalfword CMP_COMMON_BITS, gBattleTypeFlags, BATTLE_TYPE_WALLY_TUTORIAL, BattleScript_BallThrowByWally
 	printstring STRINGID_PLAYERUSEDITEM
 	handleballthrow
 
-BattleScript_BallThrowByWally: @ 81D9EB8
+BattleScript_BallThrowByWally:: @ 81D9EB8
 	printstring STRINGID_WALLYUSEDITEM
 	handleballthrow
 
-BattleScript_SafariBallThrow: @ 81D9EBC
+BattleScript_SafariBallThrow:: @ 81D9EBC
 	printstring STRINGID_PLAYERUSEDITEM
 	updatestatusicon BS_ATTACKER
 	handleballthrow
@@ -64,7 +67,7 @@ BattleScript_SuccessBallThrow:: @ 81D9EC2
 	jumpifhalfword CMP_EQUAL, gLastUsedItem, ITEM_SAFARI_BALL, BattleScript_PrintCaughtMonInfo
 	incrementgamestat GAME_STAT_POKEMON_CAPTURES
 
-BattleScript_PrintCaughtMonInfo: @ 81D9ED0
+BattleScript_PrintCaughtMonInfo:: @ 81D9ED0
 	printstring STRINGID_GOTCHAPKMNCAUGHTPLAYER
 	trysetcaughtmondexflags BattleScript_TryNicknameCaughtMon
 	printstring STRINGID_PKMNDATAADDEDTODEX
@@ -72,7 +75,7 @@ BattleScript_PrintCaughtMonInfo: @ 81D9ED0
 	setbyte gBattleCommunication, 0
 	displaydexinfo
 
-BattleScript_TryNicknameCaughtMon: @ 81D9EE3
+BattleScript_TryNicknameCaughtMon:: @ 81D9EE3
 	printstring STRINGID_GIVENICKNAMECAPTURED
 	waitstate
 	setbyte gBattleCommunication, 0
@@ -80,10 +83,10 @@ BattleScript_TryNicknameCaughtMon: @ 81D9EE3
 	printstring STRINGID_PKMNSENTTOPC
 	waitmessage B_WAIT_TIME_LONG
 
-BattleScript_GiveCaughtMonEnd: @ 81D9EF8
+BattleScript_GiveCaughtMonEnd:: @ 81D9EF8
 	givecaughtmon
 
-BattleScript_SuccessBallThrowEnd:
+BattleScript_SuccessBallThrowEnd::
 	setbyte gBattleOutcome, B_OUTCOME_CAUGHT
 	finishturn
 
@@ -101,7 +104,7 @@ BattleScript_ShakeBallThrow:: @ 81D9F0A
 	waitmessage B_WAIT_TIME_LONG
 	setbyte gBattleOutcome, B_OUTCOME_NO_SAFARI_BALLS
 
-BattleScript_ShakeBallThrowEnd: @ 81D9F34
+BattleScript_ShakeBallThrowEnd:: @ 81D9F34
 	finishaction
 
 BattleScript_TrainerBallBlock:: @ 81D9F35
@@ -112,11 +115,11 @@ BattleScript_TrainerBallBlock:: @ 81D9F35
 	waitmessage B_WAIT_TIME_LONG
 	finishaction
 
-BattleScript_PlayerUsesItem: @ 81D9F45
+BattleScript_PlayerUsesItem:: @ 81D9F45
 	moveendcase MOVEEND_MIRROR_MOVE
 	end
 
-BattleScript_OpponentUsesHealItem: @ 81D9F4F
+BattleScript_OpponentUsesHealItem:: @ 81D9F4F
 	pause B_WAIT_TIME_MED
 	playse SE_USE_ITEM
 	printstring STRINGID_TRAINER1USEDITEM
@@ -131,7 +134,7 @@ BattleScript_OpponentUsesHealItem: @ 81D9F4F
 	moveendcase MOVEEND_MIRROR_MOVE
 	finishaction
 
-BattleScript_OpponentUsesStatusCureItem: @ 81D9F7B
+BattleScript_OpponentUsesStatusCureItem:: @ 81D9F7B
 	pause B_WAIT_TIME_MED
 	playse SE_USE_ITEM
 	printstring STRINGID_TRAINER1USEDITEM
@@ -143,7 +146,7 @@ BattleScript_OpponentUsesStatusCureItem: @ 81D9F7B
 	moveendcase MOVEEND_MIRROR_MOVE
 	finishaction
 
-BattleScript_OpponentUsesXItem: @ 81D9F9C
+BattleScript_OpponentUsesXItem:: @ 81D9F9C
 	pause B_WAIT_TIME_MED
 	playse SE_USE_ITEM
 	printstring STRINGID_TRAINER1USEDITEM
@@ -154,7 +157,7 @@ BattleScript_OpponentUsesXItem: @ 81D9F9C
 	moveendcase MOVEEND_MIRROR_MOVE
 	finishaction
 
-BattleScript_OpponentUsesGuardSpec: @ 81D9FBB
+BattleScript_OpponentUsesGuardSpec:: @ 81D9FBB
 	pause B_WAIT_TIME_MED
 	playse SE_USE_ITEM
 	printstring STRINGID_TRAINER1USEDITEM
@@ -165,7 +168,7 @@ BattleScript_OpponentUsesGuardSpec: @ 81D9FBB
 	moveendcase MOVEEND_MIRROR_MOVE
 	finishaction
 
-BattleScript_RunByUsingItem: @ 81D9FDA
+BattleScript_RunByUsingItem:: @ 81D9FDA
 	playse SE_FLEE
 	setbyte gBattleOutcome, B_OUTCOME_RAN
 	finishturn
