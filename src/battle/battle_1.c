@@ -9,6 +9,7 @@
 #include "constants/items.h"
 #include "constants/opponents.h"
 #include "constants/trainers.h"
+#include "constants/battle_ai.h"
 
 #include "../data/trainer_graphics/back_pic_tables.h"
 #include "../data/pokemon_graphics/enemy_mon_elevation.h"

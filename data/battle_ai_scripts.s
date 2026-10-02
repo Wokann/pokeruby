@@ -13,16 +13,16 @@
 
 	.align 2
 gBattleAI_ScriptsTable:: @ 81DA01C
-	.4byte AI_CheckBadMove
-	.4byte AI_CheckViability
-	.4byte AI_TryToFaint
-	.4byte AI_SetupFirstTurn
-	.4byte AI_Risky
-	.4byte AI_PreferPowerExtremes
-	.4byte AI_PreferBatonPass
-	.4byte AI_Nothing
-	.4byte AI_HPAware
-	.4byte AI_TrySunnyDayStart
+	.4byte AI_CheckBadMove        @ AI_SCRIPT_CHECK_BAD_MOVE
+	.4byte AI_CheckViability      @ AI_SCRIPT_CHECK_VIABILITY
+	.4byte AI_TryToFaint          @ AI_SCRIPT_TRY_TO_FAINT
+	.4byte AI_SetupFirstTurn      @ AI_SCRIPT_SETUP_FIRST_TURN
+	.4byte AI_Risky               @ AI_SCRIPT_RISKY
+	.4byte AI_PreferPowerExtremes @ AI_SCRIPT_PREFER_POWER_EXTREMES
+	.4byte AI_PreferBatonPass     @ AI_SCRIPT_PREFER_BATON_PASS
+	.4byte AI_Nothing             @ AI_SCRIPT_DO_NOTHING
+	.4byte AI_HPAware             @ AI_SCRIPT_HP_AWARE
+	.4byte AI_TrySunnyDayStart    @ AI_SCRIPT_TRY_SUNNY_DAY_START
 	.4byte AI_Ret
 	.4byte AI_Ret
 	.4byte AI_Ret
@@ -495,7 +495,7 @@ AI_CBM_FutureSight: @ 81DA742
 
 AI_CBM_FakeOut: @ 81DA74D
 	is_first_turn_for AI_USER
-	if_equal 0, Score_Minus10
+	if_equal FALSE, Score_Minus10
 	end
 
 AI_CBM_Stockpile: @ 81DA756
