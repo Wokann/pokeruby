@@ -105,43 +105,43 @@ struct GcmbStruct gMultibootProgramStruct;
 static const u16 sIntroDrops_Pal[] = INCBIN_U16("graphics/intro/scene_1/drops.gbapal");
 static const u16 sIntroLogo_Pal[] = INCBIN_U16("graphics/intro/scene_1/logo.gbapal");
 #if ENGLISH
-static const u8 sIntroDropsLogo_Gfx[] = INCBIN_U8("graphics/intro/intro.4bpp.lz");
+static const u8 sIntroDropsLogo_Gfx[] = INCBIN_U8("graphics/intro/scene_1/drops_logo.4bpp.lz");
 #elif GERMAN
 extern const u8 sIntroDropsLogo_Gfx[];
 #endif
 static const u16 sIntro1Bg_Pal[][16] =
 {
-    INCBIN_U16("graphics/intro/intro1_bgpal1.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal2.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal3.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal4.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal5.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal6.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal7.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal8.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal9.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal10.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal11.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal12.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal13.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal14.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal15.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal16.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_palette_1.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_palette_2.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_palette_3.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_palette_4.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_palette_5.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_palette_6.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_palette_7.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_palette_8.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_palette_9.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_palette_10.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_palette_11.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_palette_12.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_palette_13.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_palette_14.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_palette_15.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_palette_16.gbapal"),
 };
 static const u8 sIntro1Bg0_Tilemap[] = INCBIN_U8("graphics/intro/scene_1/bg0_map.bin.lz");
 static const u8 sIntro1Bg1_Tilemap[] = INCBIN_U8("graphics/intro/scene_1/bg1_map.bin.lz");
 static const u8 sIntro1Bg2_Tilemap[] = INCBIN_U8("graphics/intro/scene_1/bg2_map.bin.lz");
 static const u8 sIntro1Bg3_Tilemap[] = INCBIN_U8("graphics/intro/scene_1/bg3_map.bin.lz");
-static const u8 sIntro1Bg_Gfx[] = INCBIN_U8("graphics/intro/introgfx.4bpp.lz");
+static const u8 sIntro1Bg_Gfx[] = INCBIN_U8("graphics/intro/scene_1/bg_leaves.4bpp.lz");
 static const u16 sIntroPokeball_Pal[] = INCBIN_U16("graphics/intro/scene_3/pokeball.gbapal");
 static const u8 sIntroPokeball_Tilemap[] = INCBIN_U8("graphics/intro/scene_3/pokeball_map.bin.lz");
 static const u8 sIntroPokeball_Gfx[] = INCBIN_U8("graphics/intro/scene_3/pokeball.8bpp.lz");
 static const u16 sIntroStreaks_Pal[] = INCBIN_U16("graphics/intro/scene_3/streaks.gbapal");
 static const u8 sIntroStreaks_Gfx[] = INCBIN_U8("graphics/intro/scene_3/streaks.4bpp.lz");
 static const u8 sIntroStreaks_Tilemap[] = INCBIN_U8("graphics/intro/scene_3/streaks_map.bin.lz");
-static const u16 sIntroBattleBurst_Pal[] = INCBIN_U16("graphics/intro/intro3_misc1.gbapal");
-static const u16 sIntroBattleAttack_Pal[] = INCBIN_U16("graphics/intro/intro3_misc2.gbapal");
-static const u8 sIntroBattleEffects_Gfx[] = INCBIN_U8("graphics/intro/intro3_misc.4bpp.lz");
+static const u16 sIntroBattleBurst_Pal[] = INCBIN_U16("graphics/intro/scene_3/battle_burst.gbapal");
+static const u16 sIntroBattleAttack_Pal[] = INCBIN_U16("graphics/intro/scene_3/battle_attack.gbapal");
+static const u8 sIntroBattleEffects_Gfx[] = INCBIN_U8("graphics/intro/scene_3/battle_effects.4bpp.lz");
 static const u16 sIntroLati_Pal[] = INCBIN_U16("graphics/intro/scene_1/lati.gbapal");
 static const u8 sIntroLati_Gfx[] = INCBIN_U8("graphics/intro/scene_1/lati.4bpp.lz");
 static const struct OamData sOamData_WaterDrop =
