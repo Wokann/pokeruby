@@ -713,15 +713,15 @@ Move_PIN_MISSILE: @ 81C7F5C
 	splitbgprio ANIM_TARGET
 	setalpha 12, 8
 	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
-	createsprite gPinMissileSpriteTemplate, ANIM_ATTACKER, 2, 20, -8, -8, -8, 20, -32
+	create_pin_missile_sprite ANIM_ATTACKER, 2, initial_x=20, initial_y=-8, target_x=-8, target_y=-8, duration=20, wave_amplitude=-32
 	delay 15
-	createsprite gPinMissileSpriteTemplate, ANIM_ATTACKER, 2, 20, -8, 8, 8, 20, -40
+	create_pin_missile_sprite ANIM_ATTACKER, 2, initial_x=20, initial_y=-8, target_x=8, target_y=8, duration=20, wave_amplitude=-40
 	delay 4
 	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 3, -8, -8, 1, 2
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 2, 1
 	delay 9
-	createsprite gPinMissileSpriteTemplate, ANIM_ATTACKER, 2, 20, -8, 0, 0, 20, -32
+	create_pin_missile_sprite ANIM_ATTACKER, 2, initial_x=20, initial_y=-8, target_x=0, target_y=0, duration=20, wave_amplitude=-32
 	delay 4
 	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 3, 8, 8, 1, 2
@@ -829,7 +829,7 @@ Move_POISON_STING: @ 81C828D
 	splitbgprio ANIM_TARGET
 	setalpha 12, 8
 	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER
-	createsprite gLinearStingerSpriteTemplate, ANIM_TARGET, 2, 20, 0, -8, 0, 20
+	create_linear_stinger_sprite ANIM_TARGET, 2, initial_x=20, initial_y=0, target_x=-8, target_y=0, duration=20
 	waitforvisualfinish
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 1, 2
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 5, 1
@@ -848,8 +848,8 @@ Move_TWINEEDLE: @ 81C82E2
 	splitbgprio ANIM_TARGET
 	setalpha 12, 8
 	loopsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER, 6, 2
-	createsprite gLinearStingerSpriteTemplate, ANIM_TARGET, 2, 10, -4, 0, -4, 20
-	createsprite gLinearStingerSpriteTemplate, ANIM_TARGET, 2, 20, 12, 10, 12, 20
+	create_linear_stinger_sprite ANIM_TARGET, 2, initial_x=10, initial_y=-4, target_x=0, target_y=-4, duration=20
+	create_linear_stinger_sprite ANIM_TARGET, 2, initial_x=20, initial_y=12, target_x=10, target_y=12, duration=20
 	delay 20
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 5, 1
 	createsprite gHandleInvertHitSplatSpriteTemplate, ANIM_ATTACKER, 3, 0, -4, ANIM_TARGET, 3
@@ -1314,9 +1314,9 @@ Move_SPIKE_CANNON: @ 81C8DF1
 	waitforvisualfinish
 	loopsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER, 5, 3
 	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 5
-	createsprite gLinearStingerSpriteTemplate, ANIM_ATTACKER, 2, 10, -8, -8, -8, 20
-	createsprite gLinearStingerSpriteTemplate, ANIM_ATTACKER, 2, 18, 0, 0, 0, 20
-	createsprite gLinearStingerSpriteTemplate, ANIM_ATTACKER, 2, 26, 8, 8, 8, 20
+	create_linear_stinger_sprite ANIM_ATTACKER, 2, initial_x=10, initial_y=-8, target_x=-8, target_y=-8, duration=20
+	create_linear_stinger_sprite ANIM_ATTACKER, 2, initial_x=18, initial_y=0, target_x=0, target_y=0, duration=20
+	create_linear_stinger_sprite ANIM_ATTACKER, 2, initial_x=26, initial_y=8, target_x=8, target_y=8, duration=20
 	waitforvisualfinish
 	createsprite gHandleInvertHitSplatSpriteTemplate, ANIM_ATTACKER, 3, -8, -8, ANIM_TARGET, 2
 	createsprite gHandleInvertHitSplatSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, ANIM_TARGET, 2
@@ -3895,7 +3895,7 @@ Move_TAIL_GLOW: @ 81CC918
 	setalpha 12, 8
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, 1, 2, 0, 4, RGB_BLACK
 	waitforvisualfinish
-	createsprite gTailGlowOrbSpriteTemplate, ANIM_ATTACKER, 66, ANIM_ATTACKER
+	create_tail_glow_orb_sprite ANIM_ATTACKER, 66, relative_to=ANIM_ATTACKER
 	delay 18
 	loopsewithpan SE_M_MORNING_SUN, SOUND_PAN_ATTACKER, 16, 6
 	waitforvisualfinish
