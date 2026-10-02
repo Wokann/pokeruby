@@ -529,12 +529,7 @@ SECTIONS {
         src/battle_anim.o(.rodata);
         src/battle_anim_mons.o(.rodata);
         data/map_events.o(.rodata);
-        data/unused_orb.o(.rodata); /* these files are clearly the rodata for the latter part of battle_anim_mons, but the linker linked map_events before these objects for some reason. perhaps it was compiling and linking 2 folders at the same time? */
-        data/gray_sun.o(.rodata);
-        data/sparkle.o(.rodata);
-        data/unused_paw.o(.rodata);
-        data/unused_hit.o(.rodata);
-        data/unused_orb2.o(.rodata);
+        data/battle_anim_status_effects.o(.rodata);
         src/task.o(.rodata);
         src/reshow_battle_screen.o(.rodata);
         src/battle_anim_status_effects.o(.rodata);
