@@ -773,7 +773,7 @@ SECTIONS {
         src/evolution_graphics.o(.rodata);
         src/bard_music.o(.rodata);
         src/debug/sogabe_debug_menu.o(.rodata);
-        data/strings2.o(.rodata);
+        data/strings.o(.rodata);
         src/menu_cursor.o(.rodata);
         src/mystery_event_msg.o(.rodata);
         data/debug_mystery_event_scripts.o(.rodata);
