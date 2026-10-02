@@ -7823,16 +7823,16 @@ Move_INGRAIN: @ 81D255A
 	create_ingrain_root_sprite ANIM_ATTACKER, 2, offset_x=-16, offset_y=25, subpriority=29, animation=3, duration=120
 	playsewithpan SE_M_SCRATCH, SOUND_PAN_ATTACKER
 	delay 40
-	createsprite gIngrainOrbSpriteTemplate, ANIM_ATTACKER, 3, 32, 26, -1, 3, 30
+	create_ingrain_orb_sprite ANIM_ATTACKER, 3, initial_x=32, initial_y=26, velocity_x=-1, wave_amplitude=3, duration=30
 	delay 5
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
 	delay 5
-	createsprite gIngrainOrbSpriteTemplate, ANIM_ATTACKER, 3, -48, 20, 1, 2, 30
+	create_ingrain_orb_sprite ANIM_ATTACKER, 3, initial_x=-48, initial_y=20, velocity_x=1, wave_amplitude=2, duration=30
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
 	delay 5
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
 	delay 5
-	createsprite gIngrainOrbSpriteTemplate, ANIM_ATTACKER, 3, 48, 26, -2, 3, 18
+	create_ingrain_orb_sprite ANIM_ATTACKER, 3, initial_x=48, initial_y=26, velocity_x=-2, wave_amplitude=3, duration=18
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
 	delay 10
 	waitforvisualfinish
