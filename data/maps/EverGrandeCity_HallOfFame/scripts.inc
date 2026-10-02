@@ -44,10 +44,8 @@ EverGrandeCity_HallOfFame_EventScript_EnterHallOfFame:: @ 815BBA8
 	setvar VAR_TEMP_1, 1
 	call EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags
 	checkplayergender
-	compare VAR_RESULT, MALE
-	goto_if_eq EverGrandeCity_HallOfFame_EventScript_GameClearMale
-	compare VAR_RESULT, FEMALE
-	goto_if_eq EverGrandeCity_HallOfFame_EventScript_GameClearFemale
+	goto_if_eq VAR_RESULT, MALE, EverGrandeCity_HallOfFame_EventScript_GameClearMale
+	goto_if_eq VAR_RESULT, FEMALE, EverGrandeCity_HallOfFame_EventScript_GameClearFemale
 	end
 
 EverGrandeCity_HallOfFame_EventScript_GameClearMale:: @ 815BC41

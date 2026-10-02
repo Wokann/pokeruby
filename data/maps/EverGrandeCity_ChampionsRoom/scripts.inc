@@ -53,17 +53,13 @@ EverGrandeCity_ChampionsRoom_EventScript_Defeated:: @ 815B821
 	closemessage
 	playse SE_DOOR
 	checkplayergender
-	compare VAR_RESULT, MALE
-	call_if_eq EverGrandeCity_ChampionsRoom_EventScript_PlayMayMusic
-	compare VAR_RESULT, FEMALE
-	call_if_eq EverGrandeCity_ChampionsRoom_EventScript_PlayBrendanMusic
+	call_if_eq VAR_RESULT, MALE, EverGrandeCity_ChampionsRoom_EventScript_PlayMayMusic
+	call_if_eq VAR_RESULT, FEMALE, EverGrandeCity_ChampionsRoom_EventScript_PlayBrendanMusic
 	addobject LOCALID_CHAMPIONS_ROOM_RIVAL
 	call EverGrandeCity_ChampionsRoom_EventScript_RivalApproachPlayer
 	checkplayergender
-	compare VAR_RESULT, MALE
-	goto_if_eq EverGrandeCity_ChampionsRoom_EventScript_MayAdvice
-	compare VAR_RESULT, FEMALE
-	goto_if_eq EverGrandeCity_ChampionsRoom_EventScript_BrendanAdvice
+	goto_if_eq VAR_RESULT, MALE, EverGrandeCity_ChampionsRoom_EventScript_MayAdvice
+	goto_if_eq VAR_RESULT, FEMALE, EverGrandeCity_ChampionsRoom_EventScript_BrendanAdvice
 	end
 
 EverGrandeCity_ChampionsRoom_EventScript_PlayMayMusic:: @ 815B87C
@@ -128,10 +124,8 @@ EverGrandeCity_ChampionsRoom_EventScript_BirchArrivesExitForHoF:: @ 815B8F0
 	waitmovement 0
 	msgbox EverGrandeCity_ChampionsRoom_Text_StevenWaitOutside, MSGBOX_DEFAULT
 	checkplayergender
-	compare VAR_RESULT, MALE
-	call_if_eq EverGrandeCity_ChampionsRoom_EventScript_MayCongratulations
-	compare VAR_RESULT, FEMALE
-	call_if_eq EverGrandeCity_ChampionsRoom_EventScript_BrendanCongratulations
+	call_if_eq VAR_RESULT, MALE, EverGrandeCity_ChampionsRoom_EventScript_MayCongratulations
+	call_if_eq VAR_RESULT, FEMALE, EverGrandeCity_ChampionsRoom_EventScript_BrendanCongratulations
 	closemessage
 	applymovement LOCALID_CHAMPIONS_ROOM_STEVEN, EverGrandeCity_ChampionsRoom_Movement_StevenExit
 	applymovement LOCALID_PLAYER, EverGrandeCity_ChampionsRoom_Movement_PlayerExit
