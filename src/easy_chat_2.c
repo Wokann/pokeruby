@@ -20,7 +20,11 @@
 #include "scanline_effect.h"
 
 #include "data/text/easy_chat/group_words.h"
-#include "data/text/easy_chat/words_by_letter.h"
+#if ENGLISH
+#include "data/easy_chat/easy_chat_words_by_letter.h"
+#elif GERMAN
+#include "data/easy_chat/easy_chat_words_by_letter_de.h"
+#endif
 #include "data/text/easy_chat/group_sizes.h"
 #include "data/text/easy_chat/group_orders.h"
 #include "data/text/easy_chat/group_name_table.h"
