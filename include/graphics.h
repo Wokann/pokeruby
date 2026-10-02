@@ -3446,7 +3446,7 @@ extern const u8 gBattleWindowSmall2Gfx[];
 extern const u8 gBattleWindowSmall3Gfx[];
 extern const u8 gBattleWindowLarge2Gfx[];
 extern const u8 gBlankGfxCompressed[];
-extern const u8 gBattleInterfaceGfx_HpNumbers[];
+extern const u8 gBattleInterfaceGfx_BattleBar[];
 extern const u8 gBattleInterface_BallStatusBarGfx[];
 extern const u16 gBattleInterface_BallStatusBarPal[];
 extern const u16 gBattleInterface_BallDisplayPal[];

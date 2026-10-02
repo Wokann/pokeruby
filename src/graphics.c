@@ -133,7 +133,7 @@ const u8 gBattleAnimSpriteGfx_Glass2[] = INCBIN_U8("graphics/battle_anims/sprite
 const u8 gBattleAnimSpritePal_PinkHeart2[] = INCBIN_U8("graphics/battle_anims/sprites/pink_heart_2.gbapal.lz");
 const u8 gBattleAnimSpriteGfx_PinkHeart2[] = INCBIN_U8("graphics/battle_anims/sprites/pink_heart_2.4bpp.lz");
 
-const u8 gBattleInterfaceGfx_HpNumbers[] = INCBIN_U8("graphics/interface/hp_numbers.4bpp.lz");
+const u8 gBattleInterfaceGfx_BattleBar[] = INCBIN_U8("graphics/battle_interface/battle_bar.4bpp.lz");
 
 const u8 gBattleAnimSpriteGfx_SapDrip[] = INCBIN_U8("graphics/battle_anims/sprites/sap_drip.4bpp.lz");
 const u8 gBattleAnimSpritePal_SapDrip[] = INCBIN_U8("graphics/battle_anims/sprites/sap_drip.gbapal.lz");

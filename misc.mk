@@ -110,15 +110,15 @@ graphics/summary_screen/tiles.4bpp: GFX_OPTS := -num_tiles 217
 
 $(MENUGFXDIR)/mon_markings_menu.4bpp: GFX_OPTS := -num_tiles 41
 
-$(MENUGFXDIR)/hp_numbers.4bpp: $(MENUGFXDIR)/hpbar_anim.4bpp $(MENUGFXDIR)/numbers1.4bpp $(MENUGFXDIR)/numbers2.4bpp
-	@cat $(MENUGFXDIR)/hpbar_anim.4bpp $(MENUGFXDIR)/numbers1.4bpp $(MENUGFXDIR)/numbers2.4bpp >$@
+$(BATINTGFXDIR)/battle_bar.4bpp: $(BATINTGFXDIR)/hpbar_anim_unused.4bpp \
+                                  $(BATINTGFXDIR)/numbers1.4bpp \
+                                  $(BATINTGFXDIR)/numbers2.4bpp
+	@cat $^ >$@
 
 
 #### Battle Interface ####
 
-BATTLEINTERFACEDIR := graphics/battle_interface
-
-$(BATTLEINTERFACEDIR)/healthbox_elements.4bpp: $(BATTLEINTERFACEDIR)/hpbar.4bpp $(BATTLEINTERFACEDIR)/expbar.4bpp $(BATTLEINTERFACEDIR)/status_psn.4bpp $(BATTLEINTERFACEDIR)/status_par.4bpp $(BATTLEINTERFACEDIR)/status_slp.4bpp $(BATTLEINTERFACEDIR)/status_frz.4bpp $(BATTLEINTERFACEDIR)/status_brn.4bpp $(BATTLEINTERFACEDIR)/misc.4bpp $(BATTLEINTERFACEDIR)/hpbar_anim.4bpp $(BATTLEINTERFACEDIR)/misc_frameend.4bpp
+$(BATINTGFXDIR)/healthbox_elements.4bpp: $(BATINTGFXDIR)/hpbar.4bpp $(BATINTGFXDIR)/expbar.4bpp $(BATINTGFXDIR)/status_psn.4bpp $(BATINTGFXDIR)/status_par.4bpp $(BATINTGFXDIR)/status_slp.4bpp $(BATINTGFXDIR)/status_frz.4bpp $(BATINTGFXDIR)/status_brn.4bpp $(BATINTGFXDIR)/misc.4bpp $(BATINTGFXDIR)/hpbar_anim.4bpp $(BATINTGFXDIR)/misc_frameend.4bpp
 	cat $^ > $@
 
 #### PokeNav ####
