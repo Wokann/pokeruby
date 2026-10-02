@@ -352,6 +352,10 @@
 	createsprite gHandleInvertHitSplatSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \relative_to, \animation
 	.endm
 
+	.macro create_tear_drop_sprite anim_battler:req, subpriority_offset:req, relative_to:req, type:req
+	createsprite gTearDropSpriteTemplate, \anim_battler, \subpriority_offset, \relative_to, \type
+	.endm
+
 	.macro create_claw_slash_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, animation:req
 	createsprite gClawSlashSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \animation
 	.endm

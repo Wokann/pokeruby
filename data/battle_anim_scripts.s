@@ -4179,17 +4179,17 @@ Move_FAKE_TEARS: @ 81CD10D
 	createvisualtask AnimTask_RockMonBackAndForth, 5, ANIM_ATTACKER, 2, 1
 	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 12, 4
 	delay 8
-	createsprite gTearDropSpriteTemplate, ANIM_ATTACKER, 2, ANIM_ATTACKER, 0
-	createsprite gTearDropSpriteTemplate, ANIM_ATTACKER, 2, ANIM_ATTACKER, 1
+	create_tear_drop_sprite ANIM_ATTACKER, 2, relative_to=ANIM_ATTACKER, type=0
+	create_tear_drop_sprite ANIM_ATTACKER, 2, relative_to=ANIM_ATTACKER, type=1
 	delay 8
-	createsprite gTearDropSpriteTemplate, ANIM_ATTACKER, 2, ANIM_ATTACKER, 2
-	createsprite gTearDropSpriteTemplate, ANIM_ATTACKER, 2, ANIM_ATTACKER, 3
+	create_tear_drop_sprite ANIM_ATTACKER, 2, relative_to=ANIM_ATTACKER, type=2
+	create_tear_drop_sprite ANIM_ATTACKER, 2, relative_to=ANIM_ATTACKER, type=3
 	delay 8
-	createsprite gTearDropSpriteTemplate, ANIM_ATTACKER, 2, ANIM_ATTACKER, 0
-	createsprite gTearDropSpriteTemplate, ANIM_ATTACKER, 2, ANIM_ATTACKER, 1
+	create_tear_drop_sprite ANIM_ATTACKER, 2, relative_to=ANIM_ATTACKER, type=0
+	create_tear_drop_sprite ANIM_ATTACKER, 2, relative_to=ANIM_ATTACKER, type=1
 	delay 8
-	createsprite gTearDropSpriteTemplate, ANIM_ATTACKER, 2, ANIM_ATTACKER, 2
-	createsprite gTearDropSpriteTemplate, ANIM_ATTACKER, 2, ANIM_ATTACKER, 3
+	create_tear_drop_sprite ANIM_ATTACKER, 2, relative_to=ANIM_ATTACKER, type=2
+	create_tear_drop_sprite ANIM_ATTACKER, 2, relative_to=ANIM_ATTACKER, type=3
 	waitforvisualfinish
 	end
 
