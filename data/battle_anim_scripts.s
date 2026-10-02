@@ -10551,7 +10551,7 @@ General_ItemSteal: @ 81D6852
 	createvisualtask AnimTask_SetAnimAttackerAndTargetForEffectAtk, 2
 	createvisualtask AnimTask_SetTargetToEffectBattler, 2
 	delay 1
-	createsprite gItemStealSpriteTemplate, ANIM_ATTACKER, 2, 0, -5, 10, 2, -1
+	create_item_steal_sprite ANIM_ATTACKER, 2, initial_x=0, initial_y=-5, unk2=10, unk3=2, unk4=-1
 	end
 
 General_SnatchMove: @ 81D6877

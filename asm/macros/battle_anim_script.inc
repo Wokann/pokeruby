@@ -573,3 +573,7 @@
 	.macro create_present_heal_particle_sprite anim_battler:req, subpriority_offset:req, initial_x:req, initial_y:req, velocity_y:req, unused3=1
 	createsprite gPresentHealParticleSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y, \velocity_y, \unused3
 	.endm
+
+	.macro create_item_steal_sprite anim_battler:req, subpriority_offset:req, initial_x:req, initial_y:req, unk2, unk3, unk4
+	createsprite gItemStealSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y, \unk2, \unk3, \unk4
+	.endm
