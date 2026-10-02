@@ -288,7 +288,7 @@ SECTIONS {
         src/battle_anim_dark.o(.text);
         src/battle_anim_ground.o(.text);
         src/battle/anim/normal.o(.text);
-        src/battle/anim/battle_intro.o(.text);
+        src/battle_intro.o(.text);
         src/bike.o(.text);
         src/easy_chat_1.o(.text);
         src/easy_chat_2.o(.text);
@@ -705,7 +705,7 @@ SECTIONS {
         src/battle_anim_dark.o(.rodata);
         src/battle_anim_ground.o(.rodata);
         src/battle/anim/normal.o(.rodata);
-        src/battle/anim/battle_intro.o(.rodata);
+        src/battle_intro.o(.rodata);
         src/bike.o(.rodata);
         src/easy_chat_1.o(.rodata);
         src/easy_chat_2.o(.rodata);
