@@ -543,7 +543,7 @@ void InitSecretBaseDecorationSprites(void)
                     gSpecialVar_0x8006 = decorationPositions[decorationIndex] >> 4;
                     gSpecialVar_0x8007 = decorationPositions[decorationIndex] & 0xF;
                     metatileBehavior = MapGridGetMetatileBehaviorAt(gSpecialVar_0x8006 + MAP_OFFSET, gSpecialVar_0x8007 + MAP_OFFSET);
-                    if (MetatileBehavior_IsSecretBaseLargeMatEdge(metatileBehavior) == TRUE || MetatileBehavior_IsLargeMatCenter(metatileBehavior) == TRUE)
+                    if (MetatileBehavior_HoldsSmallDecoration(metatileBehavior) == TRUE || MetatileBehavior_HoldsLargeDecoration(metatileBehavior) == TRUE)
                     {
                         gSpecialVar_Result = VAR_OBJ_GFX_ID_0 + (gMapHeader.events->objectEvents[objectEventId].graphicsId - OBJ_EVENT_GFX_VAR_0);
                         VarSet(gSpecialVar_Result, gDecorations[decorations[decorationIndex]].tiles[0]);

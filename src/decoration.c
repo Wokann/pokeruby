@@ -1190,9 +1190,9 @@ void AttemptCancelPlaceDecoration(u8 taskId)
     DisplayItemMessageOnField(taskId, gText_CancelDecorating, CancelDecoratingPrompt, 0);
 }
 
-bool8 IsBlockDecorationOnNormalLayer(u8 metatileBehavior, u16 layerType)
+static bool8 IsSecretBaseTrainerSpot(u8 metatileBehavior, u16 layerType)
 {
-    if (MetatileBehavior_IsBlockDecoration(metatileBehavior) != TRUE || layerType != 0)
+    if (MetatileBehavior_IsSecretBaseTrainerSpot(metatileBehavior) != TRUE || layerType != 0)
     {
         return FALSE;
     }
@@ -1210,7 +1210,7 @@ bool8 IsntInitialPosition(u8 taskId, s16 x, s16 y, u16 layerType)
 
 bool8 IsFloorOrBoardAndHole(u16 metatileBehavior, const struct Decoration *decoration)
 {
-    if (MetatileBehavior_IsBlockDecoration(metatileBehavior) != TRUE)
+    if (MetatileBehavior_IsSecretBaseTrainerSpot(metatileBehavior) != TRUE)
     {
         if (decoration->id == DECOR_SOLID_BOARD && MetatileBehavior_IsSecretBaseHole(metatileBehavior) == TRUE)
         {
@@ -1273,7 +1273,7 @@ bool8 CanPlaceDecoration(u8 taskId, const struct Decoration *decoration)
                     curX = gTasks[taskId].tCursorX + j;
                     behaviorAt = MapGridGetMetatileBehaviorAt(curX, curY);
                     layerType = GetMetatileAttributesById(NUM_TILES_IN_PRIMARY + decoration->tiles[(mapY - 1 - i) * mapX + j]) & METATILE_ATTR_LAYER_MASK;
-                    if (!MetatileBehavior_IsNormal(behaviorAt) && !IsBlockDecorationOnNormalLayer(behaviorAt, layerType))
+                    if (!MetatileBehavior_IsNormal(behaviorAt) && !IsSecretBaseTrainerSpot(behaviorAt, layerType))
                     {
                         return FALSE;
                     }
@@ -1334,14 +1334,14 @@ bool8 CanPlaceDecoration(u8 taskId, const struct Decoration *decoration)
                 behaviorAt = MapGridGetMetatileBehaviorAt(curX, curY);
                 if (decoration->shape == DECORSHAPE_1x2)
                 {
-                    if (!MetatileBehavior_IsLargeMatCenter(behaviorAt))
+                    if (!MetatileBehavior_HoldsLargeDecoration(behaviorAt))
                     {
                         return FALSE;
                     }
                 }
-                else if (!MetatileBehavior_IsSecretBaseLargeMatEdge(behaviorAt))
+                else if (!MetatileBehavior_HoldsSmallDecoration(behaviorAt))
                 {
-                    if (!MetatileBehavior_IsLargeMatCenter(behaviorAt))
+                    if (!MetatileBehavior_HoldsLargeDecoration(behaviorAt))
                     {
                         return FALSE;
                     }
