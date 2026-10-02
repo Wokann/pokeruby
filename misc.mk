@@ -97,9 +97,10 @@ $(TITLEGFXDIR)/press_start.4bpp: GFX_OPTS := -num_tiles 41
 #### Interface ####
 
 MENUGFXDIR := graphics/interface
+BATINTGFXDIR := graphics/battle_interface
 
-$(MENUGFXDIR)/menu.gbapal: $(MENUGFXDIR)/menu_0.gbapal $(MENUGFXDIR)/menu_1.gbapal
-	@cat $(MENUGFXDIR)/menu_0.gbapal $(MENUGFXDIR)/menu_1.gbapal >$@
+$(BATINTGFXDIR)/textbox.gbapal: $(BATINTGFXDIR)/textbox_0.gbapal $(BATINTGFXDIR)/textbox_1.gbapal
+	@cat $(BATINTGFXDIR)/textbox_0.gbapal $(BATINTGFXDIR)/textbox_1.gbapal >$@
 
 $(MENUGFXDIR)/wordgroup_frame.4bpp: GFX_OPTS := -num_tiles 65
 
