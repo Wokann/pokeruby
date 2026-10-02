@@ -201,7 +201,7 @@ gMonFrontPicTable:: @ 81E8354
 	obj_tiles gMonFrontPic_Murkrow, 0x800, SPECIES_MURKROW
 	obj_tiles gMonFrontPic_Slowking, 0x800, SPECIES_SLOWKING
 	obj_tiles gMonFrontPic_Misdreavus, 0x800, SPECIES_MISDREAVUS
-	obj_tiles gMonFrontPic_UnownA, 0x800, SPECIES_UNOWN
+	obj_tiles gMonStillFrontPic_UnownA, 0x800, SPECIES_UNOWN
 	obj_tiles gMonFrontPic_Wobbuffet, 0x800, SPECIES_WOBBUFFET
 	obj_tiles gMonFrontPic_Girafarig, 0x800, SPECIES_GIRAFARIG
 	obj_tiles gMonFrontPic_Pineco, 0x800, SPECIES_PINECO
@@ -413,30 +413,30 @@ gMonFrontPicTable:: @ 81E8354
 	obj_tiles gMonFrontPic_Deoxys, 0x800, SPECIES_DEOXYS
 	obj_tiles gMonFrontPic_Chimecho, 0x800, SPECIES_CHIMECHO
 	obj_tiles gMonStillFrontPic_Egg, 0x800, SPECIES_EGG
-	obj_tiles gMonFrontPic_UnownB, 0x800, SPECIES_UNOWN_B
-	obj_tiles gMonFrontPic_UnownC, 0x800, SPECIES_UNOWN_C
-	obj_tiles gMonFrontPic_UnownD, 0x800, SPECIES_UNOWN_D
-	obj_tiles gMonFrontPic_UnownE, 0x800, SPECIES_UNOWN_E
-	obj_tiles gMonFrontPic_UnownF, 0x800, SPECIES_UNOWN_F
-	obj_tiles gMonFrontPic_UnownG, 0x800, SPECIES_UNOWN_G
-	obj_tiles gMonFrontPic_UnownH, 0x800, SPECIES_UNOWN_H
-	obj_tiles gMonFrontPic_UnownI, 0x800, SPECIES_UNOWN_I
-	obj_tiles gMonFrontPic_UnownJ, 0x800, SPECIES_UNOWN_J
-	obj_tiles gMonFrontPic_UnownK, 0x800, SPECIES_UNOWN_K
-	obj_tiles gMonFrontPic_UnownL, 0x800, SPECIES_UNOWN_L
-	obj_tiles gMonFrontPic_UnownM, 0x800, SPECIES_UNOWN_M
-	obj_tiles gMonFrontPic_UnownN, 0x800, SPECIES_UNOWN_N
-	obj_tiles gMonFrontPic_UnownO, 0x800, SPECIES_UNOWN_O
-	obj_tiles gMonFrontPic_UnownP, 0x800, SPECIES_UNOWN_P
-	obj_tiles gMonFrontPic_UnownQ, 0x800, SPECIES_UNOWN_Q
-	obj_tiles gMonFrontPic_UnownR, 0x800, SPECIES_UNOWN_R
-	obj_tiles gMonFrontPic_UnownS, 0x800, SPECIES_UNOWN_S
-	obj_tiles gMonFrontPic_UnownT, 0x800, SPECIES_UNOWN_T
-	obj_tiles gMonFrontPic_UnownU, 0x800, SPECIES_UNOWN_U
-	obj_tiles gMonFrontPic_UnownV, 0x800, SPECIES_UNOWN_V
-	obj_tiles gMonFrontPic_UnownW, 0x800, SPECIES_UNOWN_W
-	obj_tiles gMonFrontPic_UnownX, 0x800, SPECIES_UNOWN_X
-	obj_tiles gMonFrontPic_UnownY, 0x800, SPECIES_UNOWN_Y
-	obj_tiles gMonFrontPic_UnownZ, 0x800, SPECIES_UNOWN_Z
-	obj_tiles gMonFrontPic_UnownExclamationMark, 0x800, SPECIES_UNOWN_EMARK
-	obj_tiles gMonFrontPic_UnownQuestionMark, 0x800, SPECIES_UNOWN_QMARK
+	obj_tiles gMonStillFrontPic_UnownB, 0x800, SPECIES_UNOWN_B
+	obj_tiles gMonStillFrontPic_UnownC, 0x800, SPECIES_UNOWN_C
+	obj_tiles gMonStillFrontPic_UnownD, 0x800, SPECIES_UNOWN_D
+	obj_tiles gMonStillFrontPic_UnownE, 0x800, SPECIES_UNOWN_E
+	obj_tiles gMonStillFrontPic_UnownF, 0x800, SPECIES_UNOWN_F
+	obj_tiles gMonStillFrontPic_UnownG, 0x800, SPECIES_UNOWN_G
+	obj_tiles gMonStillFrontPic_UnownH, 0x800, SPECIES_UNOWN_H
+	obj_tiles gMonStillFrontPic_UnownI, 0x800, SPECIES_UNOWN_I
+	obj_tiles gMonStillFrontPic_UnownJ, 0x800, SPECIES_UNOWN_J
+	obj_tiles gMonStillFrontPic_UnownK, 0x800, SPECIES_UNOWN_K
+	obj_tiles gMonStillFrontPic_UnownL, 0x800, SPECIES_UNOWN_L
+	obj_tiles gMonStillFrontPic_UnownM, 0x800, SPECIES_UNOWN_M
+	obj_tiles gMonStillFrontPic_UnownN, 0x800, SPECIES_UNOWN_N
+	obj_tiles gMonStillFrontPic_UnownO, 0x800, SPECIES_UNOWN_O
+	obj_tiles gMonStillFrontPic_UnownP, 0x800, SPECIES_UNOWN_P
+	obj_tiles gMonStillFrontPic_UnownQ, 0x800, SPECIES_UNOWN_Q
+	obj_tiles gMonStillFrontPic_UnownR, 0x800, SPECIES_UNOWN_R
+	obj_tiles gMonStillFrontPic_UnownS, 0x800, SPECIES_UNOWN_S
+	obj_tiles gMonStillFrontPic_UnownT, 0x800, SPECIES_UNOWN_T
+	obj_tiles gMonStillFrontPic_UnownU, 0x800, SPECIES_UNOWN_U
+	obj_tiles gMonStillFrontPic_UnownV, 0x800, SPECIES_UNOWN_V
+	obj_tiles gMonStillFrontPic_UnownW, 0x800, SPECIES_UNOWN_W
+	obj_tiles gMonStillFrontPic_UnownX, 0x800, SPECIES_UNOWN_X
+	obj_tiles gMonStillFrontPic_UnownY, 0x800, SPECIES_UNOWN_Y
+	obj_tiles gMonStillFrontPic_UnownZ, 0x800, SPECIES_UNOWN_Z
+	obj_tiles gMonStillFrontPic_UnownExclamationMark, 0x800, SPECIES_UNOWN_EMARK
+	obj_tiles gMonStillFrontPic_UnownQuestionMark, 0x800, SPECIES_UNOWN_QMARK
