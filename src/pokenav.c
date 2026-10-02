@@ -70,10 +70,10 @@ extern const u8 gPokenavDeviceOutline_Gfx[];
 extern const u8 gPokenavDeviceOutline_Pal[];
 extern const u8 gPokenavMenuBackground_Pal[];
 extern const u8 gPokenavMenuBackground_Tilemap[];
-extern const u8 gPokenavHoennMapMisc_Gfx[];
-extern const u8 gPokenavHoennMap_Tilemap[];
+extern const u8 gPokenavBackground_Gfx[];
+extern const u8 gPokenavBackground_Tilemap[];
 extern const u8 gPokenavBottomToolbarTilemap[];
-extern const u16 gPokenavHoennMap1_Pal[];
+extern const u16 gPokenavBackground_Pal[];
 extern void (*const gPokenavListRowPrinters[])(u16, u16);
 extern const u8 gPokenavTrainerEyesRematchIconTilemap[];
 extern const u8 gPokenavTrainerEyesNoRematchIconTilemap[];
@@ -185,13 +185,13 @@ bool8 LoadPokenavBackgroundStep(void)
     switch (gPokenavState->setupStep)
     {
     case 0:
-        LZ77UnCompVram(gPokenavHoennMapMisc_Gfx, (void *)VRAM + 0xC000);
+        LZ77UnCompVram(gPokenavBackground_Gfx, (void *)VRAM + 0xC000);
         break;
     case 1:
-        LZ77UnCompVram(gPokenavHoennMap_Tilemap, (void *)VRAM + 0xD800);
+        LZ77UnCompVram(gPokenavBackground_Tilemap, (void *)VRAM + 0xD800);
         break;
     case 2:
-        LoadPalette(gPokenavHoennMap1_Pal, 0x10, 0x20);
+        LoadPalette(gPokenavBackground_Pal, 0x10, 0x20);
         break;
     case 3:
         InitPokenavPaletteGradient(0);

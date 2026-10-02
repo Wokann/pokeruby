@@ -2739,7 +2739,7 @@ extern const u8 gSlotMachineReelTimePikaAura[];
 extern const u8 gSlotMachineReelBackground_Tilemap[];
 extern const u8 gSlotMachineReelTimeNumberGap_Gfx[];
 extern const u8 gSlotMachineDigitalDisplay_Gfx[];
-extern const u8 gPokenavHoennMap_Tilemap[];
+extern const u8 gPokenavBackground_Tilemap[];
 extern const u8 gPokenavBottomToolbarTilemap[];
 extern const u8 gPartyMenuDescriptorStatusTilemap[];
 extern const u8 gEasyChatBg2_Gfx[];
