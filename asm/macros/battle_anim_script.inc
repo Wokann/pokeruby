@@ -534,6 +534,10 @@
 	createsprite gDragonRageFirePlumeSpriteTemplate, \anim_battler, \subpriority_offset, \relative_to, \x, \y
 	.endm
 
+	.macro create_dragon_dance_orb_sprite anim_battler:req, subpriority_offset:req, angle:req
+	createsprite gDragonDanceOrbSpriteTemplate, \anim_battler, \subpriority_offset, 256 * \angle
+	.endm
+
 	.macro create_overheat_flame_sprite anim_battler:req, subpriority_offset:req, speed:req, unk1:req, unk2:req, duration:req, y:req
 	createsprite gOverheatFlameSpriteTemplate, \anim_battler, \subpriority_offset, \speed, \unk1, \unk2, \duration, \y
 	.endm

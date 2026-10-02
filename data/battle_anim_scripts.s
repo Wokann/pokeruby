@@ -4528,12 +4528,12 @@ Move_DRAGON_DANCE: @ 81CD7F8
 	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
 	delay 8
 	createvisualtask AnimTask_BlendPalInAndOutByTag, 5, ANIM_TAG_HOLLOW_ORB, RGB(0, 0, 19), 14, 0, 3
-	createsprite gDragonDanceOrbSpriteTemplate, ANIM_ATTACKER, 2, 0
-	createsprite gDragonDanceOrbSpriteTemplate, ANIM_ATTACKER, 2, 43
-	createsprite gDragonDanceOrbSpriteTemplate, ANIM_ATTACKER, 2, 85
-	createsprite gDragonDanceOrbSpriteTemplate, ANIM_ATTACKER, 2, 128
-	createsprite gDragonDanceOrbSpriteTemplate, ANIM_ATTACKER, 2, 170
-	createsprite gDragonDanceOrbSpriteTemplate, ANIM_ATTACKER, 2, 213
+	create_dragon_dance_orb_sprite ANIM_ATTACKER, 2, angle=0/360
+	create_dragon_dance_orb_sprite ANIM_ATTACKER, 2, angle=61/360
+	create_dragon_dance_orb_sprite ANIM_ATTACKER, 2, angle=120/360
+	create_dragon_dance_orb_sprite ANIM_ATTACKER, 2, angle=180/360
+	create_dragon_dance_orb_sprite ANIM_ATTACKER, 2, angle=240/360
+	create_dragon_dance_orb_sprite ANIM_ATTACKER, 2, angle=300/360
 	delay 30
 	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
 	delay 30
