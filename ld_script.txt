@@ -59,7 +59,6 @@ SECTIONS {
         src/battle_ai_switch_items.o(.text);
         src/battle_controller_link_opponent.o(.text);
         src/pokemon_1.o(.text);
-        src/calculate_base_damage.o(.text);
         src/pokemon_2.o(.text);
         src/pokemon_item_effect.o(.text);
         src/pokemon_3.o(.text);
@@ -490,7 +489,6 @@ SECTIONS {
         src/battle_util.o(.rodata);
         src/pokemon_1.o(.rodata);
         src/pokemon_1.o(.data); /* gEvolutionTable needs to be non-const to match */
-        src/calculate_base_damage.o(.rodata);
         src/pokemon_2.o(.rodata);
         src/pokemon_item_effect.o(.rodata);
         src/pokemon_3.o(.rodata);
