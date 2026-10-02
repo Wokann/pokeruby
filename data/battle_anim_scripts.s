@@ -540,21 +540,21 @@ Move_SWIFT: @ 81C7BA5
 	monbg ANIM_DEF_PARTNER
 	setalpha 12, 8
 	playsewithpan SE_M_SWIFT, SOUND_PAN_ATTACKER
-	createsprite gSwiftStarSpriteTemplate, ANIM_TARGET, 3, 20, -10, 20, 0, 22, 20, 1
+	create_swift_star_sprite ANIM_TARGET, 3, initial_x=20, initial_y=-10, target_x=20, target_y=0, duration=22, wave_amplitude=20, target_both=TRUE
 	delay 5
 	playsewithpan SE_M_SWIFT, SOUND_PAN_ATTACKER
-	createsprite gSwiftStarSpriteTemplate, ANIM_TARGET, 3, 20, -10, 20, 5, 22, -18, 1
+	create_swift_star_sprite ANIM_TARGET, 3, initial_x=20, initial_y=-10, target_x=20, target_y=5, duration=22, wave_amplitude=-18, target_both=TRUE
 	delay 5
 	playsewithpan SE_M_SWIFT, SOUND_PAN_ATTACKER
-	createsprite gSwiftStarSpriteTemplate, ANIM_TARGET, 3, 20, -10, 20, -10, 22, 15, 1
+	create_swift_star_sprite ANIM_TARGET, 3, initial_x=20, initial_y=-10, target_x=20, target_y=-10, duration=22, wave_amplitude=15, target_both=TRUE
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 18, 1
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_DEF_PARTNER, 2, 0, 18, 1
 	delay 5
 	playsewithpan SE_M_SWIFT, SOUND_PAN_ATTACKER
-	createsprite gSwiftStarSpriteTemplate, ANIM_TARGET, 3, 20, -10, 20, 0, 22, -20, 1
+	create_swift_star_sprite ANIM_TARGET, 3, initial_x=20, initial_y=-10, target_x=20, target_y=0, duration=22, wave_amplitude=-20, target_both=TRUE
 	delay 5
 	playsewithpan SE_M_SWIFT, SOUND_PAN_ATTACKER
-	createsprite gSwiftStarSpriteTemplate, ANIM_TARGET, 3, 20, -10, 20, 0, 22, 12, 1
+	create_swift_star_sprite ANIM_TARGET, 3, initial_x=20, initial_y=-10, target_x=20, target_y=0, duration=22, wave_amplitude=12, target_both=TRUE
 	delay 5
 	waitforvisualfinish
 	clearmonbg ANIM_DEF_PARTNER
