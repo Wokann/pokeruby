@@ -3440,11 +3440,11 @@ extern const struct CompressedSpritePalette gBattleEnvironmentPalette_Plain[];
 extern const struct CompressedSpriteSheet gBattleEnvironmentTiles_Stadium[];
 extern const u8 gBattleEnvironmentTilemap_Stadium[];
 
-extern const u8 gBattleWindowLargeGfx[];
-extern const u8 gBattleWindowSmallGfx[];
-extern const u8 gBattleWindowSmall2Gfx[];
-extern const u8 gBattleWindowSmall3Gfx[];
-extern const u8 gBattleWindowLarge2Gfx[];
+extern const u8 gHealthboxSinglesPlayerGfx[];
+extern const u8 gHealthboxSinglesOpponentGfx[];
+extern const u8 gHealthboxDoublesPlayerGfx[];
+extern const u8 gHealthboxDoublesOpponentGfx[];
+extern const u8 gHealthboxSafariGfx[];
 extern const u8 gBlankGfxCompressed[];
 extern const u8 gBattleInterfaceGfx_BattleBar[];
 extern const u8 gBattleInterface_BallStatusBarGfx[];

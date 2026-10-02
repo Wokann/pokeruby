@@ -57,25 +57,25 @@ extern const u8 gSubstituteDollTilemap[]; // graphics.s
 extern const u8 gSubstituteDollGfx[]; // graphics.s
 extern const u8 gSubstituteDollPal[]; // graphics.s
 static const struct CompressedSpriteSheet sSpriteSheet_SinglesPlayerHealthbox =
-{ gBattleWindowLargeGfx, 4096, 0xd6ff };
+{ gHealthboxSinglesPlayerGfx, 4096, 0xd6ff };
 
 static const struct CompressedSpriteSheet sSpriteSheet_SinglesOpponentHealthbox =
-{ gBattleWindowSmallGfx, 4096, 0xd701 };
+{ gHealthboxSinglesOpponentGfx, 4096, 0xd701 };
 
 static const struct CompressedSpriteSheet sSpriteSheets_DoublesPlayerHealthbox[] =
 {
-    { gBattleWindowSmall2Gfx, 2048, 0xd6ff },
-    { gBattleWindowSmall2Gfx, 2048, 0xd700 },
+    { gHealthboxDoublesPlayerGfx, 2048, 0xd6ff },
+    { gHealthboxDoublesPlayerGfx, 2048, 0xd700 },
 };
 
 static const struct CompressedSpriteSheet sSpriteSheets_DoublesOpponentHealthbox[] =
 {
-    { gBattleWindowSmall3Gfx, 2048, 0xd701 },
-    { gBattleWindowSmall3Gfx, 2048, 0xd702 },
+    { gHealthboxDoublesOpponentGfx, 2048, 0xd701 },
+    { gHealthboxDoublesOpponentGfx, 2048, 0xd702 },
 };
 
 static const struct CompressedSpriteSheet sSpriteSheet_SafariHealthbox =
-{ gBattleWindowLarge2Gfx, 4096, 0xd70b };
+{ gHealthboxSafariGfx, 4096, 0xd70b };
 
 static const struct CompressedSpriteSheet sSpriteSheets_HealthBar[] =
 {
