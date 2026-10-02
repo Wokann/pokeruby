@@ -1820,7 +1820,7 @@ const struct ObjectEventGraphicsInfo *GetObjectEventGraphicsInfo(u8 graphicsId)
     }
     if (graphicsId >= NUM_OBJ_EVENT_GFX)
     {
-        graphicsId = OBJ_EVENT_GFX_LITTLE_BOY_1;
+        graphicsId = OBJ_EVENT_GFX_NINJA_BOY;
     }
     return gObjectEventGraphicsInfoPointers[graphicsId];
 }

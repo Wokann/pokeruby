@@ -40,7 +40,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_4",
+      "graphics_id": "OBJ_EVENT_GFX_MAN_3",
       "x": 0,
       "y": 3,
       "elevation": 3,
@@ -94,7 +94,7 @@
     },
     {
       "local_id": "LOCALID_SLATEPORT_CONTEST_LOBBY_POKEBLOCK_CASE_GIRL",
-      "graphics_id": "OBJ_EVENT_GFX_LITTLE_GIRL_2",
+      "graphics_id": "OBJ_EVENT_GFX_LITTLE_GIRL",
       "x": 1,
       "y": 5,
       "elevation": 3,
@@ -107,7 +107,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_3",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_2",
       "x": 12,
       "y": 2,
       "elevation": 3,

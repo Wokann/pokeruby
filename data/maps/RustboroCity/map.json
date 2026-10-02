@@ -54,7 +54,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_LITTLE_BOY_1",
+      "graphics_id": "OBJ_EVENT_GFX_NINJA_BOY",
       "x": 25,
       "y": 37,
       "elevation": 3,
@@ -67,7 +67,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_LITTLE_GIRL_1",
+      "graphics_id": "OBJ_EVENT_GFX_TWIN",
       "x": 21,
       "y": 46,
       "elevation": 3,
@@ -93,7 +93,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_4",
+      "graphics_id": "OBJ_EVENT_GFX_MAN_3",
       "x": 26,
       "y": 23,
       "elevation": 3,
@@ -107,7 +107,7 @@
     },
     {
       "local_id": "LOCALID_RUSTBORO_LITTLE_BOY",
-      "graphics_id": "OBJ_EVENT_GFX_LITTLE_BOY_2",
+      "graphics_id": "OBJ_EVENT_GFX_LITTLE_BOY",
       "x": 24,
       "y": 51,
       "elevation": 3,
@@ -121,7 +121,7 @@
     },
     {
       "local_id": "LOCALID_RUSTBORO_LITTLE_GIRL",
-      "graphics_id": "OBJ_EVENT_GFX_LITTLE_GIRL_2",
+      "graphics_id": "OBJ_EVENT_GFX_LITTLE_GIRL",
       "x": 25,
       "y": 51,
       "elevation": 3,
@@ -188,7 +188,7 @@
       "flag": "FLAG_ITEM_RUSTBORO_CITY_X_DEFEND"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_5",
+      "graphics_id": "OBJ_EVENT_GFX_MAN_4",
       "x": 19,
       "y": 27,
       "elevation": 3,

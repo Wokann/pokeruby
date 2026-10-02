@@ -52,7 +52,7 @@
     },
     {
       "local_id": "LOCALID_SMART_MC",
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_4",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_3",
       "x": 12,
       "y": 22,
       "elevation": 3,
@@ -122,7 +122,7 @@
     },
     {
       "local_id": "LOCALID_SMART_CONTESTANT_4",
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_6",
+      "graphics_id": "OBJ_EVENT_GFX_LINK_RECEPTIONIST",
       "x": 16,
       "y": 25,
       "elevation": 3,
@@ -177,7 +177,7 @@
     },
     {
       "local_id": "LOCALID_BEAUTY_MC",
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_4",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_3",
       "x": 24,
       "y": 10,
       "elevation": 3,
@@ -205,7 +205,7 @@
     },
     {
       "local_id": "LOCALID_BEAUTY_CONTESTANT_1",
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_4",
       "x": 22,
       "y": 13,
       "elevation": 3,
@@ -219,7 +219,7 @@
     },
     {
       "local_id": "LOCALID_BEAUTY_CONTESTANT_2",
-      "graphics_id": "OBJ_EVENT_GFX_LITTLE_GIRL_1",
+      "graphics_id": "OBJ_EVENT_GFX_TWIN",
       "x": 24,
       "y": 13,
       "elevation": 3,
@@ -247,7 +247,7 @@
     },
     {
       "local_id": "LOCALID_BEAUTY_CONTESTANT_4",
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_2",
+      "graphics_id": "OBJ_EVENT_GFX_POKEFAN_F",
       "x": 28,
       "y": 13,
       "elevation": 3,
@@ -261,7 +261,7 @@
     },
     {
       "local_id": "LOCALID_BEAUTY_AUDIENCE_1",
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_3",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_2",
       "x": 20,
       "y": 10,
       "elevation": 3,
@@ -317,7 +317,7 @@
     },
     {
       "local_id": "LOCALID_CUTE_MC",
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_4",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_3",
       "x": 36,
       "y": 22,
       "elevation": 3,
@@ -401,7 +401,7 @@
     },
     {
       "local_id": "LOCALID_CUTE_AUDIENCE_1",
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_3",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_2",
       "x": 32,
       "y": 23,
       "elevation": 3,
@@ -429,7 +429,7 @@
     },
     {
       "local_id": "LOCALID_CUTE_AUDIENCE_2",
-      "graphics_id": "OBJ_EVENT_GFX_LITTLE_GIRL_2",
+      "graphics_id": "OBJ_EVENT_GFX_LITTLE_GIRL",
       "x": 42,
       "y": 24,
       "elevation": 3,
