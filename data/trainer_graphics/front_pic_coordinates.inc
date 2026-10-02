@@ -29,8 +29,8 @@ gTrainerFrontPicCoords:: @ 81EC3F0
 	trainer_pic_coords 8, 1 @ TRAINER_PIC_YOUNG_COUPLE
 	trainer_pic_coords 8, 1 @ TRAINER_PIC_GUITARIST
 	trainer_pic_coords 8, 1 @ TRAINER_PIC_GENTLEMAN
-	trainer_pic_coords 8, 1 @ TRAINER_PIC_STEVEN
-	trainer_pic_coords 8, 1 @ TRAINER_PIC_MAXIE
+	trainer_pic_coords 8, 1 @ TRAINER_PIC_CHAMPION_STEVEN
+	trainer_pic_coords 8, 1 @ TRAINER_PIC_MAGMA_LEADER_MAXIE
 	trainer_pic_coords 8, 1 @ TRAINER_PIC_RUNNING_TRIATHLETE_F
 	trainer_pic_coords 8, 1 @ TRAINER_PIC_RUNNING_TRIATHLETE_M
 	trainer_pic_coords 8, 2 @ TRAINER_PIC_BATTLE_GIRL
@@ -70,16 +70,16 @@ gTrainerFrontPicCoords:: @ 81EC3F0
 	trainer_pic_coords 8, 1 @ TRAINER_PIC_AQUA_ADMIN_M
 	trainer_pic_coords 8, 1 @ TRAINER_PIC_AQUA_ADMIN_F
 	trainer_pic_coords 8, 1 @ TRAINER_PIC_UNUSED_AQUA
-	trainer_pic_coords 8, 1 @ TRAINER_PIC_ARCHIE
-	trainer_pic_coords 8, 1 @ TRAINER_PIC_ROXANNE
-	trainer_pic_coords 8, 1 @ TRAINER_PIC_BRAWLY
-	trainer_pic_coords 8, 1 @ TRAINER_PIC_WATTSON
-	trainer_pic_coords 8, 1 @ TRAINER_PIC_FLANNERY
-	trainer_pic_coords 8, 1 @ TRAINER_PIC_NORMAN
-	trainer_pic_coords 8, 1 @ TRAINER_PIC_WINONA
-	trainer_pic_coords 8, 1 @ TRAINER_PIC_TATE_AND_LIZA
-	trainer_pic_coords 8, 1 @ TRAINER_PIC_WALLACE
-	trainer_pic_coords 8, 1 @ TRAINER_PIC_SIDNEY
-	trainer_pic_coords 8, 1 @ TRAINER_PIC_PHOEBE
-	trainer_pic_coords 8, 1 @ TRAINER_PIC_GLACIA
-	trainer_pic_coords 8, 1 @ TRAINER_PIC_DRAKE
+	trainer_pic_coords 8, 1 @ TRAINER_PIC_AQUA_LEADER_ARCHIE
+	trainer_pic_coords 8, 1 @ TRAINER_PIC_LEADER_ROXANNE
+	trainer_pic_coords 8, 1 @ TRAINER_PIC_LEADER_BRAWLY
+	trainer_pic_coords 8, 1 @ TRAINER_PIC_LEADER_WATTSON
+	trainer_pic_coords 8, 1 @ TRAINER_PIC_LEADER_FLANNERY
+	trainer_pic_coords 8, 1 @ TRAINER_PIC_LEADER_NORMAN
+	trainer_pic_coords 8, 1 @ TRAINER_PIC_LEADER_WINONA
+	trainer_pic_coords 8, 1 @ TRAINER_PIC_LEADER_TATE_AND_LIZA
+	trainer_pic_coords 8, 1 @ TRAINER_PIC_LEADER_WALLACE
+	trainer_pic_coords 8, 1 @ TRAINER_PIC_ELITE_FOUR_SIDNEY
+	trainer_pic_coords 8, 1 @ TRAINER_PIC_ELITE_FOUR_PHOEBE
+	trainer_pic_coords 8, 1 @ TRAINER_PIC_ELITE_FOUR_GLACIA
+	trainer_pic_coords 8, 1 @ TRAINER_PIC_ELITE_FOUR_DRAKE

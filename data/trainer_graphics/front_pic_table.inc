@@ -29,8 +29,8 @@ gTrainerFrontPicTable:: @ 81EC53C
 	obj_tiles gTrainerFrontPic_YoungCouple, TRAINER_PIC_SIZE, TRAINER_PIC_YOUNG_COUPLE
 	obj_tiles gTrainerFrontPic_Guitarist, TRAINER_PIC_SIZE, TRAINER_PIC_GUITARIST
 	obj_tiles gTrainerFrontPic_Gentleman, TRAINER_PIC_SIZE, TRAINER_PIC_GENTLEMAN
-	obj_tiles gTrainerFrontPic_ChampionSteven, TRAINER_PIC_SIZE, TRAINER_PIC_STEVEN
-	obj_tiles gTrainerFrontPic_MagmaLeaderMaxie, TRAINER_PIC_SIZE, TRAINER_PIC_MAXIE
+	obj_tiles gTrainerFrontPic_ChampionSteven, TRAINER_PIC_SIZE, TRAINER_PIC_CHAMPION_STEVEN
+	obj_tiles gTrainerFrontPic_MagmaLeaderMaxie, TRAINER_PIC_SIZE, TRAINER_PIC_MAGMA_LEADER_MAXIE
 	obj_tiles gTrainerFrontPic_RunningTriathleteF, TRAINER_PIC_SIZE, TRAINER_PIC_RUNNING_TRIATHLETE_F
 	obj_tiles gTrainerFrontPic_RunningTriathleteM, TRAINER_PIC_SIZE, TRAINER_PIC_RUNNING_TRIATHLETE_M
 	obj_tiles gTrainerFrontPic_BattleGirl, TRAINER_PIC_SIZE * 2, TRAINER_PIC_BATTLE_GIRL
@@ -70,16 +70,16 @@ gTrainerFrontPicTable:: @ 81EC53C
 	obj_tiles gTrainerFrontPic_AquaAdminM, TRAINER_PIC_SIZE, TRAINER_PIC_AQUA_ADMIN_M
 	obj_tiles gTrainerFrontPic_AquaAdminF, TRAINER_PIC_SIZE, TRAINER_PIC_AQUA_ADMIN_F
 	obj_tiles gTrainerFrontPic_UnusedAqua, TRAINER_PIC_SIZE, TRAINER_PIC_UNUSED_AQUA
-	obj_tiles gTrainerFrontPic_AquaLeaderArchie, TRAINER_PIC_SIZE, TRAINER_PIC_ARCHIE
-	obj_tiles gTrainerFrontPic_LeaderRoxanne, TRAINER_PIC_SIZE, TRAINER_PIC_ROXANNE
-	obj_tiles gTrainerFrontPic_LeaderBrawly, TRAINER_PIC_SIZE, TRAINER_PIC_BRAWLY
-	obj_tiles gTrainerFrontPic_LeaderWattson, TRAINER_PIC_SIZE, TRAINER_PIC_WATTSON
-	obj_tiles gTrainerFrontPic_LeaderFlannery, TRAINER_PIC_SIZE, TRAINER_PIC_FLANNERY
-	obj_tiles gTrainerFrontPic_LeaderNorman, TRAINER_PIC_SIZE, TRAINER_PIC_NORMAN
-	obj_tiles gTrainerFrontPic_LeaderWinona, TRAINER_PIC_SIZE, TRAINER_PIC_WINONA
-	obj_tiles gTrainerFrontPic_LeaderTateAndLiza, TRAINER_PIC_SIZE, TRAINER_PIC_TATE_AND_LIZA
-	obj_tiles gTrainerFrontPic_LeaderWallace, TRAINER_PIC_SIZE, TRAINER_PIC_WALLACE
-	obj_tiles gTrainerFrontPic_EliteFourSidney, TRAINER_PIC_SIZE, TRAINER_PIC_SIDNEY
-	obj_tiles gTrainerFrontPic_EliteFourPhoebe, TRAINER_PIC_SIZE, TRAINER_PIC_PHOEBE
-	obj_tiles gTrainerFrontPic_EliteFourGlacia, TRAINER_PIC_SIZE, TRAINER_PIC_GLACIA
-	obj_tiles gTrainerFrontPic_EliteFourDrake, TRAINER_PIC_SIZE, TRAINER_PIC_DRAKE
+	obj_tiles gTrainerFrontPic_AquaLeaderArchie, TRAINER_PIC_SIZE, TRAINER_PIC_AQUA_LEADER_ARCHIE
+	obj_tiles gTrainerFrontPic_LeaderRoxanne, TRAINER_PIC_SIZE, TRAINER_PIC_LEADER_ROXANNE
+	obj_tiles gTrainerFrontPic_LeaderBrawly, TRAINER_PIC_SIZE, TRAINER_PIC_LEADER_BRAWLY
+	obj_tiles gTrainerFrontPic_LeaderWattson, TRAINER_PIC_SIZE, TRAINER_PIC_LEADER_WATTSON
+	obj_tiles gTrainerFrontPic_LeaderFlannery, TRAINER_PIC_SIZE, TRAINER_PIC_LEADER_FLANNERY
+	obj_tiles gTrainerFrontPic_LeaderNorman, TRAINER_PIC_SIZE, TRAINER_PIC_LEADER_NORMAN
+	obj_tiles gTrainerFrontPic_LeaderWinona, TRAINER_PIC_SIZE, TRAINER_PIC_LEADER_WINONA
+	obj_tiles gTrainerFrontPic_LeaderTateAndLiza, TRAINER_PIC_SIZE, TRAINER_PIC_LEADER_TATE_AND_LIZA
+	obj_tiles gTrainerFrontPic_LeaderWallace, TRAINER_PIC_SIZE, TRAINER_PIC_LEADER_WALLACE
+	obj_tiles gTrainerFrontPic_EliteFourSidney, TRAINER_PIC_SIZE, TRAINER_PIC_ELITE_FOUR_SIDNEY
+	obj_tiles gTrainerFrontPic_EliteFourPhoebe, TRAINER_PIC_SIZE, TRAINER_PIC_ELITE_FOUR_PHOEBE
+	obj_tiles gTrainerFrontPic_EliteFourGlacia, TRAINER_PIC_SIZE, TRAINER_PIC_ELITE_FOUR_GLACIA
+	obj_tiles gTrainerFrontPic_EliteFourDrake, TRAINER_PIC_SIZE, TRAINER_PIC_ELITE_FOUR_DRAKE

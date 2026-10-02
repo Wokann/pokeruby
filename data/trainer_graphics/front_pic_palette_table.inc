@@ -29,8 +29,8 @@ gTrainerFrontPicPaletteTable:: @ 81EC7D4
 	obj_pal gTrainerPalette_YoungCouple, TRAINER_PIC_YOUNG_COUPLE
 	obj_pal gTrainerPalette_Guitarist, TRAINER_PIC_GUITARIST
 	obj_pal gTrainerPalette_Gentleman, TRAINER_PIC_GENTLEMAN
-	obj_pal gTrainerPalette_ChampionSteven, TRAINER_PIC_STEVEN
-	obj_pal gTrainerPalette_MagmaLeaderMaxie, TRAINER_PIC_MAXIE
+	obj_pal gTrainerPalette_ChampionSteven, TRAINER_PIC_CHAMPION_STEVEN
+	obj_pal gTrainerPalette_MagmaLeaderMaxie, TRAINER_PIC_MAGMA_LEADER_MAXIE
 	obj_pal gTrainerPalette_RunningTriathleteF, TRAINER_PIC_RUNNING_TRIATHLETE_F
 	obj_pal gTrainerPalette_RunningTriathleteM, TRAINER_PIC_RUNNING_TRIATHLETE_M
 	obj_pal gTrainerPalette_BattleGirl, TRAINER_PIC_BATTLE_GIRL
@@ -70,16 +70,16 @@ gTrainerFrontPicPaletteTable:: @ 81EC7D4
 	obj_pal gTrainerPalette_AquaAdminM, TRAINER_PIC_AQUA_ADMIN_M
 	obj_pal gTrainerPalette_AquaAdminF, TRAINER_PIC_AQUA_ADMIN_F
 	obj_pal gTrainerPalette_UnusedAqua, TRAINER_PIC_UNUSED_AQUA
-	obj_pal gTrainerPalette_AquaLeaderArchie, TRAINER_PIC_ARCHIE
-	obj_pal gTrainerPalette_LeaderRoxanne, TRAINER_PIC_ROXANNE
-	obj_pal gTrainerPalette_LeaderBrawly, TRAINER_PIC_BRAWLY
-	obj_pal gTrainerPalette_LeaderWattson, TRAINER_PIC_WATTSON
-	obj_pal gTrainerPalette_LeaderFlannery, TRAINER_PIC_FLANNERY
-	obj_pal gTrainerPalette_LeaderNorman, TRAINER_PIC_NORMAN
-	obj_pal gTrainerPalette_LeaderWinona, TRAINER_PIC_WINONA
-	obj_pal gTrainerPalette_LeaderTateAndLiza, TRAINER_PIC_TATE_AND_LIZA
-	obj_pal gTrainerPalette_LeaderWallace, TRAINER_PIC_WALLACE
-	obj_pal gTrainerPalette_EliteFourSidney, TRAINER_PIC_SIDNEY
-	obj_pal gTrainerPalette_EliteFourPhoebe, TRAINER_PIC_PHOEBE
-	obj_pal gTrainerPalette_EliteFourGlacia, TRAINER_PIC_GLACIA
-	obj_pal gTrainerPalette_EliteFourDrake, TRAINER_PIC_DRAKE
+	obj_pal gTrainerPalette_AquaLeaderArchie, TRAINER_PIC_AQUA_LEADER_ARCHIE
+	obj_pal gTrainerPalette_LeaderRoxanne, TRAINER_PIC_LEADER_ROXANNE
+	obj_pal gTrainerPalette_LeaderBrawly, TRAINER_PIC_LEADER_BRAWLY
+	obj_pal gTrainerPalette_LeaderWattson, TRAINER_PIC_LEADER_WATTSON
+	obj_pal gTrainerPalette_LeaderFlannery, TRAINER_PIC_LEADER_FLANNERY
+	obj_pal gTrainerPalette_LeaderNorman, TRAINER_PIC_LEADER_NORMAN
+	obj_pal gTrainerPalette_LeaderWinona, TRAINER_PIC_LEADER_WINONA
+	obj_pal gTrainerPalette_LeaderTateAndLiza, TRAINER_PIC_LEADER_TATE_AND_LIZA
+	obj_pal gTrainerPalette_LeaderWallace, TRAINER_PIC_LEADER_WALLACE
+	obj_pal gTrainerPalette_EliteFourSidney, TRAINER_PIC_ELITE_FOUR_SIDNEY
+	obj_pal gTrainerPalette_EliteFourPhoebe, TRAINER_PIC_ELITE_FOUR_PHOEBE
+	obj_pal gTrainerPalette_EliteFourGlacia, TRAINER_PIC_ELITE_FOUR_GLACIA
+	obj_pal gTrainerPalette_EliteFourDrake, TRAINER_PIC_ELITE_FOUR_DRAKE

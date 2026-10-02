@@ -163,11 +163,11 @@ sAnims_Gentleman:: @ 81EC1C8
 	.4byte sAnim_GeneralFrame0
 
 	.align 2
-sAnims_Steven:: @ 81EC1CC
+sAnims_ChampionSteven:: @ 81EC1CC
 	.4byte sAnim_GeneralFrame0
 
 	.align 2
-sAnims_Maxie:: @ 81EC1D0
+sAnims_MagmaLeaderMaxie:: @ 81EC1D0
 	.4byte sAnim_GeneralFrame0
 
 	.align 2
@@ -327,55 +327,55 @@ sAnims_UnusedAqua:: @ 81EC26C
 	.4byte sAnim_GeneralFrame0
 
 	.align 2
-sAnims_Archie:: @ 81EC270
+sAnims_AquaLeaderArchie:: @ 81EC270
 	.4byte sAnim_GeneralFrame0
 
 	.align 2
-sAnims_Roxanne:: @ 81EC274
+sAnims_LeaderRoxanne:: @ 81EC274
 	.4byte sAnim_GeneralFrame0
 
 	.align 2
-sAnims_Brawly:: @ 81EC278
+sAnims_LeaderBrawly:: @ 81EC278
 	.4byte sAnim_GeneralFrame0
 
 	.align 2
-sAnims_Wattson:: @ 81EC27C
+sAnims_LeaderWattson:: @ 81EC27C
 	.4byte sAnim_GeneralFrame0
 
 	.align 2
-sAnims_Flannery:: @ 81EC280
+sAnims_LeaderFlannery:: @ 81EC280
 	.4byte sAnim_GeneralFrame0
 
 	.align 2
-sAnims_Norman:: @ 81EC284
+sAnims_LeaderNorman:: @ 81EC284
 	.4byte sAnim_GeneralFrame0
 
 	.align 2
-sAnims_Winona:: @ 81EC288
+sAnims_LeaderWinona:: @ 81EC288
 	.4byte sAnim_GeneralFrame0
 
 	.align 2
-sAnims_TateAndLiza:: @ 81EC28C
+sAnims_LeaderTateAndLiza:: @ 81EC28C
 	.4byte sAnim_GeneralFrame0
 
 	.align 2
-sAnims_Wallace:: @ 81EC290
+sAnims_LeaderWallace:: @ 81EC290
 	.4byte sAnim_GeneralFrame0
 
 	.align 2
-sAnims_Sidney:: @ 81EC294
+sAnims_EliteFourSidney:: @ 81EC294
 	.4byte sAnim_GeneralFrame0
 
 	.align 2
-sAnims_Phoebe:: @ 81EC298
+sAnims_EliteFourPhoebe:: @ 81EC298
 	.4byte sAnim_GeneralFrame0
 
 	.align 2
-sAnims_Glacia:: @ 81EC29C
+sAnims_EliteFourGlacia:: @ 81EC29C
 	.4byte sAnim_GeneralFrame0
 
 	.align 2
-sAnims_Drake:: @ 81EC2A0
+sAnims_EliteFourDrake:: @ 81EC2A0
 	.4byte sAnim_GeneralFrame0
 
 	.align 2
@@ -409,8 +409,8 @@ gTrainerFrontAnimsPtrTable:: @ 81EC2A4
 	.4byte sAnims_YoungCouple @ TRAINER_PIC_YOUNG_COUPLE
 	.4byte sAnims_Guitarist @ TRAINER_PIC_GUITARIST
 	.4byte sAnims_Gentleman @ TRAINER_PIC_GENTLEMAN
-	.4byte sAnims_Steven @ TRAINER_PIC_STEVEN
-	.4byte sAnims_Maxie @ TRAINER_PIC_MAXIE
+	.4byte sAnims_ChampionSteven @ TRAINER_PIC_CHAMPION_STEVEN
+	.4byte sAnims_MagmaLeaderMaxie @ TRAINER_PIC_MAGMA_LEADER_MAXIE
 	.4byte sAnims_RunningTriathleteF @ TRAINER_PIC_RUNNING_TRIATHLETE_F
 	.4byte sAnims_RunningTriathleteM @ TRAINER_PIC_RUNNING_TRIATHLETE_M
 	.4byte sAnims_BattleGirl @ TRAINER_PIC_BATTLE_GIRL
@@ -450,19 +450,19 @@ gTrainerFrontAnimsPtrTable:: @ 81EC2A4
 	.4byte sAnims_AquaAdminM @ TRAINER_PIC_AQUA_ADMIN_M
 	.4byte sAnims_AquaAdminF @ TRAINER_PIC_AQUA_ADMIN_F
 	.4byte sAnims_UnusedAqua @ TRAINER_PIC_UNUSED_AQUA
-	.4byte sAnims_Archie @ TRAINER_PIC_ARCHIE
-	.4byte sAnims_Roxanne @ TRAINER_PIC_ROXANNE
-	.4byte sAnims_Brawly @ TRAINER_PIC_BRAWLY
-	.4byte sAnims_Wattson @ TRAINER_PIC_WATTSON
-	.4byte sAnims_Flannery @ TRAINER_PIC_FLANNERY
-	.4byte sAnims_Norman @ TRAINER_PIC_NORMAN
-	.4byte sAnims_Winona @ TRAINER_PIC_WINONA
-	.4byte sAnims_TateAndLiza @ TRAINER_PIC_TATE_AND_LIZA
-	.4byte sAnims_Wallace @ TRAINER_PIC_WALLACE
-	.4byte sAnims_Sidney @ TRAINER_PIC_SIDNEY
-	.4byte sAnims_Phoebe @ TRAINER_PIC_PHOEBE
-	.4byte sAnims_Glacia @ TRAINER_PIC_GLACIA
-	.4byte sAnims_Drake @ TRAINER_PIC_DRAKE
+	.4byte sAnims_AquaLeaderArchie @ TRAINER_PIC_AQUA_LEADER_ARCHIE
+	.4byte sAnims_LeaderRoxanne @ TRAINER_PIC_LEADER_ROXANNE
+	.4byte sAnims_LeaderBrawly @ TRAINER_PIC_LEADER_BRAWLY
+	.4byte sAnims_LeaderWattson @ TRAINER_PIC_LEADER_WATTSON
+	.4byte sAnims_LeaderFlannery @ TRAINER_PIC_LEADER_FLANNERY
+	.4byte sAnims_LeaderNorman @ TRAINER_PIC_LEADER_NORMAN
+	.4byte sAnims_LeaderWinona @ TRAINER_PIC_LEADER_WINONA
+	.4byte sAnims_LeaderTateAndLiza @ TRAINER_PIC_LEADER_TATE_AND_LIZA
+	.4byte sAnims_LeaderWallace @ TRAINER_PIC_LEADER_WALLACE
+	.4byte sAnims_EliteFourSidney @ TRAINER_PIC_ELITE_FOUR_SIDNEY
+	.4byte sAnims_EliteFourPhoebe @ TRAINER_PIC_ELITE_FOUR_PHOEBE
+	.4byte sAnims_EliteFourGlacia @ TRAINER_PIC_ELITE_FOUR_GLACIA
+	.4byte sAnims_EliteFourDrake @ TRAINER_PIC_ELITE_FOUR_DRAKE
 
 @ 81EC3F0
 	.include "data/trainer_graphics/front_pic_coordinates.inc"
