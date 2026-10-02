@@ -165,8 +165,8 @@ EWRAM_DATA u32 gFiller_20238B8 = 0;
 EWRAM_DATA u32 gBerryBlenderKeySendAttempts = 0;
 EWRAM_DATA bool8 gLinkOpen = 0;
 
-static const u16 sLinkTestDigitPalette[] = INCBIN_U16("graphics/interface/link_test_digits.gbapal");
-static const u32 sLinkTestDigitTiles[] = INCBIN_U32("graphics/interface/link_test_digits.4bpp");
+static const u16 sLinkTestDigitPalette[] = INCBIN_U16("graphics/link/test_digits.gbapal");
+static const u32 sLinkTestDigitTiles[] = INCBIN_U32("graphics/link/test_digits.4bpp");
 
 static const u8 sDebugMessages[7][12] =
 {
