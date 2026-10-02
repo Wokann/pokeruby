@@ -37,6 +37,14 @@
 #define sSummaryScreenSpriteIds         (&gSharedMem[0x1A000])
 #define sMoveSelectorSpriteIds          ((u8 *)(gSharedMem + 0x1A009))
 
+enum PokemonSummaryScreenPage
+{
+    PSS_PAGE_INFO,
+    PSS_PAGE_SKILLS,
+    PSS_PAGE_BATTLE_MOVES,
+    PSS_PAGE_CONTEST_MOVES,
+};
+
 static void SummaryScreen_PrintPokemonInfoLabels(void);
 static void SummaryScreen_PrintPokemonSkillsLabels(void);
 static void RefreshInfoPage(struct Pokemon *);
@@ -124,6 +132,7 @@ static u8 *SummaryScreen_SetTextColor(u8 *, u8);
 static u8 *SummaryScreen_CopyColoredString(u8 *, const u8 *, u8);
 static void PrintGenderSymbol(struct Pokemon *, u8, u8);
 static void SummaryScreen_PrintColoredText(const u8 *, u8, u8, u8);
+static u8 *PokemonSummaryScreen_CopyPokemonLevel(u8 *dest, u8 level);
 
 extern u8 AdvanceStorageMonIndex(struct BoxPokemon *, u8, u8, u8);
 
@@ -600,15 +609,15 @@ void ShowPokemonSummaryScreen(struct Pokemon *party, u8 curMonIndex, u8 maxMonIn
     sMonSummaryScreen->bgDisplayOrder = 0;
     sMonSummaryScreen->lockMovesFlag = FALSE;
 
-    if (mode >= PSS_MODE_PC_NORMAL)
+    if (mode >= SUMMARY_MODE_BOX)
         sMonSummaryScreen->isBoxMon = TRUE;
     else
         sMonSummaryScreen->isBoxMon = FALSE;
 
     switch (mode)
     {
-    case PSS_MODE_NORMAL:
-    case PSS_MODE_PC_NORMAL:
+    case SUMMARY_MODE_NORMAL:
+    case SUMMARY_MODE_BOX:
         sMonSummaryScreen->minPageIndex = PSS_PAGE_INFO;
         sMonSummaryScreen->maxPageIndex = PSS_PAGE_CONTEST_MOVES;
         sMonSummaryScreen->unk77 = 0;
@@ -616,7 +625,7 @@ void ShowPokemonSummaryScreen(struct Pokemon *party, u8 curMonIndex, u8 maxMonIn
         sMonSummaryScreen->headerTextId = 1;
         sMonSummaryScreen->headerActionTextId = 7;
         break;
-    case PSS_MODE_NO_MOVE_ORDER_EDIT:
+    case SUMMARY_MODE_LOCK_MOVES:
         sMonSummaryScreen->minPageIndex = PSS_PAGE_INFO;
         sMonSummaryScreen->maxPageIndex = PSS_PAGE_CONTEST_MOVES;
         sMonSummaryScreen->unk77 = 0;
@@ -625,7 +634,7 @@ void ShowPokemonSummaryScreen(struct Pokemon *party, u8 curMonIndex, u8 maxMonIn
         sMonSummaryScreen->headerActionTextId = 7;
         sMonSummaryScreen->lockMovesFlag = TRUE;
         break;
-    case PSS_MODE_SELECT_MOVE:
+    case SUMMARY_MODE_SELECT_MOVE:
         sMonSummaryScreen->minPageIndex = PSS_PAGE_BATTLE_MOVES;
         sMonSummaryScreen->maxPageIndex = PSS_PAGE_CONTEST_MOVES;
         sMonSummaryScreen->unk77 = 1;
@@ -634,8 +643,8 @@ void ShowPokemonSummaryScreen(struct Pokemon *party, u8 curMonIndex, u8 maxMonIn
         sMonSummaryScreen->headerActionTextId = 0;
         sMonSummaryScreen->firstMoveIndex = 0;
         break;
-    case PSS_MODE_MOVES_ONLY:
-    case PSS_MODE_PC_MOVES_ONLY:
+    case SUMMARY_MODE_MOVES_ONLY:
+    case SUMMARY_MODE_BOX_MOVES_ONLY:
         sMonSummaryScreen->minPageIndex = PSS_PAGE_BATTLE_MOVES;
         sMonSummaryScreen->maxPageIndex = PSS_PAGE_CONTEST_MOVES;
         sMonSummaryScreen->unk77 = 1;
@@ -649,7 +658,7 @@ void ShowPokemonSummaryScreen(struct Pokemon *party, u8 curMonIndex, u8 maxMonIn
 
 void ShowSelectMovePokemonSummaryScreen(struct Pokemon *party, u8 curMonIndex, u8 maxMonIndex, MainCallback callback, u16 move)
 {
-    ShowPokemonSummaryScreen(party, curMonIndex, maxMonIndex, callback, PSS_MODE_SELECT_MOVE);
+    ShowPokemonSummaryScreen(party, curMonIndex, maxMonIndex, callback, SUMMARY_MODE_SELECT_MOVE);
     sMonSummaryScreen->newMove = move;
 }
 
@@ -657,19 +666,19 @@ void CreateSummaryScreenInputTask(void)
 {
     switch (sMonSummaryScreen->mode)
     {
-    case PSS_MODE_NORMAL:
-    case PSS_MODE_PC_NORMAL:
+    case SUMMARY_MODE_NORMAL:
+    case SUMMARY_MODE_BOX:
         sMonSummaryScreen->inputHandlingTaskId = CreateTask(Task_HandleInput, 0);
         break;
-    case PSS_MODE_NO_MOVE_ORDER_EDIT:
+    case SUMMARY_MODE_LOCK_MOVES:
         sMonSummaryScreen->inputHandlingTaskId = CreateTask(Task_HandleInput, 0);
         break;
-    case PSS_MODE_SELECT_MOVE:
-    case PSS_MODE_MOVE_DELETER:
+    case SUMMARY_MODE_SELECT_MOVE:
+    case SUMMARY_MODE_MOVE_DELETER:
         sMonSummaryScreen->inputHandlingTaskId = CreateTask(Task_SetHandleReplaceMoveInput, 0);
         break;
-    case PSS_MODE_MOVES_ONLY:
-    case PSS_MODE_PC_MOVES_ONLY:
+    case SUMMARY_MODE_MOVES_ONLY:
+    case SUMMARY_MODE_BOX_MOVES_ONLY:
         sMonSummaryScreen->inputHandlingTaskId = CreateTask(Task_HandleInput_MoveSelect, 0);
         break;
     }
@@ -1423,7 +1432,7 @@ void PssScrollLeft(u8 taskId)
         }
         else
         {
-            if (sMonSummaryScreen->currPageIndex >= PSS_PAGE_BATTLE_MOVES && (!sMonSummaryScreen->lockMovesFlag || sMonSummaryScreen->mode == PSS_MODE_NO_MOVE_ORDER_EDIT))
+            if (sMonSummaryScreen->currPageIndex >= PSS_PAGE_BATTLE_MOVES && (!sMonSummaryScreen->lockMovesFlag || sMonSummaryScreen->mode == SUMMARY_MODE_LOCK_MOVES))
                 sMonSummaryScreen->headerActionTextId = 6;
             else if (sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO)
                 sMonSummaryScreen->headerActionTextId = 7;
@@ -1522,7 +1531,7 @@ void PssScrollRight(u8 taskId)
         }
         else
         {
-            if (sMonSummaryScreen->currPageIndex >= PSS_PAGE_BATTLE_MOVES && (!sMonSummaryScreen->lockMovesFlag || sMonSummaryScreen->mode == PSS_MODE_NO_MOVE_ORDER_EDIT))
+            if (sMonSummaryScreen->currPageIndex >= PSS_PAGE_BATTLE_MOVES && (!sMonSummaryScreen->lockMovesFlag || sMonSummaryScreen->mode == SUMMARY_MODE_LOCK_MOVES))
                 sMonSummaryScreen->headerActionTextId = 6;
             else if (sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO)
                 sMonSummaryScreen->headerActionTextId = 7;
@@ -1900,7 +1909,7 @@ static bool8 CanReplaceMove(u8 taskId)
 
     CopyMonToSummaryStruct(&mon);
     move = GetMonMove(&mon, sMonSummaryScreen->firstMoveIndex);
-    if (IsMoveHm(move) == TRUE && sMonSummaryScreen->mode != PSS_MODE_MOVE_DELETER)
+    if (IsMoveHm(move) == TRUE && sMonSummaryScreen->mode != SUMMARY_MODE_MOVE_DELETER)
         return FALSE;
     return TRUE;
 }
@@ -2480,7 +2489,7 @@ void DrawContestMoveHearts(u16 move)
     }
 }
 
-bool8 DoesMonOTMatchOwner(struct Pokemon *mon)
+static bool8 DoesMonOTMatchOwner(struct Pokemon *mon)
 {
     u32 trainerId;
 
@@ -4046,7 +4055,7 @@ static void SummaryScreen_PrintColoredText(const u8 *text, u8 id, u8 left, u8 to
     Menu_PrintText(gStringVar4, left, top);
 }
 
-u8 *PokemonSummaryScreen_CopyPokemonLevel(u8 *dest, u8 level)
+static u8 *PokemonSummaryScreen_CopyPokemonLevel(u8 *dest, u8 level)
 {
     u8 buffer[12];
 

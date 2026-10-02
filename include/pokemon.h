@@ -505,6 +505,7 @@ u16 GetLinkTrainerFlankId(u8 linkPlayerId);
 s32 GetBattlerMultiplayerId(u16 battlerId);
 u8 GetTrainerEncounterMusicId(u16 trainerOpponentId);
 void AdjustFriendship(struct Pokemon *, u8);
+u8 CheckPartyPokerus(struct Pokemon *, u8);
 u8 CheckPartyHasHadPokerus(struct Pokemon *, u8);
 void UpdatePartyPokerusTime(u16);
 u32 CanMonLearnTMHM(struct Pokemon *, u8);

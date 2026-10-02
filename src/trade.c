@@ -2020,11 +2020,11 @@ static void CB_ShowTradeMonSummaryScreen(void)
     {
         if (sTradeMenu->cursorPosition < PARTY_SIZE)
         {
-            ShowPokemonSummaryScreen(gPlayerParty, sTradeMenu->cursorPosition, sTradeMenu->partyCounts[0] - 1, CB2_ReturnToTradeMenu, PSS_MODE_NO_MOVE_ORDER_EDIT);
+            ShowPokemonSummaryScreen(gPlayerParty, sTradeMenu->cursorPosition, sTradeMenu->partyCounts[0] - 1, CB2_ReturnToTradeMenu, SUMMARY_MODE_LOCK_MOVES);
         }
         else
         {
-            ShowPokemonSummaryScreen(gEnemyParty, sTradeMenu->cursorPosition - 6, sTradeMenu->partyCounts[1] - 1, CB2_ReturnToTradeMenu, PSS_MODE_NO_MOVE_ORDER_EDIT);
+            ShowPokemonSummaryScreen(gEnemyParty, sTradeMenu->cursorPosition - 6, sTradeMenu->partyCounts[1] - 1, CB2_ReturnToTradeMenu, SUMMARY_MODE_LOCK_MOVES);
         }
     }
 }

@@ -433,7 +433,7 @@ static void Task_OpenBattleTowerSummary(u8 taskId)
 
         DestroyTask(taskId);
         gPartyMenu.unusedResumeAction = 1;
-        ShowPokemonSummaryScreen(gPlayerParty, summaryMonIndex, gPlayerPartyCount - 1, CB2_InitBattleTowerSummaryReturn, PSS_MODE_NORMAL);
+        ShowPokemonSummaryScreen(gPlayerParty, summaryMonIndex, gPlayerPartyCount - 1, CB2_InitBattleTowerSummaryReturn, SUMMARY_MODE_NORMAL);
     }
 }
 
@@ -913,7 +913,7 @@ static void Task_OpenDaycareSummary(u8 taskId)
 
         DestroyTask(taskId);
         gPartyMenu.unusedResumeAction = 1;
-        ShowPokemonSummaryScreen(gPlayerParty, summaryMonIndex, gPlayerPartyCount - 1, CB2_InitDaycareSummaryReturn, PSS_MODE_NORMAL);
+        ShowPokemonSummaryScreen(gPlayerParty, summaryMonIndex, gPlayerPartyCount - 1, CB2_InitDaycareSummaryReturn, SUMMARY_MODE_NORMAL);
     }
 }
 

@@ -353,7 +353,7 @@ static void Task_OpenSummaryScreen(u8 taskId)
 
         DestroyTask(taskId);
         gPartyMenu.unusedResumeAction = 1;
-        ShowPokemonSummaryScreen(gPlayerParty, spriteId, gPlayerPartyCount - 1, CB2_ReturnToPartyMenuFromSummaryScreen, PSS_MODE_NORMAL);
+        ShowPokemonSummaryScreen(gPlayerParty, spriteId, gPlayerPartyCount - 1, CB2_ReturnToPartyMenuFromSummaryScreen, SUMMARY_MODE_NORMAL);
     }
 }
 

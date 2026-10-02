@@ -30,7 +30,7 @@
 #include "menu_helpers.h"
 #include "battle_tower.h"
 #include "field_weather.h"
-#include "pokemon_summary_screen.h"
+#include "pokemon.h"
 #include "random.h"
 #include "constants/abilities.h"
 #include "constants/event_object_movement.h"

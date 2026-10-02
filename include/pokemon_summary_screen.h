@@ -11,21 +11,13 @@ extern u8 gLastViewedMonIndex;
 // such as move re-ordering, are available in the different modes.
 enum PokemonSummaryScreenMode
 {
-    PSS_MODE_NORMAL,
-    PSS_MODE_MOVES_ONLY,
-    PSS_MODE_SELECT_MOVE,
-    PSS_MODE_MOVE_DELETER, // TODO: this mode might be used by pokemon_storage_system
-    PSS_MODE_NO_MOVE_ORDER_EDIT,
-    PSS_MODE_PC_NORMAL,
-    PSS_MODE_PC_MOVES_ONLY,
-};
-
-enum PokemonSummaryScreenPage
-{
-	PSS_PAGE_INFO,
-	PSS_PAGE_SKILLS,
-	PSS_PAGE_BATTLE_MOVES,
-	PSS_PAGE_CONTEST_MOVES,
+    SUMMARY_MODE_NORMAL,
+    SUMMARY_MODE_MOVES_ONLY,
+    SUMMARY_MODE_SELECT_MOVE,
+    SUMMARY_MODE_MOVE_DELETER,
+    SUMMARY_MODE_LOCK_MOVES,
+    SUMMARY_MODE_BOX,
+    SUMMARY_MODE_BOX_MOVES_ONLY,
 };
 
 struct PokemonSummaryScreenData
@@ -62,9 +54,6 @@ struct PokemonSummaryScreenData
 void ShowPokemonSummaryScreen(struct Pokemon *, u8, u8, MainCallback, u8);
 void ShowSelectMovePokemonSummaryScreen(struct Pokemon *, u8, u8, MainCallback, u16);
 u8 GetMoveSlotToReplace(void);
-u8 *PokemonSummaryScreen_CopyPokemonLevel(u8 *dest, u8 level);
-u8 DoesMonOTMatchOwner(struct Pokemon *pokemon);
-bool8 CheckPartyPokerus(struct Pokemon *, u8);
 
 
 #endif // GUARD_POKEMON_SUMMARY_SCREEN_H
