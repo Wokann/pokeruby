@@ -6,6 +6,7 @@
 #include "item.h"
 #include "event_data.h"
 #include "constants/items.h"
+#include "constants/berry.h"
 #include "pokemon.h"
 #include "data2.h"
 #include "text.h"
@@ -356,7 +357,7 @@ void BufferStringBattle(u16 stringID)
         else
             StringCopy(gBattleTextBuff2, gMoveNames[gBattleMsgDataPtr->currentMove]);
         ChooseTypeOfMoveUsedString(gBattleTextBuff2);
-        stringPtr = BattleText_OpponentUsedMove;
+        stringPtr = sText_AttackerUsedX;
         break;
     case 5: // battle end
         if (gBattleTextBuff1[0] & B_OUTCOME_LINK_BATTLE_RAN)
@@ -470,9 +471,9 @@ extern u8 *GermanStringFormatName(u8 *, const u8 *);
     if (GetBattlerSide(battler) != B_SIDE_PLAYER)                        \
     {                                                                   \
         if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)                     \
-            toCpy = BattleText_Foe;                                  \
+            toCpy = sText_FoePkmnPrefix;                              \
         else                                                            \
-            toCpy = BattleText_Wild;                                  \
+            toCpy = sText_WildPkmnPrefix;                             \
         while (*toCpy != EOS)                                           \
         {                                                               \
             dst[dstID] = *toCpy;                                        \
@@ -501,9 +502,9 @@ extern u8 *GermanStringFormatName(u8 *, const u8 *);
             toCpy++;                                                    \
         }                                                               \
         if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)                     \
-            toCpy = BattleText_Foe;                                  \
+            toCpy = sText_FoePkmnPrefix;                              \
         else                                                            \
-            toCpy = BattleText_Wild;                                  \
+            toCpy = sText_WildPkmnPrefix;                             \
     }                                                                   \
     else                                                                \
     {                                                                   \
@@ -646,14 +647,14 @@ u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst)
                         {
                             StringCopy(text, gEnigmaBerries[gPotentialItemEffectBattler].name);
 #ifdef ENGLISH
-                            StringAppend(text, BattleText_Berry);
+                            StringAppend(text, sText_BerrySuffix);
 #else
-                            GermanStringFormatName(text, BattleText_Berry);
+                            GermanStringFormatName(text, sText_BerrySuffix);
 #endif
                             toCpy = text;
                         }
                         else
-                            toCpy = BattleText_EnigmaBerry;
+                            toCpy = sText_EnigmaBerry;
                     }
                     else
                     {
@@ -750,45 +751,45 @@ u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst)
                 break;
             case B_TXT_PC_CREATOR_NAME: // lanette pc
                 if (FlagGet(FLAG_SYS_PC_LANETTE))
-                    toCpy = BattleText_Lanette;
+                    toCpy = sText_Lanettes;
                 else
-                    toCpy = BattleText_Someone;
+                    toCpy = sText_Someones;
                 break;
             case B_TXT_ATK_PREFIX2:
                 if (GetBattlerSide(gBattlerAttacker) == B_SIDE_PLAYER)
-                    toCpy = BattleText_Ally2;
+                    toCpy = sText_AllyPkmnPrefix2;
                 else
-                    toCpy = BattleText_Foe3;
+                    toCpy = sText_FoePkmnPrefix3;
                 break;
             case B_TXT_DEF_PREFIX2:
                 if (GetBattlerSide(gBattlerTarget) == B_SIDE_PLAYER)
-                    toCpy = BattleText_Ally2;
+                    toCpy = sText_AllyPkmnPrefix2;
                 else
-                    toCpy = BattleText_Foe3;
+                    toCpy = sText_FoePkmnPrefix3;
                 break;
             case B_TXT_ATK_PREFIX1:
                 if (GetBattlerSide(gBattlerAttacker) == B_SIDE_PLAYER)
-                    toCpy = BattleText_Ally;
+                    toCpy = sText_AllyPkmnPrefix;
                 else
-                    toCpy = BattleText_Foe2;
+                    toCpy = sText_FoePkmnPrefix2;
                 break;
             case B_TXT_DEF_PREFIX1:
                 if (GetBattlerSide(gBattlerTarget) == B_SIDE_PLAYER)
-                    toCpy = BattleText_Ally;
+                    toCpy = sText_AllyPkmnPrefix;
                 else
-                    toCpy = BattleText_Foe2;
+                    toCpy = sText_FoePkmnPrefix2;
                 break;
             case B_TXT_ATK_PREFIX3:
                 if (GetBattlerSide(gBattlerAttacker) == B_SIDE_PLAYER)
-                    toCpy = BattleText_Ally3;
+                    toCpy = sText_AllyPkmnPrefix3;
                 else
-                    toCpy = BattleText_Foe4;
+                    toCpy = sText_FoePkmnPrefix4;
                 break;
             case B_TXT_DEF_PREFIX3:
                 if (GetBattlerSide(gBattlerTarget) == B_SIDE_PLAYER)
-                    toCpy = BattleText_Ally3;
+                    toCpy = sText_AllyPkmnPrefix3;
                 else
-                    toCpy = BattleText_Foe4;
+                    toCpy = sText_FoePkmnPrefix4;
                 break;
             }
             //if (toCpy != NULL) really GF, why did you forget about this?
@@ -872,9 +873,9 @@ static void ExpandBattleTextBuffPlaceholders(u8 *src, u8 *dst)
             else
             {
                 if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
-                    StringAppend(dst, BattleText_Foe);
+                    StringAppend(dst, sText_FoePkmnPrefix);
                 else
-                    StringAppend(dst, BattleText_Wild);
+                    StringAppend(dst, sText_WildPkmnPrefix);
                 GetMonData(&gEnemyParty[src[srcID + 2]], MON_DATA_NICKNAME, nickname);
             }
             StringGet_Nickname(nickname);
@@ -892,9 +893,9 @@ static void ExpandBattleTextBuffPlaceholders(u8 *src, u8 *dst)
                 StringGet_Nickname(nickname);
                 StringAppend(dst, nickname);
                 if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
-                    StringAppend(dst, BattleText_Foe);
+                    StringAppend(dst, sText_FoePkmnPrefix);
                 else
-                    StringAppend(dst, BattleText_Wild);
+                    StringAppend(dst, sText_WildPkmnPrefix);
             }
 #endif
             srcID += 3;
@@ -934,13 +935,13 @@ static void ExpandBattleTextBuffPlaceholders(u8 *src, u8 *dst)
                         {
                             StringCopy(dst, gEnigmaBerries[gPotentialItemEffectBattler].name);
 #ifdef ENGLISH
-                            StringAppend(dst, BattleText_Berry);
+                            StringAppend(dst, sText_BerrySuffix);
 #else
-                            GermanStringFormatName(dst, BattleText_Berry);
+                            GermanStringFormatName(dst, sText_BerrySuffix);
 #endif
                         }
                         else
-                            StringAppend(dst, BattleText_EnigmaBerry);
+                            StringAppend(dst, sText_EnigmaBerry);
                     }
                     else
                         CopyItemName(hword, dst);
@@ -974,29 +975,29 @@ static void ChooseMoveUsedParticle(u8 *textBuff)
     if (counter >= 0)
     {
         if (counter <= 2)
-            StringCopy(textBuff, BattleText_Format10); // is
+            StringCopy(textBuff, sText_SpaceIs); // is
         else if (counter <= 4)
-            StringCopy(textBuff, BattleText_Format11); // 's
+            StringCopy(textBuff, sText_ApostropheS); // 's
     }
 }
 
 // Appends "!" to the text buffer `dst`. In the original Japanese this looked
 // into the table of moves at sGrammarMoveUsedTable and varied the line accordingly.
 // 
-// BattleText_Exclamation was a plain "!", used for any attack not on the list.
+// sText_ExclamationMark5 was a plain "!", used for any attack not on the list.
 // It resulted in the translation "<NAME>'s <ATTACK>!".
 // 
-// BattleText_Exclamation2 was "を つかった！". This resulted in the translation
+// sText_ExclamationMark was "を つかった！". This resulted in the translation
 // "<NAME> used <ATTACK>!", which was used for all attacks in English.
 // 
-// BattleText_Exclamation3 was "した！". This was used for those moves whose
+// sText_ExclamationMark2 was "した！". This was used for those moves whose
 // names were verbs, such as Recover, and resulted in translations like "<NAME>
 // recovered itself!".
 // 
-// BattleText_Exclamation4 was "を した！" This resulted in a translation of
+// sText_ExclamationMark3 was "を した！" This resulted in a translation of
 // "<NAME> did an <ATTACK>!".
 // 
-// BattleText_Exclamation5 was " こうげき！" This resulted in a translation of
+// sText_ExclamationMark4 was " こうげき！" This resulted in a translation of
 // "<NAME>'s <ATTACK> attack!".
 static void ChooseTypeOfMoveUsedString(u8 *dst)
 {
@@ -1017,19 +1018,19 @@ static void ChooseTypeOfMoveUsedString(u8 *dst)
     switch (counter)
     {
     case 0:
-        StringCopy(dst, BattleText_Exclamation2);
+        StringCopy(dst, sText_ExclamationMark);
         break;
     case 1:
-        StringCopy(dst, BattleText_Exclamation3);
+        StringCopy(dst, sText_ExclamationMark2);
         break;
     case 2:
-        StringCopy(dst, BattleText_Exclamation4);
+        StringCopy(dst, sText_ExclamationMark3);
         break;
     case 3:
-        StringCopy(dst, BattleText_Exclamation5);
+        StringCopy(dst, sText_ExclamationMark4);
         break;
     case 4:
-        StringCopy(dst, BattleText_Exclamation);
+        StringCopy(dst, sText_ExclamationMark5);
         break;
     }
 }

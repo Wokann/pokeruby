@@ -211,6 +211,7 @@ extern const u8 *const gPokeblockWasTooXStringTable[];
 extern const u8 gText_Win[];
 extern const u8 gText_Loss[];
 extern const u8 gText_Tie[];
+extern const u8 gText_EmptyString3[];
 extern const u8 gText_WhatWillWallyDo[];
 extern const u8 gText_Sleep[];
 extern const u8 gText_Poison[];
