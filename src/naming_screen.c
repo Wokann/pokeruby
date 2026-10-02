@@ -145,8 +145,8 @@ struct NamingScreenData
  /*0x46*/ MainCallback returnCallback;
 };
 
-static const u8 sPCIconOff_Gfx[] = INCBIN_U8("graphics/naming_screen/pc_icon/0.4bpp");
-static const u8 sPCIconOn_Gfx[] = INCBIN_U8("graphics/naming_screen/pc_icon/1.4bpp");
+static const u8 sPCIconOff_Gfx[] = INCBIN_U8("graphics/naming_screen/pc_icon_off.4bpp");
+static const u8 sPCIconOn_Gfx[] = INCBIN_U8("graphics/naming_screen/pc_icon_on.4bpp");
 
 static struct NamingScreenData *const sNamingScreen = &namingScreenData;
 
