@@ -1,5 +1,5 @@
 EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags:: @ 819FC13
-	clearflag FLAG_HIDE_LILYCOVE_MOTEL_PEOPLE
+	clearflag FLAG_HIDE_LILYCOVE_MOTEL_GAME_DESIGNERS
 	call EverGrandeCity_HallOfFame_EventScript_ResetEliteFour
 	setflag FLAG_HIDE_SLATEPORT_CITY_STERNS_SHIPYARD_MR_BRINEY
 	clearflag FLAG_HIDE_SS_TIDAL_CORRIDOR_MR_BRINEY
