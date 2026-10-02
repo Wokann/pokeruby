@@ -27,7 +27,7 @@ static const s32 sPowersOfTen[] =
 u8 *StringCopy_Nickname(u8 *dest, const u8 *src)
 {
     u8 i;
-    u32 limit = 10;
+    u32 limit = POKEMON_NAME_LENGTH;
 
     for (i = 0; i < limit; i++)
     {
@@ -44,7 +44,7 @@ u8 *StringCopy_Nickname(u8 *dest, const u8 *src)
 u8 *StringGet_Nickname(u8 *str)
 {
     u8 i;
-    u32 limit = 10;
+    u32 limit = POKEMON_NAME_LENGTH;
 
     for (i = 0; i < limit; i++)
         if (str[i] == EOS)
@@ -58,7 +58,7 @@ u8 *StringCopy_PlayerName(u8 *dest, const u8 *src)
 {
     s32 i;
 
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < PLAYER_NAME_LENGTH + 1; i++)
     {
         dest[i] = src[i];
 
@@ -396,9 +396,9 @@ u8 *StringExpandPlaceholders(u8 *dest, const u8 *src)
         case EOS:
             *dest = EOS;
             return dest;
-        case 0xFA:
-        case 0xFB:
-        case 0xFE:
+        case CHAR_PROMPT_SCROLL:
+        case CHAR_PROMPT_CLEAR:
+        case CHAR_NEWLINE:
         default:
             *dest++ = c;
         }
@@ -407,8 +407,8 @@ u8 *StringExpandPlaceholders(u8 *dest, const u8 *src)
 
 u8 *StringBraille(u8 *dest, const u8 *src)
 {
-    u8 setBrailleFont[] = { 0xFC, 0x06, 0x06, 0xFF };
-    u8 gotoLine2[] = { 0xFE, 0xFC, 0x0E, 0x02, 0xFF };
+    u8 setBrailleFont[] = { EXT_CTRL_CODE_BEGIN, EXT_CTRL_CODE_FONT, FONT_BRAILLE, EOS };
+    u8 gotoLine2[] = { CHAR_NEWLINE, EXT_CTRL_CODE_BEGIN, EXT_CTRL_CODE_SHIFT_DOWN, 2, EOS };
 
     dest = StringCopy(dest, setBrailleFont);
 
@@ -421,12 +421,12 @@ u8 *StringBraille(u8 *dest, const u8 *src)
         case EOS:
             *dest = c;
             return dest;
-        case 0xFE:
+        case CHAR_NEWLINE:
             dest = StringCopy(dest, gotoLine2);
             break;
         default:
             *dest++ = c;
-            *dest++ = c + 0x40;
+            *dest++ = c + NUM_BRAILLE_CHARS;
             break;
         }
     }
