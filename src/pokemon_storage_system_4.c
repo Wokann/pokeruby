@@ -82,6 +82,216 @@ void AddBoxOptionsMenu(void);
 void RunTilemapCopy(struct TilemapTransfer *transfer);
 void RunTilemapFill(struct TilemapTransfer *transfer);
 
+#define PSS_CURSOR_DATA __attribute__((section(".rodata.pokemon_storage_cursor")))
+
+#define PSS_GFXTAG_CURSOR        0
+#define PSS_GFXTAG_CURSOR_SHADOW 1
+#define PSS_PALTAG_CURSOR        0xDAC6
+#define PSS_PALTAG_CURSOR_ALT    0xDAD1
+
+u8 InBoxInput_Normal(void);
+u8 HandleInput_InParty(void);
+u8 HandleInput_OnBox(void);
+u8 HandleInput_OnButtons(void);
+void SpriteCB_CursorShadow(struct Sprite *sprite);
+
+extern const u16 gHandCursorPalette[];
+extern const u16 gHandCursorAltPalette[];
+extern const u8 gHandCursorTiles[];
+extern const u8 gHandCursorShadowTiles[];
+
+extern const u8 PCText_Cancel2[];
+extern const u8 PCText_Deposit[];
+extern const u8 gPCText_Withdraw[];
+extern const u8 gPCText_Move[];
+extern const u8 PCText_Switch[];
+extern const u8 gPCText_Place[];
+extern const u8 gPCText_Summary[];
+extern const u8 gPCText_Release[];
+extern const u8 gPCText_Mark[];
+extern const u8 gPCText_Jump[];
+extern const u8 gPCText_Wallpaper[];
+extern const u8 gPCText_Name[];
+extern const u8 gPCText_Scenery1[];
+extern const u8 gPCText_Scenery2[];
+extern const u8 gPCText_Scenery3[];
+extern const u8 gPCText_Etcetera[];
+extern const u8 gPCText_Forest[];
+extern const u8 gPCText_City[];
+extern const u8 gPCText_Desert[];
+extern const u8 gPCText_Savanna[];
+extern const u8 gPCText_Crag[];
+extern const u8 gPCText_Volcano[];
+extern const u8 gPCText_Snow[];
+extern const u8 gPCText_Cave[];
+extern const u8 gPCText_Beach[];
+extern const u8 gPCText_Seafloor[];
+extern const u8 gPCText_River[];
+extern const u8 gPCText_Sky[];
+extern const u8 gPCText_PolkaDot[];
+extern const u8 gPCText_Pokecenter[];
+extern const u8 gPCText_Machine[];
+extern const u8 PCText_Plain[];
+
+const struct PokeStorageInputHandler gPokeStorageInputHandlers[] PSS_CURSOR_DATA =
+{
+    {InBoxInput_Normal, PSS_CURSOR_AREA_IN_BOX},
+    {HandleInput_InParty, PSS_CURSOR_AREA_IN_PARTY},
+    {HandleInput_OnBox, PSS_CURSOR_AREA_BOX_TITLE},
+    {HandleInput_OnButtons, PSS_CURSOR_AREA_BUTTONS},
+    {NULL, 0},
+};
+
+const struct SpriteSheet gPokeStorageCursorSpriteSheets[] PSS_CURSOR_DATA =
+{
+    {gHandCursorTiles, 0x800, PSS_GFXTAG_CURSOR},
+    {gHandCursorShadowTiles, 0x80, PSS_GFXTAG_CURSOR_SHADOW},
+    {NULL, 0, 0},
+};
+
+const struct SpritePalette gPokeStorageCursorSpritePalettes[] PSS_CURSOR_DATA =
+{
+    {gHandCursorPalette, PSS_PALTAG_CURSOR},
+    {gHandCursorAltPalette, PSS_PALTAG_CURSOR_ALT},
+    {NULL, 0},
+};
+
+const struct OamData gOamData_PokeStorageCursor PSS_CURSOR_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+const struct OamData gOamData_PokeStorageCursorShadow PSS_CURSOR_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+const union AnimCmd gAnim_PokeStorageCursorBouncing[] PSS_CURSOR_DATA =
+{
+    ANIMCMD_FRAME(0, 30),
+    ANIMCMD_FRAME(16, 30),
+    ANIMCMD_JUMP(0)
+};
+
+const union AnimCmd gAnim_PokeStorageCursorStill[] PSS_CURSOR_DATA =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_END
+};
+
+const union AnimCmd gAnim_PokeStorageCursorOpen[] PSS_CURSOR_DATA =
+{
+    ANIMCMD_FRAME(32, 5),
+    ANIMCMD_END
+};
+
+const union AnimCmd gAnim_PokeStorageCursorFist[] PSS_CURSOR_DATA =
+{
+    ANIMCMD_FRAME(48, 5),
+    ANIMCMD_END
+};
+
+const union AnimCmd *const gAnims_PokeStorageCursor[] PSS_CURSOR_DATA =
+{
+    gAnim_PokeStorageCursorBouncing,
+    gAnim_PokeStorageCursorStill,
+    gAnim_PokeStorageCursorOpen,
+    gAnim_PokeStorageCursorFist,
+};
+
+const struct SpriteTemplate gSpriteTemplate_PokeStorageCursor PSS_CURSOR_DATA =
+{
+    .tileTag = PSS_GFXTAG_CURSOR,
+    .paletteTag = PSS_PALTAG_CURSOR,
+    .oam = &gOamData_PokeStorageCursor,
+    .anims = gAnims_PokeStorageCursor,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+const struct SpriteTemplate gSpriteTemplate_PokeStorageCursorShadow PSS_CURSOR_DATA =
+{
+    .tileTag = PSS_GFXTAG_CURSOR_SHADOW,
+    .paletteTag = PSS_PALTAG_CURSOR,
+    .oam = &gOamData_PokeStorageCursorShadow,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_CursorShadow,
+};
+
+#if DEBUG
+#if DEBUG_FIX
+const u8 gText_DebugPokeStorageSet[] PSS_CURSOR_DATA = _("SET");
+#else
+const u8 gText_DebugPokeStorageSet[] PSS_CURSOR_DATA = _("セットする");
+#endif
+#endif
+
+const u8 *const gPokeStorageMenuTexts[] PSS_CURSOR_DATA =
+{
+    PCText_Cancel2,
+    PCText_Deposit,
+    gPCText_Withdraw,
+    gPCText_Move,
+    PCText_Switch,
+    gPCText_Place,
+    gPCText_Summary,
+    gPCText_Release,
+    gPCText_Mark,
+    gPCText_Jump,
+    gPCText_Wallpaper,
+    gPCText_Name,
+    gPCText_Scenery1,
+    gPCText_Scenery2,
+    gPCText_Scenery3,
+    gPCText_Etcetera,
+    gPCText_Forest,
+    gPCText_City,
+    gPCText_Desert,
+    gPCText_Savanna,
+    gPCText_Crag,
+    gPCText_Volcano,
+    gPCText_Snow,
+    gPCText_Cave,
+    gPCText_Beach,
+    gPCText_Seafloor,
+    gPCText_River,
+    gPCText_Sky,
+    gPCText_PolkaDot,
+    gPCText_Pokecenter,
+    gPCText_Machine,
+    PCText_Plain,
+#if DEBUG
+    gText_DebugPokeStorageSet,
+#endif
+};
+
 // .rodata
 
 const u16 sWallpaperBoxPalette_Forest[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
@@ -331,12 +541,6 @@ bool8 (*const sMonPlaceChangeFuncs[])(void) = {
     MonPlaceChange_Shift
 };
 
-extern const struct SpriteSheet gPokeStorageCursorSpriteSheets[3];
-extern const struct SpritePalette gPokeStorageCursorSpritePalettes[3];
-extern const struct SpriteTemplate gSpriteTemplate_PokeStorageCursor;
-extern const struct SpriteTemplate gSpriteTemplate_PokeStorageCursorShadow;
-extern const u8 *const gPokeStorageMenuTexts[];
-extern struct PokeStorageInputHandler gPokeStorageInputHandlers[];
 
 // .text
 

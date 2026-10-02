@@ -557,7 +557,7 @@ SECTIONS {
         src/pokemon_storage_system_2.o(.rodata);
         src/pokemon_storage_system_3.o(.rodata);
         src/pokemon_storage_system_4.o(.rodata);
-        data/pokemon_storage_system.o(.rodata);
+        src/pokemon_storage_system_4.o(.rodata.pokemon_storage_cursor);
         src/pokemon_icon.o(.rodata);
         src/pokemon_summary_screen.o(.rodata);
         src/fldeff_cut.o(.rodata);
