@@ -193,22 +193,22 @@ gAnims_MonPic:: @ 81E7C64
 	.4byte sAnim_MonPic_3
 
 @ 81E7C74
-	.include "data/graphics/pokemon/front_pic_coordinates.inc"
+	.include "data/pokemon_graphics/front_pic_coordinates.inc"
 
 @ 81E8354
-	.include "data/graphics/pokemon/front_pic_table.inc"
+	.include "data/pokemon_graphics/front_pic_table.inc"
 
 @ 81E9114
-	.include "data/graphics/pokemon/back_pic_coordinates.inc"
+	.include "data/pokemon_graphics/back_pic_coordinates.inc"
 
 @ 81E97F4
-	.include "data/graphics/pokemon/back_pic_table.inc"
+	.include "data/pokemon_graphics/back_pic_table.inc"
 
 @ 81EA5B4
-	.include "data/graphics/pokemon/palette_table.inc"
+	.include "data/pokemon_graphics/palette_table.inc"
 
 @ 81EB374
-	.include "data/graphics/pokemon/shiny_palette_table.inc"
+	.include "data/pokemon_graphics/shiny_palette_table.inc"
 
 	.align 2
 sAnimCmd_Lass_1:: @ 81EC134

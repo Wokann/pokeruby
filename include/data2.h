@@ -30,11 +30,23 @@ extern const union AffineAnimCmd *const gAffineAnims_BattleSpriteOpponentSide[];
 
 extern const union AffineAnimCmd *const gAffineAnims_BattleSpriteContest[];
 extern const union AnimCmd *const gAnims_MonPic[];
+
+// data/pokemon_graphics/front_pic_coordinates.inc
 extern const struct MonCoords gMonFrontPicCoords[];
+
+// data/pokemon_graphics/back_pic_coordinates.inc
 extern const struct MonCoords gMonBackPicCoords[];
+
+// data/pokemon_graphics/front_pic_table.inc
 extern const struct CompressedSpriteSheet gMonFrontPicTable[];
+
+// data/pokemon_graphics/back_pic_table.inc
 extern const struct CompressedSpriteSheet gMonBackPicTable[];
+
+// data/pokemon_graphics/palette_table.inc
 extern const struct CompressedSpritePalette gMonPaletteTable[];
+
+// data/pokemon_graphics/shiny_palette_table.inc
 extern const struct CompressedSpritePalette gMonShinyPaletteTable[];
 extern const union AnimCmd *const *const gTrainerFrontAnimsPtrTable[];
 extern const union AnimCmd *const *const gTrainerBackAnimsPtrTable[];
