@@ -1274,10 +1274,10 @@ const u16 gHoennToNationalOrder[] = // Assigns Hoenn Dex Pokémon (Using Nationa
 
 const struct SpindaSpot gSpindaSpotGraphics[] =
 {
-    {16, 14, INCBIN_U16("graphics/spinda_spots/spot_0.bin")},
-    {40, 15, INCBIN_U16("graphics/spinda_spots/spot_1.bin")},
-    {22, 32, INCBIN_U16("graphics/spinda_spots/spot_2.bin")},
-    {34, 33, INCBIN_U16("graphics/spinda_spots/spot_3.bin")}
+    {16, 14, INCBIN_U16("graphics/pokemon/spinda/spots/spot_0.1bpp")},
+    {40, 15, INCBIN_U16("graphics/pokemon/spinda/spots/spot_1.1bpp")},
+    {22, 32, INCBIN_U16("graphics/pokemon/spinda/spots/spot_2.1bpp")},
+    {34, 33, INCBIN_U16("graphics/pokemon/spinda/spots/spot_3.1bpp")}
 };
 
 #include "data/pokemon/item_effects.h"

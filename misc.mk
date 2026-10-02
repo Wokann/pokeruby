@@ -71,6 +71,13 @@ $(PSSGFXDIR)/plain.4bpp: $(PSSGFXDIR)/plain_frame.4bpp $(PSSGFXDIR)/plain_bg.4bp
 	@cat $(PSSGFXDIR)/plain_frame.4bpp $(PSSGFXDIR)/plain_bg.4bpp >$@
 
 
+#### Spinda ####
+
+SPINDAGFXDIR := graphics/pokemon/spinda
+
+$(SPINDAGFXDIR)/spots/spot_%.1bpp: GFX_OPTS := -plain -data_width 2
+
+
 #### Intro ####
 
 INTROGFXDIR := graphics/intro
