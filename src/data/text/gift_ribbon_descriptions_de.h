@@ -139,7 +139,7 @@ const u8 gGiftRibbonDescriptionPart1_LoveForPokemon[] = _(
 const u8 gGiftRibbonDescriptionPart2_LoveForPokemon[] = _(
     "Freunde.");
 
-const u8 *const gGiftRibbonDescriptions[][2] = 
+const u8 *const gGiftRibbonDescriptionPointers[MAX_GIFT_RIBBON][2] =
 {
     {gGiftRibbonDescriptionPart1_2003RegionalTourney,   gGiftRibbonDescriptionPart2_Champion},
     {gGiftRibbonDescriptionPart1_2003NationalTourney,   gGiftRibbonDescriptionPart2_Champion},
@@ -204,5 +204,5 @@ const u8 *const gGiftRibbonDescriptions[][2] =
     {gGiftRibbonDescriptionPart1_LotsOfFriends,         gGiftRibbonDescriptionPart2_EmptyString},
     {gGiftRibbonDescriptionPart1_FullOfEnergy,          gGiftRibbonDescriptionPart2_EmptyString},
     {gGiftRibbonDescriptionPart1_LovedPokemon,          gGiftRibbonDescriptionPart2_LovedPokemon},
-    {gGiftRibbonDescriptionPart1_LoveForPokemon,        gGiftRibbonDescriptionPart2_LoveForPokemon},
+    {gGiftRibbonDescriptionPart1_LoveForPokemon,        gGiftRibbonDescriptionPart2_LoveForPokemon}
 };

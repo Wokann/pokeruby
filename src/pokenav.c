@@ -86,8 +86,8 @@ extern const u16 gPokenavRibbonView_Pal[];
 extern const u16 gPokenavRibbonsSummary_Pal[];
 extern const u16 gPokenavRibbonIconPalettes[][16];
 extern const u16 gPokenavRibbonGfxData[][2];
-extern const u8 *const gRibbonDescriptions[][2];
-extern const u8 *const gGiftRibbonDescriptions[][2];
+extern const u8 *const gRibbonDescriptionPointers[][2];
+extern const u8 *const gGiftRibbonDescriptionPointers[][2];
 extern const u8 gPokenavMonInfoHeaderTilemap[];
 extern const u8 gPokenavMonInfoHeader_Gfx[];
 extern const u16 gPokenavConditionMonInfoHeader_Pal[];
@@ -1631,8 +1631,8 @@ void PrintRibbonsSummaryDescription(void)
     {
         gPokenavRibbonDescriptionId = gPokenavState->ribbonPageIndex * 9 + gPokenavState->ribbonCursorPos;
         gPokenavRibbonDescriptionId = gPokenavState->ribbonIds[gPokenavRibbonDescriptionId];
-        AlignStringInMenuWindow(tileBuffer1, gRibbonDescriptions[gPokenavRibbonDescriptionId][0], 128, 0);
-        AlignStringInMenuWindow(tileBuffer2, gRibbonDescriptions[gPokenavRibbonDescriptionId][1], 128, 0);
+        AlignStringInMenuWindow(tileBuffer1, gRibbonDescriptionPointers[gPokenavRibbonDescriptionId][0], 128, 0);
+        AlignStringInMenuWindow(tileBuffer2, gRibbonDescriptionPointers[gPokenavRibbonDescriptionId][1], 128, 0);
     }
     else
     {
@@ -1649,8 +1649,8 @@ void PrintRibbonsSummaryDescription(void)
         if (gPokenavRibbonDescriptionId)
         {
             gPokenavRibbonDescriptionId--;
-            AlignStringInMenuWindow(tileBuffer1, gGiftRibbonDescriptions[gPokenavRibbonDescriptionId][0], 128, 0);
-            AlignStringInMenuWindow(tileBuffer2, gGiftRibbonDescriptions[gPokenavRibbonDescriptionId][1], 128, 0);
+            AlignStringInMenuWindow(tileBuffer1, gGiftRibbonDescriptionPointers[gPokenavRibbonDescriptionId][0], 128, 0);
+            AlignStringInMenuWindow(tileBuffer2, gGiftRibbonDescriptionPointers[gPokenavRibbonDescriptionId][1], 128, 0);
         }
         else
         {
