@@ -55,8 +55,8 @@ extern const u8 gPokenavConditionView_Gfx[];
 extern const u8 gPokenavRegionMapCityBannerFrames[];
 extern const u8 gPokenavRegionMapCityBannerBlank[];
 extern const u8 *const gPokenavCityMaps[][2];
-extern const u8 gPokenavHoennMapSquares_Pal[];
-extern const u8 gPokenavHoennMapSquares_Gfx[];
+extern const u8 gPokenavRegionMapZoomTiles_Pal[];
+extern const u8 gPokenavRegionMapZoomTiles_Gfx[];
 extern const u16 gPokenavMenuPaletteGradientColors[];
 extern const u8 *const gPokenavMainMenuDescriptions[];
 extern const u8 *const gPokenavConditionMenuDescriptions[];
@@ -580,10 +580,10 @@ bool8 LoadPokenavRegionMapGfxStep(void)
             return TRUE;
         break;
     case 7:
-        LZ77UnCompVram(gPokenavHoennMapSquares_Gfx, (void *)VRAM + 0x5000);
+        LZ77UnCompVram(gPokenavRegionMapZoomTiles_Gfx, (void *)VRAM + 0x5000);
         break;
     case 8:
-        LoadPalette(gPokenavHoennMapSquares_Pal, 0x30, 0x20);
+        LoadPalette(gPokenavRegionMapZoomTiles_Pal, 0x30, 0x20);
         InitCityMapDecompression();
         break;
     case 9:

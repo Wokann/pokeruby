@@ -1023,9 +1023,9 @@ const u16 gPokenavMenuOptions2_Pal[] = INCBIN_U16("graphics/pokenav/pokenav2.gba
 const u16 gPokenavMenuOptions3_Pal[] = INCBIN_U16("graphics/pokenav/pokenav3.gbapal");
 const u8 gPokenavHoennMapHeader_Gfx[] = INCBIN_U8("graphics/pokenav/left_headers/hoenn_map.4bpp.lz");
 const u8 gPokenavHoennMapMisc_Gfx[] = INCBIN_U8("graphics/pokenav/map_misc2.4bpp.lz");
-const u8 gPokenavHoennMapSquares_Gfx[] = INCBIN_U8("graphics/pokenav/zoom_tiles.4bpp.lz");
+const u8 gPokenavRegionMapZoomTiles_Gfx[] = INCBIN_U8("graphics/pokenav/region_map/zoom_tiles.4bpp.lz");
 const u16 gPokenavHoennMap1_Pal[] = INCBIN_U16("graphics/pokenav/map_menu.gbapal");
-const u8 gPokenavHoennMapSquares_Pal[] = INCBIN_U8("graphics/pokenav/zoom_tiles.gbapal");
+const u8 gPokenavRegionMapZoomTiles_Pal[] = INCBIN_U8("graphics/pokenav/region_map/zoom_tiles.gbapal");
 const u8 gPokenavConditionMenu_Gfx[] = INCBIN_U8("graphics/pokenav/options/condition_menu.4bpp.lz");
 const u16 gPokenavConditionMenu_Pal[] = INCBIN_U16("graphics/pokenav/condition1.gbapal");
 const u8 gPokenavConditionMenuHeader_Gfx[] = INCBIN_U8("graphics/pokenav/left_headers/condition.4bpp.lz");
@@ -1222,8 +1222,8 @@ const u8 gPartyMenuDescriptorStatusTilemap[] = INCBIN_U8("graphics/party_menu/de
 const u8 gEasyChatBg2_Gfx[] = INCBIN_U8("graphics/easy_chat/bg2_gfx.bin");
 const u8 gEasyChatBg2_Pal[] = INCBIN_U8("graphics/easy_chat/bg2.gbapal");
 const u8 gEasyChatBg2_Tilemap[] = INCBIN_U8("graphics/easy_chat/bg2.bin.lz");
-const u8 gPokenavRegionMapCityBannerFrames[] = INCBIN_U8("graphics/pokenav/region_map_city_banner_frames.bin");
-const u8 gPokenavRegionMapCityBannerBlank[] = INCBIN_U8("graphics/pokenav/region_map_city_banner_blank.bin");
+const u8 gPokenavRegionMapCityBannerFrames[] = INCBIN_U8("graphics/pokenav/region_map/city_banner_frames.bin");
+const u8 gPokenavRegionMapCityBannerBlank[] = INCBIN_U8("graphics/pokenav/region_map/city_banner_blank.bin");
 const u8 gPokenavCondition_Tilemap[] = INCBIN_U8("graphics/pokenav/condition/graph.bin.lz");
 
 // text window frames
