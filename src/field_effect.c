@@ -167,14 +167,14 @@ static const u8 sHofMonitorSmall_Gfx[] = INCBIN_U8("graphics/field_effects/pics/
 static const u16 sHofMonitor_Pal[16] = INCBIN_U16("graphics/field_effects/palettes/hof_monitor.gbapal");
 
 // Graphics for the lights streaking past your Pokemon when it uses a field move.
-const u32 gFieldMoveStreaksTiles[] = INCBIN_U32("graphics/misc/field_move_streaks.4bpp");
-const u16 gFieldMoveStreaksPalette[16] = INCBIN_U16("graphics/misc/field_move_streaks.gbapal");
-const u16 gFieldMoveStreaksTilemap[] = INCBIN_U16("graphics/misc/field_move_streaks_map.bin");
+static const u32 sFieldMoveStreaksOutdoors_Gfx[] = INCBIN_U32("graphics/field_effects/pics/field_move_streaks.4bpp");
+static const u16 sFieldMoveStreaksOutdoors_Pal[16] = INCBIN_U16("graphics/field_effects/pics/field_move_streaks.gbapal");
+static const u16 sFieldMoveStreaksOutdoors_Tilemap[320] = INCBIN_U16("graphics/field_effects/pics/field_move_streaks.bin");
 
 // The following light streaks effect is used when the map is dark (e.g. a cave).
-const u32 gDarknessFieldMoveStreaksTiles[] = INCBIN_U32("graphics/misc/darkness_field_move_streaks.4bpp");
-const u16 gDarknessFieldMoveStreaksPalette[16] = INCBIN_U16("graphics/misc/darkness_field_move_streaks.gbapal");
-const u16 gDarknessFieldMoveStreaksTilemap[] = INCBIN_U16("graphics/misc/darkness_field_move_streaks_map.bin");
+static const u32 sFieldMoveStreaksIndoors_Gfx[] = INCBIN_U32("graphics/field_effects/pics/field_move_streaks_indoors.4bpp");
+static const u16 sFieldMoveStreaksIndoors_Pal[16] = INCBIN_U16("graphics/field_effects/pics/field_move_streaks_indoors.gbapal");
+static const u16 sFieldMoveStreaksIndoors_Tilemap[320] = INCBIN_U16("graphics/field_effects/pics/field_move_streaks_indoors.bin");
 
 bool8 (*const gFieldEffectScriptFuncs[])(u8 **, u32 *) = {
     FieldEffectCmd_loadtiles,
@@ -2452,9 +2452,9 @@ void FieldMoveShowMonOutdoorsEffect_LoadGfx(struct Task *task)
     u16 delta;
     offset = ((REG_BG0CNT >> 2) << 14);
     delta = ((REG_BG0CNT >> 8) << 11);
-    CpuCopy16(gFieldMoveStreaksTiles, (void *)(VRAM + offset), 0x200);
+    CpuCopy16(sFieldMoveStreaksOutdoors_Gfx, (void *)(VRAM + offset), 0x200);
     CpuFill32(0, (void *)(VRAM + delta), 0x800);
-    LoadPalette(gFieldMoveStreaksPalette, 0xf0, 0x20);
+    LoadPalette(sFieldMoveStreaksOutdoors_Pal, 0xf0, 0x20);
     LoadFieldMoveOutdoorStreaksTilemap(delta);
     task->data[0]++;
 }
@@ -2571,7 +2571,7 @@ void LoadFieldMoveOutdoorStreaksTilemap(u16 offs)
     dest = (u16 *)(VRAM + 0x140 + offs);
     for (i = 0; i < 0x140; i++, dest++)
     {
-        *dest = gFieldMoveStreaksTilemap[i] | 0xf000;
+        *dest = sFieldMoveStreaksOutdoors_Tilemap[i] | 0xf000;
     }
 }
 
@@ -2611,9 +2611,9 @@ void FieldMoveShowMonIndoorsEffect_LoadGfx(struct Task *task)
     offset = ((REG_BG0CNT >> 2) << 14);
     delta = ((REG_BG0CNT >> 8) << 11);
     task->data[12] = delta;
-    CpuCopy16(gDarknessFieldMoveStreaksTiles, (void *)(VRAM + offset), 0x80);
+    CpuCopy16(sFieldMoveStreaksIndoors_Gfx, (void *)(VRAM + offset), 0x80);
     CpuFill32(0, (void *)(VRAM + delta), 0x800);
-    LoadPalette(gDarknessFieldMoveStreaksPalette, 0xf0, 0x20);
+    LoadPalette(sFieldMoveStreaksIndoors_Pal, 0xf0, 0x20);
     task->data[0]++;
 }
 
@@ -2707,10 +2707,10 @@ bool8 SlideIndoorBannerOnscreen(struct Task *task)
         dest = (u16 *)(VRAM + 0x140 + (u16)task->data[12]);
         for (i = 0; i < 10; i++)
         {
-            dest[dstOffs + i * 32] = gDarknessFieldMoveStreaksTilemap[srcOffs + i * 32];
+            dest[dstOffs + i * 32] = sFieldMoveStreaksIndoors_Tilemap[srcOffs + i * 32];
             dest[dstOffs + i * 32] |= 0xf000;
 
-            dest[((dstOffs + 1) & 0x1f) + i * 32] = gDarknessFieldMoveStreaksTilemap[((srcOffs + 1) & 0x1f) + i * 32] | 0xf000;
+            dest[((dstOffs + 1) & 0x1f) + i * 32] = sFieldMoveStreaksIndoors_Tilemap[((srcOffs + 1) & 0x1f) + i * 32] | 0xf000;
             dest[((dstOffs + 1) & 0x1f) + i * 32] |= 0xf000;
         }
         task->data[4] += 2;
