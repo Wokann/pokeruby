@@ -655,7 +655,7 @@ Move_SCREECH: @ 81C7E15
 	call ScreechRing
 	call ScreechRing
 	delay 16
-	createvisualtask AnimTask_SwayMon, 5, 0, 6, 2048, 2, 1
+	createvisualtask AnimTask_SwayMon, 5, 0, 6, 2048, 2, ANIM_TARGET
 	waitforvisualfinish
 	end
 ScreechRing:
@@ -1350,7 +1350,7 @@ Move_PSYCH_UP: @ 81C8EEA
 	setalpha 12, 8
 	loopsewithpan SE_M_PSYBEAM2, SOUND_PAN_ATTACKER, 5, 10
 	createsprite gPsychUpSpiralSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 0, 0
-	createvisualtask AnimTask_SwayMon, 5, 0, 5, 2560, 8, 0
+	createvisualtask AnimTask_SwayMon, 5, 0, 5, 2560, 8, ANIM_ATTACKER
 	delay 127
 	delay 4
 	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
@@ -1853,7 +1853,7 @@ Move_VICE_GRIP: @ 81C9BE1
 	createsprite gViceGripSpriteTemplate, ANIM_ATTACKER, 2, 1
 	delay 9
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 1, 0, 0, 1, 2
-	createvisualtask AnimTask_ShakeMon2, 5, 1, 2, 0, 5, 1
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_TARGET, 2, 0, 5, 1
 	waitforvisualfinish
 	clearmonbg ANIM_DEF_PARTNER
 	blendoff
@@ -1871,9 +1871,9 @@ Move_GUILLOTINE: @ 81C9C29
 	createsprite gGuillotineSpriteTemplate, ANIM_ATTACKER, 2, 1
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 16, RGB_BLACK
 	delay 9
-	createvisualtask AnimTask_ShakeMon2, 5, 1, 2, 0, 23, 1
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_TARGET, 2, 0, 23, 1
 	delay 46
-	createvisualtask AnimTask_ShakeMon2, 5, 1, 4, 0, 8, 1
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_TARGET, 4, 0, 8, 1
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 1, 0
 	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, 31, 3, 1, 0, 8, 0, 0
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
@@ -2199,7 +2199,7 @@ Move_BUBBLE_BEAM: @ 81CA573
 	setalpha 12, 8
 	delay 1
 	call BubblebeamCreateBubbles
-	createvisualtask AnimTask_SwayMon, 5, 0, 3, 3072, 8, 1
+	createvisualtask AnimTask_SwayMon, 5, 0, 3, 3072, 8, ANIM_TARGET
 	call BubblebeamCreateBubbles
 	call BubblebeamCreateBubbles
 	waitforvisualfinish
@@ -2909,8 +2909,8 @@ Move_BARRAGE: @ 81CB533
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
 	delay 24
 	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_ATTACKER, 2, 8, 1, 40, 1
-	createvisualtask AnimTask_ShakeMon, 3, 1, 0, 4, 20, 1
-	createvisualtask AnimTask_ShakeMon, 3, 3, 0, 4, 20, 1
+	createvisualtask AnimTask_ShakeMon, 3, ANIM_TARGET, 0, 4, 20, 1
+	createvisualtask AnimTask_ShakeMon, 3, ANIM_DEF_PARTNER, 0, 4, 20, 1
 	loopsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET, 8, 2
 	end
 
@@ -4278,7 +4278,7 @@ Move_TICKLE: @ 81CD33C
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, 2, 0, 16, 0, RGB_BLACK
 	waitforvisualfinish
 	delay 20
-	createvisualtask AnimTask_SwayMon, 3, 0, 6, 1280, 3, 0
+	createvisualtask AnimTask_SwayMon, 3, 0, 6, 1280, 3, ANIM_ATTACKER
 	delay 12
 	createvisualtask AnimTask_RockMonBackAndForth, 3, ANIM_TARGET, 6, 2
 	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_TARGET, 8, 8
@@ -9269,7 +9269,7 @@ Move_OVERHEAT: @ 81D4AFC
 	createvisualtask AnimTask_CopyPalUnfadedToBackup, 5, 1, 0
 	delay 1
 	simple_palette_blend selector=F_PAL_ATTACKER, delay=1, initial_blend_y=0, target_blend_y=13, color=RGB(28, 0, 0)
-	createvisualtask AnimTask_ShakeMon, 5, 0, 2, 0, 15, 1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_ATTACKER, 2, 0, 15, 1
 	waitforvisualfinish
 	playsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_ATTACKER
 	create_overheat_flame_sprite ANIM_ATTACKER, 2, speed=1, unk1=0, unk2=30, duration=25, y=-20
@@ -9315,7 +9315,7 @@ Move_OVERHEAT: @ 81D4AFC
 	createvisualtask AnimTask_CopyPalFadedToUnfaded, 5, 1
 	delay 1
 	simple_palette_blend selector=F_PAL_ATTACKER, delay=-1, initial_blend_y=0, target_blend_y=13, color=RGB(18, 18, 18)
-	createvisualtask AnimTask_ShakeMon, 5, 0, 3, 0, 15, 1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_ATTACKER, 3, 0, 15, 1
 	waitforvisualfinish
 	createvisualtask AnimTask_CopyPalUnfadedFromBackup, 5, 0, 1
 	delay 1
@@ -10350,7 +10350,7 @@ General_PokeblockThrow: @ 81D6438
 	createsprite gPokeblockSpriteTemplate, ANIM_TARGET, 3, -16, 7, 0, 32
 	delay 50
 	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_TARGET, 19, 2
-	createvisualtask AnimTask_SwayMon, 5, 1, 8, 1536, 2, 1
+	createvisualtask AnimTask_SwayMon, 5, 1, 8, 1536, 2, ANIM_TARGET
 	waitforvisualfinish
 	createvisualtask AnimTask_FreePokeblockGfx, 2
 	end
@@ -10416,7 +10416,7 @@ Status_Clamp:
 	createsprite gClampJawSpriteTemplate, ANIM_ATTACKER, 2, 32, 0, 6, -819, 0, 10
 	delay 10
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 1, 2
-	createvisualtask AnimTask_ShakeMon, 5, 1, 3, 0, 5, 1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 3, 0, 5, 1
 	waitforvisualfinish
 	clearmonbg ANIM_TARGET
 	blendoff
@@ -10559,7 +10559,7 @@ General_SnatchMove: @ 81D6877
 	createvisualtask AnimTask_SetAnimAttackerAndTargetForEffectTgt, 2
 	call SnatchMoveTrySwapFromSubstitute
 	delay 1
-	createvisualtask AnimTask_SwayMon, 2, 0, 5, 5120, 4, 1
+	createvisualtask AnimTask_SwayMon, 2, 0, 5, 5120, 4, ANIM_TARGET
 	waitforvisualfinish
 	createvisualtask AnimTask_IsTargetSameSide, 2
 	jumpretfalse SnatchOpposingMonMove
