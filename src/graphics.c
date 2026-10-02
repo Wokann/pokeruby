@@ -1311,7 +1311,7 @@ const u16 gTradeMenu_Pal[] = INCBIN_U16("graphics/trade/menu.gbapal", "graphics/
 
 const u16 gTradeCursor_Pal[] = INCBIN_U16("graphics/trade/cursor.gbapal");
 const u8 gTradeMenu_Gfx[] = INCBIN_U8("graphics/trade/menu.4bpp");
-const u8 gTradeMenu_Tilemap[] = INCBIN_U8("graphics/trade/menu_map.bin");
+const u8 gTradeMenu_Tilemap[] = INCBIN_U8("graphics/trade/menu.bin");
 const u8 gTradeMonBoxTilemap[] = INCBIN_U8("graphics/trade/menu_mon_box.bin");
 const u8 gTradeCursor_Gfx[] = INCBIN_U8("graphics/trade/cursor.4bpp");
 
