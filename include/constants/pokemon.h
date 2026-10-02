@@ -201,6 +201,10 @@
 #define SHINY_ODDS 8
 #define NUM_UNOWN_FORMS 28
 
+#define MON_PIC_WIDTH  64
+#define MON_PIC_HEIGHT 64
+#define MON_PIC_SIZE   (MON_PIC_WIDTH * MON_PIC_HEIGHT / 2)
+
 #define MIN_STAT_STAGE     0
 #define DEFAULT_STAT_STAGE 6
 #define MAX_STAT_STAGE    12
