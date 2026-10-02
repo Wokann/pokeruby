@@ -11,19 +11,16 @@ PacifidlogTown_House2_EventScript_FanClubYoungerBrother:: @ 8154168
 	call_if_unset FLAG_MET_FANCLUB_YOUNGER_BROTHER, PacifidlogTown_House2_EventScript_FirstMonAssessment
 	setflag FLAG_MET_FANCLUB_YOUNGER_BROTHER
 	specialvar VAR_RESULT, GetLeadMonFriendshipScore
-	compare VAR_RESULT, FRIENDSHIP_150_TO_199
-	goto_if_ge PacifidlogTown_House2_EventScript_GiveReturn
+	goto_if_ge VAR_RESULT, FRIENDSHIP_150_TO_199, PacifidlogTown_House2_EventScript_GiveReturn
 	specialvar VAR_RESULT, GetLeadMonFriendshipScore
-	compare VAR_RESULT, FRIENDSHIP_50_TO_99
-	goto_if_ge PacifidlogTown_House2_EventScript_PutInEffort
+	goto_if_ge VAR_RESULT, FRIENDSHIP_50_TO_99, PacifidlogTown_House2_EventScript_PutInEffort
 	goto PacifidlogTown_House2_EventScript_GiveFrustration
 	end
 
 PacifidlogTown_House2_EventScript_UpdateFanClubTMFlag:: @ 81541B4
 	goto_if_unset FLAG_RECEIVED_FANCLUB_TM_THIS_WEEK, Common_EventScript_NopReturn
 	specialvar VAR_RESULT, GetDaysUntilPacifidlogTMAvailable
-	compare VAR_RESULT, 0
-	call_if_eq PacifidlogTown_House2_EventScript_ClearReceivedFanClubTM
+	call_if_eq VAR_RESULT, 0, PacifidlogTown_House2_EventScript_ClearReceivedFanClubTM
 	return
 
 PacifidlogTown_House2_EventScript_MonAssessment:: @ 81541CE
@@ -42,8 +39,7 @@ PacifidlogTown_House2_EventScript_ClearReceivedFanClubTM:: @ 81541E8
 PacifidlogTown_House2_EventScript_GiveReturn:: @ 81541EC
 	msgbox PacifidlogTown_House2_Text_AdoringPokemonTakeThis, MSGBOX_DEFAULT
 	giveitem ITEM_TM27
-	compare VAR_RESULT, FALSE
-	goto_if_eq Common_EventScript_ShowBagIsFull
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_FANCLUB_TM_THIS_WEEK
 	special SetPacifidlogTMReceivedDay
 	msgbox PacifidlogTown_House2_Text_ExplainReturnFrustration, MSGBOX_DEFAULT
@@ -58,8 +54,7 @@ PacifidlogTown_House2_EventScript_PutInEffort:: @ 815421B
 PacifidlogTown_House2_EventScript_GiveFrustration:: @ 8154225
 	msgbox PacifidlogTown_House2_Text_ViciousPokemonTakeThis, MSGBOX_DEFAULT
 	giveitem ITEM_TM21
-	compare VAR_RESULT, FALSE
-	goto_if_eq Common_EventScript_ShowBagIsFull
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_FANCLUB_TM_THIS_WEEK
 	special SetPacifidlogTMReceivedDay
 	msgbox PacifidlogTown_House2_Text_ExplainReturnFrustration, MSGBOX_DEFAULT
