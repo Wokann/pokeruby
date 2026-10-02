@@ -529,7 +529,7 @@ SECTIONS {
         src/battle_anim.o(.rodata);
         src/battle_anim_mons.o(.rodata);
         data/map_events.o(.rodata);
-        data/battle_anim_status_effects.o(.rodata);
+        src/battle_anim_status_effects.o(.rodata.battle_anim_status_effects);
         src/task.o(.rodata);
         src/reshow_battle_screen.o(.rodata);
         src/battle_anim_status_effects.o(.rodata);

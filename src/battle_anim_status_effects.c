@@ -20,6 +20,189 @@ extern const u8 *const gBattleAnims_StatusConditions[];
 extern const struct OamData gOamData_AffineOff_ObjBlend_64x64;
 extern const struct OamData gOamData_AffineOff_ObjNormal_8x8;
 
+#define BATTLE_ANIM_STATUS_DATA __attribute__((section(".rodata.battle_anim_status_effects")))
+
+static const union AnimCmd sAnim_FlickeringOrb[] BATTLE_ANIM_STATUS_DATA =
+{
+    ANIMCMD_FRAME(0, 3),
+    ANIMCMD_FRAME(4, 3),
+    ANIMCMD_FRAME(8, 3),
+    ANIMCMD_FRAME(12, 3),
+    ANIMCMD_JUMP(0)
+};
+
+static const union AnimCmd *const sAnims_FlickeringOrb[] BATTLE_ANIM_STATUS_DATA =
+{
+    sAnim_FlickeringOrb
+};
+
+// Unused
+static const struct SpriteTemplate sFlickeringOrbSpriteTemplate BATTLE_ANIM_STATUS_DATA =
+{
+    .tileTag = ANIM_TAG_ORB,
+    .paletteTag = ANIM_TAG_ORB,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = sAnims_FlickeringOrb,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimTranslateLinearAndFlicker,
+};
+
+// Unused
+static const struct SpriteTemplate sFlickeringOrbFlippedSpriteTemplate BATTLE_ANIM_STATUS_DATA =
+{
+    .tileTag = ANIM_TAG_ORB,
+    .paletteTag = ANIM_TAG_ORB,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = sAnims_FlickeringOrb,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimTranslateLinearAndFlicker_Flipped,
+};
+
+static const union AnimCmd sAnim_WeatherBallNormal[] BATTLE_ANIM_STATUS_DATA =
+{
+    ANIMCMD_FRAME(0, 3),
+    ANIMCMD_JUMP(0)
+};
+
+static const union AnimCmd *const sAnims_WeatherBallNormal[] BATTLE_ANIM_STATUS_DATA =
+{
+    sAnim_WeatherBallNormal
+};
+
+const struct SpriteTemplate gWeatherBallUpSpriteTemplate BATTLE_ANIM_STATUS_DATA =
+{
+    .tileTag = ANIM_TAG_WEATHER_BALL,
+    .paletteTag = ANIM_TAG_WEATHER_BALL,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_WeatherBallNormal,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimWeatherBallUp,
+};
+
+const struct SpriteTemplate gWeatherBallNormalDownSpriteTemplate BATTLE_ANIM_STATUS_DATA =
+{
+    .tileTag = ANIM_TAG_WEATHER_BALL,
+    .paletteTag = ANIM_TAG_WEATHER_BALL,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_WeatherBallNormal,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimWeatherBallDown,
+};
+
+static const union AnimCmd sAnim_SpinningSparkle[] BATTLE_ANIM_STATUS_DATA =
+{
+    ANIMCMD_FRAME(0, 3),
+    ANIMCMD_FRAME(16, 3),
+    ANIMCMD_FRAME(32, 3),
+    ANIMCMD_FRAME(48, 3),
+    ANIMCMD_FRAME(64, 3),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnims_SpinningSparkle[] BATTLE_ANIM_STATUS_DATA =
+{
+    sAnim_SpinningSparkle
+};
+
+const struct SpriteTemplate gSpinningSparkleSpriteTemplate BATTLE_ANIM_STATUS_DATA =
+{
+    .tileTag = ANIM_TAG_SPARKLE_4,
+    .paletteTag = ANIM_TAG_SPARKLE_4,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_SpinningSparkle,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimSpinningSparkle,
+};
+
+// Unused
+static const struct SpriteTemplate sFlickeringFootSpriteTemplate BATTLE_ANIM_STATUS_DATA =
+{
+    .tileTag = ANIM_TAG_MONSTER_FOOT,
+    .paletteTag = ANIM_TAG_MONSTER_FOOT,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimTranslateLinearAndFlicker,
+};
+
+static const union AnimCmd sAnim_FlickeringImpact_0[] BATTLE_ANIM_STATUS_DATA =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_JUMP(0)
+};
+
+static const union AnimCmd sAnim_FlickeringImpact_1[] BATTLE_ANIM_STATUS_DATA =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_JUMP(0)
+};
+
+static const union AnimCmd sAnim_FlickeringImpact_2[] BATTLE_ANIM_STATUS_DATA =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_JUMP(0)
+};
+
+static const union AnimCmd *const sAnims_FlickeringImpact[] BATTLE_ANIM_STATUS_DATA =
+{
+    sAnim_FlickeringImpact_0,
+    sAnim_FlickeringImpact_1,
+    sAnim_FlickeringImpact_2,
+};
+
+// Unused
+static const struct SpriteTemplate sFlickeringImpactSpriteTemplate BATTLE_ANIM_STATUS_DATA =
+{
+    .tileTag = ANIM_TAG_IMPACT,
+    .paletteTag = ANIM_TAG_IMPACT,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_FlickeringImpact,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimTranslateLinearAndFlicker,
+};
+
+static const union AnimCmd sAnim_FlickeringShrinkOrb[] BATTLE_ANIM_STATUS_DATA =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_JUMP(0)
+};
+
+static const union AnimCmd *const sAnims_FlickeringShrinkOrb[] BATTLE_ANIM_STATUS_DATA =
+{
+    sAnim_FlickeringShrinkOrb
+};
+
+static const union AffineAnimCmd sAffineAnim_FlickeringShrinkOrb[] BATTLE_ANIM_STATUS_DATA =
+{
+    AFFINEANIMCMD_FRAME(96, 96, 0, 0),
+    AFFINEANIMCMD_FRAME(2, 2, 0, 1),
+    AFFINEANIMCMD_JUMP(1)
+};
+
+static const union AffineAnimCmd *const sAffineAnims_FlickeringShrinkOrb[] BATTLE_ANIM_STATUS_DATA =
+{
+    sAffineAnim_FlickeringShrinkOrb
+};
+
+// Unused
+static const struct SpriteTemplate sFlickeringShrinkOrbSpriteTemplate BATTLE_ANIM_STATUS_DATA =
+{
+    .tileTag = ANIM_TAG_ORB,
+    .paletteTag = ANIM_TAG_ORB,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x16,
+    .anims = sAnims_FlickeringShrinkOrb,
+    .images = NULL,
+    .affineAnims = sAffineAnims_FlickeringShrinkOrb,
+    .callback = AnimTranslateLinearAndFlicker_Flipped,
+};
+
 static const struct Subsprite sFrozenIceCubeSubsprites[] =
 {
     {.x = -16, .y = -16, .shape = ST_OAM_SQUARE,      .size = 3, .tileOffset =   0, .priority = 2},
