@@ -151,9 +151,9 @@ const u8 gPokenavTrainerEyesNoRematchIconTilemap[][8] =
 const u16 gPokenavRibbonsSummary_Pal[] = INCBIN_U16("graphics/pokenav/ribbons/summary.gbapal");
 const u16 gUnusedPokenav3_Pal[] = INCBIN_U16("graphics/pokenav/unused/palette3.bin");
 const u8 gPokenavRibbonIcons_Gfx[] = INCBIN_U8("graphics/pokenav/ribbons/icons.4bpp.lz");
-const u8 gPokenavOutlinePalette[] = INCBIN_U8("graphics/pokenav/outline.gbapal");
-const u8 gPokenavOutlineTiles[] = INCBIN_U8("graphics/pokenav/outline.4bpp.lz");
-const u8 gPokenavOutlineTilemap[] = INCBIN_U8("graphics/pokenav/outline_map.bin.lz");
+const u8 gPokenavDeviceOutline_Pal[] = INCBIN_U8("graphics/pokenav/device_outline.gbapal");
+const u8 gPokenavDeviceOutline_Gfx[] = INCBIN_U8("graphics/pokenav/device_outline.4bpp.lz");
+const u8 gPokenavDeviceOutline_Tilemap[] = INCBIN_U8("graphics/pokenav/device_outline_map.bin.lz");
 
 #include "data/region_map/city_map_tilemaps.h"
 

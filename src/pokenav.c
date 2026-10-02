@@ -65,9 +65,9 @@ extern u8 *const gPokenavTileBuffer;
 extern const u8 gPokenavMenuBackground_Gfx[];
 extern const u8 gPokenavBg3Scroll_Gfx[];
 extern const u8 gPokenavBg3Scroll_Tilemap[];
-extern const u8 gPokenavOutlineTilemap[];
-extern const u8 gPokenavOutlineTiles[];
-extern const u8 gPokenavOutlinePalette[];
+extern const u8 gPokenavDeviceOutline_Tilemap[];
+extern const u8 gPokenavDeviceOutline_Gfx[];
+extern const u8 gPokenavDeviceOutline_Pal[];
 extern const u8 gPokenavMenuBackground_Pal[];
 extern const u8 gPokenavMenuBackground_Tilemap[];
 extern const u8 gPokenavHoennMapMisc_Gfx[];
@@ -342,15 +342,15 @@ bool8 LoadPokenavMenuGfxStep(u8 menuType)
         LZ77UnCompVram(gPokenavBg3Scroll_Tilemap, (void *)VRAM + 0xE000);
         break;
     case 8:
-        LZ77UnCompVram(gPokenavOutlineTilemap, (void *)VRAM + 0xE800);
+        LZ77UnCompVram(gPokenavDeviceOutline_Tilemap, (void *)VRAM + 0xE800);
         break;
     case 9:
-        LZ77UnCompVram(gPokenavOutlineTiles, (void *)VRAM + 0x8020);
+        LZ77UnCompVram(gPokenavDeviceOutline_Gfx, (void *)VRAM + 0x8020);
         break;
     case 10:
         SetPokenavMenuPalette(menuType);
         LoadPalette(gPokenavMenuBackground_Pal, 0xF0, 0x20);
-        LoadPalette(gPokenavOutlinePalette, 0x40, 0x20);
+        LoadPalette(gPokenavDeviceOutline_Pal, 0x40, 0x20);
         StartPokenavBg3Scroll();
         break;
     case 11:
