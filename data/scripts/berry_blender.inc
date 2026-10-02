@@ -93,7 +93,6 @@ BerryBlender_EventScript_DoBerryBlending:: @ 81B7742
 	copyvar VAR_0x8004, NUM_BERRY_BLENDER_OPPONENTS
 	fadescreen FADE_TO_BLACK
 	special DoBerryBlending
-	waitstate
 	releaseall
 	end
 
@@ -229,7 +228,6 @@ BerryBlender_EventScript_TryDoLinkBlender:: @ 81B78A1
 	message BerryBlender_Text_SearchingForFriends
 	waitmessage
 	special TryBerryBlenderLinkup
-	waitstate
 	compare VAR_RESULT, LINKUP_SUCCESS
 	goto_if_eq BerryBlender_EventScript_SpawnLinkPartners
 	compare VAR_RESULT, LINKUP_SOMEONE_NOT_READY
@@ -265,7 +263,6 @@ BerryBlender_EventScript_DoLinkBerryBlending:: @ 81B791D
 	removeobject 238
 	removeobject 237
 	special DoBerryBlending
-	waitstate
 	releaseall
 	end
 

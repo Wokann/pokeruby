@@ -2,7 +2,6 @@ EventScript_StartTrainerBattle:: @ 819F80B
 	lock
 	special PlayTrainerEncounterMusic
 	special DoTrainerApproach
-	waitstate
 	goto EventScript_DoTrainerBattle
 
 EventScript_TryDoNormalTrainerBattle:: @ 819F818
@@ -62,7 +61,6 @@ EventScript_TryDoRematchBattle:: @ 819F887
 	waitmessage
 	waitbuttonpress
 	special BattleSetup_StartRematchBattle
-	waitstate
 	releaseall
 	end
 
@@ -82,7 +80,6 @@ EventScript_TryDoDoubleRematchBattle:: @ 819F8AE
 	waitmessage
 	waitbuttonpress
 	special BattleSetup_StartRematchBattle
-	waitstate
 	releaseall
 	end
 

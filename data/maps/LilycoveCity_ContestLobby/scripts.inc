@@ -415,7 +415,6 @@ LilycoveCity_ContestLobby_EventScript_TrySetUpLinkContest:: @ 8158D24
 	waitmessage
 	copyvar VAR_0x8004, VAR_RESULT
 	special TryContestGModeLinkup
-	waitstate
 	compare VAR_RESULT, LINKUP_DIFF_SELECTIONS
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_CancelLinkDifferentChoices
 	compare VAR_RESULT, LINKUP_FAILED
@@ -600,31 +599,26 @@ LilycoveCity_ContestLobby_EventScript_WarpToContestHall:: @ 8158F08
 LilycoveCity_ContestLobby_EventScript_WarpToCoolContestHall:: @ 8158F45
 	setwarp MAP_LINK_CONTEST_ROOM4, WARP_ID_NONE, 7, 5
 	special DoContestHallWarp
-	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToBeautyContestHall:: @ 8158F52
 	setwarp MAP_LINK_CONTEST_ROOM2, WARP_ID_NONE, 7, 5
 	special DoContestHallWarp
-	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToCuteContestHall:: @ 8158F5F
 	setwarp MAP_LINK_CONTEST_ROOM6, WARP_ID_NONE, 7, 5
 	special DoContestHallWarp
-	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToSmartContestHall:: @ 8158F6C
 	setwarp MAP_LINK_CONTEST_ROOM5, WARP_ID_NONE, 7, 5
 	special DoContestHallWarp
-	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToToughContestHall:: @ 8158F79
 	setwarp MAP_LINK_CONTEST_ROOM3, WARP_ID_NONE, 7, 5
 	special DoContestHallWarp
-	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_LeadToContestHall:: @ 8158F86

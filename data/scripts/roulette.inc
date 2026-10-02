@@ -26,7 +26,6 @@ Roulette_EventScript_Table2:: @ 81C40AC
 
 Roulette_EventScript_Play:: @ 81C40DA
 	special PlayRoulette
-	waitstate
 	end
 
 	.include "data/text/roulette.inc"

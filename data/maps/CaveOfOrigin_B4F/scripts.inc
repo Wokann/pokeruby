@@ -34,7 +34,6 @@ CaveOfOrigin_B4F_EventScript_StartLegendaryBattle:: @ 815DDD7
 	setweather WEATHER_NONE
 	doweather
 	special WaitWeather
-	waitstate
 	playse SE_M_DETECT
 	setfieldeffectargument 0, 9
 	setfieldeffectargument 1, 13
@@ -50,7 +49,6 @@ CaveOfOrigin_B4F_EventScript_StartLegendaryBattle:: @ 815DDD7
 	special DoOrbEffect
 	waitstate
 	special FadeOutOrbEffect
-	waitstate
 	applymovement LOCALID_CAVE_OF_ORIGIN_LEGENDARY, CaveOfOrigin_B4F_Movement_LegendaryAppear
 	waitmovement 0
 	delay 60
@@ -61,7 +59,6 @@ CaveOfOrigin_B4F_EventScript_StartLegendaryBattle:: @ 815DDD7
 	waitmoncry
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special StartGroudonKyogreBattle
-	waitstate
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
 	specialvar VAR_RESULT, GetBattleOutcome
 	compare VAR_RESULT, B_OUTCOME_WON

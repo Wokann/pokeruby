@@ -138,7 +138,6 @@ MauvilleCity_PokemonCenter_1F_EventScript_AlreadyTraded:
 
 MauvilleCity_PokemonCenter_1F_EventScript_PickDecorToReceive:
 	special TraderMenuGetDecoration
-	waitstate
 	compare VAR_0x8004, 0
 	goto_if_eq MauvilleCity_PokemonCenter_1F_EventScript_CancelPickDecor
 	compare VAR_0x8004, -1
@@ -175,7 +174,6 @@ MauvilleCity_PokemonCenter_1F_EventScript_DontHaveAnyDecor:
 MauvilleCity_PokemonCenter_1F_EventScript_PickDecorToGive:
 	msgbox MauvilleCity_PokemonCenter_1F_Text_PickTheDecorToTrade, MSGBOX_DEFAULT
 	special TraderShowDecorationMenu
-	waitstate
 	compare VAR_0x8006, 0
 	goto_if_eq MauvilleCity_PokemonCenter_1F_EventScript_CancelGiveDecor
 	compare VAR_0x8006, -1
@@ -227,7 +225,6 @@ MauvilleCity_PokemonCenter_1F_EventScript_ChooseStory:
 	message MauvilleCity_PokemonCenter_1F_Text_WhichTaleToTell
 	waitmessage
 	special StorytellerStoryListMenu
-	waitstate
 	compare VAR_RESULT, FALSE
 	goto_if_eq MauvilleCity_PokemonCenter_1F_EventScript_CancelStorySelection
 	setvar VAR_0x8008, 1

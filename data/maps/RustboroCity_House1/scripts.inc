@@ -13,7 +13,6 @@ RustboroCity_House1_EventScript_Trader:: @ 8157C7D
 	compare VAR_RESULT, NO
 	goto_if_eq RustboroCity_House1_EventScript_DeclineTrade
 	special ChoosePartyMon
-	waitstate
 	copyvar VAR_0x800A, VAR_0x8004
 	compare VAR_0x8004, 255
 	goto_if_eq RustboroCity_House1_EventScript_DeclineTrade
@@ -26,7 +25,6 @@ RustboroCity_House1_EventScript_Trader:: @ 8157C7D
 	copyvar VAR_0x8005, VAR_0x800A
 	special CreateInGameTradePokemon
 	special DoInGameTradeScene
-	waitstate
 	msgbox RustboroCity_House1_Text_PleaseBeGoodToMyPokemon, MSGBOX_DEFAULT
 	setflag FLAG_RUSTBORO_NPC_TRADE_COMPLETED
 	release

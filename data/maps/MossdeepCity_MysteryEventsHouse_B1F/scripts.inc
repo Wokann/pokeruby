@@ -21,7 +21,6 @@ MossdeepCity_MysteryEventsHouse_BattleRoom_EventScript_StartEReaderTrainerBattle
 	setvar VAR_0x8004, SPECIAL_BATTLE_EREADER
 	setvar VAR_0x8005, 0
 	special DoSpecialTrainerBattle
-	waitstate
 	compare VAR_RESULT, B_OUTCOME_DREW
 	call_if_eq MossdeepCity_MysteryEventsHouse_BattleRoom_EventScript_HandleBattleTie
 	compare VAR_RESULT, B_OUTCOME_WON

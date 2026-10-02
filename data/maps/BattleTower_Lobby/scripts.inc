@@ -216,7 +216,6 @@ BattleTower_Lobby_EventScript_ChooseLevel:: @ 81604FA
 	msgbox BattleTower_Lobby_Text_ChoosePokemon, MSGBOX_DEFAULT
 	fadescreen FADE_TO_BLACK
 	special ChoosePartyForBattleTower
-	waitstate
 	compare VAR_RESULT, FALSE
 	goto_if_eq BattleTower_Lobby_EventScript_RestoreParty
 	msgbox BattleTower_Lobby_Text_SaveBeforeEntering, MSGBOX_YESNO

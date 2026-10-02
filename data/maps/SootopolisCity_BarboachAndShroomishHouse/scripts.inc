@@ -7,7 +7,6 @@ SootopolisCity_BarboachAndShroomishHouse_EventScript_ShroomishBrother:: @ 815B40
 	faceplayer
 	msgbox SootopolisCity_BarboachAndShroomishHouse_Text_PleaseShowMeBigShroomish, MSGBOX_DEFAULT
 	special ChoosePartyMon
-	waitstate
 	copyvar VAR_RESULT, VAR_0x8004
 	compare VAR_RESULT, PARTY_NOTHING_CHOSEN
 	goto_if_eq SootopolisCity_BarboachAndShroomishHouse_EventScript_CancelShowShroomish
@@ -56,7 +55,6 @@ SootopolisCity_BarboachAndShroomishHouse_EventScript_BarboachBrother:: @ 815B492
 	faceplayer
 	msgbox SootopolisCity_BarboachAndShroomishHouse_Text_PleaseShowMeBigBarboach, MSGBOX_DEFAULT
 	special ChoosePartyMon
-	waitstate
 	copyvar VAR_RESULT, VAR_0x8004
 	compare VAR_RESULT, PARTY_NOTHING_CHOSEN
 	goto_if_eq SootopolisCity_BarboachAndShroomishHouse_EventScript_CancelShowBarboach

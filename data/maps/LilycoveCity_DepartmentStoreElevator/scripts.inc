@@ -74,7 +74,6 @@ LilycoveCity_DepartmentStoreElevator_EventScript_MoveElevator:: @ 815A4B8
 	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	special MoveElevator
-	waitstate
 	setflag FLAG_TEMP_2
 	return
 

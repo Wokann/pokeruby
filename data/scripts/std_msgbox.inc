@@ -32,5 +32,4 @@ EventScript_UnusedReturn: @ 819F805
 
 Common_EventScript_SaveGame:: @ 819F806
 	special SaveGame
-	waitstate
 	return

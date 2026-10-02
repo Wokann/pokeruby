@@ -23,7 +23,6 @@ FallarborTown_MoveRelearnersHouse_EventScript_AskTeachMove:: @ 8153CB6
 FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon:: @ 8153CE4
 	msgbox FallarborTown_MoveRelearnersHouse_Text_TutorWhichMon, MSGBOX_DEFAULT
 	special ChooseMonForMoveRelearner
-	waitstate
 	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale
 	special IsSelectedMonEgg
 	goto_if_eq VAR_RESULT, TRUE, FallarborTown_MoveRelearnersHouse_EventScript_CantTeachEgg
@@ -34,7 +33,6 @@ FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon:: @ 8153CE4
 FallarborTown_MoveRelearnersHouse_EventScript_ChooseMove:: @ 8153D1A
 	msgbox FallarborTown_MoveRelearnersHouse_Text_TeachWhichMove, MSGBOX_DEFAULT
 	special TeachMoveRelearnerMove
-	waitstate
 	goto_if_eq VAR_0x8004, 0, FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon
 	msgbox FallarborTown_MoveRelearnersHouse_Text_HandedOverHeartScale, MSGBOX_DEFAULT
 	removeitem ITEM_HEART_SCALE

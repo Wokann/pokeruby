@@ -132,7 +132,6 @@ MossdeepCity_MysteryEventsHouse_EventScript_PrepareEReaderBattle:: @ 815ADF5
 	msgbox MossdeepCity_MysteryEventsHouse_Text_KeepItToA3On3, MSGBOX_DEFAULT
 	fadescreen FADE_TO_BLACK
 	special ChooseHalfPartyForBattle
-	waitstate
 	return
 
 MossdeepCity_MysteryEventsHouse_EventScript_PositionForBattleFacingNorth:: @ 815AE04

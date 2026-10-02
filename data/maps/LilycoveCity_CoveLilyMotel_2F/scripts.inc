@@ -28,7 +28,6 @@ LilycoveCity_CoveLilyMotel_2F_EventScript_ShowDiploma:: @ 81583DD
 	waitmessage
 	call Common_EventScript_PlayGymBadgeFanfare
 	special Special_ShowDiploma
-	waitstate
 	release
 	end
 

@@ -47,7 +47,6 @@ Route104_Prototype_EventScript_SoftReset:: @ 8160CFB
 	fadescreen FADE_TO_BLACK
 	delay 60
 	special DoSoftReset
-	waitstate
 	release
 	end
 

@@ -890,7 +890,6 @@ EventScript_RegionMap:: @ 81A02D6
 	msgbox Common_Text_LookCloserAtMap, MSGBOX_DEFAULT
 	fadescreen FADE_TO_BLACK
 	special FieldShowRegionMap
-	waitstate
 	releaseall
 	end
 
@@ -975,7 +974,6 @@ Common_EventScript_FerryDepartIsland:: @ 81A047C
 Common_EventScript_NameReceivedPartyMon:: @ 81A0678
 	fadescreen FADE_TO_BLACK
 	special ChangePokemonNickname
-	waitstate
 	return
 
 Common_EventScript_PlayerHandedOverTheItem:: @ 81A067F
@@ -1160,7 +1158,6 @@ EventScript_SelectWithoutRegisteredItem:: @ 81A14AF
 EventScript_FieldPoison:: @ 81A14B8
 	lockall
 	special TryFieldPoisonWhiteOut
-	waitstate
 	compare VAR_RESULT, FLDPSN_WHITEOUT
 	goto_if_eq EventScript_FieldWhiteOut
 	releaseall
@@ -1171,10 +1168,8 @@ EventScript_FieldWhiteOut::
 	waitmessage
 	waitbuttonpress
 	special Script_FadeOutMapMusic
-	waitstate
 	fadescreen FADE_TO_BLACK
 	special SetCB2WhiteOut
-	waitstate
 	end
 
 Common_EventScript_NopReturn:: @ 81A14DC

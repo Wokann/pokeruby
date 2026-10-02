@@ -13,7 +13,6 @@ PacifidlogTown_House3_EventScript_Trader:: @ 815429E
 	compare VAR_RESULT, NO
 	goto_if_eq PacifidlogTown_House3_EventScript_DeclineTrade
 	special ChoosePartyMon
-	waitstate
 	copyvar VAR_0x800A, VAR_0x8004
 	compare VAR_0x8004, PARTY_NOTHING_CHOSEN
 	goto_if_eq PacifidlogTown_House3_EventScript_DeclineTrade
@@ -26,7 +25,6 @@ PacifidlogTown_House3_EventScript_Trader:: @ 815429E
 	copyvar VAR_0x8005, VAR_0x800A
 	special CreateInGameTradePokemon
 	special DoInGameTradeScene
-	waitstate
 	bufferspeciesname STR_VAR_1, VAR_0x8009
 	msgbox PacifidlogTown_House3_Text_MonIsSoFluffy, MSGBOX_DEFAULT
 	setflag FLAG_PACIFIDLOG_NPC_TRADE_COMPLETED

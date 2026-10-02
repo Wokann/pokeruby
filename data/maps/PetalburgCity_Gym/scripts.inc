@@ -984,7 +984,6 @@ PetalburgCity_Gym_EventScript_SetOHKORoomDoorMetatiles:: @ 815516F
 
 PetalburgCity_Gym_EventScript_SlideOpenRoomDoors:: @ 8155182
 	special PetalburgGymSlideOpenRoomDoors
-	waitstate
 	return
 
 PetalburgCity_Gym_EventScript_UnlockRoomDoors:: @ 8155187

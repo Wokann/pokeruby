@@ -46,7 +46,6 @@ IslandCave_EventScript_CaveEntranceMiddle:: @ 815EF59
 	goto_if_set FLAG_SYS_BRAILLE_WAIT, IslandCave_EventScript_BigHoleInWall
 	braillemessage IslandCave_Braille_WaitTwoMinutes
 	special DoBrailleWait
-	waitstate
 	goto IslandCave_EventScript_CloseBrailleMsg
 	end
 
@@ -60,7 +59,6 @@ IslandCave_EventScript_CaveEntranceSide:: @ 815EF7C
 	braillemessage IslandCave_Braille_WaitTwoMinutes
 	goto_if_set FLAG_SYS_BRAILLE_WAIT, IslandCave_EventScript_CloseBrailleMsg
 	special DoBrailleWait
-	waitstate
 	goto IslandCave_EventScript_CloseBrailleMsg
 	end
 
@@ -81,7 +79,6 @@ IslandCave_EventScript_Regice:: @ 815EF9D
 	setflag FLAG_HIDE_REGICE
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special StartRegiBattle
-	waitstate
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
 	release
 	end

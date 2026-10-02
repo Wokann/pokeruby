@@ -56,7 +56,6 @@ Route113_GlassWorkshop_EventScript_SootSackNotInBag:: @ 81635E4
 Route113_GlassWorkshop_EventScript_ChooseGlassItem:: @ 81635EE
 	setvar VAR_0x8009, 0
 	special ShowGlassWorkshopMenu
-	waitstate
 	switch VAR_RESULT
 	case 0, Route113_GlassWorkshop_EventScript_BlueFlute
 	case 1, Route113_GlassWorkshop_EventScript_YellowFlute

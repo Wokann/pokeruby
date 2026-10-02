@@ -15,7 +15,6 @@ LilycoveCity_MoveDeletersHouse_EventScript_MoveDeleter:: @ 8159AAE
 LilycoveCity_MoveDeletersHouse_EventScript_ChooseMonAndMoveToForget:: @ 8159ADE
 	msgbox LilycoveCity_MoveDeletersHouse_Text_WhichMonShouldForget, MSGBOX_DEFAULT
 	special ChoosePartyMon
-	waitstate
 	compare VAR_0x8004, PARTY_NOTHING_CHOSEN
 	goto_if_eq LilycoveCity_MoveDeletersHouse_EventScript_ComeAgain
 	special IsSelectedMonEgg

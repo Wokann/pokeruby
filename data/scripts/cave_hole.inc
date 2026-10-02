@@ -25,7 +25,6 @@ EventScript_FallDownHoleMtPyre:: @ 81C6BDE
 	playse SE_FALL
 	delay 60
 	special DoFallWarp
-	waitstate
 	end
 
 Movement_SetInvisible:: @ 81C6BF7

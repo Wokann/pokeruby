@@ -33,7 +33,6 @@ PetalburgCity_EventScript_WallyTutorial:: @ 814B747
 	waitmovement 0
 	msgbox Route102_Text_WatchMeCatchPokemon, MSGBOX_DEFAULT
 	special StartWallyTutorialBattle
-	waitstate
 	msgbox Route102_Text_WallyIDidIt, MSGBOX_DEFAULT
 	applymovement LOCALID_PETALBURG_WALLY, Common_Movement_WalkInPlaceFasterLeft, MAP_PETALBURG_CITY
 	@ Local id and map num were swapped here (0, 0, 2 vs 2, 0, 0). Fixed to waitmovement 2, MAP_PETALBURG_CITY in Emerald

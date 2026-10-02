@@ -11,7 +11,6 @@ EventScript_MixRecordsPrompt: @ 819FFD5
 	
 EventScript_MixRecords: @ 819FFFA
 	special RecordMixingPlayerSpotTriggered
-	waitstate
 	lock
 	faceplayer
 EventScript_EndMixRecords: @ 81A0000

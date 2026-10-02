@@ -65,14 +65,12 @@ SeafloorCavern_Room9_EventScript_EvilTeamLeaderAwakensLegendary:: @ 815DAFA
 	setweather WEATHER_NONE
 	doweather
 	special Script_FadeOutMapMusic
-	waitstate
 	.ifdef SAPPHIRE
 	msgbox SeafloorCavern_Room9_Text_RedOrbShinesByItself, MSGBOX_DEFAULT
 	.else
 	msgbox SeafloorCavern_Room9_Text_BlueOrbShinesByItself, MSGBOX_DEFAULT
 	.endif
 	special WaitWeather
-	waitstate
 	.ifdef SAPPHIRE
 	setvar VAR_RESULT, 1
 	.else
@@ -103,11 +101,9 @@ SeafloorCavern_Room9_EventScript_EvilTeamLeaderAwakensLegendary:: @ 815DAFA
 	applymovement LOCALID_SEAFLOOR_CAVERN_AWAKENED_LEGENDARY, SeafloorCavern_Room9_Movement_AwakenedLegendaryApproach
 	waitmovement 0
 	special FadeOutOrbEffect
-	waitstate
 	setvar VAR_0x8004, 1 @ vertical pan
 	setvar VAR_0x8005, 1 @ horizontal pan
 	special ShakeCamera
-	waitstate
 	applymovement LOCALID_SEAFLOOR_CAVERN_AWAKENED_LEGENDARY, SeafloorCavern_Room9_Movement_AwakenedLegendaryExit
 	waitmovement 0
 	removeobject LOCALID_SEAFLOOR_CAVERN_AWAKENED_LEGENDARY
@@ -115,7 +111,6 @@ SeafloorCavern_Room9_EventScript_EvilTeamLeaderAwakensLegendary:: @ 815DAFA
 	setvar VAR_0x8004, 2 @ vertical pan
 	setvar VAR_0x8005, 2 @ horizontal pan
 	special ShakeCamera
-	waitstate
 	delay 30
 	setvar VAR_0x8004, LOCALID_SEAFLOOR_CAVERN_EVIL_TEAM_LEADER
 	setvar VAR_0x8005, LOCALID_SEAFLOOR_CAVERN_OTHER_TEAM_LEADER

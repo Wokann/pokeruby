@@ -17,7 +17,6 @@ Route128_EventScript_LegendaryAwakenedScene:: @ 815213F
 	delay 20
 	.ifndef SAPPHIRE
 	special StartDroughtWeatherBlend
-	waitstate
 	.endif
 	applymovement LOCALID_ROUTE128_EVIL_LEADER, Route128_Movement_EvilLeaderLookAround
 	waitmovement 0

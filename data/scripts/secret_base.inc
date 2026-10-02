@@ -146,7 +146,6 @@ SecretBase_EventScript_SetAsBase:: @ 81A2E08
 	closemessage
 	setflag FLAG_RECEIVED_SECRET_POWER
 	special EnterNewlyCreatedSecretBase
-	waitstate
 	end
 
 SecretBase_Movement_EnterBase:: @ 81A2E11
@@ -657,7 +656,6 @@ SecretBase_EventScript_BattleTrainer:: @ 81A350A
 	setvar VAR_0x8004, SPECIAL_BATTLE_SECRET_BASE
 	setvar VAR_0x8005, 0
 	special DoSpecialTrainerBattle
-	waitstate
 	special HealPlayerParty
 	release
 	end

@@ -62,7 +62,6 @@ DesertRuins_EventScript_Regirock:: @ 815CB85
 	setflag FLAG_HIDE_REGIROCK
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special StartRegiBattle
-	waitstate
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
 	release
 	end

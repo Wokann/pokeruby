@@ -30,7 +30,6 @@ CaveOfOrigin_EventScript_Shake:: @ 81A04D3
 	setvar VAR_0x8004, 1
 	setvar VAR_0x8005, 1
 	special ShakeCamera
-	waitstate
 	releaseall
 	end
 

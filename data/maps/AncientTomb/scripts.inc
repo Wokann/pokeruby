@@ -62,7 +62,6 @@ AncientTomb_EventScript_Registeel:: @ 815F050
 	setflag FLAG_HIDE_REGISTEEL
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special StartRegiBattle
-	waitstate
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
 	release
 	end

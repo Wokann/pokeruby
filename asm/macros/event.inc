@@ -4,6 +4,8 @@
 	.set ALLOCATE_SPECIAL_TABLE, 0
 	.include "data/specials.inc"
 
+	.set _last_implicit_waitstate, -1
+
 	@ Does nothing.
 	.macro nop
 	.byte SCR_OP_NOP
@@ -260,10 +262,13 @@
 	.4byte \func
 	.endm
 
-	@ Calls a special function; that is, a function designed for use by scripts and listed in a table of pointers.
+	@ Calls a special function listed in data/specials.inc.
 	.macro special function:req
 	.byte SCR_OP_SPECIAL
 	.2byte SPECIAL_\function
+	.if SPECIAL_WAITSTATE_\function
+	waitstate implicit=1
+	.endif
 	.endm
 
 	@ Calls a special function. That function's output (if any) will be written to the variable you specify.
@@ -271,11 +276,22 @@
 	.byte SCR_OP_SPECIALVAR
 	.2byte \output
 	.2byte SPECIAL_\function
+	.if SPECIAL_WAITSTATE_\function
+	waitstate implicit=1
+	.endif
 	.endm
 
-	@ Blocks script execution until a command or ASM code manually unblocks it. Generally used with specific commands and specials. If this command runs, and a subsequent command or piece of ASM does not unblock state, the script will remain blocked indefinitely (essentially a hang).
-	.macro waitstate
+	@ Blocks script execution until a command or ASM code manually unblocks it. Generally used with specific commands and specials.
+	@ implicit is set when another command (such as special) generates the waitstate.
+	.macro waitstate implicit=0
+	.if _last_implicit_waitstate == .
+	.warning "explicit waitstate follows implicit waitstate, ignoring"
+	.else
 	.byte SCR_OP_WAITSTATE
+	.endif
+	.if \implicit
+	.set _last_implicit_waitstate, .
+	.endif
 	.endm
 
 	@ Blocks script execution for time (frames? milliseconds?).

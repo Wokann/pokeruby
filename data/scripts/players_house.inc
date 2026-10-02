@@ -103,14 +103,12 @@ PlayersHouse_2F_EventScript_CheckWallClock:: @ 81B6A91
 	incrementgamestat GAME_STAT_CHECKED_CLOCK
 	fadescreen FADE_TO_BLACK
 	special Special_ViewWallClock
-	waitstate
 	releaseall
 	end
 
 PlayersHouse_2F_EventScript_SetWallClock:: @ 81B6A9B
 	fadescreen FADE_TO_BLACK
 	special StartWallClock
-	waitstate
 	return
 
 PlayersHouse_2F_Movement_MomEntersMale:: @ 81B6AA2

@@ -204,7 +204,6 @@ LittlerootTown_MaysHouse_2F_EventScript_CheckPlayersPC:: @ 8152C5C
 	playse SE_PC_ON
 	msgbox gText_PlayerHouseBootPC, MSGBOX_DEFAULT
 	special BedroomPC
-	waitstate
 	releaseall
 	end
 

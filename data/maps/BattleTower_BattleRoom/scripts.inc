@@ -24,7 +24,6 @@ BattleTower_BattleRoom_EventScript_ChallengeTrainer:: @ 81608FA
 	setvar VAR_0x8004, SPECIAL_BATTLE_TOWER
 	setvar VAR_0x8005, 0
 	special DoSpecialTrainerBattle
-	waitstate
 	switch VAR_RESULT
 	case B_OUTCOME_WON, BattleTower_BattleRoom_EventScript_WonBattle
 	special LoadPlayerParty

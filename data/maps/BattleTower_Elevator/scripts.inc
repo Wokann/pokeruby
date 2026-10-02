@@ -13,7 +13,6 @@ BattleTower_Elevator_EventScript_EnterElevator:: @ 81607E4
 	applymovement LOCALID_PLAYER, BattleTower_Elevator_Movement_PlayerEnter
 	waitmovement 0
 	special MoveElevator
-	waitstate
 	delay 64
 	applymovement LOCALID_BATTLE_TOWER_ELEVATOR_ATTENDANT, BattleTower_Elevator_Movement_AttendantExit
 	applymovement LOCALID_PLAYER, BattleTower_Elevator_Movement_PlayerExit
