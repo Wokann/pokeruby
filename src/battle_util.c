@@ -1637,7 +1637,7 @@ bool8 HasNoMonsToSwitch(u8 battler, u8 partyIdBattlerOn1, u8 partyIdBattlerOn2)
         playerId = GetLinkTrainerFlankId(flankId);
         for (i = playerId * 3; i < playerId * 3 + 3; i++)
         {
-            if (GetMonData(&party[i], MON_DATA_HP) && GetMonData(&party[i], MON_DATA_SPECIES2) && GetMonData(&party[i], MON_DATA_SPECIES2) != SPECIES_EGG)
+            if (GetMonData(&party[i], MON_DATA_HP) && GetMonData(&party[i], MON_DATA_SPECIES_OR_EGG) && GetMonData(&party[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG)
                 break;
         }
         return (i == playerId * 3 + 3);
@@ -1662,7 +1662,7 @@ bool8 HasNoMonsToSwitch(u8 battler, u8 partyIdBattlerOn1, u8 partyIdBattlerOn2)
             partyIdBattlerOn2 = gBattlerPartyIndexes[playerId];
         for (i = 0; i < PARTY_SIZE; i++)
         {
-            if (GetMonData(&party[i], MON_DATA_HP) && GetMonData(&party[i], MON_DATA_SPECIES2) && GetMonData(&party[i], MON_DATA_SPECIES2) != SPECIES_EGG && i != partyIdBattlerOn1 && i != partyIdBattlerOn2 && i != gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + flankId] && i != gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + playerId])
+            if (GetMonData(&party[i], MON_DATA_HP) && GetMonData(&party[i], MON_DATA_SPECIES_OR_EGG) && GetMonData(&party[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG && i != partyIdBattlerOn1 && i != partyIdBattlerOn2 && i != gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + flankId] && i != gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + playerId])
                 break;
         }
         return (i == PARTY_SIZE);

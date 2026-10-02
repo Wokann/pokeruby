@@ -3769,7 +3769,7 @@ void LoadConditionGraphMonGfx(s16 listId, u8 loadId)
     {
         boxId = gPokenavState->monList[listId].boxId;
         monId = gPokenavState->monList[listId].monId;
-        species = GetBoxOrPartyMonData(boxId, monId, MON_DATA_SPECIES2, NULL);
+        species = GetBoxOrPartyMonData(boxId, monId, MON_DATA_SPECIES_OR_EGG, NULL);
         otId = GetBoxOrPartyMonData(boxId, monId, MON_DATA_OT_ID, NULL);
         personality = GetBoxOrPartyMonData(boxId, monId, MON_DATA_PERSONALITY, NULL);
 

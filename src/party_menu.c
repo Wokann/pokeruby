@@ -2266,7 +2266,7 @@ void CreatePartyMenuMonIcon(u8 taskId, u8 monIndex, u8 menuType, struct Pokemon 
     u8 x = sPartyMenuMonIconCoords[menuType][monIndex].x;
     u8 y = sPartyMenuMonIconCoords[menuType][monIndex].y;
 
-    u16 species2 = GetMonData(pokemon, MON_DATA_SPECIES2);
+    u16 species2 = GetMonData(pokemon, MON_DATA_SPECIES_OR_EGG);
     u32 personality = GetMonData(pokemon, MON_DATA_PERSONALITY);
 
     u8 spriteId = CreateMonIcon(species2, SpriteCB_MonIcon, x, y, 5, personality);
@@ -2722,7 +2722,7 @@ void PartyMenuPrintGenderIcon(u8 monIndex, u8 menuLayout, struct Pokemon *pokemo
     u8 gender;
 
     GetMonNickname(pokemon, gStringVar1);
-    species2 = GetMonData(pokemon, MON_DATA_SPECIES2);
+    species2 = GetMonData(pokemon, MON_DATA_SPECIES_OR_EGG);
     gender = GetMonGender(pokemon);
     PartyMenuDoPrintGenderIcon(species2, gender, menuLayout, monIndex, gStringVar1);
 }

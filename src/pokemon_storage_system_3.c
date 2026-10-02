@@ -85,7 +85,7 @@ void InitMonIconFields(void)
 void CreateMovingMonIcon(void)
 {
     u32 personality = GetMonData(&gPokemonStorageSystemPtr->movingMon, MON_DATA_PERSONALITY);
-    gPokemonStorageSystemPtr->movingMonSprite = CreateMonIconSprite(GetMonData(&gPokemonStorageSystemPtr->movingMon, MON_DATA_SPECIES2), personality, 0, 0, 1, 7);
+    gPokemonStorageSystemPtr->movingMonSprite = CreateMonIconSprite(GetMonData(&gPokemonStorageSystemPtr->movingMon, MON_DATA_SPECIES_OR_EGG), personality, 0, 0, 1, 7);
     gPokemonStorageSystemPtr->movingMonSprite->callback = SpriteCB_HeldMon;
 }
 
@@ -99,7 +99,7 @@ void InitBoxMonSprites(u8 boxId)
         u16 j;
         for (j = 0; j < 6; j++)
         {
-            u16 species = GetBoxMonData(box, MON_DATA_SPECIES2);
+            u16 species = GetBoxMonData(box, MON_DATA_SPECIES_OR_EGG);
             if (species != SPECIES_NONE)
                 gPokemonStorageSystemPtr->boxMonsSprites[count] = CreateMonIconSprite(species, GetBoxMonData(box, MON_DATA_PERSONALITY), 24 * j + 0x64, 24 * i + 0x2c, 2, 18 - j);
             else
@@ -113,7 +113,7 @@ void InitBoxMonSprites(u8 boxId)
 void CreateBoxMonIconAtPos(u8 boxPosition)
 {
     struct BoxPokemon *mon = gPokemonStorage.boxes[StorageGetCurrentBox()] + boxPosition;
-    u16 species = GetBoxMonData(mon, MON_DATA_SPECIES2);
+    u16 species = GetBoxMonData(mon, MON_DATA_SPECIES_OR_EGG);
     if (species != SPECIES_NONE)
     {
         s16 x = 24 * (boxPosition % 6) + 0x64;
@@ -206,7 +206,7 @@ static u8 CreateBoxMonIconsInColumn(u8 column, u16 distance, s16 speed)
 
     for (row = 0; row < 5; row++)
     {
-        u16 species = GetBoxMonData(gPokemonStorage.boxes[gPokemonStorageSystemPtr->iconScrollToBoxId] + column, MON_DATA_SPECIES2);
+        u16 species = GetBoxMonData(gPokemonStorage.boxes[gPokemonStorageSystemPtr->iconScrollToBoxId] + column, MON_DATA_SPECIES_OR_EGG);
         if (species != SPECIES_NONE)
         {
             gPokemonStorageSystemPtr->boxMonsSprites[column] = CreateMonIconSprite(species, GetBoxMonData(gPokemonStorage.boxes[gPokemonStorageSystemPtr->iconScrollToBoxId] + column, MON_DATA_PERSONALITY), curX, y, 2, subpriority);
@@ -292,13 +292,13 @@ void CreatePartyMonsSprites(bool8 visible)
 {
     u16 count;
     u16 i;
-    u16 species = GetMonData(gPlayerParty + 0, MON_DATA_SPECIES2);
+    u16 species = GetMonData(gPlayerParty + 0, MON_DATA_SPECIES_OR_EGG);
     u32 personality = GetMonData(gPlayerParty + 0, MON_DATA_PERSONALITY);
     gPokemonStorageSystemPtr->partySprites[0] = CreateMonIconSprite(species, personality, 0x68, 0x40, 1, 11);
     count = 1;
     for (i = 1; i < PARTY_SIZE; i++)
     {
-        species = GetMonData(gPlayerParty + i, MON_DATA_SPECIES2);
+        species = GetMonData(gPlayerParty + i, MON_DATA_SPECIES_OR_EGG);
         if (species != SPECIES_NONE)
         {
             personality = GetMonData(gPlayerParty + i, MON_DATA_PERSONALITY);

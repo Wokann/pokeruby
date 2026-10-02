@@ -489,7 +489,7 @@ static void Task_Hof_InitMonData(u8 taskId)
         u8 nickname[12];
         if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES))
         {
-            fameTeam->mon[i].species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2);
+            fameTeam->mon[i].species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
             fameTeam->mon[i].tid = GetMonData(&gPlayerParty[i], MON_DATA_OT_ID);
             fameTeam->mon[i].personality = GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY);
             fameTeam->mon[i].lvl = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);

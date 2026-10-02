@@ -73,9 +73,9 @@ static bool8 ShouldSwitchIfWonderGuard(void)
         {
             if (GetMonData(&gEnemyParty[i], MON_DATA_HP) == 0)
                 continue;
-            if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES2) == SPECIES_NONE)
+            if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_NONE)
                 continue;
-            if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES2) == SPECIES_EGG)
+            if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_EGG)
                 continue;
             if (i == gBattlerPartyIndexes[gActiveBattler])
                 continue;
@@ -149,9 +149,9 @@ static bool8 FindMonThatAbsorbsOpponentsMove(void)
 
         if (GetMonData(&gEnemyParty[i], MON_DATA_HP) == 0)
             continue;
-        if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES2) == SPECIES_NONE)
+        if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_NONE)
             continue;
-        if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES2) == SPECIES_EGG)
+        if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_EGG)
             continue;
         if (i == gBattlerPartyIndexes[battlerIn1])
             continue;
@@ -319,9 +319,9 @@ static bool8 FindMonWithFlagsAndSuperEffective(u8 flags, u8 moduloPercent)
 
         if (GetMonData(&gEnemyParty[i], MON_DATA_HP) == 0)
             continue;
-        if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES2) == SPECIES_NONE)
+        if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_NONE)
             continue;
-        if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES2) == SPECIES_EGG)
+        if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_EGG)
             continue;
         if (i == gBattlerPartyIndexes[battlerIn1])
             continue;
@@ -404,9 +404,9 @@ static bool8 ShouldSwitch(void)
     {
         if (GetMonData(&gEnemyParty[i], MON_DATA_HP) == 0)
             continue;
-        if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES2) == SPECIES_NONE)
+        if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_NONE)
             continue;
-        if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES2) == SPECIES_EGG)
+        if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_EGG)
             continue;
         if (i == gBattlerPartyIndexes[battlerIn1])
             continue;
@@ -683,8 +683,8 @@ static bool8 ShouldUseItem(void)
     for (i = 0; i < 6; i++)
     {
         if (GetMonData(&gEnemyParty[i], MON_DATA_HP) != 0
-            && GetMonData(&gEnemyParty[i], MON_DATA_SPECIES2) != SPECIES_NONE
-            && GetMonData(&gEnemyParty[i], MON_DATA_SPECIES2) != SPECIES_EGG)
+            && GetMonData(&gEnemyParty[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_NONE
+            && GetMonData(&gEnemyParty[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG)
         {
             validMons++;
         }

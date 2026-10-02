@@ -18,7 +18,7 @@ extern const u8 gText_PkmnFainted_FldPsn[];
 static bool32 IsMonValidSpecies(struct Pokemon *pokemon)
 {
     // UB: Too few arguments for function 'GetMonData'
-    u16 species = GetMonData(pokemon, MON_DATA_SPECIES2);
+    u16 species = GetMonData(pokemon, MON_DATA_SPECIES_OR_EGG);
     if (species == SPECIES_NONE || species == SPECIES_EGG)
         return FALSE;
     else

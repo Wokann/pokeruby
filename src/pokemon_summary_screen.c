@@ -1845,7 +1845,7 @@ static u8 LoadMonGfxAndSprite(struct Pokemon *mon, u8 *state)
     default:
         return CreateMonSprite(mon);
     case 0:
-        species = GetMonData(mon, MON_DATA_SPECIES2);
+        species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG);
         personality = GetMonData(mon, MON_DATA_PERSONALITY);
 
         HandleLoadSpecialPokePic(
@@ -1859,7 +1859,7 @@ static u8 LoadMonGfxAndSprite(struct Pokemon *mon, u8 *state)
         *state += 1;
         return 0xFF;
     case 1:
-        species = GetMonData(mon, MON_DATA_SPECIES2);
+        species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG);
         personality = GetMonData(mon, MON_DATA_PERSONALITY);
         otId = GetMonData(mon, MON_DATA_OT_ID);
 
@@ -2700,7 +2700,7 @@ static void PrintGenderSymbol(struct Pokemon *mon, u8 left, u8 top)
     const u8 *genderSymbol;
     u8 color;
     u8 bottom;
-    u16 species = GetMonData(mon, MON_DATA_SPECIES2);
+    u16 species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG);
 
     if (species != SPECIES_NIDORAN_M && species != SPECIES_NIDORAN_F)
     {
@@ -3734,7 +3734,7 @@ u8 CreateMonSprite(struct Pokemon *mon)
     u16 species;
     u8 spriteId;
 
-    species = GetMonData(mon, MON_DATA_SPECIES2);
+    species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG);
     spriteId = CreateSprite(&gCreatingSpriteTemplate, 40, 64, 5);
 
     FreeSpriteOamMatrix(&gSprites[spriteId]);

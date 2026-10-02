@@ -5528,7 +5528,7 @@ static void Cmd_drawpartystatussummary(void)
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        if (GetMonData(&party[i], MON_DATA_SPECIES2) == 0 || GetMonData(&party[i], MON_DATA_SPECIES2) == SPECIES_EGG)
+        if (GetMonData(&party[i], MON_DATA_SPECIES_OR_EGG) == 0 || GetMonData(&party[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_EGG)
         {
             hpStatuses[i].hp = 0xFFFF;
             hpStatuses[i].status = 0;
@@ -8069,7 +8069,7 @@ static void Cmd_healpartystatus(void)
 
         for (i = 0; i < PARTY_SIZE; i++)
         {
-            u16 species = GetMonData(&party[i], MON_DATA_SPECIES2);
+            u16 species = GetMonData(&party[i], MON_DATA_SPECIES_OR_EGG);
             u8 abilityNum = GetMonData(&party[i], MON_DATA_ABILITY_NUM);
             if (species != 0 && species != SPECIES_EGG)
             {
@@ -8559,8 +8559,8 @@ static void Cmd_trydobeatup(void)
         for (;gBattleCommunication[0] < PARTY_SIZE; ++gBattleCommunication[0])
         {
             if (GetMonData(&party[gBattleCommunication[0]], MON_DATA_HP)
-             && GetMonData(&party[gBattleCommunication[0]], MON_DATA_SPECIES2)
-             && GetMonData(&party[gBattleCommunication[0]], MON_DATA_SPECIES2) != SPECIES_EGG
+             && GetMonData(&party[gBattleCommunication[0]], MON_DATA_SPECIES_OR_EGG)
+             && GetMonData(&party[gBattleCommunication[0]], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG
              && !GetMonData(&party[gBattleCommunication[0]], MON_DATA_STATUS))
                 break;
         }
@@ -9016,8 +9016,8 @@ static void Cmd_assistattackselect(void)
     for (monId = 0; monId < PARTY_SIZE; ++monId)
     {
         if (monId == gBattlerPartyIndexes[gBattlerAttacker]
-         || GetMonData(&party[monId], MON_DATA_SPECIES2) == SPECIES_NONE
-         || GetMonData(&party[monId], MON_DATA_SPECIES2) == SPECIES_EGG)
+         || GetMonData(&party[monId], MON_DATA_SPECIES_OR_EGG) == SPECIES_NONE
+         || GetMonData(&party[monId], MON_DATA_SPECIES_OR_EGG) == SPECIES_EGG)
             continue;
         for (moveId = 0; moveId < MAX_MON_MOVES; ++moveId)
         {
@@ -9159,7 +9159,7 @@ static void Cmd_pickup(void)
     int i;
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2);
+        u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
         u16 held_item = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
         u8 ability;
         if (GetMonData(&gPlayerParty[i], MON_DATA_ABILITY_NUM))

@@ -1922,7 +1922,7 @@ void SetDisplayMonData(void *pokemon, u8 mode)
     if (mode == PSS_MODE_PARTY)
     {
         struct Pokemon *mon = (struct Pokemon *)pokemon;
-        gPokemonStorageSystemPtr->displayMonSpecies = GetMonData(pokemon, MON_DATA_SPECIES2);
+        gPokemonStorageSystemPtr->displayMonSpecies = GetMonData(pokemon, MON_DATA_SPECIES_OR_EGG);
         if (gPokemonStorageSystemPtr->displayMonSpecies != SPECIES_NONE)
         {
             gPokemonStorageSystemPtr->displayMonIsEgg = GetMonData(mon, MON_DATA_IS_EGG);
@@ -1939,7 +1939,7 @@ void SetDisplayMonData(void *pokemon, u8 mode)
     else if (mode == PSS_MODE_BOX)
     {
         struct BoxPokemon *boxMon = (struct BoxPokemon *)pokemon;
-        gPokemonStorageSystemPtr->displayMonSpecies = GetBoxMonData(pokemon, MON_DATA_SPECIES2);
+        gPokemonStorageSystemPtr->displayMonSpecies = GetBoxMonData(pokemon, MON_DATA_SPECIES_OR_EGG);
         if (gPokemonStorageSystemPtr->displayMonSpecies != SPECIES_NONE)
         {
             u32 otId = GetBoxMonData(boxMon, MON_DATA_OT_ID);

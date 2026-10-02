@@ -410,7 +410,7 @@ void BufferPartyVsScreenHealth_AtStart(void)
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2);
+        species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
         hp = GetMonData(&gPlayerParty[i], MON_DATA_HP);
         status = GetMonData(&gPlayerParty[i], MON_DATA_STATUS);
 
@@ -1324,7 +1324,7 @@ void BufferPartyVsScreenHealth_AtEnd(u8 taskId)
     flags = 0;
     for (i = 0; i < 6; i++)
     {
-        u16 species = GetMonData(&party1[i], MON_DATA_SPECIES2);
+        u16 species = GetMonData(&party1[i], MON_DATA_SPECIES_OR_EGG);
         u16 hp = GetMonData(&party1[i], MON_DATA_HP);
         u32 status = GetMonData(&party1[i], MON_DATA_STATUS);
 
@@ -1348,7 +1348,7 @@ void BufferPartyVsScreenHealth_AtEnd(u8 taskId)
     flags = 0;
     for (i = 0; i < 6; i++)
     {
-        u16 species = GetMonData(&party2[i], MON_DATA_SPECIES2);
+        u16 species = GetMonData(&party2[i], MON_DATA_SPECIES_OR_EGG);
         u16 hp = GetMonData(&party2[i], MON_DATA_HP);
         u32 status = GetMonData(&party2[i], MON_DATA_STATUS);
 
@@ -3882,8 +3882,8 @@ void BattleIntroDrawPartySummaryScreens(void)
         {
             for (i = 0; i < 6; i++)
             {
-                if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES2) == 0
-                 || GetMonData(&gEnemyParty[i], MON_DATA_SPECIES2) == SPECIES_EGG)
+                if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES_OR_EGG) == 0
+                 || GetMonData(&gEnemyParty[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_EGG)
                 {
                     hpStatus[i].hp = 0xFFFF;
                     hpStatus[i].status = 0;
@@ -3900,8 +3900,8 @@ void BattleIntroDrawPartySummaryScreens(void)
 
             for (i = 0; i < 6; i++)
             {
-                if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2) == 0
-                 || GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2) == SPECIES_EGG)
+                if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) == 0
+                 || GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_EGG)
                 {
                     hpStatus[i].hp = 0xFFFF;
                     hpStatus[i].status = 0;
@@ -3925,8 +3925,8 @@ void BattleIntroDrawPartySummaryScreens(void)
 
             for (i = 0; i < 6; i++)
             {
-                if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2) == 0
-                 || GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2) == SPECIES_EGG)
+                if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) == 0
+                 || GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_EGG)
                 {
                     hpStatus[i].hp = 0xFFFF;
                     hpStatus[i].status = 0;
