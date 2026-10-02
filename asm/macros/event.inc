@@ -1486,27 +1486,27 @@
 	.endm
 
 	.macro goto_if_lt a:req, b, c @ LESS THAN
-	trycompare goto_if, 0, \a, \b, \c
+	trycompare goto_if, LESS_THAN, \a, \b, \c
 	.endm
 
 	.macro goto_if_eq a:req, b, c @ EQUAL
-	trycompare goto_if, 1, \a, \b, \c
+	trycompare goto_if, EQUAL, \a, \b, \c
 	.endm
 
 	.macro goto_if_gt a:req, b, c @ GREATER THAN
-	trycompare goto_if, 2, \a, \b, \c
+	trycompare goto_if, GREATER_THAN, \a, \b, \c
 	.endm
 
 	.macro goto_if_le a:req, b, c @ LESS THAN OR EQUAL
-	trycompare goto_if, 3, \a, \b, \c
+	trycompare goto_if, LESS_THAN_OR_EQUAL, \a, \b, \c
 	.endm
 
 	.macro goto_if_ge a:req, b, c @ GREATER THAN OR EQUAL
-	trycompare goto_if, 4, \a, \b, \c
+	trycompare goto_if, GREATER_THAN_OR_EQUAL, \a, \b, \c
 	.endm
 
 	.macro goto_if_ne a:req, b, c @ NOT EQUAL
-	trycompare goto_if, 5, \a, \b, \c
+	trycompare goto_if, NOT_EQUAL, \a, \b, \c
 	.endm
 
 	.macro call_if_unset flag:req, dest:req
@@ -1520,27 +1520,27 @@
 	.endm
 
 	.macro call_if_lt a:req, b, c @ LESS THAN
-	trycompare call_if, 0, \a, \b, \c
+	trycompare call_if, LESS_THAN, \a, \b, \c
 	.endm
 
 	.macro call_if_eq a:req, b, c @ EQUAL
-	trycompare call_if, 1, \a, \b, \c
+	trycompare call_if, EQUAL, \a, \b, \c
 	.endm
 
 	.macro call_if_gt a:req, b, c @ GREATER THAN
-	trycompare call_if, 2, \a, \b, \c
+	trycompare call_if, GREATER_THAN, \a, \b, \c
 	.endm
 
 	.macro call_if_le a:req, b, c @ LESS THAN OR EQUAL
-	trycompare call_if, 3, \a, \b, \c
+	trycompare call_if, LESS_THAN_OR_EQUAL, \a, \b, \c
 	.endm
 
 	.macro call_if_ge a:req, b, c @ GREATER THAN OR EQUAL
-	trycompare call_if, 4, \a, \b, \c
+	trycompare call_if, GREATER_THAN_OR_EQUAL, \a, \b, \c
 	.endm
 
 	.macro call_if_ne a:req, b, c @ NOT EQUAL
-	trycompare call_if, 5, \a, \b, \c
+	trycompare call_if, NOT_EQUAL, \a, \b, \c
 	.endm
 
 	.macro vgoto_if_eq dest:req

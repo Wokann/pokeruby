@@ -42,6 +42,7 @@
 #include "sound.h"
 #include "string_util.h"
 #include "tv.h"
+#include "constants/comparison_operators.h"
 #include "constants/event_objects.h"
 #include "constants/maps.h"
 
@@ -74,15 +75,15 @@ extern u8 *gStdScripts_End[];
 // script.c.
 void * const gNullScriptPtr = NULL;
 
-static const u8 sScriptConditionTable[6][3] =
+static const u8 sScriptConditionTable[COMPARISON_OPERATORS_COUNT][3] =
 {
-//  <  =  >
-    1, 0, 0, // <
-    0, 1, 0, // =
-    0, 0, 1, // >
-    1, 1, 0, // <=
-    0, 1, 1, // >=
-    1, 0, 1, // !=
+//                              <  =  >
+    [LESS_THAN] =              {1, 0, 0},
+    [EQUAL] =                  {0, 1, 0},
+    [GREATER_THAN] =           {0, 0, 1},
+    [LESS_THAN_OR_EQUAL] =     {1, 1, 0},
+    [GREATER_THAN_OR_EQUAL] =  {0, 1, 1},
+    [NOT_EQUAL] =              {1, 0, 1},
 };
 
 static u8 * const sScriptStringVars[] =

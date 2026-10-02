@@ -1,6 +1,7 @@
 #include "constants/global.h"
 #include "constants/battle.h"
 #include "constants/cable_club.h"
+#include "constants/comparison_operators.h"
 #include "constants/contest.h"
 #include "constants/daycare.h"
 #include "constants/decorations.h"
