@@ -852,10 +852,10 @@ Move_TWINEEDLE: @ 81C82E2
 	create_linear_stinger_sprite ANIM_TARGET, 2, initial_x=20, initial_y=12, target_x=10, target_y=12, duration=20
 	delay 20
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 5, 1
-	createsprite gHandleInvertHitSplatSpriteTemplate, ANIM_ATTACKER, 3, 0, -4, ANIM_TARGET, 3
+	create_handle_invert_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=-4, relative_to=ANIM_TARGET, animation=3
 	loopsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET, 5, 2
 	delay 1
-	createsprite gHandleInvertHitSplatSpriteTemplate, ANIM_ATTACKER, 3, 10, 12, ANIM_TARGET, 3
+	create_handle_invert_hitsplat_sprite ANIM_ATTACKER, 3, x=10, y=12, relative_to=ANIM_TARGET, animation=3
 	waitforvisualfinish
 	clearmonbg ANIM_TARGET
 	blendoff
@@ -1318,9 +1318,9 @@ Move_SPIKE_CANNON: @ 81C8DF1
 	create_linear_stinger_sprite ANIM_ATTACKER, 2, initial_x=18, initial_y=0, target_x=0, target_y=0, duration=20
 	create_linear_stinger_sprite ANIM_ATTACKER, 2, initial_x=26, initial_y=8, target_x=8, target_y=8, duration=20
 	waitforvisualfinish
-	createsprite gHandleInvertHitSplatSpriteTemplate, ANIM_ATTACKER, 3, -8, -8, ANIM_TARGET, 2
-	createsprite gHandleInvertHitSplatSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, ANIM_TARGET, 2
-	createsprite gHandleInvertHitSplatSpriteTemplate, ANIM_ATTACKER, 3, 8, 8, ANIM_TARGET, 2
+	create_handle_invert_hitsplat_sprite ANIM_ATTACKER, 3, x=-8, y=-8, relative_to=ANIM_TARGET, animation=2
+	create_handle_invert_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=2
+	create_handle_invert_hitsplat_sprite ANIM_ATTACKER, 3, x=8, y=8, relative_to=ANIM_TARGET, animation=2
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 7, 1
 	loopsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET, 5, 3
 	waitforvisualfinish
@@ -3403,13 +3403,13 @@ ExtremeSpeedContinue:
 	createvisualtask AnimTask_ExtremeSpeedImpact, 2
 	delay 2
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
-	createsprite gMonEdgeHitSplatSpriteTemplate, ANIM_TARGET, 2, 1, 0, -12, 3
+	create_mon_edge_hitsplat_sprite ANIM_TARGET, 2, relative_to=ANIM_TARGET, x=0, y=-12, animation=3
 	delay 10
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
-	createsprite gMonEdgeHitSplatSpriteTemplate, ANIM_TARGET, 2, 1, 0, 12, 3
+	create_mon_edge_hitsplat_sprite ANIM_TARGET, 2, relative_to=ANIM_TARGET, x=0, y=12, animation=3
 	delay 10
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
-	createsprite gMonEdgeHitSplatSpriteTemplate, ANIM_TARGET, 2, 1, 0, 0, 3
+	create_mon_edge_hitsplat_sprite ANIM_TARGET, 2, relative_to=ANIM_TARGET, x=0, y=0, animation=3
 	waitforvisualfinish
 	createvisualtask AnimTask_SpeedDust, 2
 	delay 10
@@ -10153,11 +10153,11 @@ ElectricityEffect: @ 81D6100
 
 ConfusionEffect: @ 81D618B
 	loopsewithpan SE_M_DIZZY_PUNCH, SOUND_PAN_TARGET, 13, 6
-	createsprite gConfusionDuckSpriteTemplate, ANIM_TARGET, 2, 0, -15, 0, 3, 90
-	createsprite gConfusionDuckSpriteTemplate, ANIM_TARGET, 2, 0, -15, 51, 3, 90
-	createsprite gConfusionDuckSpriteTemplate, ANIM_TARGET, 2, 0, -15, 102, 3, 90
-	createsprite gConfusionDuckSpriteTemplate, ANIM_TARGET, 2, 0, -15, 153, 3, 90
-	createsprite gConfusionDuckSpriteTemplate, ANIM_TARGET, 2, 0, -15, 204, 3, 90
+	create_confusion_duck_sprite ANIM_TARGET, 2, x=0, y=-15, wave_offset=0, wave_period=3, duration=90
+	create_confusion_duck_sprite ANIM_TARGET, 2, x=0, y=-15, wave_offset=51, wave_period=3, duration=90
+	create_confusion_duck_sprite ANIM_TARGET, 2, x=0, y=-15, wave_offset=102, wave_period=3, duration=90
+	create_confusion_duck_sprite ANIM_TARGET, 2, x=0, y=-15, wave_offset=153, wave_period=3, duration=90
+	create_confusion_duck_sprite ANIM_TARGET, 2, x=0, y=-15, wave_offset=204, wave_period=3, duration=90
 	return
 
 SetPsychicBackground: @ 81D61E7
