@@ -266,7 +266,7 @@ BattleScript_HitFromAtkAnimation: @ 81D6F48
 	resultmessage
 	waitmessage 64
 	seteffectwithchance
-	tryfaintmon BS_TARGET, FALSE, NULL
+	tryfaintmon BS_TARGET
 
 BattleScript_MoveEnd:: @ 81D6F62
 	moveendall
@@ -364,8 +364,8 @@ BattleScript_AbsorbUpdateHp: @ 81D703F
 	waitmessage 64
 
 BattleScript_AbsorbTryFainting: @ 81D7056
-	tryfaintmon BS_ATTACKER, FALSE, NULL
-	tryfaintmon BS_TARGET, FALSE, NULL
+	tryfaintmon BS_ATTACKER
+	tryfaintmon BS_TARGET
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectBurnHit: @ 81D7069
@@ -411,10 +411,10 @@ BattleScript_ExplosionLoop: @ 81D70A7
 	waitmessage 64
 	resultmessage
 	waitmessage 64
-	tryfaintmon BS_TARGET, FALSE, NULL
+	tryfaintmon BS_TARGET
 	moveendto MOVEEND_NEXT_TARGET
 	jumpifnexttargetvalid BattleScript_ExplosionLoop
-	tryfaintmon BS_ATTACKER, FALSE, NULL
+	tryfaintmon BS_ATTACKER
 	end
 
 BattleScript_ExplosionMissed: @ 81D70E0
@@ -423,7 +423,7 @@ BattleScript_ExplosionMissed: @ 81D70E0
 	waitmessage 64
 	moveendto MOVEEND_NEXT_TARGET
 	jumpifnexttargetvalid BattleScript_ExplosionLoop
-	tryfaintmon BS_ATTACKER, FALSE, NULL
+	tryfaintmon BS_ATTACKER
 	end
 
 BattleScript_PreserveMissedBitDoMoveAnim: @ 81D70FB
@@ -472,7 +472,7 @@ BattleScript_DreamEaterWorked: @ 81D7129
 	waitmessage 64
 
 BattleScript_DreamEaterTryFaintEnd: @ 81D7167
-	tryfaintmon BS_TARGET, FALSE, NULL
+	tryfaintmon BS_TARGET
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectMirrorMove: @ 81D7173
@@ -678,7 +678,7 @@ BattleScript_MultiHitPrintStrings: @ 81D7377
 
 BattleScript_MultiHitEnd: @ 81D7396
 	seteffectwithchance
-	tryfaintmon BS_TARGET, FALSE, NULL
+	tryfaintmon BS_TARGET
 	moveendcase MOVEEND_SYNCHRONIZE_TARGET
 	moveendfrom MOVEEND_IMMUNITY_ABILITIES
 	end
@@ -897,7 +897,7 @@ BattleScript_MoveMissedDoDamage: @ 81D7632
 	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
 	healthbarupdate BS_ATTACKER
 	datahpupdate BS_ATTACKER
-	tryfaintmon BS_ATTACKER, FALSE, NULL
+	tryfaintmon BS_ATTACKER
 	orbyte gMoveResultFlags, MOVE_RESULT_MISSED
 	goto BattleScript_MoveEnd
 
@@ -1474,7 +1474,7 @@ BattleScript_TripleKickPrintStrings: @ 81D7C90
 
 BattleScript_TripleKickEnd: @ 81D7CAF
 	seteffectwithchance
-	tryfaintmon BS_TARGET, FALSE, NULL
+	tryfaintmon BS_TARGET
 	moveendfrom MOVEEND_UPDATE_LAST_MOVES
 	end
 
@@ -1572,7 +1572,7 @@ BattleScript_DoGhostCurse: @ 81D7DC4
 	datahpupdate BS_ATTACKER
 	printstring BATTLE_TEXT_CurseLay
 	waitmessage 64
-	tryfaintmon BS_ATTACKER, FALSE, NULL
+	tryfaintmon BS_ATTACKER
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectEndure: @ 81D7DFD
@@ -1921,7 +1921,7 @@ BattleScript_DoHitAllWithUndergroundBonus: @ 81D812C
 	waitmessage 64
 	printstring BATTLE_TEXT_Terminator2
 	waitmessage 1
-	tryfaintmon BS_TARGET, FALSE, NULL
+	tryfaintmon BS_TARGET
 	moveendto MOVEEND_NEXT_TARGET
 	jumpifnexttargetvalid BattleScript_HitsAllWithUndergroundBonusLoop
 	end
@@ -2026,7 +2026,7 @@ BattleScript_BeatUpAttack: @ 81D829C
 	waitmessage 64
 	resultmessage
 	waitmessage 64
-	tryfaintmon BS_TARGET, FALSE, NULL
+	tryfaintmon BS_TARGET
 	moveendto MOVEEND_NEXT_TARGET
 	goto BattleScript_BeatUpLoop
 
@@ -2300,7 +2300,7 @@ BattleScript_EffectMementoTrySpAtk: @ 81D85D0
 	waitmessage 64
 
 BattleScript_EffectMementoTryFaint: @ 81D85F3
-	tryfaintmon BS_ATTACKER, FALSE, NULL
+	tryfaintmon BS_ATTACKER
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectMementoPrintNoEffect: @ 81D85FF
@@ -2319,7 +2319,7 @@ BattleScript_MementoTargetProtectEnd: @ 81D8611
 	effectivenesssound
 	resultmessage
 	waitmessage 64
-	tryfaintmon BS_ATTACKER, FALSE, NULL
+	tryfaintmon BS_ATTACKER
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectFacade: @ 81D8626
@@ -2521,7 +2521,7 @@ BattleScript_BrickBreakDoHit: @ 81D87D0
 	resultmessage
 	waitmessage 64
 	seteffectwithchance
-	tryfaintmon BS_TARGET, FALSE, NULL
+	tryfaintmon BS_TARGET
 	goto BattleScript_MoveEnd
 
 BattleScript_EffectYawn: @ 81D87EE
@@ -2950,7 +2950,7 @@ BattleScript_FaintedMonTryChoose: @ 81D8CC2
 	switchhandleorder BS_ATTACKER, 2
 	jumpifbyte EQUAL, gBattleCommunication, 6, BattleScript_FaintedMonSendOutNew
 	atknameinbuff1
-	resetintrimidatetracebits BS_ATTACKER
+	resetintimidatetracebits BS_ATTACKER
 	hpthresholds2 BS_ATTACKER
 	printstring 2
 	switchoutabilities BS_ATTACKER
@@ -3142,7 +3142,7 @@ BattleScript_PursuitDmgOnSwitchOut: @ 81D8EAD
 	waitmessage 64
 	resultmessage
 	waitmessage 64
-	tryfaintmon BS_TARGET, FALSE, NULL
+	tryfaintmon BS_TARGET
 	moveendfromto MOVEEND_ON_DAMAGE_ABILITIES, MOVEEND_CHOICE_MOVE
 	getbattlerfainted BS_TARGET
 	jumpifbyte EQUAL, gBattleCommunication, 0, BattleScript_PursuitDmgOnSwitchOutRet
@@ -3224,7 +3224,7 @@ BattleScript_DamagingWeatherLoop: @ 81D8F95
 	hitanimation BS_ATTACKER
 	healthbarupdate BS_ATTACKER
 	datahpupdate BS_ATTACKER
-	tryfaintmon BS_ATTACKER, FALSE, NULL
+	tryfaintmon BS_ATTACKER
 	checkteamslost BattleScript_DamagingWeatherLoopIncrement
 
 BattleScript_DamagingWeatherLoopIncrement: @ 81D8FD6
@@ -3295,8 +3295,8 @@ BattleScript_LeechSeedTurnPrintAndUpdateHp: @ 81D9083
 	datahpupdate BS_TARGET
 	printfromtable gLeechSeedStringIds
 	waitmessage 64
-	tryfaintmon BS_ATTACKER, FALSE, NULL
-	tryfaintmon BS_TARGET, FALSE, NULL
+	tryfaintmon BS_ATTACKER
+	tryfaintmon BS_TARGET
 	end2
 
 BattleScript_BideStoringEnergy:: @ 81D90A7
@@ -3322,7 +3322,7 @@ BattleScript_BideAttack:: @ 81D90B2
 	datahpupdate BS_TARGET
 	resultmessage
 	waitmessage 64
-	tryfaintmon BS_TARGET, FALSE, NULL
+	tryfaintmon BS_TARGET
 	goto BattleScript_MoveEnd
 
 BattleScript_BideNoEnergyToAttack:: @ 81D90F1
@@ -3385,7 +3385,7 @@ BattleScript_DestinyBondTakesLife:: @ 81D9156
 	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
 	healthbarupdate BS_ATTACKER
 	datahpupdate BS_ATTACKER
-	tryfaintmon BS_ATTACKER, FALSE, NULL
+	tryfaintmon BS_ATTACKER
 	return
 
 BattleScript_SpikesOnAttacker:: @ 81D9171
@@ -3393,8 +3393,8 @@ BattleScript_SpikesOnAttacker:: @ 81D9171
 	healthbarupdate BS_ATTACKER
 	datahpupdate BS_ATTACKER
 	call BattleScript_PrintHurtBySpikes
-	tryfaintmon BS_ATTACKER, FALSE, NULL
-	tryfaintmon BS_ATTACKER, TRUE, BattleScript_SpikesOnAttackerFainted
+	tryfaintmon BS_ATTACKER
+	tryfaintmon_spikes BS_ATTACKER, BattleScript_SpikesOnAttackerFainted
 	return
 
 BattleScript_SpikesOnAttackerFainted: @ 81D9192
@@ -3407,8 +3407,8 @@ BattleScript_SpikesOnTarget:: @ 81D919F
 	healthbarupdate BS_TARGET
 	datahpupdate BS_TARGET
 	call BattleScript_PrintHurtBySpikes
-	tryfaintmon BS_TARGET, FALSE, NULL
-	tryfaintmon BS_TARGET, TRUE, BattleScript_SpikesOnTargetFainted
+	tryfaintmon BS_TARGET
+	tryfaintmon_spikes BS_TARGET, BattleScript_SpikesOnTargetFainted
 	return
 
 BattleScript_SpikesOnTargetFainted: @ 81D91C0
@@ -3421,8 +3421,8 @@ BattleScript_SpikesOnFaintedBattler:: @ 81D91CD
 	healthbarupdate BS_FAINTED
 	datahpupdate BS_FAINTED
 	call BattleScript_PrintHurtBySpikes
-	tryfaintmon BS_FAINTED, FALSE, NULL
-	tryfaintmon BS_FAINTED, TRUE, BattleScript_SpikesOnFaintedBattlerFainted
+	tryfaintmon BS_FAINTED
+	tryfaintmon_spikes BS_FAINTED, BattleScript_SpikesOnFaintedBattlerFainted
 	return
 
 BattleScript_SpikesOnFaintedBattlerFainted: @ 81D91EE
@@ -3441,7 +3441,7 @@ BattleScript_PerishSongTakesLife:: @ 81D9202
 	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
 	healthbarupdate BS_ATTACKER
 	datahpupdate BS_ATTACKER
-	tryfaintmon BS_ATTACKER, FALSE, NULL
+	tryfaintmon BS_ATTACKER
 	end2
 
 BattleScript_PerishSongCountGoesDown:: @ 81D921D
@@ -3537,7 +3537,7 @@ BattleScript_DoFutureAttackHit: @ 81D931A
 	datahpupdate BS_TARGET
 	resultmessage
 	waitmessage 64
-	tryfaintmon BS_TARGET, FALSE, NULL
+	tryfaintmon BS_TARGET
 	checkteamslost BattleScript_FutureAttackEnd
 
 BattleScript_FutureAttackEnd: @ 81D9332
@@ -3743,7 +3743,7 @@ BattleScript_DoTurnDmg: @ 81D9520
 	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
 	healthbarupdate BS_ATTACKER
 	datahpupdate BS_ATTACKER
-	tryfaintmon BS_ATTACKER, FALSE, NULL
+	tryfaintmon BS_ATTACKER
 	checkteamslost BattleScript_DoTurnDmgEnd
 
 BattleScript_DoTurnDmgEnd: @ 81D9539
@@ -3811,7 +3811,7 @@ BattleScript_DoSelfConfusionDmg: @ 81D95AC
 	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
 	healthbarupdate BS_ATTACKER
 	datahpupdate BS_ATTACKER
-	tryfaintmon BS_ATTACKER, FALSE, NULL
+	tryfaintmon BS_ATTACKER
 	goto BattleScript_MoveEnd
 
 BattleScript_MoveUsedIsConfusedRet: @ 81D95D3
@@ -3947,7 +3947,7 @@ BattleScript_DoRecoil: @ 81D96DB
 	datahpupdate BS_ATTACKER
 	printstring BATTLE_TEXT_HitRecoil
 	waitmessage 64
-	tryfaintmon BS_ATTACKER, FALSE, NULL
+	tryfaintmon BS_ATTACKER
 
 BattleScript_RecoilEnd: @ 81D96F5
 	return
@@ -4200,7 +4200,7 @@ BattleScript_RoughSkinActivates:: @ 81D9928
 	datahpupdate BS_ATTACKER
 	printstring BATTLE_TEXT_HurtOther
 	waitmessage 64
-	tryfaintmon BS_ATTACKER, FALSE, NULL
+	tryfaintmon BS_ATTACKER
 	return
 
 BattleScript_CuteCharmActivates:: @ 81D9943
