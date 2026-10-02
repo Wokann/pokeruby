@@ -190,6 +190,11 @@ enum {
     TRAINER_PIC_DRAKE,
 };
 
+// Trainer front pics are 64x64 4bpp images.
+#define TRAINER_PIC_WIDTH  64
+#define TRAINER_PIC_HEIGHT 64
+#define TRAINER_PIC_SIZE   (TRAINER_PIC_WIDTH * TRAINER_PIC_HEIGHT / 2)
+
 // The player back pics are assumed to alternate according to the gender values (MALE/FEMALE)
 #define TRAINER_BACK_PIC_BRENDAN 0
 #define TRAINER_BACK_PIC_MAY     1

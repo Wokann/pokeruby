@@ -76,6 +76,8 @@
 	.set FACILITY_CLASS_OLD_COUPLE,            75
 	.set FACILITY_CLASS_SIS_AND_BRO,           76
 
+	.set TRAINER_PIC_SIZE,            0x800
+
 	.set TRAINER_PIC_BRENDAN,                0
 	.set TRAINER_PIC_MAY,                    1
 	.set TRAINER_PIC_LASS,                   2
