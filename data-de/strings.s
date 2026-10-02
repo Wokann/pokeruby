@@ -7,11 +7,11 @@
 gOtherText_TopSpeed::
 	.string "TEMPO$"
 
-gMultiText_BerryBlenderMaxSpeedRecord:: @ 842C2E6
+gText_BlenderMaxSpeedRecord:: @ 842C2E6
 	.string "BEERENMIXER\n"
 	.string "MAXIMALTEMPO-REKORD!$"
 
-gMultiText_2P3P4P:: @ 842C30A
+gText_234Players:: @ 842C30A
 	.string "2 SPIELER\n"
 	.string "3 SPIELER\n"
 	.string "4 SPIELER$"
@@ -99,7 +99,7 @@ SystemText_BAG::
 	.string "BEUTEL$"
 SystemText_Pokenav::
 	.string "POKéNAV$"
-SystemText_Player::
+gText_MenuPlayer::
 	.string "{PLAYER}$"
 SystemText_Save::
 	.string "SICHERN$"
@@ -110,7 +110,7 @@ SystemText_Exit::
 SystemText_Retire:: @ safari zone?
 	.string "SCHLUSS$"
 
-gOtherText_SafariStock:: @ 842C4A9
+gText_SafariBallStock:: @ 842C4A9
 	.string "SAFARIBÄLLE\n"
 	.string "Vorrat: {STR_VAR_1}$"
 
@@ -125,7 +125,7 @@ gSystemText_LoadEventPressA:: @ 842C4E9
 gSystemText_LoadingEvent:: @ 842C524
 	.string "Geschehen wird geladen.$"
 
-gSystemText_DontCutLink:: @ 842C535
+gText_DontRemoveCableTurnOff:: @ 842C535
 	.string "Verbindungskabel nicht entfernen!\n"
 	.string "Die Geräte nicht ausschalten!$"
 
@@ -139,10 +139,10 @@ gSystemText_LoadingError:: @ 842C58F
 gOtherText_Hoenn:: @ 842C5B5
 	.string "HOENN$"
 
-gOtherText_OhABite:: @ 842C5BB
+gText_OhABite:: @ 842C5BB
 	.string "Oh! Da hat etwas angebissen!$"
 
-gOtherText_PokeOnHook:: @ 842C5C7
+gText_PokemonOnHook:: @ 842C5C7
 	.string "Du hast ein POKéMON am Haken!{PAUSE_UNTIL_PRESS}$"
 
 gOtherText_NotEvenANibble:: @ 842C5E2
@@ -154,13 +154,13 @@ gOtherText_ItGotAway:: @ 842C5F9
 gTradeText_WillBeSent:: @ 842C60B
 	.string "{STR_VAR_2} wird {STR_VAR_1} zugesandt.$"
 
-gTradeText_ByeBye:: @ 842C622
+gText_ByeByeVar1:: @ 842C622
 	.string "Tschüss, {STR_VAR_2}!$"
 
-gTradeText_SentOverPoke:: @ 842C62F
+gText_XSentOverY:: @ 842C62F
 	.string "{STR_VAR_1} versandte {STR_VAR_3}.$"
 
-gTradeText_TakeGoodCare:: @ 842C640
+gText_TakeGoodCareOfX:: @ 842C640
 	.string "Kümmere dich gut um {STR_VAR_3}!$"
 
 TradeText_Cancel::
@@ -220,13 +220,13 @@ gOtherText_FourQuestions:: @ 842C7D6
 gText_ThreeQuestionMarks:: @ 842C890
 	.string "???$"
 
-gOtherText_From:: @ 842C894
+gText_FromSpace:: @ 842C894
 	.string "Von $"
 
 gOtherText_MixingRecordsWithFriend:: @ 842C89A
 	.string "Rekorddaten-Austausch...$"
 
-gOtherText_MixingComplete:: @ 842C8AC
+gText_RecordMixingComplete:: @ 842C8AC
 	.string "Rekorddaten-Austausch beendet.\n"
 	.string "Vielen Dank für deine Geduld.$"
 
@@ -245,10 +245,10 @@ gOtherText_BattleTowerWinRecord:: @ 842C924
 gOtherText_ContestRecord:: @ 842C943
 	.string "WETTB. MIT FREUND/EN S.:$"
 
-gOtherText_MixingRecord:: @ 842C959
+gText_PokeblocksWithFriends:: @ 842C959
 	.string "{POKEBLOCK} MIT FREUND/EN:$"
 
-gOtherText_TradeRecord:: @ 842C96A
+gText_PokemonTrades:: @ 842C96A
 	.string "POKéMON-TAUSCH:$"
 
 gOtherText_Boy:: @ 842C979
@@ -275,11 +275,11 @@ gOtherText_SentToPC:: @ 842C9A4
 	.string "{STR_VAR_1} wurde auf\n"
 	.string "den PC übertragen.{PAUSE_UNTIL_PRESS}$"
 
-OtherText_YourName::
+gText_YourName::
 	.string "DEIN NAME?$"
-OtherText_BoxName::
+gText_BoxName::
 	.string "NAME DER BOX?$"
-OtherText_PokeName::
+gText_PkmnsNickname::
 	.string "Kosename f. {STR_VAR_1}$"
 
 gText_Marco:: @ 842C9E1
@@ -288,7 +288,7 @@ gText_Marco:: @ 842C9E1
 gOtherText_Coins:: @ 842C9E7
 	.string "{STR_VAR_1} MÜNZ.$"
 
-gOtherText_BattleResults:: @ 842C9F0
+gText_PlayersBattleResults:: @ 842C9F0
 	.string "KAMPFERGEBNISSE von {PLAYER}$"
 
 gOtherText_WinRecord:: @ 842CA04
@@ -315,26 +315,26 @@ gOtherText_Lv100:: @ 842CA69
 gOtherText_WinStreak:: @ 842CA70
 	.string "{STR_VAR_1}S IN FOLGE$"
 
-gOtherText_Current:: @ 842CA7B
+gText_Current:: @ 842CA7B
 	.string "MOMENTAN$"
 
 gOtherText_Record:: @ 842CA83
 	.string "REKORD$"
 
-gOtherText_Prev:: @ 842CA8A
+gText_Prev:: @ 842CA8A
 	.string "VORHER$"
 
-gOtherText_QuitGamePrompt:: @ 842CA90
+gText_QuitTheGame:: @ 842CA90
 	.string "Spiel beenden?$"
 
-gOtherText_MaxCoins:: @ 842CA9F
+gText_YouveGot9999Coins:: @ 842CA9F
 	.string "Du hast 9.999 MÜNZEN.$"
 
-gOtherText_OutOfCoins:: @ 842CAB7
+gText_YouveRunOutOfCoins:: @ 842CAB7
 	.string "Du hast keine MÜNZEN mehr.\n"
 	.string "Game over!$"
 
-gOtherText_DontHaveThreeCoins:: @ 842CADB
+gText_YouDontHaveThreeCoins:: @ 842CADB
 	.string "Du hast keine drei MÜNZEN.$"
 
 gOtherText_ReelTime:: @ 842CAF7
@@ -347,15 +347,15 @@ gOtherText_ReelTime:: @ 842CAF7
 
 DaycareText_GetAlongVeryWell::
 	.string "Die beiden scheinen sich sehr zu mögen.$"
-DaycareText_GetAlong::
+gDaycareText_GetAlong::
 	.string "Die beiden scheinen sich zu vertragen.$"
 DaycareText_DontLikeOther::
 	.string "Die beiden mögen sich nicht sehr.$"
-DaycareText_PlayOther::
+gDaycareText_PlayOther::
 	.string "Die beiden spielen lieber mit anderen\n"
 	.string "POKéMON als miteinander.$"
 
-gOtherText_NewLine2:: @ 842CC28
+gText_NewLine2:: @ 842CC28
 	.string "\n$"
 
 gOtherText_CancelAndLv:: @ 842CC2A
@@ -378,7 +378,7 @@ OtherText_Contest::
 	.string "WETTB.$"
 OtherText_Type::
 	.string "TYP/$"
-OtherText_PP::
+gText_MoveRelearnerPP::
 	.string "AP/$"
 OtherText_Power::
 	.string "STÄRKE$"
@@ -389,16 +389,16 @@ OtherText_Appeal::
 OtherText_Jam::
 	.string "EINDRUCK$"
 
-gOtherText_TeachWhichMove:: @ 842CCC7
+gText_TeachWhichMoveToPkmn:: @ 842CCC7
 	.string "{STR_VAR_1} welche Attacke beibr.?$"
 
-gOtherText_TeachSpecificMove:: @ 842CCDF
+gText_MoveRelearnerTeachMoveConfirm:: @ 842CCDF
 	.string "{STR_VAR_2} beibringen?$"
 
 gOtherText_PokeLearnedMove:: @ 842CCE9
 	.string "{STR_VAR_1} erlernte {STR_VAR_2}.$"
 
-gOtherText_DeleteOlderMove:: @ 842CCF8
+gText_MoveRelearnerPkmnTryingToLearnMove:: @ 842CCF8
 	.string "{STR_VAR_1} versucht,\n"
 	.string "{STR_VAR_2} zu erlernen.\p"
 	.string "Aber {STR_VAR_1} kann nicht mehr\n"
@@ -479,19 +479,19 @@ gOtherText_FatefulEncounter:: @ 842D118
 gOtherText_Met2:: @ 842D12B
 	.string " (gef.)$"
 
-gOtherText_EggDayCare:: @ 842D133
+gText_OddEggFoundByCouple:: @ 842D133
 	.string "Seltsames POKéMON-EI, das\n"
 	.string "die PENSIONSLEITUNG fand.$"
 
-gOtherText_EggNicePlace:: @ 842D164
+gText_PeculiarEggNicePlace:: @ 842D164
 	.string "Kurioses POKéMON-EI an\n"
 	.string "hübschem Ort erhalten.$"
 
-gOtherText_EggObtainedInTrade:: @ 842D197
+gText_PeculiarEggTrade:: @ 842D197
 	.string "Kurioses POKéMON-EI im\n"
 	.string "Tausch erhalten.$"
 
-gOtherText_EggHotSprings:: @ 842D1C3
+gText_EggFromHotSprings:: @ 842D1C3
 	.string "Ein POKéMON-EI an den\n"
 	.string "Heißen Quellen erhalten.$"
 
@@ -509,7 +509,7 @@ gOtherText_YesNoAndPlayer:: @ 842D1FE
 gOtherText_HoennDex:: @ 842D21C
 	.string "HOENN$"
 
-gOtherText_NationalDex:: @ 842D222
+gText_DexNational:: @ 842D222
 	.string "NATIONALER$"
 
 gOtherText_DiplomaCertificationGameFreak:: @ 842D22B
@@ -524,7 +524,7 @@ gOtherText_DiplomaCertificationGameFreak:: @ 842D22B
 
 	.string "{COLOR RED}{HIGHLIGHT TRANSPARENT}GAME FREAK$"
 
-gOtherText_PLink:: @ 842D2BC
+gText_NumPlayerLink:: @ 842D2BC
 	.string "{STR_VAR_1}SP-LINK$"
 
 gOtherText_YesNoTerminating:: @ 842D2C5

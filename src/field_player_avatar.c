@@ -1654,7 +1654,7 @@ static bool8 Fishing_CheckForBite(struct Task *task)
 static bool8 Fishing_GotBite(struct Task *task)
 {
     AlignFishingAnimationFrames();
-    Menu_PrintText(gOtherText_OhABite, 4, 17);
+    Menu_PrintText(gText_OhABite, 4, 17);
     task->tStep++;
     task->tFrameCounter = 0;
     return FALSE;
@@ -1708,7 +1708,7 @@ static bool8 Fishing_CheckMoreDots(struct Task *task)
 static bool8 Fishing_MonOnHook(struct Task *task)
 {
     AlignFishingAnimationFrames();
-    MenuPrintMessageDefaultCoords(gOtherText_PokeOnHook);
+    MenuPrintMessageDefaultCoords(gText_PokemonOnHook);
     Menu_DisplayDialogueFrame();
     task->tStep++;
     task->tFrameCounter = 0;

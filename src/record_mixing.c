@@ -179,7 +179,7 @@ void Task_RecordMixing_Main(u8 taskId)
             tState = 4;
             tLinkTaskId = CreateTask_ReestablishCableClubLink();
             Menu_ClearWindowText();
-            Menu_PrintText(gOtherText_MixingComplete, 2, 15);
+            Menu_PrintText(gText_RecordMixingComplete, 2, 15);
             tTimer = 0;
         }
         break;

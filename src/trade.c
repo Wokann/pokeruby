@@ -4420,7 +4420,7 @@ static bool8 DoTradeAnim_Cable(void)
                 gTradeAnim->releasePokeballSpriteId = CreateTradePokeballSprite(gTradeAnim->monSpriteIds[0], gSprites[gTradeAnim->monSpriteIds[0]].oam.paletteNum, 0x78, 0x20, 0x2, 0x1, 0x14, 0xfffff);
                 gTradeAnim->state ++;
                 Text_EraseWindowRect(&gTradeAnim->window, 0, 0, 29, 19);
-                StringExpandPlaceholders(gStringVar4, gTradeText_ByeBye);
+                StringExpandPlaceholders(gStringVar4, gText_ByeByeVar1);
                 Text_InitWindowAndPrintText(&gTradeAnim->window, gStringVar4, gTradeAnim->textWindowBaseTileNum, 2, 15);
             }
             break;
@@ -4767,7 +4767,7 @@ static bool8 DoTradeAnim_Cable(void)
         case 67:
             REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_BG2_ON | DISPCNT_OBJ_ON;
             Text_EraseWindowRect(&gTradeAnim->window, 0, 0, 29, 19);
-            StringExpandPlaceholders(gStringVar4, gTradeText_SentOverPoke);
+            StringExpandPlaceholders(gStringVar4, gText_XSentOverY);
             Text_InitWindowAndPrintText(&gTradeAnim->window, gStringVar4, gTradeAnim->textWindowBaseTileNum, 2, 15);
             gTradeAnim->state ++;
             gTradeAnim->timer = 0;
@@ -4781,7 +4781,7 @@ static bool8 DoTradeAnim_Cable(void)
             {
                 gTradeAnim->state ++;
                 Text_EraseWindowRect(&gTradeAnim->window, 0, 0, 29, 19);
-                StringExpandPlaceholders(gStringVar4, gTradeText_TakeGoodCare);
+                StringExpandPlaceholders(gStringVar4, gText_TakeGoodCareOfX);
                 Text_InitWindowAndPrintText(&gTradeAnim->window, gStringVar4, gTradeAnim->textWindowBaseTileNum, 2, 15);
                 gTradeAnim->timer = 0;
             }

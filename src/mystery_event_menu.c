@@ -165,7 +165,7 @@ static void CB2_MysteryEventMenu(void)
             }
             else if (CheckLanguageMatch())
             {
-                MenuPrintMessageDefaultCoords(gSystemText_DontCutLink);
+                MenuPrintMessageDefaultCoords(gText_DontRemoveCableTurnOff);
                 gMain.state++;
                 break;
             }
@@ -235,7 +235,7 @@ static void CB2_MysteryEventMenu(void)
                 register u8 *ptr2 asm("r1");
                 register int offset3 asm("r0");
                 register int dummy asm("r2");
-                MenuPrintMessageDefaultCoords(gSystemText_DontCutLink);
+                MenuPrintMessageDefaultCoords(gText_DontRemoveCableTurnOff);
                 ptr2 = (u8 *)&gMain;
                 offset3 = offsetof(struct Main, state);
                 if (dummy)

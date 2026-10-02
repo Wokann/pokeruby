@@ -297,7 +297,7 @@ void ShowLinkBattleRecords(void)
 {
     s32 i;
     Menu_DrawStdWindowFrame(1, 0, 28, 18);
-    MenuPrint_Centered(gOtherText_BattleResults, 0, 1, 240);
+    MenuPrint_Centered(gText_PlayersBattleResults, 0, 1, 240);
 
     PrintLinkBattleWinsLossesDraws(gSaveBlock1.linkBattleRecords);
 #if ENGLISH
@@ -366,9 +366,9 @@ static void PrintLastWinStreak(u8 level, u8 left, u8 top)
 {
     u16 winStreak = GetLastWinStreak(level);
     if (IsBattleTowerWinStreakActive(level) == TRUE)
-        PrintWinStreak(gOtherText_Current, winStreak, left, top);
+        PrintWinStreak(gText_Current, winStreak, left, top);
     else
-        PrintWinStreak(gOtherText_Prev, winStreak, left, top);
+        PrintWinStreak(gText_Prev, winStreak, left, top);
 }
 
 void ShowBattleTowerRecords(void)

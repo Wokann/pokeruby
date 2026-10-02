@@ -2523,7 +2523,7 @@ static void PokemonSummaryScreen_PrintEggTrainerMemo(struct Pokemon *mon, u8 lef
 
     if (!(gameMet == VERSION_RUBY || gameMet == VERSION_SAPPHIRE || gameMet == VERSION_EMERALD))
     {
-        Menu_PrintText(gOtherText_EggObtainedInTrade, left, top);
+        Menu_PrintText(gText_PeculiarEggTrade, left, top);
         return;
     }
 
@@ -2532,13 +2532,13 @@ static void PokemonSummaryScreen_PrintEggTrainerMemo(struct Pokemon *mon, u8 lef
     if (locationMet == METLOC_FATEFUL_ENCOUNTER)
     {
         // Eggs received from Pokemon Box.
-        Menu_PrintText(gOtherText_EggNicePlace, left, top);
+        Menu_PrintText(gText_PeculiarEggNicePlace, left, top);
         return;
     }
 
     if (!DoesMonOTMatchOwner(mon))
     {
-        Menu_PrintText(gOtherText_EggObtainedInTrade, left, top);
+        Menu_PrintText(gText_PeculiarEggTrade, left, top);
         return;
     }
 
@@ -2546,11 +2546,11 @@ static void PokemonSummaryScreen_PrintEggTrainerMemo(struct Pokemon *mon, u8 lef
 
     if (locationMet == METLOC_SPECIAL_EGG)
     {
-        Menu_PrintText(gOtherText_EggHotSprings, left, top);
+        Menu_PrintText(gText_EggFromHotSprings, left, top);
         return;
     }
 
-    Menu_PrintText(gOtherText_EggDayCare, left, top);
+    Menu_PrintText(gText_OddEggFoundByCouple, left, top);
 }
 
 static void PokemonSummaryScreen_PrintTrainerMemo(struct Pokemon *mon, u8 left, u8 top)

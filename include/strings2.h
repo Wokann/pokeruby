@@ -5,8 +5,8 @@
 extern const u8 gOtherText_TopSpeed[];
 
 // berry_blender
-extern const u8 gMultiText_BerryBlenderMaxSpeedRecord[];
-extern const u8 gMultiText_2P3P4P[];
+extern const u8 gText_BlenderMaxSpeedRecord[];
+extern const u8 gText_234Players[];
 extern const u8 gMultiText_Saving[];
 
 // link
@@ -41,18 +41,18 @@ extern const u8 SystemText_Pokedex[];
 extern const u8 SystemText_Pokemon[];
 extern const u8 SystemText_BAG[];
 extern const u8 SystemText_Pokenav[];
-extern const u8 SystemText_Player[];
+extern const u8 gText_MenuPlayer[];
 extern const u8 SystemText_Save[];
 extern const u8 SystemText_Option[];
 extern const u8 SystemText_Exit[];
 extern const u8 SystemText_Retire[];
-extern const u8 gOtherText_SafariStock[];
+extern const u8 gText_SafariBallStock[];
 
 // mystery_event_menu
 extern const u8 gSystemText_LinkStandby[];
 extern const u8 gSystemText_LoadEventPressA[];
 extern const u8 gSystemText_LoadingEvent[];
-extern const u8 gSystemText_DontCutLink[];
+extern const u8 gText_DontRemoveCableTurnOff[];
 extern const u8 gSystemText_EventLoadSuccess[];
 extern const u8 gSystemText_LoadingError[];
 
@@ -60,16 +60,16 @@ extern const u8 gSystemText_LoadingError[];
 extern const u8 gOtherText_Hoenn[];
 
 // field_player_avatar
-extern const u8 gOtherText_OhABite[];
-extern const u8 gOtherText_PokeOnHook[];
+extern const u8 gText_OhABite[];
+extern const u8 gText_PokemonOnHook[];
 extern const u8 gOtherText_NotEvenANibble[];
 extern const u8 gOtherText_ItGotAway[];
 
 // trade
 extern const u8 gTradeText_WillBeSent[];
-extern const u8 gTradeText_ByeBye[];
-extern const u8 gTradeText_SentOverPoke[];
-extern const u8 gTradeText_TakeGoodCare[];
+extern const u8 gText_ByeByeVar1[];
+extern const u8 gText_XSentOverY[];
+extern const u8 gText_TakeGoodCareOfX[];
 extern const u8 TradeText_Cancel[];
 extern const u8 TradeText_ChoosePoke[];
 extern const u8 TradeText_Summary1[];
@@ -115,11 +115,11 @@ extern const u8 gEasyChatGroupName_Pokemon2[];
 extern const u8 gText_ThreeQuestionMarks[];
 
 // mail
-extern const u8 gOtherText_From[];
+extern const u8 gText_FromSpace[];
 
 // record_mixing
 extern const u8 gOtherText_MixingRecordsWithFriend[];
-extern const u8 gOtherText_MixingComplete[];
+extern const u8 gText_RecordMixingComplete[];
 
 // trainer_card
 extern const u8 gOtherText_TrainersTrainerCard[];
@@ -127,8 +127,8 @@ extern const u8 gOtherText_FirstHOF[];
 extern const u8 gOtherText_LinkCableBattles[];
 extern const u8 gOtherText_BattleTowerWinRecord[];
 extern const u8 gOtherText_ContestRecord[];
-extern const u8 gOtherText_MixingRecord[];
-extern const u8 gOtherText_TradeRecord[];
+extern const u8 gText_PokeblocksWithFriends[];
+extern const u8 gText_PokemonTrades[];
 extern const u8 gOtherText_Boy[];
 extern const u8 gOtherText_Girl[];
 
@@ -140,15 +140,15 @@ extern const u8 gOtherText_PlayTime[];
 
 // naming_screen
 extern const u8 gOtherText_SentToPC[];
-extern const u8 OtherText_YourName[];
-extern const u8 OtherText_BoxName[];
-extern const u8 OtherText_PokeName[];
+extern const u8 gText_YourName[];
+extern const u8 gText_BoxName[];
+extern const u8 gText_PkmnsNickname[];
 
 // roulette
 extern const u8 gOtherText_Coins[];
 
 // battle_records
-extern const u8 gOtherText_BattleResults[];
+extern const u8 gText_PlayersBattleResults[];
 extern const u8 gOtherText_WinRecord[];
 extern const u8 gOtherText_WinLoseDraw[];
 extern const u8 gOtherText_SevenDashes[];
@@ -157,23 +157,23 @@ extern const u8 gOtherText_BattleTowerResults[];
 extern const u8 gOtherText_Lv50[];
 extern const u8 gOtherText_Lv100[];
 extern const u8 gOtherText_WinStreak[];
-extern const u8 gOtherText_Current[];
+extern const u8 gText_Current[];
 extern const u8 gOtherText_Record[];
-extern const u8 gOtherText_Prev[];
+extern const u8 gText_Prev[];
 
 // slot_machine
-extern const u8 gOtherText_QuitGamePrompt[];
-extern const u8 gOtherText_MaxCoins[];
-extern const u8 gOtherText_OutOfCoins[];
-extern const u8 gOtherText_DontHaveThreeCoins[];
+extern const u8 gText_QuitTheGame[];
+extern const u8 gText_YouveGot9999Coins[];
+extern const u8 gText_YouveRunOutOfCoins[];
+extern const u8 gText_YouDontHaveThreeCoins[];
 extern const u8 gOtherText_ReelTime[];
 
 // daycare
 extern const u8 DaycareText_GetAlongVeryWell[];
-extern const u8 DaycareText_GetAlong[];
+extern const u8 gDaycareText_GetAlong[];
 extern const u8 DaycareText_DontLikeOther[];
-extern const u8 DaycareText_PlayOther[];
-extern const u8 gOtherText_NewLine2[];
+extern const u8 gDaycareText_PlayOther[];
+extern const u8 gText_NewLine2[];
 extern const u8 gOtherText_CancelAndLv[];
 
 // pokemon_2
@@ -189,17 +189,17 @@ extern const u8 OtherText_Contest[];
 
 // ???
 extern const u8 OtherText_Type[];
-extern const u8 OtherText_PP[];
+extern const u8 gText_MoveRelearnerPP[];
 
 // move_relearner
 extern const u8 OtherText_Power[];
 extern const u8 OtherText_Accuracy[];
 extern const u8 OtherText_Appeal[];
 extern const u8 OtherText_Jam[];
-extern const u8 gOtherText_TeachWhichMove[];
-extern const u8 gOtherText_TeachSpecificMove[];
+extern const u8 gText_TeachWhichMoveToPkmn[];
+extern const u8 gText_MoveRelearnerTeachMoveConfirm[];
 extern const u8 gOtherText_PokeLearnedMove[];
-extern const u8 gOtherText_DeleteOlderMove[];
+extern const u8 gText_MoveRelearnerPkmnTryingToLearnMove[];
 extern const u8 gOtherText_StopLearningMove[];
 extern const u8 gOtherText_ForgotMove123[];
 extern const u8 gOtherText_ForgotOrDidNotLearnMove[];
@@ -265,10 +265,10 @@ extern const u8 gOtherText_Egg2[];
 extern const u8 gOtherText_ObtainedInTrade[];
 extern const u8 gOtherText_FatefulEncounter[];
 extern const u8 gOtherText_Met2[];
-extern const u8 gOtherText_EggDayCare[];
-extern const u8 gOtherText_EggNicePlace[];
-extern const u8 gOtherText_EggObtainedInTrade[];
-extern const u8 gOtherText_EggHotSprings[];
+extern const u8 gText_OddEggFoundByCouple[];
+extern const u8 gText_PeculiarEggNicePlace[];
+extern const u8 gText_PeculiarEggTrade[];
+extern const u8 gText_EggFromHotSprings[];
 
 // evolution_scene, trade
 extern const u8 gOtherText_LinkStandby2[];
@@ -278,11 +278,11 @@ extern const u8 gOtherText_YesNoAndPlayer[];
 
 // diploma
 extern const u8 gOtherText_HoennDex[];
-extern const u8 gOtherText_NationalDex[];
+extern const u8 gText_DexNational[];
 extern const u8 gOtherText_DiplomaCertificationGameFreak[];
 
 // cable_club
-extern const u8 gOtherText_PLink[];
+extern const u8 gText_NumPlayerLink[];
 
 // berry_blender
 extern const u8 gOtherText_YesNoTerminating[];

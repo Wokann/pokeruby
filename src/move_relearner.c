@@ -533,7 +533,7 @@ static void DoMoveRelearnerMain(void)
         }
         break;
     case MENU_STATE_PRINT_TRYING_TO_LEARN_PROMPT:
-        PrintMessageWithPlaceholders(gOtherText_DeleteOlderMove);
+        PrintMessageWithPlaceholders(gText_MoveRelearnerPkmnTryingToLearnMove);
         sMoveRelearnerMenu->state++;
         break;
     case MENU_STATE_WAIT_FOR_TRYING_TO_LEARN:
@@ -732,7 +732,7 @@ static void DrawBattleMoveInfoHeaders(bool8 noTeachMoveText)
     }
 
     if (!noTeachMoveText)
-        Menu_PrintTextWithNewlineIndentAndClear(gOtherText_TeachWhichMove, 24, 120, 192, 32, 1);
+        Menu_PrintTextWithNewlineIndentAndClear(gText_TeachWhichMoveToPkmn, 24, 120, 192, 32, 1);
 }
 
 static u8 ChangeToContestMoveInfoWindow(void)
@@ -778,7 +778,7 @@ static void DrawContestMoveInfoHeaders(bool8 noTeachMoveText)
     }
 
     if (!noTeachMoveText)
-        Menu_PrintTextWithNewlineIndentAndClear(gOtherText_TeachWhichMove, 24, 120, 192, 32, 1);
+        Menu_PrintTextWithNewlineIndentAndClear(gText_TeachWhichMoveToPkmn, 24, 120, 192, 32, 1);
 }
 
 static u8 ChangeToBattleMoveInfoWindow(void)
@@ -950,7 +950,7 @@ static void HandleInput(void)
         {
             sMoveRelearnerMenu->state = MENU_STATE_PRINT_TEACH_MOVE_PROMPT;
             StringCopy(gStringVar2, sMoveRelearnerMenu->moveNames[sMoveRelearnerMenu->selectedMoveIndex]);
-            StringExpandPlaceholders(gStringVar4, gOtherText_TeachSpecificMove);
+            StringExpandPlaceholders(gStringVar4, gText_MoveRelearnerTeachMoveConfirm);
             MenuPrintMessage(gStringVar4, 3, 15);
         }
         else

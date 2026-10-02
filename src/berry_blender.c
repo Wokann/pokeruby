@@ -3455,8 +3455,8 @@ void ShowBerryBlenderRecordWindow(void)
     s32 i;
 
     Menu_DrawStdWindowFrame(6, 3, 23, 16);
-    Menu_PrintText(gMultiText_BerryBlenderMaxSpeedRecord, 8, 4);
-    Menu_PrintText(gMultiText_2P3P4P, 8, 9);
+    Menu_PrintText(gText_BlenderMaxSpeedRecord, 8, 4);
+    Menu_PrintText(gText_234Players, 8, 9);
 
     for (i = 0; i < 3; i++)
     {

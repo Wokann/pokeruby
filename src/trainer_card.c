@@ -1325,7 +1325,7 @@ static void TrainerCard_Back_PrintLinkContests(void)
 static void TrainerCard_Back_PrintLinkPokeblocks_Label(void)
 {
     if (sTrainerCardData->hasLinkPokeblockResults != 0)
-        Menu_PrintText(gOtherText_MixingRecord, 3, 11);
+        Menu_PrintText(gText_PokeblocksWithFriends, 3, 11);
 }
 
 static void TrainerCard_Back_PrintLinkPokeblocks(void)
@@ -1342,7 +1342,7 @@ static void TrainerCard_Back_PrintLinkPokeblocks(void)
 static void TrainerCard_Back_PrintPokemonTrades_Label(void)
 {
     if (sTrainerCardData->hasTrades != 0)
-        Menu_PrintText(gOtherText_TradeRecord, 3, 9);
+        Menu_PrintText(gText_PokemonTrades, 3, 9);
 }
 
 static void TrainerCard_Back_PrintPokemonTrades(void)

@@ -91,12 +91,12 @@ static const struct MenuAction sStartMenuItems[] =
     { SystemText_Pokemon, StartMenuPokemonCallback },
     { SystemText_BAG, StartMenuBagCallback },
     { SystemText_Pokenav, StartMenuPokeNavCallback },
-    { SystemText_Player, StartMenuPlayerNameCallback },
+    { gText_MenuPlayer, StartMenuPlayerNameCallback },
     { SystemText_Save, StartMenuSaveCallback },
     { SystemText_Option, StartMenuOptionCallback },
     { SystemText_Exit, StartMenuExitCallback },
     { SystemText_Retire, StartMenuSafariZoneRetireCallback },
-    { SystemText_Player, StartMenuLinkModePlayerNameCallback },
+    { gText_MenuPlayer, StartMenuLinkModePlayerNameCallback },
 };
 
 //Private functions
@@ -302,7 +302,7 @@ static void ShowSafariBallsWindow(void)
 {
     AlignInt2InMenuWindow(gStringVar1, gNumSafariBalls, 12, 1);
     Menu_DrawStdWindowFrame(0, 0, 10, 5);
-    Menu_PrintText(gOtherText_SafariStock, 1, 1);
+    Menu_PrintText(gText_SafariBallStock, 1, 1);
 }
 
 //Prints count menu items starting at *pIndex

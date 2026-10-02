@@ -573,13 +573,13 @@ static void BufferMailText(void)
     if (!sMailRead->international)
     {
         playerName = CopyAndSanitizeMailPlayerName(playerName, sMailRead->mail->playerName);
-        StringCopy(playerName, gOtherText_From);
+        StringCopy(playerName, gText_FromSpace);
         sMailRead->signatureWidth = sMailRead->layout->signatureWidth - StringLength(sMailRead->playerName);
 
     }
     else
     {
-        playerName = StringCopy(playerName, gOtherText_From);
+        playerName = StringCopy(playerName, gText_FromSpace);
         CopyAndSanitizeMailPlayerName(playerName, sMailRead->mail->playerName);
         sMailRead->signatureWidth = sMailRead->layout->signatureWidth;
     }

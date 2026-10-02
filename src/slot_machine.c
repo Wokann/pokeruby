@@ -1008,7 +1008,7 @@ static void SlotMachine_PrintMessage(const u8 *str)
 
 static bool8 SlotTask_PrintMsg_Need3Coins(struct Task *task)
 {
-    SlotMachine_PrintMessage(gOtherText_DontHaveThreeCoins);
+    SlotMachine_PrintMessage(gText_YouDontHaveThreeCoins);
     sSlotMachine->state = SLOTTASK_WAIT_MSG_NEED_3_COINS;
     return FALSE;
 }
@@ -1319,7 +1319,7 @@ static bool8 SlotTask_NoMatches(struct Task *task)
 
 static bool8 SlotTask_AskQuit(struct Task *task)
 {
-    SlotMachine_PrintMessage(gOtherText_QuitGamePrompt);
+    SlotMachine_PrintMessage(gText_QuitTheGame);
     DisplayYesNoMenu(21, 7, 1);
     DestroyOutlineCursorWindowSprite();
     sSlotMachine->state = SLOTTASK_HANDLE_QUIT_INPUT;
@@ -1348,7 +1348,7 @@ static bool8 SlotTask_HandleQuitInput(struct Task *task)
 
 static bool8 SlotTask_PrintMsg_MaxCoins(struct Task *task)
 {
-    SlotMachine_PrintMessage(gOtherText_MaxCoins);
+    SlotMachine_PrintMessage(gText_YouveGot9999Coins);
     sSlotMachine->state = SLOTTASK_WAIT_MSG_MAX_COINS;
     return FALSE;
 }
@@ -1365,7 +1365,7 @@ static bool8 SlotTask_WaitMsg_MaxCoins(struct Task *task)
 
 static bool8 SlotTask_PrintMsg_NoMoreCoins(struct Task *task)
 {
-    SlotMachine_PrintMessage(gOtherText_OutOfCoins);
+    SlotMachine_PrintMessage(gText_YouveRunOutOfCoins);
     sSlotMachine->state = SLOTTASK_WAIT_MSG_NO_MORE_COINS;
     return FALSE;
 }

@@ -128,7 +128,7 @@ static void DisplayDiplomaText(void)
     if (HasAllMons())
     {
         REG_BG3HOFS = 256;
-        StringCopy(gStringVar1, gOtherText_NationalDex);
+        StringCopy(gStringVar1, gText_DexNational);
     }
     else
     {

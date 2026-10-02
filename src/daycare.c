@@ -40,9 +40,9 @@ static u8 GetDaycareCompatibilityScore(struct DayCare *);
 
 static const u8 *const sCompatibilityMessages[] = {
     DaycareText_GetAlongVeryWell,
-    DaycareText_GetAlong,
+    gDaycareText_GetAlong,
     DaycareText_DontLikeOther,
-    DaycareText_PlayOther
+    gDaycareText_PlayOther
 };
 
 const u8 sJapaneseEggNickname[] = _("タマゴ");
@@ -989,9 +989,9 @@ static void GetDaycareLevelMenuText(struct DayCare *daycare, u8 *dest)
     }
 
     StringCopy(dest, monNames[0]);
-    StringAppend(dest, gOtherText_NewLine2);
+    StringAppend(dest, gText_NewLine2);
     StringAppend(dest, monNames[1]);
-    StringAppend(dest, gOtherText_NewLine2);
+    StringAppend(dest, gText_NewLine2);
     StringAppend(dest, gOtherText_CancelAndLv);
 }
 
@@ -1012,7 +1012,7 @@ static void GetDaycareLevelMenuLevelText(struct DayCare *daycare, u8 *dest)
         dest[0] = 0xFC;
         dest[1] = 0x14;
         dest[2] = 0x00;
-        dest = StringCopy(dest + 3, gOtherText_NewLine2);
+        dest = StringCopy(dest + 3, gText_NewLine2);
     }
 
     *dest = EOS;

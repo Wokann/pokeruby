@@ -175,7 +175,7 @@ static void PrintNumPlayersInLink(u32 numPlayers)
 {
     ConvertIntToDecimalStringN(gStringVar1, numPlayers, STR_CONV_MODE_LEFT_ALIGN, 1);
     Menu_DrawStdWindowFrame(18, 10, 28, 13);
-    MenuPrint_Centered(gOtherText_PLink, 19, 11, 72);
+    MenuPrint_Centered(gText_NumPlayerLink, 19, 11, 72);
 }
 
 static void ClearLinkPlayerCountWindow()

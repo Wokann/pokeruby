@@ -2066,7 +2066,7 @@ static const struct NamingScreenTemplate sPlayerNamingScreenTemplate =
     .iconFunction = ICON_PLAYER,
     .addGenderIcon = FALSE,
     .initialPage = KBPAGE_LETTERS_UPPER,
-    .title = OtherText_YourName,
+    .title = gText_YourName,
 };
 
 static const struct NamingScreenTemplate sPCBoxNamingTemplate =
@@ -2076,7 +2076,7 @@ static const struct NamingScreenTemplate sPCBoxNamingTemplate =
     .iconFunction = ICON_PC,
     .addGenderIcon = FALSE,
     .initialPage = KBPAGE_LETTERS_UPPER,
-    .title = OtherText_BoxName,
+    .title = gText_BoxName,
 };
 
 static const struct NamingScreenTemplate sMonNamingScreenTemplate =
@@ -2086,7 +2086,7 @@ static const struct NamingScreenTemplate sMonNamingScreenTemplate =
     .iconFunction = ICON_MON,
     .addGenderIcon = TRUE,
     .initialPage = KBPAGE_LETTERS_UPPER,
-    .title = OtherText_PokeName,
+    .title = gText_PkmnsNickname,
 };
 
 static const struct NamingScreenTemplate *const sNamingScreenTemplates[] =
