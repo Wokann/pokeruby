@@ -1,74 +1,75 @@
 #### Pokemon Storage System ####
 
 PSSGFXDIR := graphics/pokemon_storage
+PSSWALLPAPERGFXDIR := $(PSSGFXDIR)/wallpapers
 
 $(PSSGFXDIR)/header.4bpp: GFX_OPTS := -num_tiles 47
 
 $(PSSGFXDIR)/misc1.4bpp: GFX_OPTS := -num_tiles 91
 
-$(PSSGFXDIR)/forest_frame.4bpp: GFX_OPTS := -num_tiles 49
-$(PSSGFXDIR)/forest.4bpp: $(PSSGFXDIR)/forest_frame.4bpp $(PSSGFXDIR)/forest_bg.4bpp
-	@cat $(PSSGFXDIR)/forest_frame.4bpp $(PSSGFXDIR)/forest_bg.4bpp >$@
+$(PSSWALLPAPERGFXDIR)/forest/frame.4bpp: GFX_OPTS := -num_tiles 49
+$(PSSWALLPAPERGFXDIR)/forest/tiles.4bpp: $(PSSWALLPAPERGFXDIR)/forest/frame.4bpp $(PSSWALLPAPERGFXDIR)/forest/bg.4bpp
+	@cat $(PSSWALLPAPERGFXDIR)/forest/frame.4bpp $(PSSWALLPAPERGFXDIR)/forest/bg.4bpp >$@
 
-$(PSSGFXDIR)/city_frame.4bpp: GFX_OPTS := -num_tiles 37
-$(PSSGFXDIR)/city.4bpp: $(PSSGFXDIR)/city_frame.4bpp $(PSSGFXDIR)/city_bg.4bpp
-	@cat $(PSSGFXDIR)/city_frame.4bpp $(PSSGFXDIR)/city_bg.4bpp >$@
+$(PSSWALLPAPERGFXDIR)/city/frame.4bpp: GFX_OPTS := -num_tiles 37
+$(PSSWALLPAPERGFXDIR)/city/tiles.4bpp: $(PSSWALLPAPERGFXDIR)/city/frame.4bpp $(PSSWALLPAPERGFXDIR)/city/bg.4bpp
+	@cat $(PSSWALLPAPERGFXDIR)/city/frame.4bpp $(PSSWALLPAPERGFXDIR)/city/bg.4bpp >$@
 
-$(PSSGFXDIR)/desert_frame.4bpp: GFX_OPTS := -num_tiles 48
-$(PSSGFXDIR)/desert.4bpp: $(PSSGFXDIR)/desert_frame.4bpp $(PSSGFXDIR)/desert_bg.4bpp
-	@cat $(PSSGFXDIR)/desert_frame.4bpp $(PSSGFXDIR)/desert_bg.4bpp >$@
+$(PSSWALLPAPERGFXDIR)/desert/frame.4bpp: GFX_OPTS := -num_tiles 48
+$(PSSWALLPAPERGFXDIR)/desert/tiles.4bpp: $(PSSWALLPAPERGFXDIR)/desert/frame.4bpp $(PSSWALLPAPERGFXDIR)/desert/bg.4bpp
+	@cat $(PSSWALLPAPERGFXDIR)/desert/frame.4bpp $(PSSWALLPAPERGFXDIR)/desert/bg.4bpp >$@
 
-$(PSSGFXDIR)/savanna_frame.4bpp: GFX_OPTS := -num_tiles 40
-$(PSSGFXDIR)/savanna.4bpp: $(PSSGFXDIR)/savanna_frame.4bpp $(PSSGFXDIR)/savanna_bg.4bpp
-	@cat $(PSSGFXDIR)/savanna_frame.4bpp $(PSSGFXDIR)/savanna_bg.4bpp >$@
+$(PSSWALLPAPERGFXDIR)/savanna/frame.4bpp: GFX_OPTS := -num_tiles 40
+$(PSSWALLPAPERGFXDIR)/savanna/tiles.4bpp: $(PSSWALLPAPERGFXDIR)/savanna/frame.4bpp $(PSSWALLPAPERGFXDIR)/savanna/bg.4bpp
+	@cat $(PSSWALLPAPERGFXDIR)/savanna/frame.4bpp $(PSSWALLPAPERGFXDIR)/savanna/bg.4bpp >$@
 
-$(PSSGFXDIR)/crag_frame.4bpp: GFX_OPTS := -num_tiles 46
-$(PSSGFXDIR)/crag.4bpp: $(PSSGFXDIR)/crag_frame.4bpp $(PSSGFXDIR)/crag_bg.4bpp
-	@cat $(PSSGFXDIR)/crag_frame.4bpp $(PSSGFXDIR)/crag_bg.4bpp >$@
+$(PSSWALLPAPERGFXDIR)/crag/frame.4bpp: GFX_OPTS := -num_tiles 46
+$(PSSWALLPAPERGFXDIR)/crag/tiles.4bpp: $(PSSWALLPAPERGFXDIR)/crag/frame.4bpp $(PSSWALLPAPERGFXDIR)/crag/bg.4bpp
+	@cat $(PSSWALLPAPERGFXDIR)/crag/frame.4bpp $(PSSWALLPAPERGFXDIR)/crag/bg.4bpp >$@
 
-$(PSSGFXDIR)/volcano_frame.4bpp: GFX_OPTS := -num_tiles 49
-$(PSSGFXDIR)/volcano.4bpp: $(PSSGFXDIR)/volcano_frame.4bpp $(PSSGFXDIR)/volcano_bg.4bpp
-	@cat $(PSSGFXDIR)/volcano_frame.4bpp $(PSSGFXDIR)/volcano_bg.4bpp >$@
+$(PSSWALLPAPERGFXDIR)/volcano/frame.4bpp: GFX_OPTS := -num_tiles 49
+$(PSSWALLPAPERGFXDIR)/volcano/tiles.4bpp: $(PSSWALLPAPERGFXDIR)/volcano/frame.4bpp $(PSSWALLPAPERGFXDIR)/volcano/bg.4bpp
+	@cat $(PSSWALLPAPERGFXDIR)/volcano/frame.4bpp $(PSSWALLPAPERGFXDIR)/volcano/bg.4bpp >$@
 
-$(PSSGFXDIR)/snow_frame.4bpp: GFX_OPTS := -num_tiles 46
-$(PSSGFXDIR)/snow.4bpp: $(PSSGFXDIR)/snow_frame.4bpp $(PSSGFXDIR)/snow_bg.4bpp
-	@cat $(PSSGFXDIR)/snow_frame.4bpp $(PSSGFXDIR)/snow_bg.4bpp >$@
+$(PSSWALLPAPERGFXDIR)/snow/frame.4bpp: GFX_OPTS := -num_tiles 46
+$(PSSWALLPAPERGFXDIR)/snow/tiles.4bpp: $(PSSWALLPAPERGFXDIR)/snow/frame.4bpp $(PSSWALLPAPERGFXDIR)/snow/bg.4bpp
+	@cat $(PSSWALLPAPERGFXDIR)/snow/frame.4bpp $(PSSWALLPAPERGFXDIR)/snow/bg.4bpp >$@
 
-$(PSSGFXDIR)/cave_frame.4bpp: GFX_OPTS := -num_tiles 57
-$(PSSGFXDIR)/cave.4bpp: $(PSSGFXDIR)/cave_frame.4bpp $(PSSGFXDIR)/cave_bg.4bpp
-	@cat $(PSSGFXDIR)/cave_frame.4bpp $(PSSGFXDIR)/cave_bg.4bpp >$@
+$(PSSWALLPAPERGFXDIR)/cave/frame.4bpp: GFX_OPTS := -num_tiles 57
+$(PSSWALLPAPERGFXDIR)/cave/tiles.4bpp: $(PSSWALLPAPERGFXDIR)/cave/frame.4bpp $(PSSWALLPAPERGFXDIR)/cave/bg.4bpp
+	@cat $(PSSWALLPAPERGFXDIR)/cave/frame.4bpp $(PSSWALLPAPERGFXDIR)/cave/bg.4bpp >$@
 
-$(PSSGFXDIR)/beach_frame.4bpp: GFX_OPTS := -num_tiles 48
-$(PSSGFXDIR)/beach.4bpp: $(PSSGFXDIR)/beach_frame.4bpp $(PSSGFXDIR)/beach_bg.4bpp
-	@cat $(PSSGFXDIR)/beach_frame.4bpp $(PSSGFXDIR)/beach_bg.4bpp >$@
+$(PSSWALLPAPERGFXDIR)/beach/frame.4bpp: GFX_OPTS := -num_tiles 48
+$(PSSWALLPAPERGFXDIR)/beach/tiles.4bpp: $(PSSWALLPAPERGFXDIR)/beach/frame.4bpp $(PSSWALLPAPERGFXDIR)/beach/bg.4bpp
+	@cat $(PSSWALLPAPERGFXDIR)/beach/frame.4bpp $(PSSWALLPAPERGFXDIR)/beach/bg.4bpp >$@
 
-$(PSSGFXDIR)/seafloor_frame.4bpp: GFX_OPTS := -num_tiles 45
-$(PSSGFXDIR)/seafloor.4bpp: $(PSSGFXDIR)/seafloor_frame.4bpp $(PSSGFXDIR)/seafloor_bg.4bpp
-	@cat $(PSSGFXDIR)/seafloor_frame.4bpp $(PSSGFXDIR)/seafloor_bg.4bpp >$@
+$(PSSWALLPAPERGFXDIR)/seafloor/frame.4bpp: GFX_OPTS := -num_tiles 45
+$(PSSWALLPAPERGFXDIR)/seafloor/tiles.4bpp: $(PSSWALLPAPERGFXDIR)/seafloor/frame.4bpp $(PSSWALLPAPERGFXDIR)/seafloor/bg.4bpp
+	@cat $(PSSWALLPAPERGFXDIR)/seafloor/frame.4bpp $(PSSWALLPAPERGFXDIR)/seafloor/bg.4bpp >$@
 
-$(PSSGFXDIR)/river_frame.4bpp: GFX_OPTS := -num_tiles 57
-$(PSSGFXDIR)/river.4bpp: $(PSSGFXDIR)/river_frame.4bpp $(PSSGFXDIR)/river_bg.4bpp
-	@cat $(PSSGFXDIR)/river_frame.4bpp $(PSSGFXDIR)/river_bg.4bpp >$@
+$(PSSWALLPAPERGFXDIR)/river/frame.4bpp: GFX_OPTS := -num_tiles 57
+$(PSSWALLPAPERGFXDIR)/river/tiles.4bpp: $(PSSWALLPAPERGFXDIR)/river/frame.4bpp $(PSSWALLPAPERGFXDIR)/river/bg.4bpp
+	@cat $(PSSWALLPAPERGFXDIR)/river/frame.4bpp $(PSSWALLPAPERGFXDIR)/river/bg.4bpp >$@
 
-$(PSSGFXDIR)/sky_frame.4bpp: GFX_OPTS := -num_tiles 45
-$(PSSGFXDIR)/sky.4bpp: $(PSSGFXDIR)/sky_frame.4bpp $(PSSGFXDIR)/sky_bg.4bpp
-	@cat $(PSSGFXDIR)/sky_frame.4bpp $(PSSGFXDIR)/sky_bg.4bpp >$@
+$(PSSWALLPAPERGFXDIR)/sky/frame.4bpp: GFX_OPTS := -num_tiles 45
+$(PSSWALLPAPERGFXDIR)/sky/tiles.4bpp: $(PSSWALLPAPERGFXDIR)/sky/frame.4bpp $(PSSWALLPAPERGFXDIR)/sky/bg.4bpp
+	@cat $(PSSWALLPAPERGFXDIR)/sky/frame.4bpp $(PSSWALLPAPERGFXDIR)/sky/bg.4bpp >$@
 
-$(PSSGFXDIR)/polkadot_frame.4bpp: GFX_OPTS := -num_tiles 34
-$(PSSGFXDIR)/polkadot.4bpp: $(PSSGFXDIR)/polkadot_frame.4bpp $(PSSGFXDIR)/polkadot_bg.4bpp
-	@cat $(PSSGFXDIR)/polkadot_frame.4bpp $(PSSGFXDIR)/polkadot_bg.4bpp >$@
+$(PSSWALLPAPERGFXDIR)/polkadot/frame.4bpp: GFX_OPTS := -num_tiles 34
+$(PSSWALLPAPERGFXDIR)/polkadot/tiles.4bpp: $(PSSWALLPAPERGFXDIR)/polkadot/frame.4bpp $(PSSWALLPAPERGFXDIR)/polkadot/bg.4bpp
+	@cat $(PSSWALLPAPERGFXDIR)/polkadot/frame.4bpp $(PSSWALLPAPERGFXDIR)/polkadot/bg.4bpp >$@
 
-$(PSSGFXDIR)/pokecenter_bg.4bpp: GFX_OPTS := -num_tiles 38
-$(PSSGFXDIR)/pokecenter.4bpp: $(PSSGFXDIR)/pokecenter_frame.4bpp $(PSSGFXDIR)/pokecenter_bg.4bpp
-	@cat $(PSSGFXDIR)/pokecenter_frame.4bpp $(PSSGFXDIR)/pokecenter_bg.4bpp >$@
+$(PSSWALLPAPERGFXDIR)/pokecenter/bg.4bpp: GFX_OPTS := -num_tiles 38
+$(PSSWALLPAPERGFXDIR)/pokecenter/tiles.4bpp: $(PSSWALLPAPERGFXDIR)/pokecenter/frame.4bpp $(PSSWALLPAPERGFXDIR)/pokecenter/bg.4bpp
+	@cat $(PSSWALLPAPERGFXDIR)/pokecenter/frame.4bpp $(PSSWALLPAPERGFXDIR)/pokecenter/bg.4bpp >$@
 
-$(PSSGFXDIR)/machine_frame.4bpp: GFX_OPTS := -num_tiles 46
-$(PSSGFXDIR)/machine.4bpp: $(PSSGFXDIR)/machine_frame.4bpp $(PSSGFXDIR)/machine_bg.4bpp
-	@cat $(PSSGFXDIR)/machine_frame.4bpp $(PSSGFXDIR)/machine_bg.4bpp >$@
+$(PSSWALLPAPERGFXDIR)/machine/frame.4bpp: GFX_OPTS := -num_tiles 46
+$(PSSWALLPAPERGFXDIR)/machine/tiles.4bpp: $(PSSWALLPAPERGFXDIR)/machine/frame.4bpp $(PSSWALLPAPERGFXDIR)/machine/bg.4bpp
+	@cat $(PSSWALLPAPERGFXDIR)/machine/frame.4bpp $(PSSWALLPAPERGFXDIR)/machine/bg.4bpp >$@
 
-$(PSSGFXDIR)/plain_frame.4bpp: GFX_OPTS := -num_tiles 18
-$(PSSGFXDIR)/plain.4bpp: $(PSSGFXDIR)/plain_frame.4bpp $(PSSGFXDIR)/plain_bg.4bpp
-	@cat $(PSSGFXDIR)/plain_frame.4bpp $(PSSGFXDIR)/plain_bg.4bpp >$@
+$(PSSWALLPAPERGFXDIR)/plain/frame.4bpp: GFX_OPTS := -num_tiles 18
+$(PSSWALLPAPERGFXDIR)/plain/tiles.4bpp: $(PSSWALLPAPERGFXDIR)/plain/frame.4bpp $(PSSWALLPAPERGFXDIR)/plain/bg.4bpp
+	@cat $(PSSWALLPAPERGFXDIR)/plain/frame.4bpp $(PSSWALLPAPERGFXDIR)/plain/bg.4bpp >$@
 
 
 #### Spinda ####
