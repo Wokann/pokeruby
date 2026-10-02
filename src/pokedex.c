@@ -513,9 +513,9 @@ static const u8 sScrollTimers[] = {16, 8, 4, 2, 1};
 const u8 gUnusedPokedexPadding2[] = {0, 0};  // Padding, maybe?
 static const u8 sText_EmptyDexDescription[] = _("");
 #if ENGLISH
-#include "data/pokedex_entries_en.h"
+#include "data/pokemon/pokedex_entries.h"
 #elif GERMAN
-#include "data/pokedex_entries_de.h"
+#include "data/pokemon/pokedex_entries_de.h"
 #endif
 static const u16 sSizeScreenSilhouette_Pal[16] = {0};
 static const u8 *const sMonFootprintTable[] =
