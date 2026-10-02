@@ -2749,7 +2749,7 @@ extern const u8 gPokenavRegionMapCityBannerFrames[];
 extern const u8 gPokenavRegionMapCityBannerBlank[];
 extern const u8 gPokenavCondition_Tilemap[];
 
-extern const u8 gInterviewOutlineCursorTiles[];
+extern const u8 gEasyChatRsOutlineCursor_Gfx[];
 extern const u8 gTitleScreenPressStartGfx[];
 extern const u16 gTitleScreenPressStartPal[];
 extern const u8 gTitleScreenPokemonLogoGfx[];

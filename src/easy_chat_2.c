@@ -81,20 +81,20 @@ static EWRAM_DATA u8 sRectangleCursorAnim = 0;
 
 static u8 sEasyChatMessageId;
 
-static const u16 sTriangleCursor_Pal[] = INCBIN_U16("graphics/misc/interview_pal0.gbapal");
-static const u16 sRectangleCursor_Pal[] = INCBIN_U16("graphics/misc/interview_pal1.gbapal");
-static const u8 sScrollIndicator_Gfx[] = INCBIN_U8("graphics/misc/interview_arrow.4bpp");
-static const u8 sStartSelectButtons_Gfx[] = INCBIN_U8("graphics/misc/interview_buttons.4bpp");
-static const u16 sRSInterviewFrame_Pal[] = INCBIN_U16("graphics/misc/interview_frame.gbapal");
-static const u8 sRSInterviewFrame_Gfx[] = INCBIN_U8("graphics/misc/interview_frame.4bpp.lz");
-static const u8 sTriangleCursor_Gfx[] = INCBIN_U8("graphics/misc/interview_triangle_cursor.4bpp");
+static const u16 sTriangleCursor_Pal[] = INCBIN_U16("graphics/easy_chat/triangle_cursor.gbapal");
+static const u16 sEasyChatRsOutlineCursor_Pal[] = INCBIN_U16("graphics/easy_chat/rs_outline_cursor.gbapal");
+static const u8 sScrollIndicator_Gfx[] = INCBIN_U8("graphics/easy_chat/scroll_indicator.4bpp");
+static const u8 sStartSelectButtons_Gfx[] = INCBIN_U8("graphics/easy_chat/start_select_buttons.4bpp");
+static const u16 sRSInterviewFrame_Pal[] = INCBIN_U16("graphics/easy_chat/interview_frame.gbapal");
+static const u8 sRSInterviewFrame_Gfx[] = INCBIN_U8("graphics/easy_chat/interview_frame.4bpp.lz");
+static const u8 sTriangleCursor_Gfx[] = INCBIN_U8("graphics/easy_chat/triangle_cursor.4bpp");
 
 void InitEasyChatSprites(void)
 {
     struct SpriteSheet interviewSpriteSheets[] =
     {
         {sTriangleCursor_Gfx, 0x20, 0},
-        {gInterviewOutlineCursorTiles, 0x700, 1},
+        {gEasyChatRsOutlineCursor_Gfx, 0x700, 1},
         {sScrollIndicator_Gfx, 0x100, 2},
         {sStartSelectButtons_Gfx, 0x100, 3},
         {NULL, 0, 0},
@@ -102,7 +102,7 @@ void InitEasyChatSprites(void)
     struct SpritePalette interviewSpritePalettes[] =
     {
         {sTriangleCursor_Pal, 0},
-        {sRectangleCursor_Pal, 1},
+        {sEasyChatRsOutlineCursor_Pal, 1},
         {NULL, 0},
     };
 

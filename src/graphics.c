@@ -1274,7 +1274,7 @@ const u8 gIntroCopyright_Gfx[] = INCBIN_U8("graphics/intro/copyright.4bpp.lz");
 const u16 gIntroCopyright_Pal[] = INCBIN_U16("graphics/intro/copyright.gbapal");
 const u8 gIntroCopyright_Tilemap[] = INCBIN_U8("graphics/intro/copyright.bin");
 
-const u8 gInterviewOutlineCursorTiles[] = INCBIN_U8("graphics/misc/interview_outline_cursor.4bpp");
+const u8 gEasyChatRsOutlineCursor_Gfx[] = INCBIN_U8("graphics/easy_chat/rs_outline_cursor.4bpp");
 const u8 gTitleScreenPressStartGfx[] = INCBIN_U8("graphics/title_screen/press_start.4bpp.lz");
 const u8 gTitleScreenPressStartPal[] = INCBIN_U8("graphics/title_screen/logo_shine.gbapal");
 
