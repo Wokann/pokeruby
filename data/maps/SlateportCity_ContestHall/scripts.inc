@@ -15,8 +15,7 @@ SlateportCity_ContestHall_EventScript_GiveTorment:: @ 815555E
 	goto_if_set FLAG_RECEIVED_TM_TORMENT, SlateportCity_ContestHall_EventScript_ExplainTorment
 	msgbox SlateportCity_ContestHall_Text_ImLikeMajorlyCheesed, MSGBOX_DEFAULT
 	giveitem ITEM_TM41
-	compare VAR_RESULT, FALSE
-	goto_if_eq Common_EventScript_ShowBagIsFull
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_TM_TORMENT
 	msgbox SlateportCity_ContestHall_Text_ExplainTorment, MSGBOX_DEFAULT
 	release

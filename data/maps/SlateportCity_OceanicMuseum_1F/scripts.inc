@@ -34,8 +34,7 @@ SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFee:: @ 8155B06
 	showmoneybox 0, 0
 	nop
 	msgbox SlateportCity_OceanicMuseum_1F_Text_WouldYouLikeToEnter, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq SlateportCity_OceanicMuseum_1F_EventScript_CheckMoneyForFee
+	goto_if_eq VAR_RESULT, YES, SlateportCity_OceanicMuseum_1F_EventScript_CheckMoneyForFee
 	closemessage
 	hidemoneybox 0, 0
 	applymovement LOCALID_PLAYER, SlateportCity_OceanicMuseum_1F_Movement_PushPlayerBackFromCounter
@@ -45,8 +44,7 @@ SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFee:: @ 8155B06
 
 SlateportCity_OceanicMuseum_1F_EventScript_CheckMoneyForFee:: @ 8155B2D
 	checkmoney 50, 0
-	compare VAR_RESULT, FALSE
-	goto_if_eq SlateportCity_OceanicMuseum_1F_EventScript_NotEnoughMoney
+	goto_if_eq VAR_RESULT, FALSE, SlateportCity_OceanicMuseum_1F_EventScript_NotEnoughMoney
 	removemoney 50, 0
 	updatemoneybox 0, 0
 	nop
@@ -164,15 +162,12 @@ SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGrunt:: @ 8155C3A
 	waitmovement 0
 	msgbox SlateportCity_OceanicMuseum_1F_Text_RememberMeTakeThis, MSGBOX_DEFAULT
 	giveitem ITEM_TM46
-	compare VAR_RESULT, FALSE
-	goto_if_eq SlateportCity_OceanicMuseum_1F_EventScript_NoRoomForThief
+	goto_if_eq VAR_RESULT, FALSE, SlateportCity_OceanicMuseum_1F_EventScript_NoRoomForThief
 	setflag FLAG_RECEIVED_TM_THIEF
 	msgbox SlateportCity_OceanicMuseum_1F_Text_YouScrewedUpOurPlans, MSGBOX_DEFAULT
 	closemessage
-	compare VAR_FACING, DIR_NORTH
-	goto_if_eq SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExitNorth
-	compare VAR_FACING, DIR_NORTH
-	goto_if_ne SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExitSouth
+	goto_if_eq VAR_FACING, DIR_NORTH, SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExitNorth
+	goto_if_ne VAR_FACING, DIR_NORTH, SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExitSouth
 	end
 
 SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExitNorth:: @ 8155C98

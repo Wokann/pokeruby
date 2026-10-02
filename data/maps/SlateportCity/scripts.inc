@@ -12,8 +12,7 @@ SlateportCity_OnTransition:: @ 814BA3C
 	.endif
 	setvar VAR_SLATEPORT_MUSEUM_1F_STATE, 0
 	call SlateportCity_EventScript_EnterSlateport
-	compare VAR_SLATEPORT_CITY_STATE, 1
-	call_if_eq SlateportCity_EventScript_MovePeopleForSternInterview
+	call_if_eq VAR_SLATEPORT_CITY_STATE, 1, SlateportCity_EventScript_MovePeopleForSternInterview
 	end
 
 SlateportCity_EventScript_EnterSlateport:: @ 814BA5C
@@ -67,11 +66,9 @@ SlateportCity_EventScript_EffortRibbonWoman:: @ 814BAE0
 	bufferleadmonspeciesname STR_VAR_1
 	msgbox SlateportCity_Text_OhYourPokemon, MSGBOX_DEFAULT
 	specialvar VAR_RESULT, LeadMonHasEffortRibbon
-	compare VAR_RESULT, TRUE
-	call_if_eq SlateportCity_EventScript_MonHasEffortRibbon
+	call_if_eq VAR_RESULT, TRUE, SlateportCity_EventScript_MonHasEffortRibbon
 	specialvar VAR_RESULT, Special_AreLeadMonEVsMaxedOut
-	compare VAR_RESULT, FALSE
-	call_if_eq SlateportCity_EventScript_MonEVsNotMaxed
+	call_if_eq VAR_RESULT, FALSE, SlateportCity_EventScript_MonEVsNotMaxed
 	msgbox SlateportCity_Text_PleaseGiveItThisEffortRibbon, MSGBOX_DEFAULT
 	playfanfare MUS_OBTAIN_ITEM
 	message SlateportCity_Text_ReceivedEffortRibbon
@@ -95,8 +92,7 @@ SlateportCity_EventScript_MonHasEffortRibbon:: @ 814BB35
 SlateportCity_EventScript_Cook:: @ 814BB3F
 	lock
 	faceplayer
-	compare VAR_SLATEPORT_CITY_STATE, 1
-	call_if_eq SlateportCity_EventScript_CookSternInterview
+	call_if_eq VAR_SLATEPORT_CITY_STATE, 1, SlateportCity_EventScript_CookSternInterview
 	msgbox SlateportCity_Text_SeaweedFullOfLife, MSGBOX_DEFAULT
 	release
 	end
@@ -109,8 +105,7 @@ SlateportCity_EventScript_CookSternInterview:: @ 814BB56
 SlateportCity_EventScript_OldWoman:: @ 814BB60
 	lock
 	faceplayer
-	compare VAR_SLATEPORT_CITY_STATE, 1
-	call_if_eq SlateportCity_EventScript_OldWomanSternInterview
+	call_if_eq VAR_SLATEPORT_CITY_STATE, 1, SlateportCity_EventScript_OldWomanSternInterview
 	msgbox SlateportCity_Text_HowTownIsBornAndGrows, MSGBOX_DEFAULT
 	release
 	end
@@ -123,8 +118,7 @@ SlateportCity_EventScript_OldWomanSternInterview:: @ 814BB77
 SlateportCity_EventScript_Girl:: @ 814BB81
 	lock
 	faceplayer
-	compare VAR_SLATEPORT_CITY_STATE, 1
-	call_if_eq SlateportCity_EventScript_GirlSternInterview
+	call_if_eq VAR_SLATEPORT_CITY_STATE, 1, SlateportCity_EventScript_GirlSternInterview
 	goto_if_set FLAG_RECEIVED_SECRET_POWER, SlateportCity_EventScript_GirlSecretBase
 	msgbox SlateportCity_Text_SlateportWonderfulPlace, MSGBOX_DEFAULT
 	release
@@ -143,8 +137,7 @@ SlateportCity_EventScript_GirlSecretBase:: @ 814BBAB
 SlateportCity_EventScript_RichBoy:: @ 814BBB5
 	lock
 	faceplayer
-	compare VAR_SLATEPORT_CITY_STATE, 1
-	call_if_eq SlateportCity_EventScript_RichBoySternInterview
+	call_if_eq VAR_SLATEPORT_CITY_STATE, 1, SlateportCity_EventScript_RichBoySternInterview
 	msgbox SlateportCity_Text_GoingToCompeteInPokemonContest, MSGBOX_DEFAULT
 	release
 	end
@@ -155,8 +148,7 @@ SlateportCity_EventScript_RichBoySternInterview:: @ 814BBCC
 	end
 
 SlateportCity_EventScript_FatMan:: @ 814BBD6
-	compare VAR_SLATEPORT_CITY_STATE, 1
-	goto_if_eq SlateportCity_EventScript_FatManSternInterview
+	goto_if_eq VAR_SLATEPORT_CITY_STATE, 1, SlateportCity_EventScript_FatManSternInterview
 	msgbox SlateportCity_Text_BushedHikingFromMauville, MSGBOX_NPC
 	end
 
@@ -167,8 +159,7 @@ SlateportCity_EventScript_FatManSternInterview:: @ 814BBEA
 SlateportCity_EventScript_Man1:: @ 814BBF3
 	lock
 	faceplayer
-	compare VAR_SLATEPORT_CITY_STATE, 1
-	call_if_eq SlateportCity_EventScript_Man1SternInterview
+	call_if_eq VAR_SLATEPORT_CITY_STATE, 1, SlateportCity_EventScript_Man1SternInterview
 	msgbox SlateportCity_Text_EveryoneCallsHimCaptStern, MSGBOX_DEFAULT
 	release
 	end
@@ -248,8 +239,7 @@ SlateportCity_EventScript_NameRatersHouseSign:: @ 814BCAF
 SlateportCity_EventScript_Maniac:: @ 814BCB8
 	lock
 	faceplayer
-	compare VAR_SLATEPORT_CITY_STATE, 1
-	call_if_eq SlateportCity_EventScript_ManiacSternInterview
+	call_if_eq VAR_SLATEPORT_CITY_STATE, 1, SlateportCity_EventScript_ManiacSternInterview
 	msgbox SlateportCity_Text_GetNameRaterToHelpYou, MSGBOX_DEFAULT
 	release
 	end
@@ -283,10 +273,8 @@ SlateportCity_EventScript_SchoolKid:: @ 814BD06
 	lock
 	faceplayer
 	msgbox SlateportCity_Text_DoYouKnowAboutBerryBlender, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	call_if_eq SlateportCity_EventScript_ExplainBerryBlender
-	compare VAR_RESULT, NO
-	call_if_eq SlateportCity_EventScript_ExplainPokeblock
+	call_if_eq VAR_RESULT, YES, SlateportCity_EventScript_ExplainBerryBlender
+	call_if_eq VAR_RESULT, NO, SlateportCity_EventScript_ExplainPokeblock
 	release
 	end
 

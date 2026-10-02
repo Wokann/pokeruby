@@ -9,8 +9,7 @@ SlateportCity_House_EventScript_Girl:: @ 8156399
 	lock
 	faceplayer
 	checkitem ITEM_CONTEST_PASS, 1
-	compare VAR_RESULT, TRUE
-	goto_if_eq SlateportCity_House_EventScript_HaveContestPass
+	goto_if_eq VAR_RESULT, TRUE, SlateportCity_House_EventScript_HaveContestPass
 	msgbox SlateportCity_House_Text_NeedContestPass, MSGBOX_DEFAULT
 	release
 	end
