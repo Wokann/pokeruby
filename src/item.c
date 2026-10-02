@@ -13,10 +13,10 @@ extern u8 gCurSelectedItemSlotIndex;
 extern struct BagPocket gBagPockets[POCKETS_COUNT];
 
 #if ENGLISH
-#include "data/item_descriptions_en.h"
+#include "data/text/item_descriptions.h"
 #include "data/items.h"
 #elif GERMAN
-#include "data/item_descriptions_de.h"
+#include "data/text/item_descriptions_de.h"
 #include "data/items_de.h"
 #endif
 
