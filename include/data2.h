@@ -1,6 +1,7 @@
 #ifndef GUARD_DATA2_H
 #define GUARD_DATA2_H
 
+#include "constants/abilities.h"
 #include "sprite.h"
 #include "battle.h"
 
@@ -41,7 +42,8 @@ extern const u8 gTrainerClassNames[][13];
 extern const struct Trainer gTrainers[];
 extern const u8 gSpeciesNames[][11];
 extern const u8 gMoveNames[][13];
-extern const u8 gAbilityNames[][13];
+extern const u8 gAbilityNames[][ABILITY_NAME_LENGTH + 1];
+extern const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT];
 extern const u8 gTypeNames[][7];
 extern const struct ScanlineEffectParams gIntroScanlineParams16Bit;
 extern const u8 gText_ShedinjaJpnName[];

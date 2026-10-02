@@ -154,8 +154,6 @@ extern const u8 gSummaryPage_Info_Tilemap[];
 extern const u16 gSummaryScreen_StatusTilemap[];
 extern const u8 gSummaryScreen_Gfx[];
 extern const u8 gFontDefaultPalette[];
-extern const u8 gAbilityNames[][13];
-extern const u8 * const gAbilityDescriptions[];
 extern const u8 * const gContestEffectStrings[];
 extern const struct ContestMove gContestMoves[];
 extern const struct ContestEffect gContestEffects[];
@@ -2159,7 +2157,7 @@ static void SummaryScreen_PrintPokemonInfo(struct Pokemon *mon)
 
         ability = GetAbilityBySpecies(GetMonData(mon, MON_DATA_SPECIES), GetMonData(mon, MON_DATA_ABILITY_NUM));
         SummaryScreen_PrintColoredText(gAbilityNames[ability], 13, 11, 9);
-        Menu_PrintText(gAbilityDescriptions[ability], 11, 11);
+        Menu_PrintText(gAbilityDescriptionPointers[ability], 11, 11);
 
         PokemonSummaryScreen_PrintTrainerMemo(mon, 11, 14);
     }
