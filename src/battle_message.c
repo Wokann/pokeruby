@@ -1,7 +1,7 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_message.h"
-#include "battle_string_ids.h"
+#include "constants/battle_string_ids.h"
 #include "battle_tower.h"
 #include "item.h"
 #include "event_data.h"
@@ -19,7 +19,7 @@
 #include "ewram.h"
 
 #define BATTLESTRINGS_TABLE_COUNT 351
-#define BATTLESTRINGS_TABLE_END   (BATTLESTRINGS_TABLE_COUNT + BATTLESTRINGS_ID_ADDER)
+#define BATTLESTRINGS_TABLE_END   (BATTLESTRINGS_TABLE_COUNT + BATTLESTRINGS_TABLE_START)
 
 #ifdef GERMAN
 #include "data/battle_strings_de.h" // TODO: German
@@ -419,7 +419,7 @@ void BufferStringBattle(u16 stringID)
         }
         else
         {
-            stringPtr = gBattleStringsTable[stringID - BATTLESTRINGS_ID_ADDER];
+            stringPtr = gBattleStringsTable[stringID - BATTLESTRINGS_TABLE_START];
 #ifdef GERMAN
             stringPtr = GetGermanBattleString(stringID, stringPtr);
 #endif
@@ -837,7 +837,7 @@ static void ExpandBattleTextBuffPlaceholders(u8 *src, u8 *dst)
             if (hword == 209 || hword == 211)
                 srcID += 3;
 #endif
-            StringAppend(dst, gBattleStringsTable[hword - BATTLESTRINGS_ID_ADDER]);
+            StringAppend(dst, gBattleStringsTable[hword - BATTLESTRINGS_TABLE_START]);
             srcID += 3;
             break;
         case B_BUFF_NUMBER: // int to string

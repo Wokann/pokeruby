@@ -46,7 +46,7 @@
 #include "scanline_effect.h"
 #include "util.h"
 #include "ewram.h"
-#include "battle_string_ids.h"
+#include "constants/battle_string_ids.h"
 #include "constants/trainers.h"
 
 struct UnknownStruct7

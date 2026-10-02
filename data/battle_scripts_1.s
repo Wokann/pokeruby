@@ -1,5 +1,5 @@
 #include "constants/abilities.h"
-#include "battle_string_ids.h"
+#include "constants/battle_string_ids.h"
 #include "constants/battle.h"
 #include "constants/moves.h"
 #include "constants/songs.h"

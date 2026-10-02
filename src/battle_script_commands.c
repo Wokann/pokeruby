@@ -3,7 +3,7 @@
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_message.h"
-#include "battle_string_ids.h"
+#include "constants/battle_string_ids.h"
 #include "battle_script_commands.h"
 #include "battle_util.h"
 #include "constants/battle_move_effects.h"
