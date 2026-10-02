@@ -68,8 +68,7 @@ MauvilleCity_Gym_EventScript_DeactivatePuzzle:: @ 81565A7
 MauvilleCity_Gym_EventScript_Wattson:: @ 81565AB
 	trainerbattle_single TRAINER_WATTSON, MauvilleCity_Gym_Text_WattsonIntro, MauvilleCity_Gym_Text_WattsonDefeat, MauvilleCity_Gym_EventScript_WattsonDefeated, NO_MUSIC
 	goto_if_unset FLAG_RECEIVED_TM_SHOCK_WAVE, MauvilleCity_Gym_EventScript_GiveShockWave
-	compare VAR_NEW_MAUVILLE_STATE, 2
-	goto_if_eq MauvilleCity_Gym_EventScript_CompletedNewMauville
+	goto_if_eq VAR_NEW_MAUVILLE_STATE, 2, MauvilleCity_Gym_EventScript_CompletedNewMauville
 	msgbox MauvilleCity_Gym_Text_WattsonPostBattle, MSGBOX_DEFAULT
 	release
 	end
@@ -82,8 +81,7 @@ MauvilleCity_Gym_EventScript_WattsonDefeated:: @ 81565DB
 	setflag FLAG_DEFEATED_MAUVILLE_GYM
 	setflag FLAG_BADGE03_GET
 	addvar VAR_PETALBURG_GYM_STATE, 1
-	compare VAR_PETALBURG_GYM_STATE, 6
-	call_if_eq Common_EventScript_ReadyPetalburgGymForBattle
+	call_if_eq VAR_PETALBURG_GYM_STATE, 6, Common_EventScript_ReadyPetalburgGymForBattle
 	setvar VAR_0x8008, 3
 	call Common_EventScript_SetGymTrainers
 	special MauvilleGymDeactivatePuzzle
@@ -94,8 +92,7 @@ MauvilleCity_Gym_EventScript_WattsonDefeated:: @ 81565DB
 
 MauvilleCity_Gym_EventScript_GiveShockWave:: @ 815661D
 	giveitem ITEM_TM34
-	compare VAR_RESULT, FALSE
-	goto_if_eq Common_EventScript_ShowBagIsFull
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	msgbox MauvilleCity_Gym_Text_ExplainShockWave, MSGBOX_DEFAULT
 	setflag FLAG_RECEIVED_TM_SHOCK_WAVE
 	release
@@ -109,8 +106,7 @@ MauvilleCity_Gym_EventScript_CompletedNewMauville:: @ 8156641
 MauvilleCity_Gym_EventScript_Switch1:: @ 815664B
 	lockall
 	goto_if_set FLAG_DEFEATED_MAUVILLE_GYM, MauvilleCity_Gym_EventScript_SwitchDoNothing
-	compare VAR_MAUVILLE_GYM_STATE, 1
-	goto_if_eq MauvilleCity_Gym_EventScript_SwitchDoNothing
+	goto_if_eq VAR_MAUVILLE_GYM_STATE, 1, MauvilleCity_Gym_EventScript_SwitchDoNothing
 	setvar VAR_MAUVILLE_GYM_STATE, 1
 	setvar VAR_0x8004, 0
 	goto MauvilleCity_Gym_EventScript_PressFloorSwitch
@@ -119,8 +115,7 @@ MauvilleCity_Gym_EventScript_Switch1:: @ 815664B
 MauvilleCity_Gym_EventScript_Switch2:: @ 8156670
 	lockall
 	goto_if_set FLAG_DEFEATED_MAUVILLE_GYM, MauvilleCity_Gym_EventScript_SwitchDoNothing
-	compare VAR_MAUVILLE_GYM_STATE, 2
-	goto_if_eq MauvilleCity_Gym_EventScript_SwitchDoNothing
+	goto_if_eq VAR_MAUVILLE_GYM_STATE, 2, MauvilleCity_Gym_EventScript_SwitchDoNothing
 	setvar VAR_MAUVILLE_GYM_STATE, 2
 	setvar VAR_0x8004, 1
 	goto MauvilleCity_Gym_EventScript_PressFloorSwitch
@@ -129,8 +124,7 @@ MauvilleCity_Gym_EventScript_Switch2:: @ 8156670
 MauvilleCity_Gym_EventScript_Switch3:: @ 8156695
 	lockall
 	goto_if_set FLAG_DEFEATED_MAUVILLE_GYM, MauvilleCity_Gym_EventScript_SwitchDoNothing
-	compare VAR_MAUVILLE_GYM_STATE, 3
-	goto_if_eq MauvilleCity_Gym_EventScript_SwitchDoNothing
+	goto_if_eq VAR_MAUVILLE_GYM_STATE, 3, MauvilleCity_Gym_EventScript_SwitchDoNothing
 	setvar VAR_MAUVILLE_GYM_STATE, 3
 	setvar VAR_0x8004, 2
 	goto MauvilleCity_Gym_EventScript_PressFloorSwitch

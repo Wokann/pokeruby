@@ -8,18 +8,14 @@ MauvilleCity_BikeShop_EventScript_Rydel:: @ 8156796
 	goto_if_set FLAG_DECLINED_BIKE, MauvilleCity_BikeShop_EventScript_SkipGreeting
 	msgbox MauvilleCity_BikeShop_Text_RydelGreeting, MSGBOX_DEFAULT
 	msgbox MauvilleCity_BikeShop_Text_DidYouComeFromFarAway, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq MauvilleCity_BikeShop_EventScript_YesFar
-	compare VAR_RESULT, NO
-	goto_if_eq MauvilleCity_BikeShop_EventScript_NotFar
+	goto_if_eq VAR_RESULT, YES, MauvilleCity_BikeShop_EventScript_YesFar
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_BikeShop_EventScript_NotFar
 	end
 
 MauvilleCity_BikeShop_EventScript_SkipGreeting:: @ 81567D1
 	msgbox MauvilleCity_BikeShop_Text_DidYouComeFromFarAway, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq MauvilleCity_BikeShop_EventScript_YesFar
-	compare VAR_RESULT, NO
-	goto_if_eq MauvilleCity_BikeShop_EventScript_NotFar
+	goto_if_eq VAR_RESULT, YES, MauvilleCity_BikeShop_EventScript_YesFar
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_BikeShop_EventScript_NotFar
 	end
 
 MauvilleCity_BikeShop_EventScript_ChooseBike:: @ 81567F0
@@ -62,20 +58,16 @@ MauvilleCity_BikeShop_EventScript_ComeBackToSwitchBikes:: @ 8156861
 
 MauvilleCity_BikeShop_EventScript_AskSwitchBikes:: @ 815686E
 	msgbox MauvilleCity_BikeShop_Text_WantToSwitchBikes, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq MauvilleCity_BikeShop_EventScript_SwitchBikes
-	compare VAR_RESULT, NO
-	goto_if_eq MauvilleCity_BikeShop_EventScript_KeepBike
+	goto_if_eq VAR_RESULT, YES, MauvilleCity_BikeShop_EventScript_SwitchBikes
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_BikeShop_EventScript_KeepBike
 	end
 
 MauvilleCity_BikeShop_EventScript_SwitchBikes:: @ 815688D
 	msgbox MauvilleCity_BikeShop_Text_IllSwitchBikes, MSGBOX_DEFAULT
 	checkitem ITEM_ACRO_BIKE, 1
-	compare VAR_RESULT, TRUE
-	goto_if_eq MauvilleCity_BikeShop_EventScript_SwitchAcroForMach
+	goto_if_eq VAR_RESULT, TRUE, MauvilleCity_BikeShop_EventScript_SwitchAcroForMach
 	checkitem ITEM_MACH_BIKE, 1
-	compare VAR_RESULT, TRUE
-	goto_if_eq MauvilleCity_BikeShop_EventScript_SwitchMachForAcro
+	goto_if_eq VAR_RESULT, TRUE, MauvilleCity_BikeShop_EventScript_SwitchMachForAcro
 	msgbox MauvilleCity_BikeShop_Text_OhYourBikeIsInPC, MSGBOX_DEFAULT
 	release
 	end
