@@ -2625,7 +2625,7 @@ Move_FISSURE: @ 81CAF7E
 	delay 50
 	fadetobg BG_FISSURE
 	waitbgfadeout
-	createvisualtask AnimTask_PositionFissureBgOnBattler, 5, 1, 5, -1
+	createvisualtask AnimTask_PositionFissureBgOnBattler, 5, ANIM_TARGET, 5, -1
 	waitbgfadein
 	delay 40
 	restorebg
@@ -2659,7 +2659,7 @@ DigSetUp:
 	createsprite gDirtMoundSpriteTemplate, ANIM_ATTACKER, 1, 0, 1, 180
 	monbg_static ANIM_ATTACKER
 	delay 1
-	createvisualtask AnimTask_DigDownMovement, 2, 0
+	createvisualtask AnimTask_DigDownMovement, 2, FALSE
 	delay 6
 	call DigThrowDirt
 	call DigThrowDirt
@@ -2669,18 +2669,18 @@ DigSetUp:
 	waitforvisualfinish
 	clearmonbg_static ANIM_ATTACKER
 	delay 1
-	createvisualtask AnimTask_DigDownMovement, 2, 1
+	createvisualtask AnimTask_DigDownMovement, 2, TRUE
 	goto DigEnd
 DigUnleash:
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_DIRT_MOUND
-	createvisualtask AnimTask_DigUpMovement, 2, 0
+	createvisualtask AnimTask_DigUpMovement, 2, FALSE
 	waitforvisualfinish
 	monbg ANIM_ATTACKER
 	createsprite gDirtMoundSpriteTemplate, ANIM_ATTACKER, 1, 0, 0, 48
 	createsprite gDirtMoundSpriteTemplate, ANIM_ATTACKER, 1, 0, 1, 48
 	delay 1
-	createvisualtask AnimTask_DigUpMovement, 2, 1
+	createvisualtask AnimTask_DigUpMovement, 2, TRUE
 	delay 16
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 2, -8, 0, 1, 2
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 6, 1
