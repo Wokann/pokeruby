@@ -12,7 +12,7 @@
 #include "constants/species.h"
 #include "constants/vars.h"
 #include "contest_util.h"
-#include "data2.h"
+#include "data.h"
 #include "easy_chat.h"
 #include "event_data.h"
 #include "ewram.h"

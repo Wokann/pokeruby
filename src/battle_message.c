@@ -8,7 +8,7 @@
 #include "constants/items.h"
 #include "constants/berry.h"
 #include "pokemon.h"
-#include "data2.h"
+#include "data.h"
 #include "text.h"
 #include "string_util.h"
 #include "link.h"

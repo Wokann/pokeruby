@@ -1,6 +1,6 @@
 #include "global.h"
 #include "mail.h"
-#include "data2.h"
+#include "data.h"
 #include "easy_chat.h"
 #include "constants/items.h"
 #include "constants/species.h"

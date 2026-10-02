@@ -1,6 +1,6 @@
 #include "global.h"
 #include "naming_screen.h"
-#include "data2.h"
+#include "data.h"
 #include "graphics.h"
 #include "field_effect.h"
 #include "event_object_movement.h"

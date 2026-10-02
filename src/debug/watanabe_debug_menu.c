@@ -18,7 +18,7 @@
 #include "menu.h"
 #include "script.h"
 #include "overworld.h"
-#include "data2.h"
+#include "data.h"
 #include "fieldmap.h"
 #include "save.h"
 #include "sound.h"

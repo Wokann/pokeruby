@@ -1,6 +1,6 @@
 #include "global.h"
 #include "starter_choose.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "event_data.h"
 #include "main.h"

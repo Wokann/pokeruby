@@ -5,7 +5,7 @@
 #include "overworld.h"
 #include "pokenav.h"
 #include "battle.h"
-#include "data2.h"
+#include "data.h"
 #include "constants/opponents.h"
 #include "constants/region_map_sections.h"
 #include "text.h"

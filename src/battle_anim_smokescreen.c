@@ -1,5 +1,5 @@
 #include "global.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "sprite.h"
 #include "util.h"

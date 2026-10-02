@@ -5,7 +5,7 @@
 #include "battle_anim.h"
 #include "blend_palette.h"
 #include "contest.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "palette.h"
 #include "pokemon_icon.h"

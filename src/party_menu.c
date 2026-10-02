@@ -10,7 +10,7 @@
 #include "battle_interface.h"
 #include "battle_party_menu.h"
 #include "choose_party.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "event_data.h"
 #include "evolution_scene.h"

@@ -2,7 +2,7 @@
 #include "battle_party_menu.h"
 #include "choose_party.h"
 #include "contest.h"
-#include "data2.h"
+#include "data.h"
 #include "party_menu.h"
 #include "field_fadetransition.h"
 #include "palette.h"

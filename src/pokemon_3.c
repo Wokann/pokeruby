@@ -5,7 +5,7 @@
 #include "constants/moves.h"
 #include "battle.h"
 #include "battle_message.h"
-#include "data2.h"
+#include "data.h"
 #include "event_data.h"
 #include "item.h"
 #include "link.h"

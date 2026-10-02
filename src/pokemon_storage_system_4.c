@@ -2,7 +2,7 @@
 // Includes
 #include "global.h"
 #include "ewram.h"
-#include "data2.h"
+#include "data.h"
 #include "constants/moves.h"
 #include "constants/species.h"
 #include "palette.h"

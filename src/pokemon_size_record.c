@@ -1,6 +1,6 @@
 #include "global.h"
 #include "pokemon_size_record.h"
-#include "data2.h"
+#include "data.h"
 #include "event_data.h"
 #include "pokedex.h"
 #include "constants/party_menu.h"

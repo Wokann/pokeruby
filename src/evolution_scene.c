@@ -11,7 +11,7 @@
 #include "battle.h"
 #include "battle_bg.h"
 #include "scanline_effect.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "m4a.h"
 #include "trade.h"

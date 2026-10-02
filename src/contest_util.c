@@ -8,7 +8,7 @@
 #include "contest.h"
 #include "contest_link_util.h"
 #include "contest_painting.h"
-#include "data2.h"
+#include "data.h"
 #include "daycare.h"
 #include "debug.h"
 #include "decompress.h"

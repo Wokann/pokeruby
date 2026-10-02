@@ -19,7 +19,7 @@
 #include "party_menu.h"
 #include "constants/songs.h"
 #include "sound.h"
-#include "data2.h"
+#include "data.h"
 #include "pokemon_summary_screen.h"
 #include "overworld.h"
 #include "battle_anim.h"

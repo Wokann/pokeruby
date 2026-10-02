@@ -4,7 +4,7 @@
 #include "berry.h"
 #include "bike.h"
 #include "coins.h"
-#include "data2.h"
+#include "data.h"
 #include "event_data.h"
 #include "field_effect.h"
 #include "field_fadetransition.h"

@@ -3,7 +3,7 @@
 #include "battle_util.h"
 #include "battle_controllers.h"
 #include "battle_message.h"
-#include "data2.h"
+#include "data.h"
 #include "event_data.h"
 #include "ewram.h"
 #include "field_weather.h"

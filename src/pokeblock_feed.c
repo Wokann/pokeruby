@@ -8,7 +8,7 @@
 #include "menu.h"
 #include "overworld.h"
 #include "decompress.h"
-#include "data2.h"
+#include "data.h"
 #include "sprite.h"
 #include "item_use.h"
 #include "pokeblock.h"

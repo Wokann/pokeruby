@@ -4,7 +4,7 @@
 #include "decompress.h"
 #include "constants/songs.h"
 #include "constants/species.h"
-#include "data2.h"
+#include "data.h"
 #include "sound.h"
 #include "ewram.h"
 #include "task.h"

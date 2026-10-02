@@ -2,7 +2,7 @@
 #include "battle.h"
 #include "battle_anim_throw.h"
 #include "contest.h"
-#include "data2.h"
+#include "data.h"
 #include "daycare.h"
 #include "decompress.h"
 #include "event_data.h"

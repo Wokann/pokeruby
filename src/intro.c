@@ -1,7 +1,7 @@
 #include "global.h"
 #include "gba/m4a_internal.h"
 #include "intro.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "graphics.h"
 #include "hall_of_fame.h"

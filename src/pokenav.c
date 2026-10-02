@@ -6,7 +6,7 @@
 #include "palette.h"
 #include "decompress.h"
 #include "trig.h"
-#include "data2.h"
+#include "data.h"
 #include "scanline_effect.h"
 #include "pokemon_storage_system.h"
 #include "text.h"

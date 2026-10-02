@@ -4,7 +4,7 @@
 #include "contest.h"
 #include "contest_link.h"
 #include "contest_link_util.h"
-#include "data2.h"
+#include "data.h"
 #include "ewram.h"
 #include "link.h"
 #include "main.h"

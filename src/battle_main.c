@@ -16,7 +16,7 @@
 #include "battle_message.h"
 #include "battle_setup.h"
 #include "battle_util.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "event_data.h"
 #include "evolution_scene.h"

@@ -6,7 +6,7 @@
 #include "battle_interface.h"
 #include "battle_message.h"
 #include "battle.h"
-#include "data2.h"
+#include "data.h"
 #include "ewram.h"
 #include "item.h"
 #include "link.h"

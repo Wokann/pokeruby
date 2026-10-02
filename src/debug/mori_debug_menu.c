@@ -1,6 +1,6 @@
 #include "global.h"
 #include "mori_debug_menu.h"
-#include "data2.h"
+#include "data.h"
 #include "daycare.h"
 #include "move_relearner.h"
 #include "link.h"

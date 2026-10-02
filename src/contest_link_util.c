@@ -5,7 +5,7 @@
 #include "constants/songs.h"
 #include "contest.h"
 #include "contest_link.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "event_data.h"
 #include "ewram.h"

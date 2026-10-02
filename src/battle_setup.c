@@ -12,7 +12,7 @@
 #include "constants/species.h"
 #include "constants/weather.h"
 #include "contest_util.h"
-#include "data2.h"
+#include "data.h"
 #include "event_data.h"
 #include "field_control_avatar.h"
 #include "field_fadetransition.h"

@@ -1,7 +1,7 @@
 #include "global.h"
 #include "constants/battle.h"
 #include "battle.h"
-#include "data2.h"
+#include "data.h"
 #include "ewram.h"
 #include "main.h"
 #include "battle_anim.h"

@@ -3,7 +3,7 @@
 #include "pokenav.h"
 #include "ewram.h"
 #include "battle.h"
-#include "data2.h"
+#include "data.h"
 #include "de_string_util.h"
 #include "decompress.h"
 #include "event_data.h"

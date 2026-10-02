@@ -6,7 +6,7 @@
 #include "contest_link_util.h"
 #include "contest_painting.h"
 #include "contest_util.h"
-#include "data2.h"
+#include "data.h"
 #include "decoration.h"
 #include "decoration_inventory.h"
 #include "event_data.h"

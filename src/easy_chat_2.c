@@ -1,7 +1,7 @@
 #include "global.h"
 #include "constants/easy_chat.h"
 #include "constants/event_objects.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "easy_chat.h"
 #include "event_data.h"

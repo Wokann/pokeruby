@@ -3,7 +3,7 @@
 #include "battle_ai_switch_items.h"
 #include "battle_controllers.h"
 #include "battle_script_commands.h"
-#include "data2.h"
+#include "data.h"
 #include "ewram.h"
 #include "pokemon.h"
 #include "random.h"

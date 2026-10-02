@@ -10,7 +10,7 @@
 #include "battle_anim.h"
 #include "battle_interface.h"
 #include "sprite.h"
-#include "data2.h"
+#include "data.h"
 #include "ewram.h"
 #include "constants/trainers.h"
 

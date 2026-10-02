@@ -13,7 +13,7 @@
 #include "constants/species.h"
 #include "overworld.h"
 #include "m4a.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "random.h"
 #include "scanline_effect.h"

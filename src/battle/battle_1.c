@@ -1,5 +1,5 @@
 #include "global.h"
-#include "data2.h"
+#include "data.h"
 #include "battle_setup.h"
 #include "battle.h"
 #include "graphics.h"

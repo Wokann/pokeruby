@@ -1,7 +1,7 @@
 #include "global.h"
 #include "contest.h"
 #include "contest_painting.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "ewram.h"
 #include "image_processing_effects.h"

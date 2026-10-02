@@ -2,7 +2,7 @@
 #include "constants/songs.h"
 #include "constants/species.h"
 #include "main_menu.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "event_data.h"
 #include "field_effect.h"

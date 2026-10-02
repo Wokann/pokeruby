@@ -3,7 +3,7 @@
 #include "battle_anim_throw.h"
 #include "battle_controllers.h"
 #include "battle_interface.h"
-#include "data2.h"
+#include "data.h"
 #include "link.h"
 #include "m4a.h"
 #include "main.h"

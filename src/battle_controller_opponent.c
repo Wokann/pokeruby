@@ -4,7 +4,7 @@
 #include "battle_ai_switch_items.h"
 #include "battle_controllers.h"
 #include "battle_interface.h"
-#include "data2.h"
+#include "data.h"
 #include "battle_anim_throw.h"
 #include "battle_tower.h"
 #include "link.h"

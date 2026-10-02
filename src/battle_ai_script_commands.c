@@ -4,7 +4,7 @@
 #include "constants/battle_ai.h"
 #include "battle.h"
 #include "constants/battle_move_effects.h"
-#include "data2.h"
+#include "data.h"
 #include "item.h"
 #include "constants/moves.h"
 #include "pokemon.h"

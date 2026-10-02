@@ -10,7 +10,7 @@
 #include "battle_message.h"
 #include "battle_util.h"
 #include "berry.h"
-#include "data2.h"
+#include "data.h"
 #include "event_data.h"
 #include "item.h"
 #include "main.h"
