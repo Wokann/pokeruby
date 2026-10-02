@@ -47,13 +47,13 @@ extern const u8 gBerryBlenderOuter_Gfx[];
 extern const u8 gBerryBlenderOuter_Tilemap[];
 
 extern const u8 gContestInterfaceAudiencePalette[];
+extern const u8 gContestAudienceTilemap[];
 extern const u8 gContestInterfaceTilemap[];
-extern const u8 gContestBgTilemap[];
 extern const u8 gContestCurtainTilemap[];
-extern const u8 gContestMiscGfx[];
+extern const u8 gContestInterfaceGfx[];
 extern const u8 gContestAudienceGfx[];
 extern const u8 gContestJudgeSymbolsGfx[];
-extern const u8 gContest3Pal[];
+extern const u8 gContestJudgeSymbolsPal[];
 extern const u8 gContestNumbers_UnusedGfx[];
 extern const u8 gContestNumbers_UnusedPal[];
 extern const u8 gContestSliderHeart_Gfx[];

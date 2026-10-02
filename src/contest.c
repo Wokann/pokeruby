@@ -134,9 +134,9 @@ void LoadContestBgAfterMoveAnim(void)
 {
     s32 i;
 
-    LZDecompressVram(gContestMiscGfx, (void *)VRAM);
+    LZDecompressVram(gContestInterfaceGfx, (void *)VRAM);
     LZDecompressVram(gContestAudienceGfx, (void *)(VRAM + 0x2000));
-    LZDecompressVram(gContestInterfaceTilemap, (void *)(VRAM + 0xD000));
+    LZDecompressVram(gContestAudienceTilemap, (void *)(VRAM + 0xD000));
     LoadCompressedPalette(gContestInterfaceAudiencePalette, 0, 0x200);
     LoadContestPalettes();
     for (i = 0; i < 4; i++)
@@ -300,17 +300,17 @@ u8 SetupContestGraphics(u8 *stateVar)
         DmaClearLarge32(3, (void *)VRAM, VRAM_SIZE, 0x1000);
         break;
     case 1:
-        LZDecompressVram(gContestMiscGfx, (void *)VRAM);
+        LZDecompressVram(gContestInterfaceGfx, (void *)VRAM);
         break;
     case 2:
         LZDecompressVram(gContestAudienceGfx, (void *)(VRAM + 0x2000));
         DmaCopyLarge32(3, (void *)(VRAM + 0x2000), eUnzippedContestAudience_Gfx, 0x2000, 0x1000);
         break;
     case 3:
-        LZDecompressVram(gContestInterfaceTilemap, (void *)(VRAM + 0xD000));
+        LZDecompressVram(gContestAudienceTilemap, (void *)(VRAM + 0xD000));
         break;
     case 4:
-        LZDecompressVram(gContestBgTilemap, (void *)(VRAM + 0xE000));
+        LZDecompressVram(gContestInterfaceTilemap, (void *)(VRAM + 0xE000));
         DmaCopy32Defvars(3, (void *)(VRAM + 0xE000), eContestTempSave.savedJunk, 0x800);
         break;
     case 5:
@@ -2192,7 +2192,7 @@ const struct CompressedSpriteSheet sSpriteSheet_JudgeSymbols = {
 };
 
 const struct CompressedSpritePalette sSpritePalette_JudgeSymbols = {
-    .data = gContest3Pal,
+    .data = gContestJudgeSymbolsPal,
     .tag = TAG_CONTEST_SYMBOLS_PAL
 };
 

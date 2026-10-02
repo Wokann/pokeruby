@@ -331,24 +331,24 @@ const u8 gContestNumbers_UnusedPal[] = INCBIN_U8("graphics/unused/numbers.gbapal
 const u8 gUnusedGfx_OldContest2[] = INCBIN_U8("graphics/unused/old_contest_2.4bpp.lz");
 const u8 gContestInterfaceAudiencePalette[] = INCBIN_U8("graphics/contest/interface.gbapal.lz");
 
-const u8 gContestInterfaceTilemap[] = INCBIN_U8("graphics/contest/interface.bin.lz");
+const u8 gContestAudienceTilemap[] = INCBIN_U8("graphics/contest/audience.bin.lz");
 
-const u8 gContestBgTilemap[] = INCBIN_U8("graphics/contest/bgmap.bin.lz");
+const u8 gContestInterfaceTilemap[] = INCBIN_U8("graphics/contest/interface.bin.lz");
 const u8 gJPContestInterfaceTilemap[] = INCBIN_U8("graphics/contest/japanese/interface.bin.lz");
 const u8 gJPContestAudienceTilemap[] = INCBIN_U8("graphics/contest/japanese/audience.bin.lz");
 
 const u8 gContestCurtainTilemap[] = INCBIN_U8("graphics/contest/curtain.bin.lz");
 
-const u8 gContestMiscGfx[] = INCBIN_U8("graphics/contest/misc.4bpp.lz");
+const u8 gContestInterfaceGfx[] = INCBIN_U8("graphics/contest/interface.4bpp.lz");
 
 const u8 gContestAudienceGfx[] = INCBIN_U8("graphics/contest/audience.4bpp.lz");
 const u8 gContestFaces_Gfx[] = INCBIN_U8("graphics/contest/faces.4bpp.lz");
 
 const u8 gContestJudgeSymbolsGfx[] = INCBIN_U8("graphics/contest/judge_symbols.4bpp.lz");
 
-const u8 gContest3Pal[] = INCBIN_U8("graphics/contest/judge_symbols.gbapal.lz");
+const u8 gContestJudgeSymbolsPal[] = INCBIN_U8("graphics/contest/judge_symbols.gbapal.lz");
 
-const u8 gContestSliderHeart_Gfx[] = INCBIN_U8("graphics/contest/heart.4bpp");
+const u8 gContestSliderHeart_Gfx[] = INCBIN_U8("graphics/contest/slider_heart.4bpp");
 
 const u8 gContestResults_Gfx[] = INCBIN_U8("graphics/contest/results_screen/tiles.4bpp.lz");
 
