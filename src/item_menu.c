@@ -3434,8 +3434,8 @@ static int ConsumeBagItemListRedrawFlag(void)
     return val;
 }
 
-static const u16 sRotatingBallPalette[] = INCBIN_U16("graphics/interface/bag_spinner.gbapal");
-static const u8 sRotatingBallGfx[] = INCBIN_U8("graphics/interface/bag_spinner.4bpp");
+static const u16 sRotatingBall_Pal[] = INCBIN_U16("graphics/bag/rotating_ball.gbapal");
+static const u8 sRotatingBall_Gfx[] = INCBIN_U8("graphics/bag/rotating_ball.4bpp");
 
 const u8 gSpriteImage_UnusedCherry[] = INCBIN_U8("graphics/unused/cherry.4bpp");
 const u16 gSpritePalette_UnusedCherry[] = INCBIN_U16("graphics/unused/cherry.gbapal");
@@ -3669,10 +3669,10 @@ static const union AffineAnimCmd *const sRotatingBallAffineAnimTable[] =
 
 static const struct SpriteFrameImage sRotatingBallSpriteImageTable[] =
 {
-    {sRotatingBallGfx, sizeof(sRotatingBallGfx)},
+    {sRotatingBall_Gfx, sizeof(sRotatingBall_Gfx)},
 };
 
-static const struct SpritePalette sRotatingBallSpritePalette = {sRotatingBallPalette, TAG_BAG_POCKET_SWITCH_BALL};
+static const struct SpritePalette sRotatingBallSpritePalette = {sRotatingBall_Pal, TAG_BAG_POCKET_SWITCH_BALL};
 
 static void SpriteCB_SwitchPocketRotatingBallInit(struct Sprite *sprite)
 {
