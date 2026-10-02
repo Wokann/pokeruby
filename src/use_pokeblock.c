@@ -25,8 +25,8 @@
 extern const u16 gUsePokeblockUpDown_Pal[16];
 extern const u8 gUsePokeblockUpDown_Gfx[0x200];
 #else
-const u16 gUsePokeblockUpDown_Pal[] = INCBIN_U16("graphics/misc/condition_up_down.gbapal");
-const u8 gUsePokeblockUpDown_Gfx[] = INCBIN_U8("graphics/misc/condition_up_down.4bpp");
+const u16 gUsePokeblockUpDown_Pal[] = INCBIN_U16("graphics/pokeblock/use_screen/updown.gbapal");
+const u8 gUsePokeblockUpDown_Gfx[] = INCBIN_U8("graphics/pokeblock/use_screen/updown.4bpp");
 #endif
 
 static const u32 sConditionToMonData[] =
