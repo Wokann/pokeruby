@@ -408,6 +408,7 @@ extern const u16 *gLevelUpLearnsets[];
 extern const u8 gPPUpGetMask[];
 extern const u8 gPPUpClearMask[];
 extern const u8 gPPUpAddValues[];
+extern const u8 gStatStageRatios[MAX_STAT_STAGE + 1][2];
 extern struct Evolution gEvolutionTable[][5];
 extern struct PokemonStorage gPokemonStorage;
 

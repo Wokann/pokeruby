@@ -77,7 +77,6 @@ extern const struct MonCoords gCastformFrontSpriteCoords[];
 extern const u8 sText_DebugFlyingMonLoadConfirm[];
 extern const u8 sText_DebugFlyingMonSaveConfirm[];
 extern const u8 BattleText_YesNo[];
-extern u8 gStatStageRatios[][2];
 extern u8 gActionsByTurnOrder[4];
 extern struct MultiBattlePokemonTx gMultiPartnerParty[];
 extern u8 gBattleBufferB[][0x200];

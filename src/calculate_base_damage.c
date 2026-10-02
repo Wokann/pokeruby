@@ -23,30 +23,35 @@ extern struct BattleEnigmaBerry gEnigmaBerries[];
 extern u16 gBattleMovePower;
 extern u16 gTrainerBattleOpponent;
 
-// A mask to get the number of PP Ups applied to that move slot.
-const u8 gPPUpGetMask[] = {0x03, 0x0c, 0x30, 0xc0};
+#define PP_UP_SHIFTS(val)           val,        (val) << 2,        (val) << 4,        (val) << 6
+#define PP_UP_SHIFTS_INV(val) (u8)~(val), (u8)~((val) << 2), (u8)~((val) << 4), (u8)~((val) << 6)
 
-// A mask to clear the number of PP Ups applied to that move slot.
-const u8 gPPUpClearMask[] = {0xFC, 0xF3, 0xCF, 0x3F};
+// PP Up bonuses are stored for a Pokémon as a single byte.
+// There are 2 bits (a value 0-3) for each move slot that
+// represent how many PP Ups have been applied.
+// The following arrays take a move slot id and return:
+// gPPUpGetMask - A mask to get the number of PP Ups applied to that move slot
+// gPPUpClearMask - A mask to clear the number of PP Ups applied to that move slot
+// gPPUpAddValues - A value to add to the PP Bonuses byte to apply 1 PP Up to that move slot
+const u8 gPPUpGetMask[MAX_MON_MOVES]   = {PP_UP_SHIFTS(3)};
+const u8 gPPUpClearMask[MAX_MON_MOVES] = {PP_UP_SHIFTS_INV(3)};
+const u8 gPPUpAddValues[MAX_MON_MOVES] = {PP_UP_SHIFTS(1)};
 
-// A value to add to the PP Bonuses byte to apply 1 PP Up to that move slot.
-const u8 gPPUpAddValues[] = {0x01, 0x04, 0x10, 0x40};
-
-const u8 gStatStageRatios[][2] =
+const u8 gStatStageRatios[MAX_STAT_STAGE + 1][2] =
 {
-    {10, 40}, // -6
+    {10, 40}, // -6, MIN_STAT_STAGE
     {10, 35}, // -5
     {10, 30}, // -4
     {10, 25}, // -3
     {10, 20}, // -2
     {10, 15}, // -1
-    {10, 10}, //  0
-    {15, 10}, //  1
-    {20, 10}, //  2
-    {25, 10}, //  3
-    {30, 10}, //  4
-    {35, 10}, //  5
-    {40, 10}  //  6
+    {10, 10}, //  0, DEFAULT_STAT_STAGE
+    {15, 10}, // +1
+    {20, 10}, // +2
+    {25, 10}, // +3
+    {30, 10}, // +4
+    {35, 10}, // +5
+    {40, 10}  // +6, MAX_STAT_STAGE
 };
 
 const u8 gJPText_GameFreakAbbrev[] = _("ゲーフリ");
