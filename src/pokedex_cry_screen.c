@@ -7,6 +7,7 @@
 #include "ewram.h"
 #include "trig.h"
 #include "sound.h"
+#include "constants/sound.h"
 
 extern struct SoundInfo gSoundInfo;
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
@@ -327,7 +328,7 @@ void CryScreenPlayButton(u16 species)
 
 static void PlayCryScreenCry(u16 species)
 {
-    PlayCry_NormalNoDucking(species, 0, 125, 10);
+    PlayCry_NormalNoDucking(species, 0, CRY_VOLUME_RS, CRY_PRIORITY_NORMAL);
     sDexCryScreen->cryState = 1;
 }
 

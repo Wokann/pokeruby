@@ -10,6 +10,7 @@
 #include "palette.h"
 #include "pokeball.h"
 #include "battle_anim.h"
+#include "constants/sound.h"
 #include "constants/songs.h"
 #include "sound.h"
 #include "sprite.h"
@@ -1595,7 +1596,7 @@ static void LinkOpponentHandleFaintingCry(void)
 {
     PlayCry_ByMode(
       GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES),
-      25, 5);
+      25, CRY_MODE_FAINT);
     LinkOpponentBufferExecCompleted();
 }
 

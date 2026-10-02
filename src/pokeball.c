@@ -9,6 +9,7 @@
 #include "pokeball.h"
 #include "pokemon.h"
 #include "battle_anim.h"
+#include "constants/sound.h"
 #include "constants/songs.h"
 #include "sound.h"
 #include "sprite.h"
@@ -682,7 +683,7 @@ static void Task_PlayCryWhenReleasedFromBall(u8 taskId)
             gTasks[taskId].tCryTaskFrames--;
             break;
         }
-        PlayCry_ReleaseDouble(species, pan, 1);
+        PlayCry_ReleaseDouble(species, pan, CRY_MODE_DOUBLES);
         DestroyTask(taskId);
         break;
     case 3:
@@ -711,7 +712,7 @@ static void Task_PlayCryWhenReleasedFromBall(u8 taskId)
             gTasks[taskId].tCryTaskFrames--;
             break;
         }
-        PlayCry_ReleaseDouble(species, pan, 0);
+        PlayCry_ReleaseDouble(species, pan, CRY_MODE_NORMAL);
         DestroyTask(taskId);
         break;
     }

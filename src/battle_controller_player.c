@@ -24,6 +24,7 @@
 #include "util.h"
 #include "constants/items.h"
 #include "constants/moves.h"
+#include "constants/sound.h"
 #include "constants/songs.h"
 
 #if ENGLISH
@@ -2873,7 +2874,7 @@ void PlayerHandleFaintingCry(void)
 {
     u16 species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES);
 
-    PlayCry_ByMode(species, -25, 5);
+    PlayCry_ByMode(species, -25, CRY_MODE_FAINT);
     PlayerBufferExecCompleted();
 }
 

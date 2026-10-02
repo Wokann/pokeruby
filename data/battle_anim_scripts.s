@@ -3,6 +3,7 @@
 #include "constants/rgb.h"
 #include "constants/moves.h"
 #include "constants/songs.h"
+#include "constants/sound.h"
 
 #define BLDCNT_TGT1_BG3      (1 << 3)
 #define BLDCNT_TGT1_OBJ      (1 << 4)
@@ -4379,7 +4380,7 @@ Move_HOWL: @ 81CD53C
 	createvisualtask AnimTask_DeepInhale, 2, ANIM_ATTACKER
 	delay 12
 	call RoarEffect
-	createvisualtask SoundTask_PlayCryWithMode, 2, ANIM_ATTACKER, 3
+	createvisualtask SoundTask_PlayCryWithMode, 2, ANIM_ATTACKER, CRY_MODE_HIGH_PITCH
 	waitforvisualfinish
 	delay 30
 	end
@@ -4977,7 +4978,7 @@ Move_ROAR: @ 81CE31E
 	monbg ANIM_ATTACKER
 	splitbgprio ANIM_ATTACKER
 	setalpha 8, 8
-	createvisualtask SoundTask_PlayCryWithMode, 2, ANIM_ATTACKER, 2
+	createvisualtask SoundTask_PlayCryWithMode, 2, ANIM_ATTACKER, CRY_MODE_ENCOUNTER
 	createvisualtask AnimTask_ScaleMonAndRestore, 5, -5, -5, 10, ANIM_ATTACKER, 1
 	call RoarEffect
 	delay 20

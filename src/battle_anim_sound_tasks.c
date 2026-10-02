@@ -5,6 +5,7 @@
 #include "sound.h"
 #include "task.h"
 #include "constants/sound.h"
+#include "constants/species.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -178,7 +179,7 @@ static void SoundTask_LoopSEAdjustPanning_Step(u8 taskId)
 // Used by Move_HOWL, Move_ROAR, and Move_GROWL.
 void SoundTask_PlayCryWithMode(u8 taskId)
 {
-    u16 species = 0;
+    u16 species = SPECIES_NONE;
     s8 pan = BattleAnimAdjustPanning(SOUND_PAN_ATTACKER);
 
     if (IsContest())
@@ -215,13 +216,13 @@ void SoundTask_PlayCryWithMode(u8 taskId)
             species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler]], MON_DATA_SPECIES);
     }
 
-    if (species != 0)
+    if (species != SPECIES_NONE)
     {
-        s16 mode = gBattleAnimArgs[1];
-        if (mode == ANIM_CRY_MODE_DEFAULT)
+        s16 cryMode = gBattleAnimArgs[1];
+        if (cryMode == ANIM_CRY_MODE_DEFAULT)
             PlayCry_Normal(species, pan);
         else
-            PlayCry_ByMode(species, pan, mode);
+            PlayCry_ByMode(species, pan, cryMode);
     }
 
     DestroyAnimVisualTask(taskId);
@@ -237,7 +238,7 @@ void SoundTask_PlayHyperVoiceCry(u8 taskId)
     else
         species = gAnimBattlerSpecies[gBattleAnimAttacker];
 
-    if (species != 0)
+    if (species != SPECIES_NONE)
         PlayCry_ByMode(species, pan, CRY_MODE_HYPER_VOICE);
 
     DestroyAnimVisualTask(taskId);

@@ -27,6 +27,7 @@
 #include "constants/event_object_movement.h"
 #include "constants/field_effects.h"
 #include "constants/metatile_behaviors.h"
+#include "constants/sound.h"
 #include "constants/songs.h"
 
 #define subsprite_table(ptr) {.subsprites = ptr, .subspriteCount = (sizeof ptr) / (sizeof(struct Subsprite))}
@@ -2769,7 +2770,7 @@ void SpriteCB_FieldMoveMonSlideOnscreen(struct Sprite *sprite)
         sprite->callback = SpriteCB_FieldMoveMonWaitAfterCry;
         if (sprite->data[6])
         {
-            PlayCry_NormalNoDucking(sprite->data[0], 0, 0x7d, 0xa);
+            PlayCry_NormalNoDucking(sprite->data[0], 0, CRY_VOLUME_RS, CRY_PRIORITY_NORMAL);
         } else
         {
             PlayCry_Normal(sprite->data[0], 0);

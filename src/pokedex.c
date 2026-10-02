@@ -17,6 +17,7 @@
 #include "pokemon.h"
 #include "random.h"
 #include "overworld.h"
+#include "constants/sound.h"
 #include "constants/songs.h"
 #include "sound.h"
 #include "constants/species.h"
@@ -3024,7 +3025,7 @@ static void Task_LoadInfoScreen(u8 taskId)
             if (!gTasks[taskId].tSkipCry)
             {
                 StopCryAndClearCrySongs();
-                PlayCry_NormalNoDucking(NationalPokedexNumToSpecies(sPokedexListItem->dexNum), 0, 0x7D, 0xA);
+                PlayCry_NormalNoDucking(NationalPokedexNumToSpecies(sPokedexListItem->dexNum), 0, CRY_VOLUME_RS, CRY_PRIORITY_NORMAL);
             }
             else
             {

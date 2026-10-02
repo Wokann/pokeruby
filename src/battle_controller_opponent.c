@@ -16,6 +16,7 @@
 #include "random.h"
 #include "battle_anim.h"
 #include "sound.h"
+#include "constants/sound.h"
 #include "constants/songs.h"
 #include "sprite.h"
 #include "string_util.h"
@@ -1745,7 +1746,7 @@ static void OpponentHandleFaintingCry(void)
 {
     PlayCry_ByMode(
       GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES),
-      25, 5);
+      25, CRY_MODE_FAINT);
     OpponentBufferExecCompleted();
 }
 

@@ -5,6 +5,7 @@
 #include "m4a.h"
 #include "main.h"
 #include "pokemon.h"
+#include "constants/sound.h"
 #include "constants/songs.h"
 #include "task.h"
 
@@ -297,26 +298,26 @@ bool8 IsBGMStopped(void)
 void PlayCry_Normal(u16 species, s8 pan)
 {
     m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFFFF, 85);
-    PlayCryInternal(species, pan, 125, 10, 0);
+    PlayCryInternal(species, pan, CRY_VOLUME_RS, CRY_PRIORITY_NORMAL, CRY_MODE_NORMAL);
     gPokemonCryBGMDuckingCounter = 2;
     RestoreBGMVolumeAfterPokemonCry();
 }
 
 void PlayCry_NormalNoDucking(u16 species, s8 pan, s8 volume, u8 priority)
 {
-    PlayCryInternal(species, pan, volume, priority, 0);
+    PlayCryInternal(species, pan, volume, priority, CRY_MODE_NORMAL);
 }
 
 void PlayCry_ByMode(u16 species, s8 pan, u8 mode)
 {
-    if (mode == 1)
+    if (mode == CRY_MODE_DOUBLES)
     {
-        PlayCryInternal(species, pan, 125, 10, 1);
+        PlayCryInternal(species, pan, CRY_VOLUME_RS, CRY_PRIORITY_NORMAL, CRY_MODE_DOUBLES);
     }
     else
     {
         m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFFFF, 85);
-        PlayCryInternal(species, pan, 125, 10, mode);
+        PlayCryInternal(species, pan, CRY_VOLUME_RS, CRY_PRIORITY_NORMAL, mode);
         gPokemonCryBGMDuckingCounter = 2;
         RestoreBGMVolumeAfterPokemonCry();
     }
@@ -324,22 +325,22 @@ void PlayCry_ByMode(u16 species, s8 pan, u8 mode)
 
 void PlayCry_ReleaseDouble(u16 species, s8 pan, u8 mode)
 {
-    if (mode == 1)
+    if (mode == CRY_MODE_DOUBLES)
     {
-        PlayCryInternal(species, pan, 125, 10, 1);
+        PlayCryInternal(species, pan, CRY_VOLUME_RS, CRY_PRIORITY_NORMAL, CRY_MODE_DOUBLES);
     }
     else
     {
         if (!(gBattleTypeFlags & BATTLE_TYPE_MULTI))
             m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFFFF, 85);
-        PlayCryInternal(species, pan, 125, 10, mode);
+        PlayCryInternal(species, pan, CRY_VOLUME_RS, CRY_PRIORITY_NORMAL, mode);
     }
 }
 
 void PlayCry_Script(u16 species, u8 mode)
 {
     m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFFFF, 85);
-    PlayCryInternal(species, 0, 125, 10, mode);
+    PlayCryInternal(species, 0, CRY_VOLUME_RS, CRY_PRIORITY_NORMAL, mode);
     gPokemonCryBGMDuckingCounter = 2;
     RestoreBGMVolumeAfterPokemonCry();
 }
@@ -363,30 +364,30 @@ static void PlayCryInternal(u16 species, s8 pan, s8 volume, u8 priority, u8 mode
 
     switch (mode)
     {
-    case 0:
+    case CRY_MODE_NORMAL:
         break;
-    case 1:
+    case CRY_MODE_DOUBLES:
         length = 20;
         release = 225;
         break;
-    case 2:
+    case CRY_MODE_ENCOUNTER:
         length = 30;
         release = 225;
         pitch = 15600;
         chorus = 20;
         volume = 80;
         break;
-    case 3:
+    case CRY_MODE_HIGH_PITCH:
         length = 50;
         release = 200;
         pitch = 14800;
         break;
-    case 4:
+    case CRY_MODE_HYPER_VOICE:
         length = 20;
         release = 220;
         pitch = 15800;
         break;
-    case 5:
+    case CRY_MODE_FAINT:
         release = 200;
         pitch = 14500;
         break;
