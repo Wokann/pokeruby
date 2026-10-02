@@ -5,7 +5,7 @@
 #include "task.h"
 #include "constants/decorations.h"
 
-#define DECOR_INV(ptr) {.items = ptr, .size = sizeof ptr}
+#define DECOR_INV(ptr) {.items = ptr, .size = ARRAY_COUNT(ptr)}
 
 struct DecorationInventory const gDecorationInventories[] = {
     DECOR_INV(gSaveBlock1.decorDesk),
@@ -18,7 +18,7 @@ struct DecorationInventory const gDecorationInventories[] = {
     DECOR_INV(gSaveBlock1.decorCushion)
 };
 
-void ClearDecorationInventory(u8 category)
+static void ClearDecorationInventory(u8 category)
 {
     u8 i;
     for (i = 0; i < gDecorationInventories[category].size; i++)
@@ -121,7 +121,7 @@ void CondenseDecorationsInCategory(u8 category)
     {
         for (j = i + 1; j < gDecorationInventories[category].size; j++)
         {
-            if (gDecorationInventories[category].items[j] != 0 && (gDecorationInventories[category].items[i] == DECOR_NONE || gDecorationInventories[category].items[i] > gDecorationInventories[category].items[j]))
+            if (gDecorationInventories[category].items[j] != DECOR_NONE && (gDecorationInventories[category].items[i] == DECOR_NONE || gDecorationInventories[category].items[i] > gDecorationInventories[category].items[j]))
             {
                 tmp = gDecorationInventories[category].items[i];
                 gDecorationInventories[category].items[i] = gDecorationInventories[category].items[j];
