@@ -30,6 +30,7 @@
 #include "task.h"
 #include "tv.h"
 #include "constants/items.h"
+#include "constants/moves.h"
 #include "constants/songs.h"
 #include "constants/species.h"
 #include "constants/region_map_sections.h"
@@ -2400,7 +2401,7 @@ static void PrintMoveDetails(struct Pokemon *mon, u8 *firstMoveIndex)
 static void PrintBattleMoveDescription(u16 move)
 {
     if (move != 0xFFFF)
-        Menu_PrintText(gMoveDescriptions[move - 1], 11, 15);
+        Menu_PrintText(gMoveDescriptionPointers[move - 1], 11, 15);
 }
 
 static void PrintContestMoveDescription(u16 move)
