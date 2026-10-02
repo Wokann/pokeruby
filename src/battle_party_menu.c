@@ -470,9 +470,9 @@ bool8 SetUpBattlePartyMenu(void)
         if (gBattlePartyMenuAction == PARTY_ACTION_USE_ITEM)
         {
             if (GetItemEffectType(gSpecialVar_ItemId) == ITEM_EFFECT_SACRED_ASH)
-                gPartyMenu.promptTextId = 0xFF;
+                gPartyMenu.promptTextId = PARTY_MSG_NONE;
             else
-                gPartyMenu.promptTextId = 3;
+                gPartyMenu.promptTextId = PARTY_MSG_USE_ON_WHICH_MON;
         }
         return TRUE;
     }
@@ -771,6 +771,6 @@ static void Task_BattlePartyMenuCancel(u8 taskId)
     Menu_DestroyCursor();
     ClosePartyPopupMenu(gTasks[taskId].tPopupMenuType, sBattlePartyPopupMenus);
     gTasks[taskId].tPopupMenuType = gTasks[taskId].tSavedPopupMenuType;
-    PrintPartyMenuPromptText(0, 0);
+    PrintPartyMenuPromptText(PARTY_MSG_CHOOSE_MON, PARTY_MENU_PROMPT_WINDOW_STANDARD);
     SwitchTaskToFollowupFunc(taskId);
 }

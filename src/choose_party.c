@@ -259,7 +259,7 @@ static bool8 HasPartySlotAlreadyBeenSelected(u8 partyMember)
 
 static void ShowBattleTowerEntryPopup(u8 taskId)
 {
-    PrintPartyMenuPromptText(5, 1);
+    PrintPartyMenuPromptText(PARTY_MSG_DO_WHAT_WITH_MON, PARTY_MENU_PROMPT_WINDOW_NARROW);
     if (IsMonAllowedInBattleTower(&gPlayerParty[gLastFieldPokeMenuOpened]) == TRUE)
     {
         if (HasPartySlotAlreadyBeenSelected(gLastFieldPokeMenuOpened + 1) == TRUE)
@@ -391,7 +391,7 @@ static void Task_ValidateBattleTowerParty(u8 taskId)
         else
         {
             PlaySE(SE_FAILURE);
-            PrintPartyMenuPromptText(14, 0);
+            PrintPartyMenuPromptText(PARTY_MSG_NO_MON_FOR_BATTLE, PARTY_MENU_PROMPT_WINDOW_STANDARD);
             gTasks[taskId].func = Task_WaitBattleTowerPromptInput;
         }
     }
@@ -517,7 +517,7 @@ static void Task_CloseBattleTowerEntryPopup(u8 taskId)
 {
     Menu_EraseWindowRect(20, 10, 29, 19);
     Menu_DestroyCursor();
-    PrintPartyMenuPromptText(0, 0);
+    PrintPartyMenuPromptText(PARTY_MSG_CHOOSE_MON, PARTY_MENU_PROMPT_WINDOW_STANDARD);
     gTasks[taskId].func = HandleBattleTowerPartyMenu;
 }
 
@@ -928,7 +928,7 @@ static void DaycareStorageMenuCallback_Exit(u8 taskId)
     PlaySE(SE_SELECT);
     Menu_EraseWindowRect(20, 10, 29, 19);
     Menu_DestroyCursor();
-    PrintPartyMenuPromptText(15, 0);
+    PrintPartyMenuPromptText(PARTY_MSG_CHOOSE_MON_2, PARTY_MENU_PROMPT_WINDOW_STANDARD);
     gTasks[taskId].func = HandleDaycarePartyMenu;
 }
 

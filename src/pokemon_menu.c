@@ -45,7 +45,7 @@ Pokemon menu:
 struct FieldMoveCursorCallback
 {
     bool8 (*fieldMoveFunc)(void);
-    u8 msgId;
+    u8 promptTextId;
 };
 
 extern u8 gIsDebugMode;
@@ -164,20 +164,20 @@ static const struct PartyPopupMenu sMailSubmenu = {3, 9, sMailSubmenuActions};
 
 static const struct FieldMoveCursorCallback sFieldMoveCursorCallbacks[] =
 {
-    {SetUpFieldMove_Cut,            0x6},
-    {SetUpFieldMove_Flash,          0x9},
-    {SetUpFieldMove_RockSmash,      0x9},
-    {SetUpFieldMove_Strength,       0x9},
-    {SetUpFieldMove_Surf,           0x7},
-    {SetUpFieldMove_Fly,            0x9},
-    {SetUpFieldMove_Dive,           0x9},
-    {SetUpFieldMove_Waterfall,      0x9},
-    {SetUpFieldMove_Teleport,       0x9},
-    {SetUpFieldMove_Dig,            0x9},
-    {SetUpFieldMove_SecretPower,    0x9},
-    {SetUpFieldMove_SoftBoiled,     0x10},
-    {SetUpFieldMove_SoftBoiled,     0x10},
-    {SetUpFieldMove_SweetScent,     0x9},
+    {SetUpFieldMove_Cut,            PARTY_MSG_NOTHING_TO_CUT},
+    {SetUpFieldMove_Flash,          PARTY_MSG_CANT_USE_HERE},
+    {SetUpFieldMove_RockSmash,      PARTY_MSG_CANT_USE_HERE},
+    {SetUpFieldMove_Strength,       PARTY_MSG_CANT_USE_HERE},
+    {SetUpFieldMove_Surf,           PARTY_MSG_CANT_SURF_HERE},
+    {SetUpFieldMove_Fly,            PARTY_MSG_CANT_USE_HERE},
+    {SetUpFieldMove_Dive,           PARTY_MSG_CANT_USE_HERE},
+    {SetUpFieldMove_Waterfall,      PARTY_MSG_CANT_USE_HERE},
+    {SetUpFieldMove_Teleport,       PARTY_MSG_CANT_USE_HERE},
+    {SetUpFieldMove_Dig,            PARTY_MSG_CANT_USE_HERE},
+    {SetUpFieldMove_SecretPower,    PARTY_MSG_CANT_USE_HERE},
+    {SetUpFieldMove_SoftBoiled,     PARTY_MSG_NOT_ENOUGH_HP},
+    {SetUpFieldMove_SoftBoiled,     PARTY_MSG_NOT_ENOUGH_HP},
+    {SetUpFieldMove_SweetScent,     PARTY_MSG_CANT_USE_HERE},
 };
 
 void CB2_OpenPartyMenuFromStartMenu(void)
@@ -228,23 +228,23 @@ static void BuildFieldPartyMenuOptions(void)
     }
 }
 
-static void DrawPartyPopupMenuInternal(u8 left, u8 top, u8 width, u8 numChoices, const struct MenuAction2 *menuActions, const u8 *items, u8 promptTextId)
+static void DrawPartyPopupMenuInternal(u8 left, u8 top, u8 width, u8 numChoices, const struct MenuAction2 *menuActions, const u8 *items, u8 promptWindowType)
 {
-    PrintPartyMenuPromptText(5, promptTextId);
+    PrintPartyMenuPromptText(PARTY_MSG_DO_WHAT_WITH_MON, promptWindowType);
     Menu_DrawStdWindowFrame(left, top, left + width, (numChoices * 2) + top + 1);
     Menu_PrintItemsReordered(left + 1, top + 1, numChoices, menuActions, items);
 }
 
 void DrawPartyPopupMenu(u8 left, u8 top, u8 width, u8 numChoices, const struct MenuAction2 *menuActions, const u8 *items)
 {
-    DrawPartyPopupMenuInternal(left, top, width, numChoices, menuActions, items, 1);
+    DrawPartyPopupMenuInternal(left, top, width, numChoices, menuActions, items, PARTY_MENU_PROMPT_WINDOW_NARROW);
 }
 
 static void ShowFieldPartyMenu(u8 cursorPos)
 {
     u32 top = (u8)(18 - (sFieldPartyMenuOptionCount << 1));
 
-    DrawPartyPopupMenuInternal(19, top, 10, sFieldPartyMenuOptionCount, sPokemonMenuActions, sFieldPartyMenuOptionIds, 3);
+    DrawPartyPopupMenuInternal(19, top, 10, sFieldPartyMenuOptionCount, sPokemonMenuActions, sFieldPartyMenuOptionIds, PARTY_MENU_PROMPT_WINDOW_COMPACT);
     top |= 1;
     InitMenu(0, 20, top, sFieldPartyMenuOptionCount, cursorPos, 9);
 }
@@ -373,7 +373,7 @@ static void PokemonMenu_Switch(u8 taskId)
 {
     Menu_DestroyCursor();
     sPartyMenuTwoMonAction.twoMonActionCallback = Task_SwitchSelectedPartyMons;
-    gPartyMenu.pmTwoMonActionPromptTextId = 1;
+    gPartyMenu.pmTwoMonActionPromptTextId = PARTY_MSG_MOVE_TO_WHERE;
     DoPokemonMenu_Switch(taskId);
 }
 
@@ -404,7 +404,7 @@ static void Task_HandleItemSubmenuInput(u8 taskId)
 static void Task_ShowItemSubmenu(u8 taskId)
 {
     ShowPartyPopupMenu(0, &sItemSubmenu, (void *)sPokemonMenuActions, 0);
-    PrintPartyMenuPromptText(0xD, 2);
+    PrintPartyMenuPromptText(PARTY_MSG_DO_WHAT_WITH_ITEM, PARTY_MENU_PROMPT_WINDOW_WIDE);
     gTasks[taskId].func = Task_HandleItemSubmenuInput;
 }
 
@@ -432,7 +432,7 @@ static void Task_UpdateHeldItemSprite(u8 taskId)
     if (gPartyMenuMessage_IsPrinting != 1)
     {
         SetHeldItemIconVisibility(taskId, GetCursorSelectionMonId(taskId));
-        PrintPartyMenuPromptText(0, 0);
+        PrintPartyMenuPromptText(PARTY_MSG_CHOOSE_MON, PARTY_MENU_PROMPT_WINDOW_STANDARD);
         gTasks[taskId].func = HandleDefaultPartyMenu;
     }
 }
@@ -447,7 +447,7 @@ static void Task_HandleGiveHeldItemResult(u8 taskId)
     else
     {
         Menu_EraseWindowRect(0, 0, 29, 19);
-        PrintPartyMenuPromptText(0, 0);
+        PrintPartyMenuPromptText(PARTY_MSG_CHOOSE_MON, PARTY_MENU_PROMPT_WINDOW_STANDARD);
         gTasks[taskId].func = HandleDefaultPartyMenu;
     }
 }
@@ -687,7 +687,7 @@ static void Task_ResetFieldPartyMenu(u8 taskId)
 {
     sFieldPartyMenuCursorPos = 0;
     Menu_EraseWindowRect(19, 0, 29, 19);
-    PrintPartyMenuPromptText(0, 0);
+    PrintPartyMenuPromptText(PARTY_MSG_CHOOSE_MON, PARTY_MENU_PROMPT_WINDOW_STANDARD);
     gTasks[taskId].func = HandleDefaultPartyMenu;
 }
 
@@ -724,9 +724,9 @@ static void PokemonMenu_FieldMove(u8 taskId)
     {
         Menu_EraseWindowRect(19, 0, 29, 19);
         if (IS_SOFTBOILED_MILKDRINK(tFieldMoveId))
-            PrintPartyMenuPromptText(9, 0);
+            PrintPartyMenuPromptText(PARTY_MSG_CANT_USE_HERE, PARTY_MENU_PROMPT_WINDOW_STANDARD);
         else
-            PrintPartyMenuPromptText(sFieldMoveCursorCallbacks[tFieldMoveId].msgId, 0);
+            PrintPartyMenuPromptText(sFieldMoveCursorCallbacks[tFieldMoveId].promptTextId, PARTY_MENU_PROMPT_WINDOW_STANDARD);
         gTasks[taskId].func = Task_WaitForFieldMoveMessage;
     }
     else if (tFieldMoveId <= FIELD_MOVE_WATERFALL && FlagGet(FLAG_BADGE01_GET + tFieldMoveId) != TRUE)
@@ -754,9 +754,9 @@ static void PokemonMenu_FieldMove(u8 taskId)
         {
             Menu_EraseWindowRect(19, 0, 29, 19);
             if (IS_SURF(tFieldMoveId) && TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING))
-                PrintPartyMenuPromptText(8, 0);
+                PrintPartyMenuPromptText(PARTY_MSG_ALREADY_SURFING, PARTY_MENU_PROMPT_WINDOW_STANDARD);
             else
-                PrintPartyMenuPromptText(sFieldMoveCursorCallbacks[tFieldMoveId].msgId, 0);
+                PrintPartyMenuPromptText(sFieldMoveCursorCallbacks[tFieldMoveId].promptTextId, PARTY_MENU_PROMPT_WINDOW_STANDARD);
             gTasks[taskId].func = Task_WaitForFieldMoveMessage;
         }
     }

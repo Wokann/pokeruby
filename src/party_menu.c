@@ -442,14 +442,14 @@ static const struct PartyMonTextSettingsStruct sPartyMonTextSettings[4][6] =
 
 static const struct PartyMenuHandlersStruct sPartyMenuHandlers[] =
 {
-    {HandleDefaultPartyMenu,         SetupDefaultPartyMenu,            0}, // PARTY_MENU_TYPE_STANDARD
-    {HandleBattlePartyMenu,          SetUpBattlePartyMenu,             0}, // PARTY_MENU_TYPE_BATTLE
-    {HandleSelectPartyMenu,          SetupContestPartyMenu,            0}, // PARTY_MENU_TYPE_CONTEST
-    {HandleSelectPartyMenu,          SetupDefaultPartyMenu,            0}, // PARTY_MENU_TYPE_IN_GAME_TRADE
-    {HandleBattleTowerPartyMenu,     SetupBattleTowerPartyMenu,        0}, // PARTY_MENU_TYPE_BATTLE_TOWER
-    {HandleLinkMultiBattlePartyMenu, SetupLinkMultiBattlePartyMenu, 0xFF}, // PARTY_MENU_TYPE_LINK_MULTI_BATTLE
-    {HandleDaycarePartyMenu,         SetupDefaultPartyMenu,         0x0F}, // PARTY_MENU_TYPE_DAYCARE
-    {HandleMoveRelearnerPartyMenu,   SetupMoveRelearnerPartyMenu,      0}, // PARTY_MENU_TYPE_MOVE_RELEARNER
+    {HandleDefaultPartyMenu,         SetupDefaultPartyMenu,         PARTY_MSG_CHOOSE_MON},   // PARTY_MENU_TYPE_STANDARD
+    {HandleBattlePartyMenu,          SetUpBattlePartyMenu,          PARTY_MSG_CHOOSE_MON},   // PARTY_MENU_TYPE_BATTLE
+    {HandleSelectPartyMenu,          SetupContestPartyMenu,         PARTY_MSG_CHOOSE_MON},   // PARTY_MENU_TYPE_CONTEST
+    {HandleSelectPartyMenu,          SetupDefaultPartyMenu,         PARTY_MSG_CHOOSE_MON},   // PARTY_MENU_TYPE_IN_GAME_TRADE
+    {HandleBattleTowerPartyMenu,     SetupBattleTowerPartyMenu,     PARTY_MSG_CHOOSE_MON},   // PARTY_MENU_TYPE_BATTLE_TOWER
+    {HandleLinkMultiBattlePartyMenu, SetupLinkMultiBattlePartyMenu, PARTY_MSG_NONE},         // PARTY_MENU_TYPE_LINK_MULTI_BATTLE
+    {HandleDaycarePartyMenu,         SetupDefaultPartyMenu,         PARTY_MSG_CHOOSE_MON_2}, // PARTY_MENU_TYPE_DAYCARE
+    {HandleMoveRelearnerPartyMenu,   SetupMoveRelearnerPartyMenu,   PARTY_MSG_CHOOSE_MON},   // PARTY_MENU_TYPE_MOVE_RELEARNER
 };
 
 extern u16 gBattleTypeFlags;
@@ -699,7 +699,7 @@ bool8 InitPartyMenu(void)
             gMain.state++;
         break;
     case 15:
-        PrintPartyMenuPromptText(gPartyMenu.promptTextId, 0);
+        PrintPartyMenuPromptText(gPartyMenu.promptTextId, PARTY_MENU_PROMPT_WINDOW_STANDARD);
         gMain.state++;
         break;
     case 16:
@@ -1798,7 +1798,7 @@ void SetupDefaultPartyMenuSwitchPokemon(u8 taskId)
     CopyPartyMenuCursorSprite(taskId, sPartyMenuTwoMonAction.firstSelectedMonSpriteId);
     sPartyMenuTwoMonAction.currentSelectionSpriteId = GetPartyMenuCursorSpriteId(taskId);
 
-    PrintPartyMenuPromptText(gPartyMenu.pmTwoMonActionPromptTextId, 0);
+    PrintPartyMenuPromptText(gPartyMenu.pmTwoMonActionPromptTextId, PARTY_MENU_PROMPT_WINDOW_STANDARD);
 
     DrawPartyMenuMonBackgroundWithStatus(&sPartyMenuMonBackgroundCoords[gSprites[sPartyMenuTwoMonAction.firstSelectedMonSpriteId].data[0] * 2], gSprites[sPartyMenuTwoMonAction.firstSelectedMonSpriteId].data[0], 6, FALSE);
     gPartyMenu.backgroundRedrawState = 2;
@@ -1852,7 +1852,7 @@ void HandlePartyMenuSwitchPokemonInput(u8 taskId)
 void FinishTwoMonAction(u8 taskId)
 {
     DestroySprite(&gSprites[sPartyMenuTwoMonAction.firstSelectedMonSpriteId]);
-    PrintPartyMenuPromptText(0, 0);
+    PrintPartyMenuPromptText(PARTY_MSG_CHOOSE_MON, PARTY_MENU_PROMPT_WINDOW_STANDARD);
 
     gPartyMenu.backgroundRedrawState = 2;
     SwitchTaskToFollowupFunc(sPartyMenuTwoMonAction.partyMenuTaskId);
@@ -2144,20 +2144,20 @@ void OffsetLinkMultiBattlePartnerMonIcon(u8 taskId, u8 monIndex)
 
 void PrintPartyMenuPromptText(u8 textId, u8 windowType)
 {
-    if (textId != 0xFF)
+    if (textId != PARTY_MSG_NONE)
     {
         switch (windowType)
         {
-        case 0:
+        case PARTY_MENU_PROMPT_WINDOW_STANDARD:
             Menu_DrawStdWindowFrame(0, 16, 23, 19);
             break;
-        case 1:
+        case PARTY_MENU_PROMPT_WINDOW_NARROW:
             Menu_DrawStdWindowFrame(0, 16, 19, 19);
             break;
-        case 2:
+        case PARTY_MENU_PROMPT_WINDOW_WIDE:
             Menu_DrawStdWindowFrame(0, 16, 22, 19);
             break;
-        case 3:
+        case PARTY_MENU_PROMPT_WINDOW_COMPACT:
             Menu_DrawStdWindowFrame(0, 16, 18, 19);
             break;
         }
@@ -3907,7 +3907,7 @@ void DoPPRecoveryItemEffect(u8 taskId, u16 item, TaskFunc followupCallback)
     else
     {
         PlaySE(SE_SELECT);
-        PrintPartyMenuPromptText(10, 3);
+        PrintPartyMenuPromptText(PARTY_MSG_RESTORE_WHICH_MOVE, PARTY_MENU_PROMPT_WINDOW_COMPACT);
         CreateItemUseMoveMenu(sPartyMenuAction.selectedMonIndex);
         gTasks[taskId2].func = Task_HandleItemUseMoveMenuInput;
         gMain.newKeys = 0;
@@ -3931,7 +3931,7 @@ void ItemUseMoveMenu_HandleCancel(u8 taskId)
         gTasks[sPartyMenuAction.menuTaskId].func = HandleBattlePartyMenu;
     else
         gTasks[sPartyMenuAction.menuTaskId].func = Task_HandlePartyMenuItemUseInput;
-    PrintPartyMenuPromptText(3, 0);
+    PrintPartyMenuPromptText(PARTY_MSG_USE_ON_WHICH_MON, PARTY_MENU_PROMPT_WINDOW_STANDARD);
     DestroyTask(taskId);
 }
 
@@ -3963,7 +3963,7 @@ void DoPPUpItemEffect(u8 taskId, u16 item, TaskFunc followupCallback)
     gTasks[taskId].func = TaskDummy;
     SetPartyMenuItemUseContext(taskId, item, followupCallback);
     PlaySE(SE_SELECT);
-    PrintPartyMenuPromptText(11, 3);
+    PrintPartyMenuPromptText(PARTY_MSG_BOOST_PP_WHICH_MOVE, PARTY_MENU_PROMPT_WINDOW_COMPACT);
     CreateItemUseMoveMenu(sPartyMenuAction.selectedMonIndex);
     CreateTask(Task_HandleItemUseMoveMenuInput, 5);
     gMain.newKeys = 0;

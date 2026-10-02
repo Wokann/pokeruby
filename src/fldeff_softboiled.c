@@ -49,7 +49,7 @@ bool8 SetUpFieldMove_SoftBoiled(void) {
 
 void ChooseMonForSoftboiled(u8 taskid) {
     sPartyMenuTwoMonAction.twoMonActionCallback = Task_TryUseSoftboiledOnPartyMon;
-    gPartyMenu.pmTwoMonActionPromptTextId = 3;
+    gPartyMenu.pmTwoMonActionPromptTextId = PARTY_MSG_USE_ON_WHICH_MON;
     DoPokemonMenu_Switch(taskid);
 }
 
@@ -106,7 +106,7 @@ static void Task_ChooseNewMonForSoftboiled(u8 taskId) {
     }
 
     Menu_EraseWindowRect(WINDOW_LEFT, 14, WINDOW_RIGHT, 19);
-    PrintPartyMenuPromptText(3, 0);
+    PrintPartyMenuPromptText(PARTY_MSG_USE_ON_WHICH_MON, PARTY_MENU_PROMPT_WINDOW_STANDARD);
     gTasks[taskId].func = HandlePartyMenuSwitchPokemonInput;
 }
 
@@ -123,6 +123,6 @@ static void Task_FinishSoftboiled(u8 taskId)
     gPartyMenu.backgroundRedrawState = 2;
     DestroySprite(&gSprites[sPartyMenuTwoMonAction.firstSelectedMonSpriteId]);
     Menu_EraseWindowRect(WINDOW_LEFT, 14, WINDOW_RIGHT, 19);
-    PrintPartyMenuPromptText(0, 0);
+    PrintPartyMenuPromptText(PARTY_MSG_CHOOSE_MON, PARTY_MENU_PROMPT_WINDOW_STANDARD);
     SwitchTaskToFollowupFunc(sPartyMenuTwoMonAction.partyMenuTaskId);
 }
