@@ -6,7 +6,7 @@
 #include "graphics.h"
 #include "hall_of_fame.h"
 #include "intro_credits_graphics.h"
-#include "libgncmultiboot.h"
+#include "libgcnmultiboot.h"
 #include "link.h"
 #include "m4a.h"
 #include "main.h"
