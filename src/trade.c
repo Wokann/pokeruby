@@ -41,6 +41,8 @@
 #include "trade.h"
 #include "ewram.h"
 
+extern struct SpriteTemplate gCreatingSpriteTemplate;
+
 #ifndef NONMATCHING
 asm(".include \"constants/gba_constants.inc\"");
 #endif

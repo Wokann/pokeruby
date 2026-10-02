@@ -11,6 +11,7 @@
 #include "overworld.h"
 #include "party_menu.h"
 #include "pokemon.h"
+#include "pokemon_menu.h"
 #include "pokemon_storage_system.h"
 #include "random.h"
 #include "script.h"

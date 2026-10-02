@@ -31,6 +31,8 @@
 #include "tv.h"
 #include "util.h"
 
+extern struct SpriteTemplate gCreatingSpriteTemplate;
+
 #define ABS(x) ((x) < 0 ? -(x) : (x))
 #define tCategory data[9]
 

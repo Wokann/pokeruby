@@ -21,6 +21,8 @@
 #include "trig.h"
 #include "ewram.h"
 
+extern struct SpriteTemplate gCreatingSpriteTemplate;
+
 enum
 {
     ANIMDATA_ROT_IDX,

@@ -32,6 +32,8 @@
 #include "pokemon_icon.h"
 #include "field_effect.h"
 
+extern struct SpriteTemplate gCreatingSpriteTemplate;
+
 struct WatanabeDebugPokemonEditorField {
     u32 minValue;
     u32 maxValue;
