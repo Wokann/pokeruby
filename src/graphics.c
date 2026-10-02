@@ -1083,7 +1083,7 @@ const u16 gWallClockFemale_Pal[] = INCBIN_U16("graphics/wallclock/female.gbapal"
 const u8 gSlotMachineMenu_Gfx[] = INCBIN_U8("graphics/slot_machine/menu.4bpp.lz");
 const u8 gBattleInterfaceStatusIcons_DynPal[] = INCBIN_U8("graphics/battle_interface/status.gbapal");
 const u8 gUnusedArrowGfx[] = INCBIN_U8("graphics/unused/arrow.4bpp"); // unused
-const u8 gBerryBlenderScoreSymbols_Gfx[] = INCBIN_U8("graphics/berry_blender/marubatsu.4bpp");
+const u8 gBerryBlenderScoreSymbols_Gfx[] = INCBIN_U8("graphics/berry_blender/score_symbols.4bpp");
 const u8 gBerryBlenderParticles_Gfx[] = INCBIN_U8("graphics/berry_blender/particles.4bpp");
 
 asm(".space 0x120");
