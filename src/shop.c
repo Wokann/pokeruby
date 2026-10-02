@@ -65,8 +65,8 @@ struct MartInfo
 
 extern bool8 SellMenu_QuantityRoller(u8, u8);
 
-extern u8 gBuyMenuFrame_Gfx[];
-extern u16 gBuyMenuFrame_Tilemap[];
+extern const u8 gShopMenu_Gfx[];
+extern const u8 gShopMenu_Tilemap[];
 extern const u8 gShopMenuMoney_Pal[32];
 
 static void Shop_DisplayPriceInList(int firstItemId, int lastItemId, bool32 hasControlCode);
@@ -301,8 +301,8 @@ static void BuyMenuDrawGraphics(void)
     gPaletteFade.bufferTransferDisabled = 1;
 
     Dma3FillLarge32_(0, (void*)OAM, OAM_SIZE);
-    LZDecompressVram(gBuyMenuFrame_Gfx, (void*)(VRAM + 0x7C00));
-    LZDecompressWram(gBuyMenuFrame_Tilemap, ewram18000);
+    LZDecompressVram(gShopMenu_Gfx, (void*)(VRAM + 0x7C00));
+    LZDecompressWram(gShopMenu_Tilemap, ewram18000);
     LoadCompressedPalette(gShopMenuMoney_Pal, 0xC0, sizeof(gShopMenuMoney_Pal));
     FreeAllSpritePalettes();
     ResetPaletteFade();
