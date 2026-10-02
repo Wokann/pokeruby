@@ -1360,28 +1360,28 @@ gTilesetPalettes_TrickHousePuzzle:: @ 824EEA8
 
 	.align 2
 
-gTilesetTiles_Ship:: @ 824F0A8
-	.incbin "data/tilesets/secondary/ship/tiles.4bpp.lz"
+gTilesetTiles_InsideShip:: @ 824F0A8
+	.incbin "data/tilesets/secondary/inside_ship/tiles.4bpp.lz"
 
 	.align 2
 
-gTilesetPalettes_Ship:: @ 824FC78
-	.incbin "data/tilesets/secondary/ship/palettes/00.gbapal"
-	.incbin "data/tilesets/secondary/ship/palettes/01.gbapal"
-	.incbin "data/tilesets/secondary/ship/palettes/02.gbapal"
-	.incbin "data/tilesets/secondary/ship/palettes/03.gbapal"
-	.incbin "data/tilesets/secondary/ship/palettes/04.gbapal"
-	.incbin "data/tilesets/secondary/ship/palettes/05.gbapal"
-	.incbin "data/tilesets/secondary/ship/palettes/06.gbapal"
-	.incbin "data/tilesets/secondary/ship/palettes/07.gbapal"
-	.incbin "data/tilesets/secondary/ship/palettes/08.gbapal"
-	.incbin "data/tilesets/secondary/ship/palettes/09.gbapal"
-	.incbin "data/tilesets/secondary/ship/palettes/10.gbapal"
-	.incbin "data/tilesets/secondary/ship/palettes/11.gbapal"
-	.incbin "data/tilesets/secondary/ship/palettes/12.gbapal"
-	.incbin "data/tilesets/secondary/ship/palettes/13.gbapal"
-	.incbin "data/tilesets/secondary/ship/palettes/14.gbapal"
-	.incbin "data/tilesets/secondary/ship/palettes/15.gbapal"
+gTilesetPalettes_InsideShip:: @ 824FC78
+	.incbin "data/tilesets/secondary/inside_ship/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/inside_ship/palettes/15.gbapal"
 
 	.align 2
 

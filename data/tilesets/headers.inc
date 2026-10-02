@@ -106,7 +106,7 @@
 
 	tileset MossdeepGym, TRUE, TRUE, gTilesetTiles_MossdeepGym, gTilesetPalettes_MossdeepGym, gMetatiles_MossdeepGym, gMetatileAttributes_MossdeepGym, NULL @ 82871EC
 
-	tileset Ship, TRUE, TRUE, gTilesetTiles_Ship, gTilesetPalettes_Ship, gMetatiles_Ship, gMetatileAttributes_Ship, NULL @ 8287204
+	tileset InsideShip, TRUE, TRUE, gTilesetTiles_InsideShip, gTilesetPalettes_InsideShip, gMetatiles_InsideShip, gMetatileAttributes_InsideShip, NULL @ 8287204
 
 	tileset SecretBase, FALSE, FALSE, gTilesetTiles_SecretBase, gTilesetPalettes_SecretBase, gMetatiles_SecretBasePrimary, gMetatileAttributes_SecretBasePrimary, NULL @ 828721C
 
