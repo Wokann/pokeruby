@@ -3,6 +3,7 @@
 
 #include "constants/abilities.h"
 #include "constants/global.h"
+#include "constants/moves.h"
 #include "constants/pokemon.h"
 #include "sprite.h"
 #include "battle.h"
@@ -42,8 +43,8 @@ extern const struct CompressedSpritePalette gTrainerBackPicPaletteTable[];
 extern const u8 gEnemyMonElevation[];
 extern const u8 gTrainerClassNames[][13];
 extern const struct Trainer gTrainers[];
-extern const u8 gSpeciesNames[][11];
-extern const u8 gMoveNames[][13];
+extern const u8 gSpeciesNames[][POKEMON_NAME_LENGTH + 1];
+extern const u8 gMoveNames[MOVES_COUNT][MOVE_NAME_LENGTH + 1];
 extern const u8 gAbilityNames[][ABILITY_NAME_LENGTH + 1];
 extern const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT];
 extern const u8 gTypeNames[NUMBER_OF_MON_TYPES][TYPE_NAME_LENGTH + 1];

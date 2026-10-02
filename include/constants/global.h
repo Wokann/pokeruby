@@ -64,6 +64,10 @@
 #define TRAINER_ID_LENGTH 4
 #define ITEM_NAME_LENGTH 14
 #define PLAYER_NAME_LENGTH 7
+#define POKEMON_NAME_LENGTH 10
+#define POKEMON_NAME_BUFFER_SIZE max(20, POKEMON_NAME_LENGTH + 1) // Frequently used buffer size. Larger than necessary
+#define OT_NAME_LENGTH 7
+#define MOVE_NAME_LENGTH 12
 #define TYPE_NAME_LENGTH 6
 #define MAIL_WORDS_COUNT  9
 #define MAX_MON_MOVES 4

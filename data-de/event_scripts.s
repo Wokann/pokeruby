@@ -12,6 +12,8 @@
 #undef PC_LOCATION_OTHER
 #undef PC_LOCATION_BRENDANS_HOUSE
 #undef PC_LOCATION_MAYS_HOUSE
+#undef POKEMON_NAME_LENGTH
+#undef MOVE_NAME_LENGTH
 #include "constants/field_tasks.h"
 #include "constants/flags.h"
 #include "constants/game_stat.h"
