@@ -1,6 +1,7 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_bg.h"
+#include "battle_message.h"
 #include "decompress.h"
 #include "ewram.h"
 #include "graphics.h"
@@ -21,10 +22,6 @@ extern u16 gBattleTypeFlags;
 extern u8 gBattleOutcome;
 
 extern struct Window gWindowTemplate_Contest_MoveDescription;
-
-extern u8 BattleText_Win[];
-extern u8 BattleText_Loss[];
-extern u8 BattleText_Tie[];
 
 extern const u8 gGameVersion;
 extern u16 gBattleTypeFlags;
@@ -469,7 +466,7 @@ static void DrawLinkBattleVsScreenOutcomeText(void)
 
     if (gBattleOutcome == B_OUTCOME_DREW)
     {
-        PRINT_MESSAGE(BattleText_Tie, TILE_OFFSET_WIN, CENTER_MESSAGE_X);
+        PRINT_MESSAGE(gText_Tie, TILE_OFFSET_WIN, CENTER_MESSAGE_X);
         return;
     }
 
@@ -485,14 +482,14 @@ static void DrawLinkBattleVsScreenOutcomeText(void)
             {
             case 0:
             case 2:
-                PRINT_MESSAGE_LEFT(BattleText_Win, TILE_OFFSET_WIN);
-                PRINT_MESSAGE_RIGHT(BattleText_Loss, TILE_OFFSET_LOSS);
+                PRINT_MESSAGE_LEFT(gText_Win, TILE_OFFSET_WIN);
+                PRINT_MESSAGE_RIGHT(gText_Loss, TILE_OFFSET_LOSS);
                 return;
 
             case 1:
             case 3:
-                PRINT_MESSAGE_RIGHT(BattleText_Win, TILE_OFFSET_WIN)
-                PRINT_MESSAGE_LEFT(BattleText_Loss, TILE_OFFSET_LOSS)
+                PRINT_MESSAGE_RIGHT(gText_Win, TILE_OFFSET_WIN)
+                PRINT_MESSAGE_LEFT(gText_Loss, TILE_OFFSET_LOSS)
                 return;
             }
         }
@@ -503,14 +500,14 @@ static void DrawLinkBattleVsScreenOutcomeText(void)
             {
             case 1:
             case 3:
-                PRINT_MESSAGE_LEFT(BattleText_Win, TILE_OFFSET_WIN);
-                PRINT_MESSAGE_RIGHT(BattleText_Loss, TILE_OFFSET_LOSS);
+                PRINT_MESSAGE_LEFT(gText_Win, TILE_OFFSET_WIN);
+                PRINT_MESSAGE_RIGHT(gText_Loss, TILE_OFFSET_LOSS);
                 return;
 
             case 0:
             case 2:
-                PRINT_MESSAGE_RIGHT(BattleText_Win, TILE_OFFSET_WIN);
-                PRINT_MESSAGE_LEFT(BattleText_Loss, TILE_OFFSET_LOSS);
+                PRINT_MESSAGE_RIGHT(gText_Win, TILE_OFFSET_WIN);
+                PRINT_MESSAGE_LEFT(gText_Loss, TILE_OFFSET_LOSS);
                 return;
             }
         }
@@ -523,26 +520,26 @@ static void DrawLinkBattleVsScreenOutcomeText(void)
     {
         if (gLinkPlayers[gBattleStruct->multiplayerId].id != 0)
         {
-            PRINT_MESSAGE_RIGHT(BattleText_Win, TILE_OFFSET_WIN);
-            PRINT_MESSAGE_LEFT(BattleText_Loss, TILE_OFFSET_LOSS);
+            PRINT_MESSAGE_RIGHT(gText_Win, TILE_OFFSET_WIN);
+            PRINT_MESSAGE_LEFT(gText_Loss, TILE_OFFSET_LOSS);
         }
         else
         {
-            PRINT_MESSAGE_LEFT(BattleText_Win, TILE_OFFSET_WIN);
-            PRINT_MESSAGE_RIGHT(BattleText_Loss, TILE_OFFSET_LOSS);
+            PRINT_MESSAGE_LEFT(gText_Win, TILE_OFFSET_WIN);
+            PRINT_MESSAGE_RIGHT(gText_Loss, TILE_OFFSET_LOSS);
         }
     }
     else
     {
         if (gLinkPlayers[gBattleStruct->multiplayerId].id != 0)
         {
-            PRINT_MESSAGE_LEFT(BattleText_Win, TILE_OFFSET_WIN);
-            PRINT_MESSAGE_RIGHT(BattleText_Loss, TILE_OFFSET_LOSS);
+            PRINT_MESSAGE_LEFT(gText_Win, TILE_OFFSET_WIN);
+            PRINT_MESSAGE_RIGHT(gText_Loss, TILE_OFFSET_LOSS);
         }
         else
         {
-            PRINT_MESSAGE_RIGHT(BattleText_Win, TILE_OFFSET_WIN);
-            PRINT_MESSAGE_LEFT(BattleText_Loss, TILE_OFFSET_LOSS);
+            PRINT_MESSAGE_RIGHT(gText_Win, TILE_OFFSET_WIN);
+            PRINT_MESSAGE_LEFT(gText_Loss, TILE_OFFSET_LOSS);
         }
     }
 }

@@ -208,5 +208,8 @@ u32 BattleStringExpandPlaceholders(const u8* src, u8* dst);
 extern const u8 *const gBattleStringsTable[];
 extern const u8 *const gStatNamesTable[];
 extern const u8 *const gPokeblockWasTooXStringTable[];
+extern const u8 gText_Win[];
+extern const u8 gText_Loss[];
+extern const u8 gText_Tie[];
 
 #endif // GUARD_BATTLE_MESSAGE_H
