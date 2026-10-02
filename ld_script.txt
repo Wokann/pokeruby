@@ -480,7 +480,7 @@ SECTIONS {
         src/battle_script_commands.o(.rodata);
         src/battle_controller_player.o(.rodata);
         data/battle_anim_smokescreen.o(.rodata); /* why is smokescreen rodata way up here and not in the correct location? */
-        data/battle_7.o(.rodata);
+        data/battle_gfx_sfx_util.o(.rodata);
         src/battle_controller_opponent.o(.rodata);
         src/battle_ai_switch_items.o(.rodata);
         src/battle_controller_link_opponent.o(.rodata);
