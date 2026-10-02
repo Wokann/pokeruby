@@ -67,19 +67,19 @@ static s16 GetReflectionVerticalOffset(struct ObjectEvent *objectEvent)
     return GetObjectEventGraphicsInfo(objectEvent->graphicsId)->height - 2;
 }
 
-static void LoadObjectReflectionPalette(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+static void LoadObjectReflectionPalette(struct ObjectEvent *objectEvent, struct Sprite *reflectionSprite)
 {
     u8 bridgeType;
     u16 bridgeReflectionVerticalOffsets[] = { 12, 28, 44 };
-    sprite->sReflectionVerticalOffset = 0;
+    reflectionSprite->sReflectionVerticalOffset = 0;
     if (!GetObjectEventGraphicsInfo(objectEvent->graphicsId)->disableReflectionPaletteLoad && ((bridgeType = MetatileBehavior_GetBridgeType(objectEvent->previousMetatileBehavior)) || (bridgeType = MetatileBehavior_GetBridgeType(objectEvent->currentMetatileBehavior))))
     {
-        sprite->sReflectionVerticalOffset = bridgeReflectionVerticalOffsets[bridgeType - 1];
-        LoadObjectHighBridgeReflectionPalette(objectEvent, sprite->oam.paletteNum);
+        reflectionSprite->sReflectionVerticalOffset = bridgeReflectionVerticalOffsets[bridgeType - 1];
+        LoadObjectHighBridgeReflectionPalette(objectEvent, reflectionSprite->oam.paletteNum);
     }
     else
     {
-        LoadObjectRegularReflectionPalette(objectEvent, sprite->oam.paletteNum);
+        LoadObjectRegularReflectionPalette(objectEvent, reflectionSprite->oam.paletteNum);
     }
 }
 
@@ -88,7 +88,7 @@ static void LoadObjectRegularReflectionPalette(struct ObjectEvent *objectEvent, 
     const struct ObjectEventGraphicsInfo *graphicsInfo;
 
     graphicsInfo = GetObjectEventGraphicsInfo(objectEvent->graphicsId);
-    if (graphicsInfo->bridgeReflectionPaletteTag != OBJ_EVENT_PAL_TAG_NONE)
+    if (graphicsInfo->reflectionPaletteTag != OBJ_EVENT_PAL_TAG_NONE)
     {
         if (graphicsInfo->paletteSlot == PALSLOT_PLAYER)
         {
@@ -113,9 +113,9 @@ static void LoadObjectHighBridgeReflectionPalette(struct ObjectEvent *objectEven
     const struct ObjectEventGraphicsInfo *graphicsInfo;
 
     graphicsInfo = GetObjectEventGraphicsInfo(objectEvent->graphicsId);
-    if (graphicsInfo->bridgeReflectionPaletteTag != OBJ_EVENT_PAL_TAG_NONE)
+    if (graphicsInfo->reflectionPaletteTag != OBJ_EVENT_PAL_TAG_NONE)
     {
-        PatchObjectPalette(graphicsInfo->bridgeReflectionPaletteTag, paletteNum);
+        PatchObjectPalette(graphicsInfo->reflectionPaletteTag, paletteNum);
         UpdateSpritePaletteWithWeather(paletteNum);
     }
 }
@@ -229,10 +229,11 @@ const u16 gShadowVerticalOffsets[] = {
     16
 };
 
-#define sShadowLocalId  data[0]
-#define sShadowMapNum   data[1]
-#define sShadowMapGroup data[2]
-#define sShadowYOffset  data[3]
+// Sprite data for FLDEFF_SHADOW
+#define sLocalId  data[0]
+#define sMapNum   data[1]
+#define sMapGroup data[2]
+#define sYOffset  data[3]
 
 u32 FldEff_Shadow(void)
 {
@@ -246,10 +247,10 @@ u32 FldEff_Shadow(void)
     if (spriteId != MAX_SPRITES)
     {
         gSprites[spriteId].coordOffsetEnabled = TRUE;
-        gSprites[spriteId].sShadowLocalId = gFieldEffectArguments[0];
-        gSprites[spriteId].sShadowMapNum = gFieldEffectArguments[1];
-        gSprites[spriteId].sShadowMapGroup = gFieldEffectArguments[2];
-        gSprites[spriteId].sShadowYOffset = (graphicsInfo->height >> 1) - gShadowVerticalOffsets[graphicsInfo->shadowSize];
+        gSprites[spriteId].sLocalId = gFieldEffectArguments[0];
+        gSprites[spriteId].sMapNum = gFieldEffectArguments[1];
+        gSprites[spriteId].sMapGroup = gFieldEffectArguments[2];
+        gSprites[spriteId].sYOffset = (graphicsInfo->height >> 1) - gShadowVerticalOffsets[graphicsInfo->shadowSize];
     }
     return 0;
 }
@@ -260,7 +261,7 @@ void UpdateShadowFieldEffect(struct Sprite *sprite)
     struct ObjectEvent *objectEvent;
     struct Sprite *linkedSprite;
 
-    if (TryGetObjectEventIdByLocalIdAndMap(sprite->sShadowLocalId, sprite->sShadowMapNum, sprite->sShadowMapGroup, &objectEventId))
+    if (TryGetObjectEventIdByLocalIdAndMap(sprite->sLocalId, sprite->sMapNum, sprite->sMapGroup, &objectEventId))
     {
         FieldEffectStop(sprite, FLDEFF_SHADOW);
     }
@@ -270,7 +271,7 @@ void UpdateShadowFieldEffect(struct Sprite *sprite)
         linkedSprite = &gSprites[objectEvent->spriteId];
         sprite->oam.priority = linkedSprite->oam.priority;
         sprite->x = linkedSprite->x;
-        sprite->y = linkedSprite->y + sprite->sShadowYOffset;
+        sprite->y = linkedSprite->y + sprite->sYOffset;
         if (!objectEvent->active || !objectEvent->hasShadow
          || MetatileBehavior_IsPokeGrass(objectEvent->currentMetatileBehavior)
          || MetatileBehavior_IsSurfableWaterOrUnderwater(objectEvent->currentMetatileBehavior)
@@ -283,10 +284,10 @@ void UpdateShadowFieldEffect(struct Sprite *sprite)
     }
 }
 
-#undef sShadowLocalId
-#undef sShadowMapNum
-#undef sShadowMapGroup
-#undef sShadowYOffset
+#undef sLocalId
+#undef sMapNum
+#undef sMapGroup
+#undef sYOffset
 
 #define sElevation   data[0]
 #define sX           data[1]
@@ -961,11 +962,12 @@ u32 FldEff_WaterSurfacing(void)
     return 0;
 }
 
-#define sAshState      data[0]
-#define sAshX          data[1]
-#define sAshY          data[2]
-#define sAshMetatileId data[3]
-#define sAshDelay      data[4]
+// Sprite data for FLDEFF_ASH
+#define sState      data[0]
+#define sX          data[1]
+#define sY          data[2]
+#define sMetatileId data[3]
+#define sDelay      data[4]
 
 void StartAshFieldEffect(s16 x, s16 y, u16 metatileId, s16 delay)
 {
@@ -994,10 +996,10 @@ u32 FldEff_Ash(void)
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gFieldEffectArguments[3];
-        sprite->sAshX = gFieldEffectArguments[0];
-        sprite->sAshY = gFieldEffectArguments[1];
-        sprite->sAshMetatileId = gFieldEffectArguments[4];
-        sprite->sAshDelay = gFieldEffectArguments[5];
+        sprite->sX = gFieldEffectArguments[0];
+        sprite->sY = gFieldEffectArguments[1];
+        sprite->sMetatileId = gFieldEffectArguments[4];
+        sprite->sDelay = gFieldEffectArguments[5];
     }
     return 0;
 }
@@ -1010,25 +1012,25 @@ void (*const gAshFieldEffectFuncs[])(struct Sprite *) = {
 
 void UpdateAshFieldEffect(struct Sprite *sprite)
 {
-    gAshFieldEffectFuncs[sprite->sAshState](sprite);
+    gAshFieldEffectFuncs[sprite->sState](sprite);
 }
 
 static void UpdateAshFieldEffect_Wait(struct Sprite *sprite)
 {
     sprite->invisible = TRUE;
     sprite->animPaused = TRUE;
-    if (--sprite->sAshDelay == 0)
-        sprite->sAshState = 1;
+    if (--sprite->sDelay == 0)
+        sprite->sState = 1;
 }
 
 static void UpdateAshFieldEffect_Show(struct Sprite *sprite)
 {
     sprite->invisible = FALSE;
     sprite->animPaused = FALSE;
-    MapGridSetMetatileIdAt(sprite->sAshX, sprite->sAshY, sprite->sAshMetatileId);
-    CurrentMapDrawMetatileAt(sprite->sAshX, sprite->sAshY);
+    MapGridSetMetatileIdAt(sprite->sX, sprite->sY, sprite->sMetatileId);
+    CurrentMapDrawMetatileAt(sprite->sX, sprite->sY);
     gObjectEvents[gPlayerAvatar.objectEventId].triggerGroundEffectsOnMove = TRUE;
-    sprite->sAshState = 2;
+    sprite->sState = 2;
 }
 
 static void UpdateAshFieldEffect_End(struct Sprite *sprite)
@@ -1038,11 +1040,11 @@ static void UpdateAshFieldEffect_End(struct Sprite *sprite)
         FieldEffectStop(sprite, FLDEFF_ASH);
 }
 
-#undef sAshState
-#undef sAshX
-#undef sAshY
-#undef sAshMetatileId
-#undef sAshDelay
+#undef sState
+#undef sX
+#undef sY
+#undef sMetatileId
+#undef sDelay
 
 #define sBitfield     data[0]
 #define sPlayerOffset data[1]
@@ -1215,12 +1217,12 @@ u8 StartUnderwaterSurfBlobBobbing(u8 blobSpriteId)
 
 static void SpriteCB_UnderwaterSurfBlob(struct Sprite *sprite)
 {
-    struct Sprite *oldSprite;
+    struct Sprite *blobSprite;
 
-    oldSprite = &gSprites[sprite->sSpriteId];
+    blobSprite = &gSprites[sprite->sSpriteId];
     if (((sprite->sTimer++) & 0x03) == 0)
     {
-        oldSprite->y2 += sprite->sBobY;
+        blobSprite->y2 += sprite->sBobY;
     }
     if ((sprite->sTimer & 0x0F) == 0)
     {
@@ -1370,28 +1372,29 @@ u32 FldEff_BerryTreeGrowthSparkle(void)
     return 0;
 }
 
-#define sDisguiseState      data[0]
-#define sDisguiseFldEff     data[1]
-#define sDisguiseLocalId    data[2]
-#define sDisguiseMapNum     data[3]
-#define sDisguiseMapGroup   data[4]
-#define sDisguiseReadyToEnd data[7]
+// Sprite data for FLDEFF_TREE_DISGUISE / FLDEFF_MOUNTAIN_DISGUISE / FLDEFF_SAND_DISGUISE
+#define sState      data[0]
+#define sFldEff     data[1]
+#define sLocalId    data[2]
+#define sMapNum     data[3]
+#define sMapGroup   data[4]
+#define sReadyToEnd data[7]
 
 u32 ShowTreeDisguiseFieldEffect(void)
 {
-    return ShowDisguiseFieldEffect(FLDEFF_TREE_DISGUISE, 24, 4);
+    return ShowDisguiseFieldEffect(FLDEFF_TREE_DISGUISE, FLDEFFOBJ_TREE_DISGUISE, 4);
 }
 
 
 u32 ShowMountainDisguiseFieldEffect(void)
 {
-    return ShowDisguiseFieldEffect(FLDEFF_MOUNTAIN_DISGUISE, 25, 3);
+    return ShowDisguiseFieldEffect(FLDEFF_MOUNTAIN_DISGUISE, FLDEFFOBJ_MOUNTAIN_DISGUISE, 3);
 }
 
 
 u32 ShowSandDisguiseFieldEffect(void)
 {
-    return ShowDisguiseFieldEffect(FLDEFF_SAND_DISGUISE, 28, 2);
+    return ShowDisguiseFieldEffect(FLDEFF_SAND_DISGUISE, FLDEFFOBJ_SAND_DISGUISE, 2);
 }
 
 static u32 ShowDisguiseFieldEffect(u8 fldEff, u8 fldEffObj, u8 paletteNum)
@@ -1410,10 +1413,10 @@ static u32 ShowDisguiseFieldEffect(u8 fldEff, u8 fldEffObj, u8 paletteNum)
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled ++;
         sprite->oam.paletteNum = paletteNum;
-        sprite->sDisguiseFldEff = fldEff;
-        sprite->sDisguiseLocalId = gFieldEffectArguments[0];
-        sprite->sDisguiseMapNum = gFieldEffectArguments[1];
-        sprite->sDisguiseMapGroup = gFieldEffectArguments[2];
+        sprite->sFldEff = fldEff;
+        sprite->sLocalId = gFieldEffectArguments[0];
+        sprite->sMapNum = gFieldEffectArguments[1];
+        sprite->sMapGroup = gFieldEffectArguments[2];
     }
     return spriteId;
 }
@@ -1424,9 +1427,9 @@ void UpdateDisguiseFieldEffect(struct Sprite *sprite)
     const struct ObjectEventGraphicsInfo *graphicsInfo;
     struct Sprite *linkedSprite;
 
-    if (TryGetObjectEventIdByLocalIdAndMap(sprite->sDisguiseLocalId, sprite->sDisguiseMapNum, sprite->sDisguiseMapGroup, &objectEventId))
+    if (TryGetObjectEventIdByLocalIdAndMap(sprite->sLocalId, sprite->sMapNum, sprite->sMapGroup, &objectEventId))
     {
-        FieldEffectStop(sprite, sprite->sDisguiseFldEff);
+        FieldEffectStop(sprite, sprite->sFldEff);
     }
 
     graphicsInfo = GetObjectEventGraphicsInfo(gObjectEvents[objectEventId].graphicsId);
@@ -1435,18 +1438,18 @@ void UpdateDisguiseFieldEffect(struct Sprite *sprite)
     sprite->x = linkedSprite->x;
     sprite->y = (graphicsInfo->height >> 1) + linkedSprite->y - 16;
     sprite->subpriority = linkedSprite->subpriority - 1;
-    if (sprite->sDisguiseState == 1)
+    if (sprite->sState == 1)
     {
-        sprite->sDisguiseState++;
+        sprite->sState++;
         StartSpriteAnim(sprite, 1);
     }
-    if (sprite->sDisguiseState == 2 && sprite->animEnded)
+    if (sprite->sState == 2 && sprite->animEnded)
     {
-        sprite->sDisguiseReadyToEnd = 1;
+        sprite->sReadyToEnd = 1;
     }
-    if (sprite->sDisguiseState == 3)
+    if (sprite->sState == 3)
     {
-        FieldEffectStop(sprite, sprite->sDisguiseFldEff);
+        FieldEffectStop(sprite, sprite->sFldEff);
     }
 }
 
@@ -1454,7 +1457,7 @@ void StartRevealDisguise(struct ObjectEvent *objectEvent)
 {
     if (objectEvent->directionSequenceIndex == 1)
     {
-        gSprites[objectEvent->fieldEffectSpriteId].sDisguiseState++;
+        gSprites[objectEvent->fieldEffectSpriteId].sState++;
     }
 }
 
@@ -1471,21 +1474,21 @@ bool8 UpdateRevealDisguise(struct ObjectEvent *objectEvent)
         return TRUE;
     }
     sprite = &gSprites[objectEvent->fieldEffectSpriteId];
-    if (sprite->sDisguiseReadyToEnd)
+    if (sprite->sReadyToEnd)
     {
         objectEvent->directionSequenceIndex = 2;
-        sprite->sDisguiseState++;
+        sprite->sState++;
         return TRUE;
     }
     return FALSE;
 }
 
-#undef sDisguiseState
-#undef sDisguiseFldEff
-#undef sDisguiseLocalId
-#undef sDisguiseMapNum
-#undef sDisguiseMapGroup
-#undef sDisguiseReadyToEnd
+#undef sState
+#undef sFldEff
+#undef sLocalId
+#undef sMapNum
+#undef sMapGroup
+#undef sReadyToEnd
 
 #define sFinished data[0]
 #define sEndTimer data[1]
