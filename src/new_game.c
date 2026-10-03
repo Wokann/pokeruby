@@ -19,6 +19,7 @@
 #include "overworld.h"
 #include "play_time.h"
 #include "player_pc.h"
+#include "pokemon.h"
 #include "pokeblock.h"
 #include "pokedex.h"
 #include "pokemon_size_record.h"
@@ -26,23 +27,26 @@
 #include "random.h"
 #include "roamer.h"
 #include "rtc.h"
+#include "save.h"
 #include "script.h"
 #include "secret_base.h"
 #include "text.h"
 #include "tv.h"
 
+static void InitPlayerTrainerId(void);
+static void SetDefaultOptions(void);
+static void ClearPokedexFlags(void);
+static void WarpToTruck(void);
+
 EWRAM_DATA u8 gDifferentSaveFile = 0;
 EWRAM_DATA u8 gUnknown_020297ED = 0;
 
-extern u8 gPlayerPartyCount;
-extern u8 gUnusedPokedexU8;
-extern u16 gSaveFileStatus;
 
 extern u8 EventScript_ResetAllMapFlags[];
 
 static const struct ContestWinner sEmptyMuseumPortrait =
 {
-    .nickname = {EOS},
+    .monName = {EOS},
     .trainerName = {EOS},
 };
 
@@ -58,28 +62,28 @@ const s8 gUnknown_Debug_0823C788[][2] =
 const u8 gUnknown_Debug_0823C790[] = _("KRÖTE");
 #endif
 
-void write_word_to_mem(u32 var, u8 *dataPtr)
+void SetTrainerId(u32 trainerId, u8 *dst)
 {
-    dataPtr[0] = var;
-    dataPtr[1] = var >> 8;
-    dataPtr[2] = var >> 16;
-    dataPtr[3] = var >> 24;
+    dst[0] = trainerId;
+    dst[1] = trainerId >> 8;
+    dst[2] = trainerId >> 16;
+    dst[3] = trainerId >> 24;
 }
 
-void copy_word_to_mem(u8 *copyTo, u8 *copyFrom)
+void CopyTrainerId(u8 *dst, u8 *src)
 {
     s32 i;
     for (i = 0; i < 4; i++)
-        copyTo[i] = copyFrom[i];
+        dst[i] = src[i];
 }
 
-void InitPlayerTrainerId(void)
+static void InitPlayerTrainerId(void)
 {
-    write_word_to_mem((Random() << 16) | Random(), gSaveBlock2.playerTrainerId);
+    SetTrainerId((Random() << 16) | Random(), gSaveBlock2.playerTrainerId);
 }
 
 // L=A isnt set here for some reason.
-void SetDefaultOptions(void)
+static void SetDefaultOptions(void)
 {
     gSaveBlock2.optionsTextSpeed = OPTIONS_TEXT_SPEED_MID;
     gSaveBlock2.optionsWindowFrameType = 0;
@@ -89,7 +93,7 @@ void SetDefaultOptions(void)
     gSaveBlock2.regionMapZoom = FALSE;
 }
 
-void ClearPokedexFlags(void)
+static void ClearPokedexFlags(void)
 {
     gUnusedPokedexU8 = 0;
     memset(&gSaveBlock2.pokedex.owned, 0, sizeof(gSaveBlock2.pokedex.owned));
@@ -134,7 +138,7 @@ void debug_sub_8052E04()
 }
 #endif
 
-void WarpToTruck(void)
+static void WarpToTruck(void)
 {
     Overworld_SetWarpDestination(MAP_GROUP(MAP_INSIDE_OF_TRUCK), MAP_NUM(MAP_INSIDE_OF_TRUCK), -1, -1, -1);
     WarpIntoMap();

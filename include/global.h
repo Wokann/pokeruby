@@ -608,10 +608,10 @@ struct RecordMixingGift
 struct ContestWinner
 {
     /*0x00*/ u32 personality;  // personality
-    /*0x04*/ u32 otId;  // otId
+    /*0x04*/ u32 trainerId;  // otId
     /*0x08*/ u16 species;  // species
     /*0x0A*/ u8 contestCategory;
-    /*0x0B*/ u8 nickname[11];
+    /*0x0B*/ u8 monName[11];
     /*0x16*/ u8 trainerName[8];
 };
 

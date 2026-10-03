@@ -1736,8 +1736,8 @@ void DebugMenu_807808C(u32 a0)
     ConvertIntToDecimalStringN(strbuf, winner->species, STR_CONV_MODE_RIGHT_ALIGN, 3);
     Menu_PrintText(strbuf, 11, 4);
 
-    if (StringLength(winner->nickname) <= 11)
-        Menu_PrintText(winner->nickname, 11, 6);
+    if (StringLength(winner->monName) <= 11)
+        Menu_PrintText(winner->monName, 11, 6);
     else
         Menu_PrintText(Str_839C04D, 11, 6);
 

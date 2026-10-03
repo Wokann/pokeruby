@@ -582,66 +582,66 @@ const u8 gContestExcitementTable[][5] =
 const struct ContestWinner gDefaultContestWinners[] = {
     {
         .personality = 0,
-        .otId = 0xFFFF,
+        .trainerId = 0xFFFF,
         .species = SPECIES_TAILLOW,
         .contestCategory = CONTEST_CATEGORY_SMART,
-        .nickname = _(CONTEST_WINNER_1_NICKNAME),
+        .monName = _(CONTEST_WINNER_1_NICKNAME),
         .trainerName = _(CONTEST_WINNER_1_OTNAME),
     },
     {
         .personality = 0,
-        .otId = 0xFFFF,
+        .trainerId = 0xFFFF,
         .species = SPECIES_BRELOOM,
         .contestCategory = CONTEST_CATEGORY_BEAUTY,
-        .nickname = _(CONTEST_WINNER_2_NICKNAME),
+        .monName = _(CONTEST_WINNER_2_NICKNAME),
         .trainerName = _(CONTEST_WINNER_2_OTNAME),
     },
     {
         .personality = 0,
-        .otId = 0xFFFF,
+        .trainerId = 0xFFFF,
         .species = SPECIES_PELIPPER,
         .contestCategory = CONTEST_CATEGORY_COOL,
-        .nickname = _(CONTEST_WINNER_3_NICKNAME),
+        .monName = _(CONTEST_WINNER_3_NICKNAME),
         .trainerName = _(CONTEST_WINNER_3_OTNAME),
     },
     {
         .personality = 0,
-        .otId = 0xFFFF,
+        .trainerId = 0xFFFF,
         .species = SPECIES_PELIPPER,
         .contestCategory = CONTEST_CATEGORY_COOL,
-        .nickname = _(CONTEST_WINNER_4_NICKNAME),
+        .monName = _(CONTEST_WINNER_4_NICKNAME),
         .trainerName = _(CONTEST_WINNER_4_OTNAME),
     },
     {
         .personality = 0,
-        .otId = 0xFFFF,
+        .trainerId = 0xFFFF,
         .species = SPECIES_PELIPPER,
         .contestCategory = CONTEST_CATEGORY_COOL,
-        .nickname = _(CONTEST_WINNER_5_NICKNAME),
+        .monName = _(CONTEST_WINNER_5_NICKNAME),
         .trainerName = _(CONTEST_WINNER_5_OTNAME),
     },
     {
         .personality = 0,
-        .otId = 0xFFFF,
+        .trainerId = 0xFFFF,
         .species = SPECIES_DELCATTY,
         .contestCategory = CONTEST_CATEGORY_SMART,
-        .nickname = _(CONTEST_WINNER_6_NICKNAME),
+        .monName = _(CONTEST_WINNER_6_NICKNAME),
         .trainerName = _(CONTEST_WINNER_6_OTNAME),
     },
     {
         .personality = 0,
-        .otId = 0xFFFF,
+        .trainerId = 0xFFFF,
         .species = SPECIES_GULPIN,
         .contestCategory = CONTEST_CATEGORY_CUTE,
-        .nickname = _(CONTEST_WINNER_7_NICKNAME),
+        .monName = _(CONTEST_WINNER_7_NICKNAME),
         .trainerName = _(CONTEST_WINNER_7_OTNAME),
     },
     {
         .personality = 0,
-        .otId = 0xFFFF,
+        .trainerId = 0xFFFF,
         .species = SPECIES_LOUDRED,
         .contestCategory = CONTEST_CATEGORY_TOUGH,
-        .nickname = _(CONTEST_WINNER_8_NICKNAME),
+        .monName = _(CONTEST_WINNER_8_NICKNAME),
         .trainerName = _(CONTEST_WINNER_8_OTNAME),
     },
 };
@@ -4098,8 +4098,8 @@ bool8 Contest_SaveWinner(u8 rank)
 
         gSaveBlock1.contestWinners[saveIdx].personality = gContestMons[i].personality;
         gSaveBlock1.contestWinners[saveIdx].species = gContestMons[i].species;
-        gSaveBlock1.contestWinners[saveIdx].otId = gContestMons[i].otId;
-        StringCopy(gSaveBlock1.contestWinners[saveIdx].nickname, gContestMons[i].nickname);
+        gSaveBlock1.contestWinners[saveIdx].trainerId = gContestMons[i].otId;
+        StringCopy(gSaveBlock1.contestWinners[saveIdx].monName, gContestMons[i].nickname);
         StringCopy(gSaveBlock1.contestWinners[saveIdx].trainerName, gContestMons[i].trainerName);
         if (rank != CONTEST_SAVE_FOR_MUSEUM)
             gSaveBlock1.contestWinners[saveIdx].contestCategory = gSpecialVar_ContestCategory;
@@ -4109,9 +4109,9 @@ bool8 Contest_SaveWinner(u8 rank)
     else
     {
         eCurContestWinner.personality = gContestMons[i].personality;
-        eCurContestWinner.otId = gContestMons[i].otId;
+        eCurContestWinner.trainerId = gContestMons[i].otId;
         eCurContestWinner.species = gContestMons[i].species;
-        StringCopy(eCurContestWinner.nickname, gContestMons[i].nickname);
+        StringCopy(eCurContestWinner.monName, gContestMons[i].nickname);
         if (gIsLinkContest & 1)
             StringCopy(eCurContestWinner.trainerName, gLinkPlayers[i].name);
         else

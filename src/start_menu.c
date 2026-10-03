@@ -55,7 +55,6 @@ static u8 (*saveDialogCallback)(void);
 static u8 saveDialogTimer;    //Number of frames to keep the window on screen after save was completed
 static bool8 savingComplete;
 
-extern bool8 gDifferentSaveFile;
 extern u16 gSaveFileStatus;
 extern u16 gSpecialVar_Result;
 
@@ -217,7 +216,7 @@ void debug_sub_8075DB4(struct BattleTowerEReaderTrainer *ereaderTrainer, const u
     s32 r3;
 
     ereaderTrainer->trainerClass = trainerId % 77;
-    write_word_to_mem(trainerId, ereaderTrainer->trainerId);
+    SetTrainerId(trainerId, ereaderTrainer->trainerId);
     StringCopy8(ereaderTrainer->name, b);
     r3 = 7;
     for (i = 0; i < 6; i++)
