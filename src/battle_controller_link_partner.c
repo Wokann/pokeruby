@@ -1558,7 +1558,7 @@ void LinkPartnerHandleTrainerBallThrow(void)
     gTasks[taskId].data[0] = gActiveBattler;
     if (gBattleHealthBoxInfo[gActiveBattler].partyStatusSummaryShown)
         gTasks[gBattlerStatusSummaryTaskId[gActiveBattler]].func = Task_HidePartyStatusSummary;
-    gBattleAnimationInfo->unk9_0 = 1;
+    gBattleAnimationInfo->introAnimActive = 1;
     gBattlerControllerFuncs[gActiveBattler] = nullsub_74;
 }
 

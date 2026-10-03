@@ -244,6 +244,9 @@ void BtlController_EmitCmd55(u8 a, u8 b);
 // player controller
 void PlayerHandleGetRawMonData(void);
 
+// opponent controller
+void SetControllerToOpponent(void);
+
 void ActionSelectionCreateCursorAt(u8 cursorPosition, int unused);
 
 #endif // GUARD_BATTLE_CONTROLLERS_H

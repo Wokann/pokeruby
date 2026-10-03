@@ -1235,7 +1235,7 @@ static void Intro_TryShinyAnimShowHealthbox(void)
           0);
         StartHealthboxSlideIn(gActiveBattler);
         SetHealthboxSpriteVisible(gHealthboxSpriteIds[gActiveBattler]);
-        gBattleAnimationInfo->unk9_0 = 0;
+        gBattleAnimationInfo->introAnimActive = 0;
         gBattlerControllerFuncs[gActiveBattler] = Intro_WaitForShinyAnimAndHealthbox;
     }
 }

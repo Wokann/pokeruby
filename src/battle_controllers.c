@@ -161,7 +161,7 @@ static void InitSinglePlayerBtlControllers(void)
         else
             gBattlerControllerFuncs[0] = SetControllerToPlayer;
         gBattlerPositions[0] = 0;
-        gBattlerControllerFuncs[1] = SetBankFuncToOpponentBufferRunCommand;
+        gBattlerControllerFuncs[1] = SetControllerToOpponent;
         gBattlerPositions[1] = 1;
         gBattlersCount = 2;
     }
@@ -170,11 +170,11 @@ static void InitSinglePlayerBtlControllers(void)
         gBattleMainFunc = BeginBattleIntro;
         gBattlerControllerFuncs[0] = SetControllerToPlayer;
         gBattlerPositions[0] = 0;
-        gBattlerControllerFuncs[1] = SetBankFuncToOpponentBufferRunCommand;
+        gBattlerControllerFuncs[1] = SetControllerToOpponent;
         gBattlerPositions[1] = 1;
         gBattlerControllerFuncs[2] = SetControllerToPlayer;
         gBattlerPositions[2] = 2;
-        gBattlerControllerFuncs[3] = SetBankFuncToOpponentBufferRunCommand;
+        gBattlerControllerFuncs[3] = SetControllerToOpponent;
         gBattlerPositions[3] = 3;
         gBattlersCount = 4;
     }

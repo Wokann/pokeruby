@@ -372,7 +372,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x160CC*/ u16 usedHeldItems[MAX_BATTLERS_COUNT];
     // Space is reserved for two u16s, one for each opponent in
     // doubles. However, only the lower byte of each is ever used.
-    /*0x160D4*/ u16 AI_usedItemId[2];
+    /*0x160D4*/ u16 chosenItem[2];
     /*0x160D8*/ u8 AI_usedItemType[2];
     /*0x160DA*/ u8 AI_usedItemEffect[2];
     /*0x160DC*/ u8 statAnimPlayed;
@@ -425,7 +425,7 @@ struct BattleHealthboxInfo
  /*0x00*/ u8 specialAnimActive:1;
  /*0x00*/ u8 triedShinyMonAnim:1;
  /*0x01*/ u8 finishedShinyMonAnim:1;
- /*0x01*/ u8 unk1_1:5;
+ /*0x01*/ u8 opponentDrawPartyStatusSummaryDelay:5;
  /*0x02*/ u8 unk2;
  /*0x03*/ u8 unk3;
  /*0x04*/ u8 animationState;
@@ -442,7 +442,7 @@ struct BattleAnimationInfo
     u16 animArg;
     u8 filler2[6];
     u8 ballThrowCaseId;
-    u8 unk9_0:1;
+    u8 introAnimActive:1;
     u8 unk9_1:1;
     u8 unkA;
     u16 unkC;
@@ -625,7 +625,6 @@ void CB2_SetUpReshowBattleScreenAfterMenu2(void);
 // asm/battle_7.o
 void BattleGfxSfxDummy2(u16);
 void BattleGfxSfxDummy3(int);
-void SetBankFuncToOpponentBufferRunCommand(void);
 
 void SetBankFuncToLinkOpponentBufferRunCommand(void);
 

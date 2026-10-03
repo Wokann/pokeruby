@@ -798,9 +798,9 @@ static bool8 ShouldUseItem(void)
             BtlController_EmitTwoReturnValues(B_COMM_TO_ENGINE, B_ACTION_USE_ITEM, 0);
             // The AI will only ever use an item whose ID fits in 8 bits.
             // If you want the AI to use an item with a higher ID, uncomment the line below.
-            // See also: battle_controller_opponent.c:OpponentHandleOpenBag
-            gSharedMem[BSTRUCT_OFF(AI_usedItemId) + (gActiveBattler / 2) * 2] = item;
-//            gSharedMem[BSTRUCT_OFF(AI_usedItemId) + (gActiveBattler / 2) * 2 + 1] = item >> 8;
+            // See also: battle_controller_opponent.c:OpponentHandleChooseItem
+            gSharedMem[BSTRUCT_OFF(chosenItem) + (gActiveBattler / 2) * 2] = item;
+//            gSharedMem[BSTRUCT_OFF(chosenItem) + (gActiveBattler / 2) * 2 + 1] = item >> 8;
             AI_BATTLE_HISTORY->trainerItems[i] = 0;
             return shouldUse;
         }

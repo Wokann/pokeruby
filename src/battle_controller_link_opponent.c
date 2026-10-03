@@ -349,7 +349,7 @@ void sub_8037840(void)
           gActiveBattler,
           GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES));
 
-        gBattleAnimationInfo->unk9_0 = 0;
+        gBattleAnimationInfo->introAnimActive = 0;
         gBattlerControllerFuncs[gActiveBattler] = sub_8037680;
     }
 }
@@ -1614,7 +1614,7 @@ void LinkOpponentHandleTrainerBallThrow(void)
     gTasks[taskId].data[0] = gActiveBattler;
     if (gBattleHealthBoxInfo[gActiveBattler].partyStatusSummaryShown)
         gTasks[gBattlerStatusSummaryTaskId[gActiveBattler]].func = Task_HidePartyStatusSummary;
-    gBattleAnimationInfo->unk9_0 = 1;
+    gBattleAnimationInfo->introAnimActive = 1;
     gBattlerControllerFuncs[gActiveBattler] = nullsub_47;
 }
 
@@ -1662,14 +1662,14 @@ void LinkOpponentHandlecmd48(void)
     gBattleHealthBoxInfo[gActiveBattler].partyStatusSummaryShown = 1;
     if (gBattleBufferA[gActiveBattler][2] != 0)
     {
-        if (gBattleHealthBoxInfo[gActiveBattler].unk1_1 < 2)
+        if (gBattleHealthBoxInfo[gActiveBattler].opponentDrawPartyStatusSummaryDelay < 2)
         {
-            gBattleHealthBoxInfo[gActiveBattler].unk1_1++;
+            gBattleHealthBoxInfo[gActiveBattler].opponentDrawPartyStatusSummaryDelay++;
             return;
         }
         else
         {
-            gBattleHealthBoxInfo[gActiveBattler].unk1_1 = 0;
+            gBattleHealthBoxInfo[gActiveBattler].opponentDrawPartyStatusSummaryDelay = 0;
         }
     }
     gBattlerStatusSummaryTaskId[gActiveBattler] = CreatePartyStatusSummarySprites(
