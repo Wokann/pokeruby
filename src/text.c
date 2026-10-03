@@ -1,6 +1,7 @@
 #include "global.h"
 #include "text.h"
 #include "battle.h"
+#include "io_reg.h"
 #include "main.h"
 #include "palette.h"
 #include "constants/songs.h"
@@ -224,8 +225,8 @@ vu16 *const gBGVOffsetRegs[] =
 };
 
 const u16 gUnknown_081E29D8[] = { 0x100, 0x200, 0x400, 0x800 };
-const u16 gUnknown_081E29E0[] = { 0x100, 0x200, 0x400, 0x800 };
-const u16 gUnknown_081E29E8[] = { 1, 2, 4, 8 };
+const u16 gOverworldBackgroundLayerFlags[] = { 0x100, 0x200, 0x400, 0x800 };
+const u16 gOrbEffectBackgroundLayerFlags[] = { 1, 2, 4, 8 };
 
 static const u8 sFont0LatinGlyphs[] = INCBIN_U8("graphics/fonts/font0_lat.1bpp");
 static const u8 sFont1LatinGlyphs[] = INCBIN_U8("graphics/fonts/font1_lat.1bpp");
@@ -3735,7 +3736,7 @@ void ConvertInternationalString(u8 *s, u8 language)
     {
         u8 i;
 
-        Text_StripExtCtrlCodes(s);
+        StripExtCtrlCodes(s);
         i = StringLength(s);
         s[i++] = EXT_CTRL_CODE_BEGIN;
         s[i++] = 22;
@@ -3754,7 +3755,7 @@ void ConvertInternationalString(u8 *s, u8 language)
     }
 }
 
-void Text_StripExtCtrlCodes(u8 *str)
+void StripExtCtrlCodes(u8 *str)
 {
     u16 srcIndex = 0;
     u16 destIndex = 0;

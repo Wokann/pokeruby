@@ -594,7 +594,7 @@ void PrepareOwnMultiPartnerBuffer(void)
         gMultiPartnerParty[i].status      = GetMonData(&gPlayerParty[i], MON_DATA_STATUS);
         gMultiPartnerParty[i].personality = GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY);
         gMultiPartnerParty[i].gender      = GetMonGender(&gPlayerParty[i]);
-        Text_StripExtCtrlCodes(nickname);
+        StripExtCtrlCodes(nickname);
         gMultiPartnerParty[i].language    = GetMonData(&gPlayerParty[i], MON_DATA_LANGUAGE);
         if (gMultiPartnerParty[i].language != 1)
             PadNameString(nickname, 0);

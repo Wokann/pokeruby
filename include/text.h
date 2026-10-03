@@ -63,8 +63,6 @@ extern vu16 *const gBGHOffsetRegs[];
 extern vu16 *const gBGVOffsetRegs[];
 
 extern const u16 gUnknown_081E29D8[];
-extern const u16 gUnknown_081E29E0[];
-extern const u16 gUnknown_081E29E8[];
 
 extern const struct WindowTemplate gWindowTemplate_81E6C3C;
 extern const struct WindowTemplate gWindowTemplate_81E6C58;
@@ -178,7 +176,6 @@ void Text_GetTextColors(struct Window *win, u8 *foreground, u8 *background, u8 *
 void Text_InitWindow8004E3C(const struct WindowTemplate *winConfig, u8 *tileData, const u8 *text);
 u8 Text_GetStringWidthFromWindowTemplate(const struct WindowTemplate *winConfig, const u8 *s);
 void ConvertInternationalString(u8 *s, u8 language);
-void Text_StripExtCtrlCodes(u8 *str);
 s32 StringCompareWithoutExtCtrlCodes(const u8 *str1, const u8 *str2);
 u8 sub_8004FD0(struct Window *win, u8 *dest, const u8 *src, u16 tileDataStartOffset, u8 left, u16 top, u8 width, u32 a8);
 

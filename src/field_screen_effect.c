@@ -1,6 +1,7 @@
 #include "global.h"
 #include "event_data.h"
 #include "field_camera.h"
+#include "io_reg.h"
 #include "menu.h"
 #include "palette.h"
 #include "overworld.h"
@@ -216,7 +217,7 @@ static void sub_80816A8(u8 taskId)
         data[9] = REG_WININ;
         data[10] = REG_WINOUT;
         REG_DISPCNT &= 0xBFFF;
-        REG_BLDCNT |= gUnknown_081E29E8[0];
+        REG_BLDCNT |= gOrbEffectBackgroundLayerFlags[0];
         REG_BLDALPHA = 1804;
         REG_WININ = 63;
         REG_WINOUT = 30;

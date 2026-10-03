@@ -33,5 +33,6 @@ const u8 *GetExpandedPlaceholder(u32 id);
 u8 *StringFill(u8 *dest, u8 c, u16 n);
 u8 *StringCopyPadded(u8 *dest, const u8 *src, u8 c, u16 n);
 u8 *StringFillWithTerminator(u8 *dest, u16 n);
+void StripExtCtrlCodes(u8 *str);
 
 #endif // GUARD_STRING_UTIL_H

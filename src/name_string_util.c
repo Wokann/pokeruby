@@ -7,7 +7,7 @@ void PadNameString(u8 *a1, u8 a2)
 {
     u8 i;
 
-    Text_StripExtCtrlCodes(a1);
+    StripExtCtrlCodes(a1);
     i = StringLength(a1);
 
     if (a2 == 0xFC)
@@ -36,5 +36,5 @@ void SanitizeNameString(u8 *a1)
     if (StringLength(a1) < 6)
         ConvertInternationalString(a1, 1);
     else
-        Text_StripExtCtrlCodes(a1);
+        StripExtCtrlCodes(a1);
 }

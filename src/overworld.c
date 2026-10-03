@@ -25,6 +25,7 @@
 #include "fieldmap.h"
 #include "fldeff_flash.h"
 #include "heal_location.h"
+#include "io_reg.h"
 #include "link.h"
 #include "load_save.h"
 #include "m4a.h"
@@ -1797,7 +1798,7 @@ static void InitOverworldGraphicsRegisters(void)
     REG_WIN0V = 255;
     REG_WIN1H = -1;
     REG_WIN1V = -1;
-    REG_BLDCNT = gUnknown_081E29E0[1] | gUnknown_081E29E0[2] | gUnknown_081E29E0[3] | 0x1040;
+    REG_BLDCNT = gOverworldBackgroundLayerFlags[1] | gOverworldBackgroundLayerFlags[2] | gOverworldBackgroundLayerFlags[3] | 0x1040;
     REG_BLDALPHA = 1805;
     *gBGHOffsetRegs[0] = 0;
     *gBGVOffsetRegs[0] = 0;

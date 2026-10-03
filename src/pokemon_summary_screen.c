@@ -2484,7 +2484,7 @@ bool8 PokemonSummaryScreen_CheckOT(struct Pokemon *mon)
         u8 enemyId = GetMultiplayerId() ^ 1;
         trainerId = gLinkPlayers[enemyId].trainerId & 0xFFFF;
         StringCopy(gStringVar1, gLinkPlayers[enemyId].name);
-        Text_StripExtCtrlCodes(gStringVar1);
+        StripExtCtrlCodes(gStringVar1);
     }
     else
     {
