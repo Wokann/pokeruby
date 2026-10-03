@@ -12,9 +12,11 @@
 #include "pokemon.h"
 #include "pokenav.h"
 #include "palette.h"
+#include "scanline_effect.h"
 #include "text.h"
 #include "menu.h"
 #include "sound.h"
+#include "item_use.h"
 #include "constants/berry.h"
 #include "constants/songs.h"
 #include "pokeblock.h"
@@ -112,8 +114,6 @@ static EWRAM_DATA struct Pokeblock *sPokeblock = NULL;
 EWRAM_DATA u8 gPokeblockMonId = 0;
 EWRAM_DATA s16 gPokeblockGain = 0;
 
-extern u16 gSpecialVar_ItemId; // FIXME: remove after merge of #349 Pokeblock
-
 static void SetUsePokeblockCallback(void (*const)(void));
 static void CB2_ReturnToUsePokeblockMenu(void);
 static void CB2_ShowUsePokeblockMenuForResults(void);
@@ -124,7 +124,6 @@ static void RunUsePokeblockMenuLoader(void);
 static void ShowUsePokeblockMenu(void);
 static void UsePokeblockMenu(void);
 static void ShowUsePokeblockMenuForResults(void);
-void ScanlineEffect_InitHBlankDmaTransfer(void);
 static void CloseUsePokeblockMenu(void);
 static u8 GetSelectionIdFromPartyId(u8);
 static void AskUsePokeblock(void);
@@ -691,7 +690,7 @@ static void PrintMenuWindowText(const u8 *message)
     Menu_PrintText(message, 1, 17);
 }
 
-void BufferEnhancedText(u8 *dest, u8 condition, s16 enhancement)
+static void BufferEnhancedText(u8 *dest, u8 condition, s16 enhancement)
 {
     if (enhancement)
     {
