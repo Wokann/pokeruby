@@ -24,11 +24,6 @@
 #include "ewram.h"
 
 extern struct SpriteTemplate gCreatingSpriteTemplate;
-extern u16 gSaveFileStatus;
-extern u8 gReservedSpritePaletteCount;
-extern const u8 gIntroCopyright_Gfx[];
-extern const u16 gIntroCopyright_Pal[];
-extern const u16 gIntroCopyright_Tilemap[];
 
 static EWRAM_DATA u16 sIntroCharacterGender = 0;
 static EWRAM_DATA u16 sIntroBattleFinished = 0;
@@ -881,7 +876,7 @@ static const struct SpritePalette sSpritePalettes_IntroBattleEffects[] =
 static u8 (*const sIntroBattleTilemapBuffer)[32] = (u8 (*)[32])gSharedMem;
 
 static void MainCB2_EndIntro(void);
-void Task_Scene1_Load(u8);
+static void Task_Scene1_Load(u8);
 static void Task_Scene1_FadeIn(u8);
 static void Task_Scene1_WaterDrops(u8);
 static void Task_Scene1_PanUpAndShowLati(u8);
@@ -1059,7 +1054,7 @@ void CB2_InitCopyrightScreenAfterTitleScreen(void)
 #define tBg0PosHi data[5]
 #define tBg0PosLo data[6]
 
-void Task_Scene1_Load(u8 taskId)
+static void Task_Scene1_Load(u8 taskId)
 {
     SetVBlankCallback(NULL);
     sIntroCharacterGender = Random() & 1;

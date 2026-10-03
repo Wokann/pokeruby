@@ -404,10 +404,6 @@ static const struct SpriteTemplate sSpriteTemplate_CreditsMonBg =
     .callback = SpriteCB_CreditsMonBg,
 };
 
-// graphics
-extern u8 gCreditsCopyrightEnd_Gfx[];
-extern u16 gIntroCopyright_Pal[16];
-
 static void Task_WaitPaletteFade(u8 taskIdA);
 static void Task_CreditsMain(u8 taskIdA);
 static void Task_ReadyBikeScene(u8 taskIdA);
