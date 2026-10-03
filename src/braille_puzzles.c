@@ -7,6 +7,8 @@
 #include "main.h"
 #include "event_object_lock.h"
 #include "menu.h"
+#include "pokemon.h"
+#include "pokemon_menu.h"
 #include "fldeff.h"
 #include "script.h"
 #include "sound.h"
@@ -19,12 +21,13 @@
 #include "constants/species.h"
 #include "constants/metatile_labels.h"
 
-extern u8 gPlayerPartyCount;
-extern u8 gLastFieldPokeMenuOpened;
-
 extern u8 IslandCave_EventScript_OpenRegiEntrance[]; // Regice event script
 
 static void Task_SealedChamberShakingEffect(u8 taskId);
+static void UseFlyAncientTomb_Callback(void);
+static void UseFlyAncientTomb_Finish(void);
+static void Task_BrailleWait(u8 taskId);
+static bool32 BrailleWait_CheckButtonPress(void);
 
 bool8 ShouldDoBrailleDigEffect(void)
 {
@@ -45,12 +48,12 @@ bool8 ShouldDoBrailleDigEffect(void)
 
 void DoBrailleDigEffect(void)
 {
-    MapGridSetMetatileIdAt(16, 8, METATILE_ID(Cave, SealedChamberEntrance_TopLeft));
-    MapGridSetMetatileIdAt(17, 8, METATILE_ID(Cave, SealedChamberEntrance_TopMid));
-    MapGridSetMetatileIdAt(18, 8, METATILE_ID(Cave, SealedChamberEntrance_TopRight));
-    MapGridSetMetatileIdAt(16, 9, METATILE_ID(Cave, SealedChamberEntrance_BottomLeft) | MAPGRID_IMPASSABLE);
-    MapGridSetMetatileIdAt(17, 9, METATILE_ID(Cave, SealedChamberEntrance_BottomMid));
-    MapGridSetMetatileIdAt(18, 9, METATILE_ID(Cave, SealedChamberEntrance_BottomRight) | MAPGRID_IMPASSABLE);
+    MapGridSetMetatileIdAt(9 + MAP_OFFSET, 1 + MAP_OFFSET, METATILE_ID(Cave, SealedChamberEntrance_TopLeft));
+    MapGridSetMetatileIdAt(10 + MAP_OFFSET, 1 + MAP_OFFSET, METATILE_ID(Cave, SealedChamberEntrance_TopMid));
+    MapGridSetMetatileIdAt(11 + MAP_OFFSET, 1 + MAP_OFFSET, METATILE_ID(Cave, SealedChamberEntrance_TopRight));
+    MapGridSetMetatileIdAt(9 + MAP_OFFSET, 2 + MAP_OFFSET, METATILE_ID(Cave, SealedChamberEntrance_BottomLeft) | MAPGRID_IMPASSABLE);
+    MapGridSetMetatileIdAt(10 + MAP_OFFSET, 2 + MAP_OFFSET, METATILE_ID(Cave, SealedChamberEntrance_BottomMid));
+    MapGridSetMetatileIdAt(11 + MAP_OFFSET, 2 + MAP_OFFSET, METATILE_ID(Cave, SealedChamberEntrance_BottomRight) | MAPGRID_IMPASSABLE);
     DrawWholeMapView();
     PlaySE(SE_BANG);
     FlagSet(FLAG_SYS_BRAILLE_DIG);
@@ -60,7 +63,7 @@ void DoBrailleDigEffect(void)
 bool8 CheckRelicanthWailord(void)
 {
     // First comes Relicanth.
-    if (GetMonData(&gPlayerParty, MON_DATA_SPECIES_OR_EGG, 0) == SPECIES_RELICANTH)
+    if (GetMonData(&gPlayerParty[0], MON_DATA_SPECIES_OR_EGG, 0) == SPECIES_RELICANTH)
     {
         CalculatePlayerPartyCount();
         // Last comes Wailord
@@ -88,12 +91,12 @@ bool8 ShouldDoBrailleStrengthEffect(void)
 void DoBrailleStrengthEffect(void)
 {
     FieldEffectActiveListRemove(FLDEFF_USE_STRENGTH);
-    MapGridSetMetatileIdAt(14, 26, METATILE_ID(Cave, SealedChamberEntrance_TopLeft));
-    MapGridSetMetatileIdAt(15, 26, METATILE_ID(Cave, SealedChamberEntrance_TopMid));
-    MapGridSetMetatileIdAt(16, 26, METATILE_ID(Cave, SealedChamberEntrance_TopRight));
-    MapGridSetMetatileIdAt(14, 27, METATILE_ID(Cave, SealedChamberEntrance_BottomLeft) | MAPGRID_IMPASSABLE);
-    MapGridSetMetatileIdAt(15, 27, METATILE_ID(Cave, SealedChamberEntrance_BottomMid));
-    MapGridSetMetatileIdAt(16, 27, METATILE_ID(Cave, SealedChamberEntrance_BottomRight) | MAPGRID_IMPASSABLE);
+    MapGridSetMetatileIdAt(7 + MAP_OFFSET, 19 + MAP_OFFSET, METATILE_ID(Cave, SealedChamberEntrance_TopLeft));
+    MapGridSetMetatileIdAt(8 + MAP_OFFSET, 19 + MAP_OFFSET, METATILE_ID(Cave, SealedChamberEntrance_TopMid));
+    MapGridSetMetatileIdAt(9 + MAP_OFFSET, 19 + MAP_OFFSET, METATILE_ID(Cave, SealedChamberEntrance_TopRight));
+    MapGridSetMetatileIdAt(7 + MAP_OFFSET, 20 + MAP_OFFSET, METATILE_ID(Cave, SealedChamberEntrance_BottomLeft) | MAPGRID_IMPASSABLE);
+    MapGridSetMetatileIdAt(8 + MAP_OFFSET, 20 + MAP_OFFSET, METATILE_ID(Cave, SealedChamberEntrance_BottomMid));
+    MapGridSetMetatileIdAt(9 + MAP_OFFSET, 20 + MAP_OFFSET, METATILE_ID(Cave, SealedChamberEntrance_BottomRight) | MAPGRID_IMPASSABLE);
     DrawWholeMapView();
     PlaySE(SE_BANG);
     FlagSet(FLAG_SYS_BRAILLE_STRENGTH);
@@ -126,78 +129,94 @@ bool8 FldEff_UseFlyAncientTomb(void)
     return FALSE;
 }
 
-void UseFlyAncientTomb_Callback(void)
+static void UseFlyAncientTomb_Callback(void)
 {
     FieldEffectActiveListRemove(FLDEFF_USE_FLY_ANCIENT_TOMB);
     UseFlyAncientTomb_Finish();
 }
 
-void UseFlyAncientTomb_Finish(void)
+static void UseFlyAncientTomb_Finish(void)
 {
-    MapGridSetMetatileIdAt(14, 26, METATILE_ID(Cave, SealedChamberEntrance_TopLeft));
-    MapGridSetMetatileIdAt(15, 26, METATILE_ID(Cave, SealedChamberEntrance_TopMid));
-    MapGridSetMetatileIdAt(16, 26, METATILE_ID(Cave, SealedChamberEntrance_TopRight));
-    MapGridSetMetatileIdAt(14, 27, METATILE_ID(Cave, SealedChamberEntrance_BottomLeft) | MAPGRID_IMPASSABLE);
-    MapGridSetMetatileIdAt(15, 27, METATILE_ID(Cave, SealedChamberEntrance_BottomMid));
-    MapGridSetMetatileIdAt(16, 27, METATILE_ID(Cave, SealedChamberEntrance_BottomRight) | MAPGRID_IMPASSABLE);
+    MapGridSetMetatileIdAt(7 + MAP_OFFSET, 19 + MAP_OFFSET, METATILE_ID(Cave, SealedChamberEntrance_TopLeft));
+    MapGridSetMetatileIdAt(8 + MAP_OFFSET, 19 + MAP_OFFSET, METATILE_ID(Cave, SealedChamberEntrance_TopMid));
+    MapGridSetMetatileIdAt(9 + MAP_OFFSET, 19 + MAP_OFFSET, METATILE_ID(Cave, SealedChamberEntrance_TopRight));
+    MapGridSetMetatileIdAt(7 + MAP_OFFSET, 20 + MAP_OFFSET, METATILE_ID(Cave, SealedChamberEntrance_BottomLeft) | MAPGRID_IMPASSABLE);
+    MapGridSetMetatileIdAt(8 + MAP_OFFSET, 20 + MAP_OFFSET, METATILE_ID(Cave, SealedChamberEntrance_BottomMid));
+    MapGridSetMetatileIdAt(9 + MAP_OFFSET, 20 + MAP_OFFSET, METATILE_ID(Cave, SealedChamberEntrance_BottomRight) | MAPGRID_IMPASSABLE);
     DrawWholeMapView();
     PlaySE(SE_BANG);
     FlagSet(FLAG_SYS_BRAILLE_FLY);
     UnlockPlayerFieldControls();
 }
 
+enum
+{
+    BRAILLE_WAIT_STATE_INIT,
+    BRAILLE_WAIT_STATE_WAIT_FOR_INPUT,
+    BRAILLE_WAIT_STATE_WAIT_FOR_CANCEL,
+    BRAILLE_WAIT_STATE_COMPLETE_DELAY,
+    BRAILLE_WAIT_STATE_OPEN_ENTRANCE,
+};
+
+#define tBrailleWaitState data[0]
+#define tBrailleWaitTimer data[1]
+
+#define BRAILLE_WAIT_TASK_PRIORITY 0x50
+#define BRAILLE_WAIT_DURATION      (2 * 60 * 60)
+#define BRAILLE_WAIT_CANCEL_DELAY  30
+
 void DoBrailleWait(void)
 {
     if (!FlagGet(FLAG_SYS_BRAILLE_WAIT))
-        CreateTask(Task_BrailleWait, 0x50);
+        CreateTask(Task_BrailleWait, BRAILLE_WAIT_TASK_PRIORITY);
 }
 
-void Task_BrailleWait(u8 taskId)
+static void Task_BrailleWait(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
-    switch (data[0])
+    switch (tBrailleWaitState)
     {
-    case 0:
-        data[1] = 7200;
-        data[0] = 1;
+    case BRAILLE_WAIT_STATE_INIT:
+        tBrailleWaitTimer = BRAILLE_WAIT_DURATION;
+        tBrailleWaitState = BRAILLE_WAIT_STATE_WAIT_FOR_INPUT;
         break;
-    case 1:
+    case BRAILLE_WAIT_STATE_WAIT_FOR_INPUT:
         if (BrailleWait_CheckButtonPress() != FALSE)
         {
             Menu_EraseScreen();
             PlaySE(SE_SELECT);
-            data[0] = 2;
+            tBrailleWaitState = BRAILLE_WAIT_STATE_WAIT_FOR_CANCEL;
         }
         else
         {
-            data[1] = data[1] - 1;
-            if (data[1] == 0)
+            tBrailleWaitTimer--;
+            if (tBrailleWaitTimer == 0)
             {
                 Menu_EraseScreen();
-                data[0] = 3;
-                data[1] = 30;
+                tBrailleWaitState = BRAILLE_WAIT_STATE_COMPLETE_DELAY;
+                tBrailleWaitTimer = BRAILLE_WAIT_CANCEL_DELAY;
             }
         }
         break;
-    case 2:
+    case BRAILLE_WAIT_STATE_WAIT_FOR_CANCEL:
         if (BrailleWait_CheckButtonPress() == FALSE)
         {
-            data[1] = data[1] - 1;
-            if (data[1] == 0)
-                data[0] = 4;
+            tBrailleWaitTimer--;
+            if (tBrailleWaitTimer == 0)
+                tBrailleWaitState = BRAILLE_WAIT_STATE_OPEN_ENTRANCE;
             break;
         }
         ScriptUnfreezeObjectEvents();
         DestroyTask(taskId);
         UnlockPlayerFieldControls();
         break;
-    case 3:
-        data[1] = data[1] - 1;
-        if (data[1] == 0)
-            data[0] = 4;
+    case BRAILLE_WAIT_STATE_COMPLETE_DELAY:
+        tBrailleWaitTimer--;
+        if (tBrailleWaitTimer == 0)
+            tBrailleWaitState = BRAILLE_WAIT_STATE_OPEN_ENTRANCE;
         break;
-    case 4:
+    case BRAILLE_WAIT_STATE_OPEN_ENTRANCE:
         ScriptUnfreezeObjectEvents();
         ScriptContext_SetupScript(IslandCave_EventScript_OpenRegiEntrance);
         DestroyTask(taskId);
@@ -205,7 +224,7 @@ void Task_BrailleWait(u8 taskId)
     }
 }
 
-bool32 BrailleWait_CheckButtonPress(void)
+static bool32 BrailleWait_CheckButtonPress(void)
 {
     u16 keyMask = A_BUTTON | B_BUTTON | START_BUTTON | SELECT_BUTTON | DPAD_ANY;
 
@@ -219,6 +238,12 @@ bool32 BrailleWait_CheckButtonPress(void)
     else
         return FALSE;
 }
+
+#undef tBrailleWaitState
+#undef tBrailleWaitTimer
+#undef BRAILLE_WAIT_TASK_PRIORITY
+#undef BRAILLE_WAIT_DURATION
+#undef BRAILLE_WAIT_CANCEL_DELAY
 
 #define tDelayCounter  data[1]
 #define tShakeCounter  data[2]
@@ -235,7 +260,7 @@ void DoSealedChamberShakingEffect_Long(void)
     gTasks[taskId].tVerticalPan = 2;
     gTasks[taskId].tDelay = 5;
     gTasks[taskId].tNumShakes = 50;
-    SetCameraPanningCallback(0);
+    SetCameraPanningCallback(NULL);
 }
 
 void DoSealedChamberShakingEffect_Short(void)
@@ -247,7 +272,7 @@ void DoSealedChamberShakingEffect_Short(void)
     gTasks[taskId].tVerticalPan = 3;
     gTasks[taskId].tDelay = 5;
     gTasks[taskId].tNumShakes = 2;
-    SetCameraPanningCallback(0);
+    SetCameraPanningCallback(NULL);
 }
 
 static void Task_SealedChamberShakingEffect(u8 taskId)
