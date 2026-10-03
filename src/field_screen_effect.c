@@ -140,7 +140,7 @@ static u8 sub_8081534(s32 centerX, s32 centerY, s32 initialFlashRadius, s32 dest
 
 void sub_8081594(u8 flashLevel)
 {
-    u8 curFlashLevel = Overworld_GetFlashLevel();
+    u8 curFlashLevel = GetFlashLevel();
     u8 value = 0;
     if (!flashLevel)
         value = 1;

@@ -52,7 +52,7 @@ void SetSecretBase2Field_9(void)
 
 void SetSecretBase2Field_9_AndHideBG(void) // note: no other function sets specialSaveWarp to values other than 0 or 1, hence clear and set distinctions.
 {
-    gpu_sync_bg_hide(0); // the function doesn't use the parameter passed to it, but this is necessary to match.
+    SetContinueGameWarpToDynamicWarp(0); // the function doesn't use the parameter passed to it, but this is necessary to match.
     gSaveBlock2.specialSaveWarp = 1;
 }
 

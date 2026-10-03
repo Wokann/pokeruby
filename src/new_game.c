@@ -134,13 +134,13 @@ void debug_sub_8052E04()
         i = 0;
     }
 
-    Overworld_SetWarpDestination(gUnknown_Debug_0823C788[i][0], gUnknown_Debug_0823C788[i][1], -1, -1, -1);
+    SetWarpDestination(gUnknown_Debug_0823C788[i][0], gUnknown_Debug_0823C788[i][1], -1, -1, -1);
 }
 #endif
 
 static void WarpToTruck(void)
 {
-    Overworld_SetWarpDestination(MAP_GROUP(MAP_INSIDE_OF_TRUCK), MAP_NUM(MAP_INSIDE_OF_TRUCK), -1, -1, -1);
+    SetWarpDestination(MAP_GROUP(MAP_INSIDE_OF_TRUCK), MAP_NUM(MAP_INSIDE_OF_TRUCK), -1, -1, -1);
     WarpIntoMap();
 }
 

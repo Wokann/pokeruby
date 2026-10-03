@@ -1092,7 +1092,7 @@ u8 DebugMenu_OpenIwasawa(void)
 
 u8 DebugMenu_Teleport(void)
 {
-    Overworld_SetWarpDestToLastHealLoc();
+    SetWarpDestinationToLastHealLocation();
     sub_8080E88();
     LockPlayerFieldControls();
     CloseMenu();

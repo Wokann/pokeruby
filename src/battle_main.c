@@ -986,7 +986,7 @@ void BattleMainCB2(void)
         ZeroEnemyPartyMons();
         m4aSongNumStop(0x5A);
         if (gBattleTypeFlags & 2)
-            SetMainCallback2(sub_805465C);
+            SetMainCallback2(CB2_ReturnToFieldFromMultiplayer);
         else
             SetMainCallback2(gMain.savedCallback);
     }

@@ -703,7 +703,7 @@ void AdjustFriendship(struct Pokemon *mon, u8 event)
             {
                 if (GetMonData(mon, MON_DATA_POKEBALL, 0) == ITEM_LUXURY_BALL)
                     friendship++;
-                if (GetMonData(mon, MON_DATA_MET_LOCATION, 0) == sav1_map_get_name())
+                if (GetMonData(mon, MON_DATA_MET_LOCATION, 0) == GetCurrentRegionMapSectionId())
                     friendship++;
             }
 

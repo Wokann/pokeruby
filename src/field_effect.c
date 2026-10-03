@@ -1883,7 +1883,7 @@ static void EscapeRopeFieldEffect_Step1(struct Task *task)
         if (task->data[14] == 0 && !gPaletteFade.active && BGMusicStopped() == TRUE)
         {
             SetObjectEventDirection(objectEvent, task->data[15]);
-            sub_8053678();
+            SetWarpDestinationToEscapeWarp();
             WarpIntoMap();
             gFieldCallback = mapldr_080859D4;
             SetMainCallback2(CB2_LoadMap);
@@ -2045,7 +2045,7 @@ static void TeleportFieldEffectTask4(struct Task *task)
 {
     if (!gPaletteFade.active && BGMusicStopped() == TRUE)
     {
-        Overworld_SetWarpDestToLastHealLoc();
+        SetWarpDestinationToLastHealLocation();
         WarpIntoMap();
         SetMainCallback2(CB2_LoadMap);
         gFieldCallback = mapldr_08085D88;
@@ -2164,7 +2164,7 @@ void sub_8088890(struct Sprite *);
 bool8 FldEff_FieldMoveShowMon(void)
 {
     u8 taskId;
-    if (is_map_type_1_2_3_5_or_6(Overworld_GetMapTypeOfSaveblockLocation()) == TRUE)
+    if (IsMapTypeOutdoors(GetCurrentMapType()) == TRUE)
     {
         taskId = CreateTask(sub_8088120, 0xff);
     } else

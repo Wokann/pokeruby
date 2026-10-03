@@ -51,15 +51,51 @@
 #include "tv.h"
 #include "wild_encounter.h"
 
+static void SetKeyInterceptCallback(u16 (*func)(u32));
+static void SpawnLinkPlayers(void);
+static void CreateLinkPlayerSprites(void);
+static void UpdateAllLinkPlayers(u16 *keys, int selfId);
+static void UpdateHeldKeyCode(u16 key);
+static void CB1_OverworldLink(void);
+static u16 KeyInterCB_SelfIdle(u32 key);
+static u16 KeyInterCB_Idle(u32 key);
+static u16 KeyInterCB_DeferToRecvQueue(u32 key);
+static u16 KeyInterCB_DeferToSendQueue(u32 key);
+static u16 KeyInterCB_ExitingSeat(u32 key);
+static u16 KeyInterCB_Ready(u32 linkPlayerId);
+static u16 KeyInterCB_WaitForPlayersToExit(u32 a1);
+
+
+static u16 GetCenterScreenMetatileBehavior(void);
+static void CB2_LoadMap2(void);
+static void CB2_ReturnToFieldLocal(void);
+static void CB2_ReturnToFieldLink(void);
+static void FieldClearVBlankHBlankCallbacks(void);
+static void InitObjectEventsLink(void);
+static void SetCameraToTrackPlayer(void);
+static void SetCameraToTrackGuestPlayer(void);
+static void SetCameraToTrackGuestPlayer_2(void);
+static void OffsetCameraFocusByLinkPlayerId(void);
+static void ResetAllPlayerLinkStates(void);
+static u16 GetDirectionForDpadKey(u16 key);
+static void ResetPlayerHeldKeys(u16 *keys);
+static u16 KeyInterCB_DeferToEventScript(u32 key);
+static void InitLinkPlayerQueueScript(void);
+static u8 GetSpriteForLinkedPlayer(u8 linkPlayerId);
+static void GetLinkPlayerCoords(u8 linkPlayerId, u16 *x, u16 *y);
+static u8 GetLinkPlayerFacingDirection(u8 linkPlayerId);
+static u8 GetLinkPlayerElevation(u8 linkPlayerId);
+static void SetPlayerFacingDirection(u8 linkPlayerId, u8 facing);
+static void InitLinkRoomStartMenuScript(void);
+static void RunConfirmLeaveCableClubScript(void);
+static void RunTerminateLinkScript(void);
+
 #ifdef SAPPHIRE
 #define LEGENDARY_MUSIC MUS_WEATHER_KYOGRE  // Heavy Rain
 #else
 #define LEGENDARY_MUSIC MUS_WEATHER_GROUDON // Drought
 #endif
 
-extern u8 gUnknown_020297ED;
-extern u16 gTotalCameraPixelOffsetY;
-extern u16 gTotalCameraPixelOffsetX;
 
 extern u8 EventScript_WhiteOut[];
 extern u8 EventScript_ResetMrBriney[];
@@ -86,23 +122,41 @@ extern struct MapLayout * const gMapLayouts[];
 extern struct MapHeader * const * const gMapGroups[];
 extern s32 gMaxFlashLevel;
 
-u16 word_3004858;
+u16 gHeldKeyCodeToSend;
 void (*gFieldCallback)(void);
-u8 gUnknown_03004860;
+u8 gLocalLinkPlayerId;
 u8 gFieldLinkPlayerCount;
 
 EWRAM_DATA struct WarpData gLastUsedWarp = {0};
-EWRAM_DATA struct WarpData gWarpDestination = {0};
-EWRAM_DATA struct WarpData gFixedDiveWarp = {0};
-EWRAM_DATA struct WarpData gFixedHoleWarp = {0};
-EWRAM_DATA struct InitialPlayerAvatarState gInitialPlayerAvatarState = {0};
+EWRAM_DATA static struct WarpData sWarpDestination = {0};
+EWRAM_DATA static struct WarpData sFixedDiveWarp = {0};
+EWRAM_DATA static struct WarpData sFixedHoleWarp = {0};
+EWRAM_DATA static struct InitialPlayerAvatarState sInitialPlayerAvatarState = {0};
 EWRAM_DATA static u16 sAmbientCrySpecies = 0;
 EWRAM_DATA static bool8 sIsAmbientCryWaterMon = FALSE;
 EWRAM_DATA struct LinkPlayerObjectEvent gLinkPlayerObjectEvents[4] = {0};
 
-static u8 gUnknown_03000580[4];
-static u16 (*gUnknown_03000584)(u32);
-static u8 gUnknown_03000588;
+static u8 sPlayerLinkStates[4];
+static u16 (*sPlayerKeyInterceptCallback)(u32);
+static u8 sReceivingFromLink;
+
+struct CableClubPlayer
+{
+    u8 playerId;
+    u8 isLocalPlayer;
+    u8 movementMode;
+    u8 facing;
+    struct MapPosition pos;
+    u16 metatileBehavior;
+};
+
+static void HandleLinkPlayerKeyInput(u32 playerId, u16 key, struct CableClubPlayer *trainer, u16 *forceFacing);
+static void LoadCableClubPlayer(int linkPlayerId, int myPlayerId, struct CableClubPlayer *trainer);
+static bool32 IsCableClubPlayerUnfrozen(struct CableClubPlayer *player);
+static bool32 CanCableClubPlayerPressStart(struct CableClubPlayer *player);
+static const u8 *TryGetTileEventScript(struct CableClubPlayer *player);
+static bool32 PlayerIsAtSouthExit(struct CableClubPlayer *player);
+static const u8 *sub_805568C(struct CableClubPlayer *player);
 
 static void CB2_Overworld(void);
 static u8 GetAdjustedInitialTransitionFlags(struct InitialPlayerAvatarState*, u16, u8);
@@ -117,13 +171,13 @@ static void VBlankCB_Field(void);
 static void SpawnLinkPlayerObjectEvent(u8, s16, s16, u8);
 static void InitLinkPlayerObjectEventPos(struct ObjectEvent *, s16, s16);
 static u8 GetLinkPlayerIdAt(s16, s16);
-static u8 npc_something3(u8, u8);
-static u8 LinkPlayerDetectCollision(u8, u8, s16, s16);
+static u8 FlipVerticalAndClearForced(u8, u8);
+static u8 LinkPlayerGetCollision(u8, u8, s16, s16);
 static void CreateLinkPlayerSprite(u8);
 static void SpriteCB_LinkPlayer(struct Sprite *);
 static u16 sub_8055758(const u8 *);
-static void sub_8055808(const u8 *);
-static void sub_8055840(const u8 *);
+static void RunInteractLocalPlayerScript(const u8 *);
+static void InitMenuBasedScript(const u8 *);
 
 static const struct WarpData sDummyWarpData =
 {
@@ -167,43 +221,43 @@ static const struct ScanlineEffectParams sFlashEffectParams =
     0,
 };
 
-static u8 sub_8055C68(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
-static u8 sub_8055C88(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
-static u8 sub_8055C8C(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
+static u8 MovementEventModeCB_Normal(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
+static u8 MovementEventModeCB_Ignored(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
+static u8 MovementEventModeCB_Scripted(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
 
-static u8 (*const gUnknown_082166A0[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8) =
+static u8 (*const sLinkPlayerMovementModes[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8) =
 {
-    sub_8055C68,
-    sub_8055C88,
-    sub_8055C8C,
+    MovementEventModeCB_Normal,
+    MovementEventModeCB_Ignored,
+    MovementEventModeCB_Scripted,
 };
 
-static u8 sub_8055CAC(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
-static u8 sub_8055CB0(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
-static u8 sub_8055D18(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
+static u8 FacingHandler_DoNothing(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
+static u8 FacingHandler_DpadMovement(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
+static u8 FacingHandler_ForcedFacingChange(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
 
-static u8 (*const gUnknown_082166AC[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8) =
+static u8 (*const sLinkPlayerFacingHandlers[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8) =
 {
-    sub_8055CAC,
-    sub_8055CB0,
-    sub_8055CB0,
-    sub_8055CB0,
-    sub_8055CB0,
-    sub_8055CAC,
-    sub_8055CAC,
-    sub_8055D18,
-    sub_8055D18,
-    sub_8055D18,
-    sub_8055D18,
+    FacingHandler_DoNothing,
+    FacingHandler_DpadMovement,
+    FacingHandler_DpadMovement,
+    FacingHandler_DpadMovement,
+    FacingHandler_DpadMovement,
+    FacingHandler_DoNothing,
+    FacingHandler_DoNothing,
+    FacingHandler_ForcedFacingChange,
+    FacingHandler_ForcedFacingChange,
+    FacingHandler_ForcedFacingChange,
+    FacingHandler_ForcedFacingChange,
 };
 
-static void sub_8055D30(struct LinkPlayerObjectEvent *, struct ObjectEvent *);
-static void sub_8055D38(struct LinkPlayerObjectEvent *, struct ObjectEvent *);
+static void MovementStatusHandler_EnterFreeMode(struct LinkPlayerObjectEvent *, struct ObjectEvent *);
+static void MovementStatusHandler_TryAdvanceScript(struct LinkPlayerObjectEvent *, struct ObjectEvent *);
 
-static void (*const gUnknown_082166D8[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *) =
+static void (*const sMovementStatusHandler[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *) =
 {
-    sub_8055D30,
-    sub_8055D38,
+    MovementStatusHandler_EnterFreeMode,
+    MovementStatusHandler_TryAdvanceScript,
 };
 
 
@@ -213,7 +267,7 @@ static void DoWhiteOut(void)
     gSaveBlock1.money /= 2;
     ScrSpecial_HealPlayerParty();
     Overworld_ResetStateAfterWhiteOut();
-    Overworld_SetWarpDestToLastHealLoc();
+    SetWarpDestinationToLastHealLocation();
     WarpIntoMap();
 }
 
@@ -258,7 +312,7 @@ static void Overworld_ResetStateAfterWhiteOut(void)
     FlagClear(FLAG_SYS_USE_FLASH);
 }
 
-static void sub_805308C(void)
+static void UpdateMiscOverworldStates(void)
 {
     FlagClear(FLAG_SYS_SAFARI_MODE);
     ChooseAmbientCrySpecies();
@@ -286,18 +340,18 @@ void IncrementGameStat(u8 index)
     }
 }
 
-u32 GetGameStat(u8 stat)
+u32 GetGameStat(u8 index)
 {
-    if (stat >= NUM_GAME_STATS)
+    if (index >= NUM_GAME_STATS)
         return 0;
 
-    return gSaveBlock1.gameStats[stat];
+    return gSaveBlock1.gameStats[index];
 }
 
-void SetGameStat(u8 stat, u32 value)
+void SetGameStat(u8 index, u32 value)
 {
-    if (stat < NUM_GAME_STATS)
-        gSaveBlock1.gameStats[stat] = value;
+    if (index < NUM_GAME_STATS)
+        gSaveBlock1.gameStats[index] = value;
 }
 
 void LoadObjEventTemplatesFromHeader(void)
@@ -320,7 +374,7 @@ static void LoadSaveblockObjEventScripts(void)
         objectEventTemplates[i].script = gMapHeader.events->objectEvents[i].script;
 }
 
-void Overworld_SetObjEventTemplateCoords(u8 localId, s16 x, s16 y)
+void SetObjEventTemplateCoords(u8 localId, s16 x, s16 y)
 {
     s32 i;
     for (i = 0; i < 64; i++)
@@ -335,7 +389,7 @@ void Overworld_SetObjEventTemplateCoords(u8 localId, s16 x, s16 y)
     }
 }
 
-void Overworld_SetObjEventTemplateMovementType(u8 localId, u8 movementType)
+void SetObjEventTemplateMovementType(u8 localId, u8 movementType)
 {
     s32 i;
 
@@ -370,9 +424,9 @@ static struct MapLayout *GetMapLayout(void)
 static void ApplyCurrentWarp(void)
 {
     gLastUsedWarp = gSaveBlock1.location;
-    gSaveBlock1.location = gWarpDestination;
-    gFixedDiveWarp = sDummyWarpData;
-    gFixedHoleWarp = sDummyWarpData;
+    gSaveBlock1.location = sWarpDestination;
+    sFixedDiveWarp = sDummyWarpData;
+    sFixedHoleWarp = sDummyWarpData;
 }
 
 static void SetWarpData(struct WarpData *warp, s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
@@ -406,7 +460,7 @@ struct MapHeader *const Overworld_GetMapHeaderByGroupAndId(u16 mapGroup, u16 map
 
 struct MapHeader *const GetDestinationWarpMapHeader(void)
 {
-    return Overworld_GetMapHeaderByGroupAndId(gWarpDestination.mapGroup, gWarpDestination.mapNum);
+    return Overworld_GetMapHeaderByGroupAndId(sWarpDestination.mapGroup, sWarpDestination.mapNum);
 }
 
 static void LoadCurrentMapData(void)
@@ -448,45 +502,45 @@ void WarpIntoMap(void)
     SetPlayerCoordsFromWarp();
 }
 
-void Overworld_SetWarpDestination(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
+void SetWarpDestination(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
 {
-    SetWarpData(&gWarpDestination, mapGroup, mapNum, warpId, x, y);
+    SetWarpData(&sWarpDestination, mapGroup, mapNum, warpId, x, y);
 }
 
-void warp1_set_2(s8 mapGroup, s8 mapNum, s8 warpId)
+void SetWarpDestinationToMapWarp(s8 mapGroup, s8 mapNum, s8 warpId)
 {
-    Overworld_SetWarpDestination(mapGroup, mapNum, warpId, -1, -1);
+    SetWarpDestination(mapGroup, mapNum, warpId, -1, -1);
 }
 
-void saved_warp2_set(int unused, s8 mapGroup, s8 mapNum, s8 warpId)
+void SetDynamicWarp(int unused, s8 mapGroup, s8 mapNum, s8 warpId)
 {
     SetWarpData(&gSaveBlock1.dynamicWarp, mapGroup, mapNum, warpId, gSaveBlock1.pos.x, gSaveBlock1.pos.y);
 }
 
-void saved_warp2_set_2(int unused, s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
+void SetDynamicWarpWithCoords(int unused, s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
 {
     SetWarpData(&gSaveBlock1.dynamicWarp, mapGroup, mapNum, warpId, x, y);
 }
 
-void copy_saved_warp2_bank_and_enter_x_to_warp1(u8 unused)
+void SetWarpDestinationToDynamicWarp(u8 unusedWarpId)
 {
-    gWarpDestination = gSaveBlock1.dynamicWarp;
+    sWarpDestination = gSaveBlock1.dynamicWarp;
 }
 
-void sub_8053538(u8 a1)
+void SetWarpDestinationToHealLocation(u8 healLocationId)
 {
-    const struct HealLocation *warp = GetHealLocation(a1);
+    const struct HealLocation *healLocation = GetHealLocation(healLocationId);
 
-    if (warp)
-        Overworld_SetWarpDestination(warp->mapGroup, warp->mapNum, -1, warp->x, warp->y);
+    if (healLocation)
+        SetWarpDestination(healLocation->mapGroup, healLocation->mapNum, -1, healLocation->x, healLocation->y);
 }
 
-void Overworld_SetWarpDestToLastHealLoc(void)
+void SetWarpDestinationToLastHealLocation(void)
 {
-    gWarpDestination = gSaveBlock1.lastHealLocation;
+    sWarpDestination = gSaveBlock1.lastHealLocation;
 }
 
-void Overworld_SetHealLocationWarp(u8 healLocationId)
+void SetLastHealLocationWarp(u8 healLocationId)
 {
     const struct HealLocation *healLocation = GetHealLocation(healLocationId);
 
@@ -494,67 +548,67 @@ void Overworld_SetHealLocationWarp(u8 healLocationId)
         SetWarpData(&gSaveBlock1.lastHealLocation, healLocation->mapGroup, healLocation->mapNum, -1, healLocation->x, healLocation->y);
 }
 
-void sub_80535C4(s16 a1, s16 a2)
+void UpdateEscapeWarp(s16 x, s16 y)
 {
-    u8 currMapType = Overworld_GetMapTypeOfSaveblockLocation();
-    u8 destMapType = GetMapTypeByGroupAndId(gWarpDestination.mapGroup, gWarpDestination.mapNum);
-    if (is_map_type_1_2_3_5_or_6(currMapType) && is_map_type_1_2_3_5_or_6(destMapType) != TRUE)
-        sub_805363C(gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, -1, a1 - 7, a2 - 6);
+    u8 currMapType = GetCurrentMapType();
+    u8 destMapType = GetMapTypeByGroupAndId(sWarpDestination.mapGroup, sWarpDestination.mapNum);
+    if (IsMapTypeOutdoors(currMapType) && IsMapTypeOutdoors(destMapType) != TRUE)
+        SetEscapeWarp(gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, -1, x - 7, y - 6);
 }
 
-void sub_805363C(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
+void SetEscapeWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
 {
-    SetWarpData(&gSaveBlock1.warp4, mapGroup, mapNum, warpId, x, y);
+    SetWarpData(&gSaveBlock1.escapeWarp, mapGroup, mapNum, warpId, x, y);
 }
 
-void sub_8053678(void)
+void SetWarpDestinationToEscapeWarp(void)
 {
-    gWarpDestination = gSaveBlock1.warp4;
+    sWarpDestination = gSaveBlock1.escapeWarp;
 }
 
 void SetFixedDiveWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
 {
-    SetWarpData(&gFixedDiveWarp, mapGroup, mapNum, warpId, x, y);
+    SetWarpData(&sFixedDiveWarp, mapGroup, mapNum, warpId, x, y);
 }
 
-static void SetFixedDiveWarpAsDestination(void)
+static void SetWarpDestinationToDiveWarp(void)
 {
-    gWarpDestination = gFixedDiveWarp;
+    sWarpDestination = sFixedDiveWarp;
 }
 
 void SetFixedHoleWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
 {
-    SetWarpData(&gFixedHoleWarp, mapGroup, mapNum, warpId, x, y);
+    SetWarpData(&sFixedHoleWarp, mapGroup, mapNum, warpId, x, y);
 }
 
-void SetFixedHoleWarpAsDestination(s16 x, s16 y)
+void SetWarpDestinationToFixedHoleWarp(s16 x, s16 y)
 {
-    if (IsDummyWarp(&gFixedHoleWarp) == TRUE)
-        gWarpDestination = gLastUsedWarp;
+    if (IsDummyWarp(&sFixedHoleWarp) == TRUE)
+        sWarpDestination = gLastUsedWarp;
     else
-        Overworld_SetWarpDestination(gFixedHoleWarp.mapGroup, gFixedHoleWarp.mapNum, -1, x, y);
+        SetWarpDestination(sFixedHoleWarp.mapGroup, sFixedHoleWarp.mapNum, -1, x, y);
 }
 
-void sub_8053778(void)
+static void SetWarpDestinationToContinueGameWarp(void)
 {
-    gWarpDestination = gSaveBlock1.warp1;
+    sWarpDestination = gSaveBlock1.continueGameWarp;
 }
 
-void unref_sub_8053790(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
+void SetContinueGameWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
 {
-    SetWarpData(&gSaveBlock1.warp1, mapGroup, mapNum, warpId, x, y);
+    SetWarpData(&gSaveBlock1.continueGameWarp, mapGroup, mapNum, warpId, x, y);
 }
 
-void sub_80537CC(u8 a1)
+void SetContinueGameWarpToHealLocation(u8 healLocationId)
 {
-    const struct HealLocation *warp = GetHealLocation(a1);
-    if (warp)
-        SetWarpData(&gSaveBlock1.warp1, warp->mapGroup, warp->mapNum, -1, warp->x, warp->y);
+    const struct HealLocation *healLocation = GetHealLocation(healLocationId);
+    if (healLocation)
+        SetWarpData(&gSaveBlock1.continueGameWarp, healLocation->mapGroup, healLocation->mapNum, -1, healLocation->x, healLocation->y);
 }
 
-void gpu_sync_bg_hide()
+void SetContinueGameWarpToDynamicWarp()
 {
-    gSaveBlock1.warp1 = gSaveBlock1.dynamicWarp;
+    gSaveBlock1.continueGameWarp = gSaveBlock1.dynamicWarp;
 }
 
 const struct MapConnection *GetMapConnection(u8 dir)
@@ -579,15 +633,15 @@ static bool8 SetDiveWarp(u8 direction, u16 x, u16 y)
 
     if (connection != NULL)
     {
-        Overworld_SetWarpDestination(connection->mapGroup, connection->mapNum, -1, x, y);
+        SetWarpDestination(connection->mapGroup, connection->mapNum, -1, x, y);
     }
     else
     {
         RunOnDiveWarpMapScript();
-        if (IsDummyWarp(&gFixedDiveWarp))
+        if (IsDummyWarp(&sFixedDiveWarp))
             return FALSE;
 
-        SetFixedDiveWarpAsDestination();
+        SetWarpDestinationToDiveWarp();
     }
 
     return TRUE;
@@ -607,7 +661,7 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
 {
     s32 paletteIndex;
 
-    Overworld_SetWarpDestination(mapGroup, mapNum, -1, -1, -1);
+    SetWarpDestination(mapGroup, mapNum, -1, -1, -1);
     sub_8053F0C();
     ApplyCurrentWarp();
     LoadCurrentMapData();
@@ -640,13 +694,13 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
 
 void sub_8053994(u32 a1)
 {
-    bool8 v2;
-    bool8 v3;
+    bool8 isOutdoors;
+    bool8 isIndoors;
 
     LoadCurrentMapData();
     LoadObjEventTemplatesFromHeader();
-    v2 = is_map_type_1_2_3_5_or_6(gMapHeader.mapType);
-    v3 = Overworld_MapTypeIsIndoors(gMapHeader.mapType);
+    isOutdoors = IsMapTypeOutdoors(gMapHeader.mapType);
+    isIndoors = IsMapTypeIndoors(gMapHeader.mapType);
     ClearTempFieldEventData();
     ResetCyclingRoadChallengeData();
     RestartWildEncounterImmunitySteps();
@@ -655,7 +709,7 @@ void sub_8053994(u32 a1)
         DoTimeBasedEvents();
     SetSav1WeatherFromCurrMapHeader();
     ChooseAmbientCrySpecies();
-    if (v2)
+    if (isOutdoors)
         FlagClear(FLAG_SYS_USE_FLASH);
     SetDefaultFlashLevel();
     Overworld_ClearSavedMusic();
@@ -663,7 +717,7 @@ void sub_8053994(u32 a1)
     UpdateLocationHistoryForRoamer();
     RoamerMoveToOtherLocationSet();
     InitMap();
-    if (a1 != 1 && v3)
+    if (a1 != 1 && isIndoors)
     {
         UpdateTVScreensOnMap(gBackupMapLayout.width, gBackupMapLayout.height);
         InitSecretBaseAppearance(TRUE);
@@ -672,36 +726,36 @@ void sub_8053994(u32 a1)
 
 void ResetInitialPlayerAvatarState(void)
 {
-    gInitialPlayerAvatarState.direction = DIR_SOUTH;
-    gInitialPlayerAvatarState.transitionFlags = PLAYER_AVATAR_FLAG_ON_FOOT;
+    sInitialPlayerAvatarState.direction = DIR_SOUTH;
+    sInitialPlayerAvatarState.transitionFlags = PLAYER_AVATAR_FLAG_ON_FOOT;
 }
 
 void StoreInitialPlayerAvatarState(void)
 {
-    gInitialPlayerAvatarState.direction = GetPlayerFacingDirection();
+    sInitialPlayerAvatarState.direction = GetPlayerFacingDirection();
 
     if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_MACH_BIKE))
-        gInitialPlayerAvatarState.transitionFlags = PLAYER_AVATAR_FLAG_MACH_BIKE;
+        sInitialPlayerAvatarState.transitionFlags = PLAYER_AVATAR_FLAG_MACH_BIKE;
     else if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_ACRO_BIKE))
-        gInitialPlayerAvatarState.transitionFlags = PLAYER_AVATAR_FLAG_ACRO_BIKE;
+        sInitialPlayerAvatarState.transitionFlags = PLAYER_AVATAR_FLAG_ACRO_BIKE;
     else if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING))
-        gInitialPlayerAvatarState.transitionFlags = PLAYER_AVATAR_FLAG_SURFING;
+        sInitialPlayerAvatarState.transitionFlags = PLAYER_AVATAR_FLAG_SURFING;
     else if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_UNDERWATER))
-        gInitialPlayerAvatarState.transitionFlags = PLAYER_AVATAR_FLAG_UNDERWATER;
+        sInitialPlayerAvatarState.transitionFlags = PLAYER_AVATAR_FLAG_UNDERWATER;
     else
-        gInitialPlayerAvatarState.transitionFlags = PLAYER_AVATAR_FLAG_ON_FOOT;
+        sInitialPlayerAvatarState.transitionFlags = PLAYER_AVATAR_FLAG_ON_FOOT;
 }
 
 static struct InitialPlayerAvatarState *GetInitialPlayerAvatarState(void)
 {
     struct InitialPlayerAvatarState playerStruct;
-    u8 mapType = Overworld_GetMapTypeOfSaveblockLocation();
+    u8 mapType = GetCurrentMapType();
     u16 metatileBehavior = GetCenterScreenMetatileBehavior();
-    u8 transitionFlags = GetAdjustedInitialTransitionFlags(&gInitialPlayerAvatarState, metatileBehavior, mapType);
+    u8 transitionFlags = GetAdjustedInitialTransitionFlags(&sInitialPlayerAvatarState, metatileBehavior, mapType);
     playerStruct.transitionFlags = transitionFlags;
-    playerStruct.direction = GetAdjustedInitialDirection(&gInitialPlayerAvatarState, transitionFlags, metatileBehavior, mapType);
-    gInitialPlayerAvatarState = playerStruct;
-    return &gInitialPlayerAvatarState;
+    playerStruct.direction = GetAdjustedInitialDirection(&sInitialPlayerAvatarState, transitionFlags, metatileBehavior, mapType);
+    sInitialPlayerAvatarState = playerStruct;
+    return &sInitialPlayerAvatarState;
 }
 
 static u8 GetAdjustedInitialTransitionFlags(struct InitialPlayerAvatarState *playerStruct, u16 metatileBehavior, u8 mapType)
@@ -745,7 +799,7 @@ static u8 GetAdjustedInitialDirection(struct InitialPlayerAvatarState *playerStr
     return DIR_SOUTH;
 }
 
-u16 GetCenterScreenMetatileBehavior(void)
+static u16 GetCenterScreenMetatileBehavior(void)
 {
     return MapGridGetMetatileBehaviorAt(gSaveBlock1.pos.x + 7, gSaveBlock1.pos.y + 7);
 }
@@ -787,19 +841,19 @@ void SetDefaultFlashLevel(void)
         gSaveBlock1.flashLevel = gMaxFlashLevel;
 }
 
-void Overworld_SetFlashLevel(s32 flashLevel)
+void SetFlashLevel(s32 flashLevel)
 {
     if (flashLevel < 0 || flashLevel > gMaxFlashLevel)
         flashLevel = 0;
     gSaveBlock1.flashLevel = flashLevel;
 }
 
-u8 Overworld_GetFlashLevel(void)
+u8 GetFlashLevel(void)
 {
     return gSaveBlock1.flashLevel;
 }
 
-void sub_8053D14(u16 mapLayoutId)
+void SetCurrentMapLayout(u16 mapLayoutId)
 {
     gSaveBlock1.mapLayoutId = mapLayoutId;
     gMapHeader.mapLayout = GetMapLayout();
@@ -877,7 +931,7 @@ u16 GetCurrLocationDefaultMusic(void)
 
 u16 GetWarpDestinationMusic(void)
 {
-    u16 music = GetLocationMusic(&gWarpDestination);
+    u16 music = GetLocationMusic(&sWarpDestination);
     if (music != 0x7FFF)
     {
         return music;
@@ -905,7 +959,7 @@ void Overworld_PlaySpecialMapMusic(void)
     {
         if (gSaveBlock1.savedMusic)
             music = gSaveBlock1.savedMusic;
-        else if (Overworld_GetMapTypeOfSaveblockLocation() == MAP_TYPE_UNDERWATER)
+        else if (GetCurrentMapType() == MAP_TYPE_UNDERWATER)
             music = MUS_UNDERWATER;
         else if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING))
             music = MUS_SURF;
@@ -965,7 +1019,7 @@ void Overworld_ChangeMusicTo(u16 newMusic)
 u8 GetMapMusicFadeoutSpeed(void)
 {
     const struct MapHeader *mapHeader = GetDestinationWarpMapHeader();
-    if (Overworld_MapTypeIsIndoors(mapHeader->mapType) == TRUE)
+    if (IsMapTypeIndoors(mapHeader->mapType) == TRUE)
         return 2;
     else
         return 4;
@@ -1064,7 +1118,7 @@ u8 GetMapTypeByWarpData(struct WarpData *warp)
     return GetMapTypeByGroupAndId(warp->mapGroup, warp->mapNum);
 }
 
-u8 Overworld_GetMapTypeOfSaveblockLocation(void)
+u8 GetCurrentMapType(void)
 {
     return GetMapTypeByWarpData(&gSaveBlock1.location);
 }
@@ -1074,7 +1128,7 @@ u8 GetLastUsedWarpMapType(void)
     return GetMapTypeByWarpData(&gLastUsedWarp);
 }
 
-bool8 is_map_type_1_2_3_5_or_6(u8 mapType)
+bool8 IsMapTypeOutdoors(u8 mapType)
 {
     if (mapType == MAP_TYPE_ROUTE
      || mapType == MAP_TYPE_TOWN
@@ -1097,7 +1151,7 @@ bool8 Overworld_MapTypeAllowsTeleportAndFly(u8 mapType)
         return FALSE;
 }
 
-bool8 Overworld_MapTypeIsIndoors(u8 mapType)
+bool8 IsMapTypeIndoors(u8 mapType)
 {
     if (mapType == MAP_TYPE_INDOOR
      || mapType == MAP_TYPE_SECRET_BASE)
@@ -1106,17 +1160,17 @@ bool8 Overworld_MapTypeIsIndoors(u8 mapType)
         return FALSE;
 }
 
-u8 unref_sub_8054260(void)
+u8 GetSavedWarpRegionMapSectionId(void)
 {
     return Overworld_GetMapHeaderByGroupAndId(gSaveBlock1.dynamicWarp.mapGroup, gSaveBlock1.dynamicWarp.mapNum)->regionMapSectionId;
 }
 
-u8 sav1_map_get_name(void)
+u8 GetCurrentRegionMapSectionId(void)
 {
     return Overworld_GetMapHeaderByGroupAndId(gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum)->regionMapSectionId;
 }
 
-u8 sav1_map_get_battletype(void)
+u8 GetCurrentMapBattleScene(void)
 {
     return Overworld_GetMapHeaderByGroupAndId(gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum)->battleType;
 }
@@ -1183,14 +1237,14 @@ void debug_sub_8058A50(void)
 
 #endif
 
-void ResetSafariZoneFlag_(void)
+static void ResetSafariZoneFlag_(void)
 {
     ResetSafariZoneFlag();
 }
 
-bool32 is_c1_link_related_active(void)
+bool32 IsOverworldLinkActive(void)
 {
-    if (gMain.callback1 == sub_8055354)
+    if (gMain.callback1 == CB1_OverworldLink)
         return TRUE;
     else
         return FALSE;
@@ -1198,21 +1252,21 @@ bool32 is_c1_link_related_active(void)
 
 static void DoCB1_Overworld(u16 newKeys, u16 heldKeys)
 {
-    struct FieldInput fieldInput;
+    struct FieldInput inputStruct;
 
     sub_8059204();
-    ClearPlayerFieldInput(&fieldInput);
-    GetPlayerFieldInput(&fieldInput, newKeys, heldKeys);
+    ClearPlayerFieldInput(&inputStruct);
+    GetPlayerFieldInput(&inputStruct, newKeys, heldKeys);
     if (!ArePlayerFieldControlsLocked())
     {
-        if (ProcessPlayerFieldInput(&fieldInput) == 1)
+        if (ProcessPlayerFieldInput(&inputStruct) == 1)
         {
             LockPlayerFieldControls();
             HideMapNamePopup();
         }
         else
         {
-            player_step(fieldInput.dpadDirection, newKeys, heldKeys);
+            player_step(inputStruct.dpadDirection, newKeys, heldKeys);
         }
     }
 }
@@ -1256,9 +1310,9 @@ void SetMainCallback1(MainCallback cb)
     gMain.callback1 = cb;
 }
 
-void sub_80543DC(u16 (*a1)(u32))
+static void SetKeyInterceptCallback(u16 (*func)(u32))
 {
-    gUnknown_03000584 = a1;
+    sPlayerKeyInterceptCallback = func;
 }
 
 static void RunFieldCallback(void)
@@ -1314,7 +1368,7 @@ void debug_sub_8058C00(void)
 
 void CB2_WhiteOut(void)
 {
-    u8 val;
+    u8 state;
     gMain.state++;
     if (gMain.state >= 120)
     {
@@ -1326,8 +1380,8 @@ void CB2_WhiteOut(void)
         ScriptContext_Init();
         UnlockPlayerFieldControls();
         gFieldCallback = sub_8080B60;
-        val = 0;
-        do_load_map_stuff_loop(&val);
+        state = 0;
+        do_load_map_stuff_loop(&state);
         SetFieldVBlankCallback();
         SetMainCallback1(CB1_Overworld);
         SetMainCallback2(CB2_Overworld);
@@ -1344,7 +1398,7 @@ void CB2_LoadMap(void)
     gMain.savedCallback = CB2_LoadMap2;
 }
 
-void CB2_LoadMap2(void)
+static void CB2_LoadMap2(void)
 {
     do_load_map_stuff_loop(&gMain.state);
     SetFieldVBlankCallback();
@@ -1381,15 +1435,15 @@ static void c2_80567AC(void)
     if (sub_805483C(&gMain.state))
     {
         SetFieldVBlankCallback();
-        SetMainCallback1(sub_8055354);
-        sub_80543DC(sub_8055390);
+        SetMainCallback1(CB1_OverworldLink);
+        SetKeyInterceptCallback(KeyInterCB_SelfIdle);
         SetMainCallback2(CB2_Overworld);
     }
 }
 
 void CB2_ReturnToField(void)
 {
-    if (is_c1_link_related_active() == TRUE)
+    if (IsOverworldLinkActive() == TRUE)
     {
         SetMainCallback2(CB2_ReturnToFieldLink);
     }
@@ -1400,7 +1454,7 @@ void CB2_ReturnToField(void)
     }
 }
 
-void CB2_ReturnToFieldLocal(void)
+static void CB2_ReturnToFieldLocal(void)
 {
     if (sub_8054A4C(&gMain.state))
     {
@@ -1409,33 +1463,33 @@ void CB2_ReturnToFieldLocal(void)
     }
 }
 
-void CB2_ReturnToFieldLink(void)
+static void CB2_ReturnToFieldLink(void)
 {
     if (!sub_8055870() && sub_8054A9C(&gMain.state))
         SetMainCallback2(CB2_Overworld);
 }
 
-void sub_805465C(void)
+void CB2_ReturnToFieldFromMultiplayer(void)
 {
     FieldClearVBlankHBlankCallbacks();
     StopMapMusic();
-    sub_8054F70();
-    SetMainCallback1(sub_8055354);
-    sub_80543DC(sub_8055390);
+    ResetAllPlayerLinkStates();
+    SetMainCallback1(CB1_OverworldLink);
+    SetKeyInterceptCallback(KeyInterCB_SelfIdle);
     gFieldCallback = sub_8080A3C;
     ScriptContext_Init();
     UnlockPlayerFieldControls();
     CB2_ReturnToField();
 }
 
-void c2_exit_to_overworld_1_sub_8080DEC(void)
+void CB2_ReturnToFieldWithOpenMenu(void)
 {
     FieldClearVBlankHBlankCallbacks();
     gFieldCallback = sub_8080DEC;
     CB2_ReturnToField();
 }
 
-void sub_80546B8(void)
+void CB2_ReturnToFieldContinueScript(void)
 {
     FieldClearVBlankHBlankCallbacks();
     gFieldCallback = sub_80809B0;
@@ -1449,7 +1503,7 @@ void CB2_ReturnToFieldContinueScriptPlayMapMusic(void)
     CB2_ReturnToField();
 }
 
-void sub_80546F0(void)
+void CB2_ReturnToFieldFadeFromBlack(void)
 {
     FieldClearVBlankHBlankCallbacks();
     gFieldCallback = sub_8080B60;
@@ -1458,7 +1512,7 @@ void sub_80546F0(void)
 
 void sub_805470C(void)
 {
-    if (gMapHeader.flags == 1 && sub_80BBB24() == 1)
+    if (gMapHeader.showMapName == 1 && sub_80BBB24() == 1)
         ShowMapNamePopup();
     sub_8080B60();
 }
@@ -1476,7 +1530,7 @@ void CB2_ContinueSavedGame(void)
     LoadSaveblockObjEventScripts();
     UnfreezeObjectEvents();
     DoTimeBasedEvents();
-    sub_805308C();
+    UpdateMiscOverworldStates();
     InitMapFromSavedGame();
     PlayTimeCounter_Start();
     ScriptContext_Init();
@@ -1484,7 +1538,7 @@ void CB2_ContinueSavedGame(void)
     if (GetSecretBase2Field_9() == 1)
     {
         ClearSecretBase2Field_9();
-        sub_8053778();
+        SetWarpDestinationToContinueGameWarp();
         WarpIntoMap();
         SetMainCallback2(CB2_LoadMap);
     }
@@ -1496,7 +1550,7 @@ void CB2_ContinueSavedGame(void)
     }
 }
 
-void FieldClearVBlankHBlankCallbacks(void)
+static void FieldClearVBlankHBlankCallbacks(void)
 {
     u16 savedIme = REG_IME;
     REG_IME = 0;
@@ -1524,7 +1578,7 @@ static void VBlankCB_Field(void)
 
 static void InitCurrentFlashLevelScanlineEffect(void)
 {
-    u8 flashLevel = Overworld_GetFlashLevel();
+    u8 flashLevel = GetFlashLevel();
     if (flashLevel)
     {
         WriteFlashScanlineEffectBuffer(flashLevel);
@@ -1540,7 +1594,7 @@ static bool32 sub_805483C(u8 *state)
         FieldClearVBlankHBlankCallbacks();
         ScriptContext_Init();
         UnlockPlayerFieldControls();
-        sub_8054F70();
+        ResetAllPlayerLinkStates();
         sub_8054BA8();
         (*state)++;
         break;
@@ -1553,10 +1607,10 @@ static bool32 sub_805483C(u8 *state)
         (*state)++;
         break;
     case 3:
-        sub_8054E98();
-        sub_8054D90();
-        sub_8054EC8();
-        sub_8054E60();
+        OffsetCameraFocusByLinkPlayerId();
+        InitObjectEventsLink();
+        SpawnLinkPlayers();
+        SetCameraToTrackGuestPlayer();
         (*state)++;
         break;
     case 4:
@@ -1622,7 +1676,7 @@ bool32 sub_805493C(u8 *state, u32 a2)
         break;
     case 3:
         mli4_mapscripts_and_other();
-        sub_8054E34();
+        SetCameraToTrackPlayer();
         (*state)++;
         break;
     case 4:
@@ -1657,7 +1711,7 @@ bool32 sub_805493C(u8 *state, u32 a2)
         (*state)++;
         break;
     case 11:
-        if (gMapHeader.flags == 1 && sub_80BBB24() == 1)
+        if (gMapHeader.showMapName == 1 && sub_80BBB24() == 1)
             ShowMapNamePopup();
         (*state)++;
         break;
@@ -1679,7 +1733,7 @@ bool32 sub_8054A4C(u8 *state)
         sub_8054BA8();
         sub_8054D4C(0);
         sub_8054E20();
-        sub_8054E34();
+        SetCameraToTrackPlayer();
         (*state)++;
         break;
     case 1:
@@ -1710,9 +1764,9 @@ bool32 sub_8054A9C(u8 *state)
         (*state)++;
         break;
     case 2:
-        sub_8054F48();
+        CreateLinkPlayerSprites();
         sub_8054E20();
-        sub_8054E7C();
+        SetCameraToTrackGuestPlayer_2();
         (*state)++;
         break;
     case 3:
@@ -1762,9 +1816,9 @@ bool32 sub_8054A9C(u8 *state)
     return 0;
 }
 
-void do_load_map_stuff_loop(u8 *a1)
+void do_load_map_stuff_loop(u8 *state)
 {
-    while (!sub_805493C(a1, 0))
+    while (!sub_805493C(state, 0))
         ;
 }
 
@@ -1833,7 +1887,7 @@ void sub_8054D4C(u32 a1)
     RunOnResumeMapScript();
 }
 
-void sub_8054D90(void)
+static void InitObjectEventsLink(void)
 {
     gTotalCameraPixelOffsetX = 0;
     gTotalCameraPixelOffsetY = 0;
@@ -1865,36 +1919,36 @@ void sub_8054E20(void)
     RotatingGate_InitPuzzleAndGraphics();
 }
 
-void sub_8054E34(void)
+static void SetCameraToTrackPlayer(void)
 {
     gObjectEvents[gPlayerAvatar.objectEventId].trackedByCamera = 1;
     InitCameraUpdateCallback(gPlayerAvatar.spriteId);
 }
 
-void sub_8054E60(void)
+static void SetCameraToTrackGuestPlayer(void)
 {
-    InitCameraUpdateCallback(sub_8055AE8(gUnknown_03004860));
+    InitCameraUpdateCallback(GetSpriteForLinkedPlayer(gLocalLinkPlayerId));
 }
 
-void sub_8054E7C(void)
+static void SetCameraToTrackGuestPlayer_2(void)
 {
-    InitCameraUpdateCallback(sub_8055AE8(gUnknown_03004860));
+    InitCameraUpdateCallback(GetSpriteForLinkedPlayer(gLocalLinkPlayerId));
 }
 
-void sub_8054E98(void)
+static void OffsetCameraFocusByLinkPlayerId(void)
 {
     u16 x, y;
     GetCameraFocusCoords(&x, &y);
-    SetCameraFocusCoords(x + gUnknown_03004860, y);
+    SetCameraFocusCoords(x + gLocalLinkPlayerId, y);
 }
 
-void sub_8054EC8(void)
+static void SpawnLinkPlayers(void)
 {
     u16 i;
     u16 x, y;
 
     GetCameraFocusCoords(&x, &y);
-    x -= gUnknown_03004860;
+    x -= gLocalLinkPlayerId;
 
     for (i = 0; i < gFieldLinkPlayerCount; i++)
     {
@@ -1902,179 +1956,179 @@ void sub_8054EC8(void)
         CreateLinkPlayerSprite(i);
     }
 
-    sub_8055340(gLinkPartnersHeldKeys);
+    ResetPlayerHeldKeys(gLinkPartnersHeldKeys);
 }
 
-void sub_8054F48(void)
+static void CreateLinkPlayerSprites(void)
 {
     u16 i;
     for (i = 0; i < gFieldLinkPlayerCount; i++)
         CreateLinkPlayerSprite(i);
 }
 
-void sub_8054F70(void)
+static void ResetAllPlayerLinkStates(void)
 {
     int i;
     for (i = 0; i < 4; i++)
-        gUnknown_03000580[i] = 0x80;
+        sPlayerLinkStates[i] = 0x80;
 }
 
-bool32 sub_8054F88(u16 a1)
+static bool32 AreAllPlayersInLinkState(u16 state)
 {
     int i;
     int count = gFieldLinkPlayerCount;
 
     for (i = 0; i < count; i++)
-        if (gUnknown_03000580[i] != a1)
+        if (sPlayerLinkStates[i] != state)
             return FALSE;
     return TRUE;
 }
 
-bool32 sub_8054FC0(u16 a1)
+static bool32 IsAnyPlayerInLinkState(u16 state)
 {
     int i;
     int count = gFieldLinkPlayerCount;
 
     for (i = 0; i < count; i++)
-        if (gUnknown_03000580[i] == a1)
+        if (sPlayerLinkStates[i] == state)
             return TRUE;
     return FALSE;
 }
 
-void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
+static void HandleLinkPlayerKeyInput(u32 playerId, u16 key, struct CableClubPlayer *trainer, u16 *forceFacing)
 {
     const u8 *script;
 
-    if (gUnknown_03000580[a1] == 0x80)
+    if (sPlayerLinkStates[playerId] == 0x80)
     {
-        script = sub_8055648(a3);
+        script = TryGetTileEventScript(trainer);
         if (script)
         {
-            *a4 = sub_8055758(script);
-            gUnknown_03000580[a1] = 0x81;
-            if (a3->b)
+            *forceFacing = sub_8055758(script);
+            sPlayerLinkStates[playerId] = 0x81;
+            if (trainer->isLocalPlayer)
             {
-                sub_80543DC(sub_80553E4);
-                sub_8055808(script);
+                SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
+                RunInteractLocalPlayerScript(script);
             }
             return;
         }
-        if (sub_8054FC0(0x83) == 1)
+        if (IsAnyPlayerInLinkState(0x83) == 1)
         {
-            gUnknown_03000580[a1] = 0x81;
-            if (a3->b)
+            sPlayerLinkStates[playerId] = 0x81;
+            if (trainer->isLocalPlayer)
             {
-                sub_80543DC(sub_80553E4);
-                sub_805585C();
+                SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
+                RunTerminateLinkScript();
             }
             return;
         }
-        switch (a2)
+        switch (key)
         {
         case 24:
-            if (sub_8055630(a3))
+            if (CanCableClubPlayerPressStart(trainer))
             {
-                gUnknown_03000580[a1] = 0x81;
-                if (a3->b)
+                sPlayerLinkStates[playerId] = 0x81;
+                if (trainer->isLocalPlayer)
                 {
-                    sub_80543DC(sub_80553E4);
-                    sub_80557F4();
+                    SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
+                    InitLinkRoomStartMenuScript();
                 }
             }
             break;
         case 18:
-            if (sub_8055660(a3) == 1)
+            if (PlayerIsAtSouthExit(trainer) == 1)
             {
-                gUnknown_03000580[a1] = 0x81;
-                if (a3->b)
+                sPlayerLinkStates[playerId] = 0x81;
+                if (trainer->isLocalPlayer)
                 {
-                    sub_80543DC(sub_80553E4);
-                    sub_8055824();
+                    SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
+                    RunConfirmLeaveCableClubScript();
                 }
             }
             break;
         case 25:
-            script = sub_805568C(a3);
+            script = sub_805568C(trainer);
             if (script)
             {
-                gUnknown_03000580[a1] = 0x81;
-                if (a3->b)
+                sPlayerLinkStates[playerId] = 0x81;
+                if (trainer->isLocalPlayer)
                 {
-                    sub_80543DC(sub_80553E4);
-                    sub_8055840(script);
+                    SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
+                    InitMenuBasedScript(script);
                 }
             }
             break;
         case 27:
-            if (sub_8055618(a3))
+            if (IsCableClubPlayerUnfrozen(trainer))
             {
-                gUnknown_03000580[a1] = 0x81;
-                if (a3->b)
+                sPlayerLinkStates[playerId] = 0x81;
+                if (trainer->isLocalPlayer)
                 {
-                    sub_80543DC(sub_8055408);
-                    sub_80557E8();
+                    SetKeyInterceptCallback(KeyInterCB_DeferToRecvQueue);
+                    InitLinkPlayerQueueScript();
                 }
             }
             break;
         case 28:
-            if (sub_8055618(a3))
+            if (IsCableClubPlayerUnfrozen(trainer))
             {
-                gUnknown_03000580[a1] = 0x81;
-                if (a3->b)
+                sPlayerLinkStates[playerId] = 0x81;
+                if (trainer->isLocalPlayer)
                 {
-                    sub_80543DC(sub_8055438);
-                    sub_80557E8();
+                    SetKeyInterceptCallback(KeyInterCB_DeferToSendQueue);
+                    InitLinkPlayerQueueScript();
                 }
             }
             break;
         }
     }
 
-    switch (a2)
+    switch (key)
     {
     case 23:
-        gUnknown_03000580[a1] = 0x83;
+        sPlayerLinkStates[playerId] = 0x83;
         break;
     case 22:
-        gUnknown_03000580[a1] = 0x82;
+        sPlayerLinkStates[playerId] = 0x82;
         break;
     case 26:
-        gUnknown_03000580[a1] = 0x80;
-        if (a3->b)
-            sub_80543DC(sub_8055390);
+        sPlayerLinkStates[playerId] = 0x80;
+        if (trainer->isLocalPlayer)
+            SetKeyInterceptCallback(KeyInterCB_SelfIdle);
         break;
     case 29:
-        if (gUnknown_03000580[a1] == 0x82)
-            gUnknown_03000580[a1] = 0x81;
+        if (sPlayerLinkStates[playerId] == 0x82)
+            sPlayerLinkStates[playerId] = 0x81;
         break;
     }
 }
 
-void sub_8055218(u16 *a1, int a2)
+static void UpdateAllLinkPlayers(u16 *keys, int selfId)
 {
-    struct UnkStruct_8054FF8 st;
+    struct CableClubPlayer trainer;
     int i;
     for (i = 0; i < 4; i++)
     {
-        u16 v5 = a1[i];
-        u16 v8 = 0;
-        sub_80555B0(i, a2, &st);
-        sub_8054FF8(i, v5, &st, &v8);
-        if (gUnknown_03000580[i] == 0x80)
-            v8 = sub_805530C(v5);
-        sub_8055BFC(i, v8);
+        u16 key = keys[i];
+        u16 setFacing = 0;
+        LoadCableClubPlayer(i, selfId, &trainer);
+        HandleLinkPlayerKeyInput(i, key, &trainer, &setFacing);
+        if (sPlayerLinkStates[i] == 0x80)
+            setFacing = GetDirectionForDpadKey(key);
+        SetPlayerFacingDirection(i, setFacing);
     }
 }
 
-void sub_8055280(u16 a1)
+static void UpdateHeldKeyCode(u16 key)
 {
-    if (a1 >= 17 && a1 < 30)
-        word_3004858 = a1;
+    if (key >= 17 && key < 30)
+        gHeldKeyCodeToSend = key;
     else
-        word_3004858 = 17;
+        gHeldKeyCodeToSend = 17;
 }
 
-u16 sub_80552B0(u32 a1)
+static u16 KeyInterCB_ReadButtons(u32 key)
 {
     if (JOY_HELD(DPAD_UP))
     {
@@ -2106,9 +2160,9 @@ u16 sub_80552B0(u32 a1)
     }
 }
 
-u16 sub_805530C(u16 a1)
+static u16 GetDirectionForDpadKey(u16 key)
 {
-    switch (a1)
+    switch (key)
     {
     case 21:
         return 4;
@@ -2123,38 +2177,38 @@ u16 sub_805530C(u16 a1)
     }
 }
 
-void sub_8055340(u16 *a1)
+static void ResetPlayerHeldKeys(u16 *keys)
 {
     int i;
     for (i = 0; i < 4; i++)
-        a1[i] = 17;
+        keys[i] = 17;
 }
 
-void sub_8055354(void)
+static void CB1_OverworldLink(void)
 {
-    u8 val = gUnknown_03004860;
-    sub_8055218(gLinkPartnersHeldKeys, val);
-    sub_8055280(gUnknown_03000584(val));
-    sub_8055340(gLinkPartnersHeldKeys);
+    u8 selfId = gLocalLinkPlayerId;
+    UpdateAllLinkPlayers(gLinkPartnersHeldKeys, selfId);
+    UpdateHeldKeyCode(sPlayerKeyInterceptCallback(selfId));
+    ResetPlayerHeldKeys(gLinkPartnersHeldKeys);
 }
 
-u16 sub_8055390(u32 a1)
+static u16 KeyInterCB_SelfIdle(u32 key)
 {
     if (ArePlayerFieldControlsLocked() == 1)
         return 17;
     if (gLink.recvQueue.count > 4)
         return 27;
     if (gLink.sendQueue.count <= 4)
-        return sub_80552B0(a1);
+        return KeyInterCB_ReadButtons(key);
     return 28;
 }
 
-u16 sub_80553E0(u32 a1)
+static u16 KeyInterCB_Idle(u32 key)
 {
     return 17;
 }
 
-u16 sub_80553E4(u32 a1)
+static u16 KeyInterCB_DeferToEventScript(u32 key)
 {
     u16 retVal;
     if (ArePlayerFieldControlsLocked() == 1)
@@ -2164,12 +2218,12 @@ u16 sub_80553E4(u32 a1)
     else
     {
         retVal = 26;
-        sub_80543DC(sub_80553E0);
+        SetKeyInterceptCallback(KeyInterCB_Idle);
     }
     return retVal;
 }
 
-u16 sub_8055408(u32 a1)
+static u16 KeyInterCB_DeferToRecvQueue(u32 key)
 {
     u16 retVal;
     if (gLink.recvQueue.count > 2)
@@ -2180,12 +2234,12 @@ u16 sub_8055408(u32 a1)
     {
         retVal = 26;
         UnlockPlayerFieldControls();
-        sub_80543DC(sub_80553E0);
+        SetKeyInterceptCallback(KeyInterCB_Idle);
     }
     return retVal;
 }
 
-u16 sub_8055438(u32 a1)
+static u16 KeyInterCB_DeferToSendQueue(u32 key)
 {
     u16 retVal;
     if (gLink.sendQueue.count > 2)
@@ -2196,21 +2250,21 @@ u16 sub_8055438(u32 a1)
     {
         retVal = 26;
         UnlockPlayerFieldControls();
-        sub_80543DC(sub_80553E0);
+        SetKeyInterceptCallback(KeyInterCB_Idle);
     }
     return retVal;
 }
 
-u16 sub_8055468(u32 a1)
+static u16 KeyInterCB_ExitingSeat(u32 key)
 {
     return 17;
 }
 
-u16 sub_805546C(u32 linkPlayerId)
+static u16 KeyInterCB_Ready(u32 linkPlayerId)
 {
-    if (gUnknown_03000580[linkPlayerId] == 0x82 && JOY_NEW(B_BUTTON))
+    if (sPlayerLinkStates[linkPlayerId] == 0x82 && JOY_NEW(B_BUTTON))
     {
-        sub_80543DC(sub_8055468);
+        SetKeyInterceptCallback(KeyInterCB_ExitingSeat);
         return 29;
     }
     else
@@ -2219,137 +2273,137 @@ u16 sub_805546C(u32 linkPlayerId)
     }
 }
 
-u16 sub_80554A4(u32 a1)
+static u16 KeyInterCB_SetReady(u32 key)
 {
-    sub_80543DC(sub_805546C);
+    SetKeyInterceptCallback(KeyInterCB_Ready);
     return 22;
 }
 
-u16 sub_80554B8(u32 a1)
+static u16 KeyInterCB_SendNothing(u32 key)
 {
     return 17;
 }
 
-u16 sub_80554BC(u32 a1)
+static u16 KeyInterCB_WaitForPlayersToExit(u32 a1)
 {
-    if (sub_8054F88(0x83) == TRUE)
+    if (AreAllPlayersInLinkState(0x83) == TRUE)
     {
         ScriptContext_SetupScript(gUnknown_081A4508);
-        sub_80543DC(sub_80554B8);
+        SetKeyInterceptCallback(KeyInterCB_SendNothing);
     }
     return 17;
 }
 
-u16 sub_80554E4(u32 a1)
+static u16 KeyInterCB_SendExitRoomKey(u32 key)
 {
-    sub_80543DC(sub_80554BC);
+    SetKeyInterceptCallback(KeyInterCB_WaitForPlayersToExit);
     return 23;
 }
 
-s32 sub_80554F8(void)
+s32 GetCableClubPartnersReady(void)
 {
-    if (sub_8054FC0(0x83) == TRUE)
+    if (IsAnyPlayerInLinkState(0x83) == TRUE)
         return 2;
-    if (gUnknown_03000584 == sub_805546C && gUnknown_03000580[gUnknown_03004860] != 0x82)
+    if (sPlayerKeyInterceptCallback == KeyInterCB_Ready && sPlayerLinkStates[gLocalLinkPlayerId] != 0x82)
         return 0;
-    if (gUnknown_03000584 == sub_8055468 && gUnknown_03000580[gUnknown_03004860] == 0x81)
+    if (sPlayerKeyInterceptCallback == KeyInterCB_ExitingSeat && sPlayerLinkStates[gLocalLinkPlayerId] == 0x81)
         return 2;
-    return sub_8054F88(0x82);
+    return AreAllPlayersInLinkState(0x82);
 }
 
-bool32 unref_sub_8055568(void)
+static bool32 UNUSED IsAnyPlayerExitingCableClub(void)
 {
-    return sub_8054FC0(0x83);
+    return IsAnyPlayerInLinkState(0x83);
 }
 
-u16 sub_8055574(void)
+u16 SetInCableClubSeat(void)
 {
-    sub_80543DC(sub_80554A4);
+    SetKeyInterceptCallback(KeyInterCB_SetReady);
     return 0;
 }
 
-u16 sub_8055588(void)
+u16 SetLinkWaitingForScript(void)
 {
-    sub_80543DC(sub_80553E4);
+    SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
     return 0;
 }
 
-u16 sub_805559C(void)
+u16 QueueExitLinkRoomKey(void)
 {
-    sub_80543DC(sub_80554E4);
+    SetKeyInterceptCallback(KeyInterCB_SendExitRoomKey);
     return 0;
 }
 
-void sub_80555B0(int linkPlayerId, int a2, struct UnkStruct_8054FF8 *a3)
+static void LoadCableClubPlayer(int linkPlayerId, int myPlayerId, struct CableClubPlayer *trainer)
 {
     s16 x, y;
 
-    a3->a = linkPlayerId;
-    a3->b = (linkPlayerId == a2) ? 1 : 0;
-    a3->c = gLinkPlayerObjectEvents[linkPlayerId].mode;
-    a3->d = sub_8055B30(linkPlayerId);
-    sub_8055B08(linkPlayerId, &x, &y);
-    a3->sub.x = x;
-    a3->sub.y = y;
-    a3->sub.height = sub_8055B50(linkPlayerId);
-    a3->field_C = MapGridGetMetatileBehaviorAt(x, y);
+    trainer->playerId = linkPlayerId;
+    trainer->isLocalPlayer = (linkPlayerId == myPlayerId) ? 1 : 0;
+    trainer->movementMode = gLinkPlayerObjectEvents[linkPlayerId].movementMode;
+    trainer->facing = GetLinkPlayerFacingDirection(linkPlayerId);
+    GetLinkPlayerCoords(linkPlayerId, &x, &y);
+    trainer->pos.x = x;
+    trainer->pos.y = y;
+    trainer->pos.elevation = GetLinkPlayerElevation(linkPlayerId);
+    trainer->metatileBehavior = MapGridGetMetatileBehaviorAt(x, y);
 }
 
-bool32 sub_8055618(struct UnkStruct_8054FF8 *a1)
+static bool32 IsCableClubPlayerUnfrozen(struct CableClubPlayer *player)
 {
-    u8 v1 = a1->c;
-    if (v1 == 2 || v1 == 0)
+    u8 mode = player->movementMode;
+    if (mode == 2 || mode == 0)
         return TRUE;
     else
         return FALSE;
 }
 
-bool32 sub_8055630(struct UnkStruct_8054FF8 *a1)
+static bool32 CanCableClubPlayerPressStart(struct CableClubPlayer *player)
 {
-    u8 v1 = a1->c;
-    if (v1 == 2 || v1 == 0)
+    u8 mode = player->movementMode;
+    if (mode == 2 || mode == 0)
         return TRUE;
     else
         return FALSE;
 }
 
-const u8 *sub_8055648(struct UnkStruct_8054FF8 *a1)
+static const u8 *TryGetTileEventScript(struct CableClubPlayer *player)
 {
-    if (a1->c != 2)
+    if (player->movementMode != 2)
         return 0;
-    return GetCoordEventScriptAtMapPosition(&a1->sub);
+    return GetCoordEventScriptAtMapPosition(&player->pos);
 }
 
-bool32 sub_8055660(struct UnkStruct_8054FF8 *a1)
+static bool32 PlayerIsAtSouthExit(struct CableClubPlayer *player)
 {
-    if (a1->c != 2 && a1->c != 0)
+    if (player->movementMode != 2 && player->movementMode != 0)
         return FALSE;
-    if (!MetatileBehavior_IsSouthArrowWarp(a1->field_C))
+    if (!MetatileBehavior_IsSouthArrowWarp(player->metatileBehavior))
         return FALSE;
-    if (a1->d != 1)
+    if (player->facing != 1)
         return FALSE;
     return TRUE;
 }
 
-const u8 *sub_805568C(struct UnkStruct_8054FF8 *a1)
+static const u8 *sub_805568C(struct CableClubPlayer *player)
 {
-    struct MapPosition unkStruct;
+    struct MapPosition otherPlayerPos;
     u8 linkPlayerId;
 
-    if (a1->c && a1->c != 2)
+    if (player->movementMode && player->movementMode != 2)
         return 0;
 
-    unkStruct = a1->sub;
-    unkStruct.x += gDirectionToVectors[a1->d].x;
-    unkStruct.y += gDirectionToVectors[a1->d].y;
-    unkStruct.height = 0;
-    linkPlayerId = GetLinkPlayerIdAt(unkStruct.x, unkStruct.y);
+    otherPlayerPos = player->pos;
+    otherPlayerPos.x += gDirectionToVectors[player->facing].x;
+    otherPlayerPos.y += gDirectionToVectors[player->facing].y;
+    otherPlayerPos.elevation = 0;
+    linkPlayerId = GetLinkPlayerIdAt(otherPlayerPos.x, otherPlayerPos.y);
 
     if (linkPlayerId != 4)
     {
-        if (!a1->b)
+        if (!player->isLocalPlayer)
             return TradeRoom_TooBusyToNotice;
-        if (gUnknown_03000580[linkPlayerId] != 0x80)
+        if (sPlayerLinkStates[linkPlayerId] != 0x80)
             return TradeRoom_TooBusyToNotice;
         if (!sub_8083BF4(linkPlayerId))
             return TradeRoom_ReadTrainerCard1;
@@ -2357,7 +2411,7 @@ const u8 *sub_805568C(struct UnkStruct_8054FF8 *a1)
             return TradeRoom_ReadTrainerCard2;
     }
 
-    return GetInteractedLinkPlayerScript(&unkStruct, a1->field_C, a1->d);
+    return GetInteractedLinkPlayerScript(&otherPlayerPos, player->metatileBehavior, player->facing);
 }
 
 static u16 sub_8055758(const u8 *script)
@@ -2389,40 +2443,40 @@ static u16 sub_8055758(const u8 *script)
     return 0;
 }
 
-void sub_80557E8(void)
+static void InitLinkPlayerQueueScript(void)
 {
     LockPlayerFieldControls();
 }
 
-void sub_80557F4(void)
+static void InitLinkRoomStartMenuScript(void)
 {
     PlaySE(SE_WIN_OPEN);
     sub_8071310();
     LockPlayerFieldControls();
 }
 
-static void sub_8055808(const u8 *script)
+static void RunInteractLocalPlayerScript(const u8 *script)
 {
     PlaySE(SE_SELECT);
     ScriptContext_SetupScript(script);
     LockPlayerFieldControls();
 }
 
-void sub_8055824(void)
+static void RunConfirmLeaveCableClubScript(void)
 {
     PlaySE(SE_WIN_OPEN);
     ScriptContext_SetupScript(TradeRoom_PromptToCancelLink);
     LockPlayerFieldControls();
 }
 
-static void sub_8055840(const u8 *script)
+static void InitMenuBasedScript(const u8 *script)
 {
     PlaySE(SE_SELECT);
     ScriptContext_SetupScript(script);
     LockPlayerFieldControls();
 }
 
-void sub_805585C(void)
+static void RunTerminateLinkScript(void)
 {
     ScriptContext_SetupScript(TradeRoom_TerminateLink);
     LockPlayerFieldControls();
@@ -2430,33 +2484,33 @@ void sub_805585C(void)
 
 bool32 sub_8055870(void)
 {
-    if (!is_c1_link_related_active())
+    if (!IsOverworldLinkActive())
         return 0;
     if (gLink.recvQueue.count >= 3)
-        gUnknown_03000588 = 1;
+        sReceivingFromLink = 1;
     else
-        gUnknown_03000588 = 0;
-    return gUnknown_03000588;
+        sReceivingFromLink = 0;
+    return sReceivingFromLink;
 }
 
 bool32 sub_80558AC(void)
 {
     u8 temp;
 
-    if (is_c1_link_related_active() != TRUE)
+    if (IsOverworldLinkActive() != TRUE)
         return FALSE;
 
     if (IsSendingKeysToLink() != TRUE)
         return FALSE;
 
-    if (gUnknown_03000584 == sub_8055408)
+    if (sPlayerKeyInterceptCallback == KeyInterCB_DeferToRecvQueue)
         return TRUE;
 
-    if (gUnknown_03000584 != sub_80553E4)
+    if (sPlayerKeyInterceptCallback != KeyInterCB_DeferToEventScript)
         return FALSE;
 
-    temp = gUnknown_03000588;
-    gUnknown_03000588 = 0;
+    temp = sReceivingFromLink;
+    sReceivingFromLink = 0;
 
     if (temp == TRUE)
         return TRUE;
@@ -2469,13 +2523,13 @@ bool32 sub_80558AC(void)
 
 bool32 sub_8055910(void)
 {
-    if (is_c1_link_related_active() != TRUE)
+    if (IsOverworldLinkActive() != TRUE)
         return FALSE;
 
     if (IsSendingKeysToLink() != TRUE)
         return FALSE;
 
-    if (gUnknown_03000584 == sub_8055438)
+    if (sPlayerKeyInterceptCallback == KeyInterCB_DeferToSendQueue)
         return TRUE;
 
     return FALSE;
@@ -2488,7 +2542,7 @@ bool32 sub_8055940(void)
     return TRUE;
 }
 
-void ClearLinkPlayerObjectEvent(struct LinkPlayerObjectEvent *linkPlayerObjEvent)
+static void ZeroLinkPlayerObjectEvent(struct LinkPlayerObjectEvent *linkPlayerObjEvent)
 {
     memset(linkPlayerObjEvent, 0, sizeof(struct LinkPlayerObjectEvent));
 }
@@ -2498,27 +2552,27 @@ void ClearLinkPlayerObjectEvents(void)
     memset(gLinkPlayerObjectEvents, 0, sizeof(gLinkPlayerObjectEvents));
 }
 
-static void ClearObjectEvent(struct ObjectEvent *objEvent)
+static void ZeroObjectEvent(struct ObjectEvent *objEvent)
 {
     memset(objEvent, 0, sizeof(struct ObjectEvent));
 }
 
-static void SpawnLinkPlayerObjectEvent(u8 linkPlayerId, s16 x, s16 y, u8 a4)
+static void SpawnLinkPlayerObjectEvent(u8 linkPlayerId, s16 x, s16 y, u8 gender)
 {
     u8 objEventId = GetFirstInactiveObjectEventId();
     struct LinkPlayerObjectEvent *linkPlayerObjEvent = &gLinkPlayerObjectEvents[linkPlayerId];
     struct ObjectEvent *objEvent = &gObjectEvents[objEventId];
 
-    ClearLinkPlayerObjectEvent(linkPlayerObjEvent);
-    ClearObjectEvent(objEvent);
+    ZeroLinkPlayerObjectEvent(linkPlayerObjEvent);
+    ZeroObjectEvent(objEvent);
 
     linkPlayerObjEvent->active = 1;
     linkPlayerObjEvent->linkPlayerId = linkPlayerId;
     linkPlayerObjEvent->objEventId = objEventId;
-    linkPlayerObjEvent->mode = 0;
+    linkPlayerObjEvent->movementMode = 0;
 
     objEvent->active = 1;
-    objEvent->singleMovementActive = a4;
+    objEvent->singleMovementActive = gender;
     objEvent->range.as_byte = 2;
     objEvent->spriteId = 64;
 
@@ -2536,17 +2590,17 @@ static void InitLinkPlayerObjectEventPos(struct ObjectEvent *objEvent, s16 x, s1
     ObjectEventUpdateZCoord(objEvent);
 }
 
-void unref_sub_8055A6C(u8 linkPlayerId, u8 a2)
+static void UNUSED SetLinkPlayerObjectRange(u8 linkPlayerId, u8 dir)
 {
     if (gLinkPlayerObjectEvents[linkPlayerId].active)
     {
         u8 objEventId = gLinkPlayerObjectEvents[linkPlayerId].objEventId;
         struct ObjectEvent *objEvent = &gObjectEvents[objEventId];
-        objEvent->range.as_byte = a2;
+        objEvent->range.as_byte = dir;
     }
 }
 
-void unref_sub_8055A9C(u8 linkPlayerId)
+static void UNUSED DestroyLinkPlayerObject(u8 linkPlayerId)
 {
     struct LinkPlayerObjectEvent *linkPlayerObjEvent = &gLinkPlayerObjectEvents[linkPlayerId];
     u8 objEventId = linkPlayerObjEvent->objEventId;
@@ -2557,14 +2611,14 @@ void unref_sub_8055A9C(u8 linkPlayerId)
     objEvent->active = 0;
 }
 
-u8 sub_8055AE8(u8 linkPlayerId)
+static u8 GetSpriteForLinkedPlayer(u8 linkPlayerId)
 {
     u8 objEventId = gLinkPlayerObjectEvents[linkPlayerId].objEventId;
     struct ObjectEvent *objEvent = &gObjectEvents[objEventId];
     return objEvent->spriteId;
 }
 
-void sub_8055B08(u8 linkPlayerId, u16 *x, u16 *y)
+static void GetLinkPlayerCoords(u8 linkPlayerId, u16 *x, u16 *y)
 {
     u8 objEventId = gLinkPlayerObjectEvents[linkPlayerId].objEventId;
     struct ObjectEvent *objEvent = &gObjectEvents[objEventId];
@@ -2572,21 +2626,21 @@ void sub_8055B08(u8 linkPlayerId, u16 *x, u16 *y)
     *y = objEvent->currentCoords.y;
 }
 
-u8 sub_8055B30(u8 linkPlayerId)
+static u8 GetLinkPlayerFacingDirection(u8 linkPlayerId)
 {
     u8 objEventId = gLinkPlayerObjectEvents[linkPlayerId].objEventId;
     struct ObjectEvent *objEvent = &gObjectEvents[objEventId];
     return objEvent->range.as_byte;
 }
 
-u8 sub_8055B50(u8 linkPlayerId)
+static u8 GetLinkPlayerElevation(u8 linkPlayerId)
 {
     u8 objEventId = gLinkPlayerObjectEvents[linkPlayerId].objEventId;
     struct ObjectEvent *objEvent = &gObjectEvents[objEventId];
     return objEvent->currentElevation;
 }
 
-s32 unref_sub_8055B74(u8 linkPlayerId)
+static s32 UNUSED GetLinkPlayerObjectStepTimer(u8 linkPlayerId)
 {
     u8 objEventId = gLinkPlayerObjectEvents[linkPlayerId].objEventId;
     struct ObjectEvent *objEvent = &gObjectEvents[objEventId];
@@ -2599,7 +2653,7 @@ static u8 GetLinkPlayerIdAt(s16 x, s16 y)
     for (i = 0; i < 4; i++)
     {
         if (gLinkPlayerObjectEvents[i].active
-         && (gLinkPlayerObjectEvents[i].mode == 0 || gLinkPlayerObjectEvents[i].mode == 2))
+         && (gLinkPlayerObjectEvents[i].movementMode == 0 || gLinkPlayerObjectEvents[i].movementMode == 2))
         {
             struct ObjectEvent *objEvent = &gObjectEvents[gLinkPlayerObjectEvents[i].objEventId];
             if (objEvent->currentCoords.x == x && objEvent->currentCoords.y == y)
@@ -2609,7 +2663,7 @@ static u8 GetLinkPlayerIdAt(s16 x, s16 y)
     return 4;
 }
 
-void sub_8055BFC(u8 linkPlayerId, u8 a2)
+static void SetPlayerFacingDirection(u8 linkPlayerId, u8 facing)
 {
     struct LinkPlayerObjectEvent *linkPlayerObjEvent = &gLinkPlayerObjectEvents[linkPlayerId];
     u8 objEventId = linkPlayerObjEvent->objEventId;
@@ -2617,41 +2671,41 @@ void sub_8055BFC(u8 linkPlayerId, u8 a2)
 
     if (linkPlayerObjEvent->active)
     {
-        if (a2 > 10)
+        if (facing > 10)
             objEvent->triggerGroundEffectsOnMove = 1;
         else
-            gUnknown_082166D8[gUnknown_082166A0[linkPlayerObjEvent->mode](linkPlayerObjEvent, objEvent, a2)](linkPlayerObjEvent, objEvent);
+            sMovementStatusHandler[sLinkPlayerMovementModes[linkPlayerObjEvent->movementMode](linkPlayerObjEvent, objEvent, facing)](linkPlayerObjEvent, objEvent);
     }
 }
 
-static u8 sub_8055C68(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 MovementEventModeCB_Normal(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 dir)
 {
-    return gUnknown_082166AC[a3](linkPlayerObjEvent, objEvent, a3);
+    return sLinkPlayerFacingHandlers[dir](linkPlayerObjEvent, objEvent, dir);
 }
 
-static u8 sub_8055C88(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 MovementEventModeCB_Ignored(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 dir)
 {
     return 1;
 }
 
-static u8 sub_8055C8C(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 MovementEventModeCB_Scripted(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 dir)
 {
-    return gUnknown_082166AC[a3](linkPlayerObjEvent, objEvent, a3);
+    return sLinkPlayerFacingHandlers[dir](linkPlayerObjEvent, objEvent, dir);
 }
 
-static u8 sub_8055CAC(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 FacingHandler_DoNothing(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 dir)
 {
     return 0;
 }
 
-static u8 sub_8055CB0(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 FacingHandler_DpadMovement(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 dir)
 {
     s16 x, y;
 
-    objEvent->range.as_byte = npc_something3(a3, objEvent->range.as_byte);
+    objEvent->range.as_byte = FlipVerticalAndClearForced(dir, objEvent->range.as_byte);
     ObjectEventMoveDestCoords(objEvent, objEvent->range.as_byte, &x, &y);
 
-    if (LinkPlayerDetectCollision(linkPlayerObjEvent->objEventId, objEvent->range.as_byte, x, y))
+    if (LinkPlayerGetCollision(linkPlayerObjEvent->objEventId, objEvent->range.as_byte, x, y))
     {
         return 0;
     }
@@ -2664,32 +2718,32 @@ static u8 sub_8055CB0(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct O
     }
 }
 
-static u8 sub_8055D18(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 FacingHandler_ForcedFacingChange(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 dir)
 {
-    objEvent->range.as_byte = npc_something3(a3, objEvent->range.as_byte);
+    objEvent->range.as_byte = FlipVerticalAndClearForced(dir, objEvent->range.as_byte);
     return 0;
 }
 
-static void sub_8055D30(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent)
+static void MovementStatusHandler_EnterFreeMode(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent)
 {
-    linkPlayerObjEvent->mode = 0;
+    linkPlayerObjEvent->movementMode = 0;
 }
 
-static void sub_8055D38(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent)
+static void MovementStatusHandler_TryAdvanceScript(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent)
 {
     objEvent->directionSequenceIndex--;
-    linkPlayerObjEvent->mode = 1;
+    linkPlayerObjEvent->movementMode = 1;
     MoveCoords(objEvent->range.as_byte, &objEvent->initialCoords.x, &objEvent->initialCoords.y);
     if (!objEvent->directionSequenceIndex)
     {
         ShiftStillObjectEventCoords(objEvent);
-        linkPlayerObjEvent->mode = 2;
+        linkPlayerObjEvent->movementMode = 2;
     }
 }
 
-static u8 npc_something3(u8 a1, u8 a2)
+static u8 FlipVerticalAndClearForced(u8 newFacing, u8 oldFacing)
 {
-    switch (a1 - 1)
+    switch (newFacing - 1)
     {
     case 0:
     case 6:
@@ -2704,10 +2758,10 @@ static u8 npc_something3(u8 a1, u8 a2)
     case 9:
         return 4;
     }
-    return a2;
+    return oldFacing;
 }
 
-static u8 LinkPlayerDetectCollision(u8 selfObjEventId, u8 a2, s16 x, s16 y)
+static u8 LinkPlayerGetCollision(u8 selfObjEventId, u8 direction, s16 x, s16 y)
 {
     u8 i;
     for (i = 0; i < 16; i++)
@@ -2750,7 +2804,7 @@ static void SpriteCB_LinkPlayer(struct Sprite *sprite)
     sprite->y = objEvent->initialCoords.y;
     SetObjectSubpriorityByZCoord(objEvent->previousElevation, sprite, 1);
     sprite->oam.priority = ZCoordToPriority(objEvent->previousElevation);
-    if (!linkPlayerObjEvent->mode)
+    if (!linkPlayerObjEvent->movementMode)
         StartSpriteAnim(sprite, GetFaceDirectionAnimNum(objEvent->range.as_byte));
     else
         StartSpriteAnimIfDifferent(sprite, GetMoveDirectionAnimNum(objEvent->range.as_byte));

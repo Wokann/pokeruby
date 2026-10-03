@@ -709,7 +709,7 @@ static s8 GetBattleTransitionTypeByMap(void)
 
     PlayerGetDestCoords(&x, &y);
     tileBehavior = MapGridGetMetatileBehaviorAt(x, y);
-    if (Overworld_GetFlashLevel())
+    if (GetFlashLevel())
         return 2;
     if (!MetatileBehavior_IsSurfableWaterOrUnderwater(tileBehavior))
     {

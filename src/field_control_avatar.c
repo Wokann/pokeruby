@@ -287,7 +287,7 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
 static void GetPlayerPosition(struct MapPosition *position)
 {
     PlayerGetDestCoords(&position->x, &position->y);
-    position->height = PlayerGetZCoord();
+    position->elevation = PlayerGetZCoord();
 }
 
 static void GetInFrontOfPlayerPosition(struct MapPosition *position)
@@ -297,9 +297,9 @@ static void GetInFrontOfPlayerPosition(struct MapPosition *position)
     GetXYCoordsOneStepInFrontOfPlayer(&position->x, &position->y);
     PlayerGetDestCoords(&x, &y);
     if (MapGridGetElevationAt(x, y) != 0)
-        position->height = PlayerGetZCoord();
+        position->elevation = PlayerGetZCoord();
     else
-        position->height = 0;
+        position->elevation = 0;
 }
 
 static u16 GetPlayerCurMetatileBehavior(int runningState)
@@ -355,9 +355,9 @@ const u8 *GetInteractedLinkPlayerScript(struct MapPosition *position, u8 metatil
     s32 i;
 
     if (!MetatileBehavior_IsCounter(MapGridGetMetatileBehaviorAt(position->x, position->y)))
-        objectEventId = GetObjectEventIdByXYZ(position->x, position->y, position->height);
+        objectEventId = GetObjectEventIdByXYZ(position->x, position->y, position->elevation);
     else
-        objectEventId = GetObjectEventIdByXYZ(position->x + gDirectionToVectors[direction].x, position->y + gDirectionToVectors[direction].y, position->height);
+        objectEventId = GetObjectEventIdByXYZ(position->x + gDirectionToVectors[direction].x, position->y + gDirectionToVectors[direction].y, position->elevation);
 
     if (objectEventId == 16 || gObjectEvents[objectEventId].localId == LOCALID_PLAYER)
         return NULL;
@@ -379,14 +379,14 @@ static const u8 *GetInteractedObjectEventScript(struct MapPosition *position, u8
     u8 objectEventId;
     const u8 *script;
 
-    objectEventId = GetObjectEventIdByXYZ(position->x, position->y, position->height);
+    objectEventId = GetObjectEventIdByXYZ(position->x, position->y, position->elevation);
     if (objectEventId == 16 || gObjectEvents[objectEventId].localId == LOCALID_PLAYER)
     {
         if (MetatileBehavior_IsCounter(metatileBehavior) != TRUE)
             return NULL;
 
         // Look for an object event on the other side of the counter.
-        objectEventId = GetObjectEventIdByXYZ(position->x + gDirectionToVectors[direction].x, position->y + gDirectionToVectors[direction].y, position->height);
+        objectEventId = GetObjectEventIdByXYZ(position->x + gDirectionToVectors[direction].x, position->y + gDirectionToVectors[direction].y, position->elevation);
         if (objectEventId == 16 || gObjectEvents[objectEventId].localId == LOCALID_PLAYER)
             return NULL;
     }
@@ -401,7 +401,7 @@ static const u8 *GetInteractedObjectEventScript(struct MapPosition *position, u8
 
 static const u8 *GetInteractedBackgroundEventScript(struct MapPosition *position, u8 metatileBehavior, u8 direction)
 {
-    const struct BgEvent *bgEvent = GetBackgroundEventAtPosition(&gMapHeader, position->x - 7, position->y - 7, position->height);
+    const struct BgEvent *bgEvent = GetBackgroundEventAtPosition(&gMapHeader, position->x - 7, position->y - 7, position->elevation);
 
     if (bgEvent == NULL)
         return NULL;
@@ -485,7 +485,7 @@ static const u8 *GetInteractedMetatileScript(struct MapPosition *position, u8 me
     if (MetatileBehavior_IsBlueprint(metatileBehavior) == TRUE)
         return EventScript_Blueprint;
 
-    height = position->height;
+    height = position->elevation;
     if (height == MapGridGetElevationAt(position->x, position->y))
     {
         if (MetatileBehavior_IsSecretBasePC(metatileBehavior) == TRUE)
@@ -553,7 +553,7 @@ static bool8 TryStartStepBasedScript(struct MapPosition *position, u16 metatileB
 
 bool8 TryStartCoordEventScript(struct MapPosition *position)
 {
-    const u8 *script = GetCoordEventScriptAtPosition(&gMapHeader, position->x - 7, position->y - 7, position->height);
+    const u8 *script = GetCoordEventScriptAtPosition(&gMapHeader, position->x - 7, position->y - 7, position->elevation);
 
     if (script == NULL)
         return FALSE;
@@ -760,7 +760,7 @@ static bool8 IsArrowWarpMetatileBehavior(u16 metatileBehavior, u8 direction)
 
 static s8 GetWarpEventAtMapPosition(struct MapHeader *mapHeader, struct MapPosition *position)
 {
-    return GetWarpEventAtPosition(mapHeader, position->x - 7, position->y - 7, position->height);
+    return GetWarpEventAtPosition(mapHeader, position->x - 7, position->y - 7, position->elevation);
 }
 
 static void sub_8068C30(struct MapHeader *unused, s8 warpEventId, struct MapPosition *position)
@@ -769,17 +769,17 @@ static void sub_8068C30(struct MapHeader *unused, s8 warpEventId, struct MapPosi
 
     if (warpEvent->mapNum == MAP_NUM(MAP_DYNAMIC))
     {
-        copy_saved_warp2_bank_and_enter_x_to_warp1(warpEvent->warpId);
+        SetWarpDestinationToDynamicWarp(warpEvent->warpId);
     }
     else
     {
         struct MapHeader *mapHeader;
 
-        warp1_set_2(warpEvent->mapGroup, warpEvent->mapNum, warpEvent->warpId);
-        sub_80535C4(position->x, position->y);
+        SetWarpDestinationToMapWarp(warpEvent->mapGroup, warpEvent->mapNum, warpEvent->warpId);
+        UpdateEscapeWarp(position->x, position->y);
         mapHeader = Overworld_GetMapHeaderByGroupAndId(warpEvent->mapGroup, warpEvent->mapNum);
         if (mapHeader->events->warps[warpEvent->warpId].mapNum == MAP_NUM(MAP_DYNAMIC))
-            saved_warp2_set(mapHeader->events->warps[warpEventId].warpId, gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, warpEventId);
+            SetDynamicWarp(mapHeader->events->warps[warpEventId].warpId, gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, warpEventId);
     }
 }
 
@@ -869,7 +869,7 @@ static const u8 *GetCoordEventScriptAtPosition(struct MapHeader *mapHeader, u16 
 
 const u8 *GetCoordEventScriptAtMapPosition(struct MapPosition *position)
 {
-    return GetCoordEventScriptAtPosition(&gMapHeader, position->x - 7, position->y - 7, position->height);
+    return GetCoordEventScriptAtPosition(&gMapHeader, position->x - 7, position->y - 7, position->elevation);
 }
 
 static const struct BgEvent *GetBackgroundEventAtPosition(struct MapHeader *mapHeader, u16 x, u16 y, u8 elevation)

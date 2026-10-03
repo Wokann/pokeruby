@@ -58,7 +58,6 @@ static bool8 savingComplete;
 extern u16 gSaveFileStatus;
 extern u16 gSpecialVar_Result;
 
-extern u8 gUnknown_03004860;
 
 u8 (*gMenuCallback)(void);
 
@@ -243,7 +242,7 @@ void unref_sub_8070F90(void)
 static void BuildStartMenuActions(void)
 {
     sNumStartMenuActions = 0;
-    if (is_c1_link_related_active() == TRUE)
+    if (IsOverworldLinkActive() == TRUE)
         BuildStartMenuActions_Link();
     else
     {
@@ -402,7 +401,7 @@ void sub_80712B4(u8 taskId)
 
 void sub_8071310(void)
 {
-    if (!is_c1_link_related_active())
+    if (!IsOverworldLinkActive())
     {
         FreezeObjectEvents();
         sub_80594C0();
@@ -502,7 +501,7 @@ static u8 StartMenu_PlayerCallback(void)
     if (!gPaletteFade.active)
     {
         PlayRainSoundEffect();
-        TrainerCard_ShowPlayerCard(c2_exit_to_overworld_1_sub_8080DEC);
+        TrainerCard_ShowPlayerCard(CB2_ReturnToFieldWithOpenMenu);
         return 1;
     }
     return 0;
@@ -523,7 +522,7 @@ static u8 StartMenu_OptionCallback(void)
     {
         PlayRainSoundEffect();
         SetMainCallback2(CB2_InitOptionMenu);
-        gMain.savedCallback = c2_exit_to_overworld_1_sub_8080DEC;
+        gMain.savedCallback = CB2_ReturnToFieldWithOpenMenu;
         return 1;
     }
     return 0;
@@ -550,7 +549,7 @@ static u8 StartMenu_PlayerLinkCallback(void)
     if (!gPaletteFade.active)
     {
         PlayRainSoundEffect();
-        TrainerCard_ShowLinkCard(gUnknown_03004860, c2_exit_to_overworld_1_sub_8080DEC);
+        TrainerCard_ShowLinkCard(gLocalLinkPlayerId, CB2_ReturnToFieldWithOpenMenu);
         return 1;
     }
     return 0;

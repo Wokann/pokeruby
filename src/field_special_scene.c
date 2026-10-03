@@ -285,7 +285,7 @@ bool8 sub_80C7754(void)
     }
     else
     {
-        Overworld_SetWarpDestination(mapGroup, mapNum, -1, x, y);
+        SetWarpDestination(mapGroup, mapNum, -1, x, y);
         return TRUE;
     }
 }
@@ -341,7 +341,7 @@ void Task_HandlePorthole(u8 taskId)
     case EXIT_PORTHOLE: // exit porthole.
         FlagClear(FLAG_DONT_TRANSITION_MUSIC);
         FlagClear(FLAG_HIDE_MAP_NAME_POPUP);
-        copy_saved_warp2_bank_and_enter_x_to_warp1(0);
+        SetWarpDestinationToDynamicWarp(0);
         sp13E_warp_to_last_warp();
         DestroyTask(taskId);
         break;
@@ -378,7 +378,7 @@ void sub_80C7958(void)
     FlagSet(FLAG_SYS_CRUISE_MODE);
     FlagSet(FLAG_DONT_TRANSITION_MUSIC);
     FlagSet(FLAG_HIDE_MAP_NAME_POPUP);
-    saved_warp2_set(0, gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, -1);
+    SetDynamicWarp(0, gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, -1);
     sub_80C7754();
     sub_8080F9C();
 }

@@ -1,6 +1,7 @@
 #include "global.h"
 #include "cable_club.h"
 #include "link.h"
+#include "overworld.h"
 #include "battle.h"
 #include "berry.h"
 #include "berry_blender.h"
@@ -39,7 +40,6 @@ struct LinkTestBGInfo
 
 extern u16 gBattleTypeFlags;
 
-extern u16 word_3004858;
 
 
 static void InitLinkTestBG(u8, u8, u8, u8);
@@ -649,10 +649,10 @@ static void BuildSendCmd(u16 code)
         gSendCmd[0] = 0x5FFF;
         break;
     case 0xCAFE:
-        if (!word_3004858 || gLinkTransferringData)
+        if (!gHeldKeyCodeToSend || gLinkTransferringData)
             break;
         gSendCmd[0] = 0xCAFE;
-        gSendCmd[1] = word_3004858;
+        gSendCmd[1] = gHeldKeyCodeToSend;
         break;
     }
 }

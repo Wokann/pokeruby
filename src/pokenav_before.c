@@ -1122,7 +1122,7 @@ void sub_80EBA5C()
     default:
         gMain.state = 0;
     case 0:
-        gPokenavStructPtr->unk6DAC = is_c1_link_related_active();
+        gPokenavStructPtr->unk6DAC = IsOverworldLinkActive();
         if (!gPokenavStructPtr->unk6DAC)
         {
             gPokenavStructPtr->unk6DAB = 0;
@@ -3245,7 +3245,7 @@ void sub_80EE96C()
         if (!gPaletteFade.active)
         {
 			sub_80F5BDC();
-			c2_exit_to_overworld_1_sub_8080DEC();
+			CB2_ReturnToFieldWithOpenMenu();
 		}
     }
 }

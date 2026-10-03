@@ -1389,7 +1389,7 @@ static void sub_8049DC4(void)
 {
     if (gReceivedRemoteLinkPlayers == 0)
     {
-        SetMainCallback2(sub_805465C);
+        SetMainCallback2(CB2_ReturnToFieldFromMultiplayer);
     }
 }
 

@@ -433,7 +433,7 @@ static void sub_80831F8(u8 taskId)
     else
     {
         gFieldLinkPlayerCount = GetLinkPlayerCount_2();
-        gUnknown_03004860 = GetMultiplayerId();
+        gLocalLinkPlayerId = GetMultiplayerId();
         SaveLinkPlayers(gFieldLinkPlayerCount);
         TrainerCard_GenerateCardForPlayer((struct TrainerCard *)gBlockSendBuffer);
         gTasks[taskId].func = sub_8083314;
@@ -454,7 +454,7 @@ static void sub_8083288(u8 taskId)
     else
     {
         gFieldLinkPlayerCount = GetLinkPlayerCount_2();
-        gUnknown_03004860 = GetMultiplayerId();
+        gLocalLinkPlayerId = GetMultiplayerId();
         SaveLinkPlayers(gFieldLinkPlayerCount);
         TrainerCard_GenerateCardForPlayer((struct TrainerCard *)gBlockSendBuffer);
         gTasks[taskId].func = sub_8083314;
@@ -794,9 +794,9 @@ static void sub_8083958(void)
     sub_810FEFC();
 
     if (gSpecialVar_0x8004 != 5)
-        UpdateLinkBattleRecords(gUnknown_03004860 ^ 1);
+        UpdateLinkBattleRecords(gLocalLinkPlayerId ^ 1);
 
-    gMain.savedCallback = sub_805465C;
+    gMain.savedCallback = CB2_ReturnToFieldFromMultiplayer;
     SetMainCallback2(sub_8071B28);
 }
 
@@ -807,12 +807,12 @@ void sub_80839A4(void)
         LoadPlayerParty();
         SavePlayerBag();
     }
-    copy_saved_warp2_bank_and_enter_x_to_warp1(0x7F);
+    SetWarpDestinationToDynamicWarp(0x7F);
 }
 
 void sub_80839D0(void)
 {
-    sub_805559C();
+    QueueExitLinkRoomKey();
 }
 
 static void sub_80839DC(u8 taskId)
@@ -828,13 +828,13 @@ static void sub_80839DC(u8 taskId)
     case 1:
         if (IsFieldMessageBoxHidden())
         {
-            sub_8055574();
+            SetInCableClubSeat();
             SetLocalLinkPlayerId(gSpecialVar_0x8005);
             task->data[0] = 2;
         }
         break;
     case 2:
-        switch (sub_80554F8())
+        switch (GetCableClubPartnersReady())
         {
         case 0:
             break;
@@ -849,7 +849,7 @@ static void sub_80839DC(u8 taskId)
         }
         break;
     case 3:
-        sub_8055588();
+        SetLinkWaitingForScript();
         HideFieldMessageBox();
         Menu_EraseScreen();
         DestroyTask(taskId);

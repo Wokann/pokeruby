@@ -33,9 +33,9 @@ int GameClear(void)
     SetSecretBase2Field_9();
 
     if (gSaveBlock2.playerGender == MALE)
-        sub_80537CC(HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F);
+        SetContinueGameWarpToHealLocation(HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F);
     else
-        sub_80537CC(HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE_2F);
+        SetContinueGameWarpToHealLocation(HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE_2F);
 
     ribbonGet = FALSE;
 

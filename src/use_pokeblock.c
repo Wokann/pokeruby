@@ -208,7 +208,7 @@ static void sub_8136294(void)
     switch (gUnknown_02039304->unk50)
     {
         case 0:
-            c1LinkRelatedActive = is_c1_link_related_active();
+            c1LinkRelatedActive = IsOverworldLinkActive();
             gPokenavStructPtr->unk6DAC = c1LinkRelatedActive;
             if ((bool8)c1LinkRelatedActive == FALSE)
             {

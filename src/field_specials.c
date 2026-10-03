@@ -715,11 +715,11 @@ void CableCarWarp(void)
 {
     if (gSpecialVar_0x8004 != 0)
     {
-        Overworld_SetWarpDestination(MAP_GROUP(MAP_ROUTE112_CABLE_CAR_STATION), MAP_NUM(MAP_ROUTE112_CABLE_CAR_STATION), -1, 6, 4);
+        SetWarpDestination(MAP_GROUP(MAP_ROUTE112_CABLE_CAR_STATION), MAP_NUM(MAP_ROUTE112_CABLE_CAR_STATION), -1, 6, 4);
     }
     else
     {
-        Overworld_SetWarpDestination(MAP_GROUP(MAP_MT_CHIMNEY_CABLE_CAR_STATION), MAP_NUM(MAP_MT_CHIMNEY_CABLE_CAR_STATION), -1, 6, 4);
+        SetWarpDestination(MAP_GROUP(MAP_MT_CHIMNEY_CABLE_CAR_STATION), MAP_NUM(MAP_MT_CHIMNEY_CABLE_CAR_STATION), -1, 6, 4);
     }
 }
 
@@ -1122,7 +1122,7 @@ void sub_810E984(u8 taskId)
     }
     if (JOY_NEW(A_BUTTON))
     {
-        saved_warp2_set_2(0, gUnknown_03000760[gUnknown_0203925B].var1, gUnknown_03000760[gUnknown_0203925B].var2, -1, 2, 1);
+        SetDynamicWarpWithCoords(0, gUnknown_03000760[gUnknown_0203925B].var1, gUnknown_03000760[gUnknown_0203925B].var2, -1, 2, 1);
         if (gSpecialVar_0x8005 == gUnknown_0203925B)
         {
             gSpecialVar_Result = 0;
@@ -1840,7 +1840,7 @@ bool8 FoundBlackGlasses(void)
 
 void SetRoute119Weather(void)
 {
-    if (is_map_type_1_2_3_5_or_6(GetLastUsedWarpMapType()) != TRUE)
+    if (IsMapTypeOutdoors(GetLastUsedWarpMapType()) != TRUE)
     {
         SetSav1Weather(WEATHER_ROUTE119_CYCLE);
     }
@@ -1848,7 +1848,7 @@ void SetRoute119Weather(void)
 
 void SetRoute123Weather(void)
 {
-    if (is_map_type_1_2_3_5_or_6(GetLastUsedWarpMapType()) != TRUE)
+    if (IsMapTypeOutdoors(GetLastUsedWarpMapType()) != TRUE)
     {
         SetSav1Weather(WEATHER_ROUTE123_CYCLE);
     }

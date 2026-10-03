@@ -1036,7 +1036,7 @@ struct ObjectEvent gObjectEvents[OBJECT_EVENTS_COUNT];
 u8 gUnknown_Debug_03004BC0;
 #endif
 
-static void ClearObjectEvent(struct ObjectEvent *objectEvent)
+static void ZeroObjectEvent(struct ObjectEvent *objectEvent)
 {
     memset(objectEvent, 0, sizeof(struct ObjectEvent));
     objectEvent->localId = LOCALID_PLAYER;
@@ -1050,7 +1050,7 @@ static void ClearAllObjectEvents(void)
     u8 i;
 
     for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
-        ClearObjectEvent(&gObjectEvents[i]);
+        ZeroObjectEvent(&gObjectEvents[i]);
 #if DEBUG
     gUnknown_Debug_03004BC0 = 0;
 #endif
@@ -1160,7 +1160,7 @@ static u8 InitObjectEventStateFromTemplate(const struct ObjectEventTemplate *tem
         return OBJECT_EVENTS_COUNT;
 
     objectEvent = &gObjectEvents[objectEventId];
-    ClearObjectEvent(objectEvent);
+    ZeroObjectEvent(objectEvent);
     initialX = template->x + 7;
     initialY = template->y + 7;
     objectEvent->active = TRUE;

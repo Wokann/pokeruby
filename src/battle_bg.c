@@ -27,7 +27,6 @@ extern u8 BattleText_Loss[];
 extern u8 BattleText_Tie[];
 
 
-#define GetCurrentMapBattleScene sav1_map_get_battletype
 //extern u8 GetCurrentMapBattleScene(void);
 
 extern const u8 gGameVersion;
@@ -59,7 +58,7 @@ extern u16 gBattle_BG1_Y;
 extern u16 gBattle_BG2_X;
 extern u16 gBattle_BG2_Y;
 
-extern u8 sav1_map_get_battletype(void);
+extern u8 GetCurrentMapBattleScene(void);
 
 struct LinkResultWindow {
     struct Window *window;
@@ -704,7 +703,7 @@ void DrawBattleEntryBackground(void)
                 return;
             }
         }
-        if (sav1_map_get_battletype() == 0)
+        if (GetCurrentMapBattleScene() == 0)
         {
             LZDecompressVram(sBattleEnvironmentTable[gBattleEnvironment].entryTileset, (void *)(VRAM + 0x4000));
             LZDecompressVram(sBattleEnvironmentTable[gBattleEnvironment].entryTilemap, (void *)(VRAM + 0xE000));
@@ -763,7 +762,7 @@ int LoadChosenBattleElement(u8 caseId)
                         break;
                     }
                 }
-                switch (sav1_map_get_battletype())
+                switch (GetCurrentMapBattleScene())
                 {
                 case 0:
                     LZDecompressVram(sBattleEnvironmentTable[gBattleEnvironment].tileset, (void *)(BG_CHAR_ADDR(2)));
@@ -830,7 +829,7 @@ int LoadChosenBattleElement(u8 caseId)
                         break;
                     }
                 }
-                switch (sav1_map_get_battletype())
+                switch (GetCurrentMapBattleScene())
                 {
                 case 0:
                     LZDecompressVram(sBattleEnvironmentTable[gBattleEnvironment].tilemap, (void *)(BG_SCREEN_ADDR(26)));
@@ -897,7 +896,7 @@ int LoadChosenBattleElement(u8 caseId)
                         break;
                     }
                 }
-                switch (sav1_map_get_battletype())
+                switch (GetCurrentMapBattleScene())
                 {
                 case 0:
                     LoadCompressedPalette(sBattleEnvironmentTable[gBattleEnvironment].palette, 0x20, 0x60);

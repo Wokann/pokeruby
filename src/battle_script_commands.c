@@ -157,7 +157,7 @@ void BattleMainCB2(void);
 void AddMoney(u32* moneySaveblock, u32 to_give);
 u8 CanRunFromBattle(void);
 u8 GetMoveTarget(u16 move, u8 targetbyte); //get target of move
-u8 Overworld_GetMapTypeOfSaveblockLocation(void);
+u8 GetCurrentMapType(void);
 u8 CalculatePlayerPartyCount(void);
 u16 Sqrt(u32 num);
 u8 sub_809070C(u16 nationalNum, u32 TiD, u32 PiD); //task prepare poke dex display
@@ -9365,7 +9365,7 @@ void atkEF_handleballthrow(void)
                     ball_multiplier = 10;
                 break;
             case ITEM_DIVE_BALL:
-                if (Overworld_GetMapTypeOfSaveblockLocation() == 5)
+                if (GetCurrentMapType() == 5)
                     ball_multiplier = 35;
                 else
                     ball_multiplier = 10;

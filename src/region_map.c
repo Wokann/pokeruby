@@ -547,13 +547,13 @@ static void InitializeCursorPosition(void)
         break;
     case 3:
     case 6:
-        mapHeader = Overworld_GetMapHeaderByGroupAndId(gSaveBlock1.warp4.mapGroup, gSaveBlock1.warp4.mapNum);
+        mapHeader = Overworld_GetMapHeaderByGroupAndId(gSaveBlock1.escapeWarp.mapGroup, gSaveBlock1.escapeWarp.mapNum);
         gRegionMap->mapSectionId = mapHeader->regionMapSectionId;
         gRegionMap->playerIsInCave = TRUE;
         mapWidth = mapHeader->mapLayout->width;
         mapHeight = mapHeader->mapLayout->height;
-        x = gSaveBlock1.warp4.x;
-        y = gSaveBlock1.warp4.y;
+        x = gSaveBlock1.escapeWarp.x;
+        y = gSaveBlock1.escapeWarp.y;
         break;
     case 8:
         mapHeader = Overworld_GetMapHeaderByGroupAndId(gSaveBlock1.dynamicWarp.mapGroup, gSaveBlock1.dynamicWarp.mapNum);
@@ -571,7 +571,7 @@ static void InitializeCursorPosition(void)
             gRegionMap->mapSectionId = gMapHeader.regionMapSectionId;
             if (gRegionMap->mapSectionId != MAPSEC_DYNAMIC)
             {
-                r4 = &gSaveBlock1.warp4;
+                r4 = &gSaveBlock1.escapeWarp;
                 mapHeader = Overworld_GetMapHeaderByGroupAndId(r4->mapGroup, r4->mapNum);
             }
             else
@@ -1619,22 +1619,22 @@ void sub_80FC69C(void)
             switch (gRegionMapState->regionMap.mapSectionId)
             {
             case MAPSEC_SOUTHERN_ISLAND:
-                sub_8053538(HEAL_LOCATION_SOUTHERN_ISLAND_EXTERIOR);
+                SetWarpDestinationToHealLocation(HEAL_LOCATION_SOUTHERN_ISLAND_EXTERIOR);
                 break;
             case MAPSEC_BATTLE_TOWER:
-                sub_8053538(HEAL_LOCATION_BATTLE_TOWER_OUTSIDE);
+                SetWarpDestinationToHealLocation(HEAL_LOCATION_BATTLE_TOWER_OUTSIDE);
                 break;
             case MAPSEC_LITTLEROOT_TOWN:
-                sub_8053538((gSaveBlock2.playerGender == MALE) ? HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE : HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE);
+                SetWarpDestinationToHealLocation((gSaveBlock2.playerGender == MALE) ? HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE : HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE);
                 break;
             case MAPSEC_EVER_GRANDE_CITY:
-                sub_8053538((FlagGet(FLAG_SYS_POKEMON_LEAGUE_FLY) && gRegionMapState->regionMap.everGrandeCityArea == 0) ? HEAL_LOCATION_EVER_GRANDE_CITY_POKEMON_LEAGUE : HEAL_LOCATION_EVER_GRANDE_CITY);
+                SetWarpDestinationToHealLocation((FlagGet(FLAG_SYS_POKEMON_LEAGUE_FLY) && gRegionMapState->regionMap.everGrandeCityArea == 0) ? HEAL_LOCATION_EVER_GRANDE_CITY_POKEMON_LEAGUE : HEAL_LOCATION_EVER_GRANDE_CITY);
                 break;
             default:
                 if (sMapHealLocations[gRegionMapState->regionMap.mapSectionId][2] != HEAL_LOCATION_NONE)
-                    sub_8053538(sMapHealLocations[gRegionMapState->regionMap.mapSectionId][2]);
+                    SetWarpDestinationToHealLocation(sMapHealLocations[gRegionMapState->regionMap.mapSectionId][2]);
                 else
-                    warp1_set_2(sMapHealLocations[gRegionMapState->regionMap.mapSectionId][0], sMapHealLocations[gRegionMapState->regionMap.mapSectionId][1], -1);
+                    SetWarpDestinationToMapWarp(sMapHealLocations[gRegionMapState->regionMap.mapSectionId][0], sMapHealLocations[gRegionMapState->regionMap.mapSectionId][1], -1);
                 break;
             }
             sub_80865BC();
@@ -1717,7 +1717,7 @@ void debug_sub_8110D84(void)
         break;
     case 3:
         if (!UpdatePaletteFade())
-            SetMainCallback2(c2_exit_to_overworld_1_sub_8080DEC);
+            SetMainCallback2(CB2_ReturnToFieldWithOpenMenu);
         break;
     case 4:
         if (sub_80FAB60() != 0)

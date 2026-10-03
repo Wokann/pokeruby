@@ -19,7 +19,7 @@
 extern const struct WindowTemplate gWindowTemplate_81E6D54;
 extern const struct WindowTemplate gWindowTemplate_81E6DA8;
 
-extern void sub_80546B8(void);
+extern void CB2_ReturnToFieldContinueScript(void);
 
 const u16 gMysteryEventPhrase[] = {EC_WORD_MYSTERY, EC_WORD_EVENT, EC_WORD_IS, EC_WORD_EXCITING};
 
@@ -269,7 +269,7 @@ void ShowEasyChatScreen(void)
     default:
         return;
     }
-    sub_80E62A0(gSpecialVar_0x8004, r1, sub_80546B8, r4);
+    sub_80E62A0(gSpecialVar_0x8004, r1, CB2_ReturnToFieldContinueScript, r4);
 }
 
 void sub_80E62A0(u8 a, u16 *b, void (*c)(void), u8 d)

@@ -43,7 +43,6 @@ struct EggHatchData
 struct EggHatchData* gEggHatchData;
 
 bool8 GetSetPokedexFlag(u16 nationalNum, u8 caseID);
-u8 sav1_map_get_name(void);
 const struct CompressedSpritePalette* GetMonSpritePalStruct(struct Pokemon* mon); //gets pokemon palette address
 void sub_8080990(void);
 
@@ -294,7 +293,7 @@ static void AddHatchedMonToParty(u8 id)
     metLevel = 0;
     SetMonData(mon, MON_DATA_MET_LEVEL, (const u8*)  &metLevel);
 
-    metLocation = sav1_map_get_name();
+    metLocation = GetCurrentRegionMapSectionId();
     SetMonData(mon, MON_DATA_MET_LOCATION, &metLocation);
 
     MonRestorePP(mon);
