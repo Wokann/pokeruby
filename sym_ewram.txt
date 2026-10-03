@@ -102,7 +102,7 @@ gCurrentMove = .; /* 2024BE6 */
 gChosenMove = .; /* 2024BE8 */
     . += 0x2;
 
-gRandomMove = .; /* 2024BEA */
+gCalledMove = .; /* 2024BEA */
     . += 0x2;
 
 gBattleMoveDamage = .; /* 2024BEC */
@@ -111,7 +111,7 @@ gBattleMoveDamage = .; /* 2024BEC */
 gHpDealt = .; /* 2024BF0 */
     . += 0x4;
 
-gTakenDmg = .; /* 2024BF4 */
+gBideDmg = .; /* 2024BF4 */
     . += 0x10;
 
 gLastUsedItem = .; /* 2024C04 */
@@ -186,7 +186,7 @@ gHitMarker = .; /* 2024C6C */
 sUnusedBattlersArray = .; /* 2024C70 */
     . += 0x4;
 
-gTakenDmgByBattler = .; /* 2024C74 */
+gBideTarget = .; /* 2024C74 */
     . += 0x4;
 
 gUnknown_02024C78 = .; /* 2024C78 */

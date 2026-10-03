@@ -10,6 +10,7 @@
 #include "string_util.h"
 #include "battle.h"
 #include "battle_main.h"
+#include "battle_script_commands.h"
 #include "scanline_effect.h"
 #include "data2.h"
 #include "decompress.h"
@@ -58,7 +59,6 @@ struct EvoInfo
 };
 
 void EvolutionRenameMon(struct Pokemon *mon, u16 oldSpecies, u16 newSpecies);
-void sub_8024CEC(void);
 void sub_8023A80(void);
 void sub_802BC6C(void);
 void sub_8023AD8(void);
@@ -715,7 +715,7 @@ static void Task_EvolutionScene(u8 taskID)
     case 19: // pokemon learned a new move, print string and play a fanfare
         if (gWindowTemplate_Contest_MoveDescription.state == 0 && !IsSEPlaying())
         {
-            sub_8024CEC();
+            BufferMoveToLearnIntoBattleTextBuff2();
             PlayFanfare(MUS_LEVEL_UP);
             BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[3]);
             Contest_StartTextPrinter(&gWindowTemplate_Contest_MoveDescription, gDisplayedStringBattle, 144, 2, 15);
@@ -733,7 +733,7 @@ static void Task_EvolutionScene(u8 taskID)
         case 0:
             if (gWindowTemplate_Contest_MoveDescription.state == 0 && !IsSEPlaying())
             {
-                sub_8024CEC();
+                BufferMoveToLearnIntoBattleTextBuff2();
                 BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[4]);
                 Contest_StartTextPrinter(&gWindowTemplate_Contest_MoveDescription, gDisplayedStringBattle, 144, 2, 15);
                 gTasks[taskID].tLearnMoveState++;
@@ -1049,7 +1049,7 @@ static void Task_TradeEvolutionScene(u8 taskID)
     case 15:
         if (gUnknown_03004828->window.state == 0 && !IsSEPlaying())
         {
-            sub_8024CEC();
+            BufferMoveToLearnIntoBattleTextBuff2();
             PlayFanfare(MUS_LEVEL_UP);
             BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[3]);
             Contest_StartTextPrinter(&gUnknown_03004828->window,
@@ -1071,7 +1071,7 @@ static void Task_TradeEvolutionScene(u8 taskID)
         case 0:
             if (gUnknown_03004828->window.state == 0 && !IsSEPlaying())
             {
-                sub_8024CEC();
+                BufferMoveToLearnIntoBattleTextBuff2();
                 BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[4]);
                 Contest_StartTextPrinter(&gUnknown_03004828->window,
                     gDisplayedStringBattle,

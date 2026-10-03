@@ -111,6 +111,13 @@ struct HpAndStatus
     u32 status;
 };
 
+struct MovePPInfo
+{
+    u16 moves[4];
+    u8 pp[4];
+    u8 ppBonuses;
+};
+
 enum
 {
     CONTROLLER_GETMONDATA,

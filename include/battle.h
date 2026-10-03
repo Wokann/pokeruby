@@ -52,29 +52,29 @@ struct DisableStruct
     /*0x08*/ u8 protectUses;
     /*0x09*/ u8 stockpileCounter;
     /*0x0A*/ u8 substituteHP;
-    /*0x0B*/ u8 disableTimer1 : 4;
-    /*0x0B*/ u8 disableTimer2 : 4;
+    /*0x0B*/ u8 disableTimer : 4;
+    /*0x0B*/ u8 disableTimerStartValue : 4;
     /*0x0C*/ u8 encoredMovePos;
     /*0x0D*/ u8 unkD;
-    /*0x0E*/ u8 encoreTimer1 : 4;
-    /*0x0E*/ u8 encoreTimer2 : 4;
-    /*0x0F*/ u8 perishSongTimer1 : 4;
-    /*0x0F*/ u8 perishSongTimer2 : 4;
+    /*0x0E*/ u8 encoreTimer : 4;
+    /*0x0E*/ u8 encoreTimerStartValue : 4;
+    /*0x0F*/ u8 perishSongTimer : 4;
+    /*0x0F*/ u8 perishSongTimerStartValue : 4;
     /*0x10*/ u8 furyCutterCounter;
-    /*0x11*/ u8 rolloutTimer1 : 4;
-    /*0x11*/ u8 rolloutTimer2 : 4;
-    /*0x12*/ u8 chargeTimer1 : 4;
-    /*0x12*/ u8 chargeTimer2 : 4;
-    /*0x13*/ u8 tauntTimer1:4;
+    /*0x11*/ u8 rolloutTimer : 4;
+    /*0x11*/ u8 rolloutTimerStartValue : 4;
+    /*0x12*/ u8 chargeTimer : 4;
+    /*0x12*/ u8 chargeTimerStartValue : 4;
+    /*0x13*/ u8 tauntTimer:4;
     /*0x13*/ u8 tauntTimer2:4;
-    /*0x14*/ u8 bankPreventingEscape;
+    /*0x14*/ u8 battlerPreventingEscape;
     /*0x15*/ u8 battlerWithSureHit;
     /*0x16*/ u8 isFirstTurn;
     /*0x17*/ u8 unk17;
     /*0x18*/ u8 truantCounter : 1;
     /*0x18*/ u8 unk18_a : 3;
     /*0x18*/ u8 mimickedMoves : 4;
-    /*0x19*/ u8 rechargeCounter;
+    /*0x19*/ u8 rechargeTimer;
     /*0x1A*/ u8 unk1A[2];
 };
 
@@ -122,7 +122,7 @@ struct SpecialStatus
     u32 ppNotAffectedByPressure:1;
     u32 flag40:1;
     u32 focusBanded:1;
-    s32 dmg;
+    s32 shellBellDmg;
     s32 physicalDmg;
     s32 specialDmg;
     u8 physicalBattlerId;
@@ -301,14 +301,14 @@ struct BattleStruct /* 0x2000000 */
     /*0x16000*/ u8 turnEffectsTracker;
     /*0x16001*/ u8 turnEffectsBattlerId;
     /*0x16002*/ u8 animTurn;
-    /*0x16003*/ u8 scriptingActive;
+    /*0x16003*/ u8 battler;
     /*0x16004*/ u8 wrappedMove[MAX_BATTLERS_COUNT * 2];
     /*0x1600C*/ u8 cmd49StateTracker;
     /*0x1600D*/ u8 unk1600D; // unused
     /*0x1600E*/ u8 turnCountersTracker;
     /*0x1600F*/ u8 getexpStateTracker;
     /*0x16010*/ u8 moveTarget[MAX_BATTLERS_COUNT];
-    /*0x16014*/ u32 painSplitHP;
+    /*0x16014*/ u32 painSplitHp;
     /*0x16018*/ u8 expGetterMonId;
     /*0x16019*/ u8 unk16019; // unused
     /*0x1601A*/ u8 atk5A_StateTracker; //also atk5B, statetracker
@@ -318,7 +318,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x1601E*/ u8 statChanger;
     /*0x1601F*/ u8 dmgMultiplier;
     /*0x16020*/ u8 wrappedBy[MAX_BATTLERS_COUNT];
-    /*0x16024*/ u16 assistMove[PARTY_SIZE * MAX_MON_MOVES];
+    /*0x16024*/ u16 assistPossibleMoves[PARTY_SIZE * MAX_MON_MOVES];
     /*0x16054*/ u8 battlerPreventingSwitchout;
     /*0x16055*/ u8 unk16055; // unused
     /*0x16056*/ u8 moneyMultiplier;
@@ -330,7 +330,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x1605E*/ u8 unk1605E;
     /*0x1605F*/ u8 sentInPokes;
     /*0x16060*/ u8 selectionScriptFinished[MAX_BATTLERS_COUNT];
-    /*0x16064*/ u8 unk16064[MAX_BATTLERS_COUNT];
+    /*0x16064*/ u8 battlerPartyIndexes[MAX_BATTLERS_COUNT];
     /*0x16068*/ u8 monToSwitchIntoId[MAX_BATTLERS_COUNT];
     /*0x1606C*/ u8 unk1606C[MAX_BATTLERS_COUNT][3];
     /*0x16078*/ u8 runTries;
@@ -347,7 +347,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x16090*/ s32 bideDmg;
     /*0x16094*/ u8 stateIdAfterSelScript[4];
     /*0x16098*/ u8 unk16098[3]; // unused
-    /*0x1609B*/ u8 castformToChangeInto;
+    /*0x1609B*/ u8 formToChangeInto;
     /*0x1609C*/ u8 atk6C_statetracker;
     /*0x1609D*/ u8 prevSelectedPartySlot;
     /*0x1609E*/ u8 dbgAICycleMoveTracker[2]; // debug
@@ -358,13 +358,13 @@ struct BattleStruct /* 0x2000000 */
     /*0x160A4*/ u8 animArg1;
     /*0x160A5*/ u8 animArg2;
     /*0x160A6*/ u8 unk160A6; // related to gAbsentBattlerFlags, possibly absent flags turn ago?
-    /*0x160A7*/ u8 unk160A7;
+    /*0x160A7*/ u8 pursuitDoublesAttacker;
     /*0x160A8*/ u8 wallyBattleState;
     /*0x160A9*/ u8 wallyMovesState;
     /*0x160AA*/ u8 wallyWaitFrames;
     /*0x160AB*/ u8 wallyMoveFrames;
     /*0x160AC*/ u16 lastTakenMove[2 * 2 * 2];
-    /*0x160BC*/ u16 HP_OnSwitchout[2];
+    /*0x160BC*/ u16 hpOnSwitchout[2];
     /*0x160C0*/ u8 abilityPreventingSwitchout;
     /*0x160C1*/ u8 hpScale;
     /*0x160C2*/ u16 unk160C2;
@@ -385,15 +385,15 @@ struct BattleStruct /* 0x2000000 */
     /*0x160D8*/ u8 AI_usedItemType[2];
     /*0x160DA*/ u8 AI_usedItemEffect[2];
     /*0x160DC*/ u8 statAnimPlayed;
-    /*0x160DD*/ u8 intimidateBank;
+    /*0x160DD*/ u8 intimidateBattler;
     /*0x160DE*/ u8 unk160DE;
     /*0x160DF*/ u8 unk160DF;
-    /*0x160E0*/ u8 unk160E0[6];
+    /*0x160E0*/ u8 multihitString[6];
     /*0x160E6*/ u8 unk160E6;
     /*0x160E7*/ u8 atkCancellerTracker;
     /*0x160E8*/ u16 choicedMove[MAX_BATTLERS_COUNT];
     /*0x160F0*/ u16 changedItems[MAX_BATTLERS_COUNT];
-    /*0x160F8*/ u8 unk160F8;
+    /*0x160F8*/ u8 battlerWithAbility;
     /*0x160F9*/ u8 unk160F9;
     /*0x160FA*/ u8 levelUpHP;
     /*0x160FB*/ u8 unk160FB;
@@ -555,6 +555,9 @@ extern u16 gBattleTypeFlags;
 extern u8 gUnknown_02023A14_50;
 extern u16 gTrainerBattleOpponent;
 extern u8 gChosenMovePos;
+extern u16 gCalledMove;
+extern s32 gBideDmg[MAX_BATTLERS_COUNT];
+extern u8 gBideTarget[MAX_BATTLERS_COUNT];
 extern u8 gBattlerFainted;
 extern u8 gChosenActionByBattler[MAX_BATTLERS_COUNT];
 extern u16 gChosenMoveByBattler[MAX_BATTLERS_COUNT];

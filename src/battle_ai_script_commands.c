@@ -1872,7 +1872,7 @@ static void BattleAICmd_if_level_compare(void)
 
 static void BattleAICmd_if_taunted(void)
 {
-    if (gDisableStructs[gBattlerTarget].tauntTimer1 != 0)
+    if (gDisableStructs[gBattlerTarget].tauntTimer != 0)
         gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 1);
     else
         gAIScriptPtr += 5;
@@ -1880,7 +1880,7 @@ static void BattleAICmd_if_taunted(void)
 
 static void BattleAICmd_if_not_taunted(void)
 {
-    if (gDisableStructs[gBattlerTarget].tauntTimer1 == 0)
+    if (gDisableStructs[gBattlerTarget].tauntTimer == 0)
         gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 1);
     else
         gAIScriptPtr += 5;

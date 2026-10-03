@@ -24,9 +24,9 @@
 	.set ANIM_WISH_HEAL, 0x16
 		
 @ atk 80
-	.set ATK80_DMG_CHANGE_SIGN, 0x0
-	.set ATK80_DMG_HALF_BY_TWO_NOT_MORE_THAN_HALF_MAX_HP, 0x1
-	.set ATK80_DMG_DOUBLED, 0x2
+	.set DMG_CHANGE_SIGN, 0x0
+	.set DMG_RECOIL_FROM_MISS, 0x1
+	.set DMG_DOUBLED, 0x2
 	
 @ compare operands
 	.set EQUAL, 0x0
@@ -132,7 +132,7 @@
 	.set VARIOUS_PLAY_TRAINER_DEFEATED_MUSIC, 26
 	
 @ jumpifcant switch flag argument
-	.set ATK4F_DONT_CHECK_STATUSES, 0x80
+	.set SWITCH_IGNORE_ESCAPE_PREVENTION, 0x80
 
 @ battle scripting struct
 	.equiv sANIM_TURN,         gSharedMem + 0x16002

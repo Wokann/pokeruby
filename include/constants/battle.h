@@ -331,26 +331,12 @@
 #define ABILITYEFFECT_INTIMIDATE2         0xA
 #define ABILITYEFFECT_TRACE               0xB
 #define ABILITYEFFECT_CHECK_OTHER_SIDE    0xC
-#define ABILITYEFFECT_CHECK_BANK_SIDE     0xD
 #define ABILITYEFFECT_FIELD_SPORT         0xE
 #define ABILITYEFFECT_CHECK_FIELD_EXCEPT_BANK   0xF
 #define ABILITYEFFECT_COUNT_OTHER_SIZE    0x10
 #define ABILITYEFFECT_COUNT_BANK_SIDE     0x11
 #define ABILITYEFFECT_COUNT_ON_FIELD      0x12
 #define ABILITYEFFECT_CHECK_ON_FIELD      0x13
-
-#define BS_TARGET                   0
-#define BS_GET_ATTACKER                 1
-#define BS_GET_EFFECT_BANK              2
-#define BS_FAINTED                      3
-#define BS_GET_BANK_0   7
-#define BS_ATTACKER_WITH_PARTNER        4 // for atk98_status_icon_update
-#define BS_GET_ATTACKER_SIDE            8 // for atk1E_jumpifability
-#define BS_GET_NOT_ATTACKER_SIDE        9 // for atk1E_jumpifability
-#define BS_GET_SCRIPTING_BANK           10
-#define BS_GET_OPPONENT1                12
-#define BS_GET_PLAYER2                  13
-#define BS_GET_OPPONENT2                14
 
 // status animation table
 #define B_ANIM_STATUS_PSN               0x0

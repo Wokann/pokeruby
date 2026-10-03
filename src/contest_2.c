@@ -3943,7 +3943,7 @@ void Task_WaitForSliderHeartAnim(u8 taskId)
 
 u16 SanitizeMove(u16 move)
 {
-    if (move >= NUM_MOVES)
+    if (move >= MOVES_COUNT)
         move = MOVE_POUND;
     return move;
 }

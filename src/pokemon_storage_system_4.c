@@ -1455,7 +1455,7 @@ void sub_809B7D4(void)
     gPokemonStorageSystemPtr->unk_267f = 0;
     gPokemonStorageSystemPtr->unk_2686[0] = MOVE_SURF;
     gPokemonStorageSystemPtr->unk_2686[1] = MOVE_DIVE;
-    gPokemonStorageSystemPtr->unk_2686[2] = NUM_MOVES;
+    gPokemonStorageSystemPtr->unk_2686[2] = MOVES_COUNT;
     knownMoves = GetMonData(&gPokemonStorageSystemPtr->unk_2618, MON_DATA_KNOWN_MOVES, gPokemonStorageSystemPtr->unk_2686);
     gPokemonStorageSystemPtr->unk_267e = knownMoves & 1;
     gPokemonStorageSystemPtr->unk_267f = (knownMoves >> 1) & 1;

@@ -790,7 +790,7 @@ void BtlController_EmitPrintString(u8 a, u16 stringID)
     stringInfo->lastMove = gChosenMove;
     stringInfo->lastItem = gLastUsedItem;
     stringInfo->lastAbility = gLastUsedAbility;
-    stringInfo->scrActive = gBattleStruct->scriptingActive;
+    stringInfo->scrActive = gBattleStruct->battler;
     stringInfo->unk1605E = gBattleStruct->unk1605E;
     stringInfo->hpScale = gBattleStruct->hpScale;
     stringInfo->StringBank = gPotentialItemEffectBattler;
@@ -822,7 +822,7 @@ void BtlController_EmitPrintSelectionString(u8 a, u16 stringID)
     stringInfo->lastMove = gChosenMove;
     stringInfo->lastItem = gLastUsedItem;
     stringInfo->lastAbility = gLastUsedAbility;
-    stringInfo->scrActive = gBattleStruct->scriptingActive;
+    stringInfo->scrActive = gBattleStruct->battler;
     stringInfo->unk1605E = gBattleStruct->unk1605E;
 
     for (i = 0; i < 4; i++)

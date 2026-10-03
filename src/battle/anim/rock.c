@@ -762,7 +762,7 @@ void sub_80DD87C(struct Sprite *sprite)
 
 u8 sub_80DD8BC(void)
 {
-    u8 retVal = gAnimDisableStructPtr->rolloutTimer2 - gAnimDisableStructPtr->rolloutTimer1;
+    u8 retVal = gAnimDisableStructPtr->rolloutTimerStartValue - gAnimDisableStructPtr->rolloutTimer;
     u8 var0 = retVal - 1;
     if (var0 > 4)
     {

@@ -572,7 +572,7 @@ u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, u8 *data)
             u16 *moves = (u16 *)data;
             s32 i = 0;
 
-            while (moves[i] != NUM_MOVES)
+            while (moves[i] != MOVES_COUNT)
             {
                 u16 move = moves[i];
                 if (substruct1->moves[0] == move
@@ -1230,7 +1230,7 @@ void CopyPlayerPartyMonToBattleData(u8 battleIndex, u8 partyIndex)
     StringCopy_Nickname(gBattleMons[battleIndex].nickname, nickname);
     GetMonData(&gPlayerParty[partyIndex], MON_DATA_OT_NAME, gBattleMons[battleIndex].otName);
 
-    hpSwitchout = &gBattleStruct->HP_OnSwitchout[GetBattlerSide(battleIndex)];
+    hpSwitchout = &gBattleStruct->hpOnSwitchout[GetBattlerSide(battleIndex)];
     *hpSwitchout = gBattleMons[battleIndex].hp;
 
     for (i = 0; i < 8; i++)
