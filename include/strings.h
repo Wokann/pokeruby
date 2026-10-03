@@ -1,6 +1,11 @@
 #ifndef GUARD_STRINGS_H
 #define GUARD_STRINGS_H
 
+extern const u8 gDaycareText_GetAlongVeryWell[];
+extern const u8 gDaycareText_GetAlong[];
+extern const u8 gDaycareText_DontLikeOther[];
+extern const u8 gDaycareText_PlayOther[];
+
 // placeholder strings
 extern const u8 gExpandedPlaceholder_Empty[];
 extern const u8 gExpandedPlaceholder_Kun[];

@@ -320,13 +320,13 @@ gOtherText_DontHaveThreeCoins:: @ 842CADB
 gOtherText_ReelTime:: @ 842CAF7
 	.string "REEL TIME\nHere's your chance to take\naim and nail marks!\nThe Reel Time continues for\nas often as the drawn number.\nIt all ends on a Big Bonus.$"
 
-DaycareText_GetAlongVeryWell::
+gDaycareText_GetAlongVeryWell::
 	.string "The two seem to get along very well.$"
-DaycareText_GetAlong::
+gDaycareText_GetAlong::
 	.string "The two seem to get along.$"
-DaycareText_DontLikeOther::
+gDaycareText_DontLikeOther::
 	.string "The two don't seem to like each other.$"
-DaycareText_PlayOther::
+gDaycareText_PlayOther::
 	.string "The two prefer to play with other\nPOKéMON than each other.$"
 
 gOtherText_NewLine2:: @ 842CC28

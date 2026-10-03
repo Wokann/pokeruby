@@ -46,7 +46,7 @@
 	.set EGG_GROUP_WATER_2,      0x0c
 	.set EGG_GROUP_DITTO,        0x0d
 	.set EGG_GROUP_DRAGON,       0x0e
-	.set EGG_GROUP_UNDISCOVERED, 0x0f
+	.set EGG_GROUP_NO_EGGS_DISCOVERED, 0x0f
 
 	.set BODY_COLOR_RED,    0x00
 	.set BODY_COLOR_BLUE,   0x01

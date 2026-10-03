@@ -534,7 +534,7 @@ void ReceiveDaycareMailData(struct RecordMixingDayCareMail *src, size_t recordSi
 
             for (j = 0; j < _src->numDaycareMons; j ++)
             {
-                if (!_src->itemsHeld[j])
+                if (!_src->cantHoldItem[j])
                     sp1c[i][j] = 1;
             }
         }

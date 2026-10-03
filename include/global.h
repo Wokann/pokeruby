@@ -571,13 +571,6 @@ struct DayCareStepCountersEtc {
     u8 eggCycleStepsRemaining;
 };
 
-struct RecordMixingDayCareMail
-{
-    struct DayCareMail mail[DAYCARE_MON_COUNT];
-    u32 numDaycareMons;
-    u16 itemsHeld[DAYCARE_MON_COUNT]; // marks whether or not each daycare mon is currently holding an item.
-};
-
 struct DayCareMisc
 {
     struct DayCareMail mail[DAYCARE_MON_COUNT];

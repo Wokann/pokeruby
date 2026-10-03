@@ -2,6 +2,7 @@
 #define GUARD_RECORD_MIXING_H
 
 #include <stddef.h>
+#include "daycare.h"
 
 void RecordMixing_PrepareExchangePacket(void);
 void RecordMixing_ReceiveExchangePacket(u32 which);

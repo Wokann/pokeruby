@@ -345,13 +345,13 @@ gOtherText_ReelTime:: @ 842CAF7
 	.string "sich, so oft die Zahl anzeigt.\n"
 	.string "Sie endet mit einem BIG BONUS!$"
 
-DaycareText_GetAlongVeryWell::
+gDaycareText_GetAlongVeryWell::
 	.string "Die beiden scheinen sich sehr zu mögen.$"
-DaycareText_GetAlong::
+gDaycareText_GetAlong::
 	.string "Die beiden scheinen sich zu vertragen.$"
-DaycareText_DontLikeOther::
+gDaycareText_DontLikeOther::
 	.string "Die beiden mögen sich nicht sehr.$"
-DaycareText_PlayOther::
+gDaycareText_PlayOther::
 	.string "Die beiden spielen lieber mit anderen\n"
 	.string "POKéMON als miteinander.$"
 

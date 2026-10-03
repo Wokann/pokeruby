@@ -172,10 +172,6 @@ extern const u8 gOtherText_DontHaveThreeCoins[];
 extern const u8 gOtherText_ReelTime[];
 
 // daycare
-extern const u8 DaycareText_GetAlongVeryWell[];
-extern const u8 DaycareText_GetAlong[];
-extern const u8 DaycareText_DontLikeOther[];
-extern const u8 DaycareText_PlayOther[];
 extern const u8 gOtherText_NewLine2[];
 extern const u8 gOtherText_CancelAndLv[];
 

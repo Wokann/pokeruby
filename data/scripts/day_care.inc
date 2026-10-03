@@ -108,7 +108,7 @@ Route117_PokemonDayCare_EventScript_1B236C:: @ 81B236C
 	specialvar VAR_RESULT, CountAlivePartyMonsExceptSelectedOne
 	compare VAR_RESULT, 0
 	goto_if_eq Route117_PokemonDayCare_EventScript_1B23FD
-	specialvar VAR_0x8005, GetSelectedDaycareMonNickname
+	specialvar VAR_0x8005, GetSelectedMonNicknameAndSpecies
 	waitse
 	playmoncry VAR_0x8005, 0
 	msgbox Route117_PokemonDayCare_Text_1B296E, MSGBOX_DEFAULT
@@ -188,7 +188,7 @@ Route117_PokemonDayCare_EventScript_1B2469:: @ 81B2469
 	end
 
 Route117_PokemonDayCare_EventScript_1B24A8:: @ 81B24A8
-	special GetDaycareCost
+	special GetDaycareCostAndPrepareString
 	msgbox Route117_PokemonDayCare_Text_1B2B49, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	goto_if_eq Route117_PokemonDayCare_EventScript_1B24C4

@@ -288,7 +288,7 @@ static void AddHatchedMonToParty(u8 id)
     GetSetPokedexFlag(pokeNum, 2);
     GetSetPokedexFlag(pokeNum, 3);
 
-    GetMonNick(mon, gStringVar1);
+    GetMonNickname2(mon, gStringVar1);
 
     ball = ITEM_POKE_BALL;
     SetMonData(mon, MON_DATA_POKEBALL, (const u8*) &ball);
@@ -311,7 +311,7 @@ void ScriptHatchMon(void)
 static bool8 DaycareMonReceivedMail_(struct DayCare *daycare, u8 slot)
 {
     u8 monNickname[32];
-    GetBoxMonNick(&daycare->mons[slot], monNickname);
+    GetBoxMonNickname(&daycare->mons[slot], monNickname);
     if (daycare->misc.mail[slot].message.itemId != ITEM_NONE)
     {
         if (StringCompareWithoutExtCtrlCodes(monNickname, daycare->misc.mail[slot].names + 8)
@@ -517,7 +517,7 @@ static void CB2_EggHatch_1(void)
             gEggHatchData->CB2_state++;
         break;
     case 4:
-        GetMonNick(&gPlayerParty[gEggHatchData->eggPartyID], gStringVar1);
+        GetMonNickname2(&gPlayerParty[gEggHatchData->eggPartyID], gStringVar1);
         StringExpandPlaceholders(gStringVar4, gOtherText_HatchedFromEgg);
         EggHatchPrintMessage2(gStringVar4);
         PlayFanfare(371);
@@ -532,7 +532,7 @@ static void CB2_EggHatch_1(void)
             gEggHatchData->CB2_state++;
         break;
     case 7:
-        GetMonNick(&gPlayerParty[gEggHatchData->eggPartyID], gStringVar1);
+        GetMonNickname2(&gPlayerParty[gEggHatchData->eggPartyID], gStringVar1);
         StringExpandPlaceholders(gStringVar4, gOtherText_NickHatchPrompt);
         EggHatchPrintMessage1(gStringVar4);
         gEggHatchData->CB2_state++;
@@ -556,7 +556,7 @@ static void CB2_EggHatch_1(void)
                     u8 gender;
                     u32 personality;
 
-                    GetMonNick(&gPlayerParty[gEggHatchData->eggPartyID], gStringVar3);
+                    GetMonNickname2(&gPlayerParty[gEggHatchData->eggPartyID], gStringVar3);
                     species = GetMonData(&gPlayerParty[gEggHatchData->eggPartyID], MON_DATA_SPECIES);
                     gender = GetMonGender(&gPlayerParty[gEggHatchData->eggPartyID]);
                     personality = GetMonData(&gPlayerParty[gEggHatchData->eggPartyID], MON_DATA_PERSONALITY, 0);
