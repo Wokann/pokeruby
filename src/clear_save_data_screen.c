@@ -9,6 +9,7 @@
 #include "sprite.h"
 #include "strings2.h"
 #include "task.h"
+#include "constants/rgb.h"
 
 static void VBlankCB_ClearSaveDataScreen(void);
 static void Task_DoClearSaveDataScreenYesNo(u8);
@@ -60,7 +61,7 @@ static void Task_ClearSaveDataScreenYesNoChoice(u8 taskId)
         Menu_PrintTextWithStdFrame(gText_ClearingData);
         gTasks[taskId].func = Task_ClearSaveData;
         break;
-    case -1:
+    case MENU_B_PRESSED:
     case 1:
         PlaySE(SE_SELECT);
         DestroyTask(taskId);
@@ -119,23 +120,23 @@ static bool8 SetupClearSaveDataScreen(void)
 
         ResetPaletteFade();
 
-        gPlttBufferUnfaded[0] = 0x7fff;
-        gPlttBufferFaded[0] = 0x7fff;
-        gPlttBufferUnfaded[1] = 0x3945;
-        gPlttBufferFaded[1] = 0x3945;
+        gPlttBufferUnfaded[0] = RGB_WHITE;
+        gPlttBufferFaded[0] = RGB_WHITE;
+        gPlttBufferUnfaded[1] = RGB(5, 10, 14);
+        gPlttBufferFaded[1] = RGB(5, 10, 14);
 
         for (i = 0; i < 0x10; i++)
             ((u16 *)(VRAM + 0x20))[i] = 0x1111;
 
         for (i = 0; i < 0x500; i++)
-            ((u16 *)(VRAM + 0x3800))[i] = 0x0001;
+            ((u16 *)BG_SCREEN_ADDR(7))[i] = 0x0001;
 
         ResetTasks();
         ResetSpriteData();
 
         Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
         InitMenuWindow(&gMenuTextWindowTemplate);
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, FADE_COLOR_WHITE);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, FADE_COLOR_WHITE);
 
         ime = REG_IME;
         REG_IME = 0;
@@ -164,7 +165,7 @@ static void CB2_FadeAndDoReset(void)
     {
     case 0:
     default:
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, FADE_COLOR_WHITE);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, FADE_COLOR_WHITE);
         gMain.state = 1;
         break;
     case 1:
