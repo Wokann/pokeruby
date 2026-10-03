@@ -5,9 +5,9 @@
 
 struct BattleInterfaceStruct1
 {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
+    s32 maxValue;
+    s32 oldValue;
+    s32 receivedValue;
     u32 unkC_0:5;
     u32 unk10;
 };
@@ -40,22 +40,24 @@ enum
     HEALTHBOX_SAFARI_BALLS_TEXT
 };
 
-u8 battle_make_oam_normal_battle(u8);
-u8 battle_make_oam_safari_battle(void);
-void SetBattleBarStruct(u8, u8, u32, u32, u32);
-void SetHealthboxSpriteInvisible(u8);
-void SetHealthboxSpriteVisible(u8);
-void nullsub_11();
-void UpdateOamPriorityInAllHealthboxes(u8);
-void sub_8043F44(u8);
+u8 CreateBattlerHealthboxSprites(u8 battler);
+u8 CreateSafariPlayerHealthboxSprites(void);
+void SetBattleBarStruct(u8 battler, u8 healthboxSpriteId, u32 maxVal, u32 oldVal, u32 receivedValue);
+void SetHealthboxSpriteInvisible(u8 healthboxSpriteId);
+void SetHealthboxSpriteVisible(u8 healthboxSpriteId);
+void DestoryHealthboxSprite(u8 healthboxSpriteId);
+void DummyBattleInterfaceFunc();
+void UpdateOamPriorityInAllHealthboxes(u8 priority);
 void SwapHpBarsWithHpText(void);
-u8 CreatePartyStatusSummarySprites(u8, const struct HpAndStatus *, u8, u8);
-void Task_HidePartyStatusSummary(u8);
-void UpdateHealthboxAttribute(u8, struct Pokemon *, u8);
-s32 MoveBattleBar(u8, u8, u8, u8);
-s16 sub_80460C8(struct BattleInterfaceStruct1 *, int *, u16 *, int);
-u8 GetScaledHPFraction(s16, s16, u8);
-u8 GetHPBarLevel(s16, s16);
-void UpdateHpTextInHealthbox(u8 a, s16 b, u8 c);
+u8 CreatePartyStatusSummarySprites(u8 battler, const struct HpAndStatus *partyInfo, u8 skipPlayer, u8 isBattleStart);
+void Task_HidePartyStatusSummary(u8 taskId);
+void UpdateHealthboxAttribute(u8 healthboxSpriteId, struct Pokemon *mon, u8 elementId);
+s32 MoveBattleBar(u8 battler, u8 healthboxSpriteId, u8 whichBar, u8 unused);
+s16 sub_80460C8(struct BattleInterfaceStruct1 *barInfo, int *currValue, u16 *dest, int unused);
+u8 GetScaledHPFraction(s16 hp, s16 maxhp, u8 scale);
+u8 GetHPBarLevel(s16 hp, s16 maxhp);
+void UpdateHpTextInHealthbox(u8 healthboxSpriteId, s16 value, u8 maxOrCurrent);
+
+void InitBattlerHealthboxCoords(u8 battler);
 
 #endif  // GUARD_BATTLE_INTERFACE_H

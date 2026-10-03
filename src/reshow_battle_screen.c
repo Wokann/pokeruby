@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle_interface.h"
 #include "battle_controllers.h"
 #include "battle_main.h"
 #include "battle.h"
@@ -27,12 +28,10 @@ extern u8 gHealthboxSpriteIds[4];
 bool8 LoadChosenBattleElement(u8 a0);
 u8 sub_8077F7C(u8 bank);
 u8 GetBattlerSpriteDefault_Y(u8 bank);
-void nullsub_11(u8 healthboxID, u8 a1);
 void SetHealthboxSpriteInvisible(u8 bank);
-u8 battle_make_oam_normal_battle(u8 bank);
-u8 battle_make_oam_safari_battle(void);
+u8 CreateBattlerHealthboxSprites(u8 bank);
+u8 CreateSafariPlayerHealthboxSprites(void);
 void UpdateHealthboxAttribute(u8 healthboxID, struct Pokemon*, u8);
-void sub_8043F44(u8 bank);
 void SetHealthboxSpriteVisible(u8 healthboxID);
 
 // this file's functions
@@ -278,13 +277,13 @@ static void sub_807B508(u8 bank)
     {
         u8 healthboxID;
         if (gBattleTypeFlags & BATTLE_TYPE_SAFARI && bank == 0)
-            healthboxID = battle_make_oam_safari_battle();
+            healthboxID = CreateSafariPlayerHealthboxSprites();
         else if (gBattleTypeFlags & BATTLE_TYPE_WALLY_TUTORIAL && bank == 0)
             return;
         else
-            healthboxID = battle_make_oam_normal_battle(bank);
+            healthboxID = CreateBattlerHealthboxSprites(bank);
         gHealthboxSpriteIds[bank] = healthboxID;
-        sub_8043F44(bank);
+        InitBattlerHealthboxCoords(bank);
         SetHealthboxSpriteVisible(healthboxID);
         if (GetBattlerSide(bank))
             UpdateHealthboxAttribute(gHealthboxSpriteIds[bank], &gEnemyParty[gBattlerPartyIndexes[bank]], 0);
@@ -293,9 +292,9 @@ static void sub_807B508(u8 bank)
         else
             UpdateHealthboxAttribute(gHealthboxSpriteIds[bank], &gPlayerParty[gBattlerPartyIndexes[bank]], 0);
         if (GetBattlerPosition(bank) == 3 || GetBattlerPosition(bank) == 2)
-            nullsub_11(gHealthboxSpriteIds[bank], 1);
+            DummyBattleInterfaceFunc(gHealthboxSpriteIds[bank], 1);
         else
-            nullsub_11(gHealthboxSpriteIds[bank], 0);
+            DummyBattleInterfaceFunc(gHealthboxSpriteIds[bank], 0);
         if (GetBattlerSide(bank))
         {
             if (GetMonData(&gEnemyParty[gBattlerPartyIndexes[bank]], MON_DATA_HP) == 0)

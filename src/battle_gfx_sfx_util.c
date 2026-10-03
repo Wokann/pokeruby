@@ -543,9 +543,9 @@ u8 BattleInitAllSprites(u8 *state1, u8 *battler)
         break;
     case 3:
         if ((gBattleTypeFlags & 0x80) && *battler == 0)
-            gHealthboxSpriteIds[*battler] = battle_make_oam_safari_battle();
+            gHealthboxSpriteIds[*battler] = CreateSafariPlayerHealthboxSprites();
         else
-            gHealthboxSpriteIds[*battler] = battle_make_oam_normal_battle(*battler);
+            gHealthboxSpriteIds[*battler] = CreateBattlerHealthboxSprites(*battler);
         (*battler)++;
         if (*battler == gBattlersCount)
         {
@@ -554,11 +554,11 @@ u8 BattleInitAllSprites(u8 *state1, u8 *battler)
         }
         break;
     case 4:
-        sub_8043F44(*battler);
+        InitBattlerHealthboxCoords(*battler);
         if (gBattlerPositions[*battler] <= 1)
-            nullsub_11(gHealthboxSpriteIds[*battler], 0);
+            DummyBattleInterfaceFunc(gHealthboxSpriteIds[*battler], 0);
         else
-            nullsub_11(gHealthboxSpriteIds[*battler], 1);
+            DummyBattleInterfaceFunc(gHealthboxSpriteIds[*battler], 1);
         (*battler)++;
         if (*battler == gBattlersCount)
         {
