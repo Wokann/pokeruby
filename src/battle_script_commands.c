@@ -1,6 +1,7 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_main.h"
+#include "battle_gfx_sfx_util.h"
 #include "battle_anim.h"
 #include "battle_message.h"
 #include "battle_string_ids.h"
@@ -132,11 +133,9 @@ u8 GetBattlerForBattleScript(u8 bankValue);
 s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 a4, u16 powerOverride, u8 typeOverride, u8 bank_atk, u8 bank_def);
 static u8 AttacksThisTurn(u8 bank, u16 move); //Note: returns 1 if it's a charging turn, otherwise 2
 void UndoEffectsAfterFainting(void);
-void BattleStopLowHpSound(void);
 void PlayBGM(u16 songID);
 void MonGainEVs(struct Pokemon*, u16 defeatedSpecies);
 extern u8 gBattleBufferB[4][0x200];
-void HandleLowHpMusicChange(struct Pokemon*, u8 bank);
 bool8 IsTradedMon(struct Pokemon*);
 void BattleScriptPop(void);
 void SwitchInClearSetData(void);

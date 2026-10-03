@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_gfx_sfx_util.h"
 #include "battle_anim.h"
 #include "blend_palette.h"
 #include "contest.h"
@@ -2288,7 +2289,7 @@ void sub_812D7E8(u8 taskId)
         }
         break;
     case 2:
-        sub_8031FC4(gBattleAnimAttacker, gBattleAnimTarget, gTasks[taskId].data[10]);
+        HandleSpeciesGfxDataChange(gBattleAnimAttacker, gBattleAnimTarget, gTasks[taskId].data[10]);
         sub_8078954(&subStruct, gBattleAnimAttacker);
 
         if (IsContest())
@@ -2360,7 +2361,7 @@ void sub_812D7E8(u8 taskId)
             if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_OPPONENT)
             {
                 if (gTasks[taskId].data[10] == 0)
-                    sub_8032984(gBattleAnimAttacker, gBattleSpriteInfo[gBattleAnimAttacker].transformSpecies);
+                    SetBattlerShadowSpriteCallback(gBattleAnimAttacker, gBattleSpriteInfo[gBattleAnimAttacker].transformSpecies);
             }
         }
 
@@ -2377,7 +2378,7 @@ void c3_80DFBE4(u8 taskId)
 
 void sub_812DB58(u8 taskId)
 {
-    sub_8031FC4(gBattleAnimAttacker, gBattleAnimTarget, 1);
+    HandleSpeciesGfxDataChange(gBattleAnimAttacker, gBattleAnimTarget, 1);
     DestroyAnimVisualTask(taskId);
 }
 
@@ -4664,7 +4665,7 @@ void sub_81312E4(u8 taskId)
     }
     else
     {
-        refresh_graphics_maybe(gBattleAnimAttacker, 0, spriteId);
+        LoadBattleMonGfxAndAnimate(gBattleAnimAttacker, 0, spriteId);
         if (IsContest())
         {
             gSprites[gBattlerSpriteIds[gBattleAnimAttacker]].affineAnims = gAffineAnims_BattleSpriteContest;

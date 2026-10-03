@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle_gfx_sfx_util.h"
 #include "constants/items.h"
 #include "constants/item_effects.h"
 #include "constants/moves.h"
@@ -3516,7 +3517,7 @@ void sub_806F8AC(u8 taskId)
         sp14 += sp0.unk4;
         SetMonData(gPartyMenu.pokemon, MON_DATA_HP, &sp14);
         RemoveBagItem(gPartyMenu.secondarySelectedIndex, 1);
-        sub_8032638();
+        HandleBattleLowHpMusicChange();
         gTasks[taskId].func = sub_806FB44;
     }
     else

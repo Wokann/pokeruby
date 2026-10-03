@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle_gfx_sfx_util.h"
 #include "battle.h"
 #include "battle_interface.h"
 #include "decompress.h"
@@ -235,14 +236,14 @@ const struct CompressedSpriteSheet gUnknown_0820A754[] =
 
 const struct SpritePalette gUnknown_0820A764[] =
 {
-    { gUnknown_08D1212C, 0xd710 },
-    { gUnknown_08D1212C, 0xd711 },
+    { gBattleInterface_BallStatusBarPal, 0xd710 },
+    { gBattleInterface_BallStatusBarPal, 0xd711 },
 };
 
 const struct SpritePalette gUnknown_0820A774[] =
 {
-    { gUnknown_08D1214C, 0xd712 },
-    { gUnknown_08D1214C, 0xd713 },
+    { gBattleInterface_BallDisplayPal, 0xd712 },
+    { gBattleInterface_BallDisplayPal, 0xd713 },
 };
 
 const struct SpriteSheet gUnknown_0820A784[] =

@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_gfx_sfx_util.h"
 #include "battle_anim.h"
 #include "battle_anim_special.h"
 #include "battle_interface.h"
@@ -1769,7 +1770,7 @@ void sub_814151C(u8 taskId)
             gTasks[taskId].data[10]++;
         break;
     case 1:
-        refresh_graphics_maybe(gBattleAnimAttacker, gTasks[taskId].data[11], spriteId);
+        LoadBattleMonGfxAndAnimate(gBattleAnimAttacker, gTasks[taskId].data[11], spriteId);
         gTasks[taskId].data[10]++;
         break;
     case 2:
@@ -1835,7 +1836,7 @@ void sub_81416C4(u8 taskId)
     case 2:
         spriteId = gBattlerSpriteIds[gBattleAnimAttacker];
         DmaClear32(3, (void *)OBJ_VRAM0 + gSprites[spriteId].oam.tileNum * TILE_SIZE_4BPP, 0x800);
-        sub_80324E0(gBattleAnimAttacker);
+        ClearBehindSubstituteBit(gBattleAnimAttacker);
         DestroyAnimVisualTask(taskId);
         break;
     }
@@ -2076,13 +2077,13 @@ void sub_8141D7C(u8 taskId)
 
 void sub_8141DAC(u8 taskId)
 {
-    if (gBattleAnimationInfo->unk0 == 83)
+    if (gBattleAnimationInfo->animArg == 83)
         gBattleAnimArgs[0] = 1;
-    else if (gBattleAnimationInfo->unk0 == 250)
+    else if (gBattleAnimationInfo->animArg == 250)
         gBattleAnimArgs[0] = 2;
-    else if (gBattleAnimationInfo->unk0 == 128)
+    else if (gBattleAnimationInfo->animArg == 128)
         gBattleAnimArgs[0] = 3;
-    else if (gBattleAnimationInfo->unk0 == 328)
+    else if (gBattleAnimationInfo->animArg == 328)
         gBattleAnimArgs[0] = 4;
     else
         gBattleAnimArgs[0] = 0;
@@ -2092,7 +2093,7 @@ void sub_8141DAC(u8 taskId)
 
 void sub_8141E10(u8 taskId)
 {
-    gBattleAnimAttacker = gBattleAnimationInfo->unk0;
-    gBattleAnimTarget = gBattleAnimationInfo->unk0 >> 8;
+    gBattleAnimAttacker = gBattleAnimationInfo->animArg;
+    gBattleAnimTarget = gBattleAnimationInfo->animArg >> 8;
     DestroyAnimVisualTask(taskId);
 }

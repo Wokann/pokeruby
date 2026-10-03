@@ -8,6 +8,7 @@
 #include "constants/species.h"
 #include "gba/flash_internal.h"
 #include "battle.h"
+#include "battle_gfx_sfx_util.h"
 #include "battle_main.h"
 #include "battle_ai_script_commands.h"
 #include "battle_controllers.h"
@@ -571,7 +572,7 @@ static void CB2_HandleStartBattle(void)
         gBattleCommunication[2] = 0;
         break;
     case 9:
-        if (battle_load_something(gUnknown_02024D1F, gUnknown_02024D1F + 1) != 0)
+        if (BattleInitAllSprites(gUnknown_02024D1F, gUnknown_02024D1F + 1) != 0)
         {
             gPreBattleCallback1 = gMain.callback1;
             gMain.callback1 = BattleMainCB1;
@@ -955,7 +956,7 @@ static void CB2_HandleStartMultiBattle(void)
         gBattleCommunication[2] = 0;
         break;
     case 7:
-        if (battle_load_something(gUnknown_02024D1F, gUnknown_02024D1F + 1) != 0)
+        if (BattleInitAllSprites(gUnknown_02024D1F, gUnknown_02024D1F + 1) != 0)
         {
             gPreBattleCallback1 = gMain.callback1;
             gMain.callback1 = BattleMainCB1;

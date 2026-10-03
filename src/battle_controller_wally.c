@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_gfx_sfx_util.h"
 #include "battle_anim.h"
 #include "battle_anim_special.h"
 #include "battle_controllers.h"
@@ -60,14 +61,10 @@ extern void ReshowBattleScreenDummy(void);
 extern void DoWallyTutorialBagMenu(void);
 extern bool8 IsDoubleBattle(void);
 extern void Task_PlayerController_RestoreBgmAfterCry(u8);
-extern void DecompressTrainerBackPic();
 extern u8 GetBattlerPosition(u8);
 extern void SpriteCB_TrainerSlideIn(struct Sprite *);
 extern u8 GetBattlerAtPosition(u8);
 extern u8 IsMoveWithoutAnimation();
-extern void SetBattlerSpriteAffineMode();
-extern void CopyAllBattleSpritesInvisibilities(void);
-extern void TrySetBehindSubstituteSpriteBit();
 extern u8 GetBattlerSide(u8);
 extern void sub_80304A8(void);
 extern void DoHitAnimHealthboxEffect();
@@ -80,7 +77,6 @@ extern u8 GetBattlerSpriteCoord();
 extern u8 GetBattlerSpriteDefault_Y();
 extern u8 GetBattlerSpriteSubpriority();
 extern void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *);
-extern bool8 TryHandleLaunchBattleTableAnimation();
 
 // this file's functions
 static void WallyHandleGetMonData(void);

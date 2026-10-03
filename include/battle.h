@@ -430,16 +430,16 @@ struct BattleHealthboxInfo
  /*0x03*/ u8 unk3;
  /*0x04*/ u8 animationState;
  /*0x05*/ u8 partyStatusDelayTimer;
- /*0x06*/ u8 unk6;
- /*0x07*/ u8 unk7;
- /*0x08*/ u8 unk8;
+ /*0x06*/ u8 matrixNum;
+ /*0x07*/ u8 shadowSpriteId;
+ /*0x08*/ u8 soundTimer;
  /*0x09*/ u8 unk9;
  /*0x0A*/ u8 fillerA[2];
 };
 
 struct BattleAnimationInfo
 {
-    u16 unk0;
+    u16 animArg;
     u8 filler2[6];
     u8 ballThrowCaseId;
     u8 unk9_0:1;
@@ -623,21 +623,9 @@ void CB2_SetUpReshowBattleScreenAfterMenu(void);
 void CB2_SetUpReshowBattleScreenAfterMenu2(void);
 
 // asm/battle_7.o
-void InitAndLaunchSpecialAnimation(u8 a, u8 b, u8 c, u8 d);
 void BattleGfxSfxDummy2(u16);
 void BattleGfxSfxDummy3(int);
-void LoadBattleBarGfx(u8);
-u8 battle_load_something();
-void CopyBattleSpriteInvisibility(u8);
-void HandleLowHpMusicChange(struct Pokemon *, u8);
-void sub_8032638();
-void ClearTemporarySpeciesSpriteData(u8, u8);
 void SetBankFuncToOpponentBufferRunCommand(void);
-void BattleStopLowHpSound(void);
-void sub_8031FC4(u8, u8, bool8);
-void sub_8032984(u8, u16);
-void refresh_graphics_maybe(u8, u8, u8);
-void sub_80324E0(u8 a);
 
 void SetBankFuncToLinkOpponentBufferRunCommand(void);
 

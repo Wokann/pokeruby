@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_gfx_sfx_util.h"
 #include "battle_ai_script_commands.h"
 #include "battle_ai_switch_items.h"
 #include "battle_anim.h"
@@ -62,36 +63,27 @@ extern u32 gBattleControllerExecFlags;
 
 extern u8 GetBattlerSpriteDefault_Y();
 extern void sub_8033018(void);
-extern void BattleLoadOpponentMonSprite();
 extern u8 GetBattlerPosition(u8);
-extern void sub_8032984(u8, u16);
 extern void sub_80333D4(void);
 extern void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *);
 extern u8 DoPokeballSendOutAnimation();
-extern void sub_8032A08();
 extern void sub_8033160(void);
 extern u8 get_trainer_class_pic_index(void);
 extern void SpriteCB_TrainerSlideIn(struct Sprite *);
 extern void sub_8032B4C(void);
-extern void sub_8031A6C(u16, u8);
 extern void sub_8032B84(void);
 extern void StartAnimLinearTranslation(struct Sprite *);
 extern void sub_8032BBC(void);
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
 extern void sub_803311C(void);
 extern void sub_8010384(struct Sprite *);
-extern bool8 IsBattleSEPlaying(u8);
 extern u8 IsMoveWithoutAnimation();
-extern void SetBattlerSpriteAffineMode();
-extern void CopyAllBattleSpritesInvisibilities(void);
-extern void TrySetBehindSubstituteSpriteBit();
 extern void BufferStringBattle();
 extern void sub_80331D0(void);
 extern void AI_TrySwitchOrUseItem(void);
 extern u8 GetBattlerAtPosition(u8);
 extern void sub_80330C8(void);
 void sub_8033494(void);
-extern void InitAndLaunchChosenStatusAnimation();
 extern void bx_blink_t7(void);
 extern void DoHitAnimHealthboxEffect();
 extern u8 GetBattlerSide(u8);
@@ -101,7 +93,6 @@ extern void nullsub_45(void);
 extern void sub_8031B74();
 extern bool8 IsDoubleBattle(void);
 extern void sub_8032E2C(void);
-extern u8 TryHandleLaunchBattleTableAnimation();
 extern void sub_80334C0(void);
 
 // this file's functions
@@ -349,7 +340,7 @@ void sub_8032E2C(void)
               0);
             StartHealthboxSlideIn(gActiveBattler ^ 2);
             SetHealthboxSpriteVisible(gHealthboxSpriteIds[gActiveBattler ^ 2]);
-            sub_8032984(
+            SetBattlerShadowSpriteCallback(
               gActiveBattler ^ 2,
               GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler ^ 2]], MON_DATA_SPECIES));
         }
@@ -360,7 +351,7 @@ void sub_8032E2C(void)
           0);
         StartHealthboxSlideIn(gActiveBattler);
         SetHealthboxSpriteVisible(gHealthboxSpriteIds[gActiveBattler]);
-        sub_8032984(
+        SetBattlerShadowSpriteCallback(
           gActiveBattler,
           GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES));
 
@@ -417,7 +408,7 @@ void sub_8033160(void)
     {
         FreeSpriteOamMatrix(&gSprites[gBattlerSpriteIds[gActiveBattler]]);
         DestroySprite(&gSprites[gBattlerSpriteIds[gActiveBattler]]);
-        sub_8032A08(gActiveBattler);
+        HideBattlerShadowSprite(gActiveBattler);
         SetHealthboxSpriteInvisible(gHealthboxSpriteIds[gActiveBattler]);
         OpponentBufferExecCompleted();
     }
@@ -495,7 +486,7 @@ void sub_80333D4(void)
      && !gBattleHealthBoxInfo[gActiveBattler].ballAnimActive)
     {
         DestroySprite(&gSprites[gBattleControllerData[gActiveBattler]]);
-        sub_8032984(gActiveBattler, GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES));
+        SetBattlerShadowSpriteCallback(gActiveBattler, GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES));
         gBattlerControllerFuncs[gActiveBattler] = sub_8033308;
     }
 }
@@ -1109,7 +1100,7 @@ void OpponentHandleLoadPokeSprite(void)
 {
     u16 species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES);
 
-    BattleLoadOpponentMonSprite(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
+    BattleLoadOpponentMonSpriteGfx(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
     SetMultiuseSpriteTemplateToPokemon(species, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gCreatingSpriteTemplate,
@@ -1121,7 +1112,7 @@ void OpponentHandleLoadPokeSprite(void)
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[2] = species;
     gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = gActiveBattler;
     StartSpriteAnim(&gSprites[gBattlerSpriteIds[gActiveBattler]], gBattleMonForms[gActiveBattler]);
-    sub_8032984(gActiveBattler, GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES));
+    SetBattlerShadowSpriteCallback(gActiveBattler, GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES));
     gBattlerControllerFuncs[gActiveBattler] = sub_8033018;
 }
 
@@ -1141,7 +1132,7 @@ void sub_803495C(u8 a, u8 b)
     gBattlerPartyIndexes[a] = gBattleBufferA[a][1];
     species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[a]], MON_DATA_SPECIES);
     gBattleControllerData[a] = CreateInvisibleSpriteWithCallback(SpriteCB_WaitForBattlerBallReleaseAnim);
-    BattleLoadOpponentMonSprite(&gEnemyParty[gBattlerPartyIndexes[a]], a);
+    BattleLoadOpponentMonSpriteGfx(&gEnemyParty[gBattlerPartyIndexes[a]], a);
     SetMultiuseSpriteTemplateToPokemon(species, GetBattlerPosition(a));
     gBattlerSpriteIds[a] = CreateSprite(
       &gCreatingSpriteTemplate,
@@ -1169,7 +1160,7 @@ void OpponentHandleReturnPokeToBall(void)
     {
         FreeSpriteOamMatrix(&gSprites[gBattlerSpriteIds[gActiveBattler]]);
         DestroySprite(&gSprites[gBattlerSpriteIds[gActiveBattler]]);
-        sub_8032A08(gActiveBattler);
+        HideBattlerShadowSprite(gActiveBattler);
         SetHealthboxSpriteInvisible(gHealthboxSpriteIds[gActiveBattler]);
         OpponentBufferExecCompleted();
     }
@@ -1217,7 +1208,7 @@ void OpponentHandleTrainerThrow(void)
             trainerPicIndex = gTrainers[gTrainerBattleOpponent].trainerPic;
     }
 
-    sub_8031A6C(trainerPicIndex, gActiveBattler);
+    DecompressTrainerFrontPic(trainerPicIndex, gActiveBattler);
     SetMultiuseSpriteTemplateToTrainerBack(trainerPicIndex, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gCreatingSpriteTemplate,
@@ -1247,7 +1238,7 @@ void OpponentHandleTrainerSlide(void)
     else
         trainerPicIndex = gTrainers[gTrainerBattleOpponent].trainerPic;
 
-    sub_8031A6C(trainerPicIndex, gActiveBattler);
+    DecompressTrainerFrontPic(trainerPicIndex, gActiveBattler);
     SetMultiuseSpriteTemplateToTrainerBack(trainerPicIndex, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gCreatingSpriteTemplate,

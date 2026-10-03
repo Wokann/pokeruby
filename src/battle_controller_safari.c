@@ -4,6 +4,7 @@
 #include "battle_interface.h"
 #include "battle_message.h"
 #include "battle.h"
+#include "battle_gfx_sfx_util.h"
 #include "data2.h"
 #include "ewram.h"
 #include "link.h"
@@ -42,12 +43,10 @@ extern u8 gBattleOutcome;
 extern u8 GetBattlerSide(u8);
 extern u8 GetBattlerAtPosition(u8);
 extern u8 GetBattlerPosition(u8);
-extern void DecompressTrainerBackPic();
 extern u8 GetBattlerSpriteSubpriority();
 extern void SpriteCB_TrainerSlideIn(struct Sprite *);
 extern void sub_810BADC(void);
 extern void HandleIntroSlide();
-extern bool8 TryHandleLaunchBattleTableAnimation();
 
 #if ENGLISH
 #define SUB_812BB10_TILE_DATA_OFFSET 440

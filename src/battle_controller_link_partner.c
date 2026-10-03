@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_gfx_sfx_util.h"
 #include "battle_anim.h"
 #include "battle_anim_special.h"
 #include "battle_controllers.h"
@@ -50,28 +51,20 @@ extern u8 gBattleMonForms[];
 extern u8 gAnimScriptActive;
 extern void (*gAnimScriptCallback)(void);
 
-extern u8 TryHandleLaunchBattleTableAnimation();
 extern void Task_HidePartyStatusSummary(u8);
 extern void SpriteCB_FreePlayerSpriteLoadMonSprite(struct Sprite *);
 extern void HandleIntroSlide();
 extern void DoHitAnimHealthboxEffect();
-extern void InitAndLaunchChosenStatusAnimation();
 extern void BufferStringBattle();
-extern void CopyAllBattleSpritesInvisibilities(void);
-extern void SetBattlerSpriteAffineMode();
-extern void TrySetBehindSubstituteSpriteBit();
 extern u8 IsMoveWithoutAnimation();
-extern u8 IsBattleSEPlaying();
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
 extern void StartAnimLinearTranslation(struct Sprite *);
 extern void SpriteCB_FaintSlideAnim(struct Sprite *);
 extern s32 sub_803FC34(u16);
-extern void DecompressTrainerBackPic();
 extern void SpriteCB_TrainerSlideIn(struct Sprite *);
 extern u8 DoPokeballSendOutAnimation();
 extern void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *);
 extern u8 CreateInvisibleSpriteWithCallback();
-extern void BattleLoadPlayerMonSpriteGfx();
 extern u8 GetBattlerSpriteDefault_Y();
 extern void BattleGfxSfxDummy3();
 extern void BattleGfxSfxDummy2(u16);

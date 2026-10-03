@@ -107,13 +107,14 @@ $(MENUGFXDIR)/party_menu_misc.4bpp: GFX_OPTS := -num_tiles 116
 
 $(MENUGFXDIR)/status_screen.4bpp: GFX_OPTS := -num_tiles 217
 
-$(MENUGFXDIR)/hp_numbers.4bpp: $(MENUGFXDIR)/hpbar_anim.4bpp $(MENUGFXDIR)/numbers1.4bpp $(MENUGFXDIR)/numbers2.4bpp
-	@cat $(MENUGFXDIR)/hpbar_anim.4bpp $(MENUGFXDIR)/numbers1.4bpp $(MENUGFXDIR)/numbers2.4bpp >$@
 
 
 #### Battle Interface ####
 
 BATTLEINTERFACEDIR := graphics/battle_interface
+
+$(BATTLEINTERFACEDIR)/battle_bar.4bpp: $(BATTLEINTERFACEDIR)/hpbar_anim_unused.4bpp $(BATTLEINTERFACEDIR)/numbers1.4bpp $(BATTLEINTERFACEDIR)/numbers2.4bpp
+	@cat $(BATTLEINTERFACEDIR)/hpbar_anim_unused.4bpp $(BATTLEINTERFACEDIR)/numbers1.4bpp $(BATTLEINTERFACEDIR)/numbers2.4bpp >$@
 
 $(BATTLEINTERFACEDIR)/healthbox_elements.4bpp: $(BATTLEINTERFACEDIR)/hpbar.4bpp $(BATTLEINTERFACEDIR)/expbar.4bpp $(BATTLEINTERFACEDIR)/status_psn.4bpp $(BATTLEINTERFACEDIR)/status_par.4bpp $(BATTLEINTERFACEDIR)/status_slp.4bpp $(BATTLEINTERFACEDIR)/status_frz.4bpp $(BATTLEINTERFACEDIR)/status_brn.4bpp $(BATTLEINTERFACEDIR)/misc.4bpp $(BATTLEINTERFACEDIR)/hpbar_anim.4bpp $(BATTLEINTERFACEDIR)/misc_frameend.4bpp
 	cat $^ > $@

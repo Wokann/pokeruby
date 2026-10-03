@@ -3422,15 +3422,15 @@ extern const struct CompressedSpritePalette gBattleEnvironmentPalette_Plain[];
 extern const struct CompressedSpriteSheet gBattleEnvironmentTiles_Stadium[];
 extern const u8 gBattleEnvironmentTilemap_Stadium[];
 
-extern const u8 gBattleWindowLargeGfx[];
-extern const u8 gBattleWindowSmallGfx[];
-extern const u8 gBattleWindowSmall2Gfx[];
-extern const u8 gBattleWindowSmall3Gfx[];
-extern const u8 gBattleWindowLarge2Gfx[];
+extern const u8 gHealthboxSinglesPlayerGfx[];
+extern const u8 gHealthboxSinglesOpponentGfx[];
+extern const u8 gHealthboxDoublesPlayerGfx[];
+extern const u8 gHealthboxDoublesOpponentGfx[];
+extern const u8 gHealthboxSafariGfx[];
 extern const u8 gBlankGfxCompressed[];
 extern const u8 gBattleGfx_BallStatusBar[];
-extern const u16 gUnknown_08D1212C[];
-extern const u16 gUnknown_08D1214C[];
+extern const u16 gBattleInterface_BallStatusBarPal[];
+extern const u16 gBattleInterface_BallDisplayPal[];
 extern const u8 Tiles_D129AC[];
 
 extern const u8 gAreaUnknownTiles[];
@@ -3451,5 +3451,10 @@ extern const u8 gRouletteNumbersTiles[];
 extern const u8 gRouletteMultiplierTiles[];
 
 extern const u8 gDecoration10000_Gfx[];
+
+extern const u8 gBattleInterfaceGfx_BattleBar[];
+extern const u8 gSubstituteDollFrontGfx[];
+extern const u8 gSubstituteDollBackGfx[];
+extern const u8 gSubstituteDollPal[];
 
 #endif  // GUARD_GRAPHICS_H

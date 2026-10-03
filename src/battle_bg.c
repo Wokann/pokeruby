@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_gfx_sfx_util.h"
 #include "battle_main.h"
 #include "decompress.h"
 #include "ewram.h"
@@ -25,7 +26,6 @@ extern u8 BattleText_Win[];
 extern u8 BattleText_Loss[];
 extern u8 BattleText_Tie[];
 
-extern void sub_8032A38(void);
 
 #define GetCurrentMapBattleScene sav1_map_get_battletype
 //extern u8 GetCurrentMapBattleScene(void);
@@ -274,7 +274,7 @@ void ApplyPlayerChosenFrameToBattleMenu(void)
     gPlttBufferUnfaded[94] = 0x7fff;
     gPlttBufferUnfaded[95] = 0x675a;
     CpuSet(&gPlttBufferUnfaded[92], &gPlttBufferFaded[92], 4);
-    sub_8032A38();
+    FillAroundBattleWindows();
 }
 
 void DrawMainBattleBackground(void)

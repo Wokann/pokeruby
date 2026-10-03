@@ -2,6 +2,7 @@
 #include "constants/hold_effects.h"
 #include "constants/moves.h"
 #include "battle.h"
+#include "battle_gfx_sfx_util.h"
 #include "battle_main.h"
 #include "battle_util.h"
 #include "data2.h"

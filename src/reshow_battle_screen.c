@@ -2,6 +2,7 @@
 #include "battle_controllers.h"
 #include "battle_main.h"
 #include "battle.h"
+#include "battle_gfx_sfx_util.h"
 #include "battle_anim.h"
 #include "palette.h"
 #include "main.h"
@@ -25,14 +26,6 @@ extern u8 gBattleMonForms[4];
 extern u8 gHealthboxSpriteIds[4];
 
 bool8 LoadChosenBattleElement(u8 a0);
-bool8 sub_8031C30(u8 a0);
-void sub_8031EE8(void);
-void sub_80327CC(void);
-void sub_8032984(u8 a, u16 b);
-void BattleLoadOpponentMonSprite(struct Pokemon *, u8 bank);
-void BattleLoadPlayerMonSpriteGfx(struct Pokemon *, u8 bank);
-void BattleLoadSubstituteSprite(u8 bank, u8 b);
-void DecompressTrainerBackPic(u16 a0, u8 bank);
 u8 sub_8077F7C(u8 bank);
 u8 GetBattlerSpriteDefault_Y(u8 bank);
 void nullsub_11(u8 healthboxID, u8 a1);
@@ -107,10 +100,10 @@ static void CB2_ReshowBattleScreenAfterMenu(void)
         gReservedSpritePaletteCount = 4;
         break;
     case 5:
-        sub_8031EE8();
+        ClearSpritesHealthboxAnimData();
         break;
     case 6:
-        if (sub_8031C30(gHelperState))
+        if (BattleLoadAllHealthBoxesGfx(gHelperState))
             gHelperState = 0;
         else
         {
@@ -163,17 +156,17 @@ static void CB2_ReshowBattleScreenAfterMenu(void)
             u8 opponentBank;
             u16 species;
 
-            sub_80327CC();
+            LoadAndCreateEnemyShadowSprites();
 
             opponentBank = GetBattlerAtPosition(1);
             species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[opponentBank]], MON_DATA_SPECIES);
-            sub_8032984(opponentBank, species);
+            SetBattlerShadowSpriteCallback(opponentBank, species);
 
             if (IsDoubleBattle())
             {
                 opponentBank = GetBattlerAtPosition(3);
                 species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[opponentBank]], MON_DATA_SPECIES);
-                sub_8032984(opponentBank, species);
+                SetBattlerShadowSpriteCallback(opponentBank, species);
             }
             ActionSelectionCreateCursorAt(gActionSelectionCursor[gBattlerInMenuId], 0);
         }
@@ -204,9 +197,9 @@ static bool8 LoadAppropiateBankSprite(u8 bank)
         if (GetBattlerSide(bank))
         {
             if (!gBattleSpriteInfo[bank].behindSubstitute)
-                BattleLoadOpponentMonSprite(&gEnemyParty[gBattlerPartyIndexes[bank]], bank);
+                BattleLoadOpponentMonSpriteGfx(&gEnemyParty[gBattlerPartyIndexes[bank]], bank);
             else
-                BattleLoadSubstituteSprite(bank, 0);
+                BattleLoadSubstituteOrMonSpriteGfx(bank, 0);
         }
         else if (gBattleTypeFlags & BATTLE_TYPE_SAFARI && bank == 0)
             DecompressTrainerBackPic(gSaveBlock2.playerGender, 0);
@@ -215,7 +208,7 @@ static bool8 LoadAppropiateBankSprite(u8 bank)
         else if (!gBattleSpriteInfo[bank].behindSubstitute)
             BattleLoadPlayerMonSpriteGfx(&gPlayerParty[gBattlerPartyIndexes[bank]], bank);
         else
-            BattleLoadSubstituteSprite(bank, 0);
+            BattleLoadSubstituteOrMonSpriteGfx(bank, 0);
 
         gHelperState = 0;
     }

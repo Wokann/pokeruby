@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_gfx_sfx_util.h"
 #include "battle_main.h"
 #include "battle_anim_special.h"
 #include "battle_anim.h"
@@ -71,27 +72,18 @@ extern const u8 BattleText_OtherMenu[];
 extern const u8 BattleText_MenuOptions[];
 extern const u8 BattleText_PP[];
 
-extern void BattleStopLowHpSound(void);
 extern void BattleControllerDummy(void);
-extern bool8 IsBattleSEPlaying(u8);
-extern void InitAndLaunchChosenStatusAnimation();
 extern void DoHitAnimHealthboxEffect();
 extern u8 GetBattlerSide(u8);
 extern void HandleIntroSlide();
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
 extern void StartAnimLinearTranslation(struct Sprite *);
-extern void BattleLoadPlayerMonSpriteGfx();
 extern bool8 IsDoubleBattle(void);
 extern bool8 IsBattlerSpritePresent(u8);
-extern bool8 TryHandleLaunchBattleTableAnimation();
-extern void SetBattlerSpriteAffineMode();
-extern void CopyAllBattleSpritesInvisibilities(void);
-extern void TrySetBehindSubstituteSpriteBit();
 extern u8 IsMoveWithoutAnimation();
 extern u8 GetBattlerAtPosition(u8);
 extern void SpriteCB_FaintSlideAnim(struct Sprite *);
 extern u8 GetBattlerPosition(u8);
-extern void DecompressTrainerBackPic();
 extern void SpriteCB_TrainerSlideIn(struct Sprite *);
 extern u8 GetBattlerSpriteSubpriority();
 extern void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *);
