@@ -775,7 +775,7 @@ static u16 FishingPoints_CountFishingTilesInMapThird(u8 a0)
     {
         for (x = 0; x < gMapHeader.mapLayout->width; x++)
         {
-            if (MetatileBehavior_IsFeebasEncounterable(MapGridGetMetatileBehaviorAt(x + 7, y + 7)) == TRUE)
+            if (MetatileBehavior_IsSurfableAndNotWaterfall(MapGridGetMetatileBehaviorAt(x + 7, y + 7)) == TRUE)
             {
                 retval++;
             }
@@ -801,7 +801,7 @@ static u16 FishingPoints_GetIndexOfCurrentFishingSpot(void)
     {
         for (xx = 0; xx < gMapHeader.mapLayout->width; xx++)
         {
-            if (MetatileBehavior_IsFeebasEncounterable(MapGridGetMetatileBehaviorAt(xx + 7, yy + 7)) == TRUE)
+            if (MetatileBehavior_IsSurfableAndNotWaterfall(MapGridGetMetatileBehaviorAt(xx + 7, yy + 7)) == TRUE)
             {
                 retval++;
                 if (x == xx && y == yy)

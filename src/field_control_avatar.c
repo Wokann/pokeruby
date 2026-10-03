@@ -460,7 +460,7 @@ static const u8 *GetInteractedMetatileScript(struct MapPosition *position, u8 me
         return EventScript_PC;
     if (MetatileBehavior_IsClosedSootopolisDoor(metatileBehavior) == TRUE)
         return ClosedSootopolisDoorScript;
-    if (MetatileBehavior_IsLinkBattleRecords(metatileBehavior) == TRUE)
+    if (MetatileBehavior_IsCableBoxResults1(metatileBehavior) == TRUE)
         return gUnknown_081A4363;
     if (MetatileBehavior_IsPokeblockFeeder(metatileBehavior) == TRUE)
         return gUnknown_081C346A;
@@ -891,7 +891,7 @@ static const struct BgEvent *GetBackgroundEventAtPosition(struct MapHeader *mapH
 
 bool8 dive_warp(struct MapPosition *position, u16 metatileBehavior)
 {
-    if (gMapHeader.mapType == MAP_TYPE_UNDERWATER && !MetatileBehavior_IsNotSurfacable(metatileBehavior))
+    if (gMapHeader.mapType == MAP_TYPE_UNDERWATER && !MetatileBehavior_IsUnableToEmerge(metatileBehavior))
     {
         if (SetDiveWarpEmerge(position->x - 7, position->y - 7))
         {
@@ -921,7 +921,7 @@ u8 TrySetDiveWarp(void)
 
     PlayerGetDestCoords(&x, &y);
     metatileBehavior = MapGridGetMetatileBehaviorAt(x, y);
-    if (gMapHeader.mapType == MAP_TYPE_UNDERWATER && !MetatileBehavior_IsNotSurfacable(metatileBehavior))
+    if (gMapHeader.mapType == MAP_TYPE_UNDERWATER && !MetatileBehavior_IsUnableToEmerge(metatileBehavior))
     {
         if (SetDiveWarpEmerge(x - 7, y - 7) == TRUE)
             return 1;

@@ -523,7 +523,7 @@ void sub_80BBDD0(void)
                     gSpecialVar_0x8006 = roomdecorpos[decidx] >> 4;
                     gSpecialVar_0x8007 = roomdecorpos[decidx] & 0xF;
                     metatile = MapGridGetMetatileBehaviorAt(gSpecialVar_0x8006 + 7, gSpecialVar_0x8007 + 7);
-                    if (MetatileBehavior_IsSecretBaseLargeMatEdge(metatile) == TRUE || MetatileBehavior_IsLargeMatCenter(metatile) == TRUE)
+                    if (MetatileBehavior_HoldsSmallDecoration(metatile) == TRUE || MetatileBehavior_HoldsLargeDecoration(metatile) == TRUE)
                     {
                         gSpecialVar_Result = VAR_OBJ_GFX_ID_0 + (gMapHeader.events->objectEvents[objid].graphicsId - OBJ_EVENT_GFX_VAR_0);
                         VarSet(gSpecialVar_Result, gDecorations[roomdecor[decidx]].tiles[0]);
@@ -1194,7 +1194,7 @@ void sub_80BCF1C(u8 taskId)
                 PopSecretBaseBalloon(MapGridGetMetatileIdAt(x, y), x, y);
             else if (MetatileBehavior_IsSecretBaseBreakableDoor(metatileBehavior) == TRUE)
                 ShatterSecretBaseBreakableDoor(x, y);
-            else if (MetatileBehavior_IsSecretBaseMusicNoteMat(metatileBehavior) == TRUE)
+            else if (MetatileBehavior_IsSecretBaseSoundMat(metatileBehavior) == TRUE)
                 PlaySecretBaseMusicNoteMatSound(MapGridGetMetatileIdAt(x, y));
         }
         break;

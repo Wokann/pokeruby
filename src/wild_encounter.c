@@ -61,7 +61,7 @@ static u16 GetRoute119WaterTileNum(s16 x, s16 y, u8 section)
     {
         for (xCur = 0; xCur < gMapHeader.mapLayout->width; xCur++)
         {
-            if (MetatileBehavior_IsFeebasEncounterable(MapGridGetMetatileBehaviorAt(xCur + 7, yCur + 7)) == TRUE)
+            if (MetatileBehavior_IsSurfableAndNotWaterfall(MapGridGetMetatileBehaviorAt(xCur + 7, yCur + 7)) == TRUE)
             {
                 tileNum++;
                 if (x == xCur && y == yCur)
@@ -478,7 +478,7 @@ bool8 StandardWildEncounter(u16 curMetatileBehavior, u16 prevMetatileBehavior)
                 }
             }
             else if (MetatileBehavior_IsWaterWildEncounter(curMetatileBehavior) == TRUE
-             || (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING) && MetatileBehavior_IsBridge(curMetatileBehavior) == TRUE))
+             || (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING) && MetatileBehavior_IsBridgeOverWaterNoEdge(curMetatileBehavior) == TRUE))
             {
                 if (gWildMonHeaders[headerNum].waterMonsInfo)
                 {

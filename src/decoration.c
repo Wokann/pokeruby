@@ -2371,7 +2371,7 @@ void sub_80FFB08(u8 taskId)
 
 bool8 sub_80FFB6C(u8 metatileBehavior, u16 layerType)
 {
-    if (MetatileBehavior_IsBlockDecoration(metatileBehavior) != TRUE || layerType != 0)
+    if (MetatileBehavior_IsSecretBaseTrainerSpot(metatileBehavior) != TRUE || layerType != 0)
     {
         return FALSE;
     }
@@ -2389,7 +2389,7 @@ bool8 sub_80FFB94(u8 taskId, s16 x, s16 y, u16 decoId)
 
 bool8 sub_80FFBDC(u16 metatileBehavior, const struct Decoration *decoration)
 {
-    if (MetatileBehavior_IsBlockDecoration(metatileBehavior) != TRUE)
+    if (MetatileBehavior_IsSecretBaseTrainerSpot(metatileBehavior) != TRUE)
     {
         if (decoration->id == DECOR_SOLID_BOARD && MetatileBehavior_IsSecretBaseHole(metatileBehavior) == TRUE)
         {
@@ -2513,14 +2513,14 @@ bool8 sub_80FFC24(u8 taskId, const struct Decoration *decoration)
                 behaviorAt = MapGridGetMetatileBehaviorAt(curX, curY);
                 if (decoration->shape == DECORSHAPE_1x2)
                 {
-                    if (!MetatileBehavior_IsLargeMatCenter(behaviorAt))
+                    if (!MetatileBehavior_HoldsLargeDecoration(behaviorAt))
                     {
                         return FALSE;
                     }
                 }
-                else if (!MetatileBehavior_IsSecretBaseLargeMatEdge(behaviorAt))
+                else if (!MetatileBehavior_HoldsSmallDecoration(behaviorAt))
                 {
-                    if (!MetatileBehavior_IsLargeMatCenter(behaviorAt))
+                    if (!MetatileBehavior_HoldsLargeDecoration(behaviorAt))
                     {
                         return FALSE;
                     }
