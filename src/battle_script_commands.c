@@ -159,7 +159,6 @@ void nullsub_6(void);
 void ReshowBattleScreenAfterMenu(void);
 void BattleMainCB2(void);
 void AddMoney(u32* moneySaveblock, u32 to_give);
-u8 CountAliveMons(u8 caseID);
 void PokemonUseItemEffects(struct Pokemon*, u16 item, u8 partyID, u8 r3, u8 sp);
 u8 CanRunFromBattle(void);
 u8 GetMoveTarget(u16 move, u8 targetbyte); //get target of move
@@ -5535,7 +5534,7 @@ static void Cmd_drawpartystatussummary(void)
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        if (GetMonData(&party[i], MON_DATA_SPECIES2) == 0 || GetMonData(&party[i], MON_DATA_SPECIES2) == SPECIES_EGG)
+        if (GetMonData(&party[i], MON_DATA_SPECIES_OR_EGG) == 0 || GetMonData(&party[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_EGG)
         {
             hpStatuses[i].hp = 0xFFFF;
             hpStatuses[i].status = 0;
@@ -6239,7 +6238,7 @@ static void atk7E_setreflect(void)
     {
         gSideStatuses[GetBattlerPosition(gBattlerAttacker) & 1] |= SIDE_STATUS_REFLECT;
         gSideTimers[GetBattlerPosition(gBattlerAttacker) & 1].reflectTimer = 5;
-        if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && CountAliveMons(1) == 2)
+        if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && CountAliveMonsInBattle(1) == 2)
             gBattleCommunication[MULTISTRING_CHOOSER] = 2;
         else
             gBattleCommunication[MULTISTRING_CHOOSER] = 1;
@@ -6878,7 +6877,7 @@ static void atk92_setlightscreen(void)
     {
         gSideStatuses[GetBattlerPosition(gBattlerAttacker) & 1] |= SIDE_STATUS_LIGHTSCREEN;
         gSideTimers[GetBattlerPosition(gBattlerAttacker) & 1].lightscreenTimer = 5;
-        if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && CountAliveMons(1) == 2)
+        if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && CountAliveMonsInBattle(1) == 2)
             gBattleCommunication[MULTISTRING_CHOOSER] = 4;
         else
             gBattleCommunication[MULTISTRING_CHOOSER] = 3;
@@ -8069,7 +8068,7 @@ static void atkAE_healpartystatus(void)
 
         for (i = 0; i < PARTY_SIZE; i++)
         {
-            u16 species = GetMonData(&party[i], MON_DATA_SPECIES2);
+            u16 species = GetMonData(&party[i], MON_DATA_SPECIES_OR_EGG);
             u8 abilityBit = GetMonData(&party[i], MON_DATA_ABILITY_NUM);
             if (species != 0 && species != SPECIES_EGG)
             {
@@ -8559,8 +8558,8 @@ static void Cmd_trydobeatup(void)
         for (;gBattleCommunication[0] < PARTY_SIZE; ++gBattleCommunication[0])
         {
             if (GetMonData(&party[gBattleCommunication[0]], MON_DATA_HP)
-             && GetMonData(&party[gBattleCommunication[0]], MON_DATA_SPECIES2)
-             && GetMonData(&party[gBattleCommunication[0]], MON_DATA_SPECIES2) != SPECIES_EGG
+             && GetMonData(&party[gBattleCommunication[0]], MON_DATA_SPECIES_OR_EGG)
+             && GetMonData(&party[gBattleCommunication[0]], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG
              && !GetMonData(&party[gBattleCommunication[0]], MON_DATA_STATUS))
                 break;
         }
@@ -9016,8 +9015,8 @@ static void Cmd_assistattackselect(void)
     for (monId = 0; monId < PARTY_SIZE; ++monId)
     {
         if (monId == gBattlerPartyIndexes[gBattlerAttacker]
-         || GetMonData(&party[monId], MON_DATA_SPECIES2) == SPECIES_NONE
-         || GetMonData(&party[monId], MON_DATA_SPECIES2) == SPECIES_EGG)
+         || GetMonData(&party[monId], MON_DATA_SPECIES_OR_EGG) == SPECIES_NONE
+         || GetMonData(&party[monId], MON_DATA_SPECIES_OR_EGG) == SPECIES_EGG)
             continue;
         for (moveIndex = 0; moveIndex < MAX_MON_MOVES; ++moveIndex)
         {
@@ -9159,7 +9158,7 @@ static void atkE5_pickup(void)
     int i;
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2);
+        u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
         u16 held_item = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
         u8 ability;
         if (GetMonData(&gPlayerParty[i], MON_DATA_ABILITY_NUM))

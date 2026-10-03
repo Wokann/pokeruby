@@ -78,7 +78,6 @@ struct UnknownStruct8
 
 extern void sub_802BBD4(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0);
 
-extern struct SpriteTemplate gCreatingSpriteTemplate;
 extern const u8 Str_821F7B8[];
 extern u8 gUnknown_02023A14_50;
 extern const u16 gBattleTextboxPalette[];
@@ -323,7 +322,7 @@ static void BufferPartyVsScreenHealth_AtStart(void)
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2);
+        species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
         hp = GetMonData(&gPlayerParty[i], MON_DATA_HP);
         status = GetMonData(&gPlayerParty[i], MON_DATA_STATUS);
 
@@ -1237,7 +1236,7 @@ void sub_800FE40(u8 taskId)
     r7 = 0;
     for (i = 0; i < 6; i++)
     {
-        u16 species = GetMonData(&sp4[i], MON_DATA_SPECIES2);
+        u16 species = GetMonData(&sp4[i], MON_DATA_SPECIES_OR_EGG);
         u16 hp = GetMonData(&sp4[i], MON_DATA_HP);
         u32 status = GetMonData(&sp4[i], MON_DATA_STATUS);
 
@@ -1261,7 +1260,7 @@ void sub_800FE40(u8 taskId)
     r7 = 0;
     for (i = 0; i < 6; i++)
     {
-        u16 species = GetMonData(&sp8[i], MON_DATA_SPECIES2);
+        u16 species = GetMonData(&sp8[i], MON_DATA_SPECIES_OR_EGG);
         u16 hp = GetMonData(&sp8[i], MON_DATA_HP);
         u32 status = GetMonData(&sp8[i], MON_DATA_STATUS);
 
@@ -2639,7 +2638,7 @@ void debug_sub_8012688(void)
 	  gCurrentMove);
 	LoadCompressedPalette(gMonPaletteTable[gCurrentMove].data, 272, 32);
 	SetMultiuseSpriteTemplateToPokemon(gCurrentMove, 1);
-	spriteId = CreateSprite(&gCreatingSpriteTemplate, 176, 40 + gMonFrontPicCoords[gCurrentMove].y_offset, 40);
+	spriteId = CreateSprite(&gMultiuseSpriteTemplate, 176, 40 + gMonFrontPicCoords[gCurrentMove].y_offset, 40);
 	gSprites[spriteId].callback = SpriteCallbackDummy_2;
 	gSprites[spriteId].oam.paletteNum = 1;
 	REG_DISPCNT = 0x1F40;
@@ -3795,8 +3794,8 @@ void bc_801333C(void)
         {
             for (i = 0; i < 6; i++)
             {
-                if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES2) == 0
-                 || GetMonData(&gEnemyParty[i], MON_DATA_SPECIES2) == SPECIES_EGG)
+                if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES_OR_EGG) == 0
+                 || GetMonData(&gEnemyParty[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_EGG)
                 {
                     hpStatus[i].hp = 0xFFFF;
                     hpStatus[i].status = 0;
@@ -3813,8 +3812,8 @@ void bc_801333C(void)
 
             for (i = 0; i < 6; i++)
             {
-                if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2) == 0
-                 || GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2) == SPECIES_EGG)
+                if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) == 0
+                 || GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_EGG)
                 {
                     hpStatus[i].hp = 0xFFFF;
                     hpStatus[i].status = 0;
@@ -3838,8 +3837,8 @@ void bc_801333C(void)
 
             for (i = 0; i < 6; i++)
             {
-                if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2) == 0
-                 || GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2) == SPECIES_EGG)
+                if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) == 0
+                 || GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_EGG)
                 {
                     hpStatus[i].hp = 0xFFFF;
                     hpStatus[i].status = 0;
@@ -4370,7 +4369,7 @@ void sub_8012324(void)
                             MarkBattlerForControllerExec(gActiveBattler);
                             break;
                         case B_ACTION_SAFARI_BALL:
-                            if (PlayerPartyAndPokemonStorageFull())
+                            if (IsPlayerPartyAndPokemonStorageFull())
                             {
                                 gSelectionBattleScripts[gActiveBattler] = BattleScript_PrintFullBox;
                                 gBattleCommunication[gActiveBattler] = STATE_SELECTION_SCRIPT;

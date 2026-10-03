@@ -898,7 +898,7 @@ const struct BattleTowerTrainer gBattleTowerTrainers[] =
         },
     },
     {
-        .trainerClass = FACILITY_CLASS_COOL_TRAINER_M,
+        .trainerClass = FACILITY_CLASS_COOLTRAINER_M,
         .name = _("MARIUS"),
         .teamFlags = 0x10,
         .greeting = {
@@ -1080,7 +1080,7 @@ const struct BattleTowerTrainer gBattleTowerTrainers[] =
         },
     },
     {
-        .trainerClass = FACILITY_CLASS_COOL_TRAINER_F,
+        .trainerClass = FACILITY_CLASS_COOLTRAINER_F,
         .name = _("KARLA"),
         .teamFlags = 0x02,
         .greeting = {
@@ -1223,7 +1223,7 @@ const struct BattleTowerTrainer gBattleTowerTrainers[] =
         },
     },
     {
-        .trainerClass = FACILITY_CLASS_COOL_TRAINER_F,
+        .trainerClass = FACILITY_CLASS_COOLTRAINER_F,
         .name = _("JENNY"),
         .teamFlags = 0x02,
         .greeting = {
@@ -1262,7 +1262,7 @@ const struct BattleTowerTrainer gBattleTowerTrainers[] =
         },
     },
     {
-        .trainerClass = FACILITY_CLASS_COOL_TRAINER_M,
+        .trainerClass = FACILITY_CLASS_COOLTRAINER_M,
         .name = _("BILL"),
         .teamFlags = 0x01,
         .greeting = {

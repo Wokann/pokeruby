@@ -164,7 +164,6 @@ struct CreditsEntry
     const u8 *text;
 };
 
-extern struct SpriteTemplate gCreatingSpriteTemplate;
 
 extern u16 gUnknown_02039358;
 extern s16 gUnknown_0203935A;
@@ -1576,7 +1575,7 @@ static u8 CreateCreditsMonSprite(u16 species, u16 x, u16 y, u16 position)
     LoadCompressedPalette(lzPaletteData, 0x100 + (position * 16), 0x20);
     sub_8143648(position, position);
 
-    spriteId = CreateSprite(&gCreatingSpriteTemplate, x, y, 0);
+    spriteId = CreateSprite(&gMultiuseSpriteTemplate, x, y, 0);
     gSprites[spriteId].oam.paletteNum = position;
     gSprites[spriteId].oam.priority = 1;
     gSprites[spriteId].data[1] = position + 1;

@@ -375,6 +375,8 @@ extern const u32 gExperienceTables[][101];
 extern const u16 *gLevelUpLearnsets[];
 extern struct Evolution gEvolutionTable[][5];
 extern struct PokemonStorage gPokemonStorage;
+extern struct SpriteTemplate gMultiuseSpriteTemplate;
+extern const struct SpriteTemplate gBattlerSpriteTemplates[];
 
 void ZeroBoxMonData(struct BoxPokemon *boxMon);
 void ZeroMonData(struct Pokemon *mon);
@@ -407,15 +409,14 @@ void DeleteFirstMoveAndGiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move);
 
 s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 sideStatus, u16 powerOverride, u8 typeOverride, u8 battlerIdAtk, u8 battlerIdDef);
 
-u8 CountAliveMons(u8 a1);
-u8 GetDefaultMoveTarget(u8 a1);
+u8 CountAliveMonsInBattle(u8 caseId);
+u8 GetDefaultMoveTarget(u8 battler);
 u8 GetMonGender(struct Pokemon *mon);
 u8 GetBoxMonGender(struct BoxPokemon *boxMon);
 u8 GetGenderFromSpeciesAndPersonality(u16 species, u32 personality);
-void SetMultiuseSpriteTemplateToPokemon(u16 species, u8 a2);
-void SetMultiuseSpriteTemplateToTrainerBack(u16 species, u8 a2);
+void SetMultiuseSpriteTemplateToPokemon(u16 speciesTag, u8 battlerPosition);
+void SetMultiuseSpriteTemplateToTrainerBack(u16 trainerPicId, u8 battlerPosition);
 void EncryptBoxMon(struct BoxPokemon *boxMon);
-void DecryptBoxMon(struct BoxPokemon *boxMon);
 union PokemonSubstruct *GetSubstruct(struct BoxPokemon *boxMon, u32 personality, u8 substructType);
 
 // These are full type signatures for GetMonData() and GetBoxMonData(),
@@ -439,14 +440,14 @@ u8 GetAbilityBySpecies(u16 species, bool8 abilityNum);
 u8 GetMonAbility(struct Pokemon *mon);
 void CreateSecretBaseEnemyParty(struct SecretBaseRecord *secretBaseRecord);
 u8 GetSecretBaseTrainerPicIndex(void);
-u8 GetSecretBaseTrainerNameIndex(void);
-u8 PlayerPartyAndPokemonStorageFull(void);
-u8 PokemonStorageFull(void);
+u8 GetSecretBaseTrainerClass(void);
+u8 IsPlayerPartyAndPokemonStorageFull(void);
+u8 IsPokemonStorageFull(void);
 void GetSpeciesName(u8 *name, u16 species);
 u8 CalculatePPWithBonus(u16 move, u8 ppBonuses, u8 moveIndex);
 void RemoveMonPPBonus(struct Pokemon *mon, u8 moveIndex);
 void RemoveBattleMonPPBonus(struct BattlePokemon *mon, u8 moveIndex);
-void CopyPlayerPartyMonToBattleData(u8 battleIndex, u8 partyIndex);
+void CopyPlayerPartyMonToBattleData(u8 battler, u8 partyIndex);
 
 u8 GetNature(struct Pokemon *mon);
 u8 GetNatureFromPersonality(u32 personality);

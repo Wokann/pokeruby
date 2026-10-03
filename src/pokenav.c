@@ -3753,7 +3753,7 @@ void sub_80F4824(s16 arg0, u8 arg1)
     {
         box = gPokenavStructPtr->unk893c[arg0].unk1;
         monIndex = gPokenavStructPtr->unk893c[arg0].partyIdx;
-        species = sub_80F44B0(box, monIndex, MON_DATA_SPECIES2, NULL);
+        species = sub_80F44B0(box, monIndex, MON_DATA_SPECIES_OR_EGG, NULL);
         otId = sub_80F44B0(box, monIndex, MON_DATA_OT_ID, NULL);
         personality = sub_80F44B0(box, monIndex, MON_DATA_PERSONALITY, NULL);
 

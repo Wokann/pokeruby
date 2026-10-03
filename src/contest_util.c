@@ -28,7 +28,6 @@
 #define CONTEST_ENTRY_PIC_LEFT 10
 #define CONTEST_ENTRY_PIC_TOP 3
 
-extern struct SpriteTemplate gCreatingSpriteTemplate;
 
 extern u8 gSelectedOrderFromParty[];
 
@@ -302,8 +301,8 @@ void ShowContestEntryMonPic(void)
         palette = GetMonSpritePalStructFromOtIdPersonality(species, var2, var1);
         LoadCompressedObjectPalette(palette);
         SetMultiuseSpriteTemplateToPokemon(species, 1);
-        gCreatingSpriteTemplate.paletteTag = palette->tag;
-        spriteId = CreateSprite(&gCreatingSpriteTemplate, 0x78, 0x40, 0);
+        gMultiuseSpriteTemplate.paletteTag = palette->tag;
+        spriteId = CreateSprite(&gMultiuseSpriteTemplate, 0x78, 0x40, 0);
         gTasks[taskId].data[2] = spriteId;
         gTasks[taskId].data[3] = left;
         gTasks[taskId].data[4] = top;
@@ -467,7 +466,7 @@ bool8 CheckPartyMonHasHeldItem(u16 item)
 
     for(i = 0; i < 6; i++)
     {
-        u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2);
+        u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
         if(species != SPECIES_NONE && species != SPECIES_EGG && GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM) == item)
             return TRUE;
     }

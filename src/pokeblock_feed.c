@@ -614,7 +614,7 @@ static bool8 sub_8147B20(struct Pokemon* mon)
     switch (ePokeblockGfxState)
     {
     case 0:
-        species = GetMonData(mon, MON_DATA_SPECIES2);
+        species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG);
         PiD = GetMonData(mon, MON_DATA_PERSONALITY);
         HandleLoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, (void *)EWRAM, gMonSpriteGfx_Sprite_ptr[1], species, PiD);
         ePokeblockGfxState++;
@@ -623,7 +623,7 @@ static bool8 sub_8147B20(struct Pokemon* mon)
         {
             const struct CompressedSpritePalette* palette;
 
-            species = GetMonData(mon, MON_DATA_SPECIES2);
+            species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG);
             PiD = GetMonData(mon, MON_DATA_PERSONALITY);
             TiD = GetMonData(mon, MON_DATA_OT_ID);
             palette = GetMonSpritePalStructFromOtIdPersonality(species, TiD, PiD);
@@ -757,8 +757,8 @@ static void Task_PaletteFadeToReturn(u8 taskID)
 
 static u8 PokeblockFeed_CreatePokeSprite(struct Pokemon* mon)
 {
-    u16 species = GetMonData(mon, MON_DATA_SPECIES2);
-    u8 spriteID = CreateSprite(&gCreatingSpriteTemplate, 48, 80, 2);
+    u16 species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG);
+    u8 spriteID = CreateSprite(&gMultiuseSpriteTemplate, 48, 80, 2);
 
     gPokeblockFeedMonSpecies = species;
     gPokeblockFeedMonSpriteID = spriteID;

@@ -48,7 +48,7 @@ u8 *de_sub_8041024(s32 arg0, u32 arg1)
     switch (arg0)
     {
     case 0x400:
-        nameIndex = GetSecretBaseTrainerNameIndex();
+        nameIndex = GetSecretBaseTrainerClass();
         gender = eSecretBaseRecord.gender;
         if (nameIndex == TRAINER_CLASS_SCHOOL_KID)
             return de_sub_8040FE0(gender);
@@ -113,7 +113,7 @@ _08041040:\n\
     beq _08041086\n\
     b _0804109C\n\
 _0804104A:\n\
-    bl GetSecretBaseTrainerNameIndex\n\
+    bl GetSecretBaseTrainerClass\n\
     lsls r0, 24\n\
     lsrs r5, r0, 24\n\
     ldr r0, _08041060 @ =gSharedMem + 0x17000\n\

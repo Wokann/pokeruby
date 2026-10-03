@@ -58,11 +58,11 @@ void DoBrailleDigEffect(void)
 bool8 CheckRelicanthWailord(void)
 {
     // First comes Relicanth.
-    if (GetMonData(&gPlayerParty, MON_DATA_SPECIES2, 0) == SPECIES_RELICANTH)
+    if (GetMonData(&gPlayerParty, MON_DATA_SPECIES_OR_EGG, 0) == SPECIES_RELICANTH)
     {
         CalculatePlayerPartyCount();
         // Last comes Wailord
-        if (GetMonData(&gPlayerParty[gPlayerPartyCount - 1], MON_DATA_SPECIES2, 0) == SPECIES_WAILORD)
+        if (GetMonData(&gPlayerParty[gPlayerPartyCount - 1], MON_DATA_SPECIES_OR_EGG, 0) == SPECIES_WAILORD)
             return TRUE;
     }
     return FALSE;

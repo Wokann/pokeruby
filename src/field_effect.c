@@ -546,9 +546,9 @@ u8 CreateMonSprite_PicBox(u16 species, s16 x, s16 y, u8 subpriority)
     DecompressPicFromTable_2(&gMonFrontPicTable[species], gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, gMonSpriteGfx_Sprite_ptr[3], gMonSpriteGfx_Sprite_ptr[3], species);
     LoadCompressedObjectPalette(&gMonPaletteTable[species]);
     SetMultiuseSpriteTemplateToPokemon(species, 3);
-    gCreatingSpriteTemplate.paletteTag = gMonPaletteTable[0].tag;
+    gMultiuseSpriteTemplate.paletteTag = gMonPaletteTable[0].tag;
     PreservePaletteInWeather(IndexOfSpritePaletteTag(gMonPaletteTable[0].tag) + 0x10);
-    return CreateSprite(&gCreatingSpriteTemplate, x, y, subpriority);
+    return CreateSprite(&gMultiuseSpriteTemplate, x, y, subpriority);
 }
 
 u8 CreateMonSprite_FieldMove(u16 species, u32 d, u32 g, s16 x, s16 y, u8 subpriority)
@@ -559,9 +559,9 @@ u8 CreateMonSprite_FieldMove(u16 species, u32 d, u32 g, s16 x, s16 y, u8 subprio
     spritePalette = GetMonSpritePalStructFromOtIdPersonality(species, d, g);
     LoadCompressedObjectPalette(spritePalette);
     SetMultiuseSpriteTemplateToPokemon(species, 3);
-    gCreatingSpriteTemplate.paletteTag = spritePalette->tag;
+    gMultiuseSpriteTemplate.paletteTag = spritePalette->tag;
     PreservePaletteInWeather(IndexOfSpritePaletteTag(spritePalette->tag) + 0x10);
-    return CreateSprite(&gCreatingSpriteTemplate, x, y, subpriority);
+    return CreateSprite(&gMultiuseSpriteTemplate, x, y, subpriority);
 }
 
 void FreeResourcesAndDestroySprite(struct Sprite *sprite)

@@ -34,7 +34,6 @@ extern u8 gBattleBufferA[][0x200];
 extern u16 gBattlerPartyIndexes[];
 extern u8 gBattlerSpriteIds[];
 extern u8 gBattleMonForms[];
-extern struct SpriteTemplate gCreatingSpriteTemplate;
 extern void (*gBattlerControllerFuncs[])(void);
 extern u8 gBattleControllerData[];
 extern u8 gHealthboxSpriteIds[];
@@ -1102,7 +1101,7 @@ static void OpponentHandleLoadMonSprite(void)
     BattleLoadOpponentMonSpriteGfx(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
     SetMultiuseSpriteTemplateToPokemon(species, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
-      &gCreatingSpriteTemplate,
+      &gMultiuseSpriteTemplate,
       GetBattlerSpriteCoord(gActiveBattler, 2),
       GetBattlerSpriteDefault_Y(gActiveBattler),
       GetBattlerSpriteSubpriority(gActiveBattler));
@@ -1134,7 +1133,7 @@ void sub_803495C(u8 a, u8 b)
     BattleLoadOpponentMonSpriteGfx(&gEnemyParty[gBattlerPartyIndexes[a]], a);
     SetMultiuseSpriteTemplateToPokemon(species, GetBattlerPosition(a));
     gBattlerSpriteIds[a] = CreateSprite(
-      &gCreatingSpriteTemplate,
+      &gMultiuseSpriteTemplate,
       GetBattlerSpriteCoord(a, 2),
       GetBattlerSpriteDefault_Y(a),
       GetBattlerSpriteSubpriority(a));
@@ -1210,7 +1209,7 @@ void OpponentHandleTrainerThrow(void)
     DecompressTrainerFrontPic(trainerPicIndex, gActiveBattler);
     SetMultiuseSpriteTemplateToTrainerBack(trainerPicIndex, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
-      &gCreatingSpriteTemplate,
+      &gMultiuseSpriteTemplate,
       0xB0,
       40 + 4 * (8 - gTrainerFrontPicCoords[trainerPicIndex].coords),
       GetBattlerSpriteSubpriority(gActiveBattler));
@@ -1240,7 +1239,7 @@ static void OpponentHandleTrainerSlide(void)
     DecompressTrainerFrontPic(trainerPicId, gActiveBattler);
     SetMultiuseSpriteTemplateToTrainerBack(trainerPicId, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
-      &gCreatingSpriteTemplate,
+      &gMultiuseSpriteTemplate,
       0xB0,
       40 + 4 * (8 - gTrainerFrontPicCoords[trainerPicId].coords),
       0x1E);

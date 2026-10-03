@@ -122,7 +122,6 @@ struct SearchMenuItem
 
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 extern u8 gReservedSpritePaletteCount;
-extern struct SpriteTemplate gCreatingSpriteTemplate;
 extern u8 gDexCryScreenState;
 extern const u8 gPokedexMenu_Gfx[];
 extern const u8 gUnknown_08E96738[];
@@ -4510,18 +4509,18 @@ static void _SpriteCB_Dummy(struct Sprite *sprite)
 
 static void SetSpriteTemplateForPokemonPic(u16 paletteTag, u8 imagesSet)
 {
-    gCreatingSpriteTemplate = sMonOrTrainerPicSpriteTemplate;
-    gCreatingSpriteTemplate.paletteTag = paletteTag;
-    gCreatingSpriteTemplate.images = sSpriteFrameImages_MonOrTrainerPic[imagesSet];
-    gCreatingSpriteTemplate.anims = gSpriteAnimTable_81E7C64;
+    gMultiuseSpriteTemplate = sMonOrTrainerPicSpriteTemplate;
+    gMultiuseSpriteTemplate.paletteTag = paletteTag;
+    gMultiuseSpriteTemplate.images = sSpriteFrameImages_MonOrTrainerPic[imagesSet];
+    gMultiuseSpriteTemplate.anims = gSpriteAnimTable_81E7C64;
 }
 
 static void SetSpriteTemplateForSizeComparisonTrainerPic(u16 paletteTag, u8 imagesSet)
 {
-    gCreatingSpriteTemplate = sMonOrTrainerPicSpriteTemplate;
-    gCreatingSpriteTemplate.paletteTag = paletteTag;
-    gCreatingSpriteTemplate.images = sSpriteFrameImages_MonOrTrainerPic[imagesSet];
-    gCreatingSpriteTemplate.anims = gUnknown_081EC2A4[0];
+    gMultiuseSpriteTemplate = sMonOrTrainerPicSpriteTemplate;
+    gMultiuseSpriteTemplate.paletteTag = paletteTag;
+    gMultiuseSpriteTemplate.images = sSpriteFrameImages_MonOrTrainerPic[imagesSet];
+    gMultiuseSpriteTemplate.anims = gUnknown_081EC2A4[0];
 }
 
 u16 CreateMonSpriteFromNationalDexNumber(u16 num, s16 x, s16 y, u16 paletteNum)
@@ -4565,7 +4564,7 @@ u16 CreateMonSpriteFromNationalDexNumber(u16 num, s16 x, s16 y, u16 paletteNum)
     }
     LoadCompressedPalette(gMonPaletteTable[num].data, 0x100 + paletteNum * 16, 32);
     SetSpriteTemplateForPokemonPic(paletteNum, paletteNum);
-    spriteId = CreateSprite(&gCreatingSpriteTemplate, x, y, 0);
+    spriteId = CreateSprite(&gMultiuseSpriteTemplate, x, y, 0);
     gSprites[spriteId].oam.paletteNum = paletteNum;
     return spriteId;
 }
@@ -4582,7 +4581,7 @@ u16 CreateSizeScreenTrainerPic(u16 gender, s16 x, s16 y, u16 paletteNum)
       sMonOrTrainerPicDecompressDestPtrs[0],
       gender);
     SetSpriteTemplateForSizeComparisonTrainerPic(gender, 0);
-    spriteId = CreateSprite(&gCreatingSpriteTemplate, x, y, 0);
+    spriteId = CreateSprite(&gMultiuseSpriteTemplate, x, y, 0);
     gSprites[spriteId].oam.paletteNum = paletteNum;
     return spriteId;
 }

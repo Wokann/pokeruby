@@ -24,7 +24,6 @@
 #include "trig.h"
 #include "trade.h"
 
-extern struct SpriteTemplate gCreatingSpriteTemplate;
 
 struct EggHatchData
 {
@@ -362,7 +361,7 @@ static u8 EggHatchCreateMonSprite(u8 a0, u8 switchID, u8 pokeID)
         break;
     case 1:
         SetMultiuseSpriteTemplateToPokemon(GetMonSpritePalStruct(mon)->tag, r5);
-        spriteID = CreateSprite(&gCreatingSpriteTemplate, 120, 70, 6);
+        spriteID = CreateSprite(&gMultiuseSpriteTemplate, 120, 70, 6);
         gSprites[spriteID].invisible = TRUE;
         gSprites[spriteID].callback = SpriteCallbackDummy;
         break;

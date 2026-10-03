@@ -62,7 +62,6 @@ extern u32 gTransformedPersonalities[];
 extern u8 gBattleMonForms[];
 extern u16 gIntroSlideFlags;
 extern u8 gBattlerStatusSummaryTaskId[];
-extern struct SpriteTemplate gCreatingSpriteTemplate;
 extern u8 gAnimMoveTurn;
 extern u8 gBattlePartyCurrentOrder[];
 extern u8 gMultiUsePlayerCursor;
@@ -605,7 +604,7 @@ static void HandleInputChooseMove(void)
             {
                 canSelectTarget = FALSE;
             }
-            else if (!(moveTarget & (MOVE_TARGET_USER | MOVE_TARGET_USER_OR_SELECTED)) && CountAliveMons(0) <= 1)
+            else if (!(moveTarget & (MOVE_TARGET_USER | MOVE_TARGET_USER_OR_SELECTED)) && CountAliveMonsInBattle(0) <= 1)
             {
                 gMultiUsePlayerCursor = GetDefaultMoveTarget(gActiveBattler);
                 canSelectTarget = FALSE;
@@ -2360,7 +2359,7 @@ static void StartSendOutAnim(u8 battler, bool8 dontClearSubstituteBit)
     SetMultiuseSpriteTemplateToPokemon(species, GetBattlerPosition(battler));
 
     gBattlerSpriteIds[battler] = CreateSprite(
-      &gCreatingSpriteTemplate,
+      &gMultiuseSpriteTemplate,
       GetBattlerSpriteCoord(battler, BATTLER_COORD_X_2),
       GetBattlerSpriteDefault_Y(battler),
       GetBattlerSpriteSubpriority(battler));
@@ -2435,7 +2434,7 @@ static void PlayerHandleDrawTrainerPic(void)
     DecompressTrainerBackPic(gSaveBlock2.playerGender, gActiveBattler);
     SetMultiuseSpriteTemplateToTrainerBack(gSaveBlock2.playerGender, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
-      &gCreatingSpriteTemplate,
+      &gMultiuseSpriteTemplate,
       xPos + 80,
       (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].coords) * 4 + 80,
       GetBattlerSpriteSubpriority(gActiveBattler));
@@ -2451,7 +2450,7 @@ static void PlayerHandleTrainerSlide(void)
     DecompressTrainerBackPic(gSaveBlock2.playerGender, gActiveBattler);
     SetMultiuseSpriteTemplateToTrainerBack(gSaveBlock2.playerGender, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
-      &gCreatingSpriteTemplate,
+      &gMultiuseSpriteTemplate,
       80,
       (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].coords) * 4 + 80,
       30);

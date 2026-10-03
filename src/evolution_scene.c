@@ -69,7 +69,6 @@ extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern u8 gBattleEnvironment;
 extern u8 gReservedSpritePaletteCount;
 extern u16 gMoveToLearn;
-extern struct SpriteTemplate gCreatingSpriteTemplate;
 extern bool8 gAffineAnimsDisabled;
 extern u8 gDisplayedStringBattle[];
 extern u8 gBattleTextBuff2[];
@@ -234,8 +233,8 @@ void EvolutionScene(struct Pokemon* mon, u16 speciesToEvolve, bool8 canStopEvo, 
     LoadCompressedPalette(*pokePal, 0x110, 0x20);
 
     SetMultiuseSpriteTemplateToPokemon(currSpecies, 1);
-    gCreatingSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
-    sEvoInfo.preEvoSpriteID = ID = CreateSprite(&gCreatingSpriteTemplate, 120, 64, 30);
+    gMultiuseSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
+    sEvoInfo.preEvoSpriteID = ID = CreateSprite(&gMultiuseSpriteTemplate, 120, 64, 30);
 
     gSprites[ID].callback = SpriteCallbackDummy_2;
     gSprites[ID].oam.paletteNum = 1;
@@ -251,8 +250,8 @@ void EvolutionScene(struct Pokemon* mon, u16 speciesToEvolve, bool8 canStopEvo, 
     LoadCompressedPalette(*pokePal, 0x120, 0x20);
 
     SetMultiuseSpriteTemplateToPokemon(speciesToEvolve, 3);
-    gCreatingSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
-    sEvoInfo.postEvoSpriteID = ID = CreateSprite(&gCreatingSpriteTemplate, 120, 64, 30);
+    gMultiuseSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
+    sEvoInfo.postEvoSpriteID = ID = CreateSprite(&gMultiuseSpriteTemplate, 120, 64, 30);
     gSprites[ID].callback = SpriteCallbackDummy_2;
     gSprites[ID].oam.paletteNum = 2;
     gSprites[ID].invisible = TRUE;
@@ -331,8 +330,8 @@ static void CB2_EvolutionSceneLoadGraphics(void)
     LoadCompressedPalette(*pokePal, 0x120, 0x20);
 
     SetMultiuseSpriteTemplateToPokemon(postEvoSpecies, 3);
-    gCreatingSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
-    sEvoInfo.postEvoSpriteID = ID = CreateSprite(&gCreatingSpriteTemplate, 120, 64, 30);
+    gMultiuseSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
+    sEvoInfo.postEvoSpriteID = ID = CreateSprite(&gMultiuseSpriteTemplate, 120, 64, 30);
 
     gSprites[ID].callback = SpriteCallbackDummy_2;
     gSprites[ID].oam.paletteNum = 2;
@@ -407,8 +406,8 @@ static void CB2_TradeEvolutionSceneLoadGraphics(void)
             u8 ID;
 
             SetMultiuseSpriteTemplateToPokemon(postEvoSpecies, 3);
-            gCreatingSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
-            sEvoInfo.postEvoSpriteID = ID = CreateSprite(&gCreatingSpriteTemplate, 120, 64, 30);
+            gMultiuseSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
+            sEvoInfo.postEvoSpriteID = ID = CreateSprite(&gMultiuseSpriteTemplate, 120, 64, 30);
 
             gSprites[ID].callback = SpriteCallbackDummy_2;
             gSprites[ID].oam.paletteNum = 2;
@@ -451,8 +450,8 @@ void TradeEvolutionScene(struct Pokemon* mon, u16 speciesToEvolve, u8 preEvoSpri
     LoadCompressedPalette(*pokePal, 0x120, 0x20);
 
     SetMultiuseSpriteTemplateToPokemon(speciesToEvolve, 1);
-    gCreatingSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
-    sEvoInfo.postEvoSpriteID = ID = CreateSprite(&gCreatingSpriteTemplate, 120, 64, 30);
+    gMultiuseSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
+    sEvoInfo.postEvoSpriteID = ID = CreateSprite(&gMultiuseSpriteTemplate, 120, 64, 30);
 
     gSprites[ID].callback = SpriteCallbackDummy_2;
     gSprites[ID].oam.paletteNum = 2;
@@ -505,7 +504,7 @@ static void CreateShedinja(u16 preEvoSpecies, struct Pokemon* mon)
         SetMonData(Shedinja, MON_DATA_NICKNAME, (void*)gSpeciesNames[gEvolutionTable[preEvoSpecies][1].targetSpecies]);
         SetMonData(Shedinja, MON_DATA_HELD_ITEM, (void*)&data);
         SetMonData(Shedinja, MON_DATA_MARKINGS, (void*)&data);
-        SetMonData(Shedinja, MON_DATA_10, (void*)&data);
+        SetMonData(Shedinja, MON_DATA_ENCRYPT_SEPARATOR, (void*)&data);
         for (i = MON_DATA_COOL_RIBBON; i < MON_DATA_COOL_RIBBON + 5; i++)
             SetMonData(Shedinja, i, (void*)&data);
         for (i = MON_DATA_CHAMPION_RIBBON; i <= MON_DATA_EVENT_LEGAL; i++)

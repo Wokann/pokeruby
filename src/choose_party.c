@@ -538,7 +538,7 @@ void Debug_CopyLastThreePartyMonsToMultiPartnerParty(void)
     memset(gMultiPartnerParty, 0, sizeof(gMultiPartnerParty));
     for (i = 0; i < 3; i++)
     {
-        gMultiPartnerParty[i].species = GetMonData(&gPlayerParty[3 + i], MON_DATA_SPECIES2);
+        gMultiPartnerParty[i].species = GetMonData(&gPlayerParty[3 + i], MON_DATA_SPECIES_OR_EGG);
         if (gMultiPartnerParty[i].species != 0)
         {
             gMultiPartnerParty[i].level = GetMonData(&gPlayerParty[3 + i], MON_DATA_LEVEL);

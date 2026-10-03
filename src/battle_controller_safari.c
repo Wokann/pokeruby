@@ -29,7 +29,6 @@ extern void *gBattlerControllerFuncs[];
 extern u8 gBattleBufferA[][0x200];
 extern bool8 gDoingBattleAnim;
 extern u8 gBattlerSpriteIds[];
-extern struct SpriteTemplate gCreatingSpriteTemplate;
 extern u16 gBattleTypeFlags;
 extern u32 gBattleControllerExecFlags;
 extern u16 gSpecialVar_ItemId;
@@ -395,7 +394,7 @@ void SafariHandleTrainerThrow(void)
     DecompressTrainerBackPic(gSaveBlock2.playerGender, gActiveBattler);
     SetMultiuseSpriteTemplateToTrainerBack(gSaveBlock2.playerGender, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
-      &gCreatingSpriteTemplate,
+      &gMultiuseSpriteTemplate,
       80,
       (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].coords) * 4 + 80,
       30);

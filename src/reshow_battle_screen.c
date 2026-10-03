@@ -13,7 +13,6 @@
 #include "ewram.h"
 #include "constants/trainers.h"
 
-extern struct SpriteTemplate gCreatingSpriteTemplate;
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern u8 gReservedSpritePaletteCount;
 extern u8 gActionSelectionCursor[4];
@@ -230,7 +229,7 @@ static void sub_807B184(u8 bank)
             if (GetMonData(&gEnemyParty[gBattlerPartyIndexes[bank]], MON_DATA_HP) == 0)
                 return;
             SetMultiuseSpriteTemplateToPokemon(GetMonData(&gEnemyParty[gBattlerPartyIndexes[bank]], MON_DATA_SPECIES), GetBattlerPosition(bank));
-            gBattlerSpriteIds[bank] = CreateSprite(&gCreatingSpriteTemplate, GetBattlerSpriteCoord(bank, 2), posY, GetBattlerSpriteSubpriority(bank));
+            gBattlerSpriteIds[bank] = CreateSprite(&gMultiuseSpriteTemplate, GetBattlerSpriteCoord(bank, 2), posY, GetBattlerSpriteSubpriority(bank));
             gSprites[gBattlerSpriteIds[bank]].oam.paletteNum = bank;
             gSprites[gBattlerSpriteIds[bank]].callback = SpriteCallbackDummy;
             gSprites[gBattlerSpriteIds[bank]].data[0] = bank;
@@ -240,7 +239,7 @@ static void sub_807B184(u8 bank)
         else if (gBattleTypeFlags & BATTLE_TYPE_SAFARI && bank == 0)
         {
             SetMultiuseSpriteTemplateToTrainerBack(gSaveBlock2.playerGender, GetBattlerPosition(0));
-            gBattlerSpriteIds[bank] = CreateSprite(&gCreatingSpriteTemplate, 0x50,
+            gBattlerSpriteIds[bank] = CreateSprite(&gMultiuseSpriteTemplate, 0x50,
                                                 (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].coords) * 4 + 80,
                                                  GetBattlerSpriteSubpriority(0));
             gSprites[gBattlerSpriteIds[bank]].oam.paletteNum = bank;
@@ -250,7 +249,7 @@ static void sub_807B184(u8 bank)
         else if (gBattleTypeFlags & BATTLE_TYPE_WALLY_TUTORIAL && bank == 0)
         {
             SetMultiuseSpriteTemplateToTrainerBack(TRAINER_BACK_PIC_WALLY, GetBattlerPosition(0));
-            gBattlerSpriteIds[bank] = CreateSprite(&gCreatingSpriteTemplate, 0x50,
+            gBattlerSpriteIds[bank] = CreateSprite(&gMultiuseSpriteTemplate, 0x50,
                                                 (8 - gTrainerBackPicCoords[2].coords) * 4 + 80,
                                                  GetBattlerSpriteSubpriority(0));
             gSprites[gBattlerSpriteIds[bank]].oam.paletteNum = bank;
@@ -262,7 +261,7 @@ static void sub_807B184(u8 bank)
             if (GetMonData(&gPlayerParty[gBattlerPartyIndexes[bank]], MON_DATA_HP) == 0)
                 return;
             SetMultiuseSpriteTemplateToPokemon(GetMonData(&gPlayerParty[gBattlerPartyIndexes[bank]], MON_DATA_SPECIES), GetBattlerPosition(bank));
-            gBattlerSpriteIds[bank] = CreateSprite(&gCreatingSpriteTemplate, GetBattlerSpriteCoord(bank, 2), posY, GetBattlerSpriteSubpriority(bank));
+            gBattlerSpriteIds[bank] = CreateSprite(&gMultiuseSpriteTemplate, GetBattlerSpriteCoord(bank, 2), posY, GetBattlerSpriteSubpriority(bank));
             gSprites[gBattlerSpriteIds[bank]].oam.paletteNum = bank;
             gSprites[gBattlerSpriteIds[bank]].callback = SpriteCallbackDummy;
             gSprites[gBattlerSpriteIds[bank]].data[0] = bank;

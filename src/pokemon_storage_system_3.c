@@ -80,7 +80,7 @@ void ResetPSSMonIconSprites(void)
 void sub_8098BF0(void)
 {
     u32 personality = GetMonData(&gPokemonStorageSystemPtr->unk_25b4, MON_DATA_PERSONALITY);
-    gPokemonStorageSystemPtr->unk_1034 = PSS_SpawnMonIconSprite(GetMonData(&gPokemonStorageSystemPtr->unk_25b4, MON_DATA_SPECIES2), personality, 0, 0, 1, 7);
+    gPokemonStorageSystemPtr->unk_1034 = PSS_SpawnMonIconSprite(GetMonData(&gPokemonStorageSystemPtr->unk_25b4, MON_DATA_SPECIES_OR_EGG), personality, 0, 0, 1, 7);
     gPokemonStorageSystemPtr->unk_1034->callback = sub_80999C4;
 }
 
@@ -94,7 +94,7 @@ void SpawnBoxIconSprites(u8 boxId)
         u16 j;
         for (j = 0; j < 6; j++)
         {
-            u16 species = GetBoxMonData(box, MON_DATA_SPECIES2);
+            u16 species = GetBoxMonData(box, MON_DATA_SPECIES_OR_EGG);
             if (species != SPECIES_NONE)
                 gPokemonStorageSystemPtr->unk_1050[k] = PSS_SpawnMonIconSprite(species, GetBoxMonData(box, MON_DATA_PERSONALITY), 24 * j + 0x64, 24 * i + 0x2c, 2, 18 - j);
             else
@@ -108,7 +108,7 @@ void SpawnBoxIconSprites(u8 boxId)
 void sub_8098D20(u8 monId)
 {
     struct BoxPokemon *mon = gPokemonStorage.boxes[get_preferred_box()] + monId;
-    u16 species = GetBoxMonData(mon, MON_DATA_SPECIES2);
+    u16 species = GetBoxMonData(mon, MON_DATA_SPECIES_OR_EGG);
     if (species != SPECIES_NONE)
     {
         s16 x = 24 * (monId % 6) + 0x64;
@@ -193,7 +193,7 @@ static u8 sub_8098EE0(u8 col, u16 a1, s16 a2)
 
     for (i = 0; i < 5; i++)
     {
-        u16 species = GetBoxMonData(gPokemonStorage.boxes[gPokemonStorageSystemPtr->unk_117d] + col, MON_DATA_SPECIES2);
+        u16 species = GetBoxMonData(gPokemonStorage.boxes[gPokemonStorageSystemPtr->unk_117d] + col, MON_DATA_SPECIES_OR_EGG);
         if (species != SPECIES_NONE)
         {
             gPokemonStorageSystemPtr->unk_1050[col] = PSS_SpawnMonIconSprite(species, GetBoxMonData(gPokemonStorage.boxes[gPokemonStorageSystemPtr->unk_117d] + col, MON_DATA_PERSONALITY), curX, y, 2, x1);
@@ -273,13 +273,13 @@ void sub_8099200(bool8 a0)
 {
     u16 count;
     u16 i;
-    u16 species = GetMonData(gPlayerParty + 0, MON_DATA_SPECIES2);
+    u16 species = GetMonData(gPlayerParty + 0, MON_DATA_SPECIES_OR_EGG);
     u32 personality = GetMonData(gPlayerParty + 0, MON_DATA_PERSONALITY);
     gPokemonStorageSystemPtr->unk_1038[0] = PSS_SpawnMonIconSprite(species, personality, 0x68, 0x40, 1, 11);
     count = 1;
     for (i = 1; i < PARTY_SIZE; i++)
     {
-        species = GetMonData(gPlayerParty + i, MON_DATA_SPECIES2);
+        species = GetMonData(gPlayerParty + i, MON_DATA_SPECIES_OR_EGG);
         if (species != SPECIES_NONE)
         {
             personality = GetMonData(gPlayerParty + i, MON_DATA_PERSONALITY);

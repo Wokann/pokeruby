@@ -6,8 +6,8 @@
 	.set FACILITY_CLASS_INTERVIEWER,            5
 	.set FACILITY_CLASS_TUBER_F,                6
 	.set FACILITY_CLASS_TUBER_M,                7
-	.set FACILITY_CLASS_COOL_TRAINER_M,         8
-	.set FACILITY_CLASS_COOL_TRAINER_F,         9
+	.set FACILITY_CLASS_COOLTRAINER_M,         8
+	.set FACILITY_CLASS_COOLTRAINER_F,         9
 	.set FACILITY_CLASS_HEX_MANIAC,            10
 	.set FACILITY_CLASS_LADY,                  11
 	.set FACILITY_CLASS_BEAUTY,                12

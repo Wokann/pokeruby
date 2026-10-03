@@ -1698,7 +1698,7 @@ void sub_809C04C(void *pokemon, u8 a1)
     if (a1 == 0)
     {
         struct Pokemon *pkmn = (struct Pokemon *)pokemon;
-        gPokemonStorageSystemPtr->unk_11f0 = GetMonData(pokemon, MON_DATA_SPECIES2);
+        gPokemonStorageSystemPtr->unk_11f0 = GetMonData(pokemon, MON_DATA_SPECIES_OR_EGG);
         if (gPokemonStorageSystemPtr->unk_11f0 != SPECIES_NONE)
         {
             gPokemonStorageSystemPtr->unk_11f9 = GetMonData(pkmn, MON_DATA_IS_EGG);
@@ -1715,7 +1715,7 @@ void sub_809C04C(void *pokemon, u8 a1)
     else if (a1 == 1)
     {
         struct BoxPokemon *boxmon = (struct BoxPokemon *)pokemon;
-        gPokemonStorageSystemPtr->unk_11f0 = GetBoxMonData(pokemon, MON_DATA_SPECIES2);
+        gPokemonStorageSystemPtr->unk_11f0 = GetBoxMonData(pokemon, MON_DATA_SPECIES_OR_EGG);
         if (gPokemonStorageSystemPtr->unk_11f0 != SPECIES_NONE)
         {
             u32 otId = GetBoxMonData(boxmon, MON_DATA_OT_ID);

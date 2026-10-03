@@ -614,8 +614,8 @@ static void sub_80C2A8C(u8 taskId)
             monPal = GetMonSpritePalStructFromOtIdPersonality(species, otId, personality);
             LoadCompressedObjectPalette(monPal);
             SetMultiuseSpriteTemplateToPokemon(species, 1);
-            gCreatingSpriteTemplate.paletteTag = monPal->tag;
-            spriteId = CreateSprite(&gCreatingSpriteTemplate, 0x110, 0x50, 10);
+            gMultiuseSpriteTemplate.paletteTag = monPal->tag;
+            spriteId = CreateSprite(&gMultiuseSpriteTemplate, 0x110, 0x50, 10);
             gSprites[spriteId].data[1] = species;
             gSprites[spriteId].oam.priority = 0;
             gSprites[spriteId].callback = sub_80C3C44;

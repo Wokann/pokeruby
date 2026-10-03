@@ -745,7 +745,7 @@ static bool8 _ShouldEggHatch(struct DayCare *daycare)
     for (i = 0; i < DAYCARE_MON_COUNT; i++)
     {
         parent = &daycare->mons[i];
-        if (GetBoxMonData(parent, MON_DATA_SANITY_BIT2))
+        if (GetBoxMonData(parent, MON_DATA_SANITY_HAS_SPECIES))
         {
             daycare->misc.countersEtc.steps[i]++;
             numParents++;

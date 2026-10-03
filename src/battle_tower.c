@@ -107,7 +107,7 @@ static const u8 sMaleTrainerClasses[] =
 {
     FACILITY_CLASS_RUIN_MANIAC,
     FACILITY_CLASS_TUBER_M,
-    FACILITY_CLASS_COOL_TRAINER_M,
+    FACILITY_CLASS_COOLTRAINER_M,
     FACILITY_CLASS_RICH_BOY,
     FACILITY_CLASS_POKEMANIAC,
     FACILITY_CLASS_SWIMMER_M,
@@ -141,7 +141,7 @@ static const u8 sFemaleTrainerClasses[] =
 {
     FACILITY_CLASS_AROMA_LADY,
     FACILITY_CLASS_TUBER_F,
-    FACILITY_CLASS_COOL_TRAINER_F,
+    FACILITY_CLASS_COOLTRAINER_F,
     FACILITY_CLASS_HEX_MANIAC,
     FACILITY_CLASS_LADY,
     FACILITY_CLASS_BEAUTY,
@@ -981,7 +981,7 @@ void CheckPartyBattleTowerBanlist(void)
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        species2 = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2);
+        species2 = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
         heldItem = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
         level = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);
         hp = GetMonData(&gPlayerParty[i], MON_DATA_HP);

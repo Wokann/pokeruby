@@ -29,7 +29,6 @@ extern bool8 gHasHallOfFameRecords; // has hall of fame records
 extern void (*gGameContinueCallback)(void);
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 extern u8 gReservedSpritePaletteCount;
-extern struct SpriteTemplate gCreatingSpriteTemplate;
 
 extern const u8 gContestConfetti_Gfx[];
 extern const u8 gContestConfetti_Pal[];
@@ -488,7 +487,7 @@ static void sub_8141FF8(u8 taskID)
         u8 nick[12];
         if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES))
         {
-            fameMons->mons[i].species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2);
+            fameMons->mons[i].species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
             fameMons->mons[i].tid = GetMonData(&gPlayerParty[i], MON_DATA_OT_ID);
             fameMons->mons[i].personality = GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY);
             fameMons->mons[i].lvl = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);
@@ -1277,18 +1276,18 @@ static void SpriteCB_HallOfFame_Dummy(struct Sprite* sprite)
 
 void sub_8143648(u16 paletteTag, u8 animID)
 {
-    gCreatingSpriteTemplate = sUnknown_0840B6B8;
-    gCreatingSpriteTemplate.paletteTag = paletteTag;
-    gCreatingSpriteTemplate.images = sUnknown_0840B69C[animID];
-    gCreatingSpriteTemplate.anims = gSpriteAnimTable_81E7C64;
+    gMultiuseSpriteTemplate = sUnknown_0840B6B8;
+    gMultiuseSpriteTemplate.paletteTag = paletteTag;
+    gMultiuseSpriteTemplate.images = sUnknown_0840B69C[animID];
+    gMultiuseSpriteTemplate.anims = gSpriteAnimTable_81E7C64;
 }
 
 void sub_8143680(u16 paletteTag, u8 animID)
 {
-    gCreatingSpriteTemplate = sUnknown_0840B6B8;
-    gCreatingSpriteTemplate.paletteTag = paletteTag;
-    gCreatingSpriteTemplate.images = sUnknown_0840B69C[animID];
-    gCreatingSpriteTemplate.anims = gUnknown_081EC2A4[0];
+    gMultiuseSpriteTemplate = sUnknown_0840B6B8;
+    gMultiuseSpriteTemplate.paletteTag = paletteTag;
+    gMultiuseSpriteTemplate.images = sUnknown_0840B69C[animID];
+    gMultiuseSpriteTemplate.anims = gUnknown_081EC2A4[0];
 }
 
 static u32 HallOfFame_LoadPokemonPic(u16 species, s16 posX, s16 posY, u16 pokeID, u32 tid, u32 pid)
@@ -1302,7 +1301,7 @@ static u32 HallOfFame_LoadPokemonPic(u16 species, s16 posX, s16 posY, u16 pokeID
     LoadCompressedPalette(pokePal, 16 * pokeID + 256, 0x20);
 
     sub_8143648(pokeID, pokeID);
-    spriteID = CreateSprite(&gCreatingSpriteTemplate, posX, posY, 10 - pokeID);
+    spriteID = CreateSprite(&gMultiuseSpriteTemplate, posX, posY, 10 - pokeID);
     gSprites[spriteID].oam.paletteNum = pokeID;
     return spriteID;
 }
@@ -1316,7 +1315,7 @@ static u32 HallOfFame_LoadTrainerPic(u16 trainerPicID, s16 posX, s16 posY, u16 a
     LoadCompressedPalette(gTrainerFrontPicPaletteTable[trainerPicID].data, 16 * a3 + 256, 0x20);
     sub_8143680(a3, a3);
 
-    spriteID = CreateSprite(&gCreatingSpriteTemplate, posX, posY, 1);
+    spriteID = CreateSprite(&gMultiuseSpriteTemplate, posX, posY, 1);
     gSprites[spriteID].oam.paletteNum = a3;
 
     return spriteID;

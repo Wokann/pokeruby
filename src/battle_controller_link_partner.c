@@ -36,7 +36,6 @@ extern u16 gIntroSlideFlags;
 extern u8 gBattlerStatusSummaryTaskId[];
 extern u8 gDoingBattleAnim;
 extern u32 gTransformedPersonalities[];
-extern struct SpriteTemplate gCreatingSpriteTemplate;
 extern s32 gAnimMoveDmg;
 extern u16 gAnimMovePower;
 extern u8 gAnimFriendship;
@@ -1071,7 +1070,7 @@ void LinkPartnerHandleLoadPokeSprite(void)
       GetMonData(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES),
       GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
-      &gCreatingSpriteTemplate,
+      &gMultiuseSpriteTemplate,
       GetBattlerSpriteCoord(gActiveBattler, 2),
       GetBattlerSpriteDefault_Y(gActiveBattler),
       GetBattlerSpriteSubpriority(gActiveBattler));
@@ -1101,7 +1100,7 @@ void sub_811F864(u8 a, u8 b)
     gBattleControllerData[a] = CreateInvisibleSpriteWithCallback(SpriteCB_WaitForBattlerBallReleaseAnim);
     SetMultiuseSpriteTemplateToPokemon(species, GetBattlerPosition(a));
     gBattlerSpriteIds[a] = CreateSprite(
-      &gCreatingSpriteTemplate,
+      &gMultiuseSpriteTemplate,
       GetBattlerSpriteCoord(a, 2),
       GetBattlerSpriteDefault_Y(a),
       GetBattlerSpriteSubpriority(a));
@@ -1172,7 +1171,7 @@ void LinkPartnerHandleTrainerThrow(void)
     DecompressTrainerBackPic(gender, gActiveBattler);
     SetMultiuseSpriteTemplateToTrainerBack(gender, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
-      &gCreatingSpriteTemplate,
+      &gMultiuseSpriteTemplate,
       80 + xOffset, 80 + 4 * (8 - gTrainerBackPicCoords[gender].coords),
       GetBattlerSpriteSubpriority(gActiveBattler));
     gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = gActiveBattler;

@@ -16,7 +16,7 @@ extern u8 fieldPoisonText_PokemonFainted[];
 static bool32 IsMonValidSpecies(struct Pokemon *mon)
 {
     // UB: Too few arguments for function 'GetMonData'
-    u16 species = GetMonData(mon, MON_DATA_SPECIES2);
+    u16 species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG);
     if (species == SPECIES_NONE || species == SPECIES_EGG)
         return FALSE;
     else
@@ -123,7 +123,7 @@ s32 DoPoisonFieldEffect(void)
     {
         u32 hp;
 
-        if (GetMonData(mon, MON_DATA_SANITY_BIT2) != 0
+        if (GetMonData(mon, MON_DATA_SANITY_HAS_SPECIES) != 0
          && GetPrimaryStatus(GetMonData(mon, MON_DATA_STATUS)) == STATUS_PRIMARY_POISON)
         {
             // decrement HP of poisoned mon

@@ -38,7 +38,6 @@ extern u8 gDisplayedStringBattle[];
 extern u8 gBattlerTarget;
 extern u8 gBattlerSpriteIds[];
 extern struct Window gWindowTemplate_Contest_MoveDescription;
-extern struct SpriteTemplate gCreatingSpriteTemplate;
 extern void (*const gContestEffectFuncs[])(void);
 
 #include "data/contest_opponents.h"
@@ -1020,7 +1019,7 @@ u8 unref_sub_80AE908(void)
     LoadCompressedPalette(gMonPaletteTable[species].data, 0x110, 32);
     SetMultiuseSpriteTemplateToPokemon(gContestMons[gContestPlayerMonIndex].species, 1);
     spriteId = CreateSprite(
-        &gCreatingSpriteTemplate,
+        &gMultiuseSpriteTemplate,
         112, 80 + (8 - gMonFrontPicCoords[gContestMons[gContestPlayerMonIndex].species].coords) * 4,
         30);
     gSprites[spriteId].oam.paletteNum = 1;
@@ -1047,7 +1046,7 @@ u8 CreateContestantSprite(u16 species, u32 otId, u32 personality)
     lzPaletteData = GetMonSpritePalFromOtIdPersonality(species, otId, personality);
     LoadCompressedPalette(lzPaletteData, 0x120, 32);
     SetMultiuseSpriteTemplateToPokemon(species, 0);
-    spriteId = CreateSprite(&gCreatingSpriteTemplate, 112, GetBattlerSpriteFinal_Y(2, species, 0), 30);
+    spriteId = CreateSprite(&gMultiuseSpriteTemplate, 112, GetBattlerSpriteFinal_Y(2, species, 0), 30);
     gSprites[spriteId].oam.paletteNum = 2;
     gSprites[spriteId].oam.priority = 2;
     gSprites[spriteId].subpriority = GetBattlerSpriteSubpriority(2);
@@ -4177,4 +4176,3 @@ void Contest_ResetWinners(void)
     for (i = 0; i < 8; i++)
         gSaveBlock1.contestWinners[i] = gDefaultContestWinners[i];
 }
-

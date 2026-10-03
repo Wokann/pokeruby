@@ -1637,7 +1637,7 @@ bool8 sub_8018018(u8 bank, u8 r1, u8 r2)
         r6 = sub_803FBFC(r7);
         for (i = r6 * 3; i < r6 * 3 + 3; i++)
         {
-            if (GetMonData(&party[i], MON_DATA_HP) && GetMonData(&party[i], MON_DATA_SPECIES2) && GetMonData(&party[i], MON_DATA_SPECIES2) != SPECIES_EGG)
+            if (GetMonData(&party[i], MON_DATA_HP) && GetMonData(&party[i], MON_DATA_SPECIES_OR_EGG) && GetMonData(&party[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG)
                 break;
         }
         return (i == r6 * 3 + 3);
@@ -1662,7 +1662,7 @@ bool8 sub_8018018(u8 bank, u8 r1, u8 r2)
             r2 = gBattlerPartyIndexes[r6];
         for (i = 0; i < PARTY_SIZE; i++)
         {
-            if (GetMonData(&party[i], MON_DATA_HP) && GetMonData(&party[i], MON_DATA_SPECIES2) && GetMonData(&party[i], MON_DATA_SPECIES2) != SPECIES_EGG && i != r1 && i != r2 && i != gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + r7] && i != gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + r6])
+            if (GetMonData(&party[i], MON_DATA_HP) && GetMonData(&party[i], MON_DATA_SPECIES_OR_EGG) && GetMonData(&party[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG && i != r1 && i != r2 && i != gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + r7] && i != gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + r6])
                 break;
         }
         return (i == PARTY_SIZE);

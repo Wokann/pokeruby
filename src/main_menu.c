@@ -39,7 +39,6 @@ extern u8 gBirchSpeech_SoItsPlayer[];
 extern u8 gBirchSpeech_AhOkayYouArePlayer[];
 extern u8 gBirchSpeech_AreYouReady[];
 
-extern struct SpriteTemplate gCreatingSpriteTemplate;
 
 //Menu layouts
 enum
@@ -1429,7 +1428,7 @@ u8 CreateAzurillSprite(u8 x, u8 y)
         SPECIES_AZURILL);
     LoadCompressedObjectPalette(&gMonPaletteTable[SPECIES_AZURILL]);
     SetMultiuseSpriteTemplateToPokemon(SPECIES_AZURILL, 1);
-    return CreateSprite(&gCreatingSpriteTemplate, x, y, 0);
+    return CreateSprite(&gMultiuseSpriteTemplate, x, y, 0);
 }
 
 void AddBirchSpeechObjects(u8 taskId)

@@ -22,7 +22,6 @@
 #include "scanline_effect.h"
 #include "ewram.h"
 
-extern struct SpriteTemplate gCreatingSpriteTemplate;
 extern u16 gUnknown_02039358;
 extern u16 gUnknown_0203935A;
 extern u16 gSaveFileStatus;
@@ -1605,7 +1604,7 @@ static u16 sub_813CE88(u16 species, s16 x, s16 y, u16 d, u8 front)
     lzPaletteData = GetMonSpritePalFromOtIdPersonality(species, 0, 0xFFFF);
     LoadCompressedPalette(lzPaletteData, 0x100 + d * 0x10, 0x20);
     sub_8143648(d, d);
-    spriteId = CreateSprite(&gCreatingSpriteTemplate, x, y, (d + 1) * 4);
+    spriteId = CreateSprite(&gMultiuseSpriteTemplate, x, y, (d + 1) * 4);
     gSprites[spriteId].oam.paletteNum = d;
     gSprites[spriteId].oam.priority = 1;
     return spriteId;
@@ -1618,8 +1617,8 @@ static u8 sub_813CFA8(u16 a, u16 b, u16 c, u16 d)
     DecompressPicFromTable_2(&gTrainerBackPicTable[a], gTrainerBackPicCoords[a].coords, gTrainerBackPicCoords[a].y_offset, (void *)EWRAM, gUnknown_0840B5A0[d], a);
     LoadCompressedPalette(gTrainerBackPicPaletteTable[a].data, 0x100 + d * 0x10, 0x20);
     sub_8143680(d, d);
-    gCreatingSpriteTemplate.anims = gUnknown_0840B064;
-    spriteId = CreateSprite(&gCreatingSpriteTemplate, b, c, 1);
+    gMultiuseSpriteTemplate.anims = gUnknown_0840B064;
+    spriteId = CreateSprite(&gMultiuseSpriteTemplate, b, c, 1);
     gSprites[spriteId].oam.paletteNum = d;
     gSprites[spriteId].oam.priority = 1;
     return spriteId;
