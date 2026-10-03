@@ -7,10 +7,6 @@
 #include "task.h"
 #include "constants/field_effects.h"
 
-extern void (*gFieldCallback)(void);
-extern u8 gLastFieldPokeMenuOpened;
-extern void (*gPostMenuFieldCallback)(void);
-
 static void FieldCallback_Teleport(void);
 static void StartTeleportFieldEffect(void);
 

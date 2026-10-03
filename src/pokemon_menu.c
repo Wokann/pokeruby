@@ -61,7 +61,6 @@ void CB2_OpenFlyMap(void);
 bool8 SetUpFieldMove_Cut(void);
 bool8 SetUpFieldMove_Flash(void);
 bool8 SetUpFieldMove_Strength(void);
-bool8 SetUpFieldMove_Teleport(void);
 bool8 SetUpFieldMove_SecretPower(void);
 bool8 SetUpFieldMove_SoftBoiled(void);
 bool8 SetUpFieldMove_SoftBoiled(void);

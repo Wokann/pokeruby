@@ -3,6 +3,10 @@
 
 extern struct MapPosition gPlayerFacingPosition;
 
+// teleport
+bool8 SetUpFieldMove_Teleport(void);
+bool8 FldEff_UseTeleport(void);
+
 // dig
 bool8 SetUpFieldMove_Dig(void);
 bool8 FldEff_UseDig(void);
