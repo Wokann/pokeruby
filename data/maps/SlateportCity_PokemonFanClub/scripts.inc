@@ -1,8 +1,8 @@
 SlateportCity_PokemonFanClub_MapScripts:: @ 8155764
-	map_script MAP_SCRIPT_ON_TRANSITION, SlateportCity_PokemonFanClub_EventScript_OnTransition
+	map_script MAP_SCRIPT_ON_TRANSITION, SlateportCity_PokemonFanClub_OnTransition
 	.byte 0
 
-SlateportCity_PokemonFanClub_EventScript_OnTransition:: @ 815576A
+SlateportCity_PokemonFanClub_OnTransition:: @ 815576A
 	end
 
 SlateportCity_PokemonFanClub_EventScript_Chairman:: @ 815576B

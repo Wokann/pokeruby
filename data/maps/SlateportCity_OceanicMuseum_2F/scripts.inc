@@ -1,8 +1,8 @@
 SlateportCity_OceanicMuseum_2F_MapScripts:: @ 8155CDA
-	map_script MAP_SCRIPT_ON_TRANSITION, SlateportCity_OceanicMuseum_2F_EventScript_OnTransition
+	map_script MAP_SCRIPT_ON_TRANSITION, SlateportCity_OceanicMuseum_2F_OnTransition
 	.byte 0
 
-SlateportCity_OceanicMuseum_2F_EventScript_OnTransition:: @ 8155CE0
+SlateportCity_OceanicMuseum_2F_OnTransition:: @ 8155CE0
 	call Common_EventScript_SetupEvilTeamGfxIds
 	end
 
