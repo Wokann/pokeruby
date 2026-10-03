@@ -13,6 +13,7 @@
 #include "item_use.h"
 #include "pokeblock.h"
 #include "party_menu.h"
+#include "pokemon.h"
 #include "strings.h"
 #include "string_util.h"
 #include "m4a.h"
@@ -20,6 +21,7 @@
 #include "sound.h"
 #include "trig.h"
 #include "ewram.h"
+#include "constants/rgb.h"
 
 extern struct SpriteTemplate gCreatingSpriteTemplate;
 
@@ -101,6 +103,8 @@ enum
 #define STATE_START_JUMP (STATE_SPAWN_PBLOCK + 12)
 #define STATE_PRINT_MSG (STATE_START_JUMP + 16)
 
+#define STATE_INIT 0
+
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 
 extern const u8 gPokeblockRed_Pal[];
@@ -121,8 +125,6 @@ extern const u8 gPokeblock_Gfx[];
 extern const u8 gBattleEnvironmentTiles_Building[];
 extern const u8 gPokeblockFeedBg_Tilemap[];
 extern const u8 gBattleEnvironmentPalette_BattleTower[];
-bool8 IsPokeSpriteNotFlipped(u16 species);
-
 // this file's functions
 static void HandleInitBackgrounds(void);
 static void CalculateMonAnimLength(void);
@@ -164,33 +166,33 @@ s16 sAnimData[24];
 
 // rodata
 
-static const u8 sNatureToMonPokeblockAnim[][2] =
+static const u8 sNatureToMonPokeblockAnim[NUM_NATURES][2] =
 {
-    { ANIM_HARDY,   AFFINE_NONE },             // HARDY
-    { ANIM_LONELY,  AFFINE_NONE },             // LONELY
-    { ANIM_BRAVE,   AFFINE_TURN_UP },          // BRAVE
-    { ANIM_ADAMANT, AFFINE_NONE },             // ADAMANT
-    { ANIM_NAUGHTY, AFFINE_NONE },             // NAUGHTY
-    { ANIM_BOLD,    AFFINE_NONE },             // BOLD
-    { ANIM_DOCILE,  AFFINE_NONE },             // DOCILE
-    { ANIM_RELAXED, AFFINE_TURN_UP_AND_DOWN }, // RELAXED
-    { ANIM_IMPISH,  AFFINE_NONE },             // IMPISH
-    { ANIM_LAX,     AFFINE_NONE },             // LAX
-    { ANIM_TIMID,   AFFINE_NONE },             // TIMID
-    { ANIM_HASTY,   AFFINE_NONE },             // HASTY
-    { ANIM_SERIOUS, AFFINE_TURN_DOWN },        // SERIOUS
-    { ANIM_JOLLY,   AFFINE_NONE },             // JOLLY
-    { ANIM_NAIVE,   AFFINE_NONE },             // NAIVE
-    { ANIM_MODEST,  AFFINE_TURN_DOWN_SLOW },   // MODEST
-    { ANIM_MILD,    AFFINE_NONE },             // MILD
-    { ANIM_QUIET,   AFFINE_NONE },             // QUIET
-    { ANIM_BASHFUL, AFFINE_NONE },             // BASHFUL
-    { ANIM_RASH,    AFFINE_NONE },             // RASH
-    { ANIM_CALM,    AFFINE_NONE },             // CALM
-    { ANIM_GENTLE,  AFFINE_TURN_DOWN_SLIGHT }, // GENTLE
-    { ANIM_SASSY,   AFFINE_TURN_UP_HIGH },     // SASSY
-    { ANIM_CAREFUL, AFFINE_NONE },             // CAREFUL
-    { ANIM_QUIRKY,  AFFINE_NONE },             // QUIRKY
+    [NATURE_HARDY]   = { ANIM_HARDY,   AFFINE_NONE },
+    [NATURE_LONELY]  = { ANIM_LONELY,  AFFINE_NONE },
+    [NATURE_BRAVE]   = { ANIM_BRAVE,   AFFINE_TURN_UP },
+    [NATURE_ADAMANT] = { ANIM_ADAMANT, AFFINE_NONE },
+    [NATURE_NAUGHTY] = { ANIM_NAUGHTY, AFFINE_NONE },
+    [NATURE_BOLD]    = { ANIM_BOLD,    AFFINE_NONE },
+    [NATURE_DOCILE]  = { ANIM_DOCILE,  AFFINE_NONE },
+    [NATURE_RELAXED] = { ANIM_RELAXED, AFFINE_TURN_UP_AND_DOWN },
+    [NATURE_IMPISH]  = { ANIM_IMPISH,  AFFINE_NONE },
+    [NATURE_LAX]     = { ANIM_LAX,     AFFINE_NONE },
+    [NATURE_TIMID]   = { ANIM_TIMID,   AFFINE_NONE },
+    [NATURE_HASTY]   = { ANIM_HASTY,   AFFINE_NONE },
+    [NATURE_SERIOUS] = { ANIM_SERIOUS, AFFINE_TURN_DOWN },
+    [NATURE_JOLLY]   = { ANIM_JOLLY,   AFFINE_NONE },
+    [NATURE_NAIVE]   = { ANIM_NAIVE,   AFFINE_NONE },
+    [NATURE_MODEST]  = { ANIM_MODEST,  AFFINE_TURN_DOWN_SLOW },
+    [NATURE_MILD]    = { ANIM_MILD,    AFFINE_NONE },
+    [NATURE_QUIET]   = { ANIM_QUIET,   AFFINE_NONE },
+    [NATURE_BASHFUL] = { ANIM_BASHFUL, AFFINE_NONE },
+    [NATURE_RASH]    = { ANIM_RASH,    AFFINE_NONE },
+    [NATURE_CALM]    = { ANIM_CALM,    AFFINE_NONE },
+    [NATURE_GENTLE]  = { ANIM_GENTLE,  AFFINE_TURN_DOWN_SLIGHT },
+    [NATURE_SASSY]   = { ANIM_SASSY,   AFFINE_TURN_UP_HIGH },
+    [NATURE_CAREFUL] = { ANIM_CAREFUL, AFFINE_NONE },
+    [NATURE_QUIRKY]  = { ANIM_QUIRKY,  AFFINE_NONE },
 };
 
 static const s16 sMonPokeblockAnims[][NUM_ANIMDATA] =
@@ -434,22 +436,22 @@ static const union AffineAnimCmd *const sAffineAnims_Mon[] =
     sAffineAnim_Mon_None,
 };
 
-static const u8* const sPokeblocksPals[] =
+static const u8 *const sPokeblocksPals[] =
 {
-    gPokeblockRed_Pal,
-    gPokeblockBlue_Pal,
-    gPokeblockPink_Pal,
-    gPokeblockGreen_Pal,
-    gPokeblockYellow_Pal,
-    gPokeblockPurple_Pal,
-    gPokeblockIndigo_Pal,
-    gPokeblockBrown_Pal,
-    gPokeblockLiteBlue_Pal,
-    gPokeblockOlive_Pal,
-    gPokeblockGray_Pal,
-    gPokeblockBlack_Pal,
-    gPokeblockWhite_Pal,
-    gPokeblockGold_Pal
+    [PBLOCK_CLR_RED - 1]       = gPokeblockRed_Pal,
+    [PBLOCK_CLR_BLUE - 1]      = gPokeblockBlue_Pal,
+    [PBLOCK_CLR_PINK - 1]      = gPokeblockPink_Pal,
+    [PBLOCK_CLR_GREEN - 1]     = gPokeblockGreen_Pal,
+    [PBLOCK_CLR_YELLOW - 1]    = gPokeblockYellow_Pal,
+    [PBLOCK_CLR_PURPLE - 1]    = gPokeblockPurple_Pal,
+    [PBLOCK_CLR_INDIGO - 1]    = gPokeblockIndigo_Pal,
+    [PBLOCK_CLR_BROWN - 1]     = gPokeblockBrown_Pal,
+    [PBLOCK_CLR_LITE_BLUE - 1] = gPokeblockLiteBlue_Pal,
+    [PBLOCK_CLR_OLIVE - 1]     = gPokeblockOlive_Pal,
+    [PBLOCK_CLR_GRAY - 1]      = gPokeblockGray_Pal,
+    [PBLOCK_CLR_BLACK - 1]     = gPokeblockBlack_Pal,
+    [PBLOCK_CLR_WHITE - 1]     = gPokeblockWhite_Pal,
+    [PBLOCK_CLR_GOLD - 1]      = gPokeblockGold_Pal,
 };
 
 static const union AffineAnimCmd sAffineAnim_Still[] =
@@ -511,14 +513,14 @@ static const union AffineAnimCmd *const sAffineAnims_PokeblockCase_ThrowFromHori
 static const struct OamData sOamData_Pokeblock =
 {
     .y = 0,
-    .affineMode = 3,
-    .objMode = 0,
-    .mosaic = 0,
-    .bpp = 0,
-    .shape = 0,
+    .affineMode = ST_OAM_AFFINE_DOUBLE,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
     .x = 0,
     .matrixNum = 0,
-    .size = 0,
+    .size = SPRITE_SIZE(8x8),
     .tileNum = 0,
     .priority = 1,
     .paletteNum = 0,
@@ -593,7 +595,7 @@ static bool8 LoadPokeblockFeedScene(void)
         break;
     case 1:
         ResetPaletteFade();
-        gPaletteFade.bufferTransferDisabled = 1;
+        gPaletteFade.bufferTransferDisabled = TRUE;
         gMain.state++;
         break;
     case 2:
@@ -638,7 +640,7 @@ static bool8 LoadPokeblockFeedScene(void)
         gMain.state++;
         break;
     case 11:
-        if (Overworld_IsRecvQueueAtMax() != 1)
+        if (Overworld_IsRecvQueueAtMax() != TRUE)
         {
             gMain.state++;
         }
@@ -647,15 +649,15 @@ static bool8 LoadPokeblockFeedScene(void)
         {
             u16 savedIME = REG_IME;
             REG_IME = 0;
-            REG_IE |= 1;
+            REG_IE |= INTR_FLAG_VBLANK;
             REG_IME = savedIME;
-            REG_DISPSTAT |= 8;
+            REG_DISPSTAT |= DISPSTAT_VBLANK_INTR;
             SetVBlankCallback(VBlankCB_PokeblockFeed);
             gMain.state++;
         }
     case 13:
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
-        gPaletteFade.bufferTransferDisabled = 0;
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        gPaletteFade.bufferTransferDisabled = FALSE;
         SetMainCallback2(CB2_PokeblockFeed);
         return TRUE;
     }
@@ -666,20 +668,20 @@ void PreparePokeblockFeedScene(void)
 {
     while (1)
     {
-        if (LoadPokeblockFeedScene() == 1)
+        if (LoadPokeblockFeedScene() == TRUE)
         {
-            LaunchPokeblockFeedTask(1);
+            LaunchPokeblockFeedTask(TRUE);
             break;
         }
-        if (MenuHelpers_IsLinkActive() == 1)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
 
 static void HandleInitBackgrounds(void)
 {
-    REG_BG1CNT = 0x1D02l;
-    REG_DISPCNT = 0x1340;
+    REG_BG1CNT = BGCNT_PRIORITY(2) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(29);
+    REG_DISPCNT = DISPCNT_OBJ_ON | DISPCNT_BG1_ON | DISPCNT_BG0_ON | DISPCNT_OBJ_1D_MAP;
 }
 
 static bool8 LoadMonAndSceneGfx(struct Pokemon* mon)
@@ -729,11 +731,11 @@ static bool8 LoadMonAndSceneGfx(struct Pokemon* mon)
         sPokeblockLoadGfxState++;
         break;
     case 7:
-        LZDecompressVram(gPokeblockFeedBg_Tilemap, (void*)(VRAM + 0xE800));
+        LZDecompressVram(gPokeblockFeedBg_Tilemap, BG_SCREEN_ADDR(29));
         sPokeblockLoadGfxState++;
         break;
     case 8:
-        LoadCompressedPalette(gBattleEnvironmentPalette_BattleTower, 0x20, 0x60);
+        LoadCompressedPalette(gBattleEnvironmentPalette_BattleTower, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
         sPokeblockLoadGfxState = 0;
         return TRUE;
     }
@@ -756,7 +758,7 @@ static void Task_HandlePokeblockFeed(u8 taskId)
     {
         switch (gTasks[taskId].tState)
         {
-        case 0:
+        case STATE_INIT:
             sMonAnimRunState = 0;
             sTimer = 0;
             CalculateMonAnimLength();
@@ -787,7 +789,7 @@ static void Task_HandlePokeblockFeed(u8 taskId)
 static void LaunchPokeblockFeedTask(u8 horizontalThrow)
 {
     u8 taskId = CreateTask(Task_HandlePokeblockFeed, 0);
-    gTasks[taskId].tState = 0;
+    gTasks[taskId].tState = STATE_INIT;
     gTasks[taskId].tHorizontalThrow = horizontalThrow;
 }
 
@@ -829,7 +831,7 @@ static void Task_ExitPokeblockFeed(u8 taskId)
 
 static void Task_FadeOutPokeblockFeed(u8 taskId)
 {
-    BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
     gTasks[taskId].func = Task_ExitPokeblockFeed;
 }
 
@@ -850,13 +852,13 @@ static u8 CreateMonSprite(struct Pokemon* mon)
     sMonNature = GetNature(mon);
     gSprites[spriteId].sSpecies = species;
     gSprites[spriteId].callback = SpriteCallbackDummy;
-    sNoMonFlip = 1;
+    sNoMonFlip = TRUE;
     if (!IsPokeSpriteNotFlipped(species))
     {
         gSprites[spriteId].affineAnims = sSpriteAffineAnimTable_MonNoFlip;
-        gSprites[spriteId].oam.affineMode = 3;
+        gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_DOUBLE;
         CalcCenterToCornerVec(&gSprites[spriteId], gSprites[spriteId].oam.shape, gSprites[spriteId].oam.size, gSprites[spriteId].oam.affineMode);
-        sNoMonFlip = 0;
+        sNoMonFlip = FALSE;
     }
     return spriteId;
 }
@@ -884,7 +886,7 @@ static void SpriteCB_MonJumpForPokeblock(struct Sprite* sprite)
 static u8 CreatePokeblockCaseSpriteForFeeding(void)
 {
     u8 spriteId = CreatePokeblockCaseSprite(188, 100, 2);
-    gSprites[spriteId].oam.affineMode = 1;
+    gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
     gSprites[spriteId].affineAnims = sAffineAnims_PokeblockCase_Still;
     gSprites[spriteId].callback = SpriteCallbackDummy;
     InitSpriteAffineAnim(&gSprites[spriteId]);
@@ -894,7 +896,7 @@ static u8 CreatePokeblockCaseSpriteForFeeding(void)
 static void DoPokeblockCaseThrowEffect(u8 spriteId, bool8 horizontalThrow)
 {
     FreeOamMatrix(gSprites[spriteId].oam.matrixNum);
-    gSprites[spriteId].oam.affineMode = 3;
+    gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_DOUBLE;
     if (!horizontalThrow)
         gSprites[spriteId].affineAnims = sAffineAnims_PokeblockCase_ThrowFromVertical;
     else
@@ -951,18 +953,18 @@ static void UpdateMonAnim(void)
         break;
     case 10:
         InitMonAnimStage();
-        if (sNatureToMonPokeblockAnim[sMonNature][NATURE_AFFINE_ANIM] != 0)
+        if (sNatureToMonPokeblockAnim[sMonNature][NATURE_AFFINE_ANIM] != AFFINE_NONE)
         {
-            sMonSpritePtr->oam.affineMode = 3;
+            sMonSpritePtr->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
             sMonSpritePtr->oam.matrixNum = 0;
             sMonSpritePtr->affineAnims = sAffineAnims_Mon;
             InitSpriteAffineAnim(sMonSpritePtr);
         }
         sMonAnimRunState = 50;
     case 50:
-        if (sNatureToMonPokeblockAnim[sMonNature][NATURE_AFFINE_ANIM] != 0)
+        if (sNatureToMonPokeblockAnim[sMonNature][NATURE_AFFINE_ANIM] != AFFINE_NONE)
         {
-            if (sNoMonFlip == 0)
+            if (sNoMonFlip == FALSE)
                 StartSpriteAffineAnim(sMonSpritePtr, sNatureToMonPokeblockAnim[sMonNature][NATURE_AFFINE_ANIM] + NUM_MON_AFFINES);
             else
                 StartSpriteAffineAnim(sMonSpritePtr, sNatureToMonPokeblockAnim[sMonNature][NATURE_AFFINE_ANIM]);
@@ -970,9 +972,9 @@ static void UpdateMonAnim(void)
         sMonAnimRunState = 60;
         break;
     case 60:
-        if (DoMonAnimStep() == 1)
+        if (DoMonAnimStep() == TRUE)
         {
-            if (sAnimData[ANIMDATA_IS_LAST] == 0)
+            if (sAnimData[ANIMDATA_IS_LAST] == FALSE)
             {
                 sMonAnimId++;
                 InitMonAnimStage();
