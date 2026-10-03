@@ -192,7 +192,7 @@ static void InitLinkBtlControllers(void)
             gBattleMainFunc = BeginBattleIntro;
             gBattlerControllerFuncs[0] = SetControllerToPlayer;
             gBattlerPositions[0] = 0;
-            gBattlerControllerFuncs[1] = SetBankFuncToLinkOpponentBufferRunCommand;
+            gBattlerControllerFuncs[1] = SetControllerToLinkOpponent;
             gBattlerPositions[1] = 1;
             gBattlersCount = 2;
         }
@@ -200,7 +200,7 @@ static void InitLinkBtlControllers(void)
         {
             gBattlerControllerFuncs[1] = SetControllerToPlayer;
             gBattlerPositions[1] = 0;
-            gBattlerControllerFuncs[0] = SetBankFuncToLinkOpponentBufferRunCommand;
+            gBattlerControllerFuncs[0] = SetControllerToLinkOpponent;
             gBattlerPositions[0] = 1;
             gBattlersCount = 2;
         }
@@ -213,11 +213,11 @@ static void InitLinkBtlControllers(void)
             gBattleMainFunc = BeginBattleIntro;
             gBattlerControllerFuncs[0] = SetControllerToPlayer;
             gBattlerPositions[0] = 0;
-            gBattlerControllerFuncs[1] = SetBankFuncToLinkOpponentBufferRunCommand;
+            gBattlerControllerFuncs[1] = SetControllerToLinkOpponent;
             gBattlerPositions[1] = 1;
             gBattlerControllerFuncs[2] = SetControllerToPlayer;
             gBattlerPositions[2] = 2;
-            gBattlerControllerFuncs[3] = SetBankFuncToLinkOpponentBufferRunCommand;
+            gBattlerControllerFuncs[3] = SetControllerToLinkOpponent;
             gBattlerPositions[3] = 3;
             gBattlersCount = 4;
         }
@@ -225,11 +225,11 @@ static void InitLinkBtlControllers(void)
         {
             gBattlerControllerFuncs[1] = SetControllerToPlayer;
             gBattlerPositions[1] = 0;
-            gBattlerControllerFuncs[0] = SetBankFuncToLinkOpponentBufferRunCommand;
+            gBattlerControllerFuncs[0] = SetControllerToLinkOpponent;
             gBattlerPositions[0] = 1;
             gBattlerControllerFuncs[3] = SetControllerToPlayer;
             gBattlerPositions[3] = 2;
-            gBattlerControllerFuncs[2] = SetBankFuncToLinkOpponentBufferRunCommand;
+            gBattlerControllerFuncs[2] = SetControllerToLinkOpponent;
             gBattlerPositions[2] = 3;
             gBattlersCount = 4;
 
@@ -292,7 +292,7 @@ static void InitLinkBtlControllers(void)
             }
             else
             {
-                gBattlerControllerFuncs[gLinkPlayers[i].id] = SetBankFuncToLinkOpponentBufferRunCommand;
+                gBattlerControllerFuncs[gLinkPlayers[i].id] = SetControllerToLinkOpponent;
                 switch (gLinkPlayers[i].id)
                 {
                 case 0:

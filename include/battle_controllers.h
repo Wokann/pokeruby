@@ -246,6 +246,7 @@ void PlayerHandleGetRawMonData(void);
 
 // opponent controller
 void SetControllerToOpponent(void);
+void SetControllerToLinkOpponent(void);
 
 void ActionSelectionCreateCursorAt(u8 cursorPosition, int unused);
 

@@ -52,194 +52,194 @@ extern struct MusicPlayerInfo gMPlayInfo_BGM;
 extern u8 GetBattlerSpriteDefault_Y();
 extern u8 GetBattlerPosition(u8);
 extern void sub_8037A74(void);
-extern void sub_8037E30(void);
+static void SwitchIn_TryShinyAnim(void);
 extern void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *);
 extern u8 DoPokeballSendOutAnimation();
-extern void sub_8037BBC(void);
+static void FreeMonSpriteAfterSwitchOutAnim(void);
 extern s32 sub_803FC34(u16);
 extern void SpriteCB_TrainerSlideIn(struct Sprite *);
-extern void sub_803757C(void);
+static void CompleteOnBattlerSpriteCallbackDummy(void);
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
 extern void StartAnimLinearTranslation(struct Sprite *);
 extern void sub_80375B4(void);
 extern void sub_8010384(struct Sprite *);
-extern void sub_8037B78(void);
+static void HideHealthboxAfterMonFaint(void);
 extern u8 IsMoveWithoutAnimation();
 extern void BufferStringBattle();
 extern void sub_8037C2C(void);
-extern void sub_8037B24(void);
-extern void sub_8037FAC(void);
-extern void dp01t_0F_4_move_anim(void);
+static void CompleteOnHealthbarDone(void);
+static void CompleteOnFinishedStatusAnimation(void);
+static void DoHitAnimBlinkSpriteEffect(void);
 extern void DoHitAnimHealthboxEffect();
 extern u8 GetBattlerSide(u8);
 extern void HandleIntroSlide();
 extern void sub_803A3A8(struct Sprite *);
 extern void Task_HidePartyStatusSummary(u8);
-extern void nullsub_47(void);
+static void LinkOpponentDummy(void);
 extern bool8 IsDoubleBattle(void);
 extern void sub_8037840(void);
 extern void sub_8031B74();
-extern void sub_8037FD8(void);
+static void CompleteOnFinishedBattleAnimation(void);
 extern void sub_8037F34(void);
-extern void LinkOpponentBufferExecCompleted(void);
+static void LinkOpponentBufferExecCompleted(void);
 
 // this file's functions
 
-u32 dp01_getattr_by_ch1_for_player_pokemon__(u8, u8 *);
-void sub_803752C(void);
+static u32 CopyLinkOpponentMonData(u8 monId, u8 *dst);
+static void LinkOpponentBufferRunCommand(void);
 void sub_8037D2C(void);
-void sub_8038900(u8);
-void sub_8039430(u8, u8);
-void sub_8039648(void);
-void sub_8039B64(void);
-void sub_803A2C4(u8);
-void sub_803A4E0(void);
+static void SetLinkOpponentMonData(u8 monId);
+void sub_8039430(u8 battler, u8 dontClearSubstituteBit);
+static void DoSwitchOutAnimation(void);
+static void LinkOpponentDoMoveAnimation(void);
+static void Task_StartSendOutAnim(u8 taskId);
+static void EndDrawPartyStatusSummary(void);
 
-void LinkOpponentHandleGetAttributes(void);
-void LinkOpponentHandlecmd1(void);
-void LinkOpponentHandleSetAttributes(void);
-void LinkOpponentHandlecmd3(void);
-void LinkOpponentHandleLoadPokeSprite(void);
-void LinkOpponentHandleSendOutPoke(void);
-void LinkOpponentHandleReturnPokeToBall(void);
+static void LinkOpponentHandleGetMonData(void);
+static void LinkOpponentHandleGetRawMonData(void);
+static void LinkOpponentHandleSetMonData(void);
+static void LinkOpponentHandleSetRawMonData(void);
+static void LinkOpponentHandleLoadMonSprite(void);
+static void LinkOpponentHandleSwitchInAnim(void);
+static void LinkOpponentHandleReturnMonToBall(void);
 void LinkOpponentHandleTrainerThrow(void);
-void LinkOpponentHandleTrainerSlide(void);
-void LinkOpponentHandleTrainerSlideBack(void);
-void LinkOpponentHandlecmd10(void);
-void LinkOpponentHandlecmd11(void);
-void LinkOpponentHandlecmd12(void);
-void LinkOpponentHandleBallThrow(void);
-void LinkOpponentHandlePuase(void);
-void LinkOpponentHandleMoveAnimation(void);
-void LinkOpponentHandlePrintString(void);
-void LinkOpponentHandlePrintStringPlayerOnly(void);
-void LinkOpponentHandlecmd18(void);
-void LinkOpponentHandlecmd19(void);
-void LinkOpponentHandlecmd20(void);
-void LinkOpponentHandleOpenBag(void);
-void LinkOpponentHandlecmd22(void);
-void LinkOpponentHandlecmd23(void);
-void LinkOpponentHandleHealthBarUpdate(void);
-void LinkOpponentHandleExpBarUpdate(void);
-void LinkOpponentHandleStatusIconUpdate(void);
-void LinkOpponentHandleStatusAnimation(void);
-void LinkOpponentHandleStatusXor(void);
-void LinkOpponentHandlecmd29(void);
-void LinkOpponentHandleDMATransfer(void);
-void LinkOpponentHandlecmd31(void);
-void LinkOpponentHandlecmd32(void);
-void LinkOpponentHandlecmd33(void);
-void LinkOpponentHandlecmd34(void);
-void LinkOpponentHandlecmd35(void);
-void LinkOpponentHandlecmd36(void);
-void LinkOpponentHandlecmd37(void);
-void LinkOpponentHandlecmd38(void);
-void LinkOpponentHandlecmd39(void);
-void LinkOpponentHandlecmd40(void);
-void LinkOpponentHandleHitAnimation(void);
-void LinkOpponentHandlecmd42(void);
-void LinkOpponentHandleEffectivenessSound(void);
+static void LinkOpponentHandleTrainerSlide(void);
+static void LinkOpponentHandleTrainerSlideBack(void);
+static void LinkOpponentHandleFaintAnimation(void);
+static void LinkOpponentHandlePaletteFade(void);
+static void LinkOpponentHandleSuccessBallThrowAnim(void);
+static void LinkOpponentHandleBallThrowAnim(void);
+static void LinkOpponentHandlePause(void);
+static void LinkOpponentHandleMoveAnimation(void);
+static void LinkOpponentHandlePrintString(void);
+static void LinkOpponentHandlePrintSelectionString(void);
+static void LinkOpponentHandleChooseAction(void);
+static void LinkOpponentHandleYesNoBox(void);
+static void LinkOpponentHandleChooseMove(void);
+static void LinkOpponentHandleChooseItem(void);
+static void LinkOpponentHandleChoosePokemon(void);
+static void LinkOpponentHandleCmd23(void);
+static void LinkOpponentHandleHealthBarUpdate(void);
+static void LinkOpponentHandleExpUpdate(void);
+static void LinkOpponentHandleStatusIconUpdate(void);
+static void LinkOpponentHandleStatusAnimation(void);
+static void LinkOpponentHandleStatusXor(void);
+static void LinkOpponentHandleDataTransfer(void);
+static void LinkOpponentHandleDMA3Transfer(void);
+static void LinkOpponentHandlePlayBGM(void);
+static void LinkOpponentHandleCmd32(void);
+static void LinkOpponentHandleTwoReturnValues(void);
+static void LinkOpponentHandleChosenMonReturnValue(void);
+static void LinkOpponentHandleOneReturnValue(void);
+static void LinkOpponentHandleOneReturnValue_Duplicate(void);
+static void LinkOpponentHandleClearUnkVar(void);
+static void LinkOpponentHandleSetUnkVar(void);
+static void LinkOpponentHandleClearUnkFlag(void);
+static void LinkOpponentHandleToggleUnkFlag(void);
+static void LinkOpponentHandleHitAnimation(void);
+static void LinkOpponentHandleCantSwitch(void);
+static void LinkOpponentHandlePlaySE(void);
 void LinkOpponentHandlecmd44(void);
-void LinkOpponentHandleFaintingCry(void);
-void LinkOpponentHandleIntroSlide(void);
-void LinkOpponentHandleTrainerBallThrow(void);
-void LinkOpponentHandlecmd48(void);
-void LinkOpponentHandlecmd49(void);
-void LinkOpponentHandlecmd50(void);
-void LinkOpponentHandleSpriteInvisibility(void);
-void LinkOpponentHandleBattleAnimation(void);
-void LinkOpponentHandleLinkStandbyMsg(void);
-void LinkOpponentHandleResetActionMoveSelection(void);
+static void LinkOpponentHandleFaintingCry(void);
+static void LinkOpponentHandleIntroSlide(void);
+static void LinkOpponentHandleIntroTrainerBallThrow(void);
+static void LinkOpponentHandleDrawPartyStatusSummary(void);
+static void LinkOpponentHandleHidePartyStatusSummary(void);
+static void LinkOpponentHandleEndBounceEffect(void);
+static void LinkOpponentHandleSpriteInvisibility(void);
+static void LinkOpponentHandleBattleAnimation(void);
+static void LinkOpponentHandleLinkStandbyMsg(void);
+static void LinkOpponentHandleResetActionMoveSelection(void);
 void LinkOpponentHandlecmd55(void);
-void LinkOpponentHandlecmd56(void);
+static void LinkOpponentCmdEnd(void);
 
 // const data
 
 typedef void (*BattleBufferCmd) (void);
-const BattleBufferCmd gLinkOpponentBufferCommands[] =
+static const BattleBufferCmd sLinkOpponentBufferCommands[] =
 {
-    LinkOpponentHandleGetAttributes,
-    LinkOpponentHandlecmd1,
-    LinkOpponentHandleSetAttributes,
-    LinkOpponentHandlecmd3,
-    LinkOpponentHandleLoadPokeSprite,
-    LinkOpponentHandleSendOutPoke,
-    LinkOpponentHandleReturnPokeToBall,
+    LinkOpponentHandleGetMonData,
+    LinkOpponentHandleGetRawMonData,
+    LinkOpponentHandleSetMonData,
+    LinkOpponentHandleSetRawMonData,
+    LinkOpponentHandleLoadMonSprite,
+    LinkOpponentHandleSwitchInAnim,
+    LinkOpponentHandleReturnMonToBall,
     LinkOpponentHandleTrainerThrow,
     LinkOpponentHandleTrainerSlide,
     LinkOpponentHandleTrainerSlideBack,
-    LinkOpponentHandlecmd10,
-    LinkOpponentHandlecmd11,
-    LinkOpponentHandlecmd12,
-    LinkOpponentHandleBallThrow,
-    LinkOpponentHandlePuase,
+    LinkOpponentHandleFaintAnimation,
+    LinkOpponentHandlePaletteFade,
+    LinkOpponentHandleSuccessBallThrowAnim,
+    LinkOpponentHandleBallThrowAnim,
+    LinkOpponentHandlePause,
     LinkOpponentHandleMoveAnimation,
     LinkOpponentHandlePrintString,
-    LinkOpponentHandlePrintStringPlayerOnly,
-    LinkOpponentHandlecmd18,
-    LinkOpponentHandlecmd19,
-    LinkOpponentHandlecmd20,
-    LinkOpponentHandleOpenBag,
-    LinkOpponentHandlecmd22,
-    LinkOpponentHandlecmd23,
+    LinkOpponentHandlePrintSelectionString,
+    LinkOpponentHandleChooseAction,
+    LinkOpponentHandleYesNoBox,
+    LinkOpponentHandleChooseMove,
+    LinkOpponentHandleChooseItem,
+    LinkOpponentHandleChoosePokemon,
+    LinkOpponentHandleCmd23,
     LinkOpponentHandleHealthBarUpdate,
-    LinkOpponentHandleExpBarUpdate,
+    LinkOpponentHandleExpUpdate,
     LinkOpponentHandleStatusIconUpdate,
     LinkOpponentHandleStatusAnimation,
     LinkOpponentHandleStatusXor,
-    LinkOpponentHandlecmd29,
-    LinkOpponentHandleDMATransfer,
-    LinkOpponentHandlecmd31,
-    LinkOpponentHandlecmd32,
-    LinkOpponentHandlecmd33,
-    LinkOpponentHandlecmd34,
-    LinkOpponentHandlecmd35,
-    LinkOpponentHandlecmd36,
-    LinkOpponentHandlecmd37,
-    LinkOpponentHandlecmd38,
-    LinkOpponentHandlecmd39,
-    LinkOpponentHandlecmd40,
+    LinkOpponentHandleDataTransfer,
+    LinkOpponentHandleDMA3Transfer,
+    LinkOpponentHandlePlayBGM,
+    LinkOpponentHandleCmd32,
+    LinkOpponentHandleTwoReturnValues,
+    LinkOpponentHandleChosenMonReturnValue,
+    LinkOpponentHandleOneReturnValue,
+    LinkOpponentHandleOneReturnValue_Duplicate,
+    LinkOpponentHandleClearUnkVar,
+    LinkOpponentHandleSetUnkVar,
+    LinkOpponentHandleClearUnkFlag,
+    LinkOpponentHandleToggleUnkFlag,
     LinkOpponentHandleHitAnimation,
-    LinkOpponentHandlecmd42,
-    LinkOpponentHandleEffectivenessSound,
+    LinkOpponentHandleCantSwitch,
+    LinkOpponentHandlePlaySE,
     LinkOpponentHandlecmd44,
     LinkOpponentHandleFaintingCry,
     LinkOpponentHandleIntroSlide,
-    LinkOpponentHandleTrainerBallThrow,
-    LinkOpponentHandlecmd48,
-    LinkOpponentHandlecmd49,
-    LinkOpponentHandlecmd50,
+    LinkOpponentHandleIntroTrainerBallThrow,
+    LinkOpponentHandleDrawPartyStatusSummary,
+    LinkOpponentHandleHidePartyStatusSummary,
+    LinkOpponentHandleEndBounceEffect,
     LinkOpponentHandleSpriteInvisibility,
     LinkOpponentHandleBattleAnimation,
     LinkOpponentHandleLinkStandbyMsg,
     LinkOpponentHandleResetActionMoveSelection,
     LinkOpponentHandlecmd55,
-    LinkOpponentHandlecmd56
+    LinkOpponentCmdEnd
 };
 
 // code
 
-void nullsub_47(void)
+static void LinkOpponentDummy(void)
 {
 }
 
-void SetBankFuncToLinkOpponentBufferRunCommand(void)
+void SetControllerToLinkOpponent(void)
 {
-    gBattlerControllerFuncs[gActiveBattler] = sub_803752C;
+    gBattlerControllerFuncs[gActiveBattler] = LinkOpponentBufferRunCommand;
 }
 
-void sub_803752C(void)
+static void LinkOpponentBufferRunCommand(void)
 {
     if (gBattleControllerExecFlags & gBitTable[gActiveBattler])
     {
         if (gBattleBufferA[gActiveBattler][0] <= 0x38)
-            gLinkOpponentBufferCommands[gBattleBufferA[gActiveBattler][0]]();
+            sLinkOpponentBufferCommands[gBattleBufferA[gActiveBattler][0]]();
         else
             LinkOpponentBufferExecCompleted();
     }
 }
 
-void sub_803757C(void)
+static void CompleteOnBattlerSpriteCallbackDummy(void)
 {
     if (gSprites[gBattlerSpriteIds[gActiveBattler]].callback == SpriteCallbackDummy)
         LinkOpponentBufferExecCompleted();
@@ -257,7 +257,7 @@ void sub_80375B4(void)
     }
 }
 
-void sub_8037644(void)
+static void Intro_DelayAndEnd(void)
 {
     if ((--gBattleHealthBoxInfo[gActiveBattler].unk9) == 0xFF)
     {
@@ -307,7 +307,7 @@ void sub_8037680(void)
             m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFFFF, 256);
         }
         gBattleHealthBoxInfo[gActiveBattler].unk9 = 3;
-        gBattlerControllerFuncs[gActiveBattler] = sub_8037644;
+        gBattlerControllerFuncs[gActiveBattler] = Intro_DelayAndEnd;
     }
 }
 
@@ -376,18 +376,18 @@ void sub_8037A74(void)
     }
 }
 
-void sub_8037B24(void)
+static void CompleteOnHealthbarDone(void)
 {
-    s16 r4 = MoveBattleBar(gActiveBattler, gHealthboxSpriteIds[gActiveBattler], 0, 0);
+    s16 hpValue = MoveBattleBar(gActiveBattler, gHealthboxSpriteIds[gActiveBattler], 0, 0);
 
     SetHealthboxSpriteVisible(gHealthboxSpriteIds[gActiveBattler]);
-    if (r4 != -1)
-        UpdateHpTextInHealthbox(gHealthboxSpriteIds[gActiveBattler], r4, 0);
+    if (hpValue != -1)
+        UpdateHpTextInHealthbox(gHealthboxSpriteIds[gActiveBattler], hpValue, 0);
     else
         LinkOpponentBufferExecCompleted();
 }
 
-void sub_8037B78(void)
+static void HideHealthboxAfterMonFaint(void)
 {
     if (!gSprites[gBattlerSpriteIds[gActiveBattler]].inUse)
     {
@@ -396,7 +396,7 @@ void sub_8037B78(void)
     }
 }
 
-void sub_8037BBC(void)
+static void FreeMonSpriteAfterSwitchOutAnim(void)
 {
     if (!gBattleHealthBoxInfo[gActiveBattler].specialAnimActive)
     {
@@ -414,7 +414,7 @@ void sub_8037C2C(void)
         LinkOpponentBufferExecCompleted();
 }
 
-void dp01t_0F_4_move_anim(void)
+static void DoHitAnimBlinkSpriteEffect(void)
 {
     u8 spriteId = gBattlerSpriteIds[gActiveBattler];
 
@@ -433,7 +433,7 @@ void dp01t_0F_4_move_anim(void)
     }
 }
 
-void sub_8037CC0(void)
+static void SwitchIn_ShowSubstitute(void)
 {
     if (gSprites[gHealthboxSpriteIds[gActiveBattler]].callback == SpriteCallbackDummy)
     {
@@ -468,11 +468,11 @@ void sub_8037D64(void)
         StartHealthboxSlideIn(gActiveBattler);
         SetHealthboxSpriteVisible(gHealthboxSpriteIds[gActiveBattler]);
         CopyBattleSpriteInvisibility(gActiveBattler);
-        gBattlerControllerFuncs[gActiveBattler] = sub_8037CC0;
+        gBattlerControllerFuncs[gActiveBattler] = SwitchIn_ShowSubstitute;
     }
 }
 
-void sub_8037E30(void)
+static void SwitchIn_TryShinyAnim(void)
 {
     if (!gBattleHealthBoxInfo[gActiveBattler].ballAnimActive && !gBattleHealthBoxInfo[gActiveBattler].triedShinyMonAnim)
         TryShinyAnimation(gActiveBattler, &gEnemyParty[gBattlerPartyIndexes[gActiveBattler]]);
@@ -515,21 +515,21 @@ void sub_8037F34(void)
     }
 }
 
-void sub_8037FAC(void)
+static void CompleteOnFinishedStatusAnimation(void)
 {
     if (!gBattleHealthBoxInfo[gActiveBattler].statusAnimActive)
         LinkOpponentBufferExecCompleted();
 }
 
-void sub_8037FD8(void)
+static void CompleteOnFinishedBattleAnimation(void)
 {
     if (!gBattleHealthBoxInfo[gActiveBattler].animFromTableActive)
         LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentBufferExecCompleted(void)
+static void LinkOpponentBufferExecCompleted(void)
 {
-    gBattlerControllerFuncs[gActiveBattler] = sub_803752C;
+    gBattlerControllerFuncs[gActiveBattler] = LinkOpponentBufferRunCommand;
     if (gBattleTypeFlags & BATTLE_TYPE_LINK)
     {
         u8 playerId = GetMultiplayerId();
@@ -543,34 +543,34 @@ void LinkOpponentBufferExecCompleted(void)
     }
 }
 
-void LinkOpponentHandleGetAttributes(void)
+static void LinkOpponentHandleGetMonData(void)
 {
-    u8 buffer[0x100];
-    u32 r6 = 0;
-    u8 r4;
+    u8 monData[0x100];
+    u32 size = 0;
+    u8 monToCheck;
     s32 i;
 
     if (gBattleBufferA[gActiveBattler][2] == 0)
     {
-        r6 = dp01_getattr_by_ch1_for_player_pokemon__(gBattlerPartyIndexes[gActiveBattler], buffer);
+        size = CopyLinkOpponentMonData(gBattlerPartyIndexes[gActiveBattler], monData);
     }
     else
     {
-        r4 = gBattleBufferA[gActiveBattler][2];
+        monToCheck = gBattleBufferA[gActiveBattler][2];
         for (i = 0; i < 6; i++)
         {
-            if (r4 & 1)
-                r6 += dp01_getattr_by_ch1_for_player_pokemon__(i, buffer + r6);
-            r4 >>= 1;
+            if (monToCheck & 1)
+                size += CopyLinkOpponentMonData(i, monData + size);
+            monToCheck >>= 1;
         }
     }
-    BtlController_EmitDataTransfer(B_COMM_TO_ENGINE, r6, buffer);
+    BtlController_EmitDataTransfer(B_COMM_TO_ENGINE, size, monData);
     LinkOpponentBufferExecCompleted();
 }
 
-u32 dp01_getattr_by_ch1_for_player_pokemon__(u8 a, u8 *buffer)
+static u32 CopyLinkOpponentMonData(u8 monId, u8 *dst)
 {
-    struct BattlePokemon battlePokemon;
+    struct BattlePokemon battleMon;
     struct MovePPInfo moveData;
     u8 nickname[20];
     u8 *src;
@@ -581,323 +581,323 @@ u32 dp01_getattr_by_ch1_for_player_pokemon__(u8 a, u8 *buffer)
     switch (gBattleBufferA[gActiveBattler][1])
     {
     case 0:
-        battlePokemon.species = GetMonData(&gEnemyParty[a], MON_DATA_SPECIES);
-        battlePokemon.item = GetMonData(&gEnemyParty[a], MON_DATA_HELD_ITEM);
+        battleMon.species = GetMonData(&gEnemyParty[monId], MON_DATA_SPECIES);
+        battleMon.item = GetMonData(&gEnemyParty[monId], MON_DATA_HELD_ITEM);
         for (size = 0; size < 4; size++)
         {
-            battlePokemon.moves[size] = GetMonData(&gEnemyParty[a], MON_DATA_MOVE1 + size);
-            battlePokemon.pp[size] = GetMonData(&gEnemyParty[a], MON_DATA_PP1 + size);
+            battleMon.moves[size] = GetMonData(&gEnemyParty[monId], MON_DATA_MOVE1 + size);
+            battleMon.pp[size] = GetMonData(&gEnemyParty[monId], MON_DATA_PP1 + size);
         }
-        battlePokemon.ppBonuses = GetMonData(&gEnemyParty[a], MON_DATA_PP_BONUSES);
-        battlePokemon.friendship = GetMonData(&gEnemyParty[a], MON_DATA_FRIENDSHIP);
-        battlePokemon.experience = GetMonData(&gEnemyParty[a], MON_DATA_EXP);
-        battlePokemon.hpIV = GetMonData(&gEnemyParty[a], MON_DATA_HP_IV);
-        battlePokemon.attackIV = GetMonData(&gEnemyParty[a], MON_DATA_ATK_IV);
-        battlePokemon.defenseIV = GetMonData(&gEnemyParty[a], MON_DATA_DEF_IV);
-        battlePokemon.speedIV = GetMonData(&gEnemyParty[a], MON_DATA_SPEED_IV);
-        battlePokemon.spAttackIV = GetMonData(&gEnemyParty[a], MON_DATA_SPATK_IV);
-        battlePokemon.spDefenseIV = GetMonData(&gEnemyParty[a], MON_DATA_SPDEF_IV);
-        battlePokemon.personality = GetMonData(&gEnemyParty[a], MON_DATA_PERSONALITY);
-        battlePokemon.status1 = GetMonData(&gEnemyParty[a], MON_DATA_STATUS);
-        battlePokemon.level = GetMonData(&gEnemyParty[a], MON_DATA_LEVEL);
-        battlePokemon.hp = GetMonData(&gEnemyParty[a], MON_DATA_HP);
-        battlePokemon.maxHP = GetMonData(&gEnemyParty[a], MON_DATA_MAX_HP);
-        battlePokemon.attack = GetMonData(&gEnemyParty[a], MON_DATA_ATK);
-        battlePokemon.defense = GetMonData(&gEnemyParty[a], MON_DATA_DEF);
-        battlePokemon.speed = GetMonData(&gEnemyParty[a], MON_DATA_SPEED);
-        battlePokemon.spAttack = GetMonData(&gEnemyParty[a], MON_DATA_SPATK);
-        battlePokemon.spDefense = GetMonData(&gEnemyParty[a], MON_DATA_SPDEF);
-        battlePokemon.isEgg = GetMonData(&gEnemyParty[a], MON_DATA_IS_EGG);
-        battlePokemon.altAbility = GetMonData(&gEnemyParty[a], MON_DATA_ALT_ABILITY);
-        battlePokemon.otId = GetMonData(&gEnemyParty[a], MON_DATA_OT_ID);
-        GetMonData(&gEnemyParty[a], MON_DATA_NICKNAME, nickname);
-        StringCopy_Nickname(battlePokemon.nickname, nickname);
-        GetMonData(&gEnemyParty[a], MON_DATA_OT_NAME, battlePokemon.otName);
+        battleMon.ppBonuses = GetMonData(&gEnemyParty[monId], MON_DATA_PP_BONUSES);
+        battleMon.friendship = GetMonData(&gEnemyParty[monId], MON_DATA_FRIENDSHIP);
+        battleMon.experience = GetMonData(&gEnemyParty[monId], MON_DATA_EXP);
+        battleMon.hpIV = GetMonData(&gEnemyParty[monId], MON_DATA_HP_IV);
+        battleMon.attackIV = GetMonData(&gEnemyParty[monId], MON_DATA_ATK_IV);
+        battleMon.defenseIV = GetMonData(&gEnemyParty[monId], MON_DATA_DEF_IV);
+        battleMon.speedIV = GetMonData(&gEnemyParty[monId], MON_DATA_SPEED_IV);
+        battleMon.spAttackIV = GetMonData(&gEnemyParty[monId], MON_DATA_SPATK_IV);
+        battleMon.spDefenseIV = GetMonData(&gEnemyParty[monId], MON_DATA_SPDEF_IV);
+        battleMon.personality = GetMonData(&gEnemyParty[monId], MON_DATA_PERSONALITY);
+        battleMon.status1 = GetMonData(&gEnemyParty[monId], MON_DATA_STATUS);
+        battleMon.level = GetMonData(&gEnemyParty[monId], MON_DATA_LEVEL);
+        battleMon.hp = GetMonData(&gEnemyParty[monId], MON_DATA_HP);
+        battleMon.maxHP = GetMonData(&gEnemyParty[monId], MON_DATA_MAX_HP);
+        battleMon.attack = GetMonData(&gEnemyParty[monId], MON_DATA_ATK);
+        battleMon.defense = GetMonData(&gEnemyParty[monId], MON_DATA_DEF);
+        battleMon.speed = GetMonData(&gEnemyParty[monId], MON_DATA_SPEED);
+        battleMon.spAttack = GetMonData(&gEnemyParty[monId], MON_DATA_SPATK);
+        battleMon.spDefense = GetMonData(&gEnemyParty[monId], MON_DATA_SPDEF);
+        battleMon.isEgg = GetMonData(&gEnemyParty[monId], MON_DATA_IS_EGG);
+        battleMon.altAbility = GetMonData(&gEnemyParty[monId], MON_DATA_ALT_ABILITY);
+        battleMon.otId = GetMonData(&gEnemyParty[monId], MON_DATA_OT_ID);
+        GetMonData(&gEnemyParty[monId], MON_DATA_NICKNAME, nickname);
+        StringCopy_Nickname(battleMon.nickname, nickname);
+        GetMonData(&gEnemyParty[monId], MON_DATA_OT_NAME, battleMon.otName);
 
-        MEMCPY_ALT(&battlePokemon, buffer, sizeof(battlePokemon), size, src);
+        MEMCPY_ALT(&battleMon, dst, sizeof(battleMon), size, src);
         break;
     case 1:
-        data16 = GetMonData(&gEnemyParty[a], MON_DATA_SPECIES);
-        buffer[0] = data16;
-        buffer[1] = data16 >> 8;
+        data16 = GetMonData(&gEnemyParty[monId], MON_DATA_SPECIES);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
         size = 2;
         break;
     case 2:
-        data16 = GetMonData(&gEnemyParty[a], MON_DATA_HELD_ITEM);
-        buffer[0] = data16;
-        buffer[1] = data16 >> 8;
+        data16 = GetMonData(&gEnemyParty[monId], MON_DATA_HELD_ITEM);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
         size = 2;
         break;
     case 3:
         for (size = 0; size < 4; size++)
         {
-            moveData.moves[size] = GetMonData(&gEnemyParty[a], MON_DATA_MOVE1 + size);
-            moveData.pp[size] = GetMonData(&gEnemyParty[a], MON_DATA_PP1 + size);
+            moveData.moves[size] = GetMonData(&gEnemyParty[monId], MON_DATA_MOVE1 + size);
+            moveData.pp[size] = GetMonData(&gEnemyParty[monId], MON_DATA_PP1 + size);
         }
-        moveData.ppBonuses = GetMonData(&gEnemyParty[a], MON_DATA_PP_BONUSES);
-        MEMCPY_ALT(&moveData, buffer, sizeof(moveData), size, src);
+        moveData.ppBonuses = GetMonData(&gEnemyParty[monId], MON_DATA_PP_BONUSES);
+        MEMCPY_ALT(&moveData, dst, sizeof(moveData), size, src);
         break;
     case 4:
     case 5:
     case 6:
     case 7:
-        data16 = GetMonData(&gEnemyParty[a], MON_DATA_MOVE1 + gBattleBufferA[gActiveBattler][1] - 4);
-        buffer[0] = data16;
-        buffer[1] = data16 >> 8;
+        data16 = GetMonData(&gEnemyParty[monId], MON_DATA_MOVE1 + gBattleBufferA[gActiveBattler][1] - 4);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
         size = 2;
         break;
     case 8:
         for (size = 0; size < 4; size++)
-            buffer[size] = GetMonData(&gEnemyParty[a], MON_DATA_PP1 + size);
-        buffer[size] = GetMonData(&gEnemyParty[a], MON_DATA_PP_BONUSES);
+            dst[size] = GetMonData(&gEnemyParty[monId], MON_DATA_PP1 + size);
+        dst[size] = GetMonData(&gEnemyParty[monId], MON_DATA_PP_BONUSES);
         size++;
         break;
     case 9:
     case 10:
     case 11:
     case 12:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_PP1 + gBattleBufferA[gActiveBattler][1] - 9);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_PP1 + gBattleBufferA[gActiveBattler][1] - 9);
         size = 1;
         break;
     case 17:
-        data32 = GetMonData(&gEnemyParty[a], MON_DATA_OT_ID);
-        buffer[0] = (data32 & 0x000000FF);
-        buffer[1] = (data32 & 0x0000FF00) >> 8;
-        buffer[2] = (data32 & 0x00FF0000) >> 16;
+        data32 = GetMonData(&gEnemyParty[monId], MON_DATA_OT_ID);
+        dst[0] = (data32 & 0x000000FF);
+        dst[1] = (data32 & 0x0000FF00) >> 8;
+        dst[2] = (data32 & 0x00FF0000) >> 16;
         size = 3;
         break;
     case 18:
-        data32 = GetMonData(&gEnemyParty[a], MON_DATA_EXP);
-        buffer[0] = (data32 & 0x000000FF);
-        buffer[1] = (data32 & 0x0000FF00) >> 8;
-        buffer[2] = (data32 & 0x00FF0000) >> 16;
+        data32 = GetMonData(&gEnemyParty[monId], MON_DATA_EXP);
+        dst[0] = (data32 & 0x000000FF);
+        dst[1] = (data32 & 0x0000FF00) >> 8;
+        dst[2] = (data32 & 0x00FF0000) >> 16;
         size = 3;
         break;
     case 19:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_HP_EV);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_HP_EV);
         size = 1;
         break;
     case 20:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_ATK_EV);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_ATK_EV);
         size = 1;
         break;
     case 21:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_DEF_EV);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_DEF_EV);
         size = 1;
         break;
     case 22:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_SPEED_EV);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_SPEED_EV);
         size = 1;
         break;
     case 23:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_SPATK_EV);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_SPATK_EV);
         size = 1;
         break;
     case 24:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_SPDEF_EV);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_SPDEF_EV);
         size = 1;
         break;
     case 25:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_FRIENDSHIP);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_FRIENDSHIP);
         size = 1;
         break;
     case 26:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_POKERUS);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_POKERUS);
         size = 1;
         break;
     case 27:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_MET_LOCATION);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_MET_LOCATION);
         size = 1;
         break;
     case 28:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_MET_LEVEL);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_MET_LEVEL);
         size = 1;
         break;
     case 29:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_MET_GAME);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_MET_GAME);
         size = 1;
         break;
     case 30:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_POKEBALL);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_POKEBALL);
         size = 1;
         break;
     case 31:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_HP_IV);
-        buffer[1] = GetMonData(&gEnemyParty[a], MON_DATA_ATK_IV);
-        buffer[2] = GetMonData(&gEnemyParty[a], MON_DATA_DEF_IV);
-        buffer[3] = GetMonData(&gEnemyParty[a], MON_DATA_SPEED_IV);
-        buffer[4] = GetMonData(&gEnemyParty[a], MON_DATA_SPATK_IV);
-        buffer[5] = GetMonData(&gEnemyParty[a], MON_DATA_SPDEF_IV);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_HP_IV);
+        dst[1] = GetMonData(&gEnemyParty[monId], MON_DATA_ATK_IV);
+        dst[2] = GetMonData(&gEnemyParty[monId], MON_DATA_DEF_IV);
+        dst[3] = GetMonData(&gEnemyParty[monId], MON_DATA_SPEED_IV);
+        dst[4] = GetMonData(&gEnemyParty[monId], MON_DATA_SPATK_IV);
+        dst[5] = GetMonData(&gEnemyParty[monId], MON_DATA_SPDEF_IV);
         size = 6;
         break;
     case 32:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_HP_IV);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_HP_IV);
         size = 1;
         break;
     case 33:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_ATK_IV);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_ATK_IV);
         size = 1;
         break;
     case 34:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_DEF_IV);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_DEF_IV);
         size = 1;
         break;
     case 35:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_SPEED_IV);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_SPEED_IV);
         size = 1;
         break;
     case 36:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_SPATK_IV);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_SPATK_IV);
         size = 1;
         break;
     case 37:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_SPDEF_IV);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_SPDEF_IV);
         size = 1;
         break;
     case 38:
-        data32 = GetMonData(&gEnemyParty[a], MON_DATA_PERSONALITY);
-        buffer[0] = (data32 & 0x000000FF);
-        buffer[1] = (data32 & 0x0000FF00) >> 8;
-        buffer[2] = (data32 & 0x00FF0000) >> 16;
-        buffer[3] = (data32 & 0xFF000000) >> 24;
+        data32 = GetMonData(&gEnemyParty[monId], MON_DATA_PERSONALITY);
+        dst[0] = (data32 & 0x000000FF);
+        dst[1] = (data32 & 0x0000FF00) >> 8;
+        dst[2] = (data32 & 0x00FF0000) >> 16;
+        dst[3] = (data32 & 0xFF000000) >> 24;
         size = 4;
         break;
     case 39:
-        data16 = GetMonData(&gEnemyParty[a], MON_DATA_CHECKSUM);
-        buffer[0] = data16;
-        buffer[1] = data16 >> 8;
+        data16 = GetMonData(&gEnemyParty[monId], MON_DATA_CHECKSUM);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
         size = 2;
         break;
     case 40:
-        data32 = GetMonData(&gEnemyParty[a], MON_DATA_STATUS);
-        buffer[0] = (data32 & 0x000000FF);
-        buffer[1] = (data32 & 0x0000FF00) >> 8;
-        buffer[2] = (data32 & 0x00FF0000) >> 16;
-        buffer[3] = (data32 & 0xFF000000) >> 24;
+        data32 = GetMonData(&gEnemyParty[monId], MON_DATA_STATUS);
+        dst[0] = (data32 & 0x000000FF);
+        dst[1] = (data32 & 0x0000FF00) >> 8;
+        dst[2] = (data32 & 0x00FF0000) >> 16;
+        dst[3] = (data32 & 0xFF000000) >> 24;
         size = 4;
         break;
     case 41:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_LEVEL);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_LEVEL);
         size = 1;
         break;
     case 42:
-        data16 = GetMonData(&gEnemyParty[a], MON_DATA_HP);
-        buffer[0] = data16;
-        buffer[1] = data16 >> 8;
+        data16 = GetMonData(&gEnemyParty[monId], MON_DATA_HP);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
         size = 2;
         break;
     case 43:
-        data16 = GetMonData(&gEnemyParty[a], MON_DATA_MAX_HP);
-        buffer[0] = data16;
-        buffer[1] = data16 >> 8;
+        data16 = GetMonData(&gEnemyParty[monId], MON_DATA_MAX_HP);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
         size = 2;
         break;
     case 44:
-        data16 = GetMonData(&gEnemyParty[a], MON_DATA_ATK);
-        buffer[0] = data16;
-        buffer[1] = data16 >> 8;
+        data16 = GetMonData(&gEnemyParty[monId], MON_DATA_ATK);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
         size = 2;
         break;
     case 45:
-        data16 = GetMonData(&gEnemyParty[a], MON_DATA_DEF);
-        buffer[0] = data16;
-        buffer[1] = data16 >> 8;
+        data16 = GetMonData(&gEnemyParty[monId], MON_DATA_DEF);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
         size = 2;
         break;
     case 46:
-        data16 = GetMonData(&gEnemyParty[a], MON_DATA_SPEED);
-        buffer[0] = data16;
-        buffer[1] = data16 >> 8;
+        data16 = GetMonData(&gEnemyParty[monId], MON_DATA_SPEED);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
         size = 2;
         break;
     case 47:
-        data16 = GetMonData(&gEnemyParty[a], MON_DATA_SPATK);
-        buffer[0] = data16;
-        buffer[1] = data16 >> 8;
+        data16 = GetMonData(&gEnemyParty[monId], MON_DATA_SPATK);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
         size = 2;
         break;
     case 48:
-        data16 = GetMonData(&gEnemyParty[a], MON_DATA_SPDEF);
-        buffer[0] = data16;
-        buffer[1] = data16 >> 8;
+        data16 = GetMonData(&gEnemyParty[monId], MON_DATA_SPDEF);
+        dst[0] = data16;
+        dst[1] = data16 >> 8;
         size = 2;
         break;
     case 49:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_COOL);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_COOL);
         size = 1;
         break;
     case 50:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_BEAUTY);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_BEAUTY);
         size = 1;
         break;
     case 51:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_CUTE);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_CUTE);
         size = 1;
         break;
     case 52:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_SMART);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_SMART);
         size = 1;
         break;
     case 53:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_TOUGH);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_TOUGH);
         size = 1;
         break;
     case 54:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_SHEEN);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_SHEEN);
         size = 1;
         break;
     case 55:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_COOL_RIBBON);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_COOL_RIBBON);
         size = 1;
         break;
     case 56:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_BEAUTY_RIBBON);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_BEAUTY_RIBBON);
         size = 1;
         break;
     case 57:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_CUTE_RIBBON);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_CUTE_RIBBON);
         size = 1;
         break;
     case 58:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_SMART_RIBBON);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_SMART_RIBBON);
         size = 1;
         break;
     case 59:
-        buffer[0] = GetMonData(&gEnemyParty[a], MON_DATA_TOUGH_RIBBON);
+        dst[0] = GetMonData(&gEnemyParty[monId], MON_DATA_TOUGH_RIBBON);
         size = 1;
         break;
     }
     return size;
 }
 
-void LinkOpponentHandlecmd1(void)
+static void LinkOpponentHandleGetRawMonData(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandleSetAttributes(void)
+static void LinkOpponentHandleSetMonData(void)
 {
     u8 i;
-    u8 r4;
+    u8 monToCheck;
 
     if (gBattleBufferA[gActiveBattler][2] == 0)
     {
-        sub_8038900(gBattlerPartyIndexes[gActiveBattler]);
+        SetLinkOpponentMonData(gBattlerPartyIndexes[gActiveBattler]);
     }
     else
     {
-        r4 = gBattleBufferA[gActiveBattler][2];
+        monToCheck = gBattleBufferA[gActiveBattler][2];
         for (i = 0; i < 6; i++)
         {
-            if (r4 & 1)
-                sub_8038900(i);
-            r4 >>= 1;
+            if (monToCheck & 1)
+                SetLinkOpponentMonData(i);
+            monToCheck >>= 1;
         }
     }
     LinkOpponentBufferExecCompleted();
 }
 
-void sub_8038900(u8 a)
+static void SetLinkOpponentMonData(u8 monId)
 {
     struct BattlePokemon *battlePokemon = (struct BattlePokemon *)&gBattleBufferA[gActiveBattler][3];
     struct MovePPInfo *moveData = (struct MovePPInfo *)&gBattleBufferA[gActiveBattler][3];
@@ -909,211 +909,211 @@ void sub_8038900(u8 a)
         {
             u8 iv;
 
-            SetMonData(&gEnemyParty[a], MON_DATA_SPECIES, &battlePokemon->species);
-            SetMonData(&gEnemyParty[a], MON_DATA_HELD_ITEM, &battlePokemon->item);
+            SetMonData(&gEnemyParty[monId], MON_DATA_SPECIES, &battlePokemon->species);
+            SetMonData(&gEnemyParty[monId], MON_DATA_HELD_ITEM, &battlePokemon->item);
             for (i = 0; i < 4; i++)
             {
-                SetMonData(&gEnemyParty[a], MON_DATA_MOVE1 + i, &battlePokemon->moves[i]);
-                SetMonData(&gEnemyParty[a], MON_DATA_PP1 + i, &battlePokemon->pp[i]);
+                SetMonData(&gEnemyParty[monId], MON_DATA_MOVE1 + i, &battlePokemon->moves[i]);
+                SetMonData(&gEnemyParty[monId], MON_DATA_PP1 + i, &battlePokemon->pp[i]);
             }
-            SetMonData(&gEnemyParty[a], MON_DATA_PP_BONUSES, &battlePokemon->ppBonuses);
-            SetMonData(&gEnemyParty[a], MON_DATA_FRIENDSHIP, &battlePokemon->friendship);
-            SetMonData(&gEnemyParty[a], MON_DATA_EXP, &battlePokemon->experience);
+            SetMonData(&gEnemyParty[monId], MON_DATA_PP_BONUSES, &battlePokemon->ppBonuses);
+            SetMonData(&gEnemyParty[monId], MON_DATA_FRIENDSHIP, &battlePokemon->friendship);
+            SetMonData(&gEnemyParty[monId], MON_DATA_EXP, &battlePokemon->experience);
             iv = battlePokemon->hpIV;
-            SetMonData(&gEnemyParty[a], MON_DATA_HP_IV, &iv);
+            SetMonData(&gEnemyParty[monId], MON_DATA_HP_IV, &iv);
             iv = battlePokemon->attackIV;
-            SetMonData(&gEnemyParty[a], MON_DATA_ATK_IV, &iv);
+            SetMonData(&gEnemyParty[monId], MON_DATA_ATK_IV, &iv);
             iv = battlePokemon->defenseIV;
-            SetMonData(&gEnemyParty[a], MON_DATA_DEF_IV, &iv);
+            SetMonData(&gEnemyParty[monId], MON_DATA_DEF_IV, &iv);
             iv = battlePokemon->speedIV;
-            SetMonData(&gEnemyParty[a], MON_DATA_SPEED_IV, &iv);
+            SetMonData(&gEnemyParty[monId], MON_DATA_SPEED_IV, &iv);
             iv = battlePokemon->spAttackIV;
-            SetMonData(&gEnemyParty[a], MON_DATA_SPATK_IV, &iv);
+            SetMonData(&gEnemyParty[monId], MON_DATA_SPATK_IV, &iv);
             iv = battlePokemon->spDefenseIV;
-            SetMonData(&gEnemyParty[a], MON_DATA_SPDEF_IV, &iv);
-            SetMonData(&gEnemyParty[a], MON_DATA_PERSONALITY, &battlePokemon->personality);
-            SetMonData(&gEnemyParty[a], MON_DATA_STATUS, &battlePokemon->status1);
-            SetMonData(&gEnemyParty[a], MON_DATA_LEVEL, &battlePokemon->level);
-            SetMonData(&gEnemyParty[a], MON_DATA_HP, &battlePokemon->hp);
-            SetMonData(&gEnemyParty[a], MON_DATA_MAX_HP, &battlePokemon->maxHP);
-            SetMonData(&gEnemyParty[a], MON_DATA_ATK, &battlePokemon->attack);
-            SetMonData(&gEnemyParty[a], MON_DATA_DEF, &battlePokemon->defense);
-            SetMonData(&gEnemyParty[a], MON_DATA_SPEED, &battlePokemon->speed);
-            SetMonData(&gEnemyParty[a], MON_DATA_SPATK, &battlePokemon->spAttack);
-            SetMonData(&gEnemyParty[a], MON_DATA_SPDEF, &battlePokemon->spDefense);
+            SetMonData(&gEnemyParty[monId], MON_DATA_SPDEF_IV, &iv);
+            SetMonData(&gEnemyParty[monId], MON_DATA_PERSONALITY, &battlePokemon->personality);
+            SetMonData(&gEnemyParty[monId], MON_DATA_STATUS, &battlePokemon->status1);
+            SetMonData(&gEnemyParty[monId], MON_DATA_LEVEL, &battlePokemon->level);
+            SetMonData(&gEnemyParty[monId], MON_DATA_HP, &battlePokemon->hp);
+            SetMonData(&gEnemyParty[monId], MON_DATA_MAX_HP, &battlePokemon->maxHP);
+            SetMonData(&gEnemyParty[monId], MON_DATA_ATK, &battlePokemon->attack);
+            SetMonData(&gEnemyParty[monId], MON_DATA_DEF, &battlePokemon->defense);
+            SetMonData(&gEnemyParty[monId], MON_DATA_SPEED, &battlePokemon->speed);
+            SetMonData(&gEnemyParty[monId], MON_DATA_SPATK, &battlePokemon->spAttack);
+            SetMonData(&gEnemyParty[monId], MON_DATA_SPDEF, &battlePokemon->spDefense);
         }
         break;
     case 1:
-        SetMonData(&gEnemyParty[a], MON_DATA_SPECIES, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_SPECIES, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 2:
-        SetMonData(&gEnemyParty[a], MON_DATA_HELD_ITEM, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_HELD_ITEM, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 3:
         for (i = 0; i < 4; i++)
         {
-            SetMonData(&gEnemyParty[a], MON_DATA_MOVE1 + i, &moveData->moves[i]);
-            SetMonData(&gEnemyParty[a], MON_DATA_PP1 + i, &moveData->pp[i]);
+            SetMonData(&gEnemyParty[monId], MON_DATA_MOVE1 + i, &moveData->moves[i]);
+            SetMonData(&gEnemyParty[monId], MON_DATA_PP1 + i, &moveData->pp[i]);
         }
-        SetMonData(&gEnemyParty[a], MON_DATA_PP_BONUSES, &moveData->ppBonuses);
+        SetMonData(&gEnemyParty[monId], MON_DATA_PP_BONUSES, &moveData->ppBonuses);
         break;
     case 4:
     case 5:
     case 6:
     case 7:
-        SetMonData(&gEnemyParty[a], MON_DATA_MOVE1 + gBattleBufferA[gActiveBattler][1] - 4, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_MOVE1 + gBattleBufferA[gActiveBattler][1] - 4, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 8:
-        SetMonData(&gEnemyParty[a], MON_DATA_PP1, &gBattleBufferA[gActiveBattler][3]);
-        SetMonData(&gEnemyParty[a], MON_DATA_PP2, &gBattleBufferA[gActiveBattler][4]);
-        SetMonData(&gEnemyParty[a], MON_DATA_PP3, &gBattleBufferA[gActiveBattler][5]);
-        SetMonData(&gEnemyParty[a], MON_DATA_PP4, &gBattleBufferA[gActiveBattler][6]);
-        SetMonData(&gEnemyParty[a], MON_DATA_PP_BONUSES, &gBattleBufferA[gActiveBattler][7]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_PP1, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_PP2, &gBattleBufferA[gActiveBattler][4]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_PP3, &gBattleBufferA[gActiveBattler][5]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_PP4, &gBattleBufferA[gActiveBattler][6]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_PP_BONUSES, &gBattleBufferA[gActiveBattler][7]);
         break;
     case 9:
     case 10:
     case 11:
     case 12:
-        SetMonData(&gEnemyParty[a], MON_DATA_PP1 + gBattleBufferA[gActiveBattler][1] - 9, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_PP1 + gBattleBufferA[gActiveBattler][1] - 9, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 17:
-        SetMonData(&gEnemyParty[a], MON_DATA_OT_ID, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_OT_ID, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 18:
-        SetMonData(&gEnemyParty[a], MON_DATA_EXP, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_EXP, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 19:
-        SetMonData(&gEnemyParty[a], MON_DATA_HP_EV, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_HP_EV, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 20:
-        SetMonData(&gEnemyParty[a], MON_DATA_ATK_EV, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_ATK_EV, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 21:
-        SetMonData(&gEnemyParty[a], MON_DATA_DEF_EV, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_DEF_EV, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 22:
-        SetMonData(&gEnemyParty[a], MON_DATA_SPEED_EV, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_SPEED_EV, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 23:
-        SetMonData(&gEnemyParty[a], MON_DATA_SPATK_EV, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_SPATK_EV, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 24:
-        SetMonData(&gEnemyParty[a], MON_DATA_SPDEF_EV, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_SPDEF_EV, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 25:
-        SetMonData(&gEnemyParty[a], MON_DATA_FRIENDSHIP, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_FRIENDSHIP, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 26:
-        SetMonData(&gEnemyParty[a], MON_DATA_POKERUS, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_POKERUS, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 27:
-        SetMonData(&gEnemyParty[a], MON_DATA_MET_LOCATION, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_MET_LOCATION, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 28:
-        SetMonData(&gEnemyParty[a], MON_DATA_MET_LEVEL, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_MET_LEVEL, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 29:
-        SetMonData(&gEnemyParty[a], MON_DATA_MET_GAME, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_MET_GAME, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 30:
-        SetMonData(&gEnemyParty[a], MON_DATA_POKEBALL, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_POKEBALL, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 31:
-        SetMonData(&gEnemyParty[a], MON_DATA_HP_IV, &gBattleBufferA[gActiveBattler][3]);
-        SetMonData(&gEnemyParty[a], MON_DATA_ATK_IV, &gBattleBufferA[gActiveBattler][4]);
-        SetMonData(&gEnemyParty[a], MON_DATA_DEF_IV, &gBattleBufferA[gActiveBattler][5]);
-        SetMonData(&gEnemyParty[a], MON_DATA_SPEED_IV, &gBattleBufferA[gActiveBattler][6]);
-        SetMonData(&gEnemyParty[a], MON_DATA_SPATK_IV, &gBattleBufferA[gActiveBattler][7]);
-        SetMonData(&gEnemyParty[a], MON_DATA_SPDEF_IV, &gBattleBufferA[gActiveBattler][8]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_HP_IV, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_ATK_IV, &gBattleBufferA[gActiveBattler][4]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_DEF_IV, &gBattleBufferA[gActiveBattler][5]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_SPEED_IV, &gBattleBufferA[gActiveBattler][6]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_SPATK_IV, &gBattleBufferA[gActiveBattler][7]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_SPDEF_IV, &gBattleBufferA[gActiveBattler][8]);
         break;
     case 32:
-        SetMonData(&gEnemyParty[a], MON_DATA_HP_IV, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_HP_IV, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 33:
-        SetMonData(&gEnemyParty[a], MON_DATA_ATK_IV, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_ATK_IV, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 34:
-        SetMonData(&gEnemyParty[a], MON_DATA_DEF_IV, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_DEF_IV, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 35:
-        SetMonData(&gEnemyParty[a], MON_DATA_SPEED_IV, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_SPEED_IV, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 36:
-        SetMonData(&gEnemyParty[a], MON_DATA_SPATK_IV, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_SPATK_IV, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 37:
-        SetMonData(&gEnemyParty[a], MON_DATA_SPDEF_IV, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_SPDEF_IV, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 38:
-        SetMonData(&gEnemyParty[a], MON_DATA_PERSONALITY, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_PERSONALITY, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 39:
-        SetMonData(&gEnemyParty[a], MON_DATA_CHECKSUM, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_CHECKSUM, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 40:
-        SetMonData(&gEnemyParty[a], MON_DATA_STATUS, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_STATUS, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 41:
-        SetMonData(&gEnemyParty[a], MON_DATA_LEVEL, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_LEVEL, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 42:
-        SetMonData(&gEnemyParty[a], MON_DATA_HP, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_HP, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 43:
-        SetMonData(&gEnemyParty[a], MON_DATA_MAX_HP, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_MAX_HP, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 44:
-        SetMonData(&gEnemyParty[a], MON_DATA_ATK, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_ATK, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 45:
-        SetMonData(&gEnemyParty[a], MON_DATA_DEF, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_DEF, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 46:
-        SetMonData(&gEnemyParty[a], MON_DATA_SPEED, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_SPEED, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 47:
-        SetMonData(&gEnemyParty[a], MON_DATA_SPATK, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_SPATK, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 48:
-        SetMonData(&gEnemyParty[a], MON_DATA_SPDEF, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_SPDEF, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 49:
-        SetMonData(&gEnemyParty[a], MON_DATA_COOL, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_COOL, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 50:
-        SetMonData(&gEnemyParty[a], MON_DATA_BEAUTY, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_BEAUTY, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 51:
-        SetMonData(&gEnemyParty[a], MON_DATA_CUTE, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_CUTE, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 52:
-        SetMonData(&gEnemyParty[a], MON_DATA_SMART, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_SMART, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 53:
-        SetMonData(&gEnemyParty[a], MON_DATA_TOUGH, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_TOUGH, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 54:
-        SetMonData(&gEnemyParty[a], MON_DATA_SHEEN, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_SHEEN, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 55:
-        SetMonData(&gEnemyParty[a], MON_DATA_COOL_RIBBON, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_COOL_RIBBON, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 56:
-        SetMonData(&gEnemyParty[a], MON_DATA_BEAUTY_RIBBON, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_BEAUTY_RIBBON, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 57:
-        SetMonData(&gEnemyParty[a], MON_DATA_CUTE_RIBBON, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_CUTE_RIBBON, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 58:
-        SetMonData(&gEnemyParty[a], MON_DATA_SMART_RIBBON, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_SMART_RIBBON, &gBattleBufferA[gActiveBattler][3]);
         break;
     case 59:
-        SetMonData(&gEnemyParty[a], MON_DATA_TOUGH_RIBBON, &gBattleBufferA[gActiveBattler][3]);
+        SetMonData(&gEnemyParty[monId], MON_DATA_TOUGH_RIBBON, &gBattleBufferA[gActiveBattler][3]);
         break;
     }
 }
 
-void LinkOpponentHandlecmd3(void)
+static void LinkOpponentHandleSetRawMonData(void)
 {
     u8 *dst;
     u8 i;
@@ -1124,7 +1124,7 @@ void LinkOpponentHandlecmd3(void)
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandleLoadPokeSprite(void)
+static void LinkOpponentHandleLoadMonSprite(void)
 {
     u16 species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES);
 
@@ -1143,44 +1143,44 @@ void LinkOpponentHandleLoadPokeSprite(void)
     gBattlerControllerFuncs[gActiveBattler] = sub_8037A74;
 }
 
-void LinkOpponentHandleSendOutPoke(void)
+static void LinkOpponentHandleSwitchInAnim(void)
 {
     gBattlerPartyIndexes[gActiveBattler] = gBattleBufferA[gActiveBattler][1];
     sub_8039430(gActiveBattler, gBattleBufferA[gActiveBattler][2]);
-    gBattlerControllerFuncs[gActiveBattler] = sub_8037E30;
+    gBattlerControllerFuncs[gActiveBattler] = SwitchIn_TryShinyAnim;
 }
 
-void sub_8039430(u8 a, u8 b)
+void sub_8039430(u8 battler, u8 dontClearSubstituteBit)
 {
     u16 species;
 
-    ClearTemporarySpeciesSpriteData(a, b);
-    gBattlerPartyIndexes[a] = gBattleBufferA[a][1];
-    species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[a]], MON_DATA_SPECIES);
-    gBattleControllerData[a] = CreateInvisibleSpriteWithCallback(SpriteCB_WaitForBattlerBallReleaseAnim);
-    BattleLoadOpponentMonSpriteGfx(&gEnemyParty[gBattlerPartyIndexes[a]], a);
-    SetMultiuseSpriteTemplateToPokemon(species, GetBattlerPosition(a));
-    gBattlerSpriteIds[a] = CreateSprite(
+    ClearTemporarySpeciesSpriteData(battler, dontClearSubstituteBit);
+    gBattlerPartyIndexes[battler] = gBattleBufferA[battler][1];
+    species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[battler]], MON_DATA_SPECIES);
+    gBattleControllerData[battler] = CreateInvisibleSpriteWithCallback(SpriteCB_WaitForBattlerBallReleaseAnim);
+    BattleLoadOpponentMonSpriteGfx(&gEnemyParty[gBattlerPartyIndexes[battler]], battler);
+    SetMultiuseSpriteTemplateToPokemon(species, GetBattlerPosition(battler));
+    gBattlerSpriteIds[battler] = CreateSprite(
       &gCreatingSpriteTemplate,
-      GetBattlerSpriteCoord(a, 2),
-      GetBattlerSpriteDefault_Y(a),
-      GetBattlerSpriteSubpriority(a));
-    gSprites[gBattleControllerData[a]].data[1] = gBattlerSpriteIds[a];
-    gSprites[gBattlerSpriteIds[a]].data[0] = a;
-    gSprites[gBattlerSpriteIds[a]].data[2] = species;
-    gSprites[gBattlerSpriteIds[a]].oam.paletteNum = a;
-    StartSpriteAnim(&gSprites[gBattlerSpriteIds[a]], gBattleMonForms[a]);
-    gSprites[gBattlerSpriteIds[a]].invisible = TRUE;
-    gSprites[gBattlerSpriteIds[a]].callback = SpriteCallbackDummy;
-    gSprites[gBattleControllerData[a]].data[0] = DoPokeballSendOutAnimation(0, 0xFE);
+      GetBattlerSpriteCoord(battler, 2),
+      GetBattlerSpriteDefault_Y(battler),
+      GetBattlerSpriteSubpriority(battler));
+    gSprites[gBattleControllerData[battler]].data[1] = gBattlerSpriteIds[battler];
+    gSprites[gBattlerSpriteIds[battler]].data[0] = battler;
+    gSprites[gBattlerSpriteIds[battler]].data[2] = species;
+    gSprites[gBattlerSpriteIds[battler]].oam.paletteNum = battler;
+    StartSpriteAnim(&gSprites[gBattlerSpriteIds[battler]], gBattleMonForms[battler]);
+    gSprites[gBattlerSpriteIds[battler]].invisible = TRUE;
+    gSprites[gBattlerSpriteIds[battler]].callback = SpriteCallbackDummy;
+    gSprites[gBattleControllerData[battler]].data[0] = DoPokeballSendOutAnimation(0, 0xFE);
 }
 
-void LinkOpponentHandleReturnPokeToBall(void)
+static void LinkOpponentHandleReturnMonToBall(void)
 {
     if (gBattleBufferA[gActiveBattler][1] == 0)
     {
         gBattleHealthBoxInfo[gActiveBattler].animationState = 0;
-        gBattlerControllerFuncs[gActiveBattler] = sub_8039648;
+        gBattlerControllerFuncs[gActiveBattler] = DoSwitchOutAnimation;
     }
     else
     {
@@ -1192,7 +1192,7 @@ void LinkOpponentHandleReturnPokeToBall(void)
     }
 }
 
-void sub_8039648(void)
+static void DoSwitchOutAnimation(void)
 {
     switch (gBattleHealthBoxInfo[gActiveBattler].animationState)
     {
@@ -1206,7 +1206,7 @@ void sub_8039648(void)
         {
             gBattleHealthBoxInfo[gActiveBattler].animationState = 0;
             InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, gActiveBattler, 2);
-            gBattlerControllerFuncs[gActiveBattler] = sub_8037BBC;
+            gBattlerControllerFuncs[gActiveBattler] = FreeMonSpriteAfterSwitchOutAnim;
         }
         break;
     }
@@ -1243,15 +1243,15 @@ void LinkOpponentHandleTrainerThrow(void)
     gSprites[gBattlerSpriteIds[gActiveBattler]].oam.tileNum = GetSpriteTileStartByTag(gTrainerFrontPicTable[gender].tag);
     gSprites[gBattlerSpriteIds[gActiveBattler]].oam.affineParam = gender;
     gSprites[gBattlerSpriteIds[gActiveBattler]].callback = SpriteCB_TrainerSlideIn;
-    gBattlerControllerFuncs[gActiveBattler] = sub_803757C;
+    gBattlerControllerFuncs[gActiveBattler] = CompleteOnBattlerSpriteCallbackDummy;
 }
 
-void LinkOpponentHandleTrainerSlide(void)
+static void LinkOpponentHandleTrainerSlide(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandleTrainerSlideBack(void)
+static void LinkOpponentHandleTrainerSlideBack(void)
 {
     SetSpritePrimaryCoordsFromSecondaryCoords(&gSprites[gBattlerSpriteIds[gActiveBattler]]);
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[0] = 35;
@@ -1262,7 +1262,7 @@ void LinkOpponentHandleTrainerSlideBack(void)
     gBattlerControllerFuncs[gActiveBattler] = sub_80375B4;
 }
 
-void LinkOpponentHandlecmd10(void)
+static void LinkOpponentHandleFaintAnimation(void)
 {
     if (gBattleHealthBoxInfo[gActiveBattler].animationState == 0)
     {
@@ -1275,35 +1275,35 @@ void LinkOpponentHandlecmd10(void)
         gBattleHealthBoxInfo[gActiveBattler].animationState = 0;
         PlaySE12WithPanning(SE_FAINT, 63);
         gSprites[gBattlerSpriteIds[gActiveBattler]].callback = sub_8010384;
-        gBattlerControllerFuncs[gActiveBattler] = sub_8037B78;
+        gBattlerControllerFuncs[gActiveBattler] = HideHealthboxAfterMonFaint;
     }
 }
 
-void LinkOpponentHandlecmd11(void)
+static void LinkOpponentHandlePaletteFade(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandlecmd12(void)
+static void LinkOpponentHandleSuccessBallThrowAnim(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandleBallThrow(void)
+static void LinkOpponentHandleBallThrowAnim(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandlePuase(void)
+static void LinkOpponentHandlePause(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandleMoveAnimation(void)
+static void LinkOpponentHandleMoveAnimation(void)
 {
     if (!IsBattleSEPlaying(gActiveBattler))
     {
-        u32 r0 = gBattleBufferA[gActiveBattler][1]
+        u32 move = gBattleBufferA[gActiveBattler][1]
                | (gBattleBufferA[gActiveBattler][2] << 8);
 
         gAnimMoveTurn = gBattleBufferA[gActiveBattler][3];
@@ -1320,23 +1320,23 @@ void LinkOpponentHandleMoveAnimation(void)
         gTransformedPersonalities[gActiveBattler] = gAnimDisableStructPtr->transformedMonPersonality;
 
         // Dead code. IsMoveWithoutAnimation always returns 0.
-        if (IsMoveWithoutAnimation(r0, gAnimMoveTurn) != 0)
+        if (IsMoveWithoutAnimation(move, gAnimMoveTurn) != 0)
         {
             LinkOpponentBufferExecCompleted();
         }
         else
         {
             gBattleHealthBoxInfo[gActiveBattler].animationState = 0;
-            gBattlerControllerFuncs[gActiveBattler] = sub_8039B64;
+            gBattlerControllerFuncs[gActiveBattler] = LinkOpponentDoMoveAnimation;
         }
     }
 }
 
-void sub_8039B64(void)
+static void LinkOpponentDoMoveAnimation(void)
 {
-    u16 r4 = gBattleBufferA[gActiveBattler][1]
+    u16 move = gBattleBufferA[gActiveBattler][1]
            | (gBattleBufferA[gActiveBattler][2] << 8);
-    u8 r7 = gBattleBufferA[gActiveBattler][11];
+    u8 multihit = gBattleBufferA[gActiveBattler][11];
 
     switch (gBattleHealthBoxInfo[gActiveBattler].animationState)
     {
@@ -1352,7 +1352,7 @@ void sub_8039B64(void)
         if (!gBattleHealthBoxInfo[gActiveBattler].specialAnimActive)
         {
             SetBattlerSpriteAffineMode(ST_OAM_AFFINE_OFF);
-            DoMoveAnim(r4);
+            DoMoveAnim(move);
             gBattleHealthBoxInfo[gActiveBattler].animationState = 2;
         }
         break;
@@ -1361,7 +1361,7 @@ void sub_8039B64(void)
         if (!gAnimScriptActive)
         {
             SetBattlerSpriteAffineMode(ST_OAM_AFFINE_NORMAL);
-            if ((gBattleSpriteInfo[gActiveBattler].behindSubstitute) && r7 <= 1)
+            if ((gBattleSpriteInfo[gActiveBattler].behindSubstitute) && multihit <= 1)
             {
                 InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, gActiveBattler, 6);
                 gBattleSpriteInfo[gActiveBattler].flag_x8 = 0;
@@ -1383,7 +1383,7 @@ void sub_8039B64(void)
     }
 }
 
-void LinkOpponentHandlePrintString(void)
+static void LinkOpponentHandlePrintString(void)
 {
     gBattle_BG0_X = 0;
     gBattle_BG0_Y = 0;
@@ -1392,79 +1392,79 @@ void LinkOpponentHandlePrintString(void)
     gBattlerControllerFuncs[gActiveBattler] = sub_8037C2C;
 }
 
-void LinkOpponentHandlePrintStringPlayerOnly(void)
+static void LinkOpponentHandlePrintSelectionString(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandlecmd18(void)
+static void LinkOpponentHandleChooseAction(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandlecmd19(void)
+static void LinkOpponentHandleYesNoBox(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandlecmd20(void)
+static void LinkOpponentHandleChooseMove(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandleOpenBag(void)
+static void LinkOpponentHandleChooseItem(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandlecmd22(void)
+static void LinkOpponentHandleChoosePokemon(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandlecmd23(void)
+static void LinkOpponentHandleCmd23(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandleHealthBarUpdate(void)
+static void LinkOpponentHandleHealthBarUpdate(void)
 {
-    s16 r7;
+    s16 hpVal;
 
     LoadBattleBarGfx(0);
-    r7 = gBattleBufferA[gActiveBattler][2] | (gBattleBufferA[gActiveBattler][3] << 8);
-    if (r7 != 0x7FFF)
+    hpVal = gBattleBufferA[gActiveBattler][2] | (gBattleBufferA[gActiveBattler][3] << 8);
+    if (hpVal != 0x7FFF)
     {
         u32 maxHP = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_MAX_HP);
-        u32 hp = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_HP);
+        u32 curHP = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_HP);
 
-        SetBattleBarStruct(gActiveBattler, gHealthboxSpriteIds[gActiveBattler], maxHP, hp, r7);
+        SetBattleBarStruct(gActiveBattler, gHealthboxSpriteIds[gActiveBattler], maxHP, curHP, hpVal);
     }
     else
     {
         u32 maxHP = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_MAX_HP);
 
-        SetBattleBarStruct(gActiveBattler, gHealthboxSpriteIds[gActiveBattler], maxHP, 0, r7);
+        SetBattleBarStruct(gActiveBattler, gHealthboxSpriteIds[gActiveBattler], maxHP, 0, hpVal);
     }
-    gBattlerControllerFuncs[gActiveBattler] = sub_8037B24;
+    gBattlerControllerFuncs[gActiveBattler] = CompleteOnHealthbarDone;
 }
 
-void LinkOpponentHandleExpBarUpdate(void)
+static void LinkOpponentHandleExpUpdate(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandleStatusIconUpdate(void)
+static void LinkOpponentHandleStatusIconUpdate(void)
 {
     if (IsBattleSEPlaying(gActiveBattler) == 0)
     {
         UpdateHealthboxAttribute(gHealthboxSpriteIds[gActiveBattler], &gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], 9);
         gBattleHealthBoxInfo[gActiveBattler].statusAnimActive = 0;
-        gBattlerControllerFuncs[gActiveBattler] = sub_8037FAC;
+        gBattlerControllerFuncs[gActiveBattler] = CompleteOnFinishedStatusAnimation;
     }
 }
 
-void LinkOpponentHandleStatusAnimation(void)
+static void LinkOpponentHandleStatusAnimation(void)
 {
     if (IsBattleSEPlaying(gActiveBattler) == 0)
     {
@@ -1474,80 +1474,80 @@ void LinkOpponentHandleStatusAnimation(void)
           | (gBattleBufferA[gActiveBattler][3] << 8)
           | (gBattleBufferA[gActiveBattler][4] << 16)
           | (gBattleBufferA[gActiveBattler][5] << 24));
-        gBattlerControllerFuncs[gActiveBattler] = sub_8037FAC;
+        gBattlerControllerFuncs[gActiveBattler] = CompleteOnFinishedStatusAnimation;
     }
 }
 
-void LinkOpponentHandleStatusXor(void)
+static void LinkOpponentHandleStatusXor(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandlecmd29(void)
+static void LinkOpponentHandleDataTransfer(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandleDMATransfer(void)
+static void LinkOpponentHandleDMA3Transfer(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandlecmd31(void)
+static void LinkOpponentHandlePlayBGM(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandlecmd32(void)
+static void LinkOpponentHandleCmd32(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandlecmd33(void)
+static void LinkOpponentHandleTwoReturnValues(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandlecmd34(void)
+static void LinkOpponentHandleChosenMonReturnValue(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandlecmd35(void)
+static void LinkOpponentHandleOneReturnValue(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandlecmd36(void)
+static void LinkOpponentHandleOneReturnValue_Duplicate(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandlecmd37(void)
+static void LinkOpponentHandleClearUnkVar(void)
 {
     gUnusedControllerStruct.unk = 0;
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandlecmd38(void)
+static void LinkOpponentHandleSetUnkVar(void)
 {
     gUnusedControllerStruct.unk = gBattleBufferA[gActiveBattler][1];
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandlecmd39(void)
+static void LinkOpponentHandleClearUnkFlag(void)
 {
     gUnusedControllerStruct.flag = 0;
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandlecmd40(void)
+static void LinkOpponentHandleToggleUnkFlag(void)
 {
     gUnusedControllerStruct.flag ^= 1;
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandleHitAnimation(void)
+static void LinkOpponentHandleHitAnimation(void)
 {
     if (gSprites[gBattlerSpriteIds[gActiveBattler]].invisible == TRUE)
     {
@@ -1558,16 +1558,16 @@ void LinkOpponentHandleHitAnimation(void)
         gDoingBattleAnim = TRUE;
         gSprites[gBattlerSpriteIds[gActiveBattler]].data[1] = 0;
         DoHitAnimHealthboxEffect(gActiveBattler);
-        gBattlerControllerFuncs[gActiveBattler] = dp01t_0F_4_move_anim;
+        gBattlerControllerFuncs[gActiveBattler] = DoHitAnimBlinkSpriteEffect;
     }
 }
 
-void LinkOpponentHandlecmd42(void)
+static void LinkOpponentHandleCantSwitch(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandleEffectivenessSound(void)
+static void LinkOpponentHandlePlaySE(void)
 {
     s8 pan;
 
@@ -1585,7 +1585,7 @@ void LinkOpponentHandlecmd44(void)
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandleFaintingCry(void)
+static void LinkOpponentHandleFaintingCry(void)
 {
     PlayCry_ByMode(
       GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES),
@@ -1593,14 +1593,14 @@ void LinkOpponentHandleFaintingCry(void)
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandleIntroSlide(void)
+static void LinkOpponentHandleIntroSlide(void)
 {
     HandleIntroSlide(gBattleBufferA[gActiveBattler][1]);
     gIntroSlideFlags |= 1;
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandleTrainerBallThrow(void)
+static void LinkOpponentHandleIntroTrainerBallThrow(void)
 {
     u8 taskId;
 
@@ -1610,19 +1610,19 @@ void LinkOpponentHandleTrainerBallThrow(void)
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[4] = gSprites[gBattlerSpriteIds[gActiveBattler]].y;
     gSprites[gBattlerSpriteIds[gActiveBattler]].callback = StartAnimLinearTranslation;
     StoreSpriteCallbackInData6(&gSprites[gBattlerSpriteIds[gActiveBattler]], sub_803A3A8);
-    taskId = CreateTask(sub_803A2C4, 5);
+    taskId = CreateTask(Task_StartSendOutAnim, 5);
     gTasks[taskId].data[0] = gActiveBattler;
     if (gBattleHealthBoxInfo[gActiveBattler].partyStatusSummaryShown)
         gTasks[gBattlerStatusSummaryTaskId[gActiveBattler]].func = Task_HidePartyStatusSummary;
     gBattleAnimationInfo->introAnimActive = 1;
-    gBattlerControllerFuncs[gActiveBattler] = nullsub_47;
+    gBattlerControllerFuncs[gActiveBattler] = LinkOpponentDummy;
 }
 
-void sub_803A2C4(u8 taskId)
+static void Task_StartSendOutAnim(u8 taskId)
 {
-    u8 r9;
+    u8 savedActiveBank;
 
-    r9 = gActiveBattler;
+    savedActiveBank = gActiveBattler;
     gActiveBattler = gTasks[taskId].data[0];
     if (!IsDoubleBattle() || (gBattleTypeFlags & BATTLE_TYPE_MULTI))
     {
@@ -1639,7 +1639,7 @@ void sub_803A2C4(u8 taskId)
         gActiveBattler ^= 2;
     }
     gBattlerControllerFuncs[gActiveBattler] = sub_8037840;
-    gActiveBattler = r9;
+    gActiveBattler = savedActiveBank;
     DestroyTask(taskId);
 }
 
@@ -1651,7 +1651,7 @@ void sub_803A3A8(struct Sprite *sprite)
     DestroySprite(sprite);
 }
 
-void LinkOpponentHandlecmd48(void)
+static void LinkOpponentHandleDrawPartyStatusSummary(void)
 {
     if (gBattleBufferA[gActiveBattler][1] != 0 && GetBattlerSide(gActiveBattler) == 0)
     {
@@ -1680,10 +1680,10 @@ void LinkOpponentHandlecmd48(void)
     gBattleHealthBoxInfo[gActiveBattler].partyStatusDelayTimer = 0;
     if (gBattleBufferA[gActiveBattler][2] != 0)
         gBattleHealthBoxInfo[gActiveBattler].partyStatusDelayTimer = 0x5D;
-    gBattlerControllerFuncs[gActiveBattler] = sub_803A4E0;
+    gBattlerControllerFuncs[gActiveBattler] = EndDrawPartyStatusSummary;
 }
 
-void sub_803A4E0(void)
+static void EndDrawPartyStatusSummary(void)
 {
     if (gBattleHealthBoxInfo[gActiveBattler].partyStatusDelayTimer++ >= 93)
     {
@@ -1692,19 +1692,19 @@ void sub_803A4E0(void)
     }
 }
 
-void LinkOpponentHandlecmd49(void)
+static void LinkOpponentHandleHidePartyStatusSummary(void)
 {
     if (gBattleHealthBoxInfo[gActiveBattler].partyStatusSummaryShown)
         gTasks[gBattlerStatusSummaryTaskId[gActiveBattler]].func = Task_HidePartyStatusSummary;
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandlecmd50(void)
+static void LinkOpponentHandleEndBounceEffect(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandleSpriteInvisibility(void)
+static void LinkOpponentHandleSpriteInvisibility(void)
 {
     if (IsBattlerSpritePresent(gActiveBattler) != 0)
     {
@@ -1714,26 +1714,26 @@ void LinkOpponentHandleSpriteInvisibility(void)
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandleBattleAnimation(void)
+static void LinkOpponentHandleBattleAnimation(void)
 {
     if (IsBattleSEPlaying(gActiveBattler) == 0)
     {
-        u8 r3 = gBattleBufferA[gActiveBattler][1];
-        u16 r4 = gBattleBufferA[gActiveBattler][2] | (gBattleBufferA[gActiveBattler][3] << 8);
+        u8 animationId = gBattleBufferA[gActiveBattler][1];
+        u16 argument = gBattleBufferA[gActiveBattler][2] | (gBattleBufferA[gActiveBattler][3] << 8);
 
-        if (TryHandleLaunchBattleTableAnimation(gActiveBattler, gActiveBattler, gActiveBattler, r3, r4) != 0)
+        if (TryHandleLaunchBattleTableAnimation(gActiveBattler, gActiveBattler, gActiveBattler, animationId, argument) != 0)
             LinkOpponentBufferExecCompleted();
         else
-            gBattlerControllerFuncs[gActiveBattler] = sub_8037FD8;
+            gBattlerControllerFuncs[gActiveBattler] = CompleteOnFinishedBattleAnimation;
     }
 }
 
-void LinkOpponentHandleLinkStandbyMsg(void)
+static void LinkOpponentHandleLinkStandbyMsg(void)
 {
     LinkOpponentBufferExecCompleted();
 }
 
-void LinkOpponentHandleResetActionMoveSelection(void)
+static void LinkOpponentHandleResetActionMoveSelection(void)
 {
     LinkOpponentBufferExecCompleted();
 }
@@ -1750,6 +1750,6 @@ void LinkOpponentHandlecmd55(void)
     gBattlerControllerFuncs[gActiveBattler] = sub_8037F34;
 }
 
-void LinkOpponentHandlecmd56(void)
+static void LinkOpponentCmdEnd(void)
 {
 }
