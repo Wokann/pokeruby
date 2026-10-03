@@ -142,6 +142,7 @@ static void WallyCmdEnd(void);
 
 static void WallyBufferRunCommand(void);
 static void WallyBufferExecCompleted(void);
+static void WallySetBattleEndCallbacks(void);
 static void CompleteOnChosenItem(void);
 static void Intro_WaitForShinyAnimAndHealthbox(void);
 static u32 CopyWallyMonData(u8 monId, u8 *dst);
@@ -309,7 +310,7 @@ static void CompleteOnInactiveTextPrinter(void)
         WallyBufferExecCompleted();
 }
 
-void WallySetBattleEndCallbacks(void)
+static void WallySetBattleEndCallbacks(void)
 {
     if (!gPaletteFade.active)
     {
