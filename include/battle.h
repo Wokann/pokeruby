@@ -558,35 +558,6 @@ typedef void (*BattleCmdFunc)(void);
 
 extern u8 gBattleTextBuff1[];
 
-//function declarations of buffer emits
-void BtlController_EmitGetMonData(u8 buffID, u8 request, u8 c);    //0x0
-void BtlController_EmitGetRawMonData(u8 a, u8 b, u8 c); //0x1
-void BtlController_EmitSetMonData(u8 a, u8 request, u8 c, u8 bytes, void *data);  //0x2
-void BtlController_EmitSwitchInAnim(u8 a, u8 b, u8 c); //0x5
-void BtlController_EmitReturnMonToBall(u8 a, u8 b); //0x6
-void BtlController_EmitTrainerSlide(u8 a); //0x8
-void BtlController_EmitFaintAnimation(u8 a);  //0xA
-void BtlController_EmitBallThrowAnim(u8 a, u8 shakes);  //0xD
-//void BtlController_EmitMoveAnimation(u8 a, u16 move, u8 turn, u16 power, s32 dmg, u8 happiness, void *disable_struct); //0xF
-void BtlController_EmitPrintString(u8 a, u16 stringID);  //0x10
-//void BtlController_EmitPrintSelectionString(u8 a, u16 stringID); //0x11
-void BtlController_EmitChoosePokemon(u8 a, u8 b, u8 c, u8 d, u8 *e); //0x16
-//void BtlController_EmitHealthBarUpdate(u8 a, u16 b); //0x18; Had to declare the second arg as u16 because s16 wont match in atk0b
-//void BtlController_EmitExpUpdate(u8 a, u8 b, u16 c); //0x19
-void BtlController_EmitStatusIconUpdate(u8 a, u32 b, u32 c); //0x1A
-void BtlController_EmitStatusAnimation(u8 a, u8 b, u32 c); //0x1B
-void BtlController_EmitStatusXor(u8 a, u8 b); //0x1C
-void BtlController_EmitHitAnimation(u8 a); //0x29
-void BtlController_EmitPlaySE(u8 a, u16 sound); //0x2B
-void BtlController_EmitPlayFanfareOrBGM(u8 a, u16 sound);    //0x2C
-void BtlController_EmitFaintingCry(u8 a); //0x2D
-void BtlController_EmitIntroSlide(u8 bufferId, u8 environmentId); //0x2E
-void BtlController_EmitHidePartyStatusSummary(u8 a);  //0x31
-void BtlController_EmitSpriteInvisibility(u8 a, u8 b); //0x33
-void BtlController_EmitBattleAnimation(u8 a, u8 b, u16 c); //0x34
-void BtlController_EmitResetActionMoveSelection(u8 a, u8 b); //0x36
-void BtlController_EmitCmd55(u8 a, u8 b); //0x37
-
 void MarkBattlerForControllerExec(u8 bank);
 
 extern u8 gBattleTextBuff1[];

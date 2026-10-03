@@ -4,6 +4,7 @@
 #include "constants/items.h"
 #include "constants/species.h"
 #include "battle.h"
+#include "battle_controllers.h"
 #include "evolution_scene.h"
 #include "ewram.h"
 #include "item.h"
