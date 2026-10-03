@@ -1,17 +1,13 @@
 #include "global.h"
 #include "lottery_corner.h"
 #include "event_data.h"
+#include "pokemon.h"
 #include "constants/items.h"
 #include "random.h"
 #include "constants/species.h"
 #include "string_util.h"
 #include "text.h"
 
-extern u16 gSpecialVar_Result;
-extern u16 gSpecialVar_0x8004;
-extern struct PokemonStorage gPokemonStorage;
-extern u16 gSpecialVar_0x8005;
-extern u16 gSpecialVar_0x8006;
 static EWRAM_DATA u16 sWinNumberDigit = 0;
 static EWRAM_DATA u16 sOtIdDigit = 0;
 
@@ -38,7 +34,7 @@ void SetRandomLotteryNumber(u16 i)
     u32 var = Random();
 
     while (--i != 0xFFFF)
-        var = var * 1103515245 + 12345;
+        var = ISO_RANDOMIZE2(var);
 
     SetLotteryNumber(var);
 }
@@ -63,7 +59,6 @@ void PickLotteryCornerTicket(void)
     {
         struct Pokemon *mon = &gPlayerParty[i];
 
-        // UB: Too few arguments for function GetMonData
         if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE)
         {
             // do not calculate ticket values for eggs.
@@ -80,8 +75,10 @@ void PickLotteryCornerTicket(void)
                 }
             }
         }
-        else // pokemon are always arranged from populated spots first to unpopulated, so the moment a NONE species is found, that's the end of the list.
+        else // Pokemon are always arranged from populated spots first to unpopulated, so the moment a NONE species is found, that's the end of the list.
+        {
             break;
+        }
     }
 
     for (i = 0; i < TOTAL_BOXES_COUNT; i++)
@@ -90,7 +87,6 @@ void PickLotteryCornerTicket(void)
         {
             struct BoxPokemon *mon = &gPokemonStorage.boxes[i][j];
 
-            // UB: Too few arguments for function GetMonData
             if (GetBoxMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE &&
             !GetBoxMonData(mon, MON_DATA_IS_EGG))
             {
@@ -142,7 +138,9 @@ static u8 GetMatchingDigits(u16 winNumber, u16 otId)
             matchingDigits++;
         }
         else
+        {
             break;
+        }
     }
     return matchingDigits;
 }
