@@ -67,38 +67,38 @@ extern const u8 gSubstituteDollTilemap[]; // graphics.s
 extern const u8 gSubstituteDollGfx[]; // graphics.s
 extern const u8 gSubstituteDollPal[]; // graphics.s
 static const struct CompressedSpriteSheet sSpriteSheet_SinglesPlayerHealthbox =
-{ gHealthboxSinglesPlayerGfx, 4096, 0xd6ff };
+{ gHealthboxSinglesPlayerGfx, 4096, TAG_HEALTHBOX_PLAYER1_TILE };
 
 static const struct CompressedSpriteSheet sSpriteSheet_SinglesOpponentHealthbox =
-{ gHealthboxSinglesOpponentGfx, 4096, 0xd701 };
+{ gHealthboxSinglesOpponentGfx, 4096, TAG_HEALTHBOX_OPPONENT1_TILE };
 
 static const struct CompressedSpriteSheet sSpriteSheets_DoublesPlayerHealthbox[] =
 {
-    { gHealthboxDoublesPlayerGfx, 2048, 0xd6ff },
-    { gHealthboxDoublesPlayerGfx, 2048, 0xd700 },
+    { gHealthboxDoublesPlayerGfx, 2048, TAG_HEALTHBOX_PLAYER1_TILE },
+    { gHealthboxDoublesPlayerGfx, 2048, TAG_HEALTHBOX_PLAYER2_TILE },
 };
 
 static const struct CompressedSpriteSheet sSpriteSheets_DoublesOpponentHealthbox[] =
 {
-    { gHealthboxDoublesOpponentGfx, 2048, 0xd701 },
-    { gHealthboxDoublesOpponentGfx, 2048, 0xd702 },
+    { gHealthboxDoublesOpponentGfx, 2048, TAG_HEALTHBOX_OPPONENT1_TILE },
+    { gHealthboxDoublesOpponentGfx, 2048, TAG_HEALTHBOX_OPPONENT2_TILE },
 };
 
 static const struct CompressedSpriteSheet sSpriteSheet_SafariHealthbox =
-{ gHealthboxSafariGfx, 4096, 0xd70b };
+{ gHealthboxSafariGfx, 4096, TAG_HEALTHBOX_SAFARI_TILE };
 
 static const struct CompressedSpriteSheet sSpriteSheets_HealthBar[] =
 {
-    { gBlankGfxCompressed, 256, 0xd704 },
-    { gBlankGfxCompressed, 288, 0xd705 },
-    { gBlankGfxCompressed, 256, 0xd706 },
-    { gBlankGfxCompressed, 288, 0xd707 },
+    { gBlankGfxCompressed, 256, TAG_HEALTHBAR_PLAYER1_TILE },
+    { gBlankGfxCompressed, 288, TAG_HEALTHBAR_OPPONENT1_TILE },
+    { gBlankGfxCompressed, 256, TAG_HEALTHBAR_PLAYER2_TILE },
+    { gBlankGfxCompressed, 288, TAG_HEALTHBAR_OPPONENT2_TILE },
 };
 
 static const struct SpritePalette sSpritePalettes_HealthBoxHealthBar[] =
 {
-    { gBattleInterface_BallStatusBarPal, 0xD6FF },
-    { gBattleInterface_BallDisplayPal, 0xD704 },
+    { gBattleInterface_BallStatusBarPal, TAG_HEALTHBOX_PAL },
+    { gBattleInterface_BallDisplayPal, TAG_HEALTHBAR_PAL },
 };
 
 extern void Task_PlayerController_RestoreBgmAfterCry(u8);
