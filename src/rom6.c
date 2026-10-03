@@ -39,7 +39,7 @@ bool8 CheckObjectGraphicsInFrontOfPlayer(u8 graphicsId)
     u8 objEventId;
 
     GetXYCoordsOneStepInFrontOfPlayer(&gPlayerFacingPosition.x, &gPlayerFacingPosition.y);
-    gPlayerFacingPosition.elevation = PlayerGetZCoord();
+    gPlayerFacingPosition.elevation = PlayerGetElevation();
     objEventId = GetObjectEventIdByXYZ(gPlayerFacingPosition.x, gPlayerFacingPosition.y, gPlayerFacingPosition.elevation);
     if (gObjectEvents[objEventId].graphicsId != graphicsId)
     {
@@ -75,7 +75,7 @@ static void task08_080C9820(u8 taskId)
         }
         else
         {
-            sub_8059BF4();
+            SetPlayerAvatarFieldMove();
             ObjectEventSetHeldMovement(&gObjectEvents[objEventId], MOVEMENT_ACTION_START_ANIM_IN_DIRECTION);
             gTasks[taskId].func = sub_810B3DC;
         }

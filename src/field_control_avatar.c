@@ -287,7 +287,7 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
 static void GetPlayerPosition(struct MapPosition *position)
 {
     PlayerGetDestCoords(&position->x, &position->y);
-    position->elevation = PlayerGetZCoord();
+    position->elevation = PlayerGetElevation();
 }
 
 static void GetInFrontOfPlayerPosition(struct MapPosition *position)
@@ -297,7 +297,7 @@ static void GetInFrontOfPlayerPosition(struct MapPosition *position)
     GetXYCoordsOneStepInFrontOfPlayer(&position->x, &position->y);
     PlayerGetDestCoords(&x, &y);
     if (MapGridGetElevationAt(x, y) != 0)
-        position->elevation = PlayerGetZCoord();
+        position->elevation = PlayerGetElevation();
     else
         position->elevation = 0;
 }

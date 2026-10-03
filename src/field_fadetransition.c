@@ -76,7 +76,7 @@ void WarpFadeScreen(void)
 
 void sub_8080958(u8 arg)
 {
-    sub_8059B88(!arg);
+    SetPlayerInvisibility(!arg);
 }
 
 void task0A_asap_script_env_2_enable_and_set_ctx_running(u8 taskID)

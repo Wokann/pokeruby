@@ -240,14 +240,25 @@ struct ObjectEventGraphicsInfo
     /*0x20*/ const union AffineAnimCmd *const *affineAnims;
 };
 
-#define PLAYER_AVATAR_FLAG_ON_FOOT    (1 << 0)
-#define PLAYER_AVATAR_FLAG_MACH_BIKE  (1 << 1)
-#define PLAYER_AVATAR_FLAG_ACRO_BIKE  (1 << 2)
-#define PLAYER_AVATAR_FLAG_SURFING    (1 << 3)
-#define PLAYER_AVATAR_FLAG_UNDERWATER (1 << 4)
-#define PLAYER_AVATAR_FLAG_5          (1 << 5)
-#define PLAYER_AVATAR_FLAG_6          (1 << 6)
-#define PLAYER_AVATAR_FLAG_DASH       (1 << 7)
+enum {
+    PLAYER_AVATAR_STATE_NORMAL,
+    PLAYER_AVATAR_STATE_MACH_BIKE,
+    PLAYER_AVATAR_STATE_ACRO_BIKE,
+    PLAYER_AVATAR_STATE_SURFING,
+    PLAYER_AVATAR_STATE_UNDERWATER,
+    PLAYER_AVATAR_STATE_FIELD_MOVE,
+    PLAYER_AVATAR_STATE_FISHING,
+    PLAYER_AVATAR_STATE_WATERING,
+};
+
+#define PLAYER_AVATAR_FLAG_ON_FOOT      (1 << 0)
+#define PLAYER_AVATAR_FLAG_MACH_BIKE    (1 << 1)
+#define PLAYER_AVATAR_FLAG_ACRO_BIKE    (1 << 2)
+#define PLAYER_AVATAR_FLAG_SURFING      (1 << 3)
+#define PLAYER_AVATAR_FLAG_UNDERWATER   (1 << 4)
+#define PLAYER_AVATAR_FLAG_CONTROLLABLE (1 << 5)
+#define PLAYER_AVATAR_FLAG_FORCED_MOVE  (1 << 6)
+#define PLAYER_AVATAR_FLAG_DASH         (1 << 7)
 
 enum
 {
@@ -297,7 +308,7 @@ enum
 struct PlayerAvatar /* 0x202E858 */
 {
     /*0x00*/ u8 flags;
-    /*0x01*/ u8 unk1; // used to be named bike, but its definitely not that. seems to be some transition flags
+    /*0x01*/ u8 transitionFlags; // used to be named bike, but its definitely not that. seems to be some transition flags
     /*0x02*/ u8 runningState; // this is a static running state. 00 is not moving, 01 is turn direction, 02 is moving.
     /*0x03*/ u8 tileTransitionState; // this is a transition running state: 00 is not moving, 01 is transition between tiles, 02 means you are on the frame in which you have centered on a tile but are about to keep moving, even if changing directions. 2 is also used for a ledge hop, since you are transitioning.
     /*0x04*/ u8 spriteId;

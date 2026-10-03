@@ -58,10 +58,10 @@ extern const u8 gSystemText_LoadingError[];
 extern const u8 gOtherText_Hoenn[];
 
 // field_player_avatar
-extern const u8 gOtherText_OhABite[];
-extern const u8 gOtherText_PokeOnHook[];
-extern const u8 gOtherText_NotEvenANibble[];
-extern const u8 gOtherText_ItGotAway[];
+extern const u8 gText_OhABite[];
+extern const u8 gText_PokemonOnHook[];
+extern const u8 gText_NotEvenANibble[];
+extern const u8 gText_ItGotAway[];
 
 // trade
 extern const u8 sText_Cancel[];

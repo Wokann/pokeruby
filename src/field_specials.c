@@ -1603,7 +1603,7 @@ void SpawnCameraDummy(void)
 
 void RemoveCameraDummy(void)
 {
-    CameraObjectSetFollowedObjectId(GetPlayerAvatarObjectId());
+    CameraObjectSetFollowedObjectId(GetPlayerAvatarSpriteId());
     RemoveObjectEventByLocalIdAndMap(LOCALID_CAMERA, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
 }
 

@@ -2615,7 +2615,7 @@ void sub_80889E4(struct Task *task)
     objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
     if (!ObjectEventIsMovementOverridden(objectEvent) || ObjectEventClearHeldMovementIfFinished(objectEvent))
     {
-        sub_8059BF4();
+        SetPlayerAvatarFieldMove();
         ObjectEventSetHeldMovement(objectEvent, MOVEMENT_ACTION_START_ANIM_IN_DIRECTION);
         task->data[0]++;
     }
@@ -2747,7 +2747,7 @@ void sub_8088CA0(struct Task *task)
         task->data[15] = gPlayerAvatar.flags;
         gPlayerAvatar.preventStep = TRUE;
         SetPlayerAvatarStateMask(1);
-        sub_8059BF4();
+        SetPlayerAvatarFieldMove();
         ObjectEventSetHeldMovement(objectEvent, MOVEMENT_ACTION_START_ANIM_IN_DIRECTION);
         task->data[0]++;
     }
@@ -3122,7 +3122,7 @@ void sub_8089414(struct Task *task)
         sprite->x2 = 0;
         sprite->y2 = 0;
         sprite->coordOffsetEnabled = 1;
-        sub_8059BF4();
+        SetPlayerAvatarFieldMove();
         ObjectEventSetHeldMovement(objectEvent, MOVEMENT_ACTION_START_ANIM_IN_DIRECTION);
         task->data[0]++;
     }

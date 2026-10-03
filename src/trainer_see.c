@@ -323,7 +323,7 @@ static bool8 sub_8084478(u8 taskId, struct Task *task, struct ObjectEvent *train
     if (ObjectEventIsMovementOverridden(playerObj) && !ObjectEventClearHeldMovementIfFinished(playerObj))
         return FALSE;
 
-    sub_80597E8();
+    CancelPlayerForcedMovement();
     ObjectEventSetHeldMovement(&gObjectEvents[gPlayerAvatar.objectEventId], GetFaceDirectionMovementAction(GetOppositeDirection(trainerObj->facingDirection)));
     task->data[0]++;
     return FALSE;

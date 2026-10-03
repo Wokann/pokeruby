@@ -404,8 +404,8 @@ void sub_8071310(void)
     if (!IsOverworldLinkActive())
     {
         FreezeObjectEvents();
-        sub_80594C0();
-        sub_80597F4();
+        PlayerFreeze();
+        StopPlayerAvatar();
     }
     CreateStartMenuTask(sub_80712B4);
     LockPlayerFieldControls();

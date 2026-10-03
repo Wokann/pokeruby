@@ -356,7 +356,7 @@ void PerStepCallback_8069864(u8 taskId)
 
 void sub_80699D8(s16 x, s16 y)
 {
-    u8 z = PlayerGetZCoord();
+    u8 z = PlayerGetElevation();
     if (!(z & 0x01))
     {
         switch (MapGridGetMetatileIdAt(x, y))
@@ -373,7 +373,7 @@ void sub_80699D8(s16 x, s16 y)
 
 void sub_8069A3C(s16 x, s16 y)
 {
-    u8 z = PlayerGetZCoord();
+    u8 z = PlayerGetElevation();
     if (!(z & 0x01))
     {
         switch (MapGridGetMetatileIdAt(x, y))
@@ -419,7 +419,7 @@ void PerStepCallback_8069AA0(u8 taskId)
             }
             isFortreeBridgeCur = MetatileBehavior_IsFortreeBridge(MapGridGetMetatileBehaviorAt(x, y));
             isFortreeBridgePrev = MetatileBehavior_IsFortreeBridge(MapGridGetMetatileBehaviorAt(x2, y2));
-            z = PlayerGetZCoord();
+            z = PlayerGetElevation();
             flag = 0;
             if ((u8)(z & 1) == 0)
             {

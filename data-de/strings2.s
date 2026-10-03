@@ -139,16 +139,16 @@ gSystemText_LoadingError:: @ 842C58F
 gOtherText_Hoenn:: @ 842C5B5
 	.string "HOENN$"
 
-gOtherText_OhABite:: @ 842C5BB
+gText_OhABite:: @ 842C5BB
 	.string "Oh! Da hat etwas angebissen!$"
 
-gOtherText_PokeOnHook:: @ 842C5C7
+gText_PokemonOnHook:: @ 842C5C7
 	.string "Du hast ein POKéMON am Haken!{PAUSE_UNTIL_PRESS}$"
 
-gOtherText_NotEvenANibble:: @ 842C5E2
+gText_NotEvenANibble:: @ 842C5E2
 	.string "Nicht mal ein klitzekleines Knabbern...{PAUSE_UNTIL_PRESS}$"
 
-gOtherText_ItGotAway:: @ 842C5F9
+gText_ItGotAway:: @ 842C5F9
 	.string "Es ist entkommen...{PAUSE_UNTIL_PRESS}$$"
 
 gText_XWillBeSentToY:: @ 842C60B

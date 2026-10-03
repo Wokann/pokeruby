@@ -1254,7 +1254,7 @@ static void DoCB1_Overworld(u16 newKeys, u16 heldKeys)
 {
     struct FieldInput inputStruct;
 
-    sub_8059204();
+    UpdatePlayerAvatarTransitionState();
     ClearPlayerFieldInput(&inputStruct);
     GetPlayerFieldInput(&inputStruct, newKeys, heldKeys);
     if (!ArePlayerFieldControlsLocked())
@@ -1266,7 +1266,7 @@ static void DoCB1_Overworld(u16 newKeys, u16 heldKeys)
         }
         else
         {
-            player_step(inputStruct.dpadDirection, newKeys, heldKeys);
+            PlayerStep(inputStruct.dpadDirection, newKeys, heldKeys);
         }
     }
 }

@@ -84,9 +84,9 @@ static void (*const sMachBikeTransitions[])(u8) =
 // bikeFrameCounter is input which is represented by sMachBikeSpeeds in order: 0 is normal speed (1 speed), 1 is fast speed (2 speed), 2 is fastest speed (4 speed)
 static void (*const sMachBikeSpeedCallbacks[])(u8) =
 {
-    PlayerGoSpeed1, // normal speed (1 speed)
-    PlayerGoSpeed2, // fast speed (2 speed)
-    PlayerGoSpeed4, // fastest speed (4 speed)
+    PlayerWalkNormal, // normal speed (1 speed)
+    PlayerWalkFast, // fast speed (2 speed)
+    PlayerWalkFaster, // fastest speed (4 speed)
 };
 
 static void (*const sAcroBikeTransitions[])(u8) =
@@ -714,11 +714,11 @@ static void AcroBikeTransition_WheelieMoving(u8 direction)
             if (MetatileBehavior_IsBumpySlope(playerObjEvent->currentMetatileBehavior))
                 PlayerIdleWheelie(direction);
             else
-                sub_80595DC(direction);  //hit wall?
+                PlayerWheelieInPlace(direction);  //hit wall?
         }
         return;
     }
-    sub_8059618(direction);
+    PlayerWheelieMove(direction);
     gPlayerAvatar.runningState = MOVING;
 }
 
@@ -748,11 +748,11 @@ static void AcroBikeTransition_WheelieRisingMoving(u8 direction)
             if (MetatileBehavior_IsBumpySlope(playerObjEvent->currentMetatileBehavior))
                 PlayerIdleWheelie(direction);
             else
-                sub_80595DC(direction);  //hit wall?
+                PlayerWheelieInPlace(direction);  //hit wall?
         }
         return;
     }
-    sub_8059600(direction);
+    PlayerPopWheelieWhileMoving(direction);
     gPlayerAvatar.runningState = MOVING;
 }
 
@@ -775,7 +775,7 @@ static void AcroBikeTransition_WheelieLoweringMoving(u8 direction)
             PlayerEndWheelie(direction);
         return;
     }
-    sub_8059630(direction);
+    PlayerEndWheelieWhileMoving(direction);
 }
 
 void Bike_TryAcroBikeHistoryUpdate(u16 newKeys, u16 heldKeys)
@@ -925,7 +925,7 @@ static bool8 IsRunningDisallowedByMetatile(u8 tile)
 {
     if (MetatileBehavior_IsRunningDisallowed(tile))
         return TRUE;
-    if (MetatileBehavior_IsFortreeBridge(tile) && (PlayerGetZCoord() & 1) == 0)
+    if (MetatileBehavior_IsFortreeBridge(tile) && (PlayerGetElevation() & 1) == 0)
         return TRUE;
     return FALSE;
 }
@@ -1070,7 +1070,7 @@ void Bike_HandleBumpySlopeJump(void)
         if (MetatileBehavior_IsBumpySlope(tileBehavior))
         {
             gPlayerAvatar.acroBikeState = ACRO_STATE_WHEELIE_STANDING;
-            sub_8059C94(GetPlayerMovementDirection());
+            PlayerUseAcroBikeOnBumpySlope(GetPlayerMovementDirection());
         }
     }
 }

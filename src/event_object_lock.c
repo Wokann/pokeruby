@@ -21,7 +21,7 @@ void sub_8064CDC(u8 taskId)
 {
     if (walkrun_is_standing_still())
     {
-        sub_80594C0();
+        PlayerFreeze();
         DestroyTask(taskId);
     }
 }
@@ -34,7 +34,7 @@ bool8 sub_8064CFC(void)
     }
     else
     {
-        sub_80597F4();
+        StopPlayerAvatar();
         return TRUE;
     }
 }
@@ -51,7 +51,7 @@ void sub_8064D38(u8 taskId)
 
     if (!task->data[0] && walkrun_is_standing_still() == TRUE)
     {
-        sub_80594C0();
+        PlayerFreeze();
         task->data[0] = 1;
     }
     if (!task->data[1] && !gObjectEvents[gSelectedObjectEvent].singleMovementActive)
@@ -71,7 +71,7 @@ bool8 sub_8064DB4(void)
     }
     else
     {
-        sub_80597F4();
+        StopPlayerAvatar();
         return TRUE;
     }
 }
