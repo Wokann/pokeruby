@@ -1166,7 +1166,7 @@ void sub_800FCFC(void)
     ScanlineEffect_InitHBlankDmaTransfer();
 }
 
-void nullsub_36(struct Sprite *sprite)
+void SpriteCB_VsLetterDummy(struct Sprite *sprite)
 {
 }
 

@@ -1,6 +1,8 @@
 #ifndef GUARD_GRAPHICS_H
 #define GUARD_GRAPHICS_H
 
+extern const u8 gVsLettersGfx[];
+
 struct BattleAnimBackground
 {
     void *image;

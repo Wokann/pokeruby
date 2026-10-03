@@ -73,58 +73,57 @@ extern const struct LinkResultWindow gLinkResultWindows[];
 
 extern struct SpriteTemplate gSpriteTemplate_81F96D0;
 
-const struct OamData gOamData_81F952C = {
+static const struct OamData sVsLetter_V_OamData = {
     .affineMode = ST_OAM_AFFINE_DOUBLE,
     .size = 3
 };
 
-const struct OamData gOamData_81F9534 = {
+static const struct OamData sVsLetter_S_OamData = {
     .affineMode = ST_OAM_AFFINE_DOUBLE,
     .size = 3,
     .tileNum = 64
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_81F953C[] = {
+static const union AffineAnimCmd sVsLetterAffineAnimCmds0[] = {
     AFFINEANIMCMD_FRAME(0x80, 0x80, 0, 0),
     AFFINEANIMCMD_END
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_81F954C[] = {
+static const union AffineAnimCmd sVsLetterAffineAnimCmds1[] = {
     AFFINEANIMCMD_FRAME(0x80, 0x80, 0, 0),
     AFFINEANIMCMD_FRAME(0x18, 0x18, 0, -128),
     AFFINEANIMCMD_FRAME(0x18, 0x18, 0, -128),
     AFFINEANIMCMD_END
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_81F956C[] = {
-    gSpriteAffineAnim_81F953C,
-    gSpriteAffineAnim_81F954C
+static const union AffineAnimCmd *const sVsLetterAffineAnimTable[] = {
+    sVsLetterAffineAnimCmds0,
+    sVsLetterAffineAnimCmds1
 };
 
-const struct SpriteTemplate gSpriteTemplate_81F9574 = {
+static const struct SpriteTemplate sVsLetter_V_SpriteTemplate = {
     .tileTag = 10000,
     .paletteTag = 10000,
-    .oam = &gOamData_81F952C,
+    .oam = &sVsLetter_V_OamData,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_81F956C,
-    .callback = nullsub_36
+    .affineAnims = sVsLetterAffineAnimTable,
+    .callback = SpriteCB_VsLetterDummy
 };
 
-const struct SpriteTemplate gSpriteTemplate_81F958C = {
+static const struct SpriteTemplate sVsLetter_S_SpriteTemplate = {
     .tileTag = 10000,
     .paletteTag = 10000,
-    .oam = &gOamData_81F9534,
+    .oam = &sVsLetter_S_OamData,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_81F956C,
-    .callback = nullsub_36
+    .affineAnims = sVsLetterAffineAnimTable,
+    .callback = SpriteCB_VsLetterDummy
 };
 
-extern const u8 gUnknown_08E5DC2C[];
 
-const struct CompressedSpriteSheet gUnknown_081F95A4[] = {
-    {gUnknown_08E5DC2C, 4096, 0x2710},
+static const struct CompressedSpriteSheet sVsLettersSpriteSheet[] = {
+    {gVsLettersGfx, 4096, 0x2710},
 };
 
 struct BattleBackground
@@ -611,8 +610,8 @@ void InitLinkBattleVsScreen(u8 taskId)
     case 1:
         palette = AllocSpritePalette(10000);
         gPlttBufferUnfaded[palette * 16 + 0x10f] = gPlttBufferFaded[palette * 16 + 0x10f] = 0x7fff;
-        gBattleStruct->linkBattleVsSpriteId_V = CreateSprite(&gSpriteTemplate_81F9574, 108, 80, 0);
-        gBattleStruct->linkBattleVsSpriteId_S = CreateSprite(&gSpriteTemplate_81F958C, 132, 80, 0);
+        gBattleStruct->linkBattleVsSpriteId_V = CreateSprite(&sVsLetter_V_SpriteTemplate, 108, 80, 0);
+        gBattleStruct->linkBattleVsSpriteId_S = CreateSprite(&sVsLetter_S_SpriteTemplate, 132, 80, 0);
         gSprites[gBattleStruct->linkBattleVsSpriteId_V].invisible = TRUE;
         gSprites[gBattleStruct->linkBattleVsSpriteId_S].invisible = TRUE;
         gTasks[taskId].data[0]++;
@@ -660,14 +659,14 @@ void DrawBattleEntryBackground(void)
         LZDecompressVram(gVersusFrameGfx, (void *)(VRAM + 0x4000));
         LZDecompressVram(gVersusFrameTilemap, (void *)(VRAM + 0xE000));
         LZDecompressVram(gVersusFrameTilemap, (void *)(VRAM + 0xF000));
-        LZDecompressVram(gUnknown_08E5DC2C, (void *)(VRAM + 0x10000));
+        LZDecompressVram(gVsLettersGfx, (void *)(VRAM + 0x10000));
         LoadCompressedPalette(gVersusFramePal, 0x60, 0x20);
         REG_BG1CNT = 0x5c04;
         REG_WININ = 0x36;
         REG_WINOUT = 0x36;
         gBattle_BG1_Y = 0xff5c;
         gBattle_BG2_Y = 0xff5c;
-        LoadCompressedObjectPic(gUnknown_081F95A4);
+        LoadCompressedObjectPic(sVsLettersSpriteSheet);
     }
     else if (gBattleTypeFlags & (BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_LINK))
     {
