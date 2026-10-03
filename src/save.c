@@ -712,28 +712,28 @@ u8 Save_WriteDataInternal(u8 saveType)
             IncrementGameStat(GAME_STAT_ENTERED_HOF);
         for (i = 0; i < NUM_HALL_OF_FAME_SECTORS; i++)
             HandleWriteSectorNBytes(HALL_OF_FAME_SECTOR + i, sHallOfFameChunks[i].data, sHallOfFameChunks[i].size);
-        SaveSerializedGame();
+        CopyPartyAndObjectsToSave();
         WriteSaveBlockChunks(0xFFFF, sSaveBlockChunks);
         break;
     case SAVE_NORMAL: // normal save. also called by overwriting your own save.
     default:
-        SaveSerializedGame();
+        CopyPartyAndObjectsToSave();
         WriteSaveBlockChunks(0xFFFF, sSaveBlockChunks);
         break;
     case SAVE_LINK: // link save. updates only gSaveBlock1 and gSaveBlock2.
-        SaveSerializedGame();
+        CopyPartyAndObjectsToSave();
         for (i = 0; i < 5; i++)
             WriteSaveBlockChunks(i, sSaveBlockChunks);
         break;
     case SAVE_EREADER: // used in mossdeep "game corner" before/after battling old man e-reader trainer
-        SaveSerializedGame();
+        CopyPartyAndObjectsToSave();
         WriteSaveBlockChunks(0, sSaveBlockChunks);
         break;
     case SAVE_OVERWRITE_DIFFERENT_FILE: // there is a different file, so overwrite it completely.
         // Erase Hall of Fame.
         for (i = HALL_OF_FAME_SECTOR; i < TOTAL_FLASH_SECTORS; i++)
             EraseFlashSector(i);
-        SaveSerializedGame();
+        CopyPartyAndObjectsToSave();
         WriteSaveBlockChunks(0xFFFF, sSaveBlockChunks);
         break;
     }
@@ -765,7 +765,7 @@ u8 sub_8125D80(void) // trade.s save
 {
     if (gFlashMemoryPresent != TRUE)
         return 1;
-    SaveSerializedGame();
+    CopyPartyAndObjectsToSave();
     RestoreSaveBackupVarsAndIncrement(sSaveBlockChunks);
     return 0;
 }
@@ -802,7 +802,7 @@ u8 sub_8125E2C(void)
     if (gFlashMemoryPresent != TRUE)
         return 1;
 
-    SaveSerializedGame();
+    CopyPartyAndObjectsToSave();
     RestoreSaveBackupVars(sSaveBlockChunks);
     sub_812556C(gUnknown_03005EB4 + 1, sSaveBlockChunks);
     return 0;
@@ -843,7 +843,7 @@ u8 Save_LoadGameData(u8 saveType)
     case SAVE_NORMAL:
     default:
         result = sub_812587C(0xFFFF, sSaveBlockChunks);
-        LoadSerializedGame();
+        CopyPartyAndObjectsFromSave();
         gSaveFileStatus = result;
         gGameContinueCallback = 0;
         break;

@@ -11,8 +11,8 @@ void SetSecretBase2Field_9_AndHideBG(void);
 void ClearSecretBase2Field_9_2(void);
 void SavePlayerParty(void);
 void LoadPlayerParty(void);
-void SaveSerializedGame(void);
-void LoadSerializedGame(void);
+void CopyPartyAndObjectsToSave(void);
+void CopyPartyAndObjectsFromSave(void);
 void LoadPlayerBag(void);
 void SavePlayerBag(void);
 

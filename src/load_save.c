@@ -22,7 +22,7 @@ struct LoadedSaveData
 EWRAM_DATA struct SaveBlock2 gSaveBlock2 = {0};
 EWRAM_DATA struct SaveBlock1 gSaveBlock1 = {0};
 
-static EWRAM_DATA struct LoadedSaveData gLoadedSaveData = {0};
+EWRAM_DATA struct LoadedSaveData gLoadedSaveData = {0};
 
 void CheckForFlashMemory(void)
 {
@@ -97,13 +97,13 @@ static void LoadObjectEvents(void)
         gObjectEvents[i] = gSaveBlock1.objectEvents[i];
 }
 
-void SaveSerializedGame(void)
+void CopyPartyAndObjectsToSave(void)
 {
     SavePlayerParty();
     SaveObjectEvents();
 }
 
-void LoadSerializedGame(void)
+void CopyPartyAndObjectsFromSave(void)
 {
     LoadPlayerParty();
     LoadObjectEvents();
