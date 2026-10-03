@@ -1,4 +1,5 @@
 #include "global.h"
+#include "credits.h"
 #include "data.h"
 #include "decompress.h"
 #include "event_data.h"
@@ -103,8 +104,8 @@ enum
 #define FOREST_RIVAL_CHASE_DELAY (554)
 #endif
 
-#define COLOR_DARK_GREEN 0x1967
-#define COLOR_LIGHT_GREEN 0x328D
+#define COLOR_DARK_GREEN RGB(7, 11, 6)
+#define COLOR_LIGHT_GREEN RGB(13, 20, 12)
 
 #define TAG_MON_BG 1001
 
@@ -185,8 +186,8 @@ extern struct SpriteTemplate gCreatingSpriteTemplate;
 
 static EWRAM_DATA s16 sUnusedCreditsValue = 0;
 static EWRAM_DATA u16 sSavedTaskId = 0; // TASK A
-EWRAM_DATA u8 gHasHallOfFameRecords = 0;
-static EWRAM_DATA u8 sUsedSpeedUp = 0;
+EWRAM_DATA bool8 gHasHallOfFameRecords = FALSE;
+static EWRAM_DATA bool8 sUsedSpeedUp = FALSE;
 
 extern u8 gReservedSpritePaletteCount;
 
@@ -194,9 +195,9 @@ extern u8 gReservedSpritePaletteCount;
 static const u16 sCredits_Pal[] = INCBIN_U16("graphics/credits/credits.gbapal");
 static const u8 sCreditsAmpersand_Gfx[] = INCBIN_U8("graphics/credits/ampersand.4bpp");
 
-void SpriteCB_CreditsMonBg(struct Sprite *sprite);
+static void SpriteCB_CreditsMonBg(struct Sprite *sprite);
 
-const u8 sTheEnd_LetterMap_T[] =
+static const u8 sTheEnd_LetterMap_T[] =
 {
     0,    1, 0,
     0xFF, 1, 0xFF,
@@ -205,7 +206,7 @@ const u8 sTheEnd_LetterMap_T[] =
     0xFF, 1, 0xFF,
 };
 
-const u8 sTheEnd_LetterMap_H[] =
+static const u8 sTheEnd_LetterMap_H[] =
 {
     1, 0xFF, 1,
     1, 0xFF, 1,
@@ -214,7 +215,7 @@ const u8 sTheEnd_LetterMap_H[] =
     1, 0xFF, 1,
 };
 
-const u8 sTheEnd_LetterMap_E[] =
+static const u8 sTheEnd_LetterMap_E[] =
 {
     1, 0, 0,
     1, 0xFF, 0xFF,
@@ -223,7 +224,7 @@ const u8 sTheEnd_LetterMap_E[] =
     1, 0x80, 0x80,
 };
 
-const u8 sTheEnd_LetterMap_N[] =
+static const u8 sTheEnd_LetterMap_N[] =
 {
     1, 3, 1,
     1, 4, 1,
@@ -232,7 +233,7 @@ const u8 sTheEnd_LetterMap_N[] =
     1, 0xC3, 1,
 };
 
-const u8 sTheEnd_LetterMap_D[] =
+static const u8 sTheEnd_LetterMap_D[] =
 {
     1, 6, 7,
     1, 8, 9,
@@ -265,7 +266,7 @@ const u8 sTheEnd_LetterMap_I[] = {
 #include "data/credits.h"
 #endif
 
-const u8 sMonSpritePos[][2] =
+static const u8 sMonSpritePos[][2] =
 {
     {104, 36},
     {120, 36},
@@ -346,22 +347,28 @@ static const union AnimCmd *const sAnims_Rival[] =
     sAnim_Rival_Still,
 };
 
-#define MONBG_OFFSET 0x1800
+#define MONBG_OFFSET (MON_PIC_SIZE * 3)
 
-static const struct SpriteSheet sSpriteSheet_MonBg[] = {{gDecompressionBuffer, MONBG_OFFSET, TAG_MON_BG}, {0}};
-static const struct SpritePalette sSpritePalette_MonBg[] = {{(const u16 *)(gDecompressionBuffer + MONBG_OFFSET), TAG_MON_BG}, {0}};
+static const struct SpriteSheet sSpriteSheet_MonBg[] = {
+    {gDecompressionBuffer, MONBG_OFFSET, TAG_MON_BG},
+    {},
+};
+static const struct SpritePalette sSpritePalette_MonBg[] = {
+    {(const u16 *)(gDecompressionBuffer + MONBG_OFFSET), TAG_MON_BG},
+    {},
+};
 
 static const struct OamData sOamData_MonBg =
 {
-    .y = 160,
-    .affineMode = 0,
-    .objMode = 0,
-    .mosaic = 0,
-    .bpp = 0,
-    .shape = 0,
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
     .x = 0,
     .matrixNum = 0,
-    .size = 3,
+    .size = SPRITE_SIZE(64x64),
     .tileNum = 0,
     .priority = 1,
     .paletteNum = 0,
@@ -421,13 +428,18 @@ static void ResetGpuAndVram(void);
 static void Task_UpdatePage(u8 taskIdB);
 static u8 CheckChangeScene(u8 page, u8 taskIdA);
 static void Task_ShowMons(u8 taskIdD);
+static void Task_CycleSceneryPalette(u8 taskIdE);
+static void Task_BikeScene(u8 bikeTaskId);
 static bool8 LoadBikeScene(u8 scene, u8 taskIdA);
 static void ResetCreditsTasks(u8 taskIdA);
 static void LoadTheEndScreen(u16 tileOffsetLoad, u16 tileOffsetWrite, u16 palOffset);
+static u16 GetLetterMapTile(u8 baseTiles);
+static void DrawLetterMapTiles(const u8 letterMap[], u8 baseX, u8 baseY, u16 offset, u16 palette);
 static void DrawTheEnd(u16 offset, u16 palette);
 static void SpriteCB_Player(struct Sprite *sprite);
 static void SpriteCB_Rival(struct Sprite *sprite);
-static u8 CreateCreditsMonSprite(u16 species, u16 x, u16 y, u16 position);
+static void SpriteCB_CreditsMon(struct Sprite *sprite);
+static u8 CreateCreditsMonSprite(u16 species, s16 x, s16 y, u16 position);
 static void DeterminePokemonToShow(void);
 
 static void VBlankCB_Credits(void)
@@ -445,7 +457,7 @@ static void CB2_Credits(void)
     UpdatePaletteFade();
 
     if (JOY_HELD(B_BUTTON)
-     && gHasHallOfFameRecords != 0
+     && gHasHallOfFameRecords != FALSE
      && gTasks[sSavedTaskId].func == Task_CreditsMain)
     {
         VBlankCB_Credits();
@@ -453,7 +465,7 @@ static void CB2_Credits(void)
         AnimateSprites();
         BuildOamBuffer();
         UpdatePaletteFade();
-        sUsedSpeedUp = 1;
+        sUsedSpeedUp = TRUE;
     }
 }
 
@@ -488,7 +500,7 @@ void CB2_StartCreditsSequence(void)
 
     Text_LoadWindowTemplate(&gWindowTemplate_Credits);
     InitMenuWindow(&gWindowTemplate_Credits);
-    LoadPalette(sCredits_Pal, 0x80, sizeof(sCredits_Pal));
+    LoadPalette(sCredits_Pal, BG_PLTT_ID(8), sizeof(sCredits_Pal));
 
     CpuCopy16(sCreditsAmpersand_Gfx, (void *)(VRAM + 0xBEE0), sizeof(sCreditsAmpersand_Gfx));
 
@@ -499,7 +511,7 @@ void CB2_StartCreditsSequence(void)
     gTasks[pageTaskId].data[TDB_MAIN_TASK_ID] = taskIdA;
     gTasks[taskIdA].data[TDA_UPDATE_PAGE_TASK_ID] = pageTaskId;
 
-    BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
 
     savedIme = REG_IME;
     REG_IME = 0;
@@ -511,7 +523,7 @@ void CB2_StartCreditsSequence(void)
     SetVBlankCallback(VBlankCB_Credits);
     m4aSongNumStart(MUS_CREDITS);
     SetMainCallback2(CB2_Credits);
-    sUsedSpeedUp = 0;
+    sUsedSpeedUp = FALSE;
 
     pCreditsData = &sCreditsData;
 
@@ -553,14 +565,14 @@ static void Task_CreditsMain(u8 taskIdA)
     {
         gTasks[taskIdA].data[TDA_CURRENT_MODE] = mode;
         gTasks[taskIdA].data[TDA_NEXT_MODE] = MODE_NONE;
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
         gTasks[taskIdA].func = Task_ReadyBikeScene;
     }
     else if (gTasks[taskIdA].data[TDA_NEXT_MODE] == MODE_SHOW_MONS)
     {
         gTasks[taskIdA].data[TDA_CURRENT_MODE] = mode;
         gTasks[taskIdA].data[TDA_NEXT_MODE] = MODE_NONE;
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
         gTasks[taskIdA].func = Task_ReadyShowMons;
     }
 }
@@ -583,7 +595,7 @@ static void Task_SetBikeScene(u8 taskIdA)
 
     if (LoadBikeScene(gTasks[taskIdA].data[TDA_SCENE_NUM], taskIdA))
     {
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
 
         backup = REG_IME;
         REG_IME = 0;
@@ -606,7 +618,7 @@ static void Task_ReadyShowMons(u8 taskIdA)
     }
 }
 
-void Task_LoadShowMons(u8 taskIdA)
+static void Task_LoadShowMons(u8 taskIdA)
 {
     switch (gMain.state)
     {
@@ -619,17 +631,17 @@ void Task_LoadShowMons(u8 taskIdA)
         FreeAllSpritePalettes();
         gReservedSpritePaletteCount = 8;
         LZ77UnCompVram(&gBirchBagGrass_Gfx, (void *)VRAM);
-        LZ77UnCompVram(&gBirchGrassTilemap, (void *)(VRAM + 0x3800));
-        LoadPalette(gBirchBagGrass_Pal[0] + 1, 1, 31 * 2);
+        LZ77UnCompVram(&gBirchGrassTilemap, BG_SCREEN_ADDR(7));
+        LoadPalette(gBirchBagGrass_Pal[0] + 1, BG_PLTT_ID(0) + 1, PLTT_SIZEOF(2 * 16 - 1));
 
-        for (i = 0; i < 0x800; i++)
+        for (i = 0; i < MON_PIC_SIZE; i++)
             gDecompressionBuffer[i] = 0x11;
-        for (i = 0; i < 0x800; i++)
-            (gDecompressionBuffer + 0x800)[i] = 0x22;
-        for (i = 0; i < 0x800; i++)
-            (gDecompressionBuffer + 0x1000)[i] = 0x33;
+        for (i = 0; i < MON_PIC_SIZE; i++)
+            (gDecompressionBuffer + MON_PIC_SIZE)[i] = 0x22;
+        for (i = 0; i < MON_PIC_SIZE; i++)
+            (gDecompressionBuffer + MON_PIC_SIZE * 2)[i] = 0x33;
 
-        ((u16 *)(gDecompressionBuffer + MONBG_OFFSET))[0] = RGB( 0,  0,  0); // black
+        ((u16 *)(gDecompressionBuffer + MONBG_OFFSET))[0] = RGB_BLACK;
         ((u16 *)(gDecompressionBuffer + MONBG_OFFSET))[1] = RGB(31, 31, 20); // light yellow
         ((u16 *)(gDecompressionBuffer + MONBG_OFFSET))[2] = RGB(31, 20, 20); // light red
         ((u16 *)(gDecompressionBuffer + MONBG_OFFSET))[3] = RGB(20, 20, 31); // light blue
@@ -646,7 +658,7 @@ void Task_LoadShowMons(u8 taskIdA)
         gTasks[gTasks[taskIdA].data[TDA_SHOW_MONS_TASK_ID]].data[TDD_MAIN_TASK_ID] = taskIdA;
         gTasks[gTasks[taskIdA].data[TDA_SHOW_MONS_TASK_ID]].data[TDD_SCENE_NUM] = gTasks[taskIdA].data[TDA_SCENE_NUM];
 
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
         REG_BG3HOFS = 0;
         REG_BG3VOFS = 32;
         REG_BG3CNT = BGCNT_PRIORITY(3) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(7) | BGCNT_16COLOR | BGCNT_TXT256x256;
@@ -667,7 +679,7 @@ static void Task_CreditsTheEnd1(u8 taskIdA)
         return;
     }
 
-    BeginNormalPaletteFade(0xFFFFFFFF, 12, 0, 16, RGB(0, 0, 0));
+    BeginNormalPaletteFade(PALETTES_ALL, 12, 0, 16, RGB_BLACK);
     gTasks[taskIdA].func = Task_CreditsTheEnd2;
 }
 
@@ -689,7 +701,7 @@ static void Task_CreditsTheEnd3(u8 taskIdA)
     LoadTheEndScreen(0, 0x3800, 0);
     ResetSpriteData();
     FreeAllSpritePalettes();
-    BeginNormalPaletteFade(0xFFFFFFFF, 8, 16, 0, RGB(0, 0, 0));
+    BeginNormalPaletteFade(PALETTES_ALL, 8, 16, 0, RGB_BLACK);
 
     REG_BG0CNT = BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(7) | BGCNT_16COLOR | BGCNT_TXT256x256;
     backup = REG_IME;
@@ -711,7 +723,7 @@ static void Task_CreditsTheEnd4(u8 taskIdA)
         return;
     }
 
-    BeginNormalPaletteFade(0xFFFFFFFF, 6, 0, 16, RGB(0, 0, 0));
+    BeginNormalPaletteFade(PALETTES_ALL, 6, 0, 16, RGB_BLACK);
     gTasks[taskIdA].func = Task_CreditsTheEnd5;
 }
 
@@ -721,7 +733,7 @@ static void Task_CreditsTheEnd5(u8 taskIdA)
     {
         DrawTheEnd(0x3800, 0);
 
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0, RGB(0, 0, 0));
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0, RGB_BLACK);
         gTasks[taskIdA].data[TDA_END_SCREEN_DELAY] = 7200;
         gTasks[taskIdA].func = Task_CreditsTheEnd6;
     }
@@ -734,7 +746,7 @@ static void Task_CreditsTheEnd6(u8 taskIdA)
         if (gTasks[taskIdA].data[TDA_END_SCREEN_DELAY] == 0)
         {
             FadeOutBGM(4);
-            BeginNormalPaletteFade(0xFFFFFFFF, 8, 0, 16, FADE_COLOR_WHITE);
+            BeginNormalPaletteFade(PALETTES_ALL, 8, 0, 16, FADE_COLOR_WHITE);
             gTasks[taskIdA].func = Task_CreditsSoftReset;
             return;
         }
@@ -742,7 +754,7 @@ static void Task_CreditsTheEnd6(u8 taskIdA)
         if (gMain.newKeys)
         {
             FadeOutBGM(4);
-            BeginNormalPaletteFade(0xFFFFFFFF, 8, 0, 16, FADE_COLOR_WHITE);
+            BeginNormalPaletteFade(PALETTES_ALL, 8, 0, 16, FADE_COLOR_WHITE);
             gTasks[taskIdA].func = Task_CreditsSoftReset;
             return;
         }
@@ -762,7 +774,7 @@ static void Task_CreditsTheEnd6(u8 taskIdA)
 static void Task_CreditsSoftReset(u8 taskIdA)
 {
     if (!gPaletteFade.active)
-        SoftReset(0xFF);
+        SoftReset(RESET_ALL);
 }
 
 static void ResetGpuAndVram(void)
@@ -992,7 +1004,7 @@ static void Task_ShowMons(u8 taskIdD)
     }
 }
 
-void Task_BikeScene(u8 bikeTaskId)
+static void Task_BikeScene(u8 bikeTaskId)
 {
     switch (gTasks[bikeTaskId].data[TDC_STATE])
     {
@@ -1075,7 +1087,7 @@ void Task_BikeScene(u8 bikeTaskId)
     }
 }
 
-void Task_CycleSceneryPalette(u8 taskIdE)
+static void Task_CycleSceneryPalette(u8 taskIdE)
 {
     s16 bikeTaskId;
 
@@ -1338,7 +1350,7 @@ static void LoadTheEndScreen(u16 tileOffsetLoad, u16 tileOffsetWrite, u16 palOff
         ((u16 *) (VRAM + tileOffsetWrite))[13 * 32 + 4 + i] = i + 66 + baseTile;
 }
 
-u16 GetLetterMapTile(u8 baseTiles)
+static u16 GetLetterMapTile(u8 baseTiles)
 {
     u16 out = (baseTiles & 0x3F) + 80;
 
@@ -1353,7 +1365,7 @@ u16 GetLetterMapTile(u8 baseTiles)
     return out;
 }
 
-void DrawLetterMapTiles(const u8 letterMap[], u8 baseX, u8 baseY, u16 offset, u16 palette)
+static void DrawLetterMapTiles(const u8 letterMap[], u8 baseX, u8 baseY, u16 offset, u16 palette)
 {
     u8 y, x;
     const u16 tileOffset = (palette / 16) << 12;
@@ -1466,7 +1478,7 @@ static void SpriteCB_Rival(struct Sprite *sprite)
 
 #define sPosition data[1]
 
-void SpriteCB_CreditsMon(struct Sprite *sprite)
+static void SpriteCB_CreditsMon(struct Sprite *sprite)
 {
     if (gIntroCredits_MovingSceneryState != INTROCRED_SCENERY_NORMAL)
     {
@@ -1479,7 +1491,7 @@ void SpriteCB_CreditsMon(struct Sprite *sprite)
     {
     case 0:
     default:
-        sprite->oam.affineMode = 1;
+        sprite->oam.affineMode = ST_OAM_AFFINE_NORMAL;
         sprite->oam.matrixNum = sprite->sPosition;
         sprite->data[2] = 16;
         SetOamMatrix(sprite->sPosition, 0x10000 / sprite->data[2], 0, 0, 0x10000 / sprite->data[2]);
@@ -1519,9 +1531,9 @@ void SpriteCB_CreditsMon(struct Sprite *sprite)
         }
         else
         {
-            REG_BLDCNT = 0xF40;
-            REG_BLDALPHA = 0x10;
-            sprite->oam.objMode = 1;
+            REG_BLDCNT = BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG0 | BLDCNT_TGT2_BG1 | BLDCNT_TGT2_BG2 | BLDCNT_TGT2_BG3;
+            REG_BLDALPHA = BLDALPHA_BLEND(16, 0);
+            sprite->oam.objMode = ST_OAM_OBJ_BLEND;
             sprite->data[3] = 16;
             sprite->sState++;
         }
@@ -1554,7 +1566,7 @@ void SpriteCB_CreditsMon(struct Sprite *sprite)
 
 #define sMonSpriteId data[0]
 
-static u8 CreateCreditsMonSprite(u16 species, u16 x, u16 y, u16 position)
+static u8 CreateCreditsMonSprite(u16 species, s16 x, s16 y, u16 position)
 {
     u32 personality;
     const u8 *lzPaletteData;
@@ -1587,7 +1599,7 @@ static u8 CreateCreditsMonSprite(u16 species, u16 x, u16 y, u16 position)
     );
 
     lzPaletteData = GetMonSpritePalFromSpeciesAndPersonality(species, 0, 0xFFFF);
-    LoadCompressedPalette(lzPaletteData, 0x100 + (position * 16), 0x20);
+    LoadCompressedPalette(lzPaletteData, OBJ_PLTT_ID(position), PLTT_SIZE_4BPP);
     PrepareHallOfFameMonPicSpriteTemplate(position, position);
 
     spriteId = CreateSprite(&gCreatingSpriteTemplate, x, y, 0);
@@ -1605,7 +1617,7 @@ static u8 CreateCreditsMonSprite(u16 species, u16 x, u16 y, u16 position)
     return spriteId;
 }
 
-void SpriteCB_CreditsMonBg(struct Sprite *sprite)
+static void SpriteCB_CreditsMonBg(struct Sprite *sprite)
 {
     if (gSprites[sprite->sMonSpriteId].sState == 10
      || gIntroCredits_MovingSceneryState != INTROCRED_SCENERY_NORMAL)

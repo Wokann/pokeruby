@@ -1,14 +1,13 @@
 #include "global.h"
 #include "constants/heal_locations.h"
 #include "contest_util.h"
+#include "credits.h"
 #include "event_data.h"
 #include "hall_of_fame.h"
 #include "load_save.h"
 #include "main.h"
 #include "overworld.h"
 #include "pokemon.h"
-
-extern bool8 gHasHallOfFameRecords;
 
 int GameClear(void)
 {
