@@ -1,7 +1,9 @@
 #include "global.h"
+#include "battle.h"
 #include "berry_tag_screen.h"
 #include "berry.h"
 #include "decompress.h"
+#include "ewram.h"
 #include "event_object_movement.h"
 #include "item_menu.h"
 #include "item.h"
@@ -19,30 +21,21 @@
 #include "strings.h"
 #include "task.h"
 #include "text.h"
+#include "graphics.h"
+#include "constants/berry.h"
+#include "constants/rgb.h"
 
 // CreateBerryTagSprite takes an 8-bit zero-based berry index; the item ID wraps at 256.
 #define BERRY_SPRITE_INDEX_OFFSET (0x100 - FIRST_BERRY_INDEX)
 #define BERRIES_POCKET_INDEX (POCKET_BERRIES - 1)
-
-struct BerryTagSharedMem
-{
-    /*0x00*/ u8 unused[0x1FFFF];
-    /*0x1FFFF*/ u8 gfxState;
-};
-
-extern struct BerryTagSharedMem gSharedMem;
-extern u16 gBattle_BG1_Y;
+#define BERRY_TAG_BG_TILE 0x42
+#define sBerryTagGfxState (gSharedMem[0x1FFFF])
 
 static EWRAM_DATA u8 sBerrySpriteId = 0;
-static EWRAM_DATA s16 sFlavorCircleSpriteIds[5] = {0};
+static EWRAM_DATA s16 sFlavorCircleSpriteIds[FLAVOR_COUNT] = {0};
 
 extern const struct CompressedSpriteSheet gBerryCheckCircleSpriteSheet;
 extern const struct CompressedSpritePalette gBerryCheckCirclePaletteTable;
-
-extern u8 gBerryCheck_Gfx[];
-extern u8 gBerryCheck_Pal[];
-extern u8 gBerryTag_Gfx[];
-extern u8 gBerryTag_Tilemap[];
 
 static const u8 *const sBerryFirmnessStrings[] =
 {
@@ -121,13 +114,13 @@ static bool8 InitBerryTagScreen(void)
     case 5:
         if (!MultistepInitMenuWindowContinue())
             break;
-        gSharedMem.gfxState = 0;
+        sBerryTagGfxState = 0;
         gMain.state += 1;
         break;
     case 6:
         if (!LoadBerryTagGfx())
             break;
-        gSharedMem.gfxState = 0;
+        sBerryTagGfxState = 0;
         gMain.state += 1;
         break;
     case 7:
@@ -159,7 +152,7 @@ static bool8 InitBerryTagScreen(void)
         gMain.state += 1;
         break;
     case 12:
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
         gPaletteFade.bufferTransferDisabled = 0;
         SetMainCallback2(CB2_BerryTagScreen);
         return TRUE;
@@ -188,46 +181,46 @@ static void HandleInitBackgrounds(void)
     gBattle_BG1_Y = 0;
 }
 
-bool8 LoadBerryTagGfx(void)
+static bool8 LoadBerryTagGfx(void)
 {
     u16 i;
 
-    switch (gSharedMem.gfxState)
+    switch (sBerryTagGfxState)
     {
     case 0:
         LZDecompressVram(gBerryCheck_Gfx, (void *)VRAM);
-        gSharedMem.gfxState += 1;
+        sBerryTagGfxState++;
         break;
     case 1:
         LZDecompressVram(gBerryTag_Gfx, (void *)VRAM + 0x2800);
-        gSharedMem.gfxState += 1;
+        sBerryTagGfxState++;
         break;
     case 2:
-        LZDecompressVram(gBerryTag_Tilemap, (void *)VRAM + 0x3000);
-        gSharedMem.gfxState += 1;
+        LZDecompressVram(gBerryTag_Tilemap, BG_SCREEN_ADDR(6));
+        sBerryTagGfxState++;
         break;
     case 3:
-        for (i = 0; i < 0x400; i++)
+        for (i = 0; i < ARRAY_COUNT(gBGTilemapBuffers[2]); i++)
         {
             if (gSaveBlock2.playerGender == MALE)
-                gBGTilemapBuffers[2][i] = 0x4042;
+                gBGTilemapBuffers[2][i] = (4 << 12) | BERRY_TAG_BG_TILE;
             else
-                gBGTilemapBuffers[2][i] = 0x5042;
+                gBGTilemapBuffers[2][i] = (5 << 12) | BERRY_TAG_BG_TILE;
         }
-        DmaCopy16Defvars(3, gBGTilemapBuffers[2], (void *)(VRAM + 0x3800), 0x800);
-        gSharedMem.gfxState += 1;
+        DmaCopy16Defvars(3, gBGTilemapBuffers[2], BG_SCREEN_ADDR(7), sizeof(gBGTilemapBuffers[2]));
+        sBerryTagGfxState++;
         break;
     case 4:
-        LoadCompressedPalette(gBerryCheck_Pal, 0, 96 * 2);
-        gSharedMem.gfxState += 1;
+        LoadCompressedPalette(gBerryCheck_Pal, BG_PLTT_ID(0), 6 * PLTT_SIZE_4BPP);
+        sBerryTagGfxState++;
         break;
     case 5:
         LoadCompressedSpriteSheet(&gBerryCheckCircleSpriteSheet);
-        gSharedMem.gfxState += 1;
+        sBerryTagGfxState++;
         break;
     case 6:
         LoadCompressedSpritePalette(&gBerryCheckCirclePaletteTable);
-        gSharedMem.gfxState = 0;
+        sBerryTagGfxState = 0;
         return TRUE;
     }
 
@@ -248,7 +241,7 @@ static void Task_CloseBerryTagScreen(u8 taskId)
 static void PrepareToCloseBerryTagScreen(u8 taskId)
 {
     PlaySE(SE_SELECT);
-    BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
     gTasks[taskId].func = Task_CloseBerryTagScreen;
 }
 
@@ -331,27 +324,27 @@ static void CreateFlavorCircleSprites(u8 berry)
     u16 i;
 
     berryInfo = GetBerryInfo(berry + 1);
-    for (i = 0; i < 5; i++)
-        sFlavorCircleSpriteIds[i] = (u16)sFlavorCircleSpriteIds[i] | 0xFFFF;
+    for (i = 0; i < FLAVOR_COUNT; i++)
+        sFlavorCircleSpriteIds[i] = -1;
 
     // argument is the center of the circle
     if (berryInfo->spicy)
-        sFlavorCircleSpriteIds[0] = CreateBerryFlavorCircleSprite(48);
+        sFlavorCircleSpriteIds[FLAVOR_SPICY] = CreateBerryFlavorCircleSprite(48);
     if (berryInfo->dry)
-        sFlavorCircleSpriteIds[1] = CreateBerryFlavorCircleSprite(88);
+        sFlavorCircleSpriteIds[FLAVOR_DRY] = CreateBerryFlavorCircleSprite(88);
     if (berryInfo->sweet)
-        sFlavorCircleSpriteIds[2] = CreateBerryFlavorCircleSprite(128);
+        sFlavorCircleSpriteIds[FLAVOR_SWEET] = CreateBerryFlavorCircleSprite(128);
     if (berryInfo->bitter)
-        sFlavorCircleSpriteIds[3] = CreateBerryFlavorCircleSprite(168);
+        sFlavorCircleSpriteIds[FLAVOR_BITTER] = CreateBerryFlavorCircleSprite(168);
     if (berryInfo->sour)
-        sFlavorCircleSpriteIds[4] = CreateBerryFlavorCircleSprite(208);
+        sFlavorCircleSpriteIds[FLAVOR_SOUR] = CreateBerryFlavorCircleSprite(208);
 }
 
 static void DestroyFlavorCircleSprites(void)
 {
     u16 i;
 
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < FLAVOR_COUNT; i++)
     {
         if (sFlavorCircleSpriteIds[i] != -1)
         {
