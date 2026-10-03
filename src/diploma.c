@@ -11,6 +11,7 @@
 #include "task.h"
 #include "text.h"
 #include "scanline_effect.h"
+#include "constants/rgb.h"
 
 static void VBlankCB(void);
 static void MainCB2(void);
@@ -60,18 +61,18 @@ void CB2_ShowDiploma(void)
     DmaFill16(3, 0, PLTT, PLTT_SIZE);
 
     LZ77UnCompVram(sDiplomaTiles, (void *)VRAM);
-    LZ77UnCompVram(sDiplomaTilemap, (void *)(VRAM + 0x3000));
+    LZ77UnCompVram(sDiplomaTilemap, BG_SCREEN_ADDR(6));
 
     ScanlineEffect_Stop();
     ResetTasks();
     ResetSpriteData();
     ResetPaletteFade();
     FreeAllSpritePalettes();
-    LoadPalette(sDiplomaPalettes, 0, 64);
+    LoadPalette(sDiplomaPalettes, BG_PLTT_ID(0), sizeof(sDiplomaPalettes));
     Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
     InitMenuWindow(&gMenuTextWindowTemplate);
     DisplayDiplomaText();
-    BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
 
     savedIme = REG_IME;
     REG_IME = 0;
@@ -109,7 +110,7 @@ static void Task_DiplomaWaitForKeyPress(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON | B_BUTTON))
     {
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
         gTasks[taskId].func = Task_DiplomaFadeOut;
     }
 }
@@ -127,7 +128,7 @@ static void DisplayDiplomaText(void)
 {
     if (HasAllMons())
     {
-        REG_BG3HOFS = 256;
+        REG_BG3HOFS = DISPLAY_WIDTH + 16;
         StringCopy(gStringVar1, gText_DexNational);
     }
     else
