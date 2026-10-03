@@ -16,6 +16,7 @@
 #include "title_screen.h"
 #include "ewram.h"
 #include "debug.h"
+#include "constants/rgb.h"
 
 static EWRAM_DATA u8 sUnused = 0; // Set but unused.
 
@@ -33,12 +34,7 @@ static void VBlankCB(void)
 
 static bool8 CheckLanguageMatch(void)
 {
-    bool8 languagesMatch = FALSE;
-
-    if (gLinkPlayers[0].language == gLinkPlayers[1].language)
-        languagesMatch = TRUE;
-
-    return languagesMatch;
+    return gLinkPlayers[0].language == gLinkPlayers[1].language;
 }
 
 void CB2_InitMysteryEventMenu(void)
@@ -89,7 +85,7 @@ static void CB2_MysteryEventMenu(void)
     {
     case 0:
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
         gMain.state++;
         break;
     case 1:
@@ -314,7 +310,7 @@ static void CB2_MysteryEventMenu(void)
         }
         break;
     case 15:
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
         gMain.state++;
         break;
     case 16:
