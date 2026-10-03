@@ -159,7 +159,6 @@ void nullsub_6(void);
 void ReshowBattleScreenAfterMenu(void);
 void BattleMainCB2(void);
 void AddMoney(u32* moneySaveblock, u32 to_give);
-void PokemonUseItemEffects(struct Pokemon*, u16 item, u8 partyID, u8 r3, u8 sp);
 u8 CanRunFromBattle(void);
 u8 GetMoveTarget(u16 move, u8 targetbyte); //get target of move
 u8 Overworld_GetMapTypeOfSaveblockLocation(void);

@@ -644,7 +644,7 @@ void GabbyAndTyBeforeInterview(void)
     else
         gSaveBlock1.gabbyAndTyData.valA_1 = 0;
 
-    if (gBattleResults.playerHealInBattleCount)
+    if (gBattleResults.numHealingItemsUsed)
         gSaveBlock1.gabbyAndTyData.valA_2 = 1;
     else
         gSaveBlock1.gabbyAndTyData.valA_2 = 0;

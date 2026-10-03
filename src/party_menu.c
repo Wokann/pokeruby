@@ -26,7 +26,6 @@
 #include "palette.h"
 #include "pokemon.h"
 #include "pokemon_icon.h"
-#include "pokemon_item_effect.h"
 #include "pokemon_menu.h"
 #include "pokemon_summary_screen.h"
 #include "rom_8077ABC.h"
@@ -3669,9 +3668,9 @@ bool8 IsMedicineIneffective(struct Pokemon *pkmn, u16 item)
 bool8 ExecuteTableBasedItemEffect__(u8 monIndex, u16 item, u8 moveIndex)
 {
     if (gMain.inBattle)
-        return ExecuteTableBasedItemEffect_(&gPlayerParty[monIndex], item, sub_8094C20(monIndex), moveIndex);
+        return ExecuteTableBasedItemEffect(&gPlayerParty[monIndex], item, sub_8094C20(monIndex), moveIndex);
     else
-        return ExecuteTableBasedItemEffect_(&gPlayerParty[monIndex], item, monIndex, moveIndex);
+        return ExecuteTableBasedItemEffect(&gPlayerParty[monIndex], item, monIndex, moveIndex);
 }
 
 void UseMedicine(u8 taskId, u16 item, TaskFunc func)

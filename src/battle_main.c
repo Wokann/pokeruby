@@ -3501,8 +3501,8 @@ static void BattleStartClearSetData(void)
     gBattleResults.playerFaintCounter = 0;
     gBattleResults.opponentFaintCounter = 0;
     gBattleResults.totalMonSwitchCounter = 0;
-    gBattleResults.playerHealInBattleCount = 0;
-    gBattleResults.reviveCount = 0;
+    gBattleResults.numHealingItemsUsed = 0;
+    gBattleResults.numRevivesUsed = 0;
     gBattleResults.playerMonWasDamaged = 0;
     gBattleResults.usedMasterBall = 0;
     gBattleResults.lastOpponentSpecies = 0;

@@ -208,8 +208,8 @@ struct BattleResults
     u8 playerFaintCounter;    // 0x0
     u8 opponentFaintCounter;  // 0x1
     u8 totalMonSwitchCounter; // 0x2
-    u8 playerHealInBattleCount; // 0x3
-    u8 reviveCount;           // 0x4
+    u8 numHealingItemsUsed;   // 0x3
+    u8 numRevivesUsed;        // 0x4
     u8 playerMonWasDamaged:1; // 0x5
     u8 usedMasterBall:1;      // 0x5
     u16 poke1Species;         // 0x6

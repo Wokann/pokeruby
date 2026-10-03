@@ -24,7 +24,7 @@
 #include "palette.h"
 #include "party_menu.h"
 #include "pokeblock.h"
-#include "pokemon_item_effect.h"
+#include "pokemon.h"
 #include "pokemon_menu.h"
 #include "overworld.h"
 #include "rom_8094928.h"
@@ -909,7 +909,7 @@ void ItemUseInBattle_StatIncrease(u8 taskId)
 
     Menu_EraseWindowRect(0, 13, 13, 20);
 
-    if (ExecuteTableBasedItemEffect_(&gPlayerParty[partyId], gSpecialVar_ItemId, partyId, 0) != FALSE)
+    if (ExecuteTableBasedItemEffect(&gPlayerParty[partyId], gSpecialVar_ItemId, partyId, 0) != FALSE)
     {
         DisplayItemMessageOnField(taskId, gOtherText_WontHaveAnyEffect, CleanUpItemMenuMessage, 1);
     }
