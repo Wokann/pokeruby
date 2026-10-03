@@ -626,14 +626,14 @@ void sub_813F844(u8 taskId)
 void sub_813F990(u8 taskId)
 {
     u8 ballIndex = ball_number_to_ball_processing_index(gLastUsedItem);
-    LoadBallGraphics(ballIndex);
+    LoadBallGfx(ballIndex);
     DestroyAnimVisualTask(taskId);
 }
 
 void sub_813F9B8(u8 taskId)
 {
     u8 ballIndex = ball_number_to_ball_processing_index(gLastUsedItem);
-    FreeBallGraphics(ballIndex);
+    FreeBallGfx(ballIndex);
     DestroyAnimVisualTask(taskId);
 }
 

@@ -72,7 +72,6 @@ extern const u8 BattleText_MenuOptions[];
 extern const u8 BattleText_PP[];
 
 extern void BattleControllerDummy(void);
-extern void DoHitAnimHealthboxEffect();
 extern u8 GetBattlerSide(u8);
 extern void HandleIntroSlide();
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
@@ -88,7 +87,6 @@ extern u8 GetBattlerSpriteSubpriority();
 extern void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *);
 extern u8 GetBattlerSpriteCoord();
 extern u8 GetBattlerSpriteDefault_Y();
-extern u8 DoPokeballSendOutAnimation();
 extern u8 gActiveBattler;
 extern void (*gBattlerControllerFuncs[])(void);
 extern bool8 gDoingBattleAnim;

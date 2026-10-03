@@ -1,4 +1,5 @@
 #include "global.h"
+#include "graphics.h"
 #include "gba/m4a_internal.h"
 #include "intro.h"
 #include "data2.h"
@@ -26,8 +27,6 @@ extern u16 gUnknown_02039358;
 extern u16 gUnknown_0203935A;
 extern u16 gSaveFileStatus;
 extern u8 gReservedSpritePaletteCount;
-extern const u8 gInterfaceGfx_PokeBall[];
-extern const u8 gInterfacePal_PokeBall[];
 extern const u8 gIntroCopyright_Gfx[];
 extern const u16 gIntroCopyright_Pal[];
 extern const u16 gIntroCopyright_Tilemap[];
@@ -746,7 +745,7 @@ static const struct SpriteTemplate gSpriteTemplate_840B1F4 =
 };
 const struct CompressedSpriteSheet gIntro3PokeballGfx_Table[] =
 {
-    {gInterfaceGfx_PokeBall, 0x100, 2002},
+    {gBallGfx_Poke, 0x100, 2002},
     {NULL},
 };
 const struct CompressedSpriteSheet gIntro3MiscGfx_Table[] =
@@ -756,7 +755,7 @@ const struct CompressedSpriteSheet gIntro3MiscGfx_Table[] =
 };
 const struct CompressedSpritePalette gInterfacePokeballPal_Table[] =
 {
-    {gInterfacePal_PokeBall, 2002},
+    {gBallPal_Poke, 2002},
     {NULL},
 };
 const struct SpritePalette gIntro3MiscPal_Table[] =

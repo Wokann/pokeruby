@@ -3965,7 +3965,7 @@ static void sub_80A1DCC(struct Pokemon *mon)
 static void sub_80A1DE8(struct Pokemon *mon)
 {
     u8 ball = ball_number_to_ball_processing_index(GetMonData(mon, MON_DATA_POKEBALL));
-    LoadBallGraphics(ball);
+    LoadBallGfx(ball);
 
     pssData.ballSpriteId = CreateSprite(&gBallSpriteTemplates[ball], 6, 136, 0);
     gSprites[pssData.ballSpriteId].callback = SpriteCallbackDummy;
