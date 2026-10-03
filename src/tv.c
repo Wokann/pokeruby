@@ -1730,7 +1730,7 @@ void InterviewBefore_PkmnFanClubOpinions(void)
     {
         StringCopy(gStringVar1, gSpeciesNames[GetMonData(&gPlayerParty[GetLeadMonIndex()], MON_DATA_SPECIES, 0)]);
         GetMonData(&gPlayerParty[GetLeadMonIndex()], MON_DATA_NICKNAME, gStringVar2);
-        StringGetEnd10(gStringVar2);
+        StringGet_Nickname(gStringVar2);
         fanclubOpinions = &gSaveBlock1.tvShows[gUnknown_03005D38.var0].fanclubOpinions;
         sub_80EB6FC(fanclubOpinions->var1C, 2);
     }
@@ -2082,7 +2082,7 @@ void ChangePokemonNickname_CB(void)
 void TV_CopyNicknameToStringVar1AndEnsureTerminated(void)
 {
     GetMonData(&(gPlayerParty[gSpecialVar_0x8004]), MON_DATA_NICKNAME, &gStringVar1);
-    StringGetEnd10(gStringVar1);
+    StringGet_Nickname(gStringVar1);
 }
 
 void TV_CheckMonOTIDEqualsPlayerID(void)
