@@ -12,6 +12,7 @@
 #include "task.h"
 #include "text.h"
 #include "ewram.h"
+#include "constants/rgb.h"
 
 // In English 1.0, the text window is too small, causing text to overflow.
 
@@ -40,19 +41,19 @@ extern u32 gGameContinueCallback;
 
 static const struct OamData sClockOamData =
 {
-    160, // Y
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    1,
-    0,
-    0,
-    0,
-    0
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
 };
 
 static const u8 sClockFrames[8][3] =
@@ -103,7 +104,7 @@ static void CB2_SaveFailedScreen(void)
     {
     case 0:
     default:
-        SetVBlankCallback(0);
+        SetVBlankCallback(NULL);
         REG_DISPCNT = 0;
         REG_BG3CNT = 0;
         REG_BG2CNT = 0;
@@ -121,20 +122,20 @@ static void CB2_SaveFailedScreen(void)
         DmaFill32(3, 0, OAM, OAM_SIZE);
         DmaFill16(3, 0, PLTT, PLTT_SIZE);
         LZ77UnCompVram(&gBirchBagGrass_Gfx, (void *)VRAM);
-        LZ77UnCompVram(&gBirchBagTilemap, (void *)(VRAM + 0x3000));
-        LZ77UnCompVram(&gBirchGrassTilemap, (void *)(VRAM + 0x3800));
-        LZ77UnCompVram(&sSaveFailedClockGfx, (void *)(VRAM + 0x10020));
+        LZ77UnCompVram(&gBirchBagTilemap, BG_SCREEN_ADDR(6));
+        LZ77UnCompVram(&gBirchGrassTilemap, BG_SCREEN_ADDR(7));
+        LZ77UnCompVram(&sSaveFailedClockGfx, OBJ_VRAM0 + 0x20);
         ResetSpriteData();
         ResetTasks();
         ResetPaletteFade();
-        LoadPalette(&gBirchBagGrass_Pal, 0, sizeof(gBirchBagGrass_Pal));
-        LoadPalette(&sSaveFailedClockPal, 0x100, sizeof(sSaveFailedClockPal));
+        LoadPalette(&gBirchBagGrass_Pal, BG_PLTT_ID(0), sizeof(gBirchBagGrass_Pal));
+        LoadPalette(&sSaveFailedClockPal, OBJ_PLTT_ID(0), sizeof(sSaveFailedClockPal));
         Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
         InitMenuWindow(&gMenuTextWindowTemplate);
         Menu_DrawStdWindowFrame(13, CLOCK_WIN_TOP, 16, CLOCK_WIN_TOP + 3); // clock window
         Menu_DrawStdWindowFrame(1, MSG_WIN_TOP, 28, 19); // message window
         Menu_PrintText(gSystemText_SaveFailedBackupCheck, 2, MSG_WIN_TOP + 1);
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
         ime = REG_IME;
         REG_IME = 0;
         REG_IE |= INTR_FLAG_VBLANK;
@@ -232,7 +233,7 @@ static void CB2_FadeAndReturnToTitleScreen(void)
 
     if (JOY_NEW(A_BUTTON))
     {
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
         SetVBlankCallback(VBlankCB);
         SetMainCallback2(CB2_ReturnToTitleScreen);
     }
