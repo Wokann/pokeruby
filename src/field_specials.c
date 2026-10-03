@@ -366,7 +366,7 @@ void SpawnBerryBlenderLinkPlayerSprites(void)
         if (myLinkPlayerNumber != i)
         {
             rivalAvatarGraphicsId = GetRivalAvatarGraphicsIdByStateIdAndGender(PLAYER_AVATAR_STATE_NORMAL, gLinkPlayers[i].gender);
-            SpawnSpecialObjectEventParametrized(rivalAvatarGraphicsId, facingDirectionMovementTypes[j], 0xf0 - i, unknown_083F835C[j][0] + x + 7, unknown_083F835C[j][1] + y + 7, 0);
+            SpawnSpecialObjectEventParameterized(rivalAvatarGraphicsId, facingDirectionMovementTypes[j], 0xf0 - i, unknown_083F835C[j][0] + x + 7, unknown_083F835C[j][1] + y + 7, 0);
             j++;
             if (j == 4)
             {
@@ -1596,14 +1596,14 @@ void GlassWorkshopUpdateScrollIndicators(u8 newPos, u8 maxItems)
 
 void SpawnCameraDummy(void)
 {
-    u8 objectEventId = SpawnSpecialObjectEventParametrized(7, MOVEMENT_TYPE_FACE_DOWN, LOCALID_CAMERA, gSaveBlock1.pos.x + 7, gSaveBlock1.pos.y + 7, 3);
+    u8 objectEventId = SpawnSpecialObjectEventParameterized(7, MOVEMENT_TYPE_FACE_DOWN, LOCALID_CAMERA, gSaveBlock1.pos.x + 7, gSaveBlock1.pos.y + 7, 3);
     gObjectEvents[objectEventId].invisible = TRUE;
-    CameraObjectSetFollowedObjectId(gObjectEvents[objectEventId].spriteId);
+    CameraObjectSetFollowedSpriteId(gObjectEvents[objectEventId].spriteId);
 }
 
 void RemoveCameraDummy(void)
 {
-    CameraObjectSetFollowedObjectId(GetPlayerAvatarSpriteId());
+    CameraObjectSetFollowedSpriteId(GetPlayerAvatarSpriteId());
     RemoveObjectEventByLocalIdAndMap(LOCALID_CAMERA, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
 }
 

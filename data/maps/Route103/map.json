@@ -23,7 +23,7 @@
   ],
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_4",
+      "graphics_id": "OBJ_EVENT_GFX_MAN_3",
       "x": 49,
       "y": 12,
       "elevation": 3,
@@ -49,7 +49,7 @@
       "flag": "FLAG_HIDE_RIVAL_ROUTE103"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_3",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_2",
       "x": 71,
       "y": 10,
       "elevation": 3,
@@ -62,7 +62,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_LITTLE_GIRL_1",
+      "graphics_id": "OBJ_EVENT_GFX_TWIN",
       "x": 65,
       "y": 11,
       "elevation": 3,
@@ -75,7 +75,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_LITTLE_GIRL_1",
+      "graphics_id": "OBJ_EVENT_GFX_TWIN",
       "x": 64,
       "y": 11,
       "elevation": 3,
@@ -166,7 +166,7 @@
       "flag": "FLAG_HIDE_BIRCH_ROUTE103"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_3",
+      "graphics_id": "OBJ_EVENT_GFX_POKEFAN_M",
       "x": 56,
       "y": 12,
       "elevation": 3,

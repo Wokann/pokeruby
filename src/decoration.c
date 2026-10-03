@@ -2169,9 +2169,9 @@ void sub_80FF474(void)
             gSpecialVar_0x8005 = gMapHeader.events->objectEvents[j].localId;
             gSpecialVar_0x8006 = gUnknown_020391A4;
             gSpecialVar_0x8007 = gUnknown_020391A6;
-            show_sprite(gSpecialVar_0x8005, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
-            sub_805C0F8(gSpecialVar_0x8005, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, gSpecialVar_0x8006, gSpecialVar_0x8007);
-            TryOverrideTemplateCoordsForObjectEvent(gSpecialVar_0x8005, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
+            TrySpawnObjectEvent(gSpecialVar_0x8005, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
+            TryMoveObjectEventToMapCoords(gSpecialVar_0x8005, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, gSpecialVar_0x8006, gSpecialVar_0x8007);
+            TryOverrideObjectEventTemplateCoords(gSpecialVar_0x8005, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
             break;
         }
     }
@@ -2278,7 +2278,7 @@ void AddDecorationIconObjectFromObjectEvent(struct UnkStruct_02038900 * unk_0203
     } else
     {
         gUnknown_020391A8 = gSprites[gFieldCamera.spriteId].data[0];
-        gFieldCamera.spriteId = AddPseudoObjectEvent(unk_02038900->decoration->tiles[0], sub_81009A8, gUnknown_083EC900[unk_02038900->decoration->shape].x,  gUnknown_083EC900[unk_02038900->decoration->shape].y, 1);
+        gFieldCamera.spriteId = CreateObjectGraphicsSprite(unk_02038900->decoration->tiles[0], sub_81009A8, gUnknown_083EC900[unk_02038900->decoration->shape].x,  gUnknown_083EC900[unk_02038900->decoration->shape].y, 1);
         gSprites[gFieldCamera.spriteId].oam.priority = 1;
     }
 }
@@ -2293,10 +2293,10 @@ void SetUpPlacingDecorationPlayerAvatar(u8 taskId, struct UnkStruct_02038900 *un
     }
     if (gSaveBlock2.playerGender == MALE)
     {
-        gUnknown_020391A9 = AddPseudoObjectEvent(0xc1, SpriteCallbackDummy, v0, 0x48, 0);
+        gUnknown_020391A9 = CreateObjectGraphicsSprite(0xc1, SpriteCallbackDummy, v0, 0x48, 0);
     } else
     {
-        gUnknown_020391A9 = AddPseudoObjectEvent(0xc2, SpriteCallbackDummy, v0, 0x48, 0);
+        gUnknown_020391A9 = CreateObjectGraphicsSprite(0xc2, SpriteCallbackDummy, v0, 0x48, 0);
     }
     gSprites[gUnknown_020391A9].oam.priority = 1;
     DestroySprite(&gSprites[gUnknown_020391A8]);
@@ -2435,7 +2435,7 @@ bool8 sub_80FFC24(u8 taskId, const struct Decoration *decoration)
                     {
                         return FALSE;
                     }
-                    behaviorAt = GetObjectEventIdByXYZ(curX, curY, 0);
+                    behaviorAt = GetObjectEventIdByPosition(curX, curY, 0);
                     if (behaviorAt != 0 && behaviorAt != 16)
                     {
                         return FALSE;
@@ -2460,7 +2460,7 @@ bool8 sub_80FFC24(u8 taskId, const struct Decoration *decoration)
                     {
                         return FALSE;
                     }
-                    if (GetObjectEventIdByXYZ(curX, curY, 0) != 16)
+                    if (GetObjectEventIdByPosition(curX, curY, 0) != 16)
                     {
                         return FALSE;
                     }
@@ -2480,7 +2480,7 @@ bool8 sub_80FFC24(u8 taskId, const struct Decoration *decoration)
                 {
                     return FALSE;
                 }
-                behaviorAt = GetObjectEventIdByXYZ(curX, curY, 0);
+                behaviorAt = GetObjectEventIdByPosition(curX, curY, 0);
                 if (behaviorAt != 0 && behaviorAt != 16)
                 {
                     return FALSE;
@@ -2525,7 +2525,7 @@ bool8 sub_80FFC24(u8 taskId, const struct Decoration *decoration)
                         return FALSE;
                     }
                 }
-                if (GetObjectEventIdByXYZ(curX, curY, 0) != 16)
+                if (GetObjectEventIdByPosition(curX, curY, 0) != 16)
                 {
                     return FALSE;
                 }
@@ -3191,10 +3191,10 @@ void SetUpPuttingAwayDecorationPlayerAvatar(void)
     gFieldCamera.spriteId = CreateSprite(&gSpriteTemplate_83ECA88, 0x78, 0x50, 0);
     if (gSaveBlock2.playerGender == MALE)
     {
-        gUnknown_020391A9 = AddPseudoObjectEvent(0xc1, SpriteCallbackDummy, 0x88, 0x48, 0);
+        gUnknown_020391A9 = CreateObjectGraphicsSprite(0xc1, SpriteCallbackDummy, 0x88, 0x48, 0);
     } else
     {
-        gUnknown_020391A9 = AddPseudoObjectEvent(0xc2, SpriteCallbackDummy, 0x88, 0x48, 0);
+        gUnknown_020391A9 = CreateObjectGraphicsSprite(0xc2, SpriteCallbackDummy, 0x88, 0x48, 0);
     }
     gSprites[gUnknown_020391A9].oam.priority = 1;
     DestroySprite(&gSprites[gUnknown_020391A8]);

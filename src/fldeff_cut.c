@@ -71,7 +71,7 @@ const struct SpriteFrameImage gSpriteImageTable_CutGrass[] =
     {gFieldEffectPic_CutGrass, 0x20},
 };
 
-const struct SpritePalette gFieldEffectObjectPaletteInfo6 = {gFieldEffectObjectPalette6, 0x1000};
+const struct SpritePalette gSpritePalette_CutGrass = {gFieldEffectPal_CutGrass, 0x1000};
 
 static const struct SpriteTemplate sSpriteTemplate_CutGrass =
 {
@@ -225,7 +225,7 @@ bool8 FldEff_CutGrass(void)
                 if (MetatileBehavior_IsCuttableGrass(tileBehavior) == TRUE)
                 {
                     SetCutGrassMetatile(x, y);
-                    sub_805BCC0(x, y);
+                    AllowObjectAtPosTriggerGroundEffects(x, y);
                 }
             }
         }

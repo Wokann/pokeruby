@@ -617,7 +617,7 @@ static bool8 CanStopSurfing(s16 x, s16 y, u8 direction)
 {
     if ((gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_SURFING)
      && MapGridGetElevationAt(x, y) == 3
-     && GetObjectEventIdByXYZ(x, y, 3) == 16)
+     && GetObjectEventIdByPosition(x, y, 3) == 16)
     {
         CreateStopSurfingTask(direction);
         return TRUE;
@@ -846,7 +846,7 @@ void PlayerRideWaterCurrent(u8 direction)
 // fastest speed (4 speed)
 void PlayerWalkFaster(u8 direction)
 {
-    PlayerSetAnimId(GetWalkFastestMovementAction(direction), 2);
+    PlayerSetAnimId(GetWalkFasterMovementAction(direction), 2);
 }
 
 static void PlayerRun(u8 direction)
@@ -1006,7 +1006,7 @@ u8 PlayerGetElevation(void)
 
 void MovePlayerToMapCoords(s16 x, s16 y)
 {
-    sub_805C058(&gObjectEvents[gPlayerAvatar.objectEventId], x, y);
+    MoveObjectEventToMapCoords(&gObjectEvents[gPlayerAvatar.objectEventId], x, y);
 }
 
 u8 TestPlayerAvatarFlags(u8 flag)

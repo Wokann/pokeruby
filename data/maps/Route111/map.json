@@ -41,7 +41,7 @@
       "flag": "FLAG_HIDE_VICTOR_WINSTRATE"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_2",
+      "graphics_id": "OBJ_EVENT_GFX_POKEFAN_F",
       "x": 13,
       "y": 113,
       "elevation": 0,
@@ -67,7 +67,7 @@
       "flag": "FLAG_HIDE_VIVI_WINSTRATE"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_OLD_WOMAN_1",
+      "graphics_id": "OBJ_EVENT_GFX_EXPERT_F",
       "x": 13,
       "y": 113,
       "elevation": 0,
@@ -119,7 +119,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_4",
+      "graphics_id": "OBJ_EVENT_GFX_MAN_3",
       "x": 8,
       "y": 91,
       "elevation": 3,
@@ -424,7 +424,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_7",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
       "x": 11,
       "y": 12,
       "elevation": 3,
@@ -437,7 +437,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_4",
+      "graphics_id": "OBJ_EVENT_GFX_MAN_3",
       "x": 9,
       "y": 27,
       "elevation": 3,
@@ -489,7 +489,7 @@
       "flag": "FLAG_HIDE_CLAW_FOSSIL"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_5",
+      "graphics_id": "OBJ_EVENT_GFX_MAN_4",
       "x": 20,
       "y": 114,
       "elevation": 3,

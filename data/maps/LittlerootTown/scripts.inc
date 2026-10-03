@@ -136,7 +136,7 @@ LittlerootTown_Movement_MomExitHouse:: @ 814D6AC
 
 LittlerootTown_Movement_MomApproachPlayerAtTruck:: @ 814D6AE
 	walk_down
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 LittlerootTown_Movement_MomApproachDoor:: @ 814D6B1
@@ -154,7 +154,7 @@ LittlerootTown_Movement_PlayerApproachDoor:: @ 814D6B8
 	delay_16
 	delay_8
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LittlerootTown_Movement_PlayerEnterHouse:: @ 814D6BD
@@ -263,7 +263,7 @@ LittlerootTown_Movement_TwinReturnLeft:: @ 814D789
 	walk_left
 	walk_left
 	walk_up
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 LittlerootTown_Movement_PushPlayerBackFromRoute:: @ 814D793
@@ -303,7 +303,7 @@ LittlerootTown_Movement_TwinReturnRight:: @ 814D7C0
 	walk_left
 	walk_left
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 LittlerootTown_EventScript_GoSaveBirchTrigger:: @ 814D7C7
@@ -776,7 +776,7 @@ LittlerootTown_Movement_MomReturnHomeMale2:: @ 814DCB4
 	walk_left
 	walk_left
 	walk_left
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LittlerootTown_Movement_MomReturnHomeMale3:: @ 814DCBA
@@ -785,33 +785,33 @@ LittlerootTown_Movement_MomReturnHomeMale3:: @ 814DCBA
 	walk_left
 	walk_left
 	walk_left
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LittlerootTown_Movement_MomReturnHomeMale4:: @ 814DCC1
 	walk_left
 	walk_left
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LittlerootTown_Movement_MomReturnHomeMale5:: @ 814DCC5
 	walk_left
 	walk_left
 	walk_left
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LittlerootTown_Movement_MomReturnHomeFemale2:: @ 814DCCA
 	walk_right
 	walk_right
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LittlerootTown_Movement_MomReturnHomeFemale3:: @ 814DCCF
 	walk_right
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LittlerootTown_Movement_MomReturnHomeFemale4:: @ 814DCD3
@@ -820,7 +820,7 @@ LittlerootTown_Movement_MomReturnHomeFemale4:: @ 814DCD3
 	walk_right
 	walk_right
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LittlerootTown_Movement_MomReturnHomeFemale5:: @ 814DCDA
@@ -828,7 +828,7 @@ LittlerootTown_Movement_MomReturnHomeFemale5:: @ 814DCDA
 	walk_right
 	walk_right
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LittlerootTown_Movement_MomExitThroughDoor:: @ 814DCE0

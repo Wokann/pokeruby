@@ -192,7 +192,7 @@ void CreateCloudSprites(void)
 
             gWeatherPtr->sprites.s1.cloudSprites[i] = &gSprites[spriteId];
             sprite = gWeatherPtr->sprites.s1.cloudSprites[i];
-            sub_80603CC(gUnknown_0839A9C8[i].x + 7, gUnknown_0839A9C8[i].y + 7, &sprite->x, &sprite->y);
+            SetSpritePosToMapCoords(gUnknown_0839A9C8[i].x + 7, gUnknown_0839A9C8[i].y + 7, &sprite->x, &sprite->y);
             sprite->coordOffsetEnabled = TRUE;
         }
         else

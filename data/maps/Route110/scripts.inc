@@ -494,7 +494,7 @@ Route110_EventScript_14FF66:: @ 814FF66
 Route110_Movement_14FF6E:: @ 814FF6E
 	walk_down
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 Route110_Movement_14FF72:: @ 814FF72
@@ -504,7 +504,7 @@ Route110_Movement_14FF72:: @ 814FF72
 Route110_Movement_14FF74:: @ 814FF74
 	walk_down
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 Route110_Movement_14FF78:: @ 814FF78

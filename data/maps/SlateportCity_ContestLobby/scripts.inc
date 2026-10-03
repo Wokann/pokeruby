@@ -58,18 +58,18 @@ SlateportCity_ContestLobby_Movement_1554C0:: @ 81554C0
 	step_end
 
 SlateportCity_ContestLobby_Movement_1554CA:: @ 81554CA
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 SlateportCity_ContestLobby_Movement_1554CC:: @ 81554CC
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 SlateportCity_ContestLobby_Movement_1554CF:: @ 81554CF
 	walk_down
 	walk_down
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 SlateportCity_ContestLobby_Movement_1554D3:: @ 81554D3
@@ -84,7 +84,7 @@ SlateportCity_ContestLobby_Movement_1554D3:: @ 81554D3
 	step_end
 
 SlateportCity_ContestLobby_Movement_1554DC:: @ 81554DC
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 SlateportCity_ContestLobby_EventScript_Man:: @ 81554DE

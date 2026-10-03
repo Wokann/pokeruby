@@ -36,7 +36,7 @@
       "flag": "FLAG_HIDE_MR_BRINEY_BOAT_ROUTE109"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN_1",
+      "graphics_id": "OBJ_EVENT_GFX_EXPERT_M",
       "x": 21,
       "y": 24,
       "elevation": 3,
@@ -127,7 +127,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_LITTLE_GIRL_2",
+      "graphics_id": "OBJ_EVENT_GFX_LITTLE_GIRL",
       "x": 11,
       "y": 6,
       "elevation": 3,
@@ -218,7 +218,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_2",
+      "graphics_id": "OBJ_EVENT_GFX_POKEFAN_F",
       "x": 30,
       "y": 32,
       "elevation": 3,
@@ -231,7 +231,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_4",
       "x": 8,
       "y": 41,
       "elevation": 3,
@@ -244,7 +244,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_5",
+      "graphics_id": "OBJ_EVENT_GFX_MAN_4",
       "x": 9,
       "y": 41,
       "elevation": 3,
@@ -257,7 +257,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN_2",
+      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN",
       "x": 33,
       "y": 6,
       "elevation": 3,

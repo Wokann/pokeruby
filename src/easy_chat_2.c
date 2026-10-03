@@ -751,7 +751,7 @@ void sub_80E8BF4(u8 reporter, u8 b)
     LoadSpritePalette(&gUnknown_083DBD38);
     CreateSprite(&gSpriteTemplate_83DBD48, x, y, 1);
 
-    spriteId = AddPseudoObjectEvent(
+    spriteId = CreateObjectGraphicsSprite(
       (gSaveBlock2.playerGender == MALE) ? OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL : OBJ_EVENT_GFX_RIVAL_MAY_NORMAL,
       SpriteCallbackDummy, x - 12, y, 0);
     if (spriteId != MAX_SPRITES)
@@ -760,7 +760,7 @@ void sub_80E8BF4(u8 reporter, u8 b)
         StartSpriteAnim(&gSprites[spriteId], 3);
     }
 
-    spriteId = AddPseudoObjectEvent(gabbyTyGfxId, SpriteCallbackDummy, x + 12, y, 0);
+    spriteId = CreateObjectGraphicsSprite(gabbyTyGfxId, SpriteCallbackDummy, x + 12, y, 0);
     if (spriteId != MAX_SPRITES)
     {
         gSprites[spriteId].oam.priority = 0;

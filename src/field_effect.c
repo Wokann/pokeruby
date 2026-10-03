@@ -1024,8 +1024,8 @@ void c3_080843F8(u8 taskId)
 }
 
 void sub_8086774(u8);
-extern void CameraObjectReset2(void);
-extern void CameraObjectReset1(void);
+extern void CameraObjectFreeze(void);
+extern void CameraObjectReset(void);
 
 void sub_8086748(void)
 {
@@ -1050,7 +1050,7 @@ bool8 sub_80867AC(struct Task *task) // gUnknown_0839F2CC[0]
     struct Sprite *playerSprite;
     playerObject = &gObjectEvents[gPlayerAvatar.objectEventId];
     playerSprite = &gSprites[gPlayerAvatar.spriteId];
-    CameraObjectReset2();
+    CameraObjectFreeze();
     gObjectEvents[gPlayerAvatar.objectEventId].invisible = TRUE;
     gPlayerAvatar.preventStep = TRUE;
     ObjectEventSetHeldMovement(playerObject, GetFaceDirectionMovementAction(GetPlayerFacingDirection()));
@@ -1149,7 +1149,7 @@ bool8 sub_80869F8(struct Task *task)
 {
     gPlayerAvatar.preventStep = FALSE;
     UnlockPlayerFieldControls();
-    CameraObjectReset1();
+    CameraObjectReset();
     UnfreezeObjectEvents();
     InstallCameraPanAheadCallback();
     DestroyTask(FindTaskIdByFunc(sub_8086774));
@@ -1190,7 +1190,7 @@ void sub_8086A68(u8 taskId)
 bool8 sub_8086AA0(struct Task *task)
 {
     FreezeObjectEvents();
-    CameraObjectReset2();
+    CameraObjectFreeze();
     sub_80B4824(task->data[1]);
     task->data[0]++;
     return FALSE;
@@ -1317,7 +1317,7 @@ bool8 sub_8086CF4(struct Task *task)
     s16 x;
     s16 y;
     u8 behavior;
-    CameraObjectReset2();
+    CameraObjectFreeze();
     objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
     ObjectEventSetHeldMovement(objectEvent, GetFaceDirectionMovementAction(DIR_EAST));
     PlayerGetDestCoords(&x, &y);
@@ -1415,7 +1415,7 @@ bool8 sub_8086ED4(struct Task *task)
     objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
     if (ObjectEventClearHeldMovementIfFinished(objectEvent))
     {
-        CameraObjectReset1();
+        CameraObjectReset();
         UnlockPlayerFieldControls();
         ObjectEventSetHeldMovement(objectEvent, GetWalkNormalMovementAction(DIR_EAST));
         DestroyTask(FindTaskIdByFunc(sub_8086CBC));
@@ -1557,7 +1557,7 @@ void sub_80871D0(u8 taskId)
 bool8 sub_808722C(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     FreezeObjectEvents();
-    CameraObjectReset2();
+    CameraObjectFreeze();
     SetCameraPanningCallback(NULL);
     gPlayerAvatar.preventStep = TRUE;
     objectEvent->fixedPriority = 1;
@@ -1674,7 +1674,7 @@ void sub_8087470(u8 taskId)
 
 bool8 sub_80874CC(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    CameraObjectReset2();
+    CameraObjectFreeze();
     FreezeObjectEvents();
     gPlayerAvatar.preventStep = TRUE;
     objectEvent->invisible = TRUE;
@@ -1703,7 +1703,7 @@ bool8 sub_8087548(struct Task *task, struct ObjectEvent *objectEvent, struct Spr
     {
         task->data[0]++;
         objectEvent->invisible = FALSE;
-        CameraObjectReset1();
+        CameraObjectReset();
         PlaySE(SE_M_DIG);
         ObjectEventSetHeldMovement(objectEvent, GetJumpMovementAction(DIR_EAST));
     }
@@ -1722,13 +1722,13 @@ bool8 sub_808759C(struct Task *task, struct ObjectEvent *objectEvent, struct Spr
     return FALSE;
 }
 
-extern void sub_8060470(s16 *x, s16 *y, s16 dx, s16 dy);
+extern void SetSpritePosToOffsetMapCoords(s16 *x, s16 *y, s16 dx, s16 dy);
 extern const struct SpriteTemplate *const gFieldEffectObjectTemplatePointers[36];
 
 u8 FldEff_LavaridgeGymWarp(void)
 {
     u8 spriteId;
-    sub_8060470((s16 *)&gFieldEffectArguments[0], (s16 *)&gFieldEffectArguments[1], 8, 8);
+    SetSpritePosToOffsetMapCoords((s16 *)&gFieldEffectArguments[0], (s16 *)&gFieldEffectArguments[1], 8, 8);
     spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[33], gFieldEffectArguments[0], gFieldEffectArguments[1], gFieldEffectArguments[2]);
     gSprites[spriteId].oam.priority = gFieldEffectArguments[3];
     gSprites[spriteId].coordOffsetEnabled = 1;
@@ -1758,7 +1758,7 @@ void sub_808766C(u8 taskId)
 bool8 sub_80876C8(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     FreezeObjectEvents();
-    CameraObjectReset2();
+    CameraObjectFreeze();
     gPlayerAvatar.preventStep = TRUE;
     objectEvent->fixedPriority = 1;
     task->data[0]++;
@@ -1780,7 +1780,7 @@ bool8 sub_80876F8(struct Task *task, struct ObjectEvent *objectEvent, struct Spr
         } else
         {
             task->data[1]++;
-            ObjectEventSetHeldMovement(objectEvent, GetWalkInPlaceFastestMovementAction(objectEvent->facingDirection));
+            ObjectEventSetHeldMovement(objectEvent, GetWalkInPlaceFasterMovementAction(objectEvent->facingDirection));
             PlaySE(SE_LAVARIDGE_FALL_WARP);
         }
     }
@@ -1826,7 +1826,7 @@ bool8 sub_80877D4(struct Task *task, struct ObjectEvent *objectEvent, struct Spr
 u8 FldEff_PopOutOfAsh(void)
 {
     u8 spriteId;
-    sub_8060470((s16 *)&gFieldEffectArguments[0], (s16 *)&gFieldEffectArguments[1], 8, 8);
+    SetSpritePosToOffsetMapCoords((s16 *)&gFieldEffectArguments[0], (s16 *)&gFieldEffectArguments[1], 8, 8);
     spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[32], gFieldEffectArguments[0], gFieldEffectArguments[1], gFieldEffectArguments[2]);
     gSprites[spriteId].oam.priority = gFieldEffectArguments[3];
     gSprites[spriteId].coordOffsetEnabled = 1;
@@ -1988,7 +1988,7 @@ static void TeleportFieldEffectTask1(struct Task *task)
 {
     LockPlayerFieldControls();
     FreezeObjectEvents();
-    CameraObjectReset2();
+    CameraObjectFreeze();
     task->data[15] = GetPlayerFacingDirection();
     task->data[0]++;
 }
@@ -2063,7 +2063,7 @@ static void mapldr_08085D88(void)
     FreezeObjectEvents();
     gFieldCallback = NULL;
     gObjectEvents[gPlayerAvatar.objectEventId].invisible = TRUE;
-    CameraObjectReset2();
+    CameraObjectFreeze();
     CreateTask(sub_8087E1C, 0);
 }
 
@@ -2147,7 +2147,7 @@ void sub_8087FDC(struct Task *task)
         if ((++task->data[2]) > 4 && task->data[14] == objectEvent->facingDirection)
         {
             UnlockPlayerFieldControls();
-            CameraObjectReset1();
+            CameraObjectReset();
             UnfreezeObjectEvents();
             DestroyTask(FindTaskIdByFunc(sub_8087E1C));
         }
@@ -2833,7 +2833,7 @@ void sub_8088EB4(struct Task *task)
         objectEvent->inanimate = 0;
         objectEvent->hasShadow = 0;
         sub_8088FFC(task->data[1], objectEvent->spriteId);
-        CameraObjectReset2();
+        CameraObjectFreeze();
         task->data[0]++;
     }
 }
@@ -3051,7 +3051,7 @@ void sub_80892A0(struct Task *task)
             sub_8127ED0(objectEvent->fieldEffectSpriteId, 0);
         }
         ObjectEventSetGraphicsId(objectEvent, GetPlayerAvatarGraphicsIdByStateId(PLAYER_AVATAR_STATE_SURFING));
-        CameraObjectReset2();
+        CameraObjectFreeze();
         ObjectEventTurn(objectEvent, DIR_WEST);
         StartSpriteAnim(&gSprites[objectEvent->spriteId], 0x16);
         objectEvent->invisible = FALSE;
@@ -3118,7 +3118,7 @@ void sub_8089414(struct Task *task)
         objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
         sprite = &gSprites[objectEvent->spriteId];
         objectEvent->inanimate = 0;
-        sub_805C058(objectEvent, objectEvent->currentCoords.x, objectEvent->currentCoords.y);
+        MoveObjectEventToMapCoords(objectEvent, objectEvent->currentCoords.x, objectEvent->currentCoords.y);
         sprite->x2 = 0;
         sprite->y2 = 0;
         sprite->coordOffsetEnabled = 1;

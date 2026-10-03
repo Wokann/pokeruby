@@ -173,15 +173,15 @@ static bool8 CheckPathBetweenTrainerAndPlayer(struct ObjectEvent *trainerObj, u8
     }
 
     // preserve trainer sight range before clearing.
-    unk19_temp = trainerObj->range.as_nybbles.x;
-    unk19b_temp = trainerObj->range.as_nybbles.y;
-    trainerObj->range.as_nybbles.x = 0;
-    trainerObj->range.as_nybbles.y = 0;
+    unk19_temp = trainerObj->range.as_nybbles.rangeX;
+    unk19b_temp = trainerObj->range.as_nybbles.rangeY;
+    trainerObj->range.as_nybbles.rangeX = 0;
+    trainerObj->range.as_nybbles.rangeY = 0;
 
     collision = GetCollisionAtCoords((struct ObjectEvent *)trainerObj, x, y, direction);
 
-    trainerObj->range.as_nybbles.x = unk19_temp;
-    trainerObj->range.as_nybbles.y = unk19b_temp;
+    trainerObj->range.as_nybbles.rangeX = unk19_temp;
+    trainerObj->range.as_nybbles.rangeY = unk19b_temp;
     if (collision == 4)
         return approachDistance;
 
@@ -284,7 +284,7 @@ static bool8 sub_80843DC(u8 taskId, struct Task *task, struct ObjectEvent *train
         task->data[0]++;
         if (trainerObj->movementType == MOVEMENT_TYPE_TREE_DISGUISE || trainerObj->movementType == MOVEMENT_TYPE_MOUNTAIN_DISGUISE)
             task->data[0] = 6;
-        if (trainerObj->movementType == MOVEMENT_TYPE_HIDDEN)
+        if (trainerObj->movementType == MOVEMENT_TYPE_BURIED)
             task->data[0] = 8;
         return TRUE;
     }

@@ -246,7 +246,7 @@ MauvilleCity_Movement_WallysUncleExitEast1:: @ 814C2D2
 MauvilleCity_Movement_WallysUncleApproachPlayerNorth:: @ 814C2D8
 	walk_right
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 MauvilleCity_Movement_WallysUncleApproachPlayerEast:: @ 814C2DC

@@ -30,7 +30,7 @@ LilycoveCity_PokemonTrainerFanClub_EventScript_MeetFirstFans:: @ 815939F
 
 LilycoveCity_PokemonTrainerFanClub_Movement_FanApproachPlayer:: @ 81593FA
 	delay_8
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	walk_down
 	walk_down
 	walk_down
@@ -49,7 +49,7 @@ LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlWatchPlayer:: @ 8159402
 
 LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlMoveCloserToPlayer:: @ 8159409
 	walk_down
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlHideFromPlayer:: @ 815940C
@@ -57,7 +57,7 @@ LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlHideFromPlayer:: @ 815940C
 	walk_fast_up
 	walk_fast_up
 	walk_fast_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 LilycoveCity_PokemonTrainerFanClub_OnTransition:: @ 8159412

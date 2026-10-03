@@ -471,14 +471,14 @@ PetalburgCity_Gym_EventScript_154B09:: @ 8154B09
 	return
 
 @ 8154B14
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	delay_16
 	delay_16
 	delay_16
 	delay_16
 	delay_16
 	delay_8
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 PetalburgCity_Gym_Movement_WallyArriveNorth:: @ 8154B1D
@@ -490,7 +490,7 @@ PetalburgCity_Gym_Movement_WallyArriveNorth:: @ 8154B1D
 	walk_right
 	walk_up
 	walk_up
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 PetalburgCity_Gym_Movement_WallyArrive:: @ 8154B27
@@ -507,7 +507,7 @@ PetalburgCity_Gym_Movement_WallyExitNorth:: @ 8154B2E
 	walk_down
 	walk_down
 	walk_down
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	delay_16
 	walk_in_place_down
 	step_end
@@ -517,7 +517,7 @@ PetalburgCity_Gym_Movement_WallyExitEast:: @ 8154B36
 	walk_down
 	walk_right
 	walk_down
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	delay_16
 	walk_in_place_down
 	step_end
@@ -526,7 +526,7 @@ PetalburgCity_Gym_Movement_WallyExitSouthWest:: @ 8154B3E
 	walk_down
 	walk_down
 	walk_down
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	delay_16
 	walk_in_place_down
 	step_end
@@ -564,7 +564,7 @@ PetalburgCity_Gym_Movement_PlayerExitWithWallyWest:: @ 8154B57
 	step_end
 
 PetalburgCity_Gym_Movement_PlayerExitWithWallyEast:: @ 8154B5F
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	delay_16
 	delay_16
 	walk_down

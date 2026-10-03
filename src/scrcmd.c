@@ -1032,7 +1032,7 @@ bool8 ScrCmd_addobject(struct ScriptContext *ctx)
 {
     u16 objectId = VarGet(ScriptReadHalfword(ctx));
 
-    show_sprite(objectId, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
+    TrySpawnObjectEvent(objectId, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
     return FALSE;
 }
 
@@ -1042,7 +1042,7 @@ bool8 ScrCmd_addobject_at(struct ScriptContext *ctx)
     u8 mapGroup = ScriptReadByte(ctx);
     u8 mapNum = ScriptReadByte(ctx);
 
-    show_sprite(objectId, mapNum, mapGroup);
+    TrySpawnObjectEvent(objectId, mapNum, mapGroup);
     return FALSE;
 }
 
@@ -1052,7 +1052,7 @@ bool8 ScrCmd_setobjectxy(struct ScriptContext *ctx)
     u16 x = VarGet(ScriptReadHalfword(ctx));
     u16 y = VarGet(ScriptReadHalfword(ctx));
 
-    sub_805C0F8(localId, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, x, y);
+    TryMoveObjectEventToMapCoords(localId, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, x, y);
     return FALSE;
 }
 
@@ -1070,7 +1070,7 @@ bool8 ScrCmd_moveobjectoffscreen(struct ScriptContext *ctx)
 {
     u16 localId = VarGet(ScriptReadHalfword(ctx));
 
-    TryOverrideTemplateCoordsForObjectEvent(localId, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
+    TryOverrideObjectEventTemplateCoords(localId, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
     return FALSE;
 }
 
@@ -1080,7 +1080,7 @@ bool8 ScrCmd_showobjectat(struct ScriptContext *ctx)
     u8 mapGroup = ScriptReadByte(ctx);
     u8 mapNum = ScriptReadByte(ctx);
 
-    npc_by_local_id_and_map_set_field_1_bit_x20(localId, mapNum, mapGroup, 0);
+    SetObjectInvisibility(localId, mapNum, mapGroup, 0);
     return FALSE;
 }
 
@@ -1090,7 +1090,7 @@ bool8 ScrCmd_hideobjectat(struct ScriptContext *ctx)
     u8 mapGroup = ScriptReadByte(ctx);
     u8 mapNum = ScriptReadByte(ctx);
 
-    npc_by_local_id_and_map_set_field_1_bit_x20(localId, mapNum, mapGroup, 1);
+    SetObjectInvisibility(localId, mapNum, mapGroup, 1);
     return FALSE;
 }
 
@@ -1101,7 +1101,7 @@ bool8 ScrCmd_setobjectpriority(struct ScriptContext *ctx)
     u8 mapNum = ScriptReadByte(ctx);
     u8 priority = ScriptReadByte(ctx);
 
-    sub_805BCF0(localId, mapNum, mapGroup, priority + 83);
+    SetObjectSubpriority(localId, mapNum, mapGroup, priority + 83);
     return FALSE;
 }
 
@@ -1111,7 +1111,7 @@ bool8 ScrCmd_resetobjectpriority(struct ScriptContext *ctx)
     u8 mapGroup = ScriptReadByte(ctx);
     u8 mapNum = ScriptReadByte(ctx);
 
-    sub_805BD48(localId, mapNum, mapGroup);
+    ResetObjectSubpriority(localId, mapNum, mapGroup);
     return FALSE;
 }
 

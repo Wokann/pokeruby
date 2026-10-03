@@ -114,12 +114,12 @@ Route128_Movement_15226F:: @ 815226F
 
 Route128_Movement_152271:: @ 8152271
 	walk_fast_down
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	delay_16
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	delay_16
 	delay_16
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 Route128_Movement_152279:: @ 8152279
@@ -133,7 +133,7 @@ Route128_Movement_15227E:: @ 815227E
 	walk_fast_left
 	walk_fast_left
 	walk_fast_left
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 Route128_Movement_152283:: @ 8152283
@@ -158,7 +158,7 @@ Route128_Movement_152290:: @ 8152290
 
 Route128_Movement_152293:: @ 8152293
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 Route128_Movement_152296:: @ 8152296
@@ -176,7 +176,7 @@ Route128_Movement_152296:: @ 8152296
 
 Route128_Movement_1522A1:: @ 81522A1
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 Route128_EventScript_1522A4:: @ 81522A4

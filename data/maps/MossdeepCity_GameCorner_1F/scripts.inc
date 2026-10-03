@@ -78,7 +78,7 @@ MossdeepCity_GameCorner_1F_Movement_15AD3D:: @ 815AD3D
 
 MossdeepCity_GameCorner_1F_Movement_15AD3F:: @ 815AD3F
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 MossdeepCity_GameCorner_1F_EventScript_15AD42:: @ 815AD42
@@ -173,12 +173,12 @@ MossdeepCity_GameCorner_1F_Movement_15AE42:: @ 815AE42
 
 MossdeepCity_GameCorner_1F_Movement_15AE46:: @ 815AE46
 	walk_left
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 MossdeepCity_GameCorner_1F_Movement_15AE49:: @ 815AE49
 	walk_right
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 MossdeepCity_GameCorner_1F_EventScript_15AE4C:: @ 815AE4C

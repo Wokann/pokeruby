@@ -248,7 +248,7 @@ SlateportCity_Harbor_EventScript_BoardFerryNorth:: @ 81561EF
 
 SlateportCity_Harbor_Movement_BoardFerryEast:: @ 81561FA
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 SlateportCity_Harbor_Movement_BoardFerryNorth:: @ 81561FD

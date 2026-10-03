@@ -244,7 +244,7 @@ SeafloorCavern_Room9_Movement_15DD46:: @ 815DD46
 	lock_facing_direction
 	walk_down
 	unlock_facing_direction
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 SeafloorCavern_Room9_Movement_15DD4C:: @ 815DD4C

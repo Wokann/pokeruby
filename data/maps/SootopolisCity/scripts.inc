@@ -292,7 +292,7 @@ SootopolisCity_EventScript_StevenLeadPlayerToWallace:: @ 814D417
 	walk_right
 	walk_right
 	walk_up
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 SootopolisCity_EventScript_StevenStartFollowPlayerToCave:: @ 814D41D

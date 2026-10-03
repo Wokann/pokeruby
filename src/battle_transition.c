@@ -19,7 +19,7 @@
 
 void ScanlineEffect_Clear(void);
 
-extern const struct OamData gFieldOamData_32x32;
+extern const struct OamData gObjectEventBaseOam_32x32;
 
 struct TransitionData
 {
@@ -420,7 +420,7 @@ static const struct SpriteTemplate sSpriteTemplate_83FD98C =
 {
     .tileTag = 0xFFFF,
     .paletteTag = 4105,
-    .oam = &gFieldOamData_32x32,
+    .oam = &gObjectEventBaseOam_32x32,
     .anims = sSpriteAnimTable_83FD960,
     .images = sSpriteImageTable_83FD950,
     .affineAnims = sSpriteAffineAnimTable_83FD984,

@@ -112,7 +112,7 @@ MtPyre_Summit_EventScript_15D5CA:: @ 815D5CA
 MtPyre_Summit_Movement_15D5DF:: @ 815D5DF
 	walk_down
 	walk_down
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 MtPyre_Summit_Movement_15D5E3:: @ 815D5E3
@@ -122,17 +122,17 @@ MtPyre_Summit_Movement_15D5E3:: @ 815D5E3
 MtPyre_Summit_Movement_15D5E5:: @ 815D5E5
 	walk_down
 	walk_down
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 MtPyre_Summit_Movement_15D5E9:: @ 815D5E9
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 MtPyre_Summit_Movement_15D5EC:: @ 815D5EC
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 MtPyre_Summit_EventScript_15D5EF:: @ 815D5EF
@@ -320,7 +320,7 @@ MtPyre_Summit_EventScript_15D795:: @ 815D795
 
 MtPyre_Summit_Movement_15D7A0:: @ 815D7A0
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 MtPyre_Summit_Movement_15D7A3:: @ 815D7A3
@@ -328,7 +328,7 @@ MtPyre_Summit_Movement_15D7A3:: @ 815D7A3
 
 MtPyre_Summit_Movement_15D7A4:: @ 815D7A4
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 MtPyre_Summit_Movement_15D7A7:: @ 815D7A7

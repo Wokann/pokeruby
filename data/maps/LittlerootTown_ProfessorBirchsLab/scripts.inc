@@ -175,7 +175,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_BrendanNoRoomForPokeBalls:: @ 8152
 
 LittlerootTown_ProfessorBirchsLab_Movement_RivalApproachPlayer:: @ 8152E97
 	walk_down
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_Machine:: @ 8152E9A

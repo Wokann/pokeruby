@@ -204,8 +204,8 @@ struct ObjectEvent
     /*0x19*/ union __attribute__((packed)) {
         u8 as_byte;
         struct __attribute__((packed)) {
-            u16 x:4;
-            u16 y:4;
+            u16 rangeX:4;
+            u16 rangeY:4;
         } as_nybbles;
     }  range;
     /*0x1A*/ u8 fieldEffectSpriteId;

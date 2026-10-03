@@ -25,19 +25,19 @@ Common_Movement_FaceOriginalDirection:: @ 81A083D
 	step_end
 
 Common_Movement_WalkInPlaceFastestLeft:: @ 81A083F
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 Common_Movement_WalkInPlaceFastestUp:: @ 81A0841
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 Common_Movement_WalkInPlaceFastestRight:: @ 81A0843
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 Common_Movement_WalkInPlaceFastestDown:: @ 81A0845
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 Common_Movement_WalkUp6:: @ 81A0847

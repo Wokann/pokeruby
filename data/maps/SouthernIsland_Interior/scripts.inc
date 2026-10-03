@@ -92,7 +92,7 @@ SouthernIsland_Interior_Movement_160C16:: @ 8160C16
 	walk_down
 	walk_down
 	walk_down
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 SouthernIsland_Interior_Movement_160C22:: @ 8160C22

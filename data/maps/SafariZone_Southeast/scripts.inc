@@ -34,7 +34,7 @@ SafariZone_Southeast_Movement_160087:: @ 8160087
 
 SafariZone_Southeast_Movement_160089:: @ 8160089
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 SafariZone_Southeast_EventScript_16008C:: @ 816008C
@@ -104,15 +104,15 @@ SafariZone_Southeast_Movement_16014B:: @ 816014B
 
 SafariZone_Southeast_Movement_16014D:: @ 816014D
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 SafariZone_Southeast_Movement_160150:: @ 8160150
 	walk_left
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 SafariZone_Southeast_Movement_160153:: @ 8160153
 	walk_down
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end

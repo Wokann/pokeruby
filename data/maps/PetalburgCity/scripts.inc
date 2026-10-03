@@ -97,7 +97,7 @@ PetalburgCity_Movement_WallyTutorialPlayer:: @ 814B7CC
 	walk_right
 	walk_up
 	walk_up
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 PetalburgCity_Movement_WallyTutorialWally:: @ 814B7ED
@@ -133,10 +133,10 @@ PetalburgCity_Movement_WallyTutorialWally:: @ 814B7ED
 	walk_up
 	walk_right
 	delay_16
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	delay_16
 	delay_16
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 PetalburgCity_EventScript_GymSign:: @ 814B812
@@ -278,7 +278,7 @@ PetalburgCity_Movement_BoyApproachPlayer0:: @ 814B9B1
 	walk_right
 	walk_right
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 PetalburgCity_Movement_BoyApproachPlayer1:: @ 814B9B6
@@ -290,7 +290,7 @@ PetalburgCity_Movement_BoyApproachPlayer2:: @ 814B9B9
 	walk_right
 	walk_right
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 PetalburgCity_Movement_BoyApproachPlayer3:: @ 814B9BE
@@ -298,7 +298,7 @@ PetalburgCity_Movement_BoyApproachPlayer3:: @ 814B9BE
 	walk_right
 	walk_right
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 PetalburgCity_Movement_BoyWalkToGym0:: @ 814B9C4
@@ -311,7 +311,7 @@ PetalburgCity_Movement_BoyWalkToGym0:: @ 814B9C4
 	walk_right
 	walk_up
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 PetalburgCity_Movement_BoyWalkToGym1:: @ 814B9CF
@@ -327,7 +327,7 @@ PetalburgCity_Movement_BoyWalkToGym1:: @ 814B9CF
 	walk_up
 	walk_up
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 PetalburgCity_Movement_BoyWalkToGym2:: @ 814B9DD
@@ -340,7 +340,7 @@ PetalburgCity_Movement_BoyWalkToGym2:: @ 814B9DD
 	walk_right
 	walk_up
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 PetalburgCity_Movement_BoyWalkToGym3:: @ 814B9E8
@@ -354,7 +354,7 @@ PetalburgCity_Movement_BoyWalkToGym3:: @ 814B9E8
 	walk_up
 	walk_up
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 PetalburgCity_Movement_BoyWalkAway:: @ 814B9F4

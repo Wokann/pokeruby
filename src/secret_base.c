@@ -113,15 +113,15 @@ static const u8 sSecretBaseOwnerGfxIds[] = {
     // Male
     OBJ_EVENT_GFX_YOUNGSTER,
     OBJ_EVENT_GFX_BUG_CATCHER,
-    OBJ_EVENT_GFX_BOY_4,
+    OBJ_EVENT_GFX_RICH_BOY,
     OBJ_EVENT_GFX_CAMPER,
-    OBJ_EVENT_GFX_MAN_4,
+    OBJ_EVENT_GFX_MAN_3,
     // Female
     OBJ_EVENT_GFX_LASS,
     OBJ_EVENT_GFX_GIRL_3,
-    OBJ_EVENT_GFX_WOMAN_3,
+    OBJ_EVENT_GFX_WOMAN_2,
     OBJ_EVENT_GFX_PICNICKER,
-    OBJ_EVENT_GFX_WOMAN_7,
+    OBJ_EVENT_GFX_WOMAN_5,
 };
 
 extern u8 gUnknown_081A2E14[];
@@ -529,9 +529,9 @@ void sub_80BBDD0(void)
                         VarSet(gSpecialVar_Result, gDecorations[roomdecor[decidx]].tiles[0]);
                         gSpecialVar_Result = gMapHeader.events->objectEvents[objid].localId;
                         FlagClear(gSpecialVar_0x8004 + 0xAE);
-                        show_sprite(gSpecialVar_Result, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
-                        sub_805C0F8(gSpecialVar_Result, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, gSpecialVar_0x8006, gSpecialVar_0x8007);
-                        TryOverrideTemplateCoordsForObjectEvent(gSpecialVar_Result, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
+                        TrySpawnObjectEvent(gSpecialVar_Result, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
+                        TryMoveObjectEventToMapCoords(gSpecialVar_Result, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, gSpecialVar_0x8006, gSpecialVar_0x8007);
+                        TryOverrideObjectEventTemplateCoords(gSpecialVar_Result, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
                         gSpecialVar_0x8004 ++;
                     }
                 }

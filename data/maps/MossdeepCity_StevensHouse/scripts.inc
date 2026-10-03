@@ -57,7 +57,7 @@ MossdeepCity_StevensHouse_Movement_StevenApproachPlayer:: @ 815AA6E
 	walk_left
 	walk_left
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 MossdeepCity_StevensHouse_Movement_StevenReturn:: @ 815AA76
@@ -65,7 +65,7 @@ MossdeepCity_StevensHouse_Movement_StevenReturn:: @ 815AA76
 	walk_right
 	walk_right
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 MossdeepCity_StevensHouse_EventScript_BeldumPokeball:: @ 815AA7C

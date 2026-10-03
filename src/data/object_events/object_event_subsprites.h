@@ -5,105 +5,105 @@
 #ifndef POKERUBY_OBJECT_EVENT_SUBSPRITES_H
 #define POKERUBY_OBJECT_EVENT_SUBSPRITES_H
 
-const struct Subsprite gObjectEventSubspriteTable_16x16_0[] = {
+static const struct Subsprite sOamTable_16x16_0[] = {
     { -8,  -8, 0, 1, 0, 2}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_16x16_1[] = {
+static const struct Subsprite sOamTable_16x16_1[] = {
     { -8,  -8, 0, 1, 0, 1}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_16x16_2[] = {
+static const struct Subsprite sOamTable_16x16_2[] = {
     { -8,  -8, 1, 0, 0, 2},
     { -8,   0, 1, 0, 2, 3}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_16x16_3[] = {
+static const struct Subsprite sOamTable_16x16_3[] = {
     { -8,  -8, 0, 1, 0, 2},
     { -8,  -8, 0, 1, 0, 3}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_16x16_4[] = {
+static const struct Subsprite sOamTable_16x16_4[] = {
     { -8,  -8, 0, 1, 0, 1},
     { -8,  -8, 0, 1, 0, 3}
 };
 
-const struct SubspriteTable gObjectEventSubspriteTables_16x16[] = {
+static const struct SubspriteTable sOamTables_16x16[] = {
     {0, NULL},
-    {1, gObjectEventSubspriteTable_16x16_0},
-    {1, gObjectEventSubspriteTable_16x16_1},
-    {2, gObjectEventSubspriteTable_16x16_2},
-    {2, gObjectEventSubspriteTable_16x16_3},
-    {2, gObjectEventSubspriteTable_16x16_4}
+    {1, sOamTable_16x16_0},
+    {1, sOamTable_16x16_1},
+    {2, sOamTable_16x16_2},
+    {2, sOamTable_16x16_3},
+    {2, sOamTable_16x16_4}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_16x32_0[] = {
+static const struct Subsprite sOamTable_16x32_0[] = {
     { -8, -16, 2, 2, 0, 2}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_16x32_1[] = {
+static const struct Subsprite sOamTable_16x32_1[] = {
     { -8, -16, 2, 2, 0, 1}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_16x32_2[] = {
+static const struct Subsprite sOamTable_16x32_2[] = {
     { -8, -16, 0, 1, 0, 2},
     { -8,   0, 1, 0, 4, 2},
     { -8,   8, 1, 0, 6, 3}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_16x32_3[] = {
+static const struct Subsprite sOamTable_16x32_3[] = {
     { -8, -16, 0, 1, 0, 2},
     { -8,   0, 0, 1, 4, 3}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_16x32_4[] = {
+static const struct Subsprite sOamTable_16x32_4[] = {
     { -8, -16, 0, 1, 0, 1},
     { -8,   0, 0, 1, 4, 3}
 };
 
-const struct SubspriteTable gObjectEventSubspriteTables_16x32[] = {
+static const struct SubspriteTable sOamTables_16x32[] = {
     {0, NULL},
-    {1, gObjectEventSubspriteTable_16x32_0},
-    {1, gObjectEventSubspriteTable_16x32_1},
-    {3, gObjectEventSubspriteTable_16x32_2},
-    {2, gObjectEventSubspriteTable_16x32_3},
-    {2, gObjectEventSubspriteTable_16x32_4}
+    {1, sOamTable_16x32_0},
+    {1, sOamTable_16x32_1},
+    {3, sOamTable_16x32_2},
+    {2, sOamTable_16x32_3},
+    {2, sOamTable_16x32_4}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_32x32_0[] = {
+static const struct Subsprite sOamTable_32x32_0[] = {
     {-16, -16, 0, 2, 0, 2}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_32x32_1[] = {
+static const struct Subsprite sOamTable_32x32_1[] = {
     {-16, -16, 0, 2, 0, 1}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_32x32_2[] = {
+static const struct Subsprite sOamTable_32x32_2[] = {
     {-16, -16, 1, 2, 0, 2},
     {-16,   0, 1, 1, 8, 2},
     {-16,   8, 1, 1, 12, 3}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_32x32_3[] = {
+static const struct Subsprite sOamTable_32x32_3[] = {
     {-16, -16, 1, 2, 0, 2},
     {-16,   0, 1, 2, 8, 3}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_32x32_4[] = {
+static const struct Subsprite sOamTable_32x32_4[] = {
     {-16, -16, 1, 2, 0, 1},
     {-16,   0, 1, 2, 8, 3}
 };
 
-const struct SubspriteTable gObjectEventSubspriteTables_32x32[] = {
+static const struct SubspriteTable sOamTables_32x32[] = {
     {0, NULL},
-    {1, gObjectEventSubspriteTable_32x32_0},
-    {1, gObjectEventSubspriteTable_32x32_1},
-    {3, gObjectEventSubspriteTable_32x32_2},
-    {2, gObjectEventSubspriteTable_32x32_3},
-    {2, gObjectEventSubspriteTable_32x32_4}
+    {1, sOamTable_32x32_0},
+    {1, sOamTable_32x32_1},
+    {3, sOamTable_32x32_2},
+    {2, sOamTable_32x32_3},
+    {2, sOamTable_32x32_4}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_48x48[] = {
+static const struct Subsprite sOamTable_48x48[] = {
     {-24, -24, 1, 1, 0, 2},
     {  8, -24, 1, 0, 4, 2},
     {-24, -16, 1, 1, 6, 2},
@@ -118,13 +118,13 @@ const struct Subsprite gObjectEventSubspriteTable_48x48[] = {
     {  8,  16, 1, 0, 34, 2}
 };
 
-const struct SubspriteTable gObjectEventSubspriteTables_48x48[] = {
-    {12, gObjectEventSubspriteTable_48x48},
-    {12, gObjectEventSubspriteTable_48x48},
-    {12, gObjectEventSubspriteTable_48x48},
-    {12, gObjectEventSubspriteTable_48x48},
-    {12, gObjectEventSubspriteTable_48x48},
-    {12, gObjectEventSubspriteTable_48x48}
+static const struct SubspriteTable sOamTables_48x48[] = {
+    {12, sOamTable_48x48},
+    {12, sOamTable_48x48},
+    {12, sOamTable_48x48},
+    {12, sOamTable_48x48},
+    {12, sOamTable_48x48},
+    {12, sOamTable_48x48}
 };
 
 const struct Subsprite gObjectEventSubspriteTable_64x32_0[] = {
@@ -153,32 +153,32 @@ const struct SubspriteTable gObjectEventSubspriteTables_64x32[] = {
     {1, gObjectEventSubspriteTable_64x32_3}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_64x64_0[] = {
+static const struct Subsprite sOamTable_64x64_0[] = {
     {-32, -32, 0, 3, 0, 2}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_64x64_1[] = {
+static const struct Subsprite sOamTable_64x64_1[] = {
     {-32, -32, 0, 3, 0, 1}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_64x64_2[] = {
+static const struct Subsprite sOamTable_64x64_2[] = {
     {-32, -32, 0, 3, 0, 2}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_64x64_3[] = {
+static const struct Subsprite sOamTable_64x64_3[] = {
     {-32, -32, 0, 3, 0, 2}
 };
 
-const struct SubspriteTable gObjectEventSubspriteTables_64x64[] = {
+static const struct SubspriteTable sOamTables_64x64[] = {
     {0, NULL},
-    {1, gObjectEventSubspriteTable_64x64_0},
-    {1, gObjectEventSubspriteTable_64x64_1},
-    {1, gObjectEventSubspriteTable_64x64_2},
-    {1, gObjectEventSubspriteTable_64x64_3},
-    {1, gObjectEventSubspriteTable_64x64_3}
+    {1, sOamTable_64x64_0},
+    {1, sOamTable_64x64_1},
+    {1, sOamTable_64x64_2},
+    {1, sOamTable_64x64_3},
+    {1, sOamTable_64x64_3}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_96x40_0[] = {
+static const struct Subsprite sOamTable_96x40_0[] = {
     {-48, -20, 1, 1, 0, 2},
     {-16, -20, 1, 1, 4, 2},
     { 16, -20, 1, 1, 8, 2},
@@ -196,7 +196,7 @@ const struct Subsprite gObjectEventSubspriteTable_96x40_0[] = {
     { 16,  12, 1, 1, 56, 2}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_96x40_1[] = {
+static const struct Subsprite sOamTable_96x40_1[] = {
     {-48, -20, 1, 1, 0, 1},
     {-16, -20, 1, 1, 4, 1},
     { 16, -20, 1, 1, 8, 1},
@@ -214,7 +214,7 @@ const struct Subsprite gObjectEventSubspriteTable_96x40_1[] = {
     { 16,  12, 1, 1, 56, 1}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_96x40_2[] = {
+static const struct Subsprite sOamTable_96x40_2[] = {
     {-48, -20, 1, 1, 0, 2},
     {-16, -20, 1, 1, 4, 2},
     { 16, -20, 1, 1, 8, 2},
@@ -232,7 +232,7 @@ const struct Subsprite gObjectEventSubspriteTable_96x40_2[] = {
     { 16,  12, 1, 1, 56, 2}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_96x40_3[] = {
+static const struct Subsprite sOamTable_96x40_3[] = {
     {-48, -20, 1, 1, 0, 1},
     {-16, -20, 1, 1, 4, 1},
     { 16, -20, 1, 1, 8, 1},
@@ -251,16 +251,16 @@ const struct Subsprite gObjectEventSubspriteTable_96x40_3[] = {
 };
 
 // Used by SS Tidal
-const struct SubspriteTable gObjectEventSubspriteTables_96x40[] = {
-    {15, gObjectEventSubspriteTable_96x40_0},
-    {15, gObjectEventSubspriteTable_96x40_0},
-    {15, gObjectEventSubspriteTable_96x40_1},
-    {15, gObjectEventSubspriteTable_96x40_2},
-    {15, gObjectEventSubspriteTable_96x40_3},
-    {15, gObjectEventSubspriteTable_96x40_3}
+static const struct SubspriteTable sOamTables_96x40[] = {
+    {15, sOamTable_96x40_0},
+    {15, sOamTable_96x40_0},
+    {15, sOamTable_96x40_1},
+    {15, sOamTable_96x40_2},
+    {15, sOamTable_96x40_3},
+    {15, sOamTable_96x40_3}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_88x32_0[] = {
+static const struct Subsprite sOamTable_88x32_0[] = {
     {-48, -20, 1, 1, 0, 2},
     {-16, -20, 1, 1, 4, 2},
     { 16, -20, 1, 0, 8, 2},
@@ -279,7 +279,7 @@ const struct Subsprite gObjectEventSubspriteTable_88x32_0[] = {
     { 32,   4, 0, 0, 43, 2}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_88x32_1[] = {
+static const struct Subsprite sOamTable_88x32_1[] = {
     {-48, -20, 1, 1, 0, 1},
     {-16, -20, 1, 1, 4, 1},
     { 16, -20, 1, 0, 8, 1},
@@ -298,7 +298,7 @@ const struct Subsprite gObjectEventSubspriteTable_88x32_1[] = {
     { 32,   4, 0, 0, 43, 1}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_88x32_2[] = {
+static const struct Subsprite sOamTable_88x32_2[] = {
     {-48, -20, 1, 1, 0, 2},
     {-16, -20, 1, 1, 4, 2},
     { 16, -20, 1, 0, 8, 2},
@@ -317,7 +317,7 @@ const struct Subsprite gObjectEventSubspriteTable_88x32_2[] = {
     { 32,   4, 0, 0, 43, 2}
 };
 
-const struct Subsprite gObjectEventSubspriteTable_88x32_3[] = {
+static const struct Subsprite sOamTable_88x32_3[] = {
     {-48, -20, 1, 1, 0, 1},
     {-16, -20, 1, 1, 4, 1},
     { 16, -20, 1, 0, 8, 1},
@@ -337,12 +337,12 @@ const struct Subsprite gObjectEventSubspriteTable_88x32_3[] = {
 };
 
 // Used by the submarine shadow
-const struct SubspriteTable gObjectEventSubspriteTables_88x32[] = {
-    {16, gObjectEventSubspriteTable_88x32_0},
-    {16, gObjectEventSubspriteTable_88x32_0},
-    {16, gObjectEventSubspriteTable_88x32_1},
-    {16, gObjectEventSubspriteTable_88x32_2},
-    {16, gObjectEventSubspriteTable_88x32_3},
-    {16, gObjectEventSubspriteTable_88x32_3}
+static const struct SubspriteTable sOamTables_88x32[] = {
+    {16, sOamTable_88x32_0},
+    {16, sOamTable_88x32_0},
+    {16, sOamTable_88x32_1},
+    {16, sOamTable_88x32_2},
+    {16, sOamTable_88x32_3},
+    {16, sOamTable_88x32_3}
 };
 #endif //POKERUBY_OBJECT_EVENT_SUBSPRITES_H

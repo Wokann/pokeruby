@@ -62,167 +62,167 @@ Route109_EventScript_14F548:: @ 814F548
 	end
 
 Route109_Movement_14F5BF:: @ 814F5BF
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	walk_down
 	walk_down
 	walk_fast_down
 	walk_fast_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
 	walk_fast_down
 	walk_fast_down
 	walk_fast_left
 	walk_fast_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
-	walk_fastest_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
 	walk_fast_left
 	walk_fast_left
 	walk_fast_left
@@ -234,7 +234,7 @@ Route109_Movement_14F5BF:: @ 814F5BF
 	walk_fast_left
 	walk_left
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 Route109_Movement_14F66D:: @ 814F66D
@@ -246,7 +246,7 @@ Route109_Movement_14F670:: @ 814F670
 	walk_down
 	walk_down
 	walk_left
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 Route109_Movement_14F675:: @ 814F675
@@ -265,7 +265,7 @@ Route109_Movement_14F67B:: @ 814F67B
 
 Route109_Movement_14F67D:: @ 814F67D
 	walk_down
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 Route109_EventScript_14F680:: @ 814F680

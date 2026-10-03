@@ -98,7 +98,7 @@ OldaleTown_Movement_EmployeeEast:: @ 814DE8E
 	walk_up
 	walk_up
 	walk_up
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 OldaleTown_Movement_EmployeeSouth:: @ 814DE97
@@ -111,7 +111,7 @@ OldaleTown_Movement_EmployeeSouth:: @ 814DE97
 	walk_up
 	walk_up
 	walk_up
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 OldaleTown_Movement_EmployeeNorth:: @ 814DEA2
@@ -122,7 +122,7 @@ OldaleTown_Movement_EmployeeNorth:: @ 814DEA2
 	walk_up
 	walk_up
 	walk_up
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 @ 814DEAB
@@ -138,7 +138,7 @@ OldaleTown_Movement_EmployeeNorth:: @ 814DEA2
 	walk_up
 	walk_up
 	delay_8
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 OldaleTown_Movement_PlayerEast:: @ 814DEB9
@@ -306,7 +306,7 @@ OldaleTown_Movement_PlayerStepBack:: @ 814DFEC
 
 OldaleTown_Movement_BackUp:: @ 814DFEF
 	walk_fast_up
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	lock_facing_direction
 	walk_right
 	unlock_facing_direction

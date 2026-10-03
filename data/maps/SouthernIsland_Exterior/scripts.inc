@@ -46,7 +46,7 @@ BattleTower_Outside_Movement_160B45:: @ 8160B45
 
 BattleTower_Outside_Movement_160B47:: @ 8160B47
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 SouthernIsland_Exterior_EventScript_160B4A:: @ 8160B4A

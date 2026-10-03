@@ -176,119 +176,119 @@ Route104_Movement_14F09F:: @ 814F09F
 	walk_fast_down
 	walk_fast_down
 	walk_fast_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
 	walk_fast_down
 	walk_fast_down
 	walk_fast_down
 	walk_fast_down
 	walk_fast_right
 	walk_fast_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
 	walk_fast_right
 	walk_fast_right
 	walk_fast_down
 	walk_fast_down
 	walk_fast_down
 	walk_fast_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
-	walk_fastest_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
 	walk_fast_down
 	walk_fast_down
 	walk_fast_down
@@ -297,46 +297,46 @@ Route104_Movement_14F09F:: @ 814F09F
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
-	walk_fastest_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right
@@ -377,7 +377,7 @@ Route104_Movement_14F166:: @ 814F166
 Route104_Movement_14F168:: @ 814F168
 	walk_down
 	walk_left
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 Route104_Movement_14F16C:: @ 814F16C
@@ -387,7 +387,7 @@ Route104_Movement_14F16C:: @ 814F16C
 
 Route104_Movement_14F16F:: @ 814F16F
 	walk_down
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 Route104_EventScript_14F172:: @ 814F172

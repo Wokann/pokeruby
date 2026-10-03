@@ -153,7 +153,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_6",
+      "graphics_id": "OBJ_EVENT_GFX_MAN_5",
       "x": 5,
       "y": 22,
       "elevation": 3,
@@ -166,7 +166,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_6",
+      "graphics_id": "OBJ_EVENT_GFX_MAN_5",
       "x": 32,
       "y": 14,
       "elevation": 3,
@@ -326,7 +326,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_7",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
       "x": 28,
       "y": 35,
       "elevation": 3,
@@ -352,7 +352,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_7",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
       "x": 16,
       "y": 6,
       "elevation": 3,
@@ -365,7 +365,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_7",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
       "x": 18,
       "y": 34,
       "elevation": 3,
@@ -404,7 +404,7 @@
       "flag": "FLAG_ITEM_ROUTE120_3"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_KECLEON_1",
+      "graphics_id": "OBJ_EVENT_GFX_KECLEON",
       "x": 12,
       "y": 16,
       "elevation": 4,
@@ -456,7 +456,7 @@
       "flag": "FLAG_TEMP_12"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_LITTLE_BOY_1",
+      "graphics_id": "OBJ_EVENT_GFX_NINJA_BOY",
       "x": 10,
       "y": 72,
       "elevation": 3,
@@ -469,7 +469,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_LITTLE_BOY_1",
+      "graphics_id": "OBJ_EVENT_GFX_NINJA_BOY",
       "x": 19,
       "y": 28,
       "elevation": 3,
@@ -482,7 +482,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_KECLEON_2",
+      "graphics_id": "OBJ_EVENT_GFX_KECLEON_BRIDGE_SHADOW",
       "x": 12,
       "y": 16,
       "elevation": 3,
@@ -495,7 +495,7 @@
       "flag": "FLAG_HIDE_KECLEON_ROUTE120_2"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_KECLEON_1",
+      "graphics_id": "OBJ_EVENT_GFX_KECLEON",
       "x": 20,
       "y": 11,
       "elevation": 3,
@@ -508,7 +508,7 @@
       "flag": "FLAG_HIDE_KECLEON_ROUTE120_3"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_KECLEON_1",
+      "graphics_id": "OBJ_EVENT_GFX_KECLEON",
       "x": 27,
       "y": 2,
       "elevation": 3,
@@ -521,7 +521,7 @@
       "flag": "FLAG_HIDE_KECLEON_ROUTE120_4"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_KECLEON_1",
+      "graphics_id": "OBJ_EVENT_GFX_KECLEON",
       "x": 4,
       "y": 77,
       "elevation": 3,
@@ -534,7 +534,7 @@
       "flag": "FLAG_HIDE_KECLEON_ROUTE120_5"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_KECLEON_1",
+      "graphics_id": "OBJ_EVENT_GFX_KECLEON",
       "x": 7,
       "y": 51,
       "elevation": 3,
@@ -547,7 +547,7 @@
       "flag": "FLAG_HIDE_KECLEON_ROUTE120_7"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_KECLEON_1",
+      "graphics_id": "OBJ_EVENT_GFX_KECLEON",
       "x": 19,
       "y": 48,
       "elevation": 3,

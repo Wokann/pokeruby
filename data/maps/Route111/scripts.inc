@@ -321,7 +321,7 @@ Route111_EventScript_15034F:: @ 815034F
 	return
 
 Route111_Movement_150356:: @ 8150356
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	walk_up
 	step_end
 

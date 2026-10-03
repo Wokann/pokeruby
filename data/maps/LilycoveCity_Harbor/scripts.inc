@@ -141,7 +141,7 @@ LilycoveCity_Harbor_EventScript_FerryAttendantLocationAndBoarding:: @ 81599EE
 
 LilycoveCity_Harbor_Movement_PlayerBoardFerryEast:: @ 8159A86
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LilycoveCity_Harbor_Movement_PlayerBoardFerryNorth:: @ 8159A89

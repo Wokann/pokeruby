@@ -224,8 +224,8 @@ RustboroCity_EventScript_StolenGoodsScene:: @ 814C4F4
 	return
 
 @ 814C5B0
-	walk_fastest_right
-	walk_fastest_right
+	walk_faster_right
+	walk_faster_right
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right
@@ -244,8 +244,8 @@ RustboroCity_EventScript_StolenGoodsScene:: @ 814C4F4
 	step_end
 
 RustboroCity_Movement_GruntEscape:: @ 814C5C2
-	walk_fastest_right
-	walk_fastest_right
+	walk_faster_right
+	walk_faster_right
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right
@@ -269,7 +269,7 @@ RustboroCity_Movement_EmployeeChaseGrunt1:: @ 814C5D3
 	walk_right
 	walk_right
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 RustboroCity_Movement_EmployeeChaseGrunt2:: @ 814C5DB
@@ -317,7 +317,7 @@ RustboroCity_Movement_EmployeeApproachPlayerFar:: @ 814C5F7
 	walk_right
 	walk_right
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 RustboroCity_EventScript_DevonEmployee1:: @ 814C5FF

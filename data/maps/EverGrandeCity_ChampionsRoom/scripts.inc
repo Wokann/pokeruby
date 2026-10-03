@@ -183,17 +183,17 @@ EverGrandeCity_ChampionsRoom_Movement_RivalApproachPlayer:: @ 815B9E6
 	walk_up
 	walk_left
 	walk_up
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 EverGrandeCity_ChampionsRoom_Movement_RivalLookBackAndForth:: @ 815B9EF
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	delay_16
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	delay_16
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	delay_8
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	delay_16
 	step_end
 
@@ -205,7 +205,7 @@ EverGrandeCity_ChampionsRoom_Movement_RivalFollows:: @ 815B9F8
 EverGrandeCity_ChampionsRoom_Movement_StevenExitStart:: @ 815B9FB
 	walk_up
 	walk_up
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 EverGrandeCity_ChampionsRoom_Movement_StevenExit:: @ 815B9FF
@@ -222,5 +222,5 @@ EverGrandeCity_ChampionsRoom_Movement_BirchArrives:: @ 815BA03
 	walk_up
 	walk_right
 	walk_up
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end

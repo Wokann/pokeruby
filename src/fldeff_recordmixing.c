@@ -3,7 +3,7 @@
 #include "fldeff_recordmixing.h"
 #include "sprite.h"
 
-extern const struct OamData gFieldOamData_32x8;
+extern const struct OamData gObjectEventBaseOam_32x8;
 
 static const u8 sSpriteImage_83D26C0[] = INCBIN_U8("graphics/unknown_sprites/83D2860/0.4bpp");
 static const u8 sSpriteImage_83D2740[] = INCBIN_U8("graphics/unknown_sprites/83D2860/1.4bpp");
@@ -37,7 +37,7 @@ static const struct SpriteTemplate sSpriteTemplate_83D2894 =
 {
     .tileTag = 0xFFFF,
     .paletteTag = 0x1000,
-    .oam = &gFieldOamData_32x8,
+    .oam = &gObjectEventBaseOam_32x8,
     .anims = sSpriteAnimTable_83D2890,
     .images = sSpriteImageTable_83FD950,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -59,7 +59,7 @@ u8 CreateRecordMixingSprite(void)
     else
     {
         struct Sprite *sprite = &gSprites[spriteId];
-        sub_8060388(16, 13, &sprite->x, &sprite->y);
+        GetMapCoordsFromSpritePos(16, 13, &sprite->x, &sprite->y);
         sprite->coordOffsetEnabled = TRUE;
         sprite->x += 16;
         sprite->y += 2;

@@ -116,7 +116,7 @@ SlateportCity_OceanicMuseum_2F_EventScript_PlayerApproachGruntWest:: @ 8155E83
 SlateportCity_OceanicMuseum_2F_Movement_PlayerApproachGruntSouth:: @ 8155E8E
 	walk_left
 	walk_down
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 SlateportCity_OceanicMuseum_2F_Movement_PlayerApproachGruntWest:: @ 8155E92
@@ -124,7 +124,7 @@ SlateportCity_OceanicMuseum_2F_Movement_PlayerApproachGruntWest:: @ 8155E92
 	walk_left
 	walk_left
 	walk_down
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 SlateportCity_OceanicMuseum_2F_EventScript_SternLeave:: @ 8155E98
@@ -166,7 +166,7 @@ SlateportCity_OceanicMuseum_2F_Movement_GruntApproachToBattle:: @ 8155EB2
 SlateportCity_OceanicMuseum_2F_Movement_FirstGruntEnter:: @ 8155EB4
 	walk_down
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 SlateportCity_OceanicMuseum_2F_Movement_FirstGruntApproach:: @ 8155EB8
@@ -210,7 +210,7 @@ SlateportCity_OceanicMuseum_2F_Movement_GruntMoveForEvilLeader:: @ 8155ECE
 	delay_16
 	delay_8
 	walk_fast_down
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 SlateportCity_OceanicMuseum_2F_EventScript_WaterQualitySample1:: @ 8155EDA

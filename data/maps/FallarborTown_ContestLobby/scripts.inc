@@ -58,18 +58,18 @@ FallarborTown_ContestLobby_Movement_153A70:: @ 8153A70
 	step_end
 
 FallarborTown_ContestLobby_Movement_153A7A:: @ 8153A7A
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 FallarborTown_ContestLobby_Movement_153A7C:: @ 8153A7C
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 FallarborTown_ContestLobby_Movement_153A7F:: @ 8153A7F
 	walk_down
 	walk_down
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 FallarborTown_ContestLobby_Movement_153A83:: @ 8153A83
@@ -84,7 +84,7 @@ FallarborTown_ContestLobby_Movement_153A83:: @ 8153A83
 	step_end
 
 FallarborTown_ContestLobby_Movement_153A8C:: @ 8153A8C
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 FallarborTown_ContestLobby_EventScript_Boy:: @ 8153A8E

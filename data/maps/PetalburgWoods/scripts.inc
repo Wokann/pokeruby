@@ -154,7 +154,7 @@ PetalburgWoods_Movement_15CE8E:: @ 815CE8E
 	walk_down
 	walk_down
 	walk_down
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 PetalburgWoods_Movement_15CE95:: @ 815CE95
@@ -173,17 +173,17 @@ PetalburgWoods_Movement_15CE9E:: @ 815CE9E
 	walk_fast_down
 	walk_fast_down
 	walk_fast_left
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 PetalburgWoods_Movement_15CEA4:: @ 815CEA4
 	walk_fast_down
 	walk_fast_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 PetalburgWoods_Movement_15CEA8:: @ 815CEA8
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	delay_16
 	delay_16
 	delay_16

@@ -118,7 +118,7 @@ LittlerootTown_BrendansHouse_2F_EventScript_1B6A9B:: @ 81B6A9B
 LittlerootTown_BrendansHouse_2F_Movement_1B6AA2:: @ 81B6AA2
 	delay_8
 	walk_down
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	delay_16
 	delay_8
 	walk_left
@@ -133,7 +133,7 @@ LittlerootTown_BrendansHouse_2F_Movement_1B6AA9:: @ 81B6AA9
 LittlerootTown_BrendansHouse_2F_Movement_1B6AAD:: @ 81B6AAD
 	delay_8
 	walk_down
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	delay_16
 	delay_8
 	walk_right
@@ -225,24 +225,24 @@ LittlerootTown_MaysHouse_1F_EventScript_1B6BBE:: @ 81B6BBE
 
 LittlerootTown_BrendansHouse_1F_Movement_1B6BDB:: @ 81B6BDB
 	walk_left
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 LittlerootTown_MaysHouse_1F_Movement_1B6BDE:: @ 81B6BDE
 	walk_right
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 LittlerootTown_BrendansHouse_1F_Movement_1B6BE1:: @ 81B6BE1
 	walk_left
 	walk_down
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 LittlerootTown_MaysHouse_1F_Movement_1B6BE5:: @ 81B6BE5
 	walk_right
 	walk_down
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 LittlerootTown_BrendansHouse_1F_EventScript_1B6BE9:: @ 81B6BE9
@@ -490,14 +490,14 @@ LittlerootTown_BrendansHouse_1F_Movement_1B6E49:: @ 81B6E49
 	walk_down
 	walk_down
 	walk_down
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 LittlerootTown_BrendansHouse_1F_Movement_1B6E4F:: @ 81B6E4F
 	delay_16
 	delay_16
 	delay_16
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 LittlerootTown_BrendansHouse_1F_Movement_1B6E54:: @ 81B6E54
@@ -505,5 +505,5 @@ LittlerootTown_BrendansHouse_1F_Movement_1B6E54:: @ 81B6E54
 	walk_down
 	walk_down
 	walk_down
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end

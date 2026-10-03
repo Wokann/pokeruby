@@ -101,21 +101,21 @@ EverGrandeCity_PokemonLeague_1F_EventScript_GoForth:: @ 815BB57
 EverGrandeCity_PokemonLeague_1F_Movement_MoveToFrontFromRight:: @ 815BB76
 	walk_down
 	walk_left
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 EverGrandeCity_PokemonLeague_1F_Movement_MoveToFrontFromLeft:: @ 815BB7A
 	walk_down
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 EverGrandeCity_PokemonLeague_1F_Movement_LeftGuardOutOfWay:: @ 815BB7E
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 EverGrandeCity_PokemonLeague_1F_Movement_RightGuardOutOfWay:: @ 815BB81
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
