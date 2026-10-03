@@ -31,8 +31,8 @@ void NakaGenderTest(void);
 extern const u8 gMysteryEventDebugDataSourceCount;
 extern const struct MysteryEventDebugDataSource gMysteryEventDebugDataSources[];
 
-// unknown debug menu
-int InitSogabeDebugMenu(void);
+// sogabe_debug_menu
+u8 InitSogabeDebugMenu(void);
 
 // kagaya_debug_menu
 bool8 InitKagayaDebugMenu(void);

@@ -1,6 +1,7 @@
 #include "global.h"
 #include "battle_tower.h"
 #include "menu.h"
+#include "constants/battle_tower.h"
 
 extern u8 gBattleCommunication[];
 
@@ -9,65 +10,65 @@ extern u8 (*gMenuCallback)(void);
 static u8 SogabeDebugMenu_SetRound(void);
 static u8 SogabeDebugMenu_HandleInput(void);
 
-static const u8 sText_1stRound[] = _("1st round");
-static const u8 sText_2ndRound[] = _("2nd round");
-static const u8 sText_3rdRound[] = _("3rd round");
-static const u8 sText_4thRound[] = _("4th round");
-static const u8 sText_5thRound[] = _("5th round");
-static const u8 sText_6thRound[] = _("6th round");
-static const u8 sText_7thRound[] = _("7th round");
-static const u8 sText_8thRound[] = _("8th round");
+static const u8 sText_BattleTowerRound1[] = _("1st round");
+static const u8 sText_BattleTowerRound2[] = _("2nd round");
+static const u8 sText_BattleTowerRound3[] = _("3rd round");
+static const u8 sText_BattleTowerRound4[] = _("4th round");
+static const u8 sText_BattleTowerRound5[] = _("5th round");
+static const u8 sText_BattleTowerRound6[] = _("6th round");
+static const u8 sText_BattleTowerRound7[] = _("7th round");
+static const u8 sText_BattleTowerRound8[] = _("8th round");
 
 
 static const struct MenuAction sSogabeBattleTowerRoundMenuActions[] = {
-    {sText_1stRound, SogabeDebugMenu_SetRound},
-    {sText_2ndRound, SogabeDebugMenu_SetRound},
-    {sText_3rdRound, SogabeDebugMenu_SetRound},
-    {sText_4thRound, SogabeDebugMenu_SetRound},
-    {sText_5thRound, SogabeDebugMenu_SetRound},
-    {sText_6thRound, SogabeDebugMenu_SetRound},
-    {sText_7thRound, SogabeDebugMenu_SetRound},
-    {sText_8thRound, SogabeDebugMenu_SetRound}
+    {sText_BattleTowerRound1, SogabeDebugMenu_SetRound},
+    {sText_BattleTowerRound2, SogabeDebugMenu_SetRound},
+    {sText_BattleTowerRound3, SogabeDebugMenu_SetRound},
+    {sText_BattleTowerRound4, SogabeDebugMenu_SetRound},
+    {sText_BattleTowerRound5, SogabeDebugMenu_SetRound},
+    {sText_BattleTowerRound6, SogabeDebugMenu_SetRound},
+    {sText_BattleTowerRound7, SogabeDebugMenu_SetRound},
+    {sText_BattleTowerRound8, SogabeDebugMenu_SetRound}
 };
 
-int InitSogabeDebugMenu(void)
+u8 InitSogabeDebugMenu(void)
 {
     Menu_EraseScreen();
     Menu_DrawStdWindowFrame(0, 0, 16, 18);
     Menu_PrintItems(2, 1, 8, sSogabeBattleTowerRoundMenuActions);
     InitMenu(0, 1, 1, 8, 0, 15);
     gMenuCallback = SogabeDebugMenu_HandleInput;
-    return 0;
+    return FALSE;
 }
 
 static u8 SogabeDebugMenu_HandleInput(void)
 {
     s8 result = Menu_ProcessInput();
-    if (result == -2)
+    if (result == MENU_NOTHING_CHOSEN)
     {
-        return 0;
+        return FALSE;
     }
-    else if (result == -1)
+    else if (result == MENU_B_PRESSED)
     {
         CloseMenu();
-        return 1;
+        return TRUE;
     }
     else
     {
         gBattleCommunication[0] = result;
         gMenuCallback = sSogabeBattleTowerRoundMenuActions[result].func;
-        return 0;
+        return FALSE;
     }
 }
 
 static u8 SogabeDebugMenu_SetRound(void)
 {
-    gSaveBlock2.battleTower.challengeStatus[0] = 3;
-    gSaveBlock2.battleTower.challengeStatus[1] = 3;
-    gSaveBlock2.battleTower.curStreakChallengesNum[0] = gBattleCommunication[0] + 1;
-    gSaveBlock2.battleTower.curStreakChallengesNum[1] = gBattleCommunication[0] + 1;
-    gSaveBlock2.battleTower.curChallengeBattleNum[0] = 1;
-    gSaveBlock2.battleTower.curChallengeBattleNum[1] = 1;
+    gSaveBlock2.battleTower.challengeStatus[BATTLE_TOWER_LEVEL_50] = BATTLE_TOWER_CHALLENGE_STATUS_PRIZE_COLLECTED;
+    gSaveBlock2.battleTower.challengeStatus[BATTLE_TOWER_LEVEL_100] = BATTLE_TOWER_CHALLENGE_STATUS_PRIZE_COLLECTED;
+    gSaveBlock2.battleTower.curStreakChallengesNum[BATTLE_TOWER_LEVEL_50] = gBattleCommunication[0] + BATTLE_TOWER_FIRST_CHALLENGE_NUM;
+    gSaveBlock2.battleTower.curStreakChallengesNum[BATTLE_TOWER_LEVEL_100] = gBattleCommunication[0] + BATTLE_TOWER_FIRST_CHALLENGE_NUM;
+    gSaveBlock2.battleTower.curChallengeBattleNum[BATTLE_TOWER_LEVEL_50] = BATTLE_TOWER_FIRST_CHALLENGE_NUM;
+    gSaveBlock2.battleTower.curChallengeBattleNum[BATTLE_TOWER_LEVEL_100] = BATTLE_TOWER_FIRST_CHALLENGE_NUM;
     CloseMenu();
-    return 1;
+    return TRUE;
 }
