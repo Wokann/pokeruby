@@ -47,8 +47,8 @@ extern const u8 gMainMenuString_Time[];
 extern const u8 gMainMenuString_Badges[];
 
 // birch text
-extern const u8 gBirchText_Boy[];
-extern const u8 gBirchText_Girl[];
+extern const u8 gText_BirchBoy[];
+extern const u8 gText_BirchGirl[];
 extern const u8 gBirchText_NewName[];
 
 extern const u8 gDefaultBoyName1[];

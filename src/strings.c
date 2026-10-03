@@ -49,8 +49,8 @@ const u8 gMainMenuString_Time[] = _("TIME");
 const u8 gMainMenuString_Badges[] = _("BADGES");
 
 // birch text
-const u8 gBirchText_Boy[] = _("BOY");
-const u8 gBirchText_Girl[] = _("GIRL");
+const u8 gText_BirchBoy[] = _("BOY");
+const u8 gText_BirchGirl[] = _("GIRL");
 const u8 gBirchText_NewName[] = _("NEW NAME");
 
 #ifdef SAPPHIRE
@@ -977,8 +977,8 @@ const u8 gMainMenuString_Time[] = _("SPIELZEIT");
 const u8 gMainMenuString_Badges[] = _("ORDEN");
 
 // birch text
-const u8 gBirchText_Boy[] = _("JUNGE");
-const u8 gBirchText_Girl[] = _("MÄDEL");
+const u8 gText_BirchBoy[] = _("JUNGE");
+const u8 gText_BirchGirl[] = _("MÄDEL");
 const u8 gBirchText_NewName[] = _("NEUER NAME");
 
 #ifdef SAPPHIRE
