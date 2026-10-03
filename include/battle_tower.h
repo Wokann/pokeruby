@@ -81,7 +81,7 @@ enum
     BATTLE_TOWER_ITEM_GANLON_BERRY,
 };
 
-struct BattleTowerPokemon
+struct FacilityMon
 {
     /*0x00*/u16 species;
     /*0x02*/u8 heldItem; // entry in sBattleTowerHeldItems

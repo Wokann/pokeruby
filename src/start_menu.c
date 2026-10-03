@@ -228,7 +228,7 @@ void debug_sub_8075DB4(struct BattleTowerEReaderTrainer *ereaderTrainer, const u
         r3++;
     }
     for (i = 0; i < 3; i++)
-        sub_803AF78(&gPlayerParty[i], &ereaderTrainer->party[i]);
+        ConvertPokemonToBattleTowerPokemon(&gPlayerParty[i], &ereaderTrainer->party[i]);
     SetEReaderTrainerChecksum(ereaderTrainer);
 }
 

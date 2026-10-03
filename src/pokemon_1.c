@@ -1316,10 +1316,12 @@ const s8 gNatureStatTable[][5] =
 #include "data/pokemon/trainer_class_lookups.h"
 #include "data/pokemon/cry_ids.h"
 #include "data/pokemon/experience_tables.h"
-#include "data/pokemon/base_stats.h"
+#include "data/pokemon/species_info.h"
 #include "data/pokemon/level_up_learnsets.h"
 #include "data/pokemon/evolution.h"
 #include "data/pokemon/level_up_learnset_pointers.h"
+
+static u16 GiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move);
 
 void ZeroBoxMonData(struct BoxPokemon *boxMon)
 {
@@ -1363,13 +1365,13 @@ void ZeroEnemyPartyMons(void)
 
 void CreateMon(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 fixedPersonality, u8 otIdType, u32 fixedOtId)
 {
-    u32 arg;
+    u32 mail;
 
     ZeroMonData(mon);
     CreateBoxMon(&mon->box, species, level, fixedIV, hasFixedPersonality, fixedPersonality, otIdType, fixedOtId);
     SetMonData(mon, MON_DATA_LEVEL, &level);
-    arg = 255;
-    SetMonData(mon, MON_DATA_MAIL, &arg);
+    mail = 255;
+    SetMonData(mon, MON_DATA_MAIL, &mail);
     CalculateMonStats(mon);
 }
 
@@ -1421,8 +1423,8 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     SetBoxMonData(boxMon, MON_DATA_LANGUAGE, &gGameLanguage);
     SetBoxMonData(boxMon, MON_DATA_OT_NAME, gSaveBlock2.playerName);
     SetBoxMonData(boxMon, MON_DATA_SPECIES, &species);
-    SetBoxMonData(boxMon, MON_DATA_EXP, &gExperienceTables[gBaseStats[species].growthRate][level]);
-    SetBoxMonData(boxMon, MON_DATA_FRIENDSHIP, &gBaseStats[species].friendship);
+    SetBoxMonData(boxMon, MON_DATA_EXP, &gExperienceTables[gSpeciesInfo[species].growthRate][level]);
+    SetBoxMonData(boxMon, MON_DATA_FRIENDSHIP, &gSpeciesInfo[species].friendship);
     value = sav1_map_get_name();
     SetBoxMonData(boxMon, MON_DATA_MET_LOCATION, &value);
     SetBoxMonData(boxMon, MON_DATA_MET_LEVEL, &level);
@@ -1462,10 +1464,10 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
         SetBoxMonData(boxMon, MON_DATA_SPDEF_IV, &iv);
     }
 
-    if (gBaseStats[species].ability2)
+    if (gSpeciesInfo[species].ability2)
     {
         value = personality & 1;
-        SetBoxMonData(boxMon, MON_DATA_ALT_ABILITY, &value);
+        SetBoxMonData(boxMon, MON_DATA_ABILITY_NUM, &value);
     }
 
     GiveBoxMonInitialMoveset(boxMon);
@@ -1553,34 +1555,34 @@ void CreateMonWithEVSpread(struct Pokemon *mon, u16 species, u8 level, u8 fixedI
     s32 i;
     s32 statCount = 0;
     u16 evAmount;
-    u8 temp;
+    u8 evsBits;
 
     CreateMon(mon, species, level, fixedIV, 0, 0, 0, 0);
 
-    temp = evSpread;
+    evsBits = evSpread;
 
     for (i = 0; i < 6; i++)
     {
-        if (temp & 1)
+        if (evsBits & 1)
             statCount++;
-        temp >>= 1;
+        evsBits >>= 1;
     }
 
     evAmount = 510 / statCount;
 
-    temp = 1;
+    evsBits = 1;
 
     for (i = 0; i < 6; i++)
     {
-        if (evSpread & temp)
+        if (evSpread & evsBits)
             SetMonData(mon, MON_DATA_HP_EV + i, &evAmount);
-        temp <<= 1;
+        evsBits <<= 1;
     }
 
     CalculateMonStats(mon);
 }
 
-void sub_803ADE8(struct Pokemon *mon, struct UnknownPokemonStruct *src)
+void sub_803ADE8(struct Pokemon *mon, struct BattleTowerPokemon *src)
 {
     s32 i;
     u8 nickname[POKEMON_NAME_LENGTH + 1];
@@ -1612,8 +1614,8 @@ void sub_803ADE8(struct Pokemon *mon, struct UnknownPokemonStruct *src)
     SetMonData(mon, MON_DATA_SPEED_EV, &src->speedEV);
     SetMonData(mon, MON_DATA_SPATK_EV, &src->spAttackEV);
     SetMonData(mon, MON_DATA_SPDEF_EV, &src->spDefenseEV);
-    value = src->altAbility;
-    SetMonData(mon, MON_DATA_ALT_ABILITY, &value);
+    value = src->abilityNum;
+    SetMonData(mon, MON_DATA_ABILITY_NUM, &value);
     value = src->hpIV;
     SetMonData(mon, MON_DATA_HP_IV, &value);
     value = src->attackIV;
@@ -1629,7 +1631,7 @@ void sub_803ADE8(struct Pokemon *mon, struct UnknownPokemonStruct *src)
     CalculateMonStats(mon);
 }
 
-void sub_803AF78(struct Pokemon *mon, struct UnknownPokemonStruct *dest)
+void ConvertPokemonToBattleTowerPokemon(struct Pokemon *mon, struct BattleTowerPokemon *dest)
 {
     s32 i;
     u16 heldItem;
@@ -1661,7 +1663,7 @@ void sub_803AF78(struct Pokemon *mon, struct UnknownPokemonStruct *dest)
     dest->speedIV  = GetMonData(mon, MON_DATA_SPEED_IV, NULL);
     dest->spAttackIV  = GetMonData(mon, MON_DATA_SPATK_IV, NULL);
     dest->spDefenseIV  = GetMonData(mon, MON_DATA_SPDEF_IV, NULL);
-    dest->altAbility = GetMonData(mon, MON_DATA_ALT_ABILITY, NULL);
+    dest->abilityNum = GetMonData(mon, MON_DATA_ABILITY_NUM, NULL);
     dest->personality = GetMonData(mon, MON_DATA_PERSONALITY, NULL);
     GetMonData(mon, MON_DATA_NICKNAME, dest->nickname);
 }
@@ -1692,7 +1694,7 @@ u16 CalculateBoxMonChecksum(struct BoxPokemon *boxMon)
 
 #define CALC_STAT(base, iv, ev, statIndex, field)               \
 {                                                               \
-    u8 baseStat = gBaseStats[species].base;                     \
+    u8 baseStat = gSpeciesInfo[species].base;                     \
     s32 n = (((2 * baseStat + iv + ev / 4) * level) / 100) + 5; \
     u8 nature = GetNature(mon);                                 \
     n = nature_stat_mod(nature, n, statIndex);                  \
@@ -1727,7 +1729,7 @@ void CalculateMonStats(struct Pokemon *mon)
     }
     else
     {
-        s32 n = 2 * gBaseStats[species].baseHP + hpIV;
+        s32 n = 2 * gSpeciesInfo[species].baseHP + hpIV;
         newMaxHP = (((n + hpEV / 4) * level) / 100) + level + 10;
     }
 
@@ -1799,7 +1801,7 @@ void Nakamura_NakaGenderTest_RecalcStats(struct Pokemon *mon)
     }
     else
     {
-        s32 n = 2 * gBaseStats[species].baseHP + hpIV;
+        s32 n = 2 * gSpeciesInfo[species].baseHP + hpIV;
         newMaxHP = (((n + hpEV / 4) * level) / 100) + level + 10;
     }
 
@@ -1819,7 +1821,7 @@ void Nakamura_NakaGenderTest_RecalcStats(struct Pokemon *mon)
 #endif
 #endif
 
-void ExpandBoxMon(const struct BoxPokemon *src, struct Pokemon *dest)
+void BoxMonToMon(const struct BoxPokemon *src, struct Pokemon *dest)
 {
     u32 value = 0;
     dest->box = *src;
@@ -1837,7 +1839,7 @@ u8 GetLevelFromMonExp(struct Pokemon *mon)
     u32 exp = GetMonData(mon, MON_DATA_EXP, NULL);
     s32 level = 1;
 
-    while (level <= 100 && gExperienceTables[gBaseStats[species].growthRate][level] <= exp)
+    while (level <= 100 && gExperienceTables[gSpeciesInfo[species].growthRate][level] <= exp)
         level++;
 
     return level - 1;
@@ -1849,7 +1851,7 @@ u8 GetLevelFromBoxMonExp(struct BoxPokemon *boxMon)
     u32 exp = GetBoxMonData(boxMon, MON_DATA_EXP, NULL);
     s32 level = 1;
 
-    while (level <= 100 && gExperienceTables[gBaseStats[species].growthRate][level] <= exp)
+    while (level <= 100 && gExperienceTables[gSpeciesInfo[species].growthRate][level] <= exp)
         level++;
 
     return level - 1;
@@ -1860,7 +1862,7 @@ u16 GiveMoveToMon(struct Pokemon *mon, u16 move)
     return GiveMoveToBoxMon(&mon->box, move);
 }
 
-u16 GiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move)
+static u16 GiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move)
 {
     s32 i;
     for (i = 0; i < 4; i++)

@@ -205,7 +205,7 @@ static u16 TakeSelectedPokemonFromDaycare(struct DayCare * daycare, u8 slot)
 
     GetBoxMonNick(&daycare->mons[slot], gStringVar1);
     species = GetBoxMonData(&daycare->mons[slot], MON_DATA_SPECIES);
-    ExpandBoxMon(&daycare->mons[slot], &pokemon);
+    BoxMonToMon(&daycare->mons[slot], &pokemon);
 
     if (GetMonData(&pokemon, MON_DATA_LEVEL) != MAX_LEVEL)
     {
@@ -698,7 +698,7 @@ void CreateEgg(struct Pokemon *mon, u16 species, bool8 setMetLocation)
     language = LANGUAGE_JAPANESE;
     SetMonData(mon, MON_DATA_POKEBALL, &ball);
     SetMonData(mon, MON_DATA_NICKNAME, sJapaneseEggNickname);
-    SetMonData(mon, MON_DATA_FRIENDSHIP, &gBaseStats[species].eggCycles);
+    SetMonData(mon, MON_DATA_FRIENDSHIP, &gSpeciesInfo[species].eggCycles);
     SetMonData(mon, MON_DATA_MET_LEVEL, &metLevel);
     SetMonData(mon, MON_DATA_LANGUAGE, &language);
     if (setMetLocation)
@@ -725,7 +725,7 @@ static void SetInitialEggData(struct Pokemon *mon, u16 species, struct DayCare *
     language = LANGUAGE_JAPANESE;
     SetMonData(mon, MON_DATA_POKEBALL, &ball);
     SetMonData(mon, MON_DATA_NICKNAME, sJapaneseEggNickname);
-    SetMonData(mon, MON_DATA_FRIENDSHIP, &gBaseStats[species].eggCycles);
+    SetMonData(mon, MON_DATA_FRIENDSHIP, &gSpeciesInfo[species].eggCycles);
     SetMonData(mon, MON_DATA_MET_LEVEL, &metLevel);
     SetMonData(mon, MON_DATA_LANGUAGE, &language);
 }
@@ -874,8 +874,8 @@ static u8 GetDaycareCompatibilityScore(struct DayCare *daycare)
         otIds[i] = GetBoxMonData(&daycare->mons[i], MON_DATA_OT_ID);
         personality = GetBoxMonData(&daycare->mons[i], MON_DATA_PERSONALITY);
         genders[i] = GetGenderFromSpeciesAndPersonality(species[i], personality);
-        eggGroups[i][0] = gBaseStats[species[i]].eggGroup1;
-        eggGroups[i][1] = gBaseStats[species[i]].eggGroup2;
+        eggGroups[i][0] = gSpeciesInfo[species[i]].eggGroup1;
+        eggGroups[i][1] = gSpeciesInfo[species[i]].eggGroup2;
     }
 
     if (eggGroups[0][0] == EGG_GROUP_UNDISCOVERED || eggGroups[1][0] == EGG_GROUP_UNDISCOVERED)

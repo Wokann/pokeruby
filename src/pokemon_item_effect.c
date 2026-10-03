@@ -191,7 +191,7 @@ bool8 PokemonUseItemEffects(struct Pokemon *pkmn, u16 item, u8 partyIndex, u8 mo
             if ((itemEffect[cmdIndex] & ITEM3_LEVEL_UP)  // raise level
              && GetMonData(pkmn, MON_DATA_LEVEL, NULL) != 100)
             {
-                data = gExperienceTables[gBaseStats[GetMonData(pkmn, MON_DATA_SPECIES, NULL)].growthRate][GetMonData(pkmn, MON_DATA_LEVEL, NULL) + 1];
+                data = gExperienceTables[gSpeciesInfo[GetMonData(pkmn, MON_DATA_SPECIES, NULL)].growthRate][GetMonData(pkmn, MON_DATA_LEVEL, NULL) + 1];
                 SetMonData(pkmn, MON_DATA_EXP, &data);
                 CalculateMonStats(pkmn);
                 retVal = FALSE;

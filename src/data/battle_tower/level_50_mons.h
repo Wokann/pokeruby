@@ -1,4 +1,4 @@
-const struct BattleTowerPokemon gBattleTowerLevel50Mons[] = 
+const struct FacilityMon gBattleTowerLevel50Mons[] =
 {
 	{
 		.species = SPECIES_PIKACHU,

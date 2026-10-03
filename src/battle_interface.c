@@ -1867,9 +1867,9 @@ void UpdateHealthboxAttribute(u8 a, struct Pokemon *pkmn, u8 c)
             species = GetMonData(pkmn, MON_DATA_SPECIES);
             level = GetMonData(pkmn, MON_DATA_LEVEL);
             exp = GetMonData(pkmn, MON_DATA_EXP);
-            currLevelExp = gExperienceTables[gBaseStats[species].growthRate][level];
+            currLevelExp = gExperienceTables[gSpeciesInfo[species].growthRate][level];
             var1 = exp - currLevelExp;
-            var2 = gExperienceTables[gBaseStats[species].growthRate][level + 1] - currLevelExp;
+            var2 = gExperienceTables[gSpeciesInfo[species].growthRate][level + 1] - currLevelExp;
             SetBattleBarStruct(r10, a, var2, var1, 0);
             MoveBattleBar(r10, a, 1, 0);
         }

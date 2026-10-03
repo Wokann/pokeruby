@@ -4,6 +4,8 @@
 #include "constants/pokemon.h"
 #include "sprite.h"
 
+struct BattleTowerPokemon;
+
 enum {
     EGG_GROUP_NONE,
     EGG_GROUP_MONSTER,
@@ -99,7 +101,7 @@ struct PokemonSubstruct3
     /*0x05*/ u32 spAttackIV:5;
     /*0x06*/ u32 spDefenseIV:5;
     /*0x07*/ u32 isEgg:1;
-    /*0x07*/ u32 altAbility:1;
+    /*0x07*/ u32 abilityNum:1;
 
     /*0x08*/ u32 coolRibbon:3;
     /*0x08*/ u32 beautyRibbon:3;
@@ -167,33 +169,6 @@ struct Pokemon
     /*0x62*/ u16 spDefense;
 };
 
-struct UnknownPokemonStruct
-{
-    /*0x00*/u16 species;
-    /*0x02*/u16 heldItem;
-    /*0x04*/u16 moves[4];
-    /*0x0C*/u8 level;
-    /*0x0D*/u8 ppBonuses;
-    /*0x0E*/u8 hpEV;
-    /*0x0F*/u8 attackEV;
-    /*0x10*/u8 defenseEV;
-    /*0x11*/u8 speedEV;
-    /*0x12*/u8 spAttackEV;
-    /*0x13*/u8 spDefenseEV;
-    /*0x14*/u32 otId;
-    /*0x18*/u32 hpIV:5;
-    /*0x18*/u32 attackIV:5;
-    /*0x19*/u32 defenseIV:5;
-    /*0x19*/u32 speedIV:5;
-    /*0x1A*/u32 spAttackIV:5;
-    /*0x1A*/u32 spDefenseIV:5;
-    /*0x1B*/u32 gap:1;
-    /*0x1B*/u32 altAbility:1;
-    /*0x1C*/u32 personality;
-    /*0x20*/u8 nickname[POKEMON_NAME_LENGTH + 1];
-    /*0x2B*/u8 friendship;
-};
-
 struct MultiBattlePokemonTx
 {
     /*0x00*/ u16 species;
@@ -224,7 +199,7 @@ struct BattlePokemon
     /*0x16*/ u32 spAttackIV:5;
     /*0x17*/ u32 spDefenseIV:5;
     /*0x17*/ u32 isEgg:1;
-    /*0x17*/ u32 altAbility:1;
+    /*0x17*/ u32 abilityNum:1;
     /*0x18*/ s8 statStages[NUM_BATTLE_STATS];
     /*0x20*/ u8 ability;
     /*0x21*/ u8 type1;
@@ -272,7 +247,7 @@ enum
     STAT_EVA,    // 7
 };
 
-struct BaseStats
+struct SpeciesInfo
 {
     /*0x00*/ u8 baseHP;
     /*0x01*/ u8 baseAttack;
@@ -290,8 +265,8 @@ struct BaseStats
     /*0x0A*/ u16 evYield_Speed:2;
     /*0x0B*/ u16 evYield_SpAttack:2;
     /*0x0B*/ u16 evYield_SpDefense:2;
-    /*0x0C*/ u16 item1;
-    /*0x0E*/ u16 item2;
+    /*0x0C*/ u16 itemCommon;
+    /*0x0E*/ u16 itemRare;
     /*0x10*/ u8 genderRatio;
     /*0x11*/ u8 eggCycles;
     /*0x12*/ u8 friendship;
@@ -392,7 +367,7 @@ extern struct Pokemon gPlayerParty[PARTY_SIZE];
 extern u8 gEnemyPartyCount;
 extern struct Pokemon gEnemyParty[PARTY_SIZE];
 extern const u8 *const gItemEffectTable[];
-extern const struct BaseStats gBaseStats[];
+extern const struct SpeciesInfo gSpeciesInfo[];
 extern const u32 gExperienceTables[][101];
 extern const u16 *gLevelUpLearnsets[];
 extern struct Evolution gEvolutionTable[][5];
@@ -410,15 +385,14 @@ void CreateMaleMon(struct Pokemon *mon, u16 species, u8 level);
 void CreateMonWithIVsPersonality(struct Pokemon *mon, u16 species, u8 level, u32 ivs, u32 personality);
 void CreateMonWithIVsOTID(struct Pokemon *mon, u16 species, u8 level, u8 *ivs, u32 otId);
 void CreateMonWithEVSpread(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 evSpread);
-void sub_803ADE8(struct Pokemon *mon, struct UnknownPokemonStruct *src);
-void sub_803AF78(struct Pokemon *mon, struct UnknownPokemonStruct *dest);
+void sub_803ADE8(struct Pokemon *mon, struct BattleTowerPokemon *src);
+void ConvertPokemonToBattleTowerPokemon(struct Pokemon *mon, struct BattleTowerPokemon *dest);
 u16 CalculateBoxMonChecksum(struct BoxPokemon *boxMon);
 void CalculateMonStats(struct Pokemon *mon);
-void ExpandBoxMon(const struct BoxPokemon *src, struct Pokemon *dest);
+void BoxMonToMon(const struct BoxPokemon *src, struct Pokemon *dest);
 u8 GetLevelFromMonExp(struct Pokemon *mon);
 u8 GetLevelFromBoxMonExp(struct BoxPokemon *boxMon);
 u16 GiveMoveToMon(struct Pokemon *mon, u16 move);
-u16 GiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move);
 u16 GiveMoveToBattleMon(struct BattlePokemon *mon, u16 move);
 void SetMonMoveSlot(struct Pokemon *mon, u16 move, u8 slot);
 void SetBattleMonMoveSlot(struct BattlePokemon *mon, u16 move, u8 slot);
@@ -456,7 +430,7 @@ u8 SendMonToPC(struct Pokemon *mon);
 u8 CalculatePlayerPartyCount(void);
 u8 CalculateEnemyPartyCount(void);
 u8 GetMonsStateToDoubles(void);
-u8 GetAbilityBySpecies(u16 species, bool8 altAbility);
+u8 GetAbilityBySpecies(u16 species, bool8 abilityNum);
 u8 GetMonAbility(struct Pokemon *mon);
 void CreateSecretBaseEnemyParty(struct SecretBaseRecord *secretBaseRecord);
 u8 GetSecretBaseTrainerPicIndex(void);

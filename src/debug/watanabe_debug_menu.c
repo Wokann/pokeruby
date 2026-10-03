@@ -2123,7 +2123,7 @@ void debug_80C5B74(u32 a0, u8 a1)
             break;
         case 1:
             gUnknown_Debug_2038A1C->unk64[a1] = a0;
-            gUnknown_Debug_2038A1C->unk64[2] = gExperienceTables[gBaseStats[NationalPokedexNumToSpecies(gUnknown_Debug_2038A1C->unk64[0])].growthRate][a0];
+            gUnknown_Debug_2038A1C->unk64[2] = gExperienceTables[gSpeciesInfo[NationalPokedexNumToSpecies(gUnknown_Debug_2038A1C->unk64[0])].growthRate][a0];
             debug_80C5C94();
             break;
         case 2:
@@ -2261,7 +2261,7 @@ void debug_80C5FFC(void)
     SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_POKERUS, gUnknown_Debug_2038A1C->unk64 + 32);
 
     SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_HELD_ITEM, gUnknown_Debug_2038A1C->unk64 + 11);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_ALT_ABILITY, gUnknown_Debug_2038A1C->unk64 + 12);
+    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_ABILITY_NUM, gUnknown_Debug_2038A1C->unk64 + 12);
 
     SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_STATUS, &gUnknown_Debug_083F86E8[gUnknown_Debug_2038A1C->unk64[34]].data.type3);
 

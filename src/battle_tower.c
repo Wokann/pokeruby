@@ -705,7 +705,7 @@ void FillBattleTowerTrainerParty(void)
     u8 battleMonsOffset;
     u8 monPoolSize;
     u8 teamFlags;
-    const struct BattleTowerPokemon *battleTowerMons;
+    const struct FacilityMon *battleTowerMons;
 
     battleMonsOffset = 0;
     monPoolSize = 60;
@@ -1305,7 +1305,7 @@ void sub_8135AC4(void)
         playerRecord->greeting[i] = gSaveBlock1.easyChats.unk2B28[i];
 
     for (i = 0; i < 3; i++)
-        sub_803AF78(&gPlayerParty[gSaveBlock2.battleTower.selectedPartyMons[i] - 1], &playerRecord->party[i]);
+        ConvertPokemonToBattleTowerPokemon(&gPlayerParty[gSaveBlock2.battleTower.selectedPartyMons[i] - 1], &playerRecord->party[i]);
 
     SetBattleTowerRecordChecksum(&gSaveBlock2.battleTower.playerRecord);
     SaveCurrentWinStreak();
@@ -1500,7 +1500,7 @@ void Debug_FillEReaderTrainerWithPlayerData(void)
     }
 
     for (i = 0; i < 3; i++)
-        sub_803AF78(&gPlayerParty[i], &ereaderTrainer->party[i]);
+        ConvertPokemonToBattleTowerPokemon(&gPlayerParty[i], &ereaderTrainer->party[i]);
 
     SetEReaderTrainerChecksum(ereaderTrainer);
 }

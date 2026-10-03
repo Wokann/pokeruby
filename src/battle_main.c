@@ -1518,7 +1518,7 @@ void debug_sub_8010A7C(u8 a, u8 b)
 
 void debug_sub_8010AAC(u8 a)
 {
-	switch (gBaseStats[gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A4 * 5]].genderRatio)
+	switch (gSpeciesInfo[gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A4 * 5]].genderRatio)
 	{
 	case 0:
 		gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A4 * 5 + 4] = 2;
@@ -2019,7 +2019,7 @@ void debug_sub_801174C(void)
 				spC = gUnknown_Debug_2023A76[0][i + 3] - 1;
 			else
 				spC = gUnknown_Debug_2023A76[0][i + 3] - 4;
-			SetMonData(&gEnemyParty[i / 5], MON_DATA_ALT_ABILITY, &spC);
+			SetMonData(&gEnemyParty[i / 5], MON_DATA_ABILITY_NUM, &spC);
 		}
 
 		if (gUnknown_Debug_2023A76[1][i] != 0)
@@ -2062,7 +2062,7 @@ void debug_sub_801174C(void)
 				spC = gUnknown_Debug_2023A76[1][i + 3] - 1;
 			else
 				spC = gUnknown_Debug_2023A76[1][i + 3] - 4;
-			SetMonData(&gPlayerParty[i / 5], MON_DATA_ALT_ABILITY, &spC);
+			SetMonData(&gPlayerParty[i / 5], MON_DATA_ABILITY_NUM, &spC);
 		}
 		if (gUnknown_Debug_2023A76[1][i + 3] > 2)
 		{
@@ -2461,7 +2461,7 @@ void debug_sub_80123D8(u8 a)
             gUnknown_Debug_821F58C[1],
             gUnknown_Debug_821F58C[2]);
         Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
-        StringCopy(gBattleTextBuff1, gAbilityNames[gBaseStats[gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a]].ability1]);
+        StringCopy(gBattleTextBuff1, gAbilityNames[gSpeciesInfo[gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a]].ability1]);
         Text_InitWindow(
             &gUnknown_Debug_03004370,
             gBattleTextBuff1,
@@ -2482,7 +2482,7 @@ void debug_sub_80123D8(u8 a)
             gUnknown_Debug_821F58C[4],
             gUnknown_Debug_821F58C[5]);
         Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
-        StringCopy(gBattleTextBuff1, gAbilityNames[gBaseStats[gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a]].ability2]);
+        StringCopy(gBattleTextBuff1, gAbilityNames[gSpeciesInfo[gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a]].ability2]);
         Text_InitWindow(
             &gUnknown_Debug_03004370,
             gBattleTextBuff1,
@@ -2712,7 +2712,7 @@ void debug_sub_8012AC0(s8 a, u8 taskId)
             gCurrentMove = 411;
         if (gCurrentMove == 411)
             gCurrentMove = 1;
-    } while (gBaseStats[gCurrentMove].type1 != 2 && gBaseStats[gCurrentMove].type2 != 2);
+    } while (gSpeciesInfo[gCurrentMove].type1 != 2 && gSpeciesInfo[gCurrentMove].type2 != 2);
     debug_sub_80128B4();
     debug_sub_8012938(taskId);
     debug_sub_80129F8(taskId);
@@ -3475,7 +3475,7 @@ static void BattleStartClearSetData(void)
     gBattleStruct->runTries = 0;
     gBattleStruct->safariGoNearCounter = 0;
     gBattleStruct->safariPkblThrowCounter = 0;
-    gBattleStruct->safariCatchFactor = gBaseStats[GetMonData(&gEnemyParty[0], MON_DATA_SPECIES)].catchRate * 100 / 1275;
+    gBattleStruct->safariCatchFactor = gSpeciesInfo[GetMonData(&gEnemyParty[0], MON_DATA_SPECIES)].catchRate * 100 / 1275;
     gBattleStruct->safariFleeRate = 3;
     gBattleStruct->wildVictorySong = 0;
     gBattleStruct->moneyMultiplier = 1;
@@ -3671,8 +3671,8 @@ void UndoEffectsAfterFainting(void)
 
     eBattleFlagsArr.arr[gActiveBattler] = 0;
 
-    gBattleMons[gActiveBattler].type1 = gBaseStats[gBattleMons[gActiveBattler].species].type1;
-    gBattleMons[gActiveBattler].type2 = gBaseStats[gBattleMons[gActiveBattler].species].type2;
+    gBattleMons[gActiveBattler].type1 = gSpeciesInfo[gBattleMons[gActiveBattler].species].type1;
+    gBattleMons[gActiveBattler].type2 = gSpeciesInfo[gBattleMons[gActiveBattler].species].type2;
 }
 
 static void BattleIntroGetMonsData(void)
@@ -3730,9 +3730,9 @@ void sub_8011384(void)
                 u16 *hpOnSwitchout;
 
                 MEMSET_ALT(&gBattleMons[gActiveBattler], gBattleBufferB[gActiveBattler][4 + i], 0x58, i, ptr);
-                gBattleMons[gActiveBattler].type1 = gBaseStats[gBattleMons[gActiveBattler].species].type1;
-                gBattleMons[gActiveBattler].type2 = gBaseStats[gBattleMons[gActiveBattler].species].type2;
-                gBattleMons[gActiveBattler].ability = GetAbilityBySpecies(gBattleMons[gActiveBattler].species, gBattleMons[gActiveBattler].altAbility);
+                gBattleMons[gActiveBattler].type1 = gSpeciesInfo[gBattleMons[gActiveBattler].species].type1;
+                gBattleMons[gActiveBattler].type2 = gSpeciesInfo[gBattleMons[gActiveBattler].species].type2;
+                gBattleMons[gActiveBattler].ability = GetAbilityBySpecies(gBattleMons[gActiveBattler].species, gBattleMons[gActiveBattler].abilityNum);
 
                 hpOnSwitchout = &gBattleStruct->hpOnSwitchout[GetBattlerSide(gActiveBattler)];
                 *hpOnSwitchout = gBattleMons[gActiveBattler].hp;

@@ -37,7 +37,7 @@ extern u8 gCritMultiplier;
 extern s32 gBattleMoveDamage;
 extern u32 gStatuses3[MAX_BATTLERS_COUNT];
 extern u16 gBattleTypeFlags;
-extern const struct BaseStats gBaseStats[];
+extern const struct SpeciesInfo gSpeciesInfo[];
 extern struct BattleEnigmaBerry gEnigmaBerries[MAX_BATTLERS_COUNT];
 extern struct BattlePokemon gBattleMons[MAX_BATTLERS_COUNT];
 extern u8 gActiveBattler;
@@ -1670,7 +1670,7 @@ u8 AI_TypeCalc(u16 move, u16 targetSpecies, u8 targetAbility)
 {
     int i = 0;
     u8 flags = 0;
-    u8 type1 = gBaseStats[targetSpecies].type1, type2 = gBaseStats[targetSpecies].type2, moveType;
+    u8 type1 = gSpeciesInfo[targetSpecies].type1, type2 = gSpeciesInfo[targetSpecies].type2, moveType;
 
     if (move == MOVE_STRUGGLE)
         return 0;
@@ -3338,7 +3338,7 @@ static void atk23_getexp(void)
                     viaExpShare++;
             }
 
-            calculatedExp = gBaseStats[gBattleMons[gBattlerFainted].species].expYield * gBattleMons[gBattlerFainted].level / 7;
+            calculatedExp = gSpeciesInfo[gBattleMons[gBattlerFainted].species].expYield * gBattleMons[gBattlerFainted].level / 7;
 
             if (viaExpShare) // at least one mon is getting exp via exp share
             {
@@ -4617,9 +4617,9 @@ static void atk4D_switchindataupdate(void)
         monData[i] = gBattleBufferB[gActiveBattler][4 + i];
     }
 
-    gBattleMons[gActiveBattler].type1 = gBaseStats[gBattleMons[gActiveBattler].species].type1;
-    gBattleMons[gActiveBattler].type2 = gBaseStats[gBattleMons[gActiveBattler].species].type2;
-    gBattleMons[gActiveBattler].ability = GetAbilityBySpecies(gBattleMons[gActiveBattler].species, gBattleMons[gActiveBattler].altAbility);
+    gBattleMons[gActiveBattler].type1 = gSpeciesInfo[gBattleMons[gActiveBattler].species].type1;
+    gBattleMons[gActiveBattler].type2 = gSpeciesInfo[gBattleMons[gActiveBattler].species].type2;
+    gBattleMons[gActiveBattler].ability = GetAbilityBySpecies(gBattleMons[gActiveBattler].species, gBattleMons[gActiveBattler].abilityNum);
 
     // check knocked off item
     i = GetBattlerSide(gActiveBattler);
@@ -8071,7 +8071,7 @@ static void atkAE_healpartystatus(void)
         for (i = 0; i < PARTY_SIZE; i++)
         {
             u16 species = GetMonData(&party[i], MON_DATA_SPECIES2);
-            u8 abilityBit = GetMonData(&party[i], MON_DATA_ALT_ABILITY);
+            u8 abilityBit = GetMonData(&party[i], MON_DATA_ABILITY_NUM);
             if (species != 0 && species != SPECIES_EGG)
             {
                 u8 ability;
@@ -8574,10 +8574,10 @@ static void Cmd_trydobeatup(void)
             gBattleTextBuff1[4] = B_BUFF_EOS;
             gBattlescriptCurrInstr += 9;
 
-            gBattleMoveDamage = gBaseStats[GetMonData(&party[gBattleCommunication[0]], MON_DATA_SPECIES)].baseAttack;
+            gBattleMoveDamage = gSpeciesInfo[GetMonData(&party[gBattleCommunication[0]], MON_DATA_SPECIES)].baseAttack;
             gBattleMoveDamage *= gBattleMoves[gCurrentMove].power;
             gBattleMoveDamage *= (GetMonData(&party[gBattleCommunication[0]], MON_DATA_LEVEL) * 2 / 5 + 2);
-            gBattleMoveDamage /= gBaseStats[gBattleMons[gBattlerTarget].species].baseDefense;
+            gBattleMoveDamage /= gSpeciesInfo[gBattleMons[gBattlerTarget].species].baseDefense;
             gBattleMoveDamage = (gBattleMoveDamage / 50) + 2;
             if (gProtectStructs[gBattlerAttacker].helpingHand)
                 gBattleMoveDamage = gBattleMoveDamage * 15 / 10;
@@ -9163,10 +9163,10 @@ static void atkE5_pickup(void)
         u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2);
         u16 held_item = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
         u8 ability;
-        if (GetMonData(&gPlayerParty[i], MON_DATA_ALT_ABILITY))
-            ability = gBaseStats[species].ability2;
+        if (GetMonData(&gPlayerParty[i], MON_DATA_ABILITY_NUM))
+            ability = gSpeciesInfo[species].ability2;
         else
-            ability = gBaseStats[species].ability1;
+            ability = gSpeciesInfo[species].ability1;
 
         if (ability == ABILITY_PICKUP && species != 0 && species != SPECIES_EGG && held_item == 0 && (Random() % 10) == 0)
         {
@@ -9360,7 +9360,7 @@ void atkEF_handleballthrow(void)
         if (gLastUsedItem == ITEM_SAFARI_BALL)
             catch_rate = gBattleStruct->safariCatchFactor * 1275 / 100; //correct the name to safariFleeRate
         else
-            catch_rate = gBaseStats[gBattleMons[gBattlerTarget].species].catchRate;
+            catch_rate = gSpeciesInfo[gBattleMons[gBattlerTarget].species].catchRate;
         if (gLastUsedItem > 5)
         {
             switch (gLastUsedItem)

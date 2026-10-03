@@ -776,6 +776,33 @@ struct Pokedex
     /*0x44*/ u8 seen[DEX_FLAGS_NO];
 };
 
+struct BattleTowerPokemon
+{
+    /*0x00*/u16 species;
+    /*0x02*/u16 heldItem;
+    /*0x04*/u16 moves[4];
+    /*0x0C*/u8 level;
+    /*0x0D*/u8 ppBonuses;
+    /*0x0E*/u8 hpEV;
+    /*0x0F*/u8 attackEV;
+    /*0x10*/u8 defenseEV;
+    /*0x11*/u8 speedEV;
+    /*0x12*/u8 spAttackEV;
+    /*0x13*/u8 spDefenseEV;
+    /*0x14*/u32 otId;
+    /*0x18*/u32 hpIV:5;
+    /*0x18*/u32 attackIV:5;
+    /*0x19*/u32 defenseIV:5;
+    /*0x19*/u32 speedIV:5;
+    /*0x1A*/u32 spAttackIV:5;
+    /*0x1A*/u32 spDefenseIV:5;
+    /*0x1B*/u32 gap:1;
+    /*0x1B*/u32 abilityNum:1;
+    /*0x1C*/u32 personality;
+    /*0x20*/u8 nickname[POKEMON_NAME_LENGTH + 1];
+    /*0x2B*/u8 friendship;
+};
+
 struct BattleTowerTrainer
 {
     /*0x00*/ u8 trainerClass;
@@ -793,7 +820,7 @@ struct BattleTowerRecord // record mixing
     /*0x04*/ u8 name[8];
     /*0x0C*/ u8 trainerId[4];
     /*0x10*/ u16 greeting[6];
-    /*0x1C*/ struct UnknownPokemonStruct party[3];
+    /*0x1C*/ struct BattleTowerPokemon party[3];
     /*0xA0*/ u32 checksum;
 };
 
@@ -807,7 +834,7 @@ struct BattleTowerEReaderTrainer
     /*0x10*/ u16 greeting[6];
     /*0x1C*/ u16 farewellPlayerLost[6];
     /*0x28*/ u16 farewellPlayerWon[6];
-    /*0x34*/ struct UnknownPokemonStruct party[3];
+    /*0x34*/ struct BattleTowerPokemon party[3];
     /*0xB8*/ u32 checksum;
 };
 

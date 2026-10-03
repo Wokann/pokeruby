@@ -1312,7 +1312,7 @@ void sub_809B44C(u8 a0, u8 a1)
     if (a0 == 14)
         gPokemonStorageSystemPtr->unk_25b4 = gPlayerParty[sBoxCursorPosition];
     else
-        ExpandBoxMon(gPokemonStorage.boxes[a0] + a1, &gPokemonStorageSystemPtr->unk_25b4);
+        BoxMonToMon(gPokemonStorage.boxes[a0] + a1, &gPokemonStorageSystemPtr->unk_25b4);
     sub_809B548(a0, a1);
     gUnknown_020384E7 = a0;
     gUnknown_020384E8 = a1;
@@ -1344,7 +1344,7 @@ void SetShiftedMonData(u8 boxId, u8 position)
     if (boxId == 14)
         gPokemonStorageSystemPtr->unk_2618 = gPlayerParty[position];
     else
-        ExpandBoxMon(gPokemonStorage.boxes[boxId] + position, &gPokemonStorageSystemPtr->unk_2618);
+        BoxMonToMon(gPokemonStorage.boxes[boxId] + position, &gPokemonStorageSystemPtr->unk_2618);
     SetPlacedMonData(boxId, position);
     gPokemonStorageSystemPtr->unk_25b4 = gPokemonStorageSystemPtr->unk_2618;
     sub_809C04C(&gPokemonStorageSystemPtr->unk_25b4, 0);
@@ -1446,7 +1446,7 @@ void sub_809B7D4(void)
         }
         else
         {
-            ExpandBoxMon(gPokemonStorage.boxes[gPokemonStorage.currentBox] + sBoxCursorPosition, &gPokemonStorageSystemPtr->unk_2618);
+            BoxMonToMon(gPokemonStorage.boxes[gPokemonStorage.currentBox] + sBoxCursorPosition, &gPokemonStorageSystemPtr->unk_2618);
             gPokemonStorageSystemPtr->unk_2682 = gPokemonStorage.currentBox;
         }
         gPokemonStorageSystemPtr->unk_2683 = sBoxCursorPosition;

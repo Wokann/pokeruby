@@ -1816,7 +1816,7 @@ static void SummaryScreen_GetPokemon(struct Pokemon *mon)
     else
     {
         struct BoxPokemon *mons = pssData.monList.boxMons;
-        ExpandBoxMon(&mons[pssData.monIndex], mon);
+        BoxMonToMon(&mons[pssData.monIndex], mon);
     }
 }
 
@@ -2138,11 +2138,11 @@ static void SummaryScreen_PrintPokemonInfo(struct Pokemon *mon)
         SummaryScreen_PrintColoredIntPixelCoords(GetMonData(mon, MON_DATA_OT_ID) & 0xFFFF, 13, 5, 2, 193, 32, 1);
 
         species = GetMonData(mon, MON_DATA_SPECIES);
-        SummaryScreen_DrawTypeIcon(gBaseStats[species].type1, 120, 48, 0);
-        if (gBaseStats[species].type1 != gBaseStats[species].type2)
-            SummaryScreen_DrawTypeIcon(gBaseStats[species].type2, 160, 48, 1);
+        SummaryScreen_DrawTypeIcon(gSpeciesInfo[species].type1, 120, 48, 0);
+        if (gSpeciesInfo[species].type1 != gSpeciesInfo[species].type2)
+            SummaryScreen_DrawTypeIcon(gSpeciesInfo[species].type2, 160, 48, 1);
 
-        ability = GetAbilityBySpecies(GetMonData(mon, MON_DATA_SPECIES), GetMonData(mon, MON_DATA_ALT_ABILITY));
+        ability = GetAbilityBySpecies(GetMonData(mon, MON_DATA_SPECIES), GetMonData(mon, MON_DATA_ABILITY_NUM));
         SummaryScreen_PrintColoredText(gAbilityNames[ability], 13, 11, 9);
         Menu_PrintText(gAbilityDescriptions[ability], 11, 11);
 
@@ -2800,9 +2800,9 @@ static void DrawExperienceProgressBar(struct Pokemon *mon, u8 left, u8 top)
         u32 expBetweenLevels;
         u32 curLevelExperience;
 
-        nextLevelExp = gExperienceTables[gBaseStats[species].growthRate][level + 1];
+        nextLevelExp = gExperienceTables[gSpeciesInfo[species].growthRate][level + 1];
         expToNextLevel = nextLevelExp - curExperience;
-        curLevelExperience = gExperienceTables[gBaseStats[species].growthRate][level];
+        curLevelExperience = gExperienceTables[gSpeciesInfo[species].growthRate][level];
         expBetweenLevels = (nextLevelExp - curLevelExperience);
         expSinceLastLevel = curExperience - curLevelExperience;
 
