@@ -12,16 +12,16 @@ void PadNameString(u8 *dest, u8 padChar)
 
     if (padChar == EXT_CTRL_CODE_BEGIN)
     {
-        while (length < 6)
+        while (length < PLAYER_NAME_LENGTH - 1)
         {
             dest[length] = EXT_CTRL_CODE_BEGIN;
-            dest[length + 1] = 7;
+            dest[length + 1] = EXT_CTRL_CODE_RESET_FONT;
             length += 2;
         }
     }
     else
     {
-        while (length < 6)
+        while (length < PLAYER_NAME_LENGTH - 1)
         {
             dest[length] = padChar;
             length++;
@@ -33,7 +33,7 @@ void PadNameString(u8 *dest, u8 padChar)
 
 void ConvertInternationalPlayerName(u8 *str)
 {
-    if (StringLength(str) < 6)
+    if (StringLength(str) < PLAYER_NAME_LENGTH - 1)
         ConvertInternationalString(str, LANGUAGE_JAPANESE);
     else
         StripExtCtrlCodes(str);
