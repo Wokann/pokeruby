@@ -19,9 +19,9 @@ EWRAM_DATA static u8 sSavedWinOutHigh = 0;
 
 void InitOutlineCursorState(void)
 {
-    sOutlineCursorSpriteId = 0x40;
-    sOutlineCursorWindowSpriteId = 0x40;
-    sBlendedOutlineCursorSpriteId = 0x40;
+    sOutlineCursorSpriteId = MAX_SPRITES;
+    sOutlineCursorWindowSpriteId = MAX_SPRITES;
+    sBlendedOutlineCursorSpriteId = MAX_SPRITES;
     sWasObjWindowEnabled = 0;
     sSavedWinOutHigh = 0;
 }
@@ -31,11 +31,11 @@ u8 CreateOutlineCursor(u8 subpriority, u16 paletteTag, u8 tileIndex, u16 color, 
     int templateIndex;
     struct Sprite *sprite;
 
-    if (sOutlineCursorSpriteId != 0x40 || sOutlineCursorWindowSpriteId != 0x40)
+    if (sOutlineCursorSpriteId != MAX_SPRITES || sOutlineCursorWindowSpriteId != MAX_SPRITES)
         DestroyMenuCursor();
 
     templateIndex = 1;
-    if (paletteTag == 0xFFFF)
+    if (paletteTag == TAG_NONE)
     {
         sMenuCursorPalette[tileIndex & 0xF] = color;
         if (LoadSpritePalette(&gOutlineCursorSpritePalette) != 0xFF)
@@ -48,18 +48,18 @@ u8 CreateOutlineCursor(u8 subpriority, u16 paletteTag, u8 tileIndex, u16 color, 
     LoadSpriteSheetDeferred(&gOutlineCursorSpriteSheets[tileIndex & 0xF]);
     sOutlineCursorSpriteId = CreateSprite(&gOutlineCursorSpriteTemplates[templateIndex], 0, 160, subpriority);
     sOutlineCursorWindowSpriteId = CreateSprite(&gOutlineCursorSpriteTemplates[2], 0, 160, subpriority);
-    if (sOutlineCursorSpriteId != 0x40)
+    if (sOutlineCursorSpriteId != MAX_SPRITES)
     {
         sprite = &gSprites[sOutlineCursorSpriteId];
-        if (paletteTag == 0xFFFF)
+        if (paletteTag == TAG_NONE)
             sprite->oam.paletteNum = 0;
         else
             sprite->oam.paletteNum = IndexOfSpritePaletteTag(paletteTag);
     }
-    if (sOutlineCursorWindowSpriteId != 0x40)
+    if (sOutlineCursorWindowSpriteId != MAX_SPRITES)
     {
         sprite = &gSprites[sOutlineCursorWindowSpriteId];
-        if (paletteTag == 0xFFFF)
+        if (paletteTag == TAG_NONE)
             sprite->oam.paletteNum = 0;
         else
             sprite->oam.paletteNum = IndexOfSpritePaletteTag(paletteTag);
@@ -82,7 +82,7 @@ u8 CreateOutlineCursorWithPaletteNum(u8 subpriority, u8 paletteNum, u8 tileIndex
     struct Sprite *spr;
 
     result = CreateOutlineCursor(subpriority, 0, tileIndex, 0, width);
-    if (result != 0x40)
+    if (result != MAX_SPRITES)
     {
         spr = &gSprites[sOutlineCursorSpriteId];
         spr->oam.paletteNum = paletteNum;
@@ -110,17 +110,17 @@ u8 CreateOutlineCursorWithPaletteColor(u8 subpriority, u16 color, u8 width)
 
 void DestroyMenuCursor(void)
 {
-    if (sOutlineCursorSpriteId != 0x40)
+    if (sOutlineCursorSpriteId != MAX_SPRITES)
     {
         LoadTilesForSpriteSheet(&gOutlineCursorSpriteSheets[0]);
         DestroySpriteAndFreeResources(&gSprites[sOutlineCursorSpriteId]);
-        sOutlineCursorSpriteId = 0x40;
+        sOutlineCursorSpriteId = MAX_SPRITES;
     }
 
-    if (sOutlineCursorWindowSpriteId != 0x40)
+    if (sOutlineCursorWindowSpriteId != MAX_SPRITES)
     {
         DestroySpriteAndFreeResources(&gSprites[sOutlineCursorWindowSpriteId]);
-        sOutlineCursorWindowSpriteId = 0x40;
+        sOutlineCursorWindowSpriteId = MAX_SPRITES;
         if (!sWasObjWindowEnabled)
             REG_DISPCNT &= ~DISPCNT_OBJWIN_ON;
         *(u8 *)(REG_BASE + REG_OFFSET_WINOUT + 1) = sSavedWinOutHigh;
@@ -133,7 +133,7 @@ void SetOutlineCursorPosition(u8 x, u8 y)
 {
     struct Sprite *spr;
 
-    if (sOutlineCursorSpriteId != 0x40)
+    if (sOutlineCursorSpriteId != MAX_SPRITES)
     {
         spr = &gSprites[sOutlineCursorSpriteId];
         spr->invisible = FALSE;
@@ -143,7 +143,7 @@ void SetOutlineCursorPosition(u8 x, u8 y)
         spr->y = y;
     }
 
-    if (sOutlineCursorWindowSpriteId != 0x40)
+    if (sOutlineCursorWindowSpriteId != MAX_SPRITES)
     {
         spr = &gSprites[sOutlineCursorWindowSpriteId];
         spr->invisible = FALSE;
@@ -160,13 +160,13 @@ void HideOutlineCursor(void)
 {
     struct Sprite *spr;
 
-    if (sOutlineCursorSpriteId != 0x40)
+    if (sOutlineCursorSpriteId != MAX_SPRITES)
     {
         spr = &gSprites[sOutlineCursorSpriteId];
         spr->invisible = TRUE;
     }
 
-    if (sOutlineCursorWindowSpriteId != 0x40)
+    if (sOutlineCursorWindowSpriteId != MAX_SPRITES)
     {
         spr = &gSprites[sOutlineCursorWindowSpriteId];
         spr->invisible = TRUE;
@@ -230,9 +230,9 @@ void SetOutlineCursorWidth(u8 a)
     *r4 = gOutlineCursorSubsprite_Right;
     r4->x = r2 - 7 + i;
     r7++;
-    if (sOutlineCursorSpriteId != 64)
+    if (sOutlineCursorSpriteId != MAX_SPRITES)
         SetSubspriteTables(&gSprites[sOutlineCursorSpriteId], gDynamicOutlineCursorSubspriteTables + r7);
-    if (sOutlineCursorWindowSpriteId != 64)
+    if (sOutlineCursorWindowSpriteId != MAX_SPRITES)
         SetSubspriteTables(&gSprites[sOutlineCursorWindowSpriteId], gDynamicOutlineCursorSubspriteTables + r7);
 }
 #else
@@ -607,13 +607,13 @@ void SetOutlineCursorCallback(void (*callback)(struct Sprite *))
 {
     struct Sprite *spr;
 
-    if (sOutlineCursorSpriteId != 0x40)
+    if (sOutlineCursorSpriteId != MAX_SPRITES)
     {
         spr = &gSprites[sOutlineCursorSpriteId];
         spr->callback = callback;
     }
 
-    if (sOutlineCursorWindowSpriteId != 0x40)
+    if (sOutlineCursorWindowSpriteId != MAX_SPRITES)
     {
         spr = &gSprites[sOutlineCursorWindowSpriteId];
         spr->callback = callback;
@@ -629,10 +629,10 @@ void UpdateOutlineCursorPaletteByColor(u16 color)
     u8 tileIndex;
     u16 i;
 
-    if (sOutlineCursorSpriteId != 0x40)
+    if (sOutlineCursorSpriteId != MAX_SPRITES)
     {
         spr = &gSprites[sOutlineCursorSpriteId];
-        if (spr->template->paletteTag == 0xFFFF)
+        if (spr->template->paletteTag == TAG_NONE)
         {
             for (paletteNum = 0, tileIndex = 0xF, i = 0; i <= 0xFF; i++)
             {
@@ -653,12 +653,12 @@ void DestroyOutlineCursorWindowSprite(void)
 {
     struct Sprite *spr;
 
-    if (sOutlineCursorWindowSpriteId != 0x40)
+    if (sOutlineCursorWindowSpriteId != MAX_SPRITES)
     {
         spr = &gSprites[sOutlineCursorWindowSpriteId];
         FreeSpriteOamMatrix(spr);
         DestroySprite(spr);
-        sOutlineCursorWindowSpriteId = 0x40;
+        sOutlineCursorWindowSpriteId = MAX_SPRITES;
 
         if (!sWasObjWindowEnabled)
             REG_DISPCNT &= ~DISPCNT_OBJWIN_ON;
@@ -673,12 +673,12 @@ void SetOutlineCursorWindowSubsprites(int index)
 
     CpuCopy16(gOutlineCursorWindowSubspritePointers[index], &sMenuCursorSubsprites, 80);
 
-    if (sOutlineCursorSpriteId != 0x40)
+    if (sOutlineCursorSpriteId != MAX_SPRITES)
     {
         spr = &gSprites[sOutlineCursorSpriteId];
         SetSubspriteTables(spr, &gOutlineCursorWindowSubspriteTable[index]);
     }
-    if (sOutlineCursorWindowSpriteId != 0x40)
+    if (sOutlineCursorWindowSpriteId != MAX_SPRITES)
     {
         spr = &gSprites[sOutlineCursorWindowSpriteId];
         SetSubspriteTables(spr, &gOutlineCursorWindowSubspriteTable[index]);
@@ -691,12 +691,12 @@ u8 CreateBlendedOutlineCursor(u8 subpriority, u16 paletteTag, u8 tileIndex, u16 
     int templateIndex;
     struct Sprite *sprite;
 
-    if (sBlendedOutlineCursorSpriteId != 0x40)
+    if (sBlendedOutlineCursorSpriteId != MAX_SPRITES)
         DestroyBlendedOutlineCursor();
 
     templateIndex = 1;
 
-    if (paletteTag == 0xFFFF)
+    if (paletteTag == TAG_NONE)
     {
         sMenuCursorPalette[tileIndex & 0xF] = color;
         if (LoadSpritePalette(&gBlendedOutlineCursorSpritePalette) != 0xFF )
@@ -713,11 +713,11 @@ u8 CreateBlendedOutlineCursor(u8 subpriority, u16 paletteTag, u8 tileIndex, u16 
     sBlendedOutlineCursorSpriteId = CreateSprite(&gBlendedOutlineCursorSpriteTemplates[templateIndex], 0, 161, subpriority);
 #endif
 
-    if (sBlendedOutlineCursorSpriteId != 0x40)
+    if (sBlendedOutlineCursorSpriteId != MAX_SPRITES)
     {
         sprite = &gSprites[sBlendedOutlineCursorSpriteId];
 
-        if (paletteTag == 0xFFFF)
+        if (paletteTag == TAG_NONE)
             sprite->oam.paletteNum = 0;
         else
             sprite->oam.paletteNum = IndexOfSpritePaletteTag(paletteTag);
@@ -729,11 +729,11 @@ u8 CreateBlendedOutlineCursor(u8 subpriority, u16 paletteTag, u8 tileIndex, u16 
 
 void DestroyBlendedOutlineCursor(void)
 {
-    if (sBlendedOutlineCursorSpriteId != 0x40)
+    if (sBlendedOutlineCursorSpriteId != MAX_SPRITES)
     {
         LoadTilesForSpriteSheet(&gBlendedOutlineCursorSpriteSheets[0]);
         DestroySpriteAndFreeResources(&gSprites[sBlendedOutlineCursorSpriteId]);
-        sBlendedOutlineCursorSpriteId = 0x40;
+        sBlendedOutlineCursorSpriteId = MAX_SPRITES;
     }
     return;
 }
@@ -741,7 +741,7 @@ void DestroyBlendedOutlineCursor(void)
 void SetBlendedOutlineCursorPosition(u8 x, u8 y)
 {
     struct Sprite *spr;
-    if (sBlendedOutlineCursorSpriteId != 0x40)
+    if (sBlendedOutlineCursorSpriteId != MAX_SPRITES)
     {
         spr = &gSprites[sBlendedOutlineCursorSpriteId];
         spr->invisible = FALSE;
@@ -753,10 +753,10 @@ void SetBlendedOutlineCursorPosition(u8 x, u8 y)
     return;
 }
 
-void HideBlendedOutlineCursor()
+void HideBlendedOutlineCursor(void)
 {
     struct Sprite *spr;
-    if (sBlendedOutlineCursorSpriteId != 0x40)
+    if (sBlendedOutlineCursorSpriteId != MAX_SPRITES)
     {
         spr = &gSprites[sBlendedOutlineCursorSpriteId];
         spr->invisible = TRUE;
@@ -769,7 +769,7 @@ void SetBlendedOutlineCursorWidth(u8 widthIndex)
     if (widthIndex > 0x12)
         widthIndex = 0;
 
-    if (sBlendedOutlineCursorSpriteId != 0x40)
+    if (sBlendedOutlineCursorSpriteId != MAX_SPRITES)
         SetSubspriteTables(&gSprites[sBlendedOutlineCursorSpriteId], &gBlendedOutlineCursorSubspriteTables[widthIndex]);
     return;
 }
