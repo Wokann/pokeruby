@@ -26,7 +26,7 @@ void LoadCompressedObjectPic(const struct CompressedSpriteSheet *src)
     LoadSpriteSheet(&dest);
 }
 
-void LoadCompressedObjectPicOverrideBuffer(const struct CompressedSpriteSheet *src, void *buffer)
+void LoadCompressedSpriteSheetOverrideBuffer(const struct CompressedSpriteSheet *src, void *buffer)
 {
     struct SpriteSheet dest;
 
@@ -47,7 +47,7 @@ void LoadCompressedObjectPalette(const struct CompressedSpritePalette *src)
     LoadSpritePalette(&dest);
 }
 
-void LoadCompressedObjectPaletteOverrideBuffer(const struct CompressedSpritePalette *src, void *buffer)
+void LoadCompressedSpritePaletteOverrideBuffer(const struct CompressedSpritePalette *src, void *buffer)
 {
     struct SpritePalette dest;
 
@@ -112,7 +112,7 @@ void Unused_LZDecompressWramIndirect(const void **src, void *dest)
     LZ77UnCompWram(*src, dest);
 }
 
-void unref_sub_800D42C(s32 object_size, s32 object_count, u8 *src_tiles, u8 *dest_tiles)
+static void UNUSED StitchObjectsOn8x8Canvas(s32 object_size, s32 object_count, u8 *src_tiles, u8 *dest_tiles)
 {
     /*
       This function appears to emulate behaviour found in the GB(C) versions regarding how the Pokemon images
