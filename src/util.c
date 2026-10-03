@@ -37,7 +37,7 @@ const u32 gBitTable[] =
     1 << 31,
 };
 
-static const struct SpriteTemplate gInvisibleSpriteTemplate =
+static const struct SpriteTemplate sInvisibleSpriteTemplate =
 {
     .tileTag = 0,
     .paletteTag = 0,
@@ -48,7 +48,7 @@ static const struct SpriteTemplate gInvisibleSpriteTemplate =
     .callback = SpriteCallbackDummy,
 };
 
-static const u8 gSpriteDimensions[3][4][2] =
+static const u8 sSpriteDimensions[3][4][2] =
 {
     // square
     {
@@ -75,7 +75,7 @@ static const u8 gSpriteDimensions[3][4][2] =
     },
 };
 
-static const u16 gCrc16Table[] =
+static const u16 sCrc16Table[] =
 {
     0x0000, 0x1189, 0x2312, 0x329B, 0x4624, 0x57AD, 0x6536, 0x74BF,
     0x8C48, 0x9DC1, 0xAF5A, 0xBED3, 0xCA6C, 0xDBE5, 0xE97E, 0xF8F7,
@@ -116,7 +116,7 @@ const u8 gMiscBlank_Gfx[] = INCBIN_U8("graphics/interface/blank.4bpp");
 
 u8 CreateInvisibleSpriteWithCallback(void (*callback)(struct Sprite *))
 {
-    u8 sprite = CreateSprite(&gInvisibleSpriteTemplate, 248, 168, 14);
+    u8 sprite = CreateSprite(&sInvisibleSpriteTemplate, 248, 168, 14);
     gSprites[sprite].invisible = TRUE;
     gSprites[sprite].callback = callback;
     return sprite;
@@ -157,8 +157,8 @@ void CopySpriteTiles(u8 shape, u8 size, u8 *tiles, u16 *tilemap, u8 *output)
     u8 x, y;
     s8 i, j;
     u8 xflip[32];
-    u8 h = gSpriteDimensions[shape][size][1];
-    u8 w = gSpriteDimensions[shape][size][0];
+    u8 h = sSpriteDimensions[shape][size][1];
+    u8 w = sSpriteDimensions[shape][size][0];
 
     for (y = 0; y < h; y++)
     {
@@ -259,7 +259,7 @@ u16 CalcCRC16WithTable(u8 *data, int length)
     {
         byte = crc >> 8;
         crc ^= data[i];
-        crc = byte ^ gCrc16Table[(u8)crc];
+        crc = byte ^ sCrc16Table[(u8)crc];
     }
     return ~crc;
 }

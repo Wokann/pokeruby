@@ -63,7 +63,6 @@ extern s32 GetBattlerMultiplayerId(u16);
 extern void SpriteCB_TrainerSlideIn(struct Sprite *);
 extern u8 DoPokeballSendOutAnimation();
 extern void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *);
-extern u8 CreateInvisibleSpriteWithCallback();
 extern u8 GetBattlerSpriteDefault_Y();
 extern void BattleGfxSfxDummy3();
 extern void BattleGfxSfxDummy2(u16);
