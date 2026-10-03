@@ -46,8 +46,6 @@ extern const struct SpriteTemplate gSpriteTemplate_8208288[];
 extern u8 gTrainerClassToPicIndex[];
 extern u8 gTrainerClassToNameIndex[];
 
-extern const u8 gPPUpReadMasks[];
-extern const u8 gPPUpWriteMasks[];
 
 extern void oac_poke_opponent(struct Sprite *);
 
@@ -1172,19 +1170,19 @@ void GetSpeciesName(u8 *name, u16 species)
 u8 CalculatePPWithBonus(u16 move, u8 ppBonuses, u8 moveIndex)
 {
     u8 basePP = gBattleMoves[move].pp;
-    return basePP + ((basePP * 20 * ((gPPUpReadMasks[moveIndex] & ppBonuses) >> (2 * moveIndex))) / 100);
+    return basePP + ((basePP * 20 * ((gPPUpGetMask[moveIndex] & ppBonuses) >> (2 * moveIndex))) / 100);
 }
 
 void RemoveMonPPBonus(struct Pokemon *mon, u8 moveIndex)
 {
     u8 ppBonuses = GetMonData(mon, MON_DATA_PP_BONUSES, NULL);
-    ppBonuses &= gPPUpWriteMasks[moveIndex];
+    ppBonuses &= gPPUpClearMask[moveIndex];
     SetMonData(mon, MON_DATA_PP_BONUSES, &ppBonuses);
 }
 
 void RemoveBattleMonPPBonus(struct BattlePokemon *mon, u8 moveIndex)
 {
-    mon->ppBonuses &= gPPUpWriteMasks[moveIndex];
+    mon->ppBonuses &= gPPUpClearMask[moveIndex];
 }
 
 void CopyPlayerPartyMonToBattleData(u8 battleIndex, u8 partyIndex)

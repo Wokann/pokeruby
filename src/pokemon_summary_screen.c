@@ -125,7 +125,6 @@ static void SummaryScreen_PrintColoredText(const u8 *, u8, u8, u8);
 extern u8 StorageSystemGetNextMonIndex(struct BoxPokemon *, u8, u8, u8);
 
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
-extern u8 gPPUpReadMasks[];
 TaskFunc gUnknown_03005CF0;
 extern struct SpriteTemplate gCreatingSpriteTemplate;
 
@@ -1120,9 +1119,9 @@ static void SummaryScreen_SwapMoves_Party(void)
     u8 ppBonuses = GetMonData(pkmn, MON_DATA_PP_BONUSES);
 
     // Swap PP bonuses
-    u8 r9 = gPPUpReadMasks[moveIndex1];
+    u8 r9 = gPPUpGetMask[moveIndex1];
     u8 r2 = (ppBonuses & r9) >> (moveIndex1 * 2);
-    u8 r3 = gPPUpReadMasks[moveIndex2];
+    u8 r3 = gPPUpGetMask[moveIndex2];
     u8 r1 = (ppBonuses & r3) >> (moveIndex2 * 2);
     ppBonuses &= ~r9;
     ppBonuses &= ~r3;
@@ -1150,9 +1149,9 @@ static void SummaryScreen_SwapMoves_Box(void)
     u8 ppBonuses = GetBoxMonData(pkmn, MON_DATA_PP_BONUSES);
 
     // Swap PP bonuses
-    u8 r9 = gPPUpReadMasks[moveIndex1];
+    u8 r9 = gPPUpGetMask[moveIndex1];
     u8 r2 = (ppBonuses & r9) >> (moveIndex1 * 2);
-    u8 r3 = gPPUpReadMasks[moveIndex2];
+    u8 r3 = gPPUpGetMask[moveIndex2];
     u8 r1 = (ppBonuses & r3) >> (moveIndex2 * 2);
     ppBonuses &= ~r9;
     ppBonuses &= ~r3;

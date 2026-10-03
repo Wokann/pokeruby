@@ -130,7 +130,6 @@ static void CheckWonderGuardAndLevitate(void);
 u8 GetBattlerPosition(u8 bank);
 u8 GetBattlerSide(u8 bank);
 u8 GetBattlerForBattleScript(u8 bankValue);
-s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 a4, u16 powerOverride, u8 typeOverride, u8 bank_atk, u8 bank_def);
 static u8 AttacksThisTurn(u8 bank, u16 move); //Note: returns 1 if it's a charging turn, otherwise 2
 void UndoEffectsAfterFainting(void);
 void PlayBGM(u16 songID);

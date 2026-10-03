@@ -23,13 +23,13 @@ extern u16 gBattleMovePower;
 extern u16 gTrainerBattleOpponent;
 
 // Masks for getting PP Up count, also PP Max values
-const u8 gPPUpReadMasks[] = {0x03, 0x0c, 0x30, 0xc0};
+const u8 gPPUpGetMask[] = {0x03, 0x0c, 0x30, 0xc0};
 
 // Masks for setting PP Up count
-const u8 gPPUpWriteMasks[] = {0xFC, 0xF3, 0xCF, 0x3F};
+const u8 gPPUpClearMask[] = {0xFC, 0xF3, 0xCF, 0x3F};
 
 // Values added to PP Up count
-const u8 gPPUpValues[] = {0x01, 0x04, 0x10, 0x40};
+const u8 gPPUpAddValues[] = {0x01, 0x04, 0x10, 0x40};
 
 const u8 gStatStageRatios[][2] =
 {
@@ -50,7 +50,7 @@ const u8 gStatStageRatios[][2] =
 
 const u8 unknownGameFreakAbbrev_820825E[] = _("ゲーフリ");
 
-const u8 gHoldEffectToType[][2] =
+static const u8 sHoldEffectToType[][2] =
 {
     {HOLD_EFFECT_BUG_POWER,      TYPE_BUG},
     {HOLD_EFFECT_STEEL_POWER,    TYPE_STEEL},
@@ -90,7 +90,7 @@ if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_BATTLE_TOWER | BATTLE_T
 } \
 })
 
-s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 sideStatus, u16 powerOverride, u8 typeOverride, u8 bankAtk, u8 bankDef)
+s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 sideStatus, u16 powerOverride, u8 typeOverride, u8 battlerIdAtk, u8 battlerIdDef)
 {
     u32 i;
     s32 damage = 0;
@@ -120,8 +120,8 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
 
     if (attacker->item == ITEM_ENIGMA_BERRY)
     {
-        attackerHoldEffect = gEnigmaBerries[bankAtk].holdEffect;
-        attackerHoldEffectParam = gEnigmaBerries[bankAtk].holdEffectParam;
+        attackerHoldEffect = gEnigmaBerries[battlerIdAtk].holdEffect;
+        attackerHoldEffectParam = gEnigmaBerries[battlerIdAtk].holdEffectParam;
     }
     else
     {
@@ -131,8 +131,8 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
 
     if (defender->item == ITEM_ENIGMA_BERRY)
     {
-        defenderHoldEffect = gEnigmaBerries[bankDef].holdEffect;
-        defenderHoldEffectParam = gEnigmaBerries[bankDef].holdEffectParam;
+        defenderHoldEffect = gEnigmaBerries[battlerIdDef].holdEffect;
+        defenderHoldEffectParam = gEnigmaBerries[battlerIdDef].holdEffectParam;
     }
     else
     {
@@ -143,15 +143,15 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     if (attacker->ability == ABILITY_HUGE_POWER || attacker->ability == ABILITY_PURE_POWER)
         attack *= 2;
 
-    BADGE_BOOST(1, attack, bankAtk);
-    BADGE_BOOST(5, defense, bankDef);
-    BADGE_BOOST(7, spAttack, bankAtk);
-    BADGE_BOOST(7, spDefense, bankDef);
+    BADGE_BOOST(1, attack, battlerIdAtk);
+    BADGE_BOOST(5, defense, battlerIdDef);
+    BADGE_BOOST(7, spAttack, battlerIdAtk);
+    BADGE_BOOST(7, spDefense, battlerIdDef);
 
     for (i = 0; i < 17; i++)
     {
-        if (attackerHoldEffect == gHoldEffectToType[i][0]
-            && type == gHoldEffectToType[i][1])
+        if (attackerHoldEffect == sHoldEffectToType[i][0]
+            && type == sHoldEffectToType[i][1])
         {
             if (IS_TYPE_PHYSICAL(type))
                 attack = (attack * (attackerHoldEffectParam + 100)) / 100;
@@ -330,7 +330,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
         }
 
         // flash fire triggered
-        if ((eBattleFlagsArr.arr[bankAtk] & 1) && type == TYPE_FIRE)
+        if ((eBattleFlagsArr.arr[battlerIdAtk] & 1) && type == TYPE_FIRE)
             damage = (15 * damage) / 10;
     }
 
