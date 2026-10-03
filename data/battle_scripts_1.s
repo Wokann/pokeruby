@@ -3036,7 +3036,7 @@ BattleScript_1D8D99: @ 81D8D99
 	switchinanim 3, 0
 	waitstate
 	switchineffects 5
-	jumpifbytenotequal gBank1, gBattlersCount, BattleScript_1D8D99
+	jumpifbytenotequal gBattlerFainted, gBattlersCount, BattleScript_1D8D99
 
 BattleScript_1D8DBD: @ 81D8DBD
 	end2

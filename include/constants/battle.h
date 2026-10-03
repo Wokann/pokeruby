@@ -342,7 +342,7 @@
 #define BS_TARGET                   0
 #define BS_GET_ATTACKER                 1
 #define BS_GET_EFFECT_BANK              2
-#define BS_GET_gBank1   3
+#define BS_FAINTED                      3
 #define BS_GET_BANK_0   7
 #define BS_ATTACKER_WITH_PARTNER        4 // for atk98_status_icon_update
 #define BS_GET_ATTACKER_SIDE            8 // for atk1E_jumpifability

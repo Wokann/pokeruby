@@ -126,7 +126,7 @@ gBattlerAttacker = .; /* 2024C07 */
 gBattlerTarget = .; /* 2024C08 */
     . += 0x1;
 
-gBank1 = .; /* 2024C09 */
+gBattlerFainted = .; /* 2024C09 */
     . += 0x1;
 
 gEffectBattler = .; /* 2024C0A */

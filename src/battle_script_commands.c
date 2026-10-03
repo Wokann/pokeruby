@@ -85,7 +85,6 @@ extern s32 gTakenDmg[MAX_BATTLERS_COUNT];
 extern u8 gTakenDmgByBattler[MAX_BATTLERS_COUNT];
 extern const u16 gMissStringIds[];
 extern u8 gSentPokesToOpponent[2];
-extern u8 gBank1;
 extern u16 gExpShareExp;
 extern u8 gBattleTextBuff1[];
 extern u8 gBattleTextBuff2[];
@@ -127,7 +126,6 @@ extern u8 BattleScript_MoveEffectRecoil33[];
 
 //extern functions
 u8 AtkCanceller_UnableToUseMove(void);
-void PressurePPLose(u8 bank_atk, u8 bank_def, u16 move);
 void CancelMultiTurnMoves(u8 bank);
 void BattleScriptPush(const u8* BS_ptr);
 void BattleScriptPushCursor(void);
@@ -175,7 +173,6 @@ u8 CountAliveMons(u8 caseID);
 void PokemonUseItemEffects(struct Pokemon*, u16 item, u8 partyID, u8 r3, u8 sp);
 u8 CanRunFromBattle(void);
 u8 GetMoveTarget(u16 move, u8 targetbyte); //get target of move
-u8 CastformDataTypeChange(u8 bank);
 u8 Overworld_GetMapTypeOfSaveblockLocation(void);
 u8 CalculatePlayerPartyCount(void);
 u16 Sqrt(u32 num);
@@ -251,11 +248,6 @@ extern u8 BattleScript_GrudgeTakesPp[];
 #define BS2ScriptReadPtr(ptr) ((void *)BS2ScriptRead32(ptr))
 
 #define DEFENDER_IS_PROTECTED ((gProtectStructs[gBattlerTarget].protected && gBattleMoves[gCurrentMove].flags & F_AFFECTED_BY_PROTECT))
-
-//array entries for battle communication
-#define MOVE_EFFECT_BYTE    0x3
-#define MULTISTRING_CHOOSER 0x5
-#define MSG_DISPLAY         0x7
 
 #define TARGET_SELECTED         0x0
 #define TARGET_DEPENDS          0x1
@@ -3329,13 +3321,13 @@ static void atk23_getexp(void)
     s32 viaExpShare = 0;
     u16* exp = &gBattleStruct->exp;
 
-    gBank1 = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
-    sentIn = gSentPokesToOpponent[(gBank1 & 2) >> 1];
+    gBattlerFainted = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+    sentIn = gSentPokesToOpponent[(gBattlerFainted & 2) >> 1];
 
     switch (gBattleStruct->getexpStateTracker)
     {
     case 0: // check if should receive exp at all
-        if (GetBattlerSide(gBank1) != B_SIDE_OPPONENT || (gBattleTypeFlags &
+        if (GetBattlerSide(gBattlerFainted) != B_SIDE_OPPONENT || (gBattleTypeFlags &
              (BATTLE_TYPE_LINK
               | BATTLE_TYPE_SAFARI
               | BATTLE_TYPE_BATTLE_TOWER
@@ -3346,7 +3338,7 @@ static void atk23_getexp(void)
         else
         {
             gBattleStruct->getexpStateTracker++;
-            gBattleStruct->givenExpMons |= gBitTable[gBattlerPartyIndexes[gBank1]];
+            gBattleStruct->givenExpMons |= gBitTable[gBattlerPartyIndexes[gBattlerFainted]];
         }
         break;
     case 1: // calculate experience points to redistribute
@@ -3372,7 +3364,7 @@ static void atk23_getexp(void)
                     viaExpShare++;
             }
 
-            calculatedExp = gBaseStats[gBattleMons[gBank1].species].expYield * gBattleMons[gBank1].level / 7;
+            calculatedExp = gBaseStats[gBattleMons[gBattlerFainted].species].expYield * gBattleMons[gBattlerFainted].level / 7;
 
             if (viaExpShare) // at least one mon is getting exp via exp share
             {
@@ -3477,7 +3469,7 @@ static void atk23_getexp(void)
                     PREPARE_WORD_NUMBER_BUFFER(gBattleTextBuff3, 5, gBattleMoveDamage)
 
                     PrepareStringBattle(STRINGID_PKMNGAINEDEXP, gBattleStruct->expGetterBattlerId);
-                    MonGainEVs(&gPlayerParty[gBattleStruct->expGetterMonId], gBattleMons[gBank1].species);
+                    MonGainEVs(&gPlayerParty[gBattleStruct->expGetterMonId], gBattleMons[gBattlerFainted].species);
                 }
                 gBattleStruct->sentInPokes >>= 1;
                 gBattleStruct->getexpStateTracker++;
@@ -3576,8 +3568,8 @@ static void atk23_getexp(void)
         if (gBattleControllerExecFlags == 0)
         {
             // not sure why gf clears the item and ability here
-            gBattleMons[gBank1].item = 0;
-            gBattleMons[gBank1].ability = 0;
+            gBattleMons[gBattlerFainted].item = 0;
+            gBattleMons[gBattlerFainted].ability = 0;
             gBattlescriptCurrInstr += 2;
         }
         break;
@@ -4995,12 +4987,12 @@ static void atk50_openpartyscreen(void)
 
         hitmarkerFaintBits = gHitMarker >> 28;
 
-        gBank1 = 0;
-        while (!(gBitTable[gBank1] & hitmarkerFaintBits)
-               && gBank1 < gBattlersCount)
-            gBank1++;
+        gBattlerFainted = 0;
+        while (!(gBitTable[gBattlerFainted] & hitmarkerFaintBits)
+               && gBattlerFainted < gBattlersCount)
+            gBattlerFainted++;
 
-        if (gBank1 == gBattlersCount)
+        if (gBattlerFainted == gBattlersCount)
             gBattlescriptCurrInstr = jumpPtr;
     }
     else
@@ -5114,7 +5106,7 @@ static void atk52_switchineffects(void)
     int i;
 
     gActiveBattler = GetBattlerForBattleScript(T2_READ_8(gBattlescriptCurrInstr + 1));
-    sub_80157C4(gActiveBattler);
+    UpdateSentPokesToOpponentValue(gActiveBattler);
     gHitMarker &= ~(HITMARKER_FAINTED(gActiveBattler));
     gSpecialStatuses[gActiveBattler].flag40 = 0;
 
@@ -5165,14 +5157,14 @@ static void atk52_switchineffects(void)
             if (T2_READ_8(gBattlescriptCurrInstr + 1) == 5)
             {
                 u32 hitmark = gHitMarker >> 0x1C;
-                gBank1++;
+                gBattlerFainted++;
                 while (1)
                 {
-                    if (hitmark & gBitTable[gBank1] && !(gAbsentBattlerFlags & gBitTable[gBank1]))
+                    if (hitmark & gBitTable[gBattlerFainted] && !(gAbsentBattlerFlags & gBitTable[gBattlerFainted]))
                         break;
-                    if (gBank1 >= gBattlersCount)
+                    if (gBattlerFainted >= gBattlersCount)
                         break;
-                    gBank1++;
+                    gBattlerFainted++;
                 }
             }
             gBattlescriptCurrInstr += 2;
@@ -5950,7 +5942,7 @@ static void atk71_buffermovetolearn(void)
 
 static void atk72_jumpifplayerran(void)
 {
-    if (TryRunFromBattle(gBank1))
+    if (TryRunFromBattle(gBattlerFainted))
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     else
         gBattlescriptCurrInstr += 5;
@@ -8985,7 +8977,7 @@ static void atkDB_tryimprison(void)
     else
     {
         u8 bank;
-        PressurePPLoseOnUsingImprision(gBattlerAttacker);
+        PressurePPLoseOnUsingImprison(gBattlerAttacker);
         for (bank = 0; bank < gBattlersCount; bank++)
         {
             if (r8 != GetBattlerSide(bank))

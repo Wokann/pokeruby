@@ -52,20 +52,25 @@
 
 void TryClearRageStatuses(void);
 void BattleScriptPush(const u8* BS_ptr);
-void PressurePPLoseOnUsingImprision(u8 bankAtk);
-void PressurePPLoseOnUsingPerishSong(u8 bankAtk);
-void sub_80155A4(u8);
-void CancelMultiTurnMoves(u8 bank);
-bool8 WasUnableToUseMove(u8 bank);
-void PrepareStringBattle(u16 stringId, u8 bank);
+void PressurePPLose(u8 target, u8 attacker, u16 move);
+void PressurePPLoseOnUsingImprison(u8 attacker);
+void PressurePPLoseOnUsingPerishSong(u8 attacker);
+void MarkBattlerReceivedLinkData(u8 battler);
+void MarkBattlerForControllerExec(u8 battler);
+void CancelMultiTurnMoves(u8 battler);
+bool8 WasUnableToUseMove(u8 battler);
+void PrepareStringBattle(u16 stringId, u8 battler);
 void ResetSentPokesToOpponentValue(void);
-void sub_8015740(u8 bank);
-void sub_80157C4(u8 bank);
+void OpponentSwitchInResetSentPokesToOpponentValue(u8 battler);
+void UpdateSentPokesToOpponentValue(u8 battler);
 bool8 HandleWishPerishSongOnTurnEnd(void);
 void BattleScriptExecute(const u8* BS_ptr);
 void BattleScriptPushCursorAndCallback(u8* BS_ptr);
 u8 IsMonDisobedient(void);
 bool8 AreAllMovesUnusable(void);
 u8 TrySetCantSelectMoveBattleScript(void);
+u8 GetImprisonedMovesCount(u8 battler, u16 move);
+u8 CastformDataTypeChange(u8 battler);
+void HandleAction_RunBattleScript(void);
 
 #endif // GUARD_BATTLE_UTIL_H
