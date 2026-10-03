@@ -2273,13 +2273,13 @@ void AddDecorationIconObjectFromObjectEvent(struct UnkStruct_02038900 * unk_0203
         sub_8100874(unk_02038900);
         sub_810070C(unk_02038900->palette, ((u16 *)gMapHeader.mapLayout->secondaryTileset->metatiles + 8 * unk_02038900->decoration->tiles[0])[7] >> 12);
         LoadSpritePalette(&gUnknown_083EC954);
-        gUnknown_020391A8 = gSprites[gFieldCamera.trackedSpriteId].data[0];
-        gFieldCamera.trackedSpriteId = CreateSprite(&gSpriteTemplate_83EC93C, gUnknown_083EC900[unk_02038900->decoration->shape].x,  gUnknown_083EC900[unk_02038900->decoration->shape].y, 0);
+        gUnknown_020391A8 = gSprites[gFieldCamera.spriteId].data[0];
+        gFieldCamera.spriteId = CreateSprite(&gSpriteTemplate_83EC93C, gUnknown_083EC900[unk_02038900->decoration->shape].x,  gUnknown_083EC900[unk_02038900->decoration->shape].y, 0);
     } else
     {
-        gUnknown_020391A8 = gSprites[gFieldCamera.trackedSpriteId].data[0];
-        gFieldCamera.trackedSpriteId = AddPseudoObjectEvent(unk_02038900->decoration->tiles[0], sub_81009A8, gUnknown_083EC900[unk_02038900->decoration->shape].x,  gUnknown_083EC900[unk_02038900->decoration->shape].y, 1);
-        gSprites[gFieldCamera.trackedSpriteId].oam.priority = 1;
+        gUnknown_020391A8 = gSprites[gFieldCamera.spriteId].data[0];
+        gFieldCamera.spriteId = AddPseudoObjectEvent(unk_02038900->decoration->tiles[0], sub_81009A8, gUnknown_083EC900[unk_02038900->decoration->shape].x,  gUnknown_083EC900[unk_02038900->decoration->shape].y, 1);
+        gSprites[gFieldCamera.spriteId].oam.priority = 1;
     }
 }
 
@@ -2300,7 +2300,7 @@ void SetUpPlacingDecorationPlayerAvatar(u8 taskId, struct UnkStruct_02038900 *un
     }
     gSprites[gUnknown_020391A9].oam.priority = 1;
     DestroySprite(&gSprites[gUnknown_020391A8]);
-    gUnknown_020391A8 = gFieldCamera.trackedSpriteId;
+    gUnknown_020391A8 = gFieldCamera.spriteId;
 }
 
 void sub_80FF960(u8 taskId)
@@ -3186,9 +3186,9 @@ void SetUpPuttingAwayDecorationPlayerAvatar(void)
 {
     GetPlayerFacingDirection();
     Menu_EraseWindowRect(0, 0, 29, 19);
-    gUnknown_020391A8 = gSprites[gFieldCamera.trackedSpriteId].data[0];
+    gUnknown_020391A8 = gSprites[gFieldCamera.spriteId].data[0];
     sub_81016C8();
-    gFieldCamera.trackedSpriteId = CreateSprite(&gSpriteTemplate_83ECA88, 0x78, 0x50, 0);
+    gFieldCamera.spriteId = CreateSprite(&gSpriteTemplate_83ECA88, 0x78, 0x50, 0);
     if (gSaveBlock2.playerGender == MALE)
     {
         gUnknown_020391A9 = AddPseudoObjectEvent(0xc1, SpriteCallbackDummy, 0x88, 0x48, 0);
@@ -3198,7 +3198,7 @@ void SetUpPuttingAwayDecorationPlayerAvatar(void)
     }
     gSprites[gUnknown_020391A9].oam.priority = 1;
     DestroySprite(&gSprites[gUnknown_020391A8]);
-    gUnknown_020391A8 = gFieldCamera.trackedSpriteId;
+    gUnknown_020391A8 = gFieldCamera.spriteId;
     gSprites[gUnknown_020391A8].oam.priority = 1;
 }
 

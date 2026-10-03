@@ -89,10 +89,6 @@ u8 cph_IM_DIFFERENT(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
 u8 CopyablePlayerMovement_GoSpeed4(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
 u8 CopyablePlayerMovement_Jump(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
 
-extern struct FieldCamera gFieldCamera;
-extern u16 gTotalCameraPixelOffsetY;
-extern u16 gTotalCameraPixelOffsetX;
-
 extern const struct Coords16 gDirectionToVector[];
 
 void MovementType_BerryTreeGrowth(struct Sprite *);

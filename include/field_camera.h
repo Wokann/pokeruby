@@ -1,29 +1,33 @@
 #ifndef GUARD_FIELD_CAMERA_H
 #define GUARD_FIELD_CAMERA_H
 
-struct FieldCamera
+struct CameraObject
 {
-    void (*callback)(struct FieldCamera *);
-    u32 trackedSpriteId;
+    void (*callback)(struct CameraObject *);
+    u32 spriteId;
     s32 movementSpeedX;
     s32 movementSpeedY;
     s32 curMovementOffsetX;
     s32 curMovementOffsetY;
 };
 
+extern struct CameraObject gFieldCamera;
+extern u16 gTotalCameraPixelOffsetX;
+extern u16 gTotalCameraPixelOffsetY;
+
 extern struct Camera gCamera;
 
 void move_tilemap_camera_to_upper_left_corner(void);
 void sub_8057A58(void);
-void sub_8057B14(u16 *a, u16 *b);
+void GetCameraOffsetWithPan(u16 *x, u16 *y);
 void DrawWholeMapView(void);
-void CurrentMapDrawMetatileAt(int a, int b);
-void DrawDoorMetatileAt(int x, int y, u16 *arr);
+void CurrentMapDrawMetatileAt(int x, int y);
+void DrawDoorMetatileAt(int x, int y, u16 *tiles);
 void ResetCameraUpdateInfo(void);
-u32 InitCameraUpdateCallback(u8 a);
+u32 InitCameraUpdateCallback(u8 trackedSpriteId);
 void CameraUpdate(void);
-void SetCameraPanningCallback(void (*a)(void));
-void SetCameraPanning(s16 a, s16 b);
+void SetCameraPanningCallback(void (*callback)(void));
+void SetCameraPanning(s16 horizontal, s16 vertical);
 void InstallCameraPanAheadCallback(void);
 void UpdateCameraPanning(void);
 
