@@ -29,6 +29,8 @@
 #define MASTER_HANDSHAKE 0x8FFF
 #define SLAVE_HANDSHAKE  0xB9A0
 
+#define SIO_MULTI_CNT ((struct SioMultiCnt *)REG_ADDR_SIOCNT)
+
 enum
 {
     LINK_STATE_START0,
@@ -101,7 +103,7 @@ struct Link
     u8 state;
     u8 localId; // local multi-player ID
     u8 playerCount;
-    u16 tempRecvBuffer[4];
+    u16 handshakeBuffer[4];
     bool8 receivedNothing;
     s8 serialIntrCounter;
     bool8 handshakeAsMaster;
@@ -127,7 +129,7 @@ struct BlockRequest {
     u32 size;
 };
 
-extern const struct BlockRequest sBlockRequestLookupTable[5];
+extern const struct BlockRequest sBlockRequests[5];
 
 extern struct Link gLink;
 extern u16 gRecvCmds[CMD_LENGTH][MAX_LINK_PLAYERS];
@@ -143,20 +145,21 @@ extern u8 deUnkValue1;
 extern u8 deUnkValue2;
 #endif
 extern struct LinkPlayer gLinkPlayers[];
-extern u16 word_3002910[];
+extern u16 gLinkPartnersHeldKeys[];
+extern struct LinkPlayerBlock gLocalLinkPlayerBlock;
 extern bool8 gReceivedRemoteLinkPlayers;
 extern bool8 gLinkOpen;
-extern bool8 gLinkPlayerPending[MAX_LINK_PLAYERS];
+extern bool8 gRemoteLinkPlayersNotReceived[MAX_LINK_PLAYERS];
 extern void (*gLinkCallback)(void);
 extern u8 gUnknown_Debug_30030E0;
 
 void Task_DestroySelf(u8);
-void sub_8007270(u8);
+void SetLocalLinkPlayerId(u8 playerId);
 void OpenLink(void);
 void CloseLink(void);
 u16 LinkMain2(u16 *);
-void sub_8007B14(void);
-bool32 sub_8007B24(void);
+void StartSendingKeysToLink(void);
+bool32 IsSendingKeysToLink(void);
 void ClearLinkCallback(void);
 void ClearLinkCallback_2(void);
 u8 GetLinkPlayerCount(void);
@@ -165,33 +168,34 @@ u8 GetLinkPlayerDataExchangeStatusTimed(void);
 bool8 IsLinkPlayerDataExchangeComplete(void);
 u32 GetLinkPlayerTrainerId(u8);
 void ResetLinkPlayers(void);
-void sub_8007E24(void);
-void sub_8007E4C(void);
+void SetBerryBlenderLinkCallback(void);
+void SendBerryBlenderNoSpaceForPokeblocks(void);
 u8 GetMultiplayerId(void);
-u8 bitmask_all_link_players_but_self(void);
-bool8 SendBlock(u8, void *, u16);
-bool8 sub_8007E9C(u8);
+u8 BitmaskAllOtherLinkPlayers(void);
+bool8 SendBlock(u8 unused, void *src, u16 size);
+bool8 SendBlockRequest(u8 blockReqType);
 bool8 IsLinkTaskFinished(void);
 u8 GetBlockReceivedStatus(void);
 void ResetBlockReceivedFlags(void);
 void ResetBlockReceivedFlag(u8);
-void sub_8007F4C(void);
+void CheckShouldAdvanceLinkState(void);
 void SetLinkDebugValues(u32, u32);
-u8 sub_8008198(void);
-void sub_80081C8(u8);
-u8 sub_800820C(void);
-u8 sub_8008218(void);
-void sub_800826C(void);
-void sub_80082EC(void);
+u8 GetSavedLinkPlayerCountAsBitFlags(void);
+void SaveLinkPlayers(u8 playerCount);
+u8 GetSavedPlayerCount(void);
+u8 GetSavedMultiplayerId(void);
+bool8 DoesLinkPlayerCountMatchSaved(void);
+void CheckLinkPlayersMatchSaved(void);
+void ResetLinkPlayerCount(void);
 u8 GetLinkPlayerCount_2(void);
 bool8 IsLinkMaster(void);
 void SetCloseLinkCallback(void);
-void sub_8008480(void);
-void sub_80084A4(void);
+void SetCloseLinkCallbackHandleJP(void);
+void SetLinkStandbyCallback(void);
 void CB2_LinkError(void);
 u8 GetSioMultiSI(void);
 bool8 IsLinkConnectionEstablished(void);
-void SetSuppressLinkErrorMessage(bool8);
+void SetSuppressLinkErrorMessage(bool8 flag);
 bool8 HasLinkErrorOccurred(void);
 void ResetSerial(void);
 u32 LinkMain1(u8 *, u16 *, u16[CMD_LENGTH][MAX_LINK_PLAYERS]);
@@ -201,7 +205,7 @@ void SerialCB(void);
 void LinkTestScreen(void);
 void debug_sub_8008218(u16 *buffer, u32 arg1, u16 *arg2, u32 arg3);
 void debug_sub_8008264(u32 value, int left, int top, int r3, int sp0);
-u32 sub_8007E40(void);
+u32 GetBerryBlenderKeySendAttempts(void);
 void PrintHex(u32, u8, u8, u8);
 void InitLinkTestBG_Unused(u8, u8, u8, u8);
 

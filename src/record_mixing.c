@@ -122,7 +122,7 @@ void Task_RecordMixing_Main(u8 taskId)
     switch (tState)
     {
     case 0:        // init
-        sub_8007270(gSpecialVar_0x8005);
+        SetLocalLinkPlayerId(gSpecialVar_0x8005);
         VarSet(VAR_TEMP_0, 1);
         gUnknown_03000718 = 0;
         RecordMixing_PrepareExchangePacket();
@@ -200,7 +200,7 @@ void sub_80B95F0(u8 taskId)
 
             if (IsLinkMaster() == 1)
             {
-                if (players == sub_800820C())
+                if (players == GetSavedPlayerCount())
                 {
                     PlaySE(SE_PIN);
                     task->tState = 201;
@@ -215,17 +215,17 @@ void sub_80B95F0(u8 taskId)
         }
         break;
     case 201:
-        if (sub_800820C() == GetLinkPlayerCount_2())
+        if (GetSavedPlayerCount() == GetLinkPlayerCount_2())
         {
             if (++task->data[12] > GetLinkPlayerCount_2() * 30)
             {
-                sub_8007F4C();
+                CheckShouldAdvanceLinkState();
                 task->tState = 1;
             }
         }
         break;
     case 301:
-        if (sub_800820C() == GetLinkPlayerCount_2())
+        if (GetSavedPlayerCount() == GetLinkPlayerCount_2())
             task->tState = 1;
         break;
     case 400:        // wait 20 frames
@@ -286,7 +286,7 @@ void Task_RecordMixing_SendPacket(u8 taskId)
         break;
     case 1:
         if (GetMultiplayerId() == 0)
-            sub_8007E9C(1);
+            SendBlockRequest(1);
         task->tState++;
         break;
     case 2:
@@ -310,7 +310,7 @@ void Task_RecordMixing_CopyReceiveBuffer(u8 taskId)
     s32 recvStatus = GetBlockReceivedStatus();
     u8 handledPlayers = 0;
 
-    if (recvStatus == sub_8008198())
+    if (recvStatus == GetSavedLinkPlayerCountAsBitFlags())
     {
         u8 player;
 

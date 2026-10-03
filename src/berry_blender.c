@@ -1133,7 +1133,7 @@ static void sub_804E9F8(void)
         gBerryBlenderData->field_13C = 0;
         Blender_CopyBerryData(&gBerryBlenderData->blendedBerries[0], gSpecialVar_ItemId);
         memcpy(gBlockSendBuffer, &gBerryBlenderData->blendedBerries[0], sizeof(struct BlenderBerry));
-        sub_80084A4();
+        SetLinkStandbyCallback();
         gBerryBlenderData->framesToWait = 0;
         break;
     case 9:
@@ -1141,7 +1141,7 @@ static void sub_804E9F8(void)
         {
             ResetBlockReceivedFlags();
             if (GetMultiplayerId() == 0)
-                sub_8007E9C(4);
+                SendBlockRequest(4);
             gBerryBlenderData->field_0++;
         }
         break;
@@ -1149,7 +1149,7 @@ static void sub_804E9F8(void)
         if (++gBerryBlenderData->framesToWait > 20)
         {
             Menu_EraseScreen();
-            if (GetBlockReceivedStatus() == sub_8008198())
+            if (GetBlockReceivedStatus() == GetSavedLinkPlayerCountAsBitFlags())
             {
                 for (i = 0; i < GetLinkPlayerCount(); i++)
                 {
@@ -1227,13 +1227,13 @@ static void sub_804E9F8(void)
         gBerryBlenderData->field_0++;
         break;
     case 19:
-        sub_80084A4();
+        SetLinkStandbyCallback();
         gBerryBlenderData->field_0++;
         break;
     case 20:
         if (IsLinkTaskFinished())
         {
-            sub_8007E24();
+            SetBerryBlenderLinkCallback();
             gBerryBlenderData->field_0++;
         }
         break;
@@ -2328,7 +2328,7 @@ bool8 sub_8050CE8(void)
     switch (gBerryBlenderData->field_1C4)
     {
     case 0:
-        sub_80084A4();
+        SetLinkStandbyCallback();
         gBerryBlenderData->field_1C4 = 1;
         gBerryBlenderData->framesToWait = 0;
         break;
@@ -2347,7 +2347,7 @@ bool8 sub_8050CE8(void)
     case 3:
         if (++gBerryBlenderData->framesToWait == 10)
         {
-            sub_80084A4();
+            SetLinkStandbyCallback();
             gBerryBlenderData->field_1C4++;
         }
         break;
@@ -2435,7 +2435,7 @@ static void sub_8050E30(void)
     case 5:
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
         Menu_PrintText(gMultiText_Saving, 2, 15);
-        sub_80084A4();
+        SetLinkStandbyCallback();
         gBerryBlenderData->field_6F++;
         break;
     case 6:
@@ -2455,7 +2455,7 @@ static void sub_8050E30(void)
         break;
     case 8:
         gBerryBlenderData->field_6F++;
-        sub_80084A4();
+        SetLinkStandbyCallback();
         break;
     case 9:
         if (IsLinkTaskFinished())
@@ -2744,7 +2744,7 @@ void unref_sub_80516F8(u8 taskID)
             }
             if (JOY_NEW(A_BUTTON))
             {
-                sub_8007E4C();
+                SendBerryBlenderNoSpaceForPokeblocks();
                 DestroyTask(taskID);
             }
         }
@@ -3083,7 +3083,7 @@ bool8 Blender_PrintBlendingResults(void)
         Blender_PrintMadePokeblockString(&pokeblock, gBerryBlenderData->stringVar);
         CreateTask(sub_8052BD0, 6);
 #if DEBUG
-        ConvertIntToHexStringN(text[0], sub_8007E40(), 0, 4);
+        ConvertIntToHexStringN(text[0], GetBerryBlenderKeySendAttempts(), 0, 4);
         StringAppend(text[0], gUnknown_08216249);
         StringAppend(gBerryBlenderData->stringVar, text[0]);
 #endif

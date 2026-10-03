@@ -461,7 +461,7 @@ void Task_HandleSendLinkBuffersData(u8 taskId)
         GetLinkPlayerCount_2();
         if (IsLinkMaster())
         {
-            sub_8007F4C();
+            CheckShouldAdvanceLinkState();
             gTasks[taskId].data[11]++;
             break;
         }
@@ -479,7 +479,7 @@ void Task_HandleSendLinkBuffersData(u8 taskId)
                     gTasks[taskId].data[15] = 0;
                 }
                 var = (BCOMM(linkSend, size, gTasks[taskId].data[15], 0) | (BCOMM(linkSend, size, gTasks[taskId].data[15], 1) << 8)) + 8;
-                SendBlock(bitmask_all_link_players_but_self(), &gSharedMem[BSTRUCT_OFF(linkSend) + gTasks[taskId].data[15]], var);
+                SendBlock(BitmaskAllOtherLinkPlayers(), &gSharedMem[BSTRUCT_OFF(linkSend) + gTasks[taskId].data[15]], var);
                 gTasks[taskId].data[11]++;
             }
             else

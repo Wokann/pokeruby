@@ -1902,7 +1902,7 @@ void sub_8054EC8(void)
         CreateLinkPlayerSprite(i);
     }
 
-    sub_8055340(word_3002910);
+    sub_8055340(gLinkPartnersHeldKeys);
 }
 
 void sub_8054F48(void)
@@ -2133,9 +2133,9 @@ void sub_8055340(u16 *a1)
 void sub_8055354(void)
 {
     u8 val = gUnknown_03004860;
-    sub_8055218(word_3002910, val);
+    sub_8055218(gLinkPartnersHeldKeys, val);
     sub_8055280(gUnknown_03000584(val));
-    sub_8055340(word_3002910);
+    sub_8055340(gLinkPartnersHeldKeys);
 }
 
 u16 sub_8055390(u32 a1)
@@ -2446,7 +2446,7 @@ bool32 sub_80558AC(void)
     if (is_c1_link_related_active() != TRUE)
         return FALSE;
 
-    if (sub_8007B24() != TRUE)
+    if (IsSendingKeysToLink() != TRUE)
         return FALSE;
 
     if (gUnknown_03000584 == sub_8055408)
@@ -2472,7 +2472,7 @@ bool32 sub_8055910(void)
     if (is_c1_link_related_active() != TRUE)
         return FALSE;
 
-    if (sub_8007B24() != TRUE)
+    if (IsSendingKeysToLink() != TRUE)
         return FALSE;
 
     if (gUnknown_03000584 == sub_8055438)
@@ -2483,7 +2483,7 @@ bool32 sub_8055910(void)
 
 bool32 sub_8055940(void)
 {
-    if (!sub_8007B24())
+    if (!IsSendingKeysToLink())
         return FALSE;
     return TRUE;
 }

@@ -10,8 +10,6 @@
 #include "start_menu.h"
 #include "string_util.h"
 
-#define SIO_MULTI_CNT ((struct SioMultiCnt *)REG_ADDR_SIOCNT)
-
 extern u8 (*gMenuCallback)(void);
 
 u8 gUnknown_03004DA0[0x20];
@@ -68,7 +66,7 @@ void unref_sub_8083CF0(void)
     gUnknown_03004DA0[0] = EOS;
     StringAppend(gUnknown_03004DA0, gUnknown_0839B24A);
     for (i = 0; i < 10; i++)
-        if ((word_3002910[id ^ 1] >> i) & 1)
+        if ((gLinkPartnersHeldKeys[id ^ 1] >> i) & 1)
             StringAppend(gUnknown_03004DA0, gUnknown_0839B22C[i]);
 }
 

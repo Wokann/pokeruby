@@ -17,7 +17,7 @@ static void de_sub_80C9294(bool32 arg0);
 static void SendBlockToAllOpponents(const void *data, u16 size)
 {
     memcpy(gDecompressionBuffer, data, size);
-    SendBlock(bitmask_all_link_players_but_self(), gDecompressionBuffer, size);
+    SendBlock(BitmaskAllOtherLinkPlayers(), gDecompressionBuffer, size);
 }
 
 static bool8 HasPlayerReceivedBlock(u8 who)
@@ -129,7 +129,7 @@ void sub_80C8734(u8 taskId)
                 if (IsLinkTaskFinished()) {
 #if ENGLISH
                     memcpy(gBlockSendBuffer, gContestMons + gContestPlayerMonIndex, sizeof(struct ContestPokemon));
-                    sub_8007E9C(2);
+                    SendBlockRequest(2);
                     gTasks[taskId].data[0]++;
 #elif GERMAN
                     if (gTasks[taskId].data[0] == 0)
@@ -140,7 +140,7 @@ void sub_80C8734(u8 taskId)
                     {
                         memcpy(gBlockSendBuffer, gContestMons + gContestPlayerMonIndex, sizeof(struct ContestPokemon));
                         de_sub_80C9274(FALSE);
-                        sub_8007E9C(2);
+                        SendBlockRequest(2);
                         gTasks[taskId].data[0] = 1;
                     }
 #endif
@@ -261,7 +261,7 @@ void Task_LinkContest_CommunicateCategory(u8 taskId)
                 if (IsLinkTaskFinished())
                 {
 #if ENGLISH
-                    sub_8007E9C(2);
+                    SendBlockRequest(2);
                     gTasks[taskId].data[0]++;
 #elif GERMAN
                     if (gTasks[taskId].data[0] == 0)
@@ -271,7 +271,7 @@ void Task_LinkContest_CommunicateCategory(u8 taskId)
                     else
                     {
                         de_sub_80C9274(TRUE);
-                        sub_8007E9C(2);
+                        SendBlockRequest(2);
                         gTasks[taskId].data[0] = 1;
                     }
 #endif
@@ -537,7 +537,7 @@ void Task_LinkContest_CommunicateLeaderIds(u8 taskId)
                 if (IsLinkTaskFinished())
                 {
 #if ENGLISH
-                    sub_8007E9C(2);
+                    SendBlockRequest(2);
                     gTasks[taskId].data[0]++;
 #elif GERMAN
                     if (gTasks[taskId].data[0] == 0)
@@ -547,7 +547,7 @@ void Task_LinkContest_CommunicateLeaderIds(u8 taskId)
                     else
                     {
                         de_sub_80C9274(FALSE);
-                        sub_8007E9C(2);
+                        SendBlockRequest(2);
                         gTasks[taskId].data[0] = 1;
                     }
 #endif
@@ -657,7 +657,7 @@ static void de_sub_80C9294(bool32 arg0)
     }
     else if (deUnkValue2 == 2)
     {
-        SendBlock(0, sBlockRequestLookupTable[deUnkValue1].address, sBlockRequestLookupTable[deUnkValue1].size);
+        SendBlock(0, sBlockRequests[deUnkValue1].address, sBlockRequests[deUnkValue1].size);
         if (arg0)
             deUnkValue2 = 0;
         else

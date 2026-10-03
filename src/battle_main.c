@@ -444,7 +444,7 @@ void CB2_HandleStartBattle(void)
                     }
                 }
 #endif
-                SendBlock(bitmask_all_link_players_but_self(), &eMultiTxBuffer.linkPartnerHeader, sizeof(eMultiTxBuffer.linkPartnerHeader));
+                SendBlock(BitmaskAllOtherLinkPlayers(), &eMultiTxBuffer.linkPartnerHeader, sizeof(eMultiTxBuffer.linkPartnerHeader));
                 gBattleCommunication[0] = 1;
             }
         }
@@ -507,7 +507,7 @@ void CB2_HandleStartBattle(void)
     case 2:
         if (IsLinkTaskFinished())
         {
-            SendBlock(bitmask_all_link_players_but_self(), gPlayerParty, sizeof(*gPlayerParty) * 2);
+            SendBlock(BitmaskAllOtherLinkPlayers(), gPlayerParty, sizeof(*gPlayerParty) * 2);
             gBattleCommunication[0]++;
         }
         break;
@@ -522,7 +522,7 @@ void CB2_HandleStartBattle(void)
     case 4:
         if (IsLinkTaskFinished())
         {
-            SendBlock(bitmask_all_link_players_but_self(), gPlayerParty + 2, sizeof(*gPlayerParty) * 2);
+            SendBlock(BitmaskAllOtherLinkPlayers(), gPlayerParty + 2, sizeof(*gPlayerParty) * 2);
             gBattleCommunication[0]++;
         }
         break;
@@ -537,7 +537,7 @@ void CB2_HandleStartBattle(void)
     case 6:
         if (IsLinkTaskFinished())
         {
-            SendBlock(bitmask_all_link_players_but_self(), gPlayerParty + 4, sizeof(*gPlayerParty) * 2);
+            SendBlock(BitmaskAllOtherLinkPlayers(), gPlayerParty + 4, sizeof(*gPlayerParty) * 2);
             gBattleCommunication[0]++;
         }
         break;
@@ -636,7 +636,7 @@ void sub_800F104(void)
             if (IsLinkTaskFinished())
             {
                 PrepareOwnMultiPartnerBuffer();
-                SendBlock(bitmask_all_link_players_but_self(), eMultiTxBuffer.multiBattleMons, 3 * sizeof(struct MultiBattlePokemonTx));
+                SendBlock(BitmaskAllOtherLinkPlayers(), eMultiTxBuffer.multiBattleMons, 3 * sizeof(struct MultiBattlePokemonTx));
                 gBattleCommunication[0]++;
             }
         }
@@ -712,7 +712,7 @@ void CB2_HandleStartMultiBattle(void)
                 *(&eMultiTxBuffer.linkPartnerHeader.versionSignatureHi) = 1;
                 BufferPartyVsScreenHealth_AtStart();
                 SetPlayerBerryDataInBattleStruct();
-                SendBlock(bitmask_all_link_players_but_self(), &eMultiTxBuffer.linkPartnerHeader, sizeof(eMultiTxBuffer.linkPartnerHeader));
+                SendBlock(BitmaskAllOtherLinkPlayers(), &eMultiTxBuffer.linkPartnerHeader, sizeof(eMultiTxBuffer.linkPartnerHeader));
                 gBattleCommunication[0]++;
             }
         }
@@ -800,7 +800,7 @@ void CB2_HandleStartMultiBattle(void)
     case 2:
             if (IsLinkTaskFinished())
             {
-                SendBlock(bitmask_all_link_players_but_self(), eMultiBattleSetupPartySendBuffer, sizeof(struct Pokemon) * 2);
+                SendBlock(BitmaskAllOtherLinkPlayers(), eMultiBattleSetupPartySendBuffer, sizeof(struct Pokemon) * 2);
                 gBattleCommunication[0]++;
             }
 	}
@@ -864,7 +864,7 @@ void CB2_HandleStartMultiBattle(void)
     case 4:
         if (IsLinkTaskFinished())
         {
-            SendBlock(bitmask_all_link_players_but_self(), eMultiBattleSetupPartySendBuffer + 2, sizeof(struct Pokemon));
+            SendBlock(BitmaskAllOtherLinkPlayers(), eMultiBattleSetupPartySendBuffer + 2, sizeof(struct Pokemon));
             gBattleCommunication[0]++;
         }
         break;

@@ -249,7 +249,7 @@ static void sub_80A9ED8(u8 taskId)
     gTasks[taskId].data[0] = gTasks[taskId].data[0] + 1;
     if ((gTasks[taskId].data[0]) == 101)
     {
-        sub_8007F4C();
+        CheckShouldAdvanceLinkState();
         gTasks[taskId].data[0] = 0;
         gTasks[taskId].func = sub_80A9F10;
     }
