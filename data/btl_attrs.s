@@ -327,10 +327,10 @@ gUnknown_081FA640:: @ 81FA640
 	.4byte HandleAction_SafariZoneBallThrow
 	.4byte HandleAction_ThrowPokeblock
 	.4byte HandleAction_GoNear
-	.4byte HandleAction_SafriZoneRun
-	.4byte HandleAction_Action9
+	.4byte HandleAction_SafariZoneRun
+	.4byte HandleAction_WallyBallThrow
 	.4byte sub_801B594
-	.4byte HandleAction_Action11
+	.4byte HandleAction_TryFinish
 	.4byte HandleAction_ActionFinished
 	.4byte HandleAction_NothingIsFainted
 

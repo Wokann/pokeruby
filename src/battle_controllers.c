@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_main.h"
 #include "battle_controllers.h"
 #include "battle_811DA74.h"
 #include "battle_ai_script_commands.h"
@@ -94,7 +95,7 @@ void SetUpBattleVarsAndBirchPoochyena(void)
 {
     s32 i;
 
-    gBattleMainFunc = nullsub_41;
+    gBattleMainFunc = BeginBattleIntroDummy;
 
     for (i = 0; i < MAX_BATTLERS_COUNT; i++)
     {
@@ -152,7 +153,7 @@ static void InitSinglePlayerBtlControllers(void)
 {
     if (!(gBattleTypeFlags & BATTLE_TYPE_DOUBLE))
     {
-        gBattleMainFunc = sub_8010800;
+        gBattleMainFunc = BeginBattleIntro;
         if (gBattleTypeFlags & BATTLE_TYPE_SAFARI)
             gBattlerControllerFuncs[0] = SetBankFuncToSafariBufferRunCommand;
         else if (gBattleTypeFlags & BATTLE_TYPE_WALLY_TUTORIAL)
@@ -166,7 +167,7 @@ static void InitSinglePlayerBtlControllers(void)
     }
     else
     {
-        gBattleMainFunc = sub_8010800;
+        gBattleMainFunc = BeginBattleIntro;
         gBattlerControllerFuncs[0] = SetControllerToPlayer;
         gBattlerPositions[0] = 0;
         gBattlerControllerFuncs[1] = SetBankFuncToOpponentBufferRunCommand;
@@ -188,7 +189,7 @@ static void InitLinkBtlControllers(void)
     {
         if (gBattleTypeFlags & BATTLE_TYPE_WILD)
         {
-            gBattleMainFunc = sub_8010800;
+            gBattleMainFunc = BeginBattleIntro;
             gBattlerControllerFuncs[0] = SetControllerToPlayer;
             gBattlerPositions[0] = 0;
             gBattlerControllerFuncs[1] = SetBankFuncToLinkOpponentBufferRunCommand;
@@ -209,7 +210,7 @@ static void InitLinkBtlControllers(void)
     {
         if (gBattleTypeFlags & BATTLE_TYPE_WILD)
         {
-            gBattleMainFunc = sub_8010800;
+            gBattleMainFunc = BeginBattleIntro;
             gBattlerControllerFuncs[0] = SetControllerToPlayer;
             gBattlerPositions[0] = 0;
             gBattlerControllerFuncs[1] = SetBankFuncToLinkOpponentBufferRunCommand;
@@ -237,7 +238,7 @@ static void InitLinkBtlControllers(void)
     }
     multiplayerId = GetMultiplayerId();
     if (gBattleTypeFlags & BATTLE_TYPE_WILD)
-        gBattleMainFunc = sub_8010800;
+        gBattleMainFunc = BeginBattleIntro;
     for (i = 0; i < 4; i++)
     {
         switch (gLinkPlayers[i].id)

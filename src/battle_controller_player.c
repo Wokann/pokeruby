@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_main.h"
 #include "battle_anim_special.h"
 #include "battle_anim.h"
 #include "battle_controllers.h"
@@ -137,7 +138,6 @@ extern void DoBounceEffect(u8, u8, s8, s8);
 extern u8 GetBattlerPosition(u8);
 extern u8 GetBattlerAtPosition(u8);
 extern void EndBounceEffect(u8, u8);
-extern void sub_8010520(struct Sprite *);
 extern void SpriteCB_HideAsMoveTarget(struct Sprite *);
 extern bool8 IsDoubleBattle();
 extern void sub_8094E20(u8);
@@ -524,7 +524,7 @@ static void HandleInputChooseTarget(void)
             if (gAbsentBattlerFlags & gBitTable[gMultiUsePlayerCursor])
                 i = 0;
         } while (i == 0);
-        gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = sub_8010520;
+        gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_ShowAsMoveTarget;
     }
     //_0802C540
     else if (JOY_NEW(DPAD_RIGHT | DPAD_DOWN))
@@ -569,7 +569,7 @@ static void HandleInputChooseTarget(void)
             if (gAbsentBattlerFlags & gBitTable[gMultiUsePlayerCursor])
                 i = 0;
         } while (i == 0);
-        gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = sub_8010520;
+        gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_ShowAsMoveTarget;
     }
 }
 
@@ -645,7 +645,7 @@ static void HandleInputChooseMove(void)
             else
                 gMultiUsePlayerCursor = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
 
-            gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = sub_8010520;
+            gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_ShowAsMoveTarget;
         }
     }
     else if (JOY_NEW(B_BUTTON))

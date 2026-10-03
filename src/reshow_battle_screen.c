@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle_main.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "palette.h"
@@ -27,7 +28,6 @@ bool8 sub_8031C30(u8 a0);
 void sub_8031EE8(void);
 void sub_80327CC(void);
 void sub_8032984(u8 a, u16 b);
-void sub_800FCD4(void);
 void BattleLoadOpponentMonSprite(struct Pokemon *, u8 bank);
 void BattleLoadPlayerMonSpriteGfx(struct Pokemon *, u8 bank);
 void BattleLoadSubstituteSprite(u8 bank, u8 b);
@@ -178,8 +178,8 @@ static void CB2_ReshowBattleScreenAfterMenu(void)
         }
         break;
     default:
-        SetHBlankCallback(sub_800FCD4);
-        SetVBlankCallback(sub_800FCFC);
+        SetHBlankCallback(HBlankCB_Battle);
+        SetVBlankCallback(VBlankCB_Battle);
         sub_807B06C();
         BeginHardwarePaletteFade(0xFF, 0, 0x10, 0, 1);
         gPaletteFade.bufferTransferDisabled = 0;

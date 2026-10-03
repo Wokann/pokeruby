@@ -55,21 +55,6 @@
 #define MOVE_TARGET_FOES_AND_ALLY       0x20
 #define MOVE_TARGET_OPPONENTS_FIELD     0x40
 
-// defines for the u8 array gTypeEffectiveness
-#define TYPE_EFFECT_ATK_TYPE(i)((gTypeEffectiveness[i + 0]))
-#define TYPE_EFFECT_DEF_TYPE(i)((gTypeEffectiveness[i + 1]))
-#define TYPE_EFFECT_MULTIPLIER(i)((gTypeEffectiveness[i + 2]))
-
-// defines for the gTypeEffectiveness multipliers
-#define TYPE_MUL_NO_EFFECT          0
-#define TYPE_MUL_NOT_EFFECTIVE      5
-#define TYPE_MUL_NORMAL             10
-#define TYPE_MUL_SUPER_EFFECTIVE    20
-
-// special type table Ids
-#define TYPE_FORESIGHT  0xFE
-#define TYPE_ENDTABLE   0xFF
-
 struct DisableStruct
 {
     /*0x00*/ u32 transformedMonPersonality;
@@ -582,6 +567,9 @@ extern u8 gDisplayedStringBattle[];
 extern u16 gBattleTypeFlags;
 extern u8 gUnknown_02023A14_50;
 extern u16 gTrainerBattleOpponent;
+extern u8 gChosenMovePos;
+extern u8 gChosenActionByBattler[MAX_BATTLERS_COUNT];
+extern u16 gChosenMoveByBattler[MAX_BATTLERS_COUNT];
 
 // src/battle_bg.o
 void sub_800D6D4();
@@ -597,32 +585,17 @@ void DrawBattleEntryBackground();
 
 // src/battle_2.o
 void CB2_InitBattle(void);
-void CB2_InitBattleInternal(void);
-void CB2_HandleStartBattle(void);
 void sub_800F104(void);
-void CB2_HandleStartMultiBattle(void);
 void BattleMainCB2(void);
 void sub_800F838(struct Sprite *);
-u8 CreateNPCTrainerParty(struct Pokemon *, u16);
-void sub_800FCFC(void);
-void SpriteCB_VsLetterDummy(struct Sprite *sprite);
 void CB2_InitEndLinkBattle(void);
 void sub_80101B8(void);
 void c2_081284E0(void);
 void sub_8010278(struct Sprite *);
 void sub_80102AC(struct Sprite *);
-void nullsub_37(struct Sprite *);
 void sub_8010320(struct Sprite *);
 void sub_8010494(struct Sprite *);
-void sub_801053C(struct Sprite *);
-void oac_poke_ally_(struct Sprite *);
-void nullsub_86(struct Sprite *);
 void objc_dp11b_pingpong(struct Sprite *);
-void nullsub_41(void);
-void sub_8010800(void);
-void BattleMainCB1(void);
-void BattleStartClearSetData(void);
-void bc_8012FAC(void);
 void sub_8011384(void);
 void bc_801333C(void);
 void bc_battle_begin_message(void);
@@ -630,7 +603,6 @@ void bc_8013568(void);
 void sub_8011800(void);
 void sub_8011834(void);
 void bc_801362C(void);
-void sub_8011970(void);
 void sub_80119B4(void);
 void BattleBeginFirstTurn(void);
 void BattleTurnPassed(void);

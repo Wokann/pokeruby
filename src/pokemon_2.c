@@ -2,6 +2,7 @@
 #include "constants/hold_effects.h"
 #include "constants/moves.h"
 #include "battle.h"
+#include "battle_main.h"
 #include "battle_util.h"
 #include "data2.h"
 #include "event_data.h"
@@ -47,7 +48,6 @@ extern u8 gTrainerClassToNameIndex[];
 extern const u8 gPPUpReadMasks[];
 extern const u8 gPPUpWriteMasks[];
 
-extern void sub_80105A0(struct Sprite *);
 extern void oac_poke_opponent(struct Sprite *);
 
 u8 CountAliveMons(u8 a1)
@@ -151,10 +151,10 @@ u8 GetGenderFromSpeciesAndPersonality(u16 species, u32 personality)
 
 const struct SpriteTemplate gSpriteTemplate_8208288[] =
 {
-    {0xFFFF, 0, &gOamData_81F96F0, NULL, gSpriteImageTable_81E7A10, gSpriteAffineAnimTable_81E7B70, sub_80105A0},
+    {0xFFFF, 0, &gOamData_81F96F0, NULL, gSpriteImageTable_81E7A10, gSpriteAffineAnimTable_81E7B70, SpriteCB_BattleSpriteStartSlideLeft},
     {0xFFFF, 0, &gOamData_81F96E8, NULL, gSpriteImageTable_81E7A30,
         gAffineAnims_BattleSpriteOpponentSide, oac_poke_opponent},
-    {0xFFFF, 0, &gOamData_81F96F0, NULL, gSpriteImageTable_81E7A50, gSpriteAffineAnimTable_81E7B70, sub_80105A0},
+    {0xFFFF, 0, &gOamData_81F96F0, NULL, gSpriteImageTable_81E7A50, gSpriteAffineAnimTable_81E7B70, SpriteCB_BattleSpriteStartSlideLeft},
     {0xFFFF, 0, &gOamData_81F96E8, NULL, gSpriteImageTable_81E7A70,
         gAffineAnims_BattleSpriteOpponentSide, oac_poke_opponent},
 };

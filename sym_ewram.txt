@@ -93,7 +93,7 @@ gBattlerSpriteIds = .; /* 2024BE0 */
 gCurrMovePos = .; /* 2024BE4 */
     . += 0x1;
 
-gUnknown_02024BE5 = .; /* 2024BE5 */
+gChosenMovePos = .; /* 2024BE5 */
     . += 0x1;
 
 gCurrentMove = .; /* 2024BE6 */
@@ -147,7 +147,7 @@ gMultiHitCounter = .; /* 2024C0E */
 gBattlescriptCurrInstr = .; /* 2024C10 */
     . += 0x8;
 
-gActionForBanks = .; /* 2024C18 */
+gChosenActionByBattler = .; /* 2024C18 */
     . += 0x4;
 
 gSelectionBattleScripts = .; /* 2024C1C */
@@ -174,7 +174,7 @@ gLockedMoves = .; /* 2024C54 */
 gLastHitBy = .; /* 2024C5C */
     . += 0x4;
 
-gChosenMovesByBanks = .; /* 2024C60 */
+gChosenMoveByBattler = .; /* 2024C60 */
     . += 0x8;
 
 gMoveResultFlags = .; /* 2024C68 */

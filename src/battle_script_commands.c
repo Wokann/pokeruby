@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_main.h"
 #include "battle_anim.h"
 #include "battle_message.h"
 #include "battle_string_ids.h"
@@ -57,7 +58,6 @@ extern u8 gAbsentBattlerFlags;
 extern u8 gMultiHitCounter;
 extern u16 gLastMoves[4];
 extern u16 gLockedMoves[4];
-extern u16 gChosenMovesByBanks[4];
 extern u16 gSideStatuses[2];
 extern u16 gPauseCounterBattle;
 extern u16 gPaydayMoney;
@@ -108,7 +108,6 @@ extern u16 gRandomMove;
 extern u8* gBattleScriptsForMoveEffects[];
 extern u16 gChosenMove; //last used move in battle
 extern u8 gBattlerInMenuId;
-extern u8 gActionForBanks[4];
 extern u16 gLastPrintedMoves[4]; //last used moves 2, used by sketch
 extern u16 gLastResultingMoves[4]; //last used moves by banks, another one
 extern u8 gCurrentTurnActionNumber;
@@ -263,9 +262,6 @@ extern u8 BattleScript_GrudgeTakesPp[];
 #define MOVE_TARGET_BOTH             0x8
 #define MOVE_TARGET_FOES_AND_ALLY    0x20
 #define MOVE_TARGET_OPPONENTS_FIELD  0x40
-
-#define TYPE_FORESIGHT  0xFE
-#define TYPE_ENDTABLE   0xFF
 
 #define CMP_EQUAL               0x0
 #define CMP_NOT_EQUAL           0x1
@@ -8394,8 +8390,8 @@ static void atkBA_jumpifnopursuitswitchdmg(void)
             gBattlerTarget = GetBattlerAtPosition(2);
     }
 
-    if (gActionForBanks[gBattlerTarget] == 0 && gBattlerAttacker == gSharedMem[BSTRUCT_OFF(moveTarget) + gBattlerTarget] && !(gBattleMons[gBattlerTarget].status1 & (STATUS1_SLEEP | STATUS1_FREEZE))
-        && gBattleMons[gBattlerAttacker].hp && !gDisableStructs[gBattlerTarget].truantCounter && gChosenMovesByBanks[gBattlerTarget] == MOVE_PURSUIT)
+    if (gChosenActionByBattler[gBattlerTarget] == 0 && gBattlerAttacker == gSharedMem[BSTRUCT_OFF(moveTarget) + gBattlerTarget] && !(gBattleMons[gBattlerTarget].status1 & (STATUS1_SLEEP | STATUS1_FREEZE))
+        && gBattleMons[gBattlerAttacker].hp && !gDisableStructs[gBattlerTarget].truantCounter && gChosenMoveByBattler[gBattlerTarget] == MOVE_PURSUIT)
     {
         int i;
         for (i = 0; i < gBattlersCount; i++)
@@ -9331,7 +9327,7 @@ static void atkEB_settypetoenvironment(void)
 static void atkEC_pursuitrelated(void)
 {
     gActiveBattler = GetBattlerAtPosition(GetBattlerPosition(gBattlerAttacker) ^ 2);
-    if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && !(gAbsentBattlerFlags & gBitTable[gActiveBattler]) && gActionForBanks[gActiveBattler] == 0 && gChosenMovesByBanks[gActiveBattler] == MOVE_PURSUIT)
+    if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && !(gAbsentBattlerFlags & gBitTable[gActiveBattler]) && gChosenActionByBattler[gActiveBattler] == 0 && gChosenMoveByBattler[gActiveBattler] == MOVE_PURSUIT)
     {
         gActionsByTurnOrder[gActiveBattler] = 11;
         gCurrentMove = MOVE_PURSUIT;

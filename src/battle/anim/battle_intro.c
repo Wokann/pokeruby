@@ -1,6 +1,7 @@
 #include "global.h"
 #include "constants/battle.h"
 #include "battle.h"
+#include "battle_main.h"
 #include "battle_anim.h"
 #include "battle_anim_80CA710.h"
 #include "data2.h"
@@ -14,8 +15,6 @@
 extern u16 gBattleTypeFlags;
 extern u16 gIntroSlideFlags;
 extern u8 gBattleMonForms[];
-
-extern void sub_800FE20(struct Sprite *);
 
 static void BattleIntroTask_ScrollScenery(u8);
 static void BattleIntroTask_FadeScenery(u8);
@@ -403,9 +402,9 @@ static void BattleIntroTask_80E4C34(u8 taskId)
         {
             gTasks[taskId].tState++;
             gSprites[gBattleStruct->linkBattleVsSpriteId_V].oam.objMode = 2;
-            gSprites[gBattleStruct->linkBattleVsSpriteId_V].callback = sub_800FE20;
+            gSprites[gBattleStruct->linkBattleVsSpriteId_V].callback = SpriteCB_VsLetterInit;
             gSprites[gBattleStruct->linkBattleVsSpriteId_S].oam.objMode = 2;
-            gSprites[gBattleStruct->linkBattleVsSpriteId_S].callback = sub_800FE20;
+            gSprites[gBattleStruct->linkBattleVsSpriteId_S].callback = SpriteCB_VsLetterInit;
             REG_WININ = 0x3F;
             REG_WINOUT = 0x3F06;
         }
