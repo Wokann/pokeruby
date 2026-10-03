@@ -42,7 +42,7 @@ bool8 ScriptMovement_IsObjectMovementFinished(u8 localId, u8 mapNum, u8 mapBank)
     return sub_80A2370(r4, r1);
 }
 
-void sub_80A2178(void)
+void ScriptMovement_UnfreezeObjectEvents(void)
 {
     u8 taskId;
 
