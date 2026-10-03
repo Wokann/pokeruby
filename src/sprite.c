@@ -8,8 +8,6 @@
 
 #define MAX_SPRITE_COPY_REQUESTS 64
 
-#define OAM_MATRIX_COUNT 32
-
 #define SET_SPRITE_TILE_RANGE(index, start, count) \
 {                                                  \
     sSpriteTileRanges[index * 2] = start;          \
@@ -293,7 +291,7 @@ u32 gOamMatrixAllocBitmap;
 u8 gReservedSpritePaletteCount;
 
 EWRAM_DATA struct Sprite gSprites[MAX_SPRITES + 1] = {0};
-EWRAM_DATA u16 sSpritePriorities[MAX_SPRITES] = {0};
+EWRAM_DATA static u16 sSpritePriorities[MAX_SPRITES] = {0};
 u8 sSpriteOrder[MAX_SPRITES];
 bool8 sShouldProcessSpriteCopyRequests;
 u8 gSpriteCopyRequestCount;
@@ -643,11 +641,11 @@ void DestroySprite(struct Sprite *sprite)
     }
 }
 
-void ResetOamRange(u8 a, u8 b)
+void ResetOamRange(u8 start, u8 end)
 {
     u8 i;
 
-    for (i = a; i < b; i++)
+    for (i = start; i < end; i++)
     {
         struct OamData *oamBuffer = gMain.oamBuffer;
         oamBuffer[i] = *(struct OamData *)&gDummyOamData;
