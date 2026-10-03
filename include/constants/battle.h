@@ -375,12 +375,4 @@
 #define B_ANIM_INGRAIN_HEAL             0x15
 #define B_ANIM_WISH_HEAL                0x16
 
-// AI switch items
-#define AI_ITEM_FULL_RESTORE     1
-#define AI_ITEM_HEAL_HP          2
-#define AI_ITEM_CURE_CONDITION   3
-#define AI_ITEM_X_STAT           4
-#define AI_ITEM_GUARD_SPECS      5
-#define AI_ITEM_NOT_RECOGNIZABLE 6
-
 #endif // GUARD_CONSTANTS_BATTLE_CONSTANTS_H

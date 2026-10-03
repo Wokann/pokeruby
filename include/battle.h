@@ -178,7 +178,7 @@ struct BattleHistory
     /*0x20*/ u8 abilities[MAX_BATTLERS_COUNT / 2];
     /*0x22*/ u8 itemEffects[MAX_BATTLERS_COUNT / 2];
     /*0x24*/ u16 trainerItems[MAX_BATTLERS_COUNT];
-    /*0x2C*/ u8 numItems;
+    /*0x2C*/ u8 itemsNo;
 };
 
 struct BattleScriptsStack
@@ -373,8 +373,8 @@ struct BattleStruct /* 0x2000000 */
     // Space is reserved for two u16s, one for each opponent in
     // doubles. However, only the lower byte of each is ever used.
     /*0x160D4*/ u16 chosenItem[2];
-    /*0x160D8*/ u8 AI_usedItemType[2];
-    /*0x160DA*/ u8 AI_usedItemEffect[2];
+    /*0x160D8*/ u8 AI_itemType[2];
+    /*0x160DA*/ u8 AI_itemFlags[2];
     /*0x160DC*/ u8 statAnimPlayed;
     /*0x160DD*/ u8 intimidateBattler;
     /*0x160DE*/ u8 unk160DE;

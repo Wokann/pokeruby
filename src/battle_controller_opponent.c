@@ -80,7 +80,6 @@ extern void sub_8010384(struct Sprite *);
 extern u8 IsMoveWithoutAnimation();
 extern void BufferStringBattle();
 extern void sub_80331D0(void);
-extern void AI_TrySwitchOrUseItem(void);
 extern u8 GetBattlerAtPosition(u8);
 static void CompleteOnHealthbarDone(void);
 static void CompleteOnFinishedStatusAnimation(void);

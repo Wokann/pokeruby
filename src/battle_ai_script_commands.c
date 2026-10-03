@@ -279,8 +279,8 @@ void BattleAI_HandleItemUseBeforeAISetup(void)
         {
             if (gTrainers[gTrainerBattleOpponent].items[i] != 0)
             {
-                AI_BATTLE_HISTORY->trainerItems[AI_BATTLE_HISTORY->numItems] = gTrainers[gTrainerBattleOpponent].items[i];
-                AI_BATTLE_HISTORY->numItems++;
+                AI_BATTLE_HISTORY->trainerItems[AI_BATTLE_HISTORY->itemsNo] = gTrainers[gTrainerBattleOpponent].items[i];
+                AI_BATTLE_HISTORY->itemsNo++;
             }
         }
     }

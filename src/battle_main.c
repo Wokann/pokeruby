@@ -11,6 +11,7 @@
 #include "battle_gfx_sfx_util.h"
 #include "battle_main.h"
 #include "battle_ai_script_commands.h"
+#include "battle_ai_switch_items.h"
 #include "battle_controllers.h"
 #include "battle_interface.h"
 #include "battle_message.h"
@@ -5404,30 +5405,30 @@ void HandleAction_UseItem(void)
     else
     {
 
-        switch (gSharedMem[BSTRUCT_OFF(AI_usedItemType) + ((gBattleStruct->battler = gBattlerAttacker) / 2)])
+        switch (gSharedMem[BSTRUCT_OFF(AI_itemType) + ((gBattleStruct->battler = gBattlerAttacker) / 2)])
         {
         case AI_ITEM_FULL_RESTORE:
         case AI_ITEM_HEAL_HP:
             break;
         case AI_ITEM_CURE_CONDITION:
             gBattleCommunication[MULTISTRING_CHOOSER] = 0;
-            if (gSharedMem[BSTRUCT_OFF(AI_usedItemEffect) + (gBattlerAttacker >> 1)] & 1)
+            if (gSharedMem[BSTRUCT_OFF(AI_itemFlags) + (gBattlerAttacker >> 1)] & 1)
             {
-                if (gSharedMem[BSTRUCT_OFF(AI_usedItemEffect) + (gBattlerAttacker >> 1)] & 0x3E)
+                if (gSharedMem[BSTRUCT_OFF(AI_itemFlags) + (gBattlerAttacker >> 1)] & 0x3E)
                     gBattleCommunication[MULTISTRING_CHOOSER] = 5;
             }
             else
             {
-                while (!(gSharedMem[BSTRUCT_OFF(AI_usedItemEffect) + (gBattlerAttacker >> 1)] & 1))
+                while (!(gSharedMem[BSTRUCT_OFF(AI_itemFlags) + (gBattlerAttacker >> 1)] & 1))
                 {
-                    gSharedMem[BSTRUCT_OFF(AI_usedItemEffect) + (gBattlerAttacker >> 1)] >>= 1;
+                    gSharedMem[BSTRUCT_OFF(AI_itemFlags) + (gBattlerAttacker >> 1)] >>= 1;
                     gBattleCommunication[MULTISTRING_CHOOSER]++;
                 }
             }
             break;
         case AI_ITEM_X_STAT:
             gBattleCommunication[MULTISTRING_CHOOSER] = 4;
-            if (gSharedMem[BSTRUCT_OFF(AI_usedItemEffect) + (gBattlerAttacker >> 1)] & 0x80)
+            if (gSharedMem[BSTRUCT_OFF(AI_itemFlags) + (gBattlerAttacker >> 1)] & 0x80)
             {
                 gBattleCommunication[MULTISTRING_CHOOSER] = 5;
             }
@@ -5436,9 +5437,9 @@ void HandleAction_UseItem(void)
                 PREPARE_STAT_BUFFER(gBattleTextBuff1, STAT_ATK)
                 PREPARE_STRING_BUFFER(gBattleTextBuff2, STRINGID_STATROSE)
 
-                while (!(gSharedMem[BSTRUCT_OFF(AI_usedItemEffect) + (gBattlerAttacker >> 1)] & 1))
+                while (!(gSharedMem[BSTRUCT_OFF(AI_itemFlags) + (gBattlerAttacker >> 1)] & 1))
                 {
-                    gSharedMem[BSTRUCT_OFF(AI_usedItemEffect) + (gBattlerAttacker >> 1)] >>= 1;
+                    gSharedMem[BSTRUCT_OFF(AI_itemFlags) + (gBattlerAttacker >> 1)] >>= 1;
                     gBattleTextBuff1[2]++;
                 }
 
@@ -5446,7 +5447,7 @@ void HandleAction_UseItem(void)
                 gBattleStruct->animArg2 = 0;
             }
             break;
-        case AI_ITEM_GUARD_SPECS:
+        case AI_ITEM_GUARD_SPEC:
             if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
                 gBattleCommunication[MULTISTRING_CHOOSER] = 2;
             else
@@ -5454,7 +5455,7 @@ void HandleAction_UseItem(void)
             break;
         }
 
-        gBattlescriptCurrInstr = gBattlescriptsForUsingItem[gSharedMem[BSTRUCT_OFF(AI_usedItemType) + (gBattlerAttacker / 2)]];
+        gBattlescriptCurrInstr = gBattlescriptsForUsingItem[gSharedMem[BSTRUCT_OFF(AI_itemType) + (gBattlerAttacker / 2)]];
     }
     gCurrentActionFuncId = B_ACTION_EXEC_SCRIPT;
 }

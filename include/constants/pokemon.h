@@ -1,6 +1,8 @@
 #ifndef GUARD_CONSTANTS_POKEMON_H
 #define GUARD_CONSTANTS_POKEMON_H
 
+#define NUM_BATTLE_STATS 8
+
 #define MON_DATA_PERSONALITY        0
 #define MON_DATA_OT_ID              1
 #define MON_DATA_NICKNAME           2
