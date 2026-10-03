@@ -1,5 +1,6 @@
 #include "constants/global.h"
 #include "constants/battle.h"
+#include "constants/battle_tower.h"
 #include "constants/cable_club.h"
 #include "constants/comparison_operators.h"
 #include "constants/contest.h"

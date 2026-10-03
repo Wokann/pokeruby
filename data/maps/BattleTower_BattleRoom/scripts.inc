@@ -27,10 +27,10 @@ BattleTower_BattleRoom_EventScript_ChallengeTrainer:: @ 81608FA
 	switch VAR_RESULT
 	case B_OUTCOME_WON, BattleTower_BattleRoom_EventScript_WonBattle
 	special LoadPlayerParty
-	setvar VAR_0x8004, 0
-	setvar VAR_0x8005, 5
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_CHALLENGE_STATUS
+	setvar VAR_0x8005, BATTLE_TOWER_CHALLENGE_STATUS_LOST
 	special SetBattleTowerProperty
-	setvar VAR_0x8004, 14
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_SAVE_LAST_STREAK_LEVEL
 	special SetBattleTowerProperty
 	setvar VAR_0x8004, 3
 	special Script_TryGainNewFanFromCounter
@@ -38,7 +38,7 @@ BattleTower_BattleRoom_EventScript_ChallengeTrainer:: @ 81608FA
 	waitstate
 
 BattleTower_BattleRoom_EventScript_WonBattle:: @ 8160961
-	setvar VAR_0x8004, 6
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_COMPLETE_BATTLE
 	special SetBattleTowerProperty
 	switch VAR_RESULT
 	case 8, BattleTower_BattleRoom_EventScript_CompleteSet
@@ -88,15 +88,15 @@ BattleTower_BattleRoom_EventScript_ContinueChallenge:: @ 8160A3C
 
 BattleTower_BattleRoom_EventScript_CompleteSet:: @ 8160A56
 	special LoadPlayerParty
-	setvar VAR_0x8004, 0
-	setvar VAR_0x8005, 4
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_CHALLENGE_STATUS
+	setvar VAR_0x8005, BATTLE_TOWER_CHALLENGE_STATUS_AWAITING_PRIZE
 	special SetBattleTowerProperty
-	setvar VAR_0x8004, 2
-	setvar VAR_0x8005, 1
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_CURRENT_BATTLE
+	setvar VAR_0x8005, BATTLE_TOWER_FIRST_CHALLENGE_NUM
 	special SetBattleTowerProperty
-	setvar VAR_0x8004, 7
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_ADVANCE_STREAK
 	special SetBattleTowerProperty
-	setvar VAR_0x8004, 14
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_SAVE_LAST_STREAK_LEVEL
 	special SetBattleTowerProperty
 	setvar VAR_0x8004, 3
 	special Script_TryGainNewFanFromCounter
@@ -104,7 +104,7 @@ BattleTower_BattleRoom_EventScript_CompleteSet:: @ 8160A56
 	waitstate
 
 BattleTower_BattleRoom_EventScript_SaveAndQuit:: @ 8160A94
-	setvar VAR_0x8004, 2
+	setvar VAR_0x8004, BATTLE_TOWER_CHALLENGE_STATUS_PAUSED
 	special SaveBattleTowerProgress
 	message gText_SavingDontTurnOff
 	delay 60

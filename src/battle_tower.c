@@ -5,6 +5,7 @@
 #include "battle_setup.h"
 #include "battle_transition.h"
 #include "constants/battle_setup.h"
+#include "constants/battle_tower.h"
 #include "constants/easy_chat.h"
 #include "constants/event_objects.h"
 #include "constants/items.h"
@@ -233,7 +234,7 @@ const u16 gBattleTowerBannedSpecies[] =
     SPECIES_RAYQUAZA,
     SPECIES_JIRACHI,
     SPECIES_DEOXYS,
-    0xFFFF,
+    BATTLE_TOWER_BANNED_SPECIES_END,
 };
 
 // Item prizes for battle tower streaks of 5 or fewer sets.
@@ -264,6 +265,10 @@ static const u16 sLongStreakPrizes[] =
 static void ResetBattleTowerStreak(u8 levelType);
 static void ValidateBattleTowerRecordChecksums(void);
 static void CopyEReaderTrainerFarewellMessage(void);
+static bool8 ChooseSpecialBattleTowerTrainer(void);
+static void HandleSpecialTrainerBattleEnd(void);
+static void Task_StartBattleAfterTransition(u8 taskId);
+static void SaveBattleTowerRecord(void);
 extern void SetBattleTowerTrainerGfxId(u8);
 static void SaveCurrentWinStreak(void);
 static void SetTowerInterviewData(void);
@@ -286,41 +291,43 @@ void SetBattleTowerLobbyState(void)
     u8 numPendingChallenges = 0;
     s32 levelType;
 
-    for (levelType = 0; levelType < 2; levelType++)
+    for (levelType = BATTLE_TOWER_LEVEL_50; levelType < BATTLE_TOWER_LEVEL_COUNT; levelType++)
     {
         switch (gSaveBlock2.battleTower.challengeStatus[levelType])
         {
-        case 0:
+        case BATTLE_TOWER_CHALLENGE_STATUS_INACTIVE:
         default:
             ResetBattleTowerStreak(levelType);
             if (!numPendingChallenges)
                 VarSet(VAR_TEMP_0, 5);
             break;
-        case 1:
+        case BATTLE_TOWER_CHALLENGE_STATUS_IN_PROGRESS:
             ResetBattleTowerStreak(levelType);
             VarSet(VAR_TEMP_0, 1);
             numPendingChallenges++;
             break;
-        case 4:
+        case BATTLE_TOWER_CHALLENGE_STATUS_AWAITING_PRIZE:
             VarSet(VAR_TEMP_0, 2);
             numPendingChallenges++;
             break;
-        case 5:
+        case BATTLE_TOWER_CHALLENGE_STATUS_LOST:
             VarSet(VAR_TEMP_0, 3);
             numPendingChallenges++;
             break;
-        case 2:
+        case BATTLE_TOWER_CHALLENGE_STATUS_PAUSED:
             VarSet(VAR_TEMP_0, 4);
             numPendingChallenges++;
             break;
-        case 3:
-        case 6:
+        case BATTLE_TOWER_CHALLENGE_STATUS_PRIZE_COLLECTED:
+        case BATTLE_TOWER_CHALLENGE_STATUS_PRIZE_BAG_FULL:
             break;
         }
     }
 
-    if ((gSaveBlock2.battleTower.challengeStatus[0] == 3 || gSaveBlock2.battleTower.challengeStatus[0] == 6)
-     && (gSaveBlock2.battleTower.challengeStatus[1] == 3 || gSaveBlock2.battleTower.challengeStatus[1] == 6))
+    if ((gSaveBlock2.battleTower.challengeStatus[BATTLE_TOWER_LEVEL_50] == BATTLE_TOWER_CHALLENGE_STATUS_PRIZE_COLLECTED
+      || gSaveBlock2.battleTower.challengeStatus[BATTLE_TOWER_LEVEL_50] == BATTLE_TOWER_CHALLENGE_STATUS_PRIZE_BAG_FULL)
+     && (gSaveBlock2.battleTower.challengeStatus[BATTLE_TOWER_LEVEL_100] == BATTLE_TOWER_CHALLENGE_STATUS_PRIZE_COLLECTED
+      || gSaveBlock2.battleTower.challengeStatus[BATTLE_TOWER_LEVEL_100] == BATTLE_TOWER_CHALLENGE_STATUS_PRIZE_BAG_FULL))
         VarSet(VAR_TEMP_0, 5);
 
     ValidateBattleTowerRecordChecksums();
@@ -328,9 +335,9 @@ void SetBattleTowerLobbyState(void)
 
 void ResetBattleTowerStreak(u8 levelType)
 {
-    gSaveBlock2.battleTower.challengeStatus[levelType] = 0;
-    gSaveBlock2.battleTower.curChallengeBattleNum[levelType] = 1;
-    gSaveBlock2.battleTower.curStreakChallengesNum[levelType] = 1;
+    gSaveBlock2.battleTower.challengeStatus[levelType] = BATTLE_TOWER_CHALLENGE_STATUS_INACTIVE;
+    gSaveBlock2.battleTower.curChallengeBattleNum[levelType] = BATTLE_TOWER_FIRST_CHALLENGE_NUM;
+    gSaveBlock2.battleTower.curStreakChallengesNum[levelType] = BATTLE_TOWER_FIRST_CHALLENGE_NUM;
 }
 
 // Checks if the next trainer in Battle Tower should be the E-Reader trainer.
@@ -350,7 +357,7 @@ bool8 ShouldBattleEReaderTrainer(u8 levelType, u16 winStreak)
     if (gSpecialVar_Result != 0 || gSaveBlock2.battleTower.ereaderTrainer.winStreak != winStreak)
         return FALSE;
 
-    if (levelType != 0)
+    if (levelType != BATTLE_TOWER_LEVEL_50)
         trainerTeamLevel = 100;
     else
         trainerTeamLevel = 50;
@@ -377,7 +384,7 @@ bool8 ShouldBattleEReaderTrainer(u8 levelType, u16 winStreak)
 
 // Tries to choose an E-Reader or record-mixing trainer for the next Battle
 // Tower trainer opponent.
-bool8 ChooseSpecialBattleTowerTrainer(void)
+static bool8 ChooseSpecialBattleTowerTrainer(void)
 {
     s32 recordIndex, i;
     u8 battleTowerLevelType;
@@ -772,7 +779,7 @@ void FillBattleTowerTrainerParty(void)
 
     // Use the appropriate list of pokemon and level depending on the
     // current challenge type. (level 50 or level 100 challenge)
-    if (gSaveBlock2.battleTower.battleTowerLevelType != 0)
+    if (gSaveBlock2.battleTower.battleTowerLevelType != BATTLE_TOWER_LEVEL_50)
     {
         battleTowerMons = gBattleTowerLevel100Mons;
         level = 100;
@@ -867,7 +874,7 @@ u32 CountBattleTowerBanlistCaught(void)
     s32 i;
     u32 numCaught = 0;
 
-    for (i = 0; gBattleTowerBannedSpecies[i] != 0xFFFF; i++)
+    for (i = 0; gBattleTowerBannedSpecies[i] != BATTLE_TOWER_BANNED_SPECIES_END; i++)
     {
         if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(gBattleTowerBannedSpecies[i]), FLAG_GET_CAUGHT))
             numCaught++;
@@ -929,7 +936,7 @@ void CheckMonBattleTowerBanlist(u16 species, u16 heldItem, u16 hp, u8 battleTowe
 
     while (1)
     {
-        if (gBattleTowerBannedSpecies[counter] == 0xFFFF)
+        if (gBattleTowerBannedSpecies[counter] == BATTLE_TOWER_BANNED_SPECIES_END)
             break;
 
         if (gBattleTowerBannedSpecies[counter] == species)
@@ -938,10 +945,10 @@ void CheckMonBattleTowerBanlist(u16 species, u16 heldItem, u16 hp, u8 battleTowe
         counter++;
     }
 
-    if (gBattleTowerBannedSpecies[counter] != 0xFFFF)
+    if (gBattleTowerBannedSpecies[counter] != BATTLE_TOWER_BANNED_SPECIES_END)
         return;
 
-    if (battleTowerLevelType == 0 && monLevel > 50)
+    if (battleTowerLevelType == BATTLE_TOWER_LEVEL_50 && monLevel > 50)
         return;
 
     for (i = 0; i < *numValid && validPartySpecies[i] != species ; i++);
@@ -986,13 +993,13 @@ void CheckPartyBattleTowerBanlist(void)
 
     if (counter < 3)
     {
-        gStringVar1[0] = 0xFF;
-        gSpecialVar_0x8004 = 1;
+        gStringVar1[0] = EOS;
+        gSpecialVar_0x8004 = TRUE;
         counter = 0;
 
         numBanlistCaught = CountBattleTowerBanlistCaught();
 
-        for (i = 0; gBattleTowerBannedSpecies[i] != 0xFFFF; i++)
+        for (i = 0; gBattleTowerBannedSpecies[i] != BATTLE_TOWER_BANNED_SPECIES_END; i++)
             counter = AppendBattleTowerBannedSpeciesName(gBattleTowerBannedSpecies[i], counter, numBanlistCaught);
 
         if (counter == 0)
@@ -1011,7 +1018,7 @@ void CheckPartyBattleTowerBanlist(void)
     }
     else
     {
-        gSpecialVar_0x8004 = 0;
+        gSpecialVar_0x8004 = FALSE;
         gSaveBlock2.battleTower.battleTowerLevelType = gSpecialVar_Result;
     }
 }
@@ -1031,23 +1038,23 @@ void CopyBattleTowerTrainerGreeting(void)
         CopyBattleTowerTrainerSpeech(gSaveBlock2.battleTower.records[gSaveBlock2.battleTower.battleTowerTrainerId - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].greeting);
 }
 
-void HandleSpecialTrainerBattleEnd(void)
+static void HandleSpecialTrainerBattleEnd(void)
 {
     s32 i;
     u16 itemBefore;
 
     switch (gSpecialVar_0x8004)
     {
-    case 0:
+    case SPECIAL_BATTLE_TOWER:
         break;
-    case 1:
+    case SPECIAL_BATTLE_SECRET_BASE:
         for (i = 0; i < PARTY_SIZE; i++)
         {
             itemBefore = GetMonData(&gSaveBlock1.playerParty[i], MON_DATA_HELD_ITEM);
             SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &itemBefore);
         }
         break;
-    case 2:
+    case SPECIAL_BATTLE_EREADER:
         CopyEReaderTrainerFarewellMessage();
         break;
     }
@@ -1055,7 +1062,7 @@ void HandleSpecialTrainerBattleEnd(void)
     SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
-void Task_StartBattleAfterTransition(u8 taskId)
+static void Task_StartBattleAfterTransition(u8 taskId)
 {
     if (IsBattleTransitionDone() == TRUE)
     {
@@ -1120,62 +1127,62 @@ void SetBattleTowerProperty(void)
 
     switch (gSpecialVar_0x8004)
     {
-    case 0:
+    case BATTLE_TOWER_FUNC_CHALLENGE_STATUS:
         gBattleStruct->battleTowerPreviousChallengeStatus = gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType];
         gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = gSpecialVar_0x8005;
         break;
-    case 1:
+    case BATTLE_TOWER_FUNC_LEVEL_TYPE:
         gSaveBlock2.battleTower.battleTowerLevelType = gSpecialVar_0x8005;
         break;
-    case 2:
+    case BATTLE_TOWER_FUNC_CURRENT_BATTLE:
         gSaveBlock2.battleTower.curChallengeBattleNum[battleTowerLevelType] = gSpecialVar_0x8005;
         break;
-    case 3:
+    case BATTLE_TOWER_FUNC_STREAK_CHALLENGE_COUNT:
         gSaveBlock2.battleTower.curStreakChallengesNum[battleTowerLevelType] = gSpecialVar_0x8005;
         break;
-    case 4:
+    case BATTLE_TOWER_FUNC_TRAINER_ID:
         gSaveBlock2.battleTower.battleTowerTrainerId = gSpecialVar_0x8005;
         break;
-    case 5:
+    case BATTLE_TOWER_FUNC_SAVE_SELECTED_PARTY:
         for (i = 0; i < 3; i++)
             gSaveBlock2.battleTower.selectedPartyMons[i] = gSelectedOrderFromParty[i];
         break;
-    case 6:
+    case BATTLE_TOWER_FUNC_COMPLETE_BATTLE:
         if (gSaveBlock2.battleTower.battleTowerTrainerId == BATTLE_TOWER_EREADER_TRAINER_ID)
             ClearEReaderTrainer(&gSaveBlock2.battleTower.ereaderTrainer);
-        if (gSaveBlock2.battleTower.totalBattleTowerWins < 9999)
+        if (gSaveBlock2.battleTower.totalBattleTowerWins < BATTLE_TOWER_MAX_STREAK)
             gSaveBlock2.battleTower.totalBattleTowerWins++;
         gSaveBlock2.battleTower.curChallengeBattleNum[battleTowerLevelType]++;
         SaveCurrentWinStreak();
         gSpecialVar_Result = gSaveBlock2.battleTower.curChallengeBattleNum[battleTowerLevelType];
-        gStringVar1[0] = gSaveBlock2.battleTower.curChallengeBattleNum[battleTowerLevelType] + 0xA1;
-        gStringVar1[1] = 0xFF;
+        gStringVar1[0] = gSaveBlock2.battleTower.curChallengeBattleNum[battleTowerLevelType] + CHAR_0;
+        gStringVar1[1] = EOS;
         break;
-    case 7:
-        if (gSaveBlock2.battleTower.curStreakChallengesNum[battleTowerLevelType] < 1430)
+    case BATTLE_TOWER_FUNC_ADVANCE_STREAK:
+        if (gSaveBlock2.battleTower.curStreakChallengesNum[battleTowerLevelType] < BATTLE_TOWER_MAX_STREAK_CHALLENGES)
             gSaveBlock2.battleTower.curStreakChallengesNum[battleTowerLevelType]++;
         SaveCurrentWinStreak();
         gSpecialVar_Result = gSaveBlock2.battleTower.curStreakChallengesNum[battleTowerLevelType];
         break;
-    case 8:
+    case BATTLE_TOWER_FUNC_CHALLENGE_PAUSED:
         gSaveBlock2.battleTower.challengePaused = gSpecialVar_0x8005;
         break;
-    case 9:
+    case BATTLE_TOWER_FUNC_CURRENT_WIN_STREAK:
         break;
-    case 10:
+    case BATTLE_TOWER_FUNC_UPDATE_STREAK_GAME_STAT:
         SetGameStat(GAME_STAT_BATTLE_TOWER_SINGLES_STREAK, gSaveBlock2.battleTower.bestBattleTowerWinStreak);
         break;
-    case 11:
-        if (gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] != 3)
+    case BATTLE_TOWER_FUNC_RESET_STREAK:
+        if (gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] != BATTLE_TOWER_CHALLENGE_STATUS_PRIZE_COLLECTED)
             ResetBattleTowerStreak(battleTowerLevelType);
         break;
-    case 12:
+    case BATTLE_TOWER_FUNC_RESTORE_CHALLENGE_STATUS:
         gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = gBattleStruct->battleTowerPreviousChallengeStatus;
         break;
-    case 13:
+    case BATTLE_TOWER_FUNC_SAVE_CURRENT_WIN_STREAK:
         gSaveBlock2.battleTower.currentWinStreaks[battleTowerLevelType] = GetCurrentBattleTowerWinStreak(battleTowerLevelType);
         break;
-    case 14:
+    case BATTLE_TOWER_FUNC_SAVE_LAST_STREAK_LEVEL:
         gSaveBlock2.battleTower.lastStreakLevelType = gSaveBlock2.battleTower.battleTowerLevelType;
         break;
     }
@@ -1187,44 +1194,44 @@ void CallBattleTowerFunc(void)
 
     switch (gSpecialVar_0x8004)
     {
-    case 0:
+    case BATTLE_TOWER_FUNC_CHALLENGE_STATUS:
         gSpecialVar_Result = gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType];
         break;
-    case 1:
+    case BATTLE_TOWER_FUNC_LEVEL_TYPE:
         gSpecialVar_Result = gSaveBlock2.battleTower.battleTowerLevelType;
         break;
-    case 2:
+    case BATTLE_TOWER_FUNC_CURRENT_BATTLE:
         gSpecialVar_Result = gSaveBlock2.battleTower.curChallengeBattleNum[battleTowerLevelType];
         break;
-    case 3:
+    case BATTLE_TOWER_FUNC_STREAK_CHALLENGE_COUNT:
         gSpecialVar_Result = gSaveBlock2.battleTower.curStreakChallengesNum[battleTowerLevelType];
         break;
-    case 4:
+    case BATTLE_TOWER_FUNC_TRAINER_ID:
         gSpecialVar_Result = gSaveBlock2.battleTower.battleTowerTrainerId;
         break;
-    case 5:
-    case 6:
-    case 7:
+    case BATTLE_TOWER_FUNC_SAVE_SELECTED_PARTY:
+    case BATTLE_TOWER_FUNC_COMPLETE_BATTLE:
+    case BATTLE_TOWER_FUNC_ADVANCE_STREAK:
         break;
-    case 8:
+    case BATTLE_TOWER_FUNC_CHALLENGE_PAUSED:
         gSpecialVar_Result = gSaveBlock2.battleTower.challengePaused;
         break;
-    case 9:
+    case BATTLE_TOWER_FUNC_CURRENT_WIN_STREAK:
         gSpecialVar_Result = GetCurrentBattleTowerWinStreak(battleTowerLevelType);
         break;
-    case 10:
+    case BATTLE_TOWER_FUNC_UPDATE_STREAK_GAME_STAT:
         SetGameStat(GAME_STAT_BATTLE_TOWER_SINGLES_STREAK, gSaveBlock2.battleTower.bestBattleTowerWinStreak);
         break;
-    case 11:
+    case BATTLE_TOWER_FUNC_RESET_STREAK:
         ResetBattleTowerStreak(battleTowerLevelType);
         break;
-    case 12:
+    case BATTLE_TOWER_FUNC_RESTORE_CHALLENGE_STATUS:
         gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = gBattleStruct->battleTowerPreviousChallengeStatus;
         break;
-    case 13:
+    case BATTLE_TOWER_FUNC_SAVE_CURRENT_WIN_STREAK:
         gSaveBlock2.battleTower.currentWinStreaks[battleTowerLevelType] = GetCurrentBattleTowerWinStreak(battleTowerLevelType);
         break;
-    case 14:
+    case BATTLE_TOWER_FUNC_SAVE_LAST_STREAK_LEVEL:
         gSaveBlock2.battleTower.lastStreakLevelType = gSaveBlock2.battleTower.battleTowerLevelType;
         break;
     }
@@ -1253,8 +1260,8 @@ static void SaveCurrentWinStreak(void)
         winStreak = gSaveBlock2.battleTower.recordWinStreaks[0];
         SetGameStat(GAME_STAT_BATTLE_TOWER_SINGLES_STREAK, winStreak);
 
-        if (winStreak > 9999)
-            gSaveBlock2.battleTower.bestBattleTowerWinStreak = 9999;
+        if (winStreak > BATTLE_TOWER_MAX_STREAK)
+            gSaveBlock2.battleTower.bestBattleTowerWinStreak = BATTLE_TOWER_MAX_STREAK;
         else
             gSaveBlock2.battleTower.bestBattleTowerWinStreak = winStreak;
     }
@@ -1263,14 +1270,14 @@ static void SaveCurrentWinStreak(void)
         winStreak = gSaveBlock2.battleTower.recordWinStreaks[1];
         SetGameStat(GAME_STAT_BATTLE_TOWER_SINGLES_STREAK, winStreak);
 
-        if (winStreak > 9999)
-            gSaveBlock2.battleTower.bestBattleTowerWinStreak = 9999;
+        if (winStreak > BATTLE_TOWER_MAX_STREAK)
+            gSaveBlock2.battleTower.bestBattleTowerWinStreak = BATTLE_TOWER_MAX_STREAK;
         else
             gSaveBlock2.battleTower.bestBattleTowerWinStreak = winStreak;
     }
 }
 
-void SaveBattleTowerRecord(void)
+static void SaveBattleTowerRecord(void)
 {
     s32 i;
     u8 trainerClass;
@@ -1310,10 +1317,11 @@ void SaveBattleTowerProgress(void)
 {
     u8 battleTowerLevelType = gSaveBlock2.battleTower.battleTowerLevelType;
 
-    if (gSpecialVar_0x8004 == 3 || gSpecialVar_0x8004 == 0)
+    if (gSpecialVar_0x8004 == BATTLE_TOWER_CHALLENGE_STATUS_PRIZE_COLLECTED
+     || gSpecialVar_0x8004 == BATTLE_TOWER_CHALLENGE_STATUS_INACTIVE)
     {
-        if (gSaveBlock2.battleTower.curStreakChallengesNum[battleTowerLevelType] > 1
-         || gSaveBlock2.battleTower.curChallengeBattleNum[battleTowerLevelType] > 1)
+        if (gSaveBlock2.battleTower.curStreakChallengesNum[battleTowerLevelType] > BATTLE_TOWER_FIRST_CHALLENGE_NUM
+         || gSaveBlock2.battleTower.curChallengeBattleNum[battleTowerLevelType] > BATTLE_TOWER_FIRST_CHALLENGE_NUM)
             SaveBattleTowerRecord();
     }
 
@@ -1321,7 +1329,7 @@ void SaveBattleTowerProgress(void)
 
     gSaveBlock2.battleTower.battleOutcome = gBattleOutcome;
 
-    if (gSpecialVar_0x8004 != 3)
+    if (gSpecialVar_0x8004 != BATTLE_TOWER_CHALLENGE_STATUS_PRIZE_COLLECTED)
         gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = gSpecialVar_0x8004;
 
     VarSet(VAR_TEMP_0, 0);
@@ -1334,7 +1342,7 @@ void BattleTowerSoftReset(void)
     DoSoftReset();
 }
 
-void ValidateBattleTowerRecordChecksums(void)
+static void ValidateBattleTowerRecordChecksums(void)
 {
     u32 i;
     s32 recordIndex;
@@ -1369,7 +1377,7 @@ void CalcRubyBattleTowerChecksum(struct BattleTowerRecord *record)
         record->checksum += ((u32 *)record)[i];
 }
 
-void ClearBattleTowerRecord(struct BattleTowerRecord *record)
+static void ClearBattleTowerRecord(struct BattleTowerRecord *record)
 {
     u32 i;
 
@@ -1377,7 +1385,7 @@ void ClearBattleTowerRecord(struct BattleTowerRecord *record)
         ((u32 *)record)[i] = 0;
 }
 
-void SetTowerInterviewData(void)
+static void SetTowerInterviewData(void)
 {
     s32 i;
 
@@ -1391,11 +1399,11 @@ void SetTowerInterviewData(void)
 
 u16 GetCurrentBattleTowerWinStreak(u8 battleTowerLevelType)
 {
-    u16 winStreak = ((gSaveBlock2.battleTower.curStreakChallengesNum[battleTowerLevelType] - 1) * 7 - 1)
+    u16 winStreak = ((gSaveBlock2.battleTower.curStreakChallengesNum[battleTowerLevelType] - BATTLE_TOWER_FIRST_CHALLENGE_NUM) * 7 - BATTLE_TOWER_FIRST_CHALLENGE_NUM)
                     + gSaveBlock2.battleTower.curChallengeBattleNum[battleTowerLevelType];
 
-    if (winStreak > 9999)
-        return 9999;
+    if (winStreak > BATTLE_TOWER_MAX_STREAK)
+        return BATTLE_TOWER_MAX_STREAK;
     else
         return winStreak;
 }
@@ -1417,12 +1425,12 @@ void GiveBattleTowerPrize(void)
     if (AddBagItem(gSaveBlock2.battleTower.prizeItem, 1) == TRUE)
     {
         CopyItemName(gSaveBlock2.battleTower.prizeItem, gStringVar1);
-        gSpecialVar_Result = 1;
+        gSpecialVar_Result = TRUE;
     }
     else
     {
-        gSpecialVar_Result = 0;
-        gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = 6;
+        gSpecialVar_Result = FALSE;
+        gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = BATTLE_TOWER_CHALLENGE_STATUS_PRIZE_BAG_FULL;
     }
 }
 
@@ -1434,7 +1442,7 @@ void AwardBattleTowerRibbons(void)
     u8 ribbonType;
     u8 battleTowerLevelType = gSaveBlock2.battleTower.battleTowerLevelType;
 
-    if (battleTowerLevelType != 0)
+    if (battleTowerLevelType != BATTLE_TOWER_LEVEL_50)
         ribbonType = MON_DATA_VICTORY_RIBBON;
     else
         ribbonType = MON_DATA_WINNING_RIBBON;
@@ -1449,7 +1457,7 @@ void AwardBattleTowerRibbons(void)
             pokemon = &gPlayerParty[partyIndex];
             if (!GetMonData(pokemon, ribbonType))
             {
-                gSpecialVar_Result = 1;
+                gSpecialVar_Result = TRUE;
                 SetMonData(pokemon, ribbonType, &gSpecialVar_Result);
             }
         }
@@ -1573,7 +1581,7 @@ void CopyEReaderTrainerGreeting(void)
     CopyBattleTowerTrainerSpeech(gSaveBlock2.battleTower.ereaderTrainer.greeting);
 }
 
-void CopyEReaderTrainerFarewellMessage(void)
+static void CopyEReaderTrainerFarewellMessage(void)
 {
     if (gBattleOutcome == B_OUTCOME_DREW)
         gStringVar4[0] = EOS;
@@ -1587,9 +1595,9 @@ void TryHideBattleTowerReporter(void)
 {
     s32 i;
 
-    for (i = 0; i < 2; i++)
+    for (i = BATTLE_TOWER_LEVEL_50; i < BATTLE_TOWER_LEVEL_COUNT; i++)
     {
-        if (gSaveBlock2.battleTower.challengeStatus[i] == 1)
+        if (gSaveBlock2.battleTower.challengeStatus[i] == BATTLE_TOWER_CHALLENGE_STATUS_IN_PROGRESS)
             HideBattleTowerReporter();
     }
 }

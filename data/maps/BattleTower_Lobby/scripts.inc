@@ -11,7 +11,7 @@ BattleTower_Lobby_OnResume:: @ 8160293
 	end
 
 BattleTower_Lobby_EventScript_CheckAwardMan:: @ 816029C
-	setvar VAR_0x8004, 10
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_UPDATE_STREAK_GAME_STAT
 	special SetBattleTowerProperty
 	goto_if_set FLAG_RECEIVED_GOLD_SHIELD, BattleTower_Lobby_EventScript_HideAwardMan
 	goto_if_set FLAG_RECEIVED_SILVER_SHIELD, BattleTower_Lobby_EventScript_CheckGoldShieldAward
@@ -73,9 +73,9 @@ BattleTower_Lobby_EventScript_AwardSevenWins:: @ 8160342
 	faceplayer
 	message BattleTower_Lobby_Text_BeatSevenTrainers
 	waitmessage
-	setvar VAR_0x8004, 0
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_CHALLENGE_STATUS
 	special CallBattleTowerFunc
-	compare VAR_RESULT, 6
+	compare VAR_RESULT, BATTLE_TOWER_CHALLENGE_STATUS_PRIZE_BAG_FULL
 	goto_if_eq BattleTower_Lobby_EventScript_CheckPrize
 	special AwardBattleTowerRibbons
 	compare VAR_RESULT, FALSE
@@ -87,23 +87,23 @@ BattleTower_Lobby_EventScript_AwardSevenWins:: @ 8160342
 	msgbox BattleTower_Lobby_Text_PutRibbonsOnPokemon, MSGBOX_DEFAULT
 
 BattleTower_Lobby_EventScript_CheckPrize:: @ 816037D
-	setvar VAR_0x8004, 8
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_CHALLENGE_PAUSED
 	special CallBattleTowerFunc
 	compare VAR_RESULT, TRUE
 	goto_if_eq BattleTower_Lobby_EventScript_GivePrize
 	message BattleTower_Lobby_Text_SavingRecord
 	waitmessage
-	setvar VAR_0x8004, 13
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_SAVE_CURRENT_WIN_STREAK
 	special SetBattleTowerProperty
 	special DetermineBattleTowerPrize
-	setvar VAR_0x8004, 3
+	setvar VAR_0x8004, BATTLE_TOWER_CHALLENGE_STATUS_PRIZE_COLLECTED
 	special SaveBattleTowerProgress
 	playse SE_SAVE
 	waitse
 
 BattleTower_Lobby_EventScript_GivePrize:: @ 81603AD
-	setvar VAR_0x8004, 0
-	setvar VAR_0x8005, 3
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_CHALLENGE_STATUS
+	setvar VAR_0x8005, BATTLE_TOWER_CHALLENGE_STATUS_PRIZE_COLLECTED
 	special SetBattleTowerProperty
 	message BattleTower_Lobby_Text_EarnedPrize
 	waitmessage
@@ -114,9 +114,9 @@ BattleTower_Lobby_EventScript_GivePrize:: @ 81603AD
 	waitmessage
 	playfanfare MUS_OBTAIN_ITEM
 	waitfanfare
-	setvar VAR_0x8004, 9
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_CURRENT_WIN_STREAK
 	special CallBattleTowerFunc
-	compare VAR_RESULT, 49
+	compare VAR_RESULT, BATTLE_TOWER_WIN_STREAK_BEFORE_50TH_TRAINER
 	goto_if_ne BattleTower_Lobby_EventScript_FinishChallenge
 	msgbox BattleTower_Lobby_Text_AboutToFace50thTrainer, MSGBOX_DEFAULT
 
@@ -142,9 +142,9 @@ BattleTower_Lobby_EventScript_FinishChallengeAfterLoss:: @ 8160419
 	waitmessage
 	message BattleTower_Lobby_Text_SavingRecord
 	waitmessage
-	setvar VAR_0x8004, 13
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_SAVE_CURRENT_WIN_STREAK
 	special SetBattleTowerProperty
-	setvar VAR_0x8004, 0
+	setvar VAR_0x8004, BATTLE_TOWER_CHALLENGE_STATUS_INACTIVE
 	special SaveBattleTowerProgress
 	playse SE_SAVE
 	waitse
@@ -162,12 +162,12 @@ BattleTower_Lobby_EventScript_ResumeChallenge:: @ 816044B
 	waitmessage
 	message BattleTower_Lobby_Text_SavingBeforeEntry
 	waitmessage
-	setvar VAR_0x8004, 1
+	setvar VAR_0x8004, BATTLE_TOWER_CHALLENGE_STATUS_IN_PROGRESS
 	special SaveBattleTowerProgress
 	playse SE_SAVE
 	waitse
-	setvar VAR_0x8004, 8
-	setvar VAR_0x8005, 0
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_CHALLENGE_PAUSED
+	setvar VAR_0x8005, FALSE
 	special SetBattleTowerProperty
 	setvar VAR_TEMP_0, 5
 	special SavePlayerParty
@@ -182,9 +182,9 @@ BattleTower_Lobby_EventScript_ResumeChallenge:: @ 816044B
 BattleTower_Lobby_EventScript_Receptionist:: @ 816049E
 	lock
 	faceplayer
-	setvar VAR_0x8004, 0
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_CHALLENGE_STATUS
 	special CallBattleTowerFunc
-	compare VAR_RESULT, 6
+	compare VAR_RESULT, BATTLE_TOWER_CHALLENGE_STATUS_PRIZE_BAG_FULL
 	goto_if_eq BattleTower_Lobby_EventScript_AwardSevenWins
 	special SavePlayerParty
 	msgbox BattleTower_Lobby_Text_WelcomeRegisterHere, MSGBOX_DEFAULT
@@ -209,7 +209,7 @@ BattleTower_Lobby_EventScript_ChooseLevel:: @ 81604FA
 	special CheckPartyBattleTowerBanlist
 	compare VAR_0x8004, TRUE
 	goto_if_eq BattleTower_Lobby_EventScript_ShowEligibilityError
-	setvar VAR_0x8004, 1
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_LEVEL_TYPE
 	copyvar VAR_0x8005, VAR_RESULT
 	copyvar VAR_0x8006, VAR_RESULT
 	special SetBattleTowerProperty
@@ -225,16 +225,16 @@ BattleTower_Lobby_EventScript_ChooseLevel:: @ 81604FA
 	case MULTI_B_PRESSED, BattleTower_Lobby_EventScript_RestoreParty
 
 BattleTower_Lobby_EventScript_ConfirmChallengeAndSave:: @ 8160587
-	setvar VAR_0x8004, 5
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_SAVE_SELECTED_PARTY
 	special SetBattleTowerProperty
 	setvar VAR_TEMP_0, 0
-	setvar VAR_0x8004, 11
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_RESET_STREAK
 	special SetBattleTowerProperty
-	setvar VAR_0x8004, 0
-	setvar VAR_0x8005, 1
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_CHALLENGE_STATUS
+	setvar VAR_0x8005, BATTLE_TOWER_CHALLENGE_STATUS_IN_PROGRESS
 	special SetBattleTowerProperty
-	setvar VAR_0x8004, 8
-	setvar VAR_0x8005, 0
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_CHALLENGE_PAUSED
+	setvar VAR_0x8005, FALSE
 	special SetBattleTowerProperty
 	special LoadPlayerParty
 	closemessage
@@ -261,8 +261,8 @@ BattleTower_Lobby_EventScript_ExplainBattleTower:: @ 8160600
 
 BattleTower_Lobby_EventScript_ShowEligibilityError:: @ 816060D
 	switch VAR_RESULT
-	case 0, BattleTower_Lobby_EventScript_NotEnoughLevel50Mons
-	case 1, BattleTower_Lobby_EventScript_NotEnoughLevel100Mons
+	case BATTLE_TOWER_LEVEL_50, BattleTower_Lobby_EventScript_NotEnoughLevel50Mons
+	case BATTLE_TOWER_LEVEL_100, BattleTower_Lobby_EventScript_NotEnoughLevel100Mons
 
 BattleTower_Lobby_EventScript_NotEnoughLevel50Mons:: @ 8160628
 	msgbox BattleTower_Lobby_Text_NeedThreeEligibleLevel50Mons, MSGBOX_DEFAULT
@@ -273,7 +273,7 @@ BattleTower_Lobby_EventScript_NotEnoughLevel100Mons:: @ 8160635
 	goto BattleTower_Lobby_EventScript_ReleaseReceptionist
 
 BattleTower_Lobby_EventScript_SaveFailed:: @ 8160642
-	setvar VAR_0x8004, 12
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_RESTORE_CHALLENGE_STATUS
 	special SetBattleTowerProperty
 	goto BattleTower_Lobby_EventScript_CancelRegistration
 
@@ -282,7 +282,7 @@ BattleTower_Lobby_EventScript_RestoreParty:: @ 816064F
 
 BattleTower_Lobby_EventScript_CancelRegistration:: @ 8160652
 	msgbox BattleTower_Lobby_Text_LookingForwardToNextChallenge, MSGBOX_DEFAULT
-	setvar VAR_0x8004, 11
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_RESET_STREAK
 	special SetBattleTowerProperty
 
 BattleTower_Lobby_EventScript_ReleaseReceptionist:: @ 8160662
