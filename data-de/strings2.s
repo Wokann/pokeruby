@@ -151,55 +151,55 @@ gOtherText_NotEvenANibble:: @ 842C5E2
 gOtherText_ItGotAway:: @ 842C5F9
 	.string "Es ist entkommen...{PAUSE_UNTIL_PRESS}$$"
 
-gTradeText_WillBeSent:: @ 842C60B
+gText_XWillBeSentToY:: @ 842C60B
 	.string "{STR_VAR_2} wird {STR_VAR_1} zugesandt.$"
 
-gTradeText_ByeBye:: @ 842C622
+gText_ByeByeVar1:: @ 842C622
 	.string "Tschüss, {STR_VAR_2}!$"
 
-gTradeText_SentOverPoke:: @ 842C62F
+gText_XSentOverY:: @ 842C62F
 	.string "{STR_VAR_1} versandte {STR_VAR_3}.$"
 
-gTradeText_TakeGoodCare:: @ 842C640
+gText_TakeGoodCareOfX:: @ 842C640
 	.string "Kümmere dich gut um {STR_VAR_3}!$"
 
-TradeText_Cancel::
+sText_Cancel::
 	.string "ZUR.$"
-TradeText_ChoosePoke::
+sText_ChooseAPkmn::
 	.string "Wähle ein POKéMON.$"
-TradeText_Summary1::
+sText_Summary::
 	.string "BERICHT$"
-TradeText_Trade1::
+sText_Trade::
 	.string "TAUSCH$"
-TradeText_CancelTradePrompt::
+sText_CancelTrade::
 	.string "Tausch abbrechen?$"
 TradeText_PressBToExit::
 	.string "Mit B-Knopf beenden.$"
-TradeText_Summary2::
+sText_Summary2::
 	.string "BERICHT$"
-TradeText_Trade2::
+sText_Trade2::
 	.string "TAUSCH$"
-TradeText_LinkStandby::
+sText_CommunicationStandby::
 	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Verbindung...\n"
 	.string "Bitte warten...$"
-TradeText_TradeCancelled::
+sText_TheTradeHasBeenCanceled::
 	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Der Tausch\n"
 	.string "wurde abgebrochen.$"
-TradeText_OnlyPoke::
+sText_OnlyPkmnForBattle::
 	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Das ist das einzige\n"
 	.string "POKéMON zum Kampf.$"
 TradeText_NonTradablePoke::
 	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Dein Freund kann\n"
 	.string "das nicht senden.$"
-TradeText_WaitingForFriend::
+sText_WaitingForYourFriend::
 	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Dein Freund ist\n"
 	.string "noch nicht fertig...$"
-TradeText_WantToTrade::
+sText_YourFriendWantsToTrade::
 	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Dein Freund möchte\n"
 	.string "POKéMON tauschen.$"
 	.string "$"
 
-gTradeText_TradeOkayPrompt:: @ 842C7B6
+sText_IsThisTradeOkay:: @ 842C7B6
 	.string "Ist der Tausch O.K.?$"
 
 gOtherText_Terminator2:: @ 842C7CA

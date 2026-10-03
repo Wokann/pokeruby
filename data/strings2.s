@@ -140,49 +140,49 @@ gOtherText_NotEvenANibble:: @ 842C5E2
 gOtherText_ItGotAway:: @ 842C5F9
 	.string "It got away...{PAUSE_UNTIL_PRESS}$$"
 
-gTradeText_WillBeSent:: @ 842C60B
+gText_XWillBeSentToY:: @ 842C60B
 	.string "{STR_VAR_2} will be sent to {STR_VAR_1}.$"
 
-gTradeText_ByeBye:: @ 842C622
+gText_ByeByeVar1:: @ 842C622
 	.string "Bye-bye, {STR_VAR_2}!$"
 
-gTradeText_SentOverPoke:: @ 842C62F
+gText_XSentOverY:: @ 842C62F
 	.string "{STR_VAR_1} sent over {STR_VAR_3}.$"
 
-gTradeText_TakeGoodCare:: @ 842C640
+gText_TakeGoodCareOfX:: @ 842C640
 	.string "Take good care of {STR_VAR_3}!$"
 
-TradeText_Cancel::
+sText_Cancel::
 	.string "CANCEL$"
-TradeText_ChoosePoke::
+sText_ChooseAPkmn::
 	.string "Choose a POKéMON.$"
-TradeText_Summary1::
+sText_Summary::
 	.string "SUMMARY$"
-TradeText_Trade1::
+sText_Trade::
 	.string "TRADE$"
-TradeText_CancelTradePrompt::
+sText_CancelTrade::
 	.string "Cancel trade?$"
 TradeText_PressBToExit::
 	.string "Press the B Button to exit.$"
-TradeText_Summary2::
+sText_Summary2::
 	.string "SUMMARY$"
-TradeText_Trade2::
+sText_Trade2::
 	.string "TRADE$"
-TradeText_LinkStandby::
+sText_CommunicationStandby::
 	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Link standby...\nPlease wait.$"
-TradeText_TradeCancelled::
+sText_TheTradeHasBeenCanceled::
 	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}The trade has\nbeen canceled.$"
-TradeText_OnlyPoke::
+sText_OnlyPkmnForBattle::
 	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}That's your only\nPOKéMON for battle.$"
 TradeText_NonTradablePoke::
 	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Your friend can't\ntrade that one.$"
-TradeText_WaitingForFriend::
+sText_WaitingForYourFriend::
 	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Waiting for your\nfriend to finish...$"
-TradeText_WantToTrade::
+sText_YourFriendWantsToTrade::
 	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Your friend wants\nto trade POKéMON.$"
 	.string "$"
 
-gTradeText_TradeOkayPrompt:: @ 842C7B6
+sText_IsThisTradeOkay:: @ 842C7B6
 	.string "Is this trade okay?$"
 
 gOtherText_Terminator2:: @ 842C7CA

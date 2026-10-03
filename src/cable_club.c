@@ -31,11 +31,6 @@ extern const u8 gUnknown_081A4932[];
 extern const u8 gUnknown_081A4975[];
 extern const u8 gUnknown_081A49B6[];
 extern const u8 gUnknown_081A490C[];
-extern struct
-{
-    u8 field0;
-    u8 field1;
-} gUnknown_020297D8;
 
 static void sub_8082F20(u8 taskId);
 static void sub_8082F68(u8 taskId);
@@ -887,8 +882,8 @@ static void sub_8083AAC(u8 taskId)
             task->data[0]++;
         break;
     case 2:
-        gUnknown_020297D8.field0 = 0;
-        gUnknown_020297D8.field1 = 0;
+        gSelectedTradeMonPositions[0] = 0;
+        gSelectedTradeMonPositions[1] = 0;
         m4aMPlayAllStop();
         SetCloseLinkCallback();
         task->data[0]++;
@@ -896,7 +891,7 @@ static void sub_8083AAC(u8 taskId)
     case 3:
         if (!gReceivedRemoteLinkPlayers)
         {
-            SetMainCallback2(sub_8047CD8);
+            SetMainCallback2(CB2_StartCreateTradeMenu);
             DestroyTask(taskId);
         }
         break;
