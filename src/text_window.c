@@ -1,4 +1,5 @@
 #include "global.h"
+#include "graphics.h"
 #include "text_window.h"
 #include "main.h"
 #include "palette.h"
@@ -21,7 +22,6 @@ static void DrawDialogueFrame(struct Window *win, u8 left, u8 top, u8 width, u8 
 static u16 sTextWindowBaseTileNum;
 static u16 sDialogueFrameBaseTileNum;
 
-extern const u8 gTextWindowFrame1_Gfx[];
 extern const u8 gTextWindowFrame2_Gfx[];
 extern const u8 gTextWindowFrame3_Gfx[];
 extern const u8 gTextWindowFrame4_Gfx[];
@@ -42,7 +42,6 @@ extern const u8 gTextWindowFrame18_Gfx[];
 extern const u8 gTextWindowFrame19_Gfx[];
 extern const u8 gTextWindowFrame20_Gfx[];
 
-extern const u16 gTextWindowFrame1_Pal[];
 extern const u16 gTextWindowFrame2_Pal[];
 extern const u16 gTextWindowFrame3_Pal[];
 extern const u16 gTextWindowFrame4_Pal[];
@@ -63,9 +62,7 @@ extern const u16 gTextWindowFrame18_Pal[];
 extern const u16 gTextWindowFrame19_Pal[];
 extern const u16 gTextWindowFrame20_Pal[];
 
-extern const u8 gDialogueFrame_Gfx[];
-
-static const struct FrameGraphics sTextWindowFrameGraphics[20] =
+static const struct TilesPal sWindowFrames[20] =
 {
     {gTextWindowFrame1_Gfx, gTextWindowFrame1_Pal},
     {gTextWindowFrame2_Gfx, gTextWindowFrame2_Pal},
@@ -134,24 +131,24 @@ void TextWindow_DrawStdFrame(struct Window *win, u8 left, u8 top, u8 right, u8 b
 }
 
 // Returns the tile data and palette for the specified frame type
-const struct FrameGraphics *TextWindow_GetFrameGraphics(u8 frameType)
+const struct TilesPal *GetWindowFrameTilesPal(u8 frameType)
 {
     if (frameType > 19)
-        return &sTextWindowFrameGraphics[0];
+        return &sWindowFrames[0];
     else
-        return &sTextWindowFrameGraphics[frameType];
+        return &sWindowFrames[frameType];
 }
 
 static void LoadTextWindowTiles(u8 frameType, void *dest)
 {
-    const struct FrameGraphics *frameGraphics = TextWindow_GetFrameGraphics(frameType);
+    const struct TilesPal *frameGraphics = GetWindowFrameTilesPal(frameType);
     CpuFastCopy(frameGraphics->tiles, dest, 9 * TILE_SIZE_4BPP);
 }
 
 static void LoadTextWindowPalette(u8 frameType, u8 palSlot)
 {
-    const struct FrameGraphics *frameGraphics = TextWindow_GetFrameGraphics(frameType);
-    LoadPalette(frameGraphics->palette, 16 * palSlot, 0x20);
+    const struct TilesPal *frameGraphics = GetWindowFrameTilesPal(frameType);
+    LoadPalette(frameGraphics->pal, 16 * palSlot, 0x20);
 }
 
 // Draws a standard window frame
@@ -260,7 +257,7 @@ void TextWindow_DrawDialogueFrame(struct Window *win)
 void TextWindow_LoadDialogueFrameTiles(struct Window *win)
 {
     u8 *tileData = win->template->tileData;
-    CpuFastCopy(gDialogueFrame_Gfx, tileData + 32 * sDialogueFrameBaseTileNum, 14 * TILE_SIZE_4BPP);
+    CpuFastCopy(gMessageBox_Gfx, tileData + 32 * sDialogueFrameBaseTileNum, 14 * TILE_SIZE_4BPP);
 }
 
 // Erases a dialogue window frame

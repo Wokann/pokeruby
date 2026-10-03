@@ -294,9 +294,9 @@ void sub_80F727C(struct PokemonMarkMenu *ptr)
 
 void sub_80F728C(void)
 {
-    const struct FrameGraphics *frame = TextWindow_GetFrameGraphics(gSaveBlock2.optionsWindowFrameType);
+    const struct TilesPal *frame = GetWindowFrameTilesPal(gSaveBlock2.optionsWindowFrameType);
     sMenu->frameTiles = frame->tiles;
-    sMenu->framePalette = frame->palette;
+    sMenu->framePalette = frame->pal;
     sMenu->tileLoadState = 0;
     CpuFill16(0, sMenu->menuWindowSpriteTiles, sizeof(sMenu->menuWindowSpriteTiles));
 }

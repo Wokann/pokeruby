@@ -1306,7 +1306,7 @@ const u8 gUnknown_08E9FE54[] = INCBIN_U8("graphics/unknown/unknown_E9FE54.bin");
 const u8 gUnknown_08E9FEB4[] = INCBIN_U8("graphics/unknown/unknown_E9FEB4.bin.lz");
 const u8 gUnknown_08E9FF58[] = INCBIN_U8("graphics/unknown/unknown_E9FF58.bin.lz");
 const u8 gPokenavRibbonPokeView_Gfx[] = INCBIN_U8("graphics/pokenav/ribbon_pokeview.4bpp");
-const u8 gDialogueFrame_Gfx[] = INCBIN_U8("graphics/text_window/message_box.4bpp");
+const u8 gMessageBox_Gfx[] = INCBIN_U8("graphics/text_window/message_box.4bpp");
 
 const u16 gTradeMenu_Pal[] = INCBIN_U16("graphics/trade/menu.gbapal", "graphics/trade/stripes.gbapal", "graphics/trade/stripes.gbapal");
 
