@@ -42,7 +42,7 @@ void sub_80CF690(struct Sprite* sprite)
 {
     InitAnimSpritePos(sprite, 0);
     sprite->callback = sub_80785E4;
-    StoreSpriteCallbackInData(sprite, sub_80CF6B4);
+    StoreSpriteCallbackInData6(sprite, sub_80CF6B4);
 }
 
 static void sub_80CF6B4(struct Sprite* sprite)
@@ -51,5 +51,5 @@ static void sub_80CF6B4(struct Sprite* sprite)
     sprite->data[2] = sprite->x;
     sprite->data[4] = sprite->y - 32;
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }

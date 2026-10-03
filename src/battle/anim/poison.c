@@ -285,7 +285,7 @@ void sub_80D9F14(struct Sprite *sprite)
     sprite->data[4] = sprite->y + sprite->data[0];
 
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 // Animates a bubble by rising upward, swaying side to side, and

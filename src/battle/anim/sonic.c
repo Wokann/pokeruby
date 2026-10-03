@@ -149,7 +149,7 @@ void AnimSonicBoomProjectile(struct Sprite* sprite)
     sprite->data[2] = targetXPos;
     sprite->data[4] = targetYPos;
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 void sub_80CF7E0(struct Sprite* sprite)

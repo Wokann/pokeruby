@@ -2785,7 +2785,7 @@ void debug_sub_8012D10(u8 taskId)
         Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, Str_821F7BD, 400, 19, 35);
         Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
         gTasks[taskId].data[0]++;
-        sub_802E3E4(gTasks[taskId].data[2], 0);
+        ActionSelectionCreateCursorAt(gTasks[taskId].data[2], 0);
         break;
     case 1:
         if (JOY_NEW(DPAD_UP))
@@ -2793,28 +2793,28 @@ void debug_sub_8012D10(u8 taskId)
             PlaySE(SE_SELECT);
             nullsub_8(gTasks[taskId].data[2]);
             gTasks[taskId].data[2] &= ~2;
-            sub_802E3E4(gTasks[taskId].data[2], 0);
+            ActionSelectionCreateCursorAt(gTasks[taskId].data[2], 0);
         }
         else if (JOY_NEW(DPAD_DOWN))
         {
             PlaySE(SE_SELECT);
             nullsub_8(gTasks[taskId].data[2]);
             gTasks[taskId].data[2] |= 2;
-            sub_802E3E4(gTasks[taskId].data[2], 0);
+            ActionSelectionCreateCursorAt(gTasks[taskId].data[2], 0);
         }
         else if (JOY_NEW(DPAD_LEFT))
         {
             PlaySE(SE_SELECT);
             nullsub_8(gTasks[taskId].data[2]);
             gTasks[taskId].data[2] &= ~1;
-            sub_802E3E4(gTasks[taskId].data[2], 0);
+            ActionSelectionCreateCursorAt(gTasks[taskId].data[2], 0);
         }
         else if (JOY_NEW(DPAD_RIGHT))
         {
             PlaySE(SE_SELECT);
             nullsub_8(gTasks[taskId].data[2]);
             gTasks[taskId].data[2] |= 1;
-            sub_802E3E4(gTasks[taskId].data[2], 0);
+            ActionSelectionCreateCursorAt(gTasks[taskId].data[2], 0);
         }
         else if (JOY_REPT(A_BUTTON))
         {
@@ -4312,8 +4312,8 @@ void sub_8012324(void)
                                 for (i = 0; i < 4; i++)
                                 {
                                     moveInfo.moves[i] = gBattleMons[gActiveBattler].moves[i];
-                                    moveInfo.currentPp[i] = gBattleMons[gActiveBattler].pp[i];
-                                    moveInfo.maxPp[i] = CalculatePPWithBonus(
+                                    moveInfo.currentPP[i] = gBattleMons[gActiveBattler].pp[i];
+                                    moveInfo.maxPP[i] = CalculatePPWithBonus(
                                         gBattleMons[gActiveBattler].moves[i],
                                         gBattleMons[gActiveBattler].ppBonuses,
                                         i);

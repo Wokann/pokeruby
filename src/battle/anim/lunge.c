@@ -74,7 +74,7 @@ static void sub_80CD7CC(struct Sprite* sprite)
     sprite->data[1] = (GetBattlerSide(gBattleAnimAttacker)) ? 2 : -2;
     sprite->data[2] = 0;
     sprite->data[3] = gBattlerSpriteIds[gBattleAnimAttacker];
-    StoreSpriteCallbackInData(sprite, sub_80CD81C);
+    StoreSpriteCallbackInData6(sprite, sub_80CD81C);
     sprite->callback = TranslateMonBGUntil;
 }
 
@@ -104,7 +104,7 @@ static void sub_80CD8A8(struct Sprite* sprite)
     sprite->data[1] = (GetBattlerSide(gBattleAnimAttacker)) ? -3 : 3;
     sprite->data[2] = 0;
     sprite->data[3] = gBattlerSpriteIds[gBattleAnimAttacker];
-    StoreSpriteCallbackInData(sprite, sub_80CD9B8);
+    StoreSpriteCallbackInData6(sprite, sub_80CD9B8);
     sprite->callback = TranslateMonBGUntil;
 }
 

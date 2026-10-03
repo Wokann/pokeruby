@@ -300,7 +300,7 @@ void AnimFireCross(struct Sprite *sprite)
     sprite->data[1] = gBattleAnimArgs[3];
     sprite->data[2] = gBattleAnimArgs[4];
 
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 
     sprite->callback = TranslateSpriteOverDuration;
 }
@@ -315,7 +315,7 @@ void sub_80D53B4(struct Sprite *sprite)
     sprite->invisible = TRUE;
     sprite->callback = WaitAnimForDuration;
 
-    StoreSpriteCallbackInData(sprite, sub_80D53F4);
+    StoreSpriteCallbackInData6(sprite, sub_80D53F4);
 }
 
 static void sub_80D53F4(struct Sprite *sprite)

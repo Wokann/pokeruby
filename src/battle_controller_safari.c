@@ -236,7 +236,7 @@ void bx_battle_menu_t6_2(void)
             PlaySE(SE_SELECT);
             nullsub_8(gActionSelectionCursor[gActiveBattler]);
             gActionSelectionCursor[gActiveBattler] ^= 1;
-            sub_802E3E4(gActionSelectionCursor[gActiveBattler], 0);
+            ActionSelectionCreateCursorAt(gActionSelectionCursor[gActiveBattler], 0);
         }
     }
     else if (JOY_NEW(DPAD_RIGHT))
@@ -246,7 +246,7 @@ void bx_battle_menu_t6_2(void)
             PlaySE(SE_SELECT);
             nullsub_8(gActionSelectionCursor[gActiveBattler]);
             gActionSelectionCursor[gActiveBattler] ^= 1;
-            sub_802E3E4(gActionSelectionCursor[gActiveBattler], 0);
+            ActionSelectionCreateCursorAt(gActionSelectionCursor[gActiveBattler], 0);
         }
     }
     else if (JOY_NEW(DPAD_UP))
@@ -256,7 +256,7 @@ void bx_battle_menu_t6_2(void)
             PlaySE(SE_SELECT);
             nullsub_8(gActionSelectionCursor[gActiveBattler]);
             gActionSelectionCursor[gActiveBattler] ^= 2;
-            sub_802E3E4(gActionSelectionCursor[gActiveBattler], 0);
+            ActionSelectionCreateCursorAt(gActionSelectionCursor[gActiveBattler], 0);
         }
     }
     else if (JOY_NEW(DPAD_DOWN))
@@ -266,7 +266,7 @@ void bx_battle_menu_t6_2(void)
             PlaySE(SE_SELECT);
             nullsub_8(gActionSelectionCursor[gActiveBattler]);
             gActionSelectionCursor[gActiveBattler] ^= 2;
-            sub_802E3E4(gActionSelectionCursor[gActiveBattler], 0);
+            ActionSelectionCreateCursorAt(gActionSelectionCursor[gActiveBattler], 0);
         }
     }
 #if DEBUG
@@ -491,7 +491,7 @@ void SafariHandlecmd18(void)
     for (i = 0; i < 4; i++)
         nullsub_8(i);
 
-    sub_802E3E4(gActionSelectionCursor[gActiveBattler], 0);
+    ActionSelectionCreateCursorAt(gActionSelectionCursor[gActiveBattler], 0);
     BattleStringExpandPlaceholdersToDisplayedString(BattleText_PlayerMenu);
 
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gDisplayedStringBattle, SUB_812BB10_TILE_DATA_OFFSET, 2, 35);

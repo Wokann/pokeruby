@@ -48,6 +48,6 @@ void sub_80D0118(struct Sprite* sprite)
     sprite->data[3] = gBattleAnimArgs[6];
     sprite->data[4] = gBattleAnimArgs[3];
     sprite->callback = sub_8078114;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     sprite->callback(sprite);
 }

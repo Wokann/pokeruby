@@ -72,7 +72,7 @@ static void AnimLeechSeedStep(struct Sprite* sprite)
         sprite->invisible = TRUE;
         sprite->data[0] = 10;
         sprite->callback = WaitAnimForDuration;
-        StoreSpriteCallbackInData(sprite, AnimLeechSeedSprouts);
+        StoreSpriteCallbackInData6(sprite, AnimLeechSeedSprouts);
     }
 }
 
@@ -82,5 +82,5 @@ static void AnimLeechSeedSprouts(struct Sprite* sprite)
     StartSpriteAnim(sprite, 1);
     sprite->data[0] = 60;
     sprite->callback = WaitAnimForDuration;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }

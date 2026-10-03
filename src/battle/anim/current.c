@@ -473,7 +473,7 @@ void sub_80D679C(struct Sprite *sprite)
 
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->callback = WaitAnimForDuration;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 void sub_80D681C(u8 taskId)
@@ -646,7 +646,7 @@ static void sub_80D6BB8(u8 taskId)
                 sprite->data[5] = taskId;
 
                 InitAnimLinearTranslation(sprite);
-                StoreSpriteCallbackInData(sprite, sub_80D6D00);
+                StoreSpriteCallbackInData6(sprite, sub_80D6D00);
                 sprite->callback = sub_8078600;
 
                 if (++task->data[9] > 15)
@@ -701,7 +701,7 @@ void sub_80D6D18(struct Sprite *sprite)
         sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
     }
 
-    StoreSpriteCallbackInData(sprite, DestroySpriteAndMatrix);
+    StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
     sprite->callback = sub_80785E4;
 }
 
@@ -720,7 +720,7 @@ void sub_80D6D70(struct Sprite *sprite)
 
     sprite->x2 = gBattleAnimArgs[1];
     sprite->y2 = gBattleAnimArgs[2];
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     sprite->callback = sub_8078600;
 }
 

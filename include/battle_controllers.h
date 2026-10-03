@@ -118,6 +118,16 @@ struct MovePPInfo
     u8 ppBonuses;
 };
 
+struct ChooseMoveStruct
+{
+    u16 moves[4];
+    u8 currentPP[4];
+    u8 maxPP[4];
+    u16 species;
+    u8 monType1;
+    u8 monType2;
+};
+
 enum
 {
     CONTROLLER_GETMONDATA,
@@ -233,5 +243,7 @@ void BtlController_EmitCmd55(u8 a, u8 b);
 
 // player controller
 void PlayerHandleGetRawMonData(void);
+
+void ActionSelectionCreateCursorAt(u8 cursorPosition, int unused);
 
 #endif // GUARD_BATTLE_CONTROLLERS_H

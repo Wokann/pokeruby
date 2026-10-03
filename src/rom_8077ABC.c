@@ -450,7 +450,7 @@ u8 GetAnimBattlerSpriteId(u8 whichBank)
     }
 }
 
-void StoreSpriteCallbackInData(struct Sprite *sprite, void (*callback)(struct Sprite*))
+void StoreSpriteCallbackInData6(struct Sprite *sprite, void (*callback)(struct Sprite*))
 {
     sprite->data[6] = (u32)(callback) & 0xffff;
     sprite->data[7] = (u32)(callback) >> 16;
@@ -1421,7 +1421,7 @@ void TranslateAnimSpriteToTargetMonLocation(struct Sprite *sprite)
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + gBattleAnimArgs[2];
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, v2) + gBattleAnimArgs[3];
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 void sub_80794A8(struct Sprite *sprite)
@@ -1475,7 +1475,7 @@ void sub_8079534(struct Sprite *sprite)
     sprite->data[2] = GetBattlerSpriteCoord(slot, 2) + gBattleAnimArgs[2];
     sprite->data[4] = GetBattlerSpriteCoord(slot, r7) + gBattleAnimArgs[3];
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 s16 duplicate_obj_of_side_rel2move_in_transparent_mode(u8 a1)
@@ -2185,7 +2185,7 @@ void sub_807A544(struct Sprite *sprite)
     sprite->data[1] = gBattleAnimArgs[3];
     sprite->data[3] = gBattleAnimArgs[4];
     sprite->data[5] = gBattleAnimArgs[5];
-    StoreSpriteCallbackInData(sprite, DestroySpriteAndMatrix);
+    StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
     sprite->callback = sub_8078504;
 }
 
@@ -2206,7 +2206,7 @@ void sub_807A5C4(struct Sprite *sprite)
     sprite->data[3] = gBattleAnimArgs[4];
     sprite->data[5] = gBattleAnimArgs[5];
     StartSpriteAnim(sprite, gBattleAnimArgs[6]);
-    StoreSpriteCallbackInData(sprite, DestroySpriteAndMatrix);
+    StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
     sprite->callback = sub_8078504;
 }
 
@@ -2221,7 +2221,7 @@ void sub_807A63C(struct Sprite *sprite)
         sprite->x += gBattleAnimArgs[0];
     sprite->y += gBattleAnimArgs[1];
     sprite->callback = sub_8078600;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 // file_3 (punch effect?)
@@ -2353,5 +2353,5 @@ void sub_807A9BC(struct Sprite *sprite)
         sprite->y = gBattleAnimArgs[5] - 80;
     }
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }

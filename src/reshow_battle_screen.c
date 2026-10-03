@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle_controllers.h"
 #include "battle_main.h"
 #include "battle.h"
 #include "battle_anim.h"
@@ -174,7 +175,7 @@ static void CB2_ReshowBattleScreenAfterMenu(void)
                 species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[opponentBank]], MON_DATA_SPECIES);
                 sub_8032984(opponentBank, species);
             }
-            sub_802E3E4(gActionSelectionCursor[gBattlerInMenuId], 0);
+            ActionSelectionCreateCursorAt(gActionSelectionCursor[gBattlerInMenuId], 0);
         }
         break;
     default:

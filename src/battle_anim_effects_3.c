@@ -1225,7 +1225,7 @@ static void sub_812C220(struct Sprite *sprite)
     sprite->data[0] = 90;
     sprite->callback = WaitAnimForDuration;
     sprite->data[1] = 7;
-    StoreSpriteCallbackInData(sprite, sub_812C268);
+    StoreSpriteCallbackInData6(sprite, sub_812C268);
     REG_BLDCNT = 0x3F40;
     REG_BLDALPHA = ((16 - sprite->data[1]) << 8) | sprite->data[1];
 }
@@ -1266,7 +1266,7 @@ static void sub_812C2BC(struct Sprite *sprite)
     sprite->data[2] = x;
     sprite->data[4] = y;
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 static void sub_812C358(struct Sprite *sprite)
@@ -1456,7 +1456,7 @@ static void sub_812C798(struct Sprite *sprite)
         sprite->data[0] = 30;
         sprite->data[1] = 0;
         sprite->callback = WaitAnimForDuration;
-        StoreSpriteCallbackInData(sprite, sub_812C7C8);
+        StoreSpriteCallbackInData6(sprite, sub_812C7C8);
     }
 }
 
@@ -1475,7 +1475,7 @@ static void sub_812C80C(struct Sprite *sprite)
     sub_807867C(sprite, gBattleAnimArgs[0]);
     sprite->y += gBattleAnimArgs[1];
     sprite->callback = sub_8078600;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 // This is likely fakematching due to some strange type casting behavior.
@@ -2038,7 +2038,7 @@ static void sub_812D294(struct Sprite *sprite)
 
     if (sprite->data[0] == 61)
     {
-        StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+        StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
         sprite->x += sprite->x2;
         sprite->y += sprite->y2;
         sprite->x2 = 0;
@@ -4033,7 +4033,7 @@ static void sub_813051C(struct Sprite *sprite)
     sprite->data[2] = gBattleAnimArgs[2];
     sprite->data[4] = gBattleAnimArgs[3];
     sprite->data[0] = gBattleAnimArgs[4];
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     sprite->callback = sub_8078CC0;
 }
 

@@ -46,7 +46,7 @@ void sub_80CFFD8(struct Sprite* sprite)
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
     sprite->callback = StartAnimLinearTranslation;
     sprite->affineAnimPaused = 1;
-    StoreSpriteCallbackInData(sprite, sub_80D0030);
+    StoreSpriteCallbackInData6(sprite, sub_80D0030);
 }
 
 static void sub_80D0030(struct Sprite* sprite)

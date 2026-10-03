@@ -70,7 +70,7 @@ void sub_80CF458(struct Sprite* sprite)
     sprite->data[1] = gBattleAnimArgs[3];
     sprite->data[5] = gBattleAnimArgs[4];
     sprite->callback = WaitAnimForDuration;
-    StoreSpriteCallbackInData(sprite, sub_80CF490);
+    StoreSpriteCallbackInData6(sprite, sub_80CF490);
 }
 
 static void sub_80CF490(struct Sprite* sprite)
@@ -79,7 +79,7 @@ static void sub_80CF490(struct Sprite* sprite)
     sprite->data[2] = sprite->x;
     sprite->data[4] = sprite->y + 15;
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, sub_80CF4B8);
+    StoreSpriteCallbackInData6(sprite, sub_80CF4B8);
 }
 
 static void sub_80CF4B8(struct Sprite* sprite)

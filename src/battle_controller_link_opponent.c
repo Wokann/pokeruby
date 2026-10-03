@@ -20,13 +20,6 @@
 #include "util.h"
 #include "ewram.h"
 
-struct MovePpInfo
-{
-    u16 moves[4];
-    u8 pp[4];
-    u8 ppBonuses;
-};
-
 extern u8 gActiveBattler;
 extern u8 gBattleBufferA[][0x200];
 extern u8 gBattlerSpriteIds[];
@@ -70,7 +63,6 @@ extern void sub_8031A6C(u16, u8);
 extern void SpriteCB_TrainerSlideIn(struct Sprite *);
 extern void sub_803757C(void);
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
-extern void StoreSpriteCallbackInData();
 extern void StartAnimLinearTranslation(struct Sprite *);
 extern void sub_80375B4(void);
 extern void sub_8010384(struct Sprite *);
@@ -588,7 +580,7 @@ void LinkOpponentHandleGetAttributes(void)
 u32 dp01_getattr_by_ch1_for_player_pokemon__(u8 a, u8 *buffer)
 {
     struct BattlePokemon battlePokemon;
-    struct MovePpInfo moveData;
+    struct MovePPInfo moveData;
     u8 nickname[20];
     u8 *src;
     s16 data16;
@@ -917,7 +909,7 @@ void LinkOpponentHandleSetAttributes(void)
 void sub_8038900(u8 a)
 {
     struct BattlePokemon *battlePokemon = (struct BattlePokemon *)&gBattleBufferA[gActiveBattler][3];
-    struct MovePpInfo *moveData = (struct MovePpInfo *)&gBattleBufferA[gActiveBattler][3];
+    struct MovePPInfo *moveData = (struct MovePPInfo *)&gBattleBufferA[gActiveBattler][3];
     s32 i;
 
     switch (gBattleBufferA[gActiveBattler][1])
@@ -1275,7 +1267,7 @@ void LinkOpponentHandleTrainerSlideBack(void)
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[2] = 280;
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[4] = gSprites[gBattlerSpriteIds[gActiveBattler]].y;
     gSprites[gBattlerSpriteIds[gActiveBattler]].callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(&gSprites[gBattlerSpriteIds[gActiveBattler]], SpriteCallbackDummy);
+    StoreSpriteCallbackInData6(&gSprites[gBattlerSpriteIds[gActiveBattler]], SpriteCallbackDummy);
     gBattlerControllerFuncs[gActiveBattler] = sub_80375B4;
 }
 
@@ -1626,7 +1618,7 @@ void LinkOpponentHandleTrainerBallThrow(void)
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[2] = 280;
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[4] = gSprites[gBattlerSpriteIds[gActiveBattler]].y;
     gSprites[gBattlerSpriteIds[gActiveBattler]].callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(&gSprites[gBattlerSpriteIds[gActiveBattler]], sub_803A3A8);
+    StoreSpriteCallbackInData6(&gSprites[gBattlerSpriteIds[gActiveBattler]], sub_803A3A8);
     taskId = CreateTask(sub_803A2C4, 5);
     gTasks[taskId].data[0] = gActiveBattler;
     if (gBattleHealthBoxInfo[gActiveBattler].partyStatusSummaryShown)

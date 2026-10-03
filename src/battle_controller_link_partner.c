@@ -23,13 +23,6 @@
 #include "util.h"
 #include "ewram.h"
 
-struct MovePpInfo
-{
-    u16 moves[4];
-    u8 pp[4];
-    u8 ppBonuses;
-};
-
 extern u16 gBattleTypeFlags;
 extern u8 gDisplayedStringBattle[];
 extern u8 gBattleBufferA[][0x200];
@@ -70,7 +63,6 @@ extern void TrySetBehindSubstituteSpriteBit();
 extern u8 IsMoveWithoutAnimation();
 extern u8 IsBattleSEPlaying();
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
-extern void StoreSpriteCallbackInData();
 extern void StartAnimLinearTranslation(struct Sprite *);
 extern void SpriteCB_FaintSlideAnim(struct Sprite *);
 extern s32 sub_803FC34(u16);
@@ -526,7 +518,7 @@ void LinkPartnerHandleGetAttributes(void)
 u32 dp01_getattr_by_ch1_for_player_pokemon(u8 a, u8 *buffer)
 {
     struct BattlePokemon battlePokemon;
-    struct MovePpInfo moveData;
+    struct MovePPInfo moveData;
     u8 nickname[20];
     u8 *src;
     s16 data16;
@@ -854,7 +846,7 @@ void LinkPartnerHandleSetAttributes(void)
 void sub_811EC68(u8 a)
 {
     struct BattlePokemon *battlePokemon = (struct BattlePokemon *)&gBattleBufferA[gActiveBattler][3];
-    struct MovePpInfo *moveData = (struct MovePpInfo *)&gBattleBufferA[gActiveBattler][3];
+    struct MovePPInfo *moveData = (struct MovePPInfo *)&gBattleBufferA[gActiveBattler][3];
     s32 i;
 
     switch (gBattleBufferA[gActiveBattler][1])
@@ -1209,7 +1201,7 @@ void LinkPartnerHandleTrainerSlideBack(void)
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[2] = -40;
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[4] = gSprites[gBattlerSpriteIds[gActiveBattler]].y;
     gSprites[gBattlerSpriteIds[gActiveBattler]].callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(&gSprites[gBattlerSpriteIds[gActiveBattler]], SpriteCallbackDummy);
+    StoreSpriteCallbackInData6(&gSprites[gBattlerSpriteIds[gActiveBattler]], SpriteCallbackDummy);
     gBattlerControllerFuncs[gActiveBattler] = sub_811DB1C;
 }
 
@@ -1562,7 +1554,7 @@ void LinkPartnerHandleTrainerBallThrow(void)
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[4] = gSprites[gBattlerSpriteIds[gActiveBattler]].y;
     gSprites[gBattlerSpriteIds[gActiveBattler]].callback = StartAnimLinearTranslation;
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[5] = gActiveBattler;
-    StoreSpriteCallbackInData(&gSprites[gBattlerSpriteIds[gActiveBattler]], SpriteCB_FreePlayerSpriteLoadMonSprite);
+    StoreSpriteCallbackInData6(&gSprites[gBattlerSpriteIds[gActiveBattler]], SpriteCB_FreePlayerSpriteLoadMonSprite);
     StartSpriteAnim(&gSprites[gBattlerSpriteIds[gActiveBattler]], 1);
     r4 = AllocSpritePalette(0xD6F9);
     LoadCompressedPalette(

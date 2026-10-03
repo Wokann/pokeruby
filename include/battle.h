@@ -284,15 +284,6 @@ struct LinkBattleCommunicationHeader
     u8 data[0];
 };
 
-struct ChooseMoveStruct {
-    u16 moves[4];
-    u8 currentPp[4];
-    u8 maxPp[4];
-    u16 species;
-    u8 monType1;
-    u8 monType2;
-};
-
 struct BattleStruct /* 0x2000000 */
 {
     u8 filler00000[0x14000];
@@ -627,7 +618,6 @@ void BattleControllerDummy(void);
 void SetControllerToPlayer(void);
 void HandleInputChooseAction();
 void Task_PlayerController_RestoreBgmAfterCry(u8);
-void sub_802E3E4(u8, int);
 void nullsub_8(u8);
 void CB2_SetUpReshowBattleScreenAfterMenu(void);
 void CB2_SetUpReshowBattleScreenAfterMenu2(void);

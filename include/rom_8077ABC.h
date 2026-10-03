@@ -19,7 +19,6 @@ struct TransformStatus
 u8 GetBattlerSpriteCoord(u8, u8);
 u8 GetBattlerSpriteFinal_Y(u8 slot, u16 species, u8 a3);
 u8 GetAnimBattlerSpriteId(u8 bank);
-void StoreSpriteCallbackInData(struct Sprite *sprite, void(*callback)(struct Sprite *));
 void sub_8078314(struct Sprite *sprite);
 void TranslateSpriteOverDuration(struct Sprite *sprite);
 void TranslateMonBGUntil(struct Sprite *sprite);

@@ -54,6 +54,6 @@ void sub_80D09C0(struct Sprite* sprite)
     if (sprite->y <= 7)
         sprite->y = 8;
 
-    StoreSpriteCallbackInData(sprite, DestroySpriteAndMatrix);
+    StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
     sprite->callback = sub_80785E4;
 }

@@ -79,7 +79,7 @@ void sub_80CFE9C(struct Sprite* sprite)
     sprite->data[2] = r6;
     sprite->data[4] = r7;
     sprite->callback = sub_8078C00;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 void sub_80CFF50(struct Sprite* sprite)
