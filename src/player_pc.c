@@ -10,6 +10,7 @@
 #include "menu.h"
 #include "menu_helpers.h"
 #include "palette.h"
+#include "pokemon_menu.h"
 #include "script.h"
 #include "sound.h"
 #include "string_util.h"
@@ -20,16 +21,6 @@
 #include "mail.h"
 #include "overworld.h"
 #include "ewram.h"
-
-extern void DisplayItemMessageOnField(u8, const u8*, TaskFunc, u16);
-extern void DoPlayerRoomDecorationMenu(u8);
-extern void FreeScrollIndicatorPalette(void);
-extern void DestroyScrollIndicatorArrow(u8);
-extern void PauseScrollIndicatorArrow(u8);
-extern void LoadScrollIndicatorPalette(void);
-extern u8 IsWeatherNotFadingIn(void);
-extern void CB2_OpenPartyMenuForItemUse(void);
-extern void ResetScrollIndicatorState(void);
 
 enum
 {
@@ -82,13 +73,9 @@ static EWRAM_DATA const u8 *sTopMenuOptionOrder = NULL;
 
 static u8 sTopMenuNumOptions;
 
-extern u8 gPokemonItemUseType;
-
 // event scripts
 extern u8 LittlerootTown_BrendansHouse_2F_EventScript_TurnOffPlayerPC[];
 extern u8 LittlerootTown_MaysHouse_2F_EventScript_TurnOffPlayerPC[];
-
-extern void (*gFieldCallback)(void);
 
 static void InitPlayerPCMenu(u8 taskId);
 static void PlayerPCProcessMenuInput(u8 taskId);

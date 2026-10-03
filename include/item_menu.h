@@ -22,6 +22,7 @@ struct PocketScrollState
 
 extern struct PocketScrollState gBagPocketScrollStates[];
 extern struct ItemSlot *gCurrentBagPocketItemSlots;
+extern u8 gPokemonItemUseType;
 
 void ResetBagScrollPositions(void);
 void ClearBag(void);

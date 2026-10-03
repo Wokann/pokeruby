@@ -51,7 +51,6 @@ struct FieldMoveCursorCallback
 extern u8 gIsDebugMode;
 extern u8 gPartyMenuActionResult;
 extern bool8 gPartyMenuMessage_IsPrinting;
-extern u8 gPokemonItemUseType;
 extern u16 gPartyMenuPreviousHeldItem;
 extern void (*gPokemonItemUseCallback)(u8 taskId, u16 itemId, TaskFunc callback);
 extern TaskFunc gTaskFuncForLinkRecv;
