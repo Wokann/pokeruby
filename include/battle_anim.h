@@ -150,4 +150,7 @@ void DestroyAnimSoundTask(u8 taskId);
 void sub_8076464(u8 a);
 s8 BattleAnimAdjustPanning2(s8);
 
+// battle_anim_smokescreen.c
+u8 SmokescreenImpact(s16 x, s16 y, bool8 persist);
+
 #endif

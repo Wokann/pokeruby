@@ -71,7 +71,7 @@ SECTIONS {
         src/daycare.o(.text);
         src/egg_hatch.o(.text);
         src/battle_interface.o(.text);
-        src/smokescreen.o(.text);
+        src/battle_anim_smokescreen.o(.text);
         src/pokeball.o(.text);
         src/load_save.o(.text);
         src/trade.o(.text);
@@ -481,7 +481,7 @@ SECTIONS {
         data/btl_attrs.o(.rodata);
         src/battle_script_commands.o(.rodata);
         src/battle_controller_player.o(.rodata);
-        data/smokescreen.o(.rodata); /* why is smokescreen rodata way up here and not in the correct location? */
+        data/battle_anim_smokescreen.o(.rodata); /* why is smokescreen rodata way up here and not in the correct location? */
         data/battle_7.o(.rodata);
         src/battle_controller_opponent.o(.rodata);
         src/battle_ai_switch_items.o(.rodata);
