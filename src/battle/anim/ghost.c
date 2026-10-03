@@ -1,7 +1,7 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_anim.h"
-#include "blend_palette.h"
+#include "util.h"
 #include "palette.h"
 #include "rom_8077ABC.h"
 #include "scanline_effect.h"

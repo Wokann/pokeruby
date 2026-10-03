@@ -1,6 +1,6 @@
 #include "global.h"
 #include "palette.h"
-#include "blend_palette.h"
+#include "util.h"
 #include "decompress.h"
 
 enum

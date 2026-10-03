@@ -4,7 +4,6 @@
 #include "battle_anim.h"
 #include "battle_anim_special.h"
 #include "battle_interface.h"
-#include "blend_palette.h"
 #include "decompress.h"
 #include "ewram.h"
 #include "m4a.h"

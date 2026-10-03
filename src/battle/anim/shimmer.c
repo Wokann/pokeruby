@@ -3,7 +3,7 @@
 #include "trig.h"
 #include "battle_anim.h"
 #include "sound.h"
-#include "blend_palette.h"
+#include "util.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;

@@ -1,7 +1,7 @@
 #include "global.h"
 #include "constants/songs.h"
 #include "constants/weather.h"
-#include "blend_palette.h"
+#include "util.h"
 #include "event_object_movement.h"
 #include "field_weather.h"
 #include "main.h"

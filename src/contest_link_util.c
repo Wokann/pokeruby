@@ -1,7 +1,6 @@
 #include "global.h"
 #include "contest_link_util.h"
 #include "battle.h"
-#include "blend_palette.h"
 #include "constants/songs.h"
 #include "contest.h"
 #include "contest_link.h"

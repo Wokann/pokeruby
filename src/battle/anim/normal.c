@@ -1,7 +1,7 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_anim.h"
-#include "blend_palette.h"
+#include "util.h"
 #include "decompress.h"
 #include "ewram.h"
 #include "palette.h"

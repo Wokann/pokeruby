@@ -2,7 +2,7 @@
 #include "battle.h"
 #include "battle_gfx_sfx_util.h"
 #include "battle_anim.h"
-#include "blend_palette.h"
+#include "util.h"
 #include "contest.h"
 #include "data2.h"
 #include "decompress.h"

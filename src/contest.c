@@ -2,7 +2,6 @@
 #include "contest.h"
 #include "battle.h"
 #include "battle_anim.h"
-#include "blend_palette.h"
 #include "constants/event_objects.h"
 #include "constants/items.h"
 #include "constants/moves.h"

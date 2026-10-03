@@ -5,7 +5,7 @@
 #include "battle_anim.h"
 #include "battle_anim_special.h"
 #include "battle_interface.h"
-#include "blend_palette.h"
+#include "util.h"
 #include "contest.h"
 #include "data2.h"
 #include "decompress.h"
@@ -41,7 +41,6 @@ extern u8 gBattleControllerData[];
 extern struct MusicPlayerInfo gMPlayInfo_SE1;
 extern struct MusicPlayerInfo gMPlayInfo_SE2;
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
-extern u32 gBitTable[];
 extern u16 gBattleTypeFlags;
 extern u8 gBattleMonForms[];
 extern u8 gBattleAnimAttacker;
