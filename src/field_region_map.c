@@ -8,16 +8,38 @@
 #include "strings2.h"
 #include "text.h"
 #include "ewram.h"
+#include "constants/rgb.h"
+
+enum
+{
+    TAG_PLAYER_ICON,
+    TAG_CURSOR,
+};
+
+enum
+{
+    FIELD_REGION_MAP_STATE_INIT,
+    FIELD_REGION_MAP_STATE_WAIT_FADE_IN,
+    FIELD_REGION_MAP_STATE_HANDLE_INPUT,
+    FIELD_REGION_MAP_STATE_START_FADE_OUT,
+    FIELD_REGION_MAP_STATE_WAIT_FADE_OUT,
+};
+
+static void MCB2_InitRegionMapRegisters(void);
+static void VBCB_FieldUpdateRegionMap(void);
+static void MCB2_FieldUpdateRegionMap(void);
+static void FieldUpdateRegionMap(void);
+static void PrintRegionMapSecName(void);
 
 void FieldInitRegionMap(MainCallback callback)
 {
     SetVBlankCallback(NULL);
-    sRegionMapState.buffer.state = 0;
+    sRegionMapState.buffer.state = FIELD_REGION_MAP_STATE_INIT;
     sRegionMapState.callback = callback;
     SetMainCallback2(MCB2_InitRegionMapRegisters);
 }
 
-void MCB2_InitRegionMapRegisters(void)
+static void MCB2_InitRegionMapRegisters(void)
 {
     REG_DISPCNT = 0;
     REG_BG0HOFS = 0;
@@ -30,9 +52,9 @@ void MCB2_InitRegionMapRegisters(void)
     REG_BG3VOFS = 0;
     ResetSpriteData();
     FreeAllSpritePalettes();
-    InitRegionMap(&sRegionMapState.regionMap, 0);
-    CreateRegionMapPlayerIcon(0, 0);
-    CreateRegionMapCursor(1, 1);
+    InitRegionMap(&sRegionMapState.regionMap, FALSE);
+    CreateRegionMapPlayerIcon(TAG_PLAYER_ICON, TAG_PLAYER_ICON);
+    CreateRegionMapCursor(TAG_CURSOR, TAG_CURSOR);
     Text_LoadWindowTemplate(&gMenuWindowTemplateBg0);
     InitMenuWindow(&gMenuWindowTemplateBg0);
     Menu_EraseScreen();
@@ -43,17 +65,17 @@ void MCB2_InitRegionMapRegisters(void)
     PrintRegionMapSecName();
     SetMainCallback2(MCB2_FieldUpdateRegionMap);
     SetVBlankCallback(VBCB_FieldUpdateRegionMap);
-    BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
 }
 
-void VBCB_FieldUpdateRegionMap(void)
+static void VBCB_FieldUpdateRegionMap(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
 }
 
-void MCB2_FieldUpdateRegionMap(void)
+static void MCB2_FieldUpdateRegionMap(void)
 {
     FieldUpdateRegionMap();
     AnimateSprites();
@@ -61,19 +83,19 @@ void MCB2_FieldUpdateRegionMap(void)
     UpdatePaletteFade();
 }
 
-void FieldUpdateRegionMap(void)
+static void FieldUpdateRegionMap(void)
 {
     switch (sRegionMapState.buffer.state)
     {
-    case 0:
+    case FIELD_REGION_MAP_STATE_INIT:
         REG_DISPCNT = DISPCNT_MODE_1 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG2_ON | DISPCNT_OBJ_ON;
         sRegionMapState.buffer.state++;
         break;
-    case 1:
+    case FIELD_REGION_MAP_STATE_WAIT_FADE_IN:
         if (!gPaletteFade.active)
             sRegionMapState.buffer.state++;
         break;
-    case 2:
+    case FIELD_REGION_MAP_STATE_HANDLE_INPUT:
         switch (DoRegionMapInputCallback())
         {
         case MAP_INPUT_MOVE_END:
@@ -84,11 +106,11 @@ void FieldUpdateRegionMap(void)
             sRegionMapState.buffer.state++;
         }
         break;
-    case 3:
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
+    case FIELD_REGION_MAP_STATE_START_FADE_OUT:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
         sRegionMapState.buffer.state++;
         break;
-    case 4:
+    case FIELD_REGION_MAP_STATE_WAIT_FADE_OUT:
         if (!gPaletteFade.active)
         {
             FreeRegionMapIconResources();
@@ -98,7 +120,7 @@ void FieldUpdateRegionMap(void)
     }
 }
 
-void PrintRegionMapSecName(void)
+static void PrintRegionMapSecName(void)
 {
     Menu_BlankWindowRect(17, 17, 28, 18);
     if (sRegionMapState.regionMap.mapSecType != MAPSECTYPE_NONE)
