@@ -813,9 +813,9 @@ const u8 gBattleAnimBackgroundTilemap_02[] = INCBIN_U8("graphics/battle_anims/ba
 const u8 gBattleAnimSpritePalette_287[] = INCBIN_U8("graphics/battle_anims/sprites/287.gbapal.lz");
 const u8 gBattleAnimBackgroundPalette_24[] = INCBIN_U8("graphics/battle_anims/backgrounds/24.gbapal.lz");
 const u8 unused_unknown_E6BC04[] = INCBIN_U8("graphics/unknown/unknown_E6BC04.bin.lz");
-const u8 gUnknown_08E6C100[] = INCBIN_U8("graphics/berry_blender/center.8bpp.lz");
-const u8 gUnknown_08E6C920[] = INCBIN_U8("graphics/berry_blender/outer.4bpp.lz");
-const u8 gUnknown_08E6D354[] = INCBIN_U8("graphics/berry_blender/outer_map.bin.lz");
+const u8 gBerryBlenderCenter_Gfx[] = INCBIN_U8("graphics/berry_blender/center.8bpp.lz");
+const u8 gBerryBlenderOuter_Gfx[] = INCBIN_U8("graphics/berry_blender/outer.4bpp.lz");
+const u8 gBerryBlenderOuter_Tilemap[] = INCBIN_U8("graphics/berry_blender/outer_map.bin.lz");
 const u8 gBattleAnimBackgroundPalette_16[] = INCBIN_U8("graphics/battle_anims/backgrounds/16.gbapal.lz");
 const u8 gBattleAnimBackgroundImage_16[] = INCBIN_U8("graphics/battle_anims/backgrounds/16.4bpp.lz");
 const u8 gBattleAnimBackgroundTilemap_16[] = INCBIN_U8("graphics/battle_anims/backgrounds/16.bin.lz");
@@ -1083,19 +1083,19 @@ const u16 gMiscClockFemale_Pal[] = INCBIN_U16("graphics/misc/clock2.gbapal"); //
 
 const u8 gSlotMachine_Gfx[] = INCBIN_U8("graphics/slot_machine/slots.4bpp.lz");
 const u8 gBattleInterfaceStatusIcons_DynPal[] = INCBIN_U8("graphics/battle_interface/status.gbapal");
-const u8 gUnusedArrowGfx[] = INCBIN_U8("graphics/unused/arrow.4bpp"); // unused
-const u8 gBerryBlenderMarubatsuTiles[] = INCBIN_U8("graphics/berry_blender/marubatsu.4bpp");
-const u8 gBerryBlenderParticlesTiles[] = INCBIN_U8("graphics/berry_blender/particles.4bpp");
+const u8 gBerryBlenderBetaArrow_Gfx[] = INCBIN_U8("graphics/berry_blender/arrow_old.4bpp"); // unused
+const u8 gBerryBlenderScoreSymbols_Gfx[] = INCBIN_U8("graphics/berry_blender/score_symbols.4bpp");
+const u8 gBerryBlenderParticles_Gfx[] = INCBIN_U8("graphics/berry_blender/particles.4bpp");
 
 asm(".space 0x120");
 
-const u8 gBerryBlenderCountdownNumbersTiles[] = INCBIN_U8("graphics/berry_blender/countdown_numbers.4bpp");
-const u8 gBerryBlenderStartTiles[] = INCBIN_U8("graphics/berry_blender/start.4bpp");
+const u8 gBerryBlenderCountdownNumbers_Gfx[] = INCBIN_U8("graphics/berry_blender/countdown_numbers.4bpp");
+const u8 gBerryBlenderStart_Gfx[] = INCBIN_U8("graphics/berry_blender/start.4bpp");
 const u8 gUnknown_08E91418[] = INCBIN_U8("graphics/unknown/unknown_E91418.bin");
 
 asm(".space 0x1E0");
 
-const u8 gBerryBlenderArrowTiles[] = INCBIN_U8("graphics/berry_blender/arrow.4bpp");
+const u8 gBerryBlenderPlayerArrow_Gfx[] = INCBIN_U8("graphics/berry_blender/arrow.4bpp");
 asm(".space 0x2C0");
 
 const u8 gBerryBlenderMiscPalette[] = INCBIN_U8("graphics/berry_blender/misc.gbapal");

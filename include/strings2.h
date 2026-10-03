@@ -5,8 +5,6 @@
 extern const u8 gOtherText_TopSpeed[];
 
 // berry_blender
-extern const u8 gMultiText_BerryBlenderMaxSpeedRecord[];
-extern const u8 gMultiText_2P3P4P[];
 extern const u8 gMultiText_Saving[];
 
 // link
@@ -282,27 +280,27 @@ extern const u8 gOtherText_PLink[];
 // berry_blender
 extern const u8 gOtherText_YesNoTerminating[];
 extern const u8 gOtherText_LinkNotFound[];
-extern const u8 gOtherText_BlenderChooseBerry[];
-extern const u8 gOtherText_PokeBlockMade[];
-extern const u8 gOtherText_PressAToStart[];
-extern const u8 gOtherText_PleaseWait[];
+extern const u8 sText_BerryBlenderStart[];
+extern const u8 sText_WasMade[];
+extern const u8 sText_PressAToStart[];
+extern const u8 sText_PleaseWaitAWhile[];
 extern const u8 gOtherText_LinkStandby3[];
-extern const u8 gOtherText_BlendAnotherBerryPrompt[];
-extern const u8 gOtherText_OutOfBerries[];
-extern const u8 gOtherText_CaseIsFull[];
-extern const u8 gOtherText_NoBerriesForBlend[];
-extern const u8 gOtherText_OtherCaseIsFull[];
-extern const u8 gOtherText_ResultsOfBlending[];
-extern const u8 gOtherText_Berry[];
-extern const u8 gOtherText_RequiredTime[];
-extern const u8 gOtherText_Min[];
-extern const u8 gOtherText_Sec[];
-extern const u8 gOtherText_MaxSpeed[];
-extern const u8 gOtherText_RPM[];
-extern const u8 gOtherText_Ranking[];
-extern const u8 gOtherText_BlockLevelIs[];
-extern const u8 gOtherText_BlockFeelIs[];
-extern const u8 gOtherText_Period[];
+extern const u8 sText_WouldLikeToBlendAnotherBerry[];
+extern const u8 sText_RunOutOfBerriesForBlending[];
+extern const u8 sText_YourPokeblockCaseIsFull[];
+extern const u8 sText_HasNoBerriesToPut[];
+extern const u8 sText_ApostropheSPokeblockCaseIsFull[];
+extern const u8 sText_BlendingResults[];
+extern const u8 sText_SpaceBerry[];
+extern const u8 sText_Time[];
+extern const u8 sText_Min[];
+extern const u8 sText_Sec[];
+extern const u8 sText_MaximumSpeed[];
+extern const u8 sText_RPM[];
+extern const u8 sText_Ranking[];
+extern const u8 sText_TheLevelIs[];
+extern const u8 sText_TheFeelIs[];
+extern const u8 sText_Dot2[];
 
 // reset_rtc_screen
 extern const u8 gOtherText_Day[];

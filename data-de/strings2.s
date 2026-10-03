@@ -7,11 +7,11 @@
 gOtherText_TopSpeed::
 	.string "TEMPO$"
 
-gMultiText_BerryBlenderMaxSpeedRecord:: @ 842C2E6
+gText_BlenderMaxSpeedRecord:: @ 842C2E6
 	.string "BEERENMIXER\n"
 	.string "MAXIMALTEMPO-REKORD!$"
 
-gMultiText_2P3P4P:: @ 842C30A
+gText_234Players:: @ 842C30A
 	.string "2 SPIELER\n"
 	.string "3 SPIELER\n"
 	.string "4 SPIELER$"
@@ -537,77 +537,77 @@ gOtherText_LinkNotFound:: @ 842D2D9
 	.string "Kein(e) Link-Partner gefunden.\n"
 	.string "Bitte erneut versuchen.\p$"
 
-gOtherText_BlenderChooseBerry:: @ 842D307
+sText_BerryBlenderStart:: @ 842D307
 	.string "BEERENMIXER wird gestartet.\p"
 	.string "Wähle die BEERE aus dem BEUTEL,\n"
 	.string "die in den BEERENMIXER soll.\p$"
 
-gOtherText_PokeBlockMade:: @ 842D368
+sText_WasMade:: @ 842D368
 	.string "{STR_VAR_1} wurde gemixt!$"
 
-gOtherText_PressAToStart:: @ 842D373
+sText_PressAToStart:: @ 842D373
 	.string "Drücke A-Knopf zum Starten.$"
 
-gOtherText_PleaseWait:: @ 842D390
+sText_PleaseWaitAWhile:: @ 842D390
 	.string "Bitte hab noch ein wenig Geduld.$"
 
 gOtherText_LinkStandby3:: @ 842D3A5
 	.string "Verbindung...$"
 
-gOtherText_BlendAnotherBerryPrompt:: @ 842D3B5
+sText_WouldLikeToBlendAnotherBerry:: @ 842D3B5
 	.string "Möchtest du noch eine BEERE mixen?$"
 
-gOtherText_OutOfBerries:: @ 842D3DC
+sText_RunOutOfBerriesForBlending:: @ 842D3DC
 	.string "Du hast keine BEEREN mehr zum\n"
 	.string "Mixen im BEERENMIXER.\p"
 	.string "$"
 
-gOtherText_CaseIsFull:: @ 842D41A
+sText_YourPokeblockCaseIsFull:: @ 842D41A
 	.string "Deine {POKEBLOCK}-BOX ist voll.\p$"
 
-gOtherText_NoBerriesForBlend:: @ 842D434
+sText_HasNoBerriesToPut:: @ 842D434
 	.string "{PLAYER} hat keine BEEREN\n"
 	.string "für den BEERENMIXER.$"
 
-gOtherText_OtherCaseIsFull:: @ 842D461
+sText_ApostropheSPokeblockCaseIsFull:: @ 842D461
 	.string "{POKEBLOCK}-BOX von {PLAYER} \n"
 	.string "ist voll.\n$"
 
-gOtherText_ResultsOfBlending:: @ 842D479
+sText_BlendingResults:: @ 842D479
 	.string "MIX-RESULTATE$"
 
 	.string "VERW. BEERE$"
 
-gOtherText_Berry:: @ 842D498
+sText_SpaceBerry:: @ 842D498
 	.string "{STR_VAR_1}BEERE$"
 
-gOtherText_RequiredTime:: @ 842D49F
+sText_Time:: @ 842D49F
 	.string "ZEIT BENÖTIGT$"
 
-gOtherText_Min:: @ 842D4AD
+sText_Min:: @ 842D4AD
 	.string "MIN.$"
 
-gOtherText_Sec:: @ 842D4B2
+sText_Sec:: @ 842D4B2
 	.string "SEK.$"
 
-gOtherText_MaxSpeed:: @ 842D4B7
+sText_MaximumSpeed:: @ 842D4B7
 	.string "MAXIMALTEMPO$"
 
-gOtherText_RPM:: @ 842D4C5
+sText_RPM:: @ 842D4C5
 	.string " RPM$"
 
 	.string ",$"
 
-gOtherText_Ranking:: @ 842D4CB
+sText_Ranking:: @ 842D4CB
 	.string "STUFE$"
 
-gOtherText_BlockLevelIs:: @ 842D4D3
+sText_TheLevelIs:: @ 842D4D3
 	.string "Der Level ist $"
 
-gOtherText_BlockFeelIs:: @ 842D4E1
+sText_TheFeelIs:: @ 842D4E1
 	.string " und die Würze ist $"
 
-gOtherText_Period:: @ 842D4F4
+sText_Dot2:: @ 842D4F4
 	.string ".$"
 
 gOtherText_Day:: @ 842D4F6

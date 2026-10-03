@@ -7,10 +7,10 @@
 gOtherText_TopSpeed::
 	.string "TOP SPEED$"
 
-gMultiText_BerryBlenderMaxSpeedRecord:: @ 842C2E6
+gText_BlenderMaxSpeedRecord:: @ 842C2E6
 	.string "BERRY BLENDER\nMAXIMUM SPEED RECORD!$"
 
-gMultiText_2P3P4P:: @ 842C30A
+gText_234Players:: @ 842C30A
 	.string "2 PLAYERS\n3 PLAYERS\n4 PLAYERS$"
 
 gMultiText_Saving:: @ 842C328
@@ -478,69 +478,69 @@ gOtherText_YesNoTerminating:: @ 842D2C5
 gOtherText_LinkNotFound:: @ 842D2D9
 	.string "Link partner(s) not found.\nPlease try again.\p$"
 
-gOtherText_BlenderChooseBerry:: @ 842D307
+sText_BerryBlenderStart:: @ 842D307
 	.string "Starting up the BERRY BLENDER.\pPlease select a BERRY from your BAG\nto put in the BERRY BLENDER.\p$"
 
-gOtherText_PokeBlockMade:: @ 842D368
+sText_WasMade:: @ 842D368
 	.string " was made!$"
 
-gOtherText_PressAToStart:: @ 842D373
+sText_PressAToStart:: @ 842D373
 	.string "Press the A Button to start.$"
 
-gOtherText_PleaseWait:: @ 842D390
+sText_PleaseWaitAWhile:: @ 842D390
 	.string "Please wait a while.$"
 
 gOtherText_LinkStandby3:: @ 842D3A5
 	.string "Link standby...$"
 
-gOtherText_BlendAnotherBerryPrompt:: @ 842D3B5
+sText_WouldLikeToBlendAnotherBerry:: @ 842D3B5
 	.string "Would you like to blend another BERRY?$"
 
-gOtherText_OutOfBerries:: @ 842D3DC
+sText_RunOutOfBerriesForBlending:: @ 842D3DC
 	.string "You've run out of BERRIES for\nblending in the BERRY BLENDER.\p$"
 
-gOtherText_CaseIsFull:: @ 842D41A
+sText_YourPokeblockCaseIsFull:: @ 842D41A
 	.string "Your {POKEBLOCK} CASE is full.\p$"
 
-gOtherText_NoBerriesForBlend:: @ 842D434
+sText_HasNoBerriesToPut:: @ 842D434
 	.string " has no BERRIES to put in\nthe BERRY BLENDER.$"
 
-gOtherText_OtherCaseIsFull:: @ 842D461
+sText_ApostropheSPokeblockCaseIsFull:: @ 842D461
 	.string "'s {POKEBLOCK} CASE is full.\p$"
 
-gOtherText_ResultsOfBlending:: @ 842D479
+sText_BlendingResults:: @ 842D479
 	.string "RESULTS OF BLENDING$"
 	.string "BERRY USED$"
 
-gOtherText_Berry:: @ 842D498
+sText_SpaceBerry:: @ 842D498
 	.string " BERRY$"
 
-gOtherText_RequiredTime:: @ 842D49F
+sText_Time:: @ 842D49F
 	.string "REQUIRED TIME$"
 
-gOtherText_Min:: @ 842D4AD
+sText_Min:: @ 842D4AD
 	.string "MIN.$"
 
-gOtherText_Sec:: @ 842D4B2
+sText_Sec:: @ 842D4B2
 	.string "SEC.$"
 
-gOtherText_MaxSpeed:: @ 842D4B7
+sText_MaximumSpeed:: @ 842D4B7
 	.string "MAXIMUM SPEED$"
 
-gOtherText_RPM:: @ 842D4C5
+sText_RPM:: @ 842D4C5
 	.string "RPM$"
 	.string ".$"
 
-gOtherText_Ranking:: @ 842D4CB
+sText_Ranking:: @ 842D4CB
 	.string "RANKING$"
 
-gOtherText_BlockLevelIs:: @ 842D4D3
+sText_TheLevelIs:: @ 842D4D3
 	.string "The level is $"
 
-gOtherText_BlockFeelIs:: @ 842D4E1
+sText_TheFeelIs:: @ 842D4E1
 	.string ", and the feel is $"
 
-gOtherText_Period:: @ 842D4F4
+sText_Dot2:: @ 842D4F4
 	.string ".$"
 
 gOtherText_Day:: @ 842D4F6
