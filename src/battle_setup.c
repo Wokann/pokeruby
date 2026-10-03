@@ -501,7 +501,7 @@ static void CreateBattleStartTask(u8 transition, u16 song)
     u8 taskId = CreateTask(Task_BattleStart, 1);
 
     gTasks[taskId].tTransition = transition;
-    current_map_music_set__default_for_battle(song);
+    PlayMapChosenOrBattleBGM(song);
 }
 
 #undef tState
@@ -876,7 +876,7 @@ static void CB2_GiveStarter(void)
     starterPoke = GetStarterPokemon(gSpecialVar_Result);
     ScriptGiveMon(starterPoke, 5, ITEM_NONE, 0, 0, 0);
     ResetTasks();
-    sub_80408BC();
+    PlayBattleBGM();
     SetMainCallback2(CB2_StartFirstBattle);
     BattleTransition_Start(0);
 }
@@ -1184,7 +1184,7 @@ void PlayTrainerEncounterMusic(void)
 
     if (sTrainerBattleMode != 1 && sTrainerBattleMode != 8)
     {
-        switch (sub_803FC58(gTrainerBattleOpponent))
+        switch (GetTrainerEncounterMusicId(gTrainerBattleOpponent))
         {
         case TRAINER_ENCOUNTER_MUSIC_MALE:
             music = MUS_ENCOUNTER_MALE;

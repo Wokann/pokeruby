@@ -133,15 +133,12 @@ u8 GetBattlerForBattleScript(u8 bankValue);
 static u8 AttacksThisTurn(u8 bank, u16 move); //Note: returns 1 if it's a charging turn, otherwise 2
 void UndoEffectsAfterFainting(void);
 void PlayBGM(u16 songID);
-void MonGainEVs(struct Pokemon*, u16 defeatedSpecies);
 extern u8 gBattleBufferB[4][0x200];
-bool8 IsTradedMon(struct Pokemon*);
 void BattleScriptPop(void);
 void SwitchInClearSetData(void);
 u8 GetSetPokedexFlag(u16 nationalNum, u8 caseID);
-u16 SpeciesToNationalPokedexNum(u16 species);
-u8 sub_803FC34(u8 bank);
-u16 sub_803FBFC(u8 a);
+u8 GetBattlerMultiplayerId(u8 bank);
+u16 GetLinkTrainerFlankId(u8 a);
 u8 GetBattlerAtPosition(u8 ID);
 void sub_8012258(u8);
 //MonTryLearningNewMove teach poke a move
@@ -153,7 +150,6 @@ u8 MenuCursor_Create814A5C0(u8 a1, u16 a2, u8 a3, u16 a4, u8 a5);
 void DestroyMenuCursor(void);
 void sub_802BC6C(void);
 u8 sub_809FA30(void);
-bool32 IsHMMove2(u16 move);
 void sub_802BBD4(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0);
 void nullsub_6(void);
 void ReshowBattleScreenAfterMenu(void);
@@ -4680,7 +4676,7 @@ static void atk4F_jumpifcantswitch(void)
         else
             party = gPlayerParty;
         val = 0;
-        if (sub_803FBFC(sub_803FC34(gActiveBattler)) == 1)
+        if (GetLinkTrainerFlankId(GetBattlerMultiplayerId(gActiveBattler)) == 1)
             val = 3;
         for (to_cmp = val + 3; val < to_cmp; val++)
         {
@@ -6714,7 +6710,7 @@ static void atk8F_forcerandomswitch(void)
         {
             valid = 0;
             val = 0;
-            if (sub_803FBFC(sub_803FC34(gBattlerTarget)) == 1)
+            if (GetLinkTrainerFlankId(GetBattlerMultiplayerId(gBattlerTarget)) == 1)
                 val = 3;
             for (i = val; i < val + 3; i++)
             {
@@ -6749,7 +6745,7 @@ static void atk8F_forcerandomswitch(void)
                 do
                 {
                     val = Random() % 3;
-                    if (sub_803FBFC(sub_803FC34(gBattlerTarget)) == 1)
+                    if (GetLinkTrainerFlankId(GetBattlerMultiplayerId(gBattlerTarget)) == 1)
                         i = val + 3;
                     else
                         i = val;

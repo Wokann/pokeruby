@@ -1707,7 +1707,7 @@ void sub_809C04C(void *pokemon, u8 a1)
             gPokemonStorageSystemPtr->unk_11f8 = GetMonData(pkmn, MON_DATA_LEVEL);
             gPokemonStorageSystemPtr->unk_11f7 = GetMonData(pkmn, MON_DATA_MARKINGS);
             gPokemonStorageSystemPtr->unk_11ec = GetMonData(pkmn, MON_DATA_PERSONALITY);
-            gPokemonStorageSystemPtr->unk_11e8 = GetMonSpritePal(pkmn);
+            gPokemonStorageSystemPtr->unk_11e8 = GetMonFrontSpritePal(pkmn);
             gender = GetMonGender(pkmn);
             gPokemonStorageSystemPtr->unk_11f2 = GetMonData(pkmn, MON_DATA_HELD_ITEM);
         }
@@ -1725,7 +1725,7 @@ void sub_809C04C(void *pokemon, u8 a1)
             gPokemonStorageSystemPtr->unk_11f8 = GetLevelFromBoxMonExp(boxmon);
             gPokemonStorageSystemPtr->unk_11f7 = GetBoxMonData(boxmon, MON_DATA_MARKINGS);
             gPokemonStorageSystemPtr->unk_11ec = GetBoxMonData(boxmon, MON_DATA_PERSONALITY);
-            gPokemonStorageSystemPtr->unk_11e8 = GetMonSpritePalFromOtIdPersonality(gPokemonStorageSystemPtr->unk_11f0, otId, gPokemonStorageSystemPtr->unk_11ec);
+            gPokemonStorageSystemPtr->unk_11e8 = GetMonSpritePalFromSpeciesAndPersonality(gPokemonStorageSystemPtr->unk_11f0, otId, gPokemonStorageSystemPtr->unk_11ec);
             gender = GetGenderFromSpeciesAndPersonality(gPokemonStorageSystemPtr->unk_11f0, gPokemonStorageSystemPtr->unk_11ec);
             gPokemonStorageSystemPtr->unk_11f2 = GetBoxMonData(boxmon, MON_DATA_HELD_ITEM);
         }

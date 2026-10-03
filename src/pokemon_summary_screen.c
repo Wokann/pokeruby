@@ -1992,7 +1992,7 @@ static void SummaryScreen_PlaceTextTile_White(u8 tile, u8 x, u8 y)
 
 bool8 sub_809FA94(struct Pokemon *mon)
 {
-    if (!IsShiny(mon))
+    if (!IsMonShiny(mon))
     {
         LoadPalette(sUnknown_083C157C, 4, 2);
         return FALSE;
@@ -3727,7 +3727,7 @@ u8 SummaryScreen_CreatePokemonSprite(struct Pokemon *mon)
     gSprites[spriteId].data[0] = species;
     gSprites[spriteId].callback = SummaryScreen_SpritePlayCry;
 
-    if (!IsPokeSpriteNotFlipped(species))
+    if (!IsMonSpriteNotFlipped(species))
         gSprites[spriteId].hFlip = TRUE;
     else
         gSprites[spriteId].hFlip = FALSE;

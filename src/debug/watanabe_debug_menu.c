@@ -1582,7 +1582,7 @@ void debug_80C51C8(u8 taskId)
 
 void debug_80C51E4(u8 taskId)
 {
-    sub_80408BC();
+    PlayBattleBGM();
     gMain.savedCallback = debug_80C41A8;
     SetMainCallback2(debug_sub_800D684);
 }
@@ -2767,9 +2767,9 @@ void debug_80C6FA8(u8 taskId)
     {
         gUnknown_Debug_2038A20->unk9 ^= 1;
         if (gUnknown_Debug_2038A20->unk9)
-            LoadCompressedPalette(GetMonSpritePalFromOtIdPersonality(gUnknown_Debug_2038A20->totalPoints, 0, 0), gUnknown_Debug_2038A20->unk6 * 16 + 0x100, 0x20);
+            LoadCompressedPalette(GetMonSpritePalFromSpeciesAndPersonality(gUnknown_Debug_2038A20->totalPoints, 0, 0), gUnknown_Debug_2038A20->unk6 * 16 + 0x100, 0x20);
         else
-            LoadCompressedPalette(GetMonSpritePalFromOtIdPersonality(gUnknown_Debug_2038A20->totalPoints, 0, 9), gUnknown_Debug_2038A20->unk6 * 16 + 0x100, 0x20);
+            LoadCompressedPalette(GetMonSpritePalFromSpeciesAndPersonality(gUnknown_Debug_2038A20->totalPoints, 0, 9), gUnknown_Debug_2038A20->unk6 * 16 + 0x100, 0x20);
         CpuCopy16(gPlttBufferUnfaded + gUnknown_Debug_2038A20->unk6 * 16 + 0x100, gPlttBufferUnfaded + 0x80, 32);
         CpuCopy16(gPlttBufferUnfaded + gUnknown_Debug_2038A20->unk6 * 16 + 0x100, gPlttBufferFaded + 0x80, 32);
         gTasks[taskId].func = debug_80C6EE8;
@@ -2974,7 +2974,7 @@ NAKED void debug_80C6FA8(u8 taskId)
         "\tldrh\tr0, [r1]\n"
         "\tmov\tr1, #0x0\n"
         "\tmov\tr2, #0x0\n"
-        "\tbl\tGetMonSpritePalFromOtIdPersonality\n"
+        "\tbl\tGetMonSpritePalFromSpeciesAndPersonality\n"
         "\tldr\tr1, [r4]\n"
         "\tldrb\tr1, [r1, #0x6]\n"
         "\tlsl\tr1, r1, #0x14\n"
@@ -2993,7 +2993,7 @@ NAKED void debug_80C6FA8(u8 taskId)
         "\tldrh\tr0, [r1]\n"
         "\tmov\tr1, #0x0\n"
         "\tmov\tr2, #0x9\n"
-        "\tbl\tGetMonSpritePalFromOtIdPersonality\n"
+        "\tbl\tGetMonSpritePalFromSpeciesAndPersonality\n"
         "\tldr\tr1, [r4]\n"
         "\tldrb\tr1, [r1, #0x6]\n"
         "\tlsl\tr1, r1, #0x14\n"
@@ -3376,11 +3376,11 @@ void debug_80C7B14(u8 taskId)
         gUnknown_Debug_2038A20->unk9 ^= 1;
         if (gUnknown_Debug_2038A20->unk9)
         {
-            LoadCompressedPalette(GetMonSpritePalFromOtIdPersonality(gUnknown_Debug_2038A20->totalPoints, 0, 0), gUnknown_Debug_2038A20->unk6 * 16 + 0x100, 0x20);
+            LoadCompressedPalette(GetMonSpritePalFromSpeciesAndPersonality(gUnknown_Debug_2038A20->totalPoints, 0, 0), gUnknown_Debug_2038A20->unk6 * 16 + 0x100, 0x20);
         }
         else
         {
-            LoadCompressedPalette(GetMonSpritePalFromOtIdPersonality(gUnknown_Debug_2038A20->totalPoints, 0, 9), gUnknown_Debug_2038A20->unk6 * 16 + 0x100, 0x20);
+            LoadCompressedPalette(GetMonSpritePalFromSpeciesAndPersonality(gUnknown_Debug_2038A20->totalPoints, 0, 9), gUnknown_Debug_2038A20->unk6 * 16 + 0x100, 0x20);
         }
         CpuCopy16(gPlttBufferUnfaded + gUnknown_Debug_2038A20->unk6 * 16 + 0x100, gPlttBufferUnfaded + 0x80, 32);
         CpuCopy16(gPlttBufferUnfaded + gUnknown_Debug_2038A20->unk6 * 16 + 0x100, gPlttBufferFaded + 0x80, 32);
@@ -3578,7 +3578,7 @@ NAKED void debug_80C7B14(u8 taskId)
         "\tldrh\tr0, [r1]\n"
         "\tmov\tr1, #0x0\n"
         "\tmov\tr2, #0x0\n"
-        "\tbl\tGetMonSpritePalFromOtIdPersonality\n"
+        "\tbl\tGetMonSpritePalFromSpeciesAndPersonality\n"
         "\tldr\tr1, [r4]\n"
         "\tldrb\tr1, [r1, #0x6]\n"
         "\tlsl\tr1, r1, #0x14\n"
@@ -3597,7 +3597,7 @@ NAKED void debug_80C7B14(u8 taskId)
         "\tldrh\tr0, [r1]\n"
         "\tmov\tr1, #0x0\n"
         "\tmov\tr2, #0x9\n"
-        "\tbl\tGetMonSpritePalFromOtIdPersonality\n"
+        "\tbl\tGetMonSpritePalFromSpeciesAndPersonality\n"
         "\tldr\tr1, [r4]\n"
         "\tldrb\tr1, [r1, #0x6]\n"
         "\tlsl\tr1, r1, #0x14\n"

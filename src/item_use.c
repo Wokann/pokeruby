@@ -899,7 +899,7 @@ void sub_80CA2BC(u8 taskId)
     {
         PlaySE(SE_USE_ITEM);
         RemoveBagItem(gSpecialVar_ItemId, 1);
-        DisplayItemMessageOnField(taskId, sub_803F378(gSpecialVar_ItemId), sub_80CA294, 1);
+        DisplayItemMessageOnField(taskId, UseStatIncreaseItem(gSpecialVar_ItemId), sub_80CA294, 1);
     }
 }
 

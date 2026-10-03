@@ -68,7 +68,7 @@ struct MoveTutorMenu
     u8 previousCursorPos;
     bool8 redrawCursor;
     bool8 redrawMoveSelectionWindow;
-    u16 movesToLearn[MAX_MOVE_TUTOR_MOVES];
+    u16 movesToLearn[MAX_LEVEL_UP_MOVES];
     u8 filler48[10];
     u8 moveNames[6][25];
     u8 fillerE8[475];
@@ -741,7 +741,7 @@ static void ResetMoveTutorMenu(void)
     sMoveTutorMenu->redrawMoveSelectionWindow = 0;
     sMoveTutorMenu->redrawMoveInfoWindow = FALSE;
     sMoveTutorMenu->showContestInfo = FALSE;
-    for (i = 0; i < MAX_MOVE_TUTOR_MOVES; i++)
+    for (i = 0; i < MAX_LEVEL_UP_MOVES; i++)
         sMoveTutorMenu->movesToLearn[i] = 0;
 }
 
@@ -808,7 +808,7 @@ static void InitMoveTutorMenuStrings(void)
     s32 i;
     u8 nickname[POKEMON_NAME_LENGTH + 1];
 
-    sMoveTutorMenu->numMenuChoices = GetMoveTutorMoves(&gPlayerParty[sMoveTutorMenu->partyMonIndex], sMoveTutorMenu->movesToLearn);
+    sMoveTutorMenu->numMenuChoices = GetMoveRelearnerMoves(&gPlayerParty[sMoveTutorMenu->partyMonIndex], sMoveTutorMenu->movesToLearn);
     for (i = 0; i < sMoveTutorMenu->numMenuChoices; i++)
         StringCopy(sMoveTutorMenu->moveNames[i], gMoveNames[sMoveTutorMenu->movesToLearn[i]]);
     GetMonData(&gPlayerParty[sMoveTutorMenu->partyMonIndex], MON_DATA_NICKNAME, nickname);

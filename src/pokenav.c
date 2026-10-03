@@ -3766,7 +3766,7 @@ void sub_80F4824(s16 arg0, u8 arg1)
             species,
             personality);
 
-        LZ77UnCompWram(GetMonSpritePalFromOtIdPersonality(species, otId, personality), gPokenavStructPtr->unk0[arg1]);
+        LZ77UnCompWram(GetMonSpritePalFromSpeciesAndPersonality(species, otId, personality), gPokenavStructPtr->unk0[arg1]);
         gPokenavStructPtr->unkD1D6[arg1] = species;
     }
 }

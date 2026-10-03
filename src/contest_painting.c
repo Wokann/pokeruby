@@ -317,7 +317,7 @@ static void InitContestMonPixels(u16 species, u8 arg1)
 {
     const void *pal;
 
-    pal = GetMonSpritePalFromOtIdPersonality(species, gContestPaintingWinner->otId, gContestPaintingWinner->personality);
+    pal = GetMonSpritePalFromSpeciesAndPersonality(species, gContestPaintingWinner->otId, gContestPaintingWinner->personality);
     LZDecompressVram(pal, gContestPaintingMonPalette);
 
     if (arg1 == 0)

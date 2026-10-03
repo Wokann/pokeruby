@@ -1043,7 +1043,7 @@ u8 CreateContestantSprite(u16 species, u32 otId, u32 personality)
         gMonSpriteGfx_Sprite_ptr[0],
         species,
         personality);
-    lzPaletteData = GetMonSpritePalFromOtIdPersonality(species, otId, personality);
+    lzPaletteData = GetMonSpritePalFromSpeciesAndPersonality(species, otId, personality);
     LoadCompressedPalette(lzPaletteData, 0x120, 32);
     SetMultiuseSpriteTemplateToPokemon(species, 0);
     spriteId = CreateSprite(&gMultiuseSpriteTemplate, 112, GetBattlerSpriteFinal_Y(2, species, 0), 30);

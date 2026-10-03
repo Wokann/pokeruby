@@ -29,9 +29,7 @@ extern void nullsub_13(void);
 extern void CB2_SetUpReshowBattleScreenAfterMenu(void);
 extern void sub_80A6DCC(void);
 extern u8 *sub_8040D08();
-extern void SetMonPreventsSwitchingString(void);
 extern void ReshowBattleScreenDummy();
-extern u8 sub_803FBBC(void);
 
 extern u8 gPlayerPartyCount;
 extern u8 gBattlersCount;
@@ -90,7 +88,7 @@ void unref_sub_8094940(struct PokemonStorage *ptr)
 
 void sub_8094958(void)
 {
-    sub_8094998(gBattlePartyCurrentOrder, sub_803FBBC());
+    sub_8094998(gBattlePartyCurrentOrder, GetPlayerFlankId());
 }
 
 void sub_8094978(u8 arg1, u8 arg2)

@@ -58,12 +58,10 @@ struct EvoInfo
     u8 unkA0C4; // 0x201E8C4
 };
 
-void EvolutionRenameMon(struct Pokemon *mon, u16 oldSpecies, u16 newSpecies);
 void sub_8023A80(void);
 void sub_802BC6C(void);
 void sub_8023AD8(void);
 void nullsub_6(void);
-bool32 IsHMMove2(u16 move);
 
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern u8 gBattleEnvironment;

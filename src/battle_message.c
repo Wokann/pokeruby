@@ -198,7 +198,7 @@ void ChooseTypeOfMoveUsedString(u8* textBuff);
 void ExpandBattleTextBuffPlaceholders(u8* src, u8* dst);
 
 u8 GetBattlerSide(u8 bank);
-s32 sub_803FC34(u16);
+s32 GetBattlerMultiplayerId(u16);
 void get_trainer_name(u8* dst);
 u8 get_trainer_class_name_index(void);
 u8 GetMultiplayerId(void);
@@ -743,16 +743,16 @@ u32 BattleStringExpandPlaceholders(const u8* src, u8* dst)
                 toCpy = gLinkPlayers[multiplayerID].name;
                 break;
             case B_TXT_LINK_PARTNER_NAME: // link partner name?
-                toCpy = gLinkPlayers[sub_803FC34(2 ^ gLinkPlayers[multiplayerID].id)].name;
+                toCpy = gLinkPlayers[GetBattlerMultiplayerId(2 ^ gLinkPlayers[multiplayerID].id)].name;
                 break;
             case B_TXT_LINK_OPPONENT1_NAME: // link opponent 1 name?
-                toCpy = gLinkPlayers[sub_803FC34(1 ^ gLinkPlayers[multiplayerID].id)].name;
+                toCpy = gLinkPlayers[GetBattlerMultiplayerId(1 ^ gLinkPlayers[multiplayerID].id)].name;
                 break;
             case B_TXT_LINK_OPPONENT2_NAME: // link opponent 2 name?
-                toCpy = gLinkPlayers[sub_803FC34(3 ^ gLinkPlayers[multiplayerID].id)].name;
+                toCpy = gLinkPlayers[GetBattlerMultiplayerId(3 ^ gLinkPlayers[multiplayerID].id)].name;
                 break;
             case B_TXT_LINK_SCR_TRAINER_NAME: // link scripting active name
-                toCpy = gLinkPlayers[sub_803FC34(gBattleStruct->battler)].name;
+                toCpy = gLinkPlayers[GetBattlerMultiplayerId(gBattleStruct->battler)].name;
                 break;
             case B_TXT_PLAYER_NAME: // player name
                 toCpy = gSaveBlock2.playerName;

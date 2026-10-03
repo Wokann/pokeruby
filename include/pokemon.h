@@ -449,62 +449,67 @@ void RemoveMonPPBonus(struct Pokemon *mon, u8 moveIndex);
 void RemoveBattleMonPPBonus(struct BattlePokemon *mon, u8 moveIndex);
 void CopyPlayerPartyMonToBattleData(u8 battler, u8 partyIndex);
 
+bool8 HealStatusConditions(struct Pokemon *mon, u32 unused, u32 healMask, u8 battler);
+u8 GetItemEffectParamOffset(u16 itemId, u8 effectByte, u8 effectBit);
+u8 *UseStatIncreaseItem(u16 itemId);
 u8 GetNature(struct Pokemon *mon);
 u8 GetNatureFromPersonality(u32 personality);
-
-u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 type, u16 evolutionItem);
-
-u16 nature_stat_mod(u8 nature, u16 n, u8 statIndex);
-
-void MonRestorePP(struct Pokemon *);
-
-u8 *sub_803F378(u16 itemId);
-
-u16 SpeciesToPokedexNum(u16 species);
+u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 mode, u16 evolutionItem);
+u16 HoennPokedexNumToSpecies(u16 hoennNum);
 u16 NationalPokedexNumToSpecies(u16 nationalNum);
-u16 NationalToHoennOrder(u16);
-u16 SpeciesToNationalPokedexNum(u16);
-u16 HoennToNationalOrder(u16);
+u16 NationalToHoennOrder(u16 nationalNum);
+u16 SpeciesToNationalPokedexNum(u16 species);
+u16 SpeciesToHoennPokedexNum(u16 species);
+u16 HoennToNationalOrder(u16 hoennNum);
 u16 SpeciesToCryId(u16 species);
-void DrawSpindaSpots(u16, u32, u8 *, u8);
-u8 sub_803FBBC(void);
-u8 sub_803FC58(u16);
-void AdjustFriendship(struct Pokemon *, u8);
-u8 CheckPartyHasHadPokerus(struct Pokemon *, u8);
-void UpdatePartyPokerusTime(u16);
-u32 CanMonLearnTMHM(struct Pokemon *, u8);
-u8 GetMoveTutorMoves(struct Pokemon *mon, u16 *moves);
-u8 sub_8040574(struct Pokemon *party);
+void DrawSpindaSpots(u16 species, u32 personality, u8 *dest, u8 isFrontPic);
+void EvolutionRenameMon(struct Pokemon *mon, u16 oldSpecies, u16 newSpecies);
+bool8 GetPlayerFlankId(void);
+u16 ModifyStatByNature(u8 nature, u16 stat, u8 statIndex);
+void AdjustFriendship(struct Pokemon *mon, u8 event);
+void MonGainEVs(struct Pokemon *mon, u16 defeatedSpecies);
+u16 GetMonEVCount(struct Pokemon *mon);
+void RandomlyGivePartyPokerus(struct Pokemon *party);
+u8 CheckPartyPokerus(struct Pokemon *party, u8 selection);
+u8 CheckPartyHasHadPokerus(struct Pokemon *party, u8 selection);
+void UpdatePartyPokerusTime(u16 days);
+void PartySpreadPokerus(struct Pokemon *party);
+bool8 TryIncrementMonLevel(struct Pokemon *mon);
+u32 CanMonLearnTMHM(struct Pokemon *mon, u8 tm);
+u8 GetMoveRelearnerMoves(struct Pokemon *mon, u16 *moves);
+u8 GetLevelUpMovesBySpecies(u16 species, u16 *moves);
+u8 GetNumberOfRelearnableMoves(struct Pokemon *mon);
+u16 SpeciesToPokedexNum(u16 species);
 void ClearBattleMonForms(void);
-void sub_80408BC();
-void current_map_music_set__default_for_battle(u16);
-const u8 *GetMonSpritePal(struct Pokemon *mon);
-const u8 *GetMonSpritePalFromOtIdPersonality(u16, u32, u32);
-const struct CompressedSpritePalette *GetMonSpritePalStructFromOtIdPersonality(u16, u32, u32);
-bool8 IsOtherTrainer(u32, u8 *);
+const u8 *GetMonFrontSpritePal(struct Pokemon *mon);
+const u8 *GetMonSpritePalFromSpeciesAndPersonality(u16 species, u32 otId, u32 personality);
+const struct CompressedSpritePalette *GetMonSpritePalStruct(struct Pokemon *mon);
+const struct CompressedSpritePalette *GetMonSpritePalStructFromOtIdPersonality(u16 species, u32 otId , u32 personality);
+bool32 IsHMMove2(u16 move);
+bool8 IsMonSpriteNotFlipped(u16 species);
+s8 GetMonFlavorRelation(struct Pokemon *mon, u8 flavor);
+s8 GetFlavorRelationByPersonality(u32 personality, u8 flavor);
+bool8 IsTradedMon(struct Pokemon *mon);
+bool8 IsOtherTrainer(u32 otId, u8 *otName);
+void MonRestorePP(struct Pokemon *mon);
+void BoxMonRestorePP(struct BoxPokemon *boxMon);
 void SetMonPreventsSwitchingString(void);
 void SetWildMonHeldItem(void);
+bool8 IsMonShiny(struct Pokemon *mon);
+bool8 IsShinyOtIdPersonality(u32 otId, u32 personality);
+
+u8 GetTrainerEncounterMusicId(u16 trainerOpponentId);
+u16 GetBattleBGM(void);
+void PlayBattleBGM(void);
+void PlayMapChosenOrBattleBGM(u16 songId);
 u8 *sub_8040D08();
 bool32 ShouldHideGenderIconForLanguage(u16 species, u8 *name, u8 language);
 bool32 ShouldHideGenderIcon(u16 species, u8 *name);
-s8 sub_8040A54(struct Pokemon *, u8);
-u16 GetMonEVCount(struct Pokemon *);
-u16 GetEvolutionTargetSpecies(struct Pokemon *, u8, u16);
-const struct CompressedSpritePalette *GetMonSpritePalStruct(struct Pokemon *);
-bool8 IsPokeSpriteNotFlipped(u16);
-u8 GetLevelUpMovesBySpecies(u16, u16 *);
-u8 TryIncrementMonLevel(struct Pokemon *);
-bool8 IsShiny(struct Pokemon *mon);
-void RandomlyGivePartyPokerus(struct Pokemon *party);
-void PartySpreadPokerus(struct Pokemon *party);
 
 struct Sprite *sub_80F7920(u16, u16, const u16 *);
-void BoxMonRestorePP(struct BoxPokemon *);
 
 bool8 ExecuteTableBasedItemEffect(struct Pokemon *mon, u16 item, u8 partyIndex, u8 moveIndex);
 bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 moveIndex, u8 usedByAI);
-bool8 HealStatusConditions(struct Pokemon *mon, u32 unused, u32 healMask, u8 battleId);
-u8 GetItemEffectParamOffset(u16 itemId, u8 effectByte, u8 effectBit);
 
 #if DEBUG && !(ENGLISH && REVISION == 0)
 void Nakamura_NakaGenderTest_RecalcStats(struct Pokemon *);

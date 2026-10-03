@@ -1601,7 +1601,7 @@ static u16 sub_813CE88(u16 species, s16 x, s16 y, u16 d, u8 front)
         LoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, (void *)EWRAM, gUnknown_0840B5A0[d], species, 0, 1);
     else
         LoadSpecialPokePic(&gMonBackPicTable[species], gMonBackPicCoords[species].coords, gMonBackPicCoords[species].y_offset, (void *)EWRAM, gUnknown_0840B5A0[d], species, 0, 0);
-    lzPaletteData = GetMonSpritePalFromOtIdPersonality(species, 0, 0xFFFF);
+    lzPaletteData = GetMonSpritePalFromSpeciesAndPersonality(species, 0, 0xFFFF);
     LoadCompressedPalette(lzPaletteData, 0x100 + d * 0x10, 0x20);
     sub_8143648(d, d);
     spriteId = CreateSprite(&gMultiuseSpriteTemplate, x, y, (d + 1) * 4);

@@ -779,7 +779,7 @@ static void sub_8136F74(struct Pokeblock *pokeblock, struct Pokemon *pokemon)
         boost = amount / 10;
         if (amount % 10 >= 5) // round to the nearest
             boost++;
-        taste = sub_8040A54(pokemon, gUnknown_0840612C[i]);
+        taste = GetMonFlavorRelation(pokemon, gUnknown_0840612C[i]);
         if (taste == direction)
         {
             gUnknown_02039304->unk66[i] += boost * taste;

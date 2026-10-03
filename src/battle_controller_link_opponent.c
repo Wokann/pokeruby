@@ -11,6 +11,7 @@
 #include "main.h"
 #include "palette.h"
 #include "pokeball.h"
+#include "pokemon.h"
 #include "rom_8077ABC.h"
 #include "constants/songs.h"
 #include "sound.h"
@@ -55,7 +56,7 @@ static void SwitchIn_TryShinyAnim(void);
 extern void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *);
 extern u8 DoPokeballSendOutAnimation();
 static void FreeMonSpriteAfterSwitchOutAnim(void);
-extern s32 sub_803FC34(u16);
+extern s32 GetBattlerMultiplayerId(u16);
 extern void SpriteCB_TrainerSlideIn(struct Sprite *);
 static void CompleteOnBattlerSpriteCallbackDummy(void);
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
@@ -1222,7 +1223,7 @@ void LinkOpponentHandleTrainerThrow(void)
             xOffset = -16;
         else
             xOffset = 16;
-        gender = gLinkPlayers[sub_803FC34(gActiveBattler)].gender;
+        gender = gLinkPlayers[GetBattlerMultiplayerId(gActiveBattler)].gender;
     }
     else
     {

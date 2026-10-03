@@ -10,7 +10,6 @@
 #include "link.h"
 #include "m4a.h"
 #include "main.h"
-#include "move_tutor_menu.h"
 #include "pokemon.h"
 #include "pokedex.h"
 #include "random.h"
@@ -62,7 +61,7 @@ extern u8 BattleText_MistShroud[];
 extern u8 BattleText_GetPumped[];
 extern u8 *gUnknown_08400F58[];
 
-bool8 HealStatusConditions(struct Pokemon *mon, u32 unused, u32 healMask, u8 battleId)
+bool8 HealStatusConditions(struct Pokemon *mon, u32 unused, u32 healMask, u8 battler)
 {
     u32 status = GetMonData(mon, MON_DATA_STATUS, 0);
 
@@ -70,8 +69,8 @@ bool8 HealStatusConditions(struct Pokemon *mon, u32 unused, u32 healMask, u8 bat
     {
         status &= ~healMask;
         SetMonData(mon, MON_DATA_STATUS, &status);
-        if (gMain.inBattle && battleId != 4)
-            gBattleMons[battleId].status1 &= ~healMask;
+        if (gMain.inBattle && battler != 4)
+            gBattleMons[battler].status1 &= ~healMask;
         return FALSE;
     }
     else
@@ -87,7 +86,7 @@ u8 GetItemEffectParamOffset(u16 itemId, u8 effectByte, u8 effectBit)
     u8 offset;
     int i;
     u8 j;
-    u8 val;
+    u8 effectFlags;
 
     offset = 6;
 
@@ -115,31 +114,31 @@ u8 GetItemEffectParamOffset(u16 itemId, u8 effectByte, u8 effectBit)
                 return 0;
             break;
         case 4:
-            val = itemEffect[4];
-            if (val & 0x20)
-                val &= 0xDF;
+            effectFlags = itemEffect[4];
+            if (effectFlags & 0x20)
+                effectFlags &= 0xDF;
             j = 0;
-            while (val)
+            while (effectFlags)
             {
-                if (val & 1)
+                if (effectFlags & 1)
                 {
                     switch (j)
                     {
                     case 2:
-                        if (val & 0x10)
-                            val &= 0xEF;
+                        if (effectFlags & 0x10)
+                            effectFlags &= 0xEF;
                     case 0:
-                        if (i == effectByte && (val & effectBit))
+                        if (i == effectByte && (effectFlags & effectBit))
                             return offset;
                         offset++;
                         break;
                     case 1:
-                        if (i == effectByte && (val & effectBit))
+                        if (i == effectByte && (effectFlags & effectBit))
                             return offset;
                         offset++;
                         break;
                     case 3:
-                        if (i == effectByte && (val & effectBit))
+                        if (i == effectByte && (effectFlags & effectBit))
                             return offset;
                         offset++;
                         break;
@@ -150,17 +149,17 @@ u8 GetItemEffectParamOffset(u16 itemId, u8 effectByte, u8 effectBit)
                     }
                 }
                 j++;
-                val >>= 1;
+                effectFlags >>= 1;
                 if (i == effectByte)
                     effectBit >>= 1;
             }
             break;
         case 5:
-            val = itemEffect[5];
+            effectFlags = itemEffect[5];
             j = 0;
-            while (val)
+            while (effectFlags)
             {
-                if (val & 1)
+                if (effectFlags & 1)
                 {
                     switch (j)
                     {
@@ -171,7 +170,7 @@ u8 GetItemEffectParamOffset(u16 itemId, u8 effectByte, u8 effectBit)
                     case 4:
                     case 5:
                     case 6:
-                        if (i == effectByte && (val & effectBit))
+                        if (i == effectByte && (effectFlags & effectBit))
                             return offset;
                         offset++;
                         break;
@@ -182,7 +181,7 @@ u8 GetItemEffectParamOffset(u16 itemId, u8 effectByte, u8 effectBit)
                     }
                 }
                 j++;
-                val >>= 1;
+                effectFlags >>= 1;
                 if (i == effectByte)
                     effectBit >>= 1;
             }
@@ -193,17 +192,17 @@ u8 GetItemEffectParamOffset(u16 itemId, u8 effectByte, u8 effectBit)
     return offset;
 }
 
-const u8 gUnknown_082082F8[] = {1, 1, 3, 2, 4, 6};
+static const u8 sStatsToRaise[] = {1, 1, 3, 2, 4, 6};
 
-void sub_803F324(int stat)
+static void BufferStatRoseMessage(int statIdx)
 {
     gBattlerTarget = gBattlerInMenuId;
-    StringCopy(gBattleTextBuff1, gUnknown_08400F58[gUnknown_082082F8[stat]]);
+    StringCopy(gBattleTextBuff1, gUnknown_08400F58[sStatsToRaise[statIdx]]);
     StringCopy(gBattleTextBuff2, BattleText_Rose);
     BattleStringExpandPlaceholdersToDisplayedString(BattleText_UnknownString3);
 }
 
-u8 *sub_803F378(u16 itemId)
+u8 *UseStatIncreaseItem(u16 itemId)
 {
     int i;
     const u8 *itemEffect;
@@ -229,12 +228,12 @@ u8 *sub_803F378(u16 itemId)
     for (i = 0; i < 3; i++)
     {
         if (itemEffect[i] & 0xF)
-            sub_803F324(i * 2);
+            BufferStatRoseMessage(i * 2);
         if (itemEffect[i] & 0xF0)
         {
             if (i)
             {
-                sub_803F324(i * 2 + 1);
+                BufferStatRoseMessage(i * 2 + 1);
             }
             else
             {
@@ -263,7 +262,7 @@ u8 GetNatureFromPersonality(u32 personality)
     return personality % 25;
 }
 
-u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 type, u16 evolutionItem)
+u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 mode, u16 evolutionItem)
 {
     int i;
     u16 targetSpecies = 0;
@@ -281,10 +280,10 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 type, u16 evolutionItem)
     else
         holdEffect = ItemId_GetHoldEffect(heldItem);
 
-    if (holdEffect == HOLD_EFFECT_PREVENT_EVOLVE && type != 3)
+    if (holdEffect == HOLD_EFFECT_PREVENT_EVOLVE && mode != 3)
         return 0;
 
-    switch (type)
+    switch (mode)
     {
     case 0:
         level = GetMonData(mon, MON_DATA_LEVEL, 0);
@@ -471,41 +470,41 @@ u16 SpeciesToCryId(u16 species)
     return gSpeciesIdToCryId[species - ((SPECIES_OLD_UNOWN_Z + 1) - 1)];
 }
 
-void unref_sub_803F938(u16 species, u32 personality, u8 *dest)
+static void UNUSED DrawSpindaSpotsUnused(u16 species, u32 personality, u8 *dest)
 {
     if (species == SPECIES_SPINDA && dest != gMonSpriteGfx_Sprite_ptr[0] && dest != gMonSpriteGfx_Sprite_ptr[2])
     {
         int i;
         for (i = 0; i < 4; i++)
         {
-            int j;
+            int row;
             u8 x = gSpindaSpotGraphics[i].x + ((personality & 0x0F) - 8);
             u8 y = gSpindaSpotGraphics[i].y + (((personality & 0xF0) >> 4) - 8);
 
-            for (j = 0; j < 16; j++)
+            for (row = 0; row < 16; row++)
             {
-                int k;
-                s32 row = gSpindaSpotGraphics[i].image[j];
+                int column;
+                s32 spotPixelRow = gSpindaSpotGraphics[i].image[row];
 
-                for (k = x; k < x + 16; k++)
+                for (column = x; column < x + 16; column++)
                 {
-                    u8 *val = dest + ((k / 8) * 32) + ((k % 8) / 2) + ((y >> 3) << 8) + ((y & 7) << 2);
+                    u8 *destPixels = dest + ((column / 8) * 32) + ((column % 8) / 2) + ((y >> 3) << 8) + ((y & 7) << 2);
 
-                    if (row & 1)
+                    if (spotPixelRow & 1)
                     {
-                        if (k & 1)
+                        if (column & 1)
                         {
-                            if ((u8)((*val & 0xF0) - 0x10) <= 0x20)
-                                *val += 0x40;
+                            if ((u8)((*destPixels & 0xF0) - 0x10) <= 0x20)
+                                *destPixels += 0x40;
                         }
                         else
                         {
-                            if ((u8)((*val & 0xF) - 0x01) <= 0x02)
-                                *val += 0x04;
+                            if ((u8)((*destPixels & 0xF) - 0x01) <= 0x02)
+                                *destPixels += 0x04;
                         }
                     }
 
-                    row >>= 1;
+                    spotPixelRow >>= 1;
                 }
 
                 y++;
@@ -516,41 +515,41 @@ void unref_sub_803F938(u16 species, u32 personality, u8 *dest)
     }
 }
 
-void DrawSpindaSpots(u16 species, u32 personality, u8 *dest, u8 a4)
+void DrawSpindaSpots(u16 species, u32 personality, u8 *dest, u8 isFrontPic)
 {
-    if (species == SPECIES_SPINDA && a4)
+    if (species == SPECIES_SPINDA && isFrontPic)
     {
         int i;
         for (i = 0; i < 4; i++)
         {
-            int j;
+            int row;
             u8 x = gSpindaSpotGraphics[i].x + ((personality & 0x0F) - 8);
             u8 y = gSpindaSpotGraphics[i].y + (((personality & 0xF0) >> 4) - 8);
 
-            for (j = 0; j < 16; j++)
+            for (row = 0; row < 16; row++)
             {
-                int k;
-                s32 row = gSpindaSpotGraphics[i].image[j];
+                int column;
+                s32 spotPixelRow = gSpindaSpotGraphics[i].image[row];
 
-                for (k = x; k < x + 16; k++)
+                for (column = x; column < x + 16; column++)
                 {
-                    u8 *val = dest + ((k / 8) * 32) + ((k % 8) / 2) + ((y >> 3) << 8) + ((y & 7) << 2);
+                    u8 *destPixels = dest + ((column / 8) * 32) + ((column % 8) / 2) + ((y >> 3) << 8) + ((y & 7) << 2);
 
-                    if (row & 1)
+                    if (spotPixelRow & 1)
                     {
-                        if (k & 1)
+                        if (column & 1)
                         {
-                            if ((u8)((*val & 0xF0) - 0x10) <= 0x20)
-                                *val += 0x40;
+                            if ((u8)((*destPixels & 0xF0) - 0x10) <= 0x20)
+                                *destPixels += 0x40;
                         }
                         else
                         {
-                            if ((u8)((*val & 0xF) - 0x01) <= 0x02)
-                                *val += 0x04;
+                            if ((u8)((*destPixels & 0xF) - 0x01) <= 0x02)
+                                *destPixels += 0x04;
                         }
                     }
 
-                    row >>= 1;
+                    spotPixelRow >>= 1;
                 }
 
                 y++;
@@ -576,60 +575,60 @@ void EvolutionRenameMon(struct Pokemon *mon, u16 oldSpecies, u16 newSpecies)
 #endif
 }
 
-bool8 sub_803FBBC(void)
+bool8 GetPlayerFlankId(void)
 {
-    bool8 retVal = FALSE;
+    bool8 flankId = FALSE;
     switch (gLinkPlayers[GetMultiplayerId()].id)
     {
     case 0:
     case 3:
-        retVal = FALSE;
+        flankId = FALSE;
         break;
     case 1:
     case 2:
-        retVal = TRUE;
+        flankId = TRUE;
         break;
     }
-    return retVal;
+    return flankId;
 }
 
-bool8 sub_803FBFC(u8 id)
+bool8 GetLinkTrainerFlankId(u8 linkPlayerId)
 {
-    bool8 retVal = FALSE;
-    switch (gLinkPlayers[id].id)
+    bool8 flankId = FALSE;
+    switch (gLinkPlayers[linkPlayerId].id)
     {
     case 0:
     case 3:
-        retVal = FALSE;
+        flankId = FALSE;
         break;
     case 1:
     case 2:
-        retVal = TRUE;
+        flankId = TRUE;
         break;
     }
-    return retVal;
+    return flankId;
 }
 
-s32 sub_803FC34(u16 a1)
+s32 GetBattlerMultiplayerId(u16 id)
 {
-    s32 id;
-    for (id = 0; id < MAX_LINK_PLAYERS; id++)
-        if (gLinkPlayers[id].id == a1)
+    s32 multiplayerId;
+    for (multiplayerId = 0; multiplayerId < MAX_LINK_PLAYERS; multiplayerId++)
+        if (gLinkPlayers[multiplayerId].id == id)
             break;
-    return id;
+    return multiplayerId;
 }
 
-u8 sub_803FC58(u16 trainer)
+u8 GetTrainerEncounterMusicId(u16 trainerOpponentId)
 {
-    return gTrainers[trainer].encounterMusic_gender & 0x7F;
+    return gTrainers[trainerOpponentId].encounterMusic_gender & 0x7F;
 }
 
-u16 nature_stat_mod(u8 nature, u16 n, u8 statIndex)
+u16 ModifyStatByNature(u8 nature, u16 stat, u8 statIndex)
 {
     if (statIndex < 1 || statIndex > 5)
     {
-        // should just be "return n", but it wouldn't match without this
-        u16 retVal = n;
+        // should just be "return stat", but it wouldn't match without this
+        u16 retVal = stat;
         retVal++;
         retVal--;
         return retVal;
@@ -638,12 +637,12 @@ u16 nature_stat_mod(u8 nature, u16 n, u8 statIndex)
     switch (gNatureStatTable[nature][statIndex - 1])
     {
     case 1:
-        return (u16)(n * 110) / 100;
+        return (u16)(stat * 110) / 100;
     case -1:
-        return (u16)(n * 90) / 100;
+        return (u16)(stat * 90) / 100;
     }
 
-    return n;
+    return stat;
 }
 
 // Friendship deltas. Each event has 3 separate values, depending on the mon's
@@ -995,18 +994,18 @@ u32 CanMonLearnTMHM(struct Pokemon *mon, u8 tm)
     }
 }
 
-u8 GetMoveTutorMoves(struct Pokemon *mon, u16 *moves)
+u8 GetMoveRelearnerMoves(struct Pokemon *mon, u16 *moves)
 {
-    u16 knownMoves[4];
+    u16 learnedMoves[4];
     u8 numMoves = 0;
     u16 species = GetMonData(mon, MON_DATA_SPECIES, 0);
     u8 level = GetMonData(mon, MON_DATA_LEVEL, 0);
     int i, j, k;
 
     for (i = 0; i < 4; i++)
-        knownMoves[i] = GetMonData(mon, MON_DATA_MOVE1 + i, 0);
+        learnedMoves[i] = GetMonData(mon, MON_DATA_MOVE1 + i, 0);
 
-    for (i = 0; i < MAX_MOVE_TUTOR_MOVES; i++)
+    for (i = 0; i < MAX_LEVEL_UP_MOVES; i++)
     {
         u16 moveLevel;
 
@@ -1016,7 +1015,7 @@ u8 GetMoveTutorMoves(struct Pokemon *mon, u16 *moves)
         moveLevel = gLevelUpLearnsets[species][i] & 0xFE00;
         if (moveLevel <= (level << 9))
         {
-            for (j = 0; j < 4 && knownMoves[j] != (gLevelUpLearnsets[species][i] & 0x1FF); j++)
+            for (j = 0; j < 4 && learnedMoves[j] != (gLevelUpLearnsets[species][i] & 0x1FF); j++)
                 ;
 
             if (j == 4)
@@ -1044,7 +1043,7 @@ u8 GetLevelUpMovesBySpecies(u16 species, u16 *moves)
      return numMoves;
 }
 
-u8 sub_8040574(struct Pokemon *mon)
+u8 GetNumberOfRelearnableMoves(struct Pokemon *mon)
 {
     u16 learnedMoves[4];
     u16 moves[20];
@@ -1109,7 +1108,7 @@ void ClearBattleMonForms(void)
         gBattleMonForms[i] = 0;
 }
 
-u16 GetMUS_ForBattle(void)
+u16 GetBattleBGM(void)
 {
     if (gBattleTypeFlags & BATTLE_TYPE_KYOGRE_GROUDON)
         return MUS_VS_KYOGRE_GROUDON;
@@ -1146,38 +1145,32 @@ u16 GetMUS_ForBattle(void)
     return MUS_VS_WILD;
 }
 
-void sub_80408BC(void)
+void PlayBattleBGM(void)
 {
     ResetMapMusic();
     m4aMPlayAllStop();
-    PlayBGM(GetMUS_ForBattle());
+    PlayBGM(GetBattleBGM());
 }
 
-void current_map_music_set__default_for_battle(u16 song)
+void PlayMapChosenOrBattleBGM(u16 songId)
 {
     ResetMapMusic();
     m4aMPlayAllStop();
-    if (song)
-        PlayNewMapMusic(song);
+    if (songId)
+        PlayNewMapMusic(songId);
     else
-        PlayNewMapMusic(GetMUS_ForBattle());
+        PlayNewMapMusic(GetBattleBGM());
 }
 
-const u8 *GetMonSpritePal(struct Pokemon *mon)
+const u8 *GetMonFrontSpritePal(struct Pokemon *mon)
 {
     u16 species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG, 0);
     u32 otId = GetMonData(mon, MON_DATA_OT_ID, 0);
     u32 personality = GetMonData(mon, MON_DATA_PERSONALITY, 0);
-    return GetMonSpritePalFromOtIdPersonality(species, otId, personality);
+    return GetMonSpritePalFromSpeciesAndPersonality(species, otId, personality);
 }
 
-//Extracts the upper 16 bits of a 32-bit number
-#define HIHALF(n) (((n) & 0xFFFF0000) >> 16)
-
-//Extracts the lower 16 bits of a 32-bit number
-#define LOHALF(n) ((n) & 0xFFFF)
-
-const u8 *GetMonSpritePalFromOtIdPersonality(u16 species, u32 otId, u32 personality)
+const u8 *GetMonSpritePalFromSpeciesAndPersonality(u16 species, u32 otId, u32 personality)
 {
     u32 shinyValue;
 
@@ -1210,7 +1203,7 @@ const struct CompressedSpritePalette *GetMonSpritePalStructFromOtIdPersonality(u
         return &gMonPaletteTable[species];
 }
 
-const u16 gHMMoves[] =
+static const u16 sHMMoves[] =
 {
     MOVE_CUT,
     MOVE_FLY,
@@ -1226,29 +1219,29 @@ const u16 gHMMoves[] =
 bool32 IsHMMove2(u16 move)
 {
     int i = 0;
-    while (gHMMoves[i] != 0xFFFF)
+    while (sHMMoves[i] != 0xFFFF)
     {
-        if (gHMMoves[i++] == move)
+        if (sHMMoves[i++] == move)
             return TRUE;
     }
     return FALSE;
 }
 
-bool8 IsPokeSpriteNotFlipped(u16 species)
+bool8 IsMonSpriteNotFlipped(u16 species)
 {
     return gSpeciesInfo[species].noFlip;
 }
 
-s8 sub_8040A54(struct Pokemon *mon, u8 a2)
+s8 GetMonFlavorRelation(struct Pokemon *mon, u8 flavor)
 {
     u8 nature = GetNature(mon);
-    return gPokeblockFlavorCompatibilityTable[nature * 5 + a2];
+    return gPokeblockFlavorCompatibilityTable[nature * 5 + flavor];
 }
 
-s8 GetPokeFlavourRelation(u32 personality, u8 a2)
+s8 GetFlavorRelationByPersonality(u32 personality, u8 flavor)
 {
     u8 nature = GetNatureFromPersonality(personality);
-    return gPokeblockFlavorCompatibilityTable[nature * 5 + a2];
+    return gPokeblockFlavorCompatibilityTable[nature * 5 + flavor];
 }
 
 bool8 IsTradedMon(struct Pokemon *mon)
@@ -1274,8 +1267,6 @@ bool8 IsOtherTrainer(u32 otId, u8 *otName)
 
     return TRUE;
 }
-
-void BoxMonRestorePP(struct BoxPokemon *);
 
 void MonRestorePP(struct Pokemon *mon)
 {
@@ -1339,9 +1330,7 @@ void SetWildMonHeldItem(void)
     }
 }
 
-bool8 IsShinyOtIdPersonality(u32, u32);
-
-bool8 IsShiny(struct Pokemon *mon)
+bool8 IsMonShiny(struct Pokemon *mon)
 {
     u32 otId = GetMonData(mon, MON_DATA_OT_ID, 0);
     u32 personality = GetMonData(mon, MON_DATA_PERSONALITY, 0);
@@ -1360,7 +1349,7 @@ bool8 IsShinyOtIdPersonality(u32 otId, u32 personality)
 u8 *sub_8040D08(void)
 {
     u8 id = GetMultiplayerId();
-    return gLinkPlayers[sub_803FC34(gLinkPlayers[id].id ^ 2)].name;
+    return gLinkPlayers[GetBattlerMultiplayerId(gLinkPlayers[id].id ^ 2)].name;
 }
 
 const u8 gJapaneseNidoranNames[][11] = {_("ニドラン♂"), _("ニドラン♀")};

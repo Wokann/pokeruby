@@ -59,7 +59,7 @@ extern u8 IsMoveWithoutAnimation();
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
 extern void StartAnimLinearTranslation(struct Sprite *);
 extern void SpriteCB_FaintSlideAnim(struct Sprite *);
-extern s32 sub_803FC34(u16);
+extern s32 GetBattlerMultiplayerId(u16);
 extern void SpriteCB_TrainerSlideIn(struct Sprite *);
 extern u8 DoPokeballSendOutAnimation();
 extern void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *);
@@ -1161,7 +1161,7 @@ void LinkPartnerHandleTrainerThrow(void)
             xOffset = 16;
         else
             xOffset = -16;
-        gender = gLinkPlayers[sub_803FC34(gActiveBattler)].gender;
+        gender = gLinkPlayers[GetBattlerMultiplayerId(gActiveBattler)].gender;
     }
     else
     {
@@ -1550,7 +1550,7 @@ void LinkPartnerHandleTrainerBallThrow(void)
     StartSpriteAnim(&gSprites[gBattlerSpriteIds[gActiveBattler]], 1);
     r4 = AllocSpritePalette(0xD6F9);
     LoadCompressedPalette(
-      gTrainerBackPicPaletteTable[gLinkPlayers[sub_803FC34(gActiveBattler)].gender].data,
+      gTrainerBackPicPaletteTable[gLinkPlayers[GetBattlerMultiplayerId(gActiveBattler)].gender].data,
       0x100 + r4 * 16, 0x20);
     gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = r4;
     taskId = CreateTask(sub_812071C, 5);

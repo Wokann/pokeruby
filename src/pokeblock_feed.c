@@ -46,8 +46,6 @@ extern const u8 gBattleEnvironmentPalette_BattleTower[];
 extern const struct CompressedSpriteSheet gUnknown_083F7F74;
 extern const struct CompressedSpritePalette gUnknown_083F7F7C;
 
-bool8 IsPokeSpriteNotFlipped(u16 species);
-
 // this file's functions
 static void sub_8147B04(void);
 static void sub_81481DC(void);
@@ -766,7 +764,7 @@ static u8 PokeblockFeed_CreatePokeSprite(struct Pokemon* mon)
     gSprites[spriteID].data[2] = species;
     gSprites[spriteID].callback = SpriteCallbackDummy;
     gPokeblockMonNotFlipped = 1;
-    if (!IsPokeSpriteNotFlipped(species))
+    if (!IsMonSpriteNotFlipped(species))
     {
         gSprites[spriteID].affineAnims = sSpriteAffineAnimTable_84120EC;
         gSprites[spriteID].oam.affineMode = 3;

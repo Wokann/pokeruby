@@ -310,9 +310,9 @@ void BattleLoadOpponentMonSpriteGfx(struct Pokemon *mon, u8 battler)
       currentPersonality);
     paletteOffset = 0x100 + battler * 16;
     if (gBattleSpriteInfo[battler].transformSpecies == 0)
-        lzPaletteData = GetMonSpritePal(mon);
+        lzPaletteData = GetMonFrontSpritePal(mon);
     else
-        lzPaletteData = GetMonSpritePalFromOtIdPersonality(species, otId, monsPersonality);
+        lzPaletteData = GetMonSpritePalFromSpeciesAndPersonality(species, otId, monsPersonality);
     LZDecompressWram(lzPaletteData, gSharedMem);
     LoadPalette(gSharedMem, paletteOffset, 0x20);
     LoadPalette(gSharedMem, 0x80 + battler * 16, 0x20);
@@ -362,9 +362,9 @@ void BattleLoadPlayerMonSpriteGfx(struct Pokemon *mon, u8 battler)
       currentPersonality);
     paletteOffset = 0x100 + battler * 16;
     if (gBattleSpriteInfo[battler].transformSpecies == 0)
-        lzPaletteData = GetMonSpritePal(mon);
+        lzPaletteData = GetMonFrontSpritePal(mon);
     else
-        lzPaletteData = GetMonSpritePalFromOtIdPersonality(species, otId, monsPersonality);
+        lzPaletteData = GetMonSpritePalFromSpeciesAndPersonality(species, otId, monsPersonality);
     LZDecompressWram(lzPaletteData, gSharedMem);
     LoadPalette(gSharedMem, paletteOffset, 0x20);
     LoadPalette(gSharedMem, 0x80 + battler * 16, 0x20);
@@ -694,7 +694,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform)
         }
         DmaCopy32Defvars(3, gMonSpriteGfx_Sprite_ptr[position], (void *)(VRAM + 0x10000 + gSprites[gBattlerSpriteIds[battlerAtk]].oam.tileNum * 32), 0x800);
         paletteOffset = 0x100 + battlerAtk * 16;
-        lzPaletteData = GetMonSpritePalFromOtIdPersonality(targetSpecies, otId, personalityValue);
+        lzPaletteData = GetMonSpritePalFromSpeciesAndPersonality(targetSpecies, otId, personalityValue);
         LZDecompressWram(lzPaletteData, gSharedMem);
         LoadPalette(gSharedMem, paletteOffset, 32);
         if (targetSpecies == SPECIES_CASTFORM)

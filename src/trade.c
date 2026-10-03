@@ -4539,7 +4539,7 @@ static bool8 sub_804C29C(void)
             gUnknown_03004828->unk_00c4 ++;
             break;
         case 37:
-            if (!IsPokeSpriteNotFlipped(gUnknown_03004828->tradeSpecies[0]))
+            if (!IsMonSpriteNotFlipped(gUnknown_03004828->tradeSpecies[0]))
             {
                 gSprites[gUnknown_03004828->pokePicSpriteIdxs[0]].affineAnims = gSpriteAffineAnimTable_8215AC0;
                 gSprites[gUnknown_03004828->pokePicSpriteIdxs[0]].oam.affineMode = 3;
