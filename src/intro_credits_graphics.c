@@ -13,6 +13,7 @@
 #include "palette.h"
 #include "random.h"
 #include "save.h"
+#include "constants/rgb.h"
 #include "constants/songs.h"
 #include "sound.h"
 #include "constants/species.h"
@@ -119,15 +120,15 @@ static const union AnimCmd *const sAnims_Clouds[] = {
 };
 
 static const struct IntroCreditsSpriteMetadata sSpriteMetadata_Clouds[] = {
-    {  0, ST_OAM_SQUARE,      2,   72, 32, 100, 0xc00 },
-    {  0, ST_OAM_SQUARE,      2,  158, 32, 100, 0xc00 },
-    {  1, ST_OAM_SQUARE,      1,  192, 40, 101, 0x800 },
-    {  1, ST_OAM_SQUARE,      1,   56, 40, 101, 0x800 },
-    {  2, ST_OAM_H_RECTANGLE, 0,  100, 44, 102, 0x400 },
-    {  2, ST_OAM_H_RECTANGLE, 0,  152, 44, 102, 0x400 },
-    {  3, ST_OAM_H_RECTANGLE, 0,    8, 46, 103, 0x100 },
-    {  3, ST_OAM_H_RECTANGLE, 0,   56, 46, 103, 0x100 },
-    {  3, ST_OAM_H_RECTANGLE, 0,  240, 46, 103, 0x100 },
+    {  0, ST_OAM_SQUARE,      SPRITE_SIZE(32x32),  72, 32, 100, 0xc00 },
+    {  0, ST_OAM_SQUARE,      SPRITE_SIZE(32x32), 158, 32, 100, 0xc00 },
+    {  1, ST_OAM_SQUARE,      SPRITE_SIZE(16x16), 192, 40, 101, 0x800 },
+    {  1, ST_OAM_SQUARE,      SPRITE_SIZE(16x16),  56, 40, 101, 0x800 },
+    {  2, ST_OAM_H_RECTANGLE, SPRITE_SIZE(16x8),  100, 44, 102, 0x400 },
+    {  2, ST_OAM_H_RECTANGLE, SPRITE_SIZE(16x8),  152, 44, 102, 0x400 },
+    {  3, ST_OAM_H_RECTANGLE, SPRITE_SIZE(16x8),    8, 46, 103, 0x100 },
+    {  3, ST_OAM_H_RECTANGLE, SPRITE_SIZE(16x8),   56, 46, 103, 0x100 },
+    {  3, ST_OAM_H_RECTANGLE, SPRITE_SIZE(16x8),  240, 46, 103, 0x100 },
 };
 
 static const struct CompressedSpriteSheet sSpriteSheet_TreesSmall[] = {
@@ -157,18 +158,18 @@ static const union AnimCmd *const sAnims_Trees[] = {
 };
 
 static const struct IntroCreditsSpriteMetadata sSpriteMetadata_Trees[] = {
-    {  0, ST_OAM_SQUARE,      2,   16, 88, 100, 0x2000 },
-    {  0, ST_OAM_SQUARE,      2,   80, 88, 100, 0x2000 },
-    {  0, ST_OAM_SQUARE,      2,  144, 88, 100, 0x2000 },
-    {  0, ST_OAM_SQUARE,      2,  208, 88, 100, 0x2000 },
-    {  1, ST_OAM_V_RECTANGLE, 2,   40, 88, 101, 0x1000 },
-    {  1, ST_OAM_V_RECTANGLE, 2,  104, 88, 101, 0x1000 },
-    {  1, ST_OAM_V_RECTANGLE, 2,  168, 88, 101, 0x1000 },
-    {  1, ST_OAM_V_RECTANGLE, 2,  232, 88, 101, 0x1000 },
-    {  2, ST_OAM_V_RECTANGLE, 2,   56, 88, 102, 0x800  },
-    {  2, ST_OAM_V_RECTANGLE, 2,  120, 88, 102, 0x800  },
-    {  2, ST_OAM_V_RECTANGLE, 2,  184, 88, 102, 0x800  },
-    {  2, ST_OAM_V_RECTANGLE, 2,  248, 88, 102, 0x800  },
+    {  0, ST_OAM_SQUARE,      SPRITE_SIZE(32x32),  16, 88, 100, 0x2000 },
+    {  0, ST_OAM_SQUARE,      SPRITE_SIZE(32x32),  80, 88, 100, 0x2000 },
+    {  0, ST_OAM_SQUARE,      SPRITE_SIZE(32x32), 144, 88, 100, 0x2000 },
+    {  0, ST_OAM_SQUARE,      SPRITE_SIZE(32x32), 208, 88, 100, 0x2000 },
+    {  1, ST_OAM_V_RECTANGLE, SPRITE_SIZE(16x32),  40, 88, 101, 0x1000 },
+    {  1, ST_OAM_V_RECTANGLE, SPRITE_SIZE(16x32), 104, 88, 101, 0x1000 },
+    {  1, ST_OAM_V_RECTANGLE, SPRITE_SIZE(16x32), 168, 88, 101, 0x1000 },
+    {  1, ST_OAM_V_RECTANGLE, SPRITE_SIZE(16x32), 232, 88, 101, 0x1000 },
+    {  2, ST_OAM_V_RECTANGLE, SPRITE_SIZE(16x32),  56, 88, 102, 0x800  },
+    {  2, ST_OAM_V_RECTANGLE, SPRITE_SIZE(16x32), 120, 88, 102, 0x800  },
+    {  2, ST_OAM_V_RECTANGLE, SPRITE_SIZE(16x32), 184, 88, 102, 0x800  },
+    {  2, ST_OAM_V_RECTANGLE, SPRITE_SIZE(16x32), 248, 88, 102, 0x800  },
 };
 
 static const struct CompressedSpriteSheet sSpriteSheet_HouseSilhouette[] = {
@@ -186,16 +187,16 @@ static const union AnimCmd *const sAnims_HouseSilhouette[] = {
 };
 
 static const struct IntroCreditsSpriteMetadata sSpriteMetadata_HouseSilhouette[] = {
-    { 0, ST_OAM_SQUARE, 2,   24, 88, 100, 0x1000 },
-    { 0, ST_OAM_SQUARE, 2,   64, 88, 100, 0x1000 },
-    { 0, ST_OAM_SQUARE, 2,  104, 88, 100, 0x1000 },
-    { 0, ST_OAM_SQUARE, 2,  144, 88, 100, 0x1000 },
-    { 0, ST_OAM_SQUARE, 2,  184, 88, 100, 0x1000 },
-    { 0, ST_OAM_SQUARE, 2,  224, 88, 100, 0x1000 },
+    { 0, ST_OAM_SQUARE, SPRITE_SIZE(32x32),  24, 88, 100, 0x1000 },
+    { 0, ST_OAM_SQUARE, SPRITE_SIZE(32x32),  64, 88, 100, 0x1000 },
+    { 0, ST_OAM_SQUARE, SPRITE_SIZE(32x32), 104, 88, 100, 0x1000 },
+    { 0, ST_OAM_SQUARE, SPRITE_SIZE(32x32), 144, 88, 100, 0x1000 },
+    { 0, ST_OAM_SQUARE, SPRITE_SIZE(32x32), 184, 88, 100, 0x1000 },
+    { 0, ST_OAM_SQUARE, SPRITE_SIZE(32x32), 224, 88, 100, 0x1000 },
 };
 
 static const struct OamData sOamData_Player = {
-    .y = 160, .shape = ST_OAM_SQUARE, .size = 3, .priority = 1
+    .y = DISPLAY_HEIGHT, .shape = SPRITE_SHAPE(64x64), .size = SPRITE_SIZE(64x64), .priority = 1
 };
 
 static const union AnimCmd sAnim_Player[] = {
@@ -219,7 +220,7 @@ static const struct SpriteTemplate sSpriteTemplate_May = {
 };
 
 static const struct OamData sOamData_Bicycle = {
-    .y = 160, .shape = ST_OAM_H_RECTANGLE, .size = 3, .priority = 1
+    .y = DISPLAY_HEIGHT, .shape = SPRITE_SHAPE(64x32), .size = SPRITE_SIZE(64x32), .priority = 1
 };
 
 static const union AnimCmd sAnim_Bicycle[] = {
@@ -243,7 +244,7 @@ static const struct SpriteTemplate sSpriteTemplate_MayBicycle = {
 };
 
 static const struct OamData sOamData_Lati = {
-    .y = 160, .shape = ST_OAM_SQUARE, .size = 3, .priority = 1
+    .y = DISPLAY_HEIGHT, .shape = SPRITE_SHAPE(64x64), .size = SPRITE_SIZE(64x64), .priority = 1
 };
 
 static const union AnimCmd sAnim_LatiLeftHalf[] = {
@@ -320,26 +321,26 @@ static void CreateTreeSprites(void);
 
 void LoadIntroPart2Graphics(u8 scenery)
 {
-    LZ77UnCompVram(&sGrass_Gfx, (void *)(VRAM + 0x4000));
-    LZ77UnCompVram(&sGrass_Tilemap, (void *)(VRAM + 0x7800));
-    LoadPalette(&sGrass_Pal, 240, 32);
+    LZ77UnCompVram(&sGrass_Gfx, BG_CHAR_ADDR(1));
+    LZ77UnCompVram(&sGrass_Tilemap, BG_SCREEN_ADDR(15));
+    LoadPalette(&sGrass_Pal, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
     switch (scenery)
     {
     case 0:
     default:
-        LZ77UnCompVram(&sCloudsBg_Gfx, (void *)(VRAM));
-        LZ77UnCompVram(&sCloudsBg_Tilemap, (void *)(VRAM + 0x3000));
-        LoadPalette(&sCloudsBg_Pal, 0, 96);
+        LZ77UnCompVram(&sCloudsBg_Gfx, BG_CHAR_ADDR(0));
+        LZ77UnCompVram(&sCloudsBg_Tilemap, BG_SCREEN_ADDR(6));
+        LoadPalette(&sCloudsBg_Pal, BG_PLTT_ID(0), 3 * PLTT_SIZE_4BPP);
         LoadCompressedSpriteSheet(sSpriteSheet_Clouds);
-        LoadPalette(&sClouds_Pal, 256, 32);
+        LoadPalette(&sClouds_Pal, OBJ_PLTT_ID(0), PLTT_SIZE_4BPP);
         CreateCloudSprites();
         break;
     case 1:
-        LZ77UnCompVram(&sTrees_Gfx, (void *)(VRAM));
-        LZ77UnCompVram(&sTrees_Tilemap, (void *)(VRAM + 0x3000));
-        LoadPalette(&sTrees_Pal, 0, 32);
+        LZ77UnCompVram(&sTrees_Gfx, BG_CHAR_ADDR(0));
+        LZ77UnCompVram(&sTrees_Tilemap, BG_SCREEN_ADDR(6));
+        LoadPalette(&sTrees_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
         LoadCompressedSpriteSheet(sSpriteSheet_TreesSmall);
-        LoadPalette(&sTreesSmall_Pal, 256, 32);
+        LoadPalette(&sTreesSmall_Pal, OBJ_PLTT_ID(0), PLTT_SIZE_4BPP);
         CreateTreeSprites();
         break;
     }
@@ -351,17 +352,17 @@ void SetIntroPart2BgCnt(u8 scenery)
 {
     if (scenery == 1)
     {
-        REG_BG3CNT = 0x603;
-        REG_BG2CNT = 0x702;
-        REG_BG1CNT = 0xF05;
-        REG_DISPCNT = 0x1E40;
+        REG_BG3CNT = BGCNT_PRIORITY(3) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(6);
+        REG_BG2CNT = BGCNT_PRIORITY(2) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(7);
+        REG_BG1CNT = BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_SCREENBASE(15);
+        REG_DISPCNT = DISPCNT_OBJ_ON | DISPCNT_BG3_ON | DISPCNT_BG2_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_1D_MAP;
     }
     else
     {
-        REG_BG3CNT = 0x603;
-        REG_BG2CNT = 0x702;
-        REG_BG1CNT = 0xF05;
-        REG_DISPCNT = 0x1E40;
+        REG_BG3CNT = BGCNT_PRIORITY(3) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(6);
+        REG_BG2CNT = BGCNT_PRIORITY(2) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(7);
+        REG_BG1CNT = BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_SCREENBASE(15);
+        REG_DISPCNT = DISPCNT_OBJ_ON | DISPCNT_BG3_ON | DISPCNT_BG2_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_1D_MAP;
     }
 }
 
@@ -369,48 +370,48 @@ static void CreateHouseSprites(void);
 
 void LoadCreditsSceneGraphics(u8 scene)
 {
-    LZ77UnCompVram(&sGrass_Gfx, (void *)(VRAM + 0x4000));
-    LZ77UnCompVram(&sGrass_Tilemap, (void *)(VRAM + 0x7800));
+    LZ77UnCompVram(&sGrass_Gfx, BG_CHAR_ADDR(1));
+    LZ77UnCompVram(&sGrass_Tilemap, BG_SCREEN_ADDR(15));
     switch (scene)
     {
     case SCENE_OCEAN_MORNING:
     default:
-        LoadPalette(&sGrass_Pal, 240, 32);
-        LZ77UnCompVram(&sCloudsBg_Gfx, (void *)(VRAM));
-        LZ77UnCompVram(&sCloudsBg_Tilemap, (void *)(VRAM + 0x3000));
-        LoadPalette(&sCloudsBg_Pal, 0, 96);
+        LoadPalette(&sGrass_Pal, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
+        LZ77UnCompVram(&sCloudsBg_Gfx, BG_CHAR_ADDR(0));
+        LZ77UnCompVram(&sCloudsBg_Tilemap, BG_SCREEN_ADDR(6));
+        LoadPalette(&sCloudsBg_Pal, BG_PLTT_ID(0), 3 * PLTT_SIZE_4BPP);
         LoadCompressedSpriteSheet(sSpriteSheet_Clouds);
-        LZ77UnCompVram(&sClouds_Gfx, (void *)(VRAM + 0x10000));
-        LoadPalette(&sClouds_Pal, 256, 32);
+        LZ77UnCompVram(&sClouds_Gfx, OBJ_VRAM0);
+        LoadPalette(&sClouds_Pal, OBJ_PLTT_ID(0), PLTT_SIZE_4BPP);
         CreateCloudSprites();
         break;
     case SCENE_OCEAN_SUNSET:
-        LoadPalette(&sGrassSunset_Pal, 240, 32);
-        LZ77UnCompVram(&sCloudsBg_Gfx, (void *)(VRAM));
-        LZ77UnCompVram(&sCloudsBg_Tilemap, (void *)(VRAM + 0x3000));
-        LoadPalette(&sCloudsBgSunset_Pal, 0, 96);
+        LoadPalette(&sGrassSunset_Pal, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
+        LZ77UnCompVram(&sCloudsBg_Gfx, BG_CHAR_ADDR(0));
+        LZ77UnCompVram(&sCloudsBg_Tilemap, BG_SCREEN_ADDR(6));
+        LoadPalette(&sCloudsBgSunset_Pal, BG_PLTT_ID(0), 3 * PLTT_SIZE_4BPP);
         LoadCompressedSpriteSheet(sSpriteSheet_Clouds);
-        LZ77UnCompVram(&sClouds_Gfx, (void *)(VRAM + 0x10000));
-        LoadPalette(&sCloudsSunset_Pal, 256, 32);
+        LZ77UnCompVram(&sClouds_Gfx, OBJ_VRAM0);
+        LoadPalette(&sCloudsSunset_Pal, OBJ_PLTT_ID(0), PLTT_SIZE_4BPP);
         CreateCloudSprites();
         break;
     case SCENE_FOREST_RIVAL_ARRIVE:
     case SCENE_FOREST_CATCH_RIVAL:
-        LoadPalette(&sGrassSunset_Pal, 240, 32);
-        LZ77UnCompVram(&sTrees_Gfx, (void *)(VRAM));
-        LZ77UnCompVram(&sTrees_Tilemap, (void *)(VRAM + 0x3000));
-        LoadPalette(&sTreesSunset_Pal, 0, 32);
+        LoadPalette(&sGrassSunset_Pal, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
+        LZ77UnCompVram(&sTrees_Gfx, BG_CHAR_ADDR(0));
+        LZ77UnCompVram(&sTrees_Tilemap, BG_SCREEN_ADDR(6));
+        LoadPalette(&sTreesSunset_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
         LoadCompressedSpriteSheet(sSpriteSheet_TreesSmall);
-        LoadPalette(&sTreesSunset_Pal, 256, 32);
+        LoadPalette(&sTreesSunset_Pal, OBJ_PLTT_ID(0), PLTT_SIZE_4BPP);
         CreateTreeSprites();
         break;
     case SCENE_CITY_NIGHT:
-        LoadPalette(&sGrassNight_Pal, 240, 32);
-        LZ77UnCompVram(&sHouses_Gfx, (void *)(VRAM));
-        LZ77UnCompVram(&sHouses_Tilemap, (void *)(VRAM + 0x3000));
-        LoadPalette(&sHouses_Pal, 0, 64);
+        LoadPalette(&sGrassNight_Pal, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
+        LZ77UnCompVram(&sHouses_Gfx, BG_CHAR_ADDR(0));
+        LZ77UnCompVram(&sHouses_Tilemap, BG_SCREEN_ADDR(6));
+        LoadPalette(&sHouses_Pal, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
         LoadCompressedSpriteSheet(sSpriteSheet_HouseSilhouette);
-        LoadPalette(&sHouseSilhouette_Pal, 256, 32);
+        LoadPalette(&sHouseSilhouette_Pal, OBJ_PLTT_ID(0), PLTT_SIZE_4BPP);
         CreateHouseSprites();
         break;
     }
@@ -420,10 +421,10 @@ void LoadCreditsSceneGraphics(u8 scene)
 
 void SetCreditsSceneBgCnt(u8 scene)
 {
-    REG_BG3CNT = 0x603;
-    REG_BG2CNT = 0x702;
-    REG_BG1CNT = 0xF05;
-    REG_DISPCNT = 0x1F40;
+    REG_BG3CNT = BGCNT_PRIORITY(3) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(6);
+    REG_BG2CNT = BGCNT_PRIORITY(2) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(7);
+    REG_BG1CNT = BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_SCREENBASE(15);
+    REG_DISPCNT = DISPCNT_OBJ_ON | DISPCNT_BG3_ON | DISPCNT_BG2_ON | DISPCNT_BG1_ON | DISPCNT_BG0_ON | DISPCNT_OBJ_1D_MAP;
 }
 
 #define tMode     data[0]
@@ -539,13 +540,13 @@ void CycleSceneryPalette(u8 mode)
                 break;
             if (gMain.vblankCounter1 & 4)
             {
-                x = 0x3D27;
-                y = 0x295;
+                x = RGB(7, 9, 15);
+                y = RGB(21, 20, 0);
             }
             else
             {
-                x = 0x31C;
-                y = 0x3D27;
+                x = RGB(28, 24, 0);
+                y = RGB(7, 9, 15);
             }
             LoadPalette(&x, 12, 2);
             LoadPalette(&y, 13, 2);
@@ -592,7 +593,7 @@ static void CreateMovingScenerySprites(bool8 hasVerticalMove, const struct Intro
     {
         u8 spriteId = CreateSprite(&sSpriteTemplate_MovingScenery, metadata[i].x, metadata[i].y, metadata[i].subpriority);
 
-        CalcCenterToCornerVec(&gSprites[spriteId], metadata[i].shape, metadata[i].size, 0);
+        CalcCenterToCornerVec(&gSprites[spriteId], metadata[i].shape, metadata[i].size, ST_OAM_AFFINE_OFF);
         gSprites[spriteId].oam.priority = 3;
         gSprites[spriteId].oam.shape = metadata[i].shape;
         gSprites[spriteId].oam.size = metadata[i].size;
