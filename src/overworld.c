@@ -119,7 +119,6 @@ extern u8 gUnknown_081A4508[];
 
 extern struct MapLayout * const gMapLayouts[];
 extern struct MapHeader * const * const gMapGroups[];
-extern s32 gMaxFlashLevel;
 
 u16 gHeldKeyCodeToSend;
 void (*gFieldCallback)(void);

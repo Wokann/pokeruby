@@ -289,8 +289,8 @@ gSpecials::
 	def_special GetSecretBaseNearbyMapName
 	def_special CheckRelicanthWailord
 	def_special DoBrailleWait
-	def_special sub_80818A4
-	def_special sub_80818FC
+	def_special DoOrbEffect
+	def_special FadeOutOrbEffect
 	def_special ShowBattleTowerRecords
 	def_special WaitWeather
 	def_special BufferEReaderTrainerName
@@ -340,7 +340,7 @@ gSpecials::
 	def_special TryInitBattleTowerAwardManObjectEvent
 	def_special MoveSecretBase
 	def_special LoadPlayerBag
-	def_special sub_8081924
+	def_special Script_FadeOutMapMusic
 	def_special SetPacifidlogTMReceivedDay
 	def_special GetDaysUntilPacifidlogTMAvailable
 	def_special CompletedHoennPokedex

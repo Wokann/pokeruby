@@ -1152,7 +1152,7 @@ EventScript_1A14CA::
 	message UnknownString_81A1141
 	waitmessage
 	waitbuttonpress
-	special sub_8081924
+	special Script_FadeOutMapMusic
 	waitstate
 	fadescreen FADE_TO_BLACK
 	special sp0C8_whiteout_maybe

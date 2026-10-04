@@ -1,6 +1,8 @@
 #ifndef GUARD_FIELD_SCREEN_EFFECT_H
 #define GUARD_FIELD_SCREEN_EFFECT_H
 
+extern const s32 gMaxFlashLevel;
+
 void WarpFadeInScreen(void);
 void WarpFadeOutScreen(void);
 void FadeInFromBlack(void);
@@ -26,7 +28,9 @@ void DoCableClubWarp(void);
 void DoContestHallWarp(void);
 void debug_sub_80888D8(void);
 
-void AnimateFlash(u8);
-void WriteFlashScanlineEffectBuffer(u8 val);
+void AnimateFlash(u8 newFlashLevel);
+void WriteFlashScanlineEffectBuffer(u8 flashLevel);
+void DoOrbEffect(void);
+void FadeOutOrbEffect(void);
 
 #endif // GUARD_FIELD_SCREEN_EFFECT_H
