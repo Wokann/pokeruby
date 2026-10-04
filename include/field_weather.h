@@ -31,19 +31,19 @@ struct Weather
             struct Sprite *sandstormSprites2[5];
         } s2;
     } sprites;
-    u8 gammaShifts[19][32];
-    u8 altGammaShifts[19][32];
-    s8 gammaIndex;
-    s8 gammaTargetIndex;
-    u8 gammaStepDelay;
-    u8 gammaStepFrameCounter;
+    u8 darkenedContrastColorMaps[19][32];
+    u8 contrastColorMaps[19][32];
+    s8 colorMapIndex;
+    s8 targetColorMapIndex;
+    u8 colorMapStepDelay;
+    u8 colorMapStepCounter;
     u16 fadeDestColor;
     u8 palProcessingState;
     u8 fadeScreenCounter;
     bool8 readyForInit;
     u8 taskId;
-    u8 unknown_6CA;
-    u8 unknown_6CB;
+    u8 fadeInFirstFrame;
+    u8 fadeInTimer;
     u16 initStep;
     u16 finishStep;
     u8 currWeather;
@@ -51,9 +51,9 @@ struct Weather
     u8 weatherGfxLoaded;
     bool8 weatherChangeComplete;
     u8 weatherPicSpritePalIndex;
-    u8 altGammaSpritePalIndex;
+    u8 contrastColorMapSpritePalIndex;
     u16 unknown_6D6;
-    u8 unknown_6D8;
+    u8 curRainSpriteIndex;
     u8 unknown_6D9;
     u8 rainSpriteCount;
     u8 unknown_6DB;
@@ -76,7 +76,7 @@ struct Weather
     u16 unknown_6F2;
     u8 lightenedFogSpritePals[6];
     u8 lightenedFogSpritePalsCount;
-    u8 fog1SpritesCreated;
+    u8 fogHSpritesCreated;
     u16 unknown_6FC;
     u16 unknown_6FE;
     u8 ashSpritesCreated;
@@ -88,21 +88,21 @@ struct Weather
     u16 unknown_710;
     u16 unknown_712;
     u16 unknown_714;
-    u8 sandstormSprites1Created;
-    u8 sandstormSprites2Created;
+    u8 sandstormSpritesCreated;
+    u8 sandstormSwirlSpritesCreated;
     u16 unknown_718;
     u16 unknown_71A;
     u16 unknown_71C;
     u16 unknown_71E;
     u16 unknown_720;
     u16 unknown_722;
-    u8 fog2SpritesCreated;
+    u8 fogDSpritesCreated;
     u8 filler_725[1];
     u16 unknown_726;
     u16 unknown_728;
     u16 unknown_72A;
     u16 unknown_72C;
-    u8 unknown_72E;
+    u8 bubblesSpritesCreated;
     u8 filler_72F;
     u16 currBlendEVA;
     u16 currBlendEVB;
@@ -112,24 +112,14 @@ struct Weather
     u8 blendFrameCounter;
     u8 blendDelay;
     u8 filler_73B[0x3C-0x3B];
-    s16 unknown_73C;
-    s16 unknown_73E;
-    s16 unknown_740;
-    s16 unknown_742;
+    s16 droughtBrightnessStage;
+    s16 droughtLastBrightnessStage;
+    s16 droughtTimer;
+    s16 droughtState;
     u8 filler_744[0xD-4];
     s8 loadDroughtPalsIndex;
     u8 loadDroughtPalsOffset;
 };
-
-void StartWeather(void);
-void ChangeWeather(u8 weather);
-void sub_807C988(u8 effect);
-void sub_807C9B4(u8 effect);
-void Task_WeatherInit(u8);
-void Task_WeatherMain(u8);
-void sub_807CAE8(void);
-void nullsub_38(void);
-void SetWeatherScreenFadeOut(void);
 
 enum
 {
@@ -139,37 +129,97 @@ enum
     FADE_TO_WHITE,
 };
 
-void FadeScreen(u8, u8);
-// ...
-void UpdateSpritePaletteWithWeather(u8 tag);
-void ApplyWeatherGammaShiftToPal(u8);
-// ...
-void Weather_SetBlendCoeffs(u8, u8);
-// ...
-void PlayRainSoundEffect(void);
-// ...
+// field_weather.c
+extern struct Weather gWeather;
+extern struct Weather *const gWeatherPtr;
+extern const u16 gFogPalette[];
+
+void StartWeather(void);
+void SetNextWeather(u8 weather);
+void SetCurrentAndNextWeather(u8 weather);
+void SetCurrentAndNextWeatherNoDelay(u8 weather);
+void ApplyWeatherColorMapIfIdle(s8 colorMapIndex);
+void ApplyWeatherColorMapIfIdle_Gradual(u8 colorMapIndex, u8 targetColorMapIndex, u8 colorMapStepDelay);
+void FadeScreen(u8 mode, u8 delay);
+bool8 IsWeatherNotFadingIn(void);
+void UpdateSpritePaletteWithWeather(u8 spritePaletteIndex);
+void ApplyWeatherColorMapToPal(u8 paletteIndex);
+void LoadCustomWeatherSpritePalette(const u16 *palette);
+void ResetDroughtWeatherPaletteLoading(void);
+bool8 LoadDroughtWeatherPalettes(void);
+void DroughtStateInit(void);
+void DroughtStateRun(void);
+void Weather_SetBlendCoeffs(u8 eva, u8 evb);
+void Weather_SetTargetBlendCoeffs(u8 eva, u8 evb, int delay);
+bool8 Weather_UpdateBlend(void);
+u8 GetCurrentWeather(void);
+void SetRainStrengthFromSoundEffect(u16 soundEffect);
+void PlayRainStoppingSoundEffect(void);
+u8 IsWeatherChangeComplete(void);
+void SetWeatherScreenFadeOut(void);
+void SetWeatherPalStateIdle(void);
+void PreservePaletteInWeather(u8 preservedPalIndex);
+void ResetPreservedPalettesInWeather(void);
+
+// field_weather_effects.c
+void Clouds_InitVars(void);
+void Clouds_Main(void);
+void Clouds_InitAll(void);
+bool8 Clouds_Finish(void);
+void Sunny_InitVars(void);
+void Sunny_Main(void);
+void Sunny_InitAll(void);
+bool8 Sunny_Finish(void);
+void Rain_InitVars(void);
+void Rain_Main(void);
+void Rain_InitAll(void);
+bool8 Rain_Finish(void);
+void Snow_InitVars(void);
+void Snow_Main(void);
+void Snow_InitAll(void);
+bool8 Snow_Finish(void);
+void Thunderstorm_InitVars(void);
+void Thunderstorm_Main(void);
+void Thunderstorm_InitAll(void);
+bool8 Thunderstorm_Finish(void);
+void FogHorizontal_InitVars(void);
+void FogHorizontal_Main(void);
+void FogHorizontal_InitAll(void);
+bool8 FogHorizontal_Finish(void);
+void Ash_InitVars(void);
+void Ash_Main(void);
+void Ash_InitAll(void);
+bool8 Ash_Finish(void);
+void Sandstorm_InitVars(void);
+void Sandstorm_Main(void);
+void Sandstorm_InitAll(void);
+bool8 Sandstorm_Finish(void);
+void FogDiagonal_InitVars(void);
+void FogDiagonal_Main(void);
+void FogDiagonal_InitAll(void);
+bool8 FogDiagonal_Finish(void);
+void Shade_InitVars(void);
+void Shade_Main(void);
+void Shade_InitAll(void);
+bool8 Shade_Finish(void);
+void Drought_InitVars(void);
+void Drought_Main(void);
+void Drought_InitAll(void);
+bool8 Drought_Finish(void);
+void Downpour_InitVars(void);
+void Downpour_InitAll(void);
+void Bubbles_InitVars(void);
+void Bubbles_Main(void);
+void Bubbles_InitAll(void);
+bool8 Bubbles_Finish(void);
+
+// field_weather_effects.c
 void SetSavedWeather(u32);
 u8 GetSav1Weather(void);
 void SetSavedWeatherFromCurrMapHeader(void);
-// ...
 void DoCurrentWeather(void);
 void sub_8080750();
-
-bool8 IsWeatherNotFadingIn(void);
-bool8 IsWeatherChangeComplete(void);
 void SetWeather(u32);
 void UpdateWeatherPerDay(u16);
-void PreservePaletteInWeather(u8 index);
-void ResetPreservedPalettesInWeather(void);
-extern void ResetDroughtWeatherPaletteLoading(void);
-void ResetDroughtWeatherPaletteLoading(void);
-bool8 LoadDroughtWeatherPalettes(void);
-u8 GetCurrentWeather(void);
-void LoadCustomWeatherSpritePalette(const u16 *palette);
-
-
-extern struct Weather gWeather;
-
-extern struct Weather *const gWeatherPtr;
 
 #endif // GUARD_WEATHER_H

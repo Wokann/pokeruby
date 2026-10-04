@@ -426,7 +426,7 @@ static void sub_8123740(void)
     i = 0;
     sub_8123FBC(0);
     gSpriteCoordOffsetX = 0;
-    sub_807C9B4(WEATHER_NONE);
+    SetCurrentAndNextWeatherNoDelay(WEATHER_NONE);
     for (; i < 20; i++)
     {
         gWeatherPtr->sprites.s2.ashSprites[i] = NULL;
@@ -455,7 +455,7 @@ static void sub_8123878(u8 taskId)
         case 0:
             if (sCableCarPtr->unk_0006 == sCableCarPtr->unk_0004)
             {
-                ChangeWeather(sCableCarPtr->unk_0002);
+                SetNextWeather(sCableCarPtr->unk_0002);
                 sCableCarPtr->unk_0001 = 1;
             }
             break;
@@ -867,7 +867,7 @@ static void LoadSprites(void)
             gSprites[spriteId].data[1] = 0x63;
             sCableCarPtr->unk_0002 = 7;
             sCableCarPtr->unk_0004 = 0x15e;
-            sub_807C9B4(WEATHER_SUNNY);
+            SetCurrentAndNextWeatherNoDelay(WEATHER_SUNNY);
             break;
         case 1:
             CableCarUtil_CopyWrapped(sCableCarPtr->unk_00fc, eCableCar2->mtChimneyTilemap + 0x24, 0x18, 0x1a, 0x0c, 0x03);
@@ -891,7 +891,7 @@ static void LoadSprites(void)
             gSprites[spriteId].data[1] = 0x41;
             sCableCarPtr->unk_0002 = 2;
             sCableCarPtr->unk_0004 = 0x109;
-            sub_807C9B4(WEATHER_VOLCANIC_ASH);
+            SetCurrentAndNextWeatherNoDelay(WEATHER_VOLCANIC_ASH);
             break;
     }
     for (i = 0; i < 9; i++)

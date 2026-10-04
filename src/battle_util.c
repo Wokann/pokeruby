@@ -1781,7 +1781,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                 {
                 case WEATHER_RAIN:
                 case WEATHER_RAIN_THUNDERSTORM:
-                case WEATHER_RAIN_HEAVY:
+                case WEATHER_DOWNPOUR:
                     if (!(gBattleWeather & B_WEATHER_RAIN))
                     {
                         gBattleWeather = (B_WEATHER_RAIN_TEMPORARY | B_WEATHER_RAIN_PERMANENT);

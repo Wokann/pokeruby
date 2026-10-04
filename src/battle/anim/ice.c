@@ -1,4 +1,5 @@
 #include "global.h"
+#include "field_weather.h"
 #include "main.h"
 #include "trig.h"
 #include "battle_anim.h"
@@ -15,7 +16,6 @@ extern u8  gBattlerSpriteIds[];
 extern u16 gBattle_BG1_X;
 extern u16 gBattle_BG1_Y;
 
-extern const u8 gUnknown_083970E8[];
 
 extern struct INCBIN_U8 gBattleAnimFogTilemap;
 extern struct INCBIN_U8 gWeatherFog1Tiles;
@@ -1010,7 +1010,7 @@ void AnimTask_Haze1(u8 taskId)
     DmaFill32Defvars(3, 0, subStruct.bgTilemap, 0x1000);
     DmaCopy16Defvars(3, &gWeatherFog1Tiles, subStruct.bgTiles, 0x800);
     LZDecompressVram(&gBattleAnimFogTilemap, subStruct.bgTilemap);
-    LoadPalette(&gUnknown_083970E8, subStruct.paletteId * 16, 32);
+    LoadPalette(&gFogPalette, subStruct.paletteId * 16, 32);
 
     if (IsContest())
         RelocateBattleBgPal(subStruct.paletteId, (u16 *)subStruct.bgTilemap, 0, 0);
@@ -1119,7 +1119,7 @@ void AnimTask_LoadMistTiles(u8 taskId)
     DmaFill32Defvars(3, 0, subStruct.bgTilemap, 0x1000);
     DmaCopy16Defvars(3, &gWeatherFog1Tiles, subStruct.bgTiles, 0x800);
     LZDecompressVram(&gBattleAnimFogTilemap, subStruct.bgTilemap);
-    LoadPalette(&gUnknown_083970E8, subStruct.paletteId * 16, 32);
+    LoadPalette(&gFogPalette, subStruct.paletteId * 16, 32);
 
     if (IsContest())
         RelocateBattleBgPal(subStruct.paletteId, (u16 *)subStruct.bgTilemap, 0, 0);

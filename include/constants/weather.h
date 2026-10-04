@@ -11,11 +11,11 @@
 #define WEATHER_VOLCANIC_ASH      7
 #define WEATHER_SANDSTORM         8
 #define WEATHER_FOG_DIAGONAL      9
-#define WEATHER_FOG_3             10
+#define WEATHER_UNDERWATER             10
 #define WEATHER_SHADE             11
 #define WEATHER_DROUGHT           12
-#define WEATHER_RAIN_HEAVY        13
-#define WEATHER_BUBBLES           14
+#define WEATHER_DOWNPOUR        13
+#define WEATHER_UNDERWATER_BUBBLES           14
 #define WEATHER_ROUTE119_CYCLE    20
 #define WEATHER_ROUTE123_CYCLE    21
 

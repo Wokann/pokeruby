@@ -379,7 +379,7 @@ void sub_8080E88(void)
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
     WarpFadeScreen();
-    PlayRainSoundEffect();
+    PlayRainStoppingSoundEffect();
     PlaySE(SE_EXIT);
     gFieldCallback = mapldr_default;
     CreateTask(task0A_fade_n_map_maybe, 10);
@@ -390,7 +390,7 @@ void sp13E_warp_to_last_warp(void)
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
     WarpFadeScreen();
-    PlayRainSoundEffect();
+    PlayRainStoppingSoundEffect();
     gFieldCallback = mapldr_default;
     CreateTask(task0A_fade_n_map_maybe, 10);
 }
@@ -600,7 +600,7 @@ void sub_808115C(u8 taskId)
     case 4:
         TryFadeOutOldMapMusic();
         WarpFadeScreen();
-        PlayRainSoundEffect();
+        PlayRainStoppingSoundEffect();
         task->data[0] = 0;
         task->func = task0A_fade_n_map_maybe;
         break;
@@ -637,7 +637,7 @@ void sub_8081334(void)
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
     WarpFadeScreen();
-    PlayRainSoundEffect();
+    PlayRainStoppingSoundEffect();
     PlaySE(SE_EXIT);
     gFieldCallback = sub_8080B60;
     CreateTask(sub_80812C8, 10);

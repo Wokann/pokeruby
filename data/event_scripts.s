@@ -860,7 +860,7 @@ Common_EventScript_NoRoomForDecor:: @ 81A02B8
 
 Common_EventScript_SetLegendaryWeather:: @ 81A02C1
 	.ifdef SAPPHIRE
-	setweather WEATHER_RAIN_HEAVY
+	setweather WEATHER_DOWNPOUR
 	.else
 	setweather WEATHER_DROUGHT
 	.endif
