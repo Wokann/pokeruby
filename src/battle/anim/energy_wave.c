@@ -1,6 +1,5 @@
 #include "global.h"
 #include "battle_anim.h"
-#include "rom_8077ABC.h"
 #include "sprite.h"
 #include "task.h"
 #include "trig.h"
@@ -159,7 +158,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D92E8 =
 
 void sub_80D3554(struct Sprite *sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
 
     sprite->data[0] = 30;
     sprite->data[1] = sprite->x;
@@ -188,7 +187,7 @@ void sub_80D3554(struct Sprite *sprite)
 
 static void sub_80D35DC(struct Sprite *sprite)
 {
-    if (TranslateAnimLinear(sprite))
+    if (AnimTranslateLinear(sprite))
     {
         DestroyAnimSprite(sprite);
     }
@@ -286,7 +285,7 @@ void sub_80D3728(struct Sprite *sprite)
     else
         var2 = 1;
 
-    InitAnimSpritePos(sprite, var1);
+    InitSpritePosToAnimAttacker(sprite, var1);
 
     if (GetBattlerSide(gBattleAnimAttacker) != 0)
     {

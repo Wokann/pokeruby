@@ -1,6 +1,5 @@
 #include "global.h"
 #include "battle_anim.h"
-#include "rom_8077ABC.h"
 
 void sub_80D517C(struct Sprite *sprite);
 

@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 #include "battle.h"
 #include "battle_anim_80CA710.h"
@@ -133,7 +132,7 @@ void AnimSonicBoomProjectile(struct Sprite* sprite)
         gBattleAnimArgs[3] = -gBattleAnimArgs[3];
     }
 
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     targetXPos = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + gBattleAnimArgs[2];
     targetYPos = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + gBattleAnimArgs[3];
     rotation = ArcTan2Neg(targetXPos - sprite->x, targetYPos - sprite->y);
@@ -141,7 +140,7 @@ void AnimSonicBoomProjectile(struct Sprite* sprite)
     if (IsContest())
         rotation -= 0x6000;
 
-    sub_8078FDC(sprite, 0, 0x100, 0x100, rotation);
+    TrySetSpriteRotScale(sprite, 0, 0x100, 0x100, rotation);
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->data[2] = targetXPos;
     sprite->data[4] = targetYPos;

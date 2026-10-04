@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 
 extern const union AffineAnimCmd gSpriteAffineAnim_83D66BC[];

@@ -9,7 +9,7 @@
 #include "constants/species.h"
 #include "contest_ai.h"
 #include "contest_effect.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "ewram.h"
 #include "graphics.h"
@@ -18,7 +18,6 @@
 #include "menu.h"
 #include "palette.h"
 #include "random.h"
-#include "rom_8077ABC.h"
 #include "sound.h"
 #include "sprite.h"
 #include "string_util.h"
@@ -1010,7 +1009,7 @@ u8 unref_sub_80AE908(void)
 
     DecompressPicFromTable_2(
         &gMonFrontPicTable[species],
-        gMonFrontPicCoords[species].coords,
+        gMonFrontPicCoords[species].size,
         gMonFrontPicCoords[species].y_offset,
         (void *)EWRAM,
         gMonSpriteGfx_Sprite_ptr[1],
@@ -1019,7 +1018,7 @@ u8 unref_sub_80AE908(void)
     SetMultiuseSpriteTemplateToPokemon(gContestMons[gContestPlayerMonIndex].species, 1);
     spriteId = CreateSprite(
         &gMultiuseSpriteTemplate,
-        112, 80 + (8 - gMonFrontPicCoords[gContestMons[gContestPlayerMonIndex].species].coords) * 4,
+        112, 80 + (8 - gMonFrontPicCoords[gContestMons[gContestPlayerMonIndex].species].size) * 4,
         30);
     gSprites[spriteId].oam.paletteNum = 1;
     gSprites[spriteId].callback = SpriteCallbackDummy;
@@ -1036,7 +1035,7 @@ u8 CreateContestantSprite(u16 species, u32 otId, u32 personality)
     species = SanitizeSpecies(species);
     HandleLoadSpecialPokePic(
         &gMonBackPicTable[species],
-        gMonBackPicCoords[species].coords,
+        gMonBackPicCoords[species].size,
         gMonBackPicCoords[species].y_offset,
         (void *)EWRAM,
         gMonSpriteGfx_Sprite_ptr[0],

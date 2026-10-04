@@ -3,7 +3,6 @@
 #include "battle_anim.h"
 #include "decompress.h"
 #include "palette.h"
-#include "rom_8077ABC.h"
 #include "sound.h"
 #include "task.h"
 #include "trig.h"
@@ -311,7 +310,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAE30 =
     .anims = gSpriteAnimTable_83DAD50,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DADE0,
-    .callback = sub_807A9BC,
+    .callback = AnimWeatherBallDown,
 };
 
 void sub_80DCE9C(struct Sprite *sprite)
@@ -333,7 +332,7 @@ void sub_80DCE9C(struct Sprite *sprite)
     sprite->data[5] = gBattleAnimArgs[2];
 
     StoreSpriteCallbackInData6(sprite, sub_80DCF1C);
-    sprite->callback = sub_8078278;
+    sprite->callback = TranslateSpriteInEllipse;
     sprite->callback(sprite);
 }
 
@@ -348,7 +347,7 @@ static void sub_80DCF1C(struct Sprite *sprite)
     sprite->data[4] = -24;
 
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
-    sprite->callback = sub_8078278;
+    sprite->callback = TranslateSpriteInEllipse;
     sprite->callback(sprite);
 }
 
@@ -374,16 +373,16 @@ void sub_80DCF60(struct Sprite *sprite)
     sprite->data[3] = 0;
     sprite->data[4] = 0;
 
-    sprite->callback = sub_8078394;
+    sprite->callback = TranslateSpriteLinearFixedPoint;
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
 }
 
 void sub_80DCFE4(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[6] == 0)
-        InitAnimSpritePos(sprite, 0);
+        InitSpritePosToAnimAttacker(sprite, 0);
     else
-        sub_8078764(sprite, FALSE);
+        InitSpritePosToAnimTarget(sprite, FALSE);
 
     sprite->data[0] = gBattleAnimArgs[3];
     sprite->data[1] = gBattleAnimArgs[2];
@@ -566,7 +565,7 @@ void AnimDirtParticleAcrossScreen(struct Sprite *sprite)
 void AnimRaiseSprite(struct Sprite *sprite)
 {
     StartSpriteAnim(sprite, gBattleAnimArgs[4]);
-    InitAnimSpritePos(sprite, 0);
+    InitSpritePosToAnimAttacker(sprite, 0);
 
     sprite->data[0] = gBattleAnimArgs[3];
     sprite->data[2] = sprite->x;
@@ -746,7 +745,7 @@ static void sub_80DD774(struct Task *task)
 
 void sub_80DD87C(struct Sprite *sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
     {
         u8 taskId = FindTaskIdByFunc(sub_80DD604);
         if (taskId != 0xFF)
@@ -855,7 +854,7 @@ void sub_80DDA8C(u8 taskId)
 {
     if (gTasks[taskId].data[0] == 0)
     {
-        sub_80789D4(0);
+        UpdateAnimBg3ScreenSize(0);
         gTasks[taskId].data[1] = 200;
     }
 
@@ -864,7 +863,7 @@ void sub_80DDA8C(u8 taskId)
 
     if (gTasks[taskId].data[0] == 120)
     {
-        sub_80789D4(1);
+        UpdateAnimBg3ScreenSize(1);
         DestroyAnimVisualTask(taskId);
     }
 
@@ -875,7 +874,7 @@ void sub_80DDAF0(u8 taskId)
 {
     if (gTasks[taskId].data[0] == 0)
     {
-        sub_80789D4(0);
+        UpdateAnimBg3ScreenSize(0);
         gTasks[taskId].data[0]++;
         gTasks[taskId].data[2] = gBattle_BG3_Y;
     }
@@ -887,7 +886,7 @@ void sub_80DDAF0(u8 taskId)
     if (gBattleAnimArgs[7] == 0xFFF)
     {
         gBattle_BG3_Y = 0;
-        sub_80789D4(1);
+        UpdateAnimBg3ScreenSize(1);
         DestroyAnimVisualTask(taskId);
     }
 }

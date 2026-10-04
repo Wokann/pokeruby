@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 
 
@@ -82,5 +81,5 @@ void sub_80CC8C8(struct Sprite* sprite)
     sprite->data[5] = gBattleAnimArgs[5];
     StartSpriteAffineAnim(sprite, gBattleAnimArgs[6]);
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
-    sprite->callback = sub_8078504;
+    sprite->callback = TranslateSpriteLinearAndFlicker;
 }

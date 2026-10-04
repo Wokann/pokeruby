@@ -104,7 +104,7 @@ SECTIONS {
         src/palette.o(.text);
         src/sound.o(.text);
         src/battle_anim.o(.text);
-        src/rom_8077ABC.o(.text);
+        src/battle_anim_mons.o(.text);
         src/task.o(.text);
         src/reshow_battle_screen.o(.text);
         src/battle_anim_status_effects.o(.text);
@@ -530,9 +530,9 @@ SECTIONS {
         src/palette.o(.rodata);
         src/sound.o(.rodata);
         src/battle_anim.o(.rodata);
-        src/rom_8077ABC.o(.rodata);
+        src/battle_anim_mons.o(.rodata);
         data/map_events.o(.rodata);
-        data/unused_orb.o(.rodata); /* these files are clearly the rodata for latter part of rom_8077ABC, but the linker linked map_events before these objects for some reason. perhaps it was compiling and linking 2 folders at the same time? */
+        data/unused_orb.o(.rodata); /* these files are clearly the rodata for latter part of battle_anim_mons, but the linker linked map_events before these objects for some reason. perhaps it was compiling and linking 2 folders at the same time? */
         data/gray_sun.o(.rodata);
         data/sparkle.o(.rodata);
         data/unused_paw.o(.rodata);

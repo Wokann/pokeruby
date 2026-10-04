@@ -12,7 +12,7 @@
 #include "battle_main.h"
 #include "battle_script_commands.h"
 #include "scanline_effect.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "m4a.h"
 #include "trade.h"
@@ -223,7 +223,7 @@ void EvolutionScene(struct Pokemon* mon, u16 speciesToEvolve, bool8 canStopEvo, 
     TiD = GetMonData(mon, MON_DATA_OT_ID);
     PiD = GetMonData(mon, MON_DATA_PERSONALITY);
     DecompressPicFromTable_2(&gMonFrontPicTable[currSpecies],
-                             gMonFrontPicCoords[currSpecies].coords,
+                             gMonFrontPicCoords[currSpecies].size,
                              gMonFrontPicCoords[currSpecies].y_offset,
                              (void*)EWRAM,
                              gMonSpriteGfx_Sprite_ptr[1], currSpecies);
@@ -240,7 +240,7 @@ void EvolutionScene(struct Pokemon* mon, u16 speciesToEvolve, bool8 canStopEvo, 
 
     // postEvo sprite
     DecompressPicFromTable_2(&gMonFrontPicTable[speciesToEvolve],
-                             gMonFrontPicCoords[speciesToEvolve].coords,
+                             gMonFrontPicCoords[speciesToEvolve].size,
                              gMonFrontPicCoords[speciesToEvolve].y_offset,
                              (void*)EWRAM,
                              gMonSpriteGfx_Sprite_ptr[3], speciesToEvolve);
@@ -320,7 +320,7 @@ static void CB2_EvolutionSceneLoadGraphics(void)
     gReservedSpritePaletteCount = 4;
 
     DecompressPicFromTable_2(&gMonFrontPicTable[postEvoSpecies],
-                             gMonFrontPicCoords[postEvoSpecies].coords,
+                             gMonFrontPicCoords[postEvoSpecies].size,
                              gMonFrontPicCoords[postEvoSpecies].y_offset,
                              (void*)EWRAM,
                              gMonSpriteGfx_Sprite_ptr[3], postEvoSpecies);
@@ -390,7 +390,7 @@ static void CB2_TradeEvolutionSceneLoadGraphics(void)
             u32 TiD = GetMonData(Mon, MON_DATA_OT_ID);
             u32 PiD = GetMonData(Mon, MON_DATA_PERSONALITY);
             DecompressPicFromTable_2(&gMonFrontPicTable[postEvoSpecies],
-                                     gMonFrontPicCoords[postEvoSpecies].coords,
+                                     gMonFrontPicCoords[postEvoSpecies].size,
                                      gMonFrontPicCoords[postEvoSpecies].y_offset,
                                      (void*)EWRAM,
                                      gMonSpriteGfx_Sprite_ptr[3], postEvoSpecies);
@@ -440,7 +440,7 @@ void TradeEvolutionScene(struct Pokemon* mon, u16 speciesToEvolve, u8 preEvoSpri
     TiD = GetMonData(mon, MON_DATA_OT_ID);
     sEvoInfo.preEvoSpriteID = preEvoSpriteID;
     DecompressPicFromTable_2(&gMonFrontPicTable[speciesToEvolve],
-                             gMonFrontPicCoords[speciesToEvolve].coords,
+                             gMonFrontPicCoords[speciesToEvolve].size,
                              gMonFrontPicCoords[speciesToEvolve].y_offset,
                              (void*)EWRAM,
                              gMonSpriteGfx_Sprite_ptr[1], speciesToEvolve);

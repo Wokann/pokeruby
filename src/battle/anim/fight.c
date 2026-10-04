@@ -1,7 +1,6 @@
 #include "global.h"
 #include "battle_anim.h"
 #include "random.h"
-#include "rom_8077ABC.h"
 #include "sprite.h"
 #include "task.h"
 #include "trig.h"
@@ -432,7 +431,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA214 =
 
 void sub_080B08A0(struct Sprite *sprite)
 {
-    sub_807867C(sprite, gBattleAnimArgs[0]);
+    SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
     sprite->y += gBattleAnimArgs[1];
     sprite->data[0] = 15;
     sprite->callback = WaitAnimForDuration;
@@ -449,7 +448,7 @@ void sub_80D902C(struct Sprite *sprite)
 
     StartSpriteAnim(sprite, gBattleAnimArgs[6]);
     gBattleAnimArgs[6] = 0;
-    sub_8079534(sprite);
+    AnimTravelDiagonally(sprite);
 }
 
 void sub_80D9078(struct Sprite *sprite)
@@ -475,9 +474,9 @@ void AnimBasicFistOrFoot(struct Sprite *sprite)
     StartSpriteAnim(sprite, gBattleAnimArgs[4]);
 
     if (gBattleAnimArgs[3] == 0)
-        InitAnimSpritePos(sprite, 1);
+        InitSpritePosToAnimAttacker(sprite, 1);
     else
-        sub_8078764(sprite, TRUE);
+        InitSpritePosToAnimTarget(sprite, TRUE);
 
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->callback = WaitAnimForDuration;
@@ -550,7 +549,7 @@ static void sub_80D927C(struct Sprite *sprite)
 
 void sub_80D92D0(struct Sprite *sprite)
 {
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
     sprite->data[0] = 30;
 
     if (gBattleAnimArgs[2] == 0)
@@ -590,7 +589,7 @@ void sub_80D9378(struct Sprite *sprite)
     if ((gBattleAnimAttacker ^ 2) == gBattleAnimTarget && GetBattlerPosition(gBattleAnimTarget) < 2)
         gBattleAnimArgs[0] *= -1;
 
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
 
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];
@@ -612,7 +611,7 @@ void sub_80D9378(struct Sprite *sprite)
 
 static void sub_80D9404(struct Sprite *sprite)
 {
-    if (!TranslateAnimLinear(sprite))
+    if (!AnimTranslateLinear(sprite))
     {
         sprite->y2 += Sin(sprite->data[7] >> 8, sprite->data[5]);
         sprite->data[7] += sprite->data[6];
@@ -631,7 +630,7 @@ static void sub_80D9404(struct Sprite *sprite)
 // arg 3: spin duration
 void AnimSpinningKickOrPunch(struct Sprite *sprite)
 {
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
     StartSpriteAnim(sprite, gBattleAnimArgs[2]);
     sprite->data[0] = gBattleAnimArgs[3];
 
@@ -655,7 +654,7 @@ static void AnimSpinningKickOrPunchFinish(struct Sprite *sprite)
 // arg 2: initial wait duration
 void AnimStompFoot(struct Sprite *sprite)
 {
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
     sprite->data[0] = gBattleAnimArgs[2];
 
     sprite->callback = AnimStompFootStep;
@@ -686,7 +685,7 @@ void sub_80D9540(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
-        sub_8078764(sprite, TRUE);
+        InitSpritePosToAnimTarget(sprite, TRUE);
         sprite->data[1] = gBattleAnimArgs[2];
         sprite->data[2] = gBattleAnimArgs[3];
         sprite->data[0]++;
@@ -845,7 +844,7 @@ static void sub_80D986C(struct Sprite *sprite)
 
         InitAnimLinearTranslation(sprite);
         StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
-        sprite->callback = TranslateAnimLinearUntil;
+        sprite->callback = AnimTranslateLinear_WithFollowup;
     }
 }
 
@@ -855,7 +854,7 @@ void sub_80D98D8(struct Sprite *sprite)
     sprite->y = 120;
 
     sprite->data[0] = gBattleAnimArgs[3];
-    sub_8079BF4(&sprite->data[4], &sprite->data[5], (void *)(sprite->y << 8));
+    StorePointerInVars(&sprite->data[4], &sprite->data[5], (void *)(sprite->y << 8));
 
     sprite->data[6] = gBattleAnimArgs[1];
     sprite->oam.tileNum += gBattleAnimArgs[2] * 4;
@@ -869,9 +868,9 @@ static void sub_80D9934(struct Sprite *sprite)
 
     if (sprite->data[0] != 0)
     {
-        var0 = sub_8079BFC(sprite->data[4], sprite->data[5]);
+        var0 = LoadPointerFromVars(sprite->data[4], sprite->data[5]);
         var0 -= sprite->data[6];
-        sub_8079BF4(&sprite->data[4], &sprite->data[5], var0);
+        StorePointerInVars(&sprite->data[4], &sprite->data[5], var0);
 
         var0 = (void *)(((intptr_t)var0) >> 8);
         sprite->y = (intptr_t)var0;
@@ -940,7 +939,7 @@ void sub_80D9A38(struct Sprite *sprite)
 
     InitAnimLinearTranslation(sprite);
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
-    sprite->callback = TranslateAnimLinearUntil;
+    sprite->callback = AnimTranslateLinear_WithFollowup;
 }
 
 static void sub_80D9B24(struct Sprite *sprite)
@@ -981,9 +980,9 @@ void sub_80D9B48(struct Sprite *sprite)
 void sub_80D9BD4(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[2] == 0)
-        InitAnimSpritePos(sprite, 0);
+        InitSpritePosToAnimAttacker(sprite, 0);
     else
-        sub_8078764(sprite, FALSE);
+        InitSpritePosToAnimTarget(sprite, FALSE);
 
     if (IsContest())
     {
@@ -994,7 +993,7 @@ void sub_80D9BD4(struct Sprite *sprite)
         StartSpriteAnim(sprite, 1);
     }
 
-    sprite->callback = sub_8078600;
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
@@ -1019,7 +1018,7 @@ void sub_80D9C80(u8 taskId)
     switch (task->data[0])
     {
     case 0:
-        sub_80789D4(0);
+        UpdateAnimBg3ScreenSize(0);
         task->data[8] = gBattleAnimArgs[0];
         task->data[0]++;
         break;
@@ -1049,7 +1048,7 @@ void sub_80D9C80(u8 taskId)
     {
         gBattle_BG3_X = 0;
         gBattle_BG3_Y = 0;
-        sub_80789D4(1);
+        UpdateAnimBg3ScreenSize(1);
         DestroyAnimVisualTask(taskId);
     }
 }

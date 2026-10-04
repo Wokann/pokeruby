@@ -1,6 +1,5 @@
 #include "global.h"
 #include "battle_anim.h"
-#include "rom_8077ABC.h"
 #include "trig.h"
 
 
@@ -179,26 +178,26 @@ void sub_80D4ED8(struct Sprite *sprite)
 
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 
-    sprite->callback = sub_8078174;
+    sprite->callback = TranslateSpriteInGrowingCircle;
     sprite->callback(sprite);
 }
 
 void sub_80D4F18(struct Sprite *sprite)
 {
-    sub_807867C(sprite, gBattleAnimArgs[0]);
+    SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
 
     sprite->y += gBattleAnimArgs[1];
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->data[1] = gBattleAnimArgs[2];
     sprite->data[2] = gBattleAnimArgs[3];
 
-    sprite->callback = sub_8078394;
+    sprite->callback = TranslateSpriteLinearFixedPoint;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 void sub_80D4F5C(struct Sprite *sprite)
 {
-    sub_8078650(sprite);
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
 
     if (GetBattlerSide(gBattleAnimAttacker))
     {
@@ -256,7 +255,7 @@ static void sub_80D5038(struct Sprite *sprite)
 
 void sub_80D5074(struct Sprite *sprite)
 {
-    sub_8078650(sprite);
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
 
     if (GetBattlerSide(gBattleAnimAttacker))
     {

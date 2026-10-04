@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 
 extern const union AffineAnimCmd *const gSpriteAffineAnimTable_83DB1B0[];
@@ -57,12 +56,12 @@ const struct SpriteTemplate gSpriteTemplate_83D7410 =
     .anims = gSpriteAnimTable_83D73F0,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D740C,
-    .callback = sub_80793C4,
+    .callback = AnimSpriteOnMonPos,
 };
 
 void sub_80CF458(struct Sprite* sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[1] = gBattleAnimArgs[3];
     sprite->data[5] = gBattleAnimArgs[4];

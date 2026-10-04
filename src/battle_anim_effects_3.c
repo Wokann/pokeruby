@@ -4,12 +4,11 @@
 #include "battle_anim.h"
 #include "util.h"
 #include "contest.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "ewram.h"
 #include "palette.h"
 #include "random.h"
-#include "rom_8077ABC.h"
 #include "scanline_effect.h"
 #include "sound.h"
 #include "trig.h"
@@ -161,7 +160,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402180 =
     .anims = gSpriteAnimTable_840217C,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80793C4,
+    .callback = AnimSpriteOnMonPos,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_8402198 =
@@ -183,7 +182,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84021B0 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80794A8,
+    .callback = AnimThrowProjectile,
 };
 
 const union AnimCmd gSpriteAnim_84021C8[] =
@@ -207,7 +206,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84021DC =
     .anims = gSpriteAnimTable_84021D8,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80793C4,
+    .callback = AnimSpriteOnMonPos,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_84021F4 =
@@ -519,7 +518,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402498 =
     .anims = gSpriteAnimTable_8402494,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80793C4,
+    .callback = AnimSpriteOnMonPos,
 };
 
 const union AffineAnimCmd gUnknown_084024B0[] =
@@ -1247,14 +1246,14 @@ static void sub_812C2BC(struct Sprite *sprite)
     u8 x = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
     u8 y = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
 
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
 
     rotation = ArcTan2Neg(sprite->x - x, sprite->y - y);
     rotation += 0x6000;
     if (IsContest())
         rotation += 0x4000;
 
-    sub_8078FDC(sprite, 0, 0x100, 0x100, rotation);
+    TrySetSpriteRotScale(sprite, 0, 0x100, 0x100, rotation);
 
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[2] = x;
@@ -1428,7 +1427,7 @@ static void sub_812C720(struct Sprite *sprite)
     u16 x;
     u16 y;
 
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     SetAverageBattlerPositions(gBattleAnimTarget, 0, &x, &y);
 
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
@@ -1445,7 +1444,7 @@ static void sub_812C720(struct Sprite *sprite)
 
 static void sub_812C798(struct Sprite *sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
     {
         sprite->data[0] = 30;
         sprite->data[1] = 0;
@@ -1465,10 +1464,10 @@ static void sub_812C7C8(struct Sprite *sprite)
 
 static void sub_812C80C(struct Sprite *sprite)
 {
-    sub_8078650(sprite);
-    sub_807867C(sprite, gBattleAnimArgs[0]);
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
+    SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
     sprite->y += gBattleAnimArgs[1];
-    sprite->callback = sub_8078600;
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
@@ -1479,8 +1478,8 @@ static void sub_812C848(struct Sprite *sprite)
     int var1;
     if (sprite->data[0] == 0)
     {
-        sub_8078650(sprite);
-        sub_807867C(sprite, gBattleAnimArgs[0]);
+        SetSpriteCoordsToAnimAttackerCoords(sprite);
+        SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
 
         if (!IsContest())
         {
@@ -1551,7 +1550,7 @@ static void sub_812C990(struct Sprite *sprite)
     REG_WIN0H = 0;
     REG_WIN0V = 0;
 
-    sub_8078764(sprite, FALSE);
+    InitSpritePosToAnimTarget(sprite, FALSE);
 
     sprite->oam.objMode = ST_OAM_OBJ_WINDOW;
     sprite->invisible = TRUE;
@@ -1759,12 +1758,12 @@ void sub_812CDC8(u8 taskId)
 
     if (gBattleAnimArgs[0] == 0)
     {
-        var0 = sub_8077FC0(gBattleAnimAttacker);
+        var0 = GetBattlerYCoordWithElevation(gBattleAnimAttacker);
         toBG2 = GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker);
     }
     else
     {
-        var0 = sub_8077FC0(gBattleAnimTarget);
+        var0 = GetBattlerYCoordWithElevation(gBattleAnimTarget);
         toBG2 = GetBattlerSpriteBGPriorityRank(gBattleAnimTarget);
     }
 
@@ -2015,7 +2014,7 @@ static void sub_812D254(struct Sprite *sprite)
 static void sub_812D294(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
-        InitAnimSpritePos(sprite, 0);
+        InitSpritePosToAnimAttacker(sprite, 0);
 
     sprite->data[0]++;
     if (sprite->data[0] < 40)
@@ -2049,7 +2048,7 @@ void sub_812D350(u8 taskId)
     switch (gTasks[taskId].data[0])
     {
     case 0:
-        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(0), &gUnknown_084024B0);
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(0), gUnknown_084024B0);
         gTasks[taskId].data[0]++;
         break;
     case 1:
@@ -2076,7 +2075,7 @@ static void sub_812D3AC(struct Sprite *sprite)
     case 1:
         sprite->data[1] += 96;
         sprite->data[2] -= 26;
-        obj_id_set_rotscale(spriteId, sprite->data[1], sprite->data[2], 0);
+        SetSpriteRotScale(spriteId, sprite->data[1], sprite->data[2], 0);
 
         if (++sprite->data[3] == 5)
             sprite->data[0]++;
@@ -2084,13 +2083,13 @@ static void sub_812D3AC(struct Sprite *sprite)
     case 2:
         sprite->data[1] += 96;
         sprite->data[2] += 48;
-        obj_id_set_rotscale(spriteId, sprite->data[1], sprite->data[2], 0);
+        SetSpriteRotScale(spriteId, sprite->data[1], sprite->data[2], 0);
 
         if (++sprite->data[3] == 9)
         {
             sprite->data[3] = 0;
             gSprites[spriteId].invisible = TRUE;
-            sub_8078F40(spriteId);
+            ResetSpriteRotScale(spriteId);
             sprite->data[0]++;
         }
         break;
@@ -2191,7 +2190,7 @@ void sub_812D674(u8 taskId)
 {
     if (gTasks[taskId].data[0] == 0)
     {
-        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(0), &gUnknown_08402518);
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(0), gUnknown_08402518);
         gTasks[taskId].data[0]++;
     }
     else
@@ -2205,7 +2204,7 @@ void sub_812D6CC(u8 taskId)
 {
     if (gTasks[taskId].data[0] == 0)
     {
-        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(0), &gUnknown_08402540);
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(0), gUnknown_08402540);
         gTasks[taskId].data[0]++;
     }
     else
@@ -2220,7 +2219,7 @@ static void sub_812D724(struct Sprite *sprite)
     switch (sprite->data[0])
     {
     case 0:
-        InitAnimSpritePos(sprite, 0);
+        InitSpritePosToAnimAttacker(sprite, 0);
         sprite->data[1] = 0x900;
         sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
         sprite->data[0]++;
@@ -2238,7 +2237,7 @@ void sub_812D790(u8 taskId)
 {
     if (gTasks[taskId].data[0] == 0)
     {
-        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(0), &gUnknown_08402590);
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(0), gUnknown_08402590);
         gTasks[taskId].data[0]++;
     }
     else
@@ -2283,7 +2282,7 @@ void sub_812D7E8(u8 taskId)
         break;
     case 2:
         HandleSpeciesGfxDataChange(gBattleAnimAttacker, gBattleAnimTarget, gTasks[taskId].data[10]);
-        sub_8078954(&subStruct, gBattleAnimAttacker);
+        GetBgDataForTransform(&subStruct, gBattleAnimAttacker);
 
         if (IsContest())
             position = 0;
@@ -2672,7 +2671,7 @@ void sub_812E498(u8 taskId)
 {
     if (gTasks[taskId].data[0] == 0)
     {
-        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(0), &gUnknown_08402610);
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(0), gUnknown_08402610);
         gTasks[taskId].data[0]++;
     }
     else
@@ -2688,7 +2687,7 @@ static void sub_812E4F0(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
-        InitAnimSpritePos(sprite, 0);
+        InitSpritePosToAnimAttacker(sprite, 0);
         sprite->data[0]++;
     }
     else if (sprite->data[0]++ > 20)
@@ -2756,8 +2755,8 @@ static void sub_812E638(u8 taskId)
     case 0:
         gSprites[task->data[15]].x2 += task->data[5];
         task->data[2] -= task->data[4];
-        obj_id_set_rotscale(task->data[15], 0x100, 0x100, task->data[2]);
-        sub_8078F9C(task->data[15]);
+        SetSpriteRotScale(task->data[15], 0x100, 0x100, task->data[2]);
+        SetBattlerSpriteYOffsetFromRotation(task->data[15]);
         if (++task->data[1] >= task->data[3])
         {
             task->data[1] = 0;
@@ -2767,8 +2766,8 @@ static void sub_812E638(u8 taskId)
     case 1:
         gSprites[task->data[15]].x2 -= task->data[5];
         task->data[2] += task->data[4];
-        obj_id_set_rotscale(task->data[15], 0x100, 0x100, task->data[2]);
-        sub_8078F9C(task->data[15]);
+        SetSpriteRotScale(task->data[15], 0x100, 0x100, task->data[2]);
+        SetBattlerSpriteYOffsetFromRotation(task->data[15]);
         if (++task->data[1] >= task->data[3] * 2)
         {
             task->data[1] = 0;
@@ -2778,8 +2777,8 @@ static void sub_812E638(u8 taskId)
     case 2:
         gSprites[task->data[15]].x2 += task->data[5];
         task->data[2] -= task->data[4];
-        obj_id_set_rotscale(task->data[15], 0x100, 0x100, task->data[2]);
-        sub_8078F9C(task->data[15]);
+        SetSpriteRotScale(task->data[15], 0x100, 0x100, task->data[2]);
+        SetBattlerSpriteYOffsetFromRotation(task->data[15]);
         if (++task->data[1] >= task->data[3])
         {
             if (task->data[6])
@@ -2795,7 +2794,7 @@ static void sub_812E638(u8 taskId)
         }
         break;
     case 3:
-        sub_8078F40(task->data[15]);
+        ResetSpriteRotScale(task->data[15]);
         DestroyAnimVisualTask(taskId);
         break;
     }
@@ -2907,13 +2906,13 @@ static void sub_812E8B4(u8 taskId)
         }
         break;
     case 2:
-        sub_8078F40(task->data[15]);
+        ResetSpriteRotScale(task->data[15]);
         DestroyAnimVisualTask(taskId);
         return;
     }
 
-    obj_id_set_rotscale(task->data[15], 0x100, 0x100, task->data[2]);
-    sub_8078F9C(task->data[15]);
+    SetSpriteRotScale(task->data[15], 0x100, 0x100, task->data[2]);
+    SetBattlerSpriteYOffsetFromRotation(task->data[15]);
     gSprites[task->data[15]].x2 = -(((temp = task->data[2]) >= 0 ? task->data[2] : temp + 63) >> 6);
     
     if (++task->data[1] > 8)
@@ -2984,18 +2983,18 @@ void sub_812EB10(u8 taskId)
         switch (gBattleAnimArgs[1])
         {
         case 0:
-            obj_id_set_rotscale(spriteId, 0xE0, 0x140, 0);
-            sub_8079A64(spriteId);
+            SetSpriteRotScale(spriteId, 0xE0, 0x140, 0);
+            SetBattlerSpriteYOffsetFromYScale(spriteId);
             break;
         case 1:
-            obj_id_set_rotscale(spriteId, 0xD0, 0x130, 0xF00);
-            sub_8079A64(spriteId);
+            SetSpriteRotScale(spriteId, 0xD0, 0x130, 0xF00);
+            SetBattlerSpriteYOffsetFromYScale(spriteId);
             if (IsContest() || GetBattlerSide(gTasks[taskId].data[11]) == B_SIDE_PLAYER)
                 gSprites[spriteId].y2 += 16;
             break;
         case 2:
-            obj_id_set_rotscale(spriteId, 0xD0, 0x130, 0xF100);
-            sub_8079A64(spriteId);
+            SetSpriteRotScale(spriteId, 0xD0, 0x130, 0xF100);
+            SetBattlerSpriteYOffsetFromYScale(spriteId);
             if (IsContest() || GetBattlerSide(gTasks[taskId].data[11]) == B_SIDE_PLAYER)
                 gSprites[spriteId].y2 += 16;
             break;
@@ -3015,7 +3014,7 @@ void sub_812EB10(u8 taskId)
 
         if (++gTasks[taskId].data[1] == 13)
         {
-            sub_8078F40(spriteId);
+            ResetSpriteRotScale(spriteId);
             gSprites[spriteId].x2 = 0;
             gSprites[spriteId].y2 = 0;
             DestroyAnimVisualTask(taskId);
@@ -3086,7 +3085,7 @@ static void sub_812ED84(struct Sprite *sprite)
     REG_WIN0V = 0;
 
     sprite->data[0] = gBattleAnimArgs[2];
-    sub_8078764(sprite, FALSE);
+    InitSpritePosToAnimTarget(sprite, FALSE);
     sprite->oam.objMode = ST_OAM_OBJ_WINDOW;
     sprite->invisible = TRUE;
     sprite->callback = sub_812EE00;
@@ -3233,7 +3232,7 @@ void AnimTask_RolePlaySilhouette(u8 taskId)
 
     coord1 = GetBattlerSpriteCoord(gBattleAnimAttacker, 0);
     coord2 = GetBattlerSpriteCoord(gBattleAnimAttacker, 1);
-    spriteId = sub_8079F44(species, isBackPic, 0, coord1 + xOffset, coord2, 5, personality, otId);
+    spriteId = CreateAdditionalMonSpriteForMoveAnim(species, isBackPic, 0, coord1 + xOffset, coord2, 5, personality, otId);
 
     gSprites[spriteId].oam.priority = priority;
     gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
@@ -3268,12 +3267,12 @@ static void sub_812F290(u8 taskId)
     gTasks[taskId].data[10] -= 16;
     gTasks[taskId].data[11] += 128;
     gSprites[spriteId].oam.affineMode |= 2;
-    sub_8078FDC(&gSprites[spriteId], 1, gTasks[taskId].data[10], gTasks[taskId].data[11], 0);
+    TrySetSpriteRotScale(&gSprites[spriteId], 1, gTasks[taskId].data[10], gTasks[taskId].data[11], 0);
     if (++gTasks[taskId].data[12] == 9)
     {
-        sub_8079098(&gSprites[spriteId]);
+        ResetSpriteRotScale_PreserveAffine(&gSprites[spriteId]);
         DestroySpriteAndFreeResources_(&gSprites[spriteId]);
-        gTasks[taskId].func = sub_8078634;
+        gTasks[taskId].func = DestroyAnimVisualTaskAndDisableBlend;
     }
 }
 
@@ -3303,7 +3302,7 @@ void sub_812F314(u8 taskId)
     if (GetBattlerSide(battler) == B_SIDE_OPPONENT)
         task->data[8] *= -1;
 
-    task->data[13] = sub_8077FC0(battler) - 34;
+    task->data[13] = GetBattlerYCoordWithElevation(battler) - 34;
     if (task->data[13] < 0)
         task->data[13] = 0;
 
@@ -3458,7 +3457,7 @@ void sub_812F724(u8 taskId)
     struct Task *task = &gTasks[taskId];
     task->data[0] = 0;
     task->data[15] = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
-    PrepareAffineAnimInTaskData(&gTasks[taskId], task->data[15], &gUnknown_08402750);
+    PrepareAffineAnimInTaskData(&gTasks[taskId], task->data[15], gUnknown_08402750);
     task->func = sub_812F76C;
 }
 
@@ -3514,7 +3513,7 @@ static void sub_812F88C(struct Sprite *sprite)
     s16 x = sprite->x;
     s16 y = sprite->y;
 
-    sub_8078650(sprite);
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
     StartSpriteAffineAnim(sprite, gBattleAnimArgs[0]);
     sub_812F804(sprite, sprite->x, sprite->y, x, y, 64);
     sprite->data[0] = 0;
@@ -3712,7 +3711,7 @@ void sub_812FD7C(u8 taskId)
     task->data[5] = GetBattlerSpriteCoord(battler, 1);
     task->data[6] = GetBattlerSpriteSubpriority(battler);
     task->data[15] = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
-    PrepareAffineAnimInTaskData(task, task->data[15], &gUnknown_084028AC);
+    PrepareAffineAnimInTaskData(task, task->data[15], gUnknown_084028AC);
     task->func = sub_812FE20;
 }
 
@@ -3738,7 +3737,7 @@ static void sub_812FE20(u8 taskId)
             else
             {
                 task->data[1] = 0;
-                PrepareAffineAnimInTaskData(task, task->data[15], &gUnknown_084028AC);
+                PrepareAffineAnimInTaskData(task, task->data[15], gUnknown_084028AC);
             }
         }
         break;
@@ -4028,7 +4027,7 @@ static void sub_813051C(struct Sprite *sprite)
     sprite->data[4] = gBattleAnimArgs[3];
     sprite->data[0] = gBattleAnimArgs[4];
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
-    sprite->callback = sub_8078CC0;
+    sprite->callback = InitAndRunAnimFastLinearTranslation;
 }
 
 void sub_8130554(u8 taskId)
@@ -4068,13 +4067,13 @@ static void sub_81306A4(u8 taskId)
         if (++task->data[1] > 1)
         {
             task->data[1] = 0;
-            TranslateAnimArc(&gSprites[task->data[15]]);
+            TranslateAnimHorizontalArc(&gSprites[task->data[15]]);
             if (++task->data[2] > 7)
                 task->data[0]++;
         }
         break;
     case 1:
-        if (TranslateAnimArc(&gSprites[task->data[15]]))
+        if (TranslateAnimHorizontalArc(&gSprites[task->data[15]]))
         {
             task->data[1] = 0;
             task->data[2] = 0;
@@ -4183,7 +4182,7 @@ void sub_8130918(u8 taskId)
     {
         gTasks[taskId].data[0] = gBattleAnimArgs[1];
         gTasks[taskId].data[15] = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
-        PrepareAffineAnimInTaskData(&gTasks[taskId], gTasks[taskId].data[15], &gUnknown_084029DC);
+        PrepareAffineAnimInTaskData(&gTasks[taskId], gTasks[taskId].data[15], gUnknown_084029DC);
         gTasks[taskId].func = sub_8130970;
     }
 }
@@ -4206,7 +4205,7 @@ static void sub_8130970(u8 taskId)
         gSprites[task->data[15]].x2 = 0;
         if (--task->data[0])
         {
-            PrepareAffineAnimInTaskData(&gTasks[taskId], gTasks[taskId].data[15], &gUnknown_084029DC);
+            PrepareAffineAnimInTaskData(&gTasks[taskId], gTasks[taskId].data[15], gUnknown_084029DC);
             task->data[1] = 0;
             task->data[2] = 0;
         }
@@ -4471,7 +4470,7 @@ static void sub_8130F5C(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[0] == 0)
     {
-        InitAnimSpritePos(sprite, 1);
+        InitSpritePosToAnimAttacker(sprite, 1);
         sprite->data[7] = gBattleAnimAttacker;
     }
     else
@@ -4536,7 +4535,7 @@ static void sub_8130FE0(struct Sprite *sprite)
         sprite->data[5]++;
         break;
     case 1:
-        if (TranslateAnimLinear(sprite))
+        if (AnimTranslateLinear(sprite))
         {
             switch (sprite->data[6])
             {
@@ -4647,11 +4646,11 @@ void sub_81312E4(u8 taskId)
     {
         gTasks[taskId].data[1] += 0x60;
         gTasks[taskId].data[2] -= 0xD;
-        obj_id_set_rotscale(spriteId, gTasks[taskId].data[1], gTasks[taskId].data[2], 0);
+        SetSpriteRotScale(spriteId, gTasks[taskId].data[1], gTasks[taskId].data[2], 0);
         if (++gTasks[taskId].data[3] == 9)
         {
             gTasks[taskId].data[3] = 0;
-            sub_8078F40(spriteId);
+            ResetSpriteRotScale(spriteId);
             gSprites[spriteId].invisible = TRUE;
             gTasks[taskId].data[0]++;
         }
@@ -4810,17 +4809,17 @@ void sub_81316F8(u8 taskId)
         return;
     }
 
-    spriteId1 = duplicate_obj_of_side_rel2move_in_transparent_mode(1);
+    spriteId1 = CloneBattlerSpriteWithBlend(1);
     if (spriteId1 < 0)
     {
         DestroyAnimVisualTask(taskId);
         return;
     }
 
-    spriteId2 = duplicate_obj_of_side_rel2move_in_transparent_mode(1);
+    spriteId2 = CloneBattlerSpriteWithBlend(1);
     if (spriteId2 < 0)
     {
-        obj_delete_but_dont_free_vram(&gSprites[spriteId1]);
+        DestroySpriteWithActiveSheet(&gSprites[spriteId1]);
         DestroyAnimVisualTask(taskId);
         return;
     }
@@ -4886,7 +4885,7 @@ static void sub_8131838(struct Sprite *sprite)
             if (sprite->data[5] < 0)
             {
                 gTasks[sprite->data[6]].data[sprite->data[7]]--;
-                obj_delete_but_dont_free_vram(sprite);
+                DestroySpriteWithActiveSheet(sprite);
             }
         }
         break;
@@ -4979,7 +4978,7 @@ void AnimTask_SnatchOpposingMonMove(u8 taskId)
             }
         }
 
-        spriteId2 = sub_8079F44(species, isBackPic, 0, x, GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y), subpriority, personality, otId);
+        spriteId2 = CreateAdditionalMonSpriteForMoveAnim(species, isBackPic, 0, x, GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y), subpriority, personality, otId);
         if (gBattleSpriteInfo[gBattleAnimTarget].transformSpecies != SPECIES_NONE)
             BlendPalette((gSprites[spriteId2].oam.paletteNum * 16) | 0x100, 16, 6, RGB_WHITE);
 
@@ -5357,7 +5356,7 @@ _08131B94:\n\
 	adds r0, r5, 0\n\
 	adds r1, r7, 0\n\
 	movs r2, 0\n\
-	bl sub_8079F44\n\
+	bl CreateAdditionalMonSpriteForMoveAnim\n\
 	lsls r0, 24\n\
 	lsrs r5, r0, 24\n\
 	ldr r0, _08131C10 @ =gBattleAnimAttacker\n\

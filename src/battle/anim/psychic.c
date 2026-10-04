@@ -2,7 +2,6 @@
 #include "battle.h"
 #include "battle_anim.h"
 #include "palette.h"
-#include "rom_8077ABC.h"
 #include "scanline_effect.h"
 #include "sound.h"
 #include "task.h"
@@ -53,7 +52,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA690 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA68C,
-    .callback = sub_80793C4,
+    .callback = AnimSpriteOnMonPos,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA6A8 =
@@ -382,7 +381,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA9E0 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA9DC,
-    .callback = sub_80793C4,
+    .callback = AnimSpriteOnMonPos,
 };
 
 const union AffineAnimCmd gSpriteAffineAnim_83DA9F8[] =
@@ -579,9 +578,9 @@ void sub_80DBA4C(struct Sprite *sprite)
         else
         {
             if (gBattleAnimArgs[2] == 0)
-                InitAnimSpritePos(sprite, var0);
+                InitSpritePosToAnimAttacker(sprite, var0);
             else
-                sub_8078764(sprite, var0);
+                InitSpritePosToAnimTarget(sprite, var0);
         }
 
         sprite->data[0]++;
@@ -613,7 +612,7 @@ void sub_80DBAF4(struct Sprite *sprite)
     }
 
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
-    sprite->callback = sub_8078600;
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
 }
 
 void sub_80DBB70(struct Sprite *sprite)
@@ -635,7 +634,7 @@ void sub_80DBB70(struct Sprite *sprite)
     }
 
     StoreSpriteCallbackInData6(sprite, sub_80DBC00);
-    sprite->callback = sub_8078600;
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
 }
 
 static void sub_80DBC00(struct Sprite *sprite)
@@ -674,7 +673,7 @@ void sub_80DBC94(u8 taskId)
     struct Task *task = &gTasks[taskId];
     u8 spriteId = GetAnimBattlerSpriteId(0);
     task->data[0] = spriteId;
-    PrepareAffineAnimInTaskData(task, spriteId, &gSpriteAffineAnim_083DA8A4);
+    PrepareAffineAnimInTaskData(task, spriteId, gSpriteAffineAnim_083DA8A4);
     task->func = sub_80DBCD0;
 }
 
@@ -695,7 +694,7 @@ void sub_80DBCFC(u8 taskId)
     task->data[2] = 0;
     task->data[3] = GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER ? 4 : 8;
 
-    PrepareAffineAnimInTaskData(task, task->data[0], &gSpriteAffineAnim_083DA8C4);
+    PrepareAffineAnimInTaskData(task, task->data[0], gSpriteAffineAnim_083DA8C4);
     task->func = sub_80DBD58;
 }
 
@@ -720,7 +719,7 @@ static void sub_80DBD58(u8 taskId)
         {
             gSprites[task->data[0]].invisible = TRUE;
             gSprites[task->data[0]].x = 272;
-            sub_8078F40(task->data[0]);
+            ResetSpriteRotScale(task->data[0]);
             DestroyAnimVisualTask(taskId);
         }
         break;
@@ -926,7 +925,7 @@ static void sub_80DC1FC(u8 taskId)
 
 void sub_80DC2B0(struct Sprite *sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
     {
         FreeOamMatrix(sprite->oam.matrixNum);
         DestroySprite(sprite);
@@ -940,7 +939,7 @@ void sub_80DC2D4(u8 taskId)
     struct ScanlineEffectParams scanlineParams;
     struct Task *task = &gTasks[taskId];
     
-    var1 = sub_8077FC0(gBattleAnimTarget);
+    var1 = GetBattlerYCoordWithElevation(gBattleAnimTarget);
     task->data[14] = var1 - 32;
 
     switch (gBattleAnimArgs[0])
@@ -1052,7 +1051,7 @@ void sub_80DC4F4(u8 taskId)
         return;
     }
 
-    spriteId = duplicate_obj_of_side_rel2move_in_transparent_mode(gBattleAnimArgs[0]);
+    spriteId = CloneBattlerSpriteWithBlend(gBattleAnimArgs[0]);
     if (spriteId < 0)
     {
         FreeOamMatrix(matrixNum);
@@ -1065,7 +1064,7 @@ void sub_80DC4F4(u8 taskId)
     gSprites[spriteId].oam.matrixNum = matrixNum;
     gSprites[spriteId].affineAnimPaused = 1;
     gSprites[spriteId].subpriority++;
-    obj_id_set_rotscale(spriteId, 256, 256, 0);
+    SetSpriteRotScale(spriteId, 256, 256, 0);
     CalcCenterToCornerVec(&gSprites[spriteId], gSprites[spriteId].oam.shape, gSprites[spriteId].oam.size, gSprites[spriteId].oam.affineMode);
 
     task->data[13] = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
@@ -1083,21 +1082,21 @@ void sub_80DC5F4(u8 taskId)
     case 0:
         task->data[1] += 4;
         task->data[2] = 256 - (gSineTable[task->data[1]] >> 1);
-        obj_id_set_rotscale(task->data[15], task->data[2], task->data[2], 0);
-        sub_8079AB8(task->data[15], task->data[13]);
+        SetSpriteRotScale(task->data[15], task->data[2], task->data[2], 0);
+        SetBattlerSpriteYOffsetFromOtherYScale(task->data[15], task->data[13]);
         if (task->data[1] == 48)
             task->data[0]++;
         break;
     case 1:
         task->data[1] -= 4;
         task->data[2] = 256 - (gSineTable[task->data[1]] >> 1);;
-        obj_id_set_rotscale(task->data[15], task->data[2], task->data[2], 0);
-        sub_8079AB8(task->data[15], task->data[13]);
+        SetSpriteRotScale(task->data[15], task->data[2], task->data[2], 0);
+        SetBattlerSpriteYOffsetFromOtherYScale(task->data[15], task->data[13]);
         if (task->data[1] == 0)
             task->data[0]++;
         break;
     case 2:
-        obj_delete_but_dont_free_vram(&gSprites[task->data[15]]);
+        DestroySpriteWithActiveSheet(&gSprites[task->data[15]]);
         task->data[0]++;
         break;
     case 3:

@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 #include "palette.h"
 #include "util.h"
@@ -32,7 +31,7 @@ void sub_80CE7E0(u8 taskId)
     BlendPalette(r3, 16, 11, RGB(0, 0, 0));
     task->data[3] = 0;
     i = 0;
-    while (i <= 1 && (obj = duplicate_obj_of_side_rel2move_in_transparent_mode(0)) >= 0)
+    while (i <= 1 && (obj = CloneBattlerSpriteWithBlend(0)) >= 0)
     {
         gSprites[obj].oam.paletteNum = task->data[1];
         gSprites[obj].data[0] = 0;
@@ -80,7 +79,7 @@ void sub_80CE974(struct Sprite* sprite)
     if (sprite->data[0] > 0x40)
     {
         gTasks[sprite->data[2]].data[3]--;
-        obj_delete_but_dont_free_vram(sprite);
+        DestroySpriteWithActiveSheet(sprite);
     }
     else
     {

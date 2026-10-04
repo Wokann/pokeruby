@@ -8,7 +8,7 @@
 #include "menu.h"
 #include "overworld.h"
 #include "decompress.h"
-#include "data2.h"
+#include "data.h"
 #include "sprite.h"
 #include "item_use.h"
 #include "pokeblock.h"
@@ -614,7 +614,7 @@ static bool8 sub_8147B20(struct Pokemon* mon)
     case 0:
         species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG);
         PiD = GetMonData(mon, MON_DATA_PERSONALITY);
-        HandleLoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, (void *)EWRAM, gMonSpriteGfx_Sprite_ptr[1], species, PiD);
+        HandleLoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].size, gMonFrontPicCoords[species].y_offset, (void *)EWRAM, gMonSpriteGfx_Sprite_ptr[1], species, PiD);
         ePokeblockGfxState++;
         break;
     case 1:

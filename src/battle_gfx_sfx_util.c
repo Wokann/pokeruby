@@ -7,13 +7,12 @@
 #include "battle_interface.h"
 #include "util.h"
 #include "contest.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "main.h"
 #include "m4a.h"
 #include "palette.h"
 #include "pokemon.h"
-#include "rom_8077ABC.h"
 #include "rom_8094928.h"
 #include "constants/songs.h"
 #include "sound.h"
@@ -91,7 +90,7 @@ static const struct SpritePalette sSpritePalettes_HealthBoxHealthBar[] =
 extern void Task_PlayerController_RestoreBgmAfterCry(u8);
 extern u8 IsBattlerSpritePresent(u8);
 extern u8 GetBattlerSpriteDefault_Y(u8);
-extern u8 sub_8077F7C(u8);
+extern u8 GetSubstituteSpriteDefault_Y(u8);
 extern void sub_8094958(void);
 extern void move_anim_start_t2();
 
@@ -299,7 +298,7 @@ void BattleLoadOpponentMonSpriteGfx(struct Pokemon *mon, u8 battler)
     position = GetBattlerPosition(battler);
     HandleLoadSpecialPokePic(
       &gMonFrontPicTable[species],
-      gMonFrontPicCoords[species].coords,
+      gMonFrontPicCoords[species].size,
       gMonFrontPicCoords[species].y_offset,
       eBattleInterfaceGfxBuffer,
       gMonSpriteGfx_Sprite_ptr[position],
@@ -351,7 +350,7 @@ void BattleLoadPlayerMonSpriteGfx(struct Pokemon *mon, u8 battler)
     position = GetBattlerPosition(battler);
     HandleLoadSpecialPokePic(
       &gMonBackPicTable[species],
-      gMonBackPicCoords[species].coords,
+      gMonBackPicCoords[species].size,
       gMonBackPicCoords[species].y_offset,
       eBattleInterfaceGfxBuffer,
       gMonSpriteGfx_Sprite_ptr[position],
@@ -394,7 +393,7 @@ void DecompressTrainerFrontPic(u16 frontPicId, u8 battler)
     position = GetBattlerPosition(battler);
     DecompressPicFromTable_2(
       &gTrainerFrontPicTable[frontPicId],
-      gTrainerFrontPicCoords[frontPicId].coords,
+      gTrainerFrontPicCoords[frontPicId].size,
       gTrainerFrontPicCoords[frontPicId].y_offset,
       eBattleInterfaceGfxBuffer,
       gMonSpriteGfx_Sprite_ptr[position],
@@ -413,7 +412,7 @@ void DecompressTrainerBackPic(u16 backPicId, u8 battler)
     position = GetBattlerPosition(battler);
     DecompressPicFromTable_2(
       &gTrainerBackPicTable[backPicId],
-      gTrainerBackPicCoords[backPicId].coords,
+      gTrainerBackPicCoords[backPicId].size,
       gTrainerBackPicCoords[backPicId].y_offset,
       eBattleInterfaceGfxBuffer,
       gMonSpriteGfx_Sprite_ptr[position],
@@ -648,7 +647,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform)
             otId = gContestResources__moveAnim.otId;
             HandleLoadSpecialPokePic(
               &gMonBackPicTable[targetSpecies],
-              gMonBackPicCoords[targetSpecies].coords,
+              gMonBackPicCoords[targetSpecies].size,
               gMonBackPicCoords[targetSpecies].y_offset,
               eBattleInterfaceGfxBuffer,
               gMonSpriteGfx_Sprite_ptr[0],
@@ -668,7 +667,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform)
                 otId = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battlerAtk]], MON_DATA_OT_ID);
                 HandleLoadSpecialPokePic(
                   &gMonBackPicTable[targetSpecies],
-                  gMonBackPicCoords[targetSpecies].coords,
+                  gMonBackPicCoords[targetSpecies].size,
                   gMonBackPicCoords[targetSpecies].y_offset,
                   eBattleInterfaceGfxBuffer,
                   gMonSpriteGfx_Sprite_ptr[position],
@@ -681,7 +680,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform)
                 otId = GetMonData(&gEnemyParty[gBattlerPartyIndexes[battlerAtk]], MON_DATA_OT_ID);
                 HandleLoadSpecialPokePic(
                   &gMonFrontPicTable[targetSpecies],
-                  gMonFrontPicCoords[targetSpecies].coords,
+                  gMonFrontPicCoords[targetSpecies].size,
                   gMonFrontPicCoords[targetSpecies].y_offset,
                   eBattleInterfaceGfxBuffer,
                   gMonSpriteGfx_Sprite_ptr[position],
@@ -758,7 +757,7 @@ void LoadBattleMonGfxAndAnimate(u8 battler, u8 loadMonSprite, u8 spriteId)
     BattleLoadSubstituteOrMonSpriteGfx(battler, loadMonSprite);
     StartSpriteAnim(&gSprites[spriteId], gBattleMonForms[battler]);
     if (loadMonSprite == 0)
-        gSprites[spriteId].y = sub_8077F7C(battler);
+        gSprites[spriteId].y = GetSubstituteSpriteDefault_Y(battler);
     else
         gSprites[spriteId].y = GetBattlerSpriteDefault_Y(battler);
 }

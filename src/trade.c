@@ -20,10 +20,9 @@
 #include "party_menu.h"
 #include "constants/songs.h"
 #include "sound.h"
-#include "data2.h"
+#include "data.h"
 #include "pokemon_summary_screen.h"
 #include "overworld.h"
-#include "rom_8077ABC.h"
 #include "daycare.h"
 #include "event_data.h"
 #include "strings.h"
@@ -1483,7 +1482,7 @@ static void sub_8049ED4(u8 a0)
             gSprites[gUnknown_03004824->partySpriteIds[whichParty][whichPokemon]].data[4] = sTradeMonSpriteCoords[6 * whichParty + whichPokemon][1] * 8 - 12;
             StoreSpriteCallbackInData6(&gSprites[gUnknown_03004824->partySpriteIds[whichParty][whichPokemon]], SpriteCB_PokemonIcon);
             gUnknown_03004824->drawSelectedMonState[a0] ++;
-            sub_8078A34(&gSprites[gUnknown_03004824->partySpriteIds[whichParty][whichPokemon]]);
+            Trade_MoveSelectedMonToTarget(&gSprites[gUnknown_03004824->partySpriteIds[whichParty][whichPokemon]]);
             Menu_DestroyCursor();
             Text_FillWindowRectDefPalette(&gUnknown_03004824->window, 0, gUnknown_0820C330[whichParty][0], 0, gUnknown_0820C330[whichParty][1], 19);
             sub_804A96C_alt(&gUnknown_03004824->unk_00c8, 15 * a0, 0, sTradePartyBoxTilemap, 15, 17, 0);
@@ -1711,7 +1710,7 @@ static void sub_8049ED4(u8 a0)
                     "\tadds r0, r1\n"
                     "\tlsls r0, 2\n"
                     "\tadds r0, r7\n"
-                    "\tbl sub_8078A34\n"
+                    "\tbl Trade_MoveSelectedMonToTarget\n"
                     "\tbl Menu_DestroyCursor\n"
                     "\tldr r3, _0804A09C @ =gUnknown_03004824\n"
                     "\tldr r0, [r3]\n"
@@ -2744,7 +2743,7 @@ static void sub_804B2D0(u8 whichParty, u8 state)
         case 0:
             species = GetMonData(pokemon, MON_DATA_SPECIES_OR_EGG);
             personality = GetMonData(pokemon, MON_DATA_PERSONALITY);
-            HandleLoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, gSharedMem, gMonSpriteGfx_Sprite_ptr[whichParty * 2 + 1], species, personality);
+            HandleLoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].size, gMonFrontPicCoords[species].y_offset, gSharedMem, gMonSpriteGfx_Sprite_ptr[whichParty * 2 + 1], species, personality);
             LoadCompressedObjectPalette(GetMonSpritePalStruct(pokemon));
             gUnknown_03004828->monSpecies[whichParty] = species;
             break;

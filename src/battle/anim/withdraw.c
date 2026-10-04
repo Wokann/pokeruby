@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 
 
@@ -31,7 +30,7 @@ void sub_80CF514(u8 taskId)
         b = gTasks[taskId].data[0];
     }
 
-    obj_id_set_rotscale(a, 0x100, 0x100, b);
+    SetSpriteRotScale(a, 0x100, 0x100, b);
     if (gTasks[taskId].data[1] == 0)
     {
         gTasks[taskId].data[0] += 0xB0;
@@ -50,12 +49,12 @@ void sub_80CF514(u8 taskId)
         gSprites[a].y2--;
     }
 
-    sub_8078F9C(a);
+    SetBattlerSpriteYOffsetFromRotation(a);
     if (gTasks[taskId].data[0] == 0xF20 || gTasks[taskId].data[0] == 0)
     {
         if (gTasks[taskId].data[1] == 2)
         {
-            sub_8078F40(a);
+            ResetSpriteRotScale(a);
             DestroyAnimVisualTask(taskId);
         }
         else

@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 
 
@@ -76,7 +75,7 @@ void sub_80D0228(struct Sprite* sprite)
 
 static void sub_80D02D0(struct Sprite* sprite)
 {
-    if (TranslateAnimLinear(sprite) && sprite->animEnded == 1)
+    if (AnimTranslateLinear(sprite) && sprite->animEnded == 1)
     {
         SeekSpriteAnim(sprite, 0);
         sprite->animPaused = 1;
@@ -116,6 +115,6 @@ static void sub_80D0344(struct Sprite* sprite)
 
 static void sub_80D03A8(struct Sprite* sprite)
 {
-    if (TranslateAnimLinear(sprite) != 0)
+    if (AnimTranslateLinear(sprite) != 0)
         DestroyAnimSprite(sprite);
 }

@@ -1,5 +1,5 @@
 #include "global.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "decoration.h"
 #include "event_object_movement.h"
@@ -543,7 +543,7 @@ u8 CreateBirchSprite(s16 x, s16 y, u8 subpriority)
 
 u8 CreateMonSprite_PicBox(u16 species, s16 x, s16 y, u8 subpriority)
 {
-    DecompressPicFromTable_2(&gMonFrontPicTable[species], gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, gMonSpriteGfx_Sprite_ptr[3], gMonSpriteGfx_Sprite_ptr[3], species);
+    DecompressPicFromTable_2(&gMonFrontPicTable[species], gMonFrontPicCoords[species].size, gMonFrontPicCoords[species].y_offset, gMonSpriteGfx_Sprite_ptr[3], gMonSpriteGfx_Sprite_ptr[3], species);
     LoadCompressedObjectPalette(&gMonPaletteTable[species]);
     SetMultiuseSpriteTemplateToPokemon(species, 3);
     gMultiuseSpriteTemplate.paletteTag = gMonPaletteTable[0].tag;
@@ -555,7 +555,7 @@ u8 CreateMonSprite_FieldMove(u16 species, u32 d, u32 g, s16 x, s16 y, u8 subprio
 {
     const struct CompressedSpritePalette *spritePalette;
 
-    HandleLoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, gMonSpriteGfx_Sprite_ptr[3] /* this is actually u8* or something, pointing to ewram */, gMonSpriteGfx_Sprite_ptr[3], species, g);
+    HandleLoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].size, gMonFrontPicCoords[species].y_offset, gMonSpriteGfx_Sprite_ptr[3] /* this is actually u8* or something, pointing to ewram */, gMonSpriteGfx_Sprite_ptr[3], species, g);
     spritePalette = GetMonSpritePalStructFromOtIdPersonality(species, d, g);
     LoadCompressedObjectPalette(spritePalette);
     SetMultiuseSpriteTemplateToPokemon(species, 3);

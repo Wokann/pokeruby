@@ -3,7 +3,7 @@
 #include "ewram.h"
 #include "string_util.h"
 #include "palette.h"
-#include "data2.h"
+#include "data.h"
 #include "event_data.h"
 #include "constants/flags.h"
 #include "constants/songs.h"

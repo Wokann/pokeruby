@@ -2,7 +2,7 @@
 #include "battle.h"
 #include "battle_anim_special.h"
 #include "contest.h"
-#include "data2.h"
+#include "data.h"
 #include "daycare.h"
 #include "decompress.h"
 #include "event_data.h"
@@ -1835,7 +1835,7 @@ static u8 SummaryScreen_LoadPokemonSprite(struct Pokemon *mon, u8 *state)
 
         HandleLoadSpecialPokePic(
             &gMonFrontPicTable[species],
-            gMonFrontPicCoords[species].coords,
+            gMonFrontPicCoords[species].size,
             gMonFrontPicCoords[species].y_offset,
             (void *)EWRAM,
             gMonSpriteGfx_Sprite_ptr[1],

@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 #include "palette.h"
 
@@ -30,8 +29,8 @@ void sub_80CCD24(struct Sprite* sprite)
         gBattleAnimArgs[1] += 8;
     }
 
-    sprite->x = sub_8077EE4(gBattleAnimAttacker, 0) + gBattleAnimArgs[0];
-    sprite->y = sub_8077EE4(gBattleAnimAttacker, 1) + gBattleAnimArgs[1];
+    sprite->x = GetBattlerSpriteCoord2(gBattleAnimAttacker, 0) + gBattleAnimArgs[0];
+    sprite->y = GetBattlerSpriteCoord2(gBattleAnimAttacker, 1) + gBattleAnimArgs[1];
     if (GetBattlerSide(gBattleAnimAttacker) == 0 || IsContest())
         sprite->oam.priority = GetBattlerSpriteBGPriority(gBattleAnimAttacker) + 1;
     else
@@ -84,7 +83,7 @@ static void sub_80CCE0C(struct Sprite* sprite)
         if (sprite->data[7] == 16)
         {
             sprite->invisible = TRUE;
-            sprite->callback = sub_807861C;
+            sprite->callback = DestroyAnimSpriteAndDisableBlend;
         }
     }
 }

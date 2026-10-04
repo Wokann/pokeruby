@@ -17,7 +17,7 @@
 #include "task.h"
 #include "util.h"
 #include "battle_message.h"
-#include "data2.h"
+#include "data.h"
 #include "ewram.h"
 #include "constants/abilities.h"
 

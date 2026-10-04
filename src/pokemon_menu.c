@@ -11,7 +11,7 @@
 #include "overworld.h"
 #include "menu_helpers.h"
 #include "pokemon_summary_screen.h"
-#include "data2.h"
+#include "data.h"
 #include "strings.h"
 #include "item_use.h"
 #include "item.h"

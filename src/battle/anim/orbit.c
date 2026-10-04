@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 
 
 void sub_80CABF8(struct Sprite* sprite);
@@ -86,7 +85,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6440 =
 
 void sub_80CABF8(struct Sprite* sprite)
 {
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
     StartSpriteAnim(sprite, gBattleAnimArgs[4]);
     if (gBattleAnimArgs[4] == 1)
     {
@@ -149,7 +148,7 @@ void sub_80CACEC(u8 taskId)
 
 void sub_80CAD54(struct Sprite* sprite)
 {
-    InitAnimSpritePos(sprite, 0);
+    InitSpritePosToAnimAttacker(sprite, 0);
     sprite->data[0] = gBattleAnimArgs[3];
     sprite->data[1] = sprite->x;
     sprite->data[2] = sprite->x;
@@ -163,7 +162,7 @@ void sub_80CAD54(struct Sprite* sprite)
 
 static void sub_80CADA8(struct Sprite* sprite)
 {
-    if (!TranslateAnimLinear(sprite))
+    if (!AnimTranslateLinear(sprite))
     {
         sprite->x2 += Sin(sprite->data[5], 32);
         sprite->y2 += Cos(sprite->data[5], -5);
@@ -186,7 +185,7 @@ static void sub_80CADA8(struct Sprite* sprite)
 
 void sub_80CAE20(struct Sprite* sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     sprite->data[0] = gBattleAnimArgs[3];
     sprite->data[1] = sprite->x;
     sprite->data[2] = sprite->x;
@@ -200,7 +199,7 @@ void sub_80CAE20(struct Sprite* sprite)
 
 static void sub_80CAE74(struct Sprite* sprite)
 {
-    if (!TranslateAnimLinear(sprite))
+    if (!AnimTranslateLinear(sprite))
     {
         sprite->x2 += Sin(sprite->data[5], 8);
         if ((u16)(sprite->data[5] - 0x3B) < 5 || (u16)(sprite->data[5] - 0xBB) < 5)

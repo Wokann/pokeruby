@@ -4,7 +4,7 @@
 #include "decompress.h"
 #include "constants/songs.h"
 #include "constants/species.h"
-#include "data2.h"
+#include "data.h"
 #include "sound.h"
 #include "ewram.h"
 #include "task.h"
@@ -1587,7 +1587,7 @@ void sub_80981F0(u16 species, u32 pid)
     {
         if (species != SPECIES_NONE)
         {
-            HandleLoadSpecialPokePic(gMonFrontPicTable + species, gMonFrontPicCoords[species].coords, 1, gPokemonStorageSystemPtr->unk_4784, gPokemonStorageSystemPtr->unk_2784, species, pid);
+            HandleLoadSpecialPokePic(gMonFrontPicTable + species, gMonFrontPicCoords[species].size, 1, gPokemonStorageSystemPtr->unk_4784, gPokemonStorageSystemPtr->unk_2784, species, pid);
             LZ77UnCompWram(gPokemonStorageSystemPtr->unk_11e8, gPokemonStorageSystemPtr->unk_2704);
             CpuCopy32(gPokemonStorageSystemPtr->unk_2784, gPokemonStorageSystemPtr->unk_26fc, 0x800);
             LoadPalette(gPokemonStorageSystemPtr->unk_2704, gPokemonStorageSystemPtr->unk_26fa, 0x20);

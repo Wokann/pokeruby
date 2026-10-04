@@ -2,7 +2,6 @@
 #include "battle.h"
 #include "battle_anim.h"
 #include "heated_rock.h"
-#include "rom_8077ABC.h"
 #include "task.h"
 #include "trig.h"
 
@@ -144,7 +143,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D96AC =
     .anims = gSpriteAnimTable_83D95E0,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_807A9BC,
+    .callback = AnimWeatherBallDown,
 };
 
 
@@ -197,7 +196,7 @@ void AnimEmberFlare(struct Sprite *sprite)
             || gBattleAnimAttacker == GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT)))
             gBattleAnimArgs[2] = -gBattleAnimArgs[2];
 
-    sprite->callback = sub_8079534;
+    sprite->callback = AnimTravelDiagonally;
     sprite->callback(sprite);
 }
 
@@ -206,7 +205,7 @@ void sub_80D5210(struct Sprite *sprite)
     gBattleAnimArgs[0] = -gBattleAnimArgs[0];
     gBattleAnimArgs[2] = -gBattleAnimArgs[2];
 
-    sprite->callback = sub_8079534;
+    sprite->callback = AnimTravelDiagonally;
 }
 
 // Animates the a fire sprite in the first-half of the MOVE_FIRE_BLAST
@@ -218,7 +217,7 @@ void sub_80D5210(struct Sprite *sprite)
 // arg 2: initial wave offset
 void AnimFireRing(struct Sprite *sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
 
     sprite->data[7] = gBattleAnimArgs[2];
     sprite->data[0] = 0;
@@ -246,7 +245,7 @@ static void AnimFireRingStep1(struct Sprite *sprite)
 
 static void AnimFireRingStep2(struct Sprite *sprite)
 {
-    if (TranslateAnimLinear(sprite))
+    if (AnimTranslateLinear(sprite))
     {
         sprite->data[0] = 0;
 
@@ -299,12 +298,12 @@ void AnimFireCross(struct Sprite *sprite)
 
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 
-    sprite->callback = TranslateSpriteOverDuration;
+    sprite->callback = TranslateSpriteLinear;
 }
 
 void sub_80D53B4(struct Sprite *sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
 
     sprite->data[1] = gBattleAnimArgs[2];
     sprite->data[0] = gBattleAnimArgs[3];
@@ -364,7 +363,7 @@ static void sub_80D54E0(u8 taskId) // animate Move_ERUPTION?
     switch (task->data[0])
     {
     case 0:
-        sub_8079C08(task, task->data[15], 0x100, 0x100, 0xE0, 0x200, 0x20);
+        PrepareEruptAnimTaskData(task, task->data[15], 0x100, 0x100, 0xE0, 0x200, 0x20);
 
         task->data[0]++;
     case 1:
@@ -387,9 +386,9 @@ static void sub_80D54E0(u8 taskId) // animate Move_ERUPTION?
             }
         }
 
-        if(!sub_8079C74(task))
+        if(!UpdateEruptAnimTask(task))
         {
-            sub_8079A64(task->data[15]);
+            SetBattlerSpriteYOffsetFromYScale(task->data[15]);
             gSprites[task->data[15]].x2 = 0;
 
             task->data[1] = 0;
@@ -402,16 +401,16 @@ static void sub_80D54E0(u8 taskId) // animate Move_ERUPTION?
         if (++task->data[1] > 4)
         {
             if (task->data[5])
-                sub_8079C08(task, task->data[15], 0xE0, 0x200, 0x180, 0xF0, 0x6);
+                PrepareEruptAnimTaskData(task, task->data[15], 0xE0, 0x200, 0x180, 0xF0, 0x6);
             else
-                sub_8079C08(task, task->data[15], 0xE0, 0x200, 0x180, 0xC0, 0x6);
+                PrepareEruptAnimTaskData(task, task->data[15], 0xE0, 0x200, 0x180, 0xC0, 0x6);
 
             task->data[1] = 0;
             task->data[0]++;
         }
         break;
     case 3:
-        if (!sub_8079C74(task))
+        if (!UpdateEruptAnimTask(task))
         {
             sub_80D57C4(task->data[15], taskId, 6);
 
@@ -432,9 +431,9 @@ static void sub_80D54E0(u8 taskId) // animate Move_ERUPTION?
         if (++task->data[3] > 0x18)
         {
             if (task->data[5])
-                sub_8079C08(task, task->data[15], 0x180, 0xF0, 0x100, 0x100, 0x8);
+                PrepareEruptAnimTaskData(task, task->data[15], 0x180, 0xF0, 0x100, 0x100, 0x8);
             else
-                sub_8079C08(task, task->data[15], 0x180, 0xC0, 0x100, 0x100, 0x8);
+                PrepareEruptAnimTaskData(task, task->data[15], 0x180, 0xC0, 0x100, 0x100, 0x8);
 
             if (task->data[2] & 1)
                 gSprites[task->data[15]].y2 -= 3;
@@ -449,10 +448,10 @@ static void sub_80D54E0(u8 taskId) // animate Move_ERUPTION?
         if (task->data[5])
             gSprites[task->data[15]].y--;
 
-        if (!sub_8079C74(task))
+        if (!UpdateEruptAnimTask(task))
         {
             gSprites[task->data[15]].y = task->data[4];
-            sub_8078F40(task->data[15]);
+            ResetSpriteRotScale(task->data[15]);
 
             task->data[2] = 0;
             task->data[0]++;

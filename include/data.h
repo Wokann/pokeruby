@@ -1,5 +1,5 @@
-#ifndef GUARD_DATA2_H
-#define GUARD_DATA2_H
+#ifndef GUARD_DATA_H
+#define GUARD_DATA_H
 
 #include "sprite.h"
 #include "battle.h"
@@ -8,9 +8,9 @@ struct ScanlineEffectParams;
 
 struct MonCoords
 {
-    // This would use a bitfield, but sub_8079F44
+    // This would use a bitfield, but CreateAdditionalMonSpriteForMoveAnim
     // uses it as a u8 and casting won't match.
-    u8 coords; // u8 x:4, y:4;
+    u8 size; // u8 width:4, height:4;
     u8 y_offset;
 };
 
@@ -59,4 +59,4 @@ extern const struct CompressedSpriteSheet gTrainerFrontPicTable[];
 extern const struct CompressedSpritePalette gTrainerFrontPicPaletteTable[];
 
 
-#endif // GUARD_DATA2_H
+#endif // GUARD_DATA_H

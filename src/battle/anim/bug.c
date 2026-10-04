@@ -1,7 +1,6 @@
 #include "global.h"
 #include "battle_anim.h"
 #include "contest.h"
-#include "rom_8077ABC.h"
 #include "trig.h"
 
 
@@ -214,8 +213,8 @@ void sub_80DC824(struct Sprite *sprite)
         gBattleAnimArgs[0] = -gBattleAnimArgs[0];
     }
 
-    sprite->x = sub_8077EE4(gBattleAnimTarget, 2) + gBattleAnimArgs[0];
-    sprite->y = sub_8077EE4(gBattleAnimTarget, 3) + gBattleAnimArgs[1];
+    sprite->x = GetBattlerSpriteCoord2(gBattleAnimTarget, 2) + gBattleAnimArgs[0];
+    sprite->y = GetBattlerSpriteCoord2(gBattleAnimTarget, 3) + gBattleAnimArgs[1];
     sprite->data[0] = gBattleAnimArgs[4];
 
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + gBattleAnimArgs[2];
@@ -239,8 +238,8 @@ void sub_80DC8F4(struct Sprite *sprite)
         gBattleAnimArgs[0] = -gBattleAnimArgs[0];
     }
 
-    sprite->x = sub_8077EE4(gBattleAnimTarget, 2) + gBattleAnimArgs[0];
-    sprite->y = sub_8077EE4(gBattleAnimTarget, 3) + gBattleAnimArgs[1];
+    sprite->x = GetBattlerSpriteCoord2(gBattleAnimTarget, 2) + gBattleAnimArgs[0];
+    sprite->y = GetBattlerSpriteCoord2(gBattleAnimTarget, 3) + gBattleAnimArgs[1];
     sprite->data[0] = gBattleAnimArgs[2];
 
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
@@ -257,7 +256,7 @@ void sub_80DC9A0(struct Sprite *sprite)
     if (IsContest())
         gBattleAnimArgs[2] /= 2;
 
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[1] = sprite->x;
     sprite->data[3] = sprite->y;
@@ -272,14 +271,14 @@ void sub_80DC9A0(struct Sprite *sprite)
         SetAverageBattlerPositions(gBattleAnimTarget, 1, &sprite->data[2], &sprite->data[4]);
     }
 
-    sub_8078BD4(sprite);
+    InitAnimLinearTranslationWithSpeed(sprite);
     sprite->data[5] = gBattleAnimArgs[3];
     sprite->callback = sub_80DCA38;
 }
 
 static void sub_80DCA38(struct Sprite *sprite)
 {
-    if (TranslateAnimLinear(sprite))
+    if (AnimTranslateLinear(sprite))
     {
         DestroyAnimSprite(sprite);
         return;
@@ -399,13 +398,13 @@ void AnimTranslateStinger(struct Sprite *sprite)
         }
     }
 
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
 
     lVarX = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + gBattleAnimArgs[2];
     lVarY = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + gBattleAnimArgs[3];
     rot = ArcTan2Neg(lVarX - sprite->x, lVarY - sprite->y);
     rot += 0xC000;
-    sub_8078FDC(sprite, FALSE, 0x100, 0x100, rot);
+    TrySetSpriteRotScale(sprite, FALSE, 0x100, 0x100, rot);
 
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->data[2] = lVarX;
@@ -426,7 +425,7 @@ void AnimTranslateStinger(struct Sprite *sprite)
 // arg 5: wave amplitude
 void AnimMissileArc(struct Sprite *sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
 
     if (GetBattlerSide(gBattleAnimAttacker))
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];
@@ -445,7 +444,7 @@ static void AnimMissileArcStep(struct Sprite *sprite)
 {
     sprite->invisible = FALSE;
 
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
     {
         DestroyAnimSprite(sprite);
     }
@@ -465,12 +464,12 @@ static void AnimMissileArcStep(struct Sprite *sprite)
         x2 += x1;
         y2 += y1;
 
-        if (!TranslateAnimArc(sprite))
+        if (!TranslateAnimHorizontalArc(sprite))
         {
             u16 rotation = ArcTan2Neg(sprite->x + sprite->x2 - x2,
                                   sprite->y + sprite->y2 - y2);
             rotation += 0xC000;
-            sub_8078FDC(sprite, FALSE, 0x100, 0x100, rotation);
+            TrySetSpriteRotScale(sprite, FALSE, 0x100, 0x100, rotation);
 
             for (i = 0; i < 8; i++)
                 data[i] = tempData[i];
@@ -492,5 +491,5 @@ void sub_80DCE40(struct Sprite *sprite)
     }
 
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
-    sprite->callback = sub_80785E4;
+    sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
 }

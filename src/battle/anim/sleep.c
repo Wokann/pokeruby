@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 
 
@@ -69,7 +68,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6D94 =
 
 void sub_80CD328(struct Sprite* sprite)
 {
-    sub_8078650(sprite);
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
     if (GetBattlerSide(gBattleAnimAttacker) == 0)
     {
         sprite->x += gBattleAnimArgs[0];

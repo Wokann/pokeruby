@@ -1,7 +1,7 @@
 #include "global.h"
 #include "berry.h"
 #include "berry_tag_screen.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "field_effect.h"
 #include "event_object_movement.h"

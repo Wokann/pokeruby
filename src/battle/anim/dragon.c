@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 #include "scanline_effect.h"
 
@@ -213,14 +212,14 @@ void sub_80DF5A0(struct Sprite *sprite)
     sprite->data[5] = gBattleAnimArgs[5];
     sprite->invisible = TRUE;
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
-    sprite->callback = sub_8078504;
+    sprite->callback = TranslateSpriteLinearAndFlicker;
 }
 
 // part of Dragon Breath
 
 void sub_80DF63C(struct Sprite *sprite)
 {
-    sub_8078650(sprite);
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
     if (GetBattlerSide(gBattleAnimAttacker))
@@ -257,9 +256,9 @@ void sub_80DF6F0(struct Sprite *sprite)
         sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
         sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 1);
     }
-    sub_807867C(sprite, gBattleAnimArgs[1]);
+    SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[1]);
     sprite->y += gBattleAnimArgs[2];
-    sprite->callback = sub_8078600;
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
 }
 
@@ -353,7 +352,7 @@ void sub_80DF924(u8 taskId)
     sp.dmaControl = 0xA2600001;
     sp.initState = 1;
     sp.unused9 = 0;
-    r1 = sub_8077FC0(gBattleAnimAttacker);
+    r1 = GetBattlerYCoordWithElevation(gBattleAnimAttacker);
     task->data[3] = r1 - 32;
     task->data[4] = r1 + 32;
     if (task->data[3] < 0)

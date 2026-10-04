@@ -1,5 +1,5 @@
 #include "global.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "event_data.h"
 #include "hall_of_fame.h"
@@ -1562,7 +1562,7 @@ static u8 CreateCreditsMonSprite(u16 species, u16 x, u16 y, u16 position)
 
     LoadSpecialPokePic(
         &gMonFrontPicTable[species],
-        gMonFrontPicCoords[species].coords,
+        gMonFrontPicCoords[species].size,
         gMonFrontPicCoords[species].y_offset,
         (void *)EWRAM,
         gUnknown_0840B5A0[position],

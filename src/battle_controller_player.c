@@ -7,7 +7,7 @@
 #include "battle_controllers.h"
 #include "battle_interface.h"
 #include "battle_message.h"
-#include "data2.h"
+#include "data.h"
 #include "ewram.h"
 #include "item.h"
 #include "link.h"
@@ -2431,7 +2431,7 @@ static void PlayerHandleDrawTrainerPic(void)
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gMultiuseSpriteTemplate,
       xPos + 80,
-      (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].coords) * 4 + 80,
+      (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].size) * 4 + 80,
       GetBattlerSpriteSubpriority(gActiveBattler));
     gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = gActiveBattler;
     gSprites[gBattlerSpriteIds[gActiveBattler]].x2 = DISPLAY_WIDTH;
@@ -2447,7 +2447,7 @@ static void PlayerHandleTrainerSlide(void)
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gMultiuseSpriteTemplate,
       80,
-      (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].coords) * 4 + 80,
+      (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].size) * 4 + 80,
       30);
     gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = gActiveBattler;
     gSprites[gBattlerSpriteIds[gActiveBattler]].x2 = -96;

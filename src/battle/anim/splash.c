@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 
 
@@ -36,7 +35,7 @@ void AnimTask_Splash(u8 taskId)
         task->data[2] = gBattleAnimArgs[1];
         task->data[3] = 0;
         task->data[4] = 0;
-        PrepareAffineAnimInTaskData(task, spriteId, &gSpriteAffineAnim_83D76F4);
+        PrepareAffineAnimInTaskData(task, spriteId, gSpriteAffineAnim_83D76F4);
         task->func = AnimTask_SplashStep;
     }
 }
@@ -84,7 +83,7 @@ void AnimTask_SplashStep(u8 taskId)
             }
             else
             {
-                PrepareAffineAnimInTaskData(task, task->data[0], &gSpriteAffineAnim_83D76F4);
+                PrepareAffineAnimInTaskData(task, task->data[0], gSpriteAffineAnim_83D76F4);
                 task->data[1] = 0;
             }
         }

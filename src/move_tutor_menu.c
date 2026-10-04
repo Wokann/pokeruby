@@ -1,6 +1,6 @@
 #include "global.h"
 #include "contest.h"
-#include "data2.h"
+#include "data.h"
 #include "ewram.h"
 #include "field_fadetransition.h"
 #include "main.h"

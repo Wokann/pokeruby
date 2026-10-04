@@ -17,7 +17,7 @@
 #include "battle_message.h"
 #include "battle_setup.h"
 #include "battle_util.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "event_data.h"
 #include "evolution_scene.h"
@@ -36,7 +36,7 @@
 #include "pokemon.h"
 #include "random.h"
 #include "roamer.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "rom_8094928.h"
 #include "safari_zone.h"
 #include "sound.h"
@@ -2631,7 +2631,7 @@ void debug_sub_8012688(void)
 	Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gWindowTemplate_81E6C58);
 	DecompressPicFromTable_2(
 	  &gMonFrontPicTable[gCurrentMove],
-	  gMonFrontPicCoords[gCurrentMove].coords,
+	  gMonFrontPicCoords[gCurrentMove].size,
 	  gMonFrontPicCoords[gCurrentMove].y_offset,
 	  (void *)EWRAM,
 	  gMonSpriteGfx_Sprite_ptr[1],
@@ -2691,7 +2691,7 @@ void debug_sub_80129F8(u8 taskId)
 {
     DecompressPicFromTable_2(
       &gMonFrontPicTable[gCurrentMove],
-      gMonFrontPicCoords[gCurrentMove].coords,
+      gMonFrontPicCoords[gCurrentMove].size,
       gMonFrontPicCoords[gCurrentMove].y_offset,
       (void *)EWRAM,
       gMonSpriteGfx_Sprite_ptr[1],

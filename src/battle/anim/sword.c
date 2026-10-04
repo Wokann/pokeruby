@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 
 
@@ -37,8 +36,8 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D748C =
 
 void sub_80CF690(struct Sprite* sprite)
 {
-    InitAnimSpritePos(sprite, 0);
-    sprite->callback = sub_80785E4;
+    InitSpritePosToAnimAttacker(sprite, 0);
+    sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
     StoreSpriteCallbackInData6(sprite, sub_80CF6B4);
 }
 

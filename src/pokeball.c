@@ -8,7 +8,7 @@
 #include "main.h"
 #include "pokeball.h"
 #include "pokemon.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "constants/songs.h"
 #include "sound.h"
 #include "sprite.h"
@@ -298,7 +298,7 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
 };
 
 extern void InitAnimArcTranslation();
-extern bool8 TranslateAnimArc(struct Sprite *);
+extern bool8 TranslateAnimHorizontalArc(struct Sprite *);
 
 static void Task_DoPokeballSendOutAnim(u8);
 static void SpriteCB_BallThrow_ReachMon(struct Sprite *);
@@ -409,7 +409,7 @@ static void Task_DoPokeballSendOutAnim(u8 taskId)
 
 static void SpriteCB_BallThrow(struct Sprite *sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
     {
         u8 taskId = sprite->oam.affineParam;
         u8 opponentBattler = gTasks[taskId].data[4];
@@ -866,7 +866,7 @@ static void SpriteCB_PlayerMonSendOut_2(struct Sprite *sprite)
         }
 
         r4 = sprite->data[0];
-        TranslateAnimLinear(sprite);
+        AnimTranslateLinear(sprite);
         sprite->data[7] += sprite->data[6] / 3;
         sprite->y2 += Sin(HIBYTE(sprite->data[7]), sprite->data[5]);
         sprite->oam.affineParam += 0x100;
@@ -885,7 +885,7 @@ static void SpriteCB_PlayerMonSendOut_2(struct Sprite *sprite)
     }
     else
     {
-        if (TranslateAnimArc(sprite))
+        if (TranslateAnimHorizontalArc(sprite))
         {
             sprite->x += sprite->x2;
             sprite->y += sprite->y2;

@@ -1,7 +1,6 @@
 #include "global.h"
 #include "battle_anim.h"
 #include "battle_interface.h"
-#include "rom_8077ABC.h"
 #include "trig.h"
 #include "sound.h"
 
@@ -49,7 +48,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6F3C =
     .anims = gSpriteAnimTable_83D6F38,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80793C4,
+    .callback = AnimSpriteOnMonPos,
 };
 
 const union AnimCmd gSpriteAnim_83D6F54[] =
@@ -154,7 +153,7 @@ void sub_80CE108(u8 taskId)
 
 void sub_80CE17C(struct Sprite* sprite)
 {
-    sub_8078764(sprite, FALSE);
+    InitSpritePosToAnimTarget(sprite, FALSE);
     sprite->animPaused = 1;
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->callback = sub_80CE1AC;

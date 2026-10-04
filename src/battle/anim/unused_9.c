@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 #include "palette.h"
 
@@ -25,7 +24,7 @@ const struct SpriteTemplate gSpriteTemplate_83D75AC =
 
 void sub_80CFDFC(struct Sprite* sprite)
 {
-    InitAnimSpritePos(sprite, 0);
+    InitSpritePosToAnimAttacker(sprite, 0);
     sprite->data[0] = 0x100 + (IndexOfSpritePaletteTag(gSpriteTemplate_83D75AC.paletteTag) << 4);
     sprite->callback = sub_80CFE2C;
 }

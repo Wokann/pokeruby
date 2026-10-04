@@ -6,7 +6,7 @@
 #include "palette.h"
 #include "decompress.h"
 #include "trig.h"
-#include "data2.h"
+#include "data.h"
 #include "scanline_effect.h"
 #include "pokemon_storage_system.h"
 #include "text.h"
@@ -3759,7 +3759,7 @@ void sub_80F4824(s16 arg0, u8 arg1)
 
         HandleLoadSpecialPokePic(
             &gMonFrontPicTable[species],
-            gMonFrontPicCoords[species].coords,
+            gMonFrontPicCoords[species].size,
             1,
             gPokenavStructPtr->unk131E4,
             gPokenavStructPtr->unkD1E4[arg1],

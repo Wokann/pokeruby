@@ -1,6 +1,6 @@
 #include "global.h"
 #include "contest_painting.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "ewram.h"
 #include "image_processing_effects.h"
@@ -324,7 +324,7 @@ static void InitContestMonPixels(u16 species, u8 arg1)
     {
         HandleLoadSpecialPokePic(
             &gMonFrontPicTable[species],
-            gMonFrontPicCoords[species].coords,
+            gMonFrontPicCoords[species].size,
             gMonFrontPicCoords[species].y_offset,
             (void *)EWRAM,
             gMonSpriteGfx_Sprite_ptr[1],
@@ -337,7 +337,7 @@ static void InitContestMonPixels(u16 species, u8 arg1)
     {
         HandleLoadSpecialPokePic(
             &gMonBackPicTable[species],
-            gMonBackPicCoords[species].coords,
+            gMonBackPicCoords[species].size,
             gMonBackPicCoords[species].y_offset,
             (void *)EWRAM,
             gMonSpriteGfx_Sprite_ptr[0],

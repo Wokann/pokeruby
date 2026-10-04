@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 
 
@@ -62,7 +61,7 @@ void sub_80CFE9C(struct Sprite* sprite)
     s16 r7;
     u16 var;
 
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     r6 = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
     r7 = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + gBattleAnimArgs[3];
     if (GetBattlerSide(gBattleAnimAttacker) != 0)
@@ -71,11 +70,11 @@ void sub_80CFE9C(struct Sprite* sprite)
     r6 += gBattleAnimArgs[2];
     var = ArcTan2Neg(r6 - sprite->x, r7 - sprite->y);
     var += 0xC000;
-    sub_8078FDC(sprite, 0, 0x100, 0x100, var);
+    TrySetSpriteRotScale(sprite, 0, 0x100, 0x100, var);
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->data[2] = r6;
     sprite->data[4] = r7;
-    sprite->callback = sub_8078C00;
+    sprite->callback = InitAnimLinearTranslationWithSpeedAndPos;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 

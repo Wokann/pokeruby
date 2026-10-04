@@ -1,7 +1,6 @@
 #include "global.h"
 #include "battle_anim.h"
 #include "constants/songs.h"
-#include "rom_8077ABC.h"
 #include "sound.h"
 #include "trig.h"
 
@@ -64,7 +63,7 @@ void sub_80D5B0C(struct Sprite *sprite)
     switch (sprite->data[0])
     {
     case 0:
-        InitAnimSpritePos(sprite, 0);
+        InitSpritePosToAnimAttacker(sprite, 0);
         StartSpriteAnim(sprite, gBattleAnimArgs[2]);
         sprite->data[7] = gBattleAnimArgs[2];
 
@@ -117,7 +116,7 @@ void sub_80D5B0C(struct Sprite *sprite)
             sprite->data[3] = sprite->y;
             sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
 
-            sub_8078BD4(sprite);
+            InitAnimLinearTranslationWithSpeed(sprite);
             sprite->callback = sub_80D5C5C;
         }
         break;
@@ -129,7 +128,7 @@ static void sub_80D5C5C(struct Sprite *sprite)
     s16 initialData5;
     s16 newData5;
 
-    if (!TranslateAnimLinear(sprite))
+    if (!AnimTranslateLinear(sprite))
     {
         sprite->x2 += Sin(sprite->data[5], 16);
         initialData5 = sprite->data[5];

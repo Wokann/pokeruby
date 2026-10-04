@@ -1695,7 +1695,7 @@ Move_FRUSTRATION: @ 81C9830
 	loadspritegfx ANIM_TAG_ANGER
 	monbg ANIM_DEF_PARTNER
 	setalpha 12, 8
-	createvisualtask sub_8079CEC, 1
+	createvisualtask AnimTask_GetFrustrationPowerLevel, 1
 	jumpargeq 7, 0, _81C9864
 	jumpargeq 7, 1, _81C996A
 	jumpargeq 7, 2, _81C9A37
@@ -3128,7 +3128,7 @@ _81CB97E:
 	waitbgfadein
 	delay 0
 	setalpha 9, 8
-	createvisualtask sub_807A69C, 2, 28968, 10
+	createvisualtask AnimTask_AttackerPunchWithTrace, 2, 28968, 10
 	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
 	delay 6
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_TARGET, 3, 0, 0, 1, 1
@@ -3357,7 +3357,7 @@ Move_MOONLIGHT: @ 81CBDAE
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, 1, 1, 0, 16, rgb(0, 0, 0)
 	waitforvisualfinish
 	createsprite gBattleAnimSpriteTemplate_83D6FC8, ANIM_ATTACKER, 2, 120, 56
-	createvisualtask sub_8079670, 3, 0, 16, 16, 0, 1
+	createvisualtask AnimTask_AlphaFadeIn, 3, 0, 16, 16, 0, 1
 	playsewithpan SE_M_MOONLIGHT, 0
 	delay 30
 	createsprite gBattleAnimSpriteTemplate_83D6FF8, ANIM_ATTACKER, 40, -12, 0
@@ -4303,7 +4303,7 @@ Move_SHADOW_PUNCH: @ 81CD3D6
 	waitbgfadein
 	monbg ANIM_ATK_PARTNER
 	setalpha 9, 8
-	createvisualtask sub_807A69C, 2, 0, 13
+	createvisualtask AnimTask_AttackerPunchWithTrace, 2, 0, 13
 	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
 	delay 6
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_TARGET, 3, 0, 0, 1, 1
@@ -4521,7 +4521,7 @@ Move_DRAGON_DANCE: @ 81CD7F8
 	createvisualtask sub_80DF924, 5
 	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
 	delay 8
-	createvisualtask sub_80798AC, 5, 10249, 19456, 14, 0, 3
+	createvisualtask AnimTask_BlendPalInAndOutByTag, 5, 10249, 19456, 14, 0, 3
 	createsprite gBattleAnimSpriteTemplate_83DB0E8, ANIM_ATTACKER, 2, 0
 	createsprite gBattleAnimSpriteTemplate_83DB0E8, ANIM_ATTACKER, 2, 43
 	createsprite gBattleAnimSpriteTemplate_83DB0E8, ANIM_ATTACKER, 2, 85

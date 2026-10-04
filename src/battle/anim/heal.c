@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 
 
 void sub_80CBAA4(struct Sprite* sprite);
@@ -38,7 +37,7 @@ void sub_80CBAA4(struct Sprite* sprite)
 {
     if (sprite->data[0] == 0)
     {
-        sub_8078764(sprite, FALSE);
+        InitSpritePosToAnimTarget(sprite, FALSE);
         sprite->data[1] = gBattleAnimArgs[2];
     }
 

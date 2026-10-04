@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "random.h"
 
 
@@ -189,7 +188,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6394 =
 
 void sub_80CA7B0(struct Sprite* sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
@@ -199,7 +198,7 @@ void sub_80CA7B0(struct Sprite* sprite)
 
 void sub_80CA800(struct Sprite* sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     StartSpriteAnim(sprite, gBattleAnimArgs[3]);
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
@@ -210,7 +209,7 @@ void sub_80CA800(struct Sprite* sprite)
 
 void sub_80CA858(struct Sprite* sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[1] = sprite->x;
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
@@ -224,7 +223,7 @@ void sub_80CA858(struct Sprite* sprite)
 
 static void sub_80CA8B4(struct Sprite* sprite)
 {
-    if (TranslateAnimLinear(sprite))
+    if (AnimTranslateLinear(sprite))
     {
         DestroySprite(sprite);
     }
@@ -264,7 +263,7 @@ void sub_80CA928(u8 taskId)
 
 void sub_80CA9A8(struct Sprite* sprite)
 {
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
     sprite->data[0] = gBattleAnimArgs[3];
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
@@ -275,7 +274,7 @@ void sub_80CA9A8(struct Sprite* sprite)
 
 static void sub_80CA9F8(struct Sprite* sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
         DestroyAnimSprite(sprite);
 }
 
@@ -302,7 +301,7 @@ void sub_80CAA14(struct Sprite* sprite)
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
     sprite->data[3] = sprite->y;
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
-    sub_8078D60(sprite);
+    InitAnimFastLinearTranslationWithSpeed(sprite);
     sprite->data[5] = Random() & 0xFF;
     sprite->data[6] = sprite->subpriority;
     sprite->callback = sub_80CAACC;
@@ -311,7 +310,7 @@ void sub_80CAA14(struct Sprite* sprite)
 
 static void sub_80CAACC(struct Sprite* sprite)
 {
-    if (sub_8078CE8(sprite))
+    if (AnimFastTranslateLinear(sprite))
     {
         DestroyAnimSprite(sprite);
     }

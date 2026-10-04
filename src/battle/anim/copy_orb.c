@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 
 
 extern const union AnimCmd *const gSpriteAnimTable_83D62D4[];
@@ -65,7 +64,7 @@ void sub_80CB4CC(struct Sprite* sprite)
             sprite->data[0] = 25;
             sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
             sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
-            sprite->callback = sub_8078CC0;
+            sprite->callback = InitAndRunAnimFastLinearTranslation;
             StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
             break;
         }

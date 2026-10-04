@@ -7,7 +7,7 @@
 #include "constants/species.h"
 #include "battle.h"
 #include "berry.h"
-#include "data2.h"
+#include "data.h"
 #include "event_data.h"
 #include "item.h"
 #include "pokemon.h"

@@ -6,7 +6,7 @@
 #include "battle_anim.h"
 #include "battle_controllers.h"
 #include "battle_interface.h"
-#include "data2.h"
+#include "data.h"
 #include "battle_811DA74.h"
 #include "battle_anim_special.h"
 #include "battle_tower.h"
@@ -17,7 +17,6 @@
 #include "pokeball.h"
 #include "pokemon.h"
 #include "random.h"
-#include "rom_8077ABC.h"
 #include "sound.h"
 #include "constants/songs.h"
 #include "sprite.h"
@@ -1206,7 +1205,7 @@ void OpponentHandleTrainerThrow(void)
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gMultiuseSpriteTemplate,
       0xB0,
-      40 + 4 * (8 - gTrainerFrontPicCoords[trainerPicIndex].coords),
+      40 + 4 * (8 - gTrainerFrontPicCoords[trainerPicIndex].size),
       GetBattlerSpriteSubpriority(gActiveBattler));
     gSprites[gBattlerSpriteIds[gActiveBattler]].x2 = -240;
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[0] = 2;
@@ -1236,7 +1235,7 @@ static void OpponentHandleTrainerSlide(void)
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gMultiuseSpriteTemplate,
       0xB0,
-      40 + 4 * (8 - gTrainerFrontPicCoords[trainerPicId].coords),
+      40 + 4 * (8 - gTrainerFrontPicCoords[trainerPicId].size),
       0x1E);
     gSprites[gBattlerSpriteIds[gActiveBattler]].x2 = 96;
     gSprites[gBattlerSpriteIds[gActiveBattler]].x += 32;

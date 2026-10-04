@@ -1,6 +1,5 @@
 #include "global.h"
 #include "battle_anim.h"
-#include "rom_8077ABC.h"
 #include "trig.h"
 
 extern struct OamMatrix gOamMatrices[];
@@ -83,7 +82,7 @@ void sub_80D6294(struct Sprite *sprite)
     sprite->data[3] = gBattleAnimArgs[4];
 
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
-    sprite->callback = sub_8078114;
+    sprite->callback = TranslateSpriteInCircle;
 }
 
 void sub_80D6328(struct Sprite *sprite)

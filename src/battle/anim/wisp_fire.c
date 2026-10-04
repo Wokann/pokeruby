@@ -2,7 +2,6 @@
 #include "battle_anim.h"
 #include "util.h"
 #include "main.h"
-#include "rom_8077ABC.h"
 #include "task.h"
 #include "trig.h"
 

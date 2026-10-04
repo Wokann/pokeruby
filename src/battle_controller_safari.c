@@ -5,7 +5,7 @@
 #include "battle_message.h"
 #include "battle.h"
 #include "battle_gfx_sfx_util.h"
-#include "data2.h"
+#include "data.h"
 #include "ewram.h"
 #include "link.h"
 #include "main.h"
@@ -396,7 +396,7 @@ void SafariHandleTrainerThrow(void)
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gMultiuseSpriteTemplate,
       80,
-      (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].coords) * 4 + 80,
+      (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].size) * 4 + 80,
       30);
     gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = gActiveBattler;
     gSprites[gBattlerSpriteIds[gActiveBattler]].x2 = 240;

@@ -1,7 +1,6 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_anim.h"
-#include "rom_8077ABC.h"
 #include "trig.h"
 
 
@@ -184,7 +183,7 @@ static void sub_80CAF6C(struct Sprite* sprite)
 // arg 6: target between double battle opponents (boolean)
 void AnimTranslateLinearSingleSineWave(struct Sprite* sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];
@@ -225,7 +224,7 @@ static void AnimTranslateLinearSingleSineWaveStep(struct Sprite* sprite)
     s16 r0;
     
     sprite->data[0] = 1;
-    TranslateAnimArc(sprite);
+    TranslateAnimHorizontalArc(sprite);
     r0 = sprite->data[7];
     sprite->data[0] = a;
     if (b > 0xC8 && r0 <= 0x37 && sprite->oam.affineParam == 0)

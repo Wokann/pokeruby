@@ -1,6 +1,5 @@
 #include "global.h"
 #include "battle_anim.h"
-#include "rom_8077ABC.h"
 #include "trig.h"
 #include "util.h"
 
@@ -103,7 +102,7 @@ static void sub_80D32E8(struct Sprite *sprite)
     u16 index = gSprites[spriteId].data[3];
 
     sprite->data[0] = 1;
-    TranslateAnimLinear(sprite);
+    AnimTranslateLinear(sprite);
 
     sprite->x2 += Sin(index / 256, gSprites[spriteId].data[0]);
     sprite->y2 += Cos(index / 256, gSprites[spriteId].data[1]);
@@ -124,7 +123,7 @@ static void sub_80D32E8(struct Sprite *sprite)
 static void sub_80D3370(struct Sprite *sprite)
 {
     sprite->animPaused = 0;
-    sprite->callback = sub_8078600;
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
     StoreSpriteCallbackInData6(sprite, sub_80D3398);
 }
 

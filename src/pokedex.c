@@ -2,7 +2,7 @@
 #include "gba/m4a_internal.h"
 #include "pokedex.h"
 #include "battle.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "event_data.h"
 #include "graphics.h"
@@ -4533,7 +4533,7 @@ u16 CreateMonSpriteFromNationalDexNumber(u16 num, s16 x, s16 y, u16 paletteNum)
     default:
         DecompressPicFromTable_2(
           &gMonFrontPicTable[num],
-          gMonFrontPicCoords[num].coords,
+          gMonFrontPicCoords[num].size,
           gMonFrontPicCoords[num].y_offset,
           (void *)EWRAM,
           sMonOrTrainerPicDecompressDestPtrs[paletteNum],
@@ -4542,7 +4542,7 @@ u16 CreateMonSpriteFromNationalDexNumber(u16 num, s16 x, s16 y, u16 paletteNum)
     case SPECIES_SPINDA:
         LoadSpecialPokePic(
           &gMonFrontPicTable[num],
-          gMonFrontPicCoords[num].coords,
+          gMonFrontPicCoords[num].size,
           gMonFrontPicCoords[num].y_offset,
           (void *)EWRAM,
           sMonOrTrainerPicDecompressDestPtrs[paletteNum],
@@ -4553,7 +4553,7 @@ u16 CreateMonSpriteFromNationalDexNumber(u16 num, s16 x, s16 y, u16 paletteNum)
     case SPECIES_UNOWN:
         LoadSpecialPokePic(
           &gMonFrontPicTable[num],
-          gMonFrontPicCoords[num].coords,
+          gMonFrontPicCoords[num].size,
           gMonFrontPicCoords[num].y_offset,
           (void *)EWRAM,
           sMonOrTrainerPicDecompressDestPtrs[paletteNum],
@@ -4575,7 +4575,7 @@ u16 CreateSizeScreenTrainerPic(u16 gender, s16 x, s16 y, u16 paletteNum)
 
     DecompressPicFromTable_2(
       &gTrainerFrontPicTable[gender],
-      gTrainerFrontPicCoords[gender].coords,
+      gTrainerFrontPicCoords[gender].size,
       gTrainerFrontPicCoords[gender].y_offset,
       (void *)EWRAM,
       sMonOrTrainerPicDecompressDestPtrs[0],

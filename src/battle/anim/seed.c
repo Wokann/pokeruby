@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 
 
 void AnimLeechSeed(struct Sprite* sprite);
@@ -48,7 +47,7 @@ const struct SpriteTemplate gLeechSeedSpriteTemplate =
 // arg 5: wave amplitude
 void AnimLeechSeed(struct Sprite* sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     if (GetBattlerSide(gBattleAnimAttacker))
     {
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];
@@ -64,7 +63,7 @@ void AnimLeechSeed(struct Sprite* sprite)
 
 static void AnimLeechSeedStep(struct Sprite* sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
     {
         sprite->invisible = TRUE;
         sprite->data[0] = 10;

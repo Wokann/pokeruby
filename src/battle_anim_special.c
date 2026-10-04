@@ -10,7 +10,6 @@
 #include "main.h"
 #include "palette.h"
 #include "pokeball.h"
-#include "rom_8077ABC.h"
 #include "sound.h"
 #include "sprite.h"
 #include "task.h"
@@ -570,13 +569,13 @@ void sub_813F798(u8 taskId)
         break;
     case 1:
         gTasks[taskId].data[10] += 0x30;
-        obj_id_set_rotscale(spriteId, gTasks[taskId].data[10], gTasks[taskId].data[10], 0);
-        sub_8079A64(spriteId);
+        SetSpriteRotScale(spriteId, gTasks[taskId].data[10], gTasks[taskId].data[10], 0);
+        SetBattlerSpriteYOffsetFromYScale(spriteId);
         if (gTasks[taskId].data[10] >= 0x2D0)
             gTasks[taskId].data[0]++;
         break;
     case 2:
-        sub_8078F40(spriteId);
+        ResetSpriteRotScale(spriteId);
         gSprites[spriteId].invisible = TRUE;
         DestroyAnimVisualTask(taskId);
         break;
@@ -607,7 +606,7 @@ void sub_813F844(u8 taskId)
         priority = gSprites[spriteId].oam.priority;
         subpriority = gSprites[spriteId].subpriority;
         gTasks[taskId].data[10] = AnimateBallOpenParticles(x, y + 32, priority, subpriority, ballIndex);
-        selectedPalettes = sub_80791A8(1, 0, 0, 0, 0, 0, 0);
+        selectedPalettes = GetBattlePalettesMask(1, 0, 0, 0, 0, 0, 0);
         gTasks[taskId].data[11] = sub_8141314(0, gBattleAnimAttacker, selectedPalettes, ballIndex);
         gTasks[taskId].data[0]++;
         break;
@@ -766,7 +765,7 @@ static void sub_813FDC0(struct Sprite *sprite)
     u8 ballIndex;
     int ballIndex2; // extra var needed to match
 
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
     {
         if (gBattleAnimationInfo->ballThrowCaseId == 5)
         {
@@ -834,14 +833,14 @@ static void sub_813FEC8(struct Sprite *sprite)
         break;
     case 1:
         gTasks[taskId].data[10] += 0x20;
-        obj_id_set_rotscale(spriteId, gTasks[taskId].data[10], gTasks[taskId].data[10], 0);
+        SetSpriteRotScale(spriteId, gTasks[taskId].data[10], gTasks[taskId].data[10], 0);
         gTasks[taskId].data[3] += gTasks[taskId].data[2];
         gSprites[spriteId].y2 = -gTasks[taskId].data[3] >> 8;
         if (gTasks[taskId].data[10] >= 0x480)
             gTasks[taskId].data[0]++;
         break;
     case 2:
-        sub_8078F40(spriteId);
+        ResetSpriteRotScale(spriteId);
         gSprites[spriteId].invisible = TRUE;
         gTasks[taskId].data[0]++;
         break;
@@ -2024,7 +2023,7 @@ void sub_8141C08(u8 taskId)
 
 static void sub_8141C30(struct Sprite *sprite)
 {
-    InitAnimSpritePos(sprite, 0);
+    InitSpritePosToAnimAttacker(sprite, 0);
     sprite->data[0] = 30;
     sprite->data[2] = GetBattlerSpriteCoord(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT), 0) + gBattleAnimArgs[2];
     sprite->data[4] = GetBattlerSpriteCoord(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT), 1) + gBattleAnimArgs[3];
@@ -2042,7 +2041,7 @@ static void sub_8141CBC(struct Sprite *sprite)
 
 static void sub_8141CF4(struct Sprite *sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
     {
         sprite->data[0] = 0;
         sprite->invisible = TRUE;

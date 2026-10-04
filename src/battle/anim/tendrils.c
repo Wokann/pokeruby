@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 
 
 void sub_80CB25C(struct Sprite* sprite);
@@ -67,7 +66,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D65A0 =
 
 void sub_80CB25C(struct Sprite* sprite)
 {
-    sub_8078764(sprite, FALSE);
+    InitSpritePosToAnimTarget(sprite, FALSE);
     sprite->affineAnimPaused = 1;
     StartSpriteAffineAnim(sprite, gBattleAnimArgs[2]);
     sprite->data[6] = gBattleAnimArgs[2];

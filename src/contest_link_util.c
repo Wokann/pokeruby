@@ -4,7 +4,7 @@
 #include "constants/songs.h"
 #include "contest.h"
 #include "contest_link.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "event_data.h"
 #include "ewram.h"
@@ -609,7 +609,7 @@ static void sub_80C2A8C(u8 taskId)
             species = gContestMons[i].species;
             personality = gContestMons[i].personality;
             otId = gContestMons[i].otId;
-            HandleLoadSpecialPokePic(gMonFrontPicTable + species, gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, (void *)gSharedMem, gMonSpriteGfx_Sprite_ptr[1], species, personality);
+            HandleLoadSpecialPokePic(gMonFrontPicTable + species, gMonFrontPicCoords[species].size, gMonFrontPicCoords[species].y_offset, (void *)gSharedMem, gMonSpriteGfx_Sprite_ptr[1], species, personality);
             monPal = GetMonSpritePalStructFromOtIdPersonality(species, otId, personality);
             LoadCompressedObjectPalette(monPal);
             SetMultiuseSpriteTemplateToPokemon(species, 1);

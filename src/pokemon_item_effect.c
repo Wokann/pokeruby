@@ -12,7 +12,7 @@
 #include "main.h"
 #include "overworld.h"
 #include "pokemon.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "rom_8094928.h"
 #include "util.h"
 #include "constants/item_effects.h"

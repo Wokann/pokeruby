@@ -1,12 +1,11 @@
 #include "global.h"
 #include "battle_anim.h"
-#include "rom_8077ABC.h"
 #include "trig.h"
 
 
 extern const union AnimCmd *const gSpriteAnimTable_83D9310[];
 
-void sub_80793C4(struct Sprite *sprite);
+void AnimSpriteOnMonPos(struct Sprite *sprite);
 void sub_80D9D70(struct Sprite *sprite);
 void sub_80D9DF0(struct Sprite *sprite);
 void sub_80D9E94(struct Sprite *sprite);
@@ -39,7 +38,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA244 =
     .anims = gSpriteAnimTable_83DA240,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80793C4,
+    .callback = AnimSpriteOnMonPos,
 };
 
 const union AnimCmd gSpriteAnim_83DA25C[] =
@@ -194,7 +193,7 @@ void sub_80D9D70(struct Sprite *sprite)
     if (!gBattleAnimArgs[3])
         StartSpriteAnim(sprite, 2);
 
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
 
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
@@ -208,7 +207,7 @@ void sub_80D9D70(struct Sprite *sprite)
 
 static void sub_80D9DD4(struct Sprite *sprite) // same as sub_80D9E78
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
         DestroyAnimSprite(sprite);
 }
 
@@ -218,7 +217,7 @@ void sub_80D9DF0(struct Sprite *sprite)
     if (!gBattleAnimArgs[3])
         StartSpriteAnim(sprite, 2);
 
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     SetAverageBattlerPositions(gBattleAnimTarget, 1, &l1, &l2);
 
     if (GetBattlerSide(gBattleAnimAttacker))
@@ -236,7 +235,7 @@ void sub_80D9DF0(struct Sprite *sprite)
 
 static void sub_80D9E78(struct Sprite *sprite) // same as sub_80D9DD4
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
         DestroyAnimSprite(sprite);
 }
 
@@ -258,7 +257,7 @@ void sub_80D9E94(struct Sprite *sprite)
 
 static void sub_80D9EE8(struct Sprite *sprite)
 {
-    sub_8078394(sprite);
+    TranslateSpriteLinearFixedPoint(sprite);
 
     sprite->data[1] -= sprite->data[5];
     sprite->data[2] -= sprite->data[6];
@@ -295,7 +294,7 @@ void AnimBubbleEffect(struct Sprite *sprite)
 {
     if (!gBattleAnimArgs[2])
     {
-        sub_8078764(sprite, TRUE);
+        InitSpritePosToAnimTarget(sprite, TRUE);
     }
     else
     {

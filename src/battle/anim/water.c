@@ -4,7 +4,6 @@
 #include "graphics.h"
 #include "battle_anim.h"
 #include "random.h"
-#include "rom_8077ABC.h"
 #include "sprite.h"
 #include "trig.h"
 #include "util.h"
@@ -19,8 +18,8 @@ extern const union AffineAnimCmd *const gSpriteAffineAnimTable_83DA318[];
 extern const union AnimCmd *const gSpriteAnimTable_83D9BC8[];
 
 void PrepareBattlerSpriteForRotScale(u8, u8);
-void sub_8078F40(u8);
-void sub_8079A64(u8);
+void ResetSpriteRotScale(u8);
+void SetBattlerSpriteYOffsetFromYScale(u8);
 void sub_80D37FC(struct Sprite *sprite);
 void sub_80D3838(struct Sprite *sprite);
 void sub_80D3B60(u8 taskId);
@@ -77,7 +76,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9318 =
     .anims = gSpriteAnimTable_83D9310,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80794A8,
+    .callback = AnimThrowProjectile,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9330 =
@@ -215,12 +214,12 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9438 =
     .anims = gSpriteAnimTable_83D93B0,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D9404,
-    .callback = sub_807A9BC,
+    .callback = AnimWeatherBallDown,
 };
 
 void sub_80D37FC(struct Sprite *sprite)
 {
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
 
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->data[2] = sprite->x + gBattleAnimArgs[2];
@@ -234,11 +233,11 @@ void sub_80D3838(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[3] != 0)
     {
-        sub_8078764(sprite, TRUE);
+        InitSpritePosToAnimTarget(sprite, TRUE);
     }
     else
     {
-        InitAnimSpritePos(sprite, 1);
+        InitSpritePosToAnimAttacker(sprite, 1);
     }
 
     sprite->data[7] = gBattleAnimArgs[2];
@@ -500,7 +499,7 @@ void sub_80D4044(struct Sprite *sprite)
     s16 randData2;
 
     sprite->oam.tileNum += 8;
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
     randData = (Random() & 0xFF) | 256;
     randData2 = (Random() & 0x1FF);
     if (randData2 > 255)
@@ -541,7 +540,7 @@ void sub_80D4150(u8 taskId)
     switch (task->data[0])
     {
         case 0:
-            sub_8079C08(task, task->data[15], 0x100, 0x100, 224, 0x200, 32);
+            PrepareEruptAnimTaskData(task, task->data[15], 0x100, 0x100, 224, 0x200, 32);
             task->data[0]++;
         case 1:
             if (++task->data[3] > 1)
@@ -557,9 +556,9 @@ void sub_80D4150(u8 taskId)
                     gSprites[task->data[15]].x2 = -3;
                 }
             }
-            if (sub_8079C74(task) == 0)
+            if (UpdateEruptAnimTask(task) == 0)
             {
-                sub_8079A64(task->data[15]);
+                SetBattlerSpriteYOffsetFromYScale(task->data[15]);
                 gSprites[task->data[15]].x2 = 0;
                 task->data[3] = 0;
                 task->data[4] = 0;
@@ -569,13 +568,13 @@ void sub_80D4150(u8 taskId)
         case 2:
             if (++task->data[3] > 4)
             {
-                sub_8079C08(task, task->data[15], 224, 0x200, 384, 224, 8);
+                PrepareEruptAnimTaskData(task, task->data[15], 224, 0x200, 384, 224, 8);
                 task->data[3] = 0;
                 task->data[0]++;
             }
             break;
         case 3:
-            if (sub_8079C74(task) == 0)
+            if (UpdateEruptAnimTask(task) == 0)
             {
                 task->data[3] = 0;
                 task->data[4] = 0;
@@ -595,7 +594,7 @@ void sub_80D4150(u8 taskId)
                     gSprites[task->data[15]].y2 -= 2;
                 if (task->data[4] == 10)
                 {
-                    sub_8079C08(task, task->data[15], 384, 224, 0x100, 0x100, 8);
+                    PrepareEruptAnimTaskData(task, task->data[15], 384, 224, 0x100, 0x100, 8);
                     task->data[3] = 0;
                     task->data[4] = 0;
                     task->data[0]++;
@@ -604,9 +603,9 @@ void sub_80D4150(u8 taskId)
             break;
         case 6:
             gSprites[task->data[15]].y--;
-            if (sub_8079C74(task) == 0)
+            if (UpdateEruptAnimTask(task) == 0)
             {
-                sub_8078F40(task->data[15]);
+                ResetSpriteRotScale(task->data[15]);
                 gSprites[task->data[15]].y = task->data[5];
                 task->data[4] = 0;
                 task->data[0]++;
@@ -933,7 +932,7 @@ void sub_80D4AD0(struct Task *task)
 
 void sub_80D4B3C(struct Sprite *sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
     {
         sprite->x += sprite->x2;
         sprite->y += sprite->y2;
@@ -950,7 +949,7 @@ void sub_80D4BA4(struct Sprite *sprite)
 {
     u16 i;
 
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
     {
         for (i = 0; i < NUM_TASKS; i++)
         {
@@ -1000,7 +999,7 @@ void sub_80D4C64(struct Sprite *sprite)
 
 void sub_80D4CA4(struct Sprite *sprite)
 {
-    InitAnimSpritePos(sprite, TRUE);
+    InitSpritePosToAnimAttacker(sprite, TRUE);
     sprite->data[1] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
     sprite->data[3] = gBattleAnimArgs[2];

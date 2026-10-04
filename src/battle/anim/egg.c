@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "random.h"
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7594 =
@@ -12,5 +11,5 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7594 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80794A8,
+    .callback = AnimThrowProjectile,
 };

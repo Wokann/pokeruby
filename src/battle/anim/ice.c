@@ -1,9 +1,8 @@
 #include "global.h"
 #include "main.h"
 #include "trig.h"
-#include "rom_8077ABC.h"
-#include "battle.h"
 #include "battle_anim.h"
+#include "battle.h"
 #include "constants/battle.h"
 #include "task.h"
 #include "decompress.h"
@@ -33,7 +32,7 @@ static void InitSwirlingFogAnim(struct Sprite *sprite);
 static void AnimThrowMistBall(struct Sprite *sprite);
 static void InitPoisonGasCloudAnim(struct Sprite *sprite);
 static void AnimHailBegin(struct Sprite *sprite);
-void sub_807A9BC(struct Sprite *sprite);
+void AnimWeatherBallDown(struct Sprite *sprite);
 static void InitIceBallAnim(struct Sprite *sprite);
 static void InitIceBallParticle(struct Sprite *sprite);
 static void AnimSwirlingSnowball_Step1(struct Sprite *sprite);
@@ -448,7 +447,7 @@ const struct SpriteTemplate gWeatherBallHailSpriteTemplate =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D9E38,
-    .callback = sub_807A9BC,
+    .callback = AnimWeatherBallDown,
 };
 
 const union AnimCmd gSpriteAnim_83D9E6C[] =
@@ -547,7 +546,7 @@ static void sub_80D7704(struct Sprite *sprite)
     sprite->data[2] = gBattleAnimArgs[2] + targetX;
     sprite->data[3] = gBattleAnimArgs[1] + attackerY;
     sprite->data[4] = gBattleAnimArgs[3] + targetY;
-    sub_8078314(sprite);
+    ConvertPosDataToTranslateLinearData(sprite);
 
     for (;(targetX >= -32 && targetX <= 272) && (targetY >= -32 && targetY <= 192);
            targetX += sprite->data[1], targetY += sprite->data[2])
@@ -566,7 +565,7 @@ static void sub_80D7704(struct Sprite *sprite)
     sprite->data[2] = targetX;
     sprite->data[3] = attackerY;
     sprite->data[4] = targetY;
-    sub_8078314(sprite);
+    ConvertPosDataToTranslateLinearData(sprite);
     sprite->data[3] = gBattleAnimArgs[5];
     sprite->data[4] = gBattleAnimArgs[6];
     sprite->callback = sub_80D7888;
@@ -601,8 +600,8 @@ static void AnimIcePunchSwirlingParticle(struct Sprite *sprite)
     sprite->data[3] = 30; 
     sprite->data[4] = 65024; 
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
-    sprite->callback = sub_8078174;
-    sub_8078174(sprite);
+    sprite->callback = TranslateSpriteInGrowingCircle;
+    TranslateSpriteInGrowingCircle(sprite);
 }
 
 // Animates the ice particles in Ice Beam.
@@ -613,7 +612,7 @@ static void AnimIcePunchSwirlingParticle(struct Sprite *sprite)
 // arg 4: duration
 static void AnimIceBeamParticle(struct Sprite *sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
 
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
@@ -636,7 +635,7 @@ static void AnimIceEffectParticle(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[2] == 0)
     {
-        sub_8078764(sprite, TRUE);
+        InitSpritePosToAnimTarget(sprite, TRUE);
     }
     else
     {
@@ -649,7 +648,7 @@ static void AnimIceEffectParticle(struct Sprite *sprite)
     }
 
     StoreSpriteCallbackInData6(sprite, AnimFlickerIceEffectParticle);
-    sprite->callback = sub_80785E4;
+    sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
 }
 
 static void AnimFlickerIceEffectParticle(struct Sprite *sprite)
@@ -672,7 +671,7 @@ static void AnimSwirlingSnowball_Step1(struct Sprite *sprite)
     int i;
     s16 tempDataHolder[8];
 
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
 
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->data[1] = sprite->x;
@@ -696,14 +695,14 @@ static void AnimSwirlingSnowball_Step1(struct Sprite *sprite)
     for (i = 0; i < 8; i++)
         tempDataHolder[i] = sprite->data[i];
 
-    sub_8078D60(sprite);
+    InitAnimFastLinearTranslationWithSpeed(sprite);
     sprite->data[1] ^= 1;
     sprite->data[2] ^= 1;
 
     while (1)
     {
         sprite->data[0] = 1;
-        sub_8078CE8(sprite);
+        AnimFastTranslateLinear(sprite);
 
         if ((u32)(sprite->x + sprite->x2 + 16) > 272
          || sprite->y + sprite->y2 > 160
@@ -719,7 +718,7 @@ static void AnimSwirlingSnowball_Step1(struct Sprite *sprite)
     for (i = 0; i < 8; i++)
         sprite->data[i] = tempDataHolder[i];
 
-    sprite->callback = sub_8078D8C;
+    sprite->callback = InitAnimFastLinearTranslationWithSpeedAndPos;
     StoreSpriteCallbackInData6(sprite, AnimSwirlingSnowball_Step2);
 }
 
@@ -769,7 +768,7 @@ static void AnimSwirlingSnowball_Step3(struct Sprite *sprite)
 static void AnimSwirlingSnowball_End(struct Sprite *sprite)
 {
     sprite->data[0] = 1;
-    sub_8078CE8(sprite);
+    AnimFastTranslateLinear(sprite);
 
     if ((u32)(sprite->x + sprite->x2 + 16) > 272
      || sprite->y + sprite->y2 > 256
@@ -792,7 +791,7 @@ static void AnimMoveParticleBeyondTarget(struct Sprite *sprite)
     int i;
     s16 tempDataHolder[8];
 
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
 
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->data[1] = sprite->x;
@@ -814,7 +813,7 @@ static void AnimMoveParticleBeyondTarget(struct Sprite *sprite)
         sprite->data[2] += gBattleAnimArgs[2];
 
     sprite->data[4] += gBattleAnimArgs[3];
-    sub_8078D60(sprite);
+    InitAnimFastLinearTranslationWithSpeed(sprite);
     for (i = 0; i < 8; i++)
         tempDataHolder[i] = sprite->data[i];
 
@@ -824,7 +823,7 @@ static void AnimMoveParticleBeyondTarget(struct Sprite *sprite)
     while (1)
     {
         sprite->data[0] = 1;
-        sub_8078CE8(sprite);
+        AnimFastTranslateLinear(sprite);
         if ((u32)(sprite->x + sprite->x2 + 16) > 272
          || sprite->y + sprite->y2 > 160
          || sprite->y + sprite->y2 < -16)
@@ -847,7 +846,7 @@ static void AnimMoveParticleBeyondTarget(struct Sprite *sprite)
 // Moves particles in a sine wave towards the target.
 static void AnimWiggleParticleTowardsTarget(struct Sprite *sprite)
 {
-    sub_8078CE8(sprite);
+    AnimFastTranslateLinear(sprite);
     if (sprite->data[0] == 0)
         sprite->data[0] = 1;
 
@@ -872,7 +871,7 @@ static void AnimWaveFromCenterOfTarget(struct Sprite *sprite)
     {
         if (gBattleAnimArgs[2] == 0)
         {
-            sub_8078764(sprite, FALSE);
+            InitSpritePosToAnimTarget(sprite, FALSE);
         }
         else
         {
@@ -910,7 +909,7 @@ static void InitSwirlingFogAnim(struct Sprite *sprite)
     {
         if (gBattleAnimArgs[5] == 0)
         {
-            InitAnimSpritePos(sprite, 0);
+            InitSpritePosToAnimAttacker(sprite, 0);
         }
         else
         {
@@ -929,7 +928,7 @@ static void InitSwirlingFogAnim(struct Sprite *sprite)
     {
         if (gBattleAnimArgs[5] == 0)
         {
-            sub_8078764(sprite, FALSE);
+            InitSpritePosToAnimTarget(sprite, FALSE);
         }
         else 
         {
@@ -971,7 +970,7 @@ static void InitSwirlingFogAnim(struct Sprite *sprite)
 // Animates swirling fog initialized by InitSwirlingFogAnim.
 static void AnimSwirlingFogAnim(struct Sprite *sprite)
 {
-    if (!TranslateAnimLinear(sprite))
+    if (!AnimTranslateLinear(sprite))
     {
         sprite->x2 += Sin(sprite->data[5], sprite->data[6]);
         sprite->y2 += Cos(sprite->data[5], -6);
@@ -1252,7 +1251,7 @@ static void sub_80D8874(struct Sprite *sprite)
     switch (sprite->data[7] & 0xFF)
     {
     case 0:
-        TranslateAnimLinear(sprite);
+        AnimTranslateLinear(sprite);
         value = gSineTable[sprite->data[5]];
         sprite->x2 += value >> 4;
         if (sprite->data[6])
@@ -1285,7 +1284,7 @@ static void sub_80D8874(struct Sprite *sprite)
         }
         break;
     case 1:
-        TranslateAnimLinear(sprite);
+        AnimTranslateLinear(sprite);
         value = gSineTable[sprite->data[5]];
         sprite->x2 += value >> 3;
         sprite->y2 += (gSineTable[sprite->data[5] + 0x40] * -3) >> 8;
@@ -1325,11 +1324,11 @@ static void sub_80D8874(struct Sprite *sprite)
 
             sprite->data[7]++;
             sprite->x2 = sprite->y2 = 0;
-            sub_8078BD4(sprite);
+            InitAnimLinearTranslationWithSpeed(sprite);
         }
         break;
     case 2:
-        if (TranslateAnimLinear(sprite))
+        if (AnimTranslateLinear(sprite))
         {
             if (sprite->oam.affineMode & 1)
             {
@@ -1514,7 +1513,7 @@ static void InitIceBallAnim(struct Sprite *sprite)
         animNum = 4;
 
     StartSpriteAffineAnim(sprite, animNum);
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
 
     sprite->data[0] = gBattleAnimArgs[4];
 
@@ -1533,11 +1532,11 @@ static void InitIceBallAnim(struct Sprite *sprite)
 // Throws the ball of ice in Ice Ball.
 static void AnimThrowIceBall(struct Sprite *sprite)
 {
-    if (!TranslateAnimArc(sprite))
+    if (!TranslateAnimHorizontalArc(sprite))
         return;
 
     StartSpriteAnim(sprite, 1);
-    sprite->callback = sub_8078600;
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
@@ -1547,7 +1546,7 @@ static void InitIceBallParticle(struct Sprite *sprite)
     s16 randA, randB;
 
     sprite->oam.tileNum += 8;
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
 
     randA = (Random() & 0xFF) + 256;
     randB = Random() & 0x1FF;

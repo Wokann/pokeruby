@@ -2,7 +2,6 @@
 #include "battle_anim.h"
 #include "contest.h"
 #include "ewram.h"
-#include "rom_8077ABC.h"
 #include "sound.h"
 #include "task.h"
 

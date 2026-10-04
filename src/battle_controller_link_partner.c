@@ -5,7 +5,7 @@
 #include "battle_anim_special.h"
 #include "battle_controllers.h"
 #include "battle_interface.h"
-#include "data2.h"
+#include "data.h"
 #include "battle_811DA74.h"
 #include "battle_anim_special.h"
 #include "link.h"
@@ -14,7 +14,6 @@
 #include "palette.h"
 #include "pokeball.h"
 #include "pokemon.h"
-#include "rom_8077ABC.h"
 #include "sound.h"
 #include "constants/songs.h"
 #include "sprite.h"
@@ -1166,7 +1165,7 @@ void LinkPartnerHandleTrainerThrow(void)
     SetMultiuseSpriteTemplateToTrainerBack(gender, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gMultiuseSpriteTemplate,
-      80 + xOffset, 80 + 4 * (8 - gTrainerBackPicCoords[gender].coords),
+      80 + xOffset, 80 + 4 * (8 - gTrainerBackPicCoords[gender].size),
       GetBattlerSpriteSubpriority(gActiveBattler));
     gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = gActiveBattler;
     gSprites[gBattlerSpriteIds[gActiveBattler]].x2 = 240;

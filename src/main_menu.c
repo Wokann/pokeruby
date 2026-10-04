@@ -2,7 +2,7 @@
 #include "constants/songs.h"
 #include "constants/species.h"
 #include "main_menu.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "event_data.h"
 #include "field_effect.h"
@@ -1421,7 +1421,7 @@ u8 CreateAzurillSprite(u8 x, u8 y)
 {
     DecompressPicFromTable_2(
         &gMonFrontPicTable[SPECIES_AZURILL],
-        gMonFrontPicCoords[SPECIES_AZURILL].coords,
+        gMonFrontPicCoords[SPECIES_AZURILL].size,
         gMonFrontPicCoords[SPECIES_AZURILL].y_offset,
         gMonSpriteGfx_Sprite_ptr[0],
         gMonSpriteGfx_Sprite_ptr[1],

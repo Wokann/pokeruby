@@ -1,7 +1,6 @@
 #include "global.h"
 #include "battle_anim.h"
 #include "main.h"
-#include "rom_8077ABC.h"
 #include "sound.h"
 #include "trig.h"
 #include "constants/battle.h"
@@ -354,7 +353,7 @@ const struct SpriteTemplate gSpriteTemplate_83D9B40 =
 
 void sub_80D648C(struct Sprite *sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
 
     sprite->data[0] = gBattleAnimArgs[3];
     sprite->data[1] = sprite->x;
@@ -374,7 +373,7 @@ void sub_80D648C(struct Sprite *sprite)
 
 static void sub_80D6514(struct Sprite *sprite)
 {
-    if (!TranslateAnimLinear(sprite))
+    if (!AnimTranslateLinear(sprite))
     {
         sprite->x2 += Sin(sprite->data[7], sprite->data[5]);
         sprite->y2 += Cos(sprite->data[7], sprite->data[5]);
@@ -459,7 +458,7 @@ static void sub_80D672C(struct Sprite *sprite)
 
 void sub_80D679C(struct Sprite *sprite)
 {
-    sub_8078764(sprite, FALSE);
+    InitSpritePosToAnimTarget(sprite, FALSE);
     sprite->oam.tileNum += gBattleAnimArgs[3] * 4;
 
     if (gBattleAnimArgs[3] == 1)
@@ -643,7 +642,7 @@ static void sub_80D6BB8(u8 taskId)
 
                 InitAnimLinearTranslation(sprite);
                 StoreSpriteCallbackInData6(sprite, sub_80D6D00);
-                sprite->callback = sub_8078600;
+                sprite->callback = RunStoredCallbackWhenAnimEnds;
 
                 if (++task->data[9] > 15)
                     task->data[9] = 0;
@@ -671,7 +670,7 @@ static void sub_80D6BB8(u8 taskId)
 
 static void sub_80D6CCC(struct Sprite *sprite)
 {
-    if (TranslateAnimLinear(sprite))
+    if (AnimTranslateLinear(sprite))
     {
         gTasks[sprite->data[5]].data[7]--;
         DestroySprite(sprite);
@@ -698,7 +697,7 @@ void sub_80D6D18(struct Sprite *sprite)
     }
 
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
-    sprite->callback = sub_80785E4;
+    sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
 }
 
 void sub_80D6D70(struct Sprite *sprite)
@@ -717,7 +716,7 @@ void sub_80D6D70(struct Sprite *sprite)
     sprite->x2 = gBattleAnimArgs[1];
     sprite->y2 = gBattleAnimArgs[2];
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
-    sprite->callback = sub_8078600;
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
 }
 
 void sub_80D6DD8(struct Sprite *sprite)

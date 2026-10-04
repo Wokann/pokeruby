@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 #include "palette.h"
 
@@ -16,7 +15,7 @@ static void sub_80CE4D4(u8 taskId);
 
 void sub_80CE3EC(u8 taskId)
 {
-    int a = sub_80791A8(1, 0, 0, 0, 0, 0, 0) & 0xFFFF;
+    int a = GetBattlePalettesMask(1, 0, 0, 0, 0, 0, 0) & 0xFFFF;
     int b;
     int c;
     int d;
@@ -31,9 +30,9 @@ void sub_80CE3EC(u8 taskId)
     gTasks[taskId].data[7] = 13;
     gTasks[taskId].data[8] = 14;
     gTasks[taskId].data[9] = 15;
-    b = sub_80792C0(1, 1, 1, 1);
+    b = GetBattleMonSpritePalettesMask(1, 1, 1, 1);
     c = a | b;
-    sub_8079BF4(&gTasks[taskId].data[14], &gTasks[taskId].data[15], (void*)c);
+    StorePointerInVars(&gTasks[taskId].data[14], &gTasks[taskId].data[15], (void*)c);
     b = b | (0x10000 << IndexOfSpritePaletteTag(0x27D2));
     d = IndexOfSpritePaletteTag(0x27D3);
     BeginNormalPaletteFade((0x10000 << d) | b, 0, 0, 16, RGB(27, 29, 31));
@@ -108,7 +107,7 @@ void sub_80CE4D4(u8 taskId)
     case 2:
         if (++task->data[1] > 30)
         {
-            BeginNormalPaletteFade((u32)sub_8079BFC(task->data[14], task->data[15]), 0, 16, 0, RGB(27, 29, 31));
+            BeginNormalPaletteFade((u32)LoadPointerFromVars(task->data[14], task->data[15]), 0, 16, 0, RGB(27, 29, 31));
             task->data[0]++;
         }
         break;

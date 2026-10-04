@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 
 
@@ -21,7 +20,7 @@ void sub_80D1E38(u8 taskId)
     u8 spriteId = GetAnimBattlerSpriteId(1);
     if (++gTasks[taskId].data[0] == 1)
     {
-        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(1), &gSpriteAffineAnim_83D7A98);
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(1), gSpriteAffineAnim_83D7A98);
         gSprites[spriteId].x2 = 4;
     }
     else
@@ -42,7 +41,7 @@ void sub_80D1EC8(u8 taskId)
     u8 spriteId = GetAnimBattlerSpriteId(0);
     if (++gTasks[taskId].data[0] == 1)
     {
-        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(0), &gSpriteAffineAnim_83D7A98);
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(0), gSpriteAffineAnim_83D7A98);
         gSprites[spriteId].x2 = 4;
     }
     else

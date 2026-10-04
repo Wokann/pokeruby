@@ -1,6 +1,6 @@
 #include "global.h"
 #include "starter_choose.h"
-#include "data2.h"
+#include "data.h"
 #include "decompress.h"
 #include "main.h"
 #include "menu.h"
@@ -570,7 +570,7 @@ static u8 CreatePokemonFrontSprite(u16 species, u8 x, u8 y)
 
     DecompressPicFromTable_2(
       &gMonFrontPicTable[species],
-      gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset,
+      gMonFrontPicCoords[species].size, gMonFrontPicCoords[species].y_offset,
       gMonSpriteGfx_Sprite_ptr[0], gMonSpriteGfx_Sprite_ptr[1],
       species);
     LoadCompressedObjectPalette(&gMonPaletteTable[species]);

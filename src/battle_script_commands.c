@@ -12,7 +12,7 @@
 #include "constants/abilities.h"
 #include "item.h"
 #include "constants/items.h"
-#include "data2.h"
+#include "data.h"
 #include "constants/hold_effects.h"
 #include "random.h"
 #include "battle_controllers.h"

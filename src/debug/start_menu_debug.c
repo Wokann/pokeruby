@@ -38,7 +38,7 @@
 #include "rom6.h"
 #include "fldeff_strength.h"
 #include "pokemon_menu.h"
-#include "data2.h"
+#include "data.h"
 #include "item.h"
 #include "reset_rtc_screen.h"
 #include "pokeblock.h"

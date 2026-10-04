@@ -350,6 +350,13 @@ enum {
 #define EVO_LEVEL_SHEDINJA   0x000e // Pokémon reaches the specified level (special value for Shedinja)
 #define EVO_BEAUTY           0x000f // Pokémon levels up with beauty ≥ specified value
 
+#define GET_UNOWN_LETTER(personality) ((\
+      (((personality & 0x03000000) >> 24) << 6) \
+    | (((personality & 0x00030000) >> 16) << 4) \
+    | (((personality & 0x00000300) >> 8) << 2) \
+    | (((personality & 0x00000003) >> 0) << 0) \
+) % 28)
+
 struct Evolution
 {
     u16 method;

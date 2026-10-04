@@ -8,7 +8,6 @@
 #include "m4a.h"
 #include "main.h"
 #include "palette.h"
-#include "rom_8077ABC.h"
 #include "sound.h"
 #include "sprite.h"
 #include "task.h"
@@ -204,7 +203,7 @@ void LaunchBattleAnimation(const u8 *const animsTable[], u16 tableId, u8 isMoveA
 
     if (!IsContest())
     {
-        UpdateBattlerSpritePriorities();
+        InitPrioritiesForVisibleBattlers();
         UpdateOamPriorityInAllHealthboxes(0);
         for (i = 0; i < 4; i++)
         {
@@ -524,7 +523,7 @@ static void Cmd_end(void)
         m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFFFF, 256);
         if (!IsContest())
         {
-            UpdateBattlerSpritePriorities();
+            InitPrioritiesForVisibleBattlers();
             UpdateOamPriorityInAllHealthboxes(1);
         }
         gAnimScriptActive = FALSE;

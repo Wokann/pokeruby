@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 
 
@@ -32,7 +31,7 @@ void sub_80CBAE8(struct Sprite* sprite)
 {
     s16 p1;
     s16 p2;
-    sub_8078764(sprite, FALSE);
+    InitSpritePosToAnimTarget(sprite, FALSE);
     p1 = GetBattlerSpriteCoord(gBattleAnimAttacker, 0);
     p2 = GetBattlerSpriteCoord(gBattleAnimAttacker, 1);
     if ((gBattleAnimTarget ^ 2) == gBattleAnimAttacker)

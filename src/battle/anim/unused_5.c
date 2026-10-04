@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 
 
@@ -22,14 +21,14 @@ const struct SpriteTemplate gSpriteTemplate_83D7370 =
 
 void sub_80CF280(struct Sprite* sprite)
 {
-    sub_8078650(sprite);
-    sub_807867C(sprite, gBattleAnimArgs[0]);
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
+    SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
     sprite->y += gBattleAnimArgs[1];
     sprite->data[1] = gBattleAnimArgs[2];
     sprite->data[2] = gBattleAnimArgs[4];
     sprite->data[3] = gBattleAnimArgs[5];
     sprite->data[4] = gBattleAnimArgs[3];
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
-    sprite->callback = sub_8078278;
-    sub_8078278(sprite);
+    sprite->callback = TranslateSpriteInEllipse;
+    TranslateSpriteInEllipse(sprite);
 }

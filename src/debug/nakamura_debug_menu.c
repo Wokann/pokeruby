@@ -4,7 +4,7 @@
 #include "constants/species.h"
 #include "constants/songs.h"
 #include "sound.h"
-#include "data2.h"
+#include "data.h"
 #include "strings.h"
 #include "random.h"
 #include "palette.h"

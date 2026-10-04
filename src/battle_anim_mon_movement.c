@@ -1,7 +1,6 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_anim.h"
-#include "rom_8077ABC.h"
 #include "sprite.h"
 #include "task.h"
 #include "trig.h"
@@ -445,14 +444,14 @@ static void DoHorizontalLunge(struct Sprite *sprite)
     sprite->data[3] = gBattlerSpriteIds[gBattleAnimAttacker];
     sprite->data[4] = gBattleAnimArgs[0];
     StoreSpriteCallbackInData6(sprite, ReverseHorizontalLungeDirection);
-    sprite->callback = TranslateMonBGUntil;
+    sprite->callback = TranslateSpriteLinearById;
 }
 
 static void ReverseHorizontalLungeDirection(struct Sprite *sprite)
 {
     sprite->data[0] = sprite->data[4];
     sprite->data[1] = -sprite->data[1];
-    sprite->callback = TranslateMonBGUntil;
+    sprite->callback = TranslateSpriteLinearById;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
@@ -472,14 +471,14 @@ static void DoVerticalDip(struct Sprite *sprite)
     sprite->data[3] = spriteId;
     sprite->data[4] = gBattleAnimArgs[0];
     StoreSpriteCallbackInData6(sprite, ReverseVerticalDipDirection);
-    sprite->callback = TranslateMonBGUntil;
+    sprite->callback = TranslateSpriteLinearById;
 }
 
 static void ReverseVerticalDipDirection(struct Sprite *sprite)
 {
     sprite->data[0] = sprite->data[4];
     sprite->data[2] = -sprite->data[2];
-    sprite->callback = TranslateMonBGUntil;
+    sprite->callback = TranslateSpriteLinearById;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
@@ -587,7 +586,7 @@ static void SlideMonToOffset(struct Sprite *sprite)
     sprite->data[5] = monSpriteId;
     sprite->invisible = TRUE;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
-    sprite->callback = TranslateMonBGSubPixelUntil;
+    sprite->callback = TranslateSpriteLinearByIdFixedPoint;
 }
 
 static void sub_80A8818(struct Sprite *sprite)
@@ -630,7 +629,7 @@ static void sub_80A8818(struct Sprite *sprite)
     {
         StoreSpriteCallbackInData6(sprite, sub_80A88F0);
     }
-    sprite->callback = TranslateMonBGSubPixelUntil;
+    sprite->callback = TranslateSpriteLinearByIdFixedPoint;
 }
 
 
@@ -859,7 +858,7 @@ static void AnimTask_ScaleMonAndRestoreStep(u8 taskId)
     TASK.data[10] += TASK.data[0];
     TASK.data[11] += TASK.data[1];
     spriteId = TASK.data[4];
-    obj_id_set_rotscale(spriteId, TASK.data[10], TASK.data[11], 0);
+    SetSpriteRotScale(spriteId, TASK.data[10], TASK.data[11], 0);
     if (--TASK.data[2] == 0)
     {
         if (TASK.data[3] > 0)
@@ -871,7 +870,7 @@ static void AnimTask_ScaleMonAndRestoreStep(u8 taskId)
         }
         else
         {
-            sub_8078F40(spriteId);
+            ResetSpriteRotScale(spriteId);
             DestroyAnimVisualTask(taskId);
             return;
         }
@@ -963,17 +962,17 @@ void sub_80A8EFC(u8 taskId)
 static void sub_80A8FD8(u8 taskId)
 {
     TASK.data[3] += TASK.data[4];
-    obj_id_set_rotscale(TASK.data[5], 0x100, 0x100, TASK.data[3]);
+    SetSpriteRotScale(TASK.data[5], 0x100, 0x100, TASK.data[3]);
     if (TASK.data[7])
     {
-        sub_8078F9C(TASK.data[5]);
+        SetBattlerSpriteYOffsetFromRotation(TASK.data[5]);
     }
     if (++TASK.data[1] >= TASK.data[2])
     {
         switch (TASK.data[6])
         {
         case 1:
-            sub_8078F40(TASK.data[5]);
+            ResetSpriteRotScale(TASK.data[5]);
         case 0:
         default:
             DestroyAnimVisualTask(taskId);

@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 
 
@@ -41,8 +40,8 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7450 =
 
 void sub_80CF610(struct Sprite* sprite)
 {
-    sub_8078650(sprite);
-    sub_807867C(sprite, gBattleAnimArgs[0]);
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
+    SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
     sprite->y += gBattleAnimArgs[1];
     if (GetBattlerSide(gBattleAnimAttacker) != 0)
     {
@@ -56,6 +55,6 @@ void sub_80CF610(struct Sprite* sprite)
             sprite->vFlip = 1;
     }
 
-    sprite->callback = sub_8078600;
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }

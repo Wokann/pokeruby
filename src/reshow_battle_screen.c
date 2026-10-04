@@ -9,8 +9,7 @@
 #include "main.h"
 #include "scanline_effect.h"
 #include "text.h"
-#include "rom_8077ABC.h"
-#include "data2.h"
+#include "data.h"
 #include "ewram.h"
 #include "constants/trainers.h"
 
@@ -26,7 +25,7 @@ extern u8 gBattleMonForms[4];
 extern u8 gHealthboxSpriteIds[4];
 
 bool8 LoadChosenBattleElement(u8 a0);
-u8 sub_8077F7C(u8 bank);
+u8 GetSubstituteSpriteDefault_Y(u8 bank);
 u8 GetBattlerSpriteDefault_Y(u8 bank);
 void SetHealthboxSpriteInvisible(u8 bank);
 u8 CreateBattlerHealthboxSprites(u8 bank);
@@ -220,7 +219,7 @@ static void sub_807B184(u8 bank)
         u8 posY;
 
         if (gBattleSpriteInfo[bank].behindSubstitute)
-            posY = sub_8077F7C(bank);
+            posY = GetSubstituteSpriteDefault_Y(bank);
         else
             posY = GetBattlerSpriteDefault_Y(bank);
         if (GetBattlerSide(bank))
@@ -239,7 +238,7 @@ static void sub_807B184(u8 bank)
         {
             SetMultiuseSpriteTemplateToTrainerBack(gSaveBlock2.playerGender, GetBattlerPosition(0));
             gBattlerSpriteIds[bank] = CreateSprite(&gMultiuseSpriteTemplate, 0x50,
-                                                (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].coords) * 4 + 80,
+                                                (8 - gTrainerBackPicCoords[gSaveBlock2.playerGender].size) * 4 + 80,
                                                  GetBattlerSpriteSubpriority(0));
             gSprites[gBattlerSpriteIds[bank]].oam.paletteNum = bank;
             gSprites[gBattlerSpriteIds[bank]].callback = SpriteCallbackDummy;
@@ -249,7 +248,7 @@ static void sub_807B184(u8 bank)
         {
             SetMultiuseSpriteTemplateToTrainerBack(TRAINER_BACK_PIC_WALLY, GetBattlerPosition(0));
             gBattlerSpriteIds[bank] = CreateSprite(&gMultiuseSpriteTemplate, 0x50,
-                                                (8 - gTrainerBackPicCoords[2].coords) * 4 + 80,
+                                                (8 - gTrainerBackPicCoords[2].size) * 4 + 80,
                                                  GetBattlerSpriteSubpriority(0));
             gSprites[gBattlerSpriteIds[bank]].oam.paletteNum = bank;
             gSprites[gBattlerSpriteIds[bank]].callback = SpriteCallbackDummy;

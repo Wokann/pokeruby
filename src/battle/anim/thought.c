@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 
 
@@ -91,7 +90,7 @@ void sub_80CEF9C(struct Sprite* sprite)
     sprite->data[1] = a + 2;
     StartSpriteAnim(sprite, a);
     StoreSpriteCallbackInData6(sprite, sub_80CF008);
-    sprite->callback = sub_8078600;
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
 }
 
 static void sub_80CF008(struct Sprite* sprite)
@@ -100,6 +99,6 @@ static void sub_80CF008(struct Sprite* sprite)
     {
         StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
         StartSpriteAnim(sprite, sprite->data[1]);
-        sprite->callback = sub_8078600;
+        sprite->callback = RunStoredCallbackWhenAnimEnds;
     }
 }

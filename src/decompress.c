@@ -1,6 +1,6 @@
 #include "global.h"
 #include "decompress.h"
-#include "data2.h"
+#include "data.h"
 #include "constants/species.h"
 #include "text.h"
 #include "ewram.h"

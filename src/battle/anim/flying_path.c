@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 
 
@@ -112,7 +111,7 @@ static void sub_80CBF5C(u8 taskId)
     {
     case 4:
         sub_80CC358(task, taskId);
-        if (TranslateAnimArc(sprite) == 0)
+        if (TranslateAnimHorizontalArc(sprite) == 0)
         {
             break;
         }
@@ -124,7 +123,7 @@ static void sub_80CBF5C(u8 taskId)
         break;
     case 8:
         sub_80CC358(task, taskId);
-        if (TranslateAnimArc(sprite) == 0)
+        if (TranslateAnimHorizontalArc(sprite) == 0)
         {
             break;
         }
@@ -136,7 +135,7 @@ static void sub_80CBF5C(u8 taskId)
         break;
     case 0:
         sub_80CC358(task, taskId);
-        if (TranslateAnimArc(sprite) == 0)
+        if (TranslateAnimHorizontalArc(sprite) == 0)
             break;
 
         task->data[15] = 1;
@@ -162,7 +161,7 @@ static void sub_80CBF5C(u8 taskId)
         break;
     case 2:
         sub_80CC358(task, taskId);
-        if (TranslateAnimArc(sprite) == 0)
+        if (TranslateAnimHorizontalArc(sprite) == 0)
             break;
 
         task->data[15] = 3;
@@ -205,7 +204,7 @@ static void sub_80CBF5C(u8 taskId)
         break;
     case 6:
         sub_80CC358(task, taskId);
-        if (TranslateAnimArc(sprite) == 0)
+        if (TranslateAnimHorizontalArc(sprite) == 0)
             break;
 
         task->data[15] = 7;
@@ -248,7 +247,7 @@ static void sub_80CBF5C(u8 taskId)
         break;
     case 10:
         sub_80CC358(task, taskId);
-        if (TranslateAnimArc(sprite) == 0)
+        if (TranslateAnimHorizontalArc(sprite) == 0)
         {
             break;
         }
@@ -280,7 +279,7 @@ static void sub_80CBF5C(u8 taskId)
     }
     case 12:
         sub_80CC358(task, taskId);
-        if (TranslateAnimArc(sprite) != 0)
+        if (TranslateAnimHorizontalArc(sprite) != 0)
         {
             DestroySprite(sprite);
             task->data[0]++;

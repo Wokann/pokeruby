@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 
 
@@ -24,7 +23,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7AB0 =
 
 void sub_80D1F58(struct Sprite* sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     sprite->data[0] = 0x5F;
     sprite->data[1] = sprite->x;
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
@@ -36,7 +35,7 @@ void sub_80D1F58(struct Sprite* sprite)
 
 static void sub_80D1FA4(struct Sprite* sprite)
 {
-    if (TranslateAnimLinear(sprite) == 0)
+    if (AnimTranslateLinear(sprite) == 0)
     {
         sprite->y2 += Sin(sprite->data[5], 14);
         sprite->data[5] = (sprite->data[5] + 4) & 0xFF;

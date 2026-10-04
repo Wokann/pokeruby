@@ -1,7 +1,6 @@
 #include "global.h"
 #include "battle_anim.h"
 #include "palette.h"
-#include "rom_8077ABC.h"
 #include "sprite.h"
 #include "task.h"
 
@@ -62,7 +61,7 @@ void AnimAuroraRings(struct Sprite *sprite)
 {
     s16 r6;
 
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     if (GetBattlerSide(gBattleAnimAttacker) != 0)
         r6 = -gBattleAnimArgs[2];
     else
@@ -87,7 +86,7 @@ static void AnimGrowAuroraRings(struct Sprite *sprite)
         StartSpriteAnim(sprite, 1);
         sprite->affineAnimPaused = FALSE;
     }
-    if (TranslateAnimLinear(sprite) != 0)
+    if (AnimTranslateLinear(sprite) != 0)
         DestroyAnimSprite(sprite);
 }
 

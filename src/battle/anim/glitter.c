@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 
 
@@ -54,15 +53,15 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6CA0 =
 void sub_80CD140(struct Sprite* sprite)
 {
     if (!gBattleAnimArgs[2])
-        sub_8078650(sprite);
+        SetSpriteCoordsToAnimAttackerCoords(sprite);
 
-    sub_807867C(sprite, gBattleAnimArgs[0]);
+    SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
     sprite->y += gBattleAnimArgs[1];
     sprite->data[0] = gBattleAnimArgs[5];
     sprite->data[1] = gBattleAnimArgs[3];
     sprite->data[2] = gBattleAnimArgs[4];
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
-    sprite->callback = sub_8078394;
+    sprite->callback = TranslateSpriteLinearFixedPoint;
 }
 
 void sub_80CD190(struct Sprite* sprite)
@@ -76,7 +75,7 @@ void sub_80CD190(struct Sprite* sprite)
     if (IsDoubleBattle() && IsBattlerSpriteVisible(bank ^ 2))
     {
         SetAverageBattlerPositions(bank, gBattleAnimArgs[6], &sprite->x, &sprite->y);
-        sub_807867C(sprite, gBattleAnimArgs[0]);
+        SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
         sprite->y += gBattleAnimArgs[1];
     }
     else
@@ -92,12 +91,12 @@ void sub_80CD190(struct Sprite* sprite)
             sprite->y = GetBattlerSpriteCoord(bank, 3) + gBattleAnimArgs[1];
         }
 
-        sub_807867C(sprite, gBattleAnimArgs[0]);
+        SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
     }
 
     sprite->data[0] = gBattleAnimArgs[5];
     sprite->data[1] = gBattleAnimArgs[3];
     sprite->data[2] = gBattleAnimArgs[4];
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
-    sprite->callback = sub_8078394;
+    sprite->callback = TranslateSpriteLinearFixedPoint;
 }

@@ -2,7 +2,6 @@
 #include "battle.h"
 #include "battle_anim.h"
 #include "palette.h"
-#include "rom_8077ABC.h"
 #include "trig.h"
 #include "main.h"
 #include "random.h"
@@ -11,7 +10,7 @@ extern struct OamMatrix gOamMatrices[];
 extern u8 gBattlerPositions[];
 extern const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB538;
 
-void sub_80785E4(struct Sprite *sprite);
+void RunStoredCallbackWhenAffineAnimEnds(struct Sprite *sprite);
 static void sub_80DA034(struct Sprite *sprite);
 static void sub_80DA05C(struct Sprite *sprite);
 static void sub_80DA16C(struct Sprite *sprite);
@@ -367,7 +366,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA65C =
 
 static void sub_80DA034(struct Sprite *sprite)
 {
-    sub_8078764(sprite, FALSE);
+    InitSpritePosToAnimTarget(sprite, FALSE);
     sprite->y += 20;
     sprite->data[1] = 0xBF;
     sprite->callback = sub_80DA05C;
@@ -425,7 +424,7 @@ static void sub_80DA0DC(u8 taskId)
 
 static void sub_80DA16C(struct Sprite *sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];
@@ -436,13 +435,13 @@ static void sub_80DA16C(struct Sprite *sprite)
     sprite->data[3] = sprite->y;
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + gBattleAnimArgs[3];
     InitAnimLinearTranslation(sprite);
-    sprite->callback = sub_80785E4;
+    sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
     StoreSpriteCallbackInData6(sprite, sub_80DA1EC);
 }
 
 static void sub_80DA1EC(struct Sprite *sprite)
 {
-    if (TranslateAnimLinear(sprite) != 0)
+    if (AnimTranslateLinear(sprite) != 0)
     {
         DestroyAnimSprite(sprite);
     }
@@ -490,7 +489,7 @@ static void sub_80DA208(struct Sprite *sprite)
 
 static void sub_80DA300(struct Sprite *sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[1] = gBattleAnimArgs[3];
     sprite->callback = sub_80DA348;
@@ -542,7 +541,7 @@ static void sub_80DA38C(struct Sprite *sprite)
 static void sub_80DA410(struct Sprite *sprite)
 {
     sprite->data[0] = 1;
-    TranslateAnimLinear(sprite);
+    AnimTranslateLinear(sprite);
 
     if (((u16) sprite->data[3] >> 8) > 200)
     {
@@ -971,11 +970,11 @@ static void sub_80DB000(struct Sprite *sprite)
 
     if (gBattleAnimArgs[2] == 0)
     {
-        InitAnimSpritePos(sprite, 0);
+        InitSpritePosToAnimAttacker(sprite, 0);
     }
     else
     {
-        sub_8078764(sprite, FALSE);
+        InitSpritePosToAnimTarget(sprite, FALSE);
     }
 
     if ((!gBattleAnimArgs[2] && !GetBattlerSide(gBattleAnimAttacker))
@@ -1044,7 +1043,7 @@ static void sub_80DB194(struct Sprite *sprite)
     switch (sprite->data[0])
     {
         case 0:
-            InitAnimSpritePos(sprite, 1);
+            InitSpritePosToAnimAttacker(sprite, 1);
             gSprites[GetAnimBattlerSpriteId(0)].invisible = TRUE;
             ++sprite->data[0];
             break;
@@ -1084,7 +1083,7 @@ static void sub_80DB1F4(struct Sprite *sprite)
 
 static void sub_80DB288(struct Sprite *sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[1] = gBattleAnimArgs[3];
     sprite->callback = sub_80DB2D0;
@@ -1148,7 +1147,7 @@ static void sub_80DB374(struct Sprite *sprite)
 
         sprite->data[1] = 512;
 
-        sub_8078FDC(sprite, 0, 256, sprite->data[1], 0);
+        TrySetSpriteRotScale(sprite, 0, 256, sprite->data[1], 0);
         sprite->data[0]++;
         break;
     case 1:
@@ -1159,7 +1158,7 @@ static void sub_80DB374(struct Sprite *sprite)
 
         sprite->data[2]++;
 
-        sub_8078FDC(sprite, 0, 256, sprite->data[1], 0);
+        TrySetSpriteRotScale(sprite, 0, 256, sprite->data[1], 0);
 
         matrixNum = sprite->oam.matrixNum;
 
@@ -1174,7 +1173,7 @@ static void sub_80DB374(struct Sprite *sprite)
 
         if (sprite->data[2] == 24)
         {
-            sub_8079098(sprite);
+            ResetSpriteRotScale_PreserveAffine(sprite);
             DestroyAnimSprite(sprite);
         }
         break;
@@ -1301,7 +1300,7 @@ static void sub_80DB5E4(struct Sprite *sprite)
     rotation = ArcTan2Neg(posx - sprite->x, posy - sprite->y);
     rotation += 0xc000;
 
-    sub_8078FDC(sprite, 1, 0x100, 0x100, rotation);
+    TrySetSpriteRotScale(sprite, 1, 0x100, 0x100, rotation);
 
     sprite->callback = sub_80DB6A0;
 }

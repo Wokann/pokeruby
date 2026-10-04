@@ -6,7 +6,6 @@
 #include "ewram.h"
 #include "palette.h"
 #include "random.h"
-#include "rom_8077ABC.h"
 #include "sound.h"
 #include "task.h"
 #include "trig.h"
@@ -373,7 +372,7 @@ static u32 UnpackSelectedBattleAnimPalettes(s16 selector)
     u8 arg4 = (selector >> 4) & 1;
     u8 arg5 = (selector >> 5) & 1;
     u8 arg6 = (selector >> 6) & 1;
-    return sub_80791A8(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+    return GetBattlePalettesMask(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
 }
 
 static void AnimSimplePaletteBlendStep(struct Sprite *sprite)
@@ -454,7 +453,7 @@ static void sub_80E1F3C(struct Sprite *sprite)
     sprite->data[4] = 112;
     sprite->data[5] = 0;
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
-    sprite->callback = sub_8078174;
+    sprite->callback = TranslateSpriteInGrowingCircle;
     sprite->callback(sprite);
 }
 
@@ -659,7 +658,7 @@ void sub_80E2324(u8 taskId)
     u8 targetBattler = gBattleAnimTarget;
 
     if (gBattleAnimArgs[0] & 0x100)
-        selectedPalettes = sub_80791A8(1, 0, 0, 0, 0, 0, 0);
+        selectedPalettes = GetBattlePalettesMask(1, 0, 0, 0, 0, 0, 0);
 
     if (gBattleAnimArgs[1] & 0x100)
         selectedPalettes |= (0x10000 << attackerBattler);
@@ -860,11 +859,11 @@ static void sub_80E27A0(struct Sprite *sprite)
 {
     StartSpriteAffineAnim(sprite, gBattleAnimArgs[3]);
     if (gBattleAnimArgs[2] == 0)
-        InitAnimSpritePos(sprite, 1);
+        InitSpritePosToAnimAttacker(sprite, 1);
     else
-        sub_8078764(sprite, TRUE);
+        InitSpritePosToAnimTarget(sprite, TRUE);
 
-    sprite->callback = sub_80785E4;
+    sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
@@ -872,12 +871,12 @@ static void sub_80E27E8(struct Sprite *sprite)
 {
     StartSpriteAffineAnim(sprite, gBattleAnimArgs[3]);
     if (gBattleAnimArgs[2] == 0)
-        InitAnimSpritePos(sprite, 1);
+        InitSpritePosToAnimAttacker(sprite, 1);
     else
-        sub_8078764(sprite, TRUE);
+        InitSpritePosToAnimTarget(sprite, TRUE);
 
     sprite->data[0] = gBattleAnimArgs[4];
-    sprite->callback = sub_80785E4;
+    sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
     StoreSpriteCallbackInData6(sprite, sub_80DA48C);
 }
 
@@ -896,15 +895,15 @@ static void sub_80E2870(struct Sprite *sprite)
 
     StartSpriteAffineAnim(sprite, gBattleAnimArgs[1]);
     if (gBattleAnimArgs[0] == 0)
-        InitAnimSpritePos(sprite, 0);
+        InitSpritePosToAnimAttacker(sprite, 0);
     else
-        sub_8078764(sprite, FALSE);
+        InitSpritePosToAnimTarget(sprite, FALSE);
 
     sprite->x2 += (Random() % 48) - 24;
     sprite->y2 += (Random() % 24) - 12;
 
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
-    sprite->callback = sub_80785E4;
+    sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
 }
 
 static void sub_80E2908(struct Sprite *sprite)
@@ -916,15 +915,15 @@ static void sub_80E2908(struct Sprite *sprite)
     sprite->y2 = gBattleAnimArgs[2];
     StartSpriteAffineAnim(sprite, gBattleAnimArgs[3]);
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
-    sprite->callback = sub_80785E4;
+    sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
 }
 
 static void sub_80E2978(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[2] == 0)
-        InitAnimSpritePos(sprite, 1);
+        InitSpritePosToAnimAttacker(sprite, 1);
     else
-        sub_8078764(sprite, TRUE);
+        InitSpritePosToAnimTarget(sprite, TRUE);
 
     sprite->data[0] = gBattleAnimArgs[3];
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
@@ -935,9 +934,9 @@ static void sub_80E29C0(struct Sprite *sprite)
 {
     StartSpriteAffineAnim(sprite, gBattleAnimArgs[3]);
     if (gBattleAnimArgs[2] == 0)
-        InitAnimSpritePos(sprite, 1);
+        InitSpritePosToAnimAttacker(sprite, 1);
     else
-        sub_8078764(sprite, TRUE);
+        InitSpritePosToAnimTarget(sprite, TRUE);
 
     sprite->callback = sub_80E29FC;
 }
@@ -952,7 +951,7 @@ static void sub_80E29FC(struct Sprite *sprite)
 void sub_80E2A38(u8 taskId)
 {
     u32 selectedPalettes = UnpackSelectedBattleAnimPalettes(gBattleAnimArgs[0]);
-    selectedPalettes |= sub_80792C0(
+    selectedPalettes |= GetBattleMonSpritePalettesMask(
         (gBattleAnimArgs[0] >> 7)  & 1,
         (gBattleAnimArgs[0] >> 8)  & 1,
         (gBattleAnimArgs[0] >> 9)  & 1,
@@ -1004,7 +1003,7 @@ void sub_80E2A7C(u8 taskId)
     {
         if (battler != sp[0] && battler != sp[1] && IsBattlerSpriteVisible(battler))
         {
-            u8 paletteIndex = sub_80793A8(battler);
+            u8 paletteIndex = GetSpritePalIdxByBattler(battler);
             selectedPalettes |= (0x10000 << paletteIndex);
         }
     }
@@ -1151,7 +1150,7 @@ static void sub_80E2E10(u8 taskId)
         }
         else
         {
-            task->data[6] = duplicate_obj_of_side_rel2move_in_transparent_mode(task->data[0]);
+            task->data[6] = CloneBattlerSpriteWithBlend(task->data[0]);
             if (task->data[6] >= 0)
             {
                 gSprites[task->data[6]].oam.priority = task->data[0] ? 1 : 2;
@@ -1181,7 +1180,7 @@ static void sub_80E2EE8(struct Sprite *sprite)
     else
     {
         gTasks[sprite->data[1]].data[sprite->data[2]]--;
-        obj_delete_but_dont_free_vram(sprite);
+        DestroySpriteWithActiveSheet(sprite);
     }
 }
 
@@ -1234,7 +1233,7 @@ void sub_80E2F2C(u8 taskId)
     }
 
     spriteId = GetAnimBattlerSpriteId(0);
-    newSpriteId = sub_807A4A0(gBattleAnimAttacker, spriteId, species);
+    newSpriteId = CreateInvisibleSpriteCopy(gBattleAnimAttacker, spriteId, species);
     GetBattleAnimBg1Data(&subStruct);
     DmaFill32Defvars(3, 0, subStruct.bgTilemap, 0x1000);
     LZDecompressVram(&gUnknown_08D20A30, subStruct.bgTilemap);
@@ -1370,9 +1369,9 @@ static void sub_80E3338(u8 taskId)
             species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler1]], MON_DATA_SPECIES);
     }
 
-    spriteId = sub_807A4A0(battler1, gBattlerSpriteIds[battler1], species);
+    spriteId = CreateInvisibleSpriteCopy(battler1, gBattlerSpriteIds[battler1], species);
     if (taskData[3])
-        spriteId2 = sub_807A4A0(battler2, gBattlerSpriteIds[battler2], species);
+        spriteId2 = CreateInvisibleSpriteCopy(battler2, gBattlerSpriteIds[battler2], species);
     
     GetBattleAnimBg1Data(&subStruct);
     if (taskData[0] == 0)
@@ -1496,11 +1495,11 @@ static void sub_80E3704(u8 taskId)
 
 void sub_80E388C(u8 taskId)
 {
-    u32 selectedPalettes = sub_80792C0(1, 1, 1, 1);
+    u32 selectedPalettes = GetBattleMonSpritePalettesMask(1, 1, 1, 1);
     sub_80E39BC(selectedPalettes, 0);
     gTasks[taskId].data[14] = selectedPalettes >> 16;
 
-    selectedPalettes = sub_80791A8(1, 0, 0, 0, 0, 0, 0) & 0xFFFF;
+    selectedPalettes = GetBattlePalettesMask(1, 0, 0, 0, 0, 0, 0) & 0xFFFF;
     sub_80E39BC(selectedPalettes, 0xFFFF);
     gTasks[taskId].data[15] = selectedPalettes;
 
@@ -1598,7 +1597,7 @@ void sub_80E3A58(u8 taskId)
 {
     u8 newTaskId;
 
-    sub_80789D4(0);
+    UpdateAnimBg3ScreenSize(0);
     newTaskId = CreateTask(sub_80E3AD0, 5);
     if (gBattleAnimArgs[2] && GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
@@ -1626,7 +1625,7 @@ static void sub_80E3AD0(u8 taskId)
     {
         gBattle_BG3_X = 0;
         gBattle_BG3_Y = 0;
-        sub_80789D4(1);
+        UpdateAnimBg3ScreenSize(1);
         DestroyTask(taskId);
     }
 }
@@ -1700,9 +1699,9 @@ void sub_80E3C4C(u8 taskId, int unused, u16 arg2, u8 battler1, u8 arg4, u8 arg5,
             species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler1]], MON_DATA_SPECIES);
     }
 
-    spriteId = sub_807A4A0(battler1, gBattlerSpriteIds[battler1], species);
+    spriteId = CreateInvisibleSpriteCopy(battler1, gBattlerSpriteIds[battler1], species);
     if (arg4)
-        spriteId2 = sub_807A4A0(battler2, gBattlerSpriteIds[battler2], species);
+        spriteId2 = CreateInvisibleSpriteCopy(battler2, gBattlerSpriteIds[battler2], species);
 
     GetBattleAnimBg1Data(&subStruct);
     LZDecompressVram(arg9, subStruct.bgTilemap);
@@ -1795,7 +1794,7 @@ void sub_80E4028(u8 taskId)
 
     if (gBattleAnimArgs[0] == 0)
     {
-        selectedPalettes = sub_80791A8(1, 0, 0, 0, 0, 0, 0);
+        selectedPalettes = GetBattlePalettesMask(1, 0, 0, 0, 0, 0, 0);
         while ((selectedPalettes & 1) == 0)
         {
             selectedPalettes >>= 1;
@@ -1829,7 +1828,7 @@ void sub_80E40D0(u8 taskId)
 
     if (gBattleAnimArgs[0] == 0)
     {
-        selectedPalettes = sub_80791A8(1, 0, 0, 0, 0, 0, 0);
+        selectedPalettes = GetBattlePalettesMask(1, 0, 0, 0, 0, 0, 0);
         while ((selectedPalettes & 1) == 0)
         {
             selectedPalettes >>= 1;
@@ -1860,7 +1859,7 @@ void sub_80E4178(u8 taskId)
 
     if (gBattleAnimArgs[0] == 0)
     {
-        selectedPalettes = sub_80791A8(1, 0, 0, 0, 0, 0, 0);
+        selectedPalettes = GetBattlePalettesMask(1, 0, 0, 0, 0, 0, 0);
         while ((selectedPalettes & 1) == 0)
         {
             selectedPalettes >>= 1;

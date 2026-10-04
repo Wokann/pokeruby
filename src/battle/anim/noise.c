@@ -1,5 +1,4 @@
 #include "global.h"
-#include "rom_8077ABC.h"
 #include "battle_anim.h"
 
 

@@ -4,7 +4,6 @@
 #include "decompress.h"
 #include "ewram.h"
 #include "palette.h"
-#include "rom_8077ABC.h"
 #include "scanline_effect.h"
 #include "sound.h"
 #include "sprite.h"
@@ -405,7 +404,7 @@ void sub_80DFFD0(struct Sprite *sprite)
 
 static void sub_80E00D0(struct Sprite *sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
         DestroySpriteAndMatrix(sprite);
 }
 
@@ -821,7 +820,7 @@ void sub_80E0A10(struct Sprite *sprite)
     sprite->x += gBattleAnimArgs[0];
     sprite->y += gBattleAnimArgs[1];
     StartSpriteAnim(sprite, gBattleAnimArgs[2]);
-    sprite->callback = sub_8078600;
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
@@ -872,7 +871,7 @@ void sub_80E0A4C(u8 taskId)
     }
 
     spriteId = GetAnimBattlerSpriteId(0);
-    newSpriteId = sub_807A4A0(gBattleAnimAttacker, spriteId, species);
+    newSpriteId = CreateInvisibleSpriteCopy(gBattleAnimAttacker, spriteId, species);
 
     GetBattleAnimBg1Data(&subStruct);
     DmaClear32(3, subStruct.bgTilemap, 0x1000);
@@ -885,7 +884,7 @@ void sub_80E0A4C(u8 taskId)
     paletteNum = 16 + gSprites[spriteId].oam.paletteNum;
 
     if (gBattleAnimArgs[1]  == 0)
-        sub_8079108(paletteNum, FALSE);
+        SetGrayscaleOrOriginalPalette(paletteNum, FALSE);
     else
         BlendPalette(paletteNum * 16, 16, 11, gBattleAnimArgs[2]);
 
@@ -930,7 +929,7 @@ static void sub_80E0CD0(u8 taskId)
             spriteId = GetAnimBattlerSpriteId(0);
             paletteNum = 16 + gSprites[spriteId].oam.paletteNum;
             if (gTasks[taskIdCopy].data[1] == 0)
-                sub_8079108(paletteNum, 1);
+                SetGrayscaleOrOriginalPalette(paletteNum, 1);
 
             DestroySprite(&gSprites[gTasks[taskIdCopy].data[0]]);
             GetBattleAnimBg1Data(&subStruct);
@@ -992,7 +991,7 @@ void sub_80E0E24(u8 taskId)
     }
 
     if (spriteId != 0xFF)
-        sub_8079108(gSprites[spriteId].oam.paletteNum + 16, gBattleAnimArgs[1]);
+        SetGrayscaleOrOriginalPalette(gSprites[spriteId].oam.paletteNum + 16, gBattleAnimArgs[1]);
 
     DestroyAnimVisualTask(taskId);
 }

@@ -1,6 +1,5 @@
 #include "global.h"
 #include "battle_anim.h"
-#include "rom_8077ABC.h"
 #include "trig.h"
 
 
@@ -71,7 +70,7 @@ void sub_80D2E68(struct Sprite *sprite)
 
     if (++sprite->data[0] == sprite->data[1])
     {
-        sub_8079108(sprite->oam.paletteNum + 16, 0);
+        SetGrayscaleOrOriginalPalette(sprite->oam.paletteNum + 16, 0);
     }
 
     if (sprite->data[0] == sprite->data[1] + 80)

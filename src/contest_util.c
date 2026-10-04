@@ -8,7 +8,7 @@
 #include "contest.h"
 #include "contest_link_util.h"
 #include "contest_painting.h"
-#include "data2.h"
+#include "data.h"
 #include "daycare.h"
 #include "debug.h"
 #include "decompress.h"
@@ -292,7 +292,7 @@ void ShowContestEntryMonPic(void)
         gTasks[taskId].data[1] = species;
         HandleLoadSpecialPokePic(
           &gMonFrontPicTable[species],
-          gMonFrontPicCoords[species].coords,
+          gMonFrontPicCoords[species].size,
           gMonFrontPicCoords[species].y_offset,
           gMonSpriteGfx_Sprite_ptr[0],
           gMonSpriteGfx_Sprite_ptr[1],

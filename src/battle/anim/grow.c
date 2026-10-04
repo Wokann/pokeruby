@@ -1,7 +1,6 @@
 #include "global.h"
-#include "rom_8077ABC.h"
-#include "trig.h"
 #include "battle_anim.h"
+#include "trig.h"
 #include "sound.h"
 
 
@@ -22,7 +21,7 @@ void sub_80D08C8(u8 taskId)
 {
     struct Task* task = &gTasks[taskId];
     u8 spriteId = GetAnimBattlerSpriteId(0);
-    PrepareAffineAnimInTaskData(task, spriteId, &gSpriteAffineAnim_83D7714);
+    PrepareAffineAnimInTaskData(task, spriteId, gSpriteAffineAnim_83D7714);
     task->func = sub_80D0904;
 }
 

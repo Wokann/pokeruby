@@ -135,6 +135,12 @@ enum
 #define JOY_HELD(button) (TEST_BUTTON(gMain.heldKeys, button))
 #define JOY_REPT(button) (TEST_BUTTON(gMain.newAndRepeatedKeys, button))
 
+struct UCoords8
+{
+    u8 x;
+    u8 y;
+};
+
 struct Coords16
 {
     s16 x;

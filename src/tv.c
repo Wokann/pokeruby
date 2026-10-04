@@ -3,7 +3,7 @@
 #include "battle_tower.h"
 #include "contest.h"
 #include "contest_painting.h"
-#include "data2.h"
+#include "data.h"
 #include "easy_chat.h"
 #include "event_data.h"
 #include "fieldmap.h"
