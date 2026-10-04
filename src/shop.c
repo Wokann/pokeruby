@@ -512,7 +512,7 @@ static void Shop_DisplayPriceInCheckoutWindow(u8 taskId)
 {
     u16 itemListIndex = gMartInfo.choicesAbove + gMartInfo.cursor;
     u16 itemId = gMartInfo.itemList[itemListIndex];
-    u32 price = (ItemId_GetPrice(itemId) >> GetPriceReduction(1));
+    u32 price = (ItemId_GetPrice(itemId) >> IsPokeNewsActive(1));
 
     PrintMoneyAmount(gTasks[taskId].tItemCount * price, 6, 6, 11);
     gStringVar1[0] = EXT_CTRL_CODE_BEGIN;
@@ -543,7 +543,7 @@ static void Shop_DisplayNormalPriceInList(u16 itemId, u8 var2, bool32 hasControl
     if (hasControlCode)
         stringPtr = &gStringVar1[3];
 
-    GetMoneyAmountText(stringPtr, (ItemId_GetPrice(itemId) >> GetPriceReduction(1)), 0x4);
+    GetMoneyAmountText(stringPtr, (ItemId_GetPrice(itemId) >> IsPokeNewsActive(1)), 0x4);
     Menu_PrintTextPixelCoords(&gStringVar1[0], 0xCA, var2 << 3, 1);
 }
 
@@ -672,7 +672,7 @@ static void Task_DoItemPurchase(u8 taskId)
         }
         else // a normal mart is only type 0, so types 1 and 2 are decoration marts.
         {
-            if (AddDecoration(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]))
+            if (DecorationAdd(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]))
             {
                 if (gMartInfo.martType == MART_TYPE_1)
                     DisplayItemMessageOnField(taskId, gOtherText_HereYouGo2, Shop_DoItemTransaction, 0xC3E1);
@@ -714,7 +714,7 @@ static void Shop_PrintPrice(u8 taskId)
 
     if (JOY_NEW(A_BUTTON))
     {
-        gMartTotalCost = (ItemId_GetPrice(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]) >> GetPriceReduction(1)) * gTasks[taskId].tItemCount; // set total cost of your purchase.
+        gMartTotalCost = (ItemId_GetPrice(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]) >> IsPokeNewsActive(1)) * gTasks[taskId].tItemCount; // set total cost of your purchase.
         Menu_EraseWindowRect(0, 0xA, 0xD, 0xD);
         sub_80A3FA0(gBGTilemapBuffers[1], 0x1, 0xB, 0xC, 0x2, 0);
         BuyMenuDrawTextboxBG_Restore();
@@ -741,7 +741,7 @@ static void Shop_UpdateCurItemCountToMax(u8 taskId)
     Menu_DrawStdWindowFrame(0, 0xA, 0xD, 0xD);
     Shop_DisplayPriceInCheckoutWindow(taskId);
 
-    var = gSaveBlock1.money / (ItemId_GetPrice(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]) >> GetPriceReduction(1));
+    var = gSaveBlock1.money / (ItemId_GetPrice(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]) >> IsPokeNewsActive(1));
     if (var > 99)
         gMartInfo.curItemCount = 99;
     else
@@ -1086,7 +1086,7 @@ static void Shop_DoCursorAction(u8 taskId)
 
                 if (gMartInfo.martType == MART_TYPE_0)
                 {
-                    gMartTotalCost = (ItemId_GetPrice(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]) >> GetPriceReduction(1)); // set 1x price
+                    gMartTotalCost = (ItemId_GetPrice(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]) >> IsPokeNewsActive(1)); // set 1x price
                     if (!IsEnoughMoney(gSaveBlock1.money, gMartTotalCost))
                     {
                         DisplayItemMessageOnField(taskId, gOtherText_NotEnoughMoney, Shop_DoPricePrintAndReturnToBuyMenu, 0xC3E1); // tail merge
@@ -1198,7 +1198,7 @@ static void ClearItemPurchases(void)
     ClearItemSlots(gMartPurchaseHistory, 3);
 }
 
-void Shop_CreatePokemartMenu(u16 *itemList)
+void CreatePokemartMenu(u16 *itemList)
 {
     CreateShopMenu(MART_TYPE_0);
     SetShopItemsForSale(itemList);
@@ -1206,14 +1206,14 @@ void Shop_CreatePokemartMenu(u16 *itemList)
     SetShopMenuCallback(ScriptContext_Enable);
 }
 
-void Shop_CreateDecorationShop1Menu(u16 *itemList)
+void CreateDecorationShop1Menu(u16 *itemList)
 {
     CreateShopMenu(MART_TYPE_1);
     SetShopItemsForSale(itemList);
     SetShopMenuCallback(ScriptContext_Enable);
 }
 
-void Shop_CreateDecorationShop2Menu(u16 *itemList)
+void CreateDecorationShop2Menu(u16 *itemList)
 {
     CreateShopMenu(MART_TYPE_2);
     SetShopItemsForSale(itemList);

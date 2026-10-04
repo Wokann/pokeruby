@@ -119,8 +119,8 @@ Route104_EventScript_14EFCC:: @ 814EFCC
 	end
 
 Route104_EventScript_14EFD5:: @ 814EFD5
-	setobjectpriority 8, MAP_ROUTE104, 0
-	setobjectpriority 255, MAP_ROUTE104, 0
+	setobjectsubpriority 8, MAP_ROUTE104, 0
+	setobjectsubpriority 255, MAP_ROUTE104, 0
 	applymovement 8, Route104_Movement_14F16C
 	waitmovement 0
 	removeobject 8
@@ -139,7 +139,7 @@ Route104_EventScript_14EFD5:: @ 814EFD5
 	waitmovement 0
 	setobjectxyperm 2, 12, 8
 	addobject 2
-	setobjectpriority 2, MAP_DEWFORD_TOWN, 0
+	setobjectsubpriority 2, MAP_DEWFORD_TOWN, 0
 	clearflag FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN
 	applymovement 2, Route104_Movement_14F16F
 	waitmovement 0
@@ -149,9 +149,9 @@ Route104_EventScript_14EFD5:: @ 814EFD5
 	setflag FLAG_HIDE_MR_BRINEY_BOAT_ROUTE104
 	hideobjectat 7, MAP_ROUTE104
 	copyvar VAR_BRINEY_LOCATION, VAR_0x8008
-	resetobjectpriority LOCALID_PLAYER, MAP_ROUTE104
-	resetobjectpriority 2, MAP_DEWFORD_TOWN
-	moveobjectoffscreen 2
+	resetobjectsubpriority LOCALID_PLAYER, MAP_ROUTE104
+	resetobjectsubpriority 2, MAP_DEWFORD_TOWN
+	copyobjectxytoperm 2
 	setvar VAR_BOARD_BRINEY_BOAT_ROUTE104_STATE, 0
 	goto_if_unset FLAG_DELIVERED_STEVEN_LETTER, Route104_EventScript_14F08B
 	goto_if_set FLAG_DELIVERED_STEVEN_LETTER, Route104_EventScript_14F095

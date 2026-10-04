@@ -3,10 +3,10 @@
 
 void ClearDecorationInventories(void);
 s8 FindFreeDecorationInventorySlot(u8);
-u8 InventoryContainsDecoration(u8);
-u8 AddDecoration(u8);
-u8 CheckDecorationInventoryHasSpace(u8);
-s8 RemoveDecorationFromInventory(u8);
+u8 CheckHasDecoration(u8);
+u8 DecorationAdd(u8);
+u8 DecorationCheckSpace(u8);
+s8 DecorationRemove(u8);
 void SortDecorationInventory(u8);
 u8 GetNumDecorationsInInventoryCategory(u8);
 bool8 GetNumDecorationsInInventory(void);

@@ -138,7 +138,7 @@ static u8 sub_8081534(s32 centerX, s32 centerY, s32 initialFlashRadius, s32 dest
 #undef tFlashRadiusDelta
 #undef tClearScanlineEffect
 
-void sub_8081594(u8 flashLevel)
+void AnimateFlash(u8 flashLevel)
 {
     u8 curFlashLevel = GetFlashLevel();
     u8 value = 0;

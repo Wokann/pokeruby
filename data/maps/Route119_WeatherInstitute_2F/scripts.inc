@@ -49,7 +49,7 @@ Route119_WeatherInstitute_2F_EventScript_163D45:: @ 8163D45
 	fadescreen FADE_FROM_BLACK
 	applymovement 5, Route119_WeatherInstitute_2F_Movement_163DC8
 	waitmovement 0
-	moveobjectoffscreen 5
+	copyobjectxytoperm 5
 	goto Route119_WeatherInstitute_2F_EventScript_163D7A
 	end
 

@@ -3,7 +3,7 @@ LilycoveCity_DepartmentStoreRooftop_MapScripts:: @ 815A13F
 	.byte 0
 
 LilycoveCity_DepartmentStoreRooftop_OnTransition:: @ 815A145
-	getpricereduction 3
+	getpokenewsactive 3
 	compare VAR_RESULT, 1
 	call_if_eq LilycoveCity_DepartmentStoreRooftop_EventScript_ShowSaleWoman
 	compare VAR_RESULT, 0
@@ -51,7 +51,7 @@ LilycoveCity_DepartmentStoreRooftop_PokemartDecor_ClearOutSale:: @ 815A180
 LilycoveCity_DepartmentStoreRooftop_EventScript_Man:: @ 815A1A0
 	lock
 	faceplayer
-	getpricereduction 3
+	getpokenewsactive 3
 	compare VAR_RESULT, 1
 	call_if_eq LilycoveCity_DepartmentStoreRooftop_EventScript_ManClearOutSale
 	msgbox LilycoveCity_DepartmentStoreRooftop_Text_SetDatesForClearOutSales, MSGBOX_DEFAULT

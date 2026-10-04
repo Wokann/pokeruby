@@ -1028,7 +1028,7 @@ void sub_80BE3BC(void)
                     smartShopper->itemIds[i] = gMartPurchaseHistory[i].item_id;
                     smartShopper->itemAmounts[i] = gMartPurchaseHistory[i].item_amount;
                 }
-                smartShopper->priceReduced = GetPriceReduction(1);
+                smartShopper->priceReduced = IsPokeNewsActive(1);
                 StringCopy(smartShopper->playerName, gSaveBlock2.playerName);
                 sub_80BE138((TVShow *)smartShopper);
                 smartShopper->language = GAME_LANGUAGE;
@@ -1429,7 +1429,7 @@ void DoPokeNews(void)
     gSpecialVar_Result = 1;
 }
 
-bool8 GetPriceReduction(u8 arg0)
+bool8 IsPokeNewsActive(u8 arg0)
 {
     u8 i;
 
@@ -1559,12 +1559,12 @@ void SetContestCategoryStringVarForInterview(void)
 
 void sub_80BF088(u8 arg0, s32 price)
 {
-    size_t log10val = sub_80BF0B8(price);
+    size_t log10val = CountDigits(price);
 
     ConvertIntToDecimalStringN(gUnknown_083D1464[arg0], price, 0, log10val);
 }
 
-size_t sub_80BF0B8(int value)
+size_t CountDigits(int value)
 {
     if (value / 10 == 0)
         return 1;

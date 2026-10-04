@@ -945,7 +945,7 @@ static void sub_808AE8C(void)
 #endif
              (GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG) || !CanMonLearnTMHM(&gPlayerParty[i], arg)))
                 DrawMonDescriptorStatus(i, 0x9A);
-            else if (pokemon_has_move(&gPlayerParty[i], ItemIdToBattleMoveId(gSpecialVar_ItemId)))
+            else if (MonKnowsMove(&gPlayerParty[i], ItemIdToBattleMoveId(gSpecialVar_ItemId)))
                 DrawMonDescriptorStatus(i, 0xA8);
             else
                 DrawMonDescriptorStatus(i, 0x8C);

@@ -44,7 +44,7 @@ void sub_80F6C20(void)
 
     for (i = 0; i < 56; i++)
     {
-        if (HasTrainerAlreadyBeenFought(gTrainerEyeTrainers[i].opponentIDs[0]))
+        if (HasTrainerBeenFought(gTrainerEyeTrainers[i].opponentIDs[0]))
         {
             gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].opponentId = gTrainerEyeTrainers[i].opponentIDs[0];
             gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].rematchTableIdx = i;
@@ -57,7 +57,7 @@ void sub_80F6C20(void)
     for (i = 0; i < 13; i++)
     {
         {
-            if (HasTrainerAlreadyBeenFought(sGymLeaderTrainersEye[i].opponentId))
+            if (HasTrainerBeenFought(sGymLeaderTrainersEye[i].opponentId))
             {
                 gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].opponentId = sGymLeaderTrainersEye[i].opponentId;
                 gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].regionMapSectionId = sGymLeaderTrainersEye[i].regionMapSectionId;

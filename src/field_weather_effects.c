@@ -2295,7 +2295,7 @@ void unc_0807DAB4(struct Sprite *sprite)
 static u8 TranslateWeatherNum(u8);
 static void UpdateRainCounter(u8, u8);
 
-void SetSav1Weather(u32 weather)
+void SetSavedWeather(u32 weather)
 {
     u8 oldWeather = gSaveBlock1.weather;
     gSaveBlock1.weather = TranslateWeatherNum(weather);
@@ -2307,7 +2307,7 @@ u8 GetSav1Weather(void)
     return gSaveBlock1.weather;
 }
 
-void SetSav1WeatherFromCurrMapHeader(void)
+void SetSavedWeatherFromCurrMapHeader(void)
 {
     u8 oldWeather = gSaveBlock1.weather;
     gSaveBlock1.weather = TranslateWeatherNum(gMapHeader.weather);
@@ -2316,13 +2316,13 @@ void SetSav1WeatherFromCurrMapHeader(void)
 
 void SetWeather(u32 weather)
 {
-    SetSav1Weather(weather);
+    SetSavedWeather(weather);
     ChangeWeather(GetSav1Weather());
 }
 
 void SetWeather_Unused(u32 weather)
 {
-    SetSav1Weather(weather);
+    SetSavedWeather(weather);
     sub_807C988(GetSav1Weather());
 }
 

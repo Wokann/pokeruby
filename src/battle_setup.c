@@ -1083,7 +1083,7 @@ void unref_sub_8082590(void)
     FlagSet(CurrentOpponentTrainerFlag()); // duplicate function
 }
 
-u8 HasTrainerAlreadyBeenFought(u16 flag)
+u8 HasTrainerBeenFought(u16 flag)
 {
     return FlagGet(TRAINER_FLAG_START + flag);
 }
@@ -1312,13 +1312,13 @@ bool32 UpdateRandomTrainerEyeRematches(const struct TrainerEyeTrainer *trainers,
                 // Trainer already wants rematch. Don't bother updating it
                 ret = TRUE;
             }
-            else if (HasTrainerAlreadyBeenFought(trainers[i].opponentIDs[0]) == TRUE
+            else if (HasTrainerBeenFought(trainers[i].opponentIDs[0]) == TRUE
              && (Random() % 100) <= 30)  // 31% chance of getting a rematch
             {
                 int rematches = 1;
 
                 while (rematches < 5 && trainers[i].opponentIDs[rematches] != 0
-                 && HasTrainerAlreadyBeenFought(trainers[i].opponentIDs[rematches]))
+                 && HasTrainerBeenFought(trainers[i].opponentIDs[rematches]))
                     rematches++;
                 gSaveBlock1.trainerRematches[i] = rematches;
                 ret = TRUE;
@@ -1385,7 +1385,7 @@ u16 GetRematchTrainerIdFromTable(const struct TrainerEyeTrainer *trainers, u16 o
     {
         if (!trainer->opponentIDs[i])
             return trainer->opponentIDs[i - 1];
-        if (!HasTrainerAlreadyBeenFought(trainer->opponentIDs[i]))
+        if (!HasTrainerBeenFought(trainer->opponentIDs[i]))
             return trainer->opponentIDs[i];
     }
     return trainer->opponentIDs[4];
@@ -1403,7 +1403,7 @@ bool8 WasSecondRematchWon(const struct TrainerEyeTrainer *trainers, u16 opponent
 {
     s32 trainerEyeIndex = FirstBattleTrainerIdToRematchTableId(trainers, opponentId);
 
-    if (trainerEyeIndex != -1 && HasTrainerAlreadyBeenFought(trainers[trainerEyeIndex].opponentIDs[1]))
+    if (trainerEyeIndex != -1 && HasTrainerBeenFought(trainers[trainerEyeIndex].opponentIDs[1]))
         return TRUE;
     else
         return FALSE;

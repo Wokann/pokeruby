@@ -163,7 +163,7 @@ void DisplayGiveHeldItemMessage(u8, u16, u8);
 void DisplayTakeHeldItemMessage(u8, u16, u8);
 void Task_ConfirmTakeHeldMail(u8);
 u16 ItemIdToBattleMoveId(u16);
-bool8 pokemon_has_move(struct Pokemon *, u16);
+bool8 MonKnowsMove(struct Pokemon *, u16);
 void TeachMonTMMove(u8, u16, TaskFunc);
 void Task_TeamMonTMMove(u8);
 void Task_TeamMonTMMove2(u8);

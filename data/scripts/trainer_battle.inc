@@ -48,7 +48,7 @@ EventScript_DoNoIntroTrainerBattle:: @ 819F878
 	applymovement VAR_LAST_TALKED, Movement_RevealTrainer
 	waitmovement 0
 	special PlayTrainerEncounterMusic
-	trainerbattlebegin
+	dotrainerbattle
 	gotopostbattlescript
 
 EventScript_TryDoRematchBattle:: @ 819F887
@@ -109,7 +109,7 @@ EventScript_DoTrainerBattle:
 	special ShowTrainerIntroSpeech
 	waitmessage
 	waitbuttonpress
-	trainerbattlebegin
+	dotrainerbattle
 	specialvar VAR_RESULT, ScrSpecial_GetTrainerBattleMode
 	compare VAR_RESULT, TRAINER_BATTLE_SINGLE
 	goto_if_eq EventScript_EndTrainerBattle

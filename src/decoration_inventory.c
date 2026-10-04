@@ -48,7 +48,7 @@ s8 FindFreeDecorationInventorySlot(u8 category)
     return -1;
 }
 
-bool8 InventoryContainsDecoration(u8 decorationId)
+bool8 CheckHasDecoration(u8 decorationId)
 {
     u8 i;
     u8 category = gDecorations[decorationId].category;
@@ -61,7 +61,7 @@ bool8 InventoryContainsDecoration(u8 decorationId)
     return FALSE;
 }
 
-bool8 AddDecoration(u8 decorationId)
+bool8 DecorationAdd(u8 decorationId)
 {
     u8 category;
     s8 slot;
@@ -77,7 +77,7 @@ bool8 AddDecoration(u8 decorationId)
     return TRUE;
 }
 
-bool8 CheckDecorationInventoryHasSpace(u8 decorationId)
+bool8 DecorationCheckSpace(u8 decorationId)
 {
     u8 category;
     if (decorationId == DECOR_NONE)
@@ -90,7 +90,7 @@ bool8 CheckDecorationInventoryHasSpace(u8 decorationId)
     return TRUE;
 }
 
-s8 RemoveDecorationFromInventory(u8 decorationId)
+s8 DecorationRemove(u8 decorationId)
 {
     u8 category;
     u8 i = 0;
@@ -159,6 +159,6 @@ void Debug_GiveAllDecorations(void)
     u8 decor;
 
     for (decor = 0; decor < DECOR_COUNT; decor++)
-        AddDecoration(decor);
+        DecorationAdd(decor);
 }
 #endif

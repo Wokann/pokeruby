@@ -61,7 +61,7 @@ bool32 GetTrainerFlagFromScriptPointer(const u8 *data);
 //u8 ScrSpecial_GetTrainerBattleMode(void);
 //void sub_808257C(void);
 //void unref_sub_8082590(void); // unused
-u8 HasTrainerAlreadyBeenFought(u16);
+u8 HasTrainerBeenFought(u16);
 void SetTrainerFlag(u16);
 void ClearTrainerFlag(u16);
 void BattleSetup_StartTrainerBattle(void);

@@ -19,23 +19,23 @@ DewfordTown_Gym_EventScript_SetFlashLevel:: @ 8153071
 	goto DewfordTown_Gym_EventScript_SetFlashLevel1
 
 DewfordTown_Gym_EventScript_SetLightsOn:: @ 81530AA
-	setflashradius 0
+	setflashlevel 0
 	return
 
 DewfordTown_Gym_EventScript_SetFlashLevel1:: @ 81530AE
-	setflashradius 1
+	setflashlevel 1
 	return
 
 DewfordTown_Gym_EventScript_SetFlashLevel2:: @ 81530B2
-	setflashradius 2
+	setflashlevel 2
 	return
 
 DewfordTown_Gym_EventScript_SetFlashLevel3:: @ 81530B6
-	setflashradius 3
+	setflashlevel 3
 	return
 
 DewfordTown_Gym_EventScript_SetFlashLevel4:: @ 81530BA
-	setflashradius 4
+	setflashlevel 4
 	return
 
 DewfordTown_Gym_EventScript_BrightenRoom:: @ 81530BE

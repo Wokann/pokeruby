@@ -27,7 +27,7 @@ LilycoveCity_ContestLobby_EventScript_ContestArtist:: @ 8158898
 	msgbox LilycoveCity_ContestLobby_Text_YourPokemonSpurredMeToPaint, MSGBOX_DEFAULT
 	lockall
 	fadescreen FADE_TO_BLACK
-	showcontestwinner 0
+	showcontestpainting 0
 	lockall
 	msgbox LilycoveCity_ContestLobby_Text_ShouldITakePaintingToMuseum, MSGBOX_YESNO
 	compare VAR_RESULT, YES
@@ -201,7 +201,7 @@ LilycoveCity_ContestLobby_EventScript_LinkContestArtist:: @ 8158A6A
 	msgbox LilycoveCity_ContestLobby_Text_YourPokemonSpurredMeToPaint, MSGBOX_DEFAULT
 	lockall
 	fadescreen FADE_TO_BLACK
-	showcontestwinner 0
+	showcontestpainting 0
 	msgbox LilycoveCity_ContestLobby_Text_ShouldITakePaintingToMuseum, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_TakePaintingToMuseumLink
@@ -730,21 +730,21 @@ LilycoveCity_ContestLobby_EventScript_NinjaBoy:: @ 815905D
 LilycoveCity_ContestLobby_EventScript_ContestWinner1:: @ 8159066
 	lockall
 	fadescreen FADE_TO_BLACK
-	showcontestwinner 6
+	showcontestpainting 6
 	releaseall
 	end
 
 LilycoveCity_ContestLobby_EventScript_ContestWinner2:: @ 815906D
 	lockall
 	fadescreen FADE_TO_BLACK
-	showcontestwinner 7
+	showcontestpainting 7
 	releaseall
 	end
 
 LilycoveCity_ContestLobby_EventScript_ContestWinner3:: @ 8159074
 	lockall
 	fadescreen FADE_TO_BLACK
-	showcontestwinner 8
+	showcontestpainting 8
 	releaseall
 	end
 

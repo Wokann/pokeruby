@@ -148,9 +148,9 @@ void Weather_SetBlendCoeffs(u8, u8);
 // ...
 void PlayRainSoundEffect(void);
 // ...
-void SetSav1Weather(u32);
+void SetSavedWeather(u32);
 u8 GetSav1Weather(void);
-void SetSav1WeatherFromCurrMapHeader(void);
+void SetSavedWeatherFromCurrMapHeader(void);
 // ...
 void DoCurrentWeather(void);
 void sub_8080750();

@@ -2762,7 +2762,7 @@ void sub_80C489C(u8 taskId)
     }
 }
 
-void sub_80C48C8(void)
+void StartContest(void)
 {
     LockPlayerFieldControls();
     CreateTask(sub_80C489C, 10);
@@ -2783,7 +2783,7 @@ void sub_80C4914(u8 taskId)
     }
 }
 
-void sub_80C4940(void)
+void ShowContestResults(void)
 {
     LockPlayerFieldControls();
     CreateTask(sub_80C4914, 10);

@@ -3197,7 +3197,7 @@ u16 ItemIdToBattleMoveId(u16 item)
     return TMHMMoves[machineNumber];
 }
 
-bool8 pokemon_has_move(struct Pokemon *pkmn, u16 move)
+bool8 MonKnowsMove(struct Pokemon *pkmn, u16 move)
 {
     u8 i;
 
@@ -3227,7 +3227,7 @@ void Task_TeamMonTMMove(u8 taskId)
     gPartyMenu.unk8 = ItemIdToBattleMoveId(gPartyMenu.secondarySelectedIndex);
     StringCopy(gStringVar2, gMoveNames[gPartyMenu.unk8]);
     ePartyMenu2.pmUnk282 = 0;
-    if (pokemon_has_move(gPartyMenu.pokemon, gPartyMenu.unk8))
+    if (MonKnowsMove(gPartyMenu.pokemon, gPartyMenu.unk8))
     {
         StringExpandPlaceholders(gStringVar4, gOtherText_AlreadyKnows);
         DisplayPartyMenuMessage(gStringVar4, 1);

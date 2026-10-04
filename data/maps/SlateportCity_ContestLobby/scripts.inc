@@ -117,7 +117,7 @@ SlateportCity_ContestLobby_EventScript_HavePokeblockCase:: @ 8155526
 SlateportCity_ContestLobby_EventScript_15552F:: @ 815552F
 	lockall
 	fadescreen FADE_TO_BLACK
-	showcontestwinner 3
+	showcontestpainting 3
 	releaseall
 	end
 

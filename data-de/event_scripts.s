@@ -21,7 +21,7 @@
 #include "constants/script_menu.h"
 #include "constants/field_weather.h"
 	.include "include/macros.inc"
-	.include "include/macros/event.inc"
+	.include "asm/macros/event.inc"
 	.include "constants/constants.inc"
 
 	.section script_data, "aw", %progbits
@@ -1579,7 +1579,7 @@ BattleTower_Lobby_EventScript_1AE30F:: @ 81AE30F
 
 gUnknown_081B694A:: @ 81B694A
 	animateflash 1
-	setflashradius 1
+	setflashlevel 1
 	end
 
 	.include "data/scripts/players_house.inc"
@@ -1608,7 +1608,7 @@ MauvilleCity_GameCorner_EventScript_1C407E:: @ 81C407E
 	compare VAR_RESULT, 0
 	goto_if_eq MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 0
-	getpricereduction 2
+	getpokenewsactive 2
 	compare VAR_RESULT, 0
 	goto_if_eq MauvilleCity_GameCorner_EventScript_1C40DA
 	addvar VAR_0x8004, 128
@@ -1620,7 +1620,7 @@ MauvilleCity_GameCorner_EventScript_1C40AC:: @ 81C40AC
 	compare VAR_RESULT, 0
 	goto_if_eq MauvilleCity_GameCorner_EventScript_NoCoinCase
 	setvar VAR_0x8004, 1
-	getpricereduction 2
+	getpokenewsactive 2
 	compare VAR_RESULT, 0
 	goto_if_eq MauvilleCity_GameCorner_EventScript_1C40DA
 	addvar VAR_0x8004, 128

@@ -77,12 +77,12 @@
 	.endm
 
 	@ Executes a script stored in a default RAM location.
-	.macro gotoram
+	.macro returnram
 	.byte 0x0c
 	.endm
 
 	@ Terminates script execution and "resets the script RAM".
-	.macro killscript
+	.macro endram
 	.byte 0x0d
 	.endm
 
@@ -93,45 +93,45 @@
 	.endm
 
 	@ Sets the specified script bank to value.
-	.macro loadword destination:req, value:req
+	.macro loadword destIndex:req, value:req
 	.byte 0x0f
-	.byte \destination
+	.byte \destIndex
 	.4byte \value
 	.endm
 
 	@ Sets the specified script bank to value.
-	.macro loadbyte destination:req, value:req
+	.macro loadbyte destIndex:req, value:req
 	.byte 0x10
-	.byte \destination
+	.byte \destIndex
 	.byte \value
 	.endm
 
 	@ Sets the byte at offset to value.
-	.macro writebytetoaddr value:req, offset:req
+	.macro setptr value:req, ptr:req
 	.byte 0x11
 	.byte \value
-	.4byte \offset
+	.4byte \ptr
 	.endm
 
 	@ Copies the byte value at source into the specified script bank.
-	.macro loadbytefromaddr destination:req, source:req
+	.macro loadbytefromptr destIndex:req, source:req
 	.byte 0x12
-	.byte \destination
+	.byte \destIndex
 	.4byte \source
 	.endm
 
 	@ Not sure. Judging from XSE's description I think it takes the least-significant byte in bank source and writes it to destination.
-	.macro setptrbyte source:req, destination:req
+	.macro setptrbyte srcIndex:req, destination:req
 	.byte 0x13
-	.byte \source
+	.byte \srcIndex
 	.4byte \destination
 	.endm
 
 	@ Copies the contents of bank source into bank destination.
-	.macro copylocal destination:req, source:req
+	.macro copylocal destIndex:req, srcIndex:req
 	.byte 0x14
-	.byte \destination
-	.byte \source
+	.byte \destIndex
+	.byte \srcIndex
 	.endm
 
 	@ Copies the byte at source to destination, replacing whatever byte was previously there.
@@ -177,45 +177,45 @@
 	.endm
 
 	@ Compares the values of script banks a and b, after forcing the values to bytes.
-	.macro compare_local_to_local byte1:req, byte2:req
+	.macro compare_local_to_local local1:req, local2:req
 	.byte 0x1b
-	.byte \byte1
-	.byte \byte2
+	.byte \local1
+	.byte \local2
 	.endm
 
 	@ Compares the least-significant byte of the value of script bank a to a fixed byte value (b).
-	.macro compare_local_to_value a:req, b:req
+	.macro compare_local_to_value local:req, value:req
 	.byte 0x1c
-	.byte \a
-	.byte \b
+	.byte \local
+	.byte \value
 	.endm
 
 	@ Compares the least-significant byte of the value of script bank a to the byte located at offset b.
-	.macro compare_local_to_addr a:req, b:req
+	.macro compare_local_to_ptr local:req, ptr:req
 	.byte 0x1d
-	.byte \a
-	.4byte \b
+	.byte \local
+	.4byte \ptr
 	.endm
 
 	@ Compares the byte located at offset a to the least-significant byte of the value of script bank b.
-	.macro compare_addr_to_local a:req, b:req
+	.macro compare_ptr_to_local ptr:req, local:req
 	.byte 0x1e
-	.4byte \a
-	.byte \b
+	.4byte \ptr
+	.byte \local
 	.endm
 
 	@ Compares the byte located at offset a to a fixed byte value (b).
-	.macro compare_addr_to_value a:req, b:req
+	.macro compare_ptr_to_value ptr:req, value:req
 	.byte 0x1f
-	.4byte \a
-	.byte \b
+	.4byte \ptr
+	.byte \value
 	.endm
 
 	@ Compares the byte located at offset a to the byte located at offset b.
-	.macro compare_addr_to_addr a:req, b:req
+	.macro compare_ptr_to_ptr ptr1:req, ptr2:req
 	.byte 0x20
-	.4byte \a
-	.4byte \b
+	.4byte \ptr1
+	.4byte \ptr2
 	.endm
 
 	@ Compares the value of `var` to a fixed word value (b).
@@ -273,27 +273,27 @@
 	.endm
 
 	@ Blocks script execution for time (frames? milliseconds?).
-	.macro delay time:req
+	.macro delay frames:req
 	.byte 0x28
-	.2byte \time
+	.2byte \frames
 	.endm
 
 	@ Sets a to 1.
-	.macro setflag a:req
+	.macro setflag flag:req
 	.byte 0x29
-	.2byte \a
+	.2byte \flag
 	.endm
 
 	@ Sets a to 0.
-	.macro clearflag a:req
+	.macro clearflag flag:req
 	.byte 0x2a
-	.2byte \a
+	.2byte \flag
 	.endm
 
 	@ Compares a to 1.
-	.macro checkflag a:req
+	.macro checkflag flag:req
 	.byte 0x2b
-	.2byte \a
+	.2byte \flag
 	.endm
 
 	@ Initializes the RTC`s local time offset to the given hour and minute. In FireRed, this command is a nop.
@@ -314,9 +314,9 @@
 	.endm
 
 	@ Plays the specified (sound_number) sound. Only one sound may play at a time, with newer ones interrupting older ones.
-	.macro playse sound_number:req
+	.macro playse song:req
 	.byte 0x2f
-	.2byte \sound_number
+	.2byte \song
 	.endm
 
 	@ Blocks script execution until the currently-playing sound (triggered by playse) finishes playing.
@@ -325,9 +325,9 @@
 	.endm
 
 	@ Plays the specified (fanfare_number) fanfare.
-	.macro playfanfare fanfare_number:req
+	.macro playfanfare song:req
 	.byte 0x31
-	.2byte \fanfare_number
+	.2byte \song
 	.endm
 
 	@ Blocks script execution until all currently-playing fanfares finish.
@@ -336,16 +336,16 @@
 	.endm
 
 	@ Plays the specified (song_number) song. The byte is apparently supposed to be 0x00.
-	.macro playbgm song_number:req, unknown:req
+	.macro playbgm song:req, save_song:req
 	.byte 0x33
-	.2byte \song_number
-	.byte \unknown
+	.2byte \song
+	.byte \save_song
 	.endm
 
 	@ Saves the specified (song_number) song to be played later.
-	.macro savebgm song_number:req
+	.macro savebgm song:req
 	.byte 0x34
-	.2byte \song_number
+	.2byte \song
 	.endm
 
 	@ Crossfades the currently-playing song into the map's default song.
@@ -354,9 +354,9 @@
 	.endm
 
 	@ Crossfades the currently-playng song into the specified (song_number) song.
-	.macro fadenewbgm song_number:req
+	.macro fadenewbgm song:req
 	.byte 0x36
-	.2byte \song_number
+	.2byte \song
 	.endm
 
 	@ Fades out the currently-playing song.
@@ -450,10 +450,10 @@
 	.endm
 
 	@ Retrieves the player's zero-indexed X- and Y-coordinates in the map, and stores them in the specified variables.
-	.macro getplayerxy X:req, Y:req
+	.macro getplayerxy x:req, y:req
 	.byte 0x42
-	.2byte \X
-	.2byte \Y
+	.2byte \x
+	.2byte \y
 	.endm
 
 	@ Retrieves the number of Pokemon in the player's party, and stores that number in VAR_RESULT.
@@ -462,50 +462,50 @@
 	.endm
 
 	@ Attempts to add quantity of item index to the player's Bag. If the player has enough room, the item will be added and VAR_RESULT will be set to TRUE; otherwise, VAR_RESULT is set to FALSE.
-	.macro additem index:req, quantity=1
+	.macro additem itemId:req, quantity=1
 	.byte 0x44
-	.2byte \index
+	.2byte \itemId
 	.2byte \quantity
 	.endm
 
 	@ Removes quantity of item index from the player's Bag.
-	.macro removeitem index:req, quantity=1
+	.macro removeitem itemId:req, quantity=1
 	.byte 0x45
-	.2byte \index
+	.2byte \itemId
 	.2byte \quantity
 	.endm
 
 	@ Checks if the player has enough space in their Bag to hold quantity more of item index. Sets VAR_RESULT to TRUE if there is room, or FALSE is there is no room.
-	.macro checkitemspace index:req, quantity=1
+	.macro checkitemspace itemId:req, quantity=1
 	.byte 0x46
-	.2byte \index
+	.2byte \itemId
 	.2byte \quantity
 	.endm
 
 	@ Checks if the player has quantity or more of item index in their Bag. Sets VAR_RESULT to TRUE if the player has enough of the item, or FALSE if they have fewer than quantity of the item.
-	.macro checkitem index:req, quantity=1
+	.macro checkitem itemId:req, quantity=1
 	.byte 0x47
-	.2byte \index
+	.2byte \itemId
 	.2byte \quantity
 	.endm
 
 	@ Checks which Bag pocket the specified item belongs in, and writes the pocket value (POCKET_*) to VAR_RESULT. This script is used to show the name of the proper Bag pocket when the player receives an item via callstd (simplified to giveitem in XSE).
-	.macro checkitemtype index:req
+	.macro checkitemtype itemId:req
 	.byte 0x48
-	.2byte \index
+	.2byte \itemId
 	.endm
 
 	@ Adds a quantity amount of item index to the player's PC. Both arguments can be variables.
-	.macro addpcitem index:req, quantity=1
+	.macro addpcitem itemId:req, quantity=1
 	.byte 0x49
-	.2byte \index
+	.2byte \itemId
 	.2byte \quantity
 	.endm
 
 	@ Checks for quantity amount of item index in the player's PC. Both arguments can be variables.
-	.macro checkpcitem index:req, quantity=1
+	.macro checkpcitem itemId:req, quantity=1
 	.byte 0x4a
-	.2byte \index
+	.2byte \itemId
 	.2byte \quantity
 	.endm
 
@@ -535,14 +535,14 @@
 
 	@ Applies the movement data at movements to the specified (index) Object. Also closes any standard message boxes that are still open.
 	@ If no map is specified, then the current map is used.
-	.macro applymovement index:req, movements:req, map
+	.macro applymovement localId:req, movements:req, map
 		.ifb \map
 			.byte 0x4f
-			.2byte \index
+			.2byte \localId
 			.4byte \movements
 		.else
 			.byte 0x50
-			.2byte \index
+			.2byte \localId
 			.4byte \movements
 			map \map
 		.endif
@@ -565,47 +565,47 @@
 
 	@ Attempts to hide the specified (index) Object event on the specified map, by setting its visibility flag if it has a valid one. If the Object does not have a valid visibility flag, this command does nothing.
 	@ If no map is specified, then the current map is used
-	.macro removeobject index:req, map
+	.macro removeobject localId:req, map
 		.ifb \map
 			.byte 0x53
-			.2byte \index
+			.2byte \localId
 		.else
 			.byte 0x54
-			.2byte \index
+			.2byte \localId
 			map \map
 		.endif
 	.endm
 
 	@ Unsets the specified (index) Object's visibility flag on the specified (map_group, map_num) map if it has a valid one. If the Object does not have a valid visibility flag, this command does nothing.
 	@ If no map is specified, then the current map is used.
-	.macro addobject index:req, map
+	.macro addobject localId:req, map
 		.ifb \map
 			.byte 0x55
-			.2byte \index
+			.2byte \localId
 		.else
 			.byte 0x56
-			.2byte \index
+			.2byte \localId
 			map \map
 		.endif
 	.endm
 
 	@ Sets the specified (index) Object's position on the current map.
-	.macro setobjectxy index:req, x:req, y:req
+	.macro setobjectxy localId:req, x:req, y:req
 	.byte 0x57
-	.2byte \index
+	.2byte \localId
 	.2byte \x
 	.2byte \y
 	.endm
 
-	.macro showobjectat index:req, map:req
+	.macro showobjectat localId:req, map:req
 	.byte 0x58
-	.2byte \index
+	.2byte \localId
 	map \map
 	.endm
 
-	.macro hideobjectat index:req, map:req
+	.macro hideobjectat localId:req, map:req
 	.byte 0x59
-	.2byte \index
+	.2byte \localId
 	map \map
 	.endm
 
@@ -614,9 +614,9 @@
 	.byte 0x5a
 	.endm
 
-	.macro turnobject index:req, direction:req
+	.macro turnobject localId:req, direction:req
 	.byte 0x5b
-	.2byte \index
+	.2byte \localId
 	.byte \direction
 	.endm
 
@@ -703,7 +703,7 @@
 	.endm
 
 	@ Starts a trainer battle using the battle information stored in RAM (usually by trainerbattle, which actually calls this command behind-the-scenes), and blocks script execution until the battle finishes.
-	.macro trainerbattlebegin
+	.macro dotrainerbattle
 	.byte 0x5d
 	.endm
 
@@ -735,22 +735,22 @@
 	.2byte \trainer
 	.endm
 
-	.macro setobjectxyperm index:req, x:req, y:req
+	.macro setobjectxyperm localId:req, x:req, y:req
 	.byte 0x63
-	.2byte \index
+	.2byte \localId
 	.2byte \x
 	.2byte \y
 	.endm
 
-	.macro moveobjectoffscreen index:req
+	.macro copyobjectxytoperm localId:req
 	.byte 0x64
-	.2byte \index
+	.2byte \localId
 	.endm
 
-	.macro setobjectmovementtype word:req, byte:req
+	.macro setobjectmovementtype localId:req, movementType:req
 	.byte 0x65
-	.2byte \word
-	.byte \byte
+	.2byte \localId
+	.byte \movementType
 	.endm
 
 	@ If a standard message box (or its text) is being drawn on-screen, this command blocks script execution until the box and its text have been fully drawn.
@@ -802,32 +802,32 @@
 	.endm
 
 	@ Displays a multichoice box from which the user can choose a selection, and blocks script execution until a selection is made. Lists of options are predefined (sMultichoiceLists) and the one to be used is specified with list. If b is set to a non-zero value, then the user will not be allowed to back out of the multichoice with the B button.
-	.macro multichoice x:req, y:req, list:req, b:req
+	.macro multichoice x:req, y:req, multichoiceId:req, ignoreBPress:req
 	.byte 0x6f
 	.byte \x
 	.byte \y
-	.byte \list
-	.byte \b
+	.byte \multichoiceId
+	.byte \ignoreBPress
 	.endm
 
 	@ Displays a multichoice box from which the user can choose a selection, and blocks script execution until a selection is made. Lists of options are predefined (sMultichoiceLists) and the one to be used is specified with list. The default argument determines the initial position of the cursor when the box is first opened; it is zero-indexed, and if it is too large, it is treated as 0x00. If b is set to a non-zero value, then the user will not be allowed to back out of the multichoice with the B button.
-	.macro multichoicedefault x:req, y:req, list:req, default:req, b:req
+	.macro multichoicedefault x:req, y:req, multichoiceId:req, default:req, ignoreBPress:req
 	.byte 0x70
 	.byte \x
 	.byte \y
-	.byte \list
+	.byte \multichoiceId
 	.byte \default
-	.byte \b
+	.byte \ignoreBPress
 	.endm
 
 	@ Displays a multichoice box from which the user can choose a selection, and blocks script execution until a selection is made. Lists of options are predefined (sMultichoiceLists) and the one to be used is specified with list. The per_row argument determines how many list items will be shown on a single row of the box.
-	.macro multichoicegrid x:req, y:req, list:req, per_row:req, B:req
+	.macro multichoicegrid x:req, y:req, multichoiceId:req, per_row:req, ignoreBPress:req
 	.byte 0x71
 	.byte \x
 	.byte \y
-	.byte \list
+	.byte \multichoiceId
 	.byte \per_row
-	.byte \B
+	.byte \ignoreBPress
 	.endm
 
 	.macro drawbox byte1:req, byte2:req, byte3:req, byte4:req
@@ -838,20 +838,20 @@
 	.byte \byte4
 	.endm
 
-	.macro erasebox byte1:req, byte2:req, byte3:req, byte4:req
+	.macro erasebox left:req, top:req, right:req, bottom:req
 	.byte 0x73
-	.byte \byte1
-	.byte \byte2
-	.byte \byte3
-	.byte \byte4
+	.byte \left
+	.byte \top
+	.byte \right
+	.byte \bottom
 	.endm
 
-	.macro drawboxtext byte1:req, byte2:req, byte3:req, byte4:req
+	.macro drawboxtext left:req, top:req, multichoiceId:req, ignoreBPress:req
 	.byte 0x74
-	.byte \byte1
-	.byte \byte2
-	.byte \byte3
-	.byte \byte4
+	.byte \left
+	.byte \top
+	.byte \multichoiceId
+	.byte \ignoreBPress
 	.endm
 
 	@ Displays a box containing the front sprite for the specified (species) Pokemon species.
@@ -868,9 +868,9 @@
 	.endm
 
 	@ Draws an image of the winner of the contest. In FireRed, this command is a nop. (The argument is discarded.)
-	.macro showcontestwinner a:req
+	.macro showcontestpainting winnerId:req
 	.byte 0x77
-	.byte \a
+	.byte \winnerId
 	.endm
 
 	@ Displays the string at pointer as braille text in a standard message box. The string must be formatted to use braille characters.
@@ -905,17 +905,17 @@
 	.2byte \species
 	.endm
 
-	.macro setmonmove index:req, slot:req, move:req
+	.macro setmonmove partyIndex:req, slot:req, move:req
 	.byte 0x7b
-	.byte \index
+	.byte \partyIndex
 	.byte \slot
 	.2byte \move
 	.endm
 
 	@ Checks if at least one Pokemon in the player's party knows the specified (index) attack. If so, VAR_RESULT is set to the (zero-indexed) slot number of the first Pokemon that knows the move. If not, VAR_RESULT is set to PARTY_SIZE. VAR_0x8004 is also set to this Pokemon's species.
-	.macro checkpartymove index:req
+	.macro checkpartymove move:req
 	.byte 0x7c
-	.2byte \index
+	.2byte \move
 	.endm
 
 	@ Writes the name of the Pokemon at index species to the specified buffer.
@@ -999,17 +999,17 @@
 	.endm
 
 	@ Starts up the slot machine minigame.
-	.macro playslotmachine word:req
+	.macro playslotmachine id:req
 	.byte 0x89
-	.2byte \word
+	.2byte \id
 	.endm
 
 	@ Sets a berry tree's specific berry and growth stage. In FireRed, this command is a nop.
-	.macro setberrytree tree_id:req, berry:req, growth_stage:req
+	.macro setberrytree treeId:req, berry:req, growthStage:req
 	.byte 0x8a
-	.byte \tree_id
+	.byte \treeId
 	.byte \berry
-	.byte \growth_stage
+	.byte \growthStage
 	.endm
 
 	@ This allows you to choose a Pokemon to use in a contest. In FireRed, this command sets the byte at 0x03000EA8 to 0x01.
@@ -1039,24 +1039,24 @@
 	.endm
 
 	@ If check is 0x00, this command adds value to the player's money.
-	.macro addmoney value:req, check:req
+	.macro addmoney value:req, disable:req
 	.byte 0x90
 	.4byte \value
-	.byte \check
+	.byte \disable
 	.endm
 
 	@ If check is 0x00, this command subtracts value from the player's money.
-	.macro removemoney value:req, check:req
+	.macro removemoney value:req, disable:req
 	.byte 0x91
 	.4byte \value
-	.byte \check
+	.byte \disable
 	.endm
 
 	@ If check is 0x00, this command will check if the player has money >= value; VAR_RESULT is set to TRUE if the player has enough money, or FALSE if they do not.
-	.macro checkmoney value:req, check:req
+	.macro checkmoney value:req, disable:req
 	.byte 0x92
 	.4byte \value
-	.byte \check
+	.byte \disable
 	.endm
 
 	@ Spawns a secondary box showing how much money the player has.
@@ -1081,9 +1081,9 @@
 	.endm
 
 	@ Gets the price reduction for the index given. In FireRed, this command is a nop.
-	.macro getpricereduction index:req
+	.macro getpokenewsactive newsKind:req
 	.byte 0x96
-	.2byte \index
+	.2byte \newsKind
 	.endm
 
 	@ Fades the screen to and from black and white. Mode 0x00 fades from black, mode 0x01 fades out to black, mode 0x2 fades in from white, and mode 0x3 fades out to white.
@@ -1099,19 +1099,19 @@
 	.byte \speed
 	.endm
 
-	.macro setflashradius word:req
+	.macro setflashlevel level:req
 	.byte 0x99
-	.2byte \word
+	.2byte \level
 	.endm
 
-	.macro animateflash byte:req
+	.macro animateflash level:req
 	.byte 0x9a
-	.byte \byte
+	.byte \level
 	.endm
 
-	.macro messageautoscroll pointer:req
+	.macro messageautoscroll text:req
 	.byte 0x9b
-	.4byte \pointer
+	.4byte \text
 	.endm
 
 	@ Executes the specified field move animation.
@@ -1121,10 +1121,10 @@
 	.endm
 
 	@ Sets up the field effect argument argument with the value value.
-	.macro setfieldeffectargument argument:req, param:req
+	.macro setfieldeffectargument argNum:req, value:req
 	.byte 0x9d
-	.byte \argument
-	.2byte \param
+	.byte \argNum
+	.2byte \value
 	.endm
 
 	@ Blocks script execution until all playing field move animations complete.
@@ -1145,19 +1145,19 @@
 	.endm
 
 	@ Plays the specified (species) Pokemon's cry. You can use waitcry to block script execution until the sound finishes.
-	.macro playmoncry species:req, effect:req
+	.macro playmoncry species:req, mode:req
 	.byte 0xa1
 	.2byte \species
-	.2byte \effect
+	.2byte \mode
 	.endm
 
 	@ Changes the metatile at (x, y) on the current map.
-	.macro setmetatile x:req, y:req, metatile_number:req, has_collision:req
+	.macro setmetatile x:req, y:req, metatileId:req, impassable:req
 	.byte 0xa2
 	.2byte \x
 	.2byte \y
-	.2byte \metatile_number
-	.2byte \has_collision
+	.2byte \metatileId
+	.2byte \impassable
 	.endm
 
 	@ Queues a weather change to the default weather for the map.
@@ -1177,9 +1177,9 @@
 	.endm
 
 	@ This command manages cases in which maps have tiles that change state when stepped on (specifically, cracked/breakable floors).
-	.macro setstepcallback subroutine:req
+	.macro setstepcallback stepCbId:req
 	.byte 0xa6
-	.byte \subroutine
+	.byte \stepCbId
 	.endm
 
 	.macro setmaplayoutindex index:req
@@ -1187,32 +1187,32 @@
 	.2byte \index
 	.endm
 
-	.macro setobjectpriority index:req, map:req, priority:req
+	.macro setobjectsubpriority localId:req, map:req, subpriority:req
 	.byte 0xa8
-	.2byte \index
+	.2byte \localId
 	map \map
-	.byte \priority
+	.byte \subpriority
 	.endm
 
-	.macro resetobjectpriority index:req, map:req
+	.macro resetobjectsubpriority localId:req, map:req
 	.byte 0xa9
-	.2byte \index
+	.2byte \localId
 	map \map
 	.endm
 
-	.macro createvobject sprite:req, byte2:req, x:req, y:req, elevation, direction
+	.macro createvobject graphicsId:req, id:req, x:req, y:req, elevation, direction
 	.byte 0xaa
-	.byte \sprite
-	.byte \byte2
+	.byte \graphicsId
+	.byte \id
 	.2byte \x
 	.2byte \y
 	.byte \elevation
 	.byte \direction
 	.endm
 
-	.macro turnvobject index:req, direction:req
+	.macro turnvobject id:req, direction:req
 	.byte 0xab
-	.byte \index
+	.byte \id
 	.byte \direction
 	.endm
 
@@ -1259,9 +1259,9 @@
 	.byte 0xb2
 	.endm
 
-	.macro checkcoins count:req
+	.macro checkcoins out:req
 	.byte 0xb3
-	.2byte \count
+	.2byte \out
 	.endm
 
 	.macro addcoins count:req
@@ -1292,36 +1292,36 @@
 	.4byte \pointer
 	.endm
 
-	.macro vgoto pointer:req
+	.macro vgoto destination:req
 	.byte 0xb9
-	.4byte \pointer
+	.4byte \destination
 	.endm
 
-	.macro vcall pointer:req
+	.macro vcall destination:req
 	.byte 0xba
-	.4byte \pointer
+	.4byte \destination
 	.endm
 
-	.macro vgoto_if byte:req, pointer:req
+	.macro vgoto_if condition:req, destination:req
 	.byte 0xbb
-	.byte \byte
-	.4byte \pointer
+	.byte \condition
+	.4byte \destination
 	.endm
 
-	.macro vcall_if byte:req, pointer:req
+	.macro vcall_if condition:req, destination:req
 	.byte 0xbc
-	.byte \byte
-	.4byte \pointer
+	.byte \condition
+	.4byte \destination
 	.endm
 
-	.macro vmessage pointer:req
+	.macro vmessage text:req
 	.byte 0xbd
-	.4byte \pointer
+	.4byte \text
 	.endm
 
-	.macro vloadptr pointer:req
+	.macro vbuffermessage text:req
 	.byte 0xbe
-	.4byte \pointer
+	.4byte \text
 	.endm
 
 	.macro vbufferstring byte:req, pointer:req
