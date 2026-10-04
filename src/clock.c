@@ -36,13 +36,13 @@ void DoTimeBasedEvents(void)
 
 static void UpdatePerDay(struct Time *localTime)
 {
-    u16 *varPtr = GetVarPointer(VAR_DAYS);
-    int days = *varPtr;
+    u16 *days = GetVarPointer(VAR_DAYS);
+    int previousDay = *days;
     u16 daysSince;
 
-    if (days != localTime->days && days <= localTime->days)
+    if (previousDay != localTime->days && previousDay <= localTime->days)
     {
-        daysSince = localTime->days - days;
+        daysSince = localTime->days - previousDay;
         ClearDailyFlags();
         UpdateDewfordTrendPerDay(daysSince);
         UpdateTVShowsPerDay(daysSince);
@@ -52,7 +52,7 @@ static void UpdatePerDay(struct Time *localTime)
         UpdateBirchState(daysSince);
         SetShoalItemFlag(daysSince);
         SetRandomLotteryNumber(daysSince);
-        *varPtr = localTime->days;
+        *days = localTime->days;
     }
 }
 
