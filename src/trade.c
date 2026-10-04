@@ -4315,7 +4315,7 @@ static void sub_804DC88(void)
         case 2:
             gMain.state = 50;
             Text_EraseWindowRect(&gUnknown_03004828->window, 0, 0, 29, 19);
-            Text_InitWindowAndPrintText(&gUnknown_03004828->window, gSystemText_Saving, gUnknown_03004828->textWindowBaseTileNum, 2, 15);
+            Text_InitWindowAndPrintText(&gUnknown_03004828->window, gText_SavingDontTurnOffPower, gUnknown_03004828->textWindowBaseTileNum, 2, 15);
             break;
         case 50:
             SetSecretBase2Field_9_AndHideBG();

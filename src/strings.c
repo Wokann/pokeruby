@@ -149,7 +149,7 @@ const u8 gOtherText_BirchInTrouble[] = _("{HIGHLIGHT WHITE2}{COLOR DARK_GREY}PRO
 const u8 gOtherText_DoYouChoosePoke[] = _("{HIGHLIGHT WHITE2}{COLOR DARK_GREY}Do you choose this POKéMON?");
 const u8 gOtherText_Poke[] = _("POKéMON");
 
-const u8 gSystemText_SaveErrorExchangeBackup[] = _("Save error.\pPlease exchange the\nbackup memory.");
+const u8 gText_SaveError[] = _("Save error.\pPlease exchange the\nbackup memory.");
 const u8 gOtherText_FlyToWhere[] = _("FLY to where?");
 
 const u8 OtherText_Use[] = _("USE");
@@ -927,7 +927,7 @@ const u8 gText_SaveCompleted[] = _("Save completed.");
 const u8 gText_SaveFailed[] = _("Save failed...");
 const u8 gText_NoSaveFileCantSetTime[] = _("There is no save file, so the time\ncan't be set.");
 const u8 gText_InGameClockUsable[] = _("The in-game clock adjustment system\nis now useable.");
-const u8 gSystemText_Saving[] = _("SAVING...\nDON'T TURN OFF THE POWER.");
+const u8 gText_SavingDontTurnOffPower[] = _("SAVING...\nDON'T TURN OFF THE POWER.");
 
 #elif GERMAN
 
@@ -1077,7 +1077,7 @@ const u8 gOtherText_BirchInTrouble[] = _("{HIGHLIGHT WHITE2}{COLOR DARK_GREY}PRO
 const u8 gOtherText_DoYouChoosePoke[] = _("{HIGHLIGHT WHITE2}{COLOR DARK_GREY}Wählst du dieses POKéMON?");
 const u8 gOtherText_Poke[] = _("POKéMON");
 
-const u8 gSystemText_SaveErrorExchangeBackup[] = _("Fehler beim Speichern!\pBitte Backup Memory\naustauschen.");
+const u8 gText_SaveError[] = _("Fehler beim Speichern!\pBitte Backup Memory\naustauschen.");
 const u8 gOtherText_FlyToWhere[] = _("Wohin willst du FLIEGEN?");
 
 const u8 OtherText_Use[] = _("O.K.");
@@ -1852,5 +1852,5 @@ const u8 gText_SaveCompleted[] = _("Speichern beendet.");
 const u8 gText_SaveFailed[] = _("Speichern fehlgeschlagen.");
 const u8 gText_NoSaveFileCantSetTime[] = _("Es existiert kein Speicherstand. Uhr-\nzeit kann nicht eingestellt werden.");
 const u8 gText_InGameClockUsable[] = _("Das spielinterne Zeiteingabe-\nSystem ist jetzt verfügbar.");
-const u8 gSystemText_Saving[] = _("SPEICHERVORGANG...\nGERÄT NICHT AUSSCHALTEN!");
+const u8 gText_SavingDontTurnOffPower[] = _("SPEICHERVORGANG...\nGERÄT NICHT AUSSCHALTEN!");
 #endif

@@ -797,7 +797,7 @@ static void sub_8083958(void)
         UpdateLinkBattleRecords(gLocalLinkPlayerId ^ 1);
 
     gMain.savedCallback = CB2_ReturnToFieldFromMultiplayer;
-    SetMainCallback2(sub_8071B28);
+    SetMainCallback2(CB2_SetUpSaveAfterLinkBattle);
 }
 
 void sub_80839A4(void)

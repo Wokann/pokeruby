@@ -34,18 +34,6 @@ extern const u8 gSystemText_Normal[];
 extern const u8 gSystemText_LR[];
 extern const u8 gSystemText_LA[];
 
-// start_menu
-extern const u8 SystemText_Pokedex[];
-extern const u8 SystemText_Pokemon[];
-extern const u8 SystemText_BAG[];
-extern const u8 SystemText_Pokenav[];
-extern const u8 SystemText_Player[];
-extern const u8 SystemText_Save[];
-extern const u8 SystemText_Option[];
-extern const u8 SystemText_Exit[];
-extern const u8 SystemText_Retire[];
-extern const u8 gOtherText_SafariStock[];
-
 // mystery_event_menu
 extern const u8 gSystemText_LinkStandby[];
 extern const u8 gSystemText_LoadEventPressA[];

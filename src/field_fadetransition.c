@@ -325,7 +325,7 @@ void sub_8080DC4(u8 taskId)
     if (sub_8080E70() == TRUE)
     {
         DestroyTask(taskId);
-        CreateTask(sub_80712B4, 80);
+        CreateTask(Task_ShowStartMenu, 80);
     }
 }
 

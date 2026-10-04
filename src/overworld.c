@@ -2451,7 +2451,7 @@ static void InitLinkPlayerQueueScript(void)
 static void InitLinkRoomStartMenuScript(void)
 {
     PlaySE(SE_WIN_OPEN);
-    sub_8071310();
+    ShowStartMenu();
     LockPlayerFieldControls();
 }
 

@@ -91,26 +91,26 @@ gSystemText_LR:: @ 842C465
 gSystemText_LA:: @ 842C46B
 	.string "{PALETTE 15}L=A$"
 
-SystemText_Pokedex::
+gText_MenuPokedex::
 	.string "POKéDEX$"
-SystemText_Pokemon::
+gText_MenuPokemon::
 	.string "POKéMON$"
-SystemText_BAG::
+gText_MenuBag::
 	.string "BEUTEL$"
-SystemText_Pokenav::
+gText_MenuPokenav::
 	.string "POKéNAV$"
-SystemText_Player::
+gText_MenuPlayer::
 	.string "{PLAYER}$"
-SystemText_Save::
+gText_MenuSave::
 	.string "SICHERN$"
-SystemText_Option::
+gText_MenuOption::
 	.string "OPTION.$"
-SystemText_Exit::
+gText_MenuExit::
 	.string "BEENDEN$"
-SystemText_Retire:: @ safari zone?
+gText_MenuRetire:: @ safari zone?
 	.string "SCHLUSS$"
 
-gOtherText_SafariStock:: @ 842C4A9
+gText_SafariBallStock:: @ 842C4A9
 	.string "SAFARIBÄLLE\n"
 	.string "Vorrat: {STR_VAR_1}$"
 

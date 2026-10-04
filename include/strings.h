@@ -144,7 +144,24 @@ extern const u8 gOtherText_BirchInTrouble[];
 extern const u8 gOtherText_DoYouChoosePoke[];
 extern const u8 gOtherText_Poke[];
 
-extern const u8 gSystemText_SaveErrorExchangeBackup[];
+// start menu and save dialog text
+extern const u8 gText_MenuPokedex[];
+extern const u8 gText_MenuPokemon[];
+extern const u8 gText_MenuBag[];
+extern const u8 gText_MenuPokenav[];
+extern const u8 gText_MenuPlayer[];
+extern const u8 gText_MenuSave[];
+extern const u8 gText_MenuOption[];
+extern const u8 gText_MenuExit[];
+extern const u8 gText_MenuRetire[];
+extern const u8 gText_SafariBallStock[];
+extern const u8 gText_ConfirmSave[];
+extern const u8 gText_AlreadySavedFile[];
+extern const u8 gText_SavingDontTurnOff[];
+extern const u8 gText_PlayerSavedGame[];
+extern const u8 gText_DifferentSaveFile[];
+
+extern const u8 gText_SaveError[];
 extern const u8 gOtherText_FlyToWhere[];
 
 extern const u8 OtherText_Use[];
@@ -910,7 +927,7 @@ extern const u8 gText_SaveCompleted[];
 extern const u8 gText_SaveFailed[];
 extern const u8 gText_NoSaveFileCantSetTime[];
 extern const u8 gText_InGameClockUsable[];
-extern const u8 gSystemText_Saving[];
+extern const u8 gText_SavingDontTurnOffPower[];
 
 extern const u8 gText_MaleSymbol4[2];
 extern const u8 gText_FemaleSymbol4[2];
