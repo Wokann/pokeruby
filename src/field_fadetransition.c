@@ -418,25 +418,25 @@ void DoDoorWarp(void)
 void DoFallWarp(void)
 {
     DoDiveWarp();
-    gFieldCallback = sub_8086748;
+    gFieldCallback = FieldCB_FallWarpExit;
 }
 
 void DoEscalatorWarp(u8 metatileBehavior)
 {
     LockPlayerFieldControls();
-    sub_8086A2C(metatileBehavior, 10);
+    StartEscalatorWarp(metatileBehavior, 10);
 }
 
 void DoLavaridgeGymB1FWarp(void)
 {
     LockPlayerFieldControls();
-    sub_80871B8(10);
+    StartLavaridgeGymB1FWarp(10);
 }
 
 void DoLavaridgeGym1FWarp(void)
 {
     LockPlayerFieldControls();
-    sub_8087654(10);
+    StartLavaridgeGym1FWarp(10);
 }
 
 void DoTeleportTileWarp(void)

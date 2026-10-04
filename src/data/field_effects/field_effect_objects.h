@@ -818,7 +818,7 @@ static const union AnimCmd *const sAnimTable_AshPuff[] = {
     sAnim_AshPuff
 };
 
-const struct SpriteTemplate gFieldEffectObjectTemplate_AshPuff = {0xFFFF, 0x100D, &gObjectEventBaseOam_16x16, sAnimTable_AshPuff, sPicTable_AshPuff, gDummySpriteAffineAnimTable, sub_808788C};
+const struct SpriteTemplate gFieldEffectObjectTemplate_AshPuff = {0xFFFF, 0x100D, &gObjectEventBaseOam_16x16, sAnimTable_AshPuff, sPicTable_AshPuff, gDummySpriteAffineAnimTable, SpriteCB_AshPuff};
 
 const struct SpritePalette gSpritePalette_Ash = {gFieldEffectPal_Ash, 0x100D};
 
@@ -843,7 +843,7 @@ static const union AnimCmd *const sAnimTable_AshLaunch[] = {
     sAnim_AshLaunch
 };
 
-const struct SpriteTemplate gFieldEffectObjectTemplate_AshLaunch = {0xFFFF, 0x100D, &gObjectEventBaseOam_16x16, sAnimTable_AshLaunch, sPicTable_AshLaunch, gDummySpriteAffineAnimTable, sub_8087638};
+const struct SpriteTemplate gFieldEffectObjectTemplate_AshLaunch = {0xFFFF, 0x100D, &gObjectEventBaseOam_16x16, sAnimTable_AshLaunch, sPicTable_AshLaunch, gDummySpriteAffineAnimTable, SpriteCB_AshLaunch};
 
 static const struct SpriteFrameImage sPicTable_Bubbles[] = {
     overworld_frame(gFieldEffectObjectPic_Bubbles, 2, 4, 0),

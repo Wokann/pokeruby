@@ -51,7 +51,7 @@
 #define FLDEFF_NOP_47                    47
 #define FLDEFF_NOP_48                    48
 #define FLDEFF_ASH_PUFF            49
-#define FLDEFF_LAVARIDGE_GYM_WARP        50
+#define FLDEFF_ASH_LAUNCH        50
 #define FLDEFF_SWEET_SCENT               51
 #define FLDEFF_SAND_PILLAR               52
 #define FLDEFF_BUBBLES                   53

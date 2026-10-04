@@ -1435,7 +1435,7 @@ void AddBirchSpeechObjects(u8 taskId)
 {
     u8 spriteId;
 
-    spriteId = CreateBirchSprite(136, 60, 1);
+    spriteId = AddNewGameBirchObject(136, 60, 1);
     gSprites[spriteId].callback = SpriteCB_Null;
     gSprites[spriteId].oam.priority = 0;
     gSprites[spriteId].invisible = TRUE;

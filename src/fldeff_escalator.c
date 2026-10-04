@@ -1,4 +1,5 @@
 #include "global.h"
+#include "fldeff.h"
 #include "task.h"
 #include "fieldmap.h"
 #include "field_camera.h"
@@ -148,17 +149,17 @@ u8 sub_80B47D8(u16 var)
     return taskId;
 }
 
-void sub_80B4824(u8 var)
+void StartEscalator(u8 goingUp)
 {
-    gUnknown_02038731 = sub_80B47D8(var);
+    gUnknown_02038731 = sub_80B47D8(goingUp);
 }
 
-void sub_80B483C(void)
+void StopEscalator(void)
 {
     DestroyTask(gUnknown_02038731);
 }
 
-bool8 sub_80B4850(void)
+bool8 IsEscalatorMoving(void)
 {
     if (gTasks[gUnknown_02038731].data[3] == 0 && gTasks[gUnknown_02038731].data[1] == 2)
         return FALSE;
