@@ -92,7 +92,6 @@ extern u8 IsBattlerSpritePresent(u8);
 extern u8 GetBattlerSpriteDefault_Y(u8);
 extern u8 GetSubstituteSpriteDefault_Y(u8);
 extern void sub_8094958(void);
-extern void move_anim_start_t2();
 
 static void Task_ClearBitWhenBattleTableAnimDone(u8);
 static u8 ShouldAnimBeDoneRegardlessOfSubstitute(u8);
@@ -144,30 +143,30 @@ void InitAndLaunchChosenStatusAnimation(u8 isStatus2, u32 status)
     if (isStatus2 == 0)
     {
         if (status == 0x20)
-            move_anim_start_t2(gActiveBattler, 6);
+            LaunchStatusAnimation(gActiveBattler, 6);
         else if (status == 8 || (status & 0x80))
-            move_anim_start_t2(gActiveBattler, 0);
+            LaunchStatusAnimation(gActiveBattler, 0);
         else if (status == 0x10)
-            move_anim_start_t2(gActiveBattler, 2);
+            LaunchStatusAnimation(gActiveBattler, 2);
         else if (status & 7)
-            move_anim_start_t2(gActiveBattler, 4);
+            LaunchStatusAnimation(gActiveBattler, 4);
         else if (status == 0x40)
-            move_anim_start_t2(gActiveBattler, 5);
+            LaunchStatusAnimation(gActiveBattler, 5);
         else
             gBattleHealthBoxInfo[gActiveBattler].statusAnimActive = 0;
     }
     else
     {
         if (status & 0x000F0000)
-            move_anim_start_t2(gActiveBattler, 3);
+            LaunchStatusAnimation(gActiveBattler, 3);
         else if (status & 7)
-            move_anim_start_t2(gActiveBattler, 1);
+            LaunchStatusAnimation(gActiveBattler, 1);
         else if (status & 0x10000000)
-            move_anim_start_t2(gActiveBattler, 7);
+            LaunchStatusAnimation(gActiveBattler, 7);
         else if (status & 0x08000000)
-            move_anim_start_t2(gActiveBattler, 8);
+            LaunchStatusAnimation(gActiveBattler, 8);
         else if (status & 0x0000E000)
-            move_anim_start_t2(gActiveBattler, 9);
+            LaunchStatusAnimation(gActiveBattler, 9);
         else
             gBattleHealthBoxInfo[gActiveBattler].statusAnimActive = 0;
     }

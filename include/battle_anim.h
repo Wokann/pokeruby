@@ -277,6 +277,9 @@ void AnimTask_AttackerPunchWithTrace(u8 taskId);
 void AnimWeatherBallUp(struct Sprite *sprite);
 void AnimWeatherBallDown(struct Sprite *sprite);
 
+void LaunchStatusAnimation(u8 battler, u8 statusAnimId);
+void InitStatsChangeAnimation(u8 taskId);
+
 // battle_anim_smokescreen.c
 u8 SmokescreenImpact(s16 x, s16 y, bool8 persist);
 

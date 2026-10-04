@@ -8520,7 +8520,7 @@ Move_SHEER_COLD: @ 81D36AA
 	monbg ANIM_DEF_PARTNER
 	splitbgprio 1
 	setalpha 12, 8
-	createvisualtask sub_807B920, 2
+	createvisualtask AnimTask_FrozenIceCube, 2
 	waitplaysewithpan SE_M_HAIL, SOUND_PAN_TARGET, 17
 	waitforvisualfinish
 	clearmonbg ANIM_DEF_PARTNER
@@ -10270,7 +10270,7 @@ StatusCondition_Ice: @ 81D634F
 	monbg ANIM_DEF_PARTNER
 	splitbgprio 1
 	waitplaysewithpan SE_M_HAIL, SOUND_PAN_TARGET, 17
-	createvisualtask sub_807B920, 2
+	createvisualtask AnimTask_FrozenIceCube, 2
 	waitforvisualfinish
 	clearmonbg ANIM_DEF_PARTNER
 	end
@@ -10312,7 +10312,7 @@ _81D63E0:
 	end
 
 General_StatsChange: @ 81D63EA
-	createvisualtask sub_807BB88, 5
+	createvisualtask AnimTask_StatsChange, 5
 	waitforvisualfinish
 	end
 

@@ -1292,7 +1292,7 @@ static void sub_80E3194(u8 taskId)
     }
 }
 
-void sub_80E32E0(u8 taskId)
+void InitStatsChangeAnimation(u8 taskId)
 {
     u8 i;
 
