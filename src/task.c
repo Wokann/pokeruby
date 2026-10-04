@@ -3,14 +3,12 @@
 #include "task.h"
 
 #define ACTIVE_SENTINEL 0x10
-#define HEAD_SENTINEL 0xFE
-#define TAIL_SENTINEL 0xFF
 
 // gTasks is a queue of the active 16 tasks
 struct Task gTasks[NUM_TASKS];
 
 static void InsertTask(u8 newTaskId);
-static u8 FindFirstActiveTask();
+static u8 FindFirstActiveTask(void);
 
 const u8 gError_NoTasksLeft[] = _(
     "TASK OVER\n"
