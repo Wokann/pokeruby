@@ -1,4 +1,5 @@
 #include "global.h"
+#include "pokedex.h"
 #include "field_screen_effect.h"
 #include "graphics.h"
 #include "data.h"
@@ -43,7 +44,6 @@ struct EggHatchData
 
 struct EggHatchData* gEggHatchData;
 
-bool8 GetSetPokedexFlag(u16 nationalNum, u8 caseID);
 const struct CompressedSpritePalette* GetMonSpritePalStruct(struct Pokemon* mon); //gets pokemon palette address
 
 static void Task_EggHatch(u8 taskId);

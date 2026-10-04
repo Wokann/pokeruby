@@ -445,7 +445,7 @@ static bool8 StartMenuPokedexCallback(void)
     {
         IncrementGameStat(GAME_STAT_CHECKED_POKEDEX);
         PlayRainStoppingSoundEffect();
-        SetMainCallback2(CB2_InitPokedex);
+        SetMainCallback2(CB2_OpenPokedex);
         return 1;
     }
     return 0;

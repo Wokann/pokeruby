@@ -3466,4 +3466,24 @@ extern const u8 gSubstituteDollFrontGfx[];
 extern const u8 gSubstituteDollBackGfx[];
 extern const u8 gSubstituteDollPal[];
 
+// Pokédex
+extern const u8 gPokedexMenu_Gfx[];
+extern const u8 gPokedexInterface_Gfx[];
+extern const u16 gPokedexBgHoenn_Pal[];
+extern const u16 gPokedexMenu2_Pal[];
+extern const u8 gPokedexList_Tilemap[];
+extern const u8 gPokedexListUnderlay_Tilemap[];
+extern const u8 gPokedexStartMenuMain_Tilemap[];
+extern const u8 gPokedexStartMenuSearchResults_Tilemap[];
+extern const u8 gPokedexInfoScreen_Tilemap[];
+extern const u8 gPokedexScreenSelectBarMain_Tilemap[];
+extern const u8 gPokedexScreenSelectBarSubmenu_Tilemap[];
+extern const u8 gPokedexSearchMenu_Gfx[];
+extern const u16 gPokedexSearchMenu_Pal[];
+extern const u8 gPokedexMenuSearch_Tilemap[];
+extern const u16 gPokedexSearchResults_Pal[];
+extern const u16 gPokedexBgNational_Pal[];
+extern const u8 gPokedexCryScreen_Tilemap[];
+extern const u8 gPokedexSizeScreen_Tilemap[];
+
 #endif  // GUARD_GRAPHICS_H

@@ -6,7 +6,7 @@ LilycoveCity_CoveLilyMotel_2F_EventScript_GameDesigner:: @ 81583A1
 	faceplayer
 	call_if_unset FLAG_TEMP_2, LilycoveCity_CoveLilyMotel_2F_EventScript_ShowMeCompletedDex
 	call_if_set FLAG_TEMP_2, LilycoveCity_CoveLilyMotel_2F_EventScript_ShowDiploma
-	specialvar VAR_RESULT, CompletedHoennPokedex
+	specialvar VAR_RESULT, HasAllHoennMons
 	compare VAR_RESULT, 1
 	goto_if_eq LilycoveCity_CoveLilyMotel_2F_EventScript_AllHoennMonsFanfare
 	release

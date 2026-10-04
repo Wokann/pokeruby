@@ -1,5 +1,5 @@
 #if ENGLISH
-static const u16 gPokedexOrder_Alphabetical[] =
+const u16 gPokedexOrder_Alphabetical[] =
 {
     NATIONAL_DEX_OLD_UNOWN_B,
     NATIONAL_DEX_OLD_UNOWN_C,
@@ -414,7 +414,7 @@ static const u16 gPokedexOrder_Alphabetical[] =
     NATIONAL_DEX_ZUBAT,
 };
 #elif GERMAN
-static const u16 gPokedexOrder_Alphabetical[] = {
+const u16 gPokedexOrder_Alphabetical[] = {
     NATIONAL_DEX_OLD_UNOWN_B,
     NATIONAL_DEX_OLD_UNOWN_C,
     NATIONAL_DEX_OLD_UNOWN_D,
@@ -829,7 +829,7 @@ static const u16 gPokedexOrder_Alphabetical[] = {
 };
 #endif
 
-static const u16 gPokedexOrder_Weight[] =
+const u16 gPokedexOrder_Weight[] =
 {
     NATIONAL_DEX_GASTLY,
     NATIONAL_DEX_HAUNTER,
@@ -1218,7 +1218,7 @@ static const u16 gPokedexOrder_Weight[] =
     NATIONAL_DEX_METAGROSS,
     NATIONAL_DEX_GROUDON,
 };
-static const u16 gPokedexOrder_Height[] =
+const u16 gPokedexOrder_Height[] =
 {
     NATIONAL_DEX_DIGLETT,
     NATIONAL_DEX_AZURILL,

@@ -6,11 +6,17 @@
 #define HOENN_DEX_COUNT 202
 #define NATIONAL_DEX_COUNT 386
 
+enum
+{
+    DEX_MODE_HOENN,
+    DEX_MODE_NATIONAL
+};
+
 void ResetPokedex(void);
 void ResetPokedexScrollPositions(void);
-void CB2_InitPokedex(void);
-u8 sub_809070C(u16 dexNum, u32 b, u32 c);
-const u8 *GetPokemonCategory(u16);
+void CB2_OpenPokedex(void);
+u8 DisplayCaughtMonDexPage(u16 dexNum, u32 otId, u32 personality);
+const u8 *GetPokedexCategoryName(u16 dexNum);
 u16 GetPokedexHeightWeight(u16 dexNum, u8 data);
 
 enum
@@ -21,12 +27,12 @@ enum
     FLAG_SET_CAUGHT
 };
 
-s8 GetSetPokedexFlag(u16, u8);
+s8 GetSetPokedexFlag(u16 nationalDexNo, u8 caseID);
 
-u16 GetNationalPokedexCount(u8);
-u16 GetHoennPokedexCount(u8);
-bool8 CompletedHoennPokedex(void);
-bool16 CompletedNationalPokedex(void);
+u16 GetNationalPokedexCount(u8 caseID);
+u16 GetHoennPokedexCount(u8 caseID);
+bool8 HasAllHoennMons(void);
+bool16 HasAllMons(void);
 
 extern bool8 gUnusedPokedexU8;
 
@@ -46,9 +52,9 @@ struct PokedexEntry
 
 extern const struct PokedexEntry gPokedexEntries[];
 
-u16 CreateSizeScreenTrainerPic(u16 gender, s16 x, s16 y, u16 paletteNum);
-u16 CreateMonSpriteFromNationalDexNumber(u16 num, s16 x, s16 y, u16 paletteNum);
+u16 CreateSizeScreenTrainerPic(u16 gender, s16 x, s16 y, u16 paletteSlot);
+u16 CreateMonSpriteFromNationalDexNumber(u16 nationalNum, s16 x, s16 y, u16 paletteSlot);
 
-void PrintFootprint(u16 num, u16 b, u16 c);
+void DrawFootprint(u16 dexNum, u16 charBase, u16 tileNum);
 
 #endif // GUARD_POKEDEX_H

@@ -2686,7 +2686,7 @@ void debug_80C6CB8(u8 taskId)
 
     gUnknown_Debug_2038A20->round1Points = CreateMonIcon(gUnknown_Debug_2038A20->totalPoints, SpriteCB_PokemonIcon, 0x68, 0x2C, 0, 0);
 
-    PrintFootprint(SpeciesToNationalPokedexNum(gUnknown_Debug_2038A20->totalPoints), 2, 0x3fc);
+    DrawFootprint(SpeciesToNationalPokedexNum(gUnknown_Debug_2038A20->totalPoints), 2, 0x3fc);
 
     ((u16 *)(VRAM + 0xF858))[0] = 0xF3FC;
     ((u16 *)(VRAM + 0xF858))[1] = 0xF3FD;

@@ -506,7 +506,7 @@ static void CreateStarterPokemonLabel(u8 prevSelection, u8 selection)
     }
 
     species = GetStarterPokemon(selection);
-    category = GetPokemonCategory(SpeciesToNationalPokedexNum(species));
+    category = GetPokedexCategoryName(SpeciesToNationalPokedexNum(species));
     AddTextColorCtrlCode(labelText, 0, 15, 8);
 #if ENGLISH
     dstIndex = 5;

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "pokedex.h"
 #include "reshow_battle_screen.h"
 #include "battle.h"
 #include "battle_main.h"
@@ -137,7 +138,6 @@ void PlayBGM(u16 songID);
 extern u8 gBattleBufferB[4][0x200];
 void BattleScriptPop(void);
 void SwitchInClearSetData(void);
-u8 GetSetPokedexFlag(u16 nationalNum, u8 caseID);
 u8 GetBattlerMultiplayerId(u8 bank);
 u16 GetLinkTrainerFlankId(u8 a);
 u8 GetBattlerAtPosition(u8 ID);
@@ -146,7 +146,6 @@ void sub_8012258(u8);
 u16 GiveMoveToBattleMon(struct BattlePokemon *mon, u16 move);
 void IncrementGameStat(u8 index);
 u8 GetScaledHPFraction(s16 hp, s16 maxhp, u8 scale);
-u16 GetPokedexHeightWeight(u16 national_num, u8 heightweight);
 u8 MenuCursor_Create814A5C0(u8 a1, u16 a2, u8 a3, u16 a4, u8 a5);
 void DestroyMenuCursor(void);
 void sub_802BC6C(void);
@@ -160,7 +159,6 @@ u8 GetMoveTarget(u16 move, u8 targetbyte); //get target of move
 u8 GetCurrentMapType(void);
 u8 CalculatePlayerPartyCount(void);
 u16 Sqrt(u32 num);
-u8 sub_809070C(u16 nationalNum, u32 TiD, u32 PiD); //task prepare poke dex display
 void MenuCursor_SetPos814A880(u8 a1, u8 a2);
 u8 CheckMoveLimitations(u8 bank, u8 unusable_moves, u8 flags);
 bool8 IsLinkDoubleBattle(void);
@@ -9495,7 +9493,7 @@ static void atkF2_displaydexinfo(void)
     case 1:
         if (!gPaletteFade.active)
         {
-            gBattleCommunication[1] = sub_809070C(SpeciesToNationalPokedexNum(gBattleMons[gBattlerTarget].species), gBattleMons[gBattlerTarget].otId, gBattleMons[gBattlerTarget].personality);
+            gBattleCommunication[1] = DisplayCaughtMonDexPage(SpeciesToNationalPokedexNum(gBattleMons[gBattlerTarget].species), gBattleMons[gBattlerTarget].otId, gBattleMons[gBattlerTarget].personality);
             gBattleCommunication[0]++;
         }
         break;
