@@ -108,12 +108,6 @@ extern const u8 gOtherText_TrainersTrainerCard[];
 extern const u8 gOtherText_Boy[];
 extern const u8 gOtherText_Girl[];
 
-// save_menu_util
-extern const u8 gOtherText_Player[];
-extern const u8 gOtherText_Badges[];
-extern const u8 gOtherText_Pokedex[];
-extern const u8 gOtherText_PlayTime[];
-
 // naming_screen
 extern const u8 gOtherText_SentToPC[];
 extern const u8 OtherText_YourName[];

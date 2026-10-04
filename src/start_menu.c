@@ -640,7 +640,7 @@ static void SaveGameTask(u8 taskId)
 
 static void HideSaveInfoWindow(void)
 {
-    HandleCloseSaveWindow(0, 0);
+    RemoveSaveInfoWindow(0, 0);
 }
 
 static void HideSaveMessageWindow(void)
@@ -678,7 +678,7 @@ static bool8 SaveDialogCheckForTimeoutAndKeypress(void)
 static u8 SaveConfirmSaveCallback(void)
 {
     Menu_EraseScreen();
-    HandleDrawSaveWindowInfo(0, 0);
+    ShowSaveInfoWindow(0, 0);
     ShowSaveMessage(gText_ConfirmSave, SaveYesNoCallback);
     return SAVE_IN_PROGRESS;
 }

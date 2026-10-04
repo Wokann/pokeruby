@@ -258,17 +258,17 @@ gOtherText_Girl:: @ 842C97D
 	.string "MÄDEL$"
 	.string "$"
 
-gOtherText_Player:: @ 842C983
+gText_SavingPlayer:: @ 842C983
 	.string "SPIELER$"
 
-gOtherText_Badges:: @ 842C98A
+gText_SavingBadges:: @ 842C98A
 	.string "ORDEN$"
 	.string "$"
 
-gOtherText_Pokedex:: @ 842C992
+gText_SavingPokedex:: @ 842C992
 	.string "POKéDEX$"
 
-gOtherText_PlayTime:: @ 842C99A
+gText_SavingTime:: @ 842C99A
 	.string "SPIELZEIT$"
 
 gOtherText_SentToPC:: @ 842C9A4

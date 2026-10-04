@@ -5,11 +5,11 @@
 #include "pokedex.h"
 #include "region_map.h"
 #include "string_util.h"
-#include "strings2.h"
+#include "strings.h"
 
 EWRAM_DATA struct PokemonStorage gPokemonStorage = {0};
 
-void HandleDrawSaveWindowInfo(s16 left, s16 top)
+void ShowSaveInfoWindow(s16 left, s16 top)
 {
     u32 width = 12;
 
@@ -38,7 +38,7 @@ void HandleDrawSaveWindowInfo(s16 left, s16 top)
     }
 }
 
-void HandleCloseSaveWindow(u16 left, u16 top)
+void RemoveSaveInfoWindow(u16 left, u16 top)
 {
     u32 width = 12;
 
@@ -64,7 +64,7 @@ u8 IsResizeSaveWindowEnabled(void) // i don't know what else to name it..
 
 void PrintSavePlayerName(s16 x, s16 y)
 {
-    Menu_PrintText(gOtherText_Player, x, y);
+    Menu_PrintText(gText_SavingPlayer, x, y);
     MenuPrint_RightAligned(gSaveBlock2.playerName, x + 12, y);
 }
 
@@ -80,7 +80,7 @@ void PrintSaveBadges(s16 x, s16 y)
 {
     char badges[16];
 
-    Menu_PrintText(gOtherText_Badges, x, y);
+    Menu_PrintText(gText_SavingBadges, x, y);
     ConvertIntToDecimalString(badges, GetBadgeCount());
     MenuPrint_RightAligned(badges, x + 12, y);
 }
@@ -89,7 +89,7 @@ void PrintSavePokedexCount(s16 x, s16 y)
 {
     char pokedex[16];
 
-    Menu_PrintText(gOtherText_Pokedex, x, y);
+    Menu_PrintText(gText_SavingPokedex, x, y);
     ConvertIntToDecimalStringN(pokedex, GetCaughtMonsCount(), 1, 3);
     MenuPrint_RightAligned(pokedex, x + 12, y);
 }
@@ -98,7 +98,7 @@ void PrintSavePlayTime(s16 x, s16 y)
 {
     char playtime[16];
 
-    Menu_PrintText(gOtherText_PlayTime, x, y);
+    Menu_PrintText(gText_SavingTime, x, y);
     FormatPlayTime(playtime, gSaveBlock2.playTimeHours, gSaveBlock2.playTimeMinutes, 1);
     MenuPrint_RightAligned(playtime, x + 12, y);
 }

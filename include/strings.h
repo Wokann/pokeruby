@@ -959,4 +959,9 @@ extern const u8 gText_WonContestsWFriends[];
 extern const u8 gText_PokeblocksWithFriends[];
 extern const u8 gText_PokemonTrades[];
 
+extern const u8 gText_SavingPlayer[];
+extern const u8 gText_SavingBadges[];
+extern const u8 gText_SavingPokedex[];
+extern const u8 gText_SavingTime[];
+
 #endif
