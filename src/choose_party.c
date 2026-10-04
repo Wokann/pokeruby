@@ -1,6 +1,6 @@
 #include "global.h"
 #include "event_data.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "main.h"
 #include "menu.h"
 #include "name_string_util.h"
@@ -955,7 +955,7 @@ static void sub_81231C4(u8);
 
 void sub_81231AC(void)
 {
-    pal_fill_black();
+    FadeInFromBlack();
     CreateTask(sub_81231C4, 10);
 }
 

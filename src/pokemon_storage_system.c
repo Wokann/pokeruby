@@ -4,7 +4,7 @@
 #include "sound.h"
 #include "field_weather.h"
 #include "overworld.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "menu.h"
 #include "main.h"
 #include "strings.h"
@@ -360,7 +360,7 @@ void FieldCB_ReturnToOverworld(void)
     u8 taskId = CreateTask(Task_PokemonStorageSystem, 80);
     gTasks[taskId].data[0] = 0;
     gTasks[taskId].data[1] = gUnknown_02038474;
-    pal_fill_black();
+    FadeInFromBlack();
 }
 
 void StorageSystemCreatePrimaryMenu(u8 whichMenu)

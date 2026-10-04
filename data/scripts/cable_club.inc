@@ -801,6 +801,6 @@ TradeRoom_TerminateLink:: @ 81A44FE
 
 gUnknown_081A4508:: @ 81A4508
 	special sub_80839A4
-	special sub_80810DC
+	special ReturnFromLinkRoom
 	waitstate
 	end

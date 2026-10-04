@@ -20,7 +20,7 @@
 #include "field_player_avatar.h"
 #include "fldeff_softboiled.h"
 #include "braille_puzzles.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "field_weather.h"
 #include "field_effect.h"
 #include "field_control_avatar.h"
@@ -783,7 +783,7 @@ static void sub_808AB34(u8 taskID)
 
 void FieldCallback_PrepareFadeInFromMenu(void)
 {
-    pal_fill_black();
+    FadeInFromBlack();
     CreateTask(FieldCallback_AfterFadeInFromMenu, 8);
 }
 

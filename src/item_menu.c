@@ -37,7 +37,7 @@
 #include "menu_helpers.h"
 #include "ewram.h"
 #include "berry_blender.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "shop.h"
 #include "field_weather.h"
 #include "pokemon_storage_system.h"
@@ -2129,7 +2129,7 @@ void CleanUpOverworldMessage(u8 taskId)
 
 void ExecuteItemUseFromBlackPalette(void)
 {
-    pal_fill_black();
+    FadeInFromBlack();
     CreateTask(Task_CallItemUseOnFieldCallback, 8);
 }
 

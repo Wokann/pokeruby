@@ -14,10 +14,9 @@
 #include "field_camera.h"
 #include "field_control_avatar.h"
 #include "field_effect.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "field_message_box.h"
 #include "field_player_avatar.h"
-#include "field_screen_effect.h"
 #include "field_special_scene.h"
 #include "field_specials.h"
 #include "field_tasks.h"
@@ -1320,7 +1319,7 @@ static void RunFieldCallback(void)
     if (gFieldCallback != NULL)
         gFieldCallback();
     else
-        mapldr_default();
+        FieldCB_DefaultWarpExit();
     gFieldCallback = NULL;
 }
 
@@ -1356,7 +1355,7 @@ void debug_sub_8058C00(void)
     if (JOY_HELD(R_BUTTON))
         gFieldCallback = ExecuteTruckSequence;
     else
-        gFieldCallback = sub_8080B60;
+        gFieldCallback = FieldCB_WarpExitFadeFromBlack;
 
     do_load_map_stuff_loop(&gMain.state);
     SetFieldVBlankCallback();
@@ -1379,7 +1378,7 @@ void CB2_WhiteOut(void)
         ResetInitialPlayerAvatarState();
         ScriptContext_Init();
         UnlockPlayerFieldControls();
-        gFieldCallback = sub_8080B60;
+        gFieldCallback = FieldCB_WarpExitFadeFromBlack;
         state = 0;
         do_load_map_stuff_loop(&state);
         SetFieldVBlankCallback();
@@ -1476,7 +1475,7 @@ void CB2_ReturnToFieldFromMultiplayer(void)
     ResetAllPlayerLinkStates();
     SetMainCallback1(CB1_OverworldLink);
     SetKeyInterceptCallback(KeyInterCB_SelfIdle);
-    gFieldCallback = sub_8080A3C;
+    gFieldCallback = FieldCB_ReturnToFieldCableLink;
     ScriptContext_Init();
     UnlockPlayerFieldControls();
     CB2_ReturnToField();
@@ -1485,28 +1484,28 @@ void CB2_ReturnToFieldFromMultiplayer(void)
 void CB2_ReturnToFieldWithOpenMenu(void)
 {
     FieldClearVBlankHBlankCallbacks();
-    gFieldCallback = sub_8080DEC;
+    gFieldCallback = ReturnToFieldOpenStartMenu;
     CB2_ReturnToField();
 }
 
 void CB2_ReturnToFieldContinueScript(void)
 {
     FieldClearVBlankHBlankCallbacks();
-    gFieldCallback = sub_80809B0;
+    gFieldCallback = FieldCB_ContinueScript;
     CB2_ReturnToField();
 }
 
 void CB2_ReturnToFieldContinueScriptPlayMapMusic(void)
 {
     FieldClearVBlankHBlankCallbacks();
-    gFieldCallback = sub_8080990;
+    gFieldCallback = FieldCB_ContinueScriptHandleMusic;
     CB2_ReturnToField();
 }
 
 void CB2_ReturnToFieldFadeFromBlack(void)
 {
     FieldClearVBlankHBlankCallbacks();
-    gFieldCallback = sub_8080B60;
+    gFieldCallback = FieldCB_WarpExitFadeFromBlack;
     CB2_ReturnToField();
 }
 
@@ -1514,7 +1513,7 @@ void sub_805470C(void)
 {
     if (gMapHeader.showMapName == 1 && sub_80BBB24() == 1)
         ShowMapNamePopup();
-    sub_8080B60();
+    FieldCB_WarpExitFadeFromBlack();
 }
 
 void CB2_ContinueSavedGame(void)

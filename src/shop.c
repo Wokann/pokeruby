@@ -1,7 +1,7 @@
 #include "global.h"
 #include "shop.h"
 #include "decompress.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "field_weather.h"
 #include "item_menu.h"
 #include "main.h"
@@ -220,7 +220,7 @@ static void Task_ReturnToMartMenu(u8 taskId)
 
 void Shop_FadeReturnToMartMenu(void)
 {
-    pal_fill_black();
+    FadeInFromBlack();
     CreateTask(Task_ReturnToMartMenu, 0x8);
 }
 

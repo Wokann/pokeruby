@@ -14,7 +14,7 @@
 #include "data.h"
 #include "event_data.h"
 #include "field_control_avatar.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "field_message_box.h"
 #include "field_player_avatar.h"
 #include "field_weather.h"
@@ -631,7 +631,7 @@ static void CB2_EndWildBattle(void)
     else
     {
         SetMainCallback2(CB2_ReturnToField);
-        gFieldCallback = sub_8080E44;
+        gFieldCallback = FieldCB_ReturnToFieldNoScriptCheckMusic;
     }
 }
 

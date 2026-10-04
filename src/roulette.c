@@ -2,7 +2,7 @@
 #include "random.h"
 #include "graphics.h"
 #include "ewram.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "constants/game_stat.h"
 #include "m4a.h"
 #include "main.h"
@@ -1263,7 +1263,7 @@ void sub_8116B40(u8 taskId) // end roulette ?
         REG_BLDCNT = 0;
         REG_BLDALPHA = 0;
         REG_BLDY = 0;
-        gFieldCallback = sub_8080990;
+        gFieldCallback = FieldCB_ContinueScriptHandleMusic;
         SetMainCallback2(&CB2_ReturnToField);
         DestroyTask(taskId);
 #if DEBUG

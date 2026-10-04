@@ -4,7 +4,7 @@
 #include "event_data.h"
 #include "field_camera.h"
 #include "field_effect.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "field_player_avatar.h"
 #include "field_specials.h"
 #include "field_weather.h"
@@ -377,7 +377,7 @@ void sub_80BBA48(u8 taskid)
             gSaveBlock1.secretBases[curbaseid].numTimesEntered++;
         sub_80BBA14();
         WarpIntoMap();
-        gFieldCallback = sub_8080990;
+        gFieldCallback = FieldCB_ContinueScriptHandleMusic;
         SetMainCallback2(CB2_LoadMap);
         DestroyTask(taskid);
         break;
@@ -417,7 +417,7 @@ void sub_80BBB90(void)
     sub_80BB764(&x, &y, 0x220);
     MapGridSetMetatileIdAt(x + 7, y + 7, 0xe20);
     CurrentMapDrawMetatileAt(x + 7, y + 7);
-    pal_fill_black();
+    FadeInFromBlack();
     CreateTask(sub_80BBB50, 0);
 }
 
@@ -592,7 +592,7 @@ void sub_80BC074(u8 taskid)
     case 2:
         SetWarpDestinationToDynamicWarp(0x7E);
         WarpIntoMap();
-        gFieldCallback = mapldr_default;
+        gFieldCallback = FieldCB_DefaultWarpExit;
         SetMainCallback2(CB2_LoadMap);
         UnlockPlayerFieldControls();
         DestroyTask(taskid);

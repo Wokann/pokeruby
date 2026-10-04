@@ -30,7 +30,7 @@
 #include "pokedex.h"
 #include "mori_debug_menu.h"
 #include "cable_club.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "wild_encounter.h"
 #include "battle_setup.h"
 #include "safari_zone.h"
@@ -1093,7 +1093,7 @@ u8 DebugMenu_OpenIwasawa(void)
 u8 DebugMenu_Teleport(void)
 {
     SetWarpDestinationToLastHealLocation();
-    sub_8080E88();
+    DoWarp();
     LockPlayerFieldControls();
     CloseMenu();
     return TRUE;

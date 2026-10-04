@@ -6,7 +6,7 @@
 #include "daycare.h"
 #include "debug.h"
 #include "event_data.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "field_player_avatar.h"
 #include "field_poison.h"
 #include "field_specials.h"
@@ -683,7 +683,7 @@ static bool8 TryArrowWarp(struct MapPosition *position, u16 metatileBehavior, u8
     {
         StoreInitialPlayerAvatarState();
         sub_8068C30(&gMapHeader, warpEventId, position);
-        sub_8080E88();
+        DoWarp();
         return TRUE;
     }
     return FALSE;
@@ -699,22 +699,22 @@ bool8 TryStartWarpEventScript(struct MapPosition *position, u16 metatileBehavior
         sub_8068C30(&gMapHeader, warpEventId, position);
         if (MetatileBehavior_IsEscalator(metatileBehavior) == TRUE)
         {
-            sub_8080F2C(metatileBehavior);
+            DoEscalatorWarp(metatileBehavior);
             return TRUE;
         }
         if (MetatileBehavior_IsLavaridgeB1FWarp(metatileBehavior) == TRUE)
         {
-            sub_8080F48();
+            DoLavaridgeGymB1FWarp();
             return TRUE;
         }
         if (MetatileBehavior_IsLavaridge1FWarp(metatileBehavior) == TRUE)
         {
-            sub_8080F58();
+            DoLavaridgeGym1FWarp();
             return TRUE;
         }
         if (MetatileBehavior_IsAquaHideoutWarp(metatileBehavior) == TRUE)
         {
-            sub_8080F68();
+            DoTeleportTileWarp();
             return TRUE;
         }
         if (MetatileBehavior_IsMtPyreHole(metatileBehavior) == TRUE)
@@ -722,7 +722,7 @@ bool8 TryStartWarpEventScript(struct MapPosition *position, u16 metatileBehavior
             ScriptContext_SetupScript(EventScript_FallDownHoleMtPyre);
             return TRUE;
         }
-        sub_8080E88();
+        DoWarp();
         return TRUE;
     }
     return FALSE;
@@ -801,7 +801,7 @@ static bool8 TryDoorWarp(struct MapPosition *position, u16 metatileBehavior, u8 
             {
                 StoreInitialPlayerAvatarState();
                 sub_8068C30(&gMapHeader, warpEventId, position);
-                sub_8080EF0();
+                DoDoorWarp();
                 return TRUE;
             }
         }
@@ -896,7 +896,7 @@ bool8 TryDoDiveWarp(struct MapPosition *position, u16 metatileBehavior)
         if (SetDiveWarpEmerge(position->x - 7, position->y - 7))
         {
             StoreInitialPlayerAvatarState();
-            sp13E_warp_to_last_warp();
+            DoDiveWarp();
             PlaySE(SE_M_DIVE);
             return TRUE;
         }
@@ -906,7 +906,7 @@ bool8 TryDoDiveWarp(struct MapPosition *position, u16 metatileBehavior)
         if (SetDiveWarpDive(position->x - 7, position->y - 7))
         {
             StoreInitialPlayerAvatarState();
-            sp13E_warp_to_last_warp();
+            DoDiveWarp();
             PlaySE(SE_M_DIVE);
             return TRUE;
         }

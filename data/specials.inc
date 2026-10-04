@@ -11,7 +11,7 @@ gSpecials::
 	def_special ScrSpecial_HealPlayerParty
 	def_special SetCableClubWarp
 	def_special DoCableClubWarp
-	def_special sub_80810DC
+	def_special ReturnFromLinkRoom
 	def_special sub_80839A4
 	def_special sub_80839D0
 	def_special sub_80BB8CC
@@ -308,7 +308,7 @@ gSpecials::
 	def_special InitRoamer
 	def_special TryUpdateRusturfTunnelState
 	def_special IsGrassTypeInParty
-	def_special sub_8081334
+	def_special DoContestHallWarp
 	def_special PutZigzagoonInPlayerParty
 	def_special IsStarterInParty
 	def_special BufferSecretBaseOwnerName
@@ -326,7 +326,7 @@ gSpecials::
 	def_special DoSealedChamberShakingEffect2
 	def_special FoundBlackGlasses
 	def_special StartDroughtWeatherBlend
-	def_special sp13E_warp_to_last_warp
+	def_special DoDiveWarp
 	def_special DoFallWarp
 	def_special ShowContestEntryMonPic
 	def_special sub_80C5164

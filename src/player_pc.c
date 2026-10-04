@@ -1,7 +1,7 @@
 #include "global.h"
 #include "player_pc.h"
 #include "decoration.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "field_weather.h"
 #include "item.h"
 #include "item_menu.h"
@@ -371,7 +371,7 @@ void ItemStorage_ReturnToMenuAfterDeposit(void)
     Menu_DisplayDialogueFrame();
     InitItemStorageMenu(ITEMPC_MENU_DEPOSIT);
     CreateTask(ItemStorage_HandleReturnToProcessInput, 0);
-    pal_fill_black();
+    FadeInFromBlack();
 }
 
 static void ItemStorage_Withdraw(u8 taskId)
@@ -1218,7 +1218,7 @@ static void Mailbox_HandleReturnToProcessInput(u8 taskId) // Mailbox_HandleRetur
 static void Mailbox_DoRedrawMailboxMenuAfterReturn(void)
 {
     Mailbox_DrawMailboxMenu(CreateTask(Mailbox_HandleReturnToProcessInput, 0));
-    pal_fill_black();
+    FadeInFromBlack();
 }
 
 static void Mailbox_ReturnToFieldFromReadMail(void)
@@ -1308,7 +1308,7 @@ static void Mailbox_UpdateMailListAfterDeposit(void)
 
     ItemStorage_SetItemAndMailCount(taskId);
     Mailbox_DrawMailboxMenu(taskId);
-    pal_fill_black();
+    FadeInFromBlack();
 }
 
 void Mailbox_ReturnToMailListAfterDeposit(void)

@@ -1,7 +1,7 @@
 #include "global.h"
 #include "safari_zone.h"
 #include "event_data.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "field_player_avatar.h"
 #include "main.h"
 #include "overworld.h"
@@ -103,7 +103,7 @@ void sub_80C824C(void)
     {
         RunScriptImmediately(&gUnknown_081C340A);
         WarpIntoMap();
-        gFieldCallback = sub_8080E44;
+        gFieldCallback = FieldCB_ReturnToFieldNoScriptCheckMusic;
         SetMainCallback2(CB2_LoadMap);
     }
     else if (gBattleOutcome == 7)

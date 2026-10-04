@@ -2,7 +2,7 @@
 #include "field_special_scene.h"
 #include "event_data.h"
 #include "field_camera.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "event_object_movement.h"
 #include "field_specials.h"
 #include "fieldmap.h"
@@ -204,7 +204,7 @@ void Task_HandleTruckSequence(u8 taskId)
         data[1]++;
         if (data[1] == SECONDS(2.5))
         {
-            pal_fill_black();
+            FadeInFromBlack();
             data[1] = 0;
             data[0] = 2;
         }
@@ -342,7 +342,7 @@ void Task_HandlePorthole(u8 taskId)
         FlagClear(FLAG_DONT_TRANSITION_MUSIC);
         FlagClear(FLAG_HIDE_MAP_NAME_POPUP);
         SetWarpDestinationToDynamicWarp(0);
-        sp13E_warp_to_last_warp();
+        DoDiveWarp();
         DestroyTask(taskId);
         break;
     }
@@ -368,7 +368,7 @@ void sub_80C791C(void)
 {
     sub_80C78A0();
     gObjectEvents[gPlayerAvatar.objectEventId].invisible = TRUE;
-    pal_fill_black();
+    FadeInFromBlack();
     CreateTask(Task_HandlePorthole, 80);
     LockPlayerFieldControls();
 }
@@ -380,5 +380,5 @@ void sub_80C7958(void)
     FlagSet(FLAG_HIDE_MAP_NAME_POPUP);
     SetDynamicWarp(0, gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, -1);
     sub_80C7754();
-    sub_8080F9C();
+    DoPortholeWarp();
 }

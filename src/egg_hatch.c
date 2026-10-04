@@ -1,4 +1,5 @@
 #include "global.h"
+#include "field_screen_effect.h"
 #include "graphics.h"
 #include "data.h"
 #include "daycare.h"
@@ -44,7 +45,6 @@ struct EggHatchData* gEggHatchData;
 
 bool8 GetSetPokedexFlag(u16 nationalNum, u8 caseID);
 const struct CompressedSpritePalette* GetMonSpritePalStruct(struct Pokemon* mon); //gets pokemon palette address
-void sub_8080990(void);
 
 static void Task_EggHatch(u8 taskId);
 static void CB2_EggHatch_0(void);
@@ -385,7 +385,7 @@ static void Task_EggHatch(u8 taskId)
     if (!gPaletteFade.active)
     {
         SetMainCallback2(CB2_EggHatch_0);
-        gFieldCallback = sub_8080990;
+        gFieldCallback = FieldCB_ContinueScriptHandleMusic;
         DestroyTask(taskId);
     }
 }

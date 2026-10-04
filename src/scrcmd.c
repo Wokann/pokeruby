@@ -14,10 +14,9 @@
 #include "event_object_movement.h"
 #include "field_door.h"
 #include "field_effect.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "field_message_box.h"
 #include "field_player_avatar.h"
-#include "field_screen_effect.h"
 #include "field_specials.h"
 #include "field_tasks.h"
 #include "field_weather.h"
@@ -726,7 +725,7 @@ bool8 ScrCmd_warp(struct ScriptContext *ctx)
     u16 y = VarGet(ScriptReadHalfword(ctx));
 
     SetWarpDestination(mapGroup, mapNum, warpId, x, y);
-    sub_8080E88();
+    DoWarp();
     ResetInitialPlayerAvatarState();
     return TRUE;
 }
@@ -740,7 +739,7 @@ bool8 ScrCmd_warpsilent(struct ScriptContext *ctx)
     u16 y = VarGet(ScriptReadHalfword(ctx));
 
     SetWarpDestination(mapGroup, mapNum, warpId, x, y);
-    sp13E_warp_to_last_warp();
+    DoDiveWarp();
     ResetInitialPlayerAvatarState();
     return TRUE;
 }
@@ -754,7 +753,7 @@ bool8 ScrCmd_warpdoor(struct ScriptContext *ctx)
     u16 y = VarGet(ScriptReadHalfword(ctx));
 
     SetWarpDestination(mapGroup, mapNum, warpId, x, y);
-    sub_8080EF0();
+    DoDoorWarp();
     ResetInitialPlayerAvatarState();
     return TRUE;
 }
@@ -785,7 +784,7 @@ bool8 ScrCmd_warpteleport(struct ScriptContext *ctx)
     u16 y = VarGet(ScriptReadHalfword(ctx));
 
     SetWarpDestination(mapGroup, mapNum, warpId, x, y);
-    sub_8080F68();
+    DoTeleportTileWarp();
     ResetInitialPlayerAvatarState();
     return TRUE;
 }

@@ -29,7 +29,7 @@
 #include "load_save.h"
 #include "save.h"
 #include "script.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "decompress.h"
 #include "mail_data.h"
 #include "evolution_scene.h"
@@ -4431,7 +4431,7 @@ static void Task_InGameTrade(u8 taskId)
     if (!gPaletteFade.active)
     {
         SetMainCallback2(CB2_InitInGameTrade);
-        gFieldCallback = sub_8080990;
+        gFieldCallback = FieldCB_ContinueScriptHandleMusic;
         DestroyTask(taskId);
     }
 }

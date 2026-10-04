@@ -7,7 +7,7 @@
 #include "field_control_avatar.h"
 #include "field_effect.h"
 #include "field_effect_helpers.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "field_player_avatar.h"
 #include "field_weather.h"
 #include "fieldmap.h"
@@ -952,7 +952,7 @@ void sub_80865BC(void)
 
 void mapldr_080842E8(void)
 {
-    pal_fill_black();
+    FadeInFromBlack();
     CreateTask(task00_8084310, 0);
     LockPlayerFieldControls();
     FreezeObjectEvents();
@@ -990,7 +990,7 @@ void task00_8084310(u8 taskId)
 void mapldr_08084390(void)
 {
     Overworld_PlaySpecialMapMusic();
-    pal_fill_black();
+    FadeInFromBlack();
     CreateTask(c3_080843F8, 0);
     gObjectEvents[gPlayerAvatar.objectEventId].invisible = TRUE;
     if (gPlayerAvatar.flags & 0x08)
@@ -1030,7 +1030,7 @@ extern void CameraObjectReset(void);
 void sub_8086748(void)
 {
     Overworld_PlaySpecialMapMusic();
-    pal_fill_for_map_transition();
+    WarpFadeInScreen();
     LockPlayerFieldControls();
     FreezeObjectEvents();
     CreateTask(sub_8086774, 0);
@@ -1280,7 +1280,7 @@ void sub_8086BE4(struct Task *task)
 void sub_8086C30(void)
 {
     TryFadeOutOldMapMusic();
-    WarpFadeScreen();
+    WarpFadeOutScreen();
 }
 
 void sub_8086C40(void)
@@ -1298,7 +1298,7 @@ void sub_8086C40(void)
 void sub_8086C94(void)
 {
     Overworld_PlaySpecialMapMusic();
-    pal_fill_for_map_transition();
+    WarpFadeInScreen();
     LockPlayerFieldControls();
     CreateTask(sub_8086CBC, 0);
     gFieldCallback = NULL;
@@ -1639,7 +1639,7 @@ bool8 sub_80872E4(struct Task *task, struct ObjectEvent *objectEvent, struct Spr
 bool8 sub_80873D8(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     TryFadeOutOldMapMusic();
-    WarpFadeScreen();
+    WarpFadeOutScreen();
     task->data[0]++;
     return FALSE;
 }
@@ -1661,7 +1661,7 @@ void sub_8087470(u8);
 void mapldr_080851BC(void)
 {
     Overworld_PlaySpecialMapMusic();
-    pal_fill_for_map_transition();
+    WarpFadeInScreen();
     LockPlayerFieldControls();
     gFieldCallback = NULL;
     CreateTask(sub_8087470, 0);
@@ -1802,7 +1802,7 @@ bool8 sub_80877AC(struct Task *task, struct ObjectEvent *objectEvent, struct Spr
     if (!FieldEffectActiveListContains(FLDEFF_POP_OUT_OF_ASH))
     {
         TryFadeOutOldMapMusic();
-        WarpFadeScreen();
+        WarpFadeOutScreen();
         task->data[0]++;
     }
     return FALSE;
@@ -1874,7 +1874,7 @@ static void EscapeRopeFieldEffect_Step1(struct Task *task)
     if (task->data[14] != 0 && (--task->data[14]) == 0)
     {
         TryFadeOutOldMapMusic();
-        WarpFadeScreen();
+        WarpFadeOutScreen();
     }
 
     objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
@@ -1910,7 +1910,7 @@ void sub_8087A74(u8);
 void mapldr_080859D4(void)
 {
     Overworld_PlaySpecialMapMusic();
-    pal_fill_for_map_transition();
+    WarpFadeInScreen();
     LockPlayerFieldControls();
     FreezeObjectEvents();
     gFieldCallback = NULL;
@@ -2037,7 +2037,7 @@ static void TeleportFieldEffectTask3(struct Task *task)
     {
         task->data[0]++;
         TryFadeOutOldMapMusic();
-        WarpFadeScreen();
+        WarpFadeOutScreen();
     }
 }
 
@@ -2058,7 +2058,7 @@ void sub_8087E1C(u8);
 static void mapldr_08085D88(void)
 {
     Overworld_PlaySpecialMapMusic();
-    pal_fill_for_map_transition();
+    WarpFadeInScreen();
     LockPlayerFieldControls();
     FreezeObjectEvents();
     gFieldCallback = NULL;
@@ -2842,7 +2842,7 @@ void sub_8088F10(struct Task *task)
 {
     if (sub_8088FA4(task->data[1]))
     {
-        WarpFadeScreen();
+        WarpFadeOutScreen();
         task->data[0]++;
     }
 }

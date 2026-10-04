@@ -2,7 +2,7 @@
 #include "random.h"
 #include "graphics.h"
 #include "ewram.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "constants/game_stat.h"
 #include "m4a.h"
 #include "main.h"

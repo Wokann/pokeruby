@@ -7,7 +7,7 @@
 #include "data.h"
 #include "event_data.h"
 #include "field_effect.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "field_player_avatar.h"
 #include "field_weather.h"
 #include "fieldmap.h"
@@ -591,7 +591,7 @@ void ItemUseOutOfBattle_PokeblockCase(u8 taskId)
     }
     else
     {
-        gFieldCallback = (void *)sub_8080E28;
+        gFieldCallback = (void *)FieldCB_ReturnToFieldNoScript;
         sub_810BA7C(1);
         ItemMenu_ConfirmComplexFade(taskId);
     }

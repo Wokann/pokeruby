@@ -2,7 +2,7 @@
 #include "contest.h"
 #include "data.h"
 #include "ewram.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "main.h"
 #include "menu.h"
 #include "menu_cursor.h"
@@ -249,7 +249,7 @@ static void InitMoveTutorMenuWaitFade(u8 taskId)
     if (!gPaletteFade.active)
     {
         SetMainCallback2(CB2_InitMoveTutorMenu);
-        gFieldCallback = sub_8080990;
+        gFieldCallback = FieldCB_ContinueScriptHandleMusic;
         DestroyTask(taskId);
     }
 }

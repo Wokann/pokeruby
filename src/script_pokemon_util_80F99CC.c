@@ -4,7 +4,7 @@
 #include "contest.h"
 #include "data.h"
 #include "party_menu.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "palette.h"
 #include "party_menu.h"
 #include "pokemon.h"
@@ -277,7 +277,7 @@ void SelectMove(void)
 {
     ShowSelectMovePokemonSummaryScreen(&gPlayerParty[0], gSpecialVar_0x8004, gPlayerPartyCount - 1, CB2_ReturnToField, 0);
     pssData.mode = PSS_MODE_MOVE_DELETER;
-    gFieldCallback = sub_8080990;
+    gFieldCallback = FieldCB_ContinueScriptHandleMusic;
 }
 
 void ScrSpecial_CountPokemonMoves(void) // count pokemon moves

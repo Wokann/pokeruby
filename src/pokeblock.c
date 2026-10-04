@@ -8,7 +8,7 @@
 #include "text.h"
 #include "main.h"
 #include "menu.h"
-#include "field_fadetransition.h"
+#include "field_screen_effect.h"
 #include "palette.h"
 #include "graphics.h"
 #include "decompress.h"
@@ -803,7 +803,7 @@ static void sub_810C2C8(u8 taskId)
     {
         if (gUnknown_02039244 == 3)
         {
-            gFieldCallback = sub_8080990;
+            gFieldCallback = FieldCB_ContinueScriptHandleMusic;
         }
         sub_810C2B0();
         SetMainCallback2(gUnknown_083F7EA8[gUnknown_02039244]);
