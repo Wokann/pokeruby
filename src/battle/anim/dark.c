@@ -11,9 +11,6 @@
 #include "trig.h"
 #include "constants/battle.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 extern u8 gBattlerSpriteIds[];
 extern u16 gBattle_BG1_X;
 extern u16 gBattle_BG1_Y;
@@ -48,7 +45,7 @@ const struct SpriteTemplate gSpriteTemplate_83DB118 =
 {
     .tileTag = ANIM_TAG_TIED_BAG,
     .paletteTag = ANIM_TAG_TIED_BAG,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -119,7 +116,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB1D0 =
 {
     .tileTag = ANIM_TAG_SHARP_TEETH,
     .paletteTag = ANIM_TAG_SHARP_TEETH,
-    .oam = &gOamData_837E0BC,
+    .oam = &gOamData_AffineNormal_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DB1B0,
@@ -130,7 +127,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB1E8 =
 {
     .tileTag = ANIM_TAG_CLAMP,
     .paletteTag = ANIM_TAG_CLAMP,
-    .oam = &gOamData_837E0BC,
+    .oam = &gOamData_AffineNormal_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DB1B0,
@@ -161,7 +158,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB238 =
 {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DB230,
@@ -198,7 +195,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB288 =
 {
     .tileTag = ANIM_TAG_CLAW_SLASH,
     .paletteTag = ANIM_TAG_CLAW_SLASH,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DB280,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -213,7 +210,7 @@ void sub_80DFC24(u8 taskId)
     bank = gBattleAnimAttacker;
     gTasks[taskId].data[1] = 16;
     REG_BLDALPHA = 16;
-    if (GetBattlerPosition_permutated(bank) == 1)
+    if (GetBattlerSpriteBGPriorityRank(bank) == 1)
         REG_BLDCNT = 0x3F42;
     else
         REG_BLDCNT = 0x3F44;
@@ -276,7 +273,7 @@ void sub_80DFD58(u8 taskId)
 void sub_80DFDC0(u8 taskId)
 {
     REG_BLDALPHA = 0x1000;
-    if (GetBattlerPosition_permutated(gBattleAnimAttacker) == 1)
+    if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == 1)
         REG_BLDCNT = 0x3F42;
     else
         REG_BLDCNT = 0x3F44;
@@ -415,7 +412,7 @@ static void sub_80E00D0(struct Sprite *sprite)
 void sub_80E00EC(u8 taskId)
 {
     struct ScanlineEffectParams scanlineParams;
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData subStruct;
     u16 i;
     u8 pos;
     int var0;
@@ -436,13 +433,13 @@ void sub_80E00EC(u8 taskId)
     else
         task->data[8] = -64;
 
-    task->data[3] = GetBattlerPosition_permutated(gBattleAnimAttacker);
+    task->data[3] = GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker);
     if (task->data[3] == 1)
     {
-        sub_8078914(&subStruct);
+        GetBattleAnimBg1Data(&subStruct);
         task->data[10] = gBattle_BG1_Y;
         REG_BLDCNT = 0x3F42;
-        FillPalette(0, subStruct.field_8 << 4, 32);
+        FillPalette(0, subStruct.paletteId << 4, 32);
         scanlineParams.dmaDest = &REG_BG1VOFS;
         var0 = 2;
 
@@ -548,7 +545,7 @@ static void sub_80E02A4(u8 taskId)
 
 void sub_80E03BC(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData subStruct;
     struct ScanlineEffectParams scanlineParams;
     u8 pos;
     u16 i;
@@ -567,7 +564,7 @@ void sub_80E03BC(u8 taskId)
         }
         else
         {
-            task->data[3] = GetBattlerPosition_permutated(gBattleAnimTarget);
+            task->data[3] = GetBattlerSpriteBGPriorityRank(gBattleAnimTarget);
             if (task->data[3] == 1)
             {
                 REG_BLDCNT = 0x3F42;
@@ -585,9 +582,9 @@ void sub_80E03BC(u8 taskId)
     case 1:
         if (task->data[3] == 1)
         {
-            sub_8078914(&subStruct);
+            GetBattleAnimBg1Data(&subStruct);
             task->data[10] = gBattle_BG1_Y;
-            FillPalette(0, subStruct.field_8 << 4, 32);
+            FillPalette(0, subStruct.paletteId << 4, 32);
         }
         else
         {
@@ -795,11 +792,11 @@ static void sub_80E08CC(u8 priority)
 
 void sub_80E0918(u8 taskId)
 {
-    u8 toBG2 = GetBattlerPosition_permutated(gBattleAnimAttacker) ^ 1 ? 1 : 0;
+    u8 toBG2 = GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) ^ 1 ? 1 : 0;
     MoveBattlerSpriteToBG(gBattleAnimAttacker, toBG2);
     gSprites[gBattlerSpriteIds[gBattleAnimAttacker]].invisible = FALSE;
 
-    if (IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
+    if (IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2))
     {
         MoveBattlerSpriteToBG(gBattleAnimAttacker ^ 2, toBG2 ^ 1);
         gSprites[gBattlerSpriteIds[gBattleAnimAttacker ^ 2]].invisible = FALSE;
@@ -810,11 +807,11 @@ void sub_80E0918(u8 taskId)
 
 void sub_80E09C4(u8 taskId)
 {
-    u8 toBG2 = GetBattlerPosition_permutated(gBattleAnimAttacker) ^ 1 ? 1 : 0;
-    sub_8076464(toBG2);
+    u8 toBG2 = GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) ^ 1 ? 1 : 0;
+    ResetBattleAnimBg(toBG2);
 
-    if (IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
-        sub_8076464(toBG2 ^ 1);
+    if (IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2))
+        ResetBattleAnimBg(toBG2 ^ 1);
 
     DestroyAnimVisualTask(taskId);
 }
@@ -834,7 +831,7 @@ void sub_80E0A4C(u8 taskId)
     u8 spriteId;
     u8 newSpriteId;
     u16 paletteNum;
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData subStruct;
     int var0 = 0;
 
     gBattle_WIN0H = var0;
@@ -853,7 +850,7 @@ void sub_80E0A4C(u8 taskId)
     {
         if (GetBattlerPosition(gBattleAnimAttacker) == 3 || GetBattlerPosition(gBattleAnimAttacker) == 0)
         {
-            if (IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2) == TRUE)
+            if (IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2) == TRUE)
             {
                 gSprites[gBattlerSpriteIds[gBattleAnimAttacker ^ 2]].oam.priority--;
                 REG_BG1CNT_BITFIELD.priority = 1;
@@ -877,11 +874,11 @@ void sub_80E0A4C(u8 taskId)
     spriteId = GetAnimBattlerSpriteId(0);
     newSpriteId = sub_807A4A0(gBattleAnimAttacker, spriteId, species);
 
-    sub_8078914(&subStruct);
-    DmaClear32(3, subStruct.field_4, 0x1000);
-    LZDecompressVram(&gUnknown_08D1D574, subStruct.field_4);
-    LZDecompressVram(&gUnknown_08D1D410, subStruct.field_0);
-    LoadCompressedPalette(&gUnknown_08D1D54C, subStruct.field_8 << 4, 32);
+    GetBattleAnimBg1Data(&subStruct);
+    DmaClear32(3, subStruct.bgTilemap, 0x1000);
+    LZDecompressVram(&gUnknown_08D1D574, subStruct.bgTilemap);
+    LZDecompressVram(&gUnknown_08D1D410, subStruct.bgTiles);
+    LoadCompressedPalette(&gUnknown_08D1D54C, subStruct.paletteId << 4, 32);
 
     gBattle_BG1_X = -gSprites[spriteId].x + 96;
     gBattle_BG1_Y = -gSprites[spriteId].y + 32;
@@ -902,7 +899,7 @@ void sub_80E0A4C(u8 taskId)
 
 static void sub_80E0CD0(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData subStruct;
     u16 paletteNum;
     u8 spriteId;
     u8 taskIdCopy = taskId;
@@ -917,7 +914,7 @@ static void sub_80E0CD0(u8 taskId)
 
         if (++gTasks[taskIdCopy].data[11] == 2)
         {
-            sub_8076464(0);
+            ResetBattleAnimBg(0);
             gBattle_WIN0H = 0;
             gBattle_WIN0V = 0;
             REG_WININ = 0x3F3F;
@@ -936,8 +933,8 @@ static void sub_80E0CD0(u8 taskId)
                 sub_8079108(paletteNum, 1);
 
             DestroySprite(&gSprites[gTasks[taskIdCopy].data[0]]);
-            sub_8078914(&subStruct);
-            DmaClear32(3, subStruct.field_4, 0x800);
+            GetBattleAnimBg1Data(&subStruct);
+            DmaClear32(3, subStruct.bgTilemap, 0x800);
 
             if (gTasks[taskIdCopy].data[6] == 1)
             {
@@ -988,7 +985,7 @@ void sub_80E0E24(u8 taskId)
     if (calcSpriteId)
     {
         bank = GetBattlerAtPosition(identity);
-        if (IsAnimBankSpriteVisible(bank))
+        if (IsBattlerSpriteVisible(bank))
             spriteId = gBattlerSpriteIds[bank];
         else
             spriteId = 0xFF;

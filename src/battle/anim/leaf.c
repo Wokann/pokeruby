@@ -4,9 +4,6 @@
 #include "rom_8077ABC.h"
 #include "trig.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 void sub_80CAED8(struct Sprite* sprite);
 void AnimMoveTwisterParticle(struct Sprite* sprite);
@@ -52,7 +49,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D649C =
 {
     .tileTag = ANIM_TAG_LEAF,
     .paletteTag = ANIM_TAG_LEAF,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D6494,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -63,7 +60,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D64B4 =
 {
     .tileTag = ANIM_TAG_LEAF,
     .paletteTag = ANIM_TAG_LEAF,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D6494,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -88,7 +85,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D64E4 =
 {
     .tileTag = ANIM_TAG_RAZOR_LEAF,
     .paletteTag = ANIM_TAG_RAZOR_LEAF,
-    .oam = &gOamData_837DF54,
+    .oam = &gOamData_AffineOff_ObjNormal_32x16,
     .anims = gSpriteAnimTable_83D64E0,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -108,7 +105,7 @@ const struct SpriteTemplate gSwiftStarSpriteTemplate =
 {
     .tileTag = ANIM_TAG_YELLOW_STAR,
     .paletteTag = ANIM_TAG_YELLOW_STAR,
-    .oam = &gOamData_837DF94,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D650C,

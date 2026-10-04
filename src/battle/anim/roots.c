@@ -3,9 +3,6 @@
 #include "trig.h"
 #include "battle_anim.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 BSS_DATA u32 filler_03000724;
 BSS_DATA u16 gUnknown_03000728[4];
@@ -65,7 +62,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6658 =
 {
     .tileTag = ANIM_TAG_ROOTS,
     .paletteTag = ANIM_TAG_ROOTS,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D6648,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -76,7 +73,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6670 =
 {
     .tileTag = ANIM_TAG_ROOTS,
     .paletteTag = ANIM_TAG_ROOTS,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D6648,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

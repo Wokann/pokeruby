@@ -5,9 +5,6 @@
 #include "sound.h"
 #include "util.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 // shimmer
 // Used by Magical Leaf.

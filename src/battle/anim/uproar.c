@@ -4,7 +4,6 @@
 #include "sprite.h"
 #include "task.h"
 
-extern s16 gBattleAnimArgs[8];
 
 static void sub_80D2D3C(u8);
 

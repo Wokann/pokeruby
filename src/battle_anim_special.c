@@ -23,9 +23,6 @@ int gUnknown_03005F0C;
 u16 gUnknown_03005F10;
 u16 gUnknown_03005F14;
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 extern u8 gHealthboxSpriteIds[];
 extern u8 gBattlerSpriteIds[];
 extern u16 gBattlerPartyIndexes[];
@@ -39,8 +36,6 @@ extern const u16 gUnknown_08D2E150[];
 extern const struct SpriteTemplate gSpriteTemplates_840B3B4[];
 extern const struct SpriteTemplate gSpriteTemplate_8402500;
 extern const struct SpriteTemplate gBattleAnimSpriteTemplate_84024E8;
-extern const struct CompressedSpriteSheet gBattleAnimPicTable[];
-extern const struct CompressedSpritePalette gBattleAnimPaletteTable[];
 
 static void sub_813F300(u8 taskId);
 static void sub_813F6CC(u8 taskId);
@@ -98,21 +93,21 @@ const struct CompressedSpriteSheet gBallOpenParticleSpritesheets[] =
     {gBattleAnimSpriteSheet_Particles, 0x100, 0xD6F7},
 };
 
-extern const u8 gBattleAnimSpritePalette_136[];
+extern const u8 gBattleAnimSpritePal_CircleImpact[];
 const struct CompressedSpritePalette gBallOpenParticlePalettes[] =
 {
-    {gBattleAnimSpritePalette_136, 0xD6EC},
-    {gBattleAnimSpritePalette_136, 0xD6ED},
-    {gBattleAnimSpritePalette_136, 0xD6EE},
-    {gBattleAnimSpritePalette_136, 0xD6EF},
-    {gBattleAnimSpritePalette_136, 0xD6F0},
-    {gBattleAnimSpritePalette_136, 0xD6F1},
-    {gBattleAnimSpritePalette_136, 0xD6F2},
-    {gBattleAnimSpritePalette_136, 0xD6F3},
-    {gBattleAnimSpritePalette_136, 0xD6F4},
-    {gBattleAnimSpritePalette_136, 0xD6F5},
-    {gBattleAnimSpritePalette_136, 0xD6F6},
-    {gBattleAnimSpritePalette_136, 0xD6F7},
+    {gBattleAnimSpritePal_CircleImpact, 0xD6EC},
+    {gBattleAnimSpritePal_CircleImpact, 0xD6ED},
+    {gBattleAnimSpritePal_CircleImpact, 0xD6EE},
+    {gBattleAnimSpritePal_CircleImpact, 0xD6EF},
+    {gBattleAnimSpritePal_CircleImpact, 0xD6F0},
+    {gBattleAnimSpritePal_CircleImpact, 0xD6F1},
+    {gBattleAnimSpritePal_CircleImpact, 0xD6F2},
+    {gBattleAnimSpritePal_CircleImpact, 0xD6F3},
+    {gBattleAnimSpritePal_CircleImpact, 0xD6F4},
+    {gBattleAnimSpritePal_CircleImpact, 0xD6F5},
+    {gBattleAnimSpritePal_CircleImpact, 0xD6F6},
+    {gBattleAnimSpritePal_CircleImpact, 0xD6F7},
 };
 
 const union AnimCmd gSpriteAnim_840B318[] =
@@ -217,7 +212,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55020,
         .paletteTag = 55020,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -226,7 +221,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55021,
         .paletteTag = 55021,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -235,7 +230,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55022,
         .paletteTag = 55022,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -244,7 +239,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55023,
         .paletteTag = 55023,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -253,7 +248,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55024,
         .paletteTag = 55024,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -262,7 +257,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55025,
         .paletteTag = 55025,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -271,7 +266,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55026,
         .paletteTag = 55026,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -280,7 +275,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55027,
         .paletteTag = 55027,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -289,7 +284,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55028,
         .paletteTag = 55028,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -298,7 +293,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55029,
         .paletteTag = 55029,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -307,7 +302,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55030,
         .paletteTag = 55030,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -316,7 +311,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55031,
         .paletteTag = 55031,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -351,9 +346,9 @@ const u16 gUnknown_0840B4D4[] =
 static void sub_8141C30(struct Sprite *sprite);
 const struct SpriteTemplate gBattleAnimSpriteTemplate_840B4FC =
 {
-    .tileTag = ANIM_TAG_UNUSED_RED_BRICK,
-    .paletteTag = ANIM_TAG_UNUSED_RED_BRICK,
-    .oam = &gOamData_837DF2C,
+    .tileTag = ANIM_TAG_POKEBLOCK,
+    .paletteTag = ANIM_TAG_POKEBLOCK,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -362,7 +357,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_840B4FC =
 
 void unref_sub_813F0F4(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData subStruct;
     u8 healthBoxSpriteId;
     u8 battler;
     u8 spriteId1, spriteId2, spriteId3, spriteId4;
@@ -395,11 +390,11 @@ void unref_sub_813F0F4(u8 taskId)
     gSprites[spriteId3].callback = SpriteCallbackDummy;
     gSprites[spriteId4].callback = SpriteCallbackDummy;
 
-    sub_8078914(&subStruct);
-    DmaFill32Defvars(3, 0, subStruct.field_4, 0x1000);
-    LZDecompressVram(&gUnknown_08D2EE48, subStruct.field_4);
-    LZDecompressVram(&gUnknown_08D2EDFC, subStruct.field_0);
-    LoadCompressedPalette(gUnknown_08D2E150, subStruct.field_8 << 4, 32);
+    GetBattleAnimBg1Data(&subStruct);
+    DmaFill32Defvars(3, 0, subStruct.bgTilemap, 0x1000);
+    LZDecompressVram(&gUnknown_08D2EE48, subStruct.bgTilemap);
+    LZDecompressVram(&gUnknown_08D2EDFC, subStruct.bgTiles);
+    LoadCompressedPalette(gUnknown_08D2E150, subStruct.paletteId << 4, 32);
 
     gBattle_BG1_X = -gSprites[spriteId3].x + 32;
     gBattle_BG1_Y = -gSprites[spriteId3].y - 32;
@@ -411,7 +406,7 @@ void unref_sub_813F0F4(u8 taskId)
 
 static void sub_813F300(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData subStruct;
     u8 spriteId1, spriteId2;
     u8 battler;
 
@@ -444,7 +439,7 @@ static void sub_813F300(u8 taskId)
             REG_BLDALPHA = ((16 - gTasks[taskId].data[12]) << 8) | gTasks[taskId].data[12];
             if (gTasks[taskId].data[12] == 0)
             {
-                sub_8076464(0);
+                ResetBattleAnimBg(0);
                 gBattle_WIN0H = 0;
                 gBattle_WIN0V = 0;
                 REG_WININ = 0x3F3F;
@@ -457,8 +452,8 @@ static void sub_813F300(u8 taskId)
                 REG_BLDALPHA = 0;
                 DestroySprite(&gSprites[gTasks[taskId].data[0]]);
                 DestroySprite(&gSprites[gTasks[taskId].data[2]]);
-                sub_8078914(&subStruct);
-                DmaFill32Defvars(3, 0, subStruct.field_4, 0x800);
+                GetBattleAnimBg1Data(&subStruct);
+                DmaFill32Defvars(3, 0, subStruct.bgTilemap, 0x800);
                 REG_BG1CNT_BITFIELD.areaOverflowMode = 0;
                 spriteId1 = gSprites[gHealthboxSpriteIds[battler]].oam.affineParam;
                 spriteId2 = gSprites[gHealthboxSpriteIds[battler]].data[5];
@@ -1814,7 +1809,7 @@ void sub_81416C4(u8 taskId)
     switch (gTasks[taskId].data[15])
     {
     case 0:
-        if (GetBattlerPosition_permutated(gBattleAnimAttacker) == 1)
+        if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == 1)
             REG_BLDCNT = 0x3F42;
         else
             REG_BLDCNT = 0x3F44;
@@ -1865,7 +1860,7 @@ void TryShinyAnimation(u8 battler, struct Pokemon *mon)
     otId = GetMonData(mon, MON_DATA_OT_ID);
     personality = GetMonData(mon, MON_DATA_PERSONALITY);
 
-    if (IsAnimBankSpriteVisible(battler))
+    if (IsBattlerSpriteVisible(battler))
     {
         shinyValue = HIHALF(otId) ^ LOHALF(otId) ^ HIHALF(personality) ^ LOHALF(personality);
         if (shinyValue < 8)

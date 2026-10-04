@@ -5,9 +5,6 @@
 #include "sound.h"
 #include "scanline_effect.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 extern u16 gBattle_BG2_X;
 extern u16 gBattle_BG1_X;
@@ -23,7 +20,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D77E0 =
 {
     .tileTag = ANIM_TAG_PENCIL,
     .paletteTag = ANIM_TAG_PENCIL,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -44,7 +41,7 @@ void sub_80D0C88(u8 taskId)
     task->data[5] = 0;
     task->data[15] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, 0);
 
-    if (GetBattlerPosition_permutated(gBattleAnimTarget) == 1)
+    if (GetBattlerSpriteBGPriorityRank(gBattleAnimTarget) == 1)
     {
         task->data[6] = gBattle_BG1_X;
         params.dmaDest = (u16 *)REG_ADDR_BG1HOFS;

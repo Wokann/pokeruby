@@ -4,9 +4,6 @@
 #include "battle_anim.h"
 #include "sound.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 static void AnimTask_Minimize_Step(u8 taskId);
 void CreateMinimizeSprite(struct Task* task, u8 taskId);

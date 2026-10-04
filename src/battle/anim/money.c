@@ -4,9 +4,6 @@
 #include "battle_anim.h"
 #include "sound.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 void sub_80CFE9C(struct Sprite* sprite);
 void sub_80CFF50(struct Sprite* sprite);
@@ -41,7 +38,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D75E4 =
 {
     .tileTag = ANIM_TAG_COIN,
     .paletteTag = ANIM_TAG_COIN,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D75CC,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -52,7 +49,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D75FC =
 {
     .tileTag = ANIM_TAG_COIN,
     .paletteTag = ANIM_TAG_COIN,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D75CC,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D75E0,

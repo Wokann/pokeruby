@@ -8,13 +8,8 @@
 
 #define SPRITE gSprites[TASK.data[0]]
 
-extern s16 gBattleAnimArgs[8];
 
 extern u8 gBattlerSpriteIds[];
-extern s32 gAnimMoveDmg;
-extern u16 gAnimMovePower;
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 static void AnimTask_ShakeMonStep(u8 taskId);
 static void AnimTask_ShakeMon2Step(u8 taskId);
@@ -196,7 +191,7 @@ void AnimTask_ShakeMon2(u8 taskId)
             break;
         }
 
-        if (IsAnimBankSpriteVisible(side) == FALSE)
+        if (IsBattlerSpriteVisible(side) == FALSE)
             destroy = TRUE;
 
         sprite = gBattlerSpriteIds[side];
@@ -721,7 +716,7 @@ void sub_80A8A80(u8 taskId)
         spriteId = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
         break;
     case 2:
-        if (!IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
+        if (!IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2))
         {
             DestroyAnimVisualTask(taskId);
             return;
@@ -729,7 +724,7 @@ void sub_80A8A80(u8 taskId)
         spriteId = gBattlerSpriteIds[gBattleAnimAttacker ^ 2];
         break;
     case 3:
-        if (!IsAnimBankSpriteVisible(gBattleAnimTarget ^ 2))
+        if (!IsBattlerSpriteVisible(gBattleAnimTarget ^ 2))
         {
             DestroyAnimVisualTask(taskId);
             return;

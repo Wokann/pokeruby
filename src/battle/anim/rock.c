@@ -9,17 +9,13 @@
 #include "trig.h"
 #include "constants/songs.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
-extern s32 gAnimMoveDmg;
 extern u16 gBattle_BG1_X;
 extern u16 gBattle_BG1_Y;
 extern u16 gBattle_BG3_Y;
 
 extern const u8 gBattleAnimBackgroundTilemap_SandstormBrew[];
 extern const u8 gBattleAnimBackgroundImage_SandstormBrew[];
-extern const u16 gBattleAnimSpritePalette_261[];
+extern const u16 gBattleAnimSpritePal_FlyingDirt[];
 extern const union AnimCmd *const gSpriteAnimTable_83D91F0[];
 extern const union AnimCmd *const gSpriteAnimTable_83D95E0[];
 
@@ -72,7 +68,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAC4C =
 {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DAC40,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -83,7 +79,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAC64 =
 {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DAC40,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -94,7 +90,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAC7C =
 {
     .tileTag = ANIM_TAG_MUD_SAND,
     .paletteTag = ANIM_TAG_MUD_SAND,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -118,7 +114,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DACB8 =
 {
     .tileTag = ANIM_TAG_WATER_ORB,
     .paletteTag = ANIM_TAG_WATER_ORB,
-    .oam = &gOamData_837E0AC,
+    .oam = &gOamData_AffineNormal_ObjBlend_16x16,
     .anims = gSpriteAnimTable_83D91F0,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DACB4,
@@ -129,7 +125,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DACD0 =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D95E0,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -140,7 +136,7 @@ const struct SpriteTemplate gFlyingDirtSpriteTemplate =
 {
     .tileTag = ANIM_TAG_FLYING_DIRT,
     .paletteTag = ANIM_TAG_FLYING_DIRT,
-    .oam = &gOamData_837DF54,
+    .oam = &gOamData_AffineOff_ObjNormal_32x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -216,7 +212,7 @@ const struct SpriteTemplate gAncientPowerRockSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DAD48,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -227,7 +223,7 @@ const struct SpriteTemplate gSpriteTemplate_83DAD78 =
 {
     .tileTag = ANIM_TAG_MUD_SAND,
     .paletteTag = ANIM_TAG_MUD_SAND,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -238,7 +234,7 @@ const struct SpriteTemplate gSpriteTemplate_83DAD90 =
 {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -249,7 +245,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DADA8 =
 {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DAD48,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -278,7 +274,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DADE8 =
 {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
-    .oam = &gOamData_837DF94,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DAD48,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DADE0,
@@ -289,7 +285,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAE00 =
 {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
-    .oam = &gOamData_837DF94,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DAD48,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DADE0,
@@ -300,7 +296,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAE18 =
 {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DAD58,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DADE0,
@@ -311,7 +307,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAE30 =
 {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
-    .oam = &gOamData_837DF94,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DAD50,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DADE0,
@@ -412,7 +408,7 @@ static void sub_80DD02C(struct Sprite *sprite)
 
 void do_boulder_dust(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData subStruct;
     int var0 = 0;
 
     REG_BLDCNT = 0x3F42;
@@ -428,14 +424,14 @@ void do_boulder_dust(u8 taskId)
     REG_BG1HOFS = 0;
     REG_BG1VOFS = 0;
 
-    sub_8078914(&subStruct);
-    DmaFill32Defvars(3, 0, subStruct.field_4, 0x1000);
-    LZDecompressVram(&gBattleAnimBackgroundTilemap_SandstormBrew, subStruct.field_4);
-    LZDecompressVram(&gBattleAnimBackgroundImage_SandstormBrew, subStruct.field_0);
-    LoadCompressedPalette(&gBattleAnimSpritePalette_261, subStruct.field_8 << 4, 32);
+    GetBattleAnimBg1Data(&subStruct);
+    DmaFill32Defvars(3, 0, subStruct.bgTilemap, 0x1000);
+    LZDecompressVram(&gBattleAnimBackgroundTilemap_SandstormBrew, subStruct.bgTilemap);
+    LZDecompressVram(&gBattleAnimBackgroundImage_SandstormBrew, subStruct.bgTiles);
+    LoadCompressedPalette(&gBattleAnimSpritePal_FlyingDirt, subStruct.paletteId << 4, 32);
 
     if (IsContest())
-        sub_80763FC(subStruct.field_8, (u16 *)subStruct.field_4, 0, 0);
+        RelocateBattleBgPal(subStruct.paletteId, (u16 *)subStruct.bgTilemap, 0, 0);
 
     if (gBattleAnimArgs[0] != 0 && GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
         var0 = 1;
@@ -446,7 +442,7 @@ void do_boulder_dust(u8 taskId)
 
 static void sub_80DD190(u8 taskId)
 {    
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData subStruct;
 
     if (gTasks[taskId].data[0] == 0)
         gBattle_BG1_X += 0xFFFA;
@@ -491,9 +487,9 @@ static void sub_80DD190(u8 taskId)
         }
         break;
     case 3:
-        sub_8078914(&subStruct);
-        DmaFill32Large(3, 0, subStruct.field_0, 0x2000, 0x1000);
-        DmaClear32(3, subStruct.field_4, 0x800);
+        GetBattleAnimBg1Data(&subStruct);
+        DmaFill32Large(3, 0, subStruct.bgTiles, 0x2000, 0x1000);
+        DmaClear32(3, subStruct.bgTilemap, 0x800);
         if (!IsContest())
             REG_BG1CNT_BITFIELD.charBaseBlock = 0;
 

@@ -4,9 +4,6 @@
 #include "battle_anim.h"
 #include "sound.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 void sub_80CD140(struct Sprite* sprite);
 void sub_80CD190(struct Sprite* sprite);
@@ -36,7 +33,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6C88 =
 {
     .tileTag = ANIM_TAG_SPARKLE_2,
     .paletteTag = ANIM_TAG_SPARKLE_2,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D6C84,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -47,7 +44,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6CA0 =
 {
     .tileTag = ANIM_TAG_SPARKLE_2,
     .paletteTag = ANIM_TAG_SPARKLE_2,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D6C84,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -76,7 +73,7 @@ void sub_80CD190(struct Sprite* sprite)
     else
         bank = gBattleAnimTarget;
 
-    if (IsDoubleBattle() && IsAnimBankSpriteVisible(bank ^ 2))
+    if (IsDoubleBattle() && IsBattlerSpriteVisible(bank ^ 2))
     {
         SetAverageBattlerPositions(bank, gBattleAnimArgs[6], &sprite->x, &sprite->y);
         sub_807867C(sprite, gBattleAnimArgs[0]);

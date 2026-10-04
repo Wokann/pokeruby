@@ -4,7 +4,6 @@
 #include "sprite.h"
 #include "task.h"
 
-extern s16 gBattleAnimArgs[8];
 
 void SetAnimRaindropCallback(struct Sprite *sprite);
 static void MoveAnimRaindrop(struct Sprite *sprite);
@@ -36,7 +35,7 @@ const struct SpriteTemplate gSpriteTemplate_83D9130 =
 {
     .tileTag = 10115,
     .paletteTag = 10115,
-    .oam = &gOamData_837DF74,
+    .oam = &gOamData_AffineOff_ObjNormal_16x32,
     .anims = gSpriteAnimTable_83D912C,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

@@ -7,16 +7,12 @@
 #include "task.h"
 #include "trig.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 extern u16 gBattle_BG1_X;
 extern u16 gBattle_BG1_Y;
 extern u16 gBattle_BG2_X;
 extern u16 gBattle_BG2_Y;
 extern u16 gBattle_BG3_X;
 extern u16 gBattle_BG3_Y;
-extern u16 gAnimMovePower;
 extern u8 gBattlerSpriteIds[];
 
 static void AnimBonemerangProjectile(struct Sprite *sprite);
@@ -66,7 +62,7 @@ const struct SpriteTemplate gBonemerangSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BONE,
     .paletteTag = ANIM_TAG_BONE,
-    .oam = &gOamData_837DF94,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gBonemerangSpriteAffineAnimTable,
@@ -77,7 +73,7 @@ const struct SpriteTemplate gBoneHitSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BONE,
     .paletteTag = ANIM_TAG_BONE,
-    .oam = &gOamData_837DF94,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gBoneHitSpriteAffineAnimTable,
@@ -88,7 +84,7 @@ const struct SpriteTemplate gSandAttackDirtSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MUD_SAND,
     .paletteTag = ANIM_TAG_MUD_SAND,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -110,7 +106,7 @@ const struct SpriteTemplate gMudSlapDirtSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MUD_SAND,
     .paletteTag = ANIM_TAG_MUD_SAND,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gMudSlapDirtSpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -121,7 +117,7 @@ const struct SpriteTemplate gMudSportDirtSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MUD_SAND,
     .paletteTag = ANIM_TAG_MUD_SAND,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -132,7 +128,7 @@ const struct SpriteTemplate gDirtPlumeSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MUD_SAND,
     .paletteTag = ANIM_TAG_MUD_SAND,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -143,7 +139,7 @@ const struct SpriteTemplate gDigDirtMoundSpriteTemplate =
 {
     .tileTag = ANIM_TAG_DIRT_MOUND,
     .paletteTag = ANIM_TAG_DIRT_MOUND,
-    .oam = &gOamData_837DF54,
+    .oam = &gOamData_AffineOff_ObjNormal_32x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -319,7 +315,7 @@ static void sub_80E1284(u8 taskId)
     {
     case 0:
         task->data[10] = GetAnimBattlerSpriteId(0);
-        task->data[11] = GetBattlerPosition_permutated(gBattleAnimAttacker);
+        task->data[11] = GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker);
         if (task->data[11] == 1)
         {
             task->data[12] = gBattle_BG1_X;
@@ -388,7 +384,7 @@ static void sub_80E143C(u8 taskId)
     gSprites[spriteId].x2 = 0;
     gSprites[spriteId].y2 = 0;
 
-    if (GetBattlerPosition_permutated(gBattleAnimAttacker) == 1)
+    if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == 1)
         gBattle_BG1_Y = 0;
     else
         gBattle_BG2_Y = 0;
@@ -435,7 +431,7 @@ static void sub_80E1560(u8 taskId)
     {
     case 0:
         task->data[10] = GetAnimBattlerSpriteId(0);
-        task->data[11] = GetBattlerPosition_permutated(gBattleAnimAttacker);
+        task->data[11] = GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker);
         if (task->data[11] == 1)
             task->data[12] = gBattle_BG1_X;
         else
@@ -591,7 +587,7 @@ void sub_80E1864(u8 taskId)
         task->data[13] = 0;
         for (i = 0; i < 4; i++)
         {
-            if (IsAnimBankSpriteVisible(i))
+            if (IsBattlerSpriteVisible(i))
             {
                 task->data[task->data[13] + 9] = gBattlerSpriteIds[i];
                 task->data[13]++;

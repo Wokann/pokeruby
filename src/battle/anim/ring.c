@@ -6,9 +6,6 @@
 #include "main.h"
 #include "util.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 extern u8 gBattlerSpriteIds[];
 
@@ -32,7 +29,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D77F8 =
 {
     .tileTag = ANIM_TAG_SNORE_Z,
     .paletteTag = ANIM_TAG_SNORE_Z,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -57,7 +54,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7828 =
 {
     .tileTag = ANIM_TAG_EXPLOSION,
     .paletteTag = ANIM_TAG_EXPLOSION,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D7824,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -101,7 +98,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D78BC =
 {
     .tileTag = ANIM_TAG_BREAKING_EGG,
     .paletteTag = ANIM_TAG_BREAKING_EGG,
-    .oam = &gOamData_837E114,
+    .oam = &gOamData_AffineDouble_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D78B0,
@@ -144,7 +141,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7928 =
 {
     .tileTag = ANIM_TAG_THIN_RING,
     .paletteTag = ANIM_TAG_THIN_RING,
-    .oam = &gOamData_837DFFC,
+    .oam = &gOamData_AffineDouble_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D791C,
@@ -167,7 +164,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D795C =
 {
     .tileTag = ANIM_TAG_THIN_RING,
     .paletteTag = ANIM_TAG_THIN_RING,
-    .oam = &gOamData_837E11C,
+    .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D7958,
@@ -178,7 +175,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7974 =
 {
     .tileTag = ANIM_TAG_THIN_RING,
     .paletteTag = ANIM_TAG_THIN_RING,
-    .oam = &gOamData_837E11C,
+    .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D791C,
@@ -189,7 +186,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D798C =
 {
     .tileTag = ANIM_TAG_THIN_RING,
     .paletteTag = ANIM_TAG_THIN_RING,
-    .oam = &gOamData_837E11C,
+    .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D7924,
@@ -200,7 +197,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D79A4 =
 {
     .tileTag = ANIM_TAG_THIN_RING,
     .paletteTag = ANIM_TAG_THIN_RING,
-    .oam = &gOamData_837E11C,
+    .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D791C,
@@ -220,7 +217,7 @@ void sub_80D0FD8(struct Sprite* sprite)
         bank = gBattleAnimTarget;
 
     r4 = gBattleAnimArgs[3] ^ 1;
-    if (IsDoubleBattle() && IsAnimBankSpriteVisible(bank ^ 2))
+    if (IsDoubleBattle() && IsBattlerSpriteVisible(bank ^ 2))
     {
         SetAverageBattlerPositions(bank, r4, &sp0, &sp1);
         if (r4 == 0)
@@ -283,7 +280,7 @@ void sub_80D10B8(struct Sprite* sprite)
     if (GetBattlerSide(bankr7) != 0)
     {
         r9 = GetBattlerSpriteCoord(bankr7, r10) + gBattleAnimArgs[0];
-        if (IsAnimBankSpriteVisible(bankr8 ^ 2))
+        if (IsBattlerSpriteVisible(bankr8 ^ 2))
             sprite->subpriority = gSprites[gBattlerSpriteIds[bankr8 ^ 2]].subpriority - 1;
         else
             sprite->subpriority = gSprites[gBattlerSpriteIds[bankr8]].subpriority - 1;
@@ -291,7 +288,7 @@ void sub_80D10B8(struct Sprite* sprite)
     else
     {
         r9 = GetBattlerSpriteCoord(bankr7, r10) - gBattleAnimArgs[0];
-        if (gMain.inBattle && IsAnimBankSpriteVisible(bankr7 ^ 2))
+        if (gMain.inBattle && IsBattlerSpriteVisible(bankr7 ^ 2))
         {
             if (gSprites[gBattlerSpriteIds[bankr7]].x < gSprites[gBattlerSpriteIds[bankr7 ^ 2]].x)
                 sprite->subpriority = gSprites[gBattlerSpriteIds[bankr7 ^ 2]].subpriority + 1;
@@ -306,7 +303,7 @@ void sub_80D10B8(struct Sprite* sprite)
     }
 
     r6 = GetBattlerSpriteCoord(bankr7, sp4) + gBattleAnimArgs[1];
-    if (gMain.inBattle && IsAnimBankSpriteVisible(bankr8 ^ 2))
+    if (gMain.inBattle && IsBattlerSpriteVisible(bankr8 ^ 2))
     {
         SetAverageBattlerPositions(bankr8, gBattleAnimArgs[6], &sp0, &sp1);
     }

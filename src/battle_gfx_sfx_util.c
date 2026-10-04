@@ -43,8 +43,6 @@ extern struct MusicPlayerInfo gMPlayInfo_SE2;
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 extern u16 gBattleTypeFlags;
 extern u8 gBattleMonForms[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 extern void (*gAnimScriptCallback)(void);
 extern u8 gAnimScriptActive;
 extern const u8 *const gBattleAnims_General[];

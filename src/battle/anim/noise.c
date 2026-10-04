@@ -2,9 +2,6 @@
 #include "rom_8077ABC.h"
 #include "battle_anim.h"
 
-extern s16 gBattleAnimArgs[8];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 void sub_80D2D68(struct Sprite* sprite);
 static void sub_80D2E30(struct Sprite *);
@@ -16,7 +13,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7CC8 =
 {
     .tileTag = ANIM_TAG_JAGGED_MUSIC_NOTE,
     .paletteTag = ANIM_TAG_JAGGED_MUSIC_NOTE,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

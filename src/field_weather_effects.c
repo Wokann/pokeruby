@@ -2221,14 +2221,14 @@ const union AnimCmd *const gSpriteAnimTable_839ACB8[] =
     gSpriteAnim_839ACAC,
 };
 
-extern const struct OamData gOamData_837DF24;
+extern const struct OamData gOamData_AffineOff_ObjNormal_8x8;
 
 void unc_0807DAB4(struct Sprite *);
 const struct SpriteTemplate gSpriteTemplate_839ACBC =
 {
     .tileTag = 4613,
     .paletteTag = 4608,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gSpriteAnimTable_839ACB8,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

@@ -10,11 +10,7 @@
 #include "constants/battle.h"
 #include "constants/songs.h"
 
-extern s16 gBattleAnimArgs[];
 extern u8 gBattlerSpriteIds[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
-extern u8 gUnknown_0202F7D2;
 
 static void sub_80DDB6C(struct Sprite *sprite);
 static void sub_80DDBD8(struct Sprite *);
@@ -65,7 +61,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAE64 =
 {
     .tileTag = ANIM_TAG_YELLOW_BALL,
     .paletteTag = ANIM_TAG_YELLOW_BALL,
-    .oam = &gOamData_837DFEC,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DAE60,
@@ -76,7 +72,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAE7C =
 {
     .tileTag = ANIM_TAG_YELLOW_BALL,
     .paletteTag = ANIM_TAG_YELLOW_BALL,
-    .oam = &gOamData_837E04C,
+    .oam = &gOamData_AffineOff_ObjBlend_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -98,7 +94,7 @@ const struct SpriteTemplate gShadowBallSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SHADOW_BALL,
     .paletteTag = ANIM_TAG_SHADOW_BALL,
-    .oam = &gOamData_837DF94,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DAEA4,
@@ -124,7 +120,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAEDC =
 {
     .tileTag = ANIM_TAG_LICK,
     .paletteTag = ANIM_TAG_LICK,
-    .oam = &gOamData_837DF74,
+    .oam = &gOamData_AffineOff_ObjNormal_16x32,
     .anims = gSpriteAnimTable_83DAED8,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -146,7 +142,7 @@ const struct SpriteTemplate gSpriteTemplate_83DAF08 =
 {
     .tileTag = ANIM_TAG_WHITE_SHADOW,
     .paletteTag = ANIM_TAG_WHITE_SHADOW,
-    .oam = &gOamData_837E07C,
+    .oam = &gOamData_AffineOff_ObjBlend_64x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -157,7 +153,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAF20 =
 {
     .tileTag = ANIM_TAG_NAIL,
     .paletteTag = ANIM_TAG_NAIL,
-    .oam = &gOamData_837E074,
+    .oam = &gOamData_AffineOff_ObjBlend_32x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -168,7 +164,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAF38 =
 {
     .tileTag = ANIM_TAG_GHOSTLY_SPIRIT,
     .paletteTag = ANIM_TAG_GHOSTLY_SPIRIT,
-    .oam = &gOamData_837E054,
+    .oam = &gOamData_AffineOff_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -179,7 +175,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAF50 =
 {
     .tileTag = ANIM_TAG_DEVIL,
     .paletteTag = ANIM_TAG_DEVIL,
-    .oam = &gOamData_837E054,
+    .oam = &gOamData_AffineOff_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -204,7 +200,7 @@ const struct SpriteTemplate gSpriteTemplate_83DAF80 =
 {
     .tileTag = ANIM_TAG_PURPLE_FLAME,
     .paletteTag = ANIM_TAG_PURPLE_FLAME,
-    .oam = &gOamData_837E094,
+    .oam = &gOamData_AffineOff_ObjBlend_16x32,
     .anims = gSpriteAnimTable_83DAF7C,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -257,7 +253,7 @@ static void sub_80DDBD8(struct Sprite *sprite)
         return;
     if (r0 <= 0)
         return;
-    PlaySE12WithPanning(SE_M_CONFUSE_RAY, gUnknown_0202F7D2);
+    PlaySE12WithPanning(SE_M_CONFUSE_RAY, gAnimCustomPanning);
 }
 
 static void sub_80DDC4C(struct Sprite *sprite)
@@ -605,7 +601,7 @@ static void sub_80DE3D4(u8 taskId)
 {
     s16 startLine;
     struct Task *task = &gTasks[taskId];
-    u8 position = GetBattlerPosition_permutated(gBattleAnimTarget);
+    u8 position = GetBattlerSpriteBGPriorityRank(gBattleAnimTarget);
 
     switch (task->data[15])
     {
@@ -707,7 +703,7 @@ static void sub_80DE61C(u8 taskId)
 static void sub_80DE6B0(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
-    u8 position = GetBattlerPosition_permutated(gBattleAnimTarget);
+    u8 position = GetBattlerSpriteBGPriorityRank(gBattleAnimTarget);
 
     switch (task->data[15])
     {
@@ -816,7 +812,7 @@ void sub_80DE918(u8 taskId)
         {
             if (battler != gBattleAnimAttacker
              && battler != (gBattleAnimAttacker ^ 2)
-             && IsAnimBankSpriteVisible(battler))
+             && IsBattlerSpriteVisible(battler))
             {
                 spriteId = CreateSprite(&gSpriteTemplate_83DAF08, baseX, baseY, 55);
                 if (spriteId != MAX_SPRITES)

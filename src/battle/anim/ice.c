@@ -10,10 +10,6 @@
 #include "palette.h"
 #include "random.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8  gBattleAnimAttacker;
-extern u8  gBattleAnimTarget;
-extern u8  gAnimVisualTaskCount;
 extern u8  gBattlerPositions[];
 extern u8  gBattlerSpriteIds[];
 
@@ -81,7 +77,7 @@ const struct SpriteTemplate gSpriteTemplate_83D9B68 =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -170,7 +166,7 @@ const struct SpriteTemplate gLargeIcePunchCrystalSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
-    .oam = &gOamData_837E144,
+    .oam = &gOamData_AffineDouble_ObjBlend_8x16,
     .anims = gSpriteAnimTable_83D9BB8,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D9BDC,
@@ -181,7 +177,7 @@ const struct SpriteTemplate gSmallIcePunchCrystalSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
-    .oam = &gOamData_837E044,
+    .oam = &gOamData_AffineOff_ObjBlend_8x8,
     .anims = gSpriteAnimTable_83D9BBC,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -203,7 +199,7 @@ const struct SpriteTemplate IceBeamCenterParticleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
-    .oam = &gOamData_837E0E4,
+    .oam = &gOamData_AffineNormal_ObjBlend_8x16,
     .anims = gSpriteAnimTable_83D9BB8,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D9C20,
@@ -214,7 +210,7 @@ const struct SpriteTemplate gIceBeamOuterParticleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
-    .oam = &gOamData_837E044,
+    .oam = &gOamData_AffineOff_ObjBlend_8x8,
     .anims = gSpriteAnimTable_83D9BBC,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -238,7 +234,7 @@ const struct SpriteTemplate gLargeIceEffectParticleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
-    .oam = &gOamData_837E0E4,
+    .oam = &gOamData_AffineNormal_ObjBlend_8x16,
     .anims = gSpriteAnimTable_83D9BB8,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D9C74,
@@ -249,7 +245,7 @@ const struct SpriteTemplate gSmallIceEffectParticleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
-    .oam = &gOamData_837E0A4,
+    .oam = &gOamData_AffineNormal_ObjBlend_8x8,
     .anims = gSpriteAnimTable_83D9BBC,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D9C74,
@@ -260,7 +256,7 @@ const struct SpriteTemplate gSmallSnowballSpriteTemplate1 =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gSpriteAnimTable_83D9BC0,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -271,7 +267,7 @@ const struct SpriteTemplate gLargeSnowballSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D9BC4,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -282,7 +278,7 @@ const struct SpriteTemplate gSmallSnowballSpriteTemplate2 =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gSpriteAnimTable_83D9BC0,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -310,7 +306,7 @@ const struct SpriteTemplate gIceSpikeSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ICE_SPIKES,
     .paletteTag = ANIM_TAG_ICE_SPIKES,
-    .oam = &gOamData_837E084,
+    .oam = &gOamData_AffineOff_ObjBlend_8x16,
     .anims = gSpriteAnimTable_83D9D10,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -333,7 +329,7 @@ const struct SpriteTemplate gMistCloudSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MIST_CLOUD,
     .paletteTag = ANIM_TAG_MIST_CLOUD,
-    .oam = &gOamData_837E074,
+    .oam = &gOamData_AffineOff_ObjBlend_32x16,
     .anims = gSpriteAnimTable_83D9D38,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -344,7 +340,7 @@ const struct SpriteTemplate gSmogCloudSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PURPLE_GAS_CLOUD,
     .paletteTag = ANIM_TAG_PURPLE_GAS_CLOUD,
-    .oam = &gOamData_837E074,
+    .oam = &gOamData_AffineOff_ObjBlend_32x16,
     .anims = gSpriteAnimTable_83D9D38,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -360,7 +356,7 @@ const struct SpriteTemplate gMistBallSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -376,7 +372,7 @@ const struct SpriteTemplate gPoisonGasCloudSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PURPLE_GAS_CLOUD,
     .paletteTag = ANIM_TAG_PURPLE_GAS_CLOUD,
-    .oam = &gOamData_837E074,
+    .oam = &gOamData_AffineOff_ObjBlend_32x16,
     .anims = gSpriteAnimTable_83D9D38,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -437,7 +433,7 @@ const struct SpriteTemplate gHailSpriteTemplate =
 {
     .tileTag = ANIM_TAG_HAIL,
     .paletteTag = ANIM_TAG_HAIL,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D9E2C,
@@ -448,7 +444,7 @@ const struct SpriteTemplate gWeatherBallHailSpriteTemplate =
 {
     .tileTag = ANIM_TAG_HAIL,
     .paletteTag = ANIM_TAG_HAIL,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D9E38,
@@ -519,7 +515,7 @@ const struct SpriteTemplate gIceBallSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ICE_CHUNK,
     .paletteTag = ANIM_TAG_ICE_CHUNK,
-    .oam = &gOamData_837DFF4,
+    .oam = &gOamData_AffineDouble_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D9E88,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D9EE0,
@@ -530,7 +526,7 @@ const struct SpriteTemplate gIceBallParticleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gSpriteAnimTable_83D9BBC,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -996,7 +992,7 @@ static void AnimSwirlingFogAnim(struct Sprite *sprite)
 // Fades mons to black and places foggy overlay in Haze.
 void AnimTask_Haze1(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData subStruct;
 
     REG_BLDCNT = 0x3F42;
     REG_BLDALPHA = 0x1000;
@@ -1011,21 +1007,21 @@ void AnimTask_Haze1(u8 taskId)
     REG_BG1HOFS = 0;
     REG_BG1VOFS = 0;
 
-    sub_8078914(&subStruct);
-    DmaFill32Defvars(3, 0, subStruct.field_4, 0x1000);
-    DmaCopy16Defvars(3, &gWeatherFog1Tiles, subStruct.field_0, 0x800);
-    LZDecompressVram(&gBattleAnimFogTilemap, subStruct.field_4);
-    LoadPalette(&gUnknown_083970E8, subStruct.field_8 * 16, 32);
+    GetBattleAnimBg1Data(&subStruct);
+    DmaFill32Defvars(3, 0, subStruct.bgTilemap, 0x1000);
+    DmaCopy16Defvars(3, &gWeatherFog1Tiles, subStruct.bgTiles, 0x800);
+    LZDecompressVram(&gBattleAnimFogTilemap, subStruct.bgTilemap);
+    LoadPalette(&gUnknown_083970E8, subStruct.paletteId * 16, 32);
 
     if (IsContest())
-        sub_80763FC(subStruct.field_8, (u16 *)subStruct.field_4, 0, 0);
+        RelocateBattleBgPal(subStruct.paletteId, (u16 *)subStruct.bgTilemap, 0, 0);
     
     gTasks[taskId].func = AnimTask_Haze2;
 }
 
 static void AnimTask_Haze2(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData subStruct;
 
     gBattle_BG1_X += 0xFFFF;
     gBattle_BG1_Y += 0;
@@ -1069,9 +1065,9 @@ static void AnimTask_Haze2(u8 taskId)
         }
         break;
     case 3:
-        sub_8078914(&subStruct);
-        DmaFill32Large(3, 0, subStruct.field_0, 0x2000, 0x1000);
-        DmaClear32(3, subStruct.field_4, 0x800);
+        GetBattleAnimBg1Data(&subStruct);
+        DmaFill32Large(3, 0, subStruct.bgTiles, 0x2000, 0x1000);
+        DmaClear32(3, subStruct.bgTilemap, 0x800);
 
         if (!IsContest())
             REG_BG1CNT_BITFIELD.charBaseBlock = 0;
@@ -1105,7 +1101,7 @@ static void AnimThrowMistBall(struct Sprite *sprite)
 // Displays misty background in Mist Ball.
 void AnimTask_LoadMistTiles(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData subStruct;
 
     REG_BLDCNT = 0x3F42;
     REG_BLDALPHA = 0x1000;
@@ -1120,14 +1116,14 @@ void AnimTask_LoadMistTiles(u8 taskId)
     REG_BG1HOFS = 0;
     REG_BG1VOFS = 0;
 
-    sub_8078914(&subStruct);
-    DmaFill32Defvars(3, 0, subStruct.field_4, 0x1000);
-    DmaCopy16Defvars(3, &gWeatherFog1Tiles, subStruct.field_0, 0x800);
-    LZDecompressVram(&gBattleAnimFogTilemap, subStruct.field_4);
-    LoadPalette(&gUnknown_083970E8, subStruct.field_8 * 16, 32);
+    GetBattleAnimBg1Data(&subStruct);
+    DmaFill32Defvars(3, 0, subStruct.bgTilemap, 0x1000);
+    DmaCopy16Defvars(3, &gWeatherFog1Tiles, subStruct.bgTiles, 0x800);
+    LZDecompressVram(&gBattleAnimFogTilemap, subStruct.bgTilemap);
+    LoadPalette(&gUnknown_083970E8, subStruct.paletteId * 16, 32);
 
     if (IsContest())
-        sub_80763FC(subStruct.field_8, (u16 *)subStruct.field_4, 0, 0);
+        RelocateBattleBgPal(subStruct.paletteId, (u16 *)subStruct.bgTilemap, 0, 0);
 
     gTasks[taskId].data[15] = -1;
     gTasks[taskId].func = AnimTask_OverlayFogTiles;
@@ -1135,7 +1131,7 @@ void AnimTask_LoadMistTiles(u8 taskId)
 
 static void AnimTask_OverlayFogTiles(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData subStruct;
 
     gBattle_BG1_X += gTasks[taskId].data[15];
     gBattle_BG1_Y += 0;
@@ -1173,9 +1169,9 @@ static void AnimTask_OverlayFogTiles(u8 taskId)
         }
         break;
     case 3:
-        sub_8078914(&subStruct);
-        DmaFill32Large(3, 0, subStruct.field_0, 0x2000, 0x1000);
-        DmaClear32(3, subStruct.field_4, 0x800);
+        GetBattleAnimBg1Data(&subStruct);
+        DmaFill32Large(3, 0, subStruct.bgTiles, 0x2000, 0x1000);
+        DmaClear32(3, subStruct.bgTilemap, 0x800);
 
         if (!IsContest())
             REG_BG1CNT_BITFIELD.charBaseBlock = 0;
@@ -1412,7 +1408,7 @@ bool8 sub_80D8BA8(u8 hailStructId, u8 affineAnimNum, u8 taskId, u8 c)
     if (unk != 2)
     {
         id = GetBattlerAtPosition(gUnknown_083D9DC4[hailStructId].bPosition);
-        if (IsAnimBankSpriteVisible(id))
+        if (IsBattlerSpriteVisible(id))
         {
             possibleBool = TRUE;
             battlerX = GetBattlerSpriteCoord(id, BATTLER_COORD_X_2);

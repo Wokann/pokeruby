@@ -9,9 +9,6 @@
 #include "trig.h"
 #include "constants/songs.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 extern u16 gBattle_BG1_X;
 extern u16 gBattle_BG2_X;
 extern u8 gBattlerSpriteIds[];
@@ -52,7 +49,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA690 =
 {
     .tileTag = ANIM_TAG_SPIRAL,
     .paletteTag = ANIM_TAG_SPIRAL,
-    .oam = &gOamData_837E0BC,
+    .oam = &gOamData_AffineNormal_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA68C,
@@ -63,7 +60,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA6A8 =
 {
     .tileTag = ANIM_TAG_GREEN_LIGHT_WALL,
     .paletteTag = ANIM_TAG_GREEN_LIGHT_WALL,
-    .oam = &gOamData_837E05C,
+    .oam = &gOamData_AffineOff_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -74,7 +71,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA6C0 =
 {
     .tileTag = ANIM_TAG_BLUE_LIGHT_WALL,
     .paletteTag = ANIM_TAG_BLUE_LIGHT_WALL,
-    .oam = &gOamData_837E05C,
+    .oam = &gOamData_AffineOff_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -85,7 +82,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA6D8 =
 {
     .tileTag = ANIM_TAG_RED_LIGHT_WALL,
     .paletteTag = ANIM_TAG_RED_LIGHT_WALL,
-    .oam = &gOamData_837E05C,
+    .oam = &gOamData_AffineOff_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -96,7 +93,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA6F0 =
 {
     .tileTag = ANIM_TAG_GRAY_LIGHT_WALL,
     .paletteTag = ANIM_TAG_GRAY_LIGHT_WALL,
-    .oam = &gOamData_837E05C,
+    .oam = &gOamData_AffineOff_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -107,7 +104,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA708 =
 {
     .tileTag = ANIM_TAG_ORANGE_LIGHT_WALL,
     .paletteTag = ANIM_TAG_ORANGE_LIGHT_WALL,
-    .oam = &gOamData_837E05C,
+    .oam = &gOamData_AffineOff_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -133,7 +130,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA73C =
 {
     .tileTag = ANIM_TAG_SPARKLE_4,
     .paletteTag = ANIM_TAG_SPARKLE_4,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DA738,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -158,7 +155,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA76C =
 {
     .tileTag = ANIM_TAG_SPARKLE_3,
     .paletteTag = ANIM_TAG_SPARKLE_3,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83DA768,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -169,7 +166,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA784 =
 {
     .tileTag = ANIM_TAG_GOLD_RING,
     .paletteTag = ANIM_TAG_GOLD_RING,
-    .oam = &gOamData_837DF74,
+    .oam = &gOamData_AffineOff_ObjNormal_16x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -226,7 +223,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA824 =
 {
     .tileTag = ANIM_TAG_BENT_SPOON,
     .paletteTag = ANIM_TAG_BENT_SPOON,
-    .oam = &gOamData_837DF74,
+    .oam = &gOamData_AffineOff_ObjNormal_16x32,
     .anims = gSpriteAnimTable_83DA81C,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -268,7 +265,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA88C =
 {
     .tileTag = ANIM_TAG_AMNESIA,
     .paletteTag = ANIM_TAG_AMNESIA,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DA85C,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -294,7 +291,7 @@ const struct SpriteTemplate gSpriteTemplate_83DA8DC =
 {
     .tileTag = ANIM_TAG_HOLLOW_ORB,
     .paletteTag = ANIM_TAG_HOLLOW_ORB,
-    .oam = &gOamData_837E04C,
+    .oam = &gOamData_AffineOff_ObjBlend_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -305,7 +302,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA8F4 =
 {
     .tileTag = 10250,
     .paletteTag = 10250,
-    .oam = &gOamData_837DF3C,
+    .oam = &gOamData_AffineOff_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -358,7 +355,7 @@ const struct SpriteTemplate gSpriteTemplate_83DA9AC =
 {
     .tileTag = ANIM_TAG_BLUEGREEN_ORB,
     .paletteTag = ANIM_TAG_BLUEGREEN_ORB,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA99C,
@@ -381,7 +378,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA9E0 =
 {
     .tileTag = ANIM_TAG_WHITE_CIRCLE_OF_LIGHT,
     .paletteTag = ANIM_TAG_WHITE_CIRCLE_OF_LIGHT,
-    .oam = &gOamData_837E11C,
+    .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA9DC,
@@ -419,7 +416,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAA68 =
 {
     .tileTag = ANIM_TAG_CIRCLE_OF_LIGHT,
     .paletteTag = ANIM_TAG_CIRCLE_OF_LIGHT,
-    .oam = &gOamData_837E11C,
+    .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DAA60,
@@ -438,15 +435,15 @@ void sub_80DB74C(struct Sprite *sprite)
     {
         u8 bankCopy;
         u8 bank = bankCopy = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
-        u8 identity = GetBattlerPosition_permutated(bank);
+        u8 identity = GetBattlerSpriteBGPriorityRank(bank);
         int var0 = 1;
         u8 toBG_2 = (identity ^ var0) != 0;
 
-        if (IsAnimBankSpriteVisible(bank))
+        if (IsBattlerSpriteVisible(bank))
             MoveBattlerSpriteToBG(bank, toBG_2);
 
         bank = bankCopy ^ 2;
-        if (IsAnimBankSpriteVisible(bank))
+        if (IsBattlerSpriteVisible(bank))
             MoveBattlerSpriteToBG(bank, toBG_2 ^ var0);
     }
 
@@ -523,11 +520,11 @@ static void sub_80DB92C(struct Sprite *sprite)
             u8 bankCopy;
             u8 bank = bankCopy = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
 
-            if (IsAnimBankSpriteVisible(bank))
+            if (IsBattlerSpriteVisible(bank))
                 gSprites[gBattlerSpriteIds[bank]].invisible = FALSE;
 
             bank = bankCopy ^ 2;
-            if (IsAnimBankSpriteVisible(bank))
+            if (IsBattlerSpriteVisible(bank))
                 gSprites[gBattlerSpriteIds[bank]].invisible = FALSE;
         }
 
@@ -542,16 +539,16 @@ static void sub_80DB9E4(struct Sprite *sprite)
     {
         u8 bankCopy;
         u8 bank = bankCopy = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
-        u8 identity = GetBattlerPosition_permutated(bank);
+        u8 identity = GetBattlerSpriteBGPriorityRank(bank);
         int var0 = 1;
         u8 toBG_2 = (identity ^ var0) != 0;
 
-        if (IsAnimBankSpriteVisible(bank))
-            sub_8076464(toBG_2);
+        if (IsBattlerSpriteVisible(bank))
+            ResetBattleAnimBg(toBG_2);
 
         bank = bankCopy ^ 2;
-        if (IsAnimBankSpriteVisible(bank))
-            sub_8076464(toBG_2 ^ var0);
+        if (IsBattlerSpriteVisible(bank))
+            ResetBattleAnimBg(toBG_2 ^ var0);
     }
 
     sprite->callback = DestroyAnimSprite;
@@ -971,7 +968,7 @@ void sub_80DC2D4(u8 taskId)
     if (task->data[14] < 0)
         task->data[14] = 0;
 
-    if (GetBattlerPosition_permutated(gBattleAnimTarget) == 1)
+    if (GetBattlerSpriteBGPriorityRank(gBattleAnimTarget) == 1)
     {
         task->data[10] = gBattle_BG1_X;
         scanlineParams.dmaDest = &REG_BG1HOFS;

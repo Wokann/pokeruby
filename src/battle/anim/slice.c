@@ -4,9 +4,6 @@
 #include "battle_anim.h"
 #include "sound.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 void AnimCuttingSlice(struct Sprite* sprite);
 void sub_80CC9BC(struct Sprite* sprite);
@@ -30,7 +27,7 @@ const struct SpriteTemplate gCuttingSliceSpriteTemplate =
 {
     .tileTag = ANIM_TAG_CUT,
     .paletteTag = ANIM_TAG_CUT,
-    .oam = &gOamData_837E054,
+    .oam = &gOamData_AffineOff_ObjBlend_32x32,
     .anims = gSpriteAnimTable_83D6B24,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -41,7 +38,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6B40 =
 {
     .tileTag = ANIM_TAG_CUT,
     .paletteTag = ANIM_TAG_CUT,
-    .oam = &gOamData_837E054,
+    .oam = &gOamData_AffineOff_ObjBlend_32x32,
     .anims = gSpriteAnimTable_83D6B24,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -92,7 +89,7 @@ void sub_80CC9BC(struct Sprite* sprite)
     case 2:
         a = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
         b = GetBattlerSpriteCoord(gBattleAnimTarget, 1);
-        if (IsAnimBankSpriteVisible(gBattleAnimTarget ^ 2))
+        if (IsBattlerSpriteVisible(gBattleAnimTarget ^ 2))
         {
             a = (GetBattlerSpriteCoord(gBattleAnimTarget ^ 2, 0) + a) / 2;
             b = (GetBattlerSpriteCoord(gBattleAnimTarget ^ 2, 1) + b) / 2;

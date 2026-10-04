@@ -3,9 +3,6 @@
 #include "rom_8077ABC.h"
 #include "trig.h"
 
-extern s16 gBattleAnimArgs[8];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 extern const union AnimCmd *const gSpriteAnimTable_83D70D8[];
 
@@ -46,7 +43,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7D1C =
 {
     .tileTag = ANIM_TAG_MUSIC_NOTES_2,
     .paletteTag = ANIM_TAG_MUSIC_NOTES_2,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D70D8,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D7D10,
@@ -57,7 +54,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7D34 =
 {
     .tileTag = ANIM_TAG_MUSIC_NOTES_2,
     .paletteTag = ANIM_TAG_MUSIC_NOTES_2,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D70D8,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D7D10,

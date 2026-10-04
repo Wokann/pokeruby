@@ -7,11 +7,8 @@
 #include "palette.h"
 #include "decompress.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
-extern const u8 gBattleAnimSpritePalette_206[];
+extern const u8 gBattleAnimSpritePal_MusicNotes2[];
 
 void sub_80D1C08(struct Sprite* sprite);
 
@@ -44,7 +41,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7A44 =
 {
     .tileTag = ANIM_TAG_BELL,
     .paletteTag = ANIM_TAG_BELL,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D7A40,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -65,7 +62,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7A68 =
 {
     .tileTag = ANIM_TAG_MUSIC_NOTES_2,
     .paletteTag = ANIM_TAG_MUSIC_NOTES_2,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -85,7 +82,7 @@ void sub_80D1ADC(u8 taskId)
         sp[i] = AllocSpritePalette(0x2710 - i);
     }
 
-    src = &gBattleAnimSpritePalette_206;
+    src = &gBattleAnimSpritePal_MusicNotes2;
     dest = (IsContest()) ? gSharedMem + 0x18000 - 0x3800: gSharedMem + 0x18000;
     LZDecompressWram(src, dest);
     for (i = 0; i <= 4; i++)

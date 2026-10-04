@@ -6,12 +6,7 @@
 #include "sound.h"
 #include "task.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 extern u16 gBattlerPartyIndexes[];
-extern u16 gAnimSpeciesByBanks[];
-extern u8 gUnknown_0202F7D2;
 
 static void sub_812AF98(u8 taskId);
 static void sub_812B004(u8 taskId);
@@ -58,7 +53,7 @@ static void sub_812AF98(u8 taskId)
             PlaySE12WithPanning(TASK.data[0], pan);
         }
         pan += dPan;
-        TASK.data[2] = sub_8077104(pan, dPan);
+        TASK.data[2] = KeepPanInRange(pan, dPan);
     }
 }
 
@@ -133,7 +128,7 @@ static void sub_812B108(u8 taskId)
         dPan = TASK.data[3];
         oldPan = TASK.data[11];
         TASK.data[11] = dPan + oldPan;
-        TASK.data[11] = sub_8077104(TASK.data[11], oldPan);
+        TASK.data[11] = KeepPanInRange(TASK.data[11], oldPan);
     }
 }
 
@@ -165,7 +160,7 @@ void sub_812B18C(u8 taskId)
 
         if (gBattleAnimArgs[0] == 1 || gBattleAnimArgs[0] == 3)
         {
-            if (!IsAnimBankSpriteVisible(bank))
+            if (!IsBattlerSpriteVisible(bank))
             {
                 DestroyAnimVisualTask(taskId);
                 return;
@@ -199,7 +194,7 @@ void sub_812B2B8(u8 taskId)
     if (IsContest())
         species = gContestResources__moveAnim.species;
     else
-        species = gAnimSpeciesByBanks[gBattleAnimAttacker];
+        species = gAnimBattlerSpecies[gBattleAnimAttacker];
 
     if (species != 0)
         PlayCry_ByMode(species, pan, 4);
@@ -265,10 +260,10 @@ static void sub_812B404(u8 taskId)
         TASK.data[10] = 0;
         oldPan = TASK.data[11];
         TASK.data[11] = dPan + oldPan;
-        TASK.data[11] = sub_8077104(TASK.data[11], oldPan);
+        TASK.data[11] = KeepPanInRange(TASK.data[11], oldPan);
     }
 
-    gUnknown_0202F7D2 = TASK.data[11];
+    gAnimCustomPanning = TASK.data[11];
 
     if (TASK.data[11] == TASK.data[2])
     {

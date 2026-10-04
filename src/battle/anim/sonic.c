@@ -6,9 +6,6 @@
 #include "battle.h"
 #include "battle_anim_80CA710.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 extern u8 gBattlerPositions[];
 extern u16 gBattleTypeFlags;
 
@@ -21,7 +18,7 @@ const struct SpriteTemplate gSonicBoomSpriteTemplate =
 {
     .tileTag = ANIM_TAG_AIR_WAVE,
     .paletteTag = ANIM_TAG_AIR_WAVE,
-    .oam = &gOamData_837E134,
+    .oam = &gOamData_AffineDouble_ObjBlend_32x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -32,7 +29,7 @@ const struct SpriteTemplate gSpriteTemplate_83D74BC =
 {
     .tileTag = ANIM_TAG_AIR_WAVE,
     .paletteTag = ANIM_TAG_AIR_WAVE,
-    .oam = &gOamData_837E074,
+    .oam = &gOamData_AffineOff_ObjBlend_32x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -72,7 +69,7 @@ const struct SpriteTemplate gSupersonicWaveSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GOLD_RING,
     .paletteTag = ANIM_TAG_GOLD_RING,
-    .oam = &gOamData_837E034,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D752C,
@@ -83,7 +80,7 @@ const struct SpriteTemplate gScreechWaveSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PURPLE_RING,
     .paletteTag = ANIM_TAG_PURPLE_RING,
-    .oam = &gOamData_837E034,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D752C,
@@ -94,7 +91,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7564 =
 {
     .tileTag = ANIM_TAG_METAL_SOUND_WAVES,
     .paletteTag = ANIM_TAG_METAL_SOUND_WAVES,
-    .oam = &gOamData_837E03C,
+    .oam = &gOamData_AffineDouble_ObjNormal_32x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D752C,
@@ -105,7 +102,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D757C =
 {
     .tileTag = ANIM_TAG_BLUE_RING_2,
     .paletteTag = ANIM_TAG_BLUE_RING_2,
-    .oam = &gOamData_837E034,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D7530,
@@ -310,7 +307,7 @@ void sub_80CFB04(u8 taskId)
     r6 = gTasks[taskId].data[9] = GetBattlerSpriteCoord(gBattleAnimAttacker, 0);
     r9 = gTasks[taskId].data[10] = GetBattlerSpriteCoord(gBattleAnimAttacker, 1);
     if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
-        && IsAnimBankSpriteVisible(gBattleAnimTarget ^ 2))
+        && IsBattlerSpriteVisible(gBattleAnimTarget ^ 2))
     {
         SetAverageBattlerPositions(gBattleAnimTarget, 0, &sp1, &sp2);
     }

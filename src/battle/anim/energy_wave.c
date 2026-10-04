@@ -5,9 +5,6 @@
 #include "task.h"
 #include "trig.h"
 
-extern s16 gBattleAnimArgs[8];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 extern const union AffineAnimCmd *const gSpriteAffineAnimTable_83D752C[];
 
 void sub_80D3554(struct Sprite *sprite);
@@ -39,7 +36,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D91F4 =
 {
     .tileTag = ANIM_TAG_WATER_ORB,
     .paletteTag = ANIM_TAG_WATER_ORB,
-    .oam = &gOamData_837E04C,
+    .oam = &gOamData_AffineOff_ObjBlend_16x16,
     .anims = gSpriteAnimTable_83D91F0,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -50,7 +47,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D920C =
 {
     .tileTag = ANIM_TAG_BROWN_ORB,
     .paletteTag = ANIM_TAG_BROWN_ORB,
-    .oam = &gOamData_837E04C,
+    .oam = &gOamData_AffineOff_ObjBlend_16x16,
     .anims = gSpriteAnimTable_83D91F0,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -61,7 +58,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9224 =
 {
     .tileTag = ANIM_TAG_GLOWY_RED_ORB,
     .paletteTag = ANIM_TAG_GLOWY_RED_ORB,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -72,7 +69,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D923C =
 {
     .tileTag = ANIM_TAG_GLOWY_GREEN_ORB,
     .paletteTag = ANIM_TAG_GLOWY_GREEN_ORB,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -96,7 +93,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9268 =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D9264,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -107,7 +104,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9280 =
 {
     .tileTag = ANIM_TAG_BLUE_RING,
     .paletteTag = ANIM_TAG_BLUE_RING,
-    .oam = &gOamData_837E034,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D752C,
@@ -142,7 +139,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D92D0 =
 {
     .tileTag = ANIM_TAG_WATER_ORB,
     .paletteTag = ANIM_TAG_WATER_ORB,
-    .oam = &gOamData_837E10C,
+    .oam = &gOamData_AffineDouble_ObjBlend_16x16,
     .anims = gSpriteAnimTable_83D91F0,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D92C8,
@@ -153,7 +150,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D92E8 =
 {
     .tileTag = ANIM_TAG_WATER_ORB,
     .paletteTag = ANIM_TAG_WATER_ORB,
-    .oam = &gOamData_837E10C,
+    .oam = &gOamData_AffineDouble_ObjBlend_16x16,
     .anims = gSpriteAnimTable_83D91F0,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D92CC,

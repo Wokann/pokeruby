@@ -5,9 +5,6 @@
 #include "sprite.h"
 #include "task.h"
 
-extern s16 gBattleAnimArgs[8];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 void AnimAuroraRings(struct Sprite *sprite);
 static void AnimGrowAuroraRings(struct Sprite *);
@@ -48,7 +45,7 @@ const struct SpriteTemplate RainbowRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_RAINBOW_RINGS,
     .paletteTag = ANIM_TAG_RAINBOW_RINGS,
-    .oam = &gOamData_837E024,
+    .oam = &gOamData_AffineDouble_ObjNormal_8x16,
     .anims = gSpriteAnimTable_83D91A0,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D91C0,

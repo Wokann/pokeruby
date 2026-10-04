@@ -3,9 +3,6 @@
 #include "rom_8077ABC.h"
 #include "trig.h"
 
-extern s16 gBattleAnimArgs[8];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 extern struct OamMatrix gOamMatrices[];
 
 void sub_80D6294(struct Sprite *sprite);
@@ -35,7 +32,7 @@ const struct SpriteTemplate gSpriteTemplate_83D9844 =
 {
     .tileTag = ANIM_TAG_SHOCK,
     .paletteTag = ANIM_TAG_SHOCK,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D9840,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -46,7 +43,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D985C =
 {
     .tileTag = ANIM_TAG_SPARK_2,
     .paletteTag = ANIM_TAG_SPARK_2,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -57,7 +54,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9874 =
 {
     .tileTag = ANIM_TAG_BLACK_BALL_2,
     .paletteTag = ANIM_TAG_BLACK_BALL_2,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -105,7 +102,7 @@ void sub_80D6328(struct Sprite *sprite)
         slot = gBattleAnimTarget;
         break;
     case 2:
-        if (!IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
+        if (!IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2))
         {
             slot = gBattleAnimAttacker;
         }
@@ -115,7 +112,7 @@ void sub_80D6328(struct Sprite *sprite)
         }
         break;
     case 3:
-        if (IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
+        if (IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2))
         {
             slot = gBattleAnimTarget ^ 2;
         }

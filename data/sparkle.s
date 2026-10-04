@@ -18,4 +18,4 @@ gSpriteAnimTable_83930F0:: @ 83930F0
 
 	.align 2
 gBattleAnimSpriteTemplate_83930F4:: @ 83930F4
-	spr_template 10071, 10071, gOamData_837DF34, gSpriteAnimTable_83930F0, NULL, gDummySpriteAffineAnimTable, sub_807A63C
+	spr_template 10071, 10071, gOamData_AffineOff_ObjNormal_32x32, gSpriteAnimTable_83930F0, NULL, gDummySpriteAffineAnimTable, sub_807A63C

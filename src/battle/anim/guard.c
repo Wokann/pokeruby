@@ -3,9 +3,6 @@
 #include "battle_anim.h"
 #include "rom_8077ABC.h"
 
-extern s16 gBattleAnimArgs[8];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 extern u16 gBattleTypeFlags;
 
 void sub_80D3014(struct Sprite *sprite);
@@ -35,7 +32,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7D74 =
 {
     .tileTag = ANIM_TAG_GUARD_RING,
     .paletteTag = ANIM_TAG_GUARD_RING,
-    .oam = &gOamData_837E13C,
+    .oam = &gOamData_AffineDouble_ObjBlend_64x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D7D6C,
@@ -44,7 +41,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7D74 =
 
 void sub_80D3014(struct Sprite *sprite)
 {
-    if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE) && IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
+    if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE) && IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2))
     {
         SetAverageBattlerPositions(gBattleAnimAttacker, 0, &sprite->x, &sprite->y);
         sprite->y += 40;

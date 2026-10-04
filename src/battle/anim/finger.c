@@ -4,9 +4,6 @@
 #include "battle_anim.h"
 #include "sound.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 extern void sub_80CEF44(u8 bank, struct Sprite* sprite);
 
@@ -61,7 +58,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D72C8 =
 {
     .tileTag = ANIM_TAG_FINGER,
     .paletteTag = ANIM_TAG_FINGER,
-    .oam = &gOamData_837DFF4,
+    .oam = &gOamData_AffineDouble_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D72C0,
@@ -72,7 +69,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D72E0 =
 {
     .tileTag = ANIM_TAG_FINGER,
     .paletteTag = ANIM_TAG_FINGER,
-    .oam = &gOamData_837DF94,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D72C0,
@@ -127,7 +124,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7358 =
 {
     .tileTag = ANIM_TAG_FINGER_2,
     .paletteTag = ANIM_TAG_FINGER_2,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D7348,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

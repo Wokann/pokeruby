@@ -5,9 +5,6 @@
 #include "sound.h"
 #include "scanline_effect.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 extern u8 gBattlerAttacker;
 extern u16 gBattle_BG1_X;
 extern u16 gBattle_BG2_X;
@@ -44,7 +41,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAFCC =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DAFC8,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -97,7 +94,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB044 =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
-    .oam = &gOamData_837DFF4,
+    .oam = &gOamData_AffineDouble_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DB004,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DB03C,
@@ -123,7 +120,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB078 =
 {
     .tileTag = ANIM_TAG_FIRE_PLUME,
     .paletteTag = ANIM_TAG_FIRE_PLUME,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DB074,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -166,7 +163,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB0D0 =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
-    .oam = &gOamData_837DFF4,
+    .oam = &gOamData_AffineDouble_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DB0A0,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DB0C8,
@@ -177,7 +174,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB0E8 =
 {
     .tileTag = ANIM_TAG_HOLLOW_ORB,
     .paletteTag = ANIM_TAG_HOLLOW_ORB,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -188,7 +185,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB100 =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DAFC8,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -343,7 +340,7 @@ void sub_80DF924(u8 taskId)
     struct Task *task = &gTasks[taskId];
     u16 i;
     u8 r1;
-    if (GetBattlerPosition_permutated(gBattleAnimAttacker) == 1)
+    if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == 1)
     {
         sp.dmaDest = &REG_BG1HOFS;
         task->data[2] = gBattle_BG1_X;

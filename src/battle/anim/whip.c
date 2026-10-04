@@ -4,9 +4,6 @@
 #include "battle_anim.h"
 #include "sound.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 void sub_80CC82C(struct Sprite* sprite);
 void sub_80CC884(struct Sprite* sprite);
@@ -42,7 +39,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D69DC =
 {
     .tileTag = 10056,
     .paletteTag = 10056,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D69D4,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -53,7 +50,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D69F4 =
 {
     .tileTag = ANIM_TAG_WHIP_HIT,
     .paletteTag = ANIM_TAG_WHIP_HIT,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D69D4,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -77,9 +74,9 @@ const union AnimCmd *const gSpriteAnimTable_83D6A24[] =
 
 const struct SpriteTemplate gSpriteTemplate_83D6A28 =
 {
-    .tileTag = ANIM_TAG_UNUSED_HIT,
-    .paletteTag = ANIM_TAG_UNUSED_HIT,
-    .oam = &gOamData_837DF34,
+    .tileTag = ANIM_TAG_HIT,
+    .paletteTag = ANIM_TAG_HIT,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D6A24,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -88,9 +85,9 @@ const struct SpriteTemplate gSpriteTemplate_83D6A28 =
 
 const struct SpriteTemplate gSpriteTemplate_83D6A40 =
 {
-    .tileTag = ANIM_TAG_UNUSED_HIT_2,
-    .paletteTag = ANIM_TAG_UNUSED_HIT_2,
-    .oam = &gOamData_837DF34,
+    .tileTag = ANIM_TAG_HIT_2,
+    .paletteTag = ANIM_TAG_HIT_2,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D6A24,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

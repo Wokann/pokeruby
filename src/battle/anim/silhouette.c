@@ -3,9 +3,6 @@
 #include "trig.h"
 #include "battle_anim.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 static void sub_80CB3A8(u8 taskId);
 static void sub_80CB438(u8 taskId);

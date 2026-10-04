@@ -1,17 +1,17 @@
-	.macro loadspritegfx id
+	.macro loadspritegfx tag
 	.byte 0x00
-	.2byte \id
+	.2byte \tag
 	.endm
 
-	.macro unloadspritegfx id
+	.macro unloadspritegfx tag
 	.byte 0x01
-	.2byte \id
+	.2byte \tag
 	.endm
 
 	.macro createsprite template, anim_battler, subpriority_offset, argv:vararg
     .byte 0x02
     .4byte \template
-    .if \anim_battler == ANIM_BATTLER_TARGET
+    .if \anim_battler == ANIM_TARGET
     .byte 0x80 | (\subpriority_offset & 0x7F)
     .else
     .byte (\subpriority_offset & 0x7F)
@@ -32,20 +32,20 @@
 .Lcreatetask_\@_2:
 	.endm
 
-	.macro delay amount
+	.macro delay frames
 	.byte 0x04
-	.byte \amount
+	.byte \frames
 	.endm
 
 	.macro waitforvisualfinish
 	.byte 0x05
 	.endm
 
-	.macro hang1
+	.macro nop
 	.byte 0x06
 	.endm
 
-	.macro hang2
+	.macro nop2
 	.byte 0x07
 	.endm
 
@@ -53,19 +53,19 @@
 	.byte 0x08
 	.endm
 
-	.macro playse id
+	.macro playse se
 	.byte 0x09
-	.2byte \id
+	.2byte \se
 	.endm
 
-	.macro monbg which
+	.macro monbg battler
 	.byte 0x0A
-	.byte \which
+	.byte \battler
 	.endm
 
-	.macro clearmonbg which
+	.macro clearmonbg battler
 	.byte 0x0B
-	.byte \which
+	.byte \battler
 	.endm
 
 	.macro setalpha eva, evb
@@ -77,41 +77,41 @@
 	.byte 0x0D
 	.endm
 
-	.macro call addr
+	.macro call ptr
 	.byte 0x0E
-	.4byte \addr
+	.4byte \ptr
 	.endm
 
 	.macro return
 	.byte 0x0F
 	.endm
 
-	.macro setarg arg_num, value
+	.macro setarg argId, value
 	.byte 0x10
-	.byte \arg_num
+	.byte \argId
 	.2byte \value
 	.endm
 
-	.macro choosetwoturnanim addr1, addr2
+	.macro choosetwoturnanim ptr1, ptr2
 	.byte 0x11
-	.4byte \addr1
-	.4byte \addr2
+	.4byte \ptr1
+	.4byte \ptr2
 	.endm
 
-	.macro jumpifmoveturn cond, addr
+	.macro jumpifmoveturn value, ptr
 	.byte 0x12
-	.byte \cond
-	.4byte \addr
+	.byte \value
+	.4byte \ptr
 	.endm
 
-	.macro goto addr
+	.macro goto ptr
 	.byte 0x13
-	.4byte \addr
+	.4byte \ptr
 	.endm
 
-	.macro fadetobg id
+	.macro fadetobg bg
 	.byte 0x14
-	.byte \id
+	.byte \bg
 	.endm
 
 	.macro restorebg
@@ -126,14 +126,14 @@
 	.byte 0x17
 	.endm
 
-	.macro changebg id
+	.macro changebg bg
 	.byte 0x18
-	.byte \id
+	.byte \bg
 	.endm
 
-	.macro playsewithpan id, pan
+	.macro playsewithpan se, pan
 	.byte 0x19
-	.2byte \id
+	.2byte \se
 	.byte \pan
 	.endm
 
@@ -142,28 +142,28 @@
 	.byte \pan
 	.endm
 
-	.macro panse_1B id, pan_start, pan_end, step, delay
+	.macro panse se, currentPan, targetPan, incrementPan, delay
 	.byte 0x1B
-	.2byte \id
-	.byte \pan_start
-	.byte \pan_end
-	.byte \step
+	.2byte \se
+	.byte \currentPan
+	.byte \targetPan
+	.byte \incrementPan
 	.byte \delay
 	.endm
 
-	.macro loopsewithpan id, pan, delay, count
+	.macro loopsewithpan se, pan, wait, times
 	.byte 0x1C
-	.2byte \id
+	.2byte \se
 	.byte \pan
-	.byte \delay
-	.byte \count
+	.byte \wait
+	.byte \times
 	.endm
 
-	.macro waitplaysewithpan id, pan, count
+	.macro waitplaysewithpan se, pan, wait
 	.byte 0x1D
-	.2byte \id
+	.2byte \se
 	.byte \pan
-	.byte \count
+	.byte \wait
 	.endm
 
 	.macro setbldcnt bldcnt
@@ -184,85 +184,85 @@
 	.byte 0x20
 	.endm
 
-	.macro jumpargeq arg_num, value, addr
+	.macro jumpargeq argId, value, ptr
 	.byte 0x21
-	.byte \arg_num
+	.byte \argId
 	.2byte \value
-	.4byte \addr
+	.4byte \ptr
 	.endm
 
-	.macro monbg_22 bank
+	.macro monbg_static battler
 	.byte 0x22
-	.byte \bank
+	.byte \battler
 	.endm
 
-	.macro clearmonbg_23 bank
+	.macro clearmonbg_static battler
 	.byte 0x23
-	.byte \bank
+	.byte \battler
 	.endm
 
-	.macro jumpifcontest addr
+	.macro jumpifcontest ptr
 	.byte 0x24
-	.4byte \addr
+	.4byte \ptr
 	.endm
 
-	.macro fadetobgfromset a, b, c
+	.macro fadetobgfromset bgOpponent, bgPlayer, bgContest
 	.byte 0x25
-	.byte \a
-	.byte \b
-	.byte \c
+	.byte \bgOpponent
+	.byte \bgPlayer
+	.byte \bgContest
 	.endm
 
-	.macro panse_26 id, pan_start, pan_end, step, delay
+	.macro panse_adjustnone se, currentPan, targetPan, incrementPan, delay
 	.byte 0x26
-	.2byte \id
-	.byte \pan_start
-	.byte \pan_end
-	.byte \step
+	.2byte \se
+	.byte \currentPan
+	.byte \targetPan
+	.byte \incrementPan
 	.byte \delay
 	.endm
 
-	.macro panse_27 id, pan_start, pan_end, step, delay
+	.macro panse_adjustall se, currentPan, targetPan, incrementPan, delay
 	.byte 0x27
-	.2byte \id
-	.byte \pan_start
-	.byte \pan_end
-	.byte \step
+	.2byte \se
+	.byte \currentPan
+	.byte \targetPan
+	.byte \incrementPan
 	.byte \delay
 	.endm
 
-	.macro monbgprio_28 bank
+	.macro splitbgprio battler
 	.byte 0x28
-	.byte \bank
+	.byte \battler
 	.endm
 
-	.macro monbgprio_29
+	.macro splitbgprio_all
 	.byte 0x29
 	.endm
 
-	.macro monbgprio_2A bank
+	.macro splitbgprio_foes battler
 	.byte 0x2A
-	.byte \bank
+	.byte \battler
 	.endm
 
-	.macro invisible bank
+	.macro invisible battler
 	.byte 0x2B
-	.byte \bank
+	.byte \battler
 	.endm
 
-	.macro visible bank
+	.macro visible battler
 	.byte 0x2C
-	.byte \bank
+	.byte \battler
 	.endm
 
-	.macro doublebattle_2D bank
+	.macro teamattack_moveback battler
 	.byte 0x2D
-	.byte \bank
+	.byte \battler
 	.endm
 
-	.macro doublebattle_2E bank
+	.macro teamattack_movefwd battler
 	.byte 0x2E
-	.byte \bank
+	.byte \battler
 	.endm
 
 	.macro stopsound

@@ -3,12 +3,8 @@
 
 #include "sprite.h"
 #include "task.h"
+#include "battle_anim.h"
 
-struct Struct_sub_8078914 {
-    u8 *field_0;
-    u8 *field_4;
-    u8 field_8;
-};
 
 struct TransformStatus
 {
@@ -37,8 +33,8 @@ bool8 IsBattlerSpritePresent(u8);
 bool8 IsDoubleBattle();
 u8 IsDoubleBattle(void);
 bool8 IsDoubleBattle(void);
-void sub_8078914(struct Struct_sub_8078914 * unk);
-u8 sub_80789BC();
+void GetBattleAnimBg1Data(struct BattleAnimBgData * unk);
+u8 GetBattleBgPaletteNum();
 void InitSpriteDataForLinearTranslation(struct Sprite *sprite);
 void InitAnimLinearTranslation(struct Sprite *sprite);
 bool8 TranslateAnimLinear(struct Sprite *sprite);
@@ -63,7 +59,7 @@ void sub_8079C08(struct Task *task, u8 a2, s16 a3, s16 a4, s16 a5, s16 a6, u16 a
 u8 sub_8079C74(struct Task *task);
 void UpdateBattlerSpritePriorities();
 u8 GetBattlerSpriteSubpriority(u8 bank);
-u8 GetBattlerPosition_permutated(u8 slot);
+u8 GetBattlerSpriteBGPriorityRank(u8 slot);
 void sub_807A784(u8 taskId);
 void sub_807A850(struct Task *task, u8 taskId);
 void sub_807A8D4(struct Sprite *sprite);
@@ -114,7 +110,7 @@ void sub_8079AB8(u8 sprite, u8 sprite2);
 u8 sub_807A4A0(int bank, u8 sprite, int species);
 void sub_80794A8(struct Sprite *sprite);
 void sub_807A9BC(struct Sprite *sprite);
-void sub_8078954(struct Struct_sub_8078914*, u8);
+void sub_8078954(struct BattleAnimBgData*, u8);
 u8 sub_8079F44(u16 species, bool8 isBackpic, u8 a3, s16 a4, s16 a5, u8 a6, u32 a7, u32 a8);
 void sub_8079098(struct Sprite *sprite);
 void DestroySpriteAndFreeResources_(struct Sprite *sprite);

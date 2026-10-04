@@ -56,11 +56,7 @@ extern u16 gBattleMonPartyPositions[];
 extern u16 gBattleTypeFlags;
 extern u32 gTransformPersonalities[NUM_BATTLE_SLOTS];
 extern u8 gBattleMonForms[NUM_BATTLE_SLOTS];
-extern u16 gAnimSpeciesByBanks[];
 extern u8 gBattleMonSprites[NUM_BATTLE_SLOTS];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
-extern s16 gBattleAnimArgs[8];
 extern u8 gBattlerPositions[NUM_BATTLE_SLOTS];
 extern u8 gBattlersCount; // gNumBattleMons?
 extern struct OamMatrix gOamMatrices[];
@@ -121,7 +117,7 @@ const struct SpriteTemplate gSpriteTemplate_837F5B0[] =
     {
         .tileTag = 55125,
         .paletteTag = 55125,
-        .oam = &gOamData_837DF9C,
+        .oam = &gOamData_AffineNormal_ObjNormal_64x64,
         .anims = gDummySpriteAnimTable,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -130,7 +126,7 @@ const struct SpriteTemplate gSpriteTemplate_837F5B0[] =
     {
         .tileTag = 55126,
         .paletteTag = 55126,
-        .oam = &gOamData_837DF9C,
+        .oam = &gOamData_AffineNormal_ObjNormal_64x64,
         .anims = gDummySpriteAnimTable,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -343,7 +339,7 @@ u8 sub_8077EE4(u8 slot, u8 a2)
         {
             transform = &gBattleSpriteInfo[slot];
             if (!transform->transformSpecies)
-                species = gAnimSpeciesByBanks[slot];
+                species = gAnimBattlerSpecies[slot];
             else
                 species = transform->transformSpecies;
         }
@@ -409,7 +405,7 @@ u8 GetAnimBattlerSpriteId(u8 whichBank)
 {
     u8 *sprites;
 
-    if (whichBank == ANIM_BATTLER_ATTACKER)
+    if (whichBank == ANIM_ATTACKER)
     {
         if (IsBattlerSpritePresent(gBattleAnimAttacker))
         {
@@ -421,7 +417,7 @@ u8 GetAnimBattlerSpriteId(u8 whichBank)
             return 0xff;
         }
     }
-    else if (whichBank == ANIM_BATTLER_TARGET)
+    else if (whichBank == ANIM_TARGET)
     {
         if (IsBattlerSpritePresent(gBattleAnimTarget))
         {
@@ -433,16 +429,16 @@ u8 GetAnimBattlerSpriteId(u8 whichBank)
             return 0xff;
         }
     }
-    else if (whichBank == ANIM_BATTLER_ATK_PARTNER)
+    else if (whichBank == ANIM_ATK_PARTNER)
     {
-        if (!IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
+        if (!IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2))
             return 0xff;
         else
             return gBattleMonSprites[gBattleAnimAttacker ^ 2];
     }
     else
     {
-        if (IsAnimBankSpriteVisible(gBattleAnimTarget ^ 2))
+        if (IsBattlerSpriteVisible(gBattleAnimTarget ^ 2))
             return gBattleMonSprites[gBattleAnimTarget ^ 2];
         else
             return 0xff;
@@ -867,45 +863,45 @@ bool8 IsDoubleBattle()
     return IS_DOUBLE_BATTLE();
 }
 
-void sub_8078914(struct Struct_sub_8078914 *unk)
+void GetBattleAnimBg1Data(struct BattleAnimBgData *out)
 {
     if (IsContest())
     {
-        unk->field_0 = (u8 *)(VRAM + 0x8000);
-        unk->field_4 = (u8 *)(VRAM + 0xf000);
-        unk->field_8 = 0xe;
+        out->bgTiles = (u8 *)(VRAM + 0x8000);
+        out->bgTilemap = (u8 *)(VRAM + 0xf000);
+        out->paletteId = 0xe;
     }
     else
     {
-        unk->field_0 = (u8 *)(VRAM + 0x4000);
-        unk->field_4 = (u8 *)(VRAM + 0xe000);
-        unk->field_8 = 0x8;
+        out->bgTiles = (u8 *)(VRAM + 0x4000);
+        out->bgTilemap = (u8 *)(VRAM + 0xe000);
+        out->paletteId = 0x8;
     }
 }
 
-void sub_8078954(struct Struct_sub_8078914 *unk, u8 b)
+void sub_8078954(struct BattleAnimBgData *unk, u8 b)
 {
     if (IsContest())
     {
-        unk->field_0 = (u8 *)(VRAM + 0x8000);
-        unk->field_4 = (u8 *)(VRAM + 0xf000);
-        unk->field_8 = 0xe;
+        unk->bgTiles = (u8 *)(VRAM + 0x8000);
+        unk->bgTilemap = (u8 *)(VRAM + 0xf000);
+        unk->paletteId = 0xe;
     }
-    else if (GetBattlerPosition_permutated(gBattleAnimAttacker) == 1)
+    else if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == 1)
     {
-        unk->field_0 = (u8 *)(VRAM + 0x4000);
-        unk->field_4 = (u8 *)(VRAM + 0xe000);
-        unk->field_8 = 0x8;
+        unk->bgTiles = (u8 *)(VRAM + 0x4000);
+        unk->bgTilemap = (u8 *)(VRAM + 0xe000);
+        unk->paletteId = 0x8;
     }
     else
     {
-        unk->field_0 = (u8 *)(VRAM + 0x6000);
-        unk->field_4 = (u8 *)(VRAM + 0xf000);
-        unk->field_8 = 0x9;
+        unk->bgTiles = (u8 *)(VRAM + 0x6000);
+        unk->bgTilemap = (u8 *)(VRAM + 0xf000);
+        unk->paletteId = 0x9;
     }
 }
 
-u8 sub_80789BC()
+u8 GetBattleBgPaletteNum()
 {
     if (IsContest())
         return 1;
@@ -1162,7 +1158,7 @@ void PrepareBattlerSpriteForRotScale(u8 sprite, u8 objMode)
 {
     u8 r7 = gSprites[sprite].data[0];
 
-    if (IsContest() || IsAnimBankSpriteVisible(r7))
+    if (IsContest() || IsBattlerSpriteVisible(r7))
         gSprites[sprite].invisible = FALSE;
     gSprites[sprite].oam.objMode = objMode;
     gSprites[sprite].affineAnimPaused = TRUE;
@@ -1274,7 +1270,7 @@ u32 sub_80791A8(u8 a1, u8 a2, u8 a3, u8 a4, u8 a5, u8 a6, u8 a7)
         if (!IsContest())
             var = 0xe;
         else
-            var = 1 << sub_80789BC();
+            var = 1 << GetBattleBgPaletteNum();
     }
     if (a2)
     {
@@ -1287,7 +1283,7 @@ u32 sub_80791A8(u8 a1, u8 a2, u8 a3, u8 a4, u8 a5, u8 a6, u8 a7)
     }
     if (a4)
     {
-        if (IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
+        if (IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2))
         {
             shift = (gBattleAnimAttacker ^ 2) + 16;
             var |= 1 << shift;
@@ -1295,7 +1291,7 @@ u32 sub_80791A8(u8 a1, u8 a2, u8 a3, u8 a4, u8 a5, u8 a6, u8 a7)
     }
     if (a5)
     {
-        if (IsAnimBankSpriteVisible(gBattleAnimTarget ^ 2))
+        if (IsBattlerSpriteVisible(gBattleAnimTarget ^ 2))
         {
             shift = (gBattleAnimTarget ^ 2) + 16;
             var |= 1 << shift;
@@ -1330,24 +1326,24 @@ u32 sub_80792C0(u8 a1, u8 a2, u8 a3, u8 a4)
         }
     } else {
         if (a1) {
-            if (IsAnimBankSpriteVisible(GetBattlerAtPosition(0))) {
+            if (IsBattlerSpriteVisible(GetBattlerAtPosition(0))) {
                 var |= 1 << (GetBattlerAtPosition(0) + 16);
             }
         }
         if (a2) {
-            if (IsAnimBankSpriteVisible(GetBattlerAtPosition(2))) {
+            if (IsBattlerSpriteVisible(GetBattlerAtPosition(2))) {
                 shift = GetBattlerAtPosition(2) + 16;
                 var |= 1 << shift;
             }
         }
         if (a3) {
-            if (IsAnimBankSpriteVisible(GetBattlerAtPosition(1))) {
+            if (IsBattlerSpriteVisible(GetBattlerAtPosition(1))) {
                 shift = GetBattlerAtPosition(1) + 16;
                 var |= 1 << shift;
             }
         }
         if (a4) {
-            if (IsAnimBankSpriteVisible(GetBattlerAtPosition(3))) {
+            if (IsBattlerSpriteVisible(GetBattlerAtPosition(3))) {
                 shift = GetBattlerAtPosition(3) + 16;
                 var |= 1 << shift;
             }
@@ -1851,13 +1847,13 @@ void sub_8079CEC(u8 task)
 
 void unref_sub_8079D20(u8 priority)
 {
-    if (IsAnimBankSpriteVisible(gBattleAnimTarget))
+    if (IsBattlerSpriteVisible(gBattleAnimTarget))
         gSprites[gBattleMonSprites[gBattleAnimTarget]].oam.priority = priority;
-    if (IsAnimBankSpriteVisible(gBattleAnimAttacker))
+    if (IsBattlerSpriteVisible(gBattleAnimAttacker))
         gSprites[gBattleMonSprites[gBattleAnimAttacker]].oam.priority = priority;
-    if (IsAnimBankSpriteVisible(gBattleAnimTarget ^ 2))
+    if (IsBattlerSpriteVisible(gBattleAnimTarget ^ 2))
         gSprites[gBattleMonSprites[gBattleAnimTarget ^ 2]].oam.priority = priority;
-    if (IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
+    if (IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2))
         gSprites[gBattleMonSprites[gBattleAnimAttacker ^ 2]].oam.priority = priority;
 }
 
@@ -1867,7 +1863,7 @@ void UpdateBattlerSpritePriorities()
 
     for (i = 0; i < gBattlersCount; i++)
     {
-        if (IsAnimBankSpriteVisible(i))
+        if (IsBattlerSpriteVisible(i))
         {
             gSprites[gBattleMonSprites[i]].subpriority = GetBattlerSpriteSubpriority(i);
             gSprites[gBattleMonSprites[i]].oam.priority = 2;
@@ -1882,7 +1878,7 @@ u8 GetBattlerSpriteSubpriority(u8 bank)
 
     if (IsContest())
     {
-        if (bank == ANIM_BATTLER_ATK_PARTNER)
+        if (bank == ANIM_ATK_PARTNER)
             return 30;
         else
             return 40;
@@ -1914,14 +1910,14 @@ u8 GetBattlerSpriteBGPriority(u8 slot)
         return BG1CNT.priority;
 }
 
-u8 GetBattlerPosition_permutated(u8 slot)
+u8 GetBattlerSpriteBGPriorityRank(u8 battler)
 {
-    u8 status;
+    u8 position;
 
     if (!IsContest())
     {
-        status = GetBattlerPosition(slot);
-        if (status == 0 || status == 3)
+        position = GetBattlerPosition(battler);
+        if (position == 0 || position == 3)
             return 2;
         else
             return 1;

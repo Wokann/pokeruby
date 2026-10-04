@@ -5,11 +5,7 @@
 #include "sound.h"
 #include "trig.h"
 
-extern s16 gBattleAnimArgs[8];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 extern u16 gBattleTypeFlags;
-extern u8 gUnknown_0202F7D2;
 
 void sub_80D5B0C(struct Sprite *sprite);
 static void sub_80D5C5C(struct Sprite *);
@@ -56,7 +52,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D974C =
 {
     .tileTag = ANIM_TAG_WISP_ORB,
     .paletteTag = ANIM_TAG_WISP_ORB,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D973C,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -142,7 +138,7 @@ static void sub_80D5C5C(struct Sprite *sprite)
 
         if ((initialData5 == 0 || initialData5 > 196) && newData5 > 0 && sprite->data[7] == 0)
         {
-            PlaySE12WithPanning(SE_M_FLAME_WHEEL, gUnknown_0202F7D2);
+            PlaySE12WithPanning(SE_M_FLAME_WHEEL, gAnimCustomPanning);
         }
     }
     else

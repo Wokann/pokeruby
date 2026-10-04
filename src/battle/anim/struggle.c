@@ -3,9 +3,6 @@
 #include "rom_8077ABC.h"
 #include "sprite.h"
 
-extern s16 gBattleAnimArgs[8];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 void sub_80D2C38(struct Sprite *sprite);
 static void sub_80D2CC4(struct Sprite *);
@@ -38,7 +35,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7C90 =
 {
     .tileTag = ANIM_TAG_MOVEMENT_WAVES,
     .paletteTag = ANIM_TAG_MOVEMENT_WAVES,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D7C88,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

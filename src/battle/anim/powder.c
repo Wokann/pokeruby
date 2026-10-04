@@ -3,8 +3,6 @@
 #include "trig.h"
 #include "battle_anim.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
 
 void AnimMovePowderParticle(struct Sprite* sprite);
 static void AnimMovePowderParticleStep(struct Sprite* sprite);
@@ -31,7 +29,7 @@ const struct SpriteTemplate gSleepPowderParticleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SLEEP_POWDER,
     .paletteTag = ANIM_TAG_SLEEP_POWDER,
-    .oam = &gOamData_837DF64,
+    .oam = &gOamData_AffineOff_ObjNormal_8x16,
     .anims = gSpriteAnimTable_83D6220,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -42,7 +40,7 @@ const struct SpriteTemplate gStunSporeParticleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_STUN_SPORE,
     .paletteTag = ANIM_TAG_STUN_SPORE,
-    .oam = &gOamData_837DF64,
+    .oam = &gOamData_AffineOff_ObjNormal_8x16,
     .anims = gSpriteAnimTable_83D6220,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -53,7 +51,7 @@ const struct SpriteTemplate gPoisonPowderParticleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_POISON_POWDER,
     .paletteTag = ANIM_TAG_POISON_POWDER,
-    .oam = &gOamData_837DF64,
+    .oam = &gOamData_AffineOff_ObjNormal_8x16,
     .anims = gSpriteAnimTable_83D6220,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

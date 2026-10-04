@@ -3,9 +3,6 @@
 #include "trig.h"
 #include "battle_anim.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 void AnimLeechSeed(struct Sprite* sprite);
 static void AnimLeechSeedStep(struct Sprite* sprite);
@@ -34,7 +31,7 @@ const struct SpriteTemplate gLeechSeedSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SEED,
     .paletteTag = ANIM_TAG_SEED,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D63C0,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

@@ -3,9 +3,6 @@
 #include "trig.h"
 #include "battle_anim.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 void sub_80CB25C(struct Sprite* sprite);
 static void sub_80CB298(struct Sprite* sprite);
@@ -61,7 +58,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D65A0 =
 {
     .tileTag = ANIM_TAG_TENDRILS,
     .paletteTag = ANIM_TAG_TENDRILS,
-    .oam = &gOamData_837DFBC,
+    .oam = &gOamData_AffineNormal_ObjNormal_64x32,
     .anims = gSpriteAnimTable_83D6550,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D6598,

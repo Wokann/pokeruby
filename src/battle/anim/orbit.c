@@ -3,9 +3,6 @@
 #include "trig.h"
 #include "battle_anim.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 void sub_80CABF8(struct Sprite* sprite);
 void sub_80CAD54(struct Sprite* sprite);
@@ -36,7 +33,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D63F8 =
 {
     .tileTag = 10158,
     .paletteTag = 10158,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D63F0,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -69,7 +66,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6428 =
 {
     .tileTag = ANIM_TAG_FLOWER,
     .paletteTag = ANIM_TAG_FLOWER,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D6420,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -80,7 +77,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6440 =
 {
     .tileTag = ANIM_TAG_FLOWER,
     .paletteTag = ANIM_TAG_FLOWER,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gSpriteAnimTable_83D6424,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -137,7 +134,7 @@ void sub_80CACEC(u8 taskId)
     }
     else
     {
-        if (GetBattlerPosition_permutated(gBattleAnimTarget) == 1)
+        if (GetBattlerSpriteBGPriorityRank(gBattleAnimTarget) == 1)
         {
             REG_BG2CNT_BITFIELD.priority = 3;
         }

@@ -4,9 +4,6 @@
 #include "battle_anim.h"
 #include "random.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 
 void sub_80CA7B0(struct Sprite* sprite);
 void sub_80CA800(struct Sprite* sprite);
@@ -105,7 +102,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D62EC =
 {
     .tileTag = ANIM_TAG_ORBS,
     .paletteTag = ANIM_TAG_ORBS,
-    .oam = &gOamData_837E0AC,
+    .oam = &gOamData_AffineNormal_ObjBlend_16x16,
     .anims = gSpriteAnimTable_83D62D4,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D62E8,
@@ -116,7 +113,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6304 =
 {
     .tileTag = ANIM_TAG_ORBS,
     .paletteTag = ANIM_TAG_ORBS,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gSpriteAnimTable_83D62B4,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -127,7 +124,7 @@ const struct SpriteTemplate gSpriteTemplate_83D631C =
 {
     .tileTag = ANIM_TAG_ORBS,
     .paletteTag = ANIM_TAG_ORBS,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gSpriteAnimTable_83D62D0,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -148,7 +145,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6350 =
 {
     .tileTag = ANIM_TAG_GRAY_ORB,
     .paletteTag = ANIM_TAG_GRAY_ORB,
-    .oam = &gOamData_837DFE4,
+    .oam = &gOamData_AffineDouble_ObjNormal_8x8,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D634C,
@@ -168,7 +165,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D637C =
 {
     .tileTag = ANIM_TAG_ORBS,
     .paletteTag = ANIM_TAG_ORBS,
-    .oam = &gOamData_837E0AC,
+    .oam = &gOamData_AffineNormal_ObjBlend_16x16,
     .anims = gSpriteAnimTable_83D62D4,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D6378,
@@ -179,7 +176,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6394 =
 {
     .tileTag = ANIM_TAG_ORBS,
     .paletteTag = ANIM_TAG_ORBS,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gSpriteAnimTable_83D62B4,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

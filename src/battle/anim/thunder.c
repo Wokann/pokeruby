@@ -2,9 +2,6 @@
 #include "battle_anim.h"
 #include "rom_8077ABC.h"
 
-extern s16 gBattleAnimArgs[8];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 extern u16 gBattleTypeFlags;
 
 void sub_80D61C8(struct Sprite *sprite);
@@ -32,7 +29,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D97D0 =
 {
     .tileTag = ANIM_TAG_LIGHTNING,
     .paletteTag = ANIM_TAG_LIGHTNING,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D97CC,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

@@ -6,9 +6,6 @@
 #include "task.h"
 #include "trig.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimTarget;
-extern u8 gBattleAnimAttacker;
 extern u8 gBattlerSpriteIds[];
 
 void sub_80D5CC0(struct Sprite *sprite);
@@ -32,7 +29,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D977C =
 {
     .tileTag = ANIM_TAG_WISP_FIRE,
     .paletteTag = ANIM_TAG_WISP_FIRE,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D9778,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -92,7 +89,7 @@ void sub_80D5DDC(u8 taskId)
     struct Task *task = &gTasks[taskId];
 
     task->data[12] = !GetBattlerSide(gBattleAnimAttacker) ? 1 : -1;
-    task->data[13] = IsAnimBankSpriteVisible(gBattleAnimTarget ^ 2) + 1;
+    task->data[13] = IsBattlerSpriteVisible(gBattleAnimTarget ^ 2) + 1;
     task->data[14] = GetAnimBattlerSpriteId(1);
     task->data[15] = GetAnimBattlerSpriteId(3);
 
@@ -191,9 +188,9 @@ static void sub_80D5E4C(u8 taskId)
 // arg 1: color code
 void AnimTask_BlendInterfaceColor(u8 taskId)
 {
-    struct Struct_sub_8078914 unk;
-    sub_8078914(&unk);
-    BlendPalette(unk.field_8 << 4, 16, gBattleAnimArgs[0], gBattleAnimArgs[1]); // u16 palOffset, u16 numEntries, u8 coeff, u16 blendColor
+    struct BattleAnimBgData unk;
+    GetBattleAnimBg1Data(&unk);
+    BlendPalette(unk.paletteId << 4, 16, gBattleAnimArgs[0], gBattleAnimArgs[1]); // u16 palOffset, u16 numEntries, u8 coeff, u16 blendColor
     DestroyAnimVisualTask(taskId);
 }
 

@@ -13,9 +13,6 @@
 #include "constants/battle.h"
 #include "constants/songs.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 extern u8 gHealthboxSpriteIds[];
 extern u8 gBattlersCount;
 extern u8 gBattlerSpriteIds[];
@@ -24,7 +21,6 @@ extern u16 gBattlerPartyIndexes[];
 extern u8 gBattlerTarget;
 extern u8 gEffectBattler;
 extern u8 gBattlerAttacker;
-extern u8 gAnimVisualTaskCount;
 
 extern const u8 gUnknown_08D20A14[];
 extern const u8 gUnknown_08D20A30[];
@@ -111,7 +107,7 @@ const struct SpriteTemplate gConfusionDuckSpriteTemplate =
 {
     .tileTag = ANIM_TAG_DUCK,
     .paletteTag = ANIM_TAG_DUCK,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gConfusionDuckSpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -159,7 +155,7 @@ const struct SpriteTemplate gSpriteTemplate_83DB410 =
 {
     .tileTag = ANIM_TAG_SPARKLE_4,
     .paletteTag = ANIM_TAG_SPARKLE_4,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DB40C,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -216,7 +212,7 @@ const struct SpriteTemplate gBasicHitSplatSpriteTemplate =
 {
     .tileTag = ANIM_TAG_IMPACT,
     .paletteTag = ANIM_TAG_IMPACT,
-    .oam = &gOamData_837E0B4,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DB498,
@@ -227,7 +223,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB4C0 =
 {
     .tileTag = ANIM_TAG_IMPACT,
     .paletteTag = ANIM_TAG_IMPACT,
-    .oam = &gOamData_837E0B4,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DB498,
@@ -238,7 +234,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB4D8 =
 {
     .tileTag = ANIM_TAG_WATER_IMPACT,
     .paletteTag = ANIM_TAG_WATER_IMPACT,
-    .oam = &gOamData_837E0B4,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DB498,
@@ -249,7 +245,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB4F0 =
 {
     .tileTag = ANIM_TAG_IMPACT,
     .paletteTag = ANIM_TAG_IMPACT,
-    .oam = &gOamData_837E0B4,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DB498,
@@ -260,7 +256,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB508 =
 {
     .tileTag = ANIM_TAG_IMPACT,
     .paletteTag = ANIM_TAG_IMPACT,
-    .oam = &gOamData_837E0B4,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DB498,
@@ -271,7 +267,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB520 =
 {
     .tileTag = ANIM_TAG_CROSS_IMPACT,
     .paletteTag = ANIM_TAG_CROSS_IMPACT,
-    .oam = &gOamData_837E054,
+    .oam = &gOamData_AffineOff_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -282,7 +278,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB538 =
 {
     .tileTag = ANIM_TAG_IMPACT,
     .paletteTag = ANIM_TAG_IMPACT,
-    .oam = &gOamData_837DF94,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DB498,
@@ -293,7 +289,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB550 =
 {
     .tileTag = ANIM_TAG_IMPACT,
     .paletteTag = ANIM_TAG_IMPACT,
-    .oam = &gOamData_837E0B4,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DB498,
@@ -1006,7 +1002,7 @@ void sub_80E2A7C(u8 taskId)
 
     for (battler = 0; battler < 4; battler++)
     {
-        if (battler != sp[0] && battler != sp[1] && IsAnimBankSpriteVisible(battler))
+        if (battler != sp[0] && battler != sp[1] && IsBattlerSpriteVisible(battler))
         {
             u8 paletteIndex = sub_80793A8(battler);
             selectedPalettes |= (0x10000 << paletteIndex);
@@ -1194,7 +1190,7 @@ void sub_80E2F2C(u8 taskId)
     u16 species;
     int spriteId, newSpriteId;
     u16 var0;
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData subStruct;
 
     var0 = 0;
     gBattle_WIN0H = 0;
@@ -1216,7 +1212,7 @@ void sub_80E2F2C(u8 taskId)
         if (GetBattlerPosition(gBattleAnimAttacker) == B_POSITION_OPPONENT_RIGHT
          || GetBattlerPosition(gBattleAnimAttacker) == B_POSITION_PLAYER_LEFT)
         {
-            if (IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2) == TRUE)
+            if (IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2) == TRUE)
             {
                 gSprites[gBattlerSpriteIds[gBattleAnimAttacker ^ 2]].oam.priority -= 1;
                 REG_BG1CNT_BITFIELD.priority = 1;
@@ -1239,14 +1235,14 @@ void sub_80E2F2C(u8 taskId)
 
     spriteId = GetAnimBattlerSpriteId(0);
     newSpriteId = sub_807A4A0(gBattleAnimAttacker, spriteId, species);
-    sub_8078914(&subStruct);
-    DmaFill32Defvars(3, 0, subStruct.field_4, 0x1000);
-    LZDecompressVram(&gUnknown_08D20A30, subStruct.field_4);
+    GetBattleAnimBg1Data(&subStruct);
+    DmaFill32Defvars(3, 0, subStruct.bgTilemap, 0x1000);
+    LZDecompressVram(&gUnknown_08D20A30, subStruct.bgTilemap);
     if (IsContest())
-        sub_80763FC(subStruct.field_8, (u16 *)subStruct.field_4, 0, 0);
+        RelocateBattleBgPal(subStruct.paletteId, (u16 *)subStruct.bgTilemap, 0, 0);
     
-    LZDecompressVram(&gUnknown_08D20A14, subStruct.field_0);
-    LoadPalette(&gUnknown_083DB568, subStruct.field_8 * 16 + 1, 2);
+    LZDecompressVram(&gUnknown_08D20A14, subStruct.bgTiles);
+    LoadPalette(&gUnknown_083DB568, subStruct.paletteId * 16 + 1, 2);
 
     gBattle_BG1_X = -gSprites[spriteId].x + 32;
     gBattle_BG1_Y = -gSprites[spriteId].y + 32;
@@ -1257,7 +1253,7 @@ void sub_80E2F2C(u8 taskId)
 
 static void sub_80E3194(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData subStruct;
     struct Sprite *sprite;
 
     gTasks[taskId].data[10] += 4;
@@ -1268,7 +1264,7 @@ static void sub_80E3194(u8 taskId)
         gBattle_BG1_Y += 64;
         if (++gTasks[taskId].data[11] == 4)
         {
-            sub_8076464(0);
+            ResetBattleAnimBg(0);
             gBattle_WIN0H = 0;
             gBattle_WIN0V = 0;
             REG_WININ = 0x3F3F;
@@ -1284,8 +1280,8 @@ static void sub_80E3194(u8 taskId)
             sprite = &gSprites[gTasks[taskId].data[0]];
             DestroySprite(sprite);
 
-            sub_8078914(&subStruct);
-            DmaFill32Defvars(3, 0, subStruct.field_4, 0x800);
+            GetBattleAnimBg1Data(&subStruct);
+            DmaFill32Defvars(3, 0, subStruct.bgTilemap, 0x800);
             if (gTasks[taskId].data[6] == 1)
                 gSprites[gBattlerSpriteIds[gBattleAnimAttacker ^ 2]].oam.priority++;
 
@@ -1314,7 +1310,7 @@ static void sub_80E3338(u8 taskId)
     u16 species;
     u8 spriteId, spriteId2;
     u16 var0;
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData subStruct;
     s16 taskData[8];
 
     spriteId2 = 0;
@@ -1332,7 +1328,7 @@ static void sub_80E3338(u8 taskId)
         battler1 = gBattleAnimTarget;
 
     battler2 = battler1 ^ 2;
-    if (IsContest() || (taskData[3] && !IsAnimBankSpriteVisible(battler2)))
+    if (IsContest() || (taskData[3] && !IsBattlerSpriteVisible(battler2)))
         taskData[3] = 0;
 
     gBattle_WIN0H = 0;
@@ -1353,7 +1349,7 @@ static void sub_80E3338(u8 taskId)
         if (GetBattlerPosition(battler1) == B_POSITION_OPPONENT_RIGHT
          || GetBattlerPosition(battler1) == B_POSITION_PLAYER_LEFT)
         {
-            if (IsAnimBankSpriteVisible(battler2) == TRUE)
+            if (IsBattlerSpriteVisible(battler2) == TRUE)
             {
                 gSprites[gBattlerSpriteIds[battler2]].oam.priority -= 1;
                 REG_BG1CNT_BITFIELD.priority = 1;
@@ -1378,33 +1374,33 @@ static void sub_80E3338(u8 taskId)
     if (taskData[3])
         spriteId2 = sub_807A4A0(battler2, gBattlerSpriteIds[battler2], species);
     
-    sub_8078914(&subStruct);
+    GetBattleAnimBg1Data(&subStruct);
     if (taskData[0] == 0)
-        LZDecompressVram(&gBattleStatMask1_Tilemap, subStruct.field_4);
+        LZDecompressVram(&gBattleStatMask1_Tilemap, subStruct.bgTilemap);
     else
-        LZDecompressVram(&gBattleStatMask2_Tilemap, subStruct.field_4);
+        LZDecompressVram(&gBattleStatMask2_Tilemap, subStruct.bgTilemap);
 
     if (IsContest())
-        sub_80763FC(subStruct.field_8, (u16 *)subStruct.field_4, 0, 0);
+        RelocateBattleBgPal(subStruct.paletteId, (u16 *)subStruct.bgTilemap, 0, 0);
 
-    LZDecompressVram(&gBattleStatMask_Gfx, subStruct.field_0);
+    LZDecompressVram(&gBattleStatMask_Gfx, subStruct.bgTiles);
 
     if (taskData[1] == 0)
-        LoadCompressedPalette(gBattleStatMask2_Pal, subStruct.field_8 << 4, 32);
+        LoadCompressedPalette(gBattleStatMask2_Pal, subStruct.paletteId << 4, 32);
     else if (taskData[1] == 1)
-        LoadCompressedPalette(gBattleStatMask1_Pal, subStruct.field_8 << 4, 32);
+        LoadCompressedPalette(gBattleStatMask1_Pal, subStruct.paletteId << 4, 32);
     else if (taskData[1] == 2)
-        LoadCompressedPalette(gBattleStatMask3_Pal, subStruct.field_8 << 4, 32);
+        LoadCompressedPalette(gBattleStatMask3_Pal, subStruct.paletteId << 4, 32);
     else if (taskData[1] == 3)
-        LoadCompressedPalette(gBattleStatMask4_Pal, subStruct.field_8 << 4, 32);
+        LoadCompressedPalette(gBattleStatMask4_Pal, subStruct.paletteId << 4, 32);
     else if (taskData[1] == 4)
-        LoadCompressedPalette(gBattleStatMask6_Pal, subStruct.field_8 << 4, 32);
+        LoadCompressedPalette(gBattleStatMask6_Pal, subStruct.paletteId << 4, 32);
     else if (taskData[1] == 5)
-        LoadCompressedPalette(gBattleStatMask7_Pal, subStruct.field_8 << 4, 32);
+        LoadCompressedPalette(gBattleStatMask7_Pal, subStruct.paletteId << 4, 32);
     else if (taskData[1] == 6)
-        LoadCompressedPalette(gBattleStatMask8_Pal, subStruct.field_8 << 4, 32);
+        LoadCompressedPalette(gBattleStatMask8_Pal, subStruct.paletteId << 4, 32);
     else
-        LoadCompressedPalette(gBattleStatMask5_Pal, subStruct.field_8 << 4, 32);
+        LoadCompressedPalette(gBattleStatMask5_Pal, subStruct.paletteId << 4, 32);
 
     gBattle_BG1_X = 0;
     gBattle_BG1_Y = 0;
@@ -1471,7 +1467,7 @@ static void sub_80E3704(u8 taskId)
             REG_BLDALPHA = ((16 - gTasks[taskId].data[12]) << 8) | gTasks[taskId].data[12];
             if (gTasks[taskId].data[12] == 0)
             {
-                sub_8076464(0);
+                ResetBattleAnimBg(0);
                 gBattle_WIN0H = 0;
                 gBattle_WIN0V = 0;
                 REG_WININ = 0x3F3F;
@@ -1659,7 +1655,7 @@ void sub_80E3BDC(u8 taskId)
 
     for (i = 0; i < 4; i++)
     {
-        if (i != gBattleAnimAttacker && IsAnimBankSpriteVisible(i))
+        if (i != gBattleAnimAttacker && IsBattlerSpriteVisible(i))
             gSprites[gBattlerSpriteIds[i]].invisible = gBattleAnimArgs[0];
     }
 
@@ -1670,13 +1666,13 @@ void sub_80E3C4C(u8 taskId, int unused, u16 arg2, u8 battler1, u8 arg4, u8 arg5,
 {
     u16 species;
     u8 spriteId, spriteId2;
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData subStruct;
     u8 battler2;
 
     spriteId2 = 0;
     battler2 = battler1 ^ 2;
 
-    if (IsContest() || (arg4 && !IsAnimBankSpriteVisible(battler2)))
+    if (IsContest() || (arg4 && !IsBattlerSpriteVisible(battler2)))
         arg4 = 0;
 
     gBattle_WIN0H = 0;
@@ -1708,13 +1704,13 @@ void sub_80E3C4C(u8 taskId, int unused, u16 arg2, u8 battler1, u8 arg4, u8 arg5,
     if (arg4)
         spriteId2 = sub_807A4A0(battler2, gBattlerSpriteIds[battler2], species);
 
-    sub_8078914(&subStruct);
-    LZDecompressVram(arg9, subStruct.field_4);
+    GetBattleAnimBg1Data(&subStruct);
+    LZDecompressVram(arg9, subStruct.bgTilemap);
     if (IsContest())
-        sub_80763FC(subStruct.field_8, (u16 *)subStruct.field_4, 0, 0);
+        RelocateBattleBgPal(subStruct.paletteId, (u16 *)subStruct.bgTilemap, 0, 0);
 
-    LZDecompressVram(arg8, subStruct.field_0);
-    LoadCompressedPalette(palette, subStruct.field_8 << 4, 32);
+    LZDecompressVram(arg8, subStruct.bgTiles);
+    LoadCompressedPalette(palette, subStruct.paletteId << 4, 32);
     gBattle_BG1_X = 0;
     gBattle_BG1_Y = 0;
     gTasks[taskId].data[1] = arg2;
@@ -1760,7 +1756,7 @@ static void sub_80E3E64(u8 taskId)
             REG_BLDALPHA = ((16 - gTasks[taskId].data[12]) << 8) | gTasks[taskId].data[12];
             if (gTasks[taskId].data[12] == 0)
             {
-                sub_8076464(0);
+                ResetBattleAnimBg(0);
                 gBattle_WIN0H = 0;
                 gBattle_WIN0V = 0;
                 REG_WININ = 0x3F3F;

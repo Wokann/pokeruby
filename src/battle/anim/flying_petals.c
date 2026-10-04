@@ -4,9 +4,6 @@
 #include "battle_anim.h"
 #include "sound.h"
 
-extern s16 gBattleAnimArgs[];
-extern u8 gBattleAnimAttacker;
-extern u8 gBattleAnimTarget;
 extern const union AnimCmd *const gSpriteAnimTable_83D6424[];
 extern const union AnimCmd *const gSpriteAnimTable_83D6420[];
 
@@ -30,7 +27,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D68B8 =
 {
     .tileTag = ANIM_TAG_FLOWER,
     .paletteTag = ANIM_TAG_FLOWER,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gSpriteAnimTable_83D6424,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -41,7 +38,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D68D0 =
 {
     .tileTag = ANIM_TAG_FLOWER,
     .paletteTag = ANIM_TAG_FLOWER,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D6420,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D68B4,
@@ -82,7 +79,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D693C =
 {
     .tileTag = ANIM_TAG_SPARKLE_6,
     .paletteTag = ANIM_TAG_SPARKLE_6,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D6930,
@@ -93,7 +90,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6954 =
 {
     .tileTag = ANIM_TAG_SPARKLE_6,
     .paletteTag = ANIM_TAG_SPARKLE_6,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D6934,
@@ -104,7 +101,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D696C =
 {
     .tileTag = ANIM_TAG_SPARKLE_6,
     .paletteTag = ANIM_TAG_SPARKLE_6,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D6938,
