@@ -1176,7 +1176,7 @@ static void Task_IntroLoadPart3Graphics(u8 taskId)
     gTasks[taskId].data[1] = 0;
     gTasks[taskId].data[2] = 0;
     gTasks[taskId].data[3] = 0;
-    sub_813CE30(0x78, 0x50, 0, 0);
+    PanFadeAndZoomScreen(0x78, 0x50, 0, 0);
     ResetSpriteData();
     FreeAllSpritePalettes();
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, FADE_COLOR_WHITE);
@@ -1199,7 +1199,7 @@ static void Task_IntroSpinAndZoomPokeball(u8 taskId)
     {
         gTasks[taskId].func = Task_IntroWaitToSetupPart3DoubleFight;
     }
-    sub_813CE30(0x78, 0x50, 0x10000 / gTasks[taskId].data[1], gTasks[taskId].data[0]);
+    PanFadeAndZoomScreen(0x78, 0x50, 0x10000 / gTasks[taskId].data[1], gTasks[taskId].data[0]);
     if (gIntroFrameCounter == 44)
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, FADE_COLOR_WHITE);
 }
@@ -1516,11 +1516,11 @@ static void sub_813CCE8(u8 taskId)
 
             gTasks[taskId].data[1]--;
             foo = gTasks[taskId].data[1] / 2;
-            REG_BLDALPHA = gUnknown_08393E64[foo];
+            REG_BLDALPHA = gTitleScreenAlphaBlend[foo];
         }
         else
         {
-            REG_BLDALPHA = gUnknown_08393E64[0];
+            REG_BLDALPHA = gTitleScreenAlphaBlend[0];
             gTasks[taskId].data[1] = 0x80;
             gTasks[taskId].data[0]++;
         }
@@ -1544,12 +1544,12 @@ static void sub_813CCE8(u8 taskId)
 
             gTasks[taskId].data[1]++;
             foo = gTasks[taskId].data[1] / 2;
-            REG_BLDALPHA = gUnknown_08393E64[foo];
+            REG_BLDALPHA = gTitleScreenAlphaBlend[foo];
         }
         else
         {
             //_0813CDE0
-            REG_BLDALPHA = gUnknown_08393E64[0x1F];
+            REG_BLDALPHA = gTitleScreenAlphaBlend[0x1F];
             gTasks[taskId].data[1] = 0x10;
             gTasks[taskId].data[0]++;
         }
@@ -1570,15 +1570,15 @@ static void sub_813CCE8(u8 taskId)
     }
 }
 
-void sub_813CE30(u16 scrX, u16 scrY, u16 zoom, u16 alpha)
+void PanFadeAndZoomScreen(u16 screenX, u16 screenY, u16 zoom, u16 alpha)
 {
     struct BgAffineSrcData src;
     struct BgAffineDstData dest;
 
     src.texX = 0x8000;
     src.texY = 0x8000;
-    src.scrX = scrX;
-    src.scrY = scrY;
+    src.scrX = screenX;
+    src.scrY = screenY;
     src.sx = zoom;
     src.sy = zoom;
     src.alpha = alpha;

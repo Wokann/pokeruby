@@ -1,4 +1,7 @@
 #include "global.h"
+#include "constants/rgb.h"
+#include "battle.h"
+#include "graphics.h"
 #include "gba/m4a_internal.h"
 #include "title_screen.h"
 #include "clear_save_data_menu.h"
@@ -40,16 +43,10 @@
 #define START_BANNER_X DISPLAY_WIDTH / 2 - 2
 #endif
 
-extern u8 gReservedSpritePaletteCount;
-extern struct MusicPlayerInfo gMPlayInfo_BGM;
-extern u16 gBattle_BG1_Y;
-extern u16 gBattle_BG1_X;
-extern const u8 gUnknown_08E9D8CC[];
-extern const u16 gUnknown_08E9F624[];
-extern const u8 gUnknown_08E9F7E4[];
-extern const u8 gVersionTiles[];
-extern const u8 gTitleScreenPressStart_Gfx[];
-extern const u16 gTitleScreenLogoShinePalette[];
+static void SpriteCB_VersionBannerLeft(struct Sprite *sprite);
+static void SpriteCB_VersionBannerRight(struct Sprite *sprite);
+static void SpriteCB_PressStartCopyrightBanner(struct Sprite *sprite);
+static void SpriteCB_PokemonLogoShine(struct Sprite *sprite);
 
 static EWRAM_DATA u8 gUnknown_0202F7E4 = 0;
 
@@ -72,8 +69,8 @@ static const u8 sLegendaryMonPixelData[] = INCBIN_U8("graphics/title_screen/grou
 static const u8 sLegendaryMonTilemap[] = INCBIN_U8("graphics/title_screen/groudon_map.bin.lz");
 static const u8 sBackdropTilemap[] = INCBIN_U8("graphics/title_screen/lava_map.bin.lz");
 #endif
-static const u8 sLogoShineTiles[] = INCBIN_U8("graphics/title_screen/logo_shine.4bpp.lz");
-const u16 gUnknown_08393E64[] =
+static const u8 sTitleScreenLogoShineGfx[] = INCBIN_U8("graphics/title_screen/logo_shine.4bpp.lz");
+const u16 gTitleScreenAlphaBlend[] =
 {
     0x10,
     0x110,
@@ -166,7 +163,7 @@ static const struct SpriteTemplate sVersionBannerLeftSpriteTemplate =
     .anims = sVersionBannerLeftAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallback_VersionBannerLeft,
+    .callback = SpriteCB_VersionBannerLeft,
 };
 static const struct SpriteTemplate sVersionBannerRightSpriteTemplate =
 {
@@ -176,14 +173,14 @@ static const struct SpriteTemplate sVersionBannerRightSpriteTemplate =
     .anims = sVersionBannerRightAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallback_VersionBannerRight,
+    .callback = SpriteCB_VersionBannerRight,
 };
 static const struct CompressedSpriteSheet gUnknown_08393EFC[] =
 {
     {gVersionTiles, VERSION_BANNER_BYTES, 1000},
     {NULL},
 };
-static const struct OamData gOamData_8393F0C =
+static const struct OamData sOamData_CopyrightBanner =
 {
     .y = 160,
     .affineMode = 0,
@@ -199,53 +196,53 @@ static const struct OamData gOamData_8393F0C =
     .paletteNum = 0,
     .affineParam = 0,
 };
-static const union AnimCmd gSpriteAnim_8393F14[] =
+static const union AnimCmd sAnim_PressStart_0[] =
 {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_8393F1C[] =
+static const union AnimCmd sAnim_PressStart_1[] =
 {
     ANIMCMD_FRAME(4, 4),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_8393F24[] =
+static const union AnimCmd sAnim_PressStart_2[] =
 {
     ANIMCMD_FRAME(8, 4),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_8393F2C[] =
+static const union AnimCmd sAnim_Copyright_0[] =
 {
     ANIMCMD_FRAME(12, 4),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_8393F34[] =
+static const union AnimCmd sAnim_Copyright_1[] =
 {
     ANIMCMD_FRAME(16, 4),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_8393F3C[] =
+static const union AnimCmd sAnim_Copyright_2[] =
 {
     ANIMCMD_FRAME(20, 4),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_8393F44[] =
+static const union AnimCmd sAnim_Copyright_3[] =
 {
     ANIMCMD_FRAME(24, 4),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_8393F4C[] =
+static const union AnimCmd sAnim_Copyright_4[] =
 {
     ANIMCMD_FRAME(28, 4),
     ANIMCMD_END,
 };
 #if GERMAN
-static const union AnimCmd gSpriteAnim_839F73C[] =
+static const union AnimCmd sAnim_PressStart_3[] =
 {
     ANIMCMD_FRAME(32, 4),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_839F744[] =
+static const union AnimCmd sAnim_PressStart_4[] =
 {
     ANIMCMD_FRAME(36, 4),
     ANIMCMD_END,
@@ -253,37 +250,37 @@ static const union AnimCmd gSpriteAnim_839F744[] =
 #endif
 static const union AnimCmd *const sStartCopyrightBannerAnimTable[] =
 {
-    gSpriteAnim_8393F14,
-    gSpriteAnim_8393F1C,
-    gSpriteAnim_8393F24,
-    gSpriteAnim_8393F2C,
-    gSpriteAnim_8393F34,
-    gSpriteAnim_8393F3C,
-    gSpriteAnim_8393F44,
-    gSpriteAnim_8393F4C,
+    sAnim_PressStart_0,
+    sAnim_PressStart_1,
+    sAnim_PressStart_2,
+    sAnim_Copyright_0,
+    sAnim_Copyright_1,
+    sAnim_Copyright_2,
+    sAnim_Copyright_3,
+    sAnim_Copyright_4,
 #if GERMAN
-    gSpriteAnim_839F73C,
-    gSpriteAnim_839F744,
+    sAnim_PressStart_3,
+    sAnim_PressStart_4,
 #endif
 };
 static const struct SpriteTemplate sStartCopyrightBannerSpriteTemplate =
 {
     .tileTag = 1001,
     .paletteTag = 1001,
-    .oam = &gOamData_8393F0C,
+    .oam = &sOamData_CopyrightBanner,
     .anims = sStartCopyrightBannerAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallback_PressStartCopyrightBanner,
+    .callback = SpriteCB_PressStartCopyrightBanner,
 };
-static const struct CompressedSpriteSheet gUnknown_08393F8C[] =
+static const struct CompressedSpriteSheet sSpriteSheet_PressStart[] =
 {
-    {gTitleScreenPressStart_Gfx, 0x520, 1001},
+    {gTitleScreenPressStartGfx, 0x520, 1001},
     {NULL},
 };
-const struct SpritePalette sPokemonLogoShinePalette[] =
+static const struct SpritePalette sSpritePalette_PressStart[] =
 {
-    {gTitleScreenLogoShinePalette, 1001},
+    {gTitleScreenPressStartPal, 1001},
     {NULL},
 };
 static const struct OamData sPokemonLogoShineOamData =
@@ -319,15 +316,13 @@ static const struct SpriteTemplate sPokemonLogoShineSpriteTemplate =
     .anims = sPokemonLogoShineAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallback_PokemonLogoShine,
+    .callback = SpriteCB_PokemonLogoShine,
 };
 static const struct CompressedSpriteSheet sPokemonLogoShineSpriteSheet[] =
 {
-    {sLogoShineTiles, 0x800, 1002},
+    {sTitleScreenLogoShineGfx, 0x800, 1002},
     {NULL},
 };
-
-#define _RGB(r, g, b) ((((b) & 31) << 10) + (((g) & 31) << 5) + ((r) & 31))
 
 #ifdef SAPPHIRE
 //Red Kyogre markings
@@ -362,7 +357,7 @@ static void CB2_GoToResetRtcScreen(void);
 static void CB2_GoToCopyrightScreen(void);
 static void UpdateLegendaryMarkingColor(u8);
 
-void SpriteCallback_VersionBannerLeft(struct Sprite *sprite)
+static void SpriteCB_VersionBannerLeft(struct Sprite *sprite)
 {
     struct Task *task = &gTasks[sprite->data[1]];
 
@@ -381,12 +376,12 @@ void SpriteCallback_VersionBannerLeft(struct Sprite *sprite)
             sprite->invisible = FALSE;
             if (sprite->y != VERSION_BANNER_Y_GOAL)
                 sprite->y++;
-            REG_BLDALPHA = gUnknown_08393E64[task->data[5] / 2];
+            REG_BLDALPHA = gTitleScreenAlphaBlend[task->data[5] / 2];
         }
     }
 }
 
-void SpriteCallback_VersionBannerRight(struct Sprite *sprite)
+static void SpriteCB_VersionBannerRight(struct Sprite *sprite)
 {
     struct Task *task = &gTasks[sprite->data[1]];
 
@@ -407,7 +402,7 @@ void SpriteCallback_VersionBannerRight(struct Sprite *sprite)
     }
 }
 
-void SpriteCallback_PressStartCopyrightBanner(struct Sprite *sprite)
+static void SpriteCB_PressStartCopyrightBanner(struct Sprite *sprite)
 {
     if (sprite->data[0] == 1)
     {
@@ -457,7 +452,7 @@ static void CreateCopyrightBanner(s16 x, s16 y)
     }
 }
 
-void SpriteCallback_PokemonLogoShine(struct Sprite *sprite)
+static void SpriteCB_PokemonLogoShine(struct Sprite *sprite)
 {
     if (gTasks[gUnknown_0202F7E4].data[1] == 0 && sprite->x < 272)
     {
@@ -512,7 +507,6 @@ static void VBlankCB(void)
     REG_BG1VOFS = gBattle_BG1_Y;
 }
 
-
 #define tCounter data[0]
 #define tSkipToNext data[1]
 
@@ -544,9 +538,9 @@ void CB2_InitTitleScreen(void)
         gMain.state = 1;
         break;
     case 1:
-        LZ77UnCompVram(gUnknown_08E9D8CC, (void *)VRAM);
-        LZ77UnCompVram(gUnknown_08E9F7E4, (void *)(VRAM + 0x4800));
-        LoadPalette(gUnknown_08E9F624, 0, 0x1C0);
+        LZ77UnCompVram(gTitleScreenPokemonLogoGfx, (void *)VRAM);
+        LZ77UnCompVram(gTitleScreenPokemonLogoTilemap, (void *)(VRAM + 0x4800));
+        LoadPalette(gTitleScreenBgPalettes, 0, 0x1C0);
         LZ77UnCompVram(sLegendaryMonPixelData, (void *)(VRAM + 0x8000));
         LZ77UnCompVram(sLegendaryMonTilemap, (void *)(VRAM + 0xC000));
         LZ77UnCompVram(sBackdropTilemap, (void *)(VRAM + 0xC800));
@@ -557,10 +551,10 @@ void CB2_InitTitleScreen(void)
         FreeAllSpritePalettes();
         gReservedSpritePaletteCount = 14;
         LoadCompressedObjectPic(&gUnknown_08393EFC[0]);
-        LoadCompressedObjectPic(&gUnknown_08393F8C[0]);
+        LoadCompressedObjectPic(&sSpriteSheet_PressStart[0]);
         LoadCompressedObjectPic(&sPokemonLogoShineSpriteSheet[0]);
-        LoadPalette(gUnknown_08E9F624, 0x100, 0x1C0);
-        LoadSpritePalette(&sPokemonLogoShinePalette[0]);
+        LoadPalette(gTitleScreenBgPalettes, 0x100, 0x1C0);
+        LoadSpritePalette(&sSpritePalette_PressStart[0]);
         gMain.state = 2;
         break;
     case 2:
@@ -584,7 +578,7 @@ void CB2_InitTitleScreen(void)
     {
         u16 savedIme;
 
-        sub_813CE30(0x78, 0x50, 0x100, 0);
+        PanFadeAndZoomScreen(0x78, 0x50, 0x100, 0);
         REG_BG2X = -29 * 256;
         REG_BG2Y = -33 * 256;
         REG_WIN0H = 0;
@@ -797,7 +791,7 @@ static void CB2_GoToResetRtcScreen(void)
 
 static void UpdateLegendaryMarkingColor(u8 frameNum)
 {
-    u16 palette;
+    u16 color;
 
     if ((frameNum % 4) == 0) //Change color every 4th frame
     {
@@ -805,10 +799,9 @@ static void UpdateLegendaryMarkingColor(u8 frameNum)
         u8 fadeDarker = (frameNum >> 2) & 32;
 
         if (!fadeDarker)
-            palette = LEGENDARY_MARKING_COLOR(colorIntensity);
+            color = LEGENDARY_MARKING_COLOR(colorIntensity);
         else
-            palette = LEGENDARY_MARKING_COLOR(31 - colorIntensity);
-        LoadPalette(&palette, 0xEF, sizeof(palette));
+            color = LEGENDARY_MARKING_COLOR(31 - colorIntensity);
+        LoadPalette(&color, 0xEF, sizeof(color));
    }
 }
-

@@ -2734,12 +2734,12 @@ extern const u8 gUnknown_08E9AC2C[];
 extern const u8 gUnknown_08E9AC4C[];
 
 extern const u8 gInterviewOutlineCursorTiles[];
-extern const u8 gTitleScreenPressStart_Gfx[];
-extern const u16 gTitleScreenLogoShinePalette[];
-extern const u8 gUnknown_08E9D8CC[];
+extern const u8 gTitleScreenPressStartGfx[];
+extern const u16 gTitleScreenPressStartPal[];
+extern const u8 gTitleScreenPokemonLogoGfx[];
 extern const u8 gVersionTiles[];
-extern const u16 gUnknown_08E9F624[];
-extern const u8 gUnknown_08E9F7E4[];
+extern const u16 gTitleScreenBgPalettes[];
+extern const u8 gTitleScreenPokemonLogoTilemap[];
 
 extern const u8 gCableCar_Gfx[];
 extern const u8 gCableCarDoor_Gfx[];

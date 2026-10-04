@@ -1276,21 +1276,21 @@ const u16 gIntroCopyright_Pal[] = INCBIN_U16("graphics/intro/copyright.gbapal");
 const u8 gIntroCopyright_Tilemap[] = INCBIN_U8("graphics/intro/copyright.bin");
 
 const u8 gInterviewOutlineCursorTiles[] = INCBIN_U8("graphics/misc/interview_outline_cursor.4bpp");
-const u8 gTitleScreenPressStart_Gfx[] = INCBIN_U8("graphics/title_screen/press_start.4bpp.lz");
-const u8 gTitleScreenLogoShinePalette[] = INCBIN_U8("graphics/title_screen/logo_shine.gbapal");
+const u8 gTitleScreenPressStartGfx[] = INCBIN_U8("graphics/title_screen/press_start.4bpp.lz");
+const u8 gTitleScreenPressStartPal[] = INCBIN_U8("graphics/title_screen/logo_shine.gbapal");
 
 #ifdef SAPPHIRE
-const u8 gUnknown_08E9D8CC[] = INCBIN_U8("graphics/title_screen/pokemon_sapphire.8bpp.lz");
+const u8 gTitleScreenPokemonLogoGfx[] = INCBIN_U8("graphics/title_screen/pokemon_sapphire.8bpp.lz");
 const u8 gVersionTiles[] = INCBIN_U8("graphics/title_screen/sapphireversion.8bpp.lz");
-const u16 gUnknown_08E9F624[] = INCBIN_U16("graphics/title_screen/logo_sapphire.gbapal");
+const u16 gTitleScreenBgPalettes[] = INCBIN_U16("graphics/title_screen/logo_sapphire.gbapal");
 // for some reason, the sapphire palette is different even though the visible colors for the logo and version are not
 #else
-const u8 gUnknown_08E9D8CC[] = INCBIN_U8("graphics/title_screen/pokemon_ruby.8bpp.lz");
+const u8 gTitleScreenPokemonLogoGfx[] = INCBIN_U8("graphics/title_screen/pokemon_ruby.8bpp.lz");
 const u8 gVersionTiles[] = INCBIN_U8("graphics/title_screen/rubyversion.8bpp.lz");
-const u16 gUnknown_08E9F624[] = INCBIN_U16("graphics/title_screen/logo_ruby.gbapal");
+const u16 gTitleScreenBgPalettes[] = INCBIN_U16("graphics/title_screen/logo_ruby.gbapal");
 #endif // SAPPHIRE
 
-const u8 gUnknown_08E9F7E4[] = INCBIN_U8("graphics/unknown/unknown_E9F7E4.bin.lz");
+const u8 gTitleScreenPokemonLogoTilemap[] = INCBIN_U8("graphics/title_screen/pokemon_logo.bin.lz");
 const u16 gPokenavArrowsPalette[] = INCBIN_U16("graphics/pokenav/arrows.gbapal");
 const u16 gUnknown_08E9F988[] = INCBIN_U16("graphics/unknown/unknown_E9F988.gbapal");
 const u8 gPokenavArrow_Gfx[] = INCBIN_U8("graphics/pokenav/arrow2.4bpp");
