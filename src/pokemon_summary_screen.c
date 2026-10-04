@@ -728,7 +728,7 @@ bool8 sub_809DA84(void)
         break;
     case 12:
         SummaryScreen_GetPokemon(&pssData.loadedMon);
-        if (!GetMonStatusAndPokerus(&pssData.loadedMon))
+        if (!GetMonAilment(&pssData.loadedMon))
             sub_80A12D0(0);
         else
             sub_80A12D0(10);
@@ -1613,7 +1613,7 @@ void SummaryScreenHandleUpDownInput(u8 taskId, s8 direction)
     if (var3 != -1)
     {
         PlaySE(SE_SELECT);
-        if (GetMonStatusAndPokerus(&pssData.loadedMon))
+        if (GetMonAilment(&pssData.loadedMon))
         {
             sub_80A12D0(-2);
         }
@@ -1730,7 +1730,7 @@ void sub_809F43C(u8 taskId)
         break;
     case 4:
         SummaryScreen_GetPokemon(&pssData.loadedMon);
-        if (GetMonStatusAndPokerus(&pssData.loadedMon))
+        if (GetMonAilment(&pssData.loadedMon))
             sub_80A12D0(2);
         DrawPokerusSurvivorDot(&pssData.loadedMon);
         gMain.state++;
@@ -1893,7 +1893,7 @@ static bool8 SummaryScreen_CanForgetSelectedMove(u8 taskId)
 
     SummaryScreen_GetPokemon(&mon);
     move = GetMonMove(&mon, pssData.selectedMoveIndex);
-    if (IsHMMove(move) == TRUE && pssData.mode != PSS_MODE_MOVE_DELETER)
+    if (IsMoveHm(move) == TRUE && pssData.mode != PSS_MODE_MOVE_DELETER)
         return FALSE;
     return TRUE;
 }
@@ -2168,12 +2168,12 @@ static void SummaryScreen_PrintPokemonSkillsLabels(void)
     SummaryScreen_PrintColoredText(gOtherText_NextLv, 13, 11, 16);
     Menu_PrintText(gOtherText_Terminator18, 21, 16);
 
-    SummaryScreen_PrintColoredTextCentered(gOtherText_HP, 13, 11, 7, 42);
-    SummaryScreen_PrintColoredTextCentered(gOtherText_Attack, 13, 11, 9, 42);
-    SummaryScreen_PrintColoredTextCentered(gOtherText_Defense, 13, 11, 11, 42);
-    SummaryScreen_PrintColoredTextCentered(gOtherText_SpAtk, 13, 22, 7, 36);
-    SummaryScreen_PrintColoredTextCentered(gOtherText_SpDef, 13, 22, 9, 36);
-    SummaryScreen_PrintColoredTextCentered(gOtherText_Speed, 13, 22, 11, 36);
+    SummaryScreen_PrintColoredTextCentered(gText_HP4, 13, 11, 7, 42);
+    SummaryScreen_PrintColoredTextCentered(gText_Attack3, 13, 11, 9, 42);
+    SummaryScreen_PrintColoredTextCentered(gText_Defense3, 13, 11, 11, 42);
+    SummaryScreen_PrintColoredTextCentered(gText_SpAtk4, 13, 22, 7, 36);
+    SummaryScreen_PrintColoredTextCentered(gText_SpDef4, 13, 22, 9, 36);
+    SummaryScreen_PrintColoredTextCentered(gText_Speed2, 13, 22, 11, 36);
 }
 
 static void SummaryScreen_PrintPokemonSkills(struct Pokemon *mon)
@@ -3085,7 +3085,7 @@ static void sub_80A12D0(s8 a)
 //             Menu_EraseWindowRect(0, 14, 9, 18);
 //             sub_80A0958(pssData.loadedMon);
 
-//             if (GetMonStatusAndPokerus(pssData.loadedMon))
+//             if (GetMonAilment(pssData.loadedMon))
 //             {
 //                 SummaryScreen_PrintColoredText(gOtherText_Status, 13, 1, 18);
 //             }
@@ -3232,7 +3232,7 @@ _080A1410:\n\
     adds r0, r4, 0\n\
     bl sub_80A0958\n\
     adds r0, r4, 0\n\
-    bl GetMonStatusAndPokerus\n\
+    bl GetMonAilment\n\
     lsls r0, 24\n\
     cmp r0, 0\n\
     beq _080A1444\n\
@@ -3428,7 +3428,7 @@ _080A15DC:\n\
     adds r0, r4, 0\n\
     bl sub_80A0958\n\
     adds r0, r4, 0\n\
-    bl GetMonStatusAndPokerus\n\
+    bl GetMonAilment\n\
     lsls r0, 24\n\
     cmp r0, 0\n\
     beq _080A1610\n\
@@ -3880,36 +3880,36 @@ static void sub_80A1C30(u8 a)
     }
 }
 
-u8 GetPrimaryStatus(u32 status)
+u8 GetAilmentFromStatus(u32 status)
 {
     if (status & (STATUS1_POISON | STATUS1_TOXIC_POISON))
-        return STATUS_PRIMARY_POISON;
+        return AILMENT_PSN;
     if (status & STATUS1_PARALYSIS)
-        return STATUS_PRIMARY_PARALYSIS;
+        return AILMENT_PRZ;
     if (status & STATUS1_SLEEP)
-        return STATUS_PRIMARY_SLEEP;
+        return AILMENT_SLP;
     if (status & STATUS1_FREEZE)
-        return STATUS_PRIMARY_FREEZE;
+        return AILMENT_FRZ;
     if (status & STATUS1_BURN)
-        return STATUS_PRIMARY_BURN;
+        return AILMENT_BRN;
 
-    return STATUS_PRIMARY_NONE;
+    return AILMENT_NONE;
 }
 
-u8 GetMonStatusAndPokerus(struct Pokemon *mon)
+u8 GetMonAilment(struct Pokemon *mon)
 {
     u8 statusAilment;
 
     if (GetMonData(mon, MON_DATA_HP) == 0)
-        return STATUS_PRIMARY_FAINTED;
+        return AILMENT_FNT;
 
-    statusAilment = GetPrimaryStatus(GetMonData(mon, MON_DATA_STATUS));
-    if (statusAilment == STATUS_PRIMARY_NONE)
+    statusAilment = GetAilmentFromStatus(GetMonData(mon, MON_DATA_STATUS));
+    if (statusAilment == AILMENT_NONE)
     {
         if (!CheckPartyPokerus(mon, 0))
-            return STATUS_PRIMARY_NONE;
+            return AILMENT_NONE;
         else
-            return STATUS_PRIMARY_POKERUS;
+            return AILMENT_PKRS;
     }
 
     return statusAilment;
@@ -3922,7 +3922,7 @@ void sub_80A1D18(void)
     u8 statusAndPkrs2;
 
     SummaryScreen_GetPokemon(&mon);
-    statusAndPkrs = GetMonStatusAndPokerus(&mon);
+    statusAndPkrs = GetMonAilment(&mon);
 
     if (statusAndPkrs)
     {

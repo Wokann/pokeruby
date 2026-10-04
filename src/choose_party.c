@@ -32,7 +32,6 @@ EWRAM_DATA u8 gSelectedOrderFromParty[3] = {0};
 extern u8 sub_806BD58(u8, u8);
 extern void PartyMenuPrintMonsLevelOrStatus(void);
 extern void DrawMonDescriptorStatus(u8, u8);
-extern u8 GetMonStatusAndPokerus();
 extern void PartyMenuPrintHP();
 extern bool8 sub_80F9344(void); 
 
@@ -96,7 +95,7 @@ bool8 SetupBattleTowerPartyMenu(void)
         }
         break;
     case 1:
-        LoadHeldItemIconGraphics();
+        LoadHeldItemIcons();
         ePartyMenu2.pmSetupState++;
         break;
     case 2:
@@ -290,7 +289,7 @@ void HandleBattleTowerPartyMenu(u8 taskId)
         {
         case A_BUTTON:
             PlaySE(SE_SELECT);
-            gLastFieldPokeMenuOpened = sub_806CA38(taskId);
+            gLastFieldPokeMenuOpened = GetCursorSelectionMonId(taskId);
             if (gLastFieldPokeMenuOpened != 6)
             {
                 GetMonNickname(&gPlayerParty[gLastFieldPokeMenuOpened], gStringVar1);
@@ -566,7 +565,7 @@ bool8 SetupLinkMultiBattlePartyMenu(void)
         ePartyMenu2.pmSetupState++;
         break;
     case 1:
-        LoadHeldItemIconGraphics();
+        LoadHeldItemIcons();
         ePartyMenu2.pmSetupState++;
         break;
     case 2:
@@ -628,8 +627,8 @@ static void sub_81229B8(void)
             u8 status;
 
             PartyMenuPrintHP(i, 3, &gPlayerParty[i]);
-            status = GetMonStatusAndPokerus(&gPlayerParty[i]);
-            if (status && status != STATUS_PRIMARY_POKERUS)
+            status = GetMonAilment(&gPlayerParty[i]);
+            if (status && status != AILMENT_PKRS)
                 PartyMenuPutStatusTilemap(i, 3, status - 1);
             else
                 PartyMenuPrintLevel(i, 3, &gPlayerParty[i]);
@@ -676,11 +675,11 @@ static void sub_8122B10(u8 taskId)
 
             PartyMenuDoPrintHP(i + 3, 3, gMultiPartnerParty[i].hp, gMultiPartnerParty[i].maxhp);
             if (gMultiPartnerParty[i].hp == 0)
-                primaryStatus = STATUS_PRIMARY_FAINTED;
+                primaryStatus = AILMENT_FNT;
             else
-                primaryStatus = GetPrimaryStatus(gMultiPartnerParty[i].status);
+                primaryStatus = GetAilmentFromStatus(gMultiPartnerParty[i].status);
 
-            if (primaryStatus != STATUS_PRIMARY_NONE)
+            if (primaryStatus != AILMENT_NONE)
                 PartyMenuPutStatusTilemap(i + 3, 3, primaryStatus - 1);
             else
                 PartyMenuDoPrintLevel(i + 3, 3, gMultiPartnerParty[i].level);
@@ -725,7 +724,7 @@ bool8 unref_sub_8122C60(void)
         }
         break;
     case 1:
-        LoadHeldItemIconGraphics();
+        LoadHeldItemIcons();
         ePartyMenu2.pmSetupState++;
         break;
     case 2:
@@ -817,7 +816,7 @@ void HandleDaycarePartyMenu(u8 taskId)
         {
         case A_BUTTON:
             PlaySE(SE_SELECT);
-            gLastFieldPokeMenuOpened = sub_806CA38(taskId);
+            gLastFieldPokeMenuOpened = GetCursorSelectionMonId(taskId);
             GetMonNickname(&gPlayerParty[gLastFieldPokeMenuOpened], gStringVar1);
             sub_8122D94(taskId);
             gTasks[taskId].func = Task_DaycareStorageMenu8122EAC;

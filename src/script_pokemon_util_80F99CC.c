@@ -86,7 +86,7 @@ bool8 SetupContestPartyMenu(void)
         }
         break;
     case 1:
-        LoadHeldItemIconGraphics();
+        LoadHeldItemIcons();
         ePartyMenu2.pmSetupState++;
         break;
     case 2:
@@ -162,7 +162,7 @@ void HandleSelectPartyMenu(u8 var)
         {
         case A_BUTTON:
             PlaySE(SE_SELECT);
-            gContestMonPartyIndex = sub_806CA38(var);
+            gContestMonPartyIndex = GetCursorSelectionMonId(var);
             gSpecialVar_0x8004 = gContestMonPartyIndex;
             sub_8123138(var);
             break;
@@ -194,7 +194,7 @@ bool8 SetupMoveTutorPartyMenu(void)
         }
         break;
     case 1:
-        LoadHeldItemIconGraphics();
+        LoadHeldItemIcons();
         ePartyMenu2.pmSetupState++;
         break;
     case 2:
@@ -261,7 +261,7 @@ void HandleMoveTutorPartyMenu(u8 var)
         {
         case A_BUTTON:
             PlaySE(SE_SELECT);
-            gSpecialVar_0x8004 = sub_806CA38(var);
+            gSpecialVar_0x8004 = GetCursorSelectionMonId(var);
             gSpecialVar_0x8005 = GetNumberOfRelearnableMoves(&gPlayerParty[gSpecialVar_0x8004]);
             sub_8123138(var);
             break;

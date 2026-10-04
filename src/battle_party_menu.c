@@ -231,7 +231,7 @@ void sub_8094B6C(u8 a, u8 b, u8 c)
     }
 }
 
-u8 sub_8094C20(u8 monIndex)
+u8 GetPartyIdFromBattleSlot(u8 monIndex)
 {
     u8 retVal;
     u8 val = monIndex & 1;
@@ -257,8 +257,8 @@ void sub_8094C54(u8 a, u8 b)
 
 void sub_8094C98(u8 a, u8 b)
 {
-    u8 r4 = sub_8094C20(a);
-    u8 r1 = sub_8094C20(b);
+    u8 r4 = GetPartyIdFromBattleSlot(a);
+    u8 r1 = GetPartyIdFromBattleSlot(b);
 
     sub_8094C54(a, r1);
     sub_8094C54(b, r4);
@@ -302,7 +302,7 @@ static void sub_8094D60(void)
     memcpy(temp, gPlayerParty, sizeof(gPlayerParty));
     for (i = 0; i < 6; i++)
     {
-        u8 n = sub_8094C20(i);
+        u8 n = GetPartyIdFromBattleSlot(i);
 
         memcpy(&gPlayerParty[n], &temp[i], sizeof(struct Pokemon));
     }
@@ -315,12 +315,12 @@ void unref_sub_8094DB0(void)
 
     for (i = 1; i < 6; i++)
     {
-        u8 n = sub_8094C20(i);
+        u8 n = GetPartyIdFromBattleSlot(i);
 
         if (GetMonData(&gPlayerParty[n], MON_DATA_SPECIES) != 0
          && GetMonData(&gPlayerParty[n], MON_DATA_HP) != 0)
         {
-            r4 = sub_8094C20(0);
+            r4 = GetPartyIdFromBattleSlot(0);
             sub_8094C98(0, i);
             SwapPokemon(&gPlayerParty[r4], &gPlayerParty[n]);
             break;
@@ -379,7 +379,7 @@ bool8 SetUpBattlePartyMenu(void)
         }
         break;
     case 1:
-        LoadHeldItemIconGraphics();
+        LoadHeldItemIcons();
         ePartyMenu2.pmSetupState++;
         break;
     case 2:
@@ -476,7 +476,7 @@ void HandleBattlePartyMenu(u8 taskId)
         case A_BUTTON:
             if (gUnknown_02038473 == 3)
             {
-                if (GetMonData(&gPlayerParty[sub_806CA38(taskId)], MON_DATA_IS_EGG))
+                if (GetMonData(&gPlayerParty[GetCursorSelectionMonId(taskId)], MON_DATA_IS_EGG))
                     PlaySE(SE_FAILURE);
                 else
                 {
@@ -487,8 +487,8 @@ void HandleBattlePartyMenu(u8 taskId)
             else
             {
                 PlaySE(SE_SELECT);
-                GetMonNickname(&gPlayerParty[sub_806CA38(taskId)], gStringVar1);
-                sub_8095050(taskId, sub_806CA38(taskId));
+                GetMonNickname(&gPlayerParty[GetCursorSelectionMonId(taskId)], gStringVar1);
+                sub_8095050(taskId, GetCursorSelectionMonId(taskId));
                 SetTaskFuncWithFollowupFunc(taskId, Task_HandlePopupMenuInput, HandleBattlePartyMenu);
             }
             break;
@@ -621,7 +621,7 @@ static void Task_80954C0(u8 taskId)
 
 static void Task_ShowSummaryScreen(u8 taskId)
 {
-    u8 partySelection = sub_806CA38(taskId);
+    u8 partySelection = GetCursorSelectionMonId(taskId);
 
     if (!gPaletteFade.active)
     {
@@ -633,7 +633,7 @@ static void Task_ShowSummaryScreen(u8 taskId)
 
 static void Task_BattlePartyMenuSummary(u8 taskId)
 {
-    sub_806CA38(taskId);  //an unused variable was probably set with this.
+    GetCursorSelectionMonId(taskId);  //an unused variable was probably set with this.
     gTasks[taskId].func = Task_ShowSummaryScreen;
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
 }
@@ -645,7 +645,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
     u8 r4;
 
     ClosePartyPopupMenu(gTasks[taskId].data[4], sBattlePartyPopupMenus);
-    partySelection = sub_806CA38(taskId);
+    partySelection = GetCursorSelectionMonId(taskId);
     if (IsLinkDoubleBattle() == TRUE && (partySelection == 1 || partySelection == 4 || partySelection == 5))
     {
         PartyMenuEraseMsgBoxAndFrame();
@@ -667,7 +667,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
     for (i = 0; i < gBattlersCount; i++)
     {
         if (GetBattlerSide(i) == 0
-         && sub_8094C20(partySelection) == gBattlerPartyIndexes[i])
+         && GetPartyIdFromBattleSlot(partySelection) == gBattlerPartyIndexes[i])
         {
             PartyMenuEraseMsgBoxAndFrame();
             GetMonNickname(&gPlayerParty[partySelection], gStringVar1);
@@ -685,7 +685,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
         gTasks[taskId].func = Task_80954C0;
         return;
     }
-    if (sub_8094C20(partySelection) == gBattleStruct->prevSelectedPartySlot)
+    if (GetPartyIdFromBattleSlot(partySelection) == gBattleStruct->prevSelectedPartySlot)
     {
         PartyMenuEraseMsgBoxAndFrame();
         GetMonNickname(&gPlayerParty[partySelection], gStringVar1);
@@ -715,7 +715,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
         gTasks[taskId].func = Task_80954C0;
         return;
     }
-    gSelectedMonPartyId = sub_8094C20(partySelection);
+    gSelectedMonPartyId = GetPartyIdFromBattleSlot(partySelection);
     gUnknown_0202E8F4 = 1;
     r4 = pokemon_order_func(gBattlerPartyIndexes[gBattlerInMenuId]);
     sub_8094C98(r4, partySelection);

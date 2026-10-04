@@ -2,6 +2,7 @@
 #define GUARD_PARTY_MENU_H
 
 #include "menu.h"
+#include "constants/party_menu.h"
 #include "task.h"
 
 
@@ -112,7 +113,7 @@ void task_pc_turn_off(const u8 *a, u8 b);
 void ChangePartyMenuSelection(u8 taskId, s8 directionPressed);
 void SelectBattleTowerOKButton(u8 taskId);
 void sub_806C994(u8 taskId, u8 b);
-u8 sub_806CA38(u8 taskID);
+u8 GetCursorSelectionMonId(u8 taskID);
 void HandlePartyMenuSwitchPokemonInput(u8 taskId);
 void sub_806CCE4(void);
 void sub_806CD44(u8 taskId);
@@ -121,21 +122,22 @@ void sub_806D4AC(u8 taskId, u16 species, u8 c);
 void sub_806D50C(u8 taskId, u8 monIndex);
 void PrintPartyMenuPromptText(u8 textId, u8 b);
 void PartyMenuEraseMsgBoxAndFrame(void);
-void SetMonIconAnim(u8 spriteId, struct Pokemon *pokemon);
 void CreatePartyMenuMonIcon(u8 taskId, u8 monIndex, u8 c, struct Pokemon *pokemon);
 void TryCreatePartyMenuMonIcon(u8 a, u8 monIndex, struct Pokemon *pokemon);
-void LoadHeldItemIconGraphics(void);
+void LoadHeldItemIcons(void);
 void PartyMenuTryGiveMonHeldItem(u8 taskId, u16 newItem, TaskFunc c);
 void SetMonIconSpriteId(u8 taskId, u8 monIndex, u8 spriteId);
 void CreateHeldItemIcon_806DCD4(u8 taskId, u8 monIndex, u16 item);
 void CreateHeldItemIcons_806DC34(u8 taskId);
-void CreateHeldItemIcons(u8 *a, u8 *b, u8 c);
+void DrawHeldItemIconsForTrade(u8 *partyCounts, u8 *partySpriteIds, u8 whichParty);
 void SetHeldItemIconVisibility(u8 a, u8 monIndex);
 void PartyMenuDoPrintMonNickname(u8 monIndex, int b, const u8 *nameBuffer);
 void PrintPartyMenuMonNickname(u8 monIndex, u8 b, struct Pokemon *pokemon);
 void PrintPartyMenuMonNicknames(void);
 void CreateMonIcon_LinkMultiBattle(u8 taskId, u8 monIndex, u8 menuType, struct MultiBattlePokemonTx *pokemon);
-u8 *GetMonNickname(struct Pokemon *pokemon, u8 *stringBuffer);
+u8 *GetMonNickname(struct Pokemon *mon, u8 *dest);
+u8 GetAilmentFromStatus(u32 status);
+u8 GetMonAilment(struct Pokemon *mon);
 void PartyMenuPutStatusTilemap(u8 monIndex, u8 b, u8 status);
 void PartyMenuDoPrintLevel(u8 monIndex, u8 b, u8 level);
 void PartyMenuPrintLevel(u8 monIndex, u8 b, struct Pokemon *pokemon);
@@ -163,7 +165,7 @@ void DisplayGiveHeldItemMessage(u8, u16, u8);
 void DisplayTakeHeldItemMessage(u8, u16, u8);
 void Task_ConfirmTakeHeldMail(u8);
 u16 ItemIdToBattleMoveId(u16);
-bool8 MonKnowsMove(struct Pokemon *, u16);
+bool8 MonKnowsMove(struct Pokemon *mon, u16 move);
 void TeachMonTMMove(u8, u16, TaskFunc);
 void Task_TeamMonTMMove(u8);
 void Task_TeamMonTMMove2(u8);
@@ -181,8 +183,7 @@ void sub_806FA18(u8 taskId);
 void sub_806FB0C(u8 taskId);
 void sub_806FB44(u8);
 void PartyMenuUpdateLevelOrStatus(struct Pokemon *, u8);
-void GetMedicineItemEffectMessage(u16);
-bool8 ExecuteTableBasedItemEffect__(u8, u16, u8);
+bool8 ExecuteTableBasedItemEffect_(u8 partyMonIndex, u16 item, u8 monMoveIndex);
 void UseMedicine(u8, u16, TaskFunc);
 bool8 IsBlueYellowRedFlute(u16);
 void DoSacredAshItemEffect(u8, u16, TaskFunc);
@@ -209,6 +210,6 @@ void PartyMenuTryGiveMonMail(u8 taskId, TaskFunc func);
 void sub_806D668(u8 monIndex);
 void TaughtMove(u8 taskId);
 void StopTryingToTeachMove_806F588(u8 taskId);
-bool8 IsHMMove(u16 move);
+bool8 IsMoveHm(u16 move);
 
 #endif // GUARD_PARTY_MENU_H

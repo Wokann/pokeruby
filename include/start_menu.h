@@ -4,6 +4,7 @@
 extern u8 (*gMenuCallback)(void);
 
 //Public functions
+void SetDexPokemonPokenavFlags(void);
 void CreateStartMenuTask(void (*func)(u8));
 void sub_80712B4(u8 taskId);
 void sub_8071310(void);

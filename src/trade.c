@@ -379,12 +379,12 @@ static void CB2_CreateTradeMenu(void)
             gMain.state ++;
             break;
         case  7:
-            LoadHeldItemIconGraphics();
-            CreateHeldItemIcons(&gUnknown_03004824->partyCounts[0], gUnknown_03004824->partySpriteIds[0], 0);
+            LoadHeldItemIcons();
+            DrawHeldItemIconsForTrade(&gUnknown_03004824->partyCounts[0], gUnknown_03004824->partySpriteIds[0], 0);
             gMain.state ++;
             break;
         case  8:
-            CreateHeldItemIcons(&gUnknown_03004824->partyCounts[0], gUnknown_03004824->partySpriteIds[0], 1);
+            DrawHeldItemIconsForTrade(&gUnknown_03004824->partyCounts[0], gUnknown_03004824->partySpriteIds[0], 1);
             gMain.state ++;
             break;
         case  9:
@@ -529,12 +529,12 @@ static void sub_80484F4(void)
             gMain.state ++;
             break;
         case  7:
-            LoadHeldItemIconGraphics();
-            CreateHeldItemIcons(&gUnknown_03004824->partyCounts[0], gUnknown_03004824->partySpriteIds[0], 0);
+            LoadHeldItemIcons();
+            DrawHeldItemIconsForTrade(&gUnknown_03004824->partyCounts[0], gUnknown_03004824->partySpriteIds[0], 0);
             gMain.state ++;
             break;
         case  8:
-            CreateHeldItemIcons(&gUnknown_03004824->partyCounts[0], gUnknown_03004824->partySpriteIds[0], 1);
+            DrawHeldItemIconsForTrade(&gUnknown_03004824->partyCounts[0], gUnknown_03004824->partySpriteIds[0], 1);
             gMain.state ++;
             break;
         case  9:

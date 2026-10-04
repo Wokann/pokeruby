@@ -911,7 +911,7 @@ void ItemUseInBattle_StatIncrease(u8 taskId)
 
     if (ExecuteTableBasedItemEffect(&gPlayerParty[partyId], gSpecialVar_ItemId, partyId, 0) != FALSE)
     {
-        DisplayItemMessageOnField(taskId, gOtherText_WontHaveAnyEffect, CleanUpItemMenuMessage, 1);
+        DisplayItemMessageOnField(taskId, gText_WontHaveEffect, CleanUpItemMenuMessage, 1);
     }
     else
     {
@@ -958,16 +958,16 @@ void unref_sub_80CA448(u8 var)
 {
     Menu_EraseWindowRect(0, 13, 13, 20);
 
-    if (ExecuteTableBasedItemEffect__(0, gSpecialVar_ItemId, 0) == FALSE)
+    if (ExecuteTableBasedItemEffect_(0, gSpecialVar_ItemId, 0) == FALSE)
     {
         RemoveBagItem(gSpecialVar_ItemId, 1);
         GetMonNickname(&gPlayerParty[0], gStringVar1);
-        StringExpandPlaceholders(gStringVar4, gOtherText_SnapConfusion);
+        StringExpandPlaceholders(gStringVar4, gText_PkmnSnappedOutOfConfusion);
         DisplayItemMessageOnField(var, gStringVar4, sub_80A7094, 1);
     }
     else
     {
-        DisplayItemMessageOnField(var, gOtherText_WontHaveAnyEffect, CleanUpItemMenuMessage, 1);
+        DisplayItemMessageOnField(var, gText_WontHaveEffect, CleanUpItemMenuMessage, 1);
     }
 }
 
