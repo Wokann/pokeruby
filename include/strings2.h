@@ -303,7 +303,6 @@ extern const u8 sText_TheFeelIs[];
 extern const u8 sText_Dot2[];
 
 // reset_rtc_screen
-extern const u8 gOtherText_Day[];
 extern const u8 gOtherText_OK[];
 
 // wallclock

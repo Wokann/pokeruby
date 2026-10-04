@@ -918,14 +918,14 @@ const u8 gOtherText_Ferry[] = _("FERRY");
 const u8 gOtherText_SecretBase[] = _("SECRET BASE");
 const u8 gOtherText_Hideout[] = _("HIDEOUT");
 
-const u8 gSystemText_ResetRTCPrompt[] = _("Reset RTC?\nA: Confirm, B: Cancel");
-const u8 gSystemText_PresentTime[] = _("Present time in game");
-const u8 gSystemText_PreviousTime[] = _("Previous time in game");
-const u8 gSystemText_PleaseResetTime[] = _("Please reset the time.");
-const u8 gSystemText_ClockResetDataSave[] = _("The clock has been reset.\nData will be saved. Please wait.");
-const u8 gSystemText_SaveCompleted[] = _("Save completed.");
-const u8 gSystemText_SaveFailed[] = _("Save failed...");
-const u8 gSystemText_NoSaveFileNoTime[] = _("There is no save file, so the time\ncan't be set.");
+const u8 gText_ResetRTCConfirmCancel[] = _("Reset RTC?\nA: Confirm, B: Cancel");
+const u8 gText_PresentTime[] = _("Present time in game");
+const u8 gText_PreviousTime[] = _("Previous time in game");
+const u8 gText_PleaseResetTime[] = _("Please reset the time.");
+const u8 gText_ClockHasBeenReset[] = _("The clock has been reset.\nData will be saved. Please wait.");
+const u8 gText_SaveCompleted[] = _("Save completed.");
+const u8 gText_SaveFailed[] = _("Save failed...");
+const u8 gText_NoSaveFileCantSetTime[] = _("There is no save file, so the time\ncan't be set.");
 const u8 gText_InGameClockUsable[] = _("The in-game clock adjustment system\nis now useable.");
 const u8 gSystemText_Saving[] = _("SAVING...\nDON'T TURN OFF THE POWER.");
 
@@ -1843,14 +1843,14 @@ const u8 gOtherText_Ferry[] = _("FÄHRE");
 const u8 gOtherText_SecretBase[] = _("GEHEIMBASIS");
 const u8 gOtherText_Hideout[] = _("VERSTECK");
 
-const u8 gSystemText_ResetRTCPrompt[] = _("Echtzeituhr zurücksetzen?\nA: Bestätigen, B: Zurück");
-const u8 gSystemText_PresentTime[] = _("Aktuelle Uhrzeit im Spiel");
-const u8 gSystemText_PreviousTime[] = _("Vorherige Uhrzeit im Spiel");
-const u8 gSystemText_PleaseResetTime[] = _("Bitte die Zeit zurückstellen.");
-const u8 gSystemText_ClockResetDataSave[] = _("Die Uhr wurde zurückgestellt. Daten\nwerden gesichert. Bitte warten...");
-const u8 gSystemText_SaveCompleted[] = _("Speichern beendet.");
-const u8 gSystemText_SaveFailed[] = _("Speichern fehlgeschlagen.");
-const u8 gSystemText_NoSaveFileNoTime[] = _("Es existiert kein Speicherstand. Uhr-\nzeit kann nicht eingestellt werden.");
+const u8 gText_ResetRTCConfirmCancel[] = _("Echtzeituhr zurücksetzen?\nA: Bestätigen, B: Zurück");
+const u8 gText_PresentTime[] = _("Aktuelle Uhrzeit im Spiel");
+const u8 gText_PreviousTime[] = _("Vorherige Uhrzeit im Spiel");
+const u8 gText_PleaseResetTime[] = _("Bitte die Zeit zurückstellen.");
+const u8 gText_ClockHasBeenReset[] = _("Die Uhr wurde zurückgestellt. Daten\nwerden gesichert. Bitte warten...");
+const u8 gText_SaveCompleted[] = _("Speichern beendet.");
+const u8 gText_SaveFailed[] = _("Speichern fehlgeschlagen.");
+const u8 gText_NoSaveFileCantSetTime[] = _("Es existiert kein Speicherstand. Uhr-\nzeit kann nicht eingestellt werden.");
 const u8 gText_InGameClockUsable[] = _("Das spielinterne Zeiteingabe-\nSystem ist jetzt verfügbar.");
 const u8 gSystemText_Saving[] = _("SPEICHERVORGANG...\nGERÄT NICHT AUSSCHALTEN!");
 #endif

@@ -543,7 +543,7 @@ sText_TheFeelIs:: @ 842D4E1
 sText_Dot2:: @ 842D4F4
 	.string ".$"
 
-gOtherText_Day:: @ 842D4F6
+gText_Day:: @ 842D4F6
 	.string "DAY$"
 	.string ":$"
 

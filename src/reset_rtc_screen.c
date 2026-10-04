@@ -1,4 +1,5 @@
 #include "global.h"
+#include "reset_rtc_screen.h"
 #include "event_data.h"
 #include "main.h"
 #include "menu.h"
@@ -16,23 +17,23 @@
 #include "text.h"
 #include "scanline_effect.h"
 
-struct ResetRtcStruct
+struct ResetRtcInputMap
 {
     /*0x0*/ u8 dataIndex;
     /*0x2*/ u16 minVal;
     /*0x4*/ u16 maxVal;
     /*0x6*/ u8 left;
     /*0x7*/ u8 right;
-    /*0x8*/ u8 unk8;
+    /*0x8*/ u8 unk; // never read
 };
 
 extern u16 gSaveFileStatus;
 
-void CB2_ResetRtcScreen(void);
-void VBlankCB_ResetRtcScreen(void);
-void Task_ResetRtcScreen(u8);
+static void CB2_ResetRtcScreen(void);
+static void VBlankCB_ResetRtcScreen(void);
+static void Task_ResetRtcScreen(u8 taskId);
 
-static const struct ResetRtcStruct gUnknown_08376420[5] =
+static const struct ResetRtcInputMap sInputMap[5] =
 {
     {
         .dataIndex = 3,
@@ -40,7 +41,7 @@ static const struct ResetRtcStruct gUnknown_08376420[5] =
         .maxVal = 9999,
         .left = 0,
         .right = 2,
-        .unk8 = 0,
+        .unk = 0,
     },
     {
         .dataIndex = 4,
@@ -48,7 +49,7 @@ static const struct ResetRtcStruct gUnknown_08376420[5] =
         .maxVal = 23,
         .left = 1,
         .right = 3,
-        .unk8 = 0,
+        .unk = 0,
     },
     {
         .dataIndex = 5,
@@ -56,7 +57,7 @@ static const struct ResetRtcStruct gUnknown_08376420[5] =
         .maxVal = 59,
         .left = 2,
         .right = 4,
-        .unk8 = 0,
+        .unk = 0,
     },
     {
         .dataIndex = 6,
@@ -64,7 +65,7 @@ static const struct ResetRtcStruct gUnknown_08376420[5] =
         .maxVal = 59,
         .left = 3,
         .right = 5,
-        .unk8 = 0,
+        .unk = 0,
     },
     {
         .dataIndex = 7,
@@ -72,11 +73,11 @@ static const struct ResetRtcStruct gUnknown_08376420[5] =
         .maxVal = 0,
         .left = 4,
         .right = 0,
-        .unk8 = 6,
+        .unk = 6,
     },
 };
 
-const struct OamData gOamData_837645C =
+static const struct OamData sOamData_Arrow =
 {
     .y = 0,
     .affineMode = 0,
@@ -93,62 +94,62 @@ const struct OamData gOamData_837645C =
     .affineParam = 0,
 };
 
-const u8 gSpriteImage_8376464[] = INCBIN_U8("graphics/unknown_sprites/83764AC/0.4bpp");
-const u8 gSpriteImage_8376484[] = INCBIN_U8("graphics/unknown_sprites/83764AC/1.4bpp");
+static const u8 sArrowDown_Gfx[] = INCBIN_U8("graphics/reset_rtc_screen/arrow_down.4bpp");
+static const u8 sArrowRight_Gfx[] = INCBIN_U8("graphics/reset_rtc_screen/arrow_right.4bpp");
 
-const u16 Palette_3764A4[] = INCBIN_U16("graphics/unknown/83764A4.gbapal");
+static const u16 sArrow_Pal[] = INCBIN_U16("graphics/reset_rtc_screen/arrow.gbapal");
 
-const struct SpriteFrameImage gSpriteImageTable_83764AC[] =
+static const struct SpriteFrameImage sPicTable_Arrow[] =
 {
-    { gSpriteImage_8376464, 0x20 },
-    { gSpriteImage_8376484, 0x20 },
+    { sArrowDown_Gfx, 0x20 },
+    { sArrowRight_Gfx, 0x20 },
 };
 
-const struct SpritePalette gUnknown_083764BC =
+static const struct SpritePalette sSpritePalette_Arrow =
 {
-    .data = Palette_3764A4,
+    .data = sArrow_Pal,
     .tag = 0x1000,
 };
 
-const union AnimCmd gSpriteAnim_83764C4[] =
+static const union AnimCmd sAnim_Arrow_Down[] =
 {
     ANIMCMD_FRAME(0, 30),
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd gSpriteAnim_83764CC[] =
+static const union AnimCmd sAnim_Arrow_Up[] =
 {
     ANIMCMD_FRAME(0, 30, .vFlip = TRUE),
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd gSpriteAnim_83764D4[] =
+static const union AnimCmd sAnim_Arrow_Right[] =
 {
     ANIMCMD_FRAME(1, 30),
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83764DC[] =
+static const union AnimCmd *const sAnims_Arrow[] =
 {
-    gSpriteAnim_83764C4,
-    gSpriteAnim_83764CC,
-    gSpriteAnim_83764D4,
+    sAnim_Arrow_Down,
+    sAnim_Arrow_Up,
+    sAnim_Arrow_Right,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83764E8 =
+static const struct SpriteTemplate sSpriteTemplate_Arrow =
 {
     .tileTag = 0xFFFF,
     .paletteTag = 0x1000,
-    .oam = &gOamData_837645C,
-    .anims = gSpriteAnimTable_83764DC,
-    .images = gSpriteImageTable_83764AC,
+    .oam = &sOamData_Arrow,
+    .anims = sAnims_Arrow,
+    .images = sPicTable_Arrow,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy,
 };
 
-const u8 gUnknown_08376500[] = _(" : ");
+const u8 gText_Colon3[] = _(" : ");
 
-void SpriteCB_ResetRtcCusor0(struct Sprite *sprite)
+static void SpriteCB_Cursor_UpOrRight(struct Sprite *sprite)
 {
     int state = gTasks[sprite->data[0]].data[2];
     if (state != sprite->data[1])
@@ -198,7 +199,7 @@ void SpriteCB_ResetRtcCusor0(struct Sprite *sprite)
     }
 }
 
-void SpriteCB_ResetRtcCusor1(struct Sprite *sprite)
+static void SpriteCB_Cursor_Down(struct Sprite *sprite)
 {
     int state = gTasks[sprite->data[0]].data[2];
     if (state != sprite->data[1])
@@ -244,34 +245,34 @@ void SpriteCB_ResetRtcCusor1(struct Sprite *sprite)
     }
 }
 
-void ResetRtcScreen_CreateCursor(u8 taskId)
+static void ResetRtcScreen_CreateCursor(u8 taskId)
 {
     int spriteId;
 
-    LoadSpritePalette(&gUnknown_083764BC);
+    LoadSpritePalette(&sSpritePalette_Arrow);
 
-    spriteId = CreateSpriteAtEnd(&gSpriteTemplate_83764E8, 53, 68, 0);
-    gSprites[spriteId].callback = SpriteCB_ResetRtcCusor0;
+    spriteId = CreateSpriteAtEnd(&sSpriteTemplate_Arrow, 53, 68, 0);
+    gSprites[spriteId].callback = SpriteCB_Cursor_UpOrRight;
     gSprites[spriteId].data[0] = taskId;
     gSprites[spriteId].data[1] = -1;
 
-    spriteId = CreateSpriteAtEnd(&gSpriteTemplate_83764E8, 53, 68, 0);
-    gSprites[spriteId].callback = SpriteCB_ResetRtcCusor1;
+    spriteId = CreateSpriteAtEnd(&sSpriteTemplate_Arrow, 53, 68, 0);
+    gSprites[spriteId].callback = SpriteCB_Cursor_Down;
     gSprites[spriteId].data[0] = taskId;
     gSprites[spriteId].data[1] = -1;
 }
 
-void ResetRtcScreen_FreeCursorPalette(void)
+static void ResetRtcScreen_FreeCursorPalette(void)
 {
-    FreeSpritePaletteByTag(gUnknown_083764BC.tag);
+    FreeSpritePaletteByTag(sSpritePalette_Arrow.tag);
 }
 
-void ResetRtcScreen_HideChooseTimeWindow(void)
+static void ResetRtcScreen_HideChooseTimeWindow(void)
 {
     Menu_EraseWindowRect(3, 8, 25, 11);
 }
 
-void ResetRtcScreen_PrintTime(u8 x, u8 y, u16 days, u8 hours, u8 minutes, u8 seconds)
+static void ResetRtcScreen_PrintTime(u8 x, u8 y, u16 days, u8 hours, u8 minutes, u8 seconds)
 {
     u8 *dest = gStringVar4;
     days %= 10000;
@@ -280,24 +281,24 @@ void ResetRtcScreen_PrintTime(u8 x, u8 y, u16 days, u8 hours, u8 minutes, u8 sec
     seconds %= 60;
     AlignInt2InMenuWindow(gStringVar1, days, 24, 1);
     dest = StringCopy(dest, gStringVar1);
-    dest = StringCopy(dest, gOtherText_Day);
+    dest = StringCopy(dest, gText_Day);
     AlignInt2InMenuWindow(gStringVar1, hours, 18, 1);
     dest = StringCopy(dest, gStringVar1);
-    dest = StringCopy(dest, gUnknown_08376500);
+    dest = StringCopy(dest, gText_Colon3);
     dest = ConvertIntToDecimalStringN(dest, minutes, STR_CONV_MODE_LEADING_ZEROS, 2);
-    dest = StringCopy(dest, gUnknown_08376500);
+    dest = StringCopy(dest, gText_Colon3);
     ConvertIntToDecimalStringN(dest, seconds, STR_CONV_MODE_LEADING_ZEROS, 2);
     Menu_PrintText(gStringVar4, x, y);
 }
 
-void ResetRtcScreen_ShowChooseTimeWindow(u16 days, u8 hours, u8 minutes, u8 seconds)
+static void ResetRtcScreen_ShowChooseTimeWindow(u16 days, u8 hours, u8 minutes, u8 seconds)
 {
     Menu_DrawStdWindowFrame(3, 8, 25, 11);
     Menu_PrintText(gOtherText_OK, 20, 9);
     ResetRtcScreen_PrintTime(4, 9, days, hours, minutes, seconds);
 }
 
-bool32 ResetRtcScreen_MoveTimeUpDown(s16 *val, int minVal, int maxVal, u16 keys)
+static bool32 ResetRtcScreen_MoveTimeUpDown(s16 *val, int minVal, int maxVal, u16 keys)
 {
     if (keys & DPAD_DOWN)
     {
@@ -331,27 +332,27 @@ bool32 ResetRtcScreen_MoveTimeUpDown(s16 *val, int minVal, int maxVal, u16 keys)
     return TRUE;
 }
 
-void Task_ResetRtc_3(u8 taskId)
+static void Task_ResetRtc_SetFinished(u8 taskId)
 {
     gTasks[taskId].data[0] = 1;
 }
 
-void Task_ResetRtc_2(u8 taskId)
+static void Task_ResetRtc_Exit(u8 taskId)
 {
     ResetRtcScreen_HideChooseTimeWindow();
     ResetRtcScreen_FreeCursorPalette();
-    gTasks[taskId].func = Task_ResetRtc_3;
+    gTasks[taskId].func = Task_ResetRtc_SetFinished;
 }
 
-void Task_ResetRtc_1(u8 taskId)
+static void Task_ResetRtc_HandleInput(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     u8 selection = data[2];
-    const struct ResetRtcStruct *selectionInfo = &gUnknown_08376420[selection - 1];
+    const struct ResetRtcInputMap *selectionInfo = &sInputMap[selection - 1];
 
     if (JOY_NEW(B_BUTTON))
     {
-        gTasks[taskId].func = Task_ResetRtc_2;
+        gTasks[taskId].func = Task_ResetRtc_Exit;
         data[1] = 0;
         data[2] = 6;
         PlaySE(SE_SELECT);
@@ -387,7 +388,7 @@ void Task_ResetRtc_1(u8 taskId)
             gLocalTime.minutes = data[5];
             gLocalTime.seconds = data[6];
             PlaySE(SE_SELECT);
-            gTasks[taskId].func = Task_ResetRtc_2;
+            gTasks[taskId].func = Task_ResetRtc_Exit;
             data[1] = 1;
             data[2] = 6;
         }
@@ -399,7 +400,7 @@ void Task_ResetRtc_1(u8 taskId)
     }
 }
 
-void Task_ResetRtc_0(u8 taskId)
+static void Task_ResetRtc_Init(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     data[0] = 0;
@@ -410,7 +411,7 @@ void Task_ResetRtc_0(u8 taskId)
     ResetRtcScreen_ShowChooseTimeWindow(data[3], data[4], data[5], data[6]);
     ResetRtcScreen_CreateCursor(taskId);
     data[2] = 2;
-    gTasks[taskId].func = Task_ResetRtc_1;
+    gTasks[taskId].func = Task_ResetRtc_HandleInput;
 }
 
 void CB2_InitResetRtcScreen(void)
@@ -434,7 +435,7 @@ void CB2_InitResetRtcScreen(void)
     CreateTask(Task_ResetRtcScreen, 80);
 }
 
-void CB2_ResetRtcScreen(void)
+static void CB2_ResetRtcScreen(void)
 {
     RunTasks();
     AnimateSprites();
@@ -442,20 +443,20 @@ void CB2_ResetRtcScreen(void)
     UpdatePaletteFade();
 }
 
-void VBlankCB_ResetRtcScreen(void)
+static void VBlankCB_ResetRtcScreen(void)
 {
     ProcessSpriteCopyRequests();
     LoadOam();
     TransferPlttBuffer();
 }
 
-void ResetRtcScreen_ShowMessage(const u8 *str)
+static void ResetRtcScreen_ShowMessage(const u8 *str)
 {
     Menu_DisplayDialogueFrame();
     Menu_PrintText(str, 2, 15);
 }
 
-void Task_ShowResetRtcPrompt(u8 taskId)
+static void Task_ShowResetRtcPrompt(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
@@ -464,7 +465,7 @@ void Task_ShowResetRtcPrompt(u8 taskId)
     case 0:
         Menu_EraseScreen();
         Menu_DrawStdWindowFrame(0, 0, 20, 10);
-        Menu_PrintText(gSystemText_PresentTime, 1, 1);
+        Menu_PrintText(gText_PresentTime, 1, 1);
         ResetRtcScreen_PrintTime(
             1,
             3,
@@ -472,7 +473,7 @@ void Task_ShowResetRtcPrompt(u8 taskId)
             gLocalTime.hours,
             gLocalTime.minutes,
             gLocalTime.seconds);
-        Menu_PrintText(gSystemText_PreviousTime, 1, 5);
+        Menu_PrintText(gText_PreviousTime, 1, 5);
         ResetRtcScreen_PrintTime(
             1,
             7,
@@ -480,7 +481,7 @@ void Task_ShowResetRtcPrompt(u8 taskId)
             gSaveBlock2.lastBerryTreeUpdate.hours,
             gSaveBlock2.lastBerryTreeUpdate.minutes,
             gSaveBlock2.lastBerryTreeUpdate.seconds);
-        ResetRtcScreen_ShowMessage(gSystemText_ResetRTCPrompt);
+        ResetRtcScreen_ShowMessage(gText_ResetRTCConfirmCancel);
         data[0]++;
     case 1:
         if (JOY_NEW(B_BUTTON))
@@ -497,7 +498,7 @@ void Task_ShowResetRtcPrompt(u8 taskId)
     }
 }
 
-void Task_ResetRtcScreen(u8 taskId)
+static void Task_ResetRtcScreen(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
@@ -512,7 +513,7 @@ void Task_ResetRtcScreen(u8 taskId)
         {
             if (gSaveFileStatus == 0 || gSaveFileStatus == 2)
             {
-                ResetRtcScreen_ShowMessage(gSystemText_NoSaveFileNoTime);
+                ResetRtcScreen_ShowMessage(gText_NoSaveFileCantSetTime);
                 data[0] = 5;
             }
             else
@@ -527,9 +528,9 @@ void Task_ResetRtcScreen(u8 taskId)
         if (gTasks[data[1]].isActive != TRUE)
         {
             Menu_EraseScreen();
-            ResetRtcScreen_ShowMessage(gSystemText_PleaseResetTime);
+            ResetRtcScreen_ShowMessage(gText_PleaseResetTime);
             gLocalTime = gSaveBlock2.lastBerryTreeUpdate;
-            data[1] = CreateTask(Task_ResetRtc_0, 80);
+            data[1] = CreateTask(Task_ResetRtc_Init, 80);
             data[0] = 3;
         }
         break;
@@ -553,7 +554,7 @@ void Task_ResetRtcScreen(u8 taskId)
                 gSaveBlock2.lastBerryTreeUpdate = gLocalTime;
                 VarSet(VAR_DAYS, gLocalTime.days);
                 DisableResetRTC();
-                ResetRtcScreen_ShowMessage(gSystemText_ClockResetDataSave);
+                ResetRtcScreen_ShowMessage(gText_ClockHasBeenReset);
                 data[0] = 4;
             }
         }
@@ -561,12 +562,12 @@ void Task_ResetRtcScreen(u8 taskId)
     case 4:
         if (Save_WriteData(0) == SAVE_STATUS_OK)
         {
-            ResetRtcScreen_ShowMessage(gSystemText_SaveCompleted);
+            ResetRtcScreen_ShowMessage(gText_SaveCompleted);
             PlaySE(SE_DING_DONG);
         }
         else
         {
-            ResetRtcScreen_ShowMessage(gSystemText_SaveFailed);
+            ResetRtcScreen_ShowMessage(gText_SaveFailed);
             PlaySE(SE_BOO);
         }
         data[0] = 5;
@@ -604,7 +605,7 @@ void debug_sub_806F908(u8 taskId)
     switch (data[0])
     {
     case 0:
-        data[1] = CreateTask(Task_ResetRtc_0, 80);
+        data[1] = CreateTask(Task_ResetRtc_Init, 80);
         data[0]++;
         break;
     case 1:

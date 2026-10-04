@@ -899,14 +899,16 @@ extern const u8 gOtherText_Ferry[];
 extern const u8 gOtherText_SecretBase[];
 extern const u8 gOtherText_Hideout[];
 
-extern const u8 gSystemText_ResetRTCPrompt[];
-extern const u8 gSystemText_PresentTime[];
-extern const u8 gSystemText_PreviousTime[];
-extern const u8 gSystemText_PleaseResetTime[];
-extern const u8 gSystemText_ClockResetDataSave[];
-extern const u8 gSystemText_SaveCompleted[];
-extern const u8 gSystemText_SaveFailed[];
-extern const u8 gSystemText_NoSaveFileNoTime[];
+extern const u8 gText_Day[];
+extern const u8 gText_Colon3[];
+extern const u8 gText_ResetRTCConfirmCancel[];
+extern const u8 gText_PresentTime[];
+extern const u8 gText_PreviousTime[];
+extern const u8 gText_PleaseResetTime[];
+extern const u8 gText_ClockHasBeenReset[];
+extern const u8 gText_SaveCompleted[];
+extern const u8 gText_SaveFailed[];
+extern const u8 gText_NoSaveFileCantSetTime[];
 extern const u8 gText_InGameClockUsable[];
 extern const u8 gSystemText_Saving[];
 
