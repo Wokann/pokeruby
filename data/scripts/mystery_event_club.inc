@@ -97,8 +97,8 @@ PetalburgCity_PokemonCenter_1F_EventScript_1B1C6D:: @ 81B1C6D
 
 PetalburgCity_PokemonCenter_1F_EventScript_1B1C77:: @ 81B1C77
 	goto_if_unset FLAG_BADGE05_GET, PetalburgCity_PokemonCenter_1F_EventScript_1B1C96
-	goto_if_set FLAG_SYS_EXDATA_ENABLE, PetalburgCity_PokemonCenter_1F_EventScript_1B1C96
-	setflag FLAG_SYS_EXDATA_ENABLE
+	goto_if_set FLAG_SYS_MYSTERY_EVENT_ENABLE, PetalburgCity_PokemonCenter_1F_EventScript_1B1C96
+	setflag FLAG_SYS_MYSTERY_EVENT_ENABLE
 	msgbox PetalburgCity_PokemonCenter_1F_Text_1B21CC, MSGBOX_SIGN
 	release
 	end

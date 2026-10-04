@@ -21,15 +21,15 @@ EWRAM_DATA u16 gSpecialVar_0x800B = 0;
 EWRAM_DATA u16 gSpecialVar_Result = 0;
 EWRAM_DATA u16 gSpecialVar_LastTalked = 0;
 EWRAM_DATA u16 gSpecialVar_Facing = 0;
-EWRAM_DATA u8 gUnknown_0202E8E2[16] = {0};
+EWRAM_DATA static u8 sSpecialFlags[16] = {0};
 
-extern u16 *gSpecialVars[];
+extern u16 *const gSpecialVars[];
 
 void InitEventData(void)
 {
     memset(gSaveBlock1.flags, 0, sizeof(gSaveBlock1.flags));
     memset(gSaveBlock1.vars, 0, sizeof(gSaveBlock1.vars));
-    memset(gUnknown_0202E8E2, 0, sizeof(gUnknown_0202E8E2));
+    memset(sSpecialFlags, 0, sizeof(sSpecialFlags));
 }
 
 void ClearTempFieldEventData(void)
@@ -77,17 +77,17 @@ bool32 IsNationalPokedexEnabled(void)
 
 void DisableMysteryEvent(void)
 {
-    FlagClear(FLAG_SYS_EXDATA_ENABLE);
+    FlagClear(FLAG_SYS_MYSTERY_EVENT_ENABLE);
 }
 
 void EnableMysteryEvent(void)
 {
-    FlagSet(FLAG_SYS_EXDATA_ENABLE);
+    FlagSet(FLAG_SYS_MYSTERY_EVENT_ENABLE);
 }
 
 bool32 IsMysteryEventEnabled(void)
 {
-    return FlagGet(FLAG_SYS_EXDATA_ENABLE);
+    return FlagGet(FLAG_SYS_MYSTERY_EVENT_ENABLE);
 }
 
 void DisableResetRTC(void)
@@ -149,7 +149,7 @@ u8 *GetFlagPointer(u16 id)
     if (id < 0x4000)
         return &gSaveBlock1.flags[id / 8];
 
-    return &gUnknown_0202E8E2[(id - 0x4000) / 8];
+    return &sSpecialFlags[(id - 0x4000) / 8];
 }
 
 u8 FlagSet(u16 id)
