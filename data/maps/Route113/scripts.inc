@@ -18,7 +18,7 @@ Route113_EventScript_1505E5:: @ 81505E5
 	goto_if_lt Route113_EventScript_150604
 	compare VAR_TEMP_0, 84
 	goto_if_gt Route113_EventScript_150604
-	setweather WEATHER_ASH
+	setweather WEATHER_VOLCANIC_ASH
 	return
 
 Route113_EventScript_150604:: @ 8150604

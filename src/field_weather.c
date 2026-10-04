@@ -235,21 +235,21 @@ static const u8 sDebugText_Weather_Underwater2[] = DTR("かいてい2",  "UNDERW
 
 static const u8 *const sDebugText_Weather[] =
 {
-    [WEATHER_NONE]       = sDebugText_Weather_None,
-    [WEATHER_CLOUDS]     = sDebugText_Weather_Clear,
-    [WEATHER_SUNNY]      = sDebugText_Weather_Clear2,
-    [WEATHER_RAIN_LIGHT] = sDebugText_Weather_Rain,
-    [WEATHER_SNOW]       = sDebugText_Weather_Snow,
-    [WEATHER_RAIN_MED]   = sDebugText_Weather_Lightning,
-    [WEATHER_FOG_1]      = sDebugText_Weather_Fog,
-    [WEATHER_ASH]        = sDebugText_Weather_VolcanicAsh,
-    [WEATHER_SANDSTORM]  = sDebugText_Weather_Sandstorm,
-    [WEATHER_FOG_2]      = sDebugText_Weather_Fog2,
-    [WEATHER_FOG_3]      = sDebugText_Weather_Underwater,
-    [WEATHER_SHADE]      = sDebugText_Weather_Cloudy,
-    [WEATHER_DROUGHT]    = sDebugText_Weather_Clear3,
-    [WEATHER_RAIN_HEAVY] = sDebugText_Weather_HeavyRain,
-    [WEATHER_BUBBLES]    = sDebugText_Weather_Underwater2,
+    [WEATHER_NONE]              = sDebugText_Weather_None,
+    [WEATHER_SUNNY_CLOUDS]      = sDebugText_Weather_Clear,
+    [WEATHER_SUNNY]             = sDebugText_Weather_Clear2,
+    [WEATHER_RAIN]              = sDebugText_Weather_Rain,
+    [WEATHER_SNOW]              = sDebugText_Weather_Snow,
+    [WEATHER_RAIN_THUNDERSTORM] = sDebugText_Weather_Lightning,
+    [WEATHER_FOG_HORIZONTAL]    = sDebugText_Weather_Fog,
+    [WEATHER_VOLCANIC_ASH]      = sDebugText_Weather_VolcanicAsh,
+    [WEATHER_SANDSTORM]         = sDebugText_Weather_Sandstorm,
+    [WEATHER_FOG_DIAGONAL]      = sDebugText_Weather_Fog2,
+    [WEATHER_FOG_3]             = sDebugText_Weather_Underwater,
+    [WEATHER_SHADE]             = sDebugText_Weather_Cloudy,
+    [WEATHER_DROUGHT]           = sDebugText_Weather_Clear3,
+    [WEATHER_RAIN_HEAVY]        = sDebugText_Weather_HeavyRain,
+    [WEATHER_BUBBLES]           = sDebugText_Weather_Underwater2,
 };
 
 #endif
@@ -289,7 +289,7 @@ void StartWeather(void)
 
 void ChangeWeather(u8 weather)
 {
-    if (weather != WEATHER_RAIN_LIGHT && weather != WEATHER_RAIN_MED && weather != WEATHER_RAIN_HEAVY)
+    if (weather != WEATHER_RAIN && weather != WEATHER_RAIN_THUNDERSTORM && weather != WEATHER_RAIN_HEAVY)
     {
         PlayRainSoundEffect();
     }
@@ -467,8 +467,8 @@ static void FadeInScreenWithWeather(void)
 
     switch (gWeatherPtr->currWeather)
     {
-    case WEATHER_RAIN_LIGHT:
-    case WEATHER_RAIN_MED:
+    case WEATHER_RAIN:
+    case WEATHER_RAIN_THUNDERSTORM:
     case WEATHER_RAIN_HEAVY:
     case WEATHER_SNOW:
     case WEATHER_SHADE:
@@ -485,16 +485,16 @@ static void FadeInScreenWithWeather(void)
             gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
         }
         break;
-    case WEATHER_FOG_1:
+    case WEATHER_FOG_HORIZONTAL:
         if (FadeInScreen_Fog1() == FALSE)
         {
             gWeatherPtr->gammaIndex = 0;
             gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
         }
         break;
-    case WEATHER_ASH:
+    case WEATHER_VOLCANIC_ASH:
     case WEATHER_SANDSTORM:
-    case WEATHER_FOG_2:
+    case WEATHER_FOG_DIAGONAL:
     case WEATHER_FOG_3:
     default:
         if (!gPaletteFade.active)
@@ -896,11 +896,11 @@ void FadeScreen(u8 mode, u8 delay)
 
     switch (gWeatherPtr->currWeather)
     {
-    case WEATHER_RAIN_LIGHT:
-    case WEATHER_RAIN_MED:
+    case WEATHER_RAIN:
+    case WEATHER_RAIN_THUNDERSTORM:
     case WEATHER_RAIN_HEAVY:
     case WEATHER_SNOW:
-    case WEATHER_FOG_1:
+    case WEATHER_FOG_HORIZONTAL:
     case WEATHER_SHADE:
     case WEATHER_DROUGHT:
         useWeatherPal = TRUE;
@@ -949,7 +949,7 @@ void UpdateSpritePaletteWithWeather(u8 spritePaletteIndex)
     case WEATHER_PAL_STATE_SCREEN_FADING_IN:
         if (gWeatherPtr->unknown_6CA != 0)
         {
-            if (gWeatherPtr->currWeather == WEATHER_FOG_1)
+            if (gWeatherPtr->currWeather == WEATHER_FOG_HORIZONTAL)
                 MarkFogSpritePalToLighten(paletteIndex);
             paletteIndex *= 16;
             for (i = 0; i < 16; i++)
@@ -964,7 +964,7 @@ void UpdateSpritePaletteWithWeather(u8 spritePaletteIndex)
     // WEATHER_PAL_STATE_CHANGING_WEATHER
     // WEATHER_PAL_STATE_CHANGING_IDLE
     default:
-        if (gWeatherPtr->currWeather != WEATHER_FOG_1)
+        if (gWeatherPtr->currWeather != WEATHER_FOG_HORIZONTAL)
         {
             ApplyGammaShift(paletteIndex, 1, gWeatherPtr->gammaIndex);
         }
@@ -1151,28 +1151,28 @@ void unref_sub_807DCB4(u8 a)
     switch (a)
     {
     case 1:
-        SetWeather(WEATHER_CLOUDS);
+        SetWeather(WEATHER_SUNNY_CLOUDS);
         break;
     case 2:
         SetWeather(WEATHER_SUNNY);
         break;
     case 3:
-        SetWeather(WEATHER_RAIN_LIGHT);
+        SetWeather(WEATHER_RAIN);
         break;
     case 4:
         SetWeather(WEATHER_SNOW);
         break;
     case 5:
-        SetWeather(WEATHER_RAIN_MED);
+        SetWeather(WEATHER_RAIN_THUNDERSTORM);
         break;
     case 6:
-        SetWeather(WEATHER_FOG_1);
+        SetWeather(WEATHER_FOG_HORIZONTAL);
         break;
     case 7:
-        SetWeather(WEATHER_FOG_2);
+        SetWeather(WEATHER_FOG_DIAGONAL);
         break;
     case 8:
-        SetWeather(WEATHER_ASH);
+        SetWeather(WEATHER_VOLCANIC_ASH);
         break;
     case 9:
         SetWeather(WEATHER_SANDSTORM);
