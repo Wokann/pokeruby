@@ -25,70 +25,70 @@ gMultiText_LinkError:: @ 842C34C
 	.string "Die Kabelverbindungen überprüfen und\n"
 	.string "die Geräte aus- und wieder einschalten.$"
 
-gSystemText_OptionMenu:: @ 842C3A6
+gText_Option:: @ 842C3A6
 	.string "{PALETTE 9}OPTIONEN$"
 
-gSystemText_TextSpeed:: @ 842C3B0
+gText_TextSpeed:: @ 842C3B0
 	.string "{PALETTE 9}TEXT-TEMPO$"
 
-gSystemText_BattleScene:: @ 842C3BE
+gText_BattleScene:: @ 842C3BE
 	.string "{PALETTE 9}ANIMATION$"
 
-gSystemText_BattleStyle:: @ 842C3CE
+gText_BattleStyle:: @ 842C3CE
 	.string "{PALETTE 9}KAMPFSTIL$"
 
-gSystemText_Sound:: @ 842C3DE
+gText_Sound:: @ 842C3DE
 	.string "{PALETTE 9}TON$"
 
-gSystemText_Frame:: @ 842C3E7
+gText_Frame:: @ 842C3E7
 	.string "{PALETTE 9}RAHMEN$"
 
-gSystemText_Cancel:: @ 842C3F0
+gText_OptionMenuCancel:: @ 842C3F0
 	.string "{PALETTE 9}ZURÜCK$"
 
-gSystemText_ButtonMode:: @ 842C3FA
+gText_ButtonMode:: @ 842C3FA
 	.string "{PALETTE 9}KNOPFBELEGUNG$"
 
-gSystemText_Slow:: @ 842C409
+gText_TextSpeedSlow:: @ 842C409
 	.string "{PALETTE 15}1$"
 
-gSystemText_Mid:: @ 842C411
+gText_TextSpeedMid:: @ 842C411
 	.string "{PALETTE 15}2$"
 
-gSystemText_Fast:: @ 842C418
+gText_TextSpeedFast:: @ 842C418
 	.string "{PALETTE 15}3$"
 
-gSystemText_On:: @ 842C420
+gText_BattleSceneOn:: @ 842C420
 	.string "{PALETTE 15}EIN$"
 
-gSystemText_Off:: @ 842C426
+gText_BattleSceneOff:: @ 842C426
 	.string "{PALETTE 15}AUS$"
 
-gSystemText_Shift:: @ 842C42D
+gText_BattleStyleShift:: @ 842C42D
 	.string "{PALETTE 15}WECHSEL$"
 
-gSystemText_Set:: @ 842C436
+gText_BattleStyleSet:: @ 842C436
 	.string "{PALETTE 15}FOLGE$"
 
-gSystemText_Mono:: @ 842C43D
+gText_SoundMono:: @ 842C43D
 	.string "{PALETTE 15}MONO$"
 
-gSystemText_Stereo:: @ 842C445
+gText_SoundStereo:: @ 842C445
 	.string "{PALETTE 15}STEREO$"
 
-gSystemText_Type:: @ 842C44F
+gText_FrameType:: @ 842C44F
 	.string "{PALETTE 15}MOTIV $"
 
-gSystemText_Terminator:: @ 842C457
+gText_FrameTypeNumber:: @ 842C457
 	.string "{PALETTE 8}$"
 
-gSystemText_Normal:: @ 842C45B
+gText_ButtonTypeNormal:: @ 842C45B
 	.string "{PALETTE 15}NORMAL$"
 
-gSystemText_LR:: @ 842C465
+gText_ButtonTypeLR:: @ 842C465
 	.string "{PALETTE 15}L/R$"
 
-gSystemText_LA:: @ 842C46B
+gText_ButtonTypeLEqualsA:: @ 842C46B
 	.string "{PALETTE 15}L=A$"
 
 gText_MenuPokedex::
