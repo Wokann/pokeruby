@@ -153,6 +153,6 @@
 	voice_directsound_compressed 60, 0, \sample, 255, 0, 255, 0
 	.endm
 
-	.macro cry2 sample:req
+	.macro cry_reverse sample:req
 	voice_directsound_compressed_reverse 60, 0, \sample, 255, 0, 255, 0
 	.endm

@@ -661,7 +661,7 @@ static void sub_8046AD0(u8 taskId)
             gTasks[taskId].data[10]--;
             break;
         }
-        PlayCry4(species, pan, 1);
+        PlayCry_ReleaseDouble(species, pan, 1);
         DestroyTask(taskId);
         break;
     case 3:
@@ -690,7 +690,7 @@ static void sub_8046AD0(u8 taskId)
             gTasks[taskId].data[10]--;
             break;
         }
-        PlayCry4(species, pan, 0);
+        PlayCry_ReleaseDouble(species, pan, 0);
         DestroyTask(taskId);
         break;
     }

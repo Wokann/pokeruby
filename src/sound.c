@@ -14,10 +14,8 @@ struct Fanfare
     u16 duration;
 };
 
-extern u16 gBattleTypeFlags;
-
-static EWRAM_DATA struct MusicPlayerInfo *gMPlay_PokemonCry = NULL;
-static EWRAM_DATA u8 gPokemonCryBGMDuckingCounter = 0;
+EWRAM_DATA struct MusicPlayerInfo *gMPlay_PokemonCry = NULL;
+EWRAM_DATA u8 gPokemonCryBGMDuckingCounter = 0;
 
 static u16 sCurrentMapMusic;
 static u16 sNextMapMusic;
@@ -27,13 +25,8 @@ static u16 sFanfareCounter;
 
 bool8 gDisableMusic;
 
-extern struct MusicPlayerInfo gMPlayInfo_BGM;
-extern struct MusicPlayerInfo gMPlayInfo_SE1;
-extern struct MusicPlayerInfo gMPlayInfo_SE2;
-extern struct MusicPlayerInfo gMPlayInfo_SE3;
-
 extern struct ToneData gCryTable[];
-extern struct ToneData gCryTable2[];
+extern struct ToneData gCryTable_Reverse[];
 
 static const struct Fanfare sFanfares[] =
 {
@@ -53,7 +46,6 @@ static const struct Fanfare sFanfares[] =
 
 static void Task_Fanfare(u8 taskId);
 static void CreateFanfareTask(void);
-static void PlayCryInternal(u16 species, s8 pan, s8 volume, u8 priority, u8 mode);
 static void Task_DuckBGMForPokemonCry(u8 taskId);
 static void RestoreBGMVolumeAfterPokemonCry(void);
 
@@ -157,7 +149,7 @@ void FadeOutAndFadeInNewMapMusic(u16 songNum, u8 fadeOutSpeed, u8 fadeInSpeed)
     sMapMusicFadeInSpeed = fadeInSpeed;
 }
 
-void FadeInNewMapMusic(u16 songNum, u8 speed)
+static void UNUSED FadeInNewMapMusic(u16 songNum, u8 speed)
 {
     FadeInNewBGM(songNum, speed);
     sCurrentMapMusic = songNum;
@@ -302,7 +294,7 @@ void PlayCry_Normal(u16 species, s8 pan)
     RestoreBGMVolumeAfterPokemonCry();
 }
 
-void PlayCry2(u16 species, s8 pan, s8 volume, u8 priority)
+void PlayCry_NormalNoDucking(u16 species, s8 pan, s8 volume, u8 priority)
 {
     PlayCryInternal(species, pan, volume, priority, 0);
 }
@@ -322,7 +314,7 @@ void PlayCry_ByMode(u16 species, s8 pan, u8 mode)
     }
 }
 
-void PlayCry4(u16 species, s8 pan, u8 mode)
+void PlayCry_ReleaseDouble(u16 species, s8 pan, u8 mode)
 {
     if (mode == 1)
     {
@@ -336,7 +328,7 @@ void PlayCry4(u16 species, s8 pan, u8 mode)
     }
 }
 
-void PlayCry5(u16 species, u8 mode)
+void PlayCry_Script(u16 species, u8 mode)
 {
     m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFFFF, 85);
     PlayCryInternal(species, 0, 125, 10, mode);
@@ -344,9 +336,9 @@ void PlayCry5(u16 species, u8 mode)
     RestoreBGMVolumeAfterPokemonCry();
 }
 
-static void PlayCryInternal(u16 species, s8 pan, s8 volume, u8 priority, u8 mode)
+void PlayCryInternal(u16 species, s8 pan, s8 volume, u8 priority, u8 mode)
 {
-    bool32 v0;
+    bool32 reverse;
     u32 release;
     u32 length;
     u32 pitch;
@@ -355,7 +347,7 @@ static void PlayCryInternal(u16 species, s8 pan, s8 volume, u8 priority, u8 mode
     u8 table;
 
     species--;
-    v0 = FALSE;
+    reverse = FALSE;
     release = 0;
     length = 140;
     pitch = 15360;
@@ -409,19 +401,19 @@ static void PlayCryInternal(u16 species, s8 pan, s8 volume, u8 priority, u8 mode
     {
     case 0:
         gMPlay_PokemonCry = SetPokemonCryTone(
-          v0 ? &gCryTable2[(128 * 0) + index] : &gCryTable[(128 * 0) + index]);
+          reverse ? &gCryTable_Reverse[(128 * 0) + index] : &gCryTable[(128 * 0) + index]);
         break;
     case 1:
         gMPlay_PokemonCry = SetPokemonCryTone(
-          v0 ? &gCryTable2[(128 * 1) + index] : &gCryTable[(128 * 1) + index]);
+          reverse ? &gCryTable_Reverse[(128 * 1) + index] : &gCryTable[(128 * 1) + index]);
         break;
     case 2:
         gMPlay_PokemonCry = SetPokemonCryTone(
-          v0 ? &gCryTable2[(128 * 2) + index] : &gCryTable[(128 * 2) + index]);
+          reverse ? &gCryTable_Reverse[(128 * 2) + index] : &gCryTable[(128 * 2) + index]);
         break;
     case 3:
         gMPlay_PokemonCry = SetPokemonCryTone(
-          v0 ? &gCryTable2[(128 * 3) + index] : &gCryTable[(128 * 3) + index]);
+          reverse ? &gCryTable_Reverse[(128 * 3) + index] : &gCryTable[(128 * 3) + index]);
         break;
     }
 }

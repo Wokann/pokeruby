@@ -45,7 +45,7 @@ enum
 };
 
 extern struct ToneData gCryTable[];
-extern struct ToneData gCryTable2[];
+extern struct ToneData gCryTable_Reverse[];
 
 static EWRAM_DATA u8 gUnknown_020387B0 = 0;
 static EWRAM_DATA u8 gUnknown_020387B1 = 0;
@@ -538,25 +538,25 @@ void Task_ProcessDriverTestInput(u8 taskId)
         {
         case 0:
             if (gUnknown_020387D8)
-                gUnknown_03005D30 = SetPokemonCryTone(&gCryTable2[(128 * 0) + remaining]);
+                gUnknown_03005D30 = SetPokemonCryTone(&gCryTable_Reverse[(128 * 0) + remaining]);
             else
                 gUnknown_03005D30 = SetPokemonCryTone(&gCryTable[(128 * 0) + remaining]);
             break;
         case 1:
             if (gUnknown_020387D8)
-                gUnknown_03005D30 = SetPokemonCryTone(&gCryTable2[(128 * 1) + remaining]);
+                gUnknown_03005D30 = SetPokemonCryTone(&gCryTable_Reverse[(128 * 1) + remaining]);
             else
                 gUnknown_03005D30 = SetPokemonCryTone(&gCryTable[(128 * 1) + remaining]);
             break;
         case 2:
             if (gUnknown_020387D8)
-                gUnknown_03005D30 = SetPokemonCryTone(&gCryTable2[(128 * 2) + remaining]);
+                gUnknown_03005D30 = SetPokemonCryTone(&gCryTable_Reverse[(128 * 2) + remaining]);
             else
                 gUnknown_03005D30 = SetPokemonCryTone(&gCryTable[(128 * 2) + remaining]);
             break;
         case 3:
             if (gUnknown_020387D8)
-                gUnknown_03005D30 = SetPokemonCryTone(&gCryTable2[(128 * 3) + remaining]);
+                gUnknown_03005D30 = SetPokemonCryTone(&gCryTable_Reverse[(128 * 3) + remaining]);
             else
                 gUnknown_03005D30 = SetPokemonCryTone(&gCryTable[(128 * 3) + remaining]);
             break;
