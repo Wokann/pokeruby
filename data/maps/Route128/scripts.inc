@@ -16,7 +16,7 @@ Route128_EventScript_15213F:: @ 815213F
 	lockall
 	delay 20
 	.ifndef SAPPHIRE
-	special sub_807E25C
+	special StartDroughtWeatherBlend
 	waitstate
 	.endif
 	applymovement 4, Route128_Movement_152271

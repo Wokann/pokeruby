@@ -18,7 +18,6 @@ extern u16 gBattle_BG1_Y;
 
 
 extern struct INCBIN_U8 gBattleAnimFogTilemap;
-extern struct INCBIN_U8 gWeatherFog1Tiles;
 
 static void sub_80D7704(struct Sprite *sprite);
 static void sub_80D7888(struct Sprite *sprite);
@@ -1008,7 +1007,7 @@ void AnimTask_Haze1(u8 taskId)
 
     GetBattleAnimBg1Data(&subStruct);
     DmaFill32Defvars(3, 0, subStruct.bgTilemap, 0x1000);
-    DmaCopy16Defvars(3, &gWeatherFog1Tiles, subStruct.bgTiles, 0x800);
+    DmaCopy16Defvars(3, &gWeatherFogHorizontalTiles, subStruct.bgTiles, 0x800);
     LZDecompressVram(&gBattleAnimFogTilemap, subStruct.bgTilemap);
     LoadPalette(&gFogPalette, subStruct.paletteId * 16, 32);
 
@@ -1117,7 +1116,7 @@ void AnimTask_LoadMistTiles(u8 taskId)
 
     GetBattleAnimBg1Data(&subStruct);
     DmaFill32Defvars(3, 0, subStruct.bgTilemap, 0x1000);
-    DmaCopy16Defvars(3, &gWeatherFog1Tiles, subStruct.bgTiles, 0x800);
+    DmaCopy16Defvars(3, &gWeatherFogHorizontalTiles, subStruct.bgTiles, 0x800);
     LZDecompressVram(&gBattleAnimFogTilemap, subStruct.bgTilemap);
     LoadPalette(&gFogPalette, subStruct.paletteId * 16, 32);
 
