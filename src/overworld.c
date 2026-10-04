@@ -46,7 +46,7 @@
 #include "sound.h"
 #include "start_menu.h"
 #include "task.h"
-#include "tileset_anim.h"
+#include "tileset_anims.h"
 #include "time_events.h"
 #include "tv.h"
 #include "wild_encounter.h"
@@ -410,7 +410,7 @@ static void mapdata_load_assets_to_gpu_and_full_redraw(void)
     CopyMapTilesetsToVram(gMapHeader.mapLayout);
     LoadMapTilesetPalettes(gMapHeader.mapLayout);
     DrawWholeMapView();
-    cur_mapheader_run_tileset_funcs_after_some_cpuset();
+    InitTilesetAnimations();
 }
 
 static struct MapLayout *GetMapLayout(void)
@@ -683,7 +683,7 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
     for (paletteIndex = 6; paletteIndex < 12; paletteIndex++)
         ApplyWeatherGammaShiftToPal(paletteIndex);
 
-    sub_8072ED0();
+    InitSecondaryTilesetAnimation();
     UpdateLocationHistoryForRoamer();
     RoamerMove();
     DoCurrentWeather();
@@ -1286,7 +1286,7 @@ static void OverworldBasic(void)
     UpdateCameraPanning();
     BuildOamBuffer();
     UpdatePaletteFade();
-    sub_8072EDC();
+    UpdateTilesetAnimations();
 }
 
 // This CB2 is used when starting
@@ -1573,7 +1573,7 @@ static void VBlankCB_Field(void)
     ScanlineEffect_InitHBlankDmaTransfer();
     sub_8057A58();
     TransferPlttBuffer();
-    sub_8072E74();
+    TransferTilesetAnimsBuffer();
 }
 
 static void InitCurrentFlashLevelScanlineEffect(void)
@@ -1641,7 +1641,7 @@ static bool32 sub_805483C(u8 *state)
         (*state)++;
         break;
     case 10:
-        cur_mapheader_run_tileset_funcs_after_some_cpuset();
+        InitTilesetAnimations();
         (*state)++;
         break;
     case 12:
@@ -1707,7 +1707,7 @@ bool32 sub_805493C(u8 *state, u32 a2)
         (*state)++;
         break;
     case 10:
-        cur_mapheader_run_tileset_funcs_after_some_cpuset();
+        InitTilesetAnimations();
         (*state)++;
         break;
     case 11:
@@ -1797,7 +1797,7 @@ bool32 sub_8054A9C(u8 *state)
         (*state)++;
         break;
     case 9:
-        cur_mapheader_run_tileset_funcs_after_some_cpuset();
+        InitTilesetAnimations();
         (*state)++;
         break;
     case 12:
