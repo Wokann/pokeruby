@@ -701,7 +701,7 @@ void unref_sub_8078588(struct Sprite *sprite)
 
 void unref_sub_80785CC(struct Sprite *sprite)
 {
-    ResetPaletteStructByUid(sprite->data[5]);
+    PaletteStruct_ResetById(sprite->data[5]);
     DestroySpriteAndMatrix(sprite);
 }
 
