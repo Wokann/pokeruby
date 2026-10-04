@@ -77,7 +77,7 @@ extern u16 gSpecialVar_ContestRank;
 extern u8 gBattleOutcome;
 extern u16 gLastUsedItem;
 
-static EWRAM_DATA u16 gUnknown_020387E0 = 0;
+static EWRAM_DATA u16 sPokemonAnglerSpecies = 0;
 static EWRAM_DATA u16 gUnknown_020387E2 = 0;
 static EWRAM_DATA u8 gUnknown_020387E4 = 0;
 static EWRAM_DATA ALIGNED(4) u8 sTVShowState = 0; // why is this aligned to a 4-byte boundary?
@@ -1269,16 +1269,16 @@ void sub_80BE9D4(void)
         pokemonAngler->active = zero;
         pokemonAngler->var02 = gUnknown_020387E2 & 0xFF;
         pokemonAngler->var03 = gUnknown_020387E2 >> 8;
-        pokemonAngler->var04 = gUnknown_020387E0;
+        pokemonAngler->var04 = sPokemonAnglerSpecies;
         StringCopy(pokemonAngler->playerName, gSaveBlock2.playerName);
         sub_80BE138((TVShow *)pokemonAngler);
         pokemonAngler->language = GAME_LANGUAGE;
     }
 }
 
-void sub_80BEA50(u16 var)
+void SetPokemonAnglerSpecies(u16 species)
 {
-    gUnknown_020387E0 = var;
+    sPokemonAnglerSpecies = species;
 }
 
 void sub_80BEA88(void);

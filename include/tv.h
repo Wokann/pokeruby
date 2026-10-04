@@ -39,7 +39,7 @@ void sub_80BE8EC(u16);
 void UpdateMassOutbreakTimeLeft(u16);
 void sub_80BE97C(u8);
 void sub_80BE9D4();
-void sub_80BEA50(u16);
+void SetPokemonAnglerSpecies(u16 species);
 void sub_80BEA5C(u16);
 void sub_80BEA88(void);
 void sub_80BEA88(void);

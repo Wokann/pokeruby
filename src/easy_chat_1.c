@@ -281,8 +281,8 @@ void sub_80E62A0(u8 a, u16 *b, void (*c)(void), u8 d)
     if (a == 9)
     {
         gEasyChatStruct->unk4 = &gEasyChatStruct->unk9C7C;
-        gEasyChatStruct->unk9C7C = gSaveBlock1.easyChatPairs[0].words[0];
-        gEasyChatStruct->unk9C7E = gSaveBlock1.easyChatPairs[0].words[1];
+        gEasyChatStruct->unk9C7C = gSaveBlock1.dewfordTrends[0].words[0];
+        gEasyChatStruct->unk9C7E = gSaveBlock1.dewfordTrends[0].words[1];
     }
     SetMainCallback2(sub_80E62F8);
 }

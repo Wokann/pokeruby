@@ -1633,7 +1633,7 @@ const u8 gUnknown_083F83F8[] = {3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5};
 
 u16 GetSlotMachineId(void)
 {
-    u32 v0 = gSaveBlock1.easyChatPairs[0].unk0_0 + gSaveBlock1.easyChatPairs[0].unk2 + gUnknown_083F83E0[gSpecialVar_0x8004];
+    u32 v0 = gSaveBlock1.dewfordTrends[0].unk0_0 + gSaveBlock1.dewfordTrends[0].rand + gUnknown_083F83E0[gSpecialVar_0x8004];
     if (IsPokeNewsActive(2))
     {
         return gUnknown_083F83F8[v0 % 12];

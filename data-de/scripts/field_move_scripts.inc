@@ -91,7 +91,7 @@ DoRockSmashMovement: @ 81B0F0C
 	specialvar VAR_RESULT, TryUpdateRusturfTunnelState
 	compare VAR_RESULT, 1
 	goto_if_eq DoRockSmashMovement_Done
-	special ScrSpecial_RockSmashWildEncounter
+	special RockSmashWildEncounter
 	compare VAR_RESULT, 0
 	goto_if_eq DoRockSmashMovement_Done
 	waitstate

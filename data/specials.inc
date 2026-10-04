@@ -179,7 +179,7 @@ gSpecials::
 	def_special sub_810FF48
 	def_special UpdateTrainerFanClubGameClear
 	def_special sub_810FF60
-	def_special ScrSpecial_RockSmashWildEncounter
+	def_special RockSmashWildEncounter
 	def_special GabbyAndTyGetBattleNum
 	def_special GabbyAndTyAfterInterview
 	def_special GabbyAndTyBeforeInterview
