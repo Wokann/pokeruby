@@ -18,8 +18,8 @@ struct Menu
     s8 cursorPos;
     s8 minCursorPos;
     s8 maxCursorPos;
-    u8 width;
-    u8 height;
+    u8 columns;
+    u8 rows;
     u8 menu_field_7;
     u8 columnXCoords[8];
 };
@@ -27,13 +27,13 @@ struct Menu
 static void MultistepInitMenuWindowInternal(const struct WindowTemplate *, u16);
 static void InitMenuWindowInternal(const struct WindowTemplate *, u16);
 static bool8 IsGridCursorMovementClamped(void);
-static u8 sub_8072484(u8, u8, u8, u8, u8, u8, u32);
-static u8 sub_80724F4(u8, u8, u8, const struct MenuAction[], u8);
-static void sub_8072620(u8, u8, u8, const struct MenuAction[], u8);
+static u8 sub_8072484(u8 left, u8 top, u8 numChoices, u8 initialCursorPos, u8 columns, u8 a6, u32 a7);
+static u8 sub_80724F4(u8 left, u8 top, u8 itemCount, const struct MenuAction menuActions[], u8 columns);
+static void sub_8072620(u8 left, u8 top, u8 itemCount, const struct MenuAction menuActions[], u8 columns);
 static void sub_8072D18(u8, u8);
 static void RedrawMenuCursor(u8, u8);
 
-static struct Menu gMenu;
+static struct Menu sMenu;
 
 EWRAM_DATA struct Window gMenuWindow = {0};
 EWRAM_DATA u8 gFiller_202E908[0x90] = {0};
@@ -46,8 +46,8 @@ EWRAM_DATA u16 gMenuMessageBoxContentTileOffset = 0;
 
 const struct MenuAction gMenuYesNoItems[] =
 {
-    { OtherText_Yes, NULL },
-    { OtherText_No, NULL },
+    { gText_Yes, NULL },
+    { gText_No, NULL },
 };
 
 void CloseMenu(void)
@@ -59,10 +59,10 @@ void CloseMenu(void)
     Menu_DestroyCursor();
 }
 
-void AppendToList(u8 *list, u8 *pindex, u32 value)
+void AppendToList(u8 *list, u8 *pos, u32 newEntry)
 {
-    list[*pindex] = value;
-    (*pindex)++;
+    list[*pos] = newEntry;
+    (*pos)++;
 }
 
 void InitMenuWindow(const struct WindowTemplate *winTemplate)
@@ -232,39 +232,39 @@ void Menu_ClearWindowText(void)
     Text_ClearWindow(gMenuWindowPtr);
 }
 
-u8 Menu_MoveCursor(s8 delta)
+u8 Menu_MoveCursor(s8 cursorDelta)
 {
-    s32 newPos = gMenu.cursorPos + delta;
+    s32 newPos = sMenu.cursorPos + cursorDelta;
 
-    if (newPos < gMenu.minCursorPos)
-        gMenu.cursorPos = gMenu.maxCursorPos;
-    else if (newPos > gMenu.maxCursorPos)
-        gMenu.cursorPos = gMenu.minCursorPos;
+    if (newPos < sMenu.minCursorPos)
+        sMenu.cursorPos = sMenu.maxCursorPos;
+    else if (newPos > sMenu.maxCursorPos)
+        sMenu.cursorPos = sMenu.minCursorPos;
     else
-        gMenu.cursorPos += delta;
+        sMenu.cursorPos += cursorDelta;
 
-    RedrawMenuCursor(gMenu.left, 2 * gMenu.cursorPos + gMenu.top);
-    return gMenu.cursorPos;
+    RedrawMenuCursor(sMenu.left, 2 * sMenu.cursorPos + sMenu.top);
+    return sMenu.cursorPos;
 }
 
-u8 Menu_MoveCursorNoWrap(s8 delta)
+u8 Menu_MoveCursorNoWrapAround(s8 cursorDelta)
 {
-    s32 newPos = gMenu.cursorPos + delta;
+    s32 newPos = sMenu.cursorPos + cursorDelta;
 
-    if (newPos < gMenu.minCursorPos)
-        gMenu.cursorPos = gMenu.minCursorPos;
-    else if (newPos > gMenu.maxCursorPos)
-        gMenu.cursorPos = gMenu.maxCursorPos;
+    if (newPos < sMenu.minCursorPos)
+        sMenu.cursorPos = sMenu.minCursorPos;
+    else if (newPos > sMenu.maxCursorPos)
+        sMenu.cursorPos = sMenu.maxCursorPos;
     else
-        gMenu.cursorPos += delta;
+        sMenu.cursorPos += cursorDelta;
 
-    RedrawMenuCursor(gMenu.left, 2 * gMenu.cursorPos + gMenu.top);
-    return gMenu.cursorPos;
+    RedrawMenuCursor(sMenu.left, 2 * sMenu.cursorPos + sMenu.top);
+    return sMenu.cursorPos;
 }
 
 u8 Menu_GetCursorPos(void)
 {
-    return gMenu.cursorPos;
+    return sMenu.cursorPos;
 }
 
 s8 Menu_ProcessInput(void)
@@ -272,14 +272,14 @@ s8 Menu_ProcessInput(void)
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        if (gMenu.menu_field_7)
+        if (sMenu.menu_field_7)
             Menu_DestroyCursor();
-        return gMenu.cursorPos;
+        return sMenu.cursorPos;
     }
 
     if (JOY_NEW(B_BUTTON))
     {
-        if (gMenu.menu_field_7)
+        if (sMenu.menu_field_7)
             Menu_DestroyCursor();
         return -1;
     }
@@ -302,84 +302,84 @@ s8 Menu_ProcessInput(void)
 
 s8 Menu_ProcessInputNoWrap(void)
 {
-    u8 cursorPos = gMenu.cursorPos;
+    u8 oldPos = sMenu.cursorPos;
 
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        if (gMenu.menu_field_7)
+        if (sMenu.menu_field_7)
             Menu_DestroyCursor();
-        return gMenu.cursorPos;
+        return sMenu.cursorPos;
     }
 
     if (JOY_NEW(B_BUTTON))
     {
-        if (gMenu.menu_field_7)
+        if (sMenu.menu_field_7)
             Menu_DestroyCursor();
         return -1;
     }
 
     if (JOY_NEW(DPAD_UP))
     {
-        if (cursorPos != Menu_MoveCursorNoWrap(-1))
+        if (oldPos != Menu_MoveCursorNoWrapAround(-1))
             PlaySE(SE_SELECT);
         return -2;
     }
     else if (JOY_NEW(DPAD_DOWN))
     {
-        if (cursorPos != Menu_MoveCursorNoWrap(1))
+        if (oldPos != Menu_MoveCursorNoWrapAround(1))
             PlaySE(SE_SELECT);
         return -2;
     }
 
-    Menu_MoveCursorNoWrap(0);
+    Menu_MoveCursorNoWrapAround(0);
     return -2;
 }
 
 u8 MoveMenuCursor3(s8 delta)
 {
-    u8 menuHeight = (gMenu.maxCursorPos + 1) >> 1;
-    s32 newPos = gMenu.cursorPos + delta;
+    u8 menuHeight = (sMenu.maxCursorPos + 1) >> 1;
+    s32 newPos = sMenu.cursorPos + delta;
 
-    if (newPos < gMenu.minCursorPos)
-        gMenu.cursorPos = gMenu.maxCursorPos;
-    else if (newPos > gMenu.maxCursorPos)
-        gMenu.cursorPos = gMenu.minCursorPos;
+    if (newPos < sMenu.minCursorPos)
+        sMenu.cursorPos = sMenu.maxCursorPos;
+    else if (newPos > sMenu.maxCursorPos)
+        sMenu.cursorPos = sMenu.minCursorPos;
     else
-        gMenu.cursorPos += delta;
+        sMenu.cursorPos += delta;
 
     RedrawMenuCursor(
-        6 * (gMenu.cursorPos / menuHeight) + gMenu.left,
-        2 * (gMenu.cursorPos % menuHeight) + gMenu.top);
+        6 * (sMenu.cursorPos / menuHeight) + sMenu.left,
+        2 * (sMenu.cursorPos % menuHeight) + sMenu.top);
 
-    return gMenu.cursorPos;
+    return sMenu.cursorPos;
 }
 
 static u8 MoveMenuCursorGridLayout(s8 delta)
 {
     // Don't move cursor if it is clamped
-    if (gMenu.cursorPos + delta <= gMenu.maxCursorPos)
+    if (sMenu.cursorPos + delta <= sMenu.maxCursorPos)
     {
         if (IsGridCursorMovementClamped() == TRUE)
-            return gMenu.cursorPos;
+            return sMenu.cursorPos;
     }
     else
     {
-        return gMenu.cursorPos;
+        return sMenu.cursorPos;
     }
 
-    gMenu.cursorPos += delta;
+    sMenu.cursorPos += delta;
 
-    if ((gMenu.maxCursorPos + 1) / gMenu.width == 0)
+    if ((sMenu.maxCursorPos + 1) / sMenu.columns == 0)
         RedrawMenuCursor(
-            gMenu.left + gMenu.columnXCoords[gMenu.cursorPos % gMenu.width],
-            2 * ((gMenu.cursorPos / gMenu.width) % gMenu.height) + gMenu.top);
+            sMenu.left + sMenu.columnXCoords[sMenu.cursorPos % sMenu.columns],
+            2 * ((sMenu.cursorPos / sMenu.columns) % sMenu.rows) + sMenu.top);
     else
         RedrawMenuCursor(
-            gMenu.left + gMenu.columnXCoords[gMenu.cursorPos % gMenu.width],
-            2 * (gMenu.cursorPos / gMenu.width) + gMenu.top);
+            sMenu.left + sMenu.columnXCoords[sMenu.cursorPos % sMenu.columns],
+            2 * (sMenu.cursorPos / sMenu.columns) + sMenu.top);
 
-    return gMenu.cursorPos;
+    return sMenu.cursorPos;
 }
 
 // Returns TRUE if the cursor is on an edge and cannot move in the pressed direction
@@ -388,82 +388,82 @@ static bool8 IsGridCursorMovementClamped(void)
     if (JOY_NEW(DPAD_UP))
     {
         // is cursor on first row?
-        if (gMenu.cursorPos < gMenu.width)
+        if (sMenu.cursorPos < sMenu.columns)
             return TRUE;
     }
     if (JOY_NEW(DPAD_DOWN))
     {
         // is cursor on last row?
-        if (gMenu.cursorPos >= gMenu.maxCursorPos + 1 - gMenu.width)
+        if (sMenu.cursorPos >= sMenu.maxCursorPos + 1 - sMenu.columns)
             return TRUE;
     }
     if (JOY_NEW(DPAD_LEFT))
     {
         // is cursor on first column?
-        if ((gMenu.cursorPos - gMenu.cursorPos % gMenu.width) % gMenu.width == 1 // always false
-         || gMenu.cursorPos == 0  // redundant
-         || gMenu.cursorPos % gMenu.width == 0)
+        if ((sMenu.cursorPos - sMenu.cursorPos % sMenu.columns) % sMenu.columns == 1 // always false
+         || sMenu.cursorPos == 0  // redundant
+         || sMenu.cursorPos % sMenu.columns == 0)
             return TRUE;
     }
     if (JOY_NEW(DPAD_RIGHT))
     {
         // is cursor on last column?
-        if (gMenu.cursorPos % gMenu.width == gMenu.width - 1)
+        if (sMenu.cursorPos % sMenu.columns == sMenu.columns - 1)
             return TRUE;
     }
 
     return FALSE;
 }
 
-static u8 sub_8072484(u8 a1, u8 a2, u8 menuItemCount, u8 a4, u8 width, u8 a6, u32 a7)
+static u8 sub_8072484(u8 left, u8 top, u8 numChoices, u8 initialCursorPos, u8 columns, u8 a6, u32 a7)
 {
     u8 v7;
 
-    gMenu.width = width;
-    gMenu.height = menuItemCount / width;
-    InitMenu(0, a1, a2, menuItemCount, a4, a6);
+    sMenu.columns = columns;
+    sMenu.rows = numChoices / columns;
+    InitMenu(0, left, top, numChoices, initialCursorPos, a6);
     v7 = 0;
     if (a7)
         v7 = -1;
-    gMenu.menu_field_7 = v7;
-    return a4;
+    sMenu.menu_field_7 = v7;
+    return initialCursorPos;
 }
 
-static u8 sub_80724F4(u8 left, u8 top, u8 menuItemCount, const struct MenuAction menuItems[], u8 columnCount)
+static u8 sub_80724F4(u8 left, u8 top, u8 itemCount, const struct MenuAction menuActions[], u8 columns)
 {
     u8 i;
     u8 maxWidth;
     s32 height;
 
     for (i = 0; i < 7; i++)
-        gMenu.columnXCoords[i] = 0;
+        sMenu.columnXCoords[i] = 0;
 
     maxWidth = 0;
-    for (i = 0; i < menuItemCount; i++)
+    for (i = 0; i < itemCount; i++)
     {
-        u8 width = (GetStringWidthInMenuWindow(menuItems[i].text) + 7) / 8;
+        u8 width = (GetStringWidthInMenuWindow(menuActions[i].text) + 7) / 8;
 
         if (width > maxWidth)
             maxWidth = width;
     }
 
-    for (i = 1; i <= columnCount; i++)
-        gMenu.columnXCoords[i] = maxWidth;
+    for (i = 1; i <= columns; i++)
+        sMenu.columnXCoords[i] = maxWidth;
 
-    for (i = 1; i <= columnCount; i++)
-        gMenu.columnXCoords[i] += 1 + gMenu.columnXCoords[i - 1];
+    for (i = 1; i <= columns; i++)
+        sMenu.columnXCoords[i] += 1 + sMenu.columnXCoords[i - 1];
 
-    gMenu.columnXCoords[columnCount]--;
+    sMenu.columnXCoords[columns]--;
 
-    if (!((menuItemCount / 2) < columnCount || (menuItemCount % 2 != 0))
-     || columnCount == 1
-     || columnCount == menuItemCount)
+    if (!((itemCount / 2) < columns || (itemCount % 2 != 0))
+     || columns == 1
+     || columns == itemCount)
     {
-        height = 2 * (menuItemCount / columnCount) + 1;
+        height = 2 * (itemCount / columns) + 1;
     }
     else
     {
-        height = 2 * ((menuItemCount / columnCount) + 1) + 1;
+        height = 2 * ((itemCount / columns) + 1) + 1;
     }
 
     {
@@ -478,7 +478,7 @@ static u8 sub_80724F4(u8 left, u8 top, u8 menuItemCount, const struct MenuAction
         asm("" ::: "r3");
         bottom = val >> 24;
 
-        totalWidth = (gMenu.columnXCoords[columnCount] + 1);
+        totalWidth = (sMenu.columnXCoords[columns] + 1);
         right = left + totalWidth;
 
         Menu_DrawStdWindowFrame(left, top, right, bottom);
@@ -487,53 +487,53 @@ static u8 sub_80724F4(u8 left, u8 top, u8 menuItemCount, const struct MenuAction
     return maxWidth;
 }
 
-static void sub_8072620(u8 left, u8 top, u8 menuItemCount, const struct MenuAction menuItems[], u8 columnCount)
+static void sub_8072620(u8 left, u8 top, u8 itemCount, const struct MenuAction menuActions[], u8 columns)
 {
     u8 i;
     u8 maxWidth;
 
     for (i = 0; i < 7; i++)
-        gMenu.columnXCoords[i] = 0;
+        sMenu.columnXCoords[i] = 0;
 
     maxWidth = 0;
-    for (i = 0; i < menuItemCount; i++)
+    for (i = 0; i < itemCount; i++)
     {
-        u8 width = (GetStringWidthInMenuWindow(menuItems[i].text) + 7) / 8;
+        u8 width = (GetStringWidthInMenuWindow(menuActions[i].text) + 7) / 8;
 
         if (width > maxWidth)
             maxWidth = width;
     }
 
-    for (i = 1; i <= columnCount; i++)
-        gMenu.columnXCoords[i] = maxWidth;
+    for (i = 1; i <= columns; i++)
+        sMenu.columnXCoords[i] = maxWidth;
 
-    for (i = 1; i <= columnCount; i++)
-        gMenu.columnXCoords[i] += 1 + gMenu.columnXCoords[i - 1];
+    for (i = 1; i <= columns; i++)
+        sMenu.columnXCoords[i] += 1 + sMenu.columnXCoords[i - 1];
 
-    gMenu.columnXCoords[columnCount]--;
+    sMenu.columnXCoords[columns]--;
 
-    for (i = 0; i < columnCount; i++)
+    for (i = 0; i < columns; i++)
     {
         u8 row = 0;
         u8 j;
-        for (j = 0; i + j < menuItemCount; j += columnCount, row++)
-            Menu_PrintText(menuItems[i + j].text, left + gMenu.columnXCoords[i % columnCount], top + 2 * row);
+        for (j = 0; i + j < itemCount; j += columns, row++)
+            Menu_PrintText(menuActions[i + j].text, left + sMenu.columnXCoords[i % columns], top + 2 * row);
     }
 }
 
-void sub_807274C(u8 left, u8 top, u8 menuItemCount, u8 a4, const struct MenuAction menuItems[], u8 columnCount, u32 a7)
+void sub_807274C(u8 left, u8 top, u8 itemCount, u8 initialCursorPos, const struct MenuAction menuActions[], u8 columns, u32 a7)
 {
-    u8 maxWidth = sub_80724F4(left, top, menuItemCount, menuItems, columnCount);
+    u8 maxWidth = sub_80724F4(left, top, itemCount, menuActions, columns);
 
-    sub_8072484(left + 1, top + 1, menuItemCount, a4, columnCount, maxWidth, a7);
-    sub_8072620(left + 1, top + 1, menuItemCount, menuItems, columnCount);
+    sub_8072484(left + 1, top + 1, itemCount, initialCursorPos, columns, maxWidth, a7);
+    sub_8072620(left + 1, top + 1, itemCount, menuActions, columns);
 }
 
 s8 Menu_ProcessInputGridLayout(void)
 {
     if (JOY_NEW(A_BUTTON))
     {
-        if (gMenu.menu_field_7)
+        if (sMenu.menu_field_7)
             Menu_DestroyCursor();
         PlaySE(SE_SELECT);
         return Menu_GetCursorPos();
@@ -541,7 +541,7 @@ s8 Menu_ProcessInputGridLayout(void)
 
     if (JOY_NEW(B_BUTTON))
     {
-        if (gMenu.menu_field_7)
+        if (sMenu.menu_field_7)
             Menu_DestroyCursor();
         return -1;
     }
@@ -550,14 +550,14 @@ s8 Menu_ProcessInputGridLayout(void)
     {
         PlaySE(SE_SELECT);
         // Move up one whole row
-        MoveMenuCursorGridLayout(-gMenu.width);
+        MoveMenuCursorGridLayout(-sMenu.columns);
         return -2;
     }
     else if (JOY_NEW(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
         // Move down one whole column
-        MoveMenuCursorGridLayout(gMenu.width);
+        MoveMenuCursorGridLayout(sMenu.columns);
         return -2;
     }
     else if (JOY_NEW(DPAD_LEFT))
@@ -578,23 +578,23 @@ s8 Menu_ProcessInputGridLayout(void)
 
 u8 Menu_GetColumnXCoord(u8 column)
 {
-    return gMenu.columnXCoords[column];
+    return sMenu.columnXCoords[column];
 }
 
-void Menu_PrintItems(u8 left, u8 top, u8 menuItemCount, const void * menuItems)
+void Menu_PrintItems(u8 left, u8 top, u8 itemCount, const void * menuActions)
 {
     u8 i;
 
-    for (i = 0; i < menuItemCount; i++)
-        Menu_PrintText(((const struct MenuAction *)menuItems)[i].text, left, top + 2 * i);
+    for (i = 0; i < itemCount; i++)
+        Menu_PrintText(((const struct MenuAction *)menuActions)[i].text, left, top + 2 * i);
 }
 
-void Menu_PrintItemsReordered(u8 left, u8 top, u8 menuItemCount, const void * menuItems, const u8 *order)
+void Menu_PrintItemsReordered(u8 left, u8 top, u8 itemCount, const void * menuActions, const u8 *actionIds)
 {
     u8 i;
 
-    for (i = 0; i < menuItemCount; i++)
-        Menu_PrintText(((const struct MenuAction *)menuItems)[order[i]].text, left, top + 2 * i);
+    for (i = 0; i < itemCount; i++)
+        Menu_PrintText(((const struct MenuAction *)menuActions)[actionIds[i]].text, left, top + 2 * i);
 }
 
 void InitYesNoMenu(u8 left, u8 top, u8 a3)
@@ -607,7 +607,7 @@ void DisplayYesNoMenu(u8 left, u8 top, u32 a3)
 {
     Menu_DrawStdWindowFrame(left, top, left + 6, top + 5);
     InitYesNoMenu(left, top, 5);
-    gMenu.menu_field_7 = a3 ? -1 : 0;
+    sMenu.menu_field_7 = a3 ? -1 : 0;
 }
 
 s8 Menu_ProcessInputNoWrap_(void)
@@ -721,25 +721,25 @@ static void sub_8072D18(u8 a1, u8 a2)
     MenuCursor_Create814A5C0(a1, 0xFFFF, 12, 11679, 8 * a2);
 }
 
-u8 InitMenu(u8 cursorSubpriority, u8 left, u8 top, u8 numChoices, u8 cursorPos, u8 cursorWidth)
+u8 InitMenu(u8 cursorSubpriority, u8 left, u8 top, u8 numChoices, u8 initialCursorPos, u8 cursorWidth)
 {
     s32 pos;
 
     if (cursorWidth)
         sub_8072D18(cursorSubpriority, cursorWidth);
 
-    gMenu.left = left - 1;
-    gMenu.top = top;
-    gMenu.minCursorPos = 0;
-    gMenu.maxCursorPos = numChoices - 1;
-    gMenu.menu_field_7 = 0;
+    sMenu.left = left - 1;
+    sMenu.top = top;
+    sMenu.minCursorPos = 0;
+    sMenu.maxCursorPos = numChoices - 1;
+    sMenu.menu_field_7 = 0;
 
-    pos = cursorPos;
+    pos = initialCursorPos;
 
-    if (pos < 0 || pos > gMenu.maxCursorPos)
+    if (pos < 0 || pos > sMenu.maxCursorPos)
         pos = 0;
 
-    gMenu.cursorPos = pos;
+    sMenu.cursorPos = pos;
     Menu_MoveCursor(0);
 
     return pos;

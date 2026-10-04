@@ -99,8 +99,8 @@ const struct MenuAction MultichoiceList_16[] =
 
 const struct MenuAction MultichoiceList_17[] =
 {
-    {OtherText_Yes, NULL},
-    {OtherText_No, NULL},
+    {gText_Yes, NULL},
+    {gText_No, NULL},
     {OtherText_Info3, NULL},
 };
 
@@ -121,8 +121,8 @@ const struct MenuAction MultichoiceList_19[] =
 
 const struct MenuAction MultichoiceList_20[] =
 {
-    {OtherText_Yes, NULL},
-    {OtherText_No, NULL},
+    {gText_Yes, NULL},
+    {gText_No, NULL},
     {OtherText_Info3, NULL},
 };
 

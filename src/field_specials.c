@@ -1110,14 +1110,14 @@ void sub_810E984(u8 taskId)
     {
         gUnknown_0203925B--;
         curMenuPos = Menu_GetCursorPos();
-        Menu_MoveCursorNoWrap(-1);
+        Menu_MoveCursorNoWrapAround(-1);
         sub_810EAC8(curMenuPos, DPAD_UP);
     }
     if (gMain.newKeys == DPAD_DOWN && gUnknown_0203925B != gUnknown_0203925A - 1)
     {
         gUnknown_0203925B++;
         curMenuPos = Menu_GetCursorPos();
-        Menu_MoveCursorNoWrap(+1);
+        Menu_MoveCursorNoWrapAround(+1);
         sub_810EAC8(curMenuPos, DPAD_DOWN);
     }
     if (JOY_NEW(A_BUTTON))
@@ -1479,14 +1479,14 @@ void sub_810F118(u8 taskId)
     {
         gUnknown_0203925B--;
         prevCursorPos = Menu_GetCursorPos();
-        Menu_MoveCursorNoWrap(-1);
+        Menu_MoveCursorNoWrapAround(-1);
         sub_810F1F4(prevCursorPos, DPAD_UP);
     }
     if (gMain.newKeys == DPAD_DOWN && gUnknown_0203925B != gUnknown_0203925A - 1)
     {
         gUnknown_0203925B++;
         prevCursorPos = Menu_GetCursorPos();
-        Menu_MoveCursorNoWrap(1);
+        Menu_MoveCursorNoWrapAround(1);
         sub_810F1F4(prevCursorPos, DPAD_DOWN);
     }
     if (JOY_NEW(A_BUTTON))
