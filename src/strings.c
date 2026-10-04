@@ -306,8 +306,8 @@ const u8 gOtherText_CanPay[] = _("I can pay ¥{STR_VAR_1}.\nWould that be okay?"
 const u8 gOtherText_SoldItem[] = _("Turned over the {STR_VAR_2}\nand received ¥{STR_VAR_1}.");
 
 const u8 OtherText_Money[] = _("¥{STR_VAR_1}");
-const u8 OtherText_Shift[] = _("SHIFT");
-const u8 OtherText_SendOut[] = _("SEND OUT");
+const u8 gText_Shift[] = _("SHIFT");
+const u8 gText_SendOut[] = _("SEND OUT");
 const u8 gText_Switch2[] = _("SWITCH");
 const u8 gText_Summary5[] = _("SUMMARY");
 const u8 OtherText_Moves[] = _("MOVES");
@@ -327,12 +327,12 @@ const u8 gOtherText_CantUseOnPoke[] = _("This can't be used on\nthat POKéMON.{P
 const u8 gOtherText_CantUseOnPoke[] = _("This item can't be used on\nthat POKéMON.{PAUSE_UNTIL_PRESS}");
 #endif
 
-const u8 gOtherText_CantBeSwitched[] = _("{STR_VAR_1} can't be switched\nout!{PAUSE_UNTIL_PRESS}");
-const u8 gOtherText_AlreadyBattle[] = _("{STR_VAR_1} is already\nin battle!{PAUSE_UNTIL_PRESS}");
-const u8 gOtherText_AlreadySelected[] = _("{STR_VAR_1} has already been\nselected.{PAUSE_UNTIL_PRESS}");
-const u8 gOtherText_NoEnergyLeft[] = _("{STR_VAR_1} has no energy\nleft to battle!{PAUSE_UNTIL_PRESS}");
-const u8 gOtherText_CantSwitchPokeWithYours[] = _("You can't switch {STR_VAR_1}'s\nPOKéMON with one of yours!{PAUSE_UNTIL_PRESS}");
-const u8 gOtherText_EGGCantBattle[] = _("An EGG can't battle!{PAUSE_UNTIL_PRESS}");
+const u8 gText_PkmnCantSwitchOut[] = _("{STR_VAR_1} can't be switched\nout!{PAUSE_UNTIL_PRESS}");
+const u8 gText_PkmnAlreadyInBattle[] = _("{STR_VAR_1} is already\nin battle!{PAUSE_UNTIL_PRESS}");
+const u8 gText_PkmnAlreadySelected[] = _("{STR_VAR_1} has already been\nselected.{PAUSE_UNTIL_PRESS}");
+const u8 gText_PkmnHasNoEnergy[] = _("{STR_VAR_1} has no energy\nleft to battle!{PAUSE_UNTIL_PRESS}");
+const u8 gText_CantSwitchWithAlly[] = _("You can't switch {STR_VAR_1}'s\nPOKéMON with one of yours!{PAUSE_UNTIL_PRESS}");
+const u8 gText_EggCantBattle[] = _("An EGG can't battle!{PAUSE_UNTIL_PRESS}");
 const u8 gText_CantUseUntilNewBadge[] = _("This can't be used until a new\nBADGE is obtained.");
 const u8 gOtherText_NoMoreThreePoke[] = _("No more than three POKéMON\nmay enter.");
 const u8 gText_SendMailToPC[] = _("Send the removed MAIL to\nyour PC?");
@@ -1234,8 +1234,8 @@ const u8 gOtherText_CanPay[] = _("Ich gebe dir ¥{STR_VAR_1}.\nBist du damit ein
 const u8 gOtherText_SoldItem[] = _("{STR_VAR_2} wurde übergeben\nim Tausch gegen ¥{STR_VAR_1}.");
 
 const u8 OtherText_Money[] = _("¥{STR_VAR_1}");
-const u8 OtherText_Shift[] = _("TAUSCH");
-const u8 OtherText_SendOut[] = _("AUSSENDEN");
+const u8 gText_Shift[] = _("TAUSCH");
+const u8 gText_SendOut[] = _("AUSSENDEN");
 const u8 gText_Switch2[] = _("TAUSCH");
 const u8 gText_Summary5[] = _("BERICHT");
 const u8 OtherText_Moves[] = _("ATTACKEN");
@@ -1251,12 +1251,12 @@ const u8 gText_WontHaveEffect[] = _("Es wird keine Wirkung haben.{PAUSE_UNTIL_PR
 
 const u8 gOtherText_CantUseOnPoke[] = _("Das kann nicht bei diesem\nPOKéMON eingesetzt werden.{PAUSE_UNTIL_PRESS}");
 
-const u8 gOtherText_CantBeSwitched[] = _("{STR_VAR_1} kann nicht ausge-\ntauscht werden!{PAUSE_UNTIL_PRESS}");
-const u8 gOtherText_AlreadyBattle[] = _("{STR_VAR_1}\nkämpft bereits!{PAUSE_UNTIL_PRESS}");
-const u8 gOtherText_AlreadySelected[] = _("{STR_VAR_1} ist\nbereits ausgewählt.{PAUSE_UNTIL_PRESS}");
-const u8 gOtherText_NoEnergyLeft[] = _("{STR_VAR_1} kann\nnicht kämpfen!{PAUSE_UNTIL_PRESS}");
-const u8 gOtherText_CantSwitchPokeWithYours[] = _("Ein POKéMON von {STR_VAR_1} ist\nnicht gegen deins eintauschbar!{PAUSE_UNTIL_PRESS}");
-const u8 gOtherText_EGGCantBattle[] = _("Ein EI kann nicht kämpfen!{PAUSE_UNTIL_PRESS}");
+const u8 gText_PkmnCantSwitchOut[] = _("{STR_VAR_1} kann nicht ausge-\ntauscht werden!{PAUSE_UNTIL_PRESS}");
+const u8 gText_PkmnAlreadyInBattle[] = _("{STR_VAR_1}\nkämpft bereits!{PAUSE_UNTIL_PRESS}");
+const u8 gText_PkmnAlreadySelected[] = _("{STR_VAR_1} ist\nbereits ausgewählt.{PAUSE_UNTIL_PRESS}");
+const u8 gText_PkmnHasNoEnergy[] = _("{STR_VAR_1} kann\nnicht kämpfen!{PAUSE_UNTIL_PRESS}");
+const u8 gText_CantSwitchWithAlly[] = _("Ein POKéMON von {STR_VAR_1} ist\nnicht gegen deins eintauschbar!{PAUSE_UNTIL_PRESS}");
+const u8 gText_EggCantBattle[] = _("Ein EI kann nicht kämpfen!{PAUSE_UNTIL_PRESS}");
 const u8 gText_CantUseUntilNewBadge[] = _("Das ist erst einsetzbar, wenn\nein neuer ORDEN errungen wurde.");
 const u8 gOtherText_NoMoreThreePoke[] = _("Es können nicht mehr als\ndrei POKéMON teilnehmen.");
 const u8 gText_SendMailToPC[] = _("Den abgenommenen BRIEF\nauf deinen PC übertragen?");

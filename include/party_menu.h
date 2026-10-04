@@ -212,4 +212,17 @@ void TaughtMove(u8 taskId);
 void StopTryingToTeachMove_806F588(u8 taskId);
 bool8 IsMoveHm(u16 move);
 
+extern u8 gBattlePartyCurrentOrder[3];
+
+void HandleBattlePartyMenu(u8 taskId);
+bool8 SetUpBattlePartyMenu(void);
+u8 GetPartyIdFromBattleSlot(u8 slot);
+void OpenPartyMenuInBattle(u8 partyAction);
+void ChooseMonForInBattleItem(void);
+void BufferBattlePartyCurrentOrder(void);
+void BufferBattlePartyCurrentOrderBySide(u8 battler, u8 flankId);
+void SwitchPartyOrderLinkMulti(u8 battler, u8 slot, u8 slot2);
+void SwitchPartyMonSlots(u8 slot, u8 slot2);
+u8 GetPartyIdFromBattlePartyId(u8 battlePartyId);
+
 #endif // GUARD_PARTY_MENU_H

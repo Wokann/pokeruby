@@ -308,8 +308,8 @@ extern const u8 gOtherText_CanPay[];
 extern const u8 gOtherText_SoldItem[];
 
 extern const u8 OtherText_Money[];
-extern const u8 OtherText_Shift[];
-extern const u8 OtherText_SendOut[];
+extern const u8 gText_Shift[];
+extern const u8 gText_SendOut[];
 extern const u8 gText_Switch2[];
 extern const u8 gText_Summary5[];
 extern const u8 OtherText_Moves[];
@@ -325,12 +325,12 @@ extern const u8 gText_WontHaveEffect[];
 
 extern const u8 gOtherText_CantUseOnPoke[];
 
-extern const u8 gOtherText_CantBeSwitched[];
-extern const u8 gOtherText_AlreadyBattle[];
-extern const u8 gOtherText_AlreadySelected[];
-extern const u8 gOtherText_NoEnergyLeft[];
-extern const u8 gOtherText_CantSwitchPokeWithYours[];
-extern const u8 gOtherText_EGGCantBattle[];
+extern const u8 gText_PkmnCantSwitchOut[];
+extern const u8 gText_PkmnAlreadyInBattle[];
+extern const u8 gText_PkmnAlreadySelected[];
+extern const u8 gText_PkmnHasNoEnergy[];
+extern const u8 gText_CantSwitchWithAlly[];
+extern const u8 gText_EggCantBattle[];
 extern const u8 gText_CantUseUntilNewBadge[];
 extern const u8 gOtherText_NoMoreThreePoke[];
 extern const u8 gText_SendMailToPC[];

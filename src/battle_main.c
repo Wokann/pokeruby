@@ -37,7 +37,6 @@
 #include "random.h"
 #include "roamer.h"
 #include "battle_anim.h"
-#include "rom_8094928.h"
 #include "safari_zone.h"
 #include "sound.h"
 #include "sprite.h"
@@ -121,7 +120,6 @@ extern u8 gBattleOutcome;
 extern u16 gIntroSlideFlags;
 extern u8 gActionSelectionCursor[];
 extern u8 gMoveSelectionCursor[];
-extern u8 gBattlePartyCurrentOrder[];
 MainCallback gPreBattleCallback1;
 u8 gMultiUsePlayerCursor;
 u8 gNumberOfMovesToChoose;
@@ -4196,16 +4194,16 @@ void sub_8012258(u8 a)
     u8 r1;
 
     for (i = 0; i < 3; i++)
-        gBattlePartyCurrentOrder[i] = gSharedMem[BSTRUCT_OFF(unk1606C) + i + a * 3];
-    r4 = pokemon_order_func(gBattlerPartyIndexes[a]);
-    r1 = pokemon_order_func(gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + a]);
-    sub_8094C98(r4, r1);
+        gBattlePartyCurrentOrder[i] = gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + i + a * 3];
+    r4 = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[a]);
+    r1 = GetPartyIdFromBattlePartyId(gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + a]);
+    SwitchPartyMonSlots(r4, r1);
     if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
     {
         for (i = 0; i < 3; i++)
         {
-            gSharedMem[BSTRUCT_OFF(unk1606C) + i + a * 3] = gBattlePartyCurrentOrder[i];
-            gSharedMem[BSTRUCT_OFF(unk1606C) + i + (a ^ BIT_FLANK) * 3] =
+            gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + i + a * 3] = gBattlePartyCurrentOrder[i];
+            gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + i + (a ^ BIT_FLANK) * 3] =
                 gBattlePartyCurrentOrder[i];
         }
     }
@@ -4213,7 +4211,7 @@ void sub_8012258(u8 a)
     {
         for (i = 0; i < 3; i++)
         {
-            gSharedMem[BSTRUCT_OFF(unk1606C) + i + a * 3] = gBattlePartyCurrentOrder[i];
+            gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + i + a * 3] = gBattlePartyCurrentOrder[i];
         }
     }
 }
@@ -4337,7 +4335,7 @@ void sub_8012324(void)
                             }
                             else
                             {
-                                BtlController_EmitChooseItem(0, &gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0]);
+                                BtlController_EmitChooseItem(0, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0]);
                                 MarkBattlerForControllerExec(gActiveBattler);
                             }
                             break;
@@ -4346,7 +4344,7 @@ void sub_8012324(void)
                             if (gBattleMons[gActiveBattler].status2 & (STATUS2_WRAPPED | STATUS2_ESCAPE_PREVENTION)
                                 || gStatuses3[gActiveBattler] & STATUS3_ROOTED)
                             {
-                                BtlController_EmitChoosePokemon(0, 2, 6, ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0]);
+                                BtlController_EmitChoosePokemon(0, 2, 6, ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0]);
                             }
                             else if ((i = ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_SHADOW_TAG))
                                      || ((i = ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_ARENA_TRAP))
@@ -4355,16 +4353,16 @@ void sub_8012324(void)
                                      || ((i = AbilityBattleEffects(ABILITYEFFECT_CHECK_FIELD_EXCEPT_BATTLER, gActiveBattler, ABILITY_MAGNET_PULL, 0, 0))
                                          && IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_STEEL)))
                             {
-                                BtlController_EmitChoosePokemon(0, ((i - 1) << 4) | PARTY_ABILITY_PREVENTS, 6, gLastUsedAbility, &gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0]);
+                                BtlController_EmitChoosePokemon(0, ((i - 1) << 4) | PARTY_ABILITY_PREVENTS, 6, gLastUsedAbility, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0]);
                             }
                             else
                             {
                                 if (gActiveBattler == 2 && gChosenActionByBattler[0] == B_ACTION_SWITCH)
-                                    BtlController_EmitChoosePokemon(0, PARTY_CHOOSE_MON, gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + 0], ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0]);
+                                    BtlController_EmitChoosePokemon(0, PARTY_CHOOSE_MON, gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + 0], ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0]);
                                 else if (gActiveBattler == 3 && gChosenActionByBattler[1] == B_ACTION_SWITCH)
-                                    BtlController_EmitChoosePokemon(0, PARTY_CHOOSE_MON, gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + 1], ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0]);
+                                    BtlController_EmitChoosePokemon(0, PARTY_CHOOSE_MON, gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + 1], ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0]);
                                 else
-                                    BtlController_EmitChoosePokemon(0, PARTY_CHOOSE_MON, 6, ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0]);
+                                    BtlController_EmitChoosePokemon(0, PARTY_CHOOSE_MON, 6, ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0]);
                             }
                             MarkBattlerForControllerExec(gActiveBattler);
                             break;
@@ -4379,7 +4377,7 @@ void sub_8012324(void)
                             }
                             break;
                         case B_ACTION_SAFARI_POKEBLOCK:
-                            BtlController_EmitChooseItem(0, &gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0]);
+                            BtlController_EmitChooseItem(0, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0]);
                             MarkBattlerForControllerExec(gActiveBattler);
                             break;
                         case B_ACTION_CANCEL_PARTNER:
@@ -4474,13 +4472,13 @@ void sub_8012324(void)
 
                                 if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
                                 {
-                                    gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0] &= 0xF;
-                                    gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0] |= (gBattleBufferB[gActiveBattler][2] & 0xF0);
-                                    gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 1] = gBattleBufferB[gActiveBattler][3];
+                                    gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0] &= 0xF;
+                                    gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0] |= (gBattleBufferB[gActiveBattler][2] & 0xF0);
+                                    gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 1] = gBattleBufferB[gActiveBattler][3];
 
-                                    gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * (gActiveBattler ^ BIT_FLANK) + 0] &= (0xF0);
-                                    gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * (gActiveBattler ^ BIT_FLANK) + 0] |= (gBattleBufferB[gActiveBattler][2] & 0xF0) >> 4;
-                                    gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * (gActiveBattler ^ BIT_FLANK) + 2] = gBattleBufferB[gActiveBattler][3];
+                                    gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * (gActiveBattler ^ BIT_FLANK) + 0] &= (0xF0);
+                                    gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * (gActiveBattler ^ BIT_FLANK) + 0] |= (gBattleBufferB[gActiveBattler][2] & 0xF0) >> 4;
+                                    gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * (gActiveBattler ^ BIT_FLANK) + 2] = gBattleBufferB[gActiveBattler][3];
                                 }
                                 gBattleCommunication[gActiveBattler]++;
                             }

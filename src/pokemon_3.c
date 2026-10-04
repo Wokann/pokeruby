@@ -15,7 +15,7 @@
 #include "random.h"
 #include "overworld.h"
 #include "battle_anim.h"
-#include "rom_8094928.h"
+#include "party_menu.h"
 #include "rtc.h"
 #include "constants/songs.h"
 #include "sound.h"
@@ -1297,13 +1297,13 @@ void SetMonPreventsSwitchingString(void)
     gBattleTextBuff1[2] = gBattleStruct->battlerPreventingSwitchout;
     gBattleTextBuff1[4] = B_BUFF_EOS;
     if (GetBattlerSide(gBattleStruct->battlerPreventingSwitchout) == B_SIDE_PLAYER)
-        gBattleTextBuff1[3] = pokemon_order_func(gBattlerPartyIndexes[gBattleStruct->battlerPreventingSwitchout]);
+        gBattleTextBuff1[3] = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[gBattleStruct->battlerPreventingSwitchout]);
     else
         gBattleTextBuff1[3] = gBattlerPartyIndexes[gBattleStruct->battlerPreventingSwitchout];
     gBattleTextBuff2[0] = B_BUFF_PLACEHOLDER_BEGIN;
     gBattleTextBuff2[1] = B_BUFF_MON_NICK_WITH_PREFIX;
     gBattleTextBuff2[2] = gBattlerInMenuId;
-    gBattleTextBuff2[3] = pokemon_order_func(gBattlerPartyIndexes[gBattlerInMenuId]);
+    gBattleTextBuff2[3] = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[gBattlerInMenuId]);
     gBattleTextBuff2[4] = B_BUFF_EOS;
     BattleStringExpandPlaceholders(BattleText_PreventedSwitch, gStringVar4);
 }

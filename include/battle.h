@@ -323,7 +323,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x16060*/ u8 selectionScriptFinished[MAX_BATTLERS_COUNT];
     /*0x16064*/ u8 battlerPartyIndexes[MAX_BATTLERS_COUNT];
     /*0x16068*/ u8 monToSwitchIntoId[MAX_BATTLERS_COUNT];
-    /*0x1606C*/ u8 unk1606C[MAX_BATTLERS_COUNT][3];
+    /*0x1606C*/ u8 battlerPartyOrders[MAX_BATTLERS_COUNT][3];
     /*0x16078*/ u8 runTries;
     /*0x16079*/ u8 caughtNick[POKEMON_NAME_LENGTH + 1];
     /*0x16084*/ u8 battleStyle;

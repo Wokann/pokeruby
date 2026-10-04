@@ -13,7 +13,7 @@
 #include "overworld.h"
 #include "pokemon.h"
 #include "battle_anim.h"
-#include "rom_8094928.h"
+#include "party_menu.h"
 #include "util.h"
 #include "constants/item_effects.h"
 
@@ -276,7 +276,7 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                                 if (battler != 4)
                                 {
                                     gAbsentBattlerFlags &= ~gBitTable[battler];
-                                    CopyPlayerPartyMonToBattleData(battler, pokemon_order_func(gBattlerPartyIndexes[battler]));
+                                    CopyPlayerPartyMonToBattleData(battler, GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[battler]));
                                     if (GetBattlerSide(gActiveBattler) == 0 && gBattleResults.numRevivesUsed < 255)
                                         gBattleResults.numRevivesUsed++;
                                 }

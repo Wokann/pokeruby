@@ -1,5 +1,4 @@
 #include "global.h"
-#include "battle_party_menu.h"
 #include "choose_party.h"
 #include "contest.h"
 #include "data.h"

@@ -27,7 +27,6 @@
 #include "pokemon.h"
 #include "pokemon_menu.h"
 #include "overworld.h"
-#include "rom_8094928.h"
 #include "script.h"
 #include "constants/songs.h"
 #include "sound.h"
@@ -924,7 +923,7 @@ void sub_80CA394(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        sub_8094E4C();
+        ChooseMonForInBattleItem();
         FreeAndReserveObjectSpritePalettes();
         DestroyTask(taskId);
     }

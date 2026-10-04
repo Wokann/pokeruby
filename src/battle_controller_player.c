@@ -18,6 +18,7 @@
 #include "palette.h"
 #include "pokeball.h"
 #include "pokemon.h"
+#include "party_menu.h"
 #include "sound.h"
 #include "string_util.h"
 #include "task.h"
@@ -61,7 +62,6 @@ extern u8 gBattleMonForms[];
 extern u16 gIntroSlideFlags;
 extern u8 gBattlerStatusSummaryTaskId[];
 extern u8 gAnimMoveTurn;
-extern u8 gBattlePartyCurrentOrder[];
 extern u8 gMultiUsePlayerCursor;
 extern u8 gBattleControllerData[];
 
@@ -108,7 +108,6 @@ extern struct MusicPlayerInfo gMPlayInfo_BGM;
 extern u8 gBattleControllerData[];
 extern u8 gUnknown_0202E8F4;
 extern u8 gSelectedMonPartyId;
-extern u8 gBattlePartyCurrentOrder[];
 extern u16 gSpecialVar_ItemId;
 extern u8 gDisplayedStringBattle[];
 extern const u8 BattleText_LinkStandby[];
@@ -119,7 +118,6 @@ extern u8 GetBattlerAtPosition(u8);
 extern void EndBounceEffect(u8, u8);
 extern void SpriteCB_HideAsMoveTarget(struct Sprite *);
 extern bool8 IsDoubleBattle();
-extern void sub_8094E20(u8);
 extern void sub_80A6DCC(void);
 
 static void PlayerHandleGetMonData(void);
@@ -1517,7 +1515,7 @@ static void OpenPartyMenuToChooseMon(void)
         gBattlerControllerFuncs[gActiveBattler] = WaitForMonSelection;
         caseId = gTasks[gBattleControllerData[gActiveBattler]].data[0];
         DestroyTask(gBattleControllerData[gActiveBattler]);
-        sub_8094E20(caseId);
+        OpenPartyMenuInBattle(caseId);
     }
 }
 

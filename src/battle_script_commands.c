@@ -20,6 +20,7 @@
 #include "battle_controllers.h"
 #include "constants/species.h"
 #include "pokemon.h"
+#include "party_menu.h"
 #include "text.h"
 #include "palette.h"
 #include "main.h"
@@ -162,7 +163,6 @@ u16 Sqrt(u32 num);
 void MenuCursor_SetPos814A880(u8 a1, u8 a2);
 u8 CheckMoveLimitations(u8 bank, u8 unusable_moves, u8 flags);
 bool8 IsLinkDoubleBattle(void);
-void sub_8094B6C(u8 bank, u8 partyID, u8 r2);
 
 //extern BattleScripts
 extern u8 BattleScript_MoveEnd[];
@@ -4727,7 +4727,7 @@ static void atk4F_jumpifcantswitch(void)
 void sub_8022A3C(u8 unkown)
 {
     gSharedMem[BSTRUCT_OFF(battlerPartyIndexes) + gActiveBattler] = gBattlerPartyIndexes[gActiveBattler];
-    BtlController_EmitChoosePokemon(0, 1, unkown, 0, gBattleStruct->unk1606C[gActiveBattler]);
+    BtlController_EmitChoosePokemon(0, 1, unkown, 0, gBattleStruct->battlerPartyOrders[gActiveBattler]);
     MarkBattlerForControllerExec(gActiveBattler);
 }
 
@@ -4983,7 +4983,7 @@ static void atk50_openpartyscreen(void)
         {
             gActiveBattler = battlerId;
             gSharedMem[BSTRUCT_OFF(battlerPartyIndexes) + gActiveBattler] = gBattlerPartyIndexes[gActiveBattler];
-            BtlController_EmitChoosePokemon(0, hitmarkerFaintBits, gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + (gActiveBattler ^ 2)], ABILITY_NONE, gBattleStruct->unk1606C[gActiveBattler]);
+            BtlController_EmitChoosePokemon(0, hitmarkerFaintBits, gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + (gActiveBattler ^ 2)], ABILITY_NONE, gBattleStruct->battlerPartyOrders[gActiveBattler]);
             MarkBattlerForControllerExec(gActiveBattler);
 
             gBattlescriptCurrInstr += 6;
@@ -5040,12 +5040,12 @@ static void atk51_switchhandleorder(void)
         gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + gActiveBattler] = gBattleBufferB[gActiveBattler][1];
         if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
         {
-            gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0] &= 0xF;
-            gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0] |= (gBattleBufferB[gActiveBattler][2] & 0xF0);
-            gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 1] = gBattleBufferB[gActiveBattler][3];
-            gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * (gActiveBattler ^ BIT_FLANK) + 0] &= (0xF0);
-            gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * (gActiveBattler ^ BIT_FLANK) + 0] |= (gBattleBufferB[gActiveBattler][2] & 0xF0) >> 4;
-            gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * (gActiveBattler ^ BIT_FLANK) + 2] = gBattleBufferB[gActiveBattler][3];
+            gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0] &= 0xF;
+            gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0] |= (gBattleBufferB[gActiveBattler][2] & 0xF0);
+            gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 1] = gBattleBufferB[gActiveBattler][3];
+            gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * (gActiveBattler ^ BIT_FLANK) + 0] &= (0xF0);
+            gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * (gActiveBattler ^ BIT_FLANK) + 0] |= (gBattleBufferB[gActiveBattler][2] & 0xF0) >> 4;
+            gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * (gActiveBattler ^ BIT_FLANK) + 2] = gBattleBufferB[gActiveBattler][3];
         }
         else
             sub_8012258(gActiveBattler);
@@ -6769,8 +6769,8 @@ static void atk8F_forcerandomswitch(void)
             gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + gBattlerTarget] = i;
             if (!IsLinkDoubleBattle())
                 sub_8012258(gBattlerTarget);
-            sub_8094B6C(gBattlerTarget, i, 0);
-            sub_8094B6C(gBattlerTarget ^ 2, i, 1);
+            SwitchPartyOrderLinkMulti(gBattlerTarget, i, 0);
+            SwitchPartyOrderLinkMulti(gBattlerTarget ^ 2, i, 1);
 #undef MON_CAN_BATTLE
         }
     }

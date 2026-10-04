@@ -13,7 +13,7 @@
 #include "m4a.h"
 #include "palette.h"
 #include "pokemon.h"
-#include "rom_8094928.h"
+#include "party_menu.h"
 #include "constants/songs.h"
 #include "sound.h"
 #include "constants/species.h"
@@ -91,7 +91,6 @@ extern void Task_PlayerController_RestoreBgmAfterCry(u8);
 extern u8 IsBattlerSpritePresent(u8);
 extern u8 GetBattlerSpriteDefault_Y(u8);
 extern u8 GetSubstituteSpriteDefault_Y(u8);
-extern void sub_8094958(void);
 
 static void Task_ClearBitWhenBattleTableAnimDone(u8);
 static u8 ShouldAnimBeDoneRegardlessOfSubstitute(u8);
@@ -582,7 +581,7 @@ u8 BattleInitAllSprites(u8 *state1, u8 *battler)
         break;
     case 6:
         LoadAndCreateEnemyShadowSprites();
-        sub_8094958();
+        BufferBattlePartyCurrentOrder();
         retVal = TRUE;
         break;
     }
@@ -826,8 +825,8 @@ void HandleBattleLowHpMusicChange(void)
     {
         u8 playerBattler1 = GetBattlerAtPosition(0);
         u8 playerBattler2 = GetBattlerAtPosition(2);
-        u8 battler1PartyId = pokemon_order_func(gBattlerPartyIndexes[playerBattler1]);
-        u8 battler2PartyId = pokemon_order_func(gBattlerPartyIndexes[playerBattler2]);
+        u8 battler1PartyId = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[playerBattler1]);
+        u8 battler2PartyId = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[playerBattler2]);
 
         if (GetMonData(&gPlayerParty[battler1PartyId], MON_DATA_HP) != 0)
             HandleLowHpMusicChange(&gPlayerParty[battler1PartyId], playerBattler1);
