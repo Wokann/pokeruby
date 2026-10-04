@@ -235,7 +235,7 @@ FallarborTown_ContestLobby_EventScript_1B78A1:: @ 81B78A1
 	goto_if_eq FallarborTown_ContestLobby_EventScript_1B7936
 	message FallarborTown_ContestLobby_Text_1B7304
 	waitmessage
-	special sub_8083614
+	special TryBerryBlenderLinkup
 	waitstate
 	compare VAR_RESULT, 1
 	goto_if_eq FallarborTown_ContestLobby_EventScript_1B7980

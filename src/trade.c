@@ -325,7 +325,7 @@ static void CB2_CreateTradeMenu(void)
                 CreateMon(&gEnemyParty[i], 0, 0, 0x20, FALSE, 0, FALSE, 0);
             gMain.state ++;
             gUnknown_03004824->timer = 0;
-            CreateTask(sub_8083C50, 1);
+            CreateTask(Task_WaitForLinkPlayerConnection, 1);
             break;
         case  2:
             gUnknown_03004824->timer ++;

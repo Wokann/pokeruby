@@ -2403,7 +2403,7 @@ static const u8 *sub_805568C(struct CableClubPlayer *player)
             return TradeRoom_TooBusyToNotice;
         if (sPlayerLinkStates[linkPlayerId] != 0x80)
             return TradeRoom_TooBusyToNotice;
-        if (!sub_8083BF4(linkPlayerId))
+        if (!GetLinkTrainerCardColor(linkPlayerId))
             return TradeRoom_ReadTrainerCard1;
         else
             return TradeRoom_ReadTrainerCard2;

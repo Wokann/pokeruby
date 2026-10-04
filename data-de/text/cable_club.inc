@@ -54,23 +54,19 @@ OldaleTown_PokemonCenter_2F_Text_1A48DD:: @ 81A48DD
 	.string "Dein POKéMON trägt eine {STR_VAR_1}-\n"
 	.string "BEERE und kann nicht getauscht werden.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A490C:: @ 81A490C
-gUnknown_081A490C:: @ 81A490C
+gText_PleaseWaitForLink:: @ 81A490C
 	.string "Bitte warten.\n"
 	.string "... ... B-Knopf: Abbruch$"
 
-UnknownString_81A4932: @ 81A4932
-gUnknown_081A4932:: @ 81A4932
+gText_ConfirmLinkWhenPlayersReady:: @ 81A4932
 	.string "Wenn die Spieler bereit sind...\n"
 	.string "A-Knopf: Bestätigen  B-Knopf: Abbruch$"
 
-UnknownString_81A4975: @ 81A4975
-gUnknown_081A4975:: @ 81A4975
+gText_ConfirmStartLinkWithXPlayers:: @ 81A4975
 	.string "Verbindung für {STR_VAR_1} Spieler aufbauen.\n"
 	.string "A-Knopf: Bestätigen  B-Knopf: Abbruch$"
 
-UnknownString_81A49B6: @ 81A49B6
-gUnknown_081A49B6:: @ 81A49B6
+gText_AwaitingLinkup:: @ 81A49B6
 	.string "Verbindungsaufbau...\n"
 	.string "... ... B-Knopf: Abbruch$"
 

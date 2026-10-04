@@ -46,7 +46,7 @@ struct BattleTowerRecord *gBattleTowerPlayerRecord = &gSaveBlock2.battleTower.pl
 
 void RecordMixingPlayerSpotTriggered(void)
 {
-    sub_8083A84(Task_RecordMixing_Main);
+    CreateTask_EnterCableClubSeat(Task_RecordMixing_Main);
 }
 
 struct PlayerRecords
@@ -149,7 +149,7 @@ void Task_RecordMixing_Main(u8 taskId)
         if (!gTasks[data[10]].isActive)
         {
             tState = 4;
-            data[10] = sub_8083664();
+            data[10] = CreateTask_ReestablishCableClubLink();
             Menu_ClearWindowText();
             Menu_PrintText(gOtherText_MixingComplete, 2, 15);
             data[8] = 0;

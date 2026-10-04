@@ -468,7 +468,7 @@ gOtherText_DiplomaCertificationGameFreak:: @ 842D22B
 	.string "{HIGHLIGHT TRANSPARENT}Player: {CLEAR 0x10}{COLOR RED}{PLAYER}\n\n{COLOR DARK_GREY}{STR_VAR_1} POKéDEX\nThis document certifies\nthat you have successfully\ncompleted your POKéDEX.\n\n{CLEAR_TO 0x42}{COLOR RED}GAME FREAK$"
 	.string "{COLOR RED}{HIGHLIGHT TRANSPARENT}GAME FREAK$"
 
-gOtherText_PLink:: @ 842D2BC
+gText_NumPlayerLink:: @ 842D2BC
 	.string "{STR_VAR_1}P LINK$"
 
 gOtherText_YesNoTerminating:: @ 842D2C5

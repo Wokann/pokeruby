@@ -262,9 +262,6 @@ extern const u8 gOtherText_HoennDex[];
 extern const u8 gOtherText_NationalDex[];
 extern const u8 gOtherText_DiplomaCertificationGameFreak[];
 
-// cable_club
-extern const u8 gOtherText_PLink[];
-
 // berry_blender
 extern const u8 gOtherText_YesNoTerminating[];
 extern const u8 gOtherText_LinkNotFound[];
