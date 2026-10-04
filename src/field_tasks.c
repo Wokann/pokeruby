@@ -21,28 +21,36 @@
 #include "sound.h"
 #include "field_tasks.h"
 
-void DummyPerStepCallback(u8);
-void PerStepCallback_8069F64(u8);
-void PerStepCallback_8069AA0(u8);
-void PerStepCallback_8069864(u8);
-void PerStepCallback_8069DD4(u8);
-void PerStepCallback_806A07C(u8);
-
-void (*const gUnknown_08376364[])(u8) = {
-    DummyPerStepCallback,
-    PerStepCallback_8069F64,
-    PerStepCallback_8069AA0,
-    PerStepCallback_8069864,
-    PerStepCallback_8069DD4,
-    EndTruckSequence,
-    sub_80BCF1C,
-    PerStepCallback_806A07C
+struct PacifidlogMetatileOffsets
+{
+    s8 x;
+    s8 y;
+    u16 metatileId;
 };
 
-void Task_RunPerStepCallback(u8 taskId)
+static void DummyPerStepCallback(u8);
+static void AshGrassPerStepCallback(u8);
+static void FortreeBridgePerStepCallback(u8);
+static void PacifidlogBridgePerStepCallback(u8);
+static void SootopolisGymIcePerStepCallback(u8);
+static void CrackedFloorPerStepCallback(u8);
+
+static const TaskFunc sPerStepCallbacks[] =
+{
+    DummyPerStepCallback,
+    AshGrassPerStepCallback,
+    FortreeBridgePerStepCallback,
+    PacifidlogBridgePerStepCallback,
+    SootopolisGymIcePerStepCallback,
+    EndTruckSequence,
+    SecretBasePerStepCallback,
+    CrackedFloorPerStepCallback
+};
+
+static void Task_RunPerStepCallback(u8 taskId)
 {
     int idx = gTasks[taskId].data[0];
-    gUnknown_08376364[idx](taskId);
+    sPerStepCallbacks[idx](taskId);
 }
 
 #define tState           data[0]
@@ -69,7 +77,7 @@ static void RunTimeBasedEvents(s16 *data)
     }
 }
 
-void Task_RunTimeBasedEvents(u8 taskId)
+static void Task_RunTimeBasedEvents(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
@@ -84,7 +92,7 @@ void Task_RunTimeBasedEvents(u8 taskId)
 #undef tAmbientCryState
 #undef tAmbientCryDelay
 
-void Task_MuddySlope(u8);
+static void Task_MuddySlope(u8);
 
 void SetUpFieldTasks(void)
 {
@@ -103,7 +111,7 @@ void SetUpFieldTasks(void)
     }
 }
 
-void ActivatePerStepCallback(u8 callback)
+void ActivatePerStepCallback(u8 callbackId)
 {
     s16 *dataPointer;
     s16 *dataStart;
@@ -118,13 +126,13 @@ void ActivatePerStepCallback(u8 callback)
         {
             *dataPointer-- = zero;
         } while ((int)dataPointer >= (int)dataStart);
-        if (callback >= ARRAY_COUNT(gUnknown_08376364))
+        if (callbackId >= ARRAY_COUNT(sPerStepCallbacks))
         {
             *dataStart = 0;
         }
         else
         {
-            *dataStart = callback;
+            *dataStart = callbackId;
         }
     }
 }
@@ -147,46 +155,49 @@ void ResetFieldTasksArgs(void)
     }
 }
 
-const struct MetatileOffset gUnknown_08376384[] = {
-    { 0,  0, METATILE_ID(Pacifidlog, HalfSubmergedLogs_Vertical0)}, {0, 1, METATILE_ID(Pacifidlog, HalfSubmergedLogs_Vertical1)},
-    { 0, -1, METATILE_ID(Pacifidlog, HalfSubmergedLogs_Vertical0)}, {0, 0, METATILE_ID(Pacifidlog, HalfSubmergedLogs_Vertical1)},
-    { 0,  0, METATILE_ID(Pacifidlog, HalfSubmergedLogs_Horizontal0)}, {1, 0, METATILE_ID(Pacifidlog, HalfSubmergedLogs_Horizontal1)},
-    {-1,  0, METATILE_ID(Pacifidlog, HalfSubmergedLogs_Horizontal0)}, {0, 0, METATILE_ID(Pacifidlog, HalfSubmergedLogs_Horizontal1)}
-};
-
-const struct MetatileOffset gUnknown_083763A4[] = {
-    { 0,  0, METATILE_ID(Pacifidlog, SubmergedLogs_Vertical0)}, {0, 1, METATILE_ID(Pacifidlog, SubmergedLogs_Vertical1)},
-    { 0, -1, METATILE_ID(Pacifidlog, SubmergedLogs_Vertical0)}, {0, 0, METATILE_ID(Pacifidlog, SubmergedLogs_Vertical1)},
-    { 0,  0, METATILE_ID(Pacifidlog, SubmergedLogs_Horizontal0)}, {1, 0, METATILE_ID(Pacifidlog, SubmergedLogs_Horizontal1)},
-    {-1,  0, METATILE_ID(Pacifidlog, SubmergedLogs_Horizontal0)}, {0, 0, METATILE_ID(Pacifidlog, SubmergedLogs_Horizontal1)}
-};
-
-const struct MetatileOffset gUnknown_083763C4[] = {
-    { 0,  0, METATILE_ID(Pacifidlog, FloatingLogs_Vertical0)}, {0, 1, METATILE_ID(Pacifidlog, FloatingLogs_Vertical1)},
-    { 0, -1, METATILE_ID(Pacifidlog, FloatingLogs_Vertical0)}, {0, 0, METATILE_ID(Pacifidlog, FloatingLogs_Vertical1)},
-    { 0,  0, METATILE_ID(Pacifidlog, FloatingLogs_Horizontal0)}, {1, 0, METATILE_ID(Pacifidlog, FloatingLogs_Horizontal1)},
-    {-1,  0, METATILE_ID(Pacifidlog, FloatingLogs_Horizontal0)}, {0, 0, METATILE_ID(Pacifidlog, FloatingLogs_Horizontal1)}
-};
-
-void DummyPerStepCallback(u8 taskId) {}
-
-const struct MetatileOffset *sub_80695E0(const struct MetatileOffset *a0, u16 a1)
+static const struct PacifidlogMetatileOffsets sHalfSubmergedBridgeMetatileOffsets[] =
 {
-    if (MetatileBehavior_IsPacifidlogVerticalLogTop(a1))
+    { 0,  0, METATILE_ID(Pacifidlog, HalfSubmergedLogs_VerticalTop)}, {0, 1, METATILE_ID(Pacifidlog, HalfSubmergedLogs_VerticalBottom)},
+    { 0, -1, METATILE_ID(Pacifidlog, HalfSubmergedLogs_VerticalTop)}, {0, 0, METATILE_ID(Pacifidlog, HalfSubmergedLogs_VerticalBottom)},
+    { 0,  0, METATILE_ID(Pacifidlog, HalfSubmergedLogs_HorizontalLeft)}, {1, 0, METATILE_ID(Pacifidlog, HalfSubmergedLogs_HorizontalRight)},
+    {-1,  0, METATILE_ID(Pacifidlog, HalfSubmergedLogs_HorizontalLeft)}, {0, 0, METATILE_ID(Pacifidlog, HalfSubmergedLogs_HorizontalRight)}
+};
+
+static const struct PacifidlogMetatileOffsets sFullySubmergedBridgeMetatileOffsets[] =
+{
+    { 0,  0, METATILE_ID(Pacifidlog, SubmergedLogs_VerticalTop)}, {0, 1, METATILE_ID(Pacifidlog, SubmergedLogs_VerticalBottom)},
+    { 0, -1, METATILE_ID(Pacifidlog, SubmergedLogs_VerticalTop)}, {0, 0, METATILE_ID(Pacifidlog, SubmergedLogs_VerticalBottom)},
+    { 0,  0, METATILE_ID(Pacifidlog, SubmergedLogs_HorizontalLeft)}, {1, 0, METATILE_ID(Pacifidlog, SubmergedLogs_HorizontalRight)},
+    {-1,  0, METATILE_ID(Pacifidlog, SubmergedLogs_HorizontalLeft)}, {0, 0, METATILE_ID(Pacifidlog, SubmergedLogs_HorizontalRight)}
+};
+
+static const struct PacifidlogMetatileOffsets sFloatingBridgeMetatileOffsets[] =
+{
+    { 0,  0, METATILE_ID(Pacifidlog, FloatingLogs_VerticalTop)}, {0, 1, METATILE_ID(Pacifidlog, FloatingLogs_VerticalBottom)},
+    { 0, -1, METATILE_ID(Pacifidlog, FloatingLogs_VerticalTop)}, {0, 0, METATILE_ID(Pacifidlog, FloatingLogs_VerticalBottom)},
+    { 0,  0, METATILE_ID(Pacifidlog, FloatingLogs_HorizontalLeft)}, {1, 0, METATILE_ID(Pacifidlog, FloatingLogs_HorizontalRight)},
+    {-1,  0, METATILE_ID(Pacifidlog, FloatingLogs_HorizontalLeft)}, {0, 0, METATILE_ID(Pacifidlog, FloatingLogs_HorizontalRight)}
+};
+
+static void DummyPerStepCallback(u8 taskId) {}
+
+static const struct PacifidlogMetatileOffsets *GetPacifidlogBridgeMetatileOffsets(const struct PacifidlogMetatileOffsets *offsets, u16 metatileBehavior)
+{
+    if (MetatileBehavior_IsPacifidlogVerticalLogTop(metatileBehavior))
     {
-        return &a0[0 * 2];
+        return &offsets[0 * 2];
     }
-    else if (MetatileBehavior_IsPacifidlogVerticalLogBottom(a1))
+    else if (MetatileBehavior_IsPacifidlogVerticalLogBottom(metatileBehavior))
     {
-        return &a0[1 * 2];
+        return &offsets[1 * 2];
     }
-    else if (MetatileBehavior_IsPacifidlogHorizontalLogLeft(a1))
+    else if (MetatileBehavior_IsPacifidlogHorizontalLogLeft(metatileBehavior))
     {
-        return &a0[2 * 2];
+        return &offsets[2 * 2];
     }
-    else if (MetatileBehavior_IsPacifidlogHorizontalLogRight(a1))
+    else if (MetatileBehavior_IsPacifidlogHorizontalLogRight(metatileBehavior))
     {
-        return &a0[3 * 2];
+        return &offsets[3 * 2];
     }
     else
     {
@@ -194,66 +205,66 @@ const struct MetatileOffset *sub_80695E0(const struct MetatileOffset *a0, u16 a1
     }
 }
 
-void sub_8069638(const struct MetatileOffset *offsets, s16 x, s16 y, bool32 flag)
+static void TrySetPacifidlogBridgeMetatiles(const struct PacifidlogMetatileOffsets *offsets, s16 x, s16 y, bool32 redrawMap)
 {
-    offsets = sub_80695E0(offsets, MapGridGetMetatileBehaviorAt(x, y));
+    offsets = GetPacifidlogBridgeMetatileOffsets(offsets, MapGridGetMetatileBehaviorAt(x, y));
     if (offsets)
     {
-        MapGridSetMetatileIdAt(x + offsets[0].x, y + offsets[0].y, offsets[0].tileId);
-        if (flag)
+        MapGridSetMetatileIdAt(x + offsets[0].x, y + offsets[0].y, offsets[0].metatileId);
+        if (redrawMap)
         {
             CurrentMapDrawMetatileAt(x + offsets[0].x, y + offsets[0].y);
         }
-        MapGridSetMetatileIdAt(x + offsets[1].x, y + offsets[1].y, offsets[1].tileId);
-        if (flag)
+        MapGridSetMetatileIdAt(x + offsets[1].x, y + offsets[1].y, offsets[1].metatileId);
+        if (redrawMap)
         {
             CurrentMapDrawMetatileAt(x + offsets[1].x, y + offsets[1].y);
         }
     }
 }
 
-void sub_80696C0(s16 x, s16 y, bool32 flag)
+static void TrySetLogBridgeHalfSubmerged(s16 x, s16 y, bool32 redrawMap)
 {
-    sub_8069638(gUnknown_08376384, x, y, flag);
+    TrySetPacifidlogBridgeMetatiles(sHalfSubmergedBridgeMetatileOffsets, x, y, redrawMap);
 }
 
-void sub_80696E4(s16 x, s16 y, bool32 flag)
+static void TrySetLogBridgeFullySubmerged(s16 x, s16 y, bool32 redrawMap)
 {
-    sub_8069638(gUnknown_083763A4, x, y, flag);
+    TrySetPacifidlogBridgeMetatiles(sFullySubmergedBridgeMetatileOffsets, x, y, redrawMap);
 }
 
-void sub_8069708(s16 x, s16 y, bool32 flag)
+static void TrySetLogBridgeFloating(s16 x, s16 y, bool32 redrawMap)
 {
-    sub_8069638(gUnknown_083763C4, x, y, flag);
+    TrySetPacifidlogBridgeMetatiles(sFloatingBridgeMetatileOffsets, x, y, redrawMap);
 }
 
-bool32 sub_806972C(s16 x1, s16 y1, s16 x2, s16 y2)
+static bool32 ShouldRaisePacifidlogLogs(s16 newX, s16 newY, s16 oldX, s16 oldY)
 {
-    s8 metatileBehavior = MapGridGetMetatileBehaviorAt(x2, y2);
-    if (MetatileBehavior_IsPacifidlogVerticalLogTop(metatileBehavior))
+    s8 oldBehavior = MapGridGetMetatileBehaviorAt(oldX, oldY);
+    if (MetatileBehavior_IsPacifidlogVerticalLogTop(oldBehavior))
     {
-        if (y1 > y2)
+        if (newY > oldY)
         {
             return FALSE;
         }
     }
-    else if (MetatileBehavior_IsPacifidlogVerticalLogBottom(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogVerticalLogBottom(oldBehavior))
     {
-        if (y1 < y2)
+        if (newY < oldY)
         {
             return FALSE;
         }
     }
-    else if (MetatileBehavior_IsPacifidlogHorizontalLogLeft(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogHorizontalLogLeft(oldBehavior))
     {
-        if (x1 > x2)
+        if (newX > oldX)
         {
             return FALSE;
         }
     }
-    else if (MetatileBehavior_IsPacifidlogHorizontalLogRight(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogHorizontalLogRight(oldBehavior))
     {
-        if (x1 < x2)
+        if (newX < oldX)
         {
             return FALSE;
         }
@@ -261,33 +272,33 @@ bool32 sub_806972C(s16 x1, s16 y1, s16 x2, s16 y2)
     return TRUE;
 }
 
-bool32 sub_80697C8(s16 x1, s16 y1, s16 x2, s16 y2)
+static bool32 ShouldSinkPacifidlogLogs(s16 newX, s16 newY, s16 oldX, s16 oldY)
 {
-    s8 metatileBehavior = MapGridGetMetatileBehaviorAt(x1, y1);
-    if (MetatileBehavior_IsPacifidlogVerticalLogTop(metatileBehavior))
+    s8 newBehavior = MapGridGetMetatileBehaviorAt(newX, newY);
+    if (MetatileBehavior_IsPacifidlogVerticalLogTop(newBehavior))
     {
-        if (y1 < y2)
+        if (newY < oldY)
         {
             return FALSE;
         }
     }
-    else if (MetatileBehavior_IsPacifidlogVerticalLogBottom(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogVerticalLogBottom(newBehavior))
     {
-        if (y1 > y2)
+        if (newY > oldY)
         {
             return FALSE;
         }
     }
-    else if (MetatileBehavior_IsPacifidlogHorizontalLogLeft(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogHorizontalLogLeft(newBehavior))
     {
-        if (x1 < x2)
+        if (newX < oldX)
         {
             return FALSE;
         }
     }
-    else if (MetatileBehavior_IsPacifidlogHorizontalLogRight(metatileBehavior))
+    else if (MetatileBehavior_IsPacifidlogHorizontalLogRight(newBehavior))
     {
-        if (x1 > x2)
+        if (newX > oldX)
         {
             return FALSE;
         }
@@ -295,7 +306,7 @@ bool32 sub_80697C8(s16 x1, s16 y1, s16 x2, s16 y2)
     return TRUE;
 }
 
-void PerStepCallback_8069864(u8 taskId)
+static void PacifidlogBridgePerStepCallback(u8 taskId)
 {
     s16 *data;
     s16 x, y;
@@ -306,16 +317,16 @@ void PerStepCallback_8069864(u8 taskId)
         case 0:
             data[2] = x;
             data[3] = y;
-            sub_80696E4(x, y, TRUE);
+            TrySetLogBridgeFullySubmerged(x, y, TRUE);
             data[1] = 1;
             break;
         case 1:
             if (x != data[2] || y != data[3])
             {
-                if (sub_806972C(x, y, data[2], data[3]))
+                if (ShouldRaisePacifidlogLogs(x, y, data[2], data[3]))
                 {
-                    sub_80696C0(data[2], data[3], TRUE);
-                    sub_8069708(data[2], data[3], FALSE);
+                    TrySetLogBridgeHalfSubmerged(data[2], data[3], TRUE);
+                    TrySetLogBridgeFloating(data[2], data[3], FALSE);
                     data[4] = data[2];
                     data[5] = data[3];
                     data[1] = 2;
@@ -326,9 +337,9 @@ void PerStepCallback_8069864(u8 taskId)
                     data[4] = -1;
                     data[5] = -1;
                 }
-                if (sub_80697C8(x, y, data[2], data[3]))
+                if (ShouldSinkPacifidlogLogs(x, y, data[2], data[3]))
                 {
-                    sub_80696C0(x, y, TRUE);
+                    TrySetLogBridgeHalfSubmerged(x, y, TRUE);
                     data[1] = 2;
                     data[6] = 8;
                 }
@@ -343,10 +354,10 @@ void PerStepCallback_8069864(u8 taskId)
         case 2:
             if ((--data[6]) == 0)
             {
-                sub_80696E4(x, y, TRUE);
+                TrySetLogBridgeFullySubmerged(x, y, TRUE);
                 if (data[4] != -1 && data[5] != -1)
                 {
-                    sub_8069708(data[4], data[5], TRUE);
+                    TrySetLogBridgeFloating(data[4], data[5], TRUE);
                 }
                 data[1] = 1;
             }
@@ -354,10 +365,10 @@ void PerStepCallback_8069864(u8 taskId)
     }
 }
 
-void sub_80699D8(s16 x, s16 y)
+static void TryLowerFortreeBridge(s16 x, s16 y)
 {
-    u8 z = PlayerGetElevation();
-    if (!(z & 0x01))
+    u8 elevation = PlayerGetElevation();
+    if (!(elevation & 0x01))
     {
         switch (MapGridGetMetatileIdAt(x, y))
         {
@@ -371,10 +382,10 @@ void sub_80699D8(s16 x, s16 y)
     }
 }
 
-void sub_8069A3C(s16 x, s16 y)
+static void TryRaiseFortreeBridge(s16 x, s16 y)
 {
-    u8 z = PlayerGetElevation();
-    if (!(z & 0x01))
+    u8 elevation = PlayerGetElevation();
+    if (!(elevation & 0x01))
     {
         switch (MapGridGetMetatileIdAt(x, y))
         {
@@ -388,12 +399,12 @@ void sub_8069A3C(s16 x, s16 y)
     }
 }
 
-void PerStepCallback_8069AA0(u8 taskId)
+static void FortreeBridgePerStepCallback(u8 taskId)
 {
     bool8 isFortreeBridgeCur;
     bool8 isFortreeBridgePrev;
-    u8 z, flag;
-    s16 x, y, x2, y2;
+    u8 elevation, onBridgeElevation;
+    s16 x, y, prevX, prevY;
     s16 *data = gTasks[taskId].data;
     PlayerGetDestCoords(&x, &y);
     switch (data[1])
@@ -405,39 +416,39 @@ void PerStepCallback_8069AA0(u8 taskId)
             data[3] = y;
             if (MetatileBehavior_IsFortreeBridge(MapGridGetMetatileBehaviorAt(x, y)))
             {
-                sub_80699D8(x, y);
+                TryLowerFortreeBridge(x, y);
                 CurrentMapDrawMetatileAt(x, y);
             }
             data[1] = 1;
             break;
         case 1:
-            x2 = data[2];
-            y2 = data[3];
-            if (x == x2 && y == y2)
+            prevX = data[2];
+            prevY = data[3];
+            if (x == prevX && y == prevY)
             {
                 break;
             }
             isFortreeBridgeCur = MetatileBehavior_IsFortreeBridge(MapGridGetMetatileBehaviorAt(x, y));
-            isFortreeBridgePrev = MetatileBehavior_IsFortreeBridge(MapGridGetMetatileBehaviorAt(x2, y2));
-            z = PlayerGetElevation();
-            flag = 0;
-            if ((u8)(z & 1) == 0)
+            isFortreeBridgePrev = MetatileBehavior_IsFortreeBridge(MapGridGetMetatileBehaviorAt(prevX, prevY));
+            elevation = PlayerGetElevation();
+            onBridgeElevation = 0;
+            if ((u8)(elevation & 1) == 0)
             {
-                flag = 1;
+                onBridgeElevation = 1;
             }
-            if (flag && (isFortreeBridgeCur == 1 || isFortreeBridgePrev == 1))
+            if (onBridgeElevation && (isFortreeBridgeCur == 1 || isFortreeBridgePrev == 1))
             {
                 PlaySE(SE_BRIDGE_WALK);
             }
             if (isFortreeBridgePrev)
             {
-                sub_8069A3C(x2, y2);
-                CurrentMapDrawMetatileAt(x2, y2);
-                sub_80699D8(x, y);
+                TryRaiseFortreeBridge(prevX, prevY);
+                CurrentMapDrawMetatileAt(prevX, prevY);
+                TryLowerFortreeBridge(x, y);
                 CurrentMapDrawMetatileAt(x, y);
             }
-            data[4] = x2;
-            data[5] = y2;
+            data[4] = prevX;
+            data[5] = prevY;
             data[2] = x;
             data[3] = y;
             if (!isFortreeBridgePrev)
@@ -449,20 +460,20 @@ void PerStepCallback_8069AA0(u8 taskId)
             // fallthrough
         case 2:
             data[6]--;
-            x2 = data[4];
-            y2 = data[5];
+            prevX = data[4];
+            prevY = data[5];
             switch (data[6] % 7)
             {
                 case 0:
-                    CurrentMapDrawMetatileAt(x2, y2);
+                    CurrentMapDrawMetatileAt(prevX, prevY);
                 case 1:
                 case 2:
                 case 3:
                     break;
                 case 4:
-                    sub_80699D8(x2, y2);
-                    CurrentMapDrawMetatileAt(x2, y2);
-                    sub_8069A3C(x2, y2);
+                    TryLowerFortreeBridge(prevX, prevY);
+                    CurrentMapDrawMetatileAt(prevX, prevY);
+                    TryRaiseFortreeBridge(prevX, prevY);
                 case 5:
                 case 6:
                 case 7:
@@ -476,7 +487,8 @@ void PerStepCallback_8069AA0(u8 taskId)
     }
 }
 
-const u16 gUnknown_083763E4[] = {
+static const u16 sSootopolisGymIceRowVars[] =
+{
     0,
     0,
     0,
@@ -505,31 +517,31 @@ const u16 gUnknown_083763E4[] = {
     0
 };
 
-bool32 sub_8069CB8(s16 x, s16 y)
+static bool32 CoordInIcePuzzleRegion(s16 x, s16 y)
 {
-    if ((u16)(x - 3) < 11 && (u16)(y - 6) < 14 && gUnknown_083763E4[y])
+    if ((u16)(x - 3) < 11 && (u16)(y - 6) < 14 && sSootopolisGymIceRowVars[y])
     {
         return TRUE;
     }
     return FALSE;
 }
 
-void sub_8069CFC(s16 x, s16 y)
+static void MarkIcePuzzleCoordVisited(s16 x, s16 y)
 {
-    if (sub_8069CB8(x, y))
+    if (CoordInIcePuzzleRegion(x, y))
     {
-        *GetVarPointer(gUnknown_083763E4[y]) |= (1 << (x - 3));
+        *GetVarPointer(sSootopolisGymIceRowVars[y]) |= (1 << (x - 3));
     }
 }
 
-bool32 sub_8069D34(s16 x, s16 y)
+static bool32 IsIcePuzzleCoordVisited(s16 x, s16 y)
 {
     u32 var;
-    if (!sub_8069CB8(x, y))
+    if (!CoordInIcePuzzleRegion(x, y))
     {
         return FALSE;
     }
-    var = VarGet(gUnknown_083763E4[y]) << 16;
+    var = VarGet(sSootopolisGymIceRowVars[y]) << 16;
     if (((1 << 16) << (x - 3)) & var)
     {
         return TRUE;
@@ -546,7 +558,7 @@ void SetSootopolisGymCrackedIceMetatiles(void)
     {
         for (y = 0; y < height; y++)
         {
-            if (sub_8069D34(x, y) == TRUE)
+            if (IsIcePuzzleCoordVisited(x, y) == TRUE)
             {
                 MapGridSetMetatileIdAt(x + 7, y + 7, METATILE_ID(SootopolisGym, Ice_Cracked));
             }
@@ -554,11 +566,11 @@ void SetSootopolisGymCrackedIceMetatiles(void)
     }
 }
 
-void PerStepCallback_8069DD4(u8 taskId)
+static void SootopolisGymIcePerStepCallback(u8 taskId)
 {
     s16 x, y;
     u16 tileBehavior;
-    u16 *var;
+    u16 *iceStepCount;
     s16 *data = gTasks[taskId].data;
     switch (data[1])
     {
@@ -575,10 +587,10 @@ void PerStepCallback_8069DD4(u8 taskId)
                 data[2] = x;
                 data[3] = y;
                 tileBehavior = MapGridGetMetatileBehaviorAt(x, y);
-                var = GetVarPointer(VAR_ICE_STEP_COUNT);
+                iceStepCount = GetVarPointer(VAR_ICE_STEP_COUNT);
                 if (MetatileBehavior_IsThinIce(tileBehavior) == TRUE)
                 {
-                    (*var)++;
+                    (*iceStepCount)++;
                     data[6] = 4;
                     data[1] = 2;
                     data[4] = x;
@@ -586,7 +598,7 @@ void PerStepCallback_8069DD4(u8 taskId)
                 }
                 else if (MetatileBehavior_IsCrackedIce(tileBehavior) == TRUE)
                 {
-                    *var = 0;
+                    *iceStepCount = 0;
                     data[6] = 4;
                     data[1] = 3;
                     data[4] = x;
@@ -606,7 +618,7 @@ void PerStepCallback_8069DD4(u8 taskId)
                 PlaySE(SE_ICE_CRACK);
                 MapGridSetMetatileIdAt(x, y, METATILE_ID(SootopolisGym, Ice_Cracked));
                 CurrentMapDrawMetatileAt(x, y);
-                sub_8069CFC(x - 7, y - 7);
+                MarkIcePuzzleCoordVisited(x - 7, y - 7);
                 data[1] = 1;
             }
             break;
@@ -628,10 +640,10 @@ void PerStepCallback_8069DD4(u8 taskId)
     }
 }
 
-void PerStepCallback_8069F64(u8 taskId)
+static void AshGrassPerStepCallback(u8 taskId)
 {
     s16 x, y;
-    u16 *var;
+    u16 *ashGatherCount;
     s16 *data = gTasks[taskId].data;
     PlayerGetDestCoords(&x, &y);
     if (x != data[1] || y != data[2])
@@ -650,23 +662,23 @@ void PerStepCallback_8069F64(u8 taskId)
             }
             if (CheckBagHasItem(ITEM_SOOT_SACK, 1))
             {
-                var = GetVarPointer(VAR_ASH_GATHER_COUNT);
-                if (*var < 9999)
+                ashGatherCount = GetVarPointer(VAR_ASH_GATHER_COUNT);
+                if (*ashGatherCount < 9999)
                 {
-                    (*var)++;
+                    (*ashGatherCount)++;
                 }
             }
         }
     }
 }
 
-void sub_806A040(s16 x, s16 y)
+static void SetCrackedFloorHoleMetatile(s16 x, s16 y)
 {
     MapGridSetMetatileIdAt(x, y, MapGridGetMetatileIdAt(x, y) == 0x22f ? 0x206 : 0x237);
     CurrentMapDrawMetatileAt(x, y);
 }
 
-void PerStepCallback_806A07C(u8 taskId)
+static void CrackedFloorPerStepCallback(u8 taskId)
 {
     s16 x, y;
     u16 behavior;
@@ -675,11 +687,11 @@ void PerStepCallback_806A07C(u8 taskId)
     behavior = MapGridGetMetatileBehaviorAt(x, y);
     if (data[4] != 0 && (--data[4]) == 0)
     {
-        sub_806A040(data[5], data[6]);
+        SetCrackedFloorHoleMetatile(data[5], data[6]);
     }
     if (data[7] != 0 && (--data[7]) == 0)
     {
-        sub_806A040(data[8], data[9]);
+        SetCrackedFloorHoleMetatile(data[8], data[9]);
     }
     if (MetatileBehavior_IsCrackedFloorHole(behavior))
     {
@@ -720,13 +732,13 @@ static const u16 sMuddySlopeAnimationMetatiles[] = {
 
 static void SetMuddySlopeAnimatedMetatile(s16 *counter, s16 x, s16 y)
 {
-    u16 tile;
+    u16 metatileId;
     if (--(*counter) == 0)
-        tile = METATILE_ID(General, MuddySlope_Frame0);
+        metatileId = METATILE_ID(General, MuddySlope_Frame0);
     else
-        tile = sMuddySlopeAnimationMetatiles[*counter / 8];
+        metatileId = sMuddySlopeAnimationMetatiles[*counter / 8];
 
-    MapGridSetMetatileIdAt(x, y, tile);
+    MapGridSetMetatileIdAt(x, y, metatileId);
     CurrentMapDrawMetatileAt(x, y);
 
     // Immediately set the metatile back to the original muddy slope metatile
@@ -739,18 +751,18 @@ static void SetMuddySlopeAnimatedMetatile(s16 *counter, s16 x, s16 y)
 // When the player walks or slides on one, it executes a short animation to
 // make it look like a small mudslide. A maximum of 4 mudslide animations can
 // exist simultaneously.
-void Task_MuddySlope(u8 taskId)
+static void Task_MuddySlope(u8 taskId)
 {
-    s16 x, y, x2, y2;
+    s16 x, y, cameraOffsetX, cameraOffsetY;
     int i;
-    u16 mapIndices;
+    u16 mapId;
     s16 *data = gTasks[taskId].data;
     PlayerGetDestCoords(&x, &y);
-    mapIndices = (gSaveBlock1.location.mapGroup << 8) | gSaveBlock1.location.mapNum;
+    mapId = (gSaveBlock1.location.mapGroup << 8) | gSaveBlock1.location.mapNum;
     switch (data[1])
     {
         case 0:
-            data[0] = mapIndices;
+            data[0] = mapId;
             data[2] = x;
             data[3] = y;
             data[1] = 1;
@@ -781,24 +793,24 @@ void Task_MuddySlope(u8 taskId)
             break;
     }
 
-    if (gCamera.active && mapIndices != data[0])
+    if (gCamera.active && mapId != data[0])
     {
-        data[0] = mapIndices;
-        x2 = gCamera.x;
-        y2 = gCamera.y;
+        data[0] = mapId;
+        cameraOffsetX = gCamera.x;
+        cameraOffsetY = gCamera.y;
     }
     else
     {
-        x2 = 0;
-        y2 = 0;
+        cameraOffsetX = 0;
+        cameraOffsetY = 0;
     }
 
     for (i = 4; i < 14; i += 3)
     {
         if (data[i])
         {
-            data[i + 1] -= x2;
-            data[i + 2] -= y2;
+            data[i + 1] -= cameraOffsetX;
+            data[i + 2] -= cameraOffsetY;
             SetMuddySlopeAnimatedMetatile(&data[i], data[i + 1], data[i + 2]);
         }
     }

@@ -17,7 +17,7 @@ u8 sub_80BC050();
 u8 *GetSecretBaseMapName(u8 *dest);
 void SetPlayerSecretBaseRecordMixingParty();
 const u8 *GetSecretBaseTrainerLoseText(void);
-void sub_80BCF1C(u8 taskId);
+void SecretBasePerStepCallback(u8 taskId);
 void ReceiveSecretBasesData(void *playerRecords, u32 size, u8 c);
 #if DEBUG
 void unref_sub_80BCD7C(u8 secretBaseIndex);

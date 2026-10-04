@@ -1168,7 +1168,7 @@ void sub_80BCE90()
     gSpecialVar_Result = gSaveBlock1.secretBases[curBaseIndex].battledOwnerToday;
 }
 
-void sub_80BCF1C(u8 taskId)
+void SecretBasePerStepCallback(u8 taskId)
 {
     s16 x, y;
     u32 metatileBehavior;
