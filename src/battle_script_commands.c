@@ -62,7 +62,7 @@ extern u16 gPaydayMoney;
 extern u16 gRandomTurnNumber;
 extern u8 gBattleOutcome;
 extern u8 gBattleEnvironment;
-extern u16 gTrainerBattleOpponent;
+extern u16 gTrainerBattleOpponent_A;
 extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
 extern const u8* gBattlescriptCurrInstr;
@@ -2777,7 +2777,7 @@ void SetMoveEffect(bool8 primary, u8 certain)
                          (BATTLE_TYPE_EREADER_TRAINER
                           | BATTLE_TYPE_BATTLE_TOWER
                           | BATTLE_TYPE_LINK)
-                        || gTrainerBattleOpponent == SECRET_BASE_OPPONENT))
+                        || gTrainerBattleOpponent_A == TRAINER_SECRET_BASE))
                 {
                     gBattlescriptCurrInstr++;
                 }
@@ -2785,7 +2785,7 @@ void SetMoveEffect(bool8 primary, u8 certain)
                            (BATTLE_TYPE_EREADER_TRAINER
                             | BATTLE_TYPE_BATTLE_TOWER
                             | BATTLE_TYPE_LINK)
-                           || gTrainerBattleOpponent == SECRET_BASE_OPPONENT)
+                           || gTrainerBattleOpponent_A == TRAINER_SECRET_BASE)
                          && (gWishFutureKnock.knockedOffPokes[side] & gBitTable[gBattlerPartyIndexes[gBattlerAttacker]]))
                 {
                     gBattlescriptCurrInstr++;
@@ -5419,44 +5419,44 @@ static void atk5D_getmoneyreward(void)
     const struct TrainerMonItemDefaultMoves * party3;
     const struct TrainerMonItemCustomMoves * party4;
 
-    if (gTrainerBattleOpponent == SECRET_BASE_OPPONENT)
+    if (gTrainerBattleOpponent_A == TRAINER_SECRET_BASE)
     {
         money_to_give = 20 * eSecretBaseRecord->party.levels[0] * gBattleStruct->moneyMultiplier;
     }
     else
     {
-        switch(gTrainers[gTrainerBattleOpponent].partyFlags)
+        switch(gTrainers[gTrainerBattleOpponent_A].partyFlags)
         {
         case 0:
         {
-            party1 = gTrainers[gTrainerBattleOpponent].party.NoItemDefaultMoves;
-            lvl = party1[gTrainers[gTrainerBattleOpponent].partySize - 1].level;
+            party1 = gTrainers[gTrainerBattleOpponent_A].party.NoItemDefaultMoves;
+            lvl = party1[gTrainers[gTrainerBattleOpponent_A].partySize - 1].level;
         }
             break;
         case 1:
         {
-            party2 = gTrainers[gTrainerBattleOpponent].party.NoItemCustomMoves;
-            lvl = party2[gTrainers[gTrainerBattleOpponent].partySize - 1].level;
+            party2 = gTrainers[gTrainerBattleOpponent_A].party.NoItemCustomMoves;
+            lvl = party2[gTrainers[gTrainerBattleOpponent_A].partySize - 1].level;
         }
             break;
         case 2:
         {
-            party3 = gTrainers[gTrainerBattleOpponent].party.ItemDefaultMoves;
-            lvl = party3[gTrainers[gTrainerBattleOpponent].partySize - 1].level;
+            party3 = gTrainers[gTrainerBattleOpponent_A].party.ItemDefaultMoves;
+            lvl = party3[gTrainers[gTrainerBattleOpponent_A].partySize - 1].level;
         }
             break;
         case 3:
         {
-            party4 = gTrainers[gTrainerBattleOpponent].party.ItemCustomMoves;
-            lvl = party4[gTrainers[gTrainerBattleOpponent].partySize - 1].level;
+            party4 = gTrainers[gTrainerBattleOpponent_A].party.ItemCustomMoves;
+            lvl = party4[gTrainers[gTrainerBattleOpponent_A].partySize - 1].level;
         }
             break;
         }
         for (; gTrainerMoney[i].trainerClass != 0xFF; i++) {
-            if (gTrainerMoney[i].trainerClass == gTrainers[gTrainerBattleOpponent].trainerClass)
+            if (gTrainerMoney[i].trainerClass == gTrainers[gTrainerBattleOpponent_A].trainerClass)
                 break;
         }
-        party4 = gTrainers[gTrainerBattleOpponent].party.ItemCustomMoves; // Needed to match. Has no effect.
+        party4 = gTrainers[gTrainerBattleOpponent_A].party.ItemCustomMoves; // Needed to match. Has no effect.
         money_to_give = 4 * lvl * gBattleStruct->moneyMultiplier * (gBattleTypeFlags & BATTLE_TYPE_DOUBLE ? 2 : 1) * gTrainerMoney[i].baseMoney;
     }
 
@@ -8747,7 +8747,7 @@ static void atkD2_tryswapitems(void)
          && !(gBattleTypeFlags & (BATTLE_TYPE_LINK
                                   | BATTLE_TYPE_EREADER_TRAINER
                                   | BATTLE_TYPE_BATTLE_TOWER))
-         && gTrainerBattleOpponent != SECRET_BASE_OPPONENT)) {
+         && gTrainerBattleOpponent_A != TRAINER_SECRET_BASE)) {
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     }
     else {
@@ -8757,7 +8757,7 @@ static void atkD2_tryswapitems(void)
         if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK
                                   | BATTLE_TYPE_EREADER_TRAINER
                                   | BATTLE_TYPE_BATTLE_TOWER))
-            && gTrainerBattleOpponent != SECRET_BASE_OPPONENT
+            && gTrainerBattleOpponent_A != TRAINER_SECRET_BASE
             && (gWishFutureKnock.knockedOffPokes[sideAttacker] & gBitTable[gBattlerPartyIndexes[gBattlerAttacker]]
             )) {
             gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);

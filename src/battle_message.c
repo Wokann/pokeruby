@@ -167,7 +167,7 @@ extern u8 gStringVar1[];
 extern u8 gStringVar2[];
 extern u8 gStringVar3[];
 extern u16 gBattleTypeFlags;
-extern u16 gTrainerBattleOpponent;
+extern u16 gTrainerBattleOpponent_A;
 extern u8 gDisplayedStringBattle[];
 extern u8 gStringVar1[];
 extern u8 gStringVar2[];
@@ -318,7 +318,7 @@ void BufferStringBattle(u16 stringID)
         }
         else
         {
-            if (gTrainerBattleOpponent == LINK_BATTLE_OPPONENT)
+            if (gTrainerBattleOpponent_A == LINK_BATTLE_OPPONENT)
             {
                 if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
                     stringPtr = BattleText_WithdrewPoke3;
@@ -699,28 +699,28 @@ u32 BattleStringExpandPlaceholders(const u8* src, u8* dst)
                 break;
             case B_TXT_TRAINER1_CLASS: // trainer class name
 #ifdef ENGLISH
-                if (gTrainerBattleOpponent == SECRET_BASE_OPPONENT)
+                if (gTrainerBattleOpponent_A == TRAINER_SECRET_BASE)
                     toCpy = gTrainerClassNames[GetSecretBaseTrainerClass()];
                 else if (gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER)
                     toCpy = gTrainerClassNames[get_trainer_class_name_index()];
                 else if (gBattleTypeFlags & BATTLE_TYPE_EREADER_TRAINER)
                     toCpy = gTrainerClassNames[GetEReaderTrainerClassNameIndex()];
                 else
-                    toCpy = gTrainerClassNames[gTrainers[gTrainerBattleOpponent].trainerClass];
+                    toCpy = gTrainerClassNames[gTrainers[gTrainerBattleOpponent_A].trainerClass];
                 break;
 #else
-                if (gTrainerBattleOpponent == SECRET_BASE_OPPONENT)
-                    toCpy = de_sub_8041024(gTrainerBattleOpponent, 0);
+                if (gTrainerBattleOpponent_A == TRAINER_SECRET_BASE)
+                    toCpy = de_sub_8041024(gTrainerBattleOpponent_A, 0);
                 else if (gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER)
                     toCpy = de_sub_8041024(BATTLE_TYPE_BATTLE_TOWER, 0);
                 else if (gBattleTypeFlags & BATTLE_TYPE_EREADER_TRAINER)
                     toCpy = de_sub_8041024(BATTLE_TYPE_EREADER_TRAINER, 0);
                 else
-                    toCpy = de_sub_8041024(0, gTrainerBattleOpponent);
+                    toCpy = de_sub_8041024(0, gTrainerBattleOpponent_A);
                 break;
 #endif
             case B_TXT_TRAINER1_NAME: // trainer name
-                if (gTrainerBattleOpponent == SECRET_BASE_OPPONENT)
+                if (gTrainerBattleOpponent_A == TRAINER_SECRET_BASE)
                 {
                     memset(text, 0xFF, 8);
                     memcpy(text, eSecretBaseRecord->playerName, 7);
@@ -737,7 +737,7 @@ u32 BattleStringExpandPlaceholders(const u8* src, u8* dst)
                     toCpy = text;
                 }
                 else
-                    toCpy = gTrainers[gTrainerBattleOpponent].trainerName;
+                    toCpy = gTrainers[gTrainerBattleOpponent_A].trainerName;
                 break;
             case B_TXT_LINK_PLAYER_NAME: // link player name?
                 toCpy = gLinkPlayers[multiplayerID].name;
@@ -758,7 +758,7 @@ u32 BattleStringExpandPlaceholders(const u8* src, u8* dst)
                 toCpy = gSaveBlock2.playerName;
                 break;
             case B_TXT_TRAINER1_LOSE_TEXT: // ?
-                toCpy = GetTrainerLoseText();
+                toCpy = GetTrainerALoseText();
                 break;
             case B_TXT_22: // ?
                 HANDLE_NICKNAME_STRING_CASE(gBattleStruct->battler, gBattleStruct->unk1605E)

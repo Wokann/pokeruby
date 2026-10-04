@@ -61,7 +61,7 @@ DesertRuins_EventScript_15CB85:: @ 815CB85
 	setwildbattle SPECIES_REGIROCK, 40, ITEM_NONE
 	setflag FLAG_HIDE_REGIROCK
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
-	special ScrSpecial_StartRegiBattle
+	special StartRegiBattle
 	waitstate
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
 	release

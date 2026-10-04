@@ -20,7 +20,7 @@ extern u8 gCritMultiplier;
 extern u16 gBattleWeather;
 extern struct BattleEnigmaBerry gEnigmaBerries[];
 extern u16 gBattleMovePower;
-extern u16 gTrainerBattleOpponent;
+extern u16 gTrainerBattleOpponent_A;
 
 // Masks for getting PP Up count, also PP Max values
 const u8 gPPUpGetMask[] = {0x03, 0x0c, 0x30, 0xc0};
@@ -83,7 +83,7 @@ u8 GetBattlerSide(u8 bank);
 if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_EREADER_TRAINER))) \
 { \
     if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER) \
-    && gTrainerBattleOpponent != SECRET_BASE_OPPONENT \
+    && gTrainerBattleOpponent_A != TRAINER_SECRET_BASE \
     && FlagGet(FLAG_BADGE0##badge##_GET) \
     && GetBattlerSide(bank) == B_SIDE_PLAYER) \
         (stat) = (110 * (stat)) / 100; \

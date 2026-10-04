@@ -13,7 +13,7 @@ void ExitSafariMode(void);
 
 bool8 SafariZoneTakeStep(void);
 void SafariZoneRetirePrompt(void);
-void sub_80C824C(void);
+void CB2_EndSafariBattle(void);
 
 void SafariZoneGetPokeblockNameInFeeder(void);
 struct Pokeblock *unref_sub_80C8418(void);

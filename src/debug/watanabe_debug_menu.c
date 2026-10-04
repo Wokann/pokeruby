@@ -1360,7 +1360,7 @@ void debug_80C4AC4(u8 taskId)
     else if (JOY_NEW(START_BUTTON))
     {
         PlaySE(SE_SELECT);
-        gTrainerBattleOpponent = SECRET_BASE_OPPONENT;
+        gTrainerBattleOpponent_A = TRAINER_SECRET_BASE;
         eWatanabe17000.unk1_4 = 0;
         eWatanabe17000.excitementAppealBonus = 0xAC;
         eWatanabe17000.unk3 = 0xFF;

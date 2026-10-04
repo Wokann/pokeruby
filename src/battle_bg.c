@@ -32,7 +32,7 @@ extern u8 BattleText_Tie[];
 extern const u8 gGameVersion;
 extern u16 gBattleTypeFlags;
 extern struct Trainer gTrainers[];
-extern u16 gTrainerBattleOpponent;
+extern u16 gTrainerBattleOpponent_A;
 
 extern u8 gBattleEnvironment;
 
@@ -303,7 +303,7 @@ void DrawMainBattleBackground(void)
     {
         if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
         {
-            u8 trainerClass = gTrainers[gTrainerBattleOpponent].trainerClass;
+            u8 trainerClass = gTrainers[gTrainerBattleOpponent_A].trainerClass;
             if (trainerClass == TRAINER_CLASS_LEADER)
             {
                 LZDecompressVram(gBattleEnvironmentTiles_Building, (void*)(BG_CHAR_ADDR(2)));
@@ -690,13 +690,13 @@ void DrawBattleEntryBackground(void)
     {
         if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
         {
-            if (gTrainers[gTrainerBattleOpponent].trainerClass == 0x19)
+            if (gTrainers[gTrainerBattleOpponent_A].trainerClass == 0x19)
             {
                 LZDecompressVram(gBattleEnvironmentAnimTiles_Building, (void *)(VRAM + 0x4000));
                 LZDecompressVram(gBattleEnvironmentAnimTilemap_Building, (void *)(VRAM + 0xE000));
                 return;
             }
-            else if (gTrainers[gTrainerBattleOpponent].trainerClass == 0x20)
+            else if (gTrainers[gTrainerBattleOpponent_A].trainerClass == 0x20)
             {
                 LZDecompressVram(gBattleEnvironmentAnimTiles_Building, (void *)(VRAM + 0x4000));
                 LZDecompressVram(gBattleEnvironmentAnimTilemap_Building, (void *)(VRAM + 0xE000));
@@ -751,12 +751,12 @@ int LoadChosenBattleElement(u8 caseId)
             {
                 if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
                 {
-                    if (gTrainers[gTrainerBattleOpponent].trainerClass == 0x19)
+                    if (gTrainers[gTrainerBattleOpponent_A].trainerClass == 0x19)
                     {
                         LZDecompressVram(gBattleEnvironmentTiles_Building, (void *)(BG_CHAR_ADDR(2)));
                         break;
                     }
-                    else if (gTrainers[gTrainerBattleOpponent].trainerClass == 0x20)
+                    else if (gTrainers[gTrainerBattleOpponent_A].trainerClass == 0x20)
                     {
                         LZDecompressVram(gBattleEnvironmentTiles_Stadium, (void *)(BG_CHAR_ADDR(2)));
                         break;
@@ -818,12 +818,12 @@ int LoadChosenBattleElement(u8 caseId)
             {
                 if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
                 {
-                    if (gTrainers[gTrainerBattleOpponent].trainerClass == 0x19)
+                    if (gTrainers[gTrainerBattleOpponent_A].trainerClass == 0x19)
                     {
                         LZDecompressVram(gBattleEnvironmentTilemap_Building, (void *)(BG_SCREEN_ADDR(26)));
                         break;
                     }
-                    else if (gTrainers[gTrainerBattleOpponent].trainerClass == 0x20)
+                    else if (gTrainers[gTrainerBattleOpponent_A].trainerClass == 0x20)
                     {
                         LZDecompressVram(gBattleEnvironmentTilemap_Stadium, (void *)(BG_SCREEN_ADDR(26)));
                         break;
@@ -885,12 +885,12 @@ int LoadChosenBattleElement(u8 caseId)
             {
                 if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
                 {
-                    if (gTrainers[gTrainerBattleOpponent].trainerClass == 0x19)
+                    if (gTrainers[gTrainerBattleOpponent_A].trainerClass == 0x19)
                     {
                         LoadCompressedPalette(gBattleEnvironmentPalette_BuildingLeader, 0x20, 0x60);
                         break;
                     }
-                    else if (gTrainers[gTrainerBattleOpponent].trainerClass == 0x20)
+                    else if (gTrainers[gTrainerBattleOpponent_A].trainerClass == 0x20)
                     {
                         LoadCompressedPalette(gBattleEnvironmentPalette_StadiumSteven, 0x20, 0x60);
                         break;

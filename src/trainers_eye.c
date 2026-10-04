@@ -44,12 +44,12 @@ void sub_80F6C20(void)
 
     for (i = 0; i < 56; i++)
     {
-        if (HasTrainerBeenFought(gTrainerEyeTrainers[i].opponentIDs[0]))
+        if (HasTrainerBeenFought(gRematchTable[i].trainerIds[0]))
         {
-            gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].opponentId = gTrainerEyeTrainers[i].opponentIDs[0];
+            gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].opponentId = gRematchTable[i].trainerIds[0];
             gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].rematchTableIdx = i;
             gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].rematchNo = gSaveBlock1.trainerRematches[i];
-            gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].regionMapSectionId = Overworld_GetMapHeaderByGroupAndId(gTrainerEyeTrainers[i].mapGroup, gTrainerEyeTrainers[i].mapNum)->regionMapSectionId;
+            gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].regionMapSectionId = Overworld_GetMapHeaderByGroupAndId(gRematchTable[i].mapGroup, gRematchTable[i].mapNum)->regionMapSectionId;
             gPokenavStructPtr->unkD158++;
         }
     }

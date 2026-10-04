@@ -93,7 +93,7 @@ void SafariZoneRetirePrompt(void)
     ScriptContext_SetupScript(&gUnknown_081C342D);
 }
 
-void sub_80C824C(void)
+void CB2_EndSafariBattle(void)
 {
     if (gNumSafariBalls != 0)
     {

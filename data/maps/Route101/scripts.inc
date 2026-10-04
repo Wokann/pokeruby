@@ -224,7 +224,7 @@ Route101_EventScript_14EA7F:: @ 814EA7F
 	setobjectxy LOCALID_PLAYER, 6, 13
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
-	special ScrSpecial_ChooseStarter
+	special ChooseStarter
 	waitstate
 	applymovement 2, Route101_Movement_14EAD7
 	waitmovement 0

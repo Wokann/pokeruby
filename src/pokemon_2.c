@@ -37,7 +37,7 @@ extern u8 gXXX_CritRelated;
 extern u16 gBattleWeather;
 extern struct BattleEnigmaBerry gEnigmaBerries[];
 extern u16 gBattleMovePower;
-extern u16 gTrainerBattleOpponent;
+extern u16 gTrainerBattleOpponent_A;
 extern struct PokemonStorage gPokemonStorage;
 
 EWRAM_DATA struct SpriteTemplate gMultiuseSpriteTemplate = {0};
@@ -1105,7 +1105,7 @@ void CreateSecretBaseEnemyParty(struct SecretBaseRecord *secretBaseRecord)
     }
 
     gBattleTypeFlags = BATTLE_TYPE_TRAINER;
-    gTrainerBattleOpponent = SECRET_BASE_OPPONENT;
+    gTrainerBattleOpponent_A = TRAINER_SECRET_BASE;
 }
 
 static const u8 sSecretBaseFacilityClasses[][5] = {

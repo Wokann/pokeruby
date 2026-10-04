@@ -59,9 +59,9 @@ gSpecials::
 	def_special ObjectEventInteractionWaterBerryTree
 	def_special PlayerHasBerries
 	def_special IsEnigmaBerryValid
-	def_special ScrSpecial_GetTrainerBattleMode
+	def_special GetTrainerBattleMode
 	def_special ShowTrainerIntroSpeech
-	def_special ScrSpecial_ShowTrainerNonBattlingSpeech
+	def_special ShowTrainerCantBattleSpeech
 	def_special GetTrainerFlag
 	def_special EndTrainerApproach
 	def_special PlayTrainerEncounterMusic
@@ -164,8 +164,8 @@ gSpecials::
 	def_special Overworld_PlaySpecialMapMusic
 	def_special StartWallClock
 	def_special ScrSpecial_ViewWallClock
-	def_special ScrSpecial_ChooseStarter
-	def_special ScrSpecial_StartWallyTutorialBattle
+	def_special ChooseStarter
+	def_special StartWallyTutorialBattle
 	def_special ChangePokemonNickname
 	def_special SelectMonForNPCTrade
 	def_special GetFirstFreePokeblockSlot
@@ -319,10 +319,10 @@ gSpecials::
 	def_special IsPokerusInParty
 	def_special SetSootopolisGymCrackedIceMetatiles
 	def_special ShakeCamera
-	def_special ScrSpecial_StartGroudonKyogreBattle
+	def_special StartGroudonKyogreBattle
 	def_special ScrSpecial_StartRayquazaBattle
-	def_special ScrSpecial_StartRegiBattle
-	def_special SetUpTrainerMovement
+	def_special StartRegiBattle
+	def_special SetTrainerFacingDirection
 	def_special DoSealedChamberShakingEffect2
 	def_special FoundBlackGlasses
 	def_special StartDroughtWeatherBlend
@@ -331,7 +331,7 @@ gSpecials::
 	def_special ShowContestEntryMonPic
 	def_special sub_80C5164
 	def_special SetEReaderTrainerGfxId
-	def_special ScrSpecial_StartSouthernIslandBattle
+	def_special BattleSetup_StartLatiBattle
 	def_special SetRoute119Weather
 	def_special SetRoute123Weather
 	def_special ScriptGetMultiplayerId

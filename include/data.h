@@ -14,6 +14,42 @@ struct MonCoords
     u8 y_offset;
 };
 
+// IV + LEVEL + SPECIES
+struct TrainerMonNoItemDefaultMoves
+{
+    u16 iv;
+    u8 level;
+    u16 species;
+};
+
+// IV + LEVEL + SPECIES + MOVES
+struct TrainerMonNoItemCustomMoves
+{
+    u16 iv;
+    u8 level;
+    u16 species;
+    u16 moves[4];
+};
+
+// IV + LEVEL + SPECIES + ITEMS
+struct TrainerMonItemDefaultMoves
+{
+    u16 iv;
+    u8 level;
+    u16 species;
+    u16 heldItem;
+};
+
+// IV + LEVEL + SPECIES + ITEMS + MOVES
+struct TrainerMonItemCustomMoves
+{
+    u16 iv;
+    u8 level;
+    u16 species;
+    u16 heldItem;
+    u16 moves[4];
+};
+
 extern const struct OamData gOamData_81F96F0;
 extern const struct OamData gOamData_81F96E8;
 extern const struct SpriteFrameImage gSpriteImageTable_81E7A10[];

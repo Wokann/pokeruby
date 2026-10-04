@@ -31,7 +31,7 @@ extern u32 gStatuses3[MAX_BATTLERS_COUNT];
 extern u16 gSideStatuses[2];
 extern struct BattlePokemon gBattleMons[MAX_BATTLERS_COUNT];
 extern u8 gCritMultiplier;
-extern u16 gTrainerBattleOpponent;
+extern u16 gTrainerBattleOpponent_A;
 extern u8 *BattleAIs[];
 
 enum
@@ -272,14 +272,14 @@ void BattleAI_HandleItemUseBeforeAISetup(void)
     MEMSET_ALT(AI_BATTLE_HISTORY, 0, sizeof(struct BattleHistory), i, data);
 
     if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)
-     && gTrainerBattleOpponent != 0x400
+     && gTrainerBattleOpponent_A != 0x400
      && !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_SAFARI | BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_EREADER_TRAINER)))
     {
         for (i = 0; i < MAX_TRAINER_ITEMS; i++)
         {
-            if (gTrainers[gTrainerBattleOpponent].items[i] != 0)
+            if (gTrainers[gTrainerBattleOpponent_A].items[i] != 0)
             {
-                AI_BATTLE_HISTORY->trainerItems[AI_BATTLE_HISTORY->itemsNo] = gTrainers[gTrainerBattleOpponent].items[i];
+                AI_BATTLE_HISTORY->trainerItems[AI_BATTLE_HISTORY->itemsNo] = gTrainers[gTrainerBattleOpponent_A].items[i];
                 AI_BATTLE_HISTORY->itemsNo++;
             }
         }
@@ -335,11 +335,11 @@ void BattleAI_SetupAIData(void)
     else if (gBattleTypeFlags & BATTLE_TYPE_FIRST_BATTLE)
         AI_THINKING_STRUCT->aiFlags = 0x80000000;
 #if GERMAN || (ENGLISH && DEBUG && REVISION == 0)
-    else if (gBattleTypeFlags & (BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_BATTLE_TOWER) || gTrainerBattleOpponent == SECRET_BASE_OPPONENT)
+    else if (gBattleTypeFlags & (BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_BATTLE_TOWER) || gTrainerBattleOpponent_A == TRAINER_SECRET_BASE)
         AI_THINKING_STRUCT->aiFlags = 7;
 #endif
     else // otherwise, just set aiFlags to whatever flags the trainer has set in their data.
-        AI_THINKING_STRUCT->aiFlags = gTrainers[gTrainerBattleOpponent].aiFlags;
+        AI_THINKING_STRUCT->aiFlags = gTrainers[gTrainerBattleOpponent_A].aiFlags;
 #if DEBUG
     if (gUnknown_02023A14_50 & 1)
         AI_THINKING_STRUCT->aiFlags = gUnknown_02023A14_4C;

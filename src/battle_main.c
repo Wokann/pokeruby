@@ -132,7 +132,7 @@ u8 gHealthboxSpriteIds[MAX_BATTLERS_COUNT];
 u8 gBattleControllerData[MAX_BATTLERS_COUNT];
 extern u16 gBattleTypeFlags;
 extern u8 gReservedSpritePaletteCount;
-extern u16 gTrainerBattleOpponent;
+extern u16 gTrainerBattleOpponent_A;
 extern struct BattleEnigmaBerry gEnigmaBerries[];
 extern u16 gBlockRecvBuffer[MAX_LINK_PLAYERS][BLOCK_BUFFER_SIZE / 2];
 extern u8 gBattleMonForms[];
@@ -303,7 +303,7 @@ static void CB2_InitBattleInternal(void)
 #endif
        )
     {
-        CreateNPCTrainerParty(gEnemyParty, gTrainerBattleOpponent);
+        CreateNPCTrainerParty(gEnemyParty, gTrainerBattleOpponent_A);
         SetWildMonHeldItem();
     }
     gMain.inBattle = TRUE;
@@ -579,7 +579,7 @@ static void CB2_HandleStartBattle(void)
             SetMainCallback2(BattleMainCB2);
             if (gBattleTypeFlags & BATTLE_TYPE_LINK)
             {
-                gTrainerBattleOpponent = LINK_BATTLE_OPPONENT;
+                gTrainerBattleOpponent_A = LINK_BATTLE_OPPONENT;
                 gBattleTypeFlags |= BATTLE_TYPE_20;
             }
         }
@@ -963,7 +963,7 @@ static void CB2_HandleStartMultiBattle(void)
             SetMainCallback2(BattleMainCB2);
             if (gBattleTypeFlags & BATTLE_TYPE_LINK)
             {
-                gTrainerBattleOpponent = 0x800;
+                gTrainerBattleOpponent_A = 0x800;
                 gBattleTypeFlags |= BATTLE_TYPE_20;
             }
         }
@@ -1974,7 +1974,7 @@ void debug_sub_801174C(void)
 	if (gBattleTypeFlags & BATTLE_TYPE_SAFARI)
 		EnterSafariMode();
 	if (gUnknown_Debug_2023A76[0][30] >= 2 && gUnknown_Debug_2023A76[0][30] <= 4)
-		gTrainerBattleOpponent = (Random() & 7) + 1;
+		gTrainerBattleOpponent_A = (Random() & 7) + 1;
 
 	gPlayerPartyCount = 0;
 	for (i = 0; i < 30; i += 5)
@@ -4956,7 +4956,7 @@ void HandleEndTurn_BattleWon(void)
         BattleStopLowHpSound();
         gBattlescriptCurrInstr = BattleScript_LocalTrainerBattleWon;
 
-        switch (gTrainers[gTrainerBattleOpponent].trainerClass)
+        switch (gTrainers[gTrainerBattleOpponent_A].trainerClass)
         {
         case TRAINER_CLASS_ELITE_FOUR:
         case TRAINER_CLASS_CHAMPION:

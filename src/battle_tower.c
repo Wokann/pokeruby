@@ -280,7 +280,7 @@ extern const u8 BattleText_Format9[];
 extern u16 gSpecialVar_0x8004;
 extern u8 gTrainerClassToPicIndex[];
 extern u8 gTrainerClassToNameIndex[];
-extern u16 gTrainerBattleOpponent;
+extern u16 gTrainerBattleOpponent_A;
 extern u16 gBattleTypeFlags;
 extern u8 gSelectedOrderFromParty[];
 extern u8 gBattleOutcome;
@@ -1080,7 +1080,7 @@ void StartSpecialBattle(void)
     {
     case 0: // battle tower battle
         gBattleTypeFlags = (BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_TRAINER);
-        gTrainerBattleOpponent = 0;
+        gTrainerBattleOpponent_A = 0;
 
         FillBattleTowerTrainerParty();
 
@@ -1108,7 +1108,7 @@ void StartSpecialBattle(void)
             sub_803ADE8(&gEnemyParty[i], &gSaveBlock2.battleTower.ereaderTrainer.party[i]);
 
         gBattleTypeFlags = (BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_TRAINER);
-        gTrainerBattleOpponent = 0;
+        gTrainerBattleOpponent_A = 0;
 
         CreateTask(sub_8135534, 1);
         PlayMapChosenOrBattleBGM(0);

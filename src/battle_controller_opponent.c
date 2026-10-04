@@ -37,7 +37,7 @@ extern void (*gBattlerControllerFuncs[])(void);
 extern u8 gBattleControllerData[];
 extern u8 gHealthboxSpriteIds[];
 extern u16 gBattleTypeFlags;
-extern u16 gTrainerBattleOpponent;
+extern u16 gTrainerBattleOpponent_A;
 extern u8 gAnimFriendship;
 extern u32 gTransformedPersonalities[];
 extern u8 gAnimMoveTurn;
@@ -1190,14 +1190,14 @@ void OpponentHandleTrainerThrow(void)
     else
 #endif
     {
-        if (gTrainerBattleOpponent == SECRET_BASE_OPPONENT)
+        if (gTrainerBattleOpponent_A == TRAINER_SECRET_BASE)
             trainerPicIndex = GetSecretBaseTrainerPicIndex();
         else if (gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER)
             trainerPicIndex = get_trainer_class_pic_index();
         else if (gBattleTypeFlags & BATTLE_TYPE_EREADER_TRAINER)
             trainerPicIndex = GetEReaderTrainerPicIndex();
         else
-            trainerPicIndex = gTrainers[gTrainerBattleOpponent].trainerPic;
+            trainerPicIndex = gTrainers[gTrainerBattleOpponent_A].trainerPic;
     }
 
     DecompressTrainerFrontPic(trainerPicIndex, gActiveBattler);
@@ -1221,14 +1221,14 @@ static void OpponentHandleTrainerSlide(void)
 {
     u32 trainerPicId;
 
-    if (gTrainerBattleOpponent == SECRET_BASE_OPPONENT)
+    if (gTrainerBattleOpponent_A == TRAINER_SECRET_BASE)
         trainerPicId = GetSecretBaseTrainerPicIndex();
     else if (gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER)
         trainerPicId = get_trainer_class_pic_index();
     else if (gBattleTypeFlags & BATTLE_TYPE_EREADER_TRAINER)
         trainerPicId = GetEReaderTrainerPicIndex();
     else
-        trainerPicId = gTrainers[gTrainerBattleOpponent].trainerPic;
+        trainerPicId = gTrainers[gTrainerBattleOpponent_A].trainerPic;
 
     DecompressTrainerFrontPic(trainerPicId, gActiveBattler);
     SetMultiuseSpriteTemplateToTrainerBack(trainerPicId, GetBattlerPosition(gActiveBattler));

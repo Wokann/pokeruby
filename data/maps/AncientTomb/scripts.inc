@@ -61,7 +61,7 @@ AncientTomb_EventScript_15F050:: @ 815F050
 	setwildbattle SPECIES_REGISTEEL, 40, ITEM_NONE
 	setflag FLAG_HIDE_REGISTEEL
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
-	special ScrSpecial_StartRegiBattle
+	special StartRegiBattle
 	waitstate
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
 	release

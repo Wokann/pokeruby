@@ -80,7 +80,7 @@ IslandCave_EventScript_15EF9D:: @ 815EF9D
 	setwildbattle SPECIES_REGICE, 40, ITEM_NONE
 	setflag FLAG_HIDE_REGICE
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
-	special ScrSpecial_StartRegiBattle
+	special StartRegiBattle
 	waitstate
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
 	release

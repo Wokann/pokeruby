@@ -45,7 +45,7 @@ extern u8 gPotentialItemEffectBattler;
 extern u8 gBattlerInMenuId;
 extern struct SpindaSpot gSpindaSpotGraphics[];
 extern s8 gNatureStatTable[][5];
-extern u16 gTrainerBattleOpponent;
+extern u16 gTrainerBattleOpponent_A;
 extern u16 gBattleTypeFlags;
 extern u32 gTMHMLearnsets[][2];
 extern u8 gBattleMonForms[];
@@ -690,9 +690,9 @@ void AdjustFriendship(struct Pokemon *mon, u8 event)
         if ((event != FRIENDSHIP_EVENT_WALKING || !(Random() & 1))
          && (event != FRIENDSHIP_EVENT_LEAGUE_BATTLE
           || ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)
-           && (gTrainers[gTrainerBattleOpponent].trainerClass == TRAINER_CLASS_ELITE_FOUR
-            || gTrainers[gTrainerBattleOpponent].trainerClass == TRAINER_CLASS_LEADER
-            || gTrainers[gTrainerBattleOpponent].trainerClass == TRAINER_CLASS_CHAMPION))))
+           && (gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_ELITE_FOUR
+            || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_LEADER
+            || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_CHAMPION))))
         {
             s8 delta = sFriendshipEventDeltas[event][friendshipLevel];
             if (delta > 0 && holdEffect == HOLD_EFFECT_FRIENDSHIP_UP)
@@ -1118,7 +1118,7 @@ u16 GetBattleBGM(void)
         return MUS_VS_TRAINER;
     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
     {
-        switch (gTrainers[gTrainerBattleOpponent].trainerClass)
+        switch (gTrainers[gTrainerBattleOpponent_A].trainerClass)
         {
         case 2:
         case 0x31:
@@ -1133,7 +1133,7 @@ u16 GetBattleBGM(void)
         case 0x20:
             return MUS_VS_CHAMPION;
         case 0x2E:
-            if (!StringCompare(gTrainers[gTrainerBattleOpponent].trainerName, BattleText_Wally))
+            if (!StringCompare(gTrainers[gTrainerBattleOpponent_A].trainerName, BattleText_Wally))
                 return MUS_VS_TRAINER;
             return MUS_VS_RIVAL;
         case 0x18:
