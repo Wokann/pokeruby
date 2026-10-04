@@ -595,7 +595,7 @@ static void Shop_DisplayPriceInList(int firstItemId, int lastItemId, bool32 hasC
     if (i != 8 && gMartInfo.choicesAbove + i == gMartInfo.itemCount)
     {
         Menu_BlankWindowRect(0xE, (i << 1) + 2, 0x1C, (i << 1) + 3);
-        Menu_PrintText(gOtherText_CancelNoTerminator, 0xE, (i << 1) + 2);
+        Menu_PrintText(gText_Cancel2, 0xE, (i << 1) + 2);
     }
 }
 

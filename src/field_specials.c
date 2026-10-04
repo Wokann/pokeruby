@@ -1445,7 +1445,7 @@ const u8 *const gUnknown_083F83C0[] = {
     OtherText_BlackFlute,
     OtherText_PrettyChair,
     OtherText_PrettyDesk,
-    gOtherText_CancelNoTerminator
+    gText_Cancel2
 };
 
 void sub_810F118(u8);

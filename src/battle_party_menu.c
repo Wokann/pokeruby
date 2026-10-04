@@ -60,8 +60,8 @@ static void Task_BattlePartyMenuCancel(u8 taskId);
 
 static const struct MenuAction2 sBattlePartyMenuActions[] =
 {
-    {OtherText_Summary,             Task_BattlePartyMenuSummary},
-    {gOtherText_CancelNoTerminator, Task_BattlePartyMenuCancel},
+    {gText_Summary5,             Task_BattlePartyMenuSummary},
+    {gText_Cancel2, Task_BattlePartyMenuCancel},
     {OtherText_Shift,               Task_BattlePartyMenuShift},
     {OtherText_SendOut,             Task_BattlePartyMenuShift},
 };

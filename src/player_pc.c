@@ -30,7 +30,7 @@ extern void PauseVerticalScrollIndicator(u8);
 extern void LoadScrollIndicatorPalette(void);
 extern void ClearMailStruct(struct MailStruct *);
 extern u8 IsWeatherNotFadingIn(void);
-extern void sub_808B020(void);
+extern void CB2_ShowPartyMenuForItemUse(void);
 extern void ClearVerticalScrollIndicatorPalettes(void);
 
 static EWRAM_DATA const u8 *gPcItemMenuOptionOrder = NULL;
@@ -162,7 +162,7 @@ static const struct MenuAction2 gMailboxMailOptions[] =
     { OtherText_Read, Mailbox_DoMailRead },
     { gOtherText_MoveToBag, Mailbox_MoveToBag },
     { OtherText_Give, Mailbox_Give },
-    { gOtherText_CancelNoTerminator, Mailbox_Cancel }
+    { gText_Cancel2, Mailbox_Cancel }
 };
 
 static const u8 gNonSelectedItemFormattedText[] = _("{STR_VAR_1}{CLEAR_TO 80}");
@@ -872,7 +872,7 @@ static void ItemStorage_DrawItemList(u8 taskId)
 
         if (i == NUM_ITEMS)
         {
-            sub_8072A18(gOtherText_CancelNoTerminator, 0x80, (yCoord + 2) * 8, 0x68, 1);
+            sub_8072A18(gText_Cancel2, 0x80, (yCoord + 2) * 8, 0x68, 1);
             break;
         }
         else
@@ -1040,7 +1040,7 @@ static void Mailbox_DrawMailList(u8 taskId) // taskId is unused
         Menu_BlankWindowRect(0x15, yCoord + 2, 0x1C, yCoord + 3);
         if (i == eMailboxInfo.count)
         {
-            Menu_PrintText(gOtherText_CancelNoTerminator, 0x15, yCoord + 2);
+            Menu_PrintText(gText_Cancel2, 0x15, yCoord + 2);
             break;
         }
         else
@@ -1289,7 +1289,7 @@ static void Mailbox_DoGiveMailPokeMenu(u8 taskId) // Mailbox_DoGiveMailPokeMenu
 {
     if(!gPaletteFade.active)
     {
-        SetMainCallback2(sub_808B020);
+        SetMainCallback2(CB2_ShowPartyMenuForItemUse);
         gPokemonItemUseType = ITEM_USE_GIVE_MAIL;
         DestroyTask(taskId);
     }

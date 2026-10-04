@@ -169,7 +169,7 @@ static const u8 * const sPageHeaderTexts[] = {
     OtherText_ContestMoves,
     OtherText_Switch,
     OtherText_Info,
-    gOtherText_CancelNoTerminator,
+    gText_Cancel2,
 };
 
 static const union AffineAnimCmd sUnusedSpriteAffineAnim[] = {
@@ -2300,7 +2300,7 @@ static void sub_80A029C(struct Pokemon *mon)
 
     if (pssData.moveToLearn == 0)
     {
-        SummaryScreen_PrintColoredText(gOtherText_CancelNoTerminator, 13, 15, 12);
+        SummaryScreen_PrintColoredText(gText_Cancel2, 13, 15, 12);
         return;
     }
 

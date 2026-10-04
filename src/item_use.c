@@ -73,7 +73,7 @@ static const u8 *const sSSTidalBetaStrings[] =
 
 static const MainCallback gExitToOverworldFuncList[] =
 {
-    sub_808B020,
+    CB2_ShowPartyMenuForItemUse,
     CB2_ReturnToField,
     sub_810B96C,
 };

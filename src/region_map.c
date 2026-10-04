@@ -1641,7 +1641,7 @@ void sub_80FC69C(void)
         }
         else
         {
-            SetMainCallback2(sub_808AD58);
+            SetMainCallback2(CB2_ReturnToPartyMenuFromFlyMap);
         }
         break;
     }

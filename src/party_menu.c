@@ -3018,7 +3018,7 @@ void sub_806F3FC(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        ShowSelectMovePokemonSummaryScreen(gPlayerParty, gPartyMenu.primarySelectedMonIndex, gPlayerPartyCount - 1, sub_808B564, gPartyMenu.unk8);
+        ShowSelectMovePokemonSummaryScreen(gPlayerParty, gPartyMenu.primarySelectedMonIndex, gPlayerPartyCount - 1, CB2_ReturnToPartyMenuWhileLearningMove, gPartyMenu.unk8);
         DestroyTask(taskId);
     }
 }

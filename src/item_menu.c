@@ -172,11 +172,11 @@ static const struct MenuAction2 sItemPopupMenuActions[] =
 {
     {OtherText_Use,                   HandlePopupMenuAction_UseOnField},
     {OtherText_Toss,                  HandlePopupMenuAction_Toss},
-    {gOtherText_CancelNoTerminator,   sub_80A5F80},
+    {gText_Cancel2,   sub_80A5F80},
     {OtherText_Register,              HandlePopupMenuAction_Register},
     {OtherText_Use,                   HandlePopupMenuAction_UseInBattle},
-    {gOtherText_CancelNoTerminator,   sub_80A7124},
-    {OtherText_Give2,                 HandlePopupMenuAction_Give},
+    {gText_Cancel2,   sub_80A7124},
+    {gMenuText_Give,                 HandlePopupMenuAction_Give},
     {OtherText_CheckTag,              HandlePopupMenuAction_CheckTag},
     {gOtherText_CancelWithTerminator, NULL},
     {OtherText_Confirm,               HandlePopupMenuAction_Confirm},
@@ -2312,8 +2312,8 @@ static void HandlePopupMenuAction_Give(u8 taskId)
         }
         else
         {
-            gTasks[taskId].data[8] = (u32)sub_808B020 >> 16;
-            gTasks[taskId].data[9] = (u32)sub_808B020;
+            gTasks[taskId].data[8] = (u32)CB2_ShowPartyMenuForItemUse >> 16;
+            gTasks[taskId].data[9] = (u32)CB2_ShowPartyMenuForItemUse;
             gTasks[taskId].func = HandleItemMenuPaletteFade;
             gPokemonItemUseType = ITEM_USE_GIVE_ITEM;
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
