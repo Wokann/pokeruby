@@ -233,22 +233,22 @@ gOtherText_MixingComplete:: @ 842C8AC
 gOtherText_TrainersTrainerCard:: @ 842C8DC
 	.string "TRAINERPASS von {PLAYER}$"
 
-gOtherText_FirstHOF:: @ 842C8EC
+gText_HallOfFameDebut:: @ 842C8EC
 	.string "ERSTE RUHMESHALLE:$"
 
-gOtherText_LinkCableBattles:: @ 842C8FF
+gText_LinkCableBattles:: @ 842C8FF
 	.string "KÄMPFE GG. FREUND/E  S.:            N.:$"
 
-gOtherText_BattleTowerWinRecord:: @ 842C924
+gText_BattleTower:: @ 842C924
 	.string "DUELLTURM-S.:{CLEAR_TO 114}&{CLEAR_TO 152} IN FOLGE$"
 
-gOtherText_ContestRecord:: @ 842C943
+gText_WonContestsWFriends:: @ 842C943
 	.string "WETTB. MIT FREUND/EN S.:$"
 
-gOtherText_MixingRecord:: @ 842C959
+gText_PokeblocksWithFriends:: @ 842C959
 	.string "{POKEBLOCK} MIT FREUND/EN:$"
 
-gOtherText_TradeRecord:: @ 842C96A
+gText_PokemonTrades:: @ 842C96A
 	.string "POKéMON-TAUSCH:$"
 
 gOtherText_Boy:: @ 842C979

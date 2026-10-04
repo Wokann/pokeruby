@@ -493,7 +493,7 @@ static bool8 StartMenuPlayerNameCallback(void)
     if (!gPaletteFade.active)
     {
         PlayRainStoppingSoundEffect();
-        TrainerCard_ShowPlayerCard(CB2_ReturnToFieldWithOpenMenu);
+        ShowPlayerTrainerCard(CB2_ReturnToFieldWithOpenMenu);
         return 1;
     }
     return 0;
@@ -541,7 +541,7 @@ static bool8 StartMenuLinkModePlayerNameCallback(void)
     if (!gPaletteFade.active)
     {
         PlayRainStoppingSoundEffect();
-        TrainerCard_ShowLinkCard(gLocalLinkPlayerId, CB2_ReturnToFieldWithOpenMenu);
+        ShowTrainerCardInLink(gLocalLinkPlayerId, CB2_ReturnToFieldWithOpenMenu);
         return 1;
     }
     return 0;

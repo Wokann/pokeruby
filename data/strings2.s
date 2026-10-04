@@ -215,22 +215,22 @@ gOtherText_MixingComplete:: @ 842C8AC
 gOtherText_TrainersTrainerCard:: @ 842C8DC
 	.string "'s TRAINER CARD$"
 
-gOtherText_FirstHOF:: @ 842C8EC
+gText_HallOfFameDebut:: @ 842C8EC
 	.string "FIRST HALL OF FAME$"
 
-gOtherText_LinkCableBattles:: @ 842C8FF
+gText_LinkCableBattles:: @ 842C8FF
 	.string "LINK CABLE BATTLES  W/            L/$"
 
-gOtherText_BattleTowerWinRecord:: @ 842C924
+gText_BattleTower:: @ 842C924
 	.string "BATTLE TOWER W/{CLEAR_TO 0x72}&{CLEAR_TO 0x98}STRAIGHT$"
 
-gOtherText_ContestRecord:: @ 842C943
+gText_WonContestsWFriends:: @ 842C943
 	.string "CONTESTS W/FRIENDS W/$"
 
-gOtherText_MixingRecord:: @ 842C959
+gText_PokeblocksWithFriends:: @ 842C959
 	.string "{POKEBLOCK}S W/FRIENDS$"
 
-gOtherText_TradeRecord:: @ 842C96A
+gText_PokemonTrades:: @ 842C96A
 	.string "POKéMON TRADES$"
 
 gOtherText_Boy:: @ 842C979

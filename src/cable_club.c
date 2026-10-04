@@ -929,7 +929,7 @@ void unref_sub_8083BB0(void)
 
 void Script_ShowLinkTrainerCard(void)
 {
-    TrainerCard_ShowLinkCard(gSpecialVar_0x8006, CB2_ReturnToFieldContinueScriptPlayMapMusic);
+    ShowTrainerCardInLink(gSpecialVar_0x8006, CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
 bool32 GetLinkTrainerCardColor(u8 linkPlayerIndex)
@@ -939,7 +939,7 @@ bool32 GetLinkTrainerCardColor(u8 linkPlayerIndex)
     gSpecialVar_0x8006 = linkPlayerIndex;
     StringCopy(gStringVar1, gLinkPlayers[linkPlayerIndex].name);
 
-    numStars = sub_80934C4(linkPlayerIndex);
+    numStars = GetTrainerCardStars(linkPlayerIndex);
     if (numStars == 0)
         return FALSE;
 

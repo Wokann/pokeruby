@@ -710,7 +710,7 @@ void PrintPokedexCount(void)
     u8 buffer[16];
 
     Menu_PrintText(gMainMenuString_Pokedex, 2, 5);
-    AlignInt1InMenuWindow(buffer, GetPokedexSeenCount(), 18, 0);
+    AlignInt1InMenuWindow(buffer, GetCaughtMonsCount(), 18, 0);
     Menu_PrintText(buffer, 9, 5);
 }
 

@@ -105,12 +105,6 @@ extern const u8 gOtherText_MixingComplete[];
 
 // trainer_card
 extern const u8 gOtherText_TrainersTrainerCard[];
-extern const u8 gOtherText_FirstHOF[];
-extern const u8 gOtherText_LinkCableBattles[];
-extern const u8 gOtherText_BattleTowerWinRecord[];
-extern const u8 gOtherText_ContestRecord[];
-extern const u8 gOtherText_MixingRecord[];
-extern const u8 gOtherText_TradeRecord[];
 extern const u8 gOtherText_Boy[];
 extern const u8 gOtherText_Girl[];
 

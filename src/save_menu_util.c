@@ -90,7 +90,7 @@ void PrintSavePokedexCount(s16 x, s16 y)
     char pokedex[16];
 
     Menu_PrintText(gOtherText_Pokedex, x, y);
-    ConvertIntToDecimalStringN(pokedex, GetPokedexSeenCount(), 1, 3);
+    ConvertIntToDecimalStringN(pokedex, GetCaughtMonsCount(), 1, 3);
     MenuPrint_RightAligned(pokedex, x + 12, y);
 }
 
@@ -115,16 +115,16 @@ u8 GetBadgeCount(void)
     return badgeCount;
 }
 
-u16 GetPokedexSeenCount()
+u16 GetCaughtMonsCount()
 {
-    u16 pokedexSeenCount;
+    u16 caughtMonsCount;
 
     if (IsNationalPokedexEnabled())
-        pokedexSeenCount = GetNationalPokedexCount(1);
+        caughtMonsCount = GetNationalPokedexCount(1);
     else
-        pokedexSeenCount = GetHoennPokedexCount(1);
+        caughtMonsCount = GetHoennPokedexCount(1);
 
-    return pokedexSeenCount;
+    return caughtMonsCount;
 }
 
 void FormatPlayTime(char *playtime, u16 hours, u16 minutes, u16 colon)

@@ -952,4 +952,11 @@ extern const u8 gText_ConfirmStartLinkWithXPlayers[];
 extern const u8 gText_AwaitingLinkup[];
 extern const u8 gText_NumPlayerLink[];
 
+extern const u8 gText_HallOfFameDebut[];
+extern const u8 gText_LinkCableBattles[];
+extern const u8 gText_BattleTower[];
+extern const u8 gText_WonContestsWFriends[];
+extern const u8 gText_PokeblocksWithFriends[];
+extern const u8 gText_PokemonTrades[];
+
 #endif
