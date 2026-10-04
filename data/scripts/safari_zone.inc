@@ -40,7 +40,7 @@ gUnknown_081C3459:: @ 81C3459
 	releaseall
 	goto EventScript_1C341B
 
-gUnknown_081C346A:: @ 81C346A
+EventScript_PokeBlockFeeder:: @ 81C346A
 	lockall
 	special SafariZoneGetPokeblockNameInFeeder
 	compare VAR_RESULT, 0xFFFF

@@ -5,8 +5,8 @@ SSTidalCorridor_MapScripts:: @ 815FC94
 SSTidalCorridor_MapScript2_15FC9A:: @ 815FC9A
 	map_script_2 VAR_PORTHOLE_STATE, 1, SSTidalCorridor_EventScript_15FCBC
 	map_script_2 VAR_PORTHOLE_STATE, 5, SSTidalCorridor_EventScript_15FCD2
-	map_script_2 VAR_PORTHOLE_STATE, 9, SSTidalCorridor_EventScript_15FD24
-	map_script_2 VAR_PORTHOLE_STATE, 10, SSTidalCorridor_EventScript_15FD3A
+	map_script_2 VAR_PORTHOLE_STATE, 9, SSTidalCorridor_EventScript_HalfwayToLilycove
+	map_script_2 VAR_PORTHOLE_STATE, 10, SSTidalCorridor_EventScript_ArrivedInSlateport
 	.2byte 0
 
 SSTidalCorridor_EventScript_15FCBC:: @ 815FCBC
@@ -22,7 +22,7 @@ SSTidalCorridor_EventScript_15FCD2:: @ 815FCD2
 	setvar VAR_PORTHOLE_STATE, 6
 	lockall
 	playse SE_DING_DONG
-	msgbox SSTidalCorridor_Text_199088, MSGBOX_DEFAULT
+	msgbox SSTidal_Text_HopeYouEnjoyVoyage, MSGBOX_DEFAULT
 	releaseall
 	end
 
@@ -40,28 +40,28 @@ SSTidalRooms_EventScript_15FCF9:: @ 815FCF9
 	msgbox SSTidalRooms_Text_1990F8, MSGBOX_DEFAULT
 	return
 
-gUnknown_0815FD0D:: @ 815FD0D
+SSTidalCorridor_EventScript_ReachedStepCount:: @ 815FD0D
 	compare VAR_PORTHOLE_STATE, 2
-	goto_if_eq SSTidalCorridor_EventScript_15FD24
+	goto_if_eq SSTidalCorridor_EventScript_HalfwayToLilycove
 	compare VAR_PORTHOLE_STATE, 7
-	goto_if_eq SSTidalCorridor_EventScript_15FD3A
+	goto_if_eq SSTidalCorridor_EventScript_ArrivedInSlateport
 	end
 
-SSTidalCorridor_EventScript_15FD24:: @ 815FD24
+SSTidalCorridor_EventScript_HalfwayToLilycove:: @ 815FD24
 	special ResetSSTidalFlag
 	setvar VAR_PORTHOLE_STATE, 3
 	lockall
 	playse SE_DING_DONG
-	msgbox SSTidalCorridor_Text_199088, MSGBOX_DEFAULT
+	msgbox SSTidal_Text_HopeYouEnjoyVoyage, MSGBOX_DEFAULT
 	releaseall
 	end
 
-SSTidalCorridor_EventScript_15FD3A:: @ 815FD3A
+SSTidalCorridor_EventScript_ArrivedInSlateport:: @ 815FD3A
 	special ResetSSTidalFlag
 	setvar VAR_PORTHOLE_STATE, 8
 	lockall
 	playse SE_DING_DONG
-	msgbox SSTidalCorridor_Text_1990B4, MSGBOX_DEFAULT
+	msgbox SSTidal_Text_MadeLandInSlateport, MSGBOX_DEFAULT
 	releaseall
 	end
 
@@ -69,7 +69,7 @@ SSTidalRooms_EventScript_15FD50:: @ 815FD50
 	special ResetSSTidalFlag
 	setvar VAR_PORTHOLE_STATE, 8
 	playse SE_DING_DONG
-	msgbox SSTidalRooms_Text_1990B4, MSGBOX_DEFAULT
+	msgbox SSTidal_Text_MadeLandInSlateport, MSGBOX_DEFAULT
 	return
 
 SSTidalRooms_EventScript_15FD64:: @ 815FD64

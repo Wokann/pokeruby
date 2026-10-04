@@ -6,12 +6,11 @@ SSTidalRooms_Text_199007:: @ 8199007
 	.string "Wir hoffen, du genießt die Reise mit\n"
 	.string "uns. Schau dich ruhig auf dem Schiff um.$"
 
-SSTidalCorridor_Text_199088:: @ 8199088
+SSTidal_Text_HopeYouEnjoyVoyage:: @ 8199088
 	.string "Wir hoffen, du genießt die Reise mit\n"
 	.string "uns. Schau dich ruhig auf dem Schiff um.$"
 
-SSTidalCorridor_Text_1990B4:: @ 81990B4
-SSTidalRooms_Text_1990B4:: @ 81990B4
+SSTidal_Text_MadeLandInSlateport:: @ 81990B4
 	.string "Wir gehen in GRAPHITPORT CITY vor\n"
 	.string "Anker. Danke, dass du mit uns gefahren\l"
 	.string "bist.$"

@@ -1,13 +1,13 @@
-EventScript_PictureBookshelf:: @ 81A085B
-    msgbox Text_PictureBookshelf, MSGBOX_SIGN
+EventScript_PictureBookShelf:: @ 81A085B
+    msgbox Text_PictureBookShelf, MSGBOX_SIGN
     end
 
-EventScript_Bookshelf:: @ 81A0864
-    msgbox Text_Bookshelf, MSGBOX_SIGN
+EventScript_BookShelf:: @ 81A0864
+    msgbox Text_BookShelf, MSGBOX_SIGN
     end
 
-EventScript_PokemonCenterBookshelf:: @ 81A086D
-    msgbox Text_PokemonCenterBookshelf, MSGBOX_SIGN
+EventScript_PokemonCenterBookShelf:: @ 81A086D
+    msgbox Text_PokemonCenterBookShelf, MSGBOX_SIGN
     end
 
 EventScript_Vase:: @ 81A0876

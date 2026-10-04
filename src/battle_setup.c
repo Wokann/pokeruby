@@ -63,7 +63,7 @@ extern u8 EventScript_TryDoRematchBattle[];
 extern u8 EventScript_TryDoDoubleRematchBattle[];
 
 extern u8 EventScript_StartTrainerBattle[];
-extern u8 gUnknown_081C6C02[];
+extern u8 EventScript_TestSignpostMsg[];
 
 // The first transition is used if the enemy pokemon are lower level than our pokemon.
 // Otherwise, the second transition is used.
@@ -1162,7 +1162,7 @@ u8 *BattleSetup_GetScriptAddrAfterBattle(void)
     if (sTrainerBattleScriptRetAddr)
         return sTrainerBattleScriptRetAddr;
     else
-        return gUnknown_081C6C02;
+        return EventScript_TestSignpostMsg;
 }
 
 u8 *BattleSetup_GetTrainerPostBattleScript(void)
@@ -1170,7 +1170,7 @@ u8 *BattleSetup_GetTrainerPostBattleScript(void)
     if (sTrainerBattleEndScript)
         return sTrainerBattleEndScript;
     else
-        return gUnknown_081C6C02;
+        return EventScript_TestSignpostMsg;
 }
 
 void ScrSpecial_ShowTrainerNonBattlingSpeech(void)

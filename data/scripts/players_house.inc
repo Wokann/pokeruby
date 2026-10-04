@@ -507,3 +507,7 @@ LittlerootTown_BrendansHouse_1F_Movement_1B6E54:: @ 81B6E54
 	walk_down
 	walk_in_place_faster_right
 	step_end
+
+EventScript_RunningShoesManual:: @ 81B6E5A
+	msgbox PlayersHouse_1F_Text_RunningShoesManual, MSGBOX_SIGN
+	end

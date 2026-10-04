@@ -1556,7 +1556,7 @@ BattleTower_Lobby_EventScript_1AE30F:: @ 81AE30F
 
 	.include "data/scripts/mauville_man.inc"
 
-	.include "data/field_move_scripts.inc"
+	.include "data/scripts/field_move_scripts.inc"
 	.include "data/item_ball_scripts.inc"
 
 	.include "data/scripts/mystery_event_club.inc"
@@ -1583,10 +1583,6 @@ gUnknown_081B694A:: @ 81B694A
 	end
 
 	.include "data/scripts/players_house.inc"
-
-S_RunningShoesManual:: @ 81B6E5A
-	msgbox UnknownString_81728E3, MSGBOX_SIGN
-	end
 
 	.include "data/text/pokeblocks.inc"
 	.include "data/scripts/pokeblocks.inc"
@@ -1647,8 +1643,8 @@ MauvilleCity_GameCorner_EventScript_1C40DA:: @ 81C40DA
 	msgbox Text_1C6C2B, MSGBOX_NPC
 	end
 
-gUnknown_081C6C02:: @ 81C6C02
-	msgbox Text_1C6C4B, MSGBOX_SIGN
+EventScript_TestSignpostMsg:: @ 81C6C02
+	msgbox Text_ThisIsATestSignpostMsg, MSGBOX_SIGN
 	end
 
 @ 81C6C0B
@@ -1678,7 +1674,7 @@ Text_1C6C2B: @ 81C6C2B
 	.string "テストよう　メッセージです！\n"
 	.string "ポケモンの　せかいへ　ようこそ！$"
 
-Text_1C6C4B: @ 81C6C4B
+Text_ThisIsATestSignpostMsg: @ 81C6C4B
 	@ This is a test message!
 	@ This is a sign.
 	.string "テストよう　メッセージです！\n"

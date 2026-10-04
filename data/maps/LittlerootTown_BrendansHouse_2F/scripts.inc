@@ -45,8 +45,6 @@ LittlerootTown_BrendansHouse_2F_EventScript_152814:: @ 8152814
 	releaseall
 	end
 
-gUnknown_0815281E:: @ 815281E
-
 LittlerootTown_BrendansHouse_2F_EventScript_PC:: @ 815281E
 	lockall
 	checkplayergender

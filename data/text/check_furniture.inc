@@ -1,10 +1,10 @@
-Text_PictureBookshelf: @ 81C6A69
+Text_PictureBookShelf: @ 81C6A69
 	.string "There's a set of POKéMON picture books.$"
 
-Text_Bookshelf: @ 81C6A91
+Text_BookShelf: @ 81C6A91
 	.string "It's filled with all sorts of books.$"
 
-Text_PokemonCenterBookshelf: @ 81C6AB6
+Text_PokemonCenterBookShelf: @ 81C6AB6
 	.string "POKéMON magazines!\n"
 	.string "POKéMON PAL...\p"
 	.string "POKéMON HANDBOOK...\n"

@@ -5,12 +5,11 @@ SSTidalRooms_Text_199007:: @ 8199007
 	.string "We hope you enjoy your voyage with us.\n"
 	.string "Feel free to explore the ship.$"
 
-SSTidalCorridor_Text_199088:: @ 8199088
+SSTidal_Text_HopeYouEnjoyVoyage:: @ 8199088
 	.string "We hope you enjoy your voyage on\n"
 	.string "our ferry.$"
 
-SSTidalCorridor_Text_1990B4:: @ 81990B4
-SSTidalRooms_Text_1990B4:: @ 81990B4
+SSTidal_Text_MadeLandInSlateport:: @ 81990B4
 	.string "We have made land in SLATEPORT CITY.\n"
 	.string "Thank you for sailing with us.$"
 

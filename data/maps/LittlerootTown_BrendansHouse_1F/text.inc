@@ -81,7 +81,7 @@ PlayersHouse_1F_Text_TheresAMovieOnTV: @ 817288C
 	.string "keyboard.\p"
 	.string "Better get going!$"
 
-UnknownString_81728E3: @ 81728E3
+PlayersHouse_1F_Text_RunningShoesManual: @ 81728E3
 	.string "It's the instruction booklet for the\n"
 	.string "RUNNING SHOES.\p"
 	.string "“Press the B Button to run while\n"

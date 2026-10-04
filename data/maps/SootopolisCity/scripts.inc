@@ -196,8 +196,8 @@ SootopolisCity_EventScript_CitySign:: @ 814D2F6
 	msgbox SootopolisCity_Text_CitySign, MSGBOX_SIGN
 	end
 
-ClosedSootopolisDoorScript:: @ 814D2FF
-	msgbox ClosedSootopolisDoorText, MSGBOX_SIGN
+EventScript_ClosedSootopolisDoor:: @ 814D2FF
+	msgbox SootopolisCity_Text_DoorIsClosed, MSGBOX_SIGN
 	end
 
 SootopolisCity_EventScript_LeadPlayerCaveOfOrigin:: @ 814D308
