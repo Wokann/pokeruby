@@ -4,7 +4,8 @@
 #include "sprite.h"
 #include "task.h"
 
-bool8 CheckTrainers(void);
-void sub_8084794(struct ObjectEvent *var);
+bool8 CheckForTrainersWantingBattle(void);
+void SetBuriedTrainerMovement(struct ObjectEvent *objEvent);
+void DoTrainerApproach(void);
 
 #endif // GUARD_TRAINER_SEE_H

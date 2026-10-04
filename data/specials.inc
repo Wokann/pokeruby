@@ -63,7 +63,7 @@ gSpecials::
 	def_special ShowTrainerIntroSpeech
 	def_special ShowTrainerCantBattleSpeech
 	def_special GetTrainerFlag
-	def_special EndTrainerApproach
+	def_special DoTrainerApproach
 	def_special PlayTrainerEncounterMusic
 	def_special ShouldTryRematchBattle
 	def_special IsTrainerReadyForRematch

@@ -1690,7 +1690,7 @@ bool8 sub_80874FC(struct Task *task, struct ObjectEvent *objectEvent, struct Spr
         gFieldEffectArguments[1] = objectEvent->currentCoords.y;
         gFieldEffectArguments[2] = sprite->subpriority - 1;
         gFieldEffectArguments[3] = sprite->oam.priority;
-        task->data[1] = FieldEffectStart(FLDEFF_POP_OUT_OF_ASH);
+        task->data[1] = FieldEffectStart(FLDEFF_ASH_PUFF);
         task->data[0]++;
     }
     return FALSE;
@@ -1775,7 +1775,7 @@ bool8 sub_80876F8(struct Task *task, struct ObjectEvent *objectEvent, struct Spr
             gFieldEffectArguments[1] = objectEvent->currentCoords.y;
             gFieldEffectArguments[2] = sprite->subpriority - 1;
             gFieldEffectArguments[3] = sprite->oam.priority;
-            task->data[1] = FieldEffectStart(FLDEFF_POP_OUT_OF_ASH);
+            task->data[1] = FieldEffectStart(FLDEFF_ASH_PUFF);
             task->data[0]++;
         } else
         {
@@ -1799,7 +1799,7 @@ bool8 sub_8087774(struct Task *task, struct ObjectEvent *objectEvent, struct Spr
 
 bool8 sub_80877AC(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (!FieldEffectActiveListContains(FLDEFF_POP_OUT_OF_ASH))
+    if (!FieldEffectActiveListContains(FLDEFF_ASH_PUFF))
     {
         TryFadeOutOldMapMusic();
         WarpFadeOutScreen();
@@ -1837,7 +1837,7 @@ void sub_808788C(struct Sprite *sprite)
 {
     if (sprite->animEnded)
     {
-        FieldEffectStop(sprite, FLDEFF_POP_OUT_OF_ASH);
+        FieldEffectStop(sprite, FLDEFF_ASH_PUFF);
     }
 }
 

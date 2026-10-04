@@ -220,7 +220,7 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
 #if DEBUG
      !input->input_field_1_1 &&
 #endif
-     CheckTrainers() == TRUE)
+     CheckForTrainersWantingBattle() == TRUE)
         return TRUE;
 
     if (

@@ -1,7 +1,7 @@
 EventScript_StartTrainerApproach:: @ 819F80B
 	lock
 	special PlayTrainerEncounterMusic
-	special EndTrainerApproach
+	special DoTrainerApproach
 	waitstate
 	goto EventScript_DoTrainerBattle
 
