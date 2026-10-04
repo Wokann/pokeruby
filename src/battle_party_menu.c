@@ -1,4 +1,5 @@
 #include "global.h"
+#include "reshow_battle_screen.h"
 #include "battle_party_menu.h"
 #include "battle.h"
 #include "item_menu.h"
@@ -29,7 +30,6 @@ extern void nullsub_13(void);
 extern void CB2_SetUpReshowBattleScreenAfterMenu(void);
 extern void sub_80A6DCC(void);
 extern u8 *sub_8040D08();
-extern void ReshowBattleScreenDummy();
 
 extern u8 gPlayerPartyCount;
 extern u8 gBattlersCount;
@@ -41,7 +41,6 @@ extern u8 gPartyMenuMessage_IsPrinting;
 extern u8 gUnknown_020384F0;
 extern void (*gPokemonItemUseCallback)();  //don't know types yet
 extern struct PokemonStorage gPokemonStorage;
-extern void ReshowBattleScreenDummy();
 
 void sub_8094C98(u8, u8);
 u8 pokemon_order_func(u8);

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "reshow_battle_screen.h"
 #include "battle.h"
 #include "battle_main.h"
 #include "battle_gfx_sfx_util.h"
@@ -152,7 +153,6 @@ void sub_802BC6C(void);
 u8 sub_809FA30(void);
 void sub_802BBD4(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0);
 void nullsub_6(void);
-void ReshowBattleScreenAfterMenu(void);
 void BattleMainCB2(void);
 void AddMoney(u32* moneySaveblock, u32 to_give);
 u8 CanRunFromBattle(void);

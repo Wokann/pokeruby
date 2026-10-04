@@ -1,4 +1,5 @@
 #include "global.h"
+#include "reshow_battle_screen.h"
 #include "battle.h"
 #include "battle_gfx_sfx_util.h"
 #include "battle_anim.h"
@@ -53,7 +54,6 @@ extern const u8 BattleText_MenuOptions[];
 extern void BtlController_EmitTwoReturnValues(u8, u8, u16);
 extern void BtlController_EmitOneReturnValue(u8, u16);
 
-extern void ReshowBattleScreenDummy(void);
 extern void DoWallyTutorialBagMenu(void);
 extern bool8 IsDoubleBattle(void);
 extern void Task_PlayerController_RestoreBgmAfterCry(u8);
