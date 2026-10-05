@@ -2563,7 +2563,7 @@ void sub_80C42C0(u8 taskId /*r12*/)
 
 void ScrSpecial_CheckSelectedMonAndInitContest(void)
 {
-    u8 result = CanMonParticipateInContest(&gPlayerParty[gContestMonPartyIndex]);
+    u8 result = GetContestEntryEligibility(&gPlayerParty[gContestMonPartyIndex]);
     if (result != 0)
     {
         Contest_InitAllPokemon(gSpecialVar_ContestCategory, gSpecialVar_ContestRank);

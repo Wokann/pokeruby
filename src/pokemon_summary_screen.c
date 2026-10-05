@@ -2,6 +2,7 @@
 #include "battle.h"
 #include "battle_anim_special.h"
 #include "contest.h"
+#include "contest_effect.h"
 #include "data.h"
 #include "daycare.h"
 #include "decompress.h"
@@ -144,9 +145,6 @@ extern const u8 gSummaryScreen_Gfx[];
 extern const u8 gFontDefaultPalette[];
 extern const u8 gAbilityNames[][13];
 extern const u8 * const gAbilityDescriptions[];
-extern const u8 * const gContestEffectStrings[];
-extern const struct ContestMove gContestMoves[];
-extern const struct ContestEffect gContestEffects[];
 extern const u16 gUnknown_08E94510[];
 extern const u16 gUnknown_08E94550[];
 extern const u16 gUnknown_08E94590[];
@@ -2392,7 +2390,7 @@ static void sub_80A046C(u16 move)
 static void PrintContestMoveDescription(u16 move)
 {
     if (move != 0xFFFF)
-        Menu_PrintText(gContestEffectStrings[gContestMoves[move].effect], 11, 15);
+        Menu_PrintText(gContestEffectDescriptionPointers[gContestMoves[move].effect], 11, 15);
 }
 
 static void PrintMovePowerAndAccuracy(u16 move)

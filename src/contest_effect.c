@@ -2,6 +2,7 @@
 #include "ewram.h"
 #include "random.h"
 #include "contest.h"
+#include "contest_effect.h"
 
 static void ContestEffect_HighlyAppealing(void);
 static void ContestEffect_UserMoreEasilyStartled(void);

@@ -338,7 +338,7 @@ const u8 gContestInterfaceTilemap[] = INCBIN_U8("graphics/contest/interface.bin.
 const u8 unused_unknown_D176CC[] = INCBIN_U8("graphics/unknown/unknown_D176CC.bin.lz");
 const u8 unused_unknown_D177D8[] = INCBIN_U8("graphics/unknown/unknown_D177D8.bin.lz");
 
-const u8 gUnknown_08D17C3C[] = INCBIN_U8("graphics/unknown/unknown_D17C3C.bin.lz");
+const u8 gContestCurtainTilemap[] = INCBIN_U8("graphics/contest/curtain.bin.lz");
 
 const u8 gContestInterfaceGfx[] = INCBIN_U8("graphics/contest/interface.4bpp.lz");
 
@@ -347,9 +347,9 @@ const u8 unused_gfx_faces_4bpp[] = INCBIN_U8("graphics/contest/faces.4bpp.lz");
 
 const u8 gContestJudgeSymbolsGfx[] = INCBIN_U8("graphics/contest/judge_symbols.4bpp.lz");
 
-const u8 gContest3Pal[] = INCBIN_U8("graphics/contest/judge_symbols.gbapal.lz");
+const u8 gContestJudgeSymbolsPal[] = INCBIN_U8("graphics/contest/judge_symbols.gbapal.lz");
 
-const u8 gTiles_8D1975C[] = INCBIN_U8("graphics/contest/heart.4bpp");
+const u8 gContestSliderHeart_Gfx[] = INCBIN_U8("graphics/contest/slider_heart.4bpp");
 
 const u8 gUnknown_08D1977C[] = INCBIN_U8("graphics/contest/misc_2.4bpp.lz");
 

@@ -1,5 +1,6 @@
 #include "global.h"
 #include "contest.h"
+#include "contest_effect.h"
 #include "data.h"
 #include "ewram.h"
 #include "field_screen_effect.h"
@@ -27,9 +28,7 @@ extern u8 gTileBuffer[];
 
 extern const struct WindowTemplate gMenuTextWindowTemplate;
 extern const struct WindowTemplate gMoveTutorMenuFramesWindowTemplate;
-extern const u8 *const gContestEffectStrings[];
 extern const u8 gTypeNames[][7];
-extern const u8 *const gContestCategoryNames[];
 
 #ifdef GERMAN
 extern const u8 deuOtherText_ForgotAndLearned[];
@@ -917,7 +916,7 @@ static void DrawMoveSelectionWindow(void)
             u16 moveId = sMoveTutorMenu->movesToLearn[menuChoice];
 
             if (sMoveTutorMenu->showContestInfo)
-                str = AlignStringInMenuWindow(str, gContestCategoryNames[gContestMoves[moveId].contestCategory], 0x27, 0);
+                str = AlignStringInMenuWindow(str, gContestMoveTypeTextPointers[gContestMoves[moveId].contestCategory], 0x27, 0);
             else
                 str = AlignStringInMenuWindow(str, gTypeNames[gBattleMoves[moveId].type], 0x27, 0);
 
@@ -1020,7 +1019,7 @@ static void DrawMoveInfoWindow(bool8 contestInfo, int unused)
                 gSprites[sMoveTutorMenu->spriteIDs[i + 4]].invisible = FALSE;
             for (i = 0; i < 3; i++)
                 PrintMoveInfo(moveId, sMoveInfoTextCoords[sContestMoveInfoCoordIds[i]]);
-            sub_8072AB0(gContestEffectStrings[gContestMoves[moveId].effect], 0x58, 0x48, 0x90, 32, 1);
+            sub_8072AB0(gContestEffectDescriptionPointers[gContestMoves[moveId].effect], 0x58, 0x48, 0x90, 32, 1);
         }
         else
         {

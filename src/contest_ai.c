@@ -304,7 +304,7 @@ void ContestAI_ResetAI(u8 var)
 
     eContestAI->unk41 = var;
     eContestAI->unk40 = 0;
-    eContestAI->flags = gContestMons[eContestAI->unk41].flags;
+    eContestAI->flags = gContestMons[eContestAI->unk41].aiFlags;
 }
 
 u8 ContestAI_GetActionToUse(void)

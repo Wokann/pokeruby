@@ -783,7 +783,7 @@ void debug_sub_80BA054(u8 taskId)
 	    eContestantStatus[gContestPlayerMonIndex].currMove = gTasks[taskId].data[1];
 	    SetMoveSpecificAnimData(gContestPlayerMonIndex);
 	    SetMoveAnimAttackerData(gContestPlayerMonIndex);
-	    SelectContestMoveBankTarget(gTasks[taskId].data[1]);
+	    SetMoveTargetPosition(gTasks[taskId].data[1]);
 	    DoMoveAnim(gTasks[taskId].data[1]);
 	    gTasks[taskId].data[3] = 0;
 	    gTasks[taskId].data[0]++;
@@ -1028,7 +1028,7 @@ static void Task_DoAppeals(u8 taskId)
 
             SetMoveSpecificAnimData(eContest.currentContestant);
             SetMoveAnimAttackerData(eContest.currentContestant);
-            SelectContestMoveBankTarget(move);
+            SetMoveTargetPosition(move);
             DoMoveAnim(move);
             gTasks[taskId].data[0] = 8;
         }
@@ -1046,7 +1046,7 @@ static void Task_DoAppeals(u8 taskId)
             else
             {
                 if (!eContestantStatus[contestant].hasJudgesAttention)
-                    sub_80B03A8(contestant);
+                    StopFlashJudgeAttentionEye(contestant);
                 DrawUnnervedSymbols();
                 gTasks[taskId].data[0] = 23;
             }
@@ -1255,7 +1255,7 @@ static void Task_DoAppeals(u8 taskId)
             PlaySE(SE_CONTEST_ICON_CLEAR);
         if (eContestantStatus[i].judgesAttentionWasRemoved)
         {
-            sub_80B03A8(i);
+            StopFlashJudgeAttentionEye(i);
             eContestantStatus[i].judgesAttentionWasRemoved = 0;
         }
         gTasks[taskId].data[1]++;

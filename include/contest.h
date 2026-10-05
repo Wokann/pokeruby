@@ -228,28 +228,13 @@ enum
     CONTEST_STRING_NONE = 255
 };
 
-struct ContestMove
-{
-    u8 effect;
-    u8 contestCategory:3;
-    u8 comboStarterId;
-    u8 comboMoves[4];
-};
-
-struct ContestEffect
-{
-    u8 effectType;
-    u8 appeal;
-    u8 jam;
-};
-
 struct ContestPokemon
 {
     /*0x00*/ u16 species;
     /*0x02*/ u8 nickname[POKEMON_NAME_LENGTH + 1];
     /*0x0D*/ u8 trainerName[8];
     /*0x15*/ u8 trainerGfxId;
-    /*0x18*/ u32 flags;
+    /*0x18*/ u32 aiFlags;
     /*0x1C*/ u8 whichRank:2;
              u8 aiPool_Cool:1;
              u8 aiPool_Beauty:1;
@@ -285,21 +270,18 @@ struct ContestAIInfo {
 };
 
 extern struct ContestPokemon gContestMons[];
-extern const struct ContestMove gContestMoves[];
-extern const struct ContestEffect gContestEffects[];
-extern const u8 *const gContestEffectStrings[];
 
 void ResetLinkContestBoolean(void);
 void LoadContestBgAfterMoveAnim(void);
 void CB2_StartContest(void);
 void Contest_CreatePlayerMon(u8);
 void Contest_InitAllPokemon(u8, u8);
-u8 CanMonParticipateInContest(struct Pokemon *party);
+u8 GetContestEntryEligibility(struct Pokemon *pkmn);
 u16 CalculateContestantRound1Points(u8, u8);
 void CalculateRound1Points(u8);
 u8 IsSpeciesNotUnown(u16);
 void CalculateFinalScores(void);
-void SortContestants(u8);
+void SortContestants(u8 useRanking);
 bool8 Contest_SaveWinner(u8);
 u8 GetContestWinnerSaveIdx(u8, u8);
 void Contest_ResetWinners(void);
@@ -459,10 +441,10 @@ extern u16 gSpecialVar_ContestRank;
 extern u16 gSpecialVar_ContestCategory;
 extern u8 gContestMonPartyIndex;
 
-void SetContestantEffectStringID(u8 a, u8 b);
-void SetContestantEffectStringID2(u8 a, u8 b);
+void SetContestantEffectStringID(u8 contestant, u8 effectStringId);
+void SetContestantEffectStringID2(u8 contestant, u8 effectStringId);
 void MakeContestantNervous(u8 p);
-bool8 Contest_IsMonsTurnDisabled(u8 a);
+bool8 Contest_IsMonsTurnDisabled(u8 contestant);
 bool8 IsContestantAllowedToCombo(u8 contestant);
 void SetStartledString(u8 a, u8 b);
 
