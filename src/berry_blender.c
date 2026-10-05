@@ -186,7 +186,6 @@ extern u8 byte_3002A68;
 
 extern const struct WindowTemplate gWindowTemplate_81E6F68;
 extern const u8 *const gPokeblockNames[];
-extern const struct Berry gBerries[];
 
 
 // ewram

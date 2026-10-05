@@ -3,7 +3,6 @@
 
 #define BERRY_NAME_LENGTH 6
 #define BERRY_REGROW_LIMIT 10
-#define MAX_BERRY_TREES 128
 
 #define BERRY_NONE 0
 

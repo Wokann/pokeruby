@@ -1907,7 +1907,7 @@ void mli4_mapscripts_and_other(void)
     SetPlayerAvatarTransitionFlags(initialPlayerAvatarState->transitionFlags);
     ResetInitialPlayerAvatarState();
     TrySpawnObjectEvents(0, 0);
-    ResetBerryTreeSparkleFlags();
+    SetBerryTreesSeen();
     TryRunOnWarpIntoMapScript();
 }
 

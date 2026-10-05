@@ -1,6 +1,7 @@
 #include "global.h"
 #include "berry.h"
 #include "event_object_movement.h"
+#include "event_scripts.h"
 #include "field_control_avatar.h"
 #include "fieldmap.h"
 #include "fldeff.h"
@@ -972,9 +973,8 @@ const struct Berry gBerries[] =
     },
 };
 
-static const struct BerryTree gBlankBerryTree = {0};
+const struct BerryTree gBlankBerryTree = {0};
 
-extern u8 S_BerryTree[];
 extern u16 gSpecialVar_LastTalked;
 extern u16 gSpecialVar_0x8004;
 extern u16 gSpecialVar_0x8005;
@@ -1143,7 +1143,7 @@ const struct Berry *GetBerryInfo(u8 berry)
 
 // the save file can handle up to a number of 128 berry trees as indicated by its definition
 // in global.h. Interestingly, this function does not check that limit of 128.
-static struct BerryTree *GetBerryTreeInfo(u8 id)
+struct BerryTree *GetBerryTreeInfo(u8 id)
 {
     return &gSaveBlock1.berryTrees[id];
 }
@@ -1177,9 +1177,9 @@ bool32 ObjectEventInteractionWaterBerryTree(void)
     return TRUE;
 }
 
-bool8 IsPlayerFacingUnplantedSoil(void)
+bool8 IsPlayerFacingEmptyBerryTreePatch(void)
 {
-    if (GetObjectEventScriptPointerPlayerFacing() == S_BerryTree
+    if (GetObjectEventScriptPointerPlayerFacing() == BerryTreeScript
      && GetStageByBerryTreeId(GetObjectEventBerryTreeId(gSelectedObjectEvent)) == BERRY_STAGE_NO_BERRY)
         return TRUE;
     else
@@ -1188,7 +1188,7 @@ bool8 IsPlayerFacingUnplantedSoil(void)
 
 bool8 TryToWaterBerryTree(void)
 {
-    if (GetObjectEventScriptPointerPlayerFacing() != S_BerryTree)
+    if (GetObjectEventScriptPointerPlayerFacing() != BerryTreeScript)
         return FALSE;
     else
         return ObjectEventInteractionWaterBerryTree();
@@ -1200,7 +1200,7 @@ void ClearBerryTrees(void)
     struct SaveBlock1 *saveBlock1 = &gSaveBlock1;
     struct BerryTree berryTree = gBlankBerryTree;
 
-    for (i = 0; i < MAX_BERRY_TREES; i++)
+    for (i = 0; i < BERRY_TREES_COUNT; i++)
         saveBlock1->berryTrees[i] = berryTree;
 }
 
@@ -1208,7 +1208,7 @@ void ClearBerryTrees(void)
 // to advance the grow state.
 static bool32 BerryTreeGrow(struct BerryTree *tree)
 {
-    if (tree->growthSparkle)
+    if (tree->stopGrowth)
         return FALSE;
     switch (tree->stage)
     {
@@ -1240,11 +1240,11 @@ void BerryTreeTimeUpdate(s32 minutesPassed)
     int i;
     struct BerryTree *tree;
 
-    for (i = 0; i < MAX_BERRY_TREES; i++)
+    for (i = 0; i < BERRY_TREES_COUNT; i++)
     {
         tree = &gSaveBlock1.berryTrees[i];
 
-        if (tree->berry != BERRY_NONE && tree->stage != BERRY_STAGE_NO_BERRY && tree->growthSparkle == FALSE)
+        if (tree->berry != BERRY_NONE && tree->stage != BERRY_STAGE_NO_BERRY && tree->stopGrowth == FALSE)
         {
             // the player has waited too long to water the berry. Reset the tree. This is because
             // if the berry state is not in the unwatered state, the tree will grow anyway despite this
@@ -1285,7 +1285,7 @@ void BerryTreeTimeUpdate(s32 minutesPassed)
     }
 }
 
-void PlantBerryTree(u8 id, u8 berry, u8 stage, bool8 sparkle)
+void PlantBerryTree(u8 id, u8 berry, u8 stage, bool8 allowGrowth)
 {
     struct BerryTree *tree = GetBerryTreeInfo(id);
 
@@ -1298,9 +1298,11 @@ void PlantBerryTree(u8 id, u8 berry, u8 stage, bool8 sparkle)
         tree->berryYield = CalcBerryYield(tree);
         tree->minutesUntilNextStage *= 4;
     }
-    if (!sparkle)
+    // Stop growth, to keep tree at this stage until the player has seen it
+    // allowGrowth is always true for berry trees the player has planted
+    if (!allowGrowth)
     {
-        tree->growthSparkle = TRUE;
+        tree->stopGrowth = TRUE;
     }
 }
 
@@ -1345,9 +1347,9 @@ void GetBerryNameByBerryType(u8 berry, u8 *string)
     string[BERRY_NAME_LENGTH] = EOS;
 }
 
-void ResetBerryTreeSparkleFlag(u8 id)
+void AllowBerryTreeGrowth(u8 id)
 {
-    GetBerryTreeInfo(id)->growthSparkle = FALSE;
+    GetBerryTreeInfo(id)->stopGrowth = FALSE;
 }
 
 static u8 BerryTreeGetNumStagesWatered(struct BerryTree *tree)
@@ -1424,7 +1426,7 @@ void ObjectEventInteractionGetBerryTreeData(void)
 
     id = GetObjectEventBerryTreeId(gSelectedObjectEvent);
     berry = GetBerryTypeByBerryTreeId(id);
-    ResetBerryTreeSparkleFlag(id);
+    AllowBerryTreeGrowth(id);
     localId = gSpecialVar_LastTalked;
     num = gSaveBlock1.location.mapNum;
     group = gSaveBlock1.location.mapGroup;
@@ -1442,7 +1444,7 @@ void ObjectEventInteractionGetBerryTreeData(void)
     GetBerryNameByBerryType(berry, gStringVar1);
 }
 
-void Berry_FadeAndGoToBerryBagMenu(void)
+void Bag_ChooseBerry(void)
 {
     SetMainCallback2(CB2_ChooseBerry);
 }
@@ -1471,7 +1473,7 @@ void ObjectEventInteractionRemoveBerryTree(void)
 
 bool8 PlayerHasBerries(void)
 {
-    return IsBagPocketNonEmpty(BAG_BERRIES);
+    return IsBagPocketNonEmpty(POCKET_BERRIES);
 }
 
 #if DEBUG
@@ -1494,7 +1496,7 @@ static const u8 gUnknown_Debug_083F7FD3[] = _("");
 
 u8* DebugOpenBerryInfo(void)
 {
-    if (GetObjectEventScriptPointerPlayerFacing() != S_BerryTree)
+    if (GetObjectEventScriptPointerPlayerFacing() != BerryTreeScript)
     {
         return NULL;
     }
@@ -1513,7 +1515,7 @@ u8* DebugOpenBerryInfo(void)
         debug_sub_80C33FC(gUnknown_Debug_083F7FB0, berryTree->minutesUntilNextStage, 5);
         debug_sub_80C33FC(gUnknown_Debug_083F7FB7, berryTree->berryYield, 2);
         debug_sub_80C33FC(gUnknown_Debug_083F7FBE, berryTree->regrowthCount, 3);
-        debug_sub_80C33FC(gUnknown_Debug_083F7FC5, berryTree->growthSparkle, 1);
+        debug_sub_80C33FC(gUnknown_Debug_083F7FC5, berryTree->stopGrowth, 1);
         debug_sub_80C33FC(gUnknown_Debug_083F7FCC, berryTree->watered1, 1);
         debug_sub_80C33FC(gUnknown_Debug_083F7FD3, berryTree->watered2, 1);
         debug_sub_80C33FC(gUnknown_Debug_083F7FD3, berryTree->watered3, 1);
@@ -1525,9 +1527,9 @@ u8* DebugOpenBerryInfo(void)
 
 #endif
 
-// whenever the player is not within view of the berry tree during its sparkle state, the
-// sparkle state will be reset.
-void ResetBerryTreeSparkleFlags(void)
+// Berry tree growth is frozen at their initial stage (usually, fully grown) until the player has seen the tree
+// For all berry trees on screen, allow normal growth
+void SetBerryTreesSeen(void)
 {
     s16 cam_left;
     s16 cam_top;
@@ -1549,7 +1551,7 @@ void ResetBerryTreeSparkleFlags(void)
             cam_left = gObjectEvents[i].currentCoords.x;
             cam_top = gObjectEvents[i].currentCoords.y;
             if (left <= cam_left && cam_left <= right && top <= cam_top && cam_top <= bottom)
-                ResetBerryTreeSparkleFlag(gObjectEvents[i].trainerRange_berryTreeId);
+                AllowBerryTreeGrowth(gObjectEvents[i].trainerRange_berryTreeId);
         }
     }
 }

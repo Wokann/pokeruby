@@ -1,4 +1,4 @@
-S_BerryTree:: @ 81A14DD
+BerryTreeScript:: @ 81A14DD
 	special ObjectEventInteractionGetBerryTreeData
 	switch VAR_0x8004
 	case 255, BerryTree_EventScript_1A1533
@@ -41,7 +41,7 @@ BerryTree_EventScript_1A1558:: @ 81A1558
 BerryTree_EventScript_1A1577:: @ 81A1577
 	fadescreen FADE_TO_BLACK
 	closemessage
-	special Berry_FadeAndGoToBerryBagMenu
+	special Bag_ChooseBerry
 	waitstate
 	compare VAR_ITEM_ID, 0
 	goto_if_eq BerryTree_EventScript_1A1593
