@@ -2372,7 +2372,7 @@ void CB2_GoToSellMenu(void)
 
 static void OnBagClose_Shop(u8 taskId)
 {
-    gFieldCallback = Shop_FadeReturnToMartMenu;
+    gFieldCallback = MapPostLoadHook_ReturnToShopMenu;
     gTasks[taskId].data[8] = (u32)CB2_ReturnToField >> 16;
     gTasks[taskId].data[9] = (u32)CB2_ReturnToField;
     sub_80A5AE4(taskId);
