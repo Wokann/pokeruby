@@ -694,7 +694,7 @@ static void ItemStorage_DoItemToss(u8 taskId)
     s16 *data = TASK.data;
     u8 var = PAGE_INDEX + ITEMS_ABOVE_TOP;
 
-    if(ItemId_GetImportance(gSaveBlock1.pcItems[var].itemId) == FALSE)
+    if(GetItemImportance(gSaveBlock1.pcItems[var].itemId) == FALSE)
     {
         CopyItemName(gSaveBlock1.pcItems[var].itemId, gStringVar1);
         ConvertIntToDecimalStringN(gStringVar2, NUM_QUANTITY_ROLLER, 0, 3);
@@ -946,7 +946,7 @@ static void ItemStorage_PrintItemPcResponse(u16 itemId)
             string = gOtherText_SwitchWhichItem;
             break;
         default:
-            string = ItemId_GetDescription(itemId);
+            string = GetItemDescription(itemId);
             break;
     }
 

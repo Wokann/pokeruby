@@ -621,7 +621,7 @@ void debug_sub_80A3714(void)
 
         if (gUnknown_Debug_083EBC68[i].itemId == ITEM_NONE)
             break;
-        pocket = ItemId_GetPocket(gUnknown_Debug_083EBC68[i].itemId) - 1;
+        pocket = GetItemPocket(gUnknown_Debug_083EBC68[i].itemId) - 1;
         gBagPockets[pocket].itemSlots[arr[pocket]] = gUnknown_Debug_083EBC68[i];
         arr[pocket]++;
     }
@@ -1140,7 +1140,7 @@ static void sub_80A4380(u16 a, int b, int c, int d)
         r5 = i * 2 + 2;
         text = gStringVar1;
         text = sub_80A425C(a, text, i);
-        text = AlignStringInMenuWindow(text, ItemId_GetName(gCurrentBagPocketItemSlots[r4].itemId), 0x66, 0);
+        text = AlignStringInMenuWindow(text, GetItemName(gCurrentBagPocketItemSlots[r4].itemId), 0x66, 0);
         *text++ = CHAR_MULT_SIGN;
         AlignInt1InMenuWindow(text, gCurrentBagPocketItemSlots[r4].quantity, 0x78, 1);
         Menu_PrintText(gStringVar1, 14, r5);
@@ -1164,9 +1164,9 @@ static void sub_80A444C(u16 a, int b, int c, int d)
         text = gStringVar1;
         text = sub_80A425C(a, text, i);
 #if ENGLISH
-        AlignStringInMenuWindow(text, ItemId_GetName(gCurrentBagPocketItemSlots[slot].itemId), 0x60, 0);
+        AlignStringInMenuWindow(text, GetItemName(gCurrentBagPocketItemSlots[slot].itemId), 0x60, 0);
 #else
-        AlignStringInMenuWindow(text, ItemId_GetName(gCurrentBagPocketItemSlots[slot].itemId), 0x63, 0);
+        AlignStringInMenuWindow(text, GetItemName(gCurrentBagPocketItemSlots[slot].itemId), 0x63, 0);
 #endif
         Menu_PrintText(gStringVar1, 14, r5);
         if (gUnknown_02038558)
@@ -1317,7 +1317,7 @@ static void ItemListMenu_InitDescription(s16 itemId)
     }
     else
     {
-        r5 = sub_8072A18(ItemId_GetDescription(itemId), 4, 0x68, 0x68, 1);
+        r5 = sub_8072A18(GetItemDescription(itemId), 4, 0x68, 0x68, 1);
     }
 
     if (r5 < 3)
@@ -2055,10 +2055,10 @@ void sub_80A5B40(void)
 
 static void ItemMenu_UseOutOfBattle(u8 taskId)
 {
-    if (ItemId_GetFieldFunc(gSpecialVar_ItemId) != NULL)
+    if (GetItemFieldFunc(gSpecialVar_ItemId) != NULL)
     {
         PlaySE(SE_SELECT);
-        if (CalculatePlayerPartyCount() == 0 && ItemId_GetType(gSpecialVar_ItemId) == 1)
+        if (CalculatePlayerPartyCount() == 0 && GetItemType(gSpecialVar_ItemId) == 1)
         {
             PrintThereIsNoPokemon(taskId);
         }
@@ -2066,7 +2066,7 @@ static void ItemMenu_UseOutOfBattle(u8 taskId)
         {
             gTasks[taskId].data[2] = 0;
             if (sCurrentBagPocket != BERRIES_POCKET)
-                ItemId_GetFieldFunc(gSpecialVar_ItemId)(taskId);
+                GetItemFieldFunc(gSpecialVar_ItemId)(taskId);
             else
                 ItemUseOutOfBattle_Berry(taskId);
         }
@@ -2281,7 +2281,7 @@ static void ItemMenu_Give(u8 taskId)
         sub_80A7590();
         DisplayCannotUseItemMessage(taskId, gText_CantWriteMail, HandleErrorMessage, 1);
     }
-    else if (ItemId_GetImportance(gSpecialVar_ItemId) == 0)
+    else if (GetItemImportance(gSpecialVar_ItemId) == 0)
     {
         if (CalculatePlayerPartyCount() == 0)
         {
@@ -2346,7 +2346,7 @@ static void Task_ItemContext_GiveToParty(u8 taskId)
         sub_80A7590();
         DisplayCannotUseItemMessage(taskId, gStringVar4, HandleErrorMessage, 1);
     }
-    else if (r6 != 5 && ItemId_GetImportance(gSpecialVar_ItemId) == 0)
+    else if (r6 != 5 && GetItemImportance(gSpecialVar_ItemId) == 0)
     {
         gTasks[taskId].data[8] = (u32)sub_808A3F8 >> 16;
         gTasks[taskId].data[9] = (u32)sub_808A3F8;
@@ -2385,7 +2385,7 @@ static void Task_ItemContext_Sell(u8 taskId)
     sub_80A48E8(taskId, gBagPocketScrollStates[sCurrentBagPocket].cursorPosition, gBagPocketScrollStates[sCurrentBagPocket].cursorPosition);
     sub_80A73FC();
     CopyItemName(gSpecialVar_ItemId, gStringVar2);
-    if (ItemId_GetPrice(gSpecialVar_ItemId) == 0)
+    if (GetItemPrice(gSpecialVar_ItemId) == 0)
     {
         StringExpandPlaceholders(gStringVar4, gOtherText_CantBuyThat);
         DisplayCannotUseItemMessage(taskId, gStringVar4, sub_80A6444, 1);
@@ -2487,7 +2487,7 @@ static void Task_ChooseHowManyToSell(u8 taskId)
         PlaySE(SE_SELECT);
         Menu_EraseWindowRect(0, 10, 13, 13);
         sub_80A36B8(gBGTilemapBuffers[1], 0, 10, 13, 3);
-        ConvertIntToDecimalStringN(gStringVar1, ItemId_GetPrice(gSpecialVar_ItemId) / 2 * gTasks[taskId].data[1], STR_CONV_MODE_LEFT_ALIGN, 6);
+        ConvertIntToDecimalStringN(gStringVar1, GetItemPrice(gSpecialVar_ItemId) / 2 * gTasks[taskId].data[1], STR_CONV_MODE_LEFT_ALIGN, 6);
         StringExpandPlaceholders(gStringVar4, gOtherText_CanPay);
         DisplayCannotUseItemMessage(taskId, gStringVar4, AskSellItems, 1);
     }
@@ -2518,8 +2518,8 @@ static void BuyMenuPrintItemQuantityAndPrice(u8 taskId)
 
 static void BuyMenuDisplayMessage(u16 itemId, u16 quantity)
 {
-    PrintMoneyAmount(ItemId_GetPrice(itemId) / 2 * quantity, 6, 6, 11);
-    ConvertIntToDecimalStringN(gStringVar1, ItemId_GetPrice(itemId) / 2 * quantity, STR_CONV_MODE_LEFT_ALIGN, 6);
+    PrintMoneyAmount(GetItemPrice(itemId) / 2 * quantity, 6, 6, 11);
+    ConvertIntToDecimalStringN(gStringVar1, GetItemPrice(itemId) / 2 * quantity, STR_CONV_MODE_LEFT_ALIGN, 6);
 }
 
 static void sub_80A683C(void)
@@ -2530,7 +2530,7 @@ static void sub_80A683C(void)
 
 static void sub_80A6870(u16 itemId, u8 quantity)
 {
-    AddMoney(&gSaveBlock1.money, ItemId_GetPrice(itemId) / 2 * quantity);
+    AddMoney(&gSaveBlock1.money, GetItemPrice(itemId) / 2 * quantity);
     UpdateMoneyWindow(gSaveBlock1.money, 0, 0);
 }
 
@@ -2651,7 +2651,7 @@ static void TryDepositItem(u8 taskId)
 {
     s16 *taskData = gTasks[taskId].data;
 
-    if (ItemId_GetImportance(gSpecialVar_ItemId) == 2)
+    if (GetItemImportance(gSpecialVar_ItemId) == 2)
     {
         gTasks[taskId].func = WaitDepositErrorMessage;
         sub_80A7528(9);
@@ -2727,7 +2727,7 @@ bool32 UseRegisteredKeyItemOnField(void)
             PlayerFreeze();
             StopPlayerAvatar();
             gSpecialVar_ItemId = gSaveBlock1.registeredItem;
-            taskId = CreateTask(ItemId_GetFieldFunc(gSaveBlock1.registeredItem), 8);
+            taskId = CreateTask(GetItemFieldFunc(gSaveBlock1.registeredItem), 8);
             gTasks[taskId].data[2] = 1;
             return TRUE;
         }
@@ -2816,7 +2816,7 @@ static const u8 sContextMenuItems_Cancel[] = {5, 0};
 
 static void sub_80A6FDC(void)
 {
-    if (ItemId_GetBattleUsage(gSpecialVar_ItemId) != 0)
+    if (GetItemBattleUsage(gSpecialVar_ItemId) != 0)
     {
         sPopupMenuActionList = sContextMenuItems_BattleUse;
         gUnknown_02038564 = 2;
@@ -2855,10 +2855,10 @@ static void OnBagClose_Battle(u8 taskId)
 
 static void ItemMenu_UseInBattle(u8 taskId)
 {
-    if (ItemId_GetBattleFunc(gSpecialVar_ItemId) != NULL)
+    if (GetItemBattleFunc(gSpecialVar_ItemId) != NULL)
     {
         PlaySE(SE_SELECT);
-        ItemId_GetBattleFunc(gSpecialVar_ItemId)(taskId);
+        GetItemBattleFunc(gSpecialVar_ItemId)(taskId);
     }
 }
 

@@ -2769,7 +2769,7 @@ static void PrintHeldItemName(u16 itemId, u8 left, u8 top)
      && sub_80F9344() == TRUE
      && IsLinkDoubleBattle() == TRUE
      && (pssData.curMonIndex == 1 || pssData.curMonIndex == 4 || pssData.curMonIndex == 5))
-        StringCopy(gStringVar1, ItemId_GetName(itemId));
+        StringCopy(gStringVar1, GetItemName(itemId));
     else if (itemId == 0)
         StringCopy(gStringVar1, gOtherText_None);
     else

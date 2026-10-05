@@ -69,7 +69,7 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
     }
     else
     {
-        holdEffect = ItemId_GetHoldEffect(heldItem);
+        holdEffect = GetItemHoldEffect(heldItem);
     }
 
     gPotentialItemEffectBattler = gBattlerInMenuId;

@@ -4,40 +4,60 @@
 #include "constants/item.h"
 typedef void (*ItemUseFunc)(u8);
 
+struct Item
+{
+    u8 name[14];
+    u16 itemId;
+    u16 price;
+    u8 holdEffect;
+    u8 holdEffectParam;
+    const u8 *description;
+    u8 importance;
+    u8 registrability; // unused
+    u8 pocket;
+    u8 type;
+    ItemUseFunc fieldUseFunc;
+    u8 battleUsage;
+    ItemUseFunc battleUseFunc;
+    u8 secondaryId;
+};
+
 struct BagPocket
 {
     struct ItemSlot *itemSlots;
     u8 capacity;
 };
 
-void CopyItemName(u16 itemId, u8 *string);
+extern const struct Item gItems[];
+
+void CopyItemName(u16 itemId, u8 *dst);
 bool8 IsBagPocketNonEmpty(u8 pocket);
 bool8 CheckBagHasItem(u16 itemId, u16 count);
 bool8 CheckBagHasSpace(u16 itemId, u16 count);
 bool8 AddBagItem(u16 itemId, u16 count);
 bool8 RemoveBagItem(u16 itemId, u16 count);
 u8 GetPocketByItemId(u16 itemId);
-void ClearItemSlots(struct ItemSlot *itemSlots, u8 b);
+void ClearItemSlots(struct ItemSlot *itemSlots, u8 itemCount);
 u8 CountUsedPCItemSlots(void);
 bool8 CheckPCHasItem(u16 itemId, u16 count);
 bool8 AddPCItem(u16 itemId, u16 count);
 void RemovePCItem(u8 index, u16 count);
 void SwapRegisteredBike(void);
-const u8 *ItemId_GetName(u16 itemId);
-u16 ItemId_GetId(u16 itemId);
-u16 ItemId_GetPrice(u16 itemId);
-u8 ItemId_GetHoldEffect(u16 itemId);
-u8 ItemId_GetHoldEffectParam(u16 itemId);
-const u8 *ItemId_GetDescription(u16 itemId);
+const u8 *GetItemName(u16 itemId);
+u16 GetItemId(u16 itemId);
+u16 GetItemPrice(u16 itemId);
+u8 GetItemHoldEffect(u16 itemId);
+u8 GetItemHoldEffectParam(u16 itemId);
+const u8 *GetItemDescription(u16 itemId);
 bool32 ItemId_CopyDescription(u8 *a, u32 itemId, u32 c);
-u8 ItemId_GetImportance(u16 itemId);
-u8 ItemId_GetExitsBagOnUse(u16 itemId);
-u8 ItemId_GetPocket(u16 itemId);
-u8 ItemId_GetType(u16 itemId);
-ItemUseFunc ItemId_GetFieldFunc(u16 itemId);
-u8 ItemId_GetBattleUsage(u16 itemId);
-ItemUseFunc ItemId_GetBattleFunc(u16 itemId);
-u8 ItemId_GetSecondaryId(u16 itemId);
+u8 GetItemImportance(u16 itemId);
+u8 GetItemRegistrability(u16 itemId);
+u8 GetItemPocket(u16 itemId);
+u8 GetItemType(u16 itemId);
+ItemUseFunc GetItemFieldFunc(u16 itemId);
+u8 GetItemBattleUsage(u16 itemId);
+ItemUseFunc GetItemBattleFunc(u16 itemId);
+u8 GetItemSecondaryId(u16 itemId);
 
 void ClearBag(void);
 

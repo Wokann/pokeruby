@@ -2075,7 +2075,7 @@ u8 debug_80C5738(u8 * a0, u8 a1, u8 a2)
             a0[12 + r5] = 0x01;
             a0[13 + r5] = a2;
             if (gUnknown_Debug_2038A1C->unk64[a1] != ITEM_NONE)
-                debug_80C689C(a0 + 14 + r5, ItemId_GetName(gUnknown_Debug_2038A1C->unk64[a1]), 9);
+                debug_80C689C(a0 + 14 + r5, GetItemName(gUnknown_Debug_2038A1C->unk64[a1]), 9);
             else
                 debug_80C689C(a0 + 14 + r5, gUnknown_Debug_083F8541, 9);
             break;

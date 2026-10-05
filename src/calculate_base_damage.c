@@ -125,8 +125,8 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     }
     else
     {
-        attackerHoldEffect = ItemId_GetHoldEffect(attacker->item);
-        attackerHoldEffectParam = ItemId_GetHoldEffectParam(attacker->item);
+        attackerHoldEffect = GetItemHoldEffect(attacker->item);
+        attackerHoldEffectParam = GetItemHoldEffectParam(attacker->item);
     }
 
     if (defender->item == ITEM_ENIGMA_BERRY)
@@ -136,8 +136,8 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     }
     else
     {
-        defenderHoldEffect = ItemId_GetHoldEffect(defender->item);
-        defenderHoldEffectParam = ItemId_GetHoldEffectParam(defender->item);
+        defenderHoldEffect = GetItemHoldEffect(defender->item);
+        defenderHoldEffectParam = GetItemHoldEffectParam(defender->item);
     }
 
     if (attacker->ability == ABILITY_HUGE_POWER || attacker->ability == ABILITY_PURE_POWER)

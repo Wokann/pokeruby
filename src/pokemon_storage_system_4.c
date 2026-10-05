@@ -1669,7 +1669,7 @@ static void SetDisplayMonData(void *pokemon, u8 mode)
             txtPtr[1] = 0x06; // size
             txtPtr[2] = 0x04;
             txtPtr = gPokemonStorageSystemPtr->displayMonItemName + 8;
-            txtPtr = StringCopy(txtPtr, ItemId_GetName(gPokemonStorageSystemPtr->displayMonItemId));
+            txtPtr = StringCopy(txtPtr, GetItemName(gPokemonStorageSystemPtr->displayMonItemId));
             txtPtr[0] = EXT_CTRL_CODE_BEGIN;
             txtPtr[1] = 0x07; // UNKNOWN_7;
             txtPtr += 2;

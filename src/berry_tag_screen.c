@@ -282,7 +282,7 @@ static void sub_81464E4(void)
     Menu_PrintText(berryInfo->name, 14, 4);
 #elif GERMAN
     StringCopy(buffer, berryInfo->name);
-    StringAppend(buffer, gOtherText_Berry2);
+    StringAppend(buffer, gText_Berry2);
     Menu_PrintText(buffer, 14, 4);
 #endif
 

@@ -92,7 +92,7 @@ void ExecuteSwitchToOverworldFromItemUse(u8 taskId)
     if (gSpecialVar_ItemId == ITEM_ENIGMA_BERRY)
         taskData = gTasks[taskId].data[15] - 1;
     else
-        taskData = ItemId_GetType(gSpecialVar_ItemId) - 1;
+        taskData = GetItemType(gSpecialVar_ItemId) - 1;
 
     gTasks[taskId].data[8] = (u32)gExitToOverworldFuncList[taskData] >> 16;
     gTasks[taskId].data[9] = (u32)gExitToOverworldFuncList[taskData];
@@ -152,9 +152,9 @@ void DisplayCantGetOffBikeItemMessage(u8 taskId, u8 playerMenuStatus)
 
 u8 CheckIfItemIsTMHMOrEvolutionStone(u16 itemId)
 {
-    if (ItemId_GetFieldFunc(itemId) == ItemUseOutOfBattle_TMHM)
+    if (GetItemFieldFunc(itemId) == ItemUseOutOfBattle_TMHM)
         return 1;
-    else if (ItemId_GetFieldFunc(itemId) == ItemUseOutOfBattle_EvolutionStone)
+    else if (GetItemFieldFunc(itemId) == ItemUseOutOfBattle_EvolutionStone)
         return 2;
     else
         return 0;
@@ -208,9 +208,9 @@ void ItemUseOutOfBattle_Bike(u8 taskId)
 
 void ItemUseOnFieldCB_Bike(u8 taskId)
 {
-    if (ItemId_GetSecondaryId(gSpecialVar_ItemId) == 0)
+    if (GetItemSecondaryId(gSpecialVar_ItemId) == 0)
         GetOnOffBike(PLAYER_AVATAR_FLAG_MACH_BIKE);
-    if (ItemId_GetSecondaryId(gSpecialVar_ItemId) == 1)
+    if (GetItemSecondaryId(gSpecialVar_ItemId) == 1)
         GetOnOffBike(PLAYER_AVATAR_FLAG_ACRO_BIKE);
 
     ScriptUnfreezeObjectEvents();
@@ -261,7 +261,7 @@ void ItemUseOutOfBattle_Rod(u8 taskId)
 
 void ItemUseOnFieldCB_Rod(u8 taskId)
 {
-    StartFishing(ItemId_GetSecondaryId(gSpecialVar_ItemId));
+    StartFishing(GetItemSecondaryId(gSpecialVar_ItemId));
     DestroyTask(taskId);
 }
 
@@ -630,11 +630,11 @@ void ItemUseOutOfBattle_SSTicket(u8 taskId)
     if (gTasks[taskId].data[2] == 0)
     {
         Menu_EraseWindowRect(0, 13, 13, 20);
-        DisplayItemMessageOnField(taskId, sSSTidalBetaStrings[ItemId_GetSecondaryId(gSpecialVar_ItemId)], SSTicketWaitForAButtonPress, 1);
+        DisplayItemMessageOnField(taskId, sSSTidalBetaStrings[GetItemSecondaryId(gSpecialVar_ItemId)], SSTicketWaitForAButtonPress, 1);
     }
     else
     {
-        DisplayItemMessageOnField(taskId, sSSTidalBetaStrings[ItemId_GetSecondaryId(gSpecialVar_ItemId)], SSTicketWaitForAButtonPress2, 0);
+        DisplayItemMessageOnField(taskId, sSSTidalBetaStrings[GetItemSecondaryId(gSpecialVar_ItemId)], SSTicketWaitForAButtonPress2, 0);
     }
 }
 
@@ -651,7 +651,7 @@ void ItemUseOutOfBattle_Berry(u8 taskId)
     }
     else
     {
-        ItemId_GetFieldFunc(gSpecialVar_ItemId)(taskId);
+        GetItemFieldFunc(gSpecialVar_ItemId)(taskId);
     }
 }
 
@@ -783,7 +783,7 @@ void ItemUseOutOfBattle_Repel(u8 taskId)
 {
     if (VarGet(VAR_REPEL_STEP_COUNT) == 0)
     {
-        VarSet(VAR_REPEL_STEP_COUNT, ItemId_GetHoldEffectParam(gSpecialVar_ItemId));
+        VarSet(VAR_REPEL_STEP_COUNT, GetItemHoldEffectParam(gSpecialVar_ItemId));
         PrepareItemUseMessage();
         DisplayItemMessageOnField(taskId, gStringVar4, CloseItemMessage, 1);
     }

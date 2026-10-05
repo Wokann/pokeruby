@@ -200,7 +200,7 @@ extern const u8 gMenuText_GoBackToPrev[];
 extern const u8 gOtherText_WhatWillYouDo[];
 
 extern const u8 gOtherText_xString1[];
-extern const u8 gOtherText_Berry2[];
+extern const u8 gText_Berry2[];
 extern const u8 gOtherText_Coins2[];
 extern const u8 gText_CloseBag[];
 

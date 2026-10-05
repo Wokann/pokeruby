@@ -2308,7 +2308,7 @@ void debug_sub_8011EA0(u8 a)
         gBattleTextBuff1[0] = B_BUFF_EOS;
 #endif
         if (gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a] != 0)
-            StringAppend(gBattleTextBuff1, ItemId_GetName(gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a]));
+            StringAppend(gBattleTextBuff1, GetItemName(gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a]));
         else
             StringAppend(gBattleTextBuff1, Str_821F624);
         Text_InitWindow(
@@ -4135,7 +4135,7 @@ u8 CanRunFromBattle(void)
     if (gBattleMons[gActiveBattler].item == ITEM_ENIGMA_BERRY)
         r2 = gEnigmaBerries[gActiveBattler].holdEffect;
     else
-        r2 = ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item);
+        r2 = GetItemHoldEffect(gBattleMons[gActiveBattler].item);
     gPotentialItemEffectBattler = gActiveBattler;
     if (r2 == HOLD_EFFECT_CAN_ALWAYS_RUN)
         return 0;
@@ -4631,8 +4631,8 @@ u8 GetWhoStrikesFirst(u8 bank1, u8 bank2, bool8 ignoreMovePriorities)
     }
     else
     {
-        heldItemEffect = ItemId_GetHoldEffect(gBattleMons[bank1].item);
-        heldItemEffectParam = ItemId_GetHoldEffectParam(gBattleMons[bank1].item);
+        heldItemEffect = GetItemHoldEffect(gBattleMons[bank1].item);
+        heldItemEffectParam = GetItemHoldEffectParam(gBattleMons[bank1].item);
     }
 
     // Only give badge speed boost to the player's mon.
@@ -4659,8 +4659,8 @@ u8 GetWhoStrikesFirst(u8 bank1, u8 bank2, bool8 ignoreMovePriorities)
     }
     else
     {
-        heldItemEffect = ItemId_GetHoldEffect(gBattleMons[bank2].item);
-        heldItemEffectParam = ItemId_GetHoldEffectParam(gBattleMons[bank2].item);
+        heldItemEffect = GetItemHoldEffect(gBattleMons[bank2].item);
+        heldItemEffectParam = GetItemHoldEffectParam(gBattleMons[bank2].item);
     }
 
     // Only give badge speed boost to the player's mon.
@@ -5466,7 +5466,7 @@ bool8 TryRunFromBattle(u8 bank)
     if (gBattleMons[bank].item == ITEM_ENIGMA_BERRY)
         holdEffect = gEnigmaBerries[bank].holdEffect;
     else
-        holdEffect = ItemId_GetHoldEffect(gBattleMons[bank].item);
+        holdEffect = GetItemHoldEffect(gBattleMons[bank].item);
 
     gPotentialItemEffectBattler = bank;
 
