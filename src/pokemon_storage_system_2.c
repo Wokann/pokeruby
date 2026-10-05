@@ -263,7 +263,7 @@ void sub_8096884(void)
         gMain.state++;
         break;
     case 4:
-        ResetPSSMonIconSprites();
+        InitMonIconFields();
         sub_809AA24();
         gMain.state++;
         break;
@@ -326,7 +326,7 @@ static void CB2_ReturnToPokeStorage(void)
         gMain.state++;
         break;
     case 4:
-        ResetPSSMonIconSprites();
+        InitMonIconFields();
         sub_809AA98();
         gMain.state++;
         break;
@@ -966,11 +966,11 @@ void sub_809746C(void)
         break;
     case 2:
         CompactPartySlots();
-        sub_8099310();
+        CompactPartySprites();
         gPokemonStorageSystemPtr->state++;
         break;
     case 3:
-        if (sub_8099374() == 0)
+        if (GetNumPartySpritesCompacting() == 0)
         {
             sub_809B6BC();
             StartDisplayMonMosaicEffect();
@@ -1053,7 +1053,7 @@ void sub_8097594(void)
             if (sInPartyMenu)
             {
                 CompactPartySlots();
-                sub_8099310();
+                CompactPartySprites();
                 gPokemonStorageSystemPtr->state++;
             }
             else
@@ -1063,7 +1063,7 @@ void sub_8097594(void)
         }
         break;
     case 6:
-        if (sub_8099374() == 0)
+        if (GetNumPartySpritesCompacting() == 0)
         {
             sub_809B440();
             StartDisplayMonMosaicEffect();
@@ -1089,12 +1089,12 @@ void sub_8097594(void)
         if (JOY_NEW(A_BUTTON | B_BUTTON))
         {
             ClearBottomWindow();
-            sub_8099958();
+            ReshowReleaseMon();
             gPokemonStorageSystemPtr->state++;
         }
         break;
     case 11:
-        if (!sub_8099990())
+        if (!ResetReleaseMonSpritePtr())
         {
             sub_809B7AC();
             PrintMessage(MSG_CAME_BACK);
@@ -1167,11 +1167,11 @@ void sub_8097858(void)
     {
     case 0:
         CompactPartySlots();
-        sub_8099310();
+        CompactPartySprites();
         gPokemonStorageSystemPtr->state++;
         break;
     case 1:
-        if (sub_8099374() == 0)
+        if (GetNumPartySpritesCompacting() == 0)
         {
             UpdatePartySlotColors();
             SetPSSCallback(sub_8096C84);
@@ -1689,7 +1689,7 @@ static void InitSupplementalTilemaps(void)
     if (sInPartyMenu)
     {
         UpdateCloseBoxButtonTilemap(TRUE);
-        sub_8099200(TRUE);
+        CreatePartyMonsSprites(TRUE);
         sub_809D034(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->unk_00a8, 0, 0, 12, 22);
     }
     else
@@ -1705,7 +1705,7 @@ static void SetUpShowPartyMenu(void)
     gPokemonStorageSystemPtr->unk_08a8 = 20;
     gPokemonStorageSystemPtr->partyMenuY = 2;
     gPokemonStorageSystemPtr->partyMenuMoveTimer = 0;
-    sub_8099200(FALSE);
+    CreatePartyMonsSprites(FALSE);
 }
 
 static bool8 ShowPartyMenu(void)
@@ -1715,7 +1715,7 @@ static bool8 ShowPartyMenu(void)
     gPokemonStorageSystemPtr->unk_08a8--;
     gPokemonStorageSystemPtr->partyMenuY++;
     sub_809D034(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->unk_00a8, 0, gPokemonStorageSystemPtr->unk_08a8, 12, gPokemonStorageSystemPtr->partyMenuY);
-    sub_80994A8(8);
+    MovePartySprites(8);
     if (++gPokemonStorageSystemPtr->partyMenuMoveTimer == 20)
     {
         sInPartyMenu = 1;
@@ -1739,11 +1739,11 @@ static bool8 HidePartyMenu(void)
     gPokemonStorageSystemPtr->partyMenuY--;
     sub_809D034(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->unk_00a8, 0, gPokemonStorageSystemPtr->unk_08a8, 12, gPokemonStorageSystemPtr->partyMenuY);
     sub_809D16C(BG_SCREEN_ADDR(15), 10, gPokemonStorageSystemPtr->partyMenuY, 12, 1);
-    sub_80994A8(-8);
+    MovePartySprites(-8);
     if (++gPokemonStorageSystemPtr->partyMenuMoveTimer == 20)
     {
         sInPartyMenu = 0;
-        sub_809954C();
+        DestroyAllPartyMonIcons();
         CompactPartySlots();
         sub_809D034(BG_SCREEN_ADDR(15), 21, 0, gPokemonStorageSystemPtr->unk_00a8, 12, 0, 1, 2);
         return FALSE;
