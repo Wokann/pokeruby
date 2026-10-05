@@ -122,7 +122,7 @@ static u8 *SummaryScreen_CopyColoredString(u8 *, const u8 *, u8);
 static void sub_80A0A2C(struct Pokemon *, u8, u8);
 static void SummaryScreen_PrintColoredText(const u8 *, u8, u8, u8);
 
-extern u8 StorageSystemGetNextMonIndex(struct BoxPokemon *, u8, u8, u8);
+extern u8 AdvanceStorageMonIndex(struct BoxPokemon *, u8, u8, u8);
 
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 TaskFunc gUnknown_03005CF0;
@@ -1596,7 +1596,7 @@ void SummaryScreenHandleUpDownInput(u8 taskId, s8 direction)
                 direction = 3;
         }
 
-        var3 = StorageSystemGetNextMonIndex(pssData.monList.boxMons, pssData.monIndex, pssData.maxMonIndex, direction);
+        var3 = AdvanceStorageMonIndex(pssData.monList.boxMons, pssData.monIndex, pssData.maxMonIndex, direction);
     }
     else
     {

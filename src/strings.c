@@ -782,18 +782,18 @@ const u8 PCText_PokeCenter[] = _("POKéCENTER");
 const u8 PCText_Machine[] = _("MACHINE");
 const u8 PCText_Plain[] = _("PLAIN");
 const u8 PCText_WhatDoYouWant[] = _("What do you want?");
-const u8 PCText_WithdrawPoke[] = _("WITHDRAW POKéMON");
-const u8 PCText_DepositPoke[] = _("DEPOSIT POKéMON");
-const u8 PCText_MovePoke[] = _("MOVE POKéMON");
-const u8 PCText_SeeYa[] = _("SEE YA!");
-const u8 PCText_MovePokeToParty[] = _("Move POKéMON stored in BOXES to\nyour party.");
-const u8 PCText_StorePokeInBox[] = _("Store POKéMON in your party in BOXES.");
-const u8 PCText_OrganizeBoxesParty[] = _("Organize the POKéMON in BOXES and\nin your party.");
-const u8 PCText_ReturnToPrevMenu[] = _("Return to the previous menu.");
+const u8 gText_WithdrawPokemon[] = _("WITHDRAW POKéMON");
+const u8 gText_DepositPokemon[] = _("DEPOSIT POKéMON");
+const u8 gText_MovePokemon[] = _("MOVE POKéMON");
+const u8 gText_SeeYa[] = _("SEE YA!");
+const u8 gText_WithdrawMonDescription[] = _("Move POKéMON stored in BOXES to\nyour party.");
+const u8 gText_DepositMonDescription[] = _("Store POKéMON in your party in BOXES.");
+const u8 gText_MoveMonDescription[] = _("Organize the POKéMON in BOXES and\nin your party.");
+const u8 gText_SeeYaDescription[] = _("Return to the previous menu.");
 
-const u8 gPCText_OnlyOne[] = _("There is just one POKéMON with you.");
-const u8 gPCText_PartyFull2[] = _("Your party is full!");
-const u8 gPCText_BOX[] = _("BOX");
+const u8 gText_JustOnePkmn[] = _("There is just one POKéMON with you.");
+const u8 gText_PartyFull[] = _("Your party is full!");
+const u8 gText_Box[] = _("BOX");
 
 // pokenav
 const u8 PCText_CheckMap[] = _("{CLEAR 0}Check the map of the HOENN region.");
@@ -1707,18 +1707,18 @@ const u8 PCText_PokeCenter[] = _("POKéCENTER");
 const u8 PCText_Machine[] = _("MASCHINE");
 const u8 PCText_Plain[] = _("WEISS");
 const u8 PCText_WhatDoYouWant[] = _("Was willst du tun?");
-const u8 PCText_WithdrawPoke[] = _("POKéMON NEHMEN");
-const u8 PCText_DepositPoke[] = _("POKéMON ABLEGEN");
-const u8 PCText_MovePoke[] = _("POKéMON BEWEGEN");
-const u8 PCText_SeeYa[] = _("TSCHÜSSI!");
-const u8 PCText_MovePokeToParty[] = _("Nimm POKéMON aus einer\nBOX in dein Team auf.");
-const u8 PCText_StorePokeInBox[] = _("Lagere POKéMON aus deinem\nTeam in einer BOX.");
-const u8 PCText_OrganizeBoxesParty[] = _("Ordne POKéMON in den BOXEN\nund/oder in deinem Team.");
-const u8 PCText_ReturnToPrevMenu[] = _("Zurück zum vorherigen Menü.");
+const u8 gText_WithdrawPokemon[] = _("POKéMON NEHMEN");
+const u8 gText_DepositPokemon[] = _("POKéMON ABLEGEN");
+const u8 gText_MovePokemon[] = _("POKéMON BEWEGEN");
+const u8 gText_SeeYa[] = _("TSCHÜSSI!");
+const u8 gText_WithdrawMonDescription[] = _("Nimm POKéMON aus einer\nBOX in dein Team auf.");
+const u8 gText_DepositMonDescription[] = _("Lagere POKéMON aus deinem\nTeam in einer BOX.");
+const u8 gText_MoveMonDescription[] = _("Ordne POKéMON in den BOXEN\nund/oder in deinem Team.");
+const u8 gText_SeeYaDescription[] = _("Zurück zum vorherigen Menü.");
 
-const u8 gPCText_OnlyOne[] = _("Du führst nur ein POKéMON mit dir.");
-const u8 gPCText_PartyFull2[] = _("Dein Team ist voll!");
-const u8 gPCText_BOX[] = _("BOX ");
+const u8 gText_JustOnePkmn[] = _("Du führst nur ein POKéMON mit dir.");
+const u8 gText_PartyFull[] = _("Dein Team ist voll!");
+const u8 gText_Box[] = _("BOX ");
 
 // pokenav
 const u8 PCText_CheckMap[] = _("{CLEAR 0}Karte der HOENN-Region");

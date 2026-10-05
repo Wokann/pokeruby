@@ -1,4 +1,5 @@
 #include "global.h"
+#include "dma3.h"
 #include "palette.h"
 #include "constants/songs.h"
 #include "sound.h"
@@ -13,72 +14,72 @@
 #include "script.h"
 #include "pokemon_storage_system.h"
 
-void StorageSystemCreatePrimaryMenu(u8 whichMenu);
-void sub_80963D0(u8 curBox);
-void sub_809658C(void);
-void sub_80965F8(void);
-void sub_809662C(void);
-void sub_809665C(void);
+static void CreateMainMenu(u8 whichMenu);
+static void ChooseBoxMenu_CreateSprites(u8 curBox);
+static void ChooseBoxMenu_DestroySprites(void);
+static void ChooseBoxMenu_MoveRight(void);
+static void ChooseBoxMenu_MoveLeft(void);
+static void ChooseBoxMenu_PrintInfo(void);
 void sub_80966F4(const u8 *sourceString, u16 x, u16 y);
-void sub_8096784(struct Sprite *sprite);
+static void SpriteCB_ChooseBoxArrow(struct Sprite *sprite);
 
-EWRAM_DATA u8 gUnknown_02038474 = 0;
-EWRAM_DATA struct UnkPSSStruct_2002370 *gUnknown_02038478 = NULL;
+static EWRAM_DATA u8 sPreviousBoxOption = 0;
+static EWRAM_DATA struct ChooseBoxMenu *sChooseBoxMenu = NULL;
 
-const struct PSS_MenuStringPtrs gUnknown_083B600C[] = {
-    {PCText_WithdrawPoke, PCText_MovePokeToParty},
-    {PCText_DepositPoke,  PCText_StorePokeInBox},
-    {PCText_MovePoke,     PCText_OrganizeBoxesParty},
-    {PCText_SeeYa,        PCText_ReturnToPrevMenu}
+static const struct PSS_MenuStringPtrs sMainMenuTexts[] = {
+    {gText_WithdrawPokemon, gText_WithdrawMonDescription},
+    {gText_DepositPokemon,  gText_DepositMonDescription},
+    {gText_MovePokemon,     gText_MoveMonDescription},
+    {gText_SeeYa,        gText_SeeYaDescription}
 };
 
 #if DEBUG
 const u16 gUnknown_Debug_083E05F0[2] = {0};
 #endif
 
-const union AnimCmd gSpriteAnim_83B602C[] = {
+static const union AnimCmd sAnim_ChooseBoxMenu_TopLeft[] = {
     ANIMCMD_FRAME( 0, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd gSpriteAnim_83B6034[] = {
+static const union AnimCmd sAnim_ChooseBoxMenu_BottomLeft[] = {
     ANIMCMD_FRAME( 4, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd gSpriteAnim_83B603C[] = {
+static const union AnimCmd sAnim_ChooseBoxMenu_TopRight[] = {
     ANIMCMD_FRAME( 6, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd gSpriteAnim_83B6044[] = {
+static const union AnimCmd sAnim_ChooseBoxMenu_BottomRight[] = {
     ANIMCMD_FRAME(10, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd *const gSpriteAnimTable_83B604C[] = {
-    gSpriteAnim_83B602C,
-    gSpriteAnim_83B6034,
-    gSpriteAnim_83B603C,
-    gSpriteAnim_83B6044
+static const union AnimCmd *const sAnims_ChooseBoxMenu[] = {
+    sAnim_ChooseBoxMenu_TopLeft,
+    sAnim_ChooseBoxMenu_BottomLeft,
+    sAnim_ChooseBoxMenu_TopRight,
+    sAnim_ChooseBoxMenu_BottomRight
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83B605C[] = {
+static const union AffineAnimCmd sAffineAnim_ChooseBoxMenu[] = {
     AFFINEANIMCMD_FRAME(0xe0, 0xe0, 0, 0),
     AFFINEANIMCMD_END
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83B606C[] = {
-    gSpriteAffineAnim_83B605C
+static const union AffineAnimCmd *const sAffineAnims_ChooseBoxMenu[] = {
+    sAffineAnim_ChooseBoxMenu
 };
 
-const u16 gBoxSelectionPopupPalette[] = INCBIN_U16("graphics/pokemon_storage/box_selection_popup.gbapal");
+static const u16 sChooseBoxMenu_Pal[] = INCBIN_U16("graphics/pokemon_storage/box_selection_popup.gbapal");
 
-const u8 gBoxSelectionPopupCenterTiles[] = INCBIN_U8("graphics/pokemon_storage/box_selection_popup_center.4bpp");
+static const u8 sChooseBoxMenuCenter_Gfx[] = INCBIN_U8("graphics/pokemon_storage/box_selection_popup_center.4bpp");
 
-const u8 gBoxSelectionPopupSidesTiles[] = INCBIN_U8("graphics/pokemon_storage/box_selection_popup_sides.4bpp");
+static const u8 sChooseBoxMenuSides_Gfx[] = INCBIN_U8("graphics/pokemon_storage/box_selection_popup_sides.4bpp");
 
-u8 CountPokemonInBoxN(u8 boxId)
+u8 CountMonsInBox(u8 boxId)
 {
     u16 i;
     u16 count;
@@ -91,7 +92,7 @@ u8 CountPokemonInBoxN(u8 boxId)
     return count;
 }
 
-s16 GetIndexOfFirstEmptySpaceInBoxN(u8 boxId)
+s16 GetFirstFreeBoxSpot(u8 boxId)
 {
     u16 i;
 
@@ -103,7 +104,7 @@ s16 GetIndexOfFirstEmptySpaceInBoxN(u8 boxId)
     return -1;
 }
 
-u8 GetNumValidDaycarePartyMons(void)
+u8 CountPartyNonEggMons(void)
 {
     u16 i;
     u16 count;
@@ -117,14 +118,14 @@ u8 GetNumValidDaycarePartyMons(void)
     return count;
 }
 
-u8 CountAlivePartyMonsExceptOne(u8 toSkip)
+u8 CountPartyAliveNonEggMonsExcept(u8 slotToIgnore)
 {
     u16 i;
     u16 count;
 
     for (i = 0, count = 0; i < PARTY_SIZE; i++)
     {
-        if (i != toSkip)
+        if (i != slotToIgnore)
         {
             struct Pokemon *pokemon = gPlayerParty + i;
             if (GetMonData(pokemon, MON_DATA_SPECIES) != 0 && !GetMonData(pokemon, MON_DATA_IS_EGG) && GetMonData(pokemon, MON_DATA_HP) != 0)
@@ -134,12 +135,12 @@ u8 CountAlivePartyMonsExceptOne(u8 toSkip)
     return count;
 }
 
-u8 CountAlivePartyMonsExceptSelectedOne(void)
+u8 CountPartyAliveNonEggMons_IgnoreVar0x8004Slot(void)
 {
-    return CountAlivePartyMonsExceptOne(gSpecialVar_0x8004);
+    return CountPartyAliveNonEggMonsExcept(gSpecialVar_0x8004);
 }
 
-u8 StorageSystemGetPartySize(void)
+u8 CountPartyMons(void)
 {
     u16 i;
     u16 count;
@@ -152,15 +153,15 @@ u8 StorageSystemGetPartySize(void)
     return count;
 }
 
-u8 *unref_sub_8095C60(u8 *dest, const u8 *src, u16 pad)
+u8 *StringCopyAndFillWithSpaces(u8 *dst, const u8 *src, u16 n)
 {
-    u8 *_dest = StringCopy(dest, src);
-    while (_dest < dest + pad)
+    u8 *str = StringCopy(dst, src);
+    while (str < dst + n)
     {
-        *_dest++ = CHAR_SPACE;
+        *str++ = CHAR_SPACE;
     }
-    *_dest = EOS;
-    return _dest;
+    *str = EOS;
+    return str;
 }
 
 void sub_8095C8C(u16 *dest, u16 dest_left, u16 dest_top, const u16 *src, u16 src_left, u16 src_top, u16 dest_width, u16 dest_height, u16 src_width)
@@ -178,28 +179,7 @@ void sub_8095C8C(u16 *dest, u16 dest_left, u16 dest_top, const u16 *src, u16 src
     }
 }
 
-#define MAX_DMA_BLOCK_SIZE 0x1000
-#define Dma3FillLarge_(value, dest, size, bit)             \
-{                                                          \
-    void *_dest = dest;                                    \
-    u32 _size = size;                                      \
-    while (1)                                              \
-    {                                                      \
-        if (_size <= MAX_DMA_BLOCK_SIZE)                   \
-        {                                                  \
-            DmaFill##bit(3, value, _dest, _size);          \
-            break;                                         \
-        }                                                  \
-        DmaFill##bit(3, value, _dest, MAX_DMA_BLOCK_SIZE); \
-        _dest += MAX_DMA_BLOCK_SIZE;                       \
-        _size -= MAX_DMA_BLOCK_SIZE;                       \
-    }                                                      \
-}
-
-#define Dma3FillLarge16_(value, dest, size) Dma3FillLarge_(value, dest, size, 16)
-#define Dma3FillLarge32_(value, dest, size) Dma3FillLarge_(value, dest, size, 32)
-
-void unref_sub_8095D08(u16 *dest, u16 dest_left, u16 dest_top, u16 width, u16 height)
+static void UNUSED UnusedWriteRectDma(u16 *dest, u16 dest_left, u16 dest_top, u16 width, u16 height)
 {
     u16 i;
 
@@ -209,7 +189,7 @@ void unref_sub_8095D08(u16 *dest, u16 dest_left, u16 dest_top, u16 width, u16 he
         Dma3FillLarge16_(0, dest, width);
 }
 
-s16 StorageSystemGetNextMonIndex(struct BoxPokemon *box, s8 startIdx, u8 stopIdx, u8 mode)
+s16 AdvanceStorageMonIndex(struct BoxPokemon *boxMons, s8 currIndex, u8 maxIndex, u8 mode)
 {
     s16 i;
     s16 direction;
@@ -223,17 +203,17 @@ s16 StorageSystemGetNextMonIndex(struct BoxPokemon *box, s8 startIdx, u8 stopIdx
     }
     if (mode == 2 || mode == 3)
     {
-        for (i = startIdx + direction; i >= 0 && i <= stopIdx; i += direction)
+        for (i = currIndex + direction; i >= 0 && i <= maxIndex; i += direction)
         {
-            if (GetBoxMonData(box + i, MON_DATA_SPECIES) != 0)
+            if (GetBoxMonData(boxMons + i, MON_DATA_SPECIES) != 0)
                 return i;
         }
     }
     else
     {
-        for (i = startIdx + direction; i >= 0 && i <= stopIdx; i += direction)
+        for (i = currIndex + direction; i >= 0 && i <= maxIndex; i += direction)
         {
-            if (GetBoxMonData(box + i, MON_DATA_SPECIES) != 0 && !GetBoxMonData(box + i, MON_DATA_IS_EGG))
+            if (GetBoxMonData(boxMons + i, MON_DATA_SPECIES) != 0 && !GetBoxMonData(boxMons + i, MON_DATA_IS_EGG))
                 return i;
         }
     }
@@ -245,15 +225,15 @@ void StorageSystemClearMessageWindow(void)
     Menu_BlankWindowRect(2, 15, 27, 18);
 }
 
-void Task_PokemonStorageSystem(u8 taskId)
+static void Task_PCMainMenu(u8 taskId)
 {
     struct Task *task = gTasks + taskId;
     switch (task->data[0])
     {
         case 0:
-            StorageSystemCreatePrimaryMenu(task->data[1]);
+            CreateMainMenu(task->data[1]);
             Menu_DisplayDialogueFrame();
-            Menu_PrintText(gUnknown_083B600C[task->data[1]].desc, 2, 15);
+            Menu_PrintText(sMainMenuTexts[task->data[1]].desc, 2, 15);
             task->data[0]++;
             break;
         case 1:
@@ -277,7 +257,7 @@ void Task_PokemonStorageSystem(u8 taskId)
                     {
                         task->data[1] = task->data[3];
                         StorageSystemClearMessageWindow();
-                        Menu_PrintText(gUnknown_083B600C[task->data[1]].desc, 2, 15);
+                        Menu_PrintText(sMainMenuTexts[task->data[1]].desc, 2, 15);
                     }
                     break;
                 case -1:
@@ -289,16 +269,16 @@ void Task_PokemonStorageSystem(u8 taskId)
                     DestroyTask(taskId);
                     break;
                 default:
-                    if (task->data[2] == 0 && StorageSystemGetPartySize() == PARTY_SIZE)
+                    if (task->data[2] == 0 && CountPartyMons() == PARTY_SIZE)
                     {
                         StorageSystemClearMessageWindow();
-                        Menu_PrintText(gPCText_PartyFull2, 2, 15);
+                        Menu_PrintText(gText_PartyFull, 2, 15);
                         task->data[0] = 3;
                     }
-                    else if (task->data[2] == 1 && StorageSystemGetPartySize() == 1)
+                    else if (task->data[2] == 1 && CountPartyMons() == 1)
                     {
                         StorageSystemClearMessageWindow();
-                        Menu_PrintText(gPCText_OnlyOne, 2, 15);
+                        Menu_PrintText(gText_JustOnePkmn, 2, 15);
                         task->data[0] = 3;
                     }
                     else
@@ -313,7 +293,7 @@ void Task_PokemonStorageSystem(u8 taskId)
             if (JOY_NEW(A_BUTTON | B_BUTTON))
             {
                 StorageSystemClearMessageWindow();
-                Menu_PrintText(gUnknown_083B600C[task->data[1]].desc, 2, 15);
+                Menu_PrintText(sMainMenuTexts[task->data[1]].desc, 2, 15);
                 task->data[0] = 2;
             }
             else if (JOY_NEW(DPAD_UP))
@@ -323,7 +303,7 @@ void Task_PokemonStorageSystem(u8 taskId)
                 Menu_MoveCursor(-1);
                 task->data[1] = Menu_GetCursorPos();
                 StorageSystemClearMessageWindow();
-                Menu_PrintText(gUnknown_083B600C[task->data[1]].desc, 2, 15);
+                Menu_PrintText(sMainMenuTexts[task->data[1]].desc, 2, 15);
                 task->data[0] = 2;
             }
             else if (JOY_NEW(DPAD_DOWN))
@@ -333,47 +313,47 @@ void Task_PokemonStorageSystem(u8 taskId)
                 Menu_MoveCursor(1);
                 task->data[1] = Menu_GetCursorPos();
                 StorageSystemClearMessageWindow();
-                Menu_PrintText(gUnknown_083B600C[task->data[1]].desc, 2, 15);
+                Menu_PrintText(sMainMenuTexts[task->data[1]].desc, 2, 15);
                 task->data[0] = 2;
             }
             break;
         case 4:
             if (!gPaletteFade.active)
             {
-                task_intro_29(task->data[2]);
+                EnterPokeStorage(task->data[2]);
                 DestroyTask(taskId);
             }
             break;
     }
 }
 
-void ShowPokemonStorageSystem(void)
+void ShowPokemonStorageSystemPC(void)
 {
-    u8 taskId = CreateTask(Task_PokemonStorageSystem, 80);
+    u8 taskId = CreateTask(Task_PCMainMenu, 80);
     gTasks[taskId].data[0] = 0;
     gTasks[taskId].data[1] = 0;
     LockPlayerFieldControls();
 }
 
-void FieldCB_ReturnToOverworld(void)
+static void FieldTask_ReturnToPcMenu(void)
 {
-    u8 taskId = CreateTask(Task_PokemonStorageSystem, 80);
+    u8 taskId = CreateTask(Task_PCMainMenu, 80);
     gTasks[taskId].data[0] = 0;
-    gTasks[taskId].data[1] = gUnknown_02038474;
+    gTasks[taskId].data[1] = sPreviousBoxOption;
     FadeInFromBlack();
 }
 
-void StorageSystemCreatePrimaryMenu(u8 whichMenu)
+static void CreateMainMenu(u8 whichMenu)
 {
     Menu_DrawStdWindowFrame(0, 0, 13, 9);
-    Menu_PrintItems(1, 1, 4, (const struct MenuAction *)gUnknown_083B600C);
+    Menu_PrintItems(1, 1, 4, (const struct MenuAction *)sMainMenuTexts);
     InitMenu(0, 1, 1, 4, whichMenu, 12);
 }
 
-void sub_80961A8(void)
+void CB2_ExitPokeStorage(void)
 {
-    gUnknown_02038474 = gPokemonStorageSystemPtr->unk_0005;
-    gFieldCallback = FieldCB_ReturnToOverworld;
+    sPreviousBoxOption = gPokemonStorageSystemPtr->boxOption;
+    gFieldCallback = FieldTask_ReturnToPcMenu;
     SetMainCallback2(CB2_ReturnToField);
 }
 
@@ -392,7 +372,7 @@ void ResetPokemonStorageSystem(void)
     }
     for (boxId = 0; boxId < 14; boxId++)
     {
-        u8 *dest = StringCopy(gPokemonStorage.boxNames[boxId], gPCText_BOX);
+        u8 *dest = StringCopy(gPokemonStorage.boxNames[boxId], gText_Box);
         ConvertIntToDecimalStringN(dest, boxId + 1, STR_CONV_MODE_LEFT_ALIGN, 2);
     }
     for (boxId = 0; boxId < 14; boxId++)
@@ -575,42 +555,42 @@ void debug_sub_80A3904(void)
 }
 #endif
 
-void sub_8096264(struct UnkPSSStruct_2002370 *a0, u16 tileTag, u16 palTag, u8 a3)
+void LoadChooseBoxMenuGfx(struct ChooseBoxMenu *menu, u16 tileTag, u16 palTag, u8 subpriority)
 {
     struct SpritePalette palette = {
-        gBoxSelectionPopupPalette, palTag
+        sChooseBoxMenu_Pal, palTag
     };
     struct SpriteSheet sheets[] = {
-        {gBoxSelectionPopupCenterTiles, 0x800, tileTag},
-        {gBoxSelectionPopupSidesTiles,  0x180, tileTag + 1},
+        {sChooseBoxMenuCenter_Gfx, 0x800, tileTag},
+        {sChooseBoxMenuSides_Gfx,  0x180, tileTag + 1},
         {}
     };
     LoadSpritePalette(&palette);
     LoadSpriteSheets(sheets);
-    gUnknown_02038478 = a0;
-    a0->unk_0240 = tileTag;
-    a0->unk_0242 = palTag;
-    a0->unk_023e = a3;
+    sChooseBoxMenu = menu;
+    menu->tileTag = tileTag;
+    menu->paletteTag = palTag;
+    menu->subpriority = subpriority;
 }
 
-void sub_8096310(void)
+void FreeChooseBoxMenu(void)
 {
-    FreeSpritePaletteByTag(gUnknown_02038478->unk_0242);
-    FreeSpriteTilesByTag(gUnknown_02038478->unk_0240);
-    FreeSpriteTilesByTag(gUnknown_02038478->unk_0240 + 1);
+    FreeSpritePaletteByTag(sChooseBoxMenu->paletteTag);
+    FreeSpriteTilesByTag(sChooseBoxMenu->tileTag);
+    FreeSpriteTilesByTag(sChooseBoxMenu->tileTag + 1);
 }
 
-void sub_809634C(u8 curBox)
+void CreateChooseBoxMenuSprites(u8 curBox)
 {
-    sub_80963D0(curBox);
+    ChooseBoxMenu_CreateSprites(curBox);
 }
 
-void sub_809635C(void)
+void DestroyChooseBoxMenuSprites(void)
 {
-    sub_809658C();
+    ChooseBoxMenu_DestroySprites();
 }
 
-u8 sub_8096368(void)
+u8 HandleChooseBoxMenuInput(void)
 {
     if (JOY_NEW(B_BUTTON))
     {
@@ -620,22 +600,22 @@ u8 sub_8096368(void)
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        return gUnknown_02038478->curBox;
+        return sChooseBoxMenu->curBox;
     }
     if (JOY_NEW(DPAD_LEFT))
     {
         PlaySE(SE_SELECT);
-        sub_809662C();
+        ChooseBoxMenu_MoveLeft();
     }
     else if (JOY_NEW(DPAD_RIGHT))
     {
         PlaySE(SE_SELECT);
-        sub_80965F8();
+        ChooseBoxMenu_MoveRight();
     }
     return 200;
 }
 
-void sub_80963D0(u8 curBox)
+static void ChooseBoxMenu_CreateSprites(u8 curBox)
 {
     u16 i;
     u8 spriteId;
@@ -647,87 +627,87 @@ void sub_80963D0(u8 curBox)
         0, 0, &oamData, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy
     };
 
-    gUnknown_02038478->curBox = curBox;
-    template.tileTag = gUnknown_02038478->unk_0240;
-    template.paletteTag = gUnknown_02038478->unk_0242;
+    sChooseBoxMenu->curBox = curBox;
+    template.tileTag = sChooseBoxMenu->tileTag;
+    template.paletteTag = sChooseBoxMenu->paletteTag;
 
     spriteId = CreateSprite(&template, 0xA0, 0x60, 0);
-    gUnknown_02038478->unk_0000 = gSprites + spriteId;
+    sChooseBoxMenu->menuSprite = gSprites + spriteId;
 
     oamData.shape = ST_OAM_V_RECTANGLE;
     oamData.size = 1;
-    template.tileTag = gUnknown_02038478->unk_0240 + 1;
-    template.anims = gSpriteAnimTable_83B604C;
+    template.tileTag = sChooseBoxMenu->tileTag + 1;
+    template.anims = sAnims_ChooseBoxMenu;
     for (i = 0; i < 4; i++)
     {
-        u16 r5;
-        spriteId = CreateSprite(&template, 0x7c, 0x50, gUnknown_02038478->unk_023e);
-        gUnknown_02038478->unk_0004[i] = gSprites + spriteId;
-        r5 = 0;
+        u16 anim;
+        spriteId = CreateSprite(&template, 0x7c, 0x50, sChooseBoxMenu->subpriority);
+        sChooseBoxMenu->menuSideSprites[i] = gSprites + spriteId;
+        anim = 0;
         if (i & 2)
         {
-            gUnknown_02038478->unk_0004[i]->x = 0xc4;
-            r5 = 2;
+            sChooseBoxMenu->menuSideSprites[i]->x = 0xc4;
+            anim = 2;
         }
         if (i & 1)
         {
-            gUnknown_02038478->unk_0004[i]->y = 0x70;
-            gUnknown_02038478->unk_0004[i]->oam.size = 0;
-            r5++;
+            sChooseBoxMenu->menuSideSprites[i]->y = 0x70;
+            sChooseBoxMenu->menuSideSprites[i]->oam.size = 0;
+            anim++;
         }
-        StartSpriteAnim(gUnknown_02038478->unk_0004[i], r5);
+        StartSpriteAnim(sChooseBoxMenu->menuSideSprites[i], anim);
     }
     for (i = 0; i < 2; i++)
     {
-        gUnknown_02038478->unk_0020[i] = sub_809A9A0(72 * i + 0x7c, 0x58, i, 0, gUnknown_02038478->unk_023e);
-        if (gUnknown_02038478->unk_0020[i])
+        sChooseBoxMenu->arrowSprites[i] = CreateChooseBoxArrows(72 * i + 0x7c, 0x58, i, 0, sChooseBoxMenu->subpriority);
+        if (sChooseBoxMenu->arrowSprites[i])
         {
-            gUnknown_02038478->unk_0020[i]->data[0] = (i == 0 ? -1 : 1);
-            gUnknown_02038478->unk_0020[i]->callback = sub_8096784;
+            sChooseBoxMenu->arrowSprites[i]->data[0] = (i == 0 ? -1 : 1);
+            sChooseBoxMenu->arrowSprites[i]->callback = SpriteCB_ChooseBoxArrow;
         }
     }
-    sub_809665C();
+    ChooseBoxMenu_PrintInfo();
 }
 
-void sub_809658C(void)
+static void ChooseBoxMenu_DestroySprites(void)
 {
     u16 i;
-    if (gUnknown_02038478->unk_0000)
+    if (sChooseBoxMenu->menuSprite)
     {
-        DestroySprite(gUnknown_02038478->unk_0000);
-        gUnknown_02038478->unk_0000 = NULL;
+        DestroySprite(sChooseBoxMenu->menuSprite);
+        sChooseBoxMenu->menuSprite = NULL;
     }
     for (i = 0; i < 4; i++)
     {
-        if (gUnknown_02038478->unk_0004[i])
+        if (sChooseBoxMenu->menuSideSprites[i])
         {
-            DestroySprite(gUnknown_02038478->unk_0004[i]);
-            gUnknown_02038478->unk_0004[i] = NULL;
+            DestroySprite(sChooseBoxMenu->menuSideSprites[i]);
+            sChooseBoxMenu->menuSideSprites[i] = NULL;
         }
     }
     for (i = 0; i < 2; i++)
     {
-        if (gUnknown_02038478->unk_0020[i])
-            DestroySprite(gUnknown_02038478->unk_0020[i]);
+        if (sChooseBoxMenu->arrowSprites[i])
+            DestroySprite(sChooseBoxMenu->arrowSprites[i]);
     }
 }
 
-void sub_80965F8(void)
+static void ChooseBoxMenu_MoveRight(void)
 {
-    if (++gUnknown_02038478->curBox > 13)
-        gUnknown_02038478->curBox = 0;
-    sub_809665C();
+    if (++sChooseBoxMenu->curBox > 13)
+        sChooseBoxMenu->curBox = 0;
+    ChooseBoxMenu_PrintInfo();
 }
 
-void sub_809662C(void)
+static void ChooseBoxMenu_MoveLeft(void)
 {
-    gUnknown_02038478->curBox = (gUnknown_02038478->curBox == 0 ? 13 : gUnknown_02038478->curBox - 1);
-    sub_809665C();
+    sChooseBoxMenu->curBox = (sChooseBoxMenu->curBox == 0 ? 13 : sChooseBoxMenu->curBox - 1);
+    ChooseBoxMenu_PrintInfo();
 }
 
-void sub_809665C(void)
+static void ChooseBoxMenu_PrintInfo(void)
 {
-    u8 nPokemonInBox = CountPokemonInBoxN(gUnknown_02038478->curBox);
+    u8 numInBox = CountMonsInBox(sChooseBoxMenu->curBox);
     u8 *stringVar = gStringVar1;
 
     stringVar[0] = EXT_CTRL_CODE_BEGIN;
@@ -737,18 +717,18 @@ void sub_809665C(void)
     stringVar[4] = 0x0E; // TEXT_COLOR_LIGHT_BLUE
     stringVar += 5;
 
-    stringVar = StringCopy(stringVar, gPokemonStorage.boxNames[gUnknown_02038478->curBox]);
+    stringVar = StringCopy(stringVar, gPokemonStorage.boxNames[sChooseBoxMenu->curBox]);
 
     stringVar[0] = CHAR_NEWLINE;
     stringVar[1] = EXT_CTRL_CODE_BEGIN;
     stringVar[2] = EXT_CTRL_CODE_CLEAR;
-    if (nPokemonInBox < 10)
+    if (numInBox < 10)
         stringVar[3] = 0x28;
     else
         stringVar[3] = 0x22;
     stringVar += 4;
 
-    stringVar = ConvertIntToDecimalString(stringVar, nPokemonInBox);
+    stringVar = ConvertIntToDecimalString(stringVar, numInBox);
 
     stringVar[0] = CHAR_SLASH;
     stringVar[1] = CHAR_0 + 3;
@@ -759,14 +739,14 @@ void sub_809665C(void)
 
 void sub_80966F4(const u8 *sourceString, u16 x, u16 y)
 {
-    u16 *vdest = (u16 *)(BG_CHAR_ADDR(4) + (GetSpriteTileStartByTag(gUnknown_02038478->unk_0240) * 32) + y * 256 + x * 32);
+    u16 *vdest = (u16 *)(BG_CHAR_ADDR(4) + (GetSpriteTileStartByTag(sChooseBoxMenu->tileTag) * 32) + y * 256 + x * 32);
     u8 *tileBuff = gUnknown_083B6DB8;
     DmaFill16(3, 0x1111, tileBuff, 0x400);
     Text_InitWindow8004E3C(&gWindowTemplate_81E6D38, tileBuff, sourceString);
     DmaCopy16(3, tileBuff, vdest, 0x400);
 }
 
-void sub_8096784(struct Sprite *sprite)
+static void SpriteCB_ChooseBoxArrow(struct Sprite *sprite)
 {
     if (++sprite->data[1] > 3)
     {

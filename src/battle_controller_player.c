@@ -1,4 +1,5 @@
 #include "global.h"
+#include "dma3.h"
 #include "reshow_battle_screen.h"
 #include "battle.h"
 #include "battle_gfx_sfx_util.h"

@@ -371,7 +371,7 @@ bool8 TayaDebugMenu_OldMan(void)
 bool8 TayaDebugMenu_LanettesPC(void)
 {
     Menu_EraseScreen();
-    ShowPokemonStorageSystem();
+    ShowPokemonStorageSystemPC();
     return TRUE;
 }
 

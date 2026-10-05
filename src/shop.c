@@ -1,4 +1,5 @@
 #include "global.h"
+#include "dma3.h"
 #include "shop.h"
 #include "decompress.h"
 #include "field_screen_effect.h"

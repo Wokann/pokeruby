@@ -1,4 +1,5 @@
 #include "global.h"
+#include "dma3.h"
 #include "battle.h"
 #include "decompress.h"
 #include "graphics.h"

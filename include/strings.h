@@ -780,18 +780,18 @@ extern const u8 PCText_PokeCenter[];
 extern const u8 PCText_Machine[];
 extern const u8 PCText_Plain[];
 extern const u8 PCText_WhatDoYouWant[];
-extern const u8 PCText_WithdrawPoke[];
-extern const u8 PCText_DepositPoke[];
-extern const u8 PCText_MovePoke[];
-extern const u8 PCText_SeeYa[];
-extern const u8 PCText_MovePokeToParty[];
-extern const u8 PCText_StorePokeInBox[];
-extern const u8 PCText_OrganizeBoxesParty[];
-extern const u8 PCText_ReturnToPrevMenu[];
+extern const u8 gText_WithdrawPokemon[];
+extern const u8 gText_DepositPokemon[];
+extern const u8 gText_MovePokemon[];
+extern const u8 gText_SeeYa[];
+extern const u8 gText_WithdrawMonDescription[];
+extern const u8 gText_DepositMonDescription[];
+extern const u8 gText_MoveMonDescription[];
+extern const u8 gText_SeeYaDescription[];
 
-extern const u8 gPCText_OnlyOne[];
-extern const u8 gPCText_PartyFull2[];
-extern const u8 gPCText_BOX[];
+extern const u8 gText_JustOnePkmn[];
+extern const u8 gText_PartyFull[];
+extern const u8 gText_Box[];
 
 // pokenav
 extern const u8 PCText_CheckMap[];

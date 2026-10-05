@@ -149,10 +149,10 @@ const struct SpritePalette gWaveformSpritePalette = {
 
 // .text
 
-void task_intro_29(u8 whichMenu)
+void EnterPokeStorage(u8 boxOption)
 {
-    gUnknown_0203847D = whichMenu;
-    gPokemonStorageSystemPtr->unk_0005 = whichMenu;
+    gUnknown_0203847D = boxOption;
+    gPokemonStorageSystemPtr->boxOption = boxOption;
     SetMainCallback2(sub_8096884);
 }
 
@@ -183,7 +183,7 @@ void sub_8096804(void)
 void sub_8096848(void)
 {
     sub_809B0D4();
-    gUnknown_0203847C = (gPokemonStorageSystemPtr->unk_0005 == 1 ? 1 : 0);
+    gUnknown_0203847C = (gPokemonStorageSystemPtr->boxOption == 1 ? 1 : 0);
     gUnknown_0203847E = 0;
 }
 
@@ -263,7 +263,7 @@ void sub_80969A0(void)
     case 0:
         SetVBlankCallback(NULL);
         REG_DISPCNT = 0;
-        gPokemonStorageSystemPtr->unk_0005 = gUnknown_0203847D;
+        gPokemonStorageSystemPtr->boxOption = gUnknown_0203847D;
         sub_8096804();
         if (gUnknown_0203847F == 1)
             sub_809BBC0();
@@ -328,7 +328,7 @@ void sub_80969A0(void)
 void debug_sub_80A4300(void)
 {
     gUnknown_0203847D = 0;
-    gPokemonStorageSystemPtr->unk_0005 = 0;
+    gPokemonStorageSystemPtr->boxOption = 0;
     sub_8096884();
     if (gMain.callback2 == sub_8096B38)
         unk_2038790 = 1;
@@ -446,7 +446,7 @@ void sub_8096C84(void)
             gPokemonStorageSystemPtr->unk_0004 = 1;
             break;
         case 5:
-            if (gPokemonStorageSystemPtr->unk_0005 != 2)
+            if (gPokemonStorageSystemPtr->boxOption != 2)
             {
                 PrintStorageActionText(PC_TEXT_WHICH_ONE_WILL_TAKE);
                 gPokemonStorageSystemPtr->unk_0004 = 3;
@@ -458,7 +458,7 @@ void sub_8096C84(void)
             }
             break;
         case 6:
-            if (gPokemonStorageSystemPtr->unk_0005 == 2)
+            if (gPokemonStorageSystemPtr->boxOption == 2)
             {
                 if (sub_809BF20() && ItemIsMail(gPokemonStorageSystemPtr->unk_11f2))
                     gPokemonStorageSystemPtr->unk_0004 = 5;
@@ -892,18 +892,18 @@ void sub_809746C(void)
     {
     case 0:
         PrintStorageActionText(PC_TEXT_DEPOSIT_IN_WHICH_BOX);
-        sub_8096264(&gPokemonStorageSystemPtr->unk_2370, 0x0007, 0xdaca, 3);
-        sub_809634C(gUnknown_0203847E);
+        LoadChooseBoxMenuGfx(&gPokemonStorageSystemPtr->chooseBoxMenu, 0x0007, 0xdaca, 3);
+        CreateChooseBoxMenuSprites(gUnknown_0203847E);
         gPokemonStorageSystemPtr->unk_0004++;
         break;
     case 1:
-        r4 = sub_8096368();
+        r4 = HandleChooseBoxMenuInput();
         if (r4 == 200);
         else if (r4 == 201)
         {
             sub_8098A5C();
-            sub_809635C();
-            sub_8096310();
+            DestroyChooseBoxMenuSprites();
+            FreeChooseBoxMenu();
             SetPSSCallback(sub_8096C84);
         }
         else
@@ -911,8 +911,8 @@ void sub_809746C(void)
             if (sub_809B62C(r4))
             {
                 sub_8098A5C();
-                sub_809635C();
-                sub_8096310();
+                DestroyChooseBoxMenuSprites();
+                FreeChooseBoxMenu();
                 gPokemonStorageSystemPtr->unk_0004 = 2;
             }
             else
@@ -1238,20 +1238,20 @@ void sub_8097A64(void)
     {
     case 0:
         PrintStorageActionText(PC_TEXT_JUMP_TO_WHICH_BOX);
-        sub_8096264(&gPokemonStorageSystemPtr->unk_2370, 0x0007, 0xdaca, 3);
-        sub_809634C(gPokemonStorage.currentBox);
+        LoadChooseBoxMenuGfx(&gPokemonStorageSystemPtr->chooseBoxMenu, 0x0007, 0xdaca, 3);
+        CreateChooseBoxMenuSprites(gPokemonStorage.currentBox);
         gPokemonStorageSystemPtr->unk_0004++;
         break;
     case 1:
-        gPokemonStorageSystemPtr->unk_08b2 = sub_8096368();
+        gPokemonStorageSystemPtr->unk_08b2 = HandleChooseBoxMenuInput();
         switch (gPokemonStorageSystemPtr->unk_08b2)
         {
         case 200:
             break;
         default:
             sub_8098A5C();
-            sub_809635C();
-            sub_8096310();
+            DestroyChooseBoxMenuSprites();
+            FreeChooseBoxMenu();
             if (gPokemonStorageSystemPtr->unk_08b2 == 201 || gPokemonStorageSystemPtr->unk_08b2 == gPokemonStorage.currentBox)
             {
                 sub_809A860(TRUE);
@@ -1351,7 +1351,7 @@ void sub_8097BA0(void)
         if (sub_80C5F98())
         {
             gPlayerPartyCount = CalculatePlayerPartyCount();
-            SetMainCallback2(sub_80961A8);
+            SetMainCallback2(CB2_ExitPokeStorage);
         }
         break;
     }
@@ -1410,7 +1410,7 @@ void sub_8097CC0(void)
         if (sub_80C5F98())
         {
             gPlayerPartyCount = CalculatePlayerPartyCount();
-            SetMainCallback2(sub_80961A8);
+            SetMainCallback2(CB2_ExitPokeStorage);
         }
         break;
     }

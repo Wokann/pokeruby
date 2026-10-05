@@ -96,7 +96,7 @@ Route117_PokemonDayCare_EventScript_1B2327:: @ 81B2327
 	end
 
 Route117_PokemonDayCare_EventScript_1B236C:: @ 81B236C
-	specialvar VAR_RESULT, GetNumValidDaycarePartyMons
+	specialvar VAR_RESULT, CountPartyNonEggMons
 	compare VAR_RESULT, 1
 	goto_if_eq Route117_PokemonDayCare_EventScript_1B23F3
 	msgbox Route117_PokemonDayCare_Text_1B2947, MSGBOX_DEFAULT
@@ -105,7 +105,7 @@ Route117_PokemonDayCare_EventScript_1B236C:: @ 81B236C
 	waitstate
 	compare VAR_0x8004, 255
 	goto_if_eq Route117_PokemonDayCare_EventScript_1B23D0
-	specialvar VAR_RESULT, CountAlivePartyMonsExceptSelectedOne
+	specialvar VAR_RESULT, CountPartyAliveNonEggMons_IgnoreVar0x8004Slot
 	compare VAR_RESULT, 0
 	goto_if_eq Route117_PokemonDayCare_EventScript_1B23FD
 	specialvar VAR_0x8005, GetSelectedMonNicknameAndSpecies

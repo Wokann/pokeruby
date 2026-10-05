@@ -68,7 +68,7 @@ gSpecials::
 	def_special ShouldTryRematchBattle
 	def_special IsTrainerReadyForRematch
 	def_special BattleSetup_StartRematchBattle
-	def_special ShowPokemonStorageSystem
+	def_special ShowPokemonStorageSystemPC
 	def_special HasEnoughMonsForDoubleBattle
 	def_special TurnOffTVScreen
 	def_special DoTVShow
@@ -140,8 +140,8 @@ gSpecials::
 	def_special GetDewfordHallPaintingNameIndex
 	def_special SwapRegisteredBike
 	def_special CalculatePlayerPartyCount
-	def_special GetNumValidDaycarePartyMons
-	def_special CountAlivePartyMonsExceptSelectedOne
+	def_special CountPartyNonEggMons
+	def_special CountPartyAliveNonEggMons_IgnoreVar0x8004Slot
 	def_special ShouldReadyContestArtist
 	def_special SaveMuseumContestPainting
 	def_special DoesContestCategoryHaveMuseumPainting
