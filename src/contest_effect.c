@@ -156,12 +156,12 @@ static void ContestEffect_StartleFrontMon(void)
 static void ContestEffect_StartlePrevMons(void)
 {
     u8 idx = 0;
-    u8 a = eContestAppealResults.contestant;
+    u8 contestant = eContestAppealResults.contestant;
 
-    if (eContestAppealResults.turnOrder[a] != 0) {
+    if (eContestAppealResults.turnOrder[contestant] != 0) {
         int i, j;
         for (i = 0, j = 0; i < 4; i++)
-            if (eContestAppealResults.turnOrder[a] > eContestAppealResults.turnOrder[i])
+            if (eContestAppealResults.turnOrder[contestant] > eContestAppealResults.turnOrder[i])
                 eContestAppealResults.jamQueue[j++] = i;
         eContestAppealResults.jamQueue[j] = 0xFF;
         idx = WasAtLeastOneOpponentJammed();
