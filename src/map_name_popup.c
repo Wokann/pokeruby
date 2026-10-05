@@ -5,12 +5,12 @@
 #include "region_map.h"
 #include "task.h"
 
-EWRAM_DATA static u8 sTaskId = 0;
+static EWRAM_DATA u8 sPopupTaskId = 0;
 
-static void Task_MapNamePopup(u8);
-static void DrawMapNamePopup(void);
+static void Task_MapNamePopUpWindow(u8 taskId);
+static void ShowMapNamePopUpWindow(void);
 
-bool8 unref_sub_80A2F44(void)
+static bool8 UNUSED StartMenu_ShowMapNamePopup(void)
 {
     CloseMenu();
     ShowMapNamePopup();
@@ -21,24 +21,24 @@ void ShowMapNamePopup(void)
 {
     if (FlagGet(FLAG_HIDE_MAP_NAME_POPUP) != TRUE)
     {
-        if (!FuncIsActiveTask(Task_MapNamePopup))
+        if (!FuncIsActiveTask(Task_MapNamePopUpWindow))
         {
-            sTaskId = CreateTask(Task_MapNamePopup, 90);
+            sPopupTaskId = CreateTask(Task_MapNamePopUpWindow, 90);
             REG_BG0VOFS = 32;
-            DrawMapNamePopup();
-            gTasks[sTaskId].data[0] = 0;
-            gTasks[sTaskId].data[2] = 32;
+            ShowMapNamePopUpWindow();
+            gTasks[sPopupTaskId].data[0] = 0;
+            gTasks[sPopupTaskId].data[2] = 32;
         }
         else
         {
-            if (gTasks[sTaskId].data[0] != 2)
-                gTasks[sTaskId].data[0] = 2;
-            gTasks[sTaskId].data[3] = 1;
+            if (gTasks[sPopupTaskId].data[0] != 2)
+                gTasks[sPopupTaskId].data[0] = 2;
+            gTasks[sPopupTaskId].data[3] = 1;
         }
     }
 }
 
-void Task_MapNamePopup(u8 taskId)
+static void Task_MapNamePopUpWindow(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -49,7 +49,7 @@ void Task_MapNamePopup(u8 taskId)
         if (task->data[2] <= 0 )
         {
             task->data[0] = 1;
-            gTasks[sTaskId].data[1] = 0;
+            gTasks[sPopupTaskId].data[1] = 0;
         }
         break;
     case 1:
@@ -66,7 +66,7 @@ void Task_MapNamePopup(u8 taskId)
         {
             if (task->data[3])
             {
-                DrawMapNamePopup();
+                ShowMapNamePopUpWindow();
                 task->data[0] = 0;
                 task->data[3] = 0;
             }
@@ -78,30 +78,30 @@ void Task_MapNamePopup(u8 taskId)
         }
         break;
     case 4:
-        HideMapNamePopup();
+        HideMapNamePopUpWindow();
         return;
     }
 
     REG_BG0VOFS = task->data[2];
 }
 
-void HideMapNamePopup(void)
+void HideMapNamePopUpWindow(void)
 {
-    if (FuncIsActiveTask(Task_MapNamePopup))
+    if (FuncIsActiveTask(Task_MapNamePopUpWindow))
     {
         Menu_LoadStdFrameGraphics();
         Menu_EraseWindowRect(0, 0, 13, 3);
         REG_BG0VOFS = 0;
-        DestroyTask(sTaskId);
+        DestroyTask(sPopupTaskId);
     }
 }
 
-void DrawMapNamePopup(void)
+static void ShowMapNamePopUpWindow(void)
 {
-    u8 name[20];
+    u8 mapDisplayHeader[20];
 
     Menu_LoadStdFrameGraphicsOverrideStyle(0);
-    GetMapSectionName(name, gMapHeader.regionMapSectionId, 0);
+    GetMapSectionName(mapDisplayHeader, gMapHeader.regionMapSectionId, 0);
     Menu_DrawStdWindowFrame(0, 0, 13, 3);
-    MenuPrint_Centered(name, 1, 1, 0x60);
+    MenuPrint_Centered(mapDisplayHeader, 1, 1, 0x60);
 }

@@ -413,7 +413,7 @@ void sub_80BBB90(void)
     s16 x, y;
 
     LockPlayerFieldControls();
-    HideMapNamePopup();
+    HideMapNamePopUpWindow();
     sub_80BB764(&x, &y, 0x220);
     MapGridSetMetatileIdAt(x + 7, y + 7, 0xe20);
     CurrentMapDrawMetatileAt(x + 7, y + 7);

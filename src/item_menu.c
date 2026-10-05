@@ -2738,7 +2738,7 @@ static void OnItemSelect_PC(u8 taskId)
 
 bool32 UseRegisteredKeyItem(void)
 {
-    HideMapNamePopup();
+    HideMapNamePopUpWindow();
     if (gSaveBlock1.registeredItem != ITEM_NONE)
     {
         if (CheckBagHasItem(gSaveBlock1.registeredItem, 1) == TRUE)
