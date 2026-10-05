@@ -217,13 +217,13 @@ static void ResetForPokeStorage(void)
     FreeAllSpritePalettes();
     ResetTasks();
     gReservedSpriteTileCount = 0x280;
-    sub_809CFDC(&gPokemonStorageSystemPtr->unkUtil, gPokemonStorageSystemPtr->unkUtilData, 8);
+    UnkUtil_Init(&gPokemonStorageSystemPtr->unkUtil, gPokemonStorageSystemPtr->unkUtilData, 8);
     gKeyRepeatStartDelay = 20;
 }
 
 static void InitStartingPosData(void)
 {
-    sub_809B0D4();
+    ClearSavedCursorPos();
     sInPartyMenu = (gPokemonStorageSystemPtr->boxOption == 1 ? 1 : 0);
     sDepositBoxId = 0;
 }
@@ -264,7 +264,7 @@ void sub_8096884(void)
         break;
     case 4:
         InitMonIconFields();
-        sub_809AA24();
+        InitCursor();
         gMain.state++;
         break;
     case 5:
@@ -307,9 +307,9 @@ static void CB2_ReturnToPokeStorage(void)
         gPokemonStorageSystemPtr->boxOption = sCurrentBoxOption;
         ResetForPokeStorage();
         if (sWhichToReshow == 1)
-            sub_809BBC0();
+            LoadSavedMovingMon();
         if (sWhichToReshow == 0)
-            sub_809BD14();
+            SetSelectionAfterSummaryScreen();
         gMain.state++;
         break;
     case 1:
@@ -327,7 +327,7 @@ static void CB2_ReturnToPokeStorage(void)
         break;
     case 4:
         InitMonIconFields();
-        sub_809AA98();
+        InitCursorOnReopen();
         gMain.state++;
         break;
     case 5:
@@ -412,7 +412,7 @@ static void VBlankCB_PokeStorage(void)
     REG_BG3VOFS = gPokemonStorageSystemPtr->unk_0008;
     LoadOam();
     ProcessSpriteCopyRequests();
-    sub_809CFF0();
+    UnkUtil_Run();
     TransferPlttBuffer();
 }
 
@@ -480,7 +480,7 @@ void sub_8096C84(void)
     switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
-        switch (sub_809CA40())
+        switch (HandleInput())
         {
         case 1:
             PlaySE(SE_SELECT);
@@ -494,14 +494,14 @@ void sub_8096C84(void)
             }
             else
             {
-                sub_809B0D4();
+                ClearSavedCursorPos();
                 SetPSSCallback(sub_8096FC8);
             }
             break;
         case 6:
             if (gPokemonStorageSystemPtr->boxOption == 2)
             {
-                if (sub_809BF20() && ItemIsMail(gPokemonStorageSystemPtr->displayMonItemId))
+                if (IsMonBeingMoved() && ItemIsMail(gPokemonStorageSystemPtr->displayMonItemId))
                     gPokemonStorageSystemPtr->state = 5;
                 else
                     SetPSSCallback(sub_8097004);
@@ -534,7 +534,7 @@ void sub_8096C84(void)
             gPokemonStorageSystemPtr->newCurrBoxId = gPokemonStorage.currentBox + 1;
             if (gPokemonStorageSystemPtr->newCurrBoxId > 13)
                 gPokemonStorageSystemPtr->newCurrBoxId = 0;
-            sub_8099C70(gPokemonStorageSystemPtr->newCurrBoxId);
+            SetUpScrollToBox(gPokemonStorageSystemPtr->newCurrBoxId);
             gPokemonStorageSystemPtr->state = 2;
             break;
         case 10:
@@ -542,11 +542,11 @@ void sub_8096C84(void)
             gPokemonStorageSystemPtr->newCurrBoxId = gPokemonStorage.currentBox - 1;
             if (gPokemonStorageSystemPtr->newCurrBoxId < 0)
                 gPokemonStorageSystemPtr->newCurrBoxId = 13;
-            sub_8099C70(gPokemonStorageSystemPtr->newCurrBoxId);
+            SetUpScrollToBox(gPokemonStorageSystemPtr->newCurrBoxId);
             gPokemonStorageSystemPtr->state = 2;
             break;
         case 11:
-            if (!sub_809BE80())
+            if (!IsRemovingLastPartyMon())
             {
                 if (ItemIsMail(gPokemonStorageSystemPtr->displayMonItemId))
                 {
@@ -564,7 +564,7 @@ void sub_8096C84(void)
             }
             break;
         case 13:
-            if (sub_809BE80())
+            if (IsRemovingLastPartyMon())
             {
                 gPokemonStorageSystemPtr->state = 4;
             }
@@ -575,7 +575,7 @@ void sub_8096C84(void)
             }
             break;
         case 14:
-            if (!sub_809BEBC())
+            if (!CanShiftMon())
             {
                 gPokemonStorageSystemPtr->state = 4;
             }
@@ -596,9 +596,9 @@ void sub_8096C84(void)
         }
         break;
     case 1:
-        if (!sub_809AC00())
+        if (!UpdateCursorPos())
         {
-            if (sub_809BF48())
+            if (IsCursorOnCloseBox())
                 StartFlashingCloseBoxButton();
             else
                 StopFlashingCloseBoxButton();
@@ -608,12 +608,12 @@ void sub_8096C84(void)
         }
         break;
     case 2:
-        if (!sub_8099D34())
+        if (!ScrollToBox())
         {
             gPokemonStorage.currentBox = gPokemonStorageSystemPtr->newCurrBoxId;
-            if (!sInPartyMenu && !sub_809BF20())
+            if (!sInPartyMenu && !IsMonBeingMoved())
             {
-                sub_809B440();
+                RefreshDisplayMon();
                 StartDisplayMonMosaicEffect();
             }
             gPokemonStorageSystemPtr->state = 0;
@@ -673,12 +673,12 @@ void sub_8097004(void)
         case 1:
             if (!HidePartyMenu())
             {
-                sub_809B0C0(sub_809B0F4());
+                SetCursorBoxPosition(GetSavedCursorPos());
                 gPokemonStorageSystemPtr->state++;
             }
             break;
         case 2:
-            if (!sub_809AC00())
+            if (!UpdateCursorPos())
             {
                 if (gPokemonStorageSystemPtr->setMosaic)
                     StartDisplayMonMosaicEffect();
@@ -694,11 +694,11 @@ void sub_8097078(void)
     {
     case 0:
         PrintMessage(MSG_IS_SELECTED);
-        sub_809CE84();
+        AddMenu();
         gPokemonStorageSystemPtr->state = 1;
         break;
     case 1:
-        switch (sub_809CF30())
+        switch (HandleMenuInput())
         {
         case -1:
         case  0:
@@ -706,7 +706,7 @@ void sub_8097078(void)
             SetPSSCallback(sub_8096C84);
             break;
         case 3:
-            if (sub_809BE80())
+            if (IsRemovingLastPartyMon())
             {
                 gPokemonStorageSystemPtr->state = 2;
             }
@@ -723,7 +723,7 @@ void sub_8097078(void)
             SetPSSCallback(sub_80972FC);
             break;
         case 4:
-            if (!sub_809BEBC())
+            if (!CanShiftMon())
             {
                 gPokemonStorageSystemPtr->state = 2;
             }
@@ -740,7 +740,7 @@ void sub_8097078(void)
             SetPSSCallback(sub_8097390);
             break;
         case 1:
-            if (sub_809BE80())
+            if (IsRemovingLastPartyMon())
             {
                 gPokemonStorageSystemPtr->state = 2;
             }
@@ -756,7 +756,7 @@ void sub_8097078(void)
             }
             break;
         case 7:
-            if (sub_809BE80())
+            if (IsRemovingLastPartyMon())
             {
                 gPokemonStorageSystemPtr->state = 2;
             }
@@ -821,11 +821,11 @@ void sub_80972A8(void)
     switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
-        sub_809B100(0);
+        InitMonPlaceChange(0);
         gPokemonStorageSystemPtr->state++;
         break;
     case 1:
-        if (!sub_809B130())
+        if (!DoMonPlaceChange())
         {
             if (sInPartyMenu)
                 SetPSSCallback(sub_8097858);
@@ -841,11 +841,11 @@ void sub_80972FC(void)
     switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
-        sub_809B100(1);
+        InitMonPlaceChange(1);
         gPokemonStorageSystemPtr->state++;
         break;
     case 1:
-        if (!sub_809B130())
+        if (!DoMonPlaceChange())
         {
             if (sInPartyMenu)
                 SetPSSCallback(sub_8097858);
@@ -861,11 +861,11 @@ void c3_0808DC50(void)
     switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
-        sub_809B100(2);
+        InitMonPlaceChange(2);
         gPokemonStorageSystemPtr->state++;
         break;
     case 1:
-        if (!sub_809B130())
+        if (!DoMonPlaceChange())
         {
             StartDisplayMonMosaicEffect();
             SetPSSCallback(sub_8096C84);
@@ -886,8 +886,8 @@ void sub_8097390(void)
         }
         else
         {
-            sub_809B0E0();
-            sub_809B100(0);
+            SaveCursorPos();
+            InitMonPlaceChange(0);
             gPokemonStorageSystemPtr->state = 2;
         }
         break;
@@ -899,7 +899,7 @@ void sub_8097390(void)
         }
         break;
     case 2:
-        if (!sub_809B130())
+        if (!DoMonPlaceChange())
         {
             SetUpDoShowPartyMenu();
             gPokemonStorageSystemPtr->state++;
@@ -908,12 +908,12 @@ void sub_8097390(void)
     case 3:
         if (!DoShowPartyMenu())
         {
-            sub_809B100(1);
+            InitMonPlaceChange(1);
             gPokemonStorageSystemPtr->state++;
         }
         break;
     case 4:
-        if (!sub_809B130())
+        if (!DoMonPlaceChange())
         {
             UpdatePartySlotColors();
             gPokemonStorageSystemPtr->state++;
@@ -949,7 +949,7 @@ void sub_809746C(void)
         }
         else
         {
-            if (sub_809B62C(r4))
+            if (TryStorePartyMonInBox(r4))
             {
                 ClearBottomWindow();
                 DestroyChooseBoxMenuSprites();
@@ -972,7 +972,7 @@ void sub_809746C(void)
     case 3:
         if (GetNumPartySpritesCompacting() == 0)
         {
-            sub_809B6BC();
+            ResetSelectionAfterDeposit();
             StartDisplayMonMosaicEffect();
             UpdatePartySlotColors();
             SetPSSCallback(sub_8096C84);
@@ -1007,19 +1007,19 @@ void sub_8097594(void)
                 break;
             case  0:
                 ClearBottomWindow();
-                sub_809B7D4();
-                sub_809B6DC();
+                InitCanReleaseMonVars();
+                InitReleaseMon();
                 gPokemonStorageSystemPtr->state++;
                 break;
         }
         break;
     case 2:
-        sub_809B960();
-        if (!sub_809B734())
+        RunCanReleaseMon();
+        if (!TryHideReleaseMon())
         {
             while (1)
             {
-                s8 r0 = sub_809B960();
+                s8 r0 = RunCanReleaseMon();
                 if (r0 == 1)
                 {
                     gPokemonStorageSystemPtr->state++;
@@ -1034,7 +1034,7 @@ void sub_8097594(void)
         }
         break;
     case 3:
-        sub_809B760();
+        ReleaseMon();
         RefreshDisplayMonData();
         PrintMessage(MSG_WAS_RELEASED);
         gPokemonStorageSystemPtr->state++;
@@ -1065,7 +1065,7 @@ void sub_8097594(void)
     case 6:
         if (GetNumPartySpritesCompacting() == 0)
         {
-            sub_809B440();
+            RefreshDisplayMon();
             StartDisplayMonMosaicEffect();
             UpdatePartySlotColors();
             gPokemonStorageSystemPtr->state++;
@@ -1096,7 +1096,7 @@ void sub_8097594(void)
     case 11:
         if (!ResetReleaseMonSpritePtr())
         {
-            sub_809B7AC();
+            TrySetCursorFistAnim();
             PrintMessage(MSG_CAME_BACK);
             gPokemonStorageSystemPtr->state++;
         }
@@ -1123,7 +1123,7 @@ void sub_8097788(void)
     switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
-        sub_809BC18();
+        InitSummaryScreenData();
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
         gPokemonStorageSystemPtr->state++;
         break;
@@ -1186,15 +1186,15 @@ void sub_809789C(void)
     {
     case 0:
         PrintMessage(MSG_WHAT_YOU_DO);
-        sub_809CE84();
+        AddMenu();
         gPokemonStorageSystemPtr->state++;
         break;
     case 1:
-        switch (sub_809CF30())
+        switch (HandleMenuInput())
         {
         case -1:
         case  0:
-            sub_809A860(TRUE);
+            AnimateBoxScrollArrows(TRUE);
             ClearBottomWindow();
             SetPSSCallback(sub_8096C84);
             break;
@@ -1227,11 +1227,11 @@ void sub_8097974(void)
         gPokemonStorageSystemPtr->state++;
         break;
     case 1:
-        gPokemonStorageSystemPtr->wallpaperSetId = sub_809CF30();
+        gPokemonStorageSystemPtr->wallpaperSetId = HandleMenuInput();
         switch (gPokemonStorageSystemPtr->wallpaperSetId)
         {
         case -1:
-            sub_809A860(TRUE);
+            AnimateBoxScrollArrows(TRUE);
             ClearBottomWindow();
             SetPSSCallback(sub_8096C84);
             break;
@@ -1245,7 +1245,7 @@ void sub_8097974(void)
         }
         break;
     case 2:
-        gPokemonStorageSystemPtr->wallpaperId = sub_809CF30();
+        gPokemonStorageSystemPtr->wallpaperId = HandleMenuInput();
         switch (gPokemonStorageSystemPtr->wallpaperId)
         {
         case -1:
@@ -1258,15 +1258,15 @@ void sub_8097974(void)
             PlaySE(SE_SELECT);
             ClearBottomWindow();
             gPokemonStorageSystemPtr->wallpaperId -= 16;
-            sub_8099DCC(gPokemonStorageSystemPtr->wallpaperId);
+            SetWallpaperForCurrentBox(gPokemonStorageSystemPtr->wallpaperId);
             gPokemonStorageSystemPtr->state++;
             break;
         }
         break;
     case 3:
-        if (!sub_8099E08())
+        if (!DoWallpaperGfxChange())
         {
-            sub_809A860(TRUE);
+            AnimateBoxScrollArrows(TRUE);
             SetPSSCallback(sub_8096C84);
         }
         break;
@@ -1295,7 +1295,7 @@ void sub_8097A64(void)
             FreeChooseBoxMenu();
             if (gPokemonStorageSystemPtr->newCurrBoxId == 201 || gPokemonStorageSystemPtr->newCurrBoxId == gPokemonStorage.currentBox)
             {
-                sub_809A860(TRUE);
+                AnimateBoxScrollArrows(TRUE);
                 SetPSSCallback(sub_8096C84);
             }
             else
@@ -1306,11 +1306,11 @@ void sub_8097A64(void)
         }
         break;
     case 2:
-        sub_8099C70(gPokemonStorageSystemPtr->newCurrBoxId);
+        SetUpScrollToBox(gPokemonStorageSystemPtr->newCurrBoxId);
         gPokemonStorageSystemPtr->state++;
         break;
     case 3:
-        if (!sub_8099D34())
+        if (!ScrollToBox())
         {
             gPokemonStorage.currentBox = gPokemonStorageSystemPtr->newCurrBoxId;
             SetPSSCallback(sub_8096C84);
@@ -1324,7 +1324,7 @@ void sub_8097B44(void)
     switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
-        sub_809BB90();
+        SaveMovingMon();
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
         gPokemonStorageSystemPtr->state++;
         break;
@@ -1344,7 +1344,7 @@ void sub_8097BA0(void)
     switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
-        if (sub_809BF20())
+        if (IsMonBeingMoved())
         {
             PlaySE(SE_FAILURE);
             PrintMessage(MSG_HOLDING_POKE);
@@ -1403,7 +1403,7 @@ void sub_8097CC0(void)
     switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
-        if (sub_809BF20())
+        if (IsMonBeingMoved())
         {
             PlaySE(SE_FAILURE);
             PrintMessage(MSG_HOLDING_POKE);
@@ -1738,7 +1738,7 @@ static bool8 HidePartyMenu(void)
     gPokemonStorageSystemPtr->unk_08a8++;
     gPokemonStorageSystemPtr->partyMenuY--;
     sub_809D034(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->unk_00a8, 0, gPokemonStorageSystemPtr->unk_08a8, 12, gPokemonStorageSystemPtr->partyMenuY);
-    sub_809D16C(BG_SCREEN_ADDR(15), 10, gPokemonStorageSystemPtr->partyMenuY, 12, 1);
+    UnkUtil_DmaAdd(BG_SCREEN_ADDR(15), 10, gPokemonStorageSystemPtr->partyMenuY, 12, 1);
     MovePartySprites(-8);
     if (++gPokemonStorageSystemPtr->partyMenuMoveTimer == 20)
     {
@@ -1820,12 +1820,12 @@ static bool8 DoShowPartyMenu(void)
     case 0:
         if (!ShowPartyMenu())
         {
-            sub_809B068();
+            SetCursorInParty();
             gPokemonStorageSystemPtr->showPartyMenuState++;
         }
         break;
     case 1:
-        if (!sub_809AC00())
+        if (!UpdateCursorPos())
         {
             if (gPokemonStorageSystemPtr->setMosaic)
                 StartDisplayMonMosaicEffect();
@@ -2002,11 +2002,11 @@ static void ClearBottomWindow(void)
 static void AddWallpaperSetsMenu(void)
 {
     sub_809CDCC();
-    sub_809CDEC(12);
-    sub_809CDEC(13);
-    sub_809CDEC(14);
-    sub_809CDEC(15);
-    sub_809CE84();
+    SetMenuText(12);
+    SetMenuText(13);
+    SetMenuText(14);
+    SetMenuText(15);
+    AddMenu();
 }
 
 static void AddWallpapersMenu(u8 wallpaperSet)
@@ -2015,29 +2015,29 @@ static void AddWallpapersMenu(u8 wallpaperSet)
     switch (wallpaperSet)
     {
     case 0:
-        sub_809CDEC(16);
-        sub_809CDEC(17);
-        sub_809CDEC(18);
-        sub_809CDEC(19);
+        SetMenuText(16);
+        SetMenuText(17);
+        SetMenuText(18);
+        SetMenuText(19);
         break;
     case 1:
-        sub_809CDEC(20);
-        sub_809CDEC(21);
-        sub_809CDEC(22);
-        sub_809CDEC(23);
+        SetMenuText(20);
+        SetMenuText(21);
+        SetMenuText(22);
+        SetMenuText(23);
         break;
     case 2:
-        sub_809CDEC(24);
-        sub_809CDEC(25);
-        sub_809CDEC(26);
-        sub_809CDEC(27);
+        SetMenuText(24);
+        SetMenuText(25);
+        SetMenuText(26);
+        SetMenuText(27);
         break;
     case 3:
-        sub_809CDEC(28);
-        sub_809CDEC(29);
-        sub_809CDEC(30);
-        sub_809CDEC(31);
+        SetMenuText(28);
+        SetMenuText(29);
+        SetMenuText(30);
+        SetMenuText(31);
         break;
     }
-    sub_809CE84();
+    AddMenu();
 }
