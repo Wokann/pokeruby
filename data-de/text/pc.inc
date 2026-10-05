@@ -1,7 +1,7 @@
 Text_BootUpPC: @ 81A09EC
 	.string "{PLAYER} schaltet den PC ein.$"
 
-Text_WhichPCShouldBeAccessed:: @ 81A0A01
+gText_WhichPCShouldBeAccessed:: @ 81A0A01
 	.string "Zugriff auf wessen PC?$"
 
 Text_AccessedSomeonesPC: @ 81A0A1E

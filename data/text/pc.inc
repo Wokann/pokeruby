@@ -1,7 +1,7 @@
 Text_BootUpPC: @ 81A09EC
 	.string "{PLAYER} booted up the PC.$"
 
-Text_WhichPCShouldBeAccessed:: @ 81A0A01
+gText_WhichPCShouldBeAccessed:: @ 81A0A01
 	.string "Which PC should be accessed?$"
 
 Text_AccessedSomeonesPC: @ 81A0A1E
