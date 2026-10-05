@@ -838,7 +838,7 @@ void sub_80C310C(void)
 
     for (i = 0; i < 4; i++)
     {
-        species = mon_icon_convert_unown_species_id(gContestMons[i].species, 0);
+        species = GetIconSpecies(gContestMons[i].species, 0);
         LoadPalette(gMonIconPalettes[gMonIconPaletteIndices[species]], 0xa0 + 0x10 * i, 0x20);
     }
 }

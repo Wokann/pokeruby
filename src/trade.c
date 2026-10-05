@@ -302,7 +302,7 @@ static void CB2_CreateTradeMenu(void)
             gUnknown_03004824->unk_007a = TextWindow_SetBaseTileNum(20);
             TextWindow_LoadStdFrameGraphics(&gUnknown_03004824->window);
             Menu_EraseScreen();
-            sub_809D51C();
+            LoadMonIconPalettes();
             gUnknown_03004824->bufferPartyState = 0;
             gUnknown_03004824->callbackId = 0;
             gUnknown_03004824->unk_007c = 0;
@@ -371,9 +371,9 @@ static void CB2_CreateTradeMenu(void)
             gUnknown_03004824->partyCounts[0] = gPlayerPartyCount;
             gUnknown_03004824->partyCounts[1] = gEnemyPartyCount;
             for (i = 0; i < gUnknown_03004824->partyCounts[0]; i ++)
-                gUnknown_03004824->partySpriteIds[0][i] = CreateMonIcon(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG), SpriteCB_PokemonIcon, sTradeMonSpriteCoords[i][0] * 8 + 14, sTradeMonSpriteCoords[i][1] * 8 - 12, TRUE, GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY));
+                gUnknown_03004824->partySpriteIds[0][i] = CreateMonIcon(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG), SpriteCB_MonIcon, sTradeMonSpriteCoords[i][0] * 8 + 14, sTradeMonSpriteCoords[i][1] * 8 - 12, TRUE, GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY));
             for (i = 0; i < gUnknown_03004824->partyCounts[1]; i ++)
-                gUnknown_03004824->partySpriteIds[1][i] = CreateMonIcon(GetMonData(&gEnemyParty[i], MON_DATA_SPECIES_OR_EGG, NULL), SpriteCB_PokemonIcon, sTradeMonSpriteCoords[6 + i][0] * 8 + 14, sTradeMonSpriteCoords[6 + i][1] * 8 - 12, TRUE, GetMonData(&gEnemyParty[i], MON_DATA_PERSONALITY));
+                gUnknown_03004824->partySpriteIds[1][i] = CreateMonIcon(GetMonData(&gEnemyParty[i], MON_DATA_SPECIES_OR_EGG, NULL), SpriteCB_MonIcon, sTradeMonSpriteCoords[6 + i][0] * 8 + 14, sTradeMonSpriteCoords[6 + i][1] * 8 - 12, TRUE, GetMonData(&gEnemyParty[i], MON_DATA_PERSONALITY));
             nullsub_5(2, 0);
             gMain.state ++;
             break;
@@ -482,7 +482,7 @@ static void sub_80484F4(void)
             gUnknown_03004824->unk_007a = TextWindow_SetBaseTileNum(20);
             TextWindow_LoadStdFrameGraphics(&gUnknown_03004824->window);
             Menu_EraseScreen();
-            sub_809D51C();
+            LoadMonIconPalettes();
             gUnknown_03004824->bufferPartyState = 0;
             gUnknown_03004824->callbackId = 0;
             gUnknown_03004824->unk_007c = 0;
@@ -521,9 +521,9 @@ static void sub_80484F4(void)
             sub_804A41C(0);
             sub_804A41C(1);
             for (i = 0; i < gUnknown_03004824->partyCounts[0]; i ++)
-                gUnknown_03004824->partySpriteIds[0][i] = CreateMonIcon(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL), SpriteCB_PokemonIcon, sTradeMonSpriteCoords[i][0] * 8 + 14, sTradeMonSpriteCoords[i][1] * 8 - 12, TRUE, GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY));
+                gUnknown_03004824->partySpriteIds[0][i] = CreateMonIcon(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL), SpriteCB_MonIcon, sTradeMonSpriteCoords[i][0] * 8 + 14, sTradeMonSpriteCoords[i][1] * 8 - 12, TRUE, GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY));
             for (i = 0; i < gUnknown_03004824->partyCounts[1]; i ++)
-                gUnknown_03004824->partySpriteIds[1][i] = CreateMonIcon(GetMonData(&gEnemyParty[i], MON_DATA_SPECIES_OR_EGG, NULL), SpriteCB_PokemonIcon, sTradeMonSpriteCoords[6 + i][0] * 8 + 14, sTradeMonSpriteCoords[6 + i][1] * 8 - 12, TRUE, GetMonData(&gEnemyParty[i], MON_DATA_PERSONALITY));
+                gUnknown_03004824->partySpriteIds[1][i] = CreateMonIcon(GetMonData(&gEnemyParty[i], MON_DATA_SPECIES_OR_EGG, NULL), SpriteCB_MonIcon, sTradeMonSpriteCoords[6 + i][0] * 8 + 14, sTradeMonSpriteCoords[6 + i][1] * 8 - 12, TRUE, GetMonData(&gEnemyParty[i], MON_DATA_PERSONALITY));
             nullsub_5(2, 0);
             gMain.state ++;
             break;
@@ -1480,7 +1480,7 @@ static void sub_8049ED4(u8 a0)
             gSprites[gUnknown_03004824->partySpriteIds[whichParty][whichPokemon]].data[0] = 20;
             gSprites[gUnknown_03004824->partySpriteIds[whichParty][whichPokemon]].data[2] = (sTradeMonSpriteCoords[6 * whichParty + whichPokemon][0] + sTradeMonSpriteCoords[6 * whichParty + whichPokemon + 1][0]) / 2 * 8 + 14;
             gSprites[gUnknown_03004824->partySpriteIds[whichParty][whichPokemon]].data[4] = sTradeMonSpriteCoords[6 * whichParty + whichPokemon][1] * 8 - 12;
-            StoreSpriteCallbackInData6(&gSprites[gUnknown_03004824->partySpriteIds[whichParty][whichPokemon]], SpriteCB_PokemonIcon);
+            StoreSpriteCallbackInData6(&gSprites[gUnknown_03004824->partySpriteIds[whichParty][whichPokemon]], SpriteCB_MonIcon);
             gUnknown_03004824->drawSelectedMonState[a0] ++;
             Trade_MoveSelectedMonToTarget(&gSprites[gUnknown_03004824->partySpriteIds[whichParty][whichPokemon]]);
             Menu_DestroyCursor();
@@ -1492,7 +1492,7 @@ static void sub_8049ED4(u8 a0)
             }
             break;
         case 2:
-            if (gSprites[gUnknown_03004824->partySpriteIds[whichParty][whichPokemon]].callback == SpriteCB_PokemonIcon)
+            if (gSprites[gUnknown_03004824->partySpriteIds[whichParty][whichPokemon]].callback == SpriteCB_MonIcon)
             {
                 gUnknown_03004824->drawSelectedMonState[a0] = 3;
             }
@@ -1693,7 +1693,7 @@ static void sub_8049ED4(u8 a0)
                     "\tadds r0, r1\n"
                     "\tlsls r0, 2\n"
                     "\tadds r0, r7\n"
-                    "\tldr r1, _0804A0A0 @ =SpriteCB_PokemonIcon\n"
+                    "\tldr r1, _0804A0A0 @ =SpriteCB_MonIcon\n"
                     "\tbl StoreSpriteCallbackInData6\n"
                     "\tldr r2, _0804A09C @ =gUnknown_03004824\n"
                     "\tldr r1, [r2]\n"
@@ -1756,7 +1756,7 @@ static void sub_8049ED4(u8 a0)
                     "_0804A094: .4byte gSprites\n"
                     "_0804A098: .4byte sTradeMonSpriteCoords\n"
                     "_0804A09C: .4byte gUnknown_03004824\n"
-                    "_0804A0A0: .4byte SpriteCB_PokemonIcon\n"
+                    "_0804A0A0: .4byte SpriteCB_MonIcon\n"
                     "_0804A0A4: .4byte gUnknown_0820C330\n"
                     "_0804A0A8: .4byte sTradePartyBoxTilemap\n"
                     "_0804A0AC:\n"
@@ -1776,7 +1776,7 @@ static void sub_8049ED4(u8 a0)
                     "\tadds r2, 0x1C\n"
                     "\tadds r0, r2\n"
                     "\tldr r1, [r0]\n"
-                    "\tldr r0, _0804A0E0 @ =SpriteCB_PokemonIcon\n"
+                    "\tldr r0, _0804A0E0 @ =SpriteCB_MonIcon\n"
                     "\tcmp r1, r0\n"
                     "\tbeq _0804A0D4\n"
                     "\tb _0804A294\n"
@@ -1786,7 +1786,7 @@ static void sub_8049ED4(u8 a0)
                     "\tb _0804A294\n"
                     "\t.align 2, 0\n"
                     "_0804A0DC: .4byte gSprites\n"
-                    "_0804A0E0: .4byte SpriteCB_PokemonIcon\n"
+                    "_0804A0E0: .4byte SpriteCB_MonIcon\n"
                     "_0804A0E4:\n"
                     "\tadds r0, r5, 0\n"
                     "\tadds r0, 0xC8\n"

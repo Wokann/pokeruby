@@ -3,8 +3,8 @@
 #include "mail_data.h"
 #include "constants/species.h"
 #include "sprite.h"
-
-#define POKE_ICON_BASE_PAL_TAG 56000
+#include "pokemon_icon.h"
+#include "constants/pokemon_icon.h"
 
 struct MonIconSpriteTemplate
 {
@@ -140,7 +140,7 @@ const u8 * const gMonIconTable[] =
     [SPECIES_SEAKING] = gMonIcon_Seaking,
     [SPECIES_STARYU] = gMonIcon_Staryu,
     [SPECIES_STARMIE] = gMonIcon_Starmie,
-    [SPECIES_MR_MIME] = gMonIcon_Mrmime,
+    [SPECIES_MR_MIME] = gMonIcon_MrMime,
     [SPECIES_SCYTHER] = gMonIcon_Scyther,
     [SPECIES_JYNX] = gMonIcon_Jynx,
     [SPECIES_ELECTABUZZ] = gMonIcon_Electabuzz,
@@ -987,7 +987,7 @@ static const union AffineAnimCmd *const sMonIconAffineAnims[] =
     sAffineAnim_1,
 };
 
-const u16 sSpriteImageSizes[3][4] =
+static const u16 sSpriteImageSizes[3][4] =
 {
     // square
     {
@@ -1014,11 +1014,8 @@ const u16 sSpriteImageSizes[3][4] =
     },
 };
 
-u16 GetUnownLetterByPersonality(u32);
-const u8 *GetMonIconPtr(u16, u32 personality);
-u8 UpdateMonIconFrame(struct Sprite *);
-static u8 CreateMonIconSprite(struct MonIconSpriteTemplate *, s16, s16, u8);
-void DestroyPokemonIconSprite(struct Sprite *);
+static u8 CreateMonIconSprite(struct MonIconSpriteTemplate *iconTemplate, s16 x, s16 y, u8 subpriority);
+static void FreeAndDestroyMonIconSprite_(struct Sprite *sprite);
 
 // duplicate of CreateMonIcon
 u8 unref_sub_809D26C(u16 species, void (*callback)(struct Sprite *), s16 x, s16 y, u8 subpriority)
@@ -1064,7 +1061,7 @@ u8 CreateMonIcon(u16 species, void (*callback)(struct Sprite *), s16 x, s16 y, u
     return spriteId;
 }
 
-u8 sub_809D3A4(u16 species, void (*callback)(struct Sprite *), s16 x, s16 y, u8 subpriority)
+u8 CreateMonIconNoPersonality(u16 species, void (*callback)(struct Sprite *), s16 x, s16 y, u8 subpriority)
 {
     u8 spriteId;
     struct MonIconSpriteTemplate iconTemplate =
@@ -1084,7 +1081,7 @@ u8 sub_809D3A4(u16 species, void (*callback)(struct Sprite *), s16 x, s16 y, u8 
     return spriteId;
 }
 
-u16 mon_icon_convert_unown_species_id(u16 species, u32 personality)
+u16 GetIconSpecies(u16 species, u32 personality)
 {
     u16 result;
 
@@ -1113,7 +1110,7 @@ u16 GetUnownLetterByPersonality(u32 personality)
     return (((personality & 0x3000000) >> 18) | ((personality & 0x30000) >> 12) | ((personality & 0x300) >> 6) | (personality & 0x3)) % 0x1C;
 }
 
-u16 sub_809D4A8(u16 species)
+u16 GetIconSpeciesNoPersonality(u16 species)
 {
     u16 value;
 
@@ -1127,22 +1124,22 @@ u16 sub_809D4A8(u16 species)
     }
     else
     {
-        return mon_icon_convert_unown_species_id(species, 0);
+        return GetIconSpecies(species, 0);
     }
 }
 
 const u8 *GetMonIconPtr(u16 species, u32 personality)
 {
-    u16 convertedSpecies = mon_icon_convert_unown_species_id(species, personality);
+    u16 convertedSpecies = GetIconSpecies(species, personality);
     return gMonIconTable[convertedSpecies];
 }
 
-void sub_809D510(struct Sprite *sprite)
+void FreeAndDestroyMonIconSprite(struct Sprite *sprite)
 {
-    DestroyPokemonIconSprite(sprite);
+    FreeAndDestroyMonIconSprite_(sprite);
 }
 
-void sub_809D51C(void)
+void LoadMonIconPalettes(void)
 {
     u8 i;
     for (i = 0; i < 6; i++)
@@ -1160,7 +1157,7 @@ void SafeLoadMonIconPalette(u16 species)
         LoadSpritePalette(&gMonIconPaletteTable[palIndex]);
 }
 
-void sub_809D580(u16 species)
+void LoadMonIconPalette(u16 species)
 {
     u8 palIndex = gMonIconPaletteIndices[species];
     if (IndexOfSpritePaletteTag(gMonIconPaletteTable[palIndex].tag) == 0xFF)
@@ -1185,14 +1182,14 @@ void SafeFreeMonIconPalette(u16 species)
     FreeSpritePaletteByTag(gMonIconPaletteTable[palIndex].tag);
 }
 
-void sub_809D608(u16 species)
+void FreeMonIconPalette(u16 species)
 {
     u8 palIndex;
     palIndex = gMonIconPaletteIndices[species];
     FreeSpritePaletteByTag(gMonIconPaletteTable[palIndex].tag);
 }
 
-void SpriteCB_PokemonIcon(struct Sprite *sprite)
+void SpriteCB_MonIcon(struct Sprite *sprite)
 {
     UpdateMonIconFrame(sprite);
 }
@@ -1257,7 +1254,7 @@ static u8 CreateMonIconSprite(struct MonIconSpriteTemplate *iconTemplate, s16 x,
     return spriteId;
 }
 
-void DestroyPokemonIconSprite(struct Sprite *sprite)
+static void FreeAndDestroyMonIconSprite_(struct Sprite *sprite)
 {
     struct SpriteFrameImage image = { NULL, sSpriteImageSizes[sprite->oam.shape][sprite->oam.size] };
     sprite->images = &image;

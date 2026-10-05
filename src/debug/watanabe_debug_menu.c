@@ -2562,7 +2562,7 @@ void InitSeePokemonGraphics(void)
     }
     SetVBlankCallback(debug_80C3758);
     SetMainCallback2(debug_80C370C);
-    sub_809D51C();
+    LoadMonIconPalettes();
     REG_BG0CNT = BGCNT_PRIORITY(3) | BGCNT_CHARBASE(2) | BGCNT_SCREENBASE(31);
     REG_BG1CNT = BGCNT_PRIORITY(2) | BGCNT_CHARBASE(2) | BGCNT_SCREENBASE(30);
     REG_DISPCNT = DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_ON | DISPCNT_WIN0_ON;
@@ -2684,7 +2684,7 @@ void debug_80C6CB8(u8 taskId)
     gSprites[gUnknown_Debug_2038A20->unk3].callback = debug_69;
     gSprites[gUnknown_Debug_2038A20->unk3].oam.priority = 0;
 
-    gUnknown_Debug_2038A20->round1Points = CreateMonIcon(gUnknown_Debug_2038A20->totalPoints, SpriteCB_PokemonIcon, 0x68, 0x2C, 0, 0);
+    gUnknown_Debug_2038A20->round1Points = CreateMonIcon(gUnknown_Debug_2038A20->totalPoints, SpriteCB_MonIcon, 0x68, 0x2C, 0, 0);
 
     DrawFootprint(SpeciesToNationalPokedexNum(gUnknown_Debug_2038A20->totalPoints), 2, 0x3fc);
 
@@ -3092,7 +3092,7 @@ void debug_80C71FC(u8 taskId)
     DestroySprite(gSprites + gUnknown_Debug_2038A20->excitementAppealBonus);
     FreeSpritePaletteByTag(GetSpritePaletteTagByPaletteNum(gSprites[gUnknown_Debug_2038A20->unk3].oam.paletteNum));
     DestroySprite(gSprites + gUnknown_Debug_2038A20->unk3);
-    sub_809D510(gSprites + gUnknown_Debug_2038A20->round1Points);
+    FreeAndDestroyMonIconSprite(gSprites + gUnknown_Debug_2038A20->round1Points);
     gTasks[taskId].func = debug_80C6CB8;
 }
 
@@ -3683,7 +3683,7 @@ void debug_80C7D44(u8 taskId)
     DestroySprite(gSprites + gUnknown_Debug_2038A20->excitementAppealBonus);
     FreeSpritePaletteByTag(GetSpritePaletteTagByPaletteNum(gSprites[gUnknown_Debug_2038A20->unk3].oam.paletteNum));
     DestroySprite(gSprites + gUnknown_Debug_2038A20->unk3);
-    sub_809D510(gSprites + gUnknown_Debug_2038A20->round1Points);
+    FreeAndDestroyMonIconSprite(gSprites + gUnknown_Debug_2038A20->round1Points);
     gTasks[taskId].func = debug_80C7934;
 }
 

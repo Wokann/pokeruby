@@ -484,18 +484,18 @@ static u8 sub_80F8A28(void)
     {
         u16 local1;
 
-        local1 = sub_809D4A8(sSharedMemPtr->mail->species);
+        local1 = GetIconSpeciesNoPersonality(sSharedMemPtr->mail->species);
 
         switch (sSharedMemPtr->varFB)
         {
         case 1:
-            sub_809D580(local1);
-            sSharedMemPtr->varFC = sub_809D3A4(local1, SpriteCallbackDummy, 96, 128, 0);
+            LoadMonIconPalette(local1);
+            sSharedMemPtr->varFC = CreateMonIconNoPersonality(local1, SpriteCallbackDummy, 96, 128, 0);
             break;
 
         case 2:
-            sub_809D580(local1);
-            sSharedMemPtr->varFC = sub_809D3A4(local1, SpriteCallbackDummy, 40, 128, 0);
+            LoadMonIconPalette(local1);
+            sSharedMemPtr->varFC = CreateMonIconNoPersonality(local1, SpriteCallbackDummy, 40, 128, 0);
             break;
         }
         RETURN_UP_STATE;
@@ -653,8 +653,8 @@ static void sub_80F8FB4(void)
         {
         case 2:
         case 1:
-            sub_809D608(sub_809D4A8(sSharedMemPtr->mail->species));
-            sub_809D510(&gSprites[sSharedMemPtr->varFC]);
+            FreeMonIconPalette(GetIconSpeciesNoPersonality(sSharedMemPtr->mail->species));
+            FreeAndDestroyMonIconSprite(&gSprites[sSharedMemPtr->varFC]);
             break;
         }
 #if !DEBUG

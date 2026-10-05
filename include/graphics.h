@@ -794,7 +794,7 @@ extern const u8 gMonFrontPic_Mrmime[];
 extern const u8 gMonPalette_Mrmime[];
 extern const u8 gMonBackPic_Mrmime[];
 extern const u8 gMonShinyPalette_Mrmime[];
-extern const u8 gMonIcon_Mrmime[];
+extern const u8 gMonIcon_MrMime[];
 extern const u8 gMonFootprint_Mrmime[];
 extern const u8 gMonFrontPic_Scyther[];
 extern const u8 gMonPalette_Scyther[];
