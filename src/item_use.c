@@ -162,7 +162,7 @@ u8 CheckIfItemIsTMHMOrEvolutionStone(u16 itemId)
 
 void ItemMenu_ReadMail(u8 taskId)
 {
-    struct MailStruct mailStruct;
+    struct Mail mailStruct;
 
     if (!gPaletteFade.active)
     {

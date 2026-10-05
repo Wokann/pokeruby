@@ -364,6 +364,8 @@ struct Evolution
     u16 targetSpecies;
 };
 
+#define NUM_UNOWN_FORMS 28
+
 struct EvolutionData
 {
     struct Evolution evolutions[5];

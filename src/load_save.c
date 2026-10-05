@@ -16,7 +16,7 @@ struct LoadedSaveData
     struct ItemSlot pokeBalls[16];
     struct ItemSlot TMsHMs[64];
     struct ItemSlot berries[46];
-    struct MailStruct mail[16];
+    struct Mail mail[16];
 };
 
 EWRAM_DATA struct SaveBlock2 gSaveBlock2 = {0};

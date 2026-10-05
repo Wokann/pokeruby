@@ -12,7 +12,7 @@
 #include "item_menu.h"
 #include "item_use.h"
 #include "link.h"
-#include "mail_data.h"
+#include "mail.h"
 #include "main.h"
 #include "map_name_popup.h"
 #include "menu.h"

@@ -13,6 +13,7 @@
 #include "constants/moves.h"
 #include "constants/abilities.h"
 #include "item.h"
+#include "mail.h"
 #include "constants/items.h"
 #include "data.h"
 #include "constants/hold_effects.h"

@@ -15,7 +15,7 @@
 #include "strings.h"
 #include "string_util.h"
 #include "pokemon_summary_screen.h"
-#include "mail_data.h"
+#include "mail.h"
 #include "naming_screen.h"
 #include "pokemon_storage_system.h"
 

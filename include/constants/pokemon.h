@@ -134,7 +134,6 @@
 
 #define MAX_TOTAL_EVS 510
 #define NUM_STATS 6
-#define UNOWN_FORM_COUNT 28
 
 #define MIN_STAT_STAGE     0
 #define DEFAULT_STAT_STAGE 6

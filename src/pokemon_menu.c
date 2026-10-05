@@ -5,7 +5,6 @@
 #include "party_menu.h"
 #include "palette.h"
 #include "menu.h"
-#include "mail_data.h"
 #include "sound.h"
 #include "main.h"
 #include "overworld.h"

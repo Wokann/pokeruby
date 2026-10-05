@@ -46,7 +46,7 @@ struct TradeEwramSubstruct2 {
 };
 
 extern struct TradeEwramSubstruct2 *gUnknown_03004828;
-extern struct MailStruct gTradeMail[6];
+extern struct Mail gTradeMail[6];
 extern u8 gSelectedTradeMonPositions[2];
 extern const u16 gTradePlatform_Tilemap[];
 

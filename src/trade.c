@@ -31,7 +31,7 @@
 #include "script.h"
 #include "field_screen_effect.h"
 #include "decompress.h"
-#include "mail_data.h"
+#include "mail.h"
 #include "evolution_scene.h"
 #include "pokeball.h"
 #include "pokedex.h"
@@ -190,7 +190,7 @@ static void sub_804DC18(void);
 static u8 TradeGetMultiplayerId(void);
 static void sub_804E144(void);
 static void Task_InGameTrade(u8);
-static void GetInGameTradeMail(struct MailStruct *, const struct InGameTrade *);
+static void GetInGameTradeMail(struct Mail *, const struct InGameTrade *);
 static void sub_804DC88(void);
 static void SpriteCB_BouncingPokeball(struct Sprite *);
 static void SpriteCB_BouncingPokeballDepart(struct Sprite *);
@@ -208,7 +208,7 @@ static void BufferTradeSceneStrings(void);
 void sub_804DB84(void);
 
 static EWRAM_DATA u8 *sMenuTextTileBuffers[13] = {0};
-EWRAM_DATA struct MailStruct gTradeMail[6] = {0};
+EWRAM_DATA struct Mail gTradeMail[6] = {0};
 EWRAM_DATA u8 gSelectedTradeMonPositions[2] = {0};
 
 struct TradeEwramSubstruct *gUnknown_03004824;
@@ -814,7 +814,7 @@ static bool8 sub_8048D44(void)
             }
             break;
         case 10:
-            Trade_Memcpy(gBlockSendBuffer, &gSaveBlock1.mail[0], 6 * sizeof(struct MailStruct) + 4);
+            Trade_Memcpy(gBlockSendBuffer, &gSaveBlock1.mail[0], 6 * sizeof(struct Mail) + 4);
             gUnknown_03004824->bufferPartyState ++;
             break;
         case 11:
@@ -827,7 +827,7 @@ static bool8 sub_8048D44(void)
         case 12:
             if (GetBlockReceivedStatus() == 3)
             {
-                Trade_Memcpy(&gTradeMail[0], gBlockRecvBuffer[mpId ^ 1], 6 * sizeof(struct MailStruct));
+                Trade_Memcpy(&gTradeMail[0], gBlockRecvBuffer[mpId ^ 1], 6 * sizeof(struct Mail));
                 ResetBlockReceivedFlags();
                 gUnknown_03004824->bufferPartyState ++;
             }
@@ -3373,7 +3373,7 @@ static void sub_804BA94(u8 playerPartyIdx, u8 partnerPartyIdx)
     u16 partnerMail = GetMonData(partnerMon, MON_DATA_MAIL);
 
     if (playerMail != 0xff)
-        ClearMailStruct(&gSaveBlock1.mail[playerMail]);
+        ClearMail(&gSaveBlock1.mail[playerMail]);
 
     // This is where the actual trade happens!!
     gUnknown_03004828->tempMon = *playerMon;
@@ -3385,7 +3385,7 @@ static void sub_804BA94(u8 playerPartyIdx, u8 partnerPartyIdx)
         SetMonData(playerMon, MON_DATA_FRIENDSHIP, &friendship);
 
     if (partnerMail != 0xff)
-        GiveMailToMon2(playerMon, &gTradeMail[partnerMail]);
+        GiveMailToMon(playerMon, &gTradeMail[partnerMail]);
 
     sub_804BA18(playerPartyIdx);
     if (gReceivedRemoteLinkPlayers)
@@ -4165,7 +4165,7 @@ static void CreateInGameTradePokemonInternal(u8 whichPlayerMon, u8 whichInGameTr
     const struct InGameTrade *inGameTrade = &sIngameTrades[whichInGameTrade];
     u8 level = GetMonData(&gPlayerParty[whichPlayerMon], MON_DATA_LEVEL);
 
-    struct MailStruct mail;
+    struct Mail mail;
     u8 metLocation = 0xFE;
     u8 mailNum;
     struct Pokemon *pokemon = &gEnemyParty[0];
@@ -4208,7 +4208,7 @@ static void CreateInGameTradePokemonInternal(u8 whichPlayerMon, u8 whichInGameTr
     CalculateMonStats(&gEnemyParty[0]);
 }
 
-static void GetInGameTradeMail(struct MailStruct *mail, const struct InGameTrade *trade) {
+static void GetInGameTradeMail(struct Mail *mail, const struct InGameTrade *trade) {
     s32 i;
 
     for (i = 0; i < 9; i++)
