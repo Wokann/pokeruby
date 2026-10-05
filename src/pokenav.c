@@ -1792,7 +1792,7 @@ void sub_80F1934(void)
     {
         u8 nature = GetNature(&gPlayerParty[sub_8137124(gPokenavStructPtr->unk87DC)]);
         buffer = StringCopy(buffer, gOtherText_Nature2);
-        AlignStringInMenuWindow(buffer, gNatureNames[nature], 87, 0);
+        AlignStringInMenuWindow(buffer, gNatureNamePointers[nature], 87, 0);
     }
     else
     {

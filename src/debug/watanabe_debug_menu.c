@@ -2097,7 +2097,7 @@ u8 debug_80C5738(u8 * a0, u8 a1, u8 a2)
                 debug_80C689C(a0 + 10, gUnknown_Debug_083F854D, 4);
             break;
         case 6:
-            debug_80C689C(a0 + 10, gNatureNames[gUnknown_Debug_2038A1C->unk64[a1]], 5);
+            debug_80C689C(a0 + 10, gNatureNamePointers[gUnknown_Debug_2038A1C->unk64[a1]], 5);
             break;
     }
     return 0;

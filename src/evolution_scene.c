@@ -815,7 +815,7 @@ static void Task_EvolutionScene(u8 taskID)
         case 6:
             if (!gPaletteFade.active && gMain.callback2 == CB2_EvolutionSceneUpdate)
             {
-                var = sub_809FA30(); // moveID
+                var = GetMoveSlotToReplace(); // moveID
                 if (var == 4)
                     gTasks[taskID].tLearnMoveState = 9;
                 else
@@ -1179,7 +1179,7 @@ static void Task_TradeEvolutionScene(u8 taskID)
         case 6:
             if (!gPaletteFade.active && gMain.callback2 == CB2_TradeEvolutionSceneUpdate)
             {
-                var = sub_809FA30(); // moveID
+                var = GetMoveSlotToReplace(); // moveID
                 if (var == 4)
                     gTasks[taskID].tLearnMoveState = 9;
                 else

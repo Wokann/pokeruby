@@ -28,7 +28,6 @@ extern u8 gTileBuffer[];
 extern const struct WindowTemplate gMenuTextWindowTemplate;
 extern const struct WindowTemplate gMoveTutorMenuFramesWindowTemplate;
 extern const u8 *const gContestEffectStrings[];
-extern const u8 *const gMoveDescriptions[];
 extern const u8 gTypeNames[][7];
 extern const u8 *const gContestCategoryNames[];
 
@@ -1029,7 +1028,7 @@ static void DrawMoveInfoWindow(bool8 contestInfo, int unused)
 
             for (i = 0; i < 4; i++)
                 PrintMoveInfo(moveId, sMoveInfoTextCoords[sBattleMoveInfoCoordIds[i]]);
-            var = sub_8072A18(gMoveDescriptions[moveId - 1], 0x58, 0x48, 0x90, 1);
+            var = sub_8072A18(gMoveDescriptionPointers[moveId - 1], 0x58, 0x48, 0x90, 1);
             if (var < 2)
             {
                 u8 r1 = var * 2 + 9;

@@ -3486,4 +3486,14 @@ extern const u16 gPokedexBgNational_Pal[];
 extern const u8 gPokedexCryScreen_Tilemap[];
 extern const u8 gPokedexSizeScreen_Tilemap[];
 
+extern const u8 gSummaryMoveSelect_Gfx[];
+extern const u8 gSummaryMoveSelect_Pal[];
+extern const u8 gSummaryScreen_Gfx[];
+extern const u8 gSummaryScreen_Pal[];
+extern const u8 gSummaryPage_Info_Tilemap[];
+extern const u8 gSummaryPage_Skills_Tilemap[];
+extern const u8 gSummaryPage_BattleMoves_Tilemap[];
+extern const u8 gSummaryPage_ContestMoves_Tilemap[];
+extern const u8 gSummaryPage_InfoEgg_Tilemap[];
+
 #endif  // GUARD_GRAPHICS_H
