@@ -565,7 +565,7 @@ struct GabbyAndTyData
     /*2b1b*/ u8 valB_5:3;
 };
 
-struct DayCareMail
+struct DaycareMail
 {
     /*0x00*/ struct Mail message;
     /*0x24*/ u8 names[19];
@@ -579,7 +579,7 @@ struct DayCareStepCountersEtc {
 
 struct DayCareMisc
 {
-    struct DayCareMail mail[DAYCARE_MON_COUNT];
+    struct DaycareMail mail[DAYCARE_MON_COUNT];
     struct DayCareStepCountersEtc countersEtc;
 };
 

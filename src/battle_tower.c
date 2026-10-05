@@ -559,7 +559,7 @@ void SetEReaderTrainerGfxId(void)
 
 #define BATTLE_TOWER_RECORD_COUNT 5
 
-void sub_8134AC0(struct BattleTowerRecord *record)
+void PutNewBattleTowerRecord(struct BattleTowerRecord *record)
 {
     u16 slotValues[6];
     u16 slotIds[6];

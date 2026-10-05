@@ -85,8 +85,6 @@ extern u8 gSharedMem[];
 #define eRecordMixPokeNews              ((struct PokeNews (*)[POKE_NEWS_COUNT])(gSharedMem + 0x7000)) // same addr as above
 #define eLinkedDewfordTrendsBuffer      ((struct DewfordTrend *)(gSharedMem + 0x7800))
 #define eSavedDewfordTrendsBuffer       ((struct DewfordTrend *)(gSharedMem + 0x7900))
-#define eReceivedRecords                (*(struct PlayerRecords *)(gSharedMem + 0x08000))
-#define eSentRecord                     (*(struct PlayerRecords *)(gSharedMem + 0x18000))
 
 // pokedex.c
 #define ePokedexGraphicsBuffer          ((void *)&gSharedMem[0x8000])

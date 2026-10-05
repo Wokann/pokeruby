@@ -1,4 +1,5 @@
 #include "global.h"
+#include <stddef.h>
 #include "record_mixing.h"
 #include "battle_tower.h"
 #include "cable_club.h"
@@ -21,85 +22,111 @@
 #include "constants/songs.h"
 #include "sound.h"
 #include "string_util.h"
-#include "strings2.h"
+#include "strings.h"
 #include "task.h"
 #include "tv.h"
 #include "ewram.h"
 
-EWRAM_DATA struct RecordMixingDayCareMail gDayCareMailRecord = {0};
-extern u16 gSpecialVar_0x8005;
+static EWRAM_DATA struct RecordMixingDaycareMail sRecordMixMail = {0};
 
-u32 gUnknown_03005D2C;
+u32 gRecordStructSize;
 
-static u8 gUnknown_03000718;
+static bool8 sReadyToReceive;
 static u8 gUnknown_0300071C[4];
 
-void *recordMixingSecretBases = &gSaveBlock1.secretBases;
-void *recordMixingTvShows = &gSaveBlock1.tvShows;
-void *recordMixingPokeNews = &gSaveBlock1.pokeNews;
-void *recordMixingMauvilleMan = &gSaveBlock1.mauvilleMan;
-void *recordMixingEasyChatPairs = &gSaveBlock1.dewfordTrends;
-struct RecordMixingDayCareMail *gDayCareMailPlayerRecord = &gDayCareMailRecord;
-struct BattleTowerRecord *gBattleTowerPlayerRecord = &gSaveBlock2.battleTower.playerRecord;
+static struct SecretBaseRecord *sSecretBasesSave = gSaveBlock1.secretBases;
+static TVShow *sTvShowsSave = gSaveBlock1.tvShows;
+static struct PokeNews *sPokeNewsSave = gSaveBlock1.pokeNews;
+static void *recordMixingMauvilleMan = &gSaveBlock1.mauvilleMan;
+static struct DewfordTrend *sDewfordTrendsSave = gSaveBlock1.dewfordTrends;
+static struct RecordMixingDaycareMail *sRecordMixMailSave = &sRecordMixMail;
+static struct BattleTowerRecord *sBattleTowerSave = &gSaveBlock2.battleTower.playerRecord;
 
 #define BUFFER_CHUNK_SIZE 200
+
+static void PrepareExchangePacket(void);
+static void ReceiveExchangePacket(u32 multiplayerId);
+static void Task_RecordMixing_SoundEffect(u8 taskId);
+static void Task_MixingRecordsRecv(u8 taskId);
+static void Task_SendPacket(u8 taskId);
+static void Task_CopyReceiveBuffer(u8 taskId);
+static void Task_WaitReceivePacket(u8 taskId);
+static void Task_ReceivePacket(u8 taskId);
+static void Task_SendPacket_SwitchToReceive(u8 taskId);
+static void *LoadPtrFromTaskData(const u16 *taskData);
+static void StorePtrInTaskData(void *records, u16 *taskData);
+static u8 GetMultiplayerId_(void);
+static u16 *GetPlayerRecvBuffer(u8 player);
+void sub_80B9A78(void);
+static void ShufflePlayerIndices(u8 *data);
+static void ReceiveOldManData(u8 *records, size_t recordSize, u8 multiplayerId);
+static void ReceiveBattleTowerData(void *records, u32 recordSize, u8 multiplayerId);
+static u8 GetDaycareMailItemId(struct DaycareMail *mail);
+static void SwapDaycareMail(u8 *records, size_t recordSize, u8 idxs[][2], u8 playerSlot1, u8 playerSlot2);
+static u8 CalculateDaycareMailRandSum(const u8 *src);
+static void ReceiveDaycareMailData(struct RecordMixingDaycareMail *records, size_t recordSize, u8 multiplayerId, TVShow *shows);
+static void ReceiveGiftItem(u16 *item, u8 multiplayerId);
+static void Task_DoRecordMixing(u8 taskId);
 
 void RecordMixingPlayerSpotTriggered(void)
 {
     CreateTask_EnterCableClubSeat(Task_RecordMixing_Main);
 }
 
-struct PlayerRecords
+struct PlayerRecordRS
 {
     struct SecretBaseRecord secretBases[SECRET_BASES_COUNT];
     TVShow tvShows[TV_SHOWS_COUNT];
     struct PokeNews pokeNews[POKE_NEWS_COUNT];
     union MauvilleMan mauvilleMan;
     struct DewfordTrend dewfordTrends[5];
-    struct RecordMixingDayCareMail daycareMailRecord;
+    struct RecordMixingDaycareMail daycareMail;
     struct BattleTowerRecord battleTowerRecord;
     u16 giftItem;
     u16 filler11CA[0x33];
 };
 
-void RecordMixing_PrepareExchangePacket(void)
-{
-    SetPlayerSecretBaseRecordMixingParty();
-    sub_80C045C();
+#define eReceivedRecords                (*(struct PlayerRecordRS *)(gSharedMem + 0x08000))
+#define eSentRecord                     (*(struct PlayerRecordRS *)(gSharedMem + 0x18000))
 
-    memcpy(eSentRecord.secretBases, recordMixingSecretBases, sizeof(eSentRecord.secretBases));
-    memcpy(eSentRecord.tvShows, recordMixingTvShows, sizeof(eSentRecord.tvShows));
-    memcpy(eSentRecord.pokeNews, recordMixingPokeNews, sizeof(eSentRecord.pokeNews));
+static void PrepareExchangePacket(void)
+{
+    SetPlayerSecretBaseParty();
+    DeactivateAllNormalTVShows();
+
+    memcpy(eSentRecord.secretBases, sSecretBasesSave, sizeof(eSentRecord.secretBases));
+    memcpy(eSentRecord.tvShows, sTvShowsSave, sizeof(eSentRecord.tvShows));
+    memcpy(eSentRecord.pokeNews, sPokeNewsSave, sizeof(eSentRecord.pokeNews));
     memcpy(&eSentRecord.mauvilleMan, recordMixingMauvilleMan, sizeof(eSentRecord.mauvilleMan));
-    memcpy(eSentRecord.dewfordTrends, recordMixingEasyChatPairs, sizeof(eSentRecord.dewfordTrends));
-    gDayCareMailRecord.mail[0] = gSaveBlock1.daycare.misc.mail[0];
-    gDayCareMailRecord.mail[1] = gSaveBlock1.daycare.misc.mail[1];
-    InitDaycareMailRecordMixing(gSaveBlock1.daycare.mons, &gDayCareMailRecord);
-    memcpy(&eSentRecord.daycareMailRecord, gDayCareMailPlayerRecord, sizeof(struct RecordMixingDayCareMail));
-    memcpy(&eSentRecord.battleTowerRecord, gBattleTowerPlayerRecord, sizeof(struct BattleTowerRecord));
+    memcpy(eSentRecord.dewfordTrends, sDewfordTrendsSave, sizeof(eSentRecord.dewfordTrends));
+    sRecordMixMail.mail[0] = gSaveBlock1.daycare.misc.mail[0];
+    sRecordMixMail.mail[1] = gSaveBlock1.daycare.misc.mail[1];
+    InitDaycareMailRecordMixing(gSaveBlock1.daycare.mons, &sRecordMixMail);
+    memcpy(&eSentRecord.daycareMail, sRecordMixMailSave, sizeof(struct RecordMixingDaycareMail));
+    memcpy(&eSentRecord.battleTowerRecord, sBattleTowerSave, sizeof(struct BattleTowerRecord));
 
     if (GetMultiplayerId() == 0)
         eSentRecord.giftItem = GetRecordMixingGift();
 }
 
-void RecordMixing_ReceiveExchangePacket(u32 which)
+static void ReceiveExchangePacket(u32 multiplayerId)
 {
-    ReceiveSecretBasesData(eReceivedRecords.secretBases, sizeof(struct PlayerRecords), which);
-    ReceiveTvShowsData((u8 *)eReceivedRecords.tvShows, sizeof(struct PlayerRecords), which);
-    ReceivePokeNewsData(eReceivedRecords.pokeNews, sizeof(struct PlayerRecords), which);
-    ReceiveOldManData((u8 *)&eReceivedRecords.mauvilleMan, sizeof(struct PlayerRecords), which);
-    ReceiveDewfordTrendData(eReceivedRecords.dewfordTrends, sizeof(struct PlayerRecords), which);
-    ReceiveDaycareMailData(&eReceivedRecords.daycareMailRecord,
-        sizeof(struct PlayerRecords),
-        which,
+    ReceiveSecretBasesData(eReceivedRecords.secretBases, sizeof(struct PlayerRecordRS), multiplayerId);
+    ReceiveTvShowsData((u8 *)eReceivedRecords.tvShows, sizeof(struct PlayerRecordRS), multiplayerId);
+    ReceivePokeNewsData(eReceivedRecords.pokeNews, sizeof(struct PlayerRecordRS), multiplayerId);
+    ReceiveOldManData((u8 *)&eReceivedRecords.mauvilleMan, sizeof(struct PlayerRecordRS), multiplayerId);
+    ReceiveDewfordTrendData(eReceivedRecords.dewfordTrends, sizeof(struct PlayerRecordRS), multiplayerId);
+    ReceiveDaycareMailData(&eReceivedRecords.daycareMail,
+        sizeof(struct PlayerRecordRS),
+        multiplayerId,
         eReceivedRecords.tvShows);
-    ReceiveBattleTowerData(&eReceivedRecords.battleTowerRecord, sizeof(struct PlayerRecords), which);
-    ReceiveGiftItem(&eReceivedRecords.giftItem, which);
+    ReceiveBattleTowerData(&eReceivedRecords.battleTowerRecord, sizeof(struct PlayerRecordRS), multiplayerId);
+    ReceiveGiftItem(&eReceivedRecords.giftItem, multiplayerId);
 }
 
 #define tCounter data[0]
 
-void Task_RecordMixing_SoundEffect(u8 taskId)
+static void Task_RecordMixing_SoundEffect(u8 taskId)
 {
     gTasks[taskId].tCounter++;
     if (gTasks[taskId].tCounter == 50)
@@ -113,7 +140,7 @@ void Task_RecordMixing_SoundEffect(u8 taskId)
 
 
 #define tState        data[0]
-#define tSndEffTaskId data[15]
+#define tSoundTaskId  data[15]
 
 void Task_RecordMixing_Main(u8 taskId)
 {
@@ -124,34 +151,34 @@ void Task_RecordMixing_Main(u8 taskId)
     case 0:        // init
         SetLocalLinkPlayerId(gSpecialVar_0x8005);
         VarSet(VAR_TEMP_0, 1);
-        gUnknown_03000718 = 0;
-        RecordMixing_PrepareExchangePacket();
+        sReadyToReceive = 0;
+        PrepareExchangePacket();
         CreateRecordMixingSprite();
         tState = 1;
-        data[10] = CreateTask(sub_80B95F0, 0x50);
-        tSndEffTaskId = CreateTask(Task_RecordMixing_SoundEffect, 0x51);
+        data[10] = CreateTask(Task_MixingRecordsRecv, 0x50);
+        tSoundTaskId = CreateTask(Task_RecordMixing_SoundEffect, 0x51);
         break;
-    case 1:        // wait for sub_80B95F0
+    case 1:        // wait for Task_MixingRecordsRecv
         if (!gTasks[data[10]].isActive)
         {
             tState = 2;
             FlagSet(FLAG_SYS_MIX_RECORD);
             DestroyRecordMixingSprite();
-            DestroyTask(tSndEffTaskId);
+            DestroyTask(tSoundTaskId);
         }
         break;
     case 2:
-        data[10] = CreateTask(sub_80BA00C, 10);
+        data[10] = CreateTask(Task_DoRecordMixing, 10);
         tState = 3;
         PlaySE(SE_M_BATON_PASS);
         break;
-    case 3:        // wait for sub_80BA00C
+    case 3:        // wait for Task_DoRecordMixing
         if (!gTasks[data[10]].isActive)
         {
             tState = 4;
             data[10] = CreateTask_ReestablishCableClubLink();
             Menu_ClearWindowText();
-            Menu_PrintText(gOtherText_MixingComplete, 2, 15);
+            Menu_PrintText(gText_RecordMixingComplete, 2, 15);
             data[8] = 0;
         }
         break;
@@ -172,7 +199,7 @@ void Task_RecordMixing_Main(u8 taskId)
     }
 }
 
-void sub_80B95F0(u8 taskId)
+static void Task_MixingRecordsRecv(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -181,7 +208,7 @@ void sub_80B95F0(u8 taskId)
     case 0:
         sub_80B9A78();
         Menu_DisplayDialogueFrame();
-        Menu_PrintText(gOtherText_MixingRecordsWithFriend, 2, 15);
+        Menu_PrintText(gText_MixingRecords, 2, 15);
         task->data[8] = 0x708;
         task->tState = 400;
         ClearLinkCallback_2();
@@ -250,9 +277,9 @@ void sub_80B95F0(u8 taskId)
             task->data[6] = GetLinkPlayerCount_2();
             task->tState = 0;
             task->data[5] = GetMultiplayerId_();
-            task->func = Task_RecordMixing_SendPacket;
+            task->func = Task_SendPacket;
             StorePtrInTaskData(&eSentRecord, &task->data[2]);
-            subTaskId = CreateTask(Task_RecordMixing_CopyReceiveBuffer, 0x50);
+            subTaskId = CreateTask(Task_CopyReceiveBuffer, 0x50);
             task->data[10] = subTaskId;
             gTasks[subTaskId].data[0] = taskId;
             StorePtrInTaskData((u8 *)&eReceivedRecords, &gTasks[subTaskId].data[5]);
@@ -269,7 +296,7 @@ void sub_80B95F0(u8 taskId)
     }
 }
 
-void Task_RecordMixing_SendPacket(u8 taskId)
+static void Task_SendPacket(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     // does this send the data 24 times?
@@ -300,11 +327,11 @@ void Task_RecordMixing_SendPacket(u8 taskId)
         break;
     case 4:
         if (!gTasks[task->data[10]].isActive)
-            task->func = Task_RecordMixing_SendPacket_SwitchToReceive;
+            task->func = Task_SendPacket_SwitchToReceive;
     }
 }
 
-void Task_RecordMixing_CopyReceiveBuffer(u8 taskId)
+static void Task_CopyReceiveBuffer(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     s32 recvStatus = GetBlockReceivedStatus();
@@ -317,16 +344,16 @@ void Task_RecordMixing_CopyReceiveBuffer(u8 taskId)
         for (player = 0; player < GetLinkPlayerCount(); player++)
         {
             void *src;
-            u8 *dst;
+            u8 *dest;
 
             if ((recvStatus >> player) & 1)
             {
-                dst = LoadPtrFromTaskData(&task->data[5]) + task->data[player + 1] * BUFFER_CHUNK_SIZE + player * sizeof(struct PlayerRecords);
+                dest = LoadPtrFromTaskData(&task->data[5]) + task->data[player + 1] * BUFFER_CHUNK_SIZE + player * sizeof(struct PlayerRecordRS);
                 src = GetPlayerRecvBuffer(player);
-                if ((task->data[player + 1] + 1) * BUFFER_CHUNK_SIZE > sizeof(struct PlayerRecords))
-                    memcpy(dst, src, sizeof(struct PlayerRecords) - task->data[player + 1] * BUFFER_CHUNK_SIZE);
+                if ((task->data[player + 1] + 1) * BUFFER_CHUNK_SIZE > sizeof(struct PlayerRecordRS))
+                    memcpy(dest, src, sizeof(struct PlayerRecordRS) - task->data[player + 1] * BUFFER_CHUNK_SIZE);
                 else
-                    memcpy(dst, src, BUFFER_CHUNK_SIZE);
+                    memcpy(dest, src, BUFFER_CHUNK_SIZE);
                 ResetBlockReceivedFlag(player);
                 task->data[player + 1]++;
                 if ((u16)task->data[player + 1] == 0x18)
@@ -339,7 +366,7 @@ void Task_RecordMixing_CopyReceiveBuffer(u8 taskId)
         DestroyTask(taskId);
 }
 
-void sub_80B99B4(u8 taskId)
+static void Task_WaitReceivePacket(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -347,56 +374,56 @@ void sub_80B99B4(u8 taskId)
         DestroyTask(taskId);
 }
 
-void Task_RecordMixing_ReceivePacket(u8 taskId)
+static void Task_ReceivePacket(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
-    task->func = sub_80B99B4;
-    if (gUnknown_03000718 == 1)
-        RecordMixing_ReceiveExchangePacket(task->data[5]);
+    task->func = Task_WaitReceivePacket;
+    if (sReadyToReceive == 1)
+        ReceiveExchangePacket(task->data[5]);
 }
 
-void Task_RecordMixing_SendPacket_SwitchToReceive(u8 taskId)
+static void Task_SendPacket_SwitchToReceive(u8 taskId)
 {
-    gTasks[taskId].func = Task_RecordMixing_ReceivePacket;
-    gUnknown_03000718 = 1;
+    gTasks[taskId].func = Task_ReceivePacket;
+    sReadyToReceive = 1;
 }
 
-void *LoadPtrFromTaskData(u16 *taskData)
+static void *LoadPtrFromTaskData(const u16 *taskData)
 {
     return (void *)(taskData[0] | (taskData[1] << 16));
 }
 
-void StorePtrInTaskData(void *ptr, u16 *taskData)
+static void StorePtrInTaskData(void *records, u16 *taskData)
 {
-    taskData[0] = (u32)ptr;
-    taskData[1] = (u32)ptr >> 16;
+    taskData[0] = (u32)records;
+    taskData[1] = (u32)records >> 16;
 }
 
-u8 GetMultiplayerId_(void)
+static u8 GetMultiplayerId_(void)
 {
     return GetMultiplayerId();
 }
 
-u16 *GetPlayerRecvBuffer(u8 player)
+static u16 *GetPlayerRecvBuffer(u8 player)
 {
     return gBlockRecvBuffer[player];
 }
 
 void sub_80B9A78(void)
 {
-    gUnknown_03005D2C = sizeof(struct PlayerRecords);
+    gRecordStructSize = sizeof(struct PlayerRecordRS);
 }
 
-const u8 gUnknown_083D0288[2] = {1, 0};
+static const u8 sPlayerIdxOrders_2Player[2] = {1, 0};
 
-const u8 gUnknown_083D028A[2][3] =
+static const u8 sPlayerIdxOrders_3Player[2][3] =
 {
     {1, 2, 0},
     {2, 0, 1},
 };
 
-const u8 gUnknown_083D0290[9][4] =
+static const u8 sPlayerIdxOrders_4Player[9][4] =
 {
     {1, 0, 3, 2},
     {3, 0, 1, 2},
@@ -409,110 +436,110 @@ const u8 gUnknown_083D0290[9][4] =
     {3, 2, 1, 0},
 };
 
-void sub_80B9A88(u8 *a)
+static void ShufflePlayerIndices(u8 *data)
 {
     u32 i;
-    u32 id;
+    u32 linkTrainerId;
     u32 players = GetLinkPlayerCount();
 
     switch (players)
     {
     case 2:
         for (i = 0; i < 2; i++)
-            a[i] = gUnknown_083D0288[i];
+            data[i] = sPlayerIdxOrders_2Player[i];
         break;
     case 3:
-        id = GetLinkPlayerTrainerId(0) % 2;
+        linkTrainerId = GetLinkPlayerTrainerId(0) % 2;
         for (i = 0; i < 3; i++)
-            a[i] = gUnknown_083D028A[id][i];
+            data[i] = sPlayerIdxOrders_3Player[linkTrainerId][i];
         break;
     case 4:
-        id = GetLinkPlayerTrainerId(0) % 9;
+        linkTrainerId = GetLinkPlayerTrainerId(0) % 9;
         for (i = 0; i < 4; i++)
-            a[i] = gUnknown_083D0290[id][i];
+            data[i] = sPlayerIdxOrders_4Player[linkTrainerId][i];
         break;
     default:
         break;
     }
 }
 
-void ReceiveOldManData(u8 *a, size_t size, u8 index)
+static void ReceiveOldManData(u8 *records, size_t recordSize, u8 multiplayerId)
 {
-    u8 arr[4];
+    u8 mixIndices[4];
     u8 *ptr;
 
-    sub_80B9A88(arr);
+    ShufflePlayerIndices(mixIndices);
     //Probably not how it was originally written, but this matches.
-    memcpy(a + index * size, (ptr = recordMixingMauvilleMan), 0x40);
-    memcpy(ptr, a + arr[index] * size, 0x40);
-    sub_80F7F30();
+    memcpy(records + multiplayerId * recordSize, (ptr = recordMixingMauvilleMan), 0x40);
+    memcpy(ptr, records + mixIndices[multiplayerId] * recordSize, 0x40);
+    ResetMauvilleOldManFlag();
 }
 
-void ReceiveBattleTowerData(void *battleTowerRecord, u32 size, u8 index)
+static void ReceiveBattleTowerData(void *records, u32 recordSize, u8 multiplayerId)
 {
-    sub_80B9A88(gUnknown_0300071C);
-    memcpy(battleTowerRecord + size * index, battleTowerRecord + size * gUnknown_0300071C[index], sizeof(struct BattleTowerRecord));
-    sub_8134AC0(battleTowerRecord + size * index);
+    ShufflePlayerIndices(gUnknown_0300071C);
+    memcpy(records + recordSize * multiplayerId, records + recordSize * gUnknown_0300071C[multiplayerId], sizeof(struct BattleTowerRecord));
+    PutNewBattleTowerRecord(records + recordSize * multiplayerId);
 }
 
-u8 sub_80B9BBC(struct DayCareMail *a)
+static u8 GetDaycareMailItemId(struct DaycareMail *mail)
 {
-    return a->message.itemId;
+    return mail->message.itemId;
 }
 
-void sub_80B9BC4(u8 *a, size_t b, u8 c[][2], u8 d, u8 e)
+static void SwapDaycareMail(u8 *records, size_t recordSize, u8 idxs[][2], u8 playerSlot1, u8 playerSlot2)
 {
-    struct DayCareMail *r6 = (struct DayCareMail *)(a + b * c[d][0]);
-    struct DayCareMail *src = r6 + c[d][1];
-    struct DayCareMail sp0 = *src;
-    struct DayCareMail *r8 = (struct DayCareMail *)(a + b * c[e][0]);
+    struct DaycareMail *r6 = (struct DaycareMail *)(records + recordSize * idxs[playerSlot1][0]);
+    struct DaycareMail *src = r6 + idxs[playerSlot1][1];
+    struct DaycareMail temp = *src;
+    struct DaycareMail *r8 = (struct DaycareMail *)(records + recordSize * idxs[playerSlot2][0]);
 
-    r6 += c[d][1];
-    *r6 = *(r8 + c[e][1]);
+    r6 += idxs[playerSlot1][1];
+    *r6 = *(r8 + idxs[playerSlot2][1]);
 
-    r8 += c[e][1];
-    *r8 = sp0;
+    r8 += idxs[playerSlot2][1];
+    *r8 = temp;
 }
 
-u8 sub_80B9C4C(u8 *a)
+static u8 CalculateDaycareMailRandSum(const u8 *src)
 {
     int i;
-    u8 r2 = 0;
+    u8 sum = 0;
 
     for (i = 0; i < 0x100; i++)
-        r2 += a[i];
-    return r2;
+        sum += src[i];
+    return sum;
 }
 
-const u8 gUnknown_083D02B4[][2] =
+static const u8 sDaycareMailSwapIds_3Player[][2] =
 {
     {0, 1},
     {1, 2},
     {2, 0},
 };
 
-const u8 gUnknown_083D02BA[3][4] =
+static const u8 sDaycareMailSwapIds_4Player[3][4] =
 {
     {0, 1, 2, 3},
     {0, 2, 1, 3},
     {0, 3, 2, 1},
 };
 
-void ReceiveDaycareMailData(struct RecordMixingDayCareMail *src, size_t recordSize, u8 which, TVShow *shows)
+static void ReceiveDaycareMailData(struct RecordMixingDaycareMail *records, size_t recordSize, u8 multiplayerId, TVShow *shows)
 {
     {
         u16 i, j;
         u8 linkPlayerCount;
         u8 tableId;
-        struct RecordMixingDayCareMail *_src;
-        u8 which0, which1;
+        struct RecordMixingDaycareMail *mixMail;
+        u8 playerSlot1, playerSlot2;
         void *ptr;
-        u8 sp04[4];
-        u8 sp08[4];
-        struct RecordMixingDayCareMail *sp0c[4];
-        u8 sp1c[4][2];
-        u8 sp24[4][2];
-        u8 sp34;
+        u8 unusedArr1[4];
+        u8 unusedArr2[4];
+        struct RecordMixingDaycareMail *unusedMixMail[4];
+        bool8 canHoldItem[4][2];
+        u8 idxs[4][2];
+        u8 numDaycareCanHold;
         u16 oldSeed;
 
         oldSeed = Random();
@@ -520,63 +547,63 @@ void ReceiveDaycareMailData(struct RecordMixingDayCareMail *src, size_t recordSi
         linkPlayerCount = GetLinkPlayerCount();
         for (i = 0; i < 4; i++)
         {
-            sp04[i] = 0xFF;
-            sp08[i] = 0;
-            sp1c[i][0] = 0;
-            sp1c[i][1] = 0;
+            unusedArr1[i] = 0xFF;
+            unusedArr2[i] = 0;
+            canHoldItem[i][0] = 0;
+            canHoldItem[i][1] = 0;
         }
-        sp34 = 0;
+        numDaycareCanHold = 0;
         for (i = 0; i < linkPlayerCount; i++)
         {
-            _src = (void *)src + recordSize * i;
-            if (_src->numDaycareMons == 0)
+            mixMail = (void *)records + recordSize * i;
+            if (mixMail->numDaycareMons == 0)
                 continue;
 
-            for (j = 0; j < _src->numDaycareMons; j ++)
+            for (j = 0; j < mixMail->numDaycareMons; j ++)
             {
-                if (!_src->cantHoldItem[j])
-                    sp1c[i][j] = 1;
+                if (!mixMail->cantHoldItem[j])
+                    canHoldItem[i][j] = 1;
             }
         }
 
         j = 0;
         for (i = 0; i < linkPlayerCount; i++)
         {
-            _src = (void *)src + recordSize * i;
-            if (sp1c[i][0] == TRUE || sp1c[i][1] == TRUE)
-                sp34++;
+            mixMail = (void *)records + recordSize * i;
+            if (canHoldItem[i][0] == TRUE || canHoldItem[i][1] == TRUE)
+                numDaycareCanHold++;
 
-            if (sp1c[i][0] == TRUE && sp1c[i][1] == FALSE)
+            if (canHoldItem[i][0] == TRUE && canHoldItem[i][1] == FALSE)
             {
-                sp24[j][0] = i;
-                sp24[j][1] = 0;
+                idxs[j][0] = i;
+                idxs[j][1] = 0;
                 j++;
             }
-            else if (sp1c[i][0] == FALSE && sp1c[i][1] == TRUE)
+            else if (canHoldItem[i][0] == FALSE && canHoldItem[i][1] == TRUE)
             {
-                sp24[j][0] = i;
-                sp24[j][1] = 1;
+                idxs[j][0] = i;
+                idxs[j][1] = 1;
                 j++;
             }
-            else if (sp1c[i][0] == TRUE && sp1c[i][1] == TRUE)
+            else if (canHoldItem[i][0] == TRUE && canHoldItem[i][1] == TRUE)
             {
-                u32 var1, var2;
+                u32 itemId1, itemId2;
 
-                sp24[j][0] = i;
-                var1 = sub_80B9BBC(&_src->mail[0]);
-                var2 = sub_80B9BBC(&_src->mail[1]);
-                if (!var1 && var2)
+                idxs[j][0] = i;
+                itemId1 = GetDaycareMailItemId(&mixMail->mail[0]);
+                itemId2 = GetDaycareMailItemId(&mixMail->mail[1]);
+                if (!itemId1 && itemId2)
                 {
                     register u8 one asm("r0") = 1; // boo, a fakematch
-                    sp24[j][1] = one;
+                    idxs[j][1] = one;
                 }
-                else if ((var1 && var2) || (!var1 && !var2))
+                else if ((itemId1 && itemId2) || (!itemId1 && !itemId2))
                 {
-                    sp24[j][1] = Random() % 2;
+                    idxs[j][1] = Random() % 2;
                 }
-                else if (var1 && !var2)
+                else if (itemId1 && !itemId2)
                 {
-                    sp24[j][1] = 0;
+                    idxs[j][1] = 0;
                 }
                 j++;
             }
@@ -584,52 +611,52 @@ void ReceiveDaycareMailData(struct RecordMixingDayCareMail *src, size_t recordSi
 
         for (i = 0; i < 4; i++)
         {
-            _src = &src[recordSize * which];
-            sp0c[i] = _src;
+            mixMail = &records[recordSize * multiplayerId];
+            unusedMixMail[i] = mixMail;
         }
 
-        tableId = sub_80B9C4C((void *)shows) % 3;
-        switch (sp34)
+        tableId = CalculateDaycareMailRandSum((void *)shows) % 3;
+        switch (numDaycareCanHold)
         {
         case 2:
-            sub_80B9BC4((void *)src, recordSize, sp24, 0, 1);
+            SwapDaycareMail((void *)records, recordSize, idxs, 0, 1);
             break;
         case 3:
-            which0 = gUnknown_083D02B4[tableId][0];
-            which1 = gUnknown_083D02B4[tableId][1];
-            sub_80B9BC4((void *)src, recordSize, sp24, which0, which1);
+            playerSlot1 = sDaycareMailSwapIds_3Player[tableId][0];
+            playerSlot2 = sDaycareMailSwapIds_3Player[tableId][1];
+            SwapDaycareMail((void *)records, recordSize, idxs, playerSlot1, playerSlot2);
             break;
         case 4:
-            ptr = sp24;
-            which0 = gUnknown_083D02BA[tableId][0];
-            which1 = gUnknown_083D02BA[tableId][1];
-            sub_80B9BC4((void *)src, recordSize, ptr, which0, which1);
-            which0 = gUnknown_083D02BA[tableId][2];
-            which1 = gUnknown_083D02BA[tableId][3];
-            sub_80B9BC4((void *)src, recordSize, ptr, which0, which1);
+            ptr = idxs;
+            playerSlot1 = sDaycareMailSwapIds_4Player[tableId][0];
+            playerSlot2 = sDaycareMailSwapIds_4Player[tableId][1];
+            SwapDaycareMail((void *)records, recordSize, ptr, playerSlot1, playerSlot2);
+            playerSlot1 = sDaycareMailSwapIds_4Player[tableId][2];
+            playerSlot2 = sDaycareMailSwapIds_4Player[tableId][3];
+            SwapDaycareMail((void *)records, recordSize, ptr, playerSlot1, playerSlot2);
             break;
         }
 
-        _src = (void *)src + which * recordSize;
-        gSaveBlock1.daycare.misc.mail[0] = _src->mail[0];
-        gSaveBlock1.daycare.misc.mail[1] = _src->mail[1];
-        //memcpy(&gSaveBlock1.daycare.misc.mail[0], &_src->mail[0], sizeof(struct DayCareMail));
-        //memcpy(&gSaveBlock1.daycare.misc.mail[1], &_src->mail[1], sizeof(struct DayCareMail));
+        mixMail = (void *)records + multiplayerId * recordSize;
+        gSaveBlock1.daycare.misc.mail[0] = mixMail->mail[0];
+        gSaveBlock1.daycare.misc.mail[1] = mixMail->mail[1];
+        //memcpy(&gSaveBlock1.daycare.misc.mail[0], &mixMail->mail[0], sizeof(struct DaycareMail));
+        //memcpy(&gSaveBlock1.daycare.misc.mail[1], &mixMail->mail[1], sizeof(struct DaycareMail));
         SeedRng(oldSeed);
     }
 }
 
-void ReceiveGiftItem(u16 *pItemId, u8 b)
+static void ReceiveGiftItem(u16 *item, u8 multiplayerId)
 {
-    if (b != 0 && *pItemId != 0)
+    if (multiplayerId != 0 && *item != 0)
     {
-        if (GetPocketByItemId(*pItemId) == POCKET_KEY_ITEMS)
+        if (GetPocketByItemId(*item) == POCKET_KEY_ITEMS)
         {
-            if (!CheckBagHasItem(*pItemId, 1) && !CheckPCHasItem(*pItemId, 1) && AddBagItem(*pItemId, 1))
+            if (!CheckBagHasItem(*item, 1) && !CheckPCHasItem(*item, 1) && AddBagItem(*item, 1))
             {
-                VarSet(VAR_TEMP_1, *pItemId);
+                VarSet(VAR_TEMP_1, *item);
                 StringCopy(gStringVar1, gLinkPlayers[0].name);
-                if (*pItemId == ITEM_EON_TICKET)
+                if (*item == ITEM_EON_TICKET)
                     FlagSet(FLAG_SYS_HAS_EON_TICKET);
             }
             else
@@ -639,9 +666,9 @@ void ReceiveGiftItem(u16 *pItemId, u8 b)
         }
         else
         {
-            if (AddBagItem(*pItemId, 1) == TRUE)
+            if (AddBagItem(*item, 1) == TRUE)
             {
-                VarSet(VAR_TEMP_1, *pItemId);
+                VarSet(VAR_TEMP_1, *item);
                 StringCopy(gStringVar1, gLinkPlayers[0].name);
             }
             else
@@ -652,7 +679,7 @@ void ReceiveGiftItem(u16 *pItemId, u8 b)
     }
 }
 
-void sub_80BA00C(u8 taskId)
+static void Task_DoRecordMixing(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 

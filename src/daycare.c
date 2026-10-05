@@ -32,7 +32,7 @@ static u16 sHatchedEggMotherMoves[4];
 
 extern u16 gMoveToLearn;
 
-static void ClearDaycareMail(struct DayCareMail *mail);
+static void ClearDaycareMail(struct DaycareMail *mail);
 static void SetInitialEggData(struct Pokemon *mon, u16 species, struct DayCare *daycare);
 static u8 GetDaycareCompatibilityScore(struct DayCare *daycare);
 
@@ -77,7 +77,7 @@ u8 CountPokemonInDaycare(struct DayCare *daycare)
     return count;
 }
 
-void InitDaycareMailRecordMixing(struct BoxPokemon * daycareMons, struct RecordMixingDayCareMail * mixMail)
+void InitDaycareMailRecordMixing(struct BoxPokemon * daycareMons, struct RecordMixingDaycareMail * mixMail)
 {
     u8 i;
     u8 numDaycareMons = 0;
@@ -292,7 +292,7 @@ u8 GetNumLevelsGainedFromDaycare(void)
     return 0;
 }
 
-static void ClearDaycareMail(struct DayCareMail *mail)
+static void ClearDaycareMail(struct DaycareMail *mail)
 {
     u8 *names;
     u8 *names2;

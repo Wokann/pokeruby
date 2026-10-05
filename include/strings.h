@@ -965,4 +965,7 @@ extern const u8 gText_SavingBadges[];
 extern const u8 gText_SavingPokedex[];
 extern const u8 gText_SavingTime[];
 
+extern const u8 gText_MixingRecords[];
+extern const u8 gText_RecordMixingComplete[];
+
 #endif

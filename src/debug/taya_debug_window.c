@@ -332,7 +332,7 @@ bool8 debug_sub_8090984(void)
 
     if (input == 5)
     {
-        sub_80F7F30();
+        ResetMauvilleOldManFlag();
     }
     else if (input == 6)
     {

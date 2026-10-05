@@ -15,7 +15,7 @@ void SetCurrentSecretBaseFromPosition(struct MapPosition *, const struct MapEven
 void sub_80BC038(struct MapPosition *, const struct MapEvents *);
 u8 sub_80BC050();
 u8 *GetSecretBaseMapName(u8 *dest);
-void SetPlayerSecretBaseRecordMixingParty();
+void SetPlayerSecretBaseParty(void);
 const u8 *GetSecretBaseTrainerLoseText(void);
 void SecretBasePerStepCallback(u8 taskId);
 void ReceiveSecretBasesData(void *playerRecords, u32 size, u8 c);

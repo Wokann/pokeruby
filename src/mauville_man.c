@@ -543,7 +543,7 @@ static void sub_80F7F24(void)
     sub_80F8428();
 }
 
-void sub_80F7F30(void)
+void ResetMauvilleOldManFlag(void)
 {
     switch (GetCurrentMauvilleOldMan())
     {

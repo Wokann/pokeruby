@@ -223,10 +223,10 @@ gOtherText_ThreeQuestions:: @ 842C890
 gOtherText_From:: @ 842C894
 	.string "Von $"
 
-gOtherText_MixingRecordsWithFriend:: @ 842C89A
+gText_MixingRecords:: @ 842C89A
 	.string "Rekorddaten-Austausch...$"
 
-gOtherText_MixingComplete:: @ 842C8AC
+gText_RecordMixingComplete:: @ 842C8AC
 	.string "Rekorddaten-Austausch beendet.\n"
 	.string "Vielen Dank für deine Geduld.$"
 

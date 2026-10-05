@@ -2450,7 +2450,7 @@ void sub_80C0408(void)
     }
 }
 
-void sub_80C045C(void)
+void DeactivateAllNormalTVShows(void)
 {
     u8 i;
 

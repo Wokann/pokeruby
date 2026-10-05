@@ -4,7 +4,7 @@
 #include "constants/mauville_man.h"
 
 void SetupMauvilleOldMan(void);
-void sub_80F7F30(void);
+void ResetMauvilleOldManFlag(void);
 void SetMauvilleOldManObjEventGfx(void);
 void debug_sub_810B32C(u8);
 u8 GetCurrentMauvilleOldMan(void);

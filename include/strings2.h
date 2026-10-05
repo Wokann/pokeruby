@@ -99,10 +99,6 @@ extern const u8 gOtherText_ThreeQuestions[];
 // mail
 extern const u8 gOtherText_From[];
 
-// record_mixing
-extern const u8 gOtherText_MixingRecordsWithFriend[];
-extern const u8 gOtherText_MixingComplete[];
-
 // trainer_card
 extern const u8 gOtherText_TrainersTrainerCard[];
 extern const u8 gOtherText_Boy[];

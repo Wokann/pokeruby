@@ -206,10 +206,10 @@ gOtherText_ThreeQuestions:: @ 842C890
 gOtherText_From:: @ 842C894
 	.string "From $"
 
-gOtherText_MixingRecordsWithFriend:: @ 842C89A
+gText_MixingRecords:: @ 842C89A
 	.string "Mixing records...$"
 
-gOtherText_MixingComplete:: @ 842C8AC
+gText_RecordMixingComplete:: @ 842C8AC
 	.string "Record mixing completed.\nThank you for waiting.$"
 
 gOtherText_TrainersTrainerCard:: @ 842C8DC
