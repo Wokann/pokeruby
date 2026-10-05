@@ -800,14 +800,14 @@ Move_DOUBLE_EDGE: @ 81C817A
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_TARGET, 4, -10, 0, 1, 0
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 1, -32, 0, 0, 3
 	waitforvisualfinish
-	createvisualtask sub_80A8E04, 2, 8, -256, 0, 0
-	createvisualtask sub_80A8E04, 2, 8, -256, 1, 0
+	createvisualtask AnimTask_RotateMonSpriteToSide, 2, 8, -256, 0, 0
+	createvisualtask AnimTask_RotateMonSpriteToSide, 2, 8, -256, 1, 0
 	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_ATTACKER, 4, 0, 12, 1
 	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_TARGET, 4, 0, 12, 1
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, 1, 2, 16, 0, rgb(31, 31, 31)
 	waitforvisualfinish
-	createvisualtask sub_80A8E04, 2, 8, -256, 0, 1
-	createvisualtask sub_80A8E04, 2, 8, -256, 1, 1
+	createvisualtask AnimTask_RotateMonSpriteToSide, 2, 8, -256, 0, 1
+	createvisualtask AnimTask_RotateMonSpriteToSide, 2, 8, -256, 1, 1
 	waitforvisualfinish
 	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 5
 	delay 3
@@ -1268,7 +1268,7 @@ Move_REVERSAL: @ 81C8CA5
 	createsprite gBattleAnimSpriteTemplate_83DB3DC, ANIM_ATTACKER, 2, 31, 3, 1, 32767, 8, 0, 0
 	createsprite gFistFootSpriteTemplate, ANIM_TARGET, 4, 0, 0, 10, 1, 0
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_TARGET, 3, 0, 0, 1, 1
-	createvisualtask sub_80A9058, 5, 0, 1, 8, 1, 0
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 5, 0, 1, 8, 1, 0
 	end
 
 Move_PURSUIT: @ 81C8D80
@@ -1290,12 +1290,12 @@ _81C8D96:
 _81C8D9F:
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 1, 2
-	createvisualtask sub_80A9058, 5, 0, 1, 6, 1, 0
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 5, 0, 1, 6, 1, 0
 	goto _81C8D96
 _81C8DC8:
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 1, 1
-	createvisualtask sub_80A9058, 5, 0, 1, 6, 1, 0
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 5, 0, 1, 6, 1, 0
 	goto _81C8D96
 
 Move_SPIKE_CANNON: @ 81C8DF1
@@ -2043,7 +2043,7 @@ Move_WHIRLWIND: @ 81CA1E9
 	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_TARGET, 12, 6, 1, 5
 	delay 7
 	playsewithpan SE_M_STRING_SHOT, SOUND_PAN_TARGET
-	createvisualtask sub_80A8A80, 5, 1, 8
+	createvisualtask AnimTask_SlideOffScreen, 5, 1, 8
 	waitforvisualfinish
 	end
 
@@ -2439,7 +2439,7 @@ Move_HORN_ATTACK: @ 81CAB1A
 Move_FURY_ATTACK: @ 81CAB87
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_HORN_HIT
-	createvisualtask sub_80A8E04, 2, 4, 256, 0, 2
+	createvisualtask AnimTask_RotateMonSpriteToSide, 2, 4, 256, 0, 2
 	choosetwoturnanim _81CABB8, _81CABDE
 _81CABA5:
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 6, 1
@@ -2585,7 +2585,7 @@ Move_LOW_KICK: @ 81CAED4
 	createsprite gBattleAnimSpriteTemplate_83D9FF0, ANIM_TARGET, 2, -24, 28, 40, 8, 160, 0
 	delay 4
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_TARGET, 2, -8, 8, 1, 2
-	createvisualtask sub_80A8E04, 2, 6, 384, 1, 2
+	createvisualtask AnimTask_RotateMonSpriteToSide, 2, 6, 384, 1, 2
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	waitforvisualfinish
 	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 1, 4
@@ -2753,7 +2753,7 @@ Move_RAGE: @ 81CB27C
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 6
 	delay 4
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 1, 2
-	createvisualtask sub_80A9058, 2, 1, 1, 10, 1, 0
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, 1, 1, 10, 1, 0
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	waitforvisualfinish
 	clearmonbg ANIM_TARGET
@@ -2825,12 +2825,12 @@ _81CB399:
 	waitforvisualfinish
 	goto _81CB398
 _81CB3A9:
-	createsprite gBattleAnimSpriteTemplate_83C2010, ANIM_ATTACKER, 2, 0, -24, 0, 0, 10, 0
+	createsprite gSlideMonToOffsetAndBackSpriteTemplate, ANIM_ATTACKER, 2, 0, -24, 0, 0, 10, 0
 	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
 	waitforvisualfinish
-	createvisualtask sub_80A8E04, 2, 16, 96, 0, 2
+	createvisualtask AnimTask_RotateMonSpriteToSide, 2, 16, 96, 0, 2
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_83C2010, ANIM_ATTACKER, 2, 0, 24, 0, 0, 10, 1
+	createsprite gSlideMonToOffsetAndBackSpriteTemplate, ANIM_ATTACKER, 2, 0, 24, 0, 0, 10, 1
 	waitforvisualfinish
 	return
 _81CB3E6:
@@ -3094,7 +3094,7 @@ Move_FLAIL: @ 81CB8F9
 	loopsewithpan SE_M_HEADBUTT, SOUND_PAN_ATTACKER, 8, 2
 	waitforvisualfinish
 	createsprite gBattleAnimSpriteTemplate_83DB4F0, ANIM_TARGET, 3, 1, 3
-	createvisualtask sub_80A9058, 2, 0, 1, 30, 1, 0
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, 0, 1, 30, 1, 0
 	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
 	waitforvisualfinish
 	clearmonbg ANIM_TARGET
@@ -3234,7 +3234,7 @@ Move_ROLLOUT: @ 81CBB5E
 	setalpha 12, 8
 	createvisualtask sub_80DD4D4, 2
 	waitforvisualfinish
-	createvisualtask sub_80A9058, 2, 0, 1, 30, 1, 0
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, 0, 1, 30, 1, 0
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 1, 2
 	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
 	waitforvisualfinish
@@ -3339,7 +3339,7 @@ Move_RAPID_SPIN: @ 81CBD41
 	loopsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER, 8, 4
 	waitforvisualfinish
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_TARGET, 2, 0, 0, 1, 2
-	createvisualtask sub_80A9058, 2, 0, 1, 10, 1, 0
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, 0, 1, 10, 1, 0
 	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
 	waitforvisualfinish
 	delay 8
@@ -3783,11 +3783,11 @@ Move_ENDEAVOR: @ 81CC6DA
 	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 24, 2
 	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_ATTACKER, 703, 12, 1, 2
 	delay 6
-	createvisualtask sub_80A9058, 5, 0, 1, 8, 1, 0
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 5, 0, 1, 8, 1, 0
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_TARGET, 2, 12, -12, 1, 2
 	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
 	delay 24
-	createvisualtask sub_80A9058, 5, 0, 1, 8, 1, 0
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 5, 0, 1, 8, 1, 0
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_TARGET, 2, -12, 12, 1, 2
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	end
@@ -4975,7 +4975,7 @@ Move_ROAR: @ 81CE31E
 	createvisualtask AnimTask_ScaleMonAndRestore, 5, -5, -5, 10, ANIM_ATTACKER, 1
 	call _81CE35E
 	delay 20
-	createvisualtask sub_80A8A80, 5, 1, 2
+	createvisualtask AnimTask_SlideOffScreen, 5, 1, 2
 	waitforvisualfinish
 	clearmonbg ANIM_ATTACKER
 	blendoff
@@ -6190,7 +6190,7 @@ Move_WING_ATTACK: @ 81CFEEB
 Move_PECK: @ 81CFF88
 	loadspritegfx ANIM_TAG_IMPACT
 	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
-	createvisualtask sub_80A8EFC, 2, 3, -768, 1, 2
+	createvisualtask AnimTask_RotateMonToSideAndRestore, 2, 3, -768, 1, 2
 	createsprite gBattleAnimSpriteTemplate_83DB538, ANIM_TARGET, 3, -12, 0, 1, 3
 	waitforvisualfinish
 	end
@@ -8181,7 +8181,7 @@ Move_SPIT_UP: @ 81D2E65
 	jumpifmoveturn 3, _81D2F5B
 _81D2EF5:
 	delay 5
-	createvisualtask sub_80A9058, 2, 0, 1, 8, 1, 0
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, 0, 1, 8, 1, 0
 	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
 	createsprite gBattleAnimSpriteTemplate_83DB538, ANIM_TARGET, 3, -12, 10, 1, 1
 	delay 5
@@ -8534,14 +8534,14 @@ Move_ARM_THRUST: @ 81D36CF
 	loadspritegfx ANIM_TAG_IMPACT
 	splitbgprio 1
 	setalpha 12, 8
-	createvisualtask sub_80A8E04, 5, 8, 5, 0, 0
+	createvisualtask AnimTask_RotateMonSpriteToSide, 5, 8, 5, 0, 0
 	delay 6
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 3
 	delay 4
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
 	createsprite gBattleAnimSpriteTemplate_83DA144, ANIM_TARGET, 2, 10, -8, 14, 3
 	waitforvisualfinish
-	createvisualtask sub_80A8E04, 5, 8, 5, 0, 1
+	createvisualtask AnimTask_RotateMonSpriteToSide, 5, 8, 5, 0, 1
 	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
 	choosetwoturnanim _81D373C, _81D3750
 _81D3728:
@@ -9763,7 +9763,7 @@ _81D5838:
 	waitbgfadein
 	goto _81D5830
 _81D5842:
-	createvisualtask sub_80A9058, 2, 0, 1, 8, 1, 0
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, 0, 1, 8, 1, 0
 	call _81D597D
 	call _81D597D
 	call _81D597D
@@ -9771,7 +9771,7 @@ _81D5842:
 	call _81D597D
 	goto _81D581F
 _81D5871:
-	createvisualtask sub_80A9058, 2, 0, 1, 10, 1, 0
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, 0, 1, 10, 1, 0
 	call _81D597D
 	call _81D597D
 	call _81D597D
@@ -9781,7 +9781,7 @@ _81D5871:
 	call _81D597D
 	goto _81D581F
 _81D58AA:
-	createvisualtask sub_80A9058, 2, 0, 1, 14, 1, 0
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, 0, 1, 14, 1, 0
 	call _81D597D
 	call _81D597D
 	call _81D597D
@@ -9793,7 +9793,7 @@ _81D58AA:
 	call _81D597D
 	goto _81D581F
 _81D58ED:
-	createvisualtask sub_80A9058, 2, 0, 1, 18, 1, 0
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, 0, 1, 18, 1, 0
 	call _81D597D
 	call _81D597D
 	call _81D597D
@@ -9806,7 +9806,7 @@ _81D58ED:
 	call _81D597D
 	goto _81D581F
 _81D5935:
-	createvisualtask sub_80A9058, 2, 0, 1, 30, 1, 0
+	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, 0, 1, 30, 1, 0
 	call _81D597D
 	call _81D597D
 	call _81D597D
@@ -10431,13 +10431,13 @@ General_ItemEffect: @ 81D661C
 	loadspritegfx ANIM_TAG_SPARKLE_2
 	delay 0
 	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
-	createvisualtask sub_80A8EFC, 2, 16, 128, 0, 2
+	createvisualtask AnimTask_RotateMonToSideAndRestore, 2, 16, 128, 0, 2
 	waitforvisualfinish
 	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
-	createvisualtask sub_80A8EFC, 2, 16, 128, 0, 2
+	createvisualtask AnimTask_RotateMonToSideAndRestore, 2, 16, 128, 0, 2
 	waitforvisualfinish
 	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
-	createvisualtask sub_80A8EFC, 2, 16, 128, 0, 2
+	createvisualtask AnimTask_RotateMonToSideAndRestore, 2, 16, 128, 0, 2
 	waitforvisualfinish
 	playsewithpan SE_M_MORNING_SUN, SOUND_PAN_ATTACKER
 	call Unknown_81D5ECA
