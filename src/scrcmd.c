@@ -1635,7 +1635,7 @@ bool8 ScrCmd_showmoneybox(struct ScriptContext *ctx)
     u8 ignore = ScriptReadByte(ctx);
 
     if (!ignore)
-        OpenMoneyWindow(gSaveBlock1.money, x, y);
+        DrawMoneyBox(gSaveBlock1.money, x, y);
     return FALSE;
 }
 
@@ -1644,7 +1644,7 @@ bool8 ScrCmd_hidemoneybox(struct ScriptContext *ctx)
     u8 x = ScriptReadByte(ctx);
     u8 y = ScriptReadByte(ctx);
 
-    CloseMoneyWindow(x, y);
+    HideMoneyBox(x, y);
     return FALSE;
 }
 
@@ -1655,7 +1655,7 @@ bool8 ScrCmd_updatemoneybox(struct ScriptContext *ctx)
     u8 ignore = ScriptReadByte(ctx);
 
     if (!ignore)
-        UpdateMoneyWindow(gSaveBlock1.money, x, y);
+        ChangeAmountInMoneyBox(gSaveBlock1.money, x, y);
     return FALSE;
 }
 

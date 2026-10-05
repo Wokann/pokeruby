@@ -1,18 +1,17 @@
 #include "global.h"
 #include "money.h"
+#include "event_data.h"
 #include "decompress.h"
 #include "menu.h"
 #include "sprite.h"
 #include "string_util.h"
 #include "graphics.h"
 
-#define SPRITE_TAG_MONEY (0x2722)
+#define MONEY_LABEL_TAG (0x2722)
 
-extern u16 gSpecialVar_0x8005;
+static EWRAM_DATA u8 sMoneyLabelSpriteId = 0;
 
-static EWRAM_DATA u8 gUnknown_02038734 = 0;
-
-static const struct OamData gOamData_83CF558 =
+static const struct OamData sOamData_MoneyLabel =
 {
     .y = 0,
     .affineMode = 0,
@@ -29,30 +28,30 @@ static const struct OamData gOamData_83CF558 =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_83CF560[] =
+static const union AnimCmd sSpriteAnim_MoneyLabel[] =
 {
     ANIMCMD_FRAME(0, 0),
     ANIMCMD_END
 };
 
-const union AnimCmd *const gSpriteAnimTable_83CF568[] =
+static const union AnimCmd *const sSpriteAnimTable_MoneyLabel[] =
 {
-    gSpriteAnim_83CF560,
+    sSpriteAnim_MoneyLabel,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83CF56C =
+static const struct SpriteTemplate sSpriteTemplate_MoneyLabel =
 {
     .tileTag = 10018,
     .paletteTag = 10018,
-    .oam = &gOamData_83CF558,
-    .anims = gSpriteAnimTable_83CF568,
+    .oam = &sOamData_MoneyLabel,
+    .anims = sSpriteAnimTable_MoneyLabel,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy,
 };
 
-const struct CompressedSpriteSheet gUnknown_083CF584[] = {gMenuMoneyGfx, 256, SPRITE_TAG_MONEY};
-const struct CompressedSpritePalette gUnknown_083CF58C[] = {gMenuMoneyPal, SPRITE_TAG_MONEY};
+static const struct CompressedSpriteSheet sSpriteSheet_MoneyLabel[] = {gShopMenuMoney_Gfx, 256, MONEY_LABEL_TAG};
+static const struct CompressedSpritePalette sSpritePalette_MoneyLabel[] = {gMenuMoneyPal, MONEY_LABEL_TAG};
 
 bool8 IsEnoughMoney(u32 budget, u32 cost)
 {
@@ -64,30 +63,30 @@ bool8 IsEnoughMoney(u32 budget, u32 cost)
     return FALSE;
 }
 
-void AddMoney(u32 *arg0, u32 arg1)
+void AddMoney(u32 *moneyPtr, u32 toAdd)
 {
-    if (*arg0 > *arg0 + arg1)
+    if (*moneyPtr > *moneyPtr + toAdd)
     {
-        *arg0 = 999999;
+        *moneyPtr = 999999;
         return;
     }
 
-    *arg0 += arg1;
-    if (*arg0 > 999999)
+    *moneyPtr += toAdd;
+    if (*moneyPtr > 999999)
     {
-        *arg0 = 999999;
+        *moneyPtr = 999999;
     }
 }
 
-void RemoveMoney(u32 *arg0, u32 arg1)
+void RemoveMoney(u32 *moneyPtr, u32 toSub)
 {
-    if (*arg0 < arg1)
+    if (*moneyPtr < toSub)
     {
-        *arg0 = 0;
+        *moneyPtr = 0;
     }
     else
     {
-        *arg0 -= arg1;
+        *moneyPtr -= toSub;
     }
 }
 
@@ -295,35 +294,35 @@ _080B7BE8: .4byte 0x0600f840\n\
 }
 #endif
 
-void UpdateMoneyWindow(u32 amount, u8 x, u8 y)
+void ChangeAmountInMoneyBox(u32 amount, u8 x, u8 y)
 {
     PrintMoneyAmount(amount, 6, x + 6, y + 1);
 }
 
-void OpenMoneyWindow(u32 amount, u8 x, u8 y)
+void DrawMoneyBox(u32 amount, u8 x, u8 y)
 {
     Menu_DrawStdWindowFrame(x, y, x + 13, y + 3);
-    UpdateMoneyWindow(amount, x, y);
+    ChangeAmountInMoneyBox(amount, x, y);
 
-    LoadCompressedObjectPic(gUnknown_083CF584);
-    LoadCompressedObjectPalette(gUnknown_083CF58C);
+    LoadCompressedObjectPic(sSpriteSheet_MoneyLabel);
+    LoadCompressedObjectPalette(sSpritePalette_MoneyLabel);
 
-    gUnknown_02038734 = CreateSprite(&gSpriteTemplate_83CF56C, x * 8 + 19, y * 8 + 11, 0);
+    sMoneyLabelSpriteId = CreateSprite(&sSpriteTemplate_MoneyLabel, x * 8 + 19, y * 8 + 11, 0);
 }
 
-void CloseMoneyWindow(u8 x, u8 y)
+void HideMoneyBox(u8 x, u8 y)
 {
-    DestroySpriteAndFreeResources(&gSprites[gUnknown_02038734]);
-    FreeSpritePaletteByTag(SPRITE_TAG_MONEY);
+    DestroySpriteAndFreeResources(&gSprites[sMoneyLabelSpriteId]);
+    FreeSpritePaletteByTag(MONEY_LABEL_TAG);
     Menu_EraseWindowRect(x, y, x + 13, y + 3);
 }
 
-bool8 HasEnoughMoneyFor(void)
+bool8 IsEnoughForCostInVar0x8005(void)
 {
     return IsEnoughMoney(gSaveBlock1.money, gSpecialVar_0x8005);
 }
 
-void PayMoneyFor(void)
+void SubtractMoneyFromVar0x8005(void)
 {
     RemoveMoney(&gSaveBlock1.money, gSpecialVar_0x8005);
 }

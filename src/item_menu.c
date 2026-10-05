@@ -2510,7 +2510,7 @@ static void sub_80A6760(u8 taskId)
 static void BuyMenuPrintItemQuantityAndPrice(u8 taskId)
 {
     sub_80A36B8(gBGTilemapBuffers[1], 0, 0, 31, 31);
-    CloseMoneyWindow(0, 0);
+    HideMoneyBox(0, 0);
     Menu_EraseWindowRect(0, 4, 13, 13);
     Menu_EraseWindowRect(0, 14, 29, 19);
     gTasks[taskId].func = sub_80A6760;
@@ -2524,14 +2524,14 @@ static void BuyMenuDisplayMessage(u16 itemId, u16 quantity)
 
 static void sub_80A683C(void)
 {
-    OpenMoneyWindow(gSaveBlock1.money, 0, 0);
+    DrawMoneyBox(gSaveBlock1.money, 0, 0);
     sub_80A4008(gBGTilemapBuffers[1], 1, 1, 12, 2);
 }
 
 static void sub_80A6870(u16 itemId, u8 quantity)
 {
     AddMoney(&gSaveBlock1.money, GetItemPrice(itemId) / 2 * quantity);
-    UpdateMoneyWindow(gSaveBlock1.money, 0, 0);
+    ChangeAmountInMoneyBox(gSaveBlock1.money, 0, 0);
 }
 
 static void sub_80A68A4(void)

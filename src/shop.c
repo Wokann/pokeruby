@@ -316,7 +316,7 @@ static void CB2_InitBuyMenu(void)
     sMartInfo.cursor = 0;
     sMartInfo.scrollOffset = 0;
     Menu_EraseWindowRect(0, 0, 0x20, 0x20);
-    OpenMoneyWindow(gSaveBlock1.money, 0, 0);
+    DrawMoneyBox(gSaveBlock1.money, 0, 0);
     Shop_InitMenus(0, 7);
     Shop_PrintItemDesc();
     BuyMenuAddScrollIndicatorArrows();
@@ -676,7 +676,7 @@ static void BuyMenuSubtractMoney(u8 taskId)
     IncrementGameStat(GAME_STAT_SHOPPED);
     RemoveMoney(&gSaveBlock1.money, gMartTotalCost);
     PlaySE(SE_SHOP);
-    UpdateMoneyWindow(gSaveBlock1.money, 0, 0);
+    ChangeAmountInMoneyBox(gSaveBlock1.money, 0, 0);
     gTasks[taskId].func = Task_ReturnToItemListAfterItemPurchase;
 }
 
@@ -1194,7 +1194,7 @@ static void Task_ExitBuyMenu(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        CloseMoneyWindow(0, 0);
+        HideMoneyBox(0, 0);
         BuyMenuFreeMemory();
         SetMainCallback2(CB2_ReturnToField);
         DestroyTask(taskId);

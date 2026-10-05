@@ -205,8 +205,8 @@ gSpecials::
 	def_special EggHatch
 	def_special DaycareMonReceivedMail
 	def_special ShowLinkBattleRecords
-	def_special HasEnoughMoneyFor
-	def_special PayMoneyFor
+	def_special IsEnoughForCostInVar0x8005
+	def_special SubtractMoneyFromVar0x8005
 	def_special ExecuteWhiteOut
 	def_special sp0C8_whiteout_maybe
 	def_special RotatingGate_InitPuzzle

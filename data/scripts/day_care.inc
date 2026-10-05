@@ -196,7 +196,7 @@ Route117_PokemonDayCare_EventScript_1B24A8:: @ 81B24A8
 	end
 
 Route117_PokemonDayCare_EventScript_1B24C4:: @ 81B24C4
-	specialvar VAR_RESULT, HasEnoughMoneyFor
+	specialvar VAR_RESULT, IsEnoughForCostInVar0x8005
 	compare VAR_RESULT, 1
 	goto_if_eq Route117_PokemonDayCare_EventScript_1B24DE
 	msgbox Route117_PokemonDayCare_Text_1B2A30, MSGBOX_DEFAULT
@@ -207,7 +207,7 @@ Route117_PokemonDayCare_EventScript_1B24DE:: @ 81B24DE
 	applymovement 1, Route117_PokemonDayCare_Movement_1B2543
 	waitmovement 0
 	specialvar VAR_RESULT, TakePokemonFromDaycare
-	special PayMoneyFor
+	special SubtractMoneyFromVar0x8005
 	playse SE_SHOP
 	msgbox Route117_PokemonDayCare_Text_1B2B75, MSGBOX_DEFAULT
 	waitse

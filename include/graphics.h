@@ -2483,7 +2483,7 @@ extern const u16 gBagScreen_GfxTileMap[];
 extern const u8 gShopMenu_Gfx[];
 extern const u8 gMenuMoneyPal[];
 extern const u8 gShopMenu_Tilemap[];
-extern const u8 gMenuMoneyGfx[];
+extern const u8 gShopMenuMoney_Gfx[];
 extern const u8 gMenuPokeblock_Gfx[];
 extern const u8 gMenuPokeblock_Pal[];
 extern const u8 gMenuPokeblockDevice_Gfx[];
