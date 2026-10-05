@@ -17,7 +17,7 @@ S_CuttableTree:: @ 81B0DCC
 	goto DoTreeCutMovement
 	end
 
-DoCutFieldEffectScript:: @ 81B0E16
+EventScript_UseCut:: @ 81B0E16
 	lockall
 	dofieldeffect FLDEFF_USE_CUT_ON_TREE
 	waitstate

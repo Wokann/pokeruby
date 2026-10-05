@@ -6,7 +6,7 @@
 #include "item_use.h"
 #include "overworld.h"
 #include "pokemon_menu.h"
-#include "rom6.h"
+#include "fldeff.h"
 #include "script.h"
 #include "sound.h"
 #include "sprite.h"
@@ -52,7 +52,7 @@ bool8 CheckObjectGraphicsInFrontOfPlayer(u8 graphicsId)
     }
 }
 
-u8 oei_task_add(void)
+u8 CreateFieldMoveTask(void)
 {
     GetXYCoordsOneStepInFrontOfPlayer(&gPlayerFacingPosition.x, &gPlayerFacingPosition.y);
     return CreateTask(task08_080C9820, 8);
@@ -157,7 +157,7 @@ static void sub_810B53C(void)
 
 int FldEff_RockSmash(void)
 {
-    u8 taskId = oei_task_add();
+    u8 taskId = CreateFieldMoveTask();
 
     gTasks[taskId].data[8] = (u32)sub_810B58C >> 16;
     gTasks[taskId].data[9] = (u32)sub_810B58C;
@@ -195,7 +195,7 @@ static void sub_810B5D8(void)
 
 int FldEff_UseDig(void)
 {
-    u8 taskId = oei_task_add();
+    u8 taskId = CreateFieldMoveTask();
 
     gTasks[taskId].data[8] = (u32)sub_810B634 >> 16;
     gTasks[taskId].data[9] = (u32)sub_810B634;

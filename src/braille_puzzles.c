@@ -7,7 +7,7 @@
 #include "main.h"
 #include "event_object_lock.h"
 #include "menu.h"
-#include "rom6.h"
+#include "fldeff.h"
 #include "script.h"
 #include "sound.h"
 #include "task.h"
@@ -117,7 +117,7 @@ void DoBrailleFlyEffect(void)
 
 bool8 FldEff_UseFlyAncientTomb(void)
 {
-    u8 taskId = oei_task_add();
+    u8 taskId = CreateFieldMoveTask();
 
     gTasks[taskId].data[8] = (u32)UseFlyAncientTomb_Callback >> 16;
     gTasks[taskId].data[9] = (u32)UseFlyAncientTomb_Callback;

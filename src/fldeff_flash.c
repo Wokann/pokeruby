@@ -5,7 +5,7 @@
 #include "palette.h"
 #include "pokemon_menu.h"
 #include "overworld.h"
-#include "rom6.h"
+#include "fldeff.h"
 #include "script.h"
 #include "sound.h"
 #include "sprite.h"
@@ -98,7 +98,7 @@ bool8 SetUpFieldMove_Flash(void)
 
 static void sub_810CBFC(void)
 {
-    u8 taskId = oei_task_add();
+    u8 taskId = CreateFieldMoveTask();
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
     gTasks[taskId].data[8] = (uintptr_t)sub_810CC34 >> 16;
     gTasks[taskId].data[9] = (uintptr_t)sub_810CC34;

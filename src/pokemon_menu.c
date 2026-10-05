@@ -23,6 +23,7 @@
 #include "field_screen_effect.h"
 #include "field_weather.h"
 #include "field_effect.h"
+#include "fldeff.h"
 #include "field_control_avatar.h"
 #include "metatile_behavior.h"
 #include "fieldmap.h"
@@ -59,7 +60,6 @@ extern TaskFunc gUnknown_03005CF0;
 static void CB2_ReturnToPartyMenuFromWritingMail(void);
 void sub_80A61D0(void);
 void CB2_InitFlyRegionMap(void);
-bool8 SetUpFieldMove_Cut(void);
 bool8 SetUpFieldMove_Flash(void);
 bool8 SetUpFieldMove_RockSmash(void);
 bool8 SetUpFieldMove_Strength(void);

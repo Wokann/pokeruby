@@ -3,7 +3,7 @@
 #include "field_player_avatar.h"
 #include "palette.h"
 #include "pokemon_menu.h"
-#include "rom6.h"
+#include "fldeff.h"
 #include "script.h"
 #include "sound.h"
 #include "sprite.h"
@@ -38,7 +38,7 @@ static void FieldCallback_SweetScent(void)
 
 bool8 FldEff_SweetScent()
 {
-    u8 taskId = oei_task_add();
+    u8 taskId = CreateFieldMoveTask();
 
     gTasks[taskId].data[8] = (u32)StartSweetScentFieldEffect >> 16;
     gTasks[taskId].data[9] = (u32)StartSweetScentFieldEffect;

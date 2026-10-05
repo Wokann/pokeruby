@@ -2,13 +2,14 @@
 #include "field_camera.h"
 #include "field_effect.h"
 #include "event_object_movement.h"
+#include "event_scripts.h"
 #include "field_player_avatar.h"
 #include "fieldmap.h"
 #include "event_object_lock.h"
 #include "metatile_behavior.h"
 #include "pokemon_menu.h"
 #include "overworld.h"
-#include "rom6.h"
+#include "fldeff.h"
 #include "script.h"
 #include "sound.h"
 #include "sprite.h"
@@ -25,7 +26,7 @@ extern void (*gFieldCallback)(void);
 extern void (*gPostMenuFieldCallback)(void);
 extern u8 gLastFieldPokeMenuOpened;
 
-extern const u8 DoCutFieldEffectScript[];
+#define sCutGrassSpriteArrayPtr (gSharedMem + 0x1FFF0) // 8 sprite IDs
 
 // this file's functions
 static void FieldCallback_CutTree(void);
@@ -38,7 +39,7 @@ static void CutGrassSpriteCallback1(struct Sprite *);
 static void CutGrassSpriteCallback2(struct Sprite *);
 static void CutGrassSpriteCallbackEnd(struct Sprite *);
 
-static const struct OamData gOamData_CutGrass =
+static const struct OamData sOamData_CutGrass =
 {
     .y = 0,
     .affineMode = 0,
@@ -66,7 +67,7 @@ static const union AnimCmd *const sSpriteAnimTable_CutGrass[] =
     sSpriteAnim_CutGrass,
 };
 
-const struct SpriteFrameImage gSpriteImageTable_CutGrass[] =
+static const struct SpriteFrameImage sSpriteImageTable_CutGrass[] =
 {
     {gFieldEffectPic_CutGrass, 0x20},
 };
@@ -77,9 +78,9 @@ static const struct SpriteTemplate sSpriteTemplate_CutGrass =
 {
     .tileTag = 0xFFFF,
     .paletteTag = 0x1000,
-    .oam = &gOamData_CutGrass,
+    .oam = &sOamData_CutGrass,
     .anims = sSpriteAnimTable_CutGrass,
-    .images = gSpriteImageTable_CutGrass,
+    .images = sSpriteImageTable_CutGrass,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = CutGrassSpriteCallback1,
 };
@@ -175,7 +176,7 @@ static void FieldCallback_CutGrass(void)
 
 bool8 FldEff_UseCutOnGrass(void)
 {
-    u8 taskId = oei_task_add();
+    u8 taskId = CreateFieldMoveTask();
 
     gTasks[taskId].data[8] = (u32)StartCutGrassFieldEffect >> 16;
     gTasks[taskId].data[9] = (u32)StartCutGrassFieldEffect;
@@ -186,12 +187,12 @@ bool8 FldEff_UseCutOnGrass(void)
 static void FieldCallback_CutTree(void)
 {
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
-    ScriptContext_SetupScript(DoCutFieldEffectScript);
+    ScriptContext_SetupScript(EventScript_UseCut);
 }
 
 bool8 FldEff_UseCutOnTree(void)
 {
-    u8 taskId = oei_task_add();
+    u8 taskId = CreateFieldMoveTask();
 
     gTasks[taskId].data[8] = (u32)StartCutTreeFieldEffect >> 16;
     gTasks[taskId].data[9] = (u32)StartCutTreeFieldEffect;
@@ -237,9 +238,9 @@ bool8 FldEff_CutGrass(void)
     // populate sprite ID array
     for (i = 0; i < 8; i++)
     {
-        eCutGrassSpriteArray[i] = CreateSprite(&sSpriteTemplate_CutGrass,
+        sCutGrassSpriteArrayPtr[i] = CreateSprite(&sSpriteTemplate_CutGrass,
         gSprites[gPlayerAvatar.spriteId].oam.x + 8, gSprites[gPlayerAvatar.spriteId].oam.y + 20, 0);
-        gSprites[eCutGrassSpriteArray[i]].data[2] = 32 * i;
+        gSprites[sCutGrassSpriteArrayPtr[i]].data[2] = 32 * i;
     }
 
     return 0;
@@ -286,7 +287,7 @@ static void SetCutGrassMetatile(s16 x, s16 y)
     }
 }
 
-static s32 sub_80A28A0(s16 x, s16 y)
+static s32 GetLongGrassCaseAt(s16 x, s16 y)
 {
     u16 metatileId = MapGridGetMetatileIdAt(x, y);
 
@@ -313,7 +314,7 @@ static void SetCutGrassMetatiles(s16 x, s16 y)
         s16 currentXsigned = x + i;
         if (MapGridGetMetatileIdAt(currentXsigned, y) == METATILE_ID(General, LongGrass))
         {
-            switch ((u8)sub_80A28A0(currentXsigned, y + 1))
+            switch ((u8)GetLongGrassCaseAt(currentXsigned, y + 1))
             {
             case 1:
                 MapGridSetMetatileIdAt(currentXsigned, y + 1, METATILE_ID(Fortree, LongGrass_Root));
@@ -375,8 +376,8 @@ static void CutGrassSpriteCallbackEnd(struct Sprite *sprite)
     u8 i;
 
     for (i = 1; i < 8; i++)
-        DestroySprite(&gSprites[eCutGrassSpriteArray[i]]);
-    FieldEffectStop(&gSprites[eCutGrassSpriteArray[0]], FLDEFF_CUT_GRASS);
+        DestroySprite(&gSprites[sCutGrassSpriteArrayPtr[i]]);
+    FieldEffectStop(&gSprites[sCutGrassSpriteArrayPtr[0]], FLDEFF_CUT_GRASS);
     ScriptUnfreezeObjectEvents();
     UnlockPlayerFieldControls();
 }

@@ -35,7 +35,7 @@
 #include "battle_setup.h"
 #include "safari_zone.h"
 #include "fldeff_flash.h"
-#include "rom6.h"
+#include "fldeff.h"
 #include "fldeff_strength.h"
 #include "pokemon_menu.h"
 #include "data.h"
@@ -47,7 +47,6 @@
 #include "gba/m4a_internal.h"
 #include "berry_blender.h"
 
-extern void Debug_SetUpFieldMove_Cut(void);
 extern void Debug_SetUpFieldMove_SecretPower(void);
 
 #if (ENGLISH && REVISION == 0)
