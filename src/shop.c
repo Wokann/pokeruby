@@ -103,7 +103,7 @@ EWRAM_DATA s16 gMartViewportObjects[16][4] = {0};
 EWRAM_DATA struct ItemSlot gMartPurchaseHistory[3] = {0};
 static EWRAM_DATA u8 sPurchaseHistoryId = 0;
 
-EWRAM_DATA u8 gUnknown_02038731 = 0; // This really should be in fldeff_escalator, but being in a new file aligns the ewram, which doesnt match the ROM.
+EWRAM_DATA u8 gEscalatorAnim_TaskId = 0; // This really should be in fldeff_escalator, but being in a new file aligns the ewram, which doesnt match the ROM.
 
 // rodata
 static const struct MenuAction2 sShopMenuActions_BuySellQuit[] =

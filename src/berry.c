@@ -3,6 +3,7 @@
 #include "event_object_movement.h"
 #include "field_control_avatar.h"
 #include "fieldmap.h"
+#include "fldeff.h"
 #include "item.h"
 #include "item_menu.h"
 #include "item_use.h"
@@ -994,11 +995,9 @@ static u16 GetStageDurationByBerryType(u8 berry);
 
 #if DEBUG
 
-extern u8 sub_80B47D8(u16 var);
-
 u8 debug_sub_80C2B04(void)
 {
-    u8 taskId = sub_80B47D8(0);
+    u8 taskId = CreateEscalatorTask(0);
 
     gTasks[taskId].data[4]--;
     CloseMenu();
@@ -1007,7 +1006,7 @@ u8 debug_sub_80C2B04(void)
 
 u8 debug_sub_80C2B30(void)
 {
-    u8 taskId = sub_80B47D8(1);
+    u8 taskId = CreateEscalatorTask(1);
 
     gTasks[taskId].data[4]--;
     CloseMenu();

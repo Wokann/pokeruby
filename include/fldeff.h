@@ -11,7 +11,8 @@ extern const struct SpritePalette gSpritePalette_CutGrass;
 extern struct MapPosition gPlayerFacingPosition;
 
 // escalator
-void StartEscalator(u8 goingUp);
+u8 CreateEscalatorTask(bool16 goingUp);
+void StartEscalator(bool8 goingUp);
 void StopEscalator(void);
 bool8 IsEscalatorMoving(void);
 
