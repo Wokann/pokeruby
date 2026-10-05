@@ -40,7 +40,7 @@ EWRAM_DATA u8 gUnknown_020384E7 = 0;
 EWRAM_DATA u8 gUnknown_020384E8 = 0;
 EWRAM_DATA u8 gUnknown_020384E9 = 0;
 EWRAM_DATA u8 gUnknown_020384EA = 0;
-EWRAM_DATA struct UnkStruct_2000020 *gUnknown_020384EC = NULL;
+EWRAM_DATA struct UnkUtil *gUnknown_020384EC = NULL;
 
 // Static ROM declarations
 
@@ -81,8 +81,8 @@ void sub_809CC04(void);
 void sub_809CD88(void);
 s8 sub_809CE4C(u8 a0);
 void sub_809CA8C(void);
-void sub_809D0BC(struct UnkStruct_2000028*);
-void sub_809D1C4(struct UnkStruct_2000028*);
+void sub_809D0BC(struct UnkUtilData*);
+void sub_809D1C4(struct UnkUtilData*);
 
 // .rodata
 
@@ -345,7 +345,7 @@ extern struct PokemonStorageSystemFunc gUnknown_083BBBD4[];
 void sub_8099BF8(u8 boxId)
 {
     gPokemonStorageSystemPtr->unk_08ba = FALSE;
-    gPokemonStorageSystemPtr->unk_08b4 = 0;
+    gPokemonStorageSystemPtr->bg2_X = 0;
     DmaFill32(3, 0, BG_SCREEN_ADDR(26), 0x1000);
     sub_8099EB0(boxId, 0);
     sub_809A23C(boxId);
@@ -378,8 +378,8 @@ bool8 sub_8099D34(void)
     bool8 retVal = sub_80990AC();
     if (gPokemonStorageSystemPtr->unk_08b8 != 0)
     {
-        gPokemonStorageSystemPtr->unk_08b4 += gPokemonStorageSystemPtr->unk_08b6;
-        gPokemonStorageSystemPtr->unk_08b4 &= 0x1ff;
+        gPokemonStorageSystemPtr->bg2_X += gPokemonStorageSystemPtr->unk_08b6;
+        gPokemonStorageSystemPtr->bg2_X &= 0x1ff;
         if (--gPokemonStorageSystemPtr->unk_08b8 == 0)
         {
             sub_809A598();
@@ -481,7 +481,7 @@ void CopyWallpaperTilemap(u16 *buffer, const u16 *tilemap, s8 direction, u8 offs
 
     s16 rectWidth; // The width of the wallpaper, or it's first half.
     s16 rectWidth2; // Used in case of two halves.
-    s16 rectX = ((gPokemonStorageSystemPtr->unk_08b4 / 8 + 10) + (direction * 24)) & 0x3F;
+    s16 rectX = ((gPokemonStorageSystemPtr->bg2_X / 8 + 10) + (direction * 24)) & 0x3F;
 
     s16 fillX; // For blanking; used when direction is set.
 
@@ -590,7 +590,7 @@ void CopyWallpaperTilemap(u16 *buffer, const u16 *tilemap, s8 direction, u8 offs
 void ClearLowestWallpaperTiles(u16 *buffer)
 {
     u16 x;
-    s16 rectX = ((gPokemonStorageSystemPtr->unk_08b4 / 8) + 30) & 0x3F;
+    s16 rectX = ((gPokemonStorageSystemPtr->bg2_X / 8) + 30) & 0x3F;
 
     if (rectX < 32)
         buffer += rectX + 0x260;
@@ -1393,7 +1393,7 @@ void sub_809B6DC(void)
     else
         mode = 1;
     sub_809981C(mode, sBoxCursorPosition);
-    StringCopy(gPokemonStorageSystemPtr->unk_26e4, gPokemonStorageSystemPtr->unk_11fa);
+    StringCopy(gPokemonStorageSystemPtr->releaseMonName, gPokemonStorageSystemPtr->displayMonName);
 }
 
 bool8 sub_809B734(void)
@@ -1557,24 +1557,24 @@ void sub_809BC18(void)
     if (gUnknown_020384E6)
     {
         sub_809BB90();
-        gPokemonStorageSystemPtr->unk_2690.pokemon = &gUnknown_02038480;
-        gPokemonStorageSystemPtr->unk_268d = 0;
-        gPokemonStorageSystemPtr->unk_268c = 0;
-        gPokemonStorageSystemPtr->unk_268e = 0;
+        gPokemonStorageSystemPtr->summaryMon.mon = &gUnknown_02038480;
+        gPokemonStorageSystemPtr->summaryStartPos = 0;
+        gPokemonStorageSystemPtr->summaryMaxPos = 0;
+        gPokemonStorageSystemPtr->summaryScreenMode = 0;
     }
     else if (sBoxCursorArea == 1)
     {
-        gPokemonStorageSystemPtr->unk_2690.pokemon = gPlayerParty;
-        gPokemonStorageSystemPtr->unk_268d = sBoxCursorPosition;
-        gPokemonStorageSystemPtr->unk_268c = CountPartyMons() - 1;
-        gPokemonStorageSystemPtr->unk_268e = 0;
+        gPokemonStorageSystemPtr->summaryMon.mon = gPlayerParty;
+        gPokemonStorageSystemPtr->summaryStartPos = sBoxCursorPosition;
+        gPokemonStorageSystemPtr->summaryMaxPos = CountPartyMons() - 1;
+        gPokemonStorageSystemPtr->summaryScreenMode = 0;
     }
     else
     {
-        gPokemonStorageSystemPtr->unk_2690.box = gPokemonStorage.boxes[gPokemonStorage.currentBox];
-        gPokemonStorageSystemPtr->unk_268d = sBoxCursorPosition;
-        gPokemonStorageSystemPtr->unk_268c = 30 - 1;
-        gPokemonStorageSystemPtr->unk_268e = 5;
+        gPokemonStorageSystemPtr->summaryMon.box = gPokemonStorage.boxes[gPokemonStorage.currentBox];
+        gPokemonStorageSystemPtr->summaryStartPos = sBoxCursorPosition;
+        gPokemonStorageSystemPtr->summaryMaxPos = 30 - 1;
+        gPokemonStorageSystemPtr->summaryScreenMode = 5;
     }
 }
 
@@ -1610,7 +1610,7 @@ s16 CompactPartySlots(void)
 
 void sub_809BDD8(u8 markings)
 {
-    gPokemonStorageSystemPtr->unk_11f7 = markings;
+    gPokemonStorageSystemPtr->displayMonMarkings = markings;
     if (gUnknown_020384E6)
         SetMonData(&gPokemonStorageSystemPtr->unk_25b4, MON_DATA_MARKINGS, &markings);
     else
@@ -1635,7 +1635,7 @@ bool8 sub_809BEBC(void)
     {
         if (sBoxCursorArea == 1 && CountPartyAliveNonEggMonsExcept(sBoxCursorPosition) == 0)
         {
-            if (gPokemonStorageSystemPtr->unk_11f9 || GetMonData(&gPokemonStorageSystemPtr->unk_25b4, MON_DATA_HP) == 0)
+            if (gPokemonStorageSystemPtr->displayMonIsEgg || GetMonData(&gPokemonStorageSystemPtr->unk_25b4, MON_DATA_HP) == 0)
                 return FALSE;
         }
         return TRUE;
@@ -1660,7 +1660,7 @@ bool8 sub_809BF48(void)
 
 void sub_809BF74(void)
 {
-    gPokemonStorageSystemPtr->unk_11f6 = gUnknown_020384E6 ? 0 : 1;
+    gPokemonStorageSystemPtr->setMosaic = gUnknown_020384E6 ? 0 : 1;
     if (!gUnknown_020384E6)
     {
         switch (sBoxCursorArea)
@@ -1695,81 +1695,81 @@ void sub_809C04C(void *pokemon, u8 a1)
 {
     u8 *buf;
     u16 gender = MON_MALE;
-    gPokemonStorageSystemPtr->unk_11f2 = 0;
+    gPokemonStorageSystemPtr->displayMonItemId = 0;
     if (a1 == 0)
     {
         struct Pokemon *pkmn = (struct Pokemon *)pokemon;
-        gPokemonStorageSystemPtr->unk_11f0 = GetMonData(pokemon, MON_DATA_SPECIES_OR_EGG);
-        if (gPokemonStorageSystemPtr->unk_11f0 != SPECIES_NONE)
+        gPokemonStorageSystemPtr->displayMonSpecies = GetMonData(pokemon, MON_DATA_SPECIES_OR_EGG);
+        if (gPokemonStorageSystemPtr->displayMonSpecies != SPECIES_NONE)
         {
-            gPokemonStorageSystemPtr->unk_11f9 = GetMonData(pkmn, MON_DATA_IS_EGG);
-            GetMonData(pkmn, MON_DATA_NICKNAME, gPokemonStorageSystemPtr->unk_11fa);
-            StringGet_Nickname(gPokemonStorageSystemPtr->unk_11fa);
+            gPokemonStorageSystemPtr->displayMonIsEgg = GetMonData(pkmn, MON_DATA_IS_EGG);
+            GetMonData(pkmn, MON_DATA_NICKNAME, gPokemonStorageSystemPtr->displayMonName);
+            StringGet_Nickname(gPokemonStorageSystemPtr->displayMonName);
             gPokemonStorageSystemPtr->unk_11f8 = GetMonData(pkmn, MON_DATA_LEVEL);
-            gPokemonStorageSystemPtr->unk_11f7 = GetMonData(pkmn, MON_DATA_MARKINGS);
-            gPokemonStorageSystemPtr->unk_11ec = GetMonData(pkmn, MON_DATA_PERSONALITY);
-            gPokemonStorageSystemPtr->unk_11e8 = GetMonFrontSpritePal(pkmn);
+            gPokemonStorageSystemPtr->displayMonMarkings = GetMonData(pkmn, MON_DATA_MARKINGS);
+            gPokemonStorageSystemPtr->displayMonPersonality = GetMonData(pkmn, MON_DATA_PERSONALITY);
+            gPokemonStorageSystemPtr->displayMonPalette = GetMonFrontSpritePal(pkmn);
             gender = GetMonGender(pkmn);
-            gPokemonStorageSystemPtr->unk_11f2 = GetMonData(pkmn, MON_DATA_HELD_ITEM);
+            gPokemonStorageSystemPtr->displayMonItemId = GetMonData(pkmn, MON_DATA_HELD_ITEM);
         }
     }
     else if (a1 == 1)
     {
         struct BoxPokemon *boxmon = (struct BoxPokemon *)pokemon;
-        gPokemonStorageSystemPtr->unk_11f0 = GetBoxMonData(pokemon, MON_DATA_SPECIES_OR_EGG);
-        if (gPokemonStorageSystemPtr->unk_11f0 != SPECIES_NONE)
+        gPokemonStorageSystemPtr->displayMonSpecies = GetBoxMonData(pokemon, MON_DATA_SPECIES_OR_EGG);
+        if (gPokemonStorageSystemPtr->displayMonSpecies != SPECIES_NONE)
         {
             u32 otId = GetBoxMonData(boxmon, MON_DATA_OT_ID);
-            gPokemonStorageSystemPtr->unk_11f9 = GetBoxMonData(boxmon, MON_DATA_IS_EGG);
-            GetBoxMonData(boxmon, MON_DATA_NICKNAME, gPokemonStorageSystemPtr->unk_11fa);
-            StringGet_Nickname(gPokemonStorageSystemPtr->unk_11fa);
+            gPokemonStorageSystemPtr->displayMonIsEgg = GetBoxMonData(boxmon, MON_DATA_IS_EGG);
+            GetBoxMonData(boxmon, MON_DATA_NICKNAME, gPokemonStorageSystemPtr->displayMonName);
+            StringGet_Nickname(gPokemonStorageSystemPtr->displayMonName);
             gPokemonStorageSystemPtr->unk_11f8 = GetLevelFromBoxMonExp(boxmon);
-            gPokemonStorageSystemPtr->unk_11f7 = GetBoxMonData(boxmon, MON_DATA_MARKINGS);
-            gPokemonStorageSystemPtr->unk_11ec = GetBoxMonData(boxmon, MON_DATA_PERSONALITY);
-            gPokemonStorageSystemPtr->unk_11e8 = GetMonSpritePalFromSpeciesAndPersonality(gPokemonStorageSystemPtr->unk_11f0, otId, gPokemonStorageSystemPtr->unk_11ec);
-            gender = GetGenderFromSpeciesAndPersonality(gPokemonStorageSystemPtr->unk_11f0, gPokemonStorageSystemPtr->unk_11ec);
-            gPokemonStorageSystemPtr->unk_11f2 = GetBoxMonData(boxmon, MON_DATA_HELD_ITEM);
+            gPokemonStorageSystemPtr->displayMonMarkings = GetBoxMonData(boxmon, MON_DATA_MARKINGS);
+            gPokemonStorageSystemPtr->displayMonPersonality = GetBoxMonData(boxmon, MON_DATA_PERSONALITY);
+            gPokemonStorageSystemPtr->displayMonPalette = GetMonSpritePalFromSpeciesAndPersonality(gPokemonStorageSystemPtr->displayMonSpecies, otId, gPokemonStorageSystemPtr->displayMonPersonality);
+            gender = GetGenderFromSpeciesAndPersonality(gPokemonStorageSystemPtr->displayMonSpecies, gPokemonStorageSystemPtr->displayMonPersonality);
+            gPokemonStorageSystemPtr->displayMonItemId = GetBoxMonData(boxmon, MON_DATA_HELD_ITEM);
         }
     }
     else
     {
-        gPokemonStorageSystemPtr->unk_11f0 = SPECIES_NONE;
+        gPokemonStorageSystemPtr->displayMonSpecies = SPECIES_NONE;
     }
-    if (gPokemonStorageSystemPtr->unk_11f0 == SPECIES_NONE)
+    if (gPokemonStorageSystemPtr->displayMonSpecies == SPECIES_NONE)
     {
-        gPokemonStorageSystemPtr->unk_11fa[0] = EOS;
-        gPokemonStorageSystemPtr->unk_120f[0] = EOS;
-        gPokemonStorageSystemPtr->unk_1234[0] = EOS;
-        gPokemonStorageSystemPtr->unk_1259[0] = EOS;
-        gPokemonStorageSystemPtr->unk_127a[0] = EOS;
+        gPokemonStorageSystemPtr->displayMonName[0] = EOS;
+        gPokemonStorageSystemPtr->displayMonNameText[0] = EOS;
+        gPokemonStorageSystemPtr->displayMonSpeciesName[0] = EOS;
+        gPokemonStorageSystemPtr->displayMonGenderLvlText[0] = EOS;
+        gPokemonStorageSystemPtr->displayMonItemName[0] = EOS;
     }
-    else if (gPokemonStorageSystemPtr->unk_11f9)
+    else if (gPokemonStorageSystemPtr->displayMonIsEgg)
     {
-        buf = gPokemonStorageSystemPtr->unk_120f;
+        buf = gPokemonStorageSystemPtr->displayMonNameText;
         buf[0] = EXT_CTRL_CODE_BEGIN;
         buf[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
         buf[2] = 0x0F; // WHITE2
         buf[3] = 0x00; // TRANSPARENT
         buf[4] = 0x01; // DARK_GREY
-        buf = gPokemonStorageSystemPtr->unk_120f + 5;
-        buf = StringCopy(buf, gPokemonStorageSystemPtr->unk_11fa);
-        gPokemonStorageSystemPtr->unk_1234[0] = EOS;
-        gPokemonStorageSystemPtr->unk_1259[0] = EOS;
-        gPokemonStorageSystemPtr->unk_127a[0] = EOS;
+        buf = gPokemonStorageSystemPtr->displayMonNameText + 5;
+        buf = StringCopy(buf, gPokemonStorageSystemPtr->displayMonName);
+        gPokemonStorageSystemPtr->displayMonSpeciesName[0] = EOS;
+        gPokemonStorageSystemPtr->displayMonGenderLvlText[0] = EOS;
+        gPokemonStorageSystemPtr->displayMonItemName[0] = EOS;
     }
     else
     {
-        if (gPokemonStorageSystemPtr->unk_11f0 == SPECIES_NIDORAN_M || gPokemonStorageSystemPtr->unk_11f0 == SPECIES_NIDORAN_F)
+        if (gPokemonStorageSystemPtr->displayMonSpecies == SPECIES_NIDORAN_M || gPokemonStorageSystemPtr->displayMonSpecies == SPECIES_NIDORAN_F)
             gender = MON_GENDERLESS;
-        buf = gPokemonStorageSystemPtr->unk_120f;
+        buf = gPokemonStorageSystemPtr->displayMonNameText;
         buf[0] = EXT_CTRL_CODE_BEGIN;
         buf[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
         buf[2] = 0x0F; // WHITE2
         buf[3] = 0x00; // TRANSPARENT
         buf[4] = 0x01; // DARK_GREY
-        buf = gPokemonStorageSystemPtr->unk_120f + 5;
-        buf = StringCopy(buf, gPokemonStorageSystemPtr->unk_11fa);
-        buf = gPokemonStorageSystemPtr->unk_1234;
+        buf = gPokemonStorageSystemPtr->displayMonNameText + 5;
+        buf = StringCopy(buf, gPokemonStorageSystemPtr->displayMonName);
+        buf = gPokemonStorageSystemPtr->displayMonSpeciesName;
         buf[0] = EXT_CTRL_CODE_BEGIN;
         buf[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
         buf[2] = 0x0F; // WHITE2
@@ -1779,13 +1779,13 @@ void sub_809C04C(void *pokemon, u8 a1)
         buf[6] = 0x13; // CLEAR_TO
         buf[7] = 7;
         buf[8] = CHAR_SLASH;
-        buf = gPokemonStorageSystemPtr->unk_1234 + 9;
-        buf = StringCopy(buf, gSpeciesNames[gPokemonStorageSystemPtr->unk_11f0]);
+        buf = gPokemonStorageSystemPtr->displayMonSpeciesName + 9;
+        buf = StringCopy(buf, gSpeciesNames[gPokemonStorageSystemPtr->displayMonSpecies]);
         buf[0] = EXT_CTRL_CODE_BEGIN;
         buf[1] = 0x13; // CLEAR_TO
         buf[2] = 0x50;
         buf[3] = EOS;
-        buf = gPokemonStorageSystemPtr->unk_1259;
+        buf = gPokemonStorageSystemPtr->displayMonGenderLvlText;
         buf[0] = EXT_CTRL_CODE_BEGIN;
         buf[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
         buf[2] = 0x0F; // WHITE2
@@ -1794,9 +1794,9 @@ void sub_809C04C(void *pokemon, u8 a1)
         buf[5] = EXT_CTRL_CODE_BEGIN;
         buf[6] = 0x13; // CLEAR_TO
         buf[7] = 8;
-        buf = gPokemonStorageSystemPtr->unk_1259 + 8;
+        buf = gPokemonStorageSystemPtr->displayMonGenderLvlText + 8;
         buf[0] = 0x34; // LV
-        buf = gPokemonStorageSystemPtr->unk_1259 + 9;
+        buf = gPokemonStorageSystemPtr->displayMonGenderLvlText + 9;
         buf = AlignInt1InMenuWindow(buf, gPokemonStorageSystemPtr->unk_11f8, 0x22, STR_CONV_MODE_RIGHT_ALIGN);
         buf[0] = EXT_CTRL_CODE_BEGIN;
         buf[1] = 0x11; // CLEAR
@@ -1824,20 +1824,20 @@ void sub_809C04C(void *pokemon, u8 a1)
                 break;
         }
         buf[0] = EOS;
-        buf = gPokemonStorageSystemPtr->unk_127a;
-        if (gPokemonStorageSystemPtr->unk_11f2)
+        buf = gPokemonStorageSystemPtr->displayMonItemName;
+        if (gPokemonStorageSystemPtr->displayMonItemId)
         {
             buf[0] = EXT_CTRL_CODE_BEGIN;
             buf[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
             buf[2] = 0x0F; // WHITE2
             buf[3] = 0x00; // TRANSPARENT
             buf[4] = 0x01; // DARK_GREY
-            buf = gPokemonStorageSystemPtr->unk_127a + 5;
+            buf = gPokemonStorageSystemPtr->displayMonItemName + 5;
             buf[0] = EXT_CTRL_CODE_BEGIN;
             buf[1] = 0x06; // size
             buf[2] = 0x04;
-            buf = gPokemonStorageSystemPtr->unk_127a + 8;
-            buf = StringCopy(buf, ItemId_GetName(gPokemonStorageSystemPtr->unk_11f2));
+            buf = gPokemonStorageSystemPtr->displayMonItemName + 8;
+            buf = StringCopy(buf, ItemId_GetName(gPokemonStorageSystemPtr->displayMonItemId));
             buf[0] = EXT_CTRL_CODE_BEGIN;
             buf[1] = 0x07; // UNKNOWN_7;
             buf += 2;
@@ -2502,54 +2502,54 @@ s16 sub_809CF30(void)
     return textId;
 }
 
-void sub_809CFDC(struct UnkStruct_2000020 *arg0, struct UnkStruct_2000028 *arg1, u8 arg2)
+void sub_809CFDC(struct UnkUtil *arg0, struct UnkUtilData *arg1, u8 arg2)
 {
     gUnknown_020384EC = arg0;
-    arg0->unk_00 = arg1;
-    arg0->unk_05 = arg2;
-    arg0->unk_04 = 0;
+    arg0->data = arg1;
+    arg0->max = arg2;
+    arg0->numActive = 0;
 }
 
 void sub_809CFF0(void)
 {
     u16 i;
-    struct UnkStruct_2000028 *unkStruct;
+    struct UnkUtilData *unkStruct;
 
-    if (gUnknown_020384EC->unk_04)
+    if (gUnknown_020384EC->numActive)
     {
-        for (i = 0; i < gUnknown_020384EC->unk_04; i++)
+        for (i = 0; i < gUnknown_020384EC->numActive; i++)
         {
-            unkStruct = &gUnknown_020384EC->unk_00[i];
-            unkStruct->unk_0c(unkStruct);
+            unkStruct = &gUnknown_020384EC->data[i];
+            unkStruct->func(unkStruct);
         }
 
-        gUnknown_020384EC->unk_04 = 0;
+        gUnknown_020384EC->numActive = 0;
     }
 }
 
 bool8 sub_809D034(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sTop, u16 width, u16 height)
 {
-    struct UnkStruct_2000028 *unkStruct;
+    struct UnkUtilData *unkStruct;
 
-    if (gUnknown_020384EC->unk_04 >= gUnknown_020384EC->unk_05)
+    if (gUnknown_020384EC->numActive >= gUnknown_020384EC->max)
         return FALSE;
 
-    unkStruct = &gUnknown_020384EC->unk_00[gUnknown_020384EC->unk_04++];
-    unkStruct->unk_08 = width * 2;
-    unkStruct->unk_04 = dest + (dTop * 64) + (dLeft * 2);
-    unkStruct->unk_00 = src + (sTop * 64) + (sLeft * 2);
-    unkStruct->unk_0a = height;
-    unkStruct->unk_0c = sub_809D0BC;
+    unkStruct = &gUnknown_020384EC->data[gUnknown_020384EC->numActive++];
+    unkStruct->size = width * 2;
+    unkStruct->dest = dest + (dTop * 64) + (dLeft * 2);
+    unkStruct->src = src + (sTop * 64) + (sLeft * 2);
+    unkStruct->height = height;
+    unkStruct->func = sub_809D0BC;
     return TRUE;
 }
 
-void sub_809D0BC(struct UnkStruct_2000028 *unkStruct)
+void sub_809D0BC(struct UnkUtilData *unkStruct)
 {
     u32 i;
-    const u8 *src = unkStruct->unk_00;
-    u8 *dest = unkStruct->unk_04;
-    int height = unkStruct->unk_0a;
-    int width = unkStruct->unk_08;
+    const u8 *src = unkStruct->src;
+    u8 *dest = unkStruct->dest;
+    int height = unkStruct->height;
+    int width = unkStruct->size;
     for (i = 0; i < height; i++)
     {
         CpuCopy16(src, dest, width);
@@ -2574,26 +2574,26 @@ void sub_809D104(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sT
 
 bool8 sub_809D16C(void *dest, u16 dLeft, u16 dTop, u16 width, u16 height)
 {
-    struct UnkStruct_2000028 *unkStruct;
+    struct UnkUtilData *unkStruct;
 
-    if (gUnknown_020384EC->unk_04 >= gUnknown_020384EC->unk_05)
+    if (gUnknown_020384EC->numActive >= gUnknown_020384EC->max)
         return FALSE;
 
-    unkStruct = &gUnknown_020384EC->unk_00[gUnknown_020384EC->unk_04++];
-    unkStruct->unk_08 = width * 2;
-    unkStruct->unk_04 = dest + ((dTop * 32) + dLeft) * 2;
-    unkStruct->unk_0a = height;
-    unkStruct->unk_0c = sub_809D1C4;
+    unkStruct = &gUnknown_020384EC->data[gUnknown_020384EC->numActive++];
+    unkStruct->size = width * 2;
+    unkStruct->dest = dest + ((dTop * 32) + dLeft) * 2;
+    unkStruct->height = height;
+    unkStruct->func = sub_809D1C4;
     return TRUE;
 }
 
-void sub_809D1C4(struct UnkStruct_2000028 *unkStruct)
+void sub_809D1C4(struct UnkUtilData *unkStruct)
 {
     u16 i;
 
-    for (i = 0; i < unkStruct->unk_0a; i++)
+    for (i = 0; i < unkStruct->height; i++)
     {
-        Dma3FillLarge_(0, unkStruct->unk_04, unkStruct->unk_08, 16);
-        unkStruct->unk_04 += 64;
+        Dma3FillLarge_(0, unkStruct->dest, unkStruct->size, 16);
+        unkStruct->dest += 64;
     }
 }

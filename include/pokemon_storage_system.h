@@ -4,51 +4,10 @@
 #include "pc_screen_effect.h"
 #include "mon_markings.h"
 
-enum {
-    PC_TEXT_EXIT_BOX,
-    PC_TEXT_WHAT_YOU_DO,
-    PC_TEXT_PICK_A_THEME,
-    PC_TEXT_PICK_A_WALLPAPER,
-    PC_TEXT_IS_SELECTED,
-    PC_TEXT_JUMP_TO_WHICH_BOX,
-    PC_TEXT_DEPOSIT_IN_WHICH_BOX,
-    PC_TEXT_WAS_DEPOSITED,
-    PC_TEXT_BOX_IS_FULL,
-    PC_TEXT_RELEASE_POKE,
-    PC_TEXT_WAS_RELEASED,
-    PC_TEXT_BYE_BYE,
-    PC_TEXT_MARK_POKE,
-    PC_TEXT_LAST_POKE,
-    PC_TEXT_PARTY_FULL,
-    PC_TEXT_HOLDING_POKE,
-    PC_TEXT_WHICH_ONE_WILL_TAKE,
-    PC_TEXT_CANT_RELEASE_EGG,
-    PC_TEXT_CONTINUE_BOX,
-    PC_TEXT_CAME_BACK,
-    PC_TEXT_WORRIED,
-    PC_TEXT_SURPRISE,
-    PC_TEXT_PLEASE_REMOVE_MAIL
-};
-
-enum {
-    PC_TEXT_FMT_NORMAL,
-    PC_TEXT_FMT_MON_NAME,
-    PC_TEXT_FMT_UNK_02,
-    PC_TEXT_FMT_UNK_03,
-    PC_TEXT_FMT_MON_NAME_2,
-    PC_TEXT_FMT_UNK_05,
-    PC_TEXT_FMT_MON_NAME_AFTER_EXCL_MARK
-};
-
 struct PokemonStorageSystemFunc
 {
     u8 (*func)(void);
     s8 unk4;
-};
-
-struct StorageAction {
-    const u8 *text;
-    u8 format;
 };
 
 struct StorageText {
@@ -61,18 +20,18 @@ struct PSS_MenuStringPtrs {
     const u8 *desc;
 };
 
-struct UnkStruct_2000028 {
-    const u8 *unk_00;
-    u8 *unk_04;
-    u16 unk_08;
-    u16 unk_0a;
-    void (*unk_0c)(struct UnkStruct_2000028 *data);
+struct UnkUtilData {
+    const u8 *src;
+    u8 *dest;
+    u16 size;
+    u16 height;
+    void (*func)(struct UnkUtilData *data);
 };
 
-struct UnkStruct_2000020 {
-    struct UnkStruct_2000028 *unk_00;
-    u8 unk_04;
-    u8 unk_05;
+struct UnkUtil {
+    struct UnkUtilData *data;
+    u8 numActive;
+    u8 max;
 };
 
 struct ChooseBoxMenu {
@@ -90,26 +49,26 @@ struct ChooseBoxMenu {
 
 struct PokemonStorageSystemData {
     void (*unk_0000)(void);
-    u8 unk_0004;
+    u8 state;
     u8 boxOption;
-    u8 unk_0006;
+    u8 screenChangeType;
     u8 unk_0007;
     u16 unk_0008;
     u16 unk_000a;
     struct PCScreenEffectStruct unk_000c;
-    struct UnkStruct_2000020 unk_0020;
-    struct UnkStruct_2000028 unk_0028[8];
+    struct UnkUtil unkUtil;
+    struct UnkUtilData unkUtilData[8];
     u8 unk_00a8[0x800];
     u16 unk_08a8;
-    u16 unk_08aa;
+    u16 partyMenuY;
     u8 unk_08ac;
-    u8 unk_08ad;
-    u8 unk_08ae;
-    u8 unk_08af;
-    u8 unk_08b0;
-    bool8 unk_08b1;
-    s16 unk_08b2;
-    u16 unk_08b4;
+    u8 partyMenuMoveTimer;
+    u8 showPartyMenuState;
+    u8 closeBoxFlashing;
+    u8 closeBoxFlashTimer;
+    bool8 closeBoxFlashState;
+    s16 newCurrBoxId;
+    u16 bg2_X;
     u16 unk_08b6;
     u16 unk_08b8;
     bool8 unk_08ba;
@@ -132,8 +91,8 @@ struct PokemonStorageSystemData {
     u32 unk_0d08;
     u8 filler_0d0c[0x50];
     u16 unk_0d5c;
-    s16 unk_0d5e;
-    s16 unk_0d60;
+    s16 wallpaperSetId;
+    s16 wallpaperId;
     u16 unk_0d62[360];
     u8 unk_1032;
     struct Sprite *unk_1034;
@@ -177,27 +136,27 @@ struct PokemonStorageSystemData {
     s8 unk_11e2;
     u8 unk_11e3;
     u8 unk_11e4[4];
-    const u8 *unk_11e8;
-    u32 unk_11ec;
-    u16 unk_11f0;
-    u16 unk_11f2;
+    const u8 *displayMonPalette;
+    u32 displayMonPersonality;
+    u16 displayMonSpecies;
+    u16 displayMonItemId;
     u8 filler_11f4[2];
-    u8 unk_11f6;
-    u8 unk_11f7;
+    u8 setMosaic;
+    u8 displayMonMarkings;
     u8 unk_11f8;
-    u8 unk_11f9;
-    u8 unk_11fa[0x15];
-    u8 unk_120f[0x25];
-    u8 unk_1234[0x25];
-    u8 unk_1259[0x21];
-    u8 unk_127a[0x2a];
+    u8 displayMonIsEgg;
+    u8 displayMonName[0x15];
+    u8 displayMonNameText[0x25];
+    u8 displayMonSpeciesName[0x25];
+    u8 displayMonGenderLvlText[0x21];
+    u8 displayMonItemName[0x2a];
     bool8 (*unk_12a4)(void);
     u8 unk_12a8;
     u8 unk_12a9;
-    struct Sprite *unk_12ac;
-    struct Sprite *unk_12b0[2];
-    u16 *unk_12b8;
-    struct PokemonMarkMenu unk_12bc;
+    struct Sprite *markingComboSprite;
+    struct Sprite *waveformSprites[2];
+    u16 *markingComboTilesPtr;
+    struct PokemonMarkMenu markMenu;
     struct ChooseBoxMenu chooseBoxMenu;
     struct Pokemon unk_25b4;
     struct Pokemon unk_2618;
@@ -211,22 +170,22 @@ struct PokemonStorageSystemData {
     s8 unk_2683;
     u16 unk_2684;
     u16 unk_2686[3];
-    u8 unk_268c;
-    u8 unk_268d;
-    u8 unk_268e;
+    u8 summaryMaxPos;
+    u8 summaryStartPos;
+    u8 summaryScreenMode;
     union {
-        struct Pokemon *pokemon;
+        struct Pokemon *mon;
         struct BoxPokemon *box;
-    } unk_2690;
-    u8 unk_2694[18];
+    } summaryMon;
+    u8 messageText[18];
     u8 unk_26a6[62];
-    u8 unk_26e4[0x16];
-    u16 unk_26fa;
-    u16 *unk_26fc;
-    struct Sprite *unk_2700;
-    u16 unk_2704[0x10];
+    u8 releaseMonName[0x16];
+    u16 displayMonPalOffset;
+    u16 *displayMonTilePtr;
+    struct Sprite *displayMonSprite;
+    u16 displayMonPalBuffer[0x10];
     u8 filler_2724[0x60];
-    u8 unk_2784[0x800];
+    u8 tileBuffer[0x800];
     u8 filler_2f84[0x1800];
     u8 unk_4784[0x800];
 };
@@ -310,7 +269,7 @@ void sub_809CDCC(void);
 void sub_809CDEC(u8 a0);
 void sub_809CE84(void);
 s16 sub_809CF30(void);
-void sub_809CFDC(struct UnkStruct_2000020 *a0, struct UnkStruct_2000028 *a1, u8 a2);
+void sub_809CFDC(struct UnkUtil *a0, struct UnkUtilData *a1, u8 a2);
 void sub_809CFF0(void);
 bool8 sub_809D034(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sTop, u16 width, u16 height);
 void sub_809D104(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sTop, u16 width, u16 height);
