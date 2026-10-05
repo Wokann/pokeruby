@@ -469,7 +469,7 @@ static bool8 StartMenuBagCallback(void)
     if (!gPaletteFade.active)
     {
         PlayRainStoppingSoundEffect();
-        SetMainCallback2(sub_80A53F8);
+        SetMainCallback2(CB2_BagMenuFromStartMenu);
         return 1;
     }
     return 0;

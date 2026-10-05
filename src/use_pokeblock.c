@@ -4,6 +4,7 @@
 //
 
 #include "global.h"
+#include "item_menu.h"
 #include "main.h"
 #include "overworld.h"
 #include "string_util.h"
@@ -104,7 +105,6 @@ static EWRAM_DATA struct Pokeblock *gUnknown_0203930C = NULL;
 EWRAM_DATA u8 gPokeblockMonID = 0;
 EWRAM_DATA s16 gPokeblockGain = 0;
 
-extern u16 gSpecialVar_ItemId; // FIXME: remove after merge of #349 Pokeblock
 
 static void launch_c3_walk_stairs_and_run_once(void (*const)(void));
 static void sub_81361E4(void);

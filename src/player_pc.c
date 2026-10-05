@@ -348,7 +348,7 @@ static void Task_ItemStorage_Deposit(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        sub_80A6A30();
+        CB2_GoToItemDepositMenu();
         DestroyTask(taskId);
     }
 }
@@ -931,7 +931,7 @@ static void ItemStorage_PrintItemPcResponse(u16 itemId)
             string = gOtherText_HowManyToToss;
             break;
         case ITEMPC_THREW_AWAY_ITEM:
-            string = gOtherText_ThrewAwayItem;
+            string = gText_ThrewAwayVar2Var1s;
             break;
         case ITEMPC_NO_MORE_ROOM:
             string = gOtherText_NoMoreRoom;
@@ -940,7 +940,7 @@ static void ItemStorage_PrintItemPcResponse(u16 itemId)
             string = gOtherText_TooImportant;
             break;
         case ITEMPC_OKAY_TO_THROW_AWAY:
-            string = gOtherText_OkayToThrowAwayPrompt;
+            string = gText_ConfirmTossItems;
             break;
         case ITEMPC_SWITCH_WHICH_ITEM:
             string = gOtherText_SwitchWhichItem;
@@ -1319,7 +1319,7 @@ void Mailbox_ReturnToMailListAfterDeposit(void)
 // you always have at least 1 POKeMON and you cannot receive mail before you leave Littleroot: therefore this function cannot be reached normally.
 static void Mailbox_NoPokemonForMail(u8 taskId)
 {
-    DisplayItemMessageOnField(taskId, gOtherText_NoPokemon, Mailbox_DrawMailMenuAndDoProcessInput, 0);
+    DisplayItemMessageOnField(taskId, gText_NoPokemon, Mailbox_DrawMailMenuAndDoProcessInput, 0);
 }
 
 static void Mailbox_Cancel(u8 taskId)

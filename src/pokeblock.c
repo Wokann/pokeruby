@@ -150,11 +150,11 @@ const u8 *const gPokeblockNames[] =
 
 const struct MenuAction2 gUnknown_083F7EF4[] =
 {
-    {OtherText_Use,     sub_810C508},
-    {OtherText_Toss,    sub_810C5C0},
+    {gMenuText_Use,     sub_810C508},
+    {gMenuText_Toss,    sub_810C5C0},
     {gText_Cancel2, sub_810C748},
-    {OtherText_Use,     sub_810C788},
-    {OtherText_Use,     sub_810C854},
+    {gMenuText_Use,     sub_810C788},
+    {gMenuText_Use,     sub_810C854},
 };
 
 const u8 gUnknown_083F7F1C[] = {0, 1, 2};

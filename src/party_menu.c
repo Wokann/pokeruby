@@ -3843,7 +3843,7 @@ void Task_RareCandy3(u8 taskId)
                 evolutionSpecies = GetEvolutionTargetSpecies(gPartyMenu.pokemon, 0, 0);
                 if (evolutionSpecies != 0)
                 {
-                    gCB2_AfterEvolution = sub_80A53F8;
+                    gCB2_AfterEvolution = CB2_BagMenuFromStartMenu;
                     BeginEvolutionScene(gPartyMenu.pokemon, evolutionSpecies, TRUE, gPartyMenu.primarySelectedMonIndex);
                     DestroyTask(taskId);
                 }
@@ -3895,7 +3895,7 @@ void TeachMonMoveInPartyMenu(u8 taskId)
         evolutionSpecies = GetEvolutionTargetSpecies(gPartyMenu.pokemon, 0, 0);
         if (evolutionSpecies != 0)
         {
-            gCB2_AfterEvolution = sub_80A53F8;
+            gCB2_AfterEvolution = CB2_BagMenuFromStartMenu;
             BeginEvolutionScene(gPartyMenu.pokemon, evolutionSpecies, TRUE, gPartyMenu.primarySelectedMonIndex);
             DestroyTask(taskId);
         }
@@ -3945,7 +3945,7 @@ void DoEvolutionStoneItemEffect(u8 taskId, u16 evolutionStoneItem, TaskFunc c)
     gTasks[taskId].func = TaskDummy;
     sub_806E8D0(taskId, evolutionStoneItem, c);
 
-    gCB2_AfterEvolution = sub_80A53F8;
+    gCB2_AfterEvolution = CB2_BagMenuFromStartMenu;
 
     if (ExecuteTableBasedItemEffect_(gPartyMenu.primarySelectedMonIndex, evolutionStoneItem, 0))
     {

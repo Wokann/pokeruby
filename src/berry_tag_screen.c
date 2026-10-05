@@ -1,4 +1,5 @@
 #include "global.h"
+#include "item_menu_icons.h"
 #include "berry_tag_screen.h"
 #include "berry.h"
 #include "decompress.h"
@@ -33,8 +34,6 @@ extern u16 gBattle_BG1_Y;
 static EWRAM_DATA u8 gUnknown_0203932C = 0;
 static EWRAM_DATA s16 gUnknown_0203932E[5] = {0};
 
-extern const struct CompressedSpriteSheet gUnknown_083C1F74;
-extern const struct CompressedSpritePalette gUnknown_083C1F7C;
 
 extern u8 gBerryCheck_Gfx[];
 extern u8 gBerryCheck_Pal[];
@@ -133,7 +132,7 @@ static bool8 sub_8146058(void)
         break;
     case 8:
         berry = gSpecialVar_ItemId + OFFSET_7B;
-        gUnknown_0203932C = CreateBerrySprite(berry, 56, 64);
+        gUnknown_0203932C = CreateBerryTagSprite(berry, 56, 64);
         gMain.state += 1;
         break;
     case 9:
@@ -219,11 +218,11 @@ bool8 sub_81462B8(void)
         gSharedMem.var_1FFFF += 1;
         break;
     case 5:
-        LoadCompressedObjectPic(&gUnknown_083C1F74);
+        LoadCompressedObjectPic(&gBerryCheckCircleSpriteSheet);
         gSharedMem.var_1FFFF += 1;
         break;
     case 6:
-        LoadCompressedObjectPalette(&gUnknown_083C1F7C);
+        LoadCompressedObjectPalette(&gBerryCheckCirclePaletteTable);
         gSharedMem.var_1FFFF = 0;
         return TRUE;
     }
@@ -333,15 +332,15 @@ static void sub_8146600(u8 berry)
 
     // argument is the center of the circle
     if (berryInfo->spicy)
-        gUnknown_0203932E[0] = sub_80A7E5C(48);
+        gUnknown_0203932E[0] = CreateBerryFlavorCircleSprite(48);
     if (berryInfo->dry)
-        gUnknown_0203932E[1] = sub_80A7E5C(88);
+        gUnknown_0203932E[1] = CreateBerryFlavorCircleSprite(88);
     if (berryInfo->sweet)
-        gUnknown_0203932E[2] = sub_80A7E5C(128);
+        gUnknown_0203932E[2] = CreateBerryFlavorCircleSprite(128);
     if (berryInfo->bitter)
-        gUnknown_0203932E[3] = sub_80A7E5C(168);
+        gUnknown_0203932E[3] = CreateBerryFlavorCircleSprite(168);
     if (berryInfo->sour)
-        gUnknown_0203932E[4] = sub_80A7E5C(208);
+        gUnknown_0203932E[4] = CreateBerryFlavorCircleSprite(208);
 }
 
 static void sub_81466A0(void)
@@ -363,18 +362,18 @@ static void sub_81466E8(u8 taskId, s8 direction)
     u8 berryPocket = 3;
     s16 *data = gTasks[taskId].data;
 
-    if (gBagPocketScrollStates[berryPocket].scrollTop + gBagPocketScrollStates[berryPocket].cursorPos == 0
+    if (gBagPocketScrollStates[berryPocket].scrollPosition + gBagPocketScrollStates[berryPocket].cursorPosition == 0
      && direction < 0)
         return;
-    if (gBagPocketScrollStates[berryPocket].scrollTop + gBagPocketScrollStates[berryPocket].cursorPos + 1 == gBagPocketScrollStates[berryPocket].numSlots
+    if (gBagPocketScrollStates[berryPocket].scrollPosition + gBagPocketScrollStates[berryPocket].cursorPosition + 1 == gBagPocketScrollStates[berryPocket].numSlots
      && direction > 0)
         return;
 
     PlaySE(SE_SELECT);
-    if (gBagPocketScrollStates[berryPocket].scrollTop + gBagPocketScrollStates[berryPocket].cursorPos + direction < 0)
-        data[1] = -(gBagPocketScrollStates[berryPocket].scrollTop + gBagPocketScrollStates[berryPocket].cursorPos);
-    else if (gBagPocketScrollStates[berryPocket].scrollTop + gBagPocketScrollStates[berryPocket].cursorPos + direction >= gBagPocketScrollStates[berryPocket].numSlots)
-        data[1] = gBagPocketScrollStates[berryPocket].numSlots - gBagPocketScrollStates[berryPocket].scrollTop - gBagPocketScrollStates[berryPocket].cursorPos - 1;
+    if (gBagPocketScrollStates[berryPocket].scrollPosition + gBagPocketScrollStates[berryPocket].cursorPosition + direction < 0)
+        data[1] = -(gBagPocketScrollStates[berryPocket].scrollPosition + gBagPocketScrollStates[berryPocket].cursorPosition);
+    else if (gBagPocketScrollStates[berryPocket].scrollPosition + gBagPocketScrollStates[berryPocket].cursorPosition + direction >= gBagPocketScrollStates[berryPocket].numSlots)
+        data[1] = gBagPocketScrollStates[berryPocket].numSlots - gBagPocketScrollStates[berryPocket].scrollPosition - gBagPocketScrollStates[berryPocket].cursorPosition - 1;
     else
         data[1] = direction;
 
@@ -412,29 +411,29 @@ static void sub_8146810(s8 berry)
 
     if (berry > 0)
     {
-        if (gBagPocketScrollStates[berryPocket].cursorPos + berry > 7)
+        if (gBagPocketScrollStates[berryPocket].cursorPosition + berry > 7)
         {
-            gBagPocketScrollStates[berryPocket].scrollTop += gBagPocketScrollStates[berryPocket].cursorPos - 7 + berry;
-            gBagPocketScrollStates[berryPocket].cursorPos = 7;
+            gBagPocketScrollStates[berryPocket].scrollPosition += gBagPocketScrollStates[berryPocket].cursorPosition - 7 + berry;
+            gBagPocketScrollStates[berryPocket].cursorPosition = 7;
         }
         else
         {
-            gBagPocketScrollStates[berryPocket].cursorPos += berry;
+            gBagPocketScrollStates[berryPocket].cursorPosition += berry;
         }
     }
     else
     {
-        if (gBagPocketScrollStates[berryPocket].cursorPos + berry < 0)
+        if (gBagPocketScrollStates[berryPocket].cursorPosition + berry < 0)
         {
-            gBagPocketScrollStates[berryPocket].scrollTop += gBagPocketScrollStates[berryPocket].cursorPos + berry;
-            gBagPocketScrollStates[berryPocket].cursorPos = 0;
+            gBagPocketScrollStates[berryPocket].scrollPosition += gBagPocketScrollStates[berryPocket].cursorPosition + berry;
+            gBagPocketScrollStates[berryPocket].cursorPosition = 0;
         }
         else
         {
-            gBagPocketScrollStates[berryPocket].cursorPos += berry;
+            gBagPocketScrollStates[berryPocket].cursorPosition += berry;
         }
     }
-    gSpecialVar_ItemId = gCurrentBagPocketItemSlots[gBagPocketScrollStates[berryPocket].scrollTop + gBagPocketScrollStates[berryPocket].cursorPos].itemId;
+    gSpecialVar_ItemId = gCurrentBagPocketItemSlots[gBagPocketScrollStates[berryPocket].scrollPosition + gBagPocketScrollStates[berryPocket].cursorPosition].itemId;
     DestroySprite(&gSprites[gUnknown_0203932C]);
     sub_81466A0();
     sub_80A7DD4();
@@ -446,7 +445,7 @@ static void sub_81468BC(void)
     sub_81464E4();
 
     // center of berry sprite
-    gUnknown_0203932C = CreateBerrySprite(gSpecialVar_ItemId + OFFSET_7B, 56, 64);
+    gUnknown_0203932C = CreateBerryTagSprite(gSpecialVar_ItemId + OFFSET_7B, 56, 64);
 
     sub_8146600(gSpecialVar_ItemId + OFFSET_7B);
 }

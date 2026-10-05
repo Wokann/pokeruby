@@ -1,4 +1,5 @@
 #include "global.h"
+#include "item_menu.h"
 #include "cable_club.h"
 #include "link.h"
 #include "overworld.h"

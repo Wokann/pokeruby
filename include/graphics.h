@@ -2479,7 +2479,7 @@ extern const u8 gBagPalette[];
 extern const u8 gBagScreen_Gfx[];
 extern const u8 gBagScreenMale_Pal[];
 extern const u8 gBagScreenFemale_Pal[];
-extern const u16 gBagScreen_Tilemap[];
+extern const u16 gBagScreen_GfxTileMap[];
 extern const u8 gBuyMenuFrame_Gfx[];
 extern const u8 gMenuMoneyPal[];
 extern const u8 gBuyMenuFrame_Tilemap[];

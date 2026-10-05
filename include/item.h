@@ -1,16 +1,7 @@
 #ifndef GUARD_ITEM_H
 #define GUARD_ITEM_H
 
-// These constants are used in gItems
-enum
-{
-    POCKET_ITEMS = 1,
-    POCKET_POKE_BALLS,
-    POCKET_TM_HM,
-    POCKET_BERRIES,
-    POCKET_KEY_ITEMS,
-};
-
+#include "constants/item.h"
 typedef void (*ItemUseFunc)(u8);
 
 struct BagPocket
@@ -18,8 +9,6 @@ struct BagPocket
     struct ItemSlot *itemSlots;
     u8 capacity;
 };
-
-#define NUM_BAG_POCKETS 5
 
 void CopyItemName(u16 itemId, u8 *string);
 bool8 IsBagPocketNonEmpty(u8 pocket);
@@ -49,5 +38,7 @@ ItemUseFunc ItemId_GetFieldFunc(u16 itemId);
 u8 ItemId_GetBattleUsage(u16 itemId);
 ItemUseFunc ItemId_GetBattleFunc(u16 itemId);
 u8 ItemId_GetSecondaryId(u16 itemId);
+
+void ClearBag(void);
 
 #endif // GUARD_ITEM_H

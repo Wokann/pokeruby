@@ -1,7 +1,20 @@
 #ifndef GUARD_ITEM_MENU_H
 #define GUARD_ITEM_MENU_H
 
+#include "item.h"
 #include "string_util.h"
+
+enum
+{
+    ITEMMENULOCATION_FIELD,
+    ITEMMENULOCATION_BATTLE,
+    ITEMMENULOCATION_PARTY,
+    ITEMMENULOCATION_SHOP,
+    ITEMMENULOCATION_BERRY_TREE,
+    RETURN_TO_FIELD_5,
+    ITEMMENULOCATION_ITEMPC,
+    ITEMMENULOCATION_WALLY,
+};
 
 enum
 {
@@ -14,36 +27,36 @@ enum
 
 struct PocketScrollState
 {
-    u8 cursorPos;
-    u8 scrollTop;
+    u8 cursorPosition;
+    u8 scrollPosition;
     u8 numSlots;
     u8 cursorMax;
 };
 
 extern struct PocketScrollState gBagPocketScrollStates[];
 extern struct ItemSlot *gCurrentBagPocketItemSlots;
+extern u16 gSpecialVar_ItemId;
 
-void ResetBagScrollPositions(void);
-void ClearBag(void);
 void sub_80A3E0C(void);
 void sub_80A3FA0(u16 *a, u8 b, u8 c, u8 d, u8 e, u16 f);
 void sub_80A4164(u8 *, u16, enum StringConvertMode, u8);
 void sub_80A418C(u16 a, enum StringConvertMode b, u8 c, u8 d, u8 e);
-void sub_80A53F8(void);
-void HandleItemMenuPaletteFade(u8);
 void sub_80A5B40(void);
-void CleanUpItemMenuMessage(u8);
 void CleanUpOverworldMessage(u8);
 void ExecuteItemUseFromBlackPalette(void);
 void sub_80A5D04(void);
-void ItemMenu_LoadSellMenu(void);
-void CB2_ChooseBerry();
-void sub_80A6A30(void);
-bool32 UseRegisteredKeyItem(void);
-void sub_80A6DCC(void);
+bool32 UseRegisteredKeyItemOnField(void);
 void sub_80A7094(u8);
-u8 CreateBerrySprite(u8, s16, s16);
-void sub_80A7DD4(void);
-u8 sub_80A7E5C(s16);
+
+void CB2_BagMenuFromStartMenu(void);
+void CB2_BagMenuFromBattle(void);
+void CB2_GoToSellMenu(void);
+void CB2_GoToItemDepositMenu(void);
+void ChooseBerryForMachine(void);
+void CB2_ChooseBerry(void);
+void ResetBagScrollPositions(void);
+void DoWallyTutorialBagMenu(void);
+void Task_CloseBagMenu(u8 taskId);
+void CloseItemMessage(u8 taskId);
 
 #endif // GUARD_ITEM_MENU_H

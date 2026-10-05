@@ -1,4 +1,5 @@
 #include "global.h"
+#include "item_menu.h"
 #include "task.h"
 #include "palette.h"
 #include "main.h"

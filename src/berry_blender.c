@@ -1,4 +1,6 @@
 #include "global.h"
+#include "item_menu_icons.h"
+#include "item_menu.h"
 #include "berry.h"
 #include "berry_blender.h"
 #include "decompress.h"
@@ -170,8 +172,6 @@ struct BlenderDebug
 void m4aMPlayPitchControl(struct MusicPlayerInfo *mplayInfo, u16 trackBits, s16 pitch);
 void m4aMPlayTempoControl(struct MusicPlayerInfo *mplayInfo, u16 tempo);
 void m4aMPlayStop(struct MusicPlayerInfo *mplayInfo);
-void sub_80A6978(void);
-u8 sub_80A7DEC(u8 berryId, u8 x, u8 y, bool8 animate);
 void MenuCursor_SetPos814A880(u8 a1, u8 a2);
 u8 MenuCursor_Create814A5C0(u8 a1, u16 a2, u8 a3, u16 a4, u8 a5);
 s8 GetFirstFreePokeblockSlot(void);
@@ -181,7 +181,6 @@ extern void de_sub_8073110();
 
 extern struct MusicPlayerInfo gMPlayInfo_SE2;
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
-extern u16 gSpecialVar_ItemId;
 extern u8 gUnknown_020297ED;
 extern u8 byte_3002A68;
 
@@ -934,7 +933,7 @@ static void sub_804E56C(void)
     case 6:
         if (!gPaletteFade.active)
         {
-            sub_80A6978();
+            ChooseBerryForMachine();
             gBerryBlenderData->mainState = 0;
         }
         break;
@@ -979,7 +978,7 @@ static void SetBerrySpriteData(struct Sprite* sprite, s16 x, s16 y, s16 bounceSp
 
 static void CreateBerrySprite(u16 itemId, u8 playerId)
 {
-    u8 spriteId = sub_80A7DEC(itemId + 123, 0, 80, playerId & 1);
+    u8 spriteId = CreateSpinningBerrySprite(itemId + 123, 0, 80, playerId & 1);
     SetBerrySpriteData(&gSprites[spriteId], sBerrySpriteData[playerId][0], sBerrySpriteData[playerId][1], sBerrySpriteData[playerId][2], sBerrySpriteData[playerId][3], sBerrySpriteData[playerId][4]);
 }
 

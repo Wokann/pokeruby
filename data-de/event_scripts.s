@@ -1057,7 +1057,7 @@ Route111_Text_1A0F93:: @ 81A0F93
 	.string "Der Sandsturm ist zu stark.\n"
 	.string "Dagegen kann man nicht angehen!$"
 
-Text_NoRegisteredItem: @ 81A0FCC
+gText_SelectWithoutRegisteredItem: @ 81A0FCC
 	.string "Ein Basis-Item aus dem BEUTEL kann auf\n"
 	.string "SELECT gelegt werden. Sehr praktisch!$"
 
@@ -1145,8 +1145,8 @@ FallarborTown_House1_Text_1A1498:: @ 81A1498
 	.string "{PLAYER} übergibt\n"
 	.string "{STR_VAR_1}.$"
 
-Event_NoRegisteredItem:: @ 81A14AF
-	msgbox Text_NoRegisteredItem, MSGBOX_SIGN
+EventScript_SelectWithoutRegisteredItem:: @ 81A14AF
+	msgbox gText_SelectWithoutRegisteredItem, MSGBOX_SIGN
 	end
 
 gUnknown_081A14B8:: @ 81A14B8

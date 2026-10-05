@@ -1,4 +1,5 @@
 #include "global.h"
+#include "item_menu.h"
 #include "battle_anim_81258BC.h"
 #include "battle_controllers.h"
 #include "battle_interface.h"
@@ -31,7 +32,6 @@ extern bool8 gDoingBattleAnim;
 extern u8 gBattlerSpriteIds[];
 extern u16 gBattleTypeFlags;
 extern u32 gBattleControllerExecFlags;
-extern u16 gSpecialVar_ItemId;
 extern MainCallback gPreBattleCallback1;
 extern u8 gBattlerInMenuId;
 extern u8 gHealthboxSpriteIds[];

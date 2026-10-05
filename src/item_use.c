@@ -82,7 +82,7 @@ static const u8 gItemFinderDirections[] = { DIR_NORTH, DIR_EAST, DIR_SOUTH, DIR_
 static const struct YesNoFuncTable sTeachMonTMHMYesNoActions =
 {
     .yesFunc = StartTeachMonTMHMMove,
-    .noFunc = CleanUpItemMenuMessage,
+    .noFunc = CloseItemMessage,
 };
 
 void ExecuteSwitchToOverworldFromItemUse(u8 taskId)
@@ -96,7 +96,7 @@ void ExecuteSwitchToOverworldFromItemUse(u8 taskId)
 
     gTasks[taskId].data[8] = (u32)gExitToOverworldFuncList[taskData] >> 16;
     gTasks[taskId].data[9] = (u32)gExitToOverworldFuncList[taskData];
-    gTasks[taskId].func = HandleItemMenuPaletteFade;
+    gTasks[taskId].func = Task_CloseBagMenu;
 }
 
 void ItemMenu_ConfirmNormalFade(u8 var)
@@ -132,7 +132,7 @@ static void HandleDeniedItemUseMessage(u8 taskId, u8 playerMenuStatus, const u8 
     {
     case 0: // Item Menu
         Menu_EraseWindowRect(0, 13, 13, 20);
-        DisplayItemMessageOnField(taskId, gStringVar4, CleanUpItemMenuMessage, 1);
+        DisplayItemMessageOnField(taskId, gStringVar4, CloseItemMessage, 1);
         break;
     default: // Field
         DisplayItemMessageOnField(taskId, gStringVar4, CleanUpOverworldMessage, 0);
@@ -604,7 +604,7 @@ void ItemUseOutOfBattle_CoinCase(u8 taskId)
     if (!gTasks[taskId].data[2])
     {
         Menu_EraseWindowRect(0, 13, 13, 20);
-        DisplayItemMessageOnField(taskId, gStringVar4, CleanUpItemMenuMessage, 1);
+        DisplayItemMessageOnField(taskId, gStringVar4, CloseItemMessage, 1);
     }
     else
     {
@@ -615,7 +615,7 @@ void ItemUseOutOfBattle_CoinCase(u8 taskId)
 static void SSTicketWaitForAButtonPress(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON))
-        CleanUpItemMenuMessage(taskId);
+        CloseItemMessage(taskId);
 }
 
 static void SSTicketWaitForAButtonPress2(u8 taskId)
@@ -646,7 +646,7 @@ void ItemUseOutOfBattle_Berry(u8 taskId)
         gFieldCallback = ExecuteItemUseFromBlackPalette;
         gTasks[taskId].data[8] = (u32)CB2_ReturnToField >> 16;
         gTasks[taskId].data[9] = (u32)CB2_ReturnToField;
-        gTasks[taskId].func = HandleItemMenuPaletteFade;
+        gTasks[taskId].func = Task_CloseBagMenu;
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB(0, 0, 0));
     }
     else
@@ -785,11 +785,11 @@ void ItemUseOutOfBattle_Repel(u8 taskId)
     {
         VarSet(VAR_REPEL_STEP_COUNT, ItemId_GetHoldEffectParam(gSpecialVar_ItemId));
         PrepareItemUseMessage();
-        DisplayItemMessageOnField(taskId, gStringVar4, CleanUpItemMenuMessage, 1);
+        DisplayItemMessageOnField(taskId, gStringVar4, CloseItemMessage, 1);
     }
     else
     {
-        DisplayItemMessageOnField(taskId, gOtherText_RepelLingers, CleanUpItemMenuMessage, 1);
+        DisplayItemMessageOnField(taskId, gOtherText_RepelLingers, CloseItemMessage, 1);
     }
 }
 
@@ -804,7 +804,7 @@ static void PlayBlackWhiteFluteSound(u8 taskId)
     if(++gTasks[taskId].data[15] > 7)
     {
         PlaySE(SE_GLASS_FLUTE);
-        DisplayItemMessageOnField(taskId, gStringVar4, CleanUpItemMenuMessage, 1);
+        DisplayItemMessageOnField(taskId, gStringVar4, CloseItemMessage, 1);
     }
 }
 
@@ -882,7 +882,7 @@ void ItemUseInBattle_PokeBall(u8 taskId)
     else
     {
         Menu_EraseWindowRect(0, 13, 13, 20);
-        DisplayItemMessageOnField(taskId, gOtherText_BoxIsFull, CleanUpItemMenuMessage, 1);
+        DisplayItemMessageOnField(taskId, gOtherText_BoxIsFull, CloseItemMessage, 1);
     }
 }
 
@@ -910,7 +910,7 @@ void ItemUseInBattle_StatIncrease(u8 taskId)
 
     if (ExecuteTableBasedItemEffect(&gPlayerParty[partyId], gSpecialVar_ItemId, partyId, 0) != FALSE)
     {
-        DisplayItemMessageOnField(taskId, gText_WontHaveEffect, CleanUpItemMenuMessage, 1);
+        DisplayItemMessageOnField(taskId, gText_WontHaveEffect, CloseItemMessage, 1);
     }
     else
     {
@@ -966,7 +966,7 @@ void unref_sub_80CA448(u8 var)
     }
     else
     {
-        DisplayItemMessageOnField(var, gText_WontHaveEffect, CleanUpItemMenuMessage, 1);
+        DisplayItemMessageOnField(var, gText_WontHaveEffect, CloseItemMessage, 1);
     }
 }
 

@@ -175,8 +175,8 @@ static void Task_HandleShopMenuBuy(u8 taskId)
 
 static void Task_HandleShopMenuSell(u8 taskId)
 {
-    gTasks[taskId].data[8] = (u32)ItemMenu_LoadSellMenu >> 16;
-    gTasks[taskId].data[9] = (u32)ItemMenu_LoadSellMenu;
+    gTasks[taskId].data[8] = (u32)CB2_GoToSellMenu >> 16;
+    gTasks[taskId].data[9] = (u32)CB2_GoToSellMenu;
     gTasks[taskId].func = Shop_FadeAndRunBuySellCallback;
     FadeScreen(1, 0);
 }

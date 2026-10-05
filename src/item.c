@@ -28,7 +28,7 @@ struct Item
 };
 
 extern u8 gCurSelectedItemSlotIndex;
-extern struct BagPocket gBagPockets[NUM_BAG_POCKETS];
+extern struct BagPocket gBagPockets[POCKETS_COUNT];
 
 #if ENGLISH
 #include "data/item_descriptions_en.h"

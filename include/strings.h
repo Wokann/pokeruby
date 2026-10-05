@@ -164,13 +164,13 @@ extern const u8 gText_DifferentSaveFile[];
 extern const u8 gText_SaveError[];
 extern const u8 gOtherText_FlyToWhere[];
 
-extern const u8 OtherText_Use[];
-extern const u8 OtherText_Toss[];
-extern const u8 OtherText_Register[];
+extern const u8 gMenuText_Use[];
+extern const u8 gMenuText_Toss[];
+extern const u8 gMenuText_Register[];
 extern const u8 gMenuText_Give[];
-extern const u8 OtherText_CheckTag[];
-extern const u8 OtherText_Confirm[];
-extern const u8 gOtherText_Walk[];
+extern const u8 gMenuText_CheckTag[];
+extern const u8 gMenuText_Confirm[];
+extern const u8 gMenuText_Walk[];
 
 extern const u8 gOtherText_Exit[];
 extern const u8 gText_Cancel2[];
@@ -181,7 +181,7 @@ extern const u8 gText_Mail[];
 extern const u8 gText_Take[];
 extern const u8 OtherText_Store[];
 
-extern const u8 gOtherText_Check[];
+extern const u8 gMenuText_Check[];
 extern const u8 gOtherText_None[];
 
 extern const u8 gOtherText_ThreeQuestions2[];
@@ -202,33 +202,33 @@ extern const u8 gOtherText_WhatWillYouDo[];
 extern const u8 gOtherText_xString1[];
 extern const u8 gOtherText_Berry2[];
 extern const u8 gOtherText_Coins2[];
-extern const u8 gOtherText_CloseBag[];
+extern const u8 gText_CloseBag[];
 
-extern const u8 OtherText_TheField3[];
-extern const u8 OtherText_TheBattle[];
-extern const u8 OtherText_ThePokeList[];
-extern const u8 OtherText_TheShop[];
+extern const u8 gText_TheField[];
+extern const u8 gText_TheBattle[];
+extern const u8 gText_ThePokemonList[];
+extern const u8 gText_TheShop[];
 extern const u8 OtherText_TheField[];
 extern const u8 OtherText_TheField2[];
-extern const u8 OtherText_ThePC[];
+extern const u8 gText_ThePC[];
 
-extern const u8 *const gUnknown_0840E740[7];
+extern const u8 *const gBagMenu_ReturnToStrings[7];
 
 extern const u8 gOtherText_ReturnTo[];
 extern const u8 gOtherText_WhatWillYouDo2[];
-extern const u8 gOtherText_CantWriteMail[];
-extern const u8 gOtherText_NoPokemon[];
+extern const u8 gText_CantWriteMail[];
+extern const u8 gText_NoPokemon[];
 extern const u8 gOtherText_SwitchWhichItem[];
-extern const u8 gOtherText_CantBeHeld[];
-extern const u8 gOtherText_CantBeHeldHere[];
+extern const u8 gText_Var1CantBeHeld[];
+extern const u8 gText_Var1CantBeHeldHere[];
 extern const u8 gOtherText_HowManyToDeposit[];
-extern const u8 gOtherText_DepositedItems[];
-extern const u8 gOtherText_NoRoomForItems[];
+extern const u8 gText_DepositedVar2Var1s[];
+extern const u8 gText_NoRoomForItems[];
 extern const u8 gOtherText_CantStoreSomeoneItem[];
 extern const u8 gOtherText_TooImportant[];
 extern const u8 gOtherText_HowManyToToss[];
-extern const u8 gOtherText_ThrewAwayItem[];
-extern const u8 gOtherText_OkayToThrowAwayPrompt[];
+extern const u8 gText_ThrewAwayVar2Var1s[];
+extern const u8 gText_ConfirmTossItems[];
 extern const u8 gOtherText_DadsAdvice[];
 extern const u8 gOtherText_CantGetOffBike[];
 extern const u8 gOtherText_ItemfinderResponding[];

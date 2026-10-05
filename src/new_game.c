@@ -1,4 +1,5 @@
 #include "global.h"
+#include "item.h"
 #include "new_game.h"
 #include "battle_records.h"
 #include "berry.h"

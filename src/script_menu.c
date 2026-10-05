@@ -63,7 +63,7 @@ const struct MenuAction MultichoiceList_05[] =
 
 const struct MenuAction MultichoiceList_07[] =
 {
-    {OtherText_Register, NULL},
+    {gMenuText_Register, NULL},
     {OtherText_Registry, NULL},
     {OtherText_Information, NULL},
     {gText_Cancel2, NULL},

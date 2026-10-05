@@ -26,7 +26,6 @@ extern u8 sub_806BD58(u8, u8);
 extern void PartyMenuPrintMonsLevelOrStatus(void);
 extern void nullsub_13(void);
 extern void CB2_SetUpReshowBattleScreenAfterMenu(void);
-extern void sub_80A6DCC(void);
 extern u8 *sub_8040D08();
 
 extern u8 gPlayerPartyCount;
@@ -540,7 +539,7 @@ static void Task_8095330(u8 taskId)
     {
         UpdatePartyToFieldOrder();
         DestroyTask(taskId);
-        sub_80A6DCC();
+        CB2_BagMenuFromBattle();
     }
 }
 

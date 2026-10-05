@@ -152,13 +152,13 @@ const u8 gOtherText_Poke[] = _("POKéMON");
 const u8 gText_SaveError[] = _("Save error.\pPlease exchange the\nbackup memory.");
 const u8 gOtherText_FlyToWhere[] = _("FLY to where?");
 
-const u8 OtherText_Use[] = _("USE");
-const u8 OtherText_Toss[] = _("TOSS");
-const u8 OtherText_Register[] = _("REGISTER");
+const u8 gMenuText_Use[] = _("USE");
+const u8 gMenuText_Toss[] = _("TOSS");
+const u8 gMenuText_Register[] = _("REGISTER");
 const u8 gMenuText_Give[] = _("GIVE");
-const u8 OtherText_CheckTag[] = _("CHECK TAG");
-const u8 OtherText_Confirm[] = _("CONFIRM");
-const u8 gOtherText_Walk[] = _("WALK");
+const u8 gMenuText_CheckTag[] = _("CHECK TAG");
+const u8 gMenuText_Confirm[] = _("CONFIRM");
+const u8 gMenuText_Walk[] = _("WALK");
 
 const u8 gOtherText_Exit[] = _("EXIT");
 const u8 gText_Cancel2[] = _("CANCEL");
@@ -169,7 +169,7 @@ const u8 gText_Mail[] = _("MAIL");
 const u8 gText_Take[] = _("TAKE");
 const u8 OtherText_Store[] = _("STORE");
 
-const u8 gOtherText_Check[] = _("CHECK");
+const u8 gMenuText_Check[] = _("CHECK");
 const u8 gOtherText_None[] = _("NONE");
 
 const u8 gOtherText_ThreeQuestions2[] = _("???");
@@ -190,42 +190,42 @@ const u8 gOtherText_WhatWillYouDo[] = _("What would you like to do?");
 const u8 gOtherText_xString1[] = _("×{STR_VAR_1}");
 const u8 gOtherText_Berry2[] = _(" BERRY");
 const u8 gOtherText_Coins2[] = _("{STR_VAR_1} COINS");
-const u8 gOtherText_CloseBag[] = _("CLOSE BAG");
+const u8 gText_CloseBag[] = _("CLOSE BAG");
 
-const u8 OtherText_TheField3[] = _("the field.");
-const u8 OtherText_TheBattle[] = _("the battle.");
-const u8 OtherText_ThePokeList[] = _("the POKéMON LIST.");
-const u8 OtherText_TheShop[] = _("the shop.");
+const u8 gText_TheField[] = _("the field.");
+const u8 gText_TheBattle[] = _("the battle.");
+const u8 gText_ThePokemonList[] = _("the POKéMON LIST.");
+const u8 gText_TheShop[] = _("the shop.");
 const u8 OtherText_TheField[] = _("the field.");
 const u8 OtherText_TheField2[] = _("the field.");
-const u8 OtherText_ThePC[] = _("the PC.");
+const u8 gText_ThePC[] = _("the PC.");
 
-const u8 *const gUnknown_0840E740[7] =
+const u8 *const gBagMenu_ReturnToStrings[7] =
 {
-    OtherText_TheField3,
-    OtherText_TheBattle,
-    OtherText_ThePokeList,
-    OtherText_TheShop,
+    gText_TheField,
+    gText_TheBattle,
+    gText_ThePokemonList,
+    gText_TheShop,
     OtherText_TheField,
     OtherText_TheField2,
-    OtherText_ThePC,
+    gText_ThePC,
 };
 
 const u8 gOtherText_ReturnTo[] = _("Return to");
 const u8 gOtherText_WhatWillYouDo2[] = _("What would you\nlike to do?");
-const u8 gOtherText_CantWriteMail[] = _("You can't write\nMAIL here.");
-const u8 gOtherText_NoPokemon[] = _("There is no\nPOKéMON.{PAUSE_UNTIL_PRESS}");
+const u8 gText_CantWriteMail[] = _("You can't write\nMAIL here.");
+const u8 gText_NoPokemon[] = _("There is no\nPOKéMON.{PAUSE_UNTIL_PRESS}");
 const u8 gOtherText_SwitchWhichItem[] = _("Switch with which\nitem?");
-const u8 gOtherText_CantBeHeld[] = _("{STR_VAR_1} can't be held.");
-const u8 gOtherText_CantBeHeldHere[] = _("{STR_VAR_1} can't be held here.");
+const u8 gText_Var1CantBeHeld[] = _("{STR_VAR_1} can't be held.");
+const u8 gText_Var1CantBeHeldHere[] = _("{STR_VAR_1} can't be held here.");
 const u8 gOtherText_HowManyToDeposit[] = _("How many do you\nwant to deposit?");
-const u8 gOtherText_DepositedItems[] = _("Deposited {STR_VAR_2}\n{STR_VAR_1}(s).");
-const u8 gOtherText_NoRoomForItems[] = _("There's no room to\nstore items.");
+const u8 gText_DepositedVar2Var1s[] = _("Deposited {STR_VAR_2}\n{STR_VAR_1}(s).");
+const u8 gText_NoRoomForItems[] = _("There's no room to\nstore items.");
 const u8 gOtherText_CantStoreSomeoneItem[] = _("You can't store\nsomeone else's item\nin the PC.");
 const u8 gOtherText_TooImportant[] = _("That's much too\nimportant to toss\nout!");
 const u8 gOtherText_HowManyToToss[] = _("Toss out how many?");
-const u8 gOtherText_ThrewAwayItem[] = _("Threw away {STR_VAR_2}\n{STR_VAR_1}(s).");
-const u8 gOtherText_OkayToThrowAwayPrompt[] = _("Is it okay to\nthrow away {STR_VAR_2}\n{STR_VAR_1}(s)?");
+const u8 gText_ThrewAwayVar2Var1s[] = _("Threw away {STR_VAR_2}\n{STR_VAR_1}(s).");
+const u8 gText_ConfirmTossItems[] = _("Is it okay to\nthrow away {STR_VAR_2}\n{STR_VAR_1}(s)?");
 const u8 gOtherText_DadsAdvice[] = _("DAD's advice...\n{PLAYER}, there's a time and place for\leverything!{PAUSE_UNTIL_PRESS}");
 const u8 gOtherText_CantGetOffBike[] = _("You can't dismount your BIKE here.{PAUSE_UNTIL_PRESS}");
 const u8 gOtherText_ItemfinderResponding[] = _("Oh!\nThe machine's responding!\pThere's an item buried around here!{PAUSE_UNTIL_PRESS}");
@@ -1080,13 +1080,13 @@ const u8 gOtherText_Poke[] = _("POKéMON");
 const u8 gText_SaveError[] = _("Fehler beim Speichern!\pBitte Backup Memory\naustauschen.");
 const u8 gOtherText_FlyToWhere[] = _("Wohin willst du FLIEGEN?");
 
-const u8 OtherText_Use[] = _("O.K.");
-const u8 OtherText_Toss[] = _("MÜLL");
-const u8 OtherText_Register[] = _("WÄHLEN");
+const u8 gMenuText_Use[] = _("O.K.");
+const u8 gMenuText_Toss[] = _("MÜLL");
+const u8 gMenuText_Register[] = _("WÄHLEN");
 const u8 gMenuText_Give[] = _("GEBEN");
-const u8 OtherText_CheckTag[] = _("PRÜFEN");
-const u8 OtherText_Confirm[] = _("O.K.");
-const u8 gOtherText_Walk[] = _("LAUFEN");
+const u8 gMenuText_CheckTag[] = _("PRÜFEN");
+const u8 gMenuText_Confirm[] = _("O.K.");
+const u8 gMenuText_Walk[] = _("LAUFEN");
 
 const u8 gOtherText_Exit[] = _("BEENDEN");
 const u8 gText_Cancel2[] = _("ZURÜCK");
@@ -1097,7 +1097,7 @@ const u8 gText_Mail[] = _("BRIEF");
 const u8 gText_Take[] = _("NEHMEN");
 const u8 OtherText_Store[] = _("GEBEN");
 
-const u8 gOtherText_Check[] = _("PRÜFEN");
+const u8 gMenuText_Check[] = _("PRÜFEN");
 const u8 gOtherText_None[] = _("KEINES");
 
 const u8 gOtherText_ThreeQuestions2[] = _("???");
@@ -1118,42 +1118,42 @@ const u8 gOtherText_WhatWillYouDo[] = _("Was möchtest du tun?");
 const u8 gOtherText_xString1[] = _("×{STR_VAR_1}");
 const u8 gOtherText_Berry2[] = _("BEERE");
 const u8 gOtherText_Coins2[] = _("{STR_VAR_1} MÜNZ.");
-const u8 gOtherText_CloseBag[] = _("BEUTEL SCHLIESSEN");
+const u8 gText_CloseBag[] = _("BEUTEL SCHLIESSEN");
 
-const u8 OtherText_TheField3[] = _("zum Hauptmenü.");
-const u8 OtherText_TheBattle[] = _("zum Kampf.");
-const u8 OtherText_ThePokeList[] = _("zur POKéMON-LISTE.");
-const u8 OtherText_TheShop[] = _("zum Geschäft.");
+const u8 gText_TheField[] = _("zum Hauptmenü.");
+const u8 gText_TheBattle[] = _("zum Kampf.");
+const u8 gText_ThePokemonList[] = _("zur POKéMON-LISTE.");
+const u8 gText_TheShop[] = _("zum Geschäft.");
 const u8 OtherText_TheField[] = _("zum Hauptmenü.");
 const u8 OtherText_TheField2[] = _("zum Hauptmenü.");
-const u8 OtherText_ThePC[] = _("zum PC.");
+const u8 gText_ThePC[] = _("zum PC.");
 
-const u8 *const gUnknown_0840E740[7] =
+const u8 *const gBagMenu_ReturnToStrings[7] =
 {
-    OtherText_TheField3,
-    OtherText_TheBattle,
-    OtherText_ThePokeList,
-    OtherText_TheShop,
+    gText_TheField,
+    gText_TheBattle,
+    gText_ThePokemonList,
+    gText_TheShop,
     OtherText_TheField,
     OtherText_TheField2,
-    OtherText_ThePC,
+    gText_ThePC,
 };
 
 const u8 gOtherText_ReturnTo[] = _("Zurück ");
 const u8 gOtherText_WhatWillYouDo2[] = _("Was möchtest\ndu tun?");
-const u8 gOtherText_CantWriteMail[] = _("Du kannst keinen\nBRIEF schreiben.");
-const u8 gOtherText_NoPokemon[] = _("Hier ist kein\nPOKéMON.{PAUSE_UNTIL_PRESS}");
+const u8 gText_CantWriteMail[] = _("Du kannst keinen\nBRIEF schreiben.");
+const u8 gText_NoPokemon[] = _("Hier ist kein\nPOKéMON.{PAUSE_UNTIL_PRESS}");
 const u8 gOtherText_SwitchWhichItem[] = _("Gegen welches Item\naustauschen?");
-const u8 gOtherText_CantBeHeld[] = _("{STR_VAR_1} ist nicht zu geben.");
-const u8 gOtherText_CantBeHeldHere[] = _("{STR_VAR_1} ist hier nicht zu geben.");
+const u8 gText_Var1CantBeHeld[] = _("{STR_VAR_1} ist nicht zu geben.");
+const u8 gText_Var1CantBeHeldHere[] = _("{STR_VAR_1} ist hier nicht zu geben.");
 const u8 gOtherText_HowManyToDeposit[] = _("Wie viele möchtest\ndu ablegen?");
-const u8 gOtherText_DepositedItems[] = _("{STR_VAR_2}× {STR_VAR_1}\nwurde abgelegt.");
-const u8 gOtherText_NoRoomForItems[] = _("Kein Platz für\nweitere Items.");
+const u8 gText_DepositedVar2Var1s[] = _("{STR_VAR_2}× {STR_VAR_1}\nwurde abgelegt.");
+const u8 gText_NoRoomForItems[] = _("Kein Platz für\nweitere Items.");
 const u8 gOtherText_CantStoreSomeoneItem[] = _("Du kannst kein\nItem eines anderen\nauf dem PC lagern.");
 const u8 gOtherText_TooImportant[] = _("Das ist viel zu\nwichtig, um es\nwegzuwerfen!");
 const u8 gOtherText_HowManyToToss[] = _("Wie viel in den Müll?");
-const u8 gOtherText_ThrewAwayItem[] = _("{STR_VAR_2} × {STR_VAR_1}\nweggeworfen.");
-const u8 gOtherText_OkayToThrowAwayPrompt[] = _("Willst du wirklich\n{STR_VAR_2} × {STR_VAR_1}\nwegwerfen?");
+const u8 gText_ThrewAwayVar2Var1s[] = _("{STR_VAR_2} × {STR_VAR_1}\nweggeworfen.");
+const u8 gText_ConfirmTossItems[] = _("Willst du wirklich\n{STR_VAR_2} × {STR_VAR_1}\nwegwerfen?");
 const u8 gOtherText_DadsAdvice[] = _("VATI sagt immer...\n{PLAYER}, dies ist weder der rechte\lOrt noch der rechte Zeitpunkt dafür!{PAUSE_UNTIL_PRESS}");
 const u8 gOtherText_CantGetOffBike[] = _("Du kannst hier nicht vom RAD steigen.{PAUSE_UNTIL_PRESS}");
 const u8 gOtherText_ItemfinderResponding[] = _("Oh!\nDas Gerät zeigt etwas an!\pHier muss ein Item vergraben sein!{PAUSE_UNTIL_PRESS}");

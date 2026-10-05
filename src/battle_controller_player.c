@@ -1,4 +1,5 @@
 #include "global.h"
+#include "item_menu.h"
 #include "dma3.h"
 #include "reshow_battle_screen.h"
 #include "battle.h"
@@ -109,7 +110,6 @@ extern struct MusicPlayerInfo gMPlayInfo_BGM;
 extern u8 gBattleControllerData[];
 extern u8 gUnknown_0202E8F4;
 extern u8 gSelectedMonPartyId;
-extern u16 gSpecialVar_ItemId;
 extern u8 gDisplayedStringBattle[];
 extern const u8 BattleText_LinkStandby[];
 
@@ -119,7 +119,6 @@ extern u8 GetBattlerAtPosition(u8);
 extern void EndBounceEffect(u8, u8);
 extern void SpriteCB_HideAsMoveTarget(struct Sprite *);
 extern bool8 IsDoubleBattle();
-extern void sub_80A6DCC(void);
 
 static void PlayerHandleGetMonData(void);
 static void PlayerHandleSetMonData(void);
@@ -1542,7 +1541,7 @@ static void OpenBagAndChooseItem(void)
     {
         gBattlerControllerFuncs[gActiveBattler] = CompleteWhenChoseItem;
         ReshowBattleScreenDummy();
-        sub_80A6DCC();
+        CB2_BagMenuFromBattle();
     }
 }
 
