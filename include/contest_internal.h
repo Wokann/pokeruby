@@ -1,55 +1,9 @@
 #ifndef GUARD_CONTEST_INTERNAL_H
 #define GUARD_CONTEST_INTERNAL_H
 
-void InitContestResources(void);
-void Task_StartContestWaitFade(u8 taskId);
-void Task_TryStartLinkContest(u8 taskId);
-void Task_CommunicateMonIdxs(u8 taskId);
-void Task_EndCommunicateMonIdxs(u8 taskId);
-void Task_ReadyStartLinkContest(u8 taskId);
-u8 SetupContestGraphics(u8 *a);
-void Task_WaitToRaiseCurtainAtStart(u8 taskId);
-void Task_RaiseCurtainAtStart(u8 taskId);
-void ContestMainCallback2(void);
-void ContestVBlankCallback(void);
-void Task_DisplayAppealNumberText(u8 taskId);
 void sub_80ABC3C(u8);
-void Task_TryShowMoveSelectScreen(u8 taskId);
-void Task_ShowMoveSelectScreen(u8 taskId);
-void Task_HandleMoveSelectInput(u8 taskId);
-void DrawMoveSelectArrow(s8 a);
-void EraseMoveSelectArrow(s8 a); // nullsub
-void Task_SelectedMove(u8 taskId);
-void Task_EndCommunicateMoveSelections(u8 taskId);
-void Task_HideMoveSelectScreen(u8 taskId);
-void Task_HideApplauseMeterForAppealStart(u8 taskId);
-void Task_WaitHideApplauseMeterForAppealStart(u8 taskId);
-void Task_AppealSetup(u8 taskId);
-void Task_DoAppeals(u8 taskId);
 void Task_EndWaitForLink(u8 taskId);
-void SpriteCB_MonSlideIn(struct Sprite *sprite);
-void SpriteCB_MonSlideOut(struct Sprite *sprite);
-void Task_FinishRoundOfAppeals(u8 taskId);
-void Task_ReadyUpdateHeartSliders(u8 taskId);
-void Task_UpdateHeartSliders(u8 taskId);
-void Task_WaitForHeartSliders(u8 taskId);
-void sub_80ADB04(u8 taskId);
-void Task_WaitBeforePrintRoundResult(u8 taskId);
-void Task_PrintRoundResultText(u8 taskId);
 void Task_WaitPrintRoundResultText(u8 taskId);
-void Task_ReUpdateHeartSliders(u8 taskId);
-void Task_WaitForHeartSlidersAgain(u8 taskId);
-void Task_DropCurtainAtRoundEnd(u8 taskId);
-void Task_TryStartNextRoundOfAppeals(u8 taskId);
-void Task_StartNewRoundOfAppeals(u8 taskId);
-void Task_EndAppeals(u8 taskId);
-void Task_WaitForOutOfTimeMsg(u8 taskId);
-void Task_DropCurtainAtAppealsEnd(u8 taskId);
-void Task_TryCommunicateFinalStandings(u8 taskId);
-void Task_CommunicateFinalStandings(u8 taskId);
-void Task_EndCommunicateFinalStandings(u8 taskId);
-void Task_ContestReturnToField(u8 taskId);
-void FieldCB_ContestReturnToField(void);
 void InsertStringDigit(u8 *, s32);
 bool8 IsPlayerLinkLeader(void);
 void __copy_tilemap(void *);

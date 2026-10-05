@@ -1,4 +1,5 @@
 #include "global.h"
+#include "contest.h"
 #include "text.h"
 #include "battle.h"
 #include "io_reg.h"
@@ -197,7 +198,6 @@ EWRAM_DATA u8 gStringVar3[0x100] = {0};
 EWRAM_DATA u8 gStringVar4[0x100] = {0};
 
 extern u16 gBattleTypeFlags;
-extern u8 gIsLinkContest;
 extern u8 gTileBuffer[];
 
 vu16 *const gBGControlRegs[] =
@@ -2968,7 +2968,7 @@ static bool8 PlayerCanInterruptDelay(struct Window *win)
         retVal = FALSE;
         break;
     case WAIT_TYPE_CONTEST:
-        retVal = gIsLinkContest ? FALSE : TRUE;
+        retVal = gLinkContestFlags ? FALSE : TRUE;
         break;
     case WAIT_TYPE_BATTLE:
         retVal = (gBattleTypeFlags & BATTLE_TYPE_LINK) ? FALSE : TRUE;

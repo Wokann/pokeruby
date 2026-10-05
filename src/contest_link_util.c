@@ -288,7 +288,7 @@ void sub_80C226C(u8 a0)
     strbuf[2] = 0x32;
     strbuf += 3;
     strbuf = StringCopy(strbuf, gUnknown_083D17E0);
-    if (gIsLinkContest & 1)
+    if (gLinkContestFlags & 1)
         StringCopy(strbuf, gLinkPlayers[a0].name);
     else
         StringCopy(strbuf, gContestMons[a0].trainerName);
@@ -364,7 +364,7 @@ static void sub_80C24F4(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        if (gIsLinkContest & 1)
+        if (gLinkContestFlags & 1)
         {
             sub_80C3698(gOtherText_LinkStandby);
             gTasks[taskId].func = sub_80C255C;
@@ -569,7 +569,7 @@ static void sub_80C2878(u8 taskId)
             {
                 gTasks[taskId].data[1] = 0;
                 GET_CONTEST_WINNER(i);
-                if (gIsLinkContest & 1)
+                if (gLinkContestFlags & 1)
                 {
                     StringCopy(gStringVar1, gLinkPlayers[i].name);
                 }
@@ -685,7 +685,7 @@ static void sub_80C2D1C(u8 taskId)
 
     if (JOY_NEW(A_BUTTON))
     {
-        if (!(gIsLinkContest & 1))
+        if (!(gLinkContestFlags & 1))
         {
             for (i = 0; i < 4; i++)
             {
@@ -698,7 +698,7 @@ static void sub_80C2D1C(u8 taskId)
 
 static void sub_80C2D80(u8 taskId)
 {
-    if (gIsLinkContest & 1)
+    if (gLinkContestFlags & 1)
     {
         sub_80C3698(gOtherText_LinkStandby);
         SetCloseLinkCallback();
@@ -714,7 +714,7 @@ static void sub_80C2DD8(u8 taskId)
 {
     if (gReceivedRemoteLinkPlayers == 0)
     {
-        gIsLinkContest = 0;
+        gLinkContestFlags = 0;
         sub_80C3764();
         gTasks[taskId].func = sub_80C2E14;
     }
@@ -1412,7 +1412,7 @@ void sub_80C3764(void)
 static inline s32 de_sub_80C39A8(s32 a0)
 {
     s32 result = 0;
-    if (gIsLinkContest & 0x1)
+    if (gLinkContestFlags & 0x1)
     {
         sub_809D104((void *)(VRAM + 0xE000), a0, 1, gUnknown_08E964B8, 9, 2, 8, 2);
         result = 8;
@@ -1495,7 +1495,7 @@ void sub_80C37E4(void)
                 "\tsub sp, 0x10\n"
                 "\tmovs r5, 0x1\n"
                 "\tmovs r4, 0\n"
-                "\tldr r0, _080C3808 @ =gIsLinkContest\n"
+                "\tldr r0, _080C3808 @ =gLinkContestFlags\n"
                 "\tldrb r0, [r0]\n"
                 "\tadds r1, r5, 0\n"
                 "\tands r1, r0\n"
@@ -1509,7 +1509,7 @@ void sub_80C37E4(void)
                 "\tstr r2, [sp, 0x4]\n"
                 "\tb _080C386A\n"
                 "\t.align 2, 0\n"
-                "_080C3808: .4byte gIsLinkContest\n"
+                "_080C3808: .4byte gLinkContestFlags\n"
                 "_080C380C: .4byte 0x0600e000\n"
                 "_080C3810: .4byte gUnknown_08E964B8\n"
                 "_080C3814:\n"
@@ -1704,7 +1704,7 @@ void sub_80C37E4(void)
 s16 de_sub_80C39A8(s32 a0)
 {
     s16 result;
-    if (gIsLinkContest & 1)
+    if (gLinkContestFlags & 1)
     {
         sub_809D104((void *)(VRAM + 0xE000), a0, 0, gUnknown_08E964B8, 11, 3, 8, 3);
         result = 8;
@@ -2666,7 +2666,7 @@ void Contest_CopyAndConvertTrainerName_Intl(u8 * dest, const u8 * src)
 void Contest_CopyAndConvertNicknameI_Intl(u8 * dest, u8 idx)
 {
     StringCopy(dest, gContestMons[idx].nickname);
-    if (gIsLinkContest & 1)
+    if (gLinkContestFlags & 1)
     {
         if (gLinkPlayers[idx].language == LANGUAGE_JAPANESE)
         {
@@ -2677,7 +2677,7 @@ void Contest_CopyAndConvertNicknameI_Intl(u8 * dest, u8 idx)
 
 void Contest_GetTrainerNameI_StringVar1(void)
 {
-    if (gIsLinkContest & 1)
+    if (gLinkContestFlags & 1)
     {
         Contest_CopyAndConvertTrainerName_Intl(gStringVar1, gLinkPlayers[gSpecialVar_0x8006].name);
     }
@@ -2728,7 +2728,7 @@ void ScrSpecial_GetContestWinnerTrainerName(void)
     for (i = 0; i < 4 && gContestFinalStandings[i] != 0; i++)
         ;
 
-    if (gIsLinkContest & 1)
+    if (gLinkContestFlags & 1)
     {
         Contest_CopyAndConvertTrainerName_Intl(gStringVar3, gLinkPlayers[i].name);
     }

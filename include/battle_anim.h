@@ -56,17 +56,6 @@ struct BattleAnimBackground
     void *tilemap;
 };
 
-struct ContestMoveAnim
-{
-    u16 species;
-    u16 targetSpecies;
-    bool8 hasTargetAnim:1;
-    u8 contestant;
-    u32 personality;
-    u32 otId;
-    u32 targetPersonality;
-};
-
 extern void (*gAnimScriptCallback)(void);
 extern u8 gAnimScriptActive;
 extern u8 gAnimFriendship;

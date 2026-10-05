@@ -66,7 +66,7 @@ static void sub_80C8660(u8 taskId)
         gContestPlayerMonIndex = GetMultiplayerId();
         if (GetLinkPlayerCount() == MAX_LINK_PLAYERS)
         {
-            gIsLinkContest = TRUE;
+            gLinkContestFlags = TRUE;
             SwitchTaskToFollowupFunc(taskId);
         }
     }
@@ -344,7 +344,7 @@ void sub_80C8A38(u8 taskId)
         case 0:
             if (IsLinkTaskFinished())
             {
-                SendBlockToAllOpponents(&sContestantStatus[gContestPlayerMonIndex].currMove, sizeof(u16));
+                SendBlockToAllOpponents(&eContestantStatus[gContestPlayerMonIndex].currMove, sizeof(u16));
                 gTasks[taskId].data[0]++;
             }
             break;
@@ -353,7 +353,7 @@ void sub_80C8A38(u8 taskId)
             {
                 for (i = 0; i < MAX_LINK_PLAYERS; i++)
                 {
-                    *&sContestantStatus[i].currMove = gBlockRecvBuffer[i][0];
+                    *&eContestantStatus[i].currMove = gBlockRecvBuffer[i][0];
                 }
                 gTasks[taskId].data[0]++;
             }
@@ -446,14 +446,14 @@ void Task_LinkContest_CommunicateAppealsState(u8 taskId)
         case 0:
             if (IsLinkTaskFinished())
             {
-                SendBlockToAllOpponents(sContestantStatus, 4 * sizeof(struct ContestantStatus));
+                SendBlockToAllOpponents(eContestantStatus, 4 * sizeof(struct ContestantStatus));
                 gTasks[taskId].data[0]++;
             }
             break;
         case 1:
             if (HaveAllPlayersReceivedBlock())
             {
-                memcpy(sContestantStatus, gBlockRecvBuffer[gContestLinkLeaderIndex], 4 * sizeof(struct ContestantStatus));
+                memcpy(eContestantStatus, gBlockRecvBuffer[gContestLinkLeaderIndex], 4 * sizeof(struct ContestantStatus));
                 gTasks[taskId].data[0]++;
             }
             break;

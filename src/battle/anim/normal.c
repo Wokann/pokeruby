@@ -1,4 +1,5 @@
 #include "global.h"
+#include "contest.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "util.h"

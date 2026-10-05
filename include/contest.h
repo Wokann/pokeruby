@@ -315,6 +315,17 @@ struct ContestTempSave
     /*0x18A04*/ u8 savedJunk[0x800];
 };
 
+struct ContestMoveAnimData
+{
+    u16 species;
+    u16 targetSpecies;
+    bool8 hasTargetAnim:1;
+    u8 contestant;
+    u32 personality;
+    u32 otId;
+    u32 targetPersonality;
+};
+
 struct Contest
 {
     /*0x19204*/ u8 playerMoveChoice;
@@ -398,7 +409,7 @@ struct ContestantStatus
  /*0x1B*/ u8 contestantAnimTarget;
 };
 
-struct ContestGfxState
+struct ContestGraphicsState
 {
     u8 sliderHeartSpriteId;
     u8 nextTurnSpriteId;
@@ -410,8 +421,8 @@ struct ContestGfxState
 struct ContestExcitement
 {
     s8 moveExcitement;
-    bool8 excitementFrozen:1;
-    u8 excitementFreezer:3;
+    bool8 frozen:1;
+    u8 freezer:3;
     s8 excitementAppealBonus;
 };
 
@@ -434,7 +445,7 @@ struct ContestFinalStandings
 };
 
 extern u8 gContestPlayerMonIndex;
-extern u8 gIsLinkContest;
+extern u8 gLinkContestFlags;
 extern u32 gContestRngValue;
 extern u8 gContestantTurnOrder[4];
 extern s16 gContestMonRound1Points[4];
@@ -454,5 +465,16 @@ void MakeContestantNervous(u8 p);
 bool8 Contest_IsMonsTurnDisabled(u8 a);
 bool8 IsContestantAllowedToCombo(u8 contestant);
 void SetStartledString(u8 a, u8 b);
+
+// Ruby keeps its fixed shared-memory views instead of heap resources.
+#define eContest                        (*(struct Contest *)(gSharedMem + 0x19204))
+#define eContestantStatus               ((struct ContestantStatus *)(gSharedMem + 0x19260))
+#define eContestAppealResults           (*(struct ContestAppealMoveResults *)(gSharedMem + 0x192D0))
+#define eContestAI                      ((struct ContestAIInfo *)(gSharedMem + 0x192E4))
+#define eContestExcitement              (*(struct ContestExcitement *)(gSharedMem + 0x19328))
+#define eContestGfxState                ((struct ContestGraphicsState *)(gSharedMem + 0x19338))
+#define eUnzippedContestAudience_Gfx    (&gSharedMem[0x15800]) // overlaps other contest vars
+#define eContestDebugMode         (gSharedMem[0x18000])
+#define eContestTempSave                (*(struct ContestTempSave *)(gSharedMem + 0x18004))
 
 #endif // GUARD_CONTEST_H

@@ -108,7 +108,7 @@ static void sub_80A9BE4(u8 taskId)
     {
         DestroyTask(taskId);
 
-        if (!(gIsLinkContest & 1))
+        if (!(gLinkContestFlags & 1))
             CalculateFinalScores();
 
         sub_80C2358();
@@ -117,7 +117,7 @@ static void sub_80A9BE4(u8 taskId)
 
 u8 MatsudaDebugMenu_Contest(void)
 {
-    gIsLinkContest = 0;
+    gLinkContestFlags = 0;
     sub_80AA10C();
     return 0;
 }
@@ -262,7 +262,7 @@ static void sub_80A9F10(u8 taskId)
         gContestPlayerMonIndex = GetMultiplayerId();
         if (GetLinkPlayerCount() == 4)
         {
-            gIsLinkContest = 1;
+            gLinkContestFlags = 1;
             SwitchTaskToFollowupFunc(taskId);
         }
     }
@@ -858,7 +858,7 @@ void sub_80AACC4(void)
     if (!gPaletteFade.active)
     {
         SetDebugMonForContest();
-        if (!(gIsLinkContest & 1))
+        if (!(gLinkContestFlags & 1))
             CalculateRound1Points(gSharedMem[0]);
         SetMainCallback2(CB2_StartContest);
     }

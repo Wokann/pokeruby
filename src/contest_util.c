@@ -203,7 +203,7 @@ void GetContestantNamesAtRank(void)
     // Use contestant id to get names
     Contest_CopyAndConvertNicknameI_Intl(gStringVar1, i);
 
-    if (gIsLinkContest & 1)
+    if (gLinkContestFlags & 1)
         Contest_CopyAndConvertTrainerName_Intl(gStringVar2, gLinkPlayers[i].name);
     else
         Contest_CopyAndConvertTrainerName_Intl(gStringVar2, gContestMons[i].trainerName);
@@ -351,7 +351,7 @@ void sub_80C5190(u8 taskId)
 
 void ScriptGetMultiplayerId(void)
 {
-    if(gIsLinkContest & 1)
+    if(gLinkContestFlags & 1)
         gSpecialVar_Result = GetMultiplayerId();
     else
         gSpecialVar_Result = 4;
@@ -362,7 +362,7 @@ void ScriptRandom(void)
     u16 random;
     u16 *scriptPtr;
 
-    if(gIsLinkContest & 1)
+    if(gLinkContestFlags & 1)
     {
         gContestRngValue = 1103515245 * gContestRngValue + 24691;
         random = gContestRngValue >> 16;

@@ -52,20 +52,11 @@ extern u8 gSharedMem[];
 
 // Contest
 #define eBattleAnimPalBackup_Contest    ((u16 *)(gSharedMem + 0x14800))
-#define eUnzippedContestAudience_Gfx    (&gSharedMem[0x15800]) // overlaps other contest vars
 #define eCurContestWinnerSaveIdx        (gSharedMem[0x15DDE])
 #define eCurContestWinnerIsForArtist    (gSharedMem[0x15DDF])
 #define eCurContestWinner               ((*(struct ContestWinner*)(gSharedMem + 0x15DE0)))
 #define eContestPaintingBuffers         ((*(struct ContestPaintingBuffers*)(gSharedMem + 0x15E00)))
-#define eEnableContestDebugging         (gSharedMem[0x18000])
-#define eContestTempSave                (*(struct ContestTempSave *)(gSharedMem + 0x18004))
-#define sContest                        (*(struct Contest *)(gSharedMem + 0x19204))
-#define sContestantStatus               ((struct ContestantStatus *)(gSharedMem + 0x19260))
-#define eContestAppealResults           (*(struct ContestAppealMoveResults *)(gSharedMem + 0x192D0))
-#define eContestAI                      ((struct ContestAIInfo *)(gSharedMem + 0x192E4))
-#define eContestExcitement              (*(struct ContestExcitement *)(gSharedMem + 0x19328))
-#define eContestGfxState                ((struct ContestGfxState *)(gSharedMem + 0x19338))
-#define gContestResources__moveAnim     (*(struct ContestMoveAnim *)(gSharedMem + 0x19348))
+#define gContestResources__moveAnim     (*(struct ContestMoveAnimData *)(gSharedMem + 0x19348))
 
 // Non-battle allocations
 #define namingScreenData                (*(struct NamingScreenData *)(gSharedMem + 0x0))

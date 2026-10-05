@@ -33,11 +33,11 @@ extern const u8 gBallGfx_Premier[];
 extern const u8 gBallPal_Premier[];
 extern const u8 gOpenPokeballGfx[];
 
-extern const u8 gContestPalette[];
-extern const u8 gContestGfx[];
-extern const u8 gContestBgmap[];
+extern const u8 gContestInterfaceAudiencePalette[];
+extern const u8 gContestAudienceTilemap[];
+extern const u8 gContestInterfaceTilemap[];
 extern const u8 gUnknown_08D17C3C[];
-extern const u8 gContestMiscGfx[];
+extern const u8 gContestInterfaceGfx[];
 extern const u8 gContestAudienceGfx[];
 extern const u8 gContestJudgeSymbolsGfx[];
 extern const u8 gContest3Pal[];

@@ -330,17 +330,17 @@ const u8 gContestNumbers_UnusedGfx[] = INCBIN_U8("graphics/unused/numbers.4bpp.l
 const u8 gContestNumbers_UnusedPal[] = INCBIN_U8("graphics/unused/numbers.gbapal.lz");
 const u8 unused_old_contest_2_4bpp[] = INCBIN_U8("graphics/unused/old_contest_2.4bpp.lz");
 // the tilemap and palette for unused contest assets are used. however, these two files aren't old
-const u8 gContestPalette[] = INCBIN_U8("graphics/unused/old_contest_2.gbapal.lz");
+const u8 gContestInterfaceAudiencePalette[] = INCBIN_U8("graphics/contest/interface.gbapal.lz");
 
-const u8 gContestGfx[] = INCBIN_U8("graphics/unused/old_contest_2.bin.lz");
+const u8 gContestAudienceTilemap[] = INCBIN_U8("graphics/contest/audience.bin.lz");
 
-const u8 gContestBgmap[] = INCBIN_U8("graphics/unknown/unknown_D17424.bin.lz");
+const u8 gContestInterfaceTilemap[] = INCBIN_U8("graphics/contest/interface.bin.lz");
 const u8 unused_unknown_D176CC[] = INCBIN_U8("graphics/unknown/unknown_D176CC.bin.lz");
 const u8 unused_unknown_D177D8[] = INCBIN_U8("graphics/unknown/unknown_D177D8.bin.lz");
 
 const u8 gUnknown_08D17C3C[] = INCBIN_U8("graphics/unknown/unknown_D17C3C.bin.lz");
 
-const u8 gContestMiscGfx[] = INCBIN_U8("graphics/contest/misc.4bpp.lz");
+const u8 gContestInterfaceGfx[] = INCBIN_U8("graphics/contest/interface.4bpp.lz");
 
 const u8 gContestAudienceGfx[] = INCBIN_U8("graphics/contest/audience.4bpp.lz");
 const u8 unused_gfx_faces_4bpp[] = INCBIN_U8("graphics/contest/faces.4bpp.lz");
