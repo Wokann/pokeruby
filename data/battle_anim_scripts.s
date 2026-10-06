@@ -1422,11 +1422,11 @@ Move_FURY_CUTTER: @ 81C914A
 	monbg ANIM_TARGET
 	setalpha 12, 8
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
-	createvisualtask UpdateFuryCutterAnimDirection, 2
+	createvisualtask AnimTask_IsFuryCutterHitRight, 2
 	jumpargeq 7, 0, _81C91A7
 	goto _81C91B9
 _81C916A:
-	createvisualtask UpdateFuryCutterAnimCount, 2
+	createvisualtask AnimTask_GetFuryCutterHitCount, 2
 	jumpargeq 7, 1, _81C918E
 	jumpargeq 7, 2, _81C91CB
 	jumpargeq 7, 3, _81C91E5
