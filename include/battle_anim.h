@@ -268,6 +268,7 @@ void AnimWeatherBallDown(struct Sprite *sprite);
 
 void LaunchStatusAnimation(u8 battler, u8 statusAnimId);
 void InitStatsChangeAnimation(u8 taskId);
+u32 UnpackSelectedBattlePalettes(s16 selector);
 
 // battle/anim/thought.c
 void SetSpriteNextToMonHead(u8 battler, struct Sprite *sprite);

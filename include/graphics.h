@@ -3488,6 +3488,20 @@ extern const u8 gMetalShineGfx[];
 extern const u8 gMetalShinePalette[];
 extern const u8 gMetalShineTilemap[];
 
+extern const u8 gBattleAnimMaskImage_Curse[];
+extern const u8 gBattleAnimMaskTilemap_Curse[];
+extern const u8 gStatAnim_Gfx[];
+extern const u8 gStatAnim_Increase_Tilemap[];
+extern const u8 gStatAnim_Decrease_Tilemap[];
+extern const u8 gStatAnim_Defense_Pal[];
+extern const u8 gStatAnim_Attack_Pal[];
+extern const u8 gStatAnim_Accuracy_Pal[];
+extern const u8 gStatAnim_Speed_Pal[];
+extern const u8 gStatAnim_Multiple_Pal[];
+extern const u8 gStatAnim_Evasion_Pal[];
+extern const u8 gStatAnim_SpAttack_Pal[];
+extern const u8 gStatAnim_SpDefense_Pal[];
+
 // Pokédex
 extern const u8 gPokedexMenu_Gfx[];
 extern const u8 gPokedexInterface_Gfx[];
