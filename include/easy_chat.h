@@ -14,27 +14,27 @@ struct UnknownEasyChatStruct1
 
 struct Shared1000
 {
-    void (*unk0)(void);  // main cb 2
-    u16 *unk4;
-    u8 unk8;
-    u8 unk9;
-    u8 unkA;  // length of contestant array
-    u8 unkB;  // reporter talked to (Gabby or Ty)
-    u16 unkC[9];
+    void (*exitCallback)(void);  // main cb 2
+    u16 *savedPhrase;
+    u8 type;
+    u8 frameId;
+    u8 maxWords;
+    u8 displayedPersonType;
+    u16 currentPhrase[9];
     void (*unk20)(void);
-    u16 unk24;
-    u8 unk26;
+    u16 funcState;
+    u8 inAlphabetMode;
     u8 unk27;
-    u16 unk28;
-    u8 unk2A[11][2];
+    u16 numUnlockedGroups;
+    u8 unlockedGroupIds[11][2];
     u8 unk40[4][14];
     u8 unk78[5];
     u8 unk7D;
     u8 unk7E[5];
-    s8 unk83;
-    s8 unk84;
-    s8 unk85;
-    s8 unk86;
+    s8 numColumns;
+    s8 numRows;
+    s8 mainCursorColumn;
+    s8 mainCursorRow;
     bool8 unk87;
     u16 unk88;
     u16 unk8A;
@@ -60,8 +60,8 @@ struct Shared1000
     s8 unk1A8;
     s8 unk1A9;
     s8 unk1AA[0xB5-0xAA];
-    s8 unk1B5;
-    s8 unk1B6;
+    s8 keyboardScrollOffset;
+    s8 keyboardLastRow;
     s8 unk1B7;
     u8 unk1B8;
     u8 unk1B9;
@@ -79,15 +79,15 @@ struct Shared1000
 #else
     u16 unkB78[27][255];
 #endif
-    u16 unk4142[(0x78-0x42)/2];  //0x446C
+    u16 numUnlockedAlphabetWords[(0x78-0x42)/2];  //0x446C
     u16 unk4178[(0x41A4-0x4178)/2]; // unknown length
     const u8 *ecWordStrings[0x16][0x100];  //0x44CE in german
     s8 unk99A4;
-    s8 unk99A5;
+    s8 wordSelectColumn;
     s8 unk99A6[130];
     s8 unk9A28;
-    s8 unk9A29;
-    u16 unk9A2A[(0x9C32-0x9A2A)/4][2];  // unknown length
+    s8 wordSelectScrollOffset;
+    u16 selectedGroupWords[(0x9C32-0x9A2A)/4][2];  // unknown length
     u8 unk9C32;
     u8 filler9C33;
     u16 unk9C34[3][9];
@@ -118,7 +118,7 @@ struct Shared1000
 extern struct Shared1000 *const gEasyChatStruct;
 
 void ShowEasyChatScreen(void);
-void sub_80E62A0(u8 arg0, u16 *arg1, void (*arg2)(void), u8 arg3);
+void sub_80E62A0(u8 type, u16 *words, void (*exitCallback)(void), u8 displayedPersonType);
 u16 sub_80EB72C(u16 group);
 void sub_80EB6FC(u16 *, u16);
 void InitEasyChatPhrases(void);

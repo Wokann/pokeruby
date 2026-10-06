@@ -158,15 +158,15 @@ void sub_80E82BC(struct Sprite *sprite)
     {
         if (gEasyChatStruct->unk87)
         {
-            u16 r5 = gEasyChatStruct->unk86;
-            u16 r4 = gEasyChatStruct->unk85;
+            u16 r5 = gEasyChatStruct->mainCursorRow;
+            u16 r4 = gEasyChatStruct->mainCursorColumn;
             u16 r7 = 0;
             u16 i;
 
             for (i = 0; i < r4; i++)
                 r7 += gEasyChatStruct->unk8C[r5][i];
 
-            if (r5 == gEasyChatStruct->unk84)
+            if (r5 == gEasyChatStruct->numRows)
             {
                 sprite->y = 96;
                 sprite->x = (r4 * 7  + 3) * 8 + 4;
@@ -383,7 +383,7 @@ void sub_80E8534(void)
 {
     if (gEasyChatStruct->unk1B7 != 0)
         gUnknown_020388AC = 1;
-    else if (gEasyChatStruct->unk26 == 0)
+    else if (gEasyChatStruct->inAlphabetMode == 0)
         gUnknown_020388AC = 0;
     else if (gEasyChatStruct->unk1A8 == 0 && gEasyChatStruct->unk1A9 == 6)
         gUnknown_020388AC = 2;
@@ -435,7 +435,7 @@ void sub_80E85F8(struct Sprite *sprite)
         {
         case 0:
             sprite->x = gEasyChatStruct->unk1A9 * 88 + 32;
-            sprite->y = (gEasyChatStruct->unk1A8 - gEasyChatStruct->unk1B5) * 16 + 96;
+            sprite->y = (gEasyChatStruct->unk1A8 - gEasyChatStruct->keyboardScrollOffset) * 16 + 96;
             break;
         case 1:
 #if ENGLISH
@@ -451,7 +451,7 @@ void sub_80E85F8(struct Sprite *sprite)
             break;
         case 3:
             sprite->x = gUnknown_083DBCC4[gEasyChatStruct->unk1A8][gEasyChatStruct->unk1A9] * 8 + 31;
-            sprite->y = (gEasyChatStruct->unk1A8 - gEasyChatStruct->unk1B5) * 16 + 96;
+            sprite->y = (gEasyChatStruct->unk1A8 - gEasyChatStruct->keyboardScrollOffset) * 16 + 96;
             break;
         }
     }
@@ -522,8 +522,8 @@ void sub_80E8860(struct Sprite *sprite)
     {
         if (gEasyChatStruct->unk1B9 != 0)
         {
-            sprite->x = gEasyChatStruct->unk99A5 * 88 + 44;
-            sprite->y = (gEasyChatStruct->unk99A4 - gEasyChatStruct->unk9A29) * 16 + 96;
+            sprite->x = gEasyChatStruct->wordSelectColumn * 88 + 44;
+            sprite->y = (gEasyChatStruct->unk99A4 - gEasyChatStruct->wordSelectScrollOffset) * 16 + 96;
             sprite->x2 = -6;
             sprite->data[0] = 0;
         }
@@ -563,16 +563,16 @@ void sub_80E8958(u8 animNum)
     if (animNum == 0)
     {
         r9 = 100;
-        gEasyChatStruct->unk9C6C = &gEasyChatStruct->unk1B5;
-        if (gEasyChatStruct->unk26 == 0)
-            gEasyChatStruct->unk9C71 = gEasyChatStruct->unk1B6 - 4;
+        gEasyChatStruct->unk9C6C = &gEasyChatStruct->keyboardScrollOffset;
+        if (gEasyChatStruct->inAlphabetMode == 0)
+            gEasyChatStruct->unk9C71 = gEasyChatStruct->keyboardLastRow - 4;
         else
             gEasyChatStruct->unk9C71 = 0;
     }
     else
     {
         r9 = 120;
-        gEasyChatStruct->unk9C6C = &gEasyChatStruct->unk9A29;
+        gEasyChatStruct->unk9C6C = &gEasyChatStruct->wordSelectScrollOffset;
         gEasyChatStruct->unk9C71 = gEasyChatStruct->unk9A28 - 4;
         for (i = 0; i < 2; i++)
         {
@@ -901,7 +901,7 @@ void sub_80E8D54(void)
 {
     if (gEasyChatStruct->unk9C74 != NULL)
     {
-        if (gEasyChatStruct->unk26 == 0)
+        if (gEasyChatStruct->inAlphabetMode == 0)
             StartSpriteAnim(gEasyChatStruct->unk9C74, 1);
         else
             StartSpriteAnim(gEasyChatStruct->unk9C74, 2);
@@ -914,7 +914,7 @@ void sub_80E8D8C(u8 a)
     {
         if (a != 0)
         {
-            if (gEasyChatStruct->unk26 == 0)
+            if (gEasyChatStruct->inAlphabetMode == 0)
                 StartSpriteAnim(gEasyChatStruct->unk9C74, 3);
             else
                 StartSpriteAnim(gEasyChatStruct->unk9C74, 4);
@@ -1100,7 +1100,7 @@ void sub_80E91D4(u8 a)
         sub_80E91B0(gOtherText_TextDeletedConfirmPage2, 4, 17, 2);
         break;
     case 3:
-        switch (gEasyChatStruct->unk8)
+        switch (gEasyChatStruct->type)
         {
         case 9:
             sub_80E91B0(gOtherText_QuitGivingInfo, 4, 15, 4);
@@ -1202,7 +1202,7 @@ void sub_80E9368(u8 a)
 
 void sub_80E948C(void)
 {
-    switch (gEasyChatStruct->unk9)
+    switch (gEasyChatStruct->frameId)
     {
     case 4:
         sub_809D104((void *)(VRAM + 0x6800), 3, 3, gUnknown_08E94AD0, 0, 26, 24, 6);
@@ -1228,7 +1228,7 @@ void sub_80E948C(void)
 void sub_80E95A4(void)
 {
     BasicInitMenuWindow(&gWindowTemplate_81E6D8C);
-    switch (gEasyChatStruct->unk9)
+    switch (gEasyChatStruct->frameId)
     {
     case 4:
         sub_80E9620(4, 6);
@@ -1259,25 +1259,25 @@ void sub_80E9620(u16 a, u16 b)
     u16 r10 = 0;
     u16 r7 = a;
 
-    for (i = 0; i < gEasyChatStruct->unk84; i++)
+    for (i = 0; i < gEasyChatStruct->numRows; i++)
     {
         u16 r6 = b;
 
-        for (j = 0; j < gEasyChatStruct->unk83; j++)
+        for (j = 0; j < gEasyChatStruct->numColumns; j++)
         {
-            if (r10 >= gEasyChatStruct->unkA)
+            if (r10 >= gEasyChatStruct->maxWords)
             {
                 Menu_PrintText(gUnknown_083DBEA8, r6, r7);
                 break;
             }
-            if (gEasyChatStruct->unkC[r10] == 0xFFFF)
+            if (gEasyChatStruct->currentPhrase[r10] == 0xFFFF)
             {
                 sub_8095C8C((void *)(VRAM + 0x7000), r6, r7, gUnknown_083DBE1C, 0, 0, 9, 2, 9);
                 r6 += 11;
             }
             else
             {
-                sub_80EB218(gEasyChatStruct->unk9E14, gEasyChatStruct->unkC[r10], 11);
+                sub_80EB218(gEasyChatStruct->unk9E14, gEasyChatStruct->currentPhrase[r10], 11);
                 Menu_PrintText(gEasyChatStruct->unk9E14, r6, r7);
                 r6 += gEasyChatStruct->unk8C[i][j] + 11;
             }
@@ -1290,7 +1290,7 @@ void sub_80E9620(u16 a, u16 b)
 void sub_80E9744(void)
 {
     BasicInitMenuWindow(&gWindowTemplate_81E6D8C);
-    switch (gEasyChatStruct->unk9)
+    switch (gEasyChatStruct->frameId)
     {
     case 4:
         sub_80E97C0(4, 6);
@@ -1321,25 +1321,25 @@ void sub_80E97C0(u16 a, u16 b)
 
     asm("":::"r9");
 
-    for (i = 0; i < gEasyChatStruct->unk84; i++)
+    for (i = 0; i < gEasyChatStruct->numRows; i++)
     {
         u8 r6;
         u8 *r2 = gEasyChatStruct->unk9E6E;
         u32 r1;
 
-        for (r6 = 0; r6 < gEasyChatStruct->unk83; r6++)
+        for (r6 = 0; r6 < gEasyChatStruct->numColumns; r6++)
         {
-            if (r7 >= gEasyChatStruct->unkA)
+            if (r7 >= gEasyChatStruct->maxWords)
                 break;
-            if (gEasyChatStruct->unkC[r7] != 0xFFFF)
+            if (gEasyChatStruct->currentPhrase[r7] != 0xFFFF)
             {
-                r2 = sub_80EB218(r2, gEasyChatStruct->unkC[r7], 0);
+                r2 = sub_80EB218(r2, gEasyChatStruct->currentPhrase[r7], 0);
                 *r2++ = CHAR_SPACE;
             }
             r7++;
         }
 
-        r1 = gEasyChatStruct->unk83 * 11;
+        r1 = gEasyChatStruct->numColumns * 11;
         r2[0] = EXT_CTRL_CODE_BEGIN;
         r2[1] = 0x13;
         r2[2] = r1 * 8;
@@ -1357,7 +1357,7 @@ void sub_80E98C4(void)
     u8 r3;
 
     BasicInitMenuWindow(&gWindowTemplate_81E6D8C);
-    switch (gEasyChatStruct->unk9)
+    switch (gEasyChatStruct->frameId)
     {
     case 4:
         r1 = 4;
@@ -1429,11 +1429,11 @@ const u8 *const gUnknown_083DBEAC[] =
 void sub_80E9974(void)
 {
     BasicInitMenuWindow(&gWindowTemplate_81E6D54);
-    if (gEasyChatStruct->unk26 == 0)
+    if (gEasyChatStruct->inAlphabetMode == 0)
     {
         u16 i;
 
-        for (i = gEasyChatStruct->unk1B5; i < gEasyChatStruct->unk1B5 + 4; i++)
+        for (i = gEasyChatStruct->keyboardScrollOffset; i < gEasyChatStruct->keyboardScrollOffset + 4; i++)
             sub_80E9940(gEasyChatStruct->unk9DC9, i);
     }
     else
@@ -1449,8 +1449,8 @@ void sub_80E9974(void)
 void sub_80E9A14(void)
 {
     sub_80E9A4C();
-    if (gEasyChatStruct->unk26 == 0)
-        gEasyChatStruct->unk1BA += gEasyChatStruct->unk1B5 * 16;
+    if (gEasyChatStruct->inAlphabetMode == 0)
+        gEasyChatStruct->unk1BA += gEasyChatStruct->keyboardScrollOffset * 16;
 }
 
 void sub_80E9A4C(void)
@@ -1476,9 +1476,9 @@ void sub_80E9A7C(u8 *dest, u16 b)
         dest[2] = 88 * i;
         dest += 3;
 
-        dest = CopyEasyChatGroupName(dest, gEasyChatStruct->unk2A[b][i], 11);
+        dest = CopyEasyChatGroupName(dest, gEasyChatStruct->unlockedGroupIds[b][i], 11);
         r5++;
-        if (r5 >= gEasyChatStruct->unk28)
+        if (r5 >= gEasyChatStruct->numUnlockedGroups)
             break;
     }
 }
@@ -1509,11 +1509,11 @@ void sub_80E9AF8(u16 a)
     {
         for (i = 0; i < gEasyChatStruct->unk99A6[a]; i++)
         {
-            if (sub_80EB2D4(gEasyChatStruct->unk9A2A[a][i]) == 7)
+            if (sub_80EB2D4(gEasyChatStruct->selectedGroupWords[a][i]) == 7)
                 BasicInitMenuWindow(&gWindowTemplate_81E6D70);
             else
                 BasicInitMenuWindow(&gWindowTemplate_81E6D54);
-            sub_80EB218(r8, gEasyChatStruct->unk9A2A[a][i], 9);
+            sub_80EB218(r8, gEasyChatStruct->selectedGroupWords[a][i], 9);
             sub_80E9A60(gEasyChatStruct->unk9E14, i * 11 + 4, a * 2);
         }
     }
@@ -1522,7 +1522,7 @@ void sub_80E9AF8(u16 a)
         BasicInitMenuWindow(&gWindowTemplate_81E6D54);
         for (i = 0; i < gEasyChatStruct->unk99A6[a]; i++)
         {
-            sub_80EB218(r8, gEasyChatStruct->unk9A2A[a][i], 9);
+            sub_80EB218(r8, gEasyChatStruct->selectedGroupWords[a][i], 9);
             sub_80E9A60(gEasyChatStruct->unk9E14, i * 11 + 4, a * 2);
         }
     }
@@ -1540,7 +1540,7 @@ void sub_80E9C94(void)
     u16 i;
 
     for (i = 0; i < r5; i++)
-        sub_80E9AF8(gEasyChatStruct->unk9A29 + i);
+        sub_80E9AF8(gEasyChatStruct->wordSelectScrollOffset + i);
     while (i < 4)
         sub_80E9C74(i++);
 }
@@ -1553,12 +1553,12 @@ void sub_80E9D00(void)
     if (gEasyChatStruct->unk1C0 > 0)
     {
         r4 = gEasyChatStruct->unk1C0;
-        r5 = gEasyChatStruct->unk9A29 + 4;
+        r5 = gEasyChatStruct->wordSelectScrollOffset + 4;
     }
     else
     {
         r4 = -gEasyChatStruct->unk1C0;
-        r5 = gEasyChatStruct->unk9A29 - r4;
+        r5 = gEasyChatStruct->wordSelectScrollOffset - r4;
     }
     while (--r4 != 0xFFFF)
         sub_80E9AF8(r5++);
@@ -1574,12 +1574,12 @@ void sub_80E9D7C(void)
     if (gEasyChatStruct->unk1C0 < 0)
     {
         r6 = -gEasyChatStruct->unk1C0;
-        r4 = gEasyChatStruct->unk1B5 - r6;
+        r4 = gEasyChatStruct->keyboardScrollOffset - r6;
     }
     else
     {
         r6 = gEasyChatStruct->unk1C0;
-        r4 = gEasyChatStruct->unk1B5 + 4;
+        r4 = gEasyChatStruct->keyboardScrollOffset + 4;
     }
     for (i = 0; i < r6; i++)
     {
@@ -2335,7 +2335,7 @@ void sub_80EAECC(void)
         u16 word = gEasyChatWordsByLetter[i];
         u16 sp0 = gEasyChatWordsByLetter[i + 1];
 
-        gEasyChatStruct->unk4142[i] = 0;
+        gEasyChatStruct->numUnlockedAlphabetWords[i] = 0;
         r9 = 0;
         r6 = word;
         while (r6 < sp0)
@@ -2352,7 +2352,7 @@ void sub_80EAECC(void)
                     if (sub_80EADC0(EC_GROUP(word), EC_INDEX(word)) && !r7)
                     {
                         gEasyChatStruct->unkB78[i][r9++] = word;
-                        gEasyChatStruct->unk4142[i]++;
+                        gEasyChatStruct->numUnlockedAlphabetWords[i]++;
                         r7 = TRUE;
                     }
                 }
@@ -2362,7 +2362,7 @@ void sub_80EAECC(void)
                 if (sub_80EADC0(EC_GROUP(word), EC_INDEX(word)))
                 {
                     gEasyChatStruct->unkB78[i][r9++] = word;
-                    gEasyChatStruct->unk4142[i]++;
+                    gEasyChatStruct->numUnlockedAlphabetWords[i]++;
                 }
             }
         }
@@ -2409,7 +2409,7 @@ void sub_80EB0B0(void)
     u16 r9;
     u16 r8;
 
-    if (gEasyChatStruct->unk26 == 0)
+    if (gEasyChatStruct->inAlphabetMode == 0)
     {
         u16 group = gEasyChatStruct->unk1B8;
 
@@ -2421,7 +2421,7 @@ void sub_80EB0B0(void)
         {
             if (sub_80EADC0(group, sp0[r8]))
             {
-                gEasyChatStruct->unk9A2A[r9][r7] = ((group & 0x7F) << 9) | (sp0[r8] & 0x1FF);
+                gEasyChatStruct->selectedGroupWords[r9][r7] = ((group & 0x7F) << 9) | (sp0[r8] & 0x1FF);
                 gEasyChatStruct->unk4178[group]++;
                 r7++;
                 if (r7 > 1)
@@ -2439,9 +2439,9 @@ void sub_80EB0B0(void)
         u16 r6 = 0;
         u16 r5;
 
-        for (r5 = 0; r5 < gEasyChatStruct->unk4142[r2]; r5++)
+        for (r5 = 0; r5 < gEasyChatStruct->numUnlockedAlphabetWords[r2]; r5++)
         {
-            gEasyChatStruct->unk9A2A[r6][r3] = gEasyChatStruct->unkB78[r2][r5];
+            gEasyChatStruct->selectedGroupWords[r6][r3] = gEasyChatStruct->unkB78[r2][r5];
             r3++;
             if (r3 > 1)
             {
