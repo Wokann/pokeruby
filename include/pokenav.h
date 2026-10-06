@@ -252,7 +252,7 @@ void DestroyConditionSparkleSprites(void);
 bool8 gpu_sync_bg_show(void);
 void sub_80F5550(struct UCoords16*, struct UCoords16*);
 bool8 sub_80F555C(void);
-void sub_80F7224(u8);
+void CalculateNumAdditionalSparkles(u8 monIndex);
 void sub_80F5BDC(void);
 void sub_80F2F7C(u8 arg0);
 

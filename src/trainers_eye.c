@@ -88,10 +88,10 @@ void sub_80F6DB8(void)
 
 void sub_80F6E04(u8 a0)
 {
-    u16 r1 = gPokenavStructPtr->trainersEye[gPokenavStructPtr->unk876E].opponentId;
-    u8 r6 = gTrainers[r1].trainerPic;
-    DecompressPicFromTable_2(&gTrainerFrontPicTable[r6], gTrainerFrontPicCoords[r6].size, 1, gPokenavStructPtr->unk131E4, gPokenavStructPtr->unkD1E4[a0], r6);
-    LZ77UnCompWram(gTrainerFrontPicPaletteTable[r6].data, gPokenavStructPtr->unk0[a0]);
+    u16 index = gPokenavStructPtr->trainersEye[gPokenavStructPtr->unk876E].opponentId;
+    u8 trainerPic = gTrainers[index].trainerPic;
+    DecompressPicFromTable_2(&gTrainerFrontPicTable[trainerPic], gTrainerFrontPicCoords[trainerPic].size, 1, gPokenavStructPtr->unk131E4, gPokenavStructPtr->unkD1E4[a0], trainerPic);
+    LZ77UnCompWram(gTrainerFrontPicPaletteTable[trainerPic].data, gPokenavStructPtr->unk0[a0]);
 }
 
 bool8 sub_80F6E9C(void)
@@ -256,8 +256,8 @@ bool8 sub_80F70FC(void)
     return TRUE;
 }
 
-void sub_80F7224(u8 a0)
+void CalculateNumAdditionalSparkles(u8 monIndex)
 {
-    u8 sheen = GetMonData(&gPlayerParty[a0], MON_DATA_SHEEN);
+    u8 sheen = GetMonData(&gPlayerParty[monIndex], MON_DATA_SHEEN);
     gPokenavStructPtr->numSparkles[gPokenavStructPtr->loadId] = sheen != 255 ? sheen / 29 : 9;
 }
