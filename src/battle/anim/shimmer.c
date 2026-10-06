@@ -4,11 +4,10 @@
 #include "sound.h"
 #include "util.h"
 
-
 // shimmer
 // Used by Magical Leaf.
 
-static const u16 sMagicalLeafBlendColors[] =
+const u16 gMagicalLeafBlendColors[] =
 {
     RGB(31, 0, 0),
     RGB(31, 19, 0),
@@ -19,9 +18,9 @@ static const u16 sMagicalLeafBlendColors[] =
     RGB(22, 21, 31),
 };
 
-void sub_80CC5F8(u8 taskId)
+void AnimTask_CycleMagicalLeafPal(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
     switch (task->data[0])
     {
     case 0:
@@ -34,8 +33,8 @@ void sub_80CC5F8(u8 taskId)
         if (task->data[9] >= 0)
         {
             task->data[9] = 0;
-            BlendPalette(task->data[8], 0x10, task->data[10], sMagicalLeafBlendColors[task->data[11]]);
-            BlendPalette(task->data[12], 0x10, task->data[10], sMagicalLeafBlendColors[task->data[11]]);
+            BlendPalette(task->data[8], 0x10, task->data[10], gMagicalLeafBlendColors[task->data[11]]);
+            BlendPalette(task->data[12], 0x10, task->data[10], gMagicalLeafBlendColors[task->data[11]]);
             task->data[10]++;
             if (task->data[10] == 17)
             {

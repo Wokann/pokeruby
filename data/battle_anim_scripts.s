@@ -9696,7 +9696,7 @@ Move_MAGICAL_LEAF: @ 81D5699
 	setalpha 12, 8
 	delay 1
 	loopsewithpan SE_M_POISON_POWDER, SOUND_PAN_ATTACKER, 10, 5
-	createvisualtask sub_80CC5F8, 5
+	createvisualtask AnimTask_CycleMagicalLeafPal, 5
 	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, -3, -2, 10
 	delay 2
 	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, -1, -1, 15
