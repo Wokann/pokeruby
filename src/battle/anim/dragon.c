@@ -7,7 +7,7 @@
 extern u8 gBattlerAttacker;
 extern u16 gBattle_BG1_X;
 extern u16 gBattle_BG2_X;
-extern u16 gUnknown_03000730[];
+extern u16 gUnusedOverheatData[];
 extern u8 gBattlerSpriteIds[];
 
 void sub_80DF5A0(struct Sprite *sprite);
@@ -431,7 +431,7 @@ void sub_80DFB28(struct Sprite *sprite)
     sprite->data[3] = gBattleAnimArgs[3];
     sprite->callback = sub_80DFBD8;
     for (i = 0; i <= 6; i++)
-        gUnknown_03000730[i] = sprite->data[i];
+        gUnusedOverheatData[i] = sprite->data[i];
 }
 
 static void sub_80DFBD8(struct Sprite *sprite)

@@ -7800,16 +7800,16 @@ Move_FURY_SWIPES: @ 81D24F6
 Move_INGRAIN: @ 81D255A
 	loadspritegfx ANIM_TAG_ROOTS
 	loadspritegfx ANIM_TAG_ORBS
-	createsprite gBattleAnimSpriteTemplate_83D6658, ANIM_ATTACKER, 2, 16, 26, -1, 2, 150
+	createsprite gIngrainRootSpriteTemplate, ANIM_ATTACKER, 2, 16, 26, -1, 2, 150
 	playsewithpan SE_M_SCRATCH, SOUND_PAN_ATTACKER
 	delay 10
-	createsprite gBattleAnimSpriteTemplate_83D6658, ANIM_ATTACKER, 2, -32, 20, 1, 1, 140
+	createsprite gIngrainRootSpriteTemplate, ANIM_ATTACKER, 2, -32, 20, 1, 1, 140
 	playsewithpan SE_M_SCRATCH, SOUND_PAN_ATTACKER
 	delay 10
-	createsprite gBattleAnimSpriteTemplate_83D6658, ANIM_ATTACKER, 2, 32, 22, 1, 0, 130
+	createsprite gIngrainRootSpriteTemplate, ANIM_ATTACKER, 2, 32, 22, 1, 0, 130
 	playsewithpan SE_M_SCRATCH, SOUND_PAN_ATTACKER
 	delay 10
-	createsprite gBattleAnimSpriteTemplate_83D6658, ANIM_ATTACKER, 2, -16, 25, -1, 3, 120
+	createsprite gIngrainRootSpriteTemplate, ANIM_ATTACKER, 2, -16, 25, -1, 3, 120
 	playsewithpan SE_M_SCRATCH, SOUND_PAN_ATTACKER
 	delay 40
 	createsprite gBattleAnimSpriteTemplate_83D6698, ANIM_ATTACKER, 3, 32, 26, -1, 3, 30
@@ -8761,31 +8761,31 @@ Move_FRENZY_PLANT: @ 81D3C7B
 	setalpha 12, 8
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 0, 1, 2, 0, 5, rgb(0, 0, 0)
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_83D6670, ANIM_ATTACKER, 2, 10, 8, 2, 0, 0, 100
+	createsprite gFrenzyPlantRootSpriteTemplate, ANIM_ATTACKER, 2, 10, 8, 2, 0, 0, 100
 	playsewithpan SE_M_SCRATCH, SOUND_PAN_ATTACKER
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D6670, ANIM_ATTACKER, 2, 20, -8, -2, 0, 1, 95
+	createsprite gFrenzyPlantRootSpriteTemplate, ANIM_ATTACKER, 2, 20, -8, -2, 0, 1, 95
 	playsewithpan SE_M_SCRATCH, 213
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D6670, ANIM_ATTACKER, 2, 30, 8, -4, 0, 0, 90
+	createsprite gFrenzyPlantRootSpriteTemplate, ANIM_ATTACKER, 2, 30, 8, -4, 0, 0, 90
 	playsewithpan SE_M_SCRATCH, 234
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D6670, ANIM_ATTACKER, 2, 40, -8, 4, 0, 1, 85
+	createsprite gFrenzyPlantRootSpriteTemplate, ANIM_ATTACKER, 2, 40, -8, 4, 0, 1, 85
 	playsewithpan SE_M_SCRATCH, 0
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D6670, ANIM_ATTACKER, 2, 50, 8, 0, 0, 0, 85
+	createsprite gFrenzyPlantRootSpriteTemplate, ANIM_ATTACKER, 2, 50, 8, 0, 0, 0, 85
 	playsewithpan SE_M_SCRATCH, 21
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D6670, ANIM_ATTACKER, 2, 60, -8, -2, 0, 1, 85
+	createsprite gFrenzyPlantRootSpriteTemplate, ANIM_ATTACKER, 2, 60, -8, -2, 0, 1, 85
 	playsewithpan SE_M_SCRATCH, 42
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D6670, ANIM_ATTACKER, 2, 75, 8, 0, 0, 0, 85
+	createsprite gFrenzyPlantRootSpriteTemplate, ANIM_ATTACKER, 2, 75, 8, 0, 0, 0, 85
 	playsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D6670, ANIM_ATTACKER, 2, 85, 16, 6, 0, 3, 80
+	createsprite gFrenzyPlantRootSpriteTemplate, ANIM_ATTACKER, 2, 85, 16, 6, 0, 3, 80
 	playsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D6670, ANIM_ATTACKER, 2, 85, -16, -6, 0, 2, 75
+	createsprite gFrenzyPlantRootSpriteTemplate, ANIM_ATTACKER, 2, 85, -16, -6, 0, 2, 75
 	playsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET
 	delay 5
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 2, -10, -10, 1, 3
