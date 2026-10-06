@@ -2809,7 +2809,7 @@ Move_METRONOME: @ 81CB365
 	createsprite gThoughtBubbleSpriteTemplate, ANIM_ATTACKER, 11, 0, 100
 	playsewithpan SE_M_METRONOME, SOUND_PAN_ATTACKER
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83D72C8, ANIM_ATTACKER, 12, 0
+	createsprite gMetronomeFingerSpriteTemplate, ANIM_ATTACKER, 12, 0
 	delay 24
 	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 22, 3
 	waitforvisualfinish
@@ -3545,7 +3545,7 @@ Move_SMELLING_SALT: @ 81CC156
 
 Move_FOLLOW_ME: @ 81CC1B1
 	loadspritegfx ANIM_TAG_FINGER
-	createsprite gBattleAnimSpriteTemplate_83D72E0, ANIM_ATTACKER, 2, 0
+	createsprite gFollowMeFingerSpriteTemplate, ANIM_ATTACKER, 2, 0
 	playsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER
 	delay 18
 	playsewithpan SE_M_ATTRACT, SOUND_PAN_ATTACKER
@@ -3595,7 +3595,7 @@ Move_TAUNT: @ 81CC26B
 	createsprite gThoughtBubbleSpriteTemplate, ANIM_ATTACKER, 11, 0, 45
 	playsewithpan SE_M_METRONOME, SOUND_PAN_ATTACKER
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83D7358, ANIM_ATTACKER, 12, 0
+	createsprite gTauntFingerSpriteTemplate, ANIM_ATTACKER, 12, 0
 	delay 4
 	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 16, 2
 	waitforvisualfinish
