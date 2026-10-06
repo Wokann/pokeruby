@@ -3,38 +3,37 @@
 #include "trig.h"
 #include "sound.h"
 
-
 extern u8 gBattlerSpriteIds[];
 
-static void sub_80CF514(u8 taskId);
+static void AnimTask_Withdraw_Step(u8 taskId);
 
 // withdraw (where a Pokemon leans inward to mimic the effect of withdrawing into a shell.)
 // Used in Withdraw.
 
-void sub_80CF4D8(u8 taskId)
+void AnimTask_Withdraw(u8 taskId)
 {
     PrepareBattlerSpriteForRotScale(gBattlerSpriteIds[gBattleAnimAttacker], 0);
-    gTasks[taskId].func = sub_80CF514;
+    gTasks[taskId].func = AnimTask_Withdraw_Step;
 }
 
-void sub_80CF514(u8 taskId)
+static void AnimTask_Withdraw_Step(u8 taskId)
 {
-    u8 a = gBattlerSpriteIds[gBattleAnimAttacker];
-    s16 b;
+    u8 spriteId = gBattlerSpriteIds[gBattleAnimAttacker];
+    s16 rotation;
     if (GetBattlerSide(gBattleAnimAttacker) == 0)
     {
-        b = -gTasks[taskId].data[0];
+        rotation = -gTasks[taskId].data[0];
     }
     else
     {
-        b = gTasks[taskId].data[0];
+        rotation = gTasks[taskId].data[0];
     }
 
-    SetSpriteRotScale(a, 0x100, 0x100, b);
+    SetSpriteRotScale(spriteId, 0x100, 0x100, rotation);
     if (gTasks[taskId].data[1] == 0)
     {
         gTasks[taskId].data[0] += 0xB0;
-        gSprites[a].y2++;
+        gSprites[spriteId].y2++;
     }
     else if (gTasks[taskId].data[1] == 1)
     {
@@ -46,15 +45,15 @@ void sub_80CF514(u8 taskId)
     else
     {
         gTasks[taskId].data[0] -= 0xB0;
-        gSprites[a].y2--;
+        gSprites[spriteId].y2--;
     }
 
-    SetBattlerSpriteYOffsetFromRotation(a);
+    SetBattlerSpriteYOffsetFromRotation(spriteId);
     if (gTasks[taskId].data[0] == 0xF20 || gTasks[taskId].data[0] == 0)
     {
         if (gTasks[taskId].data[1] == 2)
         {
-            ResetSpriteRotScale(a);
+            ResetSpriteRotScale(spriteId);
             DestroyAnimVisualTask(taskId);
         }
         else
