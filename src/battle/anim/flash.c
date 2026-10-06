@@ -4,16 +4,15 @@
 #include "sound.h"
 #include "palette.h"
 
-
 extern const struct SpriteTemplate gMoonSpriteTemplate;
 extern const struct SpriteTemplate gMoonlightSparkleSpriteTemplate;
 
-static void sub_80CE4D4(u8 taskId);
+static void AnimTask_MoonlightEndFade_Step(u8 taskId);
 
 // flash (a "ting!" flash effect.)
 // Used in Moonlight.
 
-void sub_80CE3EC(u8 taskId)
+void AnimTask_MoonlightEndFade(u8 taskId)
 {
     int a = GetBattlePalettesMask(1, 0, 0, 0, 0, 0, 0) & 0xFFFF;
     int b;
@@ -36,13 +35,13 @@ void sub_80CE3EC(u8 taskId)
     b = b | (0x10000 << IndexOfSpritePaletteTag(0x27D2));
     d = IndexOfSpritePaletteTag(0x27D3);
     BeginNormalPaletteFade((0x10000 << d) | b, 0, 0, 16, RGB(27, 29, 31));
-    gTasks[taskId].func = sub_80CE4D4;
-    sub_80CE4D4(taskId);
+    gTasks[taskId].func = AnimTask_MoonlightEndFade_Step;
+    AnimTask_MoonlightEndFade_Step(taskId);
 }
 
-void sub_80CE4D4(u8 taskId)
+static void AnimTask_MoonlightEndFade_Step(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
     switch (task->data[0])
     {
     case 0:

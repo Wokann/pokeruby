@@ -3370,7 +3370,7 @@ Move_MOONLIGHT: @ 81CBDAE
 	delay 30
 	createsprite gMoonlightSparkleSpriteTemplate, ANIM_ATTACKER, 40, 10, 0
 	delay 20
-	createvisualtask sub_80CE3EC, 2
+	createvisualtask AnimTask_MoonlightEndFade, 2
 	waitforvisualfinish
 	call Unknown_81D5EF5
 	waitforvisualfinish
