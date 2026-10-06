@@ -3,26 +3,24 @@
 #include "trig.h"
 #include "sound.h"
 
-extern const union AffineAnimCmd *const gSpriteAffineAnimTable_83DB1B0[];
-
-void sub_80CF458(struct Sprite* sprite);
-static void sub_80CF490(struct Sprite* sprite);
-static void sub_80CF4B8(struct Sprite* sprite);
+static void AnimMovingClamp(struct Sprite *sprite);
+static void AnimMovingClamp_Step(struct Sprite *sprite);
+static void AnimMovingClamp_End(struct Sprite *sprite);
 
 // unused_8
 
-const struct SpriteTemplate gSpriteTemplate_83D73C4 =
+static const struct SpriteTemplate sMovingClampSpriteTemplate =
 {
     .tileTag = ANIM_TAG_CLAMP,
     .paletteTag = ANIM_TAG_CLAMP,
     .oam = &gOamData_AffineNormal_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DB1B0,
-    .callback = sub_80CF458,
+    .affineAnims = gAffineAnims_Bite,
+    .callback = AnimMovingClamp,
 };
 
-const union AnimCmd gSpriteAnim_83D73DC[] =
+static const union AnimCmd sAnim_SmallExplosion[] =
 {
     ANIMCMD_FRAME(0, 9),
     ANIMCMD_FRAME(16, 3),
@@ -31,54 +29,54 @@ const union AnimCmd gSpriteAnim_83D73DC[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D73F0[] =
+static const union AnimCmd *const sAnims_SmallExplosion[] =
 {
-    gSpriteAnim_83D73DC,
+    sAnim_SmallExplosion,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D73F4[] =
+static const union AffineAnimCmd sAffineAnim_SmallExplosion[] =
 {
     AFFINEANIMCMD_FRAME(0x50, 0x50, 0, 0),
     AFFINEANIMCMD_FRAME(0x9, 0x9, 0, 18),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D740C[] =
+static const union AffineAnimCmd *const sAffineAnims_SmallExplosion[] =
 {
-    gSpriteAffineAnim_83D73F4,
+    sAffineAnim_SmallExplosion,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D7410 =
+static const struct SpriteTemplate sSmallExplosionSpriteTemplate =
 {
     .tileTag = 10007,
     .paletteTag = 10007,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D73F0,
+    .anims = sAnims_SmallExplosion,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D740C,
+    .affineAnims = sAffineAnims_SmallExplosion,
     .callback = AnimSpriteOnMonPos,
 };
 
-void sub_80CF458(struct Sprite* sprite)
+static void AnimMovingClamp(struct Sprite *sprite)
 {
     InitSpritePosToAnimAttacker(sprite, 1);
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[1] = gBattleAnimArgs[3];
     sprite->data[5] = gBattleAnimArgs[4];
     sprite->callback = WaitAnimForDuration;
-    StoreSpriteCallbackInData6(sprite, sub_80CF490);
+    StoreSpriteCallbackInData6(sprite, AnimMovingClamp_Step);
 }
 
-static void sub_80CF490(struct Sprite* sprite)
+static void AnimMovingClamp_Step(struct Sprite *sprite)
 {
     sprite->data[0] = sprite->data[1];
     sprite->data[2] = sprite->x;
     sprite->data[4] = sprite->y + 15;
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData6(sprite, sub_80CF4B8);
+    StoreSpriteCallbackInData6(sprite, AnimMovingClamp_End);
 }
 
-static void sub_80CF4B8(struct Sprite* sprite)
+static void AnimMovingClamp_End(struct Sprite *sprite)
 {
     if (sprite->data[5] == 0)
         DestroyAnimSprite(sprite);

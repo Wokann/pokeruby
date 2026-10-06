@@ -100,7 +100,7 @@ const union AffineAnimCmd gSpriteAffineAnim_83DB1A0[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DB1B0[] =
+const union AffineAnimCmd *const gAffineAnims_Bite[] =
 {
     gSpriteAffineAnim_83DB130,
     gSpriteAffineAnim_83DB140,
@@ -119,7 +119,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB1D0 =
     .oam = &gOamData_AffineNormal_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DB1B0,
+    .affineAnims = gAffineAnims_Bite,
     .callback = sub_80DFF1C,
 };
 
@@ -130,7 +130,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB1E8 =
     .oam = &gOamData_AffineNormal_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DB1B0,
+    .affineAnims = gAffineAnims_Bite,
     .callback = sub_80DFF1C,
 };
 
