@@ -6,13 +6,13 @@
 
 extern u16 gBattleTypeFlags;
 
-void sub_80D5B0C(struct Sprite *sprite);
-static void sub_80D5C5C(struct Sprite *);
+static void AnimWillOWispOrb(struct Sprite *sprite);
+static void AnimWillOWispOrb_Step(struct Sprite *);
 
 // wisp_orb (animates the wisp orbs)
 // Used in Will-O-Wisp
 
-const union AnimCmd gSpriteAnim_83D9710[] =
+static const union AnimCmd sAnim_WillOWispOrb_0[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(4, 5),
@@ -21,44 +21,44 @@ const union AnimCmd gSpriteAnim_83D9710[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd gSpriteAnim_83D9724[] =
+static const union AnimCmd sAnim_WillOWispOrb_1[] =
 {
     ANIMCMD_FRAME(16, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D972C[] =
+static const union AnimCmd sAnim_WillOWispOrb_2[] =
 {
     ANIMCMD_FRAME(20, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D9734[] =
+static const union AnimCmd sAnim_WillOWispOrb_3[] =
 {
     ANIMCMD_FRAME(20, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D973C[] =
+static const union AnimCmd *const sAnims_WillOWispOrb[] =
 {
-    gSpriteAnim_83D9710,
-    gSpriteAnim_83D9724,
-    gSpriteAnim_83D972C,
-    gSpriteAnim_83D9734,
+    sAnim_WillOWispOrb_0,
+    sAnim_WillOWispOrb_1,
+    sAnim_WillOWispOrb_2,
+    sAnim_WillOWispOrb_3,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D974C =
+const struct SpriteTemplate gWillOWispOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_WISP_ORB,
     .paletteTag = ANIM_TAG_WISP_ORB,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D973C,
+    .anims = sAnims_WillOWispOrb,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D5B0C,
+    .callback = AnimWillOWispOrb,
 };
 
-void sub_80D5B0C(struct Sprite *sprite)
+static void AnimWillOWispOrb(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -102,7 +102,7 @@ void sub_80D5B0C(struct Sprite *sprite)
     case 2:
         sprite->x2 = Sin(sprite->data[2], sprite->data[4]);
         sprite->data[2] = (sprite->data[2] + 4) & 0xFF;
-        
+
         if (++sprite->data[3] == 31)
         {
             sprite->x += sprite->x2;
@@ -117,13 +117,13 @@ void sub_80D5B0C(struct Sprite *sprite)
             sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
 
             InitAnimLinearTranslationWithSpeed(sprite);
-            sprite->callback = sub_80D5C5C;
+            sprite->callback = AnimWillOWispOrb_Step;
         }
         break;
     }
 }
 
-static void sub_80D5C5C(struct Sprite *sprite)
+static void AnimWillOWispOrb_Step(struct Sprite *sprite)
 {
     s16 initialData5;
     s16 newData5;

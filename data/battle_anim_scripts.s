@@ -8043,13 +8043,13 @@ Move_WILL_O_WISP: @ 81D2B83
 	playsewithpan SE_M_EMBER, SOUND_PAN_ATTACKER
 	waitplaysewithpan SE_M_EMBER, SOUND_PAN_ATTACKER, 10
 	createvisualtask sub_812B374, 2, -64, -64, 1, 0
-	createsprite gBattleAnimSpriteTemplate_83D974C, ANIM_ATTACKER, 2, 0, 0, 0
+	createsprite gWillOWispOrbSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 0
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D974C, ANIM_ATTACKER, 3, 0, 0, 1
+	createsprite gWillOWispOrbSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 1
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D974C, ANIM_ATTACKER, 4, 0, 0, 2
+	createsprite gWillOWispOrbSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 2
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D974C, ANIM_ATTACKER, 4, 0, 0, 3
+	createsprite gWillOWispOrbSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 3
 	delay 40
 	createvisualtask sub_812B374, 2, -64, 63, 2, 0
 	waitforvisualfinish
