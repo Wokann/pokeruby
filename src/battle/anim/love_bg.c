@@ -1,26 +1,22 @@
 #include "global.h"
 #include "battle_anim.h"
+#include "graphics.h"
 #include "trig.h"
 #include "sound.h"
 #include "decompress.h"
 #include "palette.h"
 
-
-extern const u8 gAttractTilemap[];
-extern const u8 gAttractGfx[];
-extern const u8 gAttractPal[];
-
 extern u16 gBattle_BG1_Y;
 extern u16 gBattle_BG1_X;
 
-static void sub_80D21F0(u8 taskId);
+static void AnimTask_HeartsBackground_Step(u8 taskId);
 
 // love_bg (makes the BG a background of hearts.)
 // Used in Attract.
 
-void sub_80D2100(u8 taskId)
+void AnimTask_HeartsBackground(u8 taskId)
 {
-    struct BattleAnimBgData subStruct;
+    struct BattleAnimBgData animBg;
 
     REG_BLDCNT = 0x3F42;
     REG_BLDALPHA = 0x1000;
@@ -33,20 +29,20 @@ void sub_80D2100(u8 taskId)
     gBattle_BG1_Y = 0;
     REG_BG1HOFS = 0;
     REG_BG1VOFS = 0;
-    GetBattleAnimBg1Data(&subStruct);
-    DmaFill32Defvars(3, 0, subStruct.bgTilemap, 0x1000);
-    LZDecompressVram(&gAttractTilemap, subStruct.bgTilemap);
-    LZDecompressVram(&gAttractGfx, subStruct.bgTiles);
-    LoadCompressedPalette(&gAttractPal, subStruct.paletteId << 4, 32);
+    GetBattleAnimBg1Data(&animBg);
+    DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x1000);
+    LZDecompressVram(&gBattleAnimBgTilemap_Attract, animBg.bgTilemap);
+    LZDecompressVram(&gBattleAnimBgImage_Attract, animBg.bgTiles);
+    LoadCompressedPalette(&gBattleAnimBgPalette_Attract, animBg.paletteId << 4, 32);
     if (IsContest())
-        RelocateBattleBgPal(subStruct.paletteId, (u16 *)subStruct.bgTilemap, 0, 0);
+        RelocateBattleBgPal(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
 
-    gTasks[taskId].func = sub_80D21F0;
+    gTasks[taskId].func = AnimTask_HeartsBackground_Step;
 }
 
-void sub_80D21F0(u8 taskId)
+static void AnimTask_HeartsBackground_Step(u8 taskId)
 {
-    struct BattleAnimBgData subStruct;
+    struct BattleAnimBgData animBg;
 
     switch (gTasks[taskId].data[12])
     {
@@ -84,9 +80,9 @@ void sub_80D21F0(u8 taskId)
         }
         break;
     case 3:
-        GetBattleAnimBg1Data(&subStruct);
-        DmaFill32Large(3, 0, subStruct.bgTiles, 0x2000, 0x1000);
-        DmaClear32(3, subStruct.bgTilemap, 0x800);
+        GetBattleAnimBg1Data(&animBg);
+        DmaFill32Large(3, 0, animBg.bgTiles, 0x2000, 0x1000);
+        DmaClear32(3, animBg.bgTilemap, 0x800);
         if (!IsContest())
             REG_BG1CNT_BITFIELD.charBaseBlock = 0;
 

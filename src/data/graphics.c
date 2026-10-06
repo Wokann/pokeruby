@@ -545,9 +545,9 @@ const u8 gBattleAnimSpritePal_PinkHeart[] = INCBIN_U8("graphics/battle_anims/spr
 const u8 gBattleAnimSpritePal_MagentaHeart[] = INCBIN_U8("graphics/battle_anims/sprites/magenta_heart.gbapal.lz");
 const u8 gBattleAnimSpritePal_RedHeart[] = INCBIN_U8("graphics/battle_anims/sprites/red_heart.gbapal.lz");
 
-const u8 gAttractGfx[] = INCBIN_U8("graphics/battle_anims/backgrounds/attract.4bpp.lz");
-const u8 gAttractPal[] = INCBIN_U8("graphics/battle_anims/backgrounds/attract.gbapal.lz");
-const u8 gAttractTilemap[] = INCBIN_U8("graphics/battle_anims/backgrounds/attract.bin.lz");
+const u8 gBattleAnimBgImage_Attract[] = INCBIN_U8("graphics/battle_anims/backgrounds/attract.4bpp.lz");
+const u8 gBattleAnimBgPalette_Attract[] = INCBIN_U8("graphics/battle_anims/backgrounds/attract.gbapal.lz");
+const u8 gBattleAnimBgTilemap_Attract[] = INCBIN_U8("graphics/battle_anims/backgrounds/attract.bin.lz");
 
 const u8 gBattleAnimSpriteGfx_RedOrb[] = INCBIN_U8("graphics/battle_anims/sprites/red_orb.4bpp.lz");
 const u8 gBattleAnimSpritePal_RedOrb[] = INCBIN_U8("graphics/battle_anims/sprites/red_orb.gbapal.lz");

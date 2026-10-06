@@ -2003,7 +2003,7 @@ Move_ATTRACT: @ 81CA0BA
 	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, -384, -31
 	waitforvisualfinish
 	waitplaysewithpan SE_M_ATTRACT2, 0, 15
-	createvisualtask sub_80D2100, 5
+	createvisualtask AnimTask_HeartsBackground, 5
 	createsprite gRedHeartRisingSpriteTemplate, ANIM_ATTACKER, 40, 16, 256, 0
 	createsprite gRedHeartRisingSpriteTemplate, ANIM_ATTACKER, 40, 224, 240, 15
 	createsprite gRedHeartRisingSpriteTemplate, ANIM_ATTACKER, 40, 126, 272, 30
