@@ -4,20 +4,19 @@
 #include "sound.h"
 #include "palette.h"
 
-
-void sub_80CD3E0(struct Sprite* sprite);
-void sub_80CD6CC(struct Sprite* sprite);
-static void sub_80CD408(struct Sprite* sprite);
-static void sub_80CD4B8(struct Sprite* sprite);
-static void sub_80CD4EC(struct Sprite* sprite);
-static void sub_80CD5A8(struct Sprite* sprite);
-static void sub_80CD654(struct Sprite* sprite);
-static void sub_80CD67C(struct Sprite* sprite);
+static void AnimLockOnTarget(struct Sprite *sprite);
+static void AnimLockOnMoveTarget(struct Sprite *sprite);
+static void AnimLockOnTarget_Step1(struct Sprite *sprite);
+static void AnimLockOnTarget_Step2(struct Sprite *sprite);
+static void AnimLockOnTarget_Step3(struct Sprite *sprite);
+static void AnimLockOnTarget_Step4(struct Sprite *sprite);
+static void AnimLockOnTarget_Step5(struct Sprite *sprite);
+static void AnimLockOnTarget_Step6(struct Sprite *sprite);
 
 // scan
 // Used by Lock-On.
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6DAC =
+const struct SpriteTemplate gLockOnTargetSpriteTemplate =
 {
     .tileTag = ANIM_TAG_LOCK_ON,
     .paletteTag = ANIM_TAG_LOCK_ON,
@@ -25,10 +24,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6DAC =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CD3E0,
+    .callback = AnimLockOnTarget,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6DC4 =
+const struct SpriteTemplate gLockOnMoveTargetSpriteTemplate =
 {
     .tileTag = ANIM_TAG_LOCK_ON,
     .paletteTag = ANIM_TAG_LOCK_ON,
@@ -36,10 +35,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6DC4 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CD6CC,
+    .callback = AnimLockOnMoveTarget,
 };
 
-const s8 gUnknown_083D6DDC[][2] =
+const s8 gInclineMonCoordTable[][2] =
 {
     { 64,  64},
     {  0, -64},
@@ -47,23 +46,23 @@ const s8 gUnknown_083D6DDC[][2] =
     { 32, -32},
 };
 
-void sub_80CD3E0(struct Sprite* sprite)
+static void AnimLockOnTarget(struct Sprite *sprite)
 {
     sprite->x -= 32;
     sprite->y -= 32;
     sprite->data[0] = 20;
     sprite->callback = WaitAnimForDuration;
-    StoreSpriteCallbackInData6(sprite, sub_80CD408);
+    StoreSpriteCallbackInData6(sprite, AnimLockOnTarget_Step1);
 }
 
-static void sub_80CD408(struct Sprite* sprite)
+static void AnimLockOnTarget_Step1(struct Sprite *sprite)
 {
     switch (sprite->data[5] & 1)
     {
     case 0:
         sprite->data[0] = 1;
         sprite->callback = WaitAnimForDuration;
-        StoreSpriteCallbackInData6(sprite, sub_80CD408);
+        StoreSpriteCallbackInData6(sprite, AnimLockOnTarget_Step1);
         break;
     case 1:
         sprite->x += sprite->x2;
@@ -71,10 +70,10 @@ static void sub_80CD408(struct Sprite* sprite)
         sprite->y2 = 0;
         sprite->x2 = 0;
         sprite->data[0] = 8;
-        sprite->data[2] = sprite->x + gUnknown_083D6DDC[sprite->data[5] >> 8][0];
-        sprite->data[4] = sprite->y + gUnknown_083D6DDC[sprite->data[5] >> 8][1];
+        sprite->data[2] = sprite->x + gInclineMonCoordTable[sprite->data[5] >> 8][0];
+        sprite->data[4] = sprite->y + gInclineMonCoordTable[sprite->data[5] >> 8][1];
         sprite->callback = StartAnimLinearTranslation;
-        StoreSpriteCallbackInData6(sprite, sub_80CD4B8);
+        StoreSpriteCallbackInData6(sprite, AnimLockOnTarget_Step2);
         sprite->data[5] += 0x100;
         PlaySE12WithPanning(0xD2, BattleAnimAdjustPanning(SOUND_PAN_TARGET));
         break;
@@ -83,21 +82,21 @@ static void sub_80CD408(struct Sprite* sprite)
     sprite->data[5] ^= 1;
 }
 
-static void sub_80CD4B8(struct Sprite* sprite)
+static void AnimLockOnTarget_Step2(struct Sprite *sprite)
 {
     if ((sprite->data[5] >> 8) == 4)
     {
         sprite->data[0] = 10;
         sprite->callback = WaitAnimForDuration;
-        StoreSpriteCallbackInData6(sprite, sub_80CD4EC);
+        StoreSpriteCallbackInData6(sprite, AnimLockOnTarget_Step3);
     }
     else
     {
-        sprite->callback = sub_80CD408;
+        sprite->callback = AnimLockOnTarget_Step1;
     }
 }
 
-static void sub_80CD4EC(struct Sprite* sprite)
+static void AnimLockOnTarget_Step3(struct Sprite *sprite)
 {
     s16 a;
     s16 b;
@@ -107,7 +106,7 @@ static void sub_80CD4EC(struct Sprite* sprite)
         sprite->data[1] = 0;
         sprite->data[2] = 0;
         sprite->callback = WaitAnimForDuration;
-        StoreSpriteCallbackInData6(sprite, sub_80CD5A8);
+        StoreSpriteCallbackInData6(sprite, AnimLockOnTarget_Step4);
     }
     else
     {
@@ -139,11 +138,11 @@ static void sub_80CD4EC(struct Sprite* sprite)
         sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + a;
         sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + b;
         sprite->callback = StartAnimLinearTranslation;
-        StoreSpriteCallbackInData6(sprite, sub_80CD654);
+        StoreSpriteCallbackInData6(sprite, AnimLockOnTarget_Step5);
     }
 }
 
-static void sub_80CD5A8(struct Sprite* sprite)
+static void AnimLockOnTarget_Step4(struct Sprite *sprite)
 {
     if (sprite->data[2] == 0)
     {
@@ -166,21 +165,21 @@ static void sub_80CD5A8(struct Sprite* sprite)
     }
     else if (sprite->data[1] == 0)
     {
-        sprite->callback = sub_80CD654;
+        sprite->callback = AnimLockOnTarget_Step5;
     }
 }
 
-static void sub_80CD654(struct Sprite* sprite)
+static void AnimLockOnTarget_Step5(struct Sprite *sprite)
 {
     if ((u16)gBattleAnimArgs[7] == 0xFFFF)
     {
         sprite->data[1] = 0;
         sprite->data[0] = 0;
-        sprite->callback = sub_80CD67C;
+        sprite->callback = AnimLockOnTarget_Step6;
     }
 }
 
-static void sub_80CD67C(struct Sprite* sprite)
+static void AnimLockOnTarget_Step6(struct Sprite *sprite)
 {
     if (sprite->data[0] % 3 == 0)
     {
@@ -193,7 +192,7 @@ static void sub_80CD67C(struct Sprite* sprite)
         DestroyAnimSprite(sprite);
 }
 
-void sub_80CD6CC(struct Sprite* sprite)
+static void AnimLockOnMoveTarget(struct Sprite *sprite)
 {
     sprite->oam.affineParam = gBattleAnimArgs[0];
     if ((s16)sprite->oam.affineParam == 1)
@@ -221,6 +220,6 @@ void sub_80CD6CC(struct Sprite* sprite)
     }
 
     sprite->oam.tileNum = (sprite->oam.tileNum + 16);
-    sprite->callback = sub_80CD3E0;
-    sub_80CD3E0(sprite);
+    sprite->callback = AnimLockOnTarget;
+    AnimLockOnTarget(sprite);
 }
