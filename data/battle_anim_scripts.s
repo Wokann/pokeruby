@@ -3000,7 +3000,7 @@ Move_ACID_ARMOR: @ 81CB735
 
 Move_SHARPEN: @ 81CB74E
 	loadspritegfx ANIM_TAG_SPHERE_TO_CUBE
-	createsprite gBattleAnimSpriteTemplate_83D6EF0, ANIM_ATTACKER, 2
+	createsprite gSharpenSphereSpriteTemplate, ANIM_ATTACKER, 2
 	waitforvisualfinish
 	end
 
