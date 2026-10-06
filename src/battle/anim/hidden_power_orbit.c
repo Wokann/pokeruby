@@ -3,22 +3,21 @@
 #include "trig.h"
 #include "sound.h"
 
+static void AnimOrbitFast(struct Sprite *sprite);
+static void AnimOrbitScatter(struct Sprite *sprite);
+static void AnimOrbitFast_Step(struct Sprite *sprite);
+static void AnimOrbitScatter_Step(struct Sprite *sprite);
 
-void AnimOrbitFast(struct Sprite* sprite);
-void AnimOrbitScatter(struct Sprite* sprite);
-static void AnimOrbitFastStep(struct Sprite* sprite);
-static void AnimOrbitScatterStep(struct Sprite* sprite);
-
-const union AffineAnimCmd gSpriteAffineAnim_83D7AF8[] =
+const union AffineAnimCmd gHiddenPowerOrbAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0x80, 0x80, 0, 0),
     AFFINEANIMCMD_FRAME(0x8, 0x8, 0, 1),
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D7B10[] =
+const union AffineAnimCmd *const gHiddenPowerOrbAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D7AF8,
+    gHiddenPowerOrbAffineAnimCmds,
 };
 
 const struct SpriteTemplate gHiddenPowerOrbSpriteTemplate =
@@ -28,7 +27,7 @@ const struct SpriteTemplate gHiddenPowerOrbSpriteTemplate =
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D7B10,
+    .affineAnims = gHiddenPowerOrbAffineAnimTable,
     .callback = AnimOrbitFast,
 };
 
@@ -39,7 +38,7 @@ const struct SpriteTemplate gHiddenPowerOrbScatterSpriteTemplate =
     .oam = &gOamData_AffineDouble_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D7B10,
+    .affineAnims = gHiddenPowerOrbAffineAnimTable,
     .callback = AnimOrbitScatter,
 };
 
@@ -47,7 +46,7 @@ const struct SpriteTemplate gHiddenPowerOrbScatterSpriteTemplate =
 // Used by MOVE_HIDDEN_POWER
 // arg 0: duration
 // arg 1: initial wave offset
-void AnimOrbitFast(struct Sprite* sprite)
+static void AnimOrbitFast(struct Sprite *sprite)
 {
     sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
     sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
@@ -55,11 +54,11 @@ void AnimOrbitFast(struct Sprite* sprite)
     sprite->data[0] = gBattleAnimArgs[0];
     sprite->data[1] = gBattleAnimArgs[1];
     sprite->data[7] = GetBattlerSpriteSubpriority(gBattleAnimAttacker);
-    sprite->callback = AnimOrbitFastStep;
+    sprite->callback = AnimOrbitFast_Step;
     sprite->callback(sprite);
 }
 
-static void AnimOrbitFastStep(struct Sprite* sprite)
+static void AnimOrbitFast_Step(struct Sprite *sprite)
 {
     if ((u16)(sprite->data[1] - 0x40) <= 0x7F)
         sprite->subpriority = sprite->data[7] + 1;
@@ -98,16 +97,16 @@ static void AnimOrbitFastStep(struct Sprite* sprite)
 // Moves orbs away from the mon, based on where they are in their orbit.
 // Used in MOVE_HIDDEN_POWER.
 // arg 0: initial wave offset
-void AnimOrbitScatter(struct Sprite* sprite)
+static void AnimOrbitScatter(struct Sprite *sprite)
 {
     sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
     sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
     sprite->data[0] = Sin(gBattleAnimArgs[0], 10);
     sprite->data[1] = Cos(gBattleAnimArgs[0], 7);
-    sprite->callback = AnimOrbitScatterStep;
+    sprite->callback = AnimOrbitScatter_Step;
 }
 
-static void AnimOrbitScatterStep(struct Sprite* sprite)
+static void AnimOrbitScatter_Step(struct Sprite *sprite)
 {
     sprite->x2 += sprite->data[0];
     sprite->y2 += sprite->data[1];
