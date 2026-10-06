@@ -2290,45 +2290,45 @@ Move_CONVERSION: @ 81CA809
 	setalpha 16, 0
 	delay 0
 	playsewithpan SE_M_SWIFT, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D6F80, ANIM_ATTACKER, 2, -24, -24
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, -24, -24
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D6F80, ANIM_ATTACKER, 2, -8, -24
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, -8, -24
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D6F80, ANIM_ATTACKER, 2, 8, -24
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, 8, -24
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D6F80, ANIM_ATTACKER, 2, 24, -24
-	delay 3
-	playsewithpan SE_M_SWIFT, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D6F80, ANIM_ATTACKER, 2, -24, -8
-	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D6F80, ANIM_ATTACKER, 2, -8, -8
-	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D6F80, ANIM_ATTACKER, 2, 8, -8
-	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D6F80, ANIM_ATTACKER, 2, 24, -8
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, 24, -24
 	delay 3
 	playsewithpan SE_M_SWIFT, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D6F80, ANIM_ATTACKER, 2, -24, 8
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, -24, -8
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D6F80, ANIM_ATTACKER, 2, -8, 8
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, -8, -8
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D6F80, ANIM_ATTACKER, 2, 8, 8
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, 8, -8
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D6F80, ANIM_ATTACKER, 2, 24, 8
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, 24, -8
 	delay 3
 	playsewithpan SE_M_SWIFT, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D6F80, ANIM_ATTACKER, 2, -24, 24
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, -24, 8
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D6F80, ANIM_ATTACKER, 2, -8, 24
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, -8, 8
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D6F80, ANIM_ATTACKER, 2, 8, 24
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, 8, 8
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D6F80, ANIM_ATTACKER, 2, 24, 24
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, 24, 8
+	delay 3
+	playsewithpan SE_M_SWIFT, SOUND_PAN_ATTACKER
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, -24, 24
+	delay 3
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, -8, 24
+	delay 3
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, 8, 24
+	delay 3
+	createsprite gConversionSpriteTemplate, ANIM_ATTACKER, 2, 24, 24
 	delay 20
 	playsewithpan SE_M_BARRIER, SOUND_PAN_ATTACKER
 	createvisualtask sub_80E21A8, 2, 10018, 1, 1, 14335, 12, 0, 0
 	delay 6
-	createvisualtask sub_80CE108, 5
+	createvisualtask AnimTask_ConversionAlphaBlend, 5
 	waitforvisualfinish
 	delay 1
 	clearmonbg ANIM_ATK_PARTNER
@@ -2342,23 +2342,23 @@ Move_CONVERSION_2: @ 81CA91E
 	setalpha 0, 16
 	delay 0
 	playsewithpan SE_M_BARRIER, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D6FB0, ANIM_ATTACKER, 2, -24, -24, 60
-	createsprite gBattleAnimSpriteTemplate_83D6FB0, ANIM_ATTACKER, 2, -8, -24, 65
-	createsprite gBattleAnimSpriteTemplate_83D6FB0, ANIM_ATTACKER, 2, 8, -24, 70
-	createsprite gBattleAnimSpriteTemplate_83D6FB0, ANIM_ATTACKER, 2, 24, -24, 75
-	createsprite gBattleAnimSpriteTemplate_83D6FB0, ANIM_ATTACKER, 2, -24, -8, 80
-	createsprite gBattleAnimSpriteTemplate_83D6FB0, ANIM_ATTACKER, 2, -8, -8, 85
-	createsprite gBattleAnimSpriteTemplate_83D6FB0, ANIM_ATTACKER, 2, 8, -8, 90
-	createsprite gBattleAnimSpriteTemplate_83D6FB0, ANIM_ATTACKER, 2, 24, -8, 95
-	createsprite gBattleAnimSpriteTemplate_83D6FB0, ANIM_ATTACKER, 2, -24, 8, 100
-	createsprite gBattleAnimSpriteTemplate_83D6FB0, ANIM_ATTACKER, 2, -8, 8, 105
-	createsprite gBattleAnimSpriteTemplate_83D6FB0, ANIM_ATTACKER, 2, 8, 8, 110
-	createsprite gBattleAnimSpriteTemplate_83D6FB0, ANIM_ATTACKER, 2, 24, 8, 115
-	createsprite gBattleAnimSpriteTemplate_83D6FB0, ANIM_ATTACKER, 2, -24, 24, 120
-	createsprite gBattleAnimSpriteTemplate_83D6FB0, ANIM_ATTACKER, 2, -8, 24, 125
-	createsprite gBattleAnimSpriteTemplate_83D6FB0, ANIM_ATTACKER, 2, 8, 24, 130
-	createsprite gBattleAnimSpriteTemplate_83D6FB0, ANIM_ATTACKER, 2, 24, 24, 135
-	createvisualtask sub_80CE210, 5
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, -24, -24, 60
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, -8, -24, 65
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, 8, -24, 70
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, 24, -24, 75
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, -24, -8, 80
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, -8, -8, 85
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, 8, -8, 90
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, 24, -8, 95
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, -24, 8, 100
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, -8, 8, 105
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, 8, 8, 110
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, 24, 8, 115
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, -24, 24, 120
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, -8, 24, 125
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, 8, 24, 130
+	createsprite gConversion2SpriteTemplate, ANIM_ATTACKER, 2, 24, 24, 135
+	createvisualtask AnimTask_Conversion2AlphaBlend, 5
 	delay 60
 	playsewithpan SE_M_SWIFT, SOUND_PAN_TARGET
 	delay 10
@@ -6888,16 +6888,16 @@ Move_OCTAZOOKA: @ 81D100D
 	loadspritegfx ANIM_TAG_GRAY_SMOKE
 	loadspritegfx ANIM_TAG_BLACK_BALL
 	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D6F08, ANIM_TARGET, 2, 20, 0, 0, 0, 20, 0
+	createsprite gOctazookaBallSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 0, 20, 0
 	waitforvisualfinish
 	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D6F3C, ANIM_TARGET, 2, 8, 8, 1, 0
+	createsprite gOctazookaSmokeSpriteTemplate, ANIM_TARGET, 2, 8, 8, 1, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6F3C, ANIM_TARGET, 2, -8, -8, 1, 0
+	createsprite gOctazookaSmokeSpriteTemplate, ANIM_TARGET, 2, -8, -8, 1, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6F3C, ANIM_TARGET, 2, 8, -8, 1, 0
+	createsprite gOctazookaSmokeSpriteTemplate, ANIM_TARGET, 2, 8, -8, 1, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6F3C, ANIM_TARGET, 2, -8, 8, 1, 0
+	createsprite gOctazookaSmokeSpriteTemplate, ANIM_TARGET, 2, -8, 8, 1, 0
 	waitforvisualfinish
 	end
 
