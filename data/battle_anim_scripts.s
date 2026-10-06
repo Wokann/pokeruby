@@ -3200,15 +3200,15 @@ Move_ENDURE: @ 81CBA87
 	end
 
 EndureFlamesAnim:
-	createsprite gBattleAnimSpriteTemplate_EndureFlame, ANIM_ATTACKER, 2, 0, -24, 26, 2
+	createsprite gEndureEnergySpriteTemplate, ANIM_ATTACKER, 2, 0, -24, 26, 2
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_EndureFlame, ANIM_ATTACKER, 2, 0, 14, 28, 1
+	createsprite gEndureEnergySpriteTemplate, ANIM_ATTACKER, 2, 0, 14, 28, 1
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_EndureFlame, ANIM_ATTACKER, 2, 0, -5, 10, 2
+	createsprite gEndureEnergySpriteTemplate, ANIM_ATTACKER, 2, 0, -5, 10, 2
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_EndureFlame, ANIM_ATTACKER, 2, 0, 28, 26, 3
+	createsprite gEndureEnergySpriteTemplate, ANIM_ATTACKER, 2, 0, 28, 26, 3
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_EndureFlame, ANIM_ATTACKER, 2, 0, -12, 0, 1
+	createsprite gEndureEnergySpriteTemplate, ANIM_ATTACKER, 2, 0, -12, 0, 1
 	return
 
 Move_CHARM: @ 81CBB1B

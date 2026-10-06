@@ -3,14 +3,13 @@
 #include "trig.h"
 #include "sound.h"
 
-
-void sub_80CDF0C(struct Sprite* sprite);
-static void sub_80CDF70(struct Sprite* sprite);
+static void AnimEndureEnergy(struct Sprite *sprite);
+static void AnimEndureEnergy_Step(struct Sprite *sprite);
 
 // brace (the Pokemon prepares to endure a hit)
 // Used in Endure.
 
-const union AnimCmd gSpriteAnim_83D6E80[] =
+const union AnimCmd gEndureEnergyAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(8, 12),
@@ -19,23 +18,23 @@ const union AnimCmd gSpriteAnim_83D6E80[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D6E94[] =
+const union AnimCmd *const gEndureEnergyAnimTable[] =
 {
-    gSpriteAnim_83D6E80,
+    gEndureEnergyAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_EndureFlame =
+const struct SpriteTemplate gEndureEnergySpriteTemplate =
 {
     .tileTag = ANIM_TAG_FOCUS_ENERGY,
     .paletteTag = ANIM_TAG_FOCUS_ENERGY,
     .oam = &gOamData_AffineOff_ObjNormal_16x32,
-    .anims = gSpriteAnimTable_83D6E94,
+    .anims = gEndureEnergyAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CDF0C,
+    .callback = AnimEndureEnergy,
 };
 
-void sub_80CDF0C(struct Sprite* sprite)
+static void AnimEndureEnergy(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[0] == 0)
     {
@@ -50,10 +49,10 @@ void sub_80CDF0C(struct Sprite* sprite)
 
     sprite->data[0] = 0;
     sprite->data[1] = gBattleAnimArgs[3];
-    sprite->callback = sub_80CDF70;
+    sprite->callback = AnimEndureEnergy_Step;
 }
 
-static void sub_80CDF70(struct Sprite* sprite)
+static void AnimEndureEnergy_Step(struct Sprite *sprite)
 {
     if (++sprite->data[0] > sprite->data[1])
     {
