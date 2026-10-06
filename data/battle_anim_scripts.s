@@ -3386,7 +3386,7 @@ _81CBE55:
 	waitbgfadeout
 	createvisualtask sub_80E3A58, 5, -2304, 0, 1, -1
 	waitbgfadein
-	createvisualtask sub_80D15A4, 2
+	createvisualtask AnimTask_AttackerStretchAndDisappear, 2
 	loopsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER, 8, 3
 	waitforvisualfinish
 	delay 1
@@ -3394,7 +3394,7 @@ _81CBE55:
 	monbg ANIM_TARGET
 	setalpha 12, 8
 	delay 18
-	createvisualtask sub_80D1638, 2
+	createvisualtask AnimTask_ExtremeSpeedImpact, 2
 	delay 2
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	createsprite gBattleAnimSpriteTemplate_83DB508, ANIM_TARGET, 2, 1, 0, -12, 3
@@ -3405,9 +3405,9 @@ _81CBE55:
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	createsprite gBattleAnimSpriteTemplate_83DB508, ANIM_TARGET, 2, 1, 0, 0, 3
 	waitforvisualfinish
-	createvisualtask sub_80D18D4, 2
+	createvisualtask AnimTask_SpeedDust, 2
 	delay 10
-	createvisualtask sub_80D17C4, 2
+	createvisualtask AnimTask_ExtremeSpeedMonReappear, 2
 	loopsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER, 8, 4
 	waitforvisualfinish
 	restorebg
