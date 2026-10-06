@@ -6,23 +6,23 @@
 extern const union AnimCmd *const gPetalDanceSmallFlowerAnimTable[];
 extern const union AnimCmd *const gPetalDanceBigFlowerAnimTable[];
 
-void sub_80CC474(struct Sprite* sprite);
-static void sub_80CC580(struct Sprite* sprite);
+static void AnimFlyingParticle(struct Sprite *sprite);
+static void AnimFlyingParticle_Step(struct Sprite *sprite);
 
 // flying_petals (petals fly across the screen.)
 // Used by Aromatherapy.
 
-const union AffineAnimCmd gSpriteAffineAnim_83D689C[] = {
+const union AffineAnimCmd gAromatherapyBigFlowerAffineAnimCmds[] = {
     AFFINEANIMCMD_FRAME(256, 256, 0, 0),
     AFFINEANIMCMD_FRAME(0, 0, 4, 1),
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D68B4[] = {
-    gSpriteAffineAnim_83D689C,
+const union AffineAnimCmd *const gAromatherapyBigFlowerAffineAnimTable[] = {
+    gAromatherapyBigFlowerAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D68B8 =
+const struct SpriteTemplate gAromatherapySmallFlowerSpriteTemplate =
 {
     .tileTag = ANIM_TAG_FLOWER,
     .paletteTag = ANIM_TAG_FLOWER,
@@ -30,92 +30,92 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D68B8 =
     .anims = gPetalDanceSmallFlowerAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CC474,
+    .callback = AnimFlyingParticle,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D68D0 =
+const struct SpriteTemplate gAromatherapyBigFlowerSpriteTemplate =
 {
     .tileTag = ANIM_TAG_FLOWER,
     .paletteTag = ANIM_TAG_FLOWER,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gPetalDanceBigFlowerAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D68B4,
-    .callback = sub_80CC474,
+    .affineAnims = gAromatherapyBigFlowerAffineAnimTable,
+    .callback = AnimFlyingParticle,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D68E8[] = {
+const union AffineAnimCmd gSilverWindBigSparkAffineAnimCmds[] = {
     AFFINEANIMCMD_FRAME(256, 256, 0, 0),
     AFFINEANIMCMD_FRAME(0, 0, -10, 1),
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6900[] = {
+const union AffineAnimCmd gSilverWindMediumSparkAffineAnimCmds[] = {
     AFFINEANIMCMD_FRAME(192, 192, 0, 0),
     AFFINEANIMCMD_FRAME(0, 0, -12, 1),
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6918[] = {
+const union AffineAnimCmd gSilverWindSmallSparkAffineAnimCmds[] = {
     AFFINEANIMCMD_FRAME(143, 143, 0, 0),
     AFFINEANIMCMD_FRAME(0, 0, -15, 1),
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D6930[] = {
-    gSpriteAffineAnim_83D68E8,
+const union AffineAnimCmd *const gSilverWindBigSparkAffineAnimTable[] = {
+    gSilverWindBigSparkAffineAnimCmds,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D6934[] = {
-    gSpriteAffineAnim_83D6900,
+const union AffineAnimCmd *const gSilverWindMediumSparkAffineAnimTable[] = {
+    gSilverWindMediumSparkAffineAnimCmds,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D6938[] = {
-    gSpriteAffineAnim_83D6918,
+const union AffineAnimCmd *const gSilverWindSmallSparkAffineAnimTable[] = {
+    gSilverWindSmallSparkAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D693C =
+const struct SpriteTemplate gSilverWindBigSparkSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPARKLE_6,
     .paletteTag = ANIM_TAG_SPARKLE_6,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D6930,
-    .callback = sub_80CC474,
+    .affineAnims = gSilverWindBigSparkAffineAnimTable,
+    .callback = AnimFlyingParticle,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6954 =
+const struct SpriteTemplate gSilverWindMediumSparkSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPARKLE_6,
     .paletteTag = ANIM_TAG_SPARKLE_6,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D6934,
-    .callback = sub_80CC474,
+    .affineAnims = gSilverWindMediumSparkAffineAnimTable,
+    .callback = AnimFlyingParticle,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D696C =
+const struct SpriteTemplate gSilverWindSmallSparkSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPARKLE_6,
     .paletteTag = ANIM_TAG_SPARKLE_6,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D6938,
-    .callback = sub_80CC474,
+    .affineAnims = gSilverWindSmallSparkAffineAnimTable,
+    .callback = AnimFlyingParticle,
 };
 
-void sub_80CC474(struct Sprite* sprite)
+static void AnimFlyingParticle(struct Sprite *sprite)
 {
-    u8 bank;
+    u8 battler;
     if (!gBattleAnimArgs[6])
-        bank = gBattleAnimAttacker;
+        battler = gBattleAnimAttacker;
     else
-        bank = gBattleAnimTarget;
+        battler = gBattleAnimTarget;
 
-    if (GetBattlerSide(bank) != 0)
+    if (GetBattlerSide(battler) != 0)
     {
         sprite->data[4] = 0;
         sprite->data[2] = gBattleAnimArgs[3];
@@ -135,27 +135,27 @@ void sub_80CC474(struct Sprite* sprite)
     {
     case 0:
         sprite->y = gBattleAnimArgs[0];
-        sprite->oam.priority = GetBattlerSpriteBGPriority(bank);
+        sprite->oam.priority = GetBattlerSpriteBGPriority(battler);
         break;
     case 1:
         sprite->y = gBattleAnimArgs[0];
-        sprite->oam.priority = GetBattlerSpriteBGPriority(bank) + 1;
+        sprite->oam.priority = GetBattlerSpriteBGPriority(battler) + 1;
         break;
     case 2:
-        sprite->y = GetBattlerSpriteCoord(bank, 3) + gBattleAnimArgs[0];
-        sprite->oam.priority = GetBattlerSpriteBGPriority(bank);
+        sprite->y = GetBattlerSpriteCoord(battler, 3) + gBattleAnimArgs[0];
+        sprite->oam.priority = GetBattlerSpriteBGPriority(battler);
         break;
     case 3:
         sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + gBattleAnimArgs[0];
         GetAnimBattlerSpriteId(1);
-        sprite->oam.priority = GetBattlerSpriteBGPriority(bank) + 1;
+        sprite->oam.priority = GetBattlerSpriteBGPriority(battler) + 1;
         break;
     }
 
-    sprite->callback = sub_80CC580;
+    sprite->callback = AnimFlyingParticle_Step;
 }
 
-static void sub_80CC580(struct Sprite* sprite)
+static void AnimFlyingParticle_Step(struct Sprite *sprite)
 {
     int a = sprite->data[7];
     sprite->data[7]++;

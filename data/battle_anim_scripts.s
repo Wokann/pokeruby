@@ -4134,17 +4134,17 @@ Move_AROMATHERAPY: @ 81CCFAB
 	delay 1
 	monbg ANIM_ATTACKER
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D68B8, ANIM_ATTACKER, 0, 24, 16, 0, 2, 2, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D68B8, ANIM_ATTACKER, 66, 64, 24, 0, 3, 1, 1, 0
-	createsprite gBattleAnimSpriteTemplate_83D68D0, ANIM_ATTACKER, 0, 16, 24, 0, 2, 1, 0, 0
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_ATTACKER, 0, 24, 16, 0, 2, 2, 0, 0
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_ATTACKER, 66, 64, 24, 0, 3, 1, 1, 0
+	createsprite gAromatherapyBigFlowerSpriteTemplate, ANIM_ATTACKER, 0, 16, 24, 0, 2, 1, 0, 0
 	delay 20
-	createsprite gBattleAnimSpriteTemplate_83D68B8, ANIM_ATTACKER, 66, 48, 12, 0, 4, 3, 1, 0
-	createsprite gBattleAnimSpriteTemplate_83D68B8, ANIM_ATTACKER, 0, 100, 16, 0, 3, 2, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D68B8, ANIM_ATTACKER, 0, 74, 24, 180, 3, 2, 0, 0
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_ATTACKER, 66, 48, 12, 0, 4, 3, 1, 0
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_ATTACKER, 0, 100, 16, 0, 3, 2, 0, 0
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_ATTACKER, 0, 74, 24, 180, 3, 2, 0, 0
 	delay 10
-	createsprite gBattleAnimSpriteTemplate_83D68B8, ANIM_ATTACKER, 66, 80, 30, 0, 4, 1, 1, 0
-	createsprite gBattleAnimSpriteTemplate_83D68B8, ANIM_ATTACKER, 0, 128, 12, 0, 3, 3, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D68D0, ANIM_ATTACKER, 0, 90, 16, 0, 2, 1, 0, 0
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_ATTACKER, 66, 80, 30, 0, 4, 1, 1, 0
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_ATTACKER, 0, 128, 12, 0, 3, 3, 0, 0
+	createsprite gAromatherapyBigFlowerSpriteTemplate, ANIM_ATTACKER, 0, 90, 16, 0, 2, 1, 0, 0
 	waitforvisualfinish
 	clearmonbg ANIM_ATTACKER
 	delay 1
@@ -9138,29 +9138,29 @@ _81D47BA:
 	delay 0
 	createvisualtask sub_80E2A38, 10, 1, 0, 4, 4, 0
 	waitbgfadein
-	createsprite gBattleAnimSpriteTemplate_83D693C, ANIM_TARGET, 66, -32, 16, 0, 6, 2, 3, 1
-	createsprite gBattleAnimSpriteTemplate_83D693C, ANIM_TARGET, 66, -8, 18, 64, 3, 2, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D693C, ANIM_ATTACKER, 120, -24, 18, 90, 5, 1, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D693C, ANIM_ATTACKER, 120, -40, 14, 128, 4, 1, 2, 1
+	createsprite gSilverWindBigSparkSpriteTemplate, ANIM_TARGET, 66, -32, 16, 0, 6, 2, 3, 1
+	createsprite gSilverWindBigSparkSpriteTemplate, ANIM_TARGET, 66, -8, 18, 64, 3, 2, 2, 1
+	createsprite gSilverWindBigSparkSpriteTemplate, ANIM_ATTACKER, 120, -24, 18, 90, 5, 1, 2, 1
+	createsprite gSilverWindBigSparkSpriteTemplate, ANIM_ATTACKER, 120, -40, 14, 128, 4, 1, 2, 1
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83D6954, ANIM_TARGET, 66, -32, 16, 0, 6, 2, 3, 1
-	createsprite gBattleAnimSpriteTemplate_83D6954, ANIM_TARGET, 66, -8, 18, 64, 3, 2, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D6954, ANIM_ATTACKER, 120, -24, 18, 90, 5, 1, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D6954, ANIM_ATTACKER, 120, -40, 14, 128, 4, 1, 2, 1
+	createsprite gSilverWindMediumSparkSpriteTemplate, ANIM_TARGET, 66, -32, 16, 0, 6, 2, 3, 1
+	createsprite gSilverWindMediumSparkSpriteTemplate, ANIM_TARGET, 66, -8, 18, 64, 3, 2, 2, 1
+	createsprite gSilverWindMediumSparkSpriteTemplate, ANIM_ATTACKER, 120, -24, 18, 90, 5, 1, 2, 1
+	createsprite gSilverWindMediumSparkSpriteTemplate, ANIM_ATTACKER, 120, -40, 14, 128, 4, 1, 2, 1
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83D696C, ANIM_TARGET, 66, -32, 16, 0, 6, 2, 3, 1
-	createsprite gBattleAnimSpriteTemplate_83D696C, ANIM_TARGET, 66, -8, 18, 64, 3, 2, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D696C, ANIM_ATTACKER, 120, -24, 18, 90, 5, 1, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D696C, ANIM_ATTACKER, 120, -40, 14, 128, 4, 1, 2, 1
+	createsprite gSilverWindSmallSparkSpriteTemplate, ANIM_TARGET, 66, -32, 16, 0, 6, 2, 3, 1
+	createsprite gSilverWindSmallSparkSpriteTemplate, ANIM_TARGET, 66, -8, 18, 64, 3, 2, 2, 1
+	createsprite gSilverWindSmallSparkSpriteTemplate, ANIM_ATTACKER, 120, -24, 18, 90, 5, 1, 2, 1
+	createsprite gSilverWindSmallSparkSpriteTemplate, ANIM_ATTACKER, 120, -40, 14, 128, 4, 1, 2, 1
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83D693C, ANIM_TARGET, 66, -4, 16, 0, 6, 1, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D693C, ANIM_TARGET, 66, -16, 12, 192, 5, 2, 3, 1
+	createsprite gSilverWindBigSparkSpriteTemplate, ANIM_TARGET, 66, -4, 16, 0, 6, 1, 2, 1
+	createsprite gSilverWindBigSparkSpriteTemplate, ANIM_TARGET, 66, -16, 12, 192, 5, 2, 3, 1
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83D6954, ANIM_TARGET, 66, -4, 16, 0, 6, 1, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D6954, ANIM_TARGET, 66, -16, 12, 192, 5, 2, 3, 1
+	createsprite gSilverWindMediumSparkSpriteTemplate, ANIM_TARGET, 66, -4, 16, 0, 6, 1, 2, 1
+	createsprite gSilverWindMediumSparkSpriteTemplate, ANIM_TARGET, 66, -16, 12, 192, 5, 2, 3, 1
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83D696C, ANIM_TARGET, 66, -4, 16, 0, 6, 1, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D696C, ANIM_TARGET, 66, -16, 12, 192, 5, 2, 3, 1
+	createsprite gSilverWindSmallSparkSpriteTemplate, ANIM_TARGET, 66, -4, 16, 0, 6, 1, 2, 1
+	createsprite gSilverWindSmallSparkSpriteTemplate, ANIM_TARGET, 66, -16, 12, 192, 5, 2, 3, 1
 	waitforvisualfinish
 	playsewithpan SE_M_GUST2, SOUND_PAN_TARGET
 	clearmonbg ANIM_DEF_PARTNER
