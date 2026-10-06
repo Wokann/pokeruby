@@ -3481,6 +3481,9 @@ extern const u8 gSubstituteDollFrontGfx[];
 extern const u8 gSubstituteDollBackGfx[];
 extern const u8 gSubstituteDollPal[];
 
+extern const u8 gBattleAnimBgTilemap_Sandstorm[];
+extern const u8 gBattleAnimBgImage_Sandstorm[];
+
 // Pokédex
 extern const u8 gPokedexMenu_Gfx[];
 extern const u8 gPokedexInterface_Gfx[];

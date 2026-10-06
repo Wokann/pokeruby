@@ -284,7 +284,7 @@ SECTIONS {
         src/battle_anim_flying.o(.text);
         src/battle_anim_psychic.o(.text);
         src/battle_anim_bug.o(.text);
-        src/battle/anim/rock.o(.text);
+        src/battle_anim_rock.o(.text);
         src/battle/anim/ghost.o(.text);
         src/battle/anim/dragon.o(.text);
         src/battle/anim/dark.o(.text);
@@ -705,7 +705,7 @@ SECTIONS {
         src/battle_anim_flying.o(.rodata);
         src/battle_anim_psychic.o(.rodata);
         src/battle_anim_bug.o(.rodata);
-        src/battle/anim/rock.o(.rodata);
+        src/battle_anim_rock.o(.rodata);
         src/battle/anim/ghost.o(.rodata);
         src/battle/anim/dragon.o(.rodata);
         src/battle/anim/dark.o(.rodata);

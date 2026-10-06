@@ -278,6 +278,9 @@ extern const union AnimCmd *const gAnims_WaterMudOrb[];
 // battle/anim/fire_2.c
 extern const union AnimCmd *const gAnims_BasicFire[];
 
+// battle/anim/leaf.c
+void AnimMoveTwisterParticle(struct Sprite *sprite);
+
 // battle/anim/sonic.c
 extern const union AffineAnimCmd *const gGrowingRingAffineAnimTable[];
 
