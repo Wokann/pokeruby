@@ -288,7 +288,7 @@ void AnimParticleBurst(struct Sprite *sprite);
 extern const union AnimCmd *const gAnims_WaterBubble[];
 void AnimWaterPulseRing(struct Sprite *sprite);
 
-// battle/anim/poison.c
+// battle_anim_poison.c
 extern const union AffineAnimCmd *const gAffineAnims_Droplet[];
 
 // battle_anim_ice.c
