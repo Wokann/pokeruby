@@ -3,14 +3,13 @@
 #include "trig.h"
 #include "sound.h"
 
-
-void sub_80CE30C(struct Sprite* sprite);
-static void sub_80CE354(struct Sprite* sprite);
+static void AnimMoon(struct Sprite *sprite);
+static void AnimMoon_Step(struct Sprite *sprite);
 
 // moon (shows a moon image.)
 // Used in Moonlight.
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6FC8 =
+const struct SpriteTemplate gMoonSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MOON,
     .paletteTag = ANIM_TAG_MOON,
@@ -18,10 +17,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6FC8 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CE30C,
+    .callback = AnimMoon,
 };
 
-void sub_80CE30C(struct Sprite* sprite)
+static void AnimMoon(struct Sprite *sprite)
 {
     if (IsContest())
     {
@@ -37,10 +36,10 @@ void sub_80CE30C(struct Sprite* sprite)
     sprite->oam.shape = 0;
     sprite->oam.size = 3;
     sprite->data[0] = 0;
-    sprite->callback = sub_80CE354;
+    sprite->callback = AnimMoon_Step;
 }
 
-static void sub_80CE354(struct Sprite* sprite)
+static void AnimMoon_Step(struct Sprite *sprite)
 {
     if (sprite->data[0])
         DestroyAnimSprite(sprite);
