@@ -2004,14 +2004,14 @@ Move_ATTRACT: @ 81CA0BA
 	waitforvisualfinish
 	waitplaysewithpan SE_M_ATTRACT2, 0, 15
 	createvisualtask sub_80D2100, 5
-	createsprite gBattleAnimSpriteTemplate_83D7AE0, ANIM_ATTACKER, 40, 16, 256, 0
-	createsprite gBattleAnimSpriteTemplate_83D7AE0, ANIM_ATTACKER, 40, 224, 240, 15
-	createsprite gBattleAnimSpriteTemplate_83D7AE0, ANIM_ATTACKER, 40, 126, 272, 30
-	createsprite gBattleAnimSpriteTemplate_83D7AE0, ANIM_ATTACKER, 40, 80, 224, 45
-	createsprite gBattleAnimSpriteTemplate_83D7AE0, ANIM_ATTACKER, 40, 170, 272, 60
-	createsprite gBattleAnimSpriteTemplate_83D7AE0, ANIM_ATTACKER, 40, 40, 256, 75
-	createsprite gBattleAnimSpriteTemplate_83D7AE0, ANIM_ATTACKER, 40, 112, 256, 90
-	createsprite gBattleAnimSpriteTemplate_83D7AE0, ANIM_ATTACKER, 40, 200, 272, 90
+	createsprite gRedHeartRisingSpriteTemplate, ANIM_ATTACKER, 40, 16, 256, 0
+	createsprite gRedHeartRisingSpriteTemplate, ANIM_ATTACKER, 40, 224, 240, 15
+	createsprite gRedHeartRisingSpriteTemplate, ANIM_ATTACKER, 40, 126, 272, 30
+	createsprite gRedHeartRisingSpriteTemplate, ANIM_ATTACKER, 40, 80, 224, 45
+	createsprite gRedHeartRisingSpriteTemplate, ANIM_ATTACKER, 40, 170, 272, 60
+	createsprite gRedHeartRisingSpriteTemplate, ANIM_ATTACKER, 40, 40, 256, 75
+	createsprite gRedHeartRisingSpriteTemplate, ANIM_ATTACKER, 40, 112, 256, 90
+	createsprite gRedHeartRisingSpriteTemplate, ANIM_ATTACKER, 40, 200, 272, 90
 	delay 75
 	createvisualtask sub_80E1F8C, 2, 4, 4, 4, 0, 10, 28479
 	end
