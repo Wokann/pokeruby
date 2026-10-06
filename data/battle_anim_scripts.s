@@ -2619,7 +2619,7 @@ Move_FISSURE: @ 81CAF7E
 	delay 50
 	fadetobg BG_FISSURE
 	waitbgfadeout
-	createvisualtask sub_80E1BB0, 5, 1, 5, -1
+	createvisualtask AnimTask_PositionFissureBgOnBattler, 5, 1, 5, -1
 	waitbgfadein
 	delay 40
 	restorebg
@@ -2649,11 +2649,11 @@ _81CB0AA:
 _81CB0AB:
 	loadspritegfx ANIM_TAG_MUD_SAND
 	loadspritegfx ANIM_TAG_DIRT_MOUND
-	createsprite gDigDirtMoundSpriteTemplate, ANIM_ATTACKER, 1, 0, 0, 180
-	createsprite gDigDirtMoundSpriteTemplate, ANIM_ATTACKER, 1, 0, 1, 180
+	createsprite gDirtMoundSpriteTemplate, ANIM_ATTACKER, 1, 0, 0, 180
+	createsprite gDirtMoundSpriteTemplate, ANIM_ATTACKER, 1, 0, 1, 180
 	monbg_static ANIM_ATTACKER
 	delay 1
-	createvisualtask sub_80E1244, 2, 0
+	createvisualtask AnimTask_DigDownMovement, 2, 0
 	delay 6
 	call _81CB16A
 	call _81CB16A
@@ -2663,18 +2663,18 @@ _81CB0AB:
 	waitforvisualfinish
 	clearmonbg_static ANIM_ATTACKER
 	delay 1
-	createvisualtask sub_80E1244, 2, 1
+	createvisualtask AnimTask_DigDownMovement, 2, 1
 	goto _81CB0AA
 _81CB106:
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_DIRT_MOUND
-	createvisualtask sub_80E149C, 2, 0
+	createvisualtask AnimTask_DigUpMovement, 2, 0
 	waitforvisualfinish
 	monbg ANIM_ATTACKER
-	createsprite gDigDirtMoundSpriteTemplate, ANIM_ATTACKER, 1, 0, 0, 48
-	createsprite gDigDirtMoundSpriteTemplate, ANIM_ATTACKER, 1, 0, 1, 48
+	createsprite gDirtMoundSpriteTemplate, ANIM_ATTACKER, 1, 0, 0, 48
+	createsprite gDirtMoundSpriteTemplate, ANIM_ATTACKER, 1, 0, 1, 48
 	delay 1
-	createvisualtask sub_80E149C, 2, 1
+	createvisualtask AnimTask_DigUpMovement, 2, 1
 	delay 16
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 2, -8, 0, 1, 2
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 6, 1
@@ -3309,7 +3309,7 @@ Move_MILK_DRINK: @ 81CBC6E
 	end
 
 Move_MAGNITUDE: @ 81CBCB0
-	createvisualtask sub_80E1B88, 2
+	createvisualtask AnimTask_IsPowerOver99, 2
 	waitforvisualfinish
 	jumpargeq 15, 0, _81CBCC9
 	jumpargeq 15, 1, _81CBCEE
@@ -4008,46 +4008,46 @@ Move_MUD_SPORT: @ 81CCC3C
 	loadspritegfx ANIM_TAG_MUD_SAND
 	createvisualtask AnimTask_Splash, 2, 0, 6
 	delay 24
-	createsprite gMudSportDirtSpriteTemplate, ANIM_TARGET, 2, 0, -4, -16
-	createsprite gMudSportDirtSpriteTemplate, ANIM_TARGET, 2, 0, 4, -12
+	createsprite gMudsportMudSpriteTemplate, ANIM_TARGET, 2, 0, -4, -16
+	createsprite gMudsportMudSpriteTemplate, ANIM_TARGET, 2, 0, 4, -12
 	playsewithpan SE_M_DIG, SOUND_PAN_ATTACKER
 	delay 32
-	createsprite gMudSportDirtSpriteTemplate, ANIM_TARGET, 2, 0, -3, -12
-	createsprite gMudSportDirtSpriteTemplate, ANIM_TARGET, 2, 0, 5, -14
+	createsprite gMudsportMudSpriteTemplate, ANIM_TARGET, 2, 0, -3, -12
+	createsprite gMudsportMudSpriteTemplate, ANIM_TARGET, 2, 0, 5, -14
 	playsewithpan SE_M_DIG, SOUND_PAN_ATTACKER
 	delay 32
-	createsprite gMudSportDirtSpriteTemplate, ANIM_TARGET, 2, 0, -5, -18
-	createsprite gMudSportDirtSpriteTemplate, ANIM_TARGET, 2, 0, 3, -14
+	createsprite gMudsportMudSpriteTemplate, ANIM_TARGET, 2, 0, -5, -18
+	createsprite gMudsportMudSpriteTemplate, ANIM_TARGET, 2, 0, 3, -14
 	playsewithpan SE_M_DIG, SOUND_PAN_ATTACKER
 	delay 16
-	createsprite gMudSportDirtSpriteTemplate, ANIM_TARGET, 2, 1, 220, 60
+	createsprite gMudsportMudSpriteTemplate, ANIM_TARGET, 2, 1, 220, 60
 	waitplaysewithpan SE_M_BUBBLE2, 0, 15
 	delay 2
-	createsprite gMudSportDirtSpriteTemplate, ANIM_TARGET, 2, 1, 60, 100
+	createsprite gMudsportMudSpriteTemplate, ANIM_TARGET, 2, 1, 60, 100
 	waitplaysewithpan SE_M_BUBBLE2, 0, 25
 	delay 2
-	createsprite gMudSportDirtSpriteTemplate, ANIM_TARGET, 2, 1, 140, 55
+	createsprite gMudsportMudSpriteTemplate, ANIM_TARGET, 2, 1, 140, 55
 	waitplaysewithpan SE_M_BUBBLE2, 0, 14
 	delay 2
-	createsprite gMudSportDirtSpriteTemplate, ANIM_TARGET, 2, 1, 180, 50
+	createsprite gMudsportMudSpriteTemplate, ANIM_TARGET, 2, 1, 180, 50
 	waitplaysewithpan SE_M_BUBBLE2, 0, 10
 	delay 2
-	createsprite gMudSportDirtSpriteTemplate, ANIM_TARGET, 2, 1, 20, 90
+	createsprite gMudsportMudSpriteTemplate, ANIM_TARGET, 2, 1, 20, 90
 	waitplaysewithpan SE_M_BUBBLE2, 0, 22
 	delay 2
-	createsprite gMudSportDirtSpriteTemplate, ANIM_TARGET, 2, 1, 90, 90
+	createsprite gMudsportMudSpriteTemplate, ANIM_TARGET, 2, 1, 90, 90
 	waitplaysewithpan SE_M_BUBBLE2, 0, 22
 	delay 2
-	createsprite gMudSportDirtSpriteTemplate, ANIM_TARGET, 2, 1, 160, 60
+	createsprite gMudsportMudSpriteTemplate, ANIM_TARGET, 2, 1, 160, 60
 	waitplaysewithpan SE_M_BUBBLE2, 0, 15
 	delay 2
-	createsprite gMudSportDirtSpriteTemplate, ANIM_TARGET, 2, 1, 30, 90
+	createsprite gMudsportMudSpriteTemplate, ANIM_TARGET, 2, 1, 30, 90
 	waitplaysewithpan SE_M_BUBBLE2, 0, 22
 	delay 2
-	createsprite gMudSportDirtSpriteTemplate, ANIM_TARGET, 2, 1, 120, 60
+	createsprite gMudsportMudSpriteTemplate, ANIM_TARGET, 2, 1, 120, 60
 	waitplaysewithpan SE_M_BUBBLE2, 0, 15
 	delay 2
-	createsprite gMudSportDirtSpriteTemplate, ANIM_TARGET, 2, 1, 200, 40
+	createsprite gMudsportMudSpriteTemplate, ANIM_TARGET, 2, 1, 200, 40
 	waitplaysewithpan SE_M_BUBBLE2, 0, 10
 	end
 
@@ -5232,11 +5232,11 @@ Move_MUD_SLAP: @ 81CE81C
 	waitforvisualfinish
 	end
 Move_MUD_SLAP_CreateMudSpray:
-	createsprite gMudSlapDirtSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, 0, 0
-	createsprite gMudSlapDirtSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, 10, 5
-	createsprite gMudSlapDirtSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, -10, -5
-	createsprite gMudSlapDirtSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, 20, 10
-	createsprite gMudSlapDirtSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, -20, -10
+	createsprite gMudSlapMudSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, 0, 0
+	createsprite gMudSlapMudSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, 10, 5
+	createsprite gMudSlapMudSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, -10, -5
+	createsprite gMudSlapMudSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, 20, 10
+	createsprite gMudSlapMudSpriteTemplate, ANIM_TARGET, 2, 15, 15, 20, -20, -10
 	delay 2
 	return
 
@@ -6057,7 +6057,7 @@ Move_BONE_CLUB: @ 81CFCA8
 	splitbgprio 1
 	setalpha 12, 8
 	playsewithpan SE_M_BONEMERANG, SOUND_PAN_TARGET
-	createsprite gBoneHitSpriteTemplate, ANIM_ATTACKER, 2, -42, -25, 0, 0, 15
+	createsprite gSpinningBoneSpriteTemplate, ANIM_ATTACKER, 2, -42, -25, 0, 0, 15
 	delay 12
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 1, 1
 	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 5, 5, 1
@@ -6074,7 +6074,7 @@ Move_BONE_RUSH: @ 81CFD0A
 	monbg ANIM_DEF_PARTNER
 	setalpha 12, 8
 	playsewithpan SE_M_BONEMERANG, SOUND_PAN_TARGET
-	createsprite gBoneHitSpriteTemplate, ANIM_ATTACKER, 2, -42, -25, 0, 0, 15
+	createsprite gSpinningBoneSpriteTemplate, ANIM_ATTACKER, 2, -42, -25, 0, 0, 15
 	delay 12
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 1, 2
 	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 3, 5, 1
