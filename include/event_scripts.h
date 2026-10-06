@@ -4,6 +4,8 @@
 extern const u8 EventScript_UseCut[];
 
 extern const u8 BerryTreeScript[];
+extern const u8 BerryTree_EventScript_ItemUsePlantBerry[];
+extern const u8 BerryTree_EventScript_ItemUseWailmerPail[];
 
 extern const u8 EventScript_SelectWithoutRegisteredItem[];
 

@@ -136,7 +136,7 @@ BerryTree_EventScript_1A164B:: @ 81A164B
 	release
 	end
 
-S_PlantBerryTreeFromBag:: @ 81A1654
+BerryTree_EventScript_ItemUsePlantBerry:: @ 81A1654
 	lockall
 	special ObjectEventInteractionGetBerryTreeData
 	call S_PlantBerryTree
@@ -156,7 +156,7 @@ BerryTree_EventScript_1A168D:: @ 81A168D
 	releaseall
 	end
 
-S_WaterBerryTreeFromBag:: @ 81A168F
+BerryTree_EventScript_ItemUseWailmerPail:: @ 81A168F
 	special ObjectEventInteractionGetBerryTreeData
 	lockall
 S_WaterBerryTree:: @ 81A1693
