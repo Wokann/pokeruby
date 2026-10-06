@@ -7723,7 +7723,7 @@ _81D2372:
 
 Move_FAKE_OUT: @ 81D23A8
 	playsewithpan SE_M_FLATTER, 0
-	createvisualtask sub_80D1CD0, 5
+	createvisualtask AnimTask_FakeOut, 5
 	waitforvisualfinish
 	playsewithpan SE_M_SKETCH, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 5, 1
