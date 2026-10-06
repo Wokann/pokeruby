@@ -3,24 +3,23 @@
 #include "trig.h"
 #include "sound.h"
 
-
-void sub_80CF2D0(struct Sprite* sprite);
-static void sub_80CF310(struct Sprite* sprite);
+static void AnimBouncingMusicNote(struct Sprite *sprite);
+static void AnimBouncingMusicNote_Step(struct Sprite *sprite);
 
 // unused_6
 
-const union AnimCmd gSpriteAnim_83D7388[] =
+static const union AnimCmd sAnim_BouncingMusicNote[] =
 {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D7390[] =
+static const union AnimCmd *const sAnims_BouncingMusicNote[] =
 {
-    gSpriteAnim_83D7388,
+    sAnim_BouncingMusicNote,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D7394 =
+static const struct SpriteTemplate sBouncingMusicNoteSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MUSIC_NOTES,
     .paletteTag = ANIM_TAG_MUSIC_NOTES,
@@ -28,24 +27,24 @@ const struct SpriteTemplate gSpriteTemplate_83D7394 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CF2D0,
+    .callback = AnimBouncingMusicNote,
 };
 
-void sub_80CF2D0(struct Sprite* sprite)
+static void AnimBouncingMusicNote(struct Sprite *sprite)
 {
-    u8 bank;
+    u8 battler;
     if (gBattleAnimArgs[0] == 0)
-        bank = gBattleAnimAttacker;
+        battler = gBattleAnimAttacker;
     else
-        bank = gBattleAnimTarget;
+        battler = gBattleAnimTarget;
 
-    SetSpriteNextToMonHead(bank, sprite);
+    SetSpriteNextToMonHead(battler, sprite);
     sprite->data[0] = 0;
     sprite->data[1] = 0;
-    sprite->callback = sub_80CF310;
+    sprite->callback = AnimBouncingMusicNote_Step;
 }
 
-static void sub_80CF310(struct Sprite* sprite)
+static void AnimBouncingMusicNote_Step(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
