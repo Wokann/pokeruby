@@ -2,11 +2,10 @@
 #include "battle_anim.h"
 #include "trig.h"
 
+static void AnimMovePowderParticle(struct Sprite *sprite);
+static void AnimMovePowderParticle_Step(struct Sprite *sprite);
 
-void AnimMovePowderParticle(struct Sprite* sprite);
-static void AnimMovePowderParticleStep(struct Sprite* sprite);
-
-const union AnimCmd gSpriteAnim_83D61FC[] =
+const union AnimCmd gPowderParticlesAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(2, 5),
@@ -19,9 +18,9 @@ const union AnimCmd gSpriteAnim_83D61FC[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D6220[] =
+const union AnimCmd *const gPowderParticlesAnimTable[] =
 {
-    gSpriteAnim_83D61FC,
+    gPowderParticlesAnimCmds,
 };
 
 const struct SpriteTemplate gSleepPowderParticleSpriteTemplate =
@@ -29,7 +28,7 @@ const struct SpriteTemplate gSleepPowderParticleSpriteTemplate =
     .tileTag = ANIM_TAG_SLEEP_POWDER,
     .paletteTag = ANIM_TAG_SLEEP_POWDER,
     .oam = &gOamData_AffineOff_ObjNormal_8x16,
-    .anims = gSpriteAnimTable_83D6220,
+    .anims = gPowderParticlesAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimMovePowderParticle,
@@ -40,7 +39,7 @@ const struct SpriteTemplate gStunSporeParticleSpriteTemplate =
     .tileTag = ANIM_TAG_STUN_SPORE,
     .paletteTag = ANIM_TAG_STUN_SPORE,
     .oam = &gOamData_AffineOff_ObjNormal_8x16,
-    .anims = gSpriteAnimTable_83D6220,
+    .anims = gPowderParticlesAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimMovePowderParticle,
@@ -51,7 +50,7 @@ const struct SpriteTemplate gPoisonPowderParticleSpriteTemplate =
     .tileTag = ANIM_TAG_POISON_POWDER,
     .paletteTag = ANIM_TAG_POISON_POWDER,
     .oam = &gOamData_AffineOff_ObjNormal_8x16,
-    .anims = gSpriteAnimTable_83D6220,
+    .anims = gPowderParticlesAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimMovePowderParticle,
@@ -65,7 +64,7 @@ const struct SpriteTemplate gPoisonPowderParticleSpriteTemplate =
 // arg 3: vertical movement speed (sub-pixel value)
 // arg 4: wave amplitude
 // arg 5: wave speed
-void AnimMovePowderParticle(struct Sprite* sprite)
+static void AnimMovePowderParticle(struct Sprite *sprite)
 {
     sprite->x += gBattleAnimArgs[0];
     sprite->y += gBattleAnimArgs[1];
@@ -82,10 +81,10 @@ void AnimMovePowderParticle(struct Sprite* sprite)
     }
 
     sprite->data[4] = gBattleAnimArgs[5];
-    sprite->callback = AnimMovePowderParticleStep;
+    sprite->callback = AnimMovePowderParticle_Step;
 }
 
-static void AnimMovePowderParticleStep(struct Sprite* sprite)
+static void AnimMovePowderParticle_Step(struct Sprite *sprite)
 {
     if (sprite->data[0] > 0)
     {
