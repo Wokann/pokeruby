@@ -108,10 +108,10 @@ extern u16 gKeyRepeatStartDelay;
 // rodata?
 const u8 *const gUnknown_083DFEC8 = gTileBuffer;
 
-const u8 gUnknown_083DFECC[] = INCBIN_U8("graphics/pokenav/83DFECC.gbapal");
+const u8 gPokenavBgDotsPal[] = INCBIN_U8("graphics/pokenav/bg_dots.gbapal");
 
-const u8 gUnknown_083DFEEC[] = INCBIN_U8("graphics/pokenav/83DFEEC.4bpp");
-const u8 gUnknown_083DFF8C[] = INCBIN_U8("graphics/pokenav/83DFF8C.bin.lz");
+const u8 gPokenavBgDotsTiles[] = INCBIN_U8("graphics/pokenav/bg_dots.4bpp");
+const u8 gPokenavBgDotsTilemap[] = INCBIN_U8("graphics/pokenav/bg_dots.bin.lz");
 const u16 gUnknown_083E003C[] = INCBIN_U16("graphics/pokenav/83E003C.gbapal");
 
 const u8 gUnknown_083E005C[] = INCBIN_U8("graphics/pokenav/83E005C.4bpp");
@@ -124,7 +124,7 @@ const u16 gUnknown_083E0164[] = INCBIN_U16("graphics/pokenav/83E0164.bin");//?
 
 const u8 gUnknown_083E01AC[] = INCBIN_U8("graphics/pokenav/83E01AC.bin");
 const u8 gUnknown_083E01F4[] = INCBIN_U8("graphics/pokenav/83E01F4.bin");
-const u8 gUnknown_083E0254[] = INCBIN_U8("graphics/pokenav/83E0254.gbapal");
+const u8 gConditionGraphData_Pal[] = INCBIN_U8("graphics/pokenav/condition/graph_data.gbapal");
 const u16 gUnknown_083E0274[] = INCBIN_U16("graphics/pokenav/83E0274.gbapal");
 
 const u16 gPokenavConditionSearch2_Pal[] = INCBIN_U16("graphics/pokenav/condition_search2.gbapal");
@@ -150,16 +150,16 @@ const u8 gUnknown_083E03A0[][8] =
 
 const u16 gUnknown_083E03A8[] = INCBIN_U16("graphics/pokenav/83E03A8.gbapal");
 const u16 gUnknown_083E03C8[] = INCBIN_U16("graphics/pokenav/83E03C8.bin");
-const u8 gUnknown_083E040C[] = INCBIN_U8("graphics/misc/ribbons_half.4bpp.lz");
-const u8 gPokenavOutlinePalette[] = INCBIN_U8("graphics/pokenav/outline.gbapal");
-const u8 gPokenavOutlineTiles[] = INCBIN_U8("graphics/pokenav/outline.4bpp.lz");
-const u8 gPokenavOutlineTilemap[] = INCBIN_U8("graphics/pokenav/outline_map.bin.lz");
+const u8 gRibbonIconsSmall_Gfx[] = INCBIN_U8("graphics/pokenav/ribbons/icons.4bpp.lz");
+const u8 gPokenavDeviceBgPal[] = INCBIN_U8("graphics/pokenav/device_outline.gbapal");
+const u8 gPokenavDeviceBgTiles[] = INCBIN_U8("graphics/pokenav/device_outline.4bpp.lz");
+const u8 gPokenavDeviceBgTilemap[] = INCBIN_U8("graphics/pokenav/device_outline_map.bin.lz");
 
 #include "data/region_map/city_map_tilemaps.h"
 
 #ifdef ENGLISH
-#include "data/text/ribbon_descriptions_en.h"
-#include "data/text/gift_ribbon_descriptions_en.h"
+#include "data/text/ribbon_descriptions.h"
+#include "data/text/gift_ribbon_descriptions.h"
 #include "data/text/trainer_eye_descriptions_en.h"
 #elif GERMAN
 #include "data/text/ribbon_descriptions_de.h"
@@ -207,26 +207,26 @@ void (*const gUnknown_083E3270[])(u16, u16) =
     sub_80F0A74,
 };
 
-const u16 gPokenavIconPalette[] = INCBIN_U16("graphics/pokenav/icon.gbapal");
-const u8 gUnknown_083E329C[] = INCBIN_U8("graphics/pokenav/icon.4bpp.lz");
-const u8 gPokenavPokeballTiles[] = INCBIN_U8("graphics/pokenav/pokeball.4bpp");
-const u8 gUnknown_083E3780[] = INCBIN_U8("graphics/pokenav/83E3780.4bpp");
-const u16 gPokenavSparkle_Pal[] = INCBIN_U16("graphics/pokenav/sparkle.gbapal");
-const u8 gPokenavSparkle_Gfx[] = INCBIN_U8("graphics/pokenav/sparkle.4bpp");
-const u8 gPokenavUpDownArrows_Gfx[] = INCBIN_U8("graphics/pokenav/arrows.4bpp");
+static const u16 sSpinningPokenav_Pal[] = INCBIN_U16("graphics/pokenav/nav_icon.gbapal");
+const u8 gSpinningPokenav_Gfx[] = INCBIN_U8("graphics/pokenav/nav_icon.4bpp.lz");
+static const u8 sConditionPokeball_Gfx[] = INCBIN_U8("graphics/pokenav/condition/pokeball.4bpp");
+static const u8 sConditionPokeballPlaceholder_Gfx[] = INCBIN_U8("graphics/pokenav/condition/pokeball_placeholder.4bpp");
+static const u16 sPokenavSparkle_Pal[] = INCBIN_U16("graphics/pokenav/condition/sparkle.gbapal");
+static const u8 sPokenavSparkle_Gfx[] = INCBIN_U8("graphics/pokenav/condition/sparkle.4bpp");
+static const u8 sListArrow_Gfx[] = INCBIN_U8("graphics/pokenav/list_arrows.4bpp");
 const u8 gUnknown_083E3BC0[] =  INCBIN_U8("graphics/pokenav/83E3BC0.bin");
 const u8 gTiles_083E3BE0[] = INCBIN_U8("graphics/unknown/unknown_3E3BE0.4bpp");
 
 const u16 gUnknown_083E3C60[][16] = 
 {
-    INCBIN_U16("graphics/misc/ribbons_cool.gbapal"),
-    INCBIN_U16("graphics/misc/ribbons_beauty.gbapal"),
-    INCBIN_U16("graphics/misc/ribbons_cute.gbapal"),
-    INCBIN_U16("graphics/misc/ribbons_smart.gbapal"),
-    INCBIN_U16("graphics/misc/ribbons_tough.gbapal"),
+    INCBIN_U16("graphics/pokenav/ribbons/icons1.gbapal"),
+    INCBIN_U16("graphics/pokenav/ribbons/icons2.gbapal"),
+    INCBIN_U16("graphics/pokenav/ribbons/icons3.gbapal"),
+    INCBIN_U16("graphics/pokenav/ribbons/icons4.gbapal"),
+    INCBIN_U16("graphics/pokenav/ribbons/icons5.gbapal"),
 };
 
-const u8 gUnknown_083E3D00[] = INCBIN_U8("graphics/misc/ribbons_full.4bpp.lz");
+const u8 gRibbonIconsBig_Gfx[] = INCBIN_U8("graphics/pokenav/ribbons/icons_big.4bpp.lz");
 const u16 PokenavBlueLightPalette[] = INCBIN_U16("graphics/pokenav/blue_light.gbapal");
 const u8 PokenavBlueLightTiles[] = INCBIN_U8("graphics/pokenav/blue_light.4bpp");
 const u16 Palette_3E42D8[] = INCBIN_U16("graphics/pokenav/83E42D8.gbapal");
@@ -507,7 +507,7 @@ const struct SpritePalette gUnknown_083E449C[] =
     {0x0, 0},
 };
 
-const struct OamData gOamData_83E44B4 = 
+static const struct OamData sOamData_LeftHeader =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -555,7 +555,7 @@ const struct SpriteTemplate gSpriteTemplate_83E44E0 =
 {
     .tileTag = 1,
     .paletteTag = 2,
-    .oam = &gOamData_83E44B4,
+    .oam = &sOamData_LeftHeader,
     .anims = gSpriteAnimTable_83E44D4,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -566,14 +566,14 @@ const struct SpriteTemplate gSpriteTemplate_83E44F8 =
 {
     .tileTag = 1,
     .paletteTag = 3,
-    .oam = &gOamData_83E44B4,
+    .oam = &sOamData_LeftHeader,
     .anims = gSpriteAnimTable_83E44D4,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = sub_80F2BBC,
 };
 
-const struct OamData gOamData_83E4510 = 
+static const struct OamData sOamData_SubmenuLeftHeader =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -612,7 +612,7 @@ const struct SpriteTemplate gSpriteTemplate_83E4530 =
 {
     .tileTag = 2,
     .paletteTag = 2,
-    .oam = &gOamData_83E4510,
+    .oam = &sOamData_SubmenuLeftHeader,
     .anims = gSpriteAnimTable_83E4528,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -623,14 +623,14 @@ const struct SpriteTemplate gSpriteTemplate_83E4548 =
 {
     .tileTag = 2,
     .paletteTag = 3,
-    .oam = &gOamData_83E4510,
+    .oam = &sOamData_SubmenuLeftHeader,
     .anims = gSpriteAnimTable_83E4528,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = sub_80F2BBC,
 };
 
-const struct OamData gOamData_83E4560 = 
+static const struct OamData sOam_ConditionMonPic =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -655,7 +655,7 @@ const struct SpriteTemplate gSpriteTemplate_83E4570 =
 {
     .tileTag = 6,
     .paletteTag = 6,
-    .oam = &gOamData_83E4560,
+    .oam = &sOam_ConditionMonPic,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -668,7 +668,7 @@ extern const u8 gPokenavArrow_Gfx[];
 const struct SpriteSheet gUnknown_083E4590[] = 
 {
     {gPokenavArrow_Gfx, 0x40, 9},
-    {gPokenavUpDownArrows_Gfx, 0x80, 10},
+    {sListArrow_Gfx, 0x80, 10},
     {},
 };
 
@@ -754,7 +754,7 @@ const struct SpriteTemplate gSpriteTemplate_83E45F0 =
     .callback = sub_80F31AC,
 };
 
-const struct OamData gOamData_83E4608 = 
+static const struct OamData sOam_ConditionSelectionIcon =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -771,31 +771,31 @@ const struct OamData gOamData_83E4608 =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_83E4610[] = 
+static const union AnimCmd sAnim_ConditionSelectionIcon_Selected[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E4618[] = 
+static const union AnimCmd sAnim_ConditionSelectionIcon_Unselected[] =
 {
     ANIMCMD_FRAME(4, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83E4620[] = 
+static const union AnimCmd *const sAnims_ConditionSelectionIcon[] =
 {
-    gSpriteAnim_83E4610,
-    gSpriteAnim_83E4618,
+    sAnim_ConditionSelectionIcon_Selected,
+    sAnim_ConditionSelectionIcon_Unselected,
 };
 
-extern const u8 gPokenavConditionMenuCancel_Gfx[];
+extern const u8 gPokenavConditionCancel_Gfx[];
 
 const struct SpriteSheet gUnknown_083E4628[] = 
 {
-    {gPokenavPokeballTiles, 0x100, 3},
-    {gUnknown_083E3780, 0x20, 4},
-    {gPokenavConditionMenuCancel_Gfx, 0x100, 5},
+    {sConditionPokeball_Gfx, 0x100, 3},
+    {sConditionPokeballPlaceholder_Gfx, 0x20, 4},
+    {gPokenavConditionCancel_Gfx, 0x100, 5},
     {},
 };
 
@@ -815,8 +815,8 @@ const struct SpriteTemplate gSpriteTemplate_83E4660 =
 {
     .tileTag = 3,
     .paletteTag = 4,
-    .oam = &gOamData_83E4608,
-    .anims = gSpriteAnimTable_83E4620,
+    .oam = &sOam_ConditionSelectionIcon,
+    .anims = sAnims_ConditionSelectionIcon,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = sub_80F3328,
@@ -860,7 +860,7 @@ const u16 gPokenavRibbonsIconGfx[][2] =
     {11, 1},
 };
 
-const struct OamData gOamData_83E4718 = 
+static const struct OamData sOamData_RibbonIconBig =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_NORMAL,
@@ -877,48 +877,48 @@ const struct OamData gOamData_83E4718 =
     .affineParam = 0,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83E4720[] = 
+static const union AffineAnimCmd sAffineAnim_RibbonIconBig_Normal[] =
 {
     AFFINEANIMCMD_FRAME(0x80, 0x80, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83E4730[] = 
+static const union AffineAnimCmd sAffineAnim_RibbonIconBig_ZoomIn[] =
 {
     AFFINEANIMCMD_FRAME(0x80, 0x80, 0, 0),
     AFFINEANIMCMD_FRAME(0x20, 0x20, 0, 4),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83E4748[] = 
+static const union AffineAnimCmd sAffineAnim_RibbonIconBig_ZoomOut[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
     AFFINEANIMCMD_FRAME(0xFFE0, 0xFFE0, 0, 4),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83E4760[] = 
+static const union AffineAnimCmd *const sAffineAnims_RibbonIconBig[] =
 {
-    gSpriteAffineAnim_83E4720,
-    gSpriteAffineAnim_83E4730,
-    gSpriteAffineAnim_83E4748,
+    sAffineAnim_RibbonIconBig_Normal,
+    sAffineAnim_RibbonIconBig_ZoomIn,
+    sAffineAnim_RibbonIconBig_ZoomOut,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83E476C = 
+const struct SpriteTemplate gSpriteTemplate_RibbonIconBig =
 {
     .tileTag = 11,
     .paletteTag = 10,
-    .oam = &gOamData_83E4718,
+    .oam = &sOamData_RibbonIconBig,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83E4760,
+    .affineAnims = sAffineAnims_RibbonIconBig,
     .callback = SpriteCallbackDummy,
 };
 
-const struct SpriteSheet gUnknown_083E4784 = {gPokenavSparkle_Gfx, sizeof(gPokenavSparkle_Gfx), 0x0017};
-const struct SpritePalette gUnknown_083E478C = {gPokenavSparkle_Pal, 0x000f};
+const struct SpriteSheet gUnknown_083E4784 = {sPokenavSparkle_Gfx, sizeof(sPokenavSparkle_Gfx), 0x0017};
+const struct SpritePalette gUnknown_083E478C = {sPokenavSparkle_Pal, 0x000f};
 
-const s16 gUnknown_083E4794[][2] = 
+const s16 gConditionSparkleCoords[][2] =
 {
     { 0 , -35},
     { 20, -28},
@@ -932,7 +932,7 @@ const s16 gUnknown_083E4794[][2] =
     {-20, -28},
 };
 
-const struct OamData gOamData_83E47BC = 
+static const struct OamData sOam_ConditionSparkle =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -949,7 +949,7 @@ const struct OamData gOamData_83E47BC =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_83E47C4[] = 
+static const union AnimCmd sAnim_ConditionSparkle[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(4, 5),
@@ -962,33 +962,33 @@ const union AnimCmd gSpriteAnim_83E47C4[] =
 };
 
 // sparkles around pokemon on condition page of pokenav
-const union AnimCmd *const gSpriteAnimTable_83E47E4[] = 
+static const union AnimCmd *const sAnims_ConditionSparkle[] =
 {
-    &gSpriteAnim_83E47C4[0],
-    &gSpriteAnim_83E47C4[2],
-    &gSpriteAnim_83E47C4[4],
-    &gSpriteAnim_83E47C4[6],
-    &gSpriteAnim_83E47C4[8],
-    &gSpriteAnim_83E47C4[10],
-    &gSpriteAnim_83E47C4[12],
+    &sAnim_ConditionSparkle[0],
+    &sAnim_ConditionSparkle[2],
+    &sAnim_ConditionSparkle[4],
+    &sAnim_ConditionSparkle[6],
+    &sAnim_ConditionSparkle[8],
+    &sAnim_ConditionSparkle[10],
+    &sAnim_ConditionSparkle[12],
 };
 
 void sub_80F3E9C(struct Sprite *sprite);
 
-const struct SpriteTemplate gSpriteTemplate_83E4800 = 
+const struct SpriteTemplate gSpriteTemplate_ConditionSparkle =
 {
     .tileTag = 23,
     .paletteTag = 15,
-    .oam = &gOamData_83E47BC,
-    .anims = gSpriteAnimTable_83E47E4,
+    .oam = &sOam_ConditionSparkle,
+    .anims = sAnims_ConditionSparkle,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = sub_80F3E9C,
 };
 
-const struct SpritePalette gUnknown_083E4818 = {gPokenavIconPalette, 16};
+const struct SpritePalette gUnknown_083E4818 = {sSpinningPokenav_Pal, 16};
 
-const union AnimCmd gSpriteAnim_83E4820[] = 
+static const union AnimCmd sSpinningPokenavAnims[] =
 {
     ANIMCMD_FRAME(0, 12),
     ANIMCMD_FRAME(16, 12),
@@ -1001,12 +1001,12 @@ const union AnimCmd gSpriteAnim_83E4820[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83E4844[] = 
+static const union AnimCmd *const sSpinningPokenavAnimTable[] =
 {
-    gSpriteAnim_83E4820,
+    sSpinningPokenavAnims,
 };
 
-const struct OamData gOamData_83E4848 = 
+static const struct OamData sSpinningPokenavSpriteOam =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -1025,12 +1025,12 @@ const struct OamData gOamData_83E4848 =
 
 void sub_80F4138(struct Sprite *);
 
-const struct SpriteTemplate gSpriteTemplate_83E4850 =
+const struct SpriteTemplate gSpinningPokenavSpriteTemplate =
 {
     .tileTag = 24,
     .paletteTag = 16,
-    .oam = &gOamData_83E4848,
-    .anims = gSpriteAnimTable_83E4844,
+    .oam = &sSpinningPokenavSpriteOam,
+    .anims = sSpinningPokenavAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = sub_80F4138,
@@ -1066,7 +1066,7 @@ const struct SpriteTemplate gSpriteTemplate_83E4878 =
     .callback = SpriteCallbackDummy,
 };
 
-const u8 gUnknown_083E4890[] = 
+const u8 gConditionToLineLength[] =
 {   
     4,   5,  6,  7,  8,  9,  9, 10, 10, 11, 11, 12, 12, 13, 13, 13, 
     13, 14, 14, 14, 14, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 17, 
@@ -1291,7 +1291,7 @@ void sub_80EBDD8()
     case 0:
         SetVBlankCallback(NULL);
         REG_DISPCNT = 0;
-        gPokenavStructPtr->unk6DAD = gPokenavStructPtr->unk6DDC;
+        gPokenavStructPtr->cursorPos = gPokenavStructPtr->unk6DDC;
         gPokenavStructPtr->unk6DAE = 5;
         gPokenavStructPtr->unk304++;
         break;
@@ -1385,7 +1385,7 @@ void sub_80EC00C()
         {
             SetVBlankCallback(&sub_80EBD80);
             sub_80EED1C();
-            gPokenavStructPtr->unk6DAD = gPokenavStructPtr->unk6DDC;
+            gPokenavStructPtr->cursorPos = gPokenavStructPtr->unk6DDC;
             gPokenavStructPtr->unk6DAE = 5;
             sub_80EEE08();
             gPokenavStructPtr->unk304++;
@@ -1443,7 +1443,7 @@ void sub_80EC00C()
     case 13:
         if (!sub_80F1E50())
         {
-            sub_80EF428(0, gPokenavStructPtr->unk6DAD);
+            sub_80EF428(0, gPokenavStructPtr->cursorPos);
 			sub_80EBDBC(&sub_80EC268);
 #if DEBUG
 			if (gLinkOpen == TRUE)
@@ -1480,14 +1480,14 @@ void sub_80EC268()
         if (sub_80EEC10() != 0)
         {
             PlaySE(SE_SELECT);
-            sub_80EF428(0, gPokenavStructPtr->unk6DAD);
+            sub_80EF428(0, gPokenavStructPtr->cursorPos);
             sub_80EED9C();
         }
         else
         {
             if (JOY_NEW(A_BUTTON))
             {
-                gPokenavStructPtr->unk6DDC = gPokenavStructPtr->unk6DAD;
+                gPokenavStructPtr->unk6DDC = gPokenavStructPtr->cursorPos;
                 switch (gPokenavStructPtr->unk6DB2[gPokenavStructPtr->unk6DDC] - 1)
                 {
                 case 0:
@@ -1561,13 +1561,13 @@ void sub_80EC268()
         if ((var1 = sub_80EEC10()) != 0)
         {
             PlaySE(SE_SELECT);
-            sub_80EF428(0, gPokenavStructPtr->unk6DAD);
+            sub_80EF428(0, gPokenavStructPtr->cursorPos);
             gPokenavStructPtr->unk304 = 0;
             sub_80EED9C();
         }
         else if (JOY_NEW(A_BUTTON | B_BUTTON))
 		{
-			sub_80EF428(0, gPokenavStructPtr->unk6DAD);
+			sub_80EF428(0, gPokenavStructPtr->cursorPos);
 			gPokenavStructPtr->unk304 = var1;
 		}
         break;
@@ -1763,13 +1763,13 @@ void sub_80EC86C()
         if (sub_80EEC90())
         {
             PlaySE(SE_SELECT);
-            sub_80EF428(1, gPokenavStructPtr->unk6DAD);
+            sub_80EF428(1, gPokenavStructPtr->cursorPos);
             sub_80EED9C();
         }
         else if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
-            gPokenavStructPtr->unk6DF0 = gPokenavStructPtr->unk6DAD;
+            gPokenavStructPtr->unk6DF0 = gPokenavStructPtr->cursorPos;
             switch (gPokenavStructPtr->unk6DF0)
             {
             case 0:
@@ -1787,7 +1787,7 @@ void sub_80EC86C()
         {
             PlaySE(SE_SELECT);
             gPokenavStructPtr->unk6DF0 = 0x2;
-            gPokenavStructPtr->unk6DAD = 0x2;
+            gPokenavStructPtr->cursorPos = 0x2;
             gPokenavStructPtr->unk304++;
         }
         break;
@@ -1826,7 +1826,7 @@ void sub_80EC9A8()
         if (!sub_80EEA0C())
         {
 			sub_80EBDBC(&sub_80EC86C);
-			sub_80EF428(1, gPokenavStructPtr->unk6DAD);
+			sub_80EF428(1, gPokenavStructPtr->cursorPos);
 		}
 		break;
     }
@@ -1841,7 +1841,7 @@ void sub_80ECA10()
         {
 			SetVBlankCallback(&sub_80EBD80);
 			sub_80EED1C();
-			gPokenavStructPtr->unk6DAD = gPokenavStructPtr->unk6DF0;
+			gPokenavStructPtr->cursorPos = gPokenavStructPtr->unk6DF0;
 			gPokenavStructPtr->unk6DAE = 3;
 			sub_80EEE08();
 			gPokenavStructPtr->unk304++;
@@ -1897,7 +1897,7 @@ void sub_80ECA10()
     case 13:
         if (!sub_80F1E50())
         {
-			sub_80EF428(1, gPokenavStructPtr->unk6DAD);
+			sub_80EF428(1, gPokenavStructPtr->cursorPos);
 			sub_80EBDBC(&sub_80EC86C);
 #if DEBUG
 			if (gLinkOpen == TRUE)
@@ -1916,13 +1916,13 @@ void sub_80ECC08()
         if (sub_80EEC90())
         {
             PlaySE(SE_SELECT);
-            sub_80EF428(2, gPokenavStructPtr->unk6DAD);
+            sub_80EF428(2, gPokenavStructPtr->cursorPos);
             sub_80EED9C();
         }
         else if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
-            switch ((s8)gPokenavStructPtr->unk6DAD)
+            switch ((s8)gPokenavStructPtr->cursorPos)
             {
             case 0:
                 gPokenavStructPtr->unk87D8 = 22;
@@ -1944,14 +1944,14 @@ void sub_80ECC08()
                 return;
             }
 
-            gPokenavStructPtr->unk6DFC = gPokenavStructPtr->unk6DAD;
-            gPokenavStructPtr->unk76AA = 1;
+            gPokenavStructPtr->unk6DFC = gPokenavStructPtr->cursorPos;
+            gPokenavStructPtr->inSearchMode = 1;
             sub_80EBDBC(&sub_80ED01C);
         }
         else if (JOY_NEW(B_BUTTON))
         {
             PlaySE(SE_SELECT);
-            gPokenavStructPtr->unk6DAD = 0x5;
+            gPokenavStructPtr->cursorPos = 0x5;
             gPokenavStructPtr->unk304++;
         }
         break;
@@ -1995,7 +1995,7 @@ void sub_80ECD80()
         gPokenavStructPtr->unk304++;
         break;
     case 6:
-        gPokenavStructPtr->unk6DAD = gPokenavStructPtr->unk6DFC;
+        gPokenavStructPtr->cursorPos = gPokenavStructPtr->unk6DFC;
         gPokenavStructPtr->unk6DAE = 0x6;
         sub_80EEE08();
         gPokenavStructPtr->unk304++;
@@ -2062,7 +2062,7 @@ void sub_80ECD80()
     case 20:
         if (!sub_80F1E50())
 		{
-			sub_80EF428(2, gPokenavStructPtr->unk6DAD);
+			sub_80EF428(2, gPokenavStructPtr->cursorPos);
 			sub_80EBDBC(&sub_80ECC08);
 #if DEBUG
 			if (gLinkOpen == TRUE)
@@ -2372,7 +2372,7 @@ void sub_80ED620()
 			SetVBlankCallback(NULL);
 			sub_80EED0C();
 			sub_80EF814();
-			gPokenavStructPtr->unk76AA = 0;
+			gPokenavStructPtr->inSearchMode = 0;
 			gPokenavStructPtr->unk304++;
 		}
         break;
@@ -2481,7 +2481,7 @@ void sub_80ED858(void)
         if (JOY_HELD(DPAD_UP))
         {
             if (gPokenavStructPtr->unk87CB && (
-                gPokenavStructPtr->unk76AA == 0
+                gPokenavStructPtr->inSearchMode == 0
                 || gPokenavStructPtr->unk87DC != 0
             ))
             {
@@ -2495,7 +2495,7 @@ void sub_80ED858(void)
         if (JOY_HELD(DPAD_DOWN))
         {
             if (gPokenavStructPtr->unk87CB && (
-                gPokenavStructPtr->unk76AA == 0
+                gPokenavStructPtr->inSearchMode == 0
                 || gPokenavStructPtr->unk87DC < gPokenavStructPtr->unk8774
             ))
             {
@@ -2516,7 +2516,7 @@ void sub_80ED858(void)
         }
         if (JOY_NEW(A_BUTTON))
         {
-            if (gPokenavStructPtr->unk76AA == 0)
+            if (gPokenavStructPtr->inSearchMode == 0)
             {
                 if (gPokenavStructPtr->unk87DC == gPokenavStructPtr->unk87DA - 1)
                 {
@@ -2575,7 +2575,7 @@ void sub_80ED858(void)
         {
             sub_80F3CE8();
             sub_80F5BDC();
-            if (!gPokenavStructPtr->unk76AA)
+            if (!gPokenavStructPtr->inSearchMode)
             {
                 sub_80F357C();
                 sub_80F2D6C(1);
@@ -3284,7 +3284,7 @@ bool8 sub_80EEA0C(void)
             gPokenavStructPtr->unk6E16++;
         break;
     case 3:
-        gPokenavStructPtr->unk6DAD = gPokenavStructPtr->unk6E15;
+        gPokenavStructPtr->cursorPos = gPokenavStructPtr->unk6E15;
         switch (gPokenavStructPtr->unk6E14)
         {
         case 0:
@@ -3316,7 +3316,7 @@ bool8 sub_80EEA0C(void)
     case 7:
         if (!sub_80F1E50())
         {
-            sub_80EF428(gPokenavStructPtr->unk6E14, gPokenavStructPtr->unk6DAD);
+            sub_80EF428(gPokenavStructPtr->unk6E14, gPokenavStructPtr->cursorPos);
             gPokenavStructPtr->unk6E16++;
         }
         break;
@@ -3341,18 +3341,18 @@ bool8 sub_80EEC10()
     {
         do
         {
-            if (--gPokenavStructPtr->unk6DAD < 0)
-                gPokenavStructPtr->unk6DAD = gPokenavStructPtr->unk6DAE - 1;
-        } while (!gPokenavStructPtr->unk6DB2[gPokenavStructPtr->unk6DAD]);
+            if (--gPokenavStructPtr->cursorPos < 0)
+                gPokenavStructPtr->cursorPos = gPokenavStructPtr->unk6DAE - 1;
+        } while (!gPokenavStructPtr->unk6DB2[gPokenavStructPtr->cursorPos]);
         return TRUE;
     }
     if (JOY_NEW(DPAD_DOWN))
     {
         do
         {
-            if (++gPokenavStructPtr->unk6DAD >= gPokenavStructPtr->unk6DAE)
-                gPokenavStructPtr->unk6DAD = 0;
-        } while (!gPokenavStructPtr->unk6DB2[gPokenavStructPtr->unk6DAD]);
+            if (++gPokenavStructPtr->cursorPos >= gPokenavStructPtr->unk6DAE)
+                gPokenavStructPtr->cursorPos = 0;
+        } while (!gPokenavStructPtr->unk6DB2[gPokenavStructPtr->cursorPos]);
         return TRUE;
     }
 #if DEBUG
@@ -3366,14 +3366,14 @@ bool8 sub_80EEC90()
 {
     if (JOY_NEW(DPAD_UP))
     {
-        if (--gPokenavStructPtr->unk6DAD < 0)
-            gPokenavStructPtr->unk6DAD = gPokenavStructPtr->unk6DAE - 1;
+        if (--gPokenavStructPtr->cursorPos < 0)
+            gPokenavStructPtr->cursorPos = gPokenavStructPtr->unk6DAE - 1;
         return TRUE;
     }
     if (JOY_NEW(DPAD_DOWN))
     {
-        if (++gPokenavStructPtr->unk6DAD >= gPokenavStructPtr->unk6DAE)
-            gPokenavStructPtr->unk6DAD = 0;
+        if (++gPokenavStructPtr->cursorPos >= gPokenavStructPtr->unk6DAE)
+            gPokenavStructPtr->cursorPos = 0;
         return TRUE;
     }
 #if DEBUG

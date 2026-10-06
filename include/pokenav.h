@@ -93,7 +93,7 @@ struct UnkPokenavStruct {
     /*0x6798*/ u8 unk6798[0x200];
     /*0x6998*/ u8 unk6998[0x200];
     /*0x6B98*/ u8 unk6B98[0x200];
-    /*0x6D98*/ struct Sprite *unk6D98;
+    /*0x6D98*/ struct Sprite *spinningPokenav;
     /*0x6D9C*/ struct Sprite *unk6D9C;
     /*0x6DA0*/ u16 unk6DA0;
     /*0x6DA2*/ u16 unk6DA2;
@@ -101,7 +101,7 @@ struct UnkPokenavStruct {
     /*0x6DA6*/ u8 filler6DA6[0x5];
     /*0x6DAB*/ u8 unk6DAB;
     /*0x6DAC*/ u8 unk6DAC;
-    /*0x6DAD*/ s8 unk6DAD;
+    /*0x6DAD*/ s8 cursorPos;
     /*0x6DAE*/ s8 unk6DAE;
     /*0x6DAF*/ u8 filler6DAF[0x3];
     /*0x6DB2*/ u8 unk6DB2[0x2A];
@@ -122,7 +122,7 @@ struct UnkPokenavStruct {
     /*0x769D*/ u8 unk769D;
     /*0x769E*/ u8 unk769E;
     /*0x769F*/ u8 filler769F[0xB];
-    /*0x76AA*/ u8 unk76AA;
+    /*0x76AA*/ u8 inSearchMode;
     /*0x76AC*/ struct Sprite *unk76AC;
     /*0x76B0*/ struct PokemonMarkMenu unk76B0;
     /*0x8764*/ u16 unk8764;
@@ -155,7 +155,7 @@ struct UnkPokenavStruct {
     /*0x87DE*/ u8 unk87DE;
     /*0x87E0*/ bool8 (*unk87E0)(void);
     /*0x87E4*/ struct Sprite *unk87E4[7];
-    /*0x8800*/ struct Sprite *unk8800[10];
+    /*0x8800*/ struct Sprite *conditionSparkleSprites[10];
     /*0x8828*/ u8 unk8828;
     /*0x8829*/ u8 unk8829[3][64];
     /*0x88E9*/ u8 unk88E9[3][24];

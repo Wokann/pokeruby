@@ -46,7 +46,7 @@ extern const u16 gPokenavConditionSearch2_Pal[];
 extern const u8 gUnknown_083E0334[];
 extern const u16 gUnknown_083E02B4[];
 extern const u8 gPokenavConditionSearch2_Gfx[];
-extern const u8 gUnknown_083E0254[];
+extern const u8 gConditionGraphData_Pal[];
 extern const u8 gUnknown_08E9FEB4[];
 extern const u8 gUnknown_083E01AC[];
 extern const u8 gUnknown_08E9AC4C[];
@@ -62,14 +62,14 @@ extern const u8 *const gUnknown_083E31B0[];
 extern const u8 *const gUnknown_083E31CC[];
 extern const u8 *const gUnknown_083E31D8[];
 extern u8 *gUnknown_083DFEC8;
-extern const u8 gUnknown_083DFEEC[];
+extern const u8 gPokenavBgDotsTiles[];
 extern const u8 gUnknown_083E005C[];
 extern const u8 gUnknown_083E007C[];
-extern const u8 gPokenavOutlineTilemap[];
-extern const u8 gPokenavOutlineTiles[];
-extern const u8 gPokenavOutlinePalette[];
-extern const u8 gUnknown_083DFECC[];
-extern const u8 gUnknown_083DFF8C[];
+extern const u8 gPokenavDeviceBgTilemap[];
+extern const u8 gPokenavDeviceBgTiles[];
+extern const u8 gPokenavDeviceBgPal[];
+extern const u8 gPokenavBgDotsPal[];
+extern const u8 gPokenavBgDotsTilemap[];
 extern const u8 gPokenavHoennMapMisc_Gfx[];
 extern const u8 gUnknown_08E99FB0[];
 extern const u8 gUnknown_08E9A100[];
@@ -81,13 +81,13 @@ extern const u8 gUnknown_083E01F4[];
 extern const u8 *const gTrainerEyeDescriptions[];
 extern const u8 gUnknown_08E9FBA0[];
 extern const u8 gPokenavRibbonView_Gfx[];
-extern const u8 gUnknown_083E040C[];
+extern const u8 gRibbonIconsSmall_Gfx[];
 extern const u16 gPokenavRibbonView_Pal[];
 extern const u16 gUnknown_083E03A8[];
 extern const u16 gUnknown_083E3C60[][16];
 extern const u16 gPokenavRibbonsIconGfx[][2];
-extern const u8 *const gRibbonDescriptions[][2];
-extern const u8 *const gGiftRibbonDescriptions[][2];
+extern const u8 *const gRibbonDescriptionPointers[][2];
+extern const u8 *const gGiftRibbonDescriptionPointers[][2];
 extern const u8 gUnknown_08E9FF58[];
 extern const u8 gPokenavRibbonPokeView_Gfx[];
 extern const u16 gUnknown_083E0124[];
@@ -130,15 +130,15 @@ extern const struct SpriteSheet gUnknown_083E4628[4];
 extern const struct SpritePalette gUnknown_083E4648[3];
 extern const struct SpriteTemplate gSpriteTemplate_83E4660;
 extern const u16 gUnknown_083E4678[];
-extern const u8 gUnknown_083E3D00[];
-extern const struct SpriteTemplate gSpriteTemplate_83E476C;
+extern const u8 gRibbonIconsBig_Gfx[];
+extern const struct SpriteTemplate gSpriteTemplate_RibbonIconBig;
 extern const struct SpriteSheet gUnknown_083E4784;
 extern const struct SpritePalette gUnknown_083E478C;
-extern const struct SpriteTemplate gSpriteTemplate_83E4800;
-extern const s16 gUnknown_083E4794[][2];
-extern const u8 gUnknown_083E329C[];
+extern const struct SpriteTemplate gSpriteTemplate_ConditionSparkle;
+extern const s16 gConditionSparkleCoords[][2];
+extern const u8 gSpinningPokenav_Gfx[];
 extern const struct SpritePalette gUnknown_083E4818;
-extern const struct SpriteTemplate gSpriteTemplate_83E4850;
+extern const struct SpriteTemplate gSpinningPokenavSpriteTemplate;
 extern const struct SpritePalette gUnknown_083E4868;
 extern const struct SpriteTemplate gSpriteTemplate_83E4878;
 
@@ -151,7 +151,7 @@ u8 sub_80F6010(void);
 
 // .rodata
 
-extern const u8 gUnknown_083E4890[];
+extern const u8 gConditionToLineLength[];
 
 // .text
 
@@ -330,10 +330,10 @@ bool8 sub_80EF284(u8 a)
             return TRUE;
         break;
     case 4:
-    DmaCopy16Defvars(3, gUnknown_083DFEEC, (void *)VRAM + 0x5000, 0xA0);
+    DmaCopy16Defvars(3, gPokenavBgDotsTiles, (void *)VRAM + 0x5000, 0xA0);
         break;
     case 5:
-        LZ77UnCompVram(gUnknown_083DFF8C, (void *)VRAM + 0xF800);
+        LZ77UnCompVram(gPokenavBgDotsTilemap, (void *)VRAM + 0xF800);
         break;
     case 6:
     DmaCopy16Defvars(3, gUnknown_083E005C, (void *)VRAM + 0x8000, 0x20);
@@ -342,15 +342,15 @@ bool8 sub_80EF284(u8 a)
         LZ77UnCompVram(gUnknown_083E007C, (void *)VRAM + 0xE000);
         break;
     case 8:
-        LZ77UnCompVram(gPokenavOutlineTilemap, (void *)VRAM + 0xE800);
+        LZ77UnCompVram(gPokenavDeviceBgTilemap, (void *)VRAM + 0xE800);
         break;
     case 9:
-        LZ77UnCompVram(gPokenavOutlineTiles, (void *)VRAM + 0x8020);
+        LZ77UnCompVram(gPokenavDeviceBgTiles, (void *)VRAM + 0x8020);
         break;
     case 10:
         sub_80EF54C(a);
-        LoadPalette(gUnknown_083DFECC, 0xF0, 0x20);
-        LoadPalette(gPokenavOutlinePalette, 0x40, 0x20);
+        LoadPalette(gPokenavBgDotsPal, 0xF0, 0x20);
+        LoadPalette(gPokenavDeviceBgPal, 0x40, 0x20);
         sub_80EF7D4();
         break;
     case 11:
@@ -899,14 +899,14 @@ bool8 sub_80EFF68(void)
         LoadPalette(gPokenavConditionMenu2_Pal, 0x20, 0x20);
         break;
     case 9:
-        if (gPokenavStructPtr->unk76AA == 1)
+        if (gPokenavStructPtr->inSearchMode == 1)
             sub_8095C8C((void *)VRAM + 0xF000, 0, 5, gUnknown_083E01AC, 0, 0, 9, 4, 9);
         break;
     case 10:
         LZ77UnCompVram(gUnknown_08E9FEB4, (void *)VRAM + 0xB800);
         break;
     case 11:
-        LoadPalette(gUnknown_083E0254, 0x30, 0x20);
+        LoadPalette(gConditionGraphData_Pal, 0x30, 0x20);
         LoadPalette(gUnknownPalette_81E6692, 0xB0, 0x20);
         LoadPalette(&gPokenavConditionMenu2_Pal[2], 0xB1, 0x2);
         LoadPalette(&gPokenavConditionMenu2_Pal[16], 0xB5, 0x2);
@@ -952,7 +952,7 @@ void sub_80F01E0(u16 a)
 {
     Menu_PrintText(gPokenavStructPtr->unk8829[a], 13, 1);
 
-    if (gPokenavStructPtr->unk76AA == 1)
+    if (gPokenavStructPtr->inSearchMode == 1)
     {
         Menu_PrintText(gPokenavStructPtr->unk88E9[a], 13, 3);
         sub_80F443C(gPokenavStructPtr->unk8788, gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].unk2_5);
@@ -1526,7 +1526,7 @@ bool8 sub_80F1080(void)
         LZ77UnCompVram(gPokenavRibbonView_Gfx, (void *)(VRAM + 0x8000));
         break;
     case 11:
-        LZ77UnCompVram(gUnknown_083E040C, (void *)(VRAM + 0x8200));
+        LZ77UnCompVram(gRibbonIconsSmall_Gfx, (void *)(VRAM + 0x8200));
         break;
     case 12:
         LoadPalette(gPokenavRibbonView_Pal, 0x20, 0x20);
@@ -1631,8 +1631,8 @@ void sub_80F1494(void)
     {
         gUnknown_020388B4 = gPokenavStructPtr->unkBC91 * 9 + gPokenavStructPtr->unkBC90;
         gUnknown_020388B4 = gPokenavStructPtr->unkBC4C[gUnknown_020388B4];
-        AlignStringInMenuWindow(tileBuffer1, gRibbonDescriptions[gUnknown_020388B4][0], 128, 0);
-        AlignStringInMenuWindow(tileBuffer2, gRibbonDescriptions[gUnknown_020388B4][1], 128, 0);
+        AlignStringInMenuWindow(tileBuffer1, gRibbonDescriptionPointers[gUnknown_020388B4][0], 128, 0);
+        AlignStringInMenuWindow(tileBuffer2, gRibbonDescriptionPointers[gUnknown_020388B4][1], 128, 0);
     }
     else
     {
@@ -1649,8 +1649,8 @@ void sub_80F1494(void)
         if (gUnknown_020388B4)
         {
             gUnknown_020388B4--;
-            AlignStringInMenuWindow(tileBuffer1, gGiftRibbonDescriptions[gUnknown_020388B4][0], 128, 0);
-            AlignStringInMenuWindow(tileBuffer2, gGiftRibbonDescriptions[gUnknown_020388B4][1], 128, 0);
+            AlignStringInMenuWindow(tileBuffer1, gGiftRibbonDescriptionPointers[gUnknown_020388B4][0], 128, 0);
+            AlignStringInMenuWindow(tileBuffer2, gGiftRibbonDescriptionPointers[gUnknown_020388B4][1], 128, 0);
         }
         else
         {
@@ -1761,7 +1761,7 @@ bool8 sub_80F1778(void)
         LZ77UnCompVram(gUnknown_08E9FEB4, (void *)(VRAM + 0xB800));
         break;
     case 7:
-        LoadPalette(gUnknown_083E0254, 0x30, 0x20);
+        LoadPalette(gConditionGraphData_Pal, 0x30, 0x20);
         LoadPalette(gUnknownPalette_81E6692, 0xB0, 0x20);
         LoadPalette(&gPokenavConditionMenu2_Pal[2], 0xB1, 0x2);
         LoadPalette(&gPokenavConditionMenu2_Pal[16], 0xB5, 0x2);
@@ -2027,7 +2027,7 @@ void sub_80F1E84(void)
     sub_80F2148();
     for (i = 0; i < gPokenavStructPtr->unk30E; i++)
     {
-        if (i != gPokenavStructPtr->unk6DAD)
+        if (i != gPokenavStructPtr->cursorPos)
         {
             for (j = 0; j < 4; j++)
             {
@@ -2049,7 +2049,7 @@ bool8 sub_80F1F10(void)
         {
             for (j = 0; j < 4; j++)
             {
-                struct Sprite *sprite = gPokenavStructPtr->unk320[gPokenavStructPtr->unk6DAD][j];
+                struct Sprite *sprite = gPokenavStructPtr->unk320[gPokenavStructPtr->cursorPos][j];
                 sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
                 sprite->affineAnims = gSpriteAffineAnimTable_83E4450;
                 InitSpriteAffineAnim(sprite);
@@ -2082,7 +2082,7 @@ void sub_80F1FF0(void)
 {
     if (gPokenavStructPtr->unk311 == 1)
     {
-        REG_WIN0V = gPokenavStructPtr->unk314[gPokenavStructPtr->unk6DAD];
+        REG_WIN0V = gPokenavStructPtr->unk314[gPokenavStructPtr->cursorPos];
         REG_BLDY = gSineTable[gPokenavStructPtr->unk312] >> 5;
         gPokenavStructPtr->unk312 += 3;
         gPokenavStructPtr->unk312 &= 0x7F;
@@ -2103,7 +2103,7 @@ void sub_80F208C(void)
 void sub_80F2098(void)
 {
     REG_WIN0H = 0x77F0;
-    REG_WIN0V = gPokenavStructPtr->unk314[gPokenavStructPtr->unk6DAD];
+    REG_WIN0V = gPokenavStructPtr->unk314[gPokenavStructPtr->cursorPos];
     REG_WININ = 0x3F;
     REG_WINOUT = 0x1F;
     REG_DISPCNT |= DISPCNT_WIN0_ON;
@@ -2142,7 +2142,7 @@ void sub_80F2170(void)
         sub_80F20F4();
         for (j = 0; j < 4; j++)
         {
-            struct Sprite *sprite = gPokenavStructPtr->unk320[gPokenavStructPtr->unk6DAD][j];
+            struct Sprite *sprite = gPokenavStructPtr->unk320[gPokenavStructPtr->cursorPos][j];
             sprite->oam.objMode = ST_OAM_OBJ_BLEND;
         }
 
@@ -2171,7 +2171,7 @@ void sub_80F2218(struct Sprite *sprite)
 
 void sub_80F2240(struct Sprite *sprite)
 {
-    if (sprite->data[0] == gPokenavStructPtr->unk6DAD)
+    if (sprite->data[0] == gPokenavStructPtr->cursorPos)
     {
         if (sprite->data[5])
         {
@@ -2192,7 +2192,7 @@ void sub_80F2240(struct Sprite *sprite)
 
 void sub_80F22B0(struct Sprite *sprite)
 {
-    if (sprite->data[0] == gPokenavStructPtr->unk6DAD)
+    if (sprite->data[0] == gPokenavStructPtr->cursorPos)
     {
         if (sprite->x2 > -16)
             sprite->x2 -= 4;
@@ -2230,7 +2230,7 @@ bool8 sub_80F2360(void)
 
     for (i = 0; i < gPokenavStructPtr->unk30E; i++)
     {
-        if (i != gPokenavStructPtr->unk6DAD)
+        if (i != gPokenavStructPtr->cursorPos)
         {
             for (j = 0; j < 4; j++)
             {
@@ -2250,7 +2250,7 @@ bool8 sub_80F23C8(void)
 
     for (j = 0; j < 4; j++)
     {
-        struct Sprite *sprite = gPokenavStructPtr->unk320[gPokenavStructPtr->unk6DAD][j];
+        struct Sprite *sprite = gPokenavStructPtr->unk320[gPokenavStructPtr->cursorPos][j];
         if (sprite)
             return FALSE;
     }
@@ -3040,7 +3040,7 @@ bool8 sub_80F3724(void)
     switch (gPokenavStructPtr->unk306)
     {
     case 0:
-        LZ77UnCompWram(gUnknown_083E3D00, gPokenavStructPtr->unk984C);
+        LZ77UnCompWram(gRibbonIconsBig_Gfx, gPokenavStructPtr->unk984C);
         break;
     case 1:
         sub_80F379C();
@@ -3191,7 +3191,7 @@ struct Sprite *sub_80F3A3C(u16 arg0, u16 arg1)
         var0 = arg0 + (gPokenavStructPtr->unkBC8E - gPokenavStructPtr->unkBC8F);
 
     ribbon = gPokenavStructPtr->unkBC4C[var0];
-    spriteTemplate = gSpriteTemplate_83E476C;
+    spriteTemplate = gSpriteTemplate_RibbonIconBig;
     spriteTemplate.tileTag = gPokenavRibbonsIconGfx[ribbon][0] + 11;
     spriteTemplate.paletteTag = gPokenavRibbonsIconGfx[ribbon][1] + 10;
     spriteId = CreateSprite(&spriteTemplate, arg0 * 16 + 96, arg1 * 16 + 40, 2);
@@ -3292,7 +3292,7 @@ void sub_80F3C94(void)
     LoadSpriteSheet(&spriteSheet);
     LoadSpritePalette(&spritePalette);
     for (i = 0; i < 10; i++)
-        gPokenavStructPtr->unk8800[i] = NULL;
+        gPokenavStructPtr->conditionSparkleSprites[i] = NULL;
 }
 
 void sub_80F3CE8(void)
@@ -3315,11 +3315,11 @@ void sub_80F3D00(void)
     var1 = gPokenavStructPtr->unk8931[gPokenavStructPtr->unk8fe9];
     for (i = 0; i < var1 + 1; i++)
     {
-        spriteId = CreateSprite(&gSpriteTemplate_83E4800, 0, 0, 0);
+        spriteId = CreateSprite(&gSpriteTemplate_ConditionSparkle, 0, 0, 0);
         if (spriteId != MAX_SPRITES)
         {
-            gPokenavStructPtr->unk8800[i] = &gSprites[spriteId];
-            gPokenavStructPtr->unk8800[i]->invisible = TRUE;
+            gPokenavStructPtr->conditionSparkleSprites[i] = &gSprites[spriteId];
+            gPokenavStructPtr->conditionSparkleSprites[i]->invisible = TRUE;
         }
         else
         {
@@ -3336,11 +3336,11 @@ void move_anim_execute(void)
 
     for (i = 0; i < 10; i++)
     {
-        if (!gPokenavStructPtr->unk8800[i])
+        if (!gPokenavStructPtr->conditionSparkleSprites[i])
             return;
 
-        DestroySprite(gPokenavStructPtr->unk8800[i]);
-        gPokenavStructPtr->unk8800[i] = NULL;
+        DestroySprite(gPokenavStructPtr->conditionSparkleSprites[i]);
+        gPokenavStructPtr->conditionSparkleSprites[i] = NULL;
     }
 }
 
@@ -3368,15 +3368,15 @@ void sub_80F3E24(struct Sprite *sprite)
     {
         sprite->x = gPokenavStructPtr->unk8768->x
                          + gPokenavStructPtr->unk8768->x2
-                         + gUnknown_083E4794[sprite->data[0]][0];
+                         + gConditionSparkleCoords[sprite->data[0]][0];
         sprite->y = gPokenavStructPtr->unk8768->y
                          + gPokenavStructPtr->unk8768->y2
-                         + gUnknown_083E4794[sprite->data[0]][1];
+                         + gConditionSparkleCoords[sprite->data[0]][1];
     }
     else
     {
-        sprite->x = gUnknown_083E4794[sprite->data[0]][0] + 40;
-        sprite->y = gUnknown_083E4794[sprite->data[0]][1] + 104;
+        sprite->x = gConditionSparkleCoords[sprite->data[0]][0] + 40;
+        sprite->y = gConditionSparkleCoords[sprite->data[0]][1] + 104;
     }
 }
 
@@ -3420,23 +3420,23 @@ void sub_80F3F20(u8 arg0, u8 arg1)
 
     for (i = 0; i < 10; i++)
     {
-        if (gPokenavStructPtr->unk8800[i])
+        if (gPokenavStructPtr->conditionSparkleSprites[i])
         {
-            gPokenavStructPtr->unk8800[i]->data[0] = i;
-            gPokenavStructPtr->unk8800[i]->data[1] = i * 16 + 1;
-            gPokenavStructPtr->unk8800[i]->data[2] = arg0;
-            gPokenavStructPtr->unk8800[i]->data[3] = i;
+            gPokenavStructPtr->conditionSparkleSprites[i]->data[0] = i;
+            gPokenavStructPtr->conditionSparkleSprites[i]->data[1] = i * 16 + 1;
+            gPokenavStructPtr->conditionSparkleSprites[i]->data[2] = arg0;
+            gPokenavStructPtr->conditionSparkleSprites[i]->data[3] = i;
 
             if (!arg1 || arg0 != 9)
             {
-                gPokenavStructPtr->unk8800[i]->callback = sub_80F3E9C;
+                gPokenavStructPtr->conditionSparkleSprites[i]->callback = sub_80F3E9C;
             }
             else
             {
-                sub_80F3E24(gPokenavStructPtr->unk8800[i]);
+                sub_80F3E24(gPokenavStructPtr->conditionSparkleSprites[i]);
                 sub_80F3FAC();
-                gPokenavStructPtr->unk8800[i]->callback = sub_80F3E04;
-                gPokenavStructPtr->unk8800[i]->invisible = FALSE;
+                gPokenavStructPtr->conditionSparkleSprites[i]->callback = sub_80F3E04;
+                gPokenavStructPtr->conditionSparkleSprites[i]->invisible = FALSE;
             }
         }
     }
@@ -3448,10 +3448,10 @@ void sub_80F3FAC(void)
 
     for (i = 0; i < 10; i++)
     {
-        if (gPokenavStructPtr->unk8800[i])
+        if (gPokenavStructPtr->conditionSparkleSprites[i])
         {
-            SeekSpriteAnim(gPokenavStructPtr->unk8800[i], 0);
-            gPokenavStructPtr->unk8800[i]->invisible = FALSE;
+            SeekSpriteAnim(gPokenavStructPtr->conditionSparkleSprites[i], 0);
+            gPokenavStructPtr->conditionSparkleSprites[i]->invisible = FALSE;
         }
     }
 }
@@ -3472,7 +3472,7 @@ bool8 sub_80F4024(void)
     switch (gPokenavStructPtr->unk306)
     {
     case 0:
-        LZ77UnCompWram(gUnknown_083E329C, gPokenavStructPtr->unk131E4);
+        LZ77UnCompWram(gSpinningPokenav_Gfx, gPokenavStructPtr->unk131E4);
         break;
     case 1:
     {
@@ -3491,15 +3491,15 @@ bool8 sub_80F4024(void)
         gPokenavStructPtr->unk308 = -3 & ~(1 << (paletteIndex + 0x10));
         break;
     case 3:
-        spriteId = CreateSprite(&gSpriteTemplate_83E4850, 218, 14, 0);
+        spriteId = CreateSprite(&gSpinningPokenavSpriteTemplate, 218, 14, 0);
         if (spriteId != MAX_SPRITES)
         {
-            gPokenavStructPtr->unk6D98 = &gSprites[spriteId];
-            gPokenavStructPtr->unk6D98->data[0] = 0;
+            gPokenavStructPtr->spinningPokenav = &gSprites[spriteId];
+            gPokenavStructPtr->spinningPokenav->data[0] = 0;
         }
         else
         {
-            gPokenavStructPtr->unk6D98 = NULL;
+            gPokenavStructPtr->spinningPokenav = NULL;
         }
 
         gPokenavStructPtr->unk306++;
@@ -3985,7 +3985,7 @@ bool8 sub_80F4FB4(void)
 
 void sub_80F4FDC(void)
 {
-    if (gPokenavStructPtr->unk76AA || gPokenavStructPtr->unk87DC != gPokenavStructPtr->unk8828)
+    if (gPokenavStructPtr->inSearchMode || gPokenavStructPtr->unk87DC != gPokenavStructPtr->unk8828)
         sub_80F53EC(gPokenavStructPtr->unk9004[gPokenavStructPtr->unk8fe9], gPokenavStructPtr->unk9004[3]);
 }
 
@@ -4188,7 +4188,7 @@ void sub_80F556C(struct UnkPokenav11 *arg0)
 void sub_80F55AC(u8 *a0, struct UnkPokenav11 a1[])
 {
     u16 i;
-    u8 r2 = gUnknown_083E4890[*a0++];
+    u8 r2 = gConditionToLineLength[*a0++];
     u8 r7;
     s8 r12;
 
@@ -4205,7 +4205,7 @@ void sub_80F55AC(u8 *a0, struct UnkPokenav11 a1[])
             r12 = 4;
         if (r12 == 2)
             r7++;
-        r2 = gUnknown_083E4890[*a0++];
+        r2 = gConditionToLineLength[*a0++];
         a1[r12].unk0 = ((r2 * gSineTable[r7 + 0x40]) >> 8) + 0x9b;
         a1[r12].unk2 = 0x5b - ((r2 * gSineTable[r7]) >> 8);
 

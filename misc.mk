@@ -125,7 +125,7 @@ PKNAVGFXDIR := graphics/pokenav
 
 $(PKNAVGFXDIR)/region_map.8bpp: GFX_OPTS := -num_tiles 233
 
-$(PKNAVGFXDIR)/outline.4bpp: GFX_OPTS := -num_tiles 43
+$(PKNAVGFXDIR)/device_outline.4bpp: GFX_OPTS := -num_tiles 43
 
 $(PKNAVGFXDIR)/menu_options.4bpp: $(PKNAVGFXDIR)/menu_hoennmap.4bpp $(PKNAVGFXDIR)/menu_condition.4bpp $(PKNAVGFXDIR)/menu_eyes.4bpp $(PKNAVGFXDIR)/menu_ribbons.4bpp $(PKNAVGFXDIR)/menu_off.4bpp
 	@cat $(PKNAVGFXDIR)/menu_hoennmap.4bpp $(PKNAVGFXDIR)/menu_condition.4bpp $(PKNAVGFXDIR)/menu_eyes.4bpp $(PKNAVGFXDIR)/menu_ribbons.4bpp $(PKNAVGFXDIR)/menu_off.4bpp >$@

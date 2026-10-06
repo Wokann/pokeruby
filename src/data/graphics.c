@@ -1033,7 +1033,7 @@ const u8 gPokenavConditionMenuHeader_Gfx[] = INCBIN_U8("graphics/pokenav/conditi
 const u8 gPokenavConditionView_Gfx[] = INCBIN_U8("graphics/pokenav/condition_view.4bpp.lz");
 const u8 gPokenavConditionMenu2_Pal[] = INCBIN_U8("graphics/pokenav/condition2.gbapal");
 const u8 gPokenavConditionMenuOptions_Gfx[] = INCBIN_U8("graphics/pokenav/condition_menu_options.4bpp.lz");
-const u8 gPokenavConditionMenuCancel_Gfx[] = INCBIN_U8("graphics/pokenav/condition_cancel.4bpp");
+const u8 gPokenavConditionCancel_Gfx[] = INCBIN_U8("graphics/pokenav/condition/cancel.4bpp");
 const u8 gPokenavConditionPokeball_Pal[] = INCBIN_U8("graphics/pokenav/condition3.gbapal");//
 const u16 gPokenavCondition4_Pal[] = INCBIN_U16("graphics/pokenav/condition4.gbapal");
 const u8 gPokenavConditionMenuOptions2_Gfx[] = INCBIN_U8("graphics/pokenav/condition_menu_options2.4bpp.lz");
@@ -1291,7 +1291,7 @@ const u16 gTitleScreenBgPalettes[] = INCBIN_U16("graphics/title_screen/logo_ruby
 #endif // SAPPHIRE
 
 const u8 gTitleScreenPokemonLogoTilemap[] = INCBIN_U8("graphics/title_screen/pokemon_logo.bin.lz");
-const u16 gPokenavArrowsPalette[] = INCBIN_U16("graphics/pokenav/arrows.gbapal");
+const u16 gPokenavArrowsPalette[] = INCBIN_U16("graphics/pokenav/list_arrows.gbapal");
 const u16 gUnknown_08E9F988[] = INCBIN_U16("graphics/unknown/unknown_E9F988.gbapal");
 const u8 gPokenavArrow_Gfx[] = INCBIN_U8("graphics/pokenav/arrow2.4bpp");
 const u16 gUnknown_08E9F9E8[] = INCBIN_U16("graphics/unknown/unknown_E9F9E8.gbapal");

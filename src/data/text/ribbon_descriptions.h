@@ -55,7 +55,7 @@ const u8 gRibbonDescriptionPart1_Effort[] = _(
 const u8 gRibbonDescriptionPart2_Effort[] = _(
     "being a hard worker.");
 
-const u8 *const gRibbonDescriptions[][2] = 
+const u8 *const gRibbonDescriptionPointers[][2] =
 {
     {gRibbonDescriptionPart1_Champion,      gRibbonDescriptionPart2_Champion},
     {gRibbonDescriptionPart1_CoolContest,   gRibbonDescriptionPart2_NormalRank},
