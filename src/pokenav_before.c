@@ -1199,15 +1199,15 @@ void sub_80EBC10()
     gKeyRepeatStartDelay = 0x14;
     gPokenavStructPtr->unk8828 = CalculatePlayerPartyCount();
     gPokenavStructPtr->unk6DDC = 0;
-    gPokenavStructPtr->unk9344 = 0;
+    gPokenavStructPtr->needsDraw = 0;
     gPokenavStructPtr->unk8768 = 0;
     gPokenavStructPtr->unkCED0 = 0;
 
     for (i = 0; i < 5; ++i)
     {
-        gPokenavStructPtr->unk8ff0[3][i] = 0;
-        gPokenavStructPtr->unk9004[3][i].unk0 = 0x9B;
-        gPokenavStructPtr->unk9004[3][i].unk2 = 0x5B;
+        gPokenavStructPtr->conditions[3][i] = 0;
+        gPokenavStructPtr->savedPositions[3][i].x = 0x9B;
+        gPokenavStructPtr->savedPositions[3][i].y = 0x5B;
     }
 
     gPokenavStructPtr->regionMap.needUpdateVideoRegs = 0;
@@ -2487,7 +2487,7 @@ void sub_80ED858(void)
             {
                 PlaySE(SE_SELECT);
                 sub_80F5060(1);
-                move_anim_execute();
+                DestroyConditionSparkleSprites();
                 gPokenavStructPtr->unk304 = 5;
                 break;
             }
@@ -2501,7 +2501,7 @@ void sub_80ED858(void)
             {
                 PlaySE(SE_SELECT);
                 sub_80F5060(0);
-                move_anim_execute();
+                DestroyConditionSparkleSprites();
                 gPokenavStructPtr->unk304 = 5;
                 break;
             }
@@ -2510,7 +2510,7 @@ void sub_80ED858(void)
         {
             PlaySE(SE_SELECT);
             sub_80F4FDC();
-            move_anim_execute();
+            DestroyConditionSparkleSprites();
             gPokenavStructPtr->unk304 = 9;
             break;
         }

@@ -269,7 +269,7 @@ static void sub_8136294(void)
         case 11:
             gKeyRepeatStartDelay = 20;
             gPokenavStructPtr->unk8828 = CalculatePlayerPartyCount();
-            gPokenavStructPtr->unk9344 = 0;
+            gPokenavStructPtr->needsDraw = 0;
             gPokenavStructPtr->unk8768 = NULL;
             sub_80F4BD0();
             gPokenavStructPtr->unkD160 = 0;
@@ -306,7 +306,7 @@ static void sub_8136294(void)
             gUnknown_02039304->unk50++;
             break;
         case 17:
-            sub_80F567C(gPokenavStructPtr->unk8ff0[0], gPokenavStructPtr->unk9004[0]);
+            sub_80F567C(gPokenavStructPtr->conditions[0], gPokenavStructPtr->savedPositions[0]);
             sub_80F5B38();
             gUnknown_02039304->unk50++;
             break;
@@ -317,7 +317,7 @@ static void sub_8136294(void)
             }
             break;
         case 19:
-            sub_80F556C(gPokenavStructPtr->unk9004[0]);
+            sub_80F556C(gPokenavStructPtr->savedPositions[0]);
             gUnknown_02039304->unk50++;
             break;
         case 20:
@@ -378,14 +378,14 @@ static void sub_8136638(void)
             {
                 PlaySE(SE_SELECT);
                 sub_80F5060(TRUE);
-                move_anim_execute();
+                DestroyConditionSparkleSprites();
                 gUnknown_02039304->unk50 = 1;
             }
             else if (JOY_HELD(DPAD_DOWN))
             {
                 PlaySE(SE_SELECT);
                 sub_80F5060(FALSE);
-                move_anim_execute();
+                DestroyConditionSparkleSprites();
                 gUnknown_02039304->unk50 = 1;
             }
             else if (JOY_NEW(B_BUTTON))
@@ -540,7 +540,7 @@ static void sub_81369CC(void)
         case 0:
             gUnknown_02039304->pokemon = &gPlayerParty[0];
             gUnknown_02039304->pokemon = &gPlayerParty[gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].partyIdx];
-            move_anim_execute();
+            DestroyConditionSparkleSprites();
             gUnknown_02039304->unk50++;
             break;
         case 1:
@@ -549,8 +549,8 @@ static void sub_81369CC(void)
             break;
         case 2:
             sub_8136EF0();
-            sub_80F567C(gUnknown_02039304->unk5c, gPokenavStructPtr->unk9004[3]);
-            sub_80F5550(gPokenavStructPtr->unk9004[gPokenavStructPtr->unk8fe9], gPokenavStructPtr->unk9004[3]);
+            sub_80F567C(gUnknown_02039304->unk5c, gPokenavStructPtr->savedPositions[3]);
+            sub_80F5550(gPokenavStructPtr->savedPositions[gPokenavStructPtr->loadId], gPokenavStructPtr->savedPositions[3]);
             sub_8137138();
             gUnknown_02039304->unk50++;
             break;

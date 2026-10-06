@@ -79,7 +79,7 @@ void sub_80F6C20(void)
 void sub_80F6DB8(void)
 {
     s32 r1 = 0;
-    gPokenavStructPtr->unk8fe9 = r1;
+    gPokenavStructPtr->loadId = r1;
     sub_80F6E04(0);
     gPokenavStructPtr->unkD15A = -72;
     sub_80F2F7C(0);
@@ -259,5 +259,5 @@ bool8 sub_80F70FC(void)
 void sub_80F7224(u8 a0)
 {
     u8 sheen = GetMonData(&gPlayerParty[a0], MON_DATA_SHEEN);
-    gPokenavStructPtr->unk8931[gPokenavStructPtr->unk8fe9] = sheen != 255 ? sheen / 29 : 9;
+    gPokenavStructPtr->numSparkles[gPokenavStructPtr->loadId] = sheen != 255 ? sheen / 29 : 9;
 }
