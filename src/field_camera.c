@@ -1,6 +1,7 @@
 #include "global.h"
 #include "field_camera.h"
 #include "berry.h"
+#include "bike.h"
 #include "field_player_avatar.h"
 #include "fieldmap.h"
 #include "rotating_gate.h"

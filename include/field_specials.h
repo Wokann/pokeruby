@@ -1,6 +1,9 @@
 #ifndef GUARD_FIELD_SPECIALS_H
 #define GUARD_FIELD_SPECIALS_H
 
+extern bool8 gBikeCyclingChallenge;
+extern u8 gBikeCollisions;
+
 struct ElevatorMenu {
     u8 var0;
     s8 var1;
