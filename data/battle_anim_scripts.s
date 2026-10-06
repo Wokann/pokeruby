@@ -6742,11 +6742,11 @@ Move_COTTON_SPORE: @ 81D0BE7
 	clearmonbg ANIM_DEF_PARTNER
 	end
 _81D0C07:
-	createsprite gBattleAnimSpriteTemplate_83D63F8, ANIM_ATTACKER, 2, 0, -20, 85, 80, 0
+	createsprite gSporeParticleSpriteTemplate, ANIM_ATTACKER, 2, 0, -20, 85, 80, 0
 	delay 12
-	createsprite gBattleAnimSpriteTemplate_83D63F8, ANIM_ATTACKER, 2, 0, -10, 170, 80, 0
+	createsprite gSporeParticleSpriteTemplate, ANIM_ATTACKER, 2, 0, -10, 170, 80, 0
 	delay 12
-	createsprite gBattleAnimSpriteTemplate_83D63F8, ANIM_ATTACKER, 2, 0, -15, 0, 80, 0
+	createsprite gSporeParticleSpriteTemplate, ANIM_ATTACKER, 2, 0, -15, 0, 80, 0
 	delay 12
 	return
 
@@ -6754,7 +6754,7 @@ Move_SPORE: @ 81D0C41
 	loadspritegfx ANIM_TAG_SPORE
 	monbg ANIM_DEF_PARTNER
 	setalpha 12, 8
-	createvisualtask sub_80CACEC, 2
+	createvisualtask AnimTask_SporeDoubleBattle, 2
 	loopsewithpan SE_M_POISON_POWDER, SOUND_PAN_TARGET, 16, 11
 	call _81D0C6C
 	call _81D0C6C
@@ -6765,11 +6765,11 @@ Move_SPORE: @ 81D0C41
 	blendoff
 	end
 _81D0C6C:
-	createsprite gBattleAnimSpriteTemplate_83D63F8, ANIM_TARGET, 2, 0, -20, 85, 80, 1
+	createsprite gSporeParticleSpriteTemplate, ANIM_TARGET, 2, 0, -20, 85, 80, 1
 	delay 12
-	createsprite gBattleAnimSpriteTemplate_83D63F8, ANIM_TARGET, 2, 0, -10, 170, 80, 1
+	createsprite gSporeParticleSpriteTemplate, ANIM_TARGET, 2, 0, -10, 170, 80, 1
 	delay 12
-	createsprite gBattleAnimSpriteTemplate_83D63F8, ANIM_TARGET, 2, 0, -15, 0, 80, 1
+	createsprite gSporeParticleSpriteTemplate, ANIM_TARGET, 2, 0, -15, 0, 80, 1
 	delay 12
 	return
 
@@ -6780,23 +6780,23 @@ Move_PETAL_DANCE: @ 81D0CA6
 	setalpha 12, 8
 	playsewithpan SE_M_PETAL_DANCE, SOUND_PAN_ATTACKER
 	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_ATTACKER, 12, 6, 6, 3
-	createsprite gBattleAnimSpriteTemplate_83D6428, ANIM_ATTACKER, 2, 0, -24, 8, 140
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_ATTACKER, 2, 16, -24, 8, 100
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_ATTACKER, 2, -16, -24, 8, 100
+	createsprite gPetalDanceBigFlowerSpriteTemplate, ANIM_ATTACKER, 2, 0, -24, 8, 140
+	createsprite gPetalDanceSmallFlowerSpriteTemplate, ANIM_ATTACKER, 2, 16, -24, 8, 100
+	createsprite gPetalDanceSmallFlowerSpriteTemplate, ANIM_ATTACKER, 2, -16, -24, 8, 100
 	delay 15
-	createsprite gBattleAnimSpriteTemplate_83D6428, ANIM_ATTACKER, 2, 0, -24, 8, 140
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_ATTACKER, 2, 32, -24, 8, 100
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_ATTACKER, 2, -32, -24, 8, 100
+	createsprite gPetalDanceBigFlowerSpriteTemplate, ANIM_ATTACKER, 2, 0, -24, 8, 140
+	createsprite gPetalDanceSmallFlowerSpriteTemplate, ANIM_ATTACKER, 2, 32, -24, 8, 100
+	createsprite gPetalDanceSmallFlowerSpriteTemplate, ANIM_ATTACKER, 2, -32, -24, 8, 100
 	delay 15
-	createsprite gBattleAnimSpriteTemplate_83D6428, ANIM_ATTACKER, 2, 0, -24, 8, 140
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_ATTACKER, 2, 24, -24, 8, 100
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_ATTACKER, 2, -24, -24, 8, 100
+	createsprite gPetalDanceBigFlowerSpriteTemplate, ANIM_ATTACKER, 2, 0, -24, 8, 140
+	createsprite gPetalDanceSmallFlowerSpriteTemplate, ANIM_ATTACKER, 2, 24, -24, 8, 100
+	createsprite gPetalDanceSmallFlowerSpriteTemplate, ANIM_ATTACKER, 2, -24, -24, 8, 100
 	delay 30
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_ATTACKER, 2, 16, -24, 0, 100
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_ATTACKER, 2, -16, -24, 0, 100
+	createsprite gPetalDanceSmallFlowerSpriteTemplate, ANIM_ATTACKER, 2, 16, -24, 0, 100
+	createsprite gPetalDanceSmallFlowerSpriteTemplate, ANIM_ATTACKER, 2, -16, -24, 0, 100
 	delay 30
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_ATTACKER, 2, 20, -16, 14, 80
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_ATTACKER, 2, -20, -14, 16, 80
+	createsprite gPetalDanceSmallFlowerSpriteTemplate, ANIM_ATTACKER, 2, 20, -16, 14, 80
+	createsprite gPetalDanceSmallFlowerSpriteTemplate, ANIM_ATTACKER, 2, -20, -14, 16, 80
 	waitforvisualfinish
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, 24, 0, 0, 5
 	delay 3

@@ -3,8 +3,8 @@
 #include "trig.h"
 #include "sound.h"
 
-extern const union AnimCmd *const gSpriteAnimTable_83D6424[];
-extern const union AnimCmd *const gSpriteAnimTable_83D6420[];
+extern const union AnimCmd *const gPetalDanceSmallFlowerAnimTable[];
+extern const union AnimCmd *const gPetalDanceBigFlowerAnimTable[];
 
 void sub_80CC474(struct Sprite* sprite);
 static void sub_80CC580(struct Sprite* sprite);
@@ -27,7 +27,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D68B8 =
     .tileTag = ANIM_TAG_FLOWER,
     .paletteTag = ANIM_TAG_FLOWER,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
-    .anims = gSpriteAnimTable_83D6424,
+    .anims = gPetalDanceSmallFlowerAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = sub_80CC474,
@@ -38,7 +38,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D68D0 =
     .tileTag = ANIM_TAG_FLOWER,
     .paletteTag = ANIM_TAG_FLOWER,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D6420,
+    .anims = gPetalDanceBigFlowerAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D68B4,
     .callback = sub_80CC474,
