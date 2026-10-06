@@ -3,25 +3,24 @@
 #include "trig.h"
 #include "sound.h"
 
-
 extern u8 gBattlerSpriteIds[];
 
-void sub_80CD774(struct Sprite* sprite);
-void sub_80CD9C4(struct Sprite* sprite);
-static void sub_80CD7CC(struct Sprite* sprite);
-static void sub_80CD81C(struct Sprite* sprite);
-static void sub_80CD8A8(struct Sprite* sprite);
-static void sub_80CD8F8(struct Sprite* sprite);
-static void sub_80CD91C(struct Sprite* sprite);
-static void sub_80CD9B8(struct Sprite* sprite);
-static void sub_80CD9D4(struct Sprite* sprite);
-static void sub_80CDB60(u8 taskId);
-static void sub_80CDD20(u8 taskId);
+static void AnimBowMon(struct Sprite *sprite);
+static void AnimTipMon(struct Sprite *sprite);
+static void AnimBowMon_Step1(struct Sprite *sprite);
+static void AnimBowMon_Step1_Callback(struct Sprite *sprite);
+static void AnimBowMon_Step2(struct Sprite *sprite);
+static void AnimBowMon_Step3(struct Sprite *sprite);
+static void AnimBowMon_Step3_Callback(struct Sprite *sprite);
+static void AnimBowMon_Step4(struct Sprite *sprite);
+static void AnimTipMon_Step(struct Sprite *sprite);
+static void AnimTask_SkullBashPositionSet(u8 taskId);
+static void AnimTask_SkullBashPositionReset(u8 taskId);
 
 // lunge_1 (makes the pokemon sprite do a "lunge" where it leans back to attack, usually with its head or horn.)
 // Used in Drill Peck, Headbutt, Horn Attack, and Horn Drill.
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6DE4 =
+const struct SpriteTemplate gBowMonSpriteTemplate =
 {
     .tileTag = 0,
     .paletteTag = 0,
@@ -29,10 +28,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6DE4 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CD774,
+    .callback = AnimBowMon,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D6DFC =
+static const struct SpriteTemplate sTipMonSpriteTemplate =
 {
     .tileTag = 0,
     .paletteTag = 0,
@@ -40,41 +39,41 @@ const struct SpriteTemplate gSpriteTemplate_83D6DFC =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CD9C4,
+    .callback = AnimTipMon,
 };
 
-void sub_80CD774(struct Sprite* sprite)
+static void AnimBowMon(struct Sprite *sprite)
 {
     sprite->invisible = TRUE;
     sprite->data[0] = 0;
     switch (gBattleAnimArgs[0])
     {
     case 0:
-        sprite->callback = sub_80CD7CC;
+        sprite->callback = AnimBowMon_Step1;
         break;
     case 1:
-        sprite->callback = sub_80CD8A8;
+        sprite->callback = AnimBowMon_Step2;
         break;
     case 2:
-        sprite->callback = sub_80CD8F8;
+        sprite->callback = AnimBowMon_Step3;
         break;
     default:
-        sprite->callback = sub_80CD9B8;
+        sprite->callback = AnimBowMon_Step4;
         break;
     }
 }
 
-static void sub_80CD7CC(struct Sprite* sprite)
+static void AnimBowMon_Step1(struct Sprite *sprite)
 {
     sprite->data[0] = 6;
     sprite->data[1] = (GetBattlerSide(gBattleAnimAttacker)) ? 2 : -2;
     sprite->data[2] = 0;
     sprite->data[3] = gBattlerSpriteIds[gBattleAnimAttacker];
-    StoreSpriteCallbackInData6(sprite, sub_80CD81C);
+    StoreSpriteCallbackInData6(sprite, AnimBowMon_Step1_Callback);
     sprite->callback = TranslateSpriteLinearById;
 }
 
-static void sub_80CD81C(struct Sprite* sprite)
+static void AnimBowMon_Step1_Callback(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
@@ -90,30 +89,30 @@ static void sub_80CD81C(struct Sprite* sprite)
     if (++sprite->data[0] > 3)
     {
         sprite->data[0] = 0;
-        sprite->callback = sub_80CD9B8;
+        sprite->callback = AnimBowMon_Step4;
     }
 }
 
-static void sub_80CD8A8(struct Sprite* sprite)
+static void AnimBowMon_Step2(struct Sprite *sprite)
 {
     sprite->data[0] = 4;
     sprite->data[1] = (GetBattlerSide(gBattleAnimAttacker)) ? -3 : 3;
     sprite->data[2] = 0;
     sprite->data[3] = gBattlerSpriteIds[gBattleAnimAttacker];
-    StoreSpriteCallbackInData6(sprite, sub_80CD9B8);
+    StoreSpriteCallbackInData6(sprite, AnimBowMon_Step4);
     sprite->callback = TranslateSpriteLinearById;
 }
 
-static void sub_80CD8F8(struct Sprite* sprite)
+static void AnimBowMon_Step3(struct Sprite *sprite)
 {
     if (++sprite->data[0] > 8)
     {
         sprite->data[0] = 0;
-        sprite->callback = sub_80CD91C;
+        sprite->callback = AnimBowMon_Step3_Callback;
     }
 }
 
-static void sub_80CD91C(struct Sprite* sprite)
+static void AnimBowMon_Step3_Callback(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
@@ -137,22 +136,22 @@ static void sub_80CD91C(struct Sprite* sprite)
     if (++sprite->data[0] > 2)
     {
         ResetSpriteRotScale(sprite->data[3]);
-        sprite->callback = sub_80CD9B8;
+        sprite->callback = AnimBowMon_Step4;
     }
 }
 
-static void sub_80CD9B8(struct Sprite* sprite)
+static void AnimBowMon_Step4(struct Sprite *sprite)
 {
     DestroyAnimSprite(sprite);
 }
 
-void sub_80CD9C4(struct Sprite* sprite)
+static void AnimTipMon(struct Sprite *sprite)
 {
     sprite->data[0] = 0;
-    sprite->callback = sub_80CD9D4;
+    sprite->callback = AnimTipMon_Step;
 }
 
-static void sub_80CD9D4(struct Sprite* sprite)
+static void AnimTipMon_Step(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -188,13 +187,13 @@ static void sub_80CD9D4(struct Sprite* sprite)
     }
 }
 
-void sub_80CDAC8(u8 taskId)
+void AnimTask_SkullBashPosition(u8 taskId)
 {
-    u8 a;
+    u8 side;
 
     gTasks[taskId].data[0] = gBattlerSpriteIds[gBattleAnimAttacker];
-    a = GetBattlerSide(gBattleAnimAttacker);
-    gTasks[taskId].data[1] = a;
+    side = GetBattlerSide(gBattleAnimAttacker);
+    gTasks[taskId].data[1] = side;
     gTasks[taskId].data[2] = 0;
     switch (gBattleAnimArgs[0])
     {
@@ -206,27 +205,27 @@ void sub_80CDAC8(u8 taskId)
         gTasks[taskId].data[3] = 8;
         gTasks[taskId].data[4] = 0;
         gTasks[taskId].data[5] = 3;
-        if (a == 0)
+        if (side == 0)
             gTasks[taskId].data[5] *= -1;
 
-        gTasks[taskId].func = sub_80CDB60;
+        gTasks[taskId].func = AnimTask_SkullBashPositionSet;
         break;
     case 1:
         gTasks[taskId].data[3] = 8;
         gTasks[taskId].data[4] = 0x600;
         gTasks[taskId].data[5] = 0xC0;
-        if (a == 0)
+        if (side == 0)
         {
             gTasks[taskId].data[4] = -gTasks[taskId].data[4];
             gTasks[taskId].data[5] = -gTasks[taskId].data[5];
         }
 
-        gTasks[taskId].func = sub_80CDD20;
+        gTasks[taskId].func = AnimTask_SkullBashPositionReset;
         break;
     }
 }
 
-void sub_80CDB60(u8 taskId)
+static void AnimTask_SkullBashPositionSet(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     switch (task->data[2])
@@ -317,9 +316,9 @@ void sub_80CDB60(u8 taskId)
     }
 }
 
-void sub_80CDD20(u8 taskId)
+static void AnimTask_SkullBashPositionReset(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
     if (task->data[3])
     {
         task->data[4] -= task->data[5];
