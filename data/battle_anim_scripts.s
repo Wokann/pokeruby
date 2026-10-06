@@ -5404,7 +5404,7 @@ Move_AURORA_BEAM: @ 81CEC91
 	waitbgfadein
 	playsewithpan SE_M_BUBBLE_BEAM, SOUND_PAN_ATTACKER
 	setarg ARG_RET_ID, 0
-	createvisualtask AnimTask_RotateMonPalette1, 10, 130
+	createvisualtask AnimTask_RotateAuroraRingColors, 10, 130
 	call _81CED18
 	createvisualtask AnimTask_ShakeMon2, 5, 1, 1, 0, 17, 1
 	call _81CED18
@@ -5424,13 +5424,13 @@ Move_AURORA_BEAM: @ 81CEC91
 	waitbgfadein
 	end
 _81CED18:
-	createsprite RainbowRingSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 0, 17
+	createsprite gAuroraBeamRingSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 0, 17
 	delay 1
-	createsprite RainbowRingSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 0, 17
+	createsprite gAuroraBeamRingSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 0, 17
 	delay 1
-	createsprite RainbowRingSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 0, 17
+	createsprite gAuroraBeamRingSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 0, 17
 	delay 1
-	createsprite RainbowRingSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 0, 17
+	createsprite gAuroraBeamRingSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 0, 17
 	delay 1
 	return
 
