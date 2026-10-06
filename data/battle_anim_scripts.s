@@ -1885,11 +1885,11 @@ Move_PAY_DAY: @ 81C9CB5
 	splitbgprio 1
 	setalpha 12, 8
 	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D75E4, ANIM_ATTACKER, 2, 20, 0, 0, 0, 1152
+	createsprite gCoinThrowSpriteTemplate, ANIM_ATTACKER, 2, 20, 0, 0, 0, 1152
 	waitforvisualfinish
 	playsewithpan SE_M_PAY_DAY, SOUND_PAN_TARGET
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 1, 0, 0, 1, 2
-	createsprite gBattleAnimSpriteTemplate_83D75FC, ANIM_ATTACKER, 2
+	createsprite gFallingCoinSpriteTemplate, ANIM_ATTACKER, 2
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 1, 0, 6, 1
 	waitforvisualfinish
 	clearmonbg ANIM_TARGET

@@ -4,58 +4,58 @@
 #include "sound.h"
 
 
-void sub_80CFE9C(struct Sprite* sprite);
-void sub_80CFF50(struct Sprite* sprite);
-static void sub_80CFF68(struct Sprite* sprite);
+static void AnimCoinThrow(struct Sprite *sprite);
+static void AnimFallingCoin(struct Sprite *sprite);
+static void AnimFallingCoin_Step(struct Sprite *sprite);
 
 // money
 // Used by Pay Day.
 
-const union AnimCmd gSpriteAnim_83D75C4[] =
+const union AnimCmd gCoinAnimCmds[] =
 {
     ANIMCMD_FRAME(8, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D75CC[] =
+const union AnimCmd *const gCoinAnimTable[] =
 {
-    gSpriteAnim_83D75C4,
+    gCoinAnimCmds,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D75D0[] =
+const union AffineAnimCmd gFallingCoinAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 10, 1),
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D75E0[] =
+const union AffineAnimCmd *const gFallingCoinAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D75D0,
+    gFallingCoinAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D75E4 =
+const struct SpriteTemplate gCoinThrowSpriteTemplate =
 {
     .tileTag = ANIM_TAG_COIN,
     .paletteTag = ANIM_TAG_COIN,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D75CC,
+    .anims = gCoinAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CFE9C,
+    .callback = AnimCoinThrow,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D75FC =
+const struct SpriteTemplate gFallingCoinSpriteTemplate =
 {
     .tileTag = ANIM_TAG_COIN,
     .paletteTag = ANIM_TAG_COIN,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D75CC,
+    .anims = gCoinAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D75E0,
-    .callback = sub_80CFF50,
+    .affineAnims = gFallingCoinAffineAnimTable,
+    .callback = AnimFallingCoin,
 };
 
-void sub_80CFE9C(struct Sprite* sprite)
+static void AnimCoinThrow(struct Sprite *sprite)
 {
     s16 r6;
     s16 r7;
@@ -78,14 +78,14 @@ void sub_80CFE9C(struct Sprite* sprite)
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
-void sub_80CFF50(struct Sprite* sprite)
+static void AnimFallingCoin(struct Sprite *sprite)
 {
     sprite->data[2] = -16;
     sprite->y += 8;
-    sprite->callback = sub_80CFF68;
+    sprite->callback = AnimFallingCoin_Step;
 }
 
-static void sub_80CFF68(struct Sprite* sprite)
+static void AnimFallingCoin_Step(struct Sprite *sprite)
 {
     sprite->data[0] += 0x80;
     sprite->x2 = sprite->data[0] >> 8;
