@@ -1902,43 +1902,43 @@ Move_OUTRAGE: @ 81C9D08
 	createvisualtask sub_80E1F8C, 2, 7, 2, 5, 3, 8, 430
 	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_ATTACKER, 12, 6, 5, 4
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_TARGET, 2, 0, 0, 30, 1280, 0, 3
+	createsprite gOutrageFlameSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, 1280, 0, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_TARGET, 2, 0, 0, 30, -1280, 0, 3
+	createsprite gOutrageFlameSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, -1280, 0, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_TARGET, 2, 0, 0, 30, 0, 1280, 3
+	createsprite gOutrageFlameSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, 0, 1280, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_TARGET, 2, 0, 0, 30, 0, -1280, 3
+	createsprite gOutrageFlameSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, 0, -1280, 3
 	delay 0
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 40, 1
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_TARGET, 2, 0, 0, 30, 1280, 768, 3
+	createsprite gOutrageFlameSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, 1280, 768, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_TARGET, 2, 0, 0, 30, -1280, 768, 3
+	createsprite gOutrageFlameSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, -1280, 768, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_TARGET, 2, 0, 0, 30, 1280, -768, 3
+	createsprite gOutrageFlameSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, 1280, -768, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_TARGET, 2, 0, 0, 30, -1280, -768, 3
+	createsprite gOutrageFlameSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, -1280, -768, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_TARGET, 2, 0, 0, 30, 1280, 0, 3
+	createsprite gOutrageFlameSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, 1280, 0, 3
 	call _81C9E0F
 	call _81C9E0F
 	waitforvisualfinish
 	end
 _81C9E0F:
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_TARGET, 2, 0, 0, 30, -1280, 0, 3
+	createsprite gOutrageFlameSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, -1280, 0, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_TARGET, 2, 0, 0, 30, 0, 1280, 3
+	createsprite gOutrageFlameSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, 0, 1280, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_TARGET, 2, 0, 0, 30, 0, -1280, 3
+	createsprite gOutrageFlameSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, 0, -1280, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_TARGET, 2, 0, 0, 30, 1280, 768, 3
+	createsprite gOutrageFlameSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, 1280, 768, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_TARGET, 2, 0, 0, 30, -1280, 768, 3
+	createsprite gOutrageFlameSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, -1280, 768, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_TARGET, 2, 0, 0, 30, 1280, -768, 3
+	createsprite gOutrageFlameSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, 1280, -768, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_TARGET, 2, 0, 0, 30, -1280, -768, 3
+	createsprite gOutrageFlameSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, -1280, -768, 3
 	return
 
 Move_SPARK: @ 81C9EA3
@@ -4518,16 +4518,16 @@ Move_DRAGON_DANCE: @ 81CD7F8
 	monbg ANIM_ATTACKER
 	splitbgprio 0
 	delay 1
-	createvisualtask sub_80DF924, 5
+	createvisualtask AnimTask_DragonDanceWaver, 5
 	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
 	delay 8
 	createvisualtask AnimTask_BlendPalInAndOutByTag, 5, 10249, 19456, 14, 0, 3
-	createsprite gBattleAnimSpriteTemplate_83DB0E8, ANIM_ATTACKER, 2, 0
-	createsprite gBattleAnimSpriteTemplate_83DB0E8, ANIM_ATTACKER, 2, 43
-	createsprite gBattleAnimSpriteTemplate_83DB0E8, ANIM_ATTACKER, 2, 85
-	createsprite gBattleAnimSpriteTemplate_83DB0E8, ANIM_ATTACKER, 2, 128
-	createsprite gBattleAnimSpriteTemplate_83DB0E8, ANIM_ATTACKER, 2, 170
-	createsprite gBattleAnimSpriteTemplate_83DB0E8, ANIM_ATTACKER, 2, 213
+	createsprite gDragonDanceOrbSpriteTemplate, ANIM_ATTACKER, 2, 0
+	createsprite gDragonDanceOrbSpriteTemplate, ANIM_ATTACKER, 2, 43
+	createsprite gDragonDanceOrbSpriteTemplate, ANIM_ATTACKER, 2, 85
+	createsprite gDragonDanceOrbSpriteTemplate, ANIM_ATTACKER, 2, 128
+	createsprite gDragonDanceOrbSpriteTemplate, ANIM_ATTACKER, 2, 170
+	createsprite gDragonDanceOrbSpriteTemplate, ANIM_ATTACKER, 2, 213
 	delay 30
 	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
 	delay 30
@@ -4937,29 +4937,29 @@ Move_DRAGON_BREATH: @ 81CE20A
 	monbg ANIM_DEF_PARTNER
 	splitbgprio 1
 	loopsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER, 7, 7
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_TARGET, 2, 0, 0, 0, 0, 20
+	createsprite gDragonBreathFireSpriteTemplate, ANIM_TARGET, 2, 0, 0, 0, 0, 20
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_TARGET, 2, 0, 0, 0, 0, 20
+	createsprite gDragonBreathFireSpriteTemplate, ANIM_TARGET, 2, 0, 0, 0, 0, 20
 	delay 2
 	createvisualtask sub_80E2A38, 10, 4, 1, 0, 9, 31
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_TARGET, 2, 0, 0, 0, 0, 20
+	createsprite gDragonBreathFireSpriteTemplate, ANIM_TARGET, 2, 0, 0, 0, 0, 20
 	delay 2
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 21, 1
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_TARGET, 2, 0, 0, 0, 0, 20
+	createsprite gDragonBreathFireSpriteTemplate, ANIM_TARGET, 2, 0, 0, 0, 0, 20
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_TARGET, 2, 0, 0, 0, 0, 20
+	createsprite gDragonBreathFireSpriteTemplate, ANIM_TARGET, 2, 0, 0, 0, 0, 20
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_TARGET, 2, 0, 0, 0, 0, 20
+	createsprite gDragonBreathFireSpriteTemplate, ANIM_TARGET, 2, 0, 0, 0, 0, 20
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_TARGET, 2, 0, 0, 0, 0, 20
+	createsprite gDragonBreathFireSpriteTemplate, ANIM_TARGET, 2, 0, 0, 0, 0, 20
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_TARGET, 2, 0, 0, 0, 0, 20
+	createsprite gDragonBreathFireSpriteTemplate, ANIM_TARGET, 2, 0, 0, 0, 0, 20
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_TARGET, 2, 0, 0, 0, 0, 20
+	createsprite gDragonBreathFireSpriteTemplate, ANIM_TARGET, 2, 0, 0, 0, 0, 20
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_TARGET, 2, 0, 0, 0, 0, 20
+	createsprite gDragonBreathFireSpriteTemplate, ANIM_TARGET, 2, 0, 0, 0, 0, 20
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_TARGET, 2, 0, 0, 0, 0, 20
+	createsprite gDragonBreathFireSpriteTemplate, ANIM_TARGET, 2, 0, 0, 0, 0, 20
 	waitforvisualfinish
 	createvisualtask sub_80E2A38, 10, 4, 1, 9, 0, 31
 	waitforvisualfinish
@@ -5248,25 +5248,25 @@ Move_DRAGON_RAGE: @ 81CE8BA
 	waitforvisualfinish
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_TARGET, 2, 0, 15, 0, 0, 4
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_83DB0D0, ANIM_TARGET, 2, 30, 15, 0, 10, 10
+	createsprite gDragonRageFireSpitSpriteTemplate, ANIM_TARGET, 2, 30, 15, 0, 10, 10
 	waitforvisualfinish
 	loopsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_TARGET, 11, 3
 	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 3, 25, 1
-	createsprite gBattleAnimSpriteTemplate_83DB078, ANIM_TARGET, 66, 1, 5, 0
+	createsprite gDragonRageFirePlumeSpriteTemplate, ANIM_TARGET, 66, 1, 5, 0
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83DB078, ANIM_TARGET, 66, 1, -10, -15
+	createsprite gDragonRageFirePlumeSpriteTemplate, ANIM_TARGET, 66, 1, -10, -15
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83DB078, ANIM_TARGET, 2, 1, 0, 25
+	createsprite gDragonRageFirePlumeSpriteTemplate, ANIM_TARGET, 2, 1, 0, 25
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83DB078, ANIM_TARGET, 66, 1, 15, 5
+	createsprite gDragonRageFirePlumeSpriteTemplate, ANIM_TARGET, 66, 1, 15, 5
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83DB078, ANIM_TARGET, 66, 1, -25, 0
+	createsprite gDragonRageFirePlumeSpriteTemplate, ANIM_TARGET, 66, 1, -25, 0
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83DB078, ANIM_TARGET, 2, 1, 30, 30
+	createsprite gDragonRageFirePlumeSpriteTemplate, ANIM_TARGET, 2, 1, 30, 30
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83DB078, ANIM_TARGET, 2, 1, -27, 25
+	createsprite gDragonRageFirePlumeSpriteTemplate, ANIM_TARGET, 2, 1, -27, 25
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83DB078, ANIM_TARGET, 66, 1, 0, 8
+	createsprite gDragonRageFirePlumeSpriteTemplate, ANIM_TARGET, 66, 1, 0, 8
 	waitforvisualfinish
 	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_TARGET, 66, 0, 0, 4
 	waitforvisualfinish
@@ -9263,32 +9263,32 @@ Move_OVERHEAT: @ 81D4AFC
 	createvisualtask AnimTask_ShakeMon, 5, 0, 2, 0, 15, 1
 	waitforvisualfinish
 	playsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 2, 1, 0, 30, 25, -20
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 2, 1, 32, 30, 25, -20
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 2, 1, 64, 30, 25, -20
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 2, 1, 96, 30, 25, -20
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 2, 1, 128, 30, 25, -20
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 66, 1, 160, 30, 25, -20
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 66, 1, 192, 30, 25, -20
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 66, 1, 224, 30, 25, -20
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 2, 1, 0, 30, 25, -20
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 2, 1, 32, 30, 25, -20
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 2, 1, 64, 30, 25, -20
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 2, 1, 96, 30, 25, -20
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 2, 1, 128, 30, 25, -20
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 66, 1, 160, 30, 25, -20
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 66, 1, 192, 30, 25, -20
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 66, 1, 224, 30, 25, -20
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 2, 1, 0, 30, 25, 0
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 2, 1, 32, 30, 25, 0
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 2, 1, 64, 30, 25, 0
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 2, 1, 96, 30, 25, 0
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 2, 1, 128, 30, 25, 0
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 66, 1, 160, 30, 25, 0
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 66, 1, 192, 30, 25, 0
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 66, 1, 224, 30, 25, 0
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 2, 1, 0, 30, 25, 0
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 2, 1, 32, 30, 25, 0
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 2, 1, 64, 30, 25, 0
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 2, 1, 96, 30, 25, 0
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 2, 1, 128, 30, 25, 0
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 66, 1, 160, 30, 25, 0
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 66, 1, 192, 30, 25, 0
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 66, 1, 224, 30, 25, 0
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 2, 1, 0, 30, 25, 10
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 2, 1, 32, 30, 25, 10
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 2, 1, 64, 30, 25, 10
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 2, 1, 96, 30, 25, 10
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 2, 1, 128, 30, 25, 10
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 66, 1, 160, 30, 25, 10
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 66, 1, 192, 30, 25, 10
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_ATTACKER, 66, 1, 224, 30, 25, 10
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 2, 1, 0, 30, 25, 10
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 2, 1, 32, 30, 25, 10
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 2, 1, 64, 30, 25, 10
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 2, 1, 96, 30, 25, 10
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 2, 1, 128, 30, 25, 10
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 66, 1, 160, 30, 25, 10
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 66, 1, 192, 30, 25, 10
+	createsprite gOverheatFlameSpriteTemplate, ANIM_ATTACKER, 66, 1, 224, 30, 25, 10
 	delay 5
 	waitforvisualfinish
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_TARGET, 3, -5, 3, 1, 0
