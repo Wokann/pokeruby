@@ -3,7 +3,7 @@
 #include "trig.h"
 
 
-extern const union AnimCmd *const gSpriteAnimTable_83D70D8[];
+extern const union AnimCmd *const gMusicNotesAnimTable[];
 
 void sub_80D2E68(struct Sprite *sprite);
 void sub_80D2EC8(struct Sprite *sprite);
@@ -43,7 +43,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7D1C =
     .tileTag = ANIM_TAG_MUSIC_NOTES_2,
     .paletteTag = ANIM_TAG_MUSIC_NOTES_2,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D70D8,
+    .anims = gMusicNotesAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D7D10,
     .callback = sub_80D2EC8,
@@ -54,7 +54,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7D34 =
     .tileTag = ANIM_TAG_MUSIC_NOTES_2,
     .paletteTag = ANIM_TAG_MUSIC_NOTES_2,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D70D8,
+    .anims = gMusicNotesAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D7D10,
     .callback = sub_80D2E68,
