@@ -4,8 +4,6 @@
 #include "sound.h"
 
 
-extern void sub_80CEF44(u8 bank, struct Sprite* sprite);
-
 void sub_80CF2D0(struct Sprite* sprite);
 static void sub_80CF310(struct Sprite* sprite);
 
@@ -41,7 +39,7 @@ void sub_80CF2D0(struct Sprite* sprite)
     else
         bank = gBattleAnimTarget;
 
-    sub_80CEF44(bank, sprite);
+    SetSpriteNextToMonHead(bank, sprite);
     sprite->data[0] = 0;
     sprite->data[1] = 0;
     sprite->callback = sub_80CF310;

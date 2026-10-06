@@ -25,7 +25,7 @@ extern u16 gBattle_BG1_Y;
 extern u16 gBattle_BG2_X;
 extern u16 gBattle_BG2_Y;
 
-extern const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7220;
+extern const struct SpriteTemplate gThoughtBubbleSpriteTemplate;
 extern const union AffineAnimCmd *const gAffineAnims_BattleSpriteContest[];
 extern const union AffineAnimCmd *const gAffineAnims_BattleSpriteOpponentSide[];
 extern const u32 gUnknown_08D2AA98[];
@@ -1927,7 +1927,7 @@ static void sub_812D06C(u8 taskId)
         }
 
         y = task->data[3] + task->data[5];
-        spriteId = CreateSprite(&gBattleAnimSpriteTemplate_83D7220, x, y, 6 - task->data[1]);
+        spriteId = CreateSprite(&gThoughtBubbleSpriteTemplate, x, y, 6 - task->data[1]);
         PlaySE12WithPanning(186, BattleAnimAdjustPanning(SOUND_PAN_ATTACKER));
 
         if (spriteId != MAX_SPRITES)
@@ -1980,7 +1980,7 @@ static void sub_812D06C(u8 taskId)
     case 4:
         for (i = 0, j = 0; i < MAX_SPRITES; i++)
         {
-            if (gSprites[i].template == &gBattleAnimSpriteTemplate_83D7220)
+            if (gSprites[i].template == &gThoughtBubbleSpriteTemplate)
             {
                 gSprites[i].data[0] = taskId;
                 gSprites[i].data[1] = 6;

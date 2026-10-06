@@ -4,8 +4,6 @@
 #include "sound.h"
 
 
-extern void sub_80CEF44(u8 bank, struct Sprite* sprite);
-
 void sub_80CF040(struct Sprite* sprite);
 void sub_80CF0BC(struct Sprite* sprite);
 void sub_80CF1C8(struct Sprite* sprite);
@@ -138,7 +136,7 @@ void sub_80CF040(struct Sprite* sprite)
     else
         bank = gBattleAnimTarget;
 
-    sub_80CEF44(bank, sprite);
+    SetSpriteNextToMonHead(bank, sprite);
     sprite->data[0] = 0;
     StoreSpriteCallbackInData6(sprite, sub_80CF088);
     sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
@@ -219,7 +217,7 @@ void sub_80CF1C8(struct Sprite* sprite)
     else
         bank = gBattleAnimTarget;
 
-    sub_80CEF44(bank, sprite);
+    SetSpriteNextToMonHead(bank, sprite);
     if (GetBattlerSide(bank) == 0)
     {
         StartSpriteAnim(sprite, 0);
