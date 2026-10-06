@@ -7,7 +7,7 @@
 #include "constants/songs.h"
 
 
-extern const struct SpriteTemplate gBattleAnimSpriteTemplate_83D97D0;
+extern const struct SpriteTemplate gLightningSpriteTemplate;
 
 void sub_80D648C(struct Sprite *sprite);
 void sub_80D65DC(struct Sprite *sprite);
@@ -1101,7 +1101,7 @@ void sub_80D759C(u8 taskId)
 
 static bool8 sub_80D7654(struct Task *task, u8 taskId)
 {
-    u8 spriteId = CreateSprite(&gBattleAnimSpriteTemplate_83D97D0, task->data[13], task->data[14], task->data[12]);
+    u8 spriteId = CreateSprite(&gLightningSpriteTemplate, task->data[13], task->data[14], task->data[12]);
     if (spriteId != MAX_SPRITES)
     {
         gSprites[spriteId].callback = sub_80D76C4;

@@ -4782,38 +4782,38 @@ Move_THUNDER: @ 81CDDCE
 	createvisualtask sub_80E2324, 2, 257, 257, 257
 	playsewithpan SE_M_THUNDER_WAVE, SOUND_PAN_TARGET
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_TARGET, 2, 16, -36
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 16, -36
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_TARGET, 2, 16, -20
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 16, -20
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_TARGET, 2, 16, 12
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 16, 12
 	delay 20
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_TARGET, 6, -16, -32
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 6, -16, -32
 	playsewithpan SE_M_THUNDER_WAVE, SOUND_PAN_TARGET
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_TARGET, 6, -16, -16
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 6, -16, -16
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_TARGET, 6, -16, 16
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 6, -16, 16
 	playsewithpan SE_M_THUNDER_WAVE, SOUND_PAN_TARGET
 	delay 5
 	createvisualtask sub_80E2324, 2, 257, 257, 257
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_TARGET, 2, 24, -32
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 24, -32
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_TARGET, 2, 24, -16
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 24, -16
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_TARGET, 2, 24, 16
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 24, 16
 	delay 30
 	createvisualtask sub_80E2324, 2, 257, 257, 257
 	delay 5
 	createvisualtask sub_80E2324, 2, 257, 257, 257
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_TARGET, 2, 0, -32
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 0, -32
 	playsewithpan SE_M_TRI_ATTACK2, SOUND_PAN_TARGET
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_TARGET, 2, 0, -16
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 0, -16
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_TARGET, 2, 0, 16
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 0, 16
 	delay 10
 	createvisualtask sub_80E2324, 2, 257, 257, 257
 	delay 1
@@ -4843,11 +4843,11 @@ Move_THUNDER_PUNCH: @ 81CDF28
 	delay 1
 	createvisualtask sub_80E2324, 2, 257, 257, 257
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_TARGET, 2, 0, -48
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 0, -48
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_ATTACKER, 2, 0, -16
+	createsprite gLightningSpriteTemplate, ANIM_ATTACKER, 2, 0, -16
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_ATTACKER, 2, 0, 16
+	createsprite gLightningSpriteTemplate, ANIM_ATTACKER, 2, 0, 16
 	delay 1
 	playsewithpan SE_M_TRI_ATTACK2, SOUND_PAN_TARGET
 	createvisualtask sub_80E2324, 2, 257, 257, 257
@@ -8019,11 +8019,11 @@ Move_TRI_ATTACK: @ 81D2A0F
 	loadspritegfx ANIM_TAG_LIGHTNING
 	createvisualtask sub_80E2324, 2, 257, 257, 257
 	playsewithpan SE_M_TRI_ATTACK2, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_TARGET, 2, 0, -48
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 0, -48
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_TARGET, 2, 0, -16
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 0, -16
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_TARGET, 2, 0, 16
+	createsprite gLightningSpriteTemplate, ANIM_TARGET, 2, 0, 16
 	delay 20
 	createvisualtask AnimTask_ShakeTargetInPattern, 2, 20, 3, 1, 0
 	delay 2
