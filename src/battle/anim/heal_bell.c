@@ -6,14 +6,13 @@
 #include "palette.h"
 #include "decompress.h"
 
-
 extern const u8 gBattleAnimSpritePal_MusicNotes2[];
 
-void sub_80D1C08(struct Sprite* sprite);
+static void AnimHealBellMusicNote(struct Sprite *sprite);
 
 // Used in Heal Bell.
 
-const union AnimCmd gSpriteAnim_83D7A08[] =
+const union AnimCmd gBellAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 6),
     ANIMCMD_FRAME(16, 6),
@@ -31,17 +30,17 @@ const union AnimCmd gSpriteAnim_83D7A08[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D7A40[] =
+const union AnimCmd *const gBellAnimTable[] =
 {
-    gSpriteAnim_83D7A08,
+    gBellAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7A44 =
+const struct SpriteTemplate gBellSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BELL,
     .paletteTag = ANIM_TAG_BELL,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D7A40,
+    .anims = gBellAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimSpriteOnMonPos,
@@ -57,7 +56,7 @@ const u16 gUnknown_083D7A5C[] =
     0,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7A68 =
+const struct SpriteTemplate gHealBellMusicNoteSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MUSIC_NOTES_2,
     .paletteTag = ANIM_TAG_MUSIC_NOTES_2,
@@ -65,20 +64,20 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7A68 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D1C08,
+    .callback = AnimHealBellMusicNote,
 };
 
 void sub_80D1ADC(u8 taskId)
 {
     int i;
-    u8 sp[8];
-    const void* src;
-    void* dest;
-    void* what;
-    sp[0] = IndexOfSpritePaletteTag(0x27DE);
+    u8 paletteNums[8];
+    const void *src;
+    void *dest;
+    void *what;
+    paletteNums[0] = IndexOfSpritePaletteTag(0x27DE);
     for (i = 1; i <= 4; i++)
     {
-        sp[i] = AllocSpritePalette(0x2710 - i);
+        paletteNums[i] = AllocSpritePalette(0x2710 - i);
     }
 
     src = &gBattleAnimSpritePal_MusicNotes2;
@@ -87,7 +86,7 @@ void sub_80D1ADC(u8 taskId)
     for (i = 0; i <= 4; i++)
     {
         what = ((IsContest()) ? gSharedMem + 0x14800 : gSharedMem + 0x18000) + (i << 5);
-        LoadPalette(what, (u16)((sp[i] << 4) + 0x100), 32);
+        LoadPalette(what, (u16)((paletteNums[i] << 4) + 0x100), 32);
     }
 
     DestroyAnimVisualTask(taskId);
@@ -104,7 +103,7 @@ void sub_80D1B80(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-static void sub_80D1BA8(struct Sprite* sprite, u8 a, u8 b)
+static void SetMusicNotePalette(struct Sprite *sprite, u8 a, u8 b)
 {
     u8 tile;
     tile = (b & 1);
@@ -113,7 +112,7 @@ static void sub_80D1BA8(struct Sprite* sprite, u8 a, u8 b)
     sprite->oam.paletteNum = IndexOfSpritePaletteTag(gUnknown_083D7A5C[b >> 1]);
 }
 
-void sub_80D1C08(struct Sprite* sprite)
+static void AnimHealBellMusicNote(struct Sprite *sprite)
 {
     InitSpritePosToAnimAttacker(sprite, 0);
     if (GetBattlerSide(gBattleAnimAttacker) != 0)
@@ -124,5 +123,5 @@ void sub_80D1C08(struct Sprite* sprite)
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, 1) + gBattleAnimArgs[3];
     sprite->callback = StartAnimLinearTranslation;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
-    sub_80D1BA8(sprite, gBattleAnimArgs[5], gBattleAnimArgs[6]);
+    SetMusicNotePalette(sprite, gBattleAnimArgs[5], gBattleAnimArgs[6]);
 }

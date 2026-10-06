@@ -7682,24 +7682,24 @@ Move_HEAL_BELL: @ 81D21BD
 	createvisualtask sub_80E2A38, 10, 10, 0, 0, 10, 32767
 	waitforvisualfinish
 	createvisualtask sub_80D1ADC, 5
-	createsprite gBattleAnimSpriteTemplate_83D7A44, ANIM_ATTACKER, 2, 0, -24, 0, 1
+	createsprite gBellSpriteTemplate, ANIM_ATTACKER, 2, 0, -24, 0, 1
 	delay 12
-	createsprite gBattleAnimSpriteTemplate_83D7A68, ANIM_ATTACKER, 40, 0, -24, 48, -18, 35, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D7A68, ANIM_ATTACKER, 40, 0, -24, -48, 20, 30, 1, 1
-	createsprite gBattleAnimSpriteTemplate_83D7A68, ANIM_ATTACKER, 40, 0, -24, -38, -29, 30, 2, 2
-	createsprite gBattleAnimSpriteTemplate_83D7A68, ANIM_ATTACKER, 40, 0, -24, 36, 18, 30, 3, 3
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, 48, -18, 35, 0, 0
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, -48, 20, 30, 1, 1
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, -38, -29, 30, 2, 2
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, 36, 18, 30, 3, 3
 	call _81D2372
 	delay 33
-	createsprite gBattleAnimSpriteTemplate_83D7A68, ANIM_ATTACKER, 40, 0, -24, 19, 26, 35, 4, 4
-	createsprite gBattleAnimSpriteTemplate_83D7A68, ANIM_ATTACKER, 40, 0, -24, -34, -12, 30, 5, 5
-	createsprite gBattleAnimSpriteTemplate_83D7A68, ANIM_ATTACKER, 40, 0, -24, 41, -20, 34, 6, 6
-	createsprite gBattleAnimSpriteTemplate_83D7A68, ANIM_ATTACKER, 40, 0, -24, -15, 26, 32, 7, 0
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, 19, 26, 35, 4, 4
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, -34, -12, 30, 5, 5
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, 41, -20, 34, 6, 6
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, -15, 26, 32, 7, 0
 	call _81D2372
 	delay 33
-	createsprite gBattleAnimSpriteTemplate_83D7A68, ANIM_ATTACKER, 40, 0, -24, -48, 18, 31, 0, 2
-	createsprite gBattleAnimSpriteTemplate_83D7A68, ANIM_ATTACKER, 40, 0, -24, 48, -20, 30, 2, 5
-	createsprite gBattleAnimSpriteTemplate_83D7A68, ANIM_ATTACKER, 40, 0, -24, 38, 29, 33, 4, 3
-	createsprite gBattleAnimSpriteTemplate_83D7A68, ANIM_ATTACKER, 40, 0, -24, -36, -18, 30, 6, 1
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, -48, 18, 31, 0, 2
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, 48, -20, 30, 2, 5
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, 38, 29, 33, 4, 3
+	createsprite gHealBellMusicNoteSpriteTemplate, ANIM_ATTACKER, 40, 0, -24, -36, -18, 30, 6, 1
 	call _81D2372
 	waitforvisualfinish
 	createvisualtask sub_80D1B80, 5
