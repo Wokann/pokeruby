@@ -244,7 +244,7 @@ bool32 CountSSTidalStep(u16 delta)
 u8 GetSSTidalLocation(s8 *mapGroup, s8 *mapNum, s16 *x, s16 *y)
 {
     u16 *varCruiseStepCount = GetVarPointer(VAR_CRUISE_STEP_COUNT);
-    switch (*GetVarPointer(VAR_PORTHOLE_STATE))
+    switch (*GetVarPointer(VAR_SS_TIDAL_STATE))
     {
         case 1:
         case 8:

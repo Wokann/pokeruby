@@ -1,5 +1,4 @@
 #include "global.h"
-#include "field_special_scene.h"
 #include "event_data.h"
 #include "field_camera.h"
 #include "field_screen_effect.h"
@@ -31,7 +30,7 @@ enum
 const u32 gObjectEventPic_MovingBox[] = INCBIN_U32("graphics/object_events/pics/misc/moving_box.4bpp");
 const u16 gObjectEventPal_MovingBox[] = INCBIN_U16("graphics/object_events/palettes/moving_box.gbapal");
 
-static const s8 gTruckCamera_HorizontalTable[] =
+static const s8 sTruckCamera_HorizontalTable[] =
 {
     0,
     0,
@@ -54,13 +53,13 @@ static const s8 gTruckCamera_HorizontalTable[] =
     0,
 };
 
-const u8 gUnknown_083D295F[] =
+static const u8 sSSTidalSailEastMovementScript[] =
 {
     STEP_18,
     STEP_END,
 };
 
-const u8 gUnknown_083D2961[] =
+static const u8 sSSTidalSailWestMovementScript[] =
 {
     STEP_17,
     STEP_END,
@@ -75,36 +74,38 @@ enum
     EXIT_PORTHOLE,
 };
 
-s16 GetTruckCameraBobbingY(int a1)
+static void Task_Truck3(u8);
+
+static s16 GetTruckCameraBobbingY(int time)
 {
-    if (!(a1 % 120))
+    if (!(time % 120))
         return -1;
-    else if ((a1 % 10) <= 4)
+    else if ((time % 10) <= 4)
         return 1;
 
     return 0;
 }
 
-s16 GetTruckBoxMovement(int a1) // for the box movement?
+static s16 GetTruckBoxYMovement(int time) // for the box movement?
 {
-    if (!((a1 + 120) % 180))
+    if (!((time + 120) % 180))
         return -1;
 
     return 0;
 }
 
-void Task_Truck1(u8 taskId)
+static void Task_Truck1(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     s16 cameraYpan, cameraXpan = 0;
-    s16 box1, box2, box3;
+    s16 yBox1, yBox2, yBox3;
 
-    box1 = GetTruckBoxMovement(data[0] + 30) * 4; // top box.
-    SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_TOP, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, 3 - cameraXpan, box1 + 3);
-    box2 = GetTruckBoxMovement(data[0]) * 2; // bottom left box.
-    SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_BOTTOM_L, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, -cameraXpan, box2 - 3);
-    box3 = GetTruckBoxMovement(data[0]) * 4; // bottom right box.
-    SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_BOTTOM_R, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, -3 - cameraXpan, box3);
+    yBox1 = GetTruckBoxYMovement(data[0] + 30) * 4; // top box.
+    SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_TOP, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, 3 - cameraXpan, yBox1 + 3);
+    yBox2 = GetTruckBoxYMovement(data[0]) * 2; // bottom left box.
+    SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_BOTTOM_L, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, -cameraXpan, yBox2 - 3);
+    yBox3 = GetTruckBoxYMovement(data[0]) * 4; // bottom right box.
+    SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_BOTTOM_R, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, -3 - cameraXpan, yBox3);
 
     if (++data[0] == SECONDS(500)) // this will never run
         data[0] = 0; // reset the timer if it gets stuck.
@@ -114,12 +115,12 @@ void Task_Truck1(u8 taskId)
     SetCameraPanning(cameraXpan, cameraYpan);
 }
 
-void Task_Truck2(u8 taskId)
+static void Task_Truck2(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     s16 cameraYpan;
     s16 cameraXpan;
-    s16 box1, box2, box3;
+    s16 yBox1, yBox2, yBox3;
 
     data[0]++;
     data[2]++;
@@ -135,22 +136,22 @@ void Task_Truck2(u8 taskId)
     }
     else
     {
-        if (gTruckCamera_HorizontalTable[data[1]] == 2)
+        if (sTruckCamera_HorizontalTable[data[1]] == 2)
             gTasks[taskId].func = Task_Truck3;
 
-        cameraXpan = gTruckCamera_HorizontalTable[data[1]];
+        cameraXpan = sTruckCamera_HorizontalTable[data[1]];
         cameraYpan = GetTruckCameraBobbingY(data[2]);
         SetCameraPanning(cameraXpan, cameraYpan);
-        box1 = GetTruckBoxMovement(data[2] + 30) * 4;
-        SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_TOP, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, 3 - cameraXpan, box1 + 3);
-        box2 = GetTruckBoxMovement(data[2]) * 2;
-        SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_BOTTOM_L, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, -cameraXpan, box2 - 3);
-        box3 = GetTruckBoxMovement(data[2]) * 4;
-        SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_BOTTOM_R, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, -3 - cameraXpan, box3);
+        yBox1 = GetTruckBoxYMovement(data[2] + 30) * 4;
+        SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_TOP, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, 3 - cameraXpan, yBox1 + 3);
+        yBox2 = GetTruckBoxYMovement(data[2]) * 2;
+        SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_BOTTOM_L, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, -cameraXpan, yBox2 - 3);
+        yBox3 = GetTruckBoxYMovement(data[2]) * 4;
+        SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_BOTTOM_R, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, -3 - cameraXpan, yBox3);
     }
 }
 
-void Task_Truck3(u8 taskId)
+static void Task_Truck3(u8 taskId)
 {
    s16 *data = gTasks[taskId].data;
    s16 cameraXpan;
@@ -170,7 +171,7 @@ void Task_Truck3(u8 taskId)
    }
    else
    {
-       cameraXpan = gTruckCamera_HorizontalTable[data[1]];
+       cameraXpan = sTruckCamera_HorizontalTable[data[1]];
        cameraYpan = 0;
        SetCameraPanning(cameraXpan, cameraYpan);
        SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_TOP, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, 3 - cameraXpan, cameraYpan + 3);
@@ -179,7 +180,7 @@ void Task_Truck3(u8 taskId)
    }
 }
 
-void Task_HandleTruckSequence(u8 taskId)
+static void Task_HandleTruckSequence(u8 taskId)
 {
    s16 *data = gTasks[taskId].data;
 
@@ -274,7 +275,7 @@ void EndTruckSequence(u8 taskId)
     }
 }
 
-bool8 sub_80C7754(void)
+bool8 TrySetPortholeWarpDestination(void)
 {
     s8 mapGroup, mapNum;
     s16 x, y;
@@ -293,7 +294,7 @@ bool8 sub_80C7754(void)
 void Task_HandlePorthole(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
-    u16 *var = GetVarPointer(VAR_PORTHOLE_STATE);
+    u16 *cruiseState = GetVarPointer(VAR_SS_TIDAL_STATE);
     struct WarpData *location = &gSaveBlock1.location;
 
     switch (data[0])
@@ -312,10 +313,10 @@ void Task_HandlePorthole(u8 taskId)
             return;
         if (CountSSTidalStep(1) == TRUE)
         {
-            if (*var == 2)
-                *var = 9;
+            if (*cruiseState == 2)
+                *cruiseState = 9;
             else
-                *var = 10;
+                *cruiseState = 10;
             data[0] = 3;
             return;
         }
@@ -327,14 +328,14 @@ void Task_HandlePorthole(u8 taskId)
             return;
         }
         // run this once.
-        if (*var == 2) // which direction?
+        if (*cruiseState == 2) // which direction?
         {
-            ScriptMovement_StartObjectMovementScript(LOCALID_PLAYER, location->mapNum, location->mapGroup, gUnknown_083D295F);
+            ScriptMovement_StartObjectMovementScript(LOCALID_PLAYER, location->mapNum, location->mapGroup, sSSTidalSailEastMovementScript);
             data[0] = IDLE_CHECK; // run case 1.
         }
         else
         {
-            ScriptMovement_StartObjectMovementScript(LOCALID_PLAYER, location->mapNum, location->mapGroup, gUnknown_083D2961);
+            ScriptMovement_StartObjectMovementScript(LOCALID_PLAYER, location->mapNum, location->mapGroup, sSSTidalSailWestMovementScript);
             data[0] = IDLE_CHECK; // run case 1.
         }
         break;
@@ -348,13 +349,13 @@ void Task_HandlePorthole(u8 taskId)
     }
 }
 
-void sub_80C78A0(void)
+static void ShowSSTidalWhileSailing(void)
 {
     u8 spriteId = CreateObjectGraphicsSprite(0x8C, SpriteCallbackDummy, 112, 80, 0);
 
     gSprites[spriteId].coordOffsetEnabled = FALSE;
 
-    if (VarGet(VAR_PORTHOLE_STATE) == 2)
+    if (VarGet(VAR_SS_TIDAL_STATE) == 2)
     {
         StartSpriteAnim(&gSprites[spriteId], GetFaceDirectionAnimNum(4));
     }
@@ -364,21 +365,21 @@ void sub_80C78A0(void)
     }
 }
 
-void sub_80C791C(void)
+void FieldCB_ShowPortholeView(void)
 {
-    sub_80C78A0();
+    ShowSSTidalWhileSailing();
     gObjectEvents[gPlayerAvatar.objectEventId].invisible = TRUE;
     FadeInFromBlack();
     CreateTask(Task_HandlePorthole, 80);
     LockPlayerFieldControls();
 }
 
-void sub_80C7958(void)
+void LookThroughPorthole(void)
 {
     FlagSet(FLAG_SYS_CRUISE_MODE);
     FlagSet(FLAG_DONT_TRANSITION_MUSIC);
     FlagSet(FLAG_HIDE_MAP_NAME_POPUP);
     SetDynamicWarp(0, gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, -1);
-    sub_80C7754();
+    TrySetPortholeWarpDestination();
     DoPortholeWarp();
 }
