@@ -3,13 +3,9 @@
 #include "trig.h"
 #include "sound.h"
 
+static void AnimTask_GrowAndShrink_Step(u8 taskId);
 
-static void sub_80D0904(u8 taskId);
-
-// grow (grows a Pokemon then shrinks back to normal size.)
-// Used in Swagger and Bulk Up.
-
-const union AffineAnimCmd gSpriteAffineAnim_83D7714[] =
+const union AffineAnimCmd gGrowAndShrinkAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(-4, -5, 0, 12),
     AFFINEANIMCMD_FRAME(0, 0, 0, 24),
@@ -17,17 +13,20 @@ const union AffineAnimCmd gSpriteAffineAnim_83D7714[] =
     AFFINEANIMCMD_END,
 };
 
-void sub_80D08C8(u8 taskId)
+// Grows, pauses, then shrinks the attacking mon.
+// Used by MOVE_SWAGGER and MOVE_BULK_UP
+// No args.
+void AnimTask_GrowAndShrink(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
     u8 spriteId = GetAnimBattlerSpriteId(0);
-    PrepareAffineAnimInTaskData(task, spriteId, gSpriteAffineAnim_83D7714);
-    task->func = sub_80D0904;
+    PrepareAffineAnimInTaskData(task, spriteId, gGrowAndShrinkAffineAnimCmds);
+    task->func = AnimTask_GrowAndShrink_Step;
 }
 
-static void sub_80D0904(u8 taskId)
+static void AnimTask_GrowAndShrink_Step(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
     if (!RunAffineAnimFromTaskData(task))
         DestroyAnimVisualTask(taskId);
 }

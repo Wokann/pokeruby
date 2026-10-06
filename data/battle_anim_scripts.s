@@ -3272,7 +3272,7 @@ Move_FALSE_SWIPE: @ 81CBB9F
 Move_SWAGGER: @ 81CBC26
 	loadspritegfx ANIM_TAG_BREATH
 	loadspritegfx ANIM_TAG_ANGER
-	createvisualtask sub_80D08C8, 2
+	createvisualtask AnimTask_GrowAndShrink, 2
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	createsprite gBattleAnimSpriteTemplate_83D7764, ANIM_ATTACKER, 2
@@ -4380,7 +4380,7 @@ Move_HOWL: @ 81CD53C
 
 Move_BULK_UP: @ 81CD55E
 	loadspritegfx ANIM_TAG_BREATH
-	createvisualtask sub_80D08C8, 2
+	createvisualtask AnimTask_GrowAndShrink, 2
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	createsprite gBattleAnimSpriteTemplate_83D7764, ANIM_ATTACKER, 2
