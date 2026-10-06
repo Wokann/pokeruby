@@ -3,14 +3,13 @@
 #include "trig.h"
 #include "sound.h"
 
-
-void sub_80CE670(struct Sprite* sprite);
-static void sub_80CE798(struct Sprite* sprite);
+static void AnimHornHit(struct Sprite *sprite);
+static void AnimHornHit_Step(struct Sprite *sprite);
 
 // strike (A red strike towards the opponent.)
 // Used in Horn Attack, Fury Attack, and Horn Drill.
 
-const union AnimCmd gSpriteAnim_83D7010[] =
+const union AnimCmd gHealingBlueStarAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 2),
     ANIMCMD_FRAME(16, 2),
@@ -23,23 +22,23 @@ const union AnimCmd gSpriteAnim_83D7010[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D7034[] =
+const union AnimCmd *const gHealingBlueStarAnimTable[] =
 {
-    gSpriteAnim_83D7010,
+    gHealingBlueStarAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7038 =
+const struct SpriteTemplate gHealingBlueStarSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BLUE_STAR,
     .paletteTag = ANIM_TAG_BLUE_STAR,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D7034,
+    .anims = gHealingBlueStarAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimSpriteOnMonPos,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7050 =
+const struct SpriteTemplate gHornHitSpriteTemplate =
 {
     .tileTag = ANIM_TAG_HORN_HIT,
     .paletteTag = ANIM_TAG_HORN_HIT,
@@ -47,10 +46,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7050 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CE670,
+    .callback = AnimHornHit,
 };
 
-void sub_80CE670(struct Sprite* sprite)
+static void AnimHornHit(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[2] <= 1)
         gBattleAnimArgs[2] = 2;
@@ -94,10 +93,10 @@ void sub_80CE670(struct Sprite* sprite)
         sprite->oam.matrixNum = 24;
     }
 
-    sprite->callback = sub_80CE798;
+    sprite->callback = AnimHornHit_Step;
 }
 
-static void sub_80CE798(struct Sprite* sprite)
+static void AnimHornHit_Step(struct Sprite *sprite)
 {
     sprite->data[2] += sprite->data[3];
     sprite->data[4] += sprite->data[5];

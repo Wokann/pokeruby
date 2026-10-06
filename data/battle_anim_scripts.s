@@ -2426,7 +2426,7 @@ Move_HORN_ATTACK: @ 81CAB1A
 	waitforvisualfinish
 	delay 2
 	createsprite gBowMonSpriteTemplate, ANIM_ATTACKER, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D7050, ANIM_TARGET, 4, 0, 0, 10
+	createsprite gHornHitSpriteTemplate, ANIM_TARGET, 4, 0, 0, 10
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_ATTACKER, 2, 0, 4, 1
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 6, 1
@@ -2446,13 +2446,13 @@ _81CABA5:
 	waitforvisualfinish
 	end
 _81CABB8:
-	createsprite gBattleAnimSpriteTemplate_83D7050, ANIM_TARGET, 4, 8, 8, 10
+	createsprite gHornHitSpriteTemplate, ANIM_TARGET, 4, 8, 8, 10
 	waitforvisualfinish
 	createsprite gBattleAnimSpriteTemplate_83DB538, ANIM_TARGET, 3, 0, 0, 1, 1
 	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
 	goto _81CABA5
 _81CABDE:
-	createsprite gBattleAnimSpriteTemplate_83D7050, ANIM_TARGET, 4, -8, -8, 10
+	createsprite gHornHitSpriteTemplate, ANIM_TARGET, 4, -8, -8, 10
 	waitforvisualfinish
 	createsprite gBattleAnimSpriteTemplate_83DB538, ANIM_TARGET, 3, 0, 0, 1, 1
 	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
@@ -2473,7 +2473,7 @@ _81CAC21:
 	waitforvisualfinish
 	delay 2
 	createsprite gBowMonSpriteTemplate, ANIM_ATTACKER, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D7050, ANIM_TARGET, 4, 0, 0, 12
+	createsprite gHornHitSpriteTemplate, ANIM_TARGET, 4, 0, 0, 12
 	waitforvisualfinish
 	playse SE_BANG
 	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_ATTACKER, 2, 0, 40, 1
@@ -10035,25 +10035,25 @@ Unknown_81D5ECA: @ 81D5ECA
 
 Unknown_81D5EF5: @ 81D5EF5
 	playsewithpan SE_M_ABSORB_2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D7038, ANIM_ATTACKER, 2, 0, -5, 0, 0
+	createsprite gHealingBlueStarSpriteTemplate, ANIM_ATTACKER, 2, 0, -5, 0, 0
 	delay 7
-	createsprite gBattleAnimSpriteTemplate_83D7038, ANIM_ATTACKER, 2, -15, 10, 0, 0
+	createsprite gHealingBlueStarSpriteTemplate, ANIM_ATTACKER, 2, -15, 10, 0, 0
 	delay 7
-	createsprite gBattleAnimSpriteTemplate_83D7038, ANIM_ATTACKER, 2, -15, -15, 0, 0
+	createsprite gHealingBlueStarSpriteTemplate, ANIM_ATTACKER, 2, -15, -15, 0, 0
 	delay 7
-	createsprite gBattleAnimSpriteTemplate_83D7038, ANIM_ATTACKER, 2, 10, -5, 0, 0
+	createsprite gHealingBlueStarSpriteTemplate, ANIM_ATTACKER, 2, 10, -5, 0, 0
 	delay 7
 	return
 
 Unknown_81D5F3E: @ 81D5F3E
 	playsewithpan SE_M_ABSORB_2, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D7038, ANIM_TARGET, 2, 0, -5, 1, 0
+	createsprite gHealingBlueStarSpriteTemplate, ANIM_TARGET, 2, 0, -5, 1, 0
 	delay 7
-	createsprite gBattleAnimSpriteTemplate_83D7038, ANIM_TARGET, 2, -15, 10, 1, 0
+	createsprite gHealingBlueStarSpriteTemplate, ANIM_TARGET, 2, -15, 10, 1, 0
 	delay 7
-	createsprite gBattleAnimSpriteTemplate_83D7038, ANIM_TARGET, 2, -15, -15, 1, 0
+	createsprite gHealingBlueStarSpriteTemplate, ANIM_TARGET, 2, -15, -15, 1, 0
 	delay 7
-	createsprite gBattleAnimSpriteTemplate_83D7038, ANIM_TARGET, 2, 10, -5, 1, 0
+	createsprite gHealingBlueStarSpriteTemplate, ANIM_TARGET, 2, 10, -5, 1, 0
 	delay 7
 	return
 
