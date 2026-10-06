@@ -3,23 +3,23 @@
 #include "trig.h"
 #include "sound.h"
 
+static void AnimTask_GrowAndGrayscale_Step(u8 taskId);
 
-static void sub_80D0428(u8 taskId);
+// Scales up the target mon sprite, and sets the palette to grayscale.
+// Used in MOVE_DISABLE.
+// No args.
 
-// shadow_enlarge (the magnifying-like shadow over the Pokemon effect)
-// Used in Disable.
-
-void sub_80D03C4(u8 taskId)
+void AnimTask_GrowAndGrayscale(u8 taskId)
 {
     u8 spriteId = GetAnimBattlerSpriteId(1);
     PrepareBattlerSpriteForRotScale(spriteId, 1);
     SetSpriteRotScale(spriteId, 0xD0, 0xD0, 0);
     SetGrayscaleOrOriginalPalette(gSprites[spriteId].oam.paletteNum + 16, 0);
     gTasks[taskId].data[0] = 0x50;
-    gTasks[taskId].func = sub_80D0428;
+    gTasks[taskId].func = AnimTask_GrowAndGrayscale_Step;
 }
 
-void sub_80D0428(u8 taskId)
+static void AnimTask_GrowAndGrayscale_Step(u8 taskId)
 {
     if (--gTasks[taskId].data[0] == -1)
     {
