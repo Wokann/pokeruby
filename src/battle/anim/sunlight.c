@@ -1,35 +1,33 @@
 #include "global.h"
 #include "battle_anim.h"
 
-void sub_80D517C(struct Sprite *sprite);
+static void AnimSunlight(struct Sprite *sprite);
 
-// sunlight (creates sunlight orbs)
-// Used in Sunny Day
-
-const union AffineAnimCmd gSpriteAffineAnim_83D9594[] =
+static const union AffineAnimCmd sAffineAnim_SunlightRay[] =
 {
     AFFINEANIMCMD_FRAME(0x50, 0x50, 0, 0),
     AFFINEANIMCMD_FRAME(0x2, 0x2, 10, 1),
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D95AC[] =
+static const union AffineAnimCmd *const sAffineAnims_SunlightRay[] =
 {
-    gSpriteAffineAnim_83D9594,
+    sAffineAnim_SunlightRay,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D95B0 =
+const struct SpriteTemplate gSunlightRaySpriteTemplate =
 {
     .tileTag = ANIM_TAG_SUNLIGHT,
     .paletteTag = ANIM_TAG_SUNLIGHT,
     .oam = &gOamData_AffineNormal_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D95AC,
-    .callback = sub_80D517C,
+    .affineAnims = sAffineAnims_SunlightRay,
+    .callback = AnimSunlight,
 };
 
-void sub_80D517C(struct Sprite *sprite)
+// Sunlight from Sunny Day / sunny weather
+static void AnimSunlight(struct Sprite *sprite)
 {
     sprite->x = 0;
     sprite->y = 0;

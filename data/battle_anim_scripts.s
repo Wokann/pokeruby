@@ -6726,7 +6726,7 @@ Move_SUNNY_DAY: @ 81D0B91
 	blendoff
 	end
 _81D0BDD:
-	createsprite gBattleAnimSpriteTemplate_83D95B0, ANIM_ATTACKER, 40
+	createsprite gSunlightRaySpriteTemplate, ANIM_ATTACKER, 40
 	delay 6
 	return
 
