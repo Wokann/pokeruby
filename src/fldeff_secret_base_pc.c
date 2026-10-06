@@ -2,6 +2,7 @@
 #include "event_data.h"
 #include "field_camera.h"
 #include "field_effect.h"
+#include "fldeff_misc.h"
 #include "field_player_avatar.h"
 #include "fieldmap.h"
 #include "script.h"
@@ -45,7 +46,7 @@ static void Task_SecretBasePCTurnOn(u8 taskId)
     case 20:
         MapGridSetMetatileIdAt(data[0], data[1], 548);
         CurrentMapDrawMetatileAt(data[0], data[1]);
-        FieldEffectActiveListRemove(FLDEFF_SECRET_BASE_PC_TURN_ON);
+        FieldEffectActiveListRemove(FLDEFF_PCTURN_ON);
         ScriptContext_Enable();
         DestroyTask(taskId);
         return;

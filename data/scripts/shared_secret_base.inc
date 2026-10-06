@@ -26,7 +26,7 @@ SecretBase_EventScript_PC:: @ 815F36C
 	lockall
 	playse SE_PC_LOGIN
 	message SecretBase_Text_BootUpPC
-	dofieldeffect FLDEFF_SECRET_BASE_PC_TURN_ON
+	dofieldeffect FLDEFF_PCTURN_ON
 	waitstate
 	waitmessage
 	waitbuttonpress
@@ -86,7 +86,7 @@ SecretBase_EventScript_RecordMixingPC:: @ 815F43A
 	lockall
 	message SecretBase_Text_BootUpPC
 	playse SE_PC_LOGIN
-	dofieldeffect FLDEFF_SECRET_BASE_PC_TURN_ON
+	dofieldeffect FLDEFF_PCTURN_ON
 	waitstate
 	waitmessage
 	waitbuttonpress

@@ -8,6 +8,8 @@ bool8 FldEff_UseSecretPowerTree(void);
 bool8 FldEff_SecretPowerTree(void);
 bool8 FldEff_UseSecretPowerShrub(void);
 bool8 FldEff_SecretPowerShrub(void);
+u32 FldEff_SecretBasePCTurnOn(void);
+void DoSecretBasePCTurnOffEffect(void);
 
 extern const struct SpritePalette gSpritePalette_SecretPower_Cave;
 extern const struct SpritePalette gSpritePalette_SecretPower_Plant;
