@@ -3,13 +3,12 @@
 #include "trig.h"
 #include "sound.h"
 
-
-void sub_80D1C80(struct Sprite* sprite);
+static void AnimMagentaHeart(struct Sprite *sprite);
 
 // heart_1 (a floating heart in a wave pattern upward.)
 // Used in Charm, Covet, and when a Pokemon is infatuated.
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7A80 =
+const struct SpriteTemplate gMagentaHeartSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MAGENTA_HEART,
     .paletteTag = ANIM_TAG_MAGENTA_HEART,
@@ -17,10 +16,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7A80 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D1C80,
+    .callback = AnimMagentaHeart,
 };
 
-void sub_80D1C80(struct Sprite* sprite)
+static void AnimMagentaHeart(struct Sprite *sprite)
 {
     if (++sprite->data[0] == 1)
         InitSpritePosToAnimAttacker(sprite, 0);

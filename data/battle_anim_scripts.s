@@ -3214,13 +3214,13 @@ EndureFlamesAnim:
 Move_CHARM: @ 81CBB1B
 	loadspritegfx ANIM_TAG_MAGENTA_HEART
 	createvisualtask sub_812E568, 5, 0, 2, 0
-	createsprite gBattleAnimSpriteTemplate_83D7A80, ANIM_ATTACKER, 3, 0, 20
+	createsprite gMagentaHeartSpriteTemplate, ANIM_ATTACKER, 3, 0, 20
 	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
 	delay 15
-	createsprite gBattleAnimSpriteTemplate_83D7A80, ANIM_ATTACKER, 3, -20, 20
+	createsprite gMagentaHeartSpriteTemplate, ANIM_ATTACKER, 3, -20, 20
 	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
 	delay 15
-	createsprite gBattleAnimSpriteTemplate_83D7A80, ANIM_ATTACKER, 3, 20, 20
+	createsprite gMagentaHeartSpriteTemplate, ANIM_ATTACKER, 3, 20, 20
 	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	end
@@ -4392,13 +4392,13 @@ Move_COVET: @ 81CD57C
 	loadspritegfx ANIM_TAG_MAGENTA_HEART
 	loadspritegfx ANIM_TAG_ITEM_BAG
 	createvisualtask sub_812E568, 5, 0, 2, 0
-	createsprite gBattleAnimSpriteTemplate_83D7A80, ANIM_ATTACKER, 3, 0, 20
+	createsprite gMagentaHeartSpriteTemplate, ANIM_ATTACKER, 3, 0, 20
 	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
 	delay 15
-	createsprite gBattleAnimSpriteTemplate_83D7A80, ANIM_ATTACKER, 3, -20, 20
+	createsprite gMagentaHeartSpriteTemplate, ANIM_ATTACKER, 3, -20, 20
 	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
 	delay 15
-	createsprite gBattleAnimSpriteTemplate_83D7A80, ANIM_ATTACKER, 3, 20, 20
+	createsprite gMagentaHeartSpriteTemplate, ANIM_ATTACKER, 3, 20, 20
 	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
@@ -10241,13 +10241,13 @@ ConditionBurnFire:
 StatusCondition_Love: @ 81D62D4
 	loadspritegfx ANIM_TAG_MAGENTA_HEART
 	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D7A80, ANIM_ATTACKER, 3, 0, 20
+	createsprite gMagentaHeartSpriteTemplate, ANIM_ATTACKER, 3, 0, 20
 	delay 15
 	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D7A80, ANIM_ATTACKER, 3, -20, 20
+	createsprite gMagentaHeartSpriteTemplate, ANIM_ATTACKER, 3, -20, 20
 	delay 15
 	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D7A80, ANIM_ATTACKER, 3, 20, 20
+	createsprite gMagentaHeartSpriteTemplate, ANIM_ATTACKER, 3, 20, 20
 	end
 
 StatusCondition_Sleep: @ 81D6309
