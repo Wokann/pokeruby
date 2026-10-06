@@ -4,14 +4,10 @@
 
 extern struct OamMatrix gOamMatrices[];
 
-void sub_80D6294(struct Sprite *sprite);
-void sub_80D6328(struct Sprite *sprite);
-extern void sub_80DA48C(struct Sprite *);
+static void AnimUnusedCirclingShock(struct Sprite *sprite);
+static void AnimSparkElectricity(struct Sprite *sprite);
 
-// shock (moves the little electricity lines)
-// Used in Shock.
-
-const union AnimCmd gSpriteAnim_83D9824[] =
+static const union AnimCmd sAnim_UnusedCirclingShock[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(16, 5),
@@ -22,23 +18,24 @@ const union AnimCmd gSpriteAnim_83D9824[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9840[] =
+static const union AnimCmd *const sAnims_UnusedCirclingShock[] =
 {
-    gSpriteAnim_83D9824,
+    sAnim_UnusedCirclingShock,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D9844 =
+// Unused
+static const struct SpriteTemplate sUnusedCirclingShockSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SHOCK,
     .paletteTag = ANIM_TAG_SHOCK,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9840,
+    .anims = sAnims_UnusedCirclingShock,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D6294,
+    .callback = AnimUnusedCirclingShock,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D985C =
+const struct SpriteTemplate gSparkElectricitySpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPARK_2,
     .paletteTag = ANIM_TAG_SPARK_2,
@@ -46,10 +43,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D985C =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D6328,
+    .callback = AnimSparkElectricity,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9874 =
+const struct SpriteTemplate gZapCannonBallSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BLACK_BALL_2,
     .paletteTag = ANIM_TAG_BLACK_BALL_2,
@@ -60,7 +57,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9874 =
     .callback = TranslateAnimSpriteToTargetMonLocation,
 };
 
-void sub_80D6294(struct Sprite *sprite)
+static void AnimUnusedCirclingShock(struct Sprite *sprite)
 {
     sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
     sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
@@ -85,52 +82,52 @@ void sub_80D6294(struct Sprite *sprite)
     sprite->callback = TranslateSpriteInCircle;
 }
 
-void sub_80D6328(struct Sprite *sprite)
+static void AnimSparkElectricity(struct Sprite *sprite)
 {
-    u8 slot;
+    u8 battler;
     u32 matrixNum;
     s16 sineVal;
 
     switch (gBattleAnimArgs[4])
     {
     case 0:
-        slot = gBattleAnimAttacker;
+        battler = gBattleAnimAttacker;
         break;
     case 1:
     default:
-        slot = gBattleAnimTarget;
+        battler = gBattleAnimTarget;
         break;
     case 2:
         if (!IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2))
         {
-            slot = gBattleAnimAttacker;
+            battler = gBattleAnimAttacker;
         }
         else
         {
-            slot = gBattleAnimAttacker ^ 2;
+            battler = gBattleAnimAttacker ^ 2;
         }
         break;
     case 3:
         if (IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2))
         {
-            slot = gBattleAnimTarget ^ 2;
+            battler = gBattleAnimTarget ^ 2;
         }
         else
         {
-            slot = gBattleAnimTarget;
+            battler = gBattleAnimTarget;
         }
         break;
     }
 
     if (gBattleAnimArgs[5] == 0)
     {
-        sprite->x = GetBattlerSpriteCoord(slot, 0);
-        sprite->y = GetBattlerSpriteCoord(slot, 1);
+        sprite->x = GetBattlerSpriteCoord(battler, 0);
+        sprite->y = GetBattlerSpriteCoord(battler, 1);
     }
     else
     {
-        sprite->x = GetBattlerSpriteCoord(slot, 2);
-        sprite->y = GetBattlerSpriteCoord(slot, 3);
+        sprite->x = GetBattlerSpriteCoord(battler, 2);
+        sprite->y = GetBattlerSpriteCoord(battler, 3);
     }
 
     sprite->x2 = (gSineTable[gBattleAnimArgs[0]] * gBattleAnimArgs[1]) >> 8;
@@ -138,7 +135,7 @@ void sub_80D6328(struct Sprite *sprite)
 
     if (gBattleAnimArgs[6] & 1)
     {
-        sprite->oam.priority = GetBattlerSpriteBGPriority(slot) + 1;
+        sprite->oam.priority = GetBattlerSpriteBGPriority(battler) + 1;
     }
 
     matrixNum = sprite->oam.matrixNum;
@@ -149,5 +146,5 @@ void sub_80D6328(struct Sprite *sprite)
     gOamMatrices[matrixNum].c = -sineVal;
 
     sprite->data[0] = gBattleAnimArgs[3];
-    sprite->callback = sub_80DA48C;
+    sprite->callback = DestroyAnimSpriteAfterTimer;
 }

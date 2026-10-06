@@ -303,6 +303,9 @@ void AnimTask_HorizontalShake(u8 taskId);
 // battle/anim/dark.c
 extern const union AffineAnimCmd *const gAffineAnims_Bite[];
 
+// battle/anim/flying.c
+void DestroyAnimSpriteAfterTimer(struct Sprite *sprite);
+
 // battle_anim_smokescreen.c
 u8 SmokescreenImpact(s16 x, s16 y, bool8 persist);
 
