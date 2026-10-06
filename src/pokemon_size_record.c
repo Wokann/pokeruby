@@ -1,11 +1,11 @@
 #include "global.h"
 #include "pokemon_size_record.h"
+#include "give_gift_ribbon_to_party.h"
 #include "data.h"
 #include "event_data.h"
 #include "pokedex.h"
 #include "constants/species.h"
 #include "string_util.h"
-#include "strings2.h"
 #include "text.h"
 
 const u16 Unknown_083D17EC[] = INCBIN_U16("graphics/unknown/unknown_3D17EC.gbapal");
@@ -18,6 +18,7 @@ struct UnknownStruct
 };
 
 extern u16 gSpecialVar_Result;
+extern const u8 gText_Marco[];
 
 static const struct UnknownStruct sBigMonSizeTable[] =
 {
@@ -96,7 +97,7 @@ static void FormatMonSizeRecord(u8 *string, u32 size)
 
 #ifdef UNITS_IMPERIAL
     //Convert size from centimeters to inches
-    size = (double)(size * 10) / (CM_PER_INCH * 10);
+    size = (f64)(size * 10) / (CM_PER_INCH * 10);
 #endif
 
     string = ConvertIntToDecimalStringN(string, size / 10, 0, 8);
@@ -150,7 +151,7 @@ static void GetMonSizeRecordInfo(u16 species, u16 *sizeRecord)
     FormatMonSizeRecord(gStringVar3, size);
     StringCopy(gStringVar1, gSpeciesNames[species]);
     if (*sizeRecord == 0x8100)
-        StringCopy(gStringVar2, gOtherText_Marco);
+        StringCopy(gStringVar2, gText_Marco);
     else
         StringCopy(gStringVar2, gSaveBlock2.playerName);
 }
@@ -198,7 +199,7 @@ void GiveGiftRibbonToParty(u8 index, u8 ribbonId)
     s32 i;
     bool32 gotRibbon = FALSE;
     u8 data = 1;
-    u8 arr[] = {
+    u8 array[] = {
         MON_DATA_MARINE_RIBBON,
         MON_DATA_LAND_RIBBON,
         MON_DATA_SKY_RIBBON,
@@ -213,11 +214,11 @@ void GiveGiftRibbonToParty(u8 index, u8 ribbonId)
         gSaveBlock1.giftRibbons[index] = ribbonId;
         for (i = 0; i < 6; i++)
         {
-            struct Pokemon *pkmn = &gPlayerParty[i];
+            struct Pokemon *mon = &gPlayerParty[i];
 
-            if (GetMonData(pkmn, MON_DATA_SPECIES) != 0 && GetMonData(pkmn, MON_DATA_SANITY_IS_EGG) == 0)
+            if (GetMonData(mon, MON_DATA_SPECIES) != 0 && GetMonData(mon, MON_DATA_SANITY_IS_EGG) == 0)
             {
-                SetMonData(pkmn, arr[index], &data);
+                SetMonData(mon, array[index], &data);
                 gotRibbon = TRUE;
             }
         }
