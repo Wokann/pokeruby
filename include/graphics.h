@@ -3367,6 +3367,12 @@ extern const u8 gBattleAnimBgImage_Attract[];
 extern const u8 gBattleAnimBgPalette_Attract[];
 extern const u8 gBattleAnimBgTilemap_Attract[];
 
+extern const u8 gBattleAnimBgImage_ScaryFace[];
+extern const u8 gBattleAnimBgPalette_ScaryFace[];
+extern const u8 gBattleAnimBgTilemap_ScaryFacePlayer[];
+extern const u8 gBattleAnimBgTilemap_ScaryFaceOpponent[];
+extern const u8 gBattleAnimBgTilemap_ScaryFaceContest[];
+
 extern const u8 gConfetti_Gfx[];
 extern const u8 gConfetti_Pal[];
 

@@ -559,8 +559,8 @@ const u8 gBattleAnimSpriteGfx_Finger2[] = INCBIN_U8("graphics/battle_anims/sprit
 const u8 gBattleAnimSpriteGfx_MovementWaves[] = INCBIN_U8("graphics/battle_anims/sprites/movement_waves.4bpp.lz");
 const u8 gBattleAnimSpritePal_MovementWaves[] = INCBIN_U8("graphics/battle_anims/sprites/movement_waves.gbapal.lz");
 
-const u8 gBattleAnimBackgroundPalette_ScaryFace[] = INCBIN_U8("graphics/battle_anims/backgrounds/scary_face.gbapal.lz");
-const u8 gBattleAnimBackgroundImage_ScaryFace[] = INCBIN_U8("graphics/battle_anims/backgrounds/scary_face.4bpp.lz");
+const u8 gBattleAnimBgPalette_ScaryFace[] = INCBIN_U8("graphics/battle_anims/backgrounds/scary_face.gbapal.lz");
+const u8 gBattleAnimBgImage_ScaryFace[] = INCBIN_U8("graphics/battle_anims/backgrounds/scary_face.4bpp.lz");
 
 const u8 gBattleAnimSpritePal_EyeSparkle[] = INCBIN_U8("graphics/battle_anims/sprites/eye_sparkle.gbapal.lz");
 const u8 gBattleAnimSpriteGfx_EyeSparkle[] = INCBIN_U8("graphics/battle_anims/sprites/eye_sparkle.4bpp.lz");
@@ -824,9 +824,9 @@ const u8 gBattleAnimSpriteGfx_SlamHit2[] = INCBIN_U8("graphics/battle_anims/spri
 const u8 gBattleAnimFogTilemap[] = INCBIN_U8("graphics/battle_anims/backgrounds/fog.bin.lz");
 const u8 gBattleAnimSpritePal_WeatherBall[] = INCBIN_U8("graphics/battle_anims/sprites/weather_ball.gbapal.lz");
 const u8 gBattleAnimSpriteGfx_WeatherBall[] = INCBIN_U8("graphics/battle_anims/sprites/weather_ball.4bpp.lz");
-const u8 gBattleAnimBackgroundTilemap_ScaryFacePlayer[] = INCBIN_U8("graphics/battle_anims/backgrounds/scary_face_player.bin.lz");
-const u8 gBattleAnimBackgroundTilemap_ScaryFaceOpponent[] = INCBIN_U8("graphics/battle_anims/backgrounds/scary_face_opponent.bin.lz");
-const u8 gBattleAnimBackgroundTilemap_ScaryFaceContest[] = INCBIN_U8("graphics/battle_anims/backgrounds/scary_face_contest.bin.lz");
+const u8 gBattleAnimBgTilemap_ScaryFacePlayer[] = INCBIN_U8("graphics/battle_anims/backgrounds/scary_face_player.bin.lz");
+const u8 gBattleAnimBgTilemap_ScaryFaceOpponent[] = INCBIN_U8("graphics/battle_anims/backgrounds/scary_face_opponent.bin.lz");
+const u8 gBattleAnimBgTilemap_ScaryFaceContest[] = INCBIN_U8("graphics/battle_anims/backgrounds/scary_face_contest.bin.lz");
 const u8 gBattleAnimSpriteGfx_Hail[] = INCBIN_U8("graphics/battle_anims/sprites/hail.4bpp.lz");
 const u8 gBattleAnimSpritePal_Hail[] = INCBIN_U8("graphics/battle_anims/sprites/hail.gbapal.lz");
 const u8 gBattleAnimSpriteGfx_GreenSpike[] = INCBIN_U8("graphics/battle_anims/sprites/green_spike.4bpp.lz");

@@ -2889,7 +2889,7 @@ Move_GLARE: @ 81CB4CA
 	waitforvisualfinish
 	createsprite gBattleAnimSpriteTemplate_83D7B94, ANIM_ATTACKER, 0, -16, -8
 	createsprite gBattleAnimSpriteTemplate_83D7B94, ANIM_ATTACKER, 0, 16, -8
-	createvisualtask sub_80D23B4, 5
+	createvisualtask AnimTask_ScaryFace, 5
 	playsewithpan SE_M_LEER, SOUND_PAN_ATTACKER
 	delay 2
 	createvisualtask sub_80D60B4, 3, 20, 1, 0
@@ -7739,7 +7739,7 @@ Move_SCARY_FACE: @ 81D23E3
 	waitforvisualfinish
 	delay 10
 	playsewithpan SE_M_LEER, SOUND_PAN_ATTACKER
-	createvisualtask sub_80D23B4, 5
+	createvisualtask AnimTask_ScaryFace, 5
 	delay 13
 	createsprite gBattleAnimSpriteTemplate_83D7B94, ANIM_ATTACKER, 0, -16, -8
 	createsprite gBattleAnimSpriteTemplate_83D7B94, ANIM_ATTACKER, 0, 16, -8

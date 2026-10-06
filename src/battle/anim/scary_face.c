@@ -1,28 +1,22 @@
 #include "global.h"
 #include "battle_anim.h"
+#include "graphics.h"
 #include "trig.h"
 #include "sound.h"
 #include "decompress.h"
 #include "palette.h"
 
-
-extern const u8 gBattleAnimBackgroundTilemap_ScaryFaceContest[];
-extern const u8 gBattleAnimBackgroundTilemap_ScaryFacePlayer[];
-extern const u8 gBattleAnimBackgroundTilemap_ScaryFaceOpponent[];
-extern const u8 gBattleAnimBackgroundImage_ScaryFace[];
-extern const u8 gBattleAnimBackgroundPalette_ScaryFace[];
-
 extern u16 gBattle_BG1_Y;
 extern u16 gBattle_BG1_X;
 
-static void sub_80D24E0(u8 taskId);
+static void AnimTask_ScaryFace_Step(u8 taskId);
 
 // scary_face (darkens the screen and shows a scary face.)
 // Used in Glare and Scary Face.
 
-void sub_80D23B4(u8 taskId)
+void AnimTask_ScaryFace(u8 taskId)
 {
-    struct BattleAnimBgData subStruct;
+    struct BattleAnimBgData animBg;
 
     REG_BLDCNT = 0x3F42;
     REG_BLDALPHA = 0x1000;
@@ -35,26 +29,26 @@ void sub_80D23B4(u8 taskId)
     gBattle_BG1_Y = 0;
     REG_BG1HOFS = 0;
     REG_BG1VOFS = 0;
-    GetBattleAnimBg1Data(&subStruct);
-    DmaFill32Defvars(3, 0, subStruct.bgTilemap, 0x1000);
+    GetBattleAnimBg1Data(&animBg);
+    DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x1000);
     if (IsContest())
-        LZDecompressVram(&gBattleAnimBackgroundTilemap_ScaryFaceContest, subStruct.bgTilemap);
+        LZDecompressVram(&gBattleAnimBgTilemap_ScaryFaceContest, animBg.bgTilemap);
     else if (GetBattlerSide(gBattleAnimTarget) == 1)
-        LZDecompressVram(&gBattleAnimBackgroundTilemap_ScaryFacePlayer, subStruct.bgTilemap);
+        LZDecompressVram(&gBattleAnimBgTilemap_ScaryFacePlayer, animBg.bgTilemap);
     else
-        LZDecompressVram(&gBattleAnimBackgroundTilemap_ScaryFaceOpponent, subStruct.bgTilemap);
+        LZDecompressVram(&gBattleAnimBgTilemap_ScaryFaceOpponent, animBg.bgTilemap);
 
-    LZDecompressVram(&gBattleAnimBackgroundImage_ScaryFace, subStruct.bgTiles);
-    LoadCompressedPalette(&gBattleAnimBackgroundPalette_ScaryFace, subStruct.paletteId << 4, 32);
+    LZDecompressVram(&gBattleAnimBgImage_ScaryFace, animBg.bgTiles);
+    LoadCompressedPalette(&gBattleAnimBgPalette_ScaryFace, animBg.paletteId << 4, 32);
     if (IsContest())
-        RelocateBattleBgPal(subStruct.paletteId, (u16 *)subStruct.bgTilemap, 0, 0);
+        RelocateBattleBgPal(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
 
-    gTasks[taskId].func = sub_80D24E0;
+    gTasks[taskId].func = AnimTask_ScaryFace_Step;
 }
 
-void sub_80D24E0(u8 taskId)
+static void AnimTask_ScaryFace_Step(u8 taskId)
 {
-    struct BattleAnimBgData subStruct;
+    struct BattleAnimBgData animBg;
 
     switch (gTasks[taskId].data[12])
     {
@@ -92,9 +86,9 @@ void sub_80D24E0(u8 taskId)
         }
         break;
     case 3:
-        GetBattleAnimBg1Data(&subStruct);
-        DmaFill32Large(3, 0, subStruct.bgTiles, 0x2000, 0x1000);
-        DmaClear32(3, subStruct.bgTilemap, 0x800);
+        GetBattleAnimBg1Data(&animBg);
+        DmaFill32Large(3, 0, animBg.bgTiles, 0x2000, 0x1000);
+        DmaClear32(3, animBg.bgTilemap, 0x800);
         if (!IsContest())
             REG_BG1CNT_BITFIELD.charBaseBlock = 0;
 
