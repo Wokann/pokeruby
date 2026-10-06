@@ -3,75 +3,74 @@
 #include "trig.h"
 #include "sound.h"
 
-
-void sub_80CC8C8(struct Sprite* sprite);
+static void AnimFlickeringPunch(struct Sprite *sprite);
 
 // unused effect file.
 // Seems to be a beta effect for Beat Up, possibly.
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6A58[] = {
+static const union AffineAnimCmd sAffineAnim_FlickeringPunch_Normal[] = {
     AFFINEANIMCMD_FRAME(256, 256, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6A68[] = {
+static const union AffineAnimCmd sAffineAnim_FlickeringPunch_TurnedTopLeft[] = {
     AFFINEANIMCMD_FRAME(256, 256, 32, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6A78[] = {
+static const union AffineAnimCmd sAffineAnim_FlickeringPunch_TurnedLeft[] = {
     AFFINEANIMCMD_FRAME(256, 256, 64, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6A88[] = {
+static const union AffineAnimCmd sAffineAnim_FlickeringPunch_TurnedBottomLeft[] = {
     AFFINEANIMCMD_FRAME(256, 256, 96, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6A98[] = {
+static const union AffineAnimCmd sAffineAnim_FlickeringPunch_UpsideDown[] = {
     AFFINEANIMCMD_FRAME(256, 256, -128, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6AA8[] = {
+static const union AffineAnimCmd sAffineAnim_FlickeringPunch_TurnedBottomRight[] = {
     AFFINEANIMCMD_FRAME(256, 256, -96, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6AB8[] = {
+static const union AffineAnimCmd sAffineAnim_FlickeringPunch_TurnedRight[] = {
     AFFINEANIMCMD_FRAME(256, 256, -64, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6AC8[] = {
+static const union AffineAnimCmd sAffineAnim_FlickeringPunch_TurnedTopRight[] = {
     AFFINEANIMCMD_FRAME(256, 256, -32, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D6AD8[] = {
-    gSpriteAffineAnim_83D6A58,
-    gSpriteAffineAnim_83D6A68,
-    gSpriteAffineAnim_83D6A78,
-    gSpriteAffineAnim_83D6A88,
-    gSpriteAffineAnim_83D6A98,
-    gSpriteAffineAnim_83D6AA8,
-    gSpriteAffineAnim_83D6AB8,
-    gSpriteAffineAnim_83D6AC8,
+static const union AffineAnimCmd *const sAffineAnims_FlickeringPunch[] = {
+    sAffineAnim_FlickeringPunch_Normal,
+    sAffineAnim_FlickeringPunch_TurnedTopLeft,
+    sAffineAnim_FlickeringPunch_TurnedLeft,
+    sAffineAnim_FlickeringPunch_TurnedBottomLeft,
+    sAffineAnim_FlickeringPunch_UpsideDown,
+    sAffineAnim_FlickeringPunch_TurnedBottomRight,
+    sAffineAnim_FlickeringPunch_TurnedRight,
+    sAffineAnim_FlickeringPunch_TurnedTopRight,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D6AF8 =
+static const struct SpriteTemplate sFlickeringPunchSpriteTemplate =
 {
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D6AD8,
-    .callback = sub_80CC8C8,
+    .affineAnims = sAffineAnims_FlickeringPunch,
+    .callback = AnimFlickeringPunch,
 };
 
-void sub_80CC8C8(struct Sprite* sprite)
+static void AnimFlickeringPunch(struct Sprite *sprite)
 {
     sprite->x += gBattleAnimArgs[0];
     sprite->y += gBattleAnimArgs[1];
