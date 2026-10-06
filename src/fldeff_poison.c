@@ -32,7 +32,7 @@ static void Task_FieldPoisonEffect(u8 taskId)
     REG_MOSAIC = (data[1] << 4) | data[1];
 }
 
-void FldeffPoison_Start(void)
+void FldEffPoison_Start(void)
 {
     PlaySE(SE_FIELD_POISON);
     CreateTask(Task_FieldPoisonEffect, 80);

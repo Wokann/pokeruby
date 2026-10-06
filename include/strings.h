@@ -24,6 +24,7 @@ extern const u8 gExpandedPlaceholder_May[];
 // system text
 extern const u8 gText_EggNickname[];
 extern const u8 gText_Pokemon[];
+extern const u8 gText_PkmnFainted_FldPsn[];
 
 // main menu text
 extern const u8 gMainMenuString_NewGame[];

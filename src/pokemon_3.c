@@ -656,7 +656,7 @@ static const s8 sFriendshipEventDeltas[][3] = {
     { 1,  1,   0}, // FRIENDSHIP_EVENT_LEARN_TMHM
     { 1,  1,   1}, // FRIENDSHIP_EVENT_WALKING
     {-1, -1,  -1}, // FRIENDSHIP_EVENT_FAINT_SMALL
-    {-5, -5, -10}, // FRIENDSHIP_EVENT_FAINT_OUTSIDE_BATTLE
+    {-5, -5, -10}, // FRIENDSHIP_EVENT_FAINT_FIELD_PSN
     {-5, -5, -10}, // FRIENDSHIP_EVENT_FAINT_LARGE
 };
 

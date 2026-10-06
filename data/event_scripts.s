@@ -1078,7 +1078,7 @@ gText_NicknameReceivedPokemon:: @ 81A1102
 	.string "Want to give a nickname to the\n"
 	.string "{STR_VAR_2} you received?$"
 
-fieldPoisonText_PokemonFainted:: @ 81A1132
+gText_PkmnFainted_FldPsn:: @ 81A1132
 	.string "{STR_VAR_1} fainted...\p$"
 
 UnknownString_81A1141: @ 81A1141
@@ -1141,7 +1141,7 @@ EventScript_SelectWithoutRegisteredItem:: @ 81A14AF
 
 gUnknown_081A14B8:: @ 81A14B8
 	lockall
-	special ExecuteWhiteOut
+	special TryFieldPoisonWhiteOut
 	waitstate
 	compare VAR_RESULT, 1
 	goto_if_eq EventScript_1A14CA
