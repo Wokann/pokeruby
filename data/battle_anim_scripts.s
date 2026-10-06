@@ -4154,9 +4154,9 @@ Move_AROMATHERAPY: @ 81CCFAB
 	createvisualtask sub_81300A4, 2, 1
 	waitforvisualfinish
 	playsewithpan SE_M_MORNING_SUN, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D6CA0, ANIM_ATTACKER, 16, -15, 0, 0, 0, 32, 60, 1
+	createsprite gSparklingStarsSpriteTemplate, ANIM_ATTACKER, 16, -15, 0, 0, 0, 32, 60, 1
 	delay 8
-	createsprite gBattleAnimSpriteTemplate_83D6CA0, ANIM_ATTACKER, 16, 12, -5, 0, 0, 32, 60, 1
+	createsprite gSparklingStarsSpriteTemplate, ANIM_ATTACKER, 16, 12, -5, 0, 0, 32, 60, 1
 	waitforvisualfinish
 	playsewithpan SE_SHINY, SOUND_PAN_ATTACKER
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 0, 43, 3, 10, 0, rgb(13, 31, 12)
@@ -7705,9 +7705,9 @@ Move_HEAL_BELL: @ 81D21BD
 	createvisualtask sub_80D1B80, 5
 	waitforvisualfinish
 	playsewithpan SE_M_MORNING_SUN, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D6CA0, ANIM_ATTACKER, 16, -15, 0, 0, 0, 32, 60, 1
+	createsprite gSparklingStarsSpriteTemplate, ANIM_ATTACKER, 16, -15, 0, 0, 0, 32, 60, 1
 	delay 8
-	createsprite gBattleAnimSpriteTemplate_83D6CA0, ANIM_ATTACKER, 16, 12, -5, 0, 0, 32, 60, 1
+	createsprite gSparklingStarsSpriteTemplate, ANIM_ATTACKER, 16, 12, -5, 0, 0, 32, 60, 1
 	waitforvisualfinish
 	playsewithpan SE_SHINY, SOUND_PAN_ATTACKER
 	createvisualtask sub_80E2A7C, 10, 4, 3, 10, 0, 31500
@@ -9030,9 +9030,9 @@ Move_COSMIC_POWER: @ 81D43C5
 	waitbgfadein
 	delay 70
 	createvisualtask sub_812B30C, 5, 228, -64
-	createsprite gBattleAnimSpriteTemplate_83D6C88, ANIM_ATTACKER, 2, -15, 0, 0, 0, 32, 60
+	createsprite gGrantingStarsSpriteTemplate, ANIM_ATTACKER, 2, -15, 0, 0, 0, 32, 60
 	delay 8
-	createsprite gBattleAnimSpriteTemplate_83D6C88, ANIM_ATTACKER, 2, 12, -5, 0, 0, 32, 60
+	createsprite gGrantingStarsSpriteTemplate, ANIM_ATTACKER, 2, 12, -5, 0, 0, 32, 60
 	delay 40
 	createvisualtask sub_80E3A08, 2, 0, 15, 0, 0
 	waitforvisualfinish
@@ -10027,9 +10027,9 @@ Unknown_81D5E0E: @ 81D5E0E Icy Wind animates end bit with the wavy shiz
 	return
 
 Unknown_81D5ECA: @ 81D5ECA
-	createsprite gBattleAnimSpriteTemplate_83D6C88, ANIM_ATTACKER, 2, -15, 0, 0, 0, 32, 60
+	createsprite gGrantingStarsSpriteTemplate, ANIM_ATTACKER, 2, -15, 0, 0, 0, 32, 60
 	delay 8
-	createsprite gBattleAnimSpriteTemplate_83D6C88, ANIM_ATTACKER, 2, 12, -5, 0, 0, 32, 60
+	createsprite gGrantingStarsSpriteTemplate, ANIM_ATTACKER, 2, 12, -5, 0, 0, 32, 60
 	delay 8
 	return
 
