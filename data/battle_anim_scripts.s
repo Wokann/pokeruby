@@ -3015,7 +3015,7 @@ Move_SUPER_FANG: @ 81CB75A
 	delay 20
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 4
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D7080, ANIM_TARGET, 2
+	createsprite gSuperFangSpriteTemplate, ANIM_TARGET, 2
 	playsewithpan SE_M_BITE, SOUND_PAN_TARGET
 	delay 8
 	createsprite gBattleAnimSpriteTemplate_83DB3DC, ANIM_ATTACKER, 2, 1, 3, 1, 2143, 14, 32767, 14
