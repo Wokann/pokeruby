@@ -3275,7 +3275,7 @@ Move_SWAGGER: @ 81CBC26
 	createvisualtask AnimTask_GrowAndShrink, 2
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_83D7764, ANIM_ATTACKER, 2
+	createsprite gBreathPuffSpriteTemplate, ANIM_ATTACKER, 2
 	loopsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER, 4, 2
 	waitforvisualfinish
 	delay 24
@@ -4383,7 +4383,7 @@ Move_BULK_UP: @ 81CD55E
 	createvisualtask AnimTask_GrowAndShrink, 2
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_83D7764, ANIM_ATTACKER, 2
+	createsprite gBreathPuffSpriteTemplate, ANIM_ATTACKER, 2
 	loopsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER, 4, 2
 	waitforvisualfinish
 	end
