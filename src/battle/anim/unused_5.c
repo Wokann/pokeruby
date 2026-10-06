@@ -3,12 +3,11 @@
 #include "trig.h"
 #include "sound.h"
 
-
-void sub_80CF280(struct Sprite* sprite);
+static void AnimCirclingFinger(struct Sprite *sprite);
 
 // unused_5
 
-const struct SpriteTemplate gSpriteTemplate_83D7370 =
+static const struct SpriteTemplate sCirclingFingerSpriteTemplate =
 {
     .tileTag = ANIM_TAG_FINGER,
     .paletteTag = ANIM_TAG_FINGER,
@@ -16,10 +15,10 @@ const struct SpriteTemplate gSpriteTemplate_83D7370 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CF280,
+    .callback = AnimCirclingFinger,
 };
 
-void sub_80CF280(struct Sprite* sprite)
+static void AnimCirclingFinger(struct Sprite *sprite)
 {
     SetSpriteCoordsToAnimAttackerCoords(sprite);
     SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
