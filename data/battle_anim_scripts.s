@@ -8089,8 +8089,8 @@ Move_ENCORE: @ 81D2C41
 Move_TRICK: @ 81D2CE8
 	loadspritegfx ANIM_TAG_ITEM_BAG
 	loadspritegfx ANIM_TAG_SPEED_DUST
-	createsprite gBattleAnimSpriteTemplate_83D67F4, ANIM_ATTACKER, 2, -40, 80
-	createsprite gBattleAnimSpriteTemplate_83D67F4, ANIM_ATTACKER, 2, -40, 208
+	createsprite gTrickBagSpriteTemplate, ANIM_ATTACKER, 2, -40, 80
+	createsprite gTrickBagSpriteTemplate, ANIM_ATTACKER, 2, -40, 208
 	delay 16
 	playsewithpan SE_M_SKETCH, 0
 	createvisualtask sub_80D1E38, 3
