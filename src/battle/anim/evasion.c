@@ -5,20 +5,19 @@
 #include "palette.h"
 #include "util.h"
 
-
-static void sub_80CE910(u8 taskId);
-static void sub_80CE974(struct Sprite* sprite);
+static void AnimTask_DoubleTeam_Step(u8 taskId);
+static void AnimDoubleTeam(struct Sprite *sprite);
 
 // evasion (the shadow seen during evasion increases, mainly Double Team.)
 // Used by Double Team.
 
-void sub_80CE7E0(u8 taskId)
+void AnimTask_DoubleTeam(u8 taskId)
 {
     u16 i;
     int obj;
     u16 r3;
     u16 r4;
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
     task->data[0] = GetAnimBattlerSpriteId(0);
     task->data[1] = AllocSpritePalette(0x2771);
     r3 = (task->data[1] * 16) + 0x100;
@@ -37,12 +36,12 @@ void sub_80CE7E0(u8 taskId)
         gSprites[obj].data[0] = 0;
         gSprites[obj].data[1] = i << 7;
         gSprites[obj].data[2] = taskId;
-        gSprites[obj].callback = sub_80CE974;
+        gSprites[obj].callback = AnimDoubleTeam;
         task->data[3]++;
         i++;
     }
 
-    task->func = sub_80CE910;
+    task->func = AnimTask_DoubleTeam_Step;
     if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == 1)
     {
         REG_DISPCNT &= 0xFDFF;
@@ -53,9 +52,9 @@ void sub_80CE7E0(u8 taskId)
     }
 }
 
-void sub_80CE910(u8 taskId)
+static void AnimTask_DoubleTeam_Step(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
     if (!task->data[3])
     {
         if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == 1)
@@ -68,7 +67,7 @@ void sub_80CE910(u8 taskId)
     }
 }
 
-void sub_80CE974(struct Sprite* sprite)
+static void AnimDoubleTeam(struct Sprite *sprite)
 {
     if (++sprite->data[3] > 1)
     {
