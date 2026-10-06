@@ -7493,9 +7493,9 @@ _81D1E14:
 _81D1E16:
 	loadspritegfx ANIM_TAG_GUST
 	playsewithpan SE_M_GUST, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D765C, ANIM_ATTACKER, 2, 32, 0, 16, 16, 0, 7, 40
-	createsprite gBattleAnimSpriteTemplate_83D765C, ANIM_ATTACKER, 2, 32, 0, 16, 16, 85, 7, 40
-	createsprite gBattleAnimSpriteTemplate_83D765C, ANIM_ATTACKER, 2, 32, 0, 16, 16, 170, 7, 40
+	createsprite gRazorWindTornadoSpriteTemplate, ANIM_ATTACKER, 2, 32, 0, 16, 16, 0, 7, 40
+	createsprite gRazorWindTornadoSpriteTemplate, ANIM_ATTACKER, 2, 32, 0, 16, 16, 85, 7, 40
+	createsprite gRazorWindTornadoSpriteTemplate, ANIM_ATTACKER, 2, 32, 0, 16, 16, 170, 7, 40
 	waitforvisualfinish
 	playsewithpan SE_M_GUST2, SOUND_PAN_ATTACKER
 	goto _81D1E14
