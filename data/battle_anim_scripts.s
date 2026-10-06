@@ -1670,7 +1670,7 @@ Move_PROTECT: @ 81C97B5
 	monbg ANIM_ATK_PARTNER
 	splitbgprio 0
 	waitplaysewithpan SE_M_REFLECT, SOUND_PAN_ATTACKER, 16
-	createsprite gBattleAnimSpriteTemplate_83D6BE8, ANIM_ATTACKER, 2, 24, 0, 90
+	createsprite gProtectSpriteTemplate, ANIM_ATTACKER, 2, 24, 0, 90
 	waitforvisualfinish
 	clearmonbg ANIM_ATK_PARTNER
 	end

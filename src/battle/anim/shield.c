@@ -4,14 +4,13 @@
 #include "sound.h"
 #include "palette.h"
 
-
-void sub_80CCD24(struct Sprite* sprite);
-static void sub_80CCE0C(struct Sprite* sprite);
+static void AnimProtect(struct Sprite *sprite);
+static void AnimProtect_Step(struct Sprite *sprite);
 
 // shield
 // Used by Protect.
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6BE8 =
+const struct SpriteTemplate gProtectSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PROTECT,
     .paletteTag = ANIM_TAG_PROTECT,
@@ -19,10 +18,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6BE8 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CCD24,
+    .callback = AnimProtect,
 };
 
-void sub_80CCD24(struct Sprite* sprite)
+static void AnimProtect(struct Sprite *sprite)
 {
     if (IsContest() != 0)
     {
@@ -41,12 +40,12 @@ void sub_80CCD24(struct Sprite* sprite)
     sprite->data[7] = 16;
     REG_BLDCNT = 0x3F40;
     REG_BLDALPHA = (sprite->data[7] << 8) | (16 - sprite->data[7]);
-    sprite->callback = sub_80CCE0C;
+    sprite->callback = AnimProtect_Step;
 }
 
-static void sub_80CCE0C(struct Sprite* sprite)
+static void AnimProtect_Step(struct Sprite *sprite)
 {
-    int a;
+    int savedPal;
     int i;
     sprite->data[5] += 0x60;
     sprite->x2 = -(sprite->data[5] >> 8);
@@ -54,14 +53,14 @@ static void sub_80CCE0C(struct Sprite* sprite)
     if (sprite->data[1] > 1)
     {
         sprite->data[1] = 0;
-        a = gPlttBufferFaded[sprite->data[2] + 1];
+        savedPal = gPlttBufferFaded[sprite->data[2] + 1];
         i = 0;
         do
         {
             gPlttBufferFaded[sprite->data[2] + ++i] = gPlttBufferFaded[sprite->data[2] + i + 1];
         } while ( i <= 5 );
 
-        gPlttBufferFaded[sprite->data[2] + 7] = a;
+        gPlttBufferFaded[sprite->data[2] + 7] = savedPal;
     }
 
     if (sprite->data[7] > 6 && sprite->data[0] >0 && ++sprite->data[6] > 1)
