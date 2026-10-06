@@ -1,5 +1,5 @@
 #include "global.h"
-#include "fldeff_poison.h"
+#include "fldeff_misc.h"
 #include "task.h"
 #include "constants/songs.h"
 #include "sound.h"
@@ -38,7 +38,7 @@ void FldEffPoison_Start(void)
     CreateTask(Task_FieldPoisonEffect, 80);
 }
 
-bool32 FldeffPoison_IsActive(void)
+bool32 FldEffPoison_IsActive(void)
 {
     return FuncIsActiveTask(Task_FieldPoisonEffect);
 }

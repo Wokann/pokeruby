@@ -2,7 +2,7 @@
 #include "field_poison.h"
 #include "event_data.h"
 #include "field_message_box.h"
-#include "fldeff_poison.h"
+#include "fldeff_misc.h"
 #include "pokemon.h"
 #include "party_menu.h"
 #include "script.h"

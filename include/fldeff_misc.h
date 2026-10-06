@@ -17,6 +17,8 @@ void ShatterSecretBaseBreakableDoor(s16 x, s16 y);
 void PlaySecretBaseMusicNoteMatSound(s16 metatileId);
 void DoSecretBaseGlitterMatSparkle(void);
 bool8 FldEff_SandPillar(void);
+void FldEffPoison_Start(void);
+bool32 FldEffPoison_IsActive(void);
 
 extern const struct SpritePalette gSpritePalette_SecretPower_Cave;
 extern const struct SpritePalette gSpritePalette_SecretPower_Plant;

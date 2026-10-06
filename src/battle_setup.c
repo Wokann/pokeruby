@@ -19,7 +19,7 @@
 #include "field_player_avatar.h"
 #include "field_weather.h"
 #include "fieldmap.h"
-#include "fldeff_poison.h"
+#include "fldeff_misc.h"
 #include "main.h"
 #include "metatile_behavior.h"
 #include "overworld.h"
@@ -506,7 +506,7 @@ static void Task_BattleStart(u8 taskId)
     switch (tState)
     {
     case 0:
-        if (!FldeffPoison_IsActive()) // is poison not active?
+        if (!FldEffPoison_IsActive()) // is poison not active?
         {
             BattleTransition_StartOnField(tTransition);
             tState++; // go to case 1.
