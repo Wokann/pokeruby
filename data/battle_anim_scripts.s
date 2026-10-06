@@ -1800,11 +1800,11 @@ Move_SAFEGUARD: @ 81C9AF7
 	monbg ANIM_ATK_PARTNER
 	setalpha 8, 8
 	playsewithpan SE_M_MILK_DRINK, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D7D74, ANIM_ATTACKER, 2
+	createsprite gGuardRingSpriteTemplate, ANIM_ATTACKER, 2
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D7D74, ANIM_ATTACKER, 2
+	createsprite gGuardRingSpriteTemplate, ANIM_ATTACKER, 2
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D7D74, ANIM_ATTACKER, 2
+	createsprite gGuardRingSpriteTemplate, ANIM_ATTACKER, 2
 	waitforvisualfinish
 	playsewithpan SE_SHINY, SOUND_PAN_ATTACKER
 	createvisualtask sub_80E1F8C, 2, 10, 0, 2, 0, 10, 32767
