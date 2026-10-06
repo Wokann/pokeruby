@@ -3431,20 +3431,20 @@ Move_UPROAR: @ 81CBEFC
 	createvisualtask AnimTask_UproarDistortion, 2, 0
 	createsprite gUproarRingSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 0, 0, 31, 8
 	playsewithpan SE_M_UPROAR, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D7CC8, ANIM_ATTACKER, 2, 0, 29, -12, 0
-	createsprite gBattleAnimSpriteTemplate_83D7CC8, ANIM_ATTACKER, 2, 0, -12, -29, 1
+	createsprite gJaggedMusicNoteSpriteTemplate, ANIM_ATTACKER, 2, 0, 29, -12, 0
+	createsprite gJaggedMusicNoteSpriteTemplate, ANIM_ATTACKER, 2, 0, -12, -29, 1
 	delay 16
 	createvisualtask AnimTask_UproarDistortion, 2, 0
 	createsprite gUproarRingSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 0, 0, 31, 8
 	playsewithpan SE_M_UPROAR, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D7CC8, ANIM_ATTACKER, 2, 0, 12, -29, 1
-	createsprite gBattleAnimSpriteTemplate_83D7CC8, ANIM_ATTACKER, 2, 0, -29, -12, 0
+	createsprite gJaggedMusicNoteSpriteTemplate, ANIM_ATTACKER, 2, 0, 12, -29, 1
+	createsprite gJaggedMusicNoteSpriteTemplate, ANIM_ATTACKER, 2, 0, -29, -12, 0
 	delay 16
 	createvisualtask AnimTask_UproarDistortion, 2, 0
 	createsprite gUproarRingSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 0, 0, 31, 8
 	playsewithpan SE_M_UPROAR, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D7CC8, ANIM_ATTACKER, 2, 0, 24, -24, 1
-	createsprite gBattleAnimSpriteTemplate_83D7CC8, ANIM_ATTACKER, 2, 0, -24, -24, 0
+	createsprite gJaggedMusicNoteSpriteTemplate, ANIM_ATTACKER, 2, 0, 24, -24, 1
+	createsprite gJaggedMusicNoteSpriteTemplate, ANIM_ATTACKER, 2, 0, -24, -24, 0
 	waitforvisualfinish
 	clearmonbg ANIM_DEF_PARTNER
 	end
