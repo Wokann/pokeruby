@@ -176,11 +176,11 @@ extern const u8 gSystemText_ClearAllSaveDataPrompt[];
 extern const u8 gSystemText_ClearingData[];
 
 // contest_link_80C2020
-extern const u8 gContestText_AnnounceResults[];
-extern const u8 gContestText_PreliminaryResults[];
-extern const u8 gContestText_Round2Results[];
-extern const u8 gContestText_PokeWon[];
-extern const u8 gOtherText_LinkStandby[];
+extern const u8 gText_AnnouncingResults[];
+extern const u8 gText_PreliminaryResults[];
+extern const u8 gText_Round2Results[];
+extern const u8 gText_ContestantsMonWon[];
+extern const u8 gText_CommunicationStandby[];
 
 // landmark
 extern const u8 gLandmarkName_FlowerShop[];

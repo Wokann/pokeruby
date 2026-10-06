@@ -111,7 +111,7 @@ static void sub_80A9BE4(u8 taskId)
         if (!(gLinkContestFlags & 1))
             CalculateFinalScores();
 
-        sub_80C2358();
+        CB2_StartShowContestResults();
     }
 }
 

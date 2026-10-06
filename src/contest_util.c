@@ -69,9 +69,9 @@ void GetNpcContestantLocalId(void)
 
 void BufferContestTrainerAndMonNames(void)
 {
-    Contest_GetTrainerNameI_StringVar1();
-    Contest_GetNicknameI_StringVar1();
-    Contest_GetSpeciesNameI_StringVar1();
+    BufferContestantTrainerName();
+    BufferContestantMonNickname();
+    BufferContestantMonSpecies();
 }
 
 void DoesContestCategoryHaveMuseumPainting(void)

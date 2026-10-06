@@ -351,15 +351,15 @@ const u8 gContestJudgeSymbolsPal[] = INCBIN_U8("graphics/contest/judge_symbols.g
 
 const u8 gContestSliderHeart_Gfx[] = INCBIN_U8("graphics/contest/slider_heart.4bpp");
 
-const u8 gUnknown_08D1977C[] = INCBIN_U8("graphics/contest/misc_2.4bpp.lz");
+const u8 gContestResults_Gfx[] = INCBIN_U8("graphics/contest/results_screen/tiles.4bpp.lz");
 
-const u8 gUnknown_08D1A250[] = INCBIN_U8("graphics/contest/misc_2_tilemap_1.bin.lz");
+const u8 gContestResults_WinnerBanner_Tilemap[] = INCBIN_U8("graphics/contest/results_screen/winner_banner.bin.lz");
 
-const u8 gUnknown_08D1A364[] = INCBIN_U8("graphics/contest/misc_2_tilemap_2.bin.lz");
+const u8 gContestResults_Interface_Tilemap[] = INCBIN_U8("graphics/contest/results_screen/interface.bin.lz");
 
-const u8 gUnknown_08D1A490[] = INCBIN_U8("graphics/contest/misc_2_tilemap_3.bin.lz");
+const u8 gContestResults_Bg_Tilemap[] = INCBIN_U8("graphics/contest/results_screen/bg.bin.lz");
 
-const u8 gUnknown_08D1A618[] = INCBIN_U8("graphics/contest/misc_2.gbapal.lz");
+const u8 gContestResults_Pal[] = INCBIN_U8("graphics/contest/results_screen/tiles.gbapal.lz");
 const u8 gBattleAnimSpriteGfx_Impact[] = INCBIN_U8("graphics/battle_anims/sprites/impact.4bpp.lz");
 const u8 gBattleAnimSpritePal_Impact[] = INCBIN_U8("graphics/battle_anims/sprites/impact.gbapal.lz");
 const u8 gBattleAnimSpriteSheet_Particles[] = INCBIN_U8("graphics/battle_anims/sprites/particles.4bpp.lz");
@@ -645,8 +645,8 @@ const u8 gSubstituteDollFrontGfx[] = INCBIN_U8("graphics/battle_anims/sprites/su
 const u8 gSubstituteDollBackGfx[] = INCBIN_U8("graphics/battle_anims/sprites/substitute_back.bin.lz");
 const u8 gBattleAnimSpriteGfx_GreenStar[] = INCBIN_U8("graphics/battle_anims/sprites/green_star.4bpp.lz");
 const u8 gBattleAnimSpritePal_GreenStar[] = INCBIN_U8("graphics/battle_anims/sprites/green_star.gbapal.lz");
-const u8 gContestConfetti_Gfx[] = INCBIN_U8("graphics/misc/confetti.4bpp.lz");
-const u8 gContestConfetti_Pal[] = INCBIN_U8("graphics/misc/confetti.gbapal.lz");
+const u8 gConfetti_Gfx[] = INCBIN_U8("graphics/misc/confetti.4bpp.lz");
+const u8 gConfetti_Pal[] = INCBIN_U8("graphics/misc/confetti.gbapal.lz");
 const u8 gBattleAnimSpriteGfx_PinkCloud[] = INCBIN_U8("graphics/battle_anims/sprites/pink_cloud.4bpp.lz");
 const u8 gBattleAnimSpritePal_PinkCloud[] = INCBIN_U8("graphics/battle_anims/sprites/pink_cloud.gbapal.lz");
 const u8 gBattleAnimSpriteGfx_SweatDrop[] = INCBIN_U8("graphics/battle_anims/sprites/sweat_drop.4bpp.lz");

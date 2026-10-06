@@ -30,8 +30,8 @@ extern void (*gGameContinueCallback)(void);
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 extern u8 gReservedSpritePaletteCount;
 
-extern const u8 gContestConfetti_Gfx[];
-extern const u8 gContestConfetti_Pal[];
+extern const u8 gConfetti_Gfx[];
+extern const u8 gConfetti_Pal[];
 extern const u8 gHallOfFame_Gfx[];
 extern const u16 gHallOfFame_Pal[];
 
@@ -94,14 +94,14 @@ static bool8 sub_81438C4(void);
 
 static const struct CompressedSpriteSheet sHallOfFame_ConfettiSpriteSheet =
 {
-      gContestConfetti_Gfx, 0x220, 1001
+      gConfetti_Gfx, 0x220, 1001
 };
 
 static const u8 sUnused0[8] = {};
 
 static const struct CompressedSpritePalette sHallOfFame_ConfettiSpritePalette =
 {
-      gContestConfetti_Pal, 1001
+      gConfetti_Pal, 1001
 };
 
 static const u8 sUnused1[8] = {};

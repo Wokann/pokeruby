@@ -44,11 +44,11 @@ extern const u8 gContestJudgeSymbolsPal[];
 extern const u8 gContestNumbers_UnusedGfx[];
 extern const u8 gContestNumbers_UnusedPal[];
 extern const u8 gContestSliderHeart_Gfx[];
-extern const u8 gUnknown_08D1977C[];
-extern const u8 gUnknown_08D1A250[];
-extern const u8 gUnknown_08D1A364[];
-extern const u8 gUnknown_08D1A490[];
-extern const u8 gUnknown_08D1A618[];
+extern const u8 gContestResults_Gfx[];
+extern const u8 gContestResults_WinnerBanner_Tilemap[];
+extern const u8 gContestResults_Interface_Tilemap[];
+extern const u8 gContestResults_Bg_Tilemap[];
+extern const u8 gContestResults_Pal[];
 
 extern const u8 gContestJudgeGfx[];
 extern const u8 gContest2Pal[];
@@ -3363,8 +3363,8 @@ extern const u8 gBattleAnimBgTilemap_InAir[];
 extern const u8 gBattleAnimBgTilemap_Aurora[];
 extern const u8 gBattleAnimBgTilemap_Fissure[];
 
-extern const u8 gContestConfetti_Gfx[];
-extern const u8 gContestConfetti_Pal[];
+extern const u8 gConfetti_Gfx[];
+extern const u8 gConfetti_Pal[];
 
 extern const struct CompressedSpriteSheet gBattleEnvironmentTiles_TallGrass[];
 extern const u8 gBattleEnvironmentTilemap_TallGrass[];

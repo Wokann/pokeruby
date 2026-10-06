@@ -437,19 +437,19 @@ gSystemText_ClearingData:: @ 842CE42
 	.string "Daten werden gelöscht...\n"
 	.string "Bitte warten...$"
 
-gContestText_AnnounceResults:: @ 842CE60
+gText_AnnouncingResults:: @ 842CE60
 	.string "Bekanntgabe der Ergebnisse!$"
 
-gContestText_PreliminaryResults:: @ 842CE78
+gText_PreliminaryResults:: @ 842CE78
 	.string "Ergebnisse 1. Durchlauf!$"
 
-gContestText_Round2Results:: @ 842CE91
+gText_Round2Results:: @ 842CE91
 	.string "Ergebnisse 2. Durchlauf!$"
 
-gContestText_PokeWon:: @ 842CEA2
+gText_ContestantsMonWon:: @ 842CEA2
 	.string "Sieger ist: {STR_VAR_2} von {STR_VAR_1}!$"
 
-gOtherText_LinkStandby:: @ 842CEAF
+gText_CommunicationStandby:: @ 842CEAF
 	.string "Verbindung...$"
 
 @ 842CEBF
