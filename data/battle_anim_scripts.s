@@ -8168,14 +8168,14 @@ Move_SPIT_UP: @ 81D2E65
 	delay 45
 	playsewithpan SE_M_SPIT_UP, SOUND_PAN_ATTACKER
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 0, 12
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 32, 12
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 64, 12
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 96, 12
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 128, 12
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 160, 12
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 192, 12
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 224, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 0, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 32, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 64, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 96, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 128, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 160, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 192, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 224, 12
 	delay 5
 	jumpifmoveturn 2, _81D2F32
 	jumpifmoveturn 3, _81D2F5B
@@ -8190,20 +8190,20 @@ _81D2EF5:
 	waitforvisualfinish
 	end
 _81D2F32:
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 16
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 80
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 144
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 208
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 16
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 80
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 144
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 208
 	goto _81D2EF5
 _81D2F5B:
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 16
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 48
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 80
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 112
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 144
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 176
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 208
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_ATTACKER, 2, 240
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 16
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 48
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 80
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 112
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 144
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 176
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 208
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_ATTACKER, 2, 240
 	goto _81D2EF5
 
 Move_SWALLOW: @ 81D2FA8
