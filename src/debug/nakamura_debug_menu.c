@@ -252,15 +252,15 @@ static bool8 MakeBasesToMax(void)
 
             for (j = 0; j < 7; j++)
             {
-                gSaveBlock1.secretBases[i].playerName[j] = gSaveBlock2.playerName[j];
-                if (gSaveBlock1.secretBases[i].playerName[j] == EOS)
+                gSaveBlock1.secretBases[i].trainerName[j] = gSaveBlock2.playerName[j];
+                if (gSaveBlock1.secretBases[i].trainerName[j] == EOS)
                     break;
             }
 
             if (j == 7)
-                gSaveBlock1.secretBases[i].playerName[j - 1] = CHAR_A + i - 1;
+                gSaveBlock1.secretBases[i].trainerName[j - 1] = CHAR_A + i - 1;
             else
-                gSaveBlock1.secretBases[i].playerName[j] = CHAR_A + i - 1;
+                gSaveBlock1.secretBases[i].trainerName[j] = CHAR_A + i - 1;
 
             do
             {
@@ -283,7 +283,7 @@ static bool8 MakeBasesToMax(void)
             for (j = 0; j < 16; j++)
             {
                 gSaveBlock1.secretBases[i].decorations[j] = 0;
-                gSaveBlock1.secretBases[i].decorationPos[j] = 0;
+                gSaveBlock1.secretBases[i].decorationPositions[j] = 0;
             }
 
             unref_sub_80BCD7C(i);
@@ -323,7 +323,7 @@ static void BaseLocation_Redraw(void)
         u8 Y;
         BaseLocation_GetCurSecretBaseData(&R, &X, &Y);
 
-        sub_80BC190(gStringVar1, sSecretBaseIdx);
+        GetSecretBaseName(gStringVar1, sSecretBaseIdx);
         Menu_PrintText(gStringVar1, 1, 3);
 
         Menu_PrintText(Str_843E550, 1, 5);
@@ -411,7 +411,7 @@ static void MoveYourBase_PrintSBOwnerID(void)
 static void MoveYourBase_PrintSBOwnerName(void)
 {
     Menu_BlankWindowRect(2, 3, 11, 4);
-    *StringCopyN(gStringVar1, gSaveBlock1.secretBases[sSecretBaseIdx].playerName, 7) = EOS;
+    *StringCopyN(gStringVar1, gSaveBlock1.secretBases[sSecretBaseIdx].trainerName, 7) = EOS;
     Menu_PrintText(gStringVar1, 2, 3);
 }
 
@@ -463,7 +463,7 @@ static void MoveYourBase_EditOwnerID(s8 direction)
 
 static void MoveYourBase_EditOwnerNameChar(s8 a0)
 {
-    u8 * namePtr = gSaveBlock1.secretBases[sSecretBaseIdx].playerName;
+    u8 * namePtr = gSaveBlock1.secretBases[sSecretBaseIdx].trainerName;
     u8 r2 = 0;
     u8 r3 = 0;
     u8 i;

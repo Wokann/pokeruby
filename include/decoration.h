@@ -13,7 +13,7 @@ enum DecorPerm {
     DECORPERM_PASS_FLOOR,
     DECORPERM_BEHIND_FLOOR,
     DECORPERM_NA_WALL,
-    DECORPERM_SOLID_MAT
+    DECORPERM_SPRITE
 };
 
 enum DecorShape {
@@ -156,9 +156,9 @@ extern const struct YesNoFuncTable gUnknown_083ECAA0;
 
 extern void sub_8109DAC(u8); // src/trader
 extern void ReshowPlayerPC(u8); // src/player_pc
-void Task_SecretBasePC_Decoration(u8);
+void DoSecretBaseDecorationMenu(u8);
 
-void Task_SecretBasePC_Decoration(u8 taskId);
+void DoSecretBaseDecorationMenu(u8 taskId);
 void sub_80FE2B4(void);
 void Task_DecorationPCProcessMenuInput(u8);
 void sub_80FE394(void);
@@ -181,7 +181,7 @@ void sub_80FECE0(u8);
 #endif
 void sub_80FEF50(u8);
 bool8 sub_80FEFA4(void);
-void sub_80FF394(u16, u16, u16);
+void ShowDecorationOnMap(u16, u16, u16);
 void sub_80FF6AC(u8);
 void sub_80FF960(u8);
 void AddDecorationIconObjectFromObjectEvent(struct UnkStruct_02038900 *, u8);

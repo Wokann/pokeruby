@@ -441,7 +441,7 @@ static const u8 *GetInteractedBackgroundEventScript(struct MapPosition *position
         if (direction == DIR_NORTH)
         {
             gSpecialVar_0x8004 = bgEvent->bgUnion.secretBaseId;
-            if (sub_80BC050())
+            if (TrySetCurSecretBase())
                 return SecretBase_EventScript_CheckEntrance;
         }
         return NULL;
@@ -791,7 +791,7 @@ static bool8 TryDoorWarp(struct MapPosition *position, u16 metatileBehavior, u8 
     {
         if (MetatileBehavior_IsOpenSecretBaseDoor(metatileBehavior) == TRUE)
         {
-            sub_80BC038(position, gMapHeader.events);
+            WarpIntoSecretBase(position, gMapHeader.events);
             return TRUE;
         }
         if (MetatileBehavior_IsWarpDoor(metatileBehavior) == TRUE)

@@ -1,5 +1,5 @@
 SecretBase_EventScript_CheckEntrance:: @ 81A2C51
-	special sub_80BB70C
+	special GetSecretBaseTypeInFrontOfPlayer
 	special CheckPlayerHasSecretBase
 	compare VAR_RESULT, 1
 	goto_if_eq AskToMoveSecretBase
@@ -118,11 +118,11 @@ EventScript_1A2DB8:
 	playse SE_EXIT
 	setvar VAR_INIT_SECRET_BASE, 0
 	setflag FLAG_DECORATION_1
-	special sub_80BB8CC
-	special sub_80BBAF0
+	special SetPlayerSecretBase
+	special EnterSecretBase
 	setvar VAR_0x8004, 0
 	setvar VAR_0x8005, 0
-	special sub_80BBDD0
+	special InitSecretBaseDecorationSprites
 	setvar VAR_SECRET_BASE_INITIALIZED, 1
 	waitstate
 	end
@@ -136,13 +136,13 @@ SecretBase_EventScript_FirstEntrance:: @ 81A2DDE
 	goto_if_eq SecretBase_RedCave1_EventScript_1A2E08
 	closemessage
 	playse SE_EXIT
-	special sub_80BC440
+	special ClearAndLeaveSecretBase
 	end
 
 SecretBase_RedCave1_EventScript_1A2E08:: @ 81A2E08
 	closemessage
 	setflag FLAG_RECEIVED_SECRET_POWER
-	special sub_80BBC78
+	special EnterNewlyCreatedSecretBase
 	waitstate
 	end
 
@@ -151,22 +151,22 @@ SecretBase_RedCave1_Movement_1A2E11:: @ 81A2E11
 	walk_up
 	step_end
 
-gUnknown_081A2E14:: @ 81A2E14
+SecretBase_EventScript_Enter:: @ 81A2E14
 	lockall
 	setvar VAR_INIT_SECRET_BASE, 1
 	playse SE_EXIT
-	special sub_80BC114
+	special IsCurSecretBaseOwnedByAnotherPlayer
 	compare VAR_RESULT, 0
 	goto_if_eq EventScript_1A2E38
 	clearflag FLAG_DECORATION_1
-	special sub_80BBAF0
+	special EnterSecretBase
 	setvar VAR_SECRET_BASE_INITIALIZED, 0
 	waitstate
 	end
 
 EventScript_1A2E38:
 	setflag FLAG_DECORATION_1
-	special sub_80BBAF0
+	special EnterSecretBase
 	setvar VAR_SECRET_BASE_INITIALIZED, 0
 	waitstate
 	end
@@ -186,7 +186,7 @@ AskToMoveSecretBase:
 	compare VAR_RESULT, NO
 	goto_if_eq EventScript_1A2F3A
 	fadescreen FADE_TO_BLACK
-	special MoveSecretBase
+	special MoveOutOfSecretBaseFromOutside
 	closemessage
 	fadescreen FADE_FROM_BLACK
 	msgbox UnknownString_81A3CC9, MSGBOX_YESNO
@@ -252,7 +252,7 @@ SecretBase_EventScript_SetDecorationFlags:: @ 81A2F3D
 SecretBase_EventScript_InitDecorations:: @ 81A2F68
 	setvar VAR_0x8004, 0
 	setvar VAR_0x8005, 0
-	special sub_80BBDD0
+	special InitSecretBaseDecorationSprites
 	setvar VAR_SECRET_BASE_INITIALIZED, 1
 	end
 
@@ -309,7 +309,7 @@ SecretBase_YellowCave1_EventScript_1A2FC0:: @ 81A2FC0
 SecretBase_YellowCave2_EventScript_1A2FC0:: @ 81A2FC0
 SecretBase_YellowCave3_EventScript_1A2FC0:: @ 81A2FC0
 SecretBase_YellowCave4_EventScript_1A2FC0:: @ 81A2FC0
-	special sub_80BCE90
+	special GetSecretBaseOwnerAndState
 	compare VAR_0x8004, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3032
 	compare VAR_0x8004, 1
@@ -342,7 +342,7 @@ SecretBase_RedCave1_EventScript_1A3032:: @ 81A3032
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A308F
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A308F
@@ -357,7 +357,7 @@ SecretBase_RedCave1_EventScript_1A3086:: @ 81A3086
 
 SecretBase_RedCave1_EventScript_1A308F:: @ 81A308F
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_RedCave1_Text_1A1B97, MSGBOX_NPC
 	end
@@ -376,7 +376,7 @@ SecretBase_RedCave1_EventScript_1A30AE:: @ 81A30AE
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A310B
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A310B
@@ -391,7 +391,7 @@ SecretBase_RedCave1_EventScript_1A3102:: @ 81A3102
 
 SecretBase_RedCave1_EventScript_1A310B:: @ 81A310B
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_RedCave1_Text_1A1F2E, MSGBOX_NPC
 	end
@@ -410,7 +410,7 @@ SecretBase_RedCave1_EventScript_1A312A:: @ 81A312A
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3187
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3187
@@ -425,7 +425,7 @@ SecretBase_RedCave1_EventScript_1A317E:: @ 81A317E
 
 SecretBase_RedCave1_EventScript_1A3187:: @ 81A3187
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_RedCave1_Text_1A2230, MSGBOX_NPC
 	end
@@ -444,7 +444,7 @@ SecretBase_RedCave1_EventScript_1A31A6:: @ 81A31A6
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3203
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3203
@@ -459,7 +459,7 @@ SecretBase_RedCave1_EventScript_1A31FA:: @ 81A31FA
 
 SecretBase_RedCave1_EventScript_1A3203:: @ 81A3203
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_RedCave1_Text_1A258A, MSGBOX_NPC
 	end
@@ -478,7 +478,7 @@ SecretBase_RedCave1_EventScript_1A3222:: @ 81A3222
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A327F
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A327F
@@ -493,7 +493,7 @@ SecretBase_RedCave1_EventScript_1A3276:: @ 81A3276
 
 SecretBase_RedCave1_EventScript_1A327F:: @ 81A327F
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_RedCave1_Text_1A28F4, MSGBOX_NPC
 	end
@@ -512,7 +512,7 @@ SecretBase_RedCave1_EventScript_1A329E:: @ 81A329E
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A32FB
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A32FB
@@ -527,7 +527,7 @@ SecretBase_RedCave1_EventScript_1A32F2:: @ 81A32F2
 
 SecretBase_RedCave1_EventScript_1A32FB:: @ 81A32FB
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_RedCave1_Text_1A1D59, MSGBOX_NPC
 	end
@@ -546,7 +546,7 @@ SecretBase_RedCave1_EventScript_1A331A:: @ 81A331A
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3377
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3377
@@ -561,7 +561,7 @@ SecretBase_RedCave1_EventScript_1A336E:: @ 81A336E
 
 SecretBase_RedCave1_EventScript_1A3377:: @ 81A3377
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_RedCave1_Text_1A20AE, MSGBOX_NPC
 	end
@@ -580,7 +580,7 @@ SecretBase_RedCave1_EventScript_1A3396:: @ 81A3396
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A33F3
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A33F3
@@ -595,7 +595,7 @@ SecretBase_RedCave1_EventScript_1A33EA:: @ 81A33EA
 
 SecretBase_RedCave1_EventScript_1A33F3:: @ 81A33F3
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_RedCave1_Text_1A2420, MSGBOX_NPC
 	end
@@ -614,7 +614,7 @@ SecretBase_RedCave1_EventScript_1A3412:: @ 81A3412
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A346F
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A346F
@@ -629,7 +629,7 @@ SecretBase_RedCave1_EventScript_1A3466:: @ 81A3466
 
 SecretBase_RedCave1_EventScript_1A346F:: @ 81A346F
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_RedCave1_Text_1A2736, MSGBOX_NPC
 	end
@@ -648,7 +648,7 @@ SecretBase_RedCave1_EventScript_1A348E:: @ 81A348E
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A34EB
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A34EB
@@ -663,7 +663,7 @@ SecretBase_RedCave1_EventScript_1A34E2:: @ 81A34E2
 
 SecretBase_RedCave1_EventScript_1A34EB:: @ 81A34EB
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_RedCave1_Text_1A2AFB, MSGBOX_NPC
 	end

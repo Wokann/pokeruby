@@ -163,20 +163,20 @@ struct SecretBaseParty
     /*0x1AA2*/ u8 EVs[PARTY_SIZE];
 };
 
-struct SecretBaseRecord
+struct SecretBase
 {
     /*0x1A08*/ u8 secretBaseId;
     /*0x1A09*/ u8 toRegister:4;
     /*0x1A09*/ u8 gender:1;
     /*0x1A09*/ u8 battledOwnerToday:1;
     /*0x1A09*/ u8 registryStatus:2;
-    /*0x1A0A*/ u8 playerName[OT_NAME_LENGTH];
+    /*0x1A0A*/ u8 trainerName[OT_NAME_LENGTH];
     /*0x1A11*/ u8 trainerId[4]; // byte 0 is used for determining trainer class
     /*0x1A16*/ u16 numSecretBasesReceived;
     /*0x1A18*/ u8 numTimesEntered;
     /*0x1A19*/ u8 unused;
     /*0x1A1A*/ u8 decorations[DECOR_MAX_SECRET_BASE];
-    /*0x1A2A*/ u8 decorationPos[DECOR_MAX_SECRET_BASE];
+    /*0x1A2A*/ u8 decorationPositions[DECOR_MAX_SECRET_BASE];
     /*0x1A3C*/ struct SecretBaseParty party;
 };
 
@@ -707,7 +707,7 @@ struct SaveBlock1 /* 0x02025734 */
     /*0x1340*/ u16 vars[VARS_COUNT];
     /*0x1540*/ u32 gameStats[NUM_GAME_STATS];
     /*0x1608*/ struct BerryTree berryTrees[BERRY_TREES_COUNT];
-    /*0x1A08*/ struct SecretBaseRecord secretBases[SECRET_BASES_COUNT];
+    /*0x1A08*/ struct SecretBase secretBases[SECRET_BASES_COUNT];
     /*0x2688*/ u8 playerRoomDecor[DECOR_MAX_PLAYERS_HOUSE];
     /*0x2694*/ u8 playerRoomDecorPos[DECOR_MAX_PLAYERS_HOUSE];
     /*0x26A0*/ u8 decorDesk[10];

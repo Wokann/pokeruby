@@ -43,7 +43,7 @@ SecretBase_RedCave1_Text_1A1B97:: @ 81A1B97
 	.string "Hunh?\n"
 	.string "Oh, you can't now...$"
 
-UnknownString_81A1BB2:: @ 81A1BB2
+SecretBase_Text_Trainer0Defeated:: @ 81A1BB2
 	.string "Waaargh! You're too strong!\n"
 	.string "About me losing... Please keep it secret!$"
 
@@ -71,7 +71,7 @@ SecretBase_RedCave1_Text_1A1D59:: @ 81A1D59
 	.string "Oh...\n"
 	.string "You can't now, okay.$"
 
-UnknownString_81A1D74:: @ 81A1D74
+SecretBase_Text_Trainer5Defeated:: @ 81A1D74
 	.string "Hmmm... It's our loss...\n"
 	.string "But don't tell anyone!\l"
 	.string "It's a confidential secret!$"
@@ -102,7 +102,7 @@ SecretBase_RedCave1_Text_1A1F2E:: @ 81A1F2E
 	.string "Hunh? Is that right?\n"
 	.string "You're not interested in this spot?$"
 
-UnknownString_81A1F67:: @ 81A1F67
+SecretBase_Text_Trainer1Defeated:: @ 81A1F67
 	.string "I can't keep going!\n"
 	.string "I surrender!$"
 
@@ -129,7 +129,7 @@ SecretBase_RedCave1_Text_1A20AE:: @ 81A20AE
 	.string "Oh.\n"
 	.string "Some other time, then!$"
 
-UnknownString_81A20C9:: @ 81A20C9
+SecretBase_Text_Trainer6Defeated:: @ 81A20C9
 	.string "Hmm... I've still got lots to learn.\n"
 	.string "I have to study some more.$"
 
@@ -155,7 +155,7 @@ SecretBase_RedCave1_Text_1A2220:: @ 81A2220
 SecretBase_RedCave1_Text_1A2230:: @ 81A2230
 	.string "When you're ready, give me a shout!$"
 
-UnknownString_81A2254:: @ 81A2254
+SecretBase_Text_Trainer2Defeated:: @ 81A2254
 	.string "Aww! Done in!\n"
 	.string "But it's still fun to battle!$"
 
@@ -187,7 +187,7 @@ SecretBase_RedCave1_Text_1A2420:: @ 81A2420
 	.string "Oh.\n"
 	.string "How disappointing...$"
 
-UnknownString_81A2439:: @ 81A2439
+SecretBase_Text_Trainer7Defeated:: @ 81A2439
 	.string "I concede...$"
 
 SecretBase_RedCave1_Text_1A2446:: @ 81A2446
@@ -214,7 +214,7 @@ SecretBase_RedCave1_Text_1A258A:: @ 81A258A
 	.string "Oh... Are you maybe tired from searching\n"
 	.string "for this place?$"
 
-UnknownString_81A25C3:: @ 81A25C3
+SecretBase_Text_Trainer3Defeated:: @ 81A25C3
 	.string "I went down...$"
 
 SecretBase_RedCave1_Text_1A25D2:: @ 81A25D2
@@ -240,7 +240,7 @@ SecretBase_RedCave1_Text_1A2710:: @ 81A2710
 SecretBase_RedCave1_Text_1A2736:: @ 81A2736
 	.string "I'll battle with you anytime.$"
 
-UnknownString_81A2754:: @ 81A2754
+SecretBase_Text_Trainer8Defeated:: @ 81A2754
 	.string "Huh?\n"
 	.string "Did I just lose?$"
 
@@ -269,7 +269,7 @@ SecretBase_RedCave1_Text_1A28F4:: @ 81A28F4
 	.string "I guess there are times when you're not\n"
 	.string "into it.$"
 
-UnknownString_81A2925:: @ 81A2925
+SecretBase_Text_Trainer4Defeated:: @ 81A2925
 	.string "I know exactly what you're made of now.$"
 
 SecretBase_RedCave1_Text_1A294D:: @ 81A294D
@@ -299,7 +299,7 @@ SecretBase_RedCave1_Text_1A2AFB:: @ 81A2AFB
 	.string "I'll be happy to demonstrate my style\n"
 	.string "anytime.$"
 
-UnknownString_81A2B2A:: @ 81A2B2A
+SecretBase_Text_Trainer9Defeated:: @ 81A2B2A
 	.string "You're supremely talented!\n"
 	.string "Your power seems to be limitless...$"
 

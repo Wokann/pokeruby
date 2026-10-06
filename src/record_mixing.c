@@ -34,7 +34,7 @@ u32 gRecordStructSize;
 static bool8 sReadyToReceive;
 static u8 gUnknown_0300071C[4];
 
-static struct SecretBaseRecord *sSecretBasesSave = gSaveBlock1.secretBases;
+static struct SecretBase *sSecretBasesSave = gSaveBlock1.secretBases;
 static TVShow *sTvShowsSave = gSaveBlock1.tvShows;
 static struct PokeNews *sPokeNewsSave = gSaveBlock1.pokeNews;
 static void *recordMixingMauvilleMan = &gSaveBlock1.mauvilleMan;
@@ -75,7 +75,7 @@ void RecordMixingPlayerSpotTriggered(void)
 
 struct PlayerRecordRS
 {
-    struct SecretBaseRecord secretBases[SECRET_BASES_COUNT];
+    struct SecretBase secretBases[SECRET_BASES_COUNT];
     TVShow tvShows[TV_SHOWS_COUNT];
     struct PokeNews pokeNews[POKE_NEWS_COUNT];
     union MauvilleMan mauvilleMan;

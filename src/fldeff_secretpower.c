@@ -218,8 +218,8 @@ static void ShrubEntranceSpriteCallbackEnd(struct Sprite *sprite);
 
 static void SetCurrentSecretBase(void)
 {
-    SetCurrentSecretBaseFromPosition(&gPlayerFacingPosition, gMapHeader.events);
-    SetCurrentSecretBaseVar();
+    SetCurSecretBaseIdFromPosition(&gPlayerFacingPosition, gMapHeader.events);
+    TrySetCurSecretBaseIndex();
 }
 
 static void AdjustSecretPowerSpritePixelOffsets(void)
@@ -371,7 +371,7 @@ static void CaveEntranceSpriteCallback2(struct Sprite *sprite)
     {
         sprite->data[0]++;
         if (sprite->data[0] == 20)
-            SetOpenedSecretBaseMetatile();
+            ToggleSecretBaseEntranceMetatile();
     }
     else
     {
@@ -426,7 +426,7 @@ bool8 FldEff_SecretPowerTree(void)
         148);
 
     if (gFieldEffectArguments[7] == 1 || gFieldEffectArguments[7] == 3)
-        SetOpenedSecretBaseMetatile();
+        ToggleSecretBaseEntranceMetatile();
 
     return FALSE;
 }
@@ -446,7 +446,7 @@ static void TreeEntranceSpriteCallback2(struct Sprite *sprite)
     if (sprite->data[0] >= 40)
     {
         if (gFieldEffectArguments[7] == 0 || gFieldEffectArguments[7] == 2)
-            SetOpenedSecretBaseMetatile();
+            ToggleSecretBaseEntranceMetatile();
 
         sprite->data[0] = 0;
         sprite->callback = TreeEntranceSpriteCallbackEnd;
@@ -505,7 +505,7 @@ static void ShrubEntranceSpriteCallback2(struct Sprite *sprite)
     {
         sprite->data[0]++;
         if (sprite->data[0] == 20)
-            SetOpenedSecretBaseMetatile();
+            ToggleSecretBaseEntranceMetatile();
     }
     else
     {

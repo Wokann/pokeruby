@@ -75,11 +75,11 @@ SecretBase_EventScript_PCPackUp:
 	end
 
 SecretBase_EventScript_PCDecorationMenu:
-	special SecretBasePC_Decoration
+	special ShowSecretBaseDecorationMenu
 	end
 
 SecretBase_EventScript_PCRegistryMenu:
-	special SecretBasePC_Registry
+	special ShowSecretBaseRegistryMenu
 	end
 
 SecretBase_EventScript_RecordMixingPC:: @ 815F43A
@@ -117,7 +117,7 @@ SecretBase_EventScript_PCRegister:
 	goto_if_eq SecretBase_EventScript_AlreadyRegistered
 	compare VAR_RESULT, 2
 	goto_if_eq SecretBase_EventScript_CantRegisterTooManyBases
-	special BufferSecretBaseOwnerName
+	special CopyCurSecretBaseOwnerName_StrVar1
 	msgbox SecretBase_Text_WantToRegisterSecretBase, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_EventScript_PCRegisterMenu

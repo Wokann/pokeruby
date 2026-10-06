@@ -723,7 +723,7 @@ u32 BattleStringExpandPlaceholders(const u8* src, u8* dst)
                 if (gTrainerBattleOpponent_A == TRAINER_SECRET_BASE)
                 {
                     memset(text, 0xFF, 8);
-                    memcpy(text, eSecretBaseRecord->playerName, 7);
+                    memcpy(text, eSecretBaseRecord->trainerName, 7);
                     toCpy = text;
                 }
                 else if (gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER)

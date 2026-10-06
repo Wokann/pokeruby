@@ -14,26 +14,26 @@ gSpecials::
 	def_special ReturnFromLinkRoom
 	def_special CleanupLinkRoomState
 	def_special ExitLinkRoom
-	def_special sub_80BB8CC
+	def_special SetPlayerSecretBase
 	def_special CheckPlayerHasSecretBase
-	def_special sub_80BBAF0
-	def_special sub_80BC440
+	def_special EnterSecretBase
+	def_special ClearAndLeaveSecretBase
 	def_special MoveOutOfSecretBase
-	def_special sub_80BC114
+	def_special IsCurSecretBaseOwnedByAnotherPlayer
 	def_special GetCurSecretBaseRegistrationValidity
 	def_special ToggleCurSecretBaseRegistry
-	def_special SecretBasePC_Decoration
-	def_special SecretBasePC_Registry
+	def_special ShowSecretBaseDecorationMenu
+	def_special ShowSecretBaseRegistryMenu
 	def_special sub_80BCE1C
-	def_special sub_80BCE90
-	def_special sub_80BBDD0
+	def_special GetSecretBaseOwnerAndState
+	def_special InitSecretBaseDecorationSprites
 	def_special sub_80FF474
 	def_special sub_8100B20
-	def_special sub_80BB70C
+	def_special GetSecretBaseTypeInFrontOfPlayer
 	def_special SetSecretBaseOwnerGfxId
 	def_special sub_8100A7C
-	def_special sub_80BBC78
-	def_special sub_80BCE4C
+	def_special EnterNewlyCreatedSecretBase
+	def_special SetBattledOwnerFromResult
 	def_special DoSecretBasePCTurnOffEffect
 	def_special RecordMixingPlayerSpotTriggered
 	def_special TryBattleLinkup
@@ -311,7 +311,7 @@ gSpecials::
 	def_special DoContestHallWarp
 	def_special PutZigzagoonInPlayerParty
 	def_special IsStarterInParty
-	def_special BufferSecretBaseOwnerName
+	def_special CopyCurSecretBaseOwnerName_StrVar1
 	def_special CheckFreePokemonStorageSpace
 	def_special DoSealedChamberShakingEffect1
 	def_special DisplayCurrentElevatorFloor
@@ -338,7 +338,7 @@ gSpecials::
 	def_special ScriptGetPartyMonSpecies
 	def_special IsSelectedMonEgg
 	def_special TryInitBattleTowerAwardManObjectEvent
-	def_special MoveSecretBase
+	def_special MoveOutOfSecretBaseFromOutside
 	def_special LoadPlayerBag
 	def_special Script_FadeOutMapMusic
 	def_special SetPacifidlogTMReceivedDay

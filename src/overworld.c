@@ -1510,7 +1510,7 @@ void CB2_ReturnToFieldFadeFromBlack(void)
 
 void sub_805470C(void)
 {
-    if (gMapHeader.showMapName == 1 && sub_80BBB24() == 1)
+    if (gMapHeader.showMapName == 1 && SecretBaseMapPopupEnabled() == 1)
         ShowMapNamePopup();
     FieldCB_WarpExitFadeFromBlack();
 }
@@ -1709,7 +1709,7 @@ bool32 sub_805493C(u8 *state, u32 a2)
         (*state)++;
         break;
     case 11:
-        if (gMapHeader.showMapName == 1 && sub_80BBB24() == 1)
+        if (gMapHeader.showMapName == 1 && SecretBaseMapPopupEnabled() == 1)
             ShowMapNamePopup();
         (*state)++;
         break;

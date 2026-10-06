@@ -420,12 +420,12 @@ extern const u8 gOtherText_EggSomeTime[];
 extern const u8 gOtherText_EggSoon[];
 extern const u8 gOtherText_EggAbout[];
 extern const u8 gOtherText_CantForgetHMs[];
-extern const u8 gOtherText_PlayersBase[];
-extern const u8 gOtherText_OkayToDeleteFromRegistry[];
-extern const u8 gOtherText_RegisteredDataDeleted[];
+extern const u8 gText_ApostropheSBase[];
+extern const u8 gText_OkayToDeleteFromRegistry[];
+extern const u8 gText_RegisteredDataDeleted[];
 
-extern const u8 gSecretBaseText_NoRegistry[];
-extern const u8 SecretBaseText_DelRegist[];
+extern const u8 gText_NoRegistry[];
+extern const u8 gText_DelRegist[];
 extern const u8 SecretBaseText_Decorate[];
 extern const u8 SecretBaseText_PutAway[];
 extern const u8 SecretBaseText_Toss[];
