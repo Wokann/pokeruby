@@ -3,17 +3,17 @@
 #include "trig.h"
 #include "sound.h"
 
-
 static void AnimTask_Minimize_Step(u8 taskId);
-void CreateMinimizeSprite(struct Task* task, u8 taskId);
-void ClonedMinimizeSprite_Step(struct Sprite* sprite);
+static void CreateMinimizeSprite(struct Task *task, u8 taskId);
+static void ClonedMinimizeSprite_Step(struct Sprite *sprite);
 
-// shadow_minimize (the minimizing-like shadow over the Pokemon effect.)
-// Used in Minimize.
+// Shrinks and grows the attacking mon several times. Also creates transparent versions of the
+// mon's sprite while it is shrinking.
+// No args.
 
 void AnimTask_Minimize(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
     u8 spriteId = GetAnimBattlerSpriteId(0);
     task->data[0] = spriteId;
     PrepareBattlerSpriteForRotScale(spriteId, 0);
@@ -27,9 +27,9 @@ void AnimTask_Minimize(u8 taskId)
     task->func = AnimTask_Minimize_Step;
 }
 
-void AnimTask_Minimize_Step(u8 taskId)
+static void AnimTask_Minimize_Step(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
     switch (task->data[1])
     {
     case 0:
@@ -93,7 +93,7 @@ void AnimTask_Minimize_Step(u8 taskId)
     }
 }
 
-void CreateMinimizeSprite(struct Task* task, u8 taskId)
+static void CreateMinimizeSprite(struct Task *task, u8 taskId)
 {
     s16 matrixNum; // u16 in Emerald
     s16 spriteId = CloneBattlerSpriteWithBlend(0);
@@ -126,7 +126,7 @@ void CreateMinimizeSprite(struct Task* task, u8 taskId)
     }
 }
 
-void ClonedMinimizeSprite_Step(struct Sprite* sprite)
+static void ClonedMinimizeSprite_Step(struct Sprite *sprite)
 {
     if (--sprite->data[0] == 0)
     {
