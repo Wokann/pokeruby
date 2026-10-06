@@ -5,36 +5,36 @@
 #include "random.h"
 
 
-void sub_80CFFD8(struct Sprite* sprite);
-static void sub_80D0030(struct Sprite* sprite);
-static void sub_80D00B4(struct Sprite* sprite);
+static void AnimBulletSeed(struct Sprite *sprite);
+static void sub_80D0030(struct Sprite *sprite);
+static void AnimBulletSeed_Step2(struct Sprite *sprite);
 
 // bullet (shoot seeds as ammunition.)
 // Used by Bullet Seed.
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7614[] =
+const union AffineAnimCmd gBulletSeedAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 20, 1),
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D7624[] =
+const union AffineAnimCmd *const gBulletSeedAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D7614,
+    gBulletSeedAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7628 =
+const struct SpriteTemplate gBulletSeedSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SEED,
     .paletteTag = ANIM_TAG_SEED,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D7624,
-    .callback = sub_80CFFD8,
+    .affineAnims = gBulletSeedAffineAnimTable,
+    .callback = AnimBulletSeed,
 };
 
-void sub_80CFFD8(struct Sprite* sprite)
+static void AnimBulletSeed(struct Sprite *sprite)
 {
     InitSpritePosToAnimAttacker(sprite, 1);
     sprite->data[0] = 20;
@@ -45,11 +45,11 @@ void sub_80CFFD8(struct Sprite* sprite)
     StoreSpriteCallbackInData6(sprite, sub_80D0030);
 }
 
-static void sub_80D0030(struct Sprite* sprite)
+static void sub_80D0030(struct Sprite *sprite)
 {
     int i;
     u16 rand;
-    s16* ptr;
+    s16 *ptr;
     PlaySE12WithPanning(0xA6, BattleAnimAdjustPanning(SOUND_PAN_TARGET));
     sprite->x += sprite->x2;
     sprite->y += sprite->y2;
@@ -65,11 +65,11 @@ static void sub_80D0030(struct Sprite* sprite)
     sprite->data[6] = 0xFFF4 - (rand & 7);
     rand = Random();
     sprite->data[7] = (rand % 0xA0) + 0xA0;
-    sprite->callback = sub_80D00B4;
+    sprite->callback = AnimBulletSeed_Step2;
     sprite->affineAnimPaused = 0;
 }
 
-static void sub_80D00B4(struct Sprite* sprite)
+static void AnimBulletSeed_Step2(struct Sprite *sprite)
 {
     sprite->data[0] += sprite->data[7];
     sprite->x2 = sprite->data[0] >> 8;
