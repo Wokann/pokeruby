@@ -5,13 +5,13 @@
 #include "palette.h"
 
 
-void sub_80CFDFC(struct Sprite* sprite);
-static void sub_80CFE2C(struct Sprite* sprite);
+static void AnimVoidLines(struct Sprite *sprite);
+static void AnimVoidLines_Step(struct Sprite *sprite);
 
 // unused_9? (Most likely an unused effect.)
 // I cannot find any reference to this sprite template used to call this.
 
-const struct SpriteTemplate gSpriteTemplate_83D75AC =
+static const struct SpriteTemplate sVoidLinesSpriteTemplate =
 {
     .tileTag = ANIM_TAG_VOID_LINES,
     .paletteTag = ANIM_TAG_VOID_LINES,
@@ -19,31 +19,31 @@ const struct SpriteTemplate gSpriteTemplate_83D75AC =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CFDFC,
+    .callback = AnimVoidLines,
 };
 
-void sub_80CFDFC(struct Sprite* sprite)
+static void AnimVoidLines(struct Sprite *sprite)
 {
     InitSpritePosToAnimAttacker(sprite, 0);
-    sprite->data[0] = 0x100 + (IndexOfSpritePaletteTag(gSpriteTemplate_83D75AC.paletteTag) << 4);
-    sprite->callback = sub_80CFE2C;
+    sprite->data[0] = 0x100 + (IndexOfSpritePaletteTag(sVoidLinesSpriteTemplate.paletteTag) << 4);
+    sprite->callback = AnimVoidLines_Step;
 }
 
-static void sub_80CFE2C(struct Sprite* sprite)
+static void AnimVoidLines_Step(struct Sprite *sprite)
 {
-    u16 r7;
-    u16 r5;
+    u16 val;
+    u16 id;
     int i;
     if (++sprite->data[1] == 2)
     {
         sprite->data[1] = 0;
-        r5 = sprite->data[0];
-        r7 = gPlttBufferFaded[r5 + 8];
+        id = sprite->data[0];
+        val = gPlttBufferFaded[id + 8];
         for (i = 8; i < 16; i++)
         {
-            gPlttBufferFaded[r5 + i] = gPlttBufferFaded[r5 + i + 1];
+            gPlttBufferFaded[id + i] = gPlttBufferFaded[id + i + 1];
         }
-        gPlttBufferFaded[r5 + 15] = r7;
+        gPlttBufferFaded[id + 15] = val;
 
         if (++sprite->data[2] == 0x18)
             DestroyAnimSprite(sprite);
