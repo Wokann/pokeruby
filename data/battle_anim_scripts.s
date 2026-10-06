@@ -7776,10 +7776,10 @@ Move_LOVELY_KISS: @ 81D24AF
 	playsewithpan SE_M_PSYBEAM2, SOUND_PAN_TARGET
 	waitforvisualfinish
 	playsewithpan SE_M_ATTRACT, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D7BD0, ANIM_TARGET, 3, -256, -42
-	createsprite gBattleAnimSpriteTemplate_83D7BD0, ANIM_TARGET, 3, 128, -14
-	createsprite gBattleAnimSpriteTemplate_83D7BD0, ANIM_TARGET, 3, 416, -38
-	createsprite gBattleAnimSpriteTemplate_83D7BD0, ANIM_TARGET, 3, -128, -22
+	createsprite gPinkHeartSpriteTemplate, ANIM_TARGET, 3, -256, -42
+	createsprite gPinkHeartSpriteTemplate, ANIM_TARGET, 3, 128, -14
+	createsprite gPinkHeartSpriteTemplate, ANIM_TARGET, 3, 416, -38
+	createsprite gPinkHeartSpriteTemplate, ANIM_TARGET, 3, -128, -22
 	end
 
 Move_FURY_SWIPES: @ 81D24F6
