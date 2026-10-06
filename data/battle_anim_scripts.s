@@ -1861,8 +1861,8 @@ Move_GUILLOTINE: @ 81C9C29
 	fadetobgfromset BG_GUILLOTINE_OPPONENT, BG_GUILLOTINE_PLAYER, BG_GUILLOTINE_CONTESTS
 	waitbgfadein
 	playsewithpan SE_M_VICEGRIP, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D76DC, ANIM_ATTACKER, 2, 0
-	createsprite gBattleAnimSpriteTemplate_83D76DC, ANIM_ATTACKER, 2, 1
+	createsprite gGuillotineSpriteTemplate, ANIM_ATTACKER, 2, 0
+	createsprite gGuillotineSpriteTemplate, ANIM_ATTACKER, 2, 1
 	createvisualtask sub_80E2A38, 10, 4, 2, 0, 16, 0
 	delay 9
 	createvisualtask AnimTask_ShakeMon2, 5, 1, 2, 0, 23, 1
