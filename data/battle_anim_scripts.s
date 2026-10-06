@@ -7576,7 +7576,7 @@ Move_MIMIC: @ 81D1FC9
 	monbg_static ANIM_DEF_PARTNER
 	setalpha 11, 5
 	panse SE_M_MINIMIZE, SOUND_PAN_TARGET, SOUND_PAN_ATTACKER, 253, 0
-	createvisualtask sub_80CB340, 5, 128, 24
+	createvisualtask AnimTask_ShrinkTargetCopy, 5, 128, 24
 	delay 15
 	createsprite gBattleAnimSpriteTemplate_83D65E8, ANIM_TARGET, 2, -12, 24
 	delay 10
