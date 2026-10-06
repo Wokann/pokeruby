@@ -1058,7 +1058,7 @@ Move_THUNDER_SHOCK: @ 81C879C
 	createvisualtask sub_80E2A38, 10, 1, 0, 0, 6, 0
 	waitforvisualfinish
 	delay 10
-	createvisualtask sub_80D681C, 5, 0, -44, 0
+	createvisualtask AnimTask_ElectricBolt, 5, 0, -44, 0
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_TARGET
 	delay 9
 	createvisualtask sub_80E2A38, 10, 4, 0, 0, 13, 0
@@ -1080,13 +1080,13 @@ Move_THUNDERBOLT: @ 81C880A
 	createvisualtask sub_80E2A38, 10, 1, 0, 0, 6, 0
 	waitforvisualfinish
 	delay 10
-	createvisualtask sub_80D681C, 5, 24, -52, 0
+	createvisualtask AnimTask_ElectricBolt, 5, 24, -52, 0
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_TARGET
 	delay 7
-	createvisualtask sub_80D681C, 5, -24, -52, 0
+	createvisualtask AnimTask_ElectricBolt, 5, -24, -52, 0
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_TARGET
 	delay 7
-	createvisualtask sub_80D681C, 5, 0, -60, 1
+	createvisualtask AnimTask_ElectricBolt, 5, 0, -60, 1
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_TARGET
 	delay 9
 	createvisualtask sub_80E2A38, 10, 4, 0, 0, 13, 0
@@ -1094,15 +1094,15 @@ Move_THUNDERBOLT: @ 81C880A
 	createvisualtask sub_80E2A38, 10, 4, 0, 13, 0, 0
 	waitforvisualfinish
 	delay 20
-	createsprite gBattleAnimSpriteTemplate_83D98F0, ANIM_TARGET, 3, 44, 0, 0, 3
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_TARGET, 4, 0, 0, 32, 44, 0, 40, 0, -32765
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_TARGET, 4, 0, 0, 32, 44, 64, 40, 1, -32765
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_TARGET, 4, 0, 0, 32, 44, 128, 40, 0, -32765
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_TARGET, 4, 0, 0, 32, 44, 192, 40, 2, -32765
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_TARGET, 4, 0, 0, 16, 44, 32, 40, 0, -32765
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_TARGET, 4, 0, 0, 16, 44, 96, 40, 1, -32765
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_TARGET, 4, 0, 0, 16, 44, 160, 40, 0, -32765
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_TARGET, 4, 0, 0, 16, 44, 224, 40, 2, -32765
+	createsprite gThunderboltOrbSpriteTemplate, ANIM_TARGET, 3, 44, 0, 0, 3
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_TARGET, 4, 0, 0, 32, 44, 0, 40, 0, -32765
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_TARGET, 4, 0, 0, 32, 44, 64, 40, 1, -32765
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_TARGET, 4, 0, 0, 32, 44, 128, 40, 0, -32765
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_TARGET, 4, 0, 0, 32, 44, 192, 40, 2, -32765
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_TARGET, 4, 0, 0, 16, 44, 32, 40, 0, -32765
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_TARGET, 4, 0, 0, 16, 44, 96, 40, 1, -32765
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_TARGET, 4, 0, 0, 16, 44, 160, 40, 0, -32765
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_TARGET, 4, 0, 0, 16, 44, 224, 40, 2, -32765
 	playsewithpan SE_M_HYPER_BEAM, SOUND_PAN_TARGET
 	delay 0
 	createvisualtask sub_80E2A38, 10, 1, 0, 2, 2, 0
@@ -1129,15 +1129,15 @@ Move_THUNDER_WAVE: @ 81C89C0
 	createvisualtask sub_80E2A38, 10, 1, 0, 0, 6, 0
 	waitforvisualfinish
 	delay 10
-	createvisualtask sub_80D681C, 5, 0, -48, 0
+	createvisualtask AnimTask_ElectricBolt, 5, 0, -48, 0
 	playsewithpan SE_M_THUNDER_WAVE, SOUND_PAN_TARGET
 	delay 20
 	loopsewithpan SE_M_THUNDERBOLT2, SOUND_PAN_TARGET, 10, 4
-	createsprite gBattleAnimSpriteTemplate_83D9950, ANIM_TARGET, 2, -16, -16
+	createsprite gThunderWaveSpriteTemplate, ANIM_TARGET, 2, -16, -16
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D9950, ANIM_TARGET, 2, -16, 0
+	createsprite gThunderWaveSpriteTemplate, ANIM_TARGET, 2, -16, 0
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D9950, ANIM_TARGET, 2, -16, 16
+	createsprite gThunderWaveSpriteTemplate, ANIM_TARGET, 2, -16, 16
 	waitforvisualfinish
 	createvisualtask sub_80E2A38, 10, 1, 0, 6, 0, 0
 	waitforvisualfinish
@@ -1965,14 +1965,14 @@ Move_SPARK: @ 81C9EA3
 	delay 20
 	createvisualtask sub_80E1F8C, 2, 3, -31, 1, 7, 7, 23551
 	playsewithpan SE_M_THUNDERBOLT2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_ATTACKER, 4, 0, 0, 32, 12, 0, 20, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_ATTACKER, 4, 0, 0, 32, 12, 64, 20, 1, 0
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_ATTACKER, 4, 0, 0, 32, 12, 128, 20, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_ATTACKER, 4, 0, 0, 32, 12, 192, 20, 2, 0
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_ATTACKER, 4, 0, 0, 16, 12, 32, 20, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_ATTACKER, 4, 0, 0, 16, 12, 96, 20, 1, 0
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_ATTACKER, 4, 0, 0, 16, 12, 160, 20, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_ATTACKER, 4, 0, 0, 16, 12, 224, 20, 2, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 32, 12, 0, 20, 0, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 32, 12, 64, 20, 1, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 32, 12, 128, 20, 0, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 32, 12, 192, 20, 2, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 16, 12, 32, 20, 0, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 16, 12, 96, 20, 1, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 16, 12, 160, 20, 0, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, 16, 12, 224, 20, 2, 0
 	delay 4
 	waitforvisualfinish
 	createvisualtask sub_80E1F8C, 2, 3, -31, 1, 0, 0, 23551
@@ -3561,13 +3561,13 @@ Move_CHARGE: @ 81CC1D0
 	setalpha 12, 8
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, 1, 2, 0, 4, rgb(0, 0, 0)
 	waitforvisualfinish
-	createvisualtask sub_80D6B3C, 2, 0, 60, 2, 12
+	createvisualtask AnimTask_ElectricChargingParticles, 2, 0, 60, 2, 12
 	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
 	delay 30
 	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
 	delay 30
 	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D9A6C, ANIM_ATTACKER, 2, 0
+	createsprite gGrowingChargeOrbSpriteTemplate, ANIM_ATTACKER, 2, 0
 	delay 25
 	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
 	delay 20
@@ -3578,9 +3578,9 @@ Move_CHARGE: @ 81CC1D0
 	delay 6
 	loopsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER, 6, 5
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_83D9A9C, ANIM_ATTACKER, 2, 0, 16, 16
+	createsprite gElectricPuffSpriteTemplate, ANIM_ATTACKER, 2, 0, 16, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9A9C, ANIM_ATTACKER, 2, 0, -16, -16
+	createsprite gElectricPuffSpriteTemplate, ANIM_ATTACKER, 2, 0, -16, -16
 	playsewithpan SE_M_THUNDERBOLT2, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, 1, 4, 4, 0, rgb(0, 0, 0)
@@ -4413,40 +4413,40 @@ Move_VOLT_TACKLE: @ 81CD5D9
 	setalpha 12, 8
 	createvisualtask sub_80E2A38, 10, 1, 0, 0, 8, 0
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_83D9AB4, ANIM_ATTACKER, 1
+	createsprite gVoltTackleOrbSlideSpriteTemplate, ANIM_ATTACKER, 1
 	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	clearmonbg ANIM_ATTACKER
 	blendoff
 	delay 8
-	createvisualtask sub_80D700C, 5, 0
+	createvisualtask AnimTask_VoltTackleBolt, 5, 0
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_ATTACKER
 	waitforvisualfinish
-	createvisualtask sub_80D700C, 5, 1
+	createvisualtask AnimTask_VoltTackleBolt, 5, 1
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createvisualtask sub_80D700C, 5, 2
+	createvisualtask AnimTask_VoltTackleBolt, 5, 2
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_ATTACKER
 	waitforvisualfinish
-	createvisualtask sub_80D700C, 5, 3
+	createvisualtask AnimTask_VoltTackleBolt, 5, 3
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createvisualtask sub_80D700C, 5, 4
+	createvisualtask AnimTask_VoltTackleBolt, 5, 4
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_ATTACKER
 	delay 8
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 10, 0, 18, 1
 	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D9A9C, ANIM_ATTACKER, 2, 1, 16, 16
+	createsprite gElectricPuffSpriteTemplate, ANIM_ATTACKER, 2, 1, 16, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9A9C, ANIM_ATTACKER, 2, 1, -16, -16
+	createsprite gElectricPuffSpriteTemplate, ANIM_ATTACKER, 2, 1, -16, -16
 	delay 8
-	createvisualtask sub_80D6E9C, 5
+	createvisualtask AnimTask_VoltTackleAttackerReappear, 5
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_ATTACKER, 3, 0, 9, 1
 	playsewithpan SE_M_THUNDERBOLT2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D9A9C, ANIM_ATTACKER, 2, 0, 16, 16
+	createsprite gElectricPuffSpriteTemplate, ANIM_ATTACKER, 2, 0, 16, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9A9C, ANIM_ATTACKER, 2, 0, -16, -16
+	createsprite gElectricPuffSpriteTemplate, ANIM_ATTACKER, 2, 0, -16, -16
 	waitforvisualfinish
 	createvisualtask sub_80E2A38, 10, 1, 0, 8, 0, 0
 	waitforvisualfinish
@@ -4546,15 +4546,15 @@ Move_SHOCK_WAVE: @ 81CD867
 	setalpha 12, 8
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, 1, 2, 0, 4, rgb(0, 0, 0)
 	waitforvisualfinish
-	createvisualtask sub_80D6B3C, 2, 0, 20, 0, 2
+	createvisualtask AnimTask_ElectricChargingParticles, 2, 0, 20, 0, 2
 	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
 	delay 12
-	createsprite gBattleAnimSpriteTemplate_83D9B28, ANIM_ATTACKER, 2
+	createsprite gGrowingShockWaveOrbSpriteTemplate, ANIM_ATTACKER, 2
 	delay 30
-	createvisualtask sub_80D72DC, 5
+	createvisualtask AnimTask_ShockWaveProgressingBolt, 5
 	delay 12
 	waitforvisualfinish
-	createvisualtask sub_80D759C, 5
+	createvisualtask AnimTask_ShockWaveLightning, 5
 	playsewithpan SE_M_TRI_ATTACK2, SOUND_PAN_TARGET
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 6, 18, 1
@@ -7181,14 +7181,14 @@ Move_ZAP_CANNON: @ 81D1722
 	loadspritegfx ANIM_TAG_SPARK_2
 	playsewithpan SE_M_THUNDER_WAVE, SOUND_PAN_ATTACKER
 	createsprite gZapCannonBallSpriteTemplate, ANIM_TARGET, 3, 10, 0, 0, 0, 30, 0
-	createsprite gBattleAnimSpriteTemplate_83D98A0, ANIM_TARGET, 4, 10, 0, 16, 30, 0, 40, 0
-	createsprite gBattleAnimSpriteTemplate_83D98A0, ANIM_TARGET, 4, 10, 0, 16, 30, 64, 40, 1
-	createsprite gBattleAnimSpriteTemplate_83D98A0, ANIM_TARGET, 4, 10, 0, 16, 30, 128, 40, 0
-	createsprite gBattleAnimSpriteTemplate_83D98A0, ANIM_TARGET, 4, 10, 0, 16, 30, 192, 40, 2
-	createsprite gBattleAnimSpriteTemplate_83D98A0, ANIM_TARGET, 4, 10, 0, 8, 30, 32, 40, 0
-	createsprite gBattleAnimSpriteTemplate_83D98A0, ANIM_TARGET, 4, 10, 0, 8, 30, 96, 40, 1
-	createsprite gBattleAnimSpriteTemplate_83D98A0, ANIM_TARGET, 4, 10, 0, 8, 30, 160, 40, 0
-	createsprite gBattleAnimSpriteTemplate_83D98A0, ANIM_TARGET, 4, 10, 0, 8, 30, 224, 40, 2
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_TARGET, 4, 10, 0, 16, 30, 0, 40, 0
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_TARGET, 4, 10, 0, 16, 30, 64, 40, 1
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_TARGET, 4, 10, 0, 16, 30, 128, 40, 0
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_TARGET, 4, 10, 0, 16, 30, 192, 40, 2
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_TARGET, 4, 10, 0, 8, 30, 32, 40, 0
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_TARGET, 4, 10, 0, 8, 30, 96, 40, 1
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_TARGET, 4, 10, 0, 8, 30, 160, 40, 0
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_TARGET, 4, 10, 0, 8, 30, 224, 40, 2
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 5, 1
 	delay 15
