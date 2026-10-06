@@ -6819,29 +6819,29 @@ Move_RAZOR_LEAF: @ 81D0DDE
 	setalpha 12, 8
 	delay 1
 	loopsewithpan SE_M_POISON_POWDER, SOUND_PAN_ATTACKER, 10, 5
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, -3, -2, 10
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, -3, -2, 10
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, -1, -1, 15
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, -1, -1, 15
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, -4, -4, 7
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, -4, -4, 7
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, 3, -3, 11
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, 3, -3, 11
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, -1, -6, 8
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, -1, -6, 8
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, 2, -1, 12
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, 2, -1, 12
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, -3, -4, 13
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, -3, -4, 13
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, 4, -5, 7
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, 4, -5, 7
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, 2, -6, 11
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, 2, -6, 11
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, -3, -5, 8
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, -3, -5, 8
 	delay 60
 	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D64E4, ANIM_TARGET, 3, 20, -10, 20, 0, 22, 20, 1
-	createsprite gBattleAnimSpriteTemplate_83D64E4, ANIM_TARGET, 3, 20, -10, 20, 0, 22, -20, 1
+	createsprite gRazorLeafCutterSpriteTemplate, ANIM_TARGET, 3, 20, -10, 20, 0, 22, 20, 1
+	createsprite gRazorLeafCutterSpriteTemplate, ANIM_TARGET, 3, 20, -10, 20, 0, 22, -20, 1
 	delay 20
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
@@ -9649,26 +9649,26 @@ Move_TWISTER: @ 81D553A
 	monbg ANIM_DEF_PARTNER
 	splitbgprio 1
 	playsewithpan SE_M_TWISTER, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D64B4, ANIM_TARGET, 2, 120, 70, 5, 70, 30
+	createsprite gTwisterLeafSpriteTemplate, ANIM_TARGET, 2, 120, 70, 5, 70, 30
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D64B4, ANIM_TARGET, 2, 115, 55, 6, 60, 25
+	createsprite gTwisterLeafSpriteTemplate, ANIM_TARGET, 2, 115, 55, 6, 60, 25
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D64B4, ANIM_TARGET, 2, 115, 60, 7, 60, 30
-	createsprite gBattleAnimSpriteTemplate_83D64B4, ANIM_TARGET, 2, 115, 55, 10, 60, 30
+	createsprite gTwisterLeafSpriteTemplate, ANIM_TARGET, 2, 115, 60, 7, 60, 30
+	createsprite gTwisterLeafSpriteTemplate, ANIM_TARGET, 2, 115, 55, 10, 60, 30
 	delay 3
 	createsprite gBattleAnimSpriteTemplate_83DAE18, ANIM_TARGET, 2, 100, 50, 4, 50, 26
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D64B4, ANIM_TARGET, 2, 105, 25, 8, 60, 20
+	createsprite gTwisterLeafSpriteTemplate, ANIM_TARGET, 2, 105, 25, 8, 60, 20
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D64B4, ANIM_TARGET, 2, 115, 40, 10, 48, 30
+	createsprite gTwisterLeafSpriteTemplate, ANIM_TARGET, 2, 115, 40, 10, 48, 30
 	delay 3
 	createsprite gBattleAnimSpriteTemplate_83DAE18, ANIM_TARGET, 2, 120, 30, 6, 45, 25
-	createsprite gBattleAnimSpriteTemplate_83D64B4, ANIM_TARGET, 2, 115, 35, 10, 60, 30
+	createsprite gTwisterLeafSpriteTemplate, ANIM_TARGET, 2, 115, 35, 10, 60, 30
 	delay 3
 	createsprite gBattleAnimSpriteTemplate_83DAE18, ANIM_TARGET, 2, 105, 20, 8, 40, 0
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D64B4, ANIM_TARGET, 2, 20, 255, 15, 32, 0
-	createsprite gBattleAnimSpriteTemplate_83D64B4, ANIM_TARGET, 2, 110, 10, 8, 32, 20
+	createsprite gTwisterLeafSpriteTemplate, ANIM_TARGET, 2, 20, 255, 15, 32, 0
+	createsprite gTwisterLeafSpriteTemplate, ANIM_TARGET, 2, 110, 10, 8, 32, 20
 	waitforvisualfinish
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_TARGET, 3, -32, -16, 1, 3
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
@@ -9697,29 +9697,29 @@ Move_MAGICAL_LEAF: @ 81D5699
 	delay 1
 	loopsewithpan SE_M_POISON_POWDER, SOUND_PAN_ATTACKER, 10, 5
 	createvisualtask sub_80CC5F8, 5
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, -3, -2, 10
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, -3, -2, 10
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, -1, -1, 15
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, -1, -1, 15
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, -4, -4, 7
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, -4, -4, 7
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, 3, -3, 11
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, 3, -3, 11
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, -1, -6, 8
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, -1, -6, 8
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, 2, -1, 12
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, 2, -1, 12
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, -3, -4, 13
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, -3, -4, 13
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, 4, -5, 7
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, 4, -5, 7
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, 2, -6, 11
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, 2, -6, 11
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_ATTACKER, 2, -3, -5, 8
+	createsprite gRazorLeafParticleSpriteTemplate, ANIM_ATTACKER, 2, -3, -5, 8
 	delay 60
 	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D64E4, ANIM_TARGET, 3, 20, -10, 20, 0, 32, 20, 0
-	createsprite gBattleAnimSpriteTemplate_83D64E4, ANIM_TARGET, 3, 20, -10, 20, 0, 32, -20, 0
+	createsprite gRazorLeafCutterSpriteTemplate, ANIM_TARGET, 3, 20, -10, 20, 0, 32, 20, 0
+	createsprite gRazorLeafCutterSpriteTemplate, ANIM_TARGET, 3, 20, -10, 20, 0, 32, -20, 0
 	delay 30
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_TARGET, 4, -10, -4, 1, 2
