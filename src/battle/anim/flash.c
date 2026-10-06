@@ -6,7 +6,7 @@
 
 
 extern const struct SpriteTemplate gMoonSpriteTemplate;
-extern struct SpriteTemplate gBattleAnimSpriteTemplate_83D6FF8;
+extern const struct SpriteTemplate gMoonlightSparkleSpriteTemplate;
 
 static void sub_80CE4D4(u8 taskId);
 
@@ -96,7 +96,7 @@ void sub_80CE4D4(u8 taskId)
             u8 spriteId;
             for (spriteId = 0; spriteId < MAX_SPRITES; spriteId++)
             {
-                if (gSprites[spriteId].template == &gMoonSpriteTemplate || gSprites[spriteId].template == &gBattleAnimSpriteTemplate_83D6FF8)
+                if (gSprites[spriteId].template == &gMoonSpriteTemplate || gSprites[spriteId].template == &gMoonlightSparkleSpriteTemplate)
                     gSprites[spriteId].data[0] = 1;
             }
 
