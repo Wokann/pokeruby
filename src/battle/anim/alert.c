@@ -3,13 +3,12 @@
 #include "trig.h"
 #include "sound.h"
 
-
-void sub_80CF610(struct Sprite* sprite);
+void sub_80CF610(struct Sprite *sprite);
 
 // alert (red thunder from the sides of a Pokemon, simulating more alert behavior.)
 // Used in Kinesis.
 
-const union AnimCmd gSpriteAnim_83D7428[] =
+const union AnimCmd gKinesisZapEnergyAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 3, .hFlip = TRUE),
     ANIMCMD_FRAME(8, 3, .hFlip = TRUE),
@@ -22,23 +21,23 @@ const union AnimCmd gSpriteAnim_83D7428[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D744C[] =
+const union AnimCmd *const gKinesisZapEnergyAnimTable[] =
 {
-    gSpriteAnim_83D7428,
+    gKinesisZapEnergyAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7450 =
+const struct SpriteTemplate gKinesisZapEnergySpriteTemplate =
 {
     .tileTag = ANIM_TAG_ALERT,
     .paletteTag = ANIM_TAG_ALERT,
     .oam = &gOamData_AffineOff_ObjNormal_32x16,
-    .anims = gSpriteAnimTable_83D744C,
+    .anims = gKinesisZapEnergyAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = sub_80CF610,
 };
 
-void sub_80CF610(struct Sprite* sprite)
+void sub_80CF610(struct Sprite *sprite)
 {
     SetSpriteCoordsToAnimAttackerCoords(sprite);
     SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
