@@ -87,10 +87,6 @@ static void FieldCB_ContestReturnToField(void);
 
 extern u8 gUnknown_020297ED;
 
-extern void sub_80C8A38(u8);
-extern void Task_LinkContest_CommunicateFinalStandings(u8);
-extern void Task_LinkContest_CommunicateAppealsState(u8);
-
 extern u8 gBattleMonForms[];
 extern u8 gDisplayedStringBattle[];
 extern u16 gBattleTypeFlags;
@@ -857,8 +853,8 @@ static void Task_SelectedMove(u8 taskId)
         u8 taskId2;
 
         eContestantStatus[gContestPlayerMonIndex].currMove = move;
-        taskId2 = CreateTask(sub_80C8A38, 0);
-        SetTaskFuncWithFollowupFunc(taskId2, sub_80C8A38, Task_EndCommunicateMoveSelections);
+        taskId2 = CreateTask(Task_LinkContest_CommunicateMoveSelections, 0);
+        SetTaskFuncWithFollowupFunc(taskId2, Task_LinkContest_CommunicateMoveSelections, Task_EndCommunicateMoveSelections);
         gTasks[taskId].func = TaskDummy1;
         ContestPrintLinkStandby();
         SetBottomSliderHeartsInvisibility(FALSE);
