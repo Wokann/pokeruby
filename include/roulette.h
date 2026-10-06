@@ -140,8 +140,6 @@ extern const struct StructgUnknown_083F8C00 gUnknown_083F8C00[];
 extern const struct StructgUnknown_083F8D90 gUnknown_083F8D90[];
 extern const struct StructgUnknown_083F8DF4 gUnknown_083F8DF4[];
 
-s16 sub_81174C4(s16, s16);
-s16 sub_81174E0(s16);
 void PlayRoulette(void);
 
 void sub_8117838(u8);

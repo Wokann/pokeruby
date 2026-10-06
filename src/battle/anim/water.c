@@ -998,7 +998,7 @@ void sub_80D4C64(struct Sprite *sprite)
     }
 }
 
-void sub_80D4CA4(struct Sprite *sprite)
+void AnimWaterPulseRing(struct Sprite *sprite)
 {
     InitSpritePosToAnimAttacker(sprite, TRUE);
     sprite->data[1] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);

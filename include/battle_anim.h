@@ -272,6 +272,12 @@ void InitStatsChangeAnimation(u8 taskId);
 // battle/anim/thought.c
 void SetSpriteNextToMonHead(u8 battler, struct Sprite *sprite);
 
+// battle/anim/sonic.c
+extern const union AffineAnimCmd *const gGrowingRingAffineAnimTable[];
+
+// battle/anim/water.c
+void AnimWaterPulseRing(struct Sprite *sprite);
+
 // battle/anim/dark.c
 extern const union AffineAnimCmd *const gAffineAnims_Bite[];
 

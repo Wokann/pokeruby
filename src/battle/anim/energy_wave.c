@@ -4,8 +4,6 @@
 #include "task.h"
 #include "trig.h"
 
-extern const union AffineAnimCmd *const gSpriteAffineAnimTable_83D752C[];
-
 void sub_80D3554(struct Sprite *sprite);
 void sub_80D3698(struct Sprite *sprite);
 void sub_80D3728(struct Sprite *sprite);
@@ -106,7 +104,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9280 =
     .oam = &gOamData_AffineDouble_ObjNormal_16x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D752C,
+    .affineAnims = gGrowingRingAffineAnimTable,
     .callback = sub_80D3554,
 };
 

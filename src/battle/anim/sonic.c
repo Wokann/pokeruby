@@ -3,15 +3,13 @@
 #include "trig.h"
 #include "sound.h"
 #include "battle.h"
-#include "battle_anim_80CA710.h"
+#include "math_util.h"
 
 extern u8 gBattlerPositions[];
 extern u16 gBattleTypeFlags;
 
-extern void sub_80D4CA4(struct Sprite *sprite);
-
-void AnimSonicBoomProjectile(struct Sprite* sprite);
-void sub_80CF8B8(struct Sprite* sprite);
+static void AnimSonicBoomProjectile(struct Sprite *sprite);
+static void AnimAirWaveProjectile(struct Sprite *sprite);
 
 const struct SpriteTemplate gSonicBoomSpriteTemplate =
 {
@@ -24,7 +22,7 @@ const struct SpriteTemplate gSonicBoomSpriteTemplate =
     .callback = AnimSonicBoomProjectile,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D74BC =
+const struct SpriteTemplate gAirWaveProjectileSpriteTemplate =
 {
     .tileTag = ANIM_TAG_AIR_WAVE,
     .paletteTag = ANIM_TAG_AIR_WAVE,
@@ -32,17 +30,17 @@ const struct SpriteTemplate gSpriteTemplate_83D74BC =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CF8B8,
+    .callback = AnimAirWaveProjectile,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D74D4[] =
+const union AffineAnimCmd gGrowingRingAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0x20, 0x20, 0, 0),
     AFFINEANIMCMD_FRAME(0x7, 0x7, 0, -56),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D74EC[] =
+const union AffineAnimCmd gWaterPulseRingAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0x5, 0x5, 0, 10),
     AFFINEANIMCMD_FRAME(0xFFF6, 0xFFF6, 0, 10),
@@ -54,58 +52,58 @@ const union AffineAnimCmd gSpriteAffineAnim_83D74EC[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D752C[] =
+const union AffineAnimCmd *const gGrowingRingAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D74D4,
+    gGrowingRingAffineAnimCmds,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D7530[] =
+const union AffineAnimCmd *const gWaterPulseRingAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D74EC,
+    gWaterPulseRingAffineAnimCmds,
 };
 
-const struct SpriteTemplate gSupersonicWaveSpriteTemplate =
+const struct SpriteTemplate gSupersonicRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GOLD_RING,
     .paletteTag = ANIM_TAG_GOLD_RING,
     .oam = &gOamData_AffineDouble_ObjNormal_16x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D752C,
+    .affineAnims = gGrowingRingAffineAnimTable,
     .callback = TranslateAnimSpriteToTargetMonLocation,
 };
 
-const struct SpriteTemplate gScreechWaveSpriteTemplate =
+const struct SpriteTemplate gScreechRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PURPLE_RING,
     .paletteTag = ANIM_TAG_PURPLE_RING,
     .oam = &gOamData_AffineDouble_ObjNormal_16x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D752C,
+    .affineAnims = gGrowingRingAffineAnimTable,
     .callback = TranslateAnimSpriteToTargetMonLocation,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7564 =
+const struct SpriteTemplate gMetalSoundSpriteTemplate =
 {
     .tileTag = ANIM_TAG_METAL_SOUND_WAVES,
     .paletteTag = ANIM_TAG_METAL_SOUND_WAVES,
     .oam = &gOamData_AffineDouble_ObjNormal_32x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D752C,
+    .affineAnims = gGrowingRingAffineAnimTable,
     .callback = TranslateAnimSpriteToTargetMonLocation,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D757C =
+const struct SpriteTemplate gWaterPulseRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BLUE_RING_2,
     .paletteTag = ANIM_TAG_BLUE_RING_2,
     .oam = &gOamData_AffineDouble_ObjNormal_16x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D7530,
-    .callback = sub_80D4CA4,
+    .affineAnims = gWaterPulseRingAffineAnimTable,
+    .callback = AnimWaterPulseRing,
 };
 
 // Moves a projectile towards the target mon. The sprite is rotated to be pointing
@@ -115,7 +113,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D757C =
 // arg 2: target x pixel offset
 // arg 3: target y pixel offset
 // arg 4: duration
-void AnimSonicBoomProjectile(struct Sprite* sprite)
+static void AnimSonicBoomProjectile(struct Sprite *sprite)
 {
     s16 targetXPos;
     s16 targetYPos;
@@ -148,7 +146,7 @@ void AnimSonicBoomProjectile(struct Sprite* sprite)
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
-void sub_80CF7E0(struct Sprite* sprite)
+static void AnimAirWaveProjectile_Step2(struct Sprite *sprite)
 {
     if (sprite->data[0]-- <= 0)
     {
@@ -157,9 +155,9 @@ void sub_80CF7E0(struct Sprite* sprite)
     }
 }
 
-void sub_80CF814(struct Sprite* sprite)
+static void AnimAirWaveProjectile_Step1(struct Sprite *sprite)
 {
-    struct Task* task = &gTasks[sprite->data[7]];
+    struct Task *task = &gTasks[sprite->data[7]];
     if (sprite->data[0] > task->data[5])
     {
         sprite->data[5] += sprite->data[3];
@@ -186,17 +184,17 @@ void sub_80CF814(struct Sprite* sprite)
     if (sprite->data[0]-- <= 0)
     {
         sprite->data[0] = 30;
-        sprite->callback = sub_80CF7E0;
+        sprite->callback = AnimAirWaveProjectile_Step2;
     }
 }
 
-void sub_80CF8B8(struct Sprite* sprite)
+static void AnimAirWaveProjectile(struct Sprite *sprite)
 {
     s16 a;
     s16 b;
     s16 c;
 
-    struct Task* task = &gTasks[sprite->data[7]];
+    struct Task *task = &gTasks[sprite->data[7]];
     sprite->data[1] += (-2 & task->data[7]);
     sprite->data[2] += (-2 & task->data[8]);
     if (1 & task->data[7])
@@ -213,7 +211,7 @@ void sub_80CF8B8(struct Sprite* sprite)
     {
         sprite->data[0] = 8;
         task->data[5] = 4;
-        a = sub_81174E0(0x1000);
+        a = MathUtil_Inv16(0x1000);
         sprite->x += sprite->x2;
         sprite->y += sprite->y2;
         sprite->y2 = 0;
@@ -232,25 +230,25 @@ void sub_80CF8B8(struct Sprite* sprite)
         sprite->data[1] = 0;
         sprite->data[6] = 0;
         sprite->data[5] = 0;
-        sprite->data[3] = sub_81174C4(sub_81174C4(b, a), sub_81174E0(0x1C0));
-        sprite->data[4] = sub_81174C4(sub_81174C4(c, a), sub_81174E0(0x1C0));
-        sprite->callback = sub_80CF814;
+        sprite->data[3] = MathUtil_Mul16(MathUtil_Mul16(b, a), MathUtil_Inv16(0x1C0));
+        sprite->data[4] = MathUtil_Mul16(MathUtil_Mul16(c, a), MathUtil_Inv16(0x1C0));
+        sprite->callback = AnimAirWaveProjectile_Step1;
     } 
 }
 
-void sub_80CF9F8(u8 taskId)
+static void AirCutterProjectileStep2(u8 taskId)
 {
     if (gTasks[taskId].data[1] == 0)
         DestroyAnimVisualTask(taskId);
 }
 
-void sub_80CFA20(u8 taskId)
+static void AirCutterProjectileStep1(u8 taskId)
 {
     if (gTasks[taskId].data[0]-- <= 0)
     {
         u8 spriteId;
-        struct Sprite* sprite;
-        spriteId = CreateSprite(&gSpriteTemplate_83D74BC, gTasks[taskId].data[9], gTasks[taskId].data[10], gTasks[taskId].data[2] - gTasks[taskId].data[1]);
+        struct Sprite *sprite;
+        spriteId = CreateSprite(&gAirWaveProjectileSpriteTemplate, gTasks[taskId].data[9], gTasks[taskId].data[10], gTasks[taskId].data[2] - gTasks[taskId].data[1]);
         sprite = &gSprites[spriteId];
         switch (gTasks[taskId].data[4])
         {
@@ -269,16 +267,16 @@ void sub_80CFA20(u8 taskId)
         gTasks[taskId].data[1]++;
         PlaySE12WithPanning(0x9A, BattleAnimAdjustPanning(-0x3F));
         if (gTasks[taskId].data[1] > 2)
-            gTasks[taskId].func = sub_80CF9F8;
+            gTasks[taskId].func = AirCutterProjectileStep2;
     }
 }
 
-void sub_80CFB04(u8 taskId)
+void AnimTask_AirCutterProjectile(u8 taskId)
 {
-    s16 r9 = 0;
-    s16 r6 = 0;
-    s16 sp1 = 0;
-    s16 sp2 = 0;
+    s16 attackerY = 0;
+    s16 attackerX = 0;
+    s16 targetX = 0;
+    s16 targetY = 0;
     s16 r4;
 
     if (IsContest())
@@ -303,38 +301,38 @@ void sub_80CFB04(u8 taskId)
                 gBattleAnimArgs[2] |= 1;
         }
     }
-    r6 = gTasks[taskId].data[9] = GetBattlerSpriteCoord(gBattleAnimAttacker, 0);
-    r9 = gTasks[taskId].data[10] = GetBattlerSpriteCoord(gBattleAnimAttacker, 1);
+    attackerX = gTasks[taskId].data[9] = GetBattlerSpriteCoord(gBattleAnimAttacker, 0);
+    attackerY = gTasks[taskId].data[10] = GetBattlerSpriteCoord(gBattleAnimAttacker, 1);
     if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
         && IsBattlerSpriteVisible(gBattleAnimTarget ^ 2))
     {
-        SetAverageBattlerPositions(gBattleAnimTarget, 0, &sp1, &sp2);
+        SetAverageBattlerPositions(gBattleAnimTarget, 0, &targetX, &targetY);
     }
     else
     {
-        sp1 = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
-        sp2 = GetBattlerSpriteCoord(gBattleAnimTarget, 1);
+        targetX = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
+        targetY = GetBattlerSpriteCoord(gBattleAnimTarget, 1);
     }
 
-    sp1 = gTasks[taskId].data[11] = sp1 + gBattleAnimArgs[0];
-    sp2 = gTasks[taskId].data[12] = sp2 + gBattleAnimArgs[1];
-    if (sp1 >= r6)
-        r4 = sp1 - r6;
+    targetX = gTasks[taskId].data[11] = targetX + gBattleAnimArgs[0];
+    targetY = gTasks[taskId].data[12] = targetY + gBattleAnimArgs[1];
+    if (targetX >= attackerX)
+        r4 = targetX - attackerX;
     else
-        r4 = r6 - sp1;
+        r4 = attackerX - targetX;
 
-    gTasks[taskId].data[5] = sub_81174C4(r4, sub_81174E0(gBattleAnimArgs[2] & ~1));
-    gTasks[taskId].data[6] = sub_81174C4(gTasks[taskId].data[5], 0x80);
+    gTasks[taskId].data[5] = MathUtil_Mul16(r4, MathUtil_Inv16(gBattleAnimArgs[2] & ~1));
+    gTasks[taskId].data[6] = MathUtil_Mul16(gTasks[taskId].data[5], 0x80);
     gTasks[taskId].data[7] = gBattleAnimArgs[2];
-    if (sp2 >= r9)
+    if (targetY >= attackerY)
     {
-        r4 = sp2 - r9;
-        gTasks[taskId].data[8] = sub_81174C4(r4, sub_81174E0(gTasks[taskId].data[5])) & ~1;
+        r4 = targetY - attackerY;
+        gTasks[taskId].data[8] = MathUtil_Mul16(r4, MathUtil_Inv16(gTasks[taskId].data[5])) & ~1;
     }
     else
     {
-        r4 = r9 - sp2;
-        gTasks[taskId].data[8] = sub_81174C4(r4, sub_81174E0(gTasks[taskId].data[5])) | 1;
+        r4 = attackerY - targetY;
+        gTasks[taskId].data[8] = MathUtil_Mul16(r4, MathUtil_Inv16(gTasks[taskId].data[5])) | 1;
     }
 
     gTasks[taskId].data[3] = gBattleAnimArgs[3];
@@ -369,5 +367,5 @@ void sub_80CFB04(u8 taskId)
     if (gTasks[taskId].data[2] < 3)
         gTasks[taskId].data[2] = 3;
 
-    gTasks[taskId].func = sub_80CFA20;
+    gTasks[taskId].func = AirCutterProjectileStep1;
 }
