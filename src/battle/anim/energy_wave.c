@@ -4,18 +4,18 @@
 #include "task.h"
 #include "trig.h"
 
-void sub_80D3554(struct Sprite *sprite);
-void sub_80D3698(struct Sprite *sprite);
-void sub_80D3728(struct Sprite *sprite);
-static void sub_80D35DC(struct Sprite *);
-static void sub_80D365C(u8);
-static void sub_80D370C(struct Sprite *);
+static void AnimToTargetInSinWave(struct Sprite *sprite);
+static void AnimHydroCannonCharge(struct Sprite *sprite);
+static void AnimHydroCannonBeam(struct Sprite *sprite);
+static void AnimToTargetInSinWave_Step(struct Sprite *);
+static void AnimTask_RunSinAnimTimer(u8);
+static void AnimHydroCannonCharge_Step(struct Sprite *);
 
 // energy_wave (animates steady "waves" of energy)
 // Used in Hydro Pump, Mud Shot, Signal Beam, Flamethrower, Psywave, and
 // Hydro Cannon.
 
-const union AnimCmd gSpriteAnim_83D91DC[] =
+static const union AnimCmd sAnim_WaterMudOrb[] =
 {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_FRAME(4, 1),
@@ -24,34 +24,34 @@ const union AnimCmd gSpriteAnim_83D91DC[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D91F0[] =
+const union AnimCmd *const gAnims_WaterMudOrb[] =
 {
-    gSpriteAnim_83D91DC,
+    sAnim_WaterMudOrb,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D91F4 =
+const struct SpriteTemplate gHydroPumpOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_WATER_ORB,
     .paletteTag = ANIM_TAG_WATER_ORB,
     .oam = &gOamData_AffineOff_ObjBlend_16x16,
-    .anims = gSpriteAnimTable_83D91F0,
+    .anims = gAnims_WaterMudOrb,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D3554,
+    .callback = AnimToTargetInSinWave,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D920C =
+const struct SpriteTemplate gMudShotOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BROWN_ORB,
     .paletteTag = ANIM_TAG_BROWN_ORB,
     .oam = &gOamData_AffineOff_ObjBlend_16x16,
-    .anims = gSpriteAnimTable_83D91F0,
+    .anims = gAnims_WaterMudOrb,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D3554,
+    .callback = AnimToTargetInSinWave,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9224 =
+const struct SpriteTemplate gSignalBeamRedOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GLOWY_RED_ORB,
     .paletteTag = ANIM_TAG_GLOWY_RED_ORB,
@@ -59,10 +59,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9224 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D3554,
+    .callback = AnimToTargetInSinWave,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D923C =
+const struct SpriteTemplate gSignalBeamGreenOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GLOWY_GREEN_ORB,
     .paletteTag = ANIM_TAG_GLOWY_GREEN_ORB,
@@ -70,10 +70,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D923C =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D3554,
+    .callback = AnimToTargetInSinWave,
 };
 
-const union AnimCmd gSpriteAnim_83D9254[] =
+static const union AnimCmd sAnim_FlamethrowerFlame[] =
 {
     ANIMCMD_FRAME(16, 2),
     ANIMCMD_FRAME(32, 2),
@@ -81,23 +81,23 @@ const union AnimCmd gSpriteAnim_83D9254[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9264[] =
+static const union AnimCmd *const sAnims_FlamethrowerFlame[] =
 {
-    gSpriteAnim_83D9254,
+    sAnim_FlamethrowerFlame,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9268 =
+const struct SpriteTemplate gFlamethrowerFlameSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9264,
+    .anims = sAnims_FlamethrowerFlame,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D3554,
+    .callback = AnimToTargetInSinWave,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9280 =
+const struct SpriteTemplate gPsywaveRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BLUE_RING,
     .paletteTag = ANIM_TAG_BLUE_RING,
@@ -105,10 +105,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9280 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gGrowingRingAffineAnimTable,
-    .callback = sub_80D3554,
+    .callback = AnimToTargetInSinWave,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D9298[] =
+static const union AffineAnimCmd sAffineAnim_HydroCannonCharge[] =
 {
     AFFINEANIMCMD_FRAME(0x3, 0x3, 10, 50),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 10),
@@ -116,45 +116,45 @@ const union AffineAnimCmd gSpriteAffineAnim_83D9298[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D92B8[] =
+static const union AffineAnimCmd sAffineAnim_HydroCannonBeam[] =
 {
     AFFINEANIMCMD_FRAME(0x150, 0x150, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D92C8[] =
+static const union AffineAnimCmd *const sAffineAnims_HydroCannonCharge[] =
 {
-    gSpriteAffineAnim_83D9298,
+    sAffineAnim_HydroCannonCharge,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D92CC[] =
+static const union AffineAnimCmd *const sAffineAnims_HydroCannonBeam[] =
 {
-    gSpriteAffineAnim_83D92B8,
+    sAffineAnim_HydroCannonBeam,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D92D0 =
-{
-    .tileTag = ANIM_TAG_WATER_ORB,
-    .paletteTag = ANIM_TAG_WATER_ORB,
-    .oam = &gOamData_AffineDouble_ObjBlend_16x16,
-    .anims = gSpriteAnimTable_83D91F0,
-    .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D92C8,
-    .callback = sub_80D3698,
-};
-
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D92E8 =
+const struct SpriteTemplate gHydroCannonChargeSpriteTemplate =
 {
     .tileTag = ANIM_TAG_WATER_ORB,
     .paletteTag = ANIM_TAG_WATER_ORB,
     .oam = &gOamData_AffineDouble_ObjBlend_16x16,
-    .anims = gSpriteAnimTable_83D91F0,
+    .anims = gAnims_WaterMudOrb,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D92CC,
-    .callback = sub_80D3728,
+    .affineAnims = sAffineAnims_HydroCannonCharge,
+    .callback = AnimHydroCannonCharge,
 };
 
-void sub_80D3554(struct Sprite *sprite)
+const struct SpriteTemplate gHydroCannonBeamSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_WATER_ORB,
+    .paletteTag = ANIM_TAG_WATER_ORB,
+    .oam = &gOamData_AffineDouble_ObjBlend_16x16,
+    .anims = gAnims_WaterMudOrb,
+    .images = NULL,
+    .affineAnims = sAffineAnims_HydroCannonBeam,
+    .callback = AnimHydroCannonBeam,
+};
+
+static void AnimToTargetInSinWave(struct Sprite *sprite)
 {
     InitSpritePosToAnimAttacker(sprite, 1);
 
@@ -179,11 +179,11 @@ void sub_80D3554(struct Sprite *sprite)
         sprite->data[6] = gBattleAnimArgs[7] << 8;
     }
 
-    sprite->callback = sub_80D35DC;
+    sprite->callback = AnimToTargetInSinWave_Step;
     sprite->callback(sprite);
 }
 
-static void sub_80D35DC(struct Sprite *sprite)
+static void AnimToTargetInSinWave_Step(struct Sprite *sprite)
 {
     if (AnimTranslateLinear(sprite))
     {
@@ -202,14 +202,14 @@ static void sub_80D35DC(struct Sprite *sprite)
     }
 }
 
-void sub_80D3630(u8 taskId)
+void AnimTask_StartSinAnimTimer(u8 taskId)
 {
     gTasks[taskId].data[0] = gBattleAnimArgs[0];
     gBattleAnimArgs[7] = 0;
-    gTasks[taskId].func = sub_80D365C;
+    gTasks[taskId].func = AnimTask_RunSinAnimTimer;
 }
 
-static void sub_80D365C(u8 taskId)
+static void AnimTask_RunSinAnimTimer(u8 taskId)
 {
     gBattleAnimArgs[7] = (gBattleAnimArgs[7] + 3) & 0xFF;
     if (--gTasks[taskId].data[0] == 0)
@@ -218,7 +218,7 @@ static void sub_80D365C(u8 taskId)
     }
 }
 
-void sub_80D3698(struct Sprite *sprite)
+static void AnimHydroCannonCharge(struct Sprite *sprite)
 {
     u8 subpriority;
 
@@ -247,10 +247,10 @@ void sub_80D3698(struct Sprite *sprite)
         sprite->subpriority = subpriority + 2;
     }
 
-    sprite->callback = sub_80D370C;
+    sprite->callback = AnimHydroCannonCharge_Step;
 }
 
-static void sub_80D370C(struct Sprite *sprite)
+static void AnimHydroCannonCharge_Step(struct Sprite *sprite)
 {
     if (sprite->affineAnimEnded)
     {
@@ -258,9 +258,9 @@ static void sub_80D370C(struct Sprite *sprite)
     }
 }
 
-void sub_80D3728(struct Sprite *sprite)
+static void AnimHydroCannonBeam(struct Sprite *sprite)
 {
-    int var1, var2;
+    int respectMonPicOffsets, coordType;
 
     if (GetBattlerSide(gBattleAnimAttacker) == GetBattlerSide(gBattleAnimTarget))
     {
@@ -274,16 +274,16 @@ void sub_80D3728(struct Sprite *sprite)
     }
 
     if ((gBattleAnimArgs[5] & 0xFF00) == 0)
-        var1 = 1;
+        respectMonPicOffsets = 1;
     else
-        var1 = 0;
+        respectMonPicOffsets = 0;
 
     if ((u8)gBattleAnimArgs[5] == 0)
-        var2 = 3;
+        coordType = 3;
     else
-        var2 = 1;
+        coordType = 1;
 
-    InitSpritePosToAnimAttacker(sprite, var1);
+    InitSpritePosToAnimAttacker(sprite, respectMonPicOffsets);
 
     if (GetBattlerSide(gBattleAnimAttacker) != 0)
     {
@@ -292,7 +292,7 @@ void sub_80D3728(struct Sprite *sprite)
 
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + gBattleAnimArgs[2];
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, var2) + gBattleAnimArgs[3];
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, coordType) + gBattleAnimArgs[3];
     sprite->callback = StartAnimLinearTranslation;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
