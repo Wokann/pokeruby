@@ -6,7 +6,7 @@
 #include "daycare.h"
 #include "dewford_trend.h"
 #include "event_data.h"
-#include "fldeff_recordmixing.h"
+#include "fldeff_misc.h"
 #include "item.h"
 #include "constants/items.h"
 #include "load_save.h"
@@ -153,7 +153,7 @@ void Task_RecordMixing_Main(u8 taskId)
         VarSet(VAR_TEMP_0, 1);
         sReadyToReceive = 0;
         PrepareExchangePacket();
-        CreateRecordMixingSprite();
+        CreateRecordMixingLights();
         tState = 1;
         data[10] = CreateTask(Task_MixingRecordsRecv, 0x50);
         tSoundTaskId = CreateTask(Task_RecordMixing_SoundEffect, 0x51);
@@ -163,7 +163,7 @@ void Task_RecordMixing_Main(u8 taskId)
         {
             tState = 2;
             FlagSet(FLAG_SYS_MIX_RECORD);
-            DestroyRecordMixingSprite();
+            DestroyRecordMixingLights();
             DestroyTask(tSoundTaskId);
         }
         break;

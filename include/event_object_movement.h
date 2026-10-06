@@ -24,6 +24,7 @@
 #define GROUND_EFFECT_FLAG_HOT_SPRINGS           (1 << 18)
 #define GROUND_EFFECT_FLAG_SEAWEED               (1 << 19)
 
+extern const struct OamData gObjectEventBaseOam_32x8;
 extern const u8 gReflectionEffectPaletteMap[];
 
 #define movement_type_def(setup, table) \
