@@ -275,6 +275,9 @@ void SetSpriteNextToMonHead(u8 battler, struct Sprite *sprite);
 // battle/anim/sonic.c
 extern const union AffineAnimCmd *const gGrowingRingAffineAnimTable[];
 
+// battle/anim/kiss_fountain.c
+void AnimParticleBurst(struct Sprite *sprite);
+
 // battle/anim/water.c
 void AnimWaterPulseRing(struct Sprite *sprite);
 

@@ -1995,12 +1995,12 @@ Move_ATTRACT: @ 81CA0BA
 	createsprite gRedHeartProjectileSpriteTemplate, ANIM_TARGET, 3, 20, -8
 	waitforvisualfinish
 	playsewithpan SE_M_ATTRACT, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D7AC8, ANIM_TARGET, 3, 160, -32
-	createsprite gBattleAnimSpriteTemplate_83D7AC8, ANIM_TARGET, 3, -256, -40
-	createsprite gBattleAnimSpriteTemplate_83D7AC8, ANIM_TARGET, 3, 128, -16
-	createsprite gBattleAnimSpriteTemplate_83D7AC8, ANIM_TARGET, 3, 416, -38
-	createsprite gBattleAnimSpriteTemplate_83D7AC8, ANIM_TARGET, 3, -128, -22
-	createsprite gBattleAnimSpriteTemplate_83D7AC8, ANIM_TARGET, 3, -384, -31
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, 160, -32
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, -256, -40
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, 128, -16
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, 416, -38
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, -128, -22
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, -384, -31
 	waitforvisualfinish
 	waitplaysewithpan SE_M_ATTRACT2, 0, 15
 	createvisualtask sub_80D2100, 5
@@ -7760,13 +7760,13 @@ Move_SWEET_KISS: @ 81D2446
 	delay 23
 	playsewithpan SE_M_HEAL_BELL, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_83D7AC8, ANIM_TARGET, 3, 160, -30
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, 160, -30
 	playsewithpan SE_M_ATTRACT, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D7AC8, ANIM_TARGET, 3, -256, -42
-	createsprite gBattleAnimSpriteTemplate_83D7AC8, ANIM_TARGET, 3, 128, -14
-	createsprite gBattleAnimSpriteTemplate_83D7AC8, ANIM_TARGET, 3, 416, -38
-	createsprite gBattleAnimSpriteTemplate_83D7AC8, ANIM_TARGET, 3, -128, -22
-	createsprite gBattleAnimSpriteTemplate_83D7AC8, ANIM_TARGET, 3, -384, -31
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, -256, -42
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, 128, -14
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, 416, -38
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, -128, -22
+	createsprite gRedHeartBurstSpriteTemplate, ANIM_TARGET, 3, -384, -31
 	end
 
 Move_LOVELY_KISS: @ 81D24AF
