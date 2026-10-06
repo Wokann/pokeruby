@@ -3889,7 +3889,7 @@ Move_TAIL_GLOW: @ 81CC918
 	setalpha 12, 8
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, 1, 2, 0, 4, rgb(0, 0, 0)
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_83DAC10, ANIM_ATTACKER, 66, 0
+	createsprite gTailGlowOrbSpriteTemplate, ANIM_ATTACKER, 66, 0
 	delay 18
 	loopsewithpan SE_M_MORNING_SUN, SOUND_PAN_ATTACKER, 16, 6
 	waitforvisualfinish
@@ -5887,7 +5887,7 @@ Move_LEECH_LIFE: @ 81CF8D7
 	splitbgprio_foes ANIM_TARGET
 	setalpha 12, 8
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83DAB10, ANIM_ATTACKER, 2, -20, 15, 12
+	createsprite gLeechLifeNeedleSpriteTemplate, ANIM_ATTACKER, 2, -20, 15, 12
 	waitforvisualfinish
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 1, 2
 	playsewithpan SE_M_ABSORB, SOUND_PAN_TARGET
@@ -6118,7 +6118,7 @@ _81CFDCF:
 	delay 10
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, 24, 0, 0, 6
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83DAABC, ANIM_ATTACKER, 3, -42, 25, 0, 0, 6
+	createsprite gMegahornHornSpriteTemplate, ANIM_ATTACKER, 3, -42, 25, 0, 0, 6
 	delay 4
 	playsewithpan SE_M_VICEGRIP, SOUND_PAN_TARGET
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 1, 0
@@ -7433,11 +7433,11 @@ Move_STRING_SHOT: @ 81D1C98
 	call _81D1D56
 	waitforvisualfinish
 	playsewithpan SE_M_STRING_SHOT2, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DAB40, ANIM_TARGET, 2, 0, 10
+	createsprite gStringWrapSpriteTemplate, ANIM_TARGET, 2, 0, 10
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83DAB40, ANIM_TARGET, 2, 0, -2
+	createsprite gStringWrapSpriteTemplate, ANIM_TARGET, 2, 0, -2
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83DAB40, ANIM_TARGET, 2, 0, 22
+	createsprite gStringWrapSpriteTemplate, ANIM_TARGET, 2, 0, 22
 	waitforvisualfinish
 	clearmonbg ANIM_DEF_PARTNER
 	delay 1
@@ -7445,7 +7445,7 @@ Move_STRING_SHOT: @ 81D1C98
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 5, 1, 2, 9, 0, rgb(0, 0, 0)
 	end
 _81D1D56:
-	createsprite gBattleAnimSpriteTemplate_83DAB28, ANIM_TARGET, 2, 20, 0, 512, 20, 1
+	createsprite gWebThreadSpriteTemplate, ANIM_TARGET, 2, 20, 0, 512, 20, 1
 	delay 1
 	return
 
@@ -7474,14 +7474,14 @@ Move_SPIDER_WEB: @ 81D1D6A
 	call _81D1DF7
 	waitforvisualfinish
 	playsewithpan SE_M_STRING_SHOT2, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DAB74, ANIM_ATTACKER, 2
+	createsprite gSpiderWebSpriteTemplate, ANIM_ATTACKER, 2
 	waitforvisualfinish
 	clearmonbg ANIM_DEF_PARTNER
 	delay 1
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 5, 1, 2, 9, 0, rgb(0, 0, 0)
 	end
 _81D1DF7:
-	createsprite gBattleAnimSpriteTemplate_83DAB28, ANIM_TARGET, 2, 20, 0, 512, 20, 0
+	createsprite gWebThreadSpriteTemplate, ANIM_TARGET, 2, 20, 0, 512, 20, 0
 	delay 1
 	return
 
