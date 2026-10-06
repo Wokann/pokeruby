@@ -3292,7 +3292,7 @@ Move_MILK_DRINK: @ 81CBC6E
 	loadspritegfx ANIM_TAG_THIN_RING
 	loadspritegfx ANIM_TAG_BLUE_STAR
 	monbg ANIM_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D6C48, ANIM_ATTACKER, 2
+	createsprite gMilkBottleSpriteTemplate, ANIM_ATTACKER, 2
 	delay 40
 	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_ATTACKER
 	delay 12
