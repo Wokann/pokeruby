@@ -2892,7 +2892,7 @@ Move_GLARE: @ 81CB4CA
 	createvisualtask AnimTask_ScaryFace, 5
 	playsewithpan SE_M_LEER, SOUND_PAN_ATTACKER
 	delay 2
-	createvisualtask sub_80D60B4, 3, 20, 1, 0
+	createvisualtask AnimTask_ShakeTargetInPattern, 3, 20, 1, 0
 	waitforvisualfinish
 	createvisualtask sub_80E2A38, 5, 1, 0, 16, 0, 0
 	end
@@ -3453,10 +3453,10 @@ Move_HEAT_WAVE: @ 81CBFC6
 	loadspritegfx ANIM_TAG_FLYING_DIRT
 	createvisualtask AnimTask_BlendSpriteColor, 5, 10261, 0, 6, 6, rgb(31, 0, 0)
 	createvisualtask do_boulder_dust, 5, 1
-	createvisualtask AnimTask_BlendInterfaceColor, 6, 6, 31
+	createvisualtask AnimTask_BlendBackground, 6, 6, 31
 	panse SE_M_HEAT_WAVE, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
 	delay 4
-	createvisualtask sub_80D5DDC, 5
+	createvisualtask AnimTask_MoveHeatWaveTargets, 5
 	delay 12
 	createsprite gFlyingDirtSpriteTemplate, ANIM_ATTACKER, 40, 10, 2304, 96, 1
 	delay 10
@@ -4817,7 +4817,7 @@ Move_THUNDER: @ 81CDDCE
 	delay 10
 	createvisualtask sub_80E2324, 2, 257, 257, 257
 	delay 1
-	createvisualtask sub_80D60B4, 2, 30, 3, 1, 0
+	createvisualtask AnimTask_ShakeTargetInPattern, 2, 30, 3, 1, 0
 	delay 2
 	createvisualtask sub_80E2324, 2, 257, 257, 257
 	delay 1
@@ -7744,7 +7744,7 @@ Move_SCARY_FACE: @ 81D23E3
 	createsprite gEyeSparkleSpriteTemplate, ANIM_ATTACKER, 0, -16, -8
 	createsprite gEyeSparkleSpriteTemplate, ANIM_ATTACKER, 0, 16, -8
 	waitforvisualfinish
-	createvisualtask sub_80D60B4, 3, 20, 1, 0
+	createvisualtask AnimTask_ShakeTargetInPattern, 3, 20, 1, 0
 	playsewithpan SE_M_STRING_SHOT2, SOUND_PAN_TARGET
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, 27, 3, 16, 0, rgb(0, 0, 0)
 	waitforvisualfinish
@@ -8014,7 +8014,7 @@ Move_TRI_ATTACK: @ 81D2A0F
 	delay 1
 	createsprite gLargeFlameScatterSpriteTemplate, ANIM_TARGET, 2, 0, 0, 30, 30, 3, 1
 	delay 2
-	createvisualtask sub_80D60B4, 2, 20, 3, 1, 1
+	createvisualtask AnimTask_ShakeTargetInPattern, 2, 20, 3, 1, 1
 	waitforvisualfinish
 	loadspritegfx ANIM_TAG_LIGHTNING
 	createvisualtask sub_80E2324, 2, 257, 257, 257
@@ -8025,7 +8025,7 @@ Move_TRI_ATTACK: @ 81D2A0F
 	delay 1
 	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_TARGET, 2, 0, 16
 	delay 20
-	createvisualtask sub_80D60B4, 2, 20, 3, 1, 0
+	createvisualtask AnimTask_ShakeTargetInPattern, 2, 20, 3, 1, 0
 	delay 2
 	createvisualtask sub_80E2324, 2, 257, 257, 257
 	waitforvisualfinish
@@ -8056,12 +8056,12 @@ Move_WILL_O_WISP: @ 81D2B83
 	splitbgprio_all
 	playsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 13, 1
-	createsprite gBattleAnimSpriteTemplate_83D977C, ANIM_ATTACKER, 2, 0
-	createsprite gBattleAnimSpriteTemplate_83D977C, ANIM_ATTACKER, 2, 42
-	createsprite gBattleAnimSpriteTemplate_83D977C, ANIM_ATTACKER, 2, 84
-	createsprite gBattleAnimSpriteTemplate_83D977C, ANIM_ATTACKER, 2, 126
-	createsprite gBattleAnimSpriteTemplate_83D977C, ANIM_ATTACKER, 2, 168
-	createsprite gBattleAnimSpriteTemplate_83D977C, ANIM_ATTACKER, 2, 210
+	createsprite gWillOWispFireSpriteTemplate, ANIM_ATTACKER, 2, 0
+	createsprite gWillOWispFireSpriteTemplate, ANIM_ATTACKER, 2, 42
+	createsprite gWillOWispFireSpriteTemplate, ANIM_ATTACKER, 2, 84
+	createsprite gWillOWispFireSpriteTemplate, ANIM_ATTACKER, 2, 126
+	createsprite gWillOWispFireSpriteTemplate, ANIM_ATTACKER, 2, 168
+	createsprite gWillOWispFireSpriteTemplate, ANIM_ATTACKER, 2, 210
 	waitforvisualfinish
 	clearmonbg ANIM_DEF_PARTNER
 	end

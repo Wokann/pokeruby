@@ -7,10 +7,10 @@
 
 extern u8 gBattlerSpriteIds[];
 
-void sub_80D5CC0(struct Sprite *sprite);
-static void sub_80D5E4C(u8 taskId);
+static void AnimWillOWispFire(struct Sprite *sprite);
+static void AnimTask_MoveHeatWaveTargets_Step(u8 taskId);
 
-const union AnimCmd gSpriteAnim_83D9764[] =
+static const union AnimCmd sAnim_WillOWispFire[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(16, 5),
@@ -19,33 +19,36 @@ const union AnimCmd gSpriteAnim_83D9764[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9778[] =
+static const union AnimCmd *const sAnims_WillOWispFire[] =
 {
-    gSpriteAnim_83D9764,
+    sAnim_WillOWispFire,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D977C =
+const struct SpriteTemplate gWillOWispFireSpriteTemplate =
 {
     .tileTag = ANIM_TAG_WISP_FIRE,
     .paletteTag = ANIM_TAG_WISP_FIRE,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9778,
+    .anims = sAnims_WillOWispFire,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D5CC0,
+    .callback = AnimWillOWispFire,
 };
 
-const s8 gUnknown_083D9794[16] =
+// Directions for shaking up/down or left/right in AnimTask_ShakeTargetInPattern
+// Only first 10 values are ever accessed.
+// First pattern results in larger shakes, second results in faster oscillation
+static const s8 sShakeDirsPattern0[16] =
 {
     -1, -1, 0, 1, 1, 0, 0, -1, -1, 1, 1, 0, 0, -1, 0, 1,
 };
 
-const s8 gUnknown_083D97A4[16] =
+static const s8 sShakeDirsPattern1[16] =
 {
     -1, 0, 1, 0, -1, 1, 0, -1, 0, 1, 0, -1, 0, 1, 0, 1,
 };
 
-void sub_80D5CC0(struct Sprite *sprite)
+static void AnimWillOWispFire(struct Sprite *sprite)
 {
     if (!sprite->data[0])
     {
@@ -83,7 +86,7 @@ void sub_80D5CC0(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-void sub_80D5DDC(u8 taskId)
+void AnimTask_MoveHeatWaveTargets(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -92,10 +95,10 @@ void sub_80D5DDC(u8 taskId)
     task->data[14] = GetAnimBattlerSpriteId(1);
     task->data[15] = GetAnimBattlerSpriteId(3);
 
-    task->func = sub_80D5E4C;
+    task->func = AnimTask_MoveHeatWaveTargets_Step;
 }
 
-static void sub_80D5E4C(u8 taskId)
+static void AnimTask_MoveHeatWaveTargets_Step(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -182,20 +185,20 @@ static void sub_80D5E4C(u8 taskId)
     }
 }
 
-// Used to add a color mask to the battle interface / HUD in Heat Wave.
+// Used to add a color mask to the battle background.
 // arg 0: opacity
 // arg 1: color code
-void AnimTask_BlendInterfaceColor(u8 taskId)
+void AnimTask_BlendBackground(u8 taskId)
 {
-    struct BattleAnimBgData unk;
-    GetBattleAnimBg1Data(&unk);
-    BlendPalette(unk.paletteId << 4, 16, gBattleAnimArgs[0], gBattleAnimArgs[1]); // u16 palOffset, u16 numEntries, u8 coeff, u16 blendColor
+    struct BattleAnimBgData animBg;
+    GetBattleAnimBg1Data(&animBg);
+    BlendPalette(animBg.paletteId << 4, 16, gBattleAnimArgs[0], gBattleAnimArgs[1]); // u16 palOffset, u16 numEntries, u8 coeff, u16 blendColor
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_80D60B4(u8 taskId)
+void AnimTask_ShakeTargetInPattern(u8 taskId)
 {
-    s8 unk;
+    s8 dir;
     u8 spriteId;
 
     if (gTasks[taskId].data[0] == 0)
@@ -210,14 +213,14 @@ void sub_80D60B4(u8 taskId)
     spriteId = gBattlerSpriteIds[gBattleAnimTarget];
 
     if (!gTasks[taskId].data[4])
-        unk = gUnknown_083D9794[gTasks[taskId].data[0] % 10];
+        dir = sShakeDirsPattern0[gTasks[taskId].data[0] % 10];
     else
-        unk = gUnknown_083D97A4[gTasks[taskId].data[0] % 10];
+        dir = sShakeDirsPattern1[gTasks[taskId].data[0] % 10];
 
     if (gTasks[taskId].data[3] == 1)
-        gSprites[spriteId].y2 = gBattleAnimArgs[1] * unk < 0 ? -(gBattleAnimArgs[1] * unk) : gBattleAnimArgs[1] * unk;
+        gSprites[spriteId].y2 = gBattleAnimArgs[1] * dir < 0 ? -(gBattleAnimArgs[1] * dir) : gBattleAnimArgs[1] * dir;
     else
-        gSprites[spriteId].x2 = gBattleAnimArgs[1] * unk;
+        gSprites[spriteId].x2 = gBattleAnimArgs[1] * dir;
 
     if (gTasks[taskId].data[0] == gTasks[taskId].data[1])
     {
