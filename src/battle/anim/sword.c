@@ -3,14 +3,13 @@
 #include "trig.h"
 #include "sound.h"
 
-
-void sub_80CF690(struct Sprite* sprite);
-static void sub_80CF6B4(struct Sprite* sprite);
+static void AnimSwordsDanceBlade(struct Sprite *sprite);
+static void AnimSwordsDanceBlade_Step(struct Sprite *sprite);
 
 // sword (sword appears and floats upward.)
 // Used in Swords Dance.
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7468[] =
+const union AffineAnimCmd gSwordsDanceBladeAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0x10, 0x100, 0, 0),
     AFFINEANIMCMD_FRAME(0x14, 0x0, 0, 12),
@@ -18,30 +17,30 @@ const union AffineAnimCmd gSpriteAffineAnim_83D7468[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D7488[] =
+const union AffineAnimCmd *const gSwordsDanceBladeAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D7468,
+    gSwordsDanceBladeAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D748C =
+const struct SpriteTemplate gSwordsDanceBladeSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SWORD,
     .paletteTag = ANIM_TAG_SWORD,
     .oam = &gOamData_AffineNormal_ObjBlend_32x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D7488,
-    .callback = sub_80CF690,
+    .affineAnims = gSwordsDanceBladeAffineAnimTable,
+    .callback = AnimSwordsDanceBlade,
 };
 
-void sub_80CF690(struct Sprite* sprite)
+static void AnimSwordsDanceBlade(struct Sprite *sprite)
 {
     InitSpritePosToAnimAttacker(sprite, 0);
     sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
-    StoreSpriteCallbackInData6(sprite, sub_80CF6B4);
+    StoreSpriteCallbackInData6(sprite, AnimSwordsDanceBlade_Step);
 }
 
-static void sub_80CF6B4(struct Sprite* sprite)
+static void AnimSwordsDanceBlade_Step(struct Sprite *sprite)
 {
     sprite->data[0] = 6;
     sprite->data[2] = sprite->x;
