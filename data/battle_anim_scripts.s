@@ -2248,15 +2248,15 @@ Move_ICY_WIND: @ 81CA650
 	waitbgfadein
 	end
 _81CA6A8:
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_TARGET, 40, 0, 0, 0, 0, 72, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_TARGET, 40, 0, 0, 0, 0, 72, 1
 	delay 5
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_TARGET, 40, 0, 10, 0, 10, 72, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_TARGET, 40, 0, 10, 0, 10, 72, 1
 	delay 5
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_TARGET, 40, 0, -10, 0, -10, 72, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_TARGET, 40, 0, -10, 0, -10, 72, 1
 	delay 5
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_TARGET, 40, 0, 15, 0, 15, 72, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_TARGET, 40, 0, 15, 0, 15, 72, 1
 	delay 5
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_TARGET, 40, 0, -5, 0, -5, 72, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_TARGET, 40, 0, -5, 0, -5, 72, 1
 	return
 
 Move_SMOKESCREEN: @ 81CA710
@@ -3478,7 +3478,7 @@ Move_HAIL: @ 81CC076
 	loadspritegfx ANIM_TAG_ICE_CRYSTALS
 	createvisualtask sub_80E2A38, 10, 1, 3, 0, 6, 0
 	waitforvisualfinish
-	createvisualtask AnimTask_Hail1, 5
+	createvisualtask AnimTask_Hail, 5
 	loopsewithpan SE_M_HAIL, 0, 8, 10
 	waitforvisualfinish
 	createvisualtask sub_80E2A38, 10, 1, 3, 6, 0, 0
@@ -4663,15 +4663,15 @@ Move_ICE_PUNCH: @ 81CDB3E
 	createvisualtask sub_80E2A38, 10, 4, 2, 0, 9, 32588
 	delay 20
 	playsewithpan SE_M_STRING_SHOT, SOUND_PAN_TARGET
-	createsprite gSmallIcePunchCrystalSpriteTemplate, ANIM_ATTACKER, 2, 0
-	createsprite gSmallIcePunchCrystalSpriteTemplate, ANIM_ATTACKER, 2, 64
-	createsprite gSmallIcePunchCrystalSpriteTemplate, ANIM_ATTACKER, 2, 128
-	createsprite gSmallIcePunchCrystalSpriteTemplate, ANIM_ATTACKER, 2, 192
+	createsprite gIceCrystalSpiralInwardSmall, ANIM_ATTACKER, 2, 0
+	createsprite gIceCrystalSpiralInwardSmall, ANIM_ATTACKER, 2, 64
+	createsprite gIceCrystalSpiralInwardSmall, ANIM_ATTACKER, 2, 128
+	createsprite gIceCrystalSpiralInwardSmall, ANIM_ATTACKER, 2, 192
 	delay 5
-	createsprite gLargeIcePunchCrystalSpriteTemplate, ANIM_ATTACKER, 2, 32
-	createsprite gLargeIcePunchCrystalSpriteTemplate, ANIM_ATTACKER, 2, 96
-	createsprite gLargeIcePunchCrystalSpriteTemplate, ANIM_ATTACKER, 2, 160
-	createsprite gLargeIcePunchCrystalSpriteTemplate, ANIM_ATTACKER, 2, 224
+	createsprite gIceCrystalSpiralInwardLarge, ANIM_ATTACKER, 2, 32
+	createsprite gIceCrystalSpiralInwardLarge, ANIM_ATTACKER, 2, 96
+	createsprite gIceCrystalSpiralInwardLarge, ANIM_ATTACKER, 2, 160
+	createsprite gIceCrystalSpiralInwardLarge, ANIM_ATTACKER, 2, 224
 	delay 17
 	createsprite gFistFootSpriteTemplate, ANIM_ATTACKER, 4, 0, -10, 8, 1, 0
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 3, 0, -10, 1, 1
@@ -5356,8 +5356,8 @@ Move_ICE_BEAM: @ 81CEB4D
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, 1, 1, 0, 7, rgb(0, 0, 0)
 	waitforvisualfinish
 	createsoundtask sub_812B058, 183, -64, 63, 4, 4, 0, 10
-	createsprite gIceBeamOuterParticleSpriteTemplate, ANIM_ATTACKER, 2, 20, 12, 0, 12, 20
-	createsprite gIceBeamOuterParticleSpriteTemplate, ANIM_ATTACKER, 2, 20, -12, 0, -12, 20
+	createsprite gIceBeamOuterCrystalSpriteTemplate, ANIM_ATTACKER, 2, 20, 12, 0, 12, 20
+	createsprite gIceBeamOuterCrystalSpriteTemplate, ANIM_ATTACKER, 2, 20, -12, 0, -12, 20
 	delay 1
 	call _81CEC4E
 	call _81CEC4E
@@ -5372,9 +5372,9 @@ Move_ICE_BEAM: @ 81CEB4D
 	call _81CEC4E
 	call _81CEC4E
 	call _81CEC4E
-	createsprite IceBeamCenterParticleSpriteTemplate, ANIM_ATTACKER, 2, 20, 0, 0, 0, 11
+	createsprite gIceBeamInnerCrystalSpriteTemplate, ANIM_ATTACKER, 2, 20, 0, 0, 0, 11
 	delay 1
-	createsprite IceBeamCenterParticleSpriteTemplate, ANIM_ATTACKER, 2, 20, 0, 0, 0, 11
+	createsprite gIceBeamInnerCrystalSpriteTemplate, ANIM_ATTACKER, 2, 20, 0, 0, 0, 11
 	waitforvisualfinish
 	delay 20
 	call Effect_LightIceDamage
@@ -5386,9 +5386,9 @@ Move_ICE_BEAM: @ 81CEB4D
 	blendoff
 	end
 _81CEC4E:
-	createsprite gIceBeamOuterParticleSpriteTemplate, ANIM_ATTACKER, 2, 20, 12, 0, 12, 20
-	createsprite gIceBeamOuterParticleSpriteTemplate, ANIM_ATTACKER, 2, 20, -12, 0, -12, 20
-	createsprite IceBeamCenterParticleSpriteTemplate, ANIM_ATTACKER, 2, 20, 0, 0, 0, 11
+	createsprite gIceBeamOuterCrystalSpriteTemplate, ANIM_ATTACKER, 2, 20, 12, 0, 12, 20
+	createsprite gIceBeamOuterCrystalSpriteTemplate, ANIM_ATTACKER, 2, 20, -12, 0, -12, 20
+	createsprite gIceBeamInnerCrystalSpriteTemplate, ANIM_ATTACKER, 2, 20, 0, 0, 0, 11
 	delay 1
 	return
 
@@ -5549,26 +5549,26 @@ _81CEFD0:
 	waitbgfadein
 	end
 _81CF00A:
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_ATTACKER, 40, 0, -10, 0, -10, 72, 1
-	createsprite gLargeSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, 0, 0, 0, 80, 0, 0, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -10, 0, -10, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_ATTACKER, 40, 0, 0, 0, 0, 80, 0, 0, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_ATTACKER, 40, 0, -15, 0, -15, 72, 1
-	createsprite gLargeSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -10, 0, -10, 80, 0, 0, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -15, 0, -15, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_ATTACKER, 40, 0, -10, 0, -10, 80, 0, 0, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_ATTACKER, 40, 0, -5, 0, -5, 72, 1
-	createsprite gLargeSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, 10, 0, 10, 80, 0, 0, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -5, 0, -5, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_ATTACKER, 40, 0, 10, 0, 10, 80, 0, 0, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_ATTACKER, 40, 0, -10, 0, -10, 72, 1
-	createsprite gLargeSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -20, 0, -20, 80, 0, 0, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -10, 0, -10, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_ATTACKER, 40, 0, -20, 0, -20, 80, 0, 0, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_ATTACKER, 40, 0, -20, 0, -20, 72, 1
-	createsprite gLargeSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, 15, 0, 15, 80, 0, 0, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -20, 0, -20, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_ATTACKER, 40, 0, 15, 0, 15, 80, 0, 0, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_ATTACKER, 40, 0, -15, 0, -15, 72, 1
-	createsprite gLargeSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -20, 0, -20, 80, 0, 0, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -15, 0, -15, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_ATTACKER, 40, 0, -20, 0, -20, 80, 0, 0, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_ATTACKER, 40, 0, -25, 0, -25, 72, 1
-	createsprite gLargeSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, 20, 0, 20, 80, 0, 0, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -25, 0, -25, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_ATTACKER, 40, 0, 20, 0, 20, 80, 0, 0, 1
 	delay 3
 	return
 _81CF13F:
@@ -5593,19 +5593,19 @@ Move_POWDER_SNOW: @ 81CF146
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, 31, 1, 3, 0, rgb(0, 0, 0)
 	end
 _81CF190:
-	createsprite gSmallSnowballSpriteTemplate2, ANIM_ATTACKER, 40, 0, 0, 0, 0, 56, 4, 4, 1
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, 0, 0, 0, 56, 4, 4, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate2, ANIM_ATTACKER, 40, 0, -10, 0, -10, 56, 4, 4, 1
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -10, 0, -10, 56, 4, 4, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate2, ANIM_ATTACKER, 40, 0, 10, 0, 10, 56, -4, 3, 1
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, 10, 0, 10, 56, -4, 3, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate2, ANIM_ATTACKER, 40, 0, -20, 0, -20, 56, -4, 5, 1
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -20, 0, -20, 56, -4, 5, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate2, ANIM_ATTACKER, 40, 0, 15, 0, 15, 56, 4, 4, 1
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, 15, 0, 15, 56, 4, 4, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate2, ANIM_ATTACKER, 40, 0, -20, 0, -20, 56, 4, 4, 1
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, -20, 0, -20, 56, 4, 4, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate2, ANIM_ATTACKER, 40, 0, 20, 0, 20, 56, 4, 4, 1
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_ATTACKER, 40, 0, 20, 0, 20, 56, 4, 4, 1
 	delay 3
 	return
 
@@ -9735,21 +9735,21 @@ Move_MAGICAL_LEAF: @ 81D5699
 Move_ICE_BALL: @ 81D57BA
 	loadspritegfx ANIM_TAG_ICE_CHUNK
 	loadspritegfx ANIM_TAG_ICE_CRYSTALS
-	createvisualtask AnimTask_CountIceBallThrows, 5, 0
+	createvisualtask AnimTask_GetIceBallCounter, 5, 0
 	jumpargeq 0, 4, _81D5831
 _81D57D1:
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_ATTACKER
-	createsprite gIceBallSpriteTemplate, ANIM_TARGET, 2, 15, 0, -12, -16, 30, -40
+	createsprite gIceBallChunkSpriteTemplate, ANIM_TARGET, 2, 15, 0, -12, -16, 30, -40
 	delay 28
 	playsewithpan SE_M_BRICK_BREAK, SOUND_PAN_TARGET
-	createvisualtask AnimTask_CountIceBallThrows, 5, 0
+	createvisualtask AnimTask_GetIceBallCounter, 5, 0
 	jumpargeq 0, 0, _81D5842
 	jumpargeq 0, 1, _81D5871
 	jumpargeq 0, 2, _81D58AA
 	jumpargeq 0, 3, _81D58ED
 	jumpargeq 0, 4, _81D5935
 _81D581F:
-	createvisualtask AnimTask_CountIceBallThrows, 5, 0
+	createvisualtask AnimTask_GetIceBallCounter, 5, 0
 	jumpargeq 0, 4, _81D5838
 _81D5830:
 	end
@@ -9819,7 +9819,7 @@ _81D5935:
 	call _81D597D
 	goto _81D581F
 _81D597D:
-	createsprite gIceBallParticleSpriteTemplate, ANIM_TARGET, 4, -12, -16
+	createsprite gIceBallImpactShardSpriteTemplate, ANIM_TARGET, 4, -12, -16
 	return
 
 Move_WEATHER_BALL: @ 81D5989
@@ -9901,13 +9901,13 @@ _81D5AF9:
 _81D5B99:
 	loadspritegfx ANIM_TAG_HAIL
 	loadspritegfx ANIM_TAG_ICE_CRYSTALS
-	createsprite gWeatherBallHailSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 25, -40, 20
+	createsprite gWeatherBallIceDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 25, -40, 20
 	playsewithpan SE_M_HAIL, SOUND_PAN_TARGET
 	delay 10
-	createsprite gWeatherBallHailSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 25, 40, 0
+	createsprite gWeatherBallIceDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 25, 40, 0
 	playsewithpan SE_M_HAIL, SOUND_PAN_TARGET
 	delay 10
-	createsprite gWeatherBallHailSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 25, 0, 0
+	createsprite gWeatherBallIceDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 25, 0, 0
 	playsewithpan SE_M_HAIL, SOUND_PAN_TARGET
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
@@ -9929,101 +9929,101 @@ PoundCopy: @ 81D5C05
 	end
 
 Effect_LightIceDamage: @ 81D5C36
-	createsprite gLargeIceEffectParticleSpriteTemplate, ANIM_TARGET, 2, -10, -10, 0
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_TARGET, 2, -10, -10, 0
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_TARGET, 2, 10, 20, 0
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, 10, 20, 0
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gLargeIceEffectParticleSpriteTemplate, ANIM_TARGET, 2, -5, 10, 0
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_TARGET, 2, -5, 10, 0
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_TARGET, 2, 17, -12, 0
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, 17, -12, 0
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_TARGET, 2, -15, 15, 0
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, -15, 15, 0
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_TARGET, 2, 0, 0, 0
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, 0, 0, 0
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gLargeIceEffectParticleSpriteTemplate, ANIM_TARGET, 2, 20, 2, 0
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_TARGET, 2, 20, 2, 0
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	return
 
 Effect_HeavyIceDamage: @ 81D5CBA
-	createsprite gLargeIceEffectParticleSpriteTemplate, ANIM_TARGET, 2, -10, -10, 1
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_TARGET, 2, -10, -10, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_TARGET, 2, 10, 20, 1
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, 10, 20, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gLargeIceEffectParticleSpriteTemplate, ANIM_TARGET, 2, -29, 0, 1
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_TARGET, 2, -29, 0, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_TARGET, 2, 29, -20, 1
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, 29, -20, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gLargeIceEffectParticleSpriteTemplate, ANIM_TARGET, 2, -5, 10, 1
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_TARGET, 2, -5, 10, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_TARGET, 2, 17, -12, 1
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, 17, -12, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gLargeIceEffectParticleSpriteTemplate, ANIM_TARGET, 2, -20, 0, 1
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_TARGET, 2, -20, 0, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_TARGET, 2, -15, 15, 1
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, -15, 15, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_TARGET, 2, 26, -5, 1
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, 26, -5, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_TARGET, 2, 0, 0, 1
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_TARGET, 2, 0, 0, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gLargeIceEffectParticleSpriteTemplate, ANIM_TARGET, 2, 20, 2, 1
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_TARGET, 2, 20, 2, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	return
 
 Unknown_81D5D8A: @ 81D5D8A
 	loopsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET, 6, 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, 0, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 0, 24, 0
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, 8, 24, 0
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, -8, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 8, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -8, 24, 0
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, 16, 24, 0
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, -16, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 16, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -16, 24, 0
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, 24, 24, 0
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, -24, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 24, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -24, 24, 0
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, 32, 24, 0
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, -32, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 32, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -32, 24, 0
 	return
 
 Unknown_81D5E0E: @ 81D5E0E Icy Wind animates end bit with the wavy shiz
 	loopsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET, 6, 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, 0, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 0, 24, 1
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, 8, 24, 1
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, -8, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 8, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -8, 24, 1
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, 16, 24, 1
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, -16, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 16, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -16, 24, 1
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, 24, 24, 1
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, -24, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 24, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -24, 24, 1
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, 32, 24, 1
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, -32, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 32, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -32, 24, 1
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, 40, 24, 1
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, -40, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 40, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -40, 24, 1
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, 48, 24, 1
-	createsprite gIceSpikeSpriteTemplate, ANIM_TARGET, 2, -48, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, 48, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_TARGET, 2, -48, 24, 1
 	return
 
 Unknown_81D5ECA: @ 81D5ECA
