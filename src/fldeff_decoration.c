@@ -2,6 +2,7 @@
 #include "event_data.h"
 #include "field_camera.h"
 #include "field_effect.h"
+#include "field_effect_helpers.h"
 #include "fldeff_misc.h"
 #include "event_object_movement.h"
 #include "field_player_avatar.h"
@@ -15,9 +16,8 @@
 #include "constants/field_effects.h"
 #include "constants/songs.h"
 
-extern const u16 gTilesetPalettes_SecretBase[][16];
 
-const struct OamData gOamData_83D266C =
+static const struct OamData sOam_SandPillar =
 {
     .y = 0,
     .affineMode = 0,
@@ -34,7 +34,7 @@ const struct OamData gOamData_83D266C =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_83D2674[] =
+static const union AnimCmd sAnim_SandPillar[] =
 {
     ANIMCMD_FRAME(0, 6),
     ANIMCMD_FRAME(1, 6),
@@ -42,43 +42,41 @@ const union AnimCmd gSpriteAnim_83D2674[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D2684[] =
+static const union AnimCmd *const sAnimTable_SandPillar[] =
 {
-    gSpriteAnim_83D2674,
+    sAnim_SandPillar,
 };
 
-const struct SpriteFrameImage gSpriteImageTable_83D2688[] =
+static const struct SpriteFrameImage sPicTable_SandPillar[] =
 {
     {gSandPillar0_Gfx, 0x100},
     {gSandPillar1_Gfx, 0x100},
     {gSandPillar2_Gfx, 0x100},
 };
 
-void SpriteCB_SandPillar_0(struct Sprite *);
-void SpriteCB_SandPillar_1(struct Sprite *);
-void SpriteCB_SandPillar_2(struct Sprite *);
-const struct SpriteTemplate gSpriteTemplate_83D26A0 =
+static void SpriteCB_SandPillar_BreakTop(struct Sprite *);
+static void SpriteCB_SandPillar_BreakBase(struct Sprite *);
+static void SpriteCB_SandPillar_End(struct Sprite *);
+static const struct SpriteTemplate sSpriteTemplate_SandPillar =
 {
     .tileTag = 0xFFFF,
     .paletteTag = 4110,
-    .oam = &gOamData_83D266C,
-    .anims = gSpriteAnimTable_83D2684,
-    .images = gSpriteImageTable_83D2688,
+    .oam = &sOam_SandPillar,
+    .anims = sAnimTable_SandPillar,
+    .images = sPicTable_SandPillar,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCB_SandPillar_0,
+    .callback = SpriteCB_SandPillar_BreakTop,
 };
 
-// This uses one of the secret base palettes, so there is no "09.pal" file.
-const struct SpritePalette gFieldEffectObjectPaletteInfo9 = {gTilesetPalettes_SecretBase[5], 0x100E};
+// This uses one of the Secret Base tileset palettes.
+const struct SpritePalette gSpritePalette_SandPillar = {gTilesetPalettes_SecretBase[5], 0x100E};
 
-extern const struct SpriteTemplate *const gFieldEffectObjectTemplatePointers[36];
-
-static void sub_80C68EC(u8);
+static void Task_PopSecretBaseBalloon(u8);
 static void DoBalloonSoundEffect(s16);
 
 void PopSecretBaseBalloon(s16 metatileId, s16 x, s16 y)
 {
-    u8 taskId = CreateTask(sub_80C68EC, 0);
+    u8 taskId = CreateTask(Task_PopSecretBaseBalloon, 0);
 
     gTasks[taskId].data[0] = metatileId;
     gTasks[taskId].data[1] = x;
@@ -87,7 +85,7 @@ void PopSecretBaseBalloon(s16 metatileId, s16 x, s16 y)
     gTasks[taskId].data[4] = 1;
 }
 
-static void sub_80C68EC(u8 taskId)
+static void Task_PopSecretBaseBalloon(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
@@ -138,7 +136,7 @@ bool8 FldEff_Nop48(void)
     return FALSE;
 }
 
-static void sub_80C69C4(s16 x, s16 y)
+static void DoSecretBaseBreakableDoorEffect(s16 x, s16 y)
 {
     PlaySE(SE_BREAKABLE_DOOR);
     MapGridSetMetatileIdAt(x, y, 630);
@@ -147,11 +145,11 @@ static void sub_80C69C4(s16 x, s16 y)
     CurrentMapDrawMetatileAt(x, y - 1);
 }
 
-static void sub_80C6A14(u8 taskId)
+static void Task_ShatterSecretBaseBreakableDoor(u8 taskId)
 {
     if (gTasks[taskId].data[0] == 7)
     {
-        sub_80C69C4(gTasks[taskId].data[1], gTasks[taskId].data[2]);
+        DoSecretBaseBreakableDoorEffect(gTasks[taskId].data[1], gTasks[taskId].data[2]);
         DestroyTask(taskId);
     }
     else
@@ -165,11 +163,11 @@ void ShatterSecretBaseBreakableDoor(s16 x, s16 y)
     u8 dir = GetPlayerFacingDirection();
     if (dir == DIR_SOUTH)
     {
-        sub_80C69C4(x, y);
+        DoSecretBaseBreakableDoorEffect(x, y);
     }
     else if (dir == DIR_NORTH)
     {
-        u8 taskId = CreateTask(sub_80C6A14, 5);
+        u8 taskId = CreateTask(Task_ShatterSecretBaseBreakableDoor, 5);
         gTasks[taskId].data[0] = 0;
         gTasks[taskId].data[1] = x;
         gTasks[taskId].data[2] = y;
@@ -223,7 +221,7 @@ void PlaySecretBaseMusicNoteMatSound(s16 metatileId)
     gTasks[taskId].data[1] = 0;
 }
 
-void SpriteCB_GlitterMatSparkle(struct Sprite *sprite)
+static void SpriteCB_GlitterMatSparkle(struct Sprite *sprite)
 {
     sprite->data[0]++;
     if (sprite->data[0] == 8)
@@ -263,28 +261,28 @@ bool8 FldEff_SandPillar(void)
     {
     case DIR_SOUTH:
         CreateSprite(
-            &gSpriteTemplate_83D26A0,
+            &sSpriteTemplate_SandPillar,
             gSprites[gPlayerAvatar.spriteId].oam.x + 8,
             gSprites[gPlayerAvatar.spriteId].oam.y + 32,
             0);
         break;
     case DIR_NORTH:
         CreateSprite(
-            &gSpriteTemplate_83D26A0,
+            &sSpriteTemplate_SandPillar,
             gSprites[gPlayerAvatar.spriteId].oam.x + 8,
             gSprites[gPlayerAvatar.spriteId].oam.y,
             148);
         break;
     case DIR_WEST:
         CreateSprite(
-            &gSpriteTemplate_83D26A0,
+            &sSpriteTemplate_SandPillar,
             gSprites[gPlayerAvatar.spriteId].oam.x - 8,
             gSprites[gPlayerAvatar.spriteId].oam.y + 16,
             148);
         break;
     case DIR_EAST:
         CreateSprite(
-            &gSpriteTemplate_83D26A0,
+            &sSpriteTemplate_SandPillar,
             gSprites[gPlayerAvatar.spriteId].oam.x + 24,
             gSprites[gPlayerAvatar.spriteId].oam.y + 16,
             148);
@@ -294,7 +292,7 @@ bool8 FldEff_SandPillar(void)
     return FALSE;
 }
 
-void SpriteCB_SandPillar_0(struct Sprite *sprite)
+static void SpriteCB_SandPillar_BreakTop(struct Sprite *sprite)
 {
     PlaySE(SE_M_ROCK_THROW);
     if (MapGridGetMetatileIdAt(gFieldEffectArguments[5], gFieldEffectArguments[6] - 1) == 646)
@@ -305,10 +303,10 @@ void SpriteCB_SandPillar_0(struct Sprite *sprite)
     CurrentMapDrawMetatileAt(gFieldEffectArguments[5], gFieldEffectArguments[6] - 1);
     CurrentMapDrawMetatileAt(gFieldEffectArguments[5], gFieldEffectArguments[6]);
     sprite->data[0] = 0;
-    sprite->callback = SpriteCB_SandPillar_1;
+    sprite->callback = SpriteCB_SandPillar_BreakBase;
 }
 
-void SpriteCB_SandPillar_1(struct Sprite *sprite)
+static void SpriteCB_SandPillar_BreakBase(struct Sprite *sprite)
 {
     if (sprite->data[0] < 18)
     {
@@ -319,11 +317,11 @@ void SpriteCB_SandPillar_1(struct Sprite *sprite)
         MapGridSetMetatileIdAt(gFieldEffectArguments[5], gFieldEffectArguments[6], 3724);
         CurrentMapDrawMetatileAt(gFieldEffectArguments[5], gFieldEffectArguments[6]);
         sprite->data[0] = 0;
-        sprite->callback = SpriteCB_SandPillar_2;
+        sprite->callback = SpriteCB_SandPillar_End;
     }
 }
 
-void SpriteCB_SandPillar_2(struct Sprite *sprite)
+static void SpriteCB_SandPillar_End(struct Sprite *sprite)
 {
     FieldEffectStop(sprite, FLDEFF_SAND_PILLAR);
     ScriptContext_Enable();
@@ -342,12 +340,12 @@ void GetShieldToyTVDecorationInfo(void)
     {
     case 822:
         ConvertIntToDecimalStringN(gStringVar1, 100, STR_CONV_MODE_LEFT_ALIGN, 3);
-        StringCopy(gStringVar2, gSecretBaseText_GoldRank);
+        StringCopy(gStringVar2, gText_Gold);
         gSpecialVar_Result = 0;
         break;
     case 734:
         ConvertIntToDecimalStringN(gStringVar1, 50, STR_CONV_MODE_LEFT_ALIGN, 2);
-        StringCopy(gStringVar2, gSecretBaseText_SilverRank);
+        StringCopy(gStringVar2, gText_Silver);
         gSpecialVar_Result = 0;
         break;
     case 756:

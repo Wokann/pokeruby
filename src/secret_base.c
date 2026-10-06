@@ -10,7 +10,7 @@
 #include "field_specials.h"
 #include "field_weather.h"
 #include "fieldmap.h"
-#include "fldeff_decoration.h"
+#include "fldeff_misc.h"
 #include "link.h"
 #include "main.h"
 #include "sound.h"
