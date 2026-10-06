@@ -1712,10 +1712,10 @@ _81C9864:
 	waitforvisualfinish
 	delay 20
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D7798, ANIM_ATTACKER, 2, 0, 20, -28
+	createsprite gAngerMarkSpriteTemplate, ANIM_ATTACKER, 2, 0, 20, -28
 	waitforvisualfinish
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D7798, ANIM_ATTACKER, 2, 0, 20, -28
+	createsprite gAngerMarkSpriteTemplate, ANIM_ATTACKER, 2, 0, 20, -28
 	waitforvisualfinish
 	delay 10
 	createvisualtask AnimTask_SwayMon, 5, 0, 16, 6144, 8, 0
@@ -1748,7 +1748,7 @@ _81C996A:
 	waitforvisualfinish
 	delay 20
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D7798, ANIM_ATTACKER, 2, 0, 20, -28
+	createsprite gAngerMarkSpriteTemplate, ANIM_ATTACKER, 2, 0, 20, -28
 	waitforvisualfinish
 	delay 5
 	createvisualtask sub_812E498, 5
@@ -1769,7 +1769,7 @@ _81C996A:
 	goto _81C985F
 _81C9A37:
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D7798, ANIM_ATTACKER, 2, 0, 20, -28
+	createsprite gAngerMarkSpriteTemplate, ANIM_ATTACKER, 2, 0, 20, -28
 	waitforvisualfinish
 	delay 5
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 4
@@ -2744,10 +2744,10 @@ Move_RAGE: @ 81CB27C
 	monbg ANIM_TARGET
 	setalpha 12, 8
 	createvisualtask AnimTask_BlendMonInAndOut, 3, ANIM_ATTACKER, 31, 10, 0, 2
-	createsprite gBattleAnimSpriteTemplate_83D7798, ANIM_ATTACKER, 2, 0, -20, -28
+	createsprite gAngerMarkSpriteTemplate, ANIM_ATTACKER, 2, 0, -20, -28
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_ATTACKER
 	delay 20
-	createsprite gBattleAnimSpriteTemplate_83D7798, ANIM_ATTACKER, 2, 0, 20, -28
+	createsprite gAngerMarkSpriteTemplate, ANIM_ATTACKER, 2, 0, 20, -28
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 4, 6
@@ -3279,10 +3279,10 @@ Move_SWAGGER: @ 81CBC26
 	loopsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER, 4, 2
 	waitforvisualfinish
 	delay 24
-	createsprite gBattleAnimSpriteTemplate_83D7798, ANIM_TARGET, 2, 1, -20, -28
+	createsprite gAngerMarkSpriteTemplate, ANIM_TARGET, 2, 1, -20, -28
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_TARGET
 	delay 12
-	createsprite gBattleAnimSpriteTemplate_83D7798, ANIM_TARGET, 2, 1, 20, -28
+	createsprite gAngerMarkSpriteTemplate, ANIM_TARGET, 2, 1, 20, -28
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_TARGET
 	waitforvisualfinish
 	end
@@ -3490,10 +3490,10 @@ Move_TORMENT: @ 81CC0AE
 	createvisualtask sub_812D008, 2
 	waitforvisualfinish
 	createvisualtask AnimTask_BlendMonInAndOut, 2, ANIM_TARGET, 31, 10, 1, 1
-	createsprite gBattleAnimSpriteTemplate_83D7798, ANIM_TARGET, 2, 1, -20, -28
+	createsprite gAngerMarkSpriteTemplate, ANIM_TARGET, 2, 1, -20, -28
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_TARGET
 	delay 20
-	createsprite gBattleAnimSpriteTemplate_83D7798, ANIM_TARGET, 2, 1, 20, -28
+	createsprite gAngerMarkSpriteTemplate, ANIM_TARGET, 2, 1, 20, -28
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_TARGET
 	end
 
@@ -3600,11 +3600,11 @@ Move_TAUNT: @ 81CC26B
 	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 16, 2
 	waitforvisualfinish
 	delay 8
-	createsprite gBattleAnimSpriteTemplate_83D7798, ANIM_TARGET, 2, 1, -20, -28
+	createsprite gAngerMarkSpriteTemplate, ANIM_TARGET, 2, 1, -20, -28
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_TARGET
 	waitforvisualfinish
 	delay 12
-	createsprite gBattleAnimSpriteTemplate_83D7798, ANIM_TARGET, 2, 1, 20, -28
+	createsprite gAngerMarkSpriteTemplate, ANIM_TARGET, 2, 1, 20, -28
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_TARGET
 	end
 

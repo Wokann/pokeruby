@@ -3,50 +3,50 @@
 #include "trig.h"
 #include "sound.h"
 
+static void AnimAngerMark(struct Sprite *sprite);
 
-void sub_80D09C0(struct Sprite* sprite);
-
-// anger (anger emotes, usually above the Pokemon's head, indicating annoyed emotions.)
-// Used in Frustration, Rage, Swagger, Torment, and Taunt.
-
-const union AffineAnimCmd gSpriteAffineAnim_83D777C[] =
+const union AffineAnimCmd gAngerMarkAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0xB, 0xB, 0, 8),
     AFFINEANIMCMD_FRAME(0xFFF5, 0xFFF5, 0, 8),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D7794[] =
+const union AffineAnimCmd *const gAngerMarkAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D777C,
+    gAngerMarkAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7798 =
+const struct SpriteTemplate gAngerMarkSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ANGER,
     .paletteTag = ANIM_TAG_ANGER,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D7794,
-    .callback = sub_80D09C0,
+    .affineAnims = gAngerMarkAffineAnimTable,
+    .callback = AnimAngerMark,
 };
 
-void sub_80D09C0(struct Sprite* sprite)
+// Animates an "angry" mark above a mon's head.
+// arg 0: target mon (0 = attacker, 1 = target)
+// arg 1: x pixel offset
+// arg 2: y pixel offset
+static void AnimAngerMark(struct Sprite *sprite)
 {
-    u8 bank;
+    u8 battler;
     if (gBattleAnimArgs[0] == 0)
-        bank = gBattleAnimAttacker;
+        battler = gBattleAnimAttacker;
     else
-        bank = gBattleAnimTarget;
+        battler = gBattleAnimTarget;
 
-    if (GetBattlerSide(bank) == 1)
+    if (GetBattlerSide(battler) == 1)
     {
         gBattleAnimArgs[1] *= -1;
     }
 
-    sprite->x = GetBattlerSpriteCoord(bank, 2) + gBattleAnimArgs[1];
-    sprite->y = GetBattlerSpriteCoord(bank, 3) + gBattleAnimArgs[2];
+    sprite->x = GetBattlerSpriteCoord(battler, 2) + gBattleAnimArgs[1];
+    sprite->y = GetBattlerSpriteCoord(battler, 3) + gBattleAnimArgs[2];
     if (sprite->y <= 7)
         sprite->y = 8;
 
