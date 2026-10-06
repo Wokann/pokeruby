@@ -5277,8 +5277,8 @@ Move_RAIN_DANCE: @ 81CE997
 	playsewithpan SE_M_RAIN_DANCE, SOUND_PAN_ATTACKER
 	createvisualtask sub_80E2A38, 10, 1921, 2, 0, 4, 0
 	waitforvisualfinish
-	createvisualtask CreateAnimRaindrops, 2, 0, 3, 120
-	createvisualtask CreateAnimRaindrops, 2, 0, 3, 120
+	createvisualtask AnimTask_CreateRaindrops, 2, 0, 3, 120
+	createvisualtask AnimTask_CreateRaindrops, 2, 0, 3, 120
 	delay 120
 	delay 30
 	waitforvisualfinish
@@ -10503,8 +10503,8 @@ General_Rain: @ 81D67BB
 	playsewithpan SE_M_RAIN_DANCE, SOUND_PAN_ATTACKER
 	createvisualtask sub_80E2A38, 10, 1921, 2, 0, 4, 0
 	waitforvisualfinish
-	createvisualtask CreateAnimRaindrops, 2, 0, 3, 60
-	createvisualtask CreateAnimRaindrops, 2, 0, 3, 60
+	createvisualtask AnimTask_CreateRaindrops, 2, 0, 3, 60
+	createvisualtask AnimTask_CreateRaindrops, 2, 0, 3, 60
 	delay 50
 	waitforvisualfinish
 	createvisualtask sub_80E2A38, 10, 1921, 2, 4, 0, 0

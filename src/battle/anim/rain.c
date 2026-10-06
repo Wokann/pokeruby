@@ -4,17 +4,16 @@
 #include "sprite.h"
 #include "task.h"
 
-
-void SetAnimRaindropCallback(struct Sprite *sprite);
-static void MoveAnimRaindrop(struct Sprite *sprite);
+static void AnimRainDrop(struct Sprite *sprite);
+static void AnimRainDrop_Step(struct Sprite *sprite);
 
 // rain (spawns and animates raindrops)
 // Used in Rain Dance and general rain animation.
 
- const u8 gUnknown_3D7D8C[] = INCBIN_U8("graphics/unknown/unknown_3D7D8C.4bpp");
- const u8 gUnknown_3D810C[] = INCBIN_U8("graphics/unknown/unknown_3D810C.bin");
+static const u8 sUnusedWater_Gfx[] = INCBIN_U8("graphics/battle_anims/unused/water_gfx.4bpp");
+static const u8 sUnusedWater[] = INCBIN_U8("graphics/battle_anims/unused/water.bin");
 
- const union AnimCmd gSpriteAnim_83D910C[] =
+static const union AnimCmd sAnim_RainDrop[] =
 {
     ANIMCMD_FRAME(0, 2),
     ANIMCMD_FRAME(8, 2),
@@ -26,23 +25,23 @@ static void MoveAnimRaindrop(struct Sprite *sprite);
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D912C[] =
+static const union AnimCmd *const sAnims_RainDrop[] =
 {
-    gSpriteAnim_83D910C,
+    sAnim_RainDrop,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D9130 =
+const struct SpriteTemplate gRainDropSpriteTemplate =
 {
     .tileTag = 10115,
     .paletteTag = 10115,
     .oam = &gOamData_AffineOff_ObjNormal_16x32,
-    .anims = gSpriteAnimTable_83D912C,
+    .anims = sAnims_RainDrop,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SetAnimRaindropCallback,
+    .callback = AnimRainDrop,
 };
 
-void CreateAnimRaindrops(u8 taskId)
+void AnimTask_CreateRaindrops(u8 taskId)
 {
     if (gTasks[taskId].data[0] == 0)
     {
@@ -57,7 +56,7 @@ void CreateAnimRaindrops(u8 taskId)
     {
         u8 x = Random() % 240;
         u8 y = Random() % 80;
-        CreateSprite(&gSpriteTemplate_83D9130, x,  y, 4);
+        CreateSprite(&gRainDropSpriteTemplate, x, y, 4);
     }
 
     if (gTasks[taskId].data[0] == gTasks[taskId].data[3])
@@ -66,12 +65,12 @@ void CreateAnimRaindrops(u8 taskId)
     }
 }
 
-void SetAnimRaindropCallback(struct Sprite *sprite)
+static void AnimRainDrop(struct Sprite *sprite)
 {
-    sprite->callback = MoveAnimRaindrop;
+    sprite->callback = AnimRainDrop_Step;
 }
 
-static void MoveAnimRaindrop(struct Sprite *sprite)
+static void AnimRainDrop_Step(struct Sprite *sprite)
 {
     if (++sprite->data[0] <= 13)
     {
