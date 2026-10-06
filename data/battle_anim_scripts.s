@@ -662,25 +662,25 @@ Move_FLAME_WHEEL: @ 81C7E62
 	loadspritegfx ANIM_TAG_SMALL_EMBER
 	monbg ANIM_DEF_PARTNER
 	splitbgprio_foes ANIM_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D9694, ANIM_ATTACKER, 3, 0, 0, 56, 0
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 56, 0
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9694, ANIM_ATTACKER, 3, 0, 0, 56, 4
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 56, 4
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9694, ANIM_ATTACKER, 3, 0, 0, 56, 8
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 56, 8
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9694, ANIM_ATTACKER, 3, 0, 0, 56, 12
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 56, 12
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9694, ANIM_ATTACKER, 3, 0, 0, 56, 16
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 56, 16
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9694, ANIM_ATTACKER, 3, 0, 0, 56, 20
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 56, 20
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9694, ANIM_ATTACKER, 3, 0, 0, 56, 24
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 56, 24
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, 24, 0, 0, 6
@@ -696,7 +696,7 @@ Move_FLAME_WHEEL: @ 81C7E62
 	end
 
 Unknown_81C7F4C: @ 81C7F4C
-	createsprite gBattleAnimSpriteTemplate_83D9694, ANIM_ATTACKER, 3, 0, 0, 50
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 50
 	delay 4
 	return
 
@@ -888,19 +888,19 @@ Move_FIRE_BLAST: @ 81C8355
 	waitforvisualfinish
 	end
 Move_FIRE_BLAST_CreateFireRing:
-	createsprite gFireRingSpriteTemplate, ANIM_TARGET, 2, 0, 0, 0
-	createsprite gFireRingSpriteTemplate, ANIM_TARGET, 2, 0, 0, 51
-	createsprite gFireRingSpriteTemplate, ANIM_TARGET, 2, 0, 0, 102
-	createsprite gFireRingSpriteTemplate, ANIM_TARGET, 2, 0, 0, 153
-	createsprite gFireRingSpriteTemplate, ANIM_TARGET, 2, 0, 0, 204
+	createsprite gFireBlastRingSpriteTemplate, ANIM_TARGET, 2, 0, 0, 0
+	createsprite gFireBlastRingSpriteTemplate, ANIM_TARGET, 2, 0, 0, 51
+	createsprite gFireBlastRingSpriteTemplate, ANIM_TARGET, 2, 0, 0, 102
+	createsprite gFireBlastRingSpriteTemplate, ANIM_TARGET, 2, 0, 0, 153
+	createsprite gFireBlastRingSpriteTemplate, ANIM_TARGET, 2, 0, 0, 204
 	delay 5
 	return
 Move_FIRE_BLAST_CreateFireCross:
-	createsprite gFireCrossSpriteTemplate, ANIM_TARGET, 2, 0, 0, 10, 0, -2
-	createsprite gFireCrossSpriteTemplate, ANIM_TARGET, 2, 0, 0, 13, -2, 0
-	createsprite gFireCrossSpriteTemplate, ANIM_TARGET, 2, 0, 0, 13, 2, 0
-	createsprite gFireCrossSpriteTemplate, ANIM_TARGET, 2, 0, 0, 15, -2, 2
-	createsprite gFireCrossSpriteTemplate, ANIM_TARGET, 2, 0, 0, 15, 2, 2
+	createsprite gFireBlastCrossSpriteTemplate, ANIM_TARGET, 2, 0, 0, 10, 0, -2
+	createsprite gFireBlastCrossSpriteTemplate, ANIM_TARGET, 2, 0, 0, 13, -2, 0
+	createsprite gFireBlastCrossSpriteTemplate, ANIM_TARGET, 2, 0, 0, 13, 2, 0
+	createsprite gFireBlastCrossSpriteTemplate, ANIM_TARGET, 2, 0, 0, 15, -2, 2
+	createsprite gFireBlastCrossSpriteTemplate, ANIM_TARGET, 2, 0, 0, 15, 2, 2
 	return
 
 Move_LEECH_SEED: @ 81C8483
@@ -3796,19 +3796,19 @@ Move_ERUPTION: @ 81CC74F
 	loadspritegfx ANIM_TAG_WARM_ROCK
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, 31, 2, 0, 4, rgb(31, 0, 0)
 	waitforvisualfinish
-	createvisualtask sub_80D5470, 2
+	createvisualtask AnimTask_EruptionLaunchRocks, 2
 	waitplaysewithpan SE_M_EXPLOSION, SOUND_PAN_ATTACKER, 60
 	waitforvisualfinish
-	createvisualtask sub_80D5470, 2
+	createvisualtask AnimTask_EruptionLaunchRocks, 2
 	waitplaysewithpan SE_M_EXPLOSION, SOUND_PAN_ATTACKER, 60
 	waitforvisualfinish
 	delay 30
-	createsprite gBattleAnimSpriteTemplate_83D96F8, ANIM_ATTACKER, 40, 200, -32, 0, 100, 0
-	createsprite gBattleAnimSpriteTemplate_83D96F8, ANIM_ATTACKER, 40, 30, -32, 16, 90, 1
-	createsprite gBattleAnimSpriteTemplate_83D96F8, ANIM_ATTACKER, 40, 150, -32, 32, 60, 2
-	createsprite gBattleAnimSpriteTemplate_83D96F8, ANIM_ATTACKER, 40, 90, -32, 48, 80, 3
-	createsprite gBattleAnimSpriteTemplate_83D96F8, ANIM_ATTACKER, 40, 110, -32, 64, 50, 0
-	createsprite gBattleAnimSpriteTemplate_83D96F8, ANIM_ATTACKER, 40, 60, -32, 80, 70, 1
+	createsprite gEruptionFallingRockSpriteTemplate, ANIM_ATTACKER, 40, 200, -32, 0, 100, 0
+	createsprite gEruptionFallingRockSpriteTemplate, ANIM_ATTACKER, 40, 30, -32, 16, 90, 1
+	createsprite gEruptionFallingRockSpriteTemplate, ANIM_ATTACKER, 40, 150, -32, 32, 60, 2
+	createsprite gEruptionFallingRockSpriteTemplate, ANIM_ATTACKER, 40, 90, -32, 48, 80, 3
+	createsprite gEruptionFallingRockSpriteTemplate, ANIM_ATTACKER, 40, 110, -32, 64, 50, 0
+	createsprite gEruptionFallingRockSpriteTemplate, ANIM_ATTACKER, 40, 60, -32, 80, 70, 1
 	delay 22
 	createvisualtask AnimTask_HorizontalShake, 5, 5, 8, 60
 	createvisualtask AnimTask_HorizontalShake, 5, 4, 8, 60
@@ -9851,13 +9851,13 @@ _81D59F4:
 	end
 _81D5A31:
 	loadspritegfx ANIM_TAG_SMALL_EMBER
-	createsprite gBattleAnimSpriteTemplate_83D96AC, ANIM_TARGET, 2, -30, -100, 25, 1, 40, 10
+	createsprite gWeatherBallFireDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 1, 40, 10
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_TARGET
 	delay 10
-	createsprite gBattleAnimSpriteTemplate_83D96AC, ANIM_TARGET, 2, -30, -100, 25, 1, -40, 20
+	createsprite gWeatherBallFireDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 1, -40, 20
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_TARGET
 	delay 10
-	createsprite gBattleAnimSpriteTemplate_83D96AC, ANIM_TARGET, 2, -30, -100, 25, 1, 0, 0
+	createsprite gWeatherBallFireDownSpriteTemplate, ANIM_TARGET, 2, -30, -100, 25, 1, 0, 0
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_TARGET
 	waitforvisualfinish
 	playsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_TARGET
@@ -10234,7 +10234,7 @@ StatusCondition_Burn: @ 81D62A4
 	waitforvisualfinish
 	end
 ConditionBurnFire:
-	createsprite gBattleAnimSpriteTemplate_83D9614, ANIM_TARGET, 2, -24, 24, 24, 24, 20, 1, 1
+	createsprite gBurnFlameSpriteTemplate, ANIM_TARGET, 2, -24, 24, 24, 24, 20, 1, 1
 	delay 4
 	return
 

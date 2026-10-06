@@ -15,7 +15,6 @@ extern u16 gBattle_BG3_Y;
 extern const u8 gBattleAnimBackgroundTilemap_SandstormBrew[];
 extern const u8 gBattleAnimBackgroundImage_SandstormBrew[];
 extern const u16 gBattleAnimSpritePal_FlyingDirt[];
-extern const union AnimCmd *const gSpriteAnimTable_83D95E0[];
 
 extern void AnimMoveTwisterParticle(struct Sprite *sprite);
 
@@ -124,7 +123,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DACD0 =
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D95E0,
+    .anims = gAnims_BasicFire,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = sub_80DCFE4,
