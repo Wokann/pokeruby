@@ -5,26 +5,25 @@
 #include "main.h"
 #include "util.h"
 
-
 extern u8 gBattlerSpriteIds[];
 
-void sub_80D0FD8(struct Sprite* sprite);
-void sub_80D10B8(struct Sprite* sprite);
-void sub_80D1318(struct Sprite* sprite);
-void sub_80D1368(struct Sprite* sprite);
-static void sub_80D1098(struct Sprite* sprite);
-static void sub_80D13AC(struct Sprite* sprite);
-static void sub_80D1424(struct Sprite* sprite);
-static void sub_80D144C(struct Sprite* sprite);
-static void sub_80D14C4(struct Sprite* sprite);
-static void sub_80D1504(struct Sprite* sprite);
-static void sub_80D154C(struct Sprite* sprite);
-static void sub_80D158C(struct Sprite* sprite);
+static void AnimBlendThinRing(struct Sprite *sprite);
+static void AnimHyperVoiceRing(struct Sprite *sprite);
+static void AnimUproarRing(struct Sprite *sprite);
+static void AnimSoftBoiledEgg(struct Sprite *sprite);
+static void AnimHyperVoiceRing_WaitEnd(struct Sprite *sprite);
+static void AnimSoftBoiledEgg_Step1(struct Sprite *sprite);
+static void AnimSoftBoiledEgg_Step2(struct Sprite *sprite);
+static void AnimSoftBoiledEgg_Step3(struct Sprite *sprite);
+static void AnimSoftBoiledEgg_Step3_Callback1(struct Sprite *sprite);
+static void AnimSoftBoiledEgg_Step3_Callback2(struct Sprite *sprite);
+static void AnimSoftBoiledEgg_Step4(struct Sprite *sprite);
+static void AnimSoftBoiledEgg_Step4_Callback(struct Sprite *sprite);
 
 // ring (a ring that stretches outward from the Pokemon.)
 // Used in Aromatherapy and Heal Bell.
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D77F8 =
+const struct SpriteTemplate gSnoreZSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SNORE_Z,
     .paletteTag = ANIM_TAG_SNORE_Z,
@@ -35,7 +34,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D77F8 =
     .callback = AnimTravelDiagonally,
 };
 
-const union AnimCmd gSpriteAnim_83D7810[] =
+const union AnimCmd gExplosionAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(16, 5),
@@ -44,23 +43,23 @@ const union AnimCmd gSpriteAnim_83D7810[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D7824[] =
+const union AnimCmd *const gExplosionAnimTable[] =
 {
-    gSpriteAnim_83D7810,
+    gExplosionAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7828 =
+const struct SpriteTemplate gExplosionSpriteTemplate =
 {
     .tileTag = ANIM_TAG_EXPLOSION,
     .paletteTag = ANIM_TAG_EXPLOSION,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D7824,
+    .anims = gExplosionAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimSpriteOnMonPos,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7840[] =
+const union AffineAnimCmd gSoftBoiledEggAffineAnimCmds1[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, -8, 2),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 8, 4),
@@ -68,13 +67,13 @@ const union AffineAnimCmd gSpriteAffineAnim_83D7840[] =
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7860[] =
+const union AffineAnimCmd gSoftBoiledEggAffineAnimCmds2[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7870[] =
+const union AffineAnimCmd gSoftBoiledEggAffineAnimCmds3[] =
 {
     AFFINEANIMCMD_FRAME(0xFFF8, 0x4, 0, 8),
     AFFINEANIMCMD_LOOP(0),
@@ -86,155 +85,155 @@ const union AffineAnimCmd gSpriteAffineAnim_83D7870[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D78B0[] =
+const union AffineAnimCmd *const gSoftBoiledEggAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D7840,
-    gSpriteAffineAnim_83D7860,
-    gSpriteAffineAnim_83D7870,
+    gSoftBoiledEggAffineAnimCmds1,
+    gSoftBoiledEggAffineAnimCmds2,
+    gSoftBoiledEggAffineAnimCmds3,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D78BC =
+const struct SpriteTemplate gSoftBoiledEggSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BREAKING_EGG,
     .paletteTag = ANIM_TAG_BREAKING_EGG,
     .oam = &gOamData_AffineDouble_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D78B0,
-    .callback = sub_80D1368,
+    .affineAnims = gSoftBoiledEggAffineAnimTable,
+    .callback = AnimSoftBoiledEgg,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D78D4[] =
+const union AffineAnimCmd gThinRingExpandingAffineAnimCmds1[] =
 {
     AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 0),
     AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 30),
     AFFINEANIMCMD_END_ALT(1),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D78EC[] =
+const union AffineAnimCmd gThinRingExpandingAffineAnimCmds2[] =
 {
     AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 0),
     AFFINEANIMCMD_FRAME(0x20, 0x20, 0, 15),
     AFFINEANIMCMD_END_ALT(1),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7904[] =
+const union AffineAnimCmd gHyperVoiceRingAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 0),
     AFFINEANIMCMD_FRAME(0xB, 0xB, 0, 45),
     AFFINEANIMCMD_END_ALT(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D791C[] =
+const union AffineAnimCmd *const gThinRingExpandingAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D78D4,
-    gSpriteAffineAnim_83D78EC,
+    gThinRingExpandingAffineAnimCmds1,
+    gThinRingExpandingAffineAnimCmds2,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D7924[] =
+const union AffineAnimCmd *const gHyperVoiceRingAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D7904,
+    gHyperVoiceRingAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7928 =
+const struct SpriteTemplate gThinRingExpandingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_THIN_RING,
     .paletteTag = ANIM_TAG_THIN_RING,
     .oam = &gOamData_AffineDouble_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D791C,
+    .affineAnims = gThinRingExpandingAffineAnimTable,
     .callback = AnimSpriteOnMonPos,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7940[] =
+const union AffineAnimCmd gThinRingShrinkingAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0x200, 0x200, 0, 0),
     AFFINEANIMCMD_FRAME(0xFFF0, 0xFFF0, 0, 30),
     AFFINEANIMCMD_END_ALT(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D7958[] =
+const union AffineAnimCmd *const gThinRingShrinkingAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D7940,
+    gThinRingShrinkingAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D795C =
+const struct SpriteTemplate gThinRingShrinkingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_THIN_RING,
     .paletteTag = ANIM_TAG_THIN_RING,
     .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D7958,
+    .affineAnims = gThinRingShrinkingAffineAnimTable,
     .callback = AnimSpriteOnMonPos,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7974 =
+const struct SpriteTemplate gBlendThinRingExpandingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_THIN_RING,
     .paletteTag = ANIM_TAG_THIN_RING,
     .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D791C,
-    .callback = sub_80D0FD8,
+    .affineAnims = gThinRingExpandingAffineAnimTable,
+    .callback = AnimBlendThinRing,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D798C =
+const struct SpriteTemplate gHyperVoiceRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_THIN_RING,
     .paletteTag = ANIM_TAG_THIN_RING,
     .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D7924,
-    .callback = sub_80D10B8,
+    .affineAnims = gHyperVoiceRingAffineAnimTable,
+    .callback = AnimHyperVoiceRing,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D79A4 =
+const struct SpriteTemplate gUproarRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_THIN_RING,
     .paletteTag = ANIM_TAG_THIN_RING,
     .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D791C,
-    .callback = sub_80D1318,
+    .affineAnims = gThinRingExpandingAffineAnimTable,
+    .callback = AnimUproarRing,
 };
 
-void sub_80D0FD8(struct Sprite* sprite)
+static void AnimBlendThinRing(struct Sprite *sprite)
 {
-    u8 bank = 0;
-    u16 sp0 = 0;
-    u16 sp1 = 0;
+    u8 battler = 0;
+    u16 x = 0;
+    u16 y = 0;
     u8 r4;
 
     if (gBattleAnimArgs[2] == 0)
-        bank = gBattleAnimAttacker;
+        battler = gBattleAnimAttacker;
     else
-        bank = gBattleAnimTarget;
+        battler = gBattleAnimTarget;
 
     r4 = gBattleAnimArgs[3] ^ 1;
-    if (IsDoubleBattle() && IsBattlerSpriteVisible(bank ^ 2))
+    if (IsDoubleBattle() && IsBattlerSpriteVisible(battler ^ 2))
     {
-        SetAverageBattlerPositions(bank, r4, &sp0, &sp1);
+        SetAverageBattlerPositions(battler, r4, &x, &y);
         if (r4 == 0)
-            r4 = GetBattlerSpriteCoord(bank, 0);
+            r4 = GetBattlerSpriteCoord(battler, 0);
         else
-            r4 = GetBattlerSpriteCoord(bank, 2);
+            r4 = GetBattlerSpriteCoord(battler, 2);
 
-        if (GetBattlerSide(bank) != 0)
-            gBattleAnimArgs[0] -= (sp0 - r4) - gBattleAnimArgs[0];  // This is weird.
+        if (GetBattlerSide(battler) != 0)
+            gBattleAnimArgs[0] -= (x - r4) - gBattleAnimArgs[0];  // This is weird.
         else
-            gBattleAnimArgs[0] = sp0 - r4;
+            gBattleAnimArgs[0] = x - r4;
     }
 
     sprite->callback = AnimSpriteOnMonPos;
     AnimSpriteOnMonPos(sprite);
 }
 
-void sub_80D1098(struct Sprite* sprite)
+static void AnimHyperVoiceRing_WaitEnd(struct Sprite *sprite)
 {
     if (AnimTranslateLinear(sprite))
     {
@@ -243,92 +242,92 @@ void sub_80D1098(struct Sprite* sprite)
     }
 }
 
-void sub_80D10B8(struct Sprite* sprite)
+static void AnimHyperVoiceRing(struct Sprite *sprite)
 {
-    u16 r9 = 0;
-    u16 r6 = 0;
-    s16 sp0 = 0;
-    s16 sp1 = 0;
-    u8 sp4;
-    u8 bankr7;
-    u8 bankr8;
-    u8 r10;
+    u16 startX = 0;
+    u16 startY = 0;
+    s16 x = 0;
+    s16 y = 0;
+    u8 yCoordType;
+    u8 battler1;
+    u8 battler2;
+    u8 xCoordType;
 
     if (gBattleAnimArgs[5] == 0)
     {
-        bankr7 = gBattleAnimAttacker;
-        bankr8 = gBattleAnimTarget;
+        battler1 = gBattleAnimAttacker;
+        battler2 = gBattleAnimTarget;
     }
     else
     {
-        bankr7 = gBattleAnimTarget;
-        bankr8 = gBattleAnimAttacker;
+        battler1 = gBattleAnimTarget;
+        battler2 = gBattleAnimAttacker;
     }
 
     if (gBattleAnimArgs[6] == 0)
     {
-        r10 = 0;
-        sp4 = 1;
+        xCoordType = 0;
+        yCoordType = 1;
     }
     else
     {
-        r10 = 2;
-        sp4 = 3;
+        xCoordType = 2;
+        yCoordType = 3;
     }
 
-    if (GetBattlerSide(bankr7) != 0)
+    if (GetBattlerSide(battler1) != 0)
     {
-        r9 = GetBattlerSpriteCoord(bankr7, r10) + gBattleAnimArgs[0];
-        if (IsBattlerSpriteVisible(bankr8 ^ 2))
-            sprite->subpriority = gSprites[gBattlerSpriteIds[bankr8 ^ 2]].subpriority - 1;
+        startX = GetBattlerSpriteCoord(battler1, xCoordType) + gBattleAnimArgs[0];
+        if (IsBattlerSpriteVisible(battler2 ^ 2))
+            sprite->subpriority = gSprites[gBattlerSpriteIds[battler2 ^ 2]].subpriority - 1;
         else
-            sprite->subpriority = gSprites[gBattlerSpriteIds[bankr8]].subpriority - 1;
+            sprite->subpriority = gSprites[gBattlerSpriteIds[battler2]].subpriority - 1;
     }
     else
     {
-        r9 = GetBattlerSpriteCoord(bankr7, r10) - gBattleAnimArgs[0];
-        if (gMain.inBattle && IsBattlerSpriteVisible(bankr7 ^ 2))
+        startX = GetBattlerSpriteCoord(battler1, xCoordType) - gBattleAnimArgs[0];
+        if (gMain.inBattle && IsBattlerSpriteVisible(battler1 ^ 2))
         {
-            if (gSprites[gBattlerSpriteIds[bankr7]].x < gSprites[gBattlerSpriteIds[bankr7 ^ 2]].x)
-                sprite->subpriority = gSprites[gBattlerSpriteIds[bankr7 ^ 2]].subpriority + 1;
+            if (gSprites[gBattlerSpriteIds[battler1]].x < gSprites[gBattlerSpriteIds[battler1 ^ 2]].x)
+                sprite->subpriority = gSprites[gBattlerSpriteIds[battler1 ^ 2]].subpriority + 1;
             else
-                sprite->subpriority = gSprites[gBattlerSpriteIds[bankr7]].subpriority - 1;
+                sprite->subpriority = gSprites[gBattlerSpriteIds[battler1]].subpriority - 1;
         }
         else
         {
-            sprite->subpriority = gSprites[gBattlerSpriteIds[bankr7]].subpriority - 1;
+            sprite->subpriority = gSprites[gBattlerSpriteIds[battler1]].subpriority - 1;
         }
 
     }
 
-    r6 = GetBattlerSpriteCoord(bankr7, sp4) + gBattleAnimArgs[1];
-    if (gMain.inBattle && IsBattlerSpriteVisible(bankr8 ^ 2))
+    startY = GetBattlerSpriteCoord(battler1, yCoordType) + gBattleAnimArgs[1];
+    if (gMain.inBattle && IsBattlerSpriteVisible(battler2 ^ 2))
     {
-        SetAverageBattlerPositions(bankr8, gBattleAnimArgs[6], &sp0, &sp1);
+        SetAverageBattlerPositions(battler2, gBattleAnimArgs[6], &x, &y);
     }
     else
     {
-        sp0 = GetBattlerSpriteCoord(bankr8, r10);
-        sp1 = GetBattlerSpriteCoord(bankr8, sp4);
+        x = GetBattlerSpriteCoord(battler2, xCoordType);
+        y = GetBattlerSpriteCoord(battler2, yCoordType);
     }
 
-    if (GetBattlerSide(bankr8))
-        sp0 += gBattleAnimArgs[3];
+    if (GetBattlerSide(battler2))
+        x += gBattleAnimArgs[3];
     else
-        sp0 -= gBattleAnimArgs[3];
+        x -= gBattleAnimArgs[3];
 
-    sp1 += gBattleAnimArgs[4];
-    sprite->x = sprite->data[1] = r9;
-    sprite->y = sprite->data[3] = r6;
-    sprite->data[2] = sp0;
-    sprite->data[4] = sp1;
+    y += gBattleAnimArgs[4];
+    sprite->x = sprite->data[1] = startX;
+    sprite->y = sprite->data[3] = startY;
+    sprite->data[2] = x;
+    sprite->data[4] = y;
     sprite->data[0] = gBattleAnimArgs[0];
     InitAnimLinearTranslation(sprite);
-    sprite->callback = sub_80D1098;
-    sub_80D1098(sprite);
+    sprite->callback = AnimHyperVoiceRing_WaitEnd;
+    AnimHyperVoiceRing_WaitEnd(sprite);
 }
 
-void sub_80D1318(struct Sprite* sprite)
+static void AnimUproarRing(struct Sprite *sprite)
 {
     u8 index = IndexOfSpritePaletteTag(0x27DB);
     if (index != 0xFF)
@@ -341,7 +340,7 @@ void sub_80D1318(struct Sprite* sprite)
     AnimSpriteOnMonPos(sprite);
 }
 
-void sub_80D1368(struct Sprite* sprite)
+static void AnimSoftBoiledEgg(struct Sprite *sprite)
 {
     s16 r1;
     InitSpritePosToAnimAttacker(sprite, 0);
@@ -349,10 +348,10 @@ void sub_80D1368(struct Sprite* sprite)
     sprite->data[0] = 0x380;
     sprite->data[1] = r1;
     sprite->data[7] = gBattleAnimArgs[2];
-    sprite->callback = sub_80D13AC;
+    sprite->callback = AnimSoftBoiledEgg_Step1;
 }
 
-static void sub_80D13AC(struct Sprite* sprite)
+static void AnimSoftBoiledEgg_Step1(struct Sprite *sprite)
 {
     s16 add;
     sprite->y2 -= (sprite->data[0] >> 8);
@@ -368,20 +367,20 @@ static void sub_80D13AC(struct Sprite* sprite)
         sprite->x2 = 0;
         sprite->data[0] = 0;
         StartSpriteAffineAnim(sprite, 1);
-        sprite->callback = sub_80D1424;
+        sprite->callback = AnimSoftBoiledEgg_Step2;
     }
 }
 
-static void sub_80D1424(struct Sprite* sprite)
+static void AnimSoftBoiledEgg_Step2(struct Sprite *sprite)
 {
     if (sprite->data[0]++ > 19)
     {
         StartSpriteAffineAnim(sprite, 2);
-        sprite->callback = sub_80D144C;
+        sprite->callback = AnimSoftBoiledEgg_Step3;
     }
 }
 
-static void sub_80D144C(struct Sprite* sprite)
+static void AnimSoftBoiledEgg_Step3(struct Sprite *sprite)
 {
     if (sprite->affineAnimEnded)
     {
@@ -390,17 +389,17 @@ static void sub_80D144C(struct Sprite* sprite)
         if (sprite->data[7] == 0)
         {
             sprite->oam.tileNum += 16;
-            sprite->callback = sub_80D14C4;
+            sprite->callback = AnimSoftBoiledEgg_Step3_Callback1;
         }
         else
         {
             sprite->oam.tileNum += 32;
-            sprite->callback = sub_80D154C;
+            sprite->callback = AnimSoftBoiledEgg_Step4;
         }
     }
 }
 
-static void sub_80D14C4(struct Sprite* sprite)
+static void AnimSoftBoiledEgg_Step3_Callback1(struct Sprite *sprite)
 {
     sprite->y2 -= 2;
     if (++sprite->data[0] == 9)
@@ -409,34 +408,34 @@ static void sub_80D14C4(struct Sprite* sprite)
         sprite->data[1] = 0;
         REG_BLDCNT = 0x3F40;
         REG_BLDALPHA = sprite->data[0];
-        sprite->callback = sub_80D1504;
+        sprite->callback = AnimSoftBoiledEgg_Step3_Callback2;
     }
 }
 
-static void sub_80D1504(struct Sprite* sprite)
+static void AnimSoftBoiledEgg_Step3_Callback2(struct Sprite *sprite)
 {
     if (sprite->data[1]++ % 3 == 0)
     {
         sprite->data[0]--;
         REG_BLDALPHA = sprite->data[0] | ((16 - sprite->data[0]) << 8);
         if (sprite->data[0] == 0)
-            sprite->callback = sub_80D154C;
+            sprite->callback = AnimSoftBoiledEgg_Step4;
     }
 }
 
-static void sub_80D154C(struct Sprite* sprite)
+static void AnimSoftBoiledEgg_Step4(struct Sprite *sprite)
 {
     if ((u16)gBattleAnimArgs[7] == 0xFFFF)
     {
         sprite->invisible = TRUE;
         if (sprite->data[7] == 0)
-            sprite->callback = sub_80D158C;
+            sprite->callback = AnimSoftBoiledEgg_Step4_Callback;
         else
             sprite->callback = DestroyAnimSprite;
     }
 }
 
-static void sub_80D158C(struct Sprite* sprite)
+static void AnimSoftBoiledEgg_Step4_Callback(struct Sprite *sprite)
 {
     REG_BLDCNT = 0;
     REG_BLDALPHA = 0;
