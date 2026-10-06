@@ -3,35 +3,34 @@
 #include "trig.h"
 #include "sound.h"
 
-
-void sub_80D2938(struct Sprite* sprite);
+static void AnimAngel(struct Sprite *sprite);
 
 // angel (a little angel descends from somewhere towards a position)
 // Used in Sweet Kiss.
 
-const union AnimCmd gSpriteAnim_83D7BAC[] =
+const union AnimCmd gAngelSpriteAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 24),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D7BB4[] =
+const union AnimCmd *const gAngelSpriteAnimTable[] =
 {
-    gSpriteAnim_83D7BAC,
+    gAngelSpriteAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7BB8 =
+const struct SpriteTemplate gAngelSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ANGEL,
     .paletteTag = ANIM_TAG_ANGEL,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D7BB4,
+    .anims = gAngelSpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D2938,
+    .callback = AnimAngel,
 };
 
-void sub_80D2938(struct Sprite* sprite)
+static void AnimAngel(struct Sprite *sprite)
 {
     s16 r5;
     if (sprite->data[0] == 0)
