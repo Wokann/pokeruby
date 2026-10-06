@@ -7592,12 +7592,12 @@ Move_MIMIC: @ 81D1FC9
 Move_CONSTRICT: @ 81D2013
 	loadspritegfx ANIM_TAG_TENDRILS
 	loopsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET, 6, 4
-	createsprite gBattleAnimSpriteTemplate_83D65A0, ANIM_TARGET, 4, 0, 16, 0, 2
+	createsprite gConstrictBindingSpriteTemplate, ANIM_TARGET, 4, 0, 16, 0, 2
 	delay 7
-	createsprite gBattleAnimSpriteTemplate_83D65A0, ANIM_TARGET, 3, 0, 0, 0, 2
-	createsprite gBattleAnimSpriteTemplate_83D65A0, ANIM_TARGET, 2, 0, 8, 1, 2
+	createsprite gConstrictBindingSpriteTemplate, ANIM_TARGET, 3, 0, 0, 0, 2
+	createsprite gConstrictBindingSpriteTemplate, ANIM_TARGET, 2, 0, 8, 1, 2
 	delay 7
-	createsprite gBattleAnimSpriteTemplate_83D65A0, ANIM_TARGET, 3, 0, -8, 1, 2
+	createsprite gConstrictBindingSpriteTemplate, ANIM_TARGET, 3, 0, -8, 1, 2
 	delay 8
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 6, 1
 	delay 20
@@ -10361,9 +10361,9 @@ General_TurnTrap: @ 81D6489
 WrapHit:
 	loadspritegfx ANIM_TAG_TENDRILS
 	loopsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET, 6, 2
-	createsprite gBattleAnimSpriteTemplate_83D65A0, ANIM_TARGET, 4, 0, 16, 0, 1
+	createsprite gConstrictBindingSpriteTemplate, ANIM_TARGET, 4, 0, 16, 0, 1
 	delay 7
-	createsprite gBattleAnimSpriteTemplate_83D65A0, ANIM_TARGET, 2, 0, 8, 1, 1
+	createsprite gConstrictBindingSpriteTemplate, ANIM_TARGET, 2, 0, 8, 1, 1
 	delay 3
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
 	delay 20
