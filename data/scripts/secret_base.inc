@@ -35,7 +35,7 @@ EventScript_1A2CB0:
 	goto EventScript_1A2CFA
 	end
 
-DoSecretBaseCaveFieldEffectScript:: @ 81A2CE6
+SecretBase_EventScript_CaveUseSecretPower:: @ 81A2CE6
 	lockall
 	dofieldeffect FLDEFF_USE_SECRET_POWER_CAVE
 	waitstate
@@ -66,7 +66,7 @@ EventScript_1A2D08:
 	goto EventScript_1A2D52
 	end
 
-DoSecretBaseTreeFieldEffectScript:: @ 81A2D3E
+SecretBase_EventScript_TreeUseSecretPower:: @ 81A2D3E
 	lockall
 	dofieldeffect FLDEFF_USE_SECRET_POWER_TREE
 	waitstate
@@ -97,7 +97,7 @@ EventScript_1A2D60:
 	goto EventScript_1A2DAA
 	end
 
-DoSecretBaseShrubFieldEffectScript:: @ 81A2D96
+SecretBase_EventScript_ShrubUseSecretPower:: @ 81A2D96
 	lockall
 	dofieldeffect FLDEFF_USE_SECRET_POWER_SHRUB
 	waitstate
@@ -198,17 +198,17 @@ AskToMoveSecretBase:
 	closemessage
 	closemessage
 	compare VAR_0x8007, 1
-	goto_if_eq DoSecretBaseCaveFieldEffectScript
+	goto_if_eq SecretBase_EventScript_CaveUseSecretPower
 	compare VAR_0x8007, 2
-	goto_if_eq DoSecretBaseCaveFieldEffectScript
+	goto_if_eq SecretBase_EventScript_CaveUseSecretPower
 	compare VAR_0x8007, 3
-	goto_if_eq DoSecretBaseCaveFieldEffectScript
+	goto_if_eq SecretBase_EventScript_CaveUseSecretPower
 	compare VAR_0x8007, 4
-	goto_if_eq DoSecretBaseCaveFieldEffectScript
+	goto_if_eq SecretBase_EventScript_CaveUseSecretPower
 	compare VAR_0x8007, 5
-	goto_if_eq DoSecretBaseTreeFieldEffectScript
+	goto_if_eq SecretBase_EventScript_TreeUseSecretPower
 	compare VAR_0x8007, 6
-	goto_if_eq DoSecretBaseShrubFieldEffectScript
+	goto_if_eq SecretBase_EventScript_ShrubUseSecretPower
 	releaseall
 	end
 

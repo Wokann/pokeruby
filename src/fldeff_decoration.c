@@ -2,6 +2,7 @@
 #include "event_data.h"
 #include "field_camera.h"
 #include "field_effect.h"
+#include "fldeff_misc.h"
 #include "event_object_movement.h"
 #include "field_player_avatar.h"
 #include "fieldmap.h"
@@ -14,9 +15,6 @@
 #include "constants/field_effects.h"
 #include "constants/songs.h"
 
-extern const u8 gSpriteImage_83D21EC[];
-extern const u8 gSpriteImage_83D22EC[];
-extern const u8 gSpriteImage_83D23EC[];
 extern const u16 gTilesetPalettes_SecretBase[][16];
 
 const struct OamData gOamData_83D266C =
@@ -51,9 +49,9 @@ const union AnimCmd *const gSpriteAnimTable_83D2684[] =
 
 const struct SpriteFrameImage gSpriteImageTable_83D2688[] =
 {
-    {gSpriteImage_83D21EC, 0x100},
-    {gSpriteImage_83D22EC, 0x100},
-    {gSpriteImage_83D23EC, 0x100},
+    {gSandPillar0_Gfx, 0x100},
+    {gSandPillar1_Gfx, 0x100},
+    {gSandPillar2_Gfx, 0x100},
 };
 
 void SpriteCB_SandPillar_0(struct Sprite *);

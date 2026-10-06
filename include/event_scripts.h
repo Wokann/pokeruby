@@ -7,6 +7,10 @@ extern const u8 BerryTreeScript[];
 
 extern const u8 EventScript_SelectWithoutRegisteredItem[];
 
+extern const u8 SecretBase_EventScript_CaveUseSecretPower[];
+extern const u8 SecretBase_EventScript_TreeUseSecretPower[];
+extern const u8 SecretBase_EventScript_ShrubUseSecretPower[];
+
 extern const u8 SecretBase_EventScript_PCCancel[];
 extern const u8 SecretBase_EventScript_ShowRegisterMenu[];
 extern const u8 SecretBase_EventScript_Enter[];

@@ -61,9 +61,9 @@ gFieldEffectScriptPointers:: @ 81D9B34
 	.4byte gFieldEffectScript_SandPillar
 	.4byte gFieldEffectScript_Bubbles
 	.4byte gFieldEffectScript_Sparkle
-	.4byte gFieldEffectScript_SecretPowerCave
-	.4byte gFieldEffectScript_SecretPowerTree
-	.4byte gFieldEffectScript_SecretPowerShrub
+	.4byte gFieldEffectScript_ShowSecretPowerCave
+	.4byte gFieldEffectScript_ShowSecretPowerTree
+	.4byte gFieldEffectScript_ShowSecretPowerShrub
 	.4byte gFieldEffectScript_CutGrass
 	.4byte gFieldEffectScript_FieldMoveShowMonInit
 	.4byte gFieldEffectScript_UseFlyAncientTomb
@@ -293,16 +293,16 @@ gFieldEffectScript_Sparkle: @ 81D9DEE
 	field_eff_loadfadedpal_callnative gSpritePalette_SmallSparkle, FldEff_Sparkle
 	field_eff_end
 
-gFieldEffectScript_SecretPowerCave: @ 81D9DF8
-	field_eff_loadfadedpal_callnative gFieldEffectObjectPaletteInfo7, FldEff_SecretPowerCave
+gFieldEffectScript_ShowSecretPowerCave: @ 81D9DF8
+	field_eff_loadfadedpal_callnative gSpritePalette_SecretPower_Cave, FldEff_SecretPowerCave
 	field_eff_end
 
-gFieldEffectScript_SecretPowerTree: @ 81D9E02
-	field_eff_loadfadedpal_callnative gFieldEffectObjectPaletteInfo8, FldEff_SecretPowerTree
+gFieldEffectScript_ShowSecretPowerTree: @ 81D9E02
+	field_eff_loadfadedpal_callnative gSpritePalette_SecretPower_Plant, FldEff_SecretPowerTree
 	field_eff_end
 
-gFieldEffectScript_SecretPowerShrub: @ 81D9E0C
-	field_eff_loadfadedpal_callnative gFieldEffectObjectPaletteInfo8, FldEff_SecretPowerShrub
+gFieldEffectScript_ShowSecretPowerShrub: @ 81D9E0C
+	field_eff_loadfadedpal_callnative gSpritePalette_SecretPower_Plant, FldEff_SecretPowerShrub
 	field_eff_end
 
 gFieldEffectScript_CutGrass: @ 81D9E16

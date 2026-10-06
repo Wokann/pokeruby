@@ -23,6 +23,7 @@
 #include "field_weather.h"
 #include "field_effect.h"
 #include "fldeff.h"
+#include "fldeff_misc.h"
 #include "field_control_avatar.h"
 #include "metatile_behavior.h"
 #include "fieldmap.h"
@@ -64,7 +65,6 @@ bool8 SetUpFieldMove_RockSmash(void);
 bool8 SetUpFieldMove_Strength(void);
 bool8 SetUpFieldMove_Teleport(void);
 bool8 SetUpFieldMove_Dig(void);
-bool8 SetUpFieldMove_SecretPower(void);
 bool8 SetUpFieldMove_SoftBoiled(void);
 bool8 SetUpFieldMove_SoftBoiled(void);
 bool8 SetUpFieldMove_SweetScent(void);
