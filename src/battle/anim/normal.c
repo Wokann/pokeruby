@@ -230,7 +230,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB4C0 =
     .callback = sub_80E2838,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB4D8 =
+const struct SpriteTemplate gWaterHitSplatSpriteTemplate =
 {
     .tileTag = ANIM_TAG_WATER_IMPACT,
     .paletteTag = ANIM_TAG_WATER_IMPACT,

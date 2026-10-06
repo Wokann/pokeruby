@@ -282,7 +282,20 @@ extern const union AffineAnimCmd *const gGrowingRingAffineAnimTable[];
 void AnimParticleBurst(struct Sprite *sprite);
 
 // battle/anim/water.c
+extern const union AnimCmd *const gAnims_WaterBubble[];
 void AnimWaterPulseRing(struct Sprite *sprite);
+
+// battle/anim/poison.c
+extern const union AffineAnimCmd *const gAffineAnims_Droplet[];
+
+// battle/anim/ice.c
+extern const union AnimCmd *const gAnims_SmallBubblePair[];
+
+// battle/anim/normal.c
+extern const struct SpriteTemplate gWaterHitSplatSpriteTemplate;
+
+// battle/anim/ground.c
+void AnimTask_HorizontalShake(u8 taskId);
 
 // battle/anim/dark.c
 extern const union AffineAnimCmd *const gAffineAnims_Bite[];

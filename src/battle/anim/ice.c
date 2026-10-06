@@ -144,7 +144,7 @@ const union AnimCmd *const gSpriteAnimTable_83D9BC4[] =
     gSpriteAnim_83D9BA0,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9BC8[] =
+const union AnimCmd *const gAnims_SmallBubblePair[] =
 {
     gSpriteAnim_83D9BA8,
 };

@@ -565,7 +565,7 @@ static void AnimDigDirtMound(struct Sprite *sprite)
     sprite->callback = WaitAnimForDuration;
 }
 
-void sub_80E1864(u8 taskId)
+void AnimTask_HorizontalShake(u8 taskId)
 {
     u16 i;
     struct Task *task = &gTasks[taskId];

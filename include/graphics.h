@@ -3324,7 +3324,7 @@ extern const u8 gBattleAnimBgImage_Cosmic[];
 extern const u8 gBattleAnimBgImage_InAir[];
 extern const u8 gBattleAnimBgImage_Aurora[];
 extern const u8 gBattleAnimBgImage_Fissure[];
-extern const u8 gBattleAnimBackgroundImage_Surf[];
+extern const u8 gBattleAnimBgImage_Surf[];
 extern const u8 gBattleAnimBackgroundImageMuddyWater_Pal[];
 extern const u8 gBattleAnimBgPalette_Dark[];
 extern const u8 gBattleAnimBgPalette_Ghost[];
@@ -3340,7 +3340,7 @@ extern const u8 gBattleAnimBgPalette_InAir[];
 extern const u8 gBattleAnimBgPalette_Sky[];
 extern const u8 gBattleAnimBgPalette_Aurora[];
 extern const u8 gBattleAnimBgPalette_Fissure[];
-extern const u8 gBattleAnimBackgroundPalette_Surf[];
+extern const u8 gBattleAnimBgPalette_Surf[];
 extern const u8 gBattleAnimBgPalette_Bug[];
 extern const u8 gBattleAnimBgPalette_SolarBeam[];
 extern const u8 gBattleAnimBgTilemap_Dark[];
@@ -3449,9 +3449,9 @@ extern const u8 Tiles_D129AC[];
 extern const u8 gAreaUnknownTiles[];
 extern const u16 gAreaUnknownPalette[];
 
-extern const u8 gUnknown_08E70968[];
-extern const u8 gUnknown_08E70C38[];
-extern const u8 gUnknown_08E70F0C[];
+extern const u8 gBattleAnimBgTilemap_SurfOpponent[];
+extern const u8 gBattleAnimBgTilemap_SurfPlayer[];
+extern const u8 gBattleAnimBgTilemap_SurfContest[];
 
 extern const u8 gUnknown_08E964B8[];
 

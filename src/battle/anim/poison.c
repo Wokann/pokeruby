@@ -3,8 +3,6 @@
 #include "trig.h"
 
 
-extern const union AnimCmd *const gSpriteAnimTable_83D9310[];
-
 void AnimSpriteOnMonPos(struct Sprite *sprite);
 void sub_80D9D70(struct Sprite *sprite);
 void sub_80D9DF0(struct Sprite *sprite);
@@ -138,7 +136,7 @@ const union AffineAnimCmd gSpriteAffineAnim_83DA300[] =
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DA318[] =
+const union AffineAnimCmd *const gAffineAnims_Droplet[] =
 {
     gSpriteAffineAnim_83DA300,
 };
@@ -150,7 +148,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA31C =
     .oam = &gOamData_AffineDouble_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83DA278,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DA318,
+    .affineAnims = gAffineAnims_Droplet,
     .callback = sub_80D9F14,
 };
 
@@ -182,7 +180,7 @@ const struct SpriteTemplate gWaterBubbleSpriteTemplate =
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
     .oam = &gOamData_AffineNormal_ObjBlend_16x16,
-    .anims = gSpriteAnimTable_83D9310,
+    .anims = gAnims_WaterBubble,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA34C,
     .callback = AnimBubbleEffect,
