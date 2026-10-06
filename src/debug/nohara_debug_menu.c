@@ -462,7 +462,7 @@ bool8 debug_sub_808F93C(void)
     }
     if (JOY_NEW(B_BUTTON | START_BUTTON))
     {
-        sub_80BF588(gSaveBlock1.tvShows);
+        CompactTVShowArray(gSaveBlock1.tvShows);
         CloseMenu();
         return TRUE;
     }
@@ -485,15 +485,15 @@ void debug_sub_808FA88(u8 a0, u8 a1)
     for (i = 0; i < 0x22; i++)
         gSaveBlock1.tvShows[a0].common.pad02[i] = 1;
 
-    channel = GetTVChannelByShowType(a1);
+    channel = GetTVGroupByShowId(a1);
     switch (channel)
     {
         case 2:
         case 4:
-            sub_80BE160(&gSaveBlock1.tvShows[a0]);
+            StorePlayerIdInNormalShow(&gSaveBlock1.tvShows[a0]);
             break;
         case 3:
-            sub_80BE138(&gSaveBlock1.tvShows[a0]);
+            StorePlayerIdInRecordMixShow(&gSaveBlock1.tvShows[a0]);
             break;
     }
 
@@ -510,21 +510,21 @@ void debug_sub_808FA88(u8 a0, u8 a1)
         }
         case TVSHOW_PKMN_FAN_CLUB_OPINIONS:
         {
-            GF_ACCESS(TVShowFanclubOpinions)->var02 = 1;
+            GF_ACCESS(TVShowFanclubOpinions)->species = 1;
             StringCopy(GF_ACCESS(TVShowFanclubOpinions)->playerName, gSaveBlock2.playerName);
-            GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_NICKNAME, GF_ACCESS(TVShowFanclubOpinions)->var10);
+            GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_NICKNAME, GF_ACCESS(TVShowFanclubOpinions)->nickname);
             GF_ACCESS(TVShowFanclubOpinions)->language = GAME_LANGUAGE;
-            GF_ACCESS(TVShowFanclubOpinions)->var0E = GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_LANGUAGE);
+            GF_ACCESS(TVShowFanclubOpinions)->pokemonNameLanguage = GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_LANGUAGE);
             break;
         }
-        case TVSHOW_UNKN_SHOWTYPE_04:
+        case TVSHOW_DUMMY:
         {
             break;
         }
         case TVSHOW_NAME_RATER_SHOW:
         {
             GF_ACCESS(TVShowNameRaterShow)->species = GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_SPECIES);
-            GF_ACCESS(TVShowNameRaterShow)->var1C = 1;
+            GF_ACCESS(TVShowNameRaterShow)->randomSpecies = 1;
             StringCopy(GF_ACCESS(TVShowNameRaterShow)->trainerName, gSaveBlock2.playerName);
             GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_NICKNAME, GF_ACCESS(TVShowNameRaterShow)->pokemonName);
             GF_ACCESS(TVShowNameRaterShow)->language = GAME_LANGUAGE;
@@ -537,22 +537,22 @@ void debug_sub_808FA88(u8 a0, u8 a1)
             StringCopy(GF_ACCESS(TVShowBravoTrainerPokemonProfiles)->playerName, gSaveBlock2.playerName);
             GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_NICKNAME, GF_ACCESS(TVShowBravoTrainerPokemonProfiles)->pokemonNickname);
             GF_ACCESS(TVShowBravoTrainerPokemonProfiles)->language = GAME_LANGUAGE;
-            GF_ACCESS(TVShowBravoTrainerPokemonProfiles)->var1f = GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_LANGUAGE);
+            GF_ACCESS(TVShowBravoTrainerPokemonProfiles)->pokemonNameLanguage = GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_LANGUAGE);
             break;
         }
         case TVSHOW_BRAVO_TRAINER_BATTLE_TOWER_PROFILE:
         {
             GF_ACCESS(TVShowBravoTrainerBattleTowerSpotlight)->species = SPECIES_BULBASAUR;
             GF_ACCESS(TVShowBravoTrainerBattleTowerSpotlight)->defeatedSpecies = SPECIES_BULBASAUR;
-            StringCopy(GF_ACCESS(TVShowBravoTrainerBattleTowerSpotlight)->trainerName, gSaveBlock2.playerName);
-            StringCopy(GF_ACCESS(TVShowBravoTrainerBattleTowerSpotlight)->enemyTrainerName, gSaveBlock2.playerName);
-            GF_ACCESS(TVShowBravoTrainerBattleTowerSpotlight)->language = GAME_LANGUAGE;
+            StringCopy(GF_ACCESS(TVShowBravoTrainerBattleTowerSpotlight)->playerName, gSaveBlock2.playerName);
+            StringCopy(GF_ACCESS(TVShowBravoTrainerBattleTowerSpotlight)->opponentName, gSaveBlock2.playerName);
+            GF_ACCESS(TVShowBravoTrainerBattleTowerSpotlight)->playerLanguage = GAME_LANGUAGE;
             break;
         }
         case TVSHOW_MASS_OUTBREAK:
         {
             GF_ACCESS(TVShowMassOutbreak)->species = SPECIES_BULBASAUR;
-            GF_ACCESS(TVShowMassOutbreak)->daysLeft = 1;
+            GF_ACCESS(TVShowMassOutbreak)->daysBeforeOutbreak = 1;
             break;
         }
         case TVSHOW_POKEMON_TODAY_CAUGHT:
@@ -580,15 +580,15 @@ void debug_sub_808FA88(u8 a0, u8 a1)
         }
         case TVSHOW_FISHING_ADVICE:
         {
-            GF_ACCESS(TVShowPokemonAngler)->var04 = SPECIES_BULBASAUR;
+            GF_ACCESS(TVShowPokemonAngler)->species = SPECIES_BULBASAUR;
             StringCopy(GF_ACCESS(TVShowPokemonAngler)->playerName, gSaveBlock2.playerName);
             GF_ACCESS(TVShowPokemonAngler)->language = GAME_LANGUAGE;
             break;
         }
         case TVSHOW_WORLD_OF_MASTERS:
         {
-            GF_ACCESS(TVShowWorldOfMasters)->var04 = SPECIES_BULBASAUR;
-            GF_ACCESS(TVShowWorldOfMasters)->var08 = SPECIES_BULBASAUR;
+            GF_ACCESS(TVShowWorldOfMasters)->caughtPoke = SPECIES_BULBASAUR;
+            GF_ACCESS(TVShowWorldOfMasters)->species = SPECIES_BULBASAUR;
             StringCopy(GF_ACCESS(TVShowWorldOfMasters)->playerName, gSaveBlock2.playerName);
             GF_ACCESS(TVShowWorldOfMasters)->language = GAME_LANGUAGE;
             break;
@@ -614,14 +614,14 @@ void debug_sub_808FA88(u8 a0, u8 a1)
         {
             DECLARE_TERU_POINTER;
             
-            GF_ACCESS(TVShowFanclubOpinions)->var02 = 1;
+            GF_ACCESS(TVShowFanclubOpinions)->species = 1;
             StringCopy(GF_ACCESS(TVShowFanclubOpinions)->playerName, gSaveBlock2.playerName);
-            GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_NICKNAME, GF_ACCESS(TVShowFanclubOpinions)->var10);
+            GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_NICKNAME, GF_ACCESS(TVShowFanclubOpinions)->nickname);
             TERU_ACCESS(fanclubOpinions).language = GAME_LANGUAGE;
-            TERU_ACCESS(fanclubOpinions).var0E = GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_LANGUAGE);
+            TERU_ACCESS(fanclubOpinions).pokemonNameLanguage = GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_LANGUAGE);
             break;
         }
-        case TVSHOW_UNKN_SHOWTYPE_04:
+        case TVSHOW_DUMMY:
         {
             break;
         }
@@ -631,7 +631,7 @@ void debug_sub_808FA88(u8 a0, u8 a1)
             DECLARE_TERU_POINTER;
             
             GF_ACCESS(TVShowNameRaterShow)->species = species;
-            GF_ACCESS(TVShowNameRaterShow)->var1C = 1;
+            GF_ACCESS(TVShowNameRaterShow)->randomSpecies = 1;
             StringCopy(GF_ACCESS(TVShowNameRaterShow)->trainerName, gSaveBlock2.playerName);
             GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_NICKNAME, GF_ACCESS(TVShowNameRaterShow)->pokemonName);
             TERU_ACCESS(nameRaterShow).language = GAME_LANGUAGE;
@@ -646,7 +646,7 @@ void debug_sub_808FA88(u8 a0, u8 a1)
             StringCopy(GF_ACCESS(TVShowBravoTrainerPokemonProfiles)->playerName, gSaveBlock2.playerName);
             GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_NICKNAME, GF_ACCESS(TVShowBravoTrainerPokemonProfiles)->pokemonNickname);
             TERU_ACCESS(bravoTrainer).language = GAME_LANGUAGE;
-            TERU_ACCESS(bravoTrainer).var1f = GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_LANGUAGE);
+            TERU_ACCESS(bravoTrainer).pokemonNameLanguage = GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_LANGUAGE);
             break;
         }
         case TVSHOW_BRAVO_TRAINER_BATTLE_TOWER_PROFILE:
@@ -655,15 +655,15 @@ void debug_sub_808FA88(u8 a0, u8 a1)
             
             GF_ACCESS(TVShowBravoTrainerBattleTowerSpotlight)->species = SPECIES_BULBASAUR;
             GF_ACCESS(TVShowBravoTrainerBattleTowerSpotlight)->defeatedSpecies = SPECIES_BULBASAUR;
-            StringCopy(GF_ACCESS(TVShowBravoTrainerBattleTowerSpotlight)->trainerName, gSaveBlock2.playerName);
-            StringCopy(GF_ACCESS(TVShowBravoTrainerBattleTowerSpotlight)->enemyTrainerName, gSaveBlock2.playerName);
-            TERU_ACCESS(bravoTrainerTower).language = GAME_LANGUAGE;
+            StringCopy(GF_ACCESS(TVShowBravoTrainerBattleTowerSpotlight)->playerName, gSaveBlock2.playerName);
+            StringCopy(GF_ACCESS(TVShowBravoTrainerBattleTowerSpotlight)->opponentName, gSaveBlock2.playerName);
+            TERU_ACCESS(bravoTrainerTower).playerLanguage = GAME_LANGUAGE;
             break;
         }
         case TVSHOW_MASS_OUTBREAK:
         {
             GF_ACCESS(TVShowMassOutbreak)->species = SPECIES_BULBASAUR;
-            GF_ACCESS(TVShowMassOutbreak)->daysLeft = 1;
+            GF_ACCESS(TVShowMassOutbreak)->daysBeforeOutbreak = 1;
             break;
         }
         case TVSHOW_POKEMON_TODAY_CAUGHT:
@@ -672,7 +672,7 @@ void debug_sub_808FA88(u8 a0, u8 a1)
             u8 gUnknown_Debug_083C4C64[] = _("TERUKUN");
             u8 gUnknown_Debug_083C4C6C[] = _("TERUTERUDA");
 
-            TERU_ACCESS(pokemonToday).var12 = 255;
+            TERU_ACCESS(pokemonToday).nBallsUsed = 255;
             StringCopy(TERU_ACCESS(pokemonToday).playerName, gUnknown_Debug_083C4C64);
             StringCopy(TERU_ACCESS(pokemonToday).nickname, gUnknown_Debug_083C4C6C);
             TERU_ACCESS(pokemonToday).ball = ITEM_PREMIER_BALL;
@@ -704,9 +704,9 @@ void debug_sub_808FA88(u8 a0, u8 a1)
 
             TERU_ACCESS(pokemonTodayFailed).species = SPECIES_WIGGLYTUFF;
             TERU_ACCESS(pokemonTodayFailed).species2 = SPECIES_WIGGLYTUFF;
-            TERU_ACCESS(pokemonTodayFailed).var12 = 3;
-            TERU_ACCESS(pokemonTodayFailed).var10 = 0xff;
-            TERU_ACCESS(pokemonTodayFailed).var11 = 1;
+            TERU_ACCESS(pokemonTodayFailed).location = 3;
+            TERU_ACCESS(pokemonTodayFailed).nBallsUsed = 0xff;
+            TERU_ACCESS(pokemonTodayFailed).outcome = 1;
             StringCopy(TERU_ACCESS(pokemonTodayFailed).playerName, gUnknown_Debug_083C4C64);
             TERU_ACCESS(pokemonTodayFailed).language = GAME_LANGUAGE;
             break;
@@ -716,9 +716,9 @@ void debug_sub_808FA88(u8 a0, u8 a1)
             DECLARE_TERU_POINTER;
             u8 gUnknown_Debug_083C4C64[] = _("TERUKUN");
 
-            TERU_ACCESS(pokemonAngler).var02 = 0xff;
-            TERU_ACCESS(pokemonAngler).var03 = 0;
-            TERU_ACCESS(pokemonAngler).var04 = 40;
+            TERU_ACCESS(pokemonAngler).nBites = 0xff;
+            TERU_ACCESS(pokemonAngler).nFails = 0;
+            TERU_ACCESS(pokemonAngler).species = 40;
             StringCopy(TERU_ACCESS(pokemonAngler).playerName, gUnknown_Debug_083C4C64);
             TERU_ACCESS(pokemonAngler).language = GAME_LANGUAGE;
             break;
@@ -728,11 +728,11 @@ void debug_sub_808FA88(u8 a0, u8 a1)
             DECLARE_TERU_POINTER;
             u8 gUnknown_Debug_083C4C64[] = _("TERUKUN");
 
-            TERU_ACCESS(worldOfMasters).var02 = 0xffff;
-            TERU_ACCESS(worldOfMasters).var06 = 0xffff;
-            TERU_ACCESS(worldOfMasters).var04 = 40;
-            TERU_ACCESS(worldOfMasters).var08 = 40;
-            TERU_ACCESS(worldOfMasters).var0a = 3;
+            TERU_ACCESS(worldOfMasters).numPokeCaught = 0xffff;
+            TERU_ACCESS(worldOfMasters).steps = 0xffff;
+            TERU_ACCESS(worldOfMasters).caughtPoke = 40;
+            TERU_ACCESS(worldOfMasters).species = 40;
+            TERU_ACCESS(worldOfMasters).location = 3;
             StringCopy(TERU_ACCESS(worldOfMasters).playerName, gUnknown_Debug_083C4C64);
             TERU_ACCESS(worldOfMasters).language = GAME_LANGUAGE;
             break;
@@ -817,7 +817,7 @@ bool8 debug_sub_808FF3C(void)
 
     if (JOY_NEW(B_BUTTON | START_BUTTON))
     {
-        sub_80BEC40();
+        CompactPokeNews();
         CloseMenu();
         return TRUE;
     }
@@ -829,7 +829,7 @@ void debug_sub_8090080(u8 a0, u8 a1)
 {
     gSaveBlock1.pokeNews[a0].kind = a1;
     gSaveBlock1.pokeNews[a0].state = 1;
-    gSaveBlock1.pokeNews[a0].days = 4;
+    gSaveBlock1.pokeNews[a0].dayCountdown = 4;
 }
 
 bool8 debug_sub_80900AC(void)

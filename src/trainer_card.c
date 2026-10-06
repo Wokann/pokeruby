@@ -1263,10 +1263,10 @@ static void PrintLinkBattleResultsOnCard(void)
 
     if (sData->hasLinkResults != 0)
     {
-        ConvertIntToDecimalString(buffer, sData->trainerCard.linkBattleWins);
+        ConvertIntToDecimalStringSimple(buffer, sData->trainerCard.linkBattleWins);
         MenuPrint_RightAligned(buffer, 22, 7);
 
-        ConvertIntToDecimalString(buffer, sData->trainerCard.linkBattleLosses);
+        ConvertIntToDecimalStringSimple(buffer, sData->trainerCard.linkBattleLosses);
         MenuPrint_RightAligned(buffer, 28, 7);
     }
 }

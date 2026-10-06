@@ -2191,23 +2191,23 @@ static void SummaryScreen_PrintPokemonSkills(struct Pokemon *mon)
 
     buffer = gStringVar1;
 
-    ConvertIntToDecimalString(buffer, GetMonData(mon, MON_DATA_EXP));
+    ConvertIntToDecimalStringSimple(buffer, GetMonData(mon, MON_DATA_EXP));
     MenuPrint_RightAligned(buffer, 29, 14);
     DrawExperienceProgressBar(mon, 23, 16);
 
-    ConvertIntToDecimalString(buffer, GetMonData(mon, MON_DATA_ATK));
+    ConvertIntToDecimalStringSimple(buffer, GetMonData(mon, MON_DATA_ATK));
     MenuPrint_Centered(buffer, 16, 9, 50);
 
-    ConvertIntToDecimalString(buffer, GetMonData(mon, MON_DATA_DEF));
+    ConvertIntToDecimalStringSimple(buffer, GetMonData(mon, MON_DATA_DEF));
     MenuPrint_Centered(buffer, 16, 11, 50);
 
-    ConvertIntToDecimalString(buffer, GetMonData(mon, MON_DATA_SPATK));
+    ConvertIntToDecimalStringSimple(buffer, GetMonData(mon, MON_DATA_SPATK));
     MenuPrint_Centered(buffer, 27, 7, 18);
 
-    ConvertIntToDecimalString(buffer, GetMonData(mon, MON_DATA_SPDEF));
+    ConvertIntToDecimalStringSimple(buffer, GetMonData(mon, MON_DATA_SPDEF));
     MenuPrint_Centered(buffer, 27, 9, 18);
 
-    ConvertIntToDecimalString(buffer, GetMonData(mon, MON_DATA_SPEED));
+    ConvertIntToDecimalStringSimple(buffer, GetMonData(mon, MON_DATA_SPEED));
     MenuPrint_Centered(buffer, 27, 11, 18);
 
     buffer = AlignInt1InMenuWindow(buffer, GetMonData(mon, MON_DATA_HP), 24, 1);
@@ -2486,7 +2486,7 @@ static bool8 DoesMonOTMatchOwner(struct Pokemon *mon)
     }
     else
     {
-        trainerId = GetPlayerTrainerId() & 0xFFFF;
+        trainerId = GetPlayerIDAsU32() & 0xFFFF;
         StringCopy(gStringVar1, gSaveBlock2.playerName);
     }
 
@@ -2669,7 +2669,7 @@ static void sub_80A0958(struct Pokemon *mon)
     buffer = SummaryScreen_SetTextColor(gStringVar1, 13);
     buffer[0] = CHAR_LV;
     buffer += 1;
-    buffer = ConvertIntToDecimalString(buffer, level);
+    buffer = ConvertIntToDecimalStringSimple(buffer, level);
 
     buffer[0] = EXT_CTRL_CODE_BEGIN;
     buffer[1] = 0x13;
@@ -2815,7 +2815,7 @@ static void DrawExperienceProgressBar(struct Pokemon *mon, u8 left, u8 top)
         }
     }
 
-    ConvertIntToDecimalString(gStringVar1, expToNextLevel);
+    ConvertIntToDecimalStringSimple(gStringVar1, expToNextLevel);
     MenuPrint_RightAligned(gStringVar1, left + 6, top);
 
 
@@ -4050,7 +4050,7 @@ u8 *PokemonSummaryScreen_CopyPokemonLevel(u8 *dest, u8 level)
     if (level == 0)
         level = 5;
 
-    ConvertIntToDecimalString(buffer, level);
+    ConvertIntToDecimalStringSimple(buffer, level);
     dest = SummaryScreen_CopyColoredString(dest, buffer, 14);
     dest = StringCopy(dest, gOtherText_Comma);
 

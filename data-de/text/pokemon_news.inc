@@ -1,4 +1,4 @@
-gTVNewsText_EnergyGuru1:: @ 81AD135
+gPokeNewsTextSlateport_Upcoming:: @ 81AD135
 	.string "Guten Tag, meine Damen und Herren!\n"
 	.string "Hier sind die POKéMON NACHRICHTEN.\p"
 	.string "Heute berichten wir über GRAPHITPORT\n"
@@ -13,7 +13,7 @@ gTVNewsText_EnergyGuru1:: @ 81AD135
 	.string "GRAPHITPORT CITY ist eine Reise wert!\p"
 	.string "Das waren die POKéMON NACHRICHTEN.$"
 
-gTVNewsText_EnergyGuru2:: @ 81AD2E0
+gPokeNewsTextSlateport_Ongoing:: @ 81AD2E0
 	.string "Guten Tag, meine Damen und Herren!\n"
 	.string "Hier sind die POKéMON NACHRICHTEN.\p"
 	.string "Auf diese Nachrichten haben Sie\n"
@@ -27,7 +27,7 @@ gTVNewsText_EnergyGuru2:: @ 81AD2E0
 	.string "kaufen Sie, was das Herz begehrt.\p"
 	.string "Das waren die POKéMON NACHRICHTEN.$"
 
-gTVNewsText_EnergyGuru3:: @ 81AD434
+gPokeNewsTextSlateport_Ending:: @ 81AD434
 	.string "Guten Tag, meine Damen und Herren!\n"
 	.string "Hier sind die POKéMON NACHRICHTEN.\p"
 	.string "Auf diese Nachrichten haben Sie\n"
@@ -43,7 +43,7 @@ gTVNewsText_EnergyGuru3:: @ 81AD434
 	.string "genießen Sie den Einkauf!\p"
 	.string "Das waren die POKéMON NACHRICHTEN.$"
 
-gTVNewsText_GameCorner1:: @ 81AD5B0
+gPokeNewsTextGameCorner_Upcoming:: @ 81AD5B0
 	.string "Guten Tag meine Damen und Herren!\n"
 	.string "Hier sind die POKéMON NACHRICHTEN.\p"
 	.string "Bald ist es so weit!\n"
@@ -54,7 +54,7 @@ gTVNewsText_GameCorner1:: @ 81AD5B0
 	.string "werden ihr Glück nicht fassen können!\p"
 	.string "Das waren die POKéMON NACHRICHTEN.$"
 
-gTVNewsText_GameCorner2:: @ 81AD6AE
+gPokeNewsTextGameCorner_Ongoing:: @ 81AD6AE
 	.string "Guten Tag meine Damen und Herren!\n"
 	.string "Hier sind die POKéMON NACHRICHTEN.\p"
 	.string "Endlich ist es so weit!\n"
@@ -67,7 +67,7 @@ gTVNewsText_GameCorner2:: @ 81AD6AE
 	.string "Dort finden Sie Ihr Glück!\p"
 	.string "Das waren die POKéMON NACHRICHTEN.$"
 
-gTVNewsText_GameCorner3:: @ 81AD7A7
+gPokeNewsTextGameCorner_Ending:: @ 81AD7A7
 	.string "Guten Tag, meine Damen und Herren!\n"
 	.string "Hier sind die POKéMON NACHRICHTEN.\p"
 	.string "Endlich ist es so weit!\n"
@@ -81,7 +81,7 @@ gTVNewsText_GameCorner3:: @ 81AD7A7
 	.string "ruft!\p"
 	.string "Das waren die POKéMON NACHRICHTEN.$"
 
-gTVNewsText_LilycoveDepartment1:: @ 81AD8B4
+gPokeNewsTextLilycove_Upcoming:: @ 81AD8B4
 	.string "Guten Tag meine Damen und Herren!\n"
 	.string "Hier sind die POKéMON NACHRICHTEN.\p"
 	.string "Soeben erreichen uns wundervolle Nach-\n"
@@ -94,7 +94,7 @@ gTVNewsText_LilycoveDepartment1:: @ 81AD8B4
 	.string "Ihnen gehören.\p"
 	.string "Das waren die POKéMON NACHRICHTEN.$"
 
-gTVNewsText_LilycoveDepartment2:: @ 81AD9D3
+gPokeNewsTextLilycove_Ongoing:: @ 81AD9D3
 	.string "Guten Tag meine Damen und Herren!\n"
 	.string "Hier sind die POKéMON NACHRICHTEN.\p"
 	.string "Auf diese Nachricht haben Sie schon\n"
@@ -107,7 +107,7 @@ gTVNewsText_LilycoveDepartment2:: @ 81AD9D3
 	.string "Sie können sie dort finden!\p"
 	.string "Das waren die POKéMON NACHRICHTEN.$"
 
-gTVNewsText_LilycoveDepartment3:: @ 81ADB01
+gPokeNewsTextLilycove_Ending:: @ 81ADB01
 	.string "Guten Tag, meine Damen und Herren!\n"
 	.string "Hier sind die POKéMON NACHRICHTEN.\p"
 	.string "Auf diese Nachricht haben Sie schon\n"

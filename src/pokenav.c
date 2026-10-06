@@ -4855,7 +4855,7 @@ u8 * sub_80F6514(u8 * r10, u16 sp0, u8 sp4)
         dest[4] = CHAR_LV;
         dest += 5;
 
-        dest = ConvertIntToDecimalString(dest, level);
+        dest = ConvertIntToDecimalStringSimple(dest, level);
         if (sp4 == 1)
         {
             dest = AlignInt1InMenuWindow(dest, gPokenavStructPtr->unk893c[sp0].unk0, 0x80, 0x01);

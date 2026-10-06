@@ -1851,7 +1851,7 @@ static void Task_EndAppeals(u8 taskId)
         gContestMonAppealPointTotals[i] = eContestantStatus[i].pointTotal;
     CalculateFinalScores();
     ContestClearGeneralTextWindow();
-    sub_80BE23C(eContestantStatus[gContestPlayerMonIndex].prevMove);
+    BravoTrainerPokemonProfile_BeforeInterview1(eContestantStatus[gContestPlayerMonIndex].prevMove);
     gContestRngValue = gRngValue;
     StringExpandPlaceholders(gStringVar4, gText_AllOutOfAppealTime);
     Contest_StartTextPrinter(&gMenuWindow, gStringVar4, 776, 1, 15);

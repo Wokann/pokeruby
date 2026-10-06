@@ -347,7 +347,7 @@ u8 *ConvertIntToHexStringN(u8 *dest, s32 value, enum StringConvertMode mode, u8 
     return dest;
 }
 
-u8 *ConvertIntToDecimalString(u8 *dest, s32 value)
+u8 *ConvertIntToDecimalStringSimple(u8 *dest, s32 value)
 {
     char temp[12];
     s32 length = 0;

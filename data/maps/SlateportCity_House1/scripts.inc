@@ -30,12 +30,12 @@ SlateportCity_NameRatersHouse_EventScript_RateMonNickname:: @ 81556C9
 	specialvar VAR_RESULT, ScriptGetPartyMonSpecies
 	compare VAR_RESULT, SPECIES_EGG
 	goto_if_eq SlateportCity_NameRatersHouse_EventScript_CantRateEgg
-	special TV_CopyNicknameToStringVar1AndEnsureTerminated
-	special TV_CheckMonOTIDEqualsPlayerID
+	special BufferMonNickname
+	special IsMonOTIDNotPlayers
 	compare VAR_RESULT, 1
 	goto_if_eq SlateportCity_NameRatersHouse_EventScript_PlayerNotMonsOT
 	specialvar VAR_RESULT, MonOTNameMatchesPlayer
-	special TV_CopyNicknameToStringVar1AndEnsureTerminated
+	special BufferMonNickname
 	compare VAR_RESULT, 1
 	goto_if_eq SlateportCity_NameRatersHouse_EventScript_PlayerNotMonsOT
 	msgbox SlateportCity_NameRatersHouse_Text_FineNameSuggestBetterOne, MSGBOX_YESNO
@@ -58,8 +58,8 @@ SlateportCity_NameRatersHouse_EventScript_PlayerNotMonsOT:: @ 8155726
 SlateportCity_NameRatersHouse_EventScript_ChangeNickname:: @ 8155730
 	msgbox SlateportCity_NameRatersHouse_Text_WhatShallNewNameBe, MSGBOX_DEFAULT
 	call Common_EventScript_NameReceivedPartyMon
-	specialvar VAR_RESULT, TV_PutNameRaterShowOnTheAirIfNicnkameChanged
-	special TV_CopyNicknameToStringVar1AndEnsureTerminated
+	specialvar VAR_RESULT, TryPutNameRaterShowOnTheAir
+	special BufferMonNickname
 	compare VAR_RESULT, 1
 	goto_if_eq SlateportCity_NameRatersHouse_EventScript_NewNameDifferent
 	msgbox SlateportCity_NameRatersHouse_Text_NameNoDifferentYetSuperior, MSGBOX_DEFAULT

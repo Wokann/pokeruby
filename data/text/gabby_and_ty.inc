@@ -150,7 +150,7 @@ Route120_Text_1AC8D7:: @ 81AC8D7
 	.string "TY: Yep, I got it all.\n"
 	.string "That whole battle's on camera.$"
 
-gTVGabbyAndTyText1:: @ 81AC90D
+gTVInSearchOfTrainersText00:: @ 81AC90D
 	.string "IN SEARCH OF TRAINERS...\p"
 	.string "GABBY: Hi! Today I'm visiting an area\n"
 	.string "near {STR_VAR_1}.\p"
@@ -161,14 +161,14 @@ gTVGabbyAndTyText1:: @ 81AC90D
 	.string "There's something about this TRAINER\n"
 	.string "that piqued our interest.$"
 
-gTVGabbyAndTyText2:: @ 81ACA02
+gTVInSearchOfTrainersText01:: @ 81ACA02
 	.string "We've battled {PLAYER} before, but we\n"
 	.string "can attest that the TRAINER has most\l"
 	.string "definitely improved from before.\p"
 	.string "I knew we were onto someone special\n"
 	.string "when we spotted this TRAINER!$"
 
-gTVGabbyAndTyText3:: @ 81ACAAA
+gTVInSearchOfTrainersText02:: @ 81ACAAA
 	.string "The best way to determine how strong\n"
 	.string "a TRAINER is...\p"
 	.string "Well, the fastest way is to battle.\n"
@@ -182,7 +182,7 @@ gTVGabbyAndTyText3:: @ 81ACAAA
 	.string "We asked the TRAINER for a succinct\n"
 	.string "summation of the battle we shared.$"
 
-gTVGabbyAndTyText4:: @ 81ACC07
+gTVInSearchOfTrainersText03:: @ 81ACC07
 	.string "The combination of {STR_VAR_1} and\n"
 	.string "{STR_VAR_3} was divine!\p"
 	.string "The sight of them - {STR_VAR_1} and\n"
@@ -194,7 +194,7 @@ gTVGabbyAndTyText4:: @ 81ACC07
 	.string "The move {STR_VAR_2} is {STR_VAR_1}\n"
 	.string "and {STR_VAR_3}'s sign of friendship!$"
 
-gTVGabbyAndTyText5:: @ 81ACD13
+gTVInSearchOfTrainersText04:: @ 81ACD13
 	.string "...I lost confidence in myself as\n"
 	.string "a result of our encounter.\p"
 	.string "We were beaten before we could launch\n"
@@ -205,7 +205,7 @@ gTVGabbyAndTyText5:: @ 81ACD13
 	.string "I recommend confident TRAINERS to\n"
 	.string "challenge {PLAYER}.$"
 
-gTVGabbyAndTyText6:: @ 81ACDFA
+gTVInSearchOfTrainersText05:: @ 81ACDFA
 	.string "There's only one thing to be said.\n"
 	.string "Don't you dare throw a POKé BALL during\l"
 	.string "a TRAINER battle!\p"
@@ -215,13 +215,13 @@ gTVGabbyAndTyText6:: @ 81ACDFA
 	.string "If you see {PLAYER}, please caution\n"
 	.string "the TRAINER!$"
 
-gTVGabbyAndTyText7:: @ 81ACEE7
+gTVInSearchOfTrainersText06:: @ 81ACEE7
 	.string "{PLAYER} is adept at reading the\n"
 	.string "opponent's actions.\p"
 	.string "The timing of item usage was remarkably\n"
 	.string "effective!$"
 
-gTVGabbyAndTyText8:: @ 81ACF49
+gTVInSearchOfTrainersText07:: @ 81ACF49
 	.string "Honestly speaking, I thought that\n"
 	.string "I might even be pretty good.\p"
 	.string "While we did end up losing, we did have\n"
@@ -229,7 +229,7 @@ gTVGabbyAndTyText8:: @ 81ACF49
 	.string "But if you're struggling against me,\n"
 	.string "you have a ways to go, {PLAYER}!$"
 
-gTVGabbyAndTyText9:: @ 81AD00A
+gTVInSearchOfTrainersText08:: @ 81AD00A
 	.string "After our battle, we asked {PLAYER} for\n"
 	.string "a succinct summary.\p"
 	.string "The TRAINER replied, “{STR_VAR_1}.”\p"

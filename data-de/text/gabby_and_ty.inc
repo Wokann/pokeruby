@@ -150,7 +150,7 @@ Route120_Text_1AC8D7:: @ 81AC8D7
 	.string "UDO: Ja, alles im Kasten!\n"
 	.string "Der ganze Kampf ist auf Band!$"
 
-gTVGabbyAndTyText1:: @ 81AC90D
+gTVInSearchOfTrainersText00:: @ 81AC90D
 	.string "AUF DER SUCHE NACH TRAINERN...\p"
 	.string "PIA: Hallo! Heute besuche ich ein Ge-\n"
 	.string "biet in der Nähe von {STR_VAR_1}.\p"
@@ -161,14 +161,14 @@ gTVGabbyAndTyText1:: @ 81AC90D
 	.string "Etwas an diesem TRAINER hat unser\n"
 	.string "Interesse geweckt...$"
 
-gTVGabbyAndTyText2:: @ 81ACA02
+gTVInSearchOfTrainersText01:: @ 81ACA02
 	.string "Wir sind schon früher gegen {PLAYER}\n"
 	.string "angetreten, und wir versichern, dass\l"
 	.string "der TRAINER viel stärker geworden ist!\p"
 	.string "Ich wusste sofort, dass wir hier einen\n"
 	.string "ganz besonderen TRAINER vor uns haben.$"
 
-gTVGabbyAndTyText3:: @ 81ACAAA
+gTVInSearchOfTrainersText02:: @ 81ACAAA
 	.string "Die beste Art, das Können eines\n"
 	.string "TRAINERS festzustellen, ist...\p"
 	.string "Das Tempo des Kampfes anzuheben.\n"
@@ -183,7 +183,7 @@ gTVGabbyAndTyText3:: @ 81ACAAA
 	.string "Gehen wir etwas näher auf den Kampf\n"
 	.string "ein.$"
 
-gTVGabbyAndTyText4:: @ 81ACC07
+gTVInSearchOfTrainersText03:: @ 81ACC07
 	.string "Die Kombination von {STR_VAR_1} und\n"
 	.string "{STR_VAR_3} war einfach göttlich!\p"
 	.string "Schon die Ausstrahlung der beiden ließ\n"
@@ -196,7 +196,7 @@ gTVGabbyAndTyText4:: @ 81ACC07
 	.string "Zeichen der Freundschaft zwischen\l"
 	.string "{STR_VAR_1} und {STR_VAR_3}.$"
 
-gTVGabbyAndTyText5:: @ 81ACD13
+gTVInSearchOfTrainersText04:: @ 81ACD13
 	.string "So geht mein ganzes Selbstbewusstsein\n"
 	.string "dahin... Die Folge unserer Entdeckung.\p"
 	.string "Wir wurden geschlagen, bevor wir\n"
@@ -207,7 +207,7 @@ gTVGabbyAndTyText5:: @ 81ACD13
 	.string "Ich fordere mutige TRAINER auf, sich\n"
 	.string "mit {PLAYER} zu messen!$"
 
-gTVGabbyAndTyText6:: @ 81ACDFA
+gTVInSearchOfTrainersText05:: @ 81ACDFA
 	.string "Dazu gibt es nur eines zu sagen.\n"
 	.string "Wage es nicht, während eines Kampfes\l"
 	.string "einen POKéBALL zu werfen!\p"
@@ -218,13 +218,13 @@ gTVGabbyAndTyText6:: @ 81ACDFA
 	.string "Wenn ihr {PLAYER} seht, dann weist den\n"
 	.string "TRAINER zurecht!$"
 
-gTVGabbyAndTyText7:: @ 81ACEE7
+gTVInSearchOfTrainersText06:: @ 81ACEE7
 	.string "{PLAYER} hat ein Talent dafür, das Vor-\n"
 	.string "gehen seines Gegners vorherzusehen.\p"
 	.string "Das Item wurde erstaunlicherweise \n"
 	.string "genau zum richtigen Zeitpunkt benutzt!$"
 
-gTVGabbyAndTyText8:: @ 81ACF49
+gTVInSearchOfTrainersText07:: @ 81ACF49
 	.string "Ehrlich gesagt, bin ich davon ausge-\n"
 	.string "gangen, dass ich sehr gut bin.\p"
 	.string "Auch wenn wir verloren hätten, dann\n"
@@ -232,7 +232,7 @@ gTVGabbyAndTyText8:: @ 81ACF49
 	.string "Wenn du es mit uns aufnehmen willst,\n"
 	.string "{PLAYER}, musst du noch viel trainieren!$"
 
-gTVGabbyAndTyText9:: @ 81AD00A
+gTVInSearchOfTrainersText08:: @ 81AD00A
 	.string "Nach dem Kampf baten wir {PLAYER}\n"
 	.string "um eine kurze Stellungnahme.\p"
 	.string "Der TRAINER sagte: “{STR_VAR_1}”.\p"

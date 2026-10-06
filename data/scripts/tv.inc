@@ -2,28 +2,28 @@ Event_TV:: @ 81A6E72
 	lockall
 	incrementgamestat GAME_STAT_WATCHED_TV
 	special ResetTVShowState
-	specialvar VAR_RESULT, CheckForBigMovieOrEmergencyNewsOnTV
+	specialvar VAR_RESULT, CheckForPlayersHouseNews
 	compare VAR_RESULT, 2
 	goto_if_eq EventScript_1A6F01
 	compare VAR_RESULT, 1
 	goto_if_eq EventScript_1A6F0B
 	goto_if_unset FLAG_SYS_TV_START, EventScript_1A6EF1
 	goto_if_set FLAG_SYS_TV_WATCH, EventScript_1A6EF1
-	specialvar VAR_RESULT, IsTVShowInSearchOfTrainersAiring
+	specialvar VAR_RESULT, IsGabbyAndTyShowOnTheAir
 	compare VAR_RESULT, 1
 	goto_if_eq EventScript_1A6F66
 	goto EventScript_1A6F50
 	end
 
 EventScript_1A6EBB:
-	specialvar VAR_0x8004, special_0x44
+	specialvar VAR_0x8004, GetRandomActiveShowIdx
 	compare VAR_0x8004, 255
 	goto_if_eq EventScript_1A6F3F
-	specialvar VAR_RESULT, GetNonMassOutbreakActiveTVShow
+	specialvar VAR_RESULT, GetNextActiveShowIfMassOutbreak
 	compare VAR_RESULT, 255
 	goto_if_eq EventScript_1A6F3F
 	copyvar VAR_0x8004, VAR_RESULT
-	specialvar VAR_RESULT, GetTVShowType
+	specialvar VAR_RESULT, GetSelectedTVShow
 	compare VAR_RESULT, 0
 	goto_if_ne EventScript_1A6F21
 	end
@@ -47,7 +47,7 @@ EventScript_1A6F0B:
 	msgbox UnknownString_8172C50, MSGBOX_DEFAULT
 	.endif
 	special InitRoamer
-	clearflag FLAG_SYS_TV_LATI
+	clearflag FLAG_SYS_TV_LATIAS_LATIOS
 	setflag FLAG_LATIOS_OR_LATIAS_ROAMING
 	special TurnOffTVScreen
 	releaseall

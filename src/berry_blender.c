@@ -3001,7 +3001,7 @@ bool8 Blender_PrintBlendingResults(void)
                 de_sub_8073174(txtPtr, sText_SpaceBerry);
 #endif
                 txtPtr = gBerryBlenderData->stringVar;
-                txtPtr = ConvertIntToDecimalString(txtPtr, i + 1);
+                txtPtr = ConvertIntToDecimalStringSimple(txtPtr, i + 1);
                 txtPtr[0] = CHAR_SPACE;
                 txtPtr[1] = CHAR_PERIOD;
                 txtPtr[2] = CHAR_SPACE;
@@ -3205,7 +3205,7 @@ static bool8 Blender_PrintBlendingRanking(void)
             txtPtr[2] = 4;
             txtPtr += 3;
 
-            txtPtr = ConvertIntToDecimalString(txtPtr, i + 1);
+            txtPtr = ConvertIntToDecimalStringSimple(txtPtr, i + 1);
 
             txtPtr[0] = CHAR_SPACE;
             txtPtr[1] = CHAR_PERIOD;

@@ -281,7 +281,7 @@ SYMBOL(gUnknown_03005D30, 4)
 SYMBOL(gSoundTestCryNum, 4)
 
 // tv.c
-SYMBOL(gUnknown_03005D38, 4)
+SYMBOL(sCurTVShowSlot, 4)
 #if DEBUG
 . += 0x54;
 #else

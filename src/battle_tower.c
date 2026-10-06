@@ -1595,7 +1595,7 @@ void TryEnableBravoTrainerBattleTower(void)
     for (i = 0; i < 2; i++)
     {
         if (gSaveBlock2.battleTower.var_4AE[i] == 1)
-            sub_80BFD20();
+            HideBattleTowerReporter();
     }
 }
 

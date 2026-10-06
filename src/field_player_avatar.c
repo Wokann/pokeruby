@@ -1716,7 +1716,7 @@ static bool8 Fishing11(struct Task *task)
         gPlayerAvatar.preventStep = FALSE;
         UnlockPlayerFieldControls();
         FishingWildEncounter(task->tFishingRod);
-        sub_80BE97C(1);
+        RecordFishingAttemptForTV(1);
         DestroyTask(FindTaskIdByFunc(Task_Fishing));
     }
     return FALSE;
@@ -1777,7 +1777,7 @@ static bool8 Fishing16(struct Task *task)
         UnlockPlayerFieldControls();
         UnfreezeObjectEvents();
         Menu_EraseScreen();
-        sub_80BE97C(0);
+        RecordFishingAttemptForTV(0);
         DestroyTask(FindTaskIdByFunc(Task_Fishing));
     }
     return FALSE;

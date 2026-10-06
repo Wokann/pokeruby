@@ -1225,7 +1225,7 @@ static void sub_80A4548(u16 taskId, int topItemOffset, int bottomItemOffset, int
             text[1] = 0x13;
             text[2] = 0x11;
             text += 3;
-            text = ConvertIntToDecimalString(text, gCurrentBagPocketItemSlots[slot].itemId - (ITEM_HM01_CUT - 1));
+            text = ConvertIntToDecimalStringSimple(text, gCurrentBagPocketItemSlots[slot].itemId - (ITEM_HM01_CUT - 1));
             text[0] = EXT_CTRL_CODE_BEGIN;
             text[1] = 0x13;
             text[2] = 0x18;

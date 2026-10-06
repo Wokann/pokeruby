@@ -728,7 +728,7 @@ static void ChooseBoxMenu_PrintInfo(void)
         stringVar[3] = 0x22;
     stringVar += 4;
 
-    stringVar = ConvertIntToDecimalString(stringVar, numInBox);
+    stringVar = ConvertIntToDecimalStringSimple(stringVar, numInBox);
 
     stringVar[0] = CHAR_SLASH;
     stringVar[1] = CHAR_0 + 3;
