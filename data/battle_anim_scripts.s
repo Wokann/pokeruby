@@ -1992,7 +1992,7 @@ Move_ATTRACT: @ 81CA0BA
 	loopsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER, 12, 3
 	createvisualtask AnimTask_SwayMon, 5, 0, 12, 4096, 4, 0
 	delay 15
-	createsprite gBattleAnimSpriteTemplate_83D7AB0, ANIM_TARGET, 3, 20, -8
+	createsprite gRedHeartProjectileSpriteTemplate, ANIM_TARGET, 3, 20, -8
 	waitforvisualfinish
 	playsewithpan SE_M_ATTRACT, SOUND_PAN_TARGET
 	createsprite gBattleAnimSpriteTemplate_83D7AC8, ANIM_TARGET, 3, 160, -32
