@@ -2,42 +2,41 @@
 #include "battle_anim.h"
 #include "trig.h"
 
-
 extern const union AnimCmd *const gPowerAbsorptionOrbAnimTable[];
 
-void sub_80CB4CC(struct Sprite* sprite);
+static void AnimMimicOrb(struct Sprite *sprite);
 
 // copy_orb
 // Used in Mimic.
 
-const union AffineAnimCmd gSpriteAffineAnim_83D65B8[] = {
+const union AffineAnimCmd gMimicOrbAffineAnimCmds1[] = {
     AFFINEANIMCMD_FRAME(0, 0, 0, 0),
     AFFINEANIMCMD_FRAME(48, 48, 0, 14),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D65D0[] = {
+const union AffineAnimCmd gMimicOrbAffineAnimCmds2[] = {
     AFFINEANIMCMD_FRAME(-16, -16, 0, 1),
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D65E0[] = {
-    gSpriteAffineAnim_83D65B8,
-    gSpriteAffineAnim_83D65D0,
+const union AffineAnimCmd *const gMimicOrbAffineAnimTable[] = {
+    gMimicOrbAffineAnimCmds1,
+    gMimicOrbAffineAnimCmds2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D65E8 =
+const struct SpriteTemplate gMimicOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ORBS,
     .paletteTag = ANIM_TAG_ORBS,
     .oam = &gOamData_AffineDouble_ObjNormal_16x16,
     .anims = gPowerAbsorptionOrbAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D65E0,
-    .callback = sub_80CB4CC,
+    .affineAnims = gMimicOrbAffineAnimTable,
+    .callback = AnimMimicOrb,
 };
 
-void sub_80CB4CC(struct Sprite* sprite)
+static void AnimMimicOrb(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -45,8 +44,8 @@ void sub_80CB4CC(struct Sprite* sprite)
     {
         if (GetBattlerSide(gBattleAnimTarget) == 0)
         {
-            s16 a = gBattleAnimArgs[0];
-            gBattleAnimArgs[0] = -a;
+            s16 initialX = gBattleAnimArgs[0];
+            gBattleAnimArgs[0] = -initialX;
         }
 
         sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 0) + gBattleAnimArgs[0];
