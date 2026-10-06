@@ -3,24 +3,23 @@
 #include "trig.h"
 #include "sound.h"
 
-
 // startle (the pokemon sprite shrivels upward and restores after a brief time.)
 // Used in Fake Out, Trick, and Astonish.
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7A98[] =
+static const union AffineAnimCmd sAffineAnims_StretchBattlerUp[] =
 {
     AFFINEANIMCMD_FRAME(0x000A, 0xFFF3, 0x00, 0x0A),
     AFFINEANIMCMD_FRAME(0xFFF6, 0x000D, 0x00, 0x0A),
     AFFINEANIMCMD_END,
 };
 
-// opponent
-void sub_80D1E38(u8 taskId)
+// target
+void AnimTask_StretchTargetUp(u8 taskId)
 {
     u8 spriteId = GetAnimBattlerSpriteId(1);
     if (++gTasks[taskId].data[0] == 1)
     {
-        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(1), gSpriteAffineAnim_83D7A98);
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(1), sAffineAnims_StretchBattlerUp);
         gSprites[spriteId].x2 = 4;
     }
     else
@@ -35,13 +34,13 @@ void sub_80D1E38(u8 taskId)
     }
 }
 
-// player
-void sub_80D1EC8(u8 taskId)
+// attacker
+void AnimTask_StretchAttackerUp(u8 taskId)
 {
     u8 spriteId = GetAnimBattlerSpriteId(0);
     if (++gTasks[taskId].data[0] == 1)
     {
-        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(0), gSpriteAffineAnim_83D7A98);
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(0), sAffineAnims_StretchBattlerUp);
         gSprites[spriteId].x2 = 4;
     }
     else

@@ -7727,7 +7727,7 @@ Move_FAKE_OUT: @ 81D23A8
 	waitforvisualfinish
 	playsewithpan SE_M_SKETCH, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 5, 1
-	createvisualtask sub_80D1E38, 3
+	createvisualtask AnimTask_StretchTargetUp, 3
 	waitforvisualfinish
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, 1, 3, 16, 0, rgb(31, 31, 31)
 	end
@@ -8093,8 +8093,8 @@ Move_TRICK: @ 81D2CE8
 	createsprite gTrickBagSpriteTemplate, ANIM_ATTACKER, 2, -40, 208
 	delay 16
 	playsewithpan SE_M_SKETCH, 0
-	createvisualtask sub_80D1E38, 3
-	createvisualtask sub_80D1EC8, 3
+	createvisualtask AnimTask_StretchTargetUp, 3
+	createvisualtask AnimTask_StretchAttackerUp, 3
 	delay 30
 	playsewithpan SE_M_DOUBLE_TEAM, 0
 	delay 24
@@ -9373,7 +9373,7 @@ Move_ASTONISH: @ 81D4F10
 	playsewithpan SE_M_SKETCH, SOUND_PAN_TARGET
 	createsprite gBattleAnimSpriteTemplate_83DA62C, ANIM_TARGET, 5, 1, 1
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 5, 1
-	createvisualtask sub_80D1E38, 3
+	createvisualtask AnimTask_StretchTargetUp, 3
 	waitforvisualfinish
 	end
 
