@@ -3041,8 +3041,8 @@ Move_STRUGGLE: @ 81CB815
 	monbg ANIM_TARGET
 	setalpha 12, 8
 	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_ATTACKER, 3, 0, 12, 4
-	createsprite gBattleAnimSpriteTemplate_83D7C90, ANIM_ATTACKER, 2, 0, 0, 2
-	createsprite gBattleAnimSpriteTemplate_83D7C90, ANIM_ATTACKER, 2, 0, 1, 2
+	createsprite gMovementWavesSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 2
+	createsprite gMovementWavesSpriteTemplate, ANIM_ATTACKER, 2, 0, 1, 2
 	loopsewithpan SE_M_HEADBUTT, SOUND_PAN_ATTACKER, 12, 4
 	waitforvisualfinish
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, 1, 2
