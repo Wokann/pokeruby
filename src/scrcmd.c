@@ -6,6 +6,7 @@
 #include "contest_link_util.h"
 #include "contest_painting.h"
 #include "contest_util.h"
+#include "script_pokemon_util.h"
 #include "data.h"
 #include "decoration.h"
 #include "decoration_inventory.h"
@@ -1412,7 +1413,7 @@ bool8 ScrCmd_showcontestpainting(struct ScriptContext *ctx)
 
     if (contestWinnerId)
         SetContestWinnerForPainting(contestWinnerId);
-    ShowContestWinner();
+    ShowContestPainting();
     ScriptContext_Stop();
     return TRUE;
 }

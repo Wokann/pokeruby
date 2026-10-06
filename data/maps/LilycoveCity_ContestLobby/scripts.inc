@@ -478,7 +478,7 @@ LilycoveCity_ContestLobby_EventScript_StartLinkContest:: @ 8158DD1
 LilycoveCity_ContestLobby_EventScript_158DEE:: @ 8158DEE
 	call LilycoveCity_ContestLobby_EventScript_158E0B
 	setvar VAR_LINK_CONTEST_ROOM_STATE, 1
-	special ScrSpecial_SetLinkContestTrainerGfxIdx
+	special SetLinkContestPlayerGfx
 	setvar VAR_CONTEST_LOCATION, 5
 	setvar VAR_CONTEST_RANK, 3
 	call LilycoveCity_ContestLobby_EventScript_WarpToContestHall
@@ -564,7 +564,7 @@ LilycoveCity_ContestLobby_Movement_158EAE:: @ 8158EAE
 	step_end
 
 LilycoveCity_ContestLobby_EventScript_ContestReceptionist:: @ 8158EB0
-	specialvar VAR_RESULT, sub_80C5044
+	specialvar VAR_RESULT, IsContestDebugActive
 	compare VAR_RESULT, 1
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_SetDebug
 	setvar VAR_0x800B, 8

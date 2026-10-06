@@ -8,7 +8,7 @@
 .set __special__, 0
 	.align 2
 gSpecials::
-	def_special ScrSpecial_HealPlayerParty
+	def_special HealPlayerParty
 	def_special SetCableClubWarp
 	def_special DoCableClubWarp
 	def_special ReturnFromLinkRoom
@@ -49,7 +49,7 @@ gSpecials::
 	def_special SpawnBerryBlenderLinkPlayerSprites
 	def_special SavePlayerParty
 	def_special LoadPlayerParty
-	def_special sub_80C5568
+	def_special ChooseHalfPartyForBattle
 	def_special Script_ShowLinkTrainerCard
 	def_special ObjectEventInteractionGetBerryTreeData
 	def_special Bag_ChooseBerry
@@ -94,11 +94,11 @@ gSpecials::
 	def_special SetContestTrainerGfxIds
 	def_special TryEnterContestMon
 	def_special GetContestantNamesAtRank
-	def_special ScrSpecial_SetLinkContestTrainerGfxIdx
+	def_special SetLinkContestPlayerGfx
 	def_special GetContestMonCondition
 	def_special HasMonWonThisContestBefore
 	def_special GiveMonContestRibbon
-	def_special sub_80C5044
+	def_special IsContestDebugActive
 	def_special GiveMonArtistRibbon
 	def_special TryContestGModeLinkup
 	def_special SaveGame
@@ -146,7 +146,7 @@ gSpecials::
 	def_special SaveMuseumContestPainting
 	def_special DoesContestCategoryHaveMuseumPainting
 	def_special CountPlayerMuseumPaintings
-	def_special ShowContestWinner
+	def_special ShowContestPainting
 	def_special MauvilleGymSpecial2
 	def_special MauvilleGymSpecial1
 	def_special ShowFieldMessageStringVar4
@@ -256,7 +256,7 @@ gSpecials::
 	def_special ChooseBattleTowerPlayerParty
 	def_special ValidateEReaderTrainer
 	def_special GetBestBattleTowerStreak
-	def_special ReducePlayerPartyToThree
+	def_special ReducePlayerPartyToSelectedMons
 	def_special BedroomPC
 	def_special PlayerPC
 	def_special FieldShowRegionMap
@@ -329,12 +329,12 @@ gSpecials::
 	def_special DoDiveWarp
 	def_special DoFallWarp
 	def_special ShowContestEntryMonPic
-	def_special sub_80C5164
+	def_special HideContestEntryMonPic
 	def_special SetEReaderTrainerGfxId
 	def_special BattleSetup_StartLatiBattle
 	def_special SetRoute119Weather
 	def_special SetRoute123Weather
-	def_special ScriptGetMultiplayerId
+	def_special GetContestMultiplayerId
 	def_special ScriptGetPartyMonSpecies
 	def_special IsSelectedMonEgg
 	def_special TryInitBattleTowerAwardManObjectEvent
@@ -347,8 +347,8 @@ gSpecials::
 	def_special MonOTNameMatchesPlayer
 	def_special BufferLottoTicketNumber
 	def_special TryEnableBravoTrainerBattleTower
-	def_special GetNameOfEnigmaBerryInPlayerParty
-	def_special ScriptRandom
+	def_special DoesPartyHaveEnigmaBerry
+	def_special GenerateContestRand
 	def_special ValidateMixingGameLanguage
 .ifdef GERMAN
 	def_special nullsub_814B200

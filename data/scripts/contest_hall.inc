@@ -458,7 +458,7 @@ LinkContestRoom1_EventScript_1A5455:: @ 81A5455
 
 LinkContestRoom1_EventScript_1A54EB:: @ 81A54EB
 	setvar VAR_RESULT, 8
-	special ScriptRandom
+	special GenerateContestRand
 	compare VAR_RESULT, 0
 	call_if_eq LinkContestRoom1_EventScript_1A5760
 	compare VAR_RESULT, 1
@@ -720,7 +720,7 @@ LinkContestRoom1_EventScript_1A5880:: @ 81A5880
 	closemessage
 	release
 	removeobject 13
-	special sub_80C5164
+	special HideContestEntryMonPic
 	switch VAR_0x8006
 	case 0, LinkContestRoom1_EventScript_1A58BA
 	case 1, LinkContestRoom1_EventScript_1A58C7

@@ -229,7 +229,7 @@ Route101_EventScript_14EA7F:: @ 814EA7F
 	applymovement 2, Route101_Movement_14EAD7
 	waitmovement 0
 	msgbox Route101_Text_16D191, MSGBOX_DEFAULT
-	special ScrSpecial_HealPlayerParty
+	special HealPlayerParty
 	setflag FLAG_HIDE_BIRCH_BATTLE_POOCHYENA
 	clearflag FLAG_HIDE_BIRCH_IN_LAB
 	setflag FLAG_HIDE_BIRCH_STARTERS_BAG

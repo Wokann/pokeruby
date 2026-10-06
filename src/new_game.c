@@ -7,7 +7,7 @@
 #include "constants/maps.h"
 #include "constants/species.h"
 #include "contest.h"
-#include "contest_util.h"
+#include "script_pokemon_util.h"
 #include "decoration_inventory.h"
 #include "dewford_trend.h"
 #include "easy_chat.h"

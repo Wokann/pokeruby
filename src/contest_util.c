@@ -1,5 +1,6 @@
 #include "global.h"
 #include "contest_util.h"
+#include "script_pokemon_util.h"
 #include "battle.h"
 #include "berry.h"
 #include "choose_party.h"
@@ -36,6 +37,9 @@ extern u16 gSpecialVar_ContestRank;
 
 extern u8 gContestMonPartyIndex;
 extern u8 gUnknown_0203856C;
+
+static void Task_ShowContestEntryMonPic(u8 taskId);
+static void CB2_ReturnFromChooseHalfParty(void);
 
 void SetContestTrainerGfxIds(void)
 {
@@ -125,14 +129,14 @@ void ShouldReadyContestArtist(void)
 
 u8 CountPlayerMuseumPaintings(void)
 {
-    u8 retVar = 0;
+    u8 count = 0;
     int i;
 
     for (i = 0; i < 5; i++)
         if (gSaveBlock1.museumPortraits[i].species != 0)
-            retVar++;
+            count++;
 
-    return retVar;
+    return count;
 }
 
 void GetContestantNamesAtRank(void)
@@ -217,14 +221,14 @@ void GetContestantNamesAtRank(void)
         gSpecialVar_0x8006 = rank + 4;
 }
 
-void ShowContestWinnerCleanup(void)
+static void ExitContestPainting(void)
 {
     SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
 // File boundary?
 
-void ShowContestWinner(void)
+void ShowContestPainting(void)
 {
     if(gUnknown_0203856C)
     {
@@ -235,10 +239,10 @@ void ShowContestWinner(void)
         gUnknown_0203856C = 0;
     }
     SetMainCallback2(CB2_ContestPainting);
-    gMain.savedCallback = ShowContestWinnerCleanup;
+    gMain.savedCallback = ExitContestPainting;
 }
 
-void ScrSpecial_SetLinkContestTrainerGfxIdx(void)
+void SetLinkContestPlayerGfx(void)
 {
     VarSet(VAR_OBJ_GFX_ID_0, gContestMons[0].trainerGfxId);
     VarSet(VAR_OBJ_GFX_ID_1, gContestMons[1].trainerGfxId);
@@ -248,15 +252,15 @@ void ScrSpecial_SetLinkContestTrainerGfxIdx(void)
 
 bool8 GiveMonArtistRibbon(void)
 {
-    u8 ribbon = GetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_ARTIST_RIBBON);
+    u8 hasArtistRibbon = GetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_ARTIST_RIBBON);
 
-    if(ribbon == FALSE
+    if(hasArtistRibbon == FALSE
     && gContestFinalStandings[gContestPlayerMonIndex] == 0
     && gSpecialVar_ContestRank == 3
     && gContestMonTotalPoints[gContestPlayerMonIndex] >= 800)
     {
-        ribbon = TRUE;
-        SetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_ARTIST_RIBBON, &ribbon);
+        hasArtistRibbon = TRUE;
+        SetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_ARTIST_RIBBON, &hasArtistRibbon);
         return TRUE;
     }
     else
@@ -265,7 +269,7 @@ bool8 GiveMonArtistRibbon(void)
     }
 }
 
-u8 sub_80C5044(void)
+u8 IsContestDebugActive(void)
 {
     return gUnknown_0203856C;
 }
@@ -273,21 +277,21 @@ u8 sub_80C5044(void)
 void ShowContestEntryMonPic(void)
 {
     const struct CompressedSpritePalette *palette;
-    u32 var1, var2;
+    u32 personality, otId;
     u16 species;
     u8 spriteId;
     u8 taskId;
 
-    if(FindTaskIdByFunc(sub_80C5190) == 0xFF)
+    if(FindTaskIdByFunc(Task_ShowContestEntryMonPic) == 0xFF)
     {
         u8 left = CONTEST_ENTRY_PIC_LEFT;
         u8 top = CONTEST_ENTRY_PIC_TOP;
 
         Menu_DrawStdWindowFrame(left, top, 19, 13);
         species = gContestMons[gSpecialVar_0x8006].species;
-        var1 = gContestMons[gSpecialVar_0x8006].personality;
-        var2 = gContestMons[gSpecialVar_0x8006].otId;
-        taskId = CreateTask(sub_80C5190, 0x50);
+        personality = gContestMons[gSpecialVar_0x8006].personality;
+        otId = gContestMons[gSpecialVar_0x8006].otId;
+        taskId = CreateTask(Task_ShowContestEntryMonPic, 0x50);
         gTasks[taskId].data[0] = 0;
         gTasks[taskId].data[1] = species;
         HandleLoadSpecialPokePic(
@@ -297,8 +301,8 @@ void ShowContestEntryMonPic(void)
           gMonSpriteGfx_Sprite_ptr[0],
           gMonSpriteGfx_Sprite_ptr[1],
           species,
-          var1);
-        palette = GetMonSpritePalStructFromOtIdPersonality(species, var2, var1);
+          personality);
+        palette = GetMonSpritePalStructFromOtIdPersonality(species, otId, personality);
         LoadCompressedObjectPalette(palette);
         SetMultiuseSpriteTemplateToPokemon(species, 1);
         gMultiuseSpriteTemplate.paletteTag = palette->tag;
@@ -311,15 +315,15 @@ void ShowContestEntryMonPic(void)
     }
 }
 
-void sub_80C5164(void)
+void HideContestEntryMonPic(void)
 {
-    u8 taskId = FindTaskIdByFunc(sub_80C5190);
+    u8 taskId = FindTaskIdByFunc(Task_ShowContestEntryMonPic);
 
     if(taskId != 0xFF)
         gTasks[taskId].data[0]++;
 }
 
-void sub_80C5190(u8 taskId)
+static void Task_ShowContestEntryMonPic(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     struct Sprite *sprite;
@@ -349,7 +353,7 @@ void sub_80C5190(u8 taskId)
     }
 }
 
-void ScriptGetMultiplayerId(void)
+void GetContestMultiplayerId(void)
 {
     if(gLinkContestFlags & 1)
         gSpecialVar_Result = GetMultiplayerId();
@@ -357,26 +361,26 @@ void ScriptGetMultiplayerId(void)
         gSpecialVar_Result = 4;
 }
 
-void ScriptRandom(void)
+void GenerateContestRand(void)
 {
     u16 random;
-    u16 *scriptPtr;
+    u16 *result;
 
     if(gLinkContestFlags & 1)
     {
         gContestRngValue = 1103515245 * gContestRngValue + 24691;
         random = gContestRngValue >> 16;
-        scriptPtr = &gSpecialVar_Result;
+        result = &gSpecialVar_Result;
     }
     else
     {
-        scriptPtr = &gSpecialVar_Result;
+        result = &gSpecialVar_Result;
         random = Random();
     }
-    *scriptPtr = random % *scriptPtr;
+    *result = random % *result;
 }
 
-void ScrSpecial_HealPlayerParty(void)
+void HealPlayerParty(void)
 {
     u8 i, j;
     u8 ppBonuses;
@@ -460,7 +464,7 @@ void HasEnoughMonsForDoubleBattle(void)
     }
 }
 
-bool8 CheckPartyMonHasHeldItem(u16 item)
+static bool8 CheckPartyMonHasHeldItem(u16 item)
 {
     int i;
 
@@ -473,7 +477,7 @@ bool8 CheckPartyMonHasHeldItem(u16 item)
     return FALSE;
 }
 
-bool8 GetNameOfEnigmaBerryInPlayerParty(void)
+bool8 DoesPartyHaveEnigmaBerry(void)
 {
     bool8 hasItem = CheckPartyMonHasHeldItem(ITEM_ENIGMA_BERRY);
 
@@ -506,13 +510,13 @@ void ScriptSetMonMoveSlot(u8 monIndex, u16 move, u8 slot)
     SetMonMoveSlot(&gPlayerParty[monIndex], move, slot);
 }
 
-void sub_80C5568(void)
+void ChooseHalfPartyForBattle(void)
 {
-    gMain.savedCallback = sub_80C5580;
+    gMain.savedCallback = CB2_ReturnFromChooseHalfParty;
     sub_8121E10();
 }
 
-void sub_80C5580(void)
+static void CB2_ReturnFromChooseHalfParty(void)
 {
     u8 var = gSelectedOrderFromParty[0];
 
@@ -546,7 +550,7 @@ void SetBattleTowerPlayerParty(void)
         gSpecialVar_Result = 0;
         break;
     default: // load battle tower.
-        ReducePlayerPartyToThree();
+        ReducePlayerPartyToSelectedMons();
         gSpecialVar_Result = 1;
         break;
     }
@@ -554,7 +558,7 @@ void SetBattleTowerPlayerParty(void)
     SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
-void ReducePlayerPartyToThree(void)
+void ReducePlayerPartyToSelectedMons(void)
 {
     struct Pokemon party[3];
     int i;

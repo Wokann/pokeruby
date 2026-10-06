@@ -8,7 +8,7 @@
 #include "constants/maps.h"
 #include "constants/songs.h"
 #include "constants/species.h"
-#include "contest_util.h"
+#include "script_pokemon_util.h"
 #include "event_data.h"
 #include "event_object_movement.h"
 #include "field_camera.h"
@@ -263,7 +263,7 @@ static void DoWhiteOut(void)
 {
     RunScriptImmediately(EventScript_WhiteOut);
     gSaveBlock1.money /= 2;
-    ScrSpecial_HealPlayerParty();
+    HealPlayerParty();
     Overworld_ResetStateAfterWhiteOut();
     SetWarpDestinationToLastHealLocation();
     WarpIntoMap();

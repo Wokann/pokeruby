@@ -10,7 +10,7 @@
 #include "constants/opponents.h"
 #include "constants/songs.h"
 #include "constants/species.h"
-#include "contest_util.h"
+#include "script_pokemon_util.h"
 #include "data.h"
 #include "event_data.h"
 #include "field_control_avatar.h"

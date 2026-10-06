@@ -9,7 +9,7 @@
 #include "constants/moves.h"
 #include "constants/species.h"
 #include "constants/vars.h"
-#include "contest_util.h"
+#include "script_pokemon_util.h"
 #include "data.h"
 #include "easy_chat.h"
 #include "event_data.h"
@@ -1242,7 +1242,7 @@ void SetBattleTowerParty(void)
     for (i = 0; i < 3; i++)
         gSelectedOrderFromParty[i] = gSaveBlock2.battleTower.selectedPartyMons[i];
 
-    ReducePlayerPartyToThree();
+    ReducePlayerPartyToSelectedMons();
 }
 
 static void SaveCurrentWinStreak(void)

@@ -4,6 +4,7 @@
 #include "battle_records.h"
 #include "constants/songs.h"
 #include "contest_util.h"
+#include "script_pokemon_util.h"
 #include "event_data.h"
 #include "field_message_box.h"
 #include "field_specials.h"
@@ -768,7 +769,7 @@ static void Task_StartWiredCableClubBattle(u8 taskId)
             gBattleTypeFlags = BATTLE_TYPE_TRAINER | BATTLE_TYPE_LINK | BATTLE_TYPE_DOUBLE;
             break;
         case 5:
-            ReducePlayerPartyToThree();
+            ReducePlayerPartyToSelectedMons();
             gBattleTypeFlags = BATTLE_TYPE_TRAINER | BATTLE_TYPE_LINK | BATTLE_TYPE_DOUBLE | BATTLE_TYPE_MULTI;
             break;
         }

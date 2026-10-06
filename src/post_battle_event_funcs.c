@@ -1,6 +1,6 @@
 #include "global.h"
 #include "constants/heal_locations.h"
-#include "contest_util.h"
+#include "script_pokemon_util.h"
 #include "event_data.h"
 #include "hall_of_fame.h"
 #include "load_save.h"
@@ -15,7 +15,7 @@ int GameClear(void)
     int i;
     bool32 ribbonGet;
 
-    ScrSpecial_HealPlayerParty();
+    HealPlayerParty();
 
     if (FlagGet(FLAG_SYS_GAME_CLEAR) == TRUE)
     {
