@@ -7812,16 +7812,16 @@ Move_INGRAIN: @ 81D255A
 	createsprite gIngrainRootSpriteTemplate, ANIM_ATTACKER, 2, -16, 25, -1, 3, 120
 	playsewithpan SE_M_SCRATCH, SOUND_PAN_ATTACKER
 	delay 40
-	createsprite gBattleAnimSpriteTemplate_83D6698, ANIM_ATTACKER, 3, 32, 26, -1, 3, 30
+	createsprite gIngrainOrbSpriteTemplate, ANIM_ATTACKER, 3, 32, 26, -1, 3, 30
 	delay 5
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D6698, ANIM_ATTACKER, 3, -48, 20, 1, 2, 30
+	createsprite gIngrainOrbSpriteTemplate, ANIM_ATTACKER, 3, -48, 20, 1, 2, 30
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
 	delay 5
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D6698, ANIM_ATTACKER, 3, 48, 26, -2, 3, 18
+	createsprite gIngrainOrbSpriteTemplate, ANIM_ATTACKER, 3, 48, 26, -2, 3, 18
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
 	delay 10
 	waitforvisualfinish
