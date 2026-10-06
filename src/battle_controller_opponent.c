@@ -79,7 +79,6 @@ static void CompleteOnHealthbarDone(void);
 static void CompleteOnFinishedStatusAnimation(void);
 static void DoHitAnimBlinkSpriteEffect(void);
 extern u8 GetBattlerSide(u8);
-extern void HandleIntroSlide();
 extern void Task_HidePartyStatusSummary(u8);
 static void OpponentDummy(void);
 extern void sub_8031B74();

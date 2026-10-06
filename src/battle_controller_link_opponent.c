@@ -66,7 +66,6 @@ static void CompleteOnHealthbarDone(void);
 static void CompleteOnFinishedStatusAnimation(void);
 static void DoHitAnimBlinkSpriteEffect(void);
 extern u8 GetBattlerSide(u8);
-extern void HandleIntroSlide();
 extern void sub_803A3A8(struct Sprite *);
 extern void Task_HidePartyStatusSummary(u8);
 static void LinkOpponentDummy(void);

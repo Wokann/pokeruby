@@ -48,7 +48,6 @@ extern void (*gAnimScriptCallback)(void);
 
 extern void Task_HidePartyStatusSummary(u8);
 extern void SpriteCB_FreePlayerSpriteLoadMonSprite(struct Sprite *);
-extern void HandleIntroSlide();
 extern void BufferStringBattle();
 extern u8 IsMoveWithoutAnimation();
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();

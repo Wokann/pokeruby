@@ -63,7 +63,6 @@ extern u8 GetBattlerAtPosition(u8);
 extern u8 IsMoveWithoutAnimation();
 extern u8 GetBattlerSide(u8);
 extern void sub_80304A8(void);
-extern void HandleIntroSlide();
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
 extern void StartAnimLinearTranslation(struct Sprite *);
 extern void SpriteCB_FreePlayerSpriteLoadMonSprite(struct Sprite *);

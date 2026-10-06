@@ -1,6 +1,7 @@
 #include "global.h"
 #include "item_menu.h"
 #include "battle_anim_81258BC.h"
+#include "battle_anim.h"
 #include "battle_controllers.h"
 #include "battle_interface.h"
 #include "battle_message.h"
@@ -45,7 +46,6 @@ extern u8 GetBattlerPosition(u8);
 extern u8 GetBattlerSpriteSubpriority();
 extern void SpriteCB_TrainerSlideIn(struct Sprite *);
 extern void sub_810BADC(void);
-extern void HandleIntroSlide();
 
 #if ENGLISH
 #define SUB_812BB10_TILE_DATA_OFFSET 440

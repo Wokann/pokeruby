@@ -1,7 +1,6 @@
 #include "global.h"
 #include "battle_anim.h"
 #include "battle.h"
-#include "battle_anim_80CA710.h"
 #include "battle_interface.h"
 #include "contest.h"
 #include "decompress.h"

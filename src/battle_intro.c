@@ -3,7 +3,6 @@
 #include "battle.h"
 #include "battle_main.h"
 #include "battle_anim.h"
-#include "battle_anim_80CA710.h"
 #include "data.h"
 #include "ewram.h"
 #include "main.h"
@@ -20,7 +19,7 @@ static void BattleIntroTask_FadeScenery(u8);
 static void BattleIntroTask_ScrollAndFadeScenery(u8);
 static void BattleIntroTask_80E4C34(u8);
 
-static const TaskFunc sBattleIntroTaskFuncs[] =
+static const TaskFunc sBattleIntroSlideFuncs[] =
 {
     BattleIntroTask_ScrollScenery,
     BattleIntroTask_ScrollScenery,
@@ -38,7 +37,7 @@ static const TaskFunc sBattleIntroTaskFuncs[] =
 #define tBgXOffset data[2]
 #define tFramesUntilBg1Slide data[3]
 
-void HandleIntroSlide(u8 a)
+void HandleIntroSlide(u8 environment)
 {
     u8 taskId;
 
@@ -48,16 +47,16 @@ void HandleIntroSlide(u8 a)
     }
     else if ((gBattleTypeFlags & BATTLE_TYPE_KYOGRE_GROUDON) && gGameVersion != VERSION_RUBY)
     {
-        a = 3;
+        environment = 3;
         taskId = CreateTask(BattleIntroTask_FadeScenery, 0);
     }
     else
     {
-        taskId = CreateTask(sBattleIntroTaskFuncs[a], 0);
+        taskId = CreateTask(sBattleIntroSlideFuncs[environment], 0);
     }
 
     gTasks[taskId].tState = 0;
-    gTasks[taskId].data[1] = a;
+    gTasks[taskId].data[1] = environment;
     gTasks[taskId].tBgXOffset = 0;
     gTasks[taskId].tFramesUntilBg1Slide = 0;
     gTasks[taskId].data[4] = 0;
@@ -454,38 +453,38 @@ void unref_sub_80E4EC8(u8 a, u8 b, u8 c, u8 d)
 }
 
 // draws some 8x8 tilemap
-void sub_80E4EF8(u8 left, u8 top, u8 c, u8 paletteNum, u16 e, u8 bgMap, u8 g)
+void sub_80E4EF8(u8 left, u8 top, u8 battlerPosition, u8 paletteId, u16 e, u8 bgMap, u8 g)
 {
     u32 tileNum;
     s32 x;
     s32 y;
-    u8 bank = GetBattlerAtPosition(c);
+    u8 battler = GetBattlerAtPosition(battlerPosition);
 
-    DmaCopy16(3, gMonSpriteGfx_Sprite_ptr[c] + gBattleMonForms[bank] * 0x800, (void *)(VRAM + e), 0x800);
+    DmaCopy16(3, gMonSpriteGfx_Sprite_ptr[battlerPosition] + gBattleMonForms[battler] * 0x800, (void *)(VRAM + e), 0x800);
     tileNum = e / 32 - g * 512;
     for (y = top; y < top + 8; y++)
     {
         for (x = left; x < left + 8; x++)
         {
-            *(u16 *)(VRAM + x * 2 + bgMap * 0x800 + y * 64) = tileNum | (paletteNum << 12);
+            *(u16 *)(VRAM + x * 2 + bgMap * 0x800 + y * 64) = tileNum | (paletteId << 12);
             tileNum++;
         }
     }
 }
 
-void unref_sub_80E4FDC(u8 left, u8 top, u8 c, u8 form, u8 paletteNum, u16 f, u8 bgMap, u8 h)
+void unref_sub_80E4FDC(u8 left, u8 top, u8 battlerPosition, u8 form, u8 paletteId, u16 f, u8 bgMap, u8 h)
 {
     u32 tileNum;
     s32 x;
     s32 y;
 
-    DmaCopy16(3, gMonSpriteGfx_Sprite_ptr[c] + form * 0x800, (void *)(VRAM + f), 0x800);
+    DmaCopy16(3, gMonSpriteGfx_Sprite_ptr[battlerPosition] + form * 0x800, (void *)(VRAM + f), 0x800);
     tileNum = f / 32 - h * 512;
     for (y = top; y < top + 8; y++)
     {
         for (x = left; x < left + 8; x++)
         {
-            *(u16 *)(VRAM + x * 2 + bgMap * 0x800 + y * 64) = tileNum | (paletteNum << 12);
+            *(u16 *)(VRAM + x * 2 + bgMap * 0x800 + y * 64) = tileNum | (paletteId << 12);
             tileNum++;
         }
     }

@@ -73,7 +73,6 @@ extern const u8 BattleText_PP[];
 
 extern void BattleControllerDummy(void);
 extern u8 GetBattlerSide(u8);
-extern void HandleIntroSlide();
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
 extern void StartAnimLinearTranslation(struct Sprite *);
 extern bool8 IsDoubleBattle(void);

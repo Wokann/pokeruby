@@ -266,6 +266,10 @@ void AnimTask_AttackerPunchWithTrace(u8 taskId);
 void AnimWeatherBallUp(struct Sprite *sprite);
 void AnimWeatherBallDown(struct Sprite *sprite);
 
+// battle_intro.c
+void HandleIntroSlide(u8 environment);
+void sub_80E4EF8(u8, u8, u8, u8, u16, u8, u8);
+
 void LaunchStatusAnimation(u8 battler, u8 statusAnimId);
 void InitStatsChangeAnimation(u8 taskId);
 u32 UnpackSelectedBattlePalettes(s16 selector);

@@ -1,6 +1,0 @@
-#ifndef GUARD_BATTLE_ANIM_80CA710_H
-#define GUARD_BATTLE_ANIM_80CA710_H
-
-void sub_80E4EF8(u8, u8, u8, u8, u16, u8, u8);
-
-#endif // GUARD_BATTLE_ANIM_80CA710_H
