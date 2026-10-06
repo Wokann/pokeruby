@@ -3,13 +3,9 @@
 #include "trig.h"
 #include "sound.h"
 
+static void AnimTask_Splash_Step(u8 taskId);
 
-static void AnimTask_SplashStep(u8 taskId);
-
-// splash (splash effect of hopping up and down)
-// Used in Splash, Mud Sport, and Sketch.
-
-const union AffineAnimCmd gSpriteAffineAnim_83D76F4[] =
+const union AffineAnimCmd gSplashEffectAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(-6, 4, 0, 8),
     AFFINEANIMCMD_FRAME(10, -10, 0, 8),
@@ -22,7 +18,7 @@ const union AffineAnimCmd gSpriteAffineAnim_83D76F4[] =
 // arg 1: num hops
 void AnimTask_Splash(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
     if (gBattleAnimArgs[1] == 0)
     {
         DestroyAnimVisualTask(taskId);
@@ -35,14 +31,14 @@ void AnimTask_Splash(u8 taskId)
         task->data[2] = gBattleAnimArgs[1];
         task->data[3] = 0;
         task->data[4] = 0;
-        PrepareAffineAnimInTaskData(task, spriteId, gSpriteAffineAnim_83D76F4);
-        task->func = AnimTask_SplashStep;
+        PrepareAffineAnimInTaskData(task, spriteId, gSplashEffectAffineAnimCmds);
+        task->func = AnimTask_Splash_Step;
     }
 }
 
-void AnimTask_SplashStep(u8 taskId)
+static void AnimTask_Splash_Step(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
     switch (task->data[1])
     {
     case 0:
@@ -83,7 +79,7 @@ void AnimTask_SplashStep(u8 taskId)
             }
             else
             {
-                PrepareAffineAnimInTaskData(task, task->data[0], gSpriteAffineAnim_83D76F4);
+                PrepareAffineAnimInTaskData(task, task->data[0], gSplashEffectAffineAnimCmds);
                 task->data[1] = 0;
             }
         }
