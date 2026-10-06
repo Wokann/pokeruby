@@ -215,7 +215,7 @@ gSpecials::
 	def_special ResetSSTidalFlag
 	def_special EnterSafariMode
 	def_special ExitSafariMode
-	def_special SafariZoneGetPokeblockNameInFeeder
+	def_special GetPokeblockFeederInFront
 	def_special OpenPokeblockCaseOnFeeder
 	def_special IsMirageIslandPresent
 	def_special UpdateShoalTideFlag

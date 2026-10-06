@@ -1,4 +1,4 @@
-gUnknown_081C340A:: @ 81C340A
+SafariZone_EventScript_OutOfBallsMidBattle:: @ 81C340A
 	setvar VAR_SAFARI_ZONE_STATE, 1
 	special ExitSafariMode
 	setwarp MAP_ROUTE121_SAFARI_ZONE_ENTRANCE, 255, 2, 5
@@ -11,7 +11,7 @@ EventScript_1C341B: @ 81C341B
 	waitstate
 	end
 
-gUnknown_081C342D:: @ 81C342D
+SafariZone_EventScript_RetirePrompt:: @ 81C342D
 	lockall
 	msgbox UnknownString_81C34B2, MSGBOX_YESNO
 	compare VAR_RESULT, YES
@@ -22,7 +22,7 @@ gUnknown_081C342D:: @ 81C342D
 EventScript_1C3443:
 	goto EventScript_1C341B
 
-gUnknown_081C3448:: @ 81C3448
+SafariZone_EventScript_TimesUp:: @ 81C3448
 	lockall
 	playse SE_DING_DONG
 	message UnknownString_81C34E4
@@ -31,7 +31,7 @@ gUnknown_081C3448:: @ 81C3448
 	releaseall
 	goto EventScript_1C341B
 
-gUnknown_081C3459:: @ 81C3459
+SafariZone_EventScript_OutOfBalls:: @ 81C3459
 	lockall
 	playse SE_DING_DONG
 	message UnknownString_81C3514
@@ -42,7 +42,7 @@ gUnknown_081C3459:: @ 81C3459
 
 EventScript_PokeBlockFeeder:: @ 81C346A
 	lockall
-	special SafariZoneGetPokeblockNameInFeeder
+	special GetPokeblockFeederInFront
 	compare VAR_RESULT, 0xFFFF
 	goto_if_ne EventScript_1C34A9
 	msgbox UnknownString_81C354E, MSGBOX_YESNO
