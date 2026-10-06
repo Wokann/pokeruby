@@ -217,7 +217,7 @@ gOtherText_FourQuestions:: @ 842C7D6
 @ 842C7DB
 	.include "data/text/easy_chat/group_name_strings.inc"
 
-gOtherText_ThreeQuestions:: @ 842C890
+gText_ThreeQuestionMarks:: @ 842C890
 	.string "???$"
 
 gOtherText_From:: @ 842C894

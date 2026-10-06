@@ -546,7 +546,7 @@ static void InitTrainerCardData(void)
     sData->showColon = 0;
     sData->timeColonBlinkTimer = 0;
     for (i = 0; i < 4; i++)
-        EasyChat_GetWordText(sData->easyChatProfile[i], sData->trainerCard.easyChatProfile[i]);
+        CopyEasyChatWord(sData->easyChatProfile[i], sData->trainerCard.easyChatProfile[i]);
     SetDataFromTrainerCard();
 }
 

@@ -2666,9 +2666,9 @@ extern const u16 gNamingScreenKeyboardUpper_Tilemap[];
 extern const u16 gNamingScreenKeyboardSymbols_Tilemap[];
 extern const u8 gNamingScreenBackground_Tilemap[];
 
-extern const u8 gMenuWordGroupIndicator_Gfx[];
+extern const u8 gEasyChatMode_Gfx[];
 extern const u8 gMenuWordGroupFrame_Gfx[];
-extern const u16 gMenuWordGroupIndicator_Pal[];
+extern const u16 gEasyChatMode_Pal[];
 extern const u16 gMenuWordGroupFrame1_Pal[];
 extern const u16 gMenuWordGroupFrame2_Pal[];
 

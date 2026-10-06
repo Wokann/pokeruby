@@ -24,12 +24,12 @@ void InitDewfordTrend(void)
 
     for (i = 0; i < 5; i++)
     {
-        gSaveBlock1.dewfordTrends[i].words[0] = sub_80EB72C(EC_GROUP_CONDITIONS);
+        gSaveBlock1.dewfordTrends[i].words[0] = GetRandomEasyChatWordFromGroup(EC_GROUP_CONDITIONS);
 
         if (Random() & 1)
-            gSaveBlock1.dewfordTrends[i].words[1] = sub_80EB72C(EC_GROUP_LIFESTYLE);
+            gSaveBlock1.dewfordTrends[i].words[1] = GetRandomEasyChatWordFromGroup(EC_GROUP_LIFESTYLE);
         else
-            gSaveBlock1.dewfordTrends[i].words[1] = sub_80EB72C(EC_GROUP_HOBBIES);
+            gSaveBlock1.dewfordTrends[i].words[1] = GetRandomEasyChatWordFromGroup(EC_GROUP_HOBBIES);
 
         gSaveBlock1.dewfordTrends[i].unk1_6 = Random() & 1;
         sub_80FA740(&gSaveBlock1.dewfordTrends[i]);

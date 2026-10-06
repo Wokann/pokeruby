@@ -263,10 +263,10 @@ void debug_sub_810B32C(u8 a)
         break;
     case 1:
         for (i = 0; i < 8; i++)
-            savedArr[i] = gSaveBlock1.unk2D8C[i];
+            savedArr[i] = gSaveBlock1.unlockedTrendySayings[i];
         SetupHipster();
         for (i = 0; i < 8; i++)
-            gSaveBlock1.unk2D8C[i] = savedArr[i];
+            gSaveBlock1.unlockedTrendySayings[i] = savedArr[i];
         break;
     case 2:
         SetupTrader();
@@ -336,7 +336,7 @@ void PrepareSongText(void)
     // Put three words on each line
     for (lineNum = 0; lineNum < 2; lineNum++)
     {
-        wordEnd = EasyChat_GetWordText(wordEnd, *(lyrics++));
+        wordEnd = CopyEasyChatWord(wordEnd, *(lyrics++));
         while (wordEnd != str)
         {
             if (*str == CHAR_SPACE)
@@ -347,7 +347,7 @@ void PrepareSongText(void)
         str++;
         *(wordEnd++) = CHAR_SPACE;
 
-        wordEnd = EasyChat_GetWordText(wordEnd, *(lyrics++));
+        wordEnd = CopyEasyChatWord(wordEnd, *(lyrics++));
         while (wordEnd != str)
         {
             if (*str == CHAR_SPACE)
@@ -358,7 +358,7 @@ void PrepareSongText(void)
         str++;
         *(wordEnd++) = CHAR_NEWLINE;
 
-        wordEnd = EasyChat_GetWordText(wordEnd, *(lyrics++));
+        wordEnd = CopyEasyChatWord(wordEnd, *(lyrics++));
         while (wordEnd != str)
         {
             if (*str == CHAR_SPACE)
@@ -398,7 +398,7 @@ void ScrSpecial_SetHipsterSpokenFlag(void)
 
 void ScrSpecial_HipsterTeachWord(void)
 {
-    u16 var = sub_80EB8EC();
+    u16 var = UnlockRandomTrendySaying();
 
     if (var == 0xFFFF)
     {
@@ -406,7 +406,7 @@ void ScrSpecial_HipsterTeachWord(void)
     }
     else
     {
-        EasyChat_GetWordText(gStringVar1, var);
+        CopyEasyChatWord(gStringVar1, var);
         gSpecialVar_Result = TRUE;
     }
 }
@@ -439,7 +439,7 @@ void ScrSpecial_GenerateGiddyLine(void)
         u32 adjective = Random();
 
         adjective %= 8;
-        stringPtr = EasyChat_GetWordText(gStringVar4, giddy->randomWords[giddy->taleCounter]);
+        stringPtr = CopyEasyChatWord(gStringVar4, giddy->randomWords[giddy->taleCounter]);
         stringPtr = StringCopy(stringPtr, gOtherText_Is);
         stringPtr = StringCopy(stringPtr, sGiddyAdjectives[adjective]);
         StringCopy(stringPtr, gOtherText_DontYouAgree);
@@ -462,12 +462,12 @@ static void sub_80F7DC0(void)
     struct MauvilleManGiddy *giddy = &gSaveBlock1.mauvilleMan.giddy;
     u16 arr[][2] =
     {
-        {EC_GROUP_POKEMON_1, 0},
+        {EC_GROUP_POKEMON, 0},
         {EC_GROUP_LIFESTYLE, 0},
         {EC_GROUP_HOBBIES,   0},
         {EC_GROUP_MOVE_1,    0},
         {EC_GROUP_MOVE_2,    0},
-        {EC_GROUP_POKEMON_2, 0}
+        {EC_GROUP_POKEMON_NATIONAL, 0}
     };
     u16 i;
     u16 r10;

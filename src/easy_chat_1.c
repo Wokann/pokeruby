@@ -189,12 +189,10 @@ u8 sub_80EA0E4(void);
 u8 sub_80EA184(void);
 void sub_80EAC5C(void);
 void sub_80EAD08(void);
-u8 sub_80EAD7C(u8);
 void sub_80EAECC(void);
 void LoadEasyChatStrings(void);
 void sub_80EB0B0(void);
 u8 *sub_80EB218(u8 *, u16, u16);
-u16 sub_80EB2D4();
 bool8 sub_80EB680(u16 *, u16, u16, u16);
 
 void ShowEasyChatScreen(void)
@@ -421,7 +419,7 @@ void sub_80E6554(void)
     gEasyChatStruct->numUnlockedGroups = 17;
     while (r4 < 22)
     {
-        if (sub_80EAD7C(r4) != 0)
+        if (IsEasyChatGroupUnlocked(r4) != 0)
         {
             r5++;
             if (r5 > 1)
@@ -550,7 +548,7 @@ void InitEasyChatPhrases(void)
     }
 
     for (i = 0; i < 64; i++)
-        gSaveBlock1.unk2D8C[i] = 0;
+        gSaveBlock1.unlockedTrendySayings[i] = 0;
 }
 
 void sub_80E682C(void (*func)(void))
@@ -1241,7 +1239,7 @@ void sub_80E7574(void)
 {
     if (gEasyChatStruct->type == 1
      && gEasyChatStruct->unk7E[gEasyChatStruct->mainCursorRow] == 2
-     && sub_80EB2D4(gEasyChatStruct->currentPhrase[gEasyChatStruct->unk27]) != 7)
+     && GetEasyChatWordStringLength(gEasyChatStruct->currentPhrase[gEasyChatStruct->unk27]) != 7)
         gEasyChatStruct->unk7D = 1;
     else
         gEasyChatStruct->unk7D = 0;
@@ -1587,7 +1585,7 @@ bool8 sub_80E7DD0(void)
 
     if (gEasyChatStruct->unk7D != 0
      && gEasyChatStruct->unk7E[gEasyChatStruct->mainCursorRow] > 1
-     && sub_80EB2D4(easyChatWord) == 7)
+     && GetEasyChatWordStringLength(easyChatWord) == 7)
         return FALSE;
 
     sub_80E7F00(gEasyChatStruct->unk27, easyChatWord);
@@ -1617,8 +1615,8 @@ void sub_80E7F00(u16 index, u16 easyChatWord)
 {
     u16 r5 = index / gEasyChatStruct->numColumns;
     u16 r8 = index % gEasyChatStruct->numColumns;
-    u16 r4 = sub_80EB2D4(gEasyChatStruct->currentPhrase[index]);
-    u16 r3 = sub_80EB2D4(easyChatWord);
+    u16 r4 = GetEasyChatWordStringLength(gEasyChatStruct->currentPhrase[index]);
+    u16 r3 = GetEasyChatWordStringLength(easyChatWord);
 
     if (r4 == 7)
     {

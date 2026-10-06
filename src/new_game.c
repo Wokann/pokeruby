@@ -233,8 +233,8 @@ void debug_sub_8057508(bool32 arg0)
     debug_sub_80A3904();
     debug_sub_80A3714();
     debug_sub_8120F98();
-    FlagSet(FLAG_SYS_HIPSTER_MEET);
-    sub_80EB8EC();
+    FlagSet(FLAG_UNLOCKED_TRENDY_SAYINGS);
+    UnlockRandomTrendySaying();
     SetDexPokemonPokenavFlags();
     InitTimeBasedEvents();
 }

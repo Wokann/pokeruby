@@ -185,6 +185,7 @@ extern const u8 OtherText_Store[];
 extern const u8 gMenuText_Check[];
 extern const u8 gOtherText_None[];
 
+extern const u8 gText_ThreeQuestionMarks[];
 extern const u8 gOtherText_ThreeQuestions2[];
 
 extern const u8 gOtherText_FiveQuestions[];

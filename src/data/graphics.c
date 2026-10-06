@@ -1070,10 +1070,10 @@ const u8 gPSSMenuMisc_Tilemap[] = INCBIN_U8("graphics/pokemon_storage/misc1.bin.
 const u8 gHallOfFame_Gfx[] = INCBIN_U8("graphics/misc/hof.4bpp.lz");
 const u16 gHallOfFame_Pal[] = INCBIN_U16("graphics/misc/hof.gbapal");
 
-const u8 gMenuWordGroupIndicator_Gfx[] = INCBIN_U8("graphics/interface/wordgroup_indicator.4bpp.lz");
+const u8 gEasyChatMode_Gfx[] = INCBIN_U8("graphics/easy_chat/mode.4bpp.lz");
 const u8 gMenuWordGroupFrame_Gfx[] = INCBIN_U8("graphics/interface/wordgroup_frame.4bpp.lz");
 
-const u16 gMenuWordGroupIndicator_Pal[] = INCBIN_U16("graphics/interface/wordgroup_indicator.gbapal");
+const u16 gEasyChatMode_Pal[] = INCBIN_U16("graphics/easy_chat/mode.gbapal");
 const u16 gMenuWordGroupFrame1_Pal[] = INCBIN_U16("graphics/interface/wordgroup_pink.gbapal");
 const u16 gMenuWordGroupFrame2_Pal[] = INCBIN_U16("graphics/interface/wordgroup_blue.gbapal");
 

@@ -25,7 +25,7 @@
 #include "groups/pokemon_2/words.h"
 
 const u8 * gEasyChatGroupWords[] = {
-    (const u8 *)gEasyChatGroupWords_Pokemon,
+    (const u8 *)gEasyChatGroup_Pokemon,
     gEasyChatGroupWords_Trainer,
     gEasyChatGroupWords_Status,
     gEasyChatGroupWords_Battle,
@@ -43,9 +43,9 @@ const u8 * gEasyChatGroupWords[] = {
     gEasyChatGroupWords_Misc,
     gEasyChatGroupWords_Adjectives,
     gEasyChatGroupWords_Events,
-    (const u8 *)gEasyChatGroupWords_Move1,
-    (const u8 *)gEasyChatGroupWords_Move2,
+    (const u8 *)gEasyChatGroup_Move1,
+    (const u8 *)gEasyChatGroup_Move2,
     gEasyChatGroupWords_TrendySaying,
-    (const u8 *)gEasyChatGroupWords_Pokemon2
+    (const u8 *)gEasyChatGroup_Pokemon2
 };
 #endif // DATA_TEXT_EASY_CHAT_GROUP_WORDS

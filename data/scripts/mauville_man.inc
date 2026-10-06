@@ -84,7 +84,7 @@ dont_write_lyrics:
 SpeakToHipster:
 	lock
 	faceplayer
-	setflag FLAG_SYS_HIPSTER_MEET
+	setflag FLAG_UNLOCKED_TRENDY_SAYINGS
 	msgbox gTextHipster_TheyCallMeTheHipster, MSGBOX_DEFAULT
 	special ScrSpecial_GetHipsterSpokenFlag
 	compare VAR_RESULT, FALSE

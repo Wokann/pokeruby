@@ -213,9 +213,9 @@ bool8 TayaDebugMenu_Trend(void)
         u8 * r4;
 
         sp00[0] = pair->unk1_6 ? CHAR_0 + 1 : CHAR_0 + 0;
-        EasyChat_GetWordText(sp20, pair->words[0]);
+        CopyEasyChatWord(sp20, pair->words[0]);
         r4 = StringCopyPadded(sp00 + 1, sp20, CHAR_SPACE, 7);
-        EasyChat_GetWordText(sp20, pair->words[1]);
+        CopyEasyChatWord(sp20, pair->words[1]);
         r4 = StringCopyPadded(r4, sp20, CHAR_SPACE, 8);
         r4 = ConvertIntToDecimalStringN(r4, pair->unk0_0, STR_CONV_MODE_RIGHT_ALIGN, 3);
         *r4++ = CHAR_SPACE;
@@ -250,7 +250,7 @@ bool8 TayaDebugMenu_TrendR(void)
     {
         for (j = 0; j < 2; j++)
         {
-            gSaveBlock1.dewfordTrends[i].words[j] = sub_80EB72C(Random() % 22);
+            gSaveBlock1.dewfordTrends[i].words[j] = GetRandomEasyChatWordFromGroup(Random() % 22);
         }
     }
     Menu_EraseScreen();

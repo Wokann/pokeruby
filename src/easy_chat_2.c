@@ -69,38 +69,38 @@ void sub_80EAC48(struct UnknownEasyChatStruct1 *);
 void sub_80EACBC(void *, u16 *, struct UnknownEasyChatStruct1 *);
 u8 *CopyEasyChatGroupName(u8 *, u8, int);
 u8 *sub_80EB218(u8 *, u16, u16);
-u16 sub_80EB2D4(u16);
-bool8 sub_80EB37C(u16);
-bool8 sub_80EB868(u8);
-static u16 sub_80EB960(void);
-u8 sub_80EB9C8(void);
+static bool8 IsEasyChatWordInvalid(u16);
+static bool8 IsTrendySayingUnlocked(u8);
+static u8 GetNumTrendySayingsUnlocked(void);
+static u16 GetRandomUnlockedTrendySaying(void);
+static u8 EasyChatIsNationalPokedexEnabled(void);
 static u16 sub_80EB9D8(void);
 
 EWRAM_DATA u8 gUnknown_020388AC = 0;
 
 static u8 gUnknown_03000740;
 
-const u16 InterviewPalette_0[] = INCBIN_U16("graphics/misc/interview_pal0.gbapal");
+static const u16 sTriangleCursor_Pal[] = INCBIN_U16("graphics/easy_chat/triangle_cursor.gbapal");
 const u16 InterviewPalette_1[] = INCBIN_U16("graphics/misc/interview_pal1.gbapal");
-const u8 InterviewArrowTiles[] = INCBIN_U8("graphics/misc/interview_arrow.4bpp");
-const u8 InterviewButtonTiles[] = INCBIN_U8("graphics/misc/interview_buttons.4bpp");
-const u16 gMenuInterviewFrame_Pal[] = INCBIN_U16("graphics/misc/interview_frame.gbapal");
-const u8 gMenuInterviewFrame_Gfx[] = INCBIN_U8("graphics/misc/interview_frame.4bpp.lz");
-const u8 InterviewTriangleCursorTiles[] = INCBIN_U8("graphics/misc/interview_triangle_cursor.4bpp");
+static const u8 sScrollIndicator_Gfx[] = INCBIN_U8("graphics/easy_chat/scroll_indicator.4bpp");
+static const u8 sStartSelectButtons_Gfx[] = INCBIN_U8("graphics/easy_chat/start_select_buttons.4bpp");
+static const u16 sRSInterviewFrame_Pal[] = INCBIN_U16("graphics/easy_chat/interview_frame.gbapal");
+static const u8 sRSInterviewFrame_Gfx[] = INCBIN_U8("graphics/easy_chat/interview_frame.4bpp.lz");
+static const u8 sTriangleCursor_Gfx[] = INCBIN_U8("graphics/easy_chat/triangle_cursor.4bpp");
 
 void sub_80E8218(void)
 {
     struct SpriteSheet interviewSpriteSheets[] =
     {
-        {InterviewTriangleCursorTiles, 0x20, 0},
+        {sTriangleCursor_Gfx, 0x20, 0},
         {gInterviewOutlineCursorTiles, 0x700, 1},
-        {InterviewArrowTiles, 0x100, 2},
-        {InterviewButtonTiles, 0x100, 3},
+        {sScrollIndicator_Gfx, 0x100, 2},
+        {sStartSelectButtons_Gfx, 0x100, 3},
         {NULL, 0, 0},
     };
     struct SpritePalette interviewSpritePalettes[] =
     {
-        {InterviewPalette_0, 0},
+        {sTriangleCursor_Pal, 0},
         {InterviewPalette_1, 1},
         {NULL, 0},
     };
@@ -112,7 +112,7 @@ void sub_80E8218(void)
     sub_80E8A7C();
 }
 
-const struct OamData gOamData_83DBBF4 =
+static const struct OamData sOamData_TriangleCursor =
 {
     .y = 0,
     .affineMode = 0,
@@ -129,11 +129,11 @@ const struct OamData gOamData_83DBBF4 =
     .affineParam = 0,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83DBBFC =
+static const struct SpriteTemplate sSpriteTemplate_TriangleCursor =
 {
     .tileTag = 0,
     .paletteTag = 0,
-    .oam = &gOamData_83DBBF4,
+    .oam = &sOamData_TriangleCursor,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -144,12 +144,12 @@ void sub_80E8268(void)
 {
     u8 spriteId;
 
-    spriteId = CreateSprite(&gSpriteTemplate_83DBBFC, 0, 0, 0);
+    spriteId = CreateSprite(&sSpriteTemplate_TriangleCursor, 0, 0, 0);
     gSprites[spriteId].y = gEasyChatStruct->unk8A * 8 + 8;
     gSprites[spriteId].x = gEasyChatStruct->unk88 * 8 + 4;
     gSprites[spriteId].data[0] = 0;
     gSprites[spriteId].data[1] = 0;
-    gEasyChatStruct->unk98 = &gSprites[spriteId];
+    gEasyChatStruct->mainCursorSprite = &gSprites[spriteId];
 }
 
 void sub_80E82BC(struct Sprite *sprite)
@@ -197,19 +197,19 @@ void sub_80E8398(u8 a)
     switch (a)
     {
     case 0:
-        gEasyChatStruct->unk98->data[1] = a;
-        gEasyChatStruct->unk98->x2 = a;
-        gEasyChatStruct->unk98->invisible = FALSE;
+        gEasyChatStruct->mainCursorSprite->data[1] = a;
+        gEasyChatStruct->mainCursorSprite->x2 = a;
+        gEasyChatStruct->mainCursorSprite->invisible = FALSE;
         break;
     case 1:
-        gEasyChatStruct->unk98->data[1] = a;
-        gEasyChatStruct->unk98->x2 = 0;
-        gEasyChatStruct->unk98->invisible = FALSE;
+        gEasyChatStruct->mainCursorSprite->data[1] = a;
+        gEasyChatStruct->mainCursorSprite->x2 = 0;
+        gEasyChatStruct->mainCursorSprite->invisible = FALSE;
         break;
     case 2:
-        gEasyChatStruct->unk98->data[1] = 1;
-        gEasyChatStruct->unk98->x2 = 0;
-        gEasyChatStruct->unk98->invisible = TRUE;
+        gEasyChatStruct->mainCursorSprite->data[1] = 1;
+        gEasyChatStruct->mainCursorSprite->x2 = 0;
+        gEasyChatStruct->mainCursorSprite->invisible = TRUE;
         break;
     }
 }
@@ -493,13 +493,13 @@ void sub_80E8760(struct Sprite *sprite)
 
 void sub_80E87A4(u8 a)
 {
-    gEasyChatStruct->unkA8->data[1] = (a == 0);
-    gEasyChatStruct->unkA8->x2 = 0;
+    gEasyChatStruct->wordSelectCursorSprite->data[1] = (a == 0);
+    gEasyChatStruct->wordSelectCursorSprite->x2 = 0;
 }
 
 void sub_80E87CC(u8 a)
 {
-    gEasyChatStruct->unkA8->invisible = (a == 0);
+    gEasyChatStruct->wordSelectCursorSprite->invisible = (a == 0);
     sub_80E87A4(a);
     if (a != 0)
         gEasyChatStruct->unk1B9 = 1;
@@ -507,12 +507,12 @@ void sub_80E87CC(u8 a)
 
 void sub_80E8818(void)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83DBBFC, 0, 0, 0);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_TriangleCursor, 0, 0, 0);
 
     gSprites[spriteId].data[0] = 0;
     gSprites[spriteId].data[1] = 0;
-    gEasyChatStruct->unkA8 = &gSprites[spriteId];
-    gEasyChatStruct->unkA8->callback = sub_80E8860;
+    gEasyChatStruct->wordSelectCursorSprite = &gSprites[spriteId];
+    gEasyChatStruct->wordSelectCursorSprite->callback = sub_80E8860;
     sub_80E87CC(0);
 }
 
@@ -714,16 +714,16 @@ void sub_80E8B78(struct Sprite *sprite)
 // defined below
 extern const struct SpriteTemplate gSpriteTemplate_83DBD48;
 
-void sub_80E8BF4(u8 reporter, u8 b)
+void sub_80E8BF4(u8 reporter, u8 frameId)
 {
-    struct CompressedSpriteSheet gUnknown_083DBD30 = {gMenuInterviewFrame_Gfx, 2048, 0x0006};
-    struct SpritePalette gUnknown_083DBD38 = {gMenuInterviewFrame_Pal, 0x0004};
+    struct CompressedSpriteSheet gUnknown_083DBD30 = {sRSInterviewFrame_Gfx, 2048, 0x0006};
+    struct SpritePalette gUnknown_083DBD38 = {sRSInterviewFrame_Pal, 0x0004};
     s16 x;
     s16 y;
     u16 gabbyTyGfxId;
     u8 spriteId;
 
-    switch (b)
+    switch (frameId)
     {
     case 2:
     default:
@@ -796,11 +796,11 @@ const struct SpriteTemplate gSpriteTemplate_83DBD48 =
     .callback = SpriteCallbackDummy,
 };
 
-const struct CompressedSpriteSheet gUnknown_083DBD60 = {gMenuWordGroupIndicator_Gfx, 4096, 0x0007};
+const struct CompressedSpriteSheet gUnknown_083DBD60 = {gEasyChatMode_Gfx, 4096, 0x0007};
 
-const struct SpritePalette gUnknown_083DBD68 = {gMenuWordGroupIndicator_Pal, 0x0005};
+const struct SpritePalette gUnknown_083DBD68 = {gEasyChatMode_Pal, 0x0005};
 
-const struct OamData gOamData_83DBD70 =
+static const struct OamData sOamData_ModeWindow =
 {
     .y = 0,
     .affineMode = 0,
@@ -862,7 +862,7 @@ const union AnimCmd gSpriteAnim_83DBDC0[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DBDCC[] =
+static const union AnimCmd *const sAnims_ModeWindow[] =
 {
     gSpriteAnim_83DBD78,
     gSpriteAnim_83DBD80,
@@ -872,12 +872,12 @@ const union AnimCmd *const gSpriteAnimTable_83DBDCC[] =
     gSpriteAnim_83DBDC0,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83DBDE4 =
+static const struct SpriteTemplate sSpriteTemplate_ModeWindow =
 {
     .tileTag = 7,
     .paletteTag = 5,
-    .oam = &gOamData_83DBD70,
-    .anims = gSpriteAnimTable_83DBDCC,
+    .oam = &sOamData_ModeWindow,
+    .anims = sAnims_ModeWindow,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy,
@@ -890,43 +890,43 @@ void sub_80E8CEC(void)
     LoadCompressedObjectPic(&gUnknown_083DBD60);
     LoadSpritePalette(&gUnknown_083DBD68);
 
-    spriteId = CreateSprite(&gSpriteTemplate_83DBDE4, 224, 88, 0);
+    spriteId = CreateSprite(&sSpriteTemplate_ModeWindow, 224, 88, 0);
     if (spriteId != MAX_SPRITES)
-        gEasyChatStruct->unk9C74 = &gSprites[spriteId];
+        gEasyChatStruct->modeWindowSprite = &gSprites[spriteId];
     else
-        gEasyChatStruct->unk9C74 = NULL;
+        gEasyChatStruct->modeWindowSprite = NULL;
 }
 
 void sub_80E8D54(void)
 {
-    if (gEasyChatStruct->unk9C74 != NULL)
+    if (gEasyChatStruct->modeWindowSprite != NULL)
     {
         if (gEasyChatStruct->inAlphabetMode == 0)
-            StartSpriteAnim(gEasyChatStruct->unk9C74, 1);
+            StartSpriteAnim(gEasyChatStruct->modeWindowSprite, 1);
         else
-            StartSpriteAnim(gEasyChatStruct->unk9C74, 2);
+            StartSpriteAnim(gEasyChatStruct->modeWindowSprite, 2);
     }
 }
 
 void sub_80E8D8C(u8 a)
 {
-    if (gEasyChatStruct->unk9C74 != NULL)
+    if (gEasyChatStruct->modeWindowSprite != NULL)
     {
         if (a != 0)
         {
             if (gEasyChatStruct->inAlphabetMode == 0)
-                StartSpriteAnim(gEasyChatStruct->unk9C74, 3);
+                StartSpriteAnim(gEasyChatStruct->modeWindowSprite, 3);
             else
-                StartSpriteAnim(gEasyChatStruct->unk9C74, 4);
+                StartSpriteAnim(gEasyChatStruct->modeWindowSprite, 4);
         }
         else
         {
-            StartSpriteAnim(gEasyChatStruct->unk9C74, 5);
+            StartSpriteAnim(gEasyChatStruct->modeWindowSprite, 5);
         }
     }
 }
 
-const u16 gUnknown_083DBDFC[] = INCBIN_U16("graphics/unknown/unknown_3DBDFC.gbapal");
+static const u16 sTitleText_Pal[] = INCBIN_U16("graphics/easy_chat/title_text.gbapal");
 
 const u16 gUnknown_083DBE1C[] =
 {
@@ -934,7 +934,7 @@ const u16 gUnknown_083DBE1C[] =
     0x301, 0x301, 0x301, 0x301, 0x301, 0x300, 0x300, 0x300, 0x300,
 };
 
-const u16 gUnknown_083DBE40[] = INCBIN_U16("graphics/unknown/unknown_3DBE40.gbapal");
+static const u16 sText_Pal[] = INCBIN_U16("graphics/easy_chat/text.gbapal");
 
 // unused tilemap?
 const u16 gUnused_083DBE60[] =
@@ -975,12 +975,12 @@ void sub_80E8DD8(void)
     DmaCopy16Defvars(3, gUnknown_08E9AB00, (void *)(VRAM + 0x6000), 64);
     LZ77UnCompVram(gUnknown_08E9AB60, (void *)(VRAM + 0x7000));
     LoadPalette(gUnknown_08E9AB40, 0, 32);
-    LoadPalette(gUnknown_083DBDFC, 16, 32);
+    LoadPalette(sTitleText_Pal, 16, 32);
 
     REG_BG3CNT = 0x0F0F;
 
     DmaClear32(3, (void *)(VRAM + 0x7800), 0x800);
-    LoadPalette(gUnknown_083DBE40, 32, 32);
+    LoadPalette(sText_Pal, 32, 32);
     gPlttBufferUnfaded[63] = RGB(31, 31, 31);
     gPlttBufferUnfaded[49] = RGB(27, 26, 27);
     gPlttBufferUnfaded[56] = RGB(28, 28, 28);
@@ -1401,7 +1401,7 @@ void sub_80E9940(u8 *a, u8 b)
 
 #if ENGLISH
 
-const u8 gUnknown_083DBEAC[][32] =
+static const u8 sEasyChatKeyboardAlphabet[][32] =
 {
 	_("{UNKNOWN_14 8} A B C  D E F  {UNKNOWN_14 0}others"),
 	_("{UNKNOWN_14 8} G H I  J K L      "),
@@ -1415,7 +1415,7 @@ const u8 unk_83E7EB0[] = _("{UNKNOWN_14 8} A B C  D E F  {UNKNOWN_14 0}mehr");
 const u8 unk_83E7ECA[] = _("{UNKNOWN_14 8} G H I  J K L      ");
 const u8 unk_83E7EE1[] = _("{UNKNOWN_14 8} M N O  P Q R S    ");
 const u8 unk_83E7EF8[] = _("{UNKNOWN_14 8} T U V  W X Y Z    ");
-const u8 *const gUnknown_083DBEAC[] =
+static const u8 *const sEasyChatKeyboardAlphabet[] =
 {
     unk_83E7EB0,
     unk_83E7ECA,
@@ -1439,10 +1439,10 @@ void sub_80E9974(void)
     else
     {
         sub_80E9AD4();
-        sub_80E9A60(gUnknown_083DBEAC[0], 2, 0);
-        sub_80E9A60(gUnknown_083DBEAC[1], 2, 2);
-        sub_80E9A60(gUnknown_083DBEAC[2], 2, 4);
-        sub_80E9A60(gUnknown_083DBEAC[3], 2, 6);
+        sub_80E9A60(sEasyChatKeyboardAlphabet[0], 2, 0);
+        sub_80E9A60(sEasyChatKeyboardAlphabet[1], 2, 2);
+        sub_80E9A60(sEasyChatKeyboardAlphabet[2], 2, 4);
+        sub_80E9A60(sEasyChatKeyboardAlphabet[3], 2, 6);
     }
 }
 
@@ -1509,7 +1509,7 @@ void sub_80E9AF8(u16 a)
     {
         for (i = 0; i < gEasyChatStruct->unk99A6[a]; i++)
         {
-            if (sub_80EB2D4(gEasyChatStruct->selectedGroupWords[a][i]) == 7)
+            if (GetEasyChatWordStringLength(gEasyChatStruct->selectedGroupWords[a][i]) == 7)
                 BasicInitMenuWindow(&gWindowTemplate_81E6D70);
             else
                 BasicInitMenuWindow(&gWindowTemplate_81E6D54);
@@ -2073,62 +2073,62 @@ void sub_80EAD08(void)
     }
 }
 
-u8 *CopyEasyChatGroupName(u8 *dest, u8 group, int unused)
+u8 *CopyEasyChatGroupName(u8 *dest, u8 groupId, int unused)
 {
-    return StringCopy(dest, gEasyChatGroupNames[group]);
+    return StringCopy(dest, sEasyChatGroupNamePointers[groupId]);
 }
 
-bool8 sub_80EAD7C(u8 group)
+bool8 IsEasyChatGroupUnlocked(u8 groupId)
 {
-    switch (group)
+    switch (groupId)
     {
     case EC_GROUP_TRENDY_SAYING:
-        return FlagGet(FLAG_SYS_HIPSTER_MEET);
+        return FlagGet(FLAG_UNLOCKED_TRENDY_SAYINGS);
     case EC_GROUP_EVENTS:
     case EC_GROUP_MOVE_1:
     case EC_GROUP_MOVE_2:
         return FlagGet(FLAG_SYS_GAME_CLEAR);
-    case EC_GROUP_POKEMON_2:
-        return sub_80EB9C8();
+    case EC_GROUP_POKEMON_NATIONAL:
+        return EasyChatIsNationalPokedexEnabled();
     default:
         return TRUE;
     }
 }
 
-bool8 sub_80EADC0(u8 group, u16 word)
+bool8 sub_80EADC0(u8 groupId, u16 wordIndex)
 {
-    switch (group)
+    switch (groupId)
     {
     case EC_GROUP_TRENDY_SAYING:
-        if (gEasyChatStruct->unk40[2][11 + group] == 0)
+        if (gEasyChatStruct->unk40[2][11 + groupId] == 0)
             return FALSE;
-        return sub_80EB868(word);
-    case EC_GROUP_POKEMON_1:
-        return GetSetPokedexFlag(SpeciesToNationalPokedexNum(word), 0);
+        return IsTrendySayingUnlocked(wordIndex);
+    case EC_GROUP_POKEMON:
+        return GetSetPokedexFlag(SpeciesToNationalPokedexNum(wordIndex), 0);
     case EC_GROUP_EVENTS:
     case EC_GROUP_MOVE_1:
     case EC_GROUP_MOVE_2:
-        if (gEasyChatStruct->unk40[2][11 + group] == 0)
+        if (gEasyChatStruct->unk40[2][11 + groupId] == 0)
             return FALSE;
         return TRUE;
-    case EC_GROUP_POKEMON_2:
-        return sub_80EB9C8();
+    case EC_GROUP_POKEMON_NATIONAL:
+        return EasyChatIsNationalPokedexEnabled();
     default:
         return TRUE;
     }
 }
 
-u16 sub_80EAE88(u8 group)
+u16 sub_80EAE88(u8 groupId)
 {
-    switch (group)
+    switch (groupId)
     {
-    case EC_GROUP_POKEMON_1:
+    case EC_GROUP_POKEMON:
         return GetHoennPokedexCount(0);
     case EC_GROUP_TRENDY_SAYING:
-        return sub_80EB8C0();
+        return GetNumTrendySayingsUnlocked();
     default:
-        if (sub_80EAD7C(group))
-            return gEasyChatGroupSizes[group];
+        if (IsEasyChatGroupUnlocked(groupId))
+            return gEasyChatGroupSizes[groupId];
         return FALSE;
     }
 }
@@ -2351,7 +2351,7 @@ void sub_80EAECC(void)
                     word = gEasyChatWordsAlphabetized[r6++];
                     if (sub_80EADC0(EC_GROUP(word), EC_INDEX(word)) && !r7)
                     {
-                        gEasyChatStruct->unkB78[i][r9++] = word;
+                        gEasyChatStruct->unlockedAlphabetWords[i][r9++] = word;
                         gEasyChatStruct->numUnlockedAlphabetWords[i]++;
                         r7 = TRUE;
                     }
@@ -2361,7 +2361,7 @@ void sub_80EAECC(void)
             {
                 if (sub_80EADC0(EC_GROUP(word), EC_INDEX(word)))
                 {
-                    gEasyChatStruct->unkB78[i][r9++] = word;
+                    gEasyChatStruct->unlockedAlphabetWords[i][r9++] = word;
                     gEasyChatStruct->numUnlockedAlphabetWords[i]++;
                 }
             }
@@ -2376,10 +2376,10 @@ void LoadEasyChatStrings(void)
     u16 group;
     u16 index;
 
-    for (group = 0; group <= EC_GROUP_POKEMON_2; group++)
+    for (group = 0; group <= EC_GROUP_POKEMON_NATIONAL; group++)
     {
-        if (group != EC_GROUP_POKEMON_1
-         && group != EC_GROUP_POKEMON_2
+        if (group != EC_GROUP_POKEMON
+         && group != EC_GROUP_POKEMON_NATIONAL
          && group != EC_GROUP_MOVE_1
          && group != EC_GROUP_MOVE_2)
         {
@@ -2411,18 +2411,18 @@ void sub_80EB0B0(void)
 
     if (gEasyChatStruct->inAlphabetMode == 0)
     {
-        u16 group = gEasyChatStruct->unk1B8;
+        u16 groupId = gEasyChatStruct->unk1B8;
 
-        gEasyChatStruct->unk4178[group] = 0;
+        gEasyChatStruct->unk4178[groupId] = 0;
         r7 = 0;
         r9 = 0;
-        sp0 = gEasyChatGroupOrders[group];
+        sp0 = gEasyChatGroupOrders[groupId];
         for (r8 = 0; r8 < gEasyChatGroupSizes[gEasyChatStruct->unk1B8]; r8++)
         {
-            if (sub_80EADC0(group, sp0[r8]))
+            if (sub_80EADC0(groupId, sp0[r8]))
             {
-                gEasyChatStruct->selectedGroupWords[r9][r7] = ((group & 0x7F) << 9) | (sp0[r8] & 0x1FF);
-                gEasyChatStruct->unk4178[group]++;
+                gEasyChatStruct->selectedGroupWords[r9][r7] = ((groupId & 0x7F) << 9) | (sp0[r8] & 0x1FF);
+                gEasyChatStruct->unk4178[groupId]++;
                 r7++;
                 if (r7 > 1)
                 {
@@ -2441,7 +2441,7 @@ void sub_80EB0B0(void)
 
         for (r5 = 0; r5 < gEasyChatStruct->numUnlockedAlphabetWords[r2]; r5++)
         {
-            gEasyChatStruct->selectedGroupWords[r6][r3] = gEasyChatStruct->unkB78[r2][r5];
+            gEasyChatStruct->selectedGroupWords[r6][r3] = gEasyChatStruct->unlockedAlphabetWords[r2][r5];
             r3++;
             if (r3 > 1)
             {
@@ -2452,28 +2452,28 @@ void sub_80EB0B0(void)
     }
 }
 
-u8 *sub_80EB218(u8 *dest, u16 word, u16 c)
+u8 *sub_80EB218(u8 *dest, u16 easyChatWord, u16 c)
 {
     u8 *wordText;
 
-    if (sub_80EB37C(word))
+    if (IsEasyChatWordInvalid(easyChatWord))
     {
-        wordText = StringCopy(dest, gOtherText_ThreeQuestions);
+        wordText = StringCopy(dest, gText_ThreeQuestionMarks);
     }
-    else if (word == 0xFFFF)
+    else if (easyChatWord == 0xFFFF)
     {
         wordText = dest;
         wordText[0] = EOS;  // Why? It's going to get overwritten.
     }
     else
     {
-        u16 group = EC_GROUP(word);
-        u16 index = EC_INDEX(word);
+        u16 groupId = EC_GROUP(easyChatWord);
+        u16 index = EC_INDEX(easyChatWord);
 
-        switch (group)
+        switch (groupId)
         {
-        case EC_GROUP_POKEMON_1:
-        case EC_GROUP_POKEMON_2:
+        case EC_GROUP_POKEMON:
+        case EC_GROUP_POKEMON_NATIONAL:
             wordText = StringCopy(dest, gSpeciesNames[index]);
             break;
         case EC_GROUP_MOVE_1:
@@ -2481,7 +2481,7 @@ u8 *sub_80EB218(u8 *dest, u16 word, u16 c)
             wordText = StringCopy(dest, gMoveNames[index]);
             break;
         default:
-            wordText = StringCopy(dest, gEasyChatStruct->ecWordStrings[group][index]);
+            wordText = StringCopy(dest, gEasyChatStruct->ecWordStrings[groupId][index]);
             break;
         }
     }
@@ -2496,28 +2496,28 @@ u8 *sub_80EB218(u8 *dest, u16 word, u16 c)
     return wordText;
 }
 
-u16 sub_80EB2D4(u16 word)
+u16 GetEasyChatWordStringLength(u16 easyChatWord)
 {
     const u8 *wordText;
     u16 length;
 
-    if (sub_80EB37C(word))
+    if (IsEasyChatWordInvalid(easyChatWord))
     {
-        return StringLength(gOtherText_ThreeQuestions);
+        return StringLength(gText_ThreeQuestionMarks);
     }
-    else if (word == 0xFFFF)
+    else if (easyChatWord == 0xFFFF)
     {
         return 0;
     }
     else
     {
-        u16 group = EC_GROUP(word);
-        u16 index = EC_INDEX(word);
+        u16 groupId = EC_GROUP(easyChatWord);
+        u16 index = EC_INDEX(easyChatWord);
 
-        switch (group)
+        switch (groupId)
         {
-        case EC_GROUP_POKEMON_1:
-        case EC_GROUP_POKEMON_2:
+        case EC_GROUP_POKEMON:
+        case EC_GROUP_POKEMON_NATIONAL:
             wordText = gSpeciesNames[index];
             break;
         case EC_GROUP_MOVE_1:
@@ -2525,7 +2525,7 @@ u16 sub_80EB2D4(u16 word)
             wordText = gMoveNames[index];
             break;
         default:
-            wordText = gEasyChatStruct->ecWordStrings[group][index];
+            wordText = gEasyChatStruct->ecWordStrings[groupId][index];
             break;
         }
     }
@@ -2539,37 +2539,37 @@ u16 sub_80EB2D4(u16 word)
     return length;
 }
 
-bool8 sub_80EB37C(u16 word)
+static bool8 IsEasyChatWordInvalid(u16 easyChatWord)
 {
-    const u16 *r4;
+    const u16 *list;
     u16 i;
 
-    if (word == 0xFFFF)
+    if (easyChatWord == 0xFFFF)
     {
         return FALSE;
     }
     else
     {
-        u16 group = EC_GROUP(word);
-        u16 index = EC_INDEX(word);
+        u16 groupId = EC_GROUP(easyChatWord);
+        u16 index = EC_INDEX(easyChatWord);
 
-        if (group <= EC_GROUP_POKEMON_2)
+        if (groupId <= EC_GROUP_POKEMON_NATIONAL)
         {
-            switch (group)
+            switch (groupId)
             {
-            case EC_GROUP_POKEMON_1:
-            case EC_GROUP_POKEMON_2:
+            case EC_GROUP_POKEMON:
+            case EC_GROUP_POKEMON_NATIONAL:
             case EC_GROUP_MOVE_1:
             case EC_GROUP_MOVE_2:
-                r4 = (u16 *)gEasyChatGroupWords[group];
-                for (i = 0; i < gEasyChatGroupSizes[group]; i++)
+                list = (u16 *)gEasyChatGroupWords[groupId];
+                for (i = 0; i < gEasyChatGroupSizes[groupId]; i++)
                 {
-                    if (index == r4[i])
+                    if (index == list[i])
                         return FALSE;
                 }
                 break;
             default:
-                if (index < gEasyChatGroupSizes[group])
+                if (index < gEasyChatGroupSizes[groupId])
                     return FALSE;
                 break;
             }
@@ -2587,8 +2587,8 @@ u32 de_sub_80EB748(s32 group, s32 index)
 
     switch (group)
     {
-    case EC_GROUP_POKEMON_1:
-    case EC_GROUP_POKEMON_2:
+    case EC_GROUP_POKEMON:
+    case EC_GROUP_POKEMON_NATIONAL:
     case EC_GROUP_MOVE_1:
     case EC_GROUP_MOVE_2:
         words = (u16 *)gEasyChatGroupWords[group];
@@ -2611,145 +2611,145 @@ u32 de_sub_80EB748(s32 group, s32 index)
 #endif
 
 // returns the end of the destination buffer text
-u8 *EasyChat_GetWordText(u8 *dst, u16 word)
+u8 *CopyEasyChatWord(u8 *dest, u16 easyChatWord)
 {
-    u16 group;
+    u16 groupId;
     u16 wordIndex;
     const u8 *src;
     u16 i;
 
-    if (sub_80EB37C(word))
-        return StringCopy(dst, gOtherText_ThreeQuestions);
+    if (IsEasyChatWordInvalid(easyChatWord))
+        return StringCopy(dest, gText_ThreeQuestionMarks);
 
-    if (word == 0xFFFF)
+    if (easyChatWord == 0xFFFF)
     {
-        *dst = EOS;
-        return dst;
+        *dest = EOS;
+        return dest;
     }
     else
     {
-        group = EC_GROUP(word);
-        wordIndex = EC_INDEX(word);
-        switch (group)
+        groupId = EC_GROUP(easyChatWord);
+        wordIndex = EC_INDEX(easyChatWord);
+        switch (groupId)
         {
-        case EC_GROUP_POKEMON_1: // 0
-        case EC_GROUP_POKEMON_2: // 21
-            dst = StringCopy(dst, gSpeciesNames[wordIndex]);
+        case EC_GROUP_POKEMON: // 0
+        case EC_GROUP_POKEMON_NATIONAL: // 21
+            dest = StringCopy(dest, gSpeciesNames[wordIndex]);
             break;
         case EC_GROUP_MOVE_1: // 18
         case EC_GROUP_MOVE_2: // 19
-            dst = StringCopy(dst, gMoveNames[wordIndex]);
+            dest = StringCopy(dest, gMoveNames[wordIndex]);
             break;
         default:
-            src = gEasyChatGroupWords[group];
+            src = gEasyChatGroupWords[groupId];
             for (i = wordIndex - 1; i != 0xFFFF; i--)
             {
                 while (*src++ != EOS)
                     ;
             }
-            dst = StringCopy(dst, src);
+            dest = StringCopy(dest, src);
             break;
         }
-        *dst = EOS;
-        return dst;
+        *dest = EOS;
+        return dest;
     }
 }
 
-u8 *ConvertEasyChatWordsToString(u8 *dst, u16 *words, u16 arg2, u16 arg3)
+u8 *ConvertEasyChatWordsToString(u8 *dest, u16 *src, u16 columns, u16 rows)
 {
     u16 i;
-    u16 n;
+    u16 j;
 
-    const u16 i1 = arg2 - 1;
+    const u16 numColumns = columns - 1;
 
-    for (i = 0; i < arg3; i++)
+    for (i = 0; i < rows; i++)
     {
         u16 word;
 
-        for (n = 0; n < i1; n++)
+        for (j = 0; j < numColumns; j++)
         {
-            dst = EasyChat_GetWordText(dst, words[0]);
+            dest = CopyEasyChatWord(dest, src[0]);
 
-            if (words[0] != 0xFFFF)
+            if (src[0] != 0xFFFF)
             {
-                dst[0] = CHAR_SPACE;
-                dst++;
+                dest[0] = CHAR_SPACE;
+                dest++;
             }
 
-            words++;
+            src++;
         }
 
-        word = words[0];
-        words++;
-        dst = EasyChat_GetWordText(dst, word);
+        word = src[0];
+        src++;
+        dest = CopyEasyChatWord(dest, word);
 
-        dst[0] = CHAR_NEWLINE;
-        dst++;
+        dest[0] = CHAR_NEWLINE;
+        dest++;
     }
 
-    dst--;
-    dst[0] = EOS;
+    dest--;
+    dest[0] = EOS;
 
-    return dst;
+    return dest;
 }
 
-u8 *sub_80EB544(u8 *dst, u16 *words, u16 arg2, u16 arg3)
+u8 *sub_80EB544(u8 *dest, u16 *src, u16 columns, u16 rows)
 {
     u16 i;
-    u16 n;
+    u16 j;
 
-    const u16 i1 = arg2 - 1;
+    const u16 numColumns = columns - 1;
 
-    for (i = 0; i < arg3; i++)
+    for (i = 0; i < rows; i++)
     {
         u16 word;
 
-        for (n = 0; n < i1; n++)
+        for (j = 0; j < numColumns; j++)
         {
-            dst = EasyChat_GetWordText(dst, words[0]);
+            dest = CopyEasyChatWord(dest, src[0]);
 
-            if (words[0] != 0xFFFF)
+            if (src[0] != 0xFFFF)
             {
-                dst[0] = CHAR_SPACE;
-                dst++;
+                dest[0] = CHAR_SPACE;
+                dest++;
             }
 
-            words++;
+            src++;
         }
 
-        word = words[0];
-        words++;
-        dst = EasyChat_GetWordText(dst, word);
+        word = src[0];
+        src++;
+        dest = CopyEasyChatWord(dest, word);
 
         // Only difference with ConvertEasyChatWordsToString
-        dst[0] = (i == 0) ? CHAR_NEWLINE : CHAR_PROMPT_SCROLL;
-        dst++;
+        dest[0] = (i == 0) ? CHAR_NEWLINE : CHAR_PROMPT_SCROLL;
+        dest++;
     }
 
-    dst--;
-    dst[0] = EOS;
+    dest--;
+    dest[0] = EOS;
 
-    return dst;
+    return dest;
 }
 
 
-u16 unref_sub_80EB5E0(u16 arg0)
+u16 unref_sub_80EB5E0(u16 easyChatWord)
 {
     const u8 *chars;
     u16 i;
     u16 length;
-    int group, word;
+    int groupId, word;
 
 
-    if (arg0 == 0xFFFF)
+    if (easyChatWord == 0xFFFF)
         return 0;
 
-    group = EC_GROUP(arg0);
-    word = EC_INDEX(arg0);
-    switch (group)
+    groupId = EC_GROUP(easyChatWord);
+    word = EC_INDEX(easyChatWord);
+    switch (groupId)
     {
-    case EC_GROUP_POKEMON_1: // 0
-    case EC_GROUP_POKEMON_2: // 21
+    case EC_GROUP_POKEMON: // 0
+    case EC_GROUP_POKEMON_NATIONAL: // 21
         chars = gSpeciesNames[word];
         break;
     case EC_GROUP_MOVE_1: // 18
@@ -2757,7 +2757,7 @@ u16 unref_sub_80EB5E0(u16 arg0)
         chars = gMoveNames[word];
         break;
     default:
-        chars = gEasyChatGroupWords[group];
+        chars = gEasyChatGroupWords[groupId];
         for (i = word - 1; i != 0xFFFF; i--)
         {
             while (*chars++ != EOS)
@@ -2814,221 +2814,221 @@ void unref_sub_80EB684(u8 arg0, u16 arg1)
     }
 }
 
-void sub_80EB6FC(u16 *arg0, u16 arg1)
+void InitializeEasyChatWordArray(u16 *words, u16 length)
 {
     u16 i;
 
-    for (i = arg1 - 1; i != 0xFFFF; i--)
+    for (i = length - 1; i != 0xFFFF; i--)
     {
-        *arg0 = 0xFFFF;
-        arg0++;
+        *words = 0xFFFF;
+        words++;
     }
 
 }
 
-u16 sub_80EB72C(u16 group)
+u16 GetRandomEasyChatWordFromGroup(u16 groupId)
 {
-    u16 local1 = Random() % gEasyChatGroupSizes[group];
+    u16 index = Random() % gEasyChatGroupSizes[groupId];
 
-    if (group == EC_GROUP_POKEMON_1
-     || group == EC_GROUP_POKEMON_2
-     || group == EC_GROUP_MOVE_1
-     || group == EC_GROUP_MOVE_2)
+    if (groupId == EC_GROUP_POKEMON
+     || groupId == EC_GROUP_POKEMON_NATIONAL
+     || groupId == EC_GROUP_MOVE_1
+     || groupId == EC_GROUP_MOVE_2)
     {
-        local1 = ((u16 *) gEasyChatGroupWords[group])[local1];
+        index = ((u16 *) gEasyChatGroupWords[groupId])[index];
     }
 
-    return ((group & 0x7F) << 9) | (local1 & 0x1FF);
+    return ((groupId & 0x7F) << 9) | (index & 0x1FF);
 }
 
-u16 sub_80EB784(u16 group)
+u16 sub_80EB784(u16 groupId)
 {
-    if (!sub_80EAD7C(group))
+    if (!IsEasyChatGroupUnlocked(groupId))
         return -1;
 
-    if (group != EC_GROUP_POKEMON_1)
+    if (groupId != EC_GROUP_POKEMON)
     {
-        if (group == EC_GROUP_TRENDY_SAYING)
-            return sub_80EB960();
+        if (groupId == EC_GROUP_TRENDY_SAYING)
+            return GetRandomUnlockedTrendySaying();
     }
     else
     {
         return sub_80EB9D8();
     }
 
-    return sub_80EB72C(group);
+    return GetRandomEasyChatWordFromGroup(groupId);
 }
 
 void sub_80EB7C4(void)
 {
-    u16 *words;
-    u16 arg1, arg2;
+    u16 *easyChatWords;
+    u16 columns, rows;
 
     switch (gSpecialVar_0x8004)
     {
     case 0:
-        words = gSaveBlock1.easyChats.unk2B1C;
-        arg1 = 2;
-        arg2 = 2;
+        easyChatWords = gSaveBlock1.easyChats.unk2B1C;
+        columns = 2;
+        rows = 2;
         break;
     case 1:
-        words = gSaveBlock1.easyChats.unk2B28;
+        easyChatWords = gSaveBlock1.easyChats.unk2B28;
         if (sub_80EB680(gSaveBlock1.easyChats.unk2B28, 3, 2, 20))
         {
-            arg1 = 2;
-            arg2 = 3;
+            columns = 2;
+            rows = 3;
         }
         else
         {
-            arg1 = 3;
-            arg2 = 2;
+            columns = 3;
+            rows = 2;
         }
         break;
     case 2:
-        words = gSaveBlock1.easyChats.unk2B34;
-        arg1 = 3;
-        arg2 = 2;
+        easyChatWords = gSaveBlock1.easyChats.unk2B34;
+        columns = 3;
+        rows = 2;
         break;
     case 3:
-        words = gSaveBlock1.easyChats.unk2B40;
-        arg1 = 3;
-        arg2 = 2;
+        easyChatWords = gSaveBlock1.easyChats.unk2B40;
+        columns = 3;
+        rows = 2;
         break;
     default:
         return;
     }
 
-    ConvertEasyChatWordsToString(gStringVar4, words, arg1, arg2);
+    ConvertEasyChatWordsToString(gStringVar4, easyChatWords, columns, rows);
     ShowFieldAutoScrollMessage(gStringVar4);
 }
 
 void BufferRandomHobbyOrLifestyleString(void)
 {
-    u16 group, local2;
+    u16 groupId, easyChatWord;
 
     if (Random() & 1)
-        group = EC_GROUP_HOBBIES;
+        groupId = EC_GROUP_HOBBIES;
     else
-        group = EC_GROUP_LIFESTYLE;
+        groupId = EC_GROUP_LIFESTYLE;
 
-    local2 = sub_80EB784(group);
-    EasyChat_GetWordText(gStringVar2, local2);
+    easyChatWord = sub_80EB784(groupId);
+    CopyEasyChatWord(gStringVar2, easyChatWord);
 }
 
-u8 sub_80EB868(u8 arg0)
+static u8 IsTrendySayingUnlocked(u8 wordIndex)
 {
-    int offset;
-    int index;
+    int shift;
+    int byteOffset;
 
-    index = arg0 / 8;
-    offset = arg0 % 8;
-    return (gSaveBlock1.unk2D8C[index] >> offset) & 1;
+    byteOffset = wordIndex / 8;
+    shift = wordIndex % 8;
+    return (gSaveBlock1.unlockedTrendySayings[byteOffset] >> shift) & 1;
 }
 
-void UnlockTrendySaying(u8 arg0)
+void UnlockTrendySaying(u8 wordIndex)
 {
-    int offset;
-    int index;
+    int shift;
+    int byteOffset;
 
-    if (arg0 < 33)
+    if (wordIndex < 33)
     {
-        index = arg0 / 8;
-        offset = arg0 % 8;
-        gSaveBlock1.unk2D8C[index] |= 1 << offset;
+        byteOffset = wordIndex / 8;
+        shift = wordIndex % 8;
+        gSaveBlock1.unlockedTrendySayings[byteOffset] |= 1 << shift;
     }
 }
 
-u8 sub_80EB8C0(void)
+static u8 GetNumTrendySayingsUnlocked(void)
 {
-    u8 i, count;
+    u8 i, numUnlocked;
 
-    for (i = 0, count = 0; i < 33; i++)
+    for (i = 0, numUnlocked = 0; i < 33; i++)
     {
-        if (sub_80EB868(i))
-            count++;
+        if (IsTrendySayingUnlocked(i))
+            numUnlocked++;
     }
-    return count;
+    return numUnlocked;
 }
 
-u16 sub_80EB8EC(void)
+u16 UnlockRandomTrendySaying(void)
 {
     u16 i;
-    u16 local1, local2;
+    u16 numUnlocked, numToSkip;
 
-    local1 = sub_80EB8C0();
-    if (local1 == 33)
+    numUnlocked = GetNumTrendySayingsUnlocked();
+    if (numUnlocked == 33)
         return -1;
 
-    local2 = Random() % (33 - local1);
+    numToSkip = Random() % (33 - numUnlocked);
     for (i = 0; i < 33; i++)
     {
-        if (sub_80EB868(i) == 0)
+        if (IsTrendySayingUnlocked(i) == 0)
         {
-            if (local2 == 0)
+            if (numToSkip == 0)
             {
                 UnlockTrendySaying(i);
                 return (i & 0x1FF) | 0x2800;
             }
-            local2--;
+            numToSkip--;
         }
     }
     return -1;
 }
 
-static u16 sub_80EB960(void)
+static u16 GetRandomUnlockedTrendySaying(void)
 {
     u16 i;
-    u16 local1;
+    u16 n;
 
-    local1 = sub_80EB8C0();
-    if (local1 == 0)
+    n = GetNumTrendySayingsUnlocked();
+    if (n == 0)
         return -1;
 
-    local1 = Random() % local1;
+    n = Random() % n;
     for (i = 0; i < 33; i++)
     {
-        if (sub_80EB868(i))
+        if (IsTrendySayingUnlocked(i))
         {
-            if (local1 == 0)
+            if (n == 0)
                 return (i & 0x1FF) | 0x2800;
-            local1--;
+            n--;
         }
     }
 
     return -1;
 }
 
-u8 sub_80EB9C8(void)
+static u8 EasyChatIsNationalPokedexEnabled(void)
 {
     return IsNationalPokedexEnabled();
 }
 
 static u16 sub_80EB9D8(void)
 {
-    u16 *speciesList;
-    u16 local1;
+    u16 *species;
+    u16 index;
     u16 i;
-    u8 topsize;
+    u8 numWords;
 
-    local1 = sub_80EAE88(0);
+    index = sub_80EAE88(0);
 
-    if (local1 == 0)
+    if (index == 0)
         return -1;
 
-    local1 = Random() % local1;
-    speciesList = (u16 *)gEasyChatGroupWords[EC_GROUP_POKEMON_1];
-    for (i = 0, topsize = gEasyChatGroupSizes[EC_GROUP_POKEMON_1]; i < topsize; i++)
+    index = Random() % index;
+    species = (u16 *)gEasyChatGroupWords[EC_GROUP_POKEMON];
+    for (i = 0, numWords = gEasyChatGroupSizes[EC_GROUP_POKEMON]; i < numWords; i++)
     {
-        const u16 dexNum = SpeciesToNationalPokedexNum(*speciesList);
+        const u16 dexNum = SpeciesToNationalPokedexNum(*species);
         const u8 local2 = GetSetPokedexFlag(dexNum, 0);
 
         if (local2)
         {
-            if (local1 == 0)
-                return *speciesList & 0x1FF;
-            local1--;
+            if (index == 0)
+                return *species & 0x1FF;
+            index--;
         }
-        speciesList++;
+        species++;
     }
     return -1;
 }

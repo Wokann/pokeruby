@@ -41,11 +41,11 @@ struct Shared1000
     u8 unk8C[(0x96-0x8C)/2][2];
     u8 unk96;
     u8 filler97;
-    struct Sprite *unk98;
+    struct Sprite *mainCursorSprite;
     struct Sprite *unk9C;
     struct Sprite *unkA0;
     struct Sprite *unkA4;
-    struct Sprite *unkA8;
+    struct Sprite *wordSelectCursorSprite;
     struct Sprite *unkAC[2];
     struct Sprite *unkB4[2];
     u8 unkBC;
@@ -75,9 +75,9 @@ struct Shared1000
     u8 unk1C8[0x500];
     u8 unk6C8[0xB78-0x6C8];
 #if GERMAN
-    u16 unkB78[27][270];
+    u16 unlockedAlphabetWords[27][270];
 #else
-    u16 unkB78[27][255];
+    u16 unlockedAlphabetWords[27][255];
 #endif
     u16 numUnlockedAlphabetWords[(0x78-0x42)/2];  //0x446C
     u16 unk4178[(0x41A4-0x4178)/2]; // unknown length
@@ -96,7 +96,7 @@ struct Shared1000
     u8 unk9C70;
     s8 unk9C71;
     u8 filler9C72[2];
-    struct Sprite *unk9C74;
+    struct Sprite *modeWindowSprite;
     u8 filler9C78[4];
     u16 unk9C7C;  // this is at 0x9FA8 in German
     s16 unk9C7E;
@@ -119,20 +119,18 @@ extern struct Shared1000 *const gEasyChatStruct;
 
 void ShowEasyChatScreen(void);
 void sub_80E62A0(u8 type, u16 *words, void (*exitCallback)(void), u8 displayedPersonType);
-u16 sub_80EB72C(u16 group);
-void sub_80EB6FC(u16 *, u16);
+u16 GetRandomEasyChatWordFromGroup(u16 groupId);
+void InitializeEasyChatWordArray(u16 *words, u16 length);
 void InitEasyChatPhrases(void);
-u8 sub_80EAD7C(u8 group);
-u16 sub_80EAE88(u8);
-u8 sub_80EB37C(u16);
-u8* EasyChat_GetWordText(u8 *, u16);
-u8 *ConvertEasyChatWordsToString(u8 *dst, u16 *words, u16, u16);
-u16 sub_80EB784(u16 group);
-u8 sub_80EB868(u8);
-void UnlockTrendySaying(u8);
-u8 sub_80EB8C0(void);
-u16 sub_80EB8EC(void);
-u8 *sub_80EB544(u8 *dst, u16 *words, u16 arg2, u16 arg3);
+u8 IsEasyChatGroupUnlocked(u8 groupId);
+u16 sub_80EAE88(u8 groupId);
+u8 *CopyEasyChatWord(u8 *dest, u16 easyChatWord);
+u16 GetEasyChatWordStringLength(u16 easyChatWord);
+u8 *ConvertEasyChatWordsToString(u8 *dest, u16 *src, u16 columns, u16 rows);
+u16 sub_80EB784(u16 groupId);
+void UnlockTrendySaying(u8 wordIndex);
+u16 UnlockRandomTrendySaying(void);
+u8 *sub_80EB544(u8 *dest, u16 *src, u16 columns, u16 rows);
 
 #if GERMAN
 u32 de_sub_80EB748(s32, s32);

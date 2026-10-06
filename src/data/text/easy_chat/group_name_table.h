@@ -1,7 +1,7 @@
 #ifndef DATA_TEXT_EASY_CHAT_GROUP_NAME_TABLE
 #define DATA_TEXT_EASY_CHAT_GROUP_NAME_TABLE
 
-const u8 * gEasyChatGroupNames[] = {
+static const u8 * sEasyChatGroupNamePointers[] = {
     gEasyChatGroupName_Pokemon,
     gEasyChatGroupName_Trainer,
     gEasyChatGroupName_Status,

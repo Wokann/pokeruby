@@ -3,7 +3,7 @@
 
 #include "constants/moves.h"
 
-u16 gEasyChatGroupWords_Move2[] = {
+u16 gEasyChatGroup_Move2[] = {
     MOVE_TACKLE,
     MOVE_EXPLOSION,
     MOVE_DIVE,
