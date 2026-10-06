@@ -3,12 +3,11 @@
 #include "trig.h"
 #include "sound.h"
 
+static void AnimCuttingSlice(struct Sprite *sprite);
+static void AnimAirCutterSlice(struct Sprite *sprite);
+static void AnimSlice_Step(struct Sprite *sprite);
 
-void AnimCuttingSlice(struct Sprite* sprite);
-void sub_80CC9BC(struct Sprite* sprite);
-static void AnimSliceStep(struct Sprite* sprite);
-
-const union AnimCmd gSpriteAnim_83D6B10[] =
+const union AnimCmd gCuttingSliceAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(16, 5),
@@ -17,9 +16,9 @@ const union AnimCmd gSpriteAnim_83D6B10[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D6B24[] =
+const union AnimCmd *const gCuttingSliceAnimTable[] =
 {
-    gSpriteAnim_83D6B10,
+    gCuttingSliceAnimCmds,
 };
 
 const struct SpriteTemplate gCuttingSliceSpriteTemplate =
@@ -27,21 +26,21 @@ const struct SpriteTemplate gCuttingSliceSpriteTemplate =
     .tileTag = ANIM_TAG_CUT,
     .paletteTag = ANIM_TAG_CUT,
     .oam = &gOamData_AffineOff_ObjBlend_32x32,
-    .anims = gSpriteAnimTable_83D6B24,
+    .anims = gCuttingSliceAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimCuttingSlice,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6B40 =
+const struct SpriteTemplate gAirCutterSliceSpriteTemplate =
 {
     .tileTag = ANIM_TAG_CUT,
     .paletteTag = ANIM_TAG_CUT,
     .oam = &gOamData_AffineOff_ObjBlend_32x32,
-    .anims = gSpriteAnimTable_83D6B24,
+    .anims = gCuttingSliceAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CC9BC,
+    .callback = AnimAirCutterSlice,
 };
 
 // Moves the sprite in a diagonally slashing motion across the target mon.
@@ -49,14 +48,14 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6B40 =
 // arg 0: initial x pixel offset
 // arg 1: initial y pixel offset
 // arg 2: slice direction; 0 = right-to-left, 1 = left-to-right
-void AnimCuttingSlice(struct Sprite* sprite)
+static void AnimCuttingSlice(struct Sprite *sprite)
 {
     sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
     sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 1);
     if (GetBattlerSide(gBattleAnimTarget) == 0)
         sprite->y += 8;
 
-    sprite->callback = AnimSliceStep;
+    sprite->callback = AnimSlice_Step;
     if (gBattleAnimArgs[2] == 0)
     {
         sprite->x += gBattleAnimArgs[0];
@@ -75,38 +74,38 @@ void AnimCuttingSlice(struct Sprite* sprite)
         sprite->data[1] = -sprite->data[1];
 }
 
-void sub_80CC9BC(struct Sprite* sprite)
+static void AnimAirCutterSlice(struct Sprite *sprite)
 {
-    u8 a;
-    u8 b;
+    u8 x;
+    u8 y;
     switch (gBattleAnimArgs[3])
     {
     case 1:
-        a = GetBattlerSpriteCoord(gBattleAnimTarget ^ 2, 0);
-        b = GetBattlerSpriteCoord(gBattleAnimTarget ^ 2, 1);
+        x = GetBattlerSpriteCoord(gBattleAnimTarget ^ 2, 0);
+        y = GetBattlerSpriteCoord(gBattleAnimTarget ^ 2, 1);
         break;
     case 2:
-        a = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
-        b = GetBattlerSpriteCoord(gBattleAnimTarget, 1);
+        x = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
+        y = GetBattlerSpriteCoord(gBattleAnimTarget, 1);
         if (IsBattlerSpriteVisible(gBattleAnimTarget ^ 2))
         {
-            a = (GetBattlerSpriteCoord(gBattleAnimTarget ^ 2, 0) + a) / 2;
-            b = (GetBattlerSpriteCoord(gBattleAnimTarget ^ 2, 1) + b) / 2;
+            x = (GetBattlerSpriteCoord(gBattleAnimTarget ^ 2, 0) + x) / 2;
+            y = (GetBattlerSpriteCoord(gBattleAnimTarget ^ 2, 1) + y) / 2;
         }
         break;
     case 0:
     default:
-        a = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
-        b = GetBattlerSpriteCoord(gBattleAnimTarget, 1);
+        x = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
+        y = GetBattlerSpriteCoord(gBattleAnimTarget, 1);
         break;
     }
 
-    sprite->x = a;
-    sprite->y = b;
+    sprite->x = x;
+    sprite->y = y;
     if (GetBattlerSide(gBattleAnimTarget) == 0)
         sprite->y += 8;
 
-    sprite->callback = AnimSliceStep;
+    sprite->callback = AnimSlice_Step;
     if (gBattleAnimArgs[2] == 0)
     {
         sprite->x += gBattleAnimArgs[0];
@@ -125,7 +124,7 @@ void sub_80CC9BC(struct Sprite* sprite)
         sprite->data[1] = -sprite->data[1];
 }
 
-static void AnimSliceStep(struct Sprite* sprite)
+static void AnimSlice_Step(struct Sprite *sprite)
 {
     sprite->data[3] += sprite->data[1];
     sprite->data[4] += sprite->data[2];
