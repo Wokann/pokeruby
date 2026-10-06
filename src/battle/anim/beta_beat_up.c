@@ -3,12 +3,10 @@
 #include "trig.h"
 
 
-void sub_80D6234(struct Sprite *sprite);
-static void sub_80D6278(struct Sprite *);
+static void AnimUnusedSpinningFist(struct Sprite *sprite);
+static void AnimUnusedSpinningFist_Step(struct Sprite *);
 
-// beta_beat_up
-
-const union AffineAnimCmd gSpriteAffineAnim_83D97E8[] =
+static const union AffineAnimCmd sAffineAnim_UnusedSpinningFist[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 20),
@@ -16,23 +14,24 @@ const union AffineAnimCmd gSpriteAffineAnim_83D97E8[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D9808[] =
+static const union AffineAnimCmd *const sAffineAnims_UnusedSpinningFist[] =
 {
-    gSpriteAffineAnim_83D97E8,
+    sAffineAnim_UnusedSpinningFist,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D980C =
+// Unused
+static const struct SpriteTemplate sUnusedSpinningFistSpriteTemplate =
 {
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D9808,
-    .callback = sub_80D6234,
+    .affineAnims = sAffineAnims_UnusedSpinningFist,
+    .callback = AnimUnusedSpinningFist,
 };
 
-void sub_80D6234(struct Sprite *sprite)
+static void AnimUnusedSpinningFist(struct Sprite *sprite)
 {
     if (GetBattlerSide(gBattleAnimAttacker) != 0)
     {
@@ -43,10 +42,10 @@ void sub_80D6234(struct Sprite *sprite)
         sprite->x += gBattleAnimArgs[0];
     }
 
-    sprite->callback = sub_80D6278;
+    sprite->callback = AnimUnusedSpinningFist_Step;
 }
 
-static void sub_80D6278(struct Sprite *sprite)
+static void AnimUnusedSpinningFist_Step(struct Sprite *sprite)
 {
     if (sprite->affineAnimEnded)
     {
