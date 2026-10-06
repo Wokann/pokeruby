@@ -3,7 +3,7 @@
 #include "trig.h"
 
 
-extern const union AnimCmd *const gSpriteAnimTable_83D62D4[];
+extern const union AnimCmd *const gPowerAbsorptionOrbAnimTable[];
 
 void sub_80CB4CC(struct Sprite* sprite);
 
@@ -31,7 +31,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D65E8 =
     .tileTag = ANIM_TAG_ORBS,
     .paletteTag = ANIM_TAG_ORBS,
     .oam = &gOamData_AffineDouble_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D62D4,
+    .anims = gPowerAbsorptionOrbAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D65E0,
     .callback = sub_80CB4CC,

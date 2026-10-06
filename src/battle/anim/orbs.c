@@ -3,190 +3,189 @@
 #include "trig.h"
 #include "random.h"
 
+static void AnimPowerAbsorptionOrb(struct Sprite *sprite);
+static void AnimSolarBeamBigOrb(struct Sprite *sprite);
+static void AnimSolarBeamSmallOrb(struct Sprite *sprite);
+static void AnimAbsorptionOrb(struct Sprite *sprite);
+static void AnimHyperBeamOrb(struct Sprite *sprite);
+static void AnimSolarBeamSmallOrb_Step(struct Sprite *sprite);
+static void AnimAbsorptionOrb_Step(struct Sprite *sprite);
+static void AnimHyperBeamOrb_Step(struct Sprite *sprite);
 
-void sub_80CA7B0(struct Sprite* sprite);
-void sub_80CA800(struct Sprite* sprite);
-void sub_80CA858(struct Sprite* sprite);
-void sub_80CA9A8(struct Sprite* sprite);
-void sub_80CAA14(struct Sprite* sprite);
-static void sub_80CA8B4(struct Sprite* sprite);
-static void sub_80CA9F8(struct Sprite* sprite);
-static void sub_80CAACC(struct Sprite* sprite);
-
-const union AnimCmd gSpriteAnim_83D626C[] =
+const union AnimCmd gSolarBeamBigOrbAnimCmds1[] =
 {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D6274[] =
+const union AnimCmd gSolarBeamBigOrbAnimCmds2[] =
 {
     ANIMCMD_FRAME(1, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D627C[] =
+const union AnimCmd gSolarBeamBigOrbAnimCmds3[] =
 {
     ANIMCMD_FRAME(2, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D6284[] =
+const union AnimCmd gSolarBeamBigOrbAnimCmds4[] =
 {
     ANIMCMD_FRAME(3, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D628C[] =
+const union AnimCmd gSolarBeamBigOrbAnimCmds5[] =
 {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D6294[] =
+const union AnimCmd gSolarBeamBigOrbAnimCmds6[] =
 {
     ANIMCMD_FRAME(5, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D629C[] =
+const union AnimCmd gSolarBeamBigOrbAnimCmds7[] =
 {
     ANIMCMD_FRAME(6, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D62A4[] =
+const union AnimCmd gSolarBeamSmallOrbAnimCms[] =
 {
     ANIMCMD_FRAME(7, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D62AC[] =
+const union AnimCmd gPowerAbsorptionOrbAnimCmds[] =
 {
     ANIMCMD_FRAME(8, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D62B4[] =
+const union AnimCmd *const gSolarBeamBigOrbAnimTable[] =
 {
-    gSpriteAnim_83D626C,
-    gSpriteAnim_83D6274,
-    gSpriteAnim_83D627C,
-    gSpriteAnim_83D6284,
-    gSpriteAnim_83D628C,
-    gSpriteAnim_83D6294,
-    gSpriteAnim_83D629C,
+    gSolarBeamBigOrbAnimCmds1,
+    gSolarBeamBigOrbAnimCmds2,
+    gSolarBeamBigOrbAnimCmds3,
+    gSolarBeamBigOrbAnimCmds4,
+    gSolarBeamBigOrbAnimCmds5,
+    gSolarBeamBigOrbAnimCmds6,
+    gSolarBeamBigOrbAnimCmds7,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D62D0[] =
+const union AnimCmd *const gSolarBeamSmallOrbAnimTable[] =
 {
-    gSpriteAnim_83D62A4,
+    gSolarBeamSmallOrbAnimCms,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D62D4[] =
+const union AnimCmd *const gPowerAbsorptionOrbAnimTable[] =
 {
-    gSpriteAnim_83D62AC,
+    gPowerAbsorptionOrbAnimCmds,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D62D8[] = {
+const union AffineAnimCmd gPowerAbsorptionOrbAffineAnimCmds[] = {
     AFFINEANIMCMD_FRAME(-5, -5, 0, 1),
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D62E8[] = {
-    gSpriteAffineAnim_83D62D8,
+const union AffineAnimCmd *const gPowerAbsorptionOrbAffineAnimTable[] = {
+    gPowerAbsorptionOrbAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D62EC =
+const struct SpriteTemplate gPowerAbsorptionOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ORBS,
     .paletteTag = ANIM_TAG_ORBS,
     .oam = &gOamData_AffineNormal_ObjBlend_16x16,
-    .anims = gSpriteAnimTable_83D62D4,
+    .anims = gPowerAbsorptionOrbAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D62E8,
-    .callback = sub_80CA7B0,
+    .affineAnims = gPowerAbsorptionOrbAffineAnimTable,
+    .callback = AnimPowerAbsorptionOrb,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6304 =
+const struct SpriteTemplate gSolarBeamBigOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ORBS,
     .paletteTag = ANIM_TAG_ORBS,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
-    .anims = gSpriteAnimTable_83D62B4,
+    .anims = gSolarBeamBigOrbAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CA800,
+    .callback = AnimSolarBeamBigOrb,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D631C =
+const struct SpriteTemplate gSolarBeamSmallOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ORBS,
     .paletteTag = ANIM_TAG_ORBS,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
-    .anims = gSpriteAnimTable_83D62D0,
+    .anims = gSolarBeamSmallOrbAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CA858,
+    .callback = AnimSolarBeamSmallOrb,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6334[] = {
+const union AffineAnimCmd gStockpileAbsorptionOrbAffineCmds[] = {
     AFFINEANIMCMD_FRAME(320, 320, 0, 0),
     AFFINEANIMCMD_FRAME(-14, -14, 0, 1),
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D634C[] = {
-    gSpriteAffineAnim_83D6334,
+const union AffineAnimCmd *const gStockpileAbsorptionOrbAffineAnimTable[] = {
+    gStockpileAbsorptionOrbAffineCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6350 =
+const struct SpriteTemplate gStockpileAbsorptionOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GRAY_ORB,
     .paletteTag = ANIM_TAG_GRAY_ORB,
     .oam = &gOamData_AffineDouble_ObjNormal_8x8,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D634C,
-    .callback = sub_80CA7B0,
+    .affineAnims = gStockpileAbsorptionOrbAffineAnimTable,
+    .callback = AnimPowerAbsorptionOrb,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6368[] = {
+const union AffineAnimCmd gAbsorptionOrbAffineAnimCmds[] = {
     AFFINEANIMCMD_FRAME(-5, -5, 0, 1),
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D6378[] = {
-    gSpriteAffineAnim_83D6368,
+const union AffineAnimCmd *const gAbsorptionOrbAffineAnimTable[] = {
+    gAbsorptionOrbAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D637C =
+const struct SpriteTemplate gAbsorptionOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ORBS,
     .paletteTag = ANIM_TAG_ORBS,
     .oam = &gOamData_AffineNormal_ObjBlend_16x16,
-    .anims = gSpriteAnimTable_83D62D4,
+    .anims = gPowerAbsorptionOrbAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D6378,
-    .callback = sub_80CA9A8,
+    .affineAnims = gAbsorptionOrbAffineAnimTable,
+    .callback = AnimAbsorptionOrb,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6394 =
+const struct SpriteTemplate gHyperBeamOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ORBS,
     .paletteTag = ANIM_TAG_ORBS,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
-    .anims = gSpriteAnimTable_83D62B4,
+    .anims = gSolarBeamBigOrbAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CAA14,
+    .callback = AnimHyperBeamOrb,
 };
 
 
 // orbs
 // Used by Solar Beam, Absorb, Hyper Beam, and Leech Seed.
 
-void sub_80CA7B0(struct Sprite* sprite)
+static void AnimPowerAbsorptionOrb(struct Sprite *sprite)
 {
     InitSpritePosToAnimAttacker(sprite, 1);
     sprite->data[0] = gBattleAnimArgs[2];
@@ -196,7 +195,7 @@ void sub_80CA7B0(struct Sprite* sprite)
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
 }
 
-void sub_80CA800(struct Sprite* sprite)
+static void AnimSolarBeamBigOrb(struct Sprite *sprite)
 {
     InitSpritePosToAnimAttacker(sprite, 1);
     StartSpriteAnim(sprite, gBattleAnimArgs[3]);
@@ -207,7 +206,7 @@ void sub_80CA800(struct Sprite* sprite)
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
-void sub_80CA858(struct Sprite* sprite)
+static void AnimSolarBeamSmallOrb(struct Sprite *sprite)
 {
     InitSpritePosToAnimAttacker(sprite, 1);
     sprite->data[0] = gBattleAnimArgs[2];
@@ -217,11 +216,11 @@ void sub_80CA858(struct Sprite* sprite)
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
     InitAnimLinearTranslation(sprite);
     sprite->data[5] = gBattleAnimArgs[3];
-    sprite->callback = sub_80CA8B4;
-    sub_80CA8B4(sprite);
+    sprite->callback = AnimSolarBeamSmallOrb_Step;
+    AnimSolarBeamSmallOrb_Step(sprite);
 }
 
-static void sub_80CA8B4(struct Sprite* sprite)
+static void AnimSolarBeamSmallOrb_Step(struct Sprite *sprite)
 {
     if (AnimTranslateLinear(sprite))
     {
@@ -243,7 +242,7 @@ static void sub_80CA8B4(struct Sprite* sprite)
     }
 }
 
-void sub_80CA928(u8 taskId)
+void AnimTask_CreateSmallSolarBeamOrbs(u8 taskId)
 {
     gTasks[taskId].data[0]--;
     if (gTasks[taskId].data[0] == -1)
@@ -254,14 +253,14 @@ void sub_80CA928(u8 taskId)
         gBattleAnimArgs[1] = 0;
         gBattleAnimArgs[2] = 80;
         gBattleAnimArgs[3] = 0;
-        CreateSpriteAndAnimate(&gSpriteTemplate_83D631C, 0, 0, GetBattlerSpriteSubpriority(gBattleAnimTarget) + 1);
+        CreateSpriteAndAnimate(&gSolarBeamSmallOrbSpriteTemplate, 0, 0, GetBattlerSpriteSubpriority(gBattleAnimTarget) + 1);
     }
 
     if (gTasks[taskId].data[1] == 15)
         DestroyAnimVisualTask(taskId);
 }
 
-void sub_80CA9A8(struct Sprite* sprite)
+static void AnimAbsorptionOrb(struct Sprite *sprite)
 {
     InitSpritePosToAnimTarget(sprite, TRUE);
     sprite->data[0] = gBattleAnimArgs[3];
@@ -269,21 +268,21 @@ void sub_80CA9A8(struct Sprite* sprite)
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
     sprite->data[5] = gBattleAnimArgs[2];
     InitAnimArcTranslation(sprite);
-    sprite->callback = sub_80CA9F8;
+    sprite->callback = AnimAbsorptionOrb_Step;
 }
 
-static void sub_80CA9F8(struct Sprite* sprite)
+static void AnimAbsorptionOrb_Step(struct Sprite *sprite)
 {
     if (TranslateAnimHorizontalArc(sprite))
         DestroyAnimSprite(sprite);
 }
 
-void sub_80CAA14(struct Sprite* sprite)
+static void AnimHyperBeamOrb(struct Sprite *sprite)
 {
-    u16 a = Random();
-    u16 b;
+    u16 animNum = Random();
+    u16 speed;
     
-    StartSpriteAnim(sprite, a & 7);
+    StartSpriteAnim(sprite, animNum & 7);
     sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
     sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
     if (GetBattlerSide(gBattleAnimAttacker))
@@ -295,8 +294,8 @@ void sub_80CAA14(struct Sprite* sprite)
         sprite->x += 20;
     }
 
-    b = Random();
-    sprite->data[0] = (b & 31) + 64;
+    speed = Random();
+    sprite->data[0] = (speed & 31) + 64;
     sprite->data[1] = sprite->x;
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
     sprite->data[3] = sprite->y;
@@ -304,11 +303,11 @@ void sub_80CAA14(struct Sprite* sprite)
     InitAnimFastLinearTranslationWithSpeed(sprite);
     sprite->data[5] = Random() & 0xFF;
     sprite->data[6] = sprite->subpriority;
-    sprite->callback = sub_80CAACC;
-    sub_80CAACC(sprite);
+    sprite->callback = AnimHyperBeamOrb_Step;
+    AnimHyperBeamOrb_Step(sprite);
 }
 
-static void sub_80CAACC(struct Sprite* sprite)
+static void AnimHyperBeamOrb_Step(struct Sprite *sprite)
 {
     if (AnimFastTranslateLinear(sprite))
     {
