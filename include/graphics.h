@@ -3484,6 +3484,10 @@ extern const u8 gSubstituteDollPal[];
 extern const u8 gBattleAnimBgTilemap_Sandstorm[];
 extern const u8 gBattleAnimBgImage_Sandstorm[];
 
+extern const u8 gMetalShineGfx[];
+extern const u8 gMetalShinePalette[];
+extern const u8 gMetalShineTilemap[];
+
 // Pokédex
 extern const u8 gPokedexMenu_Gfx[];
 extern const u8 gPokedexInterface_Gfx[];
