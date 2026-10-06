@@ -10542,7 +10542,7 @@ General_ItemSteal: @ 81D6852
 	createvisualtask sub_80E42D0, 2
 	createvisualtask sub_8141808, 2
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D677C, ANIM_ATTACKER, 2, 0, -5, 10, 2, -1
+	createsprite gItemStealSpriteTemplate, ANIM_ATTACKER, 2, 0, -5, 10, 2, -1
 	end
 
 General_SnatchMove: @ 81D6877
