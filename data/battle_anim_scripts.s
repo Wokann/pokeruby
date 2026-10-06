@@ -2054,11 +2054,11 @@ Move_CONFUSE_RAY: @ 81CA291
 	waitbgfadein
 	createvisualtask sub_812B374, 2, -64, 63, 2, 0
 	createvisualtask sub_80E2094, 2, 10013, 0, 6, 0, 14, 351
-	createsprite gBattleAnimSpriteTemplate_83DAE64, ANIM_TARGET, 2, 28, 0, 288
+	createsprite gConfuseRayBallBounceSpriteTemplate, ANIM_TARGET, 2, 28, 0, 288
 	waitforvisualfinish
 	setalpha 8, 8
 	playsewithpan SE_M_STRING_SHOT2, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DAE7C, ANIM_TARGET, 2, 0, -16
+	createsprite gConfuseRayBallSpiralSpriteTemplate, ANIM_TARGET, 2, 0, -16
 	waitforvisualfinish
 	delay 0
 	blendoff
@@ -3107,7 +3107,7 @@ Move_SPITE: @ 81CB936
 	waitbgfadein
 	monbg ANIM_DEF_PARTNER
 	createvisualtask sub_80E1F8C, 2, 2, 2, 6, 0, 8, 32767
-	createvisualtask sub_80DE3AC, 2
+	createvisualtask AnimTask_SpiteTargetShadow, 2
 	loopsewithpan SE_M_PSYBEAM, SOUND_PAN_TARGET, 20, 3
 	waitforvisualfinish
 	restorebg
@@ -7348,7 +7348,7 @@ Move_LICK: @ 81D1B32
 	loadspritegfx ANIM_TAG_LICK
 	delay 15
 	playsewithpan SE_M_LICK, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DAEDC, ANIM_TARGET, 2, 0, 0
+	createsprite gLickSpriteTemplate, ANIM_TARGET, 2, 0, 0
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 1, 0, 16, 1
 	waitforvisualfinish
 	end
@@ -7615,7 +7615,7 @@ _81D2084:
 	createvisualtask sub_80DECB0, 5
 	waitforvisualfinish
 	delay 20
-	createsprite gBattleAnimSpriteTemplate_83DAF20, ANIM_ATTACKER, 2
+	createsprite gCurseNailSpriteTemplate, ANIM_ATTACKER, 2
 	delay 60
 	call _81D20EB
 	delay 41
@@ -7627,7 +7627,7 @@ _81D2084:
 	delay 1
 	monbg ANIM_DEF_PARTNER
 	playsewithpan SE_M_NIGHTMARE, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DAF38, ANIM_TARGET, 2
+	createsprite gCurseGhostSpriteTemplate, ANIM_TARGET, 2
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 14, 1
 	waitforvisualfinish
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, 1, 1, 16, 0, rgb(0, 0, 0)
@@ -10279,7 +10279,7 @@ StatusCondition_Curse: @ 81D636A
 	loadspritegfx ANIM_TAG_GHOSTLY_SPIRIT
 	monbg ANIM_DEF_PARTNER
 	playsewithpan SE_M_NIGHTMARE, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DAF38, ANIM_TARGET, 2
+	createsprite gCurseGhostSpriteTemplate, ANIM_TARGET, 2
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 14, 1
 	waitforvisualfinish
 	clearmonbg ANIM_DEF_PARTNER
@@ -10289,7 +10289,7 @@ StatusCondition_Nightmare: @ 81D638F
 	loadspritegfx ANIM_TAG_DEVIL
 	monbg ANIM_DEF_PARTNER
 	playsewithpan SE_M_NIGHTMARE, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DAF50, ANIM_TARGET, 2
+	createsprite gNightmareDevilSpriteTemplate, ANIM_TARGET, 2
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 14, 1
 	waitforvisualfinish
 	clearmonbg ANIM_DEF_PARTNER
