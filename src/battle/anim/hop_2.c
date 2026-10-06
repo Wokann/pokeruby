@@ -4,11 +4,11 @@
 #include "sound.h"
 
 
-extern void sub_80CB7EC(struct Sprite* sprite, s16 c);
-extern bool8 sub_80CB814(struct Sprite* sprite);
-extern void sub_80CB8B8(struct Sprite* sprite);
-extern const union AnimCmd *const gSpriteAnimTable_83D66B8[];
-extern const union AffineAnimCmd *const gSpriteAffineAnimTable_83D6714[];
+extern void InitItemBagData(struct Sprite* sprite, s16 c);
+extern bool8 moveAlongLinearPath(struct Sprite* sprite);
+extern void AnimItemSteal_Step2(struct Sprite* sprite);
+extern const union AnimCmd *const gFallingBagAnimTable[];
+extern const union AffineAnimCmd *const gFallingBagAffineAnimTable[];
 
 void sub_80CBAE8(struct Sprite* sprite);
 static void sub_80CBB60(struct Sprite* sprite);
@@ -21,9 +21,9 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D677C =
     .tileTag = ANIM_TAG_ITEM_BAG,
     .paletteTag = ANIM_TAG_ITEM_BAG,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D66B8,
+    .anims = gFallingBagAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D6714,
+    .affineAnims = gFallingBagAffineAnimTable,
     .callback = sub_80CBAE8,
 };
 
@@ -38,14 +38,14 @@ void sub_80CBAE8(struct Sprite* sprite)
     {
         sprite->data[6] = p1;
         sprite->data[7] = p2 + 10;
-        sub_80CB7EC(sprite, 0x3c);
+        InitItemBagData(sprite, 0x3c);
         sprite->data[3] = 1;
     }
     else
     {
         sprite->data[6] = p1;
         sprite->data[7] = p2 + 10;
-        sub_80CB7EC(sprite, 0x3c);
+        InitItemBagData(sprite, 0x3c);
         sprite->data[3] = 3;
     }
 
@@ -70,11 +70,11 @@ static void sub_80CBB60(struct Sprite* sprite)
         PlaySE12WithPanning(0x7D, BattleAnimAdjustPanning(SOUND_PAN_TARGET));
     }
 
-    if (sub_80CB814(sprite))
+    if (moveAlongLinearPath(sprite))
     {
         sprite->y2 = 0;
         sprite->data[0] = 0;
-        sprite->callback = sub_80CB8B8;
+        sprite->callback = AnimItemSteal_Step2;
         PlaySE12WithPanning(0x7D, BattleAnimAdjustPanning(SOUND_PAN_ATTACKER));
     }
 }

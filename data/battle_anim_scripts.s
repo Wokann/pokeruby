@@ -7830,7 +7830,7 @@ Move_INGRAIN: @ 81D255A
 Move_PRESENT: @ 81D260B
 	loadspritegfx ANIM_TAG_ITEM_BAG
 	createvisualtask sub_812C960, 2
-	createsprite gBattleAnimSpriteTemplate_83D671C, ANIM_TARGET, 2, 0, -5, 10, 2, -1
+	createsprite gPresentSpriteTemplate, ANIM_TARGET, 2, 0, -5, 10, 2, -1
 	playsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER
 	delay 14
 	playsewithpan SE_M_BUBBLE2, SOUND_PAN_ATTACKER
@@ -10348,7 +10348,7 @@ General_PokeblockThrow: @ 81D6438
 
 General_ItemKnockoff: @ 81D647E
 	loadspritegfx ANIM_TAG_ITEM_BAG
-	createsprite gFallingItemBagTemplate, ANIM_TARGET, 2
+	createsprite gKnockOffItemSpriteTemplate, ANIM_TARGET, 2
 	end
 
 General_TurnTrap: @ 81D6489
