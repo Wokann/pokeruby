@@ -141,9 +141,9 @@ extern const u8 gOtherText_Level3[];
 extern const u8 gOtherText_IDNumber[];
 extern const u8 gOtherText_Name[];
 extern const u8 gOtherText_IDNumber2[];
-extern const u8 gOtherText_BirchInTrouble[];
-extern const u8 gOtherText_DoYouChoosePoke[];
-extern const u8 gOtherText_Poke[];
+extern const u8 gText_BirchInTrouble[];
+extern const u8 gText_ConfirmStarterChoice[];
+extern const u8 gText_Pokemon4[];
 
 // start menu and save dialog text
 extern const u8 gText_MenuPokedex[];

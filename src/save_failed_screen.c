@@ -112,14 +112,14 @@ static void CB2_SaveFailedScreen(void)
         DmaFill16(3, 0, VRAM, VRAM_SIZE);
         DmaFill32(3, 0, OAM, OAM_SIZE);
         DmaFill16(3, 0, PLTT, PLTT_SIZE);
-        LZ77UnCompVram(&gBirchHelpGfx, (void *)VRAM);
+        LZ77UnCompVram(&gBirchBagGrass_Gfx, (void *)VRAM);
         LZ77UnCompVram(&gBirchBagTilemap, (void *)(VRAM + 0x3000));
         LZ77UnCompVram(&gBirchGrassTilemap, (void *)(VRAM + 0x3800));
         LZ77UnCompVram(&gSaveFailedClockGfx, (void *)(VRAM + 0x10020));
         ResetSpriteData();
         ResetTasks();
         ResetPaletteFade();
-        LoadPalette(&gBirchBagGrassPal, 0, sizeof(gBirchBagGrassPal));
+        LoadPalette(&gBirchBagGrass_Pal, 0, sizeof(gBirchBagGrass_Pal));
         LoadPalette(&gSaveFailedClockPal, 0x100, sizeof(gSaveFailedClockPal));
         Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
         InitMenuWindow(&gMenuTextWindowTemplate);
