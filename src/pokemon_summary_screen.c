@@ -14,6 +14,7 @@
 #include "main.h"
 #include "menu.h"
 #include "menu_helpers.h"
+#include "mon_markings.h"
 #include "move_tutor_menu.h"
 #include "overworld.h"
 #include "palette.h"
@@ -3943,7 +3944,7 @@ static void CreateMonMarkingsSprite(struct Pokemon *mon)
 {
     struct Sprite *sprite;
 
-    sprite = sub_80F7920(30003, 30003, sMarkings_Pal);
+    sprite = CreateMonMarkingAllCombosSprite(30003, 30003, sMarkings_Pal);
     sMarkingsSprite = sprite;
 
     if (sprite != NULL)

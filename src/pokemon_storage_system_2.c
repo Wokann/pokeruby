@@ -283,8 +283,8 @@ void sub_8096884(void)
         sub_8099BF8(gPokemonStorage.currentBox);
         gPokemonStorageSystemPtr->markMenu.baseTileTag = 0x000a;
         gPokemonStorageSystemPtr->markMenu.basePaletteTag = 0xdacb;
-        sub_80F727C(&gPokemonStorageSystemPtr->markMenu);
-        sub_80F7404();
+        InitMonMarkingsMenu(&gPokemonStorageSystemPtr->markMenu);
+        BufferMonMarkingsMenuTiles();
         gMain.state++;
         break;
     case 9:
@@ -346,8 +346,8 @@ static void CB2_ReturnToPokeStorage(void)
         sub_8099BF8(gPokemonStorage.currentBox);
         gPokemonStorageSystemPtr->markMenu.baseTileTag = 0x000a;
         gPokemonStorageSystemPtr->markMenu.basePaletteTag = 0xdacb;
-        sub_80F727C(&gPokemonStorageSystemPtr->markMenu);
-        sub_80F7404();
+        InitMonMarkingsMenu(&gPokemonStorageSystemPtr->markMenu);
+        BufferMonMarkingsMenuTiles();
         gMain.state++;
         break;
     case 9:
@@ -1145,13 +1145,13 @@ void sub_80977E4(void)
     case 0:
         PrintMessage(MSG_MARK_POKE);
         gPokemonStorageSystemPtr->markMenu.markings = gPokemonStorageSystemPtr->displayMonMarkings;
-        sub_80F7418(gPokemonStorageSystemPtr->displayMonMarkings, 0xb0, 0x10);
+        OpenMonMarkingsMenu(gPokemonStorageSystemPtr->displayMonMarkings, 0xb0, 0x10);
         gPokemonStorageSystemPtr->state++;
         break;
     case 1:
-        if (!sub_80F7500())
+        if (!HandleMonMarkingsMenuInput())
         {
-            sub_80F7470();
+            FreeMonMarkingsMenu();
             ClearBottomWindow();
             sub_809BDD8(gPokemonStorageSystemPtr->markMenu.markings);
             RefreshDisplayMonData();
@@ -1502,7 +1502,7 @@ static void InitPalettesAndSprites(void)
 
 static void CreateMarkingComboSprite(void)
 {
-    gPokemonStorageSystemPtr->markingComboSprite = sub_80F7940(0x000d, 0xdace, 0);
+    gPokemonStorageSystemPtr->markingComboSprite = CreateMonMarkingComboSprite(0x000d, 0xdace, 0);
     gPokemonStorageSystemPtr->markingComboSprite->oam.priority = 0;
     gPokemonStorageSystemPtr->markingComboSprite->subpriority = 1;
     gPokemonStorageSystemPtr->markingComboSprite->x = 0x28;
@@ -1645,7 +1645,7 @@ static void PrintDisplayMonInfo(void)
 {
     if (gPokemonStorageSystemPtr->displayMonSpecies)
     {
-        sub_80F7A10(gPokemonStorageSystemPtr->displayMonMarkings, gPokemonStorageSystemPtr->markingComboTilesPtr);
+        UpdateMonMarkingTiles(gPokemonStorageSystemPtr->displayMonMarkings, gPokemonStorageSystemPtr->markingComboTilesPtr);
         gPokemonStorageSystemPtr->markingComboSprite->invisible = FALSE;
     }
     else

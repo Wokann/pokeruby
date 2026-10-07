@@ -2993,9 +2993,9 @@ void sub_80F35B4(void)
 
     gPokenavStructPtr->marksMenu.baseTileTag = 0x1C;
     gPokenavStructPtr->marksMenu.basePaletteTag = 0x13;
-    sub_80F727C(&gPokenavStructPtr->marksMenu);
-    sub_80F7404();
-    sprite = sub_80F7920(27, 21, gUnknown_083E4678);
+    InitMonMarkingsMenu(&gPokenavStructPtr->marksMenu);
+    BufferMonMarkingsMenuTiles();
+    sprite = CreateMonMarkingAllCombosSprite(27, 21, gUnknown_083E4678);
     sprite->oam.priority = 3;
     sprite->x = 192;
     sprite->y = 32;
@@ -3017,7 +3017,7 @@ void sub_80F363C(struct Sprite *sprite)
 
 void sub_80F3668(void)
 {
-    sub_80F7418(gPokenavStructPtr->monMarks[gPokenavStructPtr->loadId], 176, 32);
+    OpenMonMarkingsMenu(gPokenavStructPtr->monMarks[gPokenavStructPtr->loadId], 176, 32);
 }
 
 void sub_80F3698(void)
@@ -3025,7 +3025,7 @@ void sub_80F3698(void)
     struct UnkUsePokeblockSub *var0 = &gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC];
     gPokenavStructPtr->monMarks[gPokenavStructPtr->loadId] = gPokenavStructPtr->marksMenu.markings;
     SetMonMarkings(var0->unk1, var0->partyIdx, gPokenavStructPtr->marksMenu.markings);
-    sub_80F7470();
+    FreeMonMarkingsMenu();
 }
 
 void sub_80F36F0(void)

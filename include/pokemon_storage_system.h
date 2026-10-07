@@ -156,7 +156,7 @@ struct PokemonStorageSystemData {
     struct Sprite *markingComboSprite;
     struct Sprite *waveformSprites[2];
     u16 *markingComboTilesPtr;
-    struct PokemonMarkMenu markMenu;
+    struct MonMarkingsMenu markMenu;
     struct ChooseBoxMenu chooseBoxMenu;
     struct Pokemon movingMon;
     struct Pokemon tempMon;

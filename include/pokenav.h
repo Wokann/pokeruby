@@ -119,7 +119,7 @@ struct UnkPokenavStruct {
     /*0x769F*/ u8 filler769F[0xB];
     /*0x76AA*/ u8 inSearchMode;
     /*0x76AC*/ struct Sprite *monMarksSprite;
-    /*0x76B0*/ struct PokemonMarkMenu marksMenu;
+    /*0x76B0*/ struct MonMarkingsMenu marksMenu;
     /*0x8764*/ u16 unk8764;
     /*0x8766*/ s16 unk8766;
     /*0x8768*/ struct Sprite *unk8768;

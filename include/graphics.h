@@ -3532,4 +3532,7 @@ extern const u8 gSummaryPage_BattleMoves_Tilemap[];
 extern const u8 gSummaryPage_ContestMoves_Tilemap[];
 extern const u8 gSummaryPage_InfoEgg_Tilemap[];
 
+extern const u8 gMonMarkingsMenu_Gfx[];
+extern const u16 gMonMarkingsMenu_Pal[];
+
 #endif  // GUARD_GRAPHICS_H

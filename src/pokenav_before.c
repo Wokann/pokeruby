@@ -2443,7 +2443,6 @@ void sub_80F4F78(void);
 void sub_80F0174(bool8);
 bool8 sub_80F4FB4(void);
 void sub_80F3668(void);
-bool8 sub_80F7500(void);
 void sub_80F3698(void);
 bool8 sub_80F5038(void);
 void sub_80F2F48(void);
@@ -2552,7 +2551,7 @@ void sub_80ED858(void)
         gPokenavStructPtr->unk304 = 8;
         break;
     case 8:
-        if (!sub_80F7500())
+        if (!HandleMonMarkingsMenuInput())
         {
             sub_80EEFBC(2);
             sub_80F3698();

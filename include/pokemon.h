@@ -515,8 +515,6 @@ u8 *sub_8040D08();
 bool32 ShouldHideGenderIconForLanguage(u16 species, u8 *name, u8 language);
 bool32 ShouldHideGenderIcon(u16 species, u8 *name);
 
-struct Sprite *sub_80F7920(u16, u16, const u16 *);
-
 bool8 ExecuteTableBasedItemEffect(struct Pokemon *mon, u16 item, u8 partyIndex, u8 moveIndex);
 bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 moveIndex, u8 usedByAI);
 
