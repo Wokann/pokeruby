@@ -141,7 +141,7 @@ S_PushableBoulder:: @ 81B0FCB
 	goto UsedStrength
 	end
 
-S_UseStrength:: @ 81B100E
+EventScript_UseStrength:: @ 81B100E
 	lockall
 	dofieldeffect FLDEFF_USE_STRENGTH
 	waitstate

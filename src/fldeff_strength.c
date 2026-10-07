@@ -1,5 +1,6 @@
 #include "global.h"
 #include "braille_puzzles.h"
+#include "event_scripts.h"
 #include "field_effect.h"
 #include "party_menu.h"
 #include "pokemon.h"
@@ -11,7 +12,7 @@
 #include "constants/field_effects.h"
 #include "constants/event_objects.h"
 
-static void sub_811AA18(void);
+static void FieldCallback_Strength(void);
 static void sub_811AA38(void);
 static void sub_811AA9C(void);
 
@@ -19,8 +20,6 @@ extern u8 gLastFieldPokeMenuOpened;
 extern u16 gSpecialVar_Result;
 extern void (*gFieldCallback)(void);
 extern void (*gPostMenuFieldCallback)(void);
-
-extern u8 S_UseStrength[];
 
 #if DEBUG
 void debug_sub_8130318(void)
@@ -35,7 +34,7 @@ void debug_sub_8130318(void)
     {
         gLastFieldPokeMenuOpened = 0;
         gSpecialVar_Result = 0;
-        sub_811AA18();
+        FieldCallback_Strength();
     }
     else
     {
@@ -58,16 +57,16 @@ bool8 SetUpFieldMove_Strength(void)
             return 0;
         gSpecialVar_Result = gLastFieldPokeMenuOpened;
         gFieldCallback = FieldCallback_PrepareFadeInFromMenu;
-        gPostMenuFieldCallback = sub_811AA18;
+        gPostMenuFieldCallback = FieldCallback_Strength;
     }
 
     return TRUE;
 }
 
-static void sub_811AA18(void)
+static void FieldCallback_Strength(void)
 {
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
-    ScriptContext_SetupScript(S_UseStrength);
+    ScriptContext_SetupScript(EventScript_UseStrength);
 }
 
 static void sub_811AA38(void)
