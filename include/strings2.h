@@ -207,9 +207,9 @@ extern const u8 gOtherText_EggObtainedInTrade[];
 extern const u8 gOtherText_EggHotSprings[];
 
 // diploma
-extern const u8 gOtherText_HoennDex[];
-extern const u8 gOtherText_NationalDex[];
-extern const u8 gOtherText_DiplomaCertificationGameFreak[];
+extern const u8 gText_DexHoenn[];
+extern const u8 gText_DexNational[];
+extern const u8 gText_PokedexDiploma[];
 
 // berry_blender
 extern const u8 gOtherText_YesNoTerminating[];

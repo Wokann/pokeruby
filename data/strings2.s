@@ -458,13 +458,13 @@ gText_YesNo:: @ 842D1FE
 	.string "{HIGHLIGHT TRANSPARENT}PLAYER$"
 	.string "{HIGHLIGHT TRANSPARENT}$"
 
-gOtherText_HoennDex:: @ 842D21C
+gText_DexHoenn:: @ 842D21C
 	.string "HOENN$"
 
-gOtherText_NationalDex:: @ 842D222
+gText_DexNational:: @ 842D222
 	.string "NATIONAL$"
 
-gOtherText_DiplomaCertificationGameFreak:: @ 842D22B
+gText_PokedexDiploma:: @ 842D22B
 	.string "{HIGHLIGHT TRANSPARENT}Player: {CLEAR 0x10}{COLOR RED}{PLAYER}\n\n{COLOR DARK_GREY}{STR_VAR_1} POKéDEX\nThis document certifies\nthat you have successfully\ncompleted your POKéDEX.\n\n{CLEAR_TO 0x42}{COLOR RED}GAME FREAK$"
 	.string "{COLOR RED}{HIGHLIGHT TRANSPARENT}GAME FREAK$"
 
