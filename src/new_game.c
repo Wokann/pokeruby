@@ -189,7 +189,7 @@ void NewGameInitData(void)
     ResetLinkContestBoolean();
     ResetGameStats();
     ResetContestAndMuseumWinners();
-    InitLinkBattleRecords();
+    ClearPlayerLinkBattleRecords();
     InitShroomishSizeRecord();
     InitBarboachSizeRecord();
     gPlayerPartyCount = 0;

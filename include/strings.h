@@ -995,4 +995,13 @@ extern const u8 gText_RecordMixingComplete[];
 
 extern const u8 gText_IsThisTheCorrectTime[];
 
+extern const u8 gText_PlayersBattleResults[];
+extern const u8 gText_TotalRecordWLD[];
+extern const u8 gText_WinLoseDraw[];
+extern const u8 gText_Lv502[];
+extern const u8 gText_WinStreak[];
+extern const u8 gText_Current[];
+extern const u8 gText_Record[];
+extern const u8 gText_Prev[];
+
 #endif

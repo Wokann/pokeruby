@@ -269,13 +269,13 @@ gText_Marco:: @ 842C9E1
 gOtherText_Coins:: @ 842C9E7
 	.string "{STR_VAR_1} COINS$"
 
-gOtherText_BattleResults:: @ 842C9F0
+gText_PlayersBattleResults:: @ 842C9F0
 	.string "{PLAYER}'s BATTLE RESULTS$"
 
-gOtherText_WinRecord:: @ 842CA04
+gText_TotalRecordWLD:: @ 842CA04
 	.string "TOTAL RECORD W/{STR_VAR_1} L/{STR_VAR_2} D/{STR_VAR_3}$"
 
-gOtherText_WinLoseDraw:: @ 842CA20
+gText_WinLoseDraw:: @ 842CA20
 	.string "WIN        LOSE        DRAW$"
 
 gOtherText_SevenDashes:: @ 842CA3C
@@ -287,22 +287,22 @@ gOtherText_FourDashes:: @ 842CA44
 gOtherText_BattleTowerResults:: @ 842CA49
 	.string "{PLAYER}'s BATTLE TOWER RESULTS$"
 
-gOtherText_Lv50:: @ 842CA63
+gText_Lv502:: @ 842CA63
 	.string "LV 50$"
 
 gOtherText_Lv100:: @ 842CA69
 	.string "LV 100$"
 
-gOtherText_WinStreak:: @ 842CA70
+gText_WinStreak:: @ 842CA70
 	.string "{STR_VAR_1}W STREAK$"
 
-gOtherText_Current:: @ 842CA7B
+gText_Current:: @ 842CA7B
 	.string "CURRENT$"
 
-gOtherText_Record:: @ 842CA83
+gText_Record:: @ 842CA83
 	.string "RECORD$"
 
-gOtherText_Prev:: @ 842CA8A
+gText_Prev:: @ 842CA8A
 	.string "PREV.$"
 
 gOtherText_QuitGamePrompt:: @ 842CA90

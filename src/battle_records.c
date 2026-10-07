@@ -6,6 +6,7 @@
 #include "overworld.h"
 #include "string_util.h"
 #include "strings2.h"
+#include "strings.h"
 #include "trainer_card.h"
 
 struct DebugStruct1
@@ -37,7 +38,7 @@ const struct {u8 totalPoints; u8 nextTurnSpriteId;} gUnknown_Debug_8424620[] =
 };
 #endif
 
-static void InitLinkBattleRecord(struct LinkBattleRecord *record)
+static void ClearLinkBattleRecord(struct LinkBattleRecord *record)
 {
     CpuFill16(0, record, sizeof(struct LinkBattleRecord));
     record->name[0] = 0xFF;
@@ -47,26 +48,26 @@ static void InitLinkBattleRecord(struct LinkBattleRecord *record)
     record->draws = 0;
 }
 
-static void InitLinkBattleRecords_(struct LinkBattleRecord *records)
+static void ClearLinkBattleRecords(struct LinkBattleRecord *records)
 {
-    int i;
+    s32 i;
     for (i = 0; i < 5; i++)
     {
-        InitLinkBattleRecord(records + i);
+        ClearLinkBattleRecord(records + i);
     }
     SetGameStat(GAME_STAT_LINK_BATTLE_WINS, 0);
     SetGameStat(GAME_STAT_LINK_BATTLE_LOSSES, 0);
     SetGameStat(GAME_STAT_LINK_BATTLE_DRAWS, 0);
 }
 
-static int GetLinkBattleRecordTotalBattles(struct LinkBattleRecord *record)
+static s32 GetLinkBattleRecordTotalBattles(struct LinkBattleRecord *record)
 {
     return record->wins + record->losses + record->draws;
 }
 
-static int FindLinkBattleRecord(struct LinkBattleRecord *records, const u8 *name, u16 trainerId)
+static s32 FindLinkBattleRecord(struct LinkBattleRecord *records, const u8 *name, u16 trainerId)
 {
-    int i;
+    s32 i;
 
     for (i = 0; i < 5; i++)
     {
@@ -81,14 +82,14 @@ static int FindLinkBattleRecord(struct LinkBattleRecord *records, const u8 *name
 
 static void SortLinkBattleRecords(struct LinkBattleRecord *records)
 {
-    int i, j;
+    s32 i, j;
 
     for (i = 4; i > 0; i--)
     {
         for (j = i - 1; j >= 0; j--)
         {
-            int totalBattlesI = GetLinkBattleRecordTotalBattles(records + i);
-            int totalBattlesJ = GetLinkBattleRecordTotalBattles(records + j);
+            s32 totalBattlesI = GetLinkBattleRecordTotalBattles(records + i);
+            s32 totalBattlesJ = GetLinkBattleRecordTotalBattles(records + j);
 
             if (totalBattlesI > totalBattlesJ)
             {
@@ -100,7 +101,7 @@ static void SortLinkBattleRecords(struct LinkBattleRecord *records)
     }
 }
 
-static void UpdateLinkBattleRecord(struct LinkBattleRecord *record, int battleOutcome)
+static void UpdateLinkBattleRecord(struct LinkBattleRecord *record, s32 battleOutcome)
 {
     switch (battleOutcome)
     {
@@ -122,7 +123,7 @@ static void UpdateLinkBattleRecord(struct LinkBattleRecord *record, int battleOu
     }
 }
 
-static void UpdateLinkBattleGameStats(int battleOutcome)
+static void UpdateLinkBattleGameStats(s32 battleOutcome)
 {
     u8 stat;
 
@@ -145,16 +146,16 @@ static void UpdateLinkBattleGameStats(int battleOutcome)
         IncrementGameStat(stat);
 }
 
-static void UpdateLinkBattleRecords_(struct LinkBattleRecord *records, const u8 *name, u16 trainerId, int battleOutcome, u8 language)
+static void UpdateLinkBattleRecords_(struct LinkBattleRecord *records, const u8 *name, u16 trainerId, s32 battleOutcome, u8 language)
 {
-    int index;
+    s32 index;
     UpdateLinkBattleGameStats(battleOutcome);
     SortLinkBattleRecords(records);
     index = FindLinkBattleRecord(records, name, trainerId);
     if (index == 5)
     {
         index = 4;
-        InitLinkBattleRecord(records + index);
+        ClearLinkBattleRecord(records + index);
         if (language == LANGUAGE_JAPANESE)
         {
             records[index].name[0] = EXT_CTRL_CODE_BEGIN;
@@ -176,51 +177,51 @@ static void UpdateLinkBattleRecords_(struct LinkBattleRecord *records, const u8 
     SortLinkBattleRecords(records);
 }
 
-void InitLinkBattleRecords(void)
+void ClearPlayerLinkBattleRecords(void)
 {
-    InitLinkBattleRecords_(gSaveBlock1.linkBattleRecords);
+    ClearLinkBattleRecords(gSaveBlock1.linkBattleRecords);
 }
 
-static void IncTrainerCardWins(int id)
+static void IncTrainerCardWins(s32 battler)
 {
-    u16 *wins = &gTrainerCards[id].linkBattleWins;
+    u16 *wins = &gTrainerCards[battler].linkBattleWins;
     (*wins)++;
     if (*wins > 9999)
         *wins = 9999;
 }
 
-static void IncTrainerCardLosses(int id)
+static void IncTrainerCardLosses(s32 battler)
 {
-    u16 *losses = &gTrainerCards[id].linkBattleLosses;
+    u16 *losses = &gTrainerCards[battler].linkBattleLosses;
     (*losses)++;
     if (*losses > 9999)
         *losses = 9999;
 }
 
-static void UpdateTrainerCardWinsLosses(int id)
+static void UpdateTrainerCardWinsLosses(s32 battler)
 {
     switch (gBattleOutcome)
     {
     case 1:
-        IncTrainerCardWins(id ^ 1);
-        IncTrainerCardLosses(id);
+        IncTrainerCardWins(battler ^ 1);
+        IncTrainerCardLosses(battler);
         break;
     case 2:
-        IncTrainerCardLosses(id ^ 1);
-        IncTrainerCardWins(id);
+        IncTrainerCardLosses(battler ^ 1);
+        IncTrainerCardWins(battler);
         break;
     }
 }
 
-void UpdateLinkBattleRecords(int id)
+void UpdateLinkBattleRecords(s32 battler)
 {
-    UpdateTrainerCardWinsLosses(id);
+    UpdateTrainerCardWinsLosses(battler);
     UpdateLinkBattleRecords_(
         gSaveBlock1.linkBattleRecords,
-        gTrainerCards[id].playerName,
-        gTrainerCards[id].trainerId,
+        gTrainerCards[battler].playerName,
+        gTrainerCards[battler].trainerId,
         gBattleOutcome,
-        gLinkPlayers[gLinkPlayerObjectEvents[id].linkPlayerId].language);
+        gLinkPlayers[gLinkPlayerObjectEvents[battler].linkPlayerId].language);
 }
 
 #if DEBUG
@@ -228,7 +229,7 @@ void debug_sub_81257E0(void)
 {
     u32 i;
 
-    InitLinkBattleRecords();
+    ClearPlayerLinkBattleRecords();
     for (i = 0; i < 3; i++)
     {
         u32 id = gUnknown_Debug_8424620[i].totalPoints - 1;
@@ -248,7 +249,7 @@ static void PrintLinkBattleWinsLossesDraws(struct LinkBattleRecord *records)
     ConvertIntToDecimalStringN_DigitWidth6(gStringVar1, GetGameStat(GAME_STAT_LINK_BATTLE_WINS), STR_CONV_MODE_RIGHT_ALIGN, 4);
     ConvertIntToDecimalStringN_DigitWidth6(gStringVar2, GetGameStat(GAME_STAT_LINK_BATTLE_LOSSES), STR_CONV_MODE_RIGHT_ALIGN, 4);
     ConvertIntToDecimalStringN_DigitWidth6(gStringVar3, GetGameStat(GAME_STAT_LINK_BATTLE_DRAWS), STR_CONV_MODE_RIGHT_ALIGN, 4);
-    Menu_PrintText(gOtherText_WinRecord, 3, 3);
+    Menu_PrintText(gText_TotalRecordWLD, 3, 3);
 }
 
 static void PrintLinkBattleRecord(struct LinkBattleRecord *record, u8 y)
@@ -290,13 +291,13 @@ void ShowLinkBattleRecords(void)
 {
     s32 i;
     Menu_DrawStdWindowFrame(1, 0, 28, 18);
-    MenuPrint_Centered(gOtherText_BattleResults, 0, 1, 240);
+    MenuPrint_Centered(gText_PlayersBattleResults, 0, 1, 240);
 
     PrintLinkBattleWinsLossesDraws(gSaveBlock1.linkBattleRecords);
 #if ENGLISH
-    Menu_PrintText(gOtherText_WinLoseDraw, 12, 6);
+    Menu_PrintText(gText_WinLoseDraw, 12, 6);
 #elif GERMAN
-    Menu_PrintTextPixelCoords(gOtherText_WinLoseDraw, 88, 48, 1);
+    Menu_PrintTextPixelCoords(gText_WinLoseDraw, 88, 48, 1);
 #endif
 
     for (i = 0; i < 5; i++)
@@ -336,14 +337,14 @@ static void PrintWinStreak(const u8 *str, u16 streak, u8 left, u8 top)
     if (streak > 9999)
         streak = 9999;
     AlignInt1InMenuWindow(gStringVar1, streak, 24, 1);
-    Menu_PrintText(gOtherText_WinStreak, left + 7, top);
+    Menu_PrintText(gText_WinStreak, left + 7, top);
 }
 
 static void PrintRecordWinStreak(u8 level, u8 left, u8 top)
 {
     struct BattleTowerData *battleTower = &gSaveBlock2.battleTower;
     u16 winStreak = battleTower->recordWinStreaks[level];
-    PrintWinStreak(gOtherText_Record, winStreak, left, top);
+    PrintWinStreak(gText_Record, winStreak, left, top);
 }
 
 static u16 GetLastWinStreak(u8 level)
@@ -359,9 +360,9 @@ static void PrintLastWinStreak(u8 level, u8 left, u8 top)
 {
     u16 winStreak = GetLastWinStreak(level);
     if (sub_8110494(level) == TRUE)
-        PrintWinStreak(gOtherText_Current, winStreak, left, top);
+        PrintWinStreak(gText_Current, winStreak, left, top);
     else
-        PrintWinStreak(gOtherText_Prev, winStreak, left, top);
+        PrintWinStreak(gText_Prev, winStreak, left, top);
 }
 
 void ShowBattleTowerRecords(void)
@@ -369,7 +370,7 @@ void ShowBattleTowerRecords(void)
     u16 i;
     Menu_DrawStdWindowFrame(3, 1, 27, 17);
     MenuPrint_Centered(gOtherText_BattleTowerResults, 3, 2, 0xC8);
-    Menu_PrintText(gOtherText_Lv50, 5, 6);
+    Menu_PrintText(gText_Lv502, 5, 6);
     Menu_PrintText(gOtherText_Lv100, 5, 12);
     for (i = 5; i < 26; i++)
     {

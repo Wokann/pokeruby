@@ -288,13 +288,13 @@ gText_Marco:: @ 842C9E1
 gOtherText_Coins:: @ 842C9E7
 	.string "{STR_VAR_1} MÜNZ.$"
 
-gOtherText_BattleResults:: @ 842C9F0
+gText_PlayersBattleResults:: @ 842C9F0
 	.string "KAMPFERGEBNISSE von {PLAYER}$"
 
-gOtherText_WinRecord:: @ 842CA04
+gText_TotalRecordWLD:: @ 842CA04
 	.string "GESAMT-REKORD S.:{STR_VAR_1} N.:{STR_VAR_2} P.:{STR_VAR_3}$"
 
-gOtherText_WinLoseDraw:: @ 842CA20
+gText_WinLoseDraw:: @ 842CA20
 	.string "SIEG      NIEDER.     PATT$"
 
 gOtherText_SevenDashes:: @ 842CA3C
@@ -306,22 +306,22 @@ gOtherText_FourDashes:: @ 842CA44
 gOtherText_BattleTowerResults:: @ 842CA49
 	.string "DUELLTURM-ERGEBNIS. von {PLAYER}$"
 
-gOtherText_Lv50:: @ 842CA63
+gText_Lv502:: @ 842CA63
 	.string "Lv. 50$"
 
 gOtherText_Lv100:: @ 842CA69
 	.string "Lv. 100$"
 
-gOtherText_WinStreak:: @ 842CA70
+gText_WinStreak:: @ 842CA70
 	.string "{STR_VAR_1}S IN FOLGE$"
 
-gOtherText_Current:: @ 842CA7B
+gText_Current:: @ 842CA7B
 	.string "MOMENTAN$"
 
-gOtherText_Record:: @ 842CA83
+gText_Record:: @ 842CA83
 	.string "REKORD$"
 
-gOtherText_Prev:: @ 842CA8A
+gText_Prev:: @ 842CA8A
 	.string "VORHER$"
 
 gOtherText_QuitGamePrompt:: @ 842CA90

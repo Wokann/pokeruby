@@ -113,18 +113,10 @@ extern const u8 OtherText_PokeName[];
 extern const u8 gOtherText_Coins[];
 
 // battle_records
-extern const u8 gOtherText_BattleResults[];
-extern const u8 gOtherText_WinRecord[];
-extern const u8 gOtherText_WinLoseDraw[];
 extern const u8 gOtherText_SevenDashes[];
 extern const u8 gOtherText_FourDashes[];
 extern const u8 gOtherText_BattleTowerResults[];
-extern const u8 gOtherText_Lv50[];
 extern const u8 gOtherText_Lv100[];
-extern const u8 gOtherText_WinStreak[];
-extern const u8 gOtherText_Current[];
-extern const u8 gOtherText_Record[];
-extern const u8 gOtherText_Prev[];
 
 // slot_machine
 extern const u8 gOtherText_QuitGamePrompt[];
