@@ -41,7 +41,7 @@ void sub_80A3E0C(void);
 void sub_80A3FA0(u16 *a, u8 b, u8 c, u8 d, u8 e, u16 f);
 void sub_80A4164(u8 *, u16, enum StringConvertMode, u8);
 void sub_80A418C(u16 a, enum StringConvertMode b, u8 c, u8 d, u8 e);
-void sub_80A5B40(void);
+void CB2_ReturnToBagMenuPocket(void);
 void CleanUpOverworldMessage(u8);
 void ExecuteItemUseFromBlackPalette(void);
 void sub_80A5D04(void);

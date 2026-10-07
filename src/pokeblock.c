@@ -123,7 +123,7 @@ const s8 gPokeblockFlavorCompatibilityTable[] =
 
 void (*const gUnknown_083F7EA8[])(void) =
 {
-    sub_80A5B40,
+    CB2_ReturnToBagMenuPocket,
     CB2_ReturnToField,
     CB2_SetUpReshowBattleScreenAfterMenu2,
     CB2_ReturnToField
@@ -359,7 +359,7 @@ static bool8 sub_810B6C0(void)
             gMain.state++;
             break;
         case 17:
-            if (sub_8055870() != TRUE)
+            if (Overworld_IsRecvQueueAtMax() != TRUE)
             {
                 gMain.state++;
             }

@@ -143,7 +143,7 @@ s32 GetCableClubPartnersReady(void);
 u16 SetInCableClubSeat(void);
 u16 SetLinkWaitingForScript(void);
 u16 QueueExitLinkRoomKey(void);
-bool32 sub_8055870(void);
+bool32 Overworld_IsRecvQueueAtMax(void);
 u32 sub_80558AC(void);
 u32 sub_8055910(void);
 u32 sub_8055940(void);

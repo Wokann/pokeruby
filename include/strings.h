@@ -211,7 +211,7 @@ extern const u8 gMenuText_Check[];
 extern const u8 gOtherText_None[];
 
 extern const u8 gText_ThreeQuestionMarks[];
-extern const u8 gOtherText_ThreeQuestions2[];
+extern const u8 gText_ThreeMarks[];
 
 extern const u8 gText_FiveMarks[];
 extern const u8 gOtherText_Slash[];
@@ -270,16 +270,16 @@ extern const u8 gText_RepelEffectsLingered[];
 extern const u8 gText_UsedVar2WildLured[];
 extern const u8 gText_UsedVar2WildRepelled[];
 extern const u8 gText_BoxFull[];
-extern const u8 gOtherText_Size[];
-extern const u8 gOtherText_Firm[];
+extern const u8 gText_SizeSlash[];
+extern const u8 gText_FirmSlash[];
 
-extern const u8 gContestStatsText_Unknown1[];
+extern const u8 gText_Var1DotVar2[];
 
-extern const u8 ContestStatsText_VerySoft[];
-extern const u8 ContestStatsText_Soft[];
-extern const u8 ContestStatsText_Hard[];
-extern const u8 ContestStatsText_VeryHard[];
-extern const u8 ContestStatsText_SuperHard[];
+extern const u8 gBerryFirmnessString_VerySoft[];
+extern const u8 gBerryFirmnessString_Soft[];
+extern const u8 gBerryFirmnessString_Hard[];
+extern const u8 gBerryFirmnessString_VeryHard[];
+extern const u8 gBerryFirmnessString_SuperHard[];
 
 extern const u8 gText_RedPokeblock[];
 extern const u8 gText_BluePokeblock[];

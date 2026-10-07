@@ -172,7 +172,7 @@ const u8 gText_Store[] = _("STORE");
 const u8 gMenuText_Check[] = _("CHECK");
 const u8 gOtherText_None[] = _("NONE");
 
-const u8 gOtherText_ThreeQuestions2[] = _("???");
+const u8 gText_ThreeMarks[] = _("???");
 
 const u8 gText_FiveMarks[] = _("?????");
 const u8 gOtherText_Slash[] = _("/");
@@ -240,16 +240,16 @@ const u8 gText_RepelEffectsLingered[] = _("But the effects of a REPEL lingered\n
 const u8 gText_UsedVar2WildLured[] = _("{PLAYER} used the\n{STR_VAR_2}.\pWild POKéMON will be lured.{PAUSE_UNTIL_PRESS}");
 const u8 gText_UsedVar2WildRepelled[] = _("{PLAYER} used the\n{STR_VAR_2}.\pWild POKéMON will be repelled.{PAUSE_UNTIL_PRESS}");
 const u8 gText_BoxFull[] = _("The BOX is full.{PAUSE_UNTIL_PRESS}");
-const u8 gOtherText_Size[] = _("SIZE /");
-const u8 gOtherText_Firm[] = _("FIRM /");
+const u8 gText_SizeSlash[] = _("SIZE /");
+const u8 gText_FirmSlash[] = _("FIRM /");
 
-const u8 gContestStatsText_Unknown1[] = _("{STR_VAR_1}.{STR_VAR_2}”");
+const u8 gText_Var1DotVar2[] = _("{STR_VAR_1}.{STR_VAR_2}”");
 
-const u8 ContestStatsText_VerySoft[] = _("Very soft");
-const u8 ContestStatsText_Soft[] = _("Soft");
-const u8 ContestStatsText_Hard[] = _("Hard");
-const u8 ContestStatsText_VeryHard[] = _("Very hard");
-const u8 ContestStatsText_SuperHard[] = _("Super hard");
+const u8 gBerryFirmnessString_VerySoft[] = _("Very soft");
+const u8 gBerryFirmnessString_Soft[] = _("Soft");
+const u8 gBerryFirmnessString_Hard[] = _("Hard");
+const u8 gBerryFirmnessString_VeryHard[] = _("Very hard");
+const u8 gBerryFirmnessString_SuperHard[] = _("Super hard");
 
 const u8 gText_RedPokeblock[] = _("RED {POKEBLOCK}");
 const u8 gText_BluePokeblock[] = _("BLUE {POKEBLOCK}");
@@ -1100,7 +1100,7 @@ const u8 gText_Store[] = _("GEBEN");
 const u8 gMenuText_Check[] = _("PRÜFEN");
 const u8 gOtherText_None[] = _("KEINES");
 
-const u8 gOtherText_ThreeQuestions2[] = _("???");
+const u8 gText_ThreeMarks[] = _("???");
 
 const u8 gText_FiveMarks[] = _("?????");
 const u8 gOtherText_Slash[] = _("/");
@@ -1168,16 +1168,16 @@ const u8 gText_RepelEffectsLingered[] = _("Aber SCHUTZ wirkt doch\nnoch!{PAUSE_U
 const u8 gText_UsedVar2WildLured[] = _("{PLAYER} setzt\n{STR_VAR_2} ein.\pWilde POKéMON werden angezogen.{PAUSE_UNTIL_PRESS}");
 const u8 gText_UsedVar2WildRepelled[] = _("{PLAYER} setzt\n{STR_VAR_2} ein.\pWilde POKéMON werden abgehalten.{PAUSE_UNTIL_PRESS}");
 const u8 gText_BoxFull[] = _("Die BOXEN sind voll.{PAUSE_UNTIL_PRESS}");
-const u8 gOtherText_Size[] = _("MASS:");
-const u8 gOtherText_Firm[] = _("GÜTE:");
+const u8 gText_SizeSlash[] = _("MASS:");
+const u8 gText_FirmSlash[] = _("GÜTE:");
 
-const u8 gContestStatsText_Unknown1[] = _("{STR_VAR_1},{STR_VAR_2} cm");
+const u8 gText_Var1DotVar2[] = _("{STR_VAR_1},{STR_VAR_2} cm");
 
-const u8 ContestStatsText_VerySoft[] = _("Sehr weich");
-const u8 ContestStatsText_Soft[] = _("Weich");
-const u8 ContestStatsText_Hard[] = _("Hart");
-const u8 ContestStatsText_VeryHard[] = _("Sehr hart");
-const u8 ContestStatsText_SuperHard[] = _("Steinhart");
+const u8 gBerryFirmnessString_VerySoft[] = _("Sehr weich");
+const u8 gBerryFirmnessString_Soft[] = _("Weich");
+const u8 gBerryFirmnessString_Hard[] = _("Hart");
+const u8 gBerryFirmnessString_VeryHard[] = _("Sehr hart");
+const u8 gBerryFirmnessString_SuperHard[] = _("Steinhart");
 
 const u8 gText_RedPokeblock[] = _("{POKEBLOCK} ROT");
 const u8 gText_BluePokeblock[] = _("{POKEBLOCK} BLAU");

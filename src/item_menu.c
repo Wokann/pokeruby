@@ -444,7 +444,7 @@ static bool8 SetupBagMenu(void)
         gMain.state++;
         break;
     case 15:
-        if (sub_8055870() == TRUE)
+        if (Overworld_IsRecvQueueAtMax() == TRUE)
             break;
         gMain.state++;
         break;
@@ -2038,7 +2038,7 @@ void Task_CloseBagMenu(u8 taskId)
     }
 }
 
-void sub_80A5B40(void)
+void CB2_ReturnToBagMenuPocket(void)
 {
     while (1)
     {
@@ -2305,8 +2305,8 @@ static void ItemMenu_Give(u8 taskId)
 static void ItemMenu_CheckTag(u8 taskId)
 {
     sub_80A5AE4(taskId);
-    gTasks[taskId].data[8] = (u32)BerryTagScreen_814625C >> 16;
-    gTasks[taskId].data[9] = (u32)BerryTagScreen_814625C;
+    gTasks[taskId].data[8] = (u32)DoBerryTagScreen >> 16;
+    gTasks[taskId].data[9] = (u32)DoBerryTagScreen;
 }
 
 static void sub_80A61A8(void)
@@ -3913,7 +3913,7 @@ static void SpriteCB_BerrySprite(struct Sprite *sprite)
     sprite->y2 = -gBattle_BG1_Y;
 }
 
-void sub_80A7DD4(void)
+void FreeBerryTagSpritePalette(void)
 {
     FreeSpritePaletteByTag(0x7544);
     FreeSpritePaletteByTag(8);

@@ -414,7 +414,7 @@ static void UsePokeblockMenu(void)
             }
             break;
         case 2:
-            if (!sub_8055870())
+            if (!Overworld_IsRecvQueueAtMax())
             {
                 sub_80F1934();
                 sub_80F3D00();
@@ -503,7 +503,7 @@ static void ShowUsePokeblockMenuForResults(void)
             }
             break;
         case 2:
-            if (!sub_8055870())
+            if (!Overworld_IsRecvQueueAtMax())
             {
                 sub_80F1934();
                 sInfo->mainState = 0;

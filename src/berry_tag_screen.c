@@ -4,6 +4,7 @@
 #include "berry.h"
 #include "decompress.h"
 #include "event_object_movement.h"
+#include "graphics.h"
 #include "item_menu.h"
 #include "constants/items.h"
 #include "item_use.h"
@@ -25,47 +26,41 @@
 struct Struct2000000
 {
     /*0x00*/ u8 filler_0[0x1FFFF];
-    /*0x1FFFF*/ u8 var_1FFFF;
+    /*0x1FFFF*/ u8 gfxState;
 };
 
 extern struct Struct2000000 gSharedMem;
 extern u16 gBattle_BG1_Y;
 
-static EWRAM_DATA u8 gUnknown_0203932C = 0;
-static EWRAM_DATA s16 gUnknown_0203932E[5] = {0};
+static EWRAM_DATA u8 sBerrySpriteId = 0;
+static EWRAM_DATA s16 sFlavorCircleIds[5] = {0};
 
-
-extern u8 gBerryCheck_Gfx[];
-extern u8 gBerryCheck_Pal[];
-extern u8 gUnknown_08E788E4[];
-extern u8 gUnknown_08E78A84[];
-
-const u8 *const gUnknown_0841192C[] =
+static const u8 *const sBerryFirmnessStrings[] =
 {
-    ContestStatsText_VerySoft,
-    ContestStatsText_Soft,
-    ContestStatsText_Hard,
-    ContestStatsText_VeryHard,
-    ContestStatsText_SuperHard,
+    gBerryFirmnessString_VerySoft,
+    gBerryFirmnessString_Soft,
+    gBerryFirmnessString_Hard,
+    gBerryFirmnessString_VeryHard,
+    gBerryFirmnessString_SuperHard,
 };
 
-static void sub_8146014(void);
-static void sub_814602C(void);
-static bool8 sub_8146058(void);
-static void sub_8146288(void);
-static bool8 sub_81462B8(void);
-static void sub_814640C(u8 taskId);
-static void sub_8146440(u8 taskId);
-static void sub_8146480(u8 taskid);
-static void sub_81464E4(void);
-static void sub_8146600(u8 berry);
-static void sub_81466A0(void);
-static void sub_81466E8(u8 taskId, s8 direction);
-static void sub_8146798(u8 berry);
-static void sub_8146810(s8 berry);
+static void CB2_BerryTagScreen(void);
+static void VblankCB(void);
+static bool8 InitBerryTagScreen(void);
+static void HandleInitBackgrounds(void);
+static bool8 LoadBerryTagGfx(void);
+static void Task_CloseBerryTagScreen(u8 taskId);
+static void PrepareToCloseBerryTagScreen(u8 taskId);
+static void Task_HandleInput(u8 taskId);
+static void PrintAllBerryData(void);
+static void CreateFlavorCircleSprites(u8 berry);
+static void DestroyFlavorCircleSprites(void);
+static void TryChangeDisplayedBerry(u8 taskId, s8 toMove);
+static void Task_DisplayAnotherBerry(u8 taskId);
+static void HandleBagCursorPositionChange(s8 toMove);
 static void sub_81468BC(void);
 
-static void sub_8146014(void)
+static void CB2_BerryTagScreen(void)
 {
     AnimateSprites();
     BuildOamBuffer();
@@ -73,7 +68,7 @@ static void sub_8146014(void)
     UpdatePaletteFade();
 }
 
-static void sub_814602C(void)
+static void VblankCB(void)
 {
     REG_BG0VOFS = gBattle_BG1_Y;
     REG_BG1VOFS = gBattle_BG1_Y;
@@ -83,7 +78,7 @@ static void sub_814602C(void)
     TransferPlttBuffer();
 }
 
-static bool8 sub_8146058(void)
+static bool8 InitBerryTagScreen(void)
 {
     u8 berry;
     u16 backup;
@@ -93,7 +88,7 @@ static bool8 sub_8146058(void)
     case 0:
         SetVBlankHBlankCallbacksToNull();
         ResetVramOamAndBgCntRegs();
-        sub_8146288();
+        HandleInitBackgrounds();
         REG_BLDCNT = 0;
         gMain.state += 1;
         break;
@@ -117,26 +112,26 @@ static bool8 sub_8146058(void)
     case 5:
         if (!MultistepInitMenuWindowContinue())
             break;
-        gSharedMem.var_1FFFF = 0;
+        gSharedMem.gfxState = 0;
         gMain.state += 1;
         break;
     case 6:
-        if (!sub_81462B8())
+        if (!LoadBerryTagGfx())
             break;
-        gSharedMem.var_1FFFF = 0;
+        gSharedMem.gfxState = 0;
         gMain.state += 1;
         break;
     case 7:
-        sub_81464E4();
+        PrintAllBerryData();
         gMain.state += 1;
         break;
     case 8:
         berry = gSpecialVar_ItemId + OFFSET_7B;
-        gUnknown_0203932C = CreateBerryTagSprite(berry, 56, 64);
+        sBerrySpriteId = CreateBerryTagSprite(berry, 56, 64);
         gMain.state += 1;
         break;
     case 9:
-        sub_8146600(gSpecialVar_ItemId + OFFSET_7B);
+        CreateFlavorCircleSprites(gSpecialVar_ItemId + OFFSET_7B);
         gMain.state += 1;
         break;
     case 10:
@@ -145,38 +140,38 @@ static bool8 sub_8146058(void)
         REG_IE |= INTR_FLAG_VBLANK;
         REG_IME = backup;
         REG_DISPSTAT |= DISPSTAT_VBLANK_INTR;
-        SetVBlankCallback(sub_814602C);
+        SetVBlankCallback(VblankCB);
         REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_ON | DISPCNT_BG_ALL_ON | DISPCNT_OBJ_1D_MAP;
         gMain.state += 1;
         break;
     case 11:
-        if (sub_8055870() == TRUE)
+        if (Overworld_IsRecvQueueAtMax() == TRUE)
             break;
         gMain.state += 1;
         break;
     case 12:
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
         gPaletteFade.bufferTransferDisabled = 0;
-        SetMainCallback2(sub_8146014);
+        SetMainCallback2(CB2_BerryTagScreen);
         return TRUE;
     }
 
     return FALSE;
 }
 
-void BerryTagScreen_814625C(u8 taskId)
+void DoBerryTagScreen(u8 taskId)
 {
     do
     {
-        if (sub_8146058() == TRUE)
+        if (InitBerryTagScreen() == TRUE)
         {
-            CreateTask(sub_8146480, 0);
+            CreateTask(Task_HandleInput, 0);
             return;
         }
     } while (MenuHelpers_IsLinkActive() != TRUE);
 }
 
-static void sub_8146288(void)
+static void HandleInitBackgrounds(void)
 {
     REG_BG1CNT = BGCNT_PRIORITY(2) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(5) | BGCNT_16COLOR | BGCNT_TXT256x256;
     REG_BG2CNT = BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(6) | BGCNT_16COLOR | BGCNT_TXT256x256;
@@ -184,23 +179,23 @@ static void sub_8146288(void)
     gBattle_BG1_Y = 0;
 }
 
-bool8 sub_81462B8(void)
+bool8 LoadBerryTagGfx(void)
 {
     u16 i;
 
-    switch (gSharedMem.var_1FFFF)
+    switch (gSharedMem.gfxState)
     {
     case 0:
         LZDecompressVram(gBerryCheck_Gfx, (void *)VRAM);
-        gSharedMem.var_1FFFF += 1;
+        gSharedMem.gfxState += 1;
         break;
     case 1:
-        LZDecompressVram(gUnknown_08E788E4, (void *)VRAM + 0x2800);
-        gSharedMem.var_1FFFF += 1;
+        LZDecompressVram(gBerryTag_Gfx, (void *)VRAM + 0x2800);
+        gSharedMem.gfxState += 1;
         break;
     case 2:
-        LZDecompressVram(gUnknown_08E78A84, (void *)VRAM + 0x3000);
-        gSharedMem.var_1FFFF += 1;
+        LZDecompressVram(gBerryTag_Tilemap, (void *)VRAM + 0x3000);
+        gSharedMem.gfxState += 1;
         break;
     case 3:
         for (i = 0; i < 0x400; i++)
@@ -211,57 +206,57 @@ bool8 sub_81462B8(void)
                 gBGTilemapBuffers[2][i] = 0x5042;
         }
         DmaCopy16Defvars(3, gBGTilemapBuffers[2], (void *)(VRAM + 0x3800), 0x800);
-        gSharedMem.var_1FFFF += 1;
+        gSharedMem.gfxState += 1;
         break;
     case 4:
         LoadCompressedPalette(gBerryCheck_Pal, 0, 96 * 2);
-        gSharedMem.var_1FFFF += 1;
+        gSharedMem.gfxState += 1;
         break;
     case 5:
         LoadCompressedObjectPic(&gBerryCheckCircleSpriteSheet);
-        gSharedMem.var_1FFFF += 1;
+        gSharedMem.gfxState += 1;
         break;
     case 6:
         LoadCompressedObjectPalette(&gBerryCheckCirclePaletteTable);
-        gSharedMem.var_1FFFF = 0;
+        gSharedMem.gfxState = 0;
         return TRUE;
     }
 
     return FALSE;
 }
 
-static void sub_814640C(u8 taskId)
+static void Task_CloseBerryTagScreen(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        SetMainCallback2(sub_80A5B40);
-        sub_80A7DD4();
+        SetMainCallback2(CB2_ReturnToBagMenuPocket);
+        FreeBerryTagSpritePalette();
         FreeAndReserveObjectSpritePalettes();
         DestroyTask(taskId);
     }
 }
 
-static void sub_8146440(u8 taskId)
+static void PrepareToCloseBerryTagScreen(u8 taskId)
 {
     PlaySE(SE_SELECT);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-    gTasks[taskId].func = sub_814640C;
+    gTasks[taskId].func = Task_CloseBerryTagScreen;
 }
 
-static void sub_8146480(u8 taskid)
+static void Task_HandleInput(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
         if (JOY_REPEAT(DPAD_ANY) == DPAD_UP)
-            sub_81466E8(taskid, -1);
+            TryChangeDisplayedBerry(taskId, -1);
         if (JOY_REPEAT(DPAD_ANY) == DPAD_DOWN)
-            sub_81466E8(taskid, 1);
+            TryChangeDisplayedBerry(taskId, 1);
         if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
-            sub_8146440(taskid);
+            PrepareToCloseBerryTagScreen(taskId);
     }
 }
 
-static void sub_81464E4(void)
+static void PrintAllBerryData(void)
 {
     const struct Berry *berryInfo;
 #ifdef UNITS_IMPERIAL
@@ -297,7 +292,7 @@ static void sub_81464E4(void)
     sizeMajor = size / 100;
 #endif
 
-    Menu_PrintText(gOtherText_Size, 11, 7);
+    Menu_PrintText(gText_SizeSlash, 11, 7);
     if (berryInfo->size != 0)
     {
 #ifdef UNITS_IMPERIAL
@@ -307,145 +302,145 @@ static void sub_81464E4(void)
         ConvertIntToDecimalStringN(gStringVar1, berryInfo->size / 10, STR_CONV_MODE_LEFT_ALIGN, 2);
         ConvertIntToDecimalStringN(gStringVar2, berryInfo->size % 10, STR_CONV_MODE_LEFT_ALIGN, 2);
 #endif
-        Menu_PrintText(gContestStatsText_Unknown1, 16, 7);
+        Menu_PrintText(gText_Var1DotVar2, 16, 7);
     }
     else
     {
-        Menu_PrintText(gOtherText_ThreeQuestions2, 16, 7);
+        Menu_PrintText(gText_ThreeMarks, 16, 7);
     }
 
-    Menu_PrintText(gOtherText_Firm, 11, 9);
+    Menu_PrintText(gText_FirmSlash, 11, 9);
     if (berryInfo->firmness != 0)
-        Menu_PrintText(gUnknown_0841192C[berryInfo->firmness - 1], 16, 9);
+        Menu_PrintText(sBerryFirmnessStrings[berryInfo->firmness - 1], 16, 9);
     else
-        Menu_PrintText(gOtherText_ThreeQuestions2, 16, 9);
+        Menu_PrintText(gText_ThreeMarks, 16, 9);
 }
 
-static void sub_8146600(u8 berry)
+static void CreateFlavorCircleSprites(u8 berry)
 {
     const struct Berry *berryInfo;
     u16 i;
 
     berryInfo = GetBerryInfo(berry + 1);
     for (i = 0; i < 5; i++)
-        gUnknown_0203932E[i] = (u16)gUnknown_0203932E[i] | 0xFFFF;
+        sFlavorCircleIds[i] = (u16)sFlavorCircleIds[i] | 0xFFFF;
 
     // argument is the center of the circle
     if (berryInfo->spicy)
-        gUnknown_0203932E[0] = CreateBerryFlavorCircleSprite(48);
+        sFlavorCircleIds[0] = CreateBerryFlavorCircleSprite(48);
     if (berryInfo->dry)
-        gUnknown_0203932E[1] = CreateBerryFlavorCircleSprite(88);
+        sFlavorCircleIds[1] = CreateBerryFlavorCircleSprite(88);
     if (berryInfo->sweet)
-        gUnknown_0203932E[2] = CreateBerryFlavorCircleSprite(128);
+        sFlavorCircleIds[2] = CreateBerryFlavorCircleSprite(128);
     if (berryInfo->bitter)
-        gUnknown_0203932E[3] = CreateBerryFlavorCircleSprite(168);
+        sFlavorCircleIds[3] = CreateBerryFlavorCircleSprite(168);
     if (berryInfo->sour)
-        gUnknown_0203932E[4] = CreateBerryFlavorCircleSprite(208);
+        sFlavorCircleIds[4] = CreateBerryFlavorCircleSprite(208);
 }
 
-static void sub_81466A0(void)
+static void DestroyFlavorCircleSprites(void)
 {
     u16 i;
 
     for (i = 0; i < 5; i++)
     {
-        if (gUnknown_0203932E[i] != -1)
+        if (sFlavorCircleIds[i] != -1)
         {
-            DestroySprite(&gSprites[gUnknown_0203932E[i]]);
-            gUnknown_0203932E[i] = -1;
+            DestroySprite(&gSprites[sFlavorCircleIds[i]]);
+            sFlavorCircleIds[i] = -1;
         }
     }
 }
 
-static void sub_81466E8(u8 taskId, s8 direction)
+static void TryChangeDisplayedBerry(u8 taskId, s8 toMove)
 {
     u8 berryPocket = 3;
     s16 *data = gTasks[taskId].data;
 
     if (gBagPocketScrollStates[berryPocket].scrollPosition + gBagPocketScrollStates[berryPocket].cursorPosition == 0
-     && direction < 0)
+     && toMove < 0)
         return;
     if (gBagPocketScrollStates[berryPocket].scrollPosition + gBagPocketScrollStates[berryPocket].cursorPosition + 1 == gBagPocketScrollStates[berryPocket].numSlots
-     && direction > 0)
+     && toMove > 0)
         return;
 
     PlaySE(SE_SELECT);
-    if (gBagPocketScrollStates[berryPocket].scrollPosition + gBagPocketScrollStates[berryPocket].cursorPosition + direction < 0)
+    if (gBagPocketScrollStates[berryPocket].scrollPosition + gBagPocketScrollStates[berryPocket].cursorPosition + toMove < 0)
         data[1] = -(gBagPocketScrollStates[berryPocket].scrollPosition + gBagPocketScrollStates[berryPocket].cursorPosition);
-    else if (gBagPocketScrollStates[berryPocket].scrollPosition + gBagPocketScrollStates[berryPocket].cursorPosition + direction >= gBagPocketScrollStates[berryPocket].numSlots)
+    else if (gBagPocketScrollStates[berryPocket].scrollPosition + gBagPocketScrollStates[berryPocket].cursorPosition + toMove >= gBagPocketScrollStates[berryPocket].numSlots)
         data[1] = gBagPocketScrollStates[berryPocket].numSlots - gBagPocketScrollStates[berryPocket].scrollPosition - gBagPocketScrollStates[berryPocket].cursorPosition - 1;
     else
-        data[1] = direction;
+        data[1] = toMove;
 
-    gTasks[taskId].func = sub_8146798;
+    gTasks[taskId].func = Task_DisplayAnotherBerry;
 
-    if (direction < 0)
+    if (toMove < 0)
         data[0] = -16;
     else
         data[0] = 16;
 
 }
 
-static void sub_8146798(u8 taskId)
+static void Task_DisplayAnotherBerry(u8 taskId)
 {
-    s16 *taskData = gTasks[taskId].data;
+    s16 *data = gTasks[taskId].data;
 
-    gBattle_BG1_Y = (gBattle_BG1_Y + taskData[0]) & 0xFF;
-    if ((taskData[0] > 0 && gBattle_BG1_Y == 144)
-     || (taskData[0] < 0 && gBattle_BG1_Y == 112))
+    gBattle_BG1_Y = (gBattle_BG1_Y + data[0]) & 0xFF;
+    if ((data[0] > 0 && gBattle_BG1_Y == 144)
+     || (data[0] < 0 && gBattle_BG1_Y == 112))
     {
-        sub_8146810(gTasks[taskId].data[1]);
+        HandleBagCursorPositionChange(gTasks[taskId].data[1]);
         sub_81468BC();
     }
     if (gBattle_BG1_Y == 0)
     {
         gTasks[taskId].data[0] = gBattle_BG1_Y;
         gTasks[taskId].data[1] = gBattle_BG1_Y;
-        gTasks[taskId].func = sub_8146480;
+        gTasks[taskId].func = Task_HandleInput;
     }
 }
 
-static void sub_8146810(s8 berry)
+static void HandleBagCursorPositionChange(s8 toMove)
 {
     u8 berryPocket = 3;
 
-    if (berry > 0)
+    if (toMove > 0)
     {
-        if (gBagPocketScrollStates[berryPocket].cursorPosition + berry > 7)
+        if (gBagPocketScrollStates[berryPocket].cursorPosition + toMove > 7)
         {
-            gBagPocketScrollStates[berryPocket].scrollPosition += gBagPocketScrollStates[berryPocket].cursorPosition - 7 + berry;
+            gBagPocketScrollStates[berryPocket].scrollPosition += gBagPocketScrollStates[berryPocket].cursorPosition - 7 + toMove;
             gBagPocketScrollStates[berryPocket].cursorPosition = 7;
         }
         else
         {
-            gBagPocketScrollStates[berryPocket].cursorPosition += berry;
+            gBagPocketScrollStates[berryPocket].cursorPosition += toMove;
         }
     }
     else
     {
-        if (gBagPocketScrollStates[berryPocket].cursorPosition + berry < 0)
+        if (gBagPocketScrollStates[berryPocket].cursorPosition + toMove < 0)
         {
-            gBagPocketScrollStates[berryPocket].scrollPosition += gBagPocketScrollStates[berryPocket].cursorPosition + berry;
+            gBagPocketScrollStates[berryPocket].scrollPosition += gBagPocketScrollStates[berryPocket].cursorPosition + toMove;
             gBagPocketScrollStates[berryPocket].cursorPosition = 0;
         }
         else
         {
-            gBagPocketScrollStates[berryPocket].cursorPosition += berry;
+            gBagPocketScrollStates[berryPocket].cursorPosition += toMove;
         }
     }
     gSpecialVar_ItemId = gCurrentBagPocketItemSlots[gBagPocketScrollStates[berryPocket].scrollPosition + gBagPocketScrollStates[berryPocket].cursorPosition].itemId;
-    DestroySprite(&gSprites[gUnknown_0203932C]);
-    sub_81466A0();
-    sub_80A7DD4();
+    DestroySprite(&gSprites[sBerrySpriteId]);
+    DestroyFlavorCircleSprites();
+    FreeBerryTagSpritePalette();
 }
 
 static void sub_81468BC(void)
 {
     Menu_EraseWindowRect(0, 4, 29, 19);
-    sub_81464E4();
+    PrintAllBerryData();
 
     // center of berry sprite
-    gUnknown_0203932C = CreateBerryTagSprite(gSpecialVar_ItemId + OFFSET_7B, 56, 64);
+    sBerrySpriteId = CreateBerryTagSprite(gSpecialVar_ItemId + OFFSET_7B, 56, 64);
 
-    sub_8146600(gSpecialVar_ItemId + OFFSET_7B);
+    CreateFlavorCircleSprites(gSpecialVar_ItemId + OFFSET_7B);
 }

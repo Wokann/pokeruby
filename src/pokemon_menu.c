@@ -1070,7 +1070,7 @@ static void sub_808B25C(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        SetMainCallback2(sub_80A5B40);
+        SetMainCallback2(CB2_ReturnToBagMenuPocket);
         DestroyTask(taskId);
     }
 }
@@ -1209,6 +1209,6 @@ void sub_808B5B4(u32 taskId)
 
 static void sub_808B5E4(u8 taskId)
 {
-    if (sub_8055870() != TRUE)
+    if (Overworld_IsRecvQueueAtMax() != TRUE)
         gTasks[taskId].func = gUnknown_03005CF0;
 }

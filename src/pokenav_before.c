@@ -1407,7 +1407,7 @@ void sub_80EC00C()
 			gPokenavStructPtr->unk304++;
         break;
     case 5:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304++;
         break;
     case 6:
@@ -1527,7 +1527,7 @@ void sub_80EC268()
 			gPokenavStructPtr->unk304++;
         break;
     case 4:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
         {
 			if (gPokenavStructPtr->unk8FE8 != 0)
 			{
@@ -1640,7 +1640,7 @@ void sub_80EC4A0()
         gPokenavStructPtr->unk304++;
         break;
     case 0xB:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304++;
         break;
     case 0xC:
@@ -1861,7 +1861,7 @@ void sub_80ECA10()
 			gPokenavStructPtr->unk304++;
         break;
     case 5:
-        if (sub_8055870()) return;
+        if (Overworld_IsRecvQueueAtMax()) return;
         gPokenavStructPtr->unk304++;
         break;
     case 6:
@@ -2016,7 +2016,7 @@ void sub_80ECD80()
 			gPokenavStructPtr->unk304++;
         break;
     case 11:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304++;
         break;
     case 12:
@@ -2120,11 +2120,11 @@ void sub_80ED01C()
 			gPokenavStructPtr->unk304 += 1;
         break;
     case 7:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304--;
         break;
     case 8:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304++;
         break;
     case 9:
@@ -2140,7 +2140,7 @@ void sub_80ED01C()
         gPokenavStructPtr->unk304++;
         break;
     case 12:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304++;
         break;
     case 13:
@@ -2227,7 +2227,7 @@ void sub_80ED31C()
 		}
         break;
     case 2:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304 = 0;
         break;
     }
@@ -2263,7 +2263,7 @@ void sub_80ED3D0()
 			gPokenavStructPtr->unk304++;
         break;
     case 5:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304++;
         break;
     case 6:
@@ -2305,7 +2305,7 @@ void sub_80ED4D8()
 		}
         break;
     case 2:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304++;
         break;
     case 3:
@@ -2393,11 +2393,11 @@ void sub_80ED620()
 			gPokenavStructPtr->unk304++;
         break;
     case 8:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304++;
         break;
     case 9:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304++;
         break;
     case 10:
@@ -2541,7 +2541,7 @@ void sub_80ED858(void)
         }
         break;
     case 6:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
             gPokenavStructPtr->unk304 = 4;
         break;
     case 7:
@@ -2641,11 +2641,11 @@ void sub_80EDB88()
 			gPokenavStructPtr->unk304 += 1;
         break;
     case 7:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304--;
         break;
     case 8:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304++;
         break;
     case 9:
@@ -2667,7 +2667,7 @@ void sub_80EDB88()
         gPokenavStructPtr->unk304++;
         break;
     case 14:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304++;
         break;
     case 15:
@@ -2730,7 +2730,7 @@ void sub_80EDDBC()
 		}
         break;
     case 2:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304 = 0;
         break;
     }
@@ -2798,7 +2798,7 @@ void sub_80EDEE4()
 			gPokenavStructPtr->unk304++;
         break;
     case 6:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304++;
         break;
     case 7:
@@ -2863,7 +2863,7 @@ void sub_80EE06C()
 			gPokenavStructPtr->unk304++;
         break;
     case 3:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304 = 0;
         break;
     case 4:
@@ -2948,7 +2948,7 @@ void sub_80EE294()
         gPokenavStructPtr->unk304++;
         break;
     case 5:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304++;
         break;
     case 6:
@@ -3026,7 +3026,7 @@ void sub_80EE3D8()
         gPokenavStructPtr->unk304++;
         break;
     case 10:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304++;
         break;
     case 11:
@@ -3090,7 +3090,7 @@ void sub_80EE58C()
 		}
         break;
     case 2:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304 = 0;
         break;
     }
@@ -3201,7 +3201,7 @@ void sub_80EE658()
 			gPokenavStructPtr->unk304++;
         break;
     case 17:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->unk304 = 0x8;
         break;
     }
@@ -3303,7 +3303,7 @@ bool8 sub_80EEA0C(void)
             gPokenavStructPtr->unk6E16++;
         break;
     case 5:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
             gPokenavStructPtr->unk6E16++;
         break;
     case 6:
@@ -3422,6 +3422,6 @@ void sub_80EED9C(void)
 
 void sub_80EEDC4(void)
 {
-    if (sub_8055870() != 0x1)
+    if (Overworld_IsRecvQueueAtMax() != 0x1)
         gPokenavStructPtr->unk300 = gUnknown_03000744;
 }

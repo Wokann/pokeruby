@@ -8,7 +8,7 @@ extern const struct CompressedSpriteSheet gBerryCheckCircleSpriteSheet;
 extern const struct CompressedSpritePalette gBerryCheckCirclePaletteTable;
 
 u8 CreateBerryTagSprite(u8 berryId, s16 x, s16 y);
-void sub_80A7DD4(void);
+void FreeBerryTagSpritePalette(void);
 u8 CreateSpinningBerrySprite(u8 berryId, u8 x, u8 y, bool8 startAffine);
 u8 CreateBerryFlavorCircleSprite(s16 x);
 
