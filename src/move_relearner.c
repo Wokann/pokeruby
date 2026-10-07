@@ -811,7 +811,7 @@ static void CreateLearnableMovesList(void)
         StringCopy(sMoveRelearnerStruct->moveNames[i], gMoveNames[sMoveRelearnerStruct->movesToLearn[i]]);
     GetMonData(&gPlayerParty[sMoveRelearnerStruct->partyMonIndex], MON_DATA_NICKNAME, nickname);
     StringCopy_Nickname(gStringVar1, nickname);
-    StringCopy(sMoveRelearnerStruct->moveNames[sMoveRelearnerStruct->numMenuChoices], gOtherText_Exit);
+    StringCopy(sMoveRelearnerStruct->moveNames[sMoveRelearnerStruct->numMenuChoices], gText_Exit);
     sMoveRelearnerStruct->numMenuChoices++;
 }
 
@@ -909,7 +909,7 @@ static void DrawMoveSelectionWindow(void)
         }
         else if (menuChoice == sMoveRelearnerStruct->numMenuChoices - 1)
         {
-            str = AlignStringInMenuWindow(str, gOtherText_Exit, 0x90, 0);
+            str = AlignStringInMenuWindow(str, gText_Exit, 0x90, 0);
         }
         else
         {

@@ -173,14 +173,14 @@ static const struct MenuAction2 sDecorationMainMenuActions[] = {
     {SecretBaseText_Decorate, sub_80FF160},
     {SecretBaseText_PutAway, sub_8100A0C},
     {SecretBaseText_Toss, sub_8101700},
-    {gOtherText_Exit, gpu_pal_decompress_alloc_tag_and_upload}
+    {gText_Exit, gpu_pal_decompress_alloc_tag_and_upload}
 };
 
 static const u8 *const sSecretBasePCMenuItemDescriptions[] = {
     SecretBaseText_PutOutDecor,
     SecretBaseText_StoreChosenDecor,
     SecretBaseText_ThrowAwayDecor,
-    gMenuText_GoBackToPrev
+    gText_GoBackPrevMenu
 };
 
 const struct YesNoFuncTable gUnknown_083EC634[] = {
@@ -225,7 +225,7 @@ void DoSecretBaseDecorationMenu(u8 taskId)
     sDecorationContext.isPlayerRoom = 0;
 }
 
-void DoPlayerPCDecoration(u8 taskId)
+void DoPlayerRoomDecorationMenu(u8 taskId)
 {
     DecorationPC(taskId);
     sDecorationContext.items = gSaveBlock1.playerRoomDecorations;
@@ -342,7 +342,7 @@ void sub_80FE528(u8 taskId) // PrintDecorationCategorySelectionMenuStrings
             sub_80FE470(category, 1, 2 * category + 1, 255); // Unselectable
         }
     }
-    Menu_PrintText(gOtherText_Exit, 1, 17);
+    Menu_PrintText(gText_Exit, 1, 17);
 }
 
 void sub_80FE5AC(u8 taskId)
@@ -568,7 +568,7 @@ void sub_80FEABC(u8 taskId, u8 dummy1)
         }
         if (i == sNumOwnedDecorationsInCurCategory)
         {
-            sub_8072A18(gOtherText_Exit, 0x08, 8 * ni, 0x68, 1);
+            sub_8072A18(gText_Exit, 0x08, 8 * ni, 0x68, 1);
             break;
         }
         if (gCurDecorationItems[i])

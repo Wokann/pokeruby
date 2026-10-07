@@ -134,7 +134,7 @@ static const u8 sSecretBaseEntrancePositions[] = {
 
 static const struct MenuAction2 sRegistryMenuActions[] = {
     {gText_DelRegist, ShowRegistryMenuDeleteConfirmation},
-    {gOtherText_Exit, ReturnToMainRegistryMenu}
+    {gText_Exit, ReturnToMainRegistryMenu}
 };
 
 static const struct YesNoFuncTable sDeleteRegistryYesNoFuncs = {
@@ -891,7 +891,7 @@ static void BuildRegistryMenuItems(u8 taskId)
     if (n < 8)
     {
         Menu_BlankWindowRect(18, 2 * n + 2, 28, 2 * n + 3);
-        Menu_PrintText(gOtherText_Exit, 18, 2 * n + 2);
+        Menu_PrintText(gText_Exit, 18, 2 * n + 2);
         DestroyVerticalScrollIndicator(BOTTOM_ARROW);
         if (n != 7)
         {

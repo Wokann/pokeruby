@@ -158,6 +158,6 @@ void sub_810026C(u8);
 void sub_8100FB4(u8);
 void sub_8101590(u8);
 void sub_8101848(u8);
-void DoPlayerPCDecoration(u8);
+void DoPlayerRoomDecorationMenu(u8 taskId);
 
 #endif // GUARD_DECORATION_H

@@ -230,7 +230,7 @@ static const struct MenuAction2 sBattleTowerEntryMenuItems[] =
     {gText_Summary5, BattleTowerEntryMenuCallback_Summary},
     {gText_Enter, BattleTowerEntryMenuCallback_Enter},
     {gText_NoEntry, BattleTowerEntryMenuCallback_NoEntry},
-    {gOtherText_Exit, BattleTowerEntryMenuCallback_Exit},
+    {gText_Exit, BattleTowerEntryMenuCallback_Exit},
 };
 
 static const u8 sPartyMenuAction_EnterSummaryCancel[] = {1, 0, 3};
@@ -781,7 +781,7 @@ static const struct MenuAction2 sDaycareStorageMenuItems[] =
 {
     {gText_Store, DaycareStorageMenuCallback_Store},
     {gText_Summary5, DaycareStorageMenuCallback_Summary},
-    {gOtherText_Exit, DaycareStorageMenuCallback_Exit},
+    {gText_Exit, DaycareStorageMenuCallback_Exit},
 };
 
 static const u8 sPartyMenuAction_StoreSummaryCancel[] = {0, 1, 2};
