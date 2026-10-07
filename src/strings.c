@@ -322,9 +322,9 @@ const u8 gText_SpDef3[] = _("SP. DEF");
 const u8 gText_WontHaveEffect[] = _("It won't have any effect.{PAUSE_UNTIL_PRESS}");
 
 #if REVISION >= 1
-const u8 gOtherText_CantUseOnPoke[] = _("This can't be used on\nthat POKéMON.{PAUSE_UNTIL_PRESS}");
+const u8 gText_CantBeUsedOnPkmn[] = _("This can't be used on\nthat POKéMON.{PAUSE_UNTIL_PRESS}");
 #else
-const u8 gOtherText_CantUseOnPoke[] = _("This item can't be used on\nthat POKéMON.{PAUSE_UNTIL_PRESS}");
+const u8 gText_CantBeUsedOnPkmn[] = _("This item can't be used on\nthat POKéMON.{PAUSE_UNTIL_PRESS}");
 #endif
 
 const u8 gText_PkmnCantSwitchOut[] = _("{STR_VAR_1} can't be switched\nout!{PAUSE_UNTIL_PRESS}");
@@ -1249,7 +1249,7 @@ const u8 gText_SpAtk3[] = _("SP. ANG.");
 const u8 gText_SpDef3[] = _("SP. VER.");
 const u8 gText_WontHaveEffect[] = _("Es wird keine Wirkung haben.{PAUSE_UNTIL_PRESS}");
 
-const u8 gOtherText_CantUseOnPoke[] = _("Das kann nicht bei diesem\nPOKéMON eingesetzt werden.{PAUSE_UNTIL_PRESS}");
+const u8 gText_CantBeUsedOnPkmn[] = _("Das kann nicht bei diesem\nPOKéMON eingesetzt werden.{PAUSE_UNTIL_PRESS}");
 
 const u8 gText_PkmnCantSwitchOut[] = _("{STR_VAR_1} kann nicht ausge-\ntauscht werden!{PAUSE_UNTIL_PRESS}");
 const u8 gText_PkmnAlreadyInBattle[] = _("{STR_VAR_1}\nkämpft bereits!{PAUSE_UNTIL_PRESS}");

@@ -16,6 +16,10 @@ void StartEscalator(bool8 goingUp);
 void StopEscalator(void);
 bool8 IsEscalatorMoving(void);
 
+// soft-boiled
+bool8 SetUpFieldMove_SoftBoiled(void);
+void ChooseMonForSoftboiled(u8 taskId);
+
 // flash
 bool8 SetUpFieldMove_Flash(void);
 bool8 GetMapPairFadeToType(u8 _fromType, u8 _toType);

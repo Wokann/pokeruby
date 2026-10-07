@@ -348,7 +348,7 @@ extern const u8 gText_SpAtk3[];
 extern const u8 gText_SpDef3[];
 extern const u8 gText_WontHaveEffect[];
 
-extern const u8 gOtherText_CantUseOnPoke[];
+extern const u8 gText_CantBeUsedOnPkmn[];
 
 extern const u8 gText_PkmnCantSwitchOut[];
 extern const u8 gText_PkmnAlreadyInBattle[];

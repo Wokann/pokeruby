@@ -17,7 +17,6 @@
 #include "event_data.h"
 #include "mail.h"
 #include "field_player_avatar.h"
-#include "fldeff_softboiled.h"
 #include "braille_puzzles.h"
 #include "field_screen_effect.h"
 #include "field_weather.h"
@@ -64,8 +63,6 @@ bool8 SetUpFieldMove_RockSmash(void);
 bool8 SetUpFieldMove_Strength(void);
 bool8 SetUpFieldMove_Teleport(void);
 bool8 SetUpFieldMove_Dig(void);
-bool8 SetUpFieldMove_SoftBoiled(void);
-bool8 SetUpFieldMove_SoftBoiled(void);
 
 #define sFieldMovesTerminator 0xFF // note: should be changed to 0xFFFF, because currently it makes it impossible to add a field move with 0xFF index
 
@@ -740,7 +737,7 @@ static void CursorCb_FieldMove(u8 taskId)
                 BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
             }
             else
-                sub_8133D28(taskId);
+                ChooseMonForSoftboiled(taskId);
         }
         else
         {
