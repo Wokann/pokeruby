@@ -468,20 +468,20 @@ void sub_8115384(void)
         break;
     case 4:
         sub_8117838(0);
-        sub_811857C();
-        sub_81184D8();
-        sub_8117F2C();
-        sub_8117900();
-        sub_8117BBC();
-        sub_8117DF4();
+        CreateWheelBallSprites();
+        CreateWheelCenterSprite();
+        CreateInterfaceSprites();
+        CreateGridSprites();
+        CreateGridBallSprites();
+        CreateWheelIconSprites();
         gMain.state++;
         break;
     case 5:
         AnimateSprites();
         BuildOamBuffer();
-        sub_81180F4(gSaveBlock1.coins);
-        sub_81182F8(6);
-        sub_811829C(0);
+        SetCreditDigits(gSaveBlock1.coins);
+        SetBallCounterNumLeft(6);
+        SetMultiplierSprite(0);
         DrawGridBackground(0);
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
         Menu_PrintText(Roulette_Text_ControlsInstruction, 1, 15);
@@ -550,9 +550,9 @@ void sub_81156BC(u8 taskId)
         gTasks[taskId].data[6] = 0;
         ResetBallDataForNewSpin(taskId);
         ResetHits();
-        sub_81185E8();
+        HideWheelBalls();
         DrawGridBackground(0);
-        sub_81182F8(6);
+        SetBallCounterNumLeft(6);
         StartTaskAfterDelayOrInput(taskId, Task_SelectFirstEmptySquare, 0xffff, 3);
     }
 }
@@ -613,9 +613,9 @@ static void UpdateGridSelectionRect(u8 selectionId)
 void sub_8115928(u8 taskId, u8 r1)
 {
     if (!r1)
-        sub_811829C(gTasks[taskId].data[4]);
+        SetMultiplierSprite(gTasks[taskId].data[4]);
     else
-        sub_811829C(eRoulette->betSelection[eRoulette->curBallNum]);
+        SetMultiplierSprite(eRoulette->betSelection[eRoulette->curBallNum]);
     UpdateGridSelectionRect(gTasks[taskId].data[4]);
 }
 
@@ -647,7 +647,7 @@ static void Task_SelectFirstEmptySquare(u8 taskId)
     gTasks[taskId].data[4] = i;
     ResetBallDataForNewSpin(taskId);
     DrawGridBackground(gTasks[taskId].data[4]);
-    sub_811829C(gTasks[taskId].data[4]);
+    SetMultiplierSprite(gTasks[taskId].data[4]);
     FlashSelectionOnWheel(gTasks[taskId].data[4]);
     gTasks[taskId].data[1] = 0;
     gTasks[taskId].func = Task_StartHandleBetGridInput;
@@ -759,10 +759,10 @@ static void Task_PlaceBet(u8 taskId)
 {
     eRoulette->betSelection[eRoulette->curBallNum] = gTasks[taskId].data[4];
     gTasks[taskId].data[2] = GetMultiplier(eRoulette->betSelection[eRoulette->curBallNum]);
-    sub_811829C(eRoulette->betSelection[eRoulette->curBallNum]);
+    SetMultiplierSprite(eRoulette->betSelection[eRoulette->curBallNum]);
     if ((gTasks[taskId].data[13] -= eRoulette->minBet) < 0)
         gTasks[taskId].data[13] = 0;
-    sub_81180F4(gTasks[taskId].data[13]);
+    SetCreditDigits(gTasks[taskId].data[13]);
     gTasks[taskId].func = sub_8115D58;
 }
 
@@ -808,8 +808,8 @@ static void Task_SlideGridOffscreen(u8 taskId)
     }
     else
     {
-        sub_8117AA8(1, 255);
-        sub_8117C60(1, 255);
+        ShowHideGridIcons(1, 255);
+        ShowHideGridBalls(1, 255);
         gTasks[taskId].func = Task_InitBallRoll;
         gTasks[taskId].data[1] = 0;
     }
@@ -969,10 +969,10 @@ static void Task_RollBall(u8 taskId)
     eRoulette->ballRolling = 1;
     index = eRoulette->spriteIds[eRoulette->curBallSpriteId];
     eRoulette->ball = &gSprites[index];
-    eRoulette->ball->callback = sub_81191F4;
+    eRoulette->ball->callback = SpriteCB_RollBall_Start;
     gTasks[taskId].data[6]++;
     gTasks[taskId].data[8]++;
-    sub_81182F8(6 - gTasks[taskId].data[6]);
+    SetBallCounterNumLeft(6 - gTasks[taskId].data[6]);
     m4aSongNumStart(SE_ROULETTE_BALL);
     gTasks[taskId].func = Task_RecordBallHit;
 }
@@ -1007,8 +1007,8 @@ static void Task_RecordBallHit(u8 taskId)
             else
             {
                 DrawGridBackground(eRoulette->betSelection[eRoulette->curBallNum]);
-                sub_8117AA8(0, (u8)gTasks[taskId].data[12]);
-                sub_8117C60(0, (u8)gTasks[taskId].data[6] - 1);
+                ShowHideGridIcons(0, (u8)gTasks[taskId].data[12]);
+                ShowHideGridBalls(0, (u8)gTasks[taskId].data[6] - 1);
                 gTasks[taskId].data[1] = 32;
                 gTasks[taskId].func = Task_SlideGridOnscreen;
             }
@@ -1023,11 +1023,11 @@ static void Task_SlideGridOnscreen(u8 taskId)
         if (gTasks[taskId].data[1] > 2)
             gSpriteCoordOffsetX -= 2;
         if ((eRoulette->gridX -= 4) == 104)
-            gSprites[eRoulette->spriteIds[25]].callback = sub_81184CC;
+            gSprites[eRoulette->spriteIds[25]].callback = SpriteCB_GridSquare;
     }
     else
     {
-        sub_8117D68(gTasks[taskId].data[12]);
+        ShowHideWinSlotCursor(gTasks[taskId].data[12]);
         if (gTasks[taskId].data[5] == 1)
             gTasks[taskId].data[1] = 121;
         else
@@ -1043,12 +1043,12 @@ static void Task_FlashBallOnWinningSquare(u8 taskId)
         switch (gTasks[taskId].data[1] % 16)
         {
         case 8:
-            sub_8117AA8(0, 255);
-            sub_8117C60(0, 255);
+            ShowHideGridIcons(0, 255);
+            ShowHideGridBalls(0, 255);
             break;
         case 0:
-            sub_8117AA8(0, (u8)gTasks[taskId].data[12]);
-            sub_8117C60(0, (u8)gTasks[taskId].data[6] - 1);
+            ShowHideGridIcons(0, (u8)gTasks[taskId].data[12]);
+            ShowHideGridBalls(0, (u8)gTasks[taskId].data[6] - 1);
             break;
         }
     }
@@ -1119,7 +1119,7 @@ static void Task_GivePayout(u8 taskId)
     case 0:
         gTasks[taskId].data[13]++;
         m4aSongNumStart(SE_PIN);
-        sub_81180F4(gTasks[taskId].data[13]);
+        SetCreditDigits(gTasks[taskId].data[13]);
         if (gTasks[taskId].data[13] > 0x270e)
         {
             gTasks[taskId].data[1] = r0;
@@ -1208,9 +1208,9 @@ void dp01t_12_3_battle_menu(u8 taskId)
     gTasks[taskId].data[6] = 0;
     ResetBallDataForNewSpin(taskId);
     ResetHits();
-    sub_81185E8();
+    HideWheelBalls();
     DrawGridBackground(0);
-    sub_81182F8(6);
+    SetBallCounterNumLeft(6);
     for (i = 0; i < 12; i++)
         gSprites[eRoulette->spriteIds[i + 7]].invisible = FALSE;
     if (gTasks[taskId].data[13] == 0x270f)
@@ -1315,7 +1315,7 @@ static void ResetHits(void)
         eRoulette->pokeHits[i] = 0;
     for (i = 0; i < 3; i++)
         eRoulette->colorHits[i] = 0;
-    sub_8117C60(1, 255);
+    ShowHideGridBalls(1, 255);
 }
 
 static u8 RecordHit(u8 taskId, u8 slotId)
@@ -1463,7 +1463,7 @@ static void DrawGridBackground(u8 selectionId)
     u8 selectionIds[5];
     u8 numSquares;
     eRoulette->updateGridHighlight = 1;
-    sub_8117AA8(0, 0);
+    ShowHideGridIcons(0, 0);
     SetTilemapRect(gBGTilemapBuffers[1], (u16 *)ewram18800, 14, 7, 16, 13);
     switch (selectionId)
     {

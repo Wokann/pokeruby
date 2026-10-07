@@ -113,26 +113,21 @@ extern const struct RouletteTable gUnknown_083F8DF4[];
 
 void PlayRoulette(void);
 
-void sub_8117838(u8);
-u8 sub_8117890(const struct SpriteTemplate *, u8, u16 *);
-void sub_8117900(void);
-void unref_sub_8117A74(void);
-void sub_8117AA8(u8, u8);
-void sub_8117BBC(void);
-void sub_8117C60(u8, u8);
-void sub_8117D68(u8);
-void sub_8117DF4(void);
-void sub_8117E98(struct Sprite *);
-void sub_8117F2C(void);
-void sub_81180F4(u16);
-u8 sub_81181E8(u8);
-void sub_811829C(u8);
-void sub_81182F8(u8);
-void sub_81184CC(struct Sprite *);
-void sub_81184D8(void);
-void sub_8118554(struct Sprite *);
-void sub_811857C(void);
-void sub_81185E8(void);
-void sub_81191F4(struct Sprite *);
+void sub_8117838(u8 free);
+void CreateGridSprites(void);
+void ShowHideGridIcons(u8 hideAll, u8 hideSquare);
+void CreateGridBallSprites(void);
+void ShowHideGridBalls(u8 hideAll, u8 hideBallId);
+void ShowHideWinSlotCursor(u8 selectionId);
+void CreateWheelIconSprites(void);
+void CreateInterfaceSprites(void);
+void SetCreditDigits(u16 num);
+void SetMultiplierSprite(u8 selectionId);
+void SetBallCounterNumLeft(u8 numBalls);
+void SpriteCB_GridSquare(struct Sprite *sprite);
+void CreateWheelCenterSprite(void);
+void CreateWheelBallSprites(void);
+void HideWheelBalls(void);
+void SpriteCB_RollBall_Start(struct Sprite *sprite);
 
 #endif

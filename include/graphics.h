@@ -3461,10 +3461,10 @@ extern const u8 gUnknown_08E964B8[];
 extern const u8 gRouletteMenu_Gfx[];
 extern const u8 gRouletteWheel_Gfx[];
 extern const u8 gRouletteCenter_Gfx[];
-extern const u8 gRouletteHeadersTiles[];
-extern const u8 gRouletteCreditTiles[];
-extern const u8 gRouletteNumbersTiles[];
-extern const u8 gRouletteMultiplierTiles[];
+extern const u8 gRouletteHeaders_Gfx[];
+extern const u8 gRouletteCredit_Gfx[];
+extern const u8 gRouletteNumbers_Gfx[];
+extern const u8 gRouletteMultiplier_Gfx[];
 
 extern const u8 gDecoration10000_Gfx[];
 
