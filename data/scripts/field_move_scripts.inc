@@ -292,9 +292,9 @@ SurfacingBlockedText: @ 81B13CE
 	.string "There is something in the way above.\n"
 	.string "DIVE can't be used here.$"
 
-SweetScentNothingHereScript:: @ 81B140C
-	msgbox SweetScentNothingHereText, MSGBOX_SIGN
+EventScript_FailSweetScent:: @ 81B140C
+	msgbox Text_FailSweetScent, MSGBOX_SIGN
 	end
 
-SweetScentNothingHereText: @ 81B1415
+Text_FailSweetScent: @ 81B1415
 	.string "There appears to be nothing here...$"

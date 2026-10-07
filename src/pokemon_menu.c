@@ -66,7 +66,6 @@ bool8 SetUpFieldMove_Teleport(void);
 bool8 SetUpFieldMove_Dig(void);
 bool8 SetUpFieldMove_SoftBoiled(void);
 bool8 SetUpFieldMove_SoftBoiled(void);
-bool8 SetUpFieldMove_SweetScent(void);
 
 #define sFieldMovesTerminator 0xFF // note: should be changed to 0xFFFF, because currently it makes it impossible to add a field move with 0xFF index
 

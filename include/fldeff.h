@@ -21,6 +21,10 @@ bool8 SetUpFieldMove_Flash(void);
 bool8 GetMapPairFadeToType(u8 _fromType, u8 _toType);
 bool8 GetMapPairFadeFromType(u8 _fromType, u8 _toType);
 
+// sweet scent
+bool8 SetUpFieldMove_SweetScent(void);
+bool8 FldEff_SweetScent(void);
+
 // rock smash
 bool8 CheckObjectGraphicsInFrontOfPlayer(u8 graphicsId);
 u8 CreateFieldMoveTask(void);

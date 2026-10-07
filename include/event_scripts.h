@@ -5,6 +5,7 @@ extern const u8 EventScript_UseCut[];
 extern const u8 EventScript_UseRockSmash[];
 extern const u8 EventScript_UseFlash[];
 extern const u8 EventScript_UseStrength[];
+extern u8 EventScript_FailSweetScent[];
 
 extern const u8 BerryTreeScript[];
 extern const u8 BerryTree_EventScript_ItemUsePlantBerry[];

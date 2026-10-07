@@ -296,9 +296,9 @@ SurfacingBlockedText: @ 81B13CE
 	.string "Weg. TAUCHER kann nicht\l"
 	.string "eingesetzt werden.$"
 
-SweetScentNothingHereScript:: @ 81B140C
-	msgbox SweetScentNothingHereText, MSGBOX_SIGN
+EventScript_FailSweetScent:: @ 81B140C
+	msgbox Text_FailSweetScent, MSGBOX_SIGN
 	end
 
-SweetScentNothingHereText: @ 81B1415
+Text_FailSweetScent: @ 81B1415
 	.string "Hier scheint nichts zu sein...$"

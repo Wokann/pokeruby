@@ -1,4 +1,5 @@
 #include "global.h"
+#include "event_scripts.h"
 #include "field_effect.h"
 #include "field_player_avatar.h"
 #include "palette.h"
@@ -14,14 +15,12 @@
 
 static void FieldCallback_SweetScent(void);
 static void StartSweetScentFieldEffect(void);
-static void TrySweetScentEncounter(u8);
-static void FailSweetScentEncounter(u8);
+static void TrySweetScentEncounter(u8 taskId);
+static void FailSweetScentEncounter(u8 taskId);
 
 extern u8 gLastFieldPokeMenuOpened;
 extern void (*gFieldCallback)(void);
 extern void (*gPostMenuFieldCallback)(void);
-
-extern u8 SweetScentNothingHereScript[];
 
 bool8 SetUpFieldMove_SweetScent(void)
 {
@@ -36,7 +35,7 @@ static void FieldCallback_SweetScent(void)
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
 }
 
-bool8 FldEff_SweetScent()
+bool8 FldEff_SweetScent(void)
 {
     u8 taskId = CreateFieldMoveTask();
 
@@ -84,7 +83,7 @@ static void FailSweetScentEncounter(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        ScriptContext_SetupScript(SweetScentNothingHereScript);
+        ScriptContext_SetupScript(EventScript_FailSweetScent);
         DestroyTask(taskId);
     }
 }
