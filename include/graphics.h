@@ -3449,8 +3449,8 @@ extern const u16 gBattleInterface_BallStatusBarPal[];
 extern const u16 gBattleInterface_BallDisplayPal[];
 extern const u8 Tiles_D129AC[];
 
-extern const u8 gAreaUnknownTiles[];
-extern const u16 gAreaUnknownPalette[];
+extern const u8 gPokedexAreaScreenAreaUnknown_Gfx[];
+extern const u16 gPokedexAreaScreenAreaUnknown_Pal[];
 
 extern const u8 gBattleAnimBgTilemap_SurfOpponent[];
 extern const u8 gBattleAnimBgTilemap_SurfPlayer[];
