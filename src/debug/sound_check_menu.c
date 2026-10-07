@@ -56,7 +56,6 @@ static EWRAM_DATA u8 gUnknown_020387D8 = 0;
 static EWRAM_DATA u8 gUnknown_020387D9 = 0;
 
 u16 gSoundTestCryNum;
-extern u8 gDexCryScreenState;
 
 struct MusicPlayerInfo *gUnknown_03005D30;
 
