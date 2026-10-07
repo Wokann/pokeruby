@@ -1,20 +1,19 @@
 #include "global.h"
 #include "coins.h"
+#include "constants/coins.h"
 #include "menu.h"
 #include "string_util.h"
 #include "strings.h"
-
-#define MAX_COINS 9999
 
 void UpdateCoinsWindow(s32 coins, u8 x, u8 y)
 {
     PrintCoins(coins, 4, x + 2, y + 1);
 }
 
-void ShowCoinsWindow(u32 coins, u8 x, u8 y)
+void ShowCoinsWindow(u32 coinAmount, u8 x, u8 y)
 {
     Menu_DrawStdWindowFrame(x, y, x + 9, y + 3);
-    UpdateCoinsWindow(coins, x, y);
+    UpdateCoinsWindow(coinAmount, x, y);
 }
 
 void HideCoinsWindow(u8 x, u8 y)
@@ -46,7 +45,7 @@ void PrintCoins(s32 coins, u8 b, u8 x, u8 y)
     ptr[2] = (b - StringLength(string)) * 6;
     ptr += 3;
     StringCopy(ptr, string);
-    Menu_PrintText(gOtherText_Coins2, x, y);
+    Menu_PrintText(gText_Coins, x, y);
 }
 
 u16 GetCoins(void)
@@ -54,13 +53,13 @@ u16 GetCoins(void)
     return gSaveBlock1.coins;
 }
 
-bool8 AddCoins(u16 coins)
+bool8 AddCoins(u16 toAdd)
 {
     u32 newCoins;
 
     if (GetCoins() >= MAX_COINS)
         return FALSE;
-    newCoins = coins + gSaveBlock1.coins;
+    newCoins = toAdd + gSaveBlock1.coins;
     if (gSaveBlock1.coins > (u16)newCoins)
         gSaveBlock1.coins = MAX_COINS;
     else
@@ -72,11 +71,11 @@ bool8 AddCoins(u16 coins)
     return TRUE;
 }
 
-bool8 RemoveCoins(u16 coins)
+bool8 RemoveCoins(u16 toSub)
 {
-    if (GetCoins() >= coins)
+    if (GetCoins() >= toSub)
     {
-        gSaveBlock1.coins -= coins;
+        gSaveBlock1.coins -= toSub;
         return TRUE;
     }
     else

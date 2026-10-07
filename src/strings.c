@@ -189,7 +189,7 @@ const u8 gOtherText_WhatWillYouDo[] = _("What would you like to do?");
 
 const u8 gText_xVar1[] = _("×{STR_VAR_1}");
 const u8 gText_Berry2[] = _(" BERRY");
-const u8 gOtherText_Coins2[] = _("{STR_VAR_1} COINS");
+const u8 gText_Coins[] = _("{STR_VAR_1} COINS");
 const u8 gText_CloseBag[] = _("CLOSE BAG");
 
 const u8 gText_TheField[] = _("the field.");
@@ -1117,7 +1117,7 @@ const u8 gOtherText_WhatWillYouDo[] = _("Was möchtest du tun?");
 
 const u8 gText_xVar1[] = _("×{STR_VAR_1}");
 const u8 gText_Berry2[] = _("BEERE");
-const u8 gOtherText_Coins2[] = _("{STR_VAR_1} MÜNZ.");
+const u8 gText_Coins[] = _("{STR_VAR_1} MÜNZ.");
 const u8 gText_CloseBag[] = _("BEUTEL SCHLIESSEN");
 
 const u8 gText_TheField[] = _("zum Hauptmenü.");

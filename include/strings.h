@@ -226,7 +226,7 @@ extern const u8 gOtherText_WhatWillYouDo[];
 
 extern const u8 gText_xVar1[];
 extern const u8 gText_Berry2[];
-extern const u8 gOtherText_Coins2[];
+extern const u8 gText_Coins[];
 extern const u8 gText_CloseBag[];
 
 extern const u8 gText_TheField[];
