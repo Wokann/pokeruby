@@ -167,7 +167,7 @@ const u8 gOtherText_CancelWithTerminator[] = _("$CANCEL"); // with terminator at
 const u8 gText_Item[] = _("ITEM");
 const u8 gText_Mail[] = _("MAIL");
 const u8 gText_Take[] = _("TAKE");
-const u8 OtherText_Store[] = _("STORE");
+const u8 gText_Store[] = _("STORE");
 
 const u8 gMenuText_Check[] = _("CHECK");
 const u8 gOtherText_None[] = _("NONE");
@@ -311,8 +311,8 @@ const u8 gText_SendOut[] = _("SEND OUT");
 const u8 gText_Switch2[] = _("SWITCH");
 const u8 gText_Summary5[] = _("SUMMARY");
 const u8 OtherText_Moves[] = _("MOVES");
-const u8 OtherText_Enter2[] = _("ENTER");
-const u8 OtherText_NoEntry[] = _("NO ENTRY");
+const u8 gText_Enter[] = _("ENTER");
+const u8 gText_NoEntry[] = _("NO ENTRY");
 const u8 gText_Take2[] = _("TAKE");
 const u8 gText_Read2[] = _("READ");
 
@@ -1095,7 +1095,7 @@ const u8 gOtherText_CancelWithTerminator[] = _("$ZURÜCK");
 const u8 gText_Item[] = _("ITEM");
 const u8 gText_Mail[] = _("BRIEF");
 const u8 gText_Take[] = _("NEHMEN");
-const u8 OtherText_Store[] = _("GEBEN");
+const u8 gText_Store[] = _("GEBEN");
 
 const u8 gMenuText_Check[] = _("PRÜFEN");
 const u8 gOtherText_None[] = _("KEINES");
@@ -1239,8 +1239,8 @@ const u8 gText_SendOut[] = _("AUSSENDEN");
 const u8 gText_Switch2[] = _("TAUSCH");
 const u8 gText_Summary5[] = _("BERICHT");
 const u8 OtherText_Moves[] = _("ATTACKEN");
-const u8 OtherText_Enter2[] = _("EINTRAGEN");
-const u8 OtherText_NoEntry[] = _("AUSTRAGEN");
+const u8 gText_Enter[] = _("EINTRAGEN");
+const u8 gText_NoEntry[] = _("AUSTRAGEN");
 const u8 gText_Take2[] = _("NEHMEN");
 const u8 gText_Read2[] = _("LESEN");
 

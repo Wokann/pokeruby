@@ -34,7 +34,7 @@ extern void DrawMonDescriptorStatus(u8, u8);
 extern void PartyMenuPrintHP();
 extern bool8 MenuHelpers_IsLinkActive(void);
 
-static void ClearPartySelection(void);
+static void ClearSelectedPartyOrder(void);
 static bool8 IsMonAllowedInBattleTower(struct Pokemon *);
 static void sub_812238C(u8);
 static void sub_8122450(u8);
@@ -54,19 +54,19 @@ static void sub_81231AC(void);
 
 void sub_8121E10(void)
 {
-    ClearPartySelection();
+    ClearSelectedPartyOrder();
     ePartyMenu2.unk263 = 0;
     OpenPartyMenu(PARTY_MENU_TYPE_BATTLE_TOWER, 0);
 }
 
 void sub_8121E34(void)
 {
-    ClearPartySelection();
+    ClearSelectedPartyOrder();
     ePartyMenu2.unk263 = 1;
     OpenPartyMenu(PARTY_MENU_TYPE_BATTLE_TOWER, 0);
 }
 
-static void ClearPartySelection(void)
+static void ClearSelectedPartyOrder(void)
 {
     u8 i;
 
@@ -159,28 +159,28 @@ bool8 SetupBattleTowerPartyMenu(void)
     return FALSE;
 }
 
-static bool8 IsMonAllowedInBattleTower(struct Pokemon *pkmn)
+static bool8 IsMonAllowedInBattleTower(struct Pokemon *mon)
 {
     u16 species;
     s32 i = 0;
 
-    if (GetMonData(pkmn, MON_DATA_IS_EGG))
+    if (GetMonData(mon, MON_DATA_IS_EGG))
         return FALSE;
 
     if (ePartyMenu2.unk263 == 0)
     {
-        if (GetMonData(pkmn, MON_DATA_HP) == 0)
+        if (GetMonData(mon, MON_DATA_HP) == 0)
             return FALSE;
         else
             return TRUE;
     }
 
     if ((gSaveBlock2.battleTower.battleTowerLevelType) == 0
-     && GetMonData(pkmn, MON_DATA_LEVEL) > 50)
+     && GetMonData(mon, MON_DATA_LEVEL) > 50)
         return FALSE;
 
     // Check if the pkmn is in the ban list
-    species = GetMonData(pkmn, MON_DATA_SPECIES);
+    species = GetMonData(mon, MON_DATA_SPECIES);
     while (gBattleTowerBannedSpecies[i] != 0xFFFF)
     {
         if (gBattleTowerBannedSpecies[i] == species)
@@ -228,30 +228,30 @@ static void BattleTowerEntryMenuCallback_Exit(u8);
 static const struct MenuAction2 sBattleTowerEntryMenuItems[] =
 {
     {gText_Summary5, BattleTowerEntryMenuCallback_Summary},
-    {OtherText_Enter2, BattleTowerEntryMenuCallback_Enter},
-    {OtherText_NoEntry, BattleTowerEntryMenuCallback_NoEntry},
+    {gText_Enter, BattleTowerEntryMenuCallback_Enter},
+    {gText_NoEntry, BattleTowerEntryMenuCallback_NoEntry},
     {gOtherText_Exit, BattleTowerEntryMenuCallback_Exit},
 };
 
-static const u8 gUnknown_084017D0[] = {1, 0, 3};
-static const u8 gUnknown_084017D3[] = {2, 0, 3};
+static const u8 sPartyMenuAction_EnterSummaryCancel[] = {1, 0, 3};
+static const u8 sPartyMenuAction_NoEntrySummaryCancel[] = {2, 0, 3};
 static const u8 gUnknown_084017D6[] = {0, 3};
 
 static const struct PartyPopupMenu sBattleTowerEntryMenu[] =
 {
-    {ARRAY_COUNT(gUnknown_084017D0), 9, gUnknown_084017D0},
-    {ARRAY_COUNT(gUnknown_084017D3), 9, gUnknown_084017D3},
+    {ARRAY_COUNT(sPartyMenuAction_EnterSummaryCancel), 9, sPartyMenuAction_EnterSummaryCancel},
+    {ARRAY_COUNT(sPartyMenuAction_NoEntrySummaryCancel), 9, sPartyMenuAction_NoEntrySummaryCancel},
     {ARRAY_COUNT(gUnknown_084017D6), 9, gUnknown_084017D6},
 };
 
 
-static bool8 IsPartyMemberAlreadySelected(u8 partyMember)
+static bool8 HasPartySlotAlreadyBeenSelected(u8 slot)
 {
     u8 i;
 
     for (i = 0; i < 3; i++)
     {
-        if (gSelectedOrderFromParty[i] == partyMember)
+        if (gSelectedOrderFromParty[i] == slot)
             return TRUE;
     }
     return FALSE;
@@ -262,7 +262,7 @@ static void sub_81221F8(u8 taskId)
     PrintPartyMenuPromptText(5, 1);
     if (IsMonAllowedInBattleTower(&gPlayerParty[gLastFieldPokeMenuOpened]) == TRUE)
     {
-        if (IsPartyMemberAlreadySelected(gLastFieldPokeMenuOpened + 1) == TRUE)
+        if (HasPartySlotAlreadyBeenSelected(gLastFieldPokeMenuOpened + 1) == TRUE)
         {
             gTasks[taskId].data[4] = 1;
             ShowPartyPopupMenu(1, sBattleTowerEntryMenu, sBattleTowerEntryMenuItems, 0);
@@ -303,7 +303,7 @@ void HandleBattleTowerPartyMenu(u8 taskId)
             break;
         case B_BUTTON:
             PlaySE(SE_SELECT);
-            ClearPartySelection();
+            ClearSelectedPartyOrder();
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
             gTasks[taskId].func = sub_8122450;
             break;
@@ -374,11 +374,11 @@ static void sub_8122480(u8 taskId)
 
 static void sub_81224A8(u8 taskId)
 {
-    u8 val = sub_81220C8();
+    u8 msgId = sub_81220C8();
 
-    if (val != 0xFF)
+    if (msgId != 0xFF)
     {
-        PrintPartyMenuPromptText(val, 0);
+        PrintPartyMenuPromptText(msgId, 0);
         gTasks[taskId].func = sub_8122480;
     }
     else
@@ -779,17 +779,17 @@ static void DaycareStorageMenuCallback_Exit(u8);
 
 static const struct MenuAction2 sDaycareStorageMenuItems[] =
 {
-    {OtherText_Store, DaycareStorageMenuCallback_Store},
+    {gText_Store, DaycareStorageMenuCallback_Store},
     {gText_Summary5, DaycareStorageMenuCallback_Summary},
     {gOtherText_Exit, DaycareStorageMenuCallback_Exit},
 };
 
-static const u8 gUnknown_08401808[] = {0, 1, 2};
+static const u8 sPartyMenuAction_StoreSummaryCancel[] = {0, 1, 2};
 static const u8 gUnknown_0840180B[] = {1, 2};
 
 static const struct PartyPopupMenu sDaycareStorageMenus[] =
 {
-    {ARRAY_COUNT(gUnknown_08401808), 9, gUnknown_08401808},
+    {ARRAY_COUNT(sPartyMenuAction_StoreSummaryCancel), 9, sPartyMenuAction_StoreSummaryCancel},
     {ARRAY_COUNT(gUnknown_0840180B), 9, gUnknown_0840180B},
 };
 

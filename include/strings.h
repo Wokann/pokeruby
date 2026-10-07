@@ -203,7 +203,7 @@ extern const u8 gOtherText_CancelWithTerminator[];
 extern const u8 gText_Item[];
 extern const u8 gText_Mail[];
 extern const u8 gText_Take[];
-extern const u8 OtherText_Store[];
+extern const u8 gText_Store[];
 
 extern const u8 gMenuText_Check[];
 extern const u8 gOtherText_None[];
@@ -338,8 +338,8 @@ extern const u8 gText_SendOut[];
 extern const u8 gText_Switch2[];
 extern const u8 gText_Summary5[];
 extern const u8 OtherText_Moves[];
-extern const u8 OtherText_Enter2[];
-extern const u8 OtherText_NoEntry[];
+extern const u8 gText_Enter[];
+extern const u8 gText_NoEntry[];
 extern const u8 gText_Take2[];
 extern const u8 gText_Read2[];
 
