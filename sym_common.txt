@@ -322,13 +322,13 @@ gUnknown_Debug_03005FB8 = .;
 SYMBOL(gDexCryScreenState, 4)
 
 // save.c
-SYMBOL(gFirstSaveSector, 4)
-SYMBOL(gPrevSaveCounter, 4)
+SYMBOL(gLastWrittenSector, 4)
+SYMBOL(gLastSaveCounter, 4)
 SYMBOL(gLastKnownGoodSector, 4)
 SYMBOL(gDamagedSaveSectors, 4)
 SYMBOL(gSaveCounter, 4)
-SYMBOL(gFastSaveSection, 4)
-SYMBOL(gUnknown_03005EB4, 4)
+SYMBOL(gReadWriteSector, 4)
+SYMBOL(gIncrementalSectorId, 4)
 SYMBOL(gSaveFileStatus, 4)
 SYMBOL(gGameContinueCallback, 4)
 #if DEBUG

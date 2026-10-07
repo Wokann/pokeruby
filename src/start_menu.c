@@ -767,12 +767,12 @@ static u8 SaveDoSaveCallback(void)
     IncrementGameStat(GAME_STAT_SAVED_GAME);
     if (gDifferentSaveFile == TRUE)
     {
-        saveStatus = Save_WriteData(SAVE_OVERWRITE_DIFFERENT_FILE);
+        saveStatus = TrySavingData(SAVE_OVERWRITE_DIFFERENT_FILE);
         gDifferentSaveFile = FALSE;
     }
     else
     {
-        saveStatus = Save_WriteData(SAVE_NORMAL);
+        saveStatus = TrySavingData(SAVE_NORMAL);
     }
 
     if (saveStatus == SAVE_STATUS_OK)
@@ -909,11 +909,11 @@ static void Task_SaveAfterLinkBattle(u8 taskId)
             break;
         case 1:
             SetSecretBase2Field_9_AndHideBG();
-            sub_8125E2C();
+            WriteSaveBlock2();
             (*state)++;
             break;
         case 2:
-            if (!sub_8125E6C())
+            if (!WriteSaveBlock1Sector())
                 break;
             ClearSecretBase2Field_9_2();
             (*state)++;

@@ -4319,7 +4319,7 @@ static void sub_804DC88(void)
         case 50:
             SetSecretBase2Field_9_AndHideBG();
             IncrementGameStat(GAME_STAT_POKEMON_TRADES);
-            sub_8125D80();
+            LinkFullSave_Init();
             gMain.state ++;
             gUnknown_03004828->timer = 0;
             break;
@@ -4330,7 +4330,7 @@ static void sub_804DC88(void)
             }
             break;
         case 52:
-            if (sub_8125DA8())
+            if (LinkFullSave_WriteSector())
             {
                 ClearSecretBase2Field_9_2();
                 gMain.state = 4;
@@ -4342,7 +4342,7 @@ static void sub_804DC88(void)
             }
             break;
         case 4:
-            sub_8125DDC();
+            LinkFullSave_ReplaceLastSector();
             gMain.state = 40;
             gUnknown_03004828->timer = 0;
             break;
@@ -4360,7 +4360,7 @@ static void sub_804DC88(void)
         case 42:
             if (IsLinkTaskFinished())
             {
-                sub_8125E04();
+                LinkFullSave_SetLastSectorSignature();
                 gSoftResetDisabled = FALSE;
                 gMain.state = 5;
             }

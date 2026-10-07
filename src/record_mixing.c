@@ -693,11 +693,11 @@ static void Task_DoRecordMixing(u8 taskId)
         break;
     case 2:
         SetSecretBase2Field_9_AndHideBG();
-        sub_8125E2C();
+        WriteSaveBlock2();
         task->data[0]++;
         break;
     case 3:
-        if (sub_8125E6C() != 0)
+        if (WriteSaveBlock1Sector() != 0)
         {
             ClearSecretBase2Field_9_2();
             task->data[0]++;

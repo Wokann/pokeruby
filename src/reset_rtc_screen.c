@@ -560,7 +560,7 @@ static void Task_ResetRtcScreen(u8 taskId)
         }
         break;
     case 4:
-        if (Save_WriteData(0) == SAVE_STATUS_OK)
+        if (TrySavingData(0) == SAVE_STATUS_OK)
         {
             ResetRtcScreen_ShowMessage(gText_SaveCompleted);
             PlaySE(SE_DING_DONG);

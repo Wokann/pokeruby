@@ -2324,7 +2324,7 @@ bool8 sub_8050CE8(void)
         }
         break;
     case 2:
-        sub_8125E2C();
+        WriteSaveBlock2();
         gBerryBlenderData->linkPlayAgainState++;
         gBerryBlenderData->framesToWait = 0;
         break;
@@ -2338,7 +2338,7 @@ bool8 sub_8050CE8(void)
     case 4:
         if (IsLinkTaskFinished())
         {
-            if (sub_8125E6C())
+            if (WriteSaveBlock1Sector())
                 gBerryBlenderData->linkPlayAgainState = 5;
             else
             {
