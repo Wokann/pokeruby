@@ -6399,7 +6399,7 @@ bool8 MovementAction_RevealTrainer_Step0(struct ObjectEvent *objectEvent, struct
     }
     else
     {
-        sub_812869C(objectEvent);
+        StartRevealDisguise(objectEvent);
         sprite->data[2] = 1;
         return MovementAction_RevealTrainer_Step1(objectEvent, sprite);
     }
@@ -6407,7 +6407,7 @@ bool8 MovementAction_RevealTrainer_Step0(struct ObjectEvent *objectEvent, struct
 
 bool8 MovementAction_RevealTrainer_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (sub_81286C4(objectEvent))
+    if (UpdateRevealDisguise(objectEvent))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -7694,12 +7694,12 @@ void GroundEffect_StepOnLongGrass(struct ObjectEvent *objEvent, struct Sprite *s
 
 void GroundEffect_WaterReflection(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    InitObjectReflectionSprite(objEvent, sprite, 0);
+    SetUpReflection(objEvent, sprite, 0);
 }
 
 void GroundEffect_IceReflection(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    InitObjectReflectionSprite(objEvent, sprite, 1);
+    SetUpReflection(objEvent, sprite, 1);
 }
 
 void GroundEffect_FlowingWater(struct ObjectEvent *objEvent, struct Sprite *sprite)

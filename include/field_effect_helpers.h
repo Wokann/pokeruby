@@ -3,8 +3,8 @@
 
 extern const struct SpriteTemplate *const gFieldEffectObjectTemplatePointers[];
 
-void sub_812869C(struct ObjectEvent *);
-bool8 sub_81286C4(struct ObjectEvent *);
+void StartRevealDisguise(struct ObjectEvent *objectEvent);
+bool8 UpdateRevealDisguise(struct ObjectEvent *objectEvent);
 void UpdateShadowFieldEffect(struct Sprite *);
 void UpdateShortGrassFieldEffect(struct Sprite *);
 void UpdateFootprintsTireTracksFieldEffect(struct Sprite *);
@@ -16,20 +16,20 @@ void UpdateSandPileFieldEffect(struct Sprite *);
 void UpdateBubblesFieldEffect(struct Sprite *);
 void UpdateDisguiseFieldEffect(struct Sprite *);
 void UpdateSparkleFieldEffect(struct Sprite *);
-void UpdateJumpLandingFieldEffect(struct Sprite *);
+void UpdateJumpImpactEffect(struct Sprite *);
 void WaitFieldEffectSpriteAnim(struct Sprite *);
 void UpdateTallGrassFieldEffect(struct Sprite *);
 void UpdateLongGrassFieldEffect(struct Sprite *);
 u8 CreateWarpArrowSprite(void);
-void SetSpriteInvisible(u8);
-void ShowWarpArrowSprite(u8 unk_1B, u8 r6, s16 x, s16 y);
+void SetSpriteInvisible(u8 spriteId);
+void ShowWarpArrowSprite(u8 spriteId, u8 direction, s16 x, s16 y);
 void SetSurfBlob_BobState(u8 spriteId, u8 state);
 void SetSurfBlob_DontSyncAnim(u8 spriteId, u8 dontSync);
-void sub_8127F28(u8, u8, s16);
-u8 sub_8128124(u8 id);
-void StartAshFieldEffect(s16, s16, u16, s16);
-void InitObjectReflectionSprite(struct ObjectEvent *objEvent, struct Sprite *sprite, u8 a);
+void SetSurfBlob_PlayerOffset(u8 spriteId, u8 hasOffset, s16 offset);
+u8 StartUnderwaterSurfBlobBobbing(u8 blobSpriteId);
+void StartAshFieldEffect(s16 x, s16 y, u16 metatileId, s16 delay);
+void SetUpReflection(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 stillReflection);
 u32 StartFieldEffectForObjectEvent(u8 fieldEffectId, struct ObjectEvent *objectEvent);
-u8 FindTallGrassFieldEffectSpriteId(u8, u8, u8, s16, s16);
+u8 FindTallGrassFieldEffectSpriteId(u8 localId, u8 mapNum, u8 mapGroup, s16 x, s16 y);
 
 #endif // GUARD_FIELD_EFFECT_HELPERS_H

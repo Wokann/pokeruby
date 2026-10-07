@@ -25,10 +25,10 @@ gFieldEffectScriptPointers:: @ 81D9B34
 	.4byte gFieldEffectScript_JumpSmallSplash
 	.4byte gFieldEffectScript_LongGrass
 	.4byte gFieldEffectScript_JumpLongGrass
-	.4byte gFieldEffectScript_Unknown19
-	.4byte gFieldEffectScript_Unknown20
-	.4byte gFieldEffectScript_Unknown21
-	.4byte gFieldEffectScript_Unknown22
+	.4byte gFieldEffectScript_UnusedGrass
+	.4byte gFieldEffectScript_UnusedGrass2
+	.4byte gFieldEffectScript_UnusedSand
+	.4byte gFieldEffectScript_WaterSurfacing
 	.4byte gFieldEffectScript_BerryTreeGrowthSparkle
 	.4byte gFieldEffectScript_DeepSandFootprints
 	.4byte gFieldEffectScript_PokeCenterHeal
@@ -147,20 +147,20 @@ gFieldEffectScript_JumpLongGrass: @ 81D9CC8
 	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_JumpLongGrass
 	field_eff_end
 
-gFieldEffectScript_Unknown19: @ 81D9CD2
-	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_Unknown19
+gFieldEffectScript_UnusedGrass: @ 81D9CD2
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_UnusedGrass
 	field_eff_end
 
-gFieldEffectScript_Unknown20: @ 81D9CDC
-	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_Unknown20
+gFieldEffectScript_UnusedGrass2: @ 81D9CDC
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect1, FldEff_UnusedGrass2
 	field_eff_end
 
-gFieldEffectScript_Unknown21: @ 81D9CE6
-	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_Unknown21
+gFieldEffectScript_UnusedSand: @ 81D9CE6
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_UnusedSand
 	field_eff_end
 
-gFieldEffectScript_Unknown22: @ 81D9CF0
-	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_Unknown22
+gFieldEffectScript_WaterSurfacing: @ 81D9CF0
+	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_WaterSurfacing
 	field_eff_end
 
 gFieldEffectScript_BerryTreeGrowthSparkle: @ 81D9CFA
@@ -185,11 +185,11 @@ gFieldEffectScript_UseSecretPowerShrub: @ 81D9D1F
 	field_eff_end
 
 gFieldEffectScript_TreeDisguise: @ 81D9D25
-	field_eff_callnative FldEff_TreeDisguise
+	field_eff_callnative ShowTreeDisguiseFieldEffect
 	field_eff_end
 
 gFieldEffectScript_MountainDisguise: @ 81D9D2B
-	field_eff_callnative FldEff_MountainDisguise
+	field_eff_callnative ShowMountainDisguiseFieldEffect
 	field_eff_end
 
 gFieldEffectScript_NPCFlyOut: @ 81D9D31
@@ -217,7 +217,7 @@ gFieldEffectScript_BikeTireTracks: @ 81D9D53
 	field_eff_end
 
 gFieldEffectScript_SandDisguise: @ 81D9D5D
-	field_eff_callnative FldEff_SandDisguise
+	field_eff_callnative ShowSandDisguiseFieldEffect
 	field_eff_end
 
 gFieldEffectScript_UseRockSmash: @ 81D9D63

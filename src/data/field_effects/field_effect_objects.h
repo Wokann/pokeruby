@@ -210,7 +210,7 @@ static const union AnimCmd *const sAnimTable_GroundImpactDust[] = {
     sAnim_GroundImpactDust
 };
 
-const struct SpriteTemplate gFieldEffectObjectTemplate_GroundImpactDust = {0xFFFF, 0x1004, &gObjectEventBaseOam_16x8, sAnimTable_GroundImpactDust, sPicTable_GroundImpactDust, gDummySpriteAffineAnimTable, UpdateJumpLandingFieldEffect};
+const struct SpriteTemplate gFieldEffectObjectTemplate_GroundImpactDust = {0xFFFF, 0x1004, &gObjectEventBaseOam_16x8, sAnimTable_GroundImpactDust, sPicTable_GroundImpactDust, gDummySpriteAffineAnimTable, UpdateJumpImpactEffect};
 
 static const struct SpriteFrameImage sPicTable_JumpTallGrass[] = {
     overworld_frame(gFieldEffectObjectPic_JumpTallGrass, 2, 1, 0),
@@ -231,7 +231,7 @@ static const union AnimCmd *const sAnimTable_JumpTallGrass[] = {
     sAnim_JumpTallGrass
 };
 
-const struct SpriteTemplate gFieldEffectObjectTemplate_JumpTallGrass = {0xFFFF, 0x1005, &gObjectEventBaseOam_16x8, sAnimTable_JumpTallGrass, sPicTable_JumpTallGrass, gDummySpriteAffineAnimTable, UpdateJumpLandingFieldEffect};
+const struct SpriteTemplate gFieldEffectObjectTemplate_JumpTallGrass = {0xFFFF, 0x1005, &gObjectEventBaseOam_16x8, sAnimTable_JumpTallGrass, sPicTable_JumpTallGrass, gDummySpriteAffineAnimTable, UpdateJumpImpactEffect};
 
 static const struct SpriteFrameImage sPicTable_SandFootprints[] = {
     overworld_frame(gFieldEffectObjectPic_SandFootprints, 2, 2, 0),
@@ -383,7 +383,7 @@ static const union AnimCmd *const sAnimTable_JumpBigSplash[] = {
     sAnim_JumpBigSplash
 };
 
-const struct SpriteTemplate gFieldEffectObjectTemplate_JumpBigSplash = {0xFFFF, 0x1004, &gObjectEventBaseOam_16x16, sAnimTable_JumpBigSplash, sPicTable_JumpBigSplash, gDummySpriteAffineAnimTable, UpdateJumpLandingFieldEffect};
+const struct SpriteTemplate gFieldEffectObjectTemplate_JumpBigSplash = {0xFFFF, 0x1004, &gObjectEventBaseOam_16x16, sAnimTable_JumpBigSplash, sPicTable_JumpBigSplash, gDummySpriteAffineAnimTable, UpdateJumpImpactEffect};
 
 static const struct SpriteFrameImage sPicTable_Splash[] = {
     overworld_frame(gFieldEffectObjectPic_Splash, 2, 1, 0),
@@ -432,7 +432,7 @@ static const union AnimCmd *const sAnimTable_JumpSmallSplash[] = {
     sAnim_JumpSmallSplash
 };
 
-const struct SpriteTemplate gFieldEffectObjectTemplate_JumpSmallSplash = {0xFFFF, 0x1004, &gObjectEventBaseOam_16x8, sAnimTable_JumpSmallSplash, sPicTable_JumpSmallSplash, gDummySpriteAffineAnimTable, UpdateJumpLandingFieldEffect};
+const struct SpriteTemplate gFieldEffectObjectTemplate_JumpSmallSplash = {0xFFFF, 0x1004, &gObjectEventBaseOam_16x8, sAnimTable_JumpSmallSplash, sPicTable_JumpSmallSplash, gDummySpriteAffineAnimTable, UpdateJumpImpactEffect};
 
 static const struct SpriteFrameImage sPicTable_LongGrass[] = {
     overworld_frame(gFieldEffectObjectPic_LongGrass, 2, 2, 0),
@@ -481,7 +481,7 @@ static const union AnimCmd *const sAnimTable_JumpLongGrass[] = {
     sAnim_JumpLongGrass
 };
 
-const struct SpriteTemplate gFieldEffectObjectTemplate_JumpLongGrass = {0xFFFF, 0x1005, &gObjectEventBaseOam_16x16, sAnimTable_JumpLongGrass, sPicTable_JumpLongGrass, gDummySpriteAffineAnimTable, UpdateJumpLandingFieldEffect};
+const struct SpriteTemplate gFieldEffectObjectTemplate_JumpLongGrass = {0xFFFF, 0x1005, &gObjectEventBaseOam_16x16, sAnimTable_JumpLongGrass, sPicTable_JumpLongGrass, gDummySpriteAffineAnimTable, UpdateJumpImpactEffect};
 
 static const struct SpriteFrameImage sPicTable_UnusedGrass[] = {
     overworld_frame(gFieldEffectObjectPic_JumpLongGrass, 2, 2, 6),
