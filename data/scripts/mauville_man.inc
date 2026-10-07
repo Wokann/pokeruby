@@ -120,7 +120,7 @@ SpeakToTrader:
 	msgbox gTextTrader_Introduction, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq dont_want_to_trade
-	special ScrSpecial_GetTraderTradedFlag
+	special GetTraderTradedFlag
 	compare VAR_RESULT, TRUE
 	goto_if_eq already_traded
 	message gTextTrader_MenuPrompt
@@ -137,7 +137,7 @@ already_traded:
 	end
 
 do_trader_menu_get:
-	special ScrSpecial_TraderMenuGetDecoration
+	special TraderMenuGetDecoration
 	waitstate
 	compare VAR_0x8004, 0
 	goto_if_eq cancelled_get_menu
@@ -146,7 +146,7 @@ do_trader_menu_get:
 	msgbox gTextTrader_ItemOnceBelongedTo, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq dont_want_item
-	special ScrSpecial_DoesPlayerHaveNoDecorations
+	special DoesPlayerHaveNoDecorations
 	compare VAR_RESULT, TRUE
 	goto_if_eq player_has_no_decorations
 	goto do_trader_menu_give
@@ -180,7 +180,7 @@ do_trader_menu_give:
 	goto_if_eq cancelled_give_menu
 	compare VAR_0x8006, -1
 	goto_if_eq decoration_is_in_use
-	special ScrSpecial_IsDecorationFull
+	special IsDecorationCategoryFull
 	compare VAR_RESULT, 1
 	goto_if_eq decorations_full
 	msgbox gTextTrader_SoWellTrade, MSGBOX_YESNO

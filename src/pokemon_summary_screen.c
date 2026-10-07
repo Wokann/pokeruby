@@ -2090,14 +2090,14 @@ static void SummaryScreen_PrintPokemonInfo(struct Pokemon *mon)
         buffer = gStringVar1;
         buffer = SummaryScreen_SetTextColor(buffer, 13);
         buffer = StringCopy(buffer, gOtherText_OriginalTrainer);
-        buffer = StringCopy(buffer, gOtherText_FiveQuestions);
+        buffer = StringCopy(buffer, gText_FiveMarks);
         buffer[0] = EXT_CTRL_CODE_BEGIN;
         buffer[1] = 0x13;
         buffer[2] = 0x4E;
         buffer[3] = EOS;
         Menu_PrintText(gStringVar1, 11, 4);
 
-        SummaryScreen_PrintColoredTextPixelCoords(gOtherText_FiveQuestions, 13, 193, 32, 1);
+        SummaryScreen_PrintColoredTextPixelCoords(gText_FiveMarks, 13, 193, 32, 1);
         SetTypeSpritePosAndPal(TYPE_MYSTERY, 120, 48, 0);
 
         friendship = GetMonData(mon, MON_DATA_FRIENDSHIP);

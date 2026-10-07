@@ -121,10 +121,10 @@ gSpecials::
 	def_special StorytellerUpdateStat
 	def_special Script_StorytellerInitializeRandomStat
 	def_special HasStorytellerAlreadyRecorded
-	def_special ScrSpecial_TraderMenuGetDecoration
-	def_special ScrSpecial_GetTraderTradedFlag
-	def_special ScrSpecial_DoesPlayerHaveNoDecorations
-	def_special ScrSpecial_IsDecorationFull
+	def_special TraderMenuGetDecoration
+	def_special GetTraderTradedFlag
+	def_special DoesPlayerHaveNoDecorations
+	def_special IsDecorationCategoryFull
 	def_special ScrSpecial_TraderMenuGiveDecoration
 	def_special ScrSpecial_TraderDoDecorationTrade
 	def_special GetShroomishSizeRecordInfo

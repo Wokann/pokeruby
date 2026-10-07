@@ -1,10 +1,10 @@
 #include "global.h"
 #include "constants/decorations.h"
+#include "constants/mauville_old_man.h"
 #include "decoration.h"
 #include "decoration_inventory.h"
 #include "event_data.h"
 #include "main.h"
-#include "mauville_old_man.h"
 #include "menu.h"
 #include "menu_helpers.h"
 #include "script.h"
@@ -14,19 +14,15 @@
 #include "strings.h"
 #include "task.h"
 
-extern u16 gSpecialVar_0x8004;
-extern u16 gSpecialVar_0x8005;
-extern u16 gSpecialVar_0x8006;
-
-static const u8 * const gUnknown_083F62D8[] =
+static const u8 * const sDefaultTraderNames[] =
 {
-    SecretBaseText_Tristan,
-    SecretBaseText_Philip,
-    SecretBaseText_Dennis,
-    SecretBaseText_Roberto,
+    gText_Tristan,
+    gText_Philip,
+    gText_Dennis,
+    gText_Roberto,
 };
 
-static const u8 gTraderDecorations[] =
+static const u8 sDefaultTraderDecorations[] =
 {
     DECOR_DUSKULL_DOLL,
     DECOR_BALL_CUSHION,
@@ -67,8 +63,8 @@ void TraderSetup(void)
 
     for (i = 0; i < 4; i++)
     {
-        StringCopy(trader->playerNames[i], gUnknown_083F62D8[i]);
-        trader->decorations[i] = gTraderDecorations[i];
+        StringCopy(trader->playerNames[i], sDefaultTraderNames[i]);
+        trader->decorations[i] = sDefaultTraderDecorations[i];
     }
 
     sub_810993C();
@@ -108,7 +104,7 @@ void CreateAvailableDecorationsMenu(u8 taskId)
         {
             if (trader->decorations[i] > DECOR_REGISTEEL_DOLL)
             {
-                Menu_PrintText(gOtherText_FiveQuestions, 1, numDecorations * 2 + 2);
+                Menu_PrintText(gText_FiveMarks, 1, numDecorations * 2 + 2);
             }
             else
             {
@@ -176,13 +172,13 @@ void Task_HandleGetDecorationMenuInput(u8 taskId)
     }
 }
 
-void ScrSpecial_GetTraderTradedFlag(void)
+void GetTraderTradedFlag(void)
 {
     struct MauvilleOldManTrader *trader = &gSaveBlock1.oldMan.trader;
     gSpecialVar_Result = trader->alreadyTraded;
 }
 
-void ScrSpecial_DoesPlayerHaveNoDecorations(void)
+void DoesPlayerHaveNoDecorations(void)
 {
     u8 i;
 
@@ -197,7 +193,7 @@ void ScrSpecial_DoesPlayerHaveNoDecorations(void)
     gSpecialVar_Result = TRUE;
 }
 
-void ScrSpecial_IsDecorationFull(void)
+void IsDecorationCategoryFull(void)
 {
     gSpecialVar_Result = FALSE;
     if (gDecorations[gSpecialVar_0x8004].category != gDecorations[gSpecialVar_0x8006].category
@@ -256,7 +252,7 @@ void ScrSpecial_TraderDoDecorationTrade(void)
     trader->alreadyTraded = TRUE;
 }
 
-void ScrSpecial_TraderMenuGetDecoration(void)
+void TraderMenuGetDecoration(void)
 {
     u8 taskId = CreateTask(Task_HandleGetDecorationMenuInput, 0);
     CreateAvailableDecorationsMenu(taskId);

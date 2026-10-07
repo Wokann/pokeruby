@@ -174,7 +174,7 @@ const u8 gOtherText_None[] = _("NONE");
 
 const u8 gOtherText_ThreeQuestions2[] = _("???");
 
-const u8 gOtherText_FiveQuestions[] = _("?????");
+const u8 gText_FiveMarks[] = _("?????");
 const u8 gOtherText_Slash[] = _("/");
 
 const u8 gOtherText_OneDash[] = _("-");
@@ -460,10 +460,10 @@ const u8 gSecretBaseText_NoDecor[] = _("There is no decoration item here.");
 const u8 gSecretBaseText_ReturnDecor[] = _("Return this decoration to the PC?");
 const u8 gSecretBaseText_DecorReturned[] = _("The decoration was returned to the PC.");
 const u8 gSecretBaseText_NoDecorInUse[] = _("There are no decorations in use.{PAUSE_UNTIL_PRESS}");
-const u8 SecretBaseText_Tristan[] = _("TRISTAN");
-const u8 SecretBaseText_Philip[] = _("PHILIP");
-const u8 SecretBaseText_Dennis[] = _("DENNIS");
-const u8 SecretBaseText_Roberto[] = _("ROBERTO");
+const u8 gText_Tristan[] = _("TRISTAN");
+const u8 gText_Philip[] = _("PHILIP");
+const u8 gText_Dennis[] = _("DENNIS");
+const u8 gText_Roberto[] = _("ROBERTO");
 const u8 SecretBaseText_TurnOff[] = _("TURN OFF");
 const u8 SecretBaseText_Decoration[] = _("DECORATION");
 const u8 SecretBaseText_ItemStorage[] = _("ITEM STORAGE");
@@ -1102,7 +1102,7 @@ const u8 gOtherText_None[] = _("KEINES");
 
 const u8 gOtherText_ThreeQuestions2[] = _("???");
 
-const u8 gOtherText_FiveQuestions[] = _("?????");
+const u8 gText_FiveMarks[] = _("?????");
 const u8 gOtherText_Slash[] = _("/");
 
 const u8 gOtherText_OneDash[] = _("-");
@@ -1385,10 +1385,10 @@ const u8 gSecretBaseText_NoDecor[] = _("Hier ist keine Dekoration.");
 const u8 gSecretBaseText_ReturnDecor[] = _("Diese Dekoration auf \nden PC übertragen?");
 const u8 gSecretBaseText_DecorReturned[] = _("Die Dekoration wurde auf\nden PC übertragen.");
 const u8 gSecretBaseText_NoDecorInUse[] = _("Es sind keine Dekorationen platziert.{PAUSE_UNTIL_PRESS}");
-const u8 SecretBaseText_Tristan[] = _("TATIAN");
-const u8 SecretBaseText_Philip[] = _("LARS");
-const u8 SecretBaseText_Dennis[] = _("KLAAS");
-const u8 SecretBaseText_Roberto[] = _("HAINER");
+const u8 gText_Tristan[] = _("TATIAN");
+const u8 gText_Philip[] = _("LARS");
+const u8 gText_Dennis[] = _("KLAAS");
+const u8 gText_Roberto[] = _("HAINER");
 const u8 SecretBaseText_TurnOff[] = _("AUSSCHALTEN");
 const u8 SecretBaseText_Decoration[] = _("DEKORATION");
 const u8 SecretBaseText_ItemStorage[] = _("ITEM-LAGER");
