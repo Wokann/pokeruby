@@ -9,7 +9,7 @@ LilycoveCity_DepartmentStore_1F_EventScript_LotteryClerk:: @ 8159D5E
 	lock
 	faceplayer
 	dotimebasedevents
-	compare VAR_LOTTERY_PRIZE, 0
+	compare VAR_POKELOT_PRIZE_ITEM, 0
 	goto_if_ne LilycoveCity_DepartmentStore_1F_EventScript_GivePrizeFromEarlier
 	goto_if_set FLAG_DAILY_PICKED_LOTTO_TICKET, LilycoveCity_DepartmentStore_1F_EventScript_ComeBackTomorrow
 	msgbox LilycoveCity_DepartmentStore_1F_Text_LotteryCornerDrawTicket, MSGBOX_YESNO
@@ -99,7 +99,7 @@ LilycoveCity_DepartmentStore_1F_EventScript_FullMatch:: @ 8159E93
 	return
 
 LilycoveCity_DepartmentStore_1F_EventScript_RecordPrizeNoRoom:: @ 8159E9C
-	copyvar VAR_LOTTERY_PRIZE, VAR_0x8005
+	copyvar VAR_POKELOT_PRIZE_ITEM, VAR_0x8005
 	goto LilycoveCity_DepartmentStore_1F_EventScript_NoRoomForPrize
 	end
 
@@ -110,10 +110,10 @@ LilycoveCity_DepartmentStore_1F_EventScript_NoRoomForPrize:: @ 8159EA7
 
 LilycoveCity_DepartmentStore_1F_EventScript_GivePrizeFromEarlier:: @ 8159EB1
 	msgbox LilycoveCity_DepartmentStore_1F_Text_PrizeWeveBeenHolding, MSGBOX_DEFAULT
-	giveitem VAR_LOTTERY_PRIZE
+	giveitem VAR_POKELOT_PRIZE_ITEM
 	compare VAR_RESULT, 0
 	goto_if_eq LilycoveCity_DepartmentStore_1F_EventScript_NoRoomForPrize
-	setvar VAR_LOTTERY_PRIZE, 0
+	setvar VAR_POKELOT_PRIZE_ITEM, 0
 	release
 	end
 

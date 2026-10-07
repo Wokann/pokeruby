@@ -1,17 +1,13 @@
 #include "global.h"
 #include "lottery_corner.h"
 #include "event_data.h"
+#include "pokemon.h"
 #include "constants/items.h"
 #include "random.h"
 #include "constants/species.h"
 #include "string_util.h"
 #include "text.h"
 
-extern u16 gSpecialVar_Result;
-extern u16 gSpecialVar_0x8004;
-extern struct PokemonStorage gPokemonStorage;
-extern u16 gSpecialVar_0x8005;
-extern u16 gSpecialVar_0x8006;
 static EWRAM_DATA u16 sWinNumberDigit = 0;
 static EWRAM_DATA u16 sOtIdDigit = 0;
 
@@ -30,7 +26,7 @@ void ResetLotteryCorner(void)
     u16 rand = Random();
 
     SetLotteryNumber((Random() << 16) | rand);
-    VarSet(VAR_LOTTERY_PRIZE, 0);
+    VarSet(VAR_POKELOT_PRIZE_ITEM, 0);
 }
 
 void SetRandomLotteryNumber(u16 i)
@@ -61,15 +57,15 @@ void PickLotteryCornerTicket(void)
     box = 0;
     for (i = 0; i < 6; i++)
     {
-        struct Pokemon *pkmn = &gPlayerParty[i];
+        struct Pokemon *mon = &gPlayerParty[i];
 
         // UB: Too few arguments for function GetMonData
-        if (GetMonData(pkmn, MON_DATA_SPECIES) != SPECIES_NONE)
+        if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE)
         {
             // do not calculate ticket values for eggs.
-            if (!GetMonData(pkmn, MON_DATA_IS_EGG))
+            if (!GetMonData(mon, MON_DATA_IS_EGG))
             {
-                u32 otId = GetMonData(pkmn, MON_DATA_OT_ID);
+                u32 otId = GetMonData(mon, MON_DATA_OT_ID);
                 u8 numMatchingDigits = GetMatchingDigits(gSpecialVar_Result, otId);
 
                 if (numMatchingDigits > gSpecialVar_0x8004 && numMatchingDigits > 1)
