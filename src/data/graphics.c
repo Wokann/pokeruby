@@ -927,9 +927,9 @@ const u8 gCableCar_Gfx[] = INCBIN_U8("graphics/misc/cable_car.4bpp.lz");
 const u8 gCableCarDoor_Gfx[] = INCBIN_U8("graphics/misc/cable_car_door.4bpp.lz");
 const u8 gCableCarCord_Gfx[] = INCBIN_U8("graphics/misc/cable_car_cord.4bpp.lz");
 
-const u8 gUnknown_08E8096C[] = INCBIN_U8("graphics/unknown/unknown_E8096C.4bpp.lz");
+const u8 gRouletteMenu_Gfx[] = INCBIN_U8("graphics/roulette/window.4bpp.lz");
 
-const u8 gRouletteWheelTiles[] = INCBIN_U8("graphics/roulette/wheel.8bpp.lz");
+const u8 gRouletteWheel_Gfx[] = INCBIN_U8("graphics/roulette/wheel.8bpp.lz");
 const u8 gRouletteCenter_Gfx[] = INCBIN_U8("graphics/roulette/center.4bpp.lz");
 const u8 gRouletteHeadersTiles[] = INCBIN_U8("graphics/roulette/headers.4bpp.lz");
 const u8 gRouletteCreditTiles[] = INCBIN_U8("graphics/roulette/credit.4bpp.lz");

@@ -14,7 +14,7 @@
 #include "palette.h"
 #include "pokemon.h"
 #include "roulette.h"
-#include "roulette_util.h"
+#include "palette_util.h"
 #include "rtc.h"
 #include "constants/songs.h"
 #include "sound.h"
@@ -22,6 +22,7 @@
 #include "constants/species.h"
 #include "sprite.h"
 #include "strings2.h"
+#include "strings.h"
 #include "string_util.h"
 #include "task.h"
 #include "text.h"
@@ -42,54 +43,54 @@ void sub_8115634(u8);
 void sub_81156BC(u8);
 void sub_8115734(u8);
 void sub_811577C(u8);
-void sub_81157AC(u8);
-void sub_81157D0(u8);
+static void Task_StopPlaying(u8);
+static void UpdateGridSelectionRect(u8);
 void sub_8115928(u8, u8);
-void sub_811597C(u8);
-void sub_81159BC(u8);
-u8 sub_8115A94(s16 *, u8);
+static void Task_StartHandleBetGridInput(u8);
+static void Task_SelectFirstEmptySquare(u8);
+static u8 CanMoveSelectionInDir(s16 *, u8);
 void sub_8115B58(u8);
-void sub_8115DA0(u8);
+static void Task_PlaceBet(u8);
 void sub_8115E14(u8);
-void sub_8115ECC(u8);
-u8 sub_8115F58(u16, u16);
-void sub_8116100(u8);
-void sub_8116308(u8);
-void sub_811637C(u8);
-void sub_8116474(u8);
-void sub_8116514(u8);
-void sub_811659C(u8);
+static void Task_SlideGridOffscreen(u8);
+static u8 GetRandomForBallTravelDistance(u16, u16);
+static void Task_InitBallRoll(u8);
+static void Task_RollBall(u8);
+static void Task_RecordBallHit(u8);
+static void Task_SlideGridOnscreen(u8);
+static void Task_FlashBallOnWinningSquare(u8);
+static void Task_TryIncrementWins(u8);
 void sub_8116638(u8);
-void sub_81166E8(u8);
+static void Task_GivePayout(u8);
 void sub_811677C(u8);
-void sub_81167F4(u8);
+static void Task_EndTurn(u8);
 void sub_8116880(u8);
 void dp01t_12_3_battle_menu(u8);
 void sub_8116AB0(u8);
 void sub_8116B40(u8);
-void sub_8116BC0(u8);
-void sub_8116C34(u8, TaskFunc, u16, u16);
-void sub_8116CAC(u8);
-void sub_8116CF8(void);
-u8 sub_8116D54(u8, u8);
-u8 sub_8116E5C(u8, u8);
-void sub_8116EF8(u8);
-void sub_8117158(u8);
-u8 sub_8117380(u8);
-void sub_8117434(void);
+static void Task_WaitForNextTask(u8);
+static void StartTaskAfterDelayOrInput(u8, TaskFunc, u16, u16);
+static void ResetBallDataForNewSpin(u8);
+static void ResetHits(void);
+static u8 RecordHit(u8, u8);
+static u8 IsHitInBetSelection(u8, u8);
+static void FlashSelectionOnWheel(u8);
+static void DrawGridBackground(u8);
+static u8 GetMultiplier(u8);
+static void UpdateWheelPosition(void);
 void sub_81174F8(u8);
-void sub_8117528(u8);
+static void Task_FadeToRouletteGame(u8);
 void sub_811755C(u8);
 void sub_81175C0(u8);
 void sub_81175DC(u8);
 void sub_8117630(u8);
 void Task_Roulette_0(u8);
 
-const u16 gUnknown_083F86BC[] = INCBIN_U16("graphics/roulette/83F86BC.gbapal");
-const u8 gUnknown_083F88BC[] = INCBIN_U8("graphics/roulette/83F88BC.bin.lz");
-const u8 gUnknown_083F8A60[] = INCBIN_U8("graphics/roulette/wheel_map.bin.lz");
+static const u16 sWheel_Pal[] = INCBIN_U16("graphics/roulette/wheel.gbapal");
+static const u8 sGrid_Tilemap[] = INCBIN_U8("graphics/roulette/grid.bin.lz");
+static const u8 sWheel_Tilemap[] = INCBIN_U8("graphics/roulette/wheel.bin.lz");
 
-const struct StructgUnknown_083F8C00 gUnknown_083F8C00[] = {
+const struct GridSelection gUnknown_083F8C00[] = {
 	{255, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 0},
 	{12, 4, 1, 0, 17, 7, 0, 0, 0, 2, 0x10842, 0xe000, 0},
 	{13, 4, 2, 0, 20, 7, 0, 0, 0, 4, 0x21084, 0xe000, 0},
@@ -112,7 +113,7 @@ const struct StructgUnknown_083F8C00 gUnknown_083F8C00[] = {
 	{11, 12, 4, 3, 26, 16, 9, 9, 0, 0x80000, 0x80000, 0x2800, 0},
 };
 
-const struct StructgUnknown_083F8D90 gUnknown_083F8D90[] = {
+const struct RouletteSlot gUnknown_083F8D90[] = {
     { 0,  1,  6, 64},
     { 1,  3, 12, 0x1000},
     { 2,  5, 18, 0x40000},
@@ -127,228 +128,216 @@ const struct StructgUnknown_083F8D90 gUnknown_083F8D90[] = {
     {11, 23, 19, 0x80000}
 };
 
-const u8 gUnknown_083F8DF0[] = {
+static const u8 sTableMinBets[] = {
     1, 3,
     1, 6,
 };
 
-const struct StructgUnknown_083F8DF4 gUnknown_083F8DF4[] = {
+const struct RouletteTable gUnknown_083F8DF4[] = {
     {
-        .var00 = 1,
-        .var01 = 60,
-        .var02 = 30,
-        .var03 = 1,
-        .var04 = 1,
+        .minBet = 1,
+        .randDistanceHigh = 60,
+        .randDistanceLow = 30,
+        .wheelSpeed = 1,
+        .wheelDelay = 1,
         .var08 = 45,
         .var0A = 30,
         .var0C = 1,
         .var10 = 75,
         .var12 = 27,
         .var14 = 24,
-        .var18 = 10,
-        .var1A = 360,
+        .ballSpeed = 10,
+        .baseTravelDist = 360,
         .var1C = -0.5f
     }, {
-        .var00 = 3,
-        .var01 = 30,
-        .var02 = 15,
-        .var03 = 1,
-        .var04 = 0,
+        .minBet = 3,
+        .randDistanceHigh = 30,
+        .randDistanceLow = 15,
+        .wheelSpeed = 1,
+        .wheelDelay = 0,
         .var08 = 75,
         .var0A = 60,
         .var0C = 2,
         .var10 = 0,
         .var12 = 54,
         .var14 = 48,
-        .var18 = 10,
-        .var1A = 270,
+        .ballSpeed = 10,
+        .baseTravelDist = 270,
         .var1C = -1.0f
     }
 };
 
-const struct UnkStruct1 gUnknown_083F8E34[] = {
+static const struct RouletteFlashSettings sFlashData_Colors[] = {
 	{
-        .var00 = 0x8000,
-        .var02 = 5,
-        .var04 = 1,
-        .var05 = 1,
-        .var06 = 255,
-        .var07_0 = 8,
-        .var07_5 = 2,
-        .var07_7 = FALSE
+        .color = 0x8000,
+        .paletteOffset = 5,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = 255,
+        .numFadeCycles = 8,
+        .unk7_5 = 2,
+        .colorDeltaDir = FALSE
     }, {
-        .var00 = 0x8000,
-        .var02 = 10,
-        .var04 = 1,
-        .var05 = 1,
-        .var06 = 255,
-        .var07_0 = 8,
-        .var07_5 = 2,
-        .var07_7 = FALSE
+        .color = 0x8000,
+        .paletteOffset = 10,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = 255,
+        .numFadeCycles = 8,
+        .unk7_5 = 2,
+        .colorDeltaDir = FALSE
     }, {
-        .var00 = 0x8000,
-        .var02 = 21,
-        .var04 = 1,
-        .var05 = 1,
-        .var06 = 255,
-        .var07_0 = 8,
-        .var07_5 = 2,
-        .var07_7 = FALSE
+        .color = 0x8000,
+        .paletteOffset = 21,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = 255,
+        .numFadeCycles = 8,
+        .unk7_5 = 2,
+        .colorDeltaDir = FALSE
     }, {
-        .var00 = 0x8000,
-        .var02 = 85,
-        .var04 = 1,
-        .var05 = 1,
-        .var06 = 255,
-        .var07_0 = 8,
-        .var07_5 = 2,
-        .var07_7 = FALSE
+        .color = 0x8000,
+        .paletteOffset = 85,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = 255,
+        .numFadeCycles = 8,
+        .unk7_5 = 2,
+        .colorDeltaDir = FALSE
     }, {
-        .var00 = 0x8000,
-        .var02 = 90,
-        .var04 = 1,
-        .var05 = 1,
-        .var06 = 255,
-        .var07_0 = 8,
-        .var07_5 = 2,
-        .var07_7 = FALSE
+        .color = 0x8000,
+        .paletteOffset = 90,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = 255,
+        .numFadeCycles = 8,
+        .unk7_5 = 2,
+        .colorDeltaDir = FALSE
     }, {
-        .var00 = 0x8000,
-        .var02 = 101,
-        .var04 = 1,
-        .var05 = 1,
-        .var06 = 255,
-        .var07_0 = 8,
-        .var07_5 = 2,
-        .var07_7 = FALSE
+        .color = 0x8000,
+        .paletteOffset = 101,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = 255,
+        .numFadeCycles = 8,
+        .unk7_5 = 2,
+        .colorDeltaDir = FALSE
     }, {
-        .var00 = 0x8000,
-        .var02 = 117,
-        .var04 = 1,
-        .var05 = 1,
-        .var06 = 255,
-        .var07_0 = 8,
-        .var07_5 = 2,
-        .var07_7 = FALSE
+        .color = 0x8000,
+        .paletteOffset = 117,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = 255,
+        .numFadeCycles = 8,
+        .unk7_5 = 2,
+        .colorDeltaDir = FALSE
     }, {
-        .var00 = 0x8000,
-        .var02 = 122,
-        .var04 = 1,
-        .var05 = 1,
-        .var06 = 255,
-        .var07_0 = 8,
-        .var07_5 = 2,
-        .var07_7 = FALSE
+        .color = 0x8000,
+        .paletteOffset = 122,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = 255,
+        .numFadeCycles = 8,
+        .unk7_5 = 2,
+        .colorDeltaDir = FALSE
     }, {
-        .var00 = 0x8000,
-        .var02 = 133,
-        .var04 = 1,
-        .var05 = 1,
-        .var06 = 255,
-        .var07_0 = 8,
-        .var07_5 = 2,
-        .var07_7 = FALSE
+        .color = 0x8000,
+        .paletteOffset = 133,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = 255,
+        .numFadeCycles = 8,
+        .unk7_5 = 2,
+        .colorDeltaDir = FALSE
     }, {
-        .var00 = 0x8000,
-        .var02 = 149,
-        .var04 = 1,
-        .var05 = 1,
-        .var06 = 255,
-        .var07_0 = 8,
-        .var07_5 = 2,
-        .var07_7 = FALSE
+        .color = 0x8000,
+        .paletteOffset = 149,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = 255,
+        .numFadeCycles = 8,
+        .unk7_5 = 2,
+        .colorDeltaDir = FALSE
     }, {
-        .var00 = 0x8000,
-        .var02 = 154,
-        .var04 = 1,
-        .var05 = 1,
-        .var06 = 255,
-        .var07_0 = 8,
-        .var07_5 = 2,
-        .var07_7 = FALSE
+        .color = 0x8000,
+        .paletteOffset = 154,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = 255,
+        .numFadeCycles = 8,
+        .unk7_5 = 2,
+        .colorDeltaDir = FALSE
     }, {
-        .var00 = 0x8000,
-        .var02 = 165,
-        .var04 = 1,
-        .var05 = 1,
-        .var06 = 255,
-        .var07_0 = 8,
-        .var07_5 = 2,
-        .var07_7 = FALSE
+        .color = 0x8000,
+        .paletteOffset = 165,
+        .numColors = 1,
+        .delay = 1,
+        .unk6 = 255,
+        .numFadeCycles = 8,
+        .unk7_5 = 2,
+        .colorDeltaDir = FALSE
     }, {
-        .var00 = 0x77d6,
-        .var02 = 40,
-        .var04 = 2,
-        .var05 = 10,
-        .var06 = 255,
-        .var07_0 = 14,
-        .var07_5 = 2,
-        .var07_7 = FALSE
+        .color = 0x77d6,
+        .paletteOffset = 40,
+        .numColors = 2,
+        .delay = 10,
+        .unk6 = 255,
+        .numFadeCycles = 14,
+        .unk7_5 = 2,
+        .colorDeltaDir = FALSE
     }
 };
 
-const struct UnkStruct1 gUnknown_083F8E9C[] = {
+static const struct RouletteFlashSettings sFlashData_PokeIcons[] = {
     {
-        .var00 = 0x53ff,
-        .var02 = 0x101,
-        .var04 = 5,
-        .var05 = 30,
-        .var06 = 255,
-        .var07_0 = 14,
-        .var07_5 = 2,
-        .var07_7 = FALSE
+        .color = 0x53ff,
+        .paletteOffset = 0x101,
+        .numColors = 5,
+        .delay = 30,
+        .unk6 = 255,
+        .numFadeCycles = 14,
+        .unk7_5 = 2,
+        .colorDeltaDir = FALSE
     }, {
-        .var00 = 0x7ffb,
-        .var02 = 0x106,
-        .var04 = 5,
-        .var05 = 30,
-        .var06 = 255,
-        .var07_0 = 14,
-        .var07_5 = 2,
-        .var07_7 = FALSE
+        .color = 0x7ffb,
+        .paletteOffset = 0x106,
+        .numColors = 5,
+        .delay = 30,
+        .unk6 = 255,
+        .numFadeCycles = 14,
+        .unk7_5 = 2,
+        .colorDeltaDir = FALSE
     }, {
-        .var00 = 0x7f7f,
-        .var02 = 0x10b,
-        .var04 = 5,
-        .var05 = 30,
-        .var06 = 255,
-        .var07_0 = 14,
-        .var07_5 = 2,
-        .var07_7 = FALSE
+        .color = 0x7f7f,
+        .paletteOffset = 0x10b,
+        .numColors = 5,
+        .delay = 30,
+        .unk6 = 255,
+        .numFadeCycles = 14,
+        .unk7_5 = 2,
+        .colorDeltaDir = FALSE
     }
 };
 
-const struct YesNoFuncTable gUnknown_083F8EB4 = {
+static const struct YesNoFuncTable sYesNoTable_AcceptMinBet = {
     sub_811755C,
     sub_81175C0
 };
 
-const struct YesNoFuncTable gUnknown_083F8EBC = {
+static const struct YesNoFuncTable sYesNoTable_KeepPlaying = {
     sub_811577C,
-    sub_81157AC
+    Task_StopPlaying
 };
 
 extern u8 gUnknown_02019000[];
 extern u16 gSpecialVar_0x8004;
 extern u16 gPlttBufferFaded[];
 extern u16 gPlttBufferUnfaded[];
-extern const u8 gUnknown_081C4157[];
-extern const u8 gUnknown_081C41E3;
 extern const u16 gUnknown_083F8ECE;
 const extern u8 gUnknown_083F8ECA[];
-const extern u8 gUnknown_081C41A5;
-const extern u8 gUnknown_081C4199;
-const extern u8 gUnknown_081C41AE;
-const extern u8 gUnknown_081C41BD;
-const extern u8 gUnknown_081C41F1;
-const extern u8 gUnknown_081C4231;
-const extern u8 gUnknown_081C41D2;
 extern const u32 gUnknown_083F8ED8[];
 extern const u32 gUnknown_083F8EE8[];
 extern const u8 gUnknown_083F8EF4[];
-extern const u8 gUnknown_081C40DF;
-extern const u8 gUnknown_081C4139;
-extern const u8 gUnknown_081C411C;
 #if DEBUG
 EWRAM_DATA u8 unk_203955C[4] = { 0 };
 EWRAM_DATA u8 unk_2039560 = 0;
@@ -360,8 +349,8 @@ void sub_81150FC(void)
 	RunTasks();
 	AnimateSprites();
 	BuildOamBuffer();
-	if (eRoulette->varB8.var00)
-	   task_tutorial_controls_fadein(&eRoulette->varB8);
+	if (eRoulette->flashUtil.enabled)
+	   RouletteFlash_Run(&eRoulette->flashUtil);
 }
 
 void sub_8115124(void)
@@ -369,21 +358,21 @@ void sub_8115124(void)
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
-    sub_8117434();
-    REG_BG1HOFS = 0x200 - eRoulette->var26;
-    if (eRoulette->var01)
-        REG_BLDALPHA = eRoulette->var34;
-    if (eRoulette->var2A != 0)
+    UpdateWheelPosition();
+    REG_BG1HOFS = 0x200 - eRoulette->gridX;
+    if (eRoulette->shroomishShadowTimer)
+        REG_BLDALPHA = eRoulette->shroomishShadowAlpha;
+    if (eRoulette->updateGridHighlight != 0)
     {
         DmaCopy16(3, &gBGTilemapBuffers[1][224], (void *)(VRAM + 0x21c0), 0x340);
-        eRoulette->var2A = 0;
+        eRoulette->updateGridHighlight = 0;
     }
-    switch (eRoulette->var28)
+    switch (eRoulette->selectionRectDrawState)
     {
     case 1:
         REG_BG0CNT = (32 * 248);
         DmaCopy16(3, &gBGTilemapBuffers[2][224], (void *)(VRAM + 0xf9c0), 0x340);
-        eRoulette->var28 = 2;
+        eRoulette->selectionRectDrawState = 2;
     break;
     case 2:
         DmaCopy16(3, &gBGTilemapBuffers[2][224], (void *)(VRAM + 0xf9c0), 0x340);
@@ -391,7 +380,7 @@ void sub_8115124(void)
     case 255:
         REG_BG0CNT = 0x1f08;
         DmaFill16(3, 0, (void *)(VRAM + 0xf9c0), 0x340);
-        eRoulette->var28 = 0;
+        eRoulette->selectionRectDrawState = 0;
     case 0:
         break;
     }
@@ -401,33 +390,33 @@ void sub_8115238(void)
 {
     u8 i;
     u32 temp;
-    const struct StructgUnknown_083F8DF4 *s0;
-    u16 arr[] = {RGB(24, 4, 10), RGB(10, 19, 6), RGB(24, 4, 10)};
+    const struct RouletteTable *s0;
+    u16 bgColors[] = {RGB(24, 4, 10), RGB(10, 19, 6), RGB(24, 4, 10)};
     memset(eRoulette, 0, sizeof(*eRoulette));
-    eRoulette->var04_0 = (gSpecialVar_0x8004 & 1);
+    eRoulette->tableId = (gSpecialVar_0x8004 & 1);
     if (gSpecialVar_0x8004 & 0x80)
-        eRoulette->var04_7 = 1;
+        eRoulette->isSpecialRate = 1;
     s0 = gUnknown_083F8DF4;
-    eRoulette->var22   = s0[eRoulette->var04_0].var03;
-    eRoulette->var23   = s0[eRoulette->var04_0].var04;
-    eRoulette->var19 = temp = gUnknown_083F8DF0[eRoulette->var04_0 + eRoulette->var04_7 * 2];
-    eRoulette->var1A_4 = 1;
+    eRoulette->wheelSpeed   = s0[eRoulette->tableId].wheelSpeed;
+    eRoulette->wheelDelay   = s0[eRoulette->tableId].wheelDelay;
+    eRoulette->minBet = temp = sTableMinBets[eRoulette->tableId + eRoulette->isSpecialRate * 2];
+    eRoulette->unk1 = 1;
     if (temp == 1)
-        gPlttBufferUnfaded[0] = gPlttBufferUnfaded[81] = gPlttBufferFaded[0] = gPlttBufferFaded[81] = arr[0];
+        gPlttBufferUnfaded[0] = gPlttBufferUnfaded[81] = gPlttBufferFaded[0] = gPlttBufferFaded[81] = bgColors[0];
     else
-        gPlttBufferUnfaded[0] = gPlttBufferUnfaded[81] = gPlttBufferFaded[0] = gPlttBufferFaded[81] = arr[1];
-    sub_8124918((&eRoulette->varB8));
+        gPlttBufferUnfaded[0] = gPlttBufferUnfaded[81] = gPlttBufferFaded[0] = gPlttBufferFaded[81] = bgColors[1];
+    RouletteFlash_Reset((&eRoulette->flashUtil));
     for (i = 0; i < 13; i++)
-        sub_812492C((&eRoulette->varB8), i, &gUnknown_083F8E34[i]);
+        RouletteFlash_Add((&eRoulette->flashUtil), i, &sFlashData_Colors[i]);
     for (i = 0; i < 6; i++)
     {
         switch (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG))
         {
         case SPECIES_SHROOMISH:
-            eRoulette->var02 |= 1;
+            eRoulette->partySpeciesFlags |= 1;
             break;
         case SPECIES_TAILLOW:
-            eRoulette->var02 |= 2;
+            eRoulette->partySpeciesFlags |= 2;
             break;
         }
     }
@@ -437,7 +426,7 @@ void sub_8115238(void)
 void sub_8115384(void)
 {
     u32 temp_IME;
-    u8 taskid;
+    u8 taskId;
 
 #if DEBUG
     gUnknown_Debug_03005FB8 = eRoulette;
@@ -454,8 +443,8 @@ void sub_8115384(void)
         REG_BG1CNT   = BGCNT_PRIORITY(1) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(4) | BGCNT_TXT512x256;
         REG_BLDCNT   = BLDCNT_EFFECT_NONE | BLDCNT_TGT2_BG2 | BLDCNT_TGT2_BD;
         REG_BLDALPHA = BLDALPHA_BLEND(10, 6);
-        LZ77UnCompVram(gUnknown_08E8096C, (void *)VRAM);
-        LZ77UnCompVram(gRouletteWheelTiles, (void *)(VRAM + 0x4000));
+        LZ77UnCompVram(gRouletteMenu_Gfx, (void *)VRAM);
+        LZ77UnCompVram(gRouletteWheel_Gfx, (void *)(VRAM + 0x4000));
         gMain.state++;
         break;
     case 1:
@@ -467,14 +456,14 @@ void sub_8115384(void)
     case 2:
         Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
         InitMenuWindow(&gMenuTextWindowTemplate);
-        LoadPalette(gUnknown_083F86BC, 0, 0x1c0);
+        LoadPalette(sWheel_Pal, 0, 0x1c0);
         gMain.state++;
         break;
     case 3:
         sub_8115238();
         ClearBGTilemapBuffers();
-        LZ77UnCompWram(gUnknown_083F88BC, (void *)(ewram18800));
-        LZ77UnCompVram(gUnknown_083F8A60, (void *)(VRAM + 0x3000));
+        LZ77UnCompWram(sGrid_Tilemap, (void *)(ewram18800));
+        LZ77UnCompVram(sWheel_Tilemap, (void *)(VRAM + 0x3000));
         gMain.state++;
         break;
     case 4:
@@ -493,9 +482,9 @@ void sub_8115384(void)
         sub_81180F4(gSaveBlock1.coins);
         sub_81182F8(6);
         sub_811829C(0);
-        sub_8117158(0);
+        DrawGridBackground(0);
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
-        Menu_PrintText(gUnknown_081C4157, 1, 15);
+        Menu_PrintText(Roulette_Text_ControlsInstruction, 1, 15);
         gSpriteCoordOffsetX = -60;
         gSpriteCoordOffsetY = 0;
         gMain.state++;
@@ -512,10 +501,10 @@ void sub_8115384(void)
         REG_DISPSTAT |= 8;
         SetVBlankCallback(sub_8115124);
         BeginHardwarePaletteFade(255, 0, 16, 0 , 1);
-        taskid = eRoulette->varA4 = CreateTask(sub_81156BC, 0);
-        gTasks[taskid].data[6] = 6;
-        gTasks[taskid].data[13] = gSaveBlock1.coins;
-        eRoulette->varA5 = CreateTask(sub_8115634, 1);
+        taskId = eRoulette->playTaskId = CreateTask(sub_81156BC, 0);
+        gTasks[taskId].data[6] = 6;
+        gTasks[taskId].data[13] = gSaveBlock1.coins;
+        eRoulette->spinTaskId = CreateTask(sub_8115634, 1);
         SetMainCallback2(sub_81150FC);
         break;
     }
@@ -527,24 +516,24 @@ void sub_8115634(u8 taskId)
     s16 cos;
     s32 cos32;
 
-    if (eRoulette->var21++ == eRoulette->var23)
+    if (eRoulette->wheelDelayTimer++ == eRoulette->wheelDelay)
     {
-        eRoulette->var21 = 0;
-        if ((eRoulette->var24 -= eRoulette->var22) < 0)
-            eRoulette->var24 = 360 - eRoulette->var22;
+        eRoulette->wheelDelayTimer = 0;
+        if ((eRoulette->wheelAngle -= eRoulette->wheelSpeed) < 0)
+            eRoulette->wheelAngle = 360 - eRoulette->wheelSpeed;
     }
-    sin = Sin2(eRoulette->var24);
-    cos = Cos2(eRoulette->var24);
+    sin = Sin2(eRoulette->wheelAngle);
+    cos = Cos2(eRoulette->wheelAngle);
     sin = sin / 16;
     cos32 = cos / 16;
-    eRoulette->var2C.d =  cos32;
-    eRoulette->var2C.a =  cos32;
-    eRoulette->var2C.b =  sin;
-    eRoulette->var2C.c = -sin;
+    eRoulette->wheelRotation.d =  cos32;
+    eRoulette->wheelRotation.a =  cos32;
+    eRoulette->wheelRotation.b =  sin;
+    eRoulette->wheelRotation.c = -sin;
 #if DEBUG
     if (unk_203955C[0] != 0 && JOY_NEW(START_BUTTON))
     {
-        gTasks[eRoulette->varA4].func = sub_81157AC;
+        gTasks[eRoulette->playTaskId].func = Task_StopPlaying;
         m4aMPlayStop(&gMPlayInfo_SE1);
         m4aMPlayStop(&gMPlayInfo_SE2);
         m4aMPlayStop(&gMPlayInfo_SE3);
@@ -552,284 +541,284 @@ void sub_8115634(u8 taskId)
 #endif
 }
 
-void sub_81156BC(u8 taskid)
+void sub_81156BC(u8 taskId)
 {
     if (UpdatePaletteFade() == 0)
     {
         REG_BLDCNT   |= BLDCNT_TGT2_BG2 | BLDCNT_TGT2_BD;
         REG_BLDALPHA  = BLDALPHA_BLEND(8, 8);
-        gTasks[taskid].data[6] = 0;
-        sub_8116CAC(taskid);
-        sub_8116CF8();
+        gTasks[taskId].data[6] = 0;
+        ResetBallDataForNewSpin(taskId);
+        ResetHits();
         sub_81185E8();
-        sub_8117158(0);
+        DrawGridBackground(0);
         sub_81182F8(6);
-        sub_8116C34(taskid, sub_81159BC, 0xffff, 3);
+        StartTaskAfterDelayOrInput(taskId, Task_SelectFirstEmptySquare, 0xffff, 3);
     }
 }
 
-void sub_8115734(u8 taskid)
+void sub_8115734(u8 taskId)
 {
     DisplayYesNoMenu(20, 8, 1);
     sub_814AAF8(RGB(30, 12, 11));
     Menu_DrawStdWindowFrame(0, 14, 29, 19);
-    Menu_PrintText(&gUnknown_081C41E3, 1, 15);
-    DoYesNoFuncWithChoice(taskid, &gUnknown_083F8EBC);
+    Menu_PrintText(Roulette_Text_KeepPlaying, 1, 15);
+    DoYesNoFuncWithChoice(taskId, &sYesNoTable_KeepPlaying);
 }
 
-void sub_811577C(u8 taskid)
+void sub_811577C(u8 taskId)
 {
     Menu_EraseWindowRect(20, 8, 26, 13);
-    gTasks[taskid].func = sub_81159BC;
+    gTasks[taskId].func = Task_SelectFirstEmptySquare;
 }
 
-void sub_81157AC(u8 taskid)
+static void Task_StopPlaying(u8 taskId)
 {
-    DestroyTask(eRoulette->varA5);
-    sub_8116AB0(taskid);
+    DestroyTask(eRoulette->spinTaskId);
+    sub_8116AB0(taskId);
 }
 
-void sub_81157D0(u8 r0)
+static void UpdateGridSelectionRect(u8 selectionId)
 {
     u8 temp0, temp1;
-    switch (r0)
+    switch (selectionId)
     {
     case 0:
-        sub_8124DDC(&gBGTilemapBuffers[2][0], 0, 14, 7, 16, 13);
+        FillTilemapRect(&gBGTilemapBuffers[2][0], 0, 14, 7, 16, 13);
         break;
     case 1:
     case 2:
     case 3:
     case 4:
-        temp0 = (r0 * 3 + 14);
-        sub_8124DDC(&gBGTilemapBuffers[2][0], 0, 14, 7, 16, 13);
-        sub_8124E2C(&gBGTilemapBuffers[2][0], ewram18800 + 0x119, temp0, 7, 3, 13);
+        temp0 = (selectionId * 3 + 14);
+        FillTilemapRect(&gBGTilemapBuffers[2][0], 0, 14, 7, 16, 13);
+        SetTilemapRect(&gBGTilemapBuffers[2][0], ewram18800 + 0x119, temp0, 7, 3, 13);
         break;
     case 5:
     case 10:
     case 15:
-        temp1 = ((r0 - 1) / 5 * 3 + 10);
-        sub_8124DDC(&gBGTilemapBuffers[2][0], 0, 14, 7, 16, 13);
-        sub_8124E2C(&gBGTilemapBuffers[2][0], ewram18800 + 0x140, 14, temp1, 16, 3);
+        temp1 = ((selectionId - 1) / 5 * 3 + 10);
+        FillTilemapRect(&gBGTilemapBuffers[2][0], 0, 14, 7, 16, 13);
+        SetTilemapRect(&gBGTilemapBuffers[2][0], ewram18800 + 0x140, 14, temp1, 16, 3);
         break;
     default:
-        temp0 = ((r0 % 5) * 3 + 14);
-        temp1 = ((r0 - 1) / 5 * 3 + 7);
-        sub_8124DDC(&gBGTilemapBuffers[2][0], 0, 14, 7, 16, 13);
-        sub_8124E2C(&gBGTilemapBuffers[2][0], ewram18800 + 0x110, temp0, temp1, 3, 3);
+        temp0 = ((selectionId % 5) * 3 + 14);
+        temp1 = ((selectionId - 1) / 5 * 3 + 7);
+        FillTilemapRect(&gBGTilemapBuffers[2][0], 0, 14, 7, 16, 13);
+        SetTilemapRect(&gBGTilemapBuffers[2][0], ewram18800 + 0x110, temp0, temp1, 3, 3);
         break;
     }
 }
 
-void sub_8115928(u8 taskid, u8 r1)
+void sub_8115928(u8 taskId, u8 r1)
 {
     if (!r1)
-        sub_811829C(gTasks[taskid].data[4]);
+        sub_811829C(gTasks[taskId].data[4]);
     else
-        sub_811829C(eRoulette->var1B[eRoulette->var1A_0]);
-    sub_81157D0(gTasks[taskid].data[4]);
+        sub_811829C(eRoulette->betSelection[eRoulette->curBallNum]);
+    UpdateGridSelectionRect(gTasks[taskId].data[4]);
 }
 
-void sub_811597C(u8 taskid)
+static void Task_StartHandleBetGridInput(u8 taskId)
 {
-    eRoulette->var28 = 1;
-    sub_81157D0(gTasks[taskid].data[4]);
-    eRoulette->var23 = 2;
-    eRoulette->var21 = 0;
-    gTasks[taskid].func = sub_8115E14;
+    eRoulette->selectionRectDrawState = 1;
+    UpdateGridSelectionRect(gTasks[taskId].data[4]);
+    eRoulette->wheelDelay = 2;
+    eRoulette->wheelDelayTimer = 0;
+    gTasks[taskId].func = sub_8115E14;
 }
 
-void sub_81159BC(u8 taskid)
+static void Task_SelectFirstEmptySquare(u8 taskId)
 {
     s16 i;
 
-    if (eRoulette->var08 & 0x20)
+    if (eRoulette->hitFlags & 0x20)
     {
         for (i = 11; (i < 14); i++)
-            if ((eRoulette->var08 & gUnknown_083F8C00[i].var08) == 0)
+            if ((eRoulette->hitFlags & gUnknown_083F8C00[i].flag) == 0)
                 break;
     }
     else
     {
         for (i = 6; (i < 10); i++)
-            if ((eRoulette->var08 & gUnknown_083F8C00[i].var08) == 0)
+            if ((eRoulette->hitFlags & gUnknown_083F8C00[i].flag) == 0)
                 break;
     }
-    gTasks[taskid].data[4] = i;
-    sub_8116CAC(taskid);
-    sub_8117158(gTasks[taskid].data[4]);
-    sub_811829C(gTasks[taskid].data[4]);
-    sub_8116EF8(gTasks[taskid].data[4]);
-    gTasks[taskid].data[1] = 0;
-    gTasks[taskid].func = sub_811597C;
+    gTasks[taskId].data[4] = i;
+    ResetBallDataForNewSpin(taskId);
+    DrawGridBackground(gTasks[taskId].data[4]);
+    sub_811829C(gTasks[taskId].data[4]);
+    FlashSelectionOnWheel(gTasks[taskId].data[4]);
+    gTasks[taskId].data[1] = 0;
+    gTasks[taskId].func = Task_StartHandleBetGridInput;
 }
 
-u8 sub_8115A94(s16 *r0, u8 r1)
+static u8 CanMoveSelectionInDir(s16 *selectionId, u8 dir)
 {
     s8 temp1 = 0;
     s8 temp = 0;
-    s8 arr[4] = {-5, 5, -1, 1};
-    s8 t;
-    t = (u8)*r0;
-    switch (r1)
+    s8 moveOffsets[4] = {-5, 5, -1, 1};
+    s8 originalSelection;
+    originalSelection = (u8)*selectionId;
+    switch (dir)
     {
     case 0:
     case 1:
-        temp1 = (*r0 % 5);
+        temp1 = (*selectionId % 5);
         temp = temp1 + 15;
         if (temp1 == 0)
             temp1 = 5;
         break;
     case 2:
     case 3:
-        temp1 = (s16)(*r0 / 5) * 5;
+        temp1 = (s16)(*selectionId / 5) * 5;
         temp = temp1 + 4;
         if (temp1 == 0)
             temp1 = 1;
         break;
     }
-    *r0 += arr[r1];
-    if (*r0 < temp1)
-        *r0 = temp;
-    if (*r0 > temp)
-        *r0 = temp1;
-    if (*r0 != t)
+    *selectionId += moveOffsets[dir];
+    if (*selectionId < temp1)
+        *selectionId = temp;
+    if (*selectionId > temp)
+        *selectionId = temp1;
+    if (*selectionId != originalSelection)
         return TRUE;
     return FALSE;
 }
 
-void sub_8115B58(u8 r0)
+void sub_8115B58(u8 taskId)
 {
-    u8 z = 0;
-    bool8 var0 = FALSE;
+    u8 headerOffset = 0;
+    bool8 dirPressed = FALSE;
     if (JOY_NEW(DPAD_UP))
     {
-        var0 = TRUE;
-        if (!sub_8115A94(&gTasks[r0].data[4], 0))
+        dirPressed = TRUE;
+        if (!CanMoveSelectionInDir(&gTasks[taskId].data[4], 0))
             return;
     }
     if (JOY_NEW(DPAD_DOWN))
     {
-        var0 = TRUE;
-        if (!sub_8115A94(&gTasks[r0].data[4], 1))
+        dirPressed = TRUE;
+        if (!CanMoveSelectionInDir(&gTasks[taskId].data[4], 1))
             return;
     }
     if (JOY_NEW(DPAD_LEFT))
     {
-        var0 = TRUE;
-        if (!sub_8115A94(&gTasks[r0].data[4], 2))
+        dirPressed = TRUE;
+        if (!CanMoveSelectionInDir(&gTasks[taskId].data[4], 2))
             return;
     }
     if (JOY_NEW(DPAD_RIGHT))
     {
-        var0 = TRUE;
-        if (!sub_8115A94(&gTasks[r0].data[4], 3))
+        dirPressed = TRUE;
+        if (!CanMoveSelectionInDir(&gTasks[taskId].data[4], 3))
             return;
     }
-    if (var0)
+    if (dirPressed)
     {
         u8 i;
-        sub_8117158(gTasks[r0].data[4]);
-        sub_8115928(r0, FALSE);
-        gTasks[r0].data[1] = z;
+        DrawGridBackground(gTasks[taskId].data[4]);
+        sub_8115928(taskId, FALSE);
+        gTasks[taskId].data[1] = headerOffset;
         PlaySE(SE_SELECT);
-        sub_8124D3C((&eRoulette->varB8), 0xffff);
-        eRoulette->varB8.var04[15].var00_7 = 0;
-        eRoulette->varB8.var04[14].var00_7 = 0;
-        eRoulette->varB8.var04[13].var00_7 = 0;
-        sub_8116EF8(gTasks[r0].data[4]);
+        RouletteFlash_Stop((&eRoulette->flashUtil), 0xffff);
+        eRoulette->flashUtil.palettes[15].available = 0;
+        eRoulette->flashUtil.palettes[14].available = 0;
+        eRoulette->flashUtil.palettes[13].available = 0;
+        FlashSelectionOnWheel(gTasks[taskId].data[4]);
         for (i = 0; i < 4; i++)
         {
-            gSprites[eRoulette->var3C[i + 41]].oam.tileNum =
-            gSprites[eRoulette->var3C[i + 41]].sheetTileStart
-            + (*gSprites[eRoulette->var3C[i + 41]].anims)->type;
+            gSprites[eRoulette->spriteIds[i + 41]].oam.tileNum =
+            gSprites[eRoulette->spriteIds[i + 41]].sheetTileStart
+            + (*gSprites[eRoulette->spriteIds[i + 41]].anims)->type;
         }
-        if ((u16)(gTasks[r0].data[4] - 1) < 4 && !(eRoulette->var08 & gUnknown_083F8C00[gTasks[r0].data[4]].var08) )
+        if ((u16)(gTasks[taskId].data[4] - 1) < 4 && !(eRoulette->hitFlags & gUnknown_083F8C00[gTasks[taskId].data[4]].flag) )
         {
-            z = gTasks[r0].data[4] - 1;
-            gSprites[eRoulette->var3C[z + 41]].oam.tileNum =
-            gSprites[eRoulette->var3C[z + 41]].sheetTileStart
-            + (*gSprites[eRoulette->var3C[z + 41]].anims + 1)->type;
+            headerOffset = gTasks[taskId].data[4] - 1;
+            gSprites[eRoulette->spriteIds[headerOffset + 41]].oam.tileNum =
+            gSprites[eRoulette->spriteIds[headerOffset + 41]].sheetTileStart
+            + (*gSprites[eRoulette->spriteIds[headerOffset + 41]].anims + 1)->type;
         }
     }
 }
 
-void sub_8115D58(u8 r0)
+void sub_8115D58(u8 taskId)
 {
-    eRoulette->var28 = 255;
-    if (eRoulette->var19 == 1)
-        eRoulette->var23 = 1;
+    eRoulette->selectionRectDrawState = 255;
+    if (eRoulette->minBet == 1)
+        eRoulette->wheelDelay = 1;
     else
-        eRoulette->var23 = 0;
-    eRoulette->var21 = 0;
-    gTasks[r0].data[1] = 32;
-    gTasks[r0].func = sub_8115ECC;
+        eRoulette->wheelDelay = 0;
+    eRoulette->wheelDelayTimer = 0;
+    gTasks[taskId].data[1] = 32;
+    gTasks[taskId].func = Task_SlideGridOffscreen;
 }
 
-void sub_8115DA0(u8 taskid)
+static void Task_PlaceBet(u8 taskId)
 {
-    eRoulette->var1B[eRoulette->var1A_0] = gTasks[taskid].data[4];
-    gTasks[taskid].data[2] = sub_8117380(eRoulette->var1B[eRoulette->var1A_0]);
-    sub_811829C(eRoulette->var1B[eRoulette->var1A_0]);
-    if ((gTasks[taskid].data[13] -= eRoulette->var19) < 0)
-        gTasks[taskid].data[13] = 0;
-    sub_81180F4(gTasks[taskid].data[13]);
-    gTasks[taskid].func = sub_8115D58;
+    eRoulette->betSelection[eRoulette->curBallNum] = gTasks[taskId].data[4];
+    gTasks[taskId].data[2] = GetMultiplier(eRoulette->betSelection[eRoulette->curBallNum]);
+    sub_811829C(eRoulette->betSelection[eRoulette->curBallNum]);
+    if ((gTasks[taskId].data[13] -= eRoulette->minBet) < 0)
+        gTasks[taskId].data[13] = 0;
+    sub_81180F4(gTasks[taskId].data[13]);
+    gTasks[taskId].func = sub_8115D58;
 }
 
-void sub_8115E14(u8 taskid)
+void sub_8115E14(u8 taskId)
 {
-    sub_8115B58(taskid);
-    switch (gTasks[taskid].data[1])
+    sub_8115B58(taskId);
+    switch (gTasks[taskId].data[1])
     {
     case 0:
-        sub_81157D0(gTasks[taskid].data[4]);
-        gTasks[taskid].data[1]+= 1;
+        UpdateGridSelectionRect(gTasks[taskId].data[4]);
+        gTasks[taskId].data[1]+= 1;
     break;
     case 30:
-        sub_81157D0(0);
-        gTasks[taskid].data[1]+= 1;
+        UpdateGridSelectionRect(0);
+        gTasks[taskId].data[1]+= 1;
     break;
     case 59:
-        gTasks[taskid].data[1] = 0;
+        gTasks[taskId].data[1] = 0;
     break;
     default:
-        gTasks[taskid].data[1]++;
+        gTasks[taskId].data[1]++;
     }
     if (JOY_NEW(A_BUTTON))
     {
-        if ((eRoulette->var08 & gUnknown_083F8C00[gTasks[taskid].data[4]].var08))
+        if ((eRoulette->hitFlags & gUnknown_083F8C00[gTasks[taskId].data[4]].flag))
             PlaySE(SE_BOO);
         else
         {
             m4aSongNumStart(SE_SHOP);
-            gTasks[taskid].func = sub_8115DA0;
+            gTasks[taskId].func = Task_PlaceBet;
         }
     }
 }
 
-void sub_8115ECC(u8 taskid)
+static void Task_SlideGridOffscreen(u8 taskId)
 {
-    if (gTasks[taskid].data[1]-- > 0)
+    if (gTasks[taskId].data[1]-- > 0)
     {
-        if (gTasks[taskid].data[1] > 2)
+        if (gTasks[taskId].data[1] > 2)
             gSpriteCoordOffsetX += 2;
-        if ((eRoulette->var26 += 4) == 104)
-            gSprites[eRoulette->var3C[25]].callback = &SpriteCallbackDummy;
+        if ((eRoulette->gridX += 4) == 104)
+            gSprites[eRoulette->spriteIds[25]].callback = &SpriteCallbackDummy;
     }
     else
     {
         sub_8117AA8(1, 255);
         sub_8117C60(1, 255);
-        gTasks[taskid].func = sub_8116100;
-        gTasks[taskid].data[1] = 0;
+        gTasks[taskId].func = Task_InitBallRoll;
+        gTasks[taskId].data[1] = 0;
     }
 }
 
-u8 sub_8115F58(u16 r0, u16 r1)
+static u8 GetRandomForBallTravelDistance(u16 ballNum, u16 rand)
 {
     u8 timeh;
-    switch (eRoulette->var02)
+    switch (eRoulette->partySpeciesFlags)
     {
     case 1: // SHROOMISH
     case 2: // TAILLOW
@@ -837,23 +826,23 @@ u8 sub_8115F58(u16 r0, u16 r1)
         timeh = gLocalTime.hours - 4;
         if (!(timeh > 5))
         {
-            if (!(r0 < 12 || (r1 & 1)))
+            if (!(ballNum < 12 || (rand & 1)))
                 return 1;
             else
             {
-                const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-                return p[eRoulette->var04_0].var02 / 2;
+                const struct RouletteTable *p = gUnknown_083F8DF4;
+                return p[eRoulette->tableId].randDistanceLow / 2;
             }
         }
-        else if (!(r1 & 3))
+        else if (!(rand & 3))
         {
-            const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-            return p[eRoulette->var04_0].var02 / 2;
+            const struct RouletteTable *p = gUnknown_083F8DF4;
+            return p[eRoulette->tableId].randDistanceLow / 2;
         }
         else
         {
-            const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-            return p[eRoulette->var04_0].var02;
+            const struct RouletteTable *p = gUnknown_083F8DF4;
+            return p[eRoulette->tableId].randDistanceLow;
         }
         break;
     case 3:
@@ -861,25 +850,25 @@ u8 sub_8115F58(u16 r0, u16 r1)
         timeh = gLocalTime.hours - 4;
         if (!(timeh > 6))
         {
-            if (r0 < 6 || (r1 & 1))
+            if (ballNum < 6 || (rand & 1))
             {
-                const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-                return p[eRoulette->var04_0].var02 / 2;
+                const struct RouletteTable *p = gUnknown_083F8DF4;
+                return p[eRoulette->tableId].randDistanceLow / 2;
             }
             else
             {
                 return 1;
             }
         }
-        else if ((r1 & 1) && !(r0 < 7))
+        else if ((rand & 1) && !(ballNum < 7))
         {
-            const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-            return p[eRoulette->var04_0].var02 / 4;
+            const struct RouletteTable *p = gUnknown_083F8DF4;
+            return p[eRoulette->tableId].randDistanceLow / 4;
         }
         else
         {
-            const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-            return p[eRoulette->var04_0].var02 / 2;
+            const struct RouletteTable *p = gUnknown_083F8DF4;
+            return p[eRoulette->tableId].randDistanceLow / 2;
         }
         break;
     case 0:
@@ -888,365 +877,365 @@ u8 sub_8115F58(u16 r0, u16 r1)
         timeh = gLocalTime.hours - 4;
         if (!(timeh > 5))
         {
-            if (!(r1 & 3))
+            if (!(rand & 3))
             {
                 return 1;
             }
             else
             {
-                const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-                return p[eRoulette->var04_0].var02 / 2;
+                const struct RouletteTable *p = gUnknown_083F8DF4;
+                return p[eRoulette->tableId].randDistanceLow / 2;
             }
         }
-        else if (!(r1 & 3))
+        else if (!(rand & 3))
         {
-            if (!(r0 < 13))
+            if (!(ballNum < 13))
             {
-                const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-                return p[eRoulette->var04_0].var02 / 2;
+                const struct RouletteTable *p = gUnknown_083F8DF4;
+                return p[eRoulette->tableId].randDistanceLow / 2;
             }
             else
             {
-                const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-                return p[eRoulette->var04_0].var02;
+                const struct RouletteTable *p = gUnknown_083F8DF4;
+                return p[eRoulette->tableId].randDistanceLow;
             }
         }
-        else if (r1 & (128 << 8))
+        else if (rand & (128 << 8))
         {
-            if (!(r0 < 13))
+            if (!(ballNum < 13))
             {
-                const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-                return p[eRoulette->var04_0].var02;
+                const struct RouletteTable *p = gUnknown_083F8DF4;
+                return p[eRoulette->tableId].randDistanceLow;
             }
             else
             {
-                const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-                return p[eRoulette->var04_0].var01;
+                const struct RouletteTable *p = gUnknown_083F8DF4;
+                return p[eRoulette->tableId].randDistanceHigh;
             }
         }
         else
         {
-            const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-            return p[eRoulette->var04_0].var01 * 2;
+            const struct RouletteTable *p = gUnknown_083F8DF4;
+            return p[eRoulette->tableId].randDistanceHigh * 2;
         }
     }
 }
 
-void sub_8116100(u8 taskid)
+static void Task_InitBallRoll(u8 taskId)
 {
-    u8 randf;
-    s8 randfinal;
-    s8 r5;
-    u16 g = 0;
+    u8 randTravelMod;
+    s8 randTravelDist;
+    s8 startAngleId;
+    u16 travelDist = 0;
     u16 rand;
     u16 randmod;
-    u16 angles[] = {0, 180, 90, 270};
+    u16 startAngles[] = {0, 180, 90, 270};
     rand = Random();
     randmod = rand % 100;
-    eRoulette->var7C = gTasks[taskid].data[6];
-    eRoulette->var7F = g;
-    eRoulette->var7E = g;
-    eRoulette->var7D = g;
-    randf = sub_8115F58(gTasks[taskid].data[8], rand);
-    randfinal = (rand % randf) - (randf / 2);
+    eRoulette->curBallSpriteId = gTasks[taskId].data[6];
+    eRoulette->stuckHitSlot = travelDist;
+    eRoulette->hitSlot = travelDist;
+    eRoulette->ballState = travelDist;
+    randTravelMod = GetRandomForBallTravelDistance(gTasks[taskId].data[8], rand);
+    randTravelDist = (rand % randTravelMod) - (randTravelMod / 2);
     if (gLocalTime.hours < 13)
-        r5 = 0;
+        startAngleId = 0;
     else
-        r5 = 1;
+        startAngleId = 1;
     if (randmod < 80)
-        r5 *= 2;
+        startAngleId *= 2;
     else
-        r5 = (1 - r5) * 2;
-    eRoulette->var80 = g = gUnknown_083F8DF4[eRoulette->var04_0].var1A + randfinal;
+        startAngleId = (1 - startAngleId) * 2;
+    eRoulette->ballTravelDist = travelDist = gUnknown_083F8DF4[eRoulette->tableId].baseTravelDist + randTravelDist;
     //
-    g = S16TOPOSFLOAT(g) / 5.0f;
-    eRoulette->var82 = g * 3;
-    eRoulette->var84 = g;
-    eRoulette->var86 = g;
+    travelDist = S16TOPOSFLOAT(travelDist) / 5.0f;
+    eRoulette->ballTravelDistFast = travelDist * 3;
+    eRoulette->ballTravelDistMed = travelDist;
+    eRoulette->ballTravelDistSlow = travelDist;
     //
-    eRoulette->var88 = S16TOPOSFLOAT(angles[(rand & 1) + r5]);
-    eRoulette->var8C = S16TOPOSFLOAT(gUnknown_083F8DF4[eRoulette->var04_0].var18);
-    eRoulette->var90 = ((eRoulette->var8C * 0.5f) - eRoulette->var8C) / S16TOPOSFLOAT(g * 3);
-    eRoulette->var94 = 68.0f;
-    eRoulette->var9C = 0.0f;
-    eRoulette->var98 = -(8.0f / S16TOPOSFLOAT(g * 3));
+    eRoulette->ballAngle = S16TOPOSFLOAT(startAngles[(rand & 1) + startAngleId]);
+    eRoulette->ballAngleSpeed = S16TOPOSFLOAT(gUnknown_083F8DF4[eRoulette->tableId].ballSpeed);
+    eRoulette->ballAngleAccel = ((eRoulette->ballAngleSpeed * 0.5f) - eRoulette->ballAngleSpeed) / S16TOPOSFLOAT(travelDist * 3);
+    eRoulette->ballDistToCenter = 68.0f;
+    eRoulette->ballFallAccel = 0.0f;
+    eRoulette->ballFallSpeed = -(8.0f / S16TOPOSFLOAT(travelDist * 3));
     eRoulette->varA0 = 36.0f;
-    gTasks[taskid].func = sub_8116308;
+    gTasks[taskId].func = Task_RollBall;
 }
 
-void sub_8116308(u8 taskid)
+static void Task_RollBall(u8 taskId)
 {
     u8 index;
-    eRoulette->var03_7 = 1;
-    index = eRoulette->var3C[eRoulette->var7C];
-    eRoulette->var38 = &gSprites[index];
-    eRoulette->var38->callback = sub_81191F4;
-    gTasks[taskid].data[6]++;
-    gTasks[taskid].data[8]++;
-    sub_81182F8(6 - gTasks[taskid].data[6]);
+    eRoulette->ballRolling = 1;
+    index = eRoulette->spriteIds[eRoulette->curBallSpriteId];
+    eRoulette->ball = &gSprites[index];
+    eRoulette->ball->callback = sub_81191F4;
+    gTasks[taskId].data[6]++;
+    gTasks[taskId].data[8]++;
+    sub_81182F8(6 - gTasks[taskId].data[6]);
     m4aSongNumStart(SE_ROULETTE_BALL);
-    gTasks[taskid].func = sub_811637C;
+    gTasks[taskId].func = Task_RecordBallHit;
 }
 
-void sub_811637C(u8 taskid)
+static void Task_RecordBallHit(u8 taskId)
 {
-    if (eRoulette->var7D)
+    if (eRoulette->ballState)
     {
-        if (eRoulette->var03_5)
+        if (eRoulette->ballStuck)
         {
-            if (eRoulette->var03_6)
+            if (eRoulette->ballUnstuck)
             {
-                eRoulette->var03_6 = FALSE;
-                eRoulette->var03_5 = FALSE;
+                eRoulette->ballUnstuck = FALSE;
+                eRoulette->ballStuck = FALSE;
             }
         }
         else
         {
-            if (!gTasks[taskid].data[1])
+            if (!gTasks[taskId].data[1])
             {
-                u8 temp = sub_8116E5C(sub_8116D54(taskid, eRoulette->var7E), eRoulette->var1B[eRoulette->var1A_0]);
-                gTasks[taskid].data[5] = temp;
-                if (temp == 1)
-                    sub_8124CE8((&eRoulette->varB8), 0x1000);
+                u8 won = IsHitInBetSelection(RecordHit(taskId, eRoulette->hitSlot), eRoulette->betSelection[eRoulette->curBallNum]);
+                gTasks[taskId].data[5] = won;
+                if (won == 1)
+                    RouletteFlash_Enable((&eRoulette->flashUtil), 0x1000);
             }
-            if (gTasks[taskid].data[1] < 61)
+            if (gTasks[taskId].data[1] < 61)
             {
                 if (JOY_NEW(A_BUTTON))
-                    gTasks[taskid].data[1] = 60;
-                gTasks[taskid].data[1]++;
+                    gTasks[taskId].data[1] = 60;
+                gTasks[taskId].data[1]++;
             }
             else
             {
-                sub_8117158(eRoulette->var1B[eRoulette->var1A_0]);
-                sub_8117AA8(0, (u8)gTasks[taskid].data[12]);
-                sub_8117C60(0, (u8)gTasks[taskid].data[6] - 1);
-                gTasks[taskid].data[1] = 32;
-                gTasks[taskid].func = sub_8116474;
+                DrawGridBackground(eRoulette->betSelection[eRoulette->curBallNum]);
+                sub_8117AA8(0, (u8)gTasks[taskId].data[12]);
+                sub_8117C60(0, (u8)gTasks[taskId].data[6] - 1);
+                gTasks[taskId].data[1] = 32;
+                gTasks[taskId].func = Task_SlideGridOnscreen;
             }
         }
     }
 }
 
-void sub_8116474(u8 taskid)
+static void Task_SlideGridOnscreen(u8 taskId)
 {
-    if (gTasks[taskid].data[1]-- > 0)
+    if (gTasks[taskId].data[1]-- > 0)
     {
-        if (gTasks[taskid].data[1] > 2)
+        if (gTasks[taskId].data[1] > 2)
             gSpriteCoordOffsetX -= 2;
-        if ((eRoulette->var26 -= 4) == 104)
-            gSprites[eRoulette->var3C[25]].callback = sub_81184CC;
+        if ((eRoulette->gridX -= 4) == 104)
+            gSprites[eRoulette->spriteIds[25]].callback = sub_81184CC;
     }
     else
     {
-        sub_8117D68(gTasks[taskid].data[12]);
-        if (gTasks[taskid].data[5] == 1)
-            gTasks[taskid].data[1] = 121;
+        sub_8117D68(gTasks[taskId].data[12]);
+        if (gTasks[taskId].data[5] == 1)
+            gTasks[taskId].data[1] = 121;
         else
-            gTasks[taskid].data[1] = 61;
-        gTasks[taskid].func = sub_8116514;
+            gTasks[taskId].data[1] = 61;
+        gTasks[taskId].func = Task_FlashBallOnWinningSquare;
     }
 }
 
-void sub_8116514(u8 taskid)
+static void Task_FlashBallOnWinningSquare(u8 taskId)
 {
-    if (gTasks[taskid].data[1]-- > 1)
+    if (gTasks[taskId].data[1]-- > 1)
     {
-        switch (gTasks[taskid].data[1] % 16)
+        switch (gTasks[taskId].data[1] % 16)
         {
         case 8:
             sub_8117AA8(0, 255);
             sub_8117C60(0, 255);
             break;
         case 0:
-            sub_8117AA8(0, (u8)gTasks[taskid].data[12]);
-            sub_8117C60(0, (u8)gTasks[taskid].data[6] - 1);
+            sub_8117AA8(0, (u8)gTasks[taskId].data[12]);
+            sub_8117C60(0, (u8)gTasks[taskId].data[6] - 1);
             break;
         }
     }
     else
     {
-        sub_8116C34(taskid, sub_8116638, 30, 0);
+        StartTaskAfterDelayOrInput(taskId, sub_8116638, 30, 0);
     }
 }
 
-void sub_811659C(u8 taskid)
+static void Task_TryIncrementWins(u8 taskId)
 {
-    switch (gTasks[taskid].data[5])
+    switch (gTasks[taskId].data[5])
     {
     case 1:
     case 2:
         if (IsFanfareTaskInactive())
         {
             u32 wins = GetGameStat(GAME_STAT_CONSECUTIVE_ROULETTE_WINS);
-            if (wins < ++gTasks[taskid].data[11])
-                SetGameStat(GAME_STAT_CONSECUTIVE_ROULETTE_WINS, gTasks[taskid].data[11]);
-            sub_8116C34(taskid, sub_811677C, 0xffff, 3);
+            if (wins < ++gTasks[taskId].data[11])
+                SetGameStat(GAME_STAT_CONSECUTIVE_ROULETTE_WINS, gTasks[taskId].data[11]);
+            StartTaskAfterDelayOrInput(taskId, sub_811677C, 0xffff, 3);
         }
         break;
     case 0:
     default:
         if (!IsSEPlaying())
         {
-            gTasks[taskid].data[11] = FALSE;
-            sub_8116C34(taskid, sub_81167F4, 0xffff, 3);
+            gTasks[taskId].data[11] = FALSE;
+            StartTaskAfterDelayOrInput(taskId, Task_EndTurn, 0xffff, 3);
         }
     }
 }
 
-void sub_8116638(u8 taskid)
+void sub_8116638(u8 taskId)
 {
-    switch (gTasks[taskid].data[5])
+    switch (gTasks[taskId].data[5])
     {
     case 1:
     case 2:
-        if (gTasks[taskid].data[2] == 12)
+        if (gTasks[taskId].data[2] == 12)
         {
             PlayFanfare(MUS_SLOTS_JACKPOT);
             Menu_DrawStdWindowFrame(0, 14, 29, 19);
-            Menu_PrintText(&gUnknown_081C41A5, 1, 15);
+            Menu_PrintText(Roulette_Text_Jackpot, 1, 15);
         }
         else
         {
             PlayFanfare(MUS_SLOTS_WIN);
             Menu_DrawStdWindowFrame(0, 14, 29, 19);
-            Menu_PrintText(&gUnknown_081C4199, 1, 15);
+            Menu_PrintText(Roulette_Text_ItsAHit, 1, 15);
         }
         break;
     case 0:
     default:
         m4aSongNumStart(SE_FAILURE);
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
-        Menu_PrintText(&gUnknown_081C41AE, 1, 15);
+        Menu_PrintText(Roulette_Text_NothingDoing, 1, 15);
     }
-    gTasks[taskid].data[1] = 0;
-    gTasks[taskid].func = sub_811659C;
+    gTasks[taskId].data[1] = 0;
+    gTasks[taskId].func = Task_TryIncrementWins;
 }
 
-void sub_81166E8(u8 taskid)
+static void Task_GivePayout(u8 taskId)
 {
-    s32 r0 = gTasks[taskid].data[7];
+    s32 r0 = gTasks[taskId].data[7];
     switch (r0)
     {
     case 0:
-        gTasks[taskid].data[13]++;
+        gTasks[taskId].data[13]++;
         m4aSongNumStart(SE_PIN);
-        sub_81180F4(gTasks[taskid].data[13]);
-        if (gTasks[taskid].data[13] > 0x270e)
+        sub_81180F4(gTasks[taskId].data[13]);
+        if (gTasks[taskId].data[13] > 0x270e)
         {
-            gTasks[taskid].data[1] = r0;
+            gTasks[taskId].data[1] = r0;
         }
         else
         {
-            gTasks[taskid].data[1]--;
-            gTasks[taskid].data[7]++;
+            gTasks[taskId].data[1]--;
+            gTasks[taskId].data[7]++;
         }
         break;
     case 3:
         m4aSongNumStop(SE_PIN);
-        gTasks[taskid].data[7] = 0;
+        gTasks[taskId].data[7] = 0;
         break;
     default:
-        gTasks[taskid].data[7]++;
+        gTasks[taskId].data[7]++;
     }
-    if (gTasks[taskid].data[1] == 0)
-        sub_8116C34(taskid, sub_81167F4, 0xffff, 3);
+    if (gTasks[taskId].data[1] == 0)
+        StartTaskAfterDelayOrInput(taskId, Task_EndTurn, 0xffff, 3);
 }
 
-void sub_811677C(u8 taskid)
+void sub_811677C(u8 taskId)
 {
-    ConvertIntToDecimalStringN((u8 *)&gStringVar1, (eRoulette->var19 * gTasks[taskid].data[2]), STR_CONV_MODE_LEFT_ALIGN, 2);
-    StringExpandPlaceholders((u8 *)&gStringVar4, &gUnknown_081C41BD);
+    ConvertIntToDecimalStringN((u8 *)&gStringVar1, (eRoulette->minBet * gTasks[taskId].data[2]), STR_CONV_MODE_LEFT_ALIGN, 2);
+    StringExpandPlaceholders((u8 *)&gStringVar4, Roulette_Text_YouveWonXCoins);
     Menu_DrawStdWindowFrame(0, 14, 29, 19);
     Menu_PrintText((u8 *)&gStringVar4, 1, 15);
-    gTasks[taskid].data[1] = (eRoulette->var19 * gTasks[taskid].data[2]);
-    gTasks[taskid].data[7] = 0;
-    gTasks[taskid].func = sub_81166E8;
+    gTasks[taskId].data[1] = (eRoulette->minBet * gTasks[taskId].data[2]);
+    gTasks[taskId].data[7] = 0;
+    gTasks[taskId].func = Task_GivePayout;
 }
 
-void sub_81167F4(u8 taskid)
+static void Task_EndTurn(u8 taskId)
 {
-    sub_8124D3C((&eRoulette->varB8), 0xffff);
-    eRoulette->varB8.var04[15].var00_7 = 0;
-    eRoulette->varB8.var04[14].var00_7 = 0;
-    eRoulette->varB8.var04[13].var00_7 = 0;
-    gSprites[eRoulette->var3C[7 + gUnknown_083F8C00[gTasks[taskid].data[12]].var00]].invisible = TRUE;
-    gTasks[taskid].func = sub_8116880;
+    RouletteFlash_Stop((&eRoulette->flashUtil), 0xffff);
+    eRoulette->flashUtil.palettes[15].available = 0;
+    eRoulette->flashUtil.palettes[14].available = 0;
+    eRoulette->flashUtil.palettes[13].available = 0;
+    gSprites[eRoulette->spriteIds[7 + gUnknown_083F8C00[gTasks[taskId].data[12]].spriteIdOffset]].invisible = TRUE;
+    gTasks[taskId].func = sub_8116880;
 }
 
-void sub_8116880(u8 taskid)
+void sub_8116880(u8 taskId)
 {
     u8 i = 0;
-    gTasks[taskid].data[4] = i;
-    eRoulette->var1B[eRoulette->var1A_0] = 0;
-    sub_8117158(0);
-    gSprites[eRoulette->var3C[48]].invisible = TRUE;
+    gTasks[taskId].data[4] = i;
+    eRoulette->betSelection[eRoulette->curBallNum] = 0;
+    DrawGridBackground(0);
+    gSprites[eRoulette->spriteIds[48]].invisible = TRUE;
     for (i = 0; i < 4; i++)
     {
-        gSprites[eRoulette->var3C[i + 41]].oam.tileNum =
-        gSprites[eRoulette->var3C[i + 41]].sheetTileStart
-        + (*gSprites[eRoulette->var3C[i + 41]].anims)->type;
+        gSprites[eRoulette->spriteIds[i + 41]].oam.tileNum =
+        gSprites[eRoulette->spriteIds[i + 41]].sheetTileStart
+        + (*gSprites[eRoulette->spriteIds[i + 41]].anims)->type;
     }
-    if (!(gTasks[taskid].data[13] < eRoulette->var19))
+    if (!(gTasks[taskId].data[13] < eRoulette->minBet))
     {
-        if (gTasks[taskid].data[6] == 6)
+        if (gTasks[taskId].data[6] == 6)
         {
             Menu_DrawStdWindowFrame(0, 14, 29, 19);
-            Menu_PrintText(&gUnknown_081C41F1, 1, 15);
-            sub_8116C34(taskid, &dp01t_12_3_battle_menu, 0xffff, 3);
+            Menu_PrintText(Roulette_Text_BoardWillBeCleared, 1, 15);
+            StartTaskAfterDelayOrInput(taskId, &dp01t_12_3_battle_menu, 0xffff, 3);
         }
-        else if (gTasks[taskid].data[13] == 0x270f)
+        else if (gTasks[taskId].data[13] == 0x270f)
         {
             Menu_DrawStdWindowFrame(0, 14, 29, 19);
-            Menu_PrintText(&gUnknown_081C4231, 1, 15);
-            sub_8116C34(taskid, sub_8115734, 0xffff, 3);
+            Menu_PrintText(Roulette_Text_CoinCaseIsFull, 1, 15);
+            StartTaskAfterDelayOrInput(taskId, sub_8115734, 0xffff, 3);
         }
         else
         {
-            gTasks[taskid].func = sub_8115734;
+            gTasks[taskId].func = sub_8115734;
         }
     }
     else
     {
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
-        Menu_PrintText(&gUnknown_081C41D2, 1, 15);
-        sub_8116C34(taskid, sub_81157AC, 60, 3);
+        Menu_PrintText(Roulette_Text_NoCoinsLeft, 1, 15);
+        StartTaskAfterDelayOrInput(taskId, Task_StopPlaying, 60, 3);
     }
 }
 
-void dp01t_12_3_battle_menu(u8 taskid)
+void dp01t_12_3_battle_menu(u8 taskId)
 {
     u8 i = 0;
-    gTasks[taskid].data[6] = 0;
-    sub_8116CAC(taskid);
-    sub_8116CF8();
+    gTasks[taskId].data[6] = 0;
+    ResetBallDataForNewSpin(taskId);
+    ResetHits();
     sub_81185E8();
-    sub_8117158(0);
+    DrawGridBackground(0);
     sub_81182F8(6);
     for (i = 0; i < 12; i++)
-        gSprites[eRoulette->var3C[i + 7]].invisible = FALSE;
-    if (gTasks[taskid].data[13] == 0x270f)
+        gSprites[eRoulette->spriteIds[i + 7]].invisible = FALSE;
+    if (gTasks[taskId].data[13] == 0x270f)
     {
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
-        Menu_PrintText(&gUnknown_081C4231, 1, 15);
-        sub_8116C34(taskid, sub_8115734, 0xffff, 3);
+        Menu_PrintText(Roulette_Text_CoinCaseIsFull, 1, 15);
+        StartTaskAfterDelayOrInput(taskId, sub_8115734, 0xffff, 3);
     }
     else
     {
-        gTasks[taskid].func = sub_8115734;
+        gTasks[taskId].func = sub_8115734;
     }
 }
 
-void sub_8116AB0(u8 taskid)
+void sub_8116AB0(u8 taskId)
 {
-    sub_8124D3C((&eRoulette->varB8), 0xffff);
-    sub_8124918((&eRoulette->varB8));
-    gSaveBlock1.coins = gTasks[taskid].data[13];
-    if (gSaveBlock1.coins < eRoulette->var19)
+    RouletteFlash_Stop((&eRoulette->flashUtil), 0xffff);
+    RouletteFlash_Reset((&eRoulette->flashUtil));
+    gSaveBlock1.coins = gTasks[taskId].data[13];
+    if (gSaveBlock1.coins < eRoulette->minBet)
         gSpecialVar_0x8004 = TRUE;
     else
         gSpecialVar_0x8004 = FALSE;
     BeginHardwarePaletteFade(255, 0, 0, 16, 0);
-    gTasks[taskid].func = sub_8116B40;
+    gTasks[taskId].func = sub_8116B40;
 }
 
 void sub_8116B40(u8 taskId) // end roulette ?
@@ -1273,170 +1262,170 @@ void sub_8116B40(u8 taskId) // end roulette ?
     }
 }
 
-void sub_8116BC0(u8 taskid)
+static void Task_WaitForNextTask(u8 taskId)
 {
-    if (eRoulette->varA8 == 0 || JOY_NEW(eRoulette->varAA))
+    if (eRoulette->taskWaitDelay == 0 || JOY_NEW(eRoulette->taskWaitKey))
     {
-        gTasks[taskid].func = eRoulette->varAC;
-        if (eRoulette->varAA > 0)
+        gTasks[taskId].func = eRoulette->nextTask;
+        if (eRoulette->taskWaitKey > 0)
             PlaySE(SE_SELECT);
-        eRoulette->varAC = NULL;
-        eRoulette->varAA = 0;
-        eRoulette->varA8 = 0;
+        eRoulette->nextTask = NULL;
+        eRoulette->taskWaitKey = 0;
+        eRoulette->taskWaitDelay = 0;
     }
-    if (eRoulette->varA8 != 0xffff)
-        eRoulette->varA8--;
+    if (eRoulette->taskWaitDelay != 0xffff)
+        eRoulette->taskWaitDelay--;
 }
 
-void sub_8116C34(u8 taskid, TaskFunc r1, u16 r2, u16 r3)
+static void StartTaskAfterDelayOrInput(u8 taskId, TaskFunc task, u16 delay, u16 key)
 {
-    eRoulette->varB4 = gTasks[taskid].func;
-    if (r1 == NULL)
-        r1 = eRoulette->varB4;
-    eRoulette->varAC = r1;
-    eRoulette->varA8 = r2;
-    if (r2 == 0xffff && r3 == 0)
-        eRoulette->varAA = 0xffff;
+    eRoulette->prevTask = gTasks[taskId].func;
+    if (task == NULL)
+        task = eRoulette->prevTask;
+    eRoulette->nextTask = task;
+    eRoulette->taskWaitDelay = delay;
+    if (delay == 0xffff && key == 0)
+        eRoulette->taskWaitKey = 0xffff;
     else
-        eRoulette->varAA = r3;
-    gTasks[taskid].func = sub_8116BC0;
+        eRoulette->taskWaitKey = key;
+    gTasks[taskId].func = Task_WaitForNextTask;
 }
 
-void sub_8116CAC(u8 taskid)
+static void ResetBallDataForNewSpin(u8 taskId)
 {
     u8 i = 0;
-    eRoulette->var00 = i;
-    eRoulette->var03_0 = 0;
-    eRoulette->var03_5 = 0;
-    eRoulette->var03_6 = 0;
-    eRoulette->var03_7 = 0;
+    eRoulette->unk0 = i;
+    eRoulette->useTaillow = 0;
+    eRoulette->ballStuck = 0;
+    eRoulette->ballUnstuck = 0;
+    eRoulette->ballRolling = 0;
     for (i = 0; i < 6; i++)
-        eRoulette->var1B[i] = 0;
-    eRoulette->var1A_0 = 0;
-    gTasks[taskid].data[1] = 0;
+        eRoulette->betSelection[i] = 0;
+    eRoulette->curBallNum = 0;
+    gTasks[taskId].data[1] = 0;
 }
 
-void sub_8116CF8(void)
+static void ResetHits(void)
 {
     u8 i;
-    eRoulette->var08 = 0;
+    eRoulette->hitFlags = 0;
     for (i = 0; i < 6; i++)
-        eRoulette->var0C[i] = 0;
+        eRoulette->hitSquares[i] = 0;
     for (i = 0; i < 4; i++)
-        eRoulette->var12[i] = 0;
+        eRoulette->pokeHits[i] = 0;
     for (i = 0; i < 3; i++)
-        eRoulette->var16[i] = 0;
+        eRoulette->colorHits[i] = 0;
     sub_8117C60(1, 255);
 }
 
-u8 sub_8116D54(u8 taskid, u8 r1)
+static u8 RecordHit(u8 taskId, u8 slotId)
 {
-    u32 t0[] = {67650, 135300, 270600, 541200};
-    u32 t1[] = {0x3e0, 0x7c00, 0xf8000};
-    if (r1 > 11)
+    u32 columnFlags[] = {67650, 135300, 270600, 541200};
+    u32 rowFlags[] = {0x3e0, 0x7c00, 0xf8000};
+    if (slotId > 11)
     {
         return 0;
     }
     else
     {
         u8 i;
-        u8 z;
-        eRoulette->var0C[gTasks[taskid].data[6] - 1] = gUnknown_083F8D90[r1].var02;
-        gTasks[taskid].data[12] = gUnknown_083F8D90[r1].var02;
-        eRoulette->var08 |= gUnknown_083F8D90[r1].var04;
+        u8 j;
+        eRoulette->hitSquares[gTasks[taskId].data[6] - 1] = gUnknown_083F8D90[slotId].gridSquare;
+        gTasks[taskId].data[12] = gUnknown_083F8D90[slotId].gridSquare;
+        eRoulette->hitFlags |= gUnknown_083F8D90[slotId].flag;
         for (i = 0; i < 4; i++)
         {
-            if (gUnknown_083F8D90[r1].var04 & t0[i])
-                eRoulette->var12[i]++;
-            if (eRoulette->var12[i] > 2)
-                eRoulette->var08 |= t0[i];
+            if (gUnknown_083F8D90[slotId].flag & columnFlags[i])
+                eRoulette->pokeHits[i]++;
+            if (eRoulette->pokeHits[i] > 2)
+                eRoulette->hitFlags |= columnFlags[i];
         }
-        for (z = 0; z < 3; z++)
+        for (j = 0; j < 3; j++)
         {
-            if (gUnknown_083F8D90[r1].var04 & t1[z])
-                eRoulette->var16[z]++;
-            if (eRoulette->var16[z] > 3)
-                eRoulette->var08 |= t1[z];
+            if (gUnknown_083F8D90[slotId].flag & rowFlags[j])
+                eRoulette->colorHits[j]++;
+            if (eRoulette->colorHits[j] > 3)
+                eRoulette->hitFlags |= rowFlags[j];
         }
-        return gUnknown_083F8D90[r1].var02;
+        return gUnknown_083F8D90[slotId].gridSquare;
     }
 }
 
-u8 sub_8116E5C(u8 r0, u8 r1)
+static u8 IsHitInBetSelection(u8 gridSquare, u8 betSelection)
 {
-    u8 t = r0;
-    if (--r0 < 19)
+    u8 hit = gridSquare;
+    if (--gridSquare < 19)
     {
-        switch (r1)
+        switch (betSelection)
         {
         case 0:
             return 3;
             break;
         case 1 ... 4:
-            if (t == r1 + 5 || t == r1 + 10 || t == r1 + 15)
+            if (hit == betSelection + 5 || hit == betSelection + 10 || hit == betSelection + 15)
                 return 1;
             break;
         case 5:
         case 10:
         case 15:
-            if (!(t < r1 + 1) && !(t > r1 + 4))
+            if (!(hit < betSelection + 1) && !(hit > betSelection + 4))
                 return 1;
             break;
         default:
-            if (t == r1)
+            if (hit == betSelection)
                 return 1;
         }
     }
     return 0;
 }
 
-void sub_8116EF8(u8 r0)
+static void FlashSelectionOnWheel(u8 selectionId)
 {
 
-    u16 var0 = 0;
-    u8 var2;
-    u16 var3;
+    u16 flashFlags = 0;
+    u8 numSelected;
+    u16 palOffset;
     u8 i;
-    switch (r0)
+    switch (selectionId)
     {
     case 5:
     case 10:
     case 15:
-        for (i = (r0 + 1); i < (r0 + 5); i++)
-            if (!(eRoulette->var08 & gUnknown_083F8C00[i].var08))
-                var0 |= gUnknown_083F8C00[i].var10;
-        sub_8124CE8(&eRoulette->varB8, var0 &= 0xdfff);
+        for (i = (selectionId + 1); i < (selectionId + 5); i++)
+            if (!(eRoulette->hitFlags & gUnknown_083F8C00[i].flag))
+                flashFlags |= gUnknown_083F8C00[i].flashFlags;
+        RouletteFlash_Enable(&eRoulette->flashUtil, flashFlags &= 0xdfff);
         break;
     default:
     {
-        struct UnkStruct1 var1[3];
-        memcpy(var1, gUnknown_083F8E9C, sizeof var1);
-        if (r0 > 0 && r0 < 5)
-            var2 = 3;
+        struct RouletteFlashSettings iconFlash[3];
+        memcpy(iconFlash, sFlashData_PokeIcons, sizeof iconFlash);
+        if (selectionId > 0 && selectionId < 5)
+            numSelected = 3;
         else
-            var2 = 1;
-        var3 = r0 / 5 - 1;
-        switch (r0 % 5)
+            numSelected = 1;
+        palOffset = selectionId / 5 - 1;
+        switch (selectionId % 5)
         {
             case 1:
-                var3 = gSprites[eRoulette->var3C[7 + 0]].oam.paletteNum * 16;
+                palOffset = gSprites[eRoulette->spriteIds[7 + 0]].oam.paletteNum * 16;
                 break;
             case 2:
-                var3 = gSprites[eRoulette->var3C[7 + 1]].oam.paletteNum * 16;
+                palOffset = gSprites[eRoulette->spriteIds[7 + 1]].oam.paletteNum * 16;
                 break;
             case 3:
-                var3 = gSprites[eRoulette->var3C[7 + 2]].oam.paletteNum * 16;
+                palOffset = gSprites[eRoulette->spriteIds[7 + 2]].oam.paletteNum * 16;
                 break;
             case 4:
-                var3 = gSprites[eRoulette->var3C[7 + 3]].oam.paletteNum * 16;
+                palOffset = gSprites[eRoulette->spriteIds[7 + 3]].oam.paletteNum * 16;
                 break;
         }
-        if (var2 == 1)
+        if (numSelected == 1)
         {
-            if (!(eRoulette->var08 & gUnknown_083F8C00[r0].var08))
+            if (!(eRoulette->hitFlags & gUnknown_083F8C00[selectionId].flag))
             {
-                var1[r0 / 5 - 1].var02 += var3;
-                sub_812492C(&eRoulette->varB8, 13, &var1[r0 / 5 - 1]);
+                iconFlash[selectionId / 5 - 1].paletteOffset += palOffset;
+                RouletteFlash_Add(&eRoulette->flashUtil, 13, &iconFlash[selectionId / 5 - 1]);
             }
             else
                 return;
@@ -1445,218 +1434,218 @@ void sub_8116EF8(u8 r0)
         {
             for (i = 0; i < 3; i++)
             {
-                u8 var4 = i * 5 + r0 + 5;
-                if (!(eRoulette->var08 & gUnknown_083F8C00[var4].var08))
+                u8 columnSlotId = i * 5 + selectionId + 5;
+                if (!(eRoulette->hitFlags & gUnknown_083F8C00[columnSlotId].flag))
                 {
-                    var1[var4 / 5 - 1].var02 += var3;
-                    sub_812492C(&eRoulette->varB8, i + 13, &var1[var4 / 5 - 1]);
-                    if (var2 == 3)
-                        var0 = gUnknown_083F8C00[var4].var10;
-                    var2--;
+                    iconFlash[columnSlotId / 5 - 1].paletteOffset += palOffset;
+                    RouletteFlash_Add(&eRoulette->flashUtil, i + 13, &iconFlash[columnSlotId / 5 - 1]);
+                    if (numSelected == 3)
+                        flashFlags = gUnknown_083F8C00[columnSlotId].flashFlags;
+                    numSelected--;
                 }
             }
-            if (var2 != 2)
-                var0 = 0;
+            if (numSelected != 2)
+                flashFlags = 0;
         }
-        sub_8124CE8(&eRoulette->varB8, var0 |= gUnknown_083F8C00[r0].var10);
+        RouletteFlash_Enable(&eRoulette->flashUtil, flashFlags |= gUnknown_083F8C00[selectionId].flashFlags);
         break;
     }
     }
 }
 
-void sub_8117158(u8 r0)
+static void DrawGridBackground(u8 selectionId)
 {
     vu8 i;
-    vu8 z;
-    vu16 var1;
-    vu16 var2;
-    vu8 var0;
-    u8 v[5];
-    u8 l;
-    eRoulette->var2A = 1;
+    vu8 j;
+    vu16 x;
+    vu16 y;
+    vu8 tilemapOffset;
+    u8 selectionIds[5];
+    u8 numSquares;
+    eRoulette->updateGridHighlight = 1;
     sub_8117AA8(0, 0);
-    sub_8124E2C(gBGTilemapBuffers[1], (u16 *)ewram18800, 14, 7, 16, 13);
-    switch (r0)
+    SetTilemapRect(gBGTilemapBuffers[1], (u16 *)ewram18800, 14, 7, 16, 13);
+    switch (selectionId)
     {
     case 0:
         return;
     case 1 ... 4:
-        l = 4;
-        for (i = 0; i < l; i++)
-            v[i] = i * 5 + r0;
+        numSquares = 4;
+        for (i = 0; i < numSquares; i++)
+            selectionIds[i] = i * 5 + selectionId;
         break;
     case 5:
     case 10:
     case 15:
-        l = 5;
-        for (i = 0; i < l; i++)
-            v[i] = i + r0;
+        numSquares = 5;
+        for (i = 0; i < numSquares; i++)
+            selectionIds[i] = i + selectionId;
         break;
     default:
-        l = 1;
-        v[0] = r0;
+        numSquares = 1;
+        selectionIds[0] = selectionId;
     }
-    for (i = 0; i < l; i++)
+    for (i = 0; i < numSquares; i++)
     {
-        var0 = gUnknown_083F8C00[v[i]].var06;
-        var1 = gUnknown_083F8C00[v[i]].var03;
-        for (z = 0; z < 3; z++)
+        tilemapOffset = gUnknown_083F8C00[selectionIds[i]].tilemapOffset;
+        x = gUnknown_083F8C00[selectionIds[i]].x;
+        for (j = 0; j < 3; j++)
         {
-            var2 = (gUnknown_083F8C00[v[i]].var04 + z) * 32;
-            gBGTilemapBuffers[1][var1 + var2 + 0] = ewram18800[0xD0 + (var0 + z) * 3 + 0];
-            gBGTilemapBuffers[1][var1 + var2 + 1] = ewram18800[0xD0 + (var0 + z) * 3 + 1];
-            gBGTilemapBuffers[1][var1 + var2 + 2] = ewram18800[0xD0 + (var0 + z) * 3 + 2];
+            y = (gUnknown_083F8C00[selectionIds[i]].y + j) * 32;
+            gBGTilemapBuffers[1][x + y + 0] = ewram18800[0xD0 + (tilemapOffset + j) * 3 + 0];
+            gBGTilemapBuffers[1][x + y + 1] = ewram18800[0xD0 + (tilemapOffset + j) * 3 + 1];
+            gBGTilemapBuffers[1][x + y + 2] = ewram18800[0xD0 + (tilemapOffset + j) * 3 + 2];
         }
     }
 }
 
-u8 sub_8117380(u8 r0)
+static u8 GetMultiplier(u8 selectionId)
 {
-    u8 var0[] = {0, 3, 4, 6, 12};
-    if (r0 > 19)
-        r0 = 0;
-    switch (gUnknown_083F8C00[r0].var01_0)
+    u8 multipliers[] = {0, 3, 4, 6, 12};
+    if (selectionId > 19)
+        selectionId = 0;
+    switch (gUnknown_083F8C00[selectionId].baseMultiplier)
     {
     case 3:
-        r0 = r0 / 5 - 1;
-        if (eRoulette->var16[r0] > 3)
+        selectionId = selectionId / 5 - 1;
+        if (eRoulette->colorHits[selectionId] > 3)
             return 0;
-        return var0[eRoulette->var16[r0] + 1];
+        return multipliers[eRoulette->colorHits[selectionId] + 1];
     case 4:
-        r0--;
-        if (eRoulette->var12[r0] > 2)
+        selectionId--;
+        if (eRoulette->pokeHits[selectionId] > 2)
             return 0;
-        return var0[eRoulette->var12[r0] + 2];
+        return multipliers[eRoulette->pokeHits[selectionId] + 2];
     case 12:
-        if (eRoulette->var08 & gUnknown_083F8C00[r0].var08)
+        if (eRoulette->hitFlags & gUnknown_083F8C00[selectionId].flag)
             return 0;
-        return var0[4];
+        return multipliers[4];
     }
     return 0;
 }
 
-void sub_8117434(void)
+static void UpdateWheelPosition(void)
 {
-    s32 x1;
-    s32 x2;
-    REG_BG2PA = eRoulette->var2C.a;
-    REG_BG2PB = eRoulette->var2C.b;
-    REG_BG2PC = eRoulette->var2C.c;
-    REG_BG2PD = eRoulette->var2C.d;
-    x1 = 0x7400 - eRoulette->var2C.a * (gSpriteCoordOffsetX + 116)
-                - eRoulette->var2C.b * (gSpriteCoordOffsetY + 80);
-    x2 = 0x5400 - eRoulette->var2C.c * (gSpriteCoordOffsetX + 116)
-                - eRoulette->var2C.d * (gSpriteCoordOffsetY + 80);
-    REG_BG2X_L = x1;
-    REG_BG2X_H = (x1 & 0xfff0000) >> 16;
-    REG_BG2Y_L = x2;
-    REG_BG2Y_H = (x2 & 0xfff0000) >> 16;
+    s32 bg2x;
+    s32 bg2y;
+    REG_BG2PA = eRoulette->wheelRotation.a;
+    REG_BG2PB = eRoulette->wheelRotation.b;
+    REG_BG2PC = eRoulette->wheelRotation.c;
+    REG_BG2PD = eRoulette->wheelRotation.d;
+    bg2x = 0x7400 - eRoulette->wheelRotation.a * (gSpriteCoordOffsetX + 116)
+                - eRoulette->wheelRotation.b * (gSpriteCoordOffsetY + 80);
+    bg2y = 0x5400 - eRoulette->wheelRotation.c * (gSpriteCoordOffsetX + 116)
+                - eRoulette->wheelRotation.d * (gSpriteCoordOffsetY + 80);
+    REG_BG2X_L = bg2x;
+    REG_BG2X_H = (bg2x & 0xfff0000) >> 16;
+    REG_BG2Y_L = bg2y;
+    REG_BG2Y_H = (bg2y & 0xfff0000) >> 16;
 }
 
-s16 MathUtil_Mul16(s16 r0, s16 r1)
+s16 MathUtil_Mul16(s16 x, s16 y)
 {
-    s32 t = r0 * r1;
-    t /= 0x100;
-    return t;
+    s32 result = x * y;
+    result /= 0x100;
+    return result;
 }
 
-s16 MathUtil_Inv16(s16 r0)
+s16 MathUtil_Inv16(s16 y)
 {
-    s32 t = 0x10000;
-    return t / r0;
+    s32 x = 0x10000;
+    return x / y;
 }
 
-void sub_81174F8(u8 r0)
+void sub_81174F8(u8 taskId)
 {
     DisplayYesNoMenu(20, 8, 1);
     sub_814AAF8(RGB(30, 12, 11));
-    DoYesNoFuncWithChoice(r0, &gUnknown_083F8EB4);
+    DoYesNoFuncWithChoice(taskId, &sYesNoTable_AcceptMinBet);
 }
 
-void sub_8117528(u8 taskid)
+static void Task_FadeToRouletteGame(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
         SetVBlankCallback(NULL);
         SetMainCallback2(sub_8115384);
-        DestroyTask(taskid);
+        DestroyTask(taskId);
     }
 }
 
-void sub_811755C(u8 taskid)
+void sub_811755C(u8 taskId)
 {
     Menu_EraseWindowRect(20, 8, 26, 13);
     Menu_EraseScreen();
     BeginNormalPaletteFade(0xffffffff, 0, 0, 16, RGB(0, 0, 0));
     gPaletteFade.delayCounter = gPaletteFade.multipurpose2;
     UpdatePaletteFade();
-    gTasks[taskid].func = sub_8117528;
+    gTasks[taskId].func = Task_FadeToRouletteGame;
 }
 
-void sub_81175C0(u8 taskid)
+void sub_81175C0(u8 taskId)
 {
 #if DEBUG
     unk_203955C[0] = 0;
 #endif
     Menu_EraseScreen();
     UnlockPlayerFieldControls();
-    DestroyTask(taskid);
+    DestroyTask(taskId);
 }
 
-void sub_81175DC(u8 taskid)
+void sub_81175DC(u8 taskId)
 {
-    gTasks[taskid].data[0]++;
-    if (!JOY_NEW(A_BUTTON | B_BUTTON) && gTasks[taskid].data[0] < 61)
+    gTasks[taskId].data[0]++;
+    if (!JOY_NEW(A_BUTTON | B_BUTTON) && gTasks[taskId].data[0] < 61)
         return;
     gSpecialVar_0x8004 = 1;
     Menu_EraseScreen();
     UnlockPlayerFieldControls();
-    DestroyTask(taskid);
+    DestroyTask(taskId);
 }
 
-void sub_8117630(u8 taskid)
+void sub_8117630(u8 taskId)
 {
-    u32 temp = gUnknown_083F8DF0[(gSpecialVar_0x8004 & 1) + (gSpecialVar_0x8004 >> 7 << 1)];
-    ConvertIntToDecimalStringN(gStringVar1, temp, 2, 1);
-    StringExpandPlaceholders(gStringVar4, &gUnknown_081C40DF);
+    u32 minBet = sTableMinBets[(gSpecialVar_0x8004 & 1) + (gSpecialVar_0x8004 >> 7 << 1)];
+    ConvertIntToDecimalStringN(gStringVar1, minBet, 2, 1);
+    StringExpandPlaceholders(gStringVar4, Roulette_Text_PlayMinimumWagerIsX);
     Menu_DrawStdWindowFrame(0, 14, 29, 19);
     Menu_PrintText(gStringVar4, 1, 15);
-    gTasks[taskid].func = sub_81174F8;
+    gTasks[taskId].func = sub_81174F8;
 }
 
-void Task_Roulette_0(u8 taskid)
+void Task_Roulette_0(u8 taskId)
 {
-    s32 temp;
-    ConvertIntToDecimalStringN(gStringVar1, gTasks[taskid].data[13], 1, 4);
+    s32 minBet;
+    ConvertIntToDecimalStringN(gStringVar1, gTasks[taskId].data[13], 1, 4);
     StringExpandPlaceholders(gStringVar4, gOtherText_Coins);
     Menu_DrawStdWindowFrame(0, 0, 9, 3);
     MenuPrint_RightAligned(gStringVar4, 9, 1);
-    temp = gUnknown_083F8DF0[(gSpecialVar_0x8004 & 1) + (gSpecialVar_0x8004 >> 7 << 1)];
-    ConvertIntToDecimalStringN(gStringVar1, temp, 2, 1);
-    if (gTasks[taskid].data[13] >= temp)
+    minBet = sTableMinBets[(gSpecialVar_0x8004 & 1) + (gSpecialVar_0x8004 >> 7 << 1)];
+    ConvertIntToDecimalStringN(gStringVar1, minBet, 2, 1);
+    if (gTasks[taskId].data[13] >= minBet)
     {
         if ((gSpecialVar_0x8004 & 0x80) && (gSpecialVar_0x8004 & 1))
         {
             Menu_DrawStdWindowFrame(0, 14, 29, 19);
-            Menu_PrintText(&gUnknown_081C4139, 1, 15);
-            sub_8116C34(taskid , sub_8117630, 0xffff, 3);
+            Menu_PrintText(Roulette_Text_SpecialRateTable, 1, 15);
+            StartTaskAfterDelayOrInput(taskId , sub_8117630, 0xffff, 3);
         }
         else
         {
-            StringExpandPlaceholders(gStringVar4, &gUnknown_081C40DF);
+            StringExpandPlaceholders(gStringVar4, Roulette_Text_PlayMinimumWagerIsX);
             Menu_DrawStdWindowFrame(0, 14, 29, 19);
             Menu_PrintText(gStringVar4, 1, 15);
-            gTasks[taskid].func = sub_81174F8;
+            gTasks[taskId].func = sub_81174F8;
         }
     }
     else
     {
-        StringExpandPlaceholders(gStringVar4, &gUnknown_081C411C);
+        StringExpandPlaceholders(gStringVar4, Roulette_Text_NotEnoughCoins);
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
         Menu_PrintText(gStringVar4, 1, 15);
-        gTasks[taskid].func = sub_81175DC;
-        gTasks[taskid].data[13] = 0;
-        gTasks[taskid].data[0] = 0;
+        gTasks[taskId].func = sub_81175DC;
+        gTasks[taskId].data[13] = 0;
+        gTasks[taskId].data[0] = 0;
     }
 }
 

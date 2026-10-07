@@ -1007,4 +1007,17 @@ extern const u8 gText_Prev[];
 extern const u8 gText_CommunicationStandby5[];
 extern const u8 gText_YesNo[];
 
+extern const u8 Roulette_Text_PlayMinimumWagerIsX[];
+extern const u8 Roulette_Text_NotEnoughCoins[];
+extern const u8 Roulette_Text_SpecialRateTable[];
+extern const u8 Roulette_Text_ControlsInstruction[];
+extern const u8 Roulette_Text_ItsAHit[];
+extern const u8 Roulette_Text_Jackpot[];
+extern const u8 Roulette_Text_NothingDoing[];
+extern const u8 Roulette_Text_YouveWonXCoins[];
+extern const u8 Roulette_Text_NoCoinsLeft[];
+extern const u8 Roulette_Text_KeepPlaying[];
+extern const u8 Roulette_Text_BoardWillBeCleared[];
+extern const u8 Roulette_Text_CoinCaseIsFull[];
+
 #endif
