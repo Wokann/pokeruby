@@ -627,13 +627,13 @@ void sub_80EF9F8(void)
     u16 mapSectionId;
     u8 b;
 
-    switch (gPokenavStructPtr->regionMap.unk16)
+    switch (gPokenavStructPtr->regionMap.mapSecType)
     {
     case 0:
         break;
     case 1:
     case 4:
-        sub_8072A18(gPokenavStructPtr->regionMap.mapSectionName, 0x70, top * 8, 0x78, 1);
+        sub_8072A18(gPokenavStructPtr->regionMap.mapSecName, 0x70, top * 8, 0x78, 1);
         top += 2;
         if (gLinkOpen == TRUE)
         {
@@ -647,8 +647,8 @@ void sub_80EF9F8(void)
             for (i = 0; i < 4; i++)
             {
                 const u8 *secName = GetLandmarkName(
-                    gPokenavStructPtr->regionMap.mapSectionId,
-                    gPokenavStructPtr->regionMap.everGrandeCityArea,
+                    gPokenavStructPtr->regionMap.mapSecId,
+                    gPokenavStructPtr->regionMap.posWithinMapSec,
                     i);
 
                 if (secName == NULL)
@@ -659,10 +659,10 @@ void sub_80EF9F8(void)
         }
         break;
     case 2:
-        sub_8072A18(gPokenavStructPtr->regionMap.mapSectionName, 0x70, top * 8, 0x78, 1);
+        sub_8072A18(gPokenavStructPtr->regionMap.mapSecName, 0x70, top * 8, 0x78, 1);
         top += 2;
-        mapSectionId = gPokenavStructPtr->regionMap.mapSectionId;
-        b = gPokenavStructPtr->regionMap.everGrandeCityArea;
+        mapSectionId = gPokenavStructPtr->regionMap.mapSecId;
+        b = gPokenavStructPtr->regionMap.posWithinMapSec;
         if (gPokenavStructPtr->unkCDCC[mapSectionId][b] != NULL)
         {
             Menu_BlankWindowRect(14, top, 15, 15);
@@ -672,7 +672,7 @@ void sub_80EF9F8(void)
         }
         break;
     case 3:
-        sub_8072A18(gPokenavStructPtr->regionMap.mapSectionName, 0x70, top * 8, 0x78, 1);
+        sub_8072A18(gPokenavStructPtr->regionMap.mapSecName, 0x70, top * 8, 0x78, 1);
         top += 2;
         break;
     }
@@ -681,7 +681,7 @@ void sub_80EF9F8(void)
     if (!someBool && top < 16)
         Menu_BlankWindowRect(14, top, 28, 15);
 
-    if (gPokenavStructPtr->regionMap.unk16 == 2)
+    if (gPokenavStructPtr->regionMap.mapSecType == 2)
         sub_80EFD74();
     else
         sub_80EFDA0();
@@ -1823,8 +1823,8 @@ void sub_80F19FC(void)
     if (ptr[0] == 1)
     {
         const u8 *landmarkName = GetLandmarkName(
-            gPokenavStructPtr->regionMap.mapSectionId,
-            gPokenavStructPtr->regionMap.everGrandeCityArea,
+            gPokenavStructPtr->regionMap.mapSecId,
+            gPokenavStructPtr->regionMap.posWithinMapSec,
             ptr[1]);
 
         if (landmarkName)
@@ -2673,7 +2673,7 @@ void sub_80F2DD8(void)
 {
     CreateRegionMapCursor(7, 7);
     CreateRegionMapPlayerIcon(8, 8);
-    sub_80FBF94();
+    TrySetPlayerIconBlink();
 }
 
 void sub_80F2DF4(void)

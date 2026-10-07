@@ -1,4 +1,4 @@
-static const u8 sRegionMapLayout[] = {
+static const u8 sRegionMap_MapSectionLayout[] = {
     MAPSEC_NONE,
     MAPSEC_ROUTE_114,
     MAPSEC_ROUTE_114,

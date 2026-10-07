@@ -145,7 +145,7 @@ static void CB2_UnusedPokedexAreaScreen(void)
             break;
         case 4:
             CreateRegionMapPlayerIcon(1, 1);
-            RegionMapDefaultZoomOffsetPlayerSprite(0, -8);
+            PokedexAreaScreen_UpdateRegionMapVariablesAndVideoRegs(0, -8);
             SetVBlankCallback(VBlankCB_AreaScren);
             break;
         case 5:
@@ -371,7 +371,7 @@ static void BuildAreaGlowTilemap(void)
         {
             for (gUnknown_02039262 = 0; gUnknown_02039262 < 32; gUnknown_02039262++)
             {
-                if (GetRegionMapSectionAt_(gUnknown_02039262, gUnknown_02039264) == gPokedexAreaScreenPtr->overworldAreasWithMons[gUnknown_02039260].regionMapSectionId)
+                if (GetRegionMapSecIdAt(gUnknown_02039262, gUnknown_02039264) == gPokedexAreaScreenPtr->overworldAreasWithMons[gUnknown_02039260].regionMapSectionId)
                 {
                     gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039266] = 0xFFFF;
                 }
@@ -548,7 +548,7 @@ static NAKED void BuildAreaGlowTilemap(void)
                 "\tldrh r0, [r5]\n"
                 "\tldrh r1, [r6]\n"
                 "\tstr r2, [sp]\n"
-                "\tbl GetRegionMapSectionAt_\n"
+                "\tbl GetRegionMapSecIdAt\n"
                 "\tldrh r1, [r7]\n"
                 "\tlsls r1, 2\n"
                 "\tldr r3, [sp, 0x8]\n"
@@ -1238,7 +1238,7 @@ static void Task_PokedexAreaScreen_0(u8 taskId)
             break;
         case 5:
             CreateRegionMapPlayerIcon(1, 1);
-            RegionMapDefaultZoomOffsetPlayerSprite(0, -8);
+            PokedexAreaScreen_UpdateRegionMapVariablesAndVideoRegs(0, -8);
             break;
         case 6:
             CreateAreaMarkerSprites();

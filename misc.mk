@@ -125,7 +125,7 @@ $(BATTLEINTERFACEDIR)/healthbox_elements.4bpp: $(BATTLEINTERFACEDIR)/hpbar.4bpp 
 
 PKNAVGFXDIR := graphics/pokenav
 
-$(PKNAVGFXDIR)/region_map.8bpp: GFX_OPTS := -num_tiles 233
+$(PKNAVGFXDIR)/region_map/map.8bpp: GFX_OPTS := -num_tiles 233
 
 $(PKNAVGFXDIR)/device_outline.4bpp: GFX_OPTS := -num_tiles 43
 

@@ -1668,7 +1668,7 @@ void sub_80EC67C()
     switch (gPokenavStructPtr->unk304)
     {
     case 0:
-        switch (sub_80FAB60())
+        switch (DoRegionMapInputCallback())
         {
         case 1:
             sub_80EED9C();
@@ -1689,17 +1689,17 @@ void sub_80EC67C()
     case 1:
         if (!gPokenavStructPtr->regionMap.zoomed)
         {
-            sub_80FAEC4();
+            SetRegionMapDataForZoom();
             gPokenavStructPtr->unk304++;
         }
         else if (!sub_80EFBDC(1))
         {
-			sub_80FAEC4();
+			SetRegionMapDataForZoom();
 			gPokenavStructPtr->unk304++;
 		}
         break;
     case 2:
-        if (!sub_80FAFC0())
+        if (!UpdateRegionMapZoom())
         {
 			if (!gPokenavStructPtr->regionMap.zoomed)
 			{

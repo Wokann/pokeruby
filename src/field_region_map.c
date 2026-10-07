@@ -74,7 +74,7 @@ void sub_813EFDC(void)
             eRegionMapState.unk_888[0]++;
         break;
     case 2:
-        switch (sub_80FAB60())
+        switch (DoRegionMapInputCallback())
         {
         case 3:
             sub_813F0C8();
@@ -101,6 +101,6 @@ void sub_813EFDC(void)
 void sub_813F0C8(void)
 {
     Menu_BlankWindowRect(17, 17, 28, 18);
-    if (eRegionMapState.regionMap.unk16)
-        Menu_PrintText(eRegionMapState.regionMap.mapSectionName, 17, 17);
+    if (eRegionMapState.regionMap.mapSecType)
+        Menu_PrintText(eRegionMapState.regionMap.mapSecName, 17, 17);
 }
