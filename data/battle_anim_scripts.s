@@ -10318,7 +10318,7 @@ General_StatsChange: @ 81D63EA
 
 General_SubstituteFade: @ 81D63F3
 	monbg ANIM_ATTACKER
-	createvisualtask sub_81416C4, 5
+	createvisualtask AnimTask_SubstituteFadeToInvisible, 5
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 0, 0, 16, 32767
 	waitforvisualfinish
 	delay 1
@@ -10326,7 +10326,7 @@ General_SubstituteFade: @ 81D63F3
 	delay 2
 	blendoff
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 0, 0, 0, 32767
-	createvisualtask sub_814151C, 2, 1
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, 1
 	end
 
 General_SubstituteAppear: @ 81D6430
@@ -10334,16 +10334,16 @@ General_SubstituteAppear: @ 81D6430
 	end
 
 General_PokeblockThrow: @ 81D6438
-	createvisualtask sub_8141D7C, 2
-	createvisualtask sub_8141BD4, 2
+	createvisualtask AnimTask_SetAttackerTargetLeftPos, 2
+	createvisualtask AnimTask_LoadPokeblockGfx, 2
 	delay 0
 	waitplaysewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER, 22
-	createsprite gBattleAnimSpriteTemplate_840B4FC, ANIM_TARGET, 3, -16, 7, 0, 32
+	createsprite gPokeblockSpriteTemplate, ANIM_TARGET, 3, -16, 7, 0, 32
 	delay 50
 	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_TARGET, 19, 2
 	createvisualtask AnimTask_SwayMon, 5, 1, 8, 1536, 2, 1
 	waitforvisualfinish
-	createvisualtask sub_8141C08, 2
+	createvisualtask AnimTask_FreePokeblockGfx, 2
 	end
 
 General_ItemKnockoff: @ 81D647E
@@ -10352,7 +10352,7 @@ General_ItemKnockoff: @ 81D647E
 	end
 
 General_TurnTrap: @ 81D6489
-	createvisualtask sub_8141DAC, 5
+	createvisualtask AnimTask_GetTrappedMoveAnimId, 5
 	jumpargeq 0, 1, FireSpinHit
 	jumpargeq 0, 2, WhirlpoolHit
 	jumpargeq 0, 3, ClampHit
@@ -10521,7 +10521,7 @@ General_Hail: @ 81D680E
 	goto Move_HAIL
 
 General_LeechSeedDrain: @ 81D6813
-	createvisualtask sub_8141E10, 5
+	createvisualtask AnimTask_GetBattlersFromArg, 5
 	delay 0
 	goto Move_ABSORB
 
@@ -10540,7 +10540,7 @@ General_MonHit: @ 81D6821
 General_ItemSteal: @ 81D6852
 	loadspritegfx ANIM_TAG_ITEM_BAG
 	createvisualtask AnimTask_SetAnimAttackerAndTargetForEffectAtk, 2
-	createvisualtask sub_8141808, 2
+	createvisualtask AnimTask_SetTargetToEffectBattler, 2
 	delay 1
 	createsprite gItemStealSpriteTemplate, ANIM_ATTACKER, 2, 0, -5, 10, 2, -1
 	end
@@ -10668,58 +10668,58 @@ General_WishHeal: @ 81D6A7C
 	end
 
 Unknown_81D6AB6: @ 81D6AB6
-	createvisualtask sub_81417D8, 2
+	createvisualtask AnimTask_IsAttackerBehindSubstitute, 2
 	jumpargeq 7, 1, _81D6AC7
 _81D6AC5:
 	waitforvisualfinish
 	return
 _81D6AC7:
-	createvisualtask sub_814151C, 2, 1
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, 1
 	waitforvisualfinish
 	goto _81D6AC5
 
 Unknown_81D6AD6: @ 81D6AD6
-	createvisualtask sub_81417D8, 2
+	createvisualtask AnimTask_IsAttackerBehindSubstitute, 2
 	jumpargeq 7, 1, _81D6AE7
 _81D6AE5:
 	waitforvisualfinish
 	return
 _81D6AE7:
-	createvisualtask sub_814151C, 2, 0
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, 0
 	waitforvisualfinish
 	goto _81D6AE5
 
 Special_LevelUp: @ 81D6AF6
 	playsewithpan SE_EXP_MAX, 0
-	createvisualtask sub_813F4EC, 2
+	createvisualtask AnimTask_LoadHealthboxPalsForLevelUp, 2
 	delay 0
-	createvisualtask sub_813F6A0, 5, 0, 0
+	createvisualtask AnimTask_FlashHealthboxOnLevelUp, 5, 0, 0
 	waitforvisualfinish
-	createvisualtask sub_813F5E8, 2
+	createvisualtask AnimTask_FreeHealthboxPalsForLevelUp, 2
 	end
 
 Special_SwitchOutPlayerMon: @ 81D6B17
-	createvisualtask sub_813F844, 2
+	createvisualtask AnimTask_SwitchOutBallEffect, 2
 	delay 10
-	createvisualtask sub_813F798, 2
+	createvisualtask AnimTask_SwitchOutShrinkMon, 2
 	end
 
 Special_SwitchOutOpponentMon: @ 81D6B28
-	createvisualtask sub_813F844, 2
+	createvisualtask AnimTask_SwitchOutBallEffect, 2
 	delay 10
-	createvisualtask sub_813F798, 2
+	createvisualtask AnimTask_SwitchOutShrinkMon, 2
 	end
 
 Special_BallThrow: @ 81D6B39
-	createvisualtask sub_813F990, 2
+	createvisualtask AnimTask_LoadBallGfx, 2
 	delay 0
 	playsewithpan SE_BALL_THROW, 0
-	createvisualtask sub_813FA94, 2
-	createvisualtask sub_813F9E0, 2
+	createvisualtask AnimTask_ThrowBall, 2
+	createvisualtask AnimTask_IsBallBlockedByTrainer, 2
 	jumpargeq 7, -1, _81D6B65
 _81D6B5C:
 	waitforvisualfinish
-	createvisualtask sub_813F9B8, 2
+	createvisualtask AnimTask_FreeBallGfx, 2
 	end
 _81D6B65:
 	loadspritegfx ANIM_TAG_IMPACT
@@ -10735,17 +10735,17 @@ _81D6B65:
 	goto _81D6B5C
 
 Special_SafariBallThrow: @ 81D6B8D
-	createvisualtask sub_813F990, 2
+	createvisualtask AnimTask_LoadBallGfx, 2
 	delay 0
-	createvisualtask sub_813FBB8, 2
+	createvisualtask AnimTask_ThrowBall_StandingTrainer, 2
 	waitforvisualfinish
-	createvisualtask sub_813F9B8, 2
+	createvisualtask AnimTask_FreeBallGfx, 2
 	end
 
 Special_SubstituteToMon: @ 81D6BA6
-	createvisualtask sub_814151C, 2, 1
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, 1
 	end
 
 Special_MonToSubstitute: @ 81D6BB0
-	createvisualtask sub_814151C, 2, 0
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, 0
 	end

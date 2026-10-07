@@ -318,4 +318,10 @@ void DestroyAnimSpriteAfterTimer(struct Sprite *sprite);
 // battle_anim_smokescreen.c
 u8 SmokescreenImpact(s16 x, s16 y, bool8 persist);
 
+// battle_anim_throw.c
+void TryShinyAnimation(u8 battler, struct Pokemon *mon);
+u8 ItemIdToBallId(u16 ballItem);
+u8 AnimateBallOpenParticles(u8 x, u8 y, u8 priority, u8 subpriority, u8 ballId);
+u8 LaunchBallFadeMonTask(u8 unfadeLater, u8 spritePalNum, u32 selectedPalettes, u8 ballId);
+
 #endif

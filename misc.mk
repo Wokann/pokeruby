@@ -180,7 +180,7 @@ $(BTLANMSPRGFXDIR)/ice_crystals.4bpp: $(BTLANMSPRGFXDIR)/ice_crystals_0.4bpp $(B
 $(BTLANMSPRGFXDIR)/flower.4bpp: $(BTLANMSPRGFXDIR)/flower_0.4bpp $(BTLANMSPRGFXDIR)/flower_1.4bpp
 	@cat $(BTLANMSPRGFXDIR)/flower_0.4bpp $(BTLANMSPRGFXDIR)/flower_1.4bpp >$@
 
-$(MASKSGFXDIR)/unknown_D2EDFC.4bpp: GFX_OPTS := -num_tiles 14
+$(MASKSGFXDIR)/unused_level_up.4bpp: GFX_OPTS := -num_tiles 14
 
 
 #### Battle Transition

@@ -1,7 +1,6 @@
 #include "global.h"
 #include "gba/m4a_internal.h"
 #include "battle.h"
-#include "battle_anim_special.h"
 #include "decompress.h"
 #include "graphics.h"
 #include "m4a.h"
@@ -361,7 +360,7 @@ static void Task_DoPokeballSendOutAnim(u8 taskId)
     else
         itemId = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler]], MON_DATA_POKEBALL);
 
-    ballId = ball_number_to_ball_processing_index(itemId);
+    ballId = ItemIdToBallId(itemId);
     LoadBallGfx(ballId);
     ballSpriteId = CreateSprite(&gBallSpriteTemplates[ballId], 32, 80, 29);
     gSprites[ballSpriteId].data[0] = 0x80;
@@ -423,9 +422,9 @@ static void SpriteCB_BallThrow(struct Sprite *sprite)
         sprite->x2 = 0;
         sprite->y2 = 0;
         sprite->data[5] = 0;
-        ballId = ball_number_to_ball_processing_index(GetBattlerPokeballItemId(opponentBattler));
+        ballId = ItemIdToBallId(GetBattlerPokeballItemId(opponentBattler));
         AnimateBallOpenParticles(sprite->x, sprite->y - 5, 1, 0x1C, ballId);
-        sprite->data[0] = sub_8141314(0, opponentBattler, 14, ballId);
+        sprite->data[0] = LaunchBallFadeMonTask(0, opponentBattler, 14, ballId);
         sprite->data[6] = opponentBattler;
         sprite->data[7] = noOfShakes;
         DestroyTask(taskId);
@@ -702,9 +701,9 @@ static void sub_8046C78(struct Sprite *sprite)
     u8 battler = sprite->data[6];
 
     StartSpriteAnim(sprite, 1);
-    ballId = ball_number_to_ball_processing_index(GetBattlerPokeballItemId(battler));
+    ballId = ItemIdToBallId(GetBattlerPokeballItemId(battler));
     AnimateBallOpenParticles(sprite->x, sprite->y - 5, 1, 28, ballId);
-    sprite->data[0] = sub_8141314(1, sprite->data[6], 14, ballId);
+    sprite->data[0] = LaunchBallFadeMonTask(1, sprite->data[6], 14, ballId);
     sprite->callback = HandleBallAnimEnd;
     if (gMain.inBattle)
     {
@@ -932,7 +931,7 @@ static u8 AnimateBallOpenParticlesForPokeball(u8 x, u8 y, u8 priority, u8 subpri
 
 static u8 LaunchBallFadeMonTaskForPokeball(u8 unFadeLater, u8 spritePalNum, u32 selectedPalettes)
 {
-    return sub_8141314(unFadeLater, spritePalNum, selectedPalettes, 0);
+    return LaunchBallFadeMonTask(unFadeLater, spritePalNum, selectedPalettes, 0);
 }
 
 void CreatePokeballSprite(u8 monSpriteId, u8 monPalNum, u8 x, u8 y, u8 oamPriority, u8 subpriority, u8 delay, u32 fadePalettes)

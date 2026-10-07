@@ -1,6 +1,6 @@
 #include "global.h"
 #include "battle.h"
-#include "battle_anim_special.h"
+#include "battle_anim.h"
 #include "contest.h"
 #include "contest_effect.h"
 #include "data.h"
@@ -3965,7 +3965,7 @@ static void RemoveAndCreateMonMarkingsSprite(struct Pokemon *mon)
 
 static void CreateCaughtBallSprite(struct Pokemon *mon)
 {
-    u8 ball = ball_number_to_ball_processing_index(GetMonData(mon, MON_DATA_POKEBALL));
+    u8 ball = ItemIdToBallId(GetMonData(mon, MON_DATA_POKEBALL));
     LoadBallGfx(ball);
 
     pssData.ballSpriteId = CreateSprite(&gBallSpriteTemplates[ball], 6, 136, 0);

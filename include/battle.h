@@ -443,9 +443,9 @@ struct BattleAnimationInfo
     u8 filler2[6];
     u8 ballThrowCaseId;
     u8 introAnimActive:1;
-    u8 unk9_1:1;
+    u8 wildMonInvisible:1;
     u8 unkA;
-    u16 unkC;
+    u16 ballSubpx;
 };
 
 struct UnusedControllerStruct

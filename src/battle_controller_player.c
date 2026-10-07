@@ -5,7 +5,6 @@
 #include "battle.h"
 #include "battle_gfx_sfx_util.h"
 #include "battle_main.h"
-#include "battle_anim_special.h"
 #include "battle_anim.h"
 #include "battle_controllers.h"
 #include "battle_interface.h"
