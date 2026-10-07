@@ -495,10 +495,10 @@ gOtherText_EggHotSprings:: @ 842D1C3
 	.string "Ein POKéMON-EI an den\n"
 	.string "Heißen Quellen erhalten.$"
 
-gOtherText_LinkStandby2:: @ 842D1EE
+gText_CommunicationStandby5:: @ 842D1EE
 	.string "Verbindung...$"
 
-gOtherText_YesNoAndPlayer:: @ 842D1FE
+gText_YesNo:: @ 842D1FE
 	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}JA\n"
 	.string "NEIN$"
 

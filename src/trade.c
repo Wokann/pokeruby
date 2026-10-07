@@ -4286,7 +4286,7 @@ static void sub_804DC88(void)
             gUnknown_03004828 = &ewram_2010000.unk_0f000;
             gMain.state ++;
             Text_EraseWindowRect(&gUnknown_03004828->window, 0, 0, 29, 19);
-            StringExpandPlaceholders(gStringVar4, gOtherText_LinkStandby2);
+            StringExpandPlaceholders(gStringVar4, gText_CommunicationStandby5);
             Text_InitWindowAndPrintText(&gUnknown_03004828->window, gStringVar4, gUnknown_03004828->textWindowBaseTileNum, 2, 15);
             break;
         case 1:

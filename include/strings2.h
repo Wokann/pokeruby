@@ -223,12 +223,6 @@ extern const u8 gOtherText_EggNicePlace[];
 extern const u8 gOtherText_EggObtainedInTrade[];
 extern const u8 gOtherText_EggHotSprings[];
 
-// evolution_scene, trade
-extern const u8 gOtherText_LinkStandby2[];
-
-// evolution_scene
-extern const u8 gOtherText_YesNoAndPlayer[];
-
 // diploma
 extern const u8 gOtherText_HoennDex[];
 extern const u8 gOtherText_NationalDex[];

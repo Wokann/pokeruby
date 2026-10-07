@@ -1004,4 +1004,7 @@ extern const u8 gText_Current[];
 extern const u8 gText_Record[];
 extern const u8 gText_Prev[];
 
+extern const u8 gText_CommunicationStandby5[];
+extern const u8 gText_YesNo[];
+
 #endif

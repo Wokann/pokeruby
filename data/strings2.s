@@ -450,10 +450,10 @@ gOtherText_EggObtainedInTrade:: @ 842D197
 gOtherText_EggHotSprings:: @ 842D1C3
 	.string "A POKéMON EGG obtained\nat the hot springs.$"
 
-gOtherText_LinkStandby2:: @ 842D1EE
+gText_CommunicationStandby5:: @ 842D1EE
 	.string "Link standby...$"
 
-gOtherText_YesNoAndPlayer:: @ 842D1FE
+gText_YesNo:: @ 842D1FE
 	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}YES\nNO$"
 	.string "{HIGHLIGHT TRANSPARENT}PLAYER$"
 	.string "{HIGHLIGHT TRANSPARENT}$"
