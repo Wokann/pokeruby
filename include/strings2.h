@@ -270,9 +270,6 @@ extern const u8 sText_Dot2[];
 // reset_rtc_screen
 extern const u8 gOtherText_OK[];
 
-// wallclock
-extern const u8 gOtherText_CorrectTimePrompt[];
-
 #if GERMAN
 extern const u8 deuOtherText_ForgotAndLearned[];
 #endif

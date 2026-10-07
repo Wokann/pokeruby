@@ -970,4 +970,6 @@ extern const u8 gText_SavingTime[];
 extern const u8 gText_MixingRecords[];
 extern const u8 gText_RecordMixingComplete[];
 
+extern const u8 gText_IsThisTheCorrectTime[];
+
 #endif

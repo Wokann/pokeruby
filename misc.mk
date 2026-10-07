@@ -231,8 +231,10 @@ STARTERCHOOSEGFXDIR := graphics/starter_choose
 $(STARTERCHOOSEGFXDIR)/tiles.4bpp: $(STARTERCHOOSEGFXDIR)/birch_bag.4bpp $(STARTERCHOOSEGFXDIR)/birch_grass.4bpp
 	@cat $(STARTERCHOOSEGFXDIR)/birch_bag.4bpp $(STARTERCHOOSEGFXDIR)/birch_grass.4bpp >$@
 
-$(MISCGFXDIR)/clock_misc.4bpp: $(MISCGFXDIR)/clock_hands.4bpp $(MISCGFXDIR)/clock_ampm.4bpp
-	@cat $(MISCGFXDIR)/clock_hands.4bpp $(MISCGFXDIR)/clock_ampm.4bpp >$@
+WALLCLOCKGFXDIR := graphics/wallclock
+
+$(WALLCLOCKGFXDIR)/hand.4bpp: $(WALLCLOCKGFXDIR)/hands.4bpp $(WALLCLOCKGFXDIR)/am_pm.4bpp
+	@cat $(WALLCLOCKGFXDIR)/hands.4bpp $(WALLCLOCKGFXDIR)/am_pm.4bpp >$@
 
 
 #### Unused ####
