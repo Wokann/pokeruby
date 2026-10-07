@@ -1,5 +1,5 @@
-#ifndef GUARD_LIBGNCMULTIBOOT_H
-#define GUARD_LIBGNCMULTIBOOT_H
+#ifndef GUARD_LIBGCNMULTIBOOT_H
+#define GUARD_LIBGCNMULTIBOOT_H
 
 struct GcmbStruct
 {
@@ -14,4 +14,4 @@ void GameCubeMultiBoot_Init(struct GcmbStruct *pStruct);
 void GameCubeMultiBoot_HandleSerialInterrupt(struct GcmbStruct *pStruct);
 void GameCubeMultiBoot_Quit(void);
 
-#endif // GUARD_LIBGNCMULTIBOOT_H
+#endif // GUARD_LIBGCNMULTIBOOT_H

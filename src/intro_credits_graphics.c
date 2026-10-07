@@ -5,7 +5,7 @@
 #include "decompress.h"
 #include "hall_of_fame.h"
 #include "intro_credits_graphics.h"
-#include "libgncmultiboot.h"
+#include "libgcnmultiboot.h"
 #include "link.h"
 #include "m4a.h"
 #include "main.h"
@@ -261,15 +261,15 @@ const struct SpriteTemplate gSpriteTemplate_8416D94 = {
     1005, 1005, &gOamData_8416D5C, gSpriteAnimTable_8416D74, NULL, gDummySpriteAffineAnimTable, nullsub_83
 };
 
-const struct CompressedSpriteSheet gIntro2BrendanSpriteSheet[] = {
+const struct CompressedSpriteSheet gSpriteSheet_IntroBrendan[] = {
     { gIntro2BrendanTiles, 0x3800, 1002 },
     {}
 };
-const struct CompressedSpriteSheet gIntro2MaySpriteSheet[] = {
+const struct CompressedSpriteSheet gSpriteSheet_IntroMay[] = {
     { gIntro2MayTiles, 0x3800, 1003 },
     {}
 };
-const struct CompressedSpriteSheet gIntro2BicycleSpriteSheet[] = {
+const struct CompressedSpriteSheet gSpriteSheet_IntroBicycle[] = {
     { gIntro2BicycleTiles, 0x1000, 1001 },
     {}
 };
@@ -301,8 +301,8 @@ const struct CompressedSpriteSheet gUnknown_08416E34[] = {
 };
 
 
-EWRAM_DATA u16 gUnknown_02039358 = 0;
-EWRAM_DATA s16 gUnknown_0203935A = 0;
+EWRAM_DATA u16 gIntroCredits_MovingSceneryVBase = 0;
+EWRAM_DATA s16 gIntroCredits_MovingSceneryVOffset = 0;
 EWRAM_DATA s16 gIntroCredits_MovingSceneryState = 0;
 
 extern u8 gReservedSpritePaletteCount;
@@ -310,12 +310,12 @@ extern u8 gReservedSpritePaletteCount;
 void sub_8149248();
 void sub_8149264();
 
-void load_intro_part2_graphics(u8 a)
+void LoadIntroPart2Graphics(u8 scenery)
 {
     LZ77UnCompVram(&gUnknown_0841225C, (void *)(VRAM + 0x4000));
     LZ77UnCompVram(&gUnknown_084126DC, (void *)(VRAM + 0x7800));
     LoadPalette(&gUnknown_084121FC, 240, 32);
-    switch (a)
+    switch (scenery)
     {
     case 0:
     default:
@@ -339,9 +339,9 @@ void load_intro_part2_graphics(u8 a)
     gReservedSpritePaletteCount = 8;
 }
 
-void sub_8148C78(u8 a)
+void SetIntroPart2BgCnt(u8 scenery)
 {
-    if (a == 1)
+    if (scenery == 1)
     {
         REG_BG3CNT = 0x603;
         REG_BG2CNT = 0x702;
@@ -418,18 +418,18 @@ void sub_8148E90(u8 a)
     REG_DISPCNT = 0x1F40;
 }
 
-u8 sub_8148EC0(u8 a, u16 b, u16 c, u16 d)
+u8 CreateBicycleBgAnimationTask(u8 mode, u16 bg1Speed, u16 bg2Speed, u16 bg3Speed)
 {
     u8 taskId = CreateTask(&sub_8148F3C, 0);
 
-    gTasks[taskId].data[0] = a;
-    gTasks[taskId].data[1] = b;
+    gTasks[taskId].data[0] = mode;
+    gTasks[taskId].data[1] = bg1Speed;
     gTasks[taskId].data[2] = 0;
     gTasks[taskId].data[3] = 0;
-    gTasks[taskId].data[4] = c;
+    gTasks[taskId].data[4] = bg2Speed;
     gTasks[taskId].data[5] = 0;
     gTasks[taskId].data[6] = 0;
-    gTasks[taskId].data[7] = d;
+    gTasks[taskId].data[7] = bg3Speed;
     gTasks[taskId].data[8] = 8;
     gTasks[taskId].data[9] = 0;
     sub_8148F3C(taskId);
@@ -451,7 +451,7 @@ void sub_8148F3C(u8 taskId)
         gTasks[taskId].data[2] = r2 >> 16;
         gTasks[taskId].data[3] = r2;
         REG_BG1HOFS = gTasks[taskId].data[2];
-        REG_BG1VOFS = gUnknown_02039358 + gUnknown_0203935A;
+        REG_BG1VOFS = gIntroCredits_MovingSceneryVBase + gIntroCredits_MovingSceneryVOffset;
     }
 
     deltaBG2HOFS = gTasks[taskId].data[4];
@@ -463,9 +463,9 @@ void sub_8148F3C(u8 taskId)
         gTasks[taskId].data[6] = r2;
         REG_BG2HOFS = gTasks[taskId].data[5];
         if (gTasks[taskId].data[0] != 0)
-            REG_BG2VOFS = gUnknown_02039358 + gUnknown_0203935A;
+            REG_BG2VOFS = gIntroCredits_MovingSceneryVBase + gIntroCredits_MovingSceneryVOffset;
         else
-            REG_BG2VOFS = gUnknown_02039358;
+            REG_BG2VOFS = gIntroCredits_MovingSceneryVBase;
     }
 
     deltaBG3HOFS = gTasks[taskId].data[7];
@@ -476,7 +476,7 @@ void sub_8148F3C(u8 taskId)
         gTasks[taskId].data[8] = r2 >> 16;
         gTasks[taskId].data[9] = r2;
         REG_BG3HOFS = gTasks[taskId].data[8];
-        REG_BG3VOFS = gUnknown_02039358;
+        REG_BG3VOFS = gIntroCredits_MovingSceneryVBase;
     }
 }
 
@@ -539,11 +539,11 @@ void sub_814910C(struct Sprite *sprite)
         if (sprite->x > 255) sprite->x = 0xFFE0;
         if (sprite->data[0])
         {
-            sprite->y2 = -(gUnknown_02039358 + gUnknown_0203935A);
+            sprite->y2 = -(gIntroCredits_MovingSceneryVBase + gIntroCredits_MovingSceneryVOffset);
         }
         else
         {
-            sprite->y2 = -gUnknown_02039358;
+            sprite->y2 = -gIntroCredits_MovingSceneryVBase;
         }
     }
 }
@@ -598,20 +598,20 @@ void sub_81492A0(struct Sprite* sprite)
 
 
 
-u8 intro_create_brendan_sprite(s16 a, s16 b)
+u8 CreateIntroBrendanSprite(s16 x, s16 y)
 {
-    u8 sprite = CreateSprite(&gSpriteTemplate_8416CDC, a, b, 0);
-    u8 brendan = CreateSprite(&gSpriteTemplate_Brendan, a, b + 8, 1);
-    gSprites[brendan].data[0] = sprite;
-    return sprite;
+    u8 playerSpriteId = CreateSprite(&gSpriteTemplate_8416CDC, x, y, 0);
+    u8 bicycleSpriteId = CreateSprite(&gSpriteTemplate_Brendan, x, y + 8, 1);
+    gSprites[bicycleSpriteId].data[0] = playerSpriteId;
+    return playerSpriteId;
 }
 
-u8 intro_create_may_sprite(s16 a, s16 b)
+u8 CreateIntroMaySprite(s16 x, s16 y)
 {
-    u8 sprite = CreateSprite(&gSpriteTemplate_8416CF4, a, b, 0);
-    u8 may = CreateSprite(&gSpriteTemplate_May, a, b + 8, 1);
-    gSprites[may].data[0] = sprite;
-    return sprite;
+    u8 playerSpriteId = CreateSprite(&gSpriteTemplate_8416CF4, x, y, 0);
+    u8 bicycleSpriteId = CreateSprite(&gSpriteTemplate_May, x, y + 8, 1);
+    gSprites[bicycleSpriteId].data[0] = playerSpriteId;
+    return playerSpriteId;
 }
 
 void nullsub_83(struct Sprite *sprite)
