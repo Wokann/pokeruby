@@ -907,12 +907,12 @@ const u8 gText_WasEnhanced[] = _("was enhanced!");
 const u8 gText_NothingChanged[] = _("Nothing changed!");
 const u8 gText_WontEatAnymore[] = _("It won't eat anymore...");
 
-const u8 gSystemText_SaveFailedBackupCheck[] = _("Save failed.\nChecking the backup memory...\nPlease wait.\n{COLOR RED}“Time required: 1 minute”");
-const u8 gSystemText_BackupDamagedGameContinue[] = _("The backup memory is damaged or\nthe internal battery has run dry.\nThe game can be played. However,\nprogress cannot be saved.");
-const u8 gSystemText_GameplayEnded[] = _("{COLOR RED}“Gameplay cannot be continued.\nReturning to the title screen...”");
-const u8 gSystemText_CheckCompleteSaveAttempt[] = _("Check completed.\nAttempting to save again.\nPlease wait.");
-const u8 gSystemText_SaveCompletedGameEnd[] = _("Save completed.\n{COLOR RED}“Gameplay cannot be continued.\nReturning to the title screen.”");
-const u8 gSystemText_SaveCompletedPressA[] = _("Save completed.\n{COLOR RED}“Please press the A Button.”");
+const u8 gText_SaveFailedCheckingBackup[] = _("Save failed.\nChecking the backup memory...\nPlease wait.\n{COLOR RED}“Time required: 1 minute”");
+const u8 gText_BackupMemoryDamaged[] = _("The backup memory is damaged or\nthe internal battery has run dry.\nThe game can be played. However,\nprogress cannot be saved.");
+const u8 gText_GamePlayCannotBeContinued[] = _("{COLOR RED}“Gameplay cannot be continued.\nReturning to the title screen...”");
+const u8 gText_CheckCompleted[] = _("Check completed.\nAttempting to save again.\nPlease wait.");
+const u8 gText_SaveCompleteGameCannotContinue[] = _("Save completed.\n{COLOR RED}“Gameplay cannot be continued.\nReturning to the title screen.”");
+const u8 gText_SaveCompletePressA[] = _("Save completed.\n{COLOR RED}“Please press the A Button.”");
 
 const u8 gOtherText_Ferry[] = _("FERRY");
 const u8 gOtherText_SecretBase[] = _("SECRET BASE");
@@ -1832,12 +1832,12 @@ const u8 gText_WasEnhanced[] = _("wurde erhöht!");
 const u8 gText_NothingChanged[] = _("Keine Veränderung eingetreten!");
 const u8 gText_WontEatAnymore[] = _("Es will nicht mehr essen.");
 
-const u8 gSystemText_SaveFailedBackupCheck[] = _("Speicherfehler\nBackup Memory wird geprüft.\nBitte warten...\n{COLOR RED}“Benötigte Zeit: 1 Minute”");
-const u8 gSystemText_BackupDamagedGameContinue[] = _("Backup Memory defekt oder\ninterne Batterie verbraucht!\nSpiel kann fortgesetzt werden.\nWeiteres Speichern nicht möglich.");
-const u8 gSystemText_GameplayEnded[] = _("{COLOR RED}“Spiel fortsetzen nicht möglich.\nZurück zum Titelbildschirm...”");
-const u8 gSystemText_CheckCompleteSaveAttempt[] = _("Überprüfung beendet.\nNeuer Speicherversuch erfolgt.\nBitte warten...");
-const u8 gSystemText_SaveCompletedGameEnd[] = _("Speichern beendet.\n{COLOR RED}“Spiel fortsetzen nicht möglich.\nZurück zum Titelbildschirm.”");
-const u8 gSystemText_SaveCompletedPressA[] = _("Speichern beendet.\n{COLOR RED}“Bitte A-Knopf drücken.”");
+const u8 gText_SaveFailedCheckingBackup[] = _("Speicherfehler\nBackup Memory wird geprüft.\nBitte warten...\n{COLOR RED}“Benötigte Zeit: 1 Minute”");
+const u8 gText_BackupMemoryDamaged[] = _("Backup Memory defekt oder\ninterne Batterie verbraucht!\nSpiel kann fortgesetzt werden.\nWeiteres Speichern nicht möglich.");
+const u8 gText_GamePlayCannotBeContinued[] = _("{COLOR RED}“Spiel fortsetzen nicht möglich.\nZurück zum Titelbildschirm...”");
+const u8 gText_CheckCompleted[] = _("Überprüfung beendet.\nNeuer Speicherversuch erfolgt.\nBitte warten...");
+const u8 gText_SaveCompleteGameCannotContinue[] = _("Speichern beendet.\n{COLOR RED}“Spiel fortsetzen nicht möglich.\nZurück zum Titelbildschirm.”");
+const u8 gText_SaveCompletePressA[] = _("Speichern beendet.\n{COLOR RED}“Bitte A-Knopf drücken.”");
 
 const u8 gOtherText_Ferry[] = _("FÄHRE");
 const u8 gOtherText_SecretBase[] = _("GEHEIMBASIS");

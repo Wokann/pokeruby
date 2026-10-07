@@ -941,12 +941,12 @@ extern const u8 gText_WasEnhanced[];
 extern const u8 gText_NothingChanged[];
 extern const u8 gText_WontEatAnymore[];
 
-extern const u8 gSystemText_SaveFailedBackupCheck[];
-extern const u8 gSystemText_BackupDamagedGameContinue[];
-extern const u8 gSystemText_GameplayEnded[];
-extern const u8 gSystemText_CheckCompleteSaveAttempt[];
-extern const u8 gSystemText_SaveCompletedGameEnd[];
-extern const u8 gSystemText_SaveCompletedPressA[];
+extern const u8 gText_SaveFailedCheckingBackup[];
+extern const u8 gText_BackupMemoryDamaged[];
+extern const u8 gText_GamePlayCannotBeContinued[];
+extern const u8 gText_CheckCompleted[];
+extern const u8 gText_SaveCompleteGameCannotContinue[];
+extern const u8 gText_SaveCompletePressA[];
 
 extern const u8 gOtherText_Ferry[];
 extern const u8 gOtherText_SecretBase[];
