@@ -535,7 +535,7 @@ static void CB2_InitMailRead(void)
             SetMainCallback2(CB2_MailRead);
             return;
         }
-    } while (sub_80F9344() != 1);
+    } while (MenuHelpers_IsLinkActive() != 1);
 }
 
 static u8 *sub_80F8D7C(u8 *dest, u8 *src)

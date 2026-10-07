@@ -824,7 +824,7 @@ static void MoveCursorPos(s8 delta)
 
 static void HandleMoveTutorMenuInput(void)
 {
-    if (JOY_REPT(DPAD_UP))
+    if (JOY_REPEAT(DPAD_UP))
     {
         if (sMoveTutorMenu->menuSelection != 0)
         {
@@ -842,7 +842,7 @@ static void HandleMoveTutorMenuInput(void)
             }
         }
     }
-    else if (JOY_REPT(DPAD_DOWN))
+    else if (JOY_REPEAT(DPAD_DOWN))
     {
         if (sMoveTutorMenu->menuSelection < sMoveTutorMenu->numMenuChoices - 1)
         {

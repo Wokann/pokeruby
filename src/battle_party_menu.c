@@ -565,7 +565,7 @@ static void Task_809538C(void)
             SetMainCallback2(CB2_PartyMenuMain);
             return;
         }
-    } while (sub_80F9344() != 1);
+    } while (MenuHelpers_IsLinkActive() != 1);
 }
 
 static void Task_HandlePopupMenuInput(u8 taskId)
@@ -574,13 +574,13 @@ static void Task_HandlePopupMenuInput(u8 taskId)
 
     if (!gPaletteFade.active)
     {
-        if (JOY_REPT(DPAD_UP))
+        if (JOY_REPEAT(DPAD_UP))
         {
             PlaySE(SE_SELECT);
             Menu_MoveCursor(-1);
             return;
         }
-        if (JOY_REPT(DPAD_DOWN))
+        if (JOY_REPEAT(DPAD_DOWN))
         {
             PlaySE(SE_SELECT);
             Menu_MoveCursor(1);

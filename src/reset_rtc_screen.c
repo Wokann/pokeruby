@@ -393,7 +393,7 @@ static void Task_ResetRtc_HandleInput(u8 taskId)
             data[2] = 6;
         }
     }
-    else if (ResetRtcScreen_MoveTimeUpDown(&data[selectionInfo->dataIndex], selectionInfo->minVal, selectionInfo->maxVal, JOY_REPT(DPAD_UP | DPAD_DOWN)))
+    else if (ResetRtcScreen_MoveTimeUpDown(&data[selectionInfo->dataIndex], selectionInfo->minVal, selectionInfo->maxVal, JOY_REPEAT(DPAD_UP | DPAD_DOWN)))
     {
         PlaySE(SE_SELECT);
         ResetRtcScreen_PrintTime(4, 9, data[3], data[4], data[5], data[6]);

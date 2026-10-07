@@ -1174,12 +1174,12 @@ static void Task_HandlePokedexStartMenuInput(u8 taskId)
             gTasks[taskId].func = Task_HandlePokedexInput;
             PlaySE(SE_SELECT);
         }
-        else if (JOY_REPT(DPAD_UP) && sPokedexView->menuCursorPos != 0)
+        else if (JOY_REPEAT(DPAD_UP) && sPokedexView->menuCursorPos != 0)
         {
             sPokedexView->menuCursorPos--;
             PlaySE(SE_SELECT);
         }
-        else if (JOY_REPT(DPAD_DOWN) && sPokedexView->menuCursorPos <= 2)
+        else if (JOY_REPEAT(DPAD_DOWN) && sPokedexView->menuCursorPos <= 2)
         {
             sPokedexView->menuCursorPos++;
             PlaySE(SE_SELECT);
@@ -1372,12 +1372,12 @@ static void Task_HandleSearchResultsStartMenuInput(u8 taskId)
             gTasks[taskId].func = Task_HandleSearchResultsInput;
             PlaySE(SE_SELECT);
         }
-        else if (JOY_REPT(DPAD_UP) && sPokedexView->menuCursorPos)
+        else if (JOY_REPEAT(DPAD_UP) && sPokedexView->menuCursorPos)
         {
             sPokedexView->menuCursorPos--;
             PlaySE(SE_SELECT);
         }
-        else if (JOY_REPT(DPAD_DOWN) && sPokedexView->menuCursorPos <= 3)
+        else if (JOY_REPEAT(DPAD_DOWN) && sPokedexView->menuCursorPos <= 3)
         {
             sPokedexView->menuCursorPos++;
             PlaySE(SE_SELECT);
@@ -4592,7 +4592,7 @@ static void Task_HandleSearchParameterInput(u8 taskId)
         return;
     }
     moved = FALSE;
-    if (JOY_REPT(DPAD_UP))
+    if (JOY_REPEAT(DPAD_UP))
     {
         if (*cursorPos != 0)
         {
@@ -4615,7 +4615,7 @@ static void Task_HandleSearchParameterInput(u8 taskId)
         }
         return;
     }
-    if (JOY_REPT(DPAD_DOWN))
+    if (JOY_REPEAT(DPAD_DOWN))
     {
         if (*cursorPos < 5 && *cursorPos < maxOption)
         {

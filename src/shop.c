@@ -170,7 +170,7 @@ static void Task_ShopMenu(u8 taskId)
 {
     const u8 taskIdConst = taskId; // why is a local const needed to match?
 
-    if (JOY_REPT(DPAD_UP))
+    if (JOY_REPEAT(DPAD_UP))
     {
         if (sMartInfo.cursor) // can move cursor up?
         {
@@ -178,7 +178,7 @@ static void Task_ShopMenu(u8 taskId)
             sMartInfo.cursor = Menu_MoveCursor(-1);
         }
     }
-    else if (JOY_REPT(DPAD_DOWN))
+    else if (JOY_REPEAT(DPAD_DOWN))
     {
         if (sMartInfo.cursor != sMartInfo.numChoices) // can move cursor down?
         {
@@ -292,7 +292,7 @@ static void VBlankCB_BuyMenu(void)
 
 static void CB2_InitBuyMenu(void)
 {
-    ClearVideoCallbacks();
+    SetVBlankHBlankCallbacksToNull();
     ScanlineEffect_Stop();
     REG_BG1HOFS = 0;
     REG_BG1VOFS = 0;
@@ -1066,7 +1066,7 @@ static void Task_BuyMenu(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        if (JOY_REPT(DPAD_ANY) == DPAD_UP) // only up can be pressed
+        if (JOY_REPEAT(DPAD_ANY) == DPAD_UP) // only up can be pressed
         {
             if (sMartInfo.cursor == 0)
             {
@@ -1087,7 +1087,7 @@ static void Task_BuyMenu(u8 taskId)
                 Shop_PrintItemDescText();
             }
         }
-        else if (JOY_REPT(DPAD_ANY) == DPAD_DOWN) // only down can be pressed
+        else if (JOY_REPEAT(DPAD_ANY) == DPAD_DOWN) // only down can be pressed
         {
             if (sMartInfo.cursor == 7) // are you at the bottom of the menu?
             {

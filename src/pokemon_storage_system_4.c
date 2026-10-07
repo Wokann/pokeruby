@@ -1690,7 +1690,7 @@ u8 InBoxInput_Normal(void)
         gPokemonStorageSystemPtr->cursorHorizontalWrap = 0;
         gPokemonStorageSystemPtr->cursorFlipTimer = 0;
 
-        if (JOY_REPT(DPAD_UP))
+        if (JOY_REPEAT(DPAD_UP))
         {
             retVal = 1;
             if (sCursorPosition >= 6)
@@ -1704,7 +1704,7 @@ u8 InBoxInput_Normal(void)
             }
             break;
         }
-        if (JOY_REPT(DPAD_DOWN))
+        if (JOY_REPEAT(DPAD_DOWN))
         {
             retVal = 1;
             cursorPosition += 6;
@@ -1718,7 +1718,7 @@ u8 InBoxInput_Normal(void)
             }
             break;
         }
-        if (JOY_REPT(DPAD_LEFT))
+        if (JOY_REPEAT(DPAD_LEFT))
         {
             retVal = 1;
             if (sCursorPosition % 6)
@@ -1730,7 +1730,7 @@ u8 InBoxInput_Normal(void)
             }
             break;
         }
-        if (JOY_REPT(DPAD_RIGHT))
+        if (JOY_REPEAT(DPAD_RIGHT))
         {
             retVal = 1;
             if ((sCursorPosition + 1) % 6)
@@ -1805,7 +1805,7 @@ u8 HandleInput_InParty(void)
         gotoBox = FALSE;
         retVal = 0;
 
-        if (JOY_REPT(DPAD_UP))
+        if (JOY_REPEAT(DPAD_UP))
         {
             if (--cursorPosition < 0)
                 cursorPosition = 6;
@@ -1814,7 +1814,7 @@ u8 HandleInput_InParty(void)
             break;
         }
 
-        if (JOY_REPT(DPAD_DOWN))
+        if (JOY_REPEAT(DPAD_DOWN))
         {
             if (++cursorPosition > 6)
                 cursorPosition = 0;
@@ -1823,7 +1823,7 @@ u8 HandleInput_InParty(void)
             break;
         }
 
-        if (JOY_REPT(DPAD_LEFT) && sCursorPosition != 0)
+        if (JOY_REPEAT(DPAD_LEFT) && sCursorPosition != 0)
         {
             retVal = 1;
             gPokemonStorageSystemPtr->cursorPrevHorizPos = sCursorPosition;
@@ -1831,7 +1831,7 @@ u8 HandleInput_InParty(void)
             break;
         }
 
-        if (JOY_REPT(DPAD_RIGHT))
+        if (JOY_REPEAT(DPAD_RIGHT))
         {
             if (sCursorPosition == 0)
             {
@@ -1920,7 +1920,7 @@ u8 HandleInput_OnBox(void)
         gPokemonStorageSystemPtr->cursorVerticalWrap = 0;
         gPokemonStorageSystemPtr->cursorFlipTimer = 0;
 
-        if (JOY_REPT(DPAD_UP))
+        if (JOY_REPEAT(DPAD_UP))
         {
             retVal = 1;
             cursorArea = 3;
@@ -1928,7 +1928,7 @@ u8 HandleInput_OnBox(void)
             gPokemonStorageSystemPtr->cursorFlipTimer = 1;
             break;
         }
-        else if (JOY_REPT(DPAD_DOWN))
+        else if (JOY_REPEAT(DPAD_DOWN))
         {
             retVal = 1;
             cursorArea = 0;
@@ -1992,7 +1992,7 @@ u8 HandleInput_OnButtons(void)
         gPokemonStorageSystemPtr->cursorVerticalWrap = 0;
         gPokemonStorageSystemPtr->cursorFlipTimer = 0;
 
-        if (JOY_REPT(DPAD_UP))
+        if (JOY_REPEAT(DPAD_UP))
         {
             retVal = 1;
             cursorArea = 0;
@@ -2005,7 +2005,7 @@ u8 HandleInput_OnButtons(void)
             break;
         }
 
-        if (JOY_REPT(DPAD_DOWN | START_BUTTON))
+        if (JOY_REPEAT(DPAD_DOWN | START_BUTTON))
         {
             retVal = 1;
             cursorArea = 2;
@@ -2014,7 +2014,7 @@ u8 HandleInput_OnButtons(void)
             break;
         }
 
-        if (JOY_REPT(DPAD_LEFT))
+        if (JOY_REPEAT(DPAD_LEFT))
         {
             retVal = 1;
             if (--cursorPosition < 0)
@@ -2025,7 +2025,7 @@ u8 HandleInput_OnButtons(void)
             break;
         }
 
-        if (JOY_REPT(DPAD_RIGHT))
+        if (JOY_REPEAT(DPAD_RIGHT))
         {
             retVal = 1;
             if (++cursorPosition > 1)

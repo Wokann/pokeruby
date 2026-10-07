@@ -91,8 +91,8 @@ static bool8 sub_8146058(void)
     switch (gMain.state)
     {
     case 0:
-        ClearVideoCallbacks();
-        sub_80F9368();
+        SetVBlankHBlankCallbacksToNull();
+        ResetVramOamAndBgCntRegs();
         sub_8146288();
         REG_BLDCNT = 0;
         gMain.state += 1;
@@ -173,7 +173,7 @@ void BerryTagScreen_814625C(u8 taskId)
             CreateTask(sub_8146480, 0);
             return;
         }
-    } while (sub_80F9344() != TRUE);
+    } while (MenuHelpers_IsLinkActive() != TRUE);
 }
 
 static void sub_8146288(void)
@@ -252,9 +252,9 @@ static void sub_8146480(u8 taskid)
 {
     if (!gPaletteFade.active)
     {
-        if (JOY_REPT(DPAD_ANY) == DPAD_UP)
+        if (JOY_REPEAT(DPAD_ANY) == DPAD_UP)
             sub_81466E8(taskid, -1);
-        if (JOY_REPT(DPAD_ANY) == DPAD_DOWN)
+        if (JOY_REPEAT(DPAD_ANY) == DPAD_DOWN)
             sub_81466E8(taskid, 1);
         if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
             sub_8146440(taskid);

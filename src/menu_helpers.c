@@ -19,9 +19,9 @@
 static void sub_80F9834(struct Sprite *sprite);
 
 static EWRAM_DATA u8 gVerticalScrollIndicatorIds[4] = {0};
-static EWRAM_DATA struct YesNoFuncTable gUnknown_020388C4 = {0};
+static EWRAM_DATA struct YesNoFuncTable sYesNo = {0};
 
-static TaskFunc gUnknown_0300074C;
+static TaskFunc sMessageNextTask;
 
 static const u8 gSpriteImage_83E5808[] = INCBIN_U8("graphics/unknown_sprites/83E59A0/0.4bpp");
 
@@ -143,19 +143,19 @@ static void PrintMessage(const u8 *str, u16 tile)
     MenuPrintMessageDefaultCoords(str);
 }
 
-static void sub_80F9090(u8 taskId)
+static void Task_ContinueTaskAfterMessagePrints(u8 taskId)
 {
     if (Menu_UpdateWindowText() == TRUE)
     {
-        gUnknown_0300074C(taskId);
+        sMessageNextTask(taskId);
     }
 }
 
 void DisplayItemMessageOnField(u8 taskId, const u8 *str, TaskFunc callback, u16 tile)
 {
     PrintMessage(str, tile);
-    gUnknown_0300074C = callback;
-    gTasks[taskId].func = sub_80F9090;
+    sMessageNextTask = callback;
+    gTasks[taskId].func = Task_ContinueTaskAfterMessagePrints;
 }
 
 static void Task_CallYesOrNoCallback(u8 taskId)
@@ -164,18 +164,18 @@ static void Task_CallYesOrNoCallback(u8 taskId)
     {
     case 0:
         PlaySE(SE_SELECT);
-        gUnknown_020388C4.yesFunc(taskId);
+        sYesNo.yesFunc(taskId);
         break;
     case 1:
     case -1:
         PlaySE(SE_SELECT);
-        gUnknown_020388C4.noFunc(taskId);
+        sYesNo.noFunc(taskId);
     }
 }
 
 void DoYesNoFuncWithChoice(u8 taskId, const struct YesNoFuncTable *funcTable)
 {
-    gUnknown_020388C4 = *funcTable;
+    sYesNo = *funcTable;
     gTasks[taskId].func = Task_CallYesOrNoCallback;
 }
 
@@ -220,7 +220,7 @@ void PrintTriangleCursorWithPalette(u8 left, u8 top, u8 paletteNum)
     PrintStringWithPalette(cursorStr, paletteNum, left, top);
 }
 
-u8 sub_80F9284(void)
+u8 GetLRKeysPressed(void)
 {
     if (gSaveBlock2.optionsButtonMode == OPTIONS_BUTTON_MODE_LR)
     {
@@ -237,15 +237,15 @@ u8 sub_80F9284(void)
     return 0;
 }
 
-u8 sub_80F92BC(void)
+u8 GetLRKeysPressedAndHeld(void)
 {
     if (gSaveBlock2.optionsButtonMode == OPTIONS_BUTTON_MODE_LR)
     {
-        if (JOY_REPT(L_BUTTON))
+        if (JOY_REPEAT(L_BUTTON))
         {
             return 1;
         }
-        if (JOY_REPT(R_BUTTON))
+        if (JOY_REPEAT(R_BUTTON))
         {
             return 2;
         }
@@ -254,7 +254,7 @@ u8 sub_80F92BC(void)
     return 0;
 }
 
-bool8 sub_80F92F4(u16 itemId)
+bool8 IsHoldingItemAllowed(u16 itemId)
 {
     if (itemId != ITEM_ENIGMA_BERRY)
     {
@@ -269,7 +269,7 @@ bool8 sub_80F92F4(u16 itemId)
     return FALSE;
 }
 
-bool8 sub_80F931C(u16 itemId)
+bool8 IsWritingMailAllowed(u16 itemId)
 {
     if (IsOverworldLinkActive() != TRUE)
     {
@@ -284,7 +284,7 @@ bool8 sub_80F931C(u16 itemId)
     return FALSE;
 }
 
-bool8 sub_80F9344(void)
+bool8 MenuHelpers_IsLinkActive(void)
 {
     if (IsOverworldLinkActive() == TRUE || gReceivedRemoteLinkPlayers == 1)
     {
@@ -294,7 +294,7 @@ bool8 sub_80F9344(void)
     return FALSE;
 }
 
-void sub_80F9368(void)
+void ResetVramOamAndBgCntRegs(void)
 {
     REG_DISPCNT = 0;
     REG_BG3CNT = 0;
@@ -314,7 +314,7 @@ void sub_80F9368(void)
     DmaClear16(3, PLTT, PLTT_SIZE);
 }
 
-void ClearVideoCallbacks(void)
+void SetVBlankHBlankCallbacksToNull(void)
 {
     SetVBlankCallback(NULL);
     SetHBlankCallback(NULL);

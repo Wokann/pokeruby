@@ -344,7 +344,7 @@ static bool8 SetupBagMenu(void)
     switch (gMain.state)
     {
     case 0:
-        ClearVideoCallbacks();
+        SetVBlankHBlankCallbacksToNull();
         BagMenu_InitBGs();
         gMain.state++;
         break;
@@ -475,7 +475,7 @@ static bool8 sub_80A34B4(void)
             ResetTasks();
             return TRUE;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
     return FALSE;
@@ -484,7 +484,7 @@ static bool8 sub_80A34B4(void)
 
 static void BagMenu_InitBGs(void)
 {
-    sub_80F9368();
+    ResetVramOamAndBgCntRegs();
     REG_BG2CNT = BGCNT_PRIORITY(2) | BGCNT_CHARBASE(1) | BGCNT_SCREENBASE(12) | BGCNT_16COLOR | BGCNT_TXT256x256;
     REG_BG1CNT = BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_SCREENBASE(4)  | BGCNT_16COLOR | BGCNT_TXT256x256;
     REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_BG2_ON | DISPCNT_OBJ_ON;
@@ -1432,7 +1432,7 @@ static void sub_80A4BF0(u16 *a)
     {
         Menu_DrawStdWindowFrame(0, 7, 13, 12);
         sub_80A4008(a, 1, 8, 12, 4);
-        if (sub_80F9344() == TRUE && sReturnLocation == RETURN_TO_FIELD_5)
+        if (MenuHelpers_IsLinkActive() == TRUE && sReturnLocation == RETURN_TO_FIELD_5)
         {
             sub_80A7834(1, 0);
         }
@@ -1507,12 +1507,12 @@ static bool8 sub_80A4F0C(void)
 {
     if (sReturnLocation == RETURN_TO_FIELD_5 || sReturnLocation == ITEMMENULOCATION_BERRY_TREE)
         return FALSE;
-    if (gMain.newKeys == DPAD_RIGHT || sub_80F9284() == 2)
+    if (gMain.newKeys == DPAD_RIGHT || GetLRKeysPressed() == 2)
     {
         sub_80A4E8C(1, 2);
         return TRUE;
     }
-    if (gMain.newKeys == DPAD_LEFT || sub_80F9284() == 1)
+    if (gMain.newKeys == DPAD_LEFT || GetLRKeysPressed() == 1)
     {
         sub_80A4E8C(-1, 1);
         return TRUE;
@@ -1529,7 +1529,7 @@ static bool8 sub_80A4F74(u8 a)
 {
     bool8 retVal = FALSE;
 
-    if (JOY_REPT(DPAD_ANY) == DPAD_UP)
+    if (JOY_REPEAT(DPAD_ANY) == DPAD_UP)
     {
         if (gBagPocketScrollStates[sCurrentBagPocket].cursorPosition != 0)
             sub_80A4B58(-1, a);
@@ -1539,7 +1539,7 @@ static bool8 sub_80A4F74(u8 a)
             gMain.keyRepeatCounter = 11;
         retVal = TRUE;
     }
-    else if (JOY_REPT(DPAD_ANY) == DPAD_DOWN)
+    else if (JOY_REPEAT(DPAD_ANY) == DPAD_DOWN)
     {
         if (sReturnLocation != RETURN_TO_FIELD_5)
         {
@@ -1686,7 +1686,7 @@ bool8 SellMenu_QuantityRoller(u8 taskId, u16 b)
 {
     s16 *taskData = gTasks[taskId].data;
 
-    if (JOY_REPT(DPAD_ANY) == DPAD_UP)
+    if (JOY_REPEAT(DPAD_ANY) == DPAD_UP)
     {
         if (taskData[1] != b)
             taskData[1]++;
@@ -1695,7 +1695,7 @@ bool8 SellMenu_QuantityRoller(u8 taskId, u16 b)
         return TRUE;
     }
 
-    if (JOY_REPT(DPAD_ANY) == DPAD_DOWN)
+    if (JOY_REPEAT(DPAD_ANY) == DPAD_DOWN)
     {
         if (taskData[1] != 1)
             taskData[1]--;
@@ -1704,7 +1704,7 @@ bool8 SellMenu_QuantityRoller(u8 taskId, u16 b)
         return TRUE;
     }
 
-    if (JOY_REPT(DPAD_ANY) == DPAD_RIGHT)
+    if (JOY_REPEAT(DPAD_ANY) == DPAD_RIGHT)
     {
         if (taskData[1] + 10 < b)
             taskData[1] += 10;
@@ -1713,7 +1713,7 @@ bool8 SellMenu_QuantityRoller(u8 taskId, u16 b)
         return TRUE;
     }
 
-    if (JOY_REPT(DPAD_ANY) == DPAD_LEFT)
+    if (JOY_REPEAT(DPAD_ANY) == DPAD_LEFT)
     {
         if (taskData[1] > 10)
             taskData[1] -= 10;
@@ -1763,7 +1763,7 @@ static void sub_80A5414(u8 taskId)
     {
         while (1)
         {
-            if (JOY_REPT(DPAD_ANY) == DPAD_UP)
+            if (JOY_REPEAT(DPAD_ANY) == DPAD_UP)
             {
                 if ((sPopupMenuSelection & 1) && sPopupMenuActionList[sPopupMenuSelection - 1] != 8)
                 {
@@ -1772,7 +1772,7 @@ static void sub_80A5414(u8 taskId)
                 }
                 break;
             }
-            if (JOY_REPT(DPAD_ANY) == DPAD_DOWN)
+            if (JOY_REPEAT(DPAD_ANY) == DPAD_DOWN)
             {
                 if ((!(sPopupMenuSelection & 1)) && sPopupMenuActionList[sPopupMenuSelection + 1] != 8)
                 {
@@ -1781,7 +1781,7 @@ static void sub_80A5414(u8 taskId)
                 }
                 break;
             }
-            if (JOY_REPT(DPAD_ANY) == DPAD_LEFT)
+            if (JOY_REPEAT(DPAD_ANY) == DPAD_LEFT)
             {
                 if ((sPopupMenuSelection >= 2) && sPopupMenuActionList[sPopupMenuSelection - 2] != 8)
                 {
@@ -1790,7 +1790,7 @@ static void sub_80A5414(u8 taskId)
                 }
                 break;
             }
-            if (JOY_REPT(DPAD_ANY) == DPAD_RIGHT)
+            if (JOY_REPEAT(DPAD_ANY) == DPAD_RIGHT)
             {
                 if ((sPopupMenuSelection < 2) && sPopupMenuActionList[sPopupMenuSelection + 2] != 8)
                 {
@@ -1846,7 +1846,7 @@ static void sub_80A5600(u8 taskId)
 
     while (1)
     {
-        if (JOY_REPT(DPAD_ANY) == DPAD_UP)
+        if (JOY_REPEAT(DPAD_ANY) == DPAD_UP)
         {
             if (sPopupMenuSelection != 0 && sPopupMenuActionList[sPopupMenuSelection - 1] != 8)
             {
@@ -1855,7 +1855,7 @@ static void sub_80A5600(u8 taskId)
             }
             break;
         }
-        if (JOY_REPT(DPAD_ANY) == DPAD_DOWN)
+        if (JOY_REPEAT(DPAD_ANY) == DPAD_DOWN)
         {
             if (sPopupMenuSelection != gUnknown_02038564 - 1 && sPopupMenuSelection != 2 && sPopupMenuActionList[sPopupMenuSelection + 1] != 8)
             {
@@ -1864,7 +1864,7 @@ static void sub_80A5600(u8 taskId)
             }
             break;
         }
-        if (JOY_REPT(DPAD_ANY) == DPAD_LEFT)
+        if (JOY_REPEAT(DPAD_ANY) == DPAD_LEFT)
         {
             if ((sPopupMenuSelection >= 3) && sPopupMenuActionList[sPopupMenuSelection - 3] != 8)
             {
@@ -1873,7 +1873,7 @@ static void sub_80A5600(u8 taskId)
             }
             break;
         }
-        if (JOY_REPT(DPAD_ANY) == DPAD_RIGHT)
+        if (JOY_REPEAT(DPAD_ANY) == DPAD_RIGHT)
         {
             if ((sPopupMenuSelection < 3) && sPopupMenuActionList[sPopupMenuSelection + 3] != 8)
             {
@@ -1928,7 +1928,7 @@ static void sub_80A57C4(void)
         gUnknown_02038564 = 1;
         r5 = 9;
     }
-    else if (sub_80F92F4(gSpecialVar_ItemId) == 0)
+    else if (IsHoldingItemAllowed(gSpecialVar_ItemId) == 0)
     {
         sPopupMenuActionList = gUnknown_083C16AE[4];
         gUnknown_02038564 = 1;
@@ -1949,7 +1949,7 @@ static void sub_80A5888(u8 taskId)
 {
     if (sub_80A78A0() != 0)
     {
-        if (JOY_REPT(DPAD_UP))
+        if (JOY_REPEAT(DPAD_UP))
         {
             if (sPopupMenuSelection != 0)
             {
@@ -1957,7 +1957,7 @@ static void sub_80A5888(u8 taskId)
                 sPopupMenuSelection = Menu_MoveCursor(-1);
             }
         }
-        else if (JOY_REPT(DPAD_DOWN))
+        else if (JOY_REPEAT(DPAD_DOWN))
         {
             if (sPopupMenuSelection != gUnknown_02038564 - 1)
             {
@@ -1997,7 +1997,7 @@ static void Task_ItemContext_Normal(u8 taskId)
     gTasks[taskId].data[10] = gBagPocketScrollStates[sCurrentBagPocket].scrollPosition + gBagPocketScrollStates[sCurrentBagPocket].cursorPosition + 1;
     sub_80A48E8(taskId, gBagPocketScrollStates[sCurrentBagPocket].cursorPosition, gBagPocketScrollStates[sCurrentBagPocket].cursorPosition);
     sub_80A73FC();
-    if (sub_80F9344() == TRUE && sReturnLocation != RETURN_TO_FIELD_5)
+    if (MenuHelpers_IsLinkActive() == TRUE && sReturnLocation != RETURN_TO_FIELD_5)
     {
         sub_80A57C4();
         gTasks[taskId].func = sub_80A5888;
@@ -2048,7 +2048,7 @@ void sub_80A5B40(void)
             gUnknown_02038563 = CreateTask(Task_BagMenu_HandleInput, 0);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -2125,7 +2125,7 @@ void sub_80A5D04(void)
             gUnknown_02038563 = CreateTask(Task_BagMenu_HandleInput, 0);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -2275,7 +2275,7 @@ static void PrintItemCantBeHeld(u8 taskId)
 static void ItemMenu_Give(u8 taskId)
 {
     PlaySE(SE_SELECT);
-    if (sub_80F931C(gSpecialVar_ItemId) == 0)
+    if (IsWritingMailAllowed(gSpecialVar_ItemId) == 0)
     {
         sub_80A73FC();
         sub_80A7590();
@@ -2332,13 +2332,13 @@ static void Task_ItemContext_GiveToParty(u8 taskId)
 {
     u8 r6 = sCurrentBagPocket + 1;
 
-    if (sub_80F931C(gSpecialVar_ItemId) == 0)
+    if (IsWritingMailAllowed(gSpecialVar_ItemId) == 0)
     {
         sub_80A73FC();
         sub_80A7590();
         DisplayCannotUseItemMessage(taskId, gText_CantWriteMail, HandleErrorMessage, 1);
     }
-    else if (sub_80F92F4(gSpecialVar_ItemId) == 0)
+    else if (IsHoldingItemAllowed(gSpecialVar_ItemId) == 0)
     {
         sub_80A73FC();
         CopyItemName(gSpecialVar_ItemId, gStringVar1);
@@ -2571,7 +2571,7 @@ static void sub_80A6940(void)
             sub_80A699C();
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -2746,7 +2746,7 @@ static void sub_80A6D98(void)
             gUnknown_02038563 = CreateTask(Task_BagMenu_HandleInput, 0);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -2779,7 +2779,7 @@ static void sub_80A6DF0(u16 *a)
 
 static void sub_80A6EB8(u8 taskId)
 {
-    if (JOY_REPT(DPAD_ANY) == DPAD_UP)
+    if (JOY_REPEAT(DPAD_ANY) == DPAD_UP)
     {
         if (sPopupMenuSelection == 1)
         {
@@ -2787,7 +2787,7 @@ static void sub_80A6EB8(u8 taskId)
             sPopupMenuSelection = Menu_MoveCursor(-1);
         }
     }
-    else if (JOY_REPT(DPAD_ANY) == DPAD_DOWN)
+    else if (JOY_REPEAT(DPAD_ANY) == DPAD_DOWN)
     {
         if (sPopupMenuSelection + 1 < gUnknown_02038564)
         {
@@ -2881,7 +2881,7 @@ static void sub_80A7150(void)
             gTasks[gUnknown_02038563].data[15] = 0;
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }

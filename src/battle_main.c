@@ -1693,7 +1693,7 @@ void debug_sub_8010CAC(void)
         }
         debug_sub_80125A0();
     }
-    if (JOY_REPT(B_BUTTON))
+    if (JOY_REPEAT(B_BUTTON))
     {
         switch (gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5)
         {
@@ -1754,7 +1754,7 @@ void debug_sub_8010CAC(void)
             break;
         }
     }
-    if (JOY_REPT(A_BUTTON))
+    if (JOY_REPEAT(A_BUTTON))
     {
         switch (gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5)
         {
@@ -1815,7 +1815,7 @@ void debug_sub_8010CAC(void)
             break;
         }
     }
-    if (JOY_REPT(L_BUTTON))
+    if (JOY_REPEAT(L_BUTTON))
     {
         if (gUnknown_Debug_030043A0 == 4 && gUnknown_Debug_030043A4 < 6)
         {
@@ -1842,7 +1842,7 @@ void debug_sub_8010CAC(void)
         debug_sub_8011EA0(gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0);
         debug_sub_80123D8(gUnknown_Debug_030043A4 * 5);
     }
-    if (JOY_REPT(R_BUTTON))
+    if (JOY_REPEAT(R_BUTTON))
     {
         if (gUnknown_Debug_030043A0 == 4 && gUnknown_Debug_030043A4 < 6)
         {
@@ -1900,28 +1900,28 @@ void debug_sub_8011498(void)
 		gUnknown_Debug_030043A8 ^= 1;
 		debug_sub_8012628();
 	}
-	if (JOY_REPT(B_BUTTON))
+	if (JOY_REPEAT(B_BUTTON))
 	{
 		gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8]--;
 		if (gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] < gUnknown_Debug_821F564[gUnknown_Debug_030043A8][4])
 			gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] = gUnknown_Debug_821F564[gUnknown_Debug_030043A8][3];
 		debug_sub_8012294();
 	}
-	if (JOY_REPT(A_BUTTON))
+	if (JOY_REPEAT(A_BUTTON))
 	{
 		gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8]++;
 		if (gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] > gUnknown_Debug_821F564[gUnknown_Debug_030043A8][3])
 			gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] = gUnknown_Debug_821F564[gUnknown_Debug_030043A8][4];
 		debug_sub_8012294();
 	}
-	if (JOY_REPT(L_BUTTON))
+	if (JOY_REPEAT(L_BUTTON))
 	{
 		gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] -= 10;
 		while (gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] < gUnknown_Debug_821F564[gUnknown_Debug_030043A8][4])
 			gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] += gUnknown_Debug_821F564[gUnknown_Debug_030043A8][3];
 		debug_sub_8012294();
 	}
-	if (JOY_REPT(R_BUTTON))
+	if (JOY_REPEAT(R_BUTTON))
 	{
 		gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] += 10;
 		while (gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] > gUnknown_Debug_821F564[gUnknown_Debug_030043A8][3])
@@ -2815,7 +2815,7 @@ void debug_sub_8012D10(u8 taskId)
             gTasks[taskId].data[2] |= 1;
             ActionSelectionCreateCursorAt(gTasks[taskId].data[2], 0);
         }
-        else if (JOY_REPT(A_BUTTON))
+        else if (JOY_REPEAT(A_BUTTON))
         {
             PlaySE(SE_SELECT);
             switch (gTasks[taskId].data[2])
@@ -2844,7 +2844,7 @@ void debug_sub_8012D10(u8 taskId)
                 break;
             }
         }
-        else if (JOY_REPT(B_BUTTON))
+        else if (JOY_REPEAT(B_BUTTON))
         {
             PlaySE(SE_SELECT);
             switch (gTasks[taskId].data[2])
@@ -2873,7 +2873,7 @@ void debug_sub_8012D10(u8 taskId)
                 break;
             }
         }
-        else if (JOY_REPT(R_BUTTON))
+        else if (JOY_REPEAT(R_BUTTON))
         {
             PlaySE(SE_SELECT);
             switch (gTasks[taskId].data[2])
@@ -2904,7 +2904,7 @@ void debug_sub_8012D10(u8 taskId)
                 break;
             }
         }
-        else if (JOY_REPT(L_BUTTON))
+        else if (JOY_REPEAT(L_BUTTON))
         {
             PlaySE(SE_SELECT);
             switch (gTasks[taskId].data[2])

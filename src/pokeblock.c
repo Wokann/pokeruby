@@ -265,8 +265,8 @@ static bool8 sub_810B6C0(void)
     switch (gMain.state)
     {
         case  0:
-            ClearVideoCallbacks();
-            sub_80F9368();
+            SetVBlankHBlankCallbacksToNull();
+            ResetVramOamAndBgCntRegs();
             REG_BG2CNT = BGCNT_SCREENBASE(15) | BGCNT_CHARBASE(2) | BGCNT_PRIORITY(2);
             REG_BLDCNT = 0;
             gMain.state++;
@@ -381,7 +381,7 @@ void sub_810B96C(void)
             CreateTask(sub_810BF7C, 0);
             break;
         }
-    } while (sub_80F9344() != TRUE);
+    } while (MenuHelpers_IsLinkActive() != TRUE);
 }
 
 static bool8 sub_810B998(void)
@@ -635,7 +635,7 @@ static void sub_810BF7C(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        if (JOY_REPT(DPAD_UP))
+        if (JOY_REPEAT(DPAD_UP))
         {
             if (gUnknown_02039248.unk0 != 0)
             {
@@ -650,7 +650,7 @@ static void sub_810BF7C(u8 taskId)
                 sub_810BF38(FALSE);
             }
         }
-        else if (JOY_REPT(DPAD_DOWN))
+        else if (JOY_REPEAT(DPAD_DOWN))
         {
             if (gUnknown_02039248.unk0 != gUnknown_02039248.unk3)
             {
@@ -699,7 +699,7 @@ static void sub_810BF7C(u8 taskId)
 
 static void sub_810C0C8(u8 taskId)
 {
-    if (JOY_REPT(DPAD_UP))
+    if (JOY_REPEAT(DPAD_UP))
     {
         if (gUnknown_02039248.unk0 != 0)
         {
@@ -717,7 +717,7 @@ static void sub_810C0C8(u8 taskId)
             sub_810C1C8(taskId, 1);
         }
     }
-    else if (JOY_REPT(DPAD_DOWN))
+    else if (JOY_REPEAT(DPAD_DOWN))
     {
         if (gUnknown_02039248.unk0 != gUnknown_02039248.unk3)
         {
@@ -838,7 +838,7 @@ static void sub_810C368(u8 taskId)
 
 static void sub_810C40C(u8 taskId)
 {
-    if (JOY_REPT(DPAD_UP))
+    if (JOY_REPEAT(DPAD_UP))
     {
         if (Menu_GetCursorPos())
         {
@@ -846,7 +846,7 @@ static void sub_810C40C(u8 taskId)
             Menu_MoveCursor(-1);
         }
     }
-    else if (JOY_REPT(DPAD_DOWN))
+    else if (JOY_REPEAT(DPAD_DOWN))
     {
         if (Menu_GetCursorPos() != gUnknown_0203924C - 1)
         {

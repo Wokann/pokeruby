@@ -32,7 +32,7 @@ extern u8 sub_806BD58(u8, u8);
 extern void PartyMenuPrintMonsLevelOrStatus(void);
 extern void DrawMonDescriptorStatus(u8, u8);
 extern void PartyMenuPrintHP();
-extern bool8 sub_80F9344(void); 
+extern bool8 MenuHelpers_IsLinkActive(void);
 
 static void ClearPartySelection(void);
 static bool8 IsMonAllowedInBattleTower(struct Pokemon *);
@@ -316,7 +316,7 @@ static void sub_812238C(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        if (JOY_REPT(0x40))
+        if (JOY_REPEAT(0x40))
         {
             if (Menu_GetCursorPos() != 0)
             {
@@ -325,7 +325,7 @@ static void sub_812238C(u8 taskId)
             }
             return;
         }
-        if (JOY_REPT(0x80))
+        if (JOY_REPEAT(0x80))
         {
             if (Menu_GetCursorPos() != 3)
             {
@@ -412,7 +412,7 @@ static void sub_8122530(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-        if (sub_80F9344() == 1)
+        if (MenuHelpers_IsLinkActive() == 1)
             break;
     }
 }
@@ -834,7 +834,7 @@ static void Task_DaycareStorageMenu8122EAC(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        if (JOY_REPT(0x40))
+        if (JOY_REPEAT(0x40))
         {
             if (Menu_GetCursorPos() != 0)
             {
@@ -843,7 +843,7 @@ static void Task_DaycareStorageMenu8122EAC(u8 taskId)
             }
             return;
         }
-        if (JOY_REPT(0x80))
+        if (JOY_REPEAT(0x80))
         {
             if (Menu_GetCursorPos() != 3)
             {
@@ -893,7 +893,7 @@ static void sub_8122F90(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-        if (sub_80F9344() == 1)
+        if (MenuHelpers_IsLinkActive() == 1)
             break;
     }
 }

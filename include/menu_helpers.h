@@ -5,8 +5,8 @@
 
 struct YesNoFuncTable
 {
-    void (*yesFunc)(u8);
-    void (*noFunc)(u8);
+    TaskFunc yesFunc;
+    TaskFunc noFunc;
 };
 
 // SetVerticalScrollIndicators enums
@@ -26,15 +26,15 @@ enum
 
 void ClearBGTilemapBuffers(void);
 void DisplayItemMessageOnField(u8, const u8 *, TaskFunc, u16);
-void DoYesNoFuncWithChoice(u8, const struct YesNoFuncTable *);
+void DoYesNoFuncWithChoice(u8 taskId, const struct YesNoFuncTable *funcTable);
 void sub_80F914C(u8, const struct YesNoFuncTable *);
-u8 sub_80F9284(void);
-u8 sub_80F92BC(void);
-bool8 sub_80F92F4(u16);
-bool8 sub_80F931C(u16);
-bool8 sub_80F9344(void);
-void sub_80F9368(void);
-void ClearVideoCallbacks(void);
+u8 GetLRKeysPressed(void);
+u8 GetLRKeysPressedAndHeld(void);
+bool8 IsHoldingItemAllowed(u16 itemId);
+bool8 IsWritingMailAllowed(u16 itemId);
+bool8 MenuHelpers_IsLinkActive(void);
+void ResetVramOamAndBgCntRegs(void);
+void SetVBlankHBlankCallbacksToNull(void);
 void ClearVerticalScrollIndicatorPalettes(void);
 void sub_80F9480(u8 *, u8);
 void sub_80F94A4(u8, u8 *, s16, s16);

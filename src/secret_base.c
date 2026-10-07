@@ -924,7 +924,7 @@ static void HandleRegistryMenuInput(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
-    if (JOY_REPT(DPAD_UP))
+    if (JOY_REPEAT(DPAD_UP))
     {
         if (data[1])
         {
@@ -938,7 +938,7 @@ static void HandleRegistryMenuInput(u8 taskId)
             BuildRegistryMenuItems(taskId);
         }
     }
-    else if (JOY_REPT(DPAD_DOWN))
+    else if (JOY_REPEAT(DPAD_DOWN))
     {
         if (data[1] == data[3])
         {
@@ -1013,7 +1013,7 @@ static void ShowRegistryMenuActions(u8 taskId)
 
 static void HandleRegistryMenuActionsInput(u8 taskId)
 {
-    if (JOY_REPT(DPAD_UP))
+    if (JOY_REPEAT(DPAD_UP))
     {
         if (Menu_GetCursorPos())
         {
@@ -1021,7 +1021,7 @@ static void HandleRegistryMenuActionsInput(u8 taskId)
             Menu_MoveCursor(-1);
         }
     }
-    else if (JOY_REPT(DPAD_DOWN))
+    else if (JOY_REPEAT(DPAD_DOWN))
     {
         if (Menu_GetCursorPos() != 1)
         {

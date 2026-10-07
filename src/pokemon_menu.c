@@ -277,13 +277,13 @@ static void Task_HandleSelectionMenuInput(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        if (JOY_REPT(DPAD_ANY) == DPAD_UP)
+        if (JOY_REPEAT(DPAD_ANY) == DPAD_UP)
         {
             PlaySE(SE_SELECT);
             sPokeMenuCursorPos = Menu_MoveCursor(-1);
             sub_808B5B4(taskId);
         }
-        else if (JOY_REPT(DPAD_ANY) == DPAD_DOWN)
+        else if (JOY_REPEAT(DPAD_ANY) == DPAD_DOWN)
         {
             PlaySE(SE_SELECT);
             sPokeMenuCursorPos = Menu_MoveCursor(1);
@@ -334,7 +334,7 @@ static void sub_8089EBC(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-    } while (sub_80F9344() != TRUE);
+    } while (MenuHelpers_IsLinkActive() != TRUE);
 }
 
 static void CB2_ReturnToPartyMenuFromSummaryScreen(void)
@@ -483,7 +483,7 @@ static void sub_808A358(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -501,7 +501,7 @@ static void sub_808A3A4(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -547,7 +547,7 @@ static void sub_808A4D4(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -714,7 +714,7 @@ static void CursorCb_FieldMove(u8 taskId)
 
     Menu_DestroyCursor();
     tFieldMoveId = sPokeMenuOptionsOrder[sPokeMenuCursorPos] - MENU_FIELD_MOVES;
-    if (sub_80F9344() == TRUE)
+    if (MenuHelpers_IsLinkActive() == TRUE)
     {
         Menu_EraseWindowRect(19, 0, 29, 19);
         if (IS_SOFTBOILED_MILKDRINK(tFieldMoveId))
@@ -856,7 +856,7 @@ static void sub_808AD0C(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -992,7 +992,7 @@ static void sub_808AF80(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -1130,7 +1130,7 @@ static void sub_808B3A0(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -1190,7 +1190,7 @@ static void sub_808B518(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }

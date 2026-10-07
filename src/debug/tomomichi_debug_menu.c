@@ -3735,9 +3735,9 @@ static void debug_sub_808E604(u8 whichMenu, u8 cursorPos)
 {
     u16 delta;
 
-    if (JOY_REPT(R_BUTTON))
+    if (JOY_REPEAT(R_BUTTON))
         delta = +1;
-    else if (JOY_REPT(L_BUTTON))
+    else if (JOY_REPEAT(L_BUTTON))
         delta = -1;
     else
         return;
@@ -4013,24 +4013,24 @@ static bool8 DummyMenuAction(void)
 
 static void PicTest_SelectPokemon(void)
 {
-    if (JOY_REPT(DPAD_LEFT))
+    if (JOY_REPEAT(DPAD_LEFT))
     {
         if (sPicTest_Species != SPECIES_BULBASAUR)
             sPicTest_Species--;
     }
-    if (JOY_REPT(DPAD_RIGHT))
+    if (JOY_REPEAT(DPAD_RIGHT))
     {
         if (sPicTest_Species != SPECIES_CHIMECHO)
             sPicTest_Species++;
     }
-    if (JOY_REPT(L_BUTTON))
+    if (JOY_REPEAT(L_BUTTON))
     {
         if (sPicTest_Species >= SPECIES_BULBASAUR + 10)
             sPicTest_Species -= 10;
         else
             sPicTest_Species = SPECIES_BULBASAUR;
     }
-    if (JOY_REPT(R_BUTTON))
+    if (JOY_REPEAT(R_BUTTON))
     {
         if (sPicTest_Species <= SPECIES_CHIMECHO - 10)
             sPicTest_Species += 10;
@@ -4041,24 +4041,24 @@ static void PicTest_SelectPokemon(void)
 
 static void PicTest_SelectPersonality(void)
 {
-    if (JOY_REPT(DPAD_LEFT))
+    if (JOY_REPEAT(DPAD_LEFT))
     {
         if (sPicTest_Personality != 0)
             sPicTest_Personality--;
     }
-    if (JOY_REPT(DPAD_RIGHT))
+    if (JOY_REPEAT(DPAD_RIGHT))
     {
         if (sPicTest_Personality != UINT32_MAX)
             sPicTest_Personality++;
     }
-    if (JOY_REPT(L_BUTTON))
+    if (JOY_REPEAT(L_BUTTON))
     {
         if (sPicTest_Personality >= 0x10)
             sPicTest_Personality -= 0x10;
         else
             sPicTest_Personality = 0;
     }
-    if (JOY_REPT(R_BUTTON))
+    if (JOY_REPEAT(R_BUTTON))
     {
         if (sPicTest_Personality <= UINT32_MAX - 0x10)
             sPicTest_Personality += 0x10;
@@ -4073,42 +4073,42 @@ static void PicTest_SelectPersonality(void)
 
 static void ContestPicTest_SelectContestType(void)
 {
-    if (JOY_REPT(DPAD_LEFT))
+    if (JOY_REPEAT(DPAD_LEFT))
     {
         if (sPicTest_ContestType != CONTEST_COOL + 1)
             sPicTest_ContestType--;
     }
-    if (JOY_REPT(DPAD_RIGHT))
+    if (JOY_REPEAT(DPAD_RIGHT))
     {
         if (sPicTest_ContestType != CONTEST_TOUGH + 1)
             sPicTest_ContestType++;
     }
-    if (JOY_REPT(L_BUTTON))
+    if (JOY_REPEAT(L_BUTTON))
         sPicTest_ContestType = CONTEST_COOL + 1;
-    if (JOY_REPT(R_BUTTON))
+    if (JOY_REPEAT(R_BUTTON))
         sPicTest_ContestType = CONTEST_TOUGH + 1;
 }
 
 static void MuseumArtPicTest_SelectTitleType(void)
 {
-    if (JOY_REPT(DPAD_LEFT))
+    if (JOY_REPEAT(DPAD_LEFT))
     {
         if (sPicTest_MuseumArtTitleType != 1)
             sPicTest_MuseumArtTitleType--;
     }
-    if (JOY_REPT(DPAD_RIGHT))
+    if (JOY_REPEAT(DPAD_RIGHT))
     {
         if (sPicTest_MuseumArtTitleType != 15)
             sPicTest_MuseumArtTitleType++;
     }
-    if (JOY_REPT(L_BUTTON))
+    if (JOY_REPEAT(L_BUTTON))
     {
         if (sPicTest_MuseumArtTitleType >= 11)
             sPicTest_MuseumArtTitleType -= 10;
         else
             sPicTest_MuseumArtTitleType = 0; // Causes underflow when pressing left on the dpad shortly thereafter.
     }
-    if (JOY_REPT(R_BUTTON))
+    if (JOY_REPEAT(R_BUTTON))
     {
         if (sPicTest_MuseumArtTitleType <= 5)
             sPicTest_MuseumArtTitleType += 10;
@@ -4119,24 +4119,24 @@ static void MuseumArtPicTest_SelectTitleType(void)
 
 static void PreviewPicTest_SelectType(void)
 {
-    if (JOY_REPT(DPAD_LEFT))
+    if (JOY_REPEAT(DPAD_LEFT))
     {
         if (sPicTest_PreviewType != 1)
             sPicTest_PreviewType--;
     }
-    if (JOY_REPT(DPAD_RIGHT))
+    if (JOY_REPEAT(DPAD_RIGHT))
     {
         if (sPicTest_PreviewType != 15)
             sPicTest_PreviewType++;
     }
-    if (JOY_REPT(L_BUTTON))
+    if (JOY_REPEAT(L_BUTTON))
     {
         if (sPicTest_PreviewType >= 11)
             sPicTest_PreviewType -= 10;
         else
             sPicTest_PreviewType = 0; // Causes underflow when pressing left on the dpad shortly thereafter.
     }
-    if (JOY_REPT(R_BUTTON))
+    if (JOY_REPEAT(R_BUTTON))
     {
         if (sPicTest_PreviewType <= 5)
             sPicTest_PreviewType += 10;

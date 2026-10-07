@@ -814,7 +814,7 @@ static bool8 LoadGraphics(void)
 
 static void CB2_InitSummaryScreen(void)
 {
-    while (LoadGraphics() != TRUE && sub_80F9344() != TRUE)
+    while (LoadGraphics() != TRUE && MenuHelpers_IsLinkActive() != TRUE)
         ;
 }
 
@@ -949,11 +949,11 @@ static void Task_HandleInput(u8 taskId)
     {
         ChangeSummaryPokemon(taskId, 1);
     }
-    else if (JOY_NEW(DPAD_LEFT) || sub_80F9284() == 1)
+    else if (JOY_NEW(DPAD_LEFT) || GetLRKeysPressed() == 1)
     {
         SummaryScreenHandleLeftRightInput(taskId, -1);
     }
-    else if (JOY_NEW(DPAD_RIGHT) || sub_80F9284() == 2)
+    else if (JOY_NEW(DPAD_RIGHT) || GetLRKeysPressed() == 2)
     {
         SummaryScreenHandleLeftRightInput(taskId, 1);
     }
@@ -985,13 +985,13 @@ static void Task_HandleReplaceMoveInput(u8 taskId)
         gTasks[taskId].data[0] = 4;
         ChangeSelectedMove(taskId, 1, &pssData.firstMoveIndex);
     }
-    else if (JOY_NEW(DPAD_LEFT) || sub_80F9284() == 1)
+    else if (JOY_NEW(DPAD_LEFT) || GetLRKeysPressed() == 1)
     {
         if (pssData.currPageIndex == PSS_PAGE_CONTEST_MOVES && (pssData.firstMoveIndex != 4 || pssData.newMove != 0))
             Menu_EraseWindowRect(0, 14, 9, 18);
         SummaryScreenHandleLeftRightInput(taskId, -1);
     }
-    else if (JOY_NEW(DPAD_RIGHT) || sub_80F9284() == 2)
+    else if (JOY_NEW(DPAD_RIGHT) || GetLRKeysPressed() == 2)
     {
         if (pssData.currPageIndex != pssData.maxPageIndex)
         {
@@ -1601,7 +1601,7 @@ static void ChangeSummaryPokemon(u8 taskId, s8 delta)
     }
     else
     {
-        if (sub_80F9344() == TRUE && IsLinkDoubleBattle() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE && IsLinkDoubleBattle() == TRUE)
         {
             monId = AdvanceMultiBattleMonIndex(delta);
         }
@@ -1923,7 +1923,7 @@ static void Task_HandleInputCantForgetHMsMoves(u8 taskId)
         pssData.firstMoveIndex = taskData[15];
         ChangeSelectedMove(taskId, 1, &pssData.firstMoveIndex);
     }
-    else if (JOY_NEW(DPAD_LEFT) || sub_80F9284() == 1)
+    else if (JOY_NEW(DPAD_LEFT) || GetLRKeysPressed() == 1)
     {
         if (pssData.currPageIndex != PSS_PAGE_BATTLE_MOVES)
         {
@@ -1937,7 +1937,7 @@ static void Task_HandleInputCantForgetHMsMoves(u8 taskId)
             PositionAppealJamSlidingWindow(1, taskData[15]);
         }
     }
-    else if (JOY_NEW(DPAD_RIGHT) || sub_80F9284() == 2)
+    else if (JOY_NEW(DPAD_RIGHT) || GetLRKeysPressed() == 2)
     {
         if (pssData.currPageIndex != pssData.maxPageIndex)
         {
@@ -2765,7 +2765,7 @@ static void PrintRibbonCount(struct Pokemon *mon)
 static void PrintHeldItemName(u16 itemId, u8 left, u8 top)
 {
     if (itemId == ITEM_ENIGMA_BERRY
-     && sub_80F9344() == TRUE
+     && MenuHelpers_IsLinkActive() == TRUE
      && IsLinkDoubleBattle() == TRUE
      && (pssData.curMonIndex == 1 || pssData.curMonIndex == 4 || pssData.curMonIndex == 5))
         StringCopy(gStringVar1, GetItemName(itemId));

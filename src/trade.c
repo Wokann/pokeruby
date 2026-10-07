@@ -1094,19 +1094,19 @@ static void sub_8049620(void)
 static void sub_8049680(void)
 {
     int i;
-    if (JOY_REPT(DPAD_UP))
+    if (JOY_REPEAT(DPAD_UP))
     {
         TradeMenuMoveCursor(&gUnknown_03004824->cursorPosition, 0);
     }
-    else if (JOY_REPT(DPAD_DOWN))
+    else if (JOY_REPEAT(DPAD_DOWN))
     {
         TradeMenuMoveCursor(&gUnknown_03004824->cursorPosition, 1);
     }
-    else if (JOY_REPT(DPAD_LEFT))
+    else if (JOY_REPEAT(DPAD_LEFT))
     {
         TradeMenuMoveCursor(&gUnknown_03004824->cursorPosition, 2);
     }
-    else if (JOY_REPT(DPAD_RIGHT))
+    else if (JOY_REPEAT(DPAD_RIGHT))
     {
         TradeMenuMoveCursor(&gUnknown_03004824->cursorPosition, 3);
     }
@@ -1154,12 +1154,12 @@ static void sub_8049804(void)
 
 static void sub_8049860(void)
 {
-    if (JOY_REPT(DPAD_UP))
+    if (JOY_REPEAT(DPAD_UP))
     {
         PlaySE(SE_SELECT);
         gUnknown_03004824->unk_007c = Menu_MoveCursor(-1);
     }
-    else if (JOY_REPT(DPAD_DOWN))
+    else if (JOY_REPEAT(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
         gUnknown_03004824->unk_007c = Menu_MoveCursor(+1);
@@ -1255,12 +1255,12 @@ static void sub_8049A20(void)
 
 static void sub_8049AC0(void)
 {
-    if (JOY_REPT(DPAD_UP))
+    if (JOY_REPEAT(DPAD_UP))
     {
         PlaySE(SE_SELECT);
         gUnknown_03004824->unk_007c = Menu_MoveCursor(-1);
     }
-    else if (JOY_REPT(DPAD_DOWN))
+    else if (JOY_REPEAT(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
         gUnknown_03004824->unk_007c = Menu_MoveCursor(+1);
@@ -1298,12 +1298,12 @@ static void sub_8049AC0(void)
 
 static void sub_8049BC0(void)
 {
-    if (JOY_REPT(DPAD_UP))
+    if (JOY_REPEAT(DPAD_UP))
     {
         PlaySE(SE_SELECT);
         gUnknown_03004824->unk_007c = Menu_MoveCursor(-1);
     }
-    else if (JOY_REPT(DPAD_DOWN))
+    else if (JOY_REPEAT(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
         gUnknown_03004824->unk_007c = Menu_MoveCursor(+1);
