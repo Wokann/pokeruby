@@ -31,10 +31,10 @@ extern u8 gEffectBattler;
 
 extern const u8 gUnknown_08D2EE48[];
 extern const u8 gUnknown_08D2EDFC[];
-extern const u16 gUnknown_08D2E150[];
+extern const u16 gCureBubblesPal[];
 extern const struct SpriteTemplate gSpriteTemplates_840B3B4[];
-extern const struct SpriteTemplate gSpriteTemplate_8402500;
-extern const struct SpriteTemplate gBattleAnimSpriteTemplate_84024E8;
+extern const struct SpriteTemplate gMiniTwinklingStarSpriteTemplate;
+extern const struct SpriteTemplate gWishStarSpriteTemplate;
 
 static void sub_813F300(u8 taskId);
 static void sub_813F6CC(u8 taskId);
@@ -393,7 +393,7 @@ void unref_sub_813F0F4(u8 taskId)
     DmaFill32Defvars(3, 0, subStruct.bgTilemap, 0x1000);
     LZDecompressVram(&gUnknown_08D2EE48, subStruct.bgTilemap);
     LZDecompressVram(&gUnknown_08D2EDFC, subStruct.bgTiles);
-    LoadCompressedPalette(gUnknown_08D2E150, subStruct.paletteId << 4, 32);
+    LoadCompressedPalette(gCureBubblesPal, subStruct.paletteId << 4, 32);
 
     gBattle_BG1_X = -gSprites[spriteId3].x + 32;
     gBattle_BG1_Y = -gSprites[spriteId3].y - 32;
@@ -1914,16 +1914,16 @@ static void sub_814191C(u8 taskId)
     state = gTasks[taskId].data[11];
     if (state == 0)
     {
-        spriteId = CreateSprite(&gBattleAnimSpriteTemplate_84024E8, x, y, 5);
+        spriteId = CreateSprite(&gWishStarSpriteTemplate, x, y, 5);
     }
     else if (state >= 0 && gTasks[taskId].data[11] < 4)
     {
-        spriteId = CreateSprite(&gSpriteTemplate_8402500, x, y, 5);
+        spriteId = CreateSprite(&gMiniTwinklingStarSpriteTemplate, x, y, 5);
         gSprites[spriteId].oam.tileNum += 4;
     }
     else
     {
-        spriteId = CreateSprite(&gSpriteTemplate_8402500, x, y, 5);
+        spriteId = CreateSprite(&gMiniTwinklingStarSpriteTemplate, x, y, 5);
         gSprites[spriteId].oam.tileNum += 5;
     }
 
