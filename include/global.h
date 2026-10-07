@@ -244,9 +244,9 @@ struct RamScript
 
 struct DewfordTrend
 {
-    u16 unk0_0:7;
-    u16 unk0_7:7;
-    u16 unk1_6:1;
+    u16 trendiness:7;
+    u16 maxTrendiness:7;
+    u16 gainingTrendiness:1;
     u16 rand;
     u16 words[2];
 }; /*size = 0x8*/

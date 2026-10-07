@@ -869,7 +869,7 @@ void sub_80E6D7C(void)
             if (gEasyChatStruct->type == 9)  // dewford trend?
             {
                 sub_80E81C0();
-                gSpecialVar_0x8004 = sub_80FA364(&gEasyChatStruct->unk9C7C);
+                gSpecialVar_0x8004 = TrySetTrendyPhrase(&gEasyChatStruct->unk9C7C);
             }
             if (gEasyChatStruct->type == 13)
             {

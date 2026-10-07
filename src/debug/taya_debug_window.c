@@ -212,14 +212,14 @@ bool8 TayaDebugMenu_Trend(void)
     {
         u8 * r4;
 
-        sp00[0] = pair->unk1_6 ? CHAR_0 + 1 : CHAR_0 + 0;
+        sp00[0] = pair->gainingTrendiness ? CHAR_0 + 1 : CHAR_0 + 0;
         CopyEasyChatWord(sp20, pair->words[0]);
         r4 = StringCopyPadded(sp00 + 1, sp20, CHAR_SPACE, 7);
         CopyEasyChatWord(sp20, pair->words[1]);
         r4 = StringCopyPadded(r4, sp20, CHAR_SPACE, 8);
-        r4 = ConvertIntToDecimalStringN(r4, pair->unk0_0, STR_CONV_MODE_RIGHT_ALIGN, 3);
+        r4 = ConvertIntToDecimalStringN(r4, pair->trendiness, STR_CONV_MODE_RIGHT_ALIGN, 3);
         *r4++ = CHAR_SPACE;
-        r4 = ConvertIntToDecimalStringN(r4, pair->unk0_7, STR_CONV_MODE_RIGHT_ALIGN, 3);
+        r4 = ConvertIntToDecimalStringN(r4, pair->maxTrendiness, STR_CONV_MODE_RIGHT_ALIGN, 3);
         *r4++ = CHAR_SPACE;
         ConvertIntToDecimalStringN(r4, pair->rand, STR_CONV_MODE_RIGHT_ALIGN, 5);
         Menu_PrintText(sp00, 1, 2 * i + 1);
