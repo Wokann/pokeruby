@@ -125,7 +125,7 @@ gSystemText_EventLoadSuccess:: @ 842C571
 gSystemText_LoadingError:: @ 842C58F
 	.string "Loading error.\nEnding session.$$$$$$$$"
 
-gOtherText_Hoenn:: @ 842C5B5
+gText_Hoenn:: @ 842C5B5
 	.string "HOENN$"
 
 gText_OhABite:: @ 842C5BB

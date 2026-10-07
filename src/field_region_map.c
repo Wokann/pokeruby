@@ -1,23 +1,29 @@
 #include "global.h"
-#include "field_region_map.h"
+#include "fieldmap.h"
 #include "main.h"
 #include "menu.h"
 #include "palette.h"
 #include "region_map.h"
 #include "sprite.h"
-#include "strings2.h"
+#include "strings.h"
 #include "text.h"
 #include "ewram.h"
+
+static void MCB2_InitRegionMapRegisters(void);
+static void VBCB_FieldUpdateRegionMap(void);
+static void MCB2_FieldUpdateRegionMap(void);
+static void FieldUpdateRegionMap(void);
+static void PrintRegionMapSecName(void);
 
 void FieldInitRegionMap(MainCallback callback)
 {
     SetVBlankCallback(NULL);
     eRegionMapState.unk_888[0] = 0;
     eRegionMapState.callback = callback;
-    SetMainCallback2(CB2_FieldInitRegionMap);
+    SetMainCallback2(MCB2_InitRegionMapRegisters);
 }
 
-void CB2_FieldInitRegionMap(void)
+static void MCB2_InitRegionMapRegisters(void)
 {
     REG_DISPCNT = 0;
     REG_BG0HOFS = 0;
@@ -38,30 +44,30 @@ void CB2_FieldInitRegionMap(void)
     Menu_EraseScreen();
     REG_BG0CNT = BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(31) | BGCNT_16COLOR | BGCNT_TXT256x256;
     Menu_DrawStdWindowFrame(21, 0, 29, 3);
-    MenuPrint_Centered(gOtherText_Hoenn, 0x16, 1, 0x38);
+    MenuPrint_Centered(gText_Hoenn, 0x16, 1, 0x38);
     Menu_DrawStdWindowFrame(16, 16, 29, 19);
-    sub_813F0C8();
-    SetMainCallback2(CB2_FieldRegionMap);
-    SetVBlankCallback(VBlankCB_FieldRegionMap);
+    PrintRegionMapSecName();
+    SetMainCallback2(MCB2_FieldUpdateRegionMap);
+    SetVBlankCallback(VBCB_FieldUpdateRegionMap);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
 }
 
-void VBlankCB_FieldRegionMap(void)
+static void VBCB_FieldUpdateRegionMap(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
 }
 
-void CB2_FieldRegionMap(void)
+static void MCB2_FieldUpdateRegionMap(void)
 {
-    sub_813EFDC();
+    FieldUpdateRegionMap();
     AnimateSprites();
     BuildOamBuffer();
     UpdatePaletteFade();
 }
 
-void sub_813EFDC(void)
+static void FieldUpdateRegionMap(void)
 {
     switch (eRegionMapState.unk_888[0])
     {
@@ -77,7 +83,7 @@ void sub_813EFDC(void)
         switch (DoRegionMapInputCallback())
         {
         case 3:
-            sub_813F0C8();
+            PrintRegionMapSecName();
             break;
         case 4:
         case 5:
@@ -98,7 +104,7 @@ void sub_813EFDC(void)
     }
 }
 
-void sub_813F0C8(void)
+static void PrintRegionMapSecName(void)
 {
     Menu_BlankWindowRect(17, 17, 28, 18);
     if (eRegionMapState.regionMap.mapSecType)

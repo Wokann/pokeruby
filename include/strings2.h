@@ -42,9 +42,6 @@ extern const u8 gSystemText_DontCutLink[];
 extern const u8 gSystemText_EventLoadSuccess[];
 extern const u8 gSystemText_LoadingError[];
 
-// field_region_map
-extern const u8 gOtherText_Hoenn[];
-
 // field_player_avatar
 extern const u8 gText_OhABite[];
 extern const u8 gText_PokemonOnHook[];

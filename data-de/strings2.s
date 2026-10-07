@@ -136,7 +136,7 @@ gSystemText_LoadingError:: @ 842C58F
 	.string "Fehler beim Laden!\n"
 	.string "Vorgang wird abgebrochen.$$$$$$$$"
 
-gOtherText_Hoenn:: @ 842C5B5
+gText_Hoenn:: @ 842C5B5
 	.string "HOENN$"
 
 gText_OhABite:: @ 842C5BB

@@ -6,7 +6,6 @@
 #include "battle_tower.h"
 #include "event_object_movement.h"
 #include "region_map.h"
-#include "field_region_map.h"
 #include "field_message_box.h"
 #include "field_camera.h"
 #include "field_player_avatar.h"

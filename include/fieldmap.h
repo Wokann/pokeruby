@@ -1,6 +1,7 @@
 #ifndef GUARD_FIELDMAP_H
 #define GUARD_FIELDMAP_H
 #include "event_object_movement.h"
+#include "main.h"
 
 #define NUM_TILES_IN_PRIMARY 512 // NOTE: CopyTilesetToVram assumes the number of primary and secondary tiles is the same
 #define NUM_TILES_TOTAL 1024
@@ -46,5 +47,8 @@ void CopyPrimaryTilesetToVram(const struct MapLayout *mapLayout);
 void CopySecondaryTilesetToVram(const struct MapLayout *mapLayout);
 const struct MapHeader *const GetMapHeaderFromConnection(const struct MapConnection *connection);
 const struct MapConnection *GetMapConnectionAtPos(s16 x, s16 y);
+
+// field_region_map.c
+void FieldInitRegionMap(MainCallback callback);
 
 #endif //GUARD_FIELDMAP_H

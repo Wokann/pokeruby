@@ -1,6 +1,8 @@
 #ifndef GUARD_STRINGS_H
 #define GUARD_STRINGS_H
 
+extern const u8 gText_Hoenn[];
+
 extern const u8 gDaycareText_GetAlongVeryWell[];
 extern const u8 gDaycareText_GetAlong[];
 extern const u8 gDaycareText_DontLikeOther[];
