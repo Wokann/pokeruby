@@ -8,17 +8,17 @@
 #define DECOR_INV(ptr) {.items = ptr, .size = sizeof ptr}
 
 struct DecorationInventory const gDecorationInventories[] = {
-    DECOR_INV(gSaveBlock1.decorDesk),
-    DECOR_INV(gSaveBlock1.decorChair),
-    DECOR_INV(gSaveBlock1.decorPlant),
-    DECOR_INV(gSaveBlock1.decorOrnament),
-    DECOR_INV(gSaveBlock1.decorMat),
-    DECOR_INV(gSaveBlock1.decorPoster),
-    DECOR_INV(gSaveBlock1.decorDoll),
-    DECOR_INV(gSaveBlock1.decorCushion)
+    DECOR_INV(gSaveBlock1.decorationDesks),
+    DECOR_INV(gSaveBlock1.decorationChairs),
+    DECOR_INV(gSaveBlock1.decorationPlants),
+    DECOR_INV(gSaveBlock1.decorationOrnaments),
+    DECOR_INV(gSaveBlock1.decorationMats),
+    DECOR_INV(gSaveBlock1.decorationPosters),
+    DECOR_INV(gSaveBlock1.decorationDolls),
+    DECOR_INV(gSaveBlock1.decorationCushions)
 };
 
-void ClearDecorationInventory(u8 category)
+static void ClearDecorationInventory(u8 category)
 {
     u8 i;
     for (i = 0; i < gDecorationInventories[category].size; i++)
@@ -29,14 +29,14 @@ void ClearDecorationInventory(u8 category)
 
 void ClearDecorationInventories(void)
 {
-    u8 i;
-    for (i = 0; i < 8; i++)
+    u8 category;
+    for (category = 0; category < 8; category++)
     {
-        ClearDecorationInventory(i);
+        ClearDecorationInventory(category);
     }
 }
 
-s8 FindFreeDecorationInventorySlot(u8 category)
+s8 GetFirstEmptyDecorSlot(u8 category)
 {
     s8 i;
     for (i = 0; i < (s8)gDecorationInventories[category].size; i++)
@@ -69,7 +69,7 @@ bool8 DecorationAdd(u8 decorationId)
         return FALSE;
 
     category = gDecorations[decorationId].category;
-    slot = FindFreeDecorationInventorySlot(category);
+    slot = GetFirstEmptyDecorSlot(category);
     if (slot == -1)
         return FALSE;
 
@@ -84,7 +84,7 @@ bool8 DecorationCheckSpace(u8 decorationId)
         return FALSE;
 
     category = gDecorations[decorationId].category;
-    if (FindFreeDecorationInventorySlot(category) == -1)
+    if (GetFirstEmptyDecorSlot(category) == -1)
         return FALSE;
 
     return TRUE;
@@ -103,7 +103,7 @@ s8 DecorationRemove(u8 decorationId)
         if (gDecorationInventories[category].items[i] == decorationId)
         {
             gDecorationInventories[category].items[i] = DECOR_NONE;
-            SortDecorationInventory(category);
+            CondenseDecorationsInCategory(category);
             return TRUE;
         }
     }
@@ -111,7 +111,7 @@ s8 DecorationRemove(u8 decorationId)
     return FALSE;
 }
 
-void SortDecorationInventory(u8 category)
+void CondenseDecorationsInCategory(u8 category)
 {
     u8 i;
     u8 j;
@@ -130,7 +130,7 @@ void SortDecorationInventory(u8 category)
     }
 }
 
-u8 GetNumDecorationsInInventoryCategory(u8 category)
+u8 GetNumOwnedDecorationsInCategory(u8 category)
 {
     u8 i;
     u8 count = 0;
@@ -143,12 +143,12 @@ u8 GetNumDecorationsInInventoryCategory(u8 category)
     return count;
 }
 
-u8 GetNumDecorationsInInventory(void)
+u8 GetNumOwnedDecorations(void)
 {
-    u8 i;
+    u8 category;
     u8 count = 0;
-    for (i = 0; i < 8; i++)
-        count += GetNumDecorationsInInventoryCategory(i);
+    for (category = 0; category < 8; category++)
+        count += GetNumOwnedDecorationsInCategory(category);
 
     return count;
 }

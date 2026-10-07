@@ -60,12 +60,6 @@ struct Decoration
     /*0x1c*/ const u16 *tiles;
 };
 
-struct DecorationInventory
-{
-    u8 *items;
-    u8 size;
-};
-
 struct UnkStruct_803EC860
 {
     const u8 *tiles;
@@ -93,7 +87,6 @@ extern u8 gUnknown_020388F3;
 extern u8 gCurDecorationIndex;
 
 extern const u16 gUnknown_083EC654[3];
-extern const struct DecorationInventory gDecorationInventories[];
 extern u8 gUnknown_020388F7[];
 extern const struct YesNoFuncTable gUnknown_083EC634[];
 extern const u8 gUnknown_083EC65A[];

@@ -318,7 +318,7 @@ void sub_80FE470(u8 category, u8 left, u8 top, u8 palIdx) // PrintDecorationCate
     strptr[2] = palIdx;
     strptr += 3;
     strptr = StringCopy(strptr, sDecorationCategoryNames[category]);
-    strptr = AlignInt1InMenuWindow(strptr, GetNumDecorationsInInventoryCategory(category), 0x56, 1);
+    strptr = AlignInt1InMenuWindow(strptr, GetNumOwnedDecorationsInCategory(category), 0x56, 1);
     *strptr++ = 0xba;
     strptr = AlignInt1InMenuWindow(strptr, gDecorationInventories[category].size, 0x68, 1);
     strptr[0] = EXT_CTRL_CODE_BEGIN;
@@ -372,10 +372,10 @@ void sub_80FE604(u8 taskId)
             sCurDecorationCategory = Menu_GetCursorPos();
             if (sCurDecorationCategory != 8)
             {
-                sNumOwnedDecorationsInCurCategory = GetNumDecorationsInInventoryCategory(sCurDecorationCategory);
+                sNumOwnedDecorationsInCurCategory = GetNumOwnedDecorationsInCategory(sCurDecorationCategory);
                 if (sNumOwnedDecorationsInCurCategory)
                 {
-                    SortDecorationInventory(sCurDecorationCategory);
+                    CondenseDecorationsInCategory(sCurDecorationCategory);
                     gCurDecorationItems = gDecorationInventories[sCurDecorationCategory].items;
                     sub_80FEF50(taskId);
                     ClearVerticalScrollIndicatorPalettes();
@@ -785,7 +785,7 @@ void sub_80FF098(u8 taskId)
     {
         sDecorationsScrollOffset--;
     }
-    SortDecorationInventory(sCurDecorationCategory);
+    CondenseDecorationsInCategory(sCurDecorationCategory);
     IdentifyOwnedDecorationsCurrentlyInUseInternal(taskId);
     sub_80FEF28();
 }
@@ -805,7 +805,7 @@ static void WarpToInitialPosition(u8 taskId)
 }
 void sub_80FF160(u8 taskId)
 {
-    if (!GetNumDecorationsInInventory())
+    if (!GetNumOwnedDecorations())
     {
         DisplayItemMessageOnField(taskId, gSecretBaseText_NoDecors, sub_80FE428, 0);
     } else
@@ -2284,7 +2284,7 @@ static void FreePlayerSpritePalette(void)
 
 void sub_8101700(u8 taskId)
 {
-    if (!GetNumDecorationsInInventory())
+    if (!GetNumOwnedDecorations())
     {
         DisplayItemMessageOnField(taskId, gSecretBaseText_NoDecors, sub_80FE428, 0);
     } else
@@ -2297,7 +2297,7 @@ void sub_8101700(u8 taskId)
 
 void sub_8101750(u8 taskId)
 {
-    if (!GetNumDecorationsInInventory())
+    if (!GetNumOwnedDecorations())
     {
         DisplayItemMessageOnField(taskId, gSecretBaseText_NoDecors, sub_80FE428, 0);
     } else
