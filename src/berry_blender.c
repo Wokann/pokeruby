@@ -174,7 +174,6 @@ void m4aMPlayTempoControl(struct MusicPlayerInfo *mplayInfo, u16 tempo);
 void m4aMPlayStop(struct MusicPlayerInfo *mplayInfo);
 void MenuCursor_SetPos814A880(u8 a1, u8 a2);
 u8 MenuCursor_Create814A5C0(u8 a1, u16 a2, u8 a3, u16 a4, u8 a5);
-s8 GetFirstFreePokeblockSlot(void);
 #ifdef GERMAN
 extern void de_sub_8073110();
 #endif
@@ -185,7 +184,6 @@ extern u8 gUnknown_020297ED;
 extern u8 byte_3002A68;
 
 extern const struct WindowTemplate gWindowTemplate_81E6F68;
-extern const u8 *const gPokeblockNames[];
 
 
 // ewram
@@ -1940,7 +1938,7 @@ u32 Blender_GetPokeblockColor(struct BlenderBerry* berries, s16* _flavors, u8 nu
             if (sPokeblockPresentFlavors[0] == 2)
                 return (sPokeblockPresentFlavors[1] << 16) | PBLOCK_CLR_BROWN;
             if (sPokeblockPresentFlavors[0] == 3)
-                return (sPokeblockPresentFlavors[1] << 16) | PBLOCK_CLR_LITEBLUE;
+                return (sPokeblockPresentFlavors[1] << 16) | PBLOCK_CLR_LITE_BLUE;
             if (sPokeblockPresentFlavors[0] == 4)
                 return (sPokeblockPresentFlavors[1] << 16) | PBLOCK_CLR_OLIVE;
         }
@@ -1953,7 +1951,7 @@ u32 Blender_GetPokeblockColor(struct BlenderBerry* berries, s16* _flavors, u8 nu
             if (sPokeblockPresentFlavors[1] == 2)
                 return (sPokeblockPresentFlavors[0] << 16) | PBLOCK_CLR_BROWN;
             if (sPokeblockPresentFlavors[1] == 3)
-                return (sPokeblockPresentFlavors[0] << 16) | PBLOCK_CLR_LITEBLUE;
+                return (sPokeblockPresentFlavors[0] << 16) | PBLOCK_CLR_LITE_BLUE;
             if (sPokeblockPresentFlavors[1] == 4)
                 return (sPokeblockPresentFlavors[0] << 16) | PBLOCK_CLR_OLIVE;
         }
@@ -3103,8 +3101,8 @@ static void Blender_PrintMadePokeblockString(struct Pokeblock* pokeblock, u8* ds
 #endif
     StringAppend(dst, sText_NewLine);
 
-    flavorLvl = sub_810C9B0(pokeblock);
-    feel = sub_810C9E8(pokeblock);
+    flavorLvl = GetHighestPokeblocksFlavorLevel(pokeblock);
+    feel = GetPokeblocksFeel(pokeblock);
 
     StringAppend(dst, sText_TheLevelIs);
     ConvertIntToDecimalStringN(text, flavorLvl, 0, 3);

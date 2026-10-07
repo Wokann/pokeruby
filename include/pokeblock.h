@@ -11,7 +11,7 @@ enum
     PBLOCK_CLR_PURPLE,
     PBLOCK_CLR_INDIGO,
     PBLOCK_CLR_BROWN,
-    PBLOCK_CLR_LITEBLUE,
+    PBLOCK_CLR_LITE_BLUE,
     PBLOCK_CLR_OLIVE,
     PBLOCK_CLR_GRAY,
     PBLOCK_CLR_BLACK,
@@ -30,16 +30,22 @@ enum
     PBLOCK_FEEL,
 };
 
+extern const s8 gPokeblockFlavorCompatibilityTable[];
+extern const u8 *const gPokeblockNames[];
+extern const struct CompressedSpriteSheet gPokeblockCase_SpriteSheet;
+extern const struct CompressedSpritePalette gPokeblockCase_SpritePal;
+
 void sub_810B96C(void);
-u8 sub_810BA50(s16, s16, u8);
-u8 sub_810C9B0(struct Pokeblock *);
+u8 CreatePokeblockCaseSprite(s16 x, s16 y, u8 subpriority);
+u8 GetHighestPokeblocksFlavorLevel(struct Pokeblock *pokeblock);
 s16 GetPokeblockData(const struct Pokeblock *, u8);
-u8 sub_810C9E8(struct Pokeblock *);
+u8 GetPokeblocksFeel(struct Pokeblock *pokeblock);
 void sub_810BA7C(u8);
 void ClearPokeblocks(void);
+s8 GetFirstFreePokeblockSlot(void);
 bool8 PokeblockClearIfExists(u8);
 s16 PokeblockGetGain(u8, const struct Pokeblock *);
-u8 sub_810CB68(u8, u8*);
+bool8 CopyMonFavoritePokeblockName(u8 nature, u8 *dest);
 void PokeblockCopyName(struct Pokeblock *pokeblock, u8 *dest);
 void CB2_PreparePokeblockFeedScene(void);
 bool8 GivePokeblock(const struct Pokeblock *);

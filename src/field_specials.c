@@ -1607,7 +1607,7 @@ void RemoveCameraDummy(void)
 
 u8 GetPokeblockNameByMonNature(void)
 {
-    return sub_810CB68(GetNature(&gPlayerParty[GetLeadMonIndex()]), gStringVar1);
+    return CopyMonFavoritePokeblockName(GetNature(&gPlayerParty[GetLeadMonIndex()]), gStringVar1);
 }
 
 void GetSecretBaseNearbyMapName(void)

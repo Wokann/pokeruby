@@ -27,32 +27,32 @@
 
 struct UnkPokeblockStruct
 {
-    u8 unk0;
-    u8 unk1;
+    u8 selectedRow;
+    u8 scrollOffset;
     u8 unk2;
     u8 unk3;
 };
 
 static EWRAM_DATA u8 gUnknown_02039244 = 0;
 static EWRAM_DATA struct UnkPokeblockStruct gUnknown_02039248 = {0};
-static EWRAM_DATA u8 gUnknown_0203924C = 0;
+static EWRAM_DATA u8 sNumPokeblockActions = 0;
 
 // function declarations
 
-// gUnknown_083F7EF4
+// sPokeblockMenuActions
 static void sub_810C508(u8);
 static void sub_810C5C0(u8);
 static void sub_810C748(u8);
 static void sub_810C788(u8);
 static void sub_810C854(u8);
 
-// gUnknown_083F7F24
+// sTossYesNoFuncTable
 static void sub_810C610(u8);
 static void sub_810C668(u8);
 
 // sub_810B6C0
 static bool8 sub_810B998(void);
-static void sub_810BC98(void);
+static void CompactPokeblockSlots(void);
 static void sub_810BD08(void);
 static void sub_810BB0C(void);
 static void sub_810BB30(void);
@@ -65,7 +65,7 @@ static void sub_810BF7C(u8);
 static void sub_810BDAC(bool8);
 
 // sub_810BF38
-static void sub_810C8D4(struct Sprite *);
+static void SpriteCB_ShakePokeblockCase(struct Sprite *);
 
 // sub_810BF7C
 static void sub_810C0C8(u8);
@@ -85,11 +85,11 @@ static void sub_810C5EC(u8);
 // sub_810C610
 static void sub_810C704(u8);
 
-static const u8 *gUnknown_03000758;
+static const u8 *sPokeblockActionIds;
 
 // rodata
 
-#define GFX_TAG_POKEBLOCK_CASE 14800
+#define TAG_POKEBLOCK_CASE 14800
 
 const s8 gPokeblockFlavorCompatibilityTable[] =
 {
@@ -132,23 +132,23 @@ void (*const gUnknown_083F7EA8[])(void) =
 const u8 *const gPokeblockNames[] =
 {
     NULL,
-    ContestStatsText_RedPokeBlock,
-    ContestStatsText_BluePokeBlock,
-    ContestStatsText_PinkPokeBlock,
-    ContestStatsText_GreenPokeBlock,
-    ContestStatsText_YellowPokeBlock,
-    ContestStatsText_PurplePokeBlock,
-    ContestStatsText_IndigoPokeBlock,
-    ContestStatsText_BrownPokeBlock,
-    ContestStatsText_LiteBluePokeBlock,
-    ContestStatsText_OlivePokeBlock,
-    ContestStatsText_GrayPokeBlock,
-    ContestStatsText_BlackPokeBlock,
-    ContestStatsText_WhitePokeBlock,
-    ContestStatsText_GoldPokeBlock
+    gText_RedPokeblock,
+    gText_BluePokeblock,
+    gText_PinkPokeblock,
+    gText_GreenPokeblock,
+    gText_YellowPokeblock,
+    gText_PurplePokeblock,
+    gText_IndigoPokeblock,
+    gText_BrownPokeblock,
+    gText_LiteBluePokeblock,
+    gText_OlivePokeblock,
+    gText_GrayPokeblock,
+    gText_BlackPokeblock,
+    gText_WhitePokeblock,
+    gText_GoldPokeblock
 };
 
-const struct MenuAction2 gUnknown_083F7EF4[] =
+static const struct MenuAction2 sPokeblockMenuActions[] =
 {
     {gMenuText_Use,     sub_810C508},
     {gMenuText_Toss,    sub_810C5C0},
@@ -157,32 +157,32 @@ const struct MenuAction2 gUnknown_083F7EF4[] =
     {gMenuText_Use,     sub_810C854},
 };
 
-const u8 gUnknown_083F7F1C[] = {0, 1, 2};
-const u8 gUnknown_083F7F1F[] = {3, 2};
-const u8 gUnknown_083F7F21[] = {4, 2};
+static const u8 sActionsOnField[] = {0, 1, 2};
+static const u8 sActionsInBattle[] = {3, 2};
+static const u8 sActionsOnPokeblockFeeder[] = {4, 2};
 
-const struct YesNoFuncTable gUnknown_083F7F24 = {sub_810C610, sub_810C668};
+static const struct YesNoFuncTable sTossYesNoFuncTable = {sub_810C610, sub_810C668};
 
-const u8 UnreferencedData_083F7F2C[] = {0x16, 0x17, 0x18, 0x21, 0x2f};
+static const u8 sContestStatsMonData[] = {0x16, 0x17, 0x18, 0x21, 0x2f};
 
-const struct OamData gOamData_83F7F34 =
+static const struct OamData sOamData_PokeblockCase =
 {
     .size = 3,
     .priority = 2
 };
 
-const union AnimCmd gSpriteAnim_83F7F3C[] =
+static const union AnimCmd sSpriteAnim_PokeblockCase[] =
 {
     ANIMCMD_FRAME(.imageValue = 0, .duration = 0),
     ANIMCMD_END
 };
 
-const union AnimCmd *const gSpriteAnimTable_83F7F44[] =
+static const union AnimCmd *const sSpriteAnimTable_PokeblockCase[] =
 {
-    gSpriteAnim_83F7F3C
+    sSpriteAnim_PokeblockCase
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83F7F48[] =
+static const union AffineAnimCmd sAffineAnim_PokeblockCaseShake[] =
 {
     AFFINEANIMCMD_FRAME(0, 0, -2,  2),
     AFFINEANIMCMD_FRAME(0, 0,  2,  4),
@@ -191,36 +191,36 @@ const union AffineAnimCmd gSpriteAffineAnim_83F7F48[] =
     AFFINEANIMCMD_END
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83F7F70[] =
+static const union AffineAnimCmd *const sAffineAnims_PokeblockCaseShake[] =
 {
-    gSpriteAffineAnim_83F7F48
+    sAffineAnim_PokeblockCaseShake
 };
 
-const struct CompressedSpriteSheet gUnknown_083F7F74 =
+const struct CompressedSpriteSheet gPokeblockCase_SpriteSheet =
 {
     gMenuPokeblockDevice_Gfx,
     0x800,
-    GFX_TAG_POKEBLOCK_CASE
+    TAG_POKEBLOCK_CASE
 };
 
-const struct CompressedSpritePalette gUnknown_083F7F7C =
+const struct CompressedSpritePalette gPokeblockCase_SpritePal =
 {
     gMenuPokeblockDevice_Pal,
-    GFX_TAG_POKEBLOCK_CASE
+    TAG_POKEBLOCK_CASE
 };
 
-const struct SpriteTemplate gSpriteTemplate_83F7F84 =
+static const struct SpriteTemplate sSpriteTemplate_PokeblockCase =
 {
-    GFX_TAG_POKEBLOCK_CASE,
-    GFX_TAG_POKEBLOCK_CASE,
-    &gOamData_83F7F34,
-    gSpriteAnimTable_83F7F44,
+    TAG_POKEBLOCK_CASE,
+    TAG_POKEBLOCK_CASE,
+    &sOamData_PokeblockCase,
+    sSpriteAnimTable_PokeblockCase,
     NULL,
     gDummySpriteAffineAnimTable,
     SpriteCallbackDummy
 };
 
-const struct Pokeblock gUnknown_083F7F9C[] =
+static const struct Pokeblock sFavoritePokeblocksTable[] =
 {
     { PBLOCK_CLR_RED,      20,  0,  0,  0,  0, 20 },
     { PBLOCK_CLR_BLUE,      0, 20,  0,  0,  0, 20 },
@@ -231,7 +231,7 @@ const struct Pokeblock gUnknown_083F7F9C[] =
     { PBLOCK_CLR_PURPLE,   20,  0, 20,  0,  0, 20 },
     { PBLOCK_CLR_INDIGO,    0, 20,  0, 20,  0, 20 },
     { PBLOCK_CLR_BROWN,     0,  0, 20,  0, 20, 20 },
-	{ PBLOCK_CLR_LITEBLUE, 20,  0,  0, 20,  0, 20 },
+	{ PBLOCK_CLR_LITE_BLUE, 20,  0,  0, 20,  0, 20 },
     { PBLOCK_CLR_OLIVE,     0, 20,  0,  0, 20, 20 },
     { PBLOCK_CLR_GRAY,      0,  2,  0,  2,  2,  0 },
 	{ PBLOCK_CLR_BLACK,     3,  3,  3,  4,  3,  0 },
@@ -334,18 +334,18 @@ static bool8 sub_810B6C0(void)
             gMain.state++;
             break;
         case 13:
-            ePokeblockCaseSpriteId = sub_810BA50(0x38, 0x40, 0);
+            ePokeblockCaseSpriteId = CreatePokeblockCaseSprite(0x38, 0x40, 0);
             gMain.state++;
             break;
         case 14:
-            sub_810BC98();
+            CompactPokeblockSlots();
             sub_810BD08();
             gMain.state++;
             break;
         case 15:
             sub_810BB0C();
             sub_810BB30();
-            sub_810BC84(gUnknown_02039248.unk1);
+            sub_810BC84(gUnknown_02039248.scrollOffset);
             gMain.state++;
             break;
         case 16:
@@ -401,20 +401,20 @@ static bool8 sub_810B998(void)
             ePokeblockGfxState++;
             break;
         case 3:
-            LoadCompressedObjectPic(&gUnknown_083F7F74);
+            LoadCompressedObjectPic(&gPokeblockCase_SpriteSheet);
             ePokeblockGfxState++;
             break;
         case 4:
-            LoadCompressedObjectPalette(&gUnknown_083F7F7C);
+            LoadCompressedObjectPalette(&gPokeblockCase_SpritePal);
             ePokeblockGfxState = 0;
             return TRUE;
     }
     return FALSE;
 }
 
-u8 sub_810BA50(s16 x, s16 y, u8 subpriority)
+u8 CreatePokeblockCaseSprite(s16 x, s16 y, u8 subpriority)
 {
-    return CreateSprite(&gSpriteTemplate_83F7F84, x, y, subpriority);
+    return CreateSprite(&sSpriteTemplate_PokeblockCase, x, y, subpriority);
 }
 
 void sub_810BA7C(u8 a0)
@@ -423,16 +423,16 @@ void sub_810BA7C(u8 a0)
     switch (gUnknown_02039244)
     {
         default:
-            gUnknown_03000758 = gUnknown_083F7F1C;
-            gUnknown_0203924C = sizeof gUnknown_083F7F1C;
+            sPokeblockActionIds = sActionsOnField;
+            sNumPokeblockActions = sizeof sActionsOnField;
             break;
         case 2:
-            gUnknown_03000758 = gUnknown_083F7F1F;
-            gUnknown_0203924C = sizeof gUnknown_083F7F1F;
+            sPokeblockActionIds = sActionsInBattle;
+            sNumPokeblockActions = sizeof sActionsInBattle;
             break;
         case 3:
-            gUnknown_03000758 = gUnknown_083F7F21;
-            gUnknown_0203924C = sizeof gUnknown_083F7F21;
+            sPokeblockActionIds = sActionsOnPokeblockFeeder;
+            sNumPokeblockActions = sizeof sActionsOnPokeblockFeeder;
             break;
     }
 }
@@ -454,8 +454,8 @@ void debug_sub_8120F98(void)
 {
     u8 i;
 
-    for (i = 0; i < 40 && gUnknown_083F7F9C[i].color != 0; i++)
-        gSaveBlock1.pokeblocks[i] = gUnknown_083F7F9C[i];
+    for (i = 0; i < 40 && sFavoritePokeblocksTable[i].color != 0; i++)
+        gSaveBlock1.pokeblocks[i] = sFavoritePokeblocksTable[i];
 }
 #endif
 
@@ -468,11 +468,11 @@ static void sub_810BB0C(void)
 static void sub_810BB30(void)
 {
     BasicInitMenuWindow(&gWindowTemplate_81E6E34);
-    Menu_PrintText(gContestStatsText_Spicy,   2, 13);
-    Menu_PrintText(gContestStatsText_Dry,     2, 15);
-    Menu_PrintText(gContestStatsText_Sweet,   2, 17);
-    Menu_PrintText(gContestStatsText_Bitter,  8, 13);
-    Menu_PrintText(gContestStatsText_Sour,    8, 15);
+    Menu_PrintText(gText_Spicy,   2, 13);
+    Menu_PrintText(gText_Dry,     2, 15);
+    Menu_PrintText(gText_Sweet,   2, 17);
+    Menu_PrintText(gText_Bitter,  8, 13);
+    Menu_PrintText(gText_Sour,    8, 15);
 }
 
 static void sub_810BB88(u8 a0)
@@ -486,7 +486,7 @@ static void sub_810BB88(u8 a0)
         y = (i - a0) << 1;
         if (i == gUnknown_02039248.unk2)
         {
-            buf = AlignStringInMenuWindow(gStringVar1, gContestStatsText_StowCase, 0x78, 0);
+            buf = AlignStringInMenuWindow(gStringVar1, gText_StowCase, 0x78, 0);
             Menu_PrintText(gStringVar1, 15, y + 1);
             if (i != a0 + 8)
             {
@@ -499,7 +499,7 @@ static void sub_810BB88(u8 a0)
         buf[1] = 0x14;
         buf[2] = 0x06;
         buf += 3;
-        ConvertIntToDecimalStringN(buf, sub_810C9B0(&gSaveBlock1.pokeblocks[i]), STR_CONV_MODE_RIGHT_ALIGN, 3);
+        ConvertIntToDecimalStringN(buf, GetHighestPokeblocksFlavorLevel(&gSaveBlock1.pokeblocks[i]), STR_CONV_MODE_RIGHT_ALIGN, 3);
         Menu_PrintText(gStringVar1, 15, y + 1);
     }
 }
@@ -510,19 +510,19 @@ static void sub_810BC84(u8 a0)
     sub_810BDAC(FALSE);
 }
 
-static void sub_810BC98(void)
+static void CompactPokeblockSlots(void)
 {
     u16 i, j;
-    struct Pokeblock buf;
+    struct Pokeblock temp;
     for (i=0; i<39; i++)
     {
         for (j=i+1; j<40; j++)
         {
             if (gSaveBlock1.pokeblocks[i].color == 0)
             {
-                buf = gSaveBlock1.pokeblocks[i];
+                temp = gSaveBlock1.pokeblocks[i];
                 gSaveBlock1.pokeblocks[i] = gSaveBlock1.pokeblocks[j];
-                gSaveBlock1.pokeblocks[j] = buf;
+                gSaveBlock1.pokeblocks[j] = temp;
             }
         }
     }
@@ -545,9 +545,9 @@ static void sub_810BD08(void)
     {
         gUnknown_02039248.unk3 = 8;
     }
-    if (gUnknown_02039248.unk1 + 8 > gUnknown_02039248.unk2 && gUnknown_02039248.unk1 != 0)
+    if (gUnknown_02039248.scrollOffset + 8 > gUnknown_02039248.unk2 && gUnknown_02039248.scrollOffset != 0)
     {
-        gUnknown_02039248.unk1--;
+        gUnknown_02039248.scrollOffset--;
     }
 }
 
@@ -557,8 +557,8 @@ static void sub_810BD64(u16 a0, u16 a1)
     int y;
     for (i=0; i<14; i++)
     {
-        gBGTilemapBuffers[2][(2 * gUnknown_02039248.unk0 + 1) * 32 + (y = i + 15)] = a0;
-        gBGTilemapBuffers[2][(2 * gUnknown_02039248.unk0 + 2) * 32 + y] = a0;
+        gBGTilemapBuffers[2][(2 * gUnknown_02039248.selectedRow + 1) * 32 + (y = i + 15)] = a0;
+        gBGTilemapBuffers[2][(2 * gUnknown_02039248.selectedRow + 2) * 32 + y] = a0;
     }
 }
 
@@ -574,7 +574,7 @@ static void sub_810BDAC(bool8 flag)
     {
         sub_810BD64(0x2005, 0x2014);
     }
-    if (gUnknown_02039248.unk1)
+    if (gUnknown_02039248.scrollOffset)
     {
         SetVerticalScrollIndicators(TOP_ARROW, VISIBLE);
     }
@@ -582,7 +582,7 @@ static void sub_810BDAC(bool8 flag)
     {
         SetVerticalScrollIndicators(TOP_ARROW, INVISIBLE);
     }
-    if (gUnknown_02039248.unk2 > gUnknown_02039248.unk3 && gUnknown_02039248.unk1 + gUnknown_02039248.unk3 != gUnknown_02039248.unk2)
+    if (gUnknown_02039248.unk2 > gUnknown_02039248.unk3 && gUnknown_02039248.scrollOffset + gUnknown_02039248.unk3 != gUnknown_02039248.unk2)
     {
         SetVerticalScrollIndicators(BOTTOM_ARROW, VISIBLE);
     }
@@ -593,9 +593,9 @@ static void sub_810BDAC(bool8 flag)
     for (i=0; i<5; i++)
     {
         v0 = ((i % 3) << 6) + 0x1a1 + (i / 3) * 6;
-        if (gUnknown_02039248.unk0 + gUnknown_02039248.unk1 != gUnknown_02039248.unk2)
+        if (gUnknown_02039248.selectedRow + gUnknown_02039248.scrollOffset != gUnknown_02039248.unk2)
         {
-            if (GetPokeblockData(&gSaveBlock1.pokeblocks[gUnknown_02039248.unk0 + gUnknown_02039248.unk1], i + 1) > 0)
+            if (GetPokeblockData(&gSaveBlock1.pokeblocks[gUnknown_02039248.selectedRow + gUnknown_02039248.scrollOffset], i + 1) > 0)
             {
                 gBGTilemapBuffers[2][v0] = (i << 12) + 23;
                 gBGTilemapBuffers[2][v0 + 32] = (i << 12) + 24;
@@ -613,9 +613,9 @@ static void sub_810BDAC(bool8 flag)
         }
     }
     BasicInitMenuWindow(&gWindowTemplate_81E6E34);
-    if (gUnknown_02039248.unk0 + gUnknown_02039248.unk1 != gUnknown_02039248.unk2)
+    if (gUnknown_02039248.selectedRow + gUnknown_02039248.scrollOffset != gUnknown_02039248.unk2)
     {
-        AlignInt1InMenuWindow(gStringVar1, sub_810C9E8(&gSaveBlock1.pokeblocks[gUnknown_02039248.unk0 + gUnknown_02039248.unk1]), 16, 1);
+        AlignInt1InMenuWindow(gStringVar1, GetPokeblocksFeel(&gSaveBlock1.pokeblocks[gUnknown_02039248.selectedRow + gUnknown_02039248.scrollOffset]), 16, 1);
         Menu_PrintText(gStringVar1, 11, 17);
     }
     else
@@ -627,7 +627,7 @@ static void sub_810BDAC(bool8 flag)
 static void sub_810BF38(bool8 flag)
 {
     PlaySE(SE_SELECT);
-    gSprites[ePokeblockCaseSpriteId].callback = sub_810C8D4;
+    gSprites[ePokeblockCaseSpriteId].callback = SpriteCB_ShakePokeblockCase;
     sub_810BDAC(flag);
 }
 
@@ -637,48 +637,48 @@ static void sub_810BF7C(u8 taskId)
     {
         if (JOY_REPEAT(DPAD_UP))
         {
-            if (gUnknown_02039248.unk0 != 0)
+            if (gUnknown_02039248.selectedRow != 0)
             {
                 sub_810BD64(5, 20);
-                gUnknown_02039248.unk0--;
+                gUnknown_02039248.selectedRow--;
                 sub_810BF38(FALSE);
             }
-            else if (gUnknown_02039248.unk1 != 0)
+            else if (gUnknown_02039248.scrollOffset != 0)
             {
-                gUnknown_02039248.unk1--;
-                sub_810BB88(gUnknown_02039248.unk1);
+                gUnknown_02039248.scrollOffset--;
+                sub_810BB88(gUnknown_02039248.scrollOffset);
                 sub_810BF38(FALSE);
             }
         }
         else if (JOY_REPEAT(DPAD_DOWN))
         {
-            if (gUnknown_02039248.unk0 != gUnknown_02039248.unk3)
+            if (gUnknown_02039248.selectedRow != gUnknown_02039248.unk3)
             {
                 sub_810BD64(5, 20);
-                gUnknown_02039248.unk0++;
+                gUnknown_02039248.selectedRow++;
                 sub_810BF38(FALSE);
             }
-            else if (gUnknown_02039248.unk1 + gUnknown_02039248.unk0 != gUnknown_02039248.unk2)
+            else if (gUnknown_02039248.scrollOffset + gUnknown_02039248.selectedRow != gUnknown_02039248.unk2)
             {
-                gUnknown_02039248.unk1++;
-                sub_810BB88(gUnknown_02039248.unk1);
+                gUnknown_02039248.scrollOffset++;
+                sub_810BB88(gUnknown_02039248.scrollOffset);
                 sub_810BF38(FALSE);
             }
         }
         else if (JOY_NEW(SELECT_BUTTON))
         {
-            if (gUnknown_02039248.unk1 + gUnknown_02039248.unk0 != gUnknown_02039248.unk2)
+            if (gUnknown_02039248.scrollOffset + gUnknown_02039248.selectedRow != gUnknown_02039248.unk2)
             {
                 PlaySE(SE_SELECT);
                 sub_810BDAC(TRUE);
-                gTasks[taskId].data[0] = gUnknown_02039248.unk1 + gUnknown_02039248.unk0;
+                gTasks[taskId].data[0] = gUnknown_02039248.scrollOffset + gUnknown_02039248.selectedRow;
                 gTasks[taskId].func = sub_810C0C8;
             }
         }
         else if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
-            if (gUnknown_02039248.unk1 + gUnknown_02039248.unk0 == gUnknown_02039248.unk2)
+            if (gUnknown_02039248.scrollOffset + gUnknown_02039248.selectedRow == gUnknown_02039248.unk2)
             {
                 gSpecialVar_Result = 0xffff;
                 sub_810C31C(taskId);
@@ -701,36 +701,36 @@ static void sub_810C0C8(u8 taskId)
 {
     if (JOY_REPEAT(DPAD_UP))
     {
-        if (gUnknown_02039248.unk0 != 0)
+        if (gUnknown_02039248.selectedRow != 0)
         {
             sub_810BD64(5, 20);
-            gUnknown_02039248.unk0--;
+            gUnknown_02039248.selectedRow--;
             sub_810BF38(TRUE);
             sub_810C1C8(taskId, 1);
         }
-        else if (gUnknown_02039248.unk1 != 0)
+        else if (gUnknown_02039248.scrollOffset != 0)
         {
             sub_810C1C8(taskId, 0);
-            gUnknown_02039248.unk1--;
-            sub_810BB88(gUnknown_02039248.unk1);
+            gUnknown_02039248.scrollOffset--;
+            sub_810BB88(gUnknown_02039248.scrollOffset);
             sub_810BF38(TRUE);
             sub_810C1C8(taskId, 1);
         }
     }
     else if (JOY_REPEAT(DPAD_DOWN))
     {
-        if (gUnknown_02039248.unk0 != gUnknown_02039248.unk3)
+        if (gUnknown_02039248.selectedRow != gUnknown_02039248.unk3)
         {
             sub_810BD64(5, 20);
-            gUnknown_02039248.unk0++;
+            gUnknown_02039248.selectedRow++;
             sub_810BF38(TRUE);
             sub_810C1C8(taskId, 1);
         }
-        else if (gUnknown_02039248.unk1 + gUnknown_02039248.unk0 != gUnknown_02039248.unk2)
+        else if (gUnknown_02039248.scrollOffset + gUnknown_02039248.selectedRow != gUnknown_02039248.unk2)
         {
             sub_810C1C8(taskId, 0);
-            gUnknown_02039248.unk1++;
-            sub_810BB88(gUnknown_02039248.unk1);
+            gUnknown_02039248.scrollOffset++;
+            sub_810BB88(gUnknown_02039248.scrollOffset);
             sub_810BF38(TRUE);
             sub_810C1C8(taskId, 1);
         }
@@ -761,8 +761,8 @@ static void sub_810C1C8(u8 taskId, u8 flag)
     {
         v0 = 0x0005;
     }
-    y = gTasks[taskId].data[0] - gUnknown_02039248.unk1;
-    if ((u16)y <= 8 && y != gUnknown_02039248.unk0)
+    y = gTasks[taskId].data[0] - gUnknown_02039248.scrollOffset;
+    if ((u16)y <= 8 && y != gUnknown_02039248.selectedRow)
     {
         for (i=0; i<14; i++)
         {
@@ -775,7 +775,7 @@ static void sub_810C1C8(u8 taskId, u8 flag)
 static void sub_810C23C(u8 taskId)
 {
     struct Pokeblock buf;
-    u8 selidx = gUnknown_02039248.unk1 + gUnknown_02039248.unk0;
+    u8 selidx = gUnknown_02039248.scrollOffset + gUnknown_02039248.selectedRow;
     if (selidx == gUnknown_02039248.unk2)
     {
         sub_810BDAC(FALSE);
@@ -785,7 +785,7 @@ static void sub_810C23C(u8 taskId)
         buf = gSaveBlock1.pokeblocks[selidx];
         gSaveBlock1.pokeblocks[selidx] = gSaveBlock1.pokeblocks[gTasks[taskId].data[0]];
         gSaveBlock1.pokeblocks[gTasks[taskId].data[0]] = buf;
-        sub_810BB88(gUnknown_02039248.unk1);
+        sub_810BB88(gUnknown_02039248.scrollOffset);
         sub_810BDAC(FALSE);
     }
 }
@@ -830,9 +830,9 @@ static void sub_810C368(u8 taskId)
     StopVerticalScrollIndicators(BOTTOM_ARROW);
     BasicInitMenuWindow(&gWindowTemplate_81E6E50);
     Menu_DrawStdWindowFrame(7, v0 + 4, 13, 11);
-    Menu_PrintItemsReordered(8, v0 + 5, gUnknown_0203924C, gUnknown_083F7EF4, gUnknown_03000758);
-    InitMenu(0, 8, v0 + 5, gUnknown_0203924C, 0, 5);
-    gSpecialVar_ItemId = gUnknown_02039248.unk0 + gUnknown_02039248.unk1;
+    Menu_PrintItemsReordered(8, v0 + 5, sNumPokeblockActions, sPokeblockMenuActions, sPokeblockActionIds);
+    InitMenu(0, 8, v0 + 5, sNumPokeblockActions, 0, 5);
+    gSpecialVar_ItemId = gUnknown_02039248.selectedRow + gUnknown_02039248.scrollOffset;
     gTasks[taskId].func = sub_810C40C;
 }
 
@@ -848,7 +848,7 @@ static void sub_810C40C(u8 taskId)
     }
     else if (JOY_REPEAT(DPAD_DOWN))
     {
-        if (Menu_GetCursorPos() != gUnknown_0203924C - 1)
+        if (Menu_GetCursorPos() != sNumPokeblockActions - 1)
         {
             PlaySE(SE_SELECT);
             Menu_MoveCursor(+1);
@@ -857,7 +857,7 @@ static void sub_810C40C(u8 taskId)
     else if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        gUnknown_083F7EF4[gUnknown_03000758[Menu_GetCursorPos()]].func(taskId);
+        sPokeblockMenuActions[sPokeblockActionIds[Menu_GetCursorPos()]].func(taskId);
     }
     else if (JOY_NEW(B_BUTTON))
     {
@@ -887,8 +887,8 @@ static void sub_810C540(u8 taskId)
     BasicInitMenuWindow(&gWindowTemplate_81E6E50);
     Menu_DestroyCursor();
     Menu_EraseWindowRect(7, 4, 13, 11);
-    StringCopy(gStringVar1, gPokeblockNames[gSaveBlock1.pokeblocks[gUnknown_02039248.unk0 + gUnknown_02039248.unk1].color]);
-    StringExpandPlaceholders(gStringVar4, gContestStatsText_ThrowAwayPrompt);
+    StringCopy(gStringVar1, gPokeblockNames[gSaveBlock1.pokeblocks[gUnknown_02039248.selectedRow + gUnknown_02039248.scrollOffset].color]);
+    StringExpandPlaceholders(gStringVar4, gText_ThrowAwayVar1);
     DisplayItemMessageOnField(taskId, gStringVar4, sub_810C5EC, 0);
 }
 
@@ -901,16 +901,16 @@ static void sub_810C5C0(u8 taskId)
 static void sub_810C5EC(u8 taskId)
 {
     DisplayYesNoMenu(7, 6, 1);
-    DoYesNoFuncWithChoice(taskId, &gUnknown_083F7F24);
+    DoYesNoFuncWithChoice(taskId, &sTossYesNoFuncTable);
 }
 
 static void sub_810C610(u8 taskId)
 {
     Menu_EraseWindowRect(7, 6, 13, 11);
-    PokeblockClearIfExists((gUnknown_02039248.unk0 + gUnknown_02039248.unk1));
-    StringExpandPlaceholders(gStringVar4, gContestStatsText_WasThrownAway);
+    PokeblockClearIfExists((gUnknown_02039248.selectedRow + gUnknown_02039248.scrollOffset));
+    StringExpandPlaceholders(gStringVar4, gText_Var1ThrownAway);
     DisplayItemMessageOnField(taskId, gStringVar4, sub_810C704, 0);
-    sub_810BC98();
+    CompactPokeblockSlots();
     sub_810BD08();
 }
 
@@ -918,7 +918,7 @@ static void sub_810C668(u8 taskId)
 {
     StartVerticalScrollIndicators(TOP_ARROW);
     StartVerticalScrollIndicators(BOTTOM_ARROW);
-    if (gUnknown_02039248.unk2 > gUnknown_02039248.unk3 && gUnknown_02039248.unk1 + gUnknown_02039248.unk3 != gUnknown_02039248.unk2)
+    if (gUnknown_02039248.unk2 > gUnknown_02039248.unk3 && gUnknown_02039248.scrollOffset + gUnknown_02039248.unk3 != gUnknown_02039248.unk2)
     {
         SetVerticalScrollIndicators(BOTTOM_ARROW, VISIBLE);
     }
@@ -939,7 +939,7 @@ static void sub_810C6DC(u8 taskId)
 static void sub_810C704(u8 taskId)
 {
     BasicInitMenuWindow(&gWindowTemplate_81E6E34);
-    sub_810BC84(gUnknown_02039248.unk1);
+    sub_810BC84(gUnknown_02039248.scrollOffset);
     SetVerticalScrollIndicators(BOTTOM_ARROW, INVISIBLE);
     gTasks[taskId].func = sub_810C6DC;
 }
@@ -955,19 +955,19 @@ static void sub_810C748(u8 taskId)
 
 static void sub_810C788(u8 taskId)
 {
-    s16 v0 = PokeblockGetGain(GetNature(&gEnemyParty[0]), &gSaveBlock1.pokeblocks[gSpecialVar_ItemId]);
+    s16 gain = PokeblockGetGain(GetNature(&gEnemyParty[0]), &gSaveBlock1.pokeblocks[gSpecialVar_ItemId]);
     StringCopy(gBattleTextBuff1, gPokeblockNames[gSaveBlock1.pokeblocks[gSpecialVar_ItemId].color]);
     PokeblockClearIfExists(gSpecialVar_ItemId);
     gSpecialVar_ItemId = gSaveBlock1.pokeblocks[gSpecialVar_ItemId].color << 8;
-    if (v0 == 0)
+    if (gain == 0)
     {
         gSpecialVar_ItemId += 1;
     }
-    if (v0 > 0)
+    if (gain > 0)
     {
         gSpecialVar_ItemId += 2;
     }
-    if (v0 < 0)
+    if (gain < 0)
     {
         gSpecialVar_ItemId += 3;
     }
@@ -985,7 +985,7 @@ static void sub_810C854(u8 taskId)
     gTasks[taskId].func = sub_810C2C8;
 }
 
-static void sub_810C8D4(struct Sprite *sprite)
+static void SpriteCB_ShakePokeblockCase(struct Sprite *sprite)
 {
     if (sprite->data[0] > 1)
     {
@@ -995,7 +995,7 @@ static void sub_810C8D4(struct Sprite *sprite)
     {
         case 0:
             sprite->oam.affineMode = 1;
-            sprite->affineAnims = gSpriteAffineAnimTable_83F7F70;
+            sprite->affineAnims = sAffineAnims_PokeblockCaseShake;
             InitSpriteAffineAnim(sprite);
             sprite->data[0] = 1;
             sprite->data[1] = 0;
@@ -1033,23 +1033,23 @@ void ClearPokeblocks(void)
     }
 }
 
-u8 sub_810C9B0(struct Pokeblock *pokeblock)
+u8 GetHighestPokeblocksFlavorLevel(struct Pokeblock *pokeblock)
 {
     u8 contestStat;
-    u8 maxRating;
-    u8 rating = GetPokeblockData(pokeblock, 1);
+    u8 currFlavor;
+    u8 maxFlavor = GetPokeblockData(pokeblock, 1);
     for (contestStat=1; contestStat<5; contestStat++)
     {
-        maxRating = GetPokeblockData(pokeblock, contestStat + 1);
-        if (rating < maxRating)
+        currFlavor = GetPokeblockData(pokeblock, contestStat + 1);
+        if (maxFlavor < currFlavor)
         {
-            rating = maxRating;
+            maxFlavor = currFlavor;
         }
     }
-    return rating;
+    return maxFlavor;
 }
 
-u8 sub_810C9E8(struct Pokeblock *pokeblock)
+u8 GetPokeblocksFeel(struct Pokeblock *pokeblock)
 {
     u8 feel = GetPokeblockData(pokeblock, 6);
     if (feel > 99)
@@ -1072,12 +1072,12 @@ s8 GetFirstFreePokeblockSlot(void)
 
 bool8 GivePokeblock(const struct Pokeblock *pokeblock)
 {
-    s8 idx = GetFirstFreePokeblockSlot();
-    if (idx == -1)
+    s8 slot = GetFirstFreePokeblockSlot();
+    if (slot == -1)
     {
         return FALSE;
     }
-    gSaveBlock1.pokeblocks[idx] = *pokeblock;
+    gSaveBlock1.pokeblocks[slot] = *pokeblock;
     return TRUE;
 }
 
@@ -1132,12 +1132,12 @@ void PokeblockCopyName(struct Pokeblock *pokeblock, u8 *dest)
     StringCopy(dest, gPokeblockNames[color]);
 }
 
-bool8 sub_810CB68(u8 nature, u8 *dest)
+bool8 CopyMonFavoritePokeblockName(u8 nature, u8 *dest)
 {
     u8 flavor;
     for (flavor=0; flavor<5; flavor++)
     {
-        if (PokeblockGetGain(nature, &gUnknown_083F7F9C[flavor]) > 0)
+        if (PokeblockGetGain(nature, &sFavoritePokeblocksTable[flavor]) > 0)
         {
             StringCopy(dest, gPokeblockNames[flavor + 1]);
             return TRUE;

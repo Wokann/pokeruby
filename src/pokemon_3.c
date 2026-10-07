@@ -11,6 +11,7 @@
 #include "m4a.h"
 #include "main.h"
 #include "pokemon.h"
+#include "pokeblock.h"
 #include "pokedex.h"
 #include "random.h"
 #include "overworld.h"
@@ -50,7 +51,6 @@ extern u16 gBattleTypeFlags;
 extern u32 gTMHMLearnsets[][2];
 extern u8 gBattleMonForms[];
 extern const u8 BattleText_Wally[];
-extern s8 gPokeblockFlavorCompatibilityTable[];
 extern u8 gLastUsedAbility;
 extern const u8 BattleText_PreventedSwitch[];
 extern u16 gBattlerPartyIndexes[];

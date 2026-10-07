@@ -44,8 +44,6 @@ extern const u8 gPokeblock_Gfx[];
 extern const u8 gBattleEnvironmentTiles_Building[];
 extern const u8 gUnknown_08E782FC[];
 extern const u8 gBattleEnvironmentPalette_BattleTower[];
-extern const struct CompressedSpriteSheet gUnknown_083F7F74;
-extern const struct CompressedSpritePalette gUnknown_083F7F7C;
 
 // this file's functions
 static void sub_8147B04(void);
@@ -632,11 +630,11 @@ static bool8 sub_8147B20(struct Pokemon* mon)
         }
         break;
     case 2:
-        LoadCompressedObjectPic(&gUnknown_083F7F74);
+        LoadCompressedObjectPic(&gPokeblockCase_SpriteSheet);
         ePokeblockGfxState++;
         break;
     case 3:
-        LoadCompressedObjectPalette(&gUnknown_083F7F7C);
+        LoadCompressedObjectPalette(&gPokeblockCase_SpritePal);
         ePokeblockGfxState++;
         break;
     case 4:
@@ -797,7 +795,7 @@ static void sub_8148078(struct Sprite* sprite)
 
 static u8 sub_81480B4(void)
 {
-    u8 spriteID = sub_810BA50(188, 100, 2);
+    u8 spriteID = CreatePokeblockCaseSprite(188, 100, 2);
     gSprites[spriteID].oam.affineMode = 1;
     gSprites[spriteID].affineAnims = sSpriteAffineAnimTable_84121A0;
     gSprites[spriteID].callback = SpriteCallbackDummy;
