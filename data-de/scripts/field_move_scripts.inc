@@ -77,7 +77,7 @@ S_BreakableRock:: @ 81B0EB7
 	goto DoRockSmashMovement
 	end
 
-S_UseRockSmash:: @ 81B0F01
+EventScript_UseRockSmash:: @ 81B0F01
 	lockall
 	dofieldeffect FLDEFF_USE_ROCK_SMASH
 	waitstate

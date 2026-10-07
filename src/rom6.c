@@ -1,6 +1,8 @@
 #include "global.h"
 #include "braille_puzzles.h"
+#include "event_data.h"
 #include "event_object_movement.h"
+#include "event_scripts.h"
 #include "field_effect.h"
 #include "field_player_avatar.h"
 #include "item_use.h"
@@ -17,22 +19,16 @@
 #include "constants/map_types.h"
 #include "constants/songs.h"
 
-extern u16 gSpecialVar_LastTalked;
-extern void (*gFieldCallback)(void);
-extern u8 gLastFieldPokeMenuOpened;
-extern void (*gPostMenuFieldCallback)(void);
-extern u8 S_UseRockSmash[];
-
 EWRAM_DATA struct MapPosition gPlayerFacingPosition = {0};
 
-static void task08_080C9820(u8);
-static void sub_810B3DC(u8);
-static void sub_810B428(u8);
-static void sub_810B4CC(u8);
+static void Task_DoFieldMove_Init(u8 taskId);
+static void Task_DoFieldMove_ShowMonAfterPose(u8 taskId);
+static void Task_DoFieldMove_WaitForMon(u8 taskId);
+static void Task_DoFieldMove_RunFunc(u8 taskId);
 static void sub_810B53C(void);
-static void sub_810B58C(void);
+static void FieldMove_RockSmash(void);
 static void sub_810B5D8(void);
-static void sub_810B634(void);
+static void StartDigFieldEffect(void);
 
 bool8 CheckObjectGraphicsInFrontOfPlayer(u8 graphicsId)
 {
@@ -55,10 +51,10 @@ bool8 CheckObjectGraphicsInFrontOfPlayer(u8 graphicsId)
 u8 CreateFieldMoveTask(void)
 {
     GetXYCoordsOneStepInFrontOfPlayer(&gPlayerFacingPosition.x, &gPlayerFacingPosition.y);
-    return CreateTask(task08_080C9820, 8);
+    return CreateTask(Task_DoFieldMove_Init, 8);
 }
 
-static void task08_080C9820(u8 taskId)
+static void Task_DoFieldMove_Init(u8 taskId)
 {
     u8 objEventId;
 
@@ -71,27 +67,27 @@ static void task08_080C9820(u8 taskId)
         if (gMapHeader.mapType == MAP_TYPE_UNDERWATER)
         {
             FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
-            gTasks[taskId].func = sub_810B428;
+            gTasks[taskId].func = Task_DoFieldMove_WaitForMon;
         }
         else
         {
             SetPlayerAvatarFieldMove();
             ObjectEventSetHeldMovement(&gObjectEvents[objEventId], MOVEMENT_ACTION_START_ANIM_IN_DIRECTION);
-            gTasks[taskId].func = sub_810B3DC;
+            gTasks[taskId].func = Task_DoFieldMove_ShowMonAfterPose;
         }
     }
 }
 
-static void sub_810B3DC(u8 taskId)
+static void Task_DoFieldMove_ShowMonAfterPose(u8 taskId)
 {
     if (ObjectEventCheckHeldMovementStatus(&gObjectEvents[gPlayerAvatar.objectEventId]) == TRUE)
     {
         FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
-        gTasks[taskId].func = sub_810B428;
+        gTasks[taskId].func = Task_DoFieldMove_WaitForMon;
     }
 }
 
-static void sub_810B428(u8 taskId)
+static void Task_DoFieldMove_WaitForMon(u8 taskId)
 {
     if (!FieldEffectActiveListContains(FLDEFF_FIELD_MOVE_SHOW_MON))
     {
@@ -107,15 +103,15 @@ static void sub_810B428(u8 taskId)
         ObjectEventSetGraphicsId(&gObjectEvents[gPlayerAvatar.objectEventId], GetPlayerAvatarGraphicsIdByCurrentState());
         StartSpriteAnim(&gSprites[gPlayerAvatar.spriteId], gFieldEffectArguments[2]);
         FieldEffectActiveListRemove(6);
-        gTasks[taskId].func = sub_810B4CC;
+        gTasks[taskId].func = Task_DoFieldMove_RunFunc;
     }
 }
 
-static void sub_810B4CC(u8 taskId)
+static void Task_DoFieldMove_RunFunc(u8 taskId)
 {
-    void (*func)(void) = (void (*)(void))(((u16)gTasks[taskId].data[8] << 16) | (u16)gTasks[taskId].data[9]);
+    void (*fieldMoveFunc)(void) = (void (*)(void))(((u16)gTasks[taskId].data[8] << 16) | (u16)gTasks[taskId].data[9]);
 
-    func();
+    fieldMoveFunc();
     gPlayerAvatar.preventStep = FALSE;
     DestroyTask(taskId);
 }
@@ -152,20 +148,20 @@ bool8 SetUpFieldMove_RockSmash(void)
 static void sub_810B53C(void)
 {
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
-    ScriptContext_SetupScript(S_UseRockSmash);
+    ScriptContext_SetupScript(EventScript_UseRockSmash);
 }
 
 int FldEff_RockSmash(void)
 {
     u8 taskId = CreateFieldMoveTask();
 
-    gTasks[taskId].data[8] = (u32)sub_810B58C >> 16;
-    gTasks[taskId].data[9] = (u32)sub_810B58C;
+    gTasks[taskId].data[8] = (u32)FieldMove_RockSmash >> 16;
+    gTasks[taskId].data[9] = (u32)FieldMove_RockSmash;
     IncrementGameStat(GAME_STAT_USED_ROCK_SMASH);
     return 0;
 }
 
-static void sub_810B58C(void)
+static void FieldMove_RockSmash(void)
 {
     PlaySE(SE_M_ROCK_THROW);
     FieldEffectActiveListRemove(FLDEFF_USE_ROCK_SMASH);
@@ -197,14 +193,14 @@ int FldEff_UseDig(void)
 {
     u8 taskId = CreateFieldMoveTask();
 
-    gTasks[taskId].data[8] = (u32)sub_810B634 >> 16;
-    gTasks[taskId].data[9] = (u32)sub_810B634;
+    gTasks[taskId].data[8] = (u32)StartDigFieldEffect >> 16;
+    gTasks[taskId].data[9] = (u32)StartDigFieldEffect;
     if (!ShouldDoBrailleDigEffect())
         SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_ON_FOOT);
     return 0;
 }
 
-static void sub_810B634(void)
+static void StartDigFieldEffect(void)
 {
     u8 taskId;
 
