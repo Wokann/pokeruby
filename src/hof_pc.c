@@ -7,8 +7,6 @@
 #include "script_menu.h"
 #include "task.h"
 
-extern void (*gFieldCallback)(void);
-
 static void ReshowPCMenuAfterHallOfFamePC(void);
 static void Task_WaitForPaletteFade(u8);
 

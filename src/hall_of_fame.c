@@ -18,7 +18,7 @@
 #include "random.h"
 #include "scanline_effect.h"
 #include "trig.h"
-#include "hof_pc.h"
+#include "hall_of_fame.h"
 #include "credits.h"
 #include "pc_screen_effect.h"
 #include "ewram.h"
