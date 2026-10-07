@@ -36,7 +36,6 @@
 #include "script.h"
 #include "script_menu.h"
 #include "script_movement.h"
-#include "script_pokemon_80F9.h"
 #include "shop.h"
 #include "slot_machine.h"
 #include "sound.h"
@@ -1811,7 +1810,7 @@ bool8 ScrCmd_getpokenewsactive(struct ScriptContext *ctx)
 
 bool8 ScrCmd_choosecontestmon(struct ScriptContext *ctx)
 {
-    sub_80F99CC();
+    ChooseContestMon();
     ScriptContext_Stop();
     return TRUE;
 }

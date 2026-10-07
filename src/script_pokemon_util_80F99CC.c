@@ -27,7 +27,7 @@ extern u16 gSpecialVar_Result;
 
 extern void (*gFieldCallback)(void);
 
-void sub_80F99CC(void)
+void ChooseContestMon(void)
 {
     u8 taskId;
 
@@ -37,23 +37,23 @@ void sub_80F99CC(void)
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
 }
 
-void SelectMonForNPCTrade(void)
+void ChoosePartyMon(void)
 {
     u8 taskId;
 
     LockPlayerFieldControls();
     taskId = CreateTask((void *)OpenPartyMenuFromScriptContext, 0xA);
-    gTasks[taskId].data[0] = PARTY_MENU_TYPE_IN_GAME_TRADE;
+    gTasks[taskId].data[0] = PARTY_MENU_TYPE_CHOOSE_MON;
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
 }
 
-void SelectMoveTutorMon(void)
+void ChooseMonForMoveRelearner(void)
 {
     u8 taskId;
 
     LockPlayerFieldControls();
     taskId = CreateTask((void *)OpenPartyMenuFromScriptContext, 0xA);
-    gTasks[taskId].data[0] = PARTY_MENU_TYPE_MOVE_TUTOR;
+    gTasks[taskId].data[0] = PARTY_MENU_TYPE_MOVE_RELEARNER;
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
 }
 
@@ -153,23 +153,23 @@ void sub_80F9C00(void)
     }
 }
 
-void HandleSelectPartyMenu(u8 var)
+void HandleSelectPartyMenu(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        switch (HandleDefaultPartyMenuInput(var))
+        switch (HandleDefaultPartyMenuInput(taskId))
         {
         case A_BUTTON:
             PlaySE(SE_SELECT);
-            gContestMonPartyIndex = GetCursorSelectionMonId(var);
+            gContestMonPartyIndex = GetCursorSelectionMonId(taskId);
             gSpecialVar_0x8004 = gContestMonPartyIndex;
-            sub_8123138(var);
+            sub_8123138(taskId);
             break;
         case B_BUTTON:
             PlaySE(SE_SELECT);
             gContestMonPartyIndex = 0xFF;
             gSpecialVar_0x8004 = 0xFF;
-            sub_8123138(var);
+            sub_8123138(taskId);
             break;
         }
     }
@@ -252,34 +252,34 @@ void sub_80F9E1C(void)
     }
 }
 
-void HandleMoveTutorPartyMenu(u8 var)
+void HandleMoveTutorPartyMenu(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        switch (HandleDefaultPartyMenuInput(var))
+        switch (HandleDefaultPartyMenuInput(taskId))
         {
         case A_BUTTON:
             PlaySE(SE_SELECT);
-            gSpecialVar_0x8004 = GetCursorSelectionMonId(var);
+            gSpecialVar_0x8004 = GetCursorSelectionMonId(taskId);
             gSpecialVar_0x8005 = GetNumberOfRelearnableMoves(&gPlayerParty[gSpecialVar_0x8004]);
-            sub_8123138(var);
+            sub_8123138(taskId);
             break;
         case B_BUTTON:
             PlaySE(SE_SELECT);
             gSpecialVar_0x8004 = 0xFF;
-            sub_8123138(var);
+            sub_8123138(taskId);
         }
     }
 }
 
-void SelectMove(void)
+void MoveDeleterChooseMoveToForget(void)
 {
     ShowSelectMovePokemonSummaryScreen(&gPlayerParty[0], gSpecialVar_0x8004, gPlayerPartyCount - 1, CB2_ReturnToField, 0);
     pssData.mode = PSS_MODE_MOVE_DELETER;
     gFieldCallback = FieldCB_ContinueScriptHandleMusic;
 }
 
-void ScrSpecial_CountPokemonMoves(void) // count pokemon moves
+void GetNumMovesSelectedMonHas(void) // count pokemon moves
 {
     u8 i;
 
@@ -290,38 +290,38 @@ void ScrSpecial_CountPokemonMoves(void) // count pokemon moves
             gSpecialVar_Result++;
 }
 
-void ScrSpecial_GetPokemonNicknameAndMoveName(void)
+void BufferMoveDeleterNicknameAndMove(void)
 {
-    struct Pokemon *pkmn = &gPlayerParty[gSpecialVar_0x8004];
-    u16 data = GetMonData(pkmn, MON_DATA_MOVE1 + gSpecialVar_0x8005);
+    struct Pokemon *mon = &gPlayerParty[gSpecialVar_0x8004];
+    u16 move = GetMonData(mon, MON_DATA_MOVE1 + gSpecialVar_0x8005);
 
-    GetMonNickname(pkmn, gStringVar1);
-    StringCopy(gStringVar2, gMoveNames[data]);
+    GetMonNickname(mon, gStringVar1);
+    StringCopy(gStringVar2, gMoveNames[move]);
 }
 
-static void SwapMoveSlots(struct Pokemon *pkmn, u8 moveIndex1, u8 moveIndex2)
+static void ShiftMoveSlot(struct Pokemon *mon, u8 slotTo, u8 slotFrom)
 {
-    u16 move1 = GetMonData(pkmn, MON_DATA_MOVE1 + moveIndex1);
-    u16 move2 = GetMonData(pkmn, MON_DATA_MOVE1 + moveIndex2);
-    u8 pp1 = GetMonData(pkmn, MON_DATA_PP1 + moveIndex1);
-    u8 pp2 = GetMonData(pkmn, MON_DATA_PP1 + moveIndex2);
-    u8 bonuses = GetMonData(pkmn, MON_DATA_PP_BONUSES);
+    u16 move1 = GetMonData(mon, MON_DATA_MOVE1 + slotTo);
+    u16 move0 = GetMonData(mon, MON_DATA_MOVE1 + slotFrom);
+    u8 pp1 = GetMonData(mon, MON_DATA_PP1 + slotTo);
+    u8 pp0 = GetMonData(mon, MON_DATA_PP1 + slotFrom);
+    u8 ppBonuses = GetMonData(mon, MON_DATA_PP_BONUSES);
 
-    u8 r2 = (bonuses & gPPUpGetMask[moveIndex1]) >> (moveIndex1 * 2);
-    u8 r1 = (bonuses & gPPUpGetMask[moveIndex2]) >> (moveIndex2 * 2);
+    u8 ppBonusMove1 = (ppBonuses & gPPUpGetMask[slotTo]) >> (slotTo * 2);
+    u8 ppBonusMove2 = (ppBonuses & gPPUpGetMask[slotFrom]) >> (slotFrom * 2);
 
-    bonuses &= ~gPPUpGetMask[moveIndex1];
-    bonuses &= ~gPPUpGetMask[moveIndex2];
-    bonuses |= (r2 << (moveIndex2 * 2)) + (r1 << (moveIndex1 * 2));
+    ppBonuses &= ~gPPUpGetMask[slotTo];
+    ppBonuses &= ~gPPUpGetMask[slotFrom];
+    ppBonuses |= (ppBonusMove1 << (slotFrom * 2)) + (ppBonusMove2 << (slotTo * 2));
 
-    SetMonData(pkmn, MON_DATA_MOVE1 + moveIndex1, &move2);
-    SetMonData(pkmn, MON_DATA_MOVE1 + moveIndex2, &move1);
-    SetMonData(pkmn, MON_DATA_PP1 + moveIndex1, &pp2);
-    SetMonData(pkmn, MON_DATA_PP1 + moveIndex2, &pp1);
-    SetMonData(pkmn, MON_DATA_PP_BONUSES, &bonuses);
+    SetMonData(mon, MON_DATA_MOVE1 + slotTo, &move0);
+    SetMonData(mon, MON_DATA_MOVE1 + slotFrom, &move1);
+    SetMonData(mon, MON_DATA_PP1 + slotTo, &pp0);
+    SetMonData(mon, MON_DATA_PP1 + slotFrom, &pp1);
+    SetMonData(mon, MON_DATA_PP_BONUSES, &ppBonuses);
 }
 
-void DeleteMonMove(void)
+void MoveDeleterForgetMove(void)
 {
     u16 i;
 
@@ -329,7 +329,7 @@ void DeleteMonMove(void)
     RemoveMonPPBonus(&gPlayerParty[gSpecialVar_0x8004], gSpecialVar_0x8005);
 
     for (i = gSpecialVar_0x8005; i < 3; i++)
-        SwapMoveSlots(&gPlayerParty[gSpecialVar_0x8004], i, i + 1);
+        ShiftMoveSlot(&gPlayerParty[gSpecialVar_0x8004], i, i + 1);
 }
 
 void IsSelectedMonEgg(void)

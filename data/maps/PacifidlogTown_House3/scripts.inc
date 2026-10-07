@@ -12,7 +12,7 @@ PacifidlogTown_House3_EventScript_Trader:: @ 815429E
 	msgbox PacifidlogTown_House3_Text_WillingToTradeIt, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq PacifidlogTown_House3_EventScript_DeclineTrade
-	special SelectMonForNPCTrade
+	special ChoosePartyMon
 	waitstate
 	copyvar VAR_0x800A, VAR_0x8004
 	compare VAR_0x8004, 255

@@ -167,7 +167,7 @@ gSpecials::
 	def_special ChooseStarter
 	def_special StartWallyTutorialBattle
 	def_special ChangePokemonNickname
-	def_special SelectMonForNPCTrade
+	def_special ChoosePartyMon
 	def_special GetFirstFreePokeblockSlot
 	def_special DoBerryBlending
 	def_special PlayRoulette
@@ -227,11 +227,11 @@ gSpecials::
 	def_special SetDepartmentStoreFloorVar
 	def_special DoLotteryCornerComputerEffect
 	def_special EndLotteryCornerComputerEffect
-	def_special SelectMoveTutorMon
-	def_special SelectMove
-	def_special DeleteMonMove
-	def_special ScrSpecial_GetPokemonNicknameAndMoveName
-	def_special ScrSpecial_CountPokemonMoves
+	def_special ChooseMonForMoveRelearner
+	def_special MoveDeleterChooseMoveToForget
+	def_special MoveDeleterForgetMove
+	def_special BufferMoveDeleterNicknameAndMove
+	def_special GetNumMovesSelectedMonHas
 	def_special DisplayMoveTutorMenu
 	def_special GetRecordedCyclingRoadResults
 	def_special ScrSpecial_BeginCyclingRoadChallenge

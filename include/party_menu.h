@@ -11,11 +11,11 @@ enum
     PARTY_MENU_TYPE_STANDARD,
     PARTY_MENU_TYPE_BATTLE,
     PARTY_MENU_TYPE_CONTEST,
-    PARTY_MENU_TYPE_IN_GAME_TRADE,
+    PARTY_MENU_TYPE_CHOOSE_MON,
     PARTY_MENU_TYPE_BATTLE_TOWER,
     PARTY_MENU_TYPE_LINK_MULTI_BATTLE,
     PARTY_MENU_TYPE_DAYCARE,
-    PARTY_MENU_TYPE_MOVE_TUTOR,
+    PARTY_MENU_TYPE_MOVE_RELEARNER,
 };
 
 enum
@@ -224,5 +224,13 @@ void BufferBattlePartyCurrentOrderBySide(u8 battler, u8 flankId);
 void SwitchPartyOrderLinkMulti(u8 battler, u8 slot, u8 slot2);
 void SwitchPartyMonSlots(u8 slot, u8 slot2);
 u8 GetPartyIdFromBattlePartyId(u8 battlePartyId);
+
+void ChooseContestMon(void);
+void ChoosePartyMon(void);
+void ChooseMonForMoveRelearner(void);
+void MoveDeleterChooseMoveToForget(void);
+void GetNumMovesSelectedMonHas(void);
+void BufferMoveDeleterNicknameAndMove(void);
+void MoveDeleterForgetMove(void);
 
 #endif // GUARD_PARTY_MENU_H

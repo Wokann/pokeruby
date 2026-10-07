@@ -6,7 +6,7 @@ SootopolisCity_MonSizeRecordHouse_EventScript_ShroomishBrother:: @ 815B401
 	lock
 	faceplayer
 	msgbox SootopolisCity_MonSizeRecordHouse_Text_PleaseShowMeBigShroomish, MSGBOX_DEFAULT
-	special SelectMonForNPCTrade
+	special ChoosePartyMon
 	waitstate
 	copyvar VAR_RESULT, VAR_0x8004
 	compare VAR_RESULT, 255
@@ -55,7 +55,7 @@ SootopolisCity_MonSizeRecordHouse_EventScript_BarboachBrother:: @ 815B492
 	lock
 	faceplayer
 	msgbox SootopolisCity_MonSizeRecordHouse_Text_PleaseShowMeBigBarboach, MSGBOX_DEFAULT
-	special SelectMonForNPCTrade
+	special ChoosePartyMon
 	waitstate
 	copyvar VAR_RESULT, VAR_0x8004
 	compare VAR_RESULT, 255
