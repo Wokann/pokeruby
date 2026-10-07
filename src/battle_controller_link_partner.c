@@ -46,19 +46,14 @@ extern u8 gAnimScriptActive;
 extern void (*gAnimScriptCallback)(void);
 
 extern void Task_HidePartyStatusSummary(u8);
-extern void SpriteCB_FreePlayerSpriteLoadMonSprite(struct Sprite *);
 extern void BufferStringBattle();
-extern u8 IsMoveWithoutAnimation();
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
 extern void StartAnimLinearTranslation(struct Sprite *);
 extern void SpriteCB_FaintSlideAnim(struct Sprite *);
 extern s32 GetBattlerMultiplayerId(u16);
-extern void SpriteCB_TrainerSlideIn(struct Sprite *);
-extern void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *);
 extern u8 GetBattlerSpriteDefault_Y();
 extern void BattleGfxSfxDummy3();
 extern void BattleGfxSfxDummy2(u16);
-extern void Task_PlayerController_RestoreBgmAfterCry(u8);
 extern void CB2_InitEndLinkBattle(void);
 
 // this file's functions

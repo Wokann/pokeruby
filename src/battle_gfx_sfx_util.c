@@ -1,6 +1,7 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_gfx_sfx_util.h"
+#include "battle_controllers.h"
 #include "battle_main.h"
 #include "battle_anim.h"
 #include "battle_anim_special.h"
@@ -87,7 +88,6 @@ static const struct SpritePalette sSpritePalettes_HealthBoxHealthBar[] =
     { gBattleInterface_BallDisplayPal, 0xD704 },
 };
 
-extern void Task_PlayerController_RestoreBgmAfterCry(u8);
 extern u8 IsBattlerSpritePresent(u8);
 extern u8 GetBattlerSpriteDefault_Y(u8);
 extern u8 GetSubstituteSpriteDefault_Y(u8);

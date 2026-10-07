@@ -203,6 +203,8 @@ void BufferStringBattle(u16 stringID);
 u32 BattleStringExpandPlaceholdersToDisplayedString(const u8* src);
 u32 BattleStringExpandPlaceholders(const u8* src, u8* dst);
 
+extern const u8 gText_WhatWillWallyDo[];
+extern const u8 gText_BattleMenu[];
 extern const u8 gText_PkmnIsEvolving[];
 extern const u8 gText_CongratsPkmnEvolved[];
 extern const u8 gText_PkmnStoppedEvolving[];

@@ -35,41 +35,15 @@ extern MainCallback gPreBattleCallback1;
 extern bool8 gDoingBattleAnim;
 extern u16 gBattlerPartyIndexes[];
 extern u8 gHealthboxSpriteIds[];
-extern u16 gBattleTypeFlags;
-extern u8 gAnimFriendship;
 extern u32 gTransformedPersonalities[];
 extern void (*gAnimScriptCallback)(void);
-extern bool8 gAnimScriptActive;
-extern u8 gDisplayedStringBattle[];
 extern u8 gBattlerInMenuId;
 extern u8 gBattleMonForms[];
 extern u8 gBattleOutcome;
 extern u16 gIntroSlideFlags;
 extern u8 gBattlerStatusSummaryTaskId[];
-extern u8 gAnimMoveTurn;
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern u8 gBattleControllerData[];
-extern const u8 gText_WhatWillWallyDo[];
-extern const u8 gText_BattleMenu[];
-
-extern void BtlController_EmitTwoReturnValues(u8, u8, u16);
-extern void BtlController_EmitOneReturnValue(u8, u16);
-
-extern bool8 IsDoubleBattle(void);
-extern void Task_PlayerController_RestoreBgmAfterCry(u8);
-extern u8 GetBattlerPosition(u8);
-extern void SpriteCB_TrainerSlideIn(struct Sprite *);
-extern u8 GetBattlerAtPosition(u8);
-extern u8 IsMoveWithoutAnimation();
-extern u8 GetBattlerSide(u8);
-extern void sub_80304A8(void);
-extern void SetSpritePrimaryCoordsFromSecondaryCoords();
-extern void StartAnimLinearTranslation(struct Sprite *);
-extern void SpriteCB_FreePlayerSpriteLoadMonSprite(struct Sprite *);
-extern u8 GetBattlerSpriteCoord();
-extern u8 GetBattlerSpriteDefault_Y();
-extern u8 GetBattlerSpriteSubpriority();
-extern void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *);
 
 // this file's functions
 static void WallyHandleGetMonData(void);
@@ -1268,7 +1242,7 @@ static void WallyHandleChooseMove(void)
     switch (gBattleStruct->wallyMovesState)
     {
     case 0:
-        sub_80304A8();
+        InitMoveSelectionsVarsAndStrings();
         gBattleStruct->wallyMovesState++;
         gBattleStruct->wallyMoveFrames = 80;
         // fall through

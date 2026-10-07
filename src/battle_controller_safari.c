@@ -43,7 +43,6 @@ extern u8 GetBattlerSide(u8);
 extern u8 GetBattlerAtPosition(u8);
 extern u8 GetBattlerPosition(u8);
 extern u8 GetBattlerSpriteSubpriority();
-extern void SpriteCB_TrainerSlideIn(struct Sprite *);
 extern void sub_810BADC(void);
 
 #if ENGLISH

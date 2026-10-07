@@ -77,13 +77,10 @@ extern void SetSpritePrimaryCoordsFromSecondaryCoords();
 extern void StartAnimLinearTranslation(struct Sprite *);
 extern bool8 IsDoubleBattle(void);
 extern bool8 IsBattlerSpritePresent(u8);
-extern u8 IsMoveWithoutAnimation();
 extern u8 GetBattlerAtPosition(u8);
 extern void SpriteCB_FaintSlideAnim(struct Sprite *);
 extern u8 GetBattlerPosition(u8);
-extern void SpriteCB_TrainerSlideIn(struct Sprite *);
 extern u8 GetBattlerSpriteSubpriority();
-extern void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *);
 extern u8 GetBattlerSpriteCoord();
 extern u8 GetBattlerSpriteDefault_Y();
 extern u8 gActiveBattler;
@@ -200,8 +197,6 @@ static void SetPlayerMonData(u8);
 static void StartSendOutAnim(u8, bool8);
 static void DoSwitchOutAnimation(void);
 static void PlayerDoMoveAnimation(void);
-void sub_80304A8(void);
-void SpriteCB_FreePlayerSpriteLoadMonSprite(struct Sprite *);
 static void Task_StartSendOutAnim(u8);
 static void EndDrawPartyStatusSummary(void);
 
@@ -2650,11 +2645,11 @@ void PlayerHandleYesNoBox()
 void PlayerHandleChooseMove(void)
 {
     MenuCursor_Create814A5C0(0, 0xFFFF, 12, 0x2D9F, 0);
-    sub_80304A8();
+    InitMoveSelectionsVarsAndStrings();
     gBattlerControllerFuncs[gActiveBattler] = HandleInputChooseMove;
 }
 
-void sub_80304A8(void)
+void InitMoveSelectionsVarsAndStrings(void)
 {
     gBattle_BG0_X = 0;
     gBattle_BG0_Y = DISPLAY_HEIGHT * 2;

@@ -192,6 +192,7 @@ enum
 };
 
 struct DisableStruct;
+struct Sprite;
 
 // emitters
 void HandleLinkBattleSetup(void);
@@ -243,6 +244,9 @@ void BtlController_EmitCmd55(u8 a, u8 b);
 
 // player controller
 void PlayerHandleGetRawMonData(void);
+void SpriteCB_FreePlayerSpriteLoadMonSprite(struct Sprite *sprite);
+void Task_PlayerController_RestoreBgmAfterCry(u8 taskId);
+void InitMoveSelectionsVarsAndStrings(void);
 
 // opponent controller
 void SetControllerToOpponent(void);
@@ -253,6 +257,9 @@ void SetControllerToLinkPartner(void);
 
 // safari controller
 void SetControllerToSafari(void);
+
+// wally controller
+void SetControllerToWally(void);
 
 void ActionSelectionCreateCursorAt(u8 cursorPosition, int unused);
 

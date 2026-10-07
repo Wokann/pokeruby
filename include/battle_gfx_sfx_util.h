@@ -4,9 +4,12 @@
 struct Pokemon;
 struct Sprite;
 
+void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *sprite);
+void SpriteCB_TrainerSlideIn(struct Sprite *sprite);
 void InitAndLaunchChosenStatusAnimation(u8 isStatus2, u32 status);
 bool8 TryHandleLaunchBattleTableAnimation(u8 activeBattler, u8 atkBattler, u8 defBattler, u8 tableId, u16 argument);
 void InitAndLaunchSpecialAnimation(u8 activeBattler, u8 atkBattler, u8 defBattler, u8 tableId);
+u8 IsMoveWithoutAnimation(int unused1, int unused2);
 bool8 IsBattleSEPlaying(u8 battler);
 void CopyAllBattleSpritesInvisibilities(void);
 void CopyBattleSpriteInvisibility(u8 battler);
