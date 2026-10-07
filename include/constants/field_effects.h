@@ -46,7 +46,7 @@
 #define FLDEFF_HOT_SPRINGS_WATER         42
 #define FLDEFF_USE_WATERFALL             43
 #define FLDEFF_USE_DIVE                  44
-#define FLDEFF_POKEBALL                  45
+#define FLDEFF_POKEBALL_TRAIL            45
 #define FLDEFF_HEART_ICON                46
 #define FLDEFF_NOP_47                    47
 #define FLDEFF_NOP_48                    48

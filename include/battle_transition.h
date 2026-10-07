@@ -1,22 +1,25 @@
 #ifndef GUARD_BATTLE_TRANSITION_H
 #define GUARD_BATTLE_TRANSITION_H
 
-void BattleTransition_StartOnField(u8 transitionID);
-void BattleTransition_Start(u8 transitionID);
+void BattleTransition_StartOnField(u8 transitionId);
+void BattleTransition_Start(u8 transitionId);
 bool8 IsBattleTransitionDone(void);
+bool8 FldEff_PokeballTrail(void);
+
+extern const struct SpritePalette gSpritePalette_Pokeball;
 
 #define TRANSITIONS_NO         17
 
 enum // TRANSITION_MUGSHOT
 {
-    MUGSHOT_SYDNEY,
+    MUGSHOT_SIDNEY,
     MUGSHOT_PHOEBE,
     MUGSHOT_GLACIA,
     MUGSHOT_DRAKE,
     MUGSHOT_STEVEN,
 };
 
-#define MUGSHOTS_NO             5
+#define MUGSHOTS_COUNT          5
 
 // credits for the names go to Dyskinesia and Tetrable
 // names are naturally subject to change

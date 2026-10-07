@@ -26,8 +26,8 @@ const u8 gTrainerClassToPicIndex[] = {
     TRAINER_PIC_PSYCHIC_M,             // PSYCHIC_M
     TRAINER_PIC_PSYCHIC_F,             // PSYCHIC_F
     TRAINER_PIC_GENTLEMAN,             // GENTLEMAN
-    TRAINER_PIC_SIDNEY,                // ELITE_FOUR_M
-    TRAINER_PIC_PHOEBE,                // ELITE_FOUR_F
+    TRAINER_PIC_ELITE_FOUR_SIDNEY,                // ELITE_FOUR_M
+    TRAINER_PIC_ELITE_FOUR_PHOEBE,                // ELITE_FOUR_F
     TRAINER_PIC_ROXANNE,               // LEADER_F
     TRAINER_PIC_BRAWLY,                // LEADER_M
     TRAINER_PIC_TATE_AND_LIZA,         // LEADER_MF
