@@ -8,7 +8,7 @@
 #include "field_player_avatar.h"
 #include "field_special_scene.h"
 #include "field_weather.h"
-#include "fldeff_flash.h"
+#include "fldeff.h"
 #include "link.h"
 #include "main.h"
 #include "event_object_lock.h"

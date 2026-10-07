@@ -16,6 +16,11 @@ void StartEscalator(bool8 goingUp);
 void StopEscalator(void);
 bool8 IsEscalatorMoving(void);
 
+// flash
+bool8 SetUpFieldMove_Flash(void);
+bool8 GetMapPairFadeToType(u8 _fromType, u8 _toType);
+bool8 GetMapPairFadeFromType(u8 _fromType, u8 _toType);
+
 // rock smash
 bool8 CheckObjectGraphicsInFrontOfPlayer(u8 graphicsId);
 u8 CreateFieldMoveTask(void);

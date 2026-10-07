@@ -1,5 +1,6 @@
 #include "global.h"
 #include "event_data.h"
+#include "event_scripts.h"
 #include "field_effect.h"
 #include "main.h"
 #include "palette.h"
@@ -15,62 +16,57 @@
 
 struct MapTypeFadePairs
 {
-    u8 mapTypeA;
-    u8 mapTypeB;
-    u8 fadeToType;   // 0 = fade to black,   1 = fade to white
-    u8 fadeFromType; // 0 = fade from black, 1 = fade from white
+    u8 fromType;
+    u8 toType;
+    bool8 isEnter;   // 0 = fade to black,   1 = fade to white
+    bool8 isExit; // 0 = fade from black, 1 = fade from white
     void (*func)(void);
 };
 
-extern u8 gLastFieldPokeMenuOpened;
-extern void (*gPostMenuFieldCallback)(void);
-
-extern u8 gUnknown_081B694A[];
-
 static void sub_810CBFC(void);
-static void sub_810CC34(void);
-static bool8 sub_810CD5C(void);
-static void sub_810CE5C(u8);
+static void FldEff_UseFlash(void);
+static bool8 TryDoMapTransition(void);
+static void Task_ExitCaveTransition1(u8 taskId);
 static void sub_810CE78(u8);
 static void sub_810CF18(u8);
 static void sub_810CF5C(u8);
-static void sub_810CFC4(u8);
-static void sub_810D00C(u8);
+static void Task_ExitCaveTransition5(u8 taskId);
+static void Task_EnterCaveTransition1(u8 taskId);
 static void sub_810D028(u8);
 static void sub_810D0C4(u8);
 static void sub_810D128(u8);
-static void CreateEnterUndergroundEffectTask(void);
-static void CreateExitUndergroundTask(void);
+static void DoEnterCaveTransition(void);
+static void DoExitCaveTransition(void);
 
-static const struct MapTypeFadePairs gMapTypeFadePairs[] =
+static const struct MapTypeFadePairs sTransitionTypes[] =
 {
-    {MAP_TYPE_TOWN,        MAP_TYPE_UNDERGROUND, 1, 0, CreateEnterUndergroundEffectTask},
-    {MAP_TYPE_CITY,        MAP_TYPE_UNDERGROUND, 1, 0, CreateEnterUndergroundEffectTask},
-    {MAP_TYPE_ROUTE,       MAP_TYPE_UNDERGROUND, 1, 0, CreateEnterUndergroundEffectTask},
-    {MAP_TYPE_UNDERWATER,  MAP_TYPE_UNDERGROUND, 1, 0, CreateEnterUndergroundEffectTask},
-    {MAP_TYPE_6,           MAP_TYPE_UNDERGROUND, 1, 0, CreateEnterUndergroundEffectTask},
-    {MAP_TYPE_7,           MAP_TYPE_UNDERGROUND, 1, 0, CreateEnterUndergroundEffectTask},
-    {MAP_TYPE_INDOOR,      MAP_TYPE_UNDERGROUND, 1, 0, CreateEnterUndergroundEffectTask},
-    {MAP_TYPE_SECRET_BASE, MAP_TYPE_UNDERGROUND, 1, 0, CreateEnterUndergroundEffectTask},
-    {MAP_TYPE_UNDERGROUND, MAP_TYPE_TOWN,        0, 1, CreateExitUndergroundTask},
-    {MAP_TYPE_UNDERGROUND, MAP_TYPE_CITY,        0, 1, CreateExitUndergroundTask},
-    {MAP_TYPE_UNDERGROUND, MAP_TYPE_ROUTE,       0, 1, CreateExitUndergroundTask},
-    {MAP_TYPE_UNDERGROUND, MAP_TYPE_UNDERWATER,  0, 1, CreateExitUndergroundTask},
-    {MAP_TYPE_UNDERGROUND, MAP_TYPE_6,           0, 1, CreateExitUndergroundTask},
-    {MAP_TYPE_UNDERGROUND, MAP_TYPE_7,           0, 1, CreateExitUndergroundTask},
-    {MAP_TYPE_UNDERGROUND, MAP_TYPE_INDOOR,      0, 1, CreateExitUndergroundTask},
-    {MAP_TYPE_UNDERGROUND, MAP_TYPE_SECRET_BASE, 0, 1, CreateExitUndergroundTask},
+    {MAP_TYPE_TOWN,        MAP_TYPE_UNDERGROUND, 1, 0, DoEnterCaveTransition},
+    {MAP_TYPE_CITY,        MAP_TYPE_UNDERGROUND, 1, 0, DoEnterCaveTransition},
+    {MAP_TYPE_ROUTE,       MAP_TYPE_UNDERGROUND, 1, 0, DoEnterCaveTransition},
+    {MAP_TYPE_UNDERWATER,  MAP_TYPE_UNDERGROUND, 1, 0, DoEnterCaveTransition},
+    {MAP_TYPE_6,           MAP_TYPE_UNDERGROUND, 1, 0, DoEnterCaveTransition},
+    {MAP_TYPE_7,           MAP_TYPE_UNDERGROUND, 1, 0, DoEnterCaveTransition},
+    {MAP_TYPE_INDOOR,      MAP_TYPE_UNDERGROUND, 1, 0, DoEnterCaveTransition},
+    {MAP_TYPE_SECRET_BASE, MAP_TYPE_UNDERGROUND, 1, 0, DoEnterCaveTransition},
+    {MAP_TYPE_UNDERGROUND, MAP_TYPE_TOWN,        0, 1, DoExitCaveTransition},
+    {MAP_TYPE_UNDERGROUND, MAP_TYPE_CITY,        0, 1, DoExitCaveTransition},
+    {MAP_TYPE_UNDERGROUND, MAP_TYPE_ROUTE,       0, 1, DoExitCaveTransition},
+    {MAP_TYPE_UNDERGROUND, MAP_TYPE_UNDERWATER,  0, 1, DoExitCaveTransition},
+    {MAP_TYPE_UNDERGROUND, MAP_TYPE_6,           0, 1, DoExitCaveTransition},
+    {MAP_TYPE_UNDERGROUND, MAP_TYPE_7,           0, 1, DoExitCaveTransition},
+    {MAP_TYPE_UNDERGROUND, MAP_TYPE_INDOOR,      0, 1, DoExitCaveTransition},
+    {MAP_TYPE_UNDERGROUND, MAP_TYPE_SECRET_BASE, 0, 1, DoExitCaveTransition},
     {0, 0, 0, 0, NULL},
 };
 
 // TODO: Make these extracted palettes?
-static const u16 gCaveTransitionPalette_White[] = {0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF};
-static const u16 gCaveTransitionPalette_Black[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000};
+static const u16 sCaveTransitionPalette_White[] = {0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF};
+static const u16 sCaveTransitionPalette_Black[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000};
 
 static const u16 gUnknown_083F808C[] = INCBIN_U16("graphics/misc/83F808C.gbapal");
 static const u16 gUnknown_083F809C[] = INCBIN_U16("graphics/misc/83F809C.gbapal");
-static const u16 gCaveTransitionTilemap[] = INCBIN_U16("graphics/misc/cave_transition_map.bin.lz");
-static const u8 gCaveTransitionTiles[] = INCBIN_U8("graphics/misc/cave_transition.4bpp.lz");
+static const u16 sCaveTransitionTilemap[] = INCBIN_U16("graphics/cave_transition/tilemap.bin.lz");
+static const u8 sCaveTransitionTiles[] = INCBIN_U8("graphics/cave_transition/tiles.4bpp.lz");
 
 #if DEBUG
 
@@ -100,18 +96,18 @@ static void sub_810CBFC(void)
 {
     u8 taskId = CreateFieldMoveTask();
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
-    gTasks[taskId].data[8] = (uintptr_t)sub_810CC34 >> 16;
-    gTasks[taskId].data[9] = (uintptr_t)sub_810CC34;
+    gTasks[taskId].data[8] = (uintptr_t)FldEff_UseFlash >> 16;
+    gTasks[taskId].data[9] = (uintptr_t)FldEff_UseFlash;
 }
 
-static void sub_810CC34(void)
+static void FldEff_UseFlash(void)
 {
     PlaySE(SE_M_REFLECT);
     FlagSet(FLAG_SYS_USE_FLASH);
-    ScriptContext_SetupScript(gUnknown_081B694A);
+    ScriptContext_SetupScript(EventScript_UseFlash);
 }
 
-void sub_810CC54(void)
+static void CB2_ChangeMapMain(void)
 {
     RunTasks();
     AnimateSprites();
@@ -119,7 +115,7 @@ void sub_810CC54(void)
     UpdatePaletteFade();
 }
 
-static void VBlankCB(void)
+static void VBC_ChangeMapVBlank(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
@@ -151,23 +147,23 @@ void sub_810CC80(void)
     REG_IME = 0;
     REG_IE |= INTR_FLAG_VBLANK;
     REG_IME = ime;
-    SetVBlankCallback(VBlankCB);
-    SetMainCallback2(sub_810CC54);
-    if (!sub_810CD5C())
+    SetVBlankCallback(VBC_ChangeMapVBlank);
+    SetMainCallback2(CB2_ChangeMapMain);
+    if (!TryDoMapTransition())
         SetMainCallback2(gMain.savedCallback);
 }
 
-static bool8 sub_810CD5C(void)
+static bool8 TryDoMapTransition(void)
 {
     u8 i;
-    u8 prevMapType = GetLastUsedWarpMapType();
-    u8 curMapType = GetCurrentMapType();
+    u8 fromType = GetLastUsedWarpMapType();
+    u8 toType = GetCurrentMapType();
 
-    for (i = 0; gMapTypeFadePairs[i].mapTypeA; i++)
+    for (i = 0; sTransitionTypes[i].fromType; i++)
     {
-        if (gMapTypeFadePairs[i].mapTypeA == prevMapType && gMapTypeFadePairs[i].mapTypeB == curMapType)
+        if (sTransitionTypes[i].fromType == fromType && sTransitionTypes[i].toType == toType)
         {
-            gMapTypeFadePairs[i].func();
+            sTransitionTypes[i].func();
             return TRUE;
         }
     }
@@ -175,44 +171,44 @@ static bool8 sub_810CD5C(void)
     return FALSE;
 }
 
-u8 GetMapPairFadeToType(u8 currentMapType, u8 destinationMapType)
+bool8 GetMapPairFadeToType(u8 _fromType, u8 _toType)
 {
     u8 i;
-    u8 curMapType = currentMapType;
-    u8 destMapType = destinationMapType;
+    u8 fromType = _fromType;
+    u8 toType = _toType;
 
-    for (i = 0; gMapTypeFadePairs[i].mapTypeA; i++)
+    for (i = 0; sTransitionTypes[i].fromType; i++)
     {
-        if (gMapTypeFadePairs[i].mapTypeA == curMapType && gMapTypeFadePairs[i].mapTypeB == destMapType)
-            return gMapTypeFadePairs[i].fadeToType;
+        if (sTransitionTypes[i].fromType == fromType && sTransitionTypes[i].toType == toType)
+            return sTransitionTypes[i].isEnter;
     }
 
     return FALSE;
 }
 
-u8 GetMapPairFadeFromType(u8 currentMapType, u8 destinationMapType)
+bool8 GetMapPairFadeFromType(u8 _fromType, u8 _toType)
 {
     u8 i;
-    u8 curMapType = currentMapType;
-    u8 destMapType = destinationMapType;
+    u8 fromType = _fromType;
+    u8 toType = _toType;
 
-    for (i = 0; gMapTypeFadePairs[i].mapTypeA; i++)
+    for (i = 0; sTransitionTypes[i].fromType; i++)
     {
-        if (gMapTypeFadePairs[i].mapTypeA == curMapType && gMapTypeFadePairs[i].mapTypeB == destMapType)
+        if (sTransitionTypes[i].fromType == fromType && sTransitionTypes[i].toType == toType)
         {
-            return gMapTypeFadePairs[i].fadeFromType;
+            return sTransitionTypes[i].isExit;
         }
     }
 
     return FALSE;
 }
 
-static void CreateExitUndergroundTask(void)
+static void DoExitCaveTransition(void)
 {
-    CreateTask(sub_810CE5C, 0);
+    CreateTask(Task_ExitCaveTransition1, 0);
 }
 
-static void sub_810CE5C(u8 taskId)
+static void Task_ExitCaveTransition1(u8 taskId)
 {
     gTasks[taskId].func = sub_810CE78;
 }
@@ -220,9 +216,9 @@ static void sub_810CE5C(u8 taskId)
 static void sub_810CE78(u8 taskId)
 {
     REG_DISPCNT = 0;
-    LZ77UnCompVram(gCaveTransitionTiles, (void *)(VRAM + 0xC000));
-    LZ77UnCompVram(gCaveTransitionTilemap, (void *)(VRAM + 0xF800));
-    LoadPalette(gCaveTransitionPalette_White, 0xE0, 0x20);
+    LZ77UnCompVram(sCaveTransitionTiles, (void *)(VRAM + 0xC000));
+    LZ77UnCompVram(sCaveTransitionTilemap, (void *)(VRAM + 0xF800));
+    LoadPalette(sCaveTransitionPalette_White, 0xE0, 0x20);
     LoadPalette(gUnknown_083F809C, 0xE0, 0x10);
     REG_BLDCNT = 15937;
     REG_BLDALPHA = 0;
@@ -265,13 +261,13 @@ static void sub_810CF5C(u8 taskId)
     }
     else
     {
-        LoadPalette(gCaveTransitionPalette_White, 0, 0x20);
-        gTasks[taskId].func = sub_810CFC4;
+        LoadPalette(sCaveTransitionPalette_White, 0, 0x20);
+        gTasks[taskId].func = Task_ExitCaveTransition5;
         gTasks[taskId].data[2] = 8;
     }
 }
 
-static void sub_810CFC4(u8 taskId)
+static void Task_ExitCaveTransition5(u8 taskId)
 {
     if (gTasks[taskId].data[2])
         gTasks[taskId].data[2]--;
@@ -279,12 +275,12 @@ static void sub_810CFC4(u8 taskId)
         SetMainCallback2(gMain.savedCallback);
 }
 
-static void CreateEnterUndergroundEffectTask(void)
+static void DoEnterCaveTransition(void)
 {
-    CreateTask(sub_810D00C, 0);
+    CreateTask(Task_EnterCaveTransition1, 0);
 }
 
-static void sub_810D00C(u8 taskId)
+static void Task_EnterCaveTransition1(u8 taskId)
 {
     gTasks[taskId].func = sub_810D028;
 }
@@ -292,15 +288,15 @@ static void sub_810D00C(u8 taskId)
 static void sub_810D028(u8 taskId)
 {
     REG_DISPCNT = 0;
-    LZ77UnCompVram(gCaveTransitionTiles, (void *)(VRAM + 0xC000));
-    LZ77UnCompVram(gCaveTransitionTilemap, (void *)(VRAM + 0xF800));
+    LZ77UnCompVram(sCaveTransitionTiles, (void *)(VRAM + 0xC000));
+    LZ77UnCompVram(sCaveTransitionTilemap, (void *)(VRAM + 0xF800));
     REG_BLDCNT = 0;
     REG_BLDALPHA = 0;
     REG_BLDY = 0;
     REG_BG0CNT = 7948;
     REG_DISPCNT = 4416;
-    LoadPalette(gCaveTransitionPalette_White, 0xE0, 0x20);
-    LoadPalette(gCaveTransitionPalette_Black, 0, 0x20);
+    LoadPalette(sCaveTransitionPalette_White, 0xE0, 0x20);
+    LoadPalette(sCaveTransitionPalette_Black, 0, 0x20);
     gTasks[taskId].func = sub_810D0C4;
     gTasks[taskId].data[0] = 16;
     gTasks[taskId].data[1] = 0;
@@ -335,7 +331,7 @@ static void sub_810D128(u8 taskId)
     }
     else
     {
-        LoadPalette(gCaveTransitionPalette_Black, 0, 0x20);
+        LoadPalette(sCaveTransitionPalette_Black, 0, 0x20);
         SetMainCallback2(gMain.savedCallback);
     }
 }

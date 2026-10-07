@@ -60,7 +60,6 @@ extern TaskFunc gUnknown_03005CF0;
 static void CB2_ReturnToPartyMenuFromWritingMail(void);
 void sub_80A61D0(void);
 void CB2_InitFlyRegionMap(void);
-bool8 SetUpFieldMove_Flash(void);
 bool8 SetUpFieldMove_RockSmash(void);
 bool8 SetUpFieldMove_Strength(void);
 bool8 SetUpFieldMove_Teleport(void);

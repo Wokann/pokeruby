@@ -1577,10 +1577,7 @@ BattleTower_Lobby_EventScript_1AE30F:: @ 81AE30F
 	.include "data/text/aqua_summit.inc"
 	.include "data/text/magma_summit.inc"
 
-gUnknown_081B694A:: @ 81B694A
-	animateflash 1
-	setflashlevel 1
-	end
+	.include "data/scripts/flash.inc"
 
 	.include "data/scripts/players_house.inc"
 
