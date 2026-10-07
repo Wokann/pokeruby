@@ -261,14 +261,14 @@ static const u16 sLongStreakPrizes[] =
 
 static void ResetBattleTowerStreak(u8 levelType);
 static void ValidateBattleTowerRecordChecksums(void);
-static void PrintEReaderTrainerFarewellMessage(void);
+static void CopyEReaderTrainerFarewellMessage(void);
 extern void SetBattleTowerTrainerGfxId(u8);
 static void SaveCurrentWinStreak(void);
-static void sub_8135CFC(void);
+static void SetTowerInterviewData(void);
 static void CheckMonBattleTowerBanlist(u16, u16, u16, u8, u8, u16 *, u16 *, u8 *);
 static void ClearEReaderTrainer(struct BattleTowerEReaderTrainer *);
-static void SetBattleTowerRecordChecksum(struct BattleTowerRecord *);
-static void ClearBattleTowerRecord(struct BattleTowerRecord *);
+static void CalcRubyBattleTowerChecksum(struct RSBattleTowerRecord *);
+static void ClearBattleTowerRecord(struct RSBattleTowerRecord *);
 
 extern const u8 gText_SpaceAndSpace[];
 extern const u8 gText_CommaSpace[];
@@ -405,18 +405,18 @@ bool8 ChooseSpecialBattleTowerTrainer(void)
         // Check if one of the battle tower trainers from record mixing should be the next trainer.
         for (recordIndex = 0; recordIndex < 5; recordIndex++)
         {
-            struct BattleTowerRecord *record = &gSaveBlock2.battleTower.records[recordIndex];
+            struct RSBattleTowerRecord *record = &gSaveBlock2.battleTower.records[recordIndex];
             u32 recordHasData = 0;
             u32 checksum = 0;
 
-            for (i = 0; i < sizeof(struct BattleTowerRecord) / sizeof(u32) - 1; i++)
+            for (i = 0; i < sizeof(struct RSBattleTowerRecord) / sizeof(u32) - 1; i++)
             {
                 recordHasData |= ((u32 *)record)[i];
                 checksum += ((u32 *)record)[i];
             }
 
             if (gSaveBlock2.battleTower.records[recordIndex].winStreak == winStreak
-             && gSaveBlock2.battleTower.records[recordIndex].battleTowerLevelType == battleTowerLevelType
+             && gSaveBlock2.battleTower.records[recordIndex].lvlMode == battleTowerLevelType
              && recordHasData
              && gSaveBlock2.battleTower.records[recordIndex].checksum == checksum)
             {
@@ -513,21 +513,21 @@ void ChooseNextBattleTowerTrainer(void)
         gSaveBlock2.battleTower.battledTrainerIds[gSaveBlock2.battleTower.curChallengeBattleNum[levelType] - 1] = gSaveBlock2.battleTower.battleTowerTrainerId;
 }
 
-void SetBattleTowerTrainerGfxId(u8 trainerIndex)
+void SetBattleTowerTrainerGfxId(u8 trainerId)
 {
     u32 i;
-    u8 trainerClass;
+    u8 facilityClass;
 
-    if (trainerIndex < BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID)
-        trainerClass = gBattleTowerTrainers[trainerIndex].trainerClass;
-    else if (trainerIndex < BATTLE_TOWER_EREADER_TRAINER_ID)
-        trainerClass = gSaveBlock2.battleTower.records[trainerIndex - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].trainerClass;
+    if (trainerId < BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID)
+        facilityClass = gBattleTowerTrainers[trainerId].facilityClass;
+    else if (trainerId < BATTLE_TOWER_EREADER_TRAINER_ID)
+        facilityClass = gSaveBlock2.battleTower.records[trainerId - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].facilityClass;
     else
-        trainerClass = gSaveBlock2.battleTower.ereaderTrainer.trainerClass;
+        facilityClass = gSaveBlock2.battleTower.ereaderTrainer.facilityClass;
 
     for (i = 0; i < 30; i++)
     {
-        if (sMaleTrainerClasses[i] == trainerClass)
+        if (sMaleTrainerClasses[i] == facilityClass)
             break;
     }
     if (i != 30)
@@ -539,7 +539,7 @@ void SetBattleTowerTrainerGfxId(u8 trainerIndex)
 
     for (i = 0; i < 20; i++)
     {
-        if (sFemaleTrainerClasses[i] == trainerClass)
+        if (sFemaleTrainerClasses[i] == facilityClass)
             break;
     }
     if (i != 20)
@@ -559,13 +559,13 @@ void SetEReaderTrainerGfxId(void)
 
 #define BATTLE_TOWER_RECORD_COUNT 5
 
-void PutNewBattleTowerRecord(struct BattleTowerRecord *record)
+void PutNewBattleTowerRecord(struct RSBattleTowerRecord *record)
 {
     u16 slotValues[6];
     u16 slotIds[6];
     s32 i, j, k;
     s32 slotsCount = 0;
-    struct BattleTowerRecord *newRecord = record; // Needed to match.
+    struct RSBattleTowerRecord *newRecord = record; // Needed to match.
 
     // Find a record slot of the same player and replace it.
     for (i = 0; i < BATTLE_TOWER_RECORD_COUNT; i++)
@@ -655,21 +655,21 @@ void PutNewBattleTowerRecord(struct BattleTowerRecord *record)
 u8 get_trainer_class_pic_index(void)
 {
     if (gSaveBlock2.battleTower.battleTowerTrainerId == BATTLE_TOWER_EREADER_TRAINER_ID)
-        return gTrainerClassToPicIndex[gSaveBlock2.battleTower.ereaderTrainer.trainerClass];
+        return gTrainerClassToPicIndex[gSaveBlock2.battleTower.ereaderTrainer.facilityClass];
     else if (gSaveBlock2.battleTower.battleTowerTrainerId < BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID)
-        return gTrainerClassToPicIndex[gBattleTowerTrainers[gSaveBlock2.battleTower.battleTowerTrainerId].trainerClass];
+        return gTrainerClassToPicIndex[gBattleTowerTrainers[gSaveBlock2.battleTower.battleTowerTrainerId].facilityClass];
     else
-        return gTrainerClassToPicIndex[gSaveBlock2.battleTower.records[gSaveBlock2.battleTower.battleTowerTrainerId - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].trainerClass];
+        return gTrainerClassToPicIndex[gSaveBlock2.battleTower.records[gSaveBlock2.battleTower.battleTowerTrainerId - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].facilityClass];
 }
 
 u8 get_trainer_class_name_index(void)
 {
     if (gSaveBlock2.battleTower.battleTowerTrainerId == BATTLE_TOWER_EREADER_TRAINER_ID)
-        return gTrainerClassToNameIndex[gSaveBlock2.battleTower.ereaderTrainer.trainerClass];
+        return gTrainerClassToNameIndex[gSaveBlock2.battleTower.ereaderTrainer.facilityClass];
     else if (gSaveBlock2.battleTower.battleTowerTrainerId >= BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID)
-        return gTrainerClassToNameIndex[gSaveBlock2.battleTower.records[gSaveBlock2.battleTower.battleTowerTrainerId - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].trainerClass];
+        return gTrainerClassToNameIndex[gSaveBlock2.battleTower.records[gSaveBlock2.battleTower.battleTowerTrainerId - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].facilityClass];
     else
-        return gTrainerClassToNameIndex[gBattleTowerTrainers[gSaveBlock2.battleTower.battleTowerTrainerId].trainerClass];
+        return gTrainerClassToNameIndex[gBattleTowerTrainers[gSaveBlock2.battleTower.battleTowerTrainerId].facilityClass];
 }
 
 void get_trainer_name(u8* dest)
@@ -684,7 +684,7 @@ void get_trainer_name(u8* dest)
     else if (gSaveBlock2.battleTower.battleTowerTrainerId < BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID)
     {
         for (i = 0; i < 7; i++)
-            dest[i] = gBattleTowerTrainers[gSaveBlock2.battleTower.battleTowerTrainerId].name[i];
+            dest[i] = gBattleTowerTrainers[gSaveBlock2.battleTower.battleTowerTrainerId].trainerName[i];
     }
     else
     {
@@ -819,7 +819,7 @@ void FillBattleTowerTrainerParty(void)
             for (i = 0; i < partyIndex; i++)
             {
                 if (GetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM, NULL) != 0
-                 && GetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM, NULL) == sBattleTowerHeldItems[battleTowerMons[battleMonIndex].heldItem])
+                 && GetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM, NULL) == sBattleTowerHeldItems[battleTowerMons[battleMonIndex].itemTableId])
                     break;
             }
 
@@ -858,7 +858,7 @@ void FillBattleTowerTrainerParty(void)
             }
 
             SetMonData(&gEnemyParty[partyIndex], MON_DATA_FRIENDSHIP, &friendship);
-            SetMonData(&gEnemyParty[partyIndex], MON_DATA_HELD_ITEM, &sBattleTowerHeldItems[battleTowerMons[battleMonIndex].heldItem]);
+            SetMonData(&gEnemyParty[partyIndex], MON_DATA_HELD_ITEM, &sBattleTowerHeldItems[battleTowerMons[battleMonIndex].itemTableId]);
 
             // The pokemon was successfully added to the trainer's party, so it's safe to move on to
             // the next party slot.
@@ -1031,15 +1031,15 @@ void PrintBattleTowerTrainerGreeting(void)
     if (gSaveBlock2.battleTower.battleTowerTrainerId == BATTLE_TOWER_EREADER_TRAINER_ID)
         PrintBattleTowerTrainerMessage(gSaveBlock2.battleTower.ereaderTrainer.greeting);
     else if (gSaveBlock2.battleTower.battleTowerTrainerId < BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID)
-        PrintBattleTowerTrainerMessage((u16 *)gBattleTowerTrainers[gSaveBlock2.battleTower.battleTowerTrainerId].greeting);
+        PrintBattleTowerTrainerMessage((u16 *)gBattleTowerTrainers[gSaveBlock2.battleTower.battleTowerTrainerId].speechBefore);
     else
         PrintBattleTowerTrainerMessage(gSaveBlock2.battleTower.records[gSaveBlock2.battleTower.battleTowerTrainerId - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].greeting);
 }
 
-void sub_81354CC(void)
+static void HandleSpecialTrainerBattleEnd(void)
 {
     s32 i;
-    u16 heldItem;
+    u16 itemBefore;
 
     switch (gSpecialVar_0x8004)
     {
@@ -1048,32 +1048,32 @@ void sub_81354CC(void)
     case 1:
         for (i = 0; i < PARTY_SIZE; i++)
         {
-            heldItem = GetMonData(&gSaveBlock1.playerParty[i], MON_DATA_HELD_ITEM);
-            SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &heldItem);
+            itemBefore = GetMonData(&gSaveBlock1.playerParty[i], MON_DATA_HELD_ITEM);
+            SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &itemBefore);
         }
         break;
     case 2:
-        PrintEReaderTrainerFarewellMessage();
+        CopyEReaderTrainerFarewellMessage();
         break;
     }
 
     SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
-void sub_8135534(u8 taskId)
+static void Task_StartBattleAfterTransition(u8 taskId)
 {
     if (IsBattleTransitionDone() == TRUE)
     {
-        gMain.savedCallback = sub_81354CC;
+        gMain.savedCallback = HandleSpecialTrainerBattleEnd;
         SetMainCallback2(CB2_InitBattle);
         DestroyTask(taskId);
     }
 }
 
-void StartSpecialBattle(void)
+void DoSpecialTrainerBattle(void)
 {
     s32 i;
-    u16 heldItem;
+    u16 itemBefore;
     u8 transition;
 
     switch (gSpecialVar_0x8004)
@@ -1084,7 +1084,7 @@ void StartSpecialBattle(void)
 
         FillBattleTowerTrainerParty();
 
-        CreateTask(sub_8135534, 1);
+        CreateTask(Task_StartBattleAfterTransition, 1);
         PlayMapChosenOrBattleBGM(0);
         transition = BattleSetup_GetBattleTowerBattleTransition();
         BattleTransition_StartOnField(transition);
@@ -1092,11 +1092,11 @@ void StartSpecialBattle(void)
     case 1: // secret base battle
         for (i = 0; i < PARTY_SIZE; i++)
         {
-            heldItem = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
-            SetMonData(&gSaveBlock1.playerParty[i], MON_DATA_HELD_ITEM, &heldItem);
+            itemBefore = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
+            SetMonData(&gSaveBlock1.playerParty[i], MON_DATA_HELD_ITEM, &itemBefore);
         }
 
-        CreateTask(sub_8135534, 1);
+        CreateTask(Task_StartBattleAfterTransition, 1);
         PlayMapChosenOrBattleBGM(0);
         transition = BattleSetup_GetBattleTowerBattleTransition();
         BattleTransition_StartOnField(transition);
@@ -1110,7 +1110,7 @@ void StartSpecialBattle(void)
         gBattleTypeFlags = (BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_TRAINER);
         gTrainerBattleOpponent_A = 0;
 
-        CreateTask(sub_8135534, 1);
+        CreateTask(Task_StartBattleAfterTransition, 1);
         PlayMapChosenOrBattleBGM(0);
         transition = BattleSetup_GetBattleTowerBattleTransition();
         BattleTransition_StartOnField(transition);
@@ -1248,38 +1248,38 @@ void SetBattleTowerParty(void)
 static void SaveCurrentWinStreak(void)
 {
     u8 levelType = gSaveBlock2.battleTower.battleTowerLevelType;
-    u16 streak = GetCurrentBattleTowerWinStreak(levelType);
+    u16 winStreak = GetCurrentBattleTowerWinStreak(levelType);
 
-    if (gSaveBlock2.battleTower.recordWinStreaks[levelType] < streak)
-        gSaveBlock2.battleTower.recordWinStreaks[levelType] = streak;
+    if (gSaveBlock2.battleTower.recordWinStreaks[levelType] < winStreak)
+        gSaveBlock2.battleTower.recordWinStreaks[levelType] = winStreak;
 
     if (gSaveBlock2.battleTower.recordWinStreaks[0] > gSaveBlock2.battleTower.recordWinStreaks[1])
     {
-        streak = gSaveBlock2.battleTower.recordWinStreaks[0];
-        SetGameStat(GAME_STAT_BATTLE_TOWER_BEST_STREAK, streak);
+        winStreak = gSaveBlock2.battleTower.recordWinStreaks[0];
+        SetGameStat(GAME_STAT_BATTLE_TOWER_BEST_STREAK, winStreak);
 
-        if (streak > 9999)
+        if (winStreak > 9999)
             gSaveBlock2.battleTower.bestBattleTowerWinStreak = 9999;
         else
-            gSaveBlock2.battleTower.bestBattleTowerWinStreak = streak;
+            gSaveBlock2.battleTower.bestBattleTowerWinStreak = winStreak;
     }
     else
     {
-        streak = gSaveBlock2.battleTower.recordWinStreaks[1];
-        SetGameStat(GAME_STAT_BATTLE_TOWER_BEST_STREAK, streak);
+        winStreak = gSaveBlock2.battleTower.recordWinStreaks[1];
+        SetGameStat(GAME_STAT_BATTLE_TOWER_BEST_STREAK, winStreak);
 
-        if (streak > 9999)
+        if (winStreak > 9999)
             gSaveBlock2.battleTower.bestBattleTowerWinStreak = 9999;
         else
-            gSaveBlock2.battleTower.bestBattleTowerWinStreak = streak;
+            gSaveBlock2.battleTower.bestBattleTowerWinStreak = winStreak;
     }
 }
 
-void sub_8135AC4(void)
+static void SaveBattleTowerRecord(void)
 {
     s32 i;
     u8 trainerClass;
-    struct BattleTowerRecord *playerRecord = &gSaveBlock2.battleTower.playerRecord;
+    struct RSBattleTowerRecord *playerRecord = &gSaveBlock2.battleTower.playerRecord;
     u8 battleTowerLevelType = gSaveBlock2.battleTower.battleTowerLevelType;
 
     if (gSaveBlock2.playerGender != MALE)
@@ -1293,8 +1293,8 @@ void sub_8135AC4(void)
                                     + gSaveBlock2.playerTrainerId[2] + gSaveBlock2.playerTrainerId[3]) % 30u];
     }
 
-    playerRecord->battleTowerLevelType = battleTowerLevelType;
-    playerRecord->trainerClass = trainerClass;
+    playerRecord->lvlMode = battleTowerLevelType;
+    playerRecord->facilityClass = trainerClass;
 
     CopyTrainerId(playerRecord->trainerId, gSaveBlock2.playerTrainerId);
     StringCopy8(playerRecord->name, gSaveBlock2.playerName);
@@ -1307,7 +1307,7 @@ void sub_8135AC4(void)
     for (i = 0; i < 3; i++)
         ConvertPokemonToBattleTowerPokemon(&gPlayerParty[gSaveBlock2.battleTower.selectedPartyMons[i] - 1], &playerRecord->party[i]);
 
-    SetBattleTowerRecordChecksum(&gSaveBlock2.battleTower.playerRecord);
+    CalcRubyBattleTowerChecksum(&gSaveBlock2.battleTower.playerRecord);
     SaveCurrentWinStreak();
 }
 
@@ -1319,10 +1319,10 @@ void SaveBattleTowerProgress(void)
     {
         if (gSaveBlock2.battleTower.curStreakChallengesNum[battleTowerLevelType] > 1
          || gSaveBlock2.battleTower.curChallengeBattleNum[battleTowerLevelType] > 1)
-            sub_8135AC4();
+            SaveBattleTowerRecord();
     }
 
-    sub_8135CFC();
+    SetTowerInterviewData();
 
     gSaveBlock2.battleTower.battleOutcome = gBattleOutcome;
 
@@ -1343,11 +1343,11 @@ void ValidateBattleTowerRecordChecksums(void)
 {
     u32 i;
     s32 recordIndex;
-    struct BattleTowerRecord *record;
+    struct RSBattleTowerRecord *record;
     u32 checksum;
 
     checksum = 0;
-    for (i = 0; i < (sizeof(struct BattleTowerRecord) / sizeof(u32)) - 1; i++)
+    for (i = 0; i < (sizeof(struct RSBattleTowerRecord) / sizeof(u32)) - 1; i++)
         checksum += ((u32 *)&gSaveBlock2.battleTower.playerRecord)[i];
 
     if (gSaveBlock2.battleTower.playerRecord.checksum != checksum)
@@ -1357,7 +1357,7 @@ void ValidateBattleTowerRecordChecksums(void)
     {
         record = &gSaveBlock2.battleTower.records[recordIndex];
         checksum = 0;
-        for (i = 0; i < (sizeof(struct BattleTowerRecord) / sizeof(u32)) - 1; i++)
+        for (i = 0; i < (sizeof(struct RSBattleTowerRecord) / sizeof(u32)) - 1; i++)
             checksum += ((u32 *)record)[i];
 
         if (gSaveBlock2.battleTower.records[recordIndex].checksum != checksum)
@@ -1365,24 +1365,24 @@ void ValidateBattleTowerRecordChecksums(void)
     }
 }
 
-void SetBattleTowerRecordChecksum(struct BattleTowerRecord *record)
+void CalcRubyBattleTowerChecksum(struct RSBattleTowerRecord *record)
 {
     u32 i;
 
     record->checksum = 0;
-    for (i = 0; i < (sizeof(struct BattleTowerRecord) / sizeof(u32)) - 1; i++)
+    for (i = 0; i < (sizeof(struct RSBattleTowerRecord) / sizeof(u32)) - 1; i++)
         record->checksum += ((u32 *)record)[i];
 }
 
-void ClearBattleTowerRecord(struct BattleTowerRecord *record)
+void ClearBattleTowerRecord(struct RSBattleTowerRecord *record)
 {
     u32 i;
 
-    for (i = 0; i < sizeof(struct BattleTowerRecord) / sizeof(u32); i++)
+    for (i = 0; i < sizeof(struct RSBattleTowerRecord) / sizeof(u32); i++)
         ((u32 *)record)[i] = 0;
 }
 
-void sub_8135CFC(void)
+void SetTowerInterviewData(void)
 {
     s32 i;
 
@@ -1466,7 +1466,7 @@ void AwardBattleTowerRibbons(void)
 
 // This is a leftover debugging function that is used to populate the E-Reader
 // trainer with the player's current data.
-void Debug_FillEReaderTrainerWithPlayerData(void)
+void FillEReaderTrainerWithPlayerData(void)
 {
     struct BattleTowerEReaderTrainer *ereaderTrainer;
     s32 i;
@@ -1476,12 +1476,12 @@ void Debug_FillEReaderTrainerWithPlayerData(void)
 
     if (gSaveBlock2.playerGender != MALE)
     {
-        ereaderTrainer->trainerClass = sFemaleTrainerClasses[(gSaveBlock2.playerTrainerId[0] + gSaveBlock2.playerTrainerId[1]
+        ereaderTrainer->facilityClass = sFemaleTrainerClasses[(gSaveBlock2.playerTrainerId[0] + gSaveBlock2.playerTrainerId[1]
                                                         + gSaveBlock2.playerTrainerId[2] + gSaveBlock2.playerTrainerId[3]) % 20u];
     }
     else
     {
-        ereaderTrainer->trainerClass = sMaleTrainerClasses[(gSaveBlock2.playerTrainerId[0] + gSaveBlock2.playerTrainerId[1]
+        ereaderTrainer->facilityClass = sMaleTrainerClasses[(gSaveBlock2.playerTrainerId[0] + gSaveBlock2.playerTrainerId[1]
                                                         + gSaveBlock2.playerTrainerId[2] + gSaveBlock2.playerTrainerId[3]) % 30u];
     }
 
@@ -1505,17 +1505,17 @@ void Debug_FillEReaderTrainerWithPlayerData(void)
     SetEReaderTrainerChecksum(ereaderTrainer);
 }
 
-u8 GetEReaderTrainerPicIndex(void)
+u8 GetEreaderTrainerFrontSpriteId(void)
 {
-    return gTrainerClassToPicIndex[gSaveBlock2.battleTower.ereaderTrainer.trainerClass];
+    return gTrainerClassToPicIndex[gSaveBlock2.battleTower.ereaderTrainer.facilityClass];
 }
 
-u8 GetEReaderTrainerClassNameIndex(void)
+u8 GetEreaderTrainerClassId(void)
 {
-    return gTrainerClassToNameIndex[gSaveBlock2.battleTower.ereaderTrainer.trainerClass];
+    return gTrainerClassToNameIndex[gSaveBlock2.battleTower.ereaderTrainer.facilityClass];
 }
 
-void SetEReaderTrainerName(u8 *trainerName)
+void GetEreaderTrainerName(u8 *trainerName)
 {
     s32 i;
 
@@ -1573,12 +1573,12 @@ void ClearEReaderTrainer(struct BattleTowerEReaderTrainer *ereaderTrainer)
         ((u32 *)ereaderTrainer)[i] = 0;
 }
 
-void PrintEReaderTrainerGreeting(void)
+void CopyEReaderTrainerGreeting(void)
 {
     PrintBattleTowerTrainerMessage(gSaveBlock2.battleTower.ereaderTrainer.greeting);
 }
 
-void PrintEReaderTrainerFarewellMessage(void)
+void CopyEReaderTrainerFarewellMessage(void)
 {
     if (gBattleOutcome == B_OUTCOME_DREW)
         gStringVar4[0] = EOS;
@@ -1588,7 +1588,7 @@ void PrintEReaderTrainerFarewellMessage(void)
         PrintBattleTowerTrainerMessage(gSaveBlock2.battleTower.ereaderTrainer.farewellPlayerLost);
 }
 
-void TryEnableBravoTrainerBattleTower(void)
+void TryHideBattleTowerReporter(void)
 {
     s32 i;
 
@@ -1603,15 +1603,15 @@ void TryEnableBravoTrainerBattleTower(void)
 u8 de_sub_81364AC(void)
 {
     if (gSaveBlock2.battleTower.battleTowerTrainerId == BATTLE_TOWER_EREADER_TRAINER_ID)
-        return gSaveBlock2.battleTower.ereaderTrainer.trainerClass;
+        return gSaveBlock2.battleTower.ereaderTrainer.facilityClass;
     else if (gSaveBlock2.battleTower.battleTowerTrainerId >= BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID)
-        return gSaveBlock2.battleTower.records[gSaveBlock2.battleTower.battleTowerTrainerId - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].trainerClass;
+        return gSaveBlock2.battleTower.records[gSaveBlock2.battleTower.battleTowerTrainerId - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].facilityClass;
     else
-        return gBattleTowerTrainers[gSaveBlock2.battleTower.battleTowerTrainerId].trainerClass;
+        return gBattleTowerTrainers[gSaveBlock2.battleTower.battleTowerTrainerId].facilityClass;
 }
 
 u8 de_sub_81364F8(void)
 {
-    return gSaveBlock2.battleTower.ereaderTrainer.trainerClass;
+    return gSaveBlock2.battleTower.ereaderTrainer.facilityClass;
 }
 #endif

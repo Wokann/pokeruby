@@ -206,7 +206,7 @@ void debug_sub_8075DB4(struct BattleTowerEReaderTrainer *ereaderTrainer, const u
     s32 i;
     s32 r3;
 
-    ereaderTrainer->trainerClass = trainerId % 77;
+    ereaderTrainer->facilityClass = trainerId % 77;
     SetTrainerId(trainerId, ereaderTrainer->trainerId);
     StringCopy8(ereaderTrainer->name, b);
     r3 = 7;

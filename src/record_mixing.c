@@ -40,7 +40,7 @@ static struct PokeNews *sPokeNewsSave = gSaveBlock1.pokeNews;
 static void *recordMixingMauvilleMan = &gSaveBlock1.oldMan;
 static struct DewfordTrend *sDewfordTrendsSave = gSaveBlock1.dewfordTrends;
 static struct RecordMixingDaycareMail *sRecordMixMailSave = &sRecordMixMail;
-static struct BattleTowerRecord *sBattleTowerSave = &gSaveBlock2.battleTower.playerRecord;
+static struct RSBattleTowerRecord *sBattleTowerSave = &gSaveBlock2.battleTower.playerRecord;
 
 #define BUFFER_CHUNK_SIZE 200
 
@@ -81,7 +81,7 @@ struct PlayerRecordRS
     union OldMan oldMan;
     struct DewfordTrend dewfordTrends[5];
     struct RecordMixingDaycareMail daycareMail;
-    struct BattleTowerRecord battleTowerRecord;
+    struct RSBattleTowerRecord battleTowerRecord;
     u16 giftItem;
     u16 filler11CA[0x33];
 };
@@ -103,7 +103,7 @@ static void PrepareExchangePacket(void)
     sRecordMixMail.mail[1] = gSaveBlock1.daycare.misc.mail[1];
     InitDaycareMailRecordMixing(gSaveBlock1.daycare.mons, &sRecordMixMail);
     memcpy(&eSentRecord.daycareMail, sRecordMixMailSave, sizeof(struct RecordMixingDaycareMail));
-    memcpy(&eSentRecord.battleTowerRecord, sBattleTowerSave, sizeof(struct BattleTowerRecord));
+    memcpy(&eSentRecord.battleTowerRecord, sBattleTowerSave, sizeof(struct RSBattleTowerRecord));
 
     if (GetMultiplayerId() == 0)
         eSentRecord.giftItem = GetRecordMixingGift();
@@ -478,7 +478,7 @@ static void ReceiveOldManData(u8 *records, size_t recordSize, u8 multiplayerId)
 static void ReceiveBattleTowerData(void *records, u32 recordSize, u8 multiplayerId)
 {
     ShufflePlayerIndices(gUnknown_0300071C);
-    memcpy(records + recordSize * multiplayerId, records + recordSize * gUnknown_0300071C[multiplayerId], sizeof(struct BattleTowerRecord));
+    memcpy(records + recordSize * multiplayerId, records + recordSize * gUnknown_0300071C[multiplayerId], sizeof(struct RSBattleTowerRecord));
     PutNewBattleTowerRecord(records + recordSize * multiplayerId);
 }
 

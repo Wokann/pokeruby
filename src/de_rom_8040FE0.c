@@ -63,7 +63,7 @@ u8 *de_sub_8041024(s32 arg0, u32 arg1)
         return gTrainerClassNames[nameIndex];
     case 0x800:
         trainerClass = de_sub_81364F8();
-        nameIndex = GetEReaderTrainerClassNameIndex();
+        nameIndex = GetEreaderTrainerClassId();
         if (trainerClass == FACILITY_CLASS_SCHOOL_KID_F)
             return de_sub_8040FE0(FEMALE);
         if (trainerClass == FACILITY_CLASS_MAY_1 || trainerClass == FACILITY_CLASS_MAY_2 || trainerClass == FACILITY_CLASS_MAY_3)
@@ -146,7 +146,7 @@ _08041086:\n\
     bl de_sub_81364F8\n\
     lsls r0, 24\n\
     lsrs r4, r0, 24\n\
-    bl GetEReaderTrainerClassNameIndex\n\
+    bl GetEreaderTrainerClassId\n\
     b _08041070\n\
 _08041094:\n\
     movs r0, 0x1\n\

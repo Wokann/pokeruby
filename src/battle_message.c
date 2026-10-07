@@ -699,7 +699,7 @@ u32 BattleStringExpandPlaceholders(const u8* src, u8* dst)
                 else if (gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER)
                     toCpy = gTrainerClassNames[get_trainer_class_name_index()];
                 else if (gBattleTypeFlags & BATTLE_TYPE_EREADER_TRAINER)
-                    toCpy = gTrainerClassNames[GetEReaderTrainerClassNameIndex()];
+                    toCpy = gTrainerClassNames[GetEreaderTrainerClassId()];
                 else
                     toCpy = gTrainerClassNames[gTrainers[gTrainerBattleOpponent_A].trainerClass];
                 break;
@@ -728,7 +728,7 @@ u32 BattleStringExpandPlaceholders(const u8* src, u8* dst)
                 }
                 else if (gBattleTypeFlags & BATTLE_TYPE_EREADER_TRAINER)
                 {
-                    SetEReaderTrainerName(text);
+                    GetEreaderTrainerName(text);
                     toCpy = text;
                 }
                 else

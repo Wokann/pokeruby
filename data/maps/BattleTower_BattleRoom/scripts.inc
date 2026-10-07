@@ -23,7 +23,7 @@ BattleTower_BattleRoom_EventScript_1608FA:: @ 81608FA
 	special HealPlayerParty
 	setvar VAR_0x8004, 0
 	setvar VAR_0x8005, 0
-	special StartSpecialBattle
+	special DoSpecialTrainerBattle
 	waitstate
 	switch VAR_RESULT
 	case 1, BattleTower_BattleRoom_EventScript_160961

@@ -572,29 +572,17 @@ struct BattleTowerPokemon
 
 struct BattleTowerTrainer
 {
-    /*0x00*/ u8 trainerClass;
-    /*0x01*/ u8 name[8];
+    /*0x00*/ u8 facilityClass;
+    /*0x01*/ u8 trainerName[8];
     /*0x09*/ u8 teamFlags;
              u8 filler0A[2];
-    /*0x0C*/ u16 greeting[6];
-};
-
-struct BattleTowerRecord // record mixing
-{
-    /*0x00*/ u8 battleTowerLevelType; // 0 = level 50, 1 = level 100
-    /*0x01*/ u8 trainerClass;
-    /*0x02*/ u16 winStreak;
-    /*0x04*/ u8 name[8];
-    /*0x0C*/ u8 trainerId[4];
-    /*0x10*/ u16 greeting[6];
-    /*0x1C*/ struct BattleTowerPokemon party[3];
-    /*0xA0*/ u32 checksum;
+    /*0x0C*/ u16 speechBefore[6];
 };
 
 struct BattleTowerEReaderTrainer
 {
     /*0x00*/ u8 unk0;
-    /*0x01*/ u8 trainerClass;
+    /*0x01*/ u8 facilityClass;
     /*0x02*/ u16 winStreak;
     /*0x04*/ u8 name[8];
     /*0x0C*/ u8 trainerId[4];
@@ -605,10 +593,12 @@ struct BattleTowerEReaderTrainer
     /*0xB8*/ u32 checksum;
 };
 
+#include "battle_tower.h"
+
 struct BattleTowerData
 {
-    /*0x0000, 0x00A8*/ struct BattleTowerRecord playerRecord;
-    /*0x00A4, 0x014C*/ struct BattleTowerRecord records[5]; // from record mixing
+    /*0x0000, 0x00A8*/ struct RSBattleTowerRecord playerRecord;
+    /*0x00A4, 0x014C*/ struct RSBattleTowerRecord records[5]; // from record mixing
     /*0x03D8, 0x0480*/ u16 firstMonSpecies; // species of the first pokemon in the player's battle tower party
     /*0x03DA, 0x0482*/ u16 defeatedBySpecies; // species of the pokemon that defated the player
     /*0x03DC, 0x0484*/ u8 defeatedByTrainerName[8];

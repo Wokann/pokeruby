@@ -243,8 +243,8 @@ gSpecials::
 	def_special ChooseNextBattleTowerTrainer
 	def_special CheckPartyBattleTowerBanlist
 	def_special PrintBattleTowerTrainerGreeting
-	def_special PrintEReaderTrainerGreeting
-	def_special StartSpecialBattle
+	def_special CopyEReaderTrainerGreeting
+	def_special DoSpecialTrainerBattle
 	def_special SetBattleTowerProperty
 	def_special BattleTowerUtil
 	def_special SetBattleTowerParty
@@ -346,7 +346,7 @@ gSpecials::
 	def_special HasAllHoennMons
 	def_special MonOTNameMatchesPlayer
 	def_special BufferLottoTicketNumber
-	def_special TryEnableBravoTrainerBattleTower
+	def_special TryHideBattleTowerReporter
 	def_special DoesPartyHaveEnigmaBerry
 	def_special GenerateContestRand
 	def_special ValidateMixingGameLanguage

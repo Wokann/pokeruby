@@ -1614,7 +1614,7 @@ u16 GetBestBattleTowerStreak(void)
 
 void BufferEReaderTrainerName(void)
 {
-    SetEReaderTrainerName(gStringVar1);
+    GetEreaderTrainerName(gStringVar1);
 }
 
 static const u8 sSlotMachineRandomSeeds[] = {12, 2, 4, 5, 1, 8, 7, 11, 3, 10, 9, 6};

@@ -1,6 +1,18 @@
 #ifndef GUARD_BATTLE_TOWER_H
 #define GUARD_BATTLE_TOWER_H
 
+struct RSBattleTowerRecord // record mixing
+{
+    /*0x00*/ u8 lvlMode; // 0 = level 50, 1 = level 100
+    /*0x01*/ u8 facilityClass;
+    /*0x02*/ u16 winStreak;
+    /*0x04*/ u8 name[8];
+    /*0x0C*/ u8 trainerId[4];
+    /*0x10*/ u16 greeting[6];
+    /*0x1C*/ struct BattleTowerPokemon party[3];
+    /*0xA0*/ u32 checksum;
+};
+
 #define BATTLE_TOWER_EREADER_TRAINER_ID 200
 #define BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID 100
 
@@ -84,19 +96,21 @@ enum
 struct FacilityMon
 {
     /*0x00*/u16 species;
-    /*0x02*/u8 heldItem; // entry in sBattleTowerHeldItems
+    /*0x02*/u8 itemTableId; // entry in sBattleTowerHeldItems
     /*0x03*/u8 teamFlags;
     /*0x04*/u16 moves[4];
     /*0x0C*/u8 evSpread;
     /*0x0D*/u8 nature;
 };
 
-u16 GetCurrentBattleTowerWinStreak(u8);
-void PutNewBattleTowerRecord(struct BattleTowerRecord *);
-u16 sub_8135D3C(u8);
-void SetEReaderTrainerName(u8*);
-u8 GetEReaderTrainerPicIndex(void);
-u8 GetEReaderTrainerClassNameIndex(void);
+void DoSpecialTrainerBattle(void);
+void CopyEReaderTrainerGreeting(void);
+void TryHideBattleTowerReporter(void);
+u16 GetCurrentBattleTowerWinStreak(u8 battleTowerLevelType);
+void PutNewBattleTowerRecord(struct RSBattleTowerRecord *record);
+void GetEreaderTrainerName(u8 *trainerName);
+u8 GetEreaderTrainerFrontSpriteId(void);
+u8 GetEreaderTrainerClassId(void);
 void ValidateEReaderTrainer(void);
 void SetEReaderTrainerChecksum(struct BattleTowerEReaderTrainer *ereaderTrainer);
 
