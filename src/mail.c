@@ -23,26 +23,26 @@
 
 extern u8 (*gMenuCallback)(void);
 
-struct UnkMailStruct
+struct MailLineLayout
 {
     u8 unk_0_0:2;
-    u8 unk_0_2:2;
-    u8 unk_0_4:4;
+    u8 numEasyChatWords:2;
+    u8 xOffset:4;
 };
 
 struct MailLayout
 {
-    u8 var0;
-    u8 var1;
+    u8 numLines;
+    u8 signatureYPos;
     u8 var2;
-    u8 var3_0:4;
-    u8 var3_4:4;
-    const struct UnkMailStruct *var4;
+    u8 wordsYPos:4;
+    u8 wordsXPos:4;
+    const struct MailLineLayout *lines;
 };
 
 struct MailRead
 {
-    /* 0x00*/ u8 words[8][27];
+    /* 0x00*/ u8 message[8][27];
     /* 0xD8*/ u8 playerName[20];
     /* 0xEC*/ MainCallback exitCallback;
     /* 0xF0*/ MainCallback callback;
@@ -50,12 +50,12 @@ struct MailRead
     /* 0xF8*/ u8 hasText;
     /* 0xF9*/ u8 varF9;
     /* 0xFA*/ u8 mailType;
-    /* 0xFB*/ u8 varFB;
-    /* 0xFC*/ u8 varFC;
+    /* 0xFB*/ u8 iconType;
+    /* 0xFC*/ u8 monIconSpriteId;
     u8 padFD[1];
     /* 0xFE*/ u8 varFE;
-    /* 0xFF*/ u8 varFF;
-    /*0x100*/ u8 var100;
+    /* 0xFF*/ u8 language;
+    /*0x100*/ u8 international;
     u8 pad101[3];
     /*0x104*/ u8 * (*unusedParserSingle)(u8 *dst, u16 word);
     /*0x108*/ u8 * (*unusedParserMultiple)(u8 *dst, u16* words, u16 arg2, u16 arg3);
@@ -69,17 +69,17 @@ struct MailGraphics
     const u8 *tileMap;
     u16 var0C;
     u16 var0E;
-    u16 color10;
-    u16 color12;
+    u16 textColor;
+    u16 textShadow;
 };
 
-const u16 gUnknown_083E562C[][2] =
+static const u16 sBgColors[][2] =
 {
     {0x6ACD, 0x51A5},
     {0x45FC, 0x38D4},
 };
 
-const struct MailGraphics gMailGraphicsTable[] =
+static const struct MailGraphics sMailGraphics[] =
 {
     {
         .palette = gMailPalette_Orange,
@@ -87,8 +87,8 @@ const struct MailGraphics gMailGraphicsTable[] =
         .tileMap = gMailTilemap_Orange,
         .var0C = 0x2C0,
         .var0E = 0,
-        .color10 = 0x294A,
-        .color12 = 0x6739,
+        .textColor = 0x294A,
+        .textShadow = 0x6739,
     },
     {
         .palette = gMailPalette_Harbor,
@@ -96,8 +96,8 @@ const struct MailGraphics gMailGraphicsTable[] =
         .tileMap = gMailTilemap_Harbor,
         .var0C = 0x2E0,
         .var0E = 0,
-        .color10 = 0x7FFF,
-        .color12 = 0x4631,
+        .textColor = 0x7FFF,
+        .textShadow = 0x4631,
     },
     {
         .palette = gMailPalette_Glitter,
@@ -105,8 +105,8 @@ const struct MailGraphics gMailGraphicsTable[] =
         .tileMap = gMailTilemap_Glitter,
         .var0C = 0x400,
         .var0E = 0,
-        .color10 = 0x294A,
-        .color12 = 0x6739,
+        .textColor = 0x294A,
+        .textShadow = 0x6739,
     },
     {
         .palette = gMailPalette_Mech,
@@ -114,8 +114,8 @@ const struct MailGraphics gMailGraphicsTable[] =
         .tileMap = gMailTilemap_Mech,
         .var0C = 0x1E0,
         .var0E = 0,
-        .color10 = 0x7FFF,
-        .color12 = 0x4631,
+        .textColor = 0x7FFF,
+        .textShadow = 0x4631,
     },
     {
         .palette = gMailPalette_Wood,
@@ -123,8 +123,8 @@ const struct MailGraphics gMailGraphicsTable[] =
         .tileMap = gMailTilemap_Wood,
         .var0C = 0x2E0,
         .var0E = 0,
-        .color10 = 0x7FFF,
-        .color12 = 0x4631,
+        .textColor = 0x7FFF,
+        .textShadow = 0x4631,
     },
     {
         .palette = gMailPalette_Wave,
@@ -132,8 +132,8 @@ const struct MailGraphics gMailGraphicsTable[] =
         .tileMap = gMailTilemap_Wave,
         .var0C = 0x300,
         .var0E = 0,
-        .color10 = 0x294A,
-        .color12 = 0x6739,
+        .textColor = 0x294A,
+        .textShadow = 0x6739,
     },
     {
         .palette = gMailPalette_Bead,
@@ -141,8 +141,8 @@ const struct MailGraphics gMailGraphicsTable[] =
         .tileMap = gMailTilemap_Bead,
         .var0C = 0x140,
         .var0E = 0,
-        .color10 = 0x7FFF,
-        .color12 = 0x4631,
+        .textColor = 0x7FFF,
+        .textShadow = 0x4631,
     },
     {
         .palette = gMailPalette_Shadow,
@@ -150,8 +150,8 @@ const struct MailGraphics gMailGraphicsTable[] =
         .tileMap = gMailTilemap_Shadow,
         .var0C = 0x300,
         .var0E = 0,
-        .color10 = 0x7FFF,
-        .color12 = 0x4631,
+        .textColor = 0x7FFF,
+        .textShadow = 0x4631,
     },
     {
         .palette = gMailPalette_Tropic,
@@ -159,8 +159,8 @@ const struct MailGraphics gMailGraphicsTable[] =
         .tileMap = gMailTilemap_Tropic,
         .var0C = 0x220,
         .var0E = 0,
-        .color10 = 0x294A,
-        .color12 = 0x6739,
+        .textColor = 0x294A,
+        .textShadow = 0x6739,
     },
     {
         .palette = gMailPalette_Dream,
@@ -168,8 +168,8 @@ const struct MailGraphics gMailGraphicsTable[] =
         .tileMap = gMailTilemap_Dream,
         .var0C = 0x340,
         .var0E = 0,
-        .color10 = 0x294A,
-        .color12 = 0x6739,
+        .textColor = 0x294A,
+        .textShadow = 0x6739,
     },
     {
         .palette = gMailPalette_Fab,
@@ -177,8 +177,8 @@ const struct MailGraphics gMailGraphicsTable[] =
         .tileMap = gMailTilemap_Fab,
         .var0C = 0x2A0,
         .var0E = 0,
-        .color10 = 0x294A,
-        .color12 = 0x6739,
+        .textColor = 0x294A,
+        .textShadow = 0x6739,
     },
     {
         .palette = gMailPalette_Retro,
@@ -186,35 +186,35 @@ const struct MailGraphics gMailGraphicsTable[] =
         .tileMap = gMailTilemap_Retro,
         .var0C = 0x520,
         .var0E = 0,
-        .color10 = 0x294A,
-        .color12 = 0x6739,
+        .textColor = 0x294A,
+        .textShadow = 0x6739,
     },
 };
 
-const struct UnkMailStruct Unknown_3E5724[] =
+static const struct MailLineLayout sLineLayouts_Wide[] =
 {
     {0, 3, 0},
     {0, 3, 0},
     {0, 3, 0},
 };
 
-const struct MailLayout gUnknown_083E5730[] =
+static const struct MailLayout sMailLayouts_Wide[] =
 {
-    {3, 15, 27, 4, 3, Unknown_3E5724},
-    {3, 15, 27, 4, 3, Unknown_3E5724},
-    {3, 15, 27, 4, 3, Unknown_3E5724},
-    {3, 15, 27, 4, 3, Unknown_3E5724},
-    {3, 15, 27, 4, 3, Unknown_3E5724},
-    {3, 15, 27, 4, 3, Unknown_3E5724},
-    {3, 15, 27, 4, 3, Unknown_3E5724},
-    {3, 15, 27, 4, 3, Unknown_3E5724},
-    {3, 15, 27, 4, 3, Unknown_3E5724},
-    {3, 15, 27, 4, 3, Unknown_3E5724},
-    {3, 16, 27, 4, 3, Unknown_3E5724},
-    {3, 15, 27, 4, 3, Unknown_3E5724},
+    {3, 15, 27, 4, 3, sLineLayouts_Wide},
+    {3, 15, 27, 4, 3, sLineLayouts_Wide},
+    {3, 15, 27, 4, 3, sLineLayouts_Wide},
+    {3, 15, 27, 4, 3, sLineLayouts_Wide},
+    {3, 15, 27, 4, 3, sLineLayouts_Wide},
+    {3, 15, 27, 4, 3, sLineLayouts_Wide},
+    {3, 15, 27, 4, 3, sLineLayouts_Wide},
+    {3, 15, 27, 4, 3, sLineLayouts_Wide},
+    {3, 15, 27, 4, 3, sLineLayouts_Wide},
+    {3, 15, 27, 4, 3, sLineLayouts_Wide},
+    {3, 16, 27, 4, 3, sLineLayouts_Wide},
+    {3, 15, 27, 4, 3, sLineLayouts_Wide},
 };
 
-const struct UnkMailStruct Unknown_3E5790[] =
+static const struct MailLineLayout sLineLayouts_Tall[] =
 {
     {0, 2, 0},
     {0, 2, 0},
@@ -223,20 +223,20 @@ const struct UnkMailStruct Unknown_3E5790[] =
     {0, 1, 0},
 };
 
-const struct MailLayout gUnknown_083E57A4[] =
+static const struct MailLayout sMailLayouts_Tall[] =
 {
-    {5, 15, 15, 4, 3, Unknown_3E5790},
-    {5, 15, 15, 4, 3, Unknown_3E5790},
-    {5, 15, 16, 4, 3, Unknown_3E5790},
-    {5, 15, 15, 4, 3, Unknown_3E5790},
-    {5, 15, 15, 4, 3, Unknown_3E5790},
-    {5, 15, 16, 4, 3, Unknown_3E5790},
-    {5, 15, 16, 4, 3, Unknown_3E5790},
-    {5, 15, 15, 4, 3, Unknown_3E5790},
-    {5, 15, 15, 4, 3, Unknown_3E5790},
-    {5, 15, 15, 4, 3, Unknown_3E5790},
-    {5, 16, 15, 4, 3, Unknown_3E5790},
-    {5, 15, 15, 4, 3, Unknown_3E5790},
+    {5, 15, 15, 4, 3, sLineLayouts_Tall},
+    {5, 15, 15, 4, 3, sLineLayouts_Tall},
+    {5, 15, 16, 4, 3, sLineLayouts_Tall},
+    {5, 15, 15, 4, 3, sLineLayouts_Tall},
+    {5, 15, 15, 4, 3, sLineLayouts_Tall},
+    {5, 15, 16, 4, 3, sLineLayouts_Tall},
+    {5, 15, 16, 4, 3, sLineLayouts_Tall},
+    {5, 15, 15, 4, 3, sLineLayouts_Tall},
+    {5, 15, 15, 4, 3, sLineLayouts_Tall},
+    {5, 15, 15, 4, 3, sLineLayouts_Tall},
+    {5, 16, 15, 4, 3, sLineLayouts_Tall},
+    {5, 15, 15, 4, 3, sLineLayouts_Tall},
 };
 
 #if DEBUG
@@ -290,17 +290,17 @@ const u8 Str_8411608[] = DTR("メールをけす", "Delete MAIL");
 #endif
 
 // XXX: what is this?
-static struct MailRead *const sSharedMemPtr = (struct MailRead *)gSharedMem;
+static struct MailRead *const sMailRead = (struct MailRead *)gSharedMem;
 
-static u8 sub_80F8A28(void);
-static void sub_80F8D50(void);
+static u8 MailReadBuildGraphics(void);
+static void CB2_InitMailRead(void);
 static void BufferMailText(void);
 static void PrintMailText(void);
-static void sub_80F8F18(void);
-static void sub_80F8F2C(void);
-static void sub_80F8F58(void);
-static void sub_80F8F78(void);
-static void sub_80F8FB4(void);
+static void VBlankCB_MailRead(void);
+static void CB2_MailRead(void);
+static void CB2_WaitForPaletteExitOnKeyPress(void);
+static void CB2_ExitOnKeyPress(void);
+static void CB2_ExitMailReadFreeVars(void);
 
 extern u16 gSpecialVar_0x8004;
 extern u16 gSpecialVar_0x8005;
@@ -310,7 +310,7 @@ extern u16 gSpecialVar_0x8006;
 static u8 gUnknown_Debug_0300079C;
 #endif
 
-void HandleReadMail(struct Mail *arg0, MainCallback arg1, bool8 arg2)
+void ReadMail(struct Mail *mail, MainCallback exitCallback, bool8 hasText)
 {
     u16 buffer[2];
     u16 species;
@@ -318,73 +318,73 @@ void HandleReadMail(struct Mail *arg0, MainCallback arg1, bool8 arg2)
 #if DEBUG
     if (gUnknown_Debug_0300079C != 0)
     {
-        sSharedMemPtr->varFF = GAME_LANGUAGE;
-        sSharedMemPtr->var100 = gSpecialVar_0x8004;
-        sSharedMemPtr->unusedParserSingle = CopyEasyChatWord;
-        sSharedMemPtr->unusedParserMultiple = ConvertEasyChatWordsToString;
-        sSharedMemPtr->mailType = gSpecialVar_0x8006;
+        sMailRead->language = GAME_LANGUAGE;
+        sMailRead->international = gSpecialVar_0x8004;
+        sMailRead->unusedParserSingle = CopyEasyChatWord;
+        sMailRead->unusedParserMultiple = ConvertEasyChatWordsToString;
+        sMailRead->mailType = gSpecialVar_0x8006;
     }
     else
 #endif
     {
-        sSharedMemPtr->varFF = GAME_LANGUAGE;
-        sSharedMemPtr->var100 = 1;
-        sSharedMemPtr->unusedParserSingle = CopyEasyChatWord;
-        sSharedMemPtr->unusedParserMultiple = ConvertEasyChatWordsToString;
-        if (IS_ITEM_MAIL(arg0->itemId))
+        sMailRead->language = GAME_LANGUAGE;
+        sMailRead->international = 1;
+        sMailRead->unusedParserSingle = CopyEasyChatWord;
+        sMailRead->unusedParserMultiple = ConvertEasyChatWordsToString;
+        if (IS_ITEM_MAIL(mail->itemId))
         {
-            sSharedMemPtr->mailType = arg0->itemId - 0x79;
+            sMailRead->mailType = mail->itemId - 0x79;
         }
         else
         {
-            sSharedMemPtr->mailType = 0;
-            arg2 = FALSE;
+            sMailRead->mailType = 0;
+            hasText = FALSE;
         }
     }
 
-    switch (sSharedMemPtr->var100)
+    switch (sMailRead->international)
     {
     case 0:
     default:
-        sSharedMemPtr->layout = &gUnknown_083E5730[sSharedMemPtr->mailType];
+        sMailRead->layout = &sMailLayouts_Wide[sMailRead->mailType];
         break;
     case 1:
-        sSharedMemPtr->layout = &gUnknown_083E57A4[sSharedMemPtr->mailType];
+        sMailRead->layout = &sMailLayouts_Tall[sMailRead->mailType];
         break;
     }
 
-    species = MailSpeciesToSpecies(arg0->species, buffer);
+    species = MailSpeciesToSpecies(mail->species, buffer);
     if (species >= 1 && species <= 411)
     {
-        switch (sSharedMemPtr->mailType)
+        switch (sMailRead->mailType)
         {
         case 6:
-            sSharedMemPtr->varFB = 1;
+            sMailRead->iconType = 1;
             break;
         case 9:
-            sSharedMemPtr->varFB = 2;
+            sMailRead->iconType = 2;
             break;
         default:
-            sSharedMemPtr->varFB = 0;
+            sMailRead->iconType = 0;
             break;
         }
     }
     else
     {
-        sSharedMemPtr->varFB = 0;
+        sMailRead->iconType = 0;
     }
 
-    sSharedMemPtr->mail = arg0;
-    sSharedMemPtr->exitCallback = arg1;
-    sSharedMemPtr->hasText = arg2;
+    sMailRead->mail = mail;
+    sMailRead->exitCallback = exitCallback;
+    sMailRead->hasText = hasText;
 
-    SetMainCallback2(sub_80F8D50);
+    SetMainCallback2(CB2_InitMailRead);
 }
 
 #define RETURN_UP_STATE break
 #define RETURN_SKIP_STATE return FALSE
 
-static u8 sub_80F8A28(void)
+static u8 MailReadBuildGraphics(void)
 {
     switch (gMain.state)
     {
@@ -446,55 +446,55 @@ static u8 sub_80F8A28(void)
         RETURN_UP_STATE;
 
     case 11:
-        LoadPalette(gMailGraphicsTable[sSharedMemPtr->mailType].palette, 0, 16 * 2);
+        LoadPalette(sMailGraphics[sMailRead->mailType].palette, 0, 16 * 2);
         RETURN_UP_STATE;
 
     case 12:
-        LZ77UnCompVram(gMailGraphicsTable[sSharedMemPtr->mailType].tileMap, (void *)(VRAM + 0x4000));
+        LZ77UnCompVram(sMailGraphics[sMailRead->mailType].tileMap, (void *)(VRAM + 0x4000));
         RETURN_UP_STATE;
 
     case 13:
-        LZ77UnCompVram(gMailGraphicsTable[sSharedMemPtr->mailType].tiles, (void *)(VRAM));
+        LZ77UnCompVram(sMailGraphics[sMailRead->mailType].tiles, (void *)(VRAM));
 
-        gPlttBufferUnfaded[241] = gMailGraphicsTable[sSharedMemPtr->mailType].color10;
-        gPlttBufferUnfaded[248] = gMailGraphicsTable[sSharedMemPtr->mailType].color12;
-        gPlttBufferUnfaded[10] = gUnknown_083E562C[gSaveBlock2.playerGender][0];
-        gPlttBufferUnfaded[11] = gUnknown_083E562C[gSaveBlock2.playerGender][1];
+        gPlttBufferUnfaded[241] = sMailGraphics[sMailRead->mailType].textColor;
+        gPlttBufferUnfaded[248] = sMailGraphics[sMailRead->mailType].textShadow;
+        gPlttBufferUnfaded[10] = sBgColors[gSaveBlock2.playerGender][0];
+        gPlttBufferUnfaded[11] = sBgColors[gSaveBlock2.playerGender][1];
         RETURN_UP_STATE;
 
     case 14:
-        if (sSharedMemPtr->hasText != 0)
+        if (sMailRead->hasText != 0)
         {
             BufferMailText();
         }
         RETURN_UP_STATE;
 
     case 15:
-        if (sSharedMemPtr->hasText != 0)
+        if (sMailRead->hasText != 0)
         {
             PrintMailText();
         }
 
-        SetVBlankCallback(sub_80F8F18);
+        SetVBlankCallback(VBlankCB_MailRead);
         gPaletteFade.bufferTransferDisabled = 1;
         RETURN_UP_STATE;
 
     case 16:
     {
-        u16 local1;
+        u16 icon;
 
-        local1 = GetIconSpeciesNoPersonality(sSharedMemPtr->mail->species);
+        icon = GetIconSpeciesNoPersonality(sMailRead->mail->species);
 
-        switch (sSharedMemPtr->varFB)
+        switch (sMailRead->iconType)
         {
         case 1:
-            LoadMonIconPalette(local1);
-            sSharedMemPtr->varFC = CreateMonIconNoPersonality(local1, SpriteCallbackDummy, 96, 128, 0);
+            LoadMonIconPalette(icon);
+            sMailRead->monIconSpriteId = CreateMonIconNoPersonality(icon, SpriteCallbackDummy, 96, 128, 0);
             break;
 
         case 2:
-            LoadMonIconPalette(local1);
-            sSharedMemPtr->varFC = CreateMonIconNoPersonality(local1, SpriteCallbackDummy, 40, 128, 0);
+            LoadMonIconPalette(icon);
+            sMailRead->monIconSpriteId = CreateMonIconNoPersonality(icon, SpriteCallbackDummy, 40, 128, 0);
             break;
         }
         RETURN_UP_STATE;
@@ -515,7 +515,7 @@ static u8 sub_80F8A28(void)
         REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_BG2_ON | DISPCNT_OBJ_ON;
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
         gPaletteFade.bufferTransferDisabled = 0;
-        sSharedMemPtr->callback = sub_80F8F58;
+        sMailRead->callback = CB2_WaitForPaletteExitOnKeyPress;
         return TRUE;
 
     default:
@@ -526,13 +526,13 @@ static u8 sub_80F8A28(void)
     return FALSE;
 }
 
-static void sub_80F8D50(void)
+static void CB2_InitMailRead(void)
 {
     do
     {
-        if (sub_80F8A28() == 1)
+        if (MailReadBuildGraphics() == 1)
         {
-            SetMainCallback2(sub_80F8F2C);
+            SetMainCallback2(CB2_MailRead);
             return;
         }
     } while (sub_80F9344() != 1);
@@ -553,111 +553,111 @@ static u8 *sub_80F8D7C(u8 *dest, u8 *src)
 static void BufferMailText(void)
 {
     u16 i;
-    u8 r6;
+    u8 numWords;
     u8 *ptr;
 
-    r6 = 0;
-    for (i = 0; i < sSharedMemPtr->layout->var0; i++)
+    numWords = 0;
+    for (i = 0; i < sMailRead->layout->numLines; i++)
     {
-        ConvertEasyChatWordsToString(sSharedMemPtr->words[i], &sSharedMemPtr->mail->words[r6], sSharedMemPtr->layout->var4[i].unk_0_2, 1);
-        r6 += sSharedMemPtr->layout->var4[i].unk_0_2;
+        ConvertEasyChatWordsToString(sMailRead->message[i], &sMailRead->mail->words[numWords], sMailRead->layout->lines[i].numEasyChatWords, 1);
+        numWords += sMailRead->layout->lines[i].numEasyChatWords;
     }
-    ptr = sSharedMemPtr->playerName;
-    if (sSharedMemPtr->var100 == 0)
+    ptr = sMailRead->playerName;
+    if (sMailRead->international == 0)
     {
-        ptr = sub_80F8D7C(ptr, sSharedMemPtr->mail->playerName);
+        ptr = sub_80F8D7C(ptr, sMailRead->mail->playerName);
         StringCopy(ptr, gOtherText_From);
-        sSharedMemPtr->varF9 = sSharedMemPtr->layout->var2 - StringLength(sSharedMemPtr->playerName);
+        sMailRead->varF9 = sMailRead->layout->var2 - StringLength(sMailRead->playerName);
 
     }
     else
     {
         ptr = StringCopy(ptr, gOtherText_From);
-        sub_80F8D7C(ptr, sSharedMemPtr->mail->playerName);
-        sSharedMemPtr->varF9 = sSharedMemPtr->layout->var2;
+        sub_80F8D7C(ptr, sMailRead->mail->playerName);
+        sMailRead->varF9 = sMailRead->layout->var2;
     }
 }
 
 static void PrintMailText(void)
 {
-    u16 pos;
+    u16 i;
     u8 x;
     u8 y = 0;
 
-    for (pos = 0; pos < sSharedMemPtr->layout->var0; pos++)
+    for (i = 0; i < sMailRead->layout->numLines; i++)
     {
-        if (sSharedMemPtr->words[pos][0] == 0xFF)
+        if (sMailRead->message[i][0] == 0xFF)
         {
             continue;
         }
 
-        if (sSharedMemPtr->words[pos][0] == 0x00)
+        if (sMailRead->message[i][0] == 0x00)
         {
             continue;
         }
 
-        x = sSharedMemPtr->layout->var4[pos].unk_0_4;
-        y += sSharedMemPtr->layout->var4[pos].unk_0_0;
-        Menu_PrintText(sSharedMemPtr->words[pos], sSharedMemPtr->layout->var3_4 + x, sSharedMemPtr->layout->var3_0 + y);
+        x = sMailRead->layout->lines[i].xOffset;
+        y += sMailRead->layout->lines[i].unk_0_0;
+        Menu_PrintText(sMailRead->message[i], sMailRead->layout->wordsXPos + x, sMailRead->layout->wordsYPos + y);
         y += 2;
     }
 
-    Menu_PrintText(sSharedMemPtr->playerName, sSharedMemPtr->varF9, sSharedMemPtr->layout->var1);
+    Menu_PrintText(sMailRead->playerName, sMailRead->varF9, sMailRead->layout->signatureYPos);
 }
 
-static void sub_80F8F18(void)
+static void VBlankCB_MailRead(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
 }
 
-static void sub_80F8F2C(void)
+static void CB2_MailRead(void)
 {
-    if (sSharedMemPtr->varFB != 0)
+    if (sMailRead->iconType != 0)
     {
         AnimateSprites();
         BuildOamBuffer();
     }
 
-    sSharedMemPtr->callback();
+    sMailRead->callback();
 }
 
-static void sub_80F8F58(void)
+static void CB2_WaitForPaletteExitOnKeyPress(void)
 {
     u8 local0;
 
     local0 = UpdatePaletteFade();
     if (local0 == 0)
     {
-        sSharedMemPtr->callback = sub_80F8F78;
+        sMailRead->callback = CB2_ExitOnKeyPress;
     }
 }
 
-static void sub_80F8F78(void)
+static void CB2_ExitOnKeyPress(void)
 {
     if (JOY_NEW(A_BUTTON | B_BUTTON))
     {
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        sSharedMemPtr->callback = sub_80F8FB4;
+        sMailRead->callback = CB2_ExitMailReadFreeVars;
     }
 }
 
-static void sub_80F8FB4(void)
+static void CB2_ExitMailReadFreeVars(void)
 {
     if (!UpdatePaletteFade())
     {
-        SetMainCallback2(sSharedMemPtr->exitCallback);
-        switch (sSharedMemPtr->varFB)
+        SetMainCallback2(sMailRead->exitCallback);
+        switch (sMailRead->iconType)
         {
         case 2:
         case 1:
-            FreeMonIconPalette(GetIconSpeciesNoPersonality(sSharedMemPtr->mail->species));
-            FreeAndDestroyMonIconSprite(&gSprites[sSharedMemPtr->varFC]);
+            FreeMonIconPalette(GetIconSpeciesNoPersonality(sMailRead->mail->species));
+            FreeAndDestroyMonIconSprite(&gSprites[sMailRead->monIconSpriteId]);
             break;
         }
 #if !DEBUG
-        memset(sSharedMemPtr, 0, sizeof(struct MailRead));
+        memset(sMailRead, 0, sizeof(struct MailRead));
 #endif
         ResetPaletteFade();
     }
@@ -678,9 +678,9 @@ void debug_sub_810C910(u8 taskId)
         Menu_EraseScreen();
         DestroyTask(taskId);
         if (gSaveBlock1.mail[gSpecialVar_0x8005].itemId == 0)
-            HandleReadMail(&gSaveBlock1.mail[gSpecialVar_0x8005], debug_sub_810D388, 0);
+            ReadMail(&gSaveBlock1.mail[gSpecialVar_0x8005], debug_sub_810D388, 0);
         else
-            HandleReadMail(&gSaveBlock1.mail[gSpecialVar_0x8005], debug_sub_810D388, 1);
+            ReadMail(&gSaveBlock1.mail[gSpecialVar_0x8005], debug_sub_810D388, 1);
     }
 }
 
@@ -1104,7 +1104,7 @@ void debug_sub_810D388(void)
         {
             ScanlineEffect_Stop();
             ResetPaletteFade();
-            SetVBlankCallback(sub_80F8F18);
+            SetVBlankCallback(VBlankCB_MailRead);
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
         }
         break;
@@ -1134,8 +1134,8 @@ void debug_sub_810D388(void)
         Menu_EraseScreen();
         break;
     case 5:
-        LoadPalette(gMailGraphicsTable[0].palette, 0, 32);
-        LZ77UnCompVram(gMailGraphicsTable[0].tiles, (void *)VRAM);
+        LoadPalette(sMailGraphics[0].palette, 0, 32);
+        LZ77UnCompVram(sMailGraphics[0].tiles, (void *)VRAM);
         DmaFill16(3, 1, (void *)(VRAM + 0x4000), 0x500);
         break;
     case 6:
@@ -1145,7 +1145,7 @@ void debug_sub_810D388(void)
         REG_DISPCNT = 0x0340;
         debug_sub_810D340();
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
-        SetVBlankCallback(sub_80F8F18);
+        SetVBlankCallback(VBlankCB_MailRead);
         break;
     case 7:
         if (!UpdatePaletteFade())

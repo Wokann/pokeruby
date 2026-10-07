@@ -666,7 +666,7 @@ static void sub_808A848(u8 taskId)
     {
         u8 mail = GetMonData(&gPlayerParty[GetCursorSelectionMonId(taskId)], MON_DATA_MAIL);
         DestroyTask(taskId);
-        HandleReadMail(&gSaveBlock1.mail[mail], CB2_ReturnToPartyMenuFromReadingMail, 1);
+        ReadMail(&gSaveBlock1.mail[mail], CB2_ReturnToPartyMenuFromReadingMail, 1);
     }
 }
 

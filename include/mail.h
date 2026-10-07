@@ -6,7 +6,7 @@
 #define IS_ITEM_MAIL(itemId) ((itemId) >= ITEM_ORANGE_MAIL && (itemId) <= ITEM_RETRO_MAIL)
 
 // mail.h
-void HandleReadMail(struct Mail *arg0, MainCallback arg1, bool8 arg2);
+void ReadMail(struct Mail *mail, MainCallback exitCallback, bool8 hasText);
 
 // mail_data.h
 void ClearAllMail(void);
