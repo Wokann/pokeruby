@@ -1020,4 +1020,19 @@ extern const u8 Roulette_Text_KeepPlaying[];
 extern const u8 Roulette_Text_BoardWillBeCleared[];
 extern const u8 Roulette_Text_CoinCaseIsFull[];
 
+extern const u8 gText_MoveRelearnerBattleMoves[];
+extern const u8 gText_MoveRelearnerContestMovesTitle[];
+extern const u8 gText_MoveRelearnerPower[];
+extern const u8 gText_MoveRelearnerAccuracy[];
+extern const u8 gText_MoveRelearnerAppeal[];
+extern const u8 gText_MoveRelearnerJam[];
+extern const u8 gText_TeachWhichMoveToPkmn[];
+extern const u8 gText_MoveRelearnerTeachMoveConfirm[];
+extern const u8 gText_MoveRelearnerPkmnLearnedMove[];
+extern const u8 gText_MoveRelearnerPkmnTryingToLearnMove[];
+extern const u8 gText_MoveRelearnerStopTryingToTeachMove[];
+extern const u8 gText_MoveRelearnerAndPoof[];
+extern const u8 gText_MoveRelearnerGiveUp[];
+extern const u8 gText_MoveRelearnerWhichMoveToForget[];
+
 #endif

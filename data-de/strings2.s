@@ -372,33 +372,33 @@ gOtherText_NickHatchPrompt:: @ 842CC5A
 	.string "{COLOR WHITE2}{HIGHLIGHT TRANSPARENT}{SHADOW DARK_GREY}Möchtest du dem geschlüpften\n"
 	.string "{STR_VAR_1} einen Kosenamen geben?$"
 
-OtherText_Battle::
+gText_MoveRelearnerBattleMoves::
 	.string "KAMPF$"
-OtherText_Contest::
+gText_MoveRelearnerContestMovesTitle::
 	.string "WETTB.$"
 OtherText_Type::
 	.string "TYP/$"
 OtherText_PP::
 	.string "AP/$"
-OtherText_Power::
+gText_MoveRelearnerPower::
 	.string "STÄRKE$"
-OtherText_Accuracy::
+gText_MoveRelearnerAccuracy::
 	.string "GENAU.$"
-OtherText_Appeal::
+gText_MoveRelearnerAppeal::
 	.string "AUSDRUCK$"
-OtherText_Jam::
+gText_MoveRelearnerJam::
 	.string "EINDRUCK$"
 
-gOtherText_TeachWhichMove:: @ 842CCC7
+gText_TeachWhichMoveToPkmn:: @ 842CCC7
 	.string "{STR_VAR_1} welche Attacke beibr.?$"
 
-gOtherText_TeachSpecificMove:: @ 842CCDF
+gText_MoveRelearnerTeachMoveConfirm:: @ 842CCDF
 	.string "{STR_VAR_2} beibringen?$"
 
-gOtherText_PokeLearnedMove:: @ 842CCE9
+gText_MoveRelearnerPkmnLearnedMove:: @ 842CCE9
 	.string "{STR_VAR_1} erlernte {STR_VAR_2}.$"
 
-gOtherText_DeleteOlderMove:: @ 842CCF8
+gText_MoveRelearnerPkmnTryingToLearnMove:: @ 842CCF8
 	.string "{STR_VAR_1} versucht,\n"
 	.string "{STR_VAR_2} zu erlernen.\p"
 	.string "Aber {STR_VAR_1} kann nicht mehr\n"
@@ -406,10 +406,10 @@ gOtherText_DeleteOlderMove:: @ 842CCF8
 	.string "Soll eine Attacke zu Gunsten von\n"
 	.string "{STR_VAR_2} vergessen werden?$"
 
-gOtherText_StopLearningMove:: @ 842CD65
+gText_MoveRelearnerStopTryingToTeachMove:: @ 842CD65
 	.string "{STR_VAR_2} nicht erlernen?$"
 
-gOtherText_ForgotMove123:: @ 842CD77
+gText_MoveRelearnerAndPoof:: @ 842CD77
 	.string "{PAUSE 32}1, {PAUSE 15}2 {PAUSE 15}...{PAUSE 15}...{PAUSE 15}...{PAUSE 15} {PLAY_SE 0x38 0x00} Schwupp!\p$"
 
 deuOtherText_ForgotAndLearned:: @ 843912f
@@ -421,11 +421,11 @@ gOtherText_ForgotOrDidNotLearnMove:: @ 842CDA3
 	.string "{STR_VAR_1} hat {STR_VAR_2}\n"
 	.string "nicht erlernt.$"
 
-gOtherText_GiveUpTeachingMove:: @ 842CDDC
+gText_MoveRelearnerGiveUp:: @ 842CDDC
 	.string "Soll {STR_VAR_1} keine neue Attacke\n"
 	.string "erlernen?$"
 
-gOtherText_WhichMoveToForget:: @ 842CE06
+gText_MoveRelearnerWhichMoveToForget:: @ 842CE06
 	.string "Welche Attacke soll vergessen\n"
 	.string "werden?\p"
 	.string "$"

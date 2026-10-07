@@ -345,49 +345,49 @@ gOtherText_HatchedFromEgg:: @ 842CC38
 gOtherText_NickHatchPrompt:: @ 842CC5A
 	.string "{COLOR WHITE2}{HIGHLIGHT TRANSPARENT}{SHADOW DARK_GREY}Would you like to nickname the newly\nhatched {STR_VAR_1}?$"
 
-OtherText_Battle::
+gText_MoveRelearnerBattleMoves::
 	.string "BATTLE$"
-OtherText_Contest::
+gText_MoveRelearnerContestMovesTitle::
 	.string "CONTEST$"
 OtherText_Type::
 	.string "TYPE/$"
 OtherText_PP::
 	.string "PP/$"
-OtherText_Power::
+gText_MoveRelearnerPower::
 	.string "POWER$"
-OtherText_Accuracy::
+gText_MoveRelearnerAccuracy::
 	.string "ACCURACY$"
-OtherText_Appeal::
+gText_MoveRelearnerAppeal::
 	.string "APPEAL$"
-OtherText_Jam::
+gText_MoveRelearnerJam::
 	.string "JAM$"
 
-gOtherText_TeachWhichMove:: @ 842CCC7
+gText_TeachWhichMoveToPkmn:: @ 842CCC7
 	.string "Teach which move to {STR_VAR_1}?$"
 
-gOtherText_TeachSpecificMove:: @ 842CCDF
+gText_MoveRelearnerTeachMoveConfirm:: @ 842CCDF
 	.string "Teach {STR_VAR_2}?$"
 
-gOtherText_PokeLearnedMove:: @ 842CCE9
+gText_MoveRelearnerPkmnLearnedMove:: @ 842CCE9
 	.string "{STR_VAR_1} learned {STR_VAR_2}.$"
 
-gOtherText_DeleteOlderMove:: @ 842CCF8
+gText_MoveRelearnerPkmnTryingToLearnMove:: @ 842CCF8
 	.string "{STR_VAR_1} is trying to learn\n{STR_VAR_2}.\pBut {STR_VAR_1} can't learn more\nthan four moves.\pDelete an older move to make\nroom for {STR_VAR_2}?$"
 
-gOtherText_StopLearningMove:: @ 842CD65
+gText_MoveRelearnerStopTryingToTeachMove:: @ 842CD65
 	.string "Stop learning {STR_VAR_2}?$"
 
-gOtherText_ForgotMove123:: @ 842CD77
+gText_MoveRelearnerAndPoof:: @ 842CD77
 	.string "{PAUSE 32}1, {PAUSE 15}2 {PAUSE 15}...{PAUSE 15}...{PAUSE 15}...{PAUSE 15} {PLAY_SE 0x0038}Poof!\p$"
 
 gOtherText_ForgotOrDidNotLearnMove:: @ 842CDA3
 	.string "{STR_VAR_1} forgot {STR_VAR_3}.\pAnd...\p{STR_VAR_1} learned {STR_VAR_2}.$"
 	.string "{STR_VAR_1} did not learn\n{STR_VAR_2}.$"
 
-gOtherText_GiveUpTeachingMove:: @ 842CDDC
+gText_MoveRelearnerGiveUp:: @ 842CDDC
 	.string "Give up trying to teach a new move\nto {STR_VAR_1}?$"
 
-gOtherText_WhichMoveToForget:: @ 842CE06
+gText_MoveRelearnerWhichMoveToForget:: @ 842CE06
 	.string "Which move should be forgotten?\p$"
 
 gSystemText_ClearAllSaveDataPrompt:: @ 842CE27

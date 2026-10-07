@@ -15,7 +15,7 @@
 #include "menu.h"
 #include "menu_helpers.h"
 #include "mon_markings.h"
-#include "move_tutor_menu.h"
+#include "move_relearner.h"
 #include "overworld.h"
 #include "palette.h"
 #include "party_menu.h"

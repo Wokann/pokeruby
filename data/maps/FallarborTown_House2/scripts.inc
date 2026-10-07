@@ -37,7 +37,7 @@ FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon:: @ 8153CE4
 
 FallarborTown_MoveRelearnersHouse_EventScript_ChooseMove:: @ 8153D1A
 	msgbox FallarborTown_MoveRelearnersHouse_Text_TeachWhichMove, MSGBOX_DEFAULT
-	special DisplayMoveTutorMenu
+	special TeachMoveRelearnerMove
 	waitstate
 	compare VAR_0x8004, 0
 	goto_if_eq FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon

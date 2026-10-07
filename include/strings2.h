@@ -136,28 +136,14 @@ extern const u8 gEggNickname[];
 extern const u8 gOtherText_HatchedFromEgg[];
 extern const u8 gOtherText_NickHatchPrompt[];
 
-// move_tutor_menu
-extern const u8 OtherText_Battle[];
-extern const u8 OtherText_Contest[];
+// move_relearner
 
 // ???
 extern const u8 OtherText_Type[];
 extern const u8 OtherText_PP[];
 
-// move_tutor_menu
-extern const u8 OtherText_Power[];
-extern const u8 OtherText_Accuracy[];
-extern const u8 OtherText_Appeal[];
-extern const u8 OtherText_Jam[];
-extern const u8 gOtherText_TeachWhichMove[];
-extern const u8 gOtherText_TeachSpecificMove[];
-extern const u8 gOtherText_PokeLearnedMove[];
-extern const u8 gOtherText_DeleteOlderMove[];
-extern const u8 gOtherText_StopLearningMove[];
-extern const u8 gOtherText_ForgotMove123[];
+// move_relearner
 extern const u8 gOtherText_ForgotOrDidNotLearnMove[];
-extern const u8 gOtherText_GiveUpTeachingMove[];
-extern const u8 gOtherText_WhichMoveToForget[];
 
 // clear_save_data_menu
 extern const u8 gSystemText_ClearAllSaveDataPrompt[];
