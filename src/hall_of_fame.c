@@ -25,7 +25,6 @@
 
 static EWRAM_DATA u32 sHofFadePalettes = 0;
 
-extern bool8 gHasHallOfFameRecords; // has hall of fame records
 extern void (*gGameContinueCallback)(void);
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 extern u8 gReservedSpritePaletteCount;

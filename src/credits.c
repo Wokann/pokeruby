@@ -1,4 +1,5 @@
 #include "global.h"
+#include "credits.h"
 #include "data.h"
 #include "decompress.h"
 #include "event_data.h"
@@ -171,7 +172,7 @@ extern s16 gIntroCredits_MovingSceneryState;
 
 static EWRAM_DATA s16 gUnknown_02039320 = 0;
 static EWRAM_DATA u16 sSavedTaskId = 0; // TASK A
-EWRAM_DATA u8 gHasHallOfFameRecords = 0;
+EWRAM_DATA bool8 gHasHallOfFameRecords = 0;
 static EWRAM_DATA u8 sUsedSpeedUp = 0;
 
 extern u8 gReservedSpritePaletteCount;

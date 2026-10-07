@@ -1,11 +1,8 @@
-#ifndef GUARD_credits_H
-#define GUARD_credits_H
+#ifndef GUARD_CREDITS_H
+#define GUARD_CREDITS_H
 
-// Exported type declarations
+extern bool8 gHasHallOfFameRecords;
 
-// Exported RAM declarations
-
-// Exported ROM declarations
 void CB2_StartCreditsSequence(void);
 
-#endif //GUARD_credits_H
+#endif // GUARD_CREDITS_H

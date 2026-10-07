@@ -625,6 +625,6 @@ void CB2_SetUpReshowBattleScreenAfterMenu2(void);
 void BattleGfxSfxDummy2(u16);
 void BattleGfxSfxDummy3(int);
 
-void GameClear(void);
+int GameClear(void);
 
 #endif // GUARD_BATTLE_H
