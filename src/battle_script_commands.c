@@ -2,6 +2,7 @@
 #include "pokedex.h"
 #include "reshow_battle_screen.h"
 #include "battle.h"
+#include "battle_ai_script_commands.h"
 #include "battle_main.h"
 #include "battle_gfx_sfx_util.h"
 #include "battle_anim.h"
@@ -126,8 +127,6 @@ extern u8 BattleScript_MoveEffectRecoil33[];
 u8 AtkCanceller_UnableToUseMove(void);
 void BattleScriptPush(const u8* BS_ptr);
 void BattleScriptPushCursor(void);
-void RecordAbilityBattle(u8 bank, u8 ability);
-void RecordItemEffectBattle(u8 bank, u8 holdEffect);
 static bool8 IsTwoTurnsMove(u16 move);
 static void TrySetDestinyBondToHappen(void);
 static void CheckWonderGuardAndLevitate(void);
@@ -7882,7 +7881,7 @@ static void Cmd_copymovepermanently(void)
 static bool8 IsTwoTurnsMove(u16 move)
 {
     u8 effect = gBattleMoves[move].effect;
-    if (effect == EFFECT_SKULL_BASH || effect == EFFECT_RAZOR_WIND || effect == EFFECT_SKY_ATTACK || effect == EFFECT_SOLARBEAM || effect == EFFECT_FLY || effect == EFFECT_BIDE)
+    if (effect == EFFECT_SKULL_BASH || effect == EFFECT_RAZOR_WIND || effect == EFFECT_SKY_ATTACK || effect == EFFECT_SOLAR_BEAM || effect == EFFECT_FLY || effect == EFFECT_BIDE)
         return 1;
     else
         return 0;
@@ -7900,10 +7899,10 @@ static u8 AttacksThisTurn(u8 bank, u16 move) //Note: returns 1 if it's a chargin
 {
     //first argument is unused
     u8 effect;
-    if (gBattleMoves[move].effect == EFFECT_SOLARBEAM && (gBattleWeather & B_WEATHER_SUN))
+    if (gBattleMoves[move].effect == EFFECT_SOLAR_BEAM && (gBattleWeather & B_WEATHER_SUN))
         return 2;
     effect = gBattleMoves[move].effect;
-    if (effect == EFFECT_SKULL_BASH || effect == EFFECT_RAZOR_WIND || effect == EFFECT_SKY_ATTACK || effect == EFFECT_SOLARBEAM || effect == EFFECT_FLY || effect == EFFECT_BIDE)
+    if (effect == EFFECT_SKULL_BASH || effect == EFFECT_RAZOR_WIND || effect == EFFECT_SKY_ATTACK || effect == EFFECT_SOLAR_BEAM || effect == EFFECT_FLY || effect == EFFECT_BIDE)
     {
         if ((gHitMarker & HITMARKER_CHARGING))
             return 1;

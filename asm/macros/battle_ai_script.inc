@@ -98,14 +98,14 @@
 	.4byte \address
 	.endm
 
-	.macro if_status4 target, status, address
+	.macro if_side_affecting target, status, address
 	.byte 0x0f
 	.byte \target
 	.4byte \status
 	.4byte \address
 	.endm
 
-	.macro if_not_status4 target, status, address
+	.macro if_not_side_affecting target, status, address
 	.byte 0x10
 	.byte \target
 	.4byte \status
@@ -136,25 +136,25 @@
 	.4byte \address
 	.endm
 
-	.macro if_less_than_32 value, address
+	.macro if_less_than_ptr value, address
 	.byte 0x15
 	.4byte \value
 	.4byte \address
 	.endm
 
-	.macro if_more_than_32 value, address
+	.macro if_more_than_ptr value, address
 	.byte 0x16
 	.4byte \value
 	.4byte \address
 	.endm
 
-	.macro if_equal_32 value, address
+	.macro if_equal_ptr value, address
 	.byte 0x17
 	.4byte \value
 	.4byte \address
 	.endm
 
-	.macro if_not_equal_32 value, address
+	.macro if_not_equal_ptr value, address
 	.byte 0x18
 	.4byte \value
 	.4byte \address
@@ -184,24 +184,24 @@
 	.4byte \address
 	.endm
 
-	.macro if_in_words list, address
+	.macro if_in_hwords list, address
 	.byte 0x1d
 	.4byte \list
 	.4byte \address
 	.endm
 
-	.macro if_not_in_words list, address
+	.macro if_not_in_hwords list, address
 	.byte 0x1e
 	.4byte \list
 	.4byte \address
 	.endm
 
-	.macro if_user_can_damage address
+	.macro if_user_has_attacking_move address
 	.byte 0x1f
 	.4byte \address
 	.endm
 
-	.macro if_user_cant_damage address
+	.macro if_user_has_no_attacking_moves address
 	.byte 0x20
 	.4byte \address
 	.endm
@@ -216,55 +216,55 @@
 	.endm
 
 	@ unused
-	.macro get_move_power
+	.macro get_considered_move_power
 	.byte 0x23
 	.endm
 
-	.macro is_most_powerful_move
+	.macro get_how_powerful_move_is
 	.byte 0x24
 	.endm
 
-	.macro get_move target
+	.macro get_last_used_bank_move target
 	.byte 0x25
 	.byte \target
 	.endm
 
-	.macro if_arg_equal type, address
+	.macro if_equal_ type, address
 	.byte 0x26
 	.byte \type
 	.4byte \address
 	.endm
 
 	@ unused
-	.macro if_arg_not_equal type, address
+	.macro if_not_equal_ type, address
 	.byte 0x27
 	.byte \type
 	.4byte \address
 	.endm
 
-	.macro if_would_go_first target, address
+	.macro if_user_goes target, address
 	.byte 0x28
 	.byte \target
 	.4byte \address
 	.endm
 
-	.macro if_would_not_go_first target, address
+	.macro if_user_doesnt_go target, address
 	.byte 0x29
 	.byte \target
 	.4byte \address
 	.endm
 
 	@ nullsub
-	.macro ai_2a
+	.macro nop_2A
 	.byte 0x2a
 	.endm
 
 	@ nullsub
-	.macro ai_2b
+	.macro nop_2B
 	.byte 0x2b
 	.endm
 
-	.macro count_alive_pokemon target
+	.macro count_usable_party_mons target
 	.byte 0x2c
 	.byte \target
 	.endm
@@ -274,7 +274,7 @@
 	.byte 0x2d
 	.endm
 
-	.macro get_effect
+	.macro get_considered_move_effect
 	.byte 0x2e
 	.endm
 
@@ -284,23 +284,23 @@
 	.endm
 
 	@ unused
-	.macro get_highest_possible_damage
+	.macro get_highest_type_effectiveness
 	.byte 0x30
 	.endm
 
-	.macro if_damage_bonus value, address
+	.macro if_type_effectiveness value, address
 	.byte 0x31
 	.byte \value
 	.4byte \address
 	.endm
 
 	@ nullsub
-	.macro ai_32
+	.macro nop_32
 	.byte 0x32
 	.endm
 
 	@ nullsub
-	.macro ai_33
+	.macro nop_33
 	.byte 0x33
 	.endm
 
@@ -407,14 +407,14 @@
 	.4byte \address
 	.endm
 
-	.macro if_last_move_did_damage target, byte, address
+	.macro if_any_move_disabled_or_encored target, byte, address
 	.byte 0x43
 	.byte \target
 	.byte \byte
 	.4byte \address
 	.endm
 
-	.macro if_encored target, address
+	.macro if_curr_move_disabled_or_encored target, address
 	.byte 0x44
 	.byte \target
 	.4byte \address
@@ -424,7 +424,7 @@
 	.byte 0x45
 	.endm
 
-	.macro if_random_100 address
+	.macro if_random_safari_flee address
 	.byte 0x46
 	.4byte \address
 	.endm
@@ -443,7 +443,7 @@
 	.byte \target
 	.endm
 
-	.macro is_first_turn target
+	.macro is_first_turn_for target
 	.byte 0x4a
 	.byte \target
 	.endm
@@ -457,7 +457,7 @@
 	.byte 0x4c
 	.endm
 
-	.macro get_item target
+	.macro get_used_held_item target
 	.byte 0x4d
 	.byte \target
 	.endm
@@ -480,32 +480,32 @@
 	.endm
 
 	@ nullsub
-	.macro ai_52
+	.macro nop_52
 	.byte 0x52
 	.endm
 
 	@ nullsub
-	.macro ai_53
+	.macro nop_53
 	.byte 0x53
 	.endm
 
 	@ nullsub
-	.macro ai_54
+	.macro nop_54
 	.byte 0x54
 	.endm
 
 	@ nullsub
-	.macro ai_55
+	.macro nop_55
 	.byte 0x55
 	.endm
 
 	@ nullsub
-	.macro ai_56
+	.macro nop_56
 	.byte 0x56
 	.endm
 
 	@ nullsub
-	.macro ai_57
+	.macro nop_57
 	.byte 0x57
 	.endm
 
@@ -515,7 +515,7 @@
 	.4byte \address
 	.endm
 
-	.macro jump address
+	.macro goto address
 	.byte 0x59
 	.4byte \address
 	.endm
@@ -543,12 +543,12 @@
 	.endm
 
 	@ unused
-	.macro if_taunted address
+	.macro if_target_taunted address
 	.byte 0x5c
 	.4byte \address
 	.endm
 
-	.macro if_not_taunted address
+	.macro if_target_not_taunted address
 	.byte 0x5d
 	.4byte \address
 	.endm

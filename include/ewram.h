@@ -36,7 +36,7 @@ extern u8 gSharedMem[];
 
 // gBattleResources
 #define AI_THINKING_STRUCT                ((struct AI_ThinkingStruct *)(gSharedMem + 0x16800))
-#define AI_BATTLE_HISTORY                 ((struct BattleHistory *) (gSharedMem + 0x16A00))
+#define BATTLE_HISTORY                    ((struct BattleHistory *) (gSharedMem + 0x16A00))
 #define AI_STACK                          ((struct AI_Stack *)         (gSharedMem + 0x16C00))
 #define eSecretBaseRecord                 ((struct SecretBase *)(gSharedMem + 0x17000))
 #define eBattleFlagsArr                   (*(struct ResourceFlags *)(gSharedMem + 0x17100))

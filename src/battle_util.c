@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_ai_script_commands.h"
 #include "battle_util.h"
 #include "battle_controllers.h"
 #include "battle_message.h"
@@ -81,8 +82,6 @@ bool8 sub_8018018(u8 bank, u8, u8);
 u8 GetMoveTarget(u16 move, u8 useMoveTarget);
 u8 GetBattlerMultiplayerId(u8 bank);
 u16 GetLinkTrainerFlankId(u8 a);
-void RecordAbilityBattle(u8 bank, u8 ability);
-void RecordItemEffectBattle(u8 bank, u8 holdEffect);
 
 extern u8 BattleScript_MoveSelectionDisabledMove[];
 extern u8 BattleScript_MoveSelectionTormented[];

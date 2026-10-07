@@ -1,0 +1,20 @@
+#ifndef GUARD_CONSTANTS_BATTLE_AI_H
+#define GUARD_CONSTANTS_BATTLE_AI_H
+
+// battlers
+enum
+{
+    AI_TARGET,
+    AI_USER
+};
+
+// ai weather
+enum
+{
+    AI_WEATHER_SUN,
+    AI_WEATHER_RAIN,
+    AI_WEATHER_SANDSTORM,
+    AI_WEATHER_HAIL,
+};
+
+#endif // GUARD_CONSTANTS_BATTLE_AI_H
