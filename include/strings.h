@@ -275,6 +275,14 @@ extern const u8 gText_FirmSlash[];
 
 extern const u8 gText_Var1DotVar2[];
 
+// mystery event menu text
+extern const u8 gText_EventSafelyLoaded[];
+extern const u8 gText_LoadErrorEndingSession[];
+extern const u8 gText_PressAToLoadEvent[];
+extern const u8 gText_LoadingEvent[];
+extern const u8 gText_DontRemoveCableTurnOff[];
+extern const u8 gText_LinkStandby2[];
+
 extern const u8 gBerryFirmnessString_VerySoft[];
 extern const u8 gBerryFirmnessString_Soft[];
 extern const u8 gBerryFirmnessString_Hard[];

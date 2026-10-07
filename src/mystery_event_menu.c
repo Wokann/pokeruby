@@ -10,14 +10,14 @@
 #include "sound.h"
 #include "sprite.h"
 #include "string_util.h"
-#include "strings2.h"
+#include "strings.h"
 #include "task.h"
 #include "text.h"
 #include "title_screen.h"
 #include "ewram.h"
 #include "debug.h"
 
-static EWRAM_DATA u8 gUnknown_02039338 = 0;
+static EWRAM_DATA u8 sUnused = 0;
 
 static void VBlankCB(void);
 static bool8 CheckLanguageMatch(void);
@@ -68,7 +68,7 @@ static bool8 GetEventLoadMessage(u8 *dest, u32 status)
 
     if (status == 0)
     {
-        StringCopy(dest, gSystemText_EventLoadSuccess);
+        StringCopy(dest, gText_EventSafelyLoaded);
         retVal = 0;
     }
 
@@ -76,14 +76,14 @@ static bool8 GetEventLoadMessage(u8 *dest, u32 status)
         retVal = 0;
 
     if (status == 1)
-        StringCopy(dest, gSystemText_LoadingError);
+        StringCopy(dest, gText_LoadErrorEndingSession);
 
     return retVal;
 }
 
 static void CB2_MysteryEventMenu(void)
 {
-    u16 unkVal;
+    u16 status;
 
     switch (gMain.state)
     {
@@ -95,7 +95,7 @@ static void CB2_MysteryEventMenu(void)
     case 1:
         if (gPaletteFade.active)
             break;
-        MenuPrintMessageDefaultCoords(gSystemText_LinkStandby);
+        MenuPrintMessageDefaultCoords(gText_LinkStandby2);
         gMain.state++;
         break;
     case 2:
@@ -110,7 +110,7 @@ static void CB2_MysteryEventMenu(void)
         if ((gLinkStatus & 0x20) && (gLinkStatus & 0x1C) > 4)
         {
             PlaySE(SE_PIN);
-            MenuPrintMessageDefaultCoords(gSystemText_LoadEventPressA);
+            MenuPrintMessageDefaultCoords(gText_PressAToLoadEvent);
             gMain.state++;
         }
         if (JOY_NEW(B_BUTTON))
@@ -138,7 +138,7 @@ static void CB2_MysteryEventMenu(void)
             PlaySE(SE_SELECT);
             CheckShouldAdvanceLinkState();
             Menu_DrawStdWindowFrame(6, 5, 23, 8);
-            Menu_PrintText(gSystemText_LoadingEvent, 7, 6);
+            Menu_PrintText(gText_LoadingEvent, 7, 6);
             gMain.state++;
         }
         else if (JOY_NEW(B_BUTTON))
@@ -165,7 +165,7 @@ static void CB2_MysteryEventMenu(void)
             }
             else if (CheckLanguageMatch())
             {
-                MenuPrintMessageDefaultCoords(gSystemText_DontCutLink);
+                MenuPrintMessageDefaultCoords(gText_DontRemoveCableTurnOff);
                 gMain.state++;
                 break;
             }
@@ -198,7 +198,7 @@ static void CB2_MysteryEventMenu(void)
             PlaySE(SE_SELECT);
             CheckShouldAdvanceLinkState();
             Menu_DrawStdWindowFrame(6, 5, 23, 8);
-            Menu_PrintText(gSystemText_LoadingEvent, 7, 6);
+            Menu_PrintText(gText_LoadingEvent, 7, 6);
             gMain.state++;
         }
         else if (JOY_NEW(B_BUTTON))
@@ -235,7 +235,7 @@ static void CB2_MysteryEventMenu(void)
                 register u8 *ptr2 asm("r1");
                 register int offset3 asm("r0");
                 register int dummy asm("r2");
-                MenuPrintMessageDefaultCoords(gSystemText_DontCutLink);
+                MenuPrintMessageDefaultCoords(gText_DontRemoveCableTurnOff);
                 ptr2 = (u8 *)&gMain;
                 offset3 = offsetof(struct Main, state);
                 if (dummy)
@@ -288,9 +288,9 @@ static void CB2_MysteryEventMenu(void)
     case 11:
         if (gReceivedRemoteLinkPlayers)
             break;
-        unkVal = RunMysteryEventScript(gSharedMem);
+        status = RunMysteryEventScript(gSharedMem);
         CpuFill32(0, gSharedMem, 0x7D4);
-        if (!GetEventLoadMessage(gStringVar4, unkVal))
+        if (!GetEventLoadMessage(gStringVar4, status))
             TrySavingData(SAVE_NORMAL);
         gMain.state++;
         break;
@@ -303,7 +303,7 @@ static void CB2_MysteryEventMenu(void)
         if (Menu_UpdateWindowText())
         {
             gMain.state++;
-            gUnknown_02039338 = 0;
+            sUnused = 0;
         }
         break;
     case 14:

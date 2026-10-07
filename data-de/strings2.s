@@ -114,25 +114,25 @@ gText_SafariBallStock:: @ 842C4A9
 	.string "SAFARIBÄLLE\n"
 	.string "Vorrat: {STR_VAR_1}$"
 
-gSystemText_LinkStandby:: @ 842C4C0
+gText_LinkStandby2:: @ 842C4C0
 	.string "Verbindung...\n"
 	.string "... ... B-Knopf: Abbrechen$"
 
-gSystemText_LoadEventPressA:: @ 842C4E9
+gText_PressAToLoadEvent:: @ 842C4E9
 	.string "Lade Geschehen mit A-Knopf.\n"
 	.string "... ... B-Knopf: Abbrechen$"
 
-gSystemText_LoadingEvent:: @ 842C524
+gText_LoadingEvent:: @ 842C524
 	.string "Geschehen wird geladen.$"
 
-gSystemText_DontCutLink:: @ 842C535
+gText_DontRemoveCableTurnOff:: @ 842C535
 	.string "Verbindungskabel nicht entfernen!\n"
 	.string "Die Geräte nicht ausschalten!$"
 
-gSystemText_EventLoadSuccess:: @ 842C571
+gText_EventSafelyLoaded:: @ 842C571
 	.string "Geschehen ist erfolgreich geladen.$$"
 
-gSystemText_LoadingError:: @ 842C58F
+gText_LoadErrorEndingSession:: @ 842C58F
 	.string "Fehler beim Laden!\n"
 	.string "Vorgang wird abgebrochen.$$$$$$$$"
 

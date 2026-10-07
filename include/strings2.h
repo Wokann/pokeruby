@@ -34,14 +34,6 @@ extern const u8 gText_ButtonTypeNormal[];
 extern const u8 gText_ButtonTypeLR[];
 extern const u8 gText_ButtonTypeLEqualsA[];
 
-// mystery_event_menu
-extern const u8 gSystemText_LinkStandby[];
-extern const u8 gSystemText_LoadEventPressA[];
-extern const u8 gSystemText_LoadingEvent[];
-extern const u8 gSystemText_DontCutLink[];
-extern const u8 gSystemText_EventLoadSuccess[];
-extern const u8 gSystemText_LoadingError[];
-
 // field_player_avatar
 extern const u8 gText_OhABite[];
 extern const u8 gText_PokemonOnHook[];

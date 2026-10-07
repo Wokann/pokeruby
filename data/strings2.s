@@ -107,22 +107,22 @@ gText_MenuRetire:: @ safari zone?
 gText_SafariBallStock:: @ 842C4A9
 	.string "SAFARI BALLS\nStock: {STR_VAR_1}$"
 
-gSystemText_LinkStandby:: @ 842C4C0
+gText_LinkStandby2:: @ 842C4C0
 	.string "Link standby...\n... ... B Button: Cancel$"
 
-gSystemText_LoadEventPressA:: @ 842C4E9
+gText_PressAToLoadEvent:: @ 842C4E9
 	.string "Press the A Button to load event.\n... ... B Button: Cancel$"
 
-gSystemText_LoadingEvent:: @ 842C524
+gText_LoadingEvent:: @ 842C524
 	.string "Loading event...$"
 
-gSystemText_DontCutLink:: @ 842C535
+gText_DontRemoveCableTurnOff:: @ 842C535
 	.string "Don't remove the Game Link cable.\nDon't turn off the power.$"
 
-gSystemText_EventLoadSuccess:: @ 842C571
+gText_EventSafelyLoaded:: @ 842C571
 	.string "The event was safely loaded.$$"
 
-gSystemText_LoadingError:: @ 842C58F
+gText_LoadErrorEndingSession:: @ 842C58F
 	.string "Loading error.\nEnding session.$$$$$$$$"
 
 gText_Hoenn:: @ 842C5B5
