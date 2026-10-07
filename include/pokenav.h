@@ -12,23 +12,23 @@ struct TrainersEyeStruct {
     /*0x5*/ u8 rematchNo;
 };
 
-struct UnkPokenavStruct_Sub1 {
-    /*0x00*/ void (*unk0)(void);
-    /*0x04*/ MainCallback callback;
+struct UsePokeblockSession {
+    /*0x00*/ void (*callback)(void);
+    /*0x04*/ MainCallback exitCallback;
     /*0x08*/ struct Pokeblock *pokeblock;
-    /*0x0C*/ struct Pokemon *pokemon;
+    /*0x0C*/ struct Pokemon *mon;
     /*0x10*/ u8 stringBuffer[0x40];
-    /*0x50*/ u8 unk50;
-    /*0x51*/ u8 unk51;
-    /*0x52*/ u8 unk52;
-    /*0x53*/ u8 unk53;
-    /*0x54*/ u8 unk54;
+    /*0x50*/ u8 mainState;
+    /*0x51*/ u8 unused1;
+    /*0x52*/ u8 timer;
+    /*0x53*/ u8 condition;
+    /*0x54*/ u8 numEnhancements;
     /*0x55*/ u8 unk55;
-    /*0x56*/ u8 unk56;
-    /*0x57*/ u8 unk57[5];
-    /*0x5c*/ u8 unk5c[5];
-    /*0x61*/ u8 unk61[5];
-    /*0x66*/ s16 unk66[5];
+    /*0x56*/ u8 monInTopHalf;
+    /*0x57*/ u8 conditionsBeforeBlock[5];
+    /*0x5c*/ u8 conditionsAfterBlock[5];
+    /*0x61*/ u8 enhancements[5];
+    /*0x66*/ s16 pokeblockStatBoosts[5];
 };
 
 struct UnkPokenavStruct_Sub3 {
@@ -216,7 +216,7 @@ struct UnkPokenavStruct {
     /*0xD15F*/ u8 unkD15F;
     /*0xD160*/ u16 unkD160;
     /*0xD162*/ u8 unkD162;
-    /*0xD164*/ struct UnkPokenavStruct_Sub1 unkD164;
+    /*0xD164*/ struct UsePokeblockSession info;
     /*0xD1D4*/ u8 fillerD1D6[0x2];
     /*0xD1D6*/ u16 unkD1D6[3];
     /*0xD1DC*/ u16 unkD1DC;

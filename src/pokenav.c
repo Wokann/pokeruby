@@ -15,7 +15,7 @@
 #include "strings.h"
 #include "string_util.h"
 #include "event_data.h"
-#include "use_pokeblock.h"
+#include "pokeblock.h"
 #include "overworld.h"
 #include "pokemon_summary_screen.h"
 #include "link.h"
@@ -1790,7 +1790,7 @@ void sub_80F1934(void)
     u8 *buffer = gPokenavStructPtr->unk8788;
     if (gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].unk3_14)
     {
-        u8 nature = GetNature(&gPlayerParty[sub_8137124(gPokenavStructPtr->unk87DC)]);
+        u8 nature = GetNature(&gPlayerParty[GetPartyIdFromSelectionId_(gPokenavStructPtr->unk87DC)]);
         buffer = StringCopy(buffer, gOtherText_Nature2);
         AlignStringInMenuWindow(buffer, gNatureNamePointers[nature], 87, 0);
     }

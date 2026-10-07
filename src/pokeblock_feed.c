@@ -23,8 +23,6 @@
 #include "ewram.h"
 
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
-extern u8 gPokeblockMonID;
-extern s16 gPokeblockGain;
 
 extern const u8 gPokeblockRed_Pal[];
 extern const u8 gPokeblockBlue_Pal[];
@@ -542,7 +540,7 @@ static bool8 TransitionToPokeblockFeedScene(void)
         }
         break;
     case 7:
-        if (sub_8147B20(&gPlayerParty[gPokeblockMonID]))
+        if (sub_8147B20(&gPlayerParty[gPokeblockMonId]))
         {
             gMain.state++;
         }
@@ -552,7 +550,7 @@ static bool8 TransitionToPokeblockFeedScene(void)
         gMain.state++;
         break;
     case 9:
-        ePokeblockMonSpriteId = PokeblockFeed_CreatePokeSprite(&gPlayerParty[gPokeblockMonID]);
+        ePokeblockMonSpriteId = PokeblockFeed_CreatePokeSprite(&gPlayerParty[gPokeblockMonId]);
         gMain.state++;
         break;
     case 10:
@@ -718,7 +716,7 @@ static void Task_WaitForAtePokeblockText(u8 taskID)
 
 static void Task_PrintAtePokeblockText(u8 taskID)
 {
-    struct Pokemon* mon = &gPlayerParty[gPokeblockMonID];
+    struct Pokemon* mon = &gPlayerParty[gPokeblockMonId];
     struct Pokeblock* pokeblock = &gSaveBlock1.pokeblocks[gSpecialVar_ItemId];
 
     gPokeblockGain = PokeblockGetGain(GetNature(mon), pokeblock);

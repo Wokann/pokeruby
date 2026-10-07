@@ -919,17 +919,17 @@ extern const u8 GiddyText_SecretBasesAreSoWonderful[];
 extern const u8 OtherText_PokeLeague[];
 extern const u8 OtherText_PokeCenter[];
 
-extern const u8 gOtherText_GetsAPokeBlock[];
+extern const u8 gText_GetsAPokeBlockQuestion[];
 
-extern const u8 OtherText_Coolness[];
-extern const u8 OtherText_Beauty[];
-extern const u8 OtherText_Cuteness[];
-extern const u8 OtherText_Smartness[];
-extern const u8 OtherText_Toughness[];
+extern const u8 gText_Coolness[];
+extern const u8 gText_Beauty3[];
+extern const u8 gText_Cuteness[];
+extern const u8 gText_Smartness[];
+extern const u8 gText_Toughness[];
 
-extern const u8 gOtherText_WasEnhanced[];
-extern const u8 gOtherText_NothingChanged[];
-extern const u8 gOtherText_WontEat[];
+extern const u8 gText_WasEnhanced[];
+extern const u8 gText_NothingChanged[];
+extern const u8 gText_WontEatAnymore[];
 
 extern const u8 gSystemText_SaveFailedBackupCheck[];
 extern const u8 gSystemText_BackupDamagedGameContinue[];

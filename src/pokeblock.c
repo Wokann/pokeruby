@@ -163,7 +163,7 @@ static const u8 sActionsOnPokeblockFeeder[] = {4, 2};
 
 static const struct YesNoFuncTable sTossYesNoFuncTable = {sub_810C610, sub_810C668};
 
-static const u8 sContestStatsMonData[] = {0x16, 0x17, 0x18, 0x21, 0x2f};
+static const u8 sConditionToMonData[] = {0x16, 0x17, 0x18, 0x21, 0x2f};
 
 static const struct OamData sOamData_PokeblockCase =
 {
@@ -871,7 +871,7 @@ static void sub_810C4C4(u8 taskId)
     if (!gPaletteFade.active)
     {
         sub_810C2B0();
-        sub_8136130(&gSaveBlock1.pokeblocks[gSpecialVar_ItemId], sub_810B96C);
+        ChooseMonToGivePokeblock(&gSaveBlock1.pokeblocks[gSpecialVar_ItemId], sub_810B96C);
         DestroyTask(taskId);
     }
 }

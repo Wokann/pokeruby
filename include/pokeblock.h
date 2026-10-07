@@ -30,6 +30,9 @@ enum
     PBLOCK_FEEL,
 };
 
+extern u8 gPokeblockMonId;
+extern s16 gPokeblockGain;
+
 extern const s8 gPokeblockFlavorCompatibilityTable[];
 extern const u8 *const gPokeblockNames[];
 extern const struct CompressedSpriteSheet gPokeblockCase_SpriteSheet;
@@ -52,6 +55,7 @@ bool8 GivePokeblock(const struct Pokeblock *);
 
 #include "main.h"
 
-void sub_8136130(struct Pokeblock *, MainCallback);
+void ChooseMonToGivePokeblock(struct Pokeblock *pokeblock, MainCallback callback);
+u8 GetPartyIdFromSelectionId_(u8 selectionId);
 
 #endif // GUARD_POKEBLOCK_H

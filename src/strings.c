@@ -895,17 +895,17 @@ const u8 GiddyText_SecretBasesAreSoWonderful[] = _("SECRET BASES are so wonderfu
 const u8 OtherText_PokeLeague[] = _("POKéMON LEAGUE");
 const u8 OtherText_PokeCenter[] = _("POKéMON CENTER");
 
-const u8 gOtherText_GetsAPokeBlock[] = _(" gets a {POKEBLOCK}?");
+const u8 gText_GetsAPokeBlockQuestion[] = _(" gets a {POKEBLOCK}?");
 
-const u8 OtherText_Coolness[] = _("Coolness ");
-const u8 OtherText_Beauty[] = _("Beauty ");
-const u8 OtherText_Cuteness[] = _("Cuteness ");
-const u8 OtherText_Smartness[] = _("Smartness ");
-const u8 OtherText_Toughness[] = _("Toughness ");
+const u8 gText_Coolness[] = _("Coolness ");
+const u8 gText_Beauty3[] = _("Beauty ");
+const u8 gText_Cuteness[] = _("Cuteness ");
+const u8 gText_Smartness[] = _("Smartness ");
+const u8 gText_Toughness[] = _("Toughness ");
 
-const u8 gOtherText_WasEnhanced[] = _("was enhanced!");
-const u8 gOtherText_NothingChanged[] = _("Nothing changed!");
-const u8 gOtherText_WontEat[] = _("It won't eat anymore...");
+const u8 gText_WasEnhanced[] = _("was enhanced!");
+const u8 gText_NothingChanged[] = _("Nothing changed!");
+const u8 gText_WontEatAnymore[] = _("It won't eat anymore...");
 
 const u8 gSystemText_SaveFailedBackupCheck[] = _("Save failed.\nChecking the backup memory...\nPlease wait.\n{COLOR RED}“Time required: 1 minute”");
 const u8 gSystemText_BackupDamagedGameContinue[] = _("The backup memory is damaged or\nthe internal battery has run dry.\nThe game can be played. However,\nprogress cannot be saved.");
@@ -1820,17 +1820,17 @@ const u8 GiddyText_SecretBasesAreSoWonderful[] = _("GEHEIMBASEN sind superklasse
 const u8 OtherText_PokeLeague[] = _("POKéMON LIGA");
 const u8 OtherText_PokeCenter[] = _("POKéMON-CENTER");
 
-const u8 gOtherText_GetsAPokeBlock[] = _(" erhält einen {POKEBLOCK}?");
+const u8 gText_GetsAPokeBlockQuestion[] = _(" erhält einen {POKEBLOCK}?");
 
-const u8 OtherText_Coolness[] = _("Coolness ");
-const u8 OtherText_Beauty[] = _("Schönheit ");
-const u8 OtherText_Cuteness[] = _("Anmut ");
-const u8 OtherText_Smartness[] = _("Klugheit ");
-const u8 OtherText_Toughness[] = _("Stärke ");
+const u8 gText_Coolness[] = _("Coolness ");
+const u8 gText_Beauty3[] = _("Schönheit ");
+const u8 gText_Cuteness[] = _("Anmut ");
+const u8 gText_Smartness[] = _("Klugheit ");
+const u8 gText_Toughness[] = _("Stärke ");
 
-const u8 gOtherText_WasEnhanced[] = _("wurde erhöht!");
-const u8 gOtherText_NothingChanged[] = _("Keine Veränderung eingetreten!");
-const u8 gOtherText_WontEat[] = _("Es will nicht mehr essen.");
+const u8 gText_WasEnhanced[] = _("wurde erhöht!");
+const u8 gText_NothingChanged[] = _("Keine Veränderung eingetreten!");
+const u8 gText_WontEatAnymore[] = _("Es will nicht mehr essen.");
 
 const u8 gSystemText_SaveFailedBackupCheck[] = _("Speicherfehler\nBackup Memory wird geprüft.\nBitte warten...\n{COLOR RED}“Benötigte Zeit: 1 Minute”");
 const u8 gSystemText_BackupDamagedGameContinue[] = _("Backup Memory defekt oder\ninterne Batterie verbraucht!\nSpiel kann fortgesetzt werden.\nWeiteres Speichern nicht möglich.");
