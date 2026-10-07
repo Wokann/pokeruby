@@ -59,7 +59,7 @@ void ClearRoamerLocationData(void)
     sRoamerLocation[MAP_NUM] = 0;
 }
 
-void CreateInitialRoamerMon(void)
+static void CreateInitialRoamerMon(void)
 {
     struct Roamer *roamer;
     CreateMon(&gEnemyParty[0], ROAMER_SPECIES, 40, 0x20, 0, 0, 0, 0);
@@ -101,20 +101,20 @@ void UpdateLocationHistoryForRoamer(void)
 
 void RoamerMoveToOtherLocationSet(void)
 {
-    u8 val = 0;
+    u8 mapNum = 0;
     struct Roamer *roamer = &gSaveBlock1.roamer;
 
     if (!roamer->active)
         return;
 
-    sRoamerLocation[MAP_GRP] = val;
+    sRoamerLocation[MAP_GRP] = mapNum;
 
     while (1)
     {
-        val = sRoamerLocations[Random() % 20][0];
-        if (sRoamerLocation[MAP_NUM] != val)
+        mapNum = sRoamerLocations[Random() % 20][0];
+        if (sRoamerLocation[MAP_NUM] != mapNum)
         {
-            sRoamerLocation[MAP_NUM] = val;
+            sRoamerLocation[MAP_NUM] = mapNum;
             return;
         }
     }
