@@ -1,7 +1,7 @@
-#include "constants/mauville_man.h"
+#include "constants/mauville_old_man.h"
 
 MauvilleCity_PokemonCenter_1F_EventScript_1AE744:: @ 81AE744
-	special ScrSpecial_GetCurrentMauvilleMan
+	special Script_GetCurrentMauvilleMan
 	switch VAR_RESULT
 	case MAUVILLE_MAN_BARD,        SpeakToBard
 	case MAUVILLE_MAN_HIPSTER,     SpeakToHipster
@@ -28,9 +28,9 @@ SpeakToBard:
 yes_hear_song:
 	setvar VAR_0x8004, 0
 	@ Give the player ear rape
-	special ScrSpecial_PlayBardSong
+	special PlayBardSong
 	delay 60
-	special ScrSpecial_HasBardSongBeenChanged
+	special HasBardSongBeenChanged
 	compare VAR_RESULT, FALSE
 	@ Prompt new lyrics only if song hasn't been changed
 	goto_if_eq prompt_write_lyrics
@@ -61,12 +61,12 @@ write_lyrics:
 	msgbox gTextBard_ThankYouKindly, MSGBOX_DEFAULT
 	setvar VAR_0x8004, 1
 	@ Give the player ear rape again
-	special ScrSpecial_PlayBardSong
+	special PlayBardSong
 	delay 60
 	msgbox gTextBard_WasThatHowYouWanted, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq write_lyrics		@ Keep looping until player responds YES
-	special ScrSpecial_SaveBardSongLyrics
+	special SaveBardSongLyrics
 	msgbox gTextBard_OkayThatsIt, MSGBOX_DEFAULT
 	release
 	end
@@ -86,7 +86,7 @@ SpeakToHipster:
 	faceplayer
 	setflag FLAG_UNLOCKED_TRENDY_SAYINGS
 	msgbox gTextHipster_TheyCallMeTheHipster, MSGBOX_DEFAULT
-	special ScrSpecial_GetHipsterSpokenFlag
+	special HasHipsterTaughtWord
 	compare VAR_RESULT, FALSE
 	goto_if_eq hipster_first_time
 	msgbox gTextHipster_TaughtYouAlready, MSGBOX_DEFAULT
@@ -94,7 +94,7 @@ SpeakToHipster:
 	end
 
 hipster_first_time:
-	special ScrSpecial_HipsterTeachWord
+	special HipsterTryTeachWord
 	compare VAR_RESULT, TRUE		@ TRUE if player learned a new word
 	goto_if_eq teach_new_word
 	msgbox gTextHipster_YouAlreadyKnowALot, MSGBOX_DEFAULT
@@ -103,7 +103,7 @@ hipster_first_time:
 
 teach_new_word:
 	msgbox gTextHipster_HaveYouHeardAbout, MSGBOX_DEFAULT
-	special ScrSpecial_SetHipsterSpokenFlag
+	special SetHipsterTaughtWord
 	release
 	end
 
@@ -220,21 +220,21 @@ SpeakToStoryteller:
 	msgbox gTextStoryteller_Introduction, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq dont_hear_story
-	specialvar VAR_RESULT, ScrSpecial_StorytellerGetFreeStorySlot
+	specialvar VAR_RESULT, StorytellerGetFreeStorySlot
 	compare VAR_RESULT, 0		@ If slot is 0, then the list is empty
 	goto_if_eq no_stories_recorded
 choose_story:
 	message gTextStoryteller_WhichTale
 	waitmessage
-	special ScrSpecial_StorytellerStoryListMenu
+	special StorytellerStoryListMenu
 	waitstate
 	compare VAR_RESULT, FALSE
 	goto_if_eq cancel_story_menu
 	setvar VAR_0x8008, 1
-	special ScrSpecial_StorytellerDisplayStory
+	special Script_StorytellerDisplayStory
 	waitmessage
 	waitbuttonpress
-	specialvar VAR_RESULT, ScrSpecial_StorytellerUpdateStat
+	specialvar VAR_RESULT, StorytellerUpdateStat
 	compare VAR_RESULT, FALSE
 	goto_if_eq no_stat_update
 	goto stat_update
@@ -248,10 +248,10 @@ no_stat_update:
 	compare VAR_RESULT, YES
 	goto_if_eq choose_story
 yes_hear_story:
-	specialvar VAR_RESULT, ScrSpecial_HasStorytellerAlreadyRecorded
+	specialvar VAR_RESULT, HasStorytellerAlreadyRecorded
 	compare VAR_RESULT, TRUE
 	goto_if_eq cant_record_story		@ already recorded story
-	specialvar VAR_RESULT, ScrSpecial_StorytellerGetFreeStorySlot
+	specialvar VAR_RESULT, StorytellerGetFreeStorySlot
 	compare VAR_RESULT, 4
 	goto_if_eq cant_record_story		@ story list is full
 	goto prompt_record_story
@@ -261,7 +261,7 @@ prompt_record_story:
 	msgbox gTextStoryteller_HaveYouAnyTales, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq dont_hear_story
-	specialvar VAR_RESULT, ScrSpecial_StorytellerInitializeRandomStat
+	specialvar VAR_RESULT, Script_StorytellerInitializeRandomStat
 	compare VAR_RESULT, TRUE
 	goto_if_eq stat_update
 	msgbox gTextStoryteller_ImNotSatisfied, MSGBOX_DEFAULT
@@ -305,7 +305,7 @@ SpeakToGiddy:
 	end
 
 yes_hear_giddy:
-	special ScrSpecial_GiddyShouldTellAnotherTale
+	special GiddyShouldTellAnotherTale
 	compare VAR_RESULT, TRUE
 	goto_if_eq tell_giddy_tale
 	compare VAR_RESULT, FALSE
@@ -313,7 +313,7 @@ yes_hear_giddy:
 	end
 
 tell_another_giddy_tale:
-	special ScrSpecial_GiddyShouldTellAnotherTale
+	special GiddyShouldTellAnotherTale
 	compare VAR_RESULT, TRUE
 	goto_if_eq also_i_was_thinking
 	compare VAR_RESULT, FALSE
@@ -326,7 +326,7 @@ also_i_was_thinking:
 	end
 
 tell_giddy_tale:
-	special ScrSpecial_GenerateGiddyLine
+	special GenerateGiddyLine
 	special ShowFieldMessageStringVar4
 	waitmessage
 	yesnobox 20, 8

@@ -11,7 +11,7 @@
 #include "constants/items.h"
 #include "load_save.h"
 #include "link.h"
-#include "mauville_man.h"
+#include "mauville_old_man.h"
 #include "menu.h"
 #include "mystery_event_script.h"
 #include "random.h"
@@ -37,7 +37,7 @@ static u8 gUnknown_0300071C[4];
 static struct SecretBase *sSecretBasesSave = gSaveBlock1.secretBases;
 static TVShow *sTvShowsSave = gSaveBlock1.tvShows;
 static struct PokeNews *sPokeNewsSave = gSaveBlock1.pokeNews;
-static void *recordMixingMauvilleMan = &gSaveBlock1.mauvilleMan;
+static void *recordMixingMauvilleMan = &gSaveBlock1.oldMan;
 static struct DewfordTrend *sDewfordTrendsSave = gSaveBlock1.dewfordTrends;
 static struct RecordMixingDaycareMail *sRecordMixMailSave = &sRecordMixMail;
 static struct BattleTowerRecord *sBattleTowerSave = &gSaveBlock2.battleTower.playerRecord;
@@ -78,7 +78,7 @@ struct PlayerRecordRS
     struct SecretBase secretBases[SECRET_BASES_COUNT];
     TVShow tvShows[TV_SHOWS_COUNT];
     struct PokeNews pokeNews[POKE_NEWS_COUNT];
-    union MauvilleMan mauvilleMan;
+    union OldMan oldMan;
     struct DewfordTrend dewfordTrends[5];
     struct RecordMixingDaycareMail daycareMail;
     struct BattleTowerRecord battleTowerRecord;
@@ -97,7 +97,7 @@ static void PrepareExchangePacket(void)
     memcpy(eSentRecord.secretBases, sSecretBasesSave, sizeof(eSentRecord.secretBases));
     memcpy(eSentRecord.tvShows, sTvShowsSave, sizeof(eSentRecord.tvShows));
     memcpy(eSentRecord.pokeNews, sPokeNewsSave, sizeof(eSentRecord.pokeNews));
-    memcpy(&eSentRecord.mauvilleMan, recordMixingMauvilleMan, sizeof(eSentRecord.mauvilleMan));
+    memcpy(&eSentRecord.oldMan, recordMixingMauvilleMan, sizeof(eSentRecord.oldMan));
     memcpy(eSentRecord.dewfordTrends, sDewfordTrendsSave, sizeof(eSentRecord.dewfordTrends));
     sRecordMixMail.mail[0] = gSaveBlock1.daycare.misc.mail[0];
     sRecordMixMail.mail[1] = gSaveBlock1.daycare.misc.mail[1];
@@ -114,7 +114,7 @@ static void ReceiveExchangePacket(u32 multiplayerId)
     ReceiveSecretBasesData(eReceivedRecords.secretBases, sizeof(struct PlayerRecordRS), multiplayerId);
     ReceiveTvShowsData((u8 *)eReceivedRecords.tvShows, sizeof(struct PlayerRecordRS), multiplayerId);
     ReceivePokeNewsData(eReceivedRecords.pokeNews, sizeof(struct PlayerRecordRS), multiplayerId);
-    ReceiveOldManData((u8 *)&eReceivedRecords.mauvilleMan, sizeof(struct PlayerRecordRS), multiplayerId);
+    ReceiveOldManData((u8 *)&eReceivedRecords.oldMan, sizeof(struct PlayerRecordRS), multiplayerId);
     ReceiveDewfordTrendData(eReceivedRecords.dewfordTrends, sizeof(struct PlayerRecordRS), multiplayerId);
     ReceiveDaycareMailData(&eReceivedRecords.daycareMail,
         sizeof(struct PlayerRecordRS),

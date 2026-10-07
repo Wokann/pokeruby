@@ -23,11 +23,11 @@ struct BardPhoneme
 
 struct BardSong
 {
-    /*0x00*/ u8 currWord;
+    /*0x00*/ u8 lyricsIndex;
     /*0x01*/ u8 currPhoneme;
     /*0x02*/ u8 phonemeTimer;
     /*0x03*/ u8 state;
-    /*0x04*/ s16 var04;
+    /*0x04*/ s16 length;
     /*0x06*/ u16 volume;
     /*0x08*/ s16 pitch;
     /*0x0A*/ s16 voiceInflection;

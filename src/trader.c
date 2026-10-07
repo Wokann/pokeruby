@@ -4,7 +4,7 @@
 #include "decoration_inventory.h"
 #include "event_data.h"
 #include "main.h"
-#include "mauville_man.h"
+#include "mauville_old_man.h"
 #include "menu.h"
 #include "menu_helpers.h"
 #include "script.h"
@@ -38,20 +38,20 @@ void sub_810993C(void)
 {
     u8 i, j;
     u8 buffer[12];
-    struct MauvilleManTrader *trader = &gSaveBlock1.mauvilleMan.trader;
+    struct MauvilleOldManTrader *trader = &gSaveBlock1.oldMan.trader;
 
     for (i = 0; i < 3; i++)
     {
         for (j = i + 1; j < 4; j++)
         {
-            if (trader->unk1[i] == 0)
+            if (trader->decorations[i] == 0)
             {
-                u8 temp = trader->unk1[i];
-                trader->unk1[i] = trader->unk1[j];
-                trader->unk1[j] = temp;
-                StringCopy(buffer, trader->unk5[i]);
-                StringCopy(trader->unk5[i], trader->unk5[j]);
-                StringCopy(trader->unk5[j], buffer);
+                u8 temp = trader->decorations[i];
+                trader->decorations[i] = trader->decorations[j];
+                trader->decorations[j] = temp;
+                StringCopy(buffer, trader->playerNames[i]);
+                StringCopy(trader->playerNames[i], trader->playerNames[j]);
+                StringCopy(trader->playerNames[j], buffer);
             }
         }
     }
@@ -60,23 +60,23 @@ void sub_810993C(void)
 void TraderSetup(void)
 {
     u8 i;
-    struct MauvilleManTrader *trader = &gSaveBlock1.mauvilleMan.trader;
+    struct MauvilleOldManTrader *trader = &gSaveBlock1.oldMan.trader;
 
     trader->id = MAUVILLE_MAN_TRADER;
     trader->alreadyTraded = FALSE;
 
     for (i = 0; i < 4; i++)
     {
-        StringCopy(trader->unk5[i], gUnknown_083F62D8[i]);
-        trader->unk1[i] = gTraderDecorations[i];
+        StringCopy(trader->playerNames[i], gUnknown_083F62D8[i]);
+        trader->decorations[i] = gTraderDecorations[i];
     }
 
     sub_810993C();
 }
 
-void sub_8109A20(void)
+void Trader_ResetFlag(void)
 {
-    struct MauvilleManTrader *trader = &gSaveBlock1.mauvilleMan.trader;
+    struct MauvilleOldManTrader *trader = &gSaveBlock1.oldMan.trader;
     trader->alreadyTraded = FALSE;
 }
 
@@ -90,11 +90,11 @@ void CreateAvailableDecorationsMenu(u8 taskId)
     u8 i;
     u8 numChoices = 1;
     u8 numDecorations = 0;
-    struct MauvilleManTrader *trader = &gSaveBlock1.mauvilleMan.trader;
+    struct MauvilleOldManTrader *trader = &gSaveBlock1.oldMan.trader;
 
     for (i = 0; i < 4; i++)
     {
-        if (trader->unk1[i])
+        if (trader->decorations[i])
         {
             numChoices++;
         }
@@ -104,15 +104,15 @@ void CreateAvailableDecorationsMenu(u8 taskId)
 
     for (i = 0; i < 4; i++)
     {
-        if (trader->unk1[i])
+        if (trader->decorations[i])
         {
-            if (trader->unk1[i] > DECOR_REGISTEEL_DOLL)
+            if (trader->decorations[i] > DECOR_REGISTEEL_DOLL)
             {
                 Menu_PrintText(gOtherText_FiveQuestions, 1, numDecorations * 2 + 2);
             }
             else
             {
-                Menu_PrintText(gDecorations[trader->unk1[i]].name, 1, numDecorations * 2 + 2);
+                Menu_PrintText(gDecorations[trader->decorations[i]].name, 1, numDecorations * 2 + 2);
             }
 
             numDecorations++;
@@ -143,7 +143,7 @@ void sub_8109B34(u8 taskId, u8 decorationId)
 
 void Task_HandleGetDecorationMenuInput(u8 taskId)
 {
-    struct MauvilleManTrader *trader = &gSaveBlock1.mauvilleMan.trader;
+    struct MauvilleOldManTrader *trader = &gSaveBlock1.oldMan.trader;
 
     if (JOY_NEW(DPAD_UP))
     {
@@ -165,8 +165,8 @@ void Task_HandleGetDecorationMenuInput(u8 taskId)
         }
         else
         {
-            StringCopy(gStringVar1, trader->unk5[gSpecialVar_0x8005]);
-            sub_8109B34(taskId, trader->unk1[gSpecialVar_0x8005]);
+            StringCopy(gStringVar1, trader->playerNames[gSpecialVar_0x8005]);
+            sub_8109B34(taskId, trader->decorations[gSpecialVar_0x8005]);
         }
     }
     else if (JOY_NEW(B_BUTTON))
@@ -178,7 +178,7 @@ void Task_HandleGetDecorationMenuInput(u8 taskId)
 
 void ScrSpecial_GetTraderTradedFlag(void)
 {
-    struct MauvilleManTrader *trader = &gSaveBlock1.mauvilleMan.trader;
+    struct MauvilleOldManTrader *trader = &gSaveBlock1.oldMan.trader;
     gSpecialVar_Result = trader->alreadyTraded;
 }
 
@@ -246,12 +246,12 @@ void sub_8109DAC(u8 taskId)
 
 void ScrSpecial_TraderDoDecorationTrade(void)
 {
-    struct MauvilleManTrader *trader = &gSaveBlock1.mauvilleMan.trader;
+    struct MauvilleOldManTrader *trader = &gSaveBlock1.oldMan.trader;
 
     DecorationRemove(gSpecialVar_0x8006);
     DecorationAdd(gSpecialVar_0x8004);
-    StringCopy(trader->unk5[gSpecialVar_0x8005], gSaveBlock2.playerName);
-    trader->unk1[gSpecialVar_0x8005] = gSpecialVar_0x8006;
+    StringCopy(trader->playerNames[gSpecialVar_0x8005], gSaveBlock2.playerName);
+    trader->decorations[gSpecialVar_0x8005] = gSpecialVar_0x8006;
     sub_810993C();
     trader->alreadyTraded = TRUE;
 }

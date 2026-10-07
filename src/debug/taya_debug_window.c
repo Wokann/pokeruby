@@ -12,7 +12,7 @@
 #include "main.h"
 #include "start_menu.h"
 #include "field_weather.h"
-#include "mauville_man.h"
+#include "mauville_old_man.h"
 #include "pokemon_storage_system.h"
 #include "lottery_corner.h"
 #include "battle_setup.h"
@@ -340,9 +340,9 @@ bool8 debug_sub_8090984(void)
 
         for (i = 0; i < 3; i++)
         {
-            union MauvilleMan *mauvilleMan = &gSaveBlock1.mauvilleMan;
+            union OldMan *mauvilleMan = &gSaveBlock1.oldMan;
             mauvilleMan->bard.songLyrics[i] = gUnknown_Debug_083C4F08[i];
-            mauvilleMan->bard.temporaryLyrics[i] = gUnknown_Debug_083C4F08[i];
+            mauvilleMan->bard.newSongLyrics[i] = gUnknown_Debug_083C4F08[i];
             gSaveBlock1.easyChats.unk2B28[i] = gUnknown_Debug_083C4F08[i];
         }
     }

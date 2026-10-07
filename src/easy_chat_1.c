@@ -219,11 +219,11 @@ void ShowEasyChatScreen(void)
         break;
     case 6:
         {
-            struct MauvilleManBard *bard = &gSaveBlock1.mauvilleMan.bard;
+            struct MauvilleManBard *bard = &gSaveBlock1.oldMan.bard;
             u16 i;
             for (i = 0; i < 6; i++)
-                bard->temporaryLyrics[i] = bard->songLyrics[i];
-            words = bard->temporaryLyrics;
+                bard->newSongLyrics[i] = bard->songLyrics[i];
+            words = bard->newSongLyrics;
         }
         break;
     case 5:

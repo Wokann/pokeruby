@@ -43,14 +43,14 @@ s32 GetWordPhonemes(struct BardSong *song, const struct BardSound *src, u16 word
 
             song->phonemes[i].length = length;
             song->phonemes[i].volume = src[i].volume;
-            song->var04 += length;
+            song->length += length;
         }
     }
 
     for (j = 0, thirty = 30; j < i; j++)
         song->phonemes[j].pitch = CalcWordPitch(thirty + word, j);
 
-    song->currWord++;
+    song->lyricsIndex++;
     song->currPhoneme = 0;
     song->phonemeTimer = 0;
     song->state = 0;

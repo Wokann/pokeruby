@@ -2,6 +2,6 @@
 #define GUARD_TRADER_H
 
 void TraderSetup(void);
-void sub_8109A20(void);
+void Trader_ResetFlag(void);
 
 #endif // GUARD_TRADER_H

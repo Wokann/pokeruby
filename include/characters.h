@@ -3,7 +3,7 @@
 
 #define CHAR_SPACE          0x00
 #define CHAR_LV             0x34
-#define CHAR_SONG_WORD_SEPARATOR 0x37  // separates words in the bard song. Not sure if it's used for anything else
+#define CHAR_BARD_WORD_DELIMIT 0x37  // separates words in the bard song. Not sure if it's used for anything else
 #define CHAR_0              0xA1
 #define CHAR_EXCL_MARK      0xAB
 #define CHAR_QUESTION_MARK  0xAC

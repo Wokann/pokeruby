@@ -1,9 +1,10 @@
 #include "global.h"
 #include "bard_music.h"
-#include "mauville_man.h"
+#include "mauville_old_man.h"
 #include "easy_chat.h"
 #include "constants/easy_chat.h"
 #include "event_data.h"
+#include "event_scripts.h"
 #include "field_message_box.h"
 #include "m4a.h"
 #include "menu.h"
@@ -18,125 +19,16 @@
 #include "task.h"
 #include "trader.h"
 
-#define MACRO1(a) (((a) % 4) + (((a) / 8) & 1))
+#define WORD_TO_PITCH_TABLE_INDEX(a) (((a) % 4) + (((a) / 8) & 1))
 
 extern struct MusicPlayerInfo gMPlayInfo_SE2;
 
 extern u16 gSpecialVar_Result;
 extern u16 gSpecialVar_0x8004;
 
-extern const u8 gTextStoryteller_Story1Title[];
-extern const u8 gTextStoryteller_Story1Action[];
-extern const u8 gTextStoryteller_Story1Text[];
-extern const u8 gTextStoryteller_Story2Title[];
-extern const u8 gTextStoryteller_Story2Action[];
-extern const u8 gTextStoryteller_Story2Text[];
-extern const u8 gTextStoryteller_Story3Title[];
-extern const u8 gTextStoryteller_Story3Action[];
-extern const u8 gTextStoryteller_Story3Text[];
-extern const u8 gTextStoryteller_Story4Title[];
-extern const u8 gTextStoryteller_Story4Action[];
-extern const u8 gTextStoryteller_Story4Text[];
-extern const u8 gTextStoryteller_Story5Title[];
-extern const u8 gTextStoryteller_Story5Action[];
-extern const u8 gTextStoryteller_Story5Text[];
-extern const u8 gTextStoryteller_Story6Title[];
-extern const u8 gTextStoryteller_Story6Action[];
-extern const u8 gTextStoryteller_Story6Text[];
-extern const u8 gTextStoryteller_Story7Title[];
-extern const u8 gTextStoryteller_Story7Action[];
-extern const u8 gTextStoryteller_Story7Text[];
-extern const u8 gTextStoryteller_Story8Title[];
-extern const u8 gTextStoryteller_Story8Action[];
-extern const u8 gTextStoryteller_Story8Text[];
-extern const u8 gTextStoryteller_Story9Title[];
-extern const u8 gTextStoryteller_Story9Action[];
-extern const u8 gTextStoryteller_Story9Text[];
-extern const u8 gTextStoryteller_Story10Title[];
-extern const u8 gTextStoryteller_Story10Action[];
-extern const u8 gTextStoryteller_Story10Text[];
-extern const u8 gTextStoryteller_Story11Title[];
-extern const u8 gTextStoryteller_Story11Action[];
-extern const u8 gTextStoryteller_Story11Text[];
-extern const u8 gTextStoryteller_Story12Title[];
-extern const u8 gTextStoryteller_Story12Action[];
-extern const u8 gTextStoryteller_Story12Text[];
-extern const u8 gTextStoryteller_Story13Title[];
-extern const u8 gTextStoryteller_Story13Action[];
-extern const u8 gTextStoryteller_Story13Text[];
-extern const u8 gTextStoryteller_Story14Title[];
-extern const u8 gTextStoryteller_Story14Action[];
-extern const u8 gTextStoryteller_Story14Text[];
-extern const u8 gTextStoryteller_Story15Title[];
-extern const u8 gTextStoryteller_Story15Action[];
-extern const u8 gTextStoryteller_Story15Text[];
-extern const u8 gTextStoryteller_Story16Title[];
-extern const u8 gTextStoryteller_Story16Action[];
-extern const u8 gTextStoryteller_Story16Text[];
-extern const u8 gTextStoryteller_Story17Title[];
-extern const u8 gTextStoryteller_Story17Action[];
-extern const u8 gTextStoryteller_Story17Text[];
-extern const u8 gTextStoryteller_Story18Title[];
-extern const u8 gTextStoryteller_Story18Action[];
-extern const u8 gTextStoryteller_Story18Text[];
-extern const u8 gTextStoryteller_Story19Title[];
-extern const u8 gTextStoryteller_Story19Action[];
-extern const u8 gTextStoryteller_Story19Text[];
-extern const u8 gTextStoryteller_Story20Title[];
-extern const u8 gTextStoryteller_Story20Action[];
-extern const u8 gTextStoryteller_Story20Text[];
-extern const u8 gTextStoryteller_Story21Title[];
-extern const u8 gTextStoryteller_Story21Action[];
-extern const u8 gTextStoryteller_Story21Text[];
-extern const u8 gTextStoryteller_Story22Title[];
-extern const u8 gTextStoryteller_Story22Action[];
-extern const u8 gTextStoryteller_Story22Text[];
-extern const u8 gTextStoryteller_Story23Title[];
-extern const u8 gTextStoryteller_Story23Action[];
-extern const u8 gTextStoryteller_Story23Text[];
-extern const u8 gTextStoryteller_Story24Title[];
-extern const u8 gTextStoryteller_Story24Action[];
-extern const u8 gTextStoryteller_Story24Text[];
-extern const u8 gTextStoryteller_Story25Title[];
-extern const u8 gTextStoryteller_Story25Action[];
-extern const u8 gTextStoryteller_Story25Text[];
-extern const u8 gTextStoryteller_Story26Title[];
-extern const u8 gTextStoryteller_Story26Action[];
-extern const u8 gTextStoryteller_Story26Text[];
-extern const u8 gTextStoryteller_Story27Title[];
-extern const u8 gTextStoryteller_Story27Action[];
-extern const u8 gTextStoryteller_Story27Text[];
-extern const u8 gTextStoryteller_Story28Title[];
-extern const u8 gTextStoryteller_Story28Action[];
-extern const u8 gTextStoryteller_Story28Text[];
-extern const u8 gTextStoryteller_Story29Title[];
-extern const u8 gTextStoryteller_Story29Action[];
-extern const u8 gTextStoryteller_Story29Text[];
-extern const u8 gTextStoryteller_Story30Title[];
-extern const u8 gTextStoryteller_Story30Action[];
-extern const u8 gTextStoryteller_Story30Text[];
-extern const u8 gTextStoryteller_Story31Title[];
-extern const u8 gTextStoryteller_Story31Action[];
-extern const u8 gTextStoryteller_Story31Text[];
-extern const u8 gTextStoryteller_Story32Title[];
-extern const u8 gTextStoryteller_Story32Action[];
-extern const u8 gTextStoryteller_Story32Text[];
-extern const u8 gTextStoryteller_Story33Title[];
-extern const u8 gTextStoryteller_Story33Action[];
-extern const u8 gTextStoryteller_Story33Text[];
-extern const u8 gTextStoryteller_Story34Title[];
-extern const u8 gTextStoryteller_Story34Action[];
-extern const u8 gTextStoryteller_Story34Text[];
-extern const u8 gTextStoryteller_Story35Title[];
-extern const u8 gTextStoryteller_Story35Action[];
-extern const u8 gTextStoryteller_Story35Text[];
-extern const u8 gTextStoryteller_Story36Title[];
-extern const u8 gTextStoryteller_Story36Action[];
-extern const u8 gTextStoryteller_Story36Text[];
+struct BardSong gBardSong;
 
-struct BardSong gUnknown_03005DA0;
-
-EWRAM_DATA static u16 gUnknown_020388BC = 0;  // set but not used?
+EWRAM_DATA static u16 sUnusedPitchTableIndex = 0;  // set but not used?
 
 static const u16 sDefaultBardSongLyrics[] =
 {
@@ -159,38 +51,38 @@ static const u16 sDefaultBardSongLyrics[] =
 
 static const u8 *const sGiddyAdjectives[] =
 {
-    OtherText_SoPretty,
-    OtherText_SoDarling,
-    OtherText_SoRelaxed,
-    OtherText_SoSunny,
-    OtherText_SoDesirable,
-    OtherText_SoExciting,
-    OtherText_SoAmusing,
-    OtherText_SoMagical,
+    GiddyText_SoPretty,
+    GiddyText_SoDarling,
+    GiddyText_SoRelaxed,
+    GiddyText_SoSunny,
+    GiddyText_SoDesirable,
+    GiddyText_SoExciting,
+    GiddyText_SoAmusing,
+    GiddyText_SoMagical,
 };
 
 static const u8 *const sGiddyQuestions[] =
 {
-    OtherText_WantVacationNicePlace,
-    OtherText_BoughtCrayonsIsNice,
-    OtherText_IfWeCouldFloat,
-    OtherText_SandWashesAwayMakeSad,
-    OtherText_WhatsBottomSeaLike,
-    OtherText_SeeSettingSun,
-    OtherText_LyingInGreenGrass,
-    OtherText_SecretBasesWonderful,
+    GiddyText_ISoWantToGoOnAVacation,
+    GiddyText_IBoughtCrayonsWith120Colors,
+    GiddyText_WouldntItBeNiceIfWeCouldFloat,
+    GiddyText_WhenYouWriteOnASandyBeach,
+    GiddyText_WhatsTheBottomOfTheSeaLike,
+    GiddyText_WhenYouSeeTheSettingSunDoesIt,
+    GiddyText_LyingBackInTheGreenGrass,
+    GiddyText_SecretBasesAreSoWonderful,
 };
 
-static void sub_80F7DC0(void);
+static void InitGiddyTaleList(void);
 static void Task_BardSong(u8);
-static void StartBardSong(u8);
+static void StartBardSong(bool8 useNewSongLyrics);
 static void StorytellerSetup(void);
-static void sub_80F8428(void);
+static void Storyteller_ResetFlag(void);
 
 static void SetupBard(void)
 {
     u16 i;
-    struct MauvilleManBard *bard = &gSaveBlock1.mauvilleMan.bard;
+    struct MauvilleManBard *bard = &gSaveBlock1.oldMan.bard;
 
     bard->id = MAUVILLE_MAN_BARD;
     bard->hasChangedSong = FALSE;
@@ -200,10 +92,10 @@ static void SetupBard(void)
 
 static void SetupHipster(void)
 {
-    struct MauvilleManHipster *hipster = &gSaveBlock1.mauvilleMan.hipster;
+    struct MauvilleManHipster *hipster = &gSaveBlock1.oldMan.hipster;
 
     hipster->id = MAUVILLE_MAN_HIPSTER;
-    hipster->alreadySpoken = FALSE;
+    hipster->taughtWord = FALSE;
 }
 
 static void SetupStoryteller(void)
@@ -213,7 +105,7 @@ static void SetupStoryteller(void)
 
 static void SetupGiddy(void)
 {
-    struct MauvilleManGiddy *giddy = &gSaveBlock1.mauvilleMan.giddy;
+    struct MauvilleManGiddy *giddy = &gSaveBlock1.oldMan.giddy;
 
     giddy->id = MAUVILLE_MAN_GIDDY;
     giddy->taleCounter = 0;
@@ -224,7 +116,7 @@ static void SetupTrader(void)
     TraderSetup();
 }
 
-void SetupMauvilleOldMan(void)
+void SetMauvilleOldMan(void)
 {
     u16 trainerId = (gSaveBlock2.playerTrainerId[1] << 8) | gSaveBlock2.playerTrainerId[0];
 
@@ -284,28 +176,28 @@ void debug_sub_810B32C(u8 a)
 
 u8 GetCurrentMauvilleOldMan(void)
 {
-    struct MauvilleManCommon *common = &gSaveBlock1.mauvilleMan.common;
+    struct MauvilleManCommon *common = &gSaveBlock1.oldMan.common;
 
     return common->id;
 }
 
-void ScrSpecial_GetCurrentMauvilleMan(void)
+void Script_GetCurrentMauvilleMan(void)
 {
     gSpecialVar_Result = GetCurrentMauvilleOldMan();
 }
 
-void ScrSpecial_HasBardSongBeenChanged(void)
+void HasBardSongBeenChanged(void)
 {
     u16 *scriptResult = &gSpecialVar_Result; // why??
-    struct MauvilleManBard *bard = &gSaveBlock1.mauvilleMan.bard;
+    struct MauvilleManBard *bard = &gSaveBlock1.oldMan.bard;
 
     *scriptResult = bard->hasChangedSong;
 }
 
-void ScrSpecial_SaveBardSongLyrics(void)
+void SaveBardSongLyrics(void)
 {
     u16 i;
-    struct MauvilleManBard *bard = &gSaveBlock1.mauvilleMan.bard;
+    struct MauvilleManBard *bard = &gSaveBlock1.oldMan.bard;
 
     StringCopy(bard->playerName, gSaveBlock2.playerName);
 
@@ -313,34 +205,34 @@ void ScrSpecial_SaveBardSongLyrics(void)
         bard->playerTrainerId[i] = gSaveBlock2.playerTrainerId[i];
 
     for (i = 0; i < 6; i++)
-        bard->songLyrics[i] = bard->temporaryLyrics[i];
+        bard->songLyrics[i] = bard->newSongLyrics[i];
 
     bard->hasChangedSong = TRUE;
 }
 
 // Copies lyrics into gStringVar4
-void PrepareSongText(void)
+static void PrepareSongText(void)
 {
-    struct MauvilleManBard *bard = &gSaveBlock1.mauvilleMan.bard;
+    struct MauvilleManBard *bard = &gSaveBlock1.oldMan.bard;
     u16 specialVar = gSpecialVar_0x8004;  // It's a bit odd to use this temp variable, but it seems needed to match.
     u16 *lyrics;
-    u16 lineNum;
+    u16 paragraphNum;
     u8 *wordEnd;
     u8 *str;
 
-    lyrics = bard->temporaryLyrics;
+    lyrics = bard->newSongLyrics;
     if (specialVar == 0)
         lyrics = bard->songLyrics;
     wordEnd = gStringVar4;
     str = wordEnd;
     // Put three words on each line
-    for (lineNum = 0; lineNum < 2; lineNum++)
+    for (paragraphNum = 0; paragraphNum < 2; paragraphNum++)
     {
         wordEnd = CopyEasyChatWord(wordEnd, *(lyrics++));
         while (wordEnd != str)
         {
             if (*str == CHAR_SPACE)
-                *str = CHAR_SONG_WORD_SEPARATOR;
+                *str = CHAR_BARD_WORD_DELIMIT;
             str++;
         }
 
@@ -351,7 +243,7 @@ void PrepareSongText(void)
         while (wordEnd != str)
         {
             if (*str == CHAR_SPACE)
-                *str = CHAR_SONG_WORD_SEPARATOR;
+                *str = CHAR_BARD_WORD_DELIMIT;
             str++;
         }
 
@@ -362,11 +254,11 @@ void PrepareSongText(void)
         while (wordEnd != str)
         {
             if (*str == CHAR_SPACE)
-                *str = CHAR_SONG_WORD_SEPARATOR;
+                *str = CHAR_BARD_WORD_DELIMIT;
             str++;
         }
 
-        if (lineNum == 0)
+        if (paragraphNum == 0)
         {
             *(wordEnd++) = EXT_CTRL_CODE_BEGIN;
             *(wordEnd++) = 15;
@@ -374,46 +266,46 @@ void PrepareSongText(void)
     }
 }
 
-void ScrSpecial_PlayBardSong(void)
+void PlayBardSong(void)
 {
     StartBardSong(gSpecialVar_0x8004);
     Menu_DisplayDialogueFrame();
     ScriptContext_Stop();
 }
 
-void ScrSpecial_GetHipsterSpokenFlag(void)
+void HasHipsterTaughtWord(void)
 {
     u16 *scriptResult = &gSpecialVar_Result; // again??
-    struct MauvilleManHipster *hipster = &gSaveBlock1.mauvilleMan.hipster;
+    struct MauvilleManHipster *hipster = &gSaveBlock1.oldMan.hipster;
 
-    *scriptResult = hipster->alreadySpoken;
+    *scriptResult = hipster->taughtWord;
 }
 
-void ScrSpecial_SetHipsterSpokenFlag(void)
+void SetHipsterTaughtWord(void)
 {
-    struct MauvilleManHipster *hipster = &gSaveBlock1.mauvilleMan.hipster;
+    struct MauvilleManHipster *hipster = &gSaveBlock1.oldMan.hipster;
 
-    hipster->alreadySpoken = TRUE;
+    hipster->taughtWord = TRUE;
 }
 
-void ScrSpecial_HipsterTeachWord(void)
+void HipsterTryTeachWord(void)
 {
-    u16 var = UnlockRandomTrendySaying();
+    u16 word = UnlockRandomTrendySaying();
 
-    if (var == 0xFFFF)
+    if (word == 0xFFFF)
     {
         gSpecialVar_Result = FALSE;
     }
     else
     {
-        CopyEasyChatWord(gStringVar1, var);
+        CopyEasyChatWord(gStringVar1, word);
         gSpecialVar_Result = TRUE;
     }
 }
 
-void ScrSpecial_GiddyShouldTellAnotherTale(void)
+void GiddyShouldTellAnotherTale(void)
 {
-    struct MauvilleManGiddy *giddy = &gSaveBlock1.mauvilleMan.giddy;
+    struct MauvilleManGiddy *giddy = &gSaveBlock1.oldMan.giddy;
 
     if (giddy->taleCounter == 10)
     {
@@ -426,12 +318,12 @@ void ScrSpecial_GiddyShouldTellAnotherTale(void)
     }
 }
 
-void ScrSpecial_GenerateGiddyLine(void)
+void GenerateGiddyLine(void)
 {
-    struct MauvilleManGiddy *giddy = &gSaveBlock1.mauvilleMan.giddy;
+    struct MauvilleManGiddy *giddy = &gSaveBlock1.oldMan.giddy;
 
     if (giddy->taleCounter == 0)
-        sub_80F7DC0();
+        InitGiddyTaleList();
 
     if (giddy->randomWords[giddy->taleCounter] != 0xFFFF) // is not the last element of the array?
     {
@@ -440,9 +332,9 @@ void ScrSpecial_GenerateGiddyLine(void)
 
         adjective %= 8;
         stringPtr = CopyEasyChatWord(gStringVar4, giddy->randomWords[giddy->taleCounter]);
-        stringPtr = StringCopy(stringPtr, gOtherText_Is);
+        stringPtr = StringCopy(stringPtr, GiddyText_Is);
         stringPtr = StringCopy(stringPtr, sGiddyAdjectives[adjective]);
-        StringCopy(stringPtr, gOtherText_DontYouAgree);
+        StringCopy(stringPtr, GiddyText_DontYouAgree);
     }
     else
     {
@@ -457,10 +349,10 @@ void ScrSpecial_GenerateGiddyLine(void)
     gSpecialVar_Result = TRUE;
 }
 
-static void sub_80F7DC0(void)
+static void InitGiddyTaleList(void)
 {
-    struct MauvilleManGiddy *giddy = &gSaveBlock1.mauvilleMan.giddy;
-    u16 arr[][2] =
+    struct MauvilleManGiddy *giddy = &gSaveBlock1.oldMan.giddy;
+    u16 wordGroupsAndCount[][2] =
     {
         {EC_GROUP_POKEMON, 0},
         {EC_GROUP_LIFESTYLE, 0},
@@ -470,9 +362,9 @@ static void sub_80F7DC0(void)
         {EC_GROUP_POKEMON_NATIONAL, 0}
     };
     u16 i;
-    u16 r10;
-    u16 r7;
-    u16 r1;
+    u16 totalWords;
+    u16 temp;
+    u16 var;
 
     for (i = 0; i < 8; i++)
     {
@@ -481,66 +373,66 @@ static void sub_80F7DC0(void)
 
     for (i = 0; i < 8; i++)
     {
-        r1 = Random() % (i + 1);
-        r7 = giddy->questionList[i];
-        giddy->questionList[i] = giddy->questionList[r1];
-        giddy->questionList[r1] = r7;
+        var = Random() % (i + 1);
+        temp = giddy->questionList[i];
+        giddy->questionList[i] = giddy->questionList[var];
+        giddy->questionList[var] = temp;
     }
 
-    r10 = 0;
+    totalWords = 0;
     for (i = 0; i < 6; i++)
     {
-        arr[i][1] = sub_80EAE88(arr[i][0]);
-        r10 += arr[i][1];
+        wordGroupsAndCount[i][1] = sub_80EAE88(wordGroupsAndCount[i][0]);
+        totalWords += wordGroupsAndCount[i][1];
     }
 
     giddy->questionNum = 0;
-    r7 = 0;
+    temp = 0;
     for (i = 0; i < 10; i++)
     {
-        r1 = Random() % 10;
-        if (r1 < 3 && r7 < 8)
+        var = Random() % 10;
+        if (var < 3 && temp < 8)
         {
             giddy->randomWords[i] = 0xFFFF;
-            r7++;
+            temp++;
         }
         else
         {
-            s16 r2 = Random() % r10;
-            for (r1 = 0; i < 6; r1++)
+            s16 randWord = Random() % totalWords;
+            for (var = 0; i < 6; var++)
             {
-                if ((r2 -= arr[r1][1]) <= 0)
+                if ((randWord -= wordGroupsAndCount[var][1]) <= 0)
                     break;
             }
-            if (r1 == 6)
-                r1 = 0;
-            giddy->randomWords[i] = sub_80EB784(arr[r1][0]);
+            if (var == 6)
+                var = 0;
+            giddy->randomWords[i] = sub_80EB784(wordGroupsAndCount[var][0]);
         }
     }
 }
 
-static void sub_80F7EFC(void)
+static void ResetBardFlag(void)
 {
-    struct MauvilleManBard *bard = &gSaveBlock1.mauvilleMan.bard;
+    struct MauvilleManBard *bard = &gSaveBlock1.oldMan.bard;
 
     bard->hasChangedSong = FALSE;
 }
 
-static void sub_80F7F0C(void)
+static void ResetHipsterFlag(void)
 {
-    struct MauvilleManHipster *hipster = &gSaveBlock1.mauvilleMan.hipster;
+    struct MauvilleManHipster *hipster = &gSaveBlock1.oldMan.hipster;
 
-    hipster->alreadySpoken = FALSE;
+    hipster->taughtWord = FALSE;
 }
 
-static void sub_80F7F18(void)
+static void ResetTraderFlag(void)
 {
-    sub_8109A20();
+    Trader_ResetFlag();
 }
 
-static void sub_80F7F24(void)
+static void ResetStorytellerFlag(void)
 {
-    sub_80F8428();
+    Storyteller_ResetFlag();
 }
 
 void ResetMauvilleOldManFlag(void)
@@ -548,16 +440,16 @@ void ResetMauvilleOldManFlag(void)
     switch (GetCurrentMauvilleOldMan())
     {
     case MAUVILLE_MAN_BARD:
-        sub_80F7EFC();
+        ResetBardFlag();
         break;
     case MAUVILLE_MAN_HIPSTER:
-        sub_80F7F0C();
+        ResetHipsterFlag();
         break;
     case MAUVILLE_MAN_STORYTELLER:
-        sub_80F7F24();
+        ResetStorytellerFlag();
         break;
     case MAUVILLE_MAN_TRADER:
-        sub_80F7F18();
+        ResetTraderFlag();
         break;
     case MAUVILLE_MAN_GIDDY:
         break;
@@ -567,14 +459,14 @@ void ResetMauvilleOldManFlag(void)
 
 #define tState data[0]
 #define tCharIndex data[3]
-#define tCurrWord data[4]
-#define tUseTemporaryLyrics data[5]
+#define tLyricsIndex data[4]
+#define tUseNewSongLyrics data[5]
 
-static void StartBardSong(bool8 useTemporaryLyrics)
+static void StartBardSong(bool8 useNewSongLyrics)
 {
     u8 taskId = CreateTask(Task_BardSong, 0x50);
 
-    gTasks[taskId].tUseTemporaryLyrics = useTemporaryLyrics;
+    gTasks[taskId].tUseNewSongLyrics = useNewSongLyrics;
 }
 
 static void BardSing(struct Task *task, struct BardSong *song)
@@ -583,7 +475,7 @@ static void BardSing(struct Task *task, struct BardSong *song)
     {
     case 0:  // Initialize song
         {
-            struct MauvilleManBard *bard = &gSaveBlock1.mauvilleMan.bard;
+            struct MauvilleManBard *bard = &gSaveBlock1.oldMan.bard;
             u16 *lyrics;
             s32 i;
 
@@ -591,7 +483,7 @@ static void BardSing(struct Task *task, struct BardSong *song)
             if (gSpecialVar_0x8004 == 0)
                 lyrics = bard->songLyrics;
             else
-                lyrics = bard->temporaryLyrics;
+                lyrics = bard->newSongLyrics;
             for (i = 0; i < 6; i++)
                 song->lyrics[i] = lyrics[i];
 
@@ -603,20 +495,20 @@ static void BardSing(struct Task *task, struct BardSong *song)
                 song->phonemes[i].pitch = 0;
                 song->phonemes[i].volume = 0;
             }
-            song->currWord = 0;
+            song->lyricsIndex = 0;
             song->currPhoneme = 0;
-            song->var04 = 0;
+            song->length = 0;
         }
         break;
     case 1:  // Wait for BGM to end
         break;
     case 2:  // Initialize word
         {
-            u16 word = song->lyrics[song->currWord];
-            const struct BardSound *sounds = GetWordSounds(EC_GROUP(word), EC_INDEX(word));
+            u16 easyChatWord = song->lyrics[song->lyricsIndex];
+            const struct BardSound *sounds = GetWordSounds(EC_GROUP(easyChatWord), EC_INDEX(easyChatWord));
 
-            song->var04 = 0;
-            GetWordPhonemes(song, sounds, MACRO1(word));
+            song->length = 0;
+            GetWordPhonemes(song, sounds, WORD_TO_PITCH_TABLE_INDEX(easyChatWord));
         }
         break;
     case 3:
@@ -637,9 +529,9 @@ static void BardSing(struct Task *task, struct BardSong *song)
                     song->phonemeTimer = phoneme->length;
                     if (phoneme->sound <= 50)
                     {
-                        u16 num = phoneme->sound / 3;
+                        u16 phonemeTripletId = phoneme->sound / 3;
 
-                        m4aSongNumStart(249 + num * 3);
+                        m4aSongNumStart(249 + phonemeTripletId * 3);
                     }
                     song->state = 1;
                 }
@@ -684,7 +576,7 @@ static void Task_BardSong(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];  // r5
 
-    BardSing(task, &gUnknown_03005DA0);
+    BardSing(task, &gBardSong);
     switch (task->tState)
     {
     case 0:  // Initialize song
@@ -694,7 +586,7 @@ static void Task_BardSong(u8 taskId)
         task->data[1] = 0;
         task->data[2] = 0;
         task->tCharIndex = 0;
-        task->tCurrWord = 0;
+        task->tLyricsIndex = 0;
         FadeOutBGMTemporarily(4);
         task->tState = 1;
         break;
@@ -704,7 +596,7 @@ static void Task_BardSong(u8 taskId)
         break;
     case 2:  // Initialize word
         {
-            struct MauvilleManBard *bard = &gSaveBlock1.mauvilleMan.bard;
+            struct MauvilleManBard *bard = &gSaveBlock1.oldMan.bard;
             u8 *str = gStringVar4 + task->tCharIndex;
             u16 wordLen = 0;
 
@@ -716,14 +608,14 @@ static void Task_BardSong(u8 taskId)
                 str++;
                 wordLen++;
             }
-            if (!task->tUseTemporaryLyrics)
-                gUnknown_020388BC = MACRO1(bard->songLyrics[task->tCurrWord]);
+            if (!task->tUseNewSongLyrics)
+                sUnusedPitchTableIndex = WORD_TO_PITCH_TABLE_INDEX(bard->songLyrics[task->tLyricsIndex]);
             else
-                gUnknown_020388BC = MACRO1(bard->temporaryLyrics[task->tCurrWord]);
-            gUnknown_03005DA0.var04 /= wordLen;
-            if (gUnknown_03005DA0.var04 <= 0)
-                gUnknown_03005DA0.var04 = 1;
-            task->tCurrWord++;
+                sUnusedPitchTableIndex = WORD_TO_PITCH_TABLE_INDEX(bard->newSongLyrics[task->tLyricsIndex]);
+            gBardSong.length /= wordLen;
+            if (gBardSong.length <= 0)
+                gBardSong.length = 1;
+            task->tLyricsIndex++;
             if (task->data[2] == 0)
             {
                 task->tState = 3;
@@ -769,7 +661,7 @@ static void Task_BardSong(u8 taskId)
             task->tState = 2;
             task->data[2] = 8;
         }
-        else if (gStringVar4[task->tCharIndex] == CHAR_SONG_WORD_SEPARATOR)
+        else if (gStringVar4[task->tCharIndex] == CHAR_BARD_WORD_DELIMIT)
         {
             gStringVar4[task->tCharIndex] = CHAR_SPACE;  // restore it back to a space
             Text_PrintWindowSimple(gMenuWindowPtr);
@@ -790,7 +682,7 @@ static void Task_BardSong(u8 taskId)
             case 2:
                 task->tCharIndex++;
                 task->data[1] = 0;
-                task->data[2] = gUnknown_03005DA0.var04;
+                task->data[2] = gBardSong.length;
                 task->tState = 4;
                 break;
             }
@@ -820,47 +712,47 @@ struct Story
 
 static const struct Story sStorytellerStories[] =
 {
-    {0x32, 1, gTextStoryteller_Story1Title,  gTextStoryteller_Story1Action,  gTextStoryteller_Story1Text},
-    {0x02, 1, gTextStoryteller_Story2Title,  gTextStoryteller_Story2Action,  gTextStoryteller_Story2Text},
-    {0x03, 1, gTextStoryteller_Story3Title,  gTextStoryteller_Story3Action,  gTextStoryteller_Story3Text},
-    {0x04, 1, gTextStoryteller_Story4Title,  gTextStoryteller_Story4Action,  gTextStoryteller_Story4Text},
-    {0x06, 1, gTextStoryteller_Story5Title,  gTextStoryteller_Story5Action,  gTextStoryteller_Story5Text},
-    {0x09, 1, gTextStoryteller_Story6Title,  gTextStoryteller_Story6Action,  gTextStoryteller_Story6Text},
-    {0x0B, 1, gTextStoryteller_Story7Title,  gTextStoryteller_Story7Action,  gTextStoryteller_Story7Text},
-    {0x0C, 1, gTextStoryteller_Story8Title,  gTextStoryteller_Story8Action,  gTextStoryteller_Story8Text},
-    {0x0D, 1, gTextStoryteller_Story9Title,  gTextStoryteller_Story9Action,  gTextStoryteller_Story9Text},
-    {0x0E, 1, gTextStoryteller_Story10Title, gTextStoryteller_Story10Action, gTextStoryteller_Story10Text},
-    {0x0F, 1, gTextStoryteller_Story11Title, gTextStoryteller_Story11Action, gTextStoryteller_Story11Text},
-    {0x10, 1, gTextStoryteller_Story12Title, gTextStoryteller_Story12Action, gTextStoryteller_Story12Text},
-    {0x11, 1, gTextStoryteller_Story13Title, gTextStoryteller_Story13Action, gTextStoryteller_Story13Text},
-    {0x12, 1, gTextStoryteller_Story14Title, gTextStoryteller_Story14Action, gTextStoryteller_Story14Text},
-    {0x13, 1, gTextStoryteller_Story15Title, gTextStoryteller_Story15Action, gTextStoryteller_Story15Text},
-    {0x14, 1, gTextStoryteller_Story16Title, gTextStoryteller_Story16Action, gTextStoryteller_Story16Text},
-    {0x1A, 1, gTextStoryteller_Story17Title, gTextStoryteller_Story17Action, gTextStoryteller_Story17Text},
-    {0x1B, 1, gTextStoryteller_Story18Title, gTextStoryteller_Story18Action, gTextStoryteller_Story18Text},
-    {0x1C, 1, gTextStoryteller_Story19Title, gTextStoryteller_Story19Action, gTextStoryteller_Story19Text},
-    {0x1D, 2, gTextStoryteller_Story20Title, gTextStoryteller_Story20Action, gTextStoryteller_Story20Text},
-    {0x1E, 1, gTextStoryteller_Story21Title, gTextStoryteller_Story21Action, gTextStoryteller_Story21Text},
-    {0x21, 1, gTextStoryteller_Story22Title, gTextStoryteller_Story22Action, gTextStoryteller_Story22Text},
-    {0x24, 1, gTextStoryteller_Story23Title, gTextStoryteller_Story23Action, gTextStoryteller_Story23Text},
-    {0x25, 1, gTextStoryteller_Story24Title, gTextStoryteller_Story24Action, gTextStoryteller_Story24Text},
-    {0x26, 1, gTextStoryteller_Story25Title, gTextStoryteller_Story25Action, gTextStoryteller_Story25Text},
-    {0x27, 1, gTextStoryteller_Story26Title, gTextStoryteller_Story26Action, gTextStoryteller_Story26Text},
-    {0x28, 1, gTextStoryteller_Story27Title, gTextStoryteller_Story27Action, gTextStoryteller_Story27Text},
-    {0x29, 1, gTextStoryteller_Story28Title, gTextStoryteller_Story28Action, gTextStoryteller_Story28Text},
-    {0x2A, 1, gTextStoryteller_Story29Title, gTextStoryteller_Story29Action, gTextStoryteller_Story29Text},
-    {0x2B, 1, gTextStoryteller_Story30Title, gTextStoryteller_Story30Action, gTextStoryteller_Story30Text},
-    {0x2C, 1, gTextStoryteller_Story31Title, gTextStoryteller_Story31Action, gTextStoryteller_Story31Text},
-    {0x2D, 1, gTextStoryteller_Story32Title, gTextStoryteller_Story32Action, gTextStoryteller_Story32Text},
-    {0x2E, 1, gTextStoryteller_Story33Title, gTextStoryteller_Story33Action, gTextStoryteller_Story33Text},
-    {0x2F, 1, gTextStoryteller_Story34Title, gTextStoryteller_Story34Action, gTextStoryteller_Story34Text},
-    {0x30, 1, gTextStoryteller_Story35Title, gTextStoryteller_Story35Action, gTextStoryteller_Story35Text},
-    {0x31, 1, gTextStoryteller_Story36Title, gTextStoryteller_Story36Action, gTextStoryteller_Story36Text},
+    {0x32, 1, MauvilleCity_PokemonCenter_1F_Text_SavedGameTitle,  MauvilleCity_PokemonCenter_1F_Text_SavedGameAction,  MauvilleCity_PokemonCenter_1F_Text_SavedGameStory},
+    {0x02, 1, MauvilleCity_PokemonCenter_1F_Text_TrendsStartedTitle,  MauvilleCity_PokemonCenter_1F_Text_TrendsStartedAction,  MauvilleCity_PokemonCenter_1F_Text_TrendsStartedStory},
+    {0x03, 1, MauvilleCity_PokemonCenter_1F_Text_BerriesPlantedTitle,  MauvilleCity_PokemonCenter_1F_Text_BerriesPlantedAction,  MauvilleCity_PokemonCenter_1F_Text_BerriesPlantedStory},
+    {0x04, 1, MauvilleCity_PokemonCenter_1F_Text_BikeTradesTitle,  MauvilleCity_PokemonCenter_1F_Text_BikeTradesAction,  MauvilleCity_PokemonCenter_1F_Text_BikeTradesStory},
+    {0x06, 1, MauvilleCity_PokemonCenter_1F_Text_InterviewsTitle,  MauvilleCity_PokemonCenter_1F_Text_InterviewsAction,  MauvilleCity_PokemonCenter_1F_Text_InterviewsStory},
+    {0x09, 1, MauvilleCity_PokemonCenter_1F_Text_TrainerBattlesTitle,  MauvilleCity_PokemonCenter_1F_Text_TrainerBattlesAction,  MauvilleCity_PokemonCenter_1F_Text_TrainerBattlesStory},
+    {0x0B, 1, MauvilleCity_PokemonCenter_1F_Text_PokemonCaughtTitle,  MauvilleCity_PokemonCenter_1F_Text_PokemonCaughtAction,  MauvilleCity_PokemonCenter_1F_Text_PokemonCaughtStory},
+    {0x0C, 1, MauvilleCity_PokemonCenter_1F_Text_FishingPokemonCaughtTitle,  MauvilleCity_PokemonCenter_1F_Text_FishingPokemonCaughtAction,  MauvilleCity_PokemonCenter_1F_Text_FishingPokemonCaughtStory},
+    {0x0D, 1, MauvilleCity_PokemonCenter_1F_Text_EggsHatchedTitle,  MauvilleCity_PokemonCenter_1F_Text_EggsHatchedAction,  MauvilleCity_PokemonCenter_1F_Text_EggsHatchedStory},
+    {0x0E, 1, MauvilleCity_PokemonCenter_1F_Text_PokemonEvolvedTitle, MauvilleCity_PokemonCenter_1F_Text_PokemonEvolvedAction, MauvilleCity_PokemonCenter_1F_Text_PokemonEvolvedStory},
+    {0x0F, 1, MauvilleCity_PokemonCenter_1F_Text_UsedPokemonCenterTitle, MauvilleCity_PokemonCenter_1F_Text_UsedPokemonCenterAction, MauvilleCity_PokemonCenter_1F_Text_UsedPokemonCenterStory},
+    {0x10, 1, MauvilleCity_PokemonCenter_1F_Text_RestedAtHomeTitle, MauvilleCity_PokemonCenter_1F_Text_RestedAtHomeAction, MauvilleCity_PokemonCenter_1F_Text_RestedAtHomeStory},
+    {0x11, 1, MauvilleCity_PokemonCenter_1F_Text_SafariGamesTitle, MauvilleCity_PokemonCenter_1F_Text_SafariGamesAction, MauvilleCity_PokemonCenter_1F_Text_SafariGamesStory},
+    {0x12, 1, MauvilleCity_PokemonCenter_1F_Text_UsedCutTitle, MauvilleCity_PokemonCenter_1F_Text_UsedCutAction, MauvilleCity_PokemonCenter_1F_Text_UsedCutStory},
+    {0x13, 1, MauvilleCity_PokemonCenter_1F_Text_UsedRockSmashTitle, MauvilleCity_PokemonCenter_1F_Text_UsedRockSmashAction, MauvilleCity_PokemonCenter_1F_Text_UsedRockSmashStory},
+    {0x14, 1, MauvilleCity_PokemonCenter_1F_Text_MovedBasesTitle, MauvilleCity_PokemonCenter_1F_Text_MovedBasesAction, MauvilleCity_PokemonCenter_1F_Text_MovedBasesStory},
+    {0x1A, 1, MauvilleCity_PokemonCenter_1F_Text_UsedSplashTitle, MauvilleCity_PokemonCenter_1F_Text_UsedSplashAction, MauvilleCity_PokemonCenter_1F_Text_UsedSplashStory},
+    {0x1B, 1, MauvilleCity_PokemonCenter_1F_Text_UsedStruggleTitle, MauvilleCity_PokemonCenter_1F_Text_UsedStruggleAction, MauvilleCity_PokemonCenter_1F_Text_UsedStruggleStory},
+    {0x1C, 1, MauvilleCity_PokemonCenter_1F_Text_SlotJackpotsTitle, MauvilleCity_PokemonCenter_1F_Text_SlotJackpotsAction, MauvilleCity_PokemonCenter_1F_Text_SlotJackpotsStory},
+    {0x1D, 2, MauvilleCity_PokemonCenter_1F_Text_RouletteWinsTitle, MauvilleCity_PokemonCenter_1F_Text_RouletteWinsAction, MauvilleCity_PokemonCenter_1F_Text_RouletteWinsStory},
+    {0x1E, 1, MauvilleCity_PokemonCenter_1F_Text_BattleTowerChallengesTitle, MauvilleCity_PokemonCenter_1F_Text_BattleTowerChallengesAction, MauvilleCity_PokemonCenter_1F_Text_BattleTowerChallengesStory},
+    {0x21, 1, MauvilleCity_PokemonCenter_1F_Text_MadePokeblocksTitle, MauvilleCity_PokemonCenter_1F_Text_MadePokeblocksAction, MauvilleCity_PokemonCenter_1F_Text_MadePokeblocksStory},
+    {0x24, 1, MauvilleCity_PokemonCenter_1F_Text_EnteredContestsTitle, MauvilleCity_PokemonCenter_1F_Text_EnteredContestsAction, MauvilleCity_PokemonCenter_1F_Text_EnteredContestsStory},
+    {0x25, 1, MauvilleCity_PokemonCenter_1F_Text_WonContestsTitle, MauvilleCity_PokemonCenter_1F_Text_WonContestsAction, MauvilleCity_PokemonCenter_1F_Text_WonContestsStory},
+    {0x26, 1, MauvilleCity_PokemonCenter_1F_Text_TimesShoppedTitle, MauvilleCity_PokemonCenter_1F_Text_TimesShoppedAction, MauvilleCity_PokemonCenter_1F_Text_TimesShoppedStory},
+    {0x27, 1, MauvilleCity_PokemonCenter_1F_Text_UsedItemFinderTitle, MauvilleCity_PokemonCenter_1F_Text_UsedItemFinderAction, MauvilleCity_PokemonCenter_1F_Text_UsedItemFinderStory},
+    {0x28, 1, MauvilleCity_PokemonCenter_1F_Text_TimesRainedTitle, MauvilleCity_PokemonCenter_1F_Text_TimesRainedAction, MauvilleCity_PokemonCenter_1F_Text_TimesRainedStory},
+    {0x29, 1, MauvilleCity_PokemonCenter_1F_Text_CheckedPokedexTitle, MauvilleCity_PokemonCenter_1F_Text_CheckedPokedexAction, MauvilleCity_PokemonCenter_1F_Text_CheckedPokedexStory},
+    {0x2A, 1, MauvilleCity_PokemonCenter_1F_Text_ReceivedRibbonsTitle, MauvilleCity_PokemonCenter_1F_Text_ReceivedRibbonsAction, MauvilleCity_PokemonCenter_1F_Text_ReceivedRibbonsStory},
+    {0x2B, 1, MauvilleCity_PokemonCenter_1F_Text_LedgesJumpedTitle, MauvilleCity_PokemonCenter_1F_Text_LedgesJumpedAction, MauvilleCity_PokemonCenter_1F_Text_LedgesJumpedStory},
+    {0x2C, 1, MauvilleCity_PokemonCenter_1F_Text_TVWatchedTitle, MauvilleCity_PokemonCenter_1F_Text_TVWatchedAction, MauvilleCity_PokemonCenter_1F_Text_TVWatchedStory},
+    {0x2D, 1, MauvilleCity_PokemonCenter_1F_Text_CheckedClockTitle, MauvilleCity_PokemonCenter_1F_Text_CheckedClockAction, MauvilleCity_PokemonCenter_1F_Text_CheckedClockStory},
+    {0x2E, 1, MauvilleCity_PokemonCenter_1F_Text_WonLotteryTitle, MauvilleCity_PokemonCenter_1F_Text_WonLotteryAction, MauvilleCity_PokemonCenter_1F_Text_WonLotteryStory},
+    {0x2F, 1, MauvilleCity_PokemonCenter_1F_Text_UsedDaycareTitle, MauvilleCity_PokemonCenter_1F_Text_UsedDaycareAction, MauvilleCity_PokemonCenter_1F_Text_UsedDaycareStory},
+    {0x30, 1, MauvilleCity_PokemonCenter_1F_Text_RodeCableCarTitle, MauvilleCity_PokemonCenter_1F_Text_RodeCableCarAction, MauvilleCity_PokemonCenter_1F_Text_RodeCableCarStory},
+    {0x31, 1, MauvilleCity_PokemonCenter_1F_Text_HotSpringsTitle, MauvilleCity_PokemonCenter_1F_Text_HotSpringsAction, MauvilleCity_PokemonCenter_1F_Text_HotSpringsStory},
 };
 
 static void StorytellerSetup(void)
 {
-    struct MauvilleManStoryteller *storyteller = &gSaveBlock1.mauvilleMan.storyteller;
+    struct MauvilleManStoryteller *storyteller = &gSaveBlock1.oldMan.storyteller;
     s32 i;
 
     storyteller->id = MAUVILLE_MAN_STORYTELLER;
@@ -872,9 +764,9 @@ static void StorytellerSetup(void)
     }
 }
 
-static void sub_80F8428(void)
+static void Storyteller_ResetFlag(void)
 {
-    struct MauvilleManStoryteller *storyteller = &gSaveBlock1.mauvilleMan.storyteller;
+    struct MauvilleManStoryteller *storyteller = &gSaveBlock1.oldMan.storyteller;
 
     storyteller->id = MAUVILLE_MAN_STORYTELLER;
     storyteller->alreadyRecorded = FALSE;
@@ -920,7 +812,7 @@ static u8 GetFreeStorySlot(void)
 
     for (i = 0; i < 4; i++)
     {
-        struct MauvilleManStoryteller *storyteller = &gSaveBlock1.mauvilleMan.storyteller;
+        struct MauvilleManStoryteller *storyteller = &gSaveBlock1.oldMan.storyteller;
 
         if (storyteller->gameStatIDs[i] == 0)
             break;
@@ -930,14 +822,14 @@ static u8 GetFreeStorySlot(void)
 
 static u32 StorytellerGetRecordedTrainerStat(u32 trainer)
 {
-    u8 *ptr = gSaveBlock1.mauvilleMan.storyteller.statValues[trainer];
+    u8 *ptr = gSaveBlock1.oldMan.storyteller.statValues[trainer];
 
     return ptr[0] | (ptr[1] << 8) | (ptr[2] << 16) | (ptr[3] << 24);
 }
 
 static void StorytellerSetRecordedTrainerStat(u32 trainer, u32 val)
 {
-    u8 *ptr = gSaveBlock1.mauvilleMan.storyteller.statValues[trainer];
+    u8 *ptr = gSaveBlock1.oldMan.storyteller.statValues[trainer];
 
     ptr[0] = val;
     ptr[1] = val >> 8;
@@ -947,7 +839,7 @@ static void StorytellerSetRecordedTrainerStat(u32 trainer, u32 val)
 
 static bool32 HasTrainerStatIncreased(u32 trainer)
 {
-    struct MauvilleManStoryteller *storyteller = &gSaveBlock1.mauvilleMan.storyteller;
+    struct MauvilleManStoryteller *storyteller = &gSaveBlock1.oldMan.storyteller;
 
     if (StorytellerGetGameStat(storyteller->gameStatIDs[trainer]) > StorytellerGetRecordedTrainerStat(trainer))
         return TRUE;
@@ -957,7 +849,7 @@ static bool32 HasTrainerStatIncreased(u32 trainer)
 
 static void GetStoryByStattellerPlayerName(u32 player, void *dst)
 {
-    u8 *name = gSaveBlock1.mauvilleMan.storyteller.trainerNames[player];
+    u8 *name = gSaveBlock1.oldMan.storyteller.trainerNames[player];
 
     memset(dst, EOS, 8);
     memcpy(dst, name, 7);
@@ -965,7 +857,7 @@ static void GetStoryByStattellerPlayerName(u32 player, void *dst)
 
 static void StorytellerSetPlayerName(u32 player, const u8 *src)
 {
-    u8 *name = gSaveBlock1.mauvilleMan.storyteller.trainerNames[player];
+    u8 *name = gSaveBlock1.oldMan.storyteller.trainerNames[player];
     u8 len = StringLength(src);
 
     memset(name, EOS, 7);
@@ -974,7 +866,7 @@ static void StorytellerSetPlayerName(u32 player, const u8 *src)
 
 static void StorytellerRecordNewStat(u32 player, u32 stat)
 {
-    struct MauvilleManStoryteller *storyteller = &gSaveBlock1.mauvilleMan.storyteller;
+    struct MauvilleManStoryteller *storyteller = &gSaveBlock1.oldMan.storyteller;
 
     storyteller->gameStatIDs[player] = stat;
     StorytellerSetPlayerName(player, gSaveBlock2.playerName);
@@ -1003,26 +895,26 @@ static void ScrambleStatList(u8 *arr, s32 count)
 static const struct {u32 length; struct MauvilleManStoryteller *unused1; u32 unused2;} sStorytellerStuff =
 {
     36,
-    &gSaveBlock1.mauvilleMan.storyteller,  // unused
+    &gSaveBlock1.oldMan.storyteller,  // unused
     12,                                    // unused
 };
 
 static bool8 StorytellerInitializeRandomStat(void)
 {
-    u8 arr[sStorytellerStuff.length];
+    u8 storyIds[sStorytellerStuff.length];
     s32 i;
     s32 j;
 
-    ScrambleStatList(arr, 36);
+    ScrambleStatList(storyIds, 36);
     for (i = 0; i < 36; i++)
     {
-        u8 stat = sStorytellerStories[arr[i]].stat;
-        u8 minVal = sStorytellerStories[arr[i]].minVal;
-        struct MauvilleManStoryteller *storyteller = &gSaveBlock1.mauvilleMan.storyteller;
+        u8 stat = sStorytellerStories[storyIds[i]].stat;
+        u8 minVal = sStorytellerStories[storyIds[i]].minVal;
+        struct MauvilleManStoryteller *storyteller = &gSaveBlock1.oldMan.storyteller;
 
         for (j = 0; j < 4; j++)
         {
-            if (gSaveBlock1.mauvilleMan.storyteller.gameStatIDs[j] == stat)
+            if (gSaveBlock1.oldMan.storyteller.gameStatIDs[j] == stat)
                 break;
         }
         if (j == 4 && StorytellerGetGameStat(stat) >= minVal)
@@ -1037,7 +929,7 @@ static bool8 StorytellerInitializeRandomStat(void)
 
 static void StorytellerDisplayStory(u32 player)
 {
-    struct MauvilleManStoryteller *storyteller = &gSaveBlock1.mauvilleMan.storyteller;
+    struct MauvilleManStoryteller *storyteller = &gSaveBlock1.oldMan.storyteller;
     u8 stat = storyteller->gameStatIDs[player];
 
     ConvertIntToDecimalStringN(gStringVar1, StorytellerGetRecordedTrainerStat(player), 0, 10);
@@ -1053,17 +945,17 @@ static void PrintStoryList(void)
     Menu_DrawStdWindowFrame(0, 0, 25, 4 + GetFreeStorySlot() * 2);
     for (i = 0; i < 4; i++)
     {
-        struct MauvilleManStoryteller *storyteller = &gSaveBlock1.mauvilleMan.storyteller;
-        u8 stat = storyteller->gameStatIDs[i];
+        struct MauvilleManStoryteller *storyteller = &gSaveBlock1.oldMan.storyteller;
+        u8 gameStatID = storyteller->gameStatIDs[i];
 
-        if (stat == 0)
+        if (gameStatID == 0)
             break;
-        Menu_PrintText(GetStoryTitleByStat(stat), 1, 2 + i * 2);
+        Menu_PrintText(GetStoryTitleByStat(gameStatID), 1, 2 + i * 2);
     }
     Menu_PrintText(gPCText_Cancel, 1, 2 + i * 2);
 }
 
-static u8 gUnknown_03000748;
+static u8 sSelectedStory;
 
 static void Task_StoryListMenu(u8 taskId)
 {
@@ -1088,7 +980,7 @@ static void Task_StoryListMenu(u8 taskId)
         else
         {
             gSpecialVar_Result = 1;
-            gUnknown_03000748 = selection;
+            sSelectedStory = selection;
         }
         Menu_DestroyCursor();
         Menu_EraseWindowRect(0, 0, 25, 12);
@@ -1099,38 +991,38 @@ static void Task_StoryListMenu(u8 taskId)
 }
 
 // Sets gSpecialVar_Result to TRUE if player selected a story
-void ScrSpecial_StorytellerStoryListMenu(void)
+void StorytellerStoryListMenu(void)
 {
     CreateTask(Task_StoryListMenu, 0x50);
 }
 
-void ScrSpecial_StorytellerDisplayStory(void)
+void Script_StorytellerDisplayStory(void)
 {
-    StorytellerDisplayStory(gUnknown_03000748);
+    StorytellerDisplayStory(sSelectedStory);
 }
 
-u8 ScrSpecial_StorytellerGetFreeStorySlot(void)
+u8 StorytellerGetFreeStorySlot(void)
 {
     return GetFreeStorySlot();
 }
 
 // Returns TRUE if stat has increased
-bool8 ScrSpecial_StorytellerUpdateStat(void)
+bool8 StorytellerUpdateStat(void)
 {
-    struct MauvilleManStoryteller *storyteller = &gSaveBlock1.mauvilleMan.storyteller;
-    u8 r4 = storyteller->gameStatIDs[gUnknown_03000748];
+    struct MauvilleManStoryteller *storyteller = &gSaveBlock1.oldMan.storyteller;
+    u8 stat = storyteller->gameStatIDs[sSelectedStory];
 
-    if (HasTrainerStatIncreased(gUnknown_03000748) == TRUE)
+    if (HasTrainerStatIncreased(sSelectedStory) == TRUE)
     {
-        StorytellerRecordNewStat(gUnknown_03000748, r4);
+        StorytellerRecordNewStat(sSelectedStory, stat);
         return TRUE;
     }
     return FALSE;
 }
 
-bool8 ScrSpecial_HasStorytellerAlreadyRecorded(void)
+bool8 HasStorytellerAlreadyRecorded(void)
 {
-    struct MauvilleManStoryteller *storyteller = &gSaveBlock1.mauvilleMan.storyteller;
+    struct MauvilleManStoryteller *storyteller = &gSaveBlock1.oldMan.storyteller;
 
     if (storyteller->alreadyRecorded == FALSE)
         return FALSE;
@@ -1138,7 +1030,7 @@ bool8 ScrSpecial_HasStorytellerAlreadyRecorded(void)
         return TRUE;
 }
 
-bool8 ScrSpecial_StorytellerInitializeRandomStat(void)
+bool8 Script_StorytellerInitializeRandomStat(void)
 {
     return StorytellerInitializeRandomStat();
 }
