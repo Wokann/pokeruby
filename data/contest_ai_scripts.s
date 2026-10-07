@@ -598,9 +598,9 @@ ContestEffectEnd:
 
 @ Randomly encourage moves in Cute, Smart, and Tough contests.
 AI_Erratic:
-	if_contest_type_eq CONTEST_CUTE, Erratic_CuteSmartTough
-	if_contest_type_eq CONTEST_SMART, Erratic_CuteSmartTough
-	if_contest_type_eq CONTEST_TOUGH, Erratic_CuteSmartTough
+	if_contest_type_eq CONTEST_CATEGORY_CUTE, Erratic_CuteSmartTough
+	if_contest_type_eq CONTEST_CATEGORY_SMART, Erratic_CuteSmartTough
+	if_contest_type_eq CONTEST_CATEGORY_TOUGH, Erratic_CuteSmartTough
 	end
 Erratic_CuteSmartTough:
 	if_random 125, Erratic_NoScoreIncrease

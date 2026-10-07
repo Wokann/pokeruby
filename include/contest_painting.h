@@ -6,32 +6,6 @@
 #define MOSAIC_BIT_OBJ_HSIZE (8)
 #define MOSAIC_BIT_OBJ_VSIZE (12)
 
-enum
-{
-    NORMAL_RANK,
-    SUPER_RANK,
-    HYPER_RANK,
-    MASTER_RANK,
-};
-
-enum
-{
-    CONTEST_COOL,
-    CONTEST_BEAUTY,
-    CONTEST_CUTE,
-    CONTEST_SMART,
-    CONTEST_TOUGH,
-};
-
-enum
-{
-    CONTESTRESULT_COOL = 9,
-    CONTESTRESULT_BEAUTY = 13,
-    CONTESTRESULT_CUTE = 2,
-    CONTESTRESULT_SMART = 36,
-    CONTESTRESULT_TOUGH = 6,
-};
-
 struct ContestPaintingBuffers
 {
     u16 pixels[0x1000];

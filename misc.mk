@@ -201,7 +201,7 @@ $(CONTESTGFXDIR)/nextturn.4bpp: GFX_OPTS := -num_tiles 8
 
 PICFRAMEGFXDIR := graphics/picture_frame
 
-$(PICFRAMEGFXDIR)/frame5.4bpp: GFX_OPTS := -num_tiles 86
+$(PICFRAMEGFXDIR)/lobby.4bpp: GFX_OPTS := -num_tiles 86
 
 
 #### Move Types ####
