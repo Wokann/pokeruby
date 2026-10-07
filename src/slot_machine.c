@@ -20,70 +20,70 @@
 
 enum
 {
-    SLOT_MACHINE_TAG_7_RED,
-    SLOT_MACHINE_TAG_7_BLUE,
-    SLOT_MACHINE_TAG_AZURILL,
-    SLOT_MACHINE_TAG_LOTAD,
-    SLOT_MACHINE_TAG_CHERRY,
-    SLOT_MACHINE_TAG_POWER,
-    SLOT_MACHINE_TAG_REPLAY
+    SYMBOL_7_RED,
+    SYMBOL_7_BLUE,
+    SYMBOL_AZURILL,
+    SYMBOL_LOTAD,
+    SYMBOL_CHERRY,
+    SYMBOL_POWER,
+    SYMBOL_REPLAY
 };
 
 enum
 {
-    SLOT_MACHINE_MATCHED_1CHERRY,
-    SLOT_MACHINE_MATCHED_2CHERRY,
-    SLOT_MACHINE_MATCHED_REPLAY,
-    SLOT_MACHINE_MATCHED_LOTAD,
-    SLOT_MACHINE_MATCHED_AZURILL,
-    SLOT_MACHINE_MATCHED_POWER,
-    SLOT_MACHINE_MATCHED_777_MIXED,
-    SLOT_MACHINE_MATCHED_777_RED,
-    SLOT_MACHINE_MATCHED_777_BLUE,
-    SLOT_MACHINE_MATCHED_NONE
+    MATCH_CHERRY,
+    MATCH_TOPBOT_CHERRY,
+    MATCH_REPLAY,
+    MATCH_LOTAD,
+    MATCH_AZURILL,
+    MATCH_POWER,
+    MATCH_MIXED_7,
+    MATCH_RED_7,
+    MATCH_BLUE_7,
+    MATCH_NONE
 };
 
 struct SlotMachineEwramStruct
 {
     /*0x00*/ u8 state;
-    /*0x01*/ u8 unk01;
-    /*0x02*/ u8 pikaPower;
-    /*0x03*/ u8 unk03;
-    /*0x04*/ u8 unk04;
-    /*0x05*/ u8 unk05;
-    /*0x06*/ u8 unk06;
-    /*0x07*/ u8 unk07;
-    /*0x08*/ u16 matchedSymbols;
-    /*0x0A*/ u8 unk0A;
-    /*0x0B*/ u8 unk0B;
+    /*0x01*/ u8 machineId;
+    /*0x02*/ u8 pikaPowerBolts;
+    /*0x03*/ u8 luckyGame;
+    /*0x04*/ u8 machineBias;
+    /*0x05*/ u8 reelTimeDraw;
+    /*0x06*/ u8 didNotFailBias;
+    /*0x07*/ u8 biasSymbol;
+    /*0x08*/ u16 matches;
+    /*0x0A*/ u8 reelTimeSpinsLeft;
+    /*0x0B*/ u8 reelTimeSpinsUsed;
     /*0x0C*/ s16 coins;
     /*0x0E*/ s16 payout;
-    /*0x10*/ s16 unk10;
+    /*0x10*/ s16 netCoinLoss;
     /*0x12*/ s16 bet;
-    /*0x14*/ s16 unk14;
-    /*0x16*/ s16 unk16;
-    /*0x18*/ s16 unk18;
-    /*0x1A*/ s16 unk1A;
-    /*0x1C*/ s16 unk1C[3];
-    /*0x22*/ u16 unk22[3];
+    /*0x14*/ s16 reeltimePixelOffset;
+    /*0x16*/ s16 reeltimePosition;
+    /*0x18*/ s16 currentReel;
+    /*0x1A*/ s16 reelSpeed;
+    /*0x1C*/ s16 reelPixelOffsets[3];
+    /*0x22*/ u16 reelShockOffsets[3];
     /*0x28*/ s16 reelPositions[3];
-    /*0x2E*/ s16 unk2E[3];
-    /*0x34*/ s16 unk34[3];
-    /*0x3A*/ u8 reelTasks[3];
-    /*0x3D*/ u8 unk3D;
-    /*0x3E*/ u8 unk3E;
-    /*0x3F*/ u8 unk3F;
-    /*0x40*/ u8 unk40;
-    /*0x41*/ u8 unk41;
-    /*0x42*/ u8 unk42;
-    /*0x43*/ u8 unk43;
-    /*0x44*/ u8 unk44[5];
-    /*0x49*/ u8 unk49[2];
-    /*0x49*/ u8 unk4B[3];
-    /*0x4E*/ u8 unk4E[2];
-    /*0x50*/ u8 unk50[2];
-    /*0x52*/ u8 unk52[2];
-    /*0x54*/ u8 unk54[4];
+    /*0x2E*/ s16 reelExtraTurns[3];
+    /*0x34*/ s16 winnerRows[3];
+    /*0x3A*/ u8 slotReelTasks[3];
+    /*0x3D*/ u8 digDisplayTaskId;
+    /*0x3E*/ u8 pikaPowerBoltTaskId;
+    /*0x3F*/ u8 reelTimePikachuSpriteId;
+    /*0x40*/ u8 reelTimeNumberGapSpriteId;
+    /*0x41*/ u8 reelTimeExplosionSpriteId;
+    /*0x42*/ u8 reelTimeBrokenMachineSpriteId;
+    /*0x43*/ u8 reelTimeSmokeSpriteId;
+    /*0x44*/ u8 flashMatchLineSpriteIds[5];
+    /*0x49*/ u8 reelTimeMachineSpriteIds[2];
+    /*0x49*/ u8 reelTimeNumberSpriteIds[3];
+    /*0x4E*/ u8 reelTimeShadowSpriteIds[2];
+    /*0x50*/ u8 reelTimeBoltSpriteIds[2];
+    /*0x52*/ u8 reelTimePikachuAuraSpriteIds[2];
+    /*0x54*/ u8 reelTimeDuckSpriteIds[4];
     /*0x58*/ u16 win0h;
     /*0x5a*/ u16 win0v;
     /*0x5c*/ u16 winIn;
@@ -105,11 +105,11 @@ struct SlotMachineEwramStruct
 #endif
 };
 
-struct UnkStruct1
+struct DigitalDisplaySprite
 {
-    /*0x00*/ u8 unk00;
-    /*0x01*/ u8 unk01;
-    /*0x02*/ s16 unk02;
+    /*0x00*/ u8 spriteTemplateId;
+    /*0x01*/ u8 dispInfoId;
+    /*0x02*/ s16 spriteId;
 };
 
 #if ENGLISH
@@ -118,44 +118,46 @@ struct UnkStruct1
 #define SLOTMACHINE_GFX_TILES 236
 #endif
 
+static void DestroyDigitalDisplayScene(void);
+static u8 CreateStdDigitalDisplaySprite(u8 templateIdx, u8 dispInfoId, s16 spriteId);
 static void CB2_SlotMachineSetup(void);
 static void CB2_SlotMachineLoop(void);
 static void PlaySlotMachine_Internal(u8 arg0, MainCallback cb);
 static void SlotMachineDummyTask(u8 taskId);
 static void SlotMachineSetup_0_0(void);
 static void SlotMachineSetup_6_2(void);
-static void SlotMachineSetup_1_0(void);
-static void SlotMachineSetup_2_0(void);
+static void SlotMachineSetup_InitVRAM(void);
+static void SlotMachineSetup_InitOAM(void);
 static void SlotMachineSetup_2_1(void);
 static void SlotMachineSetup_0_1(void);
 static void SlotMachineSetup_3_0(void);
-static void SlotMachineSetup_4_0(void);
+static void SlotMachineSetup_InitPalsSpritesTasks(void);
 static void SlotMachineSetup_5_0(void);
-static void SlotMachineSetup_6_0(void);
-static void SlotMachineSetup_6_1(void);
-static void sub_8101D04(void);
-static void sub_8101D24(u8 taskId);
-static bool8 sub_8101D5C(struct Task *task);
-static bool8 sub_8101D8C(struct Task *task);
-static bool8 sub_8101DB0(struct Task *task);
-static bool8 sub_8101DF4(struct Task *task);
+static void CreateSlotMachineSprites(void);
+static void CreateGameplayTasks(void);
+static void CreateSlotMachineTasks(void);
+static void Task_SlotMachine(u8 taskId);
+static bool8 SlotTask_UnfadeScreen(struct Task *task);
+static bool8 SlotTask_WaitUnfade(struct Task *task);
+static bool8 SlotTask_ReadyNewSpin(struct Task *task);
+static bool8 SlotTask_ReadyNewReelTimeSpin(struct Task *task);
 static bool8 sub_8101E10(struct Task *task);
 static bool8 sub_8101E3C(struct Task *task);
 static bool8 sub_8101F44(struct Task *task);
 static bool8 sub_8101F60(struct Task *task);
-static bool8 sub_8101F88(struct Task *task);
+static bool8 SlotTask_WaitInfoBox(struct Task *task);
 static bool8 sub_8101FA4(struct Task *task);
-static bool8 sub_8102008(struct Task *task);
+static bool8 SlotTask_StartReelTimeSpin(struct Task *task);
 static bool8 sub_8102034(struct Task *task);
 static bool8 sub_8102058(struct Task *task);
 static bool8 sub_8102090(struct Task *task);
 bool8 sub_81020C8(struct Task *task);
-static bool8 sub_81021E0(struct Task *task);
-static bool8 sub_81021FC(struct Task *task);
-static bool8 sub_8102264(struct Task *task);
-static bool8 sub_81022A0(struct Task *task);
-static bool8 sub_81022CC(struct Task *task);
-static bool8 sub_81022F0(struct Task *task);
+static bool8 SlotTask_WaitPayout(struct Task *task);
+static bool8 SlotTask_EndPayout(struct Task *task);
+static bool8 SlotTask_MatchedPower(struct Task *task);
+static bool8 SlotTask_WaitReelTimeAnim(struct Task *task);
+static bool8 SlotTask_ResetBetTiles(struct Task *task);
+static bool8 SlotTask_NoMatches(struct Task *task);
 static bool8 sub_8102318(struct Task *task);
 static bool8 sub_8102344(struct Task *task);
 static bool8 sub_810239C(struct Task *task);
@@ -168,143 +170,143 @@ static bool8 sub_8102460(struct Task *task);
 static bool8 debug_sub_8116E74(struct Task *);
 #endif
 static void sub_8102484(void);
-static void sub_81024F0(void);
-static bool8 sub_8102540(void);
-static u8 sub_8102578(void);
-static u16 dp15_jump_random_unknown(void);
-static u8 sub_81025BC(void);
+static void ResetBiasFailure(void);
+static bool8 ShouldTrySpecialBias(void);
+static u8 TrySelectBias_Special(void);
+static u16 ReelTimeSpeed(void);
+static u8 TrySelectBias_Regular(void);
 static void CheckMatch(void);
 static void CheckMatch_CenterRow(void);
 static void CheckMatch_TopAndBottom(void);
 static void CheckMatch_Diagonals(void);
-static u8 GetMatchFromSymbolsInRow(u8 c1, u8 c2, u8 c3);
-static void sub_8102A24(void);
-static void sub_8102A64(u8 taskId);
-static bool8 sub_8102A44(void);
-static bool8 sub_8102A9C(struct Task *task);
-static bool8 sub_8102AD0(struct Task *task);
-static bool8 sub_8102B80(struct Task *task);
-static u8 GetTagOfReelSymbolOnScreenAtPos(u8 x, s16 y);
-static void sub_8102DA8(void);
-static void sub_8102DEC(u8 a0);
-static void sub_8102E1C(u8 a0);
-static bool8 sub_8102E40(u8 a0);
-static void sub_8102E68(u8 taskId);
-static bool8 sub_8102EA0(struct Task *task);
-static bool8 sub_8102EA4(struct Task *task);
-static bool8 sub_8102EC0(struct Task *task);
-static bool8 sub_8102F4C(struct Task *task);
-static bool8 sub_8103008(struct Task *task);
-static bool8 sub_810305C(void);
-static bool8 sub_8103154(u8 a0, u8 a1);
-static bool8 sub_81031B4(u8 a0, u8 a1);
-static bool8 sub_81032C0(void);
-static bool8 sub_81032E8(void);
-static bool8 sub_810333C(void);
-static bool8 sub_81033DC(void);
-static bool8 sub_810341C(u8 a0);
-static bool8 sub_810347C(u8 a0);
-static void sub_81034F4(void);
-static void sub_8103540(void);
-static void sub_8103564(void);
-static void j5_08111E84(void);
-static void sub_8103668(void);
-static void sub_810380C(void);
-static void sub_8103830(void);
-static void sub_8103910(void);
-static void sub_8103A78(void);
-static void sub_8103C14(u8 a0);
-static void sub_8103C48(u8 taskId);
-static void sub_8103D50(u8 a0);
-static void sub_8103C78(struct Task *task, u8 taskId);
-static void sub_8103CAC(struct Task *task, u8 taskId);
-static void sub_8103CC8(struct Task *task, u8 taskId);
-static void sub_8103D8C(u8 a0);
-static void sub_8103DC8(void);
-static void sub_8103E04(u8 a0);
-static bool8 sub_8103E38(void);
-static bool8 sub_8103E7C(void);
-static bool8 sub_8103EAC(u8 spriteId);
-static void sub_8103EE4(struct Sprite *sprite);
-static void sub_8103F70(void);
-static bool8 sub_8103FA0(void);
-static void sub_8103FE8(u8 taskId);
-static void sub_8104048(void);
-static void sub_8104064(u8 pikaPower);
-static bool8 sub_81040C8(void);
-static void sub_81040E8(u8 taskId);
-static void nullsub_68(struct Task *task);
-static void sub_810411C(struct Task *task);
+static u8 GetMatchFromSymbols(u8 c1, u8 c2, u8 c3);
+static void AwardPayout(void);
+static void Task_Payout(u8 taskId);
+static bool8 IsFinalTask_Task_Payout(void);
+static bool8 PayoutTask_Init(struct Task *task);
+static bool8 PayoutTask_GivePayout(struct Task *task);
+static bool8 PayoutTask_Free(struct Task *task);
+static u8 GetSymbolAtRest(u8 x, s16 y);
+static void CreateReelTasks(void);
+static void SpinSlotReel(u8 a0);
+static void StopSlotReel(u8 a0);
+static bool8 IsSlotReelMoving(u8 a0);
+static void Task_Reel(u8 taskId);
+static bool8 ReelTask_StayStill(struct Task *task);
+static bool8 ReelTask_Spin(struct Task *task);
+static bool8 ReelTask_DecideStop(struct Task *task);
+static bool8 ReelTask_MoveToStop(struct Task *task);
+static bool8 ReelTask_ShakingStop(struct Task *task);
+static bool8 DecideStop_Bias_Reel1(void);
+static bool8 DecideStop_Bias_Reel1_Bet1(u8 a0, u8 a1);
+static bool8 DecideStop_Bias_Reel1_Bet2or3(u8 a0, u8 a1);
+static bool8 DecideStop_Bias_Reel2(void);
+static bool8 DecideStop_Bias_Reel2_Bet1or2(void);
+static bool8 DecideStop_Bias_Reel2_Bet3(void);
+static bool8 DecideStop_Bias_Reel3(void);
+static bool8 DecideStop_Bias_Reel3_Bet1or2(u8 a0);
+static bool8 DecideStop_Bias_Reel3_Bet3(u8 a0);
+static void DecideStop_NoBias_Reel1(void);
+static void DecideStop_NoBias_Reel2(void);
+static void DecideStop_NoBias_Reel2_Bet1(void);
+static void DecideStop_NoBias_Reel2_Bet2(void);
+static void DecideStop_NoBias_Reel2_Bet3(void);
+static void DecideStop_NoBias_Reel3(void);
+static void DecideStop_NoBias_Reel3_Bet1(void);
+static void DecideStop_NoBias_Reel3_Bet2(void);
+static void DecideStop_NoBias_Reel3_Bet3(void);
+static void PressStopReelButton(u8 a0);
+static void Task_PressStopReelButton(u8 taskId);
+static void LightenBetTiles(u8 a0);
+static void StopReelButton_Press(struct Task *task, u8 taskId);
+static void StopReelButton_Wait(struct Task *task, u8 taskId);
+static void StopReelButton_Unpress(struct Task *task, u8 taskId);
+static void DarkenBetTiles(u8 a0);
+static void CreateInvisibleFlashMatchLineSprites(void);
+static void FlashMatchLine(u8 a0);
+static bool8 IsMatchLineDoneFlashingBeforePayout(void);
+static bool8 TryStopMatchLinesFlashing(void);
+static bool8 TryStopMatchLineFlashing(u8 spriteId);
+static void SpriteCB_FlashMatchingLines(struct Sprite *sprite);
+static void FlashSlotMachineLights(void);
+static bool8 TryStopSlotMachineLights(void);
+static void Task_FlashSlotMachineLights(u8 taskId);
+static void CreatePikaPowerBoltTask(void);
+static void AddPikaPowerBolt(u8 pikaPower);
+static bool8 IsPikaPowerBoltAnimating(void);
+static void Task_CreatePikaPowerBolt(u8 taskId);
+static void PikaPowerBolt_Idle(struct Task *task);
+static void PikaPowerBolt_AddBolt(struct Task *task);
 static void sub_8104144(struct Task *task);
 static void sub_81041AC(struct Task *task);
-static void sub_810421C(struct Task *task);
+static void ResetPikaPowerBoltTask(struct Task *task);
 static void sub_810423C(u8 pikaPower);
-static void sub_810430C(void);
-static bool8 sub_810432C(void);
-static void sub_810434C(u8 taskId);
+static void BeginReelTime(void);
+static bool8 IsReelTimeTaskDone(void);
+static void Task_ReelTime(u8 taskId);
 static void sub_810437C(struct Task *task);
 static void sub_81043EC(struct Task *task);
-static void sub_8104468(struct Task *task);
-static void sub_8104498(struct Task *task);
-static void sub_8104548(struct Task *task);
-static void sub_8104598(struct Task *task);
-static void sub_81045CC(struct Task *task);
-static void sub_810463C(struct Task *task);
-static void sub_81046C0(struct Task *task);
-static void sub_8104764(struct Task *task);
+static void ReelTime_WaitStartPikachu(struct Task *task);
+static void ReelTime_PikachuSpeedUp1(struct Task *task);
+static void ReelTime_PikachuSpeedUp2(struct Task *task);
+static void ReelTime_WaitReel(struct Task *task);
+static void ReelTime_CheckExplode(struct Task *task);
+static void ReelTime_LandOnOutcome(struct Task *task);
+static void ReelTime_PikachuReact(struct Task *task);
+static void ReelTime_WaitClearPikaPower(struct Task *task);
 static void sub_8104794(struct Task *task);
 static void sub_81047EC(struct Task *task);
-static void sub_8104860(struct Task *task);
-static void sub_81048A8(struct Task *task);
-static void sub_81048CC(struct Task *task);
+static void ReelTime_SetReelSpeed(struct Task *task);
+static void ReelTime_EndSuccess(struct Task *task);
+static void ReelTime_ExplodeMachine(struct Task *task);
 static void sub_8104940(struct Task *task);
 static void sub_81049C8(struct Task *task);
 static void sub_81049F8(struct Task *task);
 static void sub_8104A40(s16 a0, s16 a1);
 static void sub_8104A88(s16 a0);
-static void sub_8104AB8(u8 a0);
-static bool8 sub_8104AEC(void);
-static void sub_8104B0C(u8 taskId);
-static void sub_8104B3C(struct Task *task);
-static void sub_8104B60(struct Task *task);
+static void OpenInfoBox(u8 a0);
+static bool8 IsInfoBoxClosed(void);
+static void Task_InfoBox(u8 taskId);
+static void InfoBox_FadeIn(struct Task *task);
+static void InfoBox_WaitFade(struct Task *task);
 static void sub_8104B80(struct Task *task);
 static void sub_8104BC8(struct Task *task);
 static void sub_8104BFC(struct Task *task);
-static void sub_8104C44(struct Task *task);
-static void sub_8104C5C(void);
+static void InfoBox_FreeTask(struct Task *task);
+static void CreateDigitalDisplayTask(void);
 static void sub_8104CAC(u8 arg0);
-static bool8 sub_8104E18(void);
-static void nullsub_69(struct Task *task);
-static void sub_8104E74(u8 taskId);
-static void sub_8104EA8(void);
-static void sub_8104F8C(void);
-static void sub_8104FF4(s16 x, s16 y, u8 a2, s16 a3);
-static void sub_81050C4(void);
+static bool8 IsDigitalDisplayAnimFinished(void);
+static void DigitalDisplay_Idle(struct Task *task);
+static void Task_DigitalDisplay(u8 taskId);
+static void CreateReelSymbolSprites(void);
+static void CreateCreditPayoutNumberSprites(void);
+static void CreateCoinNumberSprite(s16 x, s16 y, u8 a2, s16 a3);
+static void CreateReelBackgroundSprite(void);
 static void sub_8105100(void);
 static void sub_810514C(void);
 static void sub_81051C0(void);
 static void sub_8105284(void);
-static void sub_81052EC(void);
-static void sub_81053A0(void);
-static void sub_810545C(void);
+static void CreateReelTimeNumberSprites(void);
+static void CreateReelTimeShadowSprites(void);
+static void CreateReelTimeNumberGapSprite(void);
 static void sub_81054B8(void);
-static void sub_8105524(void);
+static void DestroyReelTimeShadowSprites(void);
 static void sub_8105554(void);
-static void sub_8105578(void);
-static void sub_8105688(s16 a0);
-static void sub_81056C0(void);
-static void sub_81056F0(void);
-static void sub_81057E8(s16 a0);
-static void sub_8105804(void);
-static void sub_8105854(void);
-static void sub_81058A0(void);
-static void sub_81058C4(void);
-static void sub_81059B8(void);
-static void sub_81059E8(void);
-static bool8 sub_8105ACC(void);
-static void sub_8105AEC(void);
-static u8 sub_8105B1C(s16 x, s16 y);
-static void sub_8105B88(u8 spriteId);
+static void CreateReelTimeBoltSprites(void);
+static void SetReelTimeBoltDelay(s16 a0);
+static void DestroyReelTimeBoltSprites(void);
+static void CreateReelTimePikachuAuraSprites(void);
+static void SetReelTimePikachuAuraFlashDelay(s16 a0);
+static void DestroyReelTimePikachuAuraSprites(void);
+static void CreateReelTimeExplosionSprite(void);
+static void DestroyReelTimeExplosionSprite(void);
+static void CreateReelTimeDuckSprites(void);
+static void DestroyReelTimeDuckSprites(void);
+static void CreateReelTimeSmokeSprite(void);
+static bool8 IsReelTimeSmokeAnimFinished(void);
+static void DestroyReelTimeSmokeSprite(void);
+static u8 CreatePikaPowerBoltSprite(s16 x, s16 y);
+static void DestroyPikaPowerBoltSprite(u8 spriteId);
 static u8 sub_8105BF8(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 a4);
 static void sub_81063C0(void);
 static void sub_8106404(void);
@@ -333,19 +335,19 @@ static u32 unk_debug_bss_1_8;
 
 static struct SlotMachineEwramStruct *const sSlotMachine = eSlotMachine;
 
-static const struct UnkStruct1 *const gUnknown_083ED048[];
+static const struct DigitalDisplaySprite *const sDigitalDisplayScenes[];
 static const u16 gPalette_83EDE24[];
-static const u8 gUnknown_083ECD04[][3];
-static const u8 gUnknown_083ECE3A[];
-static const u16 gUnknown_083ECE42[];
-static const u16 gUnknown_083ECE48[];
+static const u8 sSpecialDrawOdds[][3];
+static const u8 sBiasSymbols[];
+static const u16 sBiasesSpecial[];
+static const u16 sBiasesRegular[];
 
-void PlaySlotMachine(u8 arg0, MainCallback cb)
+void PlaySlotMachine(u8 machineId, MainCallback exitCallback)
 {
 #if DEBUG
     unk_debug_bss_1_1 = 0;
 #endif
-    PlaySlotMachine_Internal(arg0, cb);
+    PlaySlotMachine_Internal(machineId, exitCallback);
     SetMainCallback2(CB2_SlotMachineSetup);
 }
 
@@ -368,11 +370,11 @@ static void CB2_SlotMachineSetup(void)
             gMain.state++;
             break;
         case 1:
-            SlotMachineSetup_1_0();
+            SlotMachineSetup_InitVRAM();
             gMain.state++;
             break;
         case 2:
-            SlotMachineSetup_2_0();
+            SlotMachineSetup_InitOAM();
             SlotMachineSetup_2_1();
             gMain.state++;
             break;
@@ -381,7 +383,7 @@ static void CB2_SlotMachineSetup(void)
             gMain.state++;
             break;
         case 4:
-            SlotMachineSetup_4_0();
+            SlotMachineSetup_InitPalsSpritesTasks();
             gMain.state++;
             break;
         case 5:
@@ -389,8 +391,8 @@ static void CB2_SlotMachineSetup(void)
             gMain.state++;
             break;
         case 6:
-            SlotMachineSetup_6_0();
-            SlotMachineSetup_6_1();
+            CreateSlotMachineSprites();
+            CreateGameplayTasks();
             SlotMachineSetup_6_2();
             SetMainCallback2(CB2_SlotMachineLoop);
             break;
@@ -416,17 +418,17 @@ static void SlotMachine_VBlankCallback(void)
     REG_WINOUT = sSlotMachine->winOut;
 }
 
-static void PlaySlotMachine_Internal(u8 arg0, MainCallback cb)
+static void PlaySlotMachine_Internal(u8 machineId, MainCallback exitCallback)
 {
     struct Task *task = gTasks + CreateTask(SlotMachineDummyTask, 0xFF);
-    task->data[0] = arg0;
-    StoreWordInTwoHalfwords(task->data + 1, (intptr_t)cb);
+    task->data[0] = machineId;
+    StoreWordInTwoHalfwords(task->data + 1, (intptr_t)exitCallback);
 }
 
-static void sub_81019EC(void)
+static void SlotMachine_InitFromTask(void)
 {
     struct Task *task = gTasks + FindTaskIdByFunc(SlotMachineDummyTask);
-    sSlotMachine->unk01 = task->data[0];
+    sSlotMachine->machineId = task->data[0];
     LoadWordFromTwoHalfwords((u16 *)(task->data + 1), (u32 *)&sSlotMachine->prevMainCb);
 }
 
@@ -453,12 +455,12 @@ static void SlotMachineSetup_6_2(void)
     REG_DISPCNT = DISPCNT_OBJ_1D_MAP | DISPCNT_BG_ALL_ON | DISPCNT_OBJ_ON | DISPCNT_WIN0_ON;
 }
 
-static void SlotMachineSetup_1_0(void)
+static void SlotMachineSetup_InitVRAM(void)
 {
     DmaClearLarge16(3, (u16 *)(BG_VRAM), BG_VRAM_SIZE, 0x1000);
 }
 
-static void SlotMachineSetup_2_0(void)
+static void SlotMachineSetup_InitOAM(void)
 {
     DmaClear16(3, (u16 *)OAM, OAM_SIZE);
 }
@@ -487,26 +489,26 @@ static void SlotMachineSetup_2_1(void)
     REG_BLDALPHA = 0x809;
 }
 
-static const s16 gUnknown_083ECCF8[][2];
+static const s16 sInitialReelPositions[][2];
 
 static void SlotMachineSetup_0_1(void)
 {
     u8 i;
 
-    sub_81019EC();
+    SlotMachine_InitFromTask();
     sSlotMachine->state = 0;
-    sSlotMachine->pikaPower = 0;
-    sSlotMachine->unk03 = Random() & 1;
-    sSlotMachine->unk04 = 0;
-    sSlotMachine->matchedSymbols = 0;
-    sSlotMachine->unk0A = 0;
-    sSlotMachine->unk0B = 0;
+    sSlotMachine->pikaPowerBolts = 0;
+    sSlotMachine->luckyGame = Random() & 1;
+    sSlotMachine->machineBias = 0;
+    sSlotMachine->matches = 0;
+    sSlotMachine->reelTimeSpinsLeft = 0;
+    sSlotMachine->reelTimeSpinsUsed = 0;
     sSlotMachine->coins = gSaveBlock1.coins;
     sSlotMachine->payout = 0;
-    sSlotMachine->unk10 = 0;
+    sSlotMachine->netCoinLoss = 0;
     sSlotMachine->bet = 0;
-    sSlotMachine->unk18 = 0;
-    sSlotMachine->unk1A = 8;
+    sSlotMachine->currentReel = 0;
+    sSlotMachine->reelSpeed = 8;
     sSlotMachine->win0h = 0xf0;
     sSlotMachine->win0v = 0xa0;
     sSlotMachine->winIn = 0x3f;
@@ -514,10 +516,10 @@ static void SlotMachineSetup_0_1(void)
     sSlotMachine->backupMapMusic = GetCurrentMapMusic();
     for (i = 0; i < 3; i++)
     {
-        sSlotMachine->unk22[i] = 0;
-        sSlotMachine->reelPositions[i] = gUnknown_083ECCF8[i][sSlotMachine->unk03] % 21;
-        sSlotMachine->unk1C[i] = 0x1f8 - sSlotMachine->reelPositions[i] * 24;
-        sSlotMachine->unk1C[i] %= 0x1f8;
+        sSlotMachine->reelShockOffsets[i] = 0;
+        sSlotMachine->reelPositions[i] = sInitialReelPositions[i][sSlotMachine->luckyGame] % 21;
+        sSlotMachine->reelPixelOffsets[i] = 0x1f8 - sSlotMachine->reelPositions[i] * 24;
+        sSlotMachine->reelPixelOffsets[i] %= 0x1f8;
     }
 #if DEBUG
     debug_sub_811B5D0();
@@ -532,7 +534,7 @@ static void SlotMachineSetup_3_0(void)
     InitMenuWindow(&gWindowTemplate_81E7128);
 }
 
-static void SlotMachineSetup_4_0(void)
+static void SlotMachineSetup_InitPalsSpritesTasks(void)
 {
     ResetPaletteFade();
     ResetSpriteData();
@@ -548,50 +550,50 @@ static void SlotMachineSetup_5_0(void)
     sub_81063C0();
 }
 
-static void SlotMachineSetup_6_0(void)
+static void CreateSlotMachineSprites(void)
 {
-    sub_8104EA8();
-    sub_8104F8C();
-    sub_8103DC8();
-    sub_81050C4();
+    CreateReelSymbolSprites();
+    CreateCreditPayoutNumberSprites();
+    CreateInvisibleFlashMatchLineSprites();
+    CreateReelBackgroundSprite();
 }
 
-static void SlotMachineSetup_6_1(void)
+static void CreateGameplayTasks(void)
 {
-    sub_8104048();
-    sub_8102DA8();
-    sub_8104C5C();
-    sub_8101D04();
+    CreatePikaPowerBoltTask();
+    CreateReelTasks();
+    CreateDigitalDisplayTask();
+    CreateSlotMachineTasks();
 }
 
-static void sub_8101D04(void)
+static void CreateSlotMachineTasks(void)
 {
-    sub_8101D24(CreateTask(sub_8101D24, 0));
+    Task_SlotMachine(CreateTask(Task_SlotMachine, 0));
 }
 
-static bool8 (*const gUnknown_083ECAAC[])(struct Task *task) =
+static bool8 (*const sSlotTasks[])(struct Task *task) =
 {
-    sub_8101D5C,
-    sub_8101D8C,
-    sub_8101DB0,
-    sub_8101DF4,
+    SlotTask_UnfadeScreen,
+    SlotTask_WaitUnfade,
+    SlotTask_ReadyNewSpin,
+    SlotTask_ReadyNewReelTimeSpin,
     sub_8101E10,
     sub_8101E3C,
     sub_8101F44,
     sub_8101F60,
-    sub_8101F88,
+    SlotTask_WaitInfoBox,
     sub_8101FA4,
-    sub_8102008,
+    SlotTask_StartReelTimeSpin,
     sub_8102034,
     sub_8102058,
     sub_8102090,
     sub_81020C8,
-    sub_81021E0,
-    sub_81021FC,
-    sub_8102264,
-    sub_81022A0,
-    sub_81022CC,
-    sub_81022F0,
+    SlotTask_WaitPayout,
+    SlotTask_EndPayout,
+    SlotTask_MatchedPower,
+    SlotTask_WaitReelTimeAnim,
+    SlotTask_ResetBetTiles,
+    SlotTask_NoMatches,
     sub_8102318,
     sub_8102344,
     sub_810239C,
@@ -605,39 +607,39 @@ static bool8 (*const gUnknown_083ECAAC[])(struct Task *task) =
 #endif
 };
 
-static void sub_8101D24(u8 taskId)
+static void Task_SlotMachine(u8 taskId)
 {
-    while (gUnknown_083ECAAC[sSlotMachine->state](gTasks + taskId))
+    while (sSlotTasks[sSlotMachine->state](gTasks + taskId))
         ;
 }
 
-static bool8 sub_8101D5C(struct Task *task)
+static bool8 SlotTask_UnfadeScreen(struct Task *task)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
-    sub_810423C(sSlotMachine->pikaPower);
+    sub_810423C(sSlotMachine->pikaPowerBolts);
     sSlotMachine->state++;
     return FALSE;
 }
 
-static bool8 sub_8101D8C(struct Task *task)
+static bool8 SlotTask_WaitUnfade(struct Task *task)
 {
     if (!gPaletteFade.active)
         sSlotMachine->state++;
     return FALSE;
 }
 
-static bool8 sub_8101DB0(struct Task *task)
+static bool8 SlotTask_ReadyNewSpin(struct Task *task)
 {
     sSlotMachine->payout = 0;
     sSlotMachine->bet = 0;
-    sSlotMachine->unk18 = 0;
-    sSlotMachine->unk04 &= 0xc0;
+    sSlotMachine->currentReel = 0;
+    sSlotMachine->machineBias &= 0xc0;
     sSlotMachine->state = 4;
     if (sSlotMachine->coins <= 0)
     {
         sSlotMachine->state = 25;
     }
-    else if (sSlotMachine->unk0A)
+    else if (sSlotMachine->reelTimeSpinsLeft)
     {
         sSlotMachine->state = 3;
         sub_8104CAC(4);
@@ -645,9 +647,9 @@ static bool8 sub_8101DB0(struct Task *task)
     return TRUE;
 }
 
-static bool8 sub_8101DF4(struct Task *task)
+static bool8 SlotTask_ReadyNewReelTimeSpin(struct Task *task)
 {
-    if (sub_8104E18())
+    if (IsDigitalDisplayAnimFinished())
         sSlotMachine->state = 4;
     return FALSE;
 }
@@ -678,9 +680,9 @@ static bool8 sub_8101E3C(struct Task *task)
         }
         else
         {
-            sub_8103D50(0);
-            sub_8103D50(1);
-            sub_8103D50(2);
+            LightenBetTiles(0);
+            LightenBetTiles(1);
+            LightenBetTiles(2);
             sSlotMachine->coins -= 3;
             sSlotMachine->bet = 3;
             sSlotMachine->state = 9;
@@ -697,7 +699,7 @@ static bool8 sub_8101E3C(struct Task *task)
 
     if (JOY_NEW(SELECT_BUTTON))
     {
-        sub_8104AB8(0);
+        OpenInfoBox(0);
         sSlotMachine->state = 8;
     }
     else if (JOY_NEW(R_BUTTON))
@@ -705,7 +707,7 @@ static bool8 sub_8101E3C(struct Task *task)
         if (sSlotMachine->coins - (3 - sSlotMachine->bet) >= 0)
         {
             for (i = sSlotMachine->bet; i < 3; i++)
-                sub_8103D50(i);
+                LightenBetTiles(i);
             sSlotMachine->coins -= (3 - sSlotMachine->bet);
             sSlotMachine->bet = 3;
             sSlotMachine->state = 9;
@@ -721,7 +723,7 @@ static bool8 sub_8101E3C(struct Task *task)
         if (JOY_NEW(DPAD_DOWN) && sSlotMachine->coins != 0)
         {
             PlaySE(SE_SHOP);
-            sub_8103D50(sSlotMachine->bet);
+            LightenBetTiles(sSlotMachine->bet);
             sSlotMachine->coins--;
             sSlotMachine->bet++;
         }
@@ -756,9 +758,9 @@ static bool8 sub_8101F60(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_8101F88(struct Task *task)
+static bool8 SlotTask_WaitInfoBox(struct Task *task)
 {
-    if (sub_8104AEC())
+    if (IsInfoBoxClosed())
         sSlotMachine->state = 5;
     return FALSE;
 }
@@ -766,14 +768,14 @@ static bool8 sub_8101F88(struct Task *task)
 static bool8 sub_8101FA4(struct Task *task)
 {
     sub_8102484();
-    sub_8104DA4();
-    sub_8102DEC(0);
-    sub_8102DEC(1);
-    sub_8102DEC(2);
+    DestroyDigitalDisplayScene();
+    SpinSlotReel(0);
+    SpinSlotReel(1);
+    SpinSlotReel(2);
     task->data[0] = 0;
-    if (sSlotMachine->unk04 & 0x20)
+    if (sSlotMachine->machineBias & 0x20)
     {
-        sub_810430C();
+        BeginReelTime();
         sSlotMachine->state = 10;
     }
     else
@@ -781,9 +783,9 @@ static bool8 sub_8101FA4(struct Task *task)
         sub_8104CAC(1);
         sSlotMachine->state = 11;
     }
-    sSlotMachine->unk1A = 8;
-    if (sSlotMachine->unk0A)
-        sSlotMachine->unk1A = dp15_jump_random_unknown();
+    sSlotMachine->reelSpeed = 8;
+    if (sSlotMachine->reelTimeSpinsLeft)
+        sSlotMachine->reelSpeed = ReelTimeSpeed();
 #if DEBUG
     if (unk_debug_bss_1_1 != 0)
         debug_sub_811B5B4(&sSlotMachine->unk68, 1);
@@ -791,12 +793,12 @@ static bool8 sub_8101FA4(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_8102008(struct Task *task)
+static bool8 SlotTask_StartReelTimeSpin(struct Task *task)
 {
-    if (sub_810432C())
+    if (IsReelTimeTaskDone())
     {
         sub_8104CAC(1);
-        sSlotMachine->unk04 &= 0xDF;
+        sSlotMachine->machineBias &= 0xDF;
         sSlotMachine->state = 11;
     }
     return FALSE;
@@ -810,7 +812,7 @@ static bool8 sub_8102034(struct Task *task)
         if (unk_debug_bss_1_1 != 0 && unk_debug_bss_1_4 != 0)
             unk_debug_bss_1_8 = (Random() & 0x1F) + 1;
 #endif
-        sub_81024F0();
+        ResetBiasFailure();
         sSlotMachine->state = 12;
     }
     return FALSE;
@@ -825,8 +827,8 @@ static bool8 sub_8102058(struct Task *task)
         if (unk_debug_bss_1_8 == 0)
         {
             PlaySE(SE_CONTEST_PLACE);
-            sub_8102E1C(sSlotMachine->unk18);
-            sub_8103C14(sSlotMachine->unk18);
+            StopSlotReel(sSlotMachine->currentReel);
+            PressStopReelButton(sSlotMachine->currentReel);
             unk_debug_bss_1_8 = (Random() & 0x1F) + 1;
             sSlotMachine->state = 13;
         }
@@ -837,8 +839,8 @@ static bool8 sub_8102058(struct Task *task)
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_CONTEST_PLACE);
-        sub_8102E1C(sSlotMachine->unk18);
-        sub_8103C14(sSlotMachine->unk18);
+        StopSlotReel(sSlotMachine->currentReel);
+        PressStopReelButton(sSlotMachine->currentReel);
         sSlotMachine->state = 13;
     }
     return FALSE;
@@ -846,11 +848,11 @@ static bool8 sub_8102058(struct Task *task)
 
 static bool8 sub_8102090(struct Task *task)
 {
-    if (!sub_8102E40(sSlotMachine->unk18))
+    if (!IsSlotReelMoving(sSlotMachine->currentReel))
     {
-        sSlotMachine->unk18++;
+        sSlotMachine->currentReel++;
         sSlotMachine->state = 12;
-        if (sSlotMachine->unk18 > 2)
+        if (sSlotMachine->currentReel > 2)
         {
             sSlotMachine->state = 14;
 #if DEBUG
@@ -901,12 +903,12 @@ static bool8 sub_8102090(struct Task *task)
 
 bool8 sub_81020C8(struct Task *task)
 {
-    sSlotMachine->unk04 &= 0xc0;
+    sSlotMachine->machineBias &= 0xc0;
     CheckMatch();
-    if (sSlotMachine->unk0A)
+    if (sSlotMachine->reelTimeSpinsLeft)
     {
-        sSlotMachine->unk0A--;
-        sSlotMachine->unk0B++;
+        sSlotMachine->reelTimeSpinsLeft--;
+        sSlotMachine->reelTimeSpinsUsed++;
     }
 #if DEBUG
     else
@@ -915,24 +917,24 @@ bool8 sub_81020C8(struct Task *task)
     }
 #endif
 
-    if (sSlotMachine->matchedSymbols)
+    if (sSlotMachine->matches)
     {
 #if DEBUG
         debug_sub_811B5B4(&sSlotMachine->unk6C, sSlotMachine->payout);
 #endif
         sSlotMachine->state = 15;
-        sub_8102A24();
-        sub_8103F70();
-        if ((sSlotMachine->unk10 -= sSlotMachine->payout) < 0)
+        AwardPayout();
+        FlashSlotMachineLights();
+        if ((sSlotMachine->netCoinLoss -= sSlotMachine->payout) < 0)
         {
-            sSlotMachine->unk10 = 0;
+            sSlotMachine->netCoinLoss = 0;
         }
-        if (sSlotMachine->matchedSymbols & ((1 << SLOT_MACHINE_MATCHED_777_BLUE) | (1 << SLOT_MACHINE_MATCHED_777_RED)))
+        if (sSlotMachine->matches & ((1 << MATCH_BLUE_7) | (1 << MATCH_RED_7)))
         {
             PlayFanfare(MUS_SLOTS_JACKPOT);
             sub_8104CAC(6);
         }
-        else if (sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_777_MIXED))
+        else if (sSlotMachine->matches & (1 << MATCH_MIXED_7))
         {
             PlayFanfare(MUS_SLOTS_JACKPOT);
             sub_8104CAC(5);
@@ -942,56 +944,56 @@ bool8 sub_81020C8(struct Task *task)
             PlayFanfare(MUS_SLOTS_WIN);
             sub_8104CAC(2);
         }
-        if (sSlotMachine->matchedSymbols & ((1 << SLOT_MACHINE_MATCHED_777_MIXED) | (1 << SLOT_MACHINE_MATCHED_777_BLUE) | (1 << SLOT_MACHINE_MATCHED_777_RED)))
+        if (sSlotMachine->matches & ((1 << MATCH_MIXED_7) | (1 << MATCH_BLUE_7) | (1 << MATCH_RED_7)))
         {
-            sSlotMachine->unk04 &= 0x3f;
-            if (sSlotMachine->matchedSymbols & ((1 << SLOT_MACHINE_MATCHED_777_BLUE) | (1 << SLOT_MACHINE_MATCHED_777_RED)))
+            sSlotMachine->machineBias &= 0x3f;
+            if (sSlotMachine->matches & ((1 << MATCH_BLUE_7) | (1 << MATCH_RED_7)))
             {
-                sSlotMachine->unk0A = 0;
-                sSlotMachine->unk0B = 0;
-                sSlotMachine->unk03 = 0;
-                if (sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_777_BLUE))
-                    sSlotMachine->unk03 = 1;
+                sSlotMachine->reelTimeSpinsLeft = 0;
+                sSlotMachine->reelTimeSpinsUsed = 0;
+                sSlotMachine->luckyGame = 0;
+                if (sSlotMachine->matches & (1 << MATCH_BLUE_7))
+                    sSlotMachine->luckyGame = 1;
             }
         }
-        if (sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_POWER) && sSlotMachine->pikaPower < 16)
+        if (sSlotMachine->matches & (1 << MATCH_POWER) && sSlotMachine->pikaPowerBolts < 16)
         {
-            sSlotMachine->pikaPower++;
-            sub_8104064(sSlotMachine->pikaPower);
+            sSlotMachine->pikaPowerBolts++;
+            AddPikaPowerBolt(sSlotMachine->pikaPowerBolts);
         }
     }
     else
     {
         sub_8104CAC(3);
         sSlotMachine->state = 20;
-        if ((sSlotMachine->unk10 += sSlotMachine->bet) > 9999)
-            sSlotMachine->unk10 = 9999;
+        if ((sSlotMachine->netCoinLoss += sSlotMachine->bet) > 9999)
+            sSlotMachine->netCoinLoss = 9999;
     }
     return FALSE;
 }
 
-static bool8 sub_81021E0(struct Task *task)
+static bool8 SlotTask_WaitPayout(struct Task *task)
 {
-    if (sub_8102A44())
+    if (IsFinalTask_Task_Payout())
         sSlotMachine->state = 16;
     return FALSE;
 }
 
-static bool8 sub_81021FC(struct Task *task)
+static bool8 SlotTask_EndPayout(struct Task *task)
 {
-    if (sub_8103FA0())
+    if (TryStopSlotMachineLights())
     {
         sSlotMachine->state = 19;
-        if (sSlotMachine->matchedSymbols & ((1 << SLOT_MACHINE_MATCHED_777_RED) | (1 << SLOT_MACHINE_MATCHED_777_BLUE)))
+        if (sSlotMachine->matches & ((1 << MATCH_RED_7) | (1 << MATCH_BLUE_7)))
             IncrementGameStat(GAME_STAT_SLOT_JACKPOTS);
-        if (sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_REPLAY))
+        if (sSlotMachine->matches & (1 << MATCH_REPLAY))
         {
-            sSlotMachine->unk18 = 0;
+            sSlotMachine->currentReel = 0;
             sSlotMachine->state = 9;
         }
-        if (sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_POWER))
+        if (sSlotMachine->matches & (1 << MATCH_POWER))
             sSlotMachine->state = 17;
-        if (sSlotMachine->unk0A && sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_REPLAY))
+        if (sSlotMachine->reelTimeSpinsLeft && sSlotMachine->matches & (1 << MATCH_REPLAY))
         {
             sub_8104CAC(4);
             sSlotMachine->state = 18;
@@ -1000,15 +1002,15 @@ static bool8 sub_81021FC(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_8102264(struct Task *task)
+static bool8 SlotTask_MatchedPower(struct Task *task)
 {
-    if (!sub_81040C8())
+    if (!IsPikaPowerBoltAnimating())
     {
         sSlotMachine->state = 19;
-        if (sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_REPLAY))
+        if (sSlotMachine->matches & (1 << MATCH_REPLAY))
         {
             sSlotMachine->state = 9;
-            if (sSlotMachine->unk0A)
+            if (sSlotMachine->reelTimeSpinsLeft)
             {
                 sub_8104CAC(4);
                 sSlotMachine->state = 18;
@@ -1018,12 +1020,12 @@ static bool8 sub_8102264(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_81022A0(struct Task *task)
+static bool8 SlotTask_WaitReelTimeAnim(struct Task *task)
 {
-    if (sub_8104E18())
+    if (IsDigitalDisplayAnimFinished())
     {
         sSlotMachine->state = 19;
-        if (sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_REPLAY))
+        if (sSlotMachine->matches & (1 << MATCH_REPLAY))
         {
             sSlotMachine->state = 9;
         }
@@ -1031,16 +1033,16 @@ static bool8 sub_81022A0(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_81022CC(struct Task *task)
+static bool8 SlotTask_ResetBetTiles(struct Task *task)
 {
-    sub_8103D8C(0);
-    sub_8103D8C(1);
-    sub_8103D8C(2);
+    DarkenBetTiles(0);
+    DarkenBetTiles(1);
+    DarkenBetTiles(2);
     sSlotMachine->state = 2;
     return FALSE;
 }
 
-static bool8 sub_81022F0(struct Task *task)
+static bool8 SlotTask_NoMatches(struct Task *task)
 {
     if (++task->data[1] > 64)
     {
@@ -1065,9 +1067,9 @@ static bool8 sub_8102344(struct Task *task)
     if (input == 0)
     {
         Menu_EraseScreen();
-        sub_8103D8C(0);
-        sub_8103D8C(1);
-        sub_8103D8C(2);
+        DarkenBetTiles(0);
+        DarkenBetTiles(1);
+        DarkenBetTiles(2);
         sSlotMachine->coins += sSlotMachine->bet;
         sSlotMachine->state = 27;
     }
@@ -1148,71 +1150,71 @@ static bool8 debug_sub_8116E74(struct Task *task)
 
 static void sub_8102484(void)
 {
-    u8 r3;
+    u8 whichBias;
 
-    if (sSlotMachine->unk0A == 0)
+    if (sSlotMachine->reelTimeSpinsLeft == 0)
     {
 #if DEBUG
         if (unk_debug_bss_1_1 != 0 && unk_debug_bss_1_2 != 0)
         {
-            sSlotMachine->unk04 = unk_debug_bss_1_3;
+            sSlotMachine->machineBias = unk_debug_bss_1_3;
             unk_debug_bss_1_2 = 0;
             unk_debug_bss_1_3 = 0;
-            if (sSlotMachine->unk04 & 0x80)
+            if (sSlotMachine->machineBias & 0x80)
                 debug_sub_811B5B4(&sSlotMachine->unk88, 1);
-            if (sSlotMachine->unk04 & 0x40)
+            if (sSlotMachine->machineBias & 0x40)
                 debug_sub_811B5B4(&sSlotMachine->unk84, 1);
-            if (sSlotMachine->unk04 & 0x20)
+            if (sSlotMachine->machineBias & 0x20)
                 debug_sub_811B5B4(&sSlotMachine->unk8C, 1);
-            if (sSlotMachine->unk04 & 0x10)
+            if (sSlotMachine->machineBias & 0x10)
                 debug_sub_811B5B4(&sSlotMachine->unk80, 1);
-            if (sSlotMachine->unk04 & 8)
+            if (sSlotMachine->machineBias & 8)
                 debug_sub_811B5B4(&sSlotMachine->unk7C, 1);
-            if (sSlotMachine->unk04 & 4)
+            if (sSlotMachine->machineBias & 4)
                 debug_sub_811B5B4(&sSlotMachine->unk78, 1);
-            if (sSlotMachine->unk04 & 1)
+            if (sSlotMachine->machineBias & 1)
                 debug_sub_811B5B4(&sSlotMachine->unk74, 1);
-            if (sSlotMachine->unk04 & 2)
+            if (sSlotMachine->machineBias & 2)
                 debug_sub_811B5B4(&sSlotMachine->unk70, 1);
             return;
         }
 #endif
-        if (!(sSlotMachine->unk04 & 0xc0))
+        if (!(sSlotMachine->machineBias & 0xc0))
         {
-            if (sub_8102540())
+            if (ShouldTrySpecialBias())
             {
-                r3 = sub_8102578();
-                if (r3 != 3)
+                whichBias = TrySelectBias_Special();
+                if (whichBias != 3)
                 {
-                    sSlotMachine->unk04 |= gUnknown_083ECE42[r3];
+                    sSlotMachine->machineBias |= sBiasesSpecial[whichBias];
 #if DEBUG
-                    if (sSlotMachine->unk04 & 0x80)
+                    if (sSlotMachine->machineBias & 0x80)
                         debug_sub_811B5B4(&sSlotMachine->unk88, 1);
-                    if (sSlotMachine->unk04 & 0x40)
+                    if (sSlotMachine->machineBias & 0x40)
                         debug_sub_811B5B4(&sSlotMachine->unk84, 1);
-                    if (sSlotMachine->unk04 & 0x20)
+                    if (sSlotMachine->machineBias & 0x20)
                         debug_sub_811B5B4(&sSlotMachine->unk8C, 1);
 #endif
-                    if (r3 != 1)
+                    if (whichBias != 1)
                     {
                         return;
                     }
                 }
             }
-            r3 = sub_81025BC();
-            if (r3 != 5)
+            whichBias = TrySelectBias_Regular();
+            if (whichBias != 5)
             {
-                sSlotMachine->unk04 |= gUnknown_083ECE48[r3];
+                sSlotMachine->machineBias |= sBiasesRegular[whichBias];
 #if DEBUG
-                if (sSlotMachine->unk04 & 0x10)
+                if (sSlotMachine->machineBias & 0x10)
                     debug_sub_811B5B4(&sSlotMachine->unk80, 1);
-                if (sSlotMachine->unk04 & 8)
+                if (sSlotMachine->machineBias & 8)
                     debug_sub_811B5B4(&sSlotMachine->unk7C, 1);
-                if (sSlotMachine->unk04 & 4)
+                if (sSlotMachine->machineBias & 4)
                     debug_sub_811B5B4(&sSlotMachine->unk78, 1);
-                if (sSlotMachine->unk04 & 1)
+                if (sSlotMachine->machineBias & 1)
                     debug_sub_811B5B4(&sSlotMachine->unk74, 1);
-                if (sSlotMachine->unk04 & 2)
+                if (sSlotMachine->machineBias & 2)
                     debug_sub_811B5B4(&sSlotMachine->unk70, 1);
 #endif
             }
@@ -1225,14 +1227,14 @@ static void sub_8102484(void)
 {
     u8 r3;
 
-    if (sSlotMachine->unk0A == 0 && !(sSlotMachine->unk04 & 0xc0))
+    if (sSlotMachine->reelTimeSpinsLeft == 0 && !(sSlotMachine->machineBias & 0xc0))
     {
         if (sub_8102540())
         {
             r3 = sub_8102578();
             if (r3 != 3)
             {
-                sSlotMachine->unk04 |= gUnknown_083ECE42[r3];
+                sSlotMachine->machineBias |= gUnknown_083ECE42[r3];
                 if (r3 != 1)
                 {
                     return;
@@ -1242,146 +1244,146 @@ static void sub_8102484(void)
         r3 = sub_81025BC();
         if (r3 != 5)
         {
-            sSlotMachine->unk04 |= gUnknown_083ECE48[r3];
+            sSlotMachine->machineBias |= gUnknown_083ECE48[r3];
         }
     }
 }
 */
 
-static void sub_81024F0(void)
+static void ResetBiasFailure(void)
 {
-    sSlotMachine->unk06 = 0;
-    if (sSlotMachine->unk04)
-        sSlotMachine->unk06 = 1;
+    sSlotMachine->didNotFailBias = 0;
+    if (sSlotMachine->machineBias)
+        sSlotMachine->didNotFailBias = 1;
 }
 
-static u8 sub_810250C(u8 a0)
+static u8 GetBiasSymbol(u8 machineBias)
 {
     u8 i;
 
     for (i = 0; i < 8; i++)
     {
-        if (a0 & 1)
-            return gUnknown_083ECE3A[i];
-        a0 >>= 1;
+        if (machineBias & 1)
+            return sBiasSymbols[i];
+        machineBias >>= 1;
     }
     return 0;
 }
 
-static bool8 sub_8102540(void)
+static bool8 ShouldTrySpecialBias(void)
 {
     u8 rval = Random();
-    if (gUnknown_083ECD04[sSlotMachine->unk01][sSlotMachine->bet - 1] > rval)
+    if (sSpecialDrawOdds[sSlotMachine->machineId][sSlotMachine->bet - 1] > rval)
         return TRUE;
     return FALSE;
 }
 
-static const u8 gUnknown_083ECD16[][6];
+static const u8 sBiasProbabilities_Special[][6];
 
-static u8 sub_8102578(void)
+static u8 TrySelectBias_Special(void)
 {
-    s16 i;
+    s16 whichBias;
 
-    for (i = 0; i < 3; i++)
+    for (whichBias = 0; whichBias < 3; whichBias++)
     {
         s16 rval = Random() & 0xff;
-        s16 value = gUnknown_083ECD16[i][sSlotMachine->unk01];
+        s16 value = sBiasProbabilities_Special[whichBias][sSlotMachine->machineId];
         if (value > rval)
             break;
     }
-    return i;
+    return whichBias;
 }
 
-static const u8 gUnknown_083ECD28[][6];
+static const u8 sBiasProbabilities_Regular[][6];
 
-static u8 sub_81025BC(void)
+static u8 TrySelectBias_Regular(void)
 {
-    s16 i;
+    s16 whichBias;
 
-    for (i = 0; i < 5; i++)
+    for (whichBias = 0; whichBias < 5; whichBias++)
     {
         s16 rval = Random() & 0xff;
-        s16 r3 = gUnknown_083ECD28[i][sSlotMachine->unk01];
-        if (i == 0 && sSlotMachine->unk03 == 1)
+        s16 value = sBiasProbabilities_Regular[whichBias][sSlotMachine->machineId];
+        if (whichBias == 0 && sSlotMachine->luckyGame == 1)
         {
-            r3 += 10;
-            if (r3 > 0x100)
-                r3 = 0x100;
+            value += 10;
+            if (value > 0x100)
+                value = 0x100;
         }
-        else if (i == 4 && sSlotMachine->unk03 == 1)
+        else if (whichBias == 4 && sSlotMachine->luckyGame == 1)
         {
-            r3 -= 10;
-            if (r3 < 0)
-                r3 = 0;
+            value -= 10;
+            if (value < 0)
+                value = 0;
         }
-        if (r3 > rval)
+        if (value > rval)
             break;
     }
-    return i;
+    return whichBias;
 }
 
-static const u8 gUnknown_083ECD46[][17];
-static const u8 gUnknown_083ECDAC[][17];
+static const u8 sReelTimeProbabilities_NormalGame[][17];
+static const u8 sReelTimeProbabilities_LuckyGame[][17];
 
-static u8 sub_810264C(u8 a0)
+static u8 GetReelTimeSpinProbability(u8 spins)
 {
-    if (sSlotMachine->unk03 == 0)
-        return gUnknown_083ECD46[a0][sSlotMachine->pikaPower];
+    if (sSlotMachine->luckyGame == 0)
+        return sReelTimeProbabilities_NormalGame[spins][sSlotMachine->pikaPowerBolts];
     else
-        return gUnknown_083ECDAC[a0][sSlotMachine->pikaPower];
+        return sReelTimeProbabilities_LuckyGame[spins][sSlotMachine->pikaPowerBolts];
 }
 
-static void sub_8102680(void)
+static void GetReelTimeDraw(void)
 {
     u8 rval;
-    s16 i;
+    s16 spins;
 
-    sSlotMachine->unk05 = 0;
+    sSlotMachine->reelTimeDraw = 0;
     rval = Random();
-    if (rval < sub_810264C(0))
+    if (rval < GetReelTimeSpinProbability(0))
         return;
-    for (i = 5; i > 0; i--)
+    for (spins = 5; spins > 0; spins--)
     {
         rval = Random();
-        if (rval < sub_810264C(i))
+        if (rval < GetReelTimeSpinProbability(spins))
             break;
     }
-    sSlotMachine->unk05 = i;
+    sSlotMachine->reelTimeDraw = spins;
 }
 
-static const u16 gUnknown_083ECE12[];
+static const u16 sReelTimeExplodeProbability[];
 
-static bool8 sub_81026DC(u16 a0)
+static bool8 ShouldReelTimeMachineExplode(u16 check)
 {
     u16 rval = Random() & 0xff;
-    if (rval < gUnknown_083ECE12[a0])
+    if (rval < sReelTimeExplodeProbability[check])
         return TRUE;
     else
         return FALSE;
 }
 
-static const u16 gUnknown_083ECE1C[][2];
-static const u16 gUnknown_083ECE30[];
+static const u16 sReelTimeSpeed_Probabilities[][2];
+static const u16 sQuarterSpeed_ProbabilityBoost[];
 
-static u16 dp15_jump_random_unknown(void)
+static u16 ReelTimeSpeed(void)
 {
-    u8 r4 = 0;
+    u8 i = 0;
     u8 rval;
     u8 value;
-    if (sSlotMachine->unk10 >= 300)
-        r4 = 4;
-    else if (sSlotMachine->unk10 >= 250)
-        r4 = 3;
-    else if (sSlotMachine->unk10 >= 200)
-        r4 = 2;
-    else if (sSlotMachine->unk10 >= 150)
-        r4 = 1;
+    if (sSlotMachine->netCoinLoss >= 300)
+        i = 4;
+    else if (sSlotMachine->netCoinLoss >= 250)
+        i = 3;
+    else if (sSlotMachine->netCoinLoss >= 200)
+        i = 2;
+    else if (sSlotMachine->netCoinLoss >= 150)
+        i = 1;
     rval = Random() % 100;
-    value = gUnknown_083ECE1C[r4][0];
+    value = sReelTimeSpeed_Probabilities[i][0];
     if (rval < value)
         return 4;
     rval = Random() % 100;
-    value = gUnknown_083ECE1C[r4][1] + gUnknown_083ECE30[sSlotMachine->unk0B];
+    value = sReelTimeSpeed_Probabilities[i][1] + sQuarterSpeed_ProbabilityBoost[sSlotMachine->reelTimeSpinsUsed];
     if (rval < value)
         return 2;
     return 8;
@@ -1389,7 +1391,7 @@ static u16 dp15_jump_random_unknown(void)
 
 static void CheckMatch(void)
 {
-    sSlotMachine->matchedSymbols = 0;
+    sSlotMachine->matches = 0;
     CheckMatch_CenterRow();
     if (sSlotMachine->bet > 1)
         CheckMatch_TopAndBottom();
@@ -1402,126 +1404,126 @@ static const u16 sSlotPayouts[];
 
 static void CheckMatch_CenterRow(void)
 {
-    u8 c1, c2, c3, match;
+    u8 sym1, sym2, sym3, match;
 
-    c1 = GetTagOfReelSymbolOnScreenAtPos(0, 2);
-    c2 = GetTagOfReelSymbolOnScreenAtPos(1, 2);
-    c3 = GetTagOfReelSymbolOnScreenAtPos(2, 2);
-    match = GetMatchFromSymbolsInRow(c1, c2, c3);
-    if (match != SLOT_MACHINE_MATCHED_NONE)
+    sym1 = GetSymbolAtRest(0, 2);
+    sym2 = GetSymbolAtRest(1, 2);
+    sym3 = GetSymbolAtRest(2, 2);
+    match = GetMatchFromSymbols(sym1, sym2, sym3);
+    if (match != MATCH_NONE)
     {
         sSlotMachine->payout += sSlotPayouts[match];
-        sSlotMachine->matchedSymbols |= sSlotMatchFlags[match];
-        sub_8103E04(0);
+        sSlotMachine->matches |= sSlotMatchFlags[match];
+        FlashMatchLine(0);
     }
 }
 
 static void CheckMatch_TopAndBottom(void)
 {
-    u8 c1, c2, c3, match;
+    u8 sym1, sym2, sym3, match;
 
-    c1 = GetTagOfReelSymbolOnScreenAtPos(0, 1);
-    c2 = GetTagOfReelSymbolOnScreenAtPos(1, 1);
-    c3 = GetTagOfReelSymbolOnScreenAtPos(2, 1);
-    match = GetMatchFromSymbolsInRow(c1, c2, c3);
-    if (match != SLOT_MACHINE_MATCHED_NONE)
+    sym1 = GetSymbolAtRest(0, 1);
+    sym2 = GetSymbolAtRest(1, 1);
+    sym3 = GetSymbolAtRest(2, 1);
+    match = GetMatchFromSymbols(sym1, sym2, sym3);
+    if (match != MATCH_NONE)
     {
-        if (match == SLOT_MACHINE_MATCHED_1CHERRY)
-            match = SLOT_MACHINE_MATCHED_2CHERRY;
+        if (match == MATCH_CHERRY)
+            match = MATCH_TOPBOT_CHERRY;
         sSlotMachine->payout += sSlotPayouts[match];
-        sSlotMachine->matchedSymbols |= sSlotMatchFlags[match];
-        sub_8103E04(1);
+        sSlotMachine->matches |= sSlotMatchFlags[match];
+        FlashMatchLine(1);
     }
-    c1 = GetTagOfReelSymbolOnScreenAtPos(0, 3);
-    c2 = GetTagOfReelSymbolOnScreenAtPos(1, 3);
-    c3 = GetTagOfReelSymbolOnScreenAtPos(2, 3);
-    match = GetMatchFromSymbolsInRow(c1, c2, c3);
-    if (match != SLOT_MACHINE_MATCHED_NONE)
+    sym1 = GetSymbolAtRest(0, 3);
+    sym2 = GetSymbolAtRest(1, 3);
+    sym3 = GetSymbolAtRest(2, 3);
+    match = GetMatchFromSymbols(sym1, sym2, sym3);
+    if (match != MATCH_NONE)
     {
-        if (match == SLOT_MACHINE_MATCHED_1CHERRY)
-            match = SLOT_MACHINE_MATCHED_2CHERRY;
+        if (match == MATCH_CHERRY)
+            match = MATCH_TOPBOT_CHERRY;
         sSlotMachine->payout += sSlotPayouts[match];
-        sSlotMachine->matchedSymbols |= sSlotMatchFlags[match];
-        sub_8103E04(2);
+        sSlotMachine->matches |= sSlotMatchFlags[match];
+        FlashMatchLine(2);
     }
 }
 
 static void CheckMatch_Diagonals(void)
 {
-    u8 c1, c2, c3, match;
+    u8 sym1, sym2, sym3, match;
 
-    c1 = GetTagOfReelSymbolOnScreenAtPos(0, 1);
-    c2 = GetTagOfReelSymbolOnScreenAtPos(1, 2);
-    c3 = GetTagOfReelSymbolOnScreenAtPos(2, 3);
-    match = GetMatchFromSymbolsInRow(c1, c2, c3);
-    if (match != SLOT_MACHINE_MATCHED_NONE)
+    sym1 = GetSymbolAtRest(0, 1);
+    sym2 = GetSymbolAtRest(1, 2);
+    sym3 = GetSymbolAtRest(2, 3);
+    match = GetMatchFromSymbols(sym1, sym2, sym3);
+    if (match != MATCH_NONE)
     {
-        if (match != SLOT_MACHINE_MATCHED_1CHERRY)
+        if (match != MATCH_CHERRY)
         {
             sSlotMachine->payout += sSlotPayouts[match];
-            sSlotMachine->matchedSymbols |= sSlotMatchFlags[match];
+            sSlotMachine->matches |= sSlotMatchFlags[match];
         }
-        sub_8103E04(3);
+        FlashMatchLine(3);
     }
-    c1 = GetTagOfReelSymbolOnScreenAtPos(0, 3);
-    c2 = GetTagOfReelSymbolOnScreenAtPos(1, 2);
-    c3 = GetTagOfReelSymbolOnScreenAtPos(2, 1);
-    match = GetMatchFromSymbolsInRow(c1, c2, c3);
-    if (match != SLOT_MACHINE_MATCHED_NONE)
+    sym1 = GetSymbolAtRest(0, 3);
+    sym2 = GetSymbolAtRest(1, 2);
+    sym3 = GetSymbolAtRest(2, 1);
+    match = GetMatchFromSymbols(sym1, sym2, sym3);
+    if (match != MATCH_NONE)
     {
-        if (match != SLOT_MACHINE_MATCHED_1CHERRY)
+        if (match != MATCH_CHERRY)
         {
             sSlotMachine->payout += sSlotPayouts[match];
-            sSlotMachine->matchedSymbols |= sSlotMatchFlags[match];
+            sSlotMachine->matches |= sSlotMatchFlags[match];
         }
-        sub_8103E04(4);
+        FlashMatchLine(4);
     }
 }
 
-static const u8 sSym2Match[];
+static const u8 sSymbolToMatch[];
 
-static u8 GetMatchFromSymbolsInRow(u8 c1, u8 c2, u8 c3)
+static u8 GetMatchFromSymbols(u8 sym1, u8 sym2, u8 sym3)
 {
-    if (c1 == c2 && c1 == c3)
-        return sSym2Match[c1];
-    if (c1 == SLOT_MACHINE_TAG_7_RED && c2 == SLOT_MACHINE_TAG_7_RED && c3 == SLOT_MACHINE_TAG_7_BLUE)
-        return SLOT_MACHINE_MATCHED_777_MIXED;
-    if (c1 == SLOT_MACHINE_TAG_7_BLUE && c2 == SLOT_MACHINE_TAG_7_BLUE && c3 == SLOT_MACHINE_TAG_7_RED)
-        return SLOT_MACHINE_MATCHED_777_MIXED;
-    if (c1 == SLOT_MACHINE_TAG_CHERRY)
-        return SLOT_MACHINE_MATCHED_1CHERRY;
-    return SLOT_MACHINE_MATCHED_NONE;
+    if (sym1 == sym2 && sym1 == sym3)
+        return sSymbolToMatch[sym1];
+    if (sym1 == SYMBOL_7_RED && sym2 == SYMBOL_7_RED && sym3 == SYMBOL_7_BLUE)
+        return MATCH_MIXED_7;
+    if (sym1 == SYMBOL_7_BLUE && sym2 == SYMBOL_7_BLUE && sym3 == SYMBOL_7_RED)
+        return MATCH_MIXED_7;
+    if (sym1 == SYMBOL_CHERRY)
+        return MATCH_CHERRY;
+    return MATCH_NONE;
 }
 
-static void sub_8102A24(void)
+static void AwardPayout(void)
 {
-    sub_8102A64(CreateTask(sub_8102A64, 4));
+    Task_Payout(CreateTask(Task_Payout, 4));
 }
 
-static bool8 sub_8102A44(void)
+static bool8 IsFinalTask_Task_Payout(void)
 {
-    if (FindTaskIdByFunc(sub_8102A64) == 0xff)
+    if (FindTaskIdByFunc(Task_Payout) == 0xff)
         return TRUE;
     else
         return FALSE;
 }
 
-static bool8 (*const gUnknown_083ECB20[])(struct Task *task) =
+static bool8 (*const sPayoutTasks[])(struct Task *task) =
 {
-    sub_8102A9C,
-    sub_8102AD0,
-    sub_8102B80
+    PayoutTask_Init,
+    PayoutTask_GivePayout,
+    PayoutTask_Free
 };
 
-static void sub_8102A64(u8 taskId)
+static void Task_Payout(u8 taskId)
 {
-    while (gUnknown_083ECB20[gTasks[taskId].data[0]](gTasks + taskId))
+    while (sPayoutTasks[gTasks[taskId].data[0]](gTasks + taskId))
         ;
 }
 
-static bool8 sub_8102A9C(struct Task *task)
+static bool8 PayoutTask_Init(struct Task *task)
 {
-    if (sub_8103E38())
+    if (IsMatchLineDoneFlashingBeforePayout())
     {
         task->data[0]++;
         if (sSlotMachine->payout == 0)
@@ -1533,7 +1535,7 @@ static bool8 sub_8102A9C(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_8102AD0(struct Task *task)
+static bool8 PayoutTask_GivePayout(struct Task *task)
 {
     if (!task->data[1]--)
     {
@@ -1559,187 +1561,187 @@ static bool8 sub_8102AD0(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_8102B80(struct Task *task)
+static bool8 PayoutTask_Free(struct Task *task)
 {
-    if (sub_8103E7C())
-        DestroyTask(FindTaskIdByFunc(sub_8102A64));
+    if (TryStopMatchLinesFlashing())
+        DestroyTask(FindTaskIdByFunc(Task_Payout));
     return FALSE;
 }
 
 static const u8 sReelSymbols[][21];
 
-static u8 GetTagOfReelSymbolOnScreenAtPos(u8 x, s16 y)
+static u8 GetSymbolAtRest(u8 reel, s16 offset)
 {
-    s16 offset = (sSlotMachine->reelPositions[x] + y) % 21;
-    if (offset < 0)
-        offset += 21;
-    return sReelSymbols[x][offset];
+    s16 pos = (sSlotMachine->reelPositions[reel] + offset) % 21;
+    if (pos < 0)
+        pos += 21;
+    return sReelSymbols[reel][pos];
 }
 
-static u8 GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(u8 x, s16 y)
+static u8 GetSymbol(u8 reel, s16 offset)
 {
-    s16 r6 = 0;
-    if ((sSlotMachine->unk1C[x]) % 24)
-        r6 = -1;
-    return GetTagOfReelSymbolOnScreenAtPos(x, y + r6);
+    s16 inc = 0;
+    if ((sSlotMachine->reelPixelOffsets[reel]) % 24)
+        inc = -1;
+    return GetSymbolAtRest(reel, offset + inc);
 }
 
-static const u8 gUnknown_083ECCF1[];
+static const u8 sReelTimeSymbols[];
 
-static u8 sub_8102C48(s16 a0)
+static u8 GetReelTimeSymbol(s16 offset)
 {
-    s16 r1 = (sSlotMachine->unk16 + a0) % 6;
-    if (r1 < 0)
-        r1 += 6;
-    return gUnknown_083ECCF1[r1];
+    s16 newPosition = (sSlotMachine->reeltimePosition + offset) % 6;
+    if (newPosition < 0)
+        newPosition += 6;
+    return sReelTimeSymbols[newPosition];
 }
 
-static void sub_8102C84(u8 a0, s16 a1)
+static void AdvanceSlotReel(u8 reelIndex, s16 value)
 {
-    sSlotMachine->unk1C[a0] += a1;
-    sSlotMachine->unk1C[a0] %= 504;
-    sSlotMachine->reelPositions[a0] = 21 - sSlotMachine->unk1C[a0] / 24;
+    sSlotMachine->reelPixelOffsets[reelIndex] += value;
+    sSlotMachine->reelPixelOffsets[reelIndex] %= 504;
+    sSlotMachine->reelPositions[reelIndex] = 21 - sSlotMachine->reelPixelOffsets[reelIndex] / 24;
 }
 
-static s16 sub_8102CCC(u8 a0, s16 a1)
+static s16 AdvanceSlotReelToNextSymbol(u8 reelIndex, s16 value)
 {
-    s16 r1 = sSlotMachine->unk1C[a0] % 24;
-    if (r1 != 0)
+    s16 offset = sSlotMachine->reelPixelOffsets[reelIndex] % 24;
+    if (offset != 0)
     {
-        if (r1 < a1)
-            a1 = r1;
-        sub_8102C84(a0, a1);
-        r1 = sSlotMachine->unk1C[a0] % 24;
+        if (offset < value)
+            value = offset;
+        AdvanceSlotReel(reelIndex, value);
+        offset = sSlotMachine->reelPixelOffsets[reelIndex] % 24;
     }
-    return r1;
+    return offset;
 }
 
-static void sub_8102D28(s16 a0)
+static void AdvanceReeltimeReel(s16 value)
 {
-    sSlotMachine->unk14 += a0;
-    sSlotMachine->unk14 %= 120;
-    sSlotMachine->unk16 = 6 - sSlotMachine->unk14 / 20;
+    sSlotMachine->reeltimePixelOffset += value;
+    sSlotMachine->reeltimePixelOffset %= 120;
+    sSlotMachine->reeltimePosition = 6 - sSlotMachine->reeltimePixelOffset / 20;
 }
 
-static s16 sub_8102D5C(s16 a0)
+static s16 AdvanceReeltimeReelToNextSymbol(s16 value)
 {
-    s16 r1 = sSlotMachine->unk14 % 20;
-    if (r1 != 0)
+    s16 offset = sSlotMachine->reeltimePixelOffset % 20;
+    if (offset != 0)
     {
-        if (r1 < a0)
-            a0 = r1;
-        sub_8102D28(a0);
-        r1 = sSlotMachine->unk14 % 20;
+        if (offset < value)
+            value = offset;
+        AdvanceReeltimeReel(value);
+        offset = sSlotMachine->reeltimePixelOffset % 20;
     }
-    return r1;
+    return offset;
 }
 
-static void sub_8102DA8(void)
+static void CreateReelTasks(void)
 {
     u8 i;
     for (i = 0; i < 3; i++)
     {
-        u8 taskId = CreateTask(sub_8102E68, 2);
+        u8 taskId = CreateTask(Task_Reel, 2);
         gTasks[taskId].data[15] = i;
-        sSlotMachine->reelTasks[i] = taskId;
-        sub_8102E68(taskId);
+        sSlotMachine->slotReelTasks[i] = taskId;
+        Task_Reel(taskId);
     }
 }
 
-static void sub_8102DEC(u8 a0)
+static void SpinSlotReel(u8 reelIndex)
 {
-    gTasks[sSlotMachine->reelTasks[a0]].data[0] = 1;
-    gTasks[sSlotMachine->reelTasks[a0]].data[14] = 1;
+    gTasks[sSlotMachine->slotReelTasks[reelIndex]].data[0] = 1;
+    gTasks[sSlotMachine->slotReelTasks[reelIndex]].data[14] = 1;
 }
 
-static void sub_8102E1C(u8 a0)
+static void StopSlotReel(u8 reelIndex)
 {
-    gTasks[sSlotMachine->reelTasks[a0]].data[0] = 2;
+    gTasks[sSlotMachine->slotReelTasks[reelIndex]].data[0] = 2;
 }
 
-static bool8 sub_8102E40(u8 a0)
+static bool8 IsSlotReelMoving(u8 reelIndex)
 {
-    return gTasks[sSlotMachine->reelTasks[a0]].data[14];
+    return gTasks[sSlotMachine->slotReelTasks[reelIndex]].data[14];
 }
 
-static bool8 (*const gUnknown_083ECB2C[])(struct Task *task) =
+static bool8 (*const sReelTasks[])(struct Task *task) =
 {
-    sub_8102EA0,
-    sub_8102EA4,
-    sub_8102EC0,
-    sub_8102F4C,
-    sub_8103008
+    ReelTask_StayStill,
+    ReelTask_Spin,
+    ReelTask_DecideStop,
+    ReelTask_MoveToStop,
+    ReelTask_ShakingStop
 };
 
-static void sub_8102E68(u8 taskId)
+static void Task_Reel(u8 taskId)
 {
-    while (gUnknown_083ECB2C[gTasks[taskId].data[0]](gTasks + taskId))
+    while (sReelTasks[gTasks[taskId].data[0]](gTasks + taskId))
         ;
 }
 
-static bool8 sub_8102EA0(struct Task *task)
+static bool8 ReelTask_StayStill(struct Task *task)
 {
     return FALSE;
 }
 
-static bool8 sub_8102EA4(struct Task *task)
+static bool8 ReelTask_Spin(struct Task *task)
 {
-    sub_8102C84(task->data[15], sSlotMachine->unk1A);
+    AdvanceSlotReel(task->data[15], sSlotMachine->reelSpeed);
     return FALSE;
 }
 
-static bool8 (*const gUnknown_083ECB40[])(void) =
+static bool8 (*const sDecideStop_Bias[])(void) =
 {
-    sub_810305C,
-    sub_81032C0,
-    sub_81033DC
+    DecideStop_Bias_Reel1,
+    DecideStop_Bias_Reel2,
+    DecideStop_Bias_Reel3
 };
 
-static void (*const gUnknown_083ECB4C[])(void) =
+static void (*const sDecideStop_NoBias[])(void) =
 {
-    sub_81034F4,
-    sub_8103540,
-    sub_810380C
+    DecideStop_NoBias_Reel1,
+    DecideStop_NoBias_Reel2,
+    DecideStop_NoBias_Reel3
 };
 
-static bool8 sub_8102EC0(struct Task *task)
+static bool8 ReelTask_DecideStop(struct Task *task)
 {
     task->data[0]++;
-    sSlotMachine->unk34[task->data[15]] = 0;
-    sSlotMachine->unk2E[task->data[15]] = 0;
-    if (sSlotMachine->unk0A == 0 && (sSlotMachine->unk04 == 0 || sSlotMachine->unk06 == 0 || !gUnknown_083ECB40[task->data[15]]()))
+    sSlotMachine->winnerRows[task->data[15]] = 0;
+    sSlotMachine->reelExtraTurns[task->data[15]] = 0;
+    if (sSlotMachine->reelTimeSpinsLeft == 0 && (sSlotMachine->machineBias == 0 || sSlotMachine->didNotFailBias == 0 || !sDecideStop_Bias[task->data[15]]()))
     {
-        sSlotMachine->unk06 = 0;
-        gUnknown_083ECB4C[task->data[15]]();
+        sSlotMachine->didNotFailBias = 0;
+        sDecideStop_NoBias[task->data[15]]();
     }
-    task->data[1] = sSlotMachine->unk2E[task->data[15]];
+    task->data[1] = sSlotMachine->reelExtraTurns[task->data[15]];
     return TRUE;
 }
 
-static bool8 sub_8102F4C(struct Task *task)
+static bool8 ReelTask_MoveToStop(struct Task *task)
 {
-    u16 sp[] = {2, 4, 4, 4, 8};
-    s16 r2 = sSlotMachine->unk1C[task->data[15]] % 24;
-    if (r2 != 0)
-        r2 = sub_8102CCC(task->data[15], sSlotMachine->unk1A);
-    else if (sSlotMachine->unk2E[task->data[15]])
+    u16 reelStopShocks[] = {2, 4, 4, 4, 8};
+    s16 reelPixelPos = sSlotMachine->reelPixelOffsets[task->data[15]] % 24;
+    if (reelPixelPos != 0)
+        reelPixelPos = AdvanceSlotReelToNextSymbol(task->data[15], sSlotMachine->reelSpeed);
+    else if (sSlotMachine->reelExtraTurns[task->data[15]])
     {
-        sSlotMachine->unk2E[task->data[15]]--;
-        sub_8102C84(task->data[15], sSlotMachine->unk1A);
-        r2 = sSlotMachine->unk1C[task->data[15]] % 24;
+        sSlotMachine->reelExtraTurns[task->data[15]]--;
+        AdvanceSlotReel(task->data[15], sSlotMachine->reelSpeed);
+        reelPixelPos = sSlotMachine->reelPixelOffsets[task->data[15]] % 24;
     }
-    if (r2 == 0 && sSlotMachine->unk2E[task->data[15]] == 0)
+    if (reelPixelPos == 0 && sSlotMachine->reelExtraTurns[task->data[15]] == 0)
     {
         task->data[0]++;
-        task->data[1] = sp[task->data[1]];
+        task->data[1] = reelStopShocks[task->data[1]];
         task->data[2] = 0;
     }
     return FALSE;
 }
 
-static bool8 sub_8103008(struct Task *task)
+static bool8 ReelTask_ShakingStop(struct Task *task)
 {
-    sSlotMachine->unk22[task->data[15]] = task->data[1];
+    sSlotMachine->reelShockOffsets[task->data[15]] = task->data[1];
     task->data[1] = -task->data[1];
     task->data[2]++;
     if ((task->data[2] & 0x3) == 0)
@@ -1748,110 +1750,110 @@ static bool8 sub_8103008(struct Task *task)
     {
         task->data[0] = 0;
         task->data[14] = 0;
-        sSlotMachine->unk22[task->data[15]] = 0;
+        sSlotMachine->reelShockOffsets[task->data[15]] = 0;
     }
     return FALSE;
 }
 
-static bool8 (*const gUnknown_083ECB64[])(u8 a0, u8 a1) =
+static bool8 (*const sDecideStop_Bias_Reel1_Bets[])(u8 a0, u8 a1) =
 {
-    sub_8103154,
-    sub_81031B4,
-    sub_81031B4
+    DecideStop_Bias_Reel1_Bet1,
+    DecideStop_Bias_Reel1_Bet2or3,
+    DecideStop_Bias_Reel1_Bet2or3
 };
 
-static bool8 sub_810305C(void)
+static bool8 DecideStop_Bias_Reel1(void)
 {
-    u8 r3 = sub_810250C(sSlotMachine->unk04);
-    u8 r5 = r3;
-    if (sSlotMachine->unk04 & 0xc0)
+    u8 sym2 = GetBiasSymbol(sSlotMachine->machineBias);
+    u8 sym1 = sym2;
+    if (sSlotMachine->machineBias & 0xc0)
     {
-        r5 = 0;
-        r3 = 1;
+        sym1 = 0;
+        sym2 = 1;
     }
-    return gUnknown_083ECB64[sSlotMachine->bet - 1](r5, r3);
+    return sDecideStop_Bias_Reel1_Bets[sSlotMachine->bet - 1](sym1, sym2);
 }
 
-static bool8 sub_81030A4(s16 y, u8 tag1, u8 tag2)
+static bool8 EitherSymbolAtPos_Reel1(s16 pos, u8 sym1, u8 sym2)
 {
-    u8 tag = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, y);
-    if (tag == tag1 || tag == tag2)
+    u8 sym = GetSymbol(0, pos);
+    if (sym == sym1 || sym == sym2)
     {
-        sSlotMachine->unk07 = tag;
+        sSlotMachine->biasSymbol = sym;
         return TRUE;
     }
     return FALSE;
 }
 
-static bool8 sub_81030E0(s16 y)
+static bool8 AreCherriesOnScreen_Reel1(s16 turns)
 {
-    if (GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, 1 - y) == 4 || GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, 2 - y) == 4 || GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, 3 - y) == 4)
+    if (GetSymbol(0, 1 - turns) == 4 || GetSymbol(0, 2 - turns) == 4 || GetSymbol(0, 3 - turns) == 4)
         return TRUE;
     else
         return FALSE;
 }
 
-static bool8 sub_8103134(void)
+static bool8 BiasedTowardCherryOr7s(void)
 {
-    if (sSlotMachine->unk04 & 0xc2)
+    if (sSlotMachine->machineBias & 0xc2)
         return TRUE;
     else
         return FALSE;
 }
 
-static bool8 sub_8103154(u8 a0, u8 a1)
+static bool8 DecideStop_Bias_Reel1_Bet1(u8 sym1, u8 sym2)
 {
     s16 i;
 
     for (i = 0; i < 5; i++)
     {
-        if (sub_81030A4(2 - i, a0, a1))
+        if (EitherSymbolAtPos_Reel1(2 - i, sym1, sym2))
         {
-            sSlotMachine->unk34[0] = 2;
-            sSlotMachine->unk2E[0] = i;
+            sSlotMachine->winnerRows[0] = 2;
+            sSlotMachine->reelExtraTurns[0] = i;
             return TRUE;
         }
     }
     return FALSE;
 }
 
-static bool8 sub_81031B4(u8 tag1, u8 tag2)
+static bool8 DecideStop_Bias_Reel1_Bet2or3(u8 sym1, u8 sym2)
 {
     s16 i;
-    bool8 r6 = sub_8103134();
-    if (r6 || !sub_81030E0(0))
+    bool8 cherry7Bias = BiasedTowardCherryOr7s();
+    if (cherry7Bias || !AreCherriesOnScreen_Reel1(0))
     {
         for (i = 1; i < 4; i++)
         {
-            if (sub_81030A4(i, tag1, tag2))
+            if (EitherSymbolAtPos_Reel1(i, sym1, sym2))
             {
-                sSlotMachine->unk34[0] = i;
-                sSlotMachine->unk2E[0] = 0;
+                sSlotMachine->winnerRows[0] = i;
+                sSlotMachine->reelExtraTurns[0] = 0;
                 return TRUE;
             }
         }
     }
     for (i = 1; i < 5; i++)
     {
-        bool8 r7 = r6;
-        if (r7 || !sub_81030E0(i))
+        bool8 cherry7BiasCopy = cherry7Bias;
+        if (cherry7BiasCopy || !AreCherriesOnScreen_Reel1(i))
         {
-            if (sub_81030A4(1 - i, tag1, tag2))
+            if (EitherSymbolAtPos_Reel1(1 - i, sym1, sym2))
             {
-                if (i == 1 && (r7 || !sub_81030E0(3)))
+                if (i == 1 && (cherry7BiasCopy || !AreCherriesOnScreen_Reel1(3)))
                 {
-                    sSlotMachine->unk34[0] = 3;
-                    sSlotMachine->unk2E[0] = 3;
+                    sSlotMachine->winnerRows[0] = 3;
+                    sSlotMachine->reelExtraTurns[0] = 3;
                     return TRUE;
                 }
-                if (i < 4 && (r7 || !sub_81030E0(i + 1)))
+                if (i < 4 && (cherry7BiasCopy || !AreCherriesOnScreen_Reel1(i + 1)))
                 {
-                    sSlotMachine->unk34[0] = 2;
-                    sSlotMachine->unk2E[0] = i + 1;
+                    sSlotMachine->winnerRows[0] = 2;
+                    sSlotMachine->reelExtraTurns[0] = i + 1;
                     return TRUE;
                 }
-                sSlotMachine->unk34[0] = 1;
-                sSlotMachine->unk2E[0] = i;
+                sSlotMachine->winnerRows[0] = 1;
+                sSlotMachine->reelExtraTurns[0] = i;
                 return TRUE;
             }
         }
@@ -1859,62 +1861,62 @@ static bool8 sub_81031B4(u8 tag1, u8 tag2)
     return FALSE;
 }
 
-static bool8 (*const gUnknown_083ECB70[])(void) =
+static bool8 (*const sDecideStop_Bias_Reel2_Bets[])(void) =
 {
-    sub_81032E8,
-    sub_81032E8,
-    sub_810333C
+    DecideStop_Bias_Reel2_Bet1or2,
+    DecideStop_Bias_Reel2_Bet1or2,
+    DecideStop_Bias_Reel2_Bet3
 };
 
-static bool8 sub_81032C0(void)
+static bool8 DecideStop_Bias_Reel2(void)
 {
-    return gUnknown_083ECB70[sSlotMachine->bet - 1]();
+    return sDecideStop_Bias_Reel2_Bets[sSlotMachine->bet - 1]();
 }
 
-static bool8 sub_81032E8(void)
+static bool8 DecideStop_Bias_Reel2_Bet1or2(void)
 {
     s16 i;
-    s16 unk34_0 = sSlotMachine->unk34[0];
+    s16 reel1BiasRow = sSlotMachine->winnerRows[0];
 
     for (i = 0; i < 5; i++)
     {
-        if (GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, unk34_0 - i) == sSlotMachine->unk07)
+        if (GetSymbol(1, reel1BiasRow - i) == sSlotMachine->biasSymbol)
         {
-            sSlotMachine->unk34[1] = unk34_0;
-            sSlotMachine->unk2E[1] = i;
+            sSlotMachine->winnerRows[1] = reel1BiasRow;
+            sSlotMachine->reelExtraTurns[1] = i;
             return TRUE;
         }
     }
     return FALSE;
 }
 
-static bool8 sub_810333C(void)
+static bool8 DecideStop_Bias_Reel2_Bet3(void)
 {
     s16 i;
-    if (sub_81032E8())
+    if (DecideStop_Bias_Reel2_Bet1or2())
     {
-        if (sSlotMachine->unk34[0] != 2 && sSlotMachine->unk2E[1] > 1 && sSlotMachine->unk2E[1] != 4)
+        if (sSlotMachine->winnerRows[0] != 2 && sSlotMachine->reelExtraTurns[1] > 1 && sSlotMachine->reelExtraTurns[1] != 4)
         {
             for (i = 0; i < 5; i++)
             {
-                if (GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, 2 - i) == sSlotMachine->unk07)
+                if (GetSymbol(1, 2 - i) == sSlotMachine->biasSymbol)
                 {
-                    sSlotMachine->unk34[1] = 2;
-                    sSlotMachine->unk2E[1] = i;
+                    sSlotMachine->winnerRows[1] = 2;
+                    sSlotMachine->reelExtraTurns[1] = i;
                     break;
                 }
             }
         }
         return TRUE;
     }
-    if (sSlotMachine->unk34[0] != 2)
+    if (sSlotMachine->winnerRows[0] != 2)
     {
         for (i = 0; i < 5; i++)
         {
-            if (GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, 2 - i) == sSlotMachine->unk07)
+            if (GetSymbol(1, 2 - i) == sSlotMachine->biasSymbol)
             {
-                sSlotMachine->unk34[1] = 2;
-                sSlotMachine->unk2E[1] = i;
+                sSlotMachine->winnerRows[1] = 2;
+                sSlotMachine->reelExtraTurns[1] = i;
                 return TRUE;
             }
         }
@@ -1922,116 +1924,116 @@ static bool8 sub_810333C(void)
     return FALSE;
 }
 
-static bool8 (*const gUnknown_083ECB7C[])(u8 a0) =
+static bool8 (*const sDecideStop_Bias_Reel3_Bets[])(u8 a0) =
 {
-    sub_810341C,
-    sub_810341C,
-    sub_810347C
+    DecideStop_Bias_Reel3_Bet1or2,
+    DecideStop_Bias_Reel3_Bet1or2,
+    DecideStop_Bias_Reel3_Bet3
 };
 
-static bool8 sub_81033DC(void)
+static bool8 DecideStop_Bias_Reel3(void)
 {
-    u8 r3 = sSlotMachine->unk07;
-    if (sSlotMachine->unk04 & 0x40)
+    u8 biasSymbol = sSlotMachine->biasSymbol;
+    if (sSlotMachine->machineBias & 0x40)
     {
-        r3 = 0;
-        if (sSlotMachine->unk07 == 0)
+        biasSymbol = 0;
+        if (sSlotMachine->biasSymbol == 0)
         {
-            r3 = 1;
+            biasSymbol = 1;
         }
     }
-    return gUnknown_083ECB7C[sSlotMachine->bet - 1](r3);
+    return sDecideStop_Bias_Reel3_Bets[sSlotMachine->bet - 1](biasSymbol);
 }
 
-static bool8 sub_810341C(u8 a0)
+static bool8 DecideStop_Bias_Reel3_Bet1or2(u8 biasSymbol)
 {
     s16 i;
-    s16 unk34_1 = sSlotMachine->unk34[1];
+    s16 reel2BiasRow = sSlotMachine->winnerRows[1];
 
     for (i = 0; i < 5; i++)
     {
-        if (GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, unk34_1 - i) == a0)
+        if (GetSymbol(2, reel2BiasRow - i) == biasSymbol)
         {
-            sSlotMachine->unk34[2] = unk34_1;
-            sSlotMachine->unk2E[2] = i;
+            sSlotMachine->winnerRows[2] = reel2BiasRow;
+            sSlotMachine->reelExtraTurns[2] = i;
             return TRUE;
         }
     }
     return FALSE;
 }
 
-static bool8 sub_810347C(u8 a0)
+static bool8 DecideStop_Bias_Reel3_Bet3(u8 biasSymbol)
 {
     s16 i;
-    s16 r8;
-    if (sSlotMachine->unk34[0] == sSlotMachine->unk34[1])
-        return sub_810341C(a0);
-    if (sSlotMachine->unk34[0] == 1)
-        r8 = 3;
+    s16 biasRow;
+    if (sSlotMachine->winnerRows[0] == sSlotMachine->winnerRows[1])
+        return DecideStop_Bias_Reel3_Bet1or2(biasSymbol);
+    if (sSlotMachine->winnerRows[0] == 1)
+        biasRow = 3;
     else
-        r8 = 1;
+        biasRow = 1;
     for (i = 0; i < 5; i++)
     {
-        if (GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, r8 - i) == a0)
+        if (GetSymbol(2, biasRow - i) == biasSymbol)
         {
-            sSlotMachine->unk2E[2] = i;
-            sSlotMachine->unk34[2] = r8;
+            sSlotMachine->reelExtraTurns[2] = i;
+            sSlotMachine->winnerRows[2] = biasRow;
             return TRUE;
         }
     }
     return FALSE;
 }
 
-static void sub_81034F4(void)
+static void DecideStop_NoBias_Reel1(void)
 {
     s16 i = 0;
 
-    while (sub_81030E0(i) != 0)
+    while (AreCherriesOnScreen_Reel1(i) != 0)
         i++;
-    sSlotMachine->unk2E[0] = i;
+    sSlotMachine->reelExtraTurns[0] = i;
 }
 
-static bool8 sub_8103520(u8 *a0)
+static bool8 IfSymbol7_SwitchColor(u8 *symbol)
 {
-    if (*a0 == 0)
+    if (*symbol == 0)
     {
-        *a0 = 1;
+        *symbol = 1;
         return TRUE;
     }
-    if (*a0 == 1)
+    if (*symbol == 1)
     {
-        *a0 = 0;
+        *symbol = 0;
         return TRUE;
     }
     return FALSE;
 }
 
-static void (*const gUnknown_083ECB88[])(void) =
+static void (*const sDecideStop_NoBias_Reel2_Bets[])(void) =
 {
-    sub_8103564,
-    j5_08111E84,
-    sub_8103668
+    DecideStop_NoBias_Reel2_Bet1,
+    DecideStop_NoBias_Reel2_Bet2,
+    DecideStop_NoBias_Reel2_Bet3
 };
 
-static void sub_8103540(void)
+static void DecideStop_NoBias_Reel2(void)
 {
-    gUnknown_083ECB88[sSlotMachine->bet - 1]();
+    sDecideStop_NoBias_Reel2_Bets[sSlotMachine->bet - 1]();
 }
 
-static void sub_8103564(void)
+static void DecideStop_NoBias_Reel2_Bet1(void)
 {
-    if (sSlotMachine->unk34[0] != 0 && sSlotMachine->unk04 & 0x80)
+    if (sSlotMachine->winnerRows[0] != 0 && sSlotMachine->machineBias & 0x80)
     {
-        u8 sp0 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, 2 - sSlotMachine->unk2E[0]);
-        if (sub_8103520(&sp0))
+        u8 reel1MiddleSym = GetSymbol(0, 2 - sSlotMachine->reelExtraTurns[0]);
+        if (IfSymbol7_SwitchColor(&reel1MiddleSym))
         {
             s16 i;
             for (i = 0; i < 5; i++)
             {
-                if (sp0 == GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, 2 - i))
+                if (reel1MiddleSym == GetSymbol(1, 2 - i))
                 {
-                    sSlotMachine->unk34[1] = 2;
-                    sSlotMachine->unk2E[1] = i;
+                    sSlotMachine->winnerRows[1] = 2;
+                    sSlotMachine->reelExtraTurns[1] = i;
                     break;
                 }
             }
@@ -2039,20 +2041,20 @@ static void sub_8103564(void)
     }
 }
 
-static void j5_08111E84(void)
+static void DecideStop_NoBias_Reel2_Bet2(void)
 {
-    if (sSlotMachine->unk34[0] != 0 && sSlotMachine->unk04 & 0x80)
+    if (sSlotMachine->winnerRows[0] != 0 && sSlotMachine->machineBias & 0x80)
     {
-        u8 sp0 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
-        if (sub_8103520(&sp0))
+        u8 reel1BiasSym = GetSymbol(0, sSlotMachine->winnerRows[0] - sSlotMachine->reelExtraTurns[0]);
+        if (IfSymbol7_SwitchColor(&reel1BiasSym))
         {
             s16 i;
             for (i = 0; i < 5; i++)
             {
-                if (sp0 == GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, sSlotMachine->unk34[0] - i))
+                if (reel1BiasSym == GetSymbol(1, sSlotMachine->winnerRows[0] - i))
                 {
-                    sSlotMachine->unk34[1] = sSlotMachine->unk34[0];
-                    sSlotMachine->unk2E[1] = i;
+                    sSlotMachine->winnerRows[1] = sSlotMachine->winnerRows[0];
+                    sSlotMachine->reelExtraTurns[1] = i;
                     break;
                 }
             }
@@ -2060,61 +2062,61 @@ static void j5_08111E84(void)
     }
 }
 
-static void sub_8103668(void)
+static void DecideStop_NoBias_Reel2_Bet3(void)
 {
     s16 i;
     s16 j;
-    if (sSlotMachine->unk34[0] != 0 && sSlotMachine->unk04 & 0x80)
+    if (sSlotMachine->winnerRows[0] != 0 && sSlotMachine->machineBias & 0x80)
     {
-        if (sSlotMachine->unk34[0] == 2)
+        if (sSlotMachine->winnerRows[0] == 2)
         {
-            j5_08111E84();
+            DecideStop_NoBias_Reel2_Bet2();
         }
         else
         {
-            u8 sp0 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
-            if (sub_8103520(&sp0))
+            u8 reel1BiasSym = GetSymbol(0, sSlotMachine->winnerRows[0] - sSlotMachine->reelExtraTurns[0]);
+            if (IfSymbol7_SwitchColor(&reel1BiasSym))
             {
                 j = 2;
-                if (sSlotMachine->unk34[0] == 3)
+                if (sSlotMachine->winnerRows[0] == 3)
                     j = 3;
                 for (i = 0; i < 2; i++, j--)
                 {
-                    if (sp0 == GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, j))
+                    if (reel1BiasSym == GetSymbol(1, j))
                     {
-                        sSlotMachine->unk34[1] = j;
-                        sSlotMachine->unk2E[1] = 0;
+                        sSlotMachine->winnerRows[1] = j;
+                        sSlotMachine->reelExtraTurns[1] = 0;
                         return;
                     }
                 }
                 for (j = 1; j < 5; j++)
                 {
-                    if (sp0 == GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, sSlotMachine->unk34[0] - j))
+                    if (reel1BiasSym == GetSymbol(1, sSlotMachine->winnerRows[0] - j))
                     {
-                        if (sSlotMachine->unk34[0] == 1)
+                        if (sSlotMachine->winnerRows[0] == 1)
                         {
                             if (j < 3)
                             {
-                                sSlotMachine->unk34[1] = 2;
-                                sSlotMachine->unk2E[1] = j + 1;
+                                sSlotMachine->winnerRows[1] = 2;
+                                sSlotMachine->reelExtraTurns[1] = j + 1;
                             }
                             else
                             {
-                                sSlotMachine->unk34[1] = 1;
-                                sSlotMachine->unk2E[1] = j;
+                                sSlotMachine->winnerRows[1] = 1;
+                                sSlotMachine->reelExtraTurns[1] = j;
                             }
                         }
                         else
                         {
                             if (j < 3)
                             {
-                                sSlotMachine->unk34[1] = 3;
-                                sSlotMachine->unk2E[1] = j;
+                                sSlotMachine->winnerRows[1] = 3;
+                                sSlotMachine->reelExtraTurns[1] = j;
                             }
                             else
                             {
-                                sSlotMachine->unk34[1] = 2;
-                                sSlotMachine->unk2E[1] = j - 1;
+                                sSlotMachine->winnerRows[1] = 2;
+                                sSlotMachine->reelExtraTurns[1] = j - 1;
                             }
                         }
                         return;
@@ -2125,71 +2127,71 @@ static void sub_8103668(void)
     }
 }
 
-static bool8 sub_8103764(u8 a0, u8 a1)
+static bool8 MismatchedSyms_77(u8 sym1, u8 sym2)
 {
-    if ((a0 == 0 && a1 == 1) || (a0 == 1 && a1 == 0))
+    if ((sym1 == 0 && sym2 == 1) || (sym1 == 1 && sym2 == 0))
         return TRUE;
     else
         return FALSE;
 }
 
-static bool8 sub_810378C(u8 a0, u8 a1, u8 a2)
+static bool8 MismatchedSyms_777(u8 sym1, u8 sym2, u8 sym3)
 {
-    if ((a0 == 0 && a1 == 1 && a2 == 0) || (a0 == 1 && a1 == 0 && a2 == 1))
+    if ((sym1 == 0 && sym2 == 1 && sym3 == 0) || (sym1 == 1 && sym2 == 0 && sym3 == 1))
         return TRUE;
     else
         return FALSE;
 }
 
-static bool8 sub_81037BC(u8 a0, u8 a1, u8 a2)
+static bool8 NeitherMatchNor7Mismatch(u8 sym1, u8 sym2, u8 sym3)
 {
-    if ((a0 == 0 && a1 == 1 && a2 == 0) ||
-        (a0 == 1 && a1 == 0 && a2 == 1) ||
-        (a0 == 0 && a1 == 0 && a2 == 1) ||
-        (a0 == 1 && a1 == 1 && a2 == 0) ||
-        (a0 == a1 && a0 == a2))
+    if ((sym1 == 0 && sym2 == 1 && sym3 == 0) ||
+        (sym1 == 1 && sym2 == 0 && sym3 == 1) ||
+        (sym1 == 0 && sym2 == 0 && sym3 == 1) ||
+        (sym1 == 1 && sym2 == 1 && sym3 == 0) ||
+        (sym1 == sym2 && sym1 == sym3))
     {
         return FALSE;
     }
     return TRUE;
 }
 
-static void (*const gUnknown_083ECB94[])(void) =
+static void (*const sDecideStop_NoBias_Reel3_Bets[])(void) =
 {
-    sub_8103830,
-    sub_8103910,
-    sub_8103A78
+    DecideStop_NoBias_Reel3_Bet1,
+    DecideStop_NoBias_Reel3_Bet2,
+    DecideStop_NoBias_Reel3_Bet3
 };
 
-static void sub_810380C(void)
+static void DecideStop_NoBias_Reel3(void)
 {
-    gUnknown_083ECB94[sSlotMachine->bet - 1]();
+    sDecideStop_NoBias_Reel3_Bets[sSlotMachine->bet - 1]();
 }
 
-static void sub_8103830(void)
+static void DecideStop_NoBias_Reel3_Bet1(void)
 {
     s16 i = 0;
-    u8 r5 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, 2 - sSlotMachine->unk2E[0]);
-    u8 r1 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, 2 - sSlotMachine->unk2E[1]);
-    if (r5 == r1)
+    u8 sym1 = GetSymbol(0, 2 - sSlotMachine->reelExtraTurns[0]);
+    u8 sym2 = GetSymbol(1, 2 - sSlotMachine->reelExtraTurns[1]);
+    if (sym1 == sym2)
     {
         while (1)
         {
-            u8 r0;
-            if (!(r5 == (r0 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, 2 - i)) || (r5 == 0 && r0 == 1) || (r5 == 1 && r0 == 0)))
+            u8 sym3;
+            if (!(sym1 == (sym3 = GetSymbol(2, 2 - i)) || (sym1 == 0 && sym3 == 1) || (sym1 == 1 && sym3 == 0)))
                 break;
             i++;
         }
     }
-    else if (sub_8103764(r5, r1))
+    else if (MismatchedSyms_77(sym1, sym2))
     {
-        if (sSlotMachine->unk04 & 0x80)
+        if (sSlotMachine->machineBias & 0x80)
         {
             for (i = 0; i < 5; i++)
             {
-                if (r5 == GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, 2 - i))
+                if (sym1 == GetSymbol(2, 2 - i))
                 {
-                    sSlotMachine->unk2E[2] = i;
+                    sSlotMachine->reelExtraTurns[2] = i;
                     return;
                 }
             }
@@ -2197,34 +2199,34 @@ static void sub_8103830(void)
         i = 0;
         while (1)
         {
-            if (r5 != GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, 2 - i))
+            if (sym1 != GetSymbol(2, 2 - i))
                 break;
             i++;
         }
     }
-    sSlotMachine->unk2E[2] = i;
+    sSlotMachine->reelExtraTurns[2] = i;
 }
 
-static void sub_8103910(void)
+static void DecideStop_NoBias_Reel3_Bet2(void)
 {
-    s16 sp0 = 0;
+    s16 extraTurns = 0;
     s16 i;
-    u8 r7;
-    u8 r6;
-    u8 r4;
+    u8 sym1;
+    u8 sym2;
+    u8 sym3;
 
-    if (sSlotMachine->unk34[1] != 0 && sSlotMachine->unk34[0] == sSlotMachine->unk34[1] && sSlotMachine->unk04 & 0x80)
+    if (sSlotMachine->winnerRows[1] != 0 && sSlotMachine->winnerRows[0] == sSlotMachine->winnerRows[1] && sSlotMachine->machineBias & 0x80)
     {
-        r7 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
-        r6 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, sSlotMachine->unk34[1] - sSlotMachine->unk2E[1]);
-        if (sub_8103764(r7, r6))
+        sym1 = GetSymbol(0, sSlotMachine->winnerRows[0] - sSlotMachine->reelExtraTurns[0]);
+        sym2 = GetSymbol(1, sSlotMachine->winnerRows[1] - sSlotMachine->reelExtraTurns[1]);
+        if (MismatchedSyms_77(sym1, sym2))
         {
             for (i = 0; i < 5; i++)
             {
-                r4 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, sSlotMachine->unk34[1] - i);
-                if (r7 == r4)
+                sym3 = GetSymbol(2, sSlotMachine->winnerRows[1] - i);
+                if (sym1 == sym3)
                 {
-                    sp0 = i;
+                    extraTurns = i;
                     break;
                 }
             }
@@ -2232,49 +2234,49 @@ static void sub_8103910(void)
     }
     while (1)
     {
-        s16 r8;
-        for (i = 1, r8 = 0; i < 4; i++)
+        s16 numMatches;
+        for (i = 1, numMatches = 0; i < 4; i++)
         {
-            r7 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, i - sSlotMachine->unk2E[0]);
-            r6 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, i - sSlotMachine->unk2E[1]);
-            r4 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, i - sp0);
-            if (!sub_81037BC(r7, r6, r4) && (!sub_810378C(r7, r6, r4) || !(sSlotMachine->unk04 & 0x80)))
+            sym1 = GetSymbol(0, i - sSlotMachine->reelExtraTurns[0]);
+            sym2 = GetSymbol(1, i - sSlotMachine->reelExtraTurns[1]);
+            sym3 = GetSymbol(2, i - extraTurns);
+            if (!NeitherMatchNor7Mismatch(sym1, sym2, sym3) && (!MismatchedSyms_777(sym1, sym2, sym3) || !(sSlotMachine->machineBias & 0x80)))
             {
-                r8++;
+                numMatches++;
                 break;
             }
         }
-        if (r8 == 0)
+        if (numMatches == 0)
             break;
-        sp0++;
+        extraTurns++;
     }
-    sSlotMachine->unk2E[2] = sp0;
+    sSlotMachine->reelExtraTurns[2] = extraTurns;
 }
 
-static void sub_8103A78(void)
+static void DecideStop_NoBias_Reel3_Bet3(void)
 {
-    u8 r6;
-    u8 r5;
-    u8 r4;
-    s16 r8;
+    u8 sym1;
+    u8 sym2;
+    u8 sym3;
+    s16 row;
     s16 i;
 
-    sub_8103910();
-    if (sSlotMachine->unk34[1] != 0 && sSlotMachine->unk34[0] != sSlotMachine->unk34[1] && sSlotMachine->unk04 & 0x80)
+    DecideStop_NoBias_Reel3_Bet2();
+    if (sSlotMachine->winnerRows[1] != 0 && sSlotMachine->winnerRows[0] != sSlotMachine->winnerRows[1] && sSlotMachine->machineBias & 0x80)
     {
-        r6 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
-        r5 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, sSlotMachine->unk34[1] - sSlotMachine->unk2E[1]);
-        if (sub_8103764(r6, r5))
+        sym1 = GetSymbol(0, sSlotMachine->winnerRows[0] - sSlotMachine->reelExtraTurns[0]);
+        sym2 = GetSymbol(1, sSlotMachine->winnerRows[1] - sSlotMachine->reelExtraTurns[1]);
+        if (MismatchedSyms_77(sym1, sym2))
         {
-            r8 = 1;
-            if (sSlotMachine->unk34[0] == 1)
-                r8 = 3;
+            row = 1;
+            if (sSlotMachine->winnerRows[0] == 1)
+                row = 3;
             for (i = 0; i < 5; i++)
             {
-                r4 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, r8 - (sSlotMachine->unk2E[2] + i));
-                if (r6 == r4)
+                sym3 = GetSymbol(2, row - (sSlotMachine->reelExtraTurns[2] + i));
+                if (sym1 == sym3)
                 {
-                    sSlotMachine->unk2E[2] += i;
+                    sSlotMachine->reelExtraTurns[2] += i;
                     break;
                 }
             }
@@ -2282,108 +2284,108 @@ static void sub_8103A78(void)
     }
     while (1)
     {
-        r6 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, 1 - sSlotMachine->unk2E[0]);
-        r5 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, 2 - sSlotMachine->unk2E[1]);
-        r4 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, 3 - sSlotMachine->unk2E[2]);
-        if (sub_81037BC(r6, r5, r4) || (sub_810378C(r6, r5, r4) && sSlotMachine->unk04 & 0x80))
+        sym1 = GetSymbol(0, 1 - sSlotMachine->reelExtraTurns[0]);
+        sym2 = GetSymbol(1, 2 - sSlotMachine->reelExtraTurns[1]);
+        sym3 = GetSymbol(2, 3 - sSlotMachine->reelExtraTurns[2]);
+        if (NeitherMatchNor7Mismatch(sym1, sym2, sym3) || (MismatchedSyms_777(sym1, sym2, sym3) && sSlotMachine->machineBias & 0x80))
             break;
-        sSlotMachine->unk2E[2]++;
+        sSlotMachine->reelExtraTurns[2]++;
     }
     while (1)
     {
-        r6 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, 3 - sSlotMachine->unk2E[0]);
-        r5 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, 2 - sSlotMachine->unk2E[1]);
-        r4 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, 1 - sSlotMachine->unk2E[2]);
-        if (sub_81037BC(r6, r5, r4) || (sub_810378C(r6, r5, r4) && sSlotMachine->unk04 & 0x80))
+        sym1 = GetSymbol(0, 3 - sSlotMachine->reelExtraTurns[0]);
+        sym2 = GetSymbol(1, 2 - sSlotMachine->reelExtraTurns[1]);
+        sym3 = GetSymbol(2, 1 - sSlotMachine->reelExtraTurns[2]);
+        if (NeitherMatchNor7Mismatch(sym1, sym2, sym3) || (MismatchedSyms_777(sym1, sym2, sym3) && sSlotMachine->machineBias & 0x80))
             break;
-        sSlotMachine->unk2E[2]++;
+        sSlotMachine->reelExtraTurns[2]++;
     }
 }
 
-static void sub_8103C14(u8 a0)
+static void PressStopReelButton(u8 reelNum)
 {
-    u8 taskId = CreateTask(sub_8103C48, 5);
-    gTasks[taskId].data[15] = a0;
-    sub_8103C48(taskId);
+    u8 taskId = CreateTask(Task_PressStopReelButton, 5);
+    gTasks[taskId].data[15] = reelNum;
+    Task_PressStopReelButton(taskId);
 }
 
-static void (*const gUnknown_083ECBA0[])(struct Task *task, u8 taskId) =
+static void (*const sReelStopButtonTasks[])(struct Task *task, u8 taskId) =
 {
-    sub_8103C78,
-    sub_8103CAC,
-    sub_8103CC8
+    StopReelButton_Press,
+    StopReelButton_Wait,
+    StopReelButton_Unpress
 };
 
-static void sub_8103C48(u8 taskId)
+static void Task_PressStopReelButton(u8 taskId)
 {
-    gUnknown_083ECBA0[gTasks[taskId].data[0]](gTasks + taskId, taskId);
+    sReelStopButtonTasks[gTasks[taskId].data[0]](gTasks + taskId, taskId);
 }
 
-static const s16 gUnknown_083ECBAC[] = {5, 10, 15};
+static const s16 sReelButtonOffsets[] = {5, 10, 15};
 
-static void sub_8103C78(struct Task *task, u8 taskId)
+static void StopReelButton_Press(struct Task *task, u8 taskId)
 {
-    sub_81065A8(gUnknown_083ECBAC[task->data[15]], 0x62, 0x63, 0x72, 0x73);
+    sub_81065A8(sReelButtonOffsets[task->data[15]], 0x62, 0x63, 0x72, 0x73);
     task->data[0]++;
 }
 
-static void sub_8103CAC(struct Task *task, u8 taskId)
+static void StopReelButton_Wait(struct Task *task, u8 taskId)
 {
     if (++task->data[1] > 11)
         task->data[0]++;
 }
 
-static void sub_8103CC8(struct Task *task, u8 taskId)
+static void StopReelButton_Unpress(struct Task *task, u8 taskId)
 {
-    sub_81065A8(gUnknown_083ECBAC[task->data[15]], 0x42, 0x43, 0x52, 0x53);
+    sub_81065A8(sReelButtonOffsets[task->data[15]], 0x42, 0x43, 0x52, 0x53);
     DestroyTask(taskId);
 }
 
-static const u16 *const gUnknown_083EDD08[];
-static const u16 *const gUnknown_083EDD1C[];
-static const u8 gUnknown_083EDD30[];
+static const u16 *const sLitMatchLinePalTable[];
+static const u16 *const sDarkMatchLinePalTable[];
+static const u8 sMatchLinePalOffsets[];
 
-static void sub_8103D00(u8 a0)
+static void LightenMatchLine(u8 matchLineId)
 {
-    LoadPalette(gUnknown_083EDD08[a0], gUnknown_083EDD30[a0], 2);
+    LoadPalette(sLitMatchLinePalTable[matchLineId], sMatchLinePalOffsets[matchLineId], 2);
 }
 
-static void sub_8103D28(u8 a0)
+static void DarkenMatchLine(u8 matchLineId)
 {
-    LoadPalette(gUnknown_083EDD1C[a0], gUnknown_083EDD30[a0], 2);
+    LoadPalette(sDarkMatchLinePalTable[matchLineId], sMatchLinePalOffsets[matchLineId], 2);
 }
 
-static const u8 gUnknown_083EDD35[][2];
-static const u8 gUnknown_083EDD3B[];
+static const u8 sBetToMatchLineIds[][2];
+static const u8 sMatchLinesPerBet[];
 
-static void sub_8103D50(u8 a0)
-{
-    u8 i;
-    for (i = 0; i < gUnknown_083EDD3B[a0]; i++)
-        sub_8103D00(gUnknown_083EDD35[a0][i]);
-}
-
-static void sub_8103D8C(u8 a0)
+static void LightenBetTiles(u8 betVal)
 {
     u8 i;
-    for (i = 0; i < gUnknown_083EDD3B[a0]; i++)
-        sub_8103D28(gUnknown_083EDD35[a0][i]);
+    for (i = 0; i < sMatchLinesPerBet[betVal]; i++)
+        LightenMatchLine(sBetToMatchLineIds[betVal][i]);
 }
 
-static void sub_8103DC8(void)
+static void DarkenBetTiles(u8 betVal)
+{
+    u8 i;
+    for (i = 0; i < sMatchLinesPerBet[betVal]; i++)
+        DarkenMatchLine(sBetToMatchLineIds[betVal][i]);
+}
+
+static void CreateInvisibleFlashMatchLineSprites(void)
 {
     u8 i;
     for (i = 0; i < 5; i++)
     {
-        u8 spriteId = CreateInvisibleSprite(sub_8103EE4);
+        u8 spriteId = CreateInvisibleSprite(SpriteCB_FlashMatchingLines);
         gSprites[spriteId].data[0] = i;
-        sSlotMachine->unk44[i] = spriteId;
+        sSlotMachine->flashMatchLineSpriteIds[i] = spriteId;
     }
 }
 
-static void sub_8103E04(u8 a0)
+static void FlashMatchLine(u8 matchLineId)
 {
-    struct Sprite *sprite = gSprites + sSlotMachine->unk44[a0];
+    struct Sprite *sprite = gSprites + sSlotMachine->flashMatchLineSpriteIds[matchLineId];
     sprite->data[1] = 1;
     sprite->data[2] = 4;
     sprite->data[3] = 0;
@@ -2392,30 +2394,30 @@ static void sub_8103E04(u8 a0)
     sprite->data[7] = 0;
 }
 
-static bool8 sub_8103E38(void)
+static bool8 IsMatchLineDoneFlashingBeforePayout(void)
 {
     u8 i;
     for (i = 0; i < 5; i++)
     {
-        struct Sprite *sprite = &gSprites[sSlotMachine->unk44[i]];
+        struct Sprite *sprite = &gSprites[sSlotMachine->flashMatchLineSpriteIds[i]];
         if (sprite->data[1] && sprite->data[2])
             return FALSE;
     }
     return TRUE;
 }
 
-static bool8 sub_8103E7C(void)
+static bool8 TryStopMatchLinesFlashing(void)
 {
     u8 i;
     for (i = 0; i < 5; i++)
     {
-        if (!sub_8103EAC(sSlotMachine->unk44[i]))
+        if (!TryStopMatchLineFlashing(sSlotMachine->flashMatchLineSpriteIds[i]))
             return FALSE;
     }
     return TRUE;
 }
 
-static bool8 sub_8103EAC(u8 spriteId)
+static bool8 TryStopMatchLineFlashing(u8 spriteId)
 {
     struct Sprite *sprite = gSprites + spriteId;
     if (!sprite->data[1])
@@ -2425,9 +2427,9 @@ static bool8 sub_8103EAC(u8 spriteId)
     return sprite->data[7];
 }
 
-static void sub_8103EE4(struct Sprite *sprite)
+static void SpriteCB_FlashMatchingLines(struct Sprite *sprite)
 {
-    s16 r4;
+    s16 maxColorChange;
     if (sprite->data[1])
     {
         if (!sprite->data[3]--)
@@ -2435,9 +2437,9 @@ static void sub_8103EE4(struct Sprite *sprite)
             sprite->data[7] = 0;
             sprite->data[3] = 1;
             sprite->data[4] += sprite->data[5];
-            r4 = 4;
+            maxColorChange = 4;
             if (sprite->data[2])
-                r4 = 8;
+                maxColorChange = 8;
             if (sprite->data[4] <= 0)
             {
                 sprite->data[7] = 1;
@@ -2445,38 +2447,38 @@ static void sub_8103EE4(struct Sprite *sprite)
                 if (sprite->data[2])
                     sprite->data[2]--;
             }
-            else if (sprite->data[4] >= r4)
+            else if (sprite->data[4] >= maxColorChange)
                 sprite->data[5] = -sprite->data[5];
             if (sprite->data[2])
                 sprite->data[3] <<= 1;
         }
-        MultiplyPaletteRGBComponents(gUnknown_083EDD30[sprite->data[0]], sprite->data[4], sprite->data[4], sprite->data[4]);
+        MultiplyPaletteRGBComponents(sMatchLinePalOffsets[sprite->data[0]], sprite->data[4], sprite->data[4], sprite->data[4]);
     }
 }
 
-static void sub_8103F70(void)
+static void FlashSlotMachineLights(void)
 {
-    u8 taskId = CreateTask(sub_8103FE8, 6);
+    u8 taskId = CreateTask(Task_FlashSlotMachineLights, 6);
     gTasks[taskId].data[3] = 1;
-    sub_8103FE8(taskId);
+    Task_FlashSlotMachineLights(taskId);
 }
 
-static const u16 *const gUnknown_083EDDA0[];
-static const u16 *const gUnknown_083EDDAC;
+static const u16 *const sFlashingLightsPalTable[];
+static const u16 *const sSlotMachineMenu_Pal;
 
-static bool8 sub_8103FA0(void)
+static bool8 TryStopSlotMachineLights(void)
 {
-    u8 taskId = FindTaskIdByFunc(sub_8103FE8);
+    u8 taskId = FindTaskIdByFunc(Task_FlashSlotMachineLights);
     if (!gTasks[taskId].data[2])
     {
         DestroyTask(taskId);
-        LoadPalette(gUnknown_083EDDAC, 0x10, 0x20);
+        LoadPalette(sSlotMachineMenu_Pal, 0x10, 0x20);
         return TRUE;
     }
     return FALSE;
 }
 
-static void sub_8103FE8(u8 taskId)
+static void Task_FlashSlotMachineLights(u8 taskId)
 {
     struct Task *task = gTasks + taskId;
     if (!task->data[1]--)
@@ -2486,60 +2488,60 @@ static void sub_8103FE8(u8 taskId)
         if (task->data[2] == 0 || task->data[2] == 2)
             task->data[3] = -task->data[3];
     }
-    LoadPalette(gUnknown_083EDDA0[task->data[2]], 0x10, 0x20);
+    LoadPalette(sFlashingLightsPalTable[task->data[2]], 0x10, 0x20);
 }
 
-static void sub_8104048(void)
+static void CreatePikaPowerBoltTask(void)
 {
-    sSlotMachine->unk3E = CreateTask(sub_81040E8, 8);
+    sSlotMachine->pikaPowerBoltTaskId = CreateTask(Task_CreatePikaPowerBolt, 8);
 }
 
-static void sub_8104064(u8 pikaPower)
+static void AddPikaPowerBolt(u8 bolts)
 {
-    struct Task *task = gTasks + sSlotMachine->unk3E;
-    sub_810421C(task);
+    struct Task *task = gTasks + sSlotMachine->pikaPowerBoltTaskId;
+    ResetPikaPowerBoltTask(task);
     task->data[0] = 1;
     task->data[1]++;
     task->data[15] = 1;
 }
 
-static void sub_8104098(void)
+static void ResetPikaPowerBolts(void)
 {
-    struct Task *task = gTasks + sSlotMachine->unk3E;
-    sub_810421C(task);
+    struct Task *task = gTasks + sSlotMachine->pikaPowerBoltTaskId;
+    ResetPikaPowerBoltTask(task);
     task->data[0] = 3;
     task->data[15] = 1;
 }
 
-static bool8 sub_81040C8(void)
+static bool8 IsPikaPowerBoltAnimating(void)
 {
-    return gTasks[sSlotMachine->unk3E].data[15];
+    return gTasks[sSlotMachine->pikaPowerBoltTaskId].data[15];
 }
 
-static void (*const gUnknown_083ECBB4[])(struct Task *task) =
+static void (*const sPikaPowerBoltTasks[])(struct Task *task) =
 {
-    nullsub_68,
-    sub_810411C,
+    PikaPowerBolt_Idle,
+    PikaPowerBolt_AddBolt,
     sub_8104144,
     sub_81041AC
 };
 
-static void sub_81040E8(u8 taskId)
+static void Task_CreatePikaPowerBolt(u8 taskId)
 {
-    gUnknown_083ECBB4[gTasks[taskId].data[0]](gTasks + taskId);
+    sPikaPowerBoltTasks[gTasks[taskId].data[0]](gTasks + taskId);
 }
 
-static void nullsub_68(struct Task *task)
+static void PikaPowerBolt_Idle(struct Task *task)
 {
 }
 
-static void sub_810411C(struct Task *task)
+static void PikaPowerBolt_AddBolt(struct Task *task)
 {
-    task->data[2] = sub_8105B1C((task->data[1] << 3) + 20, 20);
+    task->data[2] = CreatePikaPowerBoltSprite((task->data[1] << 3) + 20, 20);
     task->data[0]++;
 }
 
-static const u16 gUnknown_083ECBC4[][2] =
+static const u16 sPikaPowerTileTable[][2] =
 {
     {0x9e, 0x6e},
     {0x9f, 0x6f},
@@ -2557,8 +2559,8 @@ static void sub_8104144(struct Task *task)
             r0 = 1;
         else if (task->data[1] == 16)
             r0 = 2;
-        vaddr[r2 + 0x40] = gUnknown_083ECBC4[r0][0];
-        sub_8105B88(task->data[2]);
+        vaddr[r2 + 0x40] = sPikaPowerTileTable[r0][0];
+        DestroyPikaPowerBoltSprite(task->data[2]);
         task->data[0] = 0;
         task->data[15] = 0;
     }
@@ -2575,7 +2577,7 @@ static void sub_81041AC(struct Task *task)
         r2 = 2;
     if (task->data[2] == 0)
     {
-        vaddr[r4 + 0x40] = gUnknown_083ECBC4[r2][1];
+        vaddr[r4 + 0x40] = sPikaPowerTileTable[r2][1];
         task->data[1]--;
     }
     if (++task->data[2] >= 20)
@@ -2587,7 +2589,7 @@ static void sub_81041AC(struct Task *task)
     }
 }
 
-static void sub_810421C(struct Task *task)
+static void ResetPikaPowerBoltTask(struct Task *task)
 {
     u8 i;
 
@@ -2595,20 +2597,20 @@ static void sub_810421C(struct Task *task)
         task->data[i] = 0;
 }
 
-static void sub_810423C(u8 pikaPower)
+static void sub_810423C(u8 bolts)
 {
     s16 i;
     u8 r3;
     s16 r2 = 3;
     u16 *vaddr = (u16 *)BG_SCREEN_ADDR(29);
-    for (i = 0; i < pikaPower; i++, r2++)
+    for (i = 0; i < bolts; i++, r2++)
     {
         r3 = 0;
         if (i == 0)
             r3 = 1;
         else if (i == 15)
             r3 = 2;
-        vaddr[r2 + 0x40] = gUnknown_083ECBC4[r3][0];
+        vaddr[r2 + 0x40] = sPikaPowerTileTable[r3][0];
     }
     for (; i < 16; i++, r2++)
     {
@@ -2617,57 +2619,57 @@ static void sub_810423C(u8 pikaPower)
             r3 = 1;
         else if (i == 15)
             r3 = 2;
-        vaddr[r2 + 0x40] = gUnknown_083ECBC4[r3][1];
+        vaddr[r2 + 0x40] = sPikaPowerTileTable[r3][1];
     }
-    gTasks[sSlotMachine->unk3E].data[1] = pikaPower;
+    gTasks[sSlotMachine->pikaPowerBoltTaskId].data[1] = bolts;
 }
 
-static void sub_810430C(void)
+static void BeginReelTime(void)
 {
-    u8 taskId = CreateTask(sub_810434C, 7);
-    sub_810434C(taskId);
+    u8 taskId = CreateTask(Task_ReelTime, 7);
+    Task_ReelTime(taskId);
 }
 
-static bool8 sub_810432C(void)
+static bool8 IsReelTimeTaskDone(void)
 {
-    if (FindTaskIdByFunc(sub_810434C) == 0xFF)
+    if (FindTaskIdByFunc(Task_ReelTime) == 0xFF)
         return TRUE;
     return FALSE;
 }
 
-static void (*const gUnknown_083ECBD0[])(struct Task *task) =
+static void (*const sReelTimeTasks[])(struct Task *task) =
 {
     sub_810437C,
     sub_81043EC,
-    sub_8104468,
-    sub_8104498,
-    sub_8104548,
-    sub_8104598,
-    sub_81045CC,
-    sub_810463C,
-    sub_81046C0,
-    sub_8104764,
+    ReelTime_WaitStartPikachu,
+    ReelTime_PikachuSpeedUp1,
+    ReelTime_PikachuSpeedUp2,
+    ReelTime_WaitReel,
+    ReelTime_CheckExplode,
+    ReelTime_LandOnOutcome,
+    ReelTime_PikachuReact,
+    ReelTime_WaitClearPikaPower,
     sub_8104794,
     sub_81047EC,
-    sub_8104860,
-    sub_81048A8,
-    sub_81048CC,
+    ReelTime_SetReelSpeed,
+    ReelTime_EndSuccess,
+    ReelTime_ExplodeMachine,
     sub_8104940,
     sub_81049C8,
     sub_8104794,
     sub_81049F8
 };
 
-static void sub_810434C(u8 taskId)
+static void Task_ReelTime(u8 taskId)
 {
-    gUnknown_083ECBD0[gTasks[taskId].data[0]](gTasks + taskId);
+    sReelTimeTasks[gTasks[taskId].data[0]](gTasks + taskId);
 }
 
 static void sub_810437C(struct Task *task)
 {
-    sSlotMachine->unk0A = 0;
-    sSlotMachine->unk14 = 0;
-    sSlotMachine->unk16 = 0;
+    sSlotMachine->reelTimeSpinsLeft = 0;
+    sSlotMachine->reeltimePixelOffset = 0;
+    sSlotMachine->reeltimePosition = 0;
     task->data[0]++;
     task->data[1] = 0;
     task->data[2] = 30;
@@ -2679,10 +2681,10 @@ static void sub_810437C(struct Task *task)
     sub_8104A40(30, 0);
     sub_81051C0();
     sub_8105100();
-    sub_81052EC();
-    sub_81053A0();
-    sub_810545C();
-    sub_8102680();
+    CreateReelTimeNumberSprites();
+    CreateReelTimeShadowSprites();
+    CreateReelTimeNumberGapSprite();
+    GetReelTimeDraw();
     StopMapMusic();
     PlayNewMapMusic(MUS_ROULETTE);
 }
@@ -2705,33 +2707,33 @@ static void sub_81043EC(struct Task *task)
         task->data[0]++;
         task->data[3] = 0;
     }
-    sub_8102D28(task->data[4] >> 8);
+    AdvanceReeltimeReel(task->data[4] >> 8);
 }
 
-static void sub_8104468(struct Task *task)
+static void ReelTime_WaitStartPikachu(struct Task *task)
 {
-    sub_8102D28(task->data[4] >> 8);
+    AdvanceReeltimeReel(task->data[4] >> 8);
     if (++task->data[5] >= 60)
     {
         task->data[0]++;
-        sub_8105578();
-        sub_81056F0();
+        CreateReelTimeBoltSprites();
+        CreateReelTimePikachuAuraSprites();
     }
 }
 
-static void sub_8104498(struct Task *task)
+static void ReelTime_PikachuSpeedUp1(struct Task *task)
 {
-    int r5;
-    u8 sp0[] = {1, 1, 2, 2};
-    s16 sp4[] = {0x40, 0x30, 0x18, 0x08};
-    s16 spC[] = {10, 8, 6, 4};
+    int i;
+    u8 pikachuAnimIds[] = {1, 1, 2, 2};
+    s16 reelTimeBoltDelays[] = {0x40, 0x30, 0x18, 0x08};
+    s16 pikachuAuraFlashDelays[] = {10, 8, 6, 4};
 
-    sub_8102D28(task->data[4] >> 8);
+    AdvanceReeltimeReel(task->data[4] >> 8);
     task->data[4] -= 4;
-    r5 = 4 - (task->data[4] >> 8);
-    sub_8105688(sp4[r5]);
-    sub_81057E8(spC[r5]);
-    StartSpriteAnimIfDifferent(gSprites + sSlotMachine->unk3F, sp0[r5]);
+    i = 4 - (task->data[4] >> 8);
+    SetReelTimeBoltDelay(reelTimeBoltDelays[i]);
+    SetReelTimePikachuAuraFlashDelay(pikachuAuraFlashDelays[i]);
+    StartSpriteAnimIfDifferent(gSprites + sSlotMachine->reelTimePikachuSpriteId, pikachuAnimIds[i]);
     if (task->data[4] <= 0x100)
     {
         task->data[0]++;
@@ -2740,21 +2742,21 @@ static void sub_8104498(struct Task *task)
     }
 }
 
-static void sub_8104548(struct Task *task)
+static void ReelTime_PikachuSpeedUp2(struct Task *task)
 {
-    sub_8102D28(task->data[4] >> 8);
+    AdvanceReeltimeReel(task->data[4] >> 8);
     if (++task->data[5] >= 80)
     {
         task->data[0]++;
         task->data[5] = 0;
-        sub_81057E8(2);
-        StartSpriteAnimIfDifferent(gSprites + sSlotMachine->unk3F, 3);
+        SetReelTimePikachuAuraFlashDelay(2);
+        StartSpriteAnimIfDifferent(gSprites + sSlotMachine->reelTimePikachuSpriteId, 3);
     }
 }
 
-static void sub_8104598(struct Task *task)
+static void ReelTime_WaitReel(struct Task *task)
 {
-    sub_8102D28(task->data[4] >> 8);
+    AdvanceReeltimeReel(task->data[4] >> 8);
     task->data[4] = (u8)task->data[4] + 0x80;
     if (++task->data[5] >= 80)
     {
@@ -2763,23 +2765,23 @@ static void sub_8104598(struct Task *task)
     }
 }
 
-static void sub_81045CC(struct Task *task)
+static void ReelTime_CheckExplode(struct Task *task)
 {
-    sub_8102D28(task->data[4] >> 8);
+    AdvanceReeltimeReel(task->data[4] >> 8);
     task->data[4] = (u8)task->data[4] + 0x40;
     if (++task->data[5] >= 40)
     {
         task->data[5] = 0;
-        if (sSlotMachine->unk05)
+        if (sSlotMachine->reelTimeDraw)
         {
-            if (sSlotMachine->unk0A <= task->data[6])
+            if (sSlotMachine->reelTimeSpinsLeft <= task->data[6])
                 task->data[0]++;
         }
         else if (task->data[6] > 3)
         {
             task->data[0]++;
         }
-        else if (sub_81026DC(task->data[6]))
+        else if (ShouldReelTimeMachineExplode(task->data[6]))
         {
             task->data[0] = 14;
         }
@@ -2787,59 +2789,59 @@ static void sub_81045CC(struct Task *task)
     }
 }
 
-static void sub_810463C(struct Task *task)
+static void ReelTime_LandOnOutcome(struct Task *task)
 {
-    s16 r5 = sSlotMachine->unk14 % 20;
-    if (r5)
+    s16 reeltimePixelOffset = sSlotMachine->reeltimePixelOffset % 20;
+    if (reeltimePixelOffset)
     {
-        r5 = sub_8102D5C(task->data[4] >> 8);
+        reeltimePixelOffset = AdvanceReeltimeReelToNextSymbol(task->data[4] >> 8);
         task->data[4] = (u8)task->data[4] + 0x40;
     }
-    else if (sub_8102C48(1) != sSlotMachine->unk05)
+    else if (GetReelTimeSymbol(1) != sSlotMachine->reelTimeDraw)
     {
-        sub_8102D28(task->data[4] >> 8);
-        r5 = sSlotMachine->unk14 % 20;
+        AdvanceReeltimeReel(task->data[4] >> 8);
+        reeltimePixelOffset = sSlotMachine->reeltimePixelOffset % 20;
         task->data[4] = (u8)task->data[4] + 0x40;
     }
-    if (r5 == 0 && sub_8102C48(1) == sSlotMachine->unk05)
+    if (reeltimePixelOffset == 0 && GetReelTimeSymbol(1) == sSlotMachine->reelTimeDraw)
     {
         task->data[4] = 0;
         task->data[0]++;
     }
 }
 
-static void sub_81046C0(struct Task *task)
+static void ReelTime_PikachuReact(struct Task *task)
 {
     if (++task->data[4] >= 60)
     {
         StopMapMusic();
-        sub_81056C0();
-        sub_8105804();
+        DestroyReelTimeBoltSprites();
+        DestroyReelTimePikachuAuraSprites();
         task->data[0]++;
-        if(sSlotMachine->unk05 == 0)
+        if(sSlotMachine->reelTimeDraw == 0)
         {
             task->data[4] = 0xa0;
-            StartSpriteAnimIfDifferent(gSprites + sSlotMachine->unk3F, 5);
+            StartSpriteAnimIfDifferent(gSprites + sSlotMachine->reelTimePikachuSpriteId, 5);
             PlayFanfare(MUS_TOO_BAD);
         }
         else
         {
             task->data[4] = 0xc0;
-            StartSpriteAnimIfDifferent(gSprites + sSlotMachine->unk3F, 4);
-            gSprites[sSlotMachine->unk3F].animCmdIndex = 0;
-            if (sSlotMachine->pikaPower)
+            StartSpriteAnimIfDifferent(gSprites + sSlotMachine->reelTimePikachuSpriteId, 4);
+            gSprites[sSlotMachine->reelTimePikachuSpriteId].animCmdIndex = 0;
+            if (sSlotMachine->pikaPowerBolts)
             {
-                sub_8104098();
-                sSlotMachine->pikaPower = 0;
+                ResetPikaPowerBolts();
+                sSlotMachine->pikaPowerBolts = 0;
             }
             PlayFanfare(MUS_SLOTS_WIN);
         }
     }
 }
 
-static void sub_8104764(struct Task *task)
+static void ReelTime_WaitClearPikaPower(struct Task *task)
 {
-    if ((task->data[4] == 0 || --task->data[4] == 0) && !sub_81040C8())
+    if ((task->data[4] == 0 || --task->data[4] == 0) && !IsPikaPowerBoltAnimating())
         task->data[0]++;
 }
 
@@ -2859,51 +2861,51 @@ static void sub_8104794(struct Task *task)
 
 static void sub_81047EC(struct Task *task)
 {
-    sSlotMachine->unk0B = 0;
-    sSlotMachine->unk0A = sSlotMachine->unk05;
+    sSlotMachine->reelTimeSpinsUsed = 0;
+    sSlotMachine->reelTimeSpinsLeft = sSlotMachine->reelTimeDraw;
     gSpriteCoordOffsetX = 0;
     REG_BG1HOFS = 0;
-    sSlotMachine->unk1A = 8;
+    sSlotMachine->reelSpeed = 8;
     sub_810514C();
     sub_81054B8();
-    sub_8105524();
+    DestroyReelTimeShadowSprites();
     PlayNewMapMusic(sSlotMachine->backupMapMusic);
-    if (sSlotMachine->unk0A == 0)
+    if (sSlotMachine->reelTimeSpinsLeft == 0)
     {
-        DestroyTask(FindTaskIdByFunc(sub_810434C));
+        DestroyTask(FindTaskIdByFunc(Task_ReelTime));
     }
     else
     {
         sub_8104CAC(4);
-        task->data[1] = dp15_jump_random_unknown();
+        task->data[1] = ReelTimeSpeed();
         task->data[2] = 0;
         task->data[3] = 0;
         task->data[0]++;
     }
 }
 
-static void sub_8104860(struct Task *task)
+static void ReelTime_SetReelSpeed(struct Task *task)
 {
-    if (sSlotMachine->unk1A == task->data[1])
+    if (sSlotMachine->reelSpeed == task->data[1])
         task->data[0]++;
-    else if (sSlotMachine->unk1C[0] % 24 == 0 && (++task->data[2]& 0x07) == 0)
-        sSlotMachine->unk1A >>= 1;
+    else if (sSlotMachine->reelPixelOffsets[0] % 24 == 0 && (++task->data[2]& 0x07) == 0)
+        sSlotMachine->reelSpeed >>= 1;
 }
 
-static void sub_81048A8(struct Task *task)
+static void ReelTime_EndSuccess(struct Task *task)
 {
-    if (sub_8104E18())
-        DestroyTask(FindTaskIdByFunc(sub_810434C));
+    if (IsDigitalDisplayAnimFinished())
+        DestroyTask(FindTaskIdByFunc(Task_ReelTime));
 }
 
-static void sub_81048CC(struct Task *task)
+static void ReelTime_ExplodeMachine(struct Task *task)
 {
     sub_81054B8();
-    sub_81056C0();
-    sub_8105804();
-    sub_8105854();
-    gSprites[sSlotMachine->unk4E[0]].invisible = TRUE;
-    StartSpriteAnimIfDifferent(gSprites + sSlotMachine->unk3F, 5);
+    DestroyReelTimeBoltSprites();
+    DestroyReelTimePikachuAuraSprites();
+    CreateReelTimeExplosionSprite();
+    gSprites[sSlotMachine->reelTimeShadowSpriteIds[0]].invisible = TRUE;
+    StartSpriteAnimIfDifferent(gSprites + sSlotMachine->reelTimePikachuSpriteId, 5);
     task->data[0]++;
     task->data[4] = 4;
     task->data[5] = 0;
@@ -2922,11 +2924,11 @@ static void sub_8104940(struct Task *task)
         task->data[4] >>= 1;
     if (task->data[4] == 0)
     {
-        sub_81058A0();
-        sub_81058C4();
+        DestroyReelTimeExplosionSprite();
+        CreateReelTimeDuckSprites();
         sub_8105284();
-        sub_81059E8();
-        gSprites[sSlotMachine->unk4E[0]].invisible = FALSE;
+        CreateReelTimeSmokeSprite();
+        gSprites[sSlotMachine->reelTimeShadowSpriteIds[0]].invisible = FALSE;
         task->data[0]++;
         task->data[5] = 0;
     }
@@ -2936,10 +2938,10 @@ static void sub_81049C8(struct Task *task)
 {
     gSpriteCoordOffsetY = 0;
     REG_BG1VOFS = 0;
-    if (sub_8105ACC())
+    if (IsReelTimeSmokeAnimFinished())
     {
         task->data[0]++;
-        sub_8105AEC();
+        DestroyReelTimeSmokeSprite();
     }
 }
 
@@ -2950,12 +2952,12 @@ static void sub_81049F8(struct Task *task)
     PlayNewMapMusic(sSlotMachine->backupMapMusic);
     sub_810514C();
     sub_8105554();
-    sub_8105524();
-    sub_81059B8();
-    DestroyTask(FindTaskIdByFunc(sub_810434C));
+    DestroyReelTimeShadowSprites();
+    DestroyReelTimeDuckSprites();
+    DestroyTask(FindTaskIdByFunc(Task_ReelTime));
 }
 
-static const u16 sReelTimeWindowTilemap[];
+static const u16 sReelTimeWindow_Tilemap[];
 
 static void sub_8104A40(s16 a0, s16 a1)
 {
@@ -2963,7 +2965,7 @@ static void sub_8104A40(s16 a0, s16 a1)
 
     for (i = 4; i < 15; i++)
     {
-        u16 tile = sReelTimeWindowTilemap[a1 + (i - 4) * 20];
+        u16 tile = sReelTimeWindow_Tilemap[a1 + (i - 4) * 20];
         ((u16 *)BG_SCREEN_ADDR(28))[32 * i + a0] = tile;
     }
 }
@@ -2978,46 +2980,46 @@ static void sub_8104A88(s16 a0)
     }
 }
 
-static void sub_8104AB8(u8 a0)
+static void OpenInfoBox(u8 digDisplayId)
 {
-    u8 taskId = CreateTask(sub_8104B0C, 1);
-    gTasks[taskId].data[1] = a0;
-    sub_8104B0C(taskId);
+    u8 taskId = CreateTask(Task_InfoBox, 1);
+    gTasks[taskId].data[1] = digDisplayId;
+    Task_InfoBox(taskId);
 }
 
-static bool8 sub_8104AEC(void)
+static bool8 IsInfoBoxClosed(void)
 {
-    if (FindTaskIdByFunc(sub_8104B0C) == 0xFF)
+    if (FindTaskIdByFunc(Task_InfoBox) == 0xFF)
         return TRUE;
     else
         return FALSE;
 }
 
-static void (*const gUnknown_083ECC30[])(struct Task *task) =
+static void (*const sInfoBoxTasks[])(struct Task *task) =
 {
-    sub_8104B3C,
-    sub_8104B60,
+    InfoBox_FadeIn,
+    InfoBox_WaitFade,
     sub_8104B80,
-    sub_8104B60,
+    InfoBox_WaitFade,
     sub_8104BC8,
-    sub_8104B60,
+    InfoBox_WaitFade,
     sub_8104BFC,
-    sub_8104B60,
-    sub_8104C44
+    InfoBox_WaitFade,
+    InfoBox_FreeTask
 };
 
-static void sub_8104B0C(u8 taskId)
+static void Task_InfoBox(u8 taskId)
 {
-    gUnknown_083ECC30[gTasks[taskId].data[0]](gTasks + taskId);
+    sInfoBoxTasks[gTasks[taskId].data[0]](gTasks + taskId);
 }
 
-static void sub_8104B3C(struct Task *task)
+static void InfoBox_FadeIn(struct Task *task)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
     task->data[0]++;
 }
 
-static void sub_8104B60(struct Task *task)
+static void InfoBox_WaitFade(struct Task *task)
 {
     if (!gPaletteFade.active)
         task->data[0]++;
@@ -3025,7 +3027,7 @@ static void sub_8104B60(struct Task *task)
 
 static void sub_8104B80(struct Task *task)
 {
-    sub_8104DA4();
+    DestroyDigitalDisplayScene();
     sub_81065DC();
     BasicInitMenuWindow(&gWindowTemplate_81E7144);
     Menu_PrintTextPixelCoords(gOtherText_ReelTime, 10, 32, 1);
@@ -3048,22 +3050,22 @@ static void sub_8104BFC(struct Task *task)
     BasicInitMenuWindow(&gWindowTemplate_81E7128);
     sub_81064B8();
     sub_8104CAC(task->data[1]);
-    sub_810423C(sSlotMachine->pikaPower);
+    sub_810423C(sSlotMachine->pikaPowerBolts);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
     task->data[0]++;
 }
 
-static void sub_8104C44(struct Task *task)
+static void InfoBox_FreeTask(struct Task *task)
 {
-    DestroyTask(FindTaskIdByFunc(sub_8104B0C));
+    DestroyTask(FindTaskIdByFunc(Task_InfoBox));
 }
 
-static void sub_8104C5C(void)
+static void CreateDigitalDisplayTask(void)
 {
     u8 i;
     struct Task *task;
-    i = CreateTask(sub_8104E74, 3);
-    sSlotMachine->unk3D = i;
+    i = CreateTask(Task_DigitalDisplay, 3);
+    sSlotMachine->digDisplayTaskId = i;
     task = gTasks + i;
     task->data[1] = -1;
     for (i = 4; i < 16; i++)
@@ -3072,55 +3074,55 @@ static void sub_8104C5C(void)
 
 static void LoadSlotMachineWheelOverlay(void);
 
-static void sub_8104CAC(u8 arg0)
+static void sub_8104CAC(u8 id)
 {
     u8 i;
     struct Task *task;
 
-    sub_8104DA4();
+    DestroyDigitalDisplayScene();
 
-    task = gTasks + sSlotMachine->unk3D;
-    task->data[1] = arg0;
+    task = gTasks + sSlotMachine->digDisplayTaskId;
+    task->data[1] = id;
 
-    for (i = 0; gUnknown_083ED048[arg0][i].unk00 != 0xFF; i++)
+    for (i = 0; sDigitalDisplayScenes[id][i].spriteTemplateId != 0xFF; i++)
     {
         u8 spriteId;
-        spriteId = sub_8105BB4(
-                gUnknown_083ED048[arg0][i].unk00,
-                gUnknown_083ED048[arg0][i].unk01,
-                gUnknown_083ED048[arg0][i].unk02
+        spriteId = CreateStdDigitalDisplaySprite(
+                sDigitalDisplayScenes[id][i].spriteTemplateId,
+                sDigitalDisplayScenes[id][i].dispInfoId,
+                sDigitalDisplayScenes[id][i].spriteId
         );
         task->data[4 + i] = spriteId;
 
 #ifdef GERMAN
-        if (arg0 == 5 && i <= 2)
+        if (id == 5 && i <= 2)
             gSprites[spriteId].invisible = TRUE;
 #endif
     }
 }
 
-static void sub_8104D30(u8 a0, SpriteCallback a1, s16 a2, s16 a3, s16 a4)
+static void AddDigitalDisplaySprite(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 spriteId)
 {
     u8 i;
-    struct Task *task = gTasks + sSlotMachine->unk3D;
+    struct Task *task = gTasks + sSlotMachine->digDisplayTaskId;
     for (i = 4; i < 16; i++)
     {
         if (task->data[i] == MAX_SPRITES)
         {
-            task->data[i] = sub_8105BF8(a0, a1, a2, a3, a4);
+            task->data[i] = sub_8105BF8(templateIdx, callback, x, y, spriteId);
             break;
         }
     }
 }
 
-static void (*const gUnknown_083ED064[])(void);
+static void (*const sDigitalDisplaySceneExitCallbacks[])(void);
 
-void sub_8104DA4(void)
+static void DestroyDigitalDisplayScene(void)
 {
     u8 i;
-    struct Task *task = gTasks + sSlotMachine->unk3D;
+    struct Task *task = gTasks + sSlotMachine->digDisplayTaskId;
     if ((u16)task->data[1] != 0xFFFF)
-        gUnknown_083ED064[task->data[1]]();
+        sDigitalDisplaySceneExitCallbacks[task->data[1]]();
     for (i = 4; i < 16; i++)
     {
         if (task->data[i] != MAX_SPRITES)
@@ -3131,10 +3133,10 @@ void sub_8104DA4(void)
     }
 }
 
-static bool8 sub_8104E18(void)
+static bool8 IsDigitalDisplayAnimFinished(void)
 {
     u8 i;
-    struct Task *task = gTasks + sSlotMachine->unk3D;
+    struct Task *task = gTasks + sSlotMachine->digDisplayTaskId;
     for (i = 4; i < 16; i++)
     {
         if (task->data[i] != MAX_SPRITES)
@@ -3146,23 +3148,23 @@ static bool8 sub_8104E18(void)
     return TRUE;
 }
 
-static void (*const gUnknown_083ECC54[])(struct Task *task) =
+static void (*const sDigitalDisplayTasks[])(struct Task *task) =
 {
-    nullsub_69,
+    DigitalDisplay_Idle,
 };
 
-static void sub_8104E74(u8 taskId)
+static void Task_DigitalDisplay(u8 taskId)
 {
-    gUnknown_083ECC54[gTasks[taskId].data[0]](gTasks + taskId);
+    sDigitalDisplayTasks[gTasks[taskId].data[0]](gTasks + taskId);
 }
 
-static void nullsub_69(struct Task *task)
+static void DigitalDisplay_Idle(struct Task *task)
 {
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED414;
+static const struct SpriteTemplate sSpriteTemplate_ReelSymbol;
 
-static void sub_8104EA8(void)
+static void CreateReelSymbolSprites(void)
 {
     s16 i;
     s16 j;
@@ -3171,7 +3173,7 @@ static void sub_8104EA8(void)
     {
         for (j = 0; j < 120; j += 24)
         {
-            struct Sprite *sprite = gSprites + CreateSprite(&gSpriteTemplate_83ED414, x, 0, 14);
+            struct Sprite *sprite = gSprites + CreateSprite(&sSpriteTemplate_ReelSymbol, x, 0, 14);
             sprite->oam.priority = 3;
             sprite->data[0] = i;
             sprite->data[1] = j;
@@ -3180,39 +3182,39 @@ static void sub_8104EA8(void)
     }
 }
 
-static void sub_8104F18(struct Sprite *sprite)
+static void SpriteCB_ReelSymbol(struct Sprite *sprite)
 {
-    sprite->data[2] = sSlotMachine->unk1C[sprite->data[0]] + sprite->data[1];
+    sprite->data[2] = sSlotMachine->reelPixelOffsets[sprite->data[0]] + sprite->data[1];
     sprite->data[2] %= 120;
-    sprite->y = sSlotMachine->unk22[sprite->data[0]] + 28 + sprite->data[2];
-    sprite->sheetTileStart = GetSpriteTileStartByTag(GetTagOfReelSymbolOnScreenAtPos(sprite->data[0], sprite->data[2] / 24));
+    sprite->y = sSlotMachine->reelShockOffsets[sprite->data[0]] + 28 + sprite->data[2];
+    sprite->sheetTileStart = GetSpriteTileStartByTag(GetSymbolAtRest(sprite->data[0], sprite->data[2] / 24));
     SetSpriteSheetFrameTileNum(sprite);
 }
 
-static void sub_8104F8C(void)
+static void CreateCreditPayoutNumberSprites(void)
 {
     s16 i;
     s16 x;
 
     for (x = 203, i = 1; i < 10000; i *= 10, x -= 7)
-        sub_8104FF4(x, 23, 0, i);
+        CreateCoinNumberSprite(x, 23, 0, i);
     for (x = 235, i = 1; i < 10000; i *= 10, x -= 7)
-        sub_8104FF4(x, 23, 1, i);
+        CreateCoinNumberSprite(x, 23, 1, i);
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED42C;
+static const struct SpriteTemplate sSpriteTemplate_CoinNumber;
 
-static void sub_8104FF4(s16 x, s16 y, u8 a2, s16 a3)
+static void CreateCoinNumberSprite(s16 x, s16 y, u8 isPayout, s16 digitMult)
 {
-    struct Sprite *sprite = gSprites + CreateSprite(&gSpriteTemplate_83ED42C, x, y, 13);
+    struct Sprite *sprite = gSprites + CreateSprite(&sSpriteTemplate_CoinNumber, x, y, 13);
     sprite->oam.priority = 2;
-    sprite->data[0] = a2;
-    sprite->data[1] = a3;
-    sprite->data[2] = a3 * 10;
+    sprite->data[0] = isPayout;
+    sprite->data[1] = digitMult;
+    sprite->data[2] = digitMult * 10;
     sprite->data[3] = -1;
 }
 
-static void sub_810506C(struct Sprite *sprite)
+static void SpriteCB_CoinNumber(struct Sprite *sprite)
 {
     u16 tag = sSlotMachine->coins;
     if (sprite->data[0])
@@ -3228,32 +3230,32 @@ static void sub_810506C(struct Sprite *sprite)
     }
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED444;
-static const struct SubspriteTable gSubspriteTables_83ED704[];
+static const struct SpriteTemplate sSpriteTemplate_ReelBackground;
+static const struct SubspriteTable sSubspriteTable_ReelBackground[];
 
-static void sub_81050C4(void)
+static void CreateReelBackgroundSprite(void)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83ED444, 0x58, 0x48, 15);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_ReelBackground, 0x58, 0x48, 15);
     gSprites[spriteId].oam.priority = 3;
-    SetSubspriteTables(gSprites + spriteId, gSubspriteTables_83ED704);
+    SetSubspriteTables(gSprites + spriteId, sSubspriteTable_ReelBackground);
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED45C;
+static const struct SpriteTemplate sSpriteTemplate_ReelTimePikachu;
 
 static void sub_8105100(void)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83ED45C, 0x118, 0x50, 1);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_ReelTimePikachu, 0x118, 0x50, 1);
     gSprites[spriteId].oam.priority = 1;
     gSprites[spriteId].coordOffsetEnabled = TRUE;
-    sSlotMachine->unk3F = spriteId;
+    sSlotMachine->reelTimePikachuSpriteId = spriteId;
 }
 
 static void sub_810514C(void)
 {
-    DestroySprite(gSprites + sSlotMachine->unk3F);
+    DestroySprite(gSprites + sSlotMachine->reelTimePikachuSpriteId);
 }
 
-static void sub_8105170(struct Sprite *sprite)
+static void SpriteCB_ReelTimePikachu(struct Sprite *sprite)
 {
     sprite->y2 = sprite->x2 = 0;
     if (sprite->animNum == 4)
@@ -3264,147 +3266,147 @@ static void sub_8105170(struct Sprite *sprite)
     }
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED474;
-static const struct SpriteTemplate gSpriteTemplate_83ED48C;
-static const struct SubspriteTable gSubspriteTables_83ED73C[];
-static const struct SubspriteTable gSubspriteTables_83ED75C[];
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeMachineAntennae;
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeMachine;
+static const struct SubspriteTable sSubspriteTable_ReelTimeMachineAntennae[];
+static const struct SubspriteTable sSubspriteTable_ReelTimeMachine[];
 
 static void sub_81051C0(void)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83ED474, 0x170, 0x34, 7);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_ReelTimeMachineAntennae, 0x170, 0x34, 7);
     struct Sprite *sprite = &gSprites[spriteId];
     sprite->oam.priority = 1;
     sprite->coordOffsetEnabled = TRUE;
-    SetSubspriteTables(sprite, gSubspriteTables_83ED73C);
-    sSlotMachine->unk49[0] = spriteId;
+    SetSubspriteTables(sprite, sSubspriteTable_ReelTimeMachineAntennae);
+    sSlotMachine->reelTimeMachineSpriteIds[0] = spriteId;
 
-    spriteId = CreateSprite(&gSpriteTemplate_83ED48C, 0x170, 0x54, 7);
+    spriteId = CreateSprite(&sSpriteTemplate_ReelTimeMachine, 0x170, 0x54, 7);
     sprite = &gSprites[spriteId];
     sprite->oam.priority = 1;
     sprite->coordOffsetEnabled = TRUE;
-    SetSubspriteTables(sprite, gSubspriteTables_83ED75C);
-    sSlotMachine->unk49[1] = spriteId;
+    SetSubspriteTables(sprite, sSubspriteTable_ReelTimeMachine);
+    sSlotMachine->reelTimeMachineSpriteIds[1] = spriteId;
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED4A4;
-static const struct SubspriteTable gSubspriteTables_83ED78C[];
+static const struct SpriteTemplate sSpriteTemplate_BrokenReelTimeMachine;
+static const struct SubspriteTable sSubspriteTable_BrokenReelTimeMachine[];
 
 static void sub_8105284(void)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83ED4A4, 0xa8 - gSpriteCoordOffsetX, 0x50, 7);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_BrokenReelTimeMachine, 0xa8 - gSpriteCoordOffsetX, 0x50, 7);
     struct Sprite *sprite = &gSprites[spriteId];
     sprite->oam.priority = 1;
     sprite->coordOffsetEnabled = TRUE;
-    SetSubspriteTables(sprite, gSubspriteTables_83ED78C);
-    sSlotMachine->unk42 = spriteId;
+    SetSubspriteTables(sprite, sSubspriteTable_BrokenReelTimeMachine);
+    sSlotMachine->reelTimeBrokenMachineSpriteId = spriteId;
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED4BC;
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeNumbers;
 
-static void sub_81052EC(void)
+static void CreateReelTimeNumberSprites(void)
 {
     u8 i;
     s16 r5;
     for (i = 0, r5 = 0; i < 3; i++, r5 += 20)
     {
-        u8 spriteId = CreateSprite(&gSpriteTemplate_83ED4BC, 0x170, 0x00, 10);
+        u8 spriteId = CreateSprite(&sSpriteTemplate_ReelTimeNumbers, 0x170, 0x00, 10);
         struct Sprite *sprite = &gSprites[spriteId];
         sprite->oam.priority = 1;
         sprite->coordOffsetEnabled = TRUE;
         sprite->data[7] = r5;
-        sSlotMachine->unk4B[i] = spriteId;
+        sSlotMachine->reelTimeNumberSpriteIds[i] = spriteId;
     }
 }
 
-static void sub_810535C(struct Sprite *sprite)
+static void SpriteCB_ReelTimeNumbers(struct Sprite *sprite)
 {
-    s16 r0 = (u16)(sSlotMachine->unk14 + sprite->data[7]);
+    s16 r0 = (u16)(sSlotMachine->reeltimePixelOffset + sprite->data[7]);
     r0 %= 40;
     sprite->y = r0 + 59;
-    StartSpriteAnimIfDifferent(sprite, sub_8102C48(r0 / 20));
+    StartSpriteAnimIfDifferent(sprite, GetReelTimeSymbol(r0 / 20));
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED4D4;
-static const struct SubspriteTable gSubspriteTables_83ED7B4[];
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeShadow;
+static const struct SubspriteTable sSubspriteTable_ReelTimeShadow[];
 
-static void sub_81053A0(void)
+static void CreateReelTimeShadowSprites(void)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83ED4D4, 0x170, 0x64, 9);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_ReelTimeShadow, 0x170, 0x64, 9);
     struct Sprite *sprite = &gSprites[spriteId];
     sprite->coordOffsetEnabled = TRUE;
     sprite->oam.priority = 1;
-    SetSubspriteTables(sprite, gSubspriteTables_83ED7B4);
-    sSlotMachine->unk4E[0] = spriteId;
+    SetSubspriteTables(sprite, sSubspriteTable_ReelTimeShadow);
+    sSlotMachine->reelTimeShadowSpriteIds[0] = spriteId;
 
-    spriteId = CreateSprite(&gSpriteTemplate_83ED4D4, 0x120, 0x68, 4);
+    spriteId = CreateSprite(&sSpriteTemplate_ReelTimeShadow, 0x120, 0x68, 4);
     sprite = &gSprites[spriteId];
     sprite->coordOffsetEnabled = TRUE;
     sprite->oam.priority = 1;
-    SetSubspriteTables(sprite, gSubspriteTables_83ED7B4);
-    sSlotMachine->unk4E[1] = spriteId;
+    SetSubspriteTables(sprite, sSubspriteTable_ReelTimeShadow);
+    sSlotMachine->reelTimeShadowSpriteIds[1] = spriteId;
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED4EC;
-static const struct SubspriteTable gSubspriteTables_83ED7D4[];
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeNumberGap;
+static const struct SubspriteTable sSubspriteTable_ReelTimeNumberGap[];
 
-static void sub_810545C(void)
+static void CreateReelTimeNumberGapSprite(void)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83ED4EC, 0x170, 0x4c, 11);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_ReelTimeNumberGap, 0x170, 0x4c, 11);
     struct Sprite *sprite = &gSprites[spriteId];
     sprite->coordOffsetEnabled = TRUE;
     sprite->oam.priority = 1;
-    SetSubspriteTables(sprite, gSubspriteTables_83ED7D4);
-    sSlotMachine->unk40 = spriteId;
+    SetSubspriteTables(sprite, sSubspriteTable_ReelTimeNumberGap);
+    sSlotMachine->reelTimeNumberGapSpriteId = spriteId;
 }
 
 static void sub_81054B8(void)
 {
     u8 i;
 
-    DestroySprite(&gSprites[sSlotMachine->unk40]);
+    DestroySprite(&gSprites[sSlotMachine->reelTimeNumberGapSpriteId]);
     for (i = 0; i < 2; i++)
-        DestroySprite(&gSprites[sSlotMachine->unk49[i]]);
+        DestroySprite(&gSprites[sSlotMachine->reelTimeMachineSpriteIds[i]]);
     for (i = 0; i < 3; i++)
-        DestroySprite(&gSprites[sSlotMachine->unk4B[i]]);
+        DestroySprite(&gSprites[sSlotMachine->reelTimeNumberSpriteIds[i]]);
 }
 
-static void sub_8105524(void)
+static void DestroyReelTimeShadowSprites(void)
 {
     u8 i;
 
     for (i = 0; i < 2; i++)
-        DestroySprite(&gSprites[sSlotMachine->unk4E[i]]);
+        DestroySprite(&gSprites[sSlotMachine->reelTimeShadowSpriteIds[i]]);
 }
 
 static void sub_8105554(void)
 {
-    DestroySprite(&gSprites[sSlotMachine->unk42]);
+    DestroySprite(&gSprites[sSlotMachine->reelTimeBrokenMachineSpriteId]);
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED504;
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeBolt;
 
-static void sub_8105578(void)
+static void CreateReelTimeBoltSprites(void)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83ED504, 0x98, 0x20, 5);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_ReelTimeBolt, 0x98, 0x20, 5);
     struct Sprite *sprite = &gSprites[spriteId];
     sprite->oam.priority = 1;
     sprite->hFlip = TRUE;
-    sSlotMachine->unk50[0] = spriteId;
+    sSlotMachine->reelTimeBoltSpriteIds[0] = spriteId;
     sprite->data[0] = 8;
     sprite->data[1] = -1;
     sprite->data[2] = -1;
     sprite->data[7] = 0x20;
 
-    spriteId = CreateSprite(&gSpriteTemplate_83ED504, 0xb8, 0x20, 5);
+    spriteId = CreateSprite(&sSpriteTemplate_ReelTimeBolt, 0xb8, 0x20, 5);
     sprite = &gSprites[spriteId];
     sprite->oam.priority = 1;
-    sSlotMachine->unk50[1] = spriteId;
+    sSlotMachine->reelTimeBoltSpriteIds[1] = spriteId;
     sprite->data[1] = 1;
     sprite->data[2] = -1;
     sprite->data[7] = 0x20;
 }
 
-static void sub_810562C(struct Sprite *sprite)
+static void SpriteCB_ReelTimeBolt(struct Sprite *sprite)
 {
     if (sprite->data[0] != 0)
     {
@@ -3426,102 +3428,102 @@ static void sub_810562C(struct Sprite *sprite)
     }
 }
 
-static void sub_8105688(s16 a0)
+static void SetReelTimeBoltDelay(s16 delay)
 {
-    gSprites[sSlotMachine->unk50[0]].data[7] = a0;
-    gSprites[sSlotMachine->unk50[1]].data[7] = a0;
+    gSprites[sSlotMachine->reelTimeBoltSpriteIds[0]].data[7] = delay;
+    gSprites[sSlotMachine->reelTimeBoltSpriteIds[1]].data[7] = delay;
 }
 
-static void sub_81056C0(void)
+static void DestroyReelTimeBoltSprites(void)
 {
     u8 i;
 
     for (i = 0; i < 2; i++)
-        DestroySprite(&gSprites[sSlotMachine->unk50[i]]);
+        DestroySprite(&gSprites[sSlotMachine->reelTimeBoltSpriteIds[i]]);
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED51C;
+static const struct SpriteTemplate sSpriteTemplate_ReelTimePikachuAura;
 
-static void sub_81056F0(void)
+static void CreateReelTimePikachuAuraSprites(void)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83ED51C, 0x48, 0x50, 3);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_ReelTimePikachuAura, 0x48, 0x50, 3);
     gSprites[spriteId].oam.priority = 1;
     gSprites[spriteId].data[0] = 1;
     gSprites[spriteId].data[5] = 0;
     gSprites[spriteId].data[6] = 16;
     gSprites[spriteId].data[7] = 8;
-    sSlotMachine->unk52[0] = spriteId;
+    sSlotMachine->reelTimePikachuAuraSpriteIds[0] = spriteId;
 
-    spriteId = CreateSprite(&gSpriteTemplate_83ED51C, 0x68, 0x50, 3);
+    spriteId = CreateSprite(&sSpriteTemplate_ReelTimePikachuAura, 0x68, 0x50, 3);
     gSprites[spriteId].oam.priority = 1;
     gSprites[spriteId].hFlip = TRUE;
-    sSlotMachine->unk52[1] = spriteId;
+    sSlotMachine->reelTimePikachuAuraSpriteIds[1] = spriteId;
 }
 
 static const u8 gUnknown_083ECC58[2]; // don't remove this until decompiled through gUnknown_083ECCF8
 
-static void sub_8105784(struct Sprite *sprite)
+static void SpriteCB_ReelTimePikachuAura(struct Sprite *sprite)
 {
-    u8 sp[] = {16, 0};
+    u8 colors[] = {16, 0};
     if (sprite->data[0] && --sprite->data[6] <= 0)
     {
-        MultiplyInvertedPaletteRGBComponents((IndexOfSpritePaletteTag(7) << 4) + 0x103, sp[sprite->data[5]], sp[sprite->data[5]], sp[sprite->data[5]]);
+        MultiplyInvertedPaletteRGBComponents((IndexOfSpritePaletteTag(7) << 4) + 0x103, colors[sprite->data[5]], colors[sprite->data[5]], colors[sprite->data[5]]);
         ++sprite->data[5];
         sprite->data[5] &= 1;
         sprite->data[6] = sprite->data[7];
     }
 }
 
-static void sub_81057E8(s16 a0)
+static void SetReelTimePikachuAuraFlashDelay(s16 delay)
 {
-    gSprites[sSlotMachine->unk52[0]].data[7] = a0;
+    gSprites[sSlotMachine->reelTimePikachuAuraSpriteIds[0]].data[7] = delay;
 }
 
-static void sub_8105804(void)
+static void DestroyReelTimePikachuAuraSprites(void)
 {
     u8 i;
     MultiplyInvertedPaletteRGBComponents((IndexOfSpritePaletteTag(7) << 4) + 0x103, 0, 0, 0);
     for (i = 0; i < 2; i++)
-        DestroySprite(&gSprites[sSlotMachine->unk52[i]]);
+        DestroySprite(&gSprites[sSlotMachine->reelTimePikachuAuraSpriteIds[i]]);
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED534;
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeExplosion;
 
-static void sub_8105854(void)
+static void CreateReelTimeExplosionSprite(void)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83ED534, 0xa8, 0x50, 6);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_ReelTimeExplosion, 0xa8, 0x50, 6);
     gSprites[spriteId].oam.priority = 1;
-    sSlotMachine->unk41 = spriteId;
+    sSlotMachine->reelTimeExplosionSpriteId = spriteId;
 }
 
-static void sub_8105894(struct Sprite *sprite)
+static void SpriteCB_ReelTimeExplosion(struct Sprite *sprite)
 {
     sprite->y2 = gSpriteCoordOffsetY;
 }
 
-static void sub_81058A0(void)
+static void DestroyReelTimeExplosionSprite(void)
 {
-    DestroySprite(&gSprites[sSlotMachine->unk41]);
+    DestroySprite(&gSprites[sSlotMachine->reelTimeExplosionSpriteId]);
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED54C;
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeDuck;
 
-static void sub_81058C4(void)
+static void CreateReelTimeDuckSprites(void)
 {
     u8 i;
     u16 sp[] = {0x0, 0x40, 0x80, 0xC0};
     for (i = 0; i < 4; i++)
     {
-        u8 spriteId = CreateSprite(&gSpriteTemplate_83ED54C, 0x50 - gSpriteCoordOffsetX, 0x44, 0);
+        u8 spriteId = CreateSprite(&sSpriteTemplate_ReelTimeDuck, 0x50 - gSpriteCoordOffsetX, 0x44, 0);
         struct Sprite *sprite = &gSprites[spriteId];
         sprite->oam.priority = 1;
         sprite->coordOffsetEnabled = TRUE;
         sprite->data[0] = sp[i];
-        sSlotMachine->unk54[i] = spriteId;
+        sSlotMachine->reelTimeDuckSpriteIds[i] = spriteId;
     }
 }
 
-static void sub_810594C(struct Sprite *sprite)
+static void SpriteCB_ReelTimeDuck(struct Sprite *sprite)
 {
     sprite->data[0] -= 2;
     sprite->data[0] &= 0xff;
@@ -3539,28 +3541,28 @@ static void sub_810594C(struct Sprite *sprite)
     }
 }
 
-static void sub_81059B8(void)
+static void DestroyReelTimeDuckSprites(void)
 {
     u8 i;
     for (i = 0; i < 4; i++)
     {
-        DestroySprite(&gSprites[sSlotMachine->unk54[i]]);
+        DestroySprite(&gSprites[sSlotMachine->reelTimeDuckSpriteIds[i]]);
     }
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED564;
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeSmoke;
 
-static void sub_81059E8(void)
+static void CreateReelTimeSmokeSprite(void)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83ED564, 0xa8, 0x3c, 8);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_ReelTimeSmoke, 0xa8, 0x3c, 8);
     struct Sprite *sprite = &gSprites[spriteId];
     sprite->oam.priority = 1;
     sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
     InitSpriteAffineAnim(sprite);
-    sSlotMachine->unk43 = spriteId;
+    sSlotMachine->reelTimeSmokeSpriteId = spriteId;
 }
 
-static void sub_8105A38(struct Sprite *sprite)
+static void SpriteCB_ReelTimeSmoke(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
@@ -3587,23 +3589,23 @@ static void sub_8105A38(struct Sprite *sprite)
     sprite->y2 -= (sprite->data[1] >> 8);
 }
 
-u8 sub_8105ACC(void)
+u8 IsReelTimeSmokeAnimFinished(void)
 {
-    return gSprites[sSlotMachine->unk43].data[7];
+    return gSprites[sSlotMachine->reelTimeSmokeSpriteId].data[7];
 }
 
-static void sub_8105AEC(void)
+static void DestroyReelTimeSmokeSprite(void)
 {
-    struct Sprite *sprite = &gSprites[sSlotMachine->unk43];
+    struct Sprite *sprite = &gSprites[sSlotMachine->reelTimeSmokeSpriteId];
     FreeOamMatrix(sprite->oam.matrixNum);
     DestroySprite(sprite);
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED6CC;
+static const struct SpriteTemplate sSpriteTemplate_PikaPowerBolt;
 
-static u8 sub_8105B1C(s16 x, s16 y)
+static u8 CreatePikaPowerBoltSprite(s16 x, s16 y)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83ED6CC, x, y, 12);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_PikaPowerBolt, x, y, 12);
     struct Sprite *sprite = &gSprites[spriteId];
     sprite->oam.priority = 2;
     sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
@@ -3611,52 +3613,52 @@ static u8 sub_8105B1C(s16 x, s16 y)
     return spriteId;
 }
 
-static void sub_8105B70(struct Sprite *sprite)
+static void SpriteCB_PikaPowerBolt(struct Sprite *sprite)
 {
     if (sprite->affineAnimEnded)
         sprite->data[7] = 1;
 }
 
-static void sub_8105B88(u8 spriteId)
+static void DestroyPikaPowerBoltSprite(u8 spriteId)
 {
     struct Sprite *sprite = &gSprites[spriteId];
     FreeOamMatrix(sprite->oam.matrixNum);
     DestroySprite(sprite);
 }
 
-static const s16 gUnknown_083ECE7E[][2];
-static const SpriteCallback gUnknown_083ECF0C[];
+static const s16 sDigitalDisplay_SpriteCoords[][2];
+static const SpriteCallback sDigitalDisplay_SpriteCallbacks[];
 
-u8 sub_8105BB4(u8 templateIdx, u8 cbAndCoordsIdx, s16 a2)
+static u8 CreateStdDigitalDisplaySprite(u8 templateIdx, u8 dispInfoId, s16 spriteId)
 {
-    return sub_8105BF8(templateIdx, gUnknown_083ECF0C[cbAndCoordsIdx], gUnknown_083ECE7E[cbAndCoordsIdx][0], gUnknown_083ECE7E[cbAndCoordsIdx][1], a2);
+    return sub_8105BF8(templateIdx, sDigitalDisplay_SpriteCallbacks[dispInfoId], sDigitalDisplay_SpriteCoords[dispInfoId][0], sDigitalDisplay_SpriteCoords[dispInfoId][1], spriteId);
 }
 
-static const struct SpriteTemplate *const gUnknown_083EDB5C[];
-static const struct SubspriteTable *const gUnknown_083EDBC4[];
+static const struct SpriteTemplate *const sSpriteTemplates_DigitalDisplay[];
+static const struct SubspriteTable *const sSubspriteTables_DigitalDisplay[];
 
-static u8 sub_8105BF8(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 a4)
+static u8 sub_8105BF8(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 internalSpriteId)
 {
-    u8 spriteId = CreateSprite(gUnknown_083EDB5C[templateIdx], x, y, 16);
+    u8 spriteId = CreateSprite(sSpriteTemplates_DigitalDisplay[templateIdx], x, y, 16);
     struct Sprite *sprite = &gSprites[spriteId];
     sprite->oam.priority = 3;
     sprite->callback = callback;
-    sprite->data[6] = a4;
+    sprite->data[6] = internalSpriteId;
     sprite->data[7] = 1;
-    if (gUnknown_083EDBC4[templateIdx])
-        SetSubspriteTables(sprite, gUnknown_083EDBC4[templateIdx]);
+    if (sSubspriteTables_DigitalDisplay[templateIdx])
+        SetSubspriteTables(sprite, sSubspriteTables_DigitalDisplay[templateIdx]);
     return spriteId;
 }
 
-static void sub_8105C64(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_Static(struct Sprite *sprite)
 {
     sprite->data[7] = 0;
 }
 
-static void sub_8105C6C(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_Smoke(struct Sprite *sprite)
 {
-    s16 sp0[] = {4, -4, 4, -4};
-    s16 sp8[] = {4, 4, -4, -4};
+    s16 targetX[] = {4, -4, 4, -4};
+    s16 targetY[] = {4, 4, -4, -4};
 
     if (sprite->data[1]++ >= 16)
     {
@@ -3667,31 +3669,31 @@ static void sub_8105C6C(struct Sprite *sprite)
     sprite->y2 = 0;
     if (sprite->subspriteTableNum != 0)
     {
-        sprite->x2 = sp0[sprite->data[6]];
-        sprite->y2 = sp8[sprite->data[6]];
+        sprite->x2 = targetX[sprite->data[6]];
+        sprite->y2 = targetY[sprite->data[6]];
     }
 }
 
-static void sub_8105CF0(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_SmokeNE(struct Sprite *sprite)
 {
     sprite->hFlip = TRUE;
-    sub_8105C6C(sprite);
+    SpriteCB_DigitalDisplay_Smoke(sprite);
 }
 
-static void sub_8105D08(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_SmokeSW(struct Sprite *sprite)
 {
     sprite->vFlip = TRUE;
-    sub_8105C6C(sprite);
+    SpriteCB_DigitalDisplay_Smoke(sprite);
 }
 
-static void sub_8105D20(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_SmokeSE(struct Sprite *sprite)
 {
     sprite->hFlip = TRUE;
     sprite->vFlip = TRUE;
-    sub_8105C6C(sprite);
+    SpriteCB_DigitalDisplay_Smoke(sprite);
 }
 
-static void sub_8105D3C(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_Reel(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -3718,7 +3720,7 @@ static void sub_8105D3C(struct Sprite *sprite)
     }
 }
 
-static void sub_8105DA4(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_Time(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -3745,12 +3747,12 @@ static void sub_8105DA4(struct Sprite *sprite)
     }
 }
 
-static void sub_8105E08(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_ReelTimeNumber(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
     case 0:
-        StartSpriteAnim(sprite, sSlotMachine->unk0A - 1);
+        StartSpriteAnim(sprite, sSlotMachine->reelTimeSpinsLeft - 1);
         sprite->data[0]++;
         // fallthrough
     case 1:
@@ -3783,7 +3785,7 @@ static void sub_8105E08(struct Sprite *sprite)
     }
 }
 
-static void sub_8105EB4(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_PokeballRocking(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -3823,7 +3825,7 @@ static void sub_8105EB4(struct Sprite *sprite)
     }
 }
 
-static void sub_8105F54(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_Stop(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -3877,13 +3879,13 @@ static void sub_8105F9C(struct Sprite *sprite)
     }
 }
 
-static const u16 *const gUnknown_083EDE10[];
+static const u16 *const sPokeballShiningPalTable[];
 
-static void sub_8106058(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_PokeballShining(struct Sprite *sprite)
 {
     if (sprite->data[1] < 3)
     {
-        LoadPalette(gUnknown_083EDE10[sprite->data[1]], (IndexOfSpritePaletteTag(6) << 4) + 0x100, 0x20);
+        LoadPalette(sPokeballShiningPalTable[sprite->data[1]], (IndexOfSpritePaletteTag(6) << 4) + 0x100, 0x20);
         if (++sprite->data[2] >= 4)
         {
             sprite->data[1]++;
@@ -3892,7 +3894,7 @@ static void sub_8106058(struct Sprite *sprite)
     }
     else
     {
-        LoadPalette(gUnknown_083EDE10[sprite->data[1]], (IndexOfSpritePaletteTag(6) << 4) + 0x100, 0x20);
+        LoadPalette(sPokeballShiningPalTable[sprite->data[1]], (IndexOfSpritePaletteTag(6) << 4) + 0x100, 0x20);
         if (++sprite->data[2] >= 25)
         {
             sprite->data[1] = 0;
@@ -3903,18 +3905,18 @@ static void sub_8106058(struct Sprite *sprite)
     sprite->data[7] = 0;
 }
 
-static void sub_81060FC(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_RegBonus(struct Sprite *sprite)
 {
-    s16 sp00[] = {0, -40, 0, 0, 48, 0, 24, 0};
-    s16 sp10[] = {-32, 0, -32, -48, 0, -48, 0, -48};
-    s16 sp20[] = {16, 12, 16, 0, 0, 4, 8, 8};
+    s16 letterXOffset[] = {0, -40, 0, 0, 48, 0, 24, 0};
+    s16 letterYOffset[] = {-32, 0, -32, -48, 0, -48, 0, -48};
+    s16 letterDelay[] = {16, 12, 16, 0, 0, 4, 8, 8};
 
     switch (sprite->data[0])
     {
     case 0:
-        sprite->x2 = sp00[sprite->data[6]];
-        sprite->y2 = sp10[sprite->data[6]];
-        sprite->data[1] = sp20[sprite->data[6]];
+        sprite->x2 = letterXOffset[sprite->data[6]];
+        sprite->y2 = letterYOffset[sprite->data[6]];
+        sprite->data[1] = letterDelay[sprite->data[6]];
         sprite->data[0]++;
         // fallthrough
     case 1:
@@ -3938,7 +3940,7 @@ static void sub_81060FC(struct Sprite *sprite)
     }
 }
 
-static void sub_81061C8(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_BigBonus(struct Sprite *sprite)
 {
     s16 sp0[] = {160, 192, 224, 104, 80, 64, 48, 24};
 
@@ -3953,7 +3955,7 @@ static void sub_81061C8(struct Sprite *sprite)
         sprite->data[1]--;
 }
 
-static void sub_8106230(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_AButtonStart(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -3982,7 +3984,7 @@ static void sub_8106230(struct Sprite *sprite)
         case 2:
             if (sSlotMachine->bet == 0)
                 break;
-            sub_8104D30(5, SpriteCallbackDummy, 0xd0, 0x74, 0);
+            AddDigitalDisplaySprite(5, SpriteCallbackDummy, 0xd0, 0x74, 0);
             sSlotMachine->win0h = 0xc0e0;
             sSlotMachine->win0v = 0x6880;
             sSlotMachine->winIn = 0x2f;
@@ -4007,7 +4009,7 @@ static void sub_8106230(struct Sprite *sprite)
     }
 }
 
-static void nullsub_70(void)
+static void EndDigitalDisplayScene_Dummy(void)
 {
 }
 
@@ -4016,14 +4018,14 @@ static void sub_8106364(void)
     REG_MOSAIC = 0;
 }
 
-static const u16 *const gUnknown_083EDE20;
+static const u16 *const sDigitalDisplay_Pal;
 
-static void sub_8106370(void)
+static void EndDigitalDisplayScene_Win(void)
 {
-    LoadPalette(gUnknown_083EDE20, (IndexOfSpritePaletteTag(6) << 4) + 0x100, 0x20);
+    LoadPalette(sDigitalDisplay_Pal, (IndexOfSpritePaletteTag(6) << 4) + 0x100, 0x20);
 }
 
-static void sub_810639C(void)
+static void EndDigitalDisplayScene_InsertBet(void)
 {
     sSlotMachine->win0h = 0xf0;
     sSlotMachine->win0v = 0xa0;
@@ -4033,26 +4035,26 @@ static void sub_810639C(void)
 
 static const u8 sReelTimeGfx[];
 static const struct SpriteSheet sSlotMachineSpriteSheets[];
-static const struct SpritePalette gSlotMachineSpritePalettes[];
+static const struct SpritePalette sSlotMachineSpritePalettes[];
 
 static void sub_81063C0(void)
 {
     sub_8106404();
-    LZDecompressWram(gSlotMachineReelTimeLights_Gfx, eSlotMachineGfxBuffer);
+    LZDecompressWram(gSlotMachineDigitalDisplay_Gfx, eSlotMachineGfxBuffer);
     LZDecompressWram(sReelTimeGfx, eSlotMachineReelTimeGfxBuffer);
     LoadSpriteSheets(sSlotMachineSpriteSheets);
-    LoadSpritePalettes(gSlotMachineSpritePalettes);
+    LoadSpritePalettes(sSlotMachineSpritePalettes);
 }
 
-static const u8 *const gUnknown_083EDCE4;
-static const struct SpriteSheet gUnknown_083EDCDC;
+static const u8 *const sReelBackground_Tilemap;
+static const struct SpriteSheet sReelBackgroundSpriteSheet;
 
 static void sub_8106404(void)
 {
     u8 *dest = eSlotMachineGfxBuffer;
     u8 i = 0;
-    const struct SpriteSheet *sheet = &gUnknown_083EDCDC;
-    const u8 *src = gUnknown_083EDCE4;
+    const struct SpriteSheet *sheet = &sReelBackgroundSpriteSheet;
+    const u8 *src = sReelBackground_Tilemap;
     for (i = 0; i < 0x40; i++)
     {
         u8 j;
@@ -4064,17 +4066,17 @@ static void sub_8106404(void)
 
 static void sub_8106448(void)
 {
-    LZDecompressWram(gSlotMachine_Gfx, eSlotMachineGfxBuffer);
+    LZDecompressWram(gSlotMachineMenu_Gfx, eSlotMachineGfxBuffer);
 
     DmaCopyLarge16(3, eSlotMachineGfxBuffer, BG_VRAM, SLOTMACHINE_GFX_TILES * 32, 0x1000);
 
-    LoadPalette(gUnknown_08E95A18, 0, 160);
+    LoadPalette(gSlotMachineMenu_Pal, 0, 160);
     LoadPalette(gPalette_83EDE24, 208, 32);
 }
 
 static void sub_81064B8(void)
 {
-    CpuCopy16(gUnknown_08E95AB8, BG_SCREEN_ADDR(29), 20 * 32 * 2);
+    CpuCopy16(gSlotMachineMenu_Tilemap, BG_SCREEN_ADDR(29), 20 * 32 * 2);
     LoadSlotMachineWheelOverlay();
 }
 
@@ -4103,14 +4105,14 @@ static void LoadSlotMachineWheelOverlay(void)
     }
 }
 
-static void sub_81065A8(s16 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4)
+static void sub_81065A8(s16 offset, u16 topLeft, u16 topRight, u16 bottomLeft, u16 bottomRight)
 {
     u16 *vram = BG_SCREEN_ADDR(29);
 
-    vram[15 * 32 + arg0] = arg1;
-    vram[15 * 32 + 1 + arg0] = arg2;
-    vram[16 * 32 + arg0] = arg3;
-    vram[16 * 32 + 1 + arg0] = arg4;
+    vram[15 * 32 + offset] = topLeft;
+    vram[15 * 32 + 1 + offset] = topRight;
+    vram[16 * 32 + offset] = bottomLeft;
+    vram[16 * 32 + 1 + offset] = bottomRight;
 }
 
 static void sub_81065DC(void)
@@ -4118,7 +4120,7 @@ static void sub_81065DC(void)
     s16 y, x;
     u16 *screen;
 
-    CpuCopy16(gUnknown_08E95FB8, BG_SCREEN_ADDR(29), 20 * 32 * 2);
+    CpuCopy16(gSlotMachineInfoBox_Tilemap, BG_SCREEN_ADDR(29), 20 * 32 * 2);
 
     screen = BG_SCREEN_ADDR(30);
     for (y = 0; y < 20; y++)
@@ -4131,87 +4133,87 @@ static void sub_81065DC(void)
 static const u8 sReelSymbols[][21] =
 {
     {
-        SLOT_MACHINE_TAG_7_RED,
-        SLOT_MACHINE_TAG_CHERRY,
-        SLOT_MACHINE_TAG_AZURILL,
-        SLOT_MACHINE_TAG_REPLAY,
-        SLOT_MACHINE_TAG_POWER,
-        SLOT_MACHINE_TAG_LOTAD,
-        SLOT_MACHINE_TAG_7_BLUE,
-        SLOT_MACHINE_TAG_LOTAD,
-        SLOT_MACHINE_TAG_CHERRY,
-        SLOT_MACHINE_TAG_POWER,
-        SLOT_MACHINE_TAG_REPLAY,
-        SLOT_MACHINE_TAG_AZURILL,
-        SLOT_MACHINE_TAG_7_RED,
-        SLOT_MACHINE_TAG_POWER,
-        SLOT_MACHINE_TAG_LOTAD,
-        SLOT_MACHINE_TAG_REPLAY,
-        SLOT_MACHINE_TAG_AZURILL,
-        SLOT_MACHINE_TAG_7_BLUE,
-        SLOT_MACHINE_TAG_POWER,
-        SLOT_MACHINE_TAG_LOTAD,
-        SLOT_MACHINE_TAG_REPLAY
+        SYMBOL_7_RED,
+        SYMBOL_CHERRY,
+        SYMBOL_AZURILL,
+        SYMBOL_REPLAY,
+        SYMBOL_POWER,
+        SYMBOL_LOTAD,
+        SYMBOL_7_BLUE,
+        SYMBOL_LOTAD,
+        SYMBOL_CHERRY,
+        SYMBOL_POWER,
+        SYMBOL_REPLAY,
+        SYMBOL_AZURILL,
+        SYMBOL_7_RED,
+        SYMBOL_POWER,
+        SYMBOL_LOTAD,
+        SYMBOL_REPLAY,
+        SYMBOL_AZURILL,
+        SYMBOL_7_BLUE,
+        SYMBOL_POWER,
+        SYMBOL_LOTAD,
+        SYMBOL_REPLAY
     },
     {
-        SLOT_MACHINE_TAG_7_RED,
-        SLOT_MACHINE_TAG_CHERRY,
-        SLOT_MACHINE_TAG_REPLAY,
-        SLOT_MACHINE_TAG_LOTAD,
-        SLOT_MACHINE_TAG_AZURILL,
-        SLOT_MACHINE_TAG_CHERRY,
-        SLOT_MACHINE_TAG_REPLAY,
-        SLOT_MACHINE_TAG_POWER,
-        SLOT_MACHINE_TAG_POWER,
-        SLOT_MACHINE_TAG_LOTAD,
-        SLOT_MACHINE_TAG_7_BLUE,
-        SLOT_MACHINE_TAG_LOTAD,
-        SLOT_MACHINE_TAG_REPLAY,
-        SLOT_MACHINE_TAG_CHERRY,
-        SLOT_MACHINE_TAG_AZURILL,
-        SLOT_MACHINE_TAG_LOTAD,
-        SLOT_MACHINE_TAG_REPLAY,
-        SLOT_MACHINE_TAG_CHERRY,
-        SLOT_MACHINE_TAG_LOTAD,
-        SLOT_MACHINE_TAG_REPLAY,
-        SLOT_MACHINE_TAG_CHERRY
+        SYMBOL_7_RED,
+        SYMBOL_CHERRY,
+        SYMBOL_REPLAY,
+        SYMBOL_LOTAD,
+        SYMBOL_AZURILL,
+        SYMBOL_CHERRY,
+        SYMBOL_REPLAY,
+        SYMBOL_POWER,
+        SYMBOL_POWER,
+        SYMBOL_LOTAD,
+        SYMBOL_7_BLUE,
+        SYMBOL_LOTAD,
+        SYMBOL_REPLAY,
+        SYMBOL_CHERRY,
+        SYMBOL_AZURILL,
+        SYMBOL_LOTAD,
+        SYMBOL_REPLAY,
+        SYMBOL_CHERRY,
+        SYMBOL_LOTAD,
+        SYMBOL_REPLAY,
+        SYMBOL_CHERRY
     },
     {
-        SLOT_MACHINE_TAG_7_RED,
-        SLOT_MACHINE_TAG_POWER,
-        SLOT_MACHINE_TAG_7_BLUE,
-        SLOT_MACHINE_TAG_REPLAY,
-        SLOT_MACHINE_TAG_LOTAD,
-        SLOT_MACHINE_TAG_AZURILL,
-        SLOT_MACHINE_TAG_REPLAY,
-        SLOT_MACHINE_TAG_LOTAD,
-        SLOT_MACHINE_TAG_POWER,
-        SLOT_MACHINE_TAG_AZURILL,
-        SLOT_MACHINE_TAG_REPLAY,
-        SLOT_MACHINE_TAG_LOTAD,
-        SLOT_MACHINE_TAG_AZURILL,
-        SLOT_MACHINE_TAG_POWER,
-        SLOT_MACHINE_TAG_REPLAY,
-        SLOT_MACHINE_TAG_LOTAD,
-        SLOT_MACHINE_TAG_AZURILL,
-        SLOT_MACHINE_TAG_POWER,
-        SLOT_MACHINE_TAG_REPLAY,
-        SLOT_MACHINE_TAG_LOTAD,
-        SLOT_MACHINE_TAG_CHERRY
+        SYMBOL_7_RED,
+        SYMBOL_POWER,
+        SYMBOL_7_BLUE,
+        SYMBOL_REPLAY,
+        SYMBOL_LOTAD,
+        SYMBOL_AZURILL,
+        SYMBOL_REPLAY,
+        SYMBOL_LOTAD,
+        SYMBOL_POWER,
+        SYMBOL_AZURILL,
+        SYMBOL_REPLAY,
+        SYMBOL_LOTAD,
+        SYMBOL_AZURILL,
+        SYMBOL_POWER,
+        SYMBOL_REPLAY,
+        SYMBOL_LOTAD,
+        SYMBOL_AZURILL,
+        SYMBOL_POWER,
+        SYMBOL_REPLAY,
+        SYMBOL_LOTAD,
+        SYMBOL_CHERRY
     },
 };
 
-static const u8 gUnknown_083ECCF1[] = {
+static const u8 sReelTimeSymbols[] = {
     1, 0, 5, 4, 3, 2
 };
 
-static const s16 gUnknown_083ECCF8[][2] = {
+static const s16 sInitialReelPositions[][2] = {
     {0,  6},
     {0, 10},
     {0,  2}
 };
 
-static const u8 gUnknown_083ECD04[][3] = {
+static const u8 sSpecialDrawOdds[][3] = {
     {1, 1, 12},
     {1, 1, 14},
     {2, 2, 14},
@@ -4220,13 +4222,13 @@ static const u8 gUnknown_083ECD04[][3] = {
     {3, 3, 16}
 };
 
-static const u8 gUnknown_083ECD16[][6] = {
+static const u8 sBiasProbabilities_Special[][6] = {
     {25, 25, 30, 40, 40, 50},
     {25, 25, 30, 30, 35, 35},
     {25, 25, 30, 25, 25, 30}
 };
 
-static const u8 gUnknown_083ECD28[][6] = {
+static const u8 sBiasProbabilities_Regular[][6] = {
     {20, 25, 25, 20, 25, 25},
     {12, 15, 15, 18, 19, 22},
     {25, 25, 25, 30, 30, 40},
@@ -4234,7 +4236,7 @@ static const u8 gUnknown_083ECD28[][6] = {
     {40, 40, 35, 35, 40, 40}
 };
 
-static const u8 gUnknown_083ECD46[][17] = {
+static const u8 sReelTimeProbabilities_NormalGame[][17] = {
     {243, 243, 243,  80,  80,  80,  80,  40,  40,  40,  40,  40,  40,   5,   5,   5,   5},
     {  5,   5,   5, 150, 150, 150, 150, 130, 130, 130, 130, 130, 130, 100, 100, 100,   5},
     {  4,   4,   4,  20,  20,  20,  20,  80,  80,  80,  80,  80,  80, 100, 100, 100,  40},
@@ -4243,7 +4245,7 @@ static const u8 gUnknown_083ECD46[][17] = {
     {  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   6}
 };
 
-static const u8 gUnknown_083ECDAC[][17] = {
+static const u8 sReelTimeProbabilities_LuckyGame[][17] = {
     { 243, 243, 243, 200, 200, 200, 200, 160, 160, 160, 160, 160, 160,  70,  70,  70,   5},
     {   5,   5,   5,  25,  25,  25,  25,   5,   5,   5,   5,   5,   5,   2,   2,   2,   6},
     {   4,   4,   4,  25,  25,  25,  25,  30,  30,  30,  30,  30,  30,  40,  40,  40,  35},
@@ -4252,11 +4254,11 @@ static const u8 gUnknown_083ECDAC[][17] = {
     {   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   4,   4,   4,  60}
 };
 
-static const u16 gUnknown_083ECE12[] = {
+static const u16 sReelTimeExplodeProbability[] = {
     0x80, 0xaf, 0xc8, 0xe1, 0x100
 };
 
-static const u16 gUnknown_083ECE1C[][2] = {
+static const u16 sReelTimeSpeed_Probabilities[][2] = {
     {10,  5},
     {10, 10},
     {10, 15},
@@ -4264,50 +4266,50 @@ static const u16 gUnknown_083ECE1C[][2] = {
     {10, 35}
 };
 
-static const u16 gUnknown_083ECE30[] = {
+static const u16 sQuarterSpeed_ProbabilityBoost[] = {
     0, 5, 10, 15, 20
 };
 
 
-static const u8 gUnknown_083ECE3A[] = {
+static const u8 sBiasSymbols[] = {
     6, 4, 3, 2, 5, 0, 0, 0
 };
 
-static const u16 gUnknown_083ECE42[] = {
+static const u16 sBiasesSpecial[] = {
     0x80, 0x20, 0x40
 };
 
-static const u16 gUnknown_083ECE48[] = {
+static const u16 sBiasesRegular[] = {
     0x10, 0x08, 0x04, 0x02, 0x01
 };
 
-static const u8 sSym2Match[] = {
-    SLOT_MACHINE_MATCHED_777_RED,
-    SLOT_MACHINE_MATCHED_777_BLUE,
-    SLOT_MACHINE_MATCHED_AZURILL,
-    SLOT_MACHINE_MATCHED_LOTAD,
-    SLOT_MACHINE_MATCHED_1CHERRY,
-    SLOT_MACHINE_MATCHED_POWER,
-    SLOT_MACHINE_MATCHED_REPLAY
+static const u8 sSymbolToMatch[] = {
+    MATCH_RED_7,
+    MATCH_BLUE_7,
+    MATCH_AZURILL,
+    MATCH_LOTAD,
+    MATCH_CHERRY,
+    MATCH_POWER,
+    MATCH_REPLAY
 };
 
 static const u16 sSlotMatchFlags[] = {
-    1 << SLOT_MACHINE_MATCHED_1CHERRY,
-    1 << SLOT_MACHINE_MATCHED_2CHERRY,
-    1 << SLOT_MACHINE_MATCHED_REPLAY,
-    1 << SLOT_MACHINE_MATCHED_LOTAD,
-    1 << SLOT_MACHINE_MATCHED_AZURILL,
-    1 << SLOT_MACHINE_MATCHED_POWER,
-    1 << SLOT_MACHINE_MATCHED_777_MIXED,
-    1 << SLOT_MACHINE_MATCHED_777_RED,
-    1 << SLOT_MACHINE_MATCHED_777_BLUE
+    1 << MATCH_CHERRY,
+    1 << MATCH_TOPBOT_CHERRY,
+    1 << MATCH_REPLAY,
+    1 << MATCH_LOTAD,
+    1 << MATCH_AZURILL,
+    1 << MATCH_POWER,
+    1 << MATCH_MIXED_7,
+    1 << MATCH_RED_7,
+    1 << MATCH_BLUE_7
 };
 
 static const u16 sSlotPayouts[] = {
     2, 4, 0, 6, 12, 3, 90, 300, 300
 };
 
-static const s16 gUnknown_083ECE7E[][2] = {
+static const s16 sDigitalDisplay_SpriteCoords[][2] = {
     { 0xd0, 0x38},
     { 0xb8, 0x00},
     { 0xc8, 0x08},
@@ -4345,52 +4347,52 @@ static const s16 gUnknown_083ECE7E[][2] = {
     { 0x00, 0x00}
 };
 
-static const SpriteCallback gUnknown_083ECF0C[] = {
-    sub_8105C64,
-    sub_8105F54,
-    sub_8105F54,
-    sub_8105F54,
-    sub_8105F54,
+static const SpriteCallback sDigitalDisplay_SpriteCallbacks[] = {
+    SpriteCB_DigitalDisplay_Static,
+    SpriteCB_DigitalDisplay_Stop,
+    SpriteCB_DigitalDisplay_Stop,
+    SpriteCB_DigitalDisplay_Stop,
+    SpriteCB_DigitalDisplay_Stop,
     sub_8105F9C,
-    sub_8105EB4,
-    sub_8105C64,
-    sub_8105C64,
-    sub_8105C6C,
-    sub_8105CF0,
-    sub_8105D08,
-    sub_8105D20,
-    sub_8105D3C,
-    sub_8105DA4,
-    sub_8105E08,
-    sub_8105C64,
-    sub_8106058,
-    sub_81060FC,
-    sub_81060FC,
-    sub_81060FC,
-    sub_81060FC,
-    sub_81060FC,
-    sub_81060FC,
-    sub_81060FC,
-    sub_81060FC,
-    sub_81061C8,
-    sub_81061C8,
-    sub_81061C8,
-    sub_81061C8,
-    sub_81061C8,
-    sub_81061C8,
-    sub_81061C8,
-    sub_81061C8,
-    sub_8106230
+    SpriteCB_DigitalDisplay_PokeballRocking,
+    SpriteCB_DigitalDisplay_Static,
+    SpriteCB_DigitalDisplay_Static,
+    SpriteCB_DigitalDisplay_Smoke,
+    SpriteCB_DigitalDisplay_SmokeNE,
+    SpriteCB_DigitalDisplay_SmokeSW,
+    SpriteCB_DigitalDisplay_SmokeSE,
+    SpriteCB_DigitalDisplay_Reel,
+    SpriteCB_DigitalDisplay_Time,
+    SpriteCB_DigitalDisplay_ReelTimeNumber,
+    SpriteCB_DigitalDisplay_Static,
+    SpriteCB_DigitalDisplay_PokeballShining,
+    SpriteCB_DigitalDisplay_RegBonus,
+    SpriteCB_DigitalDisplay_RegBonus,
+    SpriteCB_DigitalDisplay_RegBonus,
+    SpriteCB_DigitalDisplay_RegBonus,
+    SpriteCB_DigitalDisplay_RegBonus,
+    SpriteCB_DigitalDisplay_RegBonus,
+    SpriteCB_DigitalDisplay_RegBonus,
+    SpriteCB_DigitalDisplay_RegBonus,
+    SpriteCB_DigitalDisplay_BigBonus,
+    SpriteCB_DigitalDisplay_BigBonus,
+    SpriteCB_DigitalDisplay_BigBonus,
+    SpriteCB_DigitalDisplay_BigBonus,
+    SpriteCB_DigitalDisplay_BigBonus,
+    SpriteCB_DigitalDisplay_BigBonus,
+    SpriteCB_DigitalDisplay_BigBonus,
+    SpriteCB_DigitalDisplay_BigBonus,
+    SpriteCB_DigitalDisplay_AButtonStart
 };
 
-static const struct UnkStruct1 Unknown_83ECF98[] = {
+static const struct DigitalDisplaySprite sDigitalDisplay_InsertBet[] = {
     {25, 34, 0},
     {2, 0, 0},
     {9, 16, 0},
     {255, 0, 0}
 };
 
-static const struct UnkStruct1 Unknown_83ECFA8[] = {
+static const struct DigitalDisplaySprite sDigitalDisplay_StopReel[] = {
     {10, 1, 0},
     {11, 2, 0},
     {12, 3, 0},
@@ -4400,13 +4402,13 @@ static const struct UnkStruct1 Unknown_83ECFA8[] = {
     {255, 0, 0}
 };
 
-static const struct UnkStruct1 Unknown_83ECFC4[] = {
+static const struct DigitalDisplaySprite sDigitalDisplay_Win[] = {
     {3, 7, 0},
     {8, 17, 0},
     {255, 0, 0}
 };
 
-static const struct UnkStruct1 Unknown_83ECFD0[] = {
+static const struct DigitalDisplaySprite sDigitalDisplay_Lose[] = {
     {4, 8, 0},
     {6, 9, 0},
     {6, 10, 1},
@@ -4415,14 +4417,14 @@ static const struct UnkStruct1 Unknown_83ECFD0[] = {
     {255, 0, 0}
 };
 
-static const struct UnkStruct1 Unknown_83ECFE8[] = {
+static const struct DigitalDisplaySprite sDigitalDisplay_ReelTime[] = {
     {0, 13, 0},
     {1, 14, 0},
     {7, 15, 0},
     {255, 0, 0}
 };
 
-static const struct UnkStruct1 Unknown_83ECFF8[] = {
+static const struct DigitalDisplaySprite sDigitalDisplay_BonusBig[] = {
     {19, 26, 0},
     {20, 27, 1},
     {21, 28, 2},
@@ -4435,7 +4437,7 @@ static const struct UnkStruct1 Unknown_83ECFF8[] = {
     {255, 0, 0}
 };
 
-static const struct UnkStruct1 Unknown_83ED020[] = {
+static const struct DigitalDisplaySprite sDigitalDisplay_BonusRegular[] = {
     {22, 18, 0},
     {23, 19, 1},
     {24, 20, 2},
@@ -4448,28 +4450,28 @@ static const struct UnkStruct1 Unknown_83ED020[] = {
     {255, 0, 0}
 };
 
-static const struct UnkStruct1 *const gUnknown_083ED048[] = {
-    Unknown_83ECF98,
-    Unknown_83ECFA8,
-    Unknown_83ECFC4,
-    Unknown_83ECFD0,
-    Unknown_83ECFE8,
-    Unknown_83ED020,
-    Unknown_83ECFF8
+static const struct DigitalDisplaySprite *const sDigitalDisplayScenes[] = {
+    sDigitalDisplay_InsertBet,
+    sDigitalDisplay_StopReel,
+    sDigitalDisplay_Win,
+    sDigitalDisplay_Lose,
+    sDigitalDisplay_ReelTime,
+    sDigitalDisplay_BonusRegular,
+    sDigitalDisplay_BonusBig
 };
 
-static void (*const gUnknown_083ED064[])(void) = {
-    sub_810639C,
+static void (*const sDigitalDisplaySceneExitCallbacks[])(void) = {
+    EndDigitalDisplayScene_InsertBet,
     sub_8106364,
-    sub_8106370,
-    nullsub_70,
-    nullsub_70,
-    sub_8106370,
-    sub_8106370
+    EndDigitalDisplayScene_Win,
+    EndDigitalDisplayScene_Dummy,
+    EndDigitalDisplayScene_Dummy,
+    EndDigitalDisplayScene_Win,
+    EndDigitalDisplayScene_Win
 };
 
 
-static const struct OamData gOamData_83ED080 = {
+static const struct OamData sOam_8x8 = {
     .y = 0x0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -4485,7 +4487,7 @@ static const struct OamData gOamData_83ED080 = {
     .affineParam = 0
 };
 
-static const struct OamData gOamData_83ED088 = {
+static const struct OamData sOam_8x16 = {
     .y = 0x0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -4501,7 +4503,7 @@ static const struct OamData gOamData_83ED088 = {
     .affineParam = 0
 };
 
-static const struct OamData gOamData_83ED090 = {
+static const struct OamData sOam_16x16 = {
     .y = 0x0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -4517,7 +4519,7 @@ static const struct OamData gOamData_83ED090 = {
     .affineParam = 0
 };
 
-static const struct OamData gOamData_83ED098 = {
+static const struct OamData sOam_16x32 = {
     .y = 0x0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -4533,7 +4535,7 @@ static const struct OamData gOamData_83ED098 = {
     .affineParam = 0
 };
 
-static const struct OamData gOamData_83ED0A0 = {
+static const struct OamData sOam_32x32 = {
     .y = 0x0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -4549,7 +4551,7 @@ static const struct OamData gOamData_83ED0A0 = {
     .affineParam = 0
 };
 
-static const struct OamData gOamData_83ED0A8 = {
+static const struct OamData sOam_32x64 = {
     .y = 0x0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -4565,7 +4567,7 @@ static const struct OamData gOamData_83ED0A8 = {
     .affineParam = 0
 };
 
-static const struct OamData gOamData_83ED0B0 = {
+static const struct OamData sOam_64x32 = {
     .y = 0x0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -4581,7 +4583,7 @@ static const struct OamData gOamData_83ED0B0 = {
     .affineParam = 0
 };
 
-static const struct OamData gOamData_83ED0B8 = {
+static const struct OamData sOam_64x64 = {
     .y = 0x0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -4597,7 +4599,7 @@ static const struct OamData gOamData_83ED0B8 = {
     .affineParam = 0
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED0C0[] = {
+static const struct SpriteFrameImage sImageTable_ReelTimePikachu[] = {
     {eSlotMachineReelTimeGfxBuffer + 0x0000, 0x800},
     {eSlotMachineReelTimeGfxBuffer + 0x0800, 0x800},
     {eSlotMachineReelTimeGfxBuffer + 0x1000, 0x800},
@@ -4605,104 +4607,104 @@ static const struct SpriteFrameImage gSpriteImageTable_83ED0C0[] = {
     {eSlotMachineReelTimeGfxBuffer + 0x2000, 0x800}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED0E8[] = {
+static const struct SpriteFrameImage sImageTable_ReelTimeMachineAntennae[] = {
     {eSlotMachineReelTimeGfxBuffer + 0x2800, 0x300}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED0F0[] = {
+static const struct SpriteFrameImage sImageTable_ReelTimeMachine[] = {
     {eSlotMachineReelTimeGfxBuffer + 0x2B00, 0x500}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED0F8[] = {
+static const struct SpriteFrameImage sImageTable_BrokenReelTimeMachine[] = {
     {eSlotMachineReelTimeGfxBuffer + 0x3000, 0x600}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED100[] = {
-    {gSpriteImage_8E988E8, 0x80},
-    {gSpriteImage_8E98968, 0x80},
-    {gSpriteImage_8E989E8, 0x80},
-    {gSpriteImage_8E98A68, 0x80},
-    {gSpriteImage_8E98AE8, 0x80},
-    {gSpriteImage_8E98B68, 0x80}
+static const struct SpriteFrameImage sImageTable_ReelTimeNumbers[] = {
+    {gSlotMachineReelTimeNumber0, 0x80},
+    {gSlotMachineReelTimeNumber1, 0x80},
+    {gSlotMachineReelTimeNumber2, 0x80},
+    {gSlotMachineReelTimeNumber3, 0x80},
+    {gSlotMachineReelTimeNumber4, 0x80},
+    {gSlotMachineReelTimeNumber5, 0x80}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED130[] = {
-    {gSpriteImage_8E991E8, 0x200}
+static const struct SpriteFrameImage sImageTable_ReelTimeShadow[] = {
+    {gSlotMachineReelTimeShadow, 0x200}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED138[] = {
-    {gSpriteImage_8E99808, 0x40}
+static const struct SpriteFrameImage sImageTable_ReelTimeNumberGap[] = {
+    {gSlotMachineReelTimeNumberGap_Gfx, 0x40}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED140[] = {
-    {gSpriteImage_8E98BE8, 0x100},
-    {gSpriteImage_8E98CE8, 0x100}
+static const struct SpriteFrameImage sImageTable_ReelTimeBolt[] = {
+    {gSlotMachineReelTimeBolt0, 0x100},
+    {gSlotMachineReelTimeBolt1, 0x100}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED150[] = {
-    {gSpriteImage_8E993E8, 0x400}
+static const struct SpriteFrameImage sImageTable_ReelTimePikachuAura[] = {
+    {gSlotMachineReelTimePikaAura, 0x400}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED158[] = {
-    {gSpriteImage_8E98DE8, 0x200},
-    {gSpriteImage_8E98FE8, 0x200}
+static const struct SpriteFrameImage sImageTable_ReelTimeExplosion[] = {
+    {gSlotMachineReelTimeExplosion0, 0x200},
+    {gSlotMachineReelTimeExplosion1, 0x200}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED168[] = {
-    {gSpriteImage_8E98848, 0x20}
+static const struct SpriteFrameImage sImageTable_ReelTimeDuck[] = {
+    {gSlotMachineReelTimeDuck, 0x20}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED170[] = {
-    {gSpriteImage_8E98868, 0x80}
+static const struct SpriteFrameImage sImageTable_ReelTimeSmoke[] = {
+    {gSlotMachineReelTimeSmoke, 0x80}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED178[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Reel[] = {
     {eSlotMachineGfxBuffer + 0x0000, 0x600}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED180[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Time[] = {
     {eSlotMachineGfxBuffer + 0x0600, 0x200}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED188[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Insert[] = {
     {eSlotMachineGfxBuffer + 0x0800, 0x200}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED190[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Stop[] = {
     {eSlotMachineGfxBuffer + 0x0A00, 0x200}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED198[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Win[] = {
     {eSlotMachineGfxBuffer + 0x0C00, 0x300}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED1A0[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Lose[] = {
     {eSlotMachineGfxBuffer + 0x1000, 0x400}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED1A8[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Bonus[] = {
     {eSlotMachineGfxBuffer + 0x1400, 0x200}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED1B0[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Big[] = {
     {eSlotMachineGfxBuffer + 0x1600, 0x300}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED1B8[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Reg[] = {
     {eSlotMachineGfxBuffer + 0x1900, 0x300}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED1C0[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_AButton[] = {
     {eSlotMachineGfxBuffer + 0x1C00, 0x200},
     {eSlotMachineGfxBuffer + 0x1E00, 0x200},
     {eSlotMachineGfxBuffer + 0x1E00, 0x200} // is this a typo?
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED1D8[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Smoke[] = {
     {eSlotMachineGfxBuffer + 0x2000, 0x280}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED1E0[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Number[] = {
     {eSlotMachineGfxBuffer + 0x2280, 0x80},
     {eSlotMachineGfxBuffer + 0x2300, 0x80},
     {eSlotMachineGfxBuffer + 0x2380, 0x80},
@@ -4710,124 +4712,124 @@ static const struct SpriteFrameImage gSpriteImageTable_83ED1E0[] = {
     {eSlotMachineGfxBuffer + 0x2480, 0x80}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED208[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Pokeball[] = {
     {eSlotMachineGfxBuffer + 0x2600, 0x480},
     {eSlotMachineGfxBuffer + 0x2A80, 0x480}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED218[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_DPad[] = {
     {eSlotMachineGfxBuffer + 0x2F00, 0x180},
     {eSlotMachineGfxBuffer + 0x3080, 0x180}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED228[] = {
-    {gSpriteImage_8E98828, 0x20}
+static const struct SpriteFrameImage sImageTable_PikaPowerBolt[] = {
+    {gSlotMachinePikaPowerBolt, 0x20}
 };
 
-static const union AnimCmd gSpriteAnim_83ED230[] = {
+static const union AnimCmd sAnim_SingleFrame[] = {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED238[] = {
+static const union AnimCmd sAnim_ReelTimeDuck[] = {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED240[] = {
+static const union AnimCmd sAnim_ReelTimePikachu_Still[] = {
     ANIMCMD_FRAME(0, 16),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED248[] = {
+static const union AnimCmd sAnim_ReelTimePikachu_ChargingSlow[] = {
     ANIMCMD_FRAME(1, 16),
     ANIMCMD_FRAME(0, 16),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED254[] = {
+static const union AnimCmd sAnim_ReelTimePikachu_ChargingMedium[] = {
     ANIMCMD_FRAME(1, 8),
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED260[] = {
+static const union AnimCmd sAnim_ReelTimePikachu_ChargingFast[] = {
     ANIMCMD_FRAME(1, 4),
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED26C[] = {
+static const union AnimCmd sAnim_ReelTimePikachu_Cheering[] = {
     ANIMCMD_FRAME(2, 32),
     ANIMCMD_FRAME(3, 32),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED278[] = {
+static const union AnimCmd sAnim_ReelTimePikachu_FellOver[] = {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED280[] = {
+static const union AnimCmd sAnim_ReelTimeNumber_0[] = {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED288[] = {
+static const union AnimCmd sAnim_ReelTimeNumber_1[] = {
     ANIMCMD_FRAME(1, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED290[] = {
+static const union AnimCmd sAnim_ReelTimeNumber_2[] = {
     ANIMCMD_FRAME(2, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED298[] = {
+static const union AnimCmd sAnim_ReelTimeNumber_3[] = {
     ANIMCMD_FRAME(3, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED2A0[] = {
+static const union AnimCmd sAnim_ReelTimeNumber_4[] = {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED2A8[] = {
+static const union AnimCmd sAnim_ReelTimeNumber_5[] = {
     ANIMCMD_FRAME(5, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED2B0[] = {
+static const union AnimCmd sAnim_ReelTimeBolt[] = {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(1, 4),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED2BC[] = {
+static const union AnimCmd sAnim_ReelTimeExplosion[] = {
     ANIMCMD_FRAME(0, 16),
     ANIMCMD_FRAME(1, 16),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED2C8[] = {
+static const union AnimCmd sAnim_DigitalDisplay_AButton_Flashing[] = {
     ANIMCMD_FRAME(0, 30),
     ANIMCMD_FRAME(1, 30),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED2D4[] = {
+static const union AnimCmd sAnim_DigitalDisplay_AButton_Static[] = {
     ANIMCMD_FRAME(1, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED2DC[] = {
+static const union AnimCmd sAnim_DigitalDisplay_DPad_Flashing[] = {
     ANIMCMD_FRAME(0, 30),
     ANIMCMD_FRAME(1, 30),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED2E8[] = {
+static const union AnimCmd sAnim_DigitalDisplay_Pokeball_Rocking[] = {
     ANIMCMD_FRAME(0, 16),
     ANIMCMD_FRAME(1, 16),
     ANIMCMD_FRAME(0, 16),
@@ -4835,93 +4837,93 @@ static const union AnimCmd gSpriteAnim_83ED2E8[] = {
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED2FC[] = {
+static const union AnimCmd sAnim_DigitalDisplay_Pokeball_Static[] = {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED304[] = {
+static const union AnimCmd sAnim_DigitalDisplay_Number_1[] = {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED30C[] = {
+static const union AnimCmd sAnim_DigitalDisplay_Number_2[] = {
     ANIMCMD_FRAME(1, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED314[] = {
+static const union AnimCmd sAnim_DigitalDisplay_Number_3[] = {
     ANIMCMD_FRAME(2, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED31C[] = {
+static const union AnimCmd sAnim_DigitalDisplay_Number_4[] = {
     ANIMCMD_FRAME(3, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED324[] = {
+static const union AnimCmd sAnim_DigitalDisplay_Number_5[] = {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED32C[] = {
-    gSpriteAnim_83ED230
+static const union AnimCmd *const sAnims_SingleFrame[] = {
+    sAnim_SingleFrame
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED330[] = {
-    gSpriteAnim_83ED238
+static const union AnimCmd *const sAnims_ReelTimeDuck[] = {
+    sAnim_ReelTimeDuck
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED334[] = {
-    gSpriteAnim_83ED240,
-    gSpriteAnim_83ED248,
-    gSpriteAnim_83ED254,
-    gSpriteAnim_83ED260,
-    gSpriteAnim_83ED26C,
-    gSpriteAnim_83ED278
+static const union AnimCmd *const sAnims_ReelTimePikachu[] = {
+    sAnim_ReelTimePikachu_Still,
+    sAnim_ReelTimePikachu_ChargingSlow,
+    sAnim_ReelTimePikachu_ChargingMedium,
+    sAnim_ReelTimePikachu_ChargingFast,
+    sAnim_ReelTimePikachu_Cheering,
+    sAnim_ReelTimePikachu_FellOver
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED34C[] = {
-    gSpriteAnim_83ED280,
-    gSpriteAnim_83ED288,
-    gSpriteAnim_83ED290,
-    gSpriteAnim_83ED298,
-    gSpriteAnim_83ED2A0,
-    gSpriteAnim_83ED2A8
+static const union AnimCmd *const sAnims_ReelTimeNumbers[] = {
+    sAnim_ReelTimeNumber_0,
+    sAnim_ReelTimeNumber_1,
+    sAnim_ReelTimeNumber_2,
+    sAnim_ReelTimeNumber_3,
+    sAnim_ReelTimeNumber_4,
+    sAnim_ReelTimeNumber_5
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED364[] = {
-    gSpriteAnim_83ED2B0
+static const union AnimCmd *const sAnims_ReelTimeBolt[] = {
+    sAnim_ReelTimeBolt
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED368[] = {
-    gSpriteAnim_83ED2BC
+static const union AnimCmd *const sAnims_ReelTimeExplosion[] = {
+    sAnim_ReelTimeExplosion
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED36C[] = {
-    gSpriteAnim_83ED2C8,
-    gSpriteAnim_83ED2D4
+static const union AnimCmd *const sAnims_DigitalDisplay_AButton[] = {
+    sAnim_DigitalDisplay_AButton_Flashing,
+    sAnim_DigitalDisplay_AButton_Static
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED374[] = {
-    gSpriteAnim_83ED2DC
+static const union AnimCmd *const sAnims_DigitalDisplay_DPad[] = {
+    sAnim_DigitalDisplay_DPad_Flashing
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED378[] = {
-    gSpriteAnim_83ED2E8,
-    gSpriteAnim_83ED2FC
+static const union AnimCmd *const sAnims_DigitalDisplay_Pokeball[] = {
+    sAnim_DigitalDisplay_Pokeball_Rocking,
+    sAnim_DigitalDisplay_Pokeball_Static
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED380[] = {
-    gSpriteAnim_83ED304,
-    gSpriteAnim_83ED30C,
-    gSpriteAnim_83ED314,
-    gSpriteAnim_83ED31C,
-    gSpriteAnim_83ED324
+static const union AnimCmd *const sAnims_DigitalDisplay_Number[] = {
+    sAnim_DigitalDisplay_Number_1,
+    sAnim_DigitalDisplay_Number_2,
+    sAnim_DigitalDisplay_Number_3,
+    sAnim_DigitalDisplay_Number_4,
+    sAnim_DigitalDisplay_Number_5
 };
 
-static const union AffineAnimCmd gSpriteAffineAnim_83ED394[] = {
+static const union AffineAnimCmd sAffineAnim_ReelTimeSmoke[] = {
     AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 0),
     AFFINEANIMCMD_LOOP(0),
     AFFINEANIMCMD_FRAME(0x1, 0x1, 0, 1),
@@ -4929,11 +4931,11 @@ static const union AffineAnimCmd gSpriteAffineAnim_83ED394[] = {
     AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd *const gSpriteAffineAnimTable_83ED3BC[] = {
-    gSpriteAffineAnim_83ED394
+static const union AffineAnimCmd *const sAffineAnims_ReelTimeSmoke[] = {
+    sAffineAnim_ReelTimeSmoke
 };
 
-static const union AffineAnimCmd gSpriteAffineAnim_83ED3C0[] = {
+static const union AffineAnimCmd sAffineAnim_PikaPowerBolt[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 8, 32),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 6, 32),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 4, 16),
@@ -4946,142 +4948,142 @@ static const union AffineAnimCmd gSpriteAffineAnim_83ED3C0[] = {
     AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd *const gSpriteAffineAnimTable_83ED410[] = {
-    gSpriteAffineAnim_83ED3C0
+static const union AffineAnimCmd *const sAffineAnims_PikaPowerBolt[] = {
+    sAffineAnim_PikaPowerBolt
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED414 = {
-    0, 0, &gOamData_83ED0A0, gSpriteAnimTable_83ED32C, NULL, gDummySpriteAffineAnimTable, sub_8104F18
+static const struct SpriteTemplate sSpriteTemplate_ReelSymbol = {
+    0, 0, &sOam_32x32, sAnims_SingleFrame, NULL, gDummySpriteAffineAnimTable, SpriteCB_ReelSymbol
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED42C = {
-    7, 4, &gOamData_83ED088, gSpriteAnimTable_83ED32C, NULL, gDummySpriteAffineAnimTable, sub_810506C
+static const struct SpriteTemplate sSpriteTemplate_CoinNumber = {
+    7, 4, &sOam_8x16, sAnims_SingleFrame, NULL, gDummySpriteAffineAnimTable, SpriteCB_CoinNumber
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED444 = {
-    17, 0, &gOamData_83ED0B8, gSpriteAnimTable_83ED32C, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_ReelBackground = {
+    17, 0, &sOam_64x64, sAnims_SingleFrame, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED45C = {
-    0xFFFF, 1, &gOamData_83ED0B8, gSpriteAnimTable_83ED334, gSpriteImageTable_83ED0C0, gDummySpriteAffineAnimTable, sub_8105170
+static const struct SpriteTemplate sSpriteTemplate_ReelTimePikachu = {
+    0xFFFF, 1, &sOam_64x64, sAnims_ReelTimePikachu, sImageTable_ReelTimePikachu, gDummySpriteAffineAnimTable, SpriteCB_ReelTimePikachu
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED474 = {
-    0xFFFF, 2, &gOamData_83ED088, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED0E8, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeMachineAntennae = {
+    0xFFFF, 2, &sOam_8x16, sAnims_SingleFrame, sImageTable_ReelTimeMachineAntennae, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED48C = {
-    0xFFFF, 3, &gOamData_83ED088, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED0F0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeMachine = {
+    0xFFFF, 3, &sOam_8x16, sAnims_SingleFrame, sImageTable_ReelTimeMachine, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED4A4 = {
-    0xFFFF, 3, &gOamData_83ED088, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED0F8, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_BrokenReelTimeMachine = {
+    0xFFFF, 3, &sOam_8x16, sAnims_SingleFrame, sImageTable_BrokenReelTimeMachine, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED4BC = {
-    0xFFFF, 4, &gOamData_83ED090, gSpriteAnimTable_83ED34C, gSpriteImageTable_83ED100, gDummySpriteAffineAnimTable, sub_810535C
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeNumbers = {
+    0xFFFF, 4, &sOam_16x16, sAnims_ReelTimeNumbers, sImageTable_ReelTimeNumbers, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeNumbers
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED4D4 = {
-    0xFFFF, 4, &gOamData_83ED090, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED130, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeShadow = {
+    0xFFFF, 4, &sOam_16x16, sAnims_SingleFrame, sImageTable_ReelTimeShadow, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED4EC = {
-    0xFFFF, 4, &gOamData_83ED090, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED138, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeNumberGap = {
+    0xFFFF, 4, &sOam_16x16, sAnims_SingleFrame, sImageTable_ReelTimeNumberGap, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED504 = {
-    0xFFFF, 4, &gOamData_83ED098, gSpriteAnimTable_83ED364, gSpriteImageTable_83ED140, gDummySpriteAffineAnimTable, sub_810562C
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeBolt = {
+    0xFFFF, 4, &sOam_16x32, sAnims_ReelTimeBolt, sImageTable_ReelTimeBolt, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeBolt
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED51C = {
-    0xFFFF, 7, &gOamData_83ED0A8, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED150, gDummySpriteAffineAnimTable, sub_8105784
+static const struct SpriteTemplate sSpriteTemplate_ReelTimePikachuAura = {
+    0xFFFF, 7, &sOam_32x64, sAnims_SingleFrame, sImageTable_ReelTimePikachuAura, gDummySpriteAffineAnimTable, SpriteCB_ReelTimePikachuAura
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED534 = {
-    0xFFFF, 5, &gOamData_83ED0A0, gSpriteAnimTable_83ED368, gSpriteImageTable_83ED158, gDummySpriteAffineAnimTable, sub_8105894
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeExplosion = {
+    0xFFFF, 5, &sOam_32x32, sAnims_ReelTimeExplosion, sImageTable_ReelTimeExplosion, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeExplosion
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED54C = {
-    0xFFFF, 4, &gOamData_83ED080, gSpriteAnimTable_83ED330, gSpriteImageTable_83ED168, gDummySpriteAffineAnimTable, sub_810594C
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeDuck = {
+    0xFFFF, 4, &sOam_8x8, sAnims_ReelTimeDuck, sImageTable_ReelTimeDuck, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeDuck
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED564 = {
-    0xFFFF, 4, &gOamData_83ED090, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED170, gSpriteAffineAnimTable_83ED3BC, sub_8105A38
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeSmoke = {
+    0xFFFF, 4, &sOam_16x16, sAnims_SingleFrame, sImageTable_ReelTimeSmoke, sAffineAnims_ReelTimeSmoke, SpriteCB_ReelTimeSmoke
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED57C = {
-    0xFFFF, 6, &gOamData_83ED080, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED178, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Reel = {
+    0xFFFF, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Reel, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED594 = {
-    0xFFFF, 6, &gOamData_83ED080, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED180, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Time = {
+    0xFFFF, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Time, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED5AC = {
-    0xFFFF, 6, &gOamData_83ED080, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED188, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Insert = {
+    0xFFFF, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Insert, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED5C4 = {
-    18, 6, &gOamData_83ED080, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED190, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Stop = {
+    18, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Stop, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED5DC = {
-    0xFFFF, 6, &gOamData_83ED0B0, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED198, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Win = {
+    0xFFFF, 6, &sOam_64x32, sAnims_SingleFrame, sImageTable_DigitalDisplay_Win, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED5F4 = {
-    0xFFFF, 6, &gOamData_83ED0B0, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED1A0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Lose = {
+    0xFFFF, 6, &sOam_64x32, sAnims_SingleFrame, sImageTable_DigitalDisplay_Lose, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED60C = {
-    19, 6, &gOamData_83ED080, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED1A8, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Bonus = {
+    19, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Bonus, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED624 = {
-    20, 6, &gOamData_83ED080, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED1B0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Big = {
+    20, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Big, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED63C = {
-    21, 6, &gOamData_83ED080, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED1B8, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Reg = {
+    21, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Reg, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED654 = {
-    0xFFFF, 6, &gOamData_83ED0A0, gSpriteAnimTable_83ED36C, gSpriteImageTable_83ED1C0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_AButton = {
+    0xFFFF, 6, &sOam_32x32, sAnims_DigitalDisplay_AButton, sImageTable_DigitalDisplay_AButton, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED66C = {
-    0xFFFF, 6, &gOamData_83ED080, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED1D8, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Smoke = {
+    0xFFFF, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Smoke, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED684 = {
-    0xFFFF, 6, &gOamData_83ED090, gSpriteAnimTable_83ED380, gSpriteImageTable_83ED1E0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Number = {
+    0xFFFF, 6, &sOam_16x16, sAnims_DigitalDisplay_Number, sImageTable_DigitalDisplay_Number, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED69C = {
-    0xFFFF, 6, &gOamData_83ED080, gSpriteAnimTable_83ED378, gSpriteImageTable_83ED208, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Pokeball = {
+    0xFFFF, 6, &sOam_8x8, sAnims_DigitalDisplay_Pokeball, sImageTable_DigitalDisplay_Pokeball, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED6B4 = {
-    0xFFFF, 6, &gOamData_83ED080, gSpriteAnimTable_83ED374, gSpriteImageTable_83ED218, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_DPad = {
+    0xFFFF, 6, &sOam_8x8, sAnims_DigitalDisplay_DPad, sImageTable_DigitalDisplay_DPad, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED6CC = {
-    0xFFFF, 4, &gOamData_83ED080, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED228, gSpriteAffineAnimTable_83ED410, sub_8105B70
+static const struct SpriteTemplate sSpriteTemplate_PikaPowerBolt = {
+    0xFFFF, 4, &sOam_8x8, sAnims_SingleFrame, sImageTable_PikaPowerBolt, sAffineAnims_PikaPowerBolt, SpriteCB_PikaPowerBolt
 };
 
-static const struct Subsprite gSubspriteTable_83ED6E4[] = {
+static const struct Subsprite sSubsprites_ReelBackground[] = {
     {-64, -64, ST_OAM_SQUARE, 3, 0x0, 3},
     {0, -64, ST_OAM_SQUARE, 3, 0x0, 3},
     {-64, 0, ST_OAM_SQUARE, 3, 0x0, 3},
     {0, 0, ST_OAM_SQUARE, 3, 0x0, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED704[] = {
-    {4, gSubspriteTable_83ED6E4}
+static const struct SubspriteTable sSubspriteTable_ReelBackground[] = {
+    {4, sSubsprites_ReelBackground}
 };
 
-static const struct Subsprite gSubspriteTable_83ED70C[] = {
+static const struct Subsprite sSubsprites_ReelTimeMachineAntennae[] = {
     {-32, -12, ST_OAM_H_RECTANGLE, 1, 0x0, 1},
     {0, -12, ST_OAM_H_RECTANGLE, 1, 0x4, 1},
     {-32, -4, ST_OAM_H_RECTANGLE, 1, 0x8, 1},
@@ -5090,21 +5092,21 @@ static const struct Subsprite gSubspriteTable_83ED70C[] = {
     {0, 4, ST_OAM_H_RECTANGLE, 1, 0x14, 1}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED73C[] = {
-    {6, gSubspriteTable_83ED70C}
+static const struct SubspriteTable sSubspriteTable_ReelTimeMachineAntennae[] = {
+    {6, sSubsprites_ReelTimeMachineAntennae}
 };
 
-static const struct Subsprite gSubspriteTable_83ED744[] = {
+static const struct Subsprite sSubsprites_ReelTimeMachine[] = {
     {-32, -20, ST_OAM_H_RECTANGLE, 3, 0x0, 1},
     {-32, 12, ST_OAM_H_RECTANGLE, 1, 0x20, 1},
     {0, 12, ST_OAM_H_RECTANGLE, 1, 0x24, 1}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED75C[] = {
-    {3, gSubspriteTable_83ED744}
+static const struct SubspriteTable sSubspriteTable_ReelTimeMachine[] = {
+    {3, sSubsprites_ReelTimeMachine}
 };
 
-static const struct Subsprite gSubspriteTable_83ED764[] = {
+static const struct Subsprite sSubsprites_BrokenReelTimeMachine[] = {
     {-32, -24, ST_OAM_H_RECTANGLE, 3, 0x0, 1},
     {-32, 8, ST_OAM_H_RECTANGLE, 1, 0x20, 1},
     {0, 8, ST_OAM_H_RECTANGLE, 1, 0x24, 1},
@@ -5112,32 +5114,32 @@ static const struct Subsprite gSubspriteTable_83ED764[] = {
     {0, 16, ST_OAM_H_RECTANGLE, 1, 0x2c, 1}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED78C[] = {
-    {5, gSubspriteTable_83ED764}
+static const struct SubspriteTable sSubspriteTable_BrokenReelTimeMachine[] = {
+    {5, sSubsprites_BrokenReelTimeMachine}
 };
 
-static const struct Subsprite gSubspriteTable_83ED794[] = {
+static const struct Subsprite sSubsprites_ReelTimeShadow[] = {
     {-32, -8, ST_OAM_H_RECTANGLE, 1, 0x0, 1},
     {0, -8, ST_OAM_H_RECTANGLE, 1, 0x4, 1},
     {-32, 0, ST_OAM_H_RECTANGLE, 1, 0x8, 1},
     {0, 0, ST_OAM_H_RECTANGLE, 1, 0xc, 1}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED7B4[] = {
-    {4, gSubspriteTable_83ED794}
+static const struct SubspriteTable sSubspriteTable_ReelTimeShadow[] = {
+    {4, sSubsprites_ReelTimeShadow}
 };
 
-static const struct Subsprite gSubspriteTable_83ED7BC[] = {
+static const struct Subsprite sSubsprites_ReelTimeNumberGap[] = {
     {-8, -12, ST_OAM_H_RECTANGLE, 0, 0x0, 1},
     {-8, -4, ST_OAM_H_RECTANGLE, 0, 0x0, 1},
     {-8, 4, ST_OAM_H_RECTANGLE, 0, 0x0, 1}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED7D4[] = {
-    {3, gSubspriteTable_83ED7BC}
+static const struct SubspriteTable sSubspriteTable_ReelTimeNumberGap[] = {
+    {3, sSubsprites_ReelTimeNumberGap}
 };
 
-static const struct Subsprite gSubspriteTable_83ED7DC[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_Reel[] = {
     {-32, -24, ST_OAM_H_RECTANGLE, 3, 0x0, 3},
     {-32, 8, ST_OAM_H_RECTANGLE, 1, 0x20, 3},
     {0, 8, ST_OAM_H_RECTANGLE, 1, 0x24, 3},
@@ -5145,44 +5147,44 @@ static const struct Subsprite gSubspriteTable_83ED7DC[] = {
     {0, 16, ST_OAM_H_RECTANGLE, 1, 0x2c, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED804[] = {
-    {5, gSubspriteTable_83ED7DC}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_Reel[] = {
+    {5, sSubsprites_DigitalDisplay_Reel}
 };
 
-static const struct Subsprite gSubspriteTable_83ED80C[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_Time[] = {
     {-32, -8, ST_OAM_H_RECTANGLE, 1, 0x0, 3},
     {0, -8, ST_OAM_H_RECTANGLE, 1, 0x4, 3},
     {-32, 0, ST_OAM_H_RECTANGLE, 1, 0x8, 3},
     {0, 0, ST_OAM_H_RECTANGLE, 1, 0xc, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED82C[] = {
-    {4, gSubspriteTable_83ED80C}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_Time[] = {
+    {4, sSubsprites_DigitalDisplay_Time}
 };
 
-static const struct Subsprite gSubspriteTable_83ED834[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_Insert[] = {
     {-32, -8, ST_OAM_H_RECTANGLE, 1, 0x0, 3},
     {0, -8, ST_OAM_H_RECTANGLE, 1, 0x4, 3},
     {-32, 0, ST_OAM_H_RECTANGLE, 1, 0x8, 3},
     {0, 0, ST_OAM_H_RECTANGLE, 1, 0xc, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED854[] = {
-    {4, gSubspriteTable_83ED834}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_Insert[] = {
+    {4, sSubsprites_DigitalDisplay_Insert}
 };
 
-static const struct Subsprite gSubspriteTable_83ED85C[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_Unused1[] = {
     {-32, -8, ST_OAM_H_RECTANGLE, 1, 0x0, 3},
     {0, -8, ST_OAM_H_RECTANGLE, 1, 0x4, 3},
     {-32, 0, ST_OAM_H_RECTANGLE, 1, 0x8, 3},
     {0, 0, ST_OAM_H_RECTANGLE, 1, 0xc, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED87C[] = {
-    {4, gSubspriteTable_83ED85C}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_Unused1[] = {
+    {4, sSubsprites_DigitalDisplay_Unused1}
 };
 
-static const struct Subsprite gSubspriteTable_83ED884[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_Win[] = {
     {-32, -12, ST_OAM_H_RECTANGLE, 1, 0x0, 3},
     {0, -12, ST_OAM_H_RECTANGLE, 1, 0x4, 3},
     {-32, -4, ST_OAM_H_RECTANGLE, 1, 0x8, 3},
@@ -5191,24 +5193,24 @@ static const struct Subsprite gSubspriteTable_83ED884[] = {
     {0, 4, ST_OAM_H_RECTANGLE, 1, 0x14, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED8B4[] = {
-    {6, gSubspriteTable_83ED884}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_Win[] = {
+    {6, sSubsprites_DigitalDisplay_Win}
 };
 
-static const struct Subsprite gSubspriteTable_83ED8BC[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_SmokeBig[] = {
     {-16, -16, ST_OAM_SQUARE, 2, 0x0, 3}
 };
 
-static const struct Subsprite gSubspriteTable_83ED8C4[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_SmokeSmall[] = {
     {-8, -8, ST_OAM_SQUARE, 1, 0x10, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED8CC[] = {
-    {1, gSubspriteTable_83ED8BC},
-    {1, gSubspriteTable_83ED8C4}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_Smoke[] = {
+    {1, sSubsprites_DigitalDisplay_SmokeBig},
+    {1, sSubsprites_DigitalDisplay_SmokeSmall}
 };
 
-static const struct Subsprite gSubspriteTable_83ED8DC[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_Pokeball[] = {
     {-24, -24, ST_OAM_H_RECTANGLE, 1, 0x0, 3},
     {8, -24, ST_OAM_H_RECTANGLE, 0, 0x4, 3},
     {-24, -16, ST_OAM_H_RECTANGLE, 1, 0x6, 3},
@@ -5223,102 +5225,102 @@ static const struct Subsprite gSubspriteTable_83ED8DC[] = {
     {8, 16, ST_OAM_H_RECTANGLE, 0, 0x22, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED93C[] = {
-    12, gSubspriteTable_83ED8DC
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_Pokeball[] = {
+    12, sSubsprites_DigitalDisplay_Pokeball
 };
 
-static const struct Subsprite gSubspriteTable_83ED944[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_DPad[] = {
     {-16, -12, ST_OAM_H_RECTANGLE, 2, 0x0, 3},
     {-16, 4, ST_OAM_H_RECTANGLE, 0, 0x8, 3},
     {0, 4, ST_OAM_H_RECTANGLE, 0, 0xa, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED95C[] = {
-    {3, gSubspriteTable_83ED944}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_DPad[] = {
+    {3, sSubsprites_DigitalDisplay_DPad}
 };
 
-static const struct Subsprite gSubspriteTable_83ED964[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_StopS[] = {
     {-8, -8, ST_OAM_H_RECTANGLE, 0, 0x0, 3},
     {-8, 0, ST_OAM_H_RECTANGLE, 0, 0x8, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED974[] = {
-    {2, gSubspriteTable_83ED964}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_StopS[] = {
+    {2, sSubsprites_DigitalDisplay_StopS}
 };
 
-static const struct Subsprite gSubspriteTable_83ED97C[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_StopT[] = {
     {-8, -8, ST_OAM_H_RECTANGLE, 0, 0x2, 3},
     {-8, 0, ST_OAM_H_RECTANGLE, 0, 0xa, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED98C[] = {
-    {2, gSubspriteTable_83ED97C}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_StopT[] = {
+    {2, sSubsprites_DigitalDisplay_StopT}
 };
 
-static const struct Subsprite gSubspriteTable_83ED994[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_StopO[] = {
     {-8, -8, ST_OAM_H_RECTANGLE, 0, 0x4, 3},
     {-8, 0, ST_OAM_H_RECTANGLE, 0, 0xc, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED9A4[] = {
-    {2, gSubspriteTable_83ED994}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_StopO[] = {
+    {2, sSubsprites_DigitalDisplay_StopO}
 };
 
-static const struct Subsprite gSubspriteTable_83ED9AC[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_StopP[] = {
     {-8, -8, ST_OAM_H_RECTANGLE, 0, 0x6, 3},
     {-8, 0, ST_OAM_H_RECTANGLE, 0, 0xe, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED9BC[] = {
-    {2, gSubspriteTable_83ED9AC}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_StopP[] = {
+    {2, sSubsprites_DigitalDisplay_StopP}
 };
 
-static const struct Subsprite gSubspriteTable_83ED9C4[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_BonusB[] = {
     {-8, -8, ST_OAM_H_RECTANGLE, 0, 0x0, 3},
     {-8, 0, ST_OAM_H_RECTANGLE, 0, 0x8, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED9D4[] = {
-    {2, gSubspriteTable_83ED9C4}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_BonusB[] = {
+    {2, sSubsprites_DigitalDisplay_BonusB}
 };
 
-static const struct Subsprite gSubspriteTable_83ED9DC[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_BonusO[] = {
     {-4, -8, ST_OAM_SQUARE, 0, 0x2, 3},
     {-4, 0, ST_OAM_SQUARE, 0, 0xa, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED9EC[] = {
-    {2, gSubspriteTable_83ED9DC}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_BonusO[] = {
+    {2, sSubsprites_DigitalDisplay_BonusO}
 };
 
-static const struct Subsprite gSubspriteTable_83ED9F4[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_BonusN[] = {
     {-8, -8, ST_OAM_H_RECTANGLE, 0, 0x3, 3},
     {-8, 0, ST_OAM_H_RECTANGLE, 0, 0xb, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83EDA04[] = {
-    {2, gSubspriteTable_83ED9F4}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_BonusN[] = {
+    {2, sSubsprites_DigitalDisplay_BonusN}
 };
 
-static const struct Subsprite gSubspriteTable_83EDA0C[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_BonusU[] = {
     {-4, -8, ST_OAM_SQUARE, 0, 0x5, 3},
     {-4, 0, ST_OAM_SQUARE, 0, 0xd, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83EDA1C[] = {
-    {2, gSubspriteTable_83EDA0C}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_BonusU[] = {
+    {2, sSubsprites_DigitalDisplay_BonusU}
 };
 
-static const struct Subsprite gSubspriteTable_83EDA24[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_BonusS[] = {
     {-8, -8, ST_OAM_H_RECTANGLE, 0, 0x6, 3},
     {-8, 0, ST_OAM_H_RECTANGLE, 0, 0xe, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83EDA34[] = {
-    {2, gSubspriteTable_83EDA24}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_BonusS[] = {
+    {2, sSubsprites_DigitalDisplay_BonusS}
 };
 
-static const struct Subsprite gSubspriteTable_83EDA3C[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_BigB[] = {
     {-12, -12, ST_OAM_H_RECTANGLE, 0, 0x0, 3},
     {4, -12, ST_OAM_SQUARE, 0, 0x2, 3},
     {-12, -4, ST_OAM_H_RECTANGLE, 0, 0x8, 3},
@@ -5327,21 +5329,21 @@ static const struct Subsprite gSubspriteTable_83EDA3C[] = {
     {4, 4, ST_OAM_SQUARE, 0, 0x12, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83EDA6C[] = {
-    {6, gSubspriteTable_83EDA3C}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_BigB[] = {
+    {6, sSubsprites_DigitalDisplay_BigB}
 };
 
-static const struct Subsprite gSubspriteTable_83EDA74[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_BigI[] = {
     {-8, -12, ST_OAM_H_RECTANGLE, 0, 0x3, 3},
     {-8, -4, ST_OAM_H_RECTANGLE, 0, 0xb, 3},
     {-8, 4, ST_OAM_H_RECTANGLE, 0, 0x13, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83EDA8C[] = {
-    {3, gSubspriteTable_83EDA74}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_BigI[] = {
+    {3, sSubsprites_DigitalDisplay_BigI}
 };
 
-static const struct Subsprite gSubspriteTable_83EDA94[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_BigG[] = {
     {-12, -12, ST_OAM_H_RECTANGLE, 0, 0x5, 3},
     {4, -12, ST_OAM_SQUARE, 0, 0x7, 3},
     {-12, -4, ST_OAM_H_RECTANGLE, 0, 0xd, 3},
@@ -5350,11 +5352,11 @@ static const struct Subsprite gSubspriteTable_83EDA94[] = {
     {4, 4, ST_OAM_SQUARE, 0, 0x17, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83EDAC4[] = {
-    {6, gSubspriteTable_83EDA94}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_BigG[] = {
+    {6, sSubsprites_DigitalDisplay_BigG}
 };
 
-static const struct Subsprite gSubspriteTable_83EDACC[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_RegR[] = {
     {-12, -12, ST_OAM_H_RECTANGLE, 0, 0x0, 3},
     {4, -12, ST_OAM_SQUARE, 0, 0x2, 3},
     {-12, -4, ST_OAM_H_RECTANGLE, 0, 0x8, 3},
@@ -5363,21 +5365,21 @@ static const struct Subsprite gSubspriteTable_83EDACC[] = {
     {4, 4, ST_OAM_SQUARE, 0, 0x12, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83EDAFC[] = {
-    {6, gSubspriteTable_83EDACC}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_RegR[] = {
+    {6, sSubsprites_DigitalDisplay_RegR}
 };
 
-static const struct Subsprite gSubspriteTable_83EDB04[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_RegE[] = {
     {-8, -12, ST_OAM_H_RECTANGLE, 0, 0x3, 3},
     {-8, -4, ST_OAM_H_RECTANGLE, 0, 0xb, 3},
     {-8, 4, ST_OAM_H_RECTANGLE, 0, 0x13, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83EDB1C[] = {
-    {3, gSubspriteTable_83EDB04}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_RegE[] = {
+    {3, sSubsprites_DigitalDisplay_RegE}
 };
 
-static const struct Subsprite gSubspriteTable_83EDB24[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_RegG[] = {
     {-12, -12, ST_OAM_H_RECTANGLE, 0, 0x5, 3},
     {4, -12, ST_OAM_SQUARE, 0, 0x7, 3},
     {-12, -4, ST_OAM_H_RECTANGLE, 0, 0xd, 3},
@@ -5386,65 +5388,65 @@ static const struct Subsprite gSubspriteTable_83EDB24[] = {
     {4, 4, ST_OAM_SQUARE, 0, 0x17, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83EDB54[] = {
-    {6, gSubspriteTable_83EDB24}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_RegG[] = {
+    {6, sSubsprites_DigitalDisplay_RegG}
 };
 
-static const struct SpriteTemplate *const gUnknown_083EDB5C[] = {
-    &gSpriteTemplate_83ED57C,
-    &gSpriteTemplate_83ED594,
-    &gSpriteTemplate_83ED5AC,
-    &gSpriteTemplate_83ED5DC,
-    &gSpriteTemplate_83ED5F4,
-    &gSpriteTemplate_83ED654,
-    &gSpriteTemplate_83ED66C,
-    &gSpriteTemplate_83ED684,
-    &gSpriteTemplate_83ED69C,
-    &gSpriteTemplate_83ED6B4,
-    &gSpriteTemplate_83ED5C4,
-    &gSpriteTemplate_83ED5C4,
-    &gSpriteTemplate_83ED5C4,
-    &gSpriteTemplate_83ED5C4,
-    &gSpriteTemplate_83ED60C,
-    &gSpriteTemplate_83ED60C,
-    &gSpriteTemplate_83ED60C,
-    &gSpriteTemplate_83ED60C,
-    &gSpriteTemplate_83ED60C,
-    &gSpriteTemplate_83ED624,
-    &gSpriteTemplate_83ED624,
-    &gSpriteTemplate_83ED624,
-    &gSpriteTemplate_83ED63C,
-    &gSpriteTemplate_83ED63C,
-    &gSpriteTemplate_83ED63C,
+static const struct SpriteTemplate *const sSpriteTemplates_DigitalDisplay[] = {
+    &sSpriteTemplate_DigitalDisplay_Reel,
+    &sSpriteTemplate_DigitalDisplay_Time,
+    &sSpriteTemplate_DigitalDisplay_Insert,
+    &sSpriteTemplate_DigitalDisplay_Win,
+    &sSpriteTemplate_DigitalDisplay_Lose,
+    &sSpriteTemplate_DigitalDisplay_AButton,
+    &sSpriteTemplate_DigitalDisplay_Smoke,
+    &sSpriteTemplate_DigitalDisplay_Number,
+    &sSpriteTemplate_DigitalDisplay_Pokeball,
+    &sSpriteTemplate_DigitalDisplay_DPad,
+    &sSpriteTemplate_DigitalDisplay_Stop,
+    &sSpriteTemplate_DigitalDisplay_Stop,
+    &sSpriteTemplate_DigitalDisplay_Stop,
+    &sSpriteTemplate_DigitalDisplay_Stop,
+    &sSpriteTemplate_DigitalDisplay_Bonus,
+    &sSpriteTemplate_DigitalDisplay_Bonus,
+    &sSpriteTemplate_DigitalDisplay_Bonus,
+    &sSpriteTemplate_DigitalDisplay_Bonus,
+    &sSpriteTemplate_DigitalDisplay_Bonus,
+    &sSpriteTemplate_DigitalDisplay_Big,
+    &sSpriteTemplate_DigitalDisplay_Big,
+    &sSpriteTemplate_DigitalDisplay_Big,
+    &sSpriteTemplate_DigitalDisplay_Reg,
+    &sSpriteTemplate_DigitalDisplay_Reg,
+    &sSpriteTemplate_DigitalDisplay_Reg,
     &gDummySpriteTemplate
 };
 
-static const struct SubspriteTable *const gUnknown_083EDBC4[] = {
-    gSubspriteTables_83ED804,
-    gSubspriteTables_83ED82C,
-    gSubspriteTables_83ED854,
-    gSubspriteTables_83ED8B4,
+static const struct SubspriteTable *const sSubspriteTables_DigitalDisplay[] = {
+    sSubspriteTable_DigitalDisplay_Reel,
+    sSubspriteTable_DigitalDisplay_Time,
+    sSubspriteTable_DigitalDisplay_Insert,
+    sSubspriteTable_DigitalDisplay_Win,
     NULL,
     NULL,
-    gSubspriteTables_83ED8CC,
+    sSubspriteTable_DigitalDisplay_Smoke,
     NULL,
-    gSubspriteTables_83ED93C,
-    gSubspriteTables_83ED95C,
-    gSubspriteTables_83ED974,
-    gSubspriteTables_83ED98C,
-    gSubspriteTables_83ED9A4,
-    gSubspriteTables_83ED9BC,
-    gSubspriteTables_83ED9D4,
-    gSubspriteTables_83ED9EC,
-    gSubspriteTables_83EDA04,
-    gSubspriteTables_83EDA1C,
-    gSubspriteTables_83EDA34,
-    gSubspriteTables_83EDA6C,
-    gSubspriteTables_83EDA8C,
-    gSubspriteTables_83EDAC4,
-    gSubspriteTables_83EDAFC,
-    gSubspriteTables_83EDB1C,
-    gSubspriteTables_83EDB54,
+    sSubspriteTable_DigitalDisplay_Pokeball,
+    sSubspriteTable_DigitalDisplay_DPad,
+    sSubspriteTable_DigitalDisplay_StopS,
+    sSubspriteTable_DigitalDisplay_StopT,
+    sSubspriteTable_DigitalDisplay_StopO,
+    sSubspriteTable_DigitalDisplay_StopP,
+    sSubspriteTable_DigitalDisplay_BonusB,
+    sSubspriteTable_DigitalDisplay_BonusO,
+    sSubspriteTable_DigitalDisplay_BonusN,
+    sSubspriteTable_DigitalDisplay_BonusU,
+    sSubspriteTable_DigitalDisplay_BonusS,
+    sSubspriteTable_DigitalDisplay_BigB,
+    sSubspriteTable_DigitalDisplay_BigI,
+    sSubspriteTable_DigitalDisplay_BigG,
+    sSubspriteTable_DigitalDisplay_RegR,
+    sSubspriteTable_DigitalDisplay_RegE,
+    sSubspriteTable_DigitalDisplay_RegG,
     NULL
 };
 
@@ -5473,11 +5475,11 @@ static const struct SpriteSheet sSlotMachineSpriteSheets[] = {
     {}
 };
 
-static const struct SpriteSheet gUnknown_083EDCDC = {
+static const struct SpriteSheet sReelBackgroundSpriteSheet = {
     eSlotMachineGfxBuffer + 0x0000, 0x800, 17
 };
 
-static const u8 *const gUnknown_083EDCE4 = gUnknownPalette_08E997E8;
+static const u8 *const sReelBackground_Tilemap = gSlotMachineReelBackground_Tilemap;
 
 #ifdef SAPPHIRE
 static const u16 UnknownPalette_83EDCE8[] = INCBIN_U16("graphics/unknown/sapphire_83EDD40.gbapal");
@@ -5485,7 +5487,7 @@ static const u16 UnknownPalette_83EDCE8[] = INCBIN_U16("graphics/unknown/sapphir
 static const u16 UnknownPalette_83EDCE8[] = INCBIN_U16("graphics/unknown/ruby_83EDCE8.gbapal");
 #endif // RS
 
-static const u16 *const gUnknown_083EDD08[] = {
+static const u16 *const sLitMatchLinePalTable[] = {
     UnknownPalette_83EDCE8 + 10,
     UnknownPalette_83EDCE8 + 11,
     UnknownPalette_83EDCE8 + 12,
@@ -5493,73 +5495,73 @@ static const u16 *const gUnknown_083EDD08[] = {
     UnknownPalette_83EDCE8 + 14
 };
 
-static const u16 *const gUnknown_083EDD1C[] = {
-    gUnknown_08E95A18 + 74,
-    gUnknown_08E95A18 + 75,
-    gUnknown_08E95A18 + 76,
-    gUnknown_08E95A18 + 77,
-    gUnknown_08E95A18 + 78
+static const u16 *const sDarkMatchLinePalTable[] = {
+    gSlotMachineMenu_Pal + 74,
+    gSlotMachineMenu_Pal + 75,
+    gSlotMachineMenu_Pal + 76,
+    gSlotMachineMenu_Pal + 77,
+    gSlotMachineMenu_Pal + 78
 };
 
-static const u8 gUnknown_083EDD30[] = {
+static const u8 sMatchLinePalOffsets[] = {
     0x4a, 0x4b, 0x4c, 0x4e, 0x4d
 };
 
-static const u8 gUnknown_083EDD35[][2] = {
+static const u8 sBetToMatchLineIds[][2] = {
     {0, 0},
     {1, 2},
     {3, 4}
 };
-static const u8 gUnknown_083EDD3B[] = {1, 2, 2};
+static const u8 sMatchLinesPerBet[] = {1, 2, 2};
 
 #ifdef SAPPHIRE
-static const u16 Unknown_83EDD3E[] = INCBIN_U16("graphics/unknown/sapphire_83EDD96.gbapal");
-static const u16 Unknown_83EDD5E[] = INCBIN_U16("graphics/unknown/sapphire_83EDDB6.gbapal");
-static const u16 Unknown_83EDD7E[] = INCBIN_U16("graphics/unknown/sapphire_83EDDD6.gbapal");
+static const u16 sFlashingLightsInside_Pal[] = INCBIN_U16("graphics/slot_machine/flashing_lights_inside_sapphire.gbapal");
+static const u16 sFlashingLightsMiddle_Pal[] = INCBIN_U16("graphics/slot_machine/flashing_lights_middle_sapphire.gbapal");
+static const u16 sFlashingLightsOutside_Pal[] = INCBIN_U16("graphics/slot_machine/flashing_lights_outside_sapphire.gbapal");
 #elif defined (RUBY)
-static const u16 Unknown_83EDD3E[] = INCBIN_U16("graphics/unknown/ruby_83EDD3E.gbapal");
-static const u16 Unknown_83EDD5E[] = INCBIN_U16("graphics/unknown/ruby_83EDD5E.gbapal");
-static const u16 Unknown_83EDD7E[] = INCBIN_U16("graphics/unknown/ruby_83EDD7E.gbapal");
+static const u16 sFlashingLightsInside_Pal[] = INCBIN_U16("graphics/slot_machine/flashing_lights_inside_ruby.gbapal");
+static const u16 sFlashingLightsMiddle_Pal[] = INCBIN_U16("graphics/slot_machine/flashing_lights_middle_ruby.gbapal");
+static const u16 sFlashingLightsOutside_Pal[] = INCBIN_U16("graphics/slot_machine/flashing_lights_outside_ruby.gbapal");
 #endif // RS
 
-static const u16 *const gUnknown_083EDDA0[] = {
-    Unknown_83EDD3E,
-    Unknown_83EDD5E,
-    Unknown_83EDD7E
+static const u16 *const sFlashingLightsPalTable[] = {
+    sFlashingLightsInside_Pal,
+    sFlashingLightsMiddle_Pal,
+    sFlashingLightsOutside_Pal
 };
 
-static const u16 *const gUnknown_083EDDAC = gUnknown_08E95A18 + 16;
+static const u16 *const sSlotMachineMenu_Pal = gSlotMachineMenu_Pal + 16;
 
-static const u16 Palette_83EDDB0[] = INCBIN_U16("graphics/slot_machine/83EDDB0.gbapal");
-static const u16 Palette_83EDDD0[] = INCBIN_U16("graphics/slot_machine/83EDDD0.gbapal");
-static const u16 Palette_83EDDF0[] = INCBIN_U16("graphics/slot_machine/83EDDF0.gbapal");
+static const u16 sPokeballShining0_Pal[] = INCBIN_U16("graphics/slot_machine/pokeball_shining_0.gbapal");
+static const u16 sPokeballShining1_Pal[] = INCBIN_U16("graphics/slot_machine/pokeball_shining_1.gbapal");
+static const u16 sPokeballShining2_Pal[] = INCBIN_U16("graphics/slot_machine/pokeball_shining_2.gbapal");
 
-static const u16 *const gUnknown_083EDE10[] = {
-    Palette_83EDDB0,
-    Palette_83EDDD0,
-    Palette_83EDDF0,
-    gSlotMachineSpritePalette6
+static const u16 *const sPokeballShiningPalTable[] = {
+    sPokeballShining0_Pal,
+    sPokeballShining1_Pal,
+    sPokeballShining2_Pal,
+    gSlotMachineDigitalDisplay_Pal
 };
 
-static const u16 *const gUnknown_083EDE20 = gSlotMachineSpritePalette6;
+static const u16 *const sDigitalDisplay_Pal = gSlotMachineDigitalDisplay_Pal;
 
 static const u16 gPalette_83EDE24[] = INCBIN_U16("graphics/slot_machine/83EDE24_pal.bin");
 
-static const struct SpritePalette gSlotMachineSpritePalettes[] = {
-    {gSlotMachineSpritePalette0, 0},
-    {gSlotMachineSpritePalette1, 1},
-    {gSlotMachineSpritePalette2, 2},
-    {gSlotMachineSpritePalette3, 3},
-    {gSlotMachineSpritePalette4, 4},
-    {gSlotMachineSpritePalette5, 5},
-    {gSlotMachineSpritePalette6, 6},
-    {gSlotMachineSpritePalette4, 7},
+static const struct SpritePalette sSlotMachineSpritePalettes[] = {
+    {gSlotMachineReelSymbols_Pal, 0},
+    {gSlotMachineReelTimePikachu_Pal, 1},
+    {gSlotMachineReelTimeMisc_Pal, 2},
+    {gSlotMachineReelTimeMachine_Pal, 3},
+    {gSlotMachineMisc_Pal, 4},
+    {gSlotMachineReelTimeExplosion_Pal, 5},
+    {gSlotMachineDigitalDisplay_Pal, 6},
+    {gSlotMachineMisc_Pal, 7},
     {}
 };
 
-static const u8 sReelTimeGfx[] = INCBIN_U8("graphics/slot_machine/reel_time.4bpp.lz");
+static const u8 sReelTimeGfx[] = INCBIN_U8("graphics/slot_machine/reel_time_gfx.4bpp.lz");
 
-static const u16 sReelTimeWindowTilemap[] = INCBIN_U16("graphics/slot_machine/reel_time_window_map.bin");
+static const u16 sReelTimeWindow_Tilemap[] = INCBIN_U16("graphics/slot_machine/reel_time_window.bin");
 
 #if DEBUG
 
@@ -5614,7 +5616,7 @@ static void debug_sub_811B2E8(void)
 {
     u8 text[2];
 
-    ConvertIntToDecimalStringN(text, sSlotMachine->unk01 + 1, 2, 1);
+    ConvertIntToDecimalStringN(text, sSlotMachine->machineId + 1, 2, 1);
     Menu_PrintText(text, 6, 1);
 }
 
@@ -5666,7 +5668,7 @@ void debug_sub_811B310(void)
     Menu_PrintText(Str_841B23B, 15, 13);
     Menu_PrintText(Str_841B23F, 15, 15);
     Menu_PrintText(Str_841B243, 15, 17);
-    if (sSlotMachine->unk03 == 0)
+    if (sSlotMachine->luckyGame == 0)
         Menu_PrintText(Str_841B246, 10, 9);
     else
         Menu_PrintText(Str_841B249, 10, 9);
@@ -5677,7 +5679,7 @@ void debug_sub_811B310(void)
 
     PRINT_NUMBER(sSlotMachine->unk68, 10, 3);
     PRINT_NUMBER(sSlotMachine->unk6C, 10, 5);
-    PRINT_NUMBER(sSlotMachine->unk10, 10, 7);
+    PRINT_NUMBER(sSlotMachine->netCoinLoss, 10, 7);
 
 #if DEBUG_FIX
 #define OFFSET 24 // wider window
@@ -5805,17 +5807,17 @@ static void debug_sub_811B654(u8 taskId)
         }
         if (JOY_NEW(DPAD_LEFT))
         {
-            sSlotMachine->unk01--;
-            if ((s8)sSlotMachine->unk01 < 0)  // Why? It's unsigned
-                sSlotMachine->unk01 = 5;
+            sSlotMachine->machineId--;
+            if ((s8)sSlotMachine->machineId < 0)  // Why? It's unsigned
+                sSlotMachine->machineId = 5;
             debug_sub_811B2E8();
             break;
         }
         if (JOY_NEW(DPAD_RIGHT))
         {
-            sSlotMachine->unk01++;
-            if (sSlotMachine->unk01 > 5)
-                sSlotMachine->unk01 = 0;
+            sSlotMachine->machineId++;
+            if (sSlotMachine->machineId > 5)
+                sSlotMachine->machineId = 0;
             debug_sub_811B2E8();
             break;
         }
@@ -5903,7 +5905,7 @@ static const u8 Str_841B2E4[] = DTR("·ボーナスこやくの　エラーが�
 
 static void debug_sub_811B894(void)
 {
-    if (sSlotMachine->matchedSymbols & 0x180)
+    if (sSlotMachine->matches & 0x180)
     {
         sSlotMachine->unk90++;
         if (sSlotMachine->unk90 > 9999)
@@ -5913,33 +5915,33 @@ static void debug_sub_811B894(void)
             Menu_PrintText(Str_841B2B0, 4, 15);
             unk_debug_bss_1_4 = 0;
         }
-        if (!(sSlotMachine->unk04 & 0x80))
+        if (!(sSlotMachine->machineBias & 0x80))
         {
             Menu_PrintText(Str_841B2D3, 4, 17);
             unk_debug_bss_1_4 = 0;
         }
     }
-    else if (sSlotMachine->matchedSymbols != 0)
+    else if (sSlotMachine->matches != 0)
     {
-        if ((sSlotMachine->unk04 & 0x80) && !(sSlotMachine->matchedSymbols & 3))
+        if ((sSlotMachine->machineBias & 0x80) && !(sSlotMachine->matches & 3))
         {
             Menu_PrintText(Str_841B2E4, 4, 2);
             unk_debug_bss_1_4 = 0;
         }
     }
-    if (sSlotMachine->matchedSymbols == 0 && sSlotMachine->bet == 3 && !(sSlotMachine->unk04 & 0x80))
+    if (sSlotMachine->matches == 0 && sSlotMachine->bet == 3 && !(sSlotMachine->machineBias & 0x80))
     {
-        u8 sym_0_1 = GetTagOfReelSymbolOnScreenAtPos(0, 1);
-        u8 sym_0_2 = GetTagOfReelSymbolOnScreenAtPos(0, 2);
-        u8 sym_0_3 = GetTagOfReelSymbolOnScreenAtPos(0, 3);
+        u8 sym_0_1 = GetSymbolAtRest(0, 1);
+        u8 sym_0_2 = GetSymbolAtRest(0, 2);
+        u8 sym_0_3 = GetSymbolAtRest(0, 3);
 
-        u8 sym_1_1 = GetTagOfReelSymbolOnScreenAtPos(1, 1);
-        u8 sym_1_2 = GetTagOfReelSymbolOnScreenAtPos(1, 2);
-        u8 sym_1_3 = GetTagOfReelSymbolOnScreenAtPos(1, 3);
+        u8 sym_1_1 = GetSymbolAtRest(1, 1);
+        u8 sym_1_2 = GetSymbolAtRest(1, 2);
+        u8 sym_1_3 = GetSymbolAtRest(1, 3);
 
-        u8 sym_2_1 = GetTagOfReelSymbolOnScreenAtPos(2, 1);
-        u8 sym_2_2 = GetTagOfReelSymbolOnScreenAtPos(2, 2);
-        u8 sym_2_3 = GetTagOfReelSymbolOnScreenAtPos(2, 3);
+        u8 sym_2_1 = GetSymbolAtRest(2, 1);
+        u8 sym_2_2 = GetSymbolAtRest(2, 2);
+        u8 sym_2_3 = GetSymbolAtRest(2, 3);
 
         if ((sym_0_1 == 0 && sym_1_1 == 1 && sym_2_1 == 0)
          || (sym_0_2 == 0 && sym_1_2 == 1 && sym_2_2 == 0)

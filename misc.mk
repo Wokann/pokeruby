@@ -150,8 +150,8 @@ $(TRADEGFXDIR)/menu.4bpp: GFX_OPTS := -num_tiles 148
 REELGFXDIR := graphics/slot_machine
 ROULGFXDIR := graphics/roulette
 
-$(REELGFXDIR)/reel_time.4bpp: $(REELGFXDIR)/reel_pikachu.4bpp $(REELGFXDIR)/reel_machine.4bpp
-	@cat $(REELGFXDIR)/reel_pikachu.4bpp $(REELGFXDIR)/reel_machine.4bpp >$@
+$(REELGFXDIR)/reel_time_gfx.4bpp: $(REELGFXDIR)/reel_time_pikachu.4bpp $(REELGFXDIR)/reel_time_machine.4bpp
+	@cat $(REELGFXDIR)/reel_time_pikachu.4bpp $(REELGFXDIR)/reel_time_machine.4bpp >$@
 
 $(ROULGFXDIR)/roulette_tilt.4bpp: $(ROULGFXDIR)/shroomish.4bpp $(ROULGFXDIR)/tailow.4bpp
 	@cat $(ROULGFXDIR)/shroomish.4bpp $(ROULGFXDIR)/tailow.4bpp >$@
