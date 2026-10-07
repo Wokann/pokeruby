@@ -45,7 +45,7 @@ const u8 gBatteryDryMessage[] = _("The internal battery has run dry.\nThe game c
 // main menu text 2
 const u8 gMainMenuString_Player[] = _("PLAYER");
 const u8 gMainMenuString_Pokedex[] = _("POKéDEX");
-const u8 gMainMenuString_Time[] = _("TIME");
+const u8 gText_Time[] = _("TIME");
 const u8 gMainMenuString_Badges[] = _("BADGES");
 
 // birch text
@@ -135,16 +135,16 @@ const u8 gText_SelectorArrow[] = _("▶"); // right pointing triangle
 const u8 DexText_Terminator6[] = _(" ");
 
 const u8 gMenuText_WelcomeToHOFAndDexRating[] = _("Welcome to the HALL OF FAME!$Spotted POKéMON: {STR_VAR_1}!\nOwned POKéMON: {STR_VAR_2}!\pPROF. BIRCH's POKéDEX rating!\pPROF. BIRCH: Let's see...\p");
-const u8 gMenuText_HOFSaving[] = _("SAVING...\nDON'T TURN OFF THE POWER.");
-const u8 gMenuText_HOFCorrupt[] = _("The HALL OF FAME data is corrupt.");
-const u8 gMenuText_HOFNumber[] = _("HALL OF FAME No. ");
-const u8 gMenuText_HOFCongratulations[] = _("LEAGUE CHAMPION!\nCONGRATULATIONS!");
+const u8 gText_HOFDexSaving[] = _("SAVING...\nDON'T TURN OFF THE POWER.");
+const u8 gText_HOFCorrupted[] = _("The HALL OF FAME data is corrupt.");
+const u8 gText_HOFNumber[] = _("HALL OF FAME No. ");
+const u8 gText_LeagueChamp[] = _("LEAGUE CHAMPION!\nCONGRATULATIONS!");
 
-const u8 gOtherText_Number2[] = _("No. ");
-const u8 gOtherText_Level3[] = _("Lv. ");
-const u8 gOtherText_IDNumber[] = _("IDNo. /");
-const u8 gOtherText_Name[] = _("NAME /");
-const u8 gOtherText_IDNumber2[] = _("IDNo. /");
+const u8 gText_Number[] = _("No. ");
+const u8 gText_Level[] = _("Lv. ");
+const u8 gText_IdNumberSlash[] = _("IDNo. /");
+const u8 gText_Name[] = _("NAME /");
+const u8 gText_IDNumber[] = _("IDNo. /");
 const u8 gText_BirchInTrouble[] = _("{HIGHLIGHT WHITE2}{COLOR DARK_GREY}PROF. BIRCH is in trouble!\nRelease a POKéMON and rescue him!");
 const u8 gText_ConfirmStarterChoice[] = _("{HIGHLIGHT WHITE2}{COLOR DARK_GREY}Do you choose this POKéMON?");
 const u8 gText_Pokemon4[] = _("POKéMON");
@@ -973,7 +973,7 @@ const u8 gBatteryDryMessage[] = _("Interne Batterie ist verbraucht.\nSpiel kann 
 // main menu text 2
 const u8 gMainMenuString_Player[] = _("SPIELER");
 const u8 gMainMenuString_Pokedex[] = _("POKéDEX");
-const u8 gMainMenuString_Time[] = _("SPIELZEIT");
+const u8 gText_Time[] = _("SPIELZEIT");
 const u8 gMainMenuString_Badges[] = _("ORDEN");
 
 // birch text
@@ -1063,16 +1063,16 @@ const u8 gText_SelectorArrow[] = _("▶");
 const u8 DexText_Terminator6[] = _(" ");
 
 const u8 gMenuText_WelcomeToHOFAndDexRating[] = _("Willkommen in der RUHMESHALLE!$Gesehene POKéMON: {STR_VAR_1}!\nGefangene POKéMON: {STR_VAR_2}!\pPROF. BIRKs POKéDEX-Bewertung!\pPROF. BIRK: Sehen wir mal...\p");
-const u8 gMenuText_HOFSaving[] = _("SPEICHERVORGANG...\nDAS GERÄT NICHT AUSSCHALTEN!");
-const u8 gMenuText_HOFCorrupt[] = _("Die RH-Daten sind beschädigt.");
-const u8 gMenuText_HOFNumber[] = _("RUHMESHALLE, Nr. ");
-const u8 gMenuText_HOFCongratulations[] = _("CHAMP der POKéMON LIGA!\nHerzlichen Glückwunsch!");
+const u8 gText_HOFDexSaving[] = _("SPEICHERVORGANG...\nDAS GERÄT NICHT AUSSCHALTEN!");
+const u8 gText_HOFCorrupted[] = _("Die RH-Daten sind beschädigt.");
+const u8 gText_HOFNumber[] = _("RUHMESHALLE, Nr. ");
+const u8 gText_LeagueChamp[] = _("CHAMP der POKéMON LIGA!\nHerzlichen Glückwunsch!");
 
-const u8 gOtherText_Number2[] = _("Nr.");
-const u8 gOtherText_Level3[] = _("Lv.");
-const u8 gOtherText_IDNumber[] = _("ID.Nr. /");
-const u8 gOtherText_Name[] = _("NAME /");
-const u8 gOtherText_IDNumber2[] = _("ID.Nr. /");
+const u8 gText_Number[] = _("Nr.");
+const u8 gText_Level[] = _("Lv.");
+const u8 gText_IdNumberSlash[] = _("ID.Nr. /");
+const u8 gText_Name[] = _("NAME /");
+const u8 gText_IDNumber[] = _("ID.Nr. /");
 const u8 gText_BirchInTrouble[] = _("{HIGHLIGHT WHITE2}{COLOR DARK_GREY}PROF. BIRK ist in Schwierigkeiten!\nSchnapp' dir ein POKéMON und hilf ihm!");
 const u8 gText_ConfirmStarterChoice[] = _("{HIGHLIGHT WHITE2}{COLOR DARK_GREY}Wählst du dieses POKéMON?");
 const u8 gText_Pokemon4[] = _("POKéMON");

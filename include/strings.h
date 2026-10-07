@@ -51,7 +51,7 @@ extern const u8 gBatteryDryMessage[];
 // main menu text 2
 extern const u8 gMainMenuString_Player[];
 extern const u8 gMainMenuString_Pokedex[];
-extern const u8 gMainMenuString_Time[];
+extern const u8 gText_Time[];
 extern const u8 gMainMenuString_Badges[];
 
 // birch text
@@ -156,16 +156,16 @@ extern const u8 gText_SelectorArrow[];
 extern const u8 DexText_Terminator6[];
 
 extern const u8 gMenuText_WelcomeToHOFAndDexRating[];
-extern const u8 gMenuText_HOFSaving[];
-extern const u8 gMenuText_HOFCorrupt[];
-extern const u8 gMenuText_HOFNumber[];
-extern const u8 gMenuText_HOFCongratulations[];
+extern const u8 gText_HOFDexSaving[];
+extern const u8 gText_HOFCorrupted[];
+extern const u8 gText_HOFNumber[];
+extern const u8 gText_LeagueChamp[];
 
-extern const u8 gOtherText_Number2[];
-extern const u8 gOtherText_Level3[];
-extern const u8 gOtherText_IDNumber[];
-extern const u8 gOtherText_Name[];
-extern const u8 gOtherText_IDNumber2[];
+extern const u8 gText_Number[];
+extern const u8 gText_Level[];
+extern const u8 gText_IdNumberSlash[];
+extern const u8 gText_Name[];
+extern const u8 gText_IDNumber[];
 extern const u8 gText_BirchInTrouble[];
 extern const u8 gText_ConfirmStarterChoice[];
 extern const u8 gText_Pokemon4[];

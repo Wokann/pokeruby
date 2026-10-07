@@ -693,12 +693,12 @@ void PrintPlayTime(void)
     u8 alignedPlayTime[32];
 
 #if defined(ENGLISH)
-    Menu_PrintText(gMainMenuString_Time, 16, 3);
+    Menu_PrintText(gText_Time, 16, 3);
     FormatPlayTime(playTime, gSaveBlock2.playTimeHours, gSaveBlock2.playTimeMinutes, 1);
     AlignStringInMenuWindow(alignedPlayTime, playTime, 48, 1);
     Menu_PrintText(alignedPlayTime, 22, 3);
 #elif defined(GERMAN)
-    Menu_PrintTextPixelCoords(gMainMenuString_Time, 124, 24, TRUE);
+    Menu_PrintTextPixelCoords(gText_Time, 124, 24, TRUE);
     FormatPlayTime(playTime, gSaveBlock2.playTimeHours, gSaveBlock2.playTimeMinutes, 1);
     AlignStringInMenuWindow(alignedPlayTime, playTime, 40, 1);
     Menu_PrintText(alignedPlayTime, 23, 3);
