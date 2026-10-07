@@ -98,12 +98,12 @@ void SetMysteryEventScriptStatus(u32 status)
     sMysteryEventScriptContext.mStatus = status;
 }
 
-static int CalcChecksum(u8 *data, int size)
+static int CalcByteArraySum(u8 *data, int length)
 {
     unsigned int i;
     int sum = 0;
 
-    for (i = 0; i < size; i++)
+    for (i = 0; i < length; i++)
         sum += data[i];
 
     return sum;
@@ -129,7 +129,7 @@ bool8 debug_sub_81261B4(u8 *a1, const u8 * _a2)
     {
         int v4 = GetWord(a1 + 0x16) - a2 + (int)a1;
         int v5 = GetWord(a1 + 0x1A);
-        int v6 = CalcChecksum((u8*)v4, v5 - a2 + (int)a1 - v4);
+        int v6 = CalcByteArraySum((u8*)v4, v5 - a2 + (int)a1 - v4);
         SetWord(a1 + 0x12, v6);
         return TRUE;
     }
@@ -432,7 +432,7 @@ bool8 MEScrCmd_checksum(struct ScriptContext *ctx)
     int checksum = ScriptReadWord(ctx);
     u8 *data = (u8 *)(ScriptReadWord(ctx) - ctx->mOffset + ctx->mScriptBase);
     u8 *dataEnd = (u8 *)(ScriptReadWord(ctx) - ctx->mOffset + ctx->mScriptBase);
-    if (checksum != CalcChecksum(data, dataEnd - data))
+    if (checksum != CalcByteArraySum(data, dataEnd - data))
     {
         ctx->mValid = FALSE;
         ctx->mStatus = MEVENT_STATUS_LOAD_ERROR;
