@@ -7,14 +7,14 @@
 
 extern u16 gBattlerPartyIndexes[];
 
-static void sub_812AF98(u8 taskId);
-static void sub_812B004(u8 taskId);
-static void sub_812B108(u8 taskId);
-static void sub_812B404(u8 taskId);
+static void SoundTask_FireBlast_Step1(u8 taskId);
+static void SoundTask_FireBlast_Step2(u8 taskId);
+static void SoundTask_LoopSEAdjustPanning_Step(u8 taskId);
+static void SoundTask_AdjustPanningVar_Step(u8 taskId);
 
 // used in 1 move:
 //         Move_FIRE_BLAST
-void sub_812AF30(u8 taskId)
+void SoundTask_FireBlast(u8 taskId)
 {
     s8 sourcePan, targetPan, panIncrement;
     
@@ -30,19 +30,19 @@ void sub_812AF30(u8 taskId)
     TASK.data[4] = panIncrement;
     TASK.data[10] = 10;
 
-    TASK.func = sub_812AF98;
+    TASK.func = SoundTask_FireBlast_Step1;
 }
 
-static void sub_812AF98(u8 taskId)
+static void SoundTask_FireBlast_Step1(u8 taskId)
 {
     s16 pan = TASK.data[2];
-    s8 dPan = TASK.data[4];
+    s8 panIncrement = TASK.data[4];
 
     if (++TASK.data[11] == 111)
     {
         TASK.data[10] = 5;
         TASK.data[11] = 0;
-        TASK.func = sub_812B004;
+        TASK.func = SoundTask_FireBlast_Step2;
     } 
     else
     {
@@ -51,12 +51,12 @@ static void sub_812AF98(u8 taskId)
             TASK.data[10] = 0;
             PlaySE12WithPanning(TASK.data[0], pan);
         }
-        pan += dPan;
-        TASK.data[2] = KeepPanInRange(pan, dPan);
+        pan += panIncrement;
+        TASK.data[2] = KeepPanInRange(pan, panIncrement);
     }
 }
 
-static void sub_812B004(u8 taskId)
+static void SoundTask_FireBlast_Step2(u8 taskId)
 {
     s8 pan;
 
@@ -78,35 +78,35 @@ static void sub_812B004(u8 taskId)
 //         Move_ICE_BEAM, Move_AURORA_BEAM, Move_PSYBEAM,
 //         Move_PSYWAVE, Move_SHADOW_BALL, Move_TRI_ATTACK,
 //         Move_HYPER_BEAM
-void sub_812B058(u8 taskId)
+void SoundTask_LoopSEAdjustPanning(u8 taskId)
 {
-    s16 sp = gBattleAnimArgs[0];
+    s16 songId = gBattleAnimArgs[0];
     s8 r5 = gBattleAnimArgs[2];
     s8 panIncrement = gBattleAnimArgs[3];
     u8 r10 = gBattleAnimArgs[4]; // number of times the sound must be played
     u8 r7 = gBattleAnimArgs[5];
     u8 r9 = gBattleAnimArgs[6];
 
-    s8 pan1 = BattleAnimAdjustPanning(gBattleAnimArgs[1]);
-    s8 pan2 = BattleAnimAdjustPanning(r5);
-    panIncrement = CalculatePanIncrement(pan1, pan2, panIncrement);
+    s8 sourcePan = BattleAnimAdjustPanning(gBattleAnimArgs[1]);
+    s8 targetPan = BattleAnimAdjustPanning(r5);
+    panIncrement = CalculatePanIncrement(sourcePan, targetPan, panIncrement);
 
-    TASK.data[0] = sp;
-    TASK.data[1] = pan1;
-    TASK.data[2] = pan2;
+    TASK.data[0] = songId;
+    TASK.data[1] = sourcePan;
+    TASK.data[2] = targetPan;
     TASK.data[3] = panIncrement;
     TASK.data[4] = r10;
     TASK.data[5] = r7;
     TASK.data[6] = r9;
     TASK.data[10] = 0;
-    TASK.data[11] = pan1;
+    TASK.data[11] = sourcePan;
     TASK.data[12] = r9;
 
-    TASK.func = sub_812B108;
+    TASK.func = SoundTask_LoopSEAdjustPanning_Step;
     TASK.func(taskId);
 }
 
-static void sub_812B108(u8 taskId)
+static void SoundTask_LoopSEAdjustPanning_Step(u8 taskId)
 {
     if (TASK.data[12]++ == TASK.data[6])
     {
@@ -147,29 +147,29 @@ void sub_812B18C(u8 taskId)
     }
     else
     {
-        u8 bank;
+        u8 battler;
         if (gBattleAnimArgs[0] == 0)
-            bank = gBattleAnimAttacker;
+            battler = gBattleAnimAttacker;
         else if (gBattleAnimArgs[0] == 1)
-            bank = gBattleAnimTarget;
+            battler = gBattleAnimTarget;
         else if (gBattleAnimArgs[0] == 2)
-            bank = gBattleAnimAttacker ^ 0x2;
+            battler = gBattleAnimAttacker ^ 0x2;
         else
-            bank = gBattleAnimTarget ^ 0x2;
+            battler = gBattleAnimTarget ^ 0x2;
 
         if (gBattleAnimArgs[0] == 1 || gBattleAnimArgs[0] == 3)
         {
-            if (!IsBattlerSpriteVisible(bank))
+            if (!IsBattlerSpriteVisible(battler))
             {
                 DestroyAnimVisualTask(taskId);
                 return;
             }
         }
 
-        if (GetBattlerSide(bank))
-            species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[bank]], 0xB);
+        if (GetBattlerSide(battler))
+            species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[battler]], 0xB);
         else
-            species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[bank]], 0xB);
+            species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler]], 0xB);
     }
 
     if (species != 0)
@@ -204,11 +204,11 @@ void sub_812B2B8(u8 taskId)
 // used in 6 moves:
 //         Move_SKY_ATTACK, Move_LUSTER_PURGE, Move_FLATTER,
 //         Move_DRAGON_CLAW, Move_RETURN, Move_COSMIC_POWER,
-void sub_812B30C(u8 taskId)
+void SoundTask_PlaySE1WithPanning(u8 taskId)
 {
-    u16 songNum = gBattleAnimArgs[0];
+    u16 songId = gBattleAnimArgs[0];
     s8 pan = BattleAnimAdjustPanning(gBattleAnimArgs[1]);
-    PlaySE1WithPanning(songNum, pan);
+    PlaySE1WithPanning(songId, pan);
 
     DestroyAnimVisualTask(taskId);
 }
@@ -216,18 +216,18 @@ void sub_812B30C(u8 taskId)
 // used in 6 moves:
 //         Move_SKY_ATTACK, Move_SUPERPOWER, Move_ENCORE,
 //         Move_FLATTER, Move_RETURN, Move_COSMIC_POWER
-void sub_812B340(u8 taskId)
+void SoundTask_PlaySE2WithPanning(u8 taskId)
 {
-    u16 songNum = gBattleAnimArgs[0];
+    u16 songId = gBattleAnimArgs[0];
     s8 pan = BattleAnimAdjustPanning(gBattleAnimArgs[1]);
-    PlaySE2WithPanning(songNum, pan);
+    PlaySE2WithPanning(songId, pan);
 
     DestroyAnimVisualTask(taskId);
 }
 
 // used in 2 moves:
 //         Move_CONFUSE_RAY, Move_WILL_O_WISP
-void sub_812B374(u8 taskId)
+void SoundTask_AdjustPanningVar(u8 taskId)
 {
     u8 r5 = gBattleAnimArgs[1];
     s8 panIncrement = gBattleAnimArgs[2];
@@ -245,20 +245,20 @@ void sub_812B374(u8 taskId)
     TASK.data[10] = 0;
     TASK.data[11] = sourcePan;
 
-    TASK.func = sub_812B404;
+    TASK.func = SoundTask_AdjustPanningVar_Step;
     TASK.func(taskId);
 }
 
-static void sub_812B404(u8 taskId)
+static void SoundTask_AdjustPanningVar_Step(u8 taskId)
 {
-    u16 dPan = TASK.data[3];
+    u16 panIncrement = TASK.data[3];
 
     if (TASK.data[10]++ == TASK.data[5])
     {
         u16 oldPan;
         TASK.data[10] = 0;
         oldPan = TASK.data[11];
-        TASK.data[11] = dPan + oldPan;
+        TASK.data[11] = panIncrement + oldPan;
         TASK.data[11] = KeepPanInRange(TASK.data[11], oldPan);
     }
 
