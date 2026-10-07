@@ -49,8 +49,8 @@ extern u8 gBattlerStatusSummaryTaskId[];
 extern u8 gAnimMoveTurn;
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern u8 gBattleControllerData[];
-extern const u8 BattleText_WallyMenu[];
-extern const u8 BattleText_MenuOptions[];
+extern const u8 gText_WhatWillWallyDo[];
+extern const u8 gText_BattleMenu[];
 
 extern void BtlController_EmitTwoReturnValues(u8, u8, u16);
 extern void BtlController_EmitOneReturnValue(u8, u16);
@@ -1243,13 +1243,13 @@ static void WallyHandleChooseAction(void)
     Text_FillWindowRectDefPalette(&gWindowTemplate_Contest_MoveDescription, 10, 2, 15, 27, 18);
     Text_FillWindowRectDefPalette(&gWindowTemplate_Contest_MoveDescription, 10, 2, 35, 16, 36);
     gBattlerControllerFuncs[gActiveBattler] = WallyHandleActions;
-    Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, BattleText_MenuOptions, 400, 18, 35);
+    Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gText_BattleMenu, 400, 18, 35);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
     MenuCursor_Create814A5C0(0, 0xFFFF, 12, 0x2D9F, 0);
     for (i = 0; i < 4; i++)
         nullsub_8(i);
     ActionSelectionCreateCursorAt(0, 0);
-    BattleStringExpandPlaceholdersToDisplayedString(BattleText_WallyMenu);
+    BattleStringExpandPlaceholdersToDisplayedString(gText_WhatWillWallyDo);
 #ifdef ENGLISH
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gDisplayedStringBattle, 440, 2, 35);
 #else

@@ -424,8 +424,8 @@ extern u8 gHealthboxSpriteIds[];
 
 extern u16 gBattleTypeFlags;
 
-extern const u8 BattleText_SafariBalls[];
-extern const u8 BattleText_SafariBallsLeft[];
+extern const u8 gText_SafariBalls[];
+extern const u8 gText_SafariBallLeft[];
 extern const u8 BattleText_HighlightRed[];
 extern const u8 gHealthboxElementsGfxTable[][32];
 
@@ -1793,7 +1793,7 @@ static u8 GetStatusIconForBattlerId(u8 statusElementId, u8 battler)
 
     r6 = &eBattleInterfaceGfxBuffer[0x520 + GetBattlerPosition(gSprites[healthboxSpriteId].data[6]) * 0x180];
     r8 = 7;
-    RenderTextHandleBold(r6, BattleText_SafariBalls);
+    RenderTextHandleBold(r6, gText_SafariBalls);
     for (i = 0; i < r8; i++)
         CpuCopy32(GetHealthboxElementGfxPtr(0x2B), r6 + i * 64, 32);
     for (r7 = 3; r7 < 3 + r8; r7++)
@@ -1816,7 +1816,7 @@ static u8 GetStatusIconForBattlerId(u8 statusElementId, u8 battler)
     s32 r6;
     s32 i;
 
-    r7 = StringCopy(gDisplayedStringBattle, BattleText_SafariBallsLeft);
+    r7 = StringCopy(gDisplayedStringBattle, gText_SafariBallLeft);
     r7 = sub_8003504(r7, gNumSafariBalls, 10, 1);
     StringAppend(r7, BattleText_HighlightRed);
     status = GetBattlerPosition(gSprites[healthboxSpriteId].data[6]);

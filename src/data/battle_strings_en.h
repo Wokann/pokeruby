@@ -355,473 +355,473 @@ enum
     BATTLE_TEXT_NoEffectOn,
 };
 
-const u8 BattleText_UnknownString[] = _("{STRING 33}");
-const u8 BattleText_GainExpPoints[] = _("{STRING 0} gained{STRING 1}\n{STRING 42} EXP. Points!\p");
-const u8 BattleText_Terminator[] = _("");
-const u8 BattleText_BoostedExp[] = _(" a boosted");
-const u8 BattleText_GrewLevel[] = _("{STRING 0} grew to\nLV. {STRING 1}!{UNKNOWN_A}\p");
-const u8 BattleText_LearnedMove[] = _("{STRING 0} learned\n{STRING 1}!{UNKNOWN_A}\p");
-const u8 BattleText_TryingToLearnMove[] = _("{STRING 0} is trying to\nlearn {STRING 1}.\p");
-const u8 BattleText_CantLearnMore[] = _("But, {STRING 0} can't learn\nmore than four moves.\p");
-const u8 BattleText_DeleteMove[] = _("Delete a move to make\nroom for {STRING 1}?");
-const u8 BattleText_DeletedMove[] = _("{STRING 0} forgot\n{STRING 1}.\p");
-const u8 BattleText_StopLearning[] = _("{PAUSE 32}Stop learning\n{STRING 1}?");
-const u8 BattleText_DidNotLearn[] = _("{STRING 0} did not learn\n{STRING 1}.\p");
-const u8 BattleText_UseNext[] = _("Use next POKéMON?");
-const u8 BattleText_AttackMissed[] = _("{ATTACKING_MON}'s\nattack missed!");
-const u8 BattleText_ProtectedItself[] = _("{DEFENDING_MON}\nprotected itself!");
-const u8 BattleText_AvoidedDamage[] = _("{DEFENDING_MON} avoided\ndamage with {STRING 22}!");
-const u8 BattleText_GroundMoveNegate[] = _("{DEFENDING_MON} makes GROUND\nmoves miss with {STRING 22}!");
-const u8 BattleText_AvoidedAttack[] = _("{DEFENDING_MON} avoided\nthe attack!");
-const u8 BattleText_DoesntAffect[] = _("It doesn't affect\n{DEFENDING_MON}...");
-const u8 BattleText_AttackingFainted[] = _("{ATTACKING_MON}\nfainted!\p");
-const u8 BattleText_DefendingFainted[] = _("{DEFENDING_MON}\nfainted!\p");
-const u8 BattleText_WinningPrize[] = _("{STRING 32} got ¥{STRING 0}\nfor winning!\p");
-const u8 BattleText_OutOfUsablePoke[] = _("{STRING 32} is out of\nuseable POKéMON!\p");
-const u8 BattleText_WhitedOut[] = _("{STRING 32} whited out!{PAUSE_UNTIL_PRESS}");
-const u8 BattleText_PreventEscape[] = _("{STRING 16} prevents\nescape with {STRING 23}!\p");
-const u8 BattleText_CantEscape[] = _("Can't escape!\p");
-const u8 BattleText_AttackingCantEscape[] = _("{ATTACKING_MON}\ncan't escape!");
-const u8 BattleText_HitMulti[] = _("Hit {STRING 0} time(s)!");
-const u8 BattleText_FellAsleep[] = _("{STRING 14}\nfell asleep!");
-const u8 BattleText_MadeAsleep[] = _("{STRING 16}'s {STRING 23}\nmade {STRING 14} sleep!");
-const u8 BattleText_DefendingAsleep[] = _("{DEFENDING_MON} is\nalready asleep!");
-const u8 BattleText_AttackingAsleep[] = _("{ATTACKING_MON} is\nalready asleep!");
-const u8 BattleText_WasntAffected[] = _("{DEFENDING_MON}\nwasn't affected!");
-const u8 BattleText_Poisoned[] = _("{STRING 14}\nwas poisoned!");
-const u8 BattleText_Poisoned2[] = _("{STRING 16}'s {STRING 23}\npoisoned {STRING 14}!");
-const u8 BattleText_PoisonHurt[] = _("{ATTACKING_MON} is hurt\nby poison!");
-const u8 BattleText_AlreadyPoisoned[] = _("{DEFENDING_MON} is already\npoisoned.");
-const u8 BattleText_BadlyPoisoned[] = _("{STRING 14} is badly\npoisoned!");
-const u8 BattleText_EnergyDrained[] = _("{DEFENDING_MON} had its\nenergy drained!");
-const u8 BattleText_Burned[] = _("{STRING 14} was burned!");
-const u8 BattleText_Burned2[] = _("{STRING 16}'s {STRING 23}\nburned {STRING 14}!");
-const u8 BattleText_BurnHurt[] = _("{ATTACKING_MON} is hurt\nby its burn!");
-const u8 BattleText_AlreadyBurned[] = _("{DEFENDING_MON} already\nhas a burn.");
-const u8 BattleText_Frozen[] = _("{STRING 14} was\nfrozen solid!");
-const u8 BattleText_Frozen2[] = _("{STRING 16}'s {STRING 23}\nfroze {STRING 14} solid!");
-const u8 BattleText_FrozenSolid[] = _("{ATTACKING_MON} is\nfrozen solid!");
-const u8 BattleText_DefendingDefrosted[] = _("{DEFENDING_MON} was\ndefrosted!");
-const u8 BattleText_AttackingDefrosted[] = _("{ATTACKING_MON} was\ndefrosted!");
-const u8 BattleText_Defrosted[] = _("{ATTACKING_MON} was\ndefrosted by {STRING 17}!");
-const u8 BattleText_Paralyzed[] = _("{STRING 14} is paralyzed!\nIt may be unable to move!");
-const u8 BattleText_Paralyzed2[] = _("{STRING 16}'s {STRING 23}\nparalyzed {STRING 14}!\lIt may be unable to move!");
-const u8 BattleText_Paralyzed3[] = _("{ATTACKING_MON} is paralyzed!\nIt can't move!");
-const u8 BattleText_AlreadyParalyzed[] = _("{DEFENDING_MON} is\nalready paralyzed!");
-const u8 BattleText_ParalysisHealed[] = _("{DEFENDING_MON} was\nhealed of paralysis!");
-const u8 BattleText_DreamEaten[] = _("{DEFENDING_MON}'s\ndream was eaten!");
-const u8 BattleText_AttackingStatNoHigher[] = _("{ATTACKING_MON}'s {STRING 0}\nwon't go higher!");
-const u8 BattleText_DefendingStatNoHigher[] = _("{DEFENDING_MON}'s {STRING 0}\nwon't go lower!");
-const u8 BattleText_StoppedWorking[] = _("Your team's {STRING 0}\nstopped working!");
-const u8 BattleText_StoppedWorking2[] = _("The foe's {STRING 0}\nstopped working!");
-const u8 BattleText_Confused[] = _("{ATTACKING_MON} is\nconfused!");
-const u8 BattleText_ConfusionSnapOut[] = _("{ATTACKING_MON} snapped\nout of confusion!");
-const u8 BattleText_BecameConfused[] = _("{STRING 14} became\nconfused!");
-const u8 BattleText_AlreadyConfused[] = _("{DEFENDING_MON} is\nalready confused!");
-const u8 BattleText_FellLove[] = _("{DEFENDING_MON}\nfell in love!");
-const u8 BattleText_InLoveWith[] = _("{ATTACKING_MON} is in love\nwith {STRING 16}!");
-const u8 BattleText_ImmobilizedBy[] = _("{ATTACKING_MON} is\nimmobilized by love!");
-const u8 BattleText_BlownAway[] = _("{DEFENDING_MON} was\nblown away!");
-const u8 BattleText_TypeTransform[] = _("{ATTACKING_MON} transformed\ninto the {STRING 0} type!");
-const u8 BattleText_Flinched[] = _("{ATTACKING_MON} flinched!");
-const u8 BattleText_RegainedHealth[] = _("{DEFENDING_MON} regained\nhealth!");
-const u8 BattleText_HPFull[] = _("{DEFENDING_MON}'s\nHP is full!");
-const u8 BattleText_RaisedSpDef[] = _("{STRING 38}'s {STRING 17}\nraised SP. DEF!");
-const u8 BattleText_RaisedSpDefLittle[] = _("{STRING 38}'s {STRING 17}\nraised SP. DEF a little!");
-const u8 BattleText_RaisedDefense[] = _("{STRING 38}'s {STRING 17}\nraised DEFENSE!");
-const u8 BattleText_RaisedDefenseLittle[] = _("{STRING 38}'s {STRING 17}\nraised DEFENSE a little!");
-const u8 BattleText_CoveredVeil[] = _("{STRING 38} is covered\nby a veil!");
-const u8 BattleText_SafeguardActive[] = _("{DEFENDING_MON} is protected\nby SAFEGUARD!");
-const u8 BattleText_SafeguardFaded[] = _("{STRING 40}'s SAFEGUARD\nfaded!");
-const u8 BattleText_WentToSleep[] = _("{ATTACKING_MON} went\nto sleep!");
-const u8 BattleText_SpeltHealthy[] = _("{ATTACKING_MON} slept and\nbecame healthy!");
-const u8 BattleText_WhipWhirlwind[] = _("{ATTACKING_MON} whipped\nup a whirlwind!");
-const u8 BattleText_TookSunlight[] = _("{ATTACKING_MON} took\nin sunlight!");
-const u8 BattleText_LoweredHead[] = _("{ATTACKING_MON} lowered\nits head!");
-const u8 BattleText_IsGlowing[] = _("{ATTACKING_MON} is glowing!");
-const u8 BattleText_FlewHigh[] = _("{ATTACKING_MON} flew\nup high!");
-const u8 BattleText_DugHole[] = _("{ATTACKING_MON} dug a hole!");
-const u8 BattleText_HidUnderwater[] = _("{ATTACKING_MON} hid\nunderwater!");
-const u8 BattleText_SprangUp[] = _("{ATTACKING_MON} sprang up!");
-const u8 BattleText_SqueezedBind[] = _("{DEFENDING_MON} was squeezed by\n{ATTACKING_MON}'s BIND!");
-const u8 BattleText_TrappedVortex[] = _("{DEFENDING_MON} was trapped\nin the vortex!");
-const u8 BattleText_SandTombTrapped[] = _("{DEFENDING_MON} was trapped\nby SAND TOMB!");
-const u8 BattleText_Wrapped[] = _("{DEFENDING_MON} was WRAPPED by\n{ATTACKING_MON}!");
-const u8 BattleText_Clamped[] = _("{ATTACKING_MON} CLAMPED\n{DEFENDING_MON}!");
-const u8 BattleText_HurtBy[] = _("{ATTACKING_MON} is hurt\nby {STRING 0}!");
-const u8 BattleText_FreedFrom[] = _("{ATTACKING_MON} was freed\nfrom {STRING 0}!");
-const u8 BattleText_KeptGoingCrash[] = _("{ATTACKING_MON} kept going\nand crashed!");
-const u8 BattleText_MistShroud[] = _("{STRING 38} became\nshrouded in MIST!");
-const u8 BattleText_MistProtect[] = _("{STRING 16} is protected\nby MIST!");
-const u8 BattleText_GetPumped[] = _("{ATTACKING_MON} is getting\npumped!");
-const u8 BattleText_HitRecoil[] = _("{ATTACKING_MON} is hit\nwith recoil!");
-const u8 BattleText_ProtectedItself2[] = _("{ATTACKING_MON} protected\nitself!");
-const u8 BattleText_SandBuffeted[] = _("{ATTACKING_MON} is buffeted\nby the sandstorm!");
-const u8 BattleText_HailStricken[] = _("{ATTACKING_MON} is stricken\nby HAIL!");
-const u8 BattleText_WoreOff[] = _("{STRING 36}'s {STRING 0}\nwore off!");
-const u8 BattleText_WasSeeded[] = _("{DEFENDING_MON} was seeded!");
-const u8 BattleText_EvadedAttack[] = _("{DEFENDING_MON} evaded\nthe attack!");
-const u8 BattleText_HealthSapped[] = _("{ATTACKING_MON}'s health is\nsapped by LEECH SEED!");
-const u8 BattleText_FastAsleep[] = _("{ATTACKING_MON} is fast\nasleep.");
-const u8 BattleText_WokeUp[] = _("{ATTACKING_MON} woke up!");
-const u8 BattleText_UproarAwake[] = _("But {STRING 16}'s UPROAR\nkept it awake!");
-const u8 BattleText_UproarWoke[] = _("{ATTACKING_MON} woke up\nin the UPROAR!");
-const u8 BattleText_UproarCaused[] = _("{ATTACKING_MON} caused\nan UPROAR!");
-const u8 BattleText_UproarMaking[] = _("{ATTACKING_MON} is making\nan UPROAR!");
-const u8 BattleText_CalmedDown[] = _("{ATTACKING_MON} calmed down.");
-const u8 BattleText_UproarCantSleep[] = _("But {DEFENDING_MON} can't\nsleep in an UPROAR!");
-const u8 BattleText_Stockpiled[] = _("{ATTACKING_MON} STOCKPILED\n{STRING 0}!");
-const u8 BattleText_StockpiledCant[] = _("{ATTACKING_MON} can't\nSTOCKPILE any more!");
-const u8 BattleText_UproarCantSleep2[] = _("But {DEFENDING_MON} can't\nsleep in an UPROAR!");
-const u8 BattleText_UproarKeptAwake[] = _("But the UPROAR kept\n{DEFENDING_MON} awake!");
-const u8 BattleText_StayedAwake[] = _("{DEFENDING_MON} stayed awake\nusing its {STRING 22}!");
-const u8 BattleText_StoringEnergy[] = _("{ATTACKING_MON} is storing\nenergy!");
-const u8 BattleText_UnleashedEnergy[] = _("{ATTACKING_MON} unleashed\nenergy!");
-const u8 BattleText_FatigueConfuse[] = _("{ATTACKING_MON} became\nconfused out of fatigue!");
-const u8 BattleText_PickedUpYen[] = _("{STRING 32} picked up\n¥{STRING 0}!\p");
-const u8 BattleText_Unaffected[] = _("{DEFENDING_MON} is\nunaffected!");
-const u8 BattleText_Transformed[] = _("{ATTACKING_MON} transformed\ninto {STRING 0}!");
-const u8 BattleText_SubMade[] = _("{ATTACKING_MON} made\na SUBSTITUTE!");
-const u8 BattleText_SubAlready[] = _("{ATTACKING_MON} already\nhas a SUBSTITUTE!");
-const u8 BattleText_SubTookDamage[] = _("The SUBSTITUTE took damage\nfor {DEFENDING_MON}!\p");
-const u8 BattleText_SubFaded[] = _("{DEFENDING_MON}'s\nSUBSTITUTE faded!\p");
-const u8 BattleText_MustRecharge[] = _("{ATTACKING_MON} must\nrecharge!");
-const u8 BattleText_RageBuilding[] = _("{DEFENDING_MON}'s RAGE\nis building!");
-const u8 BattleText_MoveWasDisabled[] = _("{DEFENDING_MON}'s {STRING 0}\nwas disabled!");
-const u8 BattleText_DisabledNoMore[] = _("{ATTACKING_MON} is disabled\nno more!");
-const u8 BattleText_EncoreGot[] = _("{DEFENDING_MON} got\nan ENCORE!");
-const u8 BattleText_EncoreEnded[] = _("{ATTACKING_MON}'s ENCORE\nended!");
-const u8 BattleText_TookAim[] = _("{ATTACKING_MON} took aim\nat {DEFENDING_MON}!");
-const u8 BattleText_SketchedMove[] = _("{ATTACKING_MON} SKETCHED\n{STRING 0}!");
-const u8 BattleText_DestinyBondTake[] = _("{ATTACKING_MON} is trying\nto take its foe with it!");
-const u8 BattleText_DestinyBondTaken[] = _("{DEFENDING_MON} took\n{ATTACKING_MON} with it!");
-const u8 BattleText_ReducedBy[] = _("Reduced {DEFENDING_MON}'s\n{STRING 0} by {STRING 1}!");
-const u8 BattleText_StoleSomething[] = _("{ATTACKING_MON} stole\n{DEFENDING_MON}'s {STRING 19}!");
-const u8 BattleText_CantEscapeNow[] = _("{DEFENDING_MON} can't\nescape now!");
-const u8 BattleText_NightmareStart[] = _("{DEFENDING_MON} fell into\na NIGHTMARE!");
-const u8 BattleText_NightmareLock[] = _("{ATTACKING_MON} is locked\nin a NIGHTMARE!");
-const u8 BattleText_CurseLay[] = _("{ATTACKING_MON} cut its own HP\nand laid a CURSE on\l{DEFENDING_MON}!");
-const u8 BattleText_CurseAfflict[] = _("{ATTACKING_MON} is afflicted\nby the CURSE!");
-const u8 BattleText_SpikesScattered[] = _("{STRING 37} POKéMON team had SPIKES\nscattered around it!");
-const u8 BattleText_SpikesHurt[] = _("{STRING 16} is hurt\nby SPIKES!");
-const u8 BattleText_IdentifiedPoke[] = _("{ATTACKING_MON} identified\n{DEFENDING_MON}!");
-const u8 BattleText_PerishSongFell[] = _("{ATTACKING_MON}'s PERISH count\nfell to {STRING 0}!");
-const u8 BattleText_BracedItself[] = _("{ATTACKING_MON} braced\nitself!");
-const u8 BattleText_EnduredHit[] = _("{DEFENDING_MON} ENDURED\nthe hit!");
-const u8 BattleText_MagnitudeCount[] = _("MAGNITUDE {STRING 0}!");
-const u8 BattleText_CutHPMaxATK[] = _("{ATTACKING_MON} cut its own HP\nand maximized ATTACK!");
-const u8 BattleText_CopyStatChanges[] = _("{ATTACKING_MON} copied\n{DEFENDING_MON}'s stat changes!");
-const u8 BattleText_GotFreeFrom[] = _("{ATTACKING_MON} got free of\n{DEFENDING_MON}'s {STRING 0}!");
-const u8 BattleText_LeechShed[] = _("{ATTACKING_MON} shed\nLEECH SEED!");
-const u8 BattleText_SpikesBlownAway[] = _("{ATTACKING_MON} blew away\nSPIKES!");
-const u8 BattleText_FledBattle[] = _("{ATTACKING_MON} fled from\nbattle!");
-const u8 BattleText_ForesawAttack[] = _("{ATTACKING_MON} foresaw\nan attack!");
-const u8 BattleText_TookAttack[] = _("{DEFENDING_MON} took\n{STRING 0}'s attack!");
-const u8 BattleText_ChoseDestiny[] = _("{ATTACKING_MON} chose\n{STRING 17} as its destiny!");
-const u8 BattleText_PokeAttack[] = _("{STRING 0}'s attack!");
-const u8 BattleText_CenterAttention[] = _("{ATTACKING_MON} became the\ncenter of attention!");
-const u8 BattleText_ChargingPower[] = _("{ATTACKING_MON} began\ncharging power!");
-const u8 BattleText_NaturePower[] = _("NATURE POWER turned into\n{STRING 17}!");
-const u8 BattleText_StatusNormal[] = _("{ATTACKING_MON}'s status\nreturned to normal!");
-const u8 BattleText_TormentSubject[] = _("{DEFENDING_MON} was subjected\nto TORMENT!");
-const u8 BattleText_TightenFocus[] = _("{ATTACKING_MON} is tightening\nits focus!");
-const u8 BattleText_TauntFell[] = _("{DEFENDING_MON} fell for\nthe TAUNT!");
-const u8 BattleText_ReadyToHelp[] = _("{ATTACKING_MON} is ready to\nhelp {DEFENDING_MON}!");
-const u8 BattleText_SwitchedItems[] = _("{ATTACKING_MON} switched\nitems with its opponent!");
-const u8 BattleText_Obtained1[] = _("{ATTACKING_MON} obtained\n{STRING 0}.");
-const u8 BattleText_Obtained2[] = _("{DEFENDING_MON} obtained\n{STRING 1}.");
-const u8 BattleText_Obtained3[] = _("{ATTACKING_MON} obtained\n{STRING 0}.\p{DEFENDING_MON} obtained\n{STRING 1}.");
-const u8 BattleText_CopiedObject[] = _("{ATTACKING_MON} copied\n{DEFENDING_MON}'s {STRING 22}!");
-const u8 BattleText_WishMade[] = _("{ATTACKING_MON} made a WISH!");
-const u8 BattleText_WishTrue[] = _("{STRING 0}'s WISH\ncame true!");
-const u8 BattleText_PlantedRoots[] = _("{ATTACKING_MON} planted its roots!");
-const u8 BattleText_AbsorbNutrients[] = _("{ATTACKING_MON} absorbed\nnutrients with its roots!");
-const u8 BattleText_AnchoredItself[] = _("{DEFENDING_MON} anchored\nitself with its roots!");
-const u8 BattleText_DrowsyMade[] = _("{ATTACKING_MON} made\n{DEFENDING_MON} drowsy!");
-const u8 BattleText_KnockedOffItem[] = _("{ATTACKING_MON} knocked off\n{DEFENDING_MON}'s {STRING 19}!");
-const u8 BattleText_AbilitySwap[] = _("{ATTACKING_MON} swapped abilities\nwith its opponent!");
-const u8 BattleText_SealedMove[] = _("{ATTACKING_MON} sealed the\nopponent's move(s)!");
-const u8 BattleText_GrudgeBear[] = _("{ATTACKING_MON} wants the\nopponent to bear a GRUDGE!");
-const u8 BattleText_GrudgeLosePP[] = _("{ATTACKING_MON}'s {STRING 0}\nlost all its PP due to\lthe GRUDGE!");
-const u8 BattleText_ShroudedItself[] = _("{ATTACKING_MON} shrouded\nitself in {STRING 17}!");
-const u8 BattleText_MagicCoatBounce[] = _("{ATTACKING_MON}'s {STRING 17}\nwas bounced back by MAGIC COAT!");
-const u8 BattleText_AwaitMove[] = _("{ATTACKING_MON} awaits its foe\nto make a move!");
-const u8 BattleText_SnatchedMove[] = _("{DEFENDING_MON} SNATCHED\n{STRING 16}'s move!");
-const u8 BattleText_ElecWeakened[] = _("Electricity's power was\nweakened!");
-const u8 BattleText_FireWeakened[] = _("Fire's power was\nweakened!");
-const u8 BattleText_FoundOne[] = _("{ATTACKING_MON} found\none {STRING 19}!");
-const u8 BattleText_SoothingAroma[] = _("A soothing aroma wafted\nthrough the area!");
-const u8 BattleText_CantUseItems[] = _("Items can't be used now.{PAUSE 64}");
-const u8 BattleText_UnknownString2[] = _("For {STRING 16},\n{STRING 19} {STRING 0}");
-const u8 BattleText_HustleUse[] = _("{STRING 16} used\n{STRING 19} to hustle!");
-const u8 BattleText_LostFocus[] = _("{ATTACKING_MON} lost its\nfocus and couldn't move!");
-const u8 BattleText_DraggedOut[] = _("{DEFENDING_MON} was\ndragged out!\p");
-const u8 BattleText_BrokeWall[] = _("The wall shattered!");
-const u8 BattleText_NoEffect[] = _("But it had no effect!");
-const u8 BattleText_NoMovesLeft[] = _("{STRING 15} has no\nmoves left!\p");
-const u8 BattleText_MoveIsDisabled[] = _("{STRING 15}'s {STRING 17}\nis disabled!\p");
-const u8 BattleText_TormentNoUse[] = _("{STRING 15} can't use the same\nmove twice in a row due to the TORMENT!\p");
-const u8 BattleText_TauntNoUse[] = _("{STRING 15} can't use\n{STRING 17} after the TAUNT!\p");
-const u8 BattleText_SealedNoUse[] = _("{STRING 15} can't use the\nsealed {STRING 17}!\p");
-const u8 BattleText_RainMade[] = _("{STRING 16}'s {STRING 23}\nmade it rain!");
-const u8 BattleText_SpeedRisen[] = _("{STRING 16}'s {STRING 23}\nraised its SPEED!");
-const u8 BattleText_ProtectedBy[] = _("{DEFENDING_MON} was protected\nby {STRING 22}!");
-const u8 BattleText_PreventedBy[] = _("{DEFENDING_MON}'s {STRING 22}\nprevents {ATTACKING_MON}\lfrom using {STRING 17}!");
-const u8 BattleText_HPRestoredUsing[] = _("{DEFENDING_MON} restored HP\nusing its {STRING 22}!");
-const u8 BattleText_MadeUseless[] = _("{DEFENDING_MON}'s {STRING 22}\nmade {STRING 17} useless!");
-const u8 BattleText_MadeType[] = _("{DEFENDING_MON}'s {STRING 22}\nmade it the {STRING 0} type!");
-const u8 BattleText_PreventedPara[] = _("{STRING 14}'s {STRING 22}\nprevents paralysis!");
-const u8 BattleText_PreventedRomance[] = _("{DEFENDING_MON}'s {STRING 22}\nprevents romance!");
-const u8 BattleText_PreventedPoison[] = _("{STRING 14}'s {STRING 22}\nprevents poisoning!");
-const u8 BattleText_PreventedConfusion[] = _("{DEFENDING_MON}'s {STRING 22}\nprevents confusion!");
-const u8 BattleText_RaisedFirePower[] = _("{DEFENDING_MON}'s {STRING 22}\nraised its FIRE power!");
-const u8 BattleText_AnchorsItself[] = _("{DEFENDING_MON} anchors\nitself with {STRING 22}!");
-const u8 BattleText_CutsAttack[] = _("{STRING 16}'s {STRING 23}\ncuts {DEFENDING_MON}'s ATTACK!");
-const u8 BattleText_PreventedStatLoss[] = _("{STRING 16}'s {STRING 23}\nprevents stat loss!");
-const u8 BattleText_HurtOther[] = _("{DEFENDING_MON}'s {STRING 22}\nhurt {ATTACKING_MON}!");
-const u8 BattleText_Traced[] = _("{STRING 16} TRACED\n{STRING 0}'s {STRING 1}!");
-const u8 BattleText_PreventedBurn[] = _("{STRING 14}'s {STRING 24}\nprevents burns!");
-const u8 BattleText_BlocksOther[] = _("{DEFENDING_MON}'s {STRING 22}\nblocks {STRING 17}!");
-const u8 BattleText_BlocksOther2[] = _("{STRING 16}'s {STRING 23}\nblocks {STRING 17}!");
-const u8 BattleText_RestoredHPByItem[] = _("{ATTACKING_MON}'s {STRING 21}\nrestored some HP!");
-const u8 BattleText_WhipSandstorm[] = _("{STRING 16}'s {STRING 23}\nwhipped up a sandstorm!");
-const u8 BattleText_SunIntensified[] = _("{STRING 16}'s {STRING 23}\nintensified the sun's rays!");
-const u8 BattleText_PreventedLoss[] = _("{STRING 16}'s {STRING 23}\nprevents {STRING 0} loss!");
-const u8 BattleText_InfatuatedPoke[] = _("{DEFENDING_MON}'s {STRING 22}\ninfatuated {ATTACKING_MON}!");
-const u8 BattleText_MadeIneffective[] = _("{DEFENDING_MON}'s {STRING 22}\nmade {STRING 17} ineffective!");
-const u8 BattleText_CuredProblem[] = _("{STRING 16}'s {STRING 23}\ncured its {STRING 0} problem!");
-const u8 BattleText_OozeSuckup[] = _("It sucked up the\nLIQUID OOZE!");
-const u8 BattleText_Transformed2[] = _("{STRING 16} transformed!");
-const u8 BattleText_TookAttack2[] = _("{DEFENDING_MON}'s {STRING 22}\ntook the attack!");
-const u8 BattleText_PreventedSwitch[] = _("{STRING 0}'s {STRING 20}\nprevents switching!\p");
-const u8 BattleText_PreventedOther[] = _("{DEFENDING_MON}'s {STRING 22}\nprevented {STRING 16}'s\l{STRING 0} from working!");
-const u8 BattleText_MadeIneffective2[] = _("{STRING 16}'s {STRING 23}\nmade it ineffective!");
-const u8 BattleText_PreventedFlinching[] = _("{STRING 14}'s {STRING 24}\nprevents flinching!");
-const u8 BattleText_PreventedOther2[] = _("{ATTACKING_MON}'s {STRING 21}\nprevents {DEFENDING_MON}'s\l{STRING 22} from working!");
-const u8 BattleText_CuredOfProblem[] = _("{STRING 16}'s {STRING 23}\ncured its {STRING 0} problem!");
-const u8 BattleText_NoEffectOn[] = _("{STRING 16}'s {STRING 23}\nhad no effect on {STRING 14}!");
-const u8 BattleText_Sharply[] = _("sharply ");
-const u8 BattleText_Rose[] = _("rose!");
-const u8 BattleText_Harshly[] = _("harshly ");
-const u8 BattleText_Fell[] = _("fell!");
-const u8 BattleText_UnknownString7[] = _("{ATTACKING_MON}'s {STRING 0}\n{STRING 1}");
-const u8 BattleText_UnknownString3[] = _("{DEFENDING_MON}'s {STRING 0}\n{STRING 1}");
-const u8 BattleText_UnknownString4[] = _("Using {STRING 19}, the {STRING 0}\nof {STRING 16} {STRING 1}");
-const u8 BattleText_UnknownString5[] = _("{ATTACKING_MON}'s {STRING 0}\n{STRING 1}");
-const u8 BattleText_UnknownString6[] = _("{DEFENDING_MON}'s {STRING 0}\n{STRING 1}");
-const u8 BattleText_StatNoHigher[] = _("{ATTACKING_MON}'s stats won't\ngo any higher!");
-const u8 BattleText_StatNoLower[] = _("{DEFENDING_MON}'s stats won't\ngo any lower!");
-const u8 BattleText_Critical[] = _("A critical hit!");
-const u8 BattleText_GrandSlam[] = _("It's a one-hit KO!");
-const u8 BattleText_MoveForget123[] = _("{PAUSE 32}1, {PAUSE 15}2 and...{PAUSE 15} ...{PAUSE 15} ...{PAUSE 15}\n{PAUSE 15}{PLAY_SE SE_BALL_BOUNCE_1}Poof!\p");
-const u8 BattleText_MoveForgetAnd[] = _("And...\p");
-const u8 BattleText_CantForgetHM[] = _("HM moves can't be\nforgotten now.\p");
-const u8 BattleText_NotEffective[] = _("It's not very effective...");
-const u8 BattleText_SuperEffective[] = _("It's super effective!");
-const u8 BattleText_GotAwaySafely[] = _("{PLAY_SE SE_FLEE}Got away safely!\p");
-const u8 BattleText_FledUsingItem[] = _("{PLAY_SE SE_FLEE}{ATTACKING_MON} fled\nusing its {STRING 19}!\p");
-const u8 BattleText_FledUsingOther[] = _("{PLAY_SE SE_FLEE}{ATTACKING_MON} fled\nusing {STRING 21}!\p");
-const u8 BattleText_FledWild[] = _("{PLAY_SE SE_FLEE}Wild {STRING 0} fled!");
-const u8 BattleText_PlayerDefeatedTrainer[] = _("Player defeated\n{STRING 29}!");
-const u8 BattleText_PlayerDefeatedTrainers[] = _("Player beat {STRING 30}\nand {STRING 29}!");
-const u8 BattleText_PlayerLostTrainer[] = _("Player lost against\n{STRING 29}!");
-const u8 BattleText_PlayerLostTrainers[] = _("Player lost to {STRING 30}\nand {STRING 29}!");
-const u8 BattleText_PlayerTiedTrainer[] = _("Player tied against\n{STRING 29}!");
-const u8 BattleText_PlayerTiedTrainers[] = _("Player tied against {STRING 30}\nand {STRING 29}!");
-const u8 BattleText_FledSingle[] = _("{PLAY_SE SE_FLEE}{STRING 29} fled!");
-const u8 BattleText_FledDouble[] = _("{PLAY_SE SE_FLEE}{STRING 29} and\n{STRING 30} fled!");
-const u8 BattleText_NoRunning[] = _("No! There's no running\nfrom a TRAINER battle!\p");
-const u8 BattleText_CantEscape2[] = _("Can't escape!\p");
-const u8 BattleText_BirchDontLeaveMe[] = _("PROF. BIRCH: D-don't leave\nme here like this!\p");
-const u8 BattleText_Nothing[] = _("But nothing happened!");
-const u8 BattleText_Failed[] = _("But it failed!");
-const u8 BattleText_HurtItself[] = _("It hurt itself in its\nconfusion!");
-const u8 BattleText_MirrorFail[] = _("The MIRROR MOVE failed!");
-const u8 BattleText_RainStart[] = _("It started to rain!");
-const u8 BattleText_PourStart[] = _("A downpour started!"); // corresponds to DownpourText in pokegold and pokecrystal and is used by Rain Dance in GSC
-const u8 BattleText_RainCont1[] = _("Rain continues to fall.");
-const u8 BattleText_PourCont[] = _("The downpour continues."); // unused
-const u8 BattleText_RainStop[] = _("The rain stopped.");
-const u8 BattleText_SandBrewed[] = _("A sandstorm brewed!");
-const u8 BattleText_SandRages[] = _("The sandstorm rages.");
-const u8 BattleText_SandSubsided[] = _("The sandstorm subsided.");
-const u8 BattleText_SunBright[] = _("The sunlight got bright!");
-const u8 BattleText_SunStrong[] = _("The sunlight is strong.");
-const u8 BattleText_SunFaded[] = _("The sunlight faded.");
-const u8 BattleText_HailStart[] = _("It started to hail!");
-const u8 BattleText_HailCont[] = _("Hail continues to fall.");
-const u8 BattleText_HailStop[] = _("The hail  stopped.");
-const u8 BattleText_SpitUpFail[] = _("But it failed to SPIT UP\na thing!");
-const u8 BattleText_SwallowFail[] = _("But it failed to SWALLOW\na thing!");
-const u8 BattleText_WindHeatWave[] = _("The wind turned into a\nHEAT WAVE!");
-const u8 BattleText_StatElim[] = _("All stat changes were\neliminated!");
-const u8 BattleText_CoinScatter[] = _("Coins scattered everywhere!");
-const u8 BattleText_SubWeak[] = _("It was too weak to make\na SUBSTITUTE!");
-const u8 BattleText_PainSplit[] = _("The battlers shared\ntheir pain!");
-const u8 BattleText_BellChime[] = _("A bell chimed!");
-const u8 BattleText_PerishSong[] = _("All affected POKéMON will\nfaint in 3 turns!");
-const u8 BattleText_NoPP1[] = _("There's no PP left for\nthis move!\p");
-const u8 BattleText_NoPP2[] = _("But there was no PP left\nfor the move!");
-const u8 BattleText_IgnoredOrdersSLP[] = _("{ATTACKING_MON} ignored\norders while asleep!");
-const u8 BattleText_IgnoredOrders[] = _("{ATTACKING_MON} ignored\norders!");
-const u8 BattleText_BeganNap[] = _("{ATTACKING_MON} began to nap!");
-const u8 BattleText_LoafingAround[] = _("{ATTACKING_MON} is\nloafing around!");
-const u8 BattleText_WontObey[] = _("{ATTACKING_MON} won't\nobey!");
-const u8 BattleText_TurnedAway[] = _("{ATTACKING_MON} turned away!");
-const u8 BattleText_NotNotice[] = _("{ATTACKING_MON} pretended\nto not notice!");
-const u8 BattleText_WillSwitch[] = _("{STRING 25} {STRING 26} is\nabout to use {STRING 1}.\pWill {STRING 32} change\nPOKéMON?");
-const u8 BattleText_LearnedMove2[] = _("{ATTACKING_MON} learned\n{STRING 0}!");
-const u8 BattleText_PlayerDefeatedTrainer2[] = _("Player defeated\n{STRING 25} {STRING 26}!\p");
-const u8 BattleText_CreptCloser[] = _("{STRING 32} crept closer to\n{STRING 3}!");
-const u8 BattleText_CantGetCloser[] = _("{STRING 32} can't get any closer!");
-const u8 BattleText_WatchingCarefully[] = _("{STRING 3} is watching\ncarefully!");
-const u8 BattleText_CuriousAbout[] = _("{STRING 3} is curious about\nthe {STRING 0}!");
-const u8 BattleText_EnthralledBy[] = _("{STRING 3} is enthralled by\nthe {STRING 0}!");
-const u8 BattleText_IgnoredThing[] = _("{STRING 3} completely ignored\nthe {STRING 0}!");
-const u8 BattleText_ThrewBlock[] = _("{STRING 32} threw a {POKEBLOCK}\nat the {STRING 3}!");
-const u8 BattleText_SafariOver[] = _("{PLAY_SE SE_DING_DONG}ANNOUNCER: You're out of\nSAFARI BALLS! Game over!\p");
-const u8 BattleText_WildAppeared1[] = _("Wild {STRING 3} appeared!\p");
-const u8 BattleText_WildAppeared2[] = _("Wild {STRING 3} appeared!\p");
-const u8 BattleText_WildAppeared3[] = _("Wild {STRING 3} appeared!{PAUSE 127}");
-const u8 BattleText_WildDoubleAppeared[] = _("Wild {STRING 5} and\n{STRING 3} appeared!\p");
-const u8 BattleText_SingleWantToBattle1[] = _("{STRING 25} {STRING 26}\nwould like to battle!\p");
-const u8 BattleText_SingleWantToBattle2[] = _("{STRING 29}\nwants to battle!");
-const u8 BattleText_DoubleWantToBattle[] = _("{STRING 29} and {STRING 30}\nwant to battle!");
-const u8 BattleText_SentOutSingle1[] = _("{STRING 25} {STRING 26} sent\nout {STRING 3}!");
-const u8 BattleText_SentOutDouble1[] = _("{STRING 25} {STRING 26} sent\nout {STRING 3} and {STRING 5}!");
-const u8 BattleText_SentOutSingle2[] = _("{STRING 25} {STRING 26} sent\nout {STRING 0}!");
-const u8 BattleText_SentOutSingle3[] = _("{STRING 29} sent\nout {STRING 3}!");
-const u8 BattleText_SentOutDouble2[] = _("{STRING 29} sent out\n{STRING 3} and {STRING 5}!");
-const u8 BattleText_SentOutDouble3[] = _("{STRING 29} sent out\n{STRING 7}!\p{STRING 30} sent out\n{STRING 9}!");
-const u8 BattleText_SentOutSingle4[] = _("{STRING 29} sent out\n{STRING 0}!");
-const u8 BattleText_SentOutSingle5[] = _("{STRING 31} sent out\n{STRING 0}!");
-const u8 BattleText_SentOutSingle6[] = _("Go! {STRING 2}!");
-const u8 BattleText_SentOutDouble4[] = _("Go! {STRING 2} and\n{STRING 4}!");
-const u8 BattleText_SentOutSingle7[] = _("Go! {STRING 0}!");
-const u8 BattleText_SentOutSingle8[] = _("Do it! {STRING 0}!");
-const u8 BattleText_SentOutSingle9[] = _("Go for it, {STRING 0}!");
-const u8 BattleText_SentOutSingle10[] = _("Your foe's weak!\nGet'm, {STRING 0}!");
-const u8 BattleText_SentOutSingle11[] = _("{STRING 28} sent out\n{STRING 8}!\pGo! {STRING 6}!");
-const u8 BattleText_ComeBackSingle1[] = _("{STRING 0}, that's enough!\nCome back!");
-const u8 BattleText_ComeBackSingle2[] = _("{STRING 0}, come back!");
-const u8 BattleText_ComeBackSingle3[] = _("{STRING 0}, OK!\nCome back!");
-const u8 BattleText_ComeBackSingle4[] = _("{STRING 0}, good!\nCome back!");
-const u8 BattleText_WithdrewPoke1[] = _("{STRING 25} {STRING 26}\nwithdrew {STRING 0}!");
-const u8 BattleText_WithdrewPoke2[] = _("{STRING 29} withdrew\n{STRING 0}!");
-const u8 BattleText_WithdrewPoke3[] = _("{STRING 31} withdrew\n{STRING 0}!");
-const u8 BattleText_Wild[] = _("Wild ");
-const u8 BattleText_Foe[] = _("Foe ");
-const u8 BattleText_Foe2[] = _("Foe ");
-const u8 BattleText_Ally[] = _("Ally ");
-const u8 BattleText_Foe3[] = _("Foe ");
-const u8 BattleText_Ally2[] = _("Ally ");
-const u8 BattleText_Foe4[] = _("Foe ");
-const u8 BattleText_Ally3[] = _("Ally ");
-const u8 BattleText_OpponentUsedMove[] = _("{ATTACKING_MON} used\n{STRING 1}");
-const u8 BattleText_Exclamation2[] = _("!");
-const u8 BattleText_Exclamation3[] = _("!");
-const u8 BattleText_Exclamation4[] = _("!");
-const u8 BattleText_Exclamation5[] = _("!");
-const u8 BattleText_Exclamation[] = _("!");
-const u8 BattleStatText_HP[] = _("HP");
-const u8 BattleStatText_Attack[] = _("ATTACK");
-const u8 BattleStatText_Defense[] = _("DEFENSE");
-const u8 BattleStatText_Speed[] = _("SPEED");
-const u8 BattleStatText_SpAtk[] = _("SP. ATK");
-const u8 BattleStatText_SpDef[] = _("SP. DEF");
-const u8 BattleStatText_Accuracy[] = _("accuracy");
-const u8 BattleStatText_Evasion[] = _("evasiveness");
-const u8 ContestStatText_TooSpicy[] = _("was too spicy!");
-const u8 ContestStatText_TooDry[] = _("was too dry!");
-const u8 ContestStatText_TooSweet[] = _("was too sweet!");
-const u8 ContestStatText_TooBitter[] = _("was too bitter!");
-const u8 ContestStatText_TooSour[] = _("was too sour!");
-const u8 BattleText_Used1[] = _("{STRING 32} used\n{STRING 19}!");
-const u8 BattleText_TutorialUsed[] = _("WALLY used\n{STRING 19}!");
-const u8 BattleText_Used2[] = _("{STRING 25} {STRING 26}\nused {STRING 19}!");
-const u8 BattleText_BlockBall[] = _("The TRAINER blocked the BALL!");
-const u8 BattleText_DontBeAThief[] = _("Don't be a thief!");
-const u8 BattleText_DodgeBall[] = _("It dodged the thrown BALL!\nThis POKéMON can't be caught!");
-const u8 BattleText_MissPoke[] = _("You missed the POKéMON!");
-const u8 BattleText_BallBrokeOhNo[] = _("Oh, no!\nThe POKéMON broke free!");
-const u8 BattleText_BallBrokeAppeared[] = _("Aww!\nIt appeared to be caught!");
-const u8 BattleText_BallBrokeAlmost[] = _("Aargh!\nAlmost had it!");
-const u8 BattleText_BallBrokeSoClose[] = _("Shoot!\nIt was so close, too!");
-const u8 BattleText_BallCaught1[] = _("Gotcha!\n{STRING 3} was caught!{UNKNOWN_A}{PLAY_BGM MUS_CAUGHT}\p");
-const u8 BattleText_BallCaught2[] = _("Gotcha!\n{STRING 3} was caught!{UNKNOWN_A}{PLAY_BGM MUS_CAUGHT}{PAUSE 127}");
-const u8 BattleText_GiveNickname[] = _("Give a nickname to the\ncaptured {STRING 3}?");
-const u8 BattleText_SentToPC[] = _("{STRING 3} was sent to\n{STRING 35} PC.");
-const u8 BattleText_Someone[] = _("someone's");
-const u8 BattleText_Lanette[] = _("LANETTE's");
-const u8 BattleText_AddedToDex[] = _("{STRING 3}'s data was\nadded to the POKéDEX.\p");
-const u8 BattleText_Raining[] = _("It is raining.");
-const u8 BattleText_Sandstorm[] = _("A sandstorm is raging.");
-const u8 BattleText_BoxFull[] = _("The BOX is full!\nYou can't catch any more!\p");
-const u8 BattleText_EnigmaBerry[] = _("ENIGMA BERRY");
-const u8 BattleText_Berry[] = _(" BERRY");
-const u8 BattleText_CuredParalysis[] = _("{STRING 16}'s {STRING 19}\ncured paralysis!");
-const u8 BattleText_CuredPoison[] = _("{STRING 16}'s {STRING 19}\ncured poison!");
-const u8 BattleText_CuredBurn[] = _("{STRING 16}'s {STRING 19}\nhealed its burn!");
-const u8 BattleText_CuredFreeze[] = _("{STRING 16}'s {STRING 19}\ndefrosted it!");
-const u8 BattleText_CuredSleep[] = _("{STRING 16}'s {STRING 19}\nwoke it from its sleep!");
-const u8 BattleText_CuredConfusion[] = _("{STRING 16}'s {STRING 19}\nsnapped it out of confusion!");
-const u8 BattleText_CuredStatus[] = _("{STRING 16}'s {STRING 19}\ncured its {STRING 0} problem!");
-const u8 BattleText_NormalizedStatus[] = _("{STRING 16}'s {STRING 19}\nnormalized its status!");
-const u8 BattleText_RestoredHealth[] = _("{STRING 16}'s {STRING 19}\nrestored health!");
-const u8 BattleText_RestoredPP[] = _("{STRING 16}'s {STRING 19}\nrestored {STRING 0}'s PP!");
-const u8 BattleText_RestoredStatus[] = _("{STRING 16}'s {STRING 19}\nrestored its status!");
-const u8 BattleText_RestoredHPLittle[] = _("{STRING 16}'s {STRING 19}\nrestored its HP a little!");
-const u8 BattleText_ChoiceBand[] = _("{STRING 19} allows the\nuse of only {STRING 17}!\p");
-const u8 BattleText_FocusSash[] = _("{DEFENDING_MON} hung on\nusing its {STRING 19}!");
-const u8 BattleText_Terminator2[] = _("");
-const u8 BattleText_WallyBall[] = _("You throw a BALL now, right?\nI... I'll do my best!");
+static const u8 sText_Trainer1LoseText[] = _("{STRING 33}");
+static const u8 sText_PkmnGainedEXP[] = _("{STRING 0} gained{STRING 1}\n{STRING 42} EXP. Points!\p");
+static const u8 sText_EmptyString4[] = _("");
+static const u8 sText_ABoosted[] = _(" a boosted");
+static const u8 sText_PkmnGrewToLv[] = _("{STRING 0} grew to\nLV. {STRING 1}!{UNKNOWN_A}\p");
+static const u8 sText_PkmnLearnedMove[] = _("{STRING 0} learned\n{STRING 1}!{UNKNOWN_A}\p");
+static const u8 sText_TryToLearnMove1[] = _("{STRING 0} is trying to\nlearn {STRING 1}.\p");
+static const u8 sText_TryToLearnMove2[] = _("But, {STRING 0} can't learn\nmore than four moves.\p");
+static const u8 sText_TryToLearnMove3[] = _("Delete a move to make\nroom for {STRING 1}?");
+static const u8 sText_PkmnForgotMove[] = _("{STRING 0} forgot\n{STRING 1}.\p");
+static const u8 sText_StopLearningMove[] = _("{PAUSE 32}Stop learning\n{STRING 1}?");
+static const u8 sText_DidNotLearnMove[] = _("{STRING 0} did not learn\n{STRING 1}.\p");
+static const u8 sText_UseNextPkmn[] = _("Use next POKéMON?");
+static const u8 sText_AttackMissed[] = _("{ATTACKING_MON}'s\nattack missed!");
+static const u8 sText_PkmnProtectedItself[] = _("{DEFENDING_MON}\nprotected itself!");
+static const u8 sText_AvoidedDamage[] = _("{DEFENDING_MON} avoided\ndamage with {STRING 22}!");
+static const u8 sText_PkmnMakesGroundMiss[] = _("{DEFENDING_MON} makes GROUND\nmoves miss with {STRING 22}!");
+static const u8 sText_PkmnAvoidedAttack[] = _("{DEFENDING_MON} avoided\nthe attack!");
+static const u8 sText_ItDoesntAffect[] = _("It doesn't affect\n{DEFENDING_MON}...");
+static const u8 sText_AttackerFainted[] = _("{ATTACKING_MON}\nfainted!\p");
+static const u8 sText_TargetFainted[] = _("{DEFENDING_MON}\nfainted!\p");
+static const u8 sText_PlayerGotMoney[] = _("{STRING 32} got ¥{STRING 0}\nfor winning!\p");
+static const u8 sText_PlayerWhiteout[] = _("{STRING 32} is out of\nuseable POKéMON!\p");
+static const u8 sText_PlayerWhiteout2[] = _("{STRING 32} whited out!{PAUSE_UNTIL_PRESS}");
+static const u8 sText_PreventsEscape[] = _("{STRING 16} prevents\nescape with {STRING 23}!\p");
+static const u8 sText_CantEscape2[] = _("Can't escape!\p");
+static const u8 sText_AttackerCantEscape[] = _("{ATTACKING_MON}\ncan't escape!");
+static const u8 sText_HitXTimes[] = _("Hit {STRING 0} time(s)!");
+static const u8 sText_PkmnFellAsleep[] = _("{STRING 14}\nfell asleep!");
+static const u8 sText_PkmnMadeSleep[] = _("{STRING 16}'s {STRING 23}\nmade {STRING 14} sleep!");
+static const u8 sText_PkmnAlreadyAsleep[] = _("{DEFENDING_MON} is\nalready asleep!");
+static const u8 sText_PkmnAlreadyAsleep2[] = _("{ATTACKING_MON} is\nalready asleep!");
+static const u8 sText_PkmnWasntAffected[] = _("{DEFENDING_MON}\nwasn't affected!");
+static const u8 sText_PkmnWasPoisoned[] = _("{STRING 14}\nwas poisoned!");
+static const u8 sText_PkmnPoisonedBy[] = _("{STRING 16}'s {STRING 23}\npoisoned {STRING 14}!");
+static const u8 sText_PkmnHurtByPoison[] = _("{ATTACKING_MON} is hurt\nby poison!");
+static const u8 sText_PkmnAlreadyPoisoned[] = _("{DEFENDING_MON} is already\npoisoned.");
+static const u8 sText_PkmnBadlyPoisoned[] = _("{STRING 14} is badly\npoisoned!");
+static const u8 sText_PkmnEnergyDrained[] = _("{DEFENDING_MON} had its\nenergy drained!");
+static const u8 sText_PkmnWasBurned[] = _("{STRING 14} was burned!");
+static const u8 sText_PkmnBurnedBy[] = _("{STRING 16}'s {STRING 23}\nburned {STRING 14}!");
+static const u8 sText_PkmnHurtByBurn[] = _("{ATTACKING_MON} is hurt\nby its burn!");
+static const u8 sText_PkmnAlreadyHasBurn[] = _("{DEFENDING_MON} already\nhas a burn.");
+static const u8 sText_PkmnWasFrozen[] = _("{STRING 14} was\nfrozen solid!");
+static const u8 sText_PkmnFrozenBy[] = _("{STRING 16}'s {STRING 23}\nfroze {STRING 14} solid!");
+static const u8 sText_PkmnIsFrozen[] = _("{ATTACKING_MON} is\nfrozen solid!");
+static const u8 sText_PkmnWasDefrosted[] = _("{DEFENDING_MON} was\ndefrosted!");
+static const u8 sText_PkmnWasDefrosted2[] = _("{ATTACKING_MON} was\ndefrosted!");
+static const u8 sText_PkmnWasDefrostedBy[] = _("{ATTACKING_MON} was\ndefrosted by {STRING 17}!");
+static const u8 sText_PkmnWasParalyzed[] = _("{STRING 14} is paralyzed!\nIt may be unable to move!");
+static const u8 sText_PkmnWasParalyzedBy[] = _("{STRING 16}'s {STRING 23}\nparalyzed {STRING 14}!\lIt may be unable to move!");
+static const u8 sText_PkmnIsParalyzed[] = _("{ATTACKING_MON} is paralyzed!\nIt can't move!");
+static const u8 sText_PkmnIsAlreadyParalyzed[] = _("{DEFENDING_MON} is\nalready paralyzed!");
+static const u8 sText_PkmnHealedParalysis[] = _("{DEFENDING_MON} was\nhealed of paralysis!");
+static const u8 sText_PkmnDreamEaten[] = _("{DEFENDING_MON}'s\ndream was eaten!");
+static const u8 sText_StatsWontIncrease[] = _("{ATTACKING_MON}'s {STRING 0}\nwon't go higher!");
+static const u8 sText_StatsWontDecrease[] = _("{DEFENDING_MON}'s {STRING 0}\nwon't go lower!");
+static const u8 sText_TeamStoppedWorking[] = _("Your team's {STRING 0}\nstopped working!");
+static const u8 sText_FoeStoppedWorking[] = _("The foe's {STRING 0}\nstopped working!");
+static const u8 sText_PkmnIsConfused[] = _("{ATTACKING_MON} is\nconfused!");
+static const u8 sText_PkmnHealedConfusion[] = _("{ATTACKING_MON} snapped\nout of confusion!");
+static const u8 sText_PkmnWasConfused[] = _("{STRING 14} became\nconfused!");
+static const u8 sText_PkmnAlreadyConfused[] = _("{DEFENDING_MON} is\nalready confused!");
+static const u8 sText_PkmnFellInLove[] = _("{DEFENDING_MON}\nfell in love!");
+static const u8 sText_PkmnInLove[] = _("{ATTACKING_MON} is in love\nwith {STRING 16}!");
+static const u8 sText_PkmnImmobilizedByLove[] = _("{ATTACKING_MON} is\nimmobilized by love!");
+static const u8 sText_PkmnBlownAway[] = _("{DEFENDING_MON} was\nblown away!");
+static const u8 sText_PkmnChangedType[] = _("{ATTACKING_MON} transformed\ninto the {STRING 0} type!");
+static const u8 sText_PkmnFlinched[] = _("{ATTACKING_MON} flinched!");
+static const u8 sText_PkmnRegainedHealth[] = _("{DEFENDING_MON} regained\nhealth!");
+static const u8 sText_PkmnHPFull[] = _("{DEFENDING_MON}'s\nHP is full!");
+static const u8 sText_PkmnRaisedSpDef[] = _("{STRING 38}'s {STRING 17}\nraised SP. DEF!");
+static const u8 sText_PkmnRaisedSpDefALittle[] = _("{STRING 38}'s {STRING 17}\nraised SP. DEF a little!");
+static const u8 sText_PkmnRaisedDef[] = _("{STRING 38}'s {STRING 17}\nraised DEFENSE!");
+static const u8 sText_PkmnRaisedDefALittle[] = _("{STRING 38}'s {STRING 17}\nraised DEFENSE a little!");
+static const u8 sText_PkmnCoveredByVeil[] = _("{STRING 38} is covered\nby a veil!");
+static const u8 sText_PkmnUsedSafeguard[] = _("{DEFENDING_MON} is protected\nby SAFEGUARD!");
+static const u8 sText_PkmnSafeguardExpired[] = _("{STRING 40}'s SAFEGUARD\nfaded!");
+static const u8 sText_PkmnWentToSleep[] = _("{ATTACKING_MON} went\nto sleep!");
+static const u8 sText_PkmnSleptHealthy[] = _("{ATTACKING_MON} slept and\nbecame healthy!");
+static const u8 sText_PkmnWhippedWhirlwind[] = _("{ATTACKING_MON} whipped\nup a whirlwind!");
+static const u8 sText_PkmnTookSunlight[] = _("{ATTACKING_MON} took\nin sunlight!");
+static const u8 sText_PkmnLoweredHead[] = _("{ATTACKING_MON} lowered\nits head!");
+static const u8 sText_PkmnIsGlowing[] = _("{ATTACKING_MON} is glowing!");
+static const u8 sText_PkmnFlewHigh[] = _("{ATTACKING_MON} flew\nup high!");
+static const u8 sText_PkmnDugHole[] = _("{ATTACKING_MON} dug a hole!");
+static const u8 sText_PkmnHidUnderwater[] = _("{ATTACKING_MON} hid\nunderwater!");
+static const u8 sText_PkmnSprangUp[] = _("{ATTACKING_MON} sprang up!");
+static const u8 sText_PkmnSqueezedByBind[] = _("{DEFENDING_MON} was squeezed by\n{ATTACKING_MON}'s BIND!");
+static const u8 sText_PkmnTrappedInVortex[] = _("{DEFENDING_MON} was trapped\nin the vortex!");
+static const u8 sText_PkmnTrappedBySandTomb[] = _("{DEFENDING_MON} was trapped\nby SAND TOMB!");
+static const u8 sText_PkmnWrappedBy[] = _("{DEFENDING_MON} was WRAPPED by\n{ATTACKING_MON}!");
+static const u8 sText_PkmnClamped[] = _("{ATTACKING_MON} CLAMPED\n{DEFENDING_MON}!");
+static const u8 sText_PkmnHurtBy[] = _("{ATTACKING_MON} is hurt\nby {STRING 0}!");
+static const u8 sText_PkmnFreedFrom[] = _("{ATTACKING_MON} was freed\nfrom {STRING 0}!");
+static const u8 sText_PkmnCrashed[] = _("{ATTACKING_MON} kept going\nand crashed!");
+const u8 gText_PkmnShroudedInMist[] = _("{STRING 38} became\nshrouded in MIST!");
+static const u8 sText_PkmnProtectedByMist[] = _("{STRING 16} is protected\nby MIST!");
+const u8 gText_PkmnGettingPumped[] = _("{ATTACKING_MON} is getting\npumped!");
+static const u8 sText_PkmnHitWithRecoil[] = _("{ATTACKING_MON} is hit\nwith recoil!");
+static const u8 sText_PkmnProtectedItself2[] = _("{ATTACKING_MON} protected\nitself!");
+static const u8 sText_PkmnBuffetedBySandstorm[] = _("{ATTACKING_MON} is buffeted\nby the sandstorm!");
+static const u8 sText_PkmnPeltedByHail[] = _("{ATTACKING_MON} is stricken\nby HAIL!");
+static const u8 sText_PkmnsXWoreOff[] = _("{STRING 36}'s {STRING 0}\nwore off!");
+static const u8 sText_PkmnSeeded[] = _("{DEFENDING_MON} was seeded!");
+static const u8 sText_PkmnEvadedAttack[] = _("{DEFENDING_MON} evaded\nthe attack!");
+static const u8 sText_PkmnSappedByLeechSeed[] = _("{ATTACKING_MON}'s health is\nsapped by LEECH SEED!");
+static const u8 sText_PkmnFastAsleep[] = _("{ATTACKING_MON} is fast\nasleep.");
+static const u8 sText_PkmnWokeUp[] = _("{ATTACKING_MON} woke up!");
+static const u8 sText_PkmnUproarKeptAwake[] = _("But {STRING 16}'s UPROAR\nkept it awake!");
+static const u8 sText_PkmnWokeUpInUproar[] = _("{ATTACKING_MON} woke up\nin the UPROAR!");
+static const u8 sText_PkmnCausedUproar[] = _("{ATTACKING_MON} caused\nan UPROAR!");
+static const u8 sText_PkmnMakingUproar[] = _("{ATTACKING_MON} is making\nan UPROAR!");
+static const u8 sText_PkmnCalmedDown[] = _("{ATTACKING_MON} calmed down.");
+static const u8 sText_PkmnCantSleepInUproar[] = _("But {DEFENDING_MON} can't\nsleep in an UPROAR!");
+static const u8 sText_PkmnStockpiled[] = _("{ATTACKING_MON} STOCKPILED\n{STRING 0}!");
+static const u8 sText_PkmnCantStockpile[] = _("{ATTACKING_MON} can't\nSTOCKPILE any more!");
+static const u8 sText_PkmnCantSleepInUproar2[] = _("But {DEFENDING_MON} can't\nsleep in an UPROAR!");
+static const u8 sText_UproarKeptPkmnAwake[] = _("But the UPROAR kept\n{DEFENDING_MON} awake!");
+static const u8 sText_PkmnStayedAwakeUsing[] = _("{DEFENDING_MON} stayed awake\nusing its {STRING 22}!");
+static const u8 sText_PkmnStoringEnergy[] = _("{ATTACKING_MON} is storing\nenergy!");
+static const u8 sText_PkmnUnleashedEnergy[] = _("{ATTACKING_MON} unleashed\nenergy!");
+static const u8 sText_PkmnFatigueConfusion[] = _("{ATTACKING_MON} became\nconfused out of fatigue!");
+static const u8 sText_PlayerPickedUpMoney[] = _("{STRING 32} picked up\n¥{STRING 0}!\p");
+static const u8 sText_PkmnUnaffected[] = _("{DEFENDING_MON} is\nunaffected!");
+static const u8 sText_PkmnTransformedInto[] = _("{ATTACKING_MON} transformed\ninto {STRING 0}!");
+static const u8 sText_PkmnMadeSubstitute[] = _("{ATTACKING_MON} made\na SUBSTITUTE!");
+static const u8 sText_PkmnHasSubstitute[] = _("{ATTACKING_MON} already\nhas a SUBSTITUTE!");
+static const u8 sText_SubstituteDamaged[] = _("The SUBSTITUTE took damage\nfor {DEFENDING_MON}!\p");
+static const u8 sText_PkmnSubstituteFaded[] = _("{DEFENDING_MON}'s\nSUBSTITUTE faded!\p");
+static const u8 sText_PkmnMustRecharge[] = _("{ATTACKING_MON} must\nrecharge!");
+static const u8 sText_PkmnRageBuilding[] = _("{DEFENDING_MON}'s RAGE\nis building!");
+static const u8 sText_PkmnMoveWasDisabled[] = _("{DEFENDING_MON}'s {STRING 0}\nwas disabled!");
+static const u8 sText_PkmnMoveDisabledNoMore[] = _("{ATTACKING_MON} is disabled\nno more!");
+static const u8 sText_PkmnGotEncore[] = _("{DEFENDING_MON} got\nan ENCORE!");
+static const u8 sText_PkmnEncoreEnded[] = _("{ATTACKING_MON}'s ENCORE\nended!");
+static const u8 sText_PkmnTookAim[] = _("{ATTACKING_MON} took aim\nat {DEFENDING_MON}!");
+static const u8 sText_PkmnSketchedMove[] = _("{ATTACKING_MON} SKETCHED\n{STRING 0}!");
+static const u8 sText_PkmnTryingToTakeFoe[] = _("{ATTACKING_MON} is trying\nto take its foe with it!");
+static const u8 sText_PkmnTookFoe[] = _("{DEFENDING_MON} took\n{ATTACKING_MON} with it!");
+static const u8 sText_PkmnReducedPP[] = _("Reduced {DEFENDING_MON}'s\n{STRING 0} by {STRING 1}!");
+static const u8 sText_PkmnStoleItem[] = _("{ATTACKING_MON} stole\n{DEFENDING_MON}'s {STRING 19}!");
+static const u8 sText_TargetCantEscapeNow[] = _("{DEFENDING_MON} can't\nescape now!");
+static const u8 sText_PkmnFellIntoNightmare[] = _("{DEFENDING_MON} fell into\na NIGHTMARE!");
+static const u8 sText_PkmnLockedInNightmare[] = _("{ATTACKING_MON} is locked\nin a NIGHTMARE!");
+static const u8 sText_PkmnLaidCurse[] = _("{ATTACKING_MON} cut its own HP\nand laid a CURSE on\l{DEFENDING_MON}!");
+static const u8 sText_PkmnAfflictedByCurse[] = _("{ATTACKING_MON} is afflicted\nby the CURSE!");
+static const u8 sText_SpikesScattered[] = _("{STRING 37} POKéMON team had SPIKES\nscattered around it!");
+static const u8 sText_PkmnHurtBySpikes[] = _("{STRING 16} is hurt\nby SPIKES!");
+static const u8 sText_PkmnIdentified[] = _("{ATTACKING_MON} identified\n{DEFENDING_MON}!");
+static const u8 sText_PkmnPerishCountFell[] = _("{ATTACKING_MON}'s PERISH count\nfell to {STRING 0}!");
+static const u8 sText_PkmnBracedItself[] = _("{ATTACKING_MON} braced\nitself!");
+static const u8 sText_PkmnEnduredHit[] = _("{DEFENDING_MON} ENDURED\nthe hit!");
+static const u8 sText_MagnitudeStrength[] = _("MAGNITUDE {STRING 0}!");
+static const u8 sText_PkmnCutHPMaxedAttack[] = _("{ATTACKING_MON} cut its own HP\nand maximized ATTACK!");
+static const u8 sText_PkmnCopiedStatChanges[] = _("{ATTACKING_MON} copied\n{DEFENDING_MON}'s stat changes!");
+static const u8 sText_PkmnGotFree[] = _("{ATTACKING_MON} got free of\n{DEFENDING_MON}'s {STRING 0}!");
+static const u8 sText_PkmnShedLeechSeed[] = _("{ATTACKING_MON} shed\nLEECH SEED!");
+static const u8 sText_PkmnBlewAwaySpikes[] = _("{ATTACKING_MON} blew away\nSPIKES!");
+static const u8 sText_PkmnFledFromBattle[] = _("{ATTACKING_MON} fled from\nbattle!");
+static const u8 sText_PkmnForesawAttack[] = _("{ATTACKING_MON} foresaw\nan attack!");
+static const u8 sText_PkmnTookAttack[] = _("{DEFENDING_MON} took\n{STRING 0}'s attack!");
+static const u8 sText_PkmnChoseXAsDestiny[] = _("{ATTACKING_MON} chose\n{STRING 17} as its destiny!");
+static const u8 sText_PkmnAttack[] = _("{STRING 0}'s attack!");
+static const u8 sText_PkmnCenterAttention[] = _("{ATTACKING_MON} became the\ncenter of attention!");
+static const u8 sText_PkmnChargingPower[] = _("{ATTACKING_MON} began\ncharging power!");
+static const u8 sText_NaturePowerTurnedInto[] = _("NATURE POWER turned into\n{STRING 17}!");
+static const u8 sText_PkmnStatusNormal[] = _("{ATTACKING_MON}'s status\nreturned to normal!");
+static const u8 sText_PkmnSubjectedToTorment[] = _("{DEFENDING_MON} was subjected\nto TORMENT!");
+static const u8 sText_PkmnTighteningFocus[] = _("{ATTACKING_MON} is tightening\nits focus!");
+static const u8 sText_PkmnFellForTaunt[] = _("{DEFENDING_MON} fell for\nthe TAUNT!");
+static const u8 sText_PkmnReadyToHelp[] = _("{ATTACKING_MON} is ready to\nhelp {DEFENDING_MON}!");
+static const u8 sText_PkmnSwitchedItems[] = _("{ATTACKING_MON} switched\nitems with its opponent!");
+static const u8 sText_PkmnObtainedX[] = _("{ATTACKING_MON} obtained\n{STRING 0}.");
+static const u8 sText_PkmnObtainedX2[] = _("{DEFENDING_MON} obtained\n{STRING 1}.");
+static const u8 sText_PkmnObtainedXYObtainedZ[] = _("{ATTACKING_MON} obtained\n{STRING 0}.\p{DEFENDING_MON} obtained\n{STRING 1}.");
+static const u8 sText_PkmnCopiedFoe[] = _("{ATTACKING_MON} copied\n{DEFENDING_MON}'s {STRING 22}!");
+static const u8 sText_PkmnMadeWish[] = _("{ATTACKING_MON} made a WISH!");
+static const u8 sText_PkmnWishCameTrue[] = _("{STRING 0}'s WISH\ncame true!");
+static const u8 sText_PkmnPlantedRoots[] = _("{ATTACKING_MON} planted its roots!");
+static const u8 sText_PkmnAbsorbedNutrients[] = _("{ATTACKING_MON} absorbed\nnutrients with its roots!");
+static const u8 sText_PkmnAnchoredItself[] = _("{DEFENDING_MON} anchored\nitself with its roots!");
+static const u8 sText_PkmnWasMadeDrowsy[] = _("{ATTACKING_MON} made\n{DEFENDING_MON} drowsy!");
+static const u8 sText_PkmnKnockedOff[] = _("{ATTACKING_MON} knocked off\n{DEFENDING_MON}'s {STRING 19}!");
+static const u8 sText_PkmnSwappedAbilities[] = _("{ATTACKING_MON} swapped abilities\nwith its opponent!");
+static const u8 sText_PkmnSealedOpponentMove[] = _("{ATTACKING_MON} sealed the\nopponent's move(s)!");
+static const u8 sText_PkmnWantsGrudge[] = _("{ATTACKING_MON} wants the\nopponent to bear a GRUDGE!");
+static const u8 sText_PkmnLostPPGrudge[] = _("{ATTACKING_MON}'s {STRING 0}\nlost all its PP due to\lthe GRUDGE!");
+static const u8 sText_PkmnShroudedItself[] = _("{ATTACKING_MON} shrouded\nitself in {STRING 17}!");
+static const u8 sText_PkmnMoveBounced[] = _("{ATTACKING_MON}'s {STRING 17}\nwas bounced back by MAGIC COAT!");
+static const u8 sText_PkmnWaitsForTarget[] = _("{ATTACKING_MON} awaits its foe\nto make a move!");
+static const u8 sText_PkmnSnatchedMove[] = _("{DEFENDING_MON} SNATCHED\n{STRING 16}'s move!");
+static const u8 sText_ElectricityWeakened[] = _("Electricity's power was\nweakened!");
+static const u8 sText_FireWeakened[] = _("Fire's power was\nweakened!");
+static const u8 sText_XFoundOneY[] = _("{ATTACKING_MON} found\none {STRING 19}!");
+static const u8 sText_SoothingAroma[] = _("A soothing aroma wafted\nthrough the area!");
+static const u8 sText_ItemsCantBeUsedNow[] = _("Items can't be used now.{PAUSE 64}");
+static const u8 sText_ForXCommaYZ[] = _("For {STRING 16},\n{STRING 19} {STRING 0}");
+static const u8 sText_PkmnUsedXToGetPumped[] = _("{STRING 16} used\n{STRING 19} to hustle!");
+static const u8 sText_PkmnLostFocus[] = _("{ATTACKING_MON} lost its\nfocus and couldn't move!");
+static const u8 sText_PkmnWasDraggedOut[] = _("{DEFENDING_MON} was\ndragged out!\p");
+static const u8 sText_TheWallShattered[] = _("The wall shattered!");
+static const u8 sText_ButNoEffect[] = _("But it had no effect!");
+static const u8 sText_PkmnHasNoMovesLeft[] = _("{STRING 15} has no\nmoves left!\p");
+static const u8 sText_PkmnMoveIsDisabled[] = _("{STRING 15}'s {STRING 17}\nis disabled!\p");
+static const u8 sText_PkmnCantUseMoveTorment[] = _("{STRING 15} can't use the same\nmove twice in a row due to the TORMENT!\p");
+static const u8 sText_PkmnCantUseMoveTaunt[] = _("{STRING 15} can't use\n{STRING 17} after the TAUNT!\p");
+static const u8 sText_PkmnCantUseMoveSealed[] = _("{STRING 15} can't use the\nsealed {STRING 17}!\p");
+static const u8 sText_PkmnMadeItRain[] = _("{STRING 16}'s {STRING 23}\nmade it rain!");
+static const u8 sText_PkmnRaisedSpeed[] = _("{STRING 16}'s {STRING 23}\nraised its SPEED!");
+static const u8 sText_PkmnProtectedBy[] = _("{DEFENDING_MON} was protected\nby {STRING 22}!");
+static const u8 sText_PkmnPreventsUsage[] = _("{DEFENDING_MON}'s {STRING 22}\nprevents {ATTACKING_MON}\lfrom using {STRING 17}!");
+static const u8 sText_PkmnRestoredHPUsing[] = _("{DEFENDING_MON} restored HP\nusing its {STRING 22}!");
+static const u8 sText_PkmnsXMadeYUseless[] = _("{DEFENDING_MON}'s {STRING 22}\nmade {STRING 17} useless!");
+static const u8 sText_PkmnChangedTypeWith[] = _("{DEFENDING_MON}'s {STRING 22}\nmade it the {STRING 0} type!");
+static const u8 sText_PkmnPreventsParalysisWith[] = _("{STRING 14}'s {STRING 22}\nprevents paralysis!");
+static const u8 sText_PkmnPreventsRomanceWith[] = _("{DEFENDING_MON}'s {STRING 22}\nprevents romance!");
+static const u8 sText_PkmnPreventsPoisoningWith[] = _("{STRING 14}'s {STRING 22}\nprevents poisoning!");
+static const u8 sText_PkmnPreventsConfusionWith[] = _("{DEFENDING_MON}'s {STRING 22}\nprevents confusion!");
+static const u8 sText_PkmnRaisedFirePowerWith[] = _("{DEFENDING_MON}'s {STRING 22}\nraised its FIRE power!");
+static const u8 sText_PkmnAnchorsItselfWith[] = _("{DEFENDING_MON} anchors\nitself with {STRING 22}!");
+static const u8 sText_PkmnCutsAttackWith[] = _("{STRING 16}'s {STRING 23}\ncuts {DEFENDING_MON}'s ATTACK!");
+static const u8 sText_PkmnPreventsStatLossWith[] = _("{STRING 16}'s {STRING 23}\nprevents stat loss!");
+static const u8 sText_PkmnHurtsWith[] = _("{DEFENDING_MON}'s {STRING 22}\nhurt {ATTACKING_MON}!");
+static const u8 sText_PkmnTraced[] = _("{STRING 16} TRACED\n{STRING 0}'s {STRING 1}!");
+static const u8 sText_PkmnsXPreventsBurns[] = _("{STRING 14}'s {STRING 24}\nprevents burns!");
+static const u8 sText_PkmnsXBlocksY[] = _("{DEFENDING_MON}'s {STRING 22}\nblocks {STRING 17}!");
+static const u8 sText_PkmnsXBlocksY2[] = _("{STRING 16}'s {STRING 23}\nblocks {STRING 17}!");
+static const u8 sText_PkmnsXRestoredHPALittle2[] = _("{ATTACKING_MON}'s {STRING 21}\nrestored some HP!");
+static const u8 sText_PkmnsXWhippedUpSandstorm[] = _("{STRING 16}'s {STRING 23}\nwhipped up a sandstorm!");
+static const u8 sText_PkmnsXIntensifiedSun[] = _("{STRING 16}'s {STRING 23}\nintensified the sun's rays!");
+static const u8 sText_PkmnsXPreventsYLoss[] = _("{STRING 16}'s {STRING 23}\nprevents {STRING 0} loss!");
+static const u8 sText_PkmnsXInfatuatedY[] = _("{DEFENDING_MON}'s {STRING 22}\ninfatuated {ATTACKING_MON}!");
+static const u8 sText_PkmnsXMadeYIneffective[] = _("{DEFENDING_MON}'s {STRING 22}\nmade {STRING 17} ineffective!");
+static const u8 sText_PkmnsXCuredYProblem[] = _("{STRING 16}'s {STRING 23}\ncured its {STRING 0} problem!");
+static const u8 sText_ItSuckedLiquidOoze[] = _("It sucked up the\nLIQUID OOZE!");
+static const u8 sText_PkmnTransformed[] = _("{STRING 16} transformed!");
+static const u8 sText_PkmnsXTookAttack[] = _("{DEFENDING_MON}'s {STRING 22}\ntook the attack!");
+const u8 gText_PkmnsXPreventsSwitching[] = _("{STRING 0}'s {STRING 20}\nprevents switching!\p");
+static const u8 sText_PreventedFromWorking[] = _("{DEFENDING_MON}'s {STRING 22}\nprevented {STRING 16}'s\l{STRING 0} from working!");
+static const u8 sText_PkmnsXMadeItIneffective[] = _("{STRING 16}'s {STRING 23}\nmade it ineffective!");
+static const u8 sText_PkmnsXPreventsFlinching[] = _("{STRING 14}'s {STRING 24}\nprevents flinching!");
+static const u8 sText_PkmnsXPreventsYsZ[] = _("{ATTACKING_MON}'s {STRING 21}\nprevents {DEFENDING_MON}'s\l{STRING 22} from working!");
+static const u8 sText_PkmnsXCuredItsYProblem[] = _("{STRING 16}'s {STRING 23}\ncured its {STRING 0} problem!");
+static const u8 sText_PkmnsXHadNoEffectOnY[] = _("{STRING 16}'s {STRING 23}\nhad no effect on {STRING 14}!");
+static const u8 sText_StatSharply[] = _("sharply ");
+const u8 gText_StatRose[] = _("rose!");
+static const u8 sText_StatHarshly[] = _("harshly ");
+static const u8 sText_StatFell[] = _("fell!");
+static const u8 sText_AttackersStatRose[] = _("{ATTACKING_MON}'s {STRING 0}\n{STRING 1}");
+const u8 gText_DefendersStatRose[] = _("{DEFENDING_MON}'s {STRING 0}\n{STRING 1}");
+static const u8 sText_UsingItemTheStatOfPkmnRose[] = _("Using {STRING 19}, the {STRING 0}\nof {STRING 16} {STRING 1}");
+static const u8 sText_AttackersStatFell[] = _("{ATTACKING_MON}'s {STRING 0}\n{STRING 1}");
+static const u8 sText_DefendersStatFell[] = _("{DEFENDING_MON}'s {STRING 0}\n{STRING 1}");
+static const u8 sText_StatsWontIncrease2[] = _("{ATTACKING_MON}'s stats won't\ngo any higher!");
+static const u8 sText_StatsWontDecrease2[] = _("{DEFENDING_MON}'s stats won't\ngo any lower!");
+static const u8 sText_CriticalHit[] = _("A critical hit!");
+static const u8 sText_OneHitKO[] = _("It's a one-hit KO!");
+static const u8 sText_123Poof[] = _("{PAUSE 32}1, {PAUSE 15}2 and...{PAUSE 15} ...{PAUSE 15} ...{PAUSE 15}\n{PAUSE 15}{PLAY_SE SE_BALL_BOUNCE_1}Poof!\p");
+static const u8 sText_AndEllipsis[] = _("And...\p");
+static const u8 sText_HMMovesCantBeForgotten[] = _("HM moves can't be\nforgotten now.\p");
+static const u8 sText_NotVeryEffective[] = _("It's not very effective...");
+static const u8 sText_SuperEffective[] = _("It's super effective!");
+static const u8 sText_GotAwaySafely[] = _("{PLAY_SE SE_FLEE}Got away safely!\p");
+static const u8 sText_PkmnFledUsingIts[] = _("{PLAY_SE SE_FLEE}{ATTACKING_MON} fled\nusing its {STRING 19}!\p");
+static const u8 sText_PkmnFledUsing[] = _("{PLAY_SE SE_FLEE}{ATTACKING_MON} fled\nusing {STRING 21}!\p");
+static const u8 sText_WildPkmnFled[] = _("{PLAY_SE SE_FLEE}Wild {STRING 0} fled!");
+static const u8 sText_PlayerDefeatedLinkTrainer[] = _("Player defeated\n{STRING 29}!");
+static const u8 sText_TwoLinkTrainersDefeated[] = _("Player beat {STRING 30}\nand {STRING 29}!");
+static const u8 sText_PlayerLostAgainstLinkTrainer[] = _("Player lost against\n{STRING 29}!");
+static const u8 sText_PlayerLostToTwo[] = _("Player lost to {STRING 30}\nand {STRING 29}!");
+static const u8 sText_PlayerBattledToDrawLinkTrainer[] = _("Player tied against\n{STRING 29}!");
+static const u8 sText_PlayerBattledToDrawVsTwo[] = _("Player tied against {STRING 30}\nand {STRING 29}!");
+static const u8 sText_WildFled[] = _("{PLAY_SE SE_FLEE}{STRING 29} fled!");
+static const u8 sText_TwoWildFled[] = _("{PLAY_SE SE_FLEE}{STRING 29} and\n{STRING 30} fled!");
+static const u8 sText_NoRunningFromTrainers[] = _("No! There's no running\nfrom a TRAINER battle!\p");
+static const u8 sText_CantEscape[] = _("Can't escape!\p");
+static const u8 sText_DontLeaveBirch[] = _("PROF. BIRCH: D-don't leave\nme here like this!\p");
+static const u8 sText_ButNothingHappened[] = _("But nothing happened!");
+static const u8 sText_ButItFailed[] = _("But it failed!");
+static const u8 sText_ItHurtConfusion[] = _("It hurt itself in its\nconfusion!");
+static const u8 sText_MirrorMoveFailed[] = _("The MIRROR MOVE failed!");
+static const u8 sText_StartedToRain[] = _("It started to rain!");
+static const u8 sText_DownpourStarted[] = _("A downpour started!"); // corresponds to DownpourText in pokegold and pokecrystal and is used by Rain Dance in GSC
+static const u8 sText_RainContinues[] = _("Rain continues to fall.");
+static const u8 sText_DownpourContinues[] = _("The downpour continues."); // unused
+static const u8 sText_RainStopped[] = _("The rain stopped.");
+static const u8 sText_SandstormBrewed[] = _("A sandstorm brewed!");
+static const u8 sText_SandstormRages[] = _("The sandstorm rages.");
+static const u8 sText_SandstormSubsided[] = _("The sandstorm subsided.");
+static const u8 sText_SunlightGotBright[] = _("The sunlight got bright!");
+static const u8 sText_SunlightStrong[] = _("The sunlight is strong.");
+static const u8 sText_SunlightFaded[] = _("The sunlight faded.");
+static const u8 sText_StartedHail[] = _("It started to hail!");
+static const u8 sText_HailContinues[] = _("Hail continues to fall.");
+static const u8 sText_HailStopped[] = _("The hail  stopped.");
+static const u8 sText_FailedToSpitUp[] = _("But it failed to SPIT UP\na thing!");
+static const u8 sText_FailedToSwallow[] = _("But it failed to SWALLOW\na thing!");
+static const u8 sText_WindBecameHeatWave[] = _("The wind turned into a\nHEAT WAVE!");
+static const u8 sText_StatChangesGone[] = _("All stat changes were\neliminated!");
+static const u8 sText_CoinsScattered[] = _("Coins scattered everywhere!");
+static const u8 sText_TooWeakForSubstitute[] = _("It was too weak to make\na SUBSTITUTE!");
+static const u8 sText_SharedPain[] = _("The battlers shared\ntheir pain!");
+static const u8 sText_BellChimed[] = _("A bell chimed!");
+static const u8 sText_FaintInThree[] = _("All affected POKéMON will\nfaint in 3 turns!");
+static const u8 sText_NoPPLeft[] = _("There's no PP left for\nthis move!\p");
+static const u8 sText_ButNoPPLeft[] = _("But there was no PP left\nfor the move!");
+static const u8 sText_PkmnIgnoresAsleep[] = _("{ATTACKING_MON} ignored\norders while asleep!");
+static const u8 sText_PkmnIgnoredOrders[] = _("{ATTACKING_MON} ignored\norders!");
+static const u8 sText_PkmnBeganToNap[] = _("{ATTACKING_MON} began to nap!");
+static const u8 sText_PkmnLoafing[] = _("{ATTACKING_MON} is\nloafing around!");
+static const u8 sText_PkmnWontObey[] = _("{ATTACKING_MON} won't\nobey!");
+static const u8 sText_PkmnTurnedAway[] = _("{ATTACKING_MON} turned away!");
+static const u8 sText_PkmnPretendNotNotice[] = _("{ATTACKING_MON} pretended\nto not notice!");
+static const u8 sText_EnemyAboutToSwitchPkmn[] = _("{STRING 25} {STRING 26} is\nabout to use {STRING 1}.\pWill {STRING 32} change\nPOKéMON?");
+static const u8 sText_PkmnLearnedMove2[] = _("{ATTACKING_MON} learned\n{STRING 0}!");
+static const u8 sText_PlayerDefeatedLinkTrainerTrainer1[] = _("Player defeated\n{STRING 25} {STRING 26}!\p");
+static const u8 sText_CreptCloser[] = _("{STRING 32} crept closer to\n{STRING 3}!");
+static const u8 sText_CantGetCloser[] = _("{STRING 32} can't get any closer!");
+static const u8 sText_PkmnWatchingCarefully[] = _("{STRING 3} is watching\ncarefully!");
+static const u8 sText_PkmnCuriousAboutX[] = _("{STRING 3} is curious about\nthe {STRING 0}!");
+static const u8 sText_PkmnEnthralledByX[] = _("{STRING 3} is enthralled by\nthe {STRING 0}!");
+static const u8 sText_PkmnIgnoredX[] = _("{STRING 3} completely ignored\nthe {STRING 0}!");
+static const u8 sText_ThrewPokeblockAtPkmn[] = _("{STRING 32} threw a {POKEBLOCK}\nat the {STRING 3}!");
+static const u8 sText_OutOfSafariBalls[] = _("{PLAY_SE SE_DING_DONG}ANNOUNCER: You're out of\nSAFARI BALLS! Game over!\p");
+static const u8 sText_WildPkmnAppeared[] = _("Wild {STRING 3} appeared!\p");
+static const u8 sText_LegendaryPkmnAppeared[] = _("Wild {STRING 3} appeared!\p");
+static const u8 sText_WildPkmnAppearedPause[] = _("Wild {STRING 3} appeared!{PAUSE 127}");
+static const u8 sText_TwoWildPkmnAppeared[] = _("Wild {STRING 5} and\n{STRING 3} appeared!\p");
+static const u8 sText_Trainer1WantsToBattle[] = _("{STRING 25} {STRING 26}\nwould like to battle!\p");
+static const u8 sText_LinkTrainerWantsToBattle[] = _("{STRING 29}\nwants to battle!");
+static const u8 sText_TwoLinkTrainersWantToBattle[] = _("{STRING 29} and {STRING 30}\nwant to battle!");
+static const u8 sText_Trainer1SentOutPkmn[] = _("{STRING 25} {STRING 26} sent\nout {STRING 3}!");
+static const u8 sText_Trainer1SentOutTwoPkmn[] = _("{STRING 25} {STRING 26} sent\nout {STRING 3} and {STRING 5}!");
+static const u8 sText_Trainer1SentOutPkmn2[] = _("{STRING 25} {STRING 26} sent\nout {STRING 0}!");
+static const u8 sText_LinkTrainerSentOutPkmn[] = _("{STRING 29} sent\nout {STRING 3}!");
+static const u8 sText_LinkTrainerSentOutTwoPkmn[] = _("{STRING 29} sent out\n{STRING 3} and {STRING 5}!");
+static const u8 sText_TwoLinkTrainersSentOutPkmn[] = _("{STRING 29} sent out\n{STRING 7}!\p{STRING 30} sent out\n{STRING 9}!");
+static const u8 sText_LinkTrainerSentOutPkmn2[] = _("{STRING 29} sent out\n{STRING 0}!");
+static const u8 sText_LinkTrainerMultiSentOutPkmn[] = _("{STRING 31} sent out\n{STRING 0}!");
+static const u8 sText_GoPkmn[] = _("Go! {STRING 2}!");
+static const u8 sText_GoTwoPkmn[] = _("Go! {STRING 2} and\n{STRING 4}!");
+static const u8 sText_GoPkmn2[] = _("Go! {STRING 0}!");
+static const u8 sText_DoItPkmn[] = _("Do it! {STRING 0}!");
+static const u8 sText_GoForItPkmn[] = _("Go for it, {STRING 0}!");
+static const u8 sText_YourFoesWeakGetEmPkmn[] = _("Your foe's weak!\nGet'm, {STRING 0}!");
+static const u8 sText_LinkPartnerSentOutPkmnGoPkmn[] = _("{STRING 28} sent out\n{STRING 8}!\pGo! {STRING 6}!");
+static const u8 sText_PkmnThatsEnough[] = _("{STRING 0}, that's enough!\nCome back!");
+static const u8 sText_PkmnComeBack[] = _("{STRING 0}, come back!");
+static const u8 sText_PkmnOkComeBack[] = _("{STRING 0}, OK!\nCome back!");
+static const u8 sText_PkmnGoodComeBack[] = _("{STRING 0}, good!\nCome back!");
+static const u8 sText_Trainer1WithdrewPkmn[] = _("{STRING 25} {STRING 26}\nwithdrew {STRING 0}!");
+static const u8 sText_LinkTrainer1WithdrewPkmn[] = _("{STRING 29} withdrew\n{STRING 0}!");
+static const u8 sText_LinkTrainer2WithdrewPkmn[] = _("{STRING 31} withdrew\n{STRING 0}!");
+static const u8 sText_WildPkmnPrefix[] = _("Wild ");
+static const u8 sText_FoePkmnPrefix[] = _("Foe ");
+static const u8 sText_FoePkmnPrefix2[] = _("Foe ");
+static const u8 sText_AllyPkmnPrefix[] = _("Ally ");
+static const u8 sText_FoePkmnPrefix3[] = _("Foe ");
+static const u8 sText_AllyPkmnPrefix2[] = _("Ally ");
+static const u8 sText_FoePkmnPrefix4[] = _("Foe ");
+static const u8 sText_AllyPkmnPrefix3[] = _("Ally ");
+static const u8 sText_AttackerUsedX[] = _("{ATTACKING_MON} used\n{STRING 1}");
+static const u8 sText_ExclamationMark[] = _("!");
+static const u8 sText_ExclamationMark2[] = _("!");
+static const u8 sText_ExclamationMark3[] = _("!");
+static const u8 sText_ExclamationMark4[] = _("!");
+static const u8 sText_ExclamationMark5[] = _("!");
+static const u8 sText_HP2[] = _("HP");
+static const u8 sText_Attack2[] = _("ATTACK");
+static const u8 sText_Defense2[] = _("DEFENSE");
+static const u8 sText_Speed[] = _("SPEED");
+static const u8 sText_SpAtk2[] = _("SP. ATK");
+static const u8 sText_SpDef2[] = _("SP. DEF");
+static const u8 sText_Accuracy[] = _("accuracy");
+static const u8 sText_Evasiveness[] = _("evasiveness");
+static const u8 sText_PokeblockWasTooSpicy[] = _("was too spicy!");
+static const u8 sText_PokeblockWasTooDry[] = _("was too dry!");
+static const u8 sText_PokeblockWasTooSweet[] = _("was too sweet!");
+static const u8 sText_PokeblockWasTooBitter[] = _("was too bitter!");
+static const u8 sText_PokeblockWasTooSour[] = _("was too sour!");
+static const u8 sText_PlayerUsedItem[] = _("{STRING 32} used\n{STRING 19}!");
+static const u8 sText_WallyUsedItem[] = _("WALLY used\n{STRING 19}!");
+static const u8 sText_Trainer1UsedItem[] = _("{STRING 25} {STRING 26}\nused {STRING 19}!");
+static const u8 sText_TrainerBlockedBall[] = _("The TRAINER blocked the BALL!");
+static const u8 sText_DontBeAThief[] = _("Don't be a thief!");
+static const u8 sText_ItDodgedBall[] = _("It dodged the thrown BALL!\nThis POKéMON can't be caught!");
+static const u8 sText_YouMissedPkmn[] = _("You missed the POKéMON!");
+static const u8 sText_PkmnBrokeFree[] = _("Oh, no!\nThe POKéMON broke free!");
+static const u8 sText_ItAppearedCaught[] = _("Aww!\nIt appeared to be caught!");
+static const u8 sText_AarghAlmostHadIt[] = _("Aargh!\nAlmost had it!");
+static const u8 sText_ShootSoClose[] = _("Shoot!\nIt was so close, too!");
+static const u8 sText_GotchaPkmnCaughtPlayer[] = _("Gotcha!\n{STRING 3} was caught!{UNKNOWN_A}{PLAY_BGM MUS_CAUGHT}\p");
+static const u8 sText_GotchaPkmnCaughtWally[] = _("Gotcha!\n{STRING 3} was caught!{UNKNOWN_A}{PLAY_BGM MUS_CAUGHT}{PAUSE 127}");
+static const u8 sText_GiveNicknameCaptured[] = _("Give a nickname to the\ncaptured {STRING 3}?");
+static const u8 sText_PkmnSentToPC[] = _("{STRING 3} was sent to\n{STRING 35} PC.");
+static const u8 sText_Someones[] = _("someone's");
+static const u8 sText_Lanettes[] = _("LANETTE's");
+static const u8 sText_PkmnDataAddedToDex[] = _("{STRING 3}'s data was\nadded to the POKéDEX.\p");
+static const u8 sText_ItIsRaining[] = _("It is raining.");
+static const u8 sText_SandstormIsRaging[] = _("A sandstorm is raging.");
+static const u8 sText_BoxIsFull[] = _("The BOX is full!\nYou can't catch any more!\p");
+static const u8 sText_EnigmaBerry[] = _("ENIGMA BERRY");
+static const u8 sText_BerrySuffix[] = _(" BERRY");
+static const u8 sText_PkmnsItemCuredParalysis[] = _("{STRING 16}'s {STRING 19}\ncured paralysis!");
+static const u8 sText_PkmnsItemCuredPoison[] = _("{STRING 16}'s {STRING 19}\ncured poison!");
+static const u8 sText_PkmnsItemHealedBurn[] = _("{STRING 16}'s {STRING 19}\nhealed its burn!");
+static const u8 sText_PkmnsItemDefrostedIt[] = _("{STRING 16}'s {STRING 19}\ndefrosted it!");
+static const u8 sText_PkmnsItemWokeIt[] = _("{STRING 16}'s {STRING 19}\nwoke it from its sleep!");
+static const u8 sText_PkmnsItemSnappedOut[] = _("{STRING 16}'s {STRING 19}\nsnapped it out of confusion!");
+static const u8 sText_PkmnsItemCuredProblem[] = _("{STRING 16}'s {STRING 19}\ncured its {STRING 0} problem!");
+static const u8 sText_PkmnsItemNormalizedStatus[] = _("{STRING 16}'s {STRING 19}\nnormalized its status!");
+static const u8 sText_PkmnsItemRestoredHealth[] = _("{STRING 16}'s {STRING 19}\nrestored health!");
+static const u8 sText_PkmnsItemRestoredPP[] = _("{STRING 16}'s {STRING 19}\nrestored {STRING 0}'s PP!");
+static const u8 sText_PkmnsItemRestoredStatus[] = _("{STRING 16}'s {STRING 19}\nrestored its status!");
+static const u8 sText_PkmnsItemRestoredHPALittle[] = _("{STRING 16}'s {STRING 19}\nrestored its HP a little!");
+static const u8 sText_ItemAllowsOnlyYMove[] = _("{STRING 19} allows the\nuse of only {STRING 17}!\p");
+static const u8 sText_PkmnHungOnWithX[] = _("{DEFENDING_MON} hung on\nusing its {STRING 19}!");
+const u8 gText_EmptyString3[] = _("");
+static const u8 sText_YouThrowABallNowRight[] = _("You throw a BALL now, right?\nI... I'll do my best!");
 const u8 gText_PkmnIsEvolving[] = _("What?\n{STRING 2} is evolving!");
 const u8 gText_CongratsPkmnEvolved[] = _("Congratulations! Your {STRING 2}\nevolved into {STRING 3}!{UNKNOWN_A}\p");
 const u8 gText_PkmnStoppedEvolving[] = _("Huh? {STRING 2}\nstopped evolving!\p");
-const u8 BattleText_OtherMenu[] = _("What should\n{STRING 15} do?");
-const u8 BattleText_PlayerMenu[] = _("What will\n{STRING 32} do?");
-const u8 BattleText_WallyMenu[] = _("What will\nWALLY do?");
-const u8 BattleText_LinkStandby[] = _("{PAUSE 16}Link standby...");
-const u8 BattleText_MenuOptions[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW SKY_BLUE LIGHT_BLUE WHITE2}FIGHT{CLEAR_TO 0x2E}BAG\nPOKéMON{CLEAR_TO 0x2E}RUN");
-const u8 BattleText_MenuOptionsSafari[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW SKY_BLUE LIGHT_BLUE WHITE2}BALL{CLEAR_TO 0x2E}{POKEBLOCK}\nGO NEAR{CLEAR_TO 0x2E}RUN");
-const u8 BattleText_PP[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW SKY_BLUE LIGHT_BLUE WHITE2}PP\nTYPE/");
-const u8 BattleText_Format[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW SKY_BLUE LIGHT_BLUE WHITE2}"); // cant think of a better name
-const u8 BattleText_ForgetMove[] = _("{COLOR_HIGHLIGHT_SHADOW SKY_BLUE LIGHT_BLUE WHITE2}{PALETTE 5}Which move should\nbe forgotten?");
-const u8 BattleText_YesNo[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW SKY_BLUE LIGHT_BLUE WHITE2}Yes\nNo");
-const u8 BattleText_SwitchWhich[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW SKY_BLUE LIGHT_BLUE WHITE2}Switch\nwhich?");
-const u8 BattleText_Format2[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW SKY_BLUE LIGHT_BLUE WHITE2}");
+const u8 gText_WhatWillPkmnDo[] = _("What should\n{STRING 15} do?");
+const u8 gText_WhatWillPkmnDo2[] = _("What will\n{STRING 32} do?");
+const u8 gText_WhatWillWallyDo[] = _("What will\nWALLY do?");
+const u8 gText_LinkStandby[] = _("{PAUSE 16}Link standby...");
+const u8 gText_BattleMenu[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW SKY_BLUE LIGHT_BLUE WHITE2}FIGHT{CLEAR_TO 0x2E}BAG\nPOKéMON{CLEAR_TO 0x2E}RUN");
+const u8 gText_SafariZoneMenu[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW SKY_BLUE LIGHT_BLUE WHITE2}BALL{CLEAR_TO 0x2E}{POKEBLOCK}\nGO NEAR{CLEAR_TO 0x2E}RUN");
+const u8 gText_MoveInterfacePPType[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW SKY_BLUE LIGHT_BLUE WHITE2}PP\nTYPE/");
+const u8 gText_MoveInterfaceDynamicColors[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW SKY_BLUE LIGHT_BLUE WHITE2}"); // cant think of a better name
+const u8 gText_WhichMoveToForget4[] = _("{COLOR_HIGHLIGHT_SHADOW SKY_BLUE LIGHT_BLUE WHITE2}{PALETTE 5}Which move should\nbe forgotten?");
+const u8 gText_BattleYesNoChoice[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW SKY_BLUE LIGHT_BLUE WHITE2}Yes\nNo");
+const u8 gText_BattleSwitchWhich[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW SKY_BLUE LIGHT_BLUE WHITE2}Switch\nwhich?");
+const u8 gText_BattleSwitchWhich2[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW SKY_BLUE LIGHT_BLUE WHITE2}");
 const u8 BattleText_RightArrow[] = _("{RIGHT_ARROW}");
 const u8 BattleText_Plus[] = _("+");
 const u8 BattleText_Dash[] = _("-");
-const u8 BattleText_HP[] = _("HP     ");
-const u8 BattleText_Attack[] = _("ATTACK ");
-const u8 BattleText_Defense[] = _("DEFENSE");
-const u8 BattleText_SpAtk[] = _("SP. ATK");
-const u8 BattleText_SpDef[] = _("SP. DEF");
-const u8 BattleText_SafariBalls[] = _("{HIGHLIGHT RED}SAFARI BALLS");
-const u8 BattleText_SafariBallsLeft[] = _("{HIGHLIGHT RED}Left: ");
+static const u8 sText_HP[] = _("HP     ");
+static const u8 sText_Attack[] = _("ATTACK ");
+static const u8 sText_Defense[] = _("DEFENSE");
+static const u8 sText_SpAtk[] = _("SP. ATK");
+static const u8 sText_SpDef[] = _("SP. DEF");
+const u8 gText_SafariBalls[] = _("{HIGHLIGHT RED}SAFARI BALLS");
+const u8 gText_SafariBallLeft[] = _("{HIGHLIGHT RED}Left: ");
 const u8 BattleText_HighlightRed[] = _("{HIGHLIGHT RED}");
-const u8 BattleText_Sleep[] = _("sleep");
-const u8 BattleText_PoisonStatus[] = _("poison");
-const u8 BattleText_Burn[] = _("burn");
-const u8 BattleText_Paralysis[] = _("paralysis");
-const u8 BattleText_IceStatus[] = _("ice");
-const u8 BattleText_Confusion[] = _("confusion");
-const u8 BattleText_Love[] = _("love");
-const u8 BattleText_Format3[] = _(" and ");
-const u8 BattleText_Format4[] = _(", ");
-const u8 BattleText_Format5[] = _(" ");
-const u8 BattleText_Format6[] = _("\l");
-const u8 BattleText_Format7[] = _("\n");
+const u8 gText_Sleep[] = _("sleep");
+const u8 gText_Poison[] = _("poison");
+const u8 gText_Burn[] = _("burn");
+const u8 gText_Paralysis[] = _("paralysis");
+const u8 gText_Ice[] = _("ice");
+const u8 gText_Confusion[] = _("confusion");
+const u8 gText_Love[] = _("love");
+const u8 gText_SpaceAndSpace[] = _(" and ");
+const u8 gText_CommaSpace[] = _(", ");
+const u8 gText_Space2[] = _(" ");
+const u8 gText_LineBreak[] = _("\l");
+const u8 gText_NewLine[] = _("\n");
 const u8 BattleText_Format8[] = _("are");
 const u8 BattleText_Format9[] = _("are");
 const u8 gBadEggNickname[] = _("Bad EGG"); // 8400E3A
-const u8 BattleText_Wally[] = _("WALLY");
-const u8 BattleText_Win[] = _("{HIGHLIGHT TRANSPARENT}Win"); // 8400E48
-const u8 BattleText_Loss[] = _("{HIGHLIGHT TRANSPARENT}Loss"); // 8400E4F
-const u8 BattleText_Tie[] = _("{HIGHLIGHT TRANSPARENT}Tie"); // 8400E57
-const u8 BattleText_Format10[] = _(" is");
-const u8 BattleText_Format11[] = _("'s");
+const u8 gText_BattleWallyName[] = _("WALLY");
+const u8 gText_Win[] = _("{HIGHLIGHT TRANSPARENT}Win"); // 8400E48
+const u8 gText_Loss[] = _("{HIGHLIGHT TRANSPARENT}Loss"); // 8400E4F
+const u8 gText_Draw[] = _("{HIGHLIGHT TRANSPARENT}Tie"); // 8400E57
+static const u8 sText_SpaceIs[] = _(" is");
+static const u8 sText_ApostropheS[] = _("'s");
 const u8 BattleText_Normal[] = _("a NORMAL move");
 const u8 BattleText_Fighting[] = _("a FIGHTING move");
 const u8 BattleText_Flying[] = _("a FLYING move");
@@ -841,380 +841,380 @@ const u8 BattleText_Ice[] = _("an ICE move");
 const u8 BattleText_Dragon[] = _("a DRAGON move");
 const u8 BattleText_Dark[] = _("a DARK move");
 
-const u8 *const gUnknown_08400F58[] =
+const u8 *const gStatNamesTable[] =
 {
-    BattleStatText_HP,
-    BattleStatText_Attack,
-    BattleStatText_Defense,
-    BattleStatText_Speed,
-    BattleStatText_SpAtk,
-    BattleStatText_SpDef,
-    BattleStatText_Accuracy,
-    BattleStatText_Evasion,
+    sText_HP2,
+    sText_Attack2,
+    sText_Defense2,
+    sText_Speed,
+    sText_SpAtk2,
+    sText_SpDef2,
+    sText_Accuracy,
+    sText_Evasiveness,
 };
 
-const u8 *const gUnknown_08400F78[] =
+const u8 *const gPokeblockWasTooXStringTable[] =
 {
-    ContestStatText_TooSpicy,
-    ContestStatText_TooDry,
-    ContestStatText_TooSweet,
-    ContestStatText_TooBitter,
-    ContestStatText_TooSour,
+    sText_PokeblockWasTooSpicy,
+    sText_PokeblockWasTooDry,
+    sText_PokeblockWasTooSweet,
+    sText_PokeblockWasTooBitter,
+    sText_PokeblockWasTooSour,
 };
 
 const u8 *const gBattleStringsTable[] =
 {
-    BattleText_UnknownString,
-    BattleText_GainExpPoints,
-    BattleText_GrewLevel,
-    BattleText_LearnedMove,
-    BattleText_TryingToLearnMove,
-    BattleText_CantLearnMore,
-    BattleText_DeleteMove,
-    BattleText_DeletedMove,
-    BattleText_StopLearning,
-    BattleText_DidNotLearn,
-    BattleText_LearnedMove2,
-    BattleText_AttackMissed,
-    BattleText_ProtectedItself,
-    BattleText_StatNoHigher,
-    BattleText_AvoidedDamage,
-    BattleText_DoesntAffect,
-    BattleText_AttackingFainted,
-    BattleText_DefendingFainted,
-    BattleText_WinningPrize,
-    BattleText_OutOfUsablePoke,
-    BattleText_WhitedOut,
-    BattleText_PreventEscape,
-    BattleText_HitMulti,
-    BattleText_FellAsleep,
-    BattleText_MadeAsleep,
-    BattleText_DefendingAsleep,
-    BattleText_AttackingAsleep,
-    BattleText_WasntAffected,
-    BattleText_Poisoned,
-    BattleText_Poisoned2,
-    BattleText_PoisonHurt,
-    BattleText_AlreadyPoisoned,
-    BattleText_BadlyPoisoned,
-    BattleText_EnergyDrained,
-    BattleText_Burned,
-    BattleText_Burned2,
-    BattleText_BurnHurt,
-    BattleText_Frozen,
-    BattleText_Frozen2,
-    BattleText_FrozenSolid,
-    BattleText_DefendingDefrosted,
-    BattleText_AttackingDefrosted,
-    BattleText_Defrosted,
-    BattleText_Paralyzed,
-    BattleText_Paralyzed2,
-    BattleText_Paralyzed3,
-    BattleText_AlreadyParalyzed,
-    BattleText_ParalysisHealed,
-    BattleText_DreamEaten,
-    BattleText_AttackingStatNoHigher,
-    BattleText_DefendingStatNoHigher,
-    BattleText_StoppedWorking,
-    BattleText_StoppedWorking2,
-    BattleText_Confused,
-    BattleText_ConfusionSnapOut,
-    BattleText_BecameConfused,
-    BattleText_AlreadyConfused,
-    BattleText_FellLove,
-    BattleText_InLoveWith,
-    BattleText_ImmobilizedBy,
-    BattleText_BlownAway,
-    BattleText_TypeTransform,
-    BattleText_Flinched,
-    BattleText_RegainedHealth,
-    BattleText_HPFull,
-    BattleText_RaisedSpDef,
-    BattleText_RaisedDefense,
-    BattleText_CoveredVeil,
-    BattleText_SafeguardActive,
-    BattleText_SafeguardFaded,
-    BattleText_WentToSleep,
-    BattleText_SpeltHealthy,
-    BattleText_WhipWhirlwind,
-    BattleText_TookSunlight,
-    BattleText_LoweredHead,
-    BattleText_IsGlowing,
-    BattleText_FlewHigh,
-    BattleText_DugHole,
-    BattleText_SqueezedBind,
-    BattleText_TrappedVortex,
-    BattleText_Wrapped,
-    BattleText_Clamped,
-    BattleText_HurtBy,
-    BattleText_FreedFrom,
-    BattleText_KeptGoingCrash,
-    BattleText_MistShroud,
-    BattleText_MistProtect,
-    BattleText_GetPumped,
-    BattleText_HitRecoil,
-    BattleText_ProtectedItself2,
-    BattleText_SandBuffeted,
-    BattleText_HailStricken,
-    BattleText_WasSeeded,
-    BattleText_EvadedAttack,
-    BattleText_HealthSapped,
-    BattleText_FastAsleep,
-    BattleText_WokeUp,
-    BattleText_UproarAwake,
-    BattleText_UproarWoke,
-    BattleText_UproarCaused,
-    BattleText_UproarMaking,
-    BattleText_CalmedDown,
-    BattleText_UproarCantSleep,
-    BattleText_Stockpiled,
-    BattleText_StockpiledCant,
-    BattleText_UproarCantSleep2,
-    BattleText_UproarKeptAwake,
-    BattleText_StayedAwake,
-    BattleText_StoringEnergy,
-    BattleText_UnleashedEnergy,
-    BattleText_FatigueConfuse,
-    BattleText_PickedUpYen,
-    BattleText_Unaffected,
-    BattleText_Transformed,
-    BattleText_SubMade,
-    BattleText_SubAlready,
-    BattleText_SubTookDamage,
-    BattleText_SubFaded,
-    BattleText_MustRecharge,
-    BattleText_RageBuilding,
-    BattleText_MoveWasDisabled,
-    BattleText_MoveIsDisabled,
-    BattleText_DisabledNoMore,
-    BattleText_EncoreGot,
-    BattleText_EncoreEnded,
-    BattleText_TookAim,
-    BattleText_SketchedMove,
-    BattleText_DestinyBondTake,
-    BattleText_DestinyBondTaken,
-    BattleText_ReducedBy,
-    BattleText_StoleSomething,
-    BattleText_CantEscapeNow,
-    BattleText_NightmareStart,
-    BattleText_NightmareLock,
-    BattleText_CurseLay,
-    BattleText_CurseAfflict,
-    BattleText_SpikesScattered,
-    BattleText_SpikesHurt,
-    BattleText_IdentifiedPoke,
-    BattleText_PerishSongFell,
-    BattleText_BracedItself,
-    BattleText_EnduredHit,
-    BattleText_MagnitudeCount,
-    BattleText_CutHPMaxATK,
-    BattleText_CopyStatChanges,
-    BattleText_GotFreeFrom,
-    BattleText_LeechShed,
-    BattleText_SpikesBlownAway,
-    BattleText_FledBattle,
-    BattleText_ForesawAttack,
-    BattleText_TookAttack,
-    BattleText_PokeAttack,
-    BattleText_CenterAttention,
-    BattleText_ChargingPower,
-    BattleText_NaturePower,
-    BattleText_StatusNormal,
-    BattleText_NoMovesLeft,
-    BattleText_TormentSubject,
-    BattleText_TormentNoUse,
-    BattleText_TightenFocus,
-    BattleText_TauntFell,
-    BattleText_TauntNoUse,
-    BattleText_ReadyToHelp,
-    BattleText_SwitchedItems,
-    BattleText_CopiedObject,
-    BattleText_WishMade,
-    BattleText_WishTrue,
-    BattleText_PlantedRoots,
-    BattleText_AbsorbNutrients,
-    BattleText_AnchoredItself,
-    BattleText_DrowsyMade,
-    BattleText_KnockedOffItem,
-    BattleText_AbilitySwap,
-    BattleText_SealedMove,
-    BattleText_SealedNoUse,
-    BattleText_GrudgeBear,
-    BattleText_GrudgeLosePP,
-    BattleText_ShroudedItself,
-    BattleText_MagicCoatBounce,
-    BattleText_AwaitMove,
-    BattleText_SnatchedMove,
-    BattleText_RainMade,
-    BattleText_SpeedRisen,
-    BattleText_ProtectedBy,
-    BattleText_PreventedBy,
-    BattleText_HPRestoredUsing,
-    BattleText_MadeType,
-    BattleText_PreventedPara,
-    BattleText_PreventedRomance,
-    BattleText_PreventedPoison,
-    BattleText_PreventedConfusion,
-    BattleText_RaisedFirePower,
-    BattleText_AnchorsItself,
-    BattleText_CutsAttack,
-    BattleText_PreventedStatLoss,
-    BattleText_HurtOther,
-    BattleText_Traced,
-    BattleText_Sharply,
-    BattleText_Rose,
-    BattleText_Harshly,
-    BattleText_Fell,
-    BattleText_UnknownString7,
-    BattleText_UnknownString3,
-    BattleText_UnknownString5,
-    BattleText_UnknownString6,
-    BattleText_Critical,
-    BattleText_GrandSlam,
-    BattleText_MoveForget123,
-    BattleText_MoveForgetAnd,
-    BattleText_NotEffective,
-    BattleText_SuperEffective,
-    BattleText_GotAwaySafely,
-    BattleText_FledWild,
-    BattleText_NoRunning,
-    BattleText_CantEscape2,
-    BattleText_BirchDontLeaveMe,
-    BattleText_Nothing,
-    BattleText_Failed,
-    BattleText_HurtItself,
-    BattleText_MirrorFail,
-    BattleText_RainStart,
-    BattleText_PourStart,
-    BattleText_RainCont1,
-    BattleText_PourCont,
-    BattleText_RainStop,
-    BattleText_SandBrewed,
-    BattleText_SandRages,
-    BattleText_SandSubsided,
-    BattleText_SunBright,
-    BattleText_SunStrong,
-    BattleText_SunFaded,
-    BattleText_HailStart,
-    BattleText_HailCont,
-    BattleText_HailStop,
-    BattleText_SpitUpFail,
-    BattleText_SwallowFail,
-    BattleText_WindHeatWave,
-    BattleText_StatElim,
-    BattleText_CoinScatter,
-    BattleText_SubWeak,
-    BattleText_PainSplit,
-    BattleText_BellChime,
-    BattleText_PerishSong,
-    BattleText_NoPP1,
-    BattleText_NoPP2,
-    BattleText_Used1,
-    BattleText_TutorialUsed,
-    BattleText_BlockBall,
-    BattleText_DontBeAThief,
-    BattleText_DodgeBall,
-    BattleText_MissPoke,
-    BattleText_BallBrokeOhNo,
-    BattleText_BallBrokeAppeared,
-    BattleText_BallBrokeAlmost,
-    BattleText_BallBrokeSoClose,
-    BattleText_BallCaught1,
-    BattleText_BallCaught2,
-    BattleText_GiveNickname,
-    BattleText_SentToPC,
-    BattleText_AddedToDex,
-    BattleText_Raining,
-    BattleText_Sandstorm,
-    BattleText_CantEscape,
-    BattleText_IgnoredOrdersSLP,
-    BattleText_IgnoredOrders,
-    BattleText_BeganNap,
-    BattleText_LoafingAround,
-    BattleText_WontObey,
-    BattleText_TurnedAway,
-    BattleText_NotNotice,
-    BattleText_WillSwitch,
-    BattleText_CreptCloser,
-    BattleText_CantGetCloser,
-    BattleText_WatchingCarefully,
-    BattleText_CuriousAbout,
-    BattleText_EnthralledBy,
-    BattleText_IgnoredThing,
-    BattleText_ThrewBlock,
-    BattleText_SafariOver,
-    BattleText_CuredParalysis,
-    BattleText_CuredPoison,
-    BattleText_CuredBurn,
-    BattleText_CuredFreeze,
-    BattleText_CuredSleep,
-    BattleText_CuredConfusion,
-    BattleText_CuredStatus,
-    BattleText_RestoredHealth,
-    BattleText_RestoredPP,
-    BattleText_RestoredStatus,
-    BattleText_RestoredHPLittle,
-    BattleText_ChoiceBand,
-    BattleText_FocusSash,
-    BattleText_Terminator2,
-    BattleText_PreventedBurn,
-    BattleText_BlocksOther,
-    BattleText_RestoredHPByItem,
-    BattleText_WhipSandstorm,
-    BattleText_PreventedLoss,
-    BattleText_InfatuatedPoke,
-    BattleText_MadeIneffective,
-    BattleText_CuredProblem,
-    BattleText_OozeSuckup,
-    BattleText_Transformed2,
-    BattleText_ElecWeakened,
-    BattleText_FireWeakened,
-    BattleText_HidUnderwater,
-    BattleText_SprangUp,
-    BattleText_CantForgetHM,
-    BattleText_FoundOne,
-    BattleText_PlayerDefeatedTrainer2,
-    BattleText_SoothingAroma,
-    BattleText_CantUseItems,
-    BattleText_UnknownString2,
-    BattleText_UnknownString4,
-    BattleText_HustleUse,
-    BattleText_MadeUseless,
-    BattleText_SandTombTrapped,
-    BattleText_Terminator,
-    BattleText_BoostedExp,
-    BattleText_SunIntensified,
-    BattleText_GroundMoveNegate,
-    BattleText_WallyBall,
-    BattleText_TookAttack2,
-    BattleText_ChoseDestiny,
-    BattleText_LostFocus,
-    BattleText_UseNext,
-    BattleText_FledUsingItem,
-    BattleText_FledUsingOther,
-    BattleText_DraggedOut,
-    BattleText_PreventedOther,
-    BattleText_NormalizedStatus,
-    BattleText_Used2,
-    BattleText_BoxFull,
-    BattleText_AvoidedAttack,
-    BattleText_MadeIneffective2,
-    BattleText_PreventedFlinching,
-    BattleText_AlreadyBurned,
-    BattleText_StatNoLower,
-    BattleText_BlocksOther2,
-    BattleText_WoreOff,
-    BattleText_RaisedDefenseLittle,
-    BattleText_RaisedSpDefLittle,
-    BattleText_BrokeWall,
-    BattleText_PreventedOther2,
-    BattleText_CuredOfProblem,
-    BattleText_AttackingCantEscape,
-    BattleText_Obtained1,
-    BattleText_Obtained2,
-    BattleText_Obtained3,
-    BattleText_NoEffect,
-    BattleText_NoEffectOn,
+    sText_Trainer1LoseText,
+    sText_PkmnGainedEXP,
+    sText_PkmnGrewToLv,
+    sText_PkmnLearnedMove,
+    sText_TryToLearnMove1,
+    sText_TryToLearnMove2,
+    sText_TryToLearnMove3,
+    sText_PkmnForgotMove,
+    sText_StopLearningMove,
+    sText_DidNotLearnMove,
+    sText_PkmnLearnedMove2,
+    sText_AttackMissed,
+    sText_PkmnProtectedItself,
+    sText_StatsWontIncrease2,
+    sText_AvoidedDamage,
+    sText_ItDoesntAffect,
+    sText_AttackerFainted,
+    sText_TargetFainted,
+    sText_PlayerGotMoney,
+    sText_PlayerWhiteout,
+    sText_PlayerWhiteout2,
+    sText_PreventsEscape,
+    sText_HitXTimes,
+    sText_PkmnFellAsleep,
+    sText_PkmnMadeSleep,
+    sText_PkmnAlreadyAsleep,
+    sText_PkmnAlreadyAsleep2,
+    sText_PkmnWasntAffected,
+    sText_PkmnWasPoisoned,
+    sText_PkmnPoisonedBy,
+    sText_PkmnHurtByPoison,
+    sText_PkmnAlreadyPoisoned,
+    sText_PkmnBadlyPoisoned,
+    sText_PkmnEnergyDrained,
+    sText_PkmnWasBurned,
+    sText_PkmnBurnedBy,
+    sText_PkmnHurtByBurn,
+    sText_PkmnWasFrozen,
+    sText_PkmnFrozenBy,
+    sText_PkmnIsFrozen,
+    sText_PkmnWasDefrosted,
+    sText_PkmnWasDefrosted2,
+    sText_PkmnWasDefrostedBy,
+    sText_PkmnWasParalyzed,
+    sText_PkmnWasParalyzedBy,
+    sText_PkmnIsParalyzed,
+    sText_PkmnIsAlreadyParalyzed,
+    sText_PkmnHealedParalysis,
+    sText_PkmnDreamEaten,
+    sText_StatsWontIncrease,
+    sText_StatsWontDecrease,
+    sText_TeamStoppedWorking,
+    sText_FoeStoppedWorking,
+    sText_PkmnIsConfused,
+    sText_PkmnHealedConfusion,
+    sText_PkmnWasConfused,
+    sText_PkmnAlreadyConfused,
+    sText_PkmnFellInLove,
+    sText_PkmnInLove,
+    sText_PkmnImmobilizedByLove,
+    sText_PkmnBlownAway,
+    sText_PkmnChangedType,
+    sText_PkmnFlinched,
+    sText_PkmnRegainedHealth,
+    sText_PkmnHPFull,
+    sText_PkmnRaisedSpDef,
+    sText_PkmnRaisedDef,
+    sText_PkmnCoveredByVeil,
+    sText_PkmnUsedSafeguard,
+    sText_PkmnSafeguardExpired,
+    sText_PkmnWentToSleep,
+    sText_PkmnSleptHealthy,
+    sText_PkmnWhippedWhirlwind,
+    sText_PkmnTookSunlight,
+    sText_PkmnLoweredHead,
+    sText_PkmnIsGlowing,
+    sText_PkmnFlewHigh,
+    sText_PkmnDugHole,
+    sText_PkmnSqueezedByBind,
+    sText_PkmnTrappedInVortex,
+    sText_PkmnWrappedBy,
+    sText_PkmnClamped,
+    sText_PkmnHurtBy,
+    sText_PkmnFreedFrom,
+    sText_PkmnCrashed,
+    gText_PkmnShroudedInMist,
+    sText_PkmnProtectedByMist,
+    gText_PkmnGettingPumped,
+    sText_PkmnHitWithRecoil,
+    sText_PkmnProtectedItself2,
+    sText_PkmnBuffetedBySandstorm,
+    sText_PkmnPeltedByHail,
+    sText_PkmnSeeded,
+    sText_PkmnEvadedAttack,
+    sText_PkmnSappedByLeechSeed,
+    sText_PkmnFastAsleep,
+    sText_PkmnWokeUp,
+    sText_PkmnUproarKeptAwake,
+    sText_PkmnWokeUpInUproar,
+    sText_PkmnCausedUproar,
+    sText_PkmnMakingUproar,
+    sText_PkmnCalmedDown,
+    sText_PkmnCantSleepInUproar,
+    sText_PkmnStockpiled,
+    sText_PkmnCantStockpile,
+    sText_PkmnCantSleepInUproar2,
+    sText_UproarKeptPkmnAwake,
+    sText_PkmnStayedAwakeUsing,
+    sText_PkmnStoringEnergy,
+    sText_PkmnUnleashedEnergy,
+    sText_PkmnFatigueConfusion,
+    sText_PlayerPickedUpMoney,
+    sText_PkmnUnaffected,
+    sText_PkmnTransformedInto,
+    sText_PkmnMadeSubstitute,
+    sText_PkmnHasSubstitute,
+    sText_SubstituteDamaged,
+    sText_PkmnSubstituteFaded,
+    sText_PkmnMustRecharge,
+    sText_PkmnRageBuilding,
+    sText_PkmnMoveWasDisabled,
+    sText_PkmnMoveIsDisabled,
+    sText_PkmnMoveDisabledNoMore,
+    sText_PkmnGotEncore,
+    sText_PkmnEncoreEnded,
+    sText_PkmnTookAim,
+    sText_PkmnSketchedMove,
+    sText_PkmnTryingToTakeFoe,
+    sText_PkmnTookFoe,
+    sText_PkmnReducedPP,
+    sText_PkmnStoleItem,
+    sText_TargetCantEscapeNow,
+    sText_PkmnFellIntoNightmare,
+    sText_PkmnLockedInNightmare,
+    sText_PkmnLaidCurse,
+    sText_PkmnAfflictedByCurse,
+    sText_SpikesScattered,
+    sText_PkmnHurtBySpikes,
+    sText_PkmnIdentified,
+    sText_PkmnPerishCountFell,
+    sText_PkmnBracedItself,
+    sText_PkmnEnduredHit,
+    sText_MagnitudeStrength,
+    sText_PkmnCutHPMaxedAttack,
+    sText_PkmnCopiedStatChanges,
+    sText_PkmnGotFree,
+    sText_PkmnShedLeechSeed,
+    sText_PkmnBlewAwaySpikes,
+    sText_PkmnFledFromBattle,
+    sText_PkmnForesawAttack,
+    sText_PkmnTookAttack,
+    sText_PkmnAttack,
+    sText_PkmnCenterAttention,
+    sText_PkmnChargingPower,
+    sText_NaturePowerTurnedInto,
+    sText_PkmnStatusNormal,
+    sText_PkmnHasNoMovesLeft,
+    sText_PkmnSubjectedToTorment,
+    sText_PkmnCantUseMoveTorment,
+    sText_PkmnTighteningFocus,
+    sText_PkmnFellForTaunt,
+    sText_PkmnCantUseMoveTaunt,
+    sText_PkmnReadyToHelp,
+    sText_PkmnSwitchedItems,
+    sText_PkmnCopiedFoe,
+    sText_PkmnMadeWish,
+    sText_PkmnWishCameTrue,
+    sText_PkmnPlantedRoots,
+    sText_PkmnAbsorbedNutrients,
+    sText_PkmnAnchoredItself,
+    sText_PkmnWasMadeDrowsy,
+    sText_PkmnKnockedOff,
+    sText_PkmnSwappedAbilities,
+    sText_PkmnSealedOpponentMove,
+    sText_PkmnCantUseMoveSealed,
+    sText_PkmnWantsGrudge,
+    sText_PkmnLostPPGrudge,
+    sText_PkmnShroudedItself,
+    sText_PkmnMoveBounced,
+    sText_PkmnWaitsForTarget,
+    sText_PkmnSnatchedMove,
+    sText_PkmnMadeItRain,
+    sText_PkmnRaisedSpeed,
+    sText_PkmnProtectedBy,
+    sText_PkmnPreventsUsage,
+    sText_PkmnRestoredHPUsing,
+    sText_PkmnChangedTypeWith,
+    sText_PkmnPreventsParalysisWith,
+    sText_PkmnPreventsRomanceWith,
+    sText_PkmnPreventsPoisoningWith,
+    sText_PkmnPreventsConfusionWith,
+    sText_PkmnRaisedFirePowerWith,
+    sText_PkmnAnchorsItselfWith,
+    sText_PkmnCutsAttackWith,
+    sText_PkmnPreventsStatLossWith,
+    sText_PkmnHurtsWith,
+    sText_PkmnTraced,
+    sText_StatSharply,
+    gText_StatRose,
+    sText_StatHarshly,
+    sText_StatFell,
+    sText_AttackersStatRose,
+    gText_DefendersStatRose,
+    sText_AttackersStatFell,
+    sText_DefendersStatFell,
+    sText_CriticalHit,
+    sText_OneHitKO,
+    sText_123Poof,
+    sText_AndEllipsis,
+    sText_NotVeryEffective,
+    sText_SuperEffective,
+    sText_GotAwaySafely,
+    sText_WildPkmnFled,
+    sText_NoRunningFromTrainers,
+    sText_CantEscape,
+    sText_DontLeaveBirch,
+    sText_ButNothingHappened,
+    sText_ButItFailed,
+    sText_ItHurtConfusion,
+    sText_MirrorMoveFailed,
+    sText_StartedToRain,
+    sText_DownpourStarted,
+    sText_RainContinues,
+    sText_DownpourContinues,
+    sText_RainStopped,
+    sText_SandstormBrewed,
+    sText_SandstormRages,
+    sText_SandstormSubsided,
+    sText_SunlightGotBright,
+    sText_SunlightStrong,
+    sText_SunlightFaded,
+    sText_StartedHail,
+    sText_HailContinues,
+    sText_HailStopped,
+    sText_FailedToSpitUp,
+    sText_FailedToSwallow,
+    sText_WindBecameHeatWave,
+    sText_StatChangesGone,
+    sText_CoinsScattered,
+    sText_TooWeakForSubstitute,
+    sText_SharedPain,
+    sText_BellChimed,
+    sText_FaintInThree,
+    sText_NoPPLeft,
+    sText_ButNoPPLeft,
+    sText_PlayerUsedItem,
+    sText_WallyUsedItem,
+    sText_TrainerBlockedBall,
+    sText_DontBeAThief,
+    sText_ItDodgedBall,
+    sText_YouMissedPkmn,
+    sText_PkmnBrokeFree,
+    sText_ItAppearedCaught,
+    sText_AarghAlmostHadIt,
+    sText_ShootSoClose,
+    sText_GotchaPkmnCaughtPlayer,
+    sText_GotchaPkmnCaughtWally,
+    sText_GiveNicknameCaptured,
+    sText_PkmnSentToPC,
+    sText_PkmnDataAddedToDex,
+    sText_ItIsRaining,
+    sText_SandstormIsRaging,
+    sText_CantEscape2,
+    sText_PkmnIgnoresAsleep,
+    sText_PkmnIgnoredOrders,
+    sText_PkmnBeganToNap,
+    sText_PkmnLoafing,
+    sText_PkmnWontObey,
+    sText_PkmnTurnedAway,
+    sText_PkmnPretendNotNotice,
+    sText_EnemyAboutToSwitchPkmn,
+    sText_CreptCloser,
+    sText_CantGetCloser,
+    sText_PkmnWatchingCarefully,
+    sText_PkmnCuriousAboutX,
+    sText_PkmnEnthralledByX,
+    sText_PkmnIgnoredX,
+    sText_ThrewPokeblockAtPkmn,
+    sText_OutOfSafariBalls,
+    sText_PkmnsItemCuredParalysis,
+    sText_PkmnsItemCuredPoison,
+    sText_PkmnsItemHealedBurn,
+    sText_PkmnsItemDefrostedIt,
+    sText_PkmnsItemWokeIt,
+    sText_PkmnsItemSnappedOut,
+    sText_PkmnsItemCuredProblem,
+    sText_PkmnsItemRestoredHealth,
+    sText_PkmnsItemRestoredPP,
+    sText_PkmnsItemRestoredStatus,
+    sText_PkmnsItemRestoredHPALittle,
+    sText_ItemAllowsOnlyYMove,
+    sText_PkmnHungOnWithX,
+    gText_EmptyString3,
+    sText_PkmnsXPreventsBurns,
+    sText_PkmnsXBlocksY,
+    sText_PkmnsXRestoredHPALittle2,
+    sText_PkmnsXWhippedUpSandstorm,
+    sText_PkmnsXPreventsYLoss,
+    sText_PkmnsXInfatuatedY,
+    sText_PkmnsXMadeYIneffective,
+    sText_PkmnsXCuredYProblem,
+    sText_ItSuckedLiquidOoze,
+    sText_PkmnTransformed,
+    sText_ElectricityWeakened,
+    sText_FireWeakened,
+    sText_PkmnHidUnderwater,
+    sText_PkmnSprangUp,
+    sText_HMMovesCantBeForgotten,
+    sText_XFoundOneY,
+    sText_PlayerDefeatedLinkTrainerTrainer1,
+    sText_SoothingAroma,
+    sText_ItemsCantBeUsedNow,
+    sText_ForXCommaYZ,
+    sText_UsingItemTheStatOfPkmnRose,
+    sText_PkmnUsedXToGetPumped,
+    sText_PkmnsXMadeYUseless,
+    sText_PkmnTrappedBySandTomb,
+    sText_EmptyString4,
+    sText_ABoosted,
+    sText_PkmnsXIntensifiedSun,
+    sText_PkmnMakesGroundMiss,
+    sText_YouThrowABallNowRight,
+    sText_PkmnsXTookAttack,
+    sText_PkmnChoseXAsDestiny,
+    sText_PkmnLostFocus,
+    sText_UseNextPkmn,
+    sText_PkmnFledUsingIts,
+    sText_PkmnFledUsing,
+    sText_PkmnWasDraggedOut,
+    sText_PreventedFromWorking,
+    sText_PkmnsItemNormalizedStatus,
+    sText_Trainer1UsedItem,
+    sText_BoxIsFull,
+    sText_PkmnAvoidedAttack,
+    sText_PkmnsXMadeItIneffective,
+    sText_PkmnsXPreventsFlinching,
+    sText_PkmnAlreadyHasBurn,
+    sText_StatsWontDecrease2,
+    sText_PkmnsXBlocksY2,
+    sText_PkmnsXWoreOff,
+    sText_PkmnRaisedDefALittle,
+    sText_PkmnRaisedSpDefALittle,
+    sText_TheWallShattered,
+    sText_PkmnsXPreventsYsZ,
+    sText_PkmnsXCuredItsYProblem,
+    sText_AttackerCantEscape,
+    sText_PkmnObtainedX,
+    sText_PkmnObtainedX2,
+    sText_PkmnObtainedXYObtainedZ,
+    sText_ButNoEffect,
+    sText_PkmnsXHadNoEffectOnY,
 };
 
 // below are lists of battle string enums and NOT pointers to the strings.
@@ -1579,17 +1579,17 @@ const u16 gTrappingMoves[] =
     0xFFFF,
 };
 
-const u8 *const gUnknown_0840165C[] =
+const u8 *const gStatNamesTable2[] =
 {
-    BattleText_HP,
-    BattleText_SpAtk,
-    BattleText_Attack,
-    BattleText_SpDef,
-    BattleText_Defense,
-    BattleStatText_Speed,
+    sText_HP,
+    sText_SpAtk,
+    sText_Attack,
+    sText_SpDef,
+    sText_Defense,
+    sText_Speed,
 };
 
-const u8 *const gUnknown_08401674[] =
+static const u8 *const sATypeMove_Table[] =
 {
     BattleText_Normal,
     BattleText_Fighting,

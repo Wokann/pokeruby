@@ -23,9 +23,9 @@ extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern u8 gDisplayedStringBattle[];
 extern u8 gActionSelectionCursor[];
 
-extern const u8 BattleText_PlayerMenu[];
+extern const u8 gText_WhatWillPkmnDo2[];
 extern u8 gActiveBattler;
-extern const u8 BattleText_MenuOptionsSafari[];
+extern const u8 gText_SafariZoneMenu[];
 
 extern void *gBattlerControllerFuncs[];
 extern u8 gBattleBufferA[][0x200];
@@ -482,7 +482,7 @@ void SafariHandlecmd18(void)
     Text_FillWindowRectDefPalette(&gWindowTemplate_Contest_MoveDescription, 10, 2, 35, 16, 36);
     gBattlerControllerFuncs[gActiveBattler] = bx_battle_menu_t6_2;
 
-    Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, BattleText_MenuOptionsSafari, 400, 18, 35);
+    Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gText_SafariZoneMenu, 400, 18, 35);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
     MenuCursor_Create814A5C0(0, 0xFFFF, 12, 11679, 0);
 
@@ -490,7 +490,7 @@ void SafariHandlecmd18(void)
         nullsub_8(i);
 
     ActionSelectionCreateCursorAt(gActionSelectionCursor[gActiveBattler], 0);
-    BattleStringExpandPlaceholdersToDisplayedString(BattleText_PlayerMenu);
+    BattleStringExpandPlaceholdersToDisplayedString(gText_WhatWillPkmnDo2);
 
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gDisplayedStringBattle, SUB_812BB10_TILE_DATA_OFFSET, 2, 35);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);

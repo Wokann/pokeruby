@@ -48,7 +48,7 @@
 #include "scanline_effect.h"
 #include "util.h"
 #include "ewram.h"
-#include "battle_string_ids.h"
+#include "constants/battle_string_ids.h"
 #include "constants/trainers.h"
 
 static void CB2_InitBattleInternal(void);
@@ -83,7 +83,7 @@ extern const u16 gBattleTextboxPalette[];
 extern const struct MonCoords gCastformFrontSpriteCoords[];
 extern const u8 Str_821F7EA[];
 extern const u8 gUnknown_Debug_821F7F3[];
-extern const u8 BattleText_YesNo[];
+extern const u8 gText_BattleYesNoChoice[];
 extern u8 gStatStageRatios[][2];
 extern u8 gActionsByTurnOrder[4];
 extern struct MultiBattlePokemonTx gMultiPartnerParty[];
@@ -2768,7 +2768,7 @@ void debug_sub_8012C08(u8 taskId, u8 b)
         Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, Str_821F7EA, 144, 2, 35);
     }
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
-    Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, BattleText_YesNo, 656, 26, 29);
+    Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gText_BattleYesNoChoice, 656, 26, 29);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
     gTasks[taskId].data[3] = 1;
     debug_sub_8012B2C(1);

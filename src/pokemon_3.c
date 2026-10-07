@@ -50,16 +50,16 @@ extern u16 gTrainerBattleOpponent_A;
 extern u16 gBattleTypeFlags;
 extern u32 gTMHMLearnsets[][2];
 extern u8 gBattleMonForms[];
-extern const u8 BattleText_Wally[];
+extern const u8 gText_BattleWallyName[];
 extern u8 gLastUsedAbility;
-extern const u8 BattleText_PreventedSwitch[];
+extern const u8 gText_PkmnsXPreventsSwitching[];
 extern u16 gBattlerPartyIndexes[];
 
-extern u8 BattleText_Rose[];
-extern u8 BattleText_UnknownString3[];
-extern u8 BattleText_MistShroud[];
-extern u8 BattleText_GetPumped[];
-extern u8 *gUnknown_08400F58[];
+extern u8 gText_StatRose[];
+extern u8 gText_DefendersStatRose[];
+extern u8 gText_PkmnShroudedInMist[];
+extern u8 gText_PkmnGettingPumped[];
+extern const u8 *const gStatNamesTable[];
 
 bool8 HealStatusConditions(struct Pokemon *mon, u32 unused, u32 healMask, u8 battler)
 {
@@ -197,9 +197,9 @@ static const u8 sStatsToRaise[] = {1, 1, 3, 2, 4, 6};
 static void BufferStatRoseMessage(int statIdx)
 {
     gBattlerTarget = gBattlerInMenuId;
-    StringCopy(gBattleTextBuff1, gUnknown_08400F58[sStatsToRaise[statIdx]]);
-    StringCopy(gBattleTextBuff2, BattleText_Rose);
-    BattleStringExpandPlaceholdersToDisplayedString(BattleText_UnknownString3);
+    StringCopy(gBattleTextBuff1, gStatNamesTable[sStatsToRaise[statIdx]]);
+    StringCopy(gBattleTextBuff2, gText_StatRose);
+    BattleStringExpandPlaceholdersToDisplayedString(gText_DefendersStatRose);
 }
 
 u8 *UseStatIncreaseItem(u16 itemId)
@@ -238,7 +238,7 @@ u8 *UseStatIncreaseItem(u16 itemId)
             else
             {
                 gBattlerAttacker = gBattlerInMenuId;
-                BattleStringExpandPlaceholdersToDisplayedString(BattleText_GetPumped);
+                BattleStringExpandPlaceholdersToDisplayedString(gText_PkmnGettingPumped);
             }
         }
     }
@@ -246,7 +246,7 @@ u8 *UseStatIncreaseItem(u16 itemId)
     if (itemEffect[3] & 0x80)
     {
         gBattlerAttacker = gBattlerInMenuId;
-        BattleStringExpandPlaceholdersToDisplayedString(BattleText_MistShroud);
+        BattleStringExpandPlaceholdersToDisplayedString(gText_PkmnShroudedInMist);
     }
 
     return gDisplayedStringBattle;
@@ -1133,7 +1133,7 @@ u16 GetBattleBGM(void)
         case 0x20:
             return MUS_VS_CHAMPION;
         case 0x2E:
-            if (!StringCompare(gTrainers[gTrainerBattleOpponent_A].trainerName, BattleText_Wally))
+            if (!StringCompare(gTrainers[gTrainerBattleOpponent_A].trainerName, gText_BattleWallyName))
                 return MUS_VS_TRAINER;
             return MUS_VS_RIVAL;
         case 0x18:
@@ -1305,7 +1305,7 @@ void SetMonPreventsSwitchingString(void)
     gBattleTextBuff2[2] = gBattlerInMenuId;
     gBattleTextBuff2[3] = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[gBattlerInMenuId]);
     gBattleTextBuff2[4] = B_BUFF_EOS;
-    BattleStringExpandPlaceholders(BattleText_PreventedSwitch, gStringVar4);
+    BattleStringExpandPlaceholders(gText_PkmnsXPreventsSwitching, gStringVar4);
 }
 
 void SetWildMonHeldItem(void)

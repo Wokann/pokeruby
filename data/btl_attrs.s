@@ -368,14 +368,14 @@ gStatusConditionString_LoveJpn:: @ 81FA6CC
 	.string "メロメロ$$$$"
 
 	.align 2
-gUnknown_081FA6D4:: @ 81FA6D4
-	.4byte gStatusConditionString_PoisonJpn, BattleText_PoisonStatus
-	.4byte gStatusConditionString_SleepJpn, BattleText_Sleep
-	.4byte gStatusConditionString_ParalysisJpn, BattleText_Paralysis
-	.4byte gStatusConditionString_BurnJpn, BattleText_Burn
-	.4byte gStatusConditionString_IceJpn, BattleText_IceStatus
-	.4byte gStatusConditionString_ConfusionJpn, BattleText_Confusion
-	.4byte gStatusConditionString_LoveJpn, BattleText_Love
+gStatusConditionStringsTable:: @ 81FA6D4
+	.4byte gStatusConditionString_PoisonJpn, gText_Poison
+	.4byte gStatusConditionString_SleepJpn, gText_Sleep
+	.4byte gStatusConditionString_ParalysisJpn, gText_Paralysis
+	.4byte gStatusConditionString_BurnJpn, gText_Burn
+	.4byte gStatusConditionString_IceJpn, gText_Ice
+	.4byte gStatusConditionString_ConfusionJpn, gText_Confusion
+	.4byte gStatusConditionString_LoveJpn, gText_Love
 
 gUnknown_081FA70C:: @ 81FA70C
 	.byte 0, 0, 0

@@ -67,9 +67,9 @@ extern u8 gAnimMoveTurn;
 extern u8 gMultiUsePlayerCursor;
 extern u8 gBattleControllerData[];
 
-extern const u8 BattleText_OtherMenu[];
-extern const u8 BattleText_MenuOptions[];
-extern const u8 BattleText_PP[];
+extern const u8 gText_WhatWillPkmnDo[];
+extern const u8 gText_BattleMenu[];
+extern const u8 gText_MoveInterfacePPType[];
 
 extern void BattleControllerDummy(void);
 extern u8 GetBattlerSide(u8);
@@ -100,7 +100,7 @@ extern u8 gMultiUsePlayerCursor;
 extern u8 gBattlersCount;
 extern u16 gBattlerPartyIndexes[];
 extern struct Window gWindowTemplate_Contest_MoveDescription;
-extern const u8 BattleText_SwitchWhich[];
+extern const u8 gText_BattleSwitchWhich[];
 extern u8 gNumberOfMovesToChoose;
 extern struct BattlePokemon gBattleMons[];
 extern MainCallback gPreBattleCallback1;
@@ -110,7 +110,7 @@ extern u8 gBattleControllerData[];
 extern u8 gUnknown_0202E8F4;
 extern u8 gSelectedMonPartyId;
 extern u8 gDisplayedStringBattle[];
-extern const u8 BattleText_LinkStandby[];
+extern const u8 gText_LinkStandby[];
 
 extern void DoBounceEffect(u8, u8, s8, s8);
 extern u8 GetBattlerPosition(u8);
@@ -694,7 +694,7 @@ static void HandleInputChooseMove(void)
 
             MoveSelectionCreateCursorAt(gMultiUsePlayerCursor, 27);
             Text_FillWindowRect(&gWindowTemplate_Contest_MoveDescription, 0x1016, 0x17, 0x37, 0x1C, 0x3A);
-            Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, BattleText_SwitchWhich, 0x290, 0x17, 0x37);
+            Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gText_BattleSwitchWhich, 0x290, 0x17, 0x37);
             Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
             gBattlerControllerFuncs[gActiveBattler] = HandleMoveSwitching;
         }
@@ -738,7 +738,7 @@ static void HandleInputChooseMove(void)
 #endif
 }
 
-extern const u8 BattleText_Format[];
+extern const u8 gText_MoveInterfaceDynamicColors[];
 
 static void HandleMoveSwitching(void)
 {
@@ -834,13 +834,13 @@ static void HandleMoveSwitching(void)
         }
         else
         {
-            sub_802E12C(gMultiUsePlayerCursor, BattleText_Format);
+            sub_802E12C(gMultiUsePlayerCursor, gText_MoveInterfaceDynamicColors);
         }
         gBattlerControllerFuncs[gActiveBattler] = HandleInputChooseMove;
         gMoveSelectionCursor[gActiveBattler] = gMultiUsePlayerCursor;
         MoveSelectionCreateCursorAt(gMoveSelectionCursor[gActiveBattler], 0);
         Text_FillWindowRect(&gWindowTemplate_Contest_MoveDescription, 0x1016, 0x17, 0x37, 0x1C, 0x3A);
-        Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, BattleText_PP, 0x290, 0x17, 0x37);
+        Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gText_MoveInterfacePPType, 0x290, 0x17, 0x37);
         Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
         MoveSelectionDisplayPpNumber();
         MoveSelectionDisplayMoveType();
@@ -850,10 +850,10 @@ static void HandleMoveSwitching(void)
         PlaySE(SE_SELECT);
         nullsub_7(gMultiUsePlayerCursor);
         MoveSelectionCreateCursorAt(gMoveSelectionCursor[gActiveBattler], 0);
-        sub_802E12C(gMoveSelectionCursor[gActiveBattler], BattleText_Format);
+        sub_802E12C(gMoveSelectionCursor[gActiveBattler], gText_MoveInterfaceDynamicColors);
         gBattlerControllerFuncs[gActiveBattler] = HandleInputChooseMove;
         Text_FillWindowRect(&gWindowTemplate_Contest_MoveDescription, 0x1016, 0x17, 0x37, 0x1C, 0x3A);
-        Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, BattleText_PP, 0x290, 0x17, 0x37);
+        Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gText_MoveInterfacePPType, 0x290, 0x17, 0x37);
         Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
         MoveSelectionDisplayPpNumber();
         MoveSelectionDisplayMoveType();
@@ -1068,7 +1068,7 @@ void debug_sub_8030C24(void)
 
         for (i = 0; i < 4; i++)
         {
-            StringCopy(gDisplayedStringBattle, BattleText_Format);
+            StringCopy(gDisplayedStringBattle, gText_MoveInterfaceDynamicColors);
             move = GetMonData(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_MOVE1 + i);
             StringAppend(gDisplayedStringBattle, gMoveNames[move]);
             Text_InitWindow(
@@ -1603,7 +1603,7 @@ static void MoveSelectionDisplayMoveNames(void)
     for (i = 0; i < MAX_MON_MOVES; i++)
     {
         nullsub_7(i);
-        sub_802E12C(i, BattleText_Format);
+        sub_802E12C(i, gText_MoveInterfaceDynamicColors);
         if (moveInfo->moves[i] != MOVE_NONE)
             gNumberOfMovesToChoose++;
     }
@@ -1620,7 +1620,7 @@ static void MoveSelectionDisplayPpNumber(void)
     moveInfo = (struct ChooseMoveStruct *)(&gBattleBufferA[gActiveBattler][4]);
     txtPtr = gDisplayedStringBattle;
 
-    txtPtr = StringCopy(txtPtr, BattleText_Format);
+    txtPtr = StringCopy(txtPtr, gText_MoveInterfaceDynamicColors);
     txtPtr[0] = EXT_CTRL_CODE_BEGIN;
     txtPtr[1] = 0x11;
     txtPtr[2] = 2;
@@ -1636,7 +1636,7 @@ static void MoveSelectionDisplayPpNumber(void)
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
 }
 
-extern const u8 BattleText_ForgetMove[];
+extern const u8 gText_WhichMoveToForget4[];
 extern const u8 gTypeNames[][7];
 
 static void MoveSelectionDisplayMoveType(void)
@@ -1644,14 +1644,14 @@ static void MoveSelectionDisplayMoveType(void)
     if (gBattleBufferA[gActiveBattler][2] == 1)
     {
         Text_FillWindowRect(&gWindowTemplate_Contest_MoveDescription, 0x1016, 0x17, 0x37, 0x1C, 0x3A);
-        Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, BattleText_ForgetMove, 0x290, 0x13, 0x37);
+        Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gText_WhichMoveToForget4, 0x290, 0x13, 0x37);
     }
     else
     {
         struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)&gBattleBufferA[gActiveBattler][4];
         u8 *txtPtr = gDisplayedStringBattle;
 
-        txtPtr = StringCopy(txtPtr, BattleText_Format);
+        txtPtr = StringCopy(txtPtr, gText_MoveInterfaceDynamicColors);
         StringCopy(txtPtr, gTypeNames[gBattleMoves[moveInfo->moves[gMoveSelectionCursor[gActiveBattler]]].type]);
         Text_FillWindowRect(&gWindowTemplate_Contest_MoveDescription, 0x1016, 0x17, 0x39, 0x1C, 0x3A);
         Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gDisplayedStringBattle, 0x2C0, 0x17, 0x39);
@@ -1727,7 +1727,7 @@ static void PrintLinkStandbyMsg(void)
     {
         gBattle_BG0_X = 0;
         gBattle_BG0_Y = 0;
-        Contest_StartTextPrinter(&gWindowTemplate_Contest_MoveDescription, BattleText_LinkStandby, 0x90, 2, 15);
+        Contest_StartTextPrinter(&gWindowTemplate_Contest_MoveDescription, gText_LinkStandby, 0x90, 2, 15);
     }
 }
 
@@ -2629,7 +2629,7 @@ void PlayerHandleChooseAction(void)
 
     gBattlerControllerFuncs[gActiveBattler] = HandleInputChooseAction;
 
-    Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, BattleText_MenuOptions, 400, 18, 35);
+    Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gText_BattleMenu, 400, 18, 35);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
     MenuCursor_Create814A5C0(0, 0xFFFF, 12, 11679, 0);
 
@@ -2638,7 +2638,7 @@ void PlayerHandleChooseAction(void)
 
     ActionSelectionCreateCursorAt(gActionSelectionCursor[gActiveBattler], 0);
 
-    BattleStringExpandPlaceholdersToDisplayedString(BattleText_OtherMenu);
+    BattleStringExpandPlaceholdersToDisplayedString(gText_WhatWillPkmnDo);
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gDisplayedStringBattle, SUB_803037C_TILE_DATA_OFFSET, 2, 35);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
 }
@@ -2663,7 +2663,7 @@ void sub_80304A8(void)
     MoveSelectionCreateCursorAt(gMoveSelectionCursor[gActiveBattler], 0);
     if (gBattleBufferA[gActiveBattler][2] != 1)
     {
-        Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, BattleText_PP, 656, 23, 55);
+        Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gText_MoveInterfacePPType, 656, 23, 55);
         Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
     }
     MoveSelectionDisplayPpNumber();

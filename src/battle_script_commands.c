@@ -7,7 +7,7 @@
 #include "battle_gfx_sfx_util.h"
 #include "battle_anim.h"
 #include "battle_message.h"
-#include "battle_string_ids.h"
+#include "constants/battle_string_ids.h"
 #include "battle_script_commands.h"
 #include "battle_util.h"
 #include "constants/battle_move_effects.h"
@@ -92,7 +92,7 @@ extern u8 gBattleTextBuff3[];
 extern u8 gLeveledUpInBattle;
 extern void (*gBattleMainFunc)(void);
 extern struct Window gWindowTemplate_Contest_MoveDescription;
-extern const u8 BattleText_YesNo[];
+extern const u8 gText_BattleYesNoChoice[];
 extern u8 gPlayerPartyCount;
 extern u16 gMoveToLearn; //move to learn
 
@@ -5224,7 +5224,7 @@ static void Cmd_handlelearnnewmove(void)
 void sub_8023A80(void)
 {
     sub_802BBD4(0x18, 8, 0x1D, 0xD, 0);
-    Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, BattleText_YesNo, 0x100, 0x19, 0x9);
+    Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gText_BattleYesNoChoice, 0x100, 0x19, 0x9);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
     MenuCursor_Create814A5C0(0, 0xFFFF, 0xC, 0x2D9F, 0x20);
 }
@@ -5722,10 +5722,10 @@ static void Cmd_atknameinbuff1(void)
     gBattlescriptCurrInstr++;
 }
 
-extern const u8 BattleText_Format2[];
+extern const u8 gText_BattleSwitchWhich2[];
 extern const u8 BattleText_Dash[];
 extern const u8 BattleText_Plus[];
-extern const u8 *const gUnknown_0840165C[];
+extern const u8 *const gStatNamesTable2[];
 
 static void atk6C_drawlvlupbox(void)
 {
@@ -5738,11 +5738,11 @@ static void atk6C_drawlvlupbox(void)
     {
     case 0:
         sub_802BBD4(0xB, 0, 0x1D, 0x7, 0);
-        r5 = StringCopy(gStringVar4, BattleText_Format2);
+        r5 = StringCopy(gStringVar4, gText_BattleSwitchWhich2);
         for (i = 0; i < 6; i++)
         {
             sign = FALSE;
-            r5 = StringAppend(r5, gUnknown_0840165C[i]);
+            r5 = StringAppend(r5, gStatNamesTable2[i]);
             r1 = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], sRubyLevelUpStatBoxStats[i]);
             switch (i)
             {
@@ -5810,11 +5810,11 @@ static void atk6C_drawlvlupbox(void)
         if (gMain.newKeys != 0)
         {
             PlaySE(SE_SELECT);
-            r5 = StringCopy(gStringVar4, BattleText_Format2);
+            r5 = StringCopy(gStringVar4, gText_BattleSwitchWhich2);
             for (i = 0; i < 6; i++)
             {
                 sign = FALSE;
-                r5 = StringAppend(r5, gUnknown_0840165C[i]);
+                r5 = StringAppend(r5, gStatNamesTable2[i]);
                 r1 = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], sRubyLevelUpStatBoxStats[i]);
                 r5[0] = EXT_CTRL_CODE_BEGIN;
                 r5[1] = EXT_CTRL_CODE_CLEAR_TO;

@@ -270,11 +270,11 @@ static void ClearEReaderTrainer(struct BattleTowerEReaderTrainer *);
 static void SetBattleTowerRecordChecksum(struct BattleTowerRecord *);
 static void ClearBattleTowerRecord(struct BattleTowerRecord *);
 
-extern const u8 BattleText_Format3[];
-extern const u8 BattleText_Format4[];
-extern const u8 BattleText_Format5[];
-extern const u8 BattleText_Format6[];
-extern const u8 BattleText_Format7[];
+extern const u8 gText_SpaceAndSpace[];
+extern const u8 gText_CommaSpace[];
+extern const u8 gText_Space2[];
+extern const u8 gText_LineBreak[];
+extern const u8 gText_NewLine[];
 extern const u8 BattleText_Format8[];
 extern const u8 BattleText_Format9[];
 extern u16 gSpecialVar_0x8004;
@@ -895,16 +895,16 @@ u8 AppendBattleTowerBannedSpeciesName(u16 species, u8 curIndexToAppend, s32 numT
         case 8:
         case 10:
             if (numToAppend == curIndexToAppend)
-                StringAppend(gStringVar1, BattleText_Format3);
+                StringAppend(gStringVar1, gText_SpaceAndSpace);
             else if (numToAppend > curIndexToAppend)
-                StringAppend(gStringVar1, BattleText_Format4);
+                StringAppend(gStringVar1, gText_CommaSpace);
             break;
         case 1:
             if (curIndexToAppend == numToAppend)
-                StringAppend(gStringVar1, BattleText_Format3);
+                StringAppend(gStringVar1, gText_SpaceAndSpace);
             else
-                StringAppend(gStringVar1, BattleText_Format4);
-            StringAppend(gStringVar1, BattleText_Format7);
+                StringAppend(gStringVar1, gText_CommaSpace);
+            StringAppend(gStringVar1, gText_NewLine);
             break;
         case 3:
         case 5:
@@ -912,10 +912,10 @@ u8 AppendBattleTowerBannedSpeciesName(u16 species, u8 curIndexToAppend, s32 numT
         case 9:
         default:
             if (curIndexToAppend == numToAppend)
-                StringAppend(gStringVar1, BattleText_Format3);
+                StringAppend(gStringVar1, gText_SpaceAndSpace);
             else
-                StringAppend(gStringVar1, BattleText_Format4);
-            StringAppend(gStringVar1, BattleText_Format6);
+                StringAppend(gStringVar1, gText_CommaSpace);
+            StringAppend(gStringVar1, gText_LineBreak);
             break;
         }
         StringAppend(gStringVar1, gSpeciesNames[species]);
@@ -1002,15 +1002,15 @@ void CheckPartyBattleTowerBanlist(void)
 
         if (counter == 0)
         {
-            StringAppend(gStringVar1, BattleText_Format5);
+            StringAppend(gStringVar1, gText_Space2);
             StringAppend(gStringVar1, BattleText_Format8);
             return;
         }
 
         if (1 & counter)
-            StringAppend(gStringVar1, BattleText_Format6);
+            StringAppend(gStringVar1, gText_LineBreak);
         else
-            StringAppend(gStringVar1, BattleText_Format5);
+            StringAppend(gStringVar1, gText_Space2);
 
         StringAppend(gStringVar1, BattleText_Format9);
     }

@@ -3,16 +3,16 @@
 
 #define TEXT_BUFF_ARRAY_COUNT   16
 
-struct StringInfoBattle
+struct BattleMsgData
 {
     u16 currentMove;
-    u16 lastMove;
+    u16 originallyUsedMove;
     u16 lastItem;
     u8 lastAbility;
     u8 scrActive;
-    u8 unk1605E;
+    u8 bakScriptPartyIdx;
     u8 hpScale;
-    u8 StringBank;
+    u8 itemEffectBattler;
     u8 moveType;
     u8 abilities[4];
     u8 textBuffs[3][0x10];
@@ -206,5 +206,9 @@ u32 BattleStringExpandPlaceholders(const u8* src, u8* dst);
 extern const u8 gText_PkmnIsEvolving[];
 extern const u8 gText_CongratsPkmnEvolved[];
 extern const u8 gText_PkmnStoppedEvolving[];
+
+extern const u8 *const gBattleStringsTable[];
+extern const u8 *const gStatNamesTable[];
+extern const u8 *const gPokeblockWasTooXStringTable[];
 
 #endif // GUARD_BATTLE_MESSAGE_H
