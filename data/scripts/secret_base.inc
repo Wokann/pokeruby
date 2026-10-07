@@ -262,7 +262,7 @@ gUnknown_081A2F7B:: @ 81A2F7B
 	end
 
 EventScript_1A2F86:
-	special sub_80FF474
+	special SetDecoration
 	end
 
 gUnknown_081A2F8A:: @ 81A2F8A
@@ -271,7 +271,7 @@ gUnknown_081A2F8A:: @ 81A2F8A
 	end
 
 EventScript_1A2F95:
-	special sub_8100A7C
+	special PutAwayDecorationIteration
 	compare VAR_RESULT, 1
 	goto_if_eq EventScript_1A2FBF
 	addvar VAR_0x8004, 1

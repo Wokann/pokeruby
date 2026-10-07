@@ -518,8 +518,8 @@ void InitSecretBaseDecorationSprites(void)
 
     if (!CurMapIsSecretBase())
     {
-        decorations = gSaveBlock1.playerRoomDecor;
-        decorationPositions = gSaveBlock1.playerRoomDecorPos;
+        decorations = gSaveBlock1.playerRoomDecorations;
+        decorationPositions = gSaveBlock1.playerRoomDecorationPositions;
         numDecorations = 12;
     }
     else

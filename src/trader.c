@@ -203,7 +203,7 @@ void ScrSpecial_IsDecorationFull(void)
     if (gDecorations[gSpecialVar_0x8004].category != gDecorations[gSpecialVar_0x8006].category
         && FindFreeDecorationInventorySlot(gDecorations[gSpecialVar_0x8004].category) == -1)
     {
-        sub_80FE7D4(gStringVar2, gDecorations[gSpecialVar_0x8004].category);
+        CopyDecorationCategoryName(gStringVar2, gDecorations[gSpecialVar_0x8004].category);
         gSpecialVar_Result = TRUE;
     }
 }
@@ -221,9 +221,9 @@ void sub_8109D04(u8 taskId)
     DestroyVerticalScrollIndicator(BOTTOM_ARROW);
     sub_80F9520(gUnknown_020388F7, 8);
     BuyMenuFreeMemory();
-    if (sub_80FEFA4() == TRUE)
+    if (IsSelectedDecorInThePC() == TRUE)
     {
-        gSpecialVar_0x8006 = gUnknown_020388D0[gUnknown_020388F5];
+        gSpecialVar_0x8006 = gCurDecorationItems[gCurDecorationIndex];
         StringCopy(gStringVar3, gDecorations[gSpecialVar_0x8004].name);
         StringCopy(gStringVar2, gDecorations[gSpecialVar_0x8006].name);
     }

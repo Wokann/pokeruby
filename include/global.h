@@ -470,8 +470,8 @@ struct SaveBlock1 /* 0x02025734 */
     /*0x1540*/ u32 gameStats[NUM_GAME_STATS];
     /*0x1608*/ struct BerryTree berryTrees[BERRY_TREES_COUNT];
     /*0x1A08*/ struct SecretBase secretBases[SECRET_BASES_COUNT];
-    /*0x2688*/ u8 playerRoomDecor[DECOR_MAX_PLAYERS_HOUSE];
-    /*0x2694*/ u8 playerRoomDecorPos[DECOR_MAX_PLAYERS_HOUSE];
+    /*0x2688*/ u8 playerRoomDecorations[DECOR_MAX_PLAYERS_HOUSE];
+    /*0x2694*/ u8 playerRoomDecorationPositions[DECOR_MAX_PLAYERS_HOUSE];
     /*0x26A0*/ u8 decorDesk[10];
     /*0x26AA*/ u8 decorChair[10];
     /*0x26B4*/ u8 decorPlant[10];
