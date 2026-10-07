@@ -615,7 +615,6 @@ u8 GetBattlerTurnOrderNum(u8 bank);
 // asm/battle_5.o
 void BattleControllerDummy(void);
 void SetControllerToPlayer(void);
-void HandleInputChooseAction();
 void Task_PlayerController_RestoreBgmAfterCry(u8);
 void nullsub_8(u8);
 void CB2_SetUpReshowBattleScreenAfterMenu(void);

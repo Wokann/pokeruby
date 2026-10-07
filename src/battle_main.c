@@ -76,6 +76,9 @@ struct UnknownStruct8
 };
 
 extern void sub_802BBD4(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0);
+#if DEBUG
+extern void HandleInputChooseAction(void);
+#endif
 
 extern const u8 Str_821F7B8[];
 extern u8 gUnknown_02023A14_50;

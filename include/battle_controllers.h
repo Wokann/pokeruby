@@ -251,6 +251,9 @@ void SetControllerToLinkOpponent(void);
 // link partner controller
 void SetControllerToLinkPartner(void);
 
+// safari controller
+void SetControllerToSafari(void);
+
 void ActionSelectionCreateCursorAt(u8 cursorPosition, int unused);
 
 #endif // GUARD_BATTLE_CONTROLLERS_H

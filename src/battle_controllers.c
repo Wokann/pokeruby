@@ -4,7 +4,6 @@
 #include "battle_controllers.h"
 #include "battle_ai_script_commands.h"
 #include "battle_anim.h"
-#include "battle_anim_81258BC.h"
 #include "battle_anim_8137220.h"
 #include "battle_util.h"
 #include "cable_club.h"
@@ -154,7 +153,7 @@ static void InitSinglePlayerBtlControllers(void)
     {
         gBattleMainFunc = BeginBattleIntro;
         if (gBattleTypeFlags & BATTLE_TYPE_SAFARI)
-            gBattlerControllerFuncs[0] = SetBankFuncToSafariBufferRunCommand;
+            gBattlerControllerFuncs[0] = SetControllerToSafari;
         else if (gBattleTypeFlags & BATTLE_TYPE_WALLY_TUTORIAL)
             gBattlerControllerFuncs[0] = SetControllerToWally;
         else
