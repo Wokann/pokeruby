@@ -2,7 +2,6 @@
 #include "battle.h"
 #include "battle_main.h"
 #include "battle_controllers.h"
-#include "battle_811DA74.h"
 #include "battle_ai_script_commands.h"
 #include "battle_anim.h"
 #include "battle_anim_81258BC.h"
@@ -275,7 +274,7 @@ static void InitLinkBtlControllers(void)
             if ((!(gLinkPlayers[i].id & 1) && !(gLinkPlayers[multiplayerId].id & 1))
              || ((gLinkPlayers[i].id & 1) && (gLinkPlayers[multiplayerId].id & 1)))
             {
-                gBattlerControllerFuncs[gLinkPlayers[i].id] = SetBankFuncToLinkPartnerBufferRunCommand;
+                gBattlerControllerFuncs[gLinkPlayers[i].id] = SetControllerToLinkPartner;
                 switch (gLinkPlayers[i].id)
                 {
                 case 0:

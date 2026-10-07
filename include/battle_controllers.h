@@ -248,6 +248,9 @@ void PlayerHandleGetRawMonData(void);
 void SetControllerToOpponent(void);
 void SetControllerToLinkOpponent(void);
 
+// link partner controller
+void SetControllerToLinkPartner(void);
+
 void ActionSelectionCreateCursorAt(u8 cursorPosition, int unused);
 
 #endif // GUARD_BATTLE_CONTROLLERS_H
