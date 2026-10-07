@@ -786,7 +786,7 @@ static void CB2_ReturnFromCableClubBattle(void)
     Overworld_ResetMapMusic();
     LoadPlayerParty();
     SavePlayerBag();
-    sub_810FEFC();
+    UpdateTrainerFansAfterLinkBattle();
 
     if (gSpecialVar_0x8004 != 5)
         UpdateLinkBattleRecords(gLocalLinkPlayerId ^ 1);

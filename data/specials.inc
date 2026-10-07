@@ -147,14 +147,14 @@ gSpecials::
 	def_special DoesContestCategoryHaveMuseumPainting
 	def_special CountPlayerMuseumPaintings
 	def_special ShowContestPainting
-	def_special MauvilleGymSpecial2
-	def_special MauvilleGymSpecial1
+	def_special MauvilleGymSetDefaultBarriers
+	def_special MauvilleGymPressSwitch
 	def_special ShowFieldMessageStringVar4
 	def_special DrawWholeMapView
 	def_special StorePlayerCoordsInVars
-	def_special MauvilleGymSpecial3
-	def_special PetalburgGymSlideOpenDoors
-	def_special PetalburgGymOpenDoorsInstantly
+	def_special MauvilleGymDeactivatePuzzle
+	def_special PetalburgGymSlideOpenRoomDoors
+	def_special PetalburgGymUnlockRoomDoors
 	def_special GetPlayerTrainerIdOnesDigit
 	def_special GetPlayerBigGuyGirlString
 	def_special GetRivalSonDaughterString
@@ -163,7 +163,7 @@ gSpecials::
 	def_special CableCar
 	def_special Overworld_PlaySpecialMapMusic
 	def_special StartWallClock
-	def_special ScrSpecial_ViewWallClock
+	def_special Special_ViewWallClock
 	def_special ChooseStarter
 	def_special StartWallyTutorialBattle
 	def_special ChangePokemonNickname
@@ -171,14 +171,14 @@ gSpecials::
 	def_special GetFirstFreePokeblockSlot
 	def_special DoBerryBlending
 	def_special PlayRoulette
-	def_special ShouldMoveLilycoveFanClubMember
-	def_special GetNumMovedLilycoveFanClubMembers
+	def_special IsFanClubMemberFanOfPlayer
+	def_special GetNumFansOfPlayerInTrainerFanClub
 	def_special BufferStreakTrainerText
-	def_special sub_810FA74
-	def_special UpdateMovedLilycoveFanClubMembers
-	def_special sub_810FF48
+	def_special TryLoseFansFromPlayTimeAfterLinkBattle
+	def_special TryLoseFansFromPlayTime
+	def_special SetPlayerGotFirstFans
 	def_special UpdateTrainerFanClubGameClear
-	def_special sub_810FF60
+	def_special Script_TryGainNewFanFromCounter
 	def_special RockSmashWildEncounter
 	def_special GabbyAndTyGetBattleNum
 	def_special GabbyAndTyAfterInterview
@@ -234,7 +234,7 @@ gSpecials::
 	def_special GetNumMovesSelectedMonHas
 	def_special DisplayMoveTutorMenu
 	def_special GetRecordedCyclingRoadResults
-	def_special ScrSpecial_BeginCyclingRoadChallenge
+	def_special Special_BeginCyclingRoadChallenge
 	def_special GetPlayerAvatarBike
 	def_special FinishCyclingRoadChallenge
 	def_special UpdateCyclingRoadState
@@ -268,11 +268,11 @@ gSpecials::
 	def_special RetrieveLotteryNumber
 	def_special PickLotteryCornerTicket
 	def_special ShowBerryBlenderRecordWindow
-	def_special ResetTrickHouseEndRoomFlag
-	def_special SetTrickHouseEndRoomFlag
+	def_special ResetTrickHouseNuggetFlag
+	def_special SetTrickHouseNuggetFlag
 	def_special ScriptMenu_CreatePCMultichoice
 	def_special AccessHallOfFamePC
-	def_special ScrSpecial_ShowDiploma
+	def_special Special_ShowDiploma
 	def_special CheckLeadMonCool
 	def_special CheckLeadMonBeauty
 	def_special CheckLeadMonCute
@@ -283,8 +283,8 @@ gSpecials::
 	def_special GameClear
 	def_special ShakeScreenInElevator
 	def_special ShowGlassWorkshopMenu
-	def_special SpawnCameraDummy
-	def_special RemoveCameraDummy
+	def_special SpawnCameraObject
+	def_special RemoveCameraObject
 	def_special GetPokeblockNameByMonNature
 	def_special GetSecretBaseNearbyMapName
 	def_special CheckRelicanthWailord
@@ -302,14 +302,14 @@ gSpecials::
 	def_special FoundAbandonedShipRoom6Key
 	def_special LeadMonHasEffortRibbon
 	def_special GivLeadMonEffortRibbon
-	def_special ScrSpecial_AreLeadMonEVsMaxedOut
+	def_special Special_AreLeadMonEVsMaxedOut
 	def_special Script_FacePlayer
 	def_special Script_ClearHeldMovement
 	def_special InitRoamer
 	def_special TryUpdateRusturfTunnelState
 	def_special IsGrassTypeInParty
 	def_special DoContestHallWarp
-	def_special PutZigzagoonInPlayerParty
+	def_special LoadWallyZigzagoon
 	def_special IsStarterInParty
 	def_special CopyCurSecretBaseOwnerName_StrVar1
 	def_special CheckFreePokemonStorageSpace

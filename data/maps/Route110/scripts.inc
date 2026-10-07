@@ -25,7 +25,7 @@ Route110_MapScript2_14F933:: @ 814F933
 	.2byte 0
 
 Route110_EventScript_14F93D:: @ 814F93D
-	special ScrSpecial_BeginCyclingRoadChallenge
+	special Special_BeginCyclingRoadChallenge
 	setvar VAR_CYCLING_CHALLENGE_STATE, 2
 	return
 

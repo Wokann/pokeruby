@@ -27,7 +27,7 @@ LilycoveCity_CoveLilyMotel_2F_EventScript_ShowDiploma:: @ 81583DD
 	message LilycoveCity_CoveLilyMotel_2F_Text_FilledPokedexGiveYouThis
 	waitmessage
 	call Common_EventScript_PlayGymBadgeFanfare
-	special ScrSpecial_ShowDiploma
+	special Special_ShowDiploma
 	waitstate
 	release
 	end

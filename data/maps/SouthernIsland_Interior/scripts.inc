@@ -46,7 +46,7 @@ SouthernIsland_Interior_EventScript_160BA7:: @ 8160BA7
 	goto_if_set FLAG_ENCOUNTERED_LATIAS_OR_LATIOS, SouthernIsland_Interior_EventScript_160C08
 	goto_if_unset FLAG_SYS_HAS_EON_TICKET, SouthernIsland_Interior_EventScript_160C08
 	setflag FLAG_ENCOUNTERED_LATIAS_OR_LATIOS
-	special SpawnCameraDummy
+	special SpawnCameraObject
 	applymovement 127, SouthernIsland_Interior_Movement_160C12
 	waitmovement 0
 	delay 50
@@ -60,7 +60,7 @@ SouthernIsland_Interior_EventScript_160BA7:: @ 8160BA7
 	applymovement 2, SouthernIsland_Interior_Movement_160C22
 	waitmovement 0
 	delay 50
-	special RemoveCameraDummy
+	special RemoveCameraObject
 	setwildbattle SPECIES_LATIAS_OR_LATIOS, 50, ITEM_SOUL_DEW
 	setflag FLAG_HIDE_LATIOS_OR_LATIAS_STATIONARY
 	setflag FLAG_SYS_CTRL_OBJ_DELETE

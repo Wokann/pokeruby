@@ -723,7 +723,7 @@ static void Task_WaitForLinkPartnersDisconnect(u8 taskId)
 static void Task_TrySetContestInterviewData(u8 taskId)
 {
     BravoTrainerPokemonProfile_BeforeInterview2(gContestFinalStandings[gContestPlayerMonIndex]);
-    sub_810FB10(2);
+    TryGainNewFanFromCounter(2);
     Contest_SaveWinner(gSpecialVar_ContestRank);
     Contest_SaveWinner(0xFE);
     eCurContestWinnerIsForArtist = TRUE;

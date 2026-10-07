@@ -41,22 +41,19 @@
 #include "constants/weather.h"
 
 #if ENGLISH
-#define CHAR_DECIMAL_SEPARATOR CHAR_PERIOD
+#define CHAR_DEC_SEPARATOR CHAR_PERIOD
 #elif GERMAN
-#define CHAR_DECIMAL_SEPARATOR CHAR_COMMA
+#define CHAR_DEC_SEPARATOR CHAR_COMMA
 #endif
 
 extern struct WarpData gLastUsedWarp;
 extern u8 gBattleOutcome;
-extern u16 gSpecialVar_0x8004;
-extern u16 gSpecialVar_0x8005;
-extern u16 gSpecialVar_Result;
 
 EWRAM_DATA bool8 gBikeCyclingChallenge = FALSE;
 EWRAM_DATA u8 gBikeCollisions = 0;
-EWRAM_DATA u32 gBikeCyclingTimer = 0;
-EWRAM_DATA u8 gUnknown_02039258 = 0;
-EWRAM_DATA u8 gPetalburgGymSlidingDoorIndex = 0;
+static EWRAM_DATA u32 sBikeCyclingTimer = 0;
+static EWRAM_DATA u8 sSlidingDoorNextFrameCounter = 0;
+static EWRAM_DATA u8 sSlidingDoorFrame = 0;
 EWRAM_DATA u8 gUnknown_0203925A = 0;
 EWRAM_DATA u8 gUnknown_0203925B = 0;
 EWRAM_DATA u8 gUnknown_0203925C = 0;
@@ -65,13 +62,13 @@ static void RecordCyclingRoadResults(u32, u8);
 
 static struct ElevatorMenu gUnknown_03000760[20];
 
-void ScrSpecial_ShowDiploma(void)
+void Special_ShowDiploma(void)
 {
     SetMainCallback2(CB2_ShowDiploma);
     LockPlayerFieldControls();
 }
 
-void ScrSpecial_ViewWallClock(void)
+void Special_ViewWallClock(void)
 {
     gMain.savedCallback = CB2_ReturnToField;
     SetMainCallback2(CB2_ViewWallClock);
@@ -82,14 +79,14 @@ void ResetCyclingRoadChallengeData(void)
 {
     gBikeCyclingChallenge = FALSE;
     gBikeCollisions = 0;
-    gBikeCyclingTimer = 0;
+    sBikeCyclingTimer = 0;
 }
 
-void ScrSpecial_BeginCyclingRoadChallenge(void)
+void Special_BeginCyclingRoadChallenge(void)
 {
     gBikeCyclingChallenge = TRUE;
     gBikeCollisions = 0;
-    gBikeCyclingTimer = gMain.vblankCounter1;
+    sBikeCyclingTimer = gMain.vblankCounter1;
 }
 
 u16 GetPlayerAvatarBike(void)
@@ -108,23 +105,23 @@ static void DetermineCyclingRoadResults(u32 numFrames, u8 numBikeCollisions)
     if (numBikeCollisions <= 99)
     {
         ConvertIntToDecimalStringN(gStringVar1, numBikeCollisions, STR_CONV_MODE_LEFT_ALIGN, 2);
-        StringAppend(gStringVar1, gOtherText_Times);
+        StringAppend(gStringVar1, gText_SpaceTimes);
     }
     else
     {
-        StringCopy(gStringVar1, gOtherText_99Times);
+        StringCopy(gStringVar1, gText_99TimesPlus);
     }
 
     if (numFrames < 3600)
     {
         ConvertIntToDecimalStringN(gStringVar2, numFrames / 60, STR_CONV_MODE_RIGHT_ALIGN, 2);
-        gStringVar2[2] = CHAR_DECIMAL_SEPARATOR;
+        gStringVar2[2] = CHAR_DEC_SEPARATOR;
         ConvertIntToDecimalStringN(&gStringVar2[3], ((numFrames % 60) * 100) / 60, STR_CONV_MODE_LEADING_ZEROS, 2);
-        StringAppend(gStringVar2, gOtherText_Seconds);
+        StringAppend(gStringVar2, gText_SpaceSeconds);
     }
     else
     {
-        StringCopy(gStringVar2, gOtherText_1Minute);
+        StringCopy(gStringVar2, gText_1MinutePlus);
     }
 
     result = 0;
@@ -175,7 +172,7 @@ static void DetermineCyclingRoadResults(u32 numFrames, u8 numBikeCollisions)
 }
 
 void FinishCyclingRoadChallenge(void) {
-    const u32 numFrames = gMain.vblankCounter1 - gBikeCyclingTimer;
+    const u32 numFrames = gMain.vblankCounter1 - sBikeCyclingTimer;
 
     DetermineCyclingRoadResults(numFrames, gBikeCollisions);
     RecordCyclingRoadResults(numFrames, gBikeCollisions);
@@ -325,20 +322,20 @@ void SpawnBerryBlenderLinkPlayerSprites(void)
         MOVEMENT_TYPE_FACE_DOWN,
         MOVEMENT_TYPE_FACE_RIGHT,
     };
-    s8 unknown_083F835C[][2] = {
+    s8 coordOffsets[][2] = {
         { 0,  1},
         { 1,  0},
         { 0, -1},
         {-1,  0}
     };
     u8 myLinkPlayerNumber;
-    u8 playerDirectionLowerNybble;
+    u8 playerFacingDirection;
     u8 rivalAvatarGraphicsId;
     u8 i;
 
     myLinkPlayerNumber = GetSavedMultiplayerId();
-    playerDirectionLowerNybble = GetPlayerFacingDirection();
-    switch (playerDirectionLowerNybble)
+    playerFacingDirection = GetPlayerFacingDirection();
+    switch (playerFacingDirection)
     {
         case DIR_WEST:
             j = 2;
@@ -364,7 +361,7 @@ void SpawnBerryBlenderLinkPlayerSprites(void)
         if (myLinkPlayerNumber != i)
         {
             rivalAvatarGraphicsId = GetRivalAvatarGraphicsIdByStateIdAndGender(PLAYER_AVATAR_STATE_NORMAL, gLinkPlayers[i].gender);
-            SpawnSpecialObjectEventParameterized(rivalAvatarGraphicsId, facingDirectionMovementTypes[j], 0xf0 - i, unknown_083F835C[j][0] + x + 7, unknown_083F835C[j][1] + y + 7, 0);
+            SpawnSpecialObjectEventParameterized(rivalAvatarGraphicsId, facingDirectionMovementTypes[j], 0xf0 - i, coordOffsets[j][0] + x + 7, coordOffsets[j][1] + y + 7, 0);
             j++;
             if (j == 4)
             {
@@ -374,18 +371,13 @@ void SpawnBerryBlenderLinkPlayerSprites(void)
     }
 }
 
-struct Coords8 {
-    u8 x;
-    u8 y;
-};
-
-const struct Coords8 sMauvilleGymSwitchCoords[3] = {
+static const struct UCoords8 sMauvilleGymSwitchCoords[3] = {
     { 7, 16},
     {15, 18},
     {11, 22}
 };
 
-void MauvilleGymSpecial1(void)
+void MauvilleGymPressSwitch(void)
 {
     u8 i;
     for (i = 0; i < ARRAY_COUNT(sMauvilleGymSwitchCoords); i++)
@@ -401,7 +393,7 @@ void MauvilleGymSpecial1(void)
     }
 }
 
-void MauvilleGymSpecial2(void)
+void MauvilleGymSetDefaultBarriers(void)
 {
     int x, y;
     for (y = 12; y < 24; y++)
@@ -497,10 +489,10 @@ void MauvilleGymSpecial2(void)
     }
 }
 
-void MauvilleGymSpecial3(void)
+void MauvilleGymDeactivatePuzzle(void)
 {
     int i, x, y;
-    const struct Coords8 *switchCoords = sMauvilleGymSwitchCoords;
+    const struct UCoords8 *switchCoords = sMauvilleGymSwitchCoords;
     for (i = ARRAY_COUNT(sMauvilleGymSwitchCoords) - 1; i >= 0; i--)
     {
         MapGridSetMetatileIdAt(switchCoords->x, switchCoords->y, METATILE_ID(MauvilleGym, PressedSwitch));
@@ -554,11 +546,11 @@ void MauvilleGymSpecial3(void)
     }
 }
 
-static void Task_SlideOpenPetalburgGymDoors(u8);
-static void SetPetalburgGymDoorTiles(u8, u16);
-const u8 gUnknown_083F8370[] = {0, 1, 1, 1, 1};
+static void Task_PetalburgGymSlideOpenRoomDoors(u8);
+static void PetalburgGymSetDoorMetatiles(u8, u16);
+static const bool8 sSlidingDoorNextFrameDelay[] = {0, 1, 1, 1, 1};
 
-const u16 gPetalburgGymSlidingDoorMetatiles[] = {
+static const u16 sPetalburgGymSlidingDoorMetatiles[] = {
     METATILE_ID(PetalburgGym, SlidingDoor_Frame0),
     METATILE_ID(PetalburgGym, SlidingDoor_Frame1),
     METATILE_ID(PetalburgGym, SlidingDoor_Frame2),
@@ -566,21 +558,21 @@ const u16 gPetalburgGymSlidingDoorMetatiles[] = {
     METATILE_ID(PetalburgGym, SlidingDoor_Frame4),
 };
 
-void PetalburgGymSlideOpenDoors(void)
+void PetalburgGymSlideOpenRoomDoors(void)
 {
-    gUnknown_02039258 = 0;
-    gPetalburgGymSlidingDoorIndex = 0;
+    sSlidingDoorNextFrameCounter = 0;
+    sSlidingDoorFrame = 0;
     PlaySE(SE_UNLOCK);
-    CreateTask(Task_SlideOpenPetalburgGymDoors, 8);
+    CreateTask(Task_PetalburgGymSlideOpenRoomDoors, 8);
 }
 
-static void Task_SlideOpenPetalburgGymDoors(u8 taskId)
+static void Task_PetalburgGymSlideOpenRoomDoors(u8 taskId)
 {
-    if (gUnknown_083F8370[gPetalburgGymSlidingDoorIndex] == gUnknown_02039258)
+    if (sSlidingDoorNextFrameDelay[sSlidingDoorFrame] == sSlidingDoorNextFrameCounter)
     {
-        SetPetalburgGymDoorTiles(gSpecialVar_0x8004, gPetalburgGymSlidingDoorMetatiles[gPetalburgGymSlidingDoorIndex]);
-        gUnknown_02039258 = 0;
-        if ((++gPetalburgGymSlidingDoorIndex) == 5)
+        PetalburgGymSetDoorMetatiles(gSpecialVar_0x8004, sPetalburgGymSlidingDoorMetatiles[sSlidingDoorFrame]);
+        sSlidingDoorNextFrameCounter = 0;
+        if ((++sSlidingDoorFrame) == 5)
         {
             DestroyTask(taskId);
             ScriptContext_Enable();
@@ -588,80 +580,80 @@ static void Task_SlideOpenPetalburgGymDoors(u8 taskId)
     }
     else
     {
-        gUnknown_02039258++;
+        sSlidingDoorNextFrameCounter++;
     }
 }
 
-static void SetPetalburgGymDoorTiles(u8 roomIndex, u16 metatile)
+static void PetalburgGymSetDoorMetatiles(u8 roomNumber, u16 metatileId)
 {
-    u16 x[4];
-    u16 y[4];
+    u16 doorCoordsX[4];
+    u16 doorCoordsY[4];
     u8 i;
-    u8 numDoors = 0;
-    switch (roomIndex)
+    u8 nDoors = 0;
+    switch (roomNumber)
     {
         case 1:
-            numDoors = 2;
-            x[0] = 1;
-            x[1] = 7;
-            y[0] = 0x68;
-            y[1] = 0x68;
+            nDoors = 2;
+            doorCoordsX[0] = 1;
+            doorCoordsX[1] = 7;
+            doorCoordsY[0] = 0x68;
+            doorCoordsY[1] = 0x68;
             break;
         case 2:
-            numDoors = 2;
-            x[0] = 1;
-            x[1] = 7;
-            y[0] = 0x4e;
-            y[1] = 0x4e;
+            nDoors = 2;
+            doorCoordsX[0] = 1;
+            doorCoordsX[1] = 7;
+            doorCoordsY[0] = 0x4e;
+            doorCoordsY[1] = 0x4e;
             break;
         case 3:
-            numDoors = 2;
-            x[0] = 1;
-            x[1] = 7;
-            y[0] = 0x5b;
-            y[1] = 0x5b;
+            nDoors = 2;
+            doorCoordsX[0] = 1;
+            doorCoordsX[1] = 7;
+            doorCoordsY[0] = 0x5b;
+            doorCoordsY[1] = 0x5b;
             break;
         case 4:
-            numDoors = 1;
-            x[0] = 7;
-            y[0] = 0x27;
+            nDoors = 1;
+            doorCoordsX[0] = 7;
+            doorCoordsY[0] = 0x27;
             break;
         case 5:
-            numDoors = 2;
-            x[0] = 1;
-            x[1] = 7;
-            y[0] = 0x34;
-            y[1] = 0x34;
+            nDoors = 2;
+            doorCoordsX[0] = 1;
+            doorCoordsX[1] = 7;
+            doorCoordsY[0] = 0x34;
+            doorCoordsY[1] = 0x34;
             break;
         case 6:
-            numDoors = 1;
-            x[0] = 1;
-            y[0] = 0x41;
+            nDoors = 1;
+            doorCoordsX[0] = 1;
+            doorCoordsY[0] = 0x41;
             break;
         case 7:
-            numDoors = 1;
-            x[0] = 7;
-            y[0] = 0xd;
+            nDoors = 1;
+            doorCoordsX[0] = 7;
+            doorCoordsY[0] = 0xd;
             break;
         case 8:
-            numDoors = 1;
-            x[0] = 1;
-            y[0] = 0x1a;
+            nDoors = 1;
+            doorCoordsX[0] = 1;
+            doorCoordsY[0] = 0x1a;
             break;
     }
 
-    for (i = 0; i < numDoors; i++)
+    for (i = 0; i < nDoors; i++)
     {
-        MapGridSetMetatileIdAt(x[i] + 7, y[i] + 7, metatile | 0xc00);
-        MapGridSetMetatileIdAt(x[i] + 7, y[i] + 8, (metatile + 8) | 0xc00);
+        MapGridSetMetatileIdAt(doorCoordsX[i] + 7, doorCoordsY[i] + 7, metatileId | 0xc00);
+        MapGridSetMetatileIdAt(doorCoordsX[i] + 7, doorCoordsY[i] + 8, (metatileId + 8) | 0xc00);
     }
 
     DrawWholeMapView();
 }
 
-void PetalburgGymOpenDoorsInstantly(void)
+void PetalburgGymUnlockRoomDoors(void)
 {
-    SetPetalburgGymDoorTiles(gSpecialVar_0x8004, gPetalburgGymSlidingDoorMetatiles[4]);
+    PetalburgGymSetDoorMetatiles(gSpecialVar_0x8004, sPetalburgGymSlidingDoorMetatiles[4]);
 }
 
 void ShowFieldMessageStringVar4(void)
@@ -684,11 +676,11 @@ void GetPlayerBigGuyGirlString(void)
 {
     if (gSaveBlock2.playerGender == MALE)
     {
-        StringCopy(gStringVar1, gOtherText_BigGuy);
+        StringCopy(gStringVar1, gText_BigGuy);
     }
     else
     {
-        StringCopy(gStringVar1, gOtherText_BigGirl);
+        StringCopy(gStringVar1, gText_BigGirl);
     }
 }
 
@@ -696,11 +688,11 @@ void GetRivalSonDaughterString(void)
 {
     if (gSaveBlock2.playerGender == MALE)
     {
-        StringCopy(gStringVar1, gOtherText_Daughter);
+        StringCopy(gStringVar1, gText_Daughter);
     }
     else
     {
-        StringCopy(gStringVar1, gOtherText_Son);
+        StringCopy(gStringVar1, gText_Son);
     }
 }
 
@@ -766,7 +758,7 @@ u8 GetLeadMonFriendshipScore(void)
     return 0;
 }
 
-void CB2_FieldShowRegionMap(void)
+static void CB2_FieldShowRegionMap(void)
 {
     FieldInitRegionMap(CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
@@ -777,8 +769,8 @@ void FieldShowRegionMap(void)
 }
 
 static void Task_PCTurnOnEffect(u8);
-static void PCTurnOffEffect_0(struct Task *);
-static void PCTurnOffEffect_1(s16, s8, s8);
+static void PCTurnOnEffect(struct Task *);
+static void PCTurnOnEffect_SetMetatile(s16, s8, s8);
 static void PCTurnOffEffect(void);
 
 void DoPCTurnOnEffect(void)
@@ -799,20 +791,20 @@ static void Task_PCTurnOnEffect(u8 taskId)
     struct Task *task = &gTasks[taskId];
     if (task->data[0] == 0)
     {
-        PCTurnOffEffect_0(task);
+        PCTurnOnEffect(task);
     }
 }
 
-static void PCTurnOffEffect_0(struct Task *task)
+static void PCTurnOnEffect(struct Task *task)
 {
-    u8 playerDirectionLowerNybble;
+    u8 playerDirection;
     s8 dx = 0;
     s8 dy = 0;
     if (task->data[3] == 6)
     {
         task->data[3] = 0;
-        playerDirectionLowerNybble = GetPlayerFacingDirection();
-        switch (playerDirectionLowerNybble)
+        playerDirection = GetPlayerFacingDirection();
+        switch (playerDirection)
         {
             case DIR_NORTH:
                 dx = 0;
@@ -827,7 +819,7 @@ static void PCTurnOffEffect_0(struct Task *task)
                 dy = -1;
                 break;
         }
-        PCTurnOffEffect_1(task->data[4], dx, dy);
+        PCTurnOnEffect_SetMetatile(task->data[4], dx, dy);
         DrawWholeMapView();
         task->data[4] ^= 1;
         if ((++task->data[2]) == 5)
@@ -838,40 +830,40 @@ static void PCTurnOffEffect_0(struct Task *task)
     task->data[3]++;
 }
 
-static void PCTurnOffEffect_1(s16 flag, s8 dx, s8 dy)
+static void PCTurnOnEffect_SetMetatile(s16 isScreenOn, s8 dx, s8 dy)
 {
-    u16 tileId = 0;
-    if (flag != 0)
+    u16 metatileId = 0;
+    if (isScreenOn != 0)
     {
         if (gSpecialVar_0x8004 == 0)
         {
-            tileId = METATILE_ID(Building, PC_Off);
+            metatileId = METATILE_ID(Building, PC_Off);
         }
         else if (gSpecialVar_0x8004 == 1)
         {
-            tileId = METATILE_ID(BrendansMaysHouse, BrendanPC_Off);
+            metatileId = METATILE_ID(BrendansMaysHouse, BrendanPC_Off);
         }
         else if (gSpecialVar_0x8004 == 2)
         {
-            tileId = METATILE_ID(BrendansMaysHouse, MayPC_Off);
+            metatileId = METATILE_ID(BrendansMaysHouse, MayPC_Off);
         }
     }
     else
     {
         if (gSpecialVar_0x8004 == 0)
         {
-            tileId = METATILE_ID(Building, PC_On);
+            metatileId = METATILE_ID(Building, PC_On);
         }
         else if (gSpecialVar_0x8004 == 1)
         {
-            tileId = METATILE_ID(BrendansMaysHouse, BrendanPC_On);
+            metatileId = METATILE_ID(BrendansMaysHouse, BrendanPC_On);
         }
         else if (gSpecialVar_0x8004 == 2)
         {
-            tileId = METATILE_ID(BrendansMaysHouse, MayPC_On);
+            metatileId = METATILE_ID(BrendansMaysHouse, MayPC_On);
         }
     }
-    MapGridSetMetatileIdAt(gSaveBlock1.pos.x + dx + 7, gSaveBlock1.pos.y + dy + 7, tileId | 0xc00);
+    MapGridSetMetatileIdAt(gSaveBlock1.pos.x + dx + 7, gSaveBlock1.pos.y + dy + 7, metatileId | 0xc00);
 }
 
 void DoPCTurnOffEffect(void)
@@ -883,9 +875,9 @@ static void PCTurnOffEffect(void)
 {
     s8 dx = 0;
     s8 dy = 0;
-    u16 tileId = 0;
-    u8 playerDirectionLowerNybble = GetPlayerFacingDirection();
-    switch (playerDirectionLowerNybble)
+    u16 metatileId = 0;
+    u8 playerDirection = GetPlayerFacingDirection();
+    switch (playerDirection)
     {
         case DIR_NORTH:
             dx = 0;
@@ -902,17 +894,17 @@ static void PCTurnOffEffect(void)
     }
     if (gSpecialVar_0x8004 == 0)
     {
-        tileId = METATILE_ID(Building, PC_Off);
+        metatileId = METATILE_ID(Building, PC_Off);
     }
     else if (gSpecialVar_0x8004 == 1)
     {
-        tileId = METATILE_ID(BrendansMaysHouse, BrendanPC_Off);
+        metatileId = METATILE_ID(BrendansMaysHouse, BrendanPC_Off);
     }
     else if (gSpecialVar_0x8004 == 2)
     {
-        tileId = METATILE_ID(BrendansMaysHouse, MayPC_Off);
+        metatileId = METATILE_ID(BrendansMaysHouse, MayPC_Off);
     }
-    MapGridSetMetatileIdAt(gSaveBlock1.pos.x + dx + 7, gSaveBlock1.pos.y + dy + 7, tileId | MAPGRID_COLLISION_MASK);
+    MapGridSetMetatileIdAt(gSaveBlock1.pos.x + dx + 7, gSaveBlock1.pos.y + dy + 7, metatileId | MAPGRID_COLLISION_MASK);
     DrawWholeMapView();
 }
 
@@ -989,22 +981,22 @@ void sub_810ED60(struct Task *);
 void sub_810EEDC(void);
 
 const u8 *const gUnknown_083F8380[] = {
-    OtherText_1F,
-    OtherText_2F,
-    OtherText_3F,
-    OtherText_4F,
-    OtherText_5F,
-    OtherText_6F,
-    OtherText_7F,
-    OtherText_8F,
-    OtherText_9F,
-    OtherText_10F,
-    OtherText_11F,
-    OtherText_B1F,
-    OtherText_B2F,
-    OtherText_B3F,
-    OtherText_B4F,
-    OtherText_Rooftop
+    gText_1F,
+    gText_2F,
+    gText_3F,
+    gText_4F,
+    gText_5F,
+    gText_6F,
+    gText_7F,
+    gText_8F,
+    gText_9F,
+    gText_10F,
+    gText_11F,
+    gText_B1F,
+    gText_B2F,
+    gText_B3F,
+    gText_B4F,
+    gText_Rooftop
 };
 
 void SetDepartmentStoreFloorVar(void)
@@ -1097,7 +1089,7 @@ static void sub_810E874(void)
 void DisplayCurrentElevatorFloor(void)
 {
     Menu_DrawStdWindowFrame(20, 0, 29, 5);
-    MenuPrint_Centered(gOtherText_NowOn, 21, 1, 64);
+    MenuPrint_Centered(gText_ElevatorNowOn, 21, 1, 64);
     MenuPrint_Centered(gUnknown_083F8380[gSpecialVar_0x8005], 21, 3, 64);
 }
 
@@ -1353,7 +1345,7 @@ void sub_810EEDC(void)
     BuyMenuFreeMemory();
 }
 
-void SetTrickHouseEndRoomFlag(void)
+void SetTrickHouseNuggetFlag(void)
 {
     u16 *specVar = &gSpecialVar_0x8004;
     u16 flag = 0x259;
@@ -1361,7 +1353,7 @@ void SetTrickHouseEndRoomFlag(void)
     FlagSet(flag);
 }
 
-void ResetTrickHouseEndRoomFlag(void)
+void ResetTrickHouseNuggetFlag(void)
 {
     u16 *specVar = &gSpecialVar_0x8004;
     u16 flag = 0x259;
@@ -1436,13 +1428,13 @@ void IsGrassTypeInParty(void)
 }
 
 const u8 *const gUnknown_083F83C0[] = {
-    OtherText_BlueFlute,
-    OtherText_YellowFlute,
-    OtherText_RedFlute,
-    OtherText_WhiteFlute,
-    OtherText_BlackFlute,
-    OtherText_PrettyChair,
-    OtherText_PrettyDesk,
+    gText_BlueFlute,
+    gText_YellowFlute,
+    gText_RedFlute,
+    gText_WhiteFlute,
+    gText_BlackFlute,
+    gText_PrettyChair,
+    gText_PrettyDesk,
     gText_Cancel2
 };
 
@@ -1592,14 +1584,14 @@ void GlassWorkshopUpdateScrollIndicators(u8 newPos, u8 maxItems)
     }
 }
 
-void SpawnCameraDummy(void)
+void SpawnCameraObject(void)
 {
     u8 objectEventId = SpawnSpecialObjectEventParameterized(7, MOVEMENT_TYPE_FACE_DOWN, LOCALID_CAMERA, gSaveBlock1.pos.x + 7, gSaveBlock1.pos.y + 7, 3);
     gObjectEvents[objectEventId].invisible = TRUE;
     CameraObjectSetFollowedSpriteId(gObjectEvents[objectEventId].spriteId);
 }
 
-void RemoveCameraDummy(void)
+void RemoveCameraObject(void)
 {
     CameraObjectSetFollowedSpriteId(GetPlayerAvatarSpriteId());
     RemoveObjectEventByLocalIdAndMap(LOCALID_CAMERA, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
@@ -1625,18 +1617,18 @@ void BufferEReaderTrainerName(void)
     SetEReaderTrainerName(gStringVar1);
 }
 
-const u8 gUnknown_083F83E0[] = {12, 2, 4, 5, 1, 8, 7, 11, 3, 10, 9, 6};
-const u8 gUnknown_083F83EC[] = {0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 5};
-const u8 gUnknown_083F83F8[] = {3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5};
+static const u8 sSlotMachineRandomSeeds[] = {12, 2, 4, 5, 1, 8, 7, 11, 3, 10, 9, 6};
+static const u8 sSlotMachineIds[] = {0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 5};
+static const u8 sSlotMachineServiceDayIds[] = {3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5};
 
 u16 GetSlotMachineId(void)
 {
-    u32 v0 = gSaveBlock1.dewfordTrends[0].trendiness + gSaveBlock1.dewfordTrends[0].rand + gUnknown_083F83E0[gSpecialVar_0x8004];
+    u32 rnd = gSaveBlock1.dewfordTrends[0].trendiness + gSaveBlock1.dewfordTrends[0].rand + sSlotMachineRandomSeeds[gSpecialVar_0x8004];
     if (IsPokeNewsActive(2))
     {
-        return gUnknown_083F83F8[v0 % 12];
+        return sSlotMachineServiceDayIds[rnd % 12];
     }
-    return gUnknown_083F83EC[v0 % 12];
+    return sSlotMachineIds[rnd % 12];
 }
 
 bool8 FoundAbandonedShipRoom1Key(void)
@@ -1701,7 +1693,7 @@ void GivLeadMonEffortRibbon(void)
     SetMonData(&gPlayerParty[GetLeadMonIndex()], MON_DATA_EFFORT_RIBBON, &ribbonSet);
 }
 
-bool8 ScrSpecial_AreLeadMonEVsMaxedOut(void)
+bool8 Special_AreLeadMonEVsMaxedOut(void)
 {
     if (GetMonEVCount(&gPlayerParty[GetLeadMonIndex()]) >= 510)
     {
@@ -1728,12 +1720,12 @@ u8 TryUpdateRusturfTunnelState(void)
     return FALSE;
 }
 
-void SetShoalItemFlag(u16 v0)
+void SetShoalItemFlag(u16 unused)
 {
     FlagSet(0x85f);
 }
 
-void PutZigzagoonInPlayerParty(void)
+void LoadWallyZigzagoon(void)
 {
     u16 monData;
     CreateMon(&gPlayerParty[0], SPECIES_ZIGZAGOON, 7, 0x20, FALSE, 0, FALSE, 0);
@@ -1788,7 +1780,7 @@ bool8 IsPokerusInParty(void)
 }
 
 static void sub_810F7A8(u8);
-static void sub_810F814(u8);
+static void StopCameraShake(u8);
 
 void ShakeCamera(void)
 {
@@ -1818,14 +1810,14 @@ static void sub_810F7A8(u8 taskId)
             SetCameraPanning(task->data[0], task->data[4]);
             if (task->data[2] == 8)
             {
-                sub_810F814(taskId);
+                StopCameraShake(taskId);
                 InstallCameraPanAheadCallback();
             }
         }
     }
 }
 
-static void sub_810F814(u8 taskId)
+static void StopCameraShake(u8 taskId)
 {
     DestroyTask(taskId);
     ScriptContext_Enable();
@@ -1939,39 +1931,39 @@ void BufferLottoTicketNumber(void)
     }
 }
 
-const u8 gUnknown_083F8404[] = {2, 1, 2, 1};
+static const u8 sCounterIncrements[] = {2, 1, 2, 1};
 const u8 gUnknown_083F8408[] = {8,  9, 10, 11, 12, 13, 14, 15};
 const u8 gUnknown_083F8410[] = {8, 13, 14, 11, 10, 12, 15,  9};
 
-bool8 sub_810FF30(void);
-void UpdateMovedLilycoveFanClubMembers(void);
-void sub_810FF48(void);
-void sub_810FD80(void);
-u16 GetNumMovedLilycoveFanClubMembers(void);
+static bool8 DidPlayerGetFirstFans(void);
+void TryLoseFansFromPlayTime(void);
+void SetPlayerGotFirstFans(void);
+static void SetInitialFansOfPlayer(void);
+u16 GetNumFansOfPlayerInTrainerFanClub(void);
 int sub_810FB9C(void);
 
 void ResetFanClub(void)
 {
-    gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] = 0;
-    gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_2 - VARS_START] = 0;
+    gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] = 0;
+    gSaveBlock1.vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] = 0;
 }
 
-void sub_810FA74(void)
+void TryLoseFansFromPlayTimeAfterLinkBattle(void)
 {
-    if (sub_810FF30())
+    if (DidPlayerGetFirstFans())
     {
-        UpdateMovedLilycoveFanClubMembers();
-        gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_2 - VARS_START] = gSaveBlock2.playTimeHours;
+        TryLoseFansFromPlayTime();
+        gSaveBlock1.vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] = gSaveBlock2.playTimeHours;
     }
 }
 
 void UpdateTrainerFanClubGameClear(void)
 {
-    if (!((gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] >> 7) & 1))
+    if (!((gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] >> 7) & 1))
     {
-        sub_810FF48();
-        sub_810FD80();
-        gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_2 - VARS_START] = gSaveBlock2.playTimeHours;
+        SetPlayerGotFirstFans();
+        SetInitialFansOfPlayer();
+        gSaveBlock1.vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] = gSaveBlock2.playTimeHours;
         FlagClear(FLAG_HIDE_FANCLUB_OLD_LADY);
         FlagClear(FLAG_HIDE_FANCLUB_BOY);
         FlagClear(FLAG_HIDE_FANCLUB_LITTLE_BOY);
@@ -1980,137 +1972,137 @@ void UpdateTrainerFanClubGameClear(void)
     }
 }
 
-u8 sub_810FB10(u8 a0)
+u8 TryGainNewFanFromCounter(u8 incrementId)
 {
     if (VarGet(VAR_LILYCOVE_FAN_CLUB_STATE) == 2)
     {
-        if ((gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] & 0x7f) + gUnknown_083F8404[a0] >= 20)
+        if ((gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] & 0x7f) + sCounterIncrements[incrementId] >= 20)
         {
-            if (GetNumMovedLilycoveFanClubMembers() < 3)
+            if (GetNumFansOfPlayerInTrainerFanClub() < 3)
             {
                 sub_810FB9C();
-                gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] &= 0xff80;
+                gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] &= 0xff80;
             }
             else
             {
-                gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] = (gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] & 0xff80) | 20;
+                gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] = (gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] & 0xff80) | 20;
             }
         }
         else
         {
-            gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] += gUnknown_083F8404[a0];
+            gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] += sCounterIncrements[incrementId];
         }
     }
-    return gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] & 0x7f;
+    return gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] & 0x7f;
 }
 
 int sub_810FB9C(void)
 {
     u8 i;
-    int retval = 0;
+    int idx = 0;
     for (i=0; i<8; i++)
     {
-        if (!((gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] >> gUnknown_083F8408[i]) & 0x01))
+        if (!((gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] >> gUnknown_083F8408[i]) & 0x01))
         {
-            retval = i;
+            idx = i;
             if (Random() & 1)
             {
-                gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] |= (1 << gUnknown_083F8408[i]);
-                return retval;
+                gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] |= (1 << gUnknown_083F8408[i]);
+                return idx;
             }
         }
     }
-    gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] |= (1 << gUnknown_083F8408[retval]);
-    return retval;
+    gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] |= (1 << gUnknown_083F8408[idx]);
+    return idx;
 }
 
 int sub_810FC18(void)
 {
     u8 i;
-    int retval = 0;
-    if (GetNumMovedLilycoveFanClubMembers() == 1)
+    int idx = 0;
+    if (GetNumFansOfPlayerInTrainerFanClub() == 1)
     {
         return 0;
     }
     for (i=0; i<8; i++)
     {
-        if ((gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] >> gUnknown_083F8410[i]) & 1)
+        if ((gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] >> gUnknown_083F8410[i]) & 1)
         {
-            retval = i;
+            idx = i;
             if (Random() & 1)
             {
-                gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] ^= (1 << gUnknown_083F8410[i]);
-                return retval;
+                gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] ^= (1 << gUnknown_083F8410[i]);
+                return idx;
             }
         }
     }
-    if ((gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] >> gUnknown_083F8410[retval]) & 1)
+    if ((gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] >> gUnknown_083F8410[idx]) & 1)
     {
-        gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] ^= (1 << gUnknown_083F8410[retval]);
+        gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] ^= (1 << gUnknown_083F8410[idx]);
     }
-    return retval;
+    return idx;
 }
 
-u16 GetNumMovedLilycoveFanClubMembers(void)
+u16 GetNumFansOfPlayerInTrainerFanClub(void)
 {
     u8 i;
-    u8 retval = 0;
+    u8 numFans = 0;
     for (i = 0; i < 8; i++)
     {
-        if ((gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] >> (i + 8)) & 1)
+        if ((gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] >> (i + 8)) & 1)
         {
-            retval++;
+            numFans++;
         }
     }
 
-    return retval;
+    return numFans;
 }
 
-void UpdateMovedLilycoveFanClubMembers(void)
+void TryLoseFansFromPlayTime(void)
 {
     u8 i = 0;
     if (gSaveBlock2.playTimeHours < 999)
     {
         while (1)
         {
-            if (GetNumMovedLilycoveFanClubMembers() < 5)
+            if (GetNumFansOfPlayerInTrainerFanClub() < 5)
             {
-                gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_2 - VARS_START] = gSaveBlock2.playTimeHours;
+                gSaveBlock1.vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] = gSaveBlock2.playTimeHours;
                 break;
             }
             else if (i == 8)
             {
                 break;
             }
-            else if (gSaveBlock2.playTimeHours - gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_2 - VARS_START] < 12)
+            else if (gSaveBlock2.playTimeHours - gSaveBlock1.vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] < 12)
             {
                 return;
             }
             sub_810FC18();
-            gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_2 - VARS_START] += 12;
+            gSaveBlock1.vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] += 12;
             i++;
         }
     }
 }
 
-bool8 ShouldMoveLilycoveFanClubMember(void)
+bool8 IsFanClubMemberFanOfPlayer(void)
 {
-    return (gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] >> gSpecialVar_0x8004) & 0x01;
+    return (gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] >> gSpecialVar_0x8004) & 0x01;
 }
 
-void sub_810FD80(void)
+static void SetInitialFansOfPlayer(void)
 {
-    gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] |= 0x2000;
-    gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] |= 0x100;
-    gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] |= 0x400;
+    gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] |= 0x2000;
+    gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] |= 0x100;
+    gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] |= 0x400;
 }
 
 void sub_810FE1C(void *, u8, u8);
 
 void BufferStreakTrainerText(void)
 {
-    u8 a = 0;
-    u8 b = 0;
+    u8 whichLinkTrainer = 0;
+    u8 whichNPCTrainer = 0;
     switch (gSpecialVar_0x8004)
     {
         case 8:
@@ -2118,58 +2110,58 @@ void BufferStreakTrainerText(void)
         case 9:
             break;
         case 10:
-            a = 0;
-            b = 3;
+            whichLinkTrainer = 0;
+            whichNPCTrainer = 3;
             break;
         case 11:
-            a = 0;
-            b = 1;
+            whichLinkTrainer = 0;
+            whichNPCTrainer = 1;
             break;
         case 12:
-            a = 1;
-            b = 0;
+            whichLinkTrainer = 1;
+            whichNPCTrainer = 0;
             break;
         case 13:
-            a = 0;
-            b = 4;
+            whichLinkTrainer = 0;
+            whichNPCTrainer = 4;
             break;
         case 14:
-            a = 1;
-            b = 5;
+            whichLinkTrainer = 1;
+            whichNPCTrainer = 5;
             break;
         case 15:
             break;
     }
-    sub_810FE1C(gSaveBlock1.linkBattleRecords, a, b);
+    sub_810FE1C(gSaveBlock1.linkBattleRecords, whichLinkTrainer, whichNPCTrainer);
 }
 
-void sub_810FE1C(void *linkRecords, u8 a, u8 b)
+void sub_810FE1C(void *linkRecords, u8 whichLinkTrainer, u8 whichNPCTrainer)
 {
-    u8 *curRecord = (linkRecords + 16 * a);
+    u8 *curRecord = (linkRecords + 16 * whichLinkTrainer);
     if (*curRecord == EOS)
     {
-        switch (b)
+        switch (whichNPCTrainer)
         {
             case 0:
-                StringCopy(gStringVar1, gOtherText_Wallace);
+                StringCopy(gStringVar1, gText_Wallace);
                 break;
             case 1:
-                StringCopy(gStringVar1, gOtherText_Steven);
+                StringCopy(gStringVar1, gText_Steven);
                 break;
             case 2:
-                StringCopy(gStringVar1, gOtherText_Brawly);
+                StringCopy(gStringVar1, gText_Brawly);
                 break;
             case 3:
-                StringCopy(gStringVar1, gOtherText_Winona);
+                StringCopy(gStringVar1, gText_Winona);
                 break;
             case 4:
-                StringCopy(gStringVar1, gOtherText_Phoebe);
+                StringCopy(gStringVar1, gText_Phoebe);
                 break;
             case 5:
-                StringCopy(gStringVar1, gOtherText_Glacia);
+                StringCopy(gStringVar1, gText_Glacia);
                 break;
             default:
-                StringCopy(gStringVar1, gOtherText_Wallace);
+                StringCopy(gStringVar1, gText_Wallace);
                 break;
         }
     }
@@ -2184,11 +2176,11 @@ void sub_810FE1C(void *linkRecords, u8 a, u8 b)
     }
 }
 
-void sub_810FEFC(void)
+void UpdateTrainerFansAfterLinkBattle(void)
 {
     if (VarGet(VAR_LILYCOVE_FAN_CLUB_STATE) == 2)
     {
-        sub_810FA74();
+        TryLoseFansFromPlayTimeAfterLinkBattle();
         if (gBattleOutcome == 1)
         {
             sub_810FB9C();
@@ -2200,17 +2192,17 @@ void sub_810FEFC(void)
     }
 }
 
-bool8 sub_810FF30(void)
+static bool8 DidPlayerGetFirstFans(void)
 {
-    return (gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] >> 7) & 0x01;
+    return (gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] >> 7) & 0x01;
 }
 
-void sub_810FF48(void)
+void SetPlayerGotFirstFans(void)
 {
-    gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] |= 0x80;
+    gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] |= 0x80;
 }
 
-u8 sub_810FF60(void)
+u8 Script_TryGainNewFanFromCounter(void)
 {
-    return sub_810FB10(gSpecialVar_0x8004);
+    return TryGainNewFanFromCounter(gSpecialVar_0x8004);
 }
