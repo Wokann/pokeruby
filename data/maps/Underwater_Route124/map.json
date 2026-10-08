@@ -13,7 +13,7 @@
     {
       "direction": "down",
       "offset": 0,
-      "map": "MAP_UNDERWATER2"
+      "map": "MAP_UNDERWATER_ROUTE126"
     },
     {
       "direction": "emerge",

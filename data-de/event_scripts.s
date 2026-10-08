@@ -115,7 +115,7 @@ gStdScripts_End::
 	.include "data/maps/Route133/scripts.inc"
 	.include "data/maps/Route134/scripts.inc"
 	.include "data/maps/Underwater_Route124/scripts.inc"
-	.include "data/maps/Underwater2/scripts.inc"
+	.include "data/maps/Underwater_Route126/scripts.inc"
 	.include "data/maps/Underwater3/scripts.inc"
 	.include "data/maps/Underwater4/scripts.inc"
 	.include "data/maps/LittlerootTown_BrendansHouse_1F/scripts.inc"

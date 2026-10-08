@@ -502,14 +502,14 @@
       "blockdata_filepath": "data/layouts/Route134/map.bin"
     },
     {
-      "id": "LAYOUT_UNDERWATER2",
-      "name": "Underwater2_Layout",
+      "id": "LAYOUT_UNDERWATER_ROUTE126",
+      "name": "Underwater_Route126_Layout",
       "width": 80,
       "height": 80,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Underwater",
-      "border_filepath": "data/layouts/Underwater2/border.bin",
-      "blockdata_filepath": "data/layouts/Underwater2/map.bin"
+      "border_filepath": "data/layouts/Underwater_Route126/border.bin",
+      "blockdata_filepath": "data/layouts/Underwater_Route126/map.bin"
     },
     {
       "id": "LAYOUT_UNDERWATER3",
