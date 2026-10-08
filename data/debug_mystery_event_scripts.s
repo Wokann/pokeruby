@@ -68,7 +68,7 @@ _845DB56:
 	setorcopyvar VAR_0x8000, ITEM_EON_TICKET
 	setorcopyvar VAR_0x8001, 0x1
 	callstd 0x0
-	setflag FLAG_SYS_HAS_EON_TICKET
+	setflag FLAG_ENABLE_SHIP_SOUTHERN_ISLAND
 	vmessage _0845DC00
 	waitmessage
 	waitbuttonpress

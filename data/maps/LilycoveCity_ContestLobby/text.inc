@@ -13,7 +13,7 @@ LilycoveCity_ContestLobby_Text_ParticipateAnotherTime:: @ 8188559
 	.string "We hope you will participate another\n"
 	.string "time.$"
 
-LilycoveCity_ContestLobby_Text_EnterContest:: @ 8188584
+LilycoveCity_ContestLobby_Text_EnterContest3:: @ 8188584
 	.string "Would you like to enter a CONTEST?$"
 
 LilycoveCity_ContestLobby_Text_Explain4PlayerContest:: @ 81885A7
@@ -31,10 +31,10 @@ UnknownString_81886A8: @ 81886A8
 	.string "Once you have linked up, please choose\n"
 	.string "the CONTEST.$"
 
-LilycoveCity_ContestLobby_Text_EnterWhichContest:: @ 81886DC
+LilycoveCity_ContestLobby_Text_EnterWhichContest3:: @ 81886DC
 	.string "Which CONTEST would you like to enter?$"
 
-LilycoveCity_ContestLobby_Text_EnterWhichPokemon1:: @ 8188703
+LilycoveCity_ContestLobby_Text_EnterWhichPokemon3:: @ 8188703
 	.string "Which POKéMON would you like to enter?$"
 
 LilycoveCity_ContestLobby_Text_Transmitting:: @ 818872A

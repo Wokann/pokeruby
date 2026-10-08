@@ -14,7 +14,7 @@ LilycoveCity_ContestLobby_Text_ParticipateAnotherTime:: @ 8188559
 	.string "Wir hoffen, du nimmst ein anderes Mal\n"
 	.string "teil.$"
 
-LilycoveCity_ContestLobby_Text_EnterContest:: @ 8188584
+LilycoveCity_ContestLobby_Text_EnterContest3:: @ 8188584
 	.string "Möchtest du am WETTBEWERB teilnehmen?$"
 
 LilycoveCity_ContestLobby_Text_Explain4PlayerContest:: @ 81885A7
@@ -32,11 +32,11 @@ UnknownString_81886A8: @ 81886A8
 	.string "Sobald ihr per Link verbunden seid,\n"
 	.string "wählt bitte den WETTBEWERB aus.$"
 
-LilycoveCity_ContestLobby_Text_EnterWhichContest:: @ 81886DC
+LilycoveCity_ContestLobby_Text_EnterWhichContest3:: @ 81886DC
 	.string "An welchem WETTBEWERB möchtest du\n"
 	.string "teilnehmen?$"
 
-LilycoveCity_ContestLobby_Text_EnterWhichPokemon1:: @ 8188703
+LilycoveCity_ContestLobby_Text_EnterWhichPokemon3:: @ 8188703
 	.string "Welches POKéMON soll teilnehmen?$"
 
 LilycoveCity_ContestLobby_Text_Transmitting:: @ 818872A

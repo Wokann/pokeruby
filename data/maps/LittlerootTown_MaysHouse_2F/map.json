@@ -22,7 +22,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "LittlerootTown_MaysHouse_2F_EventScript_152A9D",
-      "flag": "FLAG_HIDE_MAY_UPSTAIRS"
+      "flag": "FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_VAR_0",
@@ -204,7 +204,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_MAY_PICHU_DOLL"
+      "flag": "FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_PICHU_DOLL"
     }
   ],
   "warp_events": [

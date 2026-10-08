@@ -4834,7 +4834,7 @@ const struct Item gItems[] =
     },
     {
         .name = _("TM14"),
-        .itemId = ITEM_TM14_BLIZZARD,
+        .itemId = ITEM_TM_BLIZZARD,
         .price = 5500,
         .holdEffect = HOLD_EFFECT_NONE,
         .holdEffectParam = 0,
@@ -4850,7 +4850,7 @@ const struct Item gItems[] =
     },
     {
         .name = _("TM15"),
-        .itemId = ITEM_TM15_HYPER_BEAM,
+        .itemId = ITEM_TM_HYPER_BEAM,
         .price = 7500,
         .holdEffect = HOLD_EFFECT_NONE,
         .holdEffectParam = 0,
@@ -4866,7 +4866,7 @@ const struct Item gItems[] =
     },
     {
         .name = _("TM16"),
-        .itemId = ITEM_TM16_LIGHT_SCREEN,
+        .itemId = ITEM_TM_LIGHT_SCREEN,
         .price = 3000,
         .holdEffect = HOLD_EFFECT_NONE,
         .holdEffectParam = 0,
@@ -4882,7 +4882,7 @@ const struct Item gItems[] =
     },
     {
         .name = _("TM17"),
-        .itemId = ITEM_TM17_PROTECT,
+        .itemId = ITEM_TM_PROTECT,
         .price = 3000,
         .holdEffect = HOLD_EFFECT_NONE,
         .holdEffectParam = 0,
@@ -4930,7 +4930,7 @@ const struct Item gItems[] =
     },
     {
         .name = _("TM20"),
-        .itemId = ITEM_TM20_SAFEGUARD,
+        .itemId = ITEM_TM_SAFEGUARD,
         .price = 3000,
         .holdEffect = HOLD_EFFECT_NONE,
         .holdEffectParam = 0,
@@ -5010,7 +5010,7 @@ const struct Item gItems[] =
     },
     {
         .name = _("TM25"),
-        .itemId = ITEM_TM25_THUNDER,
+        .itemId = ITEM_TM_THUNDER,
         .price = 5500,
         .holdEffect = HOLD_EFFECT_NONE,
         .holdEffectParam = 0,
@@ -5138,7 +5138,7 @@ const struct Item gItems[] =
     },
     {
         .name = _("TM33"),
-        .itemId = ITEM_TM33_REFLECT,
+        .itemId = ITEM_TM_REFLECT,
         .price = 3000,
         .holdEffect = HOLD_EFFECT_NONE,
         .holdEffectParam = 0,
@@ -5218,7 +5218,7 @@ const struct Item gItems[] =
     },
     {
         .name = _("TM38"),
-        .itemId = ITEM_TM38_FIRE_BLAST,
+        .itemId = ITEM_TM_FIRE_BLAST,
         .price = 5500,
         .holdEffect = HOLD_EFFECT_NONE,
         .holdEffectParam = 0,
@@ -5314,7 +5314,7 @@ const struct Item gItems[] =
     },
     {
         .name = _("TM44"),
-        .itemId = ITEM_TM44_REST,
+        .itemId = ITEM_TM_REST,
         .price = 3000,
         .holdEffect = HOLD_EFFECT_NONE,
         .holdEffectParam = 0,

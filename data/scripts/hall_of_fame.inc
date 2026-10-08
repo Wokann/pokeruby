@@ -1,5 +1,5 @@
 EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags:: @ 819FC13
-	clearflag FLAG_HIDE_LILYCOVE_MOTEL_PEOPLE
+	clearflag FLAG_HIDE_LILYCOVE_MOTEL_GAME_DESIGNERS
 	call EverGrandeCity_HallOfFame_EventScript_ResetEliteFour
 	setflag FLAG_HIDE_SLATEPORT_CITY_STERNS_SHIPYARD_MR_BRINEY
 	clearflag FLAG_HIDE_BRINEY_AND_PEEKO_SS_TIDAL
@@ -7,7 +7,7 @@ EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags:: @ 819FC13
 	setvar VAR_STEVENS_HOUSE_STATE, 1
 	clearflag FLAG_HIDE_WALLY_DEFEATED_VICTORY_ROAD
 	clearflag FLAG_HIDE_SLATEPORT_CITY_HARBOR_SS_TIDAL
-	clearflag FLAG_HIDE_SS_TIDAL_LILYCOVE_HARBOR
+	clearflag FLAG_HIDE_LILYCOVE_HARBOR_SSTIDAL
 	special UpdateTrainerFanClubGameClear
 	call_if_unset FLAG_RECEIVED_SS_TICKET, EverGrandeCity_HallOfFame_EventScript_ReadyReceiveSSTicketEvent
 	call_if_unset FLAG_LATIOS_OR_LATIAS_ROAMING, EverGrandeCity_HallOfFame_EventScript_ReadyLatiTVEvent

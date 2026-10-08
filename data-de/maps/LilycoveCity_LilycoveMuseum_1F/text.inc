@@ -76,7 +76,7 @@ LilycoveCity_LilycoveMuseum_1F_Text_StoneTabletWithAncientText:: @ 8187810
 	.string "zeichen einer alten unverständlichen\l"
 	.string "Sprache eingraviert sind.$"
 
-UnknownString_818788B: @ 818788B
+LilycoveCity_LilycoveMuseum_1F_Text_WorksOfMagnificence: @ 818788B
 	.string "Hmmm...\n"
 	.string "Was für eine große Pracht...$"
 

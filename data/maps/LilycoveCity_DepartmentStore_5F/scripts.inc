@@ -6,13 +6,13 @@ LilycoveCity_DepartmentStore_5F_EventScript_ClerkFarLeft:: @ 815A061
 	faceplayer
 	message gText_HowMayIServeYou
 	waitmessage
-	pokemartdecoration2 LilycoveCity_DepartmentStore_5F_Pokemart_StatBoostersAndStones
+	pokemartdecoration2 LilycoveCity_DepartmentStore_5F_Pokemart_Dolls
 	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
 	.align 2
-LilycoveCity_DepartmentStore_5F_Pokemart_StatBoostersAndStones:: @ 815A078
+LilycoveCity_DepartmentStore_5F_Pokemart_Dolls:: @ 815A078
 	.2byte ITEM_X_DEFEND
 	.2byte ITEM_X_SPEED
 	.2byte ITEM_X_ACCURACY
@@ -34,13 +34,13 @@ LilycoveCity_DepartmentStore_5F_EventScript_ClerkMidLeft:: @ 815A094
 	faceplayer
 	message gText_HowMayIServeYou
 	waitmessage
-	pokemartdecoration2 LilycoveCity_DepartmentStore_5F_Pokemart_Treasures
+	pokemartdecoration2 LilycoveCity_DepartmentStore_5F_Pokemart_Cushions
 	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
 	.align 2
-LilycoveCity_DepartmentStore_5F_Pokemart_Treasures:: @ 815A0AC
+LilycoveCity_DepartmentStore_5F_Pokemart_Cushions:: @ 815A0AC
 	.2byte 101
 	.2byte 102
 	.2byte ITEM_BIG_MUSHROOM
@@ -59,13 +59,13 @@ LilycoveCity_DepartmentStore_5F_EventScript_ClerkMidRight:: @ 815A0C2
 	faceplayer
 	message gText_HowMayIServeYou
 	waitmessage
-	pokemartdecoration2 LilycoveCity_DepartmentStore_5F_Pokemart_Vitamins
+	pokemartdecoration2 LilycoveCity_DepartmentStore_5F_Pokemart_Posters
 	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
 	.align 2
-LilycoveCity_DepartmentStore_5F_Pokemart_Vitamins:: @ 815A0DC
+LilycoveCity_DepartmentStore_5F_Pokemart_Posters:: @ 815A0DC
 	.2byte ITEM_CARBOS
 	.2byte ITEM_CALCIUM
 	.2byte ITEM_RARE_CANDY
@@ -84,13 +84,13 @@ LilycoveCity_DepartmentStore_5F_EventScript_ClerkFarRight:: @ 815A0F2
 	faceplayer
 	message gText_HowMayIServeYou
 	waitmessage
-	pokemartdecoration2 LilycoveCity_DepartmentStore_5F_Pokemart_VitaminsAndShards
+	pokemartdecoration2 LilycoveCity_DepartmentStore_5F_Pokemart_Mats
 	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
 	.align 2
-LilycoveCity_DepartmentStore_5F_Pokemart_VitaminsAndShards:: @ 815A10C
+LilycoveCity_DepartmentStore_5F_Pokemart_Mats:: @ 815A10C
 	.2byte 59
 	.2byte 60
 	.2byte 61

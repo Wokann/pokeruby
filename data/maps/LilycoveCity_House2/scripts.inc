@@ -4,12 +4,12 @@ LilycoveCity_House2_MapScripts:: @ 8159BA2
 LilycoveCity_House2_EventScript_FatMan:: @ 8159BA3
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_TM44, LilycoveCity_House2_EventScript_ReceivedRest
+	goto_if_set FLAG_RECEIVED_TM_REST, LilycoveCity_House2_EventScript_ReceivedRest
 	msgbox LilycoveCity_House2_Text_NotAwakeYetHaveThis, MSGBOX_DEFAULT
-	giveitem ITEM_TM44_REST
+	giveitem ITEM_TM_REST
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull
-	setflag FLAG_RECEIVED_TM44
+	setflag FLAG_RECEIVED_TM_REST
 	msgbox LilycoveCity_House2_Text_SleepIsEssential, MSGBOX_DEFAULT
 	release
 	end

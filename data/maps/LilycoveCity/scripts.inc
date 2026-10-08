@@ -61,14 +61,14 @@ LilycoveCity_EventScript_BerryGentleman:: @ 814CB74
 	lock
 	faceplayer
 	dotimebasedevents
-	goto_if_set FLAG_DAILY_RECEIVED_BERRY_LILYCOVE, LilycoveCity_EventScript_ReceivedBerry
+	goto_if_set FLAG_DAILY_LILYCOVE_RECEIVED_BERRY, LilycoveCity_EventScript_ReceivedBerry
 	msgbox LilycoveCity_Text_BerrySuitsYou, MSGBOX_DEFAULT
 	random 10
 	addvar VAR_RESULT, ITEM_CHERI_BERRY
 	giveitem VAR_RESULT
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull
-	setflag FLAG_DAILY_RECEIVED_BERRY_LILYCOVE
+	setflag FLAG_DAILY_LILYCOVE_RECEIVED_BERRY
 	msgbox LilycoveCity_Text_BecauseYoureTrainer, MSGBOX_DEFAULT
 	release
 	end
@@ -340,8 +340,8 @@ LilycoveCity_EventScript_DefeatedMay:: @ 814CEA6
 	call_if_eq LilycoveCity_EventScript_MayCollectBadges
 	compare VAR_RESULT, 1
 	call_if_eq LilycoveCity_EventScript_MayPokemonLeague
-	clearflag FLAG_HIDE_MAY_UPSTAIRS
-	clearflag FLAG_HIDE_MAY_PICHU_DOLL
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_PICHU_DOLL
 	goto LilycoveCity_EventScript_RivalFlyAway
 	end
 
@@ -374,7 +374,7 @@ LilycoveCity_EventScript_DefeatedBrendan:: @ 814CF12
 	call_if_eq LilycoveCity_EventScript_BrendanCollectBadges
 	compare VAR_RESULT, 1
 	call_if_eq LilycoveCity_EventScript_BrendanPokemonLeague
-	clearflag FLAG_HIDE_BRENDAN_UPSTAIRS
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM
 	goto LilycoveCity_EventScript_RivalFlyAway
 	end
 
