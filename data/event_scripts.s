@@ -599,7 +599,6 @@ gStdScripts_End::
 	.include "data/maps/MossdeepCity_GameCorner_1F/text.inc"
 	.include "data/maps/MossdeepCity_GameCorner_B1F/text.inc"
 	.include "data/maps/SootopolisCity_Gym_1F/text.inc"
-	.include "data/maps/SootopolisCity_Gym_B1F/text.inc"
 	.include "data/maps/SootopolisCity_PokemonCenter_1F/text.inc"
 	.include "data/maps/SootopolisCity_Mart/text.inc"
 	.include "data/maps/SootopolisCity_House1/text.inc"

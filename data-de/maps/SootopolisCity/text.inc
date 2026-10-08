@@ -21,7 +21,7 @@ SootopolisCity_Text_WonderWhatWorldIsLike:: @ 81697A7
 	.string "Ich frage mich, wie die Welt hinter\n"
 	.string "diesem Horizont aussieht?$"
 
-SootopolisCity_Text_NoOrdinaryTourist1:: @ 8169813
+SootopolisCity_Text_NoOrdinaryTourist:: @ 8169813
 	.string "Hm! Du bist den ganzen Weg nach\n"
 	.string "XENEROVILLE gekommen? Du bist\l"
 	.string "kein normaler Tourist.\p"

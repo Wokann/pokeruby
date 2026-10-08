@@ -19,7 +19,7 @@ SootopolisCity_Text_WonderWhatWorldIsLike:: @ 81697A7
 	.string "I wonder what the world is like on the\n"
 	.string "other side of this round sky?$"
 
-SootopolisCity_Text_NoOrdinaryTourist1:: @ 8169813
+SootopolisCity_Text_NoOrdinaryTourist:: @ 8169813
 	.string "Hm!\n"
 	.string "You've come all the way to SOOTOPOLIS?\l"
 	.string "You're no ordinary tourist.\p"

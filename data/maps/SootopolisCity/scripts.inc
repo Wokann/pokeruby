@@ -40,7 +40,7 @@ SootopolisCity_EventScript_SetWeather:: @ 814D123
 	call Common_EventScript_SetLegendaryWeather
 	setobjectxyperm 1, 29, 19
 	setobjectxyperm 2, 33, 19
-	compare VAR_SOOTOPOLIS_STATE, 1
+	compare VAR_SOOTOPOLIS_CITY_STATE, 1
 	call_if_eq SootopolisCity_EventScript_SetStevenWallaceInitialPositions
 	return
 
@@ -86,7 +86,7 @@ SootopolisCity_EventScript_KiriGiveBerry:: @ 814D19F
 	faceplayer
 	dotimebasedevents
 	special GetPlayerBigGuyGirlString
-	goto_if_set FLAG_DAILY_RECEIVED_BERRY_SOOTOPOLIS, SootopolisCity_EventScript_KiriReceivedBerry
+	goto_if_set FLAG_DAILY_SOOTOPOLIS_RECEIVED_BERRY, SootopolisCity_EventScript_KiriReceivedBerry
 	msgbox SootopolisCity_Text_NameIsKiriHaveOneOfThese, MSGBOX_DEFAULT
 	random 10
 	addvar VAR_RESULT, 20
@@ -94,7 +94,7 @@ SootopolisCity_EventScript_KiriGiveBerry:: @ 814D19F
 	giveitem VAR_RESULT
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull
-	setflag FLAG_DAILY_RECEIVED_BERRY_SOOTOPOLIS
+	setflag FLAG_DAILY_SOOTOPOLIS_RECEIVED_BERRY
 	msgbox SootopolisCity_Text_GiveYouThisBerryToo, MSGBOX_DEFAULT
 	random 2
 	compare VAR_RESULT, 0
@@ -120,7 +120,7 @@ SootopolisCity_EventScript_GiveIapapaBerry:: @ 814D220
 	end
 
 SootopolisCity_EventScript_KiriReceivedBerry:: @ 814D241
-	msgbox SootopolisCity_Text_KiriBornInSeasons, MSGBOX_YESNO
+	msgbox SootopolisCity_Text_LikeSeasonBornIn, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	goto_if_eq SootopolisCity_EventScript_KiriLikeSeasonBornIn
 	msgbox SootopolisCity_Text_OhDoesntMatter, MSGBOX_DEFAULT
@@ -145,11 +145,11 @@ SootopolisCity_EventScript_Woman2PostGym:: @ 814D27D
 	release
 	end
 
-SootopolisCity_EventScript_Man1:: @ 814D287
+SootopolisCity_EventScript_Man:: @ 814D287
 	lock
 	faceplayer
 	goto_if_set FLAG_LEGENDARY_BATTLE_COMPLETED, SootopolisCity_EventScript_Man1PostLegendary
-	msgbox SootopolisCity_Text_NoOrdinaryTourist1, MSGBOX_DEFAULT
+	msgbox SootopolisCity_Text_NoOrdinaryTourist, MSGBOX_DEFAULT
 	release
 	end
 
@@ -171,7 +171,7 @@ SootopolisCity_EventScript_Woman1PostLegendary:: @ 814D2BB
 	release
 	end
 
-SootopolisCity_EventScript_Boy1:: @ 814D2C5
+SootopolisCity_EventScript_NinjaBoy:: @ 814D2C5
 	lock
 	faceplayer
 	goto_if_set FLAG_LEGENDARY_BATTLE_COMPLETED, SootopolisCity_EventScript_Boy1PostLegendary
@@ -277,7 +277,7 @@ SootopolisCity_EventScript_LeadPlayerCaveOfOrigin:: @ 814D308
 	setobjectmovementtype 5, 9
 	copyobjectxytoperm 10
 	setobjectmovementtype 10, 10
-	setvar VAR_SOOTOPOLIS_STATE, 2
+	setvar VAR_SOOTOPOLIS_CITY_STATE, 2
 	releaseall
 	end
 

@@ -7,6 +7,8 @@ SootopolisCity_PokemonCenter_1F_OnTransition:: @ 815B196
 	end
 
 @ 815B19A
+@ Unused
+SootopolisCity_PokemonCenter_1F_EventScript_Nurse::
 	setvar VAR_0x800B, 1
 	call Common_EventScript_PkmnCenterNurse
 	waitmessage

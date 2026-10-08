@@ -48,7 +48,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SootopolisCity_EventScript_CaveOfOriginExpert",
-      "flag": "FLAG_HIDE_SOOTOPOLIS_RESIDENTS"
+      "flag": "FLAG_HIDE_SOOTOPOLIS_CITY_RESIDENTS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_4",
@@ -61,7 +61,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SootopolisCity_EventScript_Woman2",
-      "flag": "FLAG_HIDE_SOOTOPOLIS_RESIDENTS"
+      "flag": "FLAG_HIDE_SOOTOPOLIS_CITY_RESIDENTS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_WALLACE",
@@ -74,7 +74,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SootopolisCity_EventScript_YouMustGoWithOrb",
-      "flag": "FLAG_HIDE_WALLACE_SOOTOPOLIS"
+      "flag": "FLAG_HIDE_SOOTOPOLIS_CITY_WALLACE"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_GIRL_2",
@@ -87,7 +87,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SootopolisCity_EventScript_KiriGiveBerry",
-      "flag": "FLAG_HIDE_SOOTOPOLIS_RESIDENTS"
+      "flag": "FLAG_HIDE_SOOTOPOLIS_CITY_RESIDENTS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_NINJA_BOY",
@@ -99,8 +99,8 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SootopolisCity_EventScript_Boy1",
-      "flag": "FLAG_HIDE_SOOTOPOLIS_RESIDENTS"
+      "script": "SootopolisCity_EventScript_NinjaBoy",
+      "flag": "FLAG_HIDE_SOOTOPOLIS_CITY_RESIDENTS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BOY_1",
@@ -113,7 +113,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SootopolisCity_EventScript_Boy1Normal",
-      "flag": "FLAG_HIDE_SOOTOPOLIS_RESIDENTS"
+      "flag": "FLAG_HIDE_SOOTOPOLIS_CITY_RESIDENTS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MAN_1",
@@ -125,8 +125,8 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SootopolisCity_EventScript_Man1",
-      "flag": "FLAG_HIDE_SOOTOPOLIS_RESIDENTS"
+      "script": "SootopolisCity_EventScript_Man",
+      "flag": "FLAG_HIDE_SOOTOPOLIS_CITY_RESIDENTS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_STEVEN",
@@ -139,7 +139,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SootopolisCity_EventScript_YoullBeOkay",
-      "flag": "FLAG_HIDE_STEVEN_SOOTOPOLIS"
+      "flag": "FLAG_HIDE_SOOTOPOLIS_CITY_STEVEN"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
@@ -152,7 +152,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SootopolisCity_EventScript_Woman1",
-      "flag": "FLAG_HIDE_SOOTOPOLIS_RESIDENTS"
+      "flag": "FLAG_HIDE_SOOTOPOLIS_CITY_RESIDENTS"
     }
   ],
   "warp_events": [
@@ -247,7 +247,7 @@
       "x": 25,
       "y": 6,
       "elevation": 3,
-      "var": "VAR_SOOTOPOLIS_STATE",
+      "var": "VAR_SOOTOPOLIS_CITY_STATE",
       "var_value": "1",
       "script": "SootopolisCity_EventScript_LeadPlayerCaveOfOrigin"
     }
