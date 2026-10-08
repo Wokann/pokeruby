@@ -3430,7 +3430,7 @@ extern const struct CompressedSpriteSheet gBattleEnvironmentAnimTiles_Cave[];
 extern const u8 gBattleEnvironmentAnimTilemap_Cave[];
 extern const struct CompressedSpritePalette gBattleEnvironmentPalette_Cave[];
 
-extern const struct CompressedSpriteSheet gBattleEnvironmentTiles_Building[];
+extern const u8 gBattleEnvironmentTiles_Building[];
 extern const u8 gBattleEnvironmentTilemap_Building[];
 extern const struct CompressedSpriteSheet gBattleEnvironmentAnimTiles_Building[];
 extern const u8 gBattleEnvironmentAnimTilemap_Building[];
@@ -3540,6 +3540,23 @@ extern const u8 gSummaryPage_InfoEgg_Tilemap[];
 
 extern const u8 gMonMarkingsMenu_Gfx[];
 extern const u16 gMonMarkingsMenu_Pal[];
+
+extern const u8 gPokeblockRed_Pal[];
+extern const u8 gPokeblockBlue_Pal[];
+extern const u8 gPokeblockPink_Pal[];
+extern const u8 gPokeblockGreen_Pal[];
+extern const u8 gPokeblockYellow_Pal[];
+extern const u8 gPokeblockPurple_Pal[];
+extern const u8 gPokeblockIndigo_Pal[];
+extern const u8 gPokeblockBrown_Pal[];
+extern const u8 gPokeblockLiteBlue_Pal[];
+extern const u8 gPokeblockOlive_Pal[];
+extern const u8 gPokeblockGray_Pal[];
+extern const u8 gPokeblockBlack_Pal[];
+extern const u8 gPokeblockWhite_Pal[];
+extern const u8 gPokeblockGold_Pal[];
+extern const u8 gPokeblock_Gfx[];
+extern const u8 gPokeblockFeedBg_Tilemap[];
 
 extern const u8 gUsePokeblockUpDown_Gfx[];
 extern const u16 gUsePokeblockUpDown_Pal[];

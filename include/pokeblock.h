@@ -50,7 +50,7 @@ bool8 PokeblockClearIfExists(u8);
 s16 PokeblockGetGain(u8, const struct Pokeblock *);
 bool8 CopyMonFavoritePokeblockName(u8 nature, u8 *dest);
 void PokeblockCopyName(struct Pokeblock *pokeblock, u8 *dest);
-void CB2_PreparePokeblockFeedScene(void);
+void PreparePokeblockFeedScene(void);
 bool8 GivePokeblock(const struct Pokeblock *);
 
 #include "main.h"

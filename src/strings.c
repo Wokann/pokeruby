@@ -277,9 +277,9 @@ const u8 gContestStatsText_Feel[] = _("FEEL");
 const u8 gText_StowCase[] = _("Stow CASE.");
 const u8 gText_ThrowAwayVar1[] = _("Throw away this\n{STR_VAR_1}?");
 const u8 gText_Var1ThrownAway[] = _("The {STR_VAR_1}\nwas thrown away.");
-const u8 gContestStatsText_NormallyAte[] = _("{STR_VAR_1} ate the\n{STR_VAR_2}.{PAUSE_UNTIL_PRESS}");
-const u8 gContestStatsText_HappilyAte[] = _("{STR_VAR_1} happily ate the\n{STR_VAR_2}.{PAUSE_UNTIL_PRESS}");
-const u8 gContestStatsText_DisdainfullyAte[] = _("{STR_VAR_1} disdainfully ate the\n{STR_VAR_2}.{PAUSE_UNTIL_PRESS}");
+const u8 gText_Var1AteTheVar2[] = _("{STR_VAR_1} ate the\n{STR_VAR_2}.{PAUSE_UNTIL_PRESS}");
+const u8 gText_Var1HappilyAteVar2[] = _("{STR_VAR_1} happily ate the\n{STR_VAR_2}.{PAUSE_UNTIL_PRESS}");
+const u8 gText_Var1DisdainfullyAteVar2[] = _("{STR_VAR_1} disdainfully ate the\n{STR_VAR_2}.{PAUSE_UNTIL_PRESS}");
 
 const u8 gText_ShopBuy[] = _("BUY");
 const u8 gText_ShopSell[] = _("SELL");
@@ -1205,9 +1205,9 @@ const u8 gContestStatsText_Feel[] = _("WÜRZE");
 const u8 gText_StowCase[] = _("BOX verstauen.");
 const u8 gText_ThrowAwayVar1[] = _("{STR_VAR_1}\nwegwerfen?");
 const u8 gText_Var1ThrownAway[] = _("{STR_VAR_1}\nwurde weggeworfen.");
-const u8 gContestStatsText_NormallyAte[] = _("{STR_VAR_1} aß den\n{STR_VAR_2}.{PAUSE_UNTIL_PRESS}");
-const u8 gContestStatsText_HappilyAte[] = _("{STR_VAR_1} aß gerne den\n{STR_VAR_2}.{PAUSE_UNTIL_PRESS}");
-const u8 gContestStatsText_DisdainfullyAte[] = _("{STR_VAR_1} aß ungern den\n{STR_VAR_2}.{PAUSE_UNTIL_PRESS}");
+const u8 gText_Var1AteTheVar2[] = _("{STR_VAR_1} aß den\n{STR_VAR_2}.{PAUSE_UNTIL_PRESS}");
+const u8 gText_Var1HappilyAteVar2[] = _("{STR_VAR_1} aß gerne den\n{STR_VAR_2}.{PAUSE_UNTIL_PRESS}");
+const u8 gText_Var1DisdainfullyAteVar2[] = _("{STR_VAR_1} aß ungern den\n{STR_VAR_2}.{PAUSE_UNTIL_PRESS}");
 
 const u8 gText_ShopBuy[] = _("KAUFEN");
 const u8 gText_ShopSell[] = _("VERKAUFEN");

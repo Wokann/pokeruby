@@ -314,9 +314,9 @@ extern const u8 gContestStatsText_Tasty[];
 extern const u8 gText_StowCase[];
 extern const u8 gText_ThrowAwayVar1[];
 extern const u8 gText_Var1ThrownAway[];
-extern const u8 gContestStatsText_NormallyAte[];
-extern const u8 gContestStatsText_HappilyAte[];
-extern const u8 gContestStatsText_DisdainfullyAte[];
+extern const u8 gText_Var1AteTheVar2[];
+extern const u8 gText_Var1HappilyAteVar2[];
+extern const u8 gText_Var1DisdainfullyAteVar2[];
 
 extern const u8 gText_ShopBuy[];
 extern const u8 gText_ShopSell[];

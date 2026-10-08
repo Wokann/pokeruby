@@ -348,21 +348,21 @@ gMonShrinkDistance = .;
 . += 0xC;
 
 // pokeblock_feed.c
-SYMBOL(gPokeblockFeedPokeSprite, 4)
+SYMBOL(gPokeblockFeedMonSpritePtr, 4)
 SYMBOL(gPokeblockFeedMonSpecies, 4)
 SYMBOL(gPokeblockMonNotFlipped, 4)
-SYMBOL(gPokeblockFeedMonSpriteID, 4)
+SYMBOL(gPokeblockFeedMonSpriteId, 4)
 SYMBOL(gPokeblockFeedMonNature, 4)
-SYMBOL(gUnknown_03005F34, 4)
+SYMBOL(gPokeblockFeedMonAnimLength, 4)
 SYMBOL(gPokeblockFeedUnused0, 4)
-SYMBOL(gUnknown_03005F3C, 4)
-SYMBOL(gUnknown_03005F40, 4)
-SYMBOL(gPokeblockFeedPokeSpriteCopy, 68)
-SYMBOL(gUnknown_03005F94, 4)
+SYMBOL(gPokeblockFeedMonAnimRunState, 4)
+SYMBOL(gPokeblockFeedMonAnimId, 4)
+SYMBOL(gPokeblockFeedSavedMonSprite, 68)
+SYMBOL(gPokeblockFeedTimer, 4)
 #if DEBUG
-SYMBOL(gUnknown_03005FA0, 32)
+SYMBOL(gPokeblockFeedAnimData, 32)
 #else
-SYMBOL(gUnknown_03005FA0, 48)
+SYMBOL(gPokeblockFeedAnimData, 48)
 #endif
 
 // m4a_2.c
