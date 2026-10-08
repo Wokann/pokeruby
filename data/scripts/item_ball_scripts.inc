@@ -58,11 +58,11 @@ Route112_EventScript_ItemNugget:: @ 81B14EF
 	finditem ITEM_NUGGET
 	end
 
-Route113_EventScript_1B14FC:: @ 81B14FC
+Route113_EventScript_ItemMaxEther:: @ 81B14FC
 	finditem ITEM_MAX_ETHER
 	end
 
-Route113_EventScript_1B1509:: @ 81B1509
+Route113_EventScript_ItemSuperRepel:: @ 81B1509
 	finditem ITEM_SUPER_REPEL
 	end
 
