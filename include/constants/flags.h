@@ -358,7 +358,7 @@
 
 
 // object event hide/show flags
-#define FLAG_HIDE_BIRCH_STARTERS_BAG        0x2BC
+#define FLAG_HIDE_ROUTE_101_BIRCH_STARTERS_BAG        0x2BC
 
 #define FLAG_HIDE_BIRCH_BATTLE_POOCHYENA    0x2D0
 #define FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_BIRCH              0x2D1
@@ -515,7 +515,7 @@
 #define FLAG_HIDE_ROUTE_116_WANDAS_BOYFRIEND    0x37E
 #define FLAG_HIDE_LILYCOVE_CONTEST_HALL_CONTEST_ATTENDANT_2    0x37F
 #define FLAG_UNKNOWN_BIRCH_380              0x380 // TODO: what should this be called?
-#define FLAG_HIDE_BIRCH_ROUTE101            0x381
+#define FLAG_HIDE_ROUTE_101_BIRCH            0x381
 #define FLAG_HIDE_BIRCH_ROUTE103            0x382
 #define FLAG_HIDE_TRICK_HOUSE_END_MAN           0x383
 #define FLAG_HIDE_EVIL_TEAM_ROUTE110        0x384
