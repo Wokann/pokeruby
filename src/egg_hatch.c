@@ -10,7 +10,7 @@
 #include "constants/items.h"
 #include "main.h"
 #include "menu.h"
-#include "name_string_util.h"
+#include "international_string_util.h"
 #include "naming_screen.h"
 #include "overworld.h"
 #include "palette.h"
@@ -317,7 +317,7 @@ static bool8 DaycareMonReceivedMail_(struct DayCare *daycare, u8 slot)
             StringCopy(gStringVar1, monNickname);
             StringCopy(gStringVar2, daycare->misc.mail[slot].names);
             StringCopy(gStringVar3, daycare->misc.mail[slot].names + 8);
-            SanitizeNameString(gStringVar2);
+            ConvertInternationalPlayerName(gStringVar2);
             return TRUE;
         }
     }

@@ -7,7 +7,7 @@
 #include "main.h"
 #include "menu.h"
 #include "constants/moves.h"
-#include "name_string_util.h"
+#include "international_string_util.h"
 #include "overworld.h"
 #include "party_menu.h"
 #include "pokemon.h"
