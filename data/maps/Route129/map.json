@@ -32,7 +32,7 @@
       "movement_range_y": 4,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route129_EventScript_152366",
+      "script": "Route129_EventScript_Chase",
       "flag": "0"
     },
     {
@@ -45,7 +45,7 @@
       "movement_range_y": 2,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
-      "script": "Route129_EventScript_15237D",
+      "script": "Route129_EventScript_Allison",
       "flag": "0"
     },
     {
@@ -58,7 +58,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
-      "script": "Route129_EventScript_1523AB",
+      "script": "Route129_EventScript_Tisha",
       "flag": "0"
     },
     {
@@ -71,7 +71,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
-      "script": "Route129_EventScript_152394",
+      "script": "Route129_EventScript_Reed",
       "flag": "0"
     }
   ],
