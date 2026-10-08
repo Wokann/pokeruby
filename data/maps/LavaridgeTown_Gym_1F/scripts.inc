@@ -83,7 +83,7 @@ LavaridgeTown_Gym_1F_EventScript_FlanneryDefeated:: @ 8153766
 	end
 
 LavaridgeTown_Gym_1F_EventScript_GiveOverheat:: @ 81537A7
-	giveitem ITEM_TM50_OVERHEAT
+	giveitem ITEM_TM_OVERHEAT
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	msgbox LavaridgeTown_Gym_1F_Text_ExplainOverheat, MSGBOX_DEFAULT

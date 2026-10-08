@@ -5410,7 +5410,7 @@ const struct Item gItems[] =
     },
     {
         .name = _("TM50"),
-        .itemId = ITEM_TM50_OVERHEAT,
+        .itemId = ITEM_TM_OVERHEAT,
         .price = 3000,
         .holdEffect = HOLD_EFFECT_NONE,
         .holdEffectParam = 0,

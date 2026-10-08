@@ -93,7 +93,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM_CUT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
@@ -117,7 +117,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM_CUT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
@@ -145,7 +145,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
                                         | TMHM(TM47_STEEL_WING)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM_CUT)
                                         | TMHM(HM02_FLY)
                                         | TMHM(HM04_STRENGTH)
@@ -836,7 +836,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)),
+                                        | TMHM(TM_OVERHEAT)),
 
     [SPECIES_NINETALES]   = TMHM_LEARNSET(TMHM(TM05_ROAR)
                                         | TMHM(TM06_TOXIC)
@@ -856,7 +856,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)),
+                                        | TMHM(TM_OVERHEAT)),
 
     [SPECIES_JIGGLYPUFF]  = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
                                         | TMHM(TM_WATER_PULSE)
@@ -1288,7 +1288,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
                                         | TMHM(TM_THIEF)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
 
@@ -1317,7 +1317,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
                                         | TMHM(TM_THIEF)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
 
@@ -1339,7 +1339,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
                                         | TMHM(TM_THIEF)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
 
@@ -1362,7 +1362,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
                                         | TMHM(TM_THIEF)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
 
@@ -1791,7 +1791,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM04_STRENGTH)),
 
     [SPECIES_RAPIDASH]    = TMHM_LEARNSET(TMHM(TM06_TOXIC)
@@ -1810,7 +1810,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM04_STRENGTH)),
 
     [SPECIES_SLOWPOKE]    = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -3190,7 +3190,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)),
+                                        | TMHM(TM_OVERHEAT)),
 
     [SPECIES_PORYGON]     = TMHM_LEARNSET(TMHM(TM06_TOXIC)
                                         | TMHM(TM_HIDDEN_POWER)
@@ -3447,7 +3447,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM47_STEEL_WING)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM02_FLY)
                                         | TMHM(HM_ROCK_SMASH)),
 
@@ -3639,7 +3639,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM47_STEEL_WING)
                                         | TMHM(TM48_SKILL_SWAP)
                                         | TMHM(TM49_SNATCH)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM_CUT)
                                         | TMHM(HM02_FLY)
                                         | TMHM(HM_SURF)
@@ -3733,7 +3733,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM_CUT)),
 
     [SPECIES_QUILAVA]     = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -3754,7 +3754,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM_CUT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
@@ -3779,7 +3779,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM_CUT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
@@ -5004,7 +5004,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
                                         | TMHM(TM_THIEF)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
 
@@ -5041,7 +5041,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
                                         | TMHM(TM_THIEF)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
 
@@ -5233,7 +5233,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM_ROCK_SMASH)),
 
     [SPECIES_MAGCARGO]    = TMHM_LEARNSET(TMHM(TM06_TOXIC)
@@ -5255,7 +5255,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
 
@@ -5473,7 +5473,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM45_ATTRACT)
                                         | TMHM(TM_THIEF)
                                         | TMHM(TM49_SNATCH)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM_ROCK_SMASH)),
 
     [SPECIES_HOUNDOOM]    = TMHM_LEARNSET(TMHM(TM05_ROAR)
@@ -5499,7 +5499,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM45_ATTRACT)
                                         | TMHM(TM_THIEF)
                                         | TMHM(TM49_SNATCH)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
 
@@ -6024,7 +6024,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM47_STEEL_WING)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM02_FLY)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM05_FLASH)
@@ -6206,7 +6206,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM_CUT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
@@ -6230,7 +6230,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM_CUT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
@@ -6257,7 +6257,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM_CUT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
@@ -7131,7 +7131,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
 
@@ -7553,7 +7553,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
 
@@ -7576,7 +7576,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
 
@@ -7787,7 +7787,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM48_SKILL_SWAP)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM05_FLASH)),
 
     [SPECIES_AZURILL]     = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -8319,7 +8319,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
 
@@ -8349,7 +8349,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
                                         | TMHM(TM45_ATTRACT)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
 
@@ -9181,7 +9181,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_FACADE)
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM_CUT)
                                         | TMHM(HM04_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)),
@@ -9215,7 +9215,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_FACADE)
                                         | TMHM(TM_SECRET_POWER)
                                         | TMHM(TM_REST)
-                                        | TMHM(TM50_OVERHEAT)
+                                        | TMHM(TM_OVERHEAT)
                                         | TMHM(HM02_FLY)
                                         | TMHM(HM_SURF)
                                         | TMHM(HM04_STRENGTH)
