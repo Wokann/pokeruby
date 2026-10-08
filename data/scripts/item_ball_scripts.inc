@@ -54,7 +54,7 @@ Route111_EventScript_ItemHPUp:: @ 81B14E2
 	finditem ITEM_HP_UP
 	end
 
-Route112_EventScript_1B14EF:: @ 81B14EF
+Route112_EventScript_ItemNugget:: @ 81B14EF
 	finditem ITEM_NUGGET
 	end
 

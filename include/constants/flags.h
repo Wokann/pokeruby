@@ -622,7 +622,7 @@
 #define FLAG_ITEM_ROUTE_111_TM_SANDSTORM                0x3F0
 #define FLAG_ITEM_ROUTE_111_STARDUST                0x3F1
 #define FLAG_ITEM_ROUTE_111_HP_UP                0x3F2
-#define FLAG_ITEM_ROUTE112_1                0x3F3
+#define FLAG_ITEM_ROUTE_112_NUGGET                0x3F3
 #define FLAG_ITEM_ROUTE113_1                0x3F4
 #define FLAG_ITEM_ROUTE113_2                0x3F5
 #define FLAG_ITEM_ROUTE114_1                0x3F6
