@@ -1,4 +1,4 @@
-LilycoveCity_ContestLobby_EventScript_1A4E92:: @ 81A4E92
+LilycoveCity_ContestLobby_EventScript_SpeakToContestReceptionist:: @ 81A4E92
 	lock
 	faceplayer
 	checkitem ITEM_CONTEST_PASS, 1

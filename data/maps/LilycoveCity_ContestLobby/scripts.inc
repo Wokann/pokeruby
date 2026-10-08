@@ -569,7 +569,7 @@ LilycoveCity_ContestLobby_EventScript_ContestReceptionist:: @ 8158EB0
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_SetDebug
 	setvar VAR_0x800B, 8
 	setvar VAR_CONTEST_RANK, 3
-	call LilycoveCity_ContestLobby_EventScript_1A4E92
+	call LilycoveCity_ContestLobby_EventScript_SpeakToContestReceptionist
 	call LilycoveCity_ContestLobby_EventScript_LeadToContestHall
 	special SetContestTrainerGfxIds
 	call LilycoveCity_ContestLobby_EventScript_SetupRivalGfxId
