@@ -483,6 +483,7 @@ struct UnusedControllerStruct
 
 #define SET_STATCHANGER(statId, stage, goesDown)(gBattleScripting.statChanger = (statId) + (stage << 4) + (goesDown << 7))
 
+extern u8 gBattleCommunication[];
 extern struct BattleHistory unk_2016A00;
 extern struct DisableStruct gDisableStructs[MAX_BATTLERS_COUNT];
 extern struct BattleResults gBattleResults;

@@ -1,10 +1,8 @@
 #include "global.h"
+#include "battle.h"
 #include "battle_tower.h"
 #include "menu.h"
-
-extern u8 gBattleCommunication[];
-
-extern u8 (*gMenuCallback)(void);
+#include "start_menu.h"
 
 static u8 sub_814A4B8(void);
 static u8 sub_814A464(void);
