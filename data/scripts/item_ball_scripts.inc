@@ -194,7 +194,7 @@ Route124_EventScript_ItemYellowShard:: @ 81B16A9
 	finditem ITEM_YELLOW_SHARD
 	end
 
-Route126_EventScript_1B16B6:: @ 81B16B6
+Route126_EventScript_ItemGreenShard:: @ 81B16B6
 	finditem ITEM_GREEN_SHARD
 	end
 
