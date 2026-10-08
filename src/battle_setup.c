@@ -705,7 +705,7 @@ s8 BattleSetup_GetEnvironmentId(void)
         return BATTLE_ENVIRONMENT_BUILDING;
     case MAP_TYPE_UNDERWATER:
         return BATTLE_ENVIRONMENT_UNDERWATER;
-    case MAP_TYPE_6:
+    case MAP_TYPE_OCEAN_ROUTE:
         if (MetatileBehavior_IsSurfableWaterOrUnderwater(tileBehavior))
             return BATTLE_ENVIRONMENT_WATER;
         return BATTLE_ENVIRONMENT_PLAIN;

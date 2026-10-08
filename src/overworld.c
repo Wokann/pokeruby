@@ -775,7 +775,7 @@ static u8 GetAdjustedInitialTransitionFlags(struct InitialPlayerAvatarState *pla
 
 static u8 GetAdjustedInitialDirection(struct InitialPlayerAvatarState *playerStruct, u8 transitionFlags, u16 metatileBehavior, u8 mapType)
 {
-    if (FlagGet(FLAG_SYS_CRUISE_MODE) && mapType == MAP_TYPE_6)
+    if (FlagGet(FLAG_SYS_CRUISE_MODE) && mapType == MAP_TYPE_OCEAN_ROUTE)
         return DIR_EAST;
     if (MetatileBehavior_IsDeepSouthWarp(metatileBehavior) == TRUE)
         return DIR_NORTH;
@@ -1132,7 +1132,7 @@ bool8 IsMapTypeOutdoors(u8 mapType)
      || mapType == MAP_TYPE_TOWN
      || mapType == MAP_TYPE_UNDERWATER
      || mapType == MAP_TYPE_CITY
-     || mapType == MAP_TYPE_6)
+     || mapType == MAP_TYPE_OCEAN_ROUTE)
         return TRUE;
     else
         return FALSE;
@@ -1142,7 +1142,7 @@ bool8 Overworld_MapTypeAllowsTeleportAndFly(u8 mapType)
 {
     if (mapType == MAP_TYPE_ROUTE
      || mapType == MAP_TYPE_TOWN
-     || mapType == MAP_TYPE_6
+     || mapType == MAP_TYPE_OCEAN_ROUTE
      || mapType == MAP_TYPE_CITY)
         return TRUE;
     else

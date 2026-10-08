@@ -2590,85 +2590,85 @@ Route123_Text_KindraPostBattle:: @ 81C05BC
 	.string "Dort muss es eine Kraft geben, die die\n"
 	.string "Geister beruhigt...$"
 
-Route124_Text_1C0624:: @ 81C0624
+Route124_Text_SpencerIntro:: @ 81C0624
 	.string "Hey, hast du etwa auf dem Meer die\n"
 	.string "Orientierung verloren?\p"
 	.string "Wenn du meine POKéMON besiegst, zeige\n"
 	.string "ich dir den richtigen Weg.$"
 
-Route124_Text_1C0675:: @ 81C0675
+Route124_Text_SpencerDefeat:: @ 81C0675
 	.string "Ich habe die Orientierung verloren...$"
 
-Route124_Text_1C0693:: @ 81C0693
+Route124_Text_SpencerPostBattle:: @ 81C0693
 	.string "Viele Menschen verlieren auf dem Meer\n"
 	.string "die Orientierung.\p"
 	.string "Wenn du zu denen gehörst, solltest du\n"
 	.string "die KARTE des POKéNAV zu Hilfe nehmen.$"
 
-Route124_Text_1C06F7:: @ 81C06F7
+Route124_Text_RolandIntro:: @ 81C06F7
 	.string "Hm! Du sitzt auf einem POKéMON anstatt\n"
 	.string "selbst zu schwimmen...\p"
 	.string "Ich bin richtig neidisch!$"
 
-Route124_Text_1C0741:: @ 81C0741
+Route124_Text_RolandDefeat:: @ 81C0741
 	.string "Oh!\n"
 	.string "Ich kann doch nicht...$"
 
-Route124_Text_1C0750:: @ 81C0750
+Route124_Text_RolandPostBattle:: @ 81C0750
 	.string "Langsam bekomme ich eine Gänsehaut.\n"
 	.string "Ich bin schon zu lange im Wasser.\p"
 	.string "Ich wollte, ich könnte auf einem\n"
 	.string "POKéMON reiten. So wie du!$"
 
-Route124_Text_1C07B4:: @ 81C07B4
+Route124_Text_JennyIntro:: @ 81C07B4
 	.string "Wenn du dich einfach nur im Meer treiben\n"
 	.string "lässt, kommen POKéMON, um zu spielen.$"
 
-Route124_Text_1C07F9:: @ 81C07F9
+Route124_Text_JennyDefeat:: @ 81C07F9
 	.string "Oh.\n"
 	.string "Verschollen auf hoher See...$"
 
-Route124_Text_1C080E:: @ 81C080E
+Route124_Text_JennyPostBattle:: @ 81C080E
 	.string "Ich habe beim Schwimmen festgestellt,\n"
 	.string "dass einige POKéMON angreifen und\l"
 	.string "manche einen nur beobachten.\p"
 	.string "Ich glaube, POKéMON haben unter-\n"
 	.string "schiedliche Persönlichkeiten.$"
 
-Route124_Text_1C0888:: @ 81C0888
+Route124_Text_JennyRematchIntro:: @ 81C0888
 	.string "Wenn du dich hier treiben lässt, triffst\n"
 	.string "du auf TRAINER, die kämpfen wollen.$"
 
-Route124_Text_1C08C8:: @ 81C08C8
+Route124_Text_JennyRematchDefeat:: @ 81C08C8
 	.string "Das ist sehr merkwürdig...\n"
 	.string "Ich habe schon wieder verloren...$"
 
-Route124_Text_1C08EA:: @ 81C08EA
+Route124_Text_JennyPostRematch:: @ 81C08EA
 	.string "Das hat zwar nichts damit zu tun, aber\n"
 	.string "ich glaube, ich besuche das RÄTSELHAUS.$"
 
-Route124_Text_1C0936:: @ 81C0936
+Route124_Text_GraceIntro:: @ 81C0936
 	.string "Ich fange an, mich beim Schwimmen zu\n"
 	.string "langweilen. Wie wär's mit einem Kampf?$"
 
-Route124_Text_1C096B:: @ 81C096B
+Route124_Text_GraceDefeat:: @ 81C096B
 	.string "Ich hatte ja keine Ahnung, dass du so\n"
 	.string "stark bist!$"
 
-Route124_Text_1C0994:: @ 81C0994
+Route124_Text_GracePostBattle:: @ 81C0994
 	.string "Alles was du bisher erreicht hast, hat\n"
 	.string "dich so stark werden lassen.$"
 
-Route124_Text_1C09CE:: @ 81C09CE
+Route124_Text_ChadIntro:: @ 81C09CE
 	.string "Hähähä... Ich tauche tief hinab, um mich\n"
 	.string "tief und sicher zu verstecken.\l"
 	.string "Die Tiefen auszuloten ist meine Mission.$"
 
-Route124_Text_1C0A2F:: @ 81C0A2F
+Route124_Text_ChadDefeat:: @ 81C0A2F
 	.string "Blubb, blubb, blubb...\n"
 	.string "So saufe ich ab...$"
 
-Route124_Text_1C0A52:: @ 81C0A52
+Route124_Text_ChadPostBattle:: @ 81C0A52
 	.string "Aus zuverlässiger Quelle weiß ich, dass\n"
 	.string "es hier in der Nähe einen Platz zum\l"
 	.string "TAUCHEN gibt.\p"
