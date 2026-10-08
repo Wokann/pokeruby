@@ -1,21 +1,24 @@
 #ifndef GUARD_INTRO_CREDITS_GRAPHICS_H
 #define GUARD_INTRO_CREDITS_GRAPHICS_H
 
-extern const struct CompressedSpriteSheet gSpriteSheet_IntroBrendan[];
-extern const struct CompressedSpriteSheet gSpriteSheet_IntroMay[];
+extern u16 gIntroCredits_MovingSceneryVBase;
+extern s16 gIntroCredits_MovingSceneryVOffset;
+extern s16 gIntroCredits_MovingSceneryState;
+
+extern const struct CompressedSpriteSheet gSpriteSheet_CreditsBrendan[];
+extern const struct CompressedSpriteSheet gSpriteSheet_CreditsMay[];
 extern const struct CompressedSpriteSheet gSpriteSheet_IntroBicycle[];
 extern const struct CompressedSpriteSheet gIntro2LatiosSpriteSheet[];
 extern const struct CompressedSpriteSheet gIntro2LatiasSpriteSheet[];
-extern const struct SpritePalette gIntro2SpritePalettes[];
-extern const struct CompressedSpriteSheet gUnknown_08416E24[];
-extern const struct CompressedSpriteSheet gUnknown_08416E34[];
+extern const struct SpritePalette gSpritePalettes_Credits[];
+extern const struct CompressedSpriteSheet gSpriteSheet_CreditsRivalBrendan[];
+extern const struct CompressedSpriteSheet gSpriteSheet_CreditsRivalMay[];
 
 void LoadIntroPart2Graphics(u8 scenery);
 void SetIntroPart2BgCnt(u8 scenery);
-void sub_8148CB0(u8);
-void sub_8148E90(u8);
+void LoadCreditsSceneGraphics(u8);
+void SetCreditsSceneBgCnt(u8);
 u8 CreateBicycleBgAnimationTask(u8 mode, u16 bg1Speed, u16 bg2Speed, u16 bg3Speed);
-void sub_8148F3C(u8);
 void CycleSceneryPalette(u8);
 u8 CreateIntroBrendanSprite(s16 x, s16 y);
 u8 CreateIntroMaySprite(s16 x, s16 y);

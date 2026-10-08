@@ -166,9 +166,6 @@ struct CreditsEntry
 };
 
 
-extern u16 gIntroCredits_MovingSceneryVBase;
-extern s16 gIntroCredits_MovingSceneryVOffset;
-extern s16 gIntroCredits_MovingSceneryState;
 
 static EWRAM_DATA s16 sUnkVar = 0;
 static EWRAM_DATA u16 sSavedTaskId = 0; // TASK A
@@ -1226,16 +1223,16 @@ static bool8 LoadBikeScene(u8 scene, u8 taskId)
     case 1:
         gIntroCredits_MovingSceneryVBase = 34;
         gIntroCredits_MovingSceneryVOffset = 0;
-        sub_8148CB0(scene);
+        LoadCreditsSceneGraphics(scene);
         gMain.state += 1;
         break;
     case 2:
         if (gSaveBlock2.playerGender == MALE)
         {
-            LoadCompressedObjectPic(gSpriteSheet_IntroBrendan);
-            LoadCompressedObjectPic(gUnknown_08416E34);
+            LoadCompressedObjectPic(gSpriteSheet_CreditsBrendan);
+            LoadCompressedObjectPic(gSpriteSheet_CreditsRivalMay);
             LoadCompressedObjectPic(gSpriteSheet_IntroBicycle);
-            LoadSpritePalettes(gIntro2SpritePalettes);
+            LoadSpritePalettes(gSpritePalettes_Credits);
 
             spriteId = CreateIntroBrendanSprite(120, 46);
             gTasks[taskId].data[TDA_PLAYER_CYCLIST] = spriteId;
@@ -1249,10 +1246,10 @@ static bool8 LoadBikeScene(u8 scene, u8 taskId)
         }
         else
         {
-            LoadCompressedObjectPic(gSpriteSheet_IntroMay);
-            LoadCompressedObjectPic(gUnknown_08416E24);
+            LoadCompressedObjectPic(gSpriteSheet_CreditsMay);
+            LoadCompressedObjectPic(gSpriteSheet_CreditsRivalBrendan);
             LoadCompressedObjectPic(gSpriteSheet_IntroBicycle);
-            LoadSpritePalettes(gIntro2SpritePalettes);
+            LoadSpritePalettes(gSpritePalettes_Credits);
 
             spriteId = CreateIntroMaySprite(120, 46);
             gTasks[taskId].data[TDA_PLAYER_CYCLIST] = spriteId;
@@ -1268,7 +1265,7 @@ static bool8 LoadBikeScene(u8 scene, u8 taskId)
         break;
     case 3:
         SetBikeScene(scene, taskId);
-        sub_8148E90(scene);
+        SetCreditsSceneBgCnt(scene);
         gMain.state = 0;
         return TRUE;
     }

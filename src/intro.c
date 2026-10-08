@@ -23,8 +23,6 @@
 #include "scanline_effect.h"
 #include "ewram.h"
 
-extern u16 gIntroCredits_MovingSceneryVBase;
-extern u16 gIntroCredits_MovingSceneryVOffset;
 extern const u8 gIntroCopyright_Gfx[];
 extern const u16 gIntroCopyright_Pal[];
 extern const u16 gIntroCopyright_Tilemap[];
@@ -1083,16 +1081,16 @@ static void Task_Scene2_CreateSprites(u8 taskId)
     u8 spriteId;
 
     if (sIntroCharacterGender == 0)
-        LoadCompressedObjectPic(gSpriteSheet_IntroBrendan);
+        LoadCompressedObjectPic(gSpriteSheet_CreditsBrendan);
     else
-        LoadCompressedObjectPic(gSpriteSheet_IntroMay);
+        LoadCompressedObjectPic(gSpriteSheet_CreditsMay);
     LoadCompressedObjectPic(gSpriteSheet_IntroBicycle);
 #ifdef SAPPHIRE
     LoadCompressedObjectPic(gIntro2LatiasSpriteSheet);
 #else
     LoadCompressedObjectPic(gIntro2LatiosSpriteSheet);
 #endif
-    LoadSpritePalettes(gIntro2SpritePalettes);
+    LoadSpritePalettes(gSpritePalettes_Credits);
     if (sIntroCharacterGender == 0)
         spriteId = CreateIntroBrendanSprite(0x110, 100);
     else
