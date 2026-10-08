@@ -9407,7 +9407,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_Ruben }
     },
 
-    [TRAINER_KOJI] =
+    [TRAINER_KOJI_1] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_BLACK_BELT,

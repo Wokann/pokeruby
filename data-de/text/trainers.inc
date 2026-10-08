@@ -2927,52 +2927,52 @@ Route127_Text_1C1877:: @ 81C1877
 	.string "Wenn du einen Rivalen hast, willst du\n"
 	.string "dann nicht auch immer besser werden?$"
 
-Route127_Text_1C18CC:: @ 81C18CC
+Route127_Text_JonahIntro:: @ 81C18CC
 	.string "Durch das Angeln habe ich eine\n"
 	.string "gelassene Heiterkeit entwickelt...\l"
 	.string "Bitte lass mich sie dir zeigen...$"
 
-Route127_Text_1C1930:: @ 81C1930
+Route127_Text_JonahDefeat:: @ 81C1930
 	.string "Auch wenn ich verloren habe, so bleibt\n"
 	.string "mein Herz doch ruhig...$"
 
-Route127_Text_1C195D:: @ 81C195D
+Route127_Text_JonahPostBattle:: @ 81C195D
 	.string "Es macht nichts, wenn ich nichts fange.\n"
 	.string "Die Schnur bleibt im Wasser.$"
 
-Route127_Text_1C19A3:: @ 81C19A3
+Route127_Text_HenryIntro:: @ 81C19A3
 	.string "Hups! Jetzt sag nicht, dass ich ein\n"
 	.string "SURFENDES POKéMON am Haken habe?$"
 
-Route127_Text_1C19D6:: @ 81C19D6
+Route127_Text_HenryDefeat:: @ 81C19D6
 	.string "Ich kann so nicht weitermachen!$"
 
-Route127_Text_1C19E7:: @ 81C19E7
+Route127_Text_HenryPostBattle:: @ 81C19E7
 	.string "Deine POKéMON sehen stark aus! Und\n"
 	.string "doch wären sie nur ein Häppchen, wenn\l"
 	.string "ich sie als Köder am Haken hätte.$"
 
-Route127_Text_1C1A2E:: @ 81C1A2E
+Route127_Text_RogerIntro:: @ 81C1A2E
 	.string "Nun! Das ist ein Kampf zwischen einem\n"
 	.string "POKéMON-Fan und einem Angel-Fan.$"
 
-Route127_Text_1C1A73:: @ 81C1A73
+Route127_Text_RogerDefeat:: @ 81C1A73
 	.string "Nein! Meine Schnur hat sich verheddert.\n"
 	.string "Die Party ist vorbei!$"
 
-Route127_Text_1C1AA0:: @ 81C1AA0
+Route127_Text_RogerPostBattle:: @ 81C1AA0
 	.string "Meine Angelschnur tanzt im Wasser!\n"
 	.string "Sie tanzt Tango! Hahahah, hiiiks!$"
 
-Route127_Text_1C1AE2:: @ 81C1AE2
+Route127_Text_KojiIntro:: @ 81C1AE2
 	.string "Das, was ich in der ARENA von\n"
 	.string "FAUSTAUHAVEN gelernt habe,\l"
 	.string "wende ich jetzt an.$"
 
-Route127_Text_1C1B2A:: @ 81C1B2A
+Route127_Text_KojiDefeat:: @ 81C1B2A
 	.string "Ich wurde weggeschwemmt.$"
 
-Route127_Text_1C1B39:: @ 81C1B39
+Route127_Text_KojiPostBattle:: @ 81C1B39
 	.string "KAMILLO, der ARENALEITER von\n"
 	.string "FAUSTAUHAVEN, soll mit einem Typen\l"
 	.string "namens BRUNO in KANTO trainiert haben.$"
