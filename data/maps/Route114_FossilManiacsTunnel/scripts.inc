@@ -4,7 +4,7 @@ Route114_FossilManiacsTunnel_MapScripts:: @ 815C20E
 Route114_FossilManiacsTunnel_EventScript_15C20F:: @ 815C20F
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_FOSSIL_MON, Route114_FossilManiacsTunnel_EventScript_15C24E
+	goto_if_set FLAG_RECEIVED_REVIVED_FOSSIL_MON, Route114_FossilManiacsTunnel_EventScript_15C24E
 	checkitem ITEM_ROOT_FOSSIL, 1
 	compare VAR_RESULT, 1
 	goto_if_eq Route114_FossilManiacsTunnel_EventScript_15C244

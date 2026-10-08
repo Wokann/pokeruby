@@ -4,14 +4,14 @@ RustboroCity_PokemonCenter_2F_MapScripts:: @ 8157BB1
 	map_script MAP_SCRIPT_ON_LOAD, RustboroCity_PokemonCenter_2F_MapScript1_1A3D32
 	.byte 0
 
-RustboroCity_PokemonCenter_2F_EventScript_157BC1:: @ 8157BC1
+RustboroCity_PokemonCenter_2F_EventScript_Colosseum:: @ 8157BC1
 	call RustboroCity_PokemonCenter_2F_EventScript_1A3EA6
 	end
 
-RustboroCity_PokemonCenter_2F_EventScript_157BC7:: @ 8157BC7
+RustboroCity_PokemonCenter_2F_EventScript_TradeCenter:: @ 8157BC7
 	call RustboroCity_PokemonCenter_2F_EventScript_1A40CC
 	end
 
-RustboroCity_PokemonCenter_2F_EventScript_157BCD:: @ 8157BCD
+RustboroCity_PokemonCenter_2F_EventScript_RecordCorner:: @ 8157BCD
 	call RustboroCity_PokemonCenter_2F_EventScript_1A41FB
 	end

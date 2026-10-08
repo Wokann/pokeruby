@@ -10,7 +10,7 @@ Route104_MrBrineysHouse_MapScript1_15BCB8:: @ 815BCB8
 	end
 
 Route104_MrBrineysHouse_EventScript_15BCD0:: @ 815BCD0
-	setflag FLAG_HIDE_RIVAL_RUSTBORO
+	setflag FLAG_HIDE_RUSTBORO_CITY_RIVAL
 	return
 
 Route104_MrBrineysHouse_EventScript_15BCD4:: @ 815BCD4
@@ -77,8 +77,8 @@ Route104_MrBrineysHouse_EventScript_15BDAB:: @ 815BDAB
 	call EventScript_BackupMrBrineyLocation
 	setvar VAR_BOARD_BRINEY_BOAT_ROUTE104_STATE, 1
 	clearflag FLAG_HIDE_MR_BRINEY_ROUTE104
-	setflag FLAG_HIDE_MR_BRINEY_ROUTE104_HOUSE
-	setflag FLAG_HIDE_PEEKO_BRINEY_HOUSE
+	setflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
+	setflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
 	warp MAP_ROUTE104, 255, 13, 51
 	waitstate
 	releaseall

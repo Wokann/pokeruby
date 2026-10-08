@@ -15,7 +15,7 @@ RustboroCity_Gym_EventScript_RoxanneDefeated:: @ 81578FE
 	msgbox RustboroCity_Gym_Text_StoneBadgeInfoTakeThis, MSGBOX_DEFAULT
 	setflag FLAG_DEFEATED_RUSTBORO_GYM
 	setflag FLAG_BADGE01_GET
-	setvar VAR_RUSTBORO_STATE, 1
+	setvar VAR_RUSTBORO_CITY_STATE, 1
 	addvar VAR_PETALBURG_GYM_STATE, 1
 	setvar VAR_0x8008, 1
 	call Common_EventScript_SetGymTrainers
@@ -25,7 +25,7 @@ RustboroCity_Gym_EventScript_RoxanneDefeated:: @ 81578FE
 	end
 
 RustboroCity_Gym_EventScript_GiveRockTomb:: @ 815793C
-	giveitem ITEM_TM39_ROCK_TOMB
+	giveitem ITEM_TM_ROCK_TOMB
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_TM_ROCK_TOMB

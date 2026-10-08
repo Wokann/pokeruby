@@ -137,7 +137,7 @@ RustboroCity_DevonCorp_2F_EventScript_LileepReady:: @ 8157661
 	goto_if_eq RustboroCity_DevonCorp_2F_EventScript_TooManyPokemon
 	copyvar VAR_0x8004, VAR_RESULT
 	setvar VAR_FOSSIL_RESURRECTION_STATE, 0
-	setflag FLAG_RECEIVED_FOSSIL_MON
+	setflag FLAG_RECEIVED_REVIVED_FOSSIL_MON
 	playfanfare MUS_OBTAIN_ITEM
 	message RustboroCity_DevonCorp_2F_Text_ReceivedMonFromResearcher
 	waitfanfare
@@ -157,7 +157,7 @@ RustboroCity_DevonCorp_2F_EventScript_AnorithReady:: @ 81576B4
 	goto_if_eq RustboroCity_DevonCorp_2F_EventScript_TooManyPokemon
 	copyvar VAR_0x8004, VAR_RESULT
 	setvar VAR_FOSSIL_RESURRECTION_STATE, 0
-	setflag FLAG_RECEIVED_FOSSIL_MON
+	setflag FLAG_RECEIVED_REVIVED_FOSSIL_MON
 	playfanfare MUS_OBTAIN_ITEM
 	message RustboroCity_DevonCorp_2F_Text_ReceivedMonFromResearcher
 	waitfanfare

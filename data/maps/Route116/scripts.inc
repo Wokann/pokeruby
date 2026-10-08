@@ -53,7 +53,7 @@ Route116_EventScript_150A94:: @ 8150A94
 	compare VAR_FACING, 4
 	call_if_eq Route116_EventScript_150AF9
 	removeobject VAR_LAST_TALKED
-	clearflag FLAG_HIDE_EMPLOYEE_DEVON_CORP_3F
+	clearflag FLAG_HIDE_RUSTBORO_CITY_DEVON_CORP_3F_EMPLOYEE
 	setflag FLAG_RECEIVED_REPEAT_BALL
 	release
 	end

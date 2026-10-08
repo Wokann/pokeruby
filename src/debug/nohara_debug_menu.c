@@ -1040,7 +1040,7 @@ bool8 NoharaDebugMenu_SootopolisCity(void)
 
 bool8 NoharaDebugMenu_Embark(void)
 {
-    FlagClear(FLAG_HIDE_MR_BRINEY_ROUTE104_HOUSE);
+    FlagClear(FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY);
     VarSet(VAR_BRINEY_HOUSE_STATE, 1);
     CloseMenu();
     return TRUE;

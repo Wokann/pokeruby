@@ -22,7 +22,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "RusturfTunnel_EventScript_15C799",
-      "flag": "FLAG_HIDE_BOYFRIEND_RUSTURF_TUNNEL"
+      "flag": "FLAG_HIDE_RUSTURF_TUNNEL_WANDAS_BOYFRIEND"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
@@ -100,7 +100,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "RusturfTunnel_EventScript_15C9D7",
-      "flag": "FLAG_HIDE_PEEKO_RUSTURF_TUNNEL"
+      "flag": "FLAG_HIDE_RUSTURF_TUNNEL_PEEKO"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
@@ -139,7 +139,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "RusturfTunnel_EventScript_15C782",
-      "flag": "FLAG_HIDE_GIRLFRIEND_RUSTURF_TUNNEL"
+      "flag": "FLAG_HIDE_RUSTURF_TUNNEL_WANDA"
     }
   ],
   "warp_events": [

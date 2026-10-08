@@ -57,18 +57,20 @@ RustboroCity_DevonCorp_3F_EventScript_MeetPresident:: @ 8157752
 	setflag FLAG_SYS_POKENAV_GET
 	setflag FLAG_RECEIVED_POKENAV
 	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneExplainPokenav, MSGBOX_DEFAULT
-	setflag FLAG_HIDE_TUNNER_DIGGER_ROUTE116
-	clearflag FLAG_HIDE_BOYFRIEND_RUSTURF_TUNNEL
-	clearflag FLAG_HIDE_GIRLFRIEND_RUSTURF_TUNNEL
-	clearflag FLAG_HIDE_MR_BRINEY_ROUTE104_HOUSE
-	clearflag FLAG_HIDE_PEEKO_BRINEY_HOUSE
+	setflag FLAG_HIDE_ROUTE_116_WANDAS_BOYFRIEND
+	clearflag FLAG_HIDE_RUSTURF_TUNNEL_WANDAS_BOYFRIEND
+	clearflag FLAG_HIDE_RUSTURF_TUNNEL_WANDA
+	clearflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
+	clearflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
 	setvar VAR_BRINEY_LOCATION, 1
-	clearflag FLAG_HIDE_RIVAL_RUSTBORO
+	clearflag FLAG_HIDE_RUSTBORO_CITY_RIVAL
 	setvar VAR_DEVON_CORP_3F_STATE, 1
 	releaseall
 	end
 
 @ 81577FE
+@ Unused
+RustboroCity_DevonCorp_3F_Movement_Unused:
 	walk_up
 	walk_up
 	walk_up

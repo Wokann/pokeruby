@@ -79,6 +79,8 @@ RustboroCity_EventScript_GymSign:: @ 814C41C
 	end
 
 @ 814C425
+@ Unused
+RustboroCity_EventScript_DevonCorpBranchOfficeSign::
 	msgbox RustboroCity_Text_DevonCorpBranchOfficeSign, MSGBOX_SIGN
 	end
 
@@ -175,48 +177,62 @@ RustboroCity_EventScript_StolenGoodsScene:: @ 814C4F4
 	waitmovement 0
 	removeobject 9
 	setobjectxyperm 9, 30, 10
-	clearflag FLAG_HIDE_DEVON_RUSTBORO
+	clearflag FLAG_HIDE_RUSTBORO_CITY_DEVON_EMPLOYEE_1
 	setflag FLAG_DEVON_GOODS_STOLEN
-	setvar VAR_RUSTBORO_STATE, 2
+	setvar VAR_RUSTBORO_CITY_STATE, 2
 	setvar VAR_RUSTURF_TUNNEL_STATE, 2
 	setvar VAR_ROUTE116_STATE, 1
-	clearflag FLAG_HIDE_BRINEY_ROUTE116
-	clearflag FLAG_HIDE_PEEKO_RUSTURF_TUNNEL
+	clearflag FLAG_HIDE_ROUTE_116_MR_BRINEY
+	clearflag FLAG_HIDE_RUSTURF_TUNNEL_PEEKO
 	clearflag FLAG_HIDE_GRUNT_RUSTURF_TUNNEL
-	setflag FLAG_HIDE_MR_BRINEY_ROUTE104_HOUSE
-	setflag FLAG_HIDE_PEEKO_BRINEY_HOUSE
+	setflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
+	setflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
 	releaseall
 	end
 
 @ 814C55D
+@ Unused
+RustboroCity_EventScript_ShadyCharacterTookOff::
 	msgbox RustboroCity_Text_ShadyCharacterTookOffTowardsTunnel, MSGBOX_DEFAULT
 	return
 
 @ 814C566
+@ Unused
+RustboroCity_EventScript_YouGotItThankYou::
 	msgbox RustboroCity_Text_YouGotItThankYou, MSGBOX_DEFAULT
 	return
 
 @ 814C56F
+@ Unused
+RustboroCity_EventScript_EmployeeApproachUp::
 	applymovement 9, RustboroCity_Movement_EmployeeApproachUp
 	waitmovement 0
 	return
 
 @ 814C57A
+@ Unused
+RustboroCity_EventScript_EmployeeApproachLeft::
 	applymovement 9, RustboroCity_Movement_EmployeeApproachLeft
 	waitmovement 0
 	return
 
 @ 814C585
+@ Unused
+RustboroCity_EventScript_EmployeeApproachRight::
 	applymovement 9, RustboroCity_Movement_EmployeeApproachRight
 	waitmovement 0
 	return
 
 @ 814C590
+@ Unused
+RustboroCity_EventScript_EmployeeApproachDown::
 	applymovement 9, RustboroCity_Movement_EmployeeApproachDown
 	waitmovement 0
 	return
 
 @ 814C59B
+@ Unused
+RustboroCity_EventScript_EmployeeApproachPlayerFar::
 	applymovement 9, RustboroCity_Movement_EmployeeApproachPlayerFar
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
@@ -224,6 +240,8 @@ RustboroCity_EventScript_StolenGoodsScene:: @ 814C4F4
 	return
 
 @ 814C5B0
+@ Unused
+RustboroCity_Movement_GruntEscapeExtended:
 	walk_faster_right
 	walk_faster_right
 	walk_fast_right
@@ -367,8 +385,8 @@ RustboroCity_EventScript_EmployeeAskToGetGoods:: @ 814C650
 	call_if_eq RustboroCity_EventScript_EmployeeFacePlayerDown1
 	compare VAR_TEMP_1, 3
 	call_if_eq RustboroCity_EventScript_EmployeeApproachPlayerDown1
-	setflag FLAG_UNKNOWN_9F
-	setvar VAR_RUSTBORO_STATE, 3
+	setflag FLAG_INTERACTED_WITH_DEVON_EMPLOYEE_GOODS_STOLEN
+	setvar VAR_RUSTBORO_CITY_STATE, 3
 	copyobjectxytoperm 9
 	msgbox RustboroCity_Text_HelpMeIWasRobbed, MSGBOX_DEFAULT
 	releaseall
@@ -470,8 +488,8 @@ RustboroCity_EventScript_ReturnGoods:: @ 814C77D
 	msgbox RustboroCity_Text_PleaseComeWithMe, MSGBOX_DEFAULT
 	closemessage
 	setflag FLAG_RETURNED_DEVON_GOODS
-	setflag FLAG_HIDE_DEVON_RUSTBORO
-	setvar VAR_RUSTBORO_STATE, 5
+	setflag FLAG_HIDE_RUSTBORO_CITY_DEVON_EMPLOYEE_1
+	setvar VAR_RUSTBORO_CITY_STATE, 5
 	delay 30
 	warp MAP_RUSTBORO_CITY_DEVON_CORP_3F, 255, 2, 2
 	waitstate

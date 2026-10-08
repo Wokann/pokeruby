@@ -755,7 +755,7 @@ void ItemUseOutOfBattle_TMHM(u8 taskId)
 {
     Menu_EraseWindowRect(0, 13, 13, 20);
 
-    if (gSpecialVar_ItemId >= ITEM_HM01_CUT)
+    if (gSpecialVar_ItemId >= ITEM_HM_CUT)
         DisplayItemMessageOnField(taskId, gText_BootedUpHM, BootUpSoundTMHM, 1); // HM
     else
         DisplayItemMessageOnField(taskId, gText_BootedUpTM, BootUpSoundTMHM, 1); // TM
