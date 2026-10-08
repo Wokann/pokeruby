@@ -49,8 +49,8 @@ SlateportCity_OceanicMuseum_2F_EventScript_CaptStern:: @ 8155CE6
 	trainerbattle_no_intro TRAINER_MUSEUM_2F_GRUNT_2, SlateportCity_OceanicMuseum_2F_Text_Grunt2Defeat
 	applymovement 3, SlateportCity_OceanicMuseum_2F_Movement_GruntDefeated
 	waitmovement 0
-	applymovement 3, Common_Movement_WalkInPlaceFastestDown
-	applymovement 4, Common_Movement_WalkInPlaceFastestUp
+	applymovement 3, Common_Movement_WalkInPlaceFasterDown
+	applymovement 4, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox SlateportCity_OceanicMuseum_2F_Text_MeddlingKid, MSGBOX_DEFAULT
 	closemessage
@@ -75,7 +75,7 @@ SlateportCity_OceanicMuseum_2F_EventScript_CaptStern:: @ 8155CE6
 	fadescreen FADE_FROM_BLACK
 	delay 30
 	setflag FLAG_HIDE_EVIL_TEAM_OCEANIC_MUSEUM
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	msgbox SlateportCity_OceanicMuseum_2F_Text_SternThankYouForSavingUs, MSGBOX_DEFAULT
 	setvar VAR_0x8004, ITEM_DEVON_GOODS
@@ -94,12 +94,12 @@ SlateportCity_OceanicMuseum_2F_EventScript_CaptStern:: @ 8155CE6
 	end
 
 SlateportCity_OceanicMuseum_2F_EventScript_PlayerFaceGrunts:: @ 8155E62
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	return
 
 SlateportCity_OceanicMuseum_2F_EventScript_SternFaceGrunts:: @ 8155E6D
-	applymovement 1, Common_Movement_WalkInPlaceFastestLeft
+	applymovement 1, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	return
 

@@ -60,7 +60,7 @@ Route119_EventScript_1511DB:: @ 81511DB
 	call_if_eq Route119_EventScript_1513A6
 	compare VAR_TEMP_1, 2
 	call_if_eq Route119_EventScript_1513B1
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 30
 	compare VAR_TEMP_1, 1

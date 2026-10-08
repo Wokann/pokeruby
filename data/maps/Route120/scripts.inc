@@ -206,12 +206,12 @@ Route120_EventScript_15189D:: @ 815189D
 	call_if_eq Route120_EventScript_15197F
 	compare VAR_FACING, 3
 	call_if_eq Route120_EventScript_15198A
-	applymovement 31, Common_Movement_WalkInPlaceFastestLeft
+	applymovement 31, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	delay 20
 	msgbox Route120_Text_1719D4, MSGBOX_DEFAULT
 	closemessage
-	applymovement 30, Common_Movement_WalkInPlaceFastestRight
+	applymovement 30, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	applymovement 30, Movement_KecleonAppears
 	waitmovement 0
@@ -228,15 +228,15 @@ Route120_EventScript_15189D:: @ 815189D
 	end
 
 Route120_EventScript_151908:: @ 8151908
-	applymovement 31, Common_Movement_WalkInPlaceFastestDown
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement 31, Common_Movement_WalkInPlaceFasterDown
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox Route120_Text_171A40, MSGBOX_DEFAULT
 	giveitem ITEM_DEVON_SCOPE
 	setflag FLAG_RECEIVED_DEVON_SCOPE
 	msgbox Route120_Text_171B0E, MSGBOX_DEFAULT
 	closemessage
-	applymovement 31, Common_Movement_WalkInPlaceFastestDown
+	applymovement 31, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 50
 	setfieldeffectargument 0, 1
@@ -253,7 +253,7 @@ Route120_EventScript_151908:: @ 8151908
 	end
 
 Route120_EventScript_15197F:: @ 815197F
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	return
 

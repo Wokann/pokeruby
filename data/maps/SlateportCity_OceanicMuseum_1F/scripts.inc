@@ -18,14 +18,14 @@ SlateportCity_OceanicMuseum_1F_EventScript_EntranceAttendant:: @ 8155ADB
 
 SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFeeLeft:: @ 8155AE4
 	lockall
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	goto SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFee
 	end
 
 SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFeeRight:: @ 8155AF5
 	lockall
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	goto SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFee
 	end

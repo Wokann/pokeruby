@@ -16,7 +16,7 @@ MagmaHideout_B2F_EventScript_15D8BD:: @ 815D8BD
 	.ifdef SAPPHIRE
 	applymovement VAR_0x8008, Common_Movement_FacePlayer
 	.else
-	applymovement VAR_0x8008, Common_Movement_WalkInPlaceFastestUp
+	applymovement VAR_0x8008, Common_Movement_WalkInPlaceFasterUp
 	.endif
 	waitmovement 0
 	setvar VAR_TEMP_1, 1
@@ -38,9 +38,9 @@ AquaHideout_B2F_EventScript_15D8FD:: @ 815D8FD
 	setvar VAR_0x8009, 3
 	.endif
 	.ifdef SAPPHIRE
-	applymovement VAR_0x8008, Common_Movement_WalkInPlaceFastestLeft
+	applymovement VAR_0x8008, Common_Movement_WalkInPlaceFasterLeft
 	.else
-	applymovement VAR_0x8008, Common_Movement_WalkInPlaceFastestRight
+	applymovement VAR_0x8008, Common_Movement_WalkInPlaceFasterRight
 	.endif
 	waitmovement 0
 	delay 20
@@ -49,9 +49,9 @@ AquaHideout_B2F_EventScript_15D8FD:: @ 815D8FD
 	msgbox AquaHideout_B2F_Text_197162, MSGBOX_DEFAULT
 	closemessage
 	.ifdef SAPPHIRE
-	applymovement VAR_0x8008, Common_Movement_WalkInPlaceFastestLeft
+	applymovement VAR_0x8008, Common_Movement_WalkInPlaceFasterLeft
 	.else
-	applymovement VAR_0x8008, Common_Movement_WalkInPlaceFastestRight
+	applymovement VAR_0x8008, Common_Movement_WalkInPlaceFasterRight
 	.endif
 	.ifdef SAPPHIRE
 	applymovement VAR_0x8009, AquaHideout_B2F_Movement_15D958

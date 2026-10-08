@@ -220,13 +220,13 @@ Route111_EventScript_1AE5E0:: @ 81AE5E0
 
 Route111_EventScript_1AE5EB:: @ 81AE5EB
 	applymovement VAR_0x8004, Route111_Movement_1AE69B
-	applymovement VAR_0x8005, Common_Movement_WalkInPlaceFastestUp
+	applymovement VAR_0x8005, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	return
 
 Route111_EventScript_1AE5FD:: @ 81AE5FD
 	applymovement VAR_0x8004, Route111_Movement_1AE69D
-	applymovement VAR_0x8005, Common_Movement_WalkInPlaceFastestLeft
+	applymovement VAR_0x8005, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	return
 

@@ -219,7 +219,7 @@ RustboroCity_EventScript_StolenGoodsScene:: @ 814C4F4
 @ 814C59B
 	applymovement 9, RustboroCity_Movement_EmployeeApproachPlayerFar
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	return
 
@@ -375,43 +375,43 @@ RustboroCity_EventScript_EmployeeAskToGetGoods:: @ 814C650
 	end
 
 RustboroCity_EventScript_EmployeeFacePlayerUp1:: @ 814C691
-	applymovement 9, Common_Movement_WalkInPlaceFastestUp
+	applymovement 9, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	playse SE_PIN
 	applymovement 9, Common_Movement_ExclamationMark
 	waitmovement 0
 	applymovement 9, Common_Movement_Delay48
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	return
 
 RustboroCity_EventScript_EmployeeFacePlayerLeft1:: @ 814C6BD
-	applymovement 9, Common_Movement_WalkInPlaceFastestLeft
+	applymovement 9, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	playse SE_PIN
 	applymovement 9, Common_Movement_ExclamationMark
 	waitmovement 0
 	applymovement 9, Common_Movement_Delay48
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	return
 
 RustboroCity_EventScript_EmployeeFacePlayerDown1:: @ 814C6E9
-	applymovement 9, Common_Movement_WalkInPlaceFastestDown
+	applymovement 9, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	playse SE_PIN
 	applymovement 9, Common_Movement_ExclamationMark
 	waitmovement 0
 	applymovement 9, Common_Movement_Delay48
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	return
 
 RustboroCity_EventScript_EmployeeApproachPlayerDown1:: @ 814C715
-	applymovement 9, Common_Movement_WalkInPlaceFastestDown
+	applymovement 9, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	playse SE_PIN
 	applymovement 9, Common_Movement_ExclamationMark
@@ -420,7 +420,7 @@ RustboroCity_EventScript_EmployeeApproachPlayerDown1:: @ 814C715
 	waitmovement 0
 	applymovement 9, RustboroCity_Movement_EmployeeApproachPlayerDown
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	return
 
@@ -483,43 +483,43 @@ RustboroCity_EventScript_BagFull:: @ 814C7F5
 	return
 
 RustboroCity_EventScript_EmployeeFacePlayerUp2:: @ 814C7FE
-	applymovement 9, Common_Movement_WalkInPlaceFastestUp
+	applymovement 9, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	playse SE_PIN
 	applymovement 9, Common_Movement_ExclamationMark
 	waitmovement 0
 	applymovement 9, Common_Movement_Delay48
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	return
 
 RustboroCity_EventScript_EmployeeFacePlayerLeft2:: @ 814C82A
-	applymovement 9, Common_Movement_WalkInPlaceFastestRight
+	applymovement 9, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	playse SE_PIN
 	applymovement 9, Common_Movement_ExclamationMark
 	waitmovement 0
 	applymovement 9, Common_Movement_Delay48
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	return
 
 RustboroCity_EventScript_EmployeeFacePlayerDown2:: @ 814C856
-	applymovement 9, Common_Movement_WalkInPlaceFastestDown
+	applymovement 9, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	playse SE_PIN
 	applymovement 9, Common_Movement_ExclamationMark
 	waitmovement 0
 	applymovement 9, Common_Movement_Delay48
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	return
 
 RustboroCity_EventScript_EmployeeApproachPlayerDown2:: @ 814C882
-	applymovement 9, Common_Movement_WalkInPlaceFastestDown
+	applymovement 9, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	playse SE_PIN
 	applymovement 9, Common_Movement_ExclamationMark
@@ -528,12 +528,12 @@ RustboroCity_EventScript_EmployeeApproachPlayerDown2:: @ 814C882
 	waitmovement 0
 	applymovement 9, RustboroCity_Movement_EmployeeApproachPlayerDown
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	return
 
 RustboroCity_EventScript_EmployeeFacePlayerRight:: @ 814C8B8
-	applymovement 9, Common_Movement_WalkInPlaceFastestLeft
+	applymovement 9, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	playse SE_PIN
 	applymovement 9, Common_Movement_ExclamationMark

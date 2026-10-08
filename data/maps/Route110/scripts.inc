@@ -254,7 +254,7 @@ Route110_EventScript_14FC10:: @ 814FC10
 
 Route110_EventScript_14FC27:: @ 814FC27
 	lockall
-	applymovement 21, Common_Movement_WalkInPlaceFastestRight
+	applymovement 21, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	call Route110_EventScript_14FC39
 	releaseall
@@ -330,7 +330,7 @@ Route110_EventScript_14FD34:: @ 814FD34
 	call_if_eq Route110_EventScript_14FDA7
 	compare VAR_RESULT, 1
 	call_if_eq Route110_EventScript_14FDAC
-	applymovement 28, Common_Movement_WalkInPlaceFastestDown
+	applymovement 28, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	applymovement 28, Common_Movement_ExclamationMark
 	waitmovement 0

@@ -95,7 +95,7 @@ RusturfTunnel_EventScript_15C892:: @ 815C892
 	applymovement LOCALID_PLAYER, RusturfTunnel_Movement_15C96D
 	applymovement 1, RusturfTunnel_Movement_15C994
 	waitmovement 0
-	applymovement 10, Common_Movement_WalkInPlaceFastestDown
+	applymovement 10, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	return
 
@@ -103,14 +103,14 @@ RusturfTunnel_EventScript_15C8AE:: @ 815C8AE
 	applymovement LOCALID_PLAYER, RusturfTunnel_Movement_15C96D
 	applymovement 1, RusturfTunnel_Movement_15C994
 	waitmovement 0
-	applymovement 10, Common_Movement_WalkInPlaceFastestDown
+	applymovement 10, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	return
 
 RusturfTunnel_EventScript_15C8CA:: @ 815C8CA
-	applymovement 1, Common_Movement_WalkInPlaceFastestUp
+	applymovement 1, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	return
 

@@ -226,7 +226,7 @@ OldaleTown_EventScript_RivalTrigger1:: @ 814DF41
 	lockall
 	applymovement 4, OldaleTown_Movement_RivalApproachPlayer1
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	goto OldaleTown_EventScript_ShowRivalMessage
 	end
@@ -235,7 +235,7 @@ OldaleTown_EventScript_RivalTrigger2:: @ 814DF5C
 	lockall
 	applymovement 4, OldaleTown_Movement_RivalApproachPlayer2
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	goto OldaleTown_EventScript_ShowRivalMessage
 	end
@@ -244,7 +244,7 @@ OldaleTown_EventScript_RivalTrigger3:: @ 814DF77
 	lockall
 	applymovement 4, OldaleTown_Movement_RivalApproachPlayer3
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	goto OldaleTown_EventScript_ShowRivalMessage
 	end

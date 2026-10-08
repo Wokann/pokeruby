@@ -64,7 +64,7 @@ BattleTower_Outside_EventScript_160226:: @ 8160226
 
 BattleTower_Outside_EventScript_160232:: @ 8160232
 	closemessage
-	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFastestDown
+	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 30
 	hideobjectat 5, MAP_BATTLE_TOWER_OUTSIDE

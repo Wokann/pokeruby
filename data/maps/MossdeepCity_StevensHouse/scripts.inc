@@ -28,7 +28,7 @@ MossdeepCity_StevensHouse_OnFrame:: @ 815AA01
 
 MossdeepCity_StevensHouse_EventScript_StevenGivesDive:: @ 815AA0B
 	lockall
-	applymovement 1, Common_Movement_WalkInPlaceFastestLeft
+	applymovement 1, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	playse SE_PIN
 	applymovement 1, Common_Movement_ExclamationMark

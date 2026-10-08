@@ -308,9 +308,9 @@ LittlerootTown_Movement_TwinReturnRight:: @ 814D7C0
 
 LittlerootTown_EventScript_GoSaveBirchTrigger:: @ 814D7C7
 	lockall
-	applymovement 1, Common_Movement_WalkInPlaceFastestRight
+	applymovement 1, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	msgbox LittlerootTown_Text_CanYouGoSeeWhatsHappening, MSGBOX_DEFAULT
 	closemessage
@@ -440,12 +440,12 @@ LittlerootTown_EventScript_SetHomeDoorCoordsFemale:: @ 814D931
 	return
 
 LittlerootTown_EventScript_MomNoticePlayerMale:: @ 814D93C
-	applymovement 4, Common_Movement_WalkInPlaceFastestRight
+	applymovement 4, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	return
 
 LittlerootTown_EventScript_MomNoticePlayerFemale:: @ 814D947
-	applymovement 4, Common_Movement_WalkInPlaceFastestLeft
+	applymovement 4, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	return
 
@@ -480,70 +480,70 @@ LittlerootTown_EventScript_MomApproachPlayerFemale:: @ 814D995
 	return
 
 LittlerootTown_EventScript_MomApproachPlayer0:: @ 814D9D8
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	applymovement 4, LittlerootTown_Movement_MomApproachPlayer0
 	waitmovement 0
 	return
 
 LittlerootTown_EventScript_MomApproachPlayer1:: @ 814D9ED
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	applymovement 4, LittlerootTown_Movement_MomApproachPlayer1
 	waitmovement 0
 	return
 
 LittlerootTown_EventScript_MomApproachPlayerMale2:: @ 814DA02
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	applymovement 4, LittlerootTown_Movement_MomApproachPlayerMale2
 	waitmovement 0
 	return
 
 LittlerootTown_EventScript_MomApproachPlayerMale3:: @ 814DA17
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	applymovement 4, LittlerootTown_Movement_MomApproachPlayerMale3
 	waitmovement 0
 	return
 
 LittlerootTown_EventScript_MomApproachPlayerMale4:: @ 814DA2C
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	applymovement 4, LittlerootTown_Movement_MomApproachPlayerMale4
 	waitmovement 0
 	return
 
 LittlerootTown_EventScript_MomApproachPlayerMale5:: @ 814DA41
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	applymovement 4, LittlerootTown_Movement_MomApproachPlayerMale5
 	waitmovement 0
 	return
 
 LittlerootTown_EventScript_MomApproachPlayerFemale2:: @ 814DA56
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	applymovement 4, LittlerootTown_Movement_MomApproachPlayerFemale2
 	waitmovement 0
 	return
 
 LittlerootTown_EventScript_MomApproachPlayerFemale3:: @ 814DA6B
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	applymovement 4, LittlerootTown_Movement_MomApproachPlayerFemale3
 	waitmovement 0
 	return
 
 LittlerootTown_EventScript_MomApproachPlayerFemale4:: @ 814DA80
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	applymovement 4, LittlerootTown_Movement_MomApproachPlayerFemale4
 	waitmovement 0
 	return
 
 LittlerootTown_EventScript_MomApproachPlayerFemale5:: @ 814DA95
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	applymovement 4, LittlerootTown_Movement_MomApproachPlayerFemale5
 	waitmovement 0
@@ -844,7 +844,7 @@ LittlerootTown_EventScript_Mom:: @ 814DCE2
 	compare VAR_RESULT, 1
 	call_if_eq LittlerootTown_EventScript_SetHomeDoorCoordsFemale
 	call LittlerootTown_EventScript_GiveRunningShoes
-	applymovement 4, Common_Movement_WalkInPlaceFastestUp
+	applymovement 4, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	opendoor VAR_0x8009, VAR_0x800A
 	waitdooranim

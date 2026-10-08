@@ -9,18 +9,18 @@ LilycoveCity_PokemonTrainerFanClub_OnFrame:: @ 8159395
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_MeetFirstFans:: @ 815939F
 	lockall
-	applymovement 1, Common_Movement_WalkInPlaceFastestDown
+	applymovement 1, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	msgbox LilycoveCity_PokemonTrainerFanClub_Text_OhWowItsPlayer, MSGBOX_DEFAULT
 	applymovement 4, LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlWatchPlayer
 	applymovement 2, LilycoveCity_PokemonTrainerFanClub_Movement_FanApproachPlayer
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	msgbox LilycoveCity_PokemonTrainerFanClub_Text_HeardAboutYouImYourFan, MSGBOX_DEFAULT
 	applymovement 4, LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlMoveCloserToPlayer
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	applymovement 4, LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlHideFromPlayer
 	waitmovement 0

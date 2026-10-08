@@ -360,13 +360,13 @@ PetalburgCity_Gym_Text_JodyIntro:: @ 817B6D4
 PetalburgCity_Gym_Text_JodyDefeat:: @ 817B732
 	.string "Aber... Das war wohl nichts!$"
 
-PetalburgCity_Gym_Text_JodiPostBattle:: @ 817B749
+PetalburgCity_Gym_Text_JodyPostBattle:: @ 817B749
 	.string "Wie du deine POKéMON einsetzt...\n"
 	.string "Du bist wie dein Vater.\p"
 	.string "Geh weiter! Der ARENALEITER, dein\n"
 	.string "Vater, erwartet dich bereits!$"
 
-PetalburgCity_Gym_Text_JodiPostBadge:: @ 817B7C0
+PetalburgCity_Gym_Text_JodyPostBadge:: @ 817B7C0
 	.string "Sicher, es ist immer von Vorteil, die\n"
 	.string "POKéMON stärker werden zu lassen.\p"
 	.string "Aber was macht einen Gewinner aus?\p"
@@ -382,7 +382,7 @@ PetalburgCity_Gym_Text_EnterSpeedRoom:: @ 817B870
 	.string "dem Schild.\p"
 	.string "Möchtest du die Tür öffnen?$"
 
-UnknownString_817B8A8: @ 817B8A8
+PetalburgCity_Gym_Text_DoorAppearsLocked2: @ 817B8A8
 	.string "Die Tür ist noch verschlossen...$"
 
 PetalburgCity_Gym_Text_EnterAccuracyRoom:: @ 817B8D4

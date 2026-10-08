@@ -48,9 +48,9 @@ SlateportCity_Harbor_EventScript_EvilTeamEscapeTrigger3:: @ 8155FBF
 	end
 
 SlateportCity_Harbor_EventScript_EvilTeamEscapeScene:: @ 8155FD5
-	applymovement 7, Common_Movement_WalkInPlaceFastestDown
+	applymovement 7, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox SlateportCity_Harbor_Text_YouAgainHideoutInLilycove, MSGBOX_DEFAULT
 	closemessage
@@ -82,21 +82,21 @@ SlateportCity_Harbor_EventScript_EvilTeamEscapeScene:: @ 8155FD5
 SlateportCity_Harbor_EventScript_SternApproachPlayer0:: @ 815605C
 	applymovement 4, SlateportCity_Harbor_Movement_SternApproachPlayer0
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	return
 
 SlateportCity_Harbor_EventScript_SternApproachPlayer1:: @ 8156071
 	applymovement 4, SlateportCity_Harbor_Movement_SternApproachPlayer1
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	return
 
 SlateportCity_Harbor_EventScript_SternApproachPlayer:: @ 8156086
 	applymovement 4, SlateportCity_Harbor_Movement_SternApproachPlayer
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	return
 
@@ -217,7 +217,7 @@ SlateportCity_Harbor_EventScript_ChooseNewDestination:: @ 815618A
 SlateportCity_Harbor_EventScript_BoardFerry:: @ 8156196
 	msgbox SlateportCity_Harbor_Text_PleaseBoardFerry, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFastestUp
+	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	delay 30
 	hideobjectat VAR_LAST_TALKED, MAP_SLATEPORT_CITY_HARBOR

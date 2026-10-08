@@ -28,18 +28,18 @@ Route128_EventScript_15213F:: @ 815213F
 	closemessage
 	applymovement 5, Route128_Movement_152293
 	waitmovement 0
-	applymovement 4, Common_Movement_WalkInPlaceFastestUp
+	applymovement 4, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox Route128_Text_171F4B, MSGBOX_DEFAULT
 	closemessage
 	applymovement 5, Route128_Movement_1522A1
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox Route128_Text_172008, MSGBOX_DEFAULT
 	closemessage
 	applymovement 4, Route128_Movement_15227E
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	applymovement 5, Route128_Movement_152290
 	waitmovement 0
 	msgbox Route128_Text_17210B, MSGBOX_DEFAULT
@@ -57,23 +57,23 @@ Route128_EventScript_15213F:: @ 815213F
 	addobject 3
 	applymovement 3, Route128_Movement_15226F
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	msgbox Route128_Text_172181, MSGBOX_DEFAULT
 	closemessage
 	applymovement 3, Route128_Movement_15226D
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	.ifdef SAPPHIRE
 	msgbox Route128_Text_1721A2, MSGBOX_DEFAULT
 	.else
 	msgbox Route128_Text_1722A1, MSGBOX_DEFAULT
 	.endif
-	applymovement 3, Common_Movement_WalkInPlaceFastestDown
+	applymovement 3, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	msgbox Route128_Text_1723BE, MSGBOX_DEFAULT
 	closemessage
-	applymovement 3, Common_Movement_WalkInPlaceFastestDown
+	applymovement 3, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 50
 	setfieldeffectargument 0, 1

@@ -5,9 +5,9 @@ PetalburgCity_MapScripts:: @ 814B70C
 
 PetalburgCity_OnTransition:: @ 814B717
 	setflag FLAG_VISITED_PETALBURG_CITY
-	compare VAR_PETALBURG_STATE, 0
+	compare VAR_PETALBURG_CITY_STATE, 0
 	call_if_eq PetalburgCity_EventScript_MoveGymBoyToWestEntrance
-	compare VAR_PETALBURG_STATE, 2
+	compare VAR_PETALBURG_CITY_STATE, 2
 	call_if_eq PetalburgCity_EventScript_DisableMapMusic
 	end
 
@@ -20,7 +20,7 @@ PetalburgCity_EventScript_DisableMapMusic:: @ 814B739
 	return
 
 PetalburgCity_OnFrame:: @ 814B73D
-	map_script_2 VAR_PETALBURG_STATE, 2, PetalburgCity_EventScript_WallyTutorial
+	map_script_2 VAR_PETALBURG_CITY_STATE, 2, PetalburgCity_EventScript_WallyTutorial
 	.2byte 0
 
 PetalburgCity_EventScript_WallyTutorial:: @ 814B747
@@ -35,13 +35,13 @@ PetalburgCity_EventScript_WallyTutorial:: @ 814B747
 	special StartWallyTutorialBattle
 	waitstate
 	msgbox Route102_Text_WallyIDidIt, MSGBOX_DEFAULT
-	applymovement 2, Common_Movement_WalkInPlaceFastestLeft, MAP_PETALBURG_CITY
+	applymovement 2, Common_Movement_WalkInPlaceFasterLeft, MAP_PETALBURG_CITY
 	@ Local id and map num were swapped here (0, 0, 2 vs 2, 0, 0). Fixed to waitmovement 2, MAP_PETALBURG_CITY in Emerald
 	waitmovement 0, MAP_MAUVILLE_CITY
 	msgbox Route102_Text_LetsGoBack, MSGBOX_DEFAULT
 	closemessage
 	clearflag FLAG_HIDE_MAP_NAME_POPUP
-	setvar VAR_PETALBURG_STATE, 3
+	setvar VAR_PETALBURG_CITY_STATE, 3
 	fadedefaultbgm
 	clearflag FLAG_DONT_TRANSITION_MUSIC
 	special LoadPlayerParty
@@ -207,8 +207,8 @@ PetalburgCity_EventScript_ShowGymToPlayer:: @ 814B866
 	compare VAR_0x8008, 3
 	call_if_eq PetalburgCity_EventScript_LeadPlayerToGym3
 	msgbox PetalburgCity_Text_ThisIsPetalburgGym, MSGBOX_DEFAULT
-	applymovement 9, Common_Movement_WalkInPlaceFastestRight
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement 9, Common_Movement_WalkInPlaceFasterRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	msgbox PetalburgCity_Text_ThisIsGymSign, MSGBOX_DEFAULT
 	closemessage
@@ -221,7 +221,7 @@ PetalburgCity_EventScript_ShowGymToPlayer:: @ 814B866
 PetalburgCity_EventScript_BoyApproachPlayer0:: @ 814B91B
 	applymovement 9, PetalburgCity_Movement_BoyApproachPlayer0
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	return
 
@@ -233,14 +233,14 @@ PetalburgCity_EventScript_BoyApproachPlayer1:: @ 814B930
 PetalburgCity_EventScript_BoyApproachPlayer2:: @ 814B93B
 	applymovement 9, PetalburgCity_Movement_BoyApproachPlayer2
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	return
 
 PetalburgCity_EventScript_BoyApproachPlayer3:: @ 814B950
 	applymovement 9, PetalburgCity_Movement_BoyApproachPlayer3
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	return
 

@@ -202,8 +202,8 @@ EventScript_ClosedSootopolisDoor:: @ 814D2FF
 
 SootopolisCity_EventScript_LeadPlayerCaveOfOrigin:: @ 814D308
 	lockall
-	applymovement 10, Common_Movement_WalkInPlaceFastestLeft
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement 10, Common_Movement_WalkInPlaceFasterLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	playse SE_PIN
 	applymovement 10, Common_Movement_ExclamationMark
@@ -242,11 +242,11 @@ SootopolisCity_EventScript_LeadPlayerCaveOfOrigin:: @ 814D308
 	applymovement 10, SootopolisCity_EventScript_StevenStartFollowPlayerToCave
 	applymovement LOCALID_PLAYER, SootopolisCity_EventScript_PlayerStartFollowWallaceToCave
 	waitmovement 0
-	applymovement 5, Common_Movement_WalkInPlaceFastestRight
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement 5, Common_Movement_WalkInPlaceFasterRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	delay 30
-	applymovement 10, Common_Movement_WalkInPlaceFastestDown
+	applymovement 10, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	.ifdef SAPPHIRE
 	msgbox SootopolisCity_Text_PeopleNeedRainToLive, MSGBOX_DEFAULT
@@ -259,14 +259,14 @@ SootopolisCity_EventScript_LeadPlayerCaveOfOrigin:: @ 814D308
 	applymovement LOCALID_PLAYER, SootopolisCity_EventScript_PlayerContinueFollowWallaceToCave
 	applymovement 10, SootopolisCity_EventScript_StevenContinueFollowPlayerToCave
 	waitmovement 0
-	applymovement 5, Common_Movement_WalkInPlaceFastestLeft
+	applymovement 5, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	.ifdef SAPPHIRE
 	msgbox SootopolisCity_Text_CaveOfOriginWithBlueOrb, MSGBOX_DEFAULT
 	.else
 	msgbox SootopolisCity_Text_CaveOfOriginWithRedOrb, MSGBOX_DEFAULT
 	.endif
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	.ifdef SAPPHIRE
 	msgbox SootopolisCity_Text_NeverExpectedHoldingBlueOrb, MSGBOX_DEFAULT
@@ -446,7 +446,7 @@ SootopolisCity_EventScript_YoullBeOkay:: @ 814D498
 SootopolisCity_EventScript_14D4AD:: @ 814D4AD
 	msgbox SootopolisCity_Text_WeOweItAllToYou, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFastestDown
+	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 50
 	setfieldeffectargument 0, 1

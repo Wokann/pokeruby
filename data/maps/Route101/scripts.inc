@@ -30,7 +30,7 @@ Route101_EventScript_14E948:: @ 814E948
 	applymovement 4, Route101_Movement_14EA00
 	applymovement 2, Route101_Movement_14EA31
 	waitmovement 0
-	applymovement 2, Common_Movement_WalkInPlaceFastestRight
+	applymovement 2, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	applymovement 4, Route101_Movement_14EA27
 	applymovement 2, Route101_Movement_14EA58
@@ -222,7 +222,7 @@ Route101_EventScript_14EA7F:: @ 814EA7F
 	fadescreen FADE_TO_BLACK
 	removeobject 4
 	setobjectxy LOCALID_PLAYER, 6, 13
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	special ChooseStarter
 	waitstate

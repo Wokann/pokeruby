@@ -8,15 +8,15 @@ MeteorFalls_1F_1R_MapScript1_15C496:: @ 815C496
 
 MeteorFalls_1F_1R_EventScript_15C49C:: @ 815C49C
 	lockall
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 30
-	applymovement 5, Common_Movement_WalkInPlaceFastestDown
+	applymovement 5, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	msgbox MeteorFalls_1F_1R_Text_193237, MSGBOX_DEFAULT
 	closemessage
-	applymovement 5, Common_Movement_WalkInPlaceFastestUp
-	applymovement 6, Common_Movement_WalkInPlaceFastestUp
+	applymovement 5, Common_Movement_WalkInPlaceFasterUp
+	applymovement 6, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	playse SE_PIN
 	applymovement 5, Common_Movement_ExclamationMark
@@ -29,9 +29,9 @@ MeteorFalls_1F_1R_EventScript_15C49C:: @ 815C49C
 	waitmovement 0
 	msgbox MeteorFalls_1F_1R_Text_1932C5, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
-	applymovement 5, Common_Movement_WalkInPlaceFastestLeft
-	applymovement 6, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	applymovement 5, Common_Movement_WalkInPlaceFasterLeft
+	applymovement 6, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	addobject 7
 	addobject 8
@@ -40,8 +40,8 @@ MeteorFalls_1F_1R_EventScript_15C49C:: @ 815C49C
 	applymovement 8, MeteorFalls_1F_1R_Movement_15C60F
 	applymovement 9, MeteorFalls_1F_1R_Movement_15C617
 	waitmovement 0
-	applymovement 5, Common_Movement_WalkInPlaceFastestLeft
-	applymovement 6, Common_Movement_WalkInPlaceFastestLeft
+	applymovement 5, Common_Movement_WalkInPlaceFasterLeft
+	applymovement 6, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	msgbox MeteorFalls_1F_1R_Text_193320, MSGBOX_DEFAULT
 	closemessage
@@ -63,10 +63,10 @@ MeteorFalls_1F_1R_EventScript_15C49C:: @ 815C49C
 	applymovement 9, MeteorFalls_1F_1R_Movement_15C64A
 	waitmovement 0
 	msgbox MeteorFalls_1F_1R_Text_193720, MSGBOX_DEFAULT
-	applymovement 7, Common_Movement_WalkInPlaceFastestDown
+	applymovement 7, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	msgbox MeteorFalls_1F_1R_Text_193747, MSGBOX_DEFAULT
-	applymovement 7, Common_Movement_WalkInPlaceFastestLeft
+	applymovement 7, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	msgbox MeteorFalls_1F_1R_Text_1937AA, MSGBOX_DEFAULT
 	closemessage

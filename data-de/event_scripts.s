@@ -822,7 +822,7 @@ Common_EventScript_ShowEasyChatScreen:: @ 81A00F3
 	return
 
 Common_EventScript_ReadyPetalburgGymForBattle:: @ 81A00FB
-	clearflag FLAG_HIDE_PETALBURG_GYM_GUIDE
+	clearflag FLAG_HIDE_PETALBURG_GYM_GREETER
 	setflag FLAG_PETALBURG_MART_EXPANDED_ITEMS
 	return
 
@@ -940,7 +940,7 @@ RusturfTunnel_EventScript_SetRusturfTunnelOpen:: @ 81A0442
 
 EventScript_UnusedBoardFerry:
 	delay 30
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	showobjectat LOCALID_PLAYER, 0
 	delay 30
@@ -1557,7 +1557,7 @@ BattleTower_Lobby_EventScript_1AE30F:: @ 81AE30F
 	.include "data/scripts/mauville_man.inc"
 
 	.include "data/scripts/field_move_scripts.inc"
-	.include "data/item_ball_scripts.inc"
+	.include "data/scripts/item_ball_scripts.inc"
 
 	.include "data/scripts/mystery_event_club.inc"
 	.include "data/text/mystery_event_club.inc"

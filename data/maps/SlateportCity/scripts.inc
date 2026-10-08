@@ -484,10 +484,10 @@ SlateportCity_EventScript_CaptStern:: @ 814BEBC
 	msgbox SlateportCity_Text_SternMoveAheadWithExploration, MSGBOX_DEFAULT
 	msgbox SlateportCity_Text_GabbyWonderfulThanksForInterview, MSGBOX_DEFAULT
 	closemessage
-	applymovement 10, Common_Movement_WalkInPlaceFastestRight
+	applymovement 10, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	delay 10
-	applymovement 9, Common_Movement_WalkInPlaceFastestDown
+	applymovement 9, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 25
 	applymovement 11, SlateportCity_Movement_SternWatchGabbyAndTyExit
@@ -498,18 +498,18 @@ SlateportCity_EventScript_CaptStern:: @ 814BEBC
 	removeobject 10
 	removeobject 9
 	msgbox SlateportCity_Text_SternWhewFirstInterview, MSGBOX_DEFAULT
-	applymovement 11, Common_Movement_WalkInPlaceFastestUp
+	applymovement 11, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox SlateportCity_Text_OhPlayerWeMadeDiscovery, MSGBOX_DEFAULT
 	playbgm MUS_EVIL_TEAM, FALSE
 	msgbox SlateportCity_Text_EvilTeamWillAssumeControlOfSubmarine, MSGBOX_DEFAULT
-	applymovement 6, Common_Movement_WalkInPlaceFastestLeft
-	applymovement 1, Common_Movement_WalkInPlaceFastestLeft
+	applymovement 6, Common_Movement_WalkInPlaceFasterLeft
+	applymovement 1, Common_Movement_WalkInPlaceFasterLeft
 	applymovement 7, SlateportCity_Movement_OldWomanConcern
 	applymovement 3, Common_Movement_QuestionMark
 	applymovement 2, SlateportCity_Movement_ManConcern
 	waitmovement 0
-	applymovement 11, Common_Movement_WalkInPlaceFastestDown
+	applymovement 11, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	msgbox SlateportCity_Text_SternWhatWasAllThat, MSGBOX_DEFAULT
 	playse SE_PIN

@@ -94,7 +94,7 @@ LittlerootTown_BrendansHouse_1F_EventScript_YoureNewNeighbor:: @ 8152744
 	waitmovement 0
 	applymovement 4, Common_Movement_Delay48
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	applymovement 4, LittlerootTown_BrendansHouse_1F_Movement_RivalMomApproach
 	waitmovement 0
 	special GetRivalSonDaughterString
@@ -117,7 +117,7 @@ LittlerootTown_BrendansHouse_1F_EventScript_GoSeeRoom:: @ 8152789
 	lockall
 	setvar VAR_0x8004, 1
 	setvar VAR_0x8005, 0
-	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFastestLeft
+	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	goto PlayersHouse_1F_EventScript_MomGoSeeRoom
 	end
