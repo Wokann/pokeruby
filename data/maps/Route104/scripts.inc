@@ -144,9 +144,9 @@ Route104_EventScript_14EFD5:: @ 814EFD5
 	applymovement 2, Route104_Movement_14F16F
 	waitmovement 0
 	addobject 4
-	clearflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD
+	clearflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
 	call Common_EventScript_StopBrineysBoatMusic
-	setflag FLAG_HIDE_MR_BRINEY_BOAT_ROUTE104
+	setflag FLAG_HIDE_ROUTE_104_MR_BRINEY_BOAT
 	hideobjectat 7, MAP_ROUTE104
 	copyvar VAR_BRINEY_LOCATION, VAR_0x8008
 	resetobjectsubpriority LOCALID_PLAYER, MAP_ROUTE104
@@ -163,7 +163,7 @@ Route104_EventScript_14F08B:: @ 814F08B
 	end
 
 Route104_EventScript_14F095:: @ 814F095
-	msgbox Route104_Text_BrineyLandedInDewford, MSGBOX_DEFAULT
+	msgbox DewfordTown_Text_BrineyLandedInDewford, MSGBOX_DEFAULT
 	releaseall
 	end
 

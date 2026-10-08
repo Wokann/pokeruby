@@ -8,7 +8,7 @@ DewfordTown_Gym_OnTransition:: @ 815306B
 
 DewfordTown_Gym_EventScript_SetFlashLevel:: @ 8153071
 	goto_if_defeated TRAINER_BRAWLY, DewfordTown_Gym_EventScript_SetLightsOn
-	call DewfordTown_Gym_EventScript_CheckHideki
+	call DewfordTown_Gym_EventScript_CountTrainersDefeated
 	copyvar VAR_0x8001, VAR_0x8000
 	compare VAR_0x8000, 0
 	goto_if_eq DewfordTown_Gym_EventScript_SetFlashLevel4
@@ -39,13 +39,13 @@ DewfordTown_Gym_EventScript_SetFlashLevel4:: @ 81530BA
 	return
 
 DewfordTown_Gym_EventScript_BrightenRoom:: @ 81530BE
-	call DewfordTown_Gym_EventScript_CheckHideki
+	call DewfordTown_Gym_EventScript_CountTrainersDefeated
 	nop1
 	compare VAR_0x8000, VAR_0x8001
 	goto_if_eq DewfordTown_Gym_EventScript_NoLightChange
 	copyvar VAR_0x8001, VAR_0x8000
 	compare VAR_0x8000, 1
-	goto_if_eq DewfordTown_Gym_EventScript_AnimateFlash1Trainers
+	goto_if_eq DewfordTown_Gym_EventScript_AnimateFlash1Trainer
 	compare VAR_0x8000, 2
 	goto_if_eq DewfordTown_Gym_EventScript_AnimateFlash2Trainers
 	compare VAR_0x8000, 3
@@ -54,7 +54,7 @@ DewfordTown_Gym_EventScript_BrightenRoom:: @ 81530BE
 DewfordTown_Gym_EventScript_NoLightChange:: @ 81530F5
 	return
 
-DewfordTown_Gym_EventScript_AnimateFlash1Trainers:: @ 81530F6
+DewfordTown_Gym_EventScript_AnimateFlash1Trainer:: @ 81530F6
 	playse SE_SWITCH
 	animateflash 3
 	call DewfordTown_Gym_EventScript_SetFlashLevel
@@ -78,7 +78,7 @@ DewfordTown_Gym_EventScript_AnimateFlashFullBrightness:: @ 8153117
 	call DewfordTown_Gym_EventScript_SetFlashLevel
 	return
 
-DewfordTown_Gym_EventScript_CheckHideki:: @ 8153122
+DewfordTown_Gym_EventScript_CountTrainersDefeated:: @ 8153122
 	setvar VAR_0x8000, 0
 	goto_if_not_defeated TRAINER_HIDEKI, DewfordTown_Gym_EventScript_CheckTessa
 	addvar VAR_0x8000, 1

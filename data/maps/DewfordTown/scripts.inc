@@ -135,8 +135,8 @@ DewfordTown_EventScript_SailToPetalburg:: @ 814E151
 	showobjectat LOCALID_PLAYER, MAP_ROUTE104
 	clearflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
 	clearflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
-	clearflag FLAG_HIDE_MR_BRINEY_BOAT_ROUTE104
-	setflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD
+	clearflag FLAG_HIDE_ROUTE_104_MR_BRINEY_BOAT
+	setflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
 	hideobjectat 4, MAP_DEWFORD_TOWN
 	setvar VAR_BOARD_BRINEY_BOAT_ROUTE104_STATE, 2
 	resetobjectsubpriority LOCALID_PLAYER, MAP_DEWFORD_TOWN
@@ -169,10 +169,10 @@ DewfordTown_EventScript_SailToSlateport:: @ 814E1D8
 	setobjectsubpriority 2, MAP_ROUTE109, 0
 	applymovement 2, DewfordTown_Movement_BrineyExitBoat
 	waitmovement 0
-	clearflag FLAG_HIDE_MR_BRINEY_ROUTE109
+	clearflag FLAG_HIDE_ROUTE_109_MR_BRINEY
 	addobject 1
-	clearflag FLAG_HIDE_MR_BRINEY_BOAT_ROUTE109
-	setflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD
+	clearflag FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT
+	setflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
 	hideobjectat 4, MAP_DEWFORD_TOWN
 	call_if_unset FLAG_DELIVERED_DEVON_GOODS, DewfordTown_EventScript_LandedSlateportDeliverGoods
 	call_if_set FLAG_DELIVERED_DEVON_GOODS, DewfordTown_EventScript_LandedSlateport
@@ -609,7 +609,7 @@ DewfordTown_EventScript_ConfirmTrendyPhrase:: @ 814E439
 DewfordTown_EventScript_RejectTrendyPhrase:: @ 814E443
 	msgbox DewfordTown_Text_TellMeWhatsNewAndIn, MSGBOX_DEFAULT
 	setvar VAR_0x8004, 9
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, 1

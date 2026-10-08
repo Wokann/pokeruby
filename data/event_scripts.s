@@ -742,34 +742,34 @@ EventScript_ResetMrBriney:: @ 819FC9F
 
 EventScript_MoveMrBrineyToHouse:
 	setflag FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN
-	setflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD
-	setflag FLAG_HIDE_MR_BRINEY_ROUTE109
-	setflag FLAG_HIDE_MR_BRINEY_BOAT_ROUTE109
-	clearflag FLAG_HIDE_MR_BRINEY_BOAT_ROUTE104
+	setflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
+	setflag FLAG_HIDE_ROUTE_109_MR_BRINEY
+	setflag FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT
+	clearflag FLAG_HIDE_ROUTE_104_MR_BRINEY_BOAT
 	clearflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
 	clearflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
 	end
 
 EventScript_MoveMrBrineyToDewford:
-	setflag FLAG_HIDE_MR_BRINEY_ROUTE109
-	setflag FLAG_HIDE_MR_BRINEY_BOAT_ROUTE109
+	setflag FLAG_HIDE_ROUTE_109_MR_BRINEY
+	setflag FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT
 	setflag FLAG_HIDE_MR_BRINEY_ROUTE104
-	setflag FLAG_HIDE_MR_BRINEY_BOAT_ROUTE104
+	setflag FLAG_HIDE_ROUTE_104_MR_BRINEY_BOAT
 	setflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
 	setflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
 	clearflag FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN
-	clearflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD
+	clearflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
 	end
 
 EventScript_MoveMrBrineyToRoute109:
 	setflag FLAG_HIDE_MR_BRINEY_ROUTE104
-	setflag FLAG_HIDE_MR_BRINEY_BOAT_ROUTE104
+	setflag FLAG_HIDE_ROUTE_104_MR_BRINEY_BOAT
 	setflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
 	setflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
 	setflag FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN
-	setflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD
-	clearflag FLAG_HIDE_MR_BRINEY_ROUTE109
-	clearflag FLAG_HIDE_MR_BRINEY_BOAT_ROUTE109
+	setflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
+	clearflag FLAG_HIDE_ROUTE_109_MR_BRINEY
+	clearflag FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT
 	end
 
 EverGrandeCity_HallOfFame_EventScript_ResetEliteFour:: @ 819FD09
@@ -783,9 +783,9 @@ EverGrandeCity_HallOfFame_EventScript_ResetEliteFour:: @ 819FD09
 Common_EventScript_UpdateBrineyLocation:: @ 819FD1B
 	goto_if_unset FLAG_RECEIVED_POKENAV, Common_EventScript_Return
 	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, Common_EventScript_Return
-	goto_if_unset FLAG_HIDE_MR_BRINEY_BOAT_ROUTE104, EventScript_SetBrineyLocation_House
+	goto_if_unset FLAG_HIDE_ROUTE_104_MR_BRINEY_BOAT, EventScript_SetBrineyLocation_House
 	goto_if_unset FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN, EventScript_SetBrineyLocation_Dewford
-	goto_if_unset FLAG_HIDE_MR_BRINEY_ROUTE109, EventScript_SetBrineyLocation_Route109
+	goto_if_unset FLAG_HIDE_ROUTE_109_MR_BRINEY, EventScript_SetBrineyLocation_Route109
 	return
 
 EventScript_SetBrineyLocation_House:: @ 819FD49
@@ -813,7 +813,7 @@ Common_EventScript_ShowPokemonCenterSign:: @ 81A00EA
 	msgbox gText_PokemonCenterSign, MSGBOX_SIGN
 	end
 
-Common_EventScript_ShowEasyChatScreen:: @ 81A00F3
+Common_ShowEasyChatScreen:: @ 81A00F3
 	fadescreen FADE_TO_BLACK
 	special ShowEasyChatScreen
 	fadescreen FADE_FROM_BLACK
@@ -917,11 +917,11 @@ Movement_FerryDepart:: @ 81A041C
 
 EventScript_HideMrBriney:: @ 81A0424
 	setflag FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN
-	setflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD
-	setflag FLAG_HIDE_MR_BRINEY_ROUTE109
-	setflag FLAG_HIDE_MR_BRINEY_BOAT_ROUTE109
+	setflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
+	setflag FLAG_HIDE_ROUTE_109_MR_BRINEY
+	setflag FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT
 	setflag FLAG_HIDE_MR_BRINEY_ROUTE104
-	setflag FLAG_HIDE_MR_BRINEY_BOAT_ROUTE104
+	setflag FLAG_HIDE_ROUTE_104_MR_BRINEY_BOAT
 	setflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
 	setflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
 	setvar VAR_BRINEY_LOCATION, 0
@@ -1203,7 +1203,7 @@ SlateportCity_PokemonFanClub_EventScript_1ADE84:: @ 81ADE84
 	setvar VAR_0x8004, 5
 	copyvar VAR_0x8005, VAR_0x8009
 	setvar VAR_0x8006, 1
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, 1
@@ -1258,7 +1258,7 @@ SlateportCity_OceanicMuseum_1F_EventScript_1ADF44:: @ 81ADF44
 	setvar VAR_0x8004, 5
 	copyvar VAR_0x8005, VAR_0x8009
 	setvar VAR_0x8006, 0
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, 1
@@ -1330,14 +1330,14 @@ SlateportCity_PokemonFanClub_EventScript_1AE04A:: @ 81AE04A
 	setvar VAR_0x8004, 7
 	copyvar VAR_0x8005, VAR_0x8009
 	setvar VAR_0x8006, 0
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, 0
 	goto_if_eq SlateportCity_PokemonFanClub_EventScript_1AE0A2
 	msgbox SlateportCity_PokemonFanClub_Text_1A852D, MSGBOX_DEFAULT
 	setvar VAR_0x8006, 1
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, 0
@@ -1382,7 +1382,7 @@ FallarborTown_ContestLobby_EventScript_1AE0F8:: @ 81AE0F8
 	setvar VAR_0x8004, 11
 	copyvar VAR_0x8005, VAR_0x8009
 	setvar VAR_0x8006, 0
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, 1
@@ -1403,7 +1403,7 @@ FallarborTown_ContestLobby_EventScript_1AE137:: @ 81AE137
 	setvar VAR_0x8004, 11
 	copyvar VAR_0x8005, VAR_0x8009
 	setvar VAR_0x8006, 1
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, 0
@@ -1482,7 +1482,7 @@ BattleTower_Lobby_EventScript_1AE241:: @ 81AE241
 	msgbox BattleTower_Lobby_Text_1A79EB, MSGBOX_DEFAULT
 	setvar VAR_0x8004, 12
 	copyvar VAR_0x8005, VAR_0x8009
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, 1

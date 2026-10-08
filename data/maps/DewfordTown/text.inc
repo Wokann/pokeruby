@@ -37,8 +37,7 @@ DewfordTown_Text_GoDeliverIllBeWaiting:: @ 816B471
 	.string "MR. BRINEY: Then you go on and deliver\n"
 	.string "the LETTER. I'll be waiting.$"
 
-Route104_Text_BrineyLandedInDewford:: @ 816B4B5
-Route109_Text_BrineyLandedInDewford:: @ 816B4B5
+DewfordTown_Text_BrineyLandedInDewford:: @ 816B4B5
 	.string "MR. BRINEY: Ahoy!\n"
 	.string "We've hit land in DEWFORD!\p"
 	.string "You just go on and tell me whenever\n"

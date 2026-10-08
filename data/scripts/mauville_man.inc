@@ -53,7 +53,7 @@ prompt_write_lyrics:
 
 write_lyrics:
 	setvar VAR_0x8004, 6
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, NO

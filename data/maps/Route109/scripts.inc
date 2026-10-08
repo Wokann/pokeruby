@@ -43,16 +43,16 @@ Route109_EventScript_14F548:: @ 814F548
 	applymovement LOCALID_PLAYER, Route109_Movement_14F670
 	waitmovement 0
 	addobject 4
-	clearflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD
+	clearflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
 	setobjectxyperm 2, 12, 8
 	addobject 2
 	setobjectsubpriority 2, MAP_DEWFORD_TOWN, 0
 	applymovement 2, Route109_Movement_14F67D
 	waitmovement 0
 	clearflag FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN
-	setflag FLAG_HIDE_MR_BRINEY_BOAT_ROUTE109
+	setflag FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT
 	hideobjectat 1, MAP_ROUTE109
-	msgbox Route109_Text_BrineyLandedInDewford, MSGBOX_DEFAULT
+	msgbox DewfordTown_Text_BrineyLandedInDewford, MSGBOX_DEFAULT
 	closemessage
 	copyvar VAR_BRINEY_LOCATION, VAR_0x8008
 	resetobjectsubpriority LOCALID_PLAYER, MAP_ROUTE109

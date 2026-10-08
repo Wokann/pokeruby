@@ -33,7 +33,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_MR_BRINEY_BOAT_ROUTE109"
+      "flag": "FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_EXPERT_M",
@@ -46,7 +46,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route109_EventScript_14F680",
-      "flag": "FLAG_HIDE_MR_BRINEY_ROUTE109"
+      "flag": "FLAG_HIDE_ROUTE_109_MR_BRINEY"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M",

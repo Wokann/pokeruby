@@ -38,8 +38,7 @@ DewfordTown_Text_GoDeliverIllBeWaiting:: @ 816B471
 	.string "MR. BRACK: Dann bring den BRIEF zu\n"
 	.string "seinem Empfänger. Ich warte hier.$"
 
-Route104_Text_BrineyLandedInDewford:: @ 816B4B5
-Route109_Text_BrineyLandedInDewford:: @ 816B4B5
+DewfordTown_Text_BrineyLandedInDewford:: @ 816B4B5
 	.string "MR. BRACK: Ahoi! Wir haben in\n"
 	.string "FAUSTAUHAVEN Anker geworfen!\p"
 	.string "Komm, wenn wir wieder Segel\n"
