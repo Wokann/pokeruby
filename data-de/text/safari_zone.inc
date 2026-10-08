@@ -22,7 +22,7 @@ UnknownString_81C35A9: @ 81C35A9
 	.string "{STR_VAR_1} wurde in den {POKEBLOCK}-\n"
 	.string "NAPF gelegt.$"
 
-Route121_SafariZoneEntrance_Text_1C35D0:: @ 81C35D0
+Route121_SafariZoneEntrance_Text_WelcomeToSafariZone:: @ 81C35D0
 	.string "Willkommen in der SAFARI-ZONE!\p"
 	.string "Hier bekommst du viele POKéMON zu\n"
 	.string "Gesicht, die sehr selten in der HOENN-\l"
@@ -36,14 +36,14 @@ Route121_SafariZoneEntrance_Text_1C35D0:: @ 81C35D0
 	.string "Kommt und genießt die Welt der\n"
 	.string "SAFARI-ZONE!$"
 
-Route121_SafariZoneEntrance_Text_1C3704:: @ 81C3704
+Route121_SafariZoneEntrance_Text_WelcomeFirstTime:: @ 81C3704
 	.string "Willkommen in der SAFARI-ZONE!\n"
 	.string "Bist du zum ersten Mal hier?$"
 
-Route121_SafariZoneEntrance_Text_1C373C:: @ 81C373C
+Route121_SafariZoneEntrance_Text_ComeInAndEnjoy:: @ 81C373C
 	.string "Komm und genieße die SAFARI-ZONE!$"
 
-Route121_SafariZoneEntrance_Text_1C375F:: @ 81C375F
+Route121_SafariZoneEntrance_Text_FirstTimeInfo:: @ 81C375F
 	.string "Sobald du die SAFARI-ZONE betrittst,\n"
 	.string "stehen dir 30 SAFARIBÄLLE zur Ver-\l"
 	.string "fügung, um POKéMON zu fangen.\p"
@@ -52,39 +52,39 @@ Route121_SafariZoneEntrance_Text_1C375F:: @ 81C375F
 	.string "500 Schritte gemacht hast.\p"
 	.string "Komm und genieße die SAFARI-ZONE!$"
 
-Route121_SafariZoneEntrance_Text_1C3832:: @ 81C3832
+Route121_SafariZoneEntrance_Text_WouldYouLikeToPlay:: @ 81C3832
 	.string "Willkommen in der SAFARI-ZONE!\p"
 	.string "Alles, was du fangen kannst für nur\n"
 	.string "¥500! Möchtest du es einmal probieren?$"
 
-Route121_SafariZoneEntrance_Text_1C3895:: @ 81C3895
+Route121_SafariZoneEntrance_Text_PlayAnotherTime:: @ 81C3895
 	.string "Okay.\n"
 	.string "Bitte beehre uns doch später einmal.$"
 
-Route121_SafariZoneEntrance_Text_1C38B5:: @ 81C38B5
+Route121_SafariZoneEntrance_Text_NotEnoughMoney:: @ 81C38B5
 	.string "Du hast nicht genug Geld dabei.\n"
 	.string "Tut mir Leid.$"
 
-Route121_SafariZoneEntrance_Text_1C38D9:: @ 81C38D9
+Route121_SafariZoneEntrance_Text_ThatWillBe500Please:: @ 81C38D9
 	.string "Das macht dann ¥500, bitte.$"
 
-Route121_SafariZoneEntrance_Text_1C38F4:: @ 81C38F4
+Route121_SafariZoneEntrance_Text_HereAreYourSafariBalls:: @ 81C38F4
 	.string "Hier sind deine SAFARIBÄLLE.$"
 
-Route121_SafariZoneEntrance_Text_1C3910:: @ 81C3910
+Route121_SafariZoneEntrance_Text_Received30SafariBalls:: @ 81C3910
 	.string "{PLAYER} erhält 30 SAFARIBÄLLE.$"
 
-Route121_SafariZoneEntrance_Text_1C392D:: @ 81C392D
+Route121_SafariZoneEntrance_Text_PleaseEnjoyYourself:: @ 81C392D
 	.string "Wir geben dir Bescheid, wenn das Spiel\n"
 	.string "vorbei ist.\p"
 	.string "Bis dahin wünschen wir viel Spaß!\n"
 	.string "Und auf geht's in die Wildnis!$"
 
-Route121_SafariZoneEntrance_Text_1C39A3:: @ 81C39A3
+Route121_SafariZoneEntrance_Text_PCIsFull:: @ 81C39A3
 	.string "Entschuldigung!\n"
 	.string "Deine PC-BOXEN sind voll.$"
 
-Route121_SafariZoneEntrance_Text_1C39C3:: @ 81C39C3
+Route121_SafariZoneEntrance_Text_YouNeedPokeblockCase:: @ 81C39C3
 	.string "Entschuldigung!\n"
 	.string "Du besitzt keine {POKEBLOCK}BOX.\p"
 	.string "Dein SAFARI-Spiel wäre viel erfolg-\n"
@@ -152,7 +152,7 @@ SafariZone_Southeast_Text_1C3DCE:: @ 81C3DCE
 	.string "Ein POKéMON muss ihn gefuttert haben,\n"
 	.string "ohne dass ich das gemerkt habe.$"
 
-Route121_SafariZoneEntrance_Text_1C3E4B:: @ 81C3E4B
+Route121_SafariZoneEntrance_Text_TrainerTip:: @ 81C3E4B
 	.string "TIPP für TRAINER in der SAFARI-ZONE!\p"
 	.string "Wirf POKéMON {POKEBLOCK} zu, dann ergreifen\n"
 	.string "sie nicht so schnell die Flucht.$"
