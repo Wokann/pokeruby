@@ -10,6 +10,6 @@ Text_DiscountSaleToday: @ 81A0C15
 	.string "Willkommen!\p"
 	.string "Wir bieten heute Sonderangebote an!$"
 
-Text_PlayerWhatCanIDoForYou:: @ 81A0C42
+gText_PlayerWhatCanIDoForYou:: @ 81A0C42
 	.string "{PLAYER}{KUN}, willkommen!\p"
 	.string "Wie kann ich dir behilflich sein?$"

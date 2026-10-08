@@ -1,4 +1,4 @@
-S_CuttableTree:: @ 81B0DCC
+EventScript_CutTree:: @ 81B0DCC
 	lockall
 	goto_if_unset FLAG_BADGE01_GET, CannotUseCut
 	checkpartymove MOVE_CUT
