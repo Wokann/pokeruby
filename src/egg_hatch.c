@@ -325,7 +325,7 @@ static bool8 DaycareMonReceivedMail_(struct DayCare *daycare, u8 slot)
     return FALSE;
 }
 
-bool8 DaycareMonReceivedMail(void)
+bool8 CheckDaycareMonReceivedMail(void)
 {
     return DaycareMonReceivedMail_(&gSaveBlock1.daycare, gSpecialVar_0x8004);
 }
