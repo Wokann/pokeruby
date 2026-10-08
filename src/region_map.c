@@ -1222,7 +1222,7 @@ struct MultiNameFlyDest
 // Map sections that are divided into multiple parts. Ever Grande City is the only one.
 static const struct MultiNameFlyDest sMultiNameFlyDestinations[1] =
 {
-    {sEverGrandeCityNames, MAPSEC_EVER_GRANDE_CITY, FLAG_SYS_POKEMON_LEAGUE_FLY},
+    {sEverGrandeCityNames, MAPSEC_EVER_GRANDE_CITY, FLAG_LANDMARK_POKEMON_LEAGUE},
 };
 
 struct RegionMapState *const gRegionMapState = &eRegionMapState;
@@ -1618,7 +1618,7 @@ void sub_80FC69C(void)
                 SetWarpDestinationToHealLocation((gSaveBlock2.playerGender == MALE) ? HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE : HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE);
                 break;
             case MAPSEC_EVER_GRANDE_CITY:
-                SetWarpDestinationToHealLocation((FlagGet(FLAG_SYS_POKEMON_LEAGUE_FLY) && gRegionMapState->regionMap.posWithinMapSec == 0) ? HEAL_LOCATION_EVER_GRANDE_CITY_POKEMON_LEAGUE : HEAL_LOCATION_EVER_GRANDE_CITY);
+                SetWarpDestinationToHealLocation((FlagGet(FLAG_LANDMARK_POKEMON_LEAGUE) && gRegionMapState->regionMap.posWithinMapSec == 0) ? HEAL_LOCATION_EVER_GRANDE_CITY_POKEMON_LEAGUE : HEAL_LOCATION_EVER_GRANDE_CITY);
                 break;
             default:
                 if (sMapHealLocations[gRegionMapState->regionMap.mapSecId][2] != HEAL_LOCATION_NONE)

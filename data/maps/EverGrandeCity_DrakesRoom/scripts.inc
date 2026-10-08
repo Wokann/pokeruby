@@ -5,6 +5,8 @@ EverGrandeCity_DrakesRoom_MapScripts:: @ 815B70D
 	.byte 0
 
 @ 815B71D
+@ Unused, Drake uses Sidneys identical OnWarp for some reason
+EverGrandeCity_DrakesRoom_OnWarp:
 	map_script_2 VAR_TEMP_1, 0, EverGrandeCity_DrakesRoom_EventScript_PlayerTurnNorth
 	.2byte 0
 

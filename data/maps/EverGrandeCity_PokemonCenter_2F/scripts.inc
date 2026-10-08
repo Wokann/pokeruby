@@ -4,14 +4,14 @@ EverGrandeCity_PokemonCenter_2F_MapScripts:: @ 815BC90
 	map_script MAP_SCRIPT_ON_LOAD, EverGrandeCity_PokemonCenter_2F_MapScript1_1A3D32
 	.byte 0
 
-EverGrandeCity_PokemonCenter_2F_EventScript_15BCA0:: @ 815BCA0
+EverGrandeCity_PokemonCenter_2F_EventScript_Colosseum:: @ 815BCA0
 	call EverGrandeCity_PokemonCenter_2F_EventScript_1A3EA6
 	end
 
-EverGrandeCity_PokemonCenter_2F_EventScript_15BCA6:: @ 815BCA6
+EverGrandeCity_PokemonCenter_2F_EventScript_TradeCenter:: @ 815BCA6
 	call EverGrandeCity_PokemonCenter_2F_EventScript_1A40CC
 	end
 
-EverGrandeCity_PokemonCenter_2F_EventScript_15BCAC:: @ 815BCAC
+EverGrandeCity_PokemonCenter_2F_EventScript_RecordCorner:: @ 815BCAC
 	call EverGrandeCity_PokemonCenter_2F_EventScript_1A41FB
 	end

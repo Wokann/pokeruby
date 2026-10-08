@@ -273,12 +273,12 @@ gStdScripts_End::
 	.include "data/maps/EverGrandeCity_GlaciasRoom/scripts.inc"
 	.include "data/maps/EverGrandeCity_DrakesRoom/scripts.inc"
 	.include "data/maps/EverGrandeCity_ChampionsRoom/scripts.inc"
-	.include "data/maps/EverGrandeCity_Corridor1/scripts.inc"
-	.include "data/maps/EverGrandeCity_Corridor2/scripts.inc"
-	.include "data/maps/EverGrandeCity_Corridor3/scripts.inc"
-	.include "data/maps/EverGrandeCity_Corridor4/scripts.inc"
-	.include "data/maps/EverGrandeCity_Corridor5/scripts.inc"
-	.include "data/maps/EverGrandeCity_PokemonLeague/scripts.inc"
+	.include "data/maps/EverGrandeCity_Hall1/scripts.inc"
+	.include "data/maps/EverGrandeCity_Hall2/scripts.inc"
+	.include "data/maps/EverGrandeCity_Hall3/scripts.inc"
+	.include "data/maps/EverGrandeCity_Hall4/scripts.inc"
+	.include "data/maps/EverGrandeCity_Hall5/scripts.inc"
+	.include "data/maps/EverGrandeCity_PokemonLeague_1F/scripts.inc"
 	.include "data/maps/EverGrandeCity_HallOfFame/scripts.inc"
 	.include "data/maps/EverGrandeCity_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/EverGrandeCity_PokemonCenter_2F/scripts.inc"
@@ -614,7 +614,7 @@ gStdScripts_End::
 	.include "data/maps/EverGrandeCity_GlaciasRoom/text.inc"
 	.include "data/maps/EverGrandeCity_DrakesRoom/text.inc"
 	.include "data/maps/EverGrandeCity_ChampionsRoom/text.inc"
-	.include "data/maps/EverGrandeCity_PokemonLeague/text.inc"
+	.include "data/maps/EverGrandeCity_PokemonLeague_1F/text.inc"
 	.include "data/maps/EverGrandeCity_HallOfFame/text.inc"
 	.include "data/maps/EverGrandeCity_PokemonCenter_1F/text.inc"
 	.include "data/maps/Route104_MrBrineysHouse/text.inc"
@@ -774,7 +774,7 @@ EventScript_MoveMrBrineyToRoute109:
 	end
 
 EverGrandeCity_HallOfFame_EventScript_ResetEliteFour:: @ 819FD09
-	clearflag FLAG_DEFEATED_ELITE_4_SYDNEY
+	clearflag FLAG_DEFEATED_ELITE_4_SIDNEY
 	clearflag FLAG_DEFEATED_ELITE_4_PHOEBE
 	clearflag FLAG_DEFEATED_ELITE_4_GLACIA
 	clearflag FLAG_DEFEATED_ELITE_4_DRAKE

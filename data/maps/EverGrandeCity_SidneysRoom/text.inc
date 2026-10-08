@@ -1,4 +1,4 @@
-EverGrandeCity_SidneysRoom_Text_190728:: @ 8190728
+EverGrandeCity_SidneysRoom_Text_IntroSpeech:: @ 8190728
 	.string "Welcome, challenger!\n"
 	.string "I'm SIDNEY of the ELITE FOUR.\p"
 	.string "I like that look you're giving me.\n"

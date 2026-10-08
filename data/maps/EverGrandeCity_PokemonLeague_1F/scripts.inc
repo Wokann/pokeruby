@@ -1,10 +1,10 @@
-EverGrandeCity_PokemonLeague_MapScripts:: @ 815BA75
+EverGrandeCity_PokemonLeague_1F_MapScripts:: @ 815BA75
 	map_script MAP_SCRIPT_ON_TRANSITION, EverGrandeCity_PokemonLeague_1F_OnTransition
 	.byte 0
 
 EverGrandeCity_PokemonLeague_1F_OnTransition:: @ 815BA7B
 	setrespawn HEAL_LOCATION_EVER_GRANDE_CITY_POKEMON_LEAGUE
-	setflag FLAG_SYS_POKEMON_LEAGUE_FLY
+	setflag FLAG_LANDMARK_POKEMON_LEAGUE
 	call_if_unset FLAG_ENTERED_ELITE_FOUR, EverGrandeCity_PokemonLeague_1F_EventScript_GuardsBlockDoor
 	end
 
@@ -26,13 +26,13 @@ EverGrandeCity_PokemonLeague_1F_EventScript_Clerk:: @ 815BAA8
 	faceplayer
 	message gText_HowMayIServeYou
 	waitmessage
-	pokemart EverGrandeCity_PokemonLeague_Items
+	pokemart EverGrandeCity_PokemonLeague_1F_Pokemart
 	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
 	.align 2
-EverGrandeCity_PokemonLeague_Items:: @ 815BAC0
+EverGrandeCity_PokemonLeague_1F_Pokemart:: @ 815BAC0
 	.2byte ITEM_ULTRA_BALL
 	.2byte ITEM_HYPER_POTION
 	.2byte ITEM_MAX_POTION
