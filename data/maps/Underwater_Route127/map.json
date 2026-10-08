@@ -1,7 +1,7 @@
 {
-  "id": "MAP_UNDERWATER3",
-  "name": "Underwater3",
-  "layout": "LAYOUT_UNDERWATER3",
+  "id": "MAP_UNDERWATER_ROUTE127",
+  "name": "Underwater_Route127",
+  "layout": "LAYOUT_UNDERWATER_ROUTE127",
   "music": "MUS_UNDERWATER",
   "region_map_section": "MAPSEC_UNDERWATER_127",
   "requires_flash": false,
@@ -36,7 +36,7 @@
       "y": 42,
       "elevation": 3,
       "item": "ITEM_STAR_PIECE",
-      "flag": "FLAG_HIDDEN_ITEM_15"
+      "flag": "FLAG_HIDDEN_ITEM_UNDERWATER_127_STAR_PIECE"
     },
     {
       "type": "hidden_item",
@@ -44,7 +44,7 @@
       "y": 36,
       "elevation": 3,
       "item": "ITEM_HP_UP",
-      "flag": "FLAG_HIDDEN_ITEM_16"
+      "flag": "FLAG_HIDDEN_ITEM_UNDERWATER_127_HP_UP"
     },
     {
       "type": "hidden_item",
@@ -52,7 +52,7 @@
       "y": 72,
       "elevation": 3,
       "item": "ITEM_HEART_SCALE",
-      "flag": "FLAG_HIDDEN_ITEM_17"
+      "flag": "FLAG_HIDDEN_ITEM_UNDERWATER_127_HEART_SCALE"
     },
     {
       "type": "hidden_item",
@@ -60,7 +60,7 @@
       "y": 20,
       "elevation": 3,
       "item": "ITEM_RED_SHARD",
-      "flag": "FLAG_HIDDEN_ITEM_18"
+      "flag": "FLAG_HIDDEN_ITEM_UNDERWATER_127_RED_SHARD"
     }
   ]
 }
