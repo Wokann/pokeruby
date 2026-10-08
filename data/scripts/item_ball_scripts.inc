@@ -22,7 +22,7 @@ Route104_EventScript_ItemPotion:: @ 81B147A
 	finditem ITEM_POTION
 	end
 
-Route105_EventScript_1B1487:: @ 81B1487
+Route105_EventScript_ItemIron:: @ 81B1487
 	finditem ITEM_IRON
 	end
 
