@@ -1,6 +1,4 @@
-Route111_EventScript_1AE313:: @ 81AE313
-Route118_EventScript_1AE313:: @ 81AE313
-Route120_EventScript_1AE313:: @ 81AE313
+GabbyAndTy_EventScript_UpdateLocation:: @ 81AE313
 	cleartrainerflag TRAINER_GABBY_AND_TY_6
 	specialvar VAR_RESULT, GabbyAndTyGetBattleNum
 	switch VAR_RESULT
@@ -60,11 +58,11 @@ Route111_EventScript_1AE3D7:: @ 81AE3D7
 	return
 
 Route111_EventScript_1AE3E2:: @ 81AE3E2
-	setflag FLAG_HIDE_GABBY_AND_TY_ROUTE111_1
+	setflag FLAG_HIDE_ROUTE_111_GABBY_AND_TY_1
 	return
 
 Route111_EventScript_1AE3E6:: @ 81AE3E6
-	clearflag FLAG_HIDE_GABBY_AND_TY_ROUTE111_1
+	clearflag FLAG_HIDE_ROUTE_111_GABBY_AND_TY_1
 	return
 
 Route111_EventScript_1AE3EA:: @ 81AE3EA
@@ -84,11 +82,11 @@ Route111_EventScript_1AE3F6:: @ 81AE3F6
 	return
 
 Route111_EventScript_1AE3FA:: @ 81AE3FA
-	setflag FLAG_HIDE_GABBY_AND_TY_ROUTE111_2
+	setflag FLAG_HIDE_ROUTE_111_GABBY_AND_TY_2
 	return
 
 Route111_EventScript_1AE3FE:: @ 81AE3FE
-	clearflag FLAG_HIDE_GABBY_AND_TY_ROUTE111_2
+	clearflag FLAG_HIDE_ROUTE_111_GABBY_AND_TY_2
 	return
 
 Route111_EventScript_1AE402:: @ 81AE402
@@ -108,11 +106,11 @@ Route111_EventScript_1AE40E:: @ 81AE40E
 	return
 
 Route111_EventScript_1AE412:: @ 81AE412
-	setflag FLAG_HIDE_GABBY_AND_TY_ROUTE111_3
+	setflag FLAG_HIDE_ROUTE_111_GABBY_AND_TY_3
 	return
 
 Route111_EventScript_1AE416:: @ 81AE416
-	clearflag FLAG_HIDE_GABBY_AND_TY_ROUTE111_3
+	clearflag FLAG_HIDE_ROUTE_111_GABBY_AND_TY_3
 	return
 
 Route111_EventScript_1AE41A:: @ 81AE41A
@@ -123,79 +121,75 @@ Route111_EventScript_1AE41E:: @ 81AE41E
 	clearflag FLAG_HIDE_GABBY_AND_TY_ROUTE118_3
 	return
 
-Route111_EventScript_1AE422:: @ 81AE422
-	trainerbattle_double TRAINER_GABBY_AND_TY_1, Route111_Text_1ABED8, Route111_Text_1ABFD3, Route111_Text_1AC5CA, Route111_EventScript_1AE5A2
-	msgbox Route111_Text_1AC59E, MSGBOX_DEFAULT
+GabbyAndTy_EventScript_GabbyBattle1:: @ 81AE422
+	trainerbattle_double TRAINER_GABBY_AND_TY_1, GabbyAndTy_Text_GabbyPreFirstBattle, GabbyAndTy_Text_GabbyDefeatFirstTime, GabbyAndTy_Text_GabbyNotEnoughMons, Route111_EventScript_1AE5A2
+	msgbox GabbyAndTy_Text_KeepingAnEyeOutForYou, MSGBOX_DEFAULT
 	release
 	end
 
-Route111_EventScript_1AE442:: @ 81AE442
-	trainerbattle_double TRAINER_GABBY_AND_TY_1, Route111_Text_1AC73B, Route111_Text_1AC892, Route111_Text_1AC820, Route111_EventScript_1AE5A2
-	msgbox Route111_Text_1AC7E4, MSGBOX_DEFAULT
+GabbyAndTy_EventScript_TyBattle1:: @ 81AE442
+	trainerbattle_double TRAINER_GABBY_AND_TY_1, GabbyAndTy_Text_TyPreFirstBattle, GabbyAndTy_Text_TyDefeatFirstTime, GabbyAndTy_Text_TyNotEnoughMons, Route111_EventScript_1AE5A2
+	msgbox GabbyAndTy_Text_TyPostBattle, MSGBOX_DEFAULT
 	release
 	end
 
 Route118_EventScript_1AE462:: @ 81AE462
-	trainerbattle_double TRAINER_GABBY_AND_TY_2, Route118_Text_1ABF50, Route118_Text_1AC6F8, Route118_Text_1AC5CA, Route118_EventScript_1AE60F
-	msgbox Route118_Text_1AC59E, MSGBOX_DEFAULT
+	trainerbattle_double TRAINER_GABBY_AND_TY_2, GabbyAndTy_Text_GabbyIntro, GabbyAndTy_Text_GabbyDefeat, GabbyAndTy_Text_GabbyNotEnoughMons, Route118_EventScript_1AE60F
+	msgbox GabbyAndTy_Text_KeepingAnEyeOutForYou, MSGBOX_DEFAULT
 	release
 	end
 
 Route118_EventScript_1AE482:: @ 81AE482
-	trainerbattle_double TRAINER_GABBY_AND_TY_2, Route118_Text_1AC790, Route118_Text_1AC8D7, Route118_Text_1AC820, Route118_EventScript_1AE60F
-	msgbox Route118_Text_1AC7E4, MSGBOX_DEFAULT
+	trainerbattle_double TRAINER_GABBY_AND_TY_2, GabbyAndTy_Text_TyIntro, GabbyAndTy_Text_TyDefeat, GabbyAndTy_Text_TyNotEnoughMons, Route118_EventScript_1AE60F
+	msgbox GabbyAndTy_Text_TyPostBattle, MSGBOX_DEFAULT
 	release
 	end
 
 Route120_EventScript_1AE4A2:: @ 81AE4A2
-	trainerbattle_double TRAINER_GABBY_AND_TY_3, Route120_Text_1ABF50, Route120_Text_1AC6F8, Route120_Text_1AC5CA, Route120_EventScript_1AE60F
-	msgbox Route120_Text_1AC59E, MSGBOX_DEFAULT
+	trainerbattle_double TRAINER_GABBY_AND_TY_3, GabbyAndTy_Text_GabbyIntro, GabbyAndTy_Text_GabbyDefeat, GabbyAndTy_Text_GabbyNotEnoughMons, Route120_EventScript_1AE60F
+	msgbox GabbyAndTy_Text_KeepingAnEyeOutForYou, MSGBOX_DEFAULT
 	release
 	end
 
 Route120_EventScript_1AE4C2:: @ 81AE4C2
-	trainerbattle_double TRAINER_GABBY_AND_TY_3, Route120_Text_1AC790, Route120_Text_1AC8D7, Route120_Text_1AC820, Route120_EventScript_1AE60F
-	msgbox Route120_Text_1AC7E4, MSGBOX_DEFAULT
+	trainerbattle_double TRAINER_GABBY_AND_TY_3, GabbyAndTy_Text_TyIntro, GabbyAndTy_Text_TyDefeat, GabbyAndTy_Text_TyNotEnoughMons, Route120_EventScript_1AE60F
+	msgbox GabbyAndTy_Text_TyPostBattle, MSGBOX_DEFAULT
 	release
 	end
 
-Route111_EventScript_1AE4E2:: @ 81AE4E2
-	trainerbattle_double TRAINER_GABBY_AND_TY_4, Route111_Text_1ABF50, Route111_Text_1AC6F8, Route111_Text_1AC5CA, Route111_EventScript_1AE60F
-	msgbox Route111_Text_1AC59E, MSGBOX_DEFAULT
+GabbyAndTy_EventScript_GabbyBattle4:: @ 81AE4E2
+	trainerbattle_double TRAINER_GABBY_AND_TY_4, GabbyAndTy_Text_GabbyIntro, GabbyAndTy_Text_GabbyDefeat, GabbyAndTy_Text_GabbyNotEnoughMons, Route111_EventScript_1AE60F
+	msgbox GabbyAndTy_Text_KeepingAnEyeOutForYou, MSGBOX_DEFAULT
 	release
 	end
 
-Route111_EventScript_1AE502:: @ 81AE502
-	trainerbattle_double TRAINER_GABBY_AND_TY_4, Route111_Text_1AC790, Route111_Text_1AC8D7, Route111_Text_1AC820, Route111_EventScript_1AE60F
-	msgbox Route111_Text_1AC7E4, MSGBOX_DEFAULT
+GabbyAndTy_EventScript_TyBattle4:: @ 81AE502
+	trainerbattle_double TRAINER_GABBY_AND_TY_4, GabbyAndTy_Text_TyIntro, GabbyAndTy_Text_TyDefeat, GabbyAndTy_Text_TyNotEnoughMons, Route111_EventScript_1AE60F
+	msgbox GabbyAndTy_Text_TyPostBattle, MSGBOX_DEFAULT
 	release
 	end
 
 Route118_EventScript_1AE522:: @ 81AE522
-	trainerbattle_double TRAINER_GABBY_AND_TY_5, Route118_Text_1ABF50, Route118_Text_1AC6F8, Route118_Text_1AC5CA, Route118_EventScript_1AE60F
-	msgbox Route118_Text_1AC59E, MSGBOX_DEFAULT
+	trainerbattle_double TRAINER_GABBY_AND_TY_5, GabbyAndTy_Text_GabbyIntro, GabbyAndTy_Text_GabbyDefeat, GabbyAndTy_Text_GabbyNotEnoughMons, Route118_EventScript_1AE60F
+	msgbox GabbyAndTy_Text_KeepingAnEyeOutForYou, MSGBOX_DEFAULT
 	release
 	end
 
 Route118_EventScript_1AE542:: @ 81AE542
-	trainerbattle_double TRAINER_GABBY_AND_TY_5, Route118_Text_1AC790, Route118_Text_1AC8D7, Route118_Text_1AC820, Route118_EventScript_1AE60F
-	msgbox Route118_Text_1AC7E4, MSGBOX_DEFAULT
+	trainerbattle_double TRAINER_GABBY_AND_TY_5, GabbyAndTy_Text_TyIntro, GabbyAndTy_Text_TyDefeat, GabbyAndTy_Text_TyNotEnoughMons, Route118_EventScript_1AE60F
+	msgbox GabbyAndTy_Text_TyPostBattle, MSGBOX_DEFAULT
 	release
 	end
 
-Route111_EventScript_1AE562:: @ 81AE562
-Route118_EventScript_1AE562:: @ 81AE562
-Route120_EventScript_1AE562:: @ 81AE562
-	trainerbattle_double TRAINER_GABBY_AND_TY_6, Route111_Text_1ABF50, Route111_Text_1AC6F8, Route111_Text_1AC5CA, Route111_EventScript_1AE60F
-	msgbox Route111_Text_1AC59E, MSGBOX_DEFAULT
+GabbyAndTy_EventScript_GabbyBattle6:: @ 81AE562
+	trainerbattle_double TRAINER_GABBY_AND_TY_6, GabbyAndTy_Text_GabbyIntro, GabbyAndTy_Text_GabbyDefeat, GabbyAndTy_Text_GabbyNotEnoughMons, Route111_EventScript_1AE60F
+	msgbox GabbyAndTy_Text_KeepingAnEyeOutForYou, MSGBOX_DEFAULT
 	release
 	end
 
-Route111_EventScript_1AE582:: @ 81AE582
-Route118_EventScript_1AE582:: @ 81AE582
-Route120_EventScript_1AE582:: @ 81AE582
-	trainerbattle_double TRAINER_GABBY_AND_TY_6, Route111_Text_1AC790, Route111_Text_1AC8D7, Route111_Text_1AC820, Route111_EventScript_1AE60F
-	msgbox Route111_Text_1AC7E4, MSGBOX_DEFAULT
+GabbyAndTy_EventScript_TyBattle6:: @ 81AE582
+	trainerbattle_double TRAINER_GABBY_AND_TY_6, GabbyAndTy_Text_TyIntro, GabbyAndTy_Text_TyDefeat, GabbyAndTy_Text_TyNotEnoughMons, Route111_EventScript_1AE60F
+	msgbox GabbyAndTy_Text_TyPostBattle, MSGBOX_DEFAULT
 	release
 	end
 
@@ -320,6 +314,6 @@ Route111_EventScript_1AE72D:: @ 81AE72D
 	end
 
 Route111_EventScript_1AE73A:: @ 81AE73A
-	msgbox Route111_Text_1AC59E, MSGBOX_DEFAULT
+	msgbox GabbyAndTy_Text_KeepingAnEyeOutForYou, MSGBOX_DEFAULT
 	release
 	end

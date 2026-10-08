@@ -42,15 +42,15 @@ Route110_EventScript_ItemDireHit:: @ 81B14BB
 	finditem ITEM_DIRE_HIT
 	end
 
-Route111_EventScript_1B14C8:: @ 81B14C8
+Route111_EventScript_ItemTMSandstorm:: @ 81B14C8
 	finditem ITEM_TM37_SANDSTORM
 	end
 
-Route111_EventScript_1B14D5:: @ 81B14D5
+Route111_EventScript_ItemStardust:: @ 81B14D5
 	finditem ITEM_STARDUST
 	end
 
-Route111_EventScript_1B14E2:: @ 81B14E2
+Route111_EventScript_ItemHPUp:: @ 81B14E2
 	finditem ITEM_HP_UP
 	end
 

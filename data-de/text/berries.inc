@@ -18,7 +18,7 @@ Route104_Text_TrainersOftenMakeMonHoldBerries:: @ 81C5665
 	.string "Es liegt an dir, ob du BEEREN pflanzt\n"
 	.string "oder verwendest.$"
 
-Route111_Text_1C56F0:: @ 81C56F0
+Route111_Text_WateredPlantsEveryDayTakeBerry:: @ 81C56F0
 	.string "Ich habe meine Pflanzen sehr oft ge-\n"
 	.string "wässert! Sie trugen sehr viele Blüten.\p"
 	.string "Und dann wuchsen auf einmal viele\n"
@@ -31,7 +31,7 @@ Route111_Text_1C5781:: @ 81C5781
 	.string "rote {POKEBLOCK} herstellen!\p"
 	.string "Ich hoffe, du strengst dich auch an.$"
 
-Route111_Text_1C57D2:: @ 81C57D2
+Route111_Text_WhatColorBerriesToLookForToday:: @ 81C57D2
 	.string "Ich frage mich, welche BEEREN-Farbe ich\n"
 	.string "heute wählen soll.$"
 

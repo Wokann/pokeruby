@@ -911,7 +911,7 @@ u16 GetCurrLocationDefaultMusic(void)
     if (gSaveBlock1.location.mapGroup == MAP_GROUP(MAP_ROUTE111)
      && gSaveBlock1.location.mapNum == MAP_NUM(MAP_ROUTE111)
      && GetSavedWeather() == 8)
-        return MUS_ROUTE111;
+        return MUS_DESERT;
 
     music = GetLocationMusic(&gSaveBlock1.location);
     if (music != 0x7FFF)

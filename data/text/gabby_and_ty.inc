@@ -1,18 +1,16 @@
-Route111_Text_1ABED8:: @ 81ABED8
+GabbyAndTy_Text_GabbyPreFirstBattle:: @ 81ABED8
 	.string "GABBY: Oh! We've just spotted a tough-\n"
 	.string "looking TRAINER here of all places!\p"
 	.string "Okay, roll camera!\n"
 	.string "Let's get this interview.$"
 
-Route111_Text_1ABF50:: @ 81ABF50
-Route118_Text_1ABF50:: @ 81ABF50
-Route120_Text_1ABF50:: @ 81ABF50
+GabbyAndTy_Text_GabbyIntro:: @ 81ABF50
 	.string "GABBY: Oh! You're {PLAYER}! Hi!\n"
 	.string "Do you remember us from last time?\p"
 	.string "Can you show us how much stronger\n"
 	.string "you've become? Okay, cue interview!$"
 
-Route111_Text_1ABFD3:: @ 81ABFD3
+GabbyAndTy_Text_GabbyDefeatFirstTime:: @ 81ABFD3
 	.string "GABBY: My eyes didn't lie!\n"
 	.string "I did discover an astonishing TRAINER!$"
 
@@ -85,15 +83,11 @@ Route111_Text_1AC553:: @ 81AC553
 	.string "Okay, but don't give up!\n"
 	.string "We'll be keeping an eye out for you!$"
 
-Route111_Text_1AC59E:: @ 81AC59E
-Route118_Text_1AC59E:: @ 81AC59E
-Route120_Text_1AC59E:: @ 81AC59E
+GabbyAndTy_Text_KeepingAnEyeOutForYou:: @ 81AC59E
 	.string "GABBY: We'll be keeping an eye out\n"
 	.string "for you!$"
 
-Route111_Text_1AC5CA:: @ 81AC5CA
-Route118_Text_1AC5CA:: @ 81AC5CA
-Route120_Text_1AC5CA:: @ 81AC5CA
+GabbyAndTy_Text_GabbyNotEnoughMons:: @ 81AC5CA
 	.string "GABBY: Is there a strong TRAINER\n"
 	.string "anywhere with a lot of POKéMON?$"
 
@@ -107,46 +101,36 @@ Route111_Text_1AC60B:: @ 81AC60B
 	.string "Are you willing to give us an interview\l"
 	.string "this time?$"
 
-Route111_Text_1AC6F8:: @ 81AC6F8
-Route118_Text_1AC6F8:: @ 81AC6F8
-Route120_Text_1AC6F8:: @ 81AC6F8
+GabbyAndTy_Text_GabbyDefeat:: @ 81AC6F8
 	.string "GABBY: That was an intense battle!\n"
 	.string "Did you get all that on camera?$"
 
-Route111_Text_1AC73B:: @ 81AC73B
+GabbyAndTy_Text_TyPreFirstBattle:: @ 81AC73B
 	.string "TY: Hey, lookie here! A tough-looking\n"
 	.string "TRAINER here, of all places!\l"
 	.string "Camera's rolling!$"
 
-Route111_Text_1AC790:: @ 81AC790
-Route118_Text_1AC790:: @ 81AC790
-Route120_Text_1AC790:: @ 81AC790
+GabbyAndTy_Text_TyIntro:: @ 81AC790
 	.string "TY: Hey, lookie here!\n"
 	.string "I remember you!\p"
 	.string "I'll get this battle all on this\n"
 	.string "here camera!$"
 
-Route111_Text_1AC7E4:: @ 81AC7E4
-Route118_Text_1AC7E4:: @ 81AC7E4
-Route120_Text_1AC7E4:: @ 81AC7E4
+GabbyAndTy_Text_TyPostBattle:: @ 81AC7E4
 	.string "TY: You're a natural!\n"
 	.string "Got me some prime footage right here!$"
 
-Route111_Text_1AC820:: @ 81AC820
-Route118_Text_1AC820:: @ 81AC820
-Route120_Text_1AC820:: @ 81AC820
+GabbyAndTy_Text_TyNotEnoughMons:: @ 81AC820
 	.string "TY: Do you only have the one POKéMON\n"
 	.string "and that's it?\p"
 	.string "If you had more POKéMON, it'd make for\n"
 	.string "better footage, but...$"
 
-Route111_Text_1AC892:: @ 81AC892
+GabbyAndTy_Text_TyDefeatFirstTime:: @ 81AC892
 	.string "TY: Yep, we sure spotted a hot TRAINER.\n"
 	.string "This is a huge scoop for us!$"
 
-Route111_Text_1AC8D7:: @ 81AC8D7
-Route118_Text_1AC8D7:: @ 81AC8D7
-Route120_Text_1AC8D7:: @ 81AC8D7
+GabbyAndTy_Text_TyDefeat:: @ 81AC8D7
 	.string "TY: Yep, I got it all.\n"
 	.string "That whole battle's on camera.$"
 

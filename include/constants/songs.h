@@ -314,7 +314,7 @@
 #define MUS_MT_CHIMNEY               406 // MUS_TOZAN
 #define MUS_ENCOUNTER_FEMALE         407 // MUS_GIRLEYE
 #define MUS_LILYCOVE                 408 // MUS_MINAMO
-#define MUS_ROUTE111                 409 // MUS_ASHROAD
+#define MUS_DESERT                 409 // MUS_ASHROAD
 #define MUS_HELP                     410 // MUS_EVENT0
 #define MUS_UNDERWATER               411 // MUS_DEEPDEEP
 #define MUS_VICTORY_TRAINER          412 // MUS_KACHI1

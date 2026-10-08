@@ -1,18 +1,16 @@
-Route111_Text_1ABED8:: @ 81ABED8
+GabbyAndTy_Text_GabbyPreFirstBattle:: @ 81ABED8
 	.string "PIA: Oh! Wir haben hier viele stark\n"
 	.string "aussehende TRAINER gesehen!\p"
 	.string "Okay, Kamera ab!\n"
 	.string "Interviewen wir jemanden!$"
 
-Route111_Text_1ABF50:: @ 81ABF50
-Route118_Text_1ABF50:: @ 81ABF50
-Route120_Text_1ABF50:: @ 81ABF50
+GabbyAndTy_Text_GabbyIntro:: @ 81ABF50
 	.string "PIA: Oh! Du bist {PLAYER}! Hallo!\n"
 	.string "Erinnerst du dich an uns?\p"
 	.string "Zeigst du uns, wie stark du geworden\n"
 	.string "bist? Okay, das war das Stichwort.$"
 
-Route111_Text_1ABFD3:: @ 81ABFD3
+GabbyAndTy_Text_GabbyDefeatFirstTime:: @ 81ABFD3
 	.string "PIA: Mein Gefühl hat nicht getrogen.\n"
 	.string "Der TRAINER ist wirklich erstaunlich.$"
 
@@ -86,14 +84,10 @@ Route111_Text_1AC553:: @ 81AC553
 	.string "Okay, aber gib nicht auf!\n"
 	.string "Wir werden dich weiter im Auge behalten!$"
 
-Route111_Text_1AC59E:: @ 81AC59E
-Route118_Text_1AC59E:: @ 81AC59E
-Route120_Text_1AC59E:: @ 81AC59E
+GabbyAndTy_Text_KeepingAnEyeOutForYou:: @ 81AC59E
 	.string "PIA: Wir werden dich im Auge behalten!$"
 
-Route111_Text_1AC5CA:: @ 81AC5CA
-Route118_Text_1AC5CA:: @ 81AC5CA
-Route120_Text_1AC5CA:: @ 81AC5CA
+GabbyAndTy_Text_GabbyNotEnoughMons:: @ 81AC5CA
 	.string "PIA: Gibt es irgendwo einen starken\n"
 	.string "TRAINER mit vielen POKéMON?$"
 
@@ -106,47 +100,37 @@ Route111_Text_1AC60B:: @ 81AC60B
 	.string "Was meinst du? Dürfen wir dich noch\n"
 	.string "einmal interviewen?$"
 
-Route111_Text_1AC6F8:: @ 81AC6F8
-Route118_Text_1AC6F8:: @ 81AC6F8
-Route120_Text_1AC6F8:: @ 81AC6F8
+GabbyAndTy_Text_GabbyDefeat:: @ 81AC6F8
 	.string "PIA: Das war aber ein intensiver\n"
 	.string "Kampf! Hast du alles aufgezeichnet?!?$"
 
-Route111_Text_1AC73B:: @ 81AC73B
+GabbyAndTy_Text_TyPreFirstBattle:: @ 81AC73B
 	.string "UDO: Hey, guck mal! Ein stark\n"
 	.string "aussehender TRAINER! Und das hier\l"
 	.string "an diesem Ort! Kamera ab!$"
 
-Route111_Text_1AC790:: @ 81AC790
-Route118_Text_1AC790:: @ 81AC790
-Route120_Text_1AC790:: @ 81AC790
+GabbyAndTy_Text_TyIntro:: @ 81AC790
 	.string "UDO: Da schau her!\n"
 	.string "Ich erinnere mich an dich!\p"
 	.string "Ich werde den ganzen Kampf mit der\n"
 	.string "Kamera aufnehmen!$"
 
-Route111_Text_1AC7E4:: @ 81AC7E4
-Route118_Text_1AC7E4:: @ 81AC7E4
-Route120_Text_1AC7E4:: @ 81AC7E4
+GabbyAndTy_Text_TyPostBattle:: @ 81AC7E4
 	.string "UDO: Du bist ein Naturtalent!\n"
 	.string "Du gibst mir erstklassiges Bildmaterial!$"
 
-Route111_Text_1AC820:: @ 81AC820
-Route118_Text_1AC820:: @ 81AC820
-Route120_Text_1AC820:: @ 81AC820
+GabbyAndTy_Text_TyNotEnoughMons:: @ 81AC820
 	.string "UDO: Du hast nur ein POKéMON?\n"
 	.string "Mehr nicht?\p"
 	.string "Wenn du mehr POKéMON hättest, wäre\n"
 	.string "das Bildmaterial viel, viel besser!$"
 
-Route111_Text_1AC892:: @ 81AC892
+GabbyAndTy_Text_TyDefeatFirstTime:: @ 81AC892
 	.string "UDO: Wir haben tatsächlich einen\n"
 	.string "starken TRAINER entdeckt.\l"
 	.string "Das ist unser Durchbruch.$"
 
-Route111_Text_1AC8D7:: @ 81AC8D7
-Route118_Text_1AC8D7:: @ 81AC8D7
-Route120_Text_1AC8D7:: @ 81AC8D7
+GabbyAndTy_Text_TyDefeat:: @ 81AC8D7
 	.string "UDO: Ja, alles im Kasten!\n"
 	.string "Der ganze Kampf ist auf Band!$"
 
