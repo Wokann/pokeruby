@@ -1,4 +1,4 @@
-MauvilleCity_GameCorner_EventScript_1C407E:: @ 81C407E
+Roulette_EventScript_Table1:: @ 81C407E
 	checkitem ITEM_COIN_CASE, 1
 	compare VAR_RESULT, 0
 	goto_if_eq MauvilleCity_GameCorner_EventScript_NoCoinCase
@@ -10,7 +10,7 @@ MauvilleCity_GameCorner_EventScript_1C407E:: @ 81C407E
 	goto MauvilleCity_GameCorner_EventScript_1C40DA
 	end
 
-MauvilleCity_GameCorner_EventScript_1C40AC:: @ 81C40AC
+Roulette_EventScript_Table2:: @ 81C40AC
 	checkitem ITEM_COIN_CASE, 1
 	compare VAR_RESULT, 0
 	goto_if_eq MauvilleCity_GameCorner_EventScript_NoCoinCase

@@ -1,13 +1,13 @@
 MauvilleCity_House1_MapScripts:: @ 81569FC
 	.byte 0
 
-MauvilleCity_House1_EventScript_RockSmashHMMan:: @ 81569FD
+MauvilleCity_House1_EventScript_RockSmashDude:: @ 81569FD
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_HM06, MauvilleCity_House1_EventScript_ReceivedRockSmash
+	goto_if_set FLAG_RECEIVED_HM_ROCK_SMASH, MauvilleCity_House1_EventScript_ReceivedRockSmash
 	msgbox MauvilleCity_House1_Text_TakeHMRockSmash, MSGBOX_DEFAULT
-	giveitem ITEM_HM06_ROCK_SMASH
-	setflag FLAG_RECEIVED_HM06
+	giveitem ITEM_HM_ROCK_SMASH
+	setflag FLAG_RECEIVED_HM_ROCK_SMASH
 	msgbox MauvilleCity_House1_Text_ExplainRockSmash, MSGBOX_DEFAULT
 	release
 	end

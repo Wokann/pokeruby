@@ -1,6 +1,6 @@
 #include "constants/mauville_old_man.h"
 
-MauvilleCity_PokemonCenter_1F_EventScript_1AE744:: @ 81AE744
+MauvilleCity_PokemonCenter_1F_EventScript_MauvilleOldMan:: @ 81AE744
 	special Script_GetCurrentMauvilleMan
 	switch VAR_RESULT
 	case MAUVILLE_MAN_BARD,        SpeakToBard

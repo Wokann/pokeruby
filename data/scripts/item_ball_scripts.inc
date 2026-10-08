@@ -347,7 +347,7 @@ AbandonedShip_Rooms2_B1F_EventScript_ItemDiveBall:: @ 81B1897
 	end
 
 AbandonedShip_Room_B1F_EventScript_ItemTMIceBeam:: @ 81B18A4
-	finditem ITEM_TM13_ICE_BEAM
+	finditem ITEM_TM_ICE_BEAM
 	end
 
 AbandonedShip_Rooms2_1F_EventScript_ItemRevive:: @ 81B18B1
@@ -523,7 +523,7 @@ VictoryRoad_1F_EventScript_1B1AD3:: @ 81B1AD3
 	end
 
 VictoryRoad_B1F_EventScript_1B1AE0:: @ 81B1AE0
-	finditem ITEM_TM29_PSYCHIC
+	finditem ITEM_TM_PSYCHIC
 	end
 
 VictoryRoad_B1F_EventScript_1B1AED:: @ 81B1AED

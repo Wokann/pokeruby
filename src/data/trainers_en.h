@@ -9183,7 +9183,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_Kylee }
     },
 
-    [TRAINER_WALLY_2] =
+    [TRAINER_WALLY_MAUVILLE] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_POKEMON_TRAINER_3,
