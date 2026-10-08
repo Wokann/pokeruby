@@ -134,10 +134,6 @@ extern const u8 OtherText_PP[];
 // move_relearner
 extern const u8 gOtherText_ForgotOrDidNotLearnMove[];
 
-// clear_save_data_menu
-extern const u8 gSystemText_ClearAllSaveDataPrompt[];
-extern const u8 gSystemText_ClearingData[];
-
 // contest_link_80C2020
 extern const u8 gText_AnnouncingResults[];
 extern const u8 gText_PreliminaryResults[];

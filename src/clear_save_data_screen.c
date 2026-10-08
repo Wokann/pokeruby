@@ -7,23 +7,25 @@
 #include "constants/songs.h"
 #include "sound.h"
 #include "sprite.h"
-#include "strings2.h"
 #include "task.h"
 
+extern const u8 gText_ClearAllSaveData[];
+extern const u8 gText_ClearingData[];
+
 static void VBlankCB_ClearSaveDataScreen(void);
-static void Task_InitMenu(u8);
-static void Task_ProcessMenuInput(u8);
+static void Task_DoClearSaveDataScreenYesNo(u8);
+static void Task_ClearSaveDataScreenYesNoChoice(u8);
 static void Task_ClearSaveData(u8);
 static void CB2_ClearSaveDataScreen(void);
 static void VBlankCB_InitClearSaveDataScreen(void);
-static u8 InitClearSaveDataScreen(void);
-static void CB2_SoftReset(void);
+static u8 SetupClearSaveDataScreen(void);
+static void CB2_FadeAndDoReset(void);
 
 void CB2_InitClearSaveDataScreen(void)
 {
-    if (InitClearSaveDataScreen())
+    if (SetupClearSaveDataScreen())
     {
-        CreateTask(Task_InitMenu, 0);
+        CreateTask(Task_DoClearSaveDataScreenYesNo, 0);
     }
 }
 
@@ -34,7 +36,7 @@ static void VBlankCB_ClearSaveDataScreen(void)
     TransferPlttBuffer();
 }
 
-static void Task_InitMenu(u8 taskId)
+static void Task_DoClearSaveDataScreenYesNo(u8 taskId)
 {
     ResetSpriteData();
 
@@ -42,29 +44,29 @@ static void Task_InitMenu(u8 taskId)
 
     SetVBlankCallback(VBlankCB_ClearSaveDataScreen);
     Menu_DrawStdWindowFrame(2, 14, 27, 19);
-    Menu_PrintText(gSystemText_ClearAllSaveDataPrompt, 3, 15);
+    Menu_PrintText(gText_ClearAllSaveData, 3, 15);
 
     Menu_DrawStdWindowFrame(2, 1, 8, 6);
     Menu_PrintItems(3, 2, 2, gMenuYesNoItems);
     InitMenu(0, 3, 2, 2, 1, 5);
 
-    gTasks[taskId].func = Task_ProcessMenuInput;
+    gTasks[taskId].func = Task_ClearSaveDataScreenYesNoChoice;
 }
 
-static void Task_ProcessMenuInput(u8 taskId)
+static void Task_ClearSaveDataScreenYesNoChoice(u8 taskId)
 {
     switch (Menu_ProcessInputNoWrap_())
     {
     case 0:
         PlaySE(SE_SELECT);
-        sub_8071F40(gSystemText_ClearingData);
+        sub_8071F40(gText_ClearingData);
         gTasks[taskId].func = Task_ClearSaveData;
         break;
     case -1:
     case 1:
         PlaySE(SE_SELECT);
         DestroyTask(taskId);
-        SetMainCallback2(CB2_SoftReset);
+        SetMainCallback2(CB2_FadeAndDoReset);
         break;
     }
     AnimateSprites();
@@ -75,7 +77,7 @@ static void Task_ClearSaveData(u8 taskId)
 {
     ClearSaveData();
     DestroyTask(taskId);
-    SetMainCallback2(CB2_SoftReset);
+    SetMainCallback2(CB2_FadeAndDoReset);
 }
 
 static void CB2_ClearSaveDataScreen(void)
@@ -89,7 +91,7 @@ static void VBlankCB_InitClearSaveDataScreen(void)
     TransferPlttBuffer();
 }
 
-static u8 InitClearSaveDataScreen(void)
+static u8 SetupClearSaveDataScreen(void)
 {
     u16 i;
     u16 ime;
@@ -158,7 +160,7 @@ static u8 InitClearSaveDataScreen(void)
     }
 }
 
-static void CB2_SoftReset(void)
+static void CB2_FadeAndDoReset(void)
 {
     switch (gMain.state)
     {
