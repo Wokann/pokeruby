@@ -120,8 +120,8 @@
 #define METATILE_Fortree_SecretBase_LongGrass_TopLeft      0x279
 #define METATILE_Fortree_SecretBase_LongGrass_TopMid       0x27A
 #define METATILE_Fortree_SecretBase_LongGrass_TopRight     0x27B
-#define METATILE_Fortree_WoodBridge_Kecleon0               0x297
-#define METATILE_Fortree_WoodBridge_Kecleon1               0x29F
+#define METATILE_Fortree_WoodBridge1_Top               0x297
+#define METATILE_Fortree_WoodBridge1_Bottom               0x29F
 
 // gTileset_General
 #define METATILE_General_CalmWater            0x170

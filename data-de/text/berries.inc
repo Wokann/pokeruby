@@ -55,21 +55,21 @@ Route120_Text_1C58F1:: @ 81C58F1
 	.string "POKéMON gefressen...\p"
 	.string "Es ist ein Ausdruck der Liebe, richtig?$"
 
-Route120_Text_1C5979:: @ 81C5979
+Route120_Text_YesYouUnderstand:: @ 81C5979
 	.string "Ja, ja.\n"
 	.string "Du verstehst, was ich meine.\p"
 	.string "Das hier ist für dich.$"
 
-Route120_Text_1C59B5:: @ 81C59B5
+Route120_Text_MakeYourOwnImpressions:: @ 81C59B5
 	.string "Oh... Aber es ist wichtig, dass man sich\n"
 	.string "einen eigenen Eindruck verschafft...\p"
 	.string "Hier. Das kannst du haben.$"
 
-Route120_Text_1C5A0B:: @ 81C5A0B
+Route120_Text_BerryIsRareRaiseItWithCare:: @ 81C5A0B
 	.string "Dies ist eine seltene BEERE. Ich hoffe,\n"
 	.string "du gehst sorgfältig mit ihr um.$"
 
-Route120_Text_1C5A4D:: @ 81C5A4D
+Route120_Text_IllGetMoreBerriesFromBerryMaster:: @ 81C5A4D
 	.string "Ich habe einige BEEREN vom\n"
 	.string "BEERENMEISTER erhalten.$"
 

@@ -56,21 +56,21 @@ Route120_Text_1C58F1:: @ 81C58F1
 	.string "by a POKéMON...\p"
 	.string "It's an expression of love, isn't it?$"
 
-Route120_Text_1C5979:: @ 81C5979
+Route120_Text_YesYouUnderstand:: @ 81C5979
 	.string "Yes, yes.\n"
 	.string "You understand what I mean.\p"
 	.string "You should take this.$"
 
-Route120_Text_1C59B5:: @ 81C59B5
+Route120_Text_MakeYourOwnImpressions:: @ 81C59B5
 	.string "Oh... But it is important to make your\n"
 	.string "own impressions, I guess...\p"
 	.string "You can have this.$"
 
-Route120_Text_1C5A0B:: @ 81C5A0B
+Route120_Text_BerryIsRareRaiseItWithCare:: @ 81C5A0B
 	.string "I think that BERRY is rare.\n"
 	.string "I hope you raise it with loving care.$"
 
-Route120_Text_1C5A4D:: @ 81C5A4D
+Route120_Text_IllGetMoreBerriesFromBerryMaster:: @ 81C5A4D
 	.string "I'll get more BERRIES from the\n"
 	.string "BERRY MASTER.$"
 

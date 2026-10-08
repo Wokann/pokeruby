@@ -2184,38 +2184,38 @@ Route119_Text_1BEF67:: @ 81BEF67
 	.string "Dann angle von seinem Rücken aus...\p"
 	.string "Ein äußerst angenehmer Zeitvertreib!$"
 
-Route120_Text_1BEFC8:: @ 81BEFC8
+Route120_Text_ColinIntro:: @ 81BEFC8
 	.string "Hast du Attacken auf Lager, die ein\n"
 	.string "fliegendes POKéMON schlagen können?$"
 
-Route120_Text_1BF000:: @ 81BF000
+Route120_Text_ColinDefeat:: @ 81BF000
 	.string "Du bist mir überlegen!$"
 
-Route120_Text_1BF015:: @ 81BF015
+Route120_Text_ColinPostBattle:: @ 81BF015
 	.string "Die Attacke FLIEGEN ist sehr praktisch,\n"
 	.string "meinst du nicht auch?\p"
 	.string "Wenn ein POKéMON fliegt, kann ihm fast\n"
 	.string "keine Attacke Schaden zufügen.$"
 
-Route120_Text_1BF07E:: @ 81BF07E
+Route120_Text_RobertIntro:: @ 81BF07E
 	.string "Mein POKéMON ist stark!\n"
 	.string "Wie sieht es mit deinen aus?$"
 
-Route120_Text_1BF0A5:: @ 81BF0A5
+Route120_Text_RobertDefeat:: @ 81BF0A5
 	.string "Deine POKéMON sind stärker...$"
 
-Route120_Text_1BF0C3:: @ 81BF0C3
+Route120_Text_RobertPostBattle:: @ 81BF0C3
 	.string "Ein POKéMON, das beständig wächst, ist\n"
 	.string "absolut zuverlässig...$"
 
-Route120_Text_1BF0FA:: @ 81BF0FA
+Route120_Text_RobertRematchIntro:: @ 81BF0FA
 	.string "Ein POKéMON, das beständig wächst, ist\n"
 	.string "absolut zuverlässig...$"
 
-Route120_Text_1BF131:: @ 81BF131
+Route120_Text_RobertRematchDefeat:: @ 81BF131
 	.string "Deine POKéMON sind enorm stark.$"
 
-Route120_Text_1BF154:: @ 81BF154
+Route120_Text_RobertPostRematch:: @ 81BF154
 	.string "Meine POKéMON werden immer stärker.\n"
 	.string "Ich muss auch immer stärker werden.$"
 
@@ -2232,15 +2232,15 @@ Route120_Text_1BF215:: @ 81BF215
 	.string "man auch immer will... Das ist das\l"
 	.string "Schöne an einem Leben als TRAINER.$"
 
-Route120_Text_1BF26E:: @ 81BF26E
+Route120_Text_JennaIntro:: @ 81BF26E
 	.string "Wie sieht es mit deiner Fitness aus?\n"
 	.string "Wenn du nicht fit bist, könnten \l"
 	.string "harte Zeiten auf dich zukommen.$"
 
-Route120_Text_1BF2D2:: @ 81BF2D2
+Route120_Text_JennaDefeat:: @ 81BF2D2
 	.string "Ich bin fit wie ein Turnschuh, aber...$"
 
-Route120_Text_1BF2EA:: @ 81BF2EA
+Route120_Text_JennaPostBattle:: @ 81BF2EA
 	.string "Fitnesstraining gehört zu meinem\n"
 	.string "Leben. Ich laufe mit meinen POKéMON.$"
 
@@ -2273,69 +2273,69 @@ Route120_Text_1BF43E:: @ 81BF43E
 	.string "Ich werde mich mehr anstrengen...\l"
 	.string "Für meine kostbaren KÄFER-POKéMON...$"
 
-Route120_Text_1BF4A0:: @ 81BF4A0
+Route120_Text_JenniferIntro:: @ 81BF4A0
 	.string "POKéMON haben viele spezielle Fähig-\n"
 	.string "keiten. Wenn du ein klasse TRAINER\l"
 	.string "werden willst, lerne etwas darüber.$"
 
-Route120_Text_1BF504:: @ 81BF504
+Route120_Text_JenniferDefeat:: @ 81BF504
 	.string "Du setzt offensichtlich dein Gehirn ein.$"
 
-Route120_Text_1BF51F:: @ 81BF51F
+Route120_Text_JenniferPostBattle:: @ 81BF51F
 	.string "Die speziellen Fähigkeiten eines\n"
 	.string "POKéMON bestimmen den Kampfstil.$"
 
-Route120_Text_1BF560:: @ 81BF560
+Route120_Text_ChipIntro:: @ 81BF560
 	.string "Wer magst du sein?\p"
 	.string "Suchst du etwa nach antiken Ruinen,\n"
 	.string "von denen die Legende sagt, sie\l"
 	.string "seien hier zu finden?$"
 
-Route120_Text_1BF5D6:: @ 81BF5D6
+Route120_Text_ChipDefeat:: @ 81BF5D6
 	.string "Was für ein erbärmlicher Rückschritt...$"
 
-Route120_Text_1BF5F4:: @ 81BF5F4
+Route120_Text_ChipPostBattle:: @ 81BF5F4
 	.string "Dieser gigantische Felsen... Ich würde\n"
 	.string "zu gerne glauben, er enthielte antike\l"
 	.string "Schätze. Aber ich sehe keinen Eingang.$"
 
-Route120_Text_1BF65B:: @ 81BF65B
+Route120_Text_ClarissaIntro:: @ 81BF65B
 	.string "Warum ich diesen Schirm trage?\p"
 	.string "Das verrate ich dir, wenn du mich\n"
 	.string "besiegen kannst.$"
 
-Route120_Text_1BF6A4:: @ 81BF6A4
+Route120_Text_ClarissaDefeat:: @ 81BF6A4
 	.string "Ein Schirm kann nicht vor den Attacken\n"
 	.string "der POKéMON schützen...$"
 
-Route120_Text_1BF6D0:: @ 81BF6D0
+Route120_Text_ClarissaPostBattle:: @ 81BF6D0
 	.string "Ich glaube nicht, dass starkes Sonnen-\n"
 	.string "licht gut für meine POKéMON ist.\l"
 	.string "Daher schütze ich sie mit meinem Schirm.$"
 
-Route120_Text_1BF728:: @ 81BF728
+Route120_Text_AngelicaIntro:: @ 81BF728
 	.string "Mein Schirm, mein POKéMON und ich...\p"
 	.string "Würde eines dieser Elemente fehlen,\n"
 	.string "wäre dieses Bild der Schönheit ruiniert.$"
 
-Route120_Text_1BF78C:: @ 81BF78C
+Route120_Text_AngelicaDefeat:: @ 81BF78C
 	.string "Du hast das Bild der Schönheit ruiniert!$"
 
-Route120_Text_1BF7B2:: @ 81BF7B2
+Route120_Text_AngelicaPostBattle:: @ 81BF7B2
 	.string "Mein Schirm würde dir überhaupt nicht\n"
 	.string "stehen.\p"
 	.string "Er wäre dir sogar hinderlich.$"
 
-Route120_Text_1BF80B:: @ 81BF80B
+Route120_Text_KeigoIntro:: @ 81BF80B
 	.string "Ich werde die Techniken der POKéMON\n"
 	.string "übernehmen und neue Ninja-Techniken\l"
 	.string "daraus entwickeln.$"
 
-Route120_Text_1BF852:: @ 81BF852
+Route120_Text_KeigoDefeat:: @ 81BF852
 	.string "Die Entwicklung neuer Ninja-Techniken\n"
 	.string "bleibt ein Traum...$"
 
-Route120_Text_1BF891:: @ 81BF891
+Route120_Text_KeigoPostBattle:: @ 81BF891
 	.string "Vielleicht sollte ich unter einem Ninja-\n"
 	.string "Meister lernen...$"
 

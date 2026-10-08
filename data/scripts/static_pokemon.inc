@@ -81,19 +81,19 @@ EventScript_Kecleon:: @ 81A0594
 	checkitem ITEM_DEVON_SCOPE, 1
 	compare VAR_RESULT, 1
 	goto_if_eq EventScript_AskUseDevonScope
-	msgbox Text_SomethingUnseeable, MSGBOX_DEFAULT
+	msgbox Kecleon_Text_SomethingUnseeable, MSGBOX_DEFAULT
 	release
 	end
 
 EventScript_AskUseDevonScope:: @ 81A05AE
-	msgbox Text_WantToUseDevonScope, MSGBOX_YESNO
+	msgbox Kecleon_Text_WantToUseDevonScope, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	goto_if_eq EventScript_BattleKecleon
 	release
 	end
 
 EventScript_BattleKecleon:: @ 81A05C3
-	msgbox Text_UseDevonScopeMonAttacked, MSGBOX_DEFAULT
+	msgbox Kecleon_Text_UseDevonScopeMonAttacked, MSGBOX_DEFAULT
 	closemessage
 	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
 	waitmovement 0
@@ -125,23 +125,23 @@ EventScript_BattleKecleon:: @ 81A05C3
 	end
 
 Route120_EventScript_HideKecleon1:: @ 81A0646
-	setflag FLAG_HIDE_KECLEON_ROUTE120_3
+	setflag FLAG_HIDE_ROUTE_120_KECLEON_1
 	return
 
 Route120_EventScript_HideKecleon2:: @ 81A064A
-	setflag FLAG_HIDE_KECLEON_ROUTE120_4
+	setflag FLAG_HIDE_ROUTE_120_KECLEON_2
 	return
 
 Route120_EventScript_HideKecleon3:: @ 81A064E
-	setflag FLAG_HIDE_KECLEON_ROUTE120_5
+	setflag FLAG_HIDE_ROUTE_120_KECLEON_3
 	return
 
 Route120_EventScript_HideKecleon4:: @ 81A0652
-	setflag FLAG_HIDE_KECLEON_ROUTE120_6
+	setflag FLAG_HIDE_ROUTE_120_KECLEON_4
 	return
 
 Route120_EventScript_HideKecleon5:: @ 81A0656
-	setflag FLAG_HIDE_KECLEON_ROUTE120_7
+	setflag FLAG_HIDE_ROUTE_120_KECLEON_5
 	return
 
 Route119_EventScript_HideKecleon1:: @ 81A065A
