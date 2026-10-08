@@ -88,7 +88,7 @@ SlateportCity_OceanicMuseum_2F_EventScript_CaptStern:: @ 8155CE6
 	removeobject 1
 	setflag FLAG_HIDE_EVIL_TEAM_ROUTE110
 	setflag FLAG_DELIVERED_DEVON_GOODS
-	clearflag FLAG_HIDE_DEVON_EMPLOYEE_ROUTE116
+	clearflag FLAG_HIDE_ROUTE_116_DEVON_EMPLOYEE
 	setflag FLAG_HIDE_RUSTBORO_CITY_DEVON_CORP_3F_EMPLOYEE
 	release
 	end

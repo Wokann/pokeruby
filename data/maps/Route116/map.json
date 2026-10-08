@@ -58,7 +58,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route116_EventScript_150C62",
+      "script": "Route116_EventScript_Joey",
       "flag": "0"
     },
     {
@@ -97,7 +97,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
-      "script": "Route116_EventScript_150C79",
+      "script": "Route116_EventScript_Jose",
       "flag": "0"
     },
     {
@@ -110,8 +110,8 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route116_EventScript_1B1571",
-      "flag": "FLAG_ITEM_ROUTE116_2"
+      "script": "Route116_EventScript_ItemEther",
+      "flag": "FLAG_ITEM_ROUTE_116_ETHER"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -123,8 +123,8 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route116_EventScript_1B157E",
-      "flag": "FLAG_ITEM_ROUTE116_3"
+      "script": "Route116_EventScript_ItemRepel",
+      "flag": "FLAG_ITEM_ROUTE_116_REPEL"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BERRY_TREE",
@@ -162,7 +162,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route116_EventScript_150B5D",
+      "script": "Route116_EventScript_Briney",
       "flag": "FLAG_HIDE_ROUTE_116_MR_BRINEY"
     },
     {
@@ -188,7 +188,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
-      "script": "Route116_EventScript_150CCE",
+      "script": "Route116_EventScript_Clark",
       "flag": "0"
     },
     {
@@ -214,8 +214,8 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route116_EventScript_1B158B",
-      "flag": "FLAG_ITEM_ROUTE116_4"
+      "script": "Route116_EventScript_ItemHPUp",
+      "flag": "FLAG_ITEM_ROUTE_116_HP_UP"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_LASS",
@@ -227,7 +227,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route116_EventScript_150CE5",
+      "script": "Route116_EventScript_Janice",
       "flag": "0"
     },
     {
@@ -240,7 +240,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
-      "script": "Route116_EventScript_150CFC",
+      "script": "Route116_EventScript_Karen",
       "flag": "0"
     },
     {
@@ -253,7 +253,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
-      "script": "Route116_EventScript_150C90",
+      "script": "Route116_EventScript_Jerry",
       "flag": "0"
     },
     {
@@ -266,8 +266,8 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route116_EventScript_150A7B",
-      "flag": "FLAG_HIDE_DEVON_EMPLOYEE_ROUTE116"
+      "script": "Route116_EventScript_DevonEmployee",
+      "flag": "FLAG_HIDE_ROUTE_116_DEVON_EMPLOYEE"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -279,8 +279,8 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route116_EventScript_1B1564",
-      "flag": "FLAG_ITEM_ROUTE116_1"
+      "script": "Route116_EventScript_ItemXSpecial",
+      "flag": "FLAG_ITEM_ROUTE_116_X_SPECIAL"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BLACK_BELT",
@@ -292,7 +292,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route116_EventScript_150A49",
+      "script": "Route116_EventScript_WandasBoyfriend",
       "flag": "FLAG_HIDE_ROUTE_116_WANDAS_BOYFRIEND"
     },
     {
@@ -305,8 +305,8 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route116_EventScript_150B8F",
-      "flag": "FLAG_HIDE_LOST_GLASSES_MAN"
+      "script": "Route116_EventScript_GlassesMan",
+      "flag": "FLAG_HIDE_ROUTE_116_DROPPED_GLASSES_MAN"
     }
   ],
   "warp_events": [
@@ -340,7 +340,7 @@
       "elevation": 3,
       "var": "VAR_ROUTE116_STATE",
       "var_value": "1",
-      "script": "Route116_EventScript_150B6E"
+      "script": "Route116_EventScript_BrineyTrigger"
     }
   ],
   "bg_events": [
@@ -350,7 +350,7 @@
       "y": 10,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route116_EventScript_150B30"
+      "script": "Route116_EventScript_RouteSignRustboro"
     },
     {
       "type": "sign",
@@ -358,7 +358,7 @@
       "y": 9,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route116_EventScript_150B39"
+      "script": "Route116_EventScript_RusturfTunnelSign"
     },
     {
       "type": "sign",
@@ -366,7 +366,7 @@
       "y": 9,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route116_EventScript_150B42"
+      "script": "Route116_EventScript_TunnelersRestHouseSign"
     },
     {
       "type": "secret_base",
@@ -388,7 +388,7 @@
       "y": 12,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route116_EventScript_150B4B"
+      "script": "Route116_EventScript_TrainerTipsBToStopEvolution"
     },
     {
       "type": "sign",
@@ -396,7 +396,7 @@
       "y": 10,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route116_EventScript_150B54"
+      "script": "Route116_EventScript_TrainerTipsBagHasPockets"
     },
     {
       "type": "secret_base",
@@ -418,7 +418,7 @@
       "y": 9,
       "elevation": 3,
       "item": "ITEM_SUPER_POTION",
-      "flag": "FLAG_HIDDEN_ITEM_2D"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_116_SUPER_POTION"
     },
     {
       "type": "hidden_item",
@@ -426,7 +426,7 @@
       "y": 13,
       "elevation": 3,
       "item": "ITEM_BLACK_GLASSES",
-      "flag": "FLAG_HIDDEN_ITEM_BLACK_GLASSES"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_116_BLACK_GLASSES"
     }
   ]
 }

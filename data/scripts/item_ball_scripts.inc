@@ -90,19 +90,19 @@ Route115_EventScript_ItemGreatBall:: @ 81B1557
 	finditem ITEM_GREAT_BALL
 	end
 
-Route116_EventScript_1B1564:: @ 81B1564
+Route116_EventScript_ItemXSpecial:: @ 81B1564
 	finditem ITEM_X_SPECIAL
 	end
 
-Route116_EventScript_1B1571:: @ 81B1571
+Route116_EventScript_ItemEther:: @ 81B1571
 	finditem ITEM_ETHER
 	end
 
-Route116_EventScript_1B157E:: @ 81B157E
+Route116_EventScript_ItemRepel:: @ 81B157E
 	finditem ITEM_REPEL
 	end
 
-Route116_EventScript_1B158B:: @ 81B158B
+Route116_EventScript_ItemHPUp:: @ 81B158B
 	finditem ITEM_HP_UP
 	end
 
