@@ -106,11 +106,11 @@ Route116_EventScript_ItemHPUp:: @ 81B158B
 	finditem ITEM_HP_UP
 	end
 
-Route117_EventScript_1B1598:: @ 81B1598
+Route117_EventScript_ItemGreatBall:: @ 81B1598
 	finditem ITEM_GREAT_BALL
 	end
 
-Route117_EventScript_1B15A5:: @ 81B15A5
+Route117_EventScript_ItemRevive:: @ 81B15A5
 	finditem ITEM_REVIVE
 	end
 

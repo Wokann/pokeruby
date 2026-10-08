@@ -1,4 +1,4 @@
-Route117_EventScript_1B222D:: @ 81B222D
+Route117_EventScript_DaycareMan:: @ 81B222D
 	lock
 	faceplayer
 	special GetDaycareMonNicknames
@@ -78,7 +78,7 @@ Route117_EventScript_1B22FE:: @ 81B22FE
 	release
 	end
 
-Route117_PokemonDayCare_EventScript_1B2327:: @ 81B2327
+Route117_PokemonDayCare_EventScript_DaycareWoman:: @ 81B2327
 	lock
 	faceplayer
 	specialvar VAR_RESULT, GetDaycareState

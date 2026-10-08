@@ -1,121 +1,121 @@
 Route117_MapScripts:: @ 8150D3A
-	map_script MAP_SCRIPT_ON_TRANSITION, Route117_MapScript1_150D40
+	map_script MAP_SCRIPT_ON_TRANSITION, Route117_OnTransition
 	.byte 0
 
-Route117_MapScript1_150D40:: @ 8150D40
-	call Route117_EventScript_150D46
+Route117_OnTransition:: @ 8150D40
+	call Route117_EventScript_TryMoveDayCareMan
 	end
 
-Route117_EventScript_150D46:: @ 8150D46
-	goto_if_unset FLAG_PENDING_DAYCARE_EGG, Route117_EventScript_150D56
+Route117_EventScript_TryMoveDayCareMan:: @ 8150D46
+	goto_if_unset FLAG_PENDING_DAYCARE_EGG, Route117_EventScript_StopMoveDayCareMan
 	setobjectxyperm 3, 47, 6
 
-Route117_EventScript_150D56:: @ 8150D56
+Route117_EventScript_StopMoveDayCareMan:: @ 8150D56
 	return
 
-Route117_EventScript_150D57:: @ 8150D57
-	msgbox Route117_Text_170CA7, MSGBOX_NPC
+Route117_EventScript_Woman:: @ 8150D57
+	msgbox Route117_Text_ArentTheseFlowersPretty, MSGBOX_NPC
 	end
 
-Route117_EventScript_150D60:: @ 8150D60
-	msgbox Route117_Text_170CEB, MSGBOX_NPC
+Route117_EventScript_LittleBoy:: @ 8150D60
+	msgbox Route117_Text_AirIsTastyHere, MSGBOX_NPC
 	end
 
-Route117_EventScript_150D69:: @ 8150D69
-	msgbox Route117_Text_170C26, MSGBOX_NPC
+Route117_EventScript_Girl:: @ 8150D69
+	msgbox Route117_Text_DayCarePokemonHadNewMove, MSGBOX_NPC
 	end
 
-Route117_EventScript_150D72:: @ 8150D72
-	msgbox Route117_Text_170D02, MSGBOX_SIGN
+Route117_EventScript_RouteSignVerdanturf:: @ 8150D72
+	msgbox Route117_Text_RouteSignVerdanturf, MSGBOX_SIGN
 	end
 
-Route117_EventScript_150D7B:: @ 8150D7B
-	msgbox Route117_Text_170D1E, MSGBOX_SIGN
+Route117_EventScript_RouteSignMauville:: @ 8150D7B
+	msgbox Route117_Text_RouteSignMauville, MSGBOX_SIGN
 	end
 
-Route117_EventScript_150D84:: @ 8150D84
-	msgbox Route117_Text_170D38, MSGBOX_SIGN
+Route117_EventScript_DayCareSign:: @ 8150D84
+	msgbox Route117_Text_DayCareSign, MSGBOX_SIGN
 	end
 
-Route117_EventScript_150D8D:: @ 8150D8D
-	trainerbattle_single TRAINER_ISAAC_1, Route117_Text_1BD49E, Route117_Text_1BD4D9
+Route117_EventScript_Isaac:: @ 8150D8D
+	trainerbattle_single TRAINER_ISAAC_1, Route117_Text_IsaacIntro, Route117_Text_IsaacDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	compare VAR_RESULT, 1
-	goto_if_eq Route117_EventScript_150DB4
-	msgbox Route117_Text_1BD4F9, MSGBOX_AUTOCLOSE
+	goto_if_eq Route117_EventScript_RematchIsaac
+	msgbox Route117_Text_IsaacPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route117_EventScript_150DB4:: @ 8150DB4
-	trainerbattle_rematch TRAINER_ISAAC_1, Route117_Text_1BD569, Route117_Text_1BD5AB
-	msgbox Route117_Text_1BD5F2, MSGBOX_AUTOCLOSE
+Route117_EventScript_RematchIsaac:: @ 8150DB4
+	trainerbattle_rematch TRAINER_ISAAC_1, Route117_Text_IsaacRematchIntro, Route117_Text_IsaacRematchDefeat
+	msgbox Route117_Text_IsaacPostRematch, MSGBOX_AUTOCLOSE
 	end
 
-Route117_EventScript_150DCB:: @ 8150DCB
-	trainerbattle_single TRAINER_LYDIA_1, Route117_Text_1BD634, Route117_Text_1BD67B
+Route117_EventScript_Lydia:: @ 8150DCB
+	trainerbattle_single TRAINER_LYDIA_1, Route117_Text_LydiaIntro, Route117_Text_LydiaDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	compare VAR_RESULT, 1
-	goto_if_eq Route117_EventScript_150DF2
-	msgbox Route117_Text_1BD69B, MSGBOX_AUTOCLOSE
+	goto_if_eq Route117_EventScript_RematchLydia
+	msgbox Route117_Text_LydiaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route117_EventScript_150DF2:: @ 8150DF2
-	trainerbattle_rematch TRAINER_LYDIA_1, Route117_Text_1BD6F2, Route117_Text_1BD733
-	msgbox Route117_Text_1BD74F, MSGBOX_AUTOCLOSE
+Route117_EventScript_RematchLydia:: @ 8150DF2
+	trainerbattle_rematch TRAINER_LYDIA_1, Route117_Text_LydiaRematchIntro, Route117_Text_LydiaRematchDefeat
+	msgbox Route117_Text_LydiaPostRematch, MSGBOX_AUTOCLOSE
 	end
 
-Route117_EventScript_150E09:: @ 8150E09
-	trainerbattle_single TRAINER_DYLAN_1, Route117_Text_1BD79A, Route117_Text_1BD7E0
+Route117_EventScript_Dylan:: @ 8150E09
+	trainerbattle_single TRAINER_DYLAN_1, Route117_Text_DylanIntro, Route117_Text_DylanDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	compare VAR_RESULT, 1
-	goto_if_eq Route117_EventScript_150E30
-	msgbox Route117_Text_1BD7F5, MSGBOX_AUTOCLOSE
+	goto_if_eq Route117_EventScript_RematchDylan
+	msgbox Route117_Text_DylanPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route117_EventScript_150E30:: @ 8150E30
-	trainerbattle_rematch TRAINER_DYLAN_1, Route117_Text_1BD83F, Route117_Text_1BD8A2
-	msgbox Route117_Text_1BD8BD, MSGBOX_AUTOCLOSE
+Route117_EventScript_RematchDylan:: @ 8150E30
+	trainerbattle_rematch TRAINER_DYLAN_1, Route117_Text_DylanRematchIntro, Route117_Text_DylanRematchDefeat
+	msgbox Route117_Text_DylanPostRematch, MSGBOX_AUTOCLOSE
 	end
 
-Route117_EventScript_150E47:: @ 8150E47
-	trainerbattle_single TRAINER_MARIA_1, Route117_Text_1BD914, Route117_Text_1BD965
+Route117_EventScript_Maria:: @ 8150E47
+	trainerbattle_single TRAINER_MARIA_1, Route117_Text_MariaIntro, Route117_Text_MariaDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	compare VAR_RESULT, 1
-	goto_if_eq Route117_EventScript_150E6E
-	msgbox Route117_Text_1BD98F, MSGBOX_AUTOCLOSE
+	goto_if_eq Route117_EventScript_RematchMaria
+	msgbox Route117_Text_MariaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route117_EventScript_150E6E:: @ 8150E6E
-	trainerbattle_rematch TRAINER_MARIA_1, Route117_Text_1BD9F1, Route117_Text_1BDA41
-	msgbox Route117_Text_1BDA6B, MSGBOX_AUTOCLOSE
+Route117_EventScript_RematchMaria:: @ 8150E6E
+	trainerbattle_rematch TRAINER_MARIA_1, Route117_Text_MariaRematchIntro, Route117_Text_MariaRematchDefeat
+	msgbox Route117_Text_MariaPostRematch, MSGBOX_AUTOCLOSE
 	end
 
-Route117_EventScript_150E85:: @ 8150E85
-	trainerbattle_single TRAINER_DEREK, Route117_Text_1BDAA7, Route117_Text_1BDAFC
-	msgbox Route117_Text_1BDB24, MSGBOX_AUTOCLOSE
+Route117_EventScript_Derek:: @ 8150E85
+	trainerbattle_single TRAINER_DEREK, Route117_Text_DerekIntro, Route117_Text_DerekDefeat
+	msgbox Route117_Text_DerekPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route117_EventScript_150E9C:: @ 8150E9C
-	trainerbattle_double TRAINER_ANNA_AND_MEG_1, Route117_Text_1BDBC3, Route117_Text_1BDC07, Route117_Text_1BDC96
+Route117_EventScript_Anna:: @ 8150E9C
+	trainerbattle_double TRAINER_ANNA_AND_MEG_1, Route117_Text_AnnaIntro, Route117_Text_AnnaDefeat, Route117_Text_AnnaNotEnoughMons
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	compare VAR_RESULT, 1
-	goto_if_eq Route117_EventScript_150EC7
-	msgbox Route117_Text_1BDC44, MSGBOX_AUTOCLOSE
+	goto_if_eq Route117_EventScript_RematchAnna
+	msgbox Route117_Text_AnnaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route117_EventScript_150EC7:: @ 8150EC7
-	trainerbattle_rematch_double TRAINER_ANNA_AND_MEG_1, Route117_Text_1BDDEF, Route117_Text_1BDE2F, Route117_Text_1BDEA7
-	msgbox Route117_Text_1BDE55, MSGBOX_AUTOCLOSE
+Route117_EventScript_RematchAnna:: @ 8150EC7
+	trainerbattle_rematch_double TRAINER_ANNA_AND_MEG_1, Route117_Text_AnnaRematchIntro, Route117_Text_AnnaRematchDefeat, Route117_Text_AnnaRematchNotEnoughMons
+	msgbox Route117_Text_AnnaPostRematch, MSGBOX_AUTOCLOSE
 	end
 
-Route117_EventScript_150EE2:: @ 8150EE2
-	trainerbattle_double TRAINER_ANNA_AND_MEG_1, Route117_Text_1BDCD2, Route117_Text_1BDD1E, Route117_Text_1BDD8B
+Route117_EventScript_Meg:: @ 8150EE2
+	trainerbattle_double TRAINER_ANNA_AND_MEG_1, Route117_Text_MegIntro, Route117_Text_MegDefeat, Route117_Text_MegNotEnoughMons
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	compare VAR_RESULT, 1
-	goto_if_eq Route117_EventScript_150F0D
-	msgbox Route117_Text_1BDD4E, MSGBOX_AUTOCLOSE
+	goto_if_eq Route117_EventScript_RematchMeg
+	msgbox Route117_Text_MegPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route117_EventScript_150F0D:: @ 8150F0D
-	trainerbattle_rematch_double TRAINER_ANNA_AND_MEG_1, Route117_Text_1BDEE3, Route117_Text_1BDF26, Route117_Text_1BDF90
-	msgbox Route117_Text_1BDF37, MSGBOX_AUTOCLOSE
+Route117_EventScript_RematchMeg:: @ 8150F0D
+	trainerbattle_rematch_double TRAINER_ANNA_AND_MEG_1, Route117_Text_MegRematchIntro, Route117_Text_MegRematchDefeat, Route117_Text_MegRematchNotEnoughMons
+	msgbox Route117_Text_MegPostRematch, MSGBOX_AUTOCLOSE
 	end
