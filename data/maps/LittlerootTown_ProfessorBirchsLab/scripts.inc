@@ -10,10 +10,10 @@ LittlerootTown_ProfessorBirchsLab_OnTransition:: @ 8152C92
 	end
 
 LittlerootTown_ProfessorBirchsLab_OnWarp:: @ 8152C9D
-	map_script_2 VAR_BIRCH_LAB_STATE, 2, LittlerootTown_ProfessorBirchsLab_EventScript_152CA7
+	map_script_2 VAR_BIRCH_LAB_STATE, 2, LittlerootTown_ProfessorBirchsLab_EventScript_SetPlayerPosForReceiveStarter
 	.2byte 0
 
-LittlerootTown_ProfessorBirchsLab_EventScript_152CA7:: @ 8152CA7
+LittlerootTown_ProfessorBirchsLab_EventScript_SetPlayerPosForReceiveStarter:: @ 8152CA7
 	turnobject LOCALID_PLAYER, 2
 	end
 
@@ -52,7 +52,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_GoSeeRival:: @ 8152CFA
 
 LittlerootTown_ProfessorBirchsLab_EventScript_AgreeToSeeRival:: @ 8152D19
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_GetRivalToTeachYou, MSGBOX_DEFAULT
-	clearflag FLAG_HIDE_BOY_ROUTE101
+	clearflag FLAG_HIDE_ROUTE_101_BOY
 	setvar VAR_BIRCH_LAB_STATE, 3
 	releaseall
 	end
@@ -103,7 +103,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_AideReceivedStarter:: @ 8152D90
 	release
 	end
 
-LittlerootTown_ProfessorBirchsLab_EventScript_152D9A:: @ 8152D9A
+LittlerootTown_ProfessorBirchsLab_EventScript_Birch:: @ 8152D9A
 	lock
 	faceplayer
 	goto_if_unset FLAG_UNKNOWN_BIRCH_380, ProfBirch_EventScript_AskRatePokedex
@@ -130,7 +130,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_GivePokedex:: @ 8152DBA
 	setflag FLAG_ADVENTURE_STARTED
 	setvar VAR_ROUTE102_ACCESSIBLE, 1
 	setvar VAR_LITTLEROOT_RIVAL_STATE, 4
-	setvar VAR_LITTLEROOT_STATE, 3
+	setvar VAR_LITTLEROOT_TOWN_STATE, 3
 	releaseall
 	end
 

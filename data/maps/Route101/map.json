@@ -98,7 +98,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route101_EventScript_14EA6D",
-      "flag": "FLAG_HIDE_BOY_ROUTE101"
+      "flag": "FLAG_HIDE_ROUTE_101_BOY"
     }
   ],
   "warp_events": [],

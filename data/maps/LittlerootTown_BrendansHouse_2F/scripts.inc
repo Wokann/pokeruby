@@ -6,7 +6,7 @@ LittlerootTown_BrendansHouse_2F_MapScripts:: @ 81527A4
 LittlerootTown_BrendansHouse_2F_OnTransition:: @ 81527AF
 	call_if_unset FLAG_DEFEATED_RIVAL_ROUTE103, LittlerootTown_BrendansHouse_2F_EventScript_RivalCheckingNotebook
 	compare VAR_LITTLEROOT_INTRO_STATE, 4
-	call_if_eq LittlerootTown_BrendansHouse_2F_EventScript_1B6950
+	call_if_eq PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet
 	call SecretBase_EventScript_SetDecorationFlags
 	setvar VAR_SECRET_BASE_INITIALIZED, 0
 	end
@@ -64,7 +64,7 @@ LittlerootTown_BrendansHouse_2F_EventScript_CheckPlayersPC:: @ 8152837
 	releaseall
 	end
 
-gBrendanHouse_TurnPCOff:: @ 8152850
+LittlerootTown_BrendansHouse_2F_EventScript_TurnOffPlayerPC:: @ 8152850
 	setvar VAR_0x8004, 1
 	playse SE_PC_OFF
 	special DoPCTurnOffEffect

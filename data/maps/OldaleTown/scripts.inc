@@ -272,8 +272,8 @@ OldaleTown_EventScript_RivalFinish:: @ 814DFC6
 	applymovement 4, OldaleTown_Movement_RivalExit
 	waitmovement 0
 	removeobject 4
-	setvar VAR_OLDALE_STATE, 2
-	setflag FLAG_HIDE_RIVAL_OLDALE_TOWN
+	setvar VAR_OLDALE_RIVAL_STATE, 2
+	setflag FLAG_HIDE_OLDALE_TOWN_RIVAL
 	releaseall
 	end
 

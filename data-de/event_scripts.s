@@ -1618,7 +1618,7 @@ EventScript_TestSignpostMsg:: @ 81C6C02
 
 @ 81C6C15
 	lockall
-	call LittlerootTown_BrendansHouse_2F_EventScript_1B6A9B
+	call PlayersHouse_2F_EventScript_SetWallClock
 	releaseall
 	end
 

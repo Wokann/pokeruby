@@ -20,7 +20,7 @@ ProfBirch_EventScript_UpdateLocation:: @ 81A02F4
 	return
 
 ProfBirch_EventScript_MoveToLab:: @ 81A0358
-	clearflag FLAG_HIDE_BIRCH_IN_LAB
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_BIRCH
 	clearflag FLAG_UNKNOWN_BIRCH_380
 	setflag FLAG_HIDE_BIRCH_ROUTE101
 	setflag FLAG_HIDE_BIRCH_ROUTE103
@@ -28,7 +28,7 @@ ProfBirch_EventScript_MoveToLab:: @ 81A0358
 
 ProfBirch_EventScript_MoveToRoute101:: @ 81A0365
 	clearflag FLAG_HIDE_BIRCH_ROUTE101
-	setflag FLAG_HIDE_BIRCH_IN_LAB
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_BIRCH
 	setflag FLAG_UNKNOWN_BIRCH_380
 	setflag FLAG_HIDE_BIRCH_ROUTE103
 	return
@@ -36,7 +36,7 @@ ProfBirch_EventScript_MoveToRoute101:: @ 81A0365
 ProfBirch_EventScript_MoveToRoute103:: @ 81A0372
 	clearflag FLAG_HIDE_BIRCH_ROUTE103
 	setflag FLAG_HIDE_BIRCH_ROUTE101
-	setflag FLAG_HIDE_BIRCH_IN_LAB
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_BIRCH
 	setflag FLAG_UNKNOWN_BIRCH_380
 	return
 

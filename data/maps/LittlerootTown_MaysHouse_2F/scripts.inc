@@ -6,7 +6,7 @@ LittlerootTown_MaysHouse_2F_MapScripts:: @ 8152A50
 LittlerootTown_MaysHouse_2F_OnTransition:: @ 8152A5B
 	call_if_unset FLAG_DEFEATED_RIVAL_ROUTE103, LittlerootTown_MaysHouse_2F_EventScript_RivalCheckingNotebook
 	compare VAR_LITTLEROOT_INTRO_STATE, 4
-	call_if_eq LittlerootTown_MaysHouse_2F_EventScript_1B6950
+	call_if_eq PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet
 	call SecretBase_EventScript_SetDecorationFlags
 	setvar VAR_SECRET_BASE_INITIALIZED, 0
 	end
@@ -26,8 +26,7 @@ LittlerootTown_MaysHouse_2F_EventScript_CheckInitDecor:: @ 8152A90
 	goto_if_eq SecretBase_EventScript_InitDecorations
 	end
 
-LittlerootTown_BrendansHouse_2F_EventScript_152A9D:: @ 8152A9D
-LittlerootTown_MaysHouse_2F_EventScript_152A9D:: @ 8152A9D
+RivalsHouse_2F_EventScript_Rival:: @ 8152A9D
 	lockall
 	goto_if_set FLAG_MET_RIVAL_LILYCOVE, RivalsHouse_2F_EventScript_RivalPostLilycove
 	checkplayergender
@@ -38,7 +37,7 @@ LittlerootTown_MaysHouse_2F_EventScript_152A9D:: @ 8152A9D
 	playse SE_EXIT
 	removeobject VAR_LAST_TALKED
 	setvar VAR_LITTLEROOT_RIVAL_STATE, 3
-	setvar VAR_LITTLEROOT_STATE, 1
+	setvar VAR_LITTLEROOT_TOWN_STATE, 1
 	savebgm 0
 	fadedefaultbgm
 	releaseall
@@ -209,7 +208,7 @@ LittlerootTown_MaysHouse_2F_EventScript_CheckPlayersPC:: @ 8152C5C
 	releaseall
 	end
 
-gMayHouse_TurnPCOff:: @ 8152C75
+LittlerootTown_MaysHouse_2F_EventScript_TurnOffPlayerPC:: @ 8152C75
 	setvar VAR_0x8004, 2
 	playse SE_PC_OFF
 	special DoPCTurnOffEffect
