@@ -9406,8 +9406,8 @@
           }
         },
         {
-          "map": "MAP_UNDERWATER1",
-          "base_label": "Underwater1_Ruby",
+          "map": "MAP_UNDERWATER_ROUTE124",
+          "base_label": "gUnderwater_Route124_Ruby",
           "water_mons": {
             "encounter_rate": 4,
             "mons": [
@@ -18844,8 +18844,8 @@
           }
         },
         {
-          "map": "MAP_UNDERWATER1",
-          "base_label": "Underwater1_Sapphire",
+          "map": "MAP_UNDERWATER_ROUTE124",
+          "base_label": "gUnderwater_Route124_Sapphire",
           "water_mons": {
             "encounter_rate": 4,
             "mons": [
