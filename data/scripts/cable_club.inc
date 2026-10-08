@@ -1,18 +1,4 @@
-DewfordTown_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-EverGrandeCity_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-FallarborTown_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-FortreeCity_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-LavaridgeTown_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-LilycoveCity_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-MauvilleCity_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-MossdeepCity_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-OldaleTown_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-PacifidlogTown_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-PetalburgCity_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-RustboroCity_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-SlateportCity_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-SootopolisCity_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-VerdanturfTown_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
+CableClub_OnWarp:: @ 81A3D03
 	map_script_2 VAR_CABLE_CLUB_STATE, 1, OldaleTown_PokemonCenter_2F_EventScript_1A3D2D
 	map_script_2 VAR_CABLE_CLUB_STATE, 2, OldaleTown_PokemonCenter_2F_EventScript_1A3D2D
 	map_script_2 VAR_CABLE_CLUB_STATE, 5, OldaleTown_PokemonCenter_2F_EventScript_1A3D2D
@@ -24,21 +10,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A3D2D:: @ 81A3D2D
 	turnobject VAR_0x8007, 4
 	end
 
-DewfordTown_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-EverGrandeCity_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-FallarborTown_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-FortreeCity_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-LavaridgeTown_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-LilycoveCity_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-MauvilleCity_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-MossdeepCity_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-OldaleTown_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-PacifidlogTown_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-PetalburgCity_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-RustboroCity_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-SlateportCity_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-SootopolisCity_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-VerdanturfTown_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
+CableClub_OnLoad:: @ 81A3D32
 	compare VAR_CABLE_CLUB_STATE, 1
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A3D6A
 	compare VAR_CABLE_CLUB_STATE, 2
@@ -63,21 +35,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A3D7E:: @ 81A3D7E
 	setmetatile 11, 3, METATILE_PokemonCenter_Floor_Plain_Alt, 0
 	end
 
-DewfordTown_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-EverGrandeCity_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-FallarborTown_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-FortreeCity_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-LavaridgeTown_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-LilycoveCity_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-MauvilleCity_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-MossdeepCity_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-OldaleTown_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-PacifidlogTown_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-PetalburgCity_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-RustboroCity_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-SlateportCity_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-SootopolisCity_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-VerdanturfTown_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
+CableClub_OnFrame:: @ 81A3D88
 	map_script_2 VAR_CABLE_CLUB_STATE, 1, OldaleTown_PokemonCenter_2F_EventScript_1A3E8D
 	map_script_2 VAR_CABLE_CLUB_STATE, 2, OldaleTown_PokemonCenter_2F_EventScript_1A3E8D
 	map_script_2 VAR_CABLE_CLUB_STATE, 5, OldaleTown_PokemonCenter_2F_EventScript_1A3E8D
@@ -160,20 +118,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A3E8D:: @ 81A3E8D
 	releaseall
 	end
 
-DewfordTown_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-EverGrandeCity_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-FallarborTown_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-FortreeCity_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-LavaridgeTown_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-LilycoveCity_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-MauvilleCity_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-MossdeepCity_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-OldaleTown_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-PetalburgCity_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-RustboroCity_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-SlateportCity_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-SootopolisCity_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-VerdanturfTown_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
+CableClub_EventScript_Colosseum:: @ 81A3EA6
 	goto_if_unset FLAG_SYS_POKEDEX_GET, OldaleTown_PokemonCenter_2F_EventScript_1A4342
 	copyvar VAR_0x8007, VAR_LAST_TALKED
 	lock
@@ -331,20 +276,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A40C0:: @ 81A40C0
 	release
 	end
 
-DewfordTown_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-EverGrandeCity_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-FallarborTown_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-FortreeCity_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-LavaridgeTown_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-LilycoveCity_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-MauvilleCity_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-MossdeepCity_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-OldaleTown_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-PetalburgCity_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-RustboroCity_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-SlateportCity_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-SootopolisCity_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-VerdanturfTown_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
+CableClub_EventScript_TradeCenter:: @ 81A40CC
 	goto_if_unset FLAG_SYS_POKEDEX_GET, OldaleTown_PokemonCenter_2F_EventScript_1A4339
 	copyvar VAR_0x8007, VAR_LAST_TALKED
 	lock
@@ -426,21 +358,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A41EE:: @ 81A41EE
 	setvar VAR_RESULT, 0
 	return
 
-DewfordTown_PokemonCenter_2F_EventScript_1A41FB:: @ 81A41FB
-EverGrandeCity_PokemonCenter_2F_EventScript_1A41FB:: @ 81A41FB
-FallarborTown_PokemonCenter_2F_EventScript_1A41FB:: @ 81A41FB
-FortreeCity_PokemonCenter_2F_EventScript_1A41FB:: @ 81A41FB
-LavaridgeTown_PokemonCenter_2F_EventScript_1A41FB:: @ 81A41FB
-LilycoveCity_PokemonCenter_2F_EventScript_1A41FB:: @ 81A41FB
-MauvilleCity_PokemonCenter_2F_EventScript_1A41FB:: @ 81A41FB
-MossdeepCity_PokemonCenter_2F_EventScript_1A41FB:: @ 81A41FB
-OldaleTown_PokemonCenter_2F_EventScript_1A41FB:: @ 81A41FB
-PacifidlogTown_PokemonCenter_2F_EventScript_1A41FB:: @ 81A41FB
-PetalburgCity_PokemonCenter_2F_EventScript_1A41FB:: @ 81A41FB
-RustboroCity_PokemonCenter_2F_EventScript_1A41FB:: @ 81A41FB
-SlateportCity_PokemonCenter_2F_EventScript_1A41FB:: @ 81A41FB
-SootopolisCity_PokemonCenter_2F_EventScript_1A41FB:: @ 81A41FB
-VerdanturfTown_PokemonCenter_2F_EventScript_1A41FB:: @ 81A41FB
+CableClub_EventScript_RecordCorner:: @ 81A41FB
 	goto_if_unset FLAG_VISITED_MAUVILLE_CITY, OldaleTown_PokemonCenter_2F_EventScript_1A434B
 	copyvar VAR_0x8007, VAR_LAST_TALKED
 	lock
