@@ -2,7 +2,7 @@
 #define GUARD_DATA_BARD_MUSIC_TRAINER_H
 
 #if ENGLISH
-const struct BardSound gBardSounds_Trainer[][6] = {
+static const struct BardSound sBardSoundTemplates_Trainer[][6] = {
     { // I CHOOSE YOU
         {0x12}, {0x27}, {0x2D}, {0xFF}, {0xFF}, {0xFF}
     }, { // GOTCHA
@@ -44,7 +44,7 @@ const struct BardSound gBardSounds_Trainer[][6] = {
     }
 };
 #elif GERMAN
-const struct BardSound gBardSounds_Trainer[][6] = {
+static const struct BardSound sBardSoundTemplates_Trainer[][6] = {
     { // I CHOOSE YOU
         {0x29}, {0x11}, {0x02}, {0xFF}, {0xFF}, {0xFF}
     }, { // GOTCHA

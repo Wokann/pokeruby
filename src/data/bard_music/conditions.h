@@ -2,7 +2,7 @@
 #define GUARD_DATA_BARD_MUSIC_CONDITIONS_H
 
 #if ENGLISH
-const struct BardSound gBardSounds_Conditions[][6] = {
+const struct BardSound sBardSoundTemplates_Conditions[][6] = {
    { // HOT
         {0x15}, {0x33}, {0x33}, {0xFF}, {0xFF}, {0xFF}
     }, { // EXISTS
@@ -144,7 +144,7 @@ const struct BardSound gBardSounds_Conditions[][6] = {
     }
 };
 #elif GERMAN
-const struct BardSound gBardSounds_Conditions[][6] = {
+const struct BardSound sBardSoundTemplates_Conditions[][6] = {
     { // HOT
         {0x0B}, {0x11}, {0xFF}, {0xFF}, {0xFF}, {0xFF}
     }, { // EXISTS

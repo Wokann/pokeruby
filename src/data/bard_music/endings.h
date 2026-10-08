@@ -2,7 +2,7 @@
 #define GUARD_DATA_BARD_MUSIC_ENDINGS_H
 
 #if ENGLISH
-const struct BardSound gBardSounds_Endings[][6] = {
+static const struct BardSound sBardSoundTemplates_Endings[][6] = {
      { // WILL
         {0x10}, {0x33}, {0x33}, {0xFF}, {0xFF}, {0xFF}
     }, { // WILL BE HERE
@@ -144,7 +144,7 @@ const struct BardSound gBardSounds_Endings[][6] = {
     }
 };
 #elif GERMAN
-const struct BardSound gBardSounds_Endings[][6] = {
+static const struct BardSound sBardSoundTemplates_Endings[][6] = {
     { // WILL
         {0x0B}, {0x0B}, {0xFF}, {0xFF}, {0xFF}, {0xFF}
     }, { // WILL BE HERE

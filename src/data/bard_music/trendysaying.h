@@ -2,7 +2,7 @@
 #define GUARD_DATA_BARD_MUSIC_TRENDYSAYING_H
 
 #if ENGLISH
-const struct BardSound gBardSounds_TrendySaying[][6] = {
+static const struct BardSound sBardSoundTemplates_TrendySaying[][6] = {
     { // KTHX, BYE.
         {0x05}, {0x02}, {0x14}, {0x33}, {0xFF}, {0xFF}
     }, { // YES, SIR!
@@ -72,7 +72,7 @@ const struct BardSound gBardSounds_TrendySaying[][6] = {
     }
 };
 #elif GERMAN
-const struct BardSound gBardSounds_TrendySaying[][6] = {
+static const struct BardSound sBardSoundTemplates_TrendySaying[][6] = {
     { // KTHX, BYE.
         {0x1A}, {0x29}, {0x11}, {0x02}, {0xFF}, {0xFF}
     }, { // YES, SIR!

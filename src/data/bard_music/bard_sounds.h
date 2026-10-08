@@ -25,28 +25,28 @@
 #include "trendysaying.h"
 #include "pokemon_2.h"
 
-const struct BardSound (*const gBardSoundsTable[])[6] = {
+static const struct BardSound (*const sBardSoundTemplatesTable[])[6] = {
     gBardSounds_Pokemon,
-    gBardSounds_Trainer,
-    gBardSounds_Status,
-    gBardSounds_Battle,
-    gBardSounds_Greetings,
-    gBardSounds_People,
-    gBardSounds_Voices,
-    gBardSounds_Speech,
-    gBardSounds_Endings,
-    gBardSounds_Feelings,
-    gBardSounds_Conditions,
-    gBardSounds_Actions,
-    gBardSounds_Lifestyle,
-    gBardSounds_Hobbies,
-    gBardSounds_Time,
-    gBardSounds_Misc,
-    gBardSounds_Adjectives,
-    gBardSounds_Events,
+    sBardSoundTemplates_Trainer,
+    sBardSoundTemplates_Status,
+    sBardSoundTemplates_Battle,
+    sBardSoundTemplates_Greetings,
+    sBardSoundTemplates_People,
+    sBardSoundTemplates_Voices,
+    sBardSoundTemplates_Speech,
+    sBardSoundTemplates_Endings,
+    sBardSoundTemplates_Feelings,
+    sBardSoundTemplates_Conditions,
+    sBardSoundTemplates_Actions,
+    sBardSoundTemplates_Lifestyle,
+    sBardSoundTemplates_Hobbies,
+    sBardSoundTemplates_Time,
+    sBardSoundTemplates_Misc,
+    sBardSoundTemplates_Adjectives,
+    sBardSoundTemplates_Events,
     gBardSounds_Moves1,
     gBardSounds_Moves2,
-    gBardSounds_TrendySaying,
+    sBardSoundTemplates_TrendySaying,
     gBardSounds_Pokemon2
 };
 

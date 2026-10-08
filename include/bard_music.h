@@ -6,9 +6,9 @@
 
 struct BardSound
 {
-    /*0x00*/ u8 var00;
-    /*0x01*/ s8 var01;
-    /*0x02*/ u16 var02;
+    /*0x00*/ u8 songId;
+    /*0x01*/ s8 lengthAdjustment;
+    /*0x02*/ u16 unused;
     /*0x04*/ s16 volume;
     /*0x06*/ u16 var06;
 };
@@ -24,15 +24,15 @@ struct BardPhoneme
 struct BardSong
 {
     /*0x00*/ u8 lyricsIndex;
-    /*0x01*/ u8 currPhoneme;
-    /*0x02*/ u8 phonemeTimer;
+    /*0x01*/ u8 soundIndex;
+    /*0x02*/ u8 timer;
     /*0x03*/ u8 state;
     /*0x04*/ s16 length;
     /*0x06*/ u16 volume;
     /*0x08*/ s16 pitch;
     /*0x0A*/ s16 voiceInflection;
     /*0x0C*/ u16 lyrics[6];
-    /*0x18*/ struct BardPhoneme phonemes[6];
+    /*0x18*/ struct BardPhoneme sounds[6];
 };
 
 // Exported RAM declarations
@@ -40,6 +40,6 @@ struct BardSong
 // Exported ROM declarations
 
 const struct BardSound *GetWordSounds(u16 group, u16 word);
-s32 GetWordPhonemes(struct BardSong *dest, const struct BardSound *src, u16 word);
+s32 GetWordPhonemes(struct BardSong *song, const struct BardSound *soundTemplates, u16 pitchTableIndex);
 
 #endif  // GUARD_BARD_MUSIC_H

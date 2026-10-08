@@ -1,182 +1,182 @@
 #ifndef GUARD_WORD_PITCH_H
 #define GUARD_WORD_PITCH_H
 
-const s16 gUnknown_08416F08[] = {
+static const s16 sPitch1_0[] = {
     -0x300, 0x1800
 };
 
-const s16 gUnknown_08416F0C[] = {
+static const s16 sPitch1_1[] = {
     0x0900, 0x1800
 };
 
-const s16 gUnknown_08416F10[] = {
+static const s16 sPitch1_2[] = {
     0x0100, 0x1800
 };
 
-const s16 gUnknown_08416F14[] = {
+static const s16 sPitch1_3[] = {
     0x0400, 0x1800
 };
 
-const s16 gUnknown_08416F18[] = {
+static const s16 sPitch1_4[] = {
     0x0b00, 0x1800
 };
 
-const s16 gUnknown_08416F1C[] = {
+static const s16 sPitch2_0[] = {
     -0x300, -0x100, 0x1800
 };
 
-const s16 gUnknown_08416F22[] = {
+static const s16 sPitch2_1[] = {
     -0x300, 0x0200, 0x1800
 };
 
-const s16 gUnknown_08416F28[] = {
+static const s16 sPitch2_2[] = {
     0x0200, 0x0400, 0x1800
 };
 
-const s16 gUnknown_08416F2E[] = {
+static const s16 sPitch2_3[] = {
     0x0600, 0x0800, 0x1800
 };
 
-const s16 gUnknown_08416F34[] = {
+static const s16 sPitch2_4[] = {
     0x0900, 0x0800, 0x1800
 };
 
-const s16 gUnknown_08416F3A[] = {
+static const s16 sPitch3_0[] = {
     -0x300, -0x100, -0x300, 0x1800
 };
 
-const s16 gUnknown_08416F42[] = {
+static const s16 sPitch3_1[] = {
     0x0400, -0x300, 0x0400, 0x1800
 };
 
-const s16 gUnknown_08416F4A[] = {
+static const s16 sPitch3_2[] = {
     0x0900, 0x0800, 0x0600, 0x1800
 };
 
-const s16 gUnknown_08416F52[] = {
+static const s16 sPitch3_3[] = {
     0x0100, 0x0200, 0x0400, 0x1800
 };
 
-const s16 gUnknown_08416F5A[] = {
+static const s16 sPitch3_4[] = {
     0x0600, 0x1000, 0x0d00, 0x1800
 };
 
-const s16 gUnknown_08416F62[] = {
+static const s16 sPitch4_0[] = {
     0x0400, 0x0900, 0x0400, 0x0900, 0x1800
 };
 
-const s16 gUnknown_08416F6C[] = {
+static const s16 sPitch4_1[] = {
     0x0900, 0x0400, 0x0d00, 0x0400, 0x1800
 };
 
-const s16 gUnknown_08416F76[] = {
+static const s16 sPitch4_2[] = {
     0x0100, 0x0200, 0x0400, 0x0600, 0x1800
 };
 
-const s16 gUnknown_08416F80[] = {
+static const s16 sPitch4_3[] = {
     0x0800, 0x0600, 0x0400, 0x0200, 0x1800
 };
 
-const s16 gUnknown_08416F8A[] = {
+static const s16 sPitch4_4[] = {
     0x0f00, 0x0d00, 0x0b00, 0x0a00, 0x1800
 };
 
-const s16 gUnknown_08416F94[] = {
+static const s16 sPitch5_0[] = {
     -0x300, -0x100, 0x0100, 0x0200, 0x0400, 0x1800
 };
 
-const s16 gUnknown_08416FA0[] = {
+static const s16 sPitch5_1[] = {
     0x0900, 0x0800, 0x0600, 0x0400, 0x0200, 0x1800
 };
 
-const s16 gUnknown_08416FAC[] = {
+static const s16 sPitch5_2[] = {
     0x0100, 0x0400, 0x0900, 0x0400, 0x0100, 0x1800
 };
 
-const s16 gUnknown_08416FB8[] = {
+static const s16 sPitch5_3[] = {
     0x0900, 0x0400, 0x0900, 0x0400, -0x300, 0x1800
 };
 
-const s16 gUnknown_08416FC4[] = {
+static const s16 sPitch5_4[] = {
     0x0b00, 0x0800, 0x0400, 0x0400, 0x0600, 0x1800
 };
 
-const s16 gUnknown_08416FD0[] = {
+static const s16 sPitch6_0[] = {
     -0x300, -0x100, 0x0100, 0x0200, 0x0400, 0x0600, 0x1800
 };
 
-const s16 gUnknown_08416FDE[] = {
+static const s16 sPitch6_1[] = {
     0x0800, 0x0600, 0x0400, 0x0200, 0x0100, -0x100, 0x1800
 };
 
-const s16 gUnknown_08416FEC[] = {
+static const s16 sPitch6_2[] = {
     0x0100, 0x0200, 0x0400, 0x0100, 0x0200, 0x1000, 0x1800
 };
 
-const s16 gUnknown_08416FFA[] = {
+static const s16 sPitch6_3[] = {
     0x0400, -0x300, 0x0900, 0x0400, 0x0900, 0x0400, 0x1800
 };
 
-const s16 gUnknown_08417008[] = {
+static const s16 sPitch6_4[] = {
     0x0800, 0x0900, 0x0800, 0x0900, 0x0800, 0x0900, 0x1800
 };
 
-const s16 gUnknown_08417016[] = {
+static const s16 sPitch7_0[] = {
     0x0200, 0x0100, 0x0200, 0x0100, 0x0200, 0x0400, 0x0200, 0x1800
 };
 
-const s16 gUnknown_08417026[] = {
+static const s16 sPitch7_1[] = {
     0x0100, 0x0100, -0x100, -0x100, -0x300, 0x0400, -0x300, 0x1800
 };
 
-const s16 gUnknown_08417036[] = {
+static const s16 sPitch7_2[] = {
     0x0800, 0x0900, 0x0b00, 0x0d00, 0x0e00, 0x0d00, 0x0b00, 0x1800
 };
 
-const s16 gUnknown_08417046[] = {
+static const s16 sPitch7_3[] = {
     0x0800, 0x0600, 0x0400, 0x0200, 0x0d00, 0x0b00, 0x0900, 0x1800
 };
 
-const s16 gUnknown_08417056[] = {
+static const s16 sPitch7_4[] = {
     0x0300, 0x0400, 0x0600, 0x0800, 0x0700, 0x0800, 0x0400, 0x1800
 };
 
-const s16 *const gBardSoundPitchTables[] = {
-    gUnknown_08416F08,
-    gUnknown_08416F0C,
-    gUnknown_08416F10,
-    gUnknown_08416F14,
-    gUnknown_08416F18,
-    gUnknown_08416F1C,
-    gUnknown_08416F22,
-    gUnknown_08416F28,
-    gUnknown_08416F2E,
-    gUnknown_08416F34,
-    gUnknown_08416F3A,
-    gUnknown_08416F42,
-    gUnknown_08416F4A,
-    gUnknown_08416F52,
-    gUnknown_08416F5A,
-    gUnknown_08416F62,
-    gUnknown_08416F6C,
-    gUnknown_08416F76,
-    gUnknown_08416F80,
-    gUnknown_08416F8A,
-    gUnknown_08416F94,
-    gUnknown_08416FA0,
-    gUnknown_08416FAC,
-    gUnknown_08416FB8,
-    gUnknown_08416FC4,
-    gUnknown_08416FD0,
-    gUnknown_08416FDE,
-    gUnknown_08416FEC,
-    gUnknown_08416FFA,
-    gUnknown_08417008,
-    gUnknown_08417016,
-    gUnknown_08417026,
-    gUnknown_08417036,
-    gUnknown_08417046,
-    gUnknown_08417056
+static const s16 *const sPitchTables[] = {
+    sPitch1_0,
+    sPitch1_1,
+    sPitch1_2,
+    sPitch1_3,
+    sPitch1_4,
+    sPitch2_0,
+    sPitch2_1,
+    sPitch2_2,
+    sPitch2_3,
+    sPitch2_4,
+    sPitch3_0,
+    sPitch3_1,
+    sPitch3_2,
+    sPitch3_3,
+    sPitch3_4,
+    sPitch4_0,
+    sPitch4_1,
+    sPitch4_2,
+    sPitch4_3,
+    sPitch4_4,
+    sPitch5_0,
+    sPitch5_1,
+    sPitch5_2,
+    sPitch5_3,
+    sPitch5_4,
+    sPitch6_0,
+    sPitch6_1,
+    sPitch6_2,
+    sPitch6_3,
+    sPitch6_4,
+    sPitch7_0,
+    sPitch7_1,
+    sPitch7_2,
+    sPitch7_3,
+    sPitch7_4
 };
 
 

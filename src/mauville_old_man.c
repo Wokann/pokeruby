@@ -490,13 +490,13 @@ static void BardSing(struct Task *task, struct BardSong *song)
             // Clear phonemes
             for (i = 0; i < 6; i++)
             {
-                song->phonemes[i].sound = 0xFFFF;
-                song->phonemes[i].length = 0;
-                song->phonemes[i].pitch = 0;
-                song->phonemes[i].volume = 0;
+                song->sounds[i].sound = 0xFFFF;
+                song->sounds[i].length = 0;
+                song->sounds[i].pitch = 0;
+                song->sounds[i].volume = 0;
             }
             song->lyricsIndex = 0;
-            song->currPhoneme = 0;
+            song->soundIndex = 0;
             song->length = 0;
         }
         break;
@@ -514,19 +514,19 @@ static void BardSing(struct Task *task, struct BardSong *song)
     case 3:
     case 4:
         {
-            struct BardPhoneme *phoneme = &song->phonemes[song->currPhoneme];
+            struct BardPhoneme *phoneme = &song->sounds[song->soundIndex];
 
             switch (song->state)
             {
             case 0:
-                if (song->phonemeTimer == 0)  // Timer has expired. Move to next phoneme
+                if (song->timer == 0)  // Timer has expired. Move to next phoneme
                 {
-                    if (song->currPhoneme == 6 || phoneme->sound == 0xFF)
+                    if (song->soundIndex == 6 || phoneme->sound == 0xFF)
                     {
                         song->state = 0xFE;
                         break;
                     }
-                    song->phonemeTimer = phoneme->length;
+                    song->timer = phoneme->length;
                     if (phoneme->sound <= 50)
                     {
                         u16 phonemeTripletId = phoneme->sound / 3;
@@ -547,10 +547,10 @@ static void BardSing(struct Task *task, struct BardSong *song)
                     m4aMPlayPitchControl(&gMPlayInfo_SE2, 0xFFFF, song->pitch);
                     song->voiceInflection++;
                 }
-                song->phonemeTimer--;
+                song->timer--;
                 break;
             case 1:
-                song->currPhoneme++;
+                song->soundIndex++;
                 song->state = 0;
                 if (phoneme->sound <= 50)
                 {
