@@ -13,7 +13,7 @@ IslandCave_EventScript_15EED0:: @ 815EED0
 	return
 
 IslandCave_MapScript1_15EED4:: @ 815EED4
-	call_if_unset FLAG_SYS_BRAILLE_WAIT, IslandCave_EventScript_15EEDE
+	call_if_unset FLAG_SYS_BRAILLE_REGICE_COMPLETED, IslandCave_EventScript_15EEDE
 	end
 
 IslandCave_EventScript_15EEDE:: @ 815EEDE
@@ -29,7 +29,7 @@ IslandCave_MapScript1_15EF15:: @ 815EF15
 	setflag FLAG_LANDMARK_ISLAND_CAVE
 	end
 
-S_OpenRegiceChamber:: @ 815EF19
+IslandCave_EventScript_OpenRegiEntrance:: @ 815EF19
 	setmetatile 7, 19, METATILE_Cave_SealedChamberEntrance_TopLeft, 1
 	setmetatile 8, 19, METATILE_Cave_SealedChamberEntrance_TopMid, 1
 	setmetatile 9, 19, METATILE_Cave_SealedChamberEntrance_TopRight, 1
@@ -38,12 +38,12 @@ S_OpenRegiceChamber:: @ 815EF19
 	setmetatile 9, 20, METATILE_Cave_SealedChamberEntrance_BottomRight, 1
 	special DrawWholeMapView
 	playse SE_BANG
-	setflag FLAG_SYS_BRAILLE_WAIT
+	setflag FLAG_SYS_BRAILLE_REGICE_COMPLETED
 	end
 
 IslandCave_EventScript_15EF59:: @ 815EF59
 	lockall
-	goto_if_set FLAG_SYS_BRAILLE_WAIT, IslandCave_EventScript_15EF72
+	goto_if_set FLAG_SYS_BRAILLE_REGICE_COMPLETED, IslandCave_EventScript_15EF72
 	braillemessage IslandCave_Braille_WaitTwoMinutes
 	special DoBrailleWait
 	waitstate
@@ -58,7 +58,7 @@ IslandCave_EventScript_15EF72:: @ 815EF72
 IslandCave_EventScript_15EF7C:: @ 815EF7C
 	lockall
 	braillemessage IslandCave_Braille_WaitTwoMinutes
-	goto_if_set FLAG_SYS_BRAILLE_WAIT, IslandCave_EventScript_15EF95
+	goto_if_set FLAG_SYS_BRAILLE_REGICE_COMPLETED, IslandCave_EventScript_15EF95
 	special DoBrailleWait
 	waitstate
 	goto IslandCave_EventScript_15EF95

@@ -1,12 +1,15 @@
 #include "global.h"
 #include "braille_puzzles.h"
 #include "event_data.h"
+#include "event_scripts.h"
 #include "field_camera.h"
 #include "field_effect.h"
 #include "fieldmap.h"
 #include "main.h"
 #include "event_object_lock.h"
 #include "menu.h"
+#include "pokemon.h"
+#include "pokemon_menu.h"
 #include "fldeff.h"
 #include "script.h"
 #include "sound.h"
@@ -19,10 +22,7 @@
 #include "constants/species.h"
 #include "constants/metatile_labels.h"
 
-extern u8 gPlayerPartyCount;
-extern u8 gLastFieldPokeMenuOpened;
-
-extern u8 S_OpenRegiceChamber[]; // regiice event script
+static void Task_SealedChamberShakingEffect(u8 taskId);
 
 bool8 ShouldDoBrailleDigEffect(void)
 {
@@ -70,7 +70,7 @@ bool8 CheckRelicanthWailord(void)
 
 bool8 ShouldDoBrailleStrengthEffect(void)
 {
-    if (!FlagGet(FLAG_SYS_BRAILLE_STRENGTH) && (gSaveBlock1.location.mapGroup == MAP_GROUP(MAP_DESERT_RUINS) && gSaveBlock1.location.mapNum == MAP_NUM(MAP_DESERT_RUINS)))
+    if (!FlagGet(FLAG_SYS_REGIROCK_PUZZLE_COMPLETED) && (gSaveBlock1.location.mapGroup == MAP_GROUP(MAP_DESERT_RUINS) && gSaveBlock1.location.mapNum == MAP_NUM(MAP_DESERT_RUINS)))
     {
         if (gSaveBlock1.pos.x == 10 && gSaveBlock1.pos.y == 23)
             return TRUE;
@@ -94,13 +94,13 @@ void DoBrailleStrengthEffect(void)
     MapGridSetMetatileIdAt(16, 27, METATILE_ID(Cave, SealedChamberEntrance_BottomRight) | MAPGRID_COLLISION_MASK);
     DrawWholeMapView();
     PlaySE(SE_BANG);
-    FlagSet(FLAG_SYS_BRAILLE_STRENGTH);
+    FlagSet(FLAG_SYS_REGIROCK_PUZZLE_COMPLETED);
     UnlockPlayerFieldControls();
 }
 
 bool8 ShouldDoBrailleFlyEffect(void)
 {
-    if (!FlagGet(FLAG_SYS_BRAILLE_FLY) && (gSaveBlock1.location.mapGroup == MAP_GROUP(MAP_ANCIENT_TOMB) && gSaveBlock1.location.mapNum == MAP_NUM(MAP_ANCIENT_TOMB)))
+    if (!FlagGet(FLAG_SYS_REGISTEEL_PUZZLE_COMPLETED) && (gSaveBlock1.location.mapGroup == MAP_GROUP(MAP_ANCIENT_TOMB) && gSaveBlock1.location.mapNum == MAP_NUM(MAP_ANCIENT_TOMB)))
     {
         if (gSaveBlock1.pos.x == 8 && gSaveBlock1.pos.y == 25)
             return TRUE;
@@ -140,13 +140,13 @@ void UseFlyAncientTomb_Finish(void)
     MapGridSetMetatileIdAt(16, 27, METATILE_ID(Cave, SealedChamberEntrance_BottomRight) | MAPGRID_COLLISION_MASK);
     DrawWholeMapView();
     PlaySE(SE_BANG);
-    FlagSet(FLAG_SYS_BRAILLE_FLY);
+    FlagSet(FLAG_SYS_REGISTEEL_PUZZLE_COMPLETED);
     UnlockPlayerFieldControls();
 }
 
 void DoBrailleWait(void)
 {
-    if (!FlagGet(FLAG_SYS_BRAILLE_WAIT))
+    if (!FlagGet(FLAG_SYS_BRAILLE_REGICE_COMPLETED))
         CreateTask(Task_BrailleWait, 0x50);
 }
 
@@ -197,7 +197,7 @@ void Task_BrailleWait(u8 taskId)
         break;
     case 4:
         ScriptUnfreezeObjectEvents();
-        ScriptContext_SetupScript(S_OpenRegiceChamber);
+        ScriptContext_SetupScript(IslandCave_EventScript_OpenRegiEntrance);
         DestroyTask(taskId);
         break;
     }
@@ -218,9 +218,9 @@ bool32 BrailleWait_CheckButtonPress(void)
         return FALSE;
 }
 
-void DoSealedChamberShakingEffect1(void)
+void DoSealedChamberShakingEffect_Long(void)
 {
-    u8 taskId = CreateTask(SealedChamberShakingEffect, 0x9);
+    u8 taskId = CreateTask(Task_SealedChamberShakingEffect, 0x9);
 
     gTasks[taskId].data[1] = 0;
     gTasks[taskId].data[2] = 0;
@@ -230,9 +230,9 @@ void DoSealedChamberShakingEffect1(void)
     SetCameraPanningCallback(0);
 }
 
-void DoSealedChamberShakingEffect2(void)
+void DoSealedChamberShakingEffect_Short(void)
 {
-    u8 taskId = CreateTask(SealedChamberShakingEffect, 0x9);
+    u8 taskId = CreateTask(Task_SealedChamberShakingEffect, 0x9);
 
     gTasks[taskId].data[1] = 0;
     gTasks[taskId].data[2] = 0;
@@ -242,7 +242,7 @@ void DoSealedChamberShakingEffect2(void)
     SetCameraPanningCallback(0);
 }
 
-void SealedChamberShakingEffect(u8 taskId)
+static void Task_SealedChamberShakingEffect(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 

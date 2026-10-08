@@ -13,7 +13,7 @@ DesertRuins_EventScript_15CB0D:: @ 815CB0D
 	return
 
 DesertRuins_MapScript1_15CB11:: @ 815CB11
-	call_if_unset FLAG_SYS_BRAILLE_STRENGTH, DesertRuins_EventScript_15CB1B
+	call_if_unset FLAG_SYS_REGIROCK_PUZZLE_COMPLETED, DesertRuins_EventScript_15CB1B
 	end
 
 DesertRuins_EventScript_15CB1B:: @ 815CB1B
@@ -31,7 +31,7 @@ DesertRuins_MapScript1_15CB52:: @ 815CB52
 
 DesertRuins_EventScript_15CB56:: @ 815CB56
 	lockall
-	goto_if_set FLAG_SYS_BRAILLE_STRENGTH, DesertRuins_EventScript_15CB6D
+	goto_if_set FLAG_SYS_REGIROCK_PUZZLE_COMPLETED, DesertRuins_EventScript_15CB6D
 	braillemessage DesertRuins_Braille_UseStrength
 	waitbuttonpress
 	erasebox 0, 0, 29, 19

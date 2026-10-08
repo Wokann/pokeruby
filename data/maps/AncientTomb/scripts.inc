@@ -17,7 +17,7 @@ AncientTomb_MapScript1_15EFDC:: @ 815EFDC
 	end
 
 AncientTomb_MapScript1_15EFE0:: @ 815EFE0
-	call_if_unset FLAG_SYS_BRAILLE_FLY, AncientTomb_EventScript_15EFEA
+	call_if_unset FLAG_SYS_REGISTEEL_PUZZLE_COMPLETED, AncientTomb_EventScript_15EFEA
 	end
 
 AncientTomb_EventScript_15EFEA:: @ 815EFEA
@@ -31,7 +31,7 @@ AncientTomb_EventScript_15EFEA:: @ 815EFEA
 
 AncientTomb_EventScript_15F021:: @ 815F021
 	lockall
-	goto_if_set FLAG_SYS_BRAILLE_FLY, AncientTomb_EventScript_15F038
+	goto_if_set FLAG_SYS_REGISTEEL_PUZZLE_COMPLETED, AncientTomb_EventScript_15F038
 	braillemessage AncientTomb_Braille_AimToTheSkyInTheMiddle
 	waitbuttonpress
 	erasebox 0, 0, 29, 19

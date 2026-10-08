@@ -140,4 +140,6 @@ extern const u8 MauvilleCity_PokemonCenter_1F_Text_HotSpringsTitle[];
 extern const u8 MauvilleCity_PokemonCenter_1F_Text_HotSpringsAction[];
 extern const u8 MauvilleCity_PokemonCenter_1F_Text_HotSpringsStory[];
 
+extern const u8 IslandCave_EventScript_OpenRegiEntrance[];
+
 #endif // GUARD_EVENT_SCRIPTS_H
