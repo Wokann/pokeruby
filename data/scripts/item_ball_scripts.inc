@@ -238,7 +238,7 @@ LilycoveCity_EventScript_ItemMaxRepel:: @ 81B1738
 	finditem ITEM_MAX_REPEL
 	end
 
-MossdeepCity_EventScript_1B1745:: @ 81B1745
+MossdeepCity_EventScript_ItemNetBall:: @ 81B1745
 	finditem ITEM_NET_BALL
 	end
 
@@ -535,5 +535,5 @@ VictoryRoad_B2F_EventScript_1B1AFA:: @ 81B1AFA
 	end
 
 @ 81B1B07
-	finditem ITEM_HM08_DIVE
+	finditem ITEM_HM_DIVE
 	end

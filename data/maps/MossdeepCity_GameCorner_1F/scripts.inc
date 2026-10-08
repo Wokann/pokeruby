@@ -61,15 +61,15 @@ MossdeepCity_GameCorner_1F_EventScript_15ACD5:: @ 815ACD5
 	end
 
 MossdeepCity_GameCorner_1F_EventScript_15AD22:: @ 815AD22
-	msgbox MossdeepCity_GameCorner_B1F_Text_BattleWon, MSGBOX_DEFAULT
+	msgbox RS_MysteryEventsHouse_Text_BattleWon, MSGBOX_DEFAULT
 	return
 
 MossdeepCity_GameCorner_1F_EventScript_15AD2B:: @ 815AD2B
-	msgbox MossdeepCity_GameCorner_B1F_Text_BattleLost, MSGBOX_DEFAULT
+	msgbox RS_MysteryEventsHouse_Text_BattleLost, MSGBOX_DEFAULT
 	return
 
 MossdeepCity_GameCorner_1F_EventScript_15AD34:: @ 815AD34
-	msgbox MossdeepCity_GameCorner_B1F_Text_BattleTie, MSGBOX_DEFAULT
+	msgbox RS_MysteryEventsHouse_Text_BattleTie, MSGBOX_DEFAULT
 	return
 
 MossdeepCity_GameCorner_1F_Movement_15AD3D:: @ 815AD3D
@@ -86,20 +86,20 @@ MossdeepCity_GameCorner_1F_EventScript_15AD42:: @ 815AD42
 	faceplayer
 	compare VAR_TEMP_1, 1
 	goto_if_eq MossdeepCity_GameCorner_1F_EventScript_15AD59
-	msgbox MossdeepCity_GameCorner_B1F_Text_OldManGreeting, MSGBOX_DEFAULT
+	msgbox RS_MysteryEventsHouse_Text_OldManGreeting, MSGBOX_DEFAULT
 	release
 	end
 
 MossdeepCity_GameCorner_1F_EventScript_15AD59:: @ 815AD59
 	special SavePlayerParty
 	special BufferEReaderTrainerName
-	msgbox MossdeepCity_GameCorner_B1F_Text_ChallengeVisitingTrainer, MSGBOX_YESNO
+	msgbox RS_MysteryEventsHouse_Text_ChallengeVisitingTrainer, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq MossdeepCity_GameCorner_1F_EventScript_15ADE8
 	call MossdeepCity_GameCorner_1F_EventScript_15ADF5
 	compare VAR_RESULT, 0
 	goto_if_eq MossdeepCity_GameCorner_1F_EventScript_15ADE8
-	msgbox MossdeepCity_GameCorner_B1F_Text_SaveYourProgress, MSGBOX_YESNO
+	msgbox RS_MysteryEventsHouse_Text_SaveYourProgress, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	call_if_eq MossdeepCity_GameCorner_1F_EventScript_15ADE8
 	special LoadPlayerParty
@@ -109,7 +109,7 @@ MossdeepCity_GameCorner_1F_EventScript_15AD59:: @ 815AD59
 	erasebox 0, 0, 15, 10
 	special SavePlayerParty
 	special ReducePlayerPartyToSelectedMons
-	msgbox MossdeepCity_GameCorner_B1F_Text_HopeToSeeAGoodMatch, MSGBOX_DEFAULT
+	msgbox RS_MysteryEventsHouse_Text_HopeToSeeAGoodMatch, MSGBOX_DEFAULT
 	closemessage
 	compare VAR_FACING, 2
 	call_if_eq MossdeepCity_GameCorner_1F_EventScript_15AE04
@@ -124,12 +124,12 @@ MossdeepCity_GameCorner_1F_EventScript_15AD59:: @ 815AD59
 
 MossdeepCity_GameCorner_1F_EventScript_15ADE8:: @ 815ADE8
 	special LoadPlayerParty
-	msgbox MossdeepCity_GameCorner_B1F_Text_YouWontBattle, MSGBOX_DEFAULT
+	msgbox RS_MysteryEventsHouse_Text_YouWontBattle, MSGBOX_DEFAULT
 	release
 	end
 
 MossdeepCity_GameCorner_1F_EventScript_15ADF5:: @ 815ADF5
-	msgbox MossdeepCity_GameCorner_B1F_Text_KeepItToA3On3, MSGBOX_DEFAULT
+	msgbox RS_MysteryEventsHouse_Text_KeepItToA3On3, MSGBOX_DEFAULT
 	fadescreen FADE_TO_BLACK
 	special ChooseHalfPartyForBattle
 	waitstate
@@ -181,6 +181,6 @@ MossdeepCity_GameCorner_1F_Movement_15AE49:: @ 815AE49
 	walk_in_place_faster_left
 	step_end
 
-MossdeepCity_GameCorner_1F_EventScript_15AE4C:: @ 815AE4C
-	msgbox MossdeepCity_GameCorner_B1F_Text_DoorIsLocked, MSGBOX_SIGN
+RS_MysteryEventsHouse_EventScript_Door:: @ 815AE4C
+	msgbox RS_MysteryEventsHouse_Text_DoorIsLocked, MSGBOX_SIGN
 	end

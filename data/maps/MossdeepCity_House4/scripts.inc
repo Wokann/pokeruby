@@ -30,7 +30,7 @@ MossdeepCity_House4_EventScript_NoSecretBase:: @ 815AB6D
 	release
 	end
 
-MossdeepCity_House4_EventScript_Delcatty:: @ 815AB77
+MossdeepCity_House4_EventScript_Skitty:: @ 815AB77
 	lock
 	faceplayer
 	waitse

@@ -38,8 +38,8 @@ MossdeepCity_StevensHouse_EventScript_StevenGivesDive:: @ 815AA0B
 	applymovement 1, MossdeepCity_StevensHouse_Movement_StevenApproachPlayer
 	waitmovement 0
 	msgbox MossdeepCity_StevensHouse_Text_YouveEarnedHMDive, MSGBOX_DEFAULT
-	giveitem ITEM_HM08_DIVE
-	setflag FLAG_RECEIVED_HM08
+	giveitem ITEM_HM_DIVE
+	setflag FLAG_RECEIVED_HM_DIVE
 	setflag FLAG_OMIT_DIVE_FROM_STEVEN_LETTER
 	msgbox MossdeepCity_StevensHouse_Text_ExplainDive, MSGBOX_DEFAULT
 	closemessage
@@ -87,7 +87,7 @@ MossdeepCity_StevensHouse_EventScript_BeldumPokeball:: @ 815AA7C
 	msgbox gText_NicknameReceivedPokemon, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	call_if_eq Common_EventScript_NameReceivedPartyMon
-	setflag FLAG_HIDE_BELDUM_BALL_STEVENS_HOUSE
+	setflag FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_BELDUM_POKEBALL
 	setflag FLAG_RECEIVED_BELDUM
 	releaseall
 	end
@@ -123,6 +123,6 @@ MossdeepCity_StevensHouse_EventScript_LetterWithoutDive:: @ 815AB16
 	end
 
 MossdeepCity_StevensHouse_EventScript_DiveItemBall:: @ 815AB20
-	finditem ITEM_HM08_DIVE
-	setflag FLAG_RECEIVED_HM08
+	finditem ITEM_HM_DIVE
+	setflag FLAG_RECEIVED_HM_DIVE
 	end

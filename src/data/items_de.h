@@ -4674,7 +4674,7 @@ const struct Item gItems[] =
     },
     {
         .name = _("TM04"),
-        .itemId = ITEM_TM04_CALM_MIND,
+        .itemId = ITEM_TM_CALM_MIND,
         .price = 3000,
         .holdEffect = HOLD_EFFECT_NONE,
         .holdEffectParam = 0,
@@ -5538,7 +5538,7 @@ const struct Item gItems[] =
     },
     {
         .name = _("VM08"),
-        .itemId = ITEM_HM08_DIVE,
+        .itemId = ITEM_HM_DIVE,
         .price = 0,
         .holdEffect = HOLD_EFFECT_NONE,
         .holdEffectParam = 0,
