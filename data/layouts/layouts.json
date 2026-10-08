@@ -522,14 +522,14 @@
       "blockdata_filepath": "data/layouts/Underwater_Route127/map.bin"
     },
     {
-      "id": "LAYOUT_UNDERWATER4",
-      "name": "Underwater4_Layout",
+      "id": "LAYOUT_UNDERWATER_ROUTE128",
+      "name": "Underwater_Route128_Layout",
       "width": 120,
       "height": 40,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Underwater",
-      "border_filepath": "data/layouts/Underwater4/border.bin",
-      "blockdata_filepath": "data/layouts/Underwater4/map.bin"
+      "border_filepath": "data/layouts/Underwater_Route128/border.bin",
+      "blockdata_filepath": "data/layouts/Underwater_Route128/map.bin"
     },
     {
       "id": "LAYOUT_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F",
