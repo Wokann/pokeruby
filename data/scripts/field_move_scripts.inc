@@ -55,7 +55,7 @@ UsedCutRockSmashText: @ 81B0E82
 CannotUseCutText: @ 81B0E8E
 	.string "This tree looks like it can be CUT down.$"
 
-S_BreakableRock:: @ 81B0EB7
+EventScript_RockSmash:: @ 81B0EB7
 	lockall
 	goto_if_unset FLAG_BADGE03_GET, CannotUseRockSmash
 	checkpartymove MOVE_ROCK_SMASH
@@ -121,7 +121,7 @@ CannotUseRockSmashText: @ 81B0F90
 	.string "It's a rugged rock, but a POKéMON\n"
 	.string "may be able to smash it.$"
 
-S_PushableBoulder:: @ 81B0FCB
+EventScript_StrengthBoulder:: @ 81B0FCB
 	lockall
 	goto_if_unset FLAG_BADGE04_GET, CannotUseStrength
 	goto_if_set FLAG_SYS_USE_STRENGTH, AlreadyUsedStrength

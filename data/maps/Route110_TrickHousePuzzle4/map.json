@@ -73,7 +73,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "S_PushableBoulder",
+      "script": "EventScript_StrengthBoulder",
       "flag": "FLAG_TEMP_11"
     },
     {
@@ -86,7 +86,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "S_PushableBoulder",
+      "script": "EventScript_StrengthBoulder",
       "flag": "FLAG_TEMP_12"
     },
     {
@@ -99,7 +99,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "S_PushableBoulder",
+      "script": "EventScript_StrengthBoulder",
       "flag": "FLAG_TEMP_13"
     },
     {
@@ -112,7 +112,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "S_PushableBoulder",
+      "script": "EventScript_StrengthBoulder",
       "flag": "FLAG_TEMP_14"
     },
     {
@@ -125,7 +125,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "S_PushableBoulder",
+      "script": "EventScript_StrengthBoulder",
       "flag": "FLAG_TEMP_15"
     },
     {
@@ -138,7 +138,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "S_PushableBoulder",
+      "script": "EventScript_StrengthBoulder",
       "flag": "FLAG_TEMP_16"
     },
     {
@@ -151,7 +151,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "S_PushableBoulder",
+      "script": "EventScript_StrengthBoulder",
       "flag": "FLAG_TEMP_17"
     },
     {
@@ -164,7 +164,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "S_PushableBoulder",
+      "script": "EventScript_StrengthBoulder",
       "flag": "FLAG_TEMP_18"
     },
     {
@@ -177,7 +177,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "S_PushableBoulder",
+      "script": "EventScript_StrengthBoulder",
       "flag": "FLAG_TEMP_19"
     },
     {
@@ -190,7 +190,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "S_PushableBoulder",
+      "script": "EventScript_StrengthBoulder",
       "flag": "FLAG_TEMP_1A"
     },
     {
@@ -203,7 +203,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "S_PushableBoulder",
+      "script": "EventScript_StrengthBoulder",
       "flag": "FLAG_TEMP_1B"
     }
   ],

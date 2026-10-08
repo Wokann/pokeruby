@@ -180,10 +180,10 @@ Route110_TrickHouseEnd_EventScript_CompletedPuzzle8:: @ 8161BAF
 	end
 
 Route110_TrickHouseEnd_EventScript_TrickMasterExit:: @ 8161C2E
-	applymovement 1, Route110_TrickHouseEnd_Movement_TrickMasterSpin
+	applymovement 1, Route110_TrickHouse_Movement_TrickMasterSpin
 	waitmovement 0
 	playse SE_M_EXPLOSION
-	applymovement 1, Route110_TrickHouseEnd_Movement_TrickMasterJumpAway
+	applymovement 1, Route110_TrickHouse_Movement_TrickMasterJumpAway
 	waitmovement 0
 	removeobject 1
 	addvar VAR_TRICK_HOUSE_ROOMS_COMPLETED, 1

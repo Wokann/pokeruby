@@ -1,4 +1,4 @@
-Route110_SeasideCyclingRoadNorthEntrance_Text_19E406:: @ 819E406
+Route110_SeasideCyclingRoadNorthEntrance_Text_GoAllOutOnCyclingRoad:: @ 819E406
 	.string "Auf dem RADWEG kannst du so\n"
 	.string "schnell fahren, wie du willst.\p"
 	.string "Schnell fahren macht Spaß, pass aber\n"

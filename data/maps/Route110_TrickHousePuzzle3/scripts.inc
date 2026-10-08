@@ -371,13 +371,13 @@ Route110_TrickHousePuzzle3_EventScript_SetAltDoorState:: @ 81626E4
 Route110_TrickHousePuzzle3_EventScript_Scroll:: @ 81626EB
 	lockall
 	compare VAR_TRICK_HOUSE_PUZZLE_3_STATE, 0
-	goto_if_eq Route110_TrickHousePuzzle3_EventScript_ReadScroll
-	goto Route110_TrickHousePuzzle3_EventScript_ReadScrollAgain
+	goto_if_eq Route110_TrickHousePuzzle3_EventScript_FoundScroll
+	goto Route110_TrickHousePuzzle_EventScript_ReadScrollAgain
 	end
 
-Route110_TrickHousePuzzle3_EventScript_ReadScroll:: @ 81626FD
+Route110_TrickHousePuzzle3_EventScript_FoundScroll:: @ 81626FD
 	setvar VAR_TRICK_HOUSE_PUZZLE_3_STATE, 1
-	goto Route110_TrickHousePuzzle3_EventScript_FoundScroll
+	goto Route110_TrickHousePuzzle_EventScript_FoundScroll
 	end
 
 Route110_TrickHousePuzzle3_EventScript_Justin:: @ 8162708

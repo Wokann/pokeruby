@@ -24,13 +24,13 @@ Route110_TrickHousePuzzle2_OnTransition:: @ 8161DAE
 Route110_TrickHousePuzzle2_EventScript_Scroll:: @ 8161DC3
 	lockall
 	compare VAR_TRICK_HOUSE_PUZZLE_2_STATE, 0
-	goto_if_eq Route110_TrickHousePuzzle2_EventScript_ReadScroll
-	goto Route110_TrickHousePuzzle2_EventScript_ReadScrollAgain
+	goto_if_eq Route110_TrickHousePuzzle2_EventScript_FoundScroll
+	goto Route110_TrickHousePuzzle_EventScript_ReadScrollAgain
 	end
 
-Route110_TrickHousePuzzle2_EventScript_ReadScroll:: @ 8161DD5
+Route110_TrickHousePuzzle2_EventScript_FoundScroll:: @ 8161DD5
 	setvar VAR_TRICK_HOUSE_PUZZLE_2_STATE, 1
-	goto Route110_TrickHousePuzzle2_EventScript_FoundScroll
+	goto Route110_TrickHousePuzzle_EventScript_FoundScroll
 	end
 
 Route110_TrickHousePuzzle2_EventScript_Button1:: @ 8161DE0

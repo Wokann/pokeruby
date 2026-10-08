@@ -1,3 +1,10 @@
+Route110_TrickHousePuzzle8_Text_WroteSecretCodeLockOpened: @ 819E0FF
+	.string "{PLAYER} wrote down the secret code\n"
+	.string "on the door.\p"
+	.string "“TRICK MASTER I love.”\n"
+	.string "... ... ... ... ... ... ... ...\p"
+	.string "The lock clicked open!$"
+
 Route110_TrickHousePuzzle8_Text_VincentIntro:: @ 819E178
 	.string "Not many TRAINERS have made it\n"
 	.string "this far.$"
