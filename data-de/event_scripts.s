@@ -146,8 +146,8 @@ gStdScripts_End::
 	.include "data/maps/FallarborTown_ContestHall/scripts.inc"
 	.include "data/maps/FallarborTown_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/FallarborTown_PokemonCenter_2F/scripts.inc"
-	.include "data/maps/FallarborTown_House1/scripts.inc"
-	.include "data/maps/FallarborTown_House2/scripts.inc"
+	.include "data/maps/FallarborTown_CozmosHouse/scripts.inc"
+	.include "data/maps/FallarborTown_MoveRelearnersHouse/scripts.inc"
 	.include "data/maps/VerdanturfTown_ContestLobby/scripts.inc"
 	.include "data/maps/VerdanturfTown_ContestHall/scripts.inc"
 	.include "data/maps/VerdanturfTown_Mart/scripts.inc"
@@ -499,8 +499,8 @@ gStdScripts_End::
 	.include "data/maps/FallarborTown_ContestLobby/text.inc"
 	.include "data/maps/FallarborTown_ContestHall/text.inc"
 	.include "data/maps/FallarborTown_PokemonCenter_1F/text.inc"
-	.include "data/maps/FallarborTown_House1/text.inc"
-	.include "data/maps/FallarborTown_House2/text.inc"
+	.include "data/maps/FallarborTown_CozmosHouse/text.inc"
+	.include "data/maps/FallarborTown_MoveRelearnersHouse/text.inc"
 	.include "data/maps/VerdanturfTown_ContestLobby/text.inc"
 	.include "data/maps/VerdanturfTown_ContestHall/text.inc"
 	.include "data/maps/VerdanturfTown_Mart/text.inc"
@@ -974,7 +974,7 @@ Common_EventScript_NameReceivedPartyMon:: @ 81A0678
 Common_EventScript_PlayerHandedOverTheItem:: @ 81A067F
 	bufferitemname 0, VAR_0x8004
 	playfanfare MUS_OBTAIN_TMHM
-	message FallarborTown_House1_Text_1A1498
+	message gText_PlayerHandedOverTheItem
 	waitmessage
 	waitfanfare
 	removeitem VAR_0x8004, 1
@@ -1140,7 +1140,7 @@ OldaleTown_PokemonCenter_2F_Text_1A145C:: @ 81A145C
 	.string "Tut mir schrecklich Leid. Hier wird\n"
 	.string "für den STATISTIKTAUSCH renoviert.$"
 
-FallarborTown_House1_Text_1A1498:: @ 81A1498
+gText_PlayerHandedOverTheItem:: @ 81A1498
 	.string "{PLAYER} übergibt\n"
 	.string "{STR_VAR_1}.$"
 

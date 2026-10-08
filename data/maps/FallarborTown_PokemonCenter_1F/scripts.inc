@@ -48,7 +48,7 @@ FallarborTown_PokemonCenter_1F_EventScript_LanetteExitWest:: @ 8153B59
 FallarborTown_PokemonCenter_1F_EventScript_LanetteExited:: @ 8153B69
 	playse SE_SLIDING_DOOR
 	removeobject 4
-	clearflag FLAG_HIDE_LANETTE
+	clearflag FLAG_HIDE_LANETTES_HOUSE_LANETTE
 	release
 	end
 

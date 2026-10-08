@@ -1,8 +1,8 @@
-FallarborTown_House1_MapScripts:: @ 8153BAE
-	map_script MAP_SCRIPT_ON_TRANSITION, FallarborTown_House1_OnTransition
+FallarborTown_CozmosHouse_MapScripts:: @ 8153BAE
+	map_script MAP_SCRIPT_ON_TRANSITION, FallarborTown_CozmosHouse_OnTransition
 	.byte 0
 
-FallarborTown_House1_OnTransition:: @ 8153BB4
+FallarborTown_CozmosHouse_OnTransition:: @ 8153BB4
 	end
 
 FallarborTown_CozmosHouse_EventScript_ProfCozmo:: @ 8153BB5
