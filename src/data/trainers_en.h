@@ -7307,7 +7307,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_BrendanRoute110Mudkip }
     },
 
-    [TRAINER_BRENDAN_3] =
+    [TRAINER_BRENDAN_ROUTE_119_MUDKIP] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_POKEMON_TRAINER_3,
@@ -7349,7 +7349,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_BrendanRoute110Treecko }
     },
 
-    [TRAINER_BRENDAN_6] =
+    [TRAINER_BRENDAN_ROUTE_119_TREECKO] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_POKEMON_TRAINER_3,
@@ -7391,7 +7391,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_BrendanRoute110Torchic }
     },
 
-    [TRAINER_BRENDAN_9] =
+    [TRAINER_BRENDAN_ROUTE_119_TORCHIC] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_POKEMON_TRAINER_3,
@@ -7433,7 +7433,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_MayRoute110Mudkip }
     },
 
-    [TRAINER_MAY_3] =
+    [TRAINER_MAY_ROUTE_119_MUDKIP] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_POKEMON_TRAINER_3,
@@ -7475,7 +7475,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_MayRoute110Treecko }
     },
 
-    [TRAINER_MAY_6] =
+    [TRAINER_MAY_ROUTE_119_TREECKO] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_POKEMON_TRAINER_3,
@@ -7517,7 +7517,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_MayRoute110Torchic }
     },
 
-    [TRAINER_MAY_9] =
+    [TRAINER_MAY_ROUTE_119_TORCHIC] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_POKEMON_TRAINER_3,
@@ -9113,7 +9113,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemCustomMoves = gTrainerParty_Sadie }
     },
 
-    [TRAINER_HIDEO_2] =
+    [TRAINER_HIDEO] =
     {
         .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET,
         .trainerClass = TRAINER_CLASS_NINJA_BOY,

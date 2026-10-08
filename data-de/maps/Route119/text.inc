@@ -1,4 +1,4 @@
-Route119_Text_1710BB:: @ 81710BB
+Route119_Text_MayIntro:: @ 81710BB
 	.string "MAIKE: {PLAYER}{KUN}! Wo warst du?\n"
 	.string "Ich habe dich schon gesucht!\p"
 	.string "Wie stark bist du geworden?\n"
@@ -6,18 +6,18 @@ Route119_Text_1710BB:: @ 81710BB
 	.string "Bereit? Du und deine POKéMON?\n"
 	.string "Natürlich seid ihr das! Los!$"
 
-Route119_Text_171156:: @ 8171156
+Route119_Text_MayDefeat:: @ 8171156
 	.string "Achah!\n"
 	.string "{PLAYER}{KUN}, du bist stark!\p"
 	.string "Ich hatte schon befürchtet, du\n"
 	.string "hättest im Training nachgelassen.$"
 
-Route119_Text_1711B1:: @ 81711B1
+Route119_Text_MayPresentForYou:: @ 81711B1
 	.string "MAIKE: Aber ich hätte mir absolut keine\n"
 	.string "Sorgen zu machen brauchen! Weiter so!\p"
 	.string "Und hier! Dies ist ein Geschenk für dich!$"
 
-Route119_Text_171214:: @ 8171214
+Route119_Text_MayExplainFly:: @ 8171214
 	.string "MAIKE: Setze FLIEGEN ein und deine\n"
 	.string "POKéMON bringen dich an jeden Ort, an\l"
 	.string "dem du schon einmal warst.\p"
@@ -30,7 +30,7 @@ Route119_Text_171214:: @ 8171214
 	.string "schon Sorgen um dich, {PLAYER}{KUN}.\p"
 	.string "Nun, wir treffen uns sicher bald wieder!$"
 
-Route119_Text_171358:: @ 8171358
+Route119_Text_BrendanIntro:: @ 8171358
 	.string "BRIX: {PLAYER}! Hier schaust du dich\n"
 	.string "also nach POKéMON um?\p"
 	.string "Zeig mir, wie gut du geworden bist.\n"
@@ -38,17 +38,17 @@ Route119_Text_171358:: @ 8171358
 	.string "Nun!\n"
 	.string "Das ist ein Kampf, also kämpfen wir!$"
 
-Route119_Text_1713E2:: @ 81713E2
+Route119_Text_BrendanDefeat:: @ 81713E2
 	.string "Hmm...\n"
 	.string "Du bist verdammt gut geworden.$"
 
-Route119_Text_17140B:: @ 817140B
+Route119_Text_BrendanIllGiveYouThis:: @ 817140B
 	.string "BRIX: Ich sage, du bist so gut, dass\n"
 	.string "du überall nach POKéMON suchen kannst.\p"
 	.string "Hier, das ist für dich.\n"
 	.string "Probier es aus.$"
 
-Route119_Text_171475:: @ 8171475
+Route119_Text_BrendanExplainFly:: @ 8171475
 	.string "BRIX: Setze es ein, und deine\n"
 	.string "POKéMON FLIEGEN dich sofort an jeden\l"
 	.string "Ort, an dem du schon einmal warst.\p"
@@ -56,17 +56,17 @@ Route119_Text_171475:: @ 8171475
 	.string "von BAUMHAUSEN CITY dafür.\p"
 	.string "Nun ja, ich muss jetzt weiter. Bis bald.$"
 
-Route119_Text_171520:: @ 8171520
+Route119_Text_StayAwayFromWeatherInstitute:: @ 8171520
 	.string "Wir stehen hier Wache.\p"
 	.string "Hey, du! Halt dich bloß von dem KLIMA-\n"
 	.string "INSTITUT fern. Da ist es nicht sicher!$"
 
-Route119_Text_17157C:: @ 817157C
+Route119_Text_DontGoNearWeatherInstitute:: @ 817157C
 	.string "Wache schieben ist langweilig.\p"
 	.string "Hey, du! Komm nicht in die Nähe des\n"
 	.string "KLIMA-INSTITUTS.$"
 
-Route119_Text_1715D7:: @ 81715D7
+Route119_Text_ThoughtFlyByCatchingBirdMons:: @ 81715D7
 	.string "Ich dachte, FLIEGEN könnte man, indem\n"
 	.string "man viele VOGEL-POKéMON fängt, sie\p"
 	.string "zusammenbindet und sich dann\n"
@@ -76,24 +76,24 @@ Route119_Text_1715D7:: @ 81715D7
 	.string "Wenn ich das doch nur eher gewusst\n"
 	.string "hätte...$"
 
-Route119_Text_171698:: @ 8171698
+Route119_Text_TallGrassSnaresBikeTires:: @ 8171698
 	.string "Tse... So geht es nicht weiter...\p"
 	.string "Das hohe Gras verfängt sich in den \n"
 	.string "Speichen des RADS...$"
 
-Route119_Text_1716F4:: @ 81716F4
+Route119_Text_CanYourMonMakeSecretBase:: @ 81716F4
 	.string "Kann dein POKéMON GEHEIMPOWER an\n"
 	.string "einem Berg von Gras einsetzen und eine\l"
 	.string "GEHEIMBASIS einrichten?$"
 
-Route119_Text_171749:: @ 8171749
+Route119_Text_RouteSignFortree:: @ 8171749
 	.string "ROUTE 119\n"
 	.string "{RIGHT_ARROW} BAUMHAUSEN CITY$"
 
-Route119_Text_171762:: @ 8171762
+Route119_Text_WeatherInstitute:: @ 8171762
 	.string "KLIMA-INSTITUT$"
 
-Route119_Text_171774:: @ 8171774
+Route119_Text_TrainerTipsDecoration:: @ 8171774
 	.string "TIPPS für TRAINER\p"
 	.string "In der GEHEIMBASIS können bis zu 16\n"
 	.string "Dekorationen und Möbel untergebracht\l"
