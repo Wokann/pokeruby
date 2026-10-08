@@ -1,4 +1,4 @@
-Route114_FossilManiacsHouse_Text_1925E1:: @ 81925E1
+Route114_FossilManiacsHouse_Text_HaveThisToDigLikeMyBrother:: @ 81925E1
 	.string "Mein großer Bruder ist ein FOSSIL-\n"
 	.string "MANIAC... Er ist ein netter Kerl, der\l"
 	.string "Fossilien liebt...\p"
@@ -7,16 +7,16 @@ Route114_FossilManiacsHouse_Text_1925E1:: @ 81925E1
 	.string "Hier, das kannst du haben. Damit kannst\n"
 	.string "du Löcher graben, wie mein Bruder...$"
 
-Route114_FossilManiacsHouse_Text_1926AE:: @ 81926AE
+Route114_FossilManiacsHouse_Text_DigReturnsYouToEntrance:: @ 81926AE
 	.string "Wenn ein POKéMON in einer Höhle\n"
 	.string "SCHAUFLER einsetzt, kommst du zum\l"
 	.string "Eingang zurück.$"
 
-Route114_FossilManiacsHouse_Text_1926FA:: @ 81926FA
+Route114_FossilManiacsHouse_Text_RocksFillDisplayCase:: @ 81926FA
 	.string "Steine in den unterschiedlichsten\n"
 	.string "Formen liegen im Glasschaukasten.$"
 
-Route114_FossilManiacsHouse_Text_192729:: @ 8192729
+Route114_FossilManiacsHouse_Text_CrammedWithBooks:: @ 8192729
 	.string "DIE ZUSAMMENSETZUNG DER ERDSCHICHT...\n"
 	.string "WIE REGEN DAS LAND FORMT...\l"
 	.string "STEINE, BODEN UND FELSEN...\p"

@@ -1,4 +1,4 @@
-Route114_LanettesHouse_Text_192A0D:: @ 8192A0D
+Route114_LanettesHouse_Text_EverythingClutteredKeepThis:: @ 8192A0D
 	.string "LANETTE: Oh! {PLAYER}{KUN}!\p"
 	.string "Entschuldige, dass es hier so chaotisch\n"
 	.string "aussieht. Immer, wenn ich forsche,\l"
@@ -6,14 +6,14 @@ Route114_LanettesHouse_Text_192A0D:: @ 8192A0D
 	.string "Das ist echt peinlich... Erzähl das bloß\n"
 	.string "niemandem! Ich gebe dir auch dies hier...$"
 
-Route114_LanettesHouse_Text_192ACC:: @ 8192ACC
+Route114_LanettesHouse_Text_OrganizeYourBoxes:: @ 8192ACC
 	.string "Soll ich dir einige Hinweise zum POKéMON-\n"
 	.string "Lagerungs-System geben?\p"
 	.string "Du solltest deine BOXEN gut verwalten,\n"
 	.string "damit du weißt, welche POKéMON sich \l"
 	.string "in welcher BOX befinden...$"
 
-Route114_LanettesHouse_Text_192B4A:: @ 8192B4A
+Route114_LanettesHouse_Text_ResearchNotesPage1:: @ 8192B4A
 	.string "LANETTES Forschungs-Aufzeichnungen.\n"
 	.string "Das sind Informationen zu den BOXEN.\p"
 	.string "Es sollten BOXEN eingerichtet werden,\n"
@@ -23,7 +23,7 @@ Route114_LanettesHouse_Text_192B4A:: @ 8192B4A
 	.string "420 POKéMON im PC-System zu lagern.\p"
 	.string "Weiterlesen?$"
 
-Route114_LanettesHouse_Text_192C01:: @ 8192C01
+Route114_LanettesHouse_Text_ResearchNotesPage2:: @ 8192C01
 	.string "Es muss ein Markierungssystem einge-\n"
 	.string "richtet werden, mit dem man eine gute\l"
 	.string "Übersicht über die POKéMON bekommt.\p"
@@ -32,7 +32,7 @@ Route114_LanettesHouse_Text_192C01:: @ 8192C01
 	.string "darin gelagerten POKéMON.\p"
 	.string "Weiterlesen?$"
 
-Route114_LanettesHouse_Text_192CB4:: @ 8192CB4
+Route114_LanettesHouse_Text_ResearchNotesPage3:: @ 8192CB4
 	.string "Immer, wenn ein POKéMON gelagert wird,\n"
 	.string "wird es in der BOX gelagert, die als\l"
 	.string "Letzte geöffnet wurde.\p"
@@ -42,10 +42,10 @@ Route114_LanettesHouse_Text_192CB4:: @ 8192CB4
 	.string "öffnete BOX wird automatisch gewählt,\l"
 	.string "um ein POKéMON zu lagern.$"
 
-Route114_LanettesHouse_Text_192DA9:: @ 8192DA9
+Route114_LanettesHouse_Text_ClosedTheNotebook:: @ 8192DA9
 	.string "{PLAYER} schließt das Notizbuch.$"
 
-Route114_LanettesHouse_Text_192DC1:: @ 8192DC1
+Route114_LanettesHouse_Text_EmailFromBill:: @ 8192DC1
 	.string "Da ist eine E-Mail von jemandem\n"
 	.string "auf dem PC.\p"
 	.string "“... ... ... ... ... ... ...\p"

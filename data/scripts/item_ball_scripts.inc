@@ -66,11 +66,11 @@ Route113_EventScript_ItemSuperRepel:: @ 81B1509
 	finditem ITEM_SUPER_REPEL
 	end
 
-Route114_EventScript_1B1516:: @ 81B1516
+Route114_EventScript_ItemRareCandy:: @ 81B1516
 	finditem ITEM_RARE_CANDY
 	end
 
-Route114_EventScript_1B1523:: @ 81B1523
+Route114_EventScript_ItemProtein:: @ 81B1523
 	finditem ITEM_PROTEIN
 	end
 

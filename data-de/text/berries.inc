@@ -43,7 +43,7 @@ Route114_Text_1C5803:: @ 81C5803
 Route114_Text_1C5861:: @ 81C5861
 	.string "Dir auch viel Glück!$"
 
-Route114_Text_1C5878:: @ 81C5878
+Route114_Text_FunToThinkAboutBerries:: @ 81C5878
 	.string "Welche BEEREN soll ich heute pflanzen?\n"
 	.string "Welche Farben sollen die {POKEBLOCK} haben?\p"
 	.string "Darüber nachzudenken, macht irre Spaß.$"
