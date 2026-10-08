@@ -85,7 +85,7 @@ OldaleTown_EventScript_ExplainPotion:: @ 814DE79
 	end
 
 OldaleTown_EventScript_BagIsFull:: @ 814DE83
-	msgbox Text_TooBadBagIsFull, MSGBOX_DEFAULT
+	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
 	fadedefaultbgm
 	release
 	end
@@ -125,7 +125,7 @@ OldaleTown_Movement_EmployeeNorth:: @ 814DEA2
 	walk_in_place_faster_down
 	step_end
 
-@ 814DEAB
+OldaleTown_Movement_Unknown1: @ 814DEAB
 	walk_up
 	walk_up
 	walk_right
@@ -173,7 +173,7 @@ OldaleTown_Movement_PlayerNorth:: @ 814DECB
 	walk_up
 	step_end
 
-@ 814DED3
+OldaleTown_Movement_Unknown2: @ 814DED3
 	walk_left
 	walk_up
 	walk_up

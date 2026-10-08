@@ -806,12 +806,12 @@ EventScript_SetBrineyLocation_Route109:: @ 819FD55
 	.include "data/scripts/record_mix.inc"
 	.include "data/scripts/pc.inc"
 
-Common_EventScript_PokemartSign:: @ 81A00E1
-	msgbox Text_PokemartSign, MSGBOX_SIGN
+Common_EventScript_ShowPokemartSign:: @ 81A00E1
+	msgbox gText_PokemartSign, MSGBOX_SIGN
 	end
 
-Common_EventScript_PokemonCenterSign:: @ 81A00EA
-	msgbox Text_PokemonCenterSign, MSGBOX_SIGN
+Common_EventScript_ShowPokemonCenterSign:: @ 81A00EA
+	msgbox gText_PokemonCenterSign, MSGBOX_SIGN
 	end
 
 Common_EventScript_ShowEasyChatScreen:: @ 81A00F3
@@ -841,12 +841,12 @@ EventScript_BackupMrBrineyLocation:: @ 81A010C
 	.include "data/scripts/set_gym_trainers.inc"
 
 Common_EventScript_ShowBagIsFull:: @ 81A029B
-	msgbox Text_TooBadBagIsFull, MSGBOX_DEFAULT
+	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
 	release
 	end
 
 Common_EventScript_BagIsFull:: @ 81A02A5
-	msgbox Text_TooBadBagIsFull, MSGBOX_DEFAULT
+	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
 	return
 
 Common_EventScript_ShowNoRoomForDecor:: @ 81A02AE
@@ -990,12 +990,12 @@ Common_EventScript_PlayerHandedOverTheItem:: @ 81A067F
 	.include "data/text/mart_clerk.inc"
 	.include "data/text/obtain_item.inc"
 
-Text_PokemartSign:: @ 81A0D41
+gText_PokemartSign:: @ 81A0D41
 	.string "“Ausgewählte Items für Ihren\n"
 	.string "Gebrauch!”\l"
 	.string "POKéMON-SUPERMARKT$"
 
-Text_PokemonCenterSign:: @ 81A0D75
+gText_PokemonCenterSign:: @ 81A0D75
 	.string "“Erfrische deine müden Partner!”\n"
 	.string "POKéMON-CENTER$"
 
