@@ -1,4 +1,4 @@
-Route109_SeashoreHouse_Text_19B4D9:: @ 819B4D9
+Route109_SeashoreHouse_Text_SeashoreHouseIntro:: @ 819B4D9
 	.string "Ich bin der Besitzer des STRANDHAUSES.\n"
 	.string "Du kannst MR. MARE zu mir sagen.\p"
 	.string "Heißen POKéMON-Kämpfen zuzusehen\n"
@@ -7,12 +7,12 @@ Route109_SeashoreHouse_Text_19B4D9:: @ 819B4D9
 	.string "Wenn du alle TRAINER besiegen kannst,\n"
 	.string "werde ich dich belohnen!$"
 
-Route109_SeashoreHouse_Text_19B5B9:: @ 819B5B9
+Route109_SeashoreHouse_Text_ShowMeSomeHotMatches:: @ 819B5B9
 	.string "Zeig mir heiße Kämpfe!\p"
 	.string "Nur für diese habe ich das STRANDHAUS\n"
 	.string "überhaupt geöffnet!$"
 
-Route109_SeashoreHouse_Text_19B609:: @ 819B609
+Route109_SeashoreHouse_Text_TakeTheseSodaPopBottles:: @ 819B609
 	.string "Du bist brandheiß!\n"
 	.string "Die Kämpfe glühen geradezu!\l"
 	.string "Ich bin mehr als zufrieden!\p"
@@ -20,23 +20,23 @@ Route109_SeashoreHouse_Text_19B609:: @ 819B609
 	.string "Zum Dank schenke ich dir etwas.\p"
 	.string "Es sind sechs Flaschen SPRUDEL!$"
 
-Route109_SeashoreHouse_Text_19B6BE:: @ 819B6BE
+Route109_SeashoreHouse_Text_BagFull:: @ 819B6BE
 	.string "Aber dein BEUTEL ist ja gerammelt voll.\n"
 	.string "Ich werde sie für dich aufbewahren.$"
 
-Route109_SeashoreHouse_Text_19B702:: @ 819B702
+Route109_SeashoreHouse_Text_WantToBuySodaPop:: @ 819B702
 	.string "Möchtest du etwas SPRUDEL kaufen?\n"
 	.string "POKéMON lieben ihn!\p"
 	.string "Nur ¥300 pro Flasche!\n"
 	.string "Kauf doch welchen!$"
 
-Route109_SeashoreHouse_Text_19B74C:: @ 819B74C
+Route109_SeashoreHouse_Text_HereYouGo:: @ 819B74C
 	.string "Hier, bitte schön!$"
 
-Route109_SeashoreHouse_Text_19B759:: @ 819B759
+Route109_SeashoreHouse_Text_NotEnoughMoney:: @ 819B759
 	.string "Du hast nicht genügend Geld.$"
 
-Route109_SeashoreHouse_Text_19B773:: @ 819B773
+Route109_SeashoreHouse_Text_ThatsTooBad:: @ 819B773
 	.string "Nein?\n"
 	.string "Das ist aber wirklich schade.$"
 
@@ -54,40 +54,40 @@ UnknownString_819B7D2: @ 819B7D2
 UnknownString_819B7F9: @ 819B7F9
 	.string "Das ist wirklich sehr schade.$"
 
-Route109_SeashoreHouse_Text_19B809:: @ 819B809
+Route109_SeashoreHouse_Text_DwayneIntro:: @ 819B809
 	.string "Wenn du Lust auf einen heißen Kampf\n"
 	.string "auf hoher See hast, findest du keinen\l"
 	.string "lodernderen TRAINER als mich!$"
 
-Route109_SeashoreHouse_Text_19B869:: @ 819B869
+Route109_SeashoreHouse_Text_DwayneDefeated:: @ 819B869
 	.string "Das war ein heißer Kampf!\n"
 	.string "Ich kann die Niederlage verkraften!$"
 
-Route109_SeashoreHouse_Text_19B89F:: @ 819B89F
+Route109_SeashoreHouse_Text_DwaynePostBattle:: @ 819B89F
 	.string "Immer wenn ich in GRAPHITPORT CITY bin,\n"
 	.string "genieße ich heiße Kämpfe und\l"
 	.string "eisgekühlten SPRUDEL!$"
 
-Route109_SeashoreHouse_Text_19B8E5:: @ 819B8E5
+Route109_SeashoreHouse_Text_JohannaIntro:: @ 819B8E5
 	.string "Langweilige Kämpfe lohnen sich nicht.\p"
 	.string "Feurig heiße Kämpfe aber stählen\n"
 	.string "TRAINER und POKéMON.$"
 
-Route109_SeashoreHouse_Text_19B949:: @ 819B949
+Route109_SeashoreHouse_Text_JohannaDefeated:: @ 819B949
 	.string "Das war brandheiß!$"
 
-Route109_SeashoreHouse_Text_19B955:: @ 819B955
+Route109_SeashoreHouse_Text_JohannaPostBattle:: @ 819B955
 	.string "Puh, ich bin am Verdursten.\n"
 	.string "Ich sollte SPRUDEL trinken.$"
 
-Route109_SeashoreHouse_Text_19B988:: @ 819B988
+Route109_SeashoreHouse_Text_SimonIntro:: @ 819B988
 	.string "Ich werde dir zeigen, wie toll meine\n"
 	.string "POKéMON sind. Aber heul bloß nicht los!$"
 
-Route109_SeashoreHouse_Text_19B9C7:: @ 819B9C7
+Route109_SeashoreHouse_Text_SimonDefeated:: @ 819B9C7
 	.string "Ich habe verloren. Aber ich heule nicht!$"
 
-Route109_SeashoreHouse_Text_19B9E5:: @ 819B9E5
+Route109_SeashoreHouse_Text_SimonPostBattle:: @ 819B9E5
 	.string "Wenn doch nur eines meiner POKéMON\n"
 	.string "wüsste, wie es mich über das Wasser\l"
 	.string "tragen kann. Dann wäre ich den\l"
