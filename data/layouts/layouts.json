@@ -3192,14 +3192,14 @@
       "blockdata_filepath": "data/layouts/MagmaHideout_B2F/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_08302970",
-      "name": "UnknownMap_08302970_Layout",
+      "id": "LAYOUT_ROUTE131_SKY_PILLAR",
+      "name": "Route131_SkyPillar_Layout",
       "width": 60,
       "height": 40,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Pacifidlog",
-      "border_filepath": "data/layouts/UnknownMap_08302970/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_08302970/map.bin"
+      "border_filepath": "data/layouts/Route131_SkyPillar/border.bin",
+      "blockdata_filepath": "data/layouts/Route131_SkyPillar/map.bin"
     },
     {
       "id": "LAYOUT_SKY_PILLAR_ENTRANCE",
