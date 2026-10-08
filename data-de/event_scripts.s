@@ -20,7 +20,7 @@
 #include "constants/berry.h"
 #include "constants/script_menu.h"
 #include "constants/field_weather.h"
-	.include "include/macros.inc"
+	.include "asm/macros.inc"
 	.include "asm/macros/event.inc"
 	.include "constants/constants.inc"
 

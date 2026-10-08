@@ -1,4 +1,4 @@
-	.include "include/macros.inc"
+	.include "asm/macros.inc"
 	.include "asm/macros/field_effect_script.inc"
 	.include "constants/constants.inc"
 

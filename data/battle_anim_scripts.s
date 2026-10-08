@@ -4,7 +4,7 @@
 #include "constants/battle_anim.h"
 #include "constants/moves.h"
 #include "constants/songs.h"
-	.include "include/macros.inc"
+	.include "asm/macros.inc"
 	.include "asm/macros/battle_anim_script.inc"
 	.include "constants/constants.inc"
 

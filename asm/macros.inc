@@ -1,8 +1,8 @@
-	.include "include/macros/asm.inc"
-	.include "include/macros/function.inc"
-	.include "include/macros/movement.inc"
+	.include "asm/macros/asm.inc"
+	.include "asm/macros/function.inc"
+	.include "asm/macros/movement.inc"
 	.include "include/macros/pokemon_data.inc"
-	.include "include/macros/map.inc"
+	.include "asm/macros/map.inc"
 	.include "include/macros/mystery_event_script.inc"
 
 	.macro region_map_location x, y, width, height, name

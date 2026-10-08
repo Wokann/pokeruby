@@ -9,7 +9,7 @@
 #include "constants/vars.h"
 #include "constants/weather.h"
 
-	.include "include/macros.inc"
+	.include "asm/macros.inc"
 	.include "constants/constants.inc"
 
 	.section .rodata

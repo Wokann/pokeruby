@@ -939,7 +939,7 @@ static void DrawResultsTextWindow(const u8 *text, u8 spriteId)
 }
 #else
 asm(".include \"constants/gba_constants.inc\"");
-asm(".include \"include/macros.inc\"");
+asm(".include \"asm/macros.inc\"");
 NAKED
 static void DrawResultsTextWindow(const u8 * text, u8 spriteId)
 {

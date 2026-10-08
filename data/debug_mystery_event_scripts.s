@@ -11,7 +11,7 @@
 #include "constants/species.h"
 #include "constants/weather.h"
 #include "constants/vars.h"
-	.include "include/macros.inc"
+	.include "asm/macros.inc"
 	.include "constants/constants.inc"
 	.include "asm/macros/event.inc"
 
