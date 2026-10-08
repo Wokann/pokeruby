@@ -254,7 +254,7 @@ DewfordTown_Hall_EventScript_SludgeBombMan:: @ 815359D
 	call Common_EventScript_BufferTrendyPhrase
 	goto_if_set FLAG_RECEIVED_TM_SLUDGE_BOMB, DewfordTown_Hall_EventScript_ReceivedSludgeBomb
 	msgbox DewfordTown_Hall_Text_GiveYouSludgeBomb, MSGBOX_DEFAULT
-	giveitem ITEM_TM36_SLUDGE_BOMB
+	giveitem ITEM_TM_SLUDGE_BOMB
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_TM_SLUDGE_BOMB
