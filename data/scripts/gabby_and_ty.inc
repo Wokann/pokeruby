@@ -66,11 +66,11 @@ Route111_EventScript_1AE3E6:: @ 81AE3E6
 	return
 
 Route111_EventScript_1AE3EA:: @ 81AE3EA
-	setflag FLAG_HIDE_GABBY_AND_TY_ROUTE118_1
+	setflag FLAG_HIDE_ROUTE_118_GABBY_AND_TY_1
 	return
 
 Route111_EventScript_1AE3EE:: @ 81AE3EE
-	clearflag FLAG_HIDE_GABBY_AND_TY_ROUTE118_1
+	clearflag FLAG_HIDE_ROUTE_118_GABBY_AND_TY_1
 	return
 
 Route111_EventScript_1AE3F2:: @ 81AE3F2
@@ -90,11 +90,11 @@ Route111_EventScript_1AE3FE:: @ 81AE3FE
 	return
 
 Route111_EventScript_1AE402:: @ 81AE402
-	setflag FLAG_HIDE_GABBY_AND_TY_ROUTE118_2
+	setflag FLAG_HIDE_ROUTE_118_GABBY_AND_TY_2
 	return
 
 Route111_EventScript_1AE406:: @ 81AE406
-	clearflag FLAG_HIDE_GABBY_AND_TY_ROUTE118_2
+	clearflag FLAG_HIDE_ROUTE_118_GABBY_AND_TY_2
 	return
 
 Route111_EventScript_1AE40A:: @ 81AE40A
@@ -114,11 +114,11 @@ Route111_EventScript_1AE416:: @ 81AE416
 	return
 
 Route111_EventScript_1AE41A:: @ 81AE41A
-	setflag FLAG_HIDE_GABBY_AND_TY_ROUTE118_3
+	setflag FLAG_HIDE_ROUTE_118_GABBY_AND_TY_3
 	return
 
 Route111_EventScript_1AE41E:: @ 81AE41E
-	clearflag FLAG_HIDE_GABBY_AND_TY_ROUTE118_3
+	clearflag FLAG_HIDE_ROUTE_118_GABBY_AND_TY_3
 	return
 
 GabbyAndTy_EventScript_GabbyBattle1:: @ 81AE422
@@ -133,13 +133,13 @@ GabbyAndTy_EventScript_TyBattle1:: @ 81AE442
 	release
 	end
 
-Route118_EventScript_1AE462:: @ 81AE462
+GabbyAndTy_EventScript_GabbyBattle2:: @ 81AE462
 	trainerbattle_double TRAINER_GABBY_AND_TY_2, GabbyAndTy_Text_GabbyIntro, GabbyAndTy_Text_GabbyDefeat, GabbyAndTy_Text_GabbyNotEnoughMons, Route118_EventScript_1AE60F
 	msgbox GabbyAndTy_Text_KeepingAnEyeOutForYou, MSGBOX_DEFAULT
 	release
 	end
 
-Route118_EventScript_1AE482:: @ 81AE482
+GabbyAndTy_EventScript_TyBattle2:: @ 81AE482
 	trainerbattle_double TRAINER_GABBY_AND_TY_2, GabbyAndTy_Text_TyIntro, GabbyAndTy_Text_TyDefeat, GabbyAndTy_Text_TyNotEnoughMons, Route118_EventScript_1AE60F
 	msgbox GabbyAndTy_Text_TyPostBattle, MSGBOX_DEFAULT
 	release
@@ -169,13 +169,13 @@ GabbyAndTy_EventScript_TyBattle4:: @ 81AE502
 	release
 	end
 
-Route118_EventScript_1AE522:: @ 81AE522
+GabbyAndTy_EventScript_GabbyBattle5:: @ 81AE522
 	trainerbattle_double TRAINER_GABBY_AND_TY_5, GabbyAndTy_Text_GabbyIntro, GabbyAndTy_Text_GabbyDefeat, GabbyAndTy_Text_GabbyNotEnoughMons, Route118_EventScript_1AE60F
 	msgbox GabbyAndTy_Text_KeepingAnEyeOutForYou, MSGBOX_DEFAULT
 	release
 	end
 
-Route118_EventScript_1AE542:: @ 81AE542
+GabbyAndTy_EventScript_TyBattle5:: @ 81AE542
 	trainerbattle_double TRAINER_GABBY_AND_TY_5, GabbyAndTy_Text_TyIntro, GabbyAndTy_Text_TyDefeat, GabbyAndTy_Text_TyNotEnoughMons, Route118_EventScript_1AE60F
 	msgbox GabbyAndTy_Text_TyPostBattle, MSGBOX_DEFAULT
 	release
