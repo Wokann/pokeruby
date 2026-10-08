@@ -214,13 +214,13 @@ extern const u8 gText_ThreeQuestionMarks[];
 extern const u8 gText_ThreeMarks[];
 
 extern const u8 gText_FiveMarks[];
-extern const u8 gOtherText_Slash[];
+extern const u8 gText_Slash[];
 
 extern const u8 gOtherText_OneDash[];
 extern const u8 gOtherText_TwoDashes[];
 extern const u8 gOtherText_ThreeDashes2[];
-extern const u8 gOtherText_MaleSymbol2[];
-extern const u8 gOtherText_FemaleSymbol2[];
+extern const u8 gText_MaleSymbol[];
+extern const u8 gText_FemaleSymbol[];
 extern const u8 gOtherText_Lv[];
 extern const u8 gOtherText_TallPlusAndRightArrow[];
 extern const u8 gText_GoBackPrevMenu[];
@@ -309,7 +309,7 @@ extern const u8 gText_Dry[];
 extern const u8 gText_Sweet[];
 extern const u8 gText_Bitter[];
 extern const u8 gText_Sour[];
-extern const u8 gContestStatsText_Tasty[];
+extern const u8 gText_Tasty[];
 
 extern const u8 gText_StowCase[];
 extern const u8 gText_ThrowAwayVar1[];

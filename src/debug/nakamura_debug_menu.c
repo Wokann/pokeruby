@@ -763,13 +763,13 @@ static const u8 Str_843E58D[] = _(
                                     "front of you");
 #endif
 
-static u16 FishingPoints_CountFishingTilesInMapThird(u8 a0)
+static u16 FishingPoints_CountFishingTilesInMapThird(u8 section)
 {
     u16 retval = 0;
     u16 height = gMapHeader.mapLayout->height / 3;
     u16 y;
     u16 x;
-    u16 start = height * a0;
+    u16 start = height * section;
 
     for (y = start; y < start + height; y++)
     {
@@ -787,29 +787,29 @@ static u16 FishingPoints_CountFishingTilesInMapThird(u8 a0)
 
 static u16 FishingPoints_GetIndexOfCurrentFishingSpot(void)
 {
-    u16 retval = 0;
-    s16 x;
-    s16 y;
-    u16 xx;
-    u16 yy;
+    u16 spotId = 0;
+    s16 targetX;
+    s16 targetY;
+    u16 x;
+    u16 y;
 
-    GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
-    x -= 7;
-    y -= 7;
+    GetXYCoordsOneStepInFrontOfPlayer(&targetX, &targetY);
+    targetX -= 7;
+    targetY -= 7;
 
-    for (yy = 0; yy < gMapHeader.mapLayout->height; yy++)
+    for (y = 0; y < gMapHeader.mapLayout->height; y++)
     {
-        for (xx = 0; xx < gMapHeader.mapLayout->width; xx++)
+        for (x = 0; x < gMapHeader.mapLayout->width; x++)
         {
-            if (MetatileBehavior_IsSurfableAndNotWaterfall(MapGridGetMetatileBehaviorAt(xx + 7, yy + 7)) == TRUE)
+            if (MetatileBehavior_IsSurfableAndNotWaterfall(MapGridGetMetatileBehaviorAt(x + 7, y + 7)) == TRUE)
             {
-                retval++;
-                if (x == xx && y == yy)
-                    return retval;
+                spotId++;
+                if (targetX == x && targetY == y)
+                    return spotId;
             }
         }
     }
-    return retval + 1;
+    return spotId + 1;
 }
 
 static bool8 FishingPoints_HandleJoypad(void)
@@ -934,9 +934,9 @@ static void NakaGenderTest_PrintSpeciesGender(u8 i)
 
     gender = GetMonGender(gPlayerParty + i);
     if (gender == MON_MALE)
-        Menu_PrintText(gOtherText_MaleSymbol2, 23, 2 * i + 1);
+        Menu_PrintText(gText_MaleSymbol, 23, 2 * i + 1);
     else if (gender == MON_FEMALE)
-        Menu_PrintText(gOtherText_FemaleSymbol2, 23, 2 * i + 1);
+        Menu_PrintText(gText_FemaleSymbol, 23, 2 * i + 1);
     else
         Menu_PrintText(sp0, 23, 2 * i + 1);
 }
@@ -1831,7 +1831,7 @@ static void SetPokeblock_Init(void)
     Menu_PrintText(gText_Sweet, 2, 7);
     Menu_PrintText(gText_Bitter, 2, 9);
     Menu_PrintText(gText_Sour, 2, 11);
-    Menu_PrintText(gContestStatsText_Tasty, 2, 13);
+    Menu_PrintText(gText_Tasty, 2, 13);
 
     for (i = 0; i < 6; i++)
         SetPokeblock_PrintFlavorValue(i);
@@ -1950,7 +1950,7 @@ static const u8 Str_843E637[] = DTR("どりょくち　ごうけい", "EV TOTAL"
 static void EVTest_Init(void)
 {
     Menu_DrawStdWindowFrame(0, 0, 22, 19);
-    Menu_PrintText(gOtherText_Slash, 11, 1);
+    Menu_PrintText(gText_Slash, 11, 1);
     Menu_PrintText(Str_843E5F2, 2, 3);
     Menu_PrintText(Str_843E5FB, 2, 5);
     Menu_PrintText(Str_843E606, 2, 7);

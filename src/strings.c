@@ -175,13 +175,13 @@ const u8 gOtherText_None[] = _("NONE");
 const u8 gText_ThreeMarks[] = _("???");
 
 const u8 gText_FiveMarks[] = _("?????");
-const u8 gOtherText_Slash[] = _("/");
+const u8 gText_Slash[] = _("/");
 
 const u8 gOtherText_OneDash[] = _("-");
 const u8 gOtherText_TwoDashes[] = _("--");
 const u8 gOtherText_ThreeDashes2[] = _("---");
-const u8 gOtherText_MaleSymbol2[] = _("♂");
-const u8 gOtherText_FemaleSymbol2[] = _("♀");
+const u8 gText_MaleSymbol[] = _("♂");
+const u8 gText_FemaleSymbol[] = _("♀");
 const u8 gOtherText_Lv[] = _("Lv.");
 const u8 gOtherText_TallPlusAndRightArrow[] = _("{TALL_PLUS}${RIGHT_ARROW}");
 const u8 gText_GoBackPrevMenu[] = _("Go back to the\nprevious menu.");
@@ -271,7 +271,7 @@ const u8 gText_Dry[] = _("DRY");
 const u8 gText_Sweet[] = _("SWEET");
 const u8 gText_Bitter[] = _("BITTER");
 const u8 gText_Sour[] = _("SOUR");
-const u8 gContestStatsText_Tasty[] = _("TASTY");
+const u8 gText_Tasty[] = _("TASTY");
 const u8 gContestStatsText_Feel[] = _("FEEL");
 
 const u8 gText_StowCase[] = _("Stow CASE.");
@@ -1103,13 +1103,13 @@ const u8 gOtherText_None[] = _("KEINES");
 const u8 gText_ThreeMarks[] = _("???");
 
 const u8 gText_FiveMarks[] = _("?????");
-const u8 gOtherText_Slash[] = _("/");
+const u8 gText_Slash[] = _("/");
 
 const u8 gOtherText_OneDash[] = _("-");
 const u8 gOtherText_TwoDashes[] = _("--");
 const u8 gOtherText_ThreeDashes2[] = _("---");
-const u8 gOtherText_MaleSymbol2[] = _("♂");
-const u8 gOtherText_FemaleSymbol2[] = _("♀");
+const u8 gText_MaleSymbol[] = _("♂");
+const u8 gText_FemaleSymbol[] = _("♀");
 const u8 gOtherText_Lv[] = _("Lv.");
 const u8 gOtherText_TallPlusAndRightArrow[] = _("{TALL_PLUS}${RIGHT_ARROW}");
 const u8 gText_GoBackPrevMenu[] = _("Kehre zurück zum\nvorherigen Menü.");
@@ -1199,7 +1199,7 @@ const u8 gText_Dry[] = _("TROCKEN");
 const u8 gText_Sweet[] = _("SÜSS");
 const u8 gText_Bitter[] = _("BITTER");
 const u8 gText_Sour[] = _("SAUER");
-const u8 gContestStatsText_Tasty[] = _("LECKER");
+const u8 gText_Tasty[] = _("LECKER");
 const u8 gContestStatsText_Feel[] = _("WÜRZE");
 
 const u8 gText_StowCase[] = _("BOX verstauen.");

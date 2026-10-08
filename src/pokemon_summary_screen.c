@@ -2698,11 +2698,11 @@ static void PrintGenderSymbol(struct Pokemon *mon, u8 left, u8 top)
             Menu_EraseWindowRect(left, top, left, bottom);
             return;
         case MON_MALE:
-            genderSymbol = gOtherText_MaleSymbol2;
+            genderSymbol = gText_MaleSymbol;
             color = 11;
             break;
         case MON_FEMALE:
-            genderSymbol = gOtherText_FemaleSymbol2;
+            genderSymbol = gText_FemaleSymbol;
             color = 12;
             break;
         }

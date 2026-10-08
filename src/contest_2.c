@@ -544,7 +544,7 @@ static const struct SpriteTemplate sSpriteTemplates_ContestantsTurnBlinkEffect[]
 };
 
 const u8 gUnknown_083CC59C[] = _("{HIGHLIGHT TRANSPARENT}{COLOR}");
-const u8 gText_Slash[] = _("/");
+static const u8 sText_Slash[] = _("/");
 
 const u16 gUnknown_083CC5A4[] = {
     RGB(19, 3, 0),
@@ -1214,7 +1214,7 @@ void PrintContestMoveDescription(u16 move)
     }
 
     Text_InitWindowAndPrintText(&gWindowTemplate_Contest_MoveDescription, gContestEffectDescriptionPointers[gContestMoves[move].effect], 868, 11, 35);
-    Text_InitWindowAndPrintText(&gWindowTemplate_Contest_MoveDescription, gText_Slash, 866, 16, 31);
+    Text_InitWindowAndPrintText(&gWindowTemplate_Contest_MoveDescription, sText_Slash, 866, 16, 31);
 }
 
 void Contest_ClearMoveDescriptionBox(void)
