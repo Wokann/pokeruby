@@ -174,12 +174,12 @@ gStdScripts_End::
 	.include "data/maps/SlateportCity_SternsShipyard_2F/scripts.inc"
 	.include "data/maps/SlateportCity_ContestLobby/scripts.inc"
 	.include "data/maps/SlateportCity_ContestHall/scripts.inc"
-	.include "data/maps/SlateportCity_House1/scripts.inc"
+	.include "data/maps/SlateportCity_NameRatersHouse/scripts.inc"
 	.include "data/maps/SlateportCity_PokemonFanClub/scripts.inc"
 	.include "data/maps/SlateportCity_OceanicMuseum_1F/scripts.inc"
 	.include "data/maps/SlateportCity_OceanicMuseum_2F/scripts.inc"
 	.include "data/maps/SlateportCity_Harbor/scripts.inc"
-	.include "data/maps/SlateportCity_House2/scripts.inc"
+	.include "data/maps/SlateportCity_House/scripts.inc"
 	.include "data/maps/SlateportCity_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/SlateportCity_PokemonCenter_2F/scripts.inc"
 	.include "data/maps/SlateportCity_Mart/scripts.inc"
@@ -524,12 +524,12 @@ gStdScripts_End::
 	.include "data/maps/SlateportCity_SternsShipyard_2F/text.inc"
 	.include "data/maps/SlateportCity_ContestLobby/text.inc"
 	.include "data/maps/SlateportCity_ContestHall/text.inc"
-	.include "data/maps/SlateportCity_House1/text.inc"
+	.include "data/maps/SlateportCity_NameRatersHouse/text.inc"
 	.include "data/maps/SlateportCity_PokemonFanClub/text.inc"
 	.include "data/maps/SlateportCity_OceanicMuseum_1F/text.inc"
 	.include "data/maps/SlateportCity_OceanicMuseum_2F/text.inc"
 	.include "data/maps/SlateportCity_Harbor/text.inc"
-	.include "data/maps/SlateportCity_House2/text.inc"
+	.include "data/maps/SlateportCity_House/text.inc"
 	.include "data/maps/SlateportCity_PokemonCenter_1F/text.inc"
 	.include "data/maps/SlateportCity_Mart/text.inc"
 	.include "data/maps/MauvilleCity_Gym/text.inc"
@@ -1458,7 +1458,7 @@ FallarborTown_ContestLobby_EventScript_ShowVerdanturfContestReporter:: @ 81AE1F2
 	return
 
 FallarborTown_ContestLobby_EventScript_ShowSlateportContestReporter:: @ 81AE1F6
-	clearflag FLAG_HIDE_CONTEST_REPORTER_SLATEPORT
+	clearflag FLAG_HIDE_SLATEPORT_CITY_CONTEST_REPORTER
 	return
 
 FallarborTown_ContestLobby_EventScript_ShowLilycoveContestReporter:: @ 81AE1FA

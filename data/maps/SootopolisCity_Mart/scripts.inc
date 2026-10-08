@@ -4,10 +4,10 @@ SootopolisCity_Mart_MapScripts:: @ 815B21A
 SootopolisCity_Mart_EventScript_Clerk:: @ 815B21B
 	lock
 	faceplayer
-	message Text_HowMayIServeYou
+	message gText_HowMayIServeYou
 	waitmessage
 	pokemart SootopolisCity_Mart_Pokemart
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 

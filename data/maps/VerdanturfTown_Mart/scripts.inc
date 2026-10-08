@@ -4,10 +4,10 @@ VerdanturfTown_Mart_MapScripts:: @ 8153EBB
 VerdanturfTown_Mart_EventScript_Clerk:: @ 8153EBC
 	lock
 	faceplayer
-	message Text_HowMayIServeYou
+	message gText_HowMayIServeYou
 	waitmessage
 	pokemart VerdanturfTown_Mart_Pokemart
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 

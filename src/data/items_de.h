@@ -4770,7 +4770,7 @@ const struct Item gItems[] =
     },
     {
         .name = _("TM10"),
-        .itemId = ITEM_TM10_HIDDEN_POWER,
+        .itemId = ITEM_TM_HIDDEN_POWER,
         .price = 3000,
         .holdEffect = HOLD_EFFECT_NONE,
         .holdEffectParam = 0,
@@ -5266,7 +5266,7 @@ const struct Item gItems[] =
     },
     {
         .name = _("TM41"),
-        .itemId = ITEM_TM41_TORMENT,
+        .itemId = ITEM_TM_TORMENT,
         .price = 3000,
         .holdEffect = HOLD_EFFECT_NONE,
         .holdEffectParam = 0,
@@ -5298,7 +5298,7 @@ const struct Item gItems[] =
     },
     {
         .name = _("TM43"),
-        .itemId = ITEM_TM43_SECRET_POWER,
+        .itemId = ITEM_TM_SECRET_POWER,
         .price = 3000,
         .holdEffect = HOLD_EFFECT_NONE,
         .holdEffectParam = 0,
@@ -5346,7 +5346,7 @@ const struct Item gItems[] =
     },
     {
         .name = _("TM46"),
-        .itemId = ITEM_TM46_THIEF,
+        .itemId = ITEM_TM_THIEF,
         .price = 3000,
         .holdEffect = HOLD_EFFECT_NONE,
         .holdEffectParam = 0,

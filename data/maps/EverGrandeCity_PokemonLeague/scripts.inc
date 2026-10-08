@@ -24,10 +24,10 @@ EverGrandeCity_PokemonLeague_1F_EventScript_Nurse:: @ 815BA9A
 EverGrandeCity_PokemonLeague_1F_EventScript_Clerk:: @ 815BAA8
 	lock
 	faceplayer
-	message Text_HowMayIServeYou
+	message gText_HowMayIServeYou
 	waitmessage
 	pokemart EverGrandeCity_PokemonLeague_Items
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 

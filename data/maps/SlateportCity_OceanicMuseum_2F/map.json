@@ -22,7 +22,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_2F_EventScript_CaptStern",
-      "flag": "FLAG_HIDE_STERN_OCEANIC_MUSEUM_2F"
+      "flag": "FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_2F_CAPTAIN_STERN"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_VAR_6",
@@ -74,7 +74,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_2F_EventScript_MuseumPatron1",
-      "flag": "FLAG_HIDE_OCEANIC_MUSEUM_VISITORS"
+      "flag": "FLAG_HIDE_SLATEPORT_MUSEUM_POPULATION"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_POKEFAN_F",
@@ -87,7 +87,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_2F_EventScript_MuseumPatron2",
-      "flag": "FLAG_HIDE_OCEANIC_MUSEUM_VISITORS"
+      "flag": "FLAG_HIDE_SLATEPORT_MUSEUM_POPULATION"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_NINJA_BOY",
@@ -100,7 +100,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_2F_EventScript_MuseumPatron3",
-      "flag": "FLAG_HIDE_OCEANIC_MUSEUM_VISITORS"
+      "flag": "FLAG_HIDE_SLATEPORT_MUSEUM_POPULATION"
     }
   ],
   "warp_events": [

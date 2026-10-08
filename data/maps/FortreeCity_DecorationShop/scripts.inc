@@ -12,10 +12,10 @@ FortreeCity_DecorationShop_EventScript_Girl:: @ 8158261
 FortreeCity_DecorationShop_EventScript_ClerkDesks:: @ 815826A
 	lock
 	faceplayer
-	message Text_HowMayIServeYou
+	message gText_HowMayIServeYou
 	waitmessage
 	pokemartdecoration FortreeCity_DecorationShop_PokemartDecor_Desks
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
@@ -36,10 +36,10 @@ FortreeCity_DecorationShop_PokemartDecor_Desks:: @ 8158284
 FortreeCity_DecorationShop_EventScript_ClerkChairs:: @ 8158298
 	lock
 	faceplayer
-	message Text_HowMayIServeYou
+	message gText_HowMayIServeYou
 	waitmessage
 	pokemartdecoration FortreeCity_DecorationShop_PokemartDecor_Chairs
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 

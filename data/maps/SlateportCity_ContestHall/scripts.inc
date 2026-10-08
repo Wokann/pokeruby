@@ -12,12 +12,12 @@ SlateportCity_ContestHall_EventScript_155555:: @ 8155555
 SlateportCity_ContestHall_EventScript_15555E:: @ 815555E
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_TM41, SlateportCity_ContestHall_EventScript_155595
+	goto_if_set FLAG_RECEIVED_TM_TORMENT, SlateportCity_ContestHall_EventScript_155595
 	msgbox SlateportCity_ContestHall_Text_17CCE2, MSGBOX_DEFAULT
-	giveitem ITEM_TM41_TORMENT
+	giveitem ITEM_TM_TORMENT
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull
-	setflag FLAG_RECEIVED_TM41
+	setflag FLAG_RECEIVED_TM_TORMENT
 	msgbox SlateportCity_ContestHall_Text_17CE28, MSGBOX_DEFAULT
 	release
 	end

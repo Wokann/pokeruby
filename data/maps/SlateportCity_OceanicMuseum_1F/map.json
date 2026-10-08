@@ -126,7 +126,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_1F_EventScript_MuseumPatron1",
-      "flag": "FLAG_HIDE_OCEANIC_MUSEUM_VISITORS"
+      "flag": "FLAG_HIDE_SLATEPORT_MUSEUM_POPULATION"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MANIAC",
@@ -139,7 +139,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_1F_EventScript_MuseumPatron2",
-      "flag": "FLAG_HIDE_OCEANIC_MUSEUM_VISITORS"
+      "flag": "FLAG_HIDE_SLATEPORT_MUSEUM_POPULATION"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_POKEFAN_M",
@@ -152,7 +152,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_1F_EventScript_MuseumPatron3",
-      "flag": "FLAG_HIDE_OCEANIC_MUSEUM_VISITORS"
+      "flag": "FLAG_HIDE_SLATEPORT_MUSEUM_POPULATION"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_LITTLE_GIRL",
@@ -165,7 +165,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_1F_EventScript_MuseumPatron4",
-      "flag": "FLAG_HIDE_OCEANIC_MUSEUM_VISITORS"
+      "flag": "FLAG_HIDE_SLATEPORT_MUSEUM_POPULATION"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_VAR_1",
@@ -191,7 +191,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_1F_EventScript_1ADEE0",
-      "flag": "FLAG_HIDE_OCEANIC_MUSEUM_VISITORS"
+      "flag": "FLAG_HIDE_SLATEPORT_MUSEUM_POPULATION"
     }
   ],
   "warp_events": [

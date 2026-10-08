@@ -4,7 +4,7 @@ RustboroCity_Mart_MapScripts:: @ 8157BD3
 RustboroCity_Mart_EventScript_Clerk:: @ 8157BD4
 	lock
 	faceplayer
-	message Text_HowMayIServeYou
+	message gText_HowMayIServeYou
 	waitmessage
 	goto_if_unset FLAG_MET_DEVON_EMPLOYEE, RustboroCity_Mart_EventScript_PokemartBasic
 	goto_if_set FLAG_MET_DEVON_EMPLOYEE, RustboroCity_Mart_EventScript_PokemartExpanded
@@ -12,7 +12,7 @@ RustboroCity_Mart_EventScript_Clerk:: @ 8157BD4
 
 RustboroCity_Mart_EventScript_PokemartBasic:: @ 8157BEF
 	pokemart RustboroCity_Mart_Pokemart_Basic
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
@@ -34,7 +34,7 @@ RustboroCity_Mart_Pokemart_Basic:: @ 8157C00
 
 RustboroCity_Mart_EventScript_PokemartExpanded:: @ 8157C18
 	pokemart RustboroCity_Mart_Pokemart_Expanded
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 

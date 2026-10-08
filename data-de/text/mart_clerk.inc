@@ -1,8 +1,8 @@
-Text_HowMayIServeYou:: @ 81A0BE4
+gText_HowMayIServeYou:: @ 81A0BE4
 	.string "Willkommen!\p"
 	.string "Kann ich dir helfen?$"
 
-Text_PleaseComeAgain:: @ 81A0C02
+gText_PleaseComeAgain:: @ 81A0C02
 	.string "Bitte komm bald wieder!$"
 
 @ Unused

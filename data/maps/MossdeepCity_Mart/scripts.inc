@@ -4,10 +4,10 @@ MossdeepCity_Mart_MapScripts:: @ 815A925
 MossdeepCity_Mart_EventScript_Clerk:: @ 815A926
 	lock
 	faceplayer
-	message Text_HowMayIServeYou
+	message gText_HowMayIServeYou
 	waitmessage
 	pokemart MossdeepCity_Mart_Pokemart
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 

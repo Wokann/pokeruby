@@ -11,14 +11,14 @@ SlateportCity_Harbor_OnTransition:: @ 8155F63
 	end
 
 SlateportCity_Harbor_EventScript_ShowSSTidal:: @ 8155F85
-	clearflag FLAG_HIDE_SS_TIDAL_SLATEPORT_HARBOR
+	clearflag FLAG_HIDE_SLATEPORT_CITY_HARBOR_SS_TIDAL
 	return
 
 SlateportCity_Harbor_EventScript_ReadyEvilTeamEscapeScene:: @ 8155F89
 	savebgm MUS_EVIL_TEAM
 	setobjectxyperm 4, 12, 13
 	setobjectmovementtype 4, 9
-	setflag FLAG_HIDE_WORKERS_SLATEPORT_HARBOR
+	setflag FLAG_HIDE_SLATEPORT_CITY_HARBOR_PATRONS
 	return
 
 SlateportCity_Harbor_EventScript_EvilTeamEscapeTrigger0:: @ 8155F9B

@@ -1,4 +1,4 @@
-SlateportCity_House1_MapScripts:: @ 815567A
+SlateportCity_NameRatersHouse_MapScripts:: @ 815567A
 	.byte 0
 
 SlateportCity_NameRatersHouse_EventScript_NameRater:: @ 815567B

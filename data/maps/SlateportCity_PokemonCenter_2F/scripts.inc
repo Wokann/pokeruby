@@ -4,14 +4,14 @@ SlateportCity_PokemonCenter_2F_MapScripts:: @ 81563EE
 	map_script MAP_SCRIPT_ON_LOAD, SlateportCity_PokemonCenter_2F_MapScript1_1A3D32
 	.byte 0
 
-SlateportCity_PokemonCenter_2F_EventScript_1563FE:: @ 81563FE
+SlateportCity_PokemonCenter_2F_EventScript_Colosseum:: @ 81563FE
 	call SlateportCity_PokemonCenter_2F_EventScript_1A3EA6
 	end
 
-SlateportCity_PokemonCenter_2F_EventScript_156404:: @ 8156404
+SlateportCity_PokemonCenter_2F_EventScript_TradeCenter:: @ 8156404
 	call SlateportCity_PokemonCenter_2F_EventScript_1A40CC
 	end
 
-SlateportCity_PokemonCenter_2F_EventScript_15640A:: @ 815640A
+SlateportCity_PokemonCenter_2F_EventScript_RecordCorner:: @ 815640A
 	call SlateportCity_PokemonCenter_2F_EventScript_1A41FB
 	end
