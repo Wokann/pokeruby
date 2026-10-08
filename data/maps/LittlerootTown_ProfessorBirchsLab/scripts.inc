@@ -106,7 +106,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_AideReceivedStarter:: @ 8152D90
 LittlerootTown_ProfessorBirchsLab_EventScript_Birch:: @ 8152D9A
 	lock
 	faceplayer
-	goto_if_unset FLAG_UNKNOWN_BIRCH_380, ProfBirch_EventScript_AskRatePokedex
+	goto_if_unset FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_UNKNOWN_0x380, ProfBirch_EventScript_AskRatePokedex
 	compare VAR_BIRCH_LAB_STATE, 5
 	goto_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_PokemonAwait
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BirchRivalRoute103, MSGBOX_DEFAULT
