@@ -33,11 +33,11 @@ Route128_Text_17210B:: @ 817210B
 	.string "Its power is unbelievable.\n"
 	.string "It has upset the balance of nature...$"
 
-Route128_Text_172181:: @ 8172181
+Route128_Text_StevenWhatIsHappening:: @ 8172181
 	.string "STEVEN: {PLAYER}{KUN}!\n"
 	.string "What is happening?$"
 
-Route128_Text_1721A2:: @ 81721A2
+Route128_Text_StevenWholeWorldWillDrown:: @ 81721A2
 	.string "This is terrible...\p"
 	.string "If this doesn't stop, all HOENN...\n"
 	.string "No, the whole world will drown.\p"
@@ -57,7 +57,7 @@ Route128_Text_1722A1:: @ 81722A1
 	.string "There's no point arguing here...\n"
 	.string "SOOTOPOLIS should provide answers...$"
 
-Route128_Text_1723BE:: @ 81723BE
+Route128_Text_StevenImGoingToSootopolis:: @ 81723BE
 	.string "{PLAYER}{KUN}...\n"
 	.string "I don't know what you intend to do,\l"
 	.string "but don't do anything reckless.\p"

@@ -42,7 +42,7 @@
       "movement_range_y": 5,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route128_EventScript_1522A4",
+      "script": "Route128_EventScript_Isaiah",
       "flag": "0"
     },
     {
@@ -55,7 +55,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "7",
-      "script": "Route128_EventScript_1522E2",
+      "script": "Route128_EventScript_Katelyn",
       "flag": "0"
     },
     {
@@ -69,7 +69,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_STEVEN_ROUTE128"
+      "flag": "FLAG_HIDE_ROUTE_128_STEVEN"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_VAR_6",
@@ -107,7 +107,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route128_EventScript_15234E",
+      "script": "Route128_EventScript_Wayne",
       "flag": "0"
     },
     {
@@ -120,7 +120,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
-      "script": "Route128_EventScript_152337",
+      "script": "Route128_EventScript_Ruben",
       "flag": "0"
     },
     {
@@ -133,7 +133,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route128_EventScript_152320",
+      "script": "Route128_EventScript_Alexa",
       "flag": "0"
     }
   ],
@@ -146,7 +146,7 @@
       "y": 9,
       "elevation": 3,
       "item": "ITEM_HEART_SCALE",
-      "flag": "FLAG_HIDDEN_ITEM_5C"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_128_HEART_SCALE_1"
     },
     {
       "type": "hidden_item",
@@ -154,7 +154,7 @@
       "y": 21,
       "elevation": 3,
       "item": "ITEM_HEART_SCALE",
-      "flag": "FLAG_HIDDEN_ITEM_5D"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_128_HEART_SCALE_2"
     },
     {
       "type": "hidden_item",
@@ -162,7 +162,7 @@
       "y": 33,
       "elevation": 3,
       "item": "ITEM_HEART_SCALE",
-      "flag": "FLAG_HIDDEN_ITEM_5E"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_128_HEART_SCALE_3"
     }
   ]
 }

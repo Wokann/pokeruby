@@ -35,11 +35,11 @@ Route128_Text_17210B:: @ 817210B
 	.string "Seine Kraft ist unglaublich. Es hat\n"
 	.string "das Gleichgewicht der Natur verändert.$"
 
-Route128_Text_172181:: @ 8172181
+Route128_Text_StevenWhatIsHappening:: @ 8172181
 	.string "TROY: {PLAYER}{KUN}!\n"
 	.string "Was geht hier vor?$"
 
-Route128_Text_1721A2:: @ 81721A2
+Route128_Text_StevenWholeWorldWillDrown:: @ 81721A2
 	.string "Das ist schrecklich...\p"
 	.string "Wenn das nicht aufhört, wird ganz\n"
 	.string "HOENN... Nein, die ganze Welt wird\l"
@@ -61,7 +61,7 @@ Route128_Text_1722A1:: @ 81722A1
 	.string "Es bleibt keine Zeit für Spekulationen...\n"
 	.string "In XENEROVILLE erfahren wir mehr...$"
 
-Route128_Text_1723BE:: @ 81723BE
+Route128_Text_StevenImGoingToSootopolis:: @ 81723BE
 	.string "{PLAYER}{KUN}...\n"
 	.string "Ich weiß nicht, was du vorhast, aber tue\l"
 	.string "nichts Unüberlegtes.\p"

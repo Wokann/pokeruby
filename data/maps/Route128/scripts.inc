@@ -1,14 +1,14 @@
 Route128_MapScripts:: @ 815211B
-	map_script MAP_SCRIPT_ON_TRANSITION, Route128_MapScript1_152126
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route128_MapScript2_152135
+	map_script MAP_SCRIPT_ON_TRANSITION, Route128_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route128_OnFrame
 	.byte 0
 
-Route128_MapScript1_152126:: @ 8152126
+Route128_OnTransition:: @ 8152126
 	call_if_set FLAG_SYS_WEATHER_CTRL, Common_EventScript_SetLegendaryWeather
 	call Common_EventScript_SetupEvilTeamGfxIds
 	end
 
-Route128_MapScript2_152135:: @ 8152135
+Route128_OnFrame:: @ 8152135
 	map_script_2 VAR_ROUTE128_STATE, 1, Route128_EventScript_15213F
 	.2byte 0
 
@@ -55,23 +55,23 @@ Route128_EventScript_15213F:: @ 815213F
 	dofieldeffect FLDEFF_NPCFLY_OUT
 	waitfieldeffect FLDEFF_NPCFLY_OUT
 	addobject 3
-	applymovement 3, Route128_Movement_15226F
+	applymovement 3, Route128_Movement_StevenApproachPlayer
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
-	msgbox Route128_Text_172181, MSGBOX_DEFAULT
+	msgbox Route128_Text_StevenWhatIsHappening, MSGBOX_DEFAULT
 	closemessage
-	applymovement 3, Route128_Movement_15226D
+	applymovement 3, Route128_Movement_StevenWalkUp
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox Route128_Text_1721A2, MSGBOX_DEFAULT
+	msgbox Route128_Text_StevenWholeWorldWillDrown, MSGBOX_DEFAULT
 	.else
 	msgbox Route128_Text_1722A1, MSGBOX_DEFAULT
 	.endif
 	applymovement 3, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
-	msgbox Route128_Text_1723BE, MSGBOX_DEFAULT
+	msgbox Route128_Text_StevenImGoingToSootopolis, MSGBOX_DEFAULT
 	closemessage
 	applymovement 3, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
@@ -104,11 +104,11 @@ Route128_EventScript_15213F:: @ 815213F
 	walk_up
 	step_end
 
-Route128_Movement_15226D:: @ 815226D
+Route128_Movement_StevenWalkUp:: @ 815226D
 	walk_up
 	step_end
 
-Route128_Movement_15226F:: @ 815226F
+Route128_Movement_StevenApproachPlayer:: @ 815226F
 	walk_fast_left
 	step_end
 
@@ -179,43 +179,43 @@ Route128_Movement_1522A1:: @ 81522A1
 	walk_in_place_faster_down
 	step_end
 
-Route128_EventScript_1522A4:: @ 81522A4
-	trainerbattle_single TRAINER_ISAIAH_1, Route128_Text_1C1C67, Route128_Text_1C1C95
+Route128_EventScript_Isaiah:: @ 81522A4
+	trainerbattle_single TRAINER_ISAIAH_1, Route128_Text_IsaiahIntro, Route128_Text_IsaiahDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	compare VAR_RESULT, 1
-	goto_if_eq Route128_EventScript_1522CB
-	msgbox Route128_Text_1C1CC3, MSGBOX_AUTOCLOSE
+	goto_if_eq Route128_EventScript_RematchIsaiah
+	msgbox Route128_Text_IsaiahPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route128_EventScript_1522CB:: @ 81522CB
-	trainerbattle_rematch TRAINER_ISAIAH_1, Route128_Text_1C1D02, Route128_Text_1C1D45
-	msgbox Route128_Text_1C1D6B, MSGBOX_AUTOCLOSE
+Route128_EventScript_RematchIsaiah:: @ 81522CB
+	trainerbattle_rematch TRAINER_ISAIAH_1, Route128_Text_IsaiahRematchIntro, Route128_Text_IsaiahRematchDefeat
+	msgbox Route128_Text_IsaiahPostRematch, MSGBOX_AUTOCLOSE
 	end
 
-Route128_EventScript_1522E2:: @ 81522E2
-	trainerbattle_single TRAINER_KATELYN_1, Route128_Text_1C1DB0, Route128_Text_1C1E25
+Route128_EventScript_Katelyn:: @ 81522E2
+	trainerbattle_single TRAINER_KATELYN_1, Route128_Text_KatelynIntro, Route128_Text_KatelynDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	compare VAR_RESULT, 1
-	goto_if_eq Route128_EventScript_152309
-	msgbox Route128_Text_1C1E4A, MSGBOX_AUTOCLOSE
+	goto_if_eq Route128_EventScript_RematchKatelyn
+	msgbox Route128_Text_KatelynPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route128_EventScript_152309:: @ 8152309
-	trainerbattle_rematch TRAINER_KATELYN_1, Route128_Text_1C1E90, Route128_Text_1C1EFA
-	msgbox Route128_Text_1C1F2E, MSGBOX_AUTOCLOSE
+Route128_EventScript_RematchKatelyn:: @ 8152309
+	trainerbattle_rematch TRAINER_KATELYN_1, Route128_Text_KatelynRematchIntro, Route128_Text_KatelynRematchDefeat
+	msgbox Route128_Text_KatelynPostRematch, MSGBOX_AUTOCLOSE
 	end
 
-Route128_EventScript_152320:: @ 8152320
-	trainerbattle_single TRAINER_ALEXA, Route128_Text_1C1F6D, Route128_Text_1C1FCC
-	msgbox Route128_Text_1C1FE8, MSGBOX_AUTOCLOSE
+Route128_EventScript_Alexa:: @ 8152320
+	trainerbattle_single TRAINER_ALEXA, Route128_Text_AlexaIntro, Route128_Text_AlexaDefeat
+	msgbox Route128_Text_AlexaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route128_EventScript_152337:: @ 8152337
-	trainerbattle_single TRAINER_RUBEN, Route128_Text_1C202C, Route128_Text_1C2051
-	msgbox Route128_Text_1C2060, MSGBOX_AUTOCLOSE
+Route128_EventScript_Ruben:: @ 8152337
+	trainerbattle_single TRAINER_RUBEN, Route128_Text_RubenIntro, Route128_Text_RubenDefeat
+	msgbox Route128_Text_RubenPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route128_EventScript_15234E:: @ 815234E
-	trainerbattle_single TRAINER_WAYNE, Route128_Text_1C2090, Route128_Text_1C20FC
-	msgbox Route128_Text_1C210D, MSGBOX_AUTOCLOSE
+Route128_EventScript_Wayne:: @ 815234E
+	trainerbattle_single TRAINER_WAYNE, Route128_Text_WayneIntro, Route128_Text_WayneDefeat
+	msgbox Route128_Text_WaynePostBattle, MSGBOX_AUTOCLOSE
 	end
