@@ -15,7 +15,7 @@ SlateportCity_ContestLobby_Text_DoYourFriendsHaveBerries:: @ 817C9D5
 SlateportCity_ContestLobby_Text_YouCanHavePokeblockCase:: @ 817CA67
 	.string "Ich habe zwei. Du kannst eine haben.$"
 
-SlateportCity_ContestLobby_Text_PutPokeblocksInThere:: @ 817CA88
+SlateportCity_ContestLobby_Text_MakePokeblocksDifferentBerries:: @ 817CA88
 	.string "Stelle {POKEBLOCK} her und verstaue sie\n"
 	.string "darin.\p"
 	.string "Wenn ihr einen {POKEBLOCK} herstellt, muss\n"

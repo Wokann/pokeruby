@@ -111,7 +111,7 @@ SlateportCity_ContestLobby_EventScript_LittleGirl:: @ 81554F9
 	end
 
 SlateportCity_ContestLobby_EventScript_HavePokeblockCase:: @ 8155526
-	msgbox SlateportCity_ContestLobby_Text_PutPokeblocksInThere, MSGBOX_NPC
+	msgbox SlateportCity_ContestLobby_Text_MakePokeblocksDifferentBerries, MSGBOX_NPC
 	end
 
 SlateportCity_ContestLobby_EventScript_15552F:: @ 815552F

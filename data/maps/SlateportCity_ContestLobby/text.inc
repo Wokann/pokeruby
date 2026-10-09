@@ -15,7 +15,7 @@ SlateportCity_ContestLobby_Text_DoYourFriendsHaveBerries:: @ 817C9D5
 SlateportCity_ContestLobby_Text_YouCanHavePokeblockCase:: @ 817CA67
 	.string "I have two, so you can have one!$"
 
-SlateportCity_ContestLobby_Text_PutPokeblocksInThere:: @ 817CA88
+SlateportCity_ContestLobby_Text_MakePokeblocksDifferentBerries:: @ 817CA88
 	.string "Make {POKEBLOCK}S and put them in there.\p"
 	.string "When you make a {POKEBLOCK}, everyone\n"
 	.string "has to put in a different BERRY.$"
