@@ -20,7 +20,7 @@ SeafloorCavern_Room9_EventScript_15DAFA:: @ 815DAFA
 	setvar VAR_0x8007, 5
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
-	applymovement LOCALID_PLAYER, SeafloorCavern_Room9_Movement_15DD68
+	applymovement LOCALID_PLAYER, SeafloorCavern_Room9_Movement_Delay32
 	waitmovement 0
 	.ifdef SAPPHIRE
 	msgbox UnknownString_81B41B8, MSGBOX_DEFAULT
@@ -285,7 +285,7 @@ SeafloorCavern_Room9_Movement_15DD63:: @ 815DD63
 	walk_fast_right
 	step_end
 
-SeafloorCavern_Room9_Movement_15DD68:: @ 815DD68
+SeafloorCavern_Room9_Movement_Delay32:: @ 815DD68
 	delay_16
 	delay_16
 	step_end
