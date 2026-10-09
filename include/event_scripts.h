@@ -153,4 +153,9 @@ extern const u8 EventScript_RecordCenter_Spot1[];
 extern const u8 EventScript_RecordCenter_Spot2[];
 extern const u8 EventScript_RecordCenter_Spot3[];
 
+extern const u8 EventScript_BattleColosseum_4P_PlayerSpot0[];
+extern const u8 EventScript_BattleColosseum_4P_PlayerSpot1[];
+extern const u8 EventScript_BattleColosseum_4P_PlayerSpot2[];
+extern const u8 EventScript_BattleColosseum_4P_PlayerSpot3[];
+
 #endif // GUARD_EVENT_SCRIPTS_H

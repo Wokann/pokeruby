@@ -191,7 +191,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A3F5E:: @ 81A3F5E
 
 OldaleTown_PokemonCenter_2F_EventScript_1A3FCD:: @ 81A3FCD
 	special SetCableClubWarp
-	warp MAP_DOUBLE_BATTLE_COLOSSEUM, 255, 5, 8
+	warp MAP_BATTLE_COLOSSEUM_4P, 255, 5, 8
 	special DoCableClubWarp
 	waitstate
 	end
@@ -530,51 +530,51 @@ EventScript_BattleColosseum_2P_PlayerSpot1:: @ 81A4379
 	waitstate
 	end
 
-DoubleBattleColosseum_EventScript_1A4383:: @ 81A4383
+EventScript_BattleColosseum_4P_PlayerSpot0:: @ 81A4383
 	fadescreen FADE_TO_BLACK
 	special ChooseHalfPartyForBattle
 	waitstate
 	compare VAR_RESULT, 0
-	goto_if_eq DoubleBattleColosseum_EventScript_1A43EF
+	goto_if_eq EventScript_BattleColosseum_4P_CancelSpotTrigger
 	setvar VAR_0x8005, 0
 	special ColosseumPlayerSpotTriggered
 	waitstate
 	end
 
-DoubleBattleColosseum_EventScript_1A439E:: @ 81A439E
+EventScript_BattleColosseum_4P_PlayerSpot1:: @ 81A439E
 	fadescreen FADE_TO_BLACK
 	special ChooseHalfPartyForBattle
 	waitstate
 	compare VAR_RESULT, 0
-	goto_if_eq DoubleBattleColosseum_EventScript_1A43EF
+	goto_if_eq EventScript_BattleColosseum_4P_CancelSpotTrigger
 	setvar VAR_0x8005, 1
 	special ColosseumPlayerSpotTriggered
 	waitstate
 	end
 
-DoubleBattleColosseum_EventScript_1A43B9:: @ 81A43B9
+EventScript_BattleColosseum_4P_PlayerSpot2:: @ 81A43B9
 	fadescreen FADE_TO_BLACK
 	special ChooseHalfPartyForBattle
 	waitstate
 	compare VAR_RESULT, 0
-	goto_if_eq DoubleBattleColosseum_EventScript_1A43EF
+	goto_if_eq EventScript_BattleColosseum_4P_CancelSpotTrigger
 	setvar VAR_0x8005, 2
 	special ColosseumPlayerSpotTriggered
 	waitstate
 	end
 
-DoubleBattleColosseum_EventScript_1A43D4:: @ 81A43D4
+EventScript_BattleColosseum_4P_PlayerSpot3:: @ 81A43D4
 	fadescreen FADE_TO_BLACK
 	special ChooseHalfPartyForBattle
 	waitstate
 	compare VAR_RESULT, 0
-	goto_if_eq DoubleBattleColosseum_EventScript_1A43EF
+	goto_if_eq EventScript_BattleColosseum_4P_CancelSpotTrigger
 	setvar VAR_0x8005, 3
 	special ColosseumPlayerSpotTriggered
 	waitstate
 	end
 
-DoubleBattleColosseum_EventScript_1A43EF:: @ 81A43EF
+EventScript_BattleColosseum_4P_CancelSpotTrigger:: @ 81A43EF
 	end
 
 EventScript_TradeCenter_Chair0:: @ 81A43F0

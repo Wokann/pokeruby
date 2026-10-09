@@ -99,10 +99,6 @@ static void RunTerminateLinkScript(void);
 
 extern u8 EventScript_WhiteOut[];
 extern u8 EventScript_ResetMrBriney[];
-extern u8 DoubleBattleColosseum_EventScript_1A4383[];
-extern u8 DoubleBattleColosseum_EventScript_1A439E[];
-extern u8 DoubleBattleColosseum_EventScript_1A43B9[];
-extern u8 DoubleBattleColosseum_EventScript_1A43D4[];
 extern u8 TradeRoom_ReadTrainerCard1[];
 extern u8 TradeRoom_ReadTrainerCard2[];
 extern u8 TradeRoom_TooBusyToNotice[];
@@ -2407,13 +2403,13 @@ static const u8 *sub_805568C(struct CableClubPlayer *player)
 
 static u16 sub_8055758(const u8 *script)
 {
-    if (script == DoubleBattleColosseum_EventScript_1A4383)
+    if (script == EventScript_BattleColosseum_4P_PlayerSpot0)
         return 10;
-    if (script == DoubleBattleColosseum_EventScript_1A439E)
+    if (script == EventScript_BattleColosseum_4P_PlayerSpot1)
         return 9;
-    if (script == DoubleBattleColosseum_EventScript_1A43B9)
+    if (script == EventScript_BattleColosseum_4P_PlayerSpot2)
         return 10;
-    if (script == DoubleBattleColosseum_EventScript_1A43D4)
+    if (script == EventScript_BattleColosseum_4P_PlayerSpot3)
         return 9;
     if (script == EventScript_RecordCenter_Spot0)
         return 10;

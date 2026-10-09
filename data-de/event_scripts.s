@@ -384,7 +384,7 @@ gStdScripts_End::
 	.include "data/maps/BattleColosseum_2P/scripts.inc"
 	.include "data/maps/TradeCenter/scripts.inc"
 	.include "data/maps/RecordCorner/scripts.inc"
-	.include "data/maps/DoubleBattleColosseum/scripts.inc"
+	.include "data/maps/BattleColosseum_4P/scripts.inc"
 	.include "data/maps/LinkContestRoom1/scripts.inc"
 	.include "data/maps/LinkContestRoom2/scripts.inc"
 	.include "data/maps/LinkContestRoom3/scripts.inc"
