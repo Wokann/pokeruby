@@ -1414,7 +1414,7 @@ LilycoveCity_ContestLobby_EventScript_TryShowContestReporter:: @ 81AE188
 LilycoveCity_ContestLobby_EventScript_TryShowContestReporter:: @ 81AE188
 LilycoveCity_ContestLobby_EventScript_TryShowContestReporter:: @ 81AE188
 LilycoveCity_ContestLobby_EventScript_TryShowContestReporter:: @ 81AE188
-	compare VAR_LINK_CONTEST_ROOM_STATE, 2
+	compare VAR_CONTEST_HALL_STATE, 2
 	goto_if_ne LilycoveCity_ContestLobby_EventScript_DontShowContestReporter
 	setvar VAR_0x8005, 6
 	special InterviewBefore

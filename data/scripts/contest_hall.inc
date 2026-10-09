@@ -177,10 +177,10 @@ FallarborTown_ContestLobby_EventScript_1A513D:: @ 81A513D
 	msgbox FallarborTown_ContestLobby_Text_1A67C1, MSGBOX_DEFAULT
 	closemessage
 	releaseall
-	setvar VAR_LINK_CONTEST_ROOM_STATE, 1
+	setvar VAR_CONTEST_HALL_STATE, 1
 	return
 
-LinkContestRoom1_EventScript_1A514D:: @ 81A514D
+ContestHall_EventScript_DoContest:: @ 81A514D
 	setvar VAR_0x8006, 0
 	lockall
 	applymovement 14, LinkContestRoom1_Movement_1A5DBF
@@ -198,7 +198,7 @@ LinkContestRoom1_EventScript_1A514D:: @ 81A514D
 	call LinkContestRoom1_EventScript_1A5A49
 	call LinkContestRoom1_EventScript_1A5A90
 	call LinkContestRoom1_EventScript_1A5BAB
-	setvar VAR_LINK_CONTEST_ROOM_STATE, 2
+	setvar VAR_CONTEST_HALL_STATE, 2
 	return
 
 LinkContestRoom1_EventScript_1A51A0:: @ 81A51A0

@@ -12,7 +12,7 @@ SlateportCity_ContestLobby_EventScript_ContestReceptionist:: @ 815541D
 	call LilycoveCity_ContestLobby_EventScript_SpeakToContestReceptionist
 	call SlateportCity_ContestLobby_EventScript_155448
 	special SetContestTrainerGfxIds
-	call LilycoveCity_ContestLobby_EventScript_SetupRivalGfxId
+	call LilycoveCity_ContestLobby_EventScript_SetPlayerGfx
 	setvar VAR_CONTEST_LOCATION, 3
 	warp MAP_LINK_CONTEST_ROOM1, 255, 7, 5
 	waitstate

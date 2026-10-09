@@ -477,7 +477,7 @@ LilycoveCity_ContestLobby_EventScript_StartLinkContest:: @ 8158DD1
 
 LilycoveCity_ContestLobby_EventScript_158DEE:: @ 8158DEE
 	call LilycoveCity_ContestLobby_EventScript_LeadToLinkContestHall
-	setvar VAR_LINK_CONTEST_ROOM_STATE, 1
+	setvar VAR_CONTEST_HALL_STATE, 1
 	special SetLinkContestPlayerGfx
 	setvar VAR_CONTEST_LOCATION, 5
 	setvar VAR_CONTEST_RANK, 3
@@ -572,7 +572,7 @@ LilycoveCity_ContestLobby_EventScript_ContestReceptionist:: @ 8158EB0
 	call LilycoveCity_ContestLobby_EventScript_SpeakToContestReceptionist
 	call LilycoveCity_ContestLobby_EventScript_LeadToContestHall
 	special SetContestTrainerGfxIds
-	call LilycoveCity_ContestLobby_EventScript_SetupRivalGfxId
+	call LilycoveCity_ContestLobby_EventScript_SetPlayerGfx
 	setvar VAR_CONTEST_LOCATION, 4
 	call LilycoveCity_ContestLobby_EventScript_WarpToContestHall
 	waitstate
