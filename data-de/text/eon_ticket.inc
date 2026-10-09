@@ -23,23 +23,23 @@ EventTicket_Text_ShowEonTicket:: @ 81C5120
 	.string "meine alten Knochen!\p"
 	.string "Alle Mann an Bord!$"
 
-SouthernIsland_Exterior_Text_1C5215:: @ 81C5215
+EventTicket_Text_SouthernIslandSailBack:: @ 81C5215
 	.string "Aye, Maat, auf dieser gottverlassenen\n"
 	.string "Insel gibt's nichts zu sehen und zu tun.\p"
 	.string "Sollen wir nicht nach SEEGRASULB CITY\n"
 	.string "zurücksegeln?$"
 
-SouthernIsland_Exterior_Text_1C5281:: @ 81C5281
+EventTicket_Text_SailHome:: @ 81C5281
 	.string "Aye, alles klar!\n"
 	.string "Segeln wir nach Hause!$"
 
-SouthernIsland_Exterior_Text_1C52A6:: @ 81C52A6
+EventTicket_Text_AsYouLike:: @ 81C52A6
 	.string "Aye, ganz wie du willst.$"
 
-SouthernIsland_Interior_Text_1C52C5:: @ 81C52C5
+SouthernIsland_Interior_Text_Sign:: @ 81C52C5
 	.string "“Alle Träume sind nur eine andere\n"
 	.string "Realität. Vergiss das nicht...”$"
 
-SouthernIsland_Exterior_Text_1C52FB:: @ 81C52FB
+SouthernIsland_Exterior_Text_Sign:: @ 81C52FB
 	.string "“Die, denen die Erinnerung verblasst,\n"
 	.string "versuchen sie im Herzen zu halten.”$"

@@ -21,7 +21,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SouthernIsland_Exterior_EventScript_160AE0",
+      "script": "SouthernIsland_Exterior_EventScript_Sailor",
       "flag": "0"
     },
     {
@@ -62,7 +62,7 @@
       "y": 7,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "SouthernIsland_Exterior_EventScript_160B4A"
+      "script": "SouthernIsland_Exterior_EventScript_Sign"
     }
   ]
 }
