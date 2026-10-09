@@ -601,41 +601,41 @@ EventScript_TradeCenter_Chair1:: @ 81A43FA
 	waitstate
 	end
 
-RecordCorner_EventScript_1A4418:: @ 81A4418
+EventScript_RecordCenter_Spot0:: @ 81A4418
 	setvar VAR_0x8005, 0
 	special RecordMixingPlayerSpotTriggered
 	waitstate
 	compare VAR_TEMP_1, 0
-	goto_if_ne RecordCorner_EventScript_1A446C
+	goto_if_ne RecordCorner_EventScript_ReceivedGiftItem
 	end
 
-RecordCorner_EventScript_1A442D:: @ 81A442D
+EventScript_RecordCenter_Spot1:: @ 81A442D
 	setvar VAR_0x8005, 1
 	special RecordMixingPlayerSpotTriggered
 	waitstate
 	compare VAR_TEMP_1, 0
-	goto_if_ne RecordCorner_EventScript_1A446C
+	goto_if_ne RecordCorner_EventScript_ReceivedGiftItem
 	end
 
-RecordCorner_EventScript_1A4442:: @ 81A4442
+EventScript_RecordCenter_Spot2:: @ 81A4442
 	setvar VAR_0x8005, 2
 	special RecordMixingPlayerSpotTriggered
 	waitstate
 	compare VAR_TEMP_1, 0
-	goto_if_ne RecordCorner_EventScript_1A446C
+	goto_if_ne RecordCorner_EventScript_ReceivedGiftItem
 	end
 
-RecordCorner_EventScript_1A4457:: @ 81A4457
+EventScript_RecordCenter_Spot3:: @ 81A4457
 	setvar VAR_0x8005, 3
 	special RecordMixingPlayerSpotTriggered
 	waitstate
 	compare VAR_TEMP_1, 0
-	goto_if_ne RecordCorner_EventScript_1A446C
+	goto_if_ne RecordCorner_EventScript_ReceivedGiftItem
 	end
 
-RecordCorner_EventScript_1A446C:: @ 81A446C
+RecordCorner_EventScript_ReceivedGiftItem:: @ 81A446C
 	bufferitemname 1, VAR_TEMP_1
-	message RecordCorner_Text_1A4E3B
+	message RecordCorner_Text_PlayerSentOverOneX
 	waitmessage
 	waitbuttonpress
 	releaseall
@@ -684,20 +684,20 @@ TradeCenter_EventScript_Attendant:: @ 81A44AD
 	closemessage
 	end
 
-RecordCorner_EventScript_1A44BC:: @ 81A44BC
+RecordCorner_EventScript_Attendant:: @ 81A44BC
 	compare VAR_TEMP_0, 0
-	goto_if_ne RecordCorner_EventScript_1A44D6
+	goto_if_ne RecordCorner_EventScript_AlreadyMixed
 	special Script_FacePlayer
-	message RecordCorner_Text_1A4DD7
+	message RecordCorner_Text_TakeSeatAndWait
 	waitmessage
 	waitbuttonpress
 	special Script_ClearHeldMovement
 	closemessage
 	end
 
-RecordCorner_EventScript_1A44D6:: @ 81A44D6
+RecordCorner_EventScript_AlreadyMixed:: @ 81A44D6
 	special Script_FacePlayer
-	message RecordCorner_Text_1A4DF7
+	message RecordCorner_Text_ThanksForComing
 	waitmessage
 	waitbuttonpress
 	special Script_ClearHeldMovement

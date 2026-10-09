@@ -152,17 +152,17 @@ TradeCenter_Text_TakeSeatStartTrade:: @ 81A4DAB
 	.string "Bitte geh in Position und beginne mit\n"
 	.string "dem Tausch.$"
 
-RecordCorner_Text_1A4DD7:: @ 81A4DD7
+RecordCorner_Text_TakeSeatAndWait:: @ 81A4DD7
 	.string "Bitte geh in Position und warte.$"
 
-RecordCorner_Text_1A4DF7:: @ 81A4DF7
+RecordCorner_Text_ThanksForComing:: @ 81A4DF7
 	.string "Danke für den Besuch!$"
 
 UnknownString_81A4E0A: @ 81A4E0A
 	.string "Bitte wähle die POKéMON für den\n"
 	.string "MULTIKAMPF.$"
 
-RecordCorner_Text_1A4E3B:: @ 81A4E3B
+RecordCorner_Text_PlayerSentOverOneX:: @ 81A4E3B
 	.string "{STR_VAR_1} hat ein {STR_VAR_2}\n"
 	.string "versendet.$"
 
