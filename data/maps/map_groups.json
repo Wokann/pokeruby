@@ -449,9 +449,9 @@
   ],
   "gMapGroup_SpecialArea": [
     "SafariZone_Northwest",
-    "SafariZone_Northeast",
+    "SafariZone_North",
     "SafariZone_Southwest",
-    "SafariZone_Southeast",
+    "SafariZone_South",
     "BattleTower_Outside",
     "BattleTower_Lobby",
     "BattleTower_Elevator",
@@ -553,8 +553,8 @@
     "Underwater_Route127",
     "Underwater_Route128",
     "SafariZone_Northwest",
-    "SafariZone_Northeast",
+    "SafariZone_North",
     "SafariZone_Southwest",
-    "SafariZone_Southeast"
+    "SafariZone_South"
   ]
 }

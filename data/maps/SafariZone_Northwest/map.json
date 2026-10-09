@@ -13,7 +13,7 @@
     {
       "direction": "right",
       "offset": 0,
-      "map": "MAP_SAFARI_ZONE_NORTHEAST"
+      "map": "MAP_SAFARI_ZONE_NORTH"
     },
     {
       "direction": "down",
@@ -32,7 +32,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SafariZone_Northwest_EventScript_160007",
+      "script": "SafariZone_Northwest_EventScript_Man",
       "flag": "0"
     },
     {
@@ -45,8 +45,8 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SafariZone_Northwest_EventScript_1B190C",
-      "flag": "FLAG_ITEM_SAFARI_ZONE_NORTHWEST_1"
+      "script": "SafariZone_Northwest_EventScript_ItemTMSolarBeam",
+      "flag": "FLAG_ITEM_SAFARI_ZONE_NORTH_WEST_TM_SOLAR_BEAM"
     }
   ],
   "warp_events": [],
