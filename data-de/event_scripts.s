@@ -1102,7 +1102,7 @@ gText_NurseJoy_Pokerus:: @ 81A1275
 
 	.include "data/text/surf.inc"
 
-SealedChamber_InnerRoom_Text_1A138B:: @ 81A138B
+gText_DoorOpenedFarAway:: @ 81A138B
 	.string "Das hörte sich an, als würde irgendwo\n"
 	.string "eine Tür geöffnet.$"
 
