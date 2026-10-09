@@ -67,7 +67,7 @@ MauvilleCity_Gym_EventScript_DeactivatePuzzle:: @ 81565A7
 
 MauvilleCity_Gym_EventScript_Wattson:: @ 81565AB
 	trainerbattle_single TRAINER_WATTSON, MauvilleCity_Gym_Text_WattsonIntro, MauvilleCity_Gym_Text_WattsonDefeat, MauvilleCity_Gym_EventScript_WattsonDefeated, NO_MUSIC
-	goto_if_unset FLAG_RECEIVED_TM_SHOCK_WAVE, MauvilleCity_Gym_EventScript_GiveShockWave
+	goto_if_unset FLAG_RECEIVED_TM_SHOCK_WAVE, MauvilleCity_Gym_EventScript_GiveShockWave2
 	compare VAR_NEW_MAUVILLE_STATE, 2
 	goto_if_eq MauvilleCity_Gym_EventScript_CompletedNewMauville
 	msgbox MauvilleCity_Gym_Text_WattsonPostBattle, MSGBOX_DEFAULT
@@ -89,10 +89,10 @@ MauvilleCity_Gym_EventScript_WattsonDefeated:: @ 81565DB
 	special MauvilleGymDeactivatePuzzle
 	special DrawWholeMapView
 	playse SE_UNLOCK
-	goto MauvilleCity_Gym_EventScript_GiveShockWave
+	goto MauvilleCity_Gym_EventScript_GiveShockWave2
 	end
 
-MauvilleCity_Gym_EventScript_GiveShockWave:: @ 815661D
+MauvilleCity_Gym_EventScript_GiveShockWave2:: @ 815661D
 	giveitem ITEM_TM_SHOCK_WAVE
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull
