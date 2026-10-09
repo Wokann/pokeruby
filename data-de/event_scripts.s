@@ -1106,10 +1106,7 @@ SealedChamber_InnerRoom_Text_1A138B:: @ 81A138B
 	.string "Das hörte sich an, als würde irgendwo\n"
 	.string "eine Tür geöffnet.$"
 
-AncientTomb_Text_1A13BE:: @ 81A13BE
-DesertRuins_Text_1A13BE:: @ 81A13BE
-IslandCave_Text_1A13BE:: @ 81A13BE
-SealedChamber_OuterRoom_Text_1A13BE:: @ 81A13BE
+gText_BigHoleInTheWall:: @ 81A13BE
 	.string "In der Wand ist ein großes Loch.$"
 
 OldaleTown_PokemonCenter_2F_Text_1A13DF:: @ 81A13DF
