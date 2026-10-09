@@ -94,11 +94,11 @@ VictoryRoad_1F_EventScript_Wally:: @ 815DF31
 	trainerbattle_single TRAINER_WALLY_3, VictoryRoad_1F_Text_WallyIntro, VictoryRoad_1F_Text_WallyDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	compare VAR_RESULT, 1
-	goto_if_eq VictoryRoad_1F_EventScript_WallyRematch
+	goto_if_eq VictoryRoad_1F_EventScript_RematchWally
 	msgbox VictoryRoad_1F_Text_WallyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-VictoryRoad_1F_EventScript_WallyRematch:: @ 815DF58
+VictoryRoad_1F_EventScript_RematchWally:: @ 815DF58
 	trainerbattle_rematch TRAINER_WALLY_3, VictoryRoad_1F_Text_WallyIntro, VictoryRoad_1F_Text_WallyDefeat
 	msgbox VictoryRoad_1F_Text_WallyPostBattle, MSGBOX_AUTOCLOSE
 	end
