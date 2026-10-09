@@ -470,7 +470,7 @@ PetalburgCity_Gym_EventScript_154B09:: @ 8154B09
 	waitmovement 0
 	return
 
-@ 8154B14
+PetalburgCity_Gym_Movement_Unused: @ 8154B14
 	walk_in_place_faster_up
 	delay_16
 	delay_16

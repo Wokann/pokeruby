@@ -1,4 +1,4 @@
-PetalburgCity_PokemonCenter_1F_EventScript_1B1B14:: @ 81B1B14
+ProfileMan_EventScript_Man:: @ 81B1B14
 	lock
 	faceplayer
 	goto_if_set FLAG_SYS_CHAT_USED, PetalburgCity_PokemonCenter_1F_EventScript_1B1BDB
