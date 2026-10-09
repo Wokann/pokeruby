@@ -1,4 +1,4 @@
-MtPyre_Summit_EventScript_1B2DA9:: @ 81B2DA9
+MtPyre_Summit_EventScript_Grunt1:: @ 81B2DA9
 	.ifdef SAPPHIRE
 	trainerbattle_single TRAINER_MT_PYRE_SUMMIT_GRUNT_1, UnknownString_81B50C3, UnknownString_81B50F5
 	msgbox UnknownString_81B5131, MSGBOX_AUTOCLOSE
@@ -8,7 +8,7 @@ MtPyre_Summit_EventScript_1B2DA9:: @ 81B2DA9
 	.endif
 	end
 
-MtPyre_Summit_EventScript_1B2DC0:: @ 81B2DC0
+MtPyre_Summit_EventScript_Grunt2:: @ 81B2DC0
 	.ifdef SAPPHIRE
 	trainerbattle_single TRAINER_MT_PYRE_SUMMIT_GRUNT_2, UnknownString_81B5166, UnknownString_81B519F
 	msgbox UnknownString_81B51B5, MSGBOX_AUTOCLOSE
@@ -18,7 +18,7 @@ MtPyre_Summit_EventScript_1B2DC0:: @ 81B2DC0
 	.endif
 	end
 
-MtPyre_Summit_EventScript_1B2DD7:: @ 81B2DD7
+MtPyre_Summit_EventScript_Grunt3:: @ 81B2DD7
 	.ifdef SAPPHIRE
 	trainerbattle_single TRAINER_MT_PYRE_SUMMIT_GRUNT_3, UnknownString_81B51EB, UnknownString_81B5224
 	msgbox UnknownString_81B5248, MSGBOX_AUTOCLOSE

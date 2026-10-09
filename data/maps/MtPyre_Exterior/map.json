@@ -21,8 +21,8 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtPyre_Exterior_EventScript_1B1974",
-      "flag": "FLAG_ITEM_MT_PYRE_EXTERIOR_1"
+      "script": "MtPyre_Exterior_EventScript_ItemMaxPotion",
+      "flag": "FLAG_ITEM_MT_PYRE_EXTERIOR_MAX_POTION"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -34,8 +34,8 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtPyre_Exterior_EventScript_1B1981",
-      "flag": "FLAG_ITEM_MT_PYRE_EXTERIOR_2"
+      "script": "MtPyre_Exterior_EventScript_ItemTMSkillSwap",
+      "flag": "FLAG_ITEM_MT_PYRE_EXTERIOR_TM_SKILL_SWAP"
     }
   ],
   "warp_events": [
@@ -69,7 +69,7 @@
       "elevation": 3,
       "var": "0",
       "var_value": "0",
-      "script": "MtPyre_Exterior_EventScript_15D4A7"
+      "script": "MtPyre_Exterior_EventScript_FogTrigger"
     },
     {
       "type": "trigger",
@@ -78,7 +78,7 @@
       "elevation": 3,
       "var": "0",
       "var_value": "0",
-      "script": "MtPyre_Exterior_EventScript_15D4A7"
+      "script": "MtPyre_Exterior_EventScript_FogTrigger"
     },
     {
       "type": "trigger",
@@ -87,7 +87,7 @@
       "elevation": 3,
       "var": "0",
       "var_value": "0",
-      "script": "MtPyre_Exterior_EventScript_15D4AC"
+      "script": "MtPyre_Exterior_EventScript_SunTrigger"
     },
     {
       "type": "trigger",
@@ -96,7 +96,7 @@
       "elevation": 3,
       "var": "0",
       "var_value": "0",
-      "script": "MtPyre_Exterior_EventScript_15D4AC"
+      "script": "MtPyre_Exterior_EventScript_SunTrigger"
     },
     {
       "type": "trigger",
@@ -105,7 +105,7 @@
       "elevation": 3,
       "var": "0",
       "var_value": "0",
-      "script": "MtPyre_Exterior_EventScript_15D4A7"
+      "script": "MtPyre_Exterior_EventScript_FogTrigger"
     }
   ],
   "bg_events": [
@@ -115,7 +115,7 @@
       "y": 8,
       "elevation": 0,
       "item": "ITEM_ULTRA_BALL",
-      "flag": "FLAG_HIDDEN_ITEM_1D"
+      "flag": "FLAG_HIDDEN_ITEM_MT_PYRE_EXTERIOR_ULTRA_BALL"
     },
     {
       "type": "hidden_item",
@@ -123,7 +123,7 @@
       "y": 22,
       "elevation": 0,
       "item": "ITEM_MAX_ETHER",
-      "flag": "FLAG_HIDDEN_ITEM_4E"
+      "flag": "FLAG_HIDDEN_ITEM_MT_PYRE_EXTERIOR_MAX_ETHER"
     }
   ]
 }

@@ -1,8 +1,8 @@
 MtPyre_Summit_MapScripts:: @ 815D4B1
-	map_script MAP_SCRIPT_ON_TRANSITION, MtPyre_Summit_MapScript1_15D4B7
+	map_script MAP_SCRIPT_ON_TRANSITION, MtPyre_Summit_OnTransition
 	.byte 0
 
-MtPyre_Summit_MapScript1_15D4B7:: @ 815D4B7
+MtPyre_Summit_OnTransition:: @ 815D4B7
 	call Common_EventScript_SetupEvilTeamGfxIds
 	end
 
@@ -53,11 +53,11 @@ MtPyre_Summit_EventScript_15D4E1:: @ 815D4E1
 	delay 20
 	call MtPyre_Summit_EventScript_15D57A
 	compare VAR_0x8008, 0
-	call_if_eq MtPyre_Summit_EventScript_15D5AA
+	call_if_eq MtPyre_Summit_EventScript_OldLadyApproachPlayer0
 	compare VAR_0x8008, 1
-	call_if_eq MtPyre_Summit_EventScript_15D5BF
+	call_if_eq MtPyre_Summit_EventScript_OldLadyApproachPlayer1
 	compare VAR_0x8008, 2
-	call_if_eq MtPyre_Summit_EventScript_15D5CA
+	call_if_eq MtPyre_Summit_EventScript_OldLadyApproachPlayer2
 	.ifdef SAPPHIRE
 	msgbox UnknownString_81B53AB, MSGBOX_DEFAULT
 	.else
@@ -90,36 +90,36 @@ MtPyre_Summit_EventScript_15D59F:: @ 815D59F
 	waitmovement 0
 	return
 
-MtPyre_Summit_EventScript_15D5AA:: @ 815D5AA
-	applymovement 3, MtPyre_Summit_Movement_15D5DF
+MtPyre_Summit_EventScript_OldLadyApproachPlayer0:: @ 815D5AA
+	applymovement 3, MtPyre_Summit_Movement_OldLadyApproachPlayer0
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	return
 
-MtPyre_Summit_EventScript_15D5BF:: @ 815D5BF
-	applymovement 3, MtPyre_Summit_Movement_15D5E3
+MtPyre_Summit_EventScript_OldLadyApproachPlayer1:: @ 815D5BF
+	applymovement 3, MtPyre_Summit_Movement_OldLadyApproachPlayer1
 	waitmovement 0
 	return
 
-MtPyre_Summit_EventScript_15D5CA:: @ 815D5CA
-	applymovement 3, MtPyre_Summit_Movement_15D5E5
+MtPyre_Summit_EventScript_OldLadyApproachPlayer2:: @ 815D5CA
+	applymovement 3, MtPyre_Summit_Movement_OldLadyApproachPlayer2
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	return
 
-MtPyre_Summit_Movement_15D5DF:: @ 815D5DF
+MtPyre_Summit_Movement_OldLadyApproachPlayer0:: @ 815D5DF
 	walk_down
 	walk_down
 	walk_in_place_faster_left
 	step_end
 
-MtPyre_Summit_Movement_15D5E3:: @ 815D5E3
+MtPyre_Summit_Movement_OldLadyApproachPlayer1:: @ 815D5E3
 	walk_down
 	step_end
 
-MtPyre_Summit_Movement_15D5E5:: @ 815D5E5
+MtPyre_Summit_Movement_OldLadyApproachPlayer2:: @ 815D5E5
 	walk_down
 	walk_down
 	walk_in_place_faster_right
@@ -135,7 +135,7 @@ MtPyre_Summit_Movement_15D5EC:: @ 815D5EC
 	walk_in_place_faster_down
 	step_end
 
-MtPyre_Summit_EventScript_15D5EF:: @ 815D5EF
+MtPyre_Summit_EventScript_OldMan:: @ 815D5EF
 	lock
 	faceplayer
 	.ifdef SAPPHIRE
@@ -144,13 +144,13 @@ MtPyre_Summit_EventScript_15D5EF:: @ 815D5EF
 	msgbox MtPyre_Summit_Text_1B64B3, MSGBOX_YESNO
 	.endif
 	compare VAR_RESULT, YES
-	call_if_eq MtPyre_Summit_EventScript_15D611
+	call_if_eq MtPyre_Summit_EventScript_OldManTale
 	compare VAR_RESULT, NO
-	call_if_eq MtPyre_Summit_EventScript_15D61A
+	call_if_eq MtPyre_Summit_EventScript_DeclineOldManTale
 	release
 	end
 
-MtPyre_Summit_EventScript_15D611:: @ 815D611
+MtPyre_Summit_EventScript_OldManTale:: @ 815D611
 	.ifdef SAPPHIRE
 	msgbox UnknownString_81B5992, MSGBOX_DEFAULT
 	.else
@@ -158,7 +158,7 @@ MtPyre_Summit_EventScript_15D611:: @ 815D611
 	.endif
 	return
 
-MtPyre_Summit_EventScript_15D61A:: @ 815D61A
+MtPyre_Summit_EventScript_DeclineOldManTale:: @ 815D61A
 	.ifdef SAPPHIRE
 	msgbox UnknownString_81B5BD7, MSGBOX_DEFAULT
 	.else
@@ -166,12 +166,12 @@ MtPyre_Summit_EventScript_15D61A:: @ 815D61A
 	.endif
 	return
 
-MtPyre_Summit_EventScript_15D623:: @ 815D623
+MtPyre_Summit_EventScript_OldLady:: @ 815D623
 	lock
 	faceplayer
-	goto_if_set FLAG_RETURNED_RED_OR_BLUE_ORB, MtPyre_Summit_EventScript_15D6C4
+	goto_if_set FLAG_RETURNED_RED_OR_BLUE_ORB, MtPyre_Summit_EventScript_OldLadyAfterOrbsReturned
 	goto_if_set FLAG_LEGENDARY_BATTLE_COMPLETED, MtPyre_Summit_EventScript_15D64A
-	goto_if_set FLAG_LEGEND_ESCAPED_SEAFLOOR_CAVERN, MtPyre_Summit_EventScript_15D6BA
+	goto_if_set FLAG_LEGEND_ESCAPED_SEAFLOOR_CAVERN, MtPyre_Summit_EventScript_OldLadyLegendariesAwake
 	.ifdef SAPPHIRE
 	msgbox UnknownString_81B54BE, MSGBOX_DEFAULT
 	.else
@@ -223,7 +223,7 @@ MtPyre_Summit_EventScript_15D69B:: @ 815D69B
 	goto_if_eq MtPyre_Summit_EventScript_15D69B
 	end
 
-MtPyre_Summit_EventScript_15D6BA:: @ 815D6BA
+MtPyre_Summit_EventScript_OldLadyLegendariesAwake:: @ 815D6BA
 	.ifdef SAPPHIRE
 	msgbox UnknownString_81B5540, MSGBOX_DEFAULT
 	.else
@@ -232,7 +232,7 @@ MtPyre_Summit_EventScript_15D6BA:: @ 815D6BA
 	release
 	end
 
-MtPyre_Summit_EventScript_15D6C4:: @ 815D6C4
+MtPyre_Summit_EventScript_OldLadyAfterOrbsReturned:: @ 815D6C4
 	.ifdef SAPPHIRE
 	msgbox UnknownString_81B57BE, MSGBOX_DEFAULT
 	.else
