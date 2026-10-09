@@ -40,7 +40,7 @@ Route112_CableCarStation_EventScript_Attendant:: @ 815C08C
 	end
 
 Route112_CableCarStation_EventScript_RideCableCar:: @ 815C0AD
-	msgbox Route112_CableCarStation_Text_StepThisWay, MSGBOX_DEFAULT
+	msgbox MtChimney_CableCarStation_Text_StepThisWay, MSGBOX_DEFAULT
 	closemessage
 	applymovement 1, Route112_CableCarStation_Movement_LeadPlayerToCableCar
 	applymovement LOCALID_PLAYER, Route112_CableCarStation_Movement_BoardCableCar
