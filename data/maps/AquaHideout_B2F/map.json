@@ -34,7 +34,7 @@
       "movement_range_y": 3,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "AquaHideout_B2F_EventScript_15D962",
+      "script": "AquaHideout_B2F_EventScript_Grunt4",
       "flag": "FLAG_HIDE_GRUNTS_HIDEOUTS"
     },
     {
@@ -47,8 +47,8 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "AquaHideout_B2F_EventScript_1B19B5",
-      "flag": "FLAG_ITEM_AQUA_HIDEOUT_B2F_1"
+      "script": "AquaHideout_B2F_EventScript_ItemNestBall",
+      "flag": "FLAG_ITEM_AQUA_HIDEOUT_B2F_NEST_BALL"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SUBMARINE_SHADOW",
@@ -73,7 +73,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "4",
-      "script": "AquaHideout_B2F_EventScript_15D987",
+      "script": "AquaHideout_B2F_EventScript_Grunt6",
       "flag": "FLAG_HIDE_GRUNTS_HIDEOUTS"
     }
   ],

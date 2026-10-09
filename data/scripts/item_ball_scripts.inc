@@ -418,19 +418,19 @@ MtPyre_Exterior_EventScript_ItemTMSkillSwap:: @ 81B1981
 	finditem ITEM_TM_SKILL_SWAP
 	end
 
-AquaHideout_B1F_EventScript_1B198E:: @ 81B198E
+AquaHideout_B1F_EventScript_ItemMasterBall:: @ 81B198E
 	finditem ITEM_MASTER_BALL
 	end
 
-AquaHideout_B1F_EventScript_1B199B:: @ 81B199B
+AquaHideout_B1F_EventScript_ItemNugget:: @ 81B199B
 	finditem ITEM_NUGGET
 	end
 
-AquaHideout_B1F_EventScript_1B19A8:: @ 81B19A8
+AquaHideout_B1F_EventScript_ItemMaxElixir:: @ 81B19A8
 	finditem ITEM_MAX_ELIXIR
 	end
 
-AquaHideout_B2F_EventScript_1B19B5:: @ 81B19B5
+AquaHideout_B2F_EventScript_ItemNestBall:: @ 81B19B5
 	finditem ITEM_NEST_BALL
 	end
 
