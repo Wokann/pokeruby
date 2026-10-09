@@ -258,11 +258,11 @@ PetalburgWoods_EventScript_1B1779:: @ 81B1779
 	finditem ITEM_PARALYZE_HEAL
 	end
 
-RusturfTunnel_EventScript_1B1786:: @ 81B1786
+RusturfTunnel_EventScript_ItemPokeBall:: @ 81B1786
 	finditem ITEM_POKE_BALL
 	end
 
-RusturfTunnel_EventScript_1B1793:: @ 81B1793
+RusturfTunnel_EventScript_ItemMaxEther:: @ 81B1793
 	finditem ITEM_MAX_ETHER
 	end
 
