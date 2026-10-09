@@ -173,7 +173,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_WARTORTLE]   = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -198,7 +198,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_BLASTOISE]   = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -226,7 +226,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_CATERPIE]    = TMHM_LEARNSET(0),
@@ -1232,7 +1232,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_FLASH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_GOLDUCK]     = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -1261,7 +1261,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_FLASH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_MANKEY]      = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -1385,7 +1385,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(TM_THIEF)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_POLIWHIRL]   = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -1412,7 +1412,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_POLIWRATH]   = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -1442,7 +1442,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_ABRA]        = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -1681,7 +1681,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_THIEF)
                                         | TMHM(HM_CUT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_TENTACRUEL]  = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -1705,7 +1705,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_THIEF)
                                         | TMHM(HM_CUT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_GEODUDE]     = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -1985,7 +1985,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(TM_THIEF)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_DEWGONG]     = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -2007,7 +2007,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(TM_THIEF)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_GRIMER]      = TMHM_LEARNSET(TMHM(TM_TOXIC)
@@ -2751,7 +2751,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_SEADRA]      = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -2771,7 +2771,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_GOLDEEN]     = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -2790,7 +2790,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_SEAKING]     = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -2810,7 +2810,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_STARYU]      = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -2834,7 +2834,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_FLASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_STARMIE]     = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -2860,7 +2860,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_SKILL_SWAP)
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_FLASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_MR_MIME]     = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -3074,7 +3074,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_LAPRAS]      = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -3103,7 +3103,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_DITTO]       = TMHM_LEARNSET(0),
@@ -3146,7 +3146,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_JOLTEON]     = TMHM_LEARNSET(TMHM(TM05_ROAR)
@@ -3237,7 +3237,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_THIEF)
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_OMASTAR]     = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -3261,7 +3261,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_THIEF)
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_KABUTO]      = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -3287,7 +3287,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_THIEF)
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)),
+                                        | TMHM(HM_WATERFALL)),
 
     [SPECIES_KABUTOPS]    = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
                                         | TMHM(TM_TOXIC)
@@ -3315,7 +3315,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_CUT)
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_AERODACTYL]  = TMHM_LEARNSET(TMHM(TM_DRAGON_CLAW)
@@ -3476,7 +3476,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)),
+                                        | TMHM(HM_WATERFALL)),
 
     [SPECIES_DRAGONAIR]   = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
                                         | TMHM(TM_TOXIC)
@@ -3503,7 +3503,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)),
+                                        | TMHM(HM_WATERFALL)),
 
     [SPECIES_DRAGONITE]   = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
                                         | TMHM(TM_DRAGON_CLAW)
@@ -3543,7 +3543,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_MEWTWO]      = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -3646,7 +3646,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_FLASH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_CHIKORITA]   = TMHM_LEARNSET(TMHM(TM_TOXIC)
@@ -3806,7 +3806,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_CUT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_CROCONAW]    = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -3834,7 +3834,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_FERALIGATR]  = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -3865,7 +3865,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_SENTRET]     = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -4100,7 +4100,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_FLASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_LANTURN]     = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -4124,7 +4124,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_FLASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_PICHU]       = TMHM_LEARNSET(TMHM(TM_TOXIC)
@@ -4409,7 +4409,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_AZUMARILL]   = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -4435,7 +4435,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_SUDOWOODO]   = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -4486,7 +4486,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_HOPPIP]      = TMHM_LEARNSET(TMHM(TM_TOXIC)
@@ -4655,7 +4655,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_FLASH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_QUAGSIRE]    = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -4686,7 +4686,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_FLASH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_ESPEON]      = TMHM_LEARNSET(TMHM(TM_CALM_MIND)
@@ -5064,7 +5064,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_SCIZOR]      = TMHM_LEARNSET(TMHM(TM_TOXIC)
@@ -5359,7 +5359,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(TM_THIEF)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_OCTILLERY]   = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -5385,7 +5385,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(TM_THIEF)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_DELIBIRD]    = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -5426,7 +5426,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_SKARMORY]    = TMHM_LEARNSET(TMHM(TM05_ROAR)
@@ -5520,7 +5520,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_PHANPY]      = TMHM_LEARNSET(TMHM(TM05_ROAR)
@@ -5871,7 +5871,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_CUT)
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_LARVITAR]    = TMHM_LEARNSET(TMHM(TM_TOXIC)
@@ -5991,7 +5991,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_HO_OH]       = TMHM_LEARNSET(TMHM(TM_CALM_MIND)
@@ -6283,7 +6283,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_MARSHTOMP]   = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -6308,7 +6308,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_SWAMPERT]    = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -6337,7 +6337,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_POOCHYENA]   = TMHM_LEARNSET(TMHM(TM05_ROAR)
@@ -6538,7 +6538,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_FLASH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_LUDICOLO]    = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -6568,7 +6568,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_FLASH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_SEEDOT]      = TMHM_LEARNSET(TMHM(TM_TOXIC)
@@ -6924,7 +6924,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_WAILORD]     = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -6949,7 +6949,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_SKITTY]      = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -7184,7 +7184,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_WHISCASH]    = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -7209,7 +7209,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_LUVDISC]     = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -7229,7 +7229,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_CORPHISH]    = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -7257,7 +7257,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)),
+                                        | TMHM(HM_WATERFALL)),
 
     [SPECIES_CRAWDAUNT]   = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
                                         | TMHM(TM_TOXIC)
@@ -7285,7 +7285,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_FEEBAS]      = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -7304,7 +7304,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_MILOTIC]     = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -7326,7 +7326,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_CARVANHA]    = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -7348,7 +7348,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(TM_THIEF)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_SHARPEDO]    = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -7376,7 +7376,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_TRAPINCH]    = TMHM_LEARNSET(TMHM(TM_TOXIC)
@@ -7601,7 +7601,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_SEALEO]      = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -7626,7 +7626,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_WALREIN]     = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -7652,7 +7652,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_CACNEA]      = TMHM_LEARNSET(TMHM(TM01_FOCUS_PUNCH)
@@ -7807,7 +7807,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)),
+                                        | TMHM(HM_WATERFALL)),
 
     [SPECIES_SPOINK]      = TMHM_LEARNSET(TMHM(TM_CALM_MIND)
                                         | TMHM(TM_TOXIC)
@@ -8369,7 +8369,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_HUNTAIL]     = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -8391,7 +8391,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(TM49_SNATCH)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_GOREBYSS]    = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -8414,7 +8414,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_REST)
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_ABSOL]       = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -8585,7 +8585,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(TM_ATTRACT)
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_ARON]        = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)
@@ -9150,7 +9150,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_GROUDON]     = TMHM_LEARNSET(TMHM(TM_DRAGON_CLAW)
@@ -9220,7 +9220,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_STRENGTH)
                                         | TMHM(HM_ROCK_SMASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_LATIAS]      = TMHM_LEARNSET(TMHM(TM_DRAGON_CLAW)
@@ -9258,7 +9258,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM02_FLY)
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_FLASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_LATIOS]      = TMHM_LEARNSET(TMHM(TM_DRAGON_CLAW)
@@ -9296,7 +9296,7 @@ const u32 gTMHMLearnsets[][2] =
                                         | TMHM(HM02_FLY)
                                         | TMHM(HM_SURF)
                                         | TMHM(HM_FLASH)
-                                        | TMHM(HM07_WATERFALL)
+                                        | TMHM(HM_WATERFALL)
                                         | TMHM(HM_DIVE)),
 
     [SPECIES_JIRACHI]     = TMHM_LEARNSET(TMHM(TM_WATER_PULSE)

@@ -5522,7 +5522,7 @@ const struct Item gItems[] =
     },
     {
         .name = _("HM07"),
-        .itemId = ITEM_HM07_WATERFALL,
+        .itemId = ITEM_HM_WATERFALL,
         .price = 0,
         .holdEffect = HOLD_EFFECT_NONE,
         .holdEffectParam = 0,

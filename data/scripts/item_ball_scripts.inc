@@ -475,7 +475,7 @@ SeafloorCavern_Room9_EventScript_ItemTMEarthquake:: @ 81B1A37
 	end
 
 CaveOfOrigin_B3F_EventScript_1B1A44:: @ 81B1A44
-	finditem ITEM_HM07_WATERFALL
+	finditem ITEM_HM_WATERFALL
 	end
 
 Route110_TrickHousePuzzle1_EventScript_ItemOrangeMail:: @ 81B1A51
