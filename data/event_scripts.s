@@ -1513,11 +1513,11 @@ BattleTower_Lobby_EventScript_1AE2ED:: @ 81AE2ED
 	special InterviewBefore
 	compare VAR_RESULT, 1
 	goto_if_eq BattleTower_Lobby_EventScript_1AE30F
-	clearflag FLAG_HIDE_REPORTER_BATTLE_TOWER
+	clearflag FLAG_HIDE_BATTLE_TOWER_REPORTER
 	return
 
 BattleTower_Lobby_EventScript_1AE30F:: @ 81AE30F
-	setflag FLAG_HIDE_REPORTER_BATTLE_TOWER
+	setflag FLAG_HIDE_BATTLE_TOWER_REPORTER
 	return
 
 	.include "data/scripts/gabby_and_ty.inc"

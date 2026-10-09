@@ -75,7 +75,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "BattleTower_Lobby_EventScript_1AE1FF",
-      "flag": "FLAG_HIDE_REPORTER_BATTLE_TOWER"
+      "flag": "FLAG_HIDE_BATTLE_TOWER_REPORTER"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MAN_2",
