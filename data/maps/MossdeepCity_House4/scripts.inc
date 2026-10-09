@@ -35,7 +35,7 @@ MossdeepCity_House4_EventScript_Skitty:: @ 815AB77
 	faceplayer
 	waitse
 	playmoncry SPECIES_SKITTY, 0
-	msgbox MossdeepCity_House4_Text_Delcatty, MSGBOX_DEFAULT
+	msgbox MossdeepCity_House4_Text_Skitty, MSGBOX_DEFAULT
 	waitmoncry
 	release
 	end
