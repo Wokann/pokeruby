@@ -28,7 +28,7 @@ SootopolisCity_House6_EventScript_ReceivedWailmerDoll:: @ 815B3CD
 
 SootopolisCity_House6_EventScript_NoRoomForWailmerDoll:: @ 815B3D7
 	bufferdecorationname 1, DECOR_WAILMER_DOLL
-	msgbox Text_NoRoomLeftForAnother, MSGBOX_DEFAULT
+	msgbox gText_NoRoomLeftForAnother, MSGBOX_DEFAULT
 	msgbox SootopolisCity_House6_Text_IllHoldItForYou, MSGBOX_DEFAULT
 	release
 	end

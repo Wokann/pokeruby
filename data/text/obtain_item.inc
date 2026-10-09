@@ -18,7 +18,7 @@ gText_TooBadBagIsFull:
 Text_ObtainedTheDecor: @ 81A0CDE
 	.string "Obtained the {STR_VAR_2}.$"
 
-Text_NoRoomLeftForAnother:: @ 81A0CEF
+gText_NoRoomLeftForAnother:: @ 81A0CEF
 	.string "Too bad! There's no room left for\n"
 	.string "another {STR_VAR_2}...$"
 
