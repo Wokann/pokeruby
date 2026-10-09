@@ -242,19 +242,19 @@ MossdeepCity_EventScript_ItemNetBall:: @ 81B1745
 	finditem ITEM_NET_BALL
 	end
 
-PetalburgWoods_EventScript_1B1752:: @ 81B1752
+PetalburgWoods_EventScript_ItemXAttack:: @ 81B1752
 	finditem ITEM_X_ATTACK
 	end
 
-PetalburgWoods_EventScript_1B175F:: @ 81B175F
+PetalburgWoods_EventScript_ItemGreatBall:: @ 81B175F
 	finditem ITEM_GREAT_BALL
 	end
 
-PetalburgWoods_EventScript_1B176C:: @ 81B176C
+PetalburgWoods_EventScript_ItemEther:: @ 81B176C
 	finditem ITEM_ETHER
 	end
 
-PetalburgWoods_EventScript_1B1779:: @ 81B1779
+PetalburgWoods_EventScript_ItemParalyzeHeal:: @ 81B1779
 	finditem ITEM_PARALYZE_HEAL
 	end
 
