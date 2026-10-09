@@ -374,8 +374,8 @@ AbandonedShip_HiddenFloorRooms_EventScript_ItemTMRainDance:: @ 81B18F2
 	finditem ITEM_TM_RAIN_DANCE
 	end
 
-ScorchedSlab_EventScript_1B18FF:: @ 81B18FF
-	finditem ITEM_TM11_SUNNY_DAY
+ScorchedSlab_EventScript_ItemTMSunnyDay:: @ 81B18FF
+	finditem ITEM_TM_SUNNY_DAY
 	end
 
 SafariZone_Northwest_EventScript_1B190C:: @ 81B190C
