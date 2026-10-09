@@ -37,7 +37,7 @@ SlateportCity_OceanicMuseum_2F_EventScript_CaptStern:: @ 8155CE6
 	call_if_eq SlateportCity_OceanicMuseum_2F_EventScript_PlayerApproachGruntSouth
 	compare VAR_FACING, 3
 	call_if_eq SlateportCity_OceanicMuseum_2F_EventScript_PlayerApproachGruntWest
-	trainerbattle_no_intro TRAINER_MUSEUM_2F_GRUNT_1, SlateportCity_OceanicMuseum_2F_Text_Grunt1Defeat
+	trainerbattle_no_intro TRAINER_GRUNT_MUSEUM_1, SlateportCity_OceanicMuseum_2F_Text_Grunt1Defeat
 	msgbox SlateportCity_OceanicMuseum_2F_Text_BossGoingToBeFurious, MSGBOX_DEFAULT
 	closemessage
 	applymovement 4, SlateportCity_OceanicMuseum_2F_Movement_GruntDefeated
@@ -46,7 +46,7 @@ SlateportCity_OceanicMuseum_2F_EventScript_CaptStern:: @ 8155CE6
 	waitmovement 0
 	msgbox SlateportCity_OceanicMuseum_2F_Text_LetMeTakeCareOfThis, MSGBOX_DEFAULT
 	savebgm 0
-	trainerbattle_no_intro TRAINER_MUSEUM_2F_GRUNT_2, SlateportCity_OceanicMuseum_2F_Text_Grunt2Defeat
+	trainerbattle_no_intro TRAINER_GRUNT_MUSEUM_2, SlateportCity_OceanicMuseum_2F_Text_Grunt2Defeat
 	applymovement 3, SlateportCity_OceanicMuseum_2F_Movement_GruntDefeated
 	waitmovement 0
 	applymovement 3, Common_Movement_WalkInPlaceFasterDown

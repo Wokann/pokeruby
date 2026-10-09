@@ -1213,7 +1213,7 @@ SlateportCity_PokemonFanClub_EventScript_1ADED6:: @ 81ADED6
 	release
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_1ADEE0:: @ 81ADEE0
+SlateportCity_OceanicMuseum_1F_EventScript_Reporter:: @ 81ADEE0
 	lock
 	faceplayer
 	setvar VAR_0x8005, 2
@@ -1268,7 +1268,7 @@ SlateportCity_OceanicMuseum_1F_EventScript_1ADF96:: @ 81ADF96
 	release
 	end
 
-SlateportCity_PokemonFanClub_EventScript_1ADFA0:: @ 81ADFA0
+SlateportCity_PokemonFanClub_EventScript_Reporter:: @ 81ADFA0
 	lock
 	faceplayer
 	specialvar VAR_RESULT, LeadMonNicknamed
