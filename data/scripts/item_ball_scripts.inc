@@ -266,19 +266,19 @@ RusturfTunnel_EventScript_ItemMaxEther:: @ 81B1793
 	finditem ITEM_MAX_ETHER
 	end
 
-GraniteCave_1F_EventScript_1B17A0:: @ 81B17A0
+GraniteCave_1F_EventScript_ItemEscapeRope:: @ 81B17A0
 	finditem ITEM_ESCAPE_ROPE
 	end
 
-GraniteCave_B1F_EventScript_1B17AD:: @ 81B17AD
+GraniteCave_B1F_EventScript_ItemPokeBall:: @ 81B17AD
 	finditem ITEM_POKE_BALL
 	end
 
-GraniteCave_B2F_EventScript_1B17BA:: @ 81B17BA
+GraniteCave_B2F_EventScript_ItemRepel:: @ 81B17BA
 	finditem ITEM_REPEL
 	end
 
-GraniteCave_B2F_EventScript_1B17C7:: @ 81B17C7
+GraniteCave_B2F_EventScript_ItemRareCandy:: @ 81B17C7
 	finditem ITEM_RARE_CANDY
 	end
 

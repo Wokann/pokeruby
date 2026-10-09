@@ -21,8 +21,8 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "GraniteCave_StevensRoom_EventScript_15CBFA",
-      "flag": "FLAG_HIDE_STEVEN_GRANITE_CAVE"
+      "script": "GraniteCave_StevensRoom_EventScript_Steven",
+      "flag": "FLAG_HIDE_GRANITE_CAVE_STEVEN"
     }
   ],
   "warp_events": [

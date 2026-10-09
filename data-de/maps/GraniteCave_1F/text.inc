@@ -1,4 +1,4 @@
-GraniteCave_1F_Text_194917:: @ 8194917
+GraniteCave_1F_Text_GetsDarkAheadHereYouGo:: @ 8194917
 	.string "Hey, du!\n"
 	.string "Hier ist es schrecklich dunkel.\l"
 	.string "Eine Erforschung wird damit schwierig.\p"
@@ -10,7 +10,7 @@ GraniteCave_1F_Text_194917:: @ 8194917
 	.string "Jedem aus der Klemme helfen.\p"
 	.string "Deshalb bekommst du dies von mir.$"
 
-GraniteCave_1F_Text_194A3E:: @ 8194A3E
+GraniteCave_1F_Text_ExplainFlash:: @ 8194A3E
 	.string "Bringe einem POKéMON die VM BLITZ\n"
 	.string "bei und setze sie ein.\p"
 	.string "Damit wird selbst die dunkelste Höhle\n"
