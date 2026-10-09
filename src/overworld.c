@@ -103,8 +103,6 @@ extern u8 DoubleBattleColosseum_EventScript_1A4383[];
 extern u8 DoubleBattleColosseum_EventScript_1A439E[];
 extern u8 DoubleBattleColosseum_EventScript_1A43B9[];
 extern u8 DoubleBattleColosseum_EventScript_1A43D4[];
-extern u8 TradeCenter_EventScript_1A43F0[];
-extern u8 TradeCenter_EventScript_1A43FA[];
 extern u8 RecordCorner_EventScript_1A4418[];
 extern u8 RecordCorner_EventScript_1A442D[];
 extern u8 RecordCorner_EventScript_1A4442[];
@@ -2433,9 +2431,9 @@ static u16 sub_8055758(const u8 *script)
         return 10;
     if (script == EventScript_BattleColosseum_2P_PlayerSpot1)
         return 9;
-    if (script == TradeCenter_EventScript_1A43F0)
+    if (script == EventScript_TradeCenter_Chair0)
         return 10;
-    if (script == TradeCenter_EventScript_1A43FA)
+    if (script == EventScript_TradeCenter_Chair1)
         return 9;
     return 0;
 }

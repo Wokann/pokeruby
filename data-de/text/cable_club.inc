@@ -148,7 +148,7 @@ BattleColosseum_2P_Text_TakePlaceStartBattle:: @ 81A4D7E
 	.string "Bitte geh in Position und beginne mit\n"
 	.string "dem Kampf.$"
 
-TradeCenter_Text_1A4DAB:: @ 81A4DAB
+TradeCenter_Text_TakeSeatStartTrade:: @ 81A4DAB
 	.string "Bitte geh in Position und beginne mit\n"
 	.string "dem Tausch.$"
 

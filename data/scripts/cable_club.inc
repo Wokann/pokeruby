@@ -577,13 +577,13 @@ DoubleBattleColosseum_EventScript_1A43D4:: @ 81A43D4
 DoubleBattleColosseum_EventScript_1A43EF:: @ 81A43EF
 	end
 
-TradeCenter_EventScript_1A43F0:: @ 81A43F0
+EventScript_TradeCenter_Chair0:: @ 81A43F0
 	setvar VAR_0x8005, 0
 	special PlayerEnteredTradeSeat
 	waitstate
 	end
 
-TradeCenter_EventScript_1A43FA:: @ 81A43FA
+EventScript_TradeCenter_Chair1:: @ 81A43FA
 	setvar VAR_0x8005, 1
 	special PlayerEnteredTradeSeat
 	waitstate
@@ -675,9 +675,9 @@ BattleColosseum_2P_EventScript_Attendant:: @ 81A449E
 	closemessage
 	end
 
-TradeCenter_EventScript_1A44AD:: @ 81A44AD
+TradeCenter_EventScript_Attendant:: @ 81A44AD
 	special Script_FacePlayer
-	message TradeCenter_Text_1A4DAB
+	message TradeCenter_Text_TakeSeatStartTrade
 	waitmessage
 	waitbuttonpress
 	special Script_ClearHeldMovement

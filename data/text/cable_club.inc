@@ -146,7 +146,7 @@ BattleColosseum_2P_Text_TakePlaceStartBattle:: @ 81A4D7E
 	.string "Please take your seat and start\n"
 	.string "your battle.$"
 
-TradeCenter_Text_1A4DAB:: @ 81A4DAB
+TradeCenter_Text_TakeSeatStartTrade:: @ 81A4DAB
 	.string "Please take your seat and start\n"
 	.string "your trade.$"
 
