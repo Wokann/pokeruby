@@ -55,12 +55,12 @@ Route104_PrettyPetalFlowerShop_EventScript_SellDecorations:: @ 815BE7C
 
 	.align 2
 Route104_PrettyPetalFlowerShop_Pokemart_Plants:: @ 815BE94
-	.2byte ITEM_FULL_RESTORE
-	.2byte ITEM_MAX_POTION
-	.2byte ITEM_HYPER_POTION
-	.2byte ITEM_SUPER_POTION
-	.2byte ITEM_FULL_HEAL
-	.2byte ITEM_REVIVE
+	.2byte DECOR_RED_PLANT
+	.2byte DECOR_TROPICAL_PLANT
+	.2byte DECOR_PRETTY_FLOWERS
+	.2byte DECOR_COLORFUL_PLANT
+	.2byte DECOR_BIG_PLANT
+	.2byte DECOR_GORGEOUS_PLANT
 	.2byte ITEM_NONE
 	release
 	end
@@ -88,7 +88,7 @@ Route104_PrettyPetalFlowerShop_EventScript_RandomBerryGirl:: @ 815BEDA
 	goto_if_set FLAG_DAILY_FLOWER_SHOP_RECEIVED_BERRY, Route104_PrettyPetalFlowerShop_EventScript_AlreadyReceivedBerry
 	msgbox Route104_PrettyPetalFlowerShop_Text_ImGrowingFlowers, MSGBOX_DEFAULT
 	random 8
-	addvar VAR_RESULT, ITEM_CHERI_BERRY
+	addvar VAR_RESULT, FIRST_BERRY_INDEX
 	giveitem VAR_RESULT
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull
