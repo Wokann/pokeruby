@@ -1,4 +1,4 @@
-MeteorFalls_1F_1R_Text_193237:: @ 8193237
+MeteorFalls_1F_1R_Text_WithThisMeteorite:: @ 8193237
 	.string "Hähähä!\p"
 	.string "Mit diesem METEORITEN wird\n"
 	.string "SCHLOTBERG...$"
@@ -75,7 +75,7 @@ MeteorFalls_1F_1R_Text_1937AA:: @ 81937AA
 	.string "TEAM {EVIL_TEAM} im Auge behalten.\p"
 	.string "Leb wohl!$"
 
-MeteorFalls_1F_1R_Text_1937EB:: @ 81937EB
+MeteorFalls_1F_1R_Text_MeetProfCozmo:: @ 81937EB
 	.string "Ich... Ich bin KOSMO...\n"
 	.string "Ich bin Professor...\p"
 	.string "Eigentlich studiere ich METEORITEN in\n"

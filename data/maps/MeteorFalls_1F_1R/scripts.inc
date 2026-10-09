@@ -13,7 +13,7 @@ MeteorFalls_1F_1R_EventScript_15C49C:: @ 815C49C
 	delay 30
 	applymovement 5, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
-	msgbox MeteorFalls_1F_1R_Text_193237, MSGBOX_DEFAULT
+	msgbox MeteorFalls_1F_1R_Text_WithThisMeteorite, MSGBOX_DEFAULT
 	closemessage
 	applymovement 5, Common_Movement_WalkInPlaceFasterUp
 	applymovement 6, Common_Movement_WalkInPlaceFasterUp
@@ -45,7 +45,7 @@ MeteorFalls_1F_1R_EventScript_15C49C:: @ 815C49C
 	waitmovement 0
 	msgbox MeteorFalls_1F_1R_Text_193320, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_PLAYER, MeteorFalls_1F_1R_Movement_15C64F
+	applymovement LOCALID_PLAYER, MeteorFalls_1F_1R_Movement_PushPlayerOutOfWay
 	applymovement 5, MeteorFalls_1F_1R_Movement_15C5F1
 	applymovement 6, MeteorFalls_1F_1R_Movement_15C5FC
 	waitmovement 0
@@ -203,7 +203,7 @@ MeteorFalls_1F_1R_Movement_15C64A:: @ 815C64A
 	walk_in_place_faster_up
 	step_end
 
-MeteorFalls_1F_1R_Movement_15C64F:: @ 815C64F
+MeteorFalls_1F_1R_Movement_PushPlayerOutOfWay:: @ 815C64F
 	walk_in_place_faster_down
 	delay_4
 	walk_in_place_faster_right
@@ -212,16 +212,16 @@ MeteorFalls_1F_1R_Movement_15C64F:: @ 815C64F
 	unlock_facing_direction
 	step_end
 
-MeteorFalls_1F_1R_EventScript_15C656:: @ 815C656
+MeteorFalls_1F_1R_EventScript_ProfCozmo:: @ 815C656
 	lock
 	faceplayer
-	goto_if_set FLAG_MET_PROF_COSMO, MeteorFalls_1F_1R_EventScript_15C66E
-	setflag FLAG_MET_PROF_COSMO
-	msgbox MeteorFalls_1F_1R_Text_1937EB, MSGBOX_DEFAULT
+	goto_if_set FLAG_MET_PROF_COZMO, MeteorFalls_1F_1R_EventScript_MetCozmo
+	setflag FLAG_MET_PROF_COZMO
+	msgbox MeteorFalls_1F_1R_Text_MeetProfCozmo, MSGBOX_DEFAULT
 	release
 	end
 
-MeteorFalls_1F_1R_EventScript_15C66E:: @ 815C66E
+MeteorFalls_1F_1R_EventScript_MetCozmo:: @ 815C66E
 	msgbox MeteorFalls_1F_1R_Text_19396A, MSGBOX_DEFAULT
 	release
 	end

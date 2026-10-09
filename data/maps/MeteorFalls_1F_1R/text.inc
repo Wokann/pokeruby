@@ -1,4 +1,4 @@
-MeteorFalls_1F_1R_Text_193237:: @ 8193237
+MeteorFalls_1F_1R_Text_WithThisMeteorite:: @ 8193237
 	.string "Hehehe!\p"
 	.string "With this METEORITE, MT. CHIMNEY\n"
 	.string "will...$"
@@ -70,7 +70,7 @@ MeteorFalls_1F_1R_Text_1937AA:: @ 81937AA
 	.string "an eye out for TEAM {EVIL_TEAM}, too.\p"
 	.string "Farewell!$"
 
-MeteorFalls_1F_1R_Text_1937EB:: @ 81937EB
+MeteorFalls_1F_1R_Text_MeetProfCozmo:: @ 81937EB
 	.string "I... I'm COZMO...\n"
 	.string "I'm a PROFESSOR...\p"
 	.string "I usually study METEORITES in\n"
