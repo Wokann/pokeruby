@@ -142,4 +142,7 @@ extern const u8 MauvilleCity_PokemonCenter_1F_Text_HotSpringsStory[];
 
 extern const u8 IslandCave_EventScript_OpenRegiEntrance[];
 
+extern const u8 EventScript_BattleColosseum_2P_PlayerSpot0[];
+extern const u8 EventScript_BattleColosseum_2P_PlayerSpot1[];
+
 #endif // GUARD_EVENT_SCRIPTS_H

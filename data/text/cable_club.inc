@@ -142,7 +142,7 @@ CableClub_LookAtTrainerCard2: @ 81A4D45
 	.string "Score! Got to look at {STR_VAR_1}'s\n"
 	.string "TRAINER CARD! It's a {STR_VAR_2} card!$"
 
-SingleBattleColosseum_Text_1A4D7E:: @ 81A4D7E
+BattleColosseum_2P_Text_TakePlaceStartBattle:: @ 81A4D7E
 	.string "Please take your seat and start\n"
 	.string "your battle.$"
 

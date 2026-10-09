@@ -381,7 +381,7 @@ gStdScripts_End::
 	.include "data/maps/SkyPillar_5F/scripts.inc"
 	.include "data/maps/SkyPillar_Top/scripts.inc"
 	.include "data/scripts/shared_secret_base.inc"
-	.include "data/maps/SingleBattleColosseum/scripts.inc"
+	.include "data/maps/BattleColosseum_2P/scripts.inc"
 	.include "data/maps/TradeCenter/scripts.inc"
 	.include "data/maps/RecordCorner/scripts.inc"
 	.include "data/maps/DoubleBattleColosseum/scripts.inc"

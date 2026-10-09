@@ -144,7 +144,7 @@ CableClub_LookAtTrainerCard2: @ 81A4D45
 	.string "von {STR_VAR_1} an! Es ist ein\l"
 	.string "{STR_VAR_2}PASS.$"
 
-SingleBattleColosseum_Text_1A4D7E:: @ 81A4D7E
+BattleColosseum_2P_Text_TakePlaceStartBattle:: @ 81A4D7E
 	.string "Bitte geh in Position und beginne mit\n"
 	.string "dem Kampf.$"
 

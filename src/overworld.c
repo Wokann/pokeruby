@@ -11,6 +11,7 @@
 #include "script_pokemon_util.h"
 #include "event_data.h"
 #include "event_object_movement.h"
+#include "event_scripts.h"
 #include "field_camera.h"
 #include "field_control_avatar.h"
 #include "field_effect.h"
@@ -98,8 +99,6 @@ static void RunTerminateLinkScript(void);
 
 extern u8 EventScript_WhiteOut[];
 extern u8 EventScript_ResetMrBriney[];
-extern u8 SingleBattleColosseum_EventScript_1A436F[];
-extern u8 SingleBattleColosseum_EventScript_1A4379[];
 extern u8 DoubleBattleColosseum_EventScript_1A4383[];
 extern u8 DoubleBattleColosseum_EventScript_1A439E[];
 extern u8 DoubleBattleColosseum_EventScript_1A43B9[];
@@ -2430,9 +2429,9 @@ static u16 sub_8055758(const u8 *script)
         return 10;
     if (script == RecordCorner_EventScript_1A4457)
         return 9;
-    if (script == SingleBattleColosseum_EventScript_1A436F)
+    if (script == EventScript_BattleColosseum_2P_PlayerSpot0)
         return 10;
-    if (script == SingleBattleColosseum_EventScript_1A4379)
+    if (script == EventScript_BattleColosseum_2P_PlayerSpot1)
         return 9;
     if (script == TradeCenter_EventScript_1A43F0)
         return 10;

@@ -184,7 +184,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A3F5E:: @ 81A3F5E
 	compare VAR_0x8004, 5
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A3FCD
 	special SetCableClubWarp
-	warp MAP_SINGLE_BATTLE_COLOSSEUM, 255, 6, 8
+	warp MAP_BATTLE_COLOSSEUM_2P, 255, 6, 8
 	special DoCableClubWarp
 	waitstate
 	end
@@ -518,13 +518,13 @@ gUnknown_081A4363:: @ 81A4363
 	releaseall
 	end
 
-SingleBattleColosseum_EventScript_1A436F:: @ 81A436F
+EventScript_BattleColosseum_2P_PlayerSpot0:: @ 81A436F
 	setvar VAR_0x8005, 0
 	special ColosseumPlayerSpotTriggered
 	waitstate
 	end
 
-SingleBattleColosseum_EventScript_1A4379:: @ 81A4379
+EventScript_BattleColosseum_2P_PlayerSpot1:: @ 81A4379
 	setvar VAR_0x8005, 1
 	special ColosseumPlayerSpotTriggered
 	waitstate
@@ -666,9 +666,9 @@ TradeRoom_TooBusyToNotice:: @ 81A4495
 	closemessage
 	end
 
-SingleBattleColosseum_EventScript_1A449E:: @ 81A449E
+BattleColosseum_2P_EventScript_Attendant:: @ 81A449E
 	special Script_FacePlayer
-	message SingleBattleColosseum_Text_1A4D7E
+	message BattleColosseum_2P_Text_TakePlaceStartBattle
 	waitmessage
 	waitbuttonpress
 	special Script_ClearHeldMovement
