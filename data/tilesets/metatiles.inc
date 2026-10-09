@@ -391,12 +391,12 @@ gMetatileAttributes_TrickHousePuzzle:: @ 8283972
 	.incbin "data/tilesets/secondary/trick_house_puzzle/metatile_attributes.bin"
 
 	.align 1
-gMetatiles_Ship:: @ 8283A9C
-	.incbin "data/tilesets/secondary/ship/metatiles.bin"
+gMetatiles_InsideShip:: @ 8283A9C
+	.incbin "data/tilesets/secondary/inside_ship/metatiles.bin"
 
 	.align 1
-gMetatileAttributes_Ship:: @ 8284A5C
-	.incbin "data/tilesets/secondary/ship/metatile_attributes.bin"
+gMetatileAttributes_InsideShip:: @ 8284A5C
+	.incbin "data/tilesets/secondary/inside_ship/metatile_attributes.bin"
 
 	.align 1
 gMetatiles_SecretBasePrimary:: @ 8284C54

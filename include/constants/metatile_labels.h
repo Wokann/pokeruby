@@ -86,10 +86,6 @@
 
 // gTileset_Facility
 #define METATILE_Facility_DataPad                       0x3E4
-#define METATILE_Facility_DoorIndent_Locked             0x234
-#define METATILE_Facility_DoorIndent_Unlocked           0x21A
-#define METATILE_Facility_IntactDoor_Bottom_Locked      0x233
-#define METATILE_Facility_IntactDoor_Bottom_Unlocked    0x22B
 #define METATILE_Facility_NewMauvilleDoor_Closed_Tile0  0x314
 #define METATILE_Facility_NewMauvilleDoor_Closed_Tile1  0x315
 #define METATILE_Facility_NewMauvilleDoor_Closed_Tile2  0x316
@@ -166,6 +162,12 @@
 #define METATILE_InsideOfTruck_ExitLight_Bottom        0x218
 #define METATILE_InsideOfTruck_ExitLight_Mid           0x210
 #define METATILE_InsideOfTruck_ExitLight_Top           0x208
+
+// gTileset_InsideShip
+#define METATILE_InsideShip_DoorIndent_Locked           0x234
+#define METATILE_InsideShip_DoorIndent_Unlocked         0x21A
+#define METATILE_InsideShip_IntactDoor_Bottom_Locked    0x233
+#define METATILE_InsideShip_IntactDoor_Bottom_Unlocked  0x22B
 
 // gTileset_Lavaridge
 #define METATILE_Lavaridge_AshGrass     0x207

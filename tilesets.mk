@@ -46,7 +46,7 @@ $(TILESETDIR)/secondary/fortree_gym/tiles.4bpp: GFX_OPTS := -num_tiles 84
 $(TILESETDIR)/secondary/mossdeep_gym/tiles.4bpp: GFX_OPTS := -num_tiles 122
 $(TILESETDIR)/secondary/sootopolis_gym/tiles.4bpp: GFX_OPTS := -num_tiles 484
 $(TILESETDIR)/secondary/trick_house_puzzle/tiles.4bpp: GFX_OPTS := -num_tiles 255
-$(TILESETDIR)/secondary/ship/tiles.4bpp: GFX_OPTS := -num_tiles 342
+$(TILESETDIR)/secondary/inside_ship/tiles.4bpp: GFX_OPTS := -num_tiles 342
 $(TILESETDIR)/secondary/elite_four/tiles.4bpp: GFX_OPTS := -num_tiles 505
 
 # reproduce overflow quirk

@@ -371,7 +371,7 @@ AbandonedShip_HiddenFloorRooms_EventScript_ItemWaterStone:: @ 81B18E5
 	end
 
 AbandonedShip_HiddenFloorRooms_EventScript_ItemTMRainDance:: @ 81B18F2
-	finditem ITEM_TM18_RAIN_DANCE
+	finditem ITEM_TM_RAIN_DANCE
 	end
 
 ScorchedSlab_EventScript_1B18FF:: @ 81B18FF

@@ -648,14 +648,14 @@ gTileset_MossdeepGym:: @ 82871EC
 
 	.align 2
 
-gTileset_Ship:: @ 8287204
+gTileset_InsideShip:: @ 8287204
 	.byte TRUE @ is compressed
 	.byte TRUE @ is secondary tileset
 	.2byte 0 @ padding
-	.4byte gTilesetTiles_Ship
-	.4byte gTilesetPalettes_Ship
-	.4byte gMetatiles_Ship
-	.4byte gMetatileAttributes_Ship
+	.4byte gTilesetTiles_InsideShip
+	.4byte gTilesetPalettes_InsideShip
+	.4byte gMetatiles_InsideShip
+	.4byte gMetatileAttributes_InsideShip
 	.4byte NULL @ animation callback
 
 	.align 2

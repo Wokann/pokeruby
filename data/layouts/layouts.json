@@ -1877,7 +1877,7 @@
       "width": 18,
       "height": 12,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Ship",
+      "secondary_tileset": "gTileset_InsideShip",
       "border_filepath": "data/layouts/AbandonedShip_Corridors_1F/border.bin",
       "blockdata_filepath": "data/layouts/AbandonedShip_Corridors_1F/map.bin"
     },
@@ -1887,7 +1887,7 @@
       "width": 18,
       "height": 17,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Ship",
+      "secondary_tileset": "gTileset_InsideShip",
       "border_filepath": "data/layouts/AbandonedShip_Rooms_1F/border.bin",
       "blockdata_filepath": "data/layouts/AbandonedShip_Rooms_1F/map.bin"
     },
@@ -1897,7 +1897,7 @@
       "width": 13,
       "height": 10,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Ship",
+      "secondary_tileset": "gTileset_InsideShip",
       "border_filepath": "data/layouts/AbandonedShip_Corridors_B1F/border.bin",
       "blockdata_filepath": "data/layouts/AbandonedShip_Corridors_B1F/map.bin"
     },
@@ -1907,7 +1907,7 @@
       "width": 27,
       "height": 8,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Ship",
+      "secondary_tileset": "gTileset_InsideShip",
       "border_filepath": "data/layouts/AbandonedShip_Rooms_B1F/border.bin",
       "blockdata_filepath": "data/layouts/AbandonedShip_Rooms_B1F/map.bin"
     },
@@ -1917,7 +1917,7 @@
       "width": 18,
       "height": 8,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Ship",
+      "secondary_tileset": "gTileset_InsideShip",
       "border_filepath": "data/layouts/AbandonedShip_Rooms2_B1F/border.bin",
       "blockdata_filepath": "data/layouts/AbandonedShip_Rooms2_B1F/map.bin"
     },
@@ -1927,7 +1927,7 @@
       "width": 8,
       "height": 8,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Ship",
+      "secondary_tileset": "gTileset_InsideShip",
       "border_filepath": "data/layouts/AbandonedShip_Underwater1/border.bin",
       "blockdata_filepath": "data/layouts/AbandonedShip_Underwater1/map.bin"
     },
@@ -1937,7 +1937,7 @@
       "width": 9,
       "height": 8,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Ship",
+      "secondary_tileset": "gTileset_InsideShip",
       "border_filepath": "data/layouts/AbandonedShip_Room_B1F/border.bin",
       "blockdata_filepath": "data/layouts/AbandonedShip_Room_B1F/map.bin"
     },
@@ -1947,7 +1947,7 @@
       "width": 9,
       "height": 17,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Ship",
+      "secondary_tileset": "gTileset_InsideShip",
       "border_filepath": "data/layouts/AbandonedShip_Rooms2_1F/border.bin",
       "blockdata_filepath": "data/layouts/AbandonedShip_Rooms2_1F/map.bin"
     },
@@ -1967,7 +1967,7 @@
       "width": 21,
       "height": 7,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Ship",
+      "secondary_tileset": "gTileset_InsideShip",
       "border_filepath": "data/layouts/AbandonedShip_Underwater2/border.bin",
       "blockdata_filepath": "data/layouts/AbandonedShip_Underwater2/map.bin"
     },
@@ -2777,7 +2777,7 @@
       "width": 18,
       "height": 13,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Ship",
+      "secondary_tileset": "gTileset_InsideShip",
       "border_filepath": "data/layouts/SSTidalCorridor/border.bin",
       "blockdata_filepath": "data/layouts/SSTidalCorridor/map.bin"
     },
@@ -2787,7 +2787,7 @@
       "width": 17,
       "height": 13,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Ship",
+      "secondary_tileset": "gTileset_InsideShip",
       "border_filepath": "data/layouts/SSTidalLowerDeck/border.bin",
       "blockdata_filepath": "data/layouts/SSTidalLowerDeck/map.bin"
     },
@@ -2797,7 +2797,7 @@
       "width": 36,
       "height": 18,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Ship",
+      "secondary_tileset": "gTileset_InsideShip",
       "border_filepath": "data/layouts/SSTidalRooms/border.bin",
       "blockdata_filepath": "data/layouts/SSTidalRooms/map.bin"
     },
@@ -2897,7 +2897,7 @@
       "width": 13,
       "height": 11,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Ship",
+      "secondary_tileset": "gTileset_InsideShip",
       "border_filepath": "data/layouts/AbandonedShip_HiddenFloorCorridors/border.bin",
       "blockdata_filepath": "data/layouts/AbandonedShip_HiddenFloorCorridors/map.bin"
     },
@@ -3107,7 +3107,7 @@
       "width": 44,
       "height": 15,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Ship",
+      "secondary_tileset": "gTileset_InsideShip",
       "border_filepath": "data/layouts/AbandonedShip_HiddenFloorRooms/border.bin",
       "blockdata_filepath": "data/layouts/AbandonedShip_HiddenFloorRooms/map.bin"
     },
