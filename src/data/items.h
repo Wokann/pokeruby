@@ -4706,7 +4706,7 @@ const struct Item gItems[] =
     },
     {
         .name = _("TM06"),
-        .itemId = ITEM_TM06_TOXIC,
+        .itemId = ITEM_TM_TOXIC,
         .price = 3000,
         .holdEffect = HOLD_EFFECT_NONE,
         .holdEffectParam = 0,

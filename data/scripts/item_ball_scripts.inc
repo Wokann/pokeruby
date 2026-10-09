@@ -286,12 +286,12 @@ JaggedPass_EventScript_ItemBurnHeal:: @ 81B17D4
 	finditem ITEM_BURN_HEAL
 	end
 
-FieryPath_EventScript_1B17E1:: @ 81B17E1
+FieryPath_EventScript_ItemFireStone:: @ 81B17E1
 	finditem ITEM_FIRE_STONE
 	end
 
-FieryPath_EventScript_1B17EE:: @ 81B17EE
-	finditem ITEM_TM06_TOXIC
+FieryPath_EventScript_ItemTMToxic:: @ 81B17EE
+	finditem ITEM_TM_TOXIC
 	end
 
 MeteorFalls_1F_1R_EventScript_ItemTMIronTail:: @ 81B17FB

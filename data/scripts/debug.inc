@@ -95,7 +95,7 @@ DebugScript_081C1D46:: @ 81C1D46
 	additem ITEM_TM_WATER_PULSE, 99
 	additem ITEM_TM_CALM_MIND, 99
 	additem ITEM_TM05_ROAR, 99
-	additem ITEM_TM06_TOXIC, 99
+	additem ITEM_TM_TOXIC, 99
 	additem ITEM_TM07_HAIL, 99
 	additem ITEM_TM_BULK_UP, 99
 	additem ITEM_TM09_BULLET_SEED, 99
