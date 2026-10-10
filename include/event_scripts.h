@@ -4,6 +4,13 @@
 extern const u8 EventScript_HiddenItemScript[];
 extern const u8 EventScript_PC[];
 extern const u8 EventScript_RegionMap[];
+extern const u8 EventScript_PictureBookShelf[];
+extern const u8 EventScript_BookShelf[];
+extern const u8 EventScript_PokemonCenterBookShelf[];
+extern const u8 EventScript_Vase[];
+extern const u8 EventScript_EmptyTrashCan[];
+extern const u8 EventScript_ShopShelf[];
+extern const u8 EventScript_Blueprint[];
 
 extern const u8 EventScript_UseCut[];
 extern const u8 EventScript_UseRockSmash[];
