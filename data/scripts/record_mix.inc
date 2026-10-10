@@ -2,7 +2,7 @@
 EventScript_MixRecordsPrompt: @ 819FFD5
 	lock
 	faceplayer
-	msgbox UnusedMixRecordsPromptText, MSGBOX_YESNO
+	msgbox Text_WouldYouLikeToMixRecords, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	goto_if_eq EventScript_MixRecords
 	compare VAR_RESULT, NO
@@ -15,7 +15,7 @@ EventScript_MixRecords: @ 819FFFA
 	lock
 	faceplayer
 EventScript_EndMixRecords: @ 81A0000
-	message UnusedMixRecordsSeeYouAgainText
+	message Text_WeHopeToSeeYouAgain
 	waitmessage
 	waitbuttonpress
 	release
