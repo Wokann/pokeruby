@@ -1,6 +1,8 @@
 #ifndef GUARD_EVENT_SCRIPTS_H
 #define GUARD_EVENT_SCRIPTS_H
 
+extern const u8 EventScript_HiddenItemScript[];
+
 extern const u8 EventScript_UseCut[];
 extern const u8 EventScript_UseRockSmash[];
 extern const u8 EventScript_UseFlash[];
