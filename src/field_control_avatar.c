@@ -71,7 +71,6 @@ extern u8 EventScript_ShopShelf[];
 extern u8 EventScript_Blueprint[];
 extern u8 SecretBase_EventScript_SandOrnament[];
 extern u8 SecretBase_EventScript_ShieldOrToyTV[];
-extern u8 EventScript_UseSurf[];
 extern u8 EventScript_UseWaterfall[];
 extern u8 EventScript_CannotUseWaterfall[];
 extern u8 EventScript_UseDive[];
