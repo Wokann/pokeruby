@@ -1400,7 +1400,7 @@ LilycoveCity_ContestLobby_EventScript_TryShowContestReporter:: @ 81AE188
 	special InterviewBefore
 	compare VAR_RESULT, 1
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_DontShowContestReporter
-	switch VAR_CONTEST_LOCATION
+	switch VAR_CONTEST_TYPE
 	case 0, LilycoveCity_ContestLobby_EventScript_DontShowContestReporter
 	case 2, FallarborTown_ContestLobby_EventScript_ShowFallarborContestReporter
 	case 1, FallarborTown_ContestLobby_EventScript_ShowVerdanturfContestReporter

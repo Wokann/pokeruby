@@ -293,7 +293,7 @@ ContestHall_EventScript_RandomAudienceScientist1:: @ 815F913
 	return
 
 ContestHall_EventScript_CreateAudience:: @ 815F919
-	switch VAR_CONTEST_LOCATION
+	switch VAR_CONTEST_TYPE
 	case 1, ContestHall_EventScript_CreateNormalContestAudience
 	case 2, ContestHall_EventScript_CreateSuperContestAudience
 	case 3, ContestHall_EventScript_CreateHyperContestAudience
@@ -372,7 +372,7 @@ ContestHall_EventScript_CreateMasterContestAudience:: @ 815FA70
 	return
 
 ContestHall_EventScript_SetExitWarp:: @ 815FB64
-	switch VAR_CONTEST_LOCATION
+	switch VAR_CONTEST_TYPE
 	case 1, ContestHall_EventScript_SetExitWarpNormalContest
 	case 2, ContestHall_EventScript_SetExitWarpSuperContest
 	case 3, ContestHall_EventScript_SetExitWarpHyperContest

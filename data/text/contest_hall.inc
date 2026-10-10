@@ -3,11 +3,11 @@ FallarborTown_ContestLobby_Text_1A5DFC:: @ 81A5DFC
 	.string "We're accepting registrations for\n"
 	.string "{STR_VAR_1} Rank POKéMON CONTESTS.$"
 
-FallarborTown_ContestLobby_Text_1A5E46:: @ 81A5E46
+LilycoveCity_ContestLobby_Text_EnterContest1:: @ 81A5E46
 	.string "Would you like to enter your POKéMON\n"
 	.string "in our CONTESTS?$"
 
-FallarborTown_ContestLobby_Text_1A5E7C:: @ 81A5E7C
+LilycoveCity_ContestLobby_Text_WhichTopic1:: @ 81A5E7C
 	.string "Which topic would you like?$"
 
 LilycoveCity_ContestLobby_Text_ExplainContests:: @ 81A5E98
@@ -54,7 +54,7 @@ LilycoveCity_ContestLobby_Text_ExplainContestRanks:: @ 81A613F
 	.string "may compete in the MASTER Rank as\l"
 	.string "often as its TRAINER wants.$"
 
-FallarborTown_ContestLobby_Text_EnterWhichPokemon1:: @ 81A6319
+LilycoveCity_ContestLobby_Text_EnterWhichPokemon1:: @ 81A6319
 	.string "Which POKéMON would you like to enter?$"
 
 FallarborTown_ContestLobby_Text_1A6340:: @ 81A6340
@@ -96,7 +96,7 @@ FallarborTown_ContestLobby_Text_1A65EA:: @ 81A65EA
 	.string "Please visit whenever you would like\n"
 	.string "to enter a CONTEST.$"
 
-FallarborTown_ContestLobby_Text_1A6623:: @ 81A6623
+LilycoveCity_ContestLobby_Text_EnterWhichContest1:: @ 81A6623
 	.string "Which CONTEST would you like to enter?$"
 
 LilycoveCity_ContestLobby_Text_MonNotQualifiedForRank:: @ 81A664A
@@ -112,7 +112,7 @@ LilycoveCity_ContestLobby_Text_MonInNoConditionForContest:: @ 81A66DC
 	.string "Your POKéMON appears to be in no\n"
 	.string "condition to take part in a CONTEST...$"
 
-FallarborTown_ContestLobby_Text_1A6724:: @ 81A6724
+LilycoveCity_ContestLobby_Text_AlreadyWonEnterAnyway:: @ 81A6724
 	.string "Oh, but that RIBBON...\p"
 	.string "Your POKéMON has won this CONTEST\n"
 	.string "before, hasn't it?\p"
@@ -122,7 +122,7 @@ FallarborTown_ContestLobby_Text_1A6724:: @ 81A6724
 LilycoveCity_ContestLobby_Text_ConfirmContestMon:: @ 81A67A3
 	.string "Is that your CONTEST POKéMON?$"
 
-FallarborTown_ContestLobby_Text_1A67C1:: @ 81A67C1
+LilycoveCity_ContestLobby_Text_YourMonIsEntryNum4:: @ 81A67C1
 	.string "Okay, your POKéMON will be entered\n"
 	.string "in this CONTEST.\p"
 	.string "Your POKéMON is Entry No. 4.\n"
@@ -132,35 +132,35 @@ LilycoveCity_ContestLobby_Text_ComeThroughHere:: @ 81A6832
 	.string "Please come in through here.\n"
 	.string "Good luck!$"
 
-FallarborTown_ContestLobby_Text_1A685A:: @ 81A685A
+LilycoveCity_ContestLobby_Text_PokemonWonWeHavePrize:: @ 81A685A
 	.string "Congratulations! Your POKéMON is the\n"
 	.string "CONTEST winner!\p"
 	.string "We have your prize right here.\n"
 	.string "Please, right this way!$"
 
-FallarborTown_ContestLobby_Text_1A68C6:: @ 81A68C6
+LilycoveCity_ContestLobby_Text_ComeBackForPrizeLater:: @ 81A68C6
 	.string "Please come back for your prize\n"
 	.string "later on.$"
 
-LinkContestRoom1_Text_1A68F0:: @ 81A68F0
+ContestHall_Text_GettingStartedParticipantsAsFollows:: @ 81A68F0
 	.string "MC: Hello! We're just getting started\n"
 	.string "with a {STR_VAR_3} Rank POKéMON\l"
 	.string "{STR_VAR_2} CONTEST!\p"
 	.string "The participating TRAINERS and their\n"
 	.string "POKéMON are as follows:$"
 
-LinkContestRoom1_Text_1A6976:: @ 81A6976
+ContestHall_Text_GettingStartedParticipantsAsFollowsLink:: @ 81A6976
 	.string "MC: Hello! We're just getting started\n"
 	.string "with a 4-player linked POKéMON\l"
 	.string "{STR_VAR_2} CONTEST!\p"
 	.string "The participating TRAINERS and their\n"
 	.string "POKéMON are as follows:$"
 
-LinkContestRoom1_Text_1A6A04:: @ 81A6A04
+ContestHall_Text_EntryXTrainersMon:: @ 81A6A04
 	.string "MC: Entry No. {STR_VAR_2}!\n"
 	.string "{STR_VAR_1}'s {STR_VAR_3}!$"
 
-LinkContestRoom1_Text_1A6A1F:: @ 81A6A1F
+ContestHall_Text_SeenContestantsAudienceWillVote:: @ 81A6A1F
 	.string "MC: We've just seen the four POKéMON\n"
 	.string "contestants.\p"
 	.string "Now it's time for primary judging!\p"
@@ -169,10 +169,10 @@ LinkContestRoom1_Text_1A6A1F:: @ 81A6A1F
 	.string "Without any further ado, let the\n"
 	.string "voting begin!$"
 
-LinkContestRoom1_Text_1A6AE1:: @ 81A6AE1
+ContestHall_Text_VotingUnderWay:: @ 81A6AE1
 	.string "Voting under way...$"
 
-LinkContestRoom1_Text_1A6AF5:: @ 81A6AF5
+ContestHall_Text_VotingCompleteLetsAppeal:: @ 81A6AF5
 	.string "Voting is now complete!\p"
 	.string "While the votes are being tallied,\n"
 	.string "let's move on to secondary judging!\p"
@@ -183,49 +183,49 @@ LinkContestRoom1_Text_1A6AF5:: @ 81A6AF5
 	.string "Let's see a little enthusiasm!\n"
 	.string "Let's appeal!$"
 
-LinkContestRoom1_Text_1A6C06:: @ 81A6C06
+ContestHall_Text_ThatsItForJudging:: @ 81A6C06
 	.string "MC: That's it for judging!$"
 
-LinkContestRoom1_Text_1A6C21:: @ 81A6C21
+ContestHall_Text_ThankYouForAppeals:: @ 81A6C21
 	.string "Thank you all for a most wonderful\n"
 	.string "display of quality appeals!\p"
 	.string "This concludes all judging!\n"
 	.string "Thank you for your fine efforts!$"
 
-LinkContestRoom1_Text_1A6C9D:: @ 81A6C9D
+ContestHall_Text_JudgeLooksReady:: @ 81A6C9D
 	.string "Now, all that remains is the pulse-\n"
 	.string "pounding proclamation of the winner.\p"
 	.string "The JUDGE looks ready to make the\n"
 	.string "announcement!$"
 
-LinkContestRoom1_Text_1A6D16:: @ 81A6D16
+ContestHall_Text_WeWillNowDeclareWinner:: @ 81A6D16
 	.string "JUDGE: I will now declare the winner!$"
 
-LinkContestRoom1_Text_1A6D3C:: @ 81A6D3C
+ContestHall_Text_CongratsTrainerXandMon:: @ 81A6D3C
 	.string "MC: Entry No. {STR_VAR_2}!\p"
 	.string "{STR_VAR_3} and {STR_VAR_1},\n"
 	.string "congratulations!$"
 
-LinkContestRoom1_Text_1A6D6A:: @ 81A6D6A
+ContestHall_Text_ConferRibbonAsPrize:: @ 81A6D6A
 	.string "We confer on you this RIBBON as your\n"
 	.string "prize!$"
 
-LinkContestRoom1_Text_1A6D96:: @ 81A6D96
+ContestHall_Text_ReceivedRibbon:: @ 81A6D96
 	.string "{PLAYER} received a RIBBON.$"
 
-LinkContestRoom1_Text_1A6DAC:: @ 81A6DAC
+ContestHall_Text_PutRibbonOnMon:: @ 81A6DAC
 	.string "{PLAYER} put the RIBBON on\n"
 	.string "{STR_VAR_1}.$"
 
-LinkContestRoom1_Text_1A6DC5:: @ 81A6DC5
+ContestHall_Text_AcceptYourPrize:: @ 81A6DC5
 	.string "MC: Here you are!\n"
 	.string "Please accept your prize!$"
 
-LinkContestRoom1_Text_1A6DF1:: @ 81A6DF1
+ContestHall_Text_CongratsPleaseCompeteAgain:: @ 81A6DF1
 	.string "MC: Congratulations!\n"
 	.string "Please do compete again!$"
 
-LinkContestRoom1_Text_1A6E1F:: @ 81A6E1F
+ContestHall_Text_PickUpPrizeAtCounterLater:: @ 81A6E1F
 	.string "Please pick up your prize at the\n"
 	.string "reception counter later.\l"
 	.string "Please do compete again!$"

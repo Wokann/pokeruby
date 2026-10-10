@@ -326,11 +326,11 @@ LilycoveCity_ContestLobby_EventScript_RegistrationsFromFourNeedContestPass:: @ 8
 LilycoveCity_ContestLobby_EventScript_158BC4:: @ 8158BC4
 	msgbox LilycoveCity_ContestLobby_Text_ProgressWillBeSaved, MSGBOX_YESNO
 	compare VAR_RESULT, NO
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_CancelEnterContest
+	goto_if_eq LilycoveCity_ContestLobby_EventScript_CancelEnterLinkContest
 	call Common_EventScript_SaveGame
 	erasebox 0, 0, 15, 9
 	compare VAR_RESULT, 0
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_CancelEnterContest
+	goto_if_eq LilycoveCity_ContestLobby_EventScript_CancelEnterLinkContest
 	setflag FLAG_TEMP_3
 	return
 
@@ -339,8 +339,8 @@ LilycoveCity_ContestLobby_EventScript_AskEnterLinkContest:: @ 8158BF0
 	switch VAR_RESULT
 	case 0, LilycoveCity_ContestLobby_EventScript_ChooseLinkContestType
 	case 1, LilycoveCity_ContestLobby_EventScript_ExplainLinkContest
-	case 2, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
-	case 127, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
+	case 2, LilycoveCity_ContestLobby_EventScript_CancelEnterLinkContest
+	case 127, LilycoveCity_ContestLobby_EventScript_CancelEnterLinkContest
 	end
 
 LilycoveCity_ContestLobby_EventScript_ExplainLinkContest:: @ 8158C27
@@ -348,7 +348,7 @@ LilycoveCity_ContestLobby_EventScript_ExplainLinkContest:: @ 8158C27
 	goto LilycoveCity_ContestLobby_EventScript_LinkContestReceptionist
 	end
 
-LilycoveCity_ContestLobby_EventScript_CancelEnterContest:: @ 8158C35
+LilycoveCity_ContestLobby_EventScript_CancelEnterLinkContest:: @ 8158C35
 	msgbox LilycoveCity_ContestLobby_Text_ParticipateAnotherTime, MSGBOX_DEFAULT
 	releaseall
 	clearflag FLAG_TEMP_3
@@ -404,8 +404,8 @@ LilycoveCity_ContestLobby_EventScript_ChooseLinkContestType:: @ 8158CEA
 	waitmessage
 	multichoice 0, 0, 4, 0
 	switch VAR_RESULT
-	case 5, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
-	case 127, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
+	case 5, LilycoveCity_ContestLobby_EventScript_CancelEnterLinkContest
+	case 127, LilycoveCity_ContestLobby_EventScript_CancelEnterLinkContest
 	copyvar VAR_CONTEST_CATEGORY, VAR_RESULT
 	goto LilycoveCity_ContestLobby_EventScript_ChooseLinkContestMon
 	end
@@ -479,7 +479,7 @@ LilycoveCity_ContestLobby_EventScript_158DEE:: @ 8158DEE
 	call LilycoveCity_ContestLobby_EventScript_LeadToLinkContestHall
 	setvar VAR_CONTEST_HALL_STATE, 1
 	special SetLinkContestPlayerGfx
-	setvar VAR_CONTEST_LOCATION, 5
+	setvar VAR_CONTEST_TYPE, 5
 	setvar VAR_CONTEST_RANK, 3
 	call LilycoveCity_ContestLobby_EventScript_WarpToContestHall
 	end
@@ -573,7 +573,7 @@ LilycoveCity_ContestLobby_EventScript_ContestReceptionist:: @ 8158EB0
 	call LilycoveCity_ContestLobby_EventScript_LeadToContestHall
 	special SetContestTrainerGfxIds
 	call LilycoveCity_ContestLobby_EventScript_SetPlayerGfx
-	setvar VAR_CONTEST_LOCATION, 4
+	setvar VAR_CONTEST_TYPE, 4
 	call LilycoveCity_ContestLobby_EventScript_WarpToContestHall
 	waitstate
 	end
