@@ -740,7 +740,7 @@ void GabbyAndTyBeforeInterview(void)
 
     TakeGabbyAndTyOffTheAir();
     if (gSaveBlock1.gabbyAndTyData.lastMove == 0)
-        FlagSet(FLAG_TEMP_1);
+        FlagSet(FLAG_TEMP_SKIP_GABBY_INTERVIEW);
 }
 
 void GabbyAndTyAfterInterview(void)
