@@ -33,6 +33,8 @@ extern const u8 SecretBase_EventScript_ShrubUseSecretPower[];
 extern const u8 SecretBase_EventScript_PCCancel[];
 extern const u8 SecretBase_EventScript_ShowRegisterMenu[];
 extern const u8 SecretBase_EventScript_Enter[];
+extern const u8 SecretBase_EventScript_PutAwayDecoration[];
+extern const u8 SecretBase_EventScript_SetDecoration[];
 extern const u8 SecretBase_Text_Trainer0Defeated[];
 extern const u8 SecretBase_Text_Trainer1Defeated[];
 extern const u8 SecretBase_Text_Trainer2Defeated[];

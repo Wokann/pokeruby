@@ -10,7 +10,7 @@ EventScript_CutTree:: @ 81B0DCC
 	msgbox UseCutPromptText, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq Cut_ChoseNo
-	msgbox UsedCutRockSmashText, MSGBOX_DEFAULT
+	msgbox Text_MonUsedFieldMove, MSGBOX_DEFAULT
 	closemessage
 	dofieldeffect FLDEFF_USE_CUT_ON_TREE
 	waitstate
@@ -49,7 +49,7 @@ UseCutPromptText: @ 81B0E3F
 	.string "This tree looks like it can be CUT down.\p"
 	.string "Would you like to CUT it?$"
 
-UsedCutRockSmashText: @ 81B0E82
+Text_MonUsedFieldMove: @ 81B0E82
 	.string "{STR_VAR_1} used {STR_VAR_2}.$"
 
 CannotUseCutText: @ 81B0E8E
@@ -67,7 +67,7 @@ EventScript_RockSmash:: @ 81B0EB7
 	msgbox UseRockSmashPromptText, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq RockSmash_ChoseNo
-	msgbox UsedCutRockSmashText, MSGBOX_DEFAULT
+	msgbox Text_MonUsedFieldMove, MSGBOX_DEFAULT
 	closemessage
 	dofieldeffect FLDEFF_USE_ROCK_SMASH
 	waitstate

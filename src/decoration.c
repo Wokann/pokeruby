@@ -10,6 +10,7 @@
 #include "menu_helpers.h"
 #include "strings.h"
 #include "script.h"
+#include "event_scripts.h"
 #include "palette.h"
 #include "field_player_avatar.h"
 #include "field_camera.h"
@@ -189,10 +190,6 @@ const struct YesNoFuncTable gUnknown_083EC634[] = {
     {sub_81017A0, sub_80FF058},
     {sub_8109D04, sub_80FF058}
 };
-
-// text
-
-extern u8 SecretBase_EventScript_PCCancel[];
 
 void sub_80FE1DC(void)
 {
@@ -917,12 +914,12 @@ void SetDecoration(void)
     u8 j;
     for (i=0; i<14; i++)
     {
-        if (FlagGet(i + FLAG_DECORATION_2) == 1)
+        if (FlagGet(i + FLAG_DECORATION_1) == 1)
         {
-            FlagClear(i + FLAG_DECORATION_2);
+            FlagClear(i + FLAG_DECORATION_1);
             for (j=0; j<gMapHeader.events->objectEventCount; j++)
             {
-                if (gMapHeader.events->objectEvents[j].flagId == i + FLAG_DECORATION_2)
+                if (gMapHeader.events->objectEvents[j].flagId == i + FLAG_DECORATION_1)
                 {
                     break;
                 }
@@ -1326,7 +1323,7 @@ void sub_81000C4(u8 taskId)
     {
         sCurDecorMapX = gTasks[taskId].data[0] - 7;
         sCurDecorMapY = gTasks[taskId].data[1] - 7;
-        ScriptContext_SetupScript(gUnknown_081A2F7B);
+        ScriptContext_SetupScript(SecretBase_EventScript_SetDecoration);
     }
     gSprites[sDecor_CameraSpriteObjectIdx1].y += 2;
     CancelDecorating_(taskId);
@@ -1867,7 +1864,7 @@ void sub_8100C88(u8 taskId)
             if (!gPaletteFade.active)
             {
                 DrawWholeMapView();
-                ScriptContext_SetupScript(gUnknown_081A2F8A);
+                ScriptContext_SetupScript(SecretBase_EventScript_PutAwayDecoration);
                 Menu_EraseWindowRect(0, 0, 29, 19);
                 gTasks[taskId].data[2] = 2;
             }

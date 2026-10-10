@@ -80,8 +80,6 @@ struct UnkStruct_083EC900
 
 extern const struct Decoration gDecorations[];
 extern u8 *gCurDecorationItems;
-extern u8 gUnknown_081A2F7B[];
-extern u8 gUnknown_081A2F8A[];
 
 extern u8 gUnknown_020388F3;
 extern u8 gCurDecorationIndex;
