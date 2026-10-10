@@ -54,7 +54,6 @@ extern u8 LittlerootTown_BrendansHouse_2F_EventScript_PC[];
 extern u8 LittlerootTown_MaysHouse_2F_EventScript_PC[];
 extern u8 SecretBase_EventScript_PC[];
 extern u8 SecretBase_EventScript_RecordMixingPC[];
-extern u8 EventScript_PC[];
 extern u8 EventScript_TestSignpostMsg[];
 extern u8 Event_TV[];
 extern u8 EventScript_ClosedSootopolisDoor[];
