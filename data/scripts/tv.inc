@@ -30,7 +30,7 @@ EventScript_1A6EBB:
 
 EventScript_1A6EF1:
 	special GetMomOrDadStringForTVMessage
-	msgbox UnknownString_81A0E68, MSGBOX_DEFAULT
+	msgbox gText_MomOrDadMightLikeThisProgram, MSGBOX_DEFAULT
 	special TurnOffTVScreen
 	releaseall
 	end
@@ -70,7 +70,7 @@ EventScript_1A6F37:
 
 EventScript_1A6F3F:
 	special GetMomOrDadStringForTVMessage
-	msgbox UnknownString_81A0E68, MSGBOX_DEFAULT
+	msgbox gText_MomOrDadMightLikeThisProgram, MSGBOX_DEFAULT
 	goto EventScript_1A6F37
 	end
 

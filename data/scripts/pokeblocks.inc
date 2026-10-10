@@ -304,7 +304,7 @@ FallarborTown_ContestLobby_EventScript_1B7959:: @ 81B7959
 
 FallarborTown_ContestLobby_EventScript_1B7966:: @ 81B7966
 	special CloseLink
-	msgbox FallarborTown_ContestLobby_Text_1A10EB, MSGBOX_DEFAULT
+	msgbox gText_PokeblockLinkCanceled, MSGBOX_DEFAULT
 	releaseall
 	end
 

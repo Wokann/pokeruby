@@ -1013,7 +1013,7 @@ UnknownString_81A0E27: @ 81A0E27
 UnknownString_81A0E4F: @ 81A0E4F
 	.string "Bereit für einen Testkampf.$"
 
-UnknownString_81A0E68: @ 81A0E68
+gText_MomOrDadMightLikeThisProgram:: @ 81A0E68
 	.string "{STR_VAR_1} würde dieses Programm gefallen.\p"
 	.string "... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ...\p"
 	.string "Ich beeile mich besser!$"
@@ -1042,11 +1042,10 @@ gText_SandstormIsVicious:: @ 81A0F93
 	.string "Der Sandsturm ist zu stark.\n"
 	.string "Dagegen kann man nicht angehen!$"
 
-gText_SelectWithoutRegisteredItem: @ 81A0FCC
+gText_SelectWithoutRegisteredItem:: @ 81A0FCC
 	.string "Ein Basis-Item aus dem BEUTEL kann auf\n"
 	.string "SELECT gelegt werden. Sehr praktisch!$"
 
-gText_PokemonTrainerSchoolEmail:: @ 81A100C
 gText_PokemonTrainerSchoolEmail:: @ 81A100C
 	.string "Da ist eine E-Mail von der POKéMON\n"
 	.string "TRAINERSCHULE.\p"
@@ -1059,13 +1058,11 @@ gText_PokemonTrainerSchoolEmail:: @ 81A100C
 	.string "... ... ... ... ... ...$"
 
 gText_PlayerHouseBootPC:: @ 81A10D6
-gText_PlayerHouseBootPC:: @ 81A10D6
 	.string "{PLAYER} schaltet den PC ein.$"
 
-FallarborTown_ContestLobby_Text_1A10EB:: @ 81A10EB
+gText_PokeblockLinkCanceled:: @ 81A10EB
 	.string "Die Verbindung wurde abgebrochen.$"
 
-gText_NicknameReceivedPokemon:: @ 81A1102
 gText_NicknameReceivedPokemon:: @ 81A1102
 	.string "Möchtest du {STR_VAR_2} einen\n"
 	.string "Kosenamen geben?$"
@@ -1074,7 +1071,7 @@ gText_PkmnFainted_FldPsn:: @ 81A1132
 	.string "{STR_VAR_1} wurde besiegt...\p"
 	.string "$"
 
-UnknownString_81A1141: @ 81A1141
+gText_PlayerWhitedOut:: @ 81A1141
 	.string "{PLAYER} hat kein kampffähiges POKéMON\n"
 	.string "mehr!\p"
 	.string "{PLAYER} wird ohnmächtig!$"
@@ -1141,7 +1138,7 @@ gUnknown_081A14B8:: @ 81A14B8
 	end
 
 EventScript_1A14CA::
-	message UnknownString_81A1141
+	message gText_PlayerWhitedOut
 	waitmessage
 	waitbuttonpress
 	special Script_FadeOutMapMusic
