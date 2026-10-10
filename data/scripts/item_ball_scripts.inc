@@ -43,7 +43,7 @@ Route110_EventScript_ItemDireHit:: @ 81B14BB
 	end
 
 Route111_EventScript_ItemTMSandstorm:: @ 81B14C8
-	finditem ITEM_TM37_SANDSTORM
+	finditem ITEM_TM_SANDSTORM
 	end
 
 Route111_EventScript_ItemStardust:: @ 81B14D5
@@ -79,7 +79,7 @@ Route115_EventScript_ItemSuperPotion:: @ 81B1530
 	end
 
 Route115_EventScript_ItemTMFocusPunch:: @ 81B153D
-	finditem ITEM_TM01_FOCUS_PUNCH
+	finditem ITEM_TM_FOCUS_PUNCH
 	end
 
 Route115_EventScript_ItemIron:: @ 81B154A

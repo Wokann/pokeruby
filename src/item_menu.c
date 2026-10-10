@@ -1212,7 +1212,7 @@ static void sub_80A4548(u16 taskId, int topItemOffset, int bottomItemOffset, int
             gBGTilemapBuffers[2][tilemapOffset + 32] = 0x69;
             gBGTilemapBuffers[2][tilemapOffset + 33] = 0x4F;
             moveName = gMoveNames[ItemIdToBattleMoveId(gCurrentBagPocketItemSlots[slot].itemId)];
-            sub_80A41E0(text, gCurrentBagPocketItemSlots[slot].itemId - (ITEM_TM01_FOCUS_PUNCH - 1), moveName, gCurrentBagPocketItemSlots[slot].quantity, 2);
+            sub_80A41E0(text, gCurrentBagPocketItemSlots[slot].itemId - (ITEM_TM_FOCUS_PUNCH - 1), moveName, gCurrentBagPocketItemSlots[slot].quantity, 2);
         }
         else
         {

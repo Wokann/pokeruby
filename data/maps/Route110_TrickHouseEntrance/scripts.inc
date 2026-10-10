@@ -399,7 +399,7 @@ Route110_TrickHouseEntrance_EventScript_GivePuzzle4Reward:: @ 8161452
 	end
 
 Route110_TrickHouseEntrance_EventScript_GivePuzzle5Reward:: @ 816147E
-	giveitem ITEM_TM12_TAUNT
+	giveitem ITEM_TM_TAUNT
 	compare VAR_RESULT, 1
 	goto_if_eq Route110_TrickHouseEntrance_EventScript_GotReward
 	compare VAR_RESULT, 0

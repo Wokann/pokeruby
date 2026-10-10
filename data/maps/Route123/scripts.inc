@@ -15,7 +15,7 @@ Route123_EventScript_GigaDrainGirl:: @ 8151C5D
 	compare VAR_RESULT, 0
 	goto_if_eq Route123_EventScript_NoGrassMons
 	msgbox Route123_Text_YouLikeGrassMonsTooHaveThis, MSGBOX_DEFAULT
-	giveitem ITEM_TM19_GIGA_DRAIN
+	giveitem ITEM_TM_GIGA_DRAIN
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_TM_GIGA_DRAIN
