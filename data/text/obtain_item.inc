@@ -1,27 +1,27 @@
-gText_ObtainedTheItem: @ 81A0C68
+gText_ObtainedTheItem:: @ 81A0C68
 	.string "Obtained the {STR_VAR_2}.$"
 
 gText_TheBagIsFull:: @ 81A0C79
 	.string "The BAG is full...$"
 
-gText_PutItemInPocket: @ 81A0C8C
+gText_PutItemInPocket:: @ 81A0C8C
 	.string "{PLAYER} put away the {STR_VAR_2}\n"
 	.string "in the {STR_VAR_3} POCKET.$"
 
-gText_PlayerFoundOneItem: @ 81A0CB1
+gText_PlayerFoundOneItem:: @ 81A0CB1
 	.string "{PLAYER} found one {STR_VAR_2}!$"
 
-gText_TooBadBagIsFull:
+gText_TooBadBagIsFull::
 	.string "Too bad!\n"
 	.string "The BAG is full...$"
 
-gText_ObtainedTheDecor: @ 81A0CDE
+gText_ObtainedTheDecor:: @ 81A0CDE
 	.string "Obtained the {STR_VAR_2}.$"
 
 gText_NoRoomLeftForAnother:: @ 81A0CEF
 	.string "Too bad! There's no room left for\n"
 	.string "another {STR_VAR_2}...$"
 
-gText_TheDecorWasTransferredToThePC: @ 81A0D1F
+gText_TheDecorWasTransferredToThePC:: @ 81A0D1F
 	.string "The {STR_VAR_2} was transferred\n"
 	.string "to the PC.$"
