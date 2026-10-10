@@ -60,7 +60,6 @@ extern u8 EventScript_ClosedSootopolisDoor[];
 extern u8 gUnknown_081A4363[];
 extern u8 EventScript_PokeBlockFeeder[];
 extern u8 Route110_TrickHousePuzzle_EventScript_Door[];
-extern u8 EventScript_RegionMap[];
 extern u8 EventScript_RunningShoesManual[];
 extern u8 EventScript_PictureBookShelf[];
 extern u8 EventScript_BookShelf[];
