@@ -62,7 +62,7 @@ BattleTower_Lobby_EventScript_16032C:: @ 816032C
 BattleTower_Lobby_EventScript_160330:: @ 8160330
 	lock
 	faceplayer
-	msgbox BattleTower_Lobby_Text_19A3FD, MSGBOX_DEFAULT
+	msgbox BattleTower_Lobby_Text_DidntSaveBeforeQuitting, MSGBOX_DEFAULT
 	closemessage
 	setvar VAR_TEMP_0, 5
 	release
@@ -71,7 +71,7 @@ BattleTower_Lobby_EventScript_160330:: @ 8160330
 BattleTower_Lobby_EventScript_160342:: @ 8160342
 	lock
 	faceplayer
-	message BattleTower_Lobby_Text_19A487
+	message BattleTower_Lobby_Text_CongratsBeatenSeven
 	waitmessage
 	setvar VAR_0x8004, 0
 	special BattleTowerUtil
@@ -80,18 +80,18 @@ BattleTower_Lobby_EventScript_160342:: @ 8160342
 	special AwardBattleTowerRibbons
 	compare VAR_RESULT, 0
 	goto_if_eq BattleTower_Lobby_EventScript_16037D
-	message BattleTower_Lobby_Text_19A6BE
+	message BattleTower_Lobby_Text_HereAreSomeRibbons
 	waitmessage
 	playfanfare MUS_OBTAIN_ITEM
 	waitfanfare
-	msgbox BattleTower_Lobby_Text_19A719, MSGBOX_DEFAULT
+	msgbox BattleTower_Lobby_Text_PutRibbonOnMons, MSGBOX_DEFAULT
 
 BattleTower_Lobby_EventScript_16037D:: @ 816037D
 	setvar VAR_0x8004, 8
 	special BattleTowerUtil
 	compare VAR_RESULT, 1
 	goto_if_eq BattleTower_Lobby_EventScript_1603AD
-	message BattleTower_Lobby_Text_19A589
+	message BattleTower_Lobby_Text_RecordWillBeSaved
 	waitmessage
 	setvar VAR_0x8004, 13
 	special SetBattleTowerProperty
@@ -105,12 +105,12 @@ BattleTower_Lobby_EventScript_1603AD:: @ 81603AD
 	setvar VAR_0x8004, 0
 	setvar VAR_0x8005, 3
 	special SetBattleTowerProperty
-	message BattleTower_Lobby_Text_19A4BB
+	message BattleTower_Lobby_Text_EarnedFabulousPrize
 	waitmessage
 	special GiveBattleTowerPrize
 	switch VAR_RESULT
 	case 0, BattleTower_Lobby_EventScript_160408
-	message BattleTower_Lobby_Text_19A506
+	message BattleTower_Lobby_Text_ReceivedPrize
 	waitmessage
 	playfanfare MUS_OBTAIN_ITEM
 	waitfanfare
@@ -118,7 +118,7 @@ BattleTower_Lobby_EventScript_1603AD:: @ 81603AD
 	special BattleTowerUtil
 	compare VAR_RESULT, 49
 	goto_if_ne BattleTower_Lobby_EventScript_1603F8
-	msgbox BattleTower_Lobby_Text_19A617, MSGBOX_DEFAULT
+	msgbox BattleTower_Lobby_Text_AboutToFace50thTrainer, MSGBOX_DEFAULT
 
 BattleTower_Lobby_EventScript_1603F8:: @ 81603F8
 	msgbox BattleTower_Lobby_Text_199FA9, MSGBOX_DEFAULT
@@ -128,7 +128,7 @@ BattleTower_Lobby_EventScript_1603F8:: @ 81603F8
 	end
 
 BattleTower_Lobby_EventScript_160408:: @ 8160408
-	msgbox BattleTower_Lobby_Text_19A520, MSGBOX_DEFAULT
+	msgbox BattleTower_Lobby_Text_BagFullMakeRoom, MSGBOX_DEFAULT
 	waitmessage
 	closemessage
 	setvar VAR_TEMP_0, 5
@@ -138,9 +138,9 @@ BattleTower_Lobby_EventScript_160408:: @ 8160408
 BattleTower_Lobby_EventScript_160419:: @ 8160419
 	lock
 	faceplayer
-	message BattleTower_Lobby_Text_19A571
+	message BattleTower_Lobby_Text_ThankYouForPlaying
 	waitmessage
-	message BattleTower_Lobby_Text_19A589
+	message BattleTower_Lobby_Text_RecordWillBeSaved
 	waitmessage
 	setvar VAR_0x8004, 13
 	special SetBattleTowerProperty
@@ -158,9 +158,9 @@ BattleTower_Lobby_EventScript_16044B:: @ 816044B
 	lock
 	faceplayer
 	setvar VAR_BRAVO_TRAINER_BATTLE_TOWER_ON, 1
-	message BattleTower_Lobby_Text_19A5B1
+	message BattleTower_Lobby_Text_WeveBeenWaitingForYou
 	waitmessage
-	message BattleTower_Lobby_Text_19A5CE
+	message BattleTower_Lobby_Text_ProgressWillBeSaved
 	waitmessage
 	setvar VAR_0x8004, 1
 	special SaveBattleTowerProgress
@@ -172,7 +172,7 @@ BattleTower_Lobby_EventScript_16044B:: @ 816044B
 	setvar VAR_TEMP_0, 5
 	special SavePlayerParty
 	special SetBattleTowerParty
-	msgbox BattleTower_Lobby_Text_19A0A8, MSGBOX_DEFAULT
+	msgbox BattleTower_Lobby_Text_DirectYouToBattleRoom, MSGBOX_DEFAULT
 	closemessage
 	call BattleTower_Lobby_EventScript_160664
 	warp MAP_BATTLE_TOWER_ELEVATOR, 255, 1, 6
@@ -213,13 +213,13 @@ BattleTower_Lobby_EventScript_1604FA:: @ 81604FA
 	copyvar VAR_0x8005, VAR_RESULT
 	copyvar VAR_0x8006, VAR_RESULT
 	special SetBattleTowerProperty
-	msgbox BattleTower_Lobby_Text_19A07B, MSGBOX_DEFAULT
+	msgbox BattleTower_Lobby_Text_PleaseSelectMons, MSGBOX_DEFAULT
 	fadescreen FADE_TO_BLACK
 	special ChooseBattleTowerPlayerParty
 	waitstate
 	compare VAR_RESULT, 0
 	goto_if_eq BattleTower_Lobby_EventScript_16064F
-	msgbox BattleTower_Lobby_Text_199FDA, MSGBOX_YESNO
+	msgbox BattleTower_Lobby_Text_OkayToSaveBeforeEntering, MSGBOX_YESNO
 	switch VAR_RESULT
 	case NO, BattleTower_Lobby_EventScript_16064F
 	case YES, BattleTower_Lobby_EventScript_160587
@@ -249,7 +249,7 @@ BattleTower_Lobby_EventScript_160587:: @ 8160587
 	special SavePlayerParty
 	special SetBattleTowerParty
 	setvar VAR_BRAVO_TRAINER_BATTLE_TOWER_ON, 1
-	msgbox BattleTower_Lobby_Text_19A0A8, MSGBOX_DEFAULT
+	msgbox BattleTower_Lobby_Text_DirectYouToBattleRoom, MSGBOX_DEFAULT
 	closemessage
 	call BattleTower_Lobby_EventScript_160664
 	warp MAP_BATTLE_TOWER_ELEVATOR, 255, 1, 6
@@ -266,7 +266,7 @@ BattleTower_Lobby_EventScript_16060D:: @ 816060D
 	case 1, BattleTower_Lobby_EventScript_160635
 
 BattleTower_Lobby_EventScript_160628:: @ 8160628
-	msgbox BattleTower_Lobby_Text_19A249, MSGBOX_DEFAULT
+	msgbox BattleTower_Lobby_Text_NotEnoughValidMonsLv50Singles, MSGBOX_DEFAULT
 	goto BattleTower_Lobby_EventScript_160662
 
 BattleTower_Lobby_EventScript_160635:: @ 8160635
@@ -352,17 +352,17 @@ BattleTower_Lobby_EventScript_1606CC:: @ 81606CC
 	end
 
 BattleTower_Lobby_EventScript_1606F7:: @ 81606F7
-	msgbox BattleTower_Lobby_Text_19A7FD, MSGBOX_DEFAULT
+	msgbox BattleTower_Lobby_Text_DontThinkMuchAboutIt, MSGBOX_DEFAULT
 	release
 	end
 
 BattleTower_Lobby_EventScript_160701:: @ 8160701
-	msgbox BattleTower_Lobby_Text_19A83D, MSGBOX_DEFAULT
+	msgbox BattleTower_Lobby_Text_ChangedYourMind, MSGBOX_DEFAULT
 	release
 	end
 
 BattleTower_Lobby_EventScript_16070B:: @ 816070B
-	msgbox BattleTower_Lobby_Text_19A871, MSGBOX_DEFAULT
+	msgbox BattleTower_Lobby_Text_ThatsHowYouFeel, MSGBOX_DEFAULT
 	release
 	end
 
@@ -371,7 +371,7 @@ BattleTower_Lobby_EventScript_160715:: @ 8160715
 	end
 
 BattleTower_Lobby_EventScript_16071E:: @ 816071E
-	msgbox BattleTower_Lobby_Text_19A946, MSGBOX_NPC
+	msgbox BattleTower_Lobby_Text_CanLeaveUntilLossOrSevenWins, MSGBOX_NPC
 	end
 
 BattleTower_Lobby_EventScript_160727:: @ 8160727

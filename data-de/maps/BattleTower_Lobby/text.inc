@@ -11,7 +11,7 @@ BattleTower_Lobby_Text_199FA9:: @ 8199FA9
 	.string "Wir freuen uns auf deine nächste\n"
 	.string "Herausforderung.$"
 
-BattleTower_Lobby_Text_199FDA:: @ 8199FDA
+BattleTower_Lobby_Text_OkayToSaveBeforeEntering:: @ 8199FDA
 	.string "Bevor du einen KAMPFRAUM betrittst,\n"
 	.string "musst du dein Spiel speichern. Okay?$"
 
@@ -20,11 +20,11 @@ BattleTower_Lobby_Text_19A024:: @ 819A024
 	.string "und Level 100.\l"
 	.string "In welchem möchtest du antreten?$"
 
-BattleTower_Lobby_Text_19A07B:: @ 819A07B
+BattleTower_Lobby_Text_PleaseSelectMons:: @ 819A07B
 	.string "Bitte wähle die POKéMON aus, die\n"
 	.string "antreten sollen.$"
 
-BattleTower_Lobby_Text_19A0A8:: @ 819A0A8
+BattleTower_Lobby_Text_DirectYouToBattleRoom:: @ 819A0A8
 	.string "Ich bringe dich nun zum KAMPFRAUM.$"
 
 BattleTower_Lobby_Text_19A0D1:: @ 819A0D1
@@ -42,7 +42,7 @@ BattleTower_Lobby_Text_19A0D1:: @ 819A0D1
 	.string "nach einer Pause den Kampf nicht\l"
 	.string "fortsetzen.$"
 
-BattleTower_Lobby_Text_19A249:: @ 819A249
+BattleTower_Lobby_Text_NotEnoughValidMonsLv50Singles:: @ 819A249
 	.string "Entschuldigung!\p"
 	.string "Aber deine POKéMON sind nicht\n"
 	.string "teilnahmeberechtigt.\p"
@@ -64,50 +64,50 @@ BattleTower_Lobby_Text_19A32D:: @ 819A32D
 	.string "EIER{STR_VAR_1} nicht zugelassen.\p"
 	.string "Bitte komm wieder, wenn du bereit bist.$"
 
-BattleTower_Lobby_Text_19A3FD:: @ 819A3FD
+BattleTower_Lobby_Text_DidntSaveBeforeQuitting:: @ 819A3FD
 	.string "Entschuldigung!\p"
 	.string "Du hast, bevor du die Herausforderung\n"
 	.string "abgebrochen hast, nicht gespeichert.\p"
 	.string "Daher wirst du für diese Herausforde-\n"
 	.string "rung disqualifiziert. Schade!$"
 
-BattleTower_Lobby_Text_19A487:: @ 819A487
+BattleTower_Lobby_Text_CongratsBeatenSeven:: @ 819A487
 	.string "Herzlichen Glückwunsch!\n"
 	.string "Du hast alle 7 TRAINER besiegt!\p"
 	.string "$"
 
-BattleTower_Lobby_Text_19A4BB:: @ 819A4BB
+BattleTower_Lobby_Text_EarnedFabulousPrize:: @ 819A4BB
 	.string "Da du 7 TRAINER in Folge besiegt hast,\n"
 	.string "gewinnst du einen wunderbaren Preis!\p"
 	.string "$"
 
-BattleTower_Lobby_Text_19A506:: @ 819A506
+BattleTower_Lobby_Text_ReceivedPrize:: @ 819A506
 	.string "{PLAYER} gewinnt\n"
 	.string "{STR_VAR_1}.$"
 
-BattleTower_Lobby_Text_19A520:: @ 819A520
+BattleTower_Lobby_Text_BagFullMakeRoom:: @ 819A520
 	.string "Oh, dein BEUTEL ist voll.\p"
 	.string "Bitte schaffe Platz in deinem BEUTEL\n"
 	.string "und komme dann wieder.$"
 
-BattleTower_Lobby_Text_19A571:: @ 819A571
+BattleTower_Lobby_Text_ThankYouForPlaying:: @ 819A571
 	.string "Vielen Dank für die Teilnahme!\p"
 	.string "$"
 
-BattleTower_Lobby_Text_19A589:: @ 819A589
+BattleTower_Lobby_Text_RecordWillBeSaved:: @ 819A589
 	.string "Dein Erfolg wird gespeichert.\n"
 	.string "Bitte warten...$"
 
-BattleTower_Lobby_Text_19A5B1:: @ 819A5B1
+BattleTower_Lobby_Text_WeveBeenWaitingForYou:: @ 819A5B1
 	.string "Wir haben schon auf dich gewartet!\p"
 	.string "$"
 
-BattleTower_Lobby_Text_19A5CE:: @ 819A5CE
+BattleTower_Lobby_Text_ProgressWillBeSaved:: @ 819A5CE
 	.string "Bevor du einen KAMPFRAUM betrittst,\n"
 	.string "wird dein Spiel gespeichert.\l"
 	.string "Bitte warten...$"
 
-BattleTower_Lobby_Text_19A617:: @ 819A617
+BattleTower_Lobby_Text_AboutToFace50thTrainer:: @ 819A617
 	.string "Und nun wartet der 50. TRAINER auf\n"
 	.string "deine Herausforderung.\p"
 	.string "Jedes Mal, wenn du von jetzt an 7\n"
@@ -115,12 +115,12 @@ BattleTower_Lobby_Text_19A617:: @ 819A617
 	.string "POKéMON ein BAND verliehen.\p"
 	.string "Viel Glück!$"
 
-BattleTower_Lobby_Text_19A6BE:: @ 819A6BE
+BattleTower_Lobby_Text_HereAreSomeRibbons:: @ 819A6BE
 	.string "Dies sind einige BÄNDER für den erfolg-\n"
 	.string "reichen Kampf gegen 7 TRAINER in Folge.\p"
 	.string "{PLAYER} erhält einige BÄNDER!$"
 
-BattleTower_Lobby_Text_19A719:: @ 819A719
+BattleTower_Lobby_Text_PutRibbonOnMons:: @ 819A719
 	.string "{PLAYER} steckt den herausfordernden\n"
 	.string "POKéMON die BÄNDER an.$"
 
@@ -134,15 +134,15 @@ BattleTower_Lobby_Text_19A7C3:: @ 819A7C3
 	.string "Ja? Du verrätst es mir?\n"
 	.string "Toll! Also, wie lautet deine Antwort?$"
 
-BattleTower_Lobby_Text_19A7FD:: @ 819A7FD
+BattleTower_Lobby_Text_DontThinkMuchAboutIt:: @ 819A7FD
 	.string "Ach, so viel denkst du gar nicht darüber\n"
 	.string "nach? Bist du aber cool!$"
 
-BattleTower_Lobby_Text_19A83D:: @ 819A83D
+BattleTower_Lobby_Text_ChangedYourMind:: @ 819A83D
 	.string "Wie? Du hast deine Meinung geändert?\n"
 	.string "Meine Güte, bist du aber launisch!$"
 
-BattleTower_Lobby_Text_19A871:: @ 819A871
+BattleTower_Lobby_Text_ThatsHowYouFeel:: @ 819A871
 	.string "Ach? So fühlst du dich? Das ist\n"
 	.string "aber eine originelle Beschreibung.\p"
 	.string "Danke!$"
@@ -155,7 +155,7 @@ BattleTower_Lobby_Text_19A8AE:: @ 819A8AE
 	.string "Sie stehen auch auf der Rückseite\n"
 	.string "deines TRAINERPASSES.$"
 
-BattleTower_Lobby_Text_19A946:: @ 819A946
+BattleTower_Lobby_Text_CanLeaveUntilLossOrSevenWins:: @ 819A946
 	.string "Sobald du den DUELLTURM offiziell be-\n"
 	.string "treten hast, kannst du ihn nicht eher\l"
 	.string "verlassen, bis du gegen 7 TRAINER\l"

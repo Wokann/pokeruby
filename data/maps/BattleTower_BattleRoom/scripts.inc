@@ -50,7 +50,7 @@ BattleTower_BattleRoom_EventScript_160961:: @ 8160961
 	waitmovement 0
 	applymovement LOCALID_PLAYER, BattleTower_BattleRoom_Movement_160ABC
 	waitmovement 0
-	msgbox BattleTower_BattleRoom_Text_19ACDC, MSGBOX_DEFAULT
+	msgbox BattleTower_BattleRoom_Text_RestoreMonsToFullHealth, MSGBOX_DEFAULT
 	special LoadPlayerParty
 	special SavePlayerParty
 	special SetBattleTowerParty
@@ -59,21 +59,21 @@ BattleTower_BattleRoom_EventScript_160961:: @ 8160961
 	special HealPlayerParty
 
 BattleTower_BattleRoom_EventScript_1609B2:: @ 81609B2
-	msgbox BattleTower_BattleRoom_Text_19AD09, MSGBOX_YESNO
+	msgbox BattleTower_BattleRoom_Text_ReadyForOpponent, MSGBOX_YESNO
 	switch VAR_RESULT
 	case NO, BattleTower_BattleRoom_EventScript_1609E0
 	case YES, BattleTower_BattleRoom_EventScript_160A3C
 	case 127, BattleTower_BattleRoom_EventScript_1609E0
 
 BattleTower_BattleRoom_EventScript_1609E0:: @ 81609E0
-	msgbox BattleTower_BattleRoom_Text_19AD3C, MSGBOX_YESNO
+	msgbox BattleTower_BattleRoom_Text_SaveAndQuitGame, MSGBOX_YESNO
 	switch VAR_RESULT
 	case NO, BattleTower_BattleRoom_EventScript_160A0E
 	case YES, BattleTower_BattleRoom_EventScript_160A94
 	case 127, BattleTower_BattleRoom_EventScript_160A0E
 
 BattleTower_BattleRoom_EventScript_160A0E:: @ 8160A0E
-	msgbox BattleTower_BattleRoom_Text_19AD66, MSGBOX_YESNO
+	msgbox BattleTower_BattleRoom_Text_CancelYourChallenge, MSGBOX_YESNO
 	switch VAR_RESULT
 	case NO, BattleTower_BattleRoom_EventScript_1609B2
 	case YES, BattleTower_BattleRoom_EventScript_160AB1
