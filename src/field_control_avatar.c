@@ -55,7 +55,6 @@ extern u8 LittlerootTown_MaysHouse_2F_EventScript_PC[];
 extern u8 SecretBase_EventScript_PC[];
 extern u8 SecretBase_EventScript_RecordMixingPC[];
 extern u8 EventScript_TestSignpostMsg[];
-extern u8 Event_TV[];
 extern u8 EventScript_ClosedSootopolisDoor[];
 extern u8 EventScript_PokeBlockFeeder[];
 extern u8 Route110_TrickHousePuzzle_EventScript_Door[];
@@ -443,7 +442,7 @@ static const u8 *GetInteractedMetatileScript(struct MapPosition *position, u8 me
     s8 elevation;
 
     if (MetatileBehavior_IsPlayerFacingTVScreen(metatileBehavior, direction) == TRUE)
-        return Event_TV;
+        return EventScript_TV;
     if (MetatileBehavior_IsPC(metatileBehavior) == TRUE)
         return EventScript_PC;
     if (MetatileBehavior_IsClosedSootopolisDoor(metatileBehavior) == TRUE)
