@@ -1136,7 +1136,6 @@ Common_EventScript_NopReturn:: @ 81A14DC
 	.include "data/scripts/debug.inc"
 	.include "data/scripts/berry_tree.inc"
 	.include "data/text/berry_tree.inc"
-	.include "data/text/secret_base_trainers.inc"
 	.include "data/scripts/secret_base.inc"
 	.include "data/text/secret_power_tm.inc"
 	.include "data/scripts/secret_power_tm.inc"

@@ -1,3 +1,35 @@
+SecretBase_Text_TreeCanBeClimbed: @ 81A1948
+	.string "If some vines drop down, this tree can\n"
+	.string "be climbed.$"
+
+SecretBase_Text_TreeUseSecretPower: @ 81A197B
+	.string "If some vines drop down, this tree can\n"
+	.string "be climbed.\p"
+	.string "Use the SECRET POWER?$"
+
+SecretBase_Text_VineDroppedDown: @ 81A19C4
+	.string "A thick vine dropped down!$"
+
+UnknownString_81A19DF: @ 81A19DF
+	.string "Want to make your SECRET BASE here?$"
+
+SecretBase_Text_ClumpOfGrass: @ 81A1A03
+	.string "If this clump of grass can be moved,\n"
+	.string "it might be possible to go inside.$"
+
+SecretBase_Text_ClumpUseSecretPower: @ 81A1A4B
+	.string "If this clump of grass can be moved,\n"
+	.string "it might be possible to go inside.\p"
+	.string "Use the SECRET POWER?$"
+
+SecretBase_Text_DiscoveredSmallEntrance: @ 81A1AA9
+	.string "Discovered a small entrance!$"
+
+UnknownString_81A1AC6: @ 81A1AC6
+	.string "Want to make your SECRET BASE here?$"
+
+	.include "data/text/secret_base_trainers.inc"
+
 SecretBase_EventScript_CheckEntrance:: @ 81A2C51
 	special GetSecretBaseTypeInFrontOfPlayer
 	special CheckPlayerHasSecretBase
@@ -56,7 +88,7 @@ EventScript_1A2D08:
 	compare VAR_RESULT, 6
 	goto_if_eq EventScript_1A2D49
 	bufferpartymonnick 0, VAR_RESULT
-	msgbox UnknownString_81A197B, MSGBOX_YESNO
+	msgbox SecretBase_Text_TreeUseSecretPower, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq EventScript_1A2F3A
 	msgbox UsedCutRockSmashText, MSGBOX_DEFAULT
@@ -74,11 +106,11 @@ SecretBase_EventScript_TreeUseSecretPower:: @ 81A2D3E
 	end
 
 EventScript_1A2D49:
-	msgbox UnknownString_81A1948, MSGBOX_SIGN
+	msgbox SecretBase_Text_TreeCanBeClimbed, MSGBOX_SIGN
 	end
 
 EventScript_1A2D52:
-	msgbox UnknownString_81A19C4, MSGBOX_DEFAULT
+	msgbox SecretBase_Text_VineDroppedDown, MSGBOX_DEFAULT
 	goto EventScript_1A2DB8
 	end
 
@@ -87,7 +119,7 @@ EventScript_1A2D60:
 	compare VAR_RESULT, 6
 	goto_if_eq EventScript_1A2DA1
 	bufferpartymonnick 0, VAR_RESULT
-	msgbox UnknownString_81A1A4B, MSGBOX_YESNO
+	msgbox SecretBase_Text_ClumpUseSecretPower, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq EventScript_1A2F3A
 	msgbox UsedCutRockSmashText, MSGBOX_DEFAULT
@@ -105,11 +137,11 @@ SecretBase_EventScript_ShrubUseSecretPower:: @ 81A2D96
 	end
 
 EventScript_1A2DA1:
-	msgbox UnknownString_81A1A03, MSGBOX_SIGN
+	msgbox SecretBase_Text_ClumpOfGrass, MSGBOX_SIGN
 	end
 
 EventScript_1A2DAA:
-	msgbox UnknownString_81A1AA9, MSGBOX_DEFAULT
+	msgbox SecretBase_Text_DiscoveredSmallEntrance, MSGBOX_DEFAULT
 	goto EventScript_1A2DB8
 	end
 
@@ -338,7 +370,7 @@ SecretBase_RedCave1_EventScript_1A3032:: @ 81A3032
 	goto_if_eq SecretBase_RedCave1_EventScript_1A30A5
 	lock
 	faceplayer
-	msgbox SecretBase_RedCave1_Text_1A1AEA, MSGBOX_YESNO
+	msgbox SecretBase_Text_Trainer0Intro, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A308F
 	setvar VAR_RESULT, 1
@@ -347,23 +379,23 @@ SecretBase_RedCave1_EventScript_1A3032:: @ 81A3032
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A308F
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A1B83, MSGBOX_DEFAULT
+	msgbox SecretBase_Text_Trainer0AcceptBattle, MSGBOX_DEFAULT
 	goto SecretBase_RedCave1_EventScript_1A350A
 	end
 
 SecretBase_RedCave1_EventScript_1A3086:: @ 81A3086
-	msgbox SecretBase_RedCave1_Text_1A1C3B, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer0PreChampion, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A308F:: @ 81A308F
 	setvar VAR_RESULT, 0
 	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A1B97, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer0DeclineBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A30A5:: @ 81A30A5
-	msgbox SecretBase_RedCave1_Text_1A1BF8, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer0PostBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A30AE:: @ 81A30AE
@@ -372,7 +404,7 @@ SecretBase_RedCave1_EventScript_1A30AE:: @ 81A30AE
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3121
 	lock
 	faceplayer
-	msgbox SecretBase_RedCave1_Text_1A1E67, MSGBOX_YESNO
+	msgbox SecretBase_Text_Trainer1Intro, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A310B
 	setvar VAR_RESULT, 1
@@ -381,23 +413,23 @@ SecretBase_RedCave1_EventScript_1A30AE:: @ 81A30AE
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A310B
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A1F04, MSGBOX_DEFAULT
+	msgbox SecretBase_Text_Trainer1AcceptBattle, MSGBOX_DEFAULT
 	goto SecretBase_RedCave1_EventScript_1A350A
 	end
 
 SecretBase_RedCave1_EventScript_1A3102:: @ 81A3102
-	msgbox SecretBase_RedCave1_Text_1A1FBD, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer1PreChampion, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A310B:: @ 81A310B
 	setvar VAR_RESULT, 0
 	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A1F2E, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer1DeclineBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A3121:: @ 81A3121
-	msgbox SecretBase_RedCave1_Text_1A1F88, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer1PostBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A312A:: @ 81A312A
@@ -406,7 +438,7 @@ SecretBase_RedCave1_EventScript_1A312A:: @ 81A312A
 	goto_if_eq SecretBase_RedCave1_EventScript_1A319D
 	lock
 	faceplayer
-	msgbox SecretBase_RedCave1_Text_1A218F, MSGBOX_YESNO
+	msgbox SecretBase_Text_Trainer2Intro, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3187
 	setvar VAR_RESULT, 1
@@ -415,23 +447,23 @@ SecretBase_RedCave1_EventScript_1A312A:: @ 81A312A
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3187
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A2220, MSGBOX_DEFAULT
+	msgbox SecretBase_Text_Trainer2AcceptBattle, MSGBOX_DEFAULT
 	goto SecretBase_RedCave1_EventScript_1A350A
 	end
 
 SecretBase_RedCave1_EventScript_1A317E:: @ 81A317E
-	msgbox SecretBase_RedCave1_Text_1A22FA, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer2PreChampion, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A3187:: @ 81A3187
 	setvar VAR_RESULT, 0
 	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A2230, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer2DeclineBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A319D:: @ 81A319D
-	msgbox SecretBase_RedCave1_Text_1A2280, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer2PostBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A31A6:: @ 81A31A6
@@ -440,7 +472,7 @@ SecretBase_RedCave1_EventScript_1A31A6:: @ 81A31A6
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3219
 	lock
 	faceplayer
-	msgbox SecretBase_RedCave1_Text_1A24E1, MSGBOX_YESNO
+	msgbox SecretBase_Text_Trainer3Intro, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3203
 	setvar VAR_RESULT, 1
@@ -449,23 +481,23 @@ SecretBase_RedCave1_EventScript_1A31A6:: @ 81A31A6
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3203
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A256F, MSGBOX_DEFAULT
+	msgbox SecretBase_Text_Trainer3AcceptBattle, MSGBOX_DEFAULT
 	goto SecretBase_RedCave1_EventScript_1A350A
 	end
 
 SecretBase_RedCave1_EventScript_1A31FA:: @ 81A31FA
-	msgbox SecretBase_RedCave1_Text_1A2609, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer3PreChampion, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A3203:: @ 81A3203
 	setvar VAR_RESULT, 0
 	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A258A, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer3DeclineBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A3219:: @ 81A3219
-	msgbox SecretBase_RedCave1_Text_1A25D2, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer3PostBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A3222:: @ 81A3222
@@ -474,7 +506,7 @@ SecretBase_RedCave1_EventScript_1A3222:: @ 81A3222
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3295
 	lock
 	faceplayer
-	msgbox SecretBase_RedCave1_Text_1A2830, MSGBOX_YESNO
+	msgbox SecretBase_Text_Trainer4Intro, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A327F
 	setvar VAR_RESULT, 1
@@ -483,23 +515,23 @@ SecretBase_RedCave1_EventScript_1A3222:: @ 81A3222
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A327F
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A28D7, MSGBOX_DEFAULT
+	msgbox SecretBase_Text_Trainer4AcceptBattle, MSGBOX_DEFAULT
 	goto SecretBase_RedCave1_EventScript_1A350A
 	end
 
 SecretBase_RedCave1_EventScript_1A3276:: @ 81A3276
-	msgbox SecretBase_RedCave1_Text_1A297C, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer4PreChampion, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A327F:: @ 81A327F
 	setvar VAR_RESULT, 0
 	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A28F4, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer4DeclineBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A3295:: @ 81A3295
-	msgbox SecretBase_RedCave1_Text_1A294D, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer4PostBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A329E:: @ 81A329E
@@ -508,7 +540,7 @@ SecretBase_RedCave1_EventScript_1A329E:: @ 81A329E
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3311
 	lock
 	faceplayer
-	msgbox SecretBase_RedCave1_Text_1A1CB2, MSGBOX_YESNO
+	msgbox SecretBase_Text_Trainer5Intro, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A32FB
 	setvar VAR_RESULT, 1
@@ -517,23 +549,23 @@ SecretBase_RedCave1_EventScript_1A329E:: @ 81A329E
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A32FB
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A1D48, MSGBOX_DEFAULT
+	msgbox SecretBase_Text_Trainer5AcceptBattle, MSGBOX_DEFAULT
 	goto SecretBase_RedCave1_EventScript_1A350A
 	end
 
 SecretBase_RedCave1_EventScript_1A32F2:: @ 81A32F2
-	msgbox SecretBase_RedCave1_Text_1A1DF6, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer5PreChampion, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A32FB:: @ 81A32FB
 	setvar VAR_RESULT, 0
 	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A1D59, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer5DeclineBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A3311:: @ 81A3311
-	msgbox SecretBase_RedCave1_Text_1A1DC0, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer5PostBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A331A:: @ 81A331A
@@ -542,7 +574,7 @@ SecretBase_RedCave1_EventScript_1A331A:: @ 81A331A
 	goto_if_eq SecretBase_RedCave1_EventScript_1A338D
 	lock
 	faceplayer
-	msgbox SecretBase_RedCave1_Text_1A2026, MSGBOX_YESNO
+	msgbox SecretBase_Text_Trainer6Intro, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3377
 	setvar VAR_RESULT, 1
@@ -551,23 +583,23 @@ SecretBase_RedCave1_EventScript_1A331A:: @ 81A331A
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3377
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A2095, MSGBOX_DEFAULT
+	msgbox SecretBase_Text_Trainer6AcceptBattle, MSGBOX_DEFAULT
 	goto SecretBase_RedCave1_EventScript_1A350A
 	end
 
 SecretBase_RedCave1_EventScript_1A336E:: @ 81A336E
-	msgbox SecretBase_RedCave1_Text_1A2147, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer6PreChampion, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A3377:: @ 81A3377
 	setvar VAR_RESULT, 0
 	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A20AE, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer6DeclineBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A338D:: @ 81A338D
-	msgbox SecretBase_RedCave1_Text_1A2109, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer6PostBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A3396:: @ 81A3396
@@ -576,7 +608,7 @@ SecretBase_RedCave1_EventScript_1A3396:: @ 81A3396
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3409
 	lock
 	faceplayer
-	msgbox SecretBase_RedCave1_Text_1A236A, MSGBOX_YESNO
+	msgbox SecretBase_Text_Trainer7Intro, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A33F3
 	setvar VAR_RESULT, 1
@@ -585,23 +617,23 @@ SecretBase_RedCave1_EventScript_1A3396:: @ 81A3396
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A33F3
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A2405, MSGBOX_DEFAULT
+	msgbox SecretBase_Text_Trainer7AcceptBattle, MSGBOX_DEFAULT
 	goto SecretBase_RedCave1_EventScript_1A350A
 	end
 
 SecretBase_RedCave1_EventScript_1A33EA:: @ 81A33EA
-	msgbox SecretBase_RedCave1_Text_1A2480, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer7PreChampion, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A33F3:: @ 81A33F3
 	setvar VAR_RESULT, 0
 	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A2420, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer7DeclineBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A3409:: @ 81A3409
-	msgbox SecretBase_RedCave1_Text_1A2446, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer7PostBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A3412:: @ 81A3412
@@ -610,7 +642,7 @@ SecretBase_RedCave1_EventScript_1A3412:: @ 81A3412
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3485
 	lock
 	faceplayer
-	msgbox SecretBase_RedCave1_Text_1A2663, MSGBOX_YESNO
+	msgbox SecretBase_Text_Trainer8Intro, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A346F
 	setvar VAR_RESULT, 1
@@ -619,23 +651,23 @@ SecretBase_RedCave1_EventScript_1A3412:: @ 81A3412
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A346F
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A2710, MSGBOX_DEFAULT
+	msgbox SecretBase_Text_Trainer8AcceptBattle, MSGBOX_DEFAULT
 	goto SecretBase_RedCave1_EventScript_1A350A
 	end
 
 SecretBase_RedCave1_EventScript_1A3466:: @ 81A3466
-	msgbox SecretBase_RedCave1_Text_1A27A4, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer8PreChampion, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A346F:: @ 81A346F
 	setvar VAR_RESULT, 0
 	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A2736, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer8DeclineBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A3485:: @ 81A3485
-	msgbox SecretBase_RedCave1_Text_1A276A, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer8PostBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A348E:: @ 81A348E
@@ -644,7 +676,7 @@ SecretBase_RedCave1_EventScript_1A348E:: @ 81A348E
 	goto_if_eq SecretBase_RedCave1_EventScript_1A3501
 	lock
 	faceplayer
-	msgbox SecretBase_RedCave1_Text_1A2A13, MSGBOX_YESNO
+	msgbox SecretBase_Text_Trainer9Intro, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_RedCave1_EventScript_1A34EB
 	setvar VAR_RESULT, 1
@@ -653,23 +685,23 @@ SecretBase_RedCave1_EventScript_1A348E:: @ 81A348E
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_RedCave1_EventScript_1A34EB
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A2AE2, MSGBOX_DEFAULT
+	msgbox SecretBase_Text_Trainer9AcceptBattle, MSGBOX_DEFAULT
 	goto SecretBase_RedCave1_EventScript_1A350A
 	end
 
 SecretBase_RedCave1_EventScript_1A34E2:: @ 81A34E2
-	msgbox SecretBase_RedCave1_Text_1A2BA4, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer9PreChampion, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A34EB:: @ 81A34EB
 	setvar VAR_RESULT, 0
 	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
-	msgbox SecretBase_RedCave1_Text_1A2AFB, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer9DeclineBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A3501:: @ 81A3501
-	msgbox SecretBase_RedCave1_Text_1A2B69, MSGBOX_NPC
+	msgbox SecretBase_Text_Trainer9PostBattle, MSGBOX_NPC
 	end
 
 SecretBase_RedCave1_EventScript_1A350A:: @ 81A350A
