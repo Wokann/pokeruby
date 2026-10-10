@@ -3,7 +3,7 @@ EventScript_StartTrainerApproach:: @ 819F80B
 	special PlayTrainerEncounterMusic
 	special DoTrainerApproach
 	waitstate
-	goto EventScript_DoTrainerBattle
+	goto EventScript_ShowTrainerIntroMsg
 
 EventScript_TryDoNormalTrainerBattle:: @ 819F818
 	lock
@@ -15,7 +15,7 @@ EventScript_TryDoNormalTrainerBattle:: @ 819F818
 	goto_if_ne EventScript_NoNormalTrainerBattle
 	special PlayTrainerEncounterMusic
 	special SetTrainerFacingDirection
-	goto EventScript_DoTrainerBattle
+	goto EventScript_ShowTrainerIntroMsg
 
 EventScript_NoNormalTrainerBattle:
 	gotopostbattlescript
@@ -32,7 +32,7 @@ EventScript_TryDoDoubleTrainerBattle:: @ 819F840
 	goto_if_ne EventScript_NotEnoughMonsForDoubleBattle
 	special PlayTrainerEncounterMusic
 	special SetTrainerFacingDirection
-	goto EventScript_DoTrainerBattle
+	goto EventScript_ShowTrainerIntroMsg
 
 EventScript_NotEnoughMonsForDoubleBattle:
 	special ShowTrainerCantBattleSpeech
@@ -105,10 +105,12 @@ Movement_RevealTrainer::
 	reveal_trainer
 	step_end
 
-EventScript_DoTrainerBattle:
+EventScript_ShowTrainerIntroMsg:
 	special ShowTrainerIntroSpeech
 	waitmessage
 	waitbuttonpress
+
+EventScript_DoTrainerBattle:
 	dotrainerbattle
 	specialvar VAR_RESULT, GetTrainerBattleMode
 	compare VAR_RESULT, TRAINER_BATTLE_SINGLE
