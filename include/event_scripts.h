@@ -34,6 +34,7 @@ extern const u8 BerryTree_EventScript_ItemUseWailmerPail[];
 
 extern const u8 EventScript_SelectWithoutRegisteredItem[];
 extern const u8 gUnknown_081A14B8[];
+extern u8 EventScript_EggHatch[];
 
 extern const u8 SecretBase_EventScript_CaveUseSecretPower[];
 extern const u8 SecretBase_EventScript_TreeUseSecretPower[];
