@@ -70,7 +70,7 @@ gText_AwaitingLinkup:: @ 81A49B6
 	.string "Verbindungsaufbau...\n"
 	.string "... ... B-Knopf: Abbruch$"
 
-UnknownString_81A49E2: @ 81A49E2
+CableClub_Text_OkayToSaveProgress: @ 81A49E2
 	.string "Dein Spiel muss vor Verbindungsaufbau\n"
 	.string "gespeichert werden. Speichern?$"
 

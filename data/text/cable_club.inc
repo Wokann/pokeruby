@@ -72,7 +72,7 @@ gText_AwaitingLinkup:: @ 81A49B6
 	.string "Awaiting linkup...\n"
 	.string "... ... B Button: Cancel$"
 
-UnknownString_81A49E2: @ 81A49E2
+CableClub_Text_OkayToSaveProgress: @ 81A49E2
 	.string "Your progress must be saved before\n"
 	.string "linking. Is it okay to save?$"
 
