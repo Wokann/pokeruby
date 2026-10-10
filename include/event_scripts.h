@@ -12,6 +12,14 @@ extern const u8 EventScript_EmptyTrashCan[];
 extern const u8 EventScript_ShopShelf[];
 extern const u8 EventScript_Blueprint[];
 
+extern const u8 EventScript_CableBoxResults[];
+extern const u8 CableClub_EventScript_ReadTrainerCard[];
+extern const u8 CableClub_EventScript_ReadTrainerCardColored[];
+extern const u8 CableClub_EventScript_TooBusyToNotice[];
+extern const u8 EventScript_ConfirmLeaveCableClubRoom[];
+extern const u8 EventScript_TerminateLink[];
+extern const u8 EventScript_DoLinkRoomExit[];
+
 extern const u8 EventScript_UseCut[];
 extern const u8 EventScript_UseRockSmash[];
 extern const u8 EventScript_UseFlash[];

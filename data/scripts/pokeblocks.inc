@@ -292,13 +292,13 @@ FallarborTown_ContestLobby_EventScript_1B7942:: @ 81B7942
 
 FallarborTown_ContestLobby_EventScript_1B794C:: @ 81B794C
 	special CloseLink
-	msgbox FallarborTown_ContestLobby_Text_1A4A30, MSGBOX_DEFAULT
+	msgbox Text_SomeoneIsNotReadyToLink, MSGBOX_DEFAULT
 	releaseall
 	end
 
 FallarborTown_ContestLobby_EventScript_1B7959:: @ 81B7959
 	special CloseLink
-	msgbox FallarborTown_ContestLobby_Text_1A4B1D, MSGBOX_DEFAULT
+	msgbox Text_PlayersMadeDifferentSelections, MSGBOX_DEFAULT
 	releaseall
 	end
 
@@ -310,7 +310,7 @@ FallarborTown_ContestLobby_EventScript_1B7966:: @ 81B7966
 
 FallarborTown_ContestLobby_EventScript_1B7973:: @ 81B7973
 	special CloseLink
-	msgbox FallarborTown_ContestLobby_Text_1A4A85, MSGBOX_DEFAULT
+	msgbox Text_LinkErrorPleaseReset, MSGBOX_DEFAULT
 	releaseall
 	end
 

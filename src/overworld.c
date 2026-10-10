@@ -99,12 +99,6 @@ static void RunTerminateLinkScript(void);
 
 extern u8 EventScript_WhiteOut[];
 extern u8 EventScript_ResetMrBriney[];
-extern u8 TradeRoom_ReadTrainerCard1[];
-extern u8 TradeRoom_ReadTrainerCard2[];
-extern u8 TradeRoom_TooBusyToNotice[];
-extern u8 TradeRoom_PromptToCancelLink[];
-extern u8 TradeRoom_TerminateLink[];
-extern u8 gUnknown_081A4508[];
 
 extern struct MapLayout * const gMapLayouts[];
 extern struct MapHeader * const * const gMapGroups[];
@@ -2275,7 +2269,7 @@ static u16 KeyInterCB_WaitForPlayersToExit(u32 a1)
 {
     if (AreAllPlayersInLinkState(0x83) == TRUE)
     {
-        ScriptContext_SetupScript(gUnknown_081A4508);
+        ScriptContext_SetupScript(EventScript_DoLinkRoomExit);
         SetKeyInterceptCallback(KeyInterCB_SendNothing);
     }
     return 17;
@@ -2389,13 +2383,13 @@ static const u8 *sub_805568C(struct CableClubPlayer *player)
     if (linkPlayerId != 4)
     {
         if (!player->isLocalPlayer)
-            return TradeRoom_TooBusyToNotice;
+            return CableClub_EventScript_TooBusyToNotice;
         if (sPlayerLinkStates[linkPlayerId] != 0x80)
-            return TradeRoom_TooBusyToNotice;
+            return CableClub_EventScript_TooBusyToNotice;
         if (!GetLinkTrainerCardColor(linkPlayerId))
-            return TradeRoom_ReadTrainerCard1;
+            return CableClub_EventScript_ReadTrainerCard;
         else
-            return TradeRoom_ReadTrainerCard2;
+            return CableClub_EventScript_ReadTrainerCardColored;
     }
 
     return GetInteractedLinkPlayerScript(&otherPlayerPos, player->metatileBehavior, player->facing);
@@ -2452,7 +2446,7 @@ static void RunInteractLocalPlayerScript(const u8 *script)
 static void RunConfirmLeaveCableClubScript(void)
 {
     PlaySE(SE_WIN_OPEN);
-    ScriptContext_SetupScript(TradeRoom_PromptToCancelLink);
+    ScriptContext_SetupScript(EventScript_ConfirmLeaveCableClubRoom);
     LockPlayerFieldControls();
 }
 
@@ -2465,7 +2459,7 @@ static void InitMenuBasedScript(const u8 *script)
 
 static void RunTerminateLinkScript(void)
 {
-    ScriptContext_SetupScript(TradeRoom_TerminateLink);
+    ScriptContext_SetupScript(EventScript_TerminateLink);
     LockPlayerFieldControls();
 }
 
