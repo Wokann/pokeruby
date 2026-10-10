@@ -1162,7 +1162,7 @@ SlateportCity_PokemonFanClub_EventScript_1ADE4D:: @ 81ADE4D
 	compare VAR_RESULT, 1
 	goto_if_eq SlateportCity_PokemonFanClub_EventScript_1ADED6
 	copyvar VAR_0x8009, VAR_0x8006
-	msgbox SlateportCity_PokemonFanClub_Text_1A8704, MSGBOX_YESNO
+	msgbox SlateportCity_PokemonFanClub_Text_InterviewRequest, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	goto_if_eq SlateportCity_PokemonFanClub_EventScript_1ADE84
 	compare VAR_RESULT, NO
@@ -1170,7 +1170,7 @@ SlateportCity_PokemonFanClub_EventScript_1ADE4D:: @ 81ADE4D
 	end
 
 SlateportCity_PokemonFanClub_EventScript_1ADE84:: @ 81ADE84
-	msgbox SlateportCity_PokemonFanClub_Text_1A87CA, MSGBOX_DEFAULT
+	msgbox SlateportCity_PokemonFanClub_Text_TellMeAnythingAboutYourMon, MSGBOX_DEFAULT
 	setvar VAR_0x8004, 5
 	copyvar VAR_0x8005, VAR_0x8009
 	setvar VAR_0x8006, 1
@@ -1184,18 +1184,18 @@ SlateportCity_PokemonFanClub_EventScript_1ADE84:: @ 81ADE84
 	end
 
 SlateportCity_PokemonFanClub_EventScript_1ADEB9:: @ 81ADEB9
-	msgbox SlateportCity_PokemonFanClub_Text_1A8667, MSGBOX_DEFAULT
+	msgbox SlateportCity_PokemonFanClub_Text_HereIfYouGetUrgeToTellMe, MSGBOX_DEFAULT
 	release
 	end
 
 SlateportCity_PokemonFanClub_EventScript_1ADEC3:: @ 81ADEC3
-	msgbox SlateportCity_PokemonFanClub_Text_1A8818, MSGBOX_DEFAULT
+	msgbox SlateportCity_PokemonFanClub_Text_ThatsAllForInterview2, MSGBOX_DEFAULT
 	setvar VAR_0x8005, 1
 	goto SlateportCity_PokemonFanClub_EventScript_1ADE46
 	end
 
 SlateportCity_PokemonFanClub_EventScript_1ADED6:: @ 81ADED6
-	msgbox SlateportCity_PokemonFanClub_Text_1A86B5, MSGBOX_DEFAULT
+	msgbox SlateportCity_PokemonFanClub_Text_EnjoyDoingInterviews, MSGBOX_DEFAULT
 	release
 	end
 
@@ -1209,7 +1209,7 @@ SlateportCity_OceanicMuseum_1F_EventScript_Reporter:: @ 81ADEE0
 	copyvar VAR_0x8009, VAR_0x8006
 	goto_if_set FLAG_OCEANIC_MUSEUM_MET_REPORTER, SlateportCity_OceanicMuseum_1F_EventScript_1ADF25
 	setflag FLAG_OCEANIC_MUSEUM_MET_REPORTER
-	msgbox SlateportCity_OceanicMuseum_1F_Text_1A927F, MSGBOX_YESNO
+	msgbox SlateportCity_OceanicMuseum_1F_Text_InterviewRequest, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	goto_if_eq SlateportCity_OceanicMuseum_1F_EventScript_1ADF44
 	compare VAR_RESULT, NO
@@ -1217,7 +1217,7 @@ SlateportCity_OceanicMuseum_1F_EventScript_Reporter:: @ 81ADEE0
 	end
 
 SlateportCity_OceanicMuseum_1F_EventScript_1ADF25:: @ 81ADF25
-	msgbox SlateportCity_OceanicMuseum_1F_Text_1A934C, MSGBOX_YESNO
+	msgbox SlateportCity_OceanicMuseum_1F_Text_InterviewRequestShort, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	goto_if_eq SlateportCity_OceanicMuseum_1F_EventScript_1ADF44
 	compare VAR_RESULT, NO
@@ -1225,7 +1225,7 @@ SlateportCity_OceanicMuseum_1F_EventScript_1ADF25:: @ 81ADF25
 	end
 
 SlateportCity_OceanicMuseum_1F_EventScript_1ADF44:: @ 81ADF44
-	msgbox SlateportCity_OceanicMuseum_1F_Text_1A93D1, MSGBOX_DEFAULT
+	msgbox SlateportCity_OceanicMuseum_1F_Text_TellMeExperienceInvolvingPokemon, MSGBOX_DEFAULT
 	setvar VAR_0x8004, 5
 	copyvar VAR_0x8005, VAR_0x8009
 	setvar VAR_0x8006, 0
@@ -1239,18 +1239,18 @@ SlateportCity_OceanicMuseum_1F_EventScript_1ADF44:: @ 81ADF44
 	end
 
 SlateportCity_OceanicMuseum_1F_EventScript_1ADF79:: @ 81ADF79
-	msgbox SlateportCity_OceanicMuseum_1F_Text_1A9446, MSGBOX_DEFAULT
+	msgbox SlateportCity_OceanicMuseum_1F_Text_LetMeKnowIfYouHaveStory, MSGBOX_DEFAULT
 	release
 	end
 
 SlateportCity_OceanicMuseum_1F_EventScript_1ADF83:: @ 81ADF83
-	msgbox SlateportCity_OceanicMuseum_1F_Text_1A949A, MSGBOX_DEFAULT
+	msgbox SlateportCity_OceanicMuseum_1F_Text_ThatsAllForInterview, MSGBOX_DEFAULT
 	setvar VAR_0x8005, 2
 	goto SlateportCity_OceanicMuseum_1F_EventScript_1ADE46
 	end
 
 SlateportCity_OceanicMuseum_1F_EventScript_1ADF96:: @ 81ADF96
-	msgbox SlateportCity_OceanicMuseum_1F_Text_1A952E, MSGBOX_DEFAULT
+	msgbox SlateportCity_OceanicMuseum_1F_Text_BetterWriteUpStory, MSGBOX_DEFAULT
 	release
 	end
 
@@ -1265,7 +1265,7 @@ SlateportCity_PokemonFanClub_EventScript_Reporter:: @ 81ADFA0
 	compare VAR_RESULT, 1
 	goto_if_eq SlateportCity_PokemonFanClub_EventScript_1AE0AC
 	copyvar VAR_0x8009, VAR_0x8006
-	msgbox SlateportCity_PokemonFanClub_Text_1A82F1, MSGBOX_YESNO
+	msgbox SlateportCity_PokemonFanClub_Text_InterviewRequestHasName, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	goto_if_eq SlateportCity_PokemonFanClub_EventScript_1ADFE9
 	compare VAR_RESULT, NO
@@ -1273,7 +1273,7 @@ SlateportCity_PokemonFanClub_EventScript_Reporter:: @ 81ADFA0
 	end
 
 SlateportCity_PokemonFanClub_EventScript_1ADFE9:: @ 81ADFE9
-	msgbox SlateportCity_PokemonFanClub_Text_1A83D0, MSGBOX_DEFAULT
+	msgbox SlateportCity_PokemonFanClub_Text_HereGoesQuickAnswers, MSGBOX_DEFAULT
 	random 3
 	copyvar VAR_0x800A, VAR_RESULT
 	switch VAR_RESULT
@@ -1283,17 +1283,17 @@ SlateportCity_PokemonFanClub_EventScript_1ADFE9:: @ 81ADFE9
 	end
 
 SlateportCity_PokemonFanClub_EventScript_1AE020:: @ 81AE020
-	msgbox SlateportCity_PokemonFanClub_Text_1A8414, MSGBOX_DEFAULT
+	msgbox SlateportCity_PokemonFanClub_Text_DescribeFeelingsFirstMetMon, MSGBOX_DEFAULT
 	goto SlateportCity_PokemonFanClub_EventScript_1AE04A
 	end
 
 SlateportCity_PokemonFanClub_EventScript_1AE02E:: @ 81AE02E
-	msgbox SlateportCity_PokemonFanClub_Text_1A8470, MSGBOX_DEFAULT
+	msgbox SlateportCity_PokemonFanClub_Text_LikenMonToSomethingYouLike, MSGBOX_DEFAULT
 	goto SlateportCity_PokemonFanClub_EventScript_1AE04A
 	end
 
 SlateportCity_PokemonFanClub_EventScript_1AE03C:: @ 81AE03C
-	msgbox SlateportCity_PokemonFanClub_Text_1A84D5, MSGBOX_DEFAULT
+	msgbox SlateportCity_PokemonFanClub_Text_WhatAttractedYouAboutMon, MSGBOX_DEFAULT
 	goto SlateportCity_PokemonFanClub_EventScript_1AE04A
 	end
 
@@ -1306,26 +1306,26 @@ SlateportCity_PokemonFanClub_EventScript_1AE04A:: @ 81AE04A
 	faceplayer
 	compare VAR_RESULT, 0
 	goto_if_eq SlateportCity_PokemonFanClub_EventScript_1AE0A2
-	msgbox SlateportCity_PokemonFanClub_Text_1A852D, MSGBOX_DEFAULT
+	msgbox SlateportCity_PokemonFanClub_Text_WhatDoPokemonMeanToYou, MSGBOX_DEFAULT
 	setvar VAR_0x8006, 1
 	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, 0
 	goto_if_eq SlateportCity_PokemonFanClub_EventScript_1AE0A2
-	msgbox SlateportCity_PokemonFanClub_Text_1A85A6, MSGBOX_DEFAULT
+	msgbox SlateportCity_PokemonFanClub_Text_ThatsAllForInterview, MSGBOX_DEFAULT
 	copyvar VAR_0x8007, VAR_0x800A
 	setvar VAR_0x8005, 3
 	goto SlateportCity_PokemonFanClub_EventScript_1ADE46
 	end
 
 SlateportCity_PokemonFanClub_EventScript_1AE0A2:: @ 81AE0A2
-	msgbox SlateportCity_PokemonFanClub_Text_1A8667, MSGBOX_DEFAULT
+	msgbox SlateportCity_PokemonFanClub_Text_HereIfYouGetUrgeToTellMe, MSGBOX_DEFAULT
 	release
 	end
 
 SlateportCity_PokemonFanClub_EventScript_1AE0AC:: @ 81AE0AC
-	msgbox SlateportCity_PokemonFanClub_Text_1A86B5, MSGBOX_DEFAULT
+	msgbox SlateportCity_PokemonFanClub_Text_EnjoyDoingInterviews, MSGBOX_DEFAULT
 	release
 	end
 

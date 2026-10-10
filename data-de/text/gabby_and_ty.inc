@@ -14,7 +14,7 @@ GabbyAndTy_Text_GabbyDefeatFirstTime:: @ 81ABFD3
 	.string "PIA: Mein Gefühl hat nicht getrogen.\n"
 	.string "Der TRAINER ist wirklich erstaunlich.$"
 
-Route111_Text_1AC015:: @ 81AC015
+GabbyAndTy_Text_WhoAreYouInterview:: @ 81AC015
 	.string "PIA: Erstaunlich! Erstaunlich!\n"
 	.string "Wer bist du?!?\p"
 	.string "Ich wusste, wir erleben etwas Außer-\n"
@@ -25,20 +25,20 @@ Route111_Text_1AC015:: @ 81AC015
 	.string "Würdest du uns auch etwas von deiner\n"
 	.string "Zeit zur Verfügung stellen?$"
 
-Route111_Text_1AC10A:: @ 81AC10A
+GabbyAndTy_Text_QuoteFromLastInterview:: @ 81AC10A
 	.string "PIA: “{STR_VAR_1}!”\p"
 	.string "Erinnerst du dich? Das hast du uns das\n"
 	.string "letzte Mal nach einem Kampf gesagt.\p"
 	.string "So etwas vergesse ich nie!$"
 
-Route111_Text_1AC18D:: @ 81AC18D
+GabbyAndTy_Text_YouStompedUsInterviewAgain:: @ 81AC18D
 	.string "Als wir das letzte Mal kämpften, hast du\n"
 	.string "uns in den Boden gerammt, bevor wir\l"
 	.string "etwas dagegen tun konnten...\p"
 	.string "Und wie sieht es heute aus? Dürfen\n"
 	.string "wir dich noch einmal interviewen?$"
 
-Route111_Text_1AC219:: @ 81AC219
+GabbyAndTy_Text_YouThrewABallAtUsInterviewAgain:: @ 81AC219
 	.string "Hast du bei unserem letzten Kampf nicht\n"
 	.string "einen POKéBALL nach uns geworfen?\p"
 	.string "Wir waren geschockt! Daher haben wir\n"
@@ -46,30 +46,30 @@ Route111_Text_1AC219:: @ 81AC219
 	.string "Was meinst du? Dürfen wir dich noch\n"
 	.string "einmal interviewen?$"
 
-Route111_Text_1AC2D6:: @ 81AC2D6
+GabbyAndTy_Text_CleverItemSkillsInterviewAgain:: @ 81AC2D6
 	.string "Bei unserem letzten Kampf hast du uns\n"
 	.string "mit dem Einsatz der Items geschlagen.\p"
 	.string "Was meinst du? Dürfen wir dich noch\n"
 	.string "einmal interviewen?$"
 
-Route111_Text_1AC355:: @ 81AC355
+GabbyAndTy_Text_WeLookedRespectableInterviewAgain:: @ 81AC355
 	.string "In unserem letzten Kampf haben wir uns\n"
 	.string "bemüht, nicht ganz so übel auszusehen.\p"
 	.string "Was meinst du? Dürfen wir dich noch\n"
 	.string "einmal interviewen?$"
 
-Route111_Text_1AC3CF:: @ 81AC3CF
+GabbyAndTy_Text_InterviewAgain:: @ 81AC3CF
 	.string "Was meinst du? Dürfen wir dich noch\n"
 	.string "einmal interviewen?$"
 
-Route111_Text_1AC40F:: @ 81AC40F
+GabbyAndTy_Text_DescribeYourFeelings:: @ 81AC40F
 	.string "Ja?\n"
 	.string "Wunderbar! Danke!\p"
 	.string "Okay. Wie würdest du deine Gefühle\n"
 	.string "hinsichtlich unseres Kampfes\l"
 	.string "beschreiben? Kurz und nett, bitte.$"
 
-Route111_Text_1AC487:: @ 81AC487
+GabbyAndTy_Text_PerfectWellBeSeeingYou:: @ 81AC487
 	.string "PIA: Mmm, yeah!\n"
 	.string "Das ist das perfekte Schlagwort!\p"
 	.string "Ich bin überzeugt, dass dies eine groß-\n"
@@ -79,7 +79,7 @@ Route111_Text_1AC487:: @ 81AC487
 	.string "Okay!\n"
 	.string "Man sieht sich!$"
 
-Route111_Text_1AC553:: @ 81AC553
+GabbyAndTy_Text_DontGiveUpKeepingEyeOut:: @ 81AC553
 	.string "PIA: Oh...\p"
 	.string "Okay, aber gib nicht auf!\n"
 	.string "Wir werden dich weiter im Auge behalten!$"
@@ -91,7 +91,7 @@ GabbyAndTy_Text_GabbyNotEnoughMons:: @ 81AC5CA
 	.string "PIA: Gibt es irgendwo einen starken\n"
 	.string "TRAINER mit vielen POKéMON?$"
 
-Route111_Text_1AC60B:: @ 81AC60B
+GabbyAndTy_Text_GiveUsAnInterviewThisTime:: @ 81AC60B
 	.string "PIA: Wow, das war was!\p"
 	.string "Seit unserem letzten Kampf bist du\n"
 	.string "stärker geworden - viel stärker.\p"

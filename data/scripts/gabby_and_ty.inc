@@ -203,7 +203,7 @@ Route111_EventScript_1AE5A2:: @ 81AE5A2
 	compare VAR_FACING, 4
 	call_if_eq Route111_EventScript_1AE5FD
 	goto_if_set FLAG_TEMP_1, Route111_EventScript_1AE73A
-	msgbox Route111_Text_1AC015, MSGBOX_YESNO
+	msgbox GabbyAndTy_Text_WhoAreYouInterview, MSGBOX_YESNO
 	goto Route111_EventScript_1AE6F3
 	end
 
@@ -239,7 +239,7 @@ Route120_EventScript_1AE60F:: @ 81AE60F
 	specialvar VAR_RESULT, GabbyAndTyGetLastQuote
 	compare VAR_RESULT, 0
 	goto_if_eq Route111_EventScript_1AE69F
-	msgbox Route111_Text_1AC10A, MSGBOX_DEFAULT
+	msgbox GabbyAndTy_Text_QuoteFromLastInterview, MSGBOX_DEFAULT
 	specialvar VAR_RESULT, GabbyAndTyGetLastBattleTrivia
 	switch VAR_RESULT
 	case 0, Route111_EventScript_1AE6AD
@@ -262,53 +262,53 @@ Route111_Movement_1AE69D:: @ 81AE69D
 	step_end
 
 Route111_EventScript_1AE69F:: @ 81AE69F
-	msgbox Route111_Text_1AC60B, MSGBOX_YESNO
+	msgbox GabbyAndTy_Text_GiveUsAnInterviewThisTime, MSGBOX_YESNO
 	goto Route111_EventScript_1AE6F3
 	end
 
 Route111_EventScript_1AE6AD:: @ 81AE6AD
-	msgbox Route111_Text_1AC3CF, MSGBOX_YESNO
+	msgbox GabbyAndTy_Text_InterviewAgain, MSGBOX_YESNO
 	goto Route111_EventScript_1AE6F3
 	end
 
 Route111_EventScript_1AE6BB:: @ 81AE6BB
-	msgbox Route111_Text_1AC18D, MSGBOX_YESNO
+	msgbox GabbyAndTy_Text_YouStompedUsInterviewAgain, MSGBOX_YESNO
 	goto Route111_EventScript_1AE6F3
 	end
 
 Route111_EventScript_1AE6C9:: @ 81AE6C9
-	msgbox Route111_Text_1AC219, MSGBOX_YESNO
+	msgbox GabbyAndTy_Text_YouThrewABallAtUsInterviewAgain, MSGBOX_YESNO
 	goto Route111_EventScript_1AE6F3
 	end
 
 Route111_EventScript_1AE6D7:: @ 81AE6D7
-	msgbox Route111_Text_1AC2D6, MSGBOX_YESNO
+	msgbox GabbyAndTy_Text_CleverItemSkillsInterviewAgain, MSGBOX_YESNO
 	goto Route111_EventScript_1AE6F3
 	end
 
 Route111_EventScript_1AE6E5:: @ 81AE6E5
-	msgbox Route111_Text_1AC355, MSGBOX_YESNO
+	msgbox GabbyAndTy_Text_WeLookedRespectableInterviewAgain, MSGBOX_YESNO
 	goto Route111_EventScript_1AE6F3
 	end
 
 Route111_EventScript_1AE6F3:: @ 81AE6F3
 	compare VAR_RESULT, NO
 	goto_if_eq Route111_EventScript_1AE72D
-	msgbox Route111_Text_1AC40F, MSGBOX_DEFAULT
+	msgbox GabbyAndTy_Text_DescribeYourFeelings, MSGBOX_DEFAULT
 	setvar VAR_0x8004, 10
 	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, 0
 	goto_if_eq Route111_EventScript_1AE72D
-	msgbox Route111_Text_1AC487, MSGBOX_DEFAULT
+	msgbox GabbyAndTy_Text_PerfectWellBeSeeingYou, MSGBOX_DEFAULT
 	special GabbyAndTyAfterInterview
 	setflag FLAG_TEMP_1
 	release
 	end
 
 Route111_EventScript_1AE72D:: @ 81AE72D
-	msgbox Route111_Text_1AC553, MSGBOX_DEFAULT
+	msgbox GabbyAndTy_Text_DontGiveUpKeepingEyeOut, MSGBOX_DEFAULT
 	setflag FLAG_TEMP_1
 	release
 	end
