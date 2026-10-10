@@ -1,14 +1,14 @@
-gText_NurseJoy_Welcome:: @ 81A0A7D
+gText_WouldYouLikeToRestYourPkmn:: @ 81A0A7D
 	.string "Hello, and welcome to the POKéMON\n"
 	.string "CENTER.\p"
 	.string "We restore your tired POKéMON to\n"
 	.string "full health.\p"
 	.string "Would you like to rest your POKéMON?$"
 
-gText_NurseJoy_WeHopeToSeeYouAgain:: @ 81A0AFA
+gText_WeHopeToSeeYouAgain:: @ 81A0AFA
 	.string "We hope to see you again!$"
 
-gText_NurseJoy_ThankYouForWaiting:: @ 81A0B14
+gText_RestoredPkmnToFullHealth:: @ 81A0B14
 	.string "Thank you for waiting.\p"
 	.string "We've restored your POKéMON to\n"
 	.string "full health.$"

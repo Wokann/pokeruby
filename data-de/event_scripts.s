@@ -1087,11 +1087,11 @@ gText_ComeBackWithSecretPower:: @ 81A116E
 	.string "nehmen und dir unter der Hand tolle\l"
 	.string "Sachen verkaufen.$"
 
-gText_NurseJoy_OkayIllTakeYourPokemon:: @ 81A1245
+gText_IllTakeYourPkmn:: @ 81A1245
 	.string "Okay, ich nehme deine POKéMON für einen\n"
 	.string "Moment in meine Obhut.$"
 
-gText_NurseJoy_Pokerus:: @ 81A1275
+gText_PokerusExplanation:: @ 81A1275
 	.string "Dein POKéMON scheint von dem\n"
 	.string "POKéRUS befallen zu sein.\p"
 	.string "Über den POKéRUS ist bisher wenig be-\n"

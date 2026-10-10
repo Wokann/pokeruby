@@ -1,7 +1,7 @@
 Common_EventScript_PkmnCenterNurse:: @ 819FD5B
 	lock
 	faceplayer
-	msgbox gText_NurseJoy_Welcome, MSGBOX_YESNO
+	msgbox gText_WouldYouLikeToRestYourPkmn, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	goto_if_eq EventScript_PkmnCenterNurse_HealPkmn
 	compare VAR_RESULT, NO
@@ -10,7 +10,7 @@ Common_EventScript_PkmnCenterNurse:: @ 819FD5B
 
 EventScript_PkmnCenterNurse_HealPkmn:: @ 819FD7C
 	incrementgamestat GAME_STAT_USED_POKECENTER
-	message gText_NurseJoy_OkayIllTakeYourPokemon
+	message gText_IllTakeYourPkmn
 	waitmessage
 	applymovement VAR_0x800B, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
@@ -24,16 +24,16 @@ EventScript_PkmnCenterNurse_HealPkmn:: @ 819FD7C
 	end
 
 EventScript_PkmnCenterNurse_ReturnPkmn:: @ 819FDB0
-	message gText_NurseJoy_ThankYouForWaiting
+	message gText_RestoredPkmnToFullHealth
 	waitmessage
 	applymovement VAR_0x800B, Movement_PkmnCenterNurse_Bow
 	waitmovement 0
-	message gText_NurseJoy_WeHopeToSeeYouAgain
+	message gText_WeHopeToSeeYouAgain
 	waitmessage
 	return
 
 EventScript_PkmnCenterNurse_Goodbye:: @ 819FDC7
-	message gText_NurseJoy_WeHopeToSeeYouAgain
+	message gText_WeHopeToSeeYouAgain
 	waitmessage
 	return
 
@@ -46,7 +46,7 @@ EventScript_PkmnCenterNurse_CheckPokerus:: @ 819FDCE
 	end
 
 EventScript_PkmnCenterNurse_ExplainPokerus:: @ 819FDEA
-	message gText_NurseJoy_Pokerus
+	message gText_PokerusExplanation
 	waitmessage
 	setflag FLAG_POKERUS_EXPLAINED
 	return
