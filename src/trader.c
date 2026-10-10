@@ -204,7 +204,7 @@ void IsDecorationCategoryFull(void)
     }
 }
 
-void ScrSpecial_TraderMenuGiveDecoration(void)
+void TraderShowDecorationMenu(void)
 {
     CreateTask(sub_80FE7A8, 0);
 }
@@ -240,7 +240,7 @@ void sub_8109DAC(u8 taskId)
     ScriptContext_Enable();
 }
 
-void ScrSpecial_TraderDoDecorationTrade(void)
+void TraderDoDecorationTrade(void)
 {
     struct MauvilleOldManTrader *trader = &gSaveBlock1.oldMan.trader;
 

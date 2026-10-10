@@ -125,8 +125,8 @@ gSpecials::
 	def_special GetTraderTradedFlag
 	def_special DoesPlayerHaveNoDecorations
 	def_special IsDecorationCategoryFull
-	def_special ScrSpecial_TraderMenuGiveDecoration
-	def_special ScrSpecial_TraderDoDecorationTrade
+	def_special TraderShowDecorationMenu
+	def_special TraderDoDecorationTrade
 	def_special GetShroomishSizeRecordInfo
 	def_special CompareShroomishSize
 	def_special GetBarboachSizeRecordInfo
