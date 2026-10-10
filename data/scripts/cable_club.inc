@@ -472,7 +472,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A432D:: @ 81A432D
 	end
 
 OldaleTown_PokemonCenter_2F_EventScript_1A4339:: @ 81A4339
-	msgbox OldaleTown_PokemonCenter_2F_Text_1A141C, MSGBOX_NPC
+	msgbox gText_SorryTradeCenterInspections, MSGBOX_NPC
 	end
 
 OldaleTown_PokemonCenter_2F_EventScript_1A4342:: @ 81A4342
@@ -480,7 +480,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A4342:: @ 81A4342
 	end
 
 OldaleTown_PokemonCenter_2F_EventScript_1A434B:: @ 81A434B
-	msgbox OldaleTown_PokemonCenter_2F_Text_1A145C, MSGBOX_NPC
+	msgbox gText_SorryRecordCornerPreparation, MSGBOX_NPC
 	end
 
 OldaleTown_PokemonCenter_2F_Movement_1A4354:: @ 81A4354

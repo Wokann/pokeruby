@@ -1112,11 +1112,11 @@ OldaleTown_PokemonCenter_2F_Text_1A13DF:: @ 81A13DF
 	.string "Tut mir schrecklich Leid. Das KOLOSSEUM\n"
 	.string "wird gerade renoviert.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A141C:: @ 81A141C
+gText_SorryTradeCenterInspections:: @ 81A141C
 	.string "Tut mir schrecklich Leid. Das\n"
 	.string "HANDELSCENTER wird gerade renoviert.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A145C:: @ 81A145C
+gText_SorryRecordCornerPreparation:: @ 81A145C
 	.string "Tut mir schrecklich Leid. Hier wird\n"
 	.string "für den STATISTIKTAUSCH renoviert.$"
 
@@ -1128,25 +1128,7 @@ EventScript_SelectWithoutRegisteredItem:: @ 81A14AF
 	msgbox gText_SelectWithoutRegisteredItem, MSGBOX_SIGN
 	end
 
-gUnknown_081A14B8:: @ 81A14B8
-	lockall
-	special TryFieldPoisonWhiteOut
-	waitstate
-	compare VAR_RESULT, 1
-	goto_if_eq EventScript_1A14CA
-	releaseall
-	end
-
-EventScript_1A14CA::
-	message gText_PlayerWhitedOut
-	waitmessage
-	waitbuttonpress
-	special Script_FadeOutMapMusic
-	waitstate
-	fadescreen FADE_TO_BLACK
-	special sp0C8_whiteout_maybe
-	waitstate
-	end
+	.include "data/scripts/field_poison.inc"
 
 Common_EventScript_NopReturn:: @ 81A14DC
 	return
