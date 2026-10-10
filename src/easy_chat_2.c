@@ -2859,7 +2859,7 @@ u16 sub_80EB784(u16 groupId)
     return GetRandomEasyChatWordFromGroup(groupId);
 }
 
-void sub_80EB7C4(void)
+void ShowEasyChatProfile(void)
 {
     u16 *easyChatWords;
     u16 columns, rows;
@@ -2867,13 +2867,13 @@ void sub_80EB7C4(void)
     switch (gSpecialVar_0x8004)
     {
     case 0:
-        easyChatWords = gSaveBlock1.easyChats.unk2B1C;
+        easyChatWords = gSaveBlock1.easyChats.easyChatProfile;
         columns = 2;
         rows = 2;
         break;
     case 1:
-        easyChatWords = gSaveBlock1.easyChats.unk2B28;
-        if (sub_80EB680(gSaveBlock1.easyChats.unk2B28, 3, 2, 20))
+        easyChatWords = gSaveBlock1.easyChats.easyChatBattleStart;
+        if (sub_80EB680(gSaveBlock1.easyChats.easyChatBattleStart, 3, 2, 20))
         {
             columns = 2;
             rows = 3;
@@ -2885,12 +2885,12 @@ void sub_80EB7C4(void)
         }
         break;
     case 2:
-        easyChatWords = gSaveBlock1.easyChats.unk2B34;
+        easyChatWords = gSaveBlock1.easyChats.easyChatBattleWon;
         columns = 3;
         rows = 2;
         break;
     case 3:
-        easyChatWords = gSaveBlock1.easyChats.unk2B40;
+        easyChatWords = gSaveBlock1.easyChats.easyChatBattleLost;
         columns = 3;
         rows = 2;
         break;

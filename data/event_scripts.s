@@ -1150,7 +1150,7 @@ Common_EventScript_NopReturn:: @ 81A14DC
 	.include "data/scripts/field_move_scripts.inc"
 	.include "data/scripts/item_ball_scripts.inc"
 
-	.include "data/scripts/mystery_event_club.inc"
+	.include "data/scripts/profile_man.inc"
 	.include "data/text/mystery_event_club.inc"
 
 	.include "data/scripts/day_care.inc"

@@ -343,7 +343,7 @@ bool8 debug_sub_8090984(void)
             union OldMan *mauvilleMan = &gSaveBlock1.oldMan;
             mauvilleMan->bard.songLyrics[i] = gUnknown_Debug_083C4F08[i];
             mauvilleMan->bard.newSongLyrics[i] = gUnknown_Debug_083C4F08[i];
-            gSaveBlock1.easyChats.unk2B28[i] = gUnknown_Debug_083C4F08[i];
+            gSaveBlock1.easyChats.easyChatBattleStart[i] = gUnknown_Debug_083C4F08[i];
         }
     }
     else if (input == 7)

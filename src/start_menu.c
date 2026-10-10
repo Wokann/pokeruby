@@ -212,7 +212,7 @@ void debug_sub_8075DB4(struct BattleTowerEReaderTrainer *ereaderTrainer, const u
     r3 = 7;
     for (i = 0; i < 6; i++)
     {
-        ereaderTrainer->greeting[i] = gSaveBlock1.easyChats.unk2B28[i];
+        ereaderTrainer->greeting[i] = gSaveBlock1.easyChats.easyChatBattleStart[i];
         ereaderTrainer->farewellPlayerLost[i] = r3;
         ereaderTrainer->farewellPlayerWon[i] = r3 + 6;
         r3++;

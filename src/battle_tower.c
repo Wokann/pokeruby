@@ -1302,7 +1302,7 @@ static void SaveBattleTowerRecord(void)
     playerRecord->winStreak = GetCurrentBattleTowerWinStreak(battleTowerLevelType);
 
     for (i = 0; i < 6; i++)
-        playerRecord->greeting[i] = gSaveBlock1.easyChats.unk2B28[i];
+        playerRecord->greeting[i] = gSaveBlock1.easyChats.easyChatBattleStart[i];
 
     for (i = 0; i < 3; i++)
         ConvertPokemonToBattleTowerPokemon(&gPlayerParty[gSaveBlock2.battleTower.selectedPartyMons[i] - 1], &playerRecord->party[i]);
@@ -1493,7 +1493,7 @@ void FillEReaderTrainerWithPlayerData(void)
     j = 7;
     for (i = 0; i < 6; i++)
     {
-        ereaderTrainer->greeting[i] = gSaveBlock1.easyChats.unk2B28[i];
+        ereaderTrainer->greeting[i] = gSaveBlock1.easyChats.easyChatBattleStart[i];
         ereaderTrainer->farewellPlayerLost[i] = j;
         ereaderTrainer->farewellPlayerWon[i] = j + 6;
         j++;

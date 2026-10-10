@@ -495,10 +495,10 @@ struct SaveBlock1 /* 0x02025734 */
     /*0x2B0E*/ u16 outbreakDaysLeft;
     /*0x2B10*/ struct GabbyAndTyData gabbyAndTyData;
     /*0x2B1C*/ struct {
-        /*0x2B1C*/ u16 unk2B1C[6];
-        /*0x2B28*/ u16 unk2B28[6];
-        /*0x2B34*/ u16 unk2B34[6];
-        /*0x2B40*/ u16 unk2B40[6];
+        /*0x2B1C*/ u16 easyChatProfile[6];
+        /*0x2B28*/ u16 easyChatBattleStart[6];
+        /*0x2B34*/ u16 easyChatBattleWon[6];
+        /*0x2B40*/ u16 easyChatBattleLost[6];
     } easyChats;
     /*0x2B4C*/ struct Mail mail[MAIL_COUNT];
     /*0x2D8C*/ u8 unlockedTrendySayings[4]; // Bitfield for unlockable Easy Chat words in EC_GROUP_TRENDY_SAYING

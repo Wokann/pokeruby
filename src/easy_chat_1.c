@@ -203,16 +203,16 @@ void ShowEasyChatScreen(void)
     switch (gSpecialVar_0x8004)
     {
     case 0:
-        words = gSaveBlock1.easyChats.unk2B1C;
+        words = gSaveBlock1.easyChats.easyChatProfile;
         break;
     case 1:
-        words = gSaveBlock1.easyChats.unk2B28;
+        words = gSaveBlock1.easyChats.easyChatBattleStart;
         break;
     case 2:
-        words = gSaveBlock1.easyChats.unk2B34;
+        words = gSaveBlock1.easyChats.easyChatBattleWon;
         break;
     case 3:
-        words = gSaveBlock1.easyChats.unk2B40;
+        words = gSaveBlock1.easyChats.easyChatBattleLost;
         break;
     case 4:
         words = gSaveBlock1.mail[gSpecialVar_0x8005].words;
@@ -530,15 +530,15 @@ void InitEasyChatPhrases(void)
     u16 j;
 
     for (i = 0; i < 4; i++)
-        gSaveBlock1.easyChats.unk2B1C[i] = sDefaultProfileWords[i];
+        gSaveBlock1.easyChats.easyChatProfile[i] = sDefaultProfileWords[i];
 
     for (i = 0; i < 6; i++)
-        gSaveBlock1.easyChats.unk2B28[i] = sDefaultBattleStartWords[i];
+        gSaveBlock1.easyChats.easyChatBattleStart[i] = sDefaultBattleStartWords[i];
 
     for (i = 0; i < 6; i++)
     {
-        gSaveBlock1.easyChats.unk2B34[i] = 0xFFFF;
-        gSaveBlock1.easyChats.unk2B40[i] = 0xFFFF;
+        gSaveBlock1.easyChats.easyChatBattleWon[i] = 0xFFFF;
+        gSaveBlock1.easyChats.easyChatBattleLost[i] = 0xFFFF;
     }
 
     for (i = 0; i < 16; i++)
