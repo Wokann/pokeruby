@@ -1,6 +1,6 @@
 ProfBirch_EventScript_UpdateLocation:: @ 81A02F4
 	compare VAR_PETALBURG_GYM_STATE, 0
-	goto_if_eq Common_EventScript_Return
+	goto_if_eq Common_EventScript_NopReturn
 	compare VAR_BIRCH_STATE, 0
 	call_if_eq ProfBirch_EventScript_MoveToLab
 	compare VAR_BIRCH_STATE, 1
@@ -73,7 +73,7 @@ ProfBirch_EventScript_RatePokedex:: @ 81A03B0
 	msgbox gBirchDexRatingText_SoYouveSeenAndCaught, MSGBOX_DEFAULT
 	call ProfBirch_EventScript_ShowRatingMessage
 	compare VAR_0x800A, 0
-	goto_if_eq Common_EventScript_Return  @ National dex not enabled
+	goto_if_eq Common_EventScript_NopReturn  @ National dex not enabled
 	setvar VAR_0x8004, 1
 	specialvar VAR_RESULT, ScriptGetPokedexInfo
 	copyvar VAR_0x8008, VAR_0x8005

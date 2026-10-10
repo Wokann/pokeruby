@@ -710,8 +710,8 @@ EventScript_WhiteOut:: @ 819FC74
 	end
 
 EventScript_TryReadyRivalForGoGoggles:
-	goto_if_set FLAG_RECEIVED_GO_GOGGLES, Common_EventScript_Return
-	goto_if_unset FLAG_DEFEATED_LAVARIDGE_GYM, Common_EventScript_Return
+	goto_if_set FLAG_RECEIVED_GO_GOGGLES, Common_EventScript_NopReturn
+	goto_if_unset FLAG_DEFEATED_LAVARIDGE_GYM, Common_EventScript_NopReturn
 	clearflag FLAG_HIDE_LAVARIDGE_TOWN_RIVAL
 	setvar VAR_LAVARIDGE_RIVAL_STATE, 2
 	return
@@ -766,8 +766,8 @@ EverGrandeCity_HallOfFame_EventScript_ResetEliteFour:: @ 819FD09
 	return
 
 Common_EventScript_UpdateBrineyLocation:: @ 819FD1B
-	goto_if_unset FLAG_RECEIVED_POKENAV, Common_EventScript_Return
-	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, Common_EventScript_Return
+	goto_if_unset FLAG_RECEIVED_POKENAV, Common_EventScript_NopReturn
+	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, Common_EventScript_NopReturn
 	goto_if_unset FLAG_HIDE_ROUTE_104_MR_BRINEY_BOAT, EventScript_SetBrineyLocation_House
 	goto_if_unset FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN, EventScript_SetBrineyLocation_Dewford
 	goto_if_unset FLAG_HIDE_ROUTE_109_MR_BRINEY, EventScript_SetBrineyLocation_Route109
@@ -1149,7 +1149,7 @@ EventScript_1A14CA::
 	waitstate
 	end
 
-Common_EventScript_Return:: @ 81A14DC
+Common_EventScript_NopReturn:: @ 81A14DC
 	return
 
 	.include "data/scripts/debug.inc"
