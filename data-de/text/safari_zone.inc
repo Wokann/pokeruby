@@ -1,24 +1,24 @@
-UnknownString_81C34B2: @ 81C34B2
+SafariZone_Text_WouldYouLikeToExit: @ 81C34B2
 	.string "Möchtest du die SAFARI-ZONE jetzt\n"
 	.string "verlassen?$"
 
-UnknownString_81C34E4: @ 81C34E4
+SafariZone_Text_TimesUp: @ 81C34E4
 	.string "Ding Dong! Die Zeit ist abgelaufen!\n"
 	.string "Dein SAFARI-Spiel ist vorbei.$"
 
-UnknownString_81C3514: @ 81C3514
+SafariZone_Text_OutOfBalls: @ 81C3514
 	.string "Du hast keine SAFARIBÄLLE mehr.\n"
 	.string "Dein SAFARI-Spiel ist vorbei.$"
 
-UnknownString_81C354E: @ 81C354E
+SafariZone_Text_PlacePokeblockOnFeeder: @ 81C354E
 	.string "Möchtest du einen {POKEBLOCK} in den\n"
 	.string "{POKEBLOCK}NAPF legen?$"
 
-UnknownString_81C3583: @ 81C3583
+SafariZone_Text_PokeblockStillHere: @ 81C3583
 	.string "Dein {STR_VAR_1} befindet sich\n"
 	.string "noch in unserer Obhut.$"
 
-UnknownString_81C35A9: @ 81C35A9
+SafariZone_Text_PokeblockWasPlaced: @ 81C35A9
 	.string "{STR_VAR_1} wurde in den {POKEBLOCK}-\n"
 	.string "NAPF gelegt.$"
 
