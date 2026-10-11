@@ -52,23 +52,23 @@ struct TrainerMonItemCustomMoves
 
 extern const struct OamData gOamData_81F96F0;
 extern const struct OamData gOamData_81F96E8;
-extern const struct SpriteFrameImage gSpriteImageTable_81E7A10[];
-extern const struct SpriteFrameImage gSpriteImageTable_81E7A30[];
-extern const struct SpriteFrameImage gSpriteImageTable_81E7A50[];
-extern const struct SpriteFrameImage gSpriteImageTable_81E7A70[];
-extern const union AffineAnimCmd *const gSpriteAffineAnimTable_81E7B70[];
+extern const struct SpriteFrameImage gBattlerPicTable_PlayerLeft[];
+extern const struct SpriteFrameImage gBattlerPicTable_OpponentLeft[];
+extern const struct SpriteFrameImage gBattlerPicTable_PlayerRight[];
+extern const struct SpriteFrameImage gBattlerPicTable_OpponentRight[];
+extern const union AffineAnimCmd *const gAffineAnims_BattleSpritePlayerSide[];
 extern const union AffineAnimCmd *const gAffineAnims_BattleSpriteOpponentSide[];
 
 extern const union AffineAnimCmd *const gAffineAnims_BattleSpriteContest[];
-extern const union AnimCmd *const gSpriteAnimTable_81E7C64[];
+extern const union AnimCmd *const gAnims_MonPic[];
 extern const struct MonCoords gMonFrontPicCoords[];
 extern const struct MonCoords gMonBackPicCoords[];
 extern const struct CompressedSpriteSheet gMonFrontPicTable[];
 extern const struct CompressedSpriteSheet gMonBackPicTable[];
 extern const struct CompressedSpritePalette gMonPaletteTable[];
 extern const struct CompressedSpritePalette gMonShinyPaletteTable[];
-extern const union AnimCmd *const *const gUnknown_081EC2A4[];
-extern const union AnimCmd *const *const gUnknown_081ECACC[];
+extern const union AnimCmd *const *const gTrainerFrontAnimsPtrTable[];
+extern const union AnimCmd *const *const gTrainerBackAnimsPtrTable[];
 extern const struct MonCoords gTrainerBackPicCoords[];
 extern const struct CompressedSpriteSheet gTrainerBackPicTable[];
 extern const struct CompressedSpritePalette gTrainerBackPicPaletteTable[];
@@ -85,13 +85,13 @@ extern u8 *const gMonSpriteGfx_Sprite_ptr[];
 //extern u8 (*const gMonSpriteGfx_Sprite_ptr[])[0x800];
 extern const struct BattleMove gBattleMoves[];
 
-// data/graphics/trainers/front_pic_coords.inc
+// src/data/trainer_graphics/front_pic_coords.inc
 extern const struct MonCoords gTrainerFrontPicCoords[];
 
-// data/graphics/trainers/front_pic_table.inc
+// src/data/trainer_graphics/front_pic_table.inc
 extern const struct CompressedSpriteSheet gTrainerFrontPicTable[];
 
-// data/graphics/trainers/front_pic_palette_table.inc
+// src/data/trainer_graphics/front_pic_palette_table.inc
 extern const struct CompressedSpritePalette gTrainerFrontPicPaletteTable[];
 
 

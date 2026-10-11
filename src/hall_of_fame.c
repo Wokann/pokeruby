@@ -1278,7 +1278,7 @@ void sub_8143648(u16 paletteTag, u8 animID)
     gMultiuseSpriteTemplate = sUnknown_0840B6B8;
     gMultiuseSpriteTemplate.paletteTag = paletteTag;
     gMultiuseSpriteTemplate.images = sUnknown_0840B69C[animID];
-    gMultiuseSpriteTemplate.anims = gSpriteAnimTable_81E7C64;
+    gMultiuseSpriteTemplate.anims = gAnims_MonPic;
 }
 
 void sub_8143680(u16 paletteTag, u8 animID)
@@ -1286,7 +1286,7 @@ void sub_8143680(u16 paletteTag, u8 animID)
     gMultiuseSpriteTemplate = sUnknown_0840B6B8;
     gMultiuseSpriteTemplate.paletteTag = paletteTag;
     gMultiuseSpriteTemplate.images = sUnknown_0840B69C[animID];
-    gMultiuseSpriteTemplate.anims = gUnknown_081EC2A4[0];
+    gMultiuseSpriteTemplate.anims = gTrainerFrontAnimsPtrTable[0];
 }
 
 static u32 HallOfFame_LoadPokemonPic(u16 species, s16 posX, s16 posY, u16 pokeID, u32 tid, u32 pid)

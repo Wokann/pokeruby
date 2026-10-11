@@ -151,11 +151,11 @@ u8 GetGenderFromSpeciesAndPersonality(u16 species, u32 personality)
 
 const struct SpriteTemplate gBattlerSpriteTemplates[] =
 {
-    {0xFFFF, 0, &gOamData_81F96F0, NULL, gSpriteImageTable_81E7A10, gSpriteAffineAnimTable_81E7B70, SpriteCB_BattleSpriteStartSlideLeft},
-    {0xFFFF, 0, &gOamData_81F96E8, NULL, gSpriteImageTable_81E7A30,
+    {0xFFFF, 0, &gOamData_81F96F0, NULL, gBattlerPicTable_PlayerLeft, gAffineAnims_BattleSpritePlayerSide, SpriteCB_BattleSpriteStartSlideLeft},
+    {0xFFFF, 0, &gOamData_81F96E8, NULL, gBattlerPicTable_OpponentLeft,
         gAffineAnims_BattleSpriteOpponentSide, oac_poke_opponent},
-    {0xFFFF, 0, &gOamData_81F96F0, NULL, gSpriteImageTable_81E7A50, gSpriteAffineAnimTable_81E7B70, SpriteCB_BattleSpriteStartSlideLeft},
-    {0xFFFF, 0, &gOamData_81F96E8, NULL, gSpriteImageTable_81E7A70,
+    {0xFFFF, 0, &gOamData_81F96F0, NULL, gBattlerPicTable_PlayerRight, gAffineAnims_BattleSpritePlayerSide, SpriteCB_BattleSpriteStartSlideLeft},
+    {0xFFFF, 0, &gOamData_81F96E8, NULL, gBattlerPicTable_OpponentRight,
         gAffineAnims_BattleSpriteOpponentSide, oac_poke_opponent},
 };
 
@@ -163,7 +163,7 @@ void SetMultiuseSpriteTemplateToPokemon(u16 speciesTag, u8 battlerPosition)
 {
     gMultiuseSpriteTemplate = gBattlerSpriteTemplates[battlerPosition];
     gMultiuseSpriteTemplate.paletteTag = speciesTag;
-    gMultiuseSpriteTemplate.anims = (const union AnimCmd *const *)gSpriteAnimTable_81E7C64;  //Why do I have to cast this?
+    gMultiuseSpriteTemplate.anims = (const union AnimCmd *const *)gAnims_MonPic;  //Why do I have to cast this?
 }
 
 void SetMultiuseSpriteTemplateToTrainerBack(u16 trainerPicId, u8 battlerPosition)
@@ -171,9 +171,9 @@ void SetMultiuseSpriteTemplateToTrainerBack(u16 trainerPicId, u8 battlerPosition
     gMultiuseSpriteTemplate = gBattlerSpriteTemplates[battlerPosition];
     gMultiuseSpriteTemplate.paletteTag = trainerPicId;
     if (battlerPosition == 0 || battlerPosition == 2)
-        gMultiuseSpriteTemplate.anims = gUnknown_081ECACC[trainerPicId];
+        gMultiuseSpriteTemplate.anims = gTrainerBackAnimsPtrTable[trainerPicId];
     else
-        gMultiuseSpriteTemplate.anims = gUnknown_081EC2A4[trainerPicId];
+        gMultiuseSpriteTemplate.anims = gTrainerFrontAnimsPtrTable[trainerPicId];
 }
 
 void EncryptBoxMon(struct BoxPokemon *boxMon)

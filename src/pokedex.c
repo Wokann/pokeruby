@@ -4073,7 +4073,7 @@ static void SetSpriteTemplateForPokemonPic(u16 paletteTag, u8 imagesSet)
     gMultiuseSpriteTemplate = sMonOrTrainerPicSpriteTemplate;
     gMultiuseSpriteTemplate.paletteTag = paletteTag;
     gMultiuseSpriteTemplate.images = sSpriteFrameImages_MonOrTrainerPic[imagesSet];
-    gMultiuseSpriteTemplate.anims = gSpriteAnimTable_81E7C64;
+    gMultiuseSpriteTemplate.anims = gAnims_MonPic;
 }
 
 static void SetSpriteTemplateForSizeComparisonTrainerPic(u16 paletteTag, u8 imagesSet)
@@ -4081,7 +4081,7 @@ static void SetSpriteTemplateForSizeComparisonTrainerPic(u16 paletteTag, u8 imag
     gMultiuseSpriteTemplate = sMonOrTrainerPicSpriteTemplate;
     gMultiuseSpriteTemplate.paletteTag = paletteTag;
     gMultiuseSpriteTemplate.images = sSpriteFrameImages_MonOrTrainerPic[imagesSet];
-    gMultiuseSpriteTemplate.anims = gUnknown_081EC2A4[0];
+    gMultiuseSpriteTemplate.anims = gTrainerFrontAnimsPtrTable[0];
 }
 
 u16 CreateMonSpriteFromNationalDexNumber(u16 nationalNum, s16 x, s16 y, u16 paletteSlot)

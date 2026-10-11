@@ -9,206 +9,206 @@
 	.section .rodata
 
 	.align 2
-gSpriteImageTable_81E7A10:: @ 81E7A10
+gBattlerPicTable_PlayerLeft:: @ 81E7A10
 	obj_frame_tiles gSharedMem + 0x8000, 0x800
 	obj_frame_tiles gSharedMem + 0x8800, 0x800
 	obj_frame_tiles gSharedMem + 0x9000, 0x800
 	obj_frame_tiles gSharedMem + 0x9800, 0x800
 
 	.align 2
-gSpriteImageTable_81E7A30:: @ 81E7A30
+gBattlerPicTable_OpponentLeft:: @ 81E7A30
 	obj_frame_tiles gSharedMem + 0xA000, 0x800
 	obj_frame_tiles gSharedMem + 0xA800, 0x800
 	obj_frame_tiles gSharedMem + 0xB000, 0x800
 	obj_frame_tiles gSharedMem + 0xB800, 0x800
 
 	.align 2
-gSpriteImageTable_81E7A50:: @ 81E7A50
+gBattlerPicTable_PlayerRight:: @ 81E7A50
 	obj_frame_tiles gSharedMem + 0xC000, 0x800
 	obj_frame_tiles gSharedMem + 0xC800, 0x800
 	obj_frame_tiles gSharedMem + 0xD000, 0x800
 	obj_frame_tiles gSharedMem + 0xD800, 0x800
 
 	.align 2
-gSpriteImageTable_81E7A70:: @ 81E7A70
+gBattlerPicTable_OpponentRight:: @ 81E7A70
 	obj_frame_tiles gSharedMem + 0xE000, 0x800
 	obj_frame_tiles gSharedMem + 0xE800, 0x800
 	obj_frame_tiles gSharedMem + 0xF000, 0x800
 	obj_frame_tiles gSharedMem + 0xF800, 0x800
 
 	.align 2
-gSpriteAnim_81E7A90:: @ 81E7A90
+sAnim_GeneralFrame0:: @ 81E7A90
 	obj_image_anim_frame 0, 0
 	obj_image_anim_end
 
 	.align 2
-gSpriteAnim_81E7A98:: @ 81E7A98
+sAnim_GeneralFrame3:: @ 81E7A98
 	obj_image_anim_frame 3, 0
 	obj_image_anim_end
 
 	.align 2
-gSpriteAffineAnim_81E7AA0:: @ 81E7AA0
+sAffineAnim_Battler_Normal:: @ 81E7AA0
 	obj_rot_scal_anim_frame 0x100, 0x100, 0, 0
 	obj_rot_scal_anim_end
 
 	.align 2
-gSpriteAffineAnim_81E7AB0:: @ 81E7AB0
+sAffineAnim_Battler_Flipped:: @ 81E7AB0
 	obj_rot_scal_anim_frame 0xFF00, 0x100, 0, 0
 	obj_rot_scal_anim_end
 
 	.align 2
-gSpriteAffineAnim_81E7AC0:: @ 81E7AC0
+sAffineAnim_Battler_Emerge:: @ 81E7AC0
 	obj_rot_scal_anim_frame 0x28, 0x28, 0, 0
 	obj_rot_scal_anim_frame 0x12, 0x12, 0, 12
 	obj_rot_scal_anim_end
 
 	.align 2
-gSpriteAffineAnim_81E7AD8:: @ 81E7AD8
+sAffineAnim_Battler_Return:: @ 81E7AD8
 	obj_rot_scal_anim_frame 0xFFFE, 0xFFFE, 0, 18
 	obj_rot_scal_anim_frame 0xFFF0, 0xFFF0, 0, 15
 	obj_rot_scal_anim_end
 
 	.align 2
-gSpriteAffineAnim_81E7AF0:: @ 81E7AF0
+sAffineAnim_Battler_HorizontalSquishLoop:: @ 81E7AF0
 	obj_rot_scal_anim_frame 0xA0, 0x100, 0, 0
 	obj_rot_scal_anim_frame 0x4, 0x0, 0, 8
 	obj_rot_scal_anim_frame 0xFFFC, 0x0, 0, 8
 	obj_rot_scal_anim_jump 1
 
 	.align 2
-gSpriteAffineAnim_81E7B10:: @ 81E7B10
+sAffineAnim_Battler_Grow:: @ 81E7B10
 	obj_rot_scal_anim_frame 0x2, 0x2, 0, 20
 	obj_rot_scal_anim_end
 
 	.align 2
-gSpriteAffineAnim_81E7B20:: @ 81E7B20
+sAffineAnim_Battler_Shrink:: @ 81E7B20
 	obj_rot_scal_anim_frame 0xFFFE, 0xFFFE, 0, 20
 	obj_rot_scal_anim_end
 
 	.align 2
-gSpriteAffineAnim_81E7B30:: @ 81E7B30
+sAffineAnim_Battler_BigToSmall:: @ 81E7B30
 	obj_rot_scal_anim_frame 0x100, 0x100, 0, 0
 	obj_rot_scal_anim_frame 0xFFF0, 0xFFF0, 0, 9
 	obj_rot_scal_anim_end
 
 	.align 2
-gSpriteAffineAnim_81E7B48:: @ 81E7B48
+sAffineAnim_Battler_GrowLarge:: @ 81E7B48
 	obj_rot_scal_anim_frame 0x4, 0x4, 0, 63
 	obj_rot_scal_anim_end
 
 	.align 2
-gSpriteAffineAnim_81E7B58:: @ 81E7B58
+sAffineAnim_Battler_TipRight:: @ 81E7B58
 	obj_rot_scal_anim_frame 0x0, 0x0, -3, 5
 	obj_rot_scal_anim_frame 0x0, 0x0, 3, 5
 	obj_rot_scal_anim_end
 
 	.align 2
-gSpriteAffineAnimTable_81E7B70:: @ 81E7B70
-	.4byte gSpriteAffineAnim_81E7AA0
-	.4byte gSpriteAffineAnim_81E7AC0
-	.4byte gSpriteAffineAnim_81E7AD8
-	.4byte gSpriteAffineAnim_81E7AF0
-	.4byte gSpriteAffineAnim_81E7B10
-	.4byte gSpriteAffineAnim_81E7B20
-	.4byte gSpriteAffineAnim_81E7B48
-	.4byte gSpriteAffineAnim_81E7B58
-	.4byte gSpriteAffineAnim_81E7B30
+gAffineAnims_BattleSpritePlayerSide:: @ 81E7B70
+	.4byte sAffineAnim_Battler_Normal
+	.4byte sAffineAnim_Battler_Emerge
+	.4byte sAffineAnim_Battler_Return
+	.4byte sAffineAnim_Battler_HorizontalSquishLoop
+	.4byte sAffineAnim_Battler_Grow
+	.4byte sAffineAnim_Battler_Shrink
+	.4byte sAffineAnim_Battler_GrowLarge
+	.4byte sAffineAnim_Battler_TipRight
+	.4byte sAffineAnim_Battler_BigToSmall
 
 	.align 2
-gSpriteAffineAnim_81E7B94:: @ 81E7B94
+sAffineAnim_Battler_SpinShrink:: @ 81E7B94
 	obj_rot_scal_anim_frame 0xFFFC, 0xFFFC, 4, 63
 	obj_rot_scal_anim_end
 
 	.align 2
-gSpriteAffineAnim_81E7BA4:: @ 81E7BA4
+sAffineAnim_Battler_TipLeft:: @ 81E7BA4
 	obj_rot_scal_anim_frame 0x0, 0x0, 3, 5
 	obj_rot_scal_anim_frame 0x0, 0x0, -3, 5
 	obj_rot_scal_anim_end
 
 	.align 2
-gSpriteAffineAnim_81E7BBC:: @ 81E7BBC
+sAffineAnim_Battler_RotateUpAndBack:: @ 81E7BBC
 	obj_rot_scal_anim_frame 0x0, 0x0, -5, 20
 	obj_rot_scal_anim_frame 0x0, 0x0, 0, 20
 	obj_rot_scal_anim_frame 0x0, 0x0, 5, 20
 	obj_rot_scal_anim_end
 
 	.align 2
-gSpriteAffineAnim_81E7BDC:: @ 81E7BDC
+sAffineAnim_Battler_Spin:: @ 81E7BDC
 	obj_rot_scal_anim_frame 0x0, 0x0, 9, 110
 	obj_rot_scal_anim_end
 
 	.align 2
 gAffineAnims_BattleSpriteOpponentSide:: @ 81E7BEC
-	.4byte gSpriteAffineAnim_81E7AA0
-	.4byte gSpriteAffineAnim_81E7AC0
-	.4byte gSpriteAffineAnim_81E7AD8
-	.4byte gSpriteAffineAnim_81E7AF0
-	.4byte gSpriteAffineAnim_81E7B10
-	.4byte gSpriteAffineAnim_81E7B20
-	.4byte gSpriteAffineAnim_81E7B94
-	.4byte gSpriteAffineAnim_81E7BA4
-	.4byte gSpriteAffineAnim_81E7BBC
-	.4byte gSpriteAffineAnim_81E7B30
-	.4byte gSpriteAffineAnim_81E7BDC
+	.4byte sAffineAnim_Battler_Normal
+	.4byte sAffineAnim_Battler_Emerge
+	.4byte sAffineAnim_Battler_Return
+	.4byte sAffineAnim_Battler_HorizontalSquishLoop
+	.4byte sAffineAnim_Battler_Grow
+	.4byte sAffineAnim_Battler_Shrink
+	.4byte sAffineAnim_Battler_SpinShrink
+	.4byte sAffineAnim_Battler_TipLeft
+	.4byte sAffineAnim_Battler_RotateUpAndBack
+	.4byte sAffineAnim_Battler_BigToSmall
+	.4byte sAffineAnim_Battler_Spin
 
 	.align 2
 gAffineAnims_BattleSpriteContest:: @ 81E7C18
-	.4byte gSpriteAffineAnim_81E7AB0
-	.4byte gSpriteAffineAnim_81E7AC0
-	.4byte gSpriteAffineAnim_81E7AD8
-	.4byte gSpriteAffineAnim_81E7AF0
-	.4byte gSpriteAffineAnim_81E7B10
-	.4byte gSpriteAffineAnim_81E7B20
-	.4byte gSpriteAffineAnim_81E7B94
-	.4byte gSpriteAffineAnim_81E7BA4
-	.4byte gSpriteAffineAnim_81E7BBC
-	.4byte gSpriteAffineAnim_81E7B30
-	.4byte gSpriteAffineAnim_81E7BDC
+	.4byte sAffineAnim_Battler_Flipped
+	.4byte sAffineAnim_Battler_Emerge
+	.4byte sAffineAnim_Battler_Return
+	.4byte sAffineAnim_Battler_HorizontalSquishLoop
+	.4byte sAffineAnim_Battler_Grow
+	.4byte sAffineAnim_Battler_Shrink
+	.4byte sAffineAnim_Battler_SpinShrink
+	.4byte sAffineAnim_Battler_TipLeft
+	.4byte sAffineAnim_Battler_RotateUpAndBack
+	.4byte sAffineAnim_Battler_BigToSmall
+	.4byte sAffineAnim_Battler_Spin
 
 	.align 2
-gSpriteAnim_81E7C44:: @ 81E7C44
+sAnim_MonPic_0:: @ 81E7C44
 	obj_image_anim_frame 0, 0
 	obj_image_anim_end
 
 	.align 2
-gSpriteAnim_81E7C4C:: @ 81E7C4C
+sAnim_MonPic_1:: @ 81E7C4C
 	obj_image_anim_frame 1, 0
 	obj_image_anim_end
 
 	.align 2
-gSpriteAnim_81E7C54:: @ 81E7C54
+sAnim_MonPic_2:: @ 81E7C54
 	obj_image_anim_frame 2, 0
 	obj_image_anim_end
 
 	.align 2
-gSpriteAnim_81E7C5C:: @ 81E7C5C
+sAnim_MonPic_3:: @ 81E7C5C
 	obj_image_anim_frame 3, 0
 	obj_image_anim_end
 
 	.align 2
-gSpriteAnimTable_81E7C64:: @ 81E7C64
-	.4byte gSpriteAnim_81E7C44
-	.4byte gSpriteAnim_81E7C4C
-	.4byte gSpriteAnim_81E7C54
-	.4byte gSpriteAnim_81E7C5C
+gAnims_MonPic:: @ 81E7C64
+	.4byte sAnim_MonPic_0
+	.4byte sAnim_MonPic_1
+	.4byte sAnim_MonPic_2
+	.4byte sAnim_MonPic_3
 
 @ 81E7C74
-	.include "data/graphics/pokemon/front_pic_coords.inc"
+	.include "src/data/pokemon_graphics/front_pic_coordinates.inc"
 
 @ 81E8354
-	.include "data/graphics/pokemon/front_pic_table.inc"
+	.include "src/data/pokemon_graphics/front_pic_table.inc"
 
 @ 81E9114
-	.include "data/graphics/pokemon/back_pic_coords.inc"
+	.include "src/data/pokemon_graphics/back_pic_coordinates.inc"
 
 @ 81E97F4
-	.include "data/graphics/pokemon/back_pic_table.inc"
+	.include "src/data/pokemon_graphics/back_pic_table.inc"
 
 @ 81EA5B4
-	.include "data/graphics/pokemon/palette_table.inc"
+	.include "src/data/pokemon_graphics/palette_table.inc"
 
 @ 81EB374
-	.include "data/graphics/pokemon/shiny_palette_table.inc"
+	.include "src/data/pokemon_graphics/shiny_palette_table.inc"
 
 	.align 2
 gSpriteAnim_81EC134:: @ 81EC134
@@ -227,433 +227,433 @@ gSpriteAnim_81EC144:: @ 81EC144
 
 	.align 2
 gSpriteAnimTable_81EC14C:: @ 81EC14C
-	.4byte gSpriteAnim_81E7A90
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
 gSpriteAnimTable_81EC150:: @ 81EC150
-	.4byte gSpriteAnim_81E7A90
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
 gSpriteAnimTable_81EC154:: @ 81EC154
-	.4byte gSpriteAnim_81E7A90
+	.4byte sAnim_GeneralFrame0
 	.4byte gSpriteAnim_81EC134
 
 	.align 2
-gSpriteAnimTable_81EC15C:: @ 81EC15C
-	.4byte gSpriteAnim_81E7A90
+sAnims_Youngster:: @ 81EC15C
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC160:: @ 81EC160
-	.4byte gSpriteAnim_81E7A90
+sAnims_Hiker:: @ 81EC160
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC164:: @ 81EC164
-	.4byte gSpriteAnim_81E7A90
+sAnims_Beauty:: @ 81EC164
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC168:: @ 81EC168
-	.4byte gSpriteAnim_81E7A90
+sAnims_Fisherman:: @ 81EC168
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
 gSpriteAnimTable_81EC16C:: @ 81EC16C
-	.4byte gSpriteAnim_81E7A90
+	.4byte sAnim_GeneralFrame0
 	.4byte gSpriteAnim_81EC13C
 
 	.align 2
 gSpriteAnimTable_81EC174:: @ 81EC174
-	.4byte gSpriteAnim_81E7A90
+	.4byte sAnim_GeneralFrame0
 	.4byte gSpriteAnim_81EC144
 
 	.align 2
-gSpriteAnimTable_81EC17C:: @ 81EC17C
-	.4byte gSpriteAnim_81E7A90
+sAnims_AquaGruntM:: @ 81EC17C
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC180:: @ 81EC180
-	.4byte gSpriteAnim_81E7A90
+sAnims_Twins:: @ 81EC180
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC184:: @ 81EC184
-	.4byte gSpriteAnim_81E7A90
+sAnims_SwimmerF:: @ 81EC184
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC188:: @ 81EC188
-	.4byte gSpriteAnim_81E7A90
+sAnims_BugCatcher:: @ 81EC188
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC18C:: @ 81EC18C
-	.4byte gSpriteAnim_81E7A90
+sAnims_SchoolKidM:: @ 81EC18C
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC190:: @ 81EC190
-	.4byte gSpriteAnim_81E7A90
+sAnims_RichBoy:: @ 81EC190
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC194:: @ 81EC194
-	.4byte gSpriteAnim_81E7A90
+sAnims_SrAndJr:: @ 81EC194
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC198:: @ 81EC198
-	.4byte gSpriteAnim_81E7A90
+sAnims_BlackBelt:: @ 81EC198
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC19C:: @ 81EC19C
-	.4byte gSpriteAnim_81E7A90
+sAnims_Wally:: @ 81EC19C
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1A0:: @ 81EC1A0
-	.4byte gSpriteAnim_81E7A90
+sAnims_AquaGruntF:: @ 81EC1A0
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1A4:: @ 81EC1A4
-	.4byte gSpriteAnim_81E7A90
+sAnims_TuberF:: @ 81EC1A4
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1A8:: @ 81EC1A8
-	.4byte gSpriteAnim_81E7A90
+sAnims_HexManiac:: @ 81EC1A8
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1AC:: @ 81EC1AC
-	.4byte gSpriteAnim_81E7A90
+sAnims_PokemonBreederF:: @ 81EC1AC
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1B0:: @ 81EC1B0
-	.4byte gSpriteAnim_81E7A90
+sAnims_MagmaGruntM:: @ 81EC1B0
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1B4:: @ 81EC1B4
-	.4byte gSpriteAnim_81E7A90
+sAnims_MagmaGruntF:: @ 81EC1B4
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1B8:: @ 81EC1B8
-	.4byte gSpriteAnim_81E7A90
+sAnims_Interviewer:: @ 81EC1B8
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1BC:: @ 81EC1BC
-	.4byte gSpriteAnim_81E7A90
+sAnims_TuberM:: @ 81EC1BC
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1C0:: @ 81EC1C0
-	.4byte gSpriteAnim_81E7A90
+sAnims_YoungCouple:: @ 81EC1C0
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1C4:: @ 81EC1C4
-	.4byte gSpriteAnim_81E7A90
+sAnims_Guitarist:: @ 81EC1C4
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1C8:: @ 81EC1C8
-	.4byte gSpriteAnim_81E7A90
+sAnims_Gentleman:: @ 81EC1C8
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1CC:: @ 81EC1CC
-	.4byte gSpriteAnim_81E7A90
+sAnims_Steven:: @ 81EC1CC
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1D0:: @ 81EC1D0
-	.4byte gSpriteAnim_81E7A90
+sAnims_MagmaLeaderMaxie:: @ 81EC1D0
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1D4:: @ 81EC1D4
-	.4byte gSpriteAnim_81E7A90
+sAnims_RunningTriathleteF:: @ 81EC1D4
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1D8:: @ 81EC1D8
-	.4byte gSpriteAnim_81E7A90
+sAnims_RunningTriathleteM:: @ 81EC1D8
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1DC:: @ 81EC1DC
-	.4byte gSpriteAnim_81E7A90
+sAnims_BattleGirl:: @ 81EC1DC
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1E0:: @ 81EC1E0
-	.4byte gSpriteAnim_81E7A90
+sAnims_CyclingTriathleteF:: @ 81EC1E0
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1E4:: @ 81EC1E4
-	.4byte gSpriteAnim_81E7A90
+sAnims_SwimmerM:: @ 81EC1E4
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1E8:: @ 81EC1E8
-	.4byte gSpriteAnim_81E7A90
+sAnims_PokefanF:: @ 81EC1E8
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1EC:: @ 81EC1EC
-	.4byte gSpriteAnim_81E7A90
+sAnims_ExpertM:: @ 81EC1EC
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1F0:: @ 81EC1F0
-	.4byte gSpriteAnim_81E7A90
+sAnims_ExpertF:: @ 81EC1F0
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1F4:: @ 81EC1F4
-	.4byte gSpriteAnim_81E7A90
+sAnims_SwimmingTriathleteM:: @ 81EC1F4
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1F8:: @ 81EC1F8
-	.4byte gSpriteAnim_81E7A90
+sAnims_SwimmingTriathleteF:: @ 81EC1F8
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC1FC:: @ 81EC1FC
-	.4byte gSpriteAnim_81E7A90
+sAnims_DragonTamer:: @ 81EC1FC
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC200:: @ 81EC200
-	.4byte gSpriteAnim_81E7A90
+sAnims_BirdKeeper:: @ 81EC200
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC204:: @ 81EC204
-	.4byte gSpriteAnim_81E7A90
+sAnims_NinjaBoy:: @ 81EC204
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC208:: @ 81EC208
-	.4byte gSpriteAnim_81E7A90
+sAnims_ParasolLady:: @ 81EC208
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC20C:: @ 81EC20C
-	.4byte gSpriteAnim_81E7A90
+sAnims_BugManiac:: @ 81EC20C
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC210:: @ 81EC210
-	.4byte gSpriteAnim_81E7A90
+sAnims_Sailor:: @ 81EC210
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC214:: @ 81EC214
-	.4byte gSpriteAnim_81E7A90
+sAnims_Collector:: @ 81EC214
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC218:: @ 81EC218
-	.4byte gSpriteAnim_81E7A90
+sAnims_PokemonBreederM:: @ 81EC218
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC21C:: @ 81EC21C
-	.4byte gSpriteAnim_81E7A90
+sAnims_PokemonRangerM:: @ 81EC21C
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC220:: @ 81EC220
-	.4byte gSpriteAnim_81E7A90
+sAnims_PokemonRangerF:: @ 81EC220
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
 gSpriteAnimTable_81EC224:: @ 81EC224
-	.4byte gSpriteAnim_81E7A90
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
 gSpriteAnimTable_81EC228:: @ 81EC228
-	.4byte gSpriteAnim_81E7A90
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC22C:: @ 81EC22C
-	.4byte gSpriteAnim_81E7A90
+sAnims_AromaLady:: @ 81EC22C
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC230:: @ 81EC230
-	.4byte gSpriteAnim_81E7A90
+sAnims_RuinManiac:: @ 81EC230
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC234:: @ 81EC234
-	.4byte gSpriteAnim_81E7A90
+sAnims_CoolTrainerM:: @ 81EC234
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC238:: @ 81EC238
-	.4byte gSpriteAnim_81E7A90
+sAnims_CoolTrainerF:: @ 81EC238
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC23C:: @ 81EC23C
-	.4byte gSpriteAnim_81E7A90
+sAnims_Pokemaniac:: @ 81EC23C
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC240:: @ 81EC240
-	.4byte gSpriteAnim_81E7A90
+sAnims_Kindler:: @ 81EC240
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC244:: @ 81EC244
-	.4byte gSpriteAnim_81E7A90
+sAnims_Camper:: @ 81EC244
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC248:: @ 81EC248
-	.4byte gSpriteAnim_81E7A90
+sAnims_Picnicker:: @ 81EC248
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC24C:: @ 81EC24C
-	.4byte gSpriteAnim_81E7A90
+sAnims_PsychicM:: @ 81EC24C
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC250:: @ 81EC250
-	.4byte gSpriteAnim_81E7A90
+sAnims_PsychicF:: @ 81EC250
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC254:: @ 81EC254
-	.4byte gSpriteAnim_81E7A90
+sAnims_SchoolKidF:: @ 81EC254
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC258:: @ 81EC258
-	.4byte gSpriteAnim_81E7A90
+sAnims_PokefanM:: @ 81EC258
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC25C:: @ 81EC25C
-	.4byte gSpriteAnim_81E7A90
+sAnims_SisAndBro:: @ 81EC25C
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC260:: @ 81EC260
-	.4byte gSpriteAnim_81E7A90
+sAnims_OldCouple:: @ 81EC260
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC264:: @ 81EC264
-	.4byte gSpriteAnim_81E7A90
+sAnims_AquaAdminM:: @ 81EC264
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC268:: @ 81EC268
-	.4byte gSpriteAnim_81E7A90
+sAnims_AquaAdminF:: @ 81EC268
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
 gSpriteAnimTable_81EC26C:: @ 81EC26C
-	.4byte gSpriteAnim_81E7A90
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC270:: @ 81EC270
-	.4byte gSpriteAnim_81E7A90
+sAnims_AquaLeaderArchie:: @ 81EC270
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC274:: @ 81EC274
-	.4byte gSpriteAnim_81E7A90
+sAnims_LeaderRoxanne:: @ 81EC274
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC278:: @ 81EC278
-	.4byte gSpriteAnim_81E7A90
+sAnims_LeaderBrawly:: @ 81EC278
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC27C:: @ 81EC27C
-	.4byte gSpriteAnim_81E7A90
+sAnims_LeaderWattson:: @ 81EC27C
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC280:: @ 81EC280
-	.4byte gSpriteAnim_81E7A90
+sAnims_LeaderFlannery:: @ 81EC280
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC284:: @ 81EC284
-	.4byte gSpriteAnim_81E7A90
+sAnims_LeaderNorman:: @ 81EC284
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC288:: @ 81EC288
-	.4byte gSpriteAnim_81E7A90
+sAnims_LeaderWinona:: @ 81EC288
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC28C:: @ 81EC28C
-	.4byte gSpriteAnim_81E7A90
+sAnims_LeaderTateAndLiza:: @ 81EC28C
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
 gSpriteAnimTable_81EC290:: @ 81EC290
-	.4byte gSpriteAnim_81E7A90
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC294:: @ 81EC294
-	.4byte gSpriteAnim_81E7A90
+sAnims_EliteFourSidney:: @ 81EC294
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC298:: @ 81EC298
-	.4byte gSpriteAnim_81E7A90
+sAnims_EliteFourPhoebe:: @ 81EC298
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC29C:: @ 81EC29C
-	.4byte gSpriteAnim_81E7A90
+sAnims_EliteFourGlacia:: @ 81EC29C
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gSpriteAnimTable_81EC2A0:: @ 81EC2A0
-	.4byte gSpriteAnim_81E7A90
+sAnims_EliteFourDrake:: @ 81EC2A0
+	.4byte sAnim_GeneralFrame0
 
 	.align 2
-gUnknown_081EC2A4:: @ 81EC2A4
+gTrainerFrontAnimsPtrTable:: @ 81EC2A4
 	.4byte gSpriteAnimTable_81EC14C
 	.4byte gSpriteAnimTable_81EC150
 	.4byte gSpriteAnimTable_81EC154
-	.4byte gSpriteAnimTable_81EC15C
-	.4byte gSpriteAnimTable_81EC160
-	.4byte gSpriteAnimTable_81EC164
-	.4byte gSpriteAnimTable_81EC168
+	.4byte sAnims_Youngster
+	.4byte sAnims_Hiker
+	.4byte sAnims_Beauty
+	.4byte sAnims_Fisherman
 	.4byte gSpriteAnimTable_81EC16C
 	.4byte gSpriteAnimTable_81EC174
-	.4byte gSpriteAnimTable_81EC17C
-	.4byte gSpriteAnimTable_81EC180
-	.4byte gSpriteAnimTable_81EC184
-	.4byte gSpriteAnimTable_81EC188
-	.4byte gSpriteAnimTable_81EC18C
-	.4byte gSpriteAnimTable_81EC190
-	.4byte gSpriteAnimTable_81EC194
-	.4byte gSpriteAnimTable_81EC198
-	.4byte gSpriteAnimTable_81EC19C
-	.4byte gSpriteAnimTable_81EC1A0
-	.4byte gSpriteAnimTable_81EC1A4
-	.4byte gSpriteAnimTable_81EC1A8
-	.4byte gSpriteAnimTable_81EC1AC
-	.4byte gSpriteAnimTable_81EC1B0
-	.4byte gSpriteAnimTable_81EC1B4
-	.4byte gSpriteAnimTable_81EC1B8
-	.4byte gSpriteAnimTable_81EC1BC
-	.4byte gSpriteAnimTable_81EC1C0
-	.4byte gSpriteAnimTable_81EC1C4
-	.4byte gSpriteAnimTable_81EC1C8
-	.4byte gSpriteAnimTable_81EC1CC
-	.4byte gSpriteAnimTable_81EC1D0
-	.4byte gSpriteAnimTable_81EC1D4
-	.4byte gSpriteAnimTable_81EC1D8
-	.4byte gSpriteAnimTable_81EC1DC
-	.4byte gSpriteAnimTable_81EC1E0
-	.4byte gSpriteAnimTable_81EC1E4
-	.4byte gSpriteAnimTable_81EC1E8
-	.4byte gSpriteAnimTable_81EC1EC
-	.4byte gSpriteAnimTable_81EC1F0
-	.4byte gSpriteAnimTable_81EC1F4
-	.4byte gSpriteAnimTable_81EC1F8
-	.4byte gSpriteAnimTable_81EC1FC
-	.4byte gSpriteAnimTable_81EC200
-	.4byte gSpriteAnimTable_81EC204
-	.4byte gSpriteAnimTable_81EC208
-	.4byte gSpriteAnimTable_81EC20C
-	.4byte gSpriteAnimTable_81EC210
-	.4byte gSpriteAnimTable_81EC214
-	.4byte gSpriteAnimTable_81EC218
-	.4byte gSpriteAnimTable_81EC21C
-	.4byte gSpriteAnimTable_81EC220
+	.4byte sAnims_AquaGruntM
+	.4byte sAnims_Twins
+	.4byte sAnims_SwimmerF
+	.4byte sAnims_BugCatcher
+	.4byte sAnims_SchoolKidM
+	.4byte sAnims_RichBoy
+	.4byte sAnims_SrAndJr
+	.4byte sAnims_BlackBelt
+	.4byte sAnims_Wally
+	.4byte sAnims_AquaGruntF
+	.4byte sAnims_TuberF
+	.4byte sAnims_HexManiac
+	.4byte sAnims_PokemonBreederF
+	.4byte sAnims_MagmaGruntM
+	.4byte sAnims_MagmaGruntF
+	.4byte sAnims_Interviewer
+	.4byte sAnims_TuberM
+	.4byte sAnims_YoungCouple
+	.4byte sAnims_Guitarist
+	.4byte sAnims_Gentleman
+	.4byte sAnims_Steven
+	.4byte sAnims_MagmaLeaderMaxie
+	.4byte sAnims_RunningTriathleteF
+	.4byte sAnims_RunningTriathleteM
+	.4byte sAnims_BattleGirl
+	.4byte sAnims_CyclingTriathleteF
+	.4byte sAnims_SwimmerM
+	.4byte sAnims_PokefanF
+	.4byte sAnims_ExpertM
+	.4byte sAnims_ExpertF
+	.4byte sAnims_SwimmingTriathleteM
+	.4byte sAnims_SwimmingTriathleteF
+	.4byte sAnims_DragonTamer
+	.4byte sAnims_BirdKeeper
+	.4byte sAnims_NinjaBoy
+	.4byte sAnims_ParasolLady
+	.4byte sAnims_BugManiac
+	.4byte sAnims_Sailor
+	.4byte sAnims_Collector
+	.4byte sAnims_PokemonBreederM
+	.4byte sAnims_PokemonRangerM
+	.4byte sAnims_PokemonRangerF
 	.4byte gSpriteAnimTable_81EC224
 	.4byte gSpriteAnimTable_81EC228
-	.4byte gSpriteAnimTable_81EC22C
-	.4byte gSpriteAnimTable_81EC230
-	.4byte gSpriteAnimTable_81EC234
-	.4byte gSpriteAnimTable_81EC238
-	.4byte gSpriteAnimTable_81EC23C
-	.4byte gSpriteAnimTable_81EC240
-	.4byte gSpriteAnimTable_81EC244
-	.4byte gSpriteAnimTable_81EC248
-	.4byte gSpriteAnimTable_81EC24C
-	.4byte gSpriteAnimTable_81EC250
-	.4byte gSpriteAnimTable_81EC254
-	.4byte gSpriteAnimTable_81EC258
-	.4byte gSpriteAnimTable_81EC25C
-	.4byte gSpriteAnimTable_81EC260
-	.4byte gSpriteAnimTable_81EC264
-	.4byte gSpriteAnimTable_81EC268
+	.4byte sAnims_AromaLady
+	.4byte sAnims_RuinManiac
+	.4byte sAnims_CoolTrainerM
+	.4byte sAnims_CoolTrainerF
+	.4byte sAnims_Pokemaniac
+	.4byte sAnims_Kindler
+	.4byte sAnims_Camper
+	.4byte sAnims_Picnicker
+	.4byte sAnims_PsychicM
+	.4byte sAnims_PsychicF
+	.4byte sAnims_SchoolKidF
+	.4byte sAnims_PokefanM
+	.4byte sAnims_SisAndBro
+	.4byte sAnims_OldCouple
+	.4byte sAnims_AquaAdminM
+	.4byte sAnims_AquaAdminF
 	.4byte gSpriteAnimTable_81EC26C
-	.4byte gSpriteAnimTable_81EC270
-	.4byte gSpriteAnimTable_81EC274
-	.4byte gSpriteAnimTable_81EC278
-	.4byte gSpriteAnimTable_81EC27C
-	.4byte gSpriteAnimTable_81EC280
-	.4byte gSpriteAnimTable_81EC284
-	.4byte gSpriteAnimTable_81EC288
-	.4byte gSpriteAnimTable_81EC28C
+	.4byte sAnims_AquaLeaderArchie
+	.4byte sAnims_LeaderRoxanne
+	.4byte sAnims_LeaderBrawly
+	.4byte sAnims_LeaderWattson
+	.4byte sAnims_LeaderFlannery
+	.4byte sAnims_LeaderNorman
+	.4byte sAnims_LeaderWinona
+	.4byte sAnims_LeaderTateAndLiza
 	.4byte gSpriteAnimTable_81EC290
-	.4byte gSpriteAnimTable_81EC294
-	.4byte gSpriteAnimTable_81EC298
-	.4byte gSpriteAnimTable_81EC29C
-	.4byte gSpriteAnimTable_81EC2A0
+	.4byte sAnims_EliteFourSidney
+	.4byte sAnims_EliteFourPhoebe
+	.4byte sAnims_EliteFourGlacia
+	.4byte sAnims_EliteFourDrake
 
 @ 81EC3F0
-	.include "data/graphics/trainers/front_pic_coords.inc"
+	.include "src/data/trainer_graphics/front_pic_coords.inc"
 
 @ 81EC53C
-	.include "data/graphics/trainers/front_pic_table.inc"
+	.include "src/data/trainer_graphics/front_pic_table.inc"
 
 @ 81EC7D4
-	.include "data/graphics/trainers/front_pic_palette_table.inc"
+	.include "src/data/trainer_graphics/front_pic_palette_table.inc"
 
 	.align 2
 gSpriteAnim_81ECA6C:: @ 81ECA6C
@@ -674,7 +674,7 @@ gSpriteAnim_81ECA84:: @ 81ECA84
 	obj_image_anim_end
 
 	.align 2
-gSpriteAnim_81ECA9C:: @ 81ECA9C
+sAnimCmd_Wally_1:: @ 81ECA9C
 	obj_image_anim_frame 0, 24
 	obj_image_anim_frame 1, 9
 	obj_image_anim_frame 2, 24
@@ -684,21 +684,21 @@ gSpriteAnim_81ECA9C:: @ 81ECA9C
 
 	.align 2
 gSpriteAnimTable_81ECAB4:: @ 81ECAB4
-	.4byte gSpriteAnim_81E7A98
+	.4byte sAnim_GeneralFrame3
 	.4byte gSpriteAnim_81ECA6C
 
 	.align 2
 gSpriteAnimTable_81ECABC:: @ 81ECABC
-	.4byte gSpriteAnim_81E7A98
+	.4byte sAnim_GeneralFrame3
 	.4byte gSpriteAnim_81ECA84
 
 	.align 2
-gSpriteAnimTable_81ECAC4:: @ 81ECAC4
-	.4byte gSpriteAnim_81E7A98
-	.4byte gSpriteAnim_81ECA9C
+sBackAnims_Wally:: @ 81ECAC4
+	.4byte sAnim_GeneralFrame3
+	.4byte sAnimCmd_Wally_1
 
 	.align 2
-gUnknown_081ECACC:: @ 81ECACC
+gTrainerBackAnimsPtrTable:: @ 81ECACC
 	.4byte gSpriteAnimTable_81ECAB4
 	.4byte gSpriteAnimTable_81ECABC
-	.4byte gSpriteAnimTable_81ECAC4
+	.4byte sBackAnims_Wally
