@@ -13,9 +13,9 @@ gSpriteAnimTable_83930A4:: @ 83930A4
 	.4byte gSpriteAnim_839309C
 
 	.align 2
-gBattleAnimSpriteTemplate_83930A8:: @ 83930A8
+gWeatherBallUpSpriteTemplate:: @ 83930A8
 	spr_template 10283, 10283, gOamData_AffineOff_ObjNormal_32x32, gSpriteAnimTable_83930A4, NULL, gDummySpriteAffineAnimTable, AnimWeatherBallUp
 
 	.align 2
-gBattleAnimSpriteTemplate_83930C0:: @ 83930C0
+gWeatherBallNormalDownSpriteTemplate:: @ 83930C0
 	spr_template 10283, 10283, gOamData_AffineOff_ObjNormal_32x32, gSpriteAnimTable_83930A4, NULL, gDummySpriteAffineAnimTable, AnimWeatherBallDown

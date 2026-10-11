@@ -2,6 +2,7 @@
 #define GUARD_GBA_DEFINES
 
 #include <stddef.h>
+#include "constants/rgb.h"
 
 #define TRUE  1
 #define FALSE 0
@@ -63,11 +64,6 @@
 #define PLTT_SIZE_8BPP PLTT_SIZEOF(256)
 
 #define PLTT_OFFSET_4BPP(n) ((n) * PLTT_SIZE_4BPP)
-
-#define RGB(r, g, b) ((r) | ((g) << 5) | ((b) << 10))
-
-#define RGB_BLACK RGB(0, 0, 0)
-#define RGB_WHITE RGB(31, 31, 31)
 
 #define WIN_RANGE(a, b) (((a) << 8) | (b))
 

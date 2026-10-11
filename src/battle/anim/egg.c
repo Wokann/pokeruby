@@ -3,7 +3,7 @@
 #include "trig.h"
 #include "random.h"
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7594 =
+const struct SpriteTemplate gEggThrowSpriteTemplate =
 {
     .tileTag = ANIM_TAG_LARGE_FRESH_EGG,
     .paletteTag = ANIM_TAG_LARGE_FRESH_EGG,

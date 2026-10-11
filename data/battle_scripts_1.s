@@ -3746,7 +3746,7 @@ BattleScript_1D94D9: @ 81D94D9
 BattleScript_FocusPunchSetUp:: @ 81D94DA
 	printstring BATTLE_TEXT_Terminator2
 	waitmessage 1
-	playanimation USER, B_ANIM_FOCUS_PUNCH_SET_UP, NULL
+	playanimation USER, B_ANIM_FOCUS_PUNCH_SETUP, NULL
 	printstring BATTLE_TEXT_TightenFocus
 	waitmessage 64
 	end2
@@ -4306,7 +4306,7 @@ BattleScript_BerryCurePrlzEnd2:: @ 81D99B6
 	end2
 
 BattleScript_BerryCureParRet:: @ 81D99BC
-	playanimation 10, B_ANIM_ITEM_EFFECT, NULL
+	playanimation 10, B_ANIM_HELD_ITEM_EFFECT, NULL
 	printstring BATTLE_TEXT_CuredParalysis
 	waitmessage 64
 	updatestatusicon SCRIPTING_BANK
@@ -4318,7 +4318,7 @@ BattleScript_BerryCurePsnEnd2:: @ 81D99CE
 	end2
 
 BattleScript_BerryCurePsnRet:: @ 81D99D4
-	playanimation 10, B_ANIM_ITEM_EFFECT, NULL
+	playanimation 10, B_ANIM_HELD_ITEM_EFFECT, NULL
 	printstring BATTLE_TEXT_CuredPoison
 	waitmessage 64
 	updatestatusicon SCRIPTING_BANK
@@ -4330,7 +4330,7 @@ BattleScript_BerryCureBrnEnd2:: @ 81D99E6
 	end2
 
 BattleScript_BerryCureBrnRet:: @ 81D99EC
-	playanimation 10, B_ANIM_ITEM_EFFECT, NULL
+	playanimation 10, B_ANIM_HELD_ITEM_EFFECT, NULL
 	printstring BATTLE_TEXT_CuredBurn
 	waitmessage 64
 	updatestatusicon SCRIPTING_BANK
@@ -4342,7 +4342,7 @@ BattleScript_BerryCureFrzEnd2:: @ 81D99FE
 	end2
 
 BattleScript_BerryCureFrzRet:: @ 81D9A04
-	playanimation 10, B_ANIM_ITEM_EFFECT, NULL
+	playanimation 10, B_ANIM_HELD_ITEM_EFFECT, NULL
 	printstring BATTLE_TEXT_CuredFreeze
 	waitmessage 64
 	updatestatusicon SCRIPTING_BANK
@@ -4354,7 +4354,7 @@ BattleScript_BerryCureSlpEnd2:: @ 81D9A16
 	end2
 
 BattleScript_BerryCureSlpRet:: @ 81D9A1C
-	playanimation 10, B_ANIM_ITEM_EFFECT, NULL
+	playanimation 10, B_ANIM_HELD_ITEM_EFFECT, NULL
 	printstring BATTLE_TEXT_CuredSleep
 	waitmessage 64
 	updatestatusicon SCRIPTING_BANK
@@ -4366,7 +4366,7 @@ BattleScript_BerryCureConfusionEnd2:: @ 81D9A2E
 	end2
 
 BattleScript_BerryCureConfusionRet:: @ 81D9A34
-	playanimation 10, B_ANIM_ITEM_EFFECT, NULL
+	playanimation 10, B_ANIM_HELD_ITEM_EFFECT, NULL
 	printstring BATTLE_TEXT_CuredConfusion
 	waitmessage 64
 	removeitem SCRIPTING_BANK
@@ -4377,7 +4377,7 @@ BattleScript_BerryCureChosenStatusEnd2:: @ 81D9A44
 	end2
 
 BattleScript_BerryCureChosenStatusRet:: @ 81D9A4A
-	playanimation 10, B_ANIM_ITEM_EFFECT, NULL
+	playanimation 10, B_ANIM_HELD_ITEM_EFFECT, NULL
 	printfromtable gBerryEffectStringIds
 	waitmessage 64
 	updatestatusicon SCRIPTING_BANK
@@ -4389,14 +4389,14 @@ BattleScript_WhiteHerbEnd2:: @ 81D9A5E
 	end2
 
 BattleScript_WhiteHerbRet:: @ 81D9A64
-	playanimation 10, B_ANIM_ITEM_EFFECT, NULL
+	playanimation 10, B_ANIM_HELD_ITEM_EFFECT, NULL
 	printstring BATTLE_TEXT_RestoredStatus
 	waitmessage 64
 	removeitem SCRIPTING_BANK
 	return
 
 BattleScript_ItemHealHP_RemoveItem:: @ 81D9A74
-	playanimation USER, B_ANIM_ITEM_EFFECT, NULL
+	playanimation USER, B_ANIM_HELD_ITEM_EFFECT, NULL
 	printstring BATTLE_TEXT_RestoredHealth
 	waitmessage 64
 	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
@@ -4406,7 +4406,7 @@ BattleScript_ItemHealHP_RemoveItem:: @ 81D9A74
 	end2
 
 BattleScript_BerryPPHealEnd2:: @ 81D9A91
-	playanimation USER, B_ANIM_ITEM_EFFECT, NULL
+	playanimation USER, B_ANIM_HELD_ITEM_EFFECT, NULL
 	printstring BATTLE_TEXT_RestoredPP
 	waitmessage 64
 	removeitem USER
@@ -4417,7 +4417,7 @@ BattleScript_ItemHealHP_End2:: @ 81D9AA1
 	end2
 
 BattleScript_ItemHealHP_Ret:: @ 81D9AA7
-	playanimation USER, B_ANIM_ITEM_EFFECT, NULL
+	playanimation USER, B_ANIM_HELD_ITEM_EFFECT, NULL
 	printstring BATTLE_TEXT_RestoredHPLittle
 	waitmessage 64
 	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
@@ -4430,13 +4430,13 @@ BattleScript_MoveSelectionChoiceBanded:: @ 81D9AC2
 	endselectionscript
 
 BattleScript_HangedOnMsg:: @ 81D9AC6
-	playanimation TARGET, B_ANIM_HANGED_ON, NULL
+	playanimation TARGET, B_ANIM_FOCUS_BAND, NULL
 	printstring BATTLE_TEXT_FocusSash
 	waitmessage 64
 	return
 
 BattleScript_BerryConfuseHealEnd2:: @ 81D9AD4
-	playanimation USER, B_ANIM_ITEM_EFFECT, NULL
+	playanimation USER, B_ANIM_HELD_ITEM_EFFECT, NULL
 	printstring BATTLE_TEXT_RestoredHealth
 	waitmessage 64
 	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
@@ -4450,7 +4450,7 @@ BattleScript_BerryConfuseHealEnd2:: @ 81D9AD4
 	end2
 
 BattleScript_BerryStatRaiseEnd2:: @ 81D9AFE
-	playanimation USER, B_ANIM_ITEM_EFFECT, NULL
+	playanimation USER, B_ANIM_HELD_ITEM_EFFECT, NULL
 	statbuffchange AFFECTS_USER | 0x1, BattleScript_1D9B0B
 
 BattleScript_1D9B0B: @ 81D9B0B
@@ -4460,7 +4460,7 @@ BattleScript_1D9B0B: @ 81D9B0B
 	end2
 
 BattleScript_BerryFocusEnergyEnd2:: @ 81D9B19
-	playanimation USER, B_ANIM_ITEM_EFFECT, NULL
+	playanimation USER, B_ANIM_HELD_ITEM_EFFECT, NULL
 	printstring BATTLE_TEXT_HustleUse
 	waitmessage 64
 	removeitem USER

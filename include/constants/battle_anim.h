@@ -320,7 +320,7 @@
 #define SOUND_PAN_ATTACKER     -64
 
 // move background ids
-#define BG_DARK_ 0 // the same as BG_DARK but is unused
+#define BG_NONE 0 // the same as BG_DARK but is unused
 #define BG_DARK 1
 #define BG_GHOST 2
 #define BG_PSYCHIC 3
@@ -337,16 +337,16 @@
 #define BG_GUILLOTINE_CONTESTS 14
 #define BG_ICE 15
 #define BG_COSMIC 16
-#define BG_SEISMICTOSS_SKUUPPERCUT 17
-#define BG_FLYING 18
-#define BG_FLYING_CONTESTS 19
-#define BG_AURORABEAM 20
+#define BG_IN_AIR 17
+#define BG_SKY 18
+#define BG_SKY_CONTESTS 19
+#define BG_AURORA 20
 #define BG_FISSURE 21
 #define BG_BUG_OPPONENT 22
 #define BG_BUG_PLAYER 23
-#define BG_SOLARBEAM_OPPONENT 24
-#define BG_SOLARBEAM_PLAYER 25
-#define BG_SOLARBEAM_CONTESTS 26
+#define BG_SOLAR_BEAM_OPPONENT 24
+#define BG_SOLAR_BEAM_PLAYER 25
+#define BG_SOLAR_BEAM_CONTESTS 26
 
 // table ids for general animations
 #define B_ANIM_CASTFORM_CHANGE          0x0
@@ -356,9 +356,9 @@
 #define B_ANIM_POKEBLOCK_THROW          0x4
 #define B_ANIM_ITEM_KNOCKOFF            0x5
 #define B_ANIM_TURN_TRAP                0x6
-#define B_ANIM_ITEM_EFFECT              0x7
+#define B_ANIM_HELD_ITEM_EFFECT         0x7
 #define B_ANIM_SMOKEBALL_ESCAPE         0x8
-#define B_ANIM_HANGED_ON                0x9
+#define B_ANIM_FOCUS_BAND               0x9
 #define B_ANIM_RAIN_CONTINUES           0xA
 #define B_ANIM_SUN_CONTINUES            0xB
 #define B_ANIM_SANDSTORM_CONTINUES      0xC

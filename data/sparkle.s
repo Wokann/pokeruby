@@ -17,5 +17,5 @@ gSpriteAnimTable_83930F0:: @ 83930F0
 	.4byte gSpriteAnim_83930D8
 
 	.align 2
-gBattleAnimSpriteTemplate_83930F4:: @ 83930F4
+gSpinningSparkleSpriteTemplate:: @ 83930F4
 	spr_template 10071, 10071, gOamData_AffineOff_ObjNormal_32x32, gSpriteAnimTable_83930F0, NULL, gDummySpriteAffineAnimTable, AnimSpinningSparkle
