@@ -13,11 +13,15 @@
 #define BERRY_FIRMNESS_VERY_HARD   4
 #define BERRY_FIRMNESS_SUPER_HARD  5
 
-#define FLAVOR_SPICY   0
-#define FLAVOR_DRY     1
-#define FLAVOR_SWEET   2
-#define FLAVOR_BITTER  3
-#define FLAVOR_SOUR    4
+enum
+{
+    FLAVOR_SPICY, // 0
+    FLAVOR_DRY, // 1
+    FLAVOR_SWEET, // 2
+    FLAVOR_BITTER, // 3
+    FLAVOR_SOUR, // 4
+};
+
 #define FLAVOR_COUNT   5
 
 #define BERRY_STAGE_NO_BERRY    0  // there is no tree planted and the soil is completely flat.

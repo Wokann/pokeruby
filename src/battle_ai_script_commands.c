@@ -3,6 +3,7 @@
 #include "constants/abilities.h"
 #include "constants/battle_ai.h"
 #include "battle.h"
+#include "battle_util.h"
 #include "battle_main.h"
 #include "constants/battle_move_effects.h"
 #include "data.h"

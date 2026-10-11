@@ -345,7 +345,7 @@ struct BattleStruct /* 0x2000000 */
     // This is changed in Emerald to support the Tabitha fight
     // in the Space Center.
     /*0x160C8*/ u8 AI_monToSwitchIntoId[2];
-    /*0x160CA*/ u8 synchroniseEffect;
+    /*0x160CA*/ u8 synchronizeMoveEffect;
     /*0x160CB*/ u8 multiplayerId;
     /*0x160CC*/ u16 usedHeldItems[MAX_BATTLERS_COUNT];
     // Space is reserved for two u16s, one for each opponent in
@@ -556,15 +556,6 @@ void BattleBeginFirstTurn(void);
 void sub_8012324(void);
 
 void debug_sub_8010800(void);
-
-// asm/battle_3.o
-u8 CheckMoveLimitations(u8 bank, u8 unusableMoves, u8 check);
-u8 DoFieldEndTurnEffects(void);
-u8 TurnBasedEffects(void);
-u8 HandleFaintedMonActions();
-u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 move);
-u8 ItemBattleEffects(u8 caseID, u8 bank, bool8 moveTurn);
-u8 GetMoveTarget(u16 move, u8 useMoveTarget);
 
 // asm/battle_4.o
 void AI_CalcDmg(u8, u8);

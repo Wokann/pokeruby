@@ -6,6 +6,7 @@
 #include "constants/moves.h"
 #include "constants/species.h"
 #include "battle.h"
+#include "battle_util.h"
 #include "berry.h"
 #include "data.h"
 #include "event_data.h"

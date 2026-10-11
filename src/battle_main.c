@@ -4095,7 +4095,7 @@ void BattleTurnPassed(void)
     {
         if (DoFieldEndTurnEffects() != 0)
             return;
-        if (TurnBasedEffects() != 0)
+        if (DoBattlerEndTurnEffects() != 0)
             return;
     }
     if (HandleFaintedMonActions() != 0)

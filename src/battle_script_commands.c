@@ -117,20 +117,15 @@ extern u8 BattleScript_MoveEffectPayDay[];
 extern u8 BattleScript_MoveEffectRecoil[];
 
 //extern functions
-u8 AtkCanceller_UnableToUseMove(void);
-void BattleScriptPush(const u8* BS_ptr);
-void BattleScriptPushCursor(void);
 static bool8 IsTwoTurnsMove(u16 move);
 static void TrySetDestinyBondToHappen(void);
 static void CheckWonderGuardAndLevitate(void);
 u8 GetBattlerPosition(u8 bank);
 u8 GetBattlerSide(u8 bank);
-u8 GetBattlerForBattleScript(u8 bankValue);
 static u8 AttacksThisTurn(u8 battler, u16 move); //Note: returns 1 if it's a charging turn, otherwise 2
 void UndoEffectsAfterFainting(void);
 void PlayBGM(u16 songID);
 extern u8 gBattleBufferB[4][0x200];
-void BattleScriptPop(void);
 u8 GetBattlerMultiplayerId(u8 bank);
 u16 GetLinkTrainerFlankId(u8 a);
 u8 GetBattlerAtPosition(u8 ID);
@@ -150,7 +145,6 @@ u8 GetCurrentMapType(void);
 u8 CalculatePlayerPartyCount(void);
 u16 Sqrt(u32 num);
 void MenuCursor_SetPos814A880(u8 a1, u8 a2);
-u8 CheckMoveLimitations(u8 bank, u8 unusable_moves, u8 flags);
 bool8 IsLinkDoubleBattle(void);
 
 //extern BattleScripts
@@ -992,7 +986,7 @@ static void atk00_attackcanceler(void)
         gBattlescriptCurrInstr = BattleScript_MoveEnd;
         return;
     }
-    if (AtkCanceller_UnableToUseMove())
+    if (AtkCanceler_UnableToUseMove())
         return;
     if (AbilityBattleEffects(ABILITYEFFECT_MOVES_BLOCK, gBattlerTarget, 0, 0, 0))
         return;
@@ -1281,7 +1275,7 @@ static void Cmd_ppreduce(void)
             break;
         case MOVE_TARGET_BOTH:
         case MOVE_TARGET_OPPONENTS_FIELD:
-            ppToDeduct += AbilityBattleEffects(ABILITYEFFECT_COUNT_OTHER_SIZE, gBattlerAttacker, ABILITY_PRESSURE, 0, 0);
+            ppToDeduct += AbilityBattleEffects(ABILITYEFFECT_COUNT_OTHER_SIDE, gBattlerAttacker, ABILITY_PRESSURE, 0, 0);
             break;
         default:
             if (gBattlerAttacker != gBattlerTarget && gBattleMons[gBattlerTarget].ability == ABILITY_PRESSURE)
@@ -2526,7 +2520,7 @@ void SetMoveEffect(bool8 primary, u8 certain)
                 || gBattleCommunication[MOVE_EFFECT_BYTE] == MOVE_EFFECT_PARALYSIS
                 || gBattleCommunication[MOVE_EFFECT_BYTE] == MOVE_EFFECT_BURN)
             {
-                gBattleStruct->synchroniseEffect = gBattleCommunication[MOVE_EFFECT_BYTE];
+                gBattleStruct->synchronizeMoveEffect = gBattleCommunication[MOVE_EFFECT_BYTE];
                 gHitMarker |= HITMARKER_SYNCHRONIZE_EFFECT;
             }
             return;
@@ -4247,7 +4241,7 @@ void atk49_moveend(void)
             gBattleStruct->moveendState++;
             break;
         case MOVEEND_ON_DAMAGE_ABILITIES: // Such as abilities activating on contact(Poison Spore, Rough Skin, etc.).
-            if (AbilityBattleEffects(ABILITYEFFECT_MOVE_END, gBattlerTarget, 0, 0, 0))
+            if (AbilityBattleEffects(ABILITYEFFECT_ON_DAMAGE, gBattlerTarget, 0, 0, 0))
                 effect = TRUE;
             gBattleStruct->moveendState++;
             break;
@@ -4701,7 +4695,6 @@ void sub_8022A3C(u8 unkown)
     MarkBattlerForControllerExec(gActiveBattler);
 }
 
-bool8 sub_8018018(u8 bank, u8, u8);
 
 static void atk50_openpartyscreen(void)
 {
@@ -4722,7 +4715,7 @@ static void atk50_openpartyscreen(void)
             {
                 if (gHitMarker & HITMARKER_FAINTED(gActiveBattler))
                 {
-                    if (sub_8018018(gActiveBattler, PARTY_SIZE, PARTY_SIZE))
+                    if (HasNoMonsToSwitch(gActiveBattler, PARTY_SIZE, PARTY_SIZE))
                     {
                         gAbsentBattlerFlags |= gBitTable[gActiveBattler];
                         gHitMarker &= ~(HITMARKER_FAINTED(gActiveBattler));
@@ -4751,7 +4744,7 @@ static void atk50_openpartyscreen(void)
             if (gBitTable[0] & hitmarkerFaintBits)
             {
                 gActiveBattler = 0;
-                if (sub_8018018(0, PARTY_SIZE, PARTY_SIZE))
+                if (HasNoMonsToSwitch(0, PARTY_SIZE, PARTY_SIZE))
                 {
                     gAbsentBattlerFlags |= gBitTable[gActiveBattler];
                     gHitMarker &= ~(HITMARKER_FAINTED(gActiveBattler));
@@ -4773,7 +4766,7 @@ static void atk50_openpartyscreen(void)
             if (gBitTable[2] & hitmarkerFaintBits && !(gBitTable[0] & hitmarkerFaintBits))
             {
                 gActiveBattler = 2;
-                if (sub_8018018(2, PARTY_SIZE, PARTY_SIZE))
+                if (HasNoMonsToSwitch(2, PARTY_SIZE, PARTY_SIZE))
                 {
                     gAbsentBattlerFlags |= gBitTable[gActiveBattler];
                     gHitMarker &= ~(HITMARKER_FAINTED(gActiveBattler));
@@ -4794,7 +4787,7 @@ static void atk50_openpartyscreen(void)
             if (gBitTable[1] & hitmarkerFaintBits)
             {
                 gActiveBattler = 1;
-                if (sub_8018018(1, PARTY_SIZE, PARTY_SIZE))
+                if (HasNoMonsToSwitch(1, PARTY_SIZE, PARTY_SIZE))
                 {
                     gAbsentBattlerFlags |= gBitTable[gActiveBattler];
                     gHitMarker &= ~(HITMARKER_FAINTED(gActiveBattler));
@@ -4816,7 +4809,7 @@ static void atk50_openpartyscreen(void)
             if (gBitTable[3] & hitmarkerFaintBits && !(gBitTable[1] & hitmarkerFaintBits))
             {
                 gActiveBattler = 3;
-                if (sub_8018018(3, PARTY_SIZE, PARTY_SIZE))
+                if (HasNoMonsToSwitch(3, PARTY_SIZE, PARTY_SIZE))
                 {
                     gAbsentBattlerFlags |= gBitTable[gActiveBattler];
                     gHitMarker &= ~(HITMARKER_FAINTED(gActiveBattler));
@@ -4879,7 +4872,7 @@ static void atk50_openpartyscreen(void)
                 if (gBitTable[2] & hitmarkerFaintBits && gBitTable[0] & hitmarkerFaintBits)
                 {
                     gActiveBattler = 2;
-                    if (sub_8018018(2, gBattleBufferB[0][1], PARTY_SIZE))
+                    if (HasNoMonsToSwitch(2, gBattleBufferB[0][1], PARTY_SIZE))
                     {
                         gAbsentBattlerFlags |= gBitTable[gActiveBattler];
                         gHitMarker &= ~(HITMARKER_FAINTED(gActiveBattler));
@@ -4895,7 +4888,7 @@ static void atk50_openpartyscreen(void)
                 if (gBitTable[3] & hitmarkerFaintBits && hitmarkerFaintBits & gBitTable[1])
                 {
                     gActiveBattler = 3;
-                    if (sub_8018018(3, gBattleBufferB[1][1], PARTY_SIZE))
+                    if (HasNoMonsToSwitch(3, gBattleBufferB[1][1], PARTY_SIZE))
                     {
                         gAbsentBattlerFlags |= gBitTable[gActiveBattler];
                         gHitMarker &= ~(HITMARKER_FAINTED(gActiveBattler));
@@ -4942,7 +4935,7 @@ static void atk50_openpartyscreen(void)
         {
             gBattlescriptCurrInstr += 6;
         }
-        else if (sub_8018018(battlerId, PARTY_SIZE, PARTY_SIZE))
+        else if (HasNoMonsToSwitch(battlerId, PARTY_SIZE, PARTY_SIZE))
         {
             gActiveBattler = battlerId;
             gAbsentBattlerFlags |= gBitTable[gActiveBattler];
