@@ -460,7 +460,7 @@ SECTIONS {
         *libc.a:*libcfunc*.o(.text);
         *libc.a:*syscalls*.o(.text);
         *libc.a:*errno*.o(.text);
-        src/libs/libisagbprn.o(.text);
+        src/libisagbprn.o(.text);
     } =0
 
     .rodata :
@@ -1224,7 +1224,7 @@ SECTIONS {
         *libgcc.a:_udivdi3.o(.rodata);
         *libc.a(.rodata);
         *libc.a(.data);
-        src/libs/libisagbprn.o(.rodata);
+        src/libisagbprn.o(.rodata);
     } =0
 
     . = 0x8D00000;

@@ -154,8 +154,8 @@ ifeq ($(MODERN),0)
 %src/agb_flash_1m.o:      CC1FLAGS := -O1 -mthumb-interwork
 %src/agb_flash_mx.o:      CC1FLAGS := -O1 -mthumb-interwork
 %src/m4a.o:               CC1 := tools/agbcc/bin/old_agbcc$(EXE)
-%src/libs/libisagbprn.o:  CC1 := tools/agbcc/bin/old_agbcc$(EXE)
-%src/libs/libisagbprn.o:  CC1FLAGS := -mthumb-interwork
+%src/libisagbprn.o:       CC1 := tools/agbcc/bin/old_agbcc$(EXE)
+%src/libisagbprn.o:       CC1FLAGS := -mthumb-interwork
 endif
 
 
