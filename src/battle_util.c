@@ -63,7 +63,7 @@ extern s32 gBattleMoveDamage;
 extern u16 gDynamicBasePower;
 extern u32 gBattleControllerExecFlags;
 extern u8 gSentPokesToOpponent[2];
-extern const u16 gSoundMovesTable[];
+extern const u16 sSoundMovesTable[];
 extern const u8 gStatusConditionString_PoisonJpn[];
 extern const u8 gStatusConditionString_SleepJpn[];
 extern const u8 gStatusConditionString_ParalysisJpn[];
@@ -1945,12 +1945,12 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
         case ABILITYEFFECT_MOVES_BLOCK: // 2
             if (gLastUsedAbility == ABILITY_SOUNDPROOF)
             {
-                for (i = 0; gSoundMovesTable[i] != 0xFFFF; i++)
+                for (i = 0; sSoundMovesTable[i] != 0xFFFF; i++)
                 {
-                    if (gSoundMovesTable[i] == move)
+                    if (sSoundMovesTable[i] == move)
                         break;
                 }
-                if (gSoundMovesTable[i] != 0xFFFF)
+                if (sSoundMovesTable[i] != 0xFFFF)
                 {
                     if (gBattleMons[gBattlerAttacker].status2 & STATUS2_MULTIPLETURNS)
                         gHitMarker |= HITMARKER_NO_PPDEDUCT;

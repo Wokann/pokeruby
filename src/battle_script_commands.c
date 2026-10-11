@@ -96,13 +96,6 @@ extern const u8 gText_BattleYesNoChoice[];
 extern u8 gPlayerPartyCount;
 extern u16 gMoveToLearn; //move to learn
 
-struct TrainerReward
-{
-    u8 trainerClass;
-    u8 baseMoney;
-};
-
-extern const struct TrainerReward gTrainerMoney[];
 extern u8* gBattleScriptsForMoveEffects[];
 extern u16 gChosenMove; //last used move in battle
 extern u8 gBattlerInMenuId;
@@ -5450,12 +5443,12 @@ static void atk5D_getmoneyreward(void)
         }
             break;
         }
-        for (; gTrainerMoney[i].trainerClass != 0xFF; i++) {
-            if (gTrainerMoney[i].trainerClass == gTrainers[gTrainerBattleOpponent_A].trainerClass)
+        for (; gTrainerMoneyTable[i].trainerClass != 0xFF; i++) {
+            if (gTrainerMoneyTable[i].trainerClass == gTrainers[gTrainerBattleOpponent_A].trainerClass)
                 break;
         }
         party4 = gTrainers[gTrainerBattleOpponent_A].party.ItemCustomMoves; // Needed to match. Has no effect.
-        money_to_give = 4 * lvl * gBattleStruct->moneyMultiplier * (gBattleTypeFlags & BATTLE_TYPE_DOUBLE ? 2 : 1) * gTrainerMoney[i].baseMoney;
+        money_to_give = 4 * lvl * gBattleStruct->moneyMultiplier * (gBattleTypeFlags & BATTLE_TYPE_DOUBLE ? 2 : 1) * gTrainerMoneyTable[i].baseMoney;
     }
 
     AddMoney(&gSaveBlock1.money, money_to_give);

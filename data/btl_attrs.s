@@ -10,7 +10,7 @@
 	.section .rodata
 
 	.align 2
-gUnknown_081F9674:: @ 81F9674
+sIntroScanlineParams16Bit:: @ 81F9674
 	.4byte REG_BG3HOFS
 	.4byte ((DMA_ENABLE | DMA_START_HBLANK | DMA_REPEAT | DMA_DEST_RELOAD) << 16) | 1
 	.4byte 1
@@ -53,7 +53,7 @@ gUnknown_081F9680:: @ 81F9680
 	.byte 0x18
 	.4byte BG_VRAM + 0xF1C4
 
-gUnknown_081F96C8:: @ 81F96C8
+sText_ShedinjaJpnName:: @ 81F96C8
 	.string "ヌケニン$" @ "Nukenin" (Shedinja)
 
 	.align 2
@@ -272,35 +272,35 @@ gUnknown_Debug_821F7F3::
 .endif @ DEBUG
 
 	.align 2
-gOamData_81F96E8:: @ 81F96E8
+gOamData_BattleSpriteOpponentSide:: @ 81F96E8
 	.2byte 0x0100
 	.2byte 0xC000
 	.2byte 0x0800
 
 	.align 2
-gOamData_81F96F0:: @ 81F96F0
+gOamData_BattleSpritePlayerSide:: @ 81F96F0
 	.2byte 0x0100
 	.2byte 0xC000
 	.2byte 0x2800
 
 	.align 2
-gSpriteAnim_81F96F8:: @ 81F96F8
+sAnim_Unused:: @ 81F96F8
 	obj_image_anim_frame 0, 5
 	obj_image_anim_jump 0
 
 	.align 2
-gSpriteAnimTable_81F9700:: @ 81F9700
-	.4byte gSpriteAnim_81F96F8
+sAnims_Unused:: @ 81F9700
+	.4byte sAnim_Unused
 
 	.align 2
-gSpriteAffineAnim_81F9704:: @ 81F9704
+sAffineAnim_Unused:: @ 81F9704
 	obj_rot_scal_anim_frame 0xFFF0, 0x0, 0, 4
 	obj_rot_scal_anim_frame 0x0, 0x0, 0, 60
 	obj_rot_scal_anim_jump 1
 
 	.align 2
-gSpriteAffineAnimTable_81F971C:: @ 81F971C
-	.4byte gSpriteAffineAnim_81F9704
+sAffineAnims_Unused:: @ 81F971C
+	.4byte sAffineAnim_Unused
 
 @ 81F9720
 	.include "data/type_effectiveness.inc"
@@ -318,7 +318,7 @@ gSpriteAffineAnimTable_81F971C:: @ 81F971C
 	.include "data/text/ability_names.inc"
 
 	.align 2
-gUnknown_081FA640:: @ 81FA640
+sTurnActionsFuncsTable:: @ 81FA640
 	.4byte HandleAction_UseMove
 	.4byte HandleAction_UseItem
 	.4byte HandleAction_Switch
@@ -335,8 +335,8 @@ gUnknown_081FA640:: @ 81FA640
 	.4byte HandleAction_NothingIsFainted
 
 	.align 2
-gUnknown_081FA678:: @ 81FA678
-	.4byte bc_8013B1C
+sEndTurnFuncsTable:: @ 81FA678
+	.4byte HandleEndTurn_ContinueBattle
 	.4byte HandleEndTurn_BattleWon
 	.4byte HandleEndTurn_BattleLost
 	.4byte HandleEndTurn_BattleLost
@@ -391,7 +391,7 @@ gUnknown_081FA71F:: @ 81FA71F
 	.byte 4, 4, 4, 4
 
 	.align 1
-gSoundMovesTable:: @ 81FA724
+sSoundMovesTable:: @ 81FA724
 	.2byte   0x2D
 	.2byte   0x2E
 	.2byte   0x2F

@@ -1,6 +1,6 @@
 @ This is a factor in how much money you get for beating a trainer.
 	.align 2
-gTrainerMoney:: @ 81F98F0
+gTrainerMoneyTable:: @ 81F98F0
 	.byte         TRAINER_CLASS_TEAM_AQUA,  5, 0, 0
 	.byte        TRAINER_CLASS_AQUA_ADMIN, 10, 0, 0
 	.byte       TRAINER_CLASS_AQUA_LEADER, 20, 0, 0

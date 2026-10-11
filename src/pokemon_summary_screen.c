@@ -1,6 +1,7 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_anim.h"
+#include "battle_main.h"
 #include "contest.h"
 #include "contest_effect.h"
 #include "data.h"
@@ -145,7 +146,6 @@ extern const u16 gSummaryPage_Info_Tilemap[];
 extern const u8 gSummaryScreen_Gfx[];
 extern const u8 gFontDefaultPalette[];
 extern const u8 gAbilityNames[][13];
-extern const u8 * const gAbilityDescriptions[];
 extern const u16 gUnknown_08E94510[];
 extern const u16 gUnknown_08E94550[];
 extern const u16 gUnknown_08E94590[];
@@ -2143,7 +2143,7 @@ static void SummaryScreen_PrintPokemonInfo(struct Pokemon *mon)
 
         ability = GetAbilityBySpecies(GetMonData(mon, MON_DATA_SPECIES), GetMonData(mon, MON_DATA_ABILITY_NUM));
         SummaryScreen_PrintColoredText(gAbilityNames[ability], 13, 11, 9);
-        Menu_PrintText(gAbilityDescriptions[ability], 11, 11);
+        Menu_PrintText(gAbilityDescriptionPointers[ability], 11, 11);
 
         PokemonSummaryScreen_PrintTrainerMemo(mon, 11, 14);
     }

@@ -72,8 +72,6 @@ struct Trainer
     /*0x24*/ union TrainerMonPtr party;
 };
 
-extern const struct OamData gOamData_81F96F0;
-extern const struct OamData gOamData_81F96E8;
 extern const struct SpriteFrameImage gBattlerPicTable_PlayerLeft[];
 extern const struct SpriteFrameImage gBattlerPicTable_OpponentLeft[];
 extern const struct SpriteFrameImage gBattlerPicTable_PlayerRight[];
@@ -101,8 +99,8 @@ extern const u8 gSpeciesNames[][11];
 extern const u8 gMoveNames[][13];
 extern const u8 gAbilityNames[][13];
 extern const u8 gTypeNames[][7];
-extern const struct ScanlineEffectParams gUnknown_081F9674;
-extern const u8 gUnknown_081F96C8[];
+extern const struct ScanlineEffectParams sIntroScanlineParams16Bit;
+extern const u8 sText_ShedinjaJpnName[];
 extern u8 *const gMonSpriteGfx_Sprite_ptr[];
 //extern u8 (*const gMonSpriteGfx_Sprite_ptr[])[0x800];
 extern const struct BattleMove gBattleMoves[];

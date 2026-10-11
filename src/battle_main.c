@@ -146,8 +146,8 @@ extern u8 gMoveResultFlags;
 extern u8 BattleScript_FocusPunchSetUp[];
 extern u16 gDynamicBasePower;
 extern u8 gCurrentTurnActionNumber;
-extern void (* const gUnknown_081FA640[])(void);
-extern void (* const gUnknown_081FA678[])(void);
+extern void (* const sTurnActionsFuncsTable[])(void);
+extern void (* const sEndTurnFuncsTable[])(void);
 extern u8* gBattlescriptCurrInstr;
 extern u8 BattleScript_LinkBattleWonOrLost[];
 extern u8 BattleScript_PayDayMoneyAndPickUpItems[];
@@ -262,8 +262,7 @@ static void CB2_InitBattleInternal(void)
         gScanlineEffectRegBuffers[0][i] = 0xFF10;
         gScanlineEffectRegBuffers[1][i] = 0xFF10;
     }
-    //ScanlineEffect_SetParams(gUnknown_081F9674.totalPoints, gUnknown_081F9674.round1Points, gUnknown_081F9674.random);
-    ScanlineEffect_SetParams(gUnknown_081F9674);
+    ScanlineEffect_SetParams(sIntroScanlineParams16Bit);
     Text_LoadWindowTemplate(&gWindowTemplate_81E6C58);
     ResetPaletteFade();
     gBattle_BG0_X = 0;
@@ -415,7 +414,7 @@ static void TryCorrectShedinjaLanguage(struct Pokemon *mon)
      && GetMonData(mon, MON_DATA_LANGUAGE) != language)
     {
         GetMonData(mon, MON_DATA_NICKNAME, nickname);
-        if (StringCompareWithoutExtCtrlCodes(nickname, gUnknown_081F96C8) == 0)
+        if (StringCompareWithoutExtCtrlCodes(nickname, sText_ShedinjaJpnName) == 0)
             SetMonData(mon, MON_DATA_LANGUAGE, &language);
     }
 }
@@ -4056,7 +4055,7 @@ void BattleBeginFirstTurn(void)
     }
 }
 
-void bc_8013B1C(void)
+void HandleEndTurn_ContinueBattle(void)
 {
     s32 i;
 
@@ -4920,12 +4919,12 @@ static void RunTurnActionsFunctions(void)
         gCurrentActionFuncId = 12;
 
     gBattleStruct->savedTurnActionNumber = gCurrentTurnActionNumber;
-    gUnknown_081FA640[gCurrentActionFuncId]();
+    sTurnActionsFuncsTable[gCurrentActionFuncId]();
 
     if (gCurrentTurnActionNumber >= gBattlersCount) // everyone did their actions, turn finished
     {
         gHitMarker &= ~(HITMARKER_PASSIVE_HP_UPDATE);
-        gBattleMainFunc = gUnknown_081FA678[gBattleOutcome & 0x7F];
+        gBattleMainFunc = sEndTurnFuncsTable[gBattleOutcome & 0x7F];
     }
     else
     {

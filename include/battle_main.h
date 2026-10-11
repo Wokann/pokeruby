@@ -1,6 +1,12 @@
 #ifndef GUARD_BATTLE_MAIN_H
 #define GUARD_BATTLE_MAIN_H
 
+struct TrainerMoney
+{
+    u8 trainerClass;
+    u8 baseMoney;
+};
+
 struct Sprite;
 
 // defines for the u8 array gTypeEffectiveness
@@ -29,5 +35,10 @@ void BeginBattleIntro(void);
 
 void HBlankCB_Battle(void);
 void VBlankCB_Battle(void);
+
+extern const struct OamData gOamData_BattleSpritePlayerSide;
+extern const struct OamData gOamData_BattleSpriteOpponentSide;
+extern const struct TrainerMoney gTrainerMoneyTable[];
+extern const u8 *const gAbilityDescriptionPointers[];
 
 #endif // GUARD_BATTLE_MAIN_H

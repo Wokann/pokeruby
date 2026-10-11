@@ -151,11 +151,11 @@ u8 GetGenderFromSpeciesAndPersonality(u16 species, u32 personality)
 
 const struct SpriteTemplate gBattlerSpriteTemplates[] =
 {
-    {0xFFFF, 0, &gOamData_81F96F0, NULL, gBattlerPicTable_PlayerLeft, gAffineAnims_BattleSpritePlayerSide, SpriteCB_BattleSpriteStartSlideLeft},
-    {0xFFFF, 0, &gOamData_81F96E8, NULL, gBattlerPicTable_OpponentLeft,
+    {0xFFFF, 0, &gOamData_BattleSpritePlayerSide, NULL, gBattlerPicTable_PlayerLeft, gAffineAnims_BattleSpritePlayerSide, SpriteCB_BattleSpriteStartSlideLeft},
+    {0xFFFF, 0, &gOamData_BattleSpriteOpponentSide, NULL, gBattlerPicTable_OpponentLeft,
         gAffineAnims_BattleSpriteOpponentSide, oac_poke_opponent},
-    {0xFFFF, 0, &gOamData_81F96F0, NULL, gBattlerPicTable_PlayerRight, gAffineAnims_BattleSpritePlayerSide, SpriteCB_BattleSpriteStartSlideLeft},
-    {0xFFFF, 0, &gOamData_81F96E8, NULL, gBattlerPicTable_OpponentRight,
+    {0xFFFF, 0, &gOamData_BattleSpritePlayerSide, NULL, gBattlerPicTable_PlayerRight, gAffineAnims_BattleSpritePlayerSide, SpriteCB_BattleSpriteStartSlideLeft},
+    {0xFFFF, 0, &gOamData_BattleSpriteOpponentSide, NULL, gBattlerPicTable_OpponentRight,
         gAffineAnims_BattleSpriteOpponentSide, oac_poke_opponent},
 };
 
