@@ -88,7 +88,7 @@ static void ChangeDefaultPartyMenuSelection(u8 spriteId, u8 menuIndex, s8 direct
 void ChangeLinkDoubleBattlePartyMenuSelection(u8 spriteId, u8 menuIndex, s8 directionPressed);
 static void SpriteCB_BouncePartyMonIcon(struct Sprite *sprite);
 static void SpriteCB_UpdatePartyMonIcon(struct Sprite *sprite);
-static void UpdateMonIconFrame_806DA44(u8 taskId, u8 monIndex, u8 c);
+static void UpdateMonIconFrame_806DA44(u8 taskId, u8 monIndex, u8 animNum);
 static u8 sub_806CA00(u8 taskId);
 static void SpriteCB_sub_806D37C(struct Sprite *sprite);
 static u8 GetMonIconSpriteId(u8 taskId, u8 monIndex);
@@ -1986,7 +1986,7 @@ static void SpriteCB_UpdatePartyMonIcon(struct Sprite *sprite)
     UpdateMonIconFrame(sprite);
 }
 
-void UpdateMonIconFrame_806DA44(u8 taskId, u8 monIndex, u8 c)
+void UpdateMonIconFrame_806DA44(u8 taskId, u8 monIndex, u8 animNum)
 {
     u8 spriteId;
 
@@ -1996,7 +1996,7 @@ void UpdateMonIconFrame_806DA44(u8 taskId, u8 monIndex, u8 c)
         gSprites[spriteId].y2 = 0;
         gSprites[spriteId].data[0] = 0;
 
-        if (!c)
+        if (!animNum)
             gSprites[spriteId].callback = SpriteCB_UpdatePartyMonIcon;
         else
             gSprites[spriteId].callback = SpriteCB_BouncePartyMonIcon;
@@ -2572,13 +2572,13 @@ void sub_806E8D0(u8 taskId, u16 b, TaskFunc c)
     gPartyMenu.pokemon = &gPlayerParty[gPartyMenu.primarySelectedMonIndex];
 }
 
-bool8 PartyMenuUpdateMonHeldItem(struct Pokemon *pkmn, u16 item)
+bool8 PartyMenuUpdateMonHeldItem(struct Pokemon *mon, u16 item)
 {
-    u8 itemData[2];
+    u8 itemBytes[2];
 
     if (ItemIsMail(item) == TRUE)
     {
-        if (GiveMailToMonByItemId(pkmn, item) == 0xFF)
+        if (GiveMailToMonByItemId(mon, item) == 0xFF)
             return TRUE;
         gUnknown_0202E8F4 = 2;
     }
@@ -2587,9 +2587,9 @@ bool8 PartyMenuUpdateMonHeldItem(struct Pokemon *pkmn, u16 item)
         gUnknown_0202E8F4 = 1;
     }
 
-    itemData[0] = item;
-    itemData[1] = item >> 8;
-    SetMonData(pkmn, MON_DATA_HELD_ITEM, itemData);
+    itemBytes[0] = item;
+    itemBytes[1] = item >> 8;
+    SetMonData(mon, MON_DATA_HELD_ITEM, itemBytes);
     return FALSE;
 }
 
@@ -2697,12 +2697,12 @@ void Task_ConfirmGiveHeldItem(u8 taskId)
     }
 }
 
-void DisplayGiveHeldItemMessage(u8 a, u16 b, u8 c)
+void DisplayGiveHeldItemMessage(u8 a, u16 item, u8 keepOpen)
 {
     GetMonNickname(&gPlayerParty[a], gStringVar1);
-    CopyItemName(b, gStringVar2);
+    CopyItemName(item, gStringVar2);
     StringExpandPlaceholders(gStringVar4, gText_PkmnWasGivenItem);
-    DisplayPartyMenuMessage(gStringVar4, c);
+    DisplayPartyMenuMessage(gStringVar4, keepOpen);
 }
 
 void PartyMenuTryGiveMonMail(u8 taskId, TaskFunc func)
@@ -2766,12 +2766,12 @@ void PartyMenuTryGiveMonHeldItem_806ECE8(u8 taskId, TaskFunc func)
     }
 }
 
-void DisplayTakeHeldItemMessage(u8 a, u16 b, u8 c)
+void DisplayTakeHeldItemMessage(u8 a, u16 item, u8 keepOpen)
 {
     GetMonNickname(&gPlayerParty[a], gStringVar1);
-    CopyItemName(b, gStringVar2);
+    CopyItemName(item, gStringVar2);
     StringExpandPlaceholders(gStringVar4, gText_ReceivedItemFromPkmn);
-    DisplayPartyMenuMessage(gStringVar4, c);
+    DisplayPartyMenuMessage(gStringVar4, keepOpen);
 }
 
 void DoTakeMail(u8 taskId, TaskFunc func)
@@ -3035,14 +3035,14 @@ void TaughtMove(u8 taskId)
     if (!gPaletteFade.active)
     {
         u8 moveIndex;
-        u16 r4;
+        u16 move;
 
         gTasks[taskId].func = TaskDummy;
         sub_806E8D0(taskId, gSpecialVar_ItemId, sub_808B508);
         moveIndex = GetMoveSlotToReplace();
-        r4 = GetMonData(gPartyMenu.pokemon, MON_DATA_MOVE1 + moveIndex);
+        move = GetMonData(gPartyMenu.pokemon, MON_DATA_MOVE1 + moveIndex);
         GetMonNickname(gPartyMenu.pokemon, gStringVar1);
-        StringCopy(gStringVar2, gMoveNames[r4]);
+        StringCopy(gStringVar2, gMoveNames[move]);
         StringExpandPlaceholders(gStringVar4, gText_12PoofForgotMove);
         DisplayPartyMenuMessage(gStringVar4, 1);
         CreateTask(TMMoveUpdateMoveSlot, 5);
@@ -3338,37 +3338,37 @@ bool8 ExecuteTableBasedItemEffect_(u8 partyMonIndex, u16 item, u8 monMoveIndex)
         return ExecuteTableBasedItemEffect(&gPlayerParty[partyMonIndex], item, partyMonIndex, monMoveIndex);
 }
 
-void UseMedicine(u8 taskId, u16 item, TaskFunc func)
+void UseMedicine(u8 taskId, u16 item, TaskFunc task)
 {
     u8 r7;
-    bool8 r9 = FALSE;
-    bool8 r0;
+    bool8 canHeal = FALSE;
+    bool8 cannotUse;
 
     gTasks[taskId].func = TaskDummy;
     r7 = CreateTask(TaskDummy, 5);
-    sub_806E8D0(taskId, item, func);
+    sub_806E8D0(taskId, item, task);
     if (!IsMedicineIneffective(gPartyMenu.pokemon, item))
     {
-        r9 = IsHPRecoveryItem(item);
-        if (r9 == TRUE)
+        canHeal = IsHPRecoveryItem(item);
+        if (canHeal == TRUE)
         {
             gTasks[r7].data[10] = GetMonData(gPartyMenu.pokemon, MON_DATA_MAX_HP);
             gTasks[r7].data[11] = GetMonData(gPartyMenu.pokemon, MON_DATA_HP);
             if (gTasks[r7].data[10] == gTasks[r7].data[11])
             {
-                r9 = FALSE;
+                canHeal = FALSE;
                 gTasks[r7].data[10] = 0;
                 gTasks[r7].data[11] = 0;
             }
         }
-        r0 = ExecuteTableBasedItemEffect_(gPartyMenu.primarySelectedMonIndex, item, 0);
+        cannotUse = ExecuteTableBasedItemEffect_(gPartyMenu.primarySelectedMonIndex, item, 0);
     }
     else
     {
-        r0 = TRUE;
+        cannotUse = TRUE;
     }
 
-    if (r0)
+    if (cannotUse)
     {
         gUnknown_0202E8F4 = 0;
         PlaySE(SE_SELECT);
@@ -3387,7 +3387,7 @@ void UseMedicine(u8 taskId, u16 item, TaskFunc func)
         statusAndPkrs = GetMonAilment(gPartyMenu.pokemon);
         if (statusAndPkrs == AILMENT_PKRS || statusAndPkrs == AILMENT_NONE)
             PartyMenuUpdateLevelOrStatus(gPartyMenu.pokemon, gPartyMenu.primarySelectedMonIndex);
-        if (r9 == TRUE)
+        if (canHeal == TRUE)
         {
             gTasks[r7].data[12] = GetMonData(gPartyMenu.pokemon, MON_DATA_HP) - gTasks[r7].data[11];
             gPartyMenu.unkC = -32768;
@@ -3513,10 +3513,10 @@ void sub_80701DC(u8 taskId)
 
 void CreateItemUseMoveMenu(u8 partyMonIndex)
 {
-    u8 r6;
+    u8 moveCount;
     u8 i;
 
-    r6 = 0;
+    moveCount = 0;
     Menu_DrawStdWindowFrame(19, 10, 29, 19);
     for (i = 0; i < 4; i++)
     {
@@ -3524,9 +3524,9 @@ void CreateItemUseMoveMenu(u8 partyMonIndex)
 
         Menu_PrintText(gMoveNames[move], 20, i * 2 + 11);
         if (move != 0)
-            r6++;
+            moveCount++;
     }
-    InitMenu(0, 20, 11, r6, 0, 9);
+    InitMenu(0, 20, 11, moveCount, 0, 9);
 }
 
 void Task_HandleItemUseMoveMenuInput(u8 taskId)
@@ -3602,7 +3602,7 @@ void ItemUseMoveMenu_HandleCancel(u8 taskId)
 
 void DoRecoverPP(u8 taskId)
 {
-    u16 r5 = 0;
+    u16 move = 0;
 
     if (ExecuteTableBasedItemEffect_(gPartyMenu.primarySelectedMonIndex, gPartyMenu.secondarySelectedIndex, gTasks[taskId].data[11]))
     {
@@ -3615,8 +3615,8 @@ void DoRecoverPP(u8 taskId)
         gUnknown_0202E8F4 = 1;
         PlaySE(SE_USE_ITEM);
         RemoveBagItem(gPartyMenu.secondarySelectedIndex, 1);
-        r5 = GetMonData(gPartyMenu.pokemon, MON_DATA_MOVE1 + gTasks[taskId].data[11]);
-        StringCopy(gStringVar1, gMoveNames[r5]);
+        move = GetMonData(gPartyMenu.pokemon, MON_DATA_MOVE1 + gTasks[taskId].data[11]);
+        StringCopy(gStringVar1, gMoveNames[move]);
         GetMedicineItemEffectMessage(gPartyMenu.secondarySelectedIndex);
         DisplayPartyMenuMessage(gStringVar4, 1);
     }
