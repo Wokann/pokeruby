@@ -701,9 +701,9 @@ u8 Menu_GetTextWindowPaletteNum(void)
     return Text_GetWindowPaletteNum(gMenuWindowPtr);
 }
 
-void Menu_GetTextColors(u8 *a1, u8 *a2, u8 *a3)
+void Menu_GetTextColors(u8 *foreground, u8 *background, u8 *shadow)
 {
-    Text_GetTextColors(gMenuWindowPtr, a1, a2, a3);
+    Text_GetTextColors(gMenuWindowPtr, foreground, background, shadow);
 }
 
 u32 Menu_UpdateWindowTextOverrideLineLength(u8 lineLength)

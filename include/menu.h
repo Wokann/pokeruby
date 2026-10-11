@@ -78,7 +78,7 @@ u8 *AlignInt2InMenuWindow(u8 *, s32, u8, u8);
 u8 *AlignStringInMenuWindow(u8 *, const u8 *, u8, u8);
 u8 GetStringWidthInMenuWindow(const u8 *s);
 u8 Menu_GetTextWindowPaletteNum(void);
-void Menu_GetTextColors(u8 *, u8 *, u8 *);
+void Menu_GetTextColors(u8 *foreground, u8 *background, u8 *shadow);
 u32 Menu_UpdateWindowTextOverrideLineLength(u8);
 struct Window * unref_sub_8072D0C(void);
 u8 InitMenu(u8 cursorSubpriority, u8 left, u8 top, u8 numChoices, u8 initialCursorPos, u8 cursorWidth);
