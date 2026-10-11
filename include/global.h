@@ -154,6 +154,12 @@ struct UCoords16
     u16 y;
 };
 
+struct Coords32
+{
+    s32 x;
+    s32 y;
+};
+
 struct UCoords32
 {
     u32 x;

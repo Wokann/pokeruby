@@ -30,12 +30,6 @@
 #include "constants/map_types.h"
 #include "constants/maps.h"
 
-struct Coords32
-{
-    s32 x;
-    s32 y;
-};
-
 extern u16 gSpecialVar_LastTalked;
 extern u16 gSpecialVar_Facing;
 extern struct LinkPlayerObjectEvent gLinkPlayerObjectEvents[];
