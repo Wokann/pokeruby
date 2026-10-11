@@ -38,7 +38,7 @@ LilycoveCity_ContestLobby_EventScript_1B7681:: @ 81B7681
 SlateportCity_ContestLobby_EventScript_1B7681:: @ 81B7681
 VerdanturfTown_ContestLobby_EventScript_1B7681:: @ 81B7681
 	lockall
-	msgbox FallarborTown_ContestLobby_Text_1B6E63, MSGBOX_YESNO
+	msgbox BerryBlender_Text_WantToMakePokeblocks, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	goto_if_eq FallarborTown_ContestLobby_EventScript_1B76A1
 	compare VAR_RESULT, NO
@@ -52,7 +52,7 @@ FallarborTown_ContestLobby_EventScript_1B76A1:: @ 81B76A1
 	specialvar VAR_RESULT, PlayerHasBerries
 	compare VAR_RESULT, 0
 	goto_if_eq FallarborTown_ContestLobby_EventScript_1B770E
-	msgbox FallarborTown_ContestLobby_Text_1B6E9D, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_Excellent, MSGBOX_DEFAULT
 	specialvar VAR_RESULT, GetFirstFreePokeblockSlot
 	compare VAR_RESULT, -1
 	goto_if_ne FallarborTown_ContestLobby_EventScript_1B76EF
@@ -61,12 +61,12 @@ FallarborTown_ContestLobby_EventScript_1B76A1:: @ 81B76A1
 	end
 
 FallarborTown_ContestLobby_EventScript_1B76E5:: @ 81B76E5
-	msgbox FallarborTown_ContestLobby_Text_1B6EA8, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_MadeOldTimerSad, MSGBOX_DEFAULT
 	releaseall
 	end
 
 FallarborTown_ContestLobby_EventScript_1B76EF:: @ 81B76EF
-	msgbox FallarborTown_ContestLobby_Text_1B6ED0, MSGBOX_YESNO
+	msgbox BerryBlender_Text_KnowHowToMakePokeblocks, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	goto_if_eq FallarborTown_ContestLobby_EventScript_1B7734
 	compare VAR_RESULT, NO
@@ -74,19 +74,19 @@ FallarborTown_ContestLobby_EventScript_1B76EF:: @ 81B76EF
 	end
 
 FallarborTown_ContestLobby_EventScript_1B770E:: @ 81B770E
-	msgbox FallarborTown_ContestLobby_Text_1B6FF0, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_DontHaveAnyBerries, MSGBOX_DEFAULT
 	dotimebasedevents
 	goto_if_set FLAG_DAILY_RECEIVED_BERRY_FALLARBOR, FallarborTown_ContestLobby_EventScript_1B774F
 	goto FallarborTown_ContestLobby_EventScript_1B7759
 	end
 
 FallarborTown_ContestLobby_EventScript_1B7726:: @ 81B7726
-	msgbox FallarborTown_ContestLobby_Text_1B6F1F, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_ExplainBerryBlending, MSGBOX_DEFAULT
 	goto FallarborTown_ContestLobby_EventScript_1B7734
 	end
 
 FallarborTown_ContestLobby_EventScript_1B7734:: @ 81B7734
-	msgbox FallarborTown_ContestLobby_Text_1B6EF1, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_LetsBerryBlender, MSGBOX_DEFAULT
 	goto FallarborTown_ContestLobby_EventScript_1B7742
 	end
 
@@ -99,24 +99,24 @@ FallarborTown_ContestLobby_EventScript_1B7742:: @ 81B7742
 	end
 
 FallarborTown_ContestLobby_EventScript_1B774F:: @ 81B774F
-	msgbox FallarborTown_ContestLobby_Text_1B70F6, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_DontHaveAnyBerriesToSpare, MSGBOX_DEFAULT
 	releaseall
 	end
 
 FallarborTown_ContestLobby_EventScript_1B7759:: @ 81B7759
-	msgbox FallarborTown_ContestLobby_Text_1B704A, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_CanHaveOneOfMyBerries, MSGBOX_DEFAULT
 	giveitem ITEM_PECHA_BERRY
 	setflag FLAG_DAILY_RECEIVED_BERRY_FALLARBOR
 	goto FallarborTown_ContestLobby_EventScript_1B76EF
 	end
 
 FallarborTown_ContestLobby_EventScript_1B7776:: @ 81B7776
-	msgbox FallarborTown_ContestLobby_Text_1B717C, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_PokeblockCaseIsFull, MSGBOX_DEFAULT
 	releaseall
 	end
 
 FallarborTown_ContestLobby_EventScript_1B7780:: @ 81B7780
-	msgbox FallarborTown_ContestLobby_Text_1B71D2, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_DontHavePokeblockCase, MSGBOX_DEFAULT
 	releaseall
 	end
 
@@ -143,7 +143,7 @@ BerryBlender_EventScript_Blender2OldMan:: @ 81B77AB
 VerdanturfTown_ContestLobby_EventScript_BerryBlendWithNPC:: @ 81B77B6
 	lock
 	faceplayer
-	msgbox FallarborTown_ContestLobby_Text_1B742F, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_LoveMakingPokeblocks, MSGBOX_DEFAULT
 	specialvar VAR_RESULT, PlayerHasBerries
 	compare VAR_RESULT, 1
 	goto_if_eq FallarborTown_ContestLobby_EventScript_1B77DC
@@ -152,7 +152,7 @@ VerdanturfTown_ContestLobby_EventScript_BerryBlendWithNPC:: @ 81B77B6
 	end
 
 FallarborTown_ContestLobby_EventScript_1B77DC:: @ 81B77DC
-	msgbox FallarborTown_ContestLobby_Text_1B7469, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_MakePokeblocksUsingBerryBlender, MSGBOX_DEFAULT
 	release
 	end
 
@@ -163,15 +163,15 @@ FallarborTown_ContestLobby_EventScript_1B77E6:: @ 81B77E6
 	end
 
 FallarborTown_ContestLobby_EventScript_1B77F6:: @ 81B77F6
-	msgbox FallarborTown_ContestLobby_Text_1B7578, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_DontHaveAnyBerriesNoneToSpare, MSGBOX_DEFAULT
 	release
 	end
 
 FallarborTown_ContestLobby_EventScript_1B7800:: @ 81B7800
-	msgbox FallarborTown_ContestLobby_Text_1B74B4, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_DontHaveAnyBerriesHaveOne, MSGBOX_DEFAULT
 	giveitem ITEM_PECHA_BERRY
 	setflag FLAG_DAILY_RECEIVED_BERRY_FALLARBOR
-	msgbox FallarborTown_ContestLobby_Text_1B753A, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_UseItToMakePokeblocksTogether, MSGBOX_DEFAULT
 	release
 	end
 
@@ -217,7 +217,7 @@ VerdanturfTown_ContestLobby_EventScript_1B783B:: @ 81B783B
 	end
 
 FallarborTown_ContestLobby_EventScript_1B7878:: @ 81B7878
-	msgbox FallarborTown_ContestLobby_Text_1B727C, MSGBOX_YESNO
+	msgbox BerryBlender_Text_SaveGameBeforeBerryBlenderLink, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	goto_if_eq FallarborTown_ContestLobby_EventScript_1B78A1
 	compare VAR_RESULT, NO
@@ -225,7 +225,7 @@ FallarborTown_ContestLobby_EventScript_1B7878:: @ 81B7878
 	end
 
 FallarborTown_ContestLobby_EventScript_1B7897:: @ 81B7897
-	msgbox FallarborTown_ContestLobby_Text_1B7381, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_NoBerriesLink, MSGBOX_DEFAULT
 	releaseall
 	end
 
@@ -233,7 +233,7 @@ FallarborTown_ContestLobby_EventScript_1B78A1:: @ 81B78A1
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq FallarborTown_ContestLobby_EventScript_1B7936
-	message FallarborTown_ContestLobby_Text_1B7304
+	message BerryBlender_Text_SearchingForFriends
 	waitmessage
 	special TryBerryBlenderLinkup
 	waitstate
@@ -250,17 +250,17 @@ FallarborTown_ContestLobby_EventScript_1B78A1:: @ 81B78A1
 	end
 
 FallarborTown_ContestLobby_EventScript_1B78F3:: @ 81B78F3
-	msgbox FallarborTown_ContestLobby_Text_1B733B, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_Player1Arrived, MSGBOX_DEFAULT
 	goto FallarborTown_ContestLobby_EventScript_1B791D
 	end
 
 FallarborTown_ContestLobby_EventScript_1B7901:: @ 81B7901
-	msgbox FallarborTown_ContestLobby_Text_1B7347, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_Player1And2Arrived, MSGBOX_DEFAULT
 	goto FallarborTown_ContestLobby_EventScript_1B791D
 	end
 
 FallarborTown_ContestLobby_EventScript_1B790F:: @ 81B790F
-	msgbox FallarborTown_ContestLobby_Text_1B735A, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_AllPlayersArrived, MSGBOX_DEFAULT
 	goto FallarborTown_ContestLobby_EventScript_1B791D
 	end
 
@@ -281,12 +281,12 @@ FallarborTown_ContestLobby_EventScript_1B7936:: @ 81B7936
 	end
 
 FallarborTown_ContestLobby_EventScript_1B7938:: @ 81B7938
-	msgbox FallarborTown_ContestLobby_Text_1B73B7, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_PokeblockCaseIsFullLink, MSGBOX_DEFAULT
 	releaseall
 	end
 
 FallarborTown_ContestLobby_EventScript_1B7942:: @ 81B7942
-	msgbox FallarborTown_ContestLobby_Text_1B73F1, MSGBOX_DEFAULT
+	msgbox BerryBlender_Text_DontHavePokeblockCaseLink, MSGBOX_DEFAULT
 	releaseall
 	end
 
