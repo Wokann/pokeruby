@@ -391,58 +391,58 @@ void LoadBattleTextboxAndBackground(void)
     #endif
 }
 
-static void sub_800DAF8(u8 taskId, u8 windowId, u8 *dest)
+static void sub_800DAF8(u8 taskId, u8 multiplayerId, u8 *dest)
 {
     int i;
-    u16 r4 = 0;
-    u16 src[6];
+    u16 pokeballStatuses = 0;
+    u16 tiles[6];
 
     if (gBattleTypeFlags & BATTLE_TYPE_MULTI) {
         if (gTasks[taskId].data[5]) {
-            switch (windowId) {
+            switch (multiplayerId) {
             case 0:
-                r4 = gTasks[taskId].data[3] & 0x3f;
+                pokeballStatuses = gTasks[taskId].data[3] & 0x3f;
                 break;
             case 1:
-                r4 = (gTasks[taskId].data[4] & 0xfc0) >> 6;
+                pokeballStatuses = (gTasks[taskId].data[4] & 0xfc0) >> 6;
                 break;
             case 2:
-                r4 = (gTasks[taskId].data[3] & 0xfc0) >> 6;
+                pokeballStatuses = (gTasks[taskId].data[3] & 0xfc0) >> 6;
                 break;
             case 3:
-                r4 = gTasks[taskId].data[4] & 0x3f;
+                pokeballStatuses = gTasks[taskId].data[4] & 0x3f;
                 break;
             }
         } else {
-            switch (windowId) {
+            switch (multiplayerId) {
             case 0:
-                r4 = gTasks[taskId].data[3] & 0x3f;
+                pokeballStatuses = gTasks[taskId].data[3] & 0x3f;
                 break;
             case 1:
-                r4 = gTasks[taskId].data[4] & 0x3f;
+                pokeballStatuses = gTasks[taskId].data[4] & 0x3f;
                 break;
             case 2:
-                r4 = (gTasks[taskId].data[3] & 0xfc0) >> 6;
+                pokeballStatuses = (gTasks[taskId].data[3] & 0xfc0) >> 6;
                 break;
             case 3:
-                r4 = (gTasks[taskId].data[4] & 0xfc0) >> 6;
+                pokeballStatuses = (gTasks[taskId].data[4] & 0xfc0) >> 6;
                 break;
             }
         }
         for (i = 0; i < 3; i++) {
-            src[i] = ((r4 & (3 << (i * 2))) >> (i * 2)) + 0x6001;
+            tiles[i] = ((pokeballStatuses & (3 << (i * 2))) >> (i * 2)) + 0x6001;
         }
-        CpuSet(src, dest, 3);
+        CpuSet(tiles, dest, 3);
     } else {
-        if (windowId == gBattleStruct->multiplayerId) {
-            r4 = gTasks[taskId].data[3];
+        if (multiplayerId == gBattleStruct->multiplayerId) {
+            pokeballStatuses = gTasks[taskId].data[3];
         } else {
-            r4 = gTasks[taskId].data[4];
+            pokeballStatuses = gTasks[taskId].data[4];
         }
         for (i = 0; i < 6; i++) {
-            src[i] = ((r4 & (3 << (i * 2))) >> (i * 2)) + 0x6001;
+            tiles[i] = ((pokeballStatuses & (3 << (i * 2))) >> (i * 2)) + 0x6001;
         }
-        CpuSet(src, dest, 6);
+        CpuSet(tiles, dest, 6);
     }
 }
 
@@ -555,7 +555,7 @@ static void PrintLinkBattleWinLossTie(void)
 
 void InitLinkBattleVsScreen(u8 taskId)
 {
-    u8 palette;
+    u8 palId;
     int i;
 
     switch (gTasks[taskId].data[0]) {
@@ -608,8 +608,8 @@ void InitLinkBattleVsScreen(u8 taskId)
         break;
 
     case 1:
-        palette = AllocSpritePalette(10000);
-        gPlttBufferUnfaded[palette * 16 + 0x10f] = gPlttBufferFaded[palette * 16 + 0x10f] = 0x7fff;
+        palId = AllocSpritePalette(10000);
+        gPlttBufferUnfaded[palId * 16 + 0x10f] = gPlttBufferFaded[palId * 16 + 0x10f] = 0x7fff;
         gBattleStruct->linkBattleVsSpriteId_V = CreateSprite(&sVsLetter_V_SpriteTemplate, 108, 80, 0);
         gBattleStruct->linkBattleVsSpriteId_S = CreateSprite(&sVsLetter_S_SpriteTemplate, 132, 80, 0);
         gSprites[gBattleStruct->linkBattleVsSpriteId_V].invisible = TRUE;
