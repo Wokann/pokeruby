@@ -386,21 +386,21 @@
 	.endm
 
 	@ unused
-	.macro if_dont_have_move, target, move, address
+	.macro if_doesnt_have_move, target, move, address
 	.byte 0x40
 	.byte \target
 	.2byte \move
 	.4byte \address
 	.endm
 
-	.macro if_move_effect target, effect, address
+	.macro if_has_move_with_effect target, effect, address
 	.byte 0x41
 	.byte \target
 	.byte \effect
 	.4byte \address
 	.endm
 
-	.macro if_not_move_effect target, effect, address
+	.macro if_doesnt_have_move_with_effect target, effect, address
 	.byte 0x42
 	.byte \target
 	.byte \effect
@@ -551,4 +551,26 @@
 	.macro if_target_not_taunted address
 	.byte 0x5d
 	.4byte \address
+	.endm
+
+@ useful script macros
+
+	.macro get_curr_move_type
+	get_type AI_TYPE_MOVE
+	.endm
+
+	.macro get_user_type1
+	get_type AI_TYPE1_USER
+	.endm
+
+	.macro get_user_type2
+	get_type AI_TYPE2_USER
+	.endm
+
+	.macro get_target_type1
+	get_type AI_TYPE1_TARGET
+	.endm
+
+	.macro get_target_type2
+	get_type AI_TYPE2_TARGET
 	.endm

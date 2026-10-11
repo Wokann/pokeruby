@@ -7881,7 +7881,7 @@ static void Cmd_copymovepermanently(void)
 static bool8 IsTwoTurnsMove(u16 move)
 {
     u8 effect = gBattleMoves[move].effect;
-    if (effect == EFFECT_SKULL_BASH || effect == EFFECT_RAZOR_WIND || effect == EFFECT_SKY_ATTACK || effect == EFFECT_SOLAR_BEAM || effect == EFFECT_FLY || effect == EFFECT_BIDE)
+    if (effect == EFFECT_SKULL_BASH || effect == EFFECT_RAZOR_WIND || effect == EFFECT_SKY_ATTACK || effect == EFFECT_SOLAR_BEAM || effect == EFFECT_SEMI_INVULNERABLE || effect == EFFECT_BIDE)
         return 1;
     else
         return 0;
@@ -7902,7 +7902,7 @@ static u8 AttacksThisTurn(u8 bank, u16 move) //Note: returns 1 if it's a chargin
     if (gBattleMoves[move].effect == EFFECT_SOLAR_BEAM && (gBattleWeather & B_WEATHER_SUN))
         return 2;
     effect = gBattleMoves[move].effect;
-    if (effect == EFFECT_SKULL_BASH || effect == EFFECT_RAZOR_WIND || effect == EFFECT_SKY_ATTACK || effect == EFFECT_SOLAR_BEAM || effect == EFFECT_FLY || effect == EFFECT_BIDE)
+    if (effect == EFFECT_SKULL_BASH || effect == EFFECT_RAZOR_WIND || effect == EFFECT_SKY_ATTACK || effect == EFFECT_SOLAR_BEAM || effect == EFFECT_SEMI_INVULNERABLE || effect == EFFECT_BIDE)
     {
         if ((gHitMarker & HITMARKER_CHARGING))
             return 1;

@@ -234,7 +234,7 @@ const struct BattleMove gBattleMoves[] = {
     },
 
     [MOVE_FLY] = {
-        .effect = EFFECT_FLY,
+        .effect = EFFECT_SEMI_INVULNERABLE,
         .power = 70,
         .type = TYPE_FLYING,
         .accuracy = 95,
@@ -1098,7 +1098,7 @@ const struct BattleMove gBattleMoves[] = {
     },
 
     [MOVE_DIG] = {
-        .effect = EFFECT_FLY,
+        .effect = EFFECT_SEMI_INVULNERABLE,
         .power = 60,
         .type = TYPE_GROUND,
         .accuracy = 100,
@@ -3498,7 +3498,7 @@ const struct BattleMove gBattleMoves[] = {
     },
 
     [MOVE_DIVE] = {
-        .effect = EFFECT_FLY,
+        .effect = EFFECT_SEMI_INVULNERABLE,
         .power = 60,
         .type = TYPE_WATER,
         .accuracy = 100,
@@ -4086,7 +4086,7 @@ const struct BattleMove gBattleMoves[] = {
     },
 
     [MOVE_BOUNCE] = {
-        .effect = EFFECT_FLY,
+        .effect = EFFECT_SEMI_INVULNERABLE,
         .power = 85,
         .type = TYPE_FLYING,
         .accuracy = 85,

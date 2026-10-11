@@ -1,3 +1,4 @@
+#include "constants/battle.h"
 #include "constants/abilities.h"
 #include "constants/battle_move_effects.h"
 #include "constants/hold_effects.h"
@@ -17,33 +18,33 @@ gBattleAI_ScriptsTable:: @ 81DA01C
 	.4byte AI_TryToFaint
 	.4byte AI_SetupFirstTurn
 	.4byte AI_Risky
-	.4byte AI_PreferStrongestMove
+	.4byte AI_PreferPowerExtremes
 	.4byte AI_PreferBatonPass
 	.4byte AI_Nothing
 	.4byte AI_HPAware
-	.4byte AI_Unknown
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
+	.4byte AI_TrySunnyDayStart
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
 	.4byte AI_Roaming
 	.4byte AI_Safari
-	.4byte AI_GoEasy
+	.4byte AI_FirstBattle
 
 AI_CheckBadMove: @ 81DA09C
 	get_how_powerful_move_is
@@ -58,17 +59,17 @@ AI_CheckBadMove: @ 81DA09C
 	goto AI_CheckBadMove_CheckSoundproof
 
 CheckIfVoltAbsorbCancelsElectric: @ 81DA0CE
-	get_type CURRENT_MOVE
+	get_curr_move_type
 	if_equal_ TYPE_ELECTRIC, Score_Minus12
 	goto AI_CheckBadMove_CheckSoundproof
 
 CheckIfWaterAbsorbCancelsWater: @ 81DA0DB
-	get_type CURRENT_MOVE
+	get_curr_move_type
 	if_equal_ TYPE_WATER, Score_Minus12
 	goto AI_CheckBadMove_CheckSoundproof
 
 CheckIfFlashFireCancelsFire: @ 81DA0E8
-	get_type CURRENT_MOVE
+	get_curr_move_type
 	if_equal_ TYPE_FIRE, Score_Minus12
 	goto AI_CheckBadMove_CheckSoundproof
 
@@ -77,7 +78,7 @@ CheckIfWonderGuardCancelsMove: @ 81DA0F5
 	goto Score_Minus10
 
 CheckIfLevitateCancelsGroundMove: @ 81DA100
-	get_type CURRENT_MOVE
+	get_curr_move_type
 	if_equal_ TYPE_GROUND, Score_Minus10
 
 AI_CheckBadMove_CheckSoundproof: @ 81DA108
@@ -209,7 +210,7 @@ AI_CBM_Sleep: @ 81DA3DE
 	get_ability AI_TARGET
 	if_equal ABILITY_INSOMNIA, Score_Minus10
 	if_equal ABILITY_VITAL_SPIRIT, Score_Minus10
-	if_status AI_TARGET, SLP | PSN | BRN | FRZ | PAR | TOX, Score_Minus10
+	if_status AI_TARGET, STATUS1_ANY, Score_Minus10
 	end
 
 AI_CBM_Explosion: @ 81DA3F7
@@ -226,12 +227,12 @@ AI_CBM_Explosion_End: @ 81DA41A
 	end
 
 AI_CBM_Nightmare: @ 81DA41B
-	if_status2 AI_TARGET, S_NIGHTMARE, Score_Minus10
-	if_not_status AI_TARGET, SLP, Score_Minus8
+	if_status2 AI_TARGET, STATUS2_NIGHTMARE, Score_Minus10
+	if_not_status AI_TARGET, STATUS1_SLEEP, Score_Minus8
 	end
 
 AI_CBM_DreamEater: @ 81DA430
-	if_not_status AI_TARGET, SLP, Score_Minus8
+	if_not_status AI_TARGET, STATUS1_SLEEP, Score_Minus8
 	if_type_effectiveness 0, Score_Minus10
 	end
 
@@ -331,19 +332,19 @@ AI_CBM_Roar: @ 81DA572
 	end
 
 AI_CBM_Toxic: @ 81DA583
-	get_type ENEMY_TYPE1
+	get_target_type1
 	if_equal TYPE_STEEL, Score_Minus10
 	if_equal TYPE_POISON, Score_Minus10
-	get_type PLAYER_TYPE1
+	get_target_type2
 	if_equal TYPE_STEEL, Score_Minus10
 	if_equal TYPE_POISON, Score_Minus10
 	get_ability AI_TARGET
 	if_equal ABILITY_IMMUNITY, Score_Minus10
-	if_status AI_TARGET, SLP | PSN | BRN | FRZ | PAR | TOX, Score_Minus10
+	if_status AI_TARGET, STATUS1_ANY, Score_Minus10
 	end
 
 AI_CBM_LightScreen: @ 81DA5B2
-	if_side_affecting AI_USER, S_LIGHT_SCREEN, Score_Minus8
+	if_side_affecting AI_USER, SIDE_STATUS_LIGHTSCREEN, Score_Minus8
 	end
 
 AI_CBM_OneHitKO: @ 81DA5BD
@@ -368,40 +369,40 @@ AI_CBM_HighRiskForDamage_End: @ 81DA5F3
 	end
 
 AI_CBM_Mist: @ 81DA5F4
-	if_side_affecting AI_USER, S_MIST, Score_Minus8
+	if_side_affecting AI_USER, SIDE_STATUS_MIST, Score_Minus8
 	end
 
 AI_CBM_FocusEnergy: @ 81DA5FF
-	if_status2 AI_USER, S_FOCUS_ENERGY, Score_Minus10
+	if_status2 AI_USER, STATUS2_FOCUS_ENERGY, Score_Minus10
 	end
 
 AI_CBM_Confuse: @ 81DA60A
-	if_status2 AI_TARGET, S_CONFUSED, Score_Minus5
+	if_status2 AI_TARGET, STATUS2_CONFUSION, Score_Minus5
 	get_ability AI_TARGET
 	if_equal ABILITY_OWN_TEMPO, Score_Minus10
 	end
 
 AI_CBM_Reflect: @ 81DA61D
-	if_side_affecting AI_USER, S_REFLECT, Score_Minus8
+	if_side_affecting AI_USER, SIDE_STATUS_REFLECT, Score_Minus8
 	end
 
 AI_CBM_Paralyze: @ 81DA628
 	if_type_effectiveness 0, Score_Minus10
 	get_ability AI_TARGET
 	if_equal ABILITY_LIMBER, Score_Minus10
-	if_status AI_TARGET, SLP | PSN | BRN | FRZ | PAR | TOX, Score_Minus10
+	if_status AI_TARGET, STATUS1_ANY, Score_Minus10
 	end
 
 AI_CBM_Substitute: @ 81DA641
-	if_status2 AI_USER, S_SUBSTITUTE, Score_Minus8
+	if_status2 AI_USER, STATUS2_SUBSTITUTE, Score_Minus8
 	if_hp_less_than AI_USER, 26, Score_Minus10
 	end
 
 AI_CBM_LeechSeed: @ 81DA653
-	if_status3 AI_TARGET, S_LEECH_SEED, Score_Minus10
-	get_type ENEMY_TYPE1
+	if_status3 AI_TARGET, STATUS3_LEECHSEED, Score_Minus10
+	get_target_type1
 	if_equal TYPE_GRASS, Score_Minus10
-	get_type PLAYER_TYPE1
+	get_target_type2
 	if_equal TYPE_GRASS, Score_Minus10
 	end
 
@@ -414,11 +415,11 @@ AI_CBM_Encore: @ 81DA676
 	end
 
 AI_CBM_DamageDuringSleep: @ 81DA67E
-	if_not_status AI_USER, SLP, Score_Minus8
+	if_not_status AI_USER, STATUS1_SLEEP, Score_Minus8
 	end
 
 AI_CBM_CantEscape: @ 81DA689
-	if_status2 AI_TARGET, S_MEAN_LOOK, Score_Minus10
+	if_status2 AI_TARGET, STATUS2_ESCAPE_PREVENTION, Score_Minus10
 	end
 
 AI_CBM_Curse: @ 81DA694
@@ -427,15 +428,15 @@ AI_CBM_Curse: @ 81DA694
 	end
 
 AI_CBM_Spikes: @ 81DA6A5
-	if_side_affecting AI_TARGET, S_SPIKES, Score_Minus10
+	if_side_affecting AI_TARGET, SIDE_STATUS_SPIKES, Score_Minus10
 	end
 
 AI_CBM_Foresight: @ 81DA6B0
-	if_status2 AI_TARGET, S_FORESIGHT, Score_Minus10
+	if_status2 AI_TARGET, STATUS2_FORESIGHT, Score_Minus10
 	end
 
 AI_CBM_PerishSong: @ 81DA6BB
-	if_status3 AI_TARGET, S_PERISH_SONG, Score_Minus10
+	if_status3 AI_TARGET, STATUS3_PERISH_SONG, Score_Minus10
 	end
 
 AI_CBM_Sandstorm: @ 81DA6C6
@@ -444,7 +445,7 @@ AI_CBM_Sandstorm: @ 81DA6C6
 	end
 
 AI_CBM_Attract: @ 81DA6CE
-	if_status2 AI_TARGET, S_INFATUATED, Score_Minus10
+	if_status2 AI_TARGET, STATUS2_INFATUATION, Score_Minus10
 	get_ability AI_TARGET
 	if_equal ABILITY_OBLIVIOUS, Score_Minus10
 	get_gender AI_USER
@@ -466,7 +467,7 @@ AI_CBM_Attract_End: @ 81DA70D
 	end
 
 AI_CBM_Safeguard: @ 81DA70E
-	if_side_affecting AI_USER, S_SAFEGUARD, Score_Minus8
+	if_side_affecting AI_USER, SIDE_STATUS_SAFEGUARD, Score_Minus8
 	end
 
 AI_CBM_Memento: @ 81DA719
@@ -489,7 +490,7 @@ AI_CBM_SunnyDay: @ 81DA73A
 	end
 
 AI_CBM_FutureSight: @ 81DA742
-	if_side_affecting AI_TARGET, S_FUTURE_SIGHT, Score_Minus10
+	if_side_affecting AI_TARGET, SIDE_STATUS_FUTUREATTACK, Score_Minus10
 	end
 
 AI_CBM_FakeOut: @ 81DA74D
@@ -514,13 +515,13 @@ AI_CBM_Hail: @ 81DA76E
 	end
 
 AI_CBM_Torment: @ 81DA776
-	if_status2 AI_TARGET, S_TORMENT, Score_Minus10
+	if_status2 AI_TARGET, STATUS2_TORMENT, Score_Minus10
 	end
 
 AI_CBM_WillOWisp: @ 81DA781
 	get_ability AI_TARGET
 	if_equal ABILITY_WATER_VEIL, Score_Minus10
-	if_status AI_TARGET, SLP | PSN | BRN | FRZ | PAR | TOX, Score_Minus10
+	if_status AI_TARGET, STATUS1_ANY, Score_Minus10
 	if_type_effectiveness 0, Score_Minus10
 	if_type_effectiveness 20, Score_Minus10
 	if_type_effectiveness 10, Score_Minus10
@@ -537,7 +538,7 @@ AI_CBM_TrickAndKnockOff: @ 81DA7AE
 	end
 
 AI_CBM_Ingrain: @ 81DA7B7
-	if_status3 AI_USER, S_ROOTED, Score_Minus10
+	if_status3 AI_USER, STATUS3_ROOTED, Score_Minus10
 	end
 
 AI_CBM_Recycle: @ 81DA7C2
@@ -546,15 +547,15 @@ AI_CBM_Recycle: @ 81DA7C2
 	end
 
 AI_CBM_Imprison: @ 81DA7CB
-	if_status3 AI_USER, S_IMPRISONED, Score_Minus10
+	if_status3 AI_USER, STATUS3_IMPRISONED_OTHERS, Score_Minus10
 	end
 
 AI_CBM_Refresh: @ 81DA7D6
-	if_not_status AI_USER, PSN | BRN | PAR | TOX, Score_Minus10
+	if_not_status AI_USER, STATUS1_POISON | STATUS1_BURN | STATUS1_PARALYSIS | STATUS1_TOXIC_POISON, Score_Minus10
 	end
 
 AI_CBM_MudSport: @ 81DA7E1
-	if_status3 AI_USER, S_MUD_SPORT, Score_Minus10
+	if_status3 AI_USER, STATUS3_MUDSPORT, Score_Minus10
 	end
 
 AI_CBM_Tickle: @ 81DA7EC
@@ -573,7 +574,7 @@ AI_CBM_BulkUp: @ 81DA80E
 	end
 
 AI_CBM_WaterSport: @ 81DA81F
-	if_status3 AI_USER, S_WATER_SPORT, Score_Minus10
+	if_status3 AI_USER, STATUS3_WATERSPORT, Score_Minus10
 	end
 
 AI_CBM_CalmMind: @ 81DA82A
@@ -717,7 +718,7 @@ AI_CheckViability: @ 81DA86D
 	if_effect EFFECT_MIRROR_COAT, AI_CV_MirrorCoat
 	if_effect EFFECT_SKULL_BASH, AI_CV_ChargeUpMove
 	if_effect EFFECT_SOLAR_BEAM, AI_CV_ChargeUpMove
-	if_effect EFFECT_FLY, AI_CV_Fly
+	if_effect EFFECT_SEMI_INVULNERABLE, AI_CV_SemiInvulnerable
 	if_effect EFFECT_SOFTBOILED, AI_CV_Heal
 	if_effect EFFECT_FAKE_OUT, AI_CV_FakeOut
 	if_effect EFFECT_SPIT_UP, AI_CV_SpitUp
@@ -755,8 +756,8 @@ AI_CheckViability: @ 81DA86D
 	end
 
 AI_CV_Sleep: @ 81DAB44
-	if_move_effect AI_TARGET, EFFECT_DREAM_EATER, AI_CV_SleepEncourageSlpDamage
-	if_move_effect AI_TARGET, EFFECT_NIGHTMARE, AI_CV_SleepEncourageSlpDamage
+	if_has_move_with_effect AI_TARGET, EFFECT_DREAM_EATER, AI_CV_SleepEncourageSlpDamage
+	if_has_move_with_effect AI_TARGET, EFFECT_NIGHTMARE, AI_CV_SleepEncourageSlpDamage
 	goto AI_CV_Sleep_End
 
 AI_CV_SleepEncourageSlpDamage: @ 81DAB57
@@ -1051,7 +1052,7 @@ AI_CV_EvasionUp2: @ 81DADF1
 	score -1
 
 AI_CV_EvasionUp3: @ 81DAE01
-	if_not_status AI_TARGET, TOX, AI_CV_EvasionUp5
+	if_not_status AI_TARGET, STATUS1_TOXIC_POISON, AI_CV_EvasionUp5
 	if_hp_more_than AI_USER, 50, AI_CV_EvasionUp4
 	if_random_less_than 80, AI_CV_EvasionUp5
 
@@ -1060,17 +1061,17 @@ AI_CV_EvasionUp4: @ 81DAE18
 	score +3
 
 AI_CV_EvasionUp5: @ 81DAE20
-	if_not_status3 AI_TARGET, S_LEECH_SEED, AI_CV_EvasionUp6
+	if_not_status3 AI_TARGET, STATUS3_LEECHSEED, AI_CV_EvasionUp6
 	if_random_less_than 70, AI_CV_EvasionUp6
 	score +3
 
 AI_CV_EvasionUp6: @ 81DAE32
-	if_not_status3 AI_USER, S_ROOTED, AI_CV_EvasionUp7
+	if_not_status3 AI_USER, STATUS3_ROOTED, AI_CV_EvasionUp7
 	if_random_less_than 128, AI_CV_EvasionUp7
 	score +2
 
 AI_CV_EvasionUp7: @ 81DAE44
-	if_not_status2 AI_TARGET, S_CURSED, AI_CV_EvasionUp8
+	if_not_status2 AI_TARGET, STATUS2_CURSED, AI_CV_EvasionUp8
 	if_random_less_than 70, AI_CV_EvasionUp8
 	score +3
 
@@ -1120,17 +1121,17 @@ AI_CV_AttackDown3: @ 81DAECF
 	score -2
 
 AI_CV_AttackDown4: @ 81DAED8
-	get_type ENEMY_TYPE1
-	if_in_bytes AI_CV_AttackDown_UnknownTypeList, AI_CV_AttackDown_End
-	get_type PLAYER_TYPE1
-	if_in_bytes AI_CV_AttackDown_UnknownTypeList, AI_CV_AttackDown_End
+	get_target_type1
+	if_in_bytes AI_CV_AttackDown_PhysicalTypeList, AI_CV_AttackDown_End
+	get_target_type2
+	if_in_bytes AI_CV_AttackDown_PhysicalTypeList, AI_CV_AttackDown_End
 	if_random_less_than 50, AI_CV_AttackDown_End
 	score -2
 
 AI_CV_AttackDown_End: @ 81DAEF6
 	end
 
-AI_CV_AttackDown_UnknownTypeList: @ 81DAEF7
+AI_CV_AttackDown_PhysicalTypeList: @ 81DAEF7
 @ why these types specifically?
 	.byte TYPE_NORMAL
 	.byte TYPE_FIGHTING
@@ -1189,9 +1190,9 @@ AI_CV_SpAtkDown3: @ 81DAF6E
 	score -2
 
 AI_CV_SpAtkDown4: @ 81DAF77
-	get_type ENEMY_TYPE1
+	get_target_type1
 	if_in_bytes AI_CV_SpAtkDown_SpecialTypeList, AI_CV_SpAtkDown_End
-	get_type PLAYER_TYPE1
+	get_target_type2
 	if_in_bytes AI_CV_SpAtkDown_SpecialTypeList, AI_CV_SpAtkDown_End
 	if_random_less_than 50, AI_CV_SpAtkDown_End
 	score -2
@@ -1239,22 +1240,22 @@ AI_CV_AccuracyDown3: @ 81DAFD6
 	score -2
 
 AI_CV_AccuracyDown4: @ 81DAFE6
-	if_not_status AI_TARGET, TOX, AI_CV_AccuracyDown5
+	if_not_status AI_TARGET, STATUS1_TOXIC_POISON, AI_CV_AccuracyDown5
 	if_random_less_than 70, AI_CV_AccuracyDown5
 	score +2
 
 AI_CV_AccuracyDown5: @ 81DAFF8
-	if_not_status3 AI_TARGET, S_LEECH_SEED, AI_CV_AccuracyDown6
+	if_not_status3 AI_TARGET, STATUS3_LEECHSEED, AI_CV_AccuracyDown6
 	if_random_less_than 70, AI_CV_AccuracyDown6
 	score +2
 
 AI_CV_AccuracyDown6: @ 81DB00A
-	if_not_status3 AI_USER, S_ROOTED, AI_CV_AccuracyDown7
+	if_not_status3 AI_USER, STATUS3_ROOTED, AI_CV_AccuracyDown7
 	if_random_less_than 128, AI_CV_AccuracyDown7
 	score +1
 
 AI_CV_AccuracyDown7: @ 81DB01C
-	if_not_status2 AI_TARGET, S_CURSED, AI_CV_AccuracyDown8
+	if_not_status2 AI_TARGET, STATUS2_CURSED, AI_CV_AccuracyDown8
 	if_random_less_than 70, AI_CV_AccuracyDown8
 	score +2
 
@@ -1392,7 +1393,7 @@ AI_CV_Heal4: @ 81DB1DA
 	goto AI_CV_Heal_End
 
 AI_CV_Heal5: @ 81DB1EE
-	if_not_move_effect AI_TARGET, EFFECT_SNATCH, AI_CV_Heal6
+	if_doesnt_have_move_with_effect AI_TARGET, EFFECT_SNATCH, AI_CV_Heal6
 	if_random_less_than 100, AI_CV_Heal_End
 
 AI_CV_Heal6: @ 81DB1FB
@@ -1414,8 +1415,8 @@ AI_CV_Toxic2: @ 81DB218
 	score -3
 
 AI_CV_Toxic3: @ 81DB227
-	if_move_effect AI_USER, EFFECT_SPECIAL_DEFENSE_UP, AI_CV_Toxic4
-	if_move_effect AI_USER, EFFECT_PROTECT, AI_CV_Toxic4
+	if_has_move_with_effect AI_USER, EFFECT_SPECIAL_DEFENSE_UP, AI_CV_Toxic4
+	if_has_move_with_effect AI_USER, EFFECT_PROTECT, AI_CV_Toxic4
 	goto AI_CV_Toxic_End
 
 AI_CV_Toxic4: @ 81DB23A
@@ -1427,9 +1428,9 @@ AI_CV_Toxic_End: @ 81DB242
 
 AI_CV_LightScreen: @ 81DB243
 	if_hp_less_than AI_USER, 50, AI_CV_LightScreen_ScoreDown2
-	get_type ENEMY_TYPE1
+	get_target_type1
 	if_in_bytes AI_CV_LightScreen_SpecialTypeList, AI_CV_LightScreen_End
-	get_type PLAYER_TYPE1
+	get_target_type2
 	if_in_bytes AI_CV_LightScreen_SpecialTypeList, AI_CV_LightScreen_End
 	if_random_less_than 50, AI_CV_LightScreen_End
 
@@ -1475,7 +1476,7 @@ AI_CV_Rest5: @ 81DB2B5
 	goto AI_CV_Rest_End
 
 AI_CV_Rest6: @ 81DB2BC
-	if_not_move_effect AI_TARGET, EFFECT_SNATCH, AI_CV_Rest7
+	if_doesnt_have_move_with_effect AI_TARGET, EFFECT_SNATCH, AI_CV_Rest7
 	if_random_less_than 50, AI_CV_Rest_End
 
 AI_CV_Rest7: @ 81DB2C9
@@ -1496,10 +1497,10 @@ AI_CV_SuperFang_End: @ 81DB2DC
 	end
 
 AI_CV_Trap: @ 81DB2DD
-	if_status AI_TARGET, TOX, AI_CV_Trap2
-	if_status2 AI_TARGET, S_CURSED, AI_CV_Trap2
-	if_status3 AI_TARGET, S_PERISH_SONG, AI_CV_Trap2
-	if_status2 AI_TARGET, S_INFATUATED, AI_CV_Trap2
+	if_status AI_TARGET, STATUS1_TOXIC_POISON, AI_CV_Trap2
+	if_status2 AI_TARGET, STATUS2_CURSED, AI_CV_Trap2
+	if_status3 AI_TARGET, STATUS3_PERISH_SONG, AI_CV_Trap2
+	if_status2 AI_TARGET, STATUS2_INFATUATION, AI_CV_Trap2
 	goto AI_CV_Trap_End
 
 AI_CV_Trap2: @ 81DB30A
@@ -1543,9 +1544,9 @@ AI_CV_Confuse_End: @ 81DB363
 
 AI_CV_Reflect: @ 81DB364
 	if_hp_less_than AI_USER, 50, AI_CV_Reflect_ScoreDown2
-	get_type ENEMY_TYPE1
+	get_target_type1
 	if_in_bytes AI_CV_Reflect_PhysicalTypeList, AI_CV_Reflect_End
-	get_type PLAYER_TYPE1
+	get_target_type2
 	if_in_bytes AI_CV_Reflect_PhysicalTypeList, AI_CV_Reflect_End
 	if_random_less_than 50, AI_CV_Reflect_End
 
@@ -1632,15 +1633,15 @@ AI_CV_Substitute4: @ 81DB412
 	goto AI_CV_Substitute_End
 
 AI_CV_Substitute5: @ 81DB44A
-	if_not_status AI_TARGET, SLP | PSN | BRN | FRZ | PAR | TOX, AI_CV_Substitute8
+	if_not_status AI_TARGET, STATUS1_ANY, AI_CV_Substitute8
 	goto AI_CV_Substitute_End
 
 AI_CV_Substitute6: @ 81DB459
-	if_not_status2 AI_TARGET, S_CONFUSED, AI_CV_Substitute8
+	if_not_status2 AI_TARGET, STATUS2_CONFUSION, AI_CV_Substitute8
 	goto AI_CV_Substitute_End
 
 AI_CV_Substitute7: @ 81DB468
-	if_status3 AI_TARGET, S_LEECH_SEED, AI_CV_Substitute_End
+	if_status3 AI_TARGET, STATUS3_LEECHSEED, AI_CV_Substitute_End
 
 AI_CV_Substitute8: @ 81DB472
 	if_random_less_than 100, AI_CV_Substitute_End
@@ -1681,9 +1682,9 @@ AI_CV_Disable_End: @ 81DB4C1
 	end
 
 AI_CV_Counter: @ 81DB4C2
-	if_status AI_TARGET, SLP, AI_CV_Counter_ScoreDown1
-	if_status2 AI_TARGET, S_INFATUATED, AI_CV_Counter_ScoreDown1
-	if_status2 AI_TARGET, S_CONFUSED, AI_CV_Counter_ScoreDown1
+	if_status AI_TARGET, STATUS1_SLEEP, AI_CV_Counter_ScoreDown1
+	if_status2 AI_TARGET, STATUS2_INFATUATION, AI_CV_Counter_ScoreDown1
+	if_status2 AI_TARGET, STATUS2_CONFUSION, AI_CV_Counter_ScoreDown1
 	if_hp_more_than AI_USER, 30, AI_CV_Counter2
 	if_random_less_than 10, AI_CV_Counter2
 	score -1
@@ -1715,9 +1716,9 @@ AI_CV_Counter5: @ 81DB52D
 	score +1
 
 AI_CV_Counter6: @ 81DB53A
-	get_type ENEMY_TYPE1
+	get_target_type1
 	if_in_bytes AI_CV_Counter_PhysicalTypeList, AI_CV_Counter_End
-	get_type PLAYER_TYPE1
+	get_target_type2
 	if_in_bytes AI_CV_Counter_PhysicalTypeList, AI_CV_Counter_End
 	if_random_less_than 50, AI_CV_Counter_End
 
@@ -1902,8 +1903,8 @@ AI_CV_Flail_End: @ 81DB680
 	end
 
 AI_CV_HealBell: @ 81DB681
-	if_status AI_TARGET, SLP | PSN | BRN | FRZ | PAR | TOX, AI_CV_HealBell_End
-	if_status_in_party AI_TARGET, SLP | PSN | BRN | FRZ | PAR | TOX, AI_CV_HealBell_End
+	if_status AI_TARGET, STATUS1_ANY, AI_CV_HealBell_End
+	if_status_in_party AI_TARGET, STATUS1_ANY, AI_CV_HealBell_End
 	score -5
 
 AI_CV_HealBell_End: @ 81DB697
@@ -1933,9 +1934,9 @@ AI_CV_Thief_EncourageItemsToSteal: @ 81DB6B3
 	.byte -1
 
 AI_CV_Curse: @ 81DB6BB
-	get_type ENEMY_TYPE2
+	get_user_type1
 	if_equal TYPE_GHOST, AI_CV_Curse4
-	get_type PLAYER_TYPE2
+	get_user_type2
 	if_equal TYPE_GHOST, AI_CV_Curse4
 	if_stat_level_more_than AI_USER, STAT_DEF, 9, AI_CV_Curse_End
 	if_random_less_than 128, AI_CV_Curse2
@@ -1962,20 +1963,20 @@ AI_CV_Curse_End: @ 81DB709
 AI_CV_Protect: @ 81DB70A
 	get_protect_count AI_USER
 	if_more_than 1, AI_CV_Protect_ScoreDown2
-	if_status AI_USER, TOX, AI_CV_Protect3
-	if_status2 AI_USER, S_CURSED, AI_CV_Protect3
-	if_status3 AI_USER, S_PERISH_SONG, AI_CV_Protect3
-	if_status2 AI_USER, S_INFATUATED, AI_CV_Protect3
-	if_status3 AI_USER, S_LEECH_SEED, AI_CV_Protect3
-	if_status3 AI_USER, S_YAWN, AI_CV_Protect3
-	if_move_effect AI_TARGET, EFFECT_RESTORE_HP, AI_CV_Protect3
-	if_move_effect AI_TARGET, EFFECT_DEFENSE_CURL, AI_CV_Protect3
-	if_status AI_TARGET, TOX, AI_CV_Protect_ScoreUp2
-	if_status2 AI_TARGET, S_CURSED, AI_CV_Protect_ScoreUp2
-	if_status3 AI_TARGET, S_PERISH_SONG, AI_CV_Protect_ScoreUp2
-	if_status2 AI_TARGET, S_INFATUATED, AI_CV_Protect_ScoreUp2
-	if_status3 AI_TARGET, S_LEECH_SEED, AI_CV_Protect_ScoreUp2
-	if_status3 AI_TARGET, S_YAWN, AI_CV_Protect_ScoreUp2
+	if_status AI_USER, STATUS1_TOXIC_POISON, AI_CV_Protect3
+	if_status2 AI_USER, STATUS2_CURSED, AI_CV_Protect3
+	if_status3 AI_USER, STATUS3_PERISH_SONG, AI_CV_Protect3
+	if_status2 AI_USER, STATUS2_INFATUATION, AI_CV_Protect3
+	if_status3 AI_USER, STATUS3_LEECHSEED, AI_CV_Protect3
+	if_status3 AI_USER, STATUS3_YAWN, AI_CV_Protect3
+	if_has_move_with_effect AI_TARGET, EFFECT_RESTORE_HP, AI_CV_Protect3
+	if_has_move_with_effect AI_TARGET, EFFECT_DEFENSE_CURL, AI_CV_Protect3
+	if_status AI_TARGET, STATUS1_TOXIC_POISON, AI_CV_Protect_ScoreUp2
+	if_status2 AI_TARGET, STATUS2_CURSED, AI_CV_Protect_ScoreUp2
+	if_status3 AI_TARGET, STATUS3_PERISH_SONG, AI_CV_Protect_ScoreUp2
+	if_status2 AI_TARGET, STATUS2_INFATUATION, AI_CV_Protect_ScoreUp2
+	if_status3 AI_TARGET, STATUS3_LEECHSEED, AI_CV_Protect_ScoreUp2
+	if_status3 AI_TARGET, STATUS3_YAWN, AI_CV_Protect_ScoreUp2
 	get_last_used_bank_move AI_TARGET
 	get_move_effect_from_result
 	if_not_equal EFFECT_LOCK_ON, AI_CV_Protect_ScoreUp2
@@ -2004,9 +2005,9 @@ AI_CV_Protect_End: @ 81DB7CA
 	end
 
 AI_CV_Foresight: @ 81DB7CB
-	get_type ENEMY_TYPE2
+	get_user_type1
 	if_equal TYPE_GHOST, AI_CV_Foresight2
-	get_type PLAYER_TYPE2
+	get_user_type2
 	if_equal TYPE_GHOST, AI_CV_Foresight2
 	if_stat_level_more_than AI_USER, STAT_EVASION, 8, AI_CV_Foresight3
 	score -2
@@ -2059,19 +2060,19 @@ AI_CV_BatonPass4: @ 81DB85D
 	goto AI_CV_BatonPass_End
 
 AI_CV_BatonPass5: @ 81DB86A
-	if_stat_level_more_than AI_USER, STAT_ATK, 7, AI_CV_BatonPass6
-	if_stat_level_more_than AI_USER, STAT_DEF, 7, AI_CV_BatonPass6
-	if_stat_level_more_than AI_USER, STAT_SPATK, 7, AI_CV_BatonPass6
-	if_stat_level_more_than AI_USER, STAT_SPDEF, 7, AI_CV_BatonPass6
-	if_stat_level_more_than AI_USER, STAT_EVASION, 7, AI_CV_BatonPass6
+	if_stat_level_more_than AI_USER, STAT_ATK, 7, AI_CV_BatonPass7
+	if_stat_level_more_than AI_USER, STAT_DEF, 7, AI_CV_BatonPass7
+	if_stat_level_more_than AI_USER, STAT_SPATK, 7, AI_CV_BatonPass7
+	if_stat_level_more_than AI_USER, STAT_SPDEF, 7, AI_CV_BatonPass7
+	if_stat_level_more_than AI_USER, STAT_EVASION, 7, AI_CV_BatonPass7
 	goto AI_CV_BatonPass_ScoreDown2
 
-AI_CV_BatonPass6: @ 81DB897
-	if_user_goes USER, AI_CV_BatonPass7
+AI_CV_BatonPass7: @ 81DB897
+	if_user_goes USER, AI_CV_BatonPass8
 	if_hp_more_than AI_USER, 60, AI_CV_BatonPass_ScoreDown2
 	goto AI_CV_BatonPass_End
 
-AI_CV_BatonPass7: @ 81DB8A9
+AI_CV_BatonPass8: @ 81DB8A9
 	if_hp_less_than AI_USER, 70, AI_CV_BatonPass_End
 
 AI_CV_BatonPass_ScoreDown2: @ 81DB8B0
@@ -2083,13 +2084,13 @@ AI_CV_BatonPass_End: @ 81DB8B2
 AI_CV_Pursuit: @ 81DB8B3
 	is_first_turn_for AI_USER
 	if_not_equal 0, AI_CV_Pursuit_End
-	get_type ENEMY_TYPE1
+	get_target_type1
 	if_equal TYPE_GHOST, AI_CV_Pursuit2
-	get_type ENEMY_TYPE1
+	get_target_type1
 	if_equal TYPE_PSYCHIC, AI_CV_Pursuit2
-	get_type PLAYER_TYPE1
+	get_target_type2
 	if_equal TYPE_GHOST, AI_CV_Pursuit2
-	get_type PLAYER_TYPE1
+	get_target_type2
 	if_equal TYPE_PSYCHIC, AI_CV_Pursuit2
 	goto AI_CV_Pursuit_End
 
@@ -2184,9 +2185,9 @@ AI_CV_PsychUp_End: @ 81DB9CC
 	end
 
 AI_CV_MirrorCoat: @ 81DB9CD
-	if_status AI_TARGET, SLP, AI_CV_MirrorCoat_ScoreDown1
-	if_status2 AI_TARGET, S_INFATUATED, AI_CV_MirrorCoat_ScoreDown1
-	if_status2 AI_TARGET, S_CONFUSED, AI_CV_MirrorCoat_ScoreDown1
+	if_status AI_TARGET, STATUS1_SLEEP, AI_CV_MirrorCoat_ScoreDown1
+	if_status2 AI_TARGET, STATUS2_INFATUATION, AI_CV_MirrorCoat_ScoreDown1
+	if_status2 AI_TARGET, STATUS2_CONFUSION, AI_CV_MirrorCoat_ScoreDown1
 	if_hp_more_than AI_USER, 30, AI_CV_MirrorCoat2
 	if_random_less_than 10, AI_CV_MirrorCoat2
 	score -1
@@ -2218,9 +2219,9 @@ AI_CV_MirrorCoat5: @ 81DBA38
 	score +1
 
 AI_CV_MirrorCoat6: @ 81DBA45
-	get_type ENEMY_TYPE1
+	get_target_type1
 	if_in_bytes AI_CV_MirrorCoat_SpecialTypeList, AI_CV_MirrorCoat_End
-	get_type PLAYER_TYPE1
+	get_target_type2
 	if_in_bytes AI_CV_MirrorCoat_SpecialTypeList, AI_CV_MirrorCoat_End
 	if_random_less_than 50, AI_CV_MirrorCoat_End
 
@@ -2244,7 +2245,7 @@ AI_CV_MirrorCoat_SpecialTypeList: @ 81DBA64
 AI_CV_ChargeUpMove: @ 81DBA6D
 	if_type_effectiveness 10, AI_CV_ChargeUpMove_ScoreDown2
 	if_type_effectiveness 20, AI_CV_ChargeUpMove_ScoreDown2
-	if_move_effect AI_TARGET, EFFECT_PROTECT, AI_CV_ChargeUpMove_ScoreDown2
+	if_has_move_with_effect AI_TARGET, EFFECT_PROTECT, AI_CV_ChargeUpMove_ScoreDown2
 	if_hp_more_than AI_USER, 38, AI_CV_ChargeUpMove_End
 	score -1
 	goto AI_CV_ChargeUpMove_End
@@ -2255,48 +2256,48 @@ AI_CV_ChargeUpMove_ScoreDown2: @ 81DBA8E
 AI_CV_ChargeUpMove_End: @ 81DBA90
 	end
 
-AI_CV_Fly: @ 81DBA91
-	if_not_move_effect AI_TARGET, EFFECT_PROTECT, AI_CV_Fly2
+AI_CV_SemiInvulnerable: @ 81DBA91
+	if_doesnt_have_move_with_effect AI_TARGET, EFFECT_PROTECT, AI_CV_SemiInvulnerable2
 	score -1
-	goto AI_CV_Fly_End
+	goto AI_CV_SemiInvulnerable_End
 
-AI_CV_Fly2: @ 81DBA9F
-	if_status AI_TARGET, TOX, AI_CV_Fly6
-	if_status2 AI_TARGET, S_CURSED, AI_CV_Fly6
-	if_status3 AI_TARGET, S_LEECH_SEED, AI_CV_Fly6
+AI_CV_SemiInvulnerable2: @ 81DBA9F
+	if_status AI_TARGET, STATUS1_TOXIC_POISON, AI_CV_SemiInvulnerable_TryEncourage
+	if_status2 AI_TARGET, STATUS2_CURSED, AI_CV_SemiInvulnerable_TryEncourage
+	if_status3 AI_TARGET, STATUS3_LEECHSEED, AI_CV_SemiInvulnerable_TryEncourage
 	get_weather
-	if_equal AI_WEATHER_HAIL, AI_CV_Fly3
-	if_equal AI_WEATHER_SANDSTORM, AI_CV_Fly4
-	goto AI_CV_Fly5
+	if_equal AI_WEATHER_HAIL, AI_CV_SemiInvulnerable_CheckSandstormTypes
+	if_equal AI_WEATHER_SANDSTORM, AI_CV_SemiInvulnerable_CheckIceType
+	goto AI_CV_SemiInvulnerable5
 
-AI_CV_Fly3: @ 81DBACF
-	get_type ENEMY_TYPE2
-	if_in_bytes AI_CV_Fly_TypesToEncourage, AI_CV_Fly6
-	get_type PLAYER_TYPE2
-	if_in_bytes AI_CV_Fly_TypesToEncourage, AI_CV_Fly6
-	goto AI_CV_Fly5
+AI_CV_SemiInvulnerable_CheckSandstormTypes: @ 81DBACF
+	get_user_type1
+	if_in_bytes AI_CV_SandstormResistantTypes, AI_CV_SemiInvulnerable_TryEncourage
+	get_user_type2
+	if_in_bytes AI_CV_SandstormResistantTypes, AI_CV_SemiInvulnerable_TryEncourage
+	goto AI_CV_SemiInvulnerable5
 
-AI_CV_Fly4: @ 81DBAEA
-	get_type ENEMY_TYPE2
-	if_equal TYPE_ICE, AI_CV_Fly6
-	get_type PLAYER_TYPE2
-	if_equal TYPE_ICE, AI_CV_Fly6
+AI_CV_SemiInvulnerable_CheckIceType: @ 81DBAEA
+	get_user_type1
+	if_equal TYPE_ICE, AI_CV_SemiInvulnerable_TryEncourage
+	get_user_type2
+	if_equal TYPE_ICE, AI_CV_SemiInvulnerable_TryEncourage
 
-AI_CV_Fly5: @ 81DBAFA
-	if_user_goes USER, AI_CV_Fly_End
+AI_CV_SemiInvulnerable5: @ 81DBAFA
+	if_user_goes USER, AI_CV_SemiInvulnerable_End
 	get_last_used_bank_move AI_TARGET
 	get_move_effect_from_result
-	if_not_equal EFFECT_LOCK_ON, AI_CV_Fly6
-	goto AI_CV_Fly_End
+	if_not_equal EFFECT_LOCK_ON, AI_CV_SemiInvulnerable_TryEncourage
+	goto AI_CV_SemiInvulnerable_End
 
-AI_CV_Fly6: @ 81DBB0E
-	if_random_less_than 80, AI_CV_Fly_End
+AI_CV_SemiInvulnerable_TryEncourage: @ 81DBB0E
+	if_random_less_than 80, AI_CV_SemiInvulnerable_End
 	score +1
 
-AI_CV_Fly_End: @ 81DBB16
+AI_CV_SemiInvulnerable_End: @ 81DBB16
 	end
 
-AI_CV_Fly_TypesToEncourage: @ 81DBB17
+AI_CV_SandstormResistantTypes: @ 81DBB17
 	.byte TYPE_GROUND
 	.byte TYPE_ROCK
 	.byte TYPE_STEEL
@@ -2334,7 +2335,7 @@ AI_CV_Hail_End: @ 81DBB57
 	end
 
 AI_CV_Facade: @ 81DBB58
-	if_not_status AI_TARGET, PSN | BRN | PAR | TOX, AI_CV_Facade_End
+	if_not_status AI_TARGET, STATUS1_POISON | STATUS1_BURN | STATUS1_PARALYSIS | STATUS1_TOXIC_POISON, AI_CV_Facade_End
 	score +1
 
 AI_CV_Facade_End: @ 81DBB64
@@ -2343,9 +2344,9 @@ AI_CV_Facade_End: @ 81DBB64
 AI_CV_FocusPunch: @ 81DBB65
 	if_type_effectiveness 10, AI_CV_FocusPunch2
 	if_type_effectiveness 20, AI_CV_FocusPunch2
-	if_status AI_TARGET, SLP, AI_CV_FocusPunch_ScoreUp1
-	if_status2 AI_TARGET, S_INFATUATED, AI_CV_FocusPunch3
-	if_status2 AI_TARGET, S_CONFUSED, AI_CV_FocusPunch3
+	if_status AI_TARGET, STATUS1_SLEEP, AI_CV_FocusPunch_ScoreUp1
+	if_status2 AI_TARGET, STATUS2_INFATUATION, AI_CV_FocusPunch3
+	if_status2 AI_TARGET, STATUS2_CONFUSION, AI_CV_FocusPunch3
 	is_first_turn_for AI_USER
 	if_not_equal 0, AI_CV_FocusPunch_End
 	if_random_less_than 100, AI_CV_FocusPunch_End
@@ -2366,7 +2367,7 @@ AI_CV_FocusPunch_End: @ 81DBBB3
 	end
 
 AI_CV_SmellingSalt: @ 81DBBB4
-	if_status AI_TARGET, PAR, AI_CV_SmellingSalt_ScoreUp1
+	if_status AI_TARGET, STATUS1_PARALYSIS, AI_CV_SmellingSalt_ScoreUp1
 	goto AI_CV_SmellingSalt_End
 
 AI_CV_SmellingSalt_ScoreUp1: @ 81DBBC3
@@ -2508,9 +2509,9 @@ AI_CV_Recycle_ItemsToEncourage: @ 81DBCC6
 	.byte -1
 
 AI_CV_Revenge: @ 81DBCCA
-	if_status AI_TARGET, SLP, AI_CV_Revenge_ScoreDown2
-	if_status2 AI_TARGET, S_INFATUATED, AI_CV_Revenge_ScoreDown2
-	if_status2 AI_TARGET, S_CONFUSED, AI_CV_Revenge_ScoreDown2
+	if_status AI_TARGET, STATUS1_SLEEP, AI_CV_Revenge_ScoreDown2
+	if_status2 AI_TARGET, STATUS2_INFATUATION, AI_CV_Revenge_ScoreDown2
+	if_status2 AI_TARGET, STATUS2_CONFUSION, AI_CV_Revenge_ScoreDown2
 	if_random_less_than 180, AI_CV_Revenge_ScoreDown2
 	score +2
 	goto AI_CV_Revenge_End
@@ -2522,7 +2523,7 @@ AI_CV_Revenge_End: @ 81DBCF7
 	end
 
 AI_CV_BrickBreak: @ 81DBCF8
-	if_side_affecting AI_TARGET, S_REFLECT, AI_CV_BrickBreak_ScoreUp1
+	if_side_affecting AI_TARGET, SIDE_STATUS_REFLECT, AI_CV_BrickBreak_ScoreUp1
 	goto AI_CV_BrickBreak_End
 
 AI_CV_BrickBreak_ScoreUp1: @ 81DBD07
@@ -2606,8 +2607,8 @@ AI_CV_Snatch: @ 81DBD96
 
 AI_CV_Snatch2: @ 81DBDC3
 	if_hp_more_than AI_TARGET, 25, AI_CV_Snatch5
-	if_move_effect AI_TARGET, EFFECT_RESTORE_HP, AI_CV_Snatch3
-	if_move_effect AI_TARGET, EFFECT_DEFENSE_CURL, AI_CV_Snatch3
+	if_has_move_with_effect AI_TARGET, EFFECT_RESTORE_HP, AI_CV_Snatch3
+	if_has_move_with_effect AI_TARGET, EFFECT_DEFENSE_CURL, AI_CV_Snatch3
 	goto AI_CV_Snatch4
 
 AI_CV_Snatch3: @ 81DBDDD
@@ -2629,9 +2630,9 @@ AI_CV_Snatch_End: @ 81DBDFF
 
 AI_CV_MudSport: @ 81DBE00
 	if_hp_less_than AI_USER, 50, AI_CV_MudSport_ScoreDown1
-	get_type ENEMY_TYPE1
+	get_target_type1
 	if_equal TYPE_ELECTRIC, AI_CV_MudSport2
-	get_type PLAYER_TYPE1
+	get_target_type2
 	if_equal TYPE_ELECTRIC, AI_CV_MudSport2
 	goto AI_CV_MudSport_ScoreDown1
 
@@ -2663,9 +2664,9 @@ AI_CV_Overheat_End: @ 81DBE4D
 
 AI_CV_WaterSport: @ 81DBE4E
 	if_hp_less_than AI_USER, 50, AI_CV_WaterSport_ScoreDown1
-	get_type ENEMY_TYPE1
+	get_target_type1
 	if_equal TYPE_FIRE, AI_CV_WaterSport2
-	get_type PLAYER_TYPE1
+	get_target_type2
 	if_equal TYPE_FIRE, AI_CV_WaterSport2
 	goto AI_CV_WaterSport_ScoreDown1
 
@@ -2779,13 +2780,13 @@ AI_SetupFirstTurn_SetupEffectsToEncourage: @ 81DBECF
 	.byte EFFECT_CAMOUFLAGE
 	.byte -1
 
-AI_PreferStrongestMove: @ 81DBF07
+AI_PreferPowerExtremes: @ 81DBF07
 	get_how_powerful_move_is
-	if_not_equal 0, AI_PreferStrongestMove_End
-	if_random_less_than 100, AI_PreferStrongestMove_End
+	if_not_equal 0, AI_PreferPowerExtremes_End
+	if_random_less_than 100, AI_PreferPowerExtremes_End
 	score +2
 
-AI_PreferStrongestMove_End: @ 81DBF16
+AI_PreferPowerExtremes_End: @ 81DBF16
 	end
 
 AI_Risky: @ 81DBF17
@@ -2824,7 +2825,7 @@ AI_PreferBatonPass: @ 81DBF3E
 	if_equal 0, AI_PreferBatonPass_End
 	get_how_powerful_move_is
 	if_not_equal 0, AI_PreferBatonPass_End
-	if_move_effect AI_USER, EFFECT_BATON_PASS, AI_PreferBatonPass_GoForBatonPass
+	if_has_move_with_effect AI_USER, EFFECT_BATON_PASS, AI_PreferBatonPass_GoForBatonPass
 	if_random_less_than 80, AI_Risky_End
 
 AI_PreferBatonPass_GoForBatonPass: @ 81DBF5A
@@ -3100,19 +3101,19 @@ AI_HPAware_DiscouragedEffectsWhenTargetLowHP: @ 81DC07D
 	.byte EFFECT_DRAGON_DANCE
 	.byte -1
 
-AI_Unknown: @ 81DC0B9
-	if_not_effect EFFECT_SUNNY_DAY, AI_Unknown_End
-	if_equal 0, AI_Unknown_End
+AI_TrySunnyDayStart: @ 81DC0B9
+	if_not_effect EFFECT_SUNNY_DAY, AI_TrySunnyDayStart_End
+	if_equal 0, AI_TrySunnyDayStart_End
 	is_first_turn_for AI_USER
-	if_equal 0, AI_Unknown_End
+	if_equal 0, AI_TrySunnyDayStart_End
 	score +5
 
-AI_Unknown_End: @ 81DC0CF
+AI_TrySunnyDayStart_End: @ 81DC0CF
 	end
 
 AI_Roaming: @ 81DC0D0
-	if_status2 AI_USER, S_TEMP_TRAP, AI_Roaming_End
-	if_status2 AI_USER, S_MEAN_LOOK, AI_Roaming_End
+	if_status2 AI_USER, STATUS2_WRAPPED, AI_Roaming_End
+	if_status2 AI_USER, STATUS2_ESCAPE_PREVENTION, AI_Roaming_End
 	get_ability AI_TARGET
 	if_equal ABILITY_SHADOW_TAG, AI_Roaming_End
 	get_ability AI_USER
@@ -3135,13 +3136,13 @@ AI_Safari_Flee: @ 81DC104
 
 @ This AI is used by the wild Poochyena in the first battle in the game.
 @ If it reduces your health to 20% or below, it will flee, allowing you to win.
-AI_GoEasy: @ 81DC105
-	if_hp_equal AI_TARGET, 20, AI_GoEasy_Flee
-	if_hp_less_than AI_TARGET, 20, AI_GoEasy_Flee
+AI_FirstBattle: @ 81DC105
+	if_hp_equal AI_TARGET, 20, AI_FirstBattle_Flee
+	if_hp_less_than AI_TARGET, 20, AI_FirstBattle_Flee
 	end
 
-AI_GoEasy_Flee: @ 81DC114
+AI_FirstBattle_Flee: @ 81DC114
 	flee
 
-AI_Unused: @ 81DC115
+AI_Ret: @ 81DC115
 	end
