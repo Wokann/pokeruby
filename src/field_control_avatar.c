@@ -58,7 +58,6 @@ extern u8 EventScript_TestSignpostMsg[];
 extern u8 EventScript_ClosedSootopolisDoor[];
 extern u8 EventScript_PokeBlockFeeder[];
 extern u8 Route110_TrickHousePuzzle_EventScript_Door[];
-extern u8 EventScript_RunningShoesManual[];
 extern u8 SecretBase_EventScript_SandOrnament[];
 extern u8 SecretBase_EventScript_ShieldOrToyTV[];
 extern u8 EventScript_UseWaterfall[];

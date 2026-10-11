@@ -5,6 +5,7 @@ extern const u8 EventScript_HiddenItemScript[];
 extern const u8 EventScript_PC[];
 extern const u8 EventScript_TV[];
 extern const u8 EventScript_RegionMap[];
+extern const u8 EventScript_RunningShoesManual[];
 extern const u8 EventScript_PictureBookShelf[];
 extern const u8 EventScript_BookShelf[];
 extern const u8 EventScript_PokemonCenterBookShelf[];
