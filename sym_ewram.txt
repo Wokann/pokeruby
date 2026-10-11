@@ -22,7 +22,7 @@ gBattleTypeFlags = .; /* 20239F8 */
     . += 0x2;
 
 	. = ALIGN(4);
-gUnknown_020239FC = .; /* 20239FC */
+gUnusedFirstBattleVar1 = .; /* 20239FC */
     . += 0x4;
 
 	. = ALIGN(4);
@@ -189,7 +189,7 @@ sUnusedBattlersArray = .; /* 2024C70 */
 gBideTarget = .; /* 2024C74 */
     . += 0x4;
 
-gUnknown_02024C78 = .; /* 2024C78 */
+gUnusedFirstBattleVar2 = .; /* 2024C78 */
     . += 0x2;
 
 gSideStatuses = .; /* 2024C7A */
