@@ -308,7 +308,7 @@ MtChimney_EventScript_15D0F5:: @ 815D0F5
 	.ifdef SAPPHIRE
 	msgbox MtChimney_Text_1B36F1, MSGBOX_SIGN
 	.else
-	msgbox MtChimney_Text_1B40EA, MSGBOX_SIGN
+	msgbox MtChimney_Text_MagmaOutnumbersUs, MSGBOX_SIGN
 	.endif
 	end
 
@@ -316,7 +316,7 @@ MtChimney_EventScript_15D0FE:: @ 815D0FE
 	.ifdef SAPPHIRE
 	msgbox MtChimney_Text_1B372E, MSGBOX_SIGN
 	.else
-	msgbox MtChimney_Text_1B4128, MSGBOX_SIGN
+	msgbox MtChimney_Text_LessHabitatForWaterPokemon, MSGBOX_SIGN
 	.endif
 	end
 
@@ -333,8 +333,8 @@ MtChimney_EventScript_15D110:: @ 815D110
 	trainerbattle_single TRAINER_MT_CHIMNEY_GRUNT_1, MtChimney_Text_1B3168, MtChimney_Text_1B31EA
 	msgbox MtChimney_Text_1B3239, MSGBOX_AUTOCLOSE
 	.else
-	trainerbattle_single TRAINER_MT_CHIMNEY_GRUNT_1, MtChimney_Text_1B3B36, MtChimney_Text_1B3BB8
-	msgbox MtChimney_Text_1B3C07, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_MT_CHIMNEY_GRUNT_1, MtChimney_Text_TabithaIntro, MtChimney_Text_TabithaDefeat
+	msgbox MtChimney_Text_TabithaPostBattle, MSGBOX_AUTOCLOSE
 	.endif
 	end
 
@@ -343,8 +343,8 @@ MtChimney_EventScript_Grunt2:: @ 815D127
 	trainerbattle_single TRAINER_MT_CHIMNEY_GRUNT_2, MtChimney_Text_1B32C8, MtChimney_Text_1B336E
 	msgbox MtChimney_Text_1B338D, MSGBOX_AUTOCLOSE
 	.else
-	trainerbattle_single TRAINER_MT_CHIMNEY_GRUNT_2, MtChimney_Text_1B3C96, MtChimney_Text_1B3D1E
-	msgbox MtChimney_Text_1B3D3D, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_MT_CHIMNEY_GRUNT_2, MtChimney_Text_Grunt2Intro, MtChimney_Text_Grunt2Defeat
+	msgbox MtChimney_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
 	.endif
 	end
 
@@ -352,7 +352,7 @@ MtChimney_EventScript_15D13E:: @ 815D13E
 	.ifdef SAPPHIRE
 	msgbox MtChimney_Text_1B33EA, MSGBOX_SIGN
 	.else
-	msgbox MtChimney_Text_1B3D9A, MSGBOX_SIGN
+	msgbox MtChimney_Text_TeamAquaAlwaysMessingWithPlans, MSGBOX_SIGN
 	.endif
 	end
 
@@ -360,7 +360,7 @@ MtChimney_EventScript_15D13E:: @ 815D13E
 	.ifdef SAPPHIRE
 	msgbox MtChimney_Text_1B3427, MSGBOX_SIGN
 	.else
-	msgbox MtChimney_Text_1B3DD6, MSGBOX_SIGN
+	msgbox MtChimney_Text_MeteoritesPackAmazingPower, MSGBOX_SIGN
 	.endif
 	end
 
@@ -384,7 +384,7 @@ MtChimney_EventScript_15D162:: @ 815D162
 	.ifdef SAPPHIRE
 	msgbox MtChimney_Text_1B34C6, MSGBOX_SIGN
 	.else
-	msgbox MtChimney_Text_1B3E7A, MSGBOX_SIGN
+	msgbox MtChimney_Text_DouseThemInFire, MSGBOX_SIGN
 	.endif
 	end
 
@@ -392,7 +392,7 @@ MtChimney_EventScript_15D16B:: @ 815D16B
 	.ifdef SAPPHIRE
 	msgbox MtChimney_Text_1B3503, MSGBOX_SIGN
 	.else
-	msgbox MtChimney_Text_1B3EBA, MSGBOX_SIGN
+	msgbox MtChimney_Text_Bufoh, MSGBOX_SIGN
 	.endif
 	end
 
@@ -400,7 +400,7 @@ MtChimney_EventScript_15D174:: @ 815D174
 	.ifdef SAPPHIRE
 	msgbox MtChimney_Text_1B37B4, MSGBOX_SIGN
 	.else
-	msgbox MtChimney_Text_1B41B0, MSGBOX_SIGN
+	msgbox MtChimney_Text_Bushaa, MSGBOX_SIGN
 	.endif
 	end
 

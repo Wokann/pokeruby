@@ -8105,7 +8105,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_Grunt39 }
     },
 
-    [TRAINER_GRUNT_40] =
+    [TRAINER_GRUNT_MT_CHIMNEY_2] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
@@ -8116,7 +8116,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 2,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt40 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntMtChimney2 }
     },
 
     [TRAINER_GRUNT_41] =
@@ -8357,7 +8357,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_Tabitha1 }
     },
 
-    [TRAINER_TABITHA_2] =
+    [TRAINER_TABITHA_MT_CHIMNEY] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_MAGMA_ADMIN,
@@ -8368,7 +8368,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 3,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Tabitha2 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_TabithaMtChimney }
     },
 
     [TRAINER_ANONYMOUS_16] =
@@ -8427,7 +8427,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_Maxie2 }
     },
 
-    [TRAINER_MAXIE_3] =
+    [TRAINER_MAXIE_MT_CHIMNEY] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_MAGMA_LEADER,
@@ -8438,7 +8438,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 3,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Maxie3 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_MaxieMtChimney }
     },
 
     [TRAINER_TIANA] =

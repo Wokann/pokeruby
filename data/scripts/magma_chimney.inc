@@ -14,7 +14,7 @@ MtChimney_EventScript_1B2CB9:: @ 81B2CB9
 	.ifdef SAPPHIRE
 	msgbox MtChimney_Text_1B350B, MSGBOX_DEFAULT
 	.else
-	msgbox MtChimney_Text_1B3EC1, MSGBOX_DEFAULT
+	msgbox MtChimney_Text_ArchieGoStopTeamMagma, MSGBOX_DEFAULT
 	.endif
 	return
 
@@ -22,7 +22,7 @@ MtChimney_EventScript_1B2CC2:: @ 81B2CC2
 	.ifdef SAPPHIRE
 	msgbox MtChimney_Text_1B3598, MSGBOX_DEFAULT
 	.else
-	msgbox MtChimney_Text_1B3F8C, MSGBOX_DEFAULT
+	msgbox MtChimney_Text_ArchieIHaveMyHandsFull, MSGBOX_DEFAULT
 	.endif
 	return
 
@@ -31,7 +31,7 @@ MtChimney_EventScript_1B2CCB:: @ 81B2CCB
 	.ifdef SAPPHIRE
 	msgbox MtChimney_Text_1B2DEE, MSGBOX_DEFAULT
 	.else
-	msgbox MtChimney_Text_1B37BB, MSGBOX_DEFAULT
+	msgbox MtChimney_Text_MeteoriteWillActivateVolcano, MSGBOX_DEFAULT
 	.endif
 	applymovement 2, Common_Movement_FacePlayer
 	waitmovement 0
@@ -43,17 +43,17 @@ MtChimney_EventScript_1B2CCB:: @ 81B2CCB
 	.ifdef SAPPHIRE
 	msgbox MtChimney_Text_1B2ED9, MSGBOX_DEFAULT
 	.else
-	msgbox MtChimney_Text_1B38B3, MSGBOX_DEFAULT
+	msgbox MtChimney_Text_MaxieIntro, MSGBOX_DEFAULT
 	.endif
 	.ifdef SAPPHIRE
 	trainerbattle_no_intro TRAINER_MT_CHIMNEY_GRUNT_3, MtChimney_Text_1B3099
 	.else
-	trainerbattle_no_intro TRAINER_MT_CHIMNEY_GRUNT_3, MtChimney_Text_1B3A68
+	trainerbattle_no_intro TRAINER_MT_CHIMNEY_GRUNT_3, MtChimney_Text_MaxieDefeat
 	.endif
 	.ifdef SAPPHIRE
 	msgbox MtChimney_Text_1B30C2, MSGBOX_DEFAULT
 	.else
-	msgbox MtChimney_Text_1B3A90, MSGBOX_DEFAULT
+	msgbox MtChimney_Text_MaxieYouHaventSeenLastOfMagma, MSGBOX_DEFAULT
 	.endif
 	closemessage
 	delay 30
@@ -74,7 +74,7 @@ MtChimney_EventScript_1B2CCB:: @ 81B2CCB
 	.ifdef SAPPHIRE
 	msgbox MtChimney_Text_1B3608, MSGBOX_DEFAULT
 	.else
-	msgbox MtChimney_Text_1B3FFE, MSGBOX_DEFAULT
+	msgbox MtChimney_Text_ArchieThankYou, MSGBOX_DEFAULT
 	.endif
 	closemessage
 	compare VAR_FACING, 4

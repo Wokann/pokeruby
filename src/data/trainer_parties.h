@@ -8009,7 +8009,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_Grunt39[] = {
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_Grunt40[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_GruntMtChimney2[] = {
     {
 	.iv = 0,
 	.level = 20,
@@ -8238,7 +8238,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_Tabitha1[] = {
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_Tabitha2[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_TabithaMtChimney[] = {
     {
 	.iv = 50,
 	.level = 20,
@@ -8313,7 +8313,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_Maxie2[] = {
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_Maxie3[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_MaxieMtChimney[] = {
     {
 	.iv = 150,
 	.level = 24,
