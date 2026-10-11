@@ -54,7 +54,6 @@ extern u8 LittlerootTown_BrendansHouse_2F_EventScript_PC[];
 extern u8 LittlerootTown_MaysHouse_2F_EventScript_PC[];
 extern u8 SecretBase_EventScript_PC[];
 extern u8 SecretBase_EventScript_RecordMixingPC[];
-extern u8 EventScript_TestSignpostMsg[];
 extern u8 EventScript_ClosedSootopolisDoor[];
 extern u8 EventScript_PokeBlockFeeder[];
 extern u8 Route110_TrickHousePuzzle_EventScript_Door[];

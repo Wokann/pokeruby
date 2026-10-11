@@ -13,6 +13,7 @@
 #include "script_pokemon_util.h"
 #include "data.h"
 #include "event_data.h"
+#include "event_scripts.h"
 #include "field_control_avatar.h"
 #include "field_screen_effect.h"
 #include "field_message_box.h"
@@ -58,7 +59,6 @@ extern u8 EventScript_TryDoRematchBattle[];
 extern u8 EventScript_TryDoDoubleRematchBattle[];
 
 extern u8 EventScript_StartTrainerApproach[];
-extern u8 EventScript_TestSignpostMsg[];
 
 // The first transition is used if the enemy pokemon are lower level than our pokemon.
 // Otherwise, the second transition is used.
@@ -1182,7 +1182,7 @@ void ShowTrainerIntroSpeech(void)
     ShowFieldMessage(GetIntroSpeechOfApproachingTrainer());
 }
 
-u8 *BattleSetup_GetScriptAddrAfterBattle(void)
+const u8 *BattleSetup_GetScriptAddrAfterBattle(void)
 {
     if (sTrainerBattleEndScript)
         return sTrainerBattleEndScript;
@@ -1190,7 +1190,7 @@ u8 *BattleSetup_GetScriptAddrAfterBattle(void)
         return EventScript_TestSignpostMsg;
 }
 
-u8 *BattleSetup_GetTrainerPostBattleScript(void)
+const u8 *BattleSetup_GetTrainerPostBattleScript(void)
 {
     if (sTrainerABattleScriptRetAddr)
         return sTrainerABattleScriptRetAddr;
