@@ -51,7 +51,7 @@ static bool8 MainMenuProcessKeyInput(u8 taskId);
 static void Task_MainMenuProcessKeyInput(u8 taskId);
 static void Task_MainMenuPressedA(u8 taskId);
 static void Task_MainMenuPressedB(u8 taskId);
-static void HighlightCurrentMenuItem(u8 layout, u8 menuItem);
+static void HighlightCurrentMenuItem(u8 menuType, u8 selectedMenuItem);
 static void PrintMainMenuItem(const u8 *text, u8 left, u8 top);
 static void PrintSaveFileInfo(void);
 static void PrintPlayerName(void);
@@ -91,24 +91,24 @@ static void Task_NewGameSpeech30(u8 taskId);
 static void Task_NewGameBirchSpeech_WaitForPlayerShrink(u8 taskId);
 static void Task_NewGameSpeech32(u8 taskId);
 static void Task_NewGameSpeech33(u8 taskId);
-static void CB_ContinueNewGameSpeechPart2();
+static void CB_ContinueNewGameSpeechPart2(void);
 static void SpriteCB_Null(struct Sprite *sprite);
 static void SpriteCB_MovePlayerDownWhileShrinking(struct Sprite *sprite);
 static u8 CreateAzurillSprite(u8 x, u8 y);
 static void AddBirchSpeechObjects(u8 taskId);
 static void Task_SpriteFadeOut(u8 taskId);
-static void StartSpriteFadeOut(u8 taskId, u8 interval);
+static void StartSpriteFadeOut(u8 taskId, u8 delay);
 static void Task_SpriteFadeIn(u8 taskId);
-static void StartSpriteFadeIn(u8 taskId, u8 interval);
+static void StartSpriteFadeIn(u8 taskId, u8 delay);
 static void HandleFloorShadowFadeOut(u8 taskId);
-static void StartBackgroundFadeOut(u8 taskId, u8 interval);
+static void StartBackgroundFadeOut(u8 taskId, u8 delay);
 static void HandleFloorShadowFadeIn(u8 taskId);
-static void StartBackgroundFadeIn(u8 taskId, u8 interval);
+static void StartBackgroundFadeIn(u8 taskId, u8 delay);
 static void CreateGenderMenu(u8 left, u8 top);
 static s8 NewGameBirchSpeech_ProcessGenderMenuInput(void);
 static void CreateNameMenu(u8 left, u8 top);
 static s8 NameMenuProcessInput(void);
-static void SetPresetPlayerName(u8 index);
+static void SetPresetPlayerName(u8 nameId);
 
 static const u16 sBirchSpeechBgPals[][16] =
 {
@@ -181,10 +181,10 @@ static void CB2_ReinitMainMenu(void)
     InitMainMenu(TRUE);
 }
 
-#define tMenuLayout    data[0]
-#define tMenuSelection data[1]
+#define tMenuType data[0]
+#define tCurrItem data[1]
 
-u32 InitMainMenu(u8 returningFromOptionsMenu)
+u32 InitMainMenu(bool8 returningFromOptionsMenu)
 {
     u16 savedIme;
     u8 taskId;
@@ -243,7 +243,7 @@ u32 InitMainMenu(u8 returningFromOptionsMenu)
                 | DISPCNT_WIN0_ON;
 
     taskId = CreateTask(Task_MainMenuCheckSave, 0);
-    gTasks[taskId].tMenuSelection = 0;
+    gTasks[taskId].tCurrItem = 0;
 
     return 0;
 }
@@ -265,9 +265,9 @@ void Task_MainMenuCheckSave(u8 taskId)
     {
     case SAVE_STATUS_OK:
         if (IsMysteryEventEnabled() == TRUE)
-            gTasks[taskId].tMenuLayout = HAS_MYSTERY_EVENT;
+            gTasks[taskId].tMenuType = HAS_MYSTERY_EVENT;
         else
-            gTasks[taskId].tMenuLayout = HAS_SAVED_GAME;
+            gTasks[taskId].tMenuType = HAS_SAVED_GAME;
         gTasks[taskId].func = Task_MainMenuCheckRtc;
         break;
     case 2:
@@ -275,7 +275,7 @@ void Task_MainMenuCheckSave(u8 taskId)
         MenuPrintMessage(gSaveFileDeletedMessage, 3, 15);
         REG_WIN0H = WIN_RANGE(17, 223);
         REG_WIN0V = WIN_RANGE(113, 159);
-        gTasks[taskId].tMenuLayout = HAS_NO_SAVED_GAME;
+        gTasks[taskId].tMenuType = HAS_NO_SAVED_GAME;
         gTasks[taskId].func = Task_MainMenuWaitForSaveErrorAck;
         break;
     case SAVE_STATUS_ERROR:
@@ -283,17 +283,17 @@ void Task_MainMenuCheckSave(u8 taskId)
         MenuPrintMessage(gSaveFileCorruptMessage, 3, 15);
         REG_WIN0H = WIN_RANGE(17, 223);
         REG_WIN0V = WIN_RANGE(113, 159);
-        gTasks[taskId].tMenuLayout = HAS_SAVED_GAME;
+        gTasks[taskId].tMenuType = HAS_SAVED_GAME;
         gTasks[taskId].func = Task_MainMenuWaitForSaveErrorAck;
 
         if (IsMysteryEventEnabled() == TRUE)
-            gTasks[taskId].tMenuLayout = HAS_MYSTERY_EVENT;
+            gTasks[taskId].tMenuType = HAS_MYSTERY_EVENT;
         else
-            gTasks[taskId].tMenuLayout = HAS_SAVED_GAME;
+            gTasks[taskId].tMenuType = HAS_SAVED_GAME;
         break;
     case SAVE_STATUS_EMPTY:
     default:
-        gTasks[taskId].tMenuLayout = HAS_NO_SAVED_GAME;
+        gTasks[taskId].tMenuType = HAS_NO_SAVED_GAME;
         gTasks[taskId].func = Task_MainMenuCheckRtc;
         break;
     case SAVE_STATUS_NO_FLASH:
@@ -301,7 +301,7 @@ void Task_MainMenuCheckSave(u8 taskId)
         MenuPrintMessage(gBoardNotInstalledMessage, 3, 15);
         REG_WIN0H = WIN_RANGE(17, 223);
         REG_WIN0V = WIN_RANGE(113, 159);
-        gTasks[taskId].tMenuLayout = HAS_NO_SAVED_GAME;
+        gTasks[taskId].tMenuType = HAS_NO_SAVED_GAME;
         gTasks[taskId].func = Task_MainMenuWaitForSaveErrorAck;
         return;
     }
@@ -338,7 +338,7 @@ void Task_MainMenuCheckRtc(u8 taskId)
         else
         {
             Menu_DrawStdWindowFrame(2, 14, 27, 19);
-            MenuPrintMessage(gBatteryDryMessage, 3, 15);
+            MenuPrintMessage(gText_BatteryRunDry, 3, 15);
             REG_WIN0H = WIN_RANGE(17, 223);
             REG_WIN0V = WIN_RANGE(113, 159);
             gTasks[taskId].func = Task_MainMenuWaitForRtcErrorAck;
@@ -386,33 +386,33 @@ void Task_MainMenuDraw(u8 taskId)
             LoadPalette(&palette, 241, 2);
         }
 
-        switch (gTasks[taskId].tMenuLayout)
+        switch (gTasks[taskId].tMenuType)
         {
         case HAS_NO_SAVED_GAME:
         default:
             Menu_DrawStdWindowFrame(1, 0, 28, 3);
-            PrintMainMenuItem(gMainMenuString_NewGame, 2, 1);
+            PrintMainMenuItem(gText_MainMenuNewGame, 2, 1);
             Menu_DrawStdWindowFrame(1, 4, 28, 7);
-            PrintMainMenuItem(gMainMenuString_Option, 2, 5);
+            PrintMainMenuItem(gText_MainMenuOption, 2, 5);
             break;
         case HAS_SAVED_GAME:
             Menu_DrawStdWindowFrame(1, 0, 28, 7);
-            PrintMainMenuItem(gMainMenuString_Continue, 2, 1);
+            PrintMainMenuItem(gText_MainMenuContinue, 2, 1);
             Menu_DrawStdWindowFrame(1, 8, 28, 11);
-            PrintMainMenuItem(gMainMenuString_NewGame, 2, 9);
+            PrintMainMenuItem(gText_MainMenuNewGame, 2, 9);
             Menu_DrawStdWindowFrame(1, 12, 28, 15);
-            PrintMainMenuItem(gMainMenuString_Option, 2, 13);
+            PrintMainMenuItem(gText_MainMenuOption, 2, 13);
             PrintSaveFileInfo();
             break;
         case HAS_MYSTERY_EVENT:
             Menu_DrawStdWindowFrame(1, 0, 28, 7);
-            PrintMainMenuItem(gMainMenuString_Continue, 2, 1);
+            PrintMainMenuItem(gText_MainMenuContinue, 2, 1);
             Menu_DrawStdWindowFrame(1, 8, 28, 11);
-            PrintMainMenuItem(gMainMenuString_NewGame, 2, 9);
+            PrintMainMenuItem(gText_MainMenuNewGame, 2, 9);
             Menu_DrawStdWindowFrame(1, 12, 28, 15);
-            PrintMainMenuItem(gMainMenuString_MysteryEvents, 2, 13);
+            PrintMainMenuItem(gText_MainMenuMysteryEvents, 2, 13);
             Menu_DrawStdWindowFrame(1, 16, 28, 19);
-            PrintMainMenuItem(gMainMenuString_Option, 2, 0x11);
+            PrintMainMenuItem(gText_MainMenuOption, 2, 0x11);
             PrintSaveFileInfo();
             break;
         }
@@ -423,7 +423,7 @@ void Task_MainMenuDraw(u8 taskId)
 
 void Task_MainMenuHighlight(u8 taskId)
 {
-    HighlightCurrentMenuItem(gTasks[taskId].tMenuLayout, gTasks[taskId].tMenuSelection);
+    HighlightCurrentMenuItem(gTasks[taskId].tMenuType, gTasks[taskId].tCurrItem);
     gTasks[taskId].func = Task_MainMenuProcessKeyInput;
 }
 
@@ -447,7 +447,7 @@ bool8 MainMenuProcessKeyInput(u8 taskId)
     {
         s32 menuItemCount;
 
-        switch (gTasks[taskId].tMenuLayout)
+        switch (gTasks[taskId].tMenuType)
         {
         case HAS_NO_SAVED_GAME:
         default:
@@ -463,17 +463,17 @@ bool8 MainMenuProcessKeyInput(u8 taskId)
 
         if (JOY_NEW(DPAD_UP))
         {
-            if (gTasks[taskId].tMenuSelection > 0)
+            if (gTasks[taskId].tCurrItem > 0)
             {
-                gTasks[taskId].tMenuSelection--;
+                gTasks[taskId].tCurrItem--;
                 return TRUE;
             }
         }
         if (JOY_NEW(DPAD_DOWN))
         {
-            if (gTasks[taskId].tMenuSelection < menuItemCount - 1)
+            if (gTasks[taskId].tCurrItem < menuItemCount - 1)
             {
-                gTasks[taskId].tMenuSelection++;
+                gTasks[taskId].tCurrItem++;
                 return TRUE;
             }
         }
@@ -493,60 +493,60 @@ void Task_MainMenuPressedA(u8 taskId)
 {
     enum
     {
-        NEW_GAME,
-        CONTINUE,
-        OPTION,
-        MYSTERY_EVENTS,
+        ACTION_NEW_GAME,
+        ACTION_CONTINUE,
+        ACTION_OPTION,
+        ACTION_MYSTERY_EVENTS,
     } action;
 
     if (gPaletteFade.active)
         return;
 
-    switch (gTasks[taskId].tMenuLayout)
+    switch (gTasks[taskId].tMenuType)
     {
     case HAS_NO_SAVED_GAME:
     default:
-        switch (gTasks[taskId].tMenuSelection)
+        switch (gTasks[taskId].tCurrItem)
         {
         case 0:
         default:
-            action = NEW_GAME;
+            action = ACTION_NEW_GAME;
             break;
         case 1:
-            action = OPTION;
+            action = ACTION_OPTION;
             break;
         }
         break;
     case HAS_SAVED_GAME:
-        switch (gTasks[taskId].tMenuSelection)
+        switch (gTasks[taskId].tCurrItem)
         {
         case 0:
         default:
-            action = CONTINUE;
+            action = ACTION_CONTINUE;
             break;
         case 1:
-            action = NEW_GAME;
+            action = ACTION_NEW_GAME;
             break;
         case 2:
-            action = OPTION;
+            action = ACTION_OPTION;
             break;
         }
         break;
     case HAS_MYSTERY_EVENT:
-        switch (gTasks[taskId].tMenuSelection)
+        switch (gTasks[taskId].tCurrItem)
         {
         case 0:
         default:
-            action = CONTINUE;
+            action = ACTION_CONTINUE;
             break;
         case 1:
-            action = NEW_GAME;
+            action = ACTION_NEW_GAME;
             break;
         case 2:
-            action = MYSTERY_EVENTS;
+            action = ACTION_MYSTERY_EVENTS;
             break;
         case 3:
-            action = OPTION;
+            action = ACTION_OPTION;
             break;
         }
         break;
@@ -554,24 +554,24 @@ void Task_MainMenuPressedA(u8 taskId)
 
     switch ((int)action)
     {
-    case NEW_GAME:
+    case ACTION_NEW_GAME:
     default:
         gPlttBufferUnfaded[0] = 0;
         gPlttBufferFaded[0] = 0;
         gTasks[taskId].func = Task_NewGameSpeech1;
         break;
-    case CONTINUE:
+    case ACTION_CONTINUE:
         gPlttBufferUnfaded[0] = 0;
         gPlttBufferFaded[0] = 0;
         SetMainCallback2(CB2_ContinueSavedGame);
         DestroyTask(taskId);
         break;
-    case OPTION:
+    case ACTION_OPTION:
         gMain.savedCallback = CB2_ReinitMainMenu;
         SetMainCallback2(CB2_InitOptionMenu);
         DestroyTask(taskId);
         break;
-    case MYSTERY_EVENTS:
+    case ACTION_MYSTERY_EVENTS:
         SetMainCallback2(CB2_InitMysteryEventMenu);
         DestroyTask(taskId);
         break;
@@ -587,18 +587,18 @@ void Task_MainMenuPressedB(u8 taskId)
     }
 }
 
-#undef tMenuLayout
-#undef tMenuSelection
+#undef tMenuType
+#undef tCurrItem
 
-void HighlightCurrentMenuItem(u8 layout, u8 menuItem)
+void HighlightCurrentMenuItem(u8 menuType, u8 selectedMenuItem)
 {
     REG_WIN0H = WIN_RANGE(9, 231);
 
-    switch (layout)
+    switch (menuType)
     {
     case HAS_NO_SAVED_GAME:
     default:
-        switch (menuItem)
+        switch (selectedMenuItem)
         {
         case 0:
         default:
@@ -610,7 +610,7 @@ void HighlightCurrentMenuItem(u8 layout, u8 menuItem)
         }
         break;
     case HAS_SAVED_GAME:
-        switch (menuItem)
+        switch (selectedMenuItem)
         {
         case 0:
         default:
@@ -625,7 +625,7 @@ void HighlightCurrentMenuItem(u8 layout, u8 menuItem)
         }
         break;
     case HAS_MYSTERY_EVENT:
-        switch (menuItem)
+        switch (selectedMenuItem)
         {
         case 0:
         default:
@@ -672,7 +672,7 @@ void PrintSaveFileInfo(void)
 
 void PrintPlayerName(void)
 {
-    Menu_PrintText(gMainMenuString_Player, 2, 3);
+    Menu_PrintText(gText_Player, 2, 3);
     Menu_PrintText(gSaveBlock2.playerName, 9, 3);
 }
 
@@ -698,7 +698,7 @@ void PrintPokedexCount(void)
 {
     u8 buffer[16];
 
-    Menu_PrintText(gMainMenuString_Pokedex, 2, 5);
+    Menu_PrintText(gText_Pokedex, 2, 5);
     AlignInt1InMenuWindow(buffer, GetCaughtMonsCount(), 18, 0);
     Menu_PrintText(buffer, 9, 5);
 }
@@ -708,9 +708,9 @@ void PrintBadgeCount(void)
     u8 buffer[16];
 
 #if defined(ENGLISH)
-    Menu_PrintText(gMainMenuString_Badges, 16, 5);
+    Menu_PrintText(gText_Badges, 16, 5);
 #elif defined(GERMAN)
-    Menu_PrintTextPixelCoords(gMainMenuString_Badges, 124, 40, TRUE);
+    Menu_PrintTextPixelCoords(gText_Badges, 124, 40, TRUE);
 #endif
     ConvertIntToDecimalStringSimple(buffer, GetBadgeCount());
     Menu_PrintTextPixelCoords(buffer, 205, 40, 1);
@@ -1310,7 +1310,7 @@ static void Task_NewGameSpeech33(u8 taskId)
 
 // Re-initializes graphics state after running the naming screen
 // and continues the new game speech
-void CB_ContinueNewGameSpeechPart2()
+void CB_ContinueNewGameSpeechPart2(void)
 {
     u8 taskId;
     u8 spriteId;
@@ -1494,7 +1494,7 @@ static void Task_SpriteFadeOut(u8 taskId)
 }
 
 //Launches a helper task to fade out sprites
-static void StartSpriteFadeOut(u8 taskId, u8 interval)
+static void StartSpriteFadeOut(u8 taskId, u8 delay)
 {
     u8 newTaskId;
 
@@ -1507,8 +1507,8 @@ static void StartSpriteFadeOut(u8 taskId, u8 interval)
     gTasks[newTaskId].tMainTask = taskId;
     gTasks[newTaskId].tAlphaCoeff1 = 16;
     gTasks[newTaskId].tAlphaCoeff2 = 0;
-    gTasks[newTaskId].tDelay = interval;
-    gTasks[newTaskId].tDelayTimer = interval;
+    gTasks[newTaskId].tDelay = delay;
+    gTasks[newTaskId].tDelayTimer = delay;
 }
 
 static void Task_SpriteFadeIn(u8 taskId)
@@ -1532,7 +1532,7 @@ static void Task_SpriteFadeIn(u8 taskId)
 }
 
 //Launches a helper task to fade in sprites
-static void StartSpriteFadeIn(u8 taskId, u8 interval)
+static void StartSpriteFadeIn(u8 taskId, u8 delay)
 {
     u8 newTaskId;
 
@@ -1545,8 +1545,8 @@ static void StartSpriteFadeIn(u8 taskId, u8 interval)
     gTasks[newTaskId].tMainTask = taskId;
     gTasks[newTaskId].tAlphaCoeff1 = 0;
     gTasks[newTaskId].tAlphaCoeff2 = 16;
-    gTasks[newTaskId].tDelay = interval;
-    gTasks[newTaskId].tDelayTimer = interval;
+    gTasks[newTaskId].tDelay = delay;
+    gTasks[newTaskId].tDelayTimer = delay;
 }
 
 #undef tMainTask
@@ -1587,14 +1587,14 @@ static void HandleFloorShadowFadeOut(u8 taskId)
 }
 
 //Launches a helper task to fade out the background
-static void StartBackgroundFadeOut(u8 taskId, u8 interval)
+static void StartBackgroundFadeOut(u8 taskId, u8 delay)
 {
     u8 newTaskId = CreateTask(HandleFloorShadowFadeOut, 0);
     gTasks[newTaskId].tMainTask = taskId;
     gTasks[newTaskId].tPalIndex = 0;
     gTasks[newTaskId].tDelayBefore = 8;
-    gTasks[newTaskId].tDelay = interval;
-    gTasks[newTaskId].tDelayTimer = interval;
+    gTasks[newTaskId].tDelay = delay;
+    gTasks[newTaskId].tDelayTimer = delay;
 }
 
 static void HandleFloorShadowFadeIn(u8 taskId)
@@ -1620,14 +1620,14 @@ static void HandleFloorShadowFadeIn(u8 taskId)
 }
 
 //Launches a helper task to fade in the background
-static void StartBackgroundFadeIn(u8 taskId, u8 interval)
+static void StartBackgroundFadeIn(u8 taskId, u8 delay)
 {
     u8 newTaskId = CreateTask(HandleFloorShadowFadeIn, 0);
     gTasks[newTaskId].tMainTask = taskId;
     gTasks[newTaskId].tPalIndex = 8;
     gTasks[newTaskId].tDelayBefore = 8;
-    gTasks[newTaskId].tDelay = interval;
-    gTasks[newTaskId].tDelayTimer = interval;
+    gTasks[newTaskId].tDelay = delay;
+    gTasks[newTaskId].tDelayTimer = delay;
 }
 
 #undef tMainTask
@@ -1668,15 +1668,15 @@ static s8 NameMenuProcessInput(void)
     return Menu_ProcessInput();
 }
 
-static void SetPresetPlayerName(u8 index)
+static void SetPresetPlayerName(u8 nameId)
 {
     u8 i;
     u8 *name;
 
     if (gSaveBlock2.playerGender == MALE)
-        name = (u8 *) sMalePresetNames[index].text;
+        name = (u8 *) sMalePresetNames[nameId].text;
     else
-        name = (u8 *) sFemalePresetNames[index].text;
+        name = (u8 *) sFemalePresetNames[nameId].text;
 
     for (i = 0; i < 7; i++)
         gSaveBlock2.playerName[i] = name[i];

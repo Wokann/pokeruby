@@ -29,10 +29,10 @@ extern const u8 gText_Pokemon[];
 extern const u8 gText_PkmnFainted_FldPsn[];
 
 // main menu text
-extern const u8 gMainMenuString_NewGame[];
-extern const u8 gMainMenuString_Continue[];
-extern const u8 gMainMenuString_Option[];
-extern const u8 gMainMenuString_MysteryEvents[];
+extern const u8 gText_MainMenuNewGame[];
+extern const u8 gText_MainMenuContinue[];
+extern const u8 gText_MainMenuOption[];
+extern const u8 gText_MainMenuMysteryEvents[];
 
 // system text 2
 extern const u8 SystemText_UpdatingSaveExternal[];
@@ -46,13 +46,13 @@ extern const u8 gSaveFileDeletedMessage[];
 
 // system text 3
 extern const u8 gBoardNotInstalledMessage[];
-extern const u8 gBatteryDryMessage[];
+extern const u8 gText_BatteryRunDry[];
 
 // main menu text 2
-extern const u8 gMainMenuString_Player[];
-extern const u8 gMainMenuString_Pokedex[];
+extern const u8 gText_Player[];
+extern const u8 gText_Pokedex[];
 extern const u8 gText_Time[];
-extern const u8 gMainMenuString_Badges[];
+extern const u8 gText_Badges[];
 
 // birch text
 extern const u8 gText_BirchBoy[];

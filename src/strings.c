@@ -23,10 +23,10 @@ const u8 gText_EggNickname[] = _("EGG");
 const u8 gText_Pokemon[] = _("POKéMON");
 
 // main menu text
-const u8 gMainMenuString_NewGame[] = _("NEW GAME");
-const u8 gMainMenuString_Continue[] = _("CONTINUE");
-const u8 gMainMenuString_Option[] = _("OPTION");
-const u8 gMainMenuString_MysteryEvents[] = _("MYSTERY EVENTS");
+const u8 gText_MainMenuNewGame[] = _("NEW GAME");
+const u8 gText_MainMenuContinue[] = _("CONTINUE");
+const u8 gText_MainMenuOption[] = _("OPTION");
+const u8 gText_MainMenuMysteryEvents[] = _("MYSTERY EVENTS");
 
 // system text 2
 const u8 SystemText_UpdatingSaveExternal[] = _("Updating save file using external\ndata. Please wait.");
@@ -40,13 +40,13 @@ const u8 gSaveFileDeletedMessage[] = _(" The save file has been deleted...");
 
 // system text 3
 const u8 gBoardNotInstalledMessage[] = _("The 1M sub-circuit board is\nnot installed.");
-const u8 gBatteryDryMessage[] = _("The internal battery has run dry.\nThe game can be played.\pHowever, clock-based events will\nno longer occur.");
+const u8 gText_BatteryRunDry[] = _("The internal battery has run dry.\nThe game can be played.\pHowever, clock-based events will\nno longer occur.");
 
 // main menu text 2
-const u8 gMainMenuString_Player[] = _("PLAYER");
-const u8 gMainMenuString_Pokedex[] = _("POKéDEX");
+const u8 gText_Player[] = _("PLAYER");
+const u8 gText_Pokedex[] = _("POKéDEX");
 const u8 gText_Time[] = _("TIME");
-const u8 gMainMenuString_Badges[] = _("BADGES");
+const u8 gText_Badges[] = _("BADGES");
 
 // birch text
 const u8 gText_BirchBoy[] = _("BOY");
@@ -951,10 +951,10 @@ const u8 gText_EggNickname[] = _("EI");
 const u8 gText_Pokemon[] = _("POKéMON");
 
 // main menu text
-const u8 gMainMenuString_NewGame[] = _("NEUES SPIEL");
-const u8 gMainMenuString_Continue[] = _("WEITER");
-const u8 gMainMenuString_Option[] = _("OPTIONEN");
-const u8 gMainMenuString_MysteryEvents[] = _("GEHEIMGESCHEHEN");
+const u8 gText_MainMenuNewGame[] = _("NEUES SPIEL");
+const u8 gText_MainMenuContinue[] = _("WEITER");
+const u8 gText_MainMenuOption[] = _("OPTIONEN");
+const u8 gText_MainMenuMysteryEvents[] = _("GEHEIMGESCHEHEN");
 
 // system text 2
 const u8 SystemText_UpdatingSaveExternal[] = _("Neuer Spielstand mittels Übertra-\ngung externer Daten. Bitte warten.");
@@ -968,13 +968,13 @@ const u8 gSaveFileDeletedMessage[] = _("Der Spielstand wurde gelöscht.");
 
 // system text 3
 const u8 gBoardNotInstalledMessage[] = _("Das ‘1M Sub-circuit Board'\nist nicht installiert.");
-const u8 gBatteryDryMessage[] = _("Interne Batterie ist verbraucht.\nSpiel kann fortgesetzt werden.\pAber zeitbasierende Spiel-Events\nwerden nicht mehr initiiert.");
+const u8 gText_BatteryRunDry[] = _("Interne Batterie ist verbraucht.\nSpiel kann fortgesetzt werden.\pAber zeitbasierende Spiel-Events\nwerden nicht mehr initiiert.");
 
 // main menu text 2
-const u8 gMainMenuString_Player[] = _("SPIELER");
-const u8 gMainMenuString_Pokedex[] = _("POKéDEX");
+const u8 gText_Player[] = _("SPIELER");
+const u8 gText_Pokedex[] = _("POKéDEX");
 const u8 gText_Time[] = _("SPIELZEIT");
-const u8 gMainMenuString_Badges[] = _("ORDEN");
+const u8 gText_Badges[] = _("ORDEN");
 
 // birch text
 const u8 gText_BirchBoy[] = _("JUNGE");
