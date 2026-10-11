@@ -57,8 +57,8 @@ sText_ShedinjaJpnName:: @ 81F96C8
 	.string "ヌケニン$" @ "Nukenin" (Shedinja)
 
 	.align 2
-gSpriteTemplate_81F96D0:: @ 81F96D0
-	spr_template 0, 0, gDummyOamData, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, sub_800F828
+gUnusedBattleInitSprite:: @ 81F96D0
+	spr_template 0, 0, gDummyOamData, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCB_UnusedBattleInit
 
 .if DEBUG
 
@@ -377,17 +377,17 @@ gStatusConditionStringsTable:: @ 81FA6D4
 	.4byte gStatusConditionString_ConfusionJpn, gText_Confusion
 	.4byte gStatusConditionString_LoveJpn, gText_Love
 
-gUnknown_081FA70C:: @ 81FA70C
+sPkblToEscapeFactor:: @ 81FA70C
 	.byte 0, 0, 0
 	.byte 3, 5, 0
 	.byte 2, 3, 0
 	.byte 1, 2, 0
 	.byte 1, 1, 0
 
-gUnknown_081FA71B:: @ 81FA71B
+sGoNearCounterToCatchFactor:: @ 81FA71B
 	.byte 4, 3, 2, 1
 
-gUnknown_081FA71F:: @ 81FA71F
+sGoNearCounterToEscapeFactor:: @ 81FA71F
 	.byte 4, 4, 4, 4
 
 	.align 1

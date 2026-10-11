@@ -2,6 +2,7 @@
 #include "item_menu.h"
 #include "reshow_battle_screen.h"
 #include "battle.h"
+#include "battle_main.h"
 #include "battle_gfx_sfx_util.h"
 #include "battle_anim.h"
 #include "battle_controllers.h"

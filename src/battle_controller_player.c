@@ -108,10 +108,8 @@ extern u8 gSelectedMonPartyId;
 extern u8 gDisplayedStringBattle[];
 extern const u8 gText_LinkStandby[];
 
-extern void DoBounceEffect(u8, u8, s8, s8);
 extern u8 GetBattlerPosition(u8);
 extern u8 GetBattlerAtPosition(u8);
-extern void EndBounceEffect(u8, u8);
 extern void SpriteCB_HideAsMoveTarget(struct Sprite *);
 extern bool8 IsDoubleBattle();
 

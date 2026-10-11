@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_main.h"
 #include "battle_ai_script_commands.h"
 #include "battle_util.h"
 #include "battle_controllers.h"
@@ -1355,12 +1356,12 @@ u8 AtkCanceller_UnableToUseMove(void)
     s32* bideDmg = &gBattleStruct->bideDmg;
     do
     {
-        switch (gBattleStruct->atkCancellerTracker)
+        switch (gBattleStruct->atkCancelerTracker)
         {
         case 0: // flags clear
             gBattleMons[gBattlerAttacker].status2 &= ~(STATUS2_DESTINY_BOND);
             gStatuses3[gBattlerAttacker] &= ~(STATUS3_GRUDGE);
-            gBattleStruct->atkCancellerTracker++;
+            gBattleStruct->atkCancelerTracker++;
             break;
         case 1: // check being asleep
             if (gBattleMons[gBattlerAttacker].status1 & STATUS1_SLEEP)
@@ -1404,7 +1405,7 @@ u8 AtkCanceller_UnableToUseMove(void)
                     }
                 }
             }
-            gBattleStruct->atkCancellerTracker++;
+            gBattleStruct->atkCancelerTracker++;
             break;
         case 2: // check being frozen
             if (gBattleMons[gBattlerAttacker].status1 & STATUS1_FREEZE)
@@ -1418,7 +1419,7 @@ u8 AtkCanceller_UnableToUseMove(void)
                     }
                     else
                     {
-                        gBattleStruct->atkCancellerTracker++;
+                        gBattleStruct->atkCancelerTracker++;
                         break;
                     }
                 }
@@ -1431,7 +1432,7 @@ u8 AtkCanceller_UnableToUseMove(void)
                 }
                 effect = 2;
             }
-            gBattleStruct->atkCancellerTracker++;
+            gBattleStruct->atkCancelerTracker++;
             break;
         case 3: // truant
             if (gBattleMons[gBattlerAttacker].ability == ABILITY_TRUANT && gDisableStructs[gBattlerAttacker].truantCounter)
@@ -1443,7 +1444,7 @@ u8 AtkCanceller_UnableToUseMove(void)
                 gMoveResultFlags |= MOVE_RESULT_MISSED;
                 effect = 1;
             }
-            gBattleStruct->atkCancellerTracker++;
+            gBattleStruct->atkCancelerTracker++;
             break;
         case 4: // recharge
             if (gBattleMons[gBattlerAttacker].status2 & STATUS2_RECHARGE)
@@ -1455,7 +1456,7 @@ u8 AtkCanceller_UnableToUseMove(void)
                 gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
                 effect = 1;
             }
-            gBattleStruct->atkCancellerTracker++;
+            gBattleStruct->atkCancelerTracker++;
             break;
         case 5: // flinch
             if (gBattleMons[gBattlerAttacker].status2 & STATUS2_FLINCHED)
@@ -1467,7 +1468,7 @@ u8 AtkCanceller_UnableToUseMove(void)
                 gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
                 effect = 1;
             }
-            gBattleStruct->atkCancellerTracker++;
+            gBattleStruct->atkCancelerTracker++;
             break;
         case 6: // disabled move
             if (gDisableStructs[gBattlerAttacker].disabledMove == gCurrentMove && gDisableStructs[gBattlerAttacker].disabledMove != 0)
@@ -1479,7 +1480,7 @@ u8 AtkCanceller_UnableToUseMove(void)
                 gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
                 effect = 1;
             }
-            gBattleStruct->atkCancellerTracker++;
+            gBattleStruct->atkCancelerTracker++;
             break;
         case 7: // taunt
             if (gDisableStructs[gBattlerAttacker].tauntTimer && gBattleMoves[gCurrentMove].power == 0)
@@ -1490,7 +1491,7 @@ u8 AtkCanceller_UnableToUseMove(void)
                 gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
                 effect = 1;
             }
-            gBattleStruct->atkCancellerTracker++;
+            gBattleStruct->atkCancelerTracker++;
             break;
         case 8: // imprisoned
             if (GetImprisonedMovesCount(gBattlerAttacker, gCurrentMove))
@@ -1501,7 +1502,7 @@ u8 AtkCanceller_UnableToUseMove(void)
                 gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
                 effect = 1;
             }
-            gBattleStruct->atkCancellerTracker++;
+            gBattleStruct->atkCancelerTracker++;
             break;
         case 9: // confusion
             if (gBattleMons[gBattlerAttacker].status2 & STATUS2_CONFUSION)
@@ -1531,7 +1532,7 @@ u8 AtkCanceller_UnableToUseMove(void)
                 }
                 effect = 1;
             }
-            gBattleStruct->atkCancellerTracker++;
+            gBattleStruct->atkCancelerTracker++;
             break;
         case 10: // paralysis
             if (gBattleMons[gBattlerAttacker].status1 & STATUS1_PARALYSIS && (Random() % 4) == 0)
@@ -1542,7 +1543,7 @@ u8 AtkCanceller_UnableToUseMove(void)
                 gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
                 effect = 1;
             }
-            gBattleStruct->atkCancellerTracker++;
+            gBattleStruct->atkCancelerTracker++;
             break;
         case 11: // infatuation
             if (gBattleMons[gBattlerAttacker].status2 & STATUS2_INFATUATION)
@@ -1560,7 +1561,7 @@ u8 AtkCanceller_UnableToUseMove(void)
                 gBattlescriptCurrInstr = BattleScript_MoveUsedIsInLove;
                 effect = 1;
             }
-            gBattleStruct->atkCancellerTracker++;
+            gBattleStruct->atkCancelerTracker++;
             break;
         case 12: // bide
             if (gBattleMons[gBattlerAttacker].status2 & STATUS2_BIDE)
@@ -1585,7 +1586,7 @@ u8 AtkCanceller_UnableToUseMove(void)
                 }
                 effect = 1;
             }
-            gBattleStruct->atkCancellerTracker++;
+            gBattleStruct->atkCancelerTracker++;
             break;
         case 13: // move thawing
             if (gBattleMons[gBattlerAttacker].status1 & STATUS1_FREEZE)
@@ -1599,13 +1600,13 @@ u8 AtkCanceller_UnableToUseMove(void)
                 }
                 effect = 2;
             }
-            gBattleStruct->atkCancellerTracker++;
+            gBattleStruct->atkCancelerTracker++;
             break;
         case 14: // last case
             break;
         }
 
-    } while (gBattleStruct->atkCancellerTracker != ATKCANCELLER_MAX_CASE && effect == 0);
+    } while (gBattleStruct->atkCancelerTracker != ATKCANCELLER_MAX_CASE && effect == 0);
 
     if (effect == 2)
     {
@@ -1987,14 +1988,14 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                 case ABILITY_FLASH_FIRE:
                     if (moveType == TYPE_FIRE && !(gBattleMons[bank].status1 & STATUS1_FREEZE))
                     {
-                        if (!(eBattleFlagsArr.arr[bank] & 1))
+                        if (!(eBattleFlagsArr.flags[bank] & 1))
                         {
                             gBattleCommunication[MULTISTRING_CHOOSER] = 0;
                             if (gProtectStructs[gBattlerAttacker].notFirstStrike)
                                 gBattlescriptCurrInstr = BattleScript_FlashFireBoost;
                             else
                                 gBattlescriptCurrInstr = BattleScript_FlashFireBoost_PPLoss;
-                            eBattleFlagsArr.arr[bank] |= 1;
+                            eBattleFlagsArr.flags[bank] |= 1;
                             effect = 2;
                         }
                         else
@@ -2594,7 +2595,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
 void BattleScriptExecute(const u8* BS_ptr)
 {
     gBattlescriptCurrInstr = BS_ptr;
-    B_FUNCTION_STACK->ptr[B_FUNCTION_STACK->size++] = gBattleMainFunc;
+    B_FUNCTION_STACK->function[B_FUNCTION_STACK->size++] = gBattleMainFunc;
     gBattleMainFunc = RunBattleScriptCommands_PopCallbacksStack;
     gCurrentActionFuncId = 0;
 }
@@ -2603,7 +2604,7 @@ void BattleScriptPushCursorAndCallback(u8* BS_ptr)
 {
     BattleScriptPushCursor();
     gBattlescriptCurrInstr = BS_ptr;
-    B_FUNCTION_STACK->ptr[B_FUNCTION_STACK->size++] = gBattleMainFunc;
+    B_FUNCTION_STACK->function[B_FUNCTION_STACK->size++] = gBattleMainFunc;
     gBattleMainFunc = RunBattleScriptCommands;
 }
 

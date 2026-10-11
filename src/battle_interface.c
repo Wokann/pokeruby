@@ -974,7 +974,7 @@ static void PrintSafariMonInfo(u8 healthboxSpriteId, struct Pokemon *mon)
 
     healthBarSpriteId = gSprites[healthboxSpriteId].data[5];
     ConvertIntToDecimalStringN(text + 6, gBattleStruct->safariCatchFactor, 1, 2);
-    ConvertIntToDecimalStringN(text + 9, gBattleStruct->safariFleeRate, 1, 2);
+    ConvertIntToDecimalStringN(text + 9, gBattleStruct->safariEscapeFactor, 1, 2);
     text[5] = CHAR_SPACE;
     text[8] = CHAR_SLASH;
     RenderTextHandleBold(eBattleInterfaceGfxBuffer, text);

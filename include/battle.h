@@ -93,7 +93,7 @@ struct ProtectStruct
     u32 confusionSelfDmg:1;
     u32 targetNotAffected:1;
     u32 chargingTurn:1;
-    u32 fleeFlag:2; // For RunAway and Smoke Ball.
+    u32 fleeType:2; // For RunAway and Smoke Ball.
     u32 usedImprisonedMove:1;
     u32 loveImmobility:1;
     u32 usedDisabledMove:1;
@@ -189,7 +189,7 @@ struct BattleScriptsStack
 
 struct BattleCallbacksStack
 {
-    void* ptr[8];
+    void* function[8];
     u8 size;
 };
 
@@ -212,20 +212,20 @@ struct BattleResults
     u8 numRevivesUsed;        // 0x4
     u8 playerMonWasDamaged:1; // 0x5
     u8 usedMasterBall:1;      // 0x5
-    u16 poke1Species;         // 0x6
-    u8 pokeString1[10];       // 0x8
+    u16 playerMon1Species;         // 0x6
+    u8 playerMon1Name[10];       // 0x8
     u8 unk12; // unused
     u8 battleTurnCounter;     // 0x13
-    u8 pokeString2[10];       // 0x14
+    u8 playerMon2Name[10];       // 0x14
     u8 filler1E[2];
     u16 lastOpponentSpecies;  // 0x20
-    u16 lastUsedMove;         // 0x22
-    u16 opponentMove;         // 0x24
-    u16 opponentSpecies;      // 0x26
-    u16 caughtPoke;           // 0x28
-    u8 caughtNick[10];        // 0x2A
+    u16 lastUsedMovePlayer;         // 0x22
+    u16 lastUsedMoveOpponent;         // 0x24
+    u16 playerMon2Species;      // 0x26
+    u16 caughtMonSpecies;           // 0x28
+    u8 caughtMonNick[10];        // 0x2A
     u8 filler34[2];
-    u8 usedBalls[11];
+    u8 catchAttempts[11];
 };
 
 struct AI_Stack
@@ -234,7 +234,7 @@ struct AI_Stack
     u8 size;
 };
 
-struct LinkPartnerHeader
+struct LinkBattlerHeader
 {
     u8 versionSignatureLo;
     u8 versionSignatureHi;
@@ -245,7 +245,7 @@ struct LinkPartnerHeader
 
 union MultiBuffers
 {
-    struct LinkPartnerHeader linkPartnerHeader;
+    struct LinkBattlerHeader linkBattlerHeader;
     struct MultiBattlePokemonTx multiBattleMons[3];
 };
 
@@ -283,7 +283,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x1601A*/ u8 learnMoveState;
     /*0x1601B*/ u8 wildVictorySong;
     /*0x1601C*/ u8 dynamicMoveType;
-    /*0x1601D*/ u8 focusPunchBattler;
+    /*0x1601D*/ u8 focusPunchBattlerId;
     /*0x1601E*/ u8 statChanger;
     /*0x1601F*/ u8 dmgMultiplier;
     /*0x16020*/ u8 wrappedBy[MAX_BATTLERS_COUNT];
@@ -308,7 +308,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x16085*/ u8 unk16085;
     /*0x16086*/ u8 safariGoNearCounter;
     /*0x16087*/ u8 safariPkblThrowCounter;
-    /*0x16088*/ u8 safariFleeRate;
+    /*0x16088*/ u8 safariEscapeFactor;
     /*0x16089*/ u8 safariCatchFactor;
     /*0x1608A*/ u8 linkBattleVsSpriteId_V;
     /*0x1608B*/ u8 linkBattleVsSpriteId_S;
@@ -326,7 +326,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x160A3*/ u8 unk160A3;
     /*0x160A4*/ u8 animArg1;
     /*0x160A5*/ u8 animArg2;
-    /*0x160A6*/ u8 unk160A6; // related to gAbsentBattlerFlags, possibly absent flags turn ago?
+    /*0x160A6*/ u8 absentBattlerFlags;
     /*0x160A7*/ u8 pursuitDoublesAttacker;
     /*0x160A8*/ u8 wallyBattleState;
     /*0x160A9*/ u8 wallyMovesState;
@@ -336,8 +336,8 @@ struct BattleStruct /* 0x2000000 */
     /*0x160BC*/ u16 hpOnSwitchout[2];
     /*0x160C0*/ u8 abilityPreventingSwitchout;
     /*0x160C1*/ u8 hpScale;
-    /*0x160C2*/ u16 unk160C2;
-    /*0x160C4*/ MainCallback unk160C4;
+    /*0x160C2*/ u16 savedBattleTypeFlags;
+    /*0x160C4*/ MainCallback savedCallback;
 
     // Buffers used by the AI are indexed using (battler / 2)
     // i.e. the flank bit, because at no point in game is the
@@ -358,12 +358,12 @@ struct BattleStruct /* 0x2000000 */
     /*0x160DE*/ u8 unk160DE;
     /*0x160DF*/ u8 unk160DF;
     /*0x160E0*/ u8 multihitString[6];
-    /*0x160E6*/ u8 unk160E6;
-    /*0x160E7*/ u8 atkCancellerTracker;
+    /*0x160E6*/ u8 overworldWeatherDone;
+    /*0x160E7*/ u8 atkCancelerTracker;
     /*0x160E8*/ u16 choicedMove[MAX_BATTLERS_COUNT];
     /*0x160F0*/ u16 changedItems[MAX_BATTLERS_COUNT];
     /*0x160F8*/ u8 battlerWithAbility;
-    /*0x160F9*/ u8 unk160F9;
+    /*0x160F9*/ u8 switchInItemsCounter;
     /*0x160FA*/ u8 levelUpHP;
     /*0x160FB*/ u8 unk160FB;
     /*0x160FC*/ u8 turnSideTracker;
@@ -379,7 +379,7 @@ struct BattleStruct /* 0x2000000 */
 
 struct ResourceFlags
 {
-    u32 arr[4];
+    u32 flags[4];
 };
 
 struct BattleSpriteInfo
@@ -395,8 +395,8 @@ struct BattleSpriteInfo
 struct BattleHealthboxInfo
 {
  /*0x00*/ u8 partyStatusSummaryShown:1;
- /*0x00*/ u8 unk0_1:1;
- /*0x00*/ u8 unk0_2:1;
+ /*0x00*/ u8 healthboxIsBouncing:1;
+ /*0x00*/ u8 battlerIsBouncing:1;
  /*0x00*/ u8 ballAnimActive:1;
  /*0x00*/ u8 statusAnimActive:1;
  /*0x00*/ u8 animFromTableActive:1;
@@ -404,8 +404,8 @@ struct BattleHealthboxInfo
  /*0x00*/ u8 triedShinyMonAnim:1;
  /*0x01*/ u8 finishedShinyMonAnim:1;
  /*0x01*/ u8 opponentDrawPartyStatusSummaryDelay:5;
- /*0x02*/ u8 unk2;
- /*0x03*/ u8 unk3;
+ /*0x02*/ u8 healthboxBounceSpriteId;
+ /*0x03*/ u8 battlerBounceSpriteId;
  /*0x04*/ u8 animationState;
  /*0x05*/ u8 partyStatusDelayTimer;
  /*0x06*/ u8 matrixNum;
@@ -539,41 +539,21 @@ void LoadBattleTextboxAndBackground();
 void InitLinkBattleVsScreen(u8);
 void DrawBattleEntryBackground();
 
-// defines for the 'DoBounceEffect' function
-#define BOUNCE_MON          0x0
-#define BOUNCE_HEALTHBOX    0x1
-
 // src/battle_2.o
-void CB2_InitBattle(void);
 void sub_800F104(void);
-void BattleMainCB2(void);
-void sub_800F838(struct Sprite *);
-void CB2_InitEndLinkBattle(void);
 void sub_80101B8(void);
 void c2_081284E0(void);
 void sub_8010278(struct Sprite *);
 void sub_80102AC(struct Sprite *);
-void sub_8010320(struct Sprite *);
-void sub_8010494(struct Sprite *);
-void objc_dp11b_pingpong(struct Sprite *);
 void sub_8011384(void);
-void bc_801333C(void);
-void bc_battle_begin_message(void);
-void bc_8013568(void);
 void sub_8011800(void);
 void sub_8011834(void);
 void bc_801362C(void);
 void sub_80119B4(void);
 void BattleBeginFirstTurn(void);
-void BattleTurnPassed(void);
-void RunBattleScriptCommands_PopCallbacksStack(void);
-void RunBattleScriptCommands(void);
-bool8 TryRunFromBattle(u8 bank);
 
 // asm/battle_2.o
 void sub_8012324(void);
-void SwapTurnOrder(u8, u8);
-u8 GetWhoStrikesFirst(u8, u8, u8);
 
 void debug_sub_8010800(void);
 

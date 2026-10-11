@@ -1,6 +1,7 @@
 #include "global.h"
 #include "cable_club.h"
 #include "battle.h"
+#include "battle_main.h"
 #include "battle_records.h"
 #include "constants/songs.h"
 #include "contest_util.h"

@@ -330,7 +330,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
         }
 
         // flash fire triggered
-        if ((eBattleFlagsArr.arr[battlerIdAtk] & 1) && type == TYPE_FIRE)
+        if ((eBattleFlagsArr.flags[battlerIdAtk] & 1) && type == TYPE_FIRE)
             damage = (15 * damage) / 10;
     }
 

@@ -131,11 +131,9 @@ void UndoEffectsAfterFainting(void);
 void PlayBGM(u16 songID);
 extern u8 gBattleBufferB[4][0x200];
 void BattleScriptPop(void);
-void SwitchInClearSetData(void);
 u8 GetBattlerMultiplayerId(u8 bank);
 u16 GetLinkTrainerFlankId(u8 a);
 u8 GetBattlerAtPosition(u8 ID);
-void sub_8012258(u8);
 //MonTryLearningNewMove teach poke a move
 u16 GiveMoveToBattleMon(struct BattlePokemon *mon, u16 move);
 void IncrementGameStat(u8 index);
@@ -146,9 +144,7 @@ void sub_802BC6C(void);
 u8 GetMoveSlotToReplace(void);
 void sub_802BBD4(u8 xStart, u8 yStart, u8 xEnd, u8 yEnd, u8 sp0);
 void nullsub_6(void);
-void BattleMainCB2(void);
 void AddMoney(u32* moneySaveblock, u32 to_give);
-u8 CanRunFromBattle(void);
 u8 GetMoveTarget(u16 move, u8 targetbyte); //get target of move
 u8 GetCurrentMapType(void);
 u8 CalculatePlayerPartyCount(void);
@@ -3947,7 +3943,7 @@ static void Cmd_end3(void) //pops the main function stack
     BattleScriptPop();
     if (B_FUNCTION_STACK->size)
         B_FUNCTION_STACK->size--;
-    gBattleMainFunc = B_FUNCTION_STACK->ptr[B_FUNCTION_STACK->size];
+    gBattleMainFunc = B_FUNCTION_STACK->function[B_FUNCTION_STACK->size];
 }
 
 static void Cmd_call(void)
@@ -5007,7 +5003,7 @@ static void atk51_switchhandleorder(void)
         break;
     case 1:
         if (!(gBattleTypeFlags & BATTLE_TYPE_MULTI))
-            sub_8012258(gActiveBattler);
+            SwitchPartyOrder(gActiveBattler);
         break;
     case 2:
         gBattleCommunication[0] = gBattleBufferB[gActiveBattler][1];
@@ -5022,7 +5018,7 @@ static void atk51_switchhandleorder(void)
             gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * (gActiveBattler ^ BIT_FLANK) + 2] = gBattleBufferB[gActiveBattler][3];
         }
         else
-            sub_8012258(gActiveBattler);
+            SwitchPartyOrder(gActiveBattler);
 
         gBattleTextBuff1[0] = 0xFD;
         gBattleTextBuff1[1] = 6;
@@ -5965,7 +5961,7 @@ static void atk76_various(void)
         }
         break;
     case 2:
-        gBattleCommunication[0] = CanRunFromBattle();
+        gBattleCommunication[0] = IsRunningFromBattleImpossible();
         break;
     case 3:
         gBattlerTarget = GetMoveTarget(gCurrentMove, 0);
@@ -6742,7 +6738,7 @@ static void atk8F_forcerandomswitch(void)
             }
             gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + gBattlerTarget] = i;
             if (!IsLinkDoubleBattle())
-                sub_8012258(gBattlerTarget);
+                SwitchPartyOrder(gBattlerTarget);
             SwitchPartyOrderLinkMulti(gBattlerTarget, i, 0);
             SwitchPartyOrderLinkMulti(gBattlerTarget ^ 2, i, 1);
 #undef MON_CAN_BATTLE
@@ -9386,8 +9382,8 @@ void atkEF_handleballthrow(void)
             }
             else
             {
-                if (gBattleResults.usedBalls[gLastUsedItem - ITEM_ULTRA_BALL] < 0xFF)
-                    gBattleResults.usedBalls[gLastUsedItem - ITEM_ULTRA_BALL]++;
+                if (gBattleResults.catchAttempts[gLastUsedItem - ITEM_ULTRA_BALL] < 0xFF)
+                    gBattleResults.catchAttempts[gLastUsedItem - ITEM_ULTRA_BALL]++;
             }
         }
         if (odds > 254) //poke caught
@@ -9432,8 +9428,8 @@ void atkEF_handleballthrow(void)
 static void atkF0_givecaughtmon(void)
 {
     GiveMonToPlayer(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]]);
-    gBattleResults.caughtPoke = gBattleMons[gBattlerAttacker ^ 1].species;
-    GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_NICKNAME, gBattleResults.caughtNick);
+    gBattleResults.caughtMonSpecies = gBattleMons[gBattlerAttacker ^ 1].species;
+    GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_NICKNAME, gBattleResults.caughtMonNick);
     gBattlescriptCurrInstr++;
 }
 

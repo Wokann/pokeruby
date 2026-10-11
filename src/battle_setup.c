@@ -1,6 +1,7 @@
 #include "global.h"
 #include "battle_setup.h"
 #include "battle.h"
+#include "battle_main.h"
 #include "battle_transition.h"
 #include "constants/battle_setup.h"
 #include "constants/event_objects.h"

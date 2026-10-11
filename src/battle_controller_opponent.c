@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_main.h"
 #include "battle_gfx_sfx_util.h"
 #include "battle_ai_script_commands.h"
 #include "battle_ai_switch_items.h"
@@ -66,7 +67,6 @@ extern void StartAnimLinearTranslation(struct Sprite *);
 extern void sub_8032BBC(void);
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
 static void HideHealthboxAfterMonFaint(void);
-extern void sub_8010384(struct Sprite *);
 extern void BufferStringBattle();
 extern void sub_80331D0(void);
 extern u8 GetBattlerAtPosition(u8);
@@ -1265,7 +1265,7 @@ static void OpponentHandleFaintAnimation(void)
     {
         gBattleHealthBoxInfo[gActiveBattler].animationState = 0;
         PlaySE12WithPanning(SE_FAINT, 63);
-        gSprites[gBattlerSpriteIds[gActiveBattler]].callback = sub_8010384;
+        gSprites[gBattlerSpriteIds[gActiveBattler]].callback = SpriteCB_FaintOpponentMon;
         gBattlerControllerFuncs[gActiveBattler] = HideHealthboxAfterMonFaint;
     }
 }

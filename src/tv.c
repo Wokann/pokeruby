@@ -705,9 +705,9 @@ void GabbyAndTyBeforeInterview(void)
 {
     u8 i;
 
-    gSaveBlock1.gabbyAndTyData.mon1 = gBattleResults.poke1Species;
-    gSaveBlock1.gabbyAndTyData.mon2 = gBattleResults.opponentSpecies;
-    gSaveBlock1.gabbyAndTyData.lastMove = gBattleResults.lastUsedMove;
+    gSaveBlock1.gabbyAndTyData.mon1 = gBattleResults.playerMon1Species;
+    gSaveBlock1.gabbyAndTyData.mon2 = gBattleResults.playerMon2Species;
+    gSaveBlock1.gabbyAndTyData.lastMove = gBattleResults.lastUsedMovePlayer;
     if (gSaveBlock1.gabbyAndTyData.battleNum != 0xff)
         gSaveBlock1.gabbyAndTyData.battleNum ++;
     gSaveBlock1.gabbyAndTyData.battleTookMoreThanOneTurn = gBattleResults.playerMonWasDamaged;
@@ -726,7 +726,7 @@ void GabbyAndTyBeforeInterview(void)
     {
         for (i=0; i<11; i++)
         {
-            if (gBattleResults.usedBalls[i] != 0)
+            if (gBattleResults.catchAttempts[i] != 0)
             {
                 gSaveBlock1.gabbyAndTyData.playerThrewABall = 1;
                 break;
@@ -878,20 +878,20 @@ void TryPutPokemonTodayOnAir(void)
     TryPutRandomPokeNewsOnAir();
     TryStartRandomMassOutbreak();
 
-    if (gBattleResults.caughtPoke == 0)
+    if (gBattleResults.caughtMonSpecies == 0)
     {
         TryPutPokemonTodayFailedOnTheAir();
     }
     else
     {
         InitWorldOfMastersShowAttempt();
-        if (BernoulliTrial(0xffff) == 0 && StringCompareWithoutExtCtrlCodes(gSpeciesNames[gBattleResults.caughtPoke], gBattleResults.caughtNick) != 0)
+        if (BernoulliTrial(0xffff) == 0 && StringCompareWithoutExtCtrlCodes(gSpeciesNames[gBattleResults.caughtMonSpecies], gBattleResults.caughtMonNick) != 0)
         {
             sCurTVShowSlot.var0 = FindFirstEmptyRecordMixTVShowSlot(gSaveBlock1.tvShows);
             if (sCurTVShowSlot.var0 != -1 && IsRecordMixShowAlreadySpawned(TVSHOW_POKEMON_TODAY_CAUGHT) != 1)
             {
                 for (i = 0; i < 11; i++)
-                    ballsUsed += gBattleResults.usedBalls[i];
+                    ballsUsed += gBattleResults.catchAttempts[i];
                 if (ballsUsed != 0 || gBattleResults.usedMasterBall != 0)
                 {
                     struct TVShowPokemonToday *pokemonToday;
@@ -908,7 +908,7 @@ void TryPutPokemonTodayOnAir(void)
                     else
                     {
                         for (i = 0; i < 11; i++)
-                            ballsUsed += gBattleResults.usedBalls[i];
+                            ballsUsed += gBattleResults.catchAttempts[i];
                         if (ballsUsed > 0xff)
                             ballsUsed = 0xff;
                         itemLastUsed = gLastUsedItem;
@@ -916,8 +916,8 @@ void TryPutPokemonTodayOnAir(void)
                     pokemonToday->nBallsUsed = ballsUsed;
                     pokemonToday->ball = itemLastUsed;
                     StringCopy(pokemonToday->playerName, gSaveBlock2.playerName);
-                    StringCopy(pokemonToday->nickname, gBattleResults.caughtNick);
-                    pokemonToday->species = gBattleResults.caughtPoke;
+                    StringCopy(pokemonToday->nickname, gBattleResults.caughtMonNick);
+                    pokemonToday->species = gBattleResults.caughtMonSpecies;
                     StorePlayerIdInRecordMixShow((TVShow *)pokemonToday);
                     pokemonToday->language = GAME_LANGUAGE;
                     pokemonToday->language2 = GetStringLanguage(pokemonToday->nickname);
@@ -939,8 +939,8 @@ static void InitWorldOfMastersShowAttempt(void)
         worldOfMasters->kind = TVSHOW_WORLD_OF_MASTERS;
     }
     worldOfMasters->numPokeCaught++;
-    worldOfMasters->caughtPoke = gBattleResults.caughtPoke;
-    worldOfMasters->species = gBattleResults.poke1Species;
+    worldOfMasters->caughtPoke = gBattleResults.caughtMonSpecies;
+    worldOfMasters->species = gBattleResults.playerMon1Species;
     worldOfMasters->location = gMapHeader.regionMapSectionId;
 }
 
@@ -953,7 +953,7 @@ static void TryPutPokemonTodayFailedOnTheAir(void)
     if (BernoulliTrial(0xffff) == 0)
     {
         for (i = 0, ballsUsed = 0; i < 11; i++)
-            ballsUsed += gBattleResults.usedBalls[i];
+            ballsUsed += gBattleResults.catchAttempts[i];
         if (ballsUsed > 0xff)
             ballsUsed = 0xff;
         if (ballsUsed > 2 && gBattleOutcome == 1)
@@ -966,7 +966,7 @@ static void TryPutPokemonTodayFailedOnTheAir(void)
                 zero = 0;
                 pokemonTodayFailed->kind = TVSHOW_POKEMON_TODAY_FAILED;
                 pokemonTodayFailed->active = zero;
-                pokemonTodayFailed->species = gBattleResults.poke1Species;
+                pokemonTodayFailed->species = gBattleResults.playerMon1Species;
                 pokemonTodayFailed->species2 = gBattleResults.lastOpponentSpecies;
                 pokemonTodayFailed->nBallsUsed = ballsUsed;
                 pokemonTodayFailed->outcome = gBattleOutcome;

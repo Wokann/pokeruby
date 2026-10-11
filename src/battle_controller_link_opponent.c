@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_main.h"
 #include "battle_gfx_sfx_util.h"
 #include "battle_anim.h"
 #include "battle_controllers.h"
@@ -54,7 +55,6 @@ static void CompleteOnBattlerSpriteCallbackDummy(void);
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
 extern void StartAnimLinearTranslation(struct Sprite *);
 extern void sub_80375B4(void);
-extern void sub_8010384(struct Sprite *);
 static void HideHealthboxAfterMonFaint(void);
 extern void BufferStringBattle();
 extern void sub_8037C2C(void);
@@ -1263,7 +1263,7 @@ static void LinkOpponentHandleFaintAnimation(void)
     {
         gBattleHealthBoxInfo[gActiveBattler].animationState = 0;
         PlaySE12WithPanning(SE_FAINT, 63);
-        gSprites[gBattlerSpriteIds[gActiveBattler]].callback = sub_8010384;
+        gSprites[gBattlerSpriteIds[gActiveBattler]].callback = SpriteCB_FaintOpponentMon;
         gBattlerControllerFuncs[gActiveBattler] = HideHealthboxAfterMonFaint;
     }
 }

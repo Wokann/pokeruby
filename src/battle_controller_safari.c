@@ -5,6 +5,7 @@
 #include "battle_interface.h"
 #include "battle_message.h"
 #include "battle.h"
+#include "battle_main.h"
 #include "battle_gfx_sfx_util.h"
 #include "data.h"
 #include "ewram.h"

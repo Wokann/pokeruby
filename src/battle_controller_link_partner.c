@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_main.h"
 #include "battle_gfx_sfx_util.h"
 #include "battle_anim.h"
 #include "battle_controllers.h"
@@ -52,7 +53,6 @@ extern s32 GetBattlerMultiplayerId(u16);
 extern u8 GetBattlerSpriteDefault_Y();
 extern void BattleGfxSfxDummy3();
 extern void BattleGfxSfxDummy2(u16);
-extern void CB2_InitEndLinkBattle(void);
 
 // this file's functions
 
