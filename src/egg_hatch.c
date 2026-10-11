@@ -21,7 +21,6 @@
 #include "constants/songs.h"
 #include "sound.h"
 #include "string_util.h"
-#include "strings2.h"
 #include "task.h"
 #include "text.h"
 #include "text_window.h"
@@ -44,14 +43,15 @@ struct EggHatchData
 
 struct EggHatchData* gEggHatchData;
 
-const struct CompressedSpritePalette* GetMonSpritePalStruct(struct Pokemon* mon); //gets pokemon palette address
+extern const u8 gText_HatchedFromEgg[];
+extern const u8 gText_NicknameHatchPrompt[];
 
 static void Task_EggHatch(u8 taskId);
-static void CB2_EggHatch_0(void);
-static void CB2_EggHatch_1(void);
+static void CB2_LoadEggHatch(void);
+static void CB2_EggHatch(void);
 static void SpriteCB_Egg_Shake1(struct Sprite* sprite);
 static void SpriteCB_Egg_Shake2(struct Sprite* sprite);
-static void SpriteCB_Egg_2(struct Sprite* sprite);
+static void SpriteCB_Egg_Shake3(struct Sprite* sprite);
 static void SpriteCB_Egg_WaitHatch(struct Sprite* sprite);
 static void SpriteCB_Egg_Hatch(struct Sprite* sprite);
 static void SpriteCB_Egg_Reveal(struct Sprite* sprite);
@@ -211,7 +211,7 @@ static const struct SpriteTemplate sSpriteTemplate_EggShard =
 
 // actual code
 
-static void CreatedHatchedMon(struct Pokemon *egg, struct Pokemon *temp)
+static void CreateHatchedMon(struct Pokemon *egg, struct Pokemon *temp)
 {
     u16 species;
     u32 personality, pokerus;
@@ -266,24 +266,24 @@ static void CreatedHatchedMon(struct Pokemon *egg, struct Pokemon *temp)
 static void AddHatchedMonToParty(u8 id)
 {
     u8 isEgg;
-    u16 pokeNum;
+    u16 species;
     u8 name[12];
     u16 ball;
     u16 metLevel;
-    u8 metLocation;
+    metloc_u8_t metLocation;
     struct Pokemon* mon = &gPlayerParty[id];
 
-    CreatedHatchedMon(mon, &gEnemyParty[0]);
+    CreateHatchedMon(mon, &gEnemyParty[0]);
     isEgg = 0;
     SetMonData(mon, MON_DATA_IS_EGG, &isEgg);
 
-    pokeNum = GetMonData(mon, MON_DATA_SPECIES);
-    GetSpeciesName(name, pokeNum);
+    species = GetMonData(mon, MON_DATA_SPECIES);
+    GetSpeciesName(name, species);
     SetMonData(mon, MON_DATA_NICKNAME, name);
 
-    pokeNum = SpeciesToNationalPokedexNum(pokeNum);
-    GetSetPokedexFlag(pokeNum, 2);
-    GetSetPokedexFlag(pokeNum, 3);
+    species = SpeciesToNationalPokedexNum(species);
+    GetSetPokedexFlag(species, 2);
+    GetSetPokedexFlag(species, 3);
 
     GetMonNickname2(mon, gStringVar1);
 
@@ -305,18 +305,18 @@ void ScriptHatchMon(void)
     AddHatchedMonToParty(gSpecialVar_0x8004);
 }
 
-static bool8 DaycareMonReceivedMail_(struct DayCare *daycare, u8 slot)
+static bool8 _CheckDaycareMonReceivedMail(struct DayCare *daycare, u8 daycareId)
 {
     u8 monNickname[32];
-    GetBoxMonNickname(&daycare->mons[slot], monNickname);
-    if (daycare->misc.mail[slot].message.itemId != ITEM_NONE)
+    GetBoxMonNickname(&daycare->mons[daycareId], monNickname);
+    if (daycare->misc.mail[daycareId].message.itemId != ITEM_NONE)
     {
-        if (StringCompareWithoutExtCtrlCodes(monNickname, daycare->misc.mail[slot].names + 8)
-         || StringCompareWithoutExtCtrlCodes(gSaveBlock2.playerName, daycare->misc.mail[slot].names))
+        if (StringCompareWithoutExtCtrlCodes(monNickname, daycare->misc.mail[daycareId].names + 8)
+         || StringCompareWithoutExtCtrlCodes(gSaveBlock2.playerName, daycare->misc.mail[daycareId].names))
         {
             StringCopy(gStringVar1, monNickname);
-            StringCopy(gStringVar2, daycare->misc.mail[slot].names);
-            StringCopy(gStringVar3, daycare->misc.mail[slot].names + 8);
+            StringCopy(gStringVar2, daycare->misc.mail[daycareId].names);
+            StringCopy(gStringVar3, daycare->misc.mail[daycareId].names + 8);
             ConvertInternationalPlayerName(gStringVar2);
             return TRUE;
         }
@@ -327,7 +327,7 @@ static bool8 DaycareMonReceivedMail_(struct DayCare *daycare, u8 slot)
 
 bool8 CheckDaycareMonReceivedMail(void)
 {
-    return DaycareMonReceivedMail_(&gSaveBlock1.daycare, gSpecialVar_0x8004);
+    return _CheckDaycareMonReceivedMail(&gSaveBlock1.daycare, gSpecialVar_0x8004);
 }
 
 static u8 EggHatchCreateMonSprite(u8 useAlt, u8 state, u8 partyId)
@@ -384,13 +384,13 @@ static void Task_EggHatch(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        SetMainCallback2(CB2_EggHatch_0);
+        SetMainCallback2(CB2_LoadEggHatch);
         gFieldCallback = FieldCB_ContinueScriptHandleMusic;
         DestroyTask(taskId);
     }
 }
 
-static void CB2_EggHatch_0(void)
+static void CB2_LoadEggHatch(void)
 {
     switch (gMain.state)
     {
@@ -458,7 +458,7 @@ static void CB2_EggHatch_0(void)
         REG_BG2HOFS = 0;
         REG_BG2VOFS = 0;
 
-        SetMainCallback2(CB2_EggHatch_1);
+        SetMainCallback2(CB2_EggHatch);
         gEggHatchData->state = 0;
         break;
     }
@@ -485,7 +485,7 @@ static void Task_EggHatchPlayBGM(u8 taskId)
     gTasks[taskId].data[0]++;
 }
 
-static void CB2_EggHatch_1(void)
+static void CB2_EggHatch(void)
 {
     switch (gEggHatchData->state)
     {
@@ -515,7 +515,7 @@ static void CB2_EggHatch_1(void)
         break;
     case 4:
         GetMonNickname2(&gPlayerParty[gEggHatchData->eggPartyId], gStringVar1);
-        StringExpandPlaceholders(gStringVar4, gOtherText_HatchedFromEgg);
+        StringExpandPlaceholders(gStringVar4, gText_HatchedFromEgg);
         EggHatchPrintMessage2(gStringVar4);
         PlayFanfare(371);
         gEggHatchData->state++;
@@ -530,7 +530,7 @@ static void CB2_EggHatch_1(void)
         break;
     case 7:
         GetMonNickname2(&gPlayerParty[gEggHatchData->eggPartyId], gStringVar1);
-        StringExpandPlaceholders(gStringVar4, gOtherText_NickHatchPrompt);
+        StringExpandPlaceholders(gStringVar4, gText_NicknameHatchPrompt);
         EggHatchPrintMessage1(gStringVar4);
         gEggHatchData->state++;
         break;
@@ -605,7 +605,7 @@ static void SpriteCB_Egg_Shake2(struct Sprite* sprite)
     {
         if (++sprite->data[0] > 20)
         {
-            sprite->callback = SpriteCB_Egg_2;
+            sprite->callback = SpriteCB_Egg_Shake3;
             sprite->data[0] = 0;
             sprite->data[2] = 0;
         }
@@ -622,7 +622,7 @@ static void SpriteCB_Egg_Shake2(struct Sprite* sprite)
     }
 }
 
-static void SpriteCB_Egg_2(struct Sprite* sprite)
+static void SpriteCB_Egg_Shake3(struct Sprite* sprite)
 {
     if (++sprite->data[2] > 30)
     {

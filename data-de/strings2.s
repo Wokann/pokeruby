@@ -365,10 +365,10 @@ gOtherText_CancelAndLv:: @ 842CC2A
 gEggNickname:: @ 842CC34
 	.string "EI$"
 
-gOtherText_HatchedFromEgg:: @ 842CC38
+gText_HatchedFromEgg:: @ 842CC38
 	.string "{COLOR WHITE2}{HIGHLIGHT TRANSPARENT}{SHADOW DARK_GREY}{STR_VAR_1} schlüpfte aus dem EI!$"
 
-gOtherText_NickHatchPrompt:: @ 842CC5A
+gText_NicknameHatchPrompt:: @ 842CC5A
 	.string "{COLOR WHITE2}{HIGHLIGHT TRANSPARENT}{SHADOW DARK_GREY}Möchtest du dem geschlüpften\n"
 	.string "{STR_VAR_1} einen Kosenamen geben?$"
 

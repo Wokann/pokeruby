@@ -339,10 +339,10 @@ gOtherText_CancelAndLv:: @ 842CC2A
 gEggNickname:: @ 842CC34
 	.string "EGG$"
 
-gOtherText_HatchedFromEgg:: @ 842CC38
+gText_HatchedFromEgg:: @ 842CC38
 	.string "{COLOR WHITE2}{HIGHLIGHT TRANSPARENT}{SHADOW DARK_GREY}{STR_VAR_1} hatched from the EGG!$"
 
-gOtherText_NickHatchPrompt:: @ 842CC5A
+gText_NicknameHatchPrompt:: @ 842CC5A
 	.string "{COLOR WHITE2}{HIGHLIGHT TRANSPARENT}{SHADOW DARK_GREY}Would you like to nickname the newly\nhatched {STR_VAR_1}?$"
 
 gText_MoveRelearnerBattleMoves::

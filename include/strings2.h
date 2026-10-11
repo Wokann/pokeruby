@@ -120,10 +120,6 @@ extern const u8 gOtherText_CancelAndLv[];
 // pokemon_2
 extern const u8 gEggNickname[];
 
-// egg_hatch
-extern const u8 gOtherText_HatchedFromEgg[];
-extern const u8 gOtherText_NickHatchPrompt[];
-
 // move_relearner
 
 // ???
