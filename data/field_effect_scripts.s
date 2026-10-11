@@ -6,76 +6,76 @@
 
 	.align 2
 gFieldEffectScriptPointers:: @ 81D9B34
-	.4byte gFieldEffectScript_ExclamationMarkIcon
-	.4byte gFieldEffectScript_UseCutOnGrass
-	.4byte gFieldEffectScript_UseCutOnTree
-	.4byte gFieldEffectScript_Shadow
-	.4byte gFieldEffectScript_TallGrass
-	.4byte gFieldEffectScript_Ripple
-	.4byte gFieldEffectScript_FieldMoveShowMon
-	.4byte gFieldEffectScript_Ash
-	.4byte gFieldEffectScript_SurfBlob
-	.4byte gFieldEffectScript_UseSurf
-	.4byte gFieldEffectScript_Dust
-	.4byte gFieldEffectScript_UseSecretPowerCave
-	.4byte gFieldEffectScript_JumpTallGrass
-	.4byte gFieldEffectScript_SandFootprints
-	.4byte gFieldEffectScript_JumpBigSplash
-	.4byte gFieldEffectScript_Splash
-	.4byte gFieldEffectScript_JumpSmallSplash
-	.4byte gFieldEffectScript_LongGrass
-	.4byte gFieldEffectScript_JumpLongGrass
-	.4byte gFieldEffectScript_UnusedGrass
-	.4byte gFieldEffectScript_UnusedGrass2
-	.4byte gFieldEffectScript_UnusedSand
-	.4byte gFieldEffectScript_WaterSurfacing
-	.4byte gFieldEffectScript_BerryTreeGrowthSparkle
-	.4byte gFieldEffectScript_DeepSandFootprints
-	.4byte gFieldEffectScript_PokeCenterHeal
-	.4byte gFieldEffectScript_UseSecretPowerTree
-	.4byte gFieldEffectScript_UseSecretPowerShrub
-	.4byte gFieldEffectScript_TreeDisguise
-	.4byte gFieldEffectScript_MountainDisguise
-	.4byte gFieldEffectScript_NPCFlyOut
-	.4byte gFieldEffectScript_UseFly
-	.4byte gFieldEffectScript_FlyIn
-	.4byte gFieldEffectScript_QuestionMarkIcon
-	.4byte gFieldEffectScript_FeetInFlowingWater
-	.4byte gFieldEffectScript_BikeTireTracks
-	.4byte gFieldEffectScript_SandDisguise
-	.4byte gFieldEffectScript_UseRockSmash
-	.4byte gFieldEffectScript_UseDig
-	.4byte gFieldEffectScript_SandPile
-	.4byte gFieldEffectScript_UseStrength
-	.4byte gFieldEffectScript_ShortGrass
-	.4byte gFieldEffectScript_HotSpringsWater
-	.4byte gFieldEffectScript_UseWaterfall
-	.4byte gFieldEffectScript_UseDive
-	.4byte gFieldEffectScript_PokeballTrail
-	.4byte gFieldEffectScript_HeartIcon
-	.4byte gFieldEffectScript_Nop47
-	.4byte gFieldEffectScript_Nop48
-	.4byte gFieldEffectScript_AshPuff
-	.4byte gFieldEffectScript_AshLaunch
-	.4byte gFieldEffectScript_SweetScent
-	.4byte gFieldEffectScript_SandPillar
-	.4byte gFieldEffectScript_Bubbles
-	.4byte gFieldEffectScript_Sparkle
-	.4byte gFieldEffectScript_ShowSecretPowerCave
-	.4byte gFieldEffectScript_ShowSecretPowerTree
-	.4byte gFieldEffectScript_ShowSecretPowerShrub
-	.4byte gFieldEffectScript_CutGrass
-	.4byte gFieldEffectScript_FieldMoveShowMonInit
-	.4byte gFieldEffectScript_UseFlyAncientTomb
-	.4byte gFieldEffectScript_SecretBaseBootPC
-	.4byte gFieldEffectScript_HallOfFameRecord
-	.4byte gFieldEffectScript_UseTeleport
+	.4byte gFieldEffectScript_ExclamationMarkIcon          @ FLDEFF_EXCLAMATION_MARK_ICON
+	.4byte gFieldEffectScript_UseCutOnTallGrass            @ FLDEFF_USE_CUT_ON_GRASS
+	.4byte gFieldEffectScript_UseCutOnTree                 @ FLDEFF_USE_CUT_ON_TREE
+	.4byte gFieldEffectScript_Shadow                       @ FLDEFF_SHADOW
+	.4byte gFieldEffectScript_TallGrass                    @ FLDEFF_TALL_GRASS
+	.4byte gFieldEffectScript_Ripple                       @ FLDEFF_RIPPLE
+	.4byte gFieldEffectScript_FieldMoveShowMon             @ FLDEFF_FIELD_MOVE_SHOW_MON
+	.4byte gFieldEffectScript_Ash                          @ FLDEFF_ASH
+	.4byte gFieldEffectScript_SurfBlob                     @ FLDEFF_SURF_BLOB
+	.4byte gFieldEffectScript_UseSurf                      @ FLDEFF_USE_SURF
+	.4byte gFieldEffectScript_GroundImpactDust             @ FLDEFF_DUST
+	.4byte gFieldEffectScript_UseSecretPowerCave           @ FLDEFF_USE_SECRET_POWER_CAVE
+	.4byte gFieldEffectScript_JumpTallGrass                @ FLDEFF_JUMP_TALL_GRASS
+	.4byte gFieldEffectScript_SandFootprints               @ FLDEFF_SAND_FOOTPRINTS
+	.4byte gFieldEffectScript_JumpBigSplash                @ FLDEFF_JUMP_BIG_SPLASH
+	.4byte gFieldEffectScript_Splash                       @ FLDEFF_SPLASH
+	.4byte gFieldEffectScript_JumpSmallSplash              @ FLDEFF_JUMP_SMALL_SPLASH
+	.4byte gFieldEffectScript_LongGrass                    @ FLDEFF_LONG_GRASS
+	.4byte gFieldEffectScript_JumpLongGrass                @ FLDEFF_JUMP_LONG_GRASS
+	.4byte gFieldEffectScript_UnusedGrass                  @ FLDEFF_UNUSED_GRASS
+	.4byte gFieldEffectScript_UnusedGrass2                 @ FLDEFF_UNUSED_GRASS_2
+	.4byte gFieldEffectScript_UnusedSand                   @ FLDEFF_UNUSED_SAND
+	.4byte gFieldEffectScript_WaterSurfacing               @ FLDEFF_WATER_SURFACING
+	.4byte gFieldEffectScript_BerryTreeGrowthSparkle       @ FLDEFF_BERRY_TREE_GROWTH_SPARKLE
+	.4byte gFieldEffectScript_DeepSandFootprints           @ FLDEFF_DEEP_SAND_FOOTPRINTS
+	.4byte gFieldEffectScript_PokeCenterHeal               @ FLDEFF_POKECENTER_HEAL
+	.4byte gFieldEffectScript_UseSecretPowerTree           @ FLDEFF_USE_SECRET_POWER_TREE
+	.4byte gFieldEffectScript_UseSecretPowerShrub          @ FLDEFF_USE_SECRET_POWER_SHRUB
+	.4byte gFieldEffectScript_TreeDisguise                 @ FLDEFF_TREE_DISGUISE
+	.4byte gFieldEffectScript_MountainDisguise             @ FLDEFF_MOUNTAIN_DISGUISE
+	.4byte gFieldEffectScript_NPCUseFly                    @ FLDEFF_NPCFLY_OUT
+	.4byte gFieldEffectScript_UseFly                       @ FLDEFF_USE_FLY
+	.4byte gFieldEffectScript_FlyIn                        @ FLDEFF_FLY_IN
+	.4byte gFieldEffectScript_QuestionMarkIcon             @ FLDEFF_QUESTION_MARK_ICON
+	.4byte gFieldEffectScript_FeetInFlowingWater           @ FLDEFF_FEET_IN_FLOWING_WATER
+	.4byte gFieldEffectScript_BikeTireTracks               @ FLDEFF_BIKE_TIRE_TRACKS
+	.4byte gFieldEffectScript_SandDisguisePlaceholder      @ FLDEFF_SAND_DISGUISE
+	.4byte gFieldEffectScript_UseRockSmash                 @ FLDEFF_USE_ROCK_SMASH
+	.4byte gFieldEffectScript_UseDig                       @ FLDEFF_USE_DIG
+	.4byte gFieldEffectScript_SandPile                     @ FLDEFF_SAND_PILE
+	.4byte gFieldEffectScript_UseStrength                  @ FLDEFF_USE_STRENGTH
+	.4byte gFieldEffectScript_ShortGrass                   @ FLDEFF_SHORT_GRASS
+	.4byte gFieldEffectScript_HotSpringsWater              @ FLDEFF_HOT_SPRINGS_WATER
+	.4byte gFieldEffectScript_UseWaterfall                 @ FLDEFF_USE_WATERFALL
+	.4byte gFieldEffectScript_UseDive                      @ FLDEFF_USE_DIVE
+	.4byte gFieldEffectScript_PokeballTrail                @ FLDEFF_POKEBALL_TRAIL
+	.4byte gFieldEffectScript_HeartIcon                    @ FLDEFF_HEART_ICON
+	.4byte gFieldEffectScript_Nop47                        @ FLDEFF_NOP_47
+	.4byte gFieldEffectScript_Nop48                        @ FLDEFF_NOP_48
+	.4byte gFieldEffectScript_AshPuff                      @ FLDEFF_ASH_PUFF
+	.4byte gFieldEffectScript_AshLaunch                    @ FLDEFF_ASH_LAUNCH
+	.4byte gFieldEffectScript_SweetScent                   @ FLDEFF_SWEET_SCENT
+	.4byte gFieldEffectScript_SandPillar                   @ FLDEFF_SAND_PILLAR
+	.4byte gFieldEffectScript_Bubbles                      @ FLDEFF_BUBBLES
+	.4byte gFieldEffectScript_Sparkle                      @ FLDEFF_SPARKLE
+	.4byte gFieldEffectScript_ShowSecretPowerCave          @ FLDEFF_SECRET_POWER_CAVE
+	.4byte gFieldEffectScript_ShowSecretPowerTree          @ FLDEFF_SECRET_POWER_TREE
+	.4byte gFieldEffectScript_ShowSecretPowerShrub         @ FLDEFF_SECRET_POWER_SHRUB
+	.4byte gFieldEffectScript_ShowCutGrass                 @ FLDEFF_CUT_GRASS
+	.4byte gFieldEffectScript_FieldMoveShowMonInit         @ FLDEFF_FIELD_MOVE_SHOW_MON_INIT
+	.4byte gFieldEffectScript_UseFlyAncientTomb            @ FLDEFF_USE_FLY_ANCIENT_TOMB
+	.4byte gFieldEffectScript_SecretBaseBootPC             @ FLDEFF_PCTURN_ON
+	.4byte gFieldEffectScript_HallOfFameRecord             @ FLDEFF_HALL_OF_FAME_RECORD
+	.4byte gFieldEffectScript_UseTeleport                  @ FLDEFF_USE_TELEPORT
 
 gFieldEffectScript_ExclamationMarkIcon: @ 81D9C34
 	field_eff_callnative FldEff_ExclamationMarkIcon
 	field_eff_end
 
-gFieldEffectScript_UseCutOnGrass: @ 81D9C3A
+gFieldEffectScript_UseCutOnTallGrass: @ 81D9C3A
 	field_eff_callnative FldEff_UseCutOnGrass
 	field_eff_end
 
@@ -111,7 +111,7 @@ gFieldEffectScript_UseSurf: @ 81D9C76
 	field_eff_callnative FldEff_UseSurf
 	field_eff_end
 
-gFieldEffectScript_Dust: @ 81D9C7C
+gFieldEffectScript_GroundImpactDust: @ 81D9C7C
 	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_Dust
 	field_eff_end
 
@@ -192,7 +192,7 @@ gFieldEffectScript_MountainDisguise: @ 81D9D2B
 	field_eff_callnative ShowMountainDisguiseFieldEffect
 	field_eff_end
 
-gFieldEffectScript_NPCFlyOut: @ 81D9D31
+gFieldEffectScript_NPCUseFly: @ 81D9D31
 	field_eff_callnative FldEff_NPCFlyOut
 	field_eff_end
 
@@ -216,12 +216,12 @@ gFieldEffectScript_BikeTireTracks: @ 81D9D53
 	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_BikeTireTracks
 	field_eff_end
 
-gFieldEffectScript_SandDisguise: @ 81D9D5D
+gFieldEffectScript_SandDisguisePlaceholder: @ 81D9D5D
 	field_eff_callnative ShowSandDisguiseFieldEffect
 	field_eff_end
 
 gFieldEffectScript_UseRockSmash: @ 81D9D63
-	field_eff_callnative FldEff_RockSmash
+	field_eff_callnative FldEff_UseRockSmash
 	field_eff_end
 
 gFieldEffectScript_UseStrength: @ 81D9D69
@@ -305,7 +305,7 @@ gFieldEffectScript_ShowSecretPowerShrub: @ 81D9E0C
 	field_eff_loadfadedpal_callnative gSpritePalette_SecretPower_Plant, FldEff_SecretPowerShrub
 	field_eff_end
 
-gFieldEffectScript_CutGrass: @ 81D9E16
+gFieldEffectScript_ShowCutGrass: @ 81D9E16
 	field_eff_loadfadedpal_callnative gSpritePalette_CutGrass, FldEff_CutGrass
 	field_eff_end
 

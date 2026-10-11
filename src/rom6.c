@@ -151,7 +151,7 @@ static void sub_810B53C(void)
     ScriptContext_SetupScript(EventScript_UseRockSmash);
 }
 
-int FldEff_RockSmash(void)
+int FldEff_UseRockSmash(void)
 {
     u8 taskId = CreateFieldMoveTask();
 
