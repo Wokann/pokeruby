@@ -48,7 +48,7 @@ void SetPlayerAvatarStateMask(u8 flags);
 u8 GetPlayerAvatarGraphicsIdByCurrentState(void);
 void SetPlayerAvatarExtraStateTransition(u8 graphicsId, u8 transitionFlag);
 void InitPlayerAvatar(s16 x, s16 y, u8 direction, u8 gender);
-void SetPlayerInvisibility(u8 invisible);
+void SetPlayerInvisibility(bool8 invisible);
 void SetPlayerAvatarFieldMove(void);
 void PlayerUseAcroBikeOnBumpySlope(u8 direction);
 void SetPlayerAvatarWatering(u8 direction);
