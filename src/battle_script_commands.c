@@ -1186,13 +1186,13 @@ static void Cmd_accuracycheck(void)
 
         if (gBattleMons[gBattlerTarget].status2 & STATUS2_FORESIGHT)
         {
-            u8 acc = gBattleMons[gBattlerAttacker].statStages[STAT_STAGE_ACC];
+            u8 acc = gBattleMons[gBattlerAttacker].statStages[STAT_ACC];
             buff = acc;
         }
         else
         {
-            u8 acc = gBattleMons[gBattlerAttacker].statStages[STAT_STAGE_ACC];
-            buff = acc + 6 - gBattleMons[gBattlerTarget].statStages[STAT_STAGE_EVASION];
+            u8 acc = gBattleMons[gBattlerAttacker].statStages[STAT_ACC];
+            buff = acc + 6 - gBattleMons[gBattlerTarget].statStages[STAT_EVASION];
         }
 
         if (buff < 0)
@@ -4210,9 +4210,9 @@ void atk49_moveend(void)
                 && gBattleMons[gBattlerTarget].hp != 0 && gBattlerAttacker != gBattlerTarget
                 && GetBattlerSide(gBattlerAttacker) != GetBattlerSide(gBattlerTarget)
                 && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT) && (gProtectStructs[gBattlerTarget].physicalDmg != 0 || gProtectStructs[gBattlerTarget].specialDmg != 0)
-                && gBattleMoves[gCurrentMove].power && gBattleMons[gBattlerTarget].statStages[STAT_STAGE_ATK] <= 0xB)
+                && gBattleMoves[gCurrentMove].power && gBattleMons[gBattlerTarget].statStages[STAT_ATK] <= 0xB)
             {
-                gBattleMons[gBattlerTarget].statStages[STAT_STAGE_ATK]++;
+                gBattleMons[gBattlerTarget].statStages[STAT_ATK]++;
                 BattleScriptPushCursor();
                 gBattlescriptCurrInstr = BattleScript_RageIsBuilding;
                 effect = TRUE;
@@ -6480,7 +6480,7 @@ static u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr)
             return STAT_CHANGE_DIDNT_WORK;
         }
         else if (gBattleMons[gActiveBattler].ability == ABILITY_KEEN_EYE
-                 && !certain && statId == STAT_STAGE_ACC)
+                 && !certain && statId == STAT_ACC)
         {
             if (flags == STAT_CHANGE_ALLOW_PTR)
             {
@@ -6493,7 +6493,7 @@ static u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr)
             return STAT_CHANGE_DIDNT_WORK;
         }
         else if (gBattleMons[gActiveBattler].ability == ABILITY_HYPER_CUTTER
-                 && !certain && statId == STAT_STAGE_ATK)
+                 && !certain && statId == STAT_ATK)
         {
             if (flags == STAT_CHANGE_ALLOW_PTR)
             {
@@ -8346,9 +8346,9 @@ static void Cmd_maxattackhalvehp(void) //belly drum
     if (!(gBattleMons[gBattlerAttacker].maxHP / 2))
         halfHp = 1;
 
-    if (gBattleMons[gBattlerAttacker].statStages[STAT_STAGE_ATK] < 12 && gBattleMons[gBattlerAttacker].hp > halfHp)
+    if (gBattleMons[gBattlerAttacker].statStages[STAT_ATK] < 12 && gBattleMons[gBattlerAttacker].hp > halfHp)
     {
-        gBattleMons[gBattlerAttacker].statStages[STAT_STAGE_ATK] = 12;
+        gBattleMons[gBattlerAttacker].statStages[STAT_ATK] = 12;
         gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 2;
         if (gBattleMoveDamage == 0)
             gBattleMoveDamage = 1;
@@ -8605,8 +8605,8 @@ static void Cmd_sethail(void)
 
 static void Cmd_trymemento(void) //memento
 {
-    if (gBattleMons[gBattlerTarget].statStages[STAT_STAGE_ATK] == 0
-        && gBattleMons[gBattlerTarget].statStages[STAT_STAGE_SPATK] == 0
+    if (gBattleMons[gBattlerTarget].statStages[STAT_ATK] == 0
+        && gBattleMons[gBattlerTarget].statStages[STAT_SPATK] == 0
         && gBattleCommunication[6] != 1)
             gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     else

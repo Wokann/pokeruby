@@ -1924,9 +1924,9 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                     }
                     break;
                 case ABILITY_SPEED_BOOST:
-                    if (gBattleMons[battler].statStages[STAT_STAGE_SPEED] < 0xC && gDisableStructs[battler].isFirstTurn != 2)
+                    if (gBattleMons[battler].statStages[STAT_SPEED] < 0xC && gDisableStructs[battler].isFirstTurn != 2)
                     {
-                        gBattleMons[battler].statStages[STAT_STAGE_SPEED]++;
+                        gBattleMons[battler].statStages[STAT_SPEED]++;
                         gBattleStruct->animArg1 = 0x11;
                         gBattleStruct->animArg2 = 0;
                         BattleScriptPushCursorAndCallback(BattleScript_SpeedBoostActivates);
@@ -2876,11 +2876,11 @@ u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn)
                 break;
             // copy/paste again, smh
             case HOLD_EFFECT_ATTACK_UP:
-                if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / battlerHoldEffectParam && !moveTurn && gBattleMons[battler].statStages[STAT_STAGE_ATK] < 0xC)
+                if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / battlerHoldEffectParam && !moveTurn && gBattleMons[battler].statStages[STAT_ATK] < 0xC)
                 {
                     gBattleTextBuff1[0] = 0xFD;
                     gBattleTextBuff1[1] = 5;
-                    gBattleTextBuff1[2] = STAT_STAGE_ATK;
+                    gBattleTextBuff1[2] = STAT_ATK;
                     gBattleTextBuff1[3] = EOS;
 
                     gBattleTextBuff2[0] = 0xFD;
@@ -2890,72 +2890,72 @@ u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn)
                     gBattleTextBuff2[4] = EOS;
 
                     gEffectBattler = battler;
-                    gBattleStruct->statChanger = 0x10 + STAT_STAGE_ATK;
-                    gBattleStruct->animArg1 = 0xE + STAT_STAGE_ATK;
+                    gBattleStruct->statChanger = 0x10 + STAT_ATK;
+                    gBattleStruct->animArg1 = 0xE + STAT_ATK;
                     gBattleStruct->animArg2 = 0;
                     BattleScriptExecute(BattleScript_BerryStatRaiseEnd2);
                     effect = ITEM_STATS_CHANGE;
                 }
                 break;
             case HOLD_EFFECT_DEFENSE_UP:
-                if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / battlerHoldEffectParam && !moveTurn && gBattleMons[battler].statStages[STAT_STAGE_DEF] < 0xC)
+                if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / battlerHoldEffectParam && !moveTurn && gBattleMons[battler].statStages[STAT_DEF] < 0xC)
                 {
                     gBattleTextBuff1[0] = 0xFD;
                     gBattleTextBuff1[1] = 5;
-                    gBattleTextBuff1[2] = STAT_STAGE_DEF;
+                    gBattleTextBuff1[2] = STAT_DEF;
                     gBattleTextBuff1[3] = EOS;
 
                     gEffectBattler = battler;
-                    gBattleStruct->statChanger = 0x10 + STAT_STAGE_DEF;
-                    gBattleStruct->animArg1 = 0xE + STAT_STAGE_DEF;
+                    gBattleStruct->statChanger = 0x10 + STAT_DEF;
+                    gBattleStruct->animArg1 = 0xE + STAT_DEF;
                     gBattleStruct->animArg2 = 0;
                     BattleScriptExecute(BattleScript_BerryStatRaiseEnd2);
                     effect = ITEM_STATS_CHANGE;
                 }
                 break;
             case HOLD_EFFECT_SPEED_UP:
-                if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / battlerHoldEffectParam && !moveTurn && gBattleMons[battler].statStages[STAT_STAGE_SPEED] < 0xC)
+                if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / battlerHoldEffectParam && !moveTurn && gBattleMons[battler].statStages[STAT_SPEED] < 0xC)
                 {
                     gBattleTextBuff1[0] = 0xFD;
                     gBattleTextBuff1[1] = 5;
-                    gBattleTextBuff1[2] = STAT_STAGE_SPEED;
+                    gBattleTextBuff1[2] = STAT_SPEED;
                     gBattleTextBuff1[3] = EOS;
 
                     gEffectBattler = battler;
-                    gBattleStruct->statChanger = 0x10 + STAT_STAGE_SPEED;
-                    gBattleStruct->animArg1 = 0xE + STAT_STAGE_SPEED;
+                    gBattleStruct->statChanger = 0x10 + STAT_SPEED;
+                    gBattleStruct->animArg1 = 0xE + STAT_SPEED;
                     gBattleStruct->animArg2 = 0;
                     BattleScriptExecute(BattleScript_BerryStatRaiseEnd2);
                     effect = ITEM_STATS_CHANGE;
                 }
                 break;
             case HOLD_EFFECT_SP_ATTACK_UP:
-                if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / battlerHoldEffectParam && !moveTurn && gBattleMons[battler].statStages[STAT_STAGE_SPATK] < 0xC)
+                if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / battlerHoldEffectParam && !moveTurn && gBattleMons[battler].statStages[STAT_SPATK] < 0xC)
                 {
                     gBattleTextBuff1[0] = 0xFD;
                     gBattleTextBuff1[1] = 5;
-                    gBattleTextBuff1[2] = STAT_STAGE_SPATK;
+                    gBattleTextBuff1[2] = STAT_SPATK;
                     gBattleTextBuff1[3] = EOS;
 
                     gEffectBattler = battler;
-                    gBattleStruct->statChanger = 0x10 + STAT_STAGE_SPATK;
-                    gBattleStruct->animArg1 = 0xE + STAT_STAGE_SPATK;
+                    gBattleStruct->statChanger = 0x10 + STAT_SPATK;
+                    gBattleStruct->animArg1 = 0xE + STAT_SPATK;
                     gBattleStruct->animArg2 = 0;
                     BattleScriptExecute(BattleScript_BerryStatRaiseEnd2);
                     effect = ITEM_STATS_CHANGE;
                 }
                 break;
             case HOLD_EFFECT_SP_DEFENSE_UP:
-                if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / battlerHoldEffectParam && !moveTurn && gBattleMons[battler].statStages[STAT_STAGE_SPDEF] < 0xC)
+                if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / battlerHoldEffectParam && !moveTurn && gBattleMons[battler].statStages[STAT_SPDEF] < 0xC)
                 {
                     gBattleTextBuff1[0] = 0xFD;
                     gBattleTextBuff1[1] = 5;
-                    gBattleTextBuff1[2] = STAT_STAGE_SPDEF;
+                    gBattleTextBuff1[2] = STAT_SPDEF;
                     gBattleTextBuff1[3] = EOS;
 
                     gEffectBattler = battler;
-                    gBattleStruct->statChanger = 0x10 + STAT_STAGE_SPDEF;
-                    gBattleStruct->animArg1 = 0xE + STAT_STAGE_SPDEF;
+                    gBattleStruct->statChanger = 0x10 + STAT_SPDEF;
+                    gBattleStruct->animArg1 = 0xE + STAT_SPDEF;
                     gBattleStruct->animArg2 = 0;
                     BattleScriptExecute(BattleScript_BerryStatRaiseEnd2);
                     effect = ITEM_STATS_CHANGE;
@@ -2974,7 +2974,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn)
                 {
                     for (i = 0; i < 5; i++)
                     {
-                        if (gBattleMons[battler].statStages[STAT_STAGE_ATK + i] < 0xC)
+                        if (gBattleMons[battler].statStages[STAT_ATK + i] < 0xC)
                             break;
                     }
                     if (i != 5)
@@ -2982,7 +2982,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn)
                         do
                         {
                             i = Random() % 5;
-                        } while (gBattleMons[battler].statStages[STAT_STAGE_ATK + i] == 0xC);
+                        } while (gBattleMons[battler].statStages[STAT_ATK + i] == 0xC);
 
                         gBattleTextBuff1[0] = 0xFD;
                         gBattleTextBuff1[1] = 5;

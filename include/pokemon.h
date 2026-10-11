@@ -221,30 +221,16 @@ struct BattlePokemon
     /*0x54*/ u32 otId;
 };
 
-// Shouldn't these be the same enum?
-
 enum
 {
-    STAT_STAGE_HP,       // 0
-    STAT_STAGE_ATK,      // 1
-    STAT_STAGE_DEF,      // 2
-    STAT_STAGE_SPEED,    // 3
-    STAT_STAGE_SPATK,    // 4
-    STAT_STAGE_SPDEF,    // 5
-    STAT_STAGE_ACC,      // 6
-    STAT_STAGE_EVASION,  // 7
-};
-
-enum
-{
-    STAT_HP,     // 0
-    STAT_ATK,    // 1
-    STAT_DEF,    // 2
-    STAT_SPD,    // 3
-    STAT_SPATK,  // 4
-    STAT_SPDEF,  // 5
-    STAT_ACC,    // 6
-    STAT_EVA,    // 7
+    STAT_HP,       // 0
+    STAT_ATK,      // 1
+    STAT_DEF,      // 2
+    STAT_SPEED,    // 3
+    STAT_SPATK,    // 4
+    STAT_SPDEF,    // 5
+    STAT_ACC,      // 6
+    STAT_EVASION,  // 7
 };
 
 struct SpeciesInfo
@@ -381,6 +367,7 @@ extern const struct SpindaSpot gSpindaSpotGraphics[];
 extern const u8 gPPUpGetMask[];
 extern const u8 gPPUpClearMask[];
 extern const u8 gPPUpAddValues[];
+extern const u8 gStatStageRatios[][2];
 extern const u32 gExperienceTables[][101];
 extern const u16 *gLevelUpLearnsets[];
 extern struct Evolution gEvolutionTable[][5];

@@ -95,7 +95,6 @@ extern const struct MonCoords gCastformFrontSpriteCoords[];
 extern const u8 Str_821F7EA[];
 extern const u8 gUnknown_Debug_821F7F3[];
 extern const u8 gText_BattleYesNoChoice[];
-extern u8 gStatStageRatios[][2];
 extern u8 gActionsByTurnOrder[4];
 extern struct MultiBattlePokemonTx gMultiPartnerParty[];
 extern u8 gBattleBufferB[][0x200];
@@ -4631,7 +4630,7 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreMovePriorities)
 
     // Calculate adjusted speed for first mon.
     bank1AdjustedSpeed = (gBattleMons[battler1].speed * speedMultiplierBattler1)
-        * gStatStageRatios[gBattleMons[battler1].statStages[STAT_STAGE_SPEED]][0] / gStatStageRatios[gBattleMons[battler1].statStages[STAT_STAGE_SPEED]][1];
+        * gStatStageRatios[gBattleMons[battler1].statStages[STAT_SPEED]][0] / gStatStageRatios[gBattleMons[battler1].statStages[STAT_SPEED]][1];
 
     if (gBattleMons[battler1].item == ITEM_ENIGMA_BERRY)
     {
@@ -4659,7 +4658,7 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreMovePriorities)
 
     // Calculate adjusted speed for second mon.
     bank2AdjustedSpeed = gBattleMons[battler2].speed * speedMultiplierBattler2
-        * gStatStageRatios[gBattleMons[battler2].statStages[STAT_STAGE_SPEED]][0] / gStatStageRatios[gBattleMons[battler2].statStages[STAT_STAGE_SPEED]][1];
+        * gStatStageRatios[gBattleMons[battler2].statStages[STAT_SPEED]][0] / gStatStageRatios[gBattleMons[battler2].statStages[STAT_SPEED]][1];
 
     if (gBattleMons[battler2].item == ITEM_ENIGMA_BERRY)
     {

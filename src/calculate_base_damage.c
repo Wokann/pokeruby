@@ -209,26 +209,26 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     {
         if (gCritMultiplier == 2)
         {
-            if (attacker->statStages[STAT_STAGE_ATK] > 6)
-                APPLY_STAT_MOD(damage, attacker, attack, STAT_STAGE_ATK)
+            if (attacker->statStages[STAT_ATK] > 6)
+                APPLY_STAT_MOD(damage, attacker, attack, STAT_ATK)
             else
                 damage = attack;
         }
         else
-            APPLY_STAT_MOD(damage, attacker, attack, STAT_STAGE_ATK)
+            APPLY_STAT_MOD(damage, attacker, attack, STAT_ATK)
 
         damage = damage * gBattleMovePower;
         damage *= (2 * attacker->level / 5 + 2);
 
         if (gCritMultiplier == 2)
         {
-            if (defender->statStages[STAT_STAGE_DEF] < 6)
-                APPLY_STAT_MOD(damageHelper, defender, defense, STAT_STAGE_DEF)
+            if (defender->statStages[STAT_DEF] < 6)
+                APPLY_STAT_MOD(damageHelper, defender, defense, STAT_DEF)
             else
                 damageHelper = defense;
         }
         else
-            APPLY_STAT_MOD(damageHelper, defender, defense, STAT_STAGE_DEF)
+            APPLY_STAT_MOD(damageHelper, defender, defense, STAT_DEF)
 
         damage = damage / damageHelper;
         damage /= 50;
@@ -259,26 +259,26 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     {
         if (gCritMultiplier == 2)
         {
-            if (attacker->statStages[STAT_STAGE_SPATK] > 6)
-                APPLY_STAT_MOD(damage, attacker, spAttack, STAT_STAGE_SPATK)
+            if (attacker->statStages[STAT_SPATK] > 6)
+                APPLY_STAT_MOD(damage, attacker, spAttack, STAT_SPATK)
             else
                 damage = spAttack;
         }
         else
-            APPLY_STAT_MOD(damage, attacker, spAttack, STAT_STAGE_SPATK)
+            APPLY_STAT_MOD(damage, attacker, spAttack, STAT_SPATK)
 
         damage = damage * gBattleMovePower;
         damage *= (2 * attacker->level / 5 + 2);
 
         if (gCritMultiplier == 2)
         {
-            if (defender->statStages[STAT_STAGE_SPDEF] < 6)
-                APPLY_STAT_MOD(damageHelper, defender, spDefense, STAT_STAGE_SPDEF)
+            if (defender->statStages[STAT_SPDEF] < 6)
+                APPLY_STAT_MOD(damageHelper, defender, spDefense, STAT_SPDEF)
             else
                 damageHelper = spDefense;
         }
         else
-            APPLY_STAT_MOD(damageHelper, defender, spDefense, STAT_STAGE_SPDEF)
+            APPLY_STAT_MOD(damageHelper, defender, spDefense, STAT_SPDEF)
 
         damage = (damage / damageHelper);
         damage /= 50;
