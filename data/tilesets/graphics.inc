@@ -325,12 +325,12 @@ gTilesetPalettes_Sootopolis:: @ 8225420
 
 	.align 2
 
-gTilesetTiles_Building:: @ 8225620
+gTilesetTiles_InsideBuilding:: @ 8225620
 	.incbin "data/tilesets/primary/building/tiles.4bpp.lz"
 
 	.align 2
 
-gTilesetPalettes_Building:: @ 8225FA4
+gTilesetPalettes_InsideBuilding:: @ 8225FA4
 	.incbin "data/tilesets/primary/building/palettes/00.gbapal"
 	.incbin "data/tilesets/primary/building/palettes/01.gbapal"
 	.incbin "data/tilesets/primary/building/palettes/02.gbapal"

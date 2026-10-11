@@ -172,10 +172,10 @@ gTileset_Building:: @ 8286E44
 	.byte TRUE @ is compressed
 	.byte FALSE @ is secondary tileset
 	.2byte 0 @ padding
-	.4byte gTilesetTiles_Building
-	.4byte gTilesetPalettes_Building
-	.4byte gMetatiles_Building
-	.4byte gMetatileAttributes_Building
+	.4byte gTilesetTiles_InsideBuilding
+	.4byte gTilesetPalettes_InsideBuilding
+	.4byte gMetatiles_InsideBuilding
+	.4byte gMetatileAttributes_InsideBuilding
 	.4byte InitTilesetAnim_Building
 
 	.align 2

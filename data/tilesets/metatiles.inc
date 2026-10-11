@@ -111,11 +111,11 @@ gMetatileAttributes_Sootopolis:: @ 826BF0C
 	.incbin "data/tilesets/secondary/sootopolis/metatile_attributes.bin"
 
 	.align 1
-gMetatiles_Building:: @ 826C108
+gMetatiles_InsideBuilding:: @ 826C108
 	.incbin "data/tilesets/primary/building/metatiles.bin"
 
 	.align 1
-gMetatileAttributes_Building:: @ 826C188
+gMetatileAttributes_InsideBuilding:: @ 826C188
 	.incbin "data/tilesets/primary/building/metatile_attributes.bin"
 
 	.align 1
