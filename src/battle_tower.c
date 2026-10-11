@@ -761,7 +761,7 @@ void FillBattleTowerTrainerParty(void)
     {
         // Load E-Reader trainer's party.
         for (partyIndex = 0; partyIndex < 3; partyIndex++)
-            sub_803ADE8(&gEnemyParty[partyIndex], &gSaveBlock2.battleTower.ereaderTrainer.party[partyIndex]);
+            CreateBattleTowerMon(&gEnemyParty[partyIndex], &gSaveBlock2.battleTower.ereaderTrainer.party[partyIndex]);
         return;
     }
     else
@@ -769,7 +769,7 @@ void FillBattleTowerTrainerParty(void)
         // Load a battle tower record's party. (From record mixing)
         for (partyIndex = 0; partyIndex < 3; partyIndex++)
         {
-            sub_803ADE8(
+            CreateBattleTowerMon(
                 &gEnemyParty[partyIndex],
                 &gSaveBlock2.battleTower.records[gSaveBlock2.battleTower.battleTowerTrainerId - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].party[partyIndex]);
         }
@@ -1106,7 +1106,7 @@ void DoSpecialTrainerBattle(void)
         ZeroEnemyPartyMons();
 
         for (i = 0; i < 3; i++)
-            sub_803ADE8(&gEnemyParty[i], &gSaveBlock2.battleTower.ereaderTrainer.party[i]);
+            CreateBattleTowerMon(&gEnemyParty[i], &gSaveBlock2.battleTower.ereaderTrainer.party[i]);
 
         gBattleTypeFlags = (BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_TRAINER);
         gTrainerBattleOpponent_A = 0;

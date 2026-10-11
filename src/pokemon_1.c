@@ -1274,10 +1274,10 @@ const u16 gHoennToNationalOrder[] = // Assigns Hoenn Dex Pokémon (Using Nationa
 
 const struct SpindaSpot gSpindaSpotGraphics[] =
 {
-    {16, 14, INCBIN_U16("graphics/spinda_spots/spot_0.bin")},
-    {40, 15, INCBIN_U16("graphics/spinda_spots/spot_1.bin")},
-    {22, 32, INCBIN_U16("graphics/spinda_spots/spot_2.bin")},
-    {34, 33, INCBIN_U16("graphics/spinda_spots/spot_3.bin")}
+    {16, 14, INCBIN_U16("graphics/pokemon/spinda/spots/spot_0.bin")},
+    {40, 15, INCBIN_U16("graphics/pokemon/spinda/spots/spot_1.bin")},
+    {22, 32, INCBIN_U16("graphics/pokemon/spinda/spots/spot_2.bin")},
+    {34, 33, INCBIN_U16("graphics/pokemon/spinda/spots/spot_3.bin")}
 };
 
 #include "data/pokemon/item_effects.h"
@@ -1582,7 +1582,7 @@ void CreateMonWithEVSpread(struct Pokemon *mon, u16 species, u8 level, u8 fixedI
     CalculateMonStats(mon);
 }
 
-void sub_803ADE8(struct Pokemon *mon, struct BattleTowerPokemon *src)
+void CreateBattleTowerMon(struct Pokemon *mon, struct BattleTowerPokemon *src)
 {
     s32 i;
     u8 nickname[POKEMON_NAME_LENGTH + 1];

@@ -44,7 +44,6 @@ extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
 extern u8 gPotentialItemEffectBattler;
 extern u8 gBattlerInMenuId;
-extern struct SpindaSpot gSpindaSpotGraphics[];
 extern s8 gNatureStatTable[][5];
 extern u16 gTrainerBattleOpponent_A;
 extern u16 gBattleTypeFlags;
