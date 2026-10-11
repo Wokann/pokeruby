@@ -149,7 +149,7 @@ endif
 
 # Special configurations required for lib files
 ifeq ($(MODERN),0)
-%src/libs/siirtc.o:       CC1FLAGS := -mthumb-interwork
+%src/siirtc.o:            CC1FLAGS := -mthumb-interwork
 %src/agb_flash.o:         CC1FLAGS := -O1 -mthumb-interwork
 %src/agb_flash_1m.o:      CC1FLAGS := -O1 -mthumb-interwork
 %src/agb_flash_mx.o:      CC1FLAGS := -O1 -mthumb-interwork

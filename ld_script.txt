@@ -401,7 +401,7 @@ SECTIONS {
         src/agb_flash.o(.text);
         src/agb_flash_1m.o(.text);
         src/agb_flash_mx.o(.text);
-        src/libs/siirtc.o(.text);
+        src/siirtc.o(.text);
         src/libs/libagbsyscall.o(.text);
         *libgcc.a:*_call_via_rX*.o(.text);
         *libgcc.a:*_divsi3*.o(.text);
@@ -1220,7 +1220,7 @@ SECTIONS {
         src/agb_flash_1m.o(.rodata);
         src/agb_flash_mx.o(.rodata);
         src/libs/agb_flash_le.o(.rodata);
-        src/libs/siirtc.o(.rodata);
+        src/siirtc.o(.rodata);
         *libgcc.a:_udivdi3.o(.rodata);
         *libc.a(.rodata);
         *libc.a(.data);
