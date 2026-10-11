@@ -5,9 +5,9 @@ Roulette_EventScript_Table1:: @ 81C407E
 	setvar VAR_0x8004, 0
 	getpokenewsactive 2
 	compare VAR_RESULT, 0
-	goto_if_eq MauvilleCity_GameCorner_EventScript_1C40DA
+	goto_if_eq Roulette_EventScript_Play
 	addvar VAR_0x8004, 128
-	goto MauvilleCity_GameCorner_EventScript_1C40DA
+	goto Roulette_EventScript_Play
 	end
 
 Roulette_EventScript_Table2:: @ 81C40AC
@@ -17,12 +17,12 @@ Roulette_EventScript_Table2:: @ 81C40AC
 	setvar VAR_0x8004, 1
 	getpokenewsactive 2
 	compare VAR_RESULT, 0
-	goto_if_eq MauvilleCity_GameCorner_EventScript_1C40DA
+	goto_if_eq Roulette_EventScript_Play
 	addvar VAR_0x8004, 128
-	goto MauvilleCity_GameCorner_EventScript_1C40DA
+	goto Roulette_EventScript_Play
 	end
 
-MauvilleCity_GameCorner_EventScript_1C40DA:: @ 81C40DA
+Roulette_EventScript_Play:: @ 81C40DA
 	special PlayRoulette
 	waitstate
 	end
