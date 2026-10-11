@@ -1466,8 +1466,8 @@ static void Cmd_panse_adjustnone(void)
 static void Cmd_panse_adjustall(void)
 {
     u16 songId;
-    u8 targetPanArg, incrementPanArg, currentPan, currentPanArg;
-    s8 targetPan, incrementPan, framesToWait;
+    u8 targetPanArg, incrementPanArg, framesToWait, currentPanArg;
+    s8 currentPan, targetPan, incrementPan;
     u8 taskId;
 
     sBattleAnimScriptPtr++;
@@ -1475,20 +1475,20 @@ static void Cmd_panse_adjustall(void)
     currentPanArg = T1_READ_8(sBattleAnimScriptPtr + 2);
     targetPanArg = T1_READ_8(sBattleAnimScriptPtr + 3);
     incrementPanArg = T1_READ_8(sBattleAnimScriptPtr + 4);
-    currentPan = T1_READ_8(sBattleAnimScriptPtr + 5);
+    framesToWait = T1_READ_8(sBattleAnimScriptPtr + 5);
 
-    targetPan = BattleAnimAdjustPanning2(currentPanArg);
-    incrementPan = BattleAnimAdjustPanning2(targetPanArg);
-    framesToWait = BattleAnimAdjustPanning2(incrementPanArg);
+    currentPan = BattleAnimAdjustPanning2(currentPanArg);
+    targetPan = BattleAnimAdjustPanning2(targetPanArg);
+    incrementPan = BattleAnimAdjustPanning2(incrementPanArg);
 
     taskId = CreateTask(Task_PanFromInitialToTarget, 1);
-    gTasks[taskId].data[0] = targetPan;
-    gTasks[taskId].data[1] = incrementPan;
-    gTasks[taskId].data[2] = framesToWait;
-    gTasks[taskId].data[3] = currentPan;
-    gTasks[taskId].data[4] = targetPan;
+    gTasks[taskId].data[0] = currentPan;
+    gTasks[taskId].data[1] = targetPan;
+    gTasks[taskId].data[2] = incrementPan;
+    gTasks[taskId].data[3] = framesToWait;
+    gTasks[taskId].data[4] = currentPan;
 
-    PlaySE12WithPanning(songId, targetPan);
+    PlaySE12WithPanning(songId, currentPan);
 
     gAnimSoundTaskCount++;
     sBattleAnimScriptPtr += 6;
