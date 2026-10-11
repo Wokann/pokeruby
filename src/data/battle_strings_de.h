@@ -1220,7 +1220,7 @@ const u8 *const gBattleStringsTable[] =
 // below are lists of battle string enums and NOT pointers to the strings.
 const u16 gMissStringIds[] =
 {
-    BATTLE_TEXT_AttackMissed,
+    STRINGID_ATTACKMISSED,
     BATTLE_TEXT_ProtectedItself,
     BATTLE_TEXT_AvoidedAttack,
     BATTLE_TEXT_AvoidedDamage,
@@ -1229,244 +1229,244 @@ const u16 gMissStringIds[] =
 
 const u16 gNoEscapeStringIds[] =
 {
-    BATTLE_TEXT_CantEscape2,
-    BATTLE_TEXT_BirchDontLeaveMe,
-    BATTLE_TEXT_PreventEscape,
-    BATTLE_TEXT_CantEscape,
-    BATTLE_TEXT_AttackingCantEscape,
+    STRINGID_CANTESCAPE,
+    STRINGID_DONTLEAVEBIRCH,
+    STRINGID_PREVENTSESCAPE,
+    STRINGID_CANTESCAPE2,
+    STRINGID_ATTACKERCANTESCAPE,
 };
 
 const u16 gMoveWeatherChangeStringIds[] =
 {
-    BATTLE_TEXT_RainStart,
-    BATTLE_TEXT_PourStart,
-    BATTLE_TEXT_Failed,
-    BATTLE_TEXT_SandBrewed,
-    BATTLE_TEXT_SunBright,
-    BATTLE_TEXT_HailStart,
+    STRINGID_STARTEDTORAIN,
+    STRINGID_DOWNPOURSTARTED,
+    STRINGID_BUTITFAILED,
+    STRINGID_SANDSTORMBREWED,
+    STRINGID_SUNLIGHTGOTBRIGHT,
+    STRINGID_STARTEDHAIL,
 };
 
 const u16 gSandStormHailContinuesStringIds[] =
 {
-    BATTLE_TEXT_SandRages,
-    BATTLE_TEXT_HailCont,
+    STRINGID_SANDSTORMRAGES,
+    STRINGID_HAILCONTINUES,
 };
 
 const u16 gSandStormHailDmgStringIds[] =
 {
-    BATTLE_TEXT_SandBuffeted,
-    BATTLE_TEXT_HailStricken,
+    STRINGID_PKMNBUFFETEDBYSANDSTORM,
+    STRINGID_PKMNPELTEDBYHAIL,
 };
 
 const u16 gSandStormHailEndStringIds[] =
 {
-    BATTLE_TEXT_SandSubsided,
-    BATTLE_TEXT_HailStop,
+    STRINGID_SANDSTORMSUBSIDED,
+    STRINGID_HAILSTOPPED,
 };
 
 const u16 gRainContinuesStringIds[] =
 {
-    BATTLE_TEXT_RainCont1,
-    BATTLE_TEXT_PourCont,
-    BATTLE_TEXT_RainStop,
+    STRINGID_RAINCONTINUES,
+    STRINGID_DOWNPOURCONTINUES,
+    STRINGID_RAINSTOPPED,
 };
 
 const u16 gProtectLikeUsedStringIds[] =
 {
-    BATTLE_TEXT_ProtectedItself2,
-    BATTLE_TEXT_BracedItself,
-    BATTLE_TEXT_Failed,
+    STRINGID_PKMNPROTECTEDITSELF2,
+    STRINGID_PKMNBRACEDITSELF,
+    STRINGID_BUTITFAILED,
 };
 
 const u16 gReflectLightScreenSafeguardStringIds[] =
 {
-    BATTLE_TEXT_Failed,
-    BATTLE_TEXT_RaisedDefense,
-    BATTLE_TEXT_RaisedDefenseLittle,
-    BATTLE_TEXT_RaisedSpDef,
-    BATTLE_TEXT_RaisedSpDefLittle,
-    BATTLE_TEXT_CoveredVeil,
+    STRINGID_BUTITFAILED,
+    STRINGID_PKMNRAISEDDEF,
+    STRINGID_PKMNRAISEDDEFALITTLE,
+    STRINGID_PKMNRAISEDSPDEF,
+    STRINGID_PKMNRAISEDSPDEFALITTLE,
+    STRINGID_PKMNCOVEREDBYVEIL,
 };
 
 const u16 gLeechSeedStringIds[] =
 {
-    BATTLE_TEXT_WasSeeded,
-    BATTLE_TEXT_EvadedAttack,
-    BATTLE_TEXT_DoesntAffect,
-    BATTLE_TEXT_HealthSapped,
-    BATTLE_TEXT_OozeSuckup,
+    STRINGID_PKMNSEEDED,
+    STRINGID_PKMNEVADEDATTACK,
+    STRINGID_ITDOESNTAFFECT,
+    STRINGID_PKMNSAPPEDBYLEECHSEED,
+    STRINGID_ITSUCKEDLIQUIDOOZE,
 };
 
 const u16 gRestUsedStringIds[] =
 {
-    BATTLE_TEXT_WentToSleep,
-    BATTLE_TEXT_SpeltHealthy,
+    STRINGID_PKMNWENTTOSLEEP,
+    STRINGID_PKMNSLEPTHEALTHY,
 };
 
 const u16 gUproarOverTurnStringIds[] =
 {
-    BATTLE_TEXT_UproarMaking,
-    BATTLE_TEXT_CalmedDown,
+    STRINGID_PKMNMAKINGUPROAR,
+    STRINGID_PKMNCALMEDDOWN,
 };
 
 const u16 gStockpileUsedStringIds[] =
 {
-    BATTLE_TEXT_Stockpiled,
-    BATTLE_TEXT_StockpiledCant,
+    STRINGID_PKMNSTOCKPILED,
+    STRINGID_PKMNCANTSTOCKPILE,
 };
 
 const u16 gWokeUpStringIds[] =
 {
-    BATTLE_TEXT_WokeUp,
-    BATTLE_TEXT_UproarWoke,
+    STRINGID_PKMNWOKEUP,
+    STRINGID_PKMNWOKEUPINUPROAR,
 };
 
 const u16 gSwallowFailStringIds[] =
 {
-    BATTLE_TEXT_SwallowFail,
-    BATTLE_TEXT_HPFull,
+    STRINGID_FAILEDTOSWALLOW,
+    STRINGID_PKMNHPFULL,
 };
 
 const u16 gUproarAwakeStringIds[] =
 {
-    BATTLE_TEXT_UproarCantSleep2,
-    BATTLE_TEXT_UproarKeptAwake,
-    BATTLE_TEXT_StayedAwake,
+    STRINGID_PKMNCANTSLEEPINUPROAR2,
+    STRINGID_UPROARKEPTPKMNAWAKE,
+    STRINGID_PKMNSTAYEDAWAKEUSING,
 };
 
 const u16 gStatUpStringIds[] =
 {
-    BATTLE_TEXT_UnknownString7,
-    BATTLE_TEXT_UnknownString3,
-    BATTLE_TEXT_AttackingStatNoHigher,
-    BATTLE_TEXT_Terminator2,
-    BATTLE_TEXT_UnknownString4,
-    BATTLE_TEXT_HustleUse,
+    STRINGID_ATTACKERSSTATROSE,
+    STRINGID_DEFENDERSSTATROSE,
+    STRINGID_STATSWONTINCREASE,
+    STRINGID_EMPTYSTRING3,
+    STRINGID_USINGITEMSTATOFPKMNROSE,
+    STRINGID_PKMNUSEDXTOGETPUMPED,
 };
 
 const u16 gStatDownStringIds[] =
 {
-    BATTLE_TEXT_UnknownString5,
-    BATTLE_TEXT_UnknownString6,
-    BATTLE_TEXT_DefendingStatNoHigher,
-    BATTLE_TEXT_Terminator2,
+    STRINGID_ATTACKERSSTATFELL,
+    STRINGID_DEFENDERSSTATFELL,
+    STRINGID_STATSWONTDECREASE,
+    STRINGID_EMPTYSTRING3,
 };
 
 const u16 gFirstTurnOfTwoStringIds[] =
 {
-    BATTLE_TEXT_WhipWhirlwind,
-    BATTLE_TEXT_TookSunlight,
-    BATTLE_TEXT_LoweredHead,
-    BATTLE_TEXT_IsGlowing,
-    BATTLE_TEXT_FlewHigh,
-    BATTLE_TEXT_DugHole,
-    BATTLE_TEXT_HidUnderwater,
-    BATTLE_TEXT_SprangUp,
+    STRINGID_PKMNWHIPPEDWHIRLWIND,
+    STRINGID_PKMNTOOKSUNLIGHT,
+    STRINGID_PKMNLOWEREDHEAD,
+    STRINGID_PKMNISGLOWING,
+    STRINGID_PKMNFLEWHIGH,
+    STRINGID_PKMNDUGHOLE,
+    STRINGID_PKMNHIDUNDERWATER,
+    STRINGID_PKMNSPRANGUP,
 };
 
 const u16 gWrappedStringIds[] =
 {
-    BATTLE_TEXT_SqueezedBind, 
-    BATTLE_TEXT_Wrapped, 
-    BATTLE_TEXT_TrappedVortex, 
-    BATTLE_TEXT_Clamped, 
-    BATTLE_TEXT_TrappedVortex, 
-    BATTLE_TEXT_SandTombTrapped, 
+    STRINGID_PKMNSQUEEZEDBYBIND,
+    STRINGID_PKMNWRAPPEDBY,
+    STRINGID_PKMNTRAPPEDINVORTEX,
+    STRINGID_PKMNCLAMPED,
+    STRINGID_PKMNTRAPPEDINVORTEX,
+    STRINGID_PKMNTRAPPEDBYSANDTOMB,
 };
 
 const u16 gMistUsedStringIds[] =
 {
-    BATTLE_TEXT_MistShroud,
-    BATTLE_TEXT_Failed,
+    STRINGID_PKMNSHROUDEDINMIST,
+    STRINGID_BUTITFAILED,
 };
 
 const u16 gFocusEnergyUsedStringIds[] =
 {
-    BATTLE_TEXT_GetPumped,
-    BATTLE_TEXT_Failed,
+    STRINGID_PKMNGETTINGPUMPED,
+    STRINGID_BUTITFAILED,
 };
 
 const u16 gTransformUsedStringIds[] =
 {
-    BATTLE_TEXT_Transformed,
-    BATTLE_TEXT_Failed,
+    STRINGID_PKMNTRANSFORMEDINTO,
+    STRINGID_BUTITFAILED,
 };
 
-const u16 gSubsituteUsedStringIds[] =
+const u16 gSubstituteUsedStringIds[] =
 {
-    BATTLE_TEXT_SubMade,
-    BATTLE_TEXT_SubWeak,
+    STRINGID_PKMNMADESUBSTITUTE,
+    STRINGID_TOOWEAKFORSUBSTITUTE,
 };
 
 const u16 gGotPoisonedStringIds[] =
 {
-    BATTLE_TEXT_Poisoned,
-    BATTLE_TEXT_Poisoned2,
+    STRINGID_PKMNWASPOISONED,
+    STRINGID_PKMNPOISONEDBY,
 };
 
 const u16 gGotParalyzedStringIds[] =
 {
-    BATTLE_TEXT_Paralyzed,
-    BATTLE_TEXT_Paralyzed2,
+    STRINGID_PKMNWASPARALYZED,
+    STRINGID_PKMNWASPARALYZEDBY,
 };
 
 const u16 gFellAsleepStringIds[] =
 {
-    BATTLE_TEXT_FellAsleep,
-    BATTLE_TEXT_MadeAsleep,
+    STRINGID_PKMNFELLASLEEP,
+    STRINGID_PKMNMADESLEEP,
 };
 
 const u16 gGotBurnedStringIds[] =
 {
-    BATTLE_TEXT_Burned,
-    BATTLE_TEXT_Burned2,
+    STRINGID_PKMNWASBURNED,
+    STRINGID_PKMNBURNEDBY,
 };
 
 const u16 gGotFrozenStringIds[] =
 {
-    BATTLE_TEXT_Frozen,
-    BATTLE_TEXT_Frozen2,
+    STRINGID_PKMNWASFROZEN,
+    STRINGID_PKMNFROZENBY,
 };
 
 const u16 gGotDefrostedStringIds[] =
 {
-    BATTLE_TEXT_AttackingDefrosted,
-    BATTLE_TEXT_Defrosted,
+    STRINGID_PKMNWASDEFROSTED2,
+    STRINGID_PKMNWASDEFROSTEDBY,
 };
 
 const u16 gKOFailedStringIds[] =
 {
-    BATTLE_TEXT_AttackMissed,
-    BATTLE_TEXT_Unaffected,
-    BATTLE_TEXT_FellLove,
-    BATTLE_TEXT_InfatuatedPoke,
+    STRINGID_ATTACKMISSED,
+    STRINGID_PKMNUNAFFECTED,
+    STRINGID_PKMNFELLINLOVE,
+    STRINGID_PKMNSXINFATUATEDY,
 };
 
 const u16 gLeechSeedDrainStringIds[] =
 {
-    BATTLE_TEXT_EnergyDrained,
-    BATTLE_TEXT_OozeSuckup,
+    STRINGID_PKMNENERGYDRAINED,
+    STRINGID_ITSUCKEDLIQUIDOOZE,
 };
 
 const u16 gSportsUsedStringIds[] =
 {
-    BATTLE_TEXT_ElecWeakened,
-    BATTLE_TEXT_FireWeakened,
+    STRINGID_ELECTRICITYWEAKENED,
+    STRINGID_FIREWEAKENED,
 };
 
 const u16 gPartyStatusHealStringIds[] =
 {
-    BATTLE_TEXT_BellChime,
-    BATTLE_TEXT_BellChime,
-    BATTLE_TEXT_BellChime,
-    BATTLE_TEXT_BellChime,
-    BATTLE_TEXT_SoothingAroma,
+    STRINGID_BELLCHIMED,
+    STRINGID_BELLCHIMED,
+    STRINGID_BELLCHIMED,
+    STRINGID_BELLCHIMED,
+    STRINGID_SOOTHINGAROMA,
 };
 
 const u16 gFutureMoveUsedStringIds[] =
 {
-    BATTLE_TEXT_ForesawAttack,
-    BATTLE_TEXT_ChoseDestiny,
+    STRINGID_PKMNFORESAWATTACK,
+    STRINGID_PKMNCHOSEXASDESTINY,
 };
 
 const u16 gBallEscapeStringIds[] =
@@ -1479,30 +1479,30 @@ const u16 gBallEscapeStringIds[] =
 
 const u16 gWeatherContinuesStringIds[] =
 {
-    BATTLE_TEXT_Raining,
-    BATTLE_TEXT_Raining,
-    BATTLE_TEXT_Raining,
-    BATTLE_TEXT_Raining,
-    BATTLE_TEXT_Raining,
-    BATTLE_TEXT_Raining,
-    BATTLE_TEXT_Raining,
-    BATTLE_TEXT_Raining,
-    BATTLE_TEXT_Sandstorm,
-    BATTLE_TEXT_Raining,
-    BATTLE_TEXT_Raining,
-    BATTLE_TEXT_Raining,
-    BATTLE_TEXT_SunStrong,
-    BATTLE_TEXT_Raining,
-    BATTLE_TEXT_Raining,
-    BATTLE_TEXT_Raining,
+    STRINGID_ITISRAINING,
+    STRINGID_ITISRAINING,
+    STRINGID_ITISRAINING,
+    STRINGID_ITISRAINING,
+    STRINGID_ITISRAINING,
+    STRINGID_ITISRAINING,
+    STRINGID_ITISRAINING,
+    STRINGID_ITISRAINING,
+    STRINGID_SANDSTORMISRAGING,
+    STRINGID_ITISRAINING,
+    STRINGID_ITISRAINING,
+    STRINGID_ITISRAINING,
+    STRINGID_SUNLIGHTSTRONG,
+    STRINGID_ITISRAINING,
+    STRINGID_ITISRAINING,
+    STRINGID_ITISRAINING,
 };
 
 const u16 gInobedientStringIds[] =
 {
-    BATTLE_TEXT_LoafingAround, 
-    BATTLE_TEXT_WontObey, 
-    BATTLE_TEXT_TurnedAway, 
-    BATTLE_TEXT_NotNotice, 
+    STRINGID_PKMNLOAFING,
+    STRINGID_PKMNWONTOBEY,
+    STRINGID_PKMNTURNEDAWAY,
+    STRINGID_PKMNPRETENDNOTNOTICE,
 };
 
 const u16 gSafariGetNearStringIds[] =
@@ -1520,52 +1520,52 @@ const u16 gSafariPokeblockResultStringIds[] =
 
 const u16 gTrainerItemCuredStatusStringIds[] =
 {
-    BATTLE_TEXT_CuredConfusion,
-    BATTLE_TEXT_CuredParalysis,
-    BATTLE_TEXT_CuredFreeze,
-    BATTLE_TEXT_CuredBurn,
-    BATTLE_TEXT_CuredPoison,
-    BATTLE_TEXT_CuredSleep,
+    STRINGID_PKMNSITEMSNAPPEDOUT,
+    STRINGID_PKMNSITEMCUREDPARALYSIS,
+    STRINGID_PKMNSITEMDEFROSTEDIT,
+    STRINGID_PKMNSITEMHEALEDBURN,
+    STRINGID_PKMNSITEMCUREDPOISON,
+    STRINGID_PKMNSITEMWOKEIT,
 };
 
 const u16 gBerryEffectStringIds[] =
 {
-    BATTLE_TEXT_CuredStatus,
-    BATTLE_TEXT_NormalizedStatus,
+    STRINGID_PKMNSITEMCUREDPROBLEM,
+    STRINGID_PKMNSITEMNORMALIZEDSTATUS,
 };
 
 const u16 gBRNPreventionStringIds[] =
 {
-    BATTLE_TEXT_PreventedBurn,
-    BATTLE_TEXT_PreventedOther2,
-    BATTLE_TEXT_NoEffectOn,
+    STRINGID_PKMNSXPREVENTSBURNS,
+    STRINGID_PKMNSXPREVENTSYSZ,
+    STRINGID_PKMNSXHADNOEFFECTONY,
 };
 
 const u16 gPRLZPreventionStringIds[] =
 {
-    BATTLE_TEXT_PreventedPara,
-    BATTLE_TEXT_PreventedOther2,
-    BATTLE_TEXT_NoEffectOn,
+    STRINGID_PKMNPREVENTSPARALYSISWITH,
+    STRINGID_PKMNSXPREVENTSYSZ,
+    STRINGID_PKMNSXHADNOEFFECTONY,
 };
 
 const u16 gPSNPreventionStringIds[] =
 {
-    BATTLE_TEXT_PreventedPoison,
-    BATTLE_TEXT_PreventedOther2,
-    BATTLE_TEXT_NoEffectOn,
+    STRINGID_PKMNPREVENTSPOISONINGWITH,
+    STRINGID_PKMNSXPREVENTSYSZ,
+    STRINGID_PKMNSXHADNOEFFECTONY,
 };
 
 const u16 gItemSwapStringIds[] =
 {
-    BATTLE_TEXT_Obtained1,
-    BATTLE_TEXT_Obtained2,
-    BATTLE_TEXT_Obtained3,
+    STRINGID_PKMNOBTAINEDX,
+    STRINGID_PKMNOBTAINEDX2,
+    STRINGID_PKMNOBTAINEDXYOBTAINEDZ,
 };
 
 const u16 gFlashFireStringIds[] =
 {
-    BATTLE_TEXT_RaisedFirePower,
-    BATTLE_TEXT_MadeIneffective,
+    STRINGID_PKMNRAISEDFIREPOWERWITH,
+    STRINGID_PKMNSXMADEYINEFFECTIVE,
 };
 
 const u16 gTrappingMoves[] =

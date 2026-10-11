@@ -14,8 +14,8 @@
 #include "battle_tower.h"
 #include "constants/flags.h"
 #include "ewram.h"
+#include "constants/battle_string_ids.h"
 
-#define BATTLESTRINGS_TABLE_START 12
 #define BATTLESTRINGS_NO    351
 #define BATTLESTRINGS_MAX   BATTLESTRINGS_NO + BATTLESTRINGS_TABLE_START
 

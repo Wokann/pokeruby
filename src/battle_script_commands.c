@@ -121,7 +121,7 @@ extern u8 BattleScript_MoveEffectConfusion[];
 extern u8 BattleScript_MoveEffectUproar[];
 extern u8 BattleScript_MoveEffectWrap[];
 extern u8 BattleScript_MoveEffectPayDay[];
-extern u8 BattleScript_MoveEffectRecoil33[];
+extern u8 BattleScript_MoveEffectRecoil[];
 
 //extern functions
 u8 AtkCanceller_UnableToUseMove(void);
@@ -172,7 +172,7 @@ extern u8 BattleScript_TookAttack[];
 extern u8 BattleScript_SnatchedMove[];
 extern u8 BattleScript_Pausex20[];
 extern u8 BattleScript_SubstituteFade[];
-extern u8 BattleScript_HangedOnMsg[];
+extern u8 BattleScript_FocusBandActivates[];
 extern u8 BattleScript_OneHitKOMsg[];
 extern u8 BattleScript_EnduredMsg[];
 extern u8 BattleScript_PSNPrevention[];
@@ -181,7 +181,7 @@ extern u8 BattleScript_PRLZPrevention[];
 extern u8 BattleScript_FlinchPrevention[];
 extern u8 BattleScript_StatUp[];
 extern u8 BattleScript_StatDown[];
-extern u8 BattleScript_NoItemSteal[];
+extern u8 BattleScript_StickyHoldActivates[];
 extern u8 BattleScript_ItemSteal[];
 extern u8 BattleScript_RapidSpinAway[];
 extern u8 BattleScript_TargetPRLZHeal[];
@@ -205,7 +205,7 @@ extern u8 BattleScript_SAtkDown2[];
 
 extern u8 BattleScript_SpikesOnTarget[]; //spikes1
 extern u8 BattleScript_SpikesOnAttacker[]; //spikes2
-extern u8 BattleScript_SpikesOngBank1[]; //spikes3
+extern u8 BattleScript_SpikesOnFaintedBattler[]; //spikes3
 extern u8 BattleScript_HitFromCritCalc[]; //present dmg
 extern u8 BattleScript_AlreadyAtFullHp[]; //present full hp
 extern u8 BattleScript_PresentHealTarget[]; //present hp heal
@@ -217,7 +217,7 @@ extern u8 BattleScript_PrintPayDayMoneyString[]; //bs payday money give
 extern u8 BattleScript_FaintAttacker[];
 extern u8 BattleScript_FaintTarget[];
 extern u8 BattleScript_DestinyBondTakesLife[];
-extern u8 BattleScript_GrudgeTakesPp[];
+extern u8 BattleScript_GrudgeTakesPP[];
 
 // read via orr
 #define BSScriptRead32(ptr) ((ptr)[0] | (ptr)[1] << 8 | (ptr)[2] << 16 | (ptr)[3] << 24)
@@ -854,7 +854,7 @@ u8* const gMoveEffectBS_Ptrs[] =
     BattleScript_MoveEffectPayDay,
     BattleScript_MoveEffectSleep,
     BattleScript_MoveEffectWrap,
-    BattleScript_MoveEffectRecoil33,
+    BattleScript_MoveEffectRecoil,
     BattleScript_MoveEffectSleep,
     BattleScript_MoveEffectSleep,
     BattleScript_MoveEffectSleep,
@@ -878,7 +878,7 @@ u8* const gMoveEffectBS_Ptrs[] =
     BattleScript_MoveEffectSleep,
     BattleScript_MoveEffectSleep,
     BattleScript_MoveEffectSleep,
-    BattleScript_MoveEffectRecoil33
+    BattleScript_MoveEffectRecoil
 };
 
 const u8 sUnreferencedBitMask1[] = {0, 1, 3, 7, 0xF, 0x1F, 0x3F};
@@ -2126,7 +2126,7 @@ static void Cmd_resultmessage(void)
             gPotentialItemEffectBattler = gBattlerTarget;
             gMoveResultFlags &= ~(MOVE_RESULT_FOE_ENDURED | MOVE_RESULT_FOE_HUNG_ON);
             BattleScriptPushCursor();
-            gBattlescriptCurrInstr = BattleScript_HangedOnMsg;
+            gBattlescriptCurrInstr = BattleScript_FocusBandActivates;
             return;
         default:
             if (gMoveResultFlags & MOVE_RESULT_DOESNT_AFFECT_FOE)
@@ -2155,7 +2155,7 @@ static void Cmd_resultmessage(void)
                 gPotentialItemEffectBattler = gBattlerTarget;
                 gMoveResultFlags &= ~(MOVE_RESULT_FOE_ENDURED | MOVE_RESULT_FOE_HUNG_ON);
                 BattleScriptPushCursor();
-                gBattlescriptCurrInstr = BattleScript_HangedOnMsg;
+                gBattlescriptCurrInstr = BattleScript_FocusBandActivates;
                 return;
             }
             else if (gMoveResultFlags & MOVE_RESULT_FAILED)
@@ -2791,7 +2791,7 @@ void SetMoveEffect(bool8 primary, u8 certain)
                 else if (gBattleMons[gBattlerTarget].item
                          && gBattleMons[gBattlerTarget].ability == ABILITY_STICKY_HOLD)
                 {
-                    gBattlescriptCurrInstr = BattleScript_NoItemSteal;
+                    gBattlescriptCurrInstr = BattleScript_StickyHoldActivates;
 
                     gLastUsedAbility = gBattleMons[gBattlerTarget].ability;
                     RecordAbilityBattle(gBattlerTarget, gLastUsedAbility);
@@ -2893,7 +2893,7 @@ void SetMoveEffect(bool8 primary, u8 certain)
                     else
                     {
                         gLastUsedAbility = ABILITY_STICKY_HOLD;
-                        gBattlescriptCurrInstr = BattleScript_NoItemSteal;
+                        gBattlescriptCurrInstr = BattleScript_StickyHoldActivates;
                         RecordAbilityBattle(gEffectBattler, ABILITY_STICKY_HOLD);
                     }
                     break;
@@ -3075,7 +3075,7 @@ static void atk19_tryfaintmon(void)
 
                 gBattleMons[gBattlerAttacker].pp[moveIndex] = 0;
                 BattleScriptPush(gBattlescriptCurrInstr);
-                gBattlescriptCurrInstr = BattleScript_GrudgeTakesPp;
+                gBattlescriptCurrInstr = BattleScript_GrudgeTakesPP;
                 gActiveBattler = gBattlerAttacker;
                 BtlController_EmitSetMonData(0, moveIndex + 9, 0, 1, &gBattleMons[gActiveBattler].pp[moveIndex]);
                 MarkBattlerForControllerExec(gActiveBattler);
@@ -4191,7 +4191,7 @@ static void Cmd_playstatchangeanimation(void)
     }
 }
 
-#define BattleScript_FlushMessageBox gUnknown_081D9B2D
+
 
 extern u8 BattleScript_RageIsBuilding[];
 extern u8 BattleScript_DefrostedViaFireMove[];
@@ -5095,7 +5095,7 @@ static void atk52_switchineffects(void)
         else if (T2_READ_8(gBattlescriptCurrInstr + 1) == 1)
             gBattlescriptCurrInstr = BattleScript_SpikesOnAttacker;
         else
-            gBattlescriptCurrInstr = BattleScript_SpikesOngBank1;
+            gBattlescriptCurrInstr = BattleScript_SpikesOnFaintedBattler;
     }
     else
     {
@@ -8771,7 +8771,7 @@ static void atkD2_tryswapitems(void)
         }
             // check if ability prevents swapping
         else if (gBattleMons[gBattlerTarget].ability == ABILITY_STICKY_HOLD) {
-            gBattlescriptCurrInstr = BattleScript_NoItemSteal;
+            gBattlescriptCurrInstr = BattleScript_StickyHoldActivates;
             gLastUsedAbility = gBattleMons[gBattlerTarget].ability;
             RecordAbilityBattle(gBattlerTarget, gLastUsedAbility);
         }

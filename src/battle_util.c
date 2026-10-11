@@ -83,12 +83,12 @@ u8 GetMoveTarget(u16 move, u8 useMoveTarget);
 u8 GetBattlerMultiplayerId(u8 bank);
 u16 GetLinkTrainerFlankId(u8 a);
 
-extern u8 BattleScript_MoveSelectionDisabledMove[];
-extern u8 BattleScript_MoveSelectionTormented[];
-extern u8 BattleScript_MoveSelectionTaunted[];
-extern u8 BattleScript_MoveSelectionImprisoned[];
-extern u8 BattleScript_MoveSelectionChoiceBanded[];
-extern u8 BattleScript_MoveSelectionNoPP[];
+extern u8 BattleScript_SelectingDisabledMove[];
+extern u8 BattleScript_SelectingTormentedMove[];
+extern u8 BattleScript_SelectingNotAllowedMoveTaunt[];
+extern u8 BattleScript_SelectingImprisonedMove[];
+extern u8 BattleScript_SelectingNotAllowedMoveChoiceItem[];
+extern u8 BattleScript_SelectingMoveWithNoPP[];
 extern u8 BattleScript_NoMovesLeft[];
 extern u8 BattleScript_WishComesTrue[];
 extern u8 BattleScript_IngrainTurnHeal[];
@@ -114,8 +114,8 @@ extern u8 BattleScript_PrintUproarOverTurns[]; //uproar BS
 extern u8 BattleScript_ThrashConfuses[];
 extern u8 BattleScript_YawnMakesAsleep[];
 extern u8 BattleScript_MonTookFutureAttack[];
-extern u8 BattleScript_PerishSongHits[];
-extern u8 BattleScript_PerishSongTimerGoesDown[];
+extern u8 BattleScript_PerishSongTakesLife[];
+extern u8 BattleScript_PerishSongCountGoesDown[];
 extern u8 BattleScript_GiveExp[];
 extern u8 BattleScript_HandleFaintedMon[];
 
@@ -132,7 +132,7 @@ extern u8 BattleScript_MoveUsedIsImprisoned[];
 extern u8 BattleScript_MoveUsedIsConfused[];
 extern u8 BattleScript_MoveUsedIsConfusedNoMore[];
 extern u8 BattleScript_MoveUsedIsParalyzed[];
-extern u8 BattleScript_MoveUsedIsParalyzedCantAttack[];
+extern u8 BattleScript_MoveUsedIsInLoveCantAttack[];
 extern u8 BattleScript_MoveUsedIsInLove[];
 extern u8 BattleScript_BideStoringEnergy[];
 extern u8 BattleScript_BideAttack[];
@@ -151,16 +151,16 @@ extern u8 BattleScript_MoveHPDrain[];
 extern u8 BattleScript_MoveHPDrain_PPLoss[];
 extern u8 BattleScript_FlashFireBoost[];
 extern u8 BattleScript_FlashFireBoost_PPLoss[];
-extern u8 BattleScript_MoveHPDrain_FullHP[];
-extern u8 BattleScript_MoveHPDrain_FullHP_PPLoss[];
+extern u8 BattleScript_MonMadeMoveUseless[];
+extern u8 BattleScript_MonMadeMoveUseless_PPLoss[];
 extern u8 BattleScript_ColorChangeActivates[];
 extern u8 BattleScript_RoughSkinActivates[];
 extern u8 BattleScript_ApplySecondaryEffect[];
 extern u8 BattleScript_CuteCharmActivates[];
 extern u8 BattleScript_AbilityCuredStatus[]; //ability status clear
 extern u8 BattleScript_SynchronizeActivates[];
-extern u8 gUnknown_081D978C[]; //intimidate1
-extern u8 gUnknown_081D9795[]; //intimidate2
+extern u8 BattleScript_IntimidateActivatesEnd3[]; //intimidate1
+extern u8 BattleScript_IntimidateActivates[]; //intimidate2
 extern u8 BattleScript_TraceActivates[];
 
 extern u8 BattleScript_WhiteHerbEnd2[];
@@ -188,10 +188,10 @@ extern u8 BattleScript_BerryCureChosenStatusRet[]; //berry cure any status retur
 
 extern u8 BattleScript_ItemHealHP_Ret[];
 
-extern u8 gUnknown_081D995F[]; //disobedient while asleep
+extern u8 BattleScript_IgnoresWhileAsleep[]; //disobedient while asleep
 extern u8 BattleScript_IgnoresAndUsesRandomMove[]; //disobedient, uses a random move
 extern u8 BattleScript_IgnoresAndFallsAsleep[]; //disobedient, went to sleep
-extern u8 gUnknown_081D99A0[]; //disobedient, hits itself
+extern u8 BattleScript_IgnoresAndHitsItself[]; //disobedient, hits itself
 
 u8 GetBattlerForBattleScript(u8 caseId)
 {
@@ -464,25 +464,25 @@ u8 TrySetCantSelectMoveBattleScript(void) //msg can't select a move
     {
         gBattleStruct->battler = gActiveBattler;
         gCurrentMove = move;
-        gSelectionBattleScripts[gActiveBattler] = BattleScript_MoveSelectionDisabledMove;
+        gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingDisabledMove;
         limitations++;
     }
     if (move == gLastMoves[gActiveBattler] && move != MOVE_STRUGGLE && gBattleMons[gActiveBattler].status2 & STATUS2_TORMENT)
     {
         CancelMultiTurnMoves(gActiveBattler);
-        gSelectionBattleScripts[gActiveBattler] = BattleScript_MoveSelectionTormented;
+        gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingTormentedMove;
         limitations++;
     }
     if (gDisableStructs[gActiveBattler].tauntTimer && gBattleMoves[move].power == 0)
     {
         gCurrentMove = move;
-        gSelectionBattleScripts[gActiveBattler] = BattleScript_MoveSelectionTaunted;
+        gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingNotAllowedMoveTaunt;
         limitations++;
     }
     if (GetImprisonedMovesCount(gActiveBattler, move))
     {
         gCurrentMove = move;
-        gSelectionBattleScripts[gActiveBattler] = BattleScript_MoveSelectionImprisoned;
+        gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingImprisonedMove;
         limitations++;
     }
 
@@ -497,12 +497,12 @@ u8 TrySetCantSelectMoveBattleScript(void) //msg can't select a move
     {
         gCurrentMove = *choicedMove;
         gLastUsedItem = gBattleMons[gActiveBattler].item;
-        gSelectionBattleScripts[gActiveBattler] = BattleScript_MoveSelectionChoiceBanded;
+        gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingNotAllowedMoveChoiceItem;
         limitations++;
     }
     if (gBattleMons[gActiveBattler].pp[gBattleBufferB[gActiveBattler][2]] == 0)
     {
-        gSelectionBattleScripts[gActiveBattler] = BattleScript_MoveSelectionNoPP;
+        gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingMoveWithNoPP;
         limitations++;
     }
     return limitations;
@@ -1246,12 +1246,12 @@ bool8 HandleWishPerishSongOnTurnEnd(void)
                     {
                         gStatuses3[gActiveBattler] &= ~(STATUS3_PERISH_SONG);
                         gBattleMoveDamage = gBattleMons[gActiveBattler].hp;
-                        gBattlescriptCurrInstr = BattleScript_PerishSongHits;
+                        gBattlescriptCurrInstr = BattleScript_PerishSongTakesLife;
                     }
                     else
                     {
                         gDisableStructs[gActiveBattler].perishSongTimer--;
-                        gBattlescriptCurrInstr = BattleScript_PerishSongTimerGoesDown;
+                        gBattlescriptCurrInstr = BattleScript_PerishSongCountGoesDown;
                     }
                     BattleScriptExecute(gBattlescriptCurrInstr);
                     return 1;
@@ -1552,7 +1552,7 @@ u8 AtkCanceller_UnableToUseMove(void)
                     BattleScriptPushCursor();
                 else
                 {
-                    BattleScriptPush(BattleScript_MoveUsedIsParalyzedCantAttack);
+                    BattleScriptPush(BattleScript_MoveUsedIsInLoveCantAttack);
                     gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
                     gProtectStructs[gBattlerAttacker].loveImmobility = 1;
                     CancelMultiTurnMoves(gBattlerAttacker);
@@ -2014,9 +2014,9 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                     if (gBattleMons[bank].maxHP == gBattleMons[bank].hp)
                     {
                         if ((gProtectStructs[gBattlerAttacker].notFirstStrike))
-                            gBattlescriptCurrInstr = BattleScript_MoveHPDrain_FullHP;
+                            gBattlescriptCurrInstr = BattleScript_MonMadeMoveUseless;
                         else
-                            gBattlescriptCurrInstr = BattleScript_MoveHPDrain_FullHP_PPLoss;
+                            gBattlescriptCurrInstr = BattleScript_MonMadeMoveUseless_PPLoss;
                     }
                     else
                     {
@@ -2393,7 +2393,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                 {
                     gLastUsedAbility = ABILITY_INTIMIDATE;
                     gStatuses3[i] &= ~(STATUS3_INTIMIDATE_POKES);
-                    BattleScriptPushCursorAndCallback(gUnknown_081D978C);
+                    BattleScriptPushCursorAndCallback(BattleScript_IntimidateActivatesEnd3);
                     gBattleStruct->intimidateBattler = i;
                     effect++;
                     break;
@@ -2473,7 +2473,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                     gLastUsedAbility = ABILITY_INTIMIDATE;
                     gStatuses3[i] &= ~(STATUS3_INTIMIDATE_POKES);
                     BattleScriptPushCursor();
-                    gBattlescriptCurrInstr = gUnknown_081D9795;
+                    gBattlescriptCurrInstr = BattleScript_IntimidateActivates;
                     gBattleStruct->intimidateBattler = i;
                     effect++;
                     break;
@@ -3509,7 +3509,7 @@ u8 IsMonDisobedient(void)
         gBattleMons[gBattlerAttacker].status2 &= ~(STATUS2_RAGE);
     if (gBattleMons[gBattlerAttacker].status1 & STATUS1_SLEEP && (gCurrentMove == MOVE_SNORE || gCurrentMove == MOVE_SLEEP_TALK))
     {
-        gBattlescriptCurrInstr = gUnknown_081D995F;
+        gBattlescriptCurrInstr = BattleScript_IgnoresWhileAsleep;
         return 1;
     }
 
@@ -3565,7 +3565,7 @@ u8 IsMonDisobedient(void)
         {
             gBattleMoveDamage = CalculateBaseDamage(&gBattleMons[gBattlerAttacker], &gBattleMons[gBattlerAttacker], MOVE_POUND, 0, 40, 0, gBattlerAttacker, gBattlerAttacker);
             gBattlerTarget = gBattlerAttacker;
-            gBattlescriptCurrInstr = gUnknown_081D99A0;
+            gBattlescriptCurrInstr = BattleScript_IgnoresAndHitsItself;
             gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
             return 2;
         }

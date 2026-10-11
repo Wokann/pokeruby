@@ -49,10 +49,10 @@
 .equiv AI_WEATHER_HAIL, 3
 
 	enum_start 1
-	enum ATTACK
-	enum DEFENSE
-	enum SPEED
-	enum SP_ATTACK
-	enum SP_DEFENSE
-	enum ACCURACY
-	enum EVASION
+	enum STAT_ATK
+	enum STAT_DEF
+	enum STAT_SPEED
+	enum STAT_SPATK
+	enum STAT_SPDEF
+	enum STAT_ACC
+	enum STAT_EVASION

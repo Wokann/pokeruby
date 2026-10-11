@@ -1,6 +1,28 @@
 #ifndef GUARD_CONSTANTS_BATTLE_SCRIPT_COMMANDS_H
 #define GUARD_CONSTANTS_BATTLE_SCRIPT_COMMANDS_H
 
+// Ruby battle scripting state in gSharedMem
+#define sB_ANIM_TURN                (gSharedMem + 0x16002)
+#define sBATTLER                    (gSharedMem + 0x16003)
+#define sMOVEEND_STATE              (gSharedMem + 0x1600C)
+#define sGIVEEXP_STATE              (gSharedMem + 0x1600F)
+#define sPAINSPLIT_HP               (gSharedMem + 0x16014)
+#define sLEARNMOVE_STATE            (gSharedMem + 0x1601A)
+#define sSTATCHANGER                (gSharedMem + 0x1601E)
+#define sDMG_MULTIPLIER             (gSharedMem + 0x1601F)
+#define sTWOTURN_STRINGID           (gSharedMem + 0x16055)
+#define sBATTLE_STYLE               (gSharedMem + 0x16084)
+#define sBIDE_DMG                   (gSharedMem + 0x16090)
+#define sLVLBOX_STATE               (gSharedMem + 0x1609C)
+#define sB_ANIM_TARGETS_HIT         (gSharedMem + 0x160A1)
+#define sB_ANIM_ARG1                (gSharedMem + 0x160A4)
+#define sB_ANIM_ARG2                (gSharedMem + 0x160A5)
+#define sSTAT_ANIM_PLAYED           (gSharedMem + 0x160DC)
+#define sTRIPLE_KICK_POWER          (gSharedMem + 0x160DE)
+#define sMULTIHIT_STRING            (gSharedMem + 0x160E0)
+#define sBATTLER_WITH_ABILITY       (gSharedMem + 0x160F8)
+#define sMULTIHIT_EFFECT            (gSharedMem + 0x16112)
+
 // array entries for battle communication
 #define MULTIUSE_STATE          0x0
 #define CURSOR_POSITION         0x1
@@ -10,8 +32,13 @@
 #define MOVE_EFFECT_BYTE        0x3
 #define ACTIONS_CONFIRMED_COUNT 0x4
 #define MULTISTRING_CHOOSER     0x5
+#define MISS_TYPE               0x6
 #define MSG_DISPLAY             0x7
 #define BATTLE_COMMUNICATION_ENTRIES_COUNT  0x8
+
+#define cEFFECT_CHOOSER      (gBattleCommunication + MOVE_EFFECT_BYTE)
+#define cMULTISTRING_CHOOSER (gBattleCommunication + MULTISTRING_CHOOSER)
+#define cMISS_TYPE           (gBattleCommunication + MISS_TYPE)
 
 #define BS_TARGET                   0
 #define BS_ATTACKER                 1

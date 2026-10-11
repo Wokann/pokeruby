@@ -1,8 +1,9 @@
 #include "constants/battle.h"
+#include "constants/battle_script_commands.h"
 #include "constants/items.h"
 #include "constants/songs.h"
 	.include "asm/macros.inc"
-	.include "include/macros/battle_script.inc"
+	.include "asm/macros/battle_script.inc"
 	.include "constants/constants.inc"
 	.include "constants/battle_script_constants.inc"
 
@@ -42,7 +43,7 @@ gBattlescriptsForSafariActions:: @ 81D9E98
 	.4byte BattleScript_1DA00A
 
 BattleScript_BallThrow: @ 81D9EA8
-	jumpifhalfword COMMON_BITS, gBattleTypeFlags, BATTLE_TYPE_WALLY_TUTORIAL, BattleScript_BallThrowByWally
+	jumpifhalfword CMP_COMMON_BITS, gBattleTypeFlags, BATTLE_TYPE_WALLY_TUTORIAL, BattleScript_BallThrowByWally
 	printstring BATTLE_TEXT_Used1
 	handleballthrow
 
@@ -52,11 +53,11 @@ BattleScript_BallThrowByWally: @ 81D9EB8
 
 BattleScript_SafariBallThrow: @ 81D9EBC
 	printstring BATTLE_TEXT_Used1
-	updatestatusicon USER
+	updatestatusicon BS_ATTACKER
 	handleballthrow
 
 BattleScript_SuccessBallThrow:: @ 81D9EC2
-	jumpifhalfword EQUAL, gLastUsedItem, ITEM_SAFARI_BALL, BattleScript_PrintCaughtMonInfo
+	jumpifhalfword CMP_EQUAL, gLastUsedItem, ITEM_SAFARI_BALL, BattleScript_PrintCaughtMonInfo
 	incrementgamestat 11
 
 BattleScript_PrintCaughtMonInfo: @ 81D9ED0
@@ -88,8 +89,8 @@ BattleScript_WallyBallThrow:: @ 81D9F00
 BattleScript_ShakeBallThrow:: @ 81D9F0A
 	printfromtable gBallEscapeStringIds
 	waitmessage 64
-	jumpifbyte NO_COMMON_BITS, gBattleTypeFlags, BATTLE_TYPE_SAFARI, BattleScript_ShakeBallThrowEnd
-	jumpifbyte NOT_EQUAL, gNumSafariBalls, 0, BattleScript_ShakeBallThrowEnd
+	jumpifbyte CMP_NO_COMMON_BITS, gBattleTypeFlags, BATTLE_TYPE_SAFARI, BattleScript_ShakeBallThrowEnd
+	jumpifbyte CMP_NOT_EQUAL, gNumSafariBalls, 0, BattleScript_ShakeBallThrowEnd
 	printstring BATTLE_TEXT_SafariOver
 	waitmessage 64
 	setbyte gBattleOutcome, B_OUTCOME_NO_SAFARI_BALLS
@@ -117,11 +118,11 @@ BattleScript_OpponentUsesHealItem: @ 81D9F4F
 	waitmessage 64
 	useitemonopponent
 	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
-	healthbarupdate USER
-	datahpupdate USER
-	printstring BATTLE_TEXT_RestoredHealth
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	printstring STRINGID_PKMNSITEMRESTOREDHEALTH
 	waitmessage 64
-	updatestatusicon USER
+	updatestatusicon BS_ATTACKER
 	setbyte sMOVEEND_STATE, 15
 	moveend 1, 0
 	finishaction
@@ -134,7 +135,7 @@ BattleScript_OpponentUsesStatusCureItem: @ 81D9F7B
 	useitemonopponent
 	printfromtable gTrainerItemCuredStatusStringIds
 	waitmessage 64
-	updatestatusicon USER
+	updatestatusicon BS_ATTACKER
 	setbyte sMOVEEND_STATE, 15
 	moveend 1, 0
 	finishaction
@@ -181,7 +182,7 @@ BattleScript_ActionGetNear: @ 81D9FEB
 BattleScript_ActionThrowPokeblock: @ 81D9FF4
 	printstring BATTLE_TEXT_ThrewBlock
 	waitmessage 64
-	playanimation USER, B_ANIM_POKEBLOCK_THROW, 0x0
+	playanimation BS_ATTACKER, B_ANIM_POKEBLOCK_THROW, 0x0
 	printfromtable gSafariPokeblockResultStringIds
 	waitmessage 64
 	end2
@@ -191,7 +192,7 @@ BattleScript_1DA00A: @ 81DA00A
 	waitmessage 64
 	returnatktoball
 	waitstate
-	trainerslidein TARGET
+	trainerslidein BS_TARGET
 	waitstate
 	printstring BATTLE_TEXT_WallyBall
 	waitmessage 64
