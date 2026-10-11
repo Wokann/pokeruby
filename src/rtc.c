@@ -28,13 +28,13 @@ static const s32 sNumDaysInMonths[12] =
     31,
 };
 
-void RtcDisableInterrupts()
+void RtcDisableInterrupts(void)
 {
     sSavedIme = REG_IME;
     REG_IME = 0;
 }
 
-void RtcRestoreInterrupts()
+void RtcRestoreInterrupts(void)
 {
     REG_IME = sSavedIme;
 }
@@ -102,7 +102,7 @@ u16 RtcGetDayCount(struct SiiRtcInfo *rtc)
     return ConvertDateToDayCount(year, month, day);
 }
 
-void RtcInit()
+void RtcInit(void)
 {
     sErrorStatus = 0;
 
@@ -126,7 +126,7 @@ void RtcInit()
     sErrorStatus = RtcCheckInfo(&sRtc);
 }
 
-u16 RtcGetErrorStatus()
+u16 RtcGetErrorStatus(void)
 {
     return sErrorStatus;
 }
@@ -216,7 +216,7 @@ u16 RtcCheckInfo(struct SiiRtcInfo *rtc)
     return errorFlags;
 }
 
-void RtcReset()
+void RtcReset(void)
 {
     RtcDisableInterrupts();
     SiiRtcReset();
@@ -317,7 +317,7 @@ void RtcCalcTimeDifference(struct SiiRtcInfo *rtc, struct Time *result, struct T
     }
 }
 
-void RtcCalcLocalTime()
+void RtcCalcLocalTime(void)
 {
     RtcGetInfo(&sRtc);
     RtcCalcTimeDifference(&sRtc, &gLocalTime, &gSaveBlock2.localTimeOffset);
@@ -364,7 +364,7 @@ void CalcTimeDifference(struct Time *result, struct Time *t1, struct Time *t2)
     }
 }
 
-u32 RtcGetMinuteCount()
+u32 RtcGetMinuteCount(void)
 {
     RtcGetInfo(&sRtc);
     return (24 * 60) * RtcGetDayCount(&sRtc) + 60 * sRtc.hour + sRtc.minute;
