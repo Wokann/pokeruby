@@ -543,8 +543,6 @@ void DrawBattleEntryBackground();
 void sub_800F104(void);
 void sub_80101B8(void);
 void c2_081284E0(void);
-void sub_8010278(struct Sprite *);
-void sub_80102AC(struct Sprite *);
 void sub_8011384(void);
 void sub_8011800(void);
 void sub_8011834(void);

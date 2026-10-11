@@ -1,7 +1,7 @@
 #ifndef POKERUBY_TRAINER_CLASS_LOOKUPS_H
 #define POKERUBY_TRAINER_CLASS_LOOKUPS_H
 
-const u8 gTrainerClassToPicIndex[] = {
+const u8 gFacilityClassToPicIndex[] = {
     TRAINER_PIC_ARCHIE,                // AQUA_LEADER
     TRAINER_PIC_AQUA_GRUNT_M,          // TEAM_AQUA_M
     TRAINER_PIC_AQUA_GRUNT_F,          // TEAM_AQUA_F
@@ -81,7 +81,7 @@ const u8 gTrainerClassToPicIndex[] = {
     TRAINER_PIC_SIS_AND_BRO            // SIS_AND_BRO
 };
 
-const u8 gTrainerClassToNameIndex[] = {
+const u8 gFacilityClassToTrainerClass[] = {
     TRAINER_CLASS_AQUA_LEADER,       // AQUA_LEADER
     TRAINER_CLASS_TEAM_AQUA,         // TEAM_AQUA_M
     TRAINER_CLASS_TEAM_AQUA,         // TEAM_AQUA_F

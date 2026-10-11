@@ -4,6 +4,7 @@
 #include "battle.h"
 #include "battle_gfx_sfx_util.h"
 #include "battle_main.h"
+#include "battle_message.h"
 #include "battle_util.h"
 #include "data.h"
 #include "event_data.h"
@@ -41,14 +42,6 @@ extern u16 gTrainerBattleOpponent_A;
 extern struct PokemonStorage gPokemonStorage;
 
 EWRAM_DATA struct SpriteTemplate gMultiuseSpriteTemplate = {0};
-
-extern u8 gBadEggNickname[];
-//array of pointers to arrays of pointers to union AnimCmd (We probably need to typedef this.)
-extern u8 gTrainerClassToPicIndex[];
-extern u8 gTrainerClassToNameIndex[];
-
-
-extern void oac_poke_opponent(struct Sprite *);
 
 u8 CountAliveMonsInBattle(u8 caseId)
 {
@@ -153,10 +146,10 @@ const struct SpriteTemplate gBattlerSpriteTemplates[] =
 {
     {0xFFFF, 0, &gOamData_BattleSpritePlayerSide, NULL, gBattlerPicTable_PlayerLeft, gAffineAnims_BattleSpritePlayerSide, SpriteCB_BattleSpriteStartSlideLeft},
     {0xFFFF, 0, &gOamData_BattleSpriteOpponentSide, NULL, gBattlerPicTable_OpponentLeft,
-        gAffineAnims_BattleSpriteOpponentSide, oac_poke_opponent},
+        gAffineAnims_BattleSpriteOpponentSide, SpriteCB_WildMon},
     {0xFFFF, 0, &gOamData_BattleSpritePlayerSide, NULL, gBattlerPicTable_PlayerRight, gAffineAnims_BattleSpritePlayerSide, SpriteCB_BattleSpriteStartSlideLeft},
     {0xFFFF, 0, &gOamData_BattleSpriteOpponentSide, NULL, gBattlerPicTable_OpponentRight,
-        gAffineAnims_BattleSpriteOpponentSide, oac_poke_opponent},
+        gAffineAnims_BattleSpriteOpponentSide, SpriteCB_WildMon},
 };
 
 void SetMultiuseSpriteTemplateToPokemon(u16 speciesTag, u8 battlerPosition)
@@ -341,7 +334,7 @@ u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, u8 *data)
     {
         if (boxMon->isBadEgg)
         {
-            StringCopy(data, gBadEggNickname);
+            StringCopy(data, gText_BadEgg);
             retVal = StringLength(data);
         }
         else if (boxMon->isEgg)
@@ -975,14 +968,14 @@ u8 GiveMonToPlayer(struct Pokemon *mon)
         i++;
 
     if (i >= 6)
-        return SendMonToPC(mon);
+        return CopyMonToPC(mon);
 
     CopyMon(&gPlayerParty[i], mon, sizeof(*mon));
     gPlayerPartyCount = i + 1;
     return 0;
 }
 
-u8 SendMonToPC(struct Pokemon *mon)
+u8 CopyMonToPC(struct Pokemon *mon)
 {
     s32 boxNo = gPokemonStorage.currentBox;
 
@@ -1118,16 +1111,16 @@ static const u8 sSecretBaseFacilityClasses[][5] = {
 u8 GetSecretBaseTrainerPicIndex(void)
 {
     u8 facilityClass = sSecretBaseFacilityClasses[eSecretBaseRecord->gender][eSecretBaseRecord->trainerId[0] % 5];
-    return gTrainerClassToPicIndex[facilityClass];
+    return gFacilityClassToPicIndex[facilityClass];
 }
 
 u8 GetSecretBaseTrainerClass(void)
 {
     u8 facilityClass = sSecretBaseFacilityClasses[eSecretBaseRecord->gender][eSecretBaseRecord->trainerId[0] % 5];
-    return gTrainerClassToNameIndex[facilityClass];
+    return gFacilityClassToTrainerClass[facilityClass];
 }
 
-u8 IsPlayerPartyAndPokemonStorageFull(void)
+bool8 IsPlayerPartyAndPokemonStorageFull(void)
 {
     s32 i;
 
@@ -1138,7 +1131,7 @@ u8 IsPlayerPartyAndPokemonStorageFull(void)
     return IsPokemonStorageFull();
 }
 
-u8 IsPokemonStorageFull(void)
+bool8 IsPokemonStorageFull(void)
 {
     s32 i, j;
 

@@ -1619,7 +1619,7 @@ bool8 debug_80C527C(struct Pokemon *pokemon)
             return FALSE;
         }
     }
-    SendMonToPC(&gUnknown_Debug_2038A1C->pokemon);
+    CopyMonToPC(&gUnknown_Debug_2038A1C->pokemon);
     return TRUE;
 }
 

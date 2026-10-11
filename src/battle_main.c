@@ -53,6 +53,8 @@
 
 void SpriteCB_UnusedBattleInit_Main(struct Sprite *);
 void SpriteCB_Flicker(struct Sprite *);
+void SpriteCB_MoveWildMonToRight(struct Sprite *sprite);
+void SpriteCB_WildMonShowHealthbox(struct Sprite *sprite);
 void SpriteCB_AnimFaintOpponent(struct Sprite *);
 void SpriteCB_BounceEffect(struct Sprite *);
 void BattleIntroDrawPartySummaryScreens(void);
@@ -3073,27 +3075,27 @@ void debug_sub_80132C8(u8 a, void *b, u32 c)
 }
 #endif
 
-void oac_poke_opponent(struct Sprite *sprite)
+void SpriteCB_WildMon(struct Sprite *sprite)
 {
-    sprite->callback = sub_8010278;
+    sprite->callback = SpriteCB_MoveWildMonToRight;
     StartSpriteAnimIfDifferent(sprite, 0);
     BeginNormalPaletteFade(0x00020000, 0, 10, 10, RGB(15, 15, 15));
 }
 
-void sub_8010278(struct Sprite *sprite)
+void SpriteCB_MoveWildMonToRight(struct Sprite *sprite)
 {
     if ((gIntroSlideFlags & 1) == 0)
     {
         sprite->x2 += 2;
         if (sprite->x2 == 0)
         {
-            sprite->callback = sub_80102AC;
+            sprite->callback = SpriteCB_WildMonShowHealthbox;
             PlayCry_Normal(sprite->data[2], 25);
         }
     }
 }
 
-void sub_80102AC(struct Sprite *sprite)
+void SpriteCB_WildMonShowHealthbox(struct Sprite *sprite)
 {
     if (sprite->animEnded)
     {

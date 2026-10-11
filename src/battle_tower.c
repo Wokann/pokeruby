@@ -20,6 +20,7 @@
 #include "new_game.h"
 #include "overworld.h"
 #include "pokedex.h"
+#include "pokemon.h"
 #include "random.h"
 #include "save.h"
 #include "string_util.h"
@@ -279,8 +280,6 @@ extern const u8 gText_NewLine[];
 extern const u8 BattleText_Format8[];
 extern const u8 BattleText_Format9[];
 extern u16 gSpecialVar_0x8004;
-extern u8 gTrainerClassToPicIndex[];
-extern u8 gTrainerClassToNameIndex[];
 extern u16 gTrainerBattleOpponent_A;
 extern u16 gBattleTypeFlags;
 extern u8 gSelectedOrderFromParty[];
@@ -656,21 +655,21 @@ void PutNewBattleTowerRecord(struct RSBattleTowerRecord *record)
 u8 get_trainer_class_pic_index(void)
 {
     if (gSaveBlock2.battleTower.battleTowerTrainerId == BATTLE_TOWER_EREADER_TRAINER_ID)
-        return gTrainerClassToPicIndex[gSaveBlock2.battleTower.ereaderTrainer.facilityClass];
+        return gFacilityClassToPicIndex[gSaveBlock2.battleTower.ereaderTrainer.facilityClass];
     else if (gSaveBlock2.battleTower.battleTowerTrainerId < BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID)
-        return gTrainerClassToPicIndex[gBattleTowerTrainers[gSaveBlock2.battleTower.battleTowerTrainerId].facilityClass];
+        return gFacilityClassToPicIndex[gBattleTowerTrainers[gSaveBlock2.battleTower.battleTowerTrainerId].facilityClass];
     else
-        return gTrainerClassToPicIndex[gSaveBlock2.battleTower.records[gSaveBlock2.battleTower.battleTowerTrainerId - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].facilityClass];
+        return gFacilityClassToPicIndex[gSaveBlock2.battleTower.records[gSaveBlock2.battleTower.battleTowerTrainerId - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].facilityClass];
 }
 
 u8 get_trainer_class_name_index(void)
 {
     if (gSaveBlock2.battleTower.battleTowerTrainerId == BATTLE_TOWER_EREADER_TRAINER_ID)
-        return gTrainerClassToNameIndex[gSaveBlock2.battleTower.ereaderTrainer.facilityClass];
+        return gFacilityClassToTrainerClass[gSaveBlock2.battleTower.ereaderTrainer.facilityClass];
     else if (gSaveBlock2.battleTower.battleTowerTrainerId >= BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID)
-        return gTrainerClassToNameIndex[gSaveBlock2.battleTower.records[gSaveBlock2.battleTower.battleTowerTrainerId - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].facilityClass];
+        return gFacilityClassToTrainerClass[gSaveBlock2.battleTower.records[gSaveBlock2.battleTower.battleTowerTrainerId - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].facilityClass];
     else
-        return gTrainerClassToNameIndex[gBattleTowerTrainers[gSaveBlock2.battleTower.battleTowerTrainerId].facilityClass];
+        return gFacilityClassToTrainerClass[gBattleTowerTrainers[gSaveBlock2.battleTower.battleTowerTrainerId].facilityClass];
 }
 
 void get_trainer_name(u8* dest)
@@ -1508,12 +1507,12 @@ void FillEReaderTrainerWithPlayerData(void)
 
 u8 GetEreaderTrainerFrontSpriteId(void)
 {
-    return gTrainerClassToPicIndex[gSaveBlock2.battleTower.ereaderTrainer.facilityClass];
+    return gFacilityClassToPicIndex[gSaveBlock2.battleTower.ereaderTrainer.facilityClass];
 }
 
 u8 GetEreaderTrainerClassId(void)
 {
-    return gTrainerClassToNameIndex[gSaveBlock2.battleTower.ereaderTrainer.facilityClass];
+    return gFacilityClassToTrainerClass[gSaveBlock2.battleTower.ereaderTrainer.facilityClass];
 }
 
 void GetEreaderTrainerName(u8 *trainerName)
