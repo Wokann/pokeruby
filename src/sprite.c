@@ -294,7 +294,7 @@ EWRAM_DATA struct Sprite gSprites[MAX_SPRITES + 1] = {0};
 EWRAM_DATA static u16 sSpritePriorities[MAX_SPRITES] = {0};
 u8 sSpriteOrder[MAX_SPRITES];
 bool8 sShouldProcessSpriteCopyRequests;
-u8 gSpriteCopyRequestCount;
+u8 sSpriteCopyRequestCount;
 struct SpriteCopyRequest sSpriteCopyRequests[MAX_SPRITE_COPY_REQUESTS];
 u8 gOamLimit;
 u16 gReservedSpriteTileCount;
@@ -663,7 +663,7 @@ static void ClearSpriteCopyRequests(void)
     u8 i;
 
     sShouldProcessSpriteCopyRequests = FALSE;
-    gSpriteCopyRequestCount = 0;
+    sSpriteCopyRequestCount = 0;
 
     for (i = 0; i < MAX_SPRITE_COPY_REQUESTS; i++)
     {
@@ -803,10 +803,10 @@ void ProcessSpriteCopyRequests(void)
     {
         u8 i = 0;
 
-        while (gSpriteCopyRequestCount > 0)
+        while (sSpriteCopyRequestCount > 0)
         {
             CpuCopy16(sSpriteCopyRequests[i].src, sSpriteCopyRequests[i].dest, sSpriteCopyRequests[i].size);
-            gSpriteCopyRequestCount--;
+            sSpriteCopyRequestCount--;
             i++;
         }
 
@@ -816,12 +816,12 @@ void ProcessSpriteCopyRequests(void)
 
 static void RequestSpriteFrameImageCopy(u16 index, u16 tileNum, const struct SpriteFrameImage *images)
 {
-    if (gSpriteCopyRequestCount < MAX_SPRITE_COPY_REQUESTS)
+    if (sSpriteCopyRequestCount < MAX_SPRITE_COPY_REQUESTS)
     {
-        sSpriteCopyRequests[gSpriteCopyRequestCount].src = images[index].data;
-        sSpriteCopyRequests[gSpriteCopyRequestCount].dest = OBJ_VRAM0 + TILE_SIZE_4BPP * tileNum;
-        sSpriteCopyRequests[gSpriteCopyRequestCount].size = images[index].size;
-        gSpriteCopyRequestCount++;
+        sSpriteCopyRequests[sSpriteCopyRequestCount].src = images[index].data;
+        sSpriteCopyRequests[sSpriteCopyRequestCount].dest = OBJ_VRAM0 + TILE_SIZE_4BPP * tileNum;
+        sSpriteCopyRequests[sSpriteCopyRequestCount].size = images[index].size;
+        sSpriteCopyRequestCount++;
     }
 #if DEBUG
     else
@@ -833,12 +833,12 @@ static void RequestSpriteFrameImageCopy(u16 index, u16 tileNum, const struct Spr
 
 void RequestSpriteCopy(const void *src, u8 *dest, u16 size)
 {
-    if (gSpriteCopyRequestCount < MAX_SPRITE_COPY_REQUESTS)
+    if (sSpriteCopyRequestCount < MAX_SPRITE_COPY_REQUESTS)
     {
-        sSpriteCopyRequests[gSpriteCopyRequestCount].src = src;
-        sSpriteCopyRequests[gSpriteCopyRequestCount].dest = dest;
-        sSpriteCopyRequests[gSpriteCopyRequestCount].size = size;
-        gSpriteCopyRequestCount++;
+        sSpriteCopyRequests[sSpriteCopyRequestCount].src = src;
+        sSpriteCopyRequests[sSpriteCopyRequestCount].dest = dest;
+        sSpriteCopyRequests[sSpriteCopyRequestCount].size = size;
+        sSpriteCopyRequestCount++;
     }
 #if DEBUG
     else

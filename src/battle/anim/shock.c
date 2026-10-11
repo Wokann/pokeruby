@@ -2,8 +2,6 @@
 #include "battle_anim.h"
 #include "trig.h"
 
-extern struct OamMatrix gOamMatrices[];
-
 static void AnimUnusedCirclingShock(struct Sprite *sprite);
 static void AnimSparkElectricity(struct Sprite *sprite);
 

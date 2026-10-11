@@ -67,7 +67,6 @@ extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern u8 gBattleEnvironment;
 extern u8 gReservedSpritePaletteCount;
 extern u16 gMoveToLearn;
-extern bool8 gAffineAnimsDisabled;
 extern u8 gDisplayedStringBattle[];
 extern u8 gBattleTextBuff2[];
 

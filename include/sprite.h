@@ -169,6 +169,8 @@ struct SubspriteTable
 
 struct Sprite;
 
+typedef void (*SpriteCallback)(struct Sprite *);
+
 struct SpriteTemplate
 {
     u16 tileTag;
@@ -177,10 +179,8 @@ struct SpriteTemplate
     const union AnimCmd *const *anims;
     const struct SpriteFrameImage *images;
     const union AffineAnimCmd *const *affineAnims;
-    void (*callback)(struct Sprite *);
+    SpriteCallback callback;
 };
-
-typedef void (*SpriteCallback)(struct Sprite *);
 
 struct Sprite
 {
@@ -200,28 +200,28 @@ struct Sprite
     /*0x2A*/ u8 animNum;
     /*0x2B*/ u8 animCmdIndex;
     /*0x2C*/ u8 animDelayCounter:6;
-             u8 animPaused:1;
-             u8 affineAnimPaused:1;
+             bool8 animPaused:1;
+             bool8 affineAnimPaused:1;
     /*0x2D*/ u8 animLoopCounter;
 
     // general purpose data fields
     /*0x2E*/ s16 data[8];
 
-    /*0x3E*/ u16 inUse:1;               //1
-             u16 coordOffsetEnabled:1;  //2
+    /*0x3E*/ bool16 inUse:1;               //1
+             bool16 coordOffsetEnabled:1;  //2
              bool16 invisible:1;        //4
-             u16 flags_3:1;             //8
-             u16 flags_4:1;             //0x10
-             u16 flags_5:1;             //0x20
-             u16 flags_6:1;             //0x40
-             u16 flags_7:1;             //0x80
-    /*0x3F*/ u16 hFlip:1;
-             u16 vFlip:1;
-             u16 animBeginning:1;
-             u16 affineAnimBeginning:1;
-             u16 animEnded:1;
-             u16 affineAnimEnded:1;
-             u16 usingSheet:1;
+             bool16 flags_3:1;             //8
+             bool16 flags_4:1;             //0x10
+             bool16 flags_5:1;             //0x20
+             bool16 flags_6:1;             //0x40
+             bool16 flags_7:1;             //0x80
+    /*0x3F*/ bool16 hFlip:1;
+             bool16 vFlip:1;
+             bool16 animBeginning:1;
+             bool16 affineAnimBeginning:1;
+             bool16 animEnded:1;
+             bool16 affineAnimEnded:1;
+             bool16 usingSheet:1;
              u16 flags_f:1;
 
     /*0x40*/ u16 sheetTileStart;
@@ -251,8 +251,9 @@ extern u16 gReservedSpriteTileCount;
 
 extern u8 gOamLimit;
 
-extern struct Sprite gSprites[];
-extern struct OamMatrix gOamMatrices[];
+extern struct Sprite gSprites[MAX_SPRITES + 1];
+extern struct OamMatrix gOamMatrices[OAM_MATRIX_COUNT];
+extern bool8 gAffineAnimsDisabled;
 
 void ResetSpriteData(void);
 void AnimateSprites(void);
@@ -307,7 +308,7 @@ u8 IndexOfSpritePaletteTag(u16 tag);
 u16 GetSpritePaletteTagByPaletteNum(u8 paletteNum);
 void FreeSpritePaletteByTag(u16 tag);
 void SetSubspriteTables(struct Sprite *sprite, const struct SubspriteTable *subspriteTables);
-bool8 AddSpriteToOamBuffer(struct Sprite *object, u8 *oamIndex);
+bool8 AddSpriteToOamBuffer(struct Sprite *sprite, u8 *oamIndex);
 bool8 AddSubspritesToOamBuffer(struct Sprite *sprite, struct OamData *destOam, u8 *oamIndex);
 void CopyToSprites(u8 *src);
 void CopyFromSprites(u8 *dest);
