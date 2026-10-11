@@ -6,6 +6,7 @@
 #include <limits.h>
 #include "config.h" // we need to define config before gba headers as print stuff needs the functions nulled before defines.
 #include "gba/gba.h"
+#include "gametypes.h"
 #include "constants/global.h"
 
 // IDE support
@@ -336,7 +337,7 @@ struct DaycareMail
 struct DayCareStepCountersEtc {
     u32 steps[DAYCARE_MON_COUNT];
     u16 pendingEggPersonality;
-    u8 eggCycleStepsRemaining;
+    u8 stepCounter;
 };
 
 struct DayCareMisc

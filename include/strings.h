@@ -7,6 +7,7 @@ extern const u8 gDaycareText_GetAlongVeryWell[];
 extern const u8 gDaycareText_GetAlong[];
 extern const u8 gDaycareText_DontLikeOther[];
 extern const u8 gDaycareText_PlayOther[];
+extern const u8 gText_NewLine2[];
 
 // placeholder strings
 extern const u8 gText_ExpandedPlaceholder_Empty[];

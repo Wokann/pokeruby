@@ -152,7 +152,7 @@ u8 MoriDebugMenu_BreedEgg(void)
             SetMonData(&gPlayerParty[loopCounter], MON_DATA_FRIENDSHIP, &friendship);
         }
     }
-    gSaveBlock1.daycare.misc.countersEtc.eggCycleStepsRemaining = -3;
+    gSaveBlock1.daycare.misc.countersEtc.stepCounter = -3;
     CloseMenu();
     return 1;
 }

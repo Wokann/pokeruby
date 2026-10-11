@@ -32,7 +32,7 @@ static u16 sHatchedEggMotherMoves[4];
 
 extern u16 gMoveToLearn;
 
-static void ClearDaycareMail(struct DaycareMail *mail);
+static void ClearDaycareMonMail(struct DaycareMail *mail);
 static void SetInitialEggData(struct Pokemon *mon, u16 species, struct DayCare *daycare);
 static u8 GetDaycareCompatibilityScore(struct DayCare *daycare);
 
@@ -161,7 +161,7 @@ static void ShiftDaycareSlots(struct DayCare * daycare)
         daycare->misc.mail[0] = daycare->misc.mail[1];
         daycare->misc.countersEtc.steps[0] = daycare->misc.countersEtc.steps[1];
         daycare->misc.countersEtc.steps[1] = 0;
-        ClearDaycareMail(&daycare->misc.mail[1]);
+        ClearDaycareMonMail(&daycare->misc.mail[1]);
     }
 }
 
@@ -219,7 +219,7 @@ static u16 TakeSelectedPokemonFromDaycare(struct DayCare * daycare, u8 slot)
     if (daycare->misc.mail[slot].message.itemId)
     {
         GiveMailToMon(&gPlayerParty[PARTY_SIZE - 1], &daycare->misc.mail[slot].message);
-        ClearDaycareMail(&daycare->misc.mail[slot]);
+        ClearDaycareMonMail(&daycare->misc.mail[slot]);
     }
 
     CompactPartySlots();
@@ -292,7 +292,7 @@ u8 GetNumLevelsGainedFromDaycare(void)
     return 0;
 }
 
-static void ClearDaycareMail(struct DaycareMail *mail)
+static void ClearDaycareMonMail(struct DaycareMail *mail)
 {
     u8 *names;
     u8 *names2;
@@ -311,18 +311,18 @@ static void ClearDaycareMail(struct DaycareMail *mail)
     ClearMail(&mail->message);
 }
 
-void unref_sub_8041824(struct DayCare *daycare)
+void ClearAllDaycareData(struct DayCare *daycare)
 {
     u8 slot;
     for (slot = 0; slot < ARRAY_COUNT(daycare->mons); slot++)
     {
         ZeroBoxMonData(&daycare->mons[slot]);
         daycare->misc.countersEtc.steps[slot] = 0;
-        ClearDaycareMail(&daycare->misc.mail[slot]);
+        ClearDaycareMonMail(&daycare->misc.mail[slot]);
     }
 
     daycare->misc.countersEtc.pendingEggPersonality = 0;
-    daycare->misc.countersEtc.eggCycleStepsRemaining = 0;
+    daycare->misc.countersEtc.stepCounter = 0;
 }
 
 // Determines what the species of an Egg would be based on the given species.
@@ -592,7 +592,7 @@ static void BuildEggMoveset(struct Pokemon *egg, struct BoxPokemon *father, stru
 static void RemoveEggFromDayCare(struct DayCare *daycare)
 {
     daycare->misc.countersEtc.pendingEggPersonality = 0;
-    daycare->misc.countersEtc.eggCycleStepsRemaining = 0;
+    daycare->misc.countersEtc.stepCounter = 0;
 }
 
 void RejectEggFromDayCare(void)
@@ -669,7 +669,7 @@ static void _GiveEggFromDaycare(struct DayCare *daycare) // give_egg
     struct Pokemon egg;
     u16 species;
     u8 parentSlots[2]; // 0th index is "mother" daycare slot, 1st is "father"
-    u8 isEgg;
+    bool8 isEgg;
 
     species = DetermineEggSpeciesAndParentSlots(daycare, parentSlots);
     AlterEggSpeciesWithIncenseItem(&species, daycare);
@@ -690,7 +690,7 @@ void CreateEgg(struct Pokemon *mon, u16 species, bool8 setHotSpringsLocation)
     u8 metLevel;
     u16 ball;
     u8 language;
-    u8 metLocation;
+    metloc_u8_t metLocation;
     u8 isEgg;
 
     CreateMon(mon, species, EGG_HATCH_LEVEL, 0x20, FALSE, 0, FALSE, 0);
@@ -736,7 +736,7 @@ void GiveEggFromDaycare(void)
     _GiveEggFromDaycare(&gSaveBlock1.daycare);
 }
 
-static bool8 _ShouldEggHatch(struct DayCare *daycare)
+static bool8 TryProduceOrHatchEgg(struct DayCare *daycare)
 {
     struct BoxPokemon *parent;
     u32 i;
@@ -756,21 +756,21 @@ static bool8 _ShouldEggHatch(struct DayCare *daycare)
     if (daycare->misc.countersEtc.pendingEggPersonality == 0 && numParents == 2 && (daycare->misc.countersEtc.steps[1] % 256) == 255 && GetDaycareCompatibilityScore(daycare) > (u32)(Random() * 100) / 0xffff)
         TriggerPendingDaycareEgg();
 
-    if (++daycare->misc.countersEtc.eggCycleStepsRemaining == 255)
+    if (++daycare->misc.countersEtc.stepCounter == 255)
     {
         for (i = 0; i < gPlayerPartyCount; i++)
         {
             if (GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG))
             {
-                int friendship = GetMonData(&gPlayerParty[i], MON_DATA_FRIENDSHIP);
-                if (friendship == 0)
+                int eggCycles = GetMonData(&gPlayerParty[i], MON_DATA_FRIENDSHIP);
+                if (eggCycles == 0)
                 {
                     gSpecialVar_0x8004 = i;
                     return TRUE;
                 }
 
-                friendship--;
-                SetMonData(&gPlayerParty[i], MON_DATA_FRIENDSHIP, &friendship);
+                eggCycles--;
+                SetMonData(&gPlayerParty[i], MON_DATA_FRIENDSHIP, &eggCycles);
             }
         }
     }
@@ -780,7 +780,7 @@ static bool8 _ShouldEggHatch(struct DayCare *daycare)
 
 bool8 ShouldEggHatch(void)
 {
-    return _ShouldEggHatch(&gSaveBlock1.daycare);
+    return TryProduceOrHatchEgg(&gSaveBlock1.daycare);
 }
 
 static bool8 IsEggPending(struct DayCare *daycare)
@@ -989,9 +989,9 @@ static void GetDaycareLevelMenuText(struct DayCare *daycare, u8 *dest)
     }
 
     StringCopy(dest, monNames[0]);
-    StringAppend(dest, gOtherText_NewLine2);
+    StringAppend(dest, gText_NewLine2);
     StringAppend(dest, monNames[1]);
-    StringAppend(dest, gOtherText_NewLine2);
+    StringAppend(dest, gText_NewLine2);
     StringAppend(dest, gOtherText_CancelAndLv);
 }
 
@@ -1012,13 +1012,13 @@ static void GetDaycareLevelMenuLevelText(struct DayCare *daycare, u8 *dest)
         dest[0] = 0xFC;
         dest[1] = 0x14;
         dest[2] = 0x00;
-        dest = StringCopy(dest + 3, gOtherText_NewLine2);
+        dest = StringCopy(dest + 3, gText_NewLine2);
     }
 
     *dest = EOS;
 }
 
-static void HandleDaycareLevelMenuInput(u8 taskId)
+static void Task_HandleDaycareLevelMenuInput(u8 taskId)
 {
     if (JOY_NEW(DPAD_UP))
     {
@@ -1066,7 +1066,7 @@ void ShowDaycareLevelMenu(void)
     GetDaycareLevelMenuLevelText(&gSaveBlock1.daycare, buffer);
     Menu_PrintTextPixelCoords(buffer, 0xce, 0x38, TRUE);
     InitMenu(0, 16, 7, 3, 0, 13);
-    CreateTask(HandleDaycareLevelMenuInput, 3);
+    CreateTask(Task_HandleDaycareLevelMenuInput, 3);
 }
 
 void ChooseSendDaycareMon(void)

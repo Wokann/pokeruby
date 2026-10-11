@@ -355,7 +355,7 @@ gDaycareText_PlayOther::
 	.string "Die beiden spielen lieber mit anderen\n"
 	.string "POKéMON als miteinander.$"
 
-gOtherText_NewLine2:: @ 842CC28
+gText_NewLine2:: @ 842CC28
 	.string "\n$"
 
 gOtherText_CancelAndLv:: @ 842CC2A

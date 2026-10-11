@@ -115,7 +115,6 @@ extern const u8 gOtherText_DontHaveThreeCoins[];
 extern const u8 gOtherText_ReelTime[];
 
 // daycare
-extern const u8 gOtherText_NewLine2[];
 extern const u8 gOtherText_CancelAndLv[];
 
 // pokemon_2
