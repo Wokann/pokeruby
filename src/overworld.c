@@ -1237,7 +1237,7 @@ static void DoCB1_Overworld(u16 newKeys, u16 heldKeys)
 
     UpdatePlayerAvatarTransitionState();
     FieldClearPlayerInput(&inputStruct);
-    GetPlayerFieldInput(&inputStruct, newKeys, heldKeys);
+    FieldGetPlayerInput(&inputStruct, newKeys, heldKeys);
     if (!ArePlayerFieldControlsLocked())
     {
         if (ProcessPlayerFieldInput(&inputStruct) == 1)

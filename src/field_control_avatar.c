@@ -42,23 +42,6 @@ static EWRAM_DATA u16 sPreviousPlayerMetatileBehavior = 0;
 
 extern u8 gSelectedObjectEvent;
 
-//scripts
-extern u8 SecretBase_EventScript_CheckEntrance[];
-extern u8 LittlerootTown_BrendansHouse_2F_EventScript_PC[];
-extern u8 LittlerootTown_MaysHouse_2F_EventScript_PC[];
-extern u8 SecretBase_EventScript_PC[];
-extern u8 SecretBase_EventScript_RecordMixingPC[];
-extern u8 EventScript_ClosedSootopolisDoor[];
-extern u8 EventScript_PokeBlockFeeder[];
-extern u8 Route110_TrickHousePuzzle_EventScript_Door[];
-extern u8 SecretBase_EventScript_SandOrnament[];
-extern u8 SecretBase_EventScript_ShieldOrToyTV[];
-extern u8 EventScript_UseWaterfall[];
-extern u8 EventScript_CannotUseWaterfall[];
-extern u8 EventScript_UseDive[];
-extern u8 EventScript_UseDiveUnderwater[];
-extern u8 SSTidalCorridor_EventScript_ReachedStepCount[];
-
 static void GetPlayerPosition(struct MapPosition *);
 static void GetInFrontOfPlayerPosition(struct MapPosition *);
 static u16 GetPlayerCurMetatileBehavior(int);
@@ -78,7 +61,7 @@ static bool8 TryArrowWarp(struct MapPosition *, u16, u8);
 static bool8 IsWarpMetatileBehavior(u16);
 static bool8 IsArrowWarpMetatileBehavior(u16, u8);
 static s8 GetWarpEventAtMapPosition(struct MapHeader *, struct MapPosition *);
-static void sub_8068C30(struct MapHeader *, s8, struct MapPosition *);
+static void SetupWarp(struct MapHeader *, s8, struct MapPosition *);
 static bool8 TryDoorWarp(struct MapPosition *, u16, u8);
 static s8 GetWarpEventAtPosition(struct MapHeader *, u16, u16, u8);
 static const u8 *GetCoordEventScriptAtPosition(struct MapHeader *, u16, u16, u8);
@@ -105,7 +88,7 @@ void FieldClearPlayerInput(struct FieldInput *input)
     input->dpadDirection = 0;
 }
 
-void GetPlayerFieldInput(struct FieldInput *input, u16 newKeys, u16 heldKeys)
+void FieldGetPlayerInput(struct FieldInput *input, u16 newKeys, u16 heldKeys)
 {
     u8 tileTransitionState = gPlayerAvatar.tileTransitionState;
     u8 runningState = gPlayerAvatar.runningState;
@@ -553,7 +536,7 @@ bool8 TryStartStepCountScript(void)
     UpdateFriendshipStepCounter();
     if (UpdatePoisonStepCounter() == TRUE)
     {
-        ScriptContext_SetupScript(gUnknown_081A14B8);
+        ScriptContext_SetupScript(EventScript_FieldPoison);
         return TRUE;
     }
     if (ShouldEggHatch())
@@ -658,7 +641,7 @@ static bool8 TryArrowWarp(struct MapPosition *position, u16 metatileBehavior, u8
     if (IsArrowWarpMetatileBehavior(metatileBehavior, direction) == TRUE && warpEventId != -1)
     {
         StoreInitialPlayerAvatarState();
-        sub_8068C30(&gMapHeader, warpEventId, position);
+        SetupWarp(&gMapHeader, warpEventId, position);
         DoWarp();
         return TRUE;
     }
@@ -672,7 +655,7 @@ bool8 TryStartWarpEventScript(struct MapPosition *position, u16 metatileBehavior
     if (warpEventId != -1 && IsWarpMetatileBehavior(metatileBehavior) == TRUE)
     {
         StoreInitialPlayerAvatarState();
-        sub_8068C30(&gMapHeader, warpEventId, position);
+        SetupWarp(&gMapHeader, warpEventId, position);
         if (MetatileBehavior_IsEscalator(metatileBehavior) == TRUE)
         {
             DoEscalatorWarp(metatileBehavior);
@@ -739,7 +722,7 @@ static s8 GetWarpEventAtMapPosition(struct MapHeader *mapHeader, struct MapPosit
     return GetWarpEventAtPosition(mapHeader, position->x - 7, position->y - 7, position->elevation);
 }
 
-static void sub_8068C30(struct MapHeader *unused, s8 warpEventId, struct MapPosition *position)
+static void SetupWarp(struct MapHeader *unused, s8 warpEventId, struct MapPosition *position)
 {
     const struct WarpEvent *warpEvent = &gMapHeader.events->warps[warpEventId];
 
@@ -749,7 +732,7 @@ static void sub_8068C30(struct MapHeader *unused, s8 warpEventId, struct MapPosi
     }
     else
     {
-        struct MapHeader *mapHeader;
+        const struct MapHeader *mapHeader;
 
         SetWarpDestinationToMapWarp(warpEvent->mapGroup, warpEvent->mapNum, warpEvent->warpId);
         UpdateEscapeWarp(position->x, position->y);
@@ -776,7 +759,7 @@ static bool8 TryDoorWarp(struct MapPosition *position, u16 metatileBehavior, u8 
             if (warpEventId != -1 && IsWarpMetatileBehavior(metatileBehavior) == TRUE)
             {
                 StoreInitialPlayerAvatarState();
-                sub_8068C30(&gMapHeader, warpEventId, position);
+                SetupWarp(&gMapHeader, warpEventId, position);
                 DoDoorWarp();
                 return TRUE;
             }
@@ -927,6 +910,6 @@ int SetCableClubWarp(void)
     GetPlayerMovementDirection();  //unnecessary
     GetPlayerPosition(&position);
     MapGridGetMetatileBehaviorAt(position.x, position.y);  //unnecessary
-    sub_8068C30(&gMapHeader, GetWarpEventAtMapPosition(&gMapHeader, &position), &position);
+    SetupWarp(&gMapHeader, GetWarpEventAtMapPosition(&gMapHeader, &position), &position);
     return 0;
 }

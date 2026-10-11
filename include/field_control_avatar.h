@@ -24,7 +24,7 @@ struct FieldInput
 };
 
 void FieldClearPlayerInput(struct FieldInput *input);
-void GetPlayerFieldInput(struct FieldInput *input, u16 newKeys, u16 heldKeys);
+void FieldGetPlayerInput(struct FieldInput *input, u16 newKeys, u16 heldKeys);
 int ProcessPlayerFieldInput(struct FieldInput *input);
 const u8 *GetInteractedLinkPlayerScript(struct MapPosition *position, u8 metatileBehavior, u8 direction);
 void ClearPoisonStepCounter(void);

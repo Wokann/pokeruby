@@ -1,13 +1,13 @@
-gUnknown_081A14B8:: @ 81A14B8
+EventScript_FieldPoison:: @ 81A14B8
 	lockall
 	special TryFieldPoisonWhiteOut
 	waitstate
 	compare VAR_RESULT, 1
-	goto_if_eq EventScript_1A14CA
+	goto_if_eq EventScript_FieldWhiteOut
 	releaseall
 	end
 
-EventScript_1A14CA::
+EventScript_FieldWhiteOut::
 	message gText_PlayerWhitedOut
 	waitmessage
 	waitbuttonpress
