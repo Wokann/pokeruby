@@ -957,7 +957,7 @@ void PrintMoveInfo(u16 moveId, const u8 *moveInfoCoords)
     u8 numHearts;
     u8 i;
 
-    StringCopy(str, gExpandedPlaceholder_Empty);
+    StringCopy(str, gText_ExpandedPlaceholder_Empty);
     switch (moveInfoCoords[2])
     {
     case 1:

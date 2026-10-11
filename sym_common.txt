@@ -37,7 +37,7 @@ SYMBOL(gOamMatrixAllocBitmap, 4)
 SYMBOL(gReservedSpritePaletteCount, 4)
 
 // string_util.c
-SYMBOL(gUnknownStringVar, 16)
+SYMBOL(sUnknownStringVar, 16)
 
 // link.c
 SYMBOL(gLinkPartnersHeldKeys, 8)

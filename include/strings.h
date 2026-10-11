@@ -9,19 +9,19 @@ extern const u8 gDaycareText_DontLikeOther[];
 extern const u8 gDaycareText_PlayOther[];
 
 // placeholder strings
-extern const u8 gExpandedPlaceholder_Empty[];
-extern const u8 gExpandedPlaceholder_Kun[];
-extern const u8 gExpandedPlaceholder_Chan[];
-extern const u8 gExpandedPlaceholder_Sapphire[];
-extern const u8 gExpandedPlaceholder_Ruby[];
-extern const u8 gExpandedPlaceholder_Aqua[];
-extern const u8 gExpandedPlaceholder_Magma[];
-extern const u8 gExpandedPlaceholder_Archie[];
-extern const u8 gExpandedPlaceholder_Maxie[];
-extern const u8 gExpandedPlaceholder_Kyogre[];
-extern const u8 gExpandedPlaceholder_Groudon[];
-extern const u8 gExpandedPlaceholder_Brendan[];
-extern const u8 gExpandedPlaceholder_May[];
+extern const u8 gText_ExpandedPlaceholder_Empty[];
+extern const u8 gText_ExpandedPlaceholder_Kun[];
+extern const u8 gText_ExpandedPlaceholder_Chan[];
+extern const u8 gText_ExpandedPlaceholder_Sapphire[];
+extern const u8 gText_ExpandedPlaceholder_Ruby[];
+extern const u8 gText_ExpandedPlaceholder_Aqua[];
+extern const u8 gText_ExpandedPlaceholder_Magma[];
+extern const u8 gText_ExpandedPlaceholder_Archie[];
+extern const u8 gText_ExpandedPlaceholder_Maxie[];
+extern const u8 gText_ExpandedPlaceholder_Kyogre[];
+extern const u8 gText_ExpandedPlaceholder_Groudon[];
+extern const u8 gText_ExpandedPlaceholder_Brendan[];
+extern const u8 gText_ExpandedPlaceholder_May[];
 
 // system text
 extern const u8 gText_EggNickname[];
