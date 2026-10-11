@@ -742,14 +742,14 @@
       "blockdata_filepath": "data/layouts/LilycoveCity_House2/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082CF564",
-      "name": "UnknownMap_082CF564_Layout",
+      "id": "LAYOUT_UNUSED_CONTEST_ROOM1",
+      "name": "UnusedContestRoom1_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/UnknownMap_082CF564/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082CF564/map.bin"
+      "border_filepath": "data/layouts/UnusedContestRoom1/border.bin",
+      "blockdata_filepath": "data/layouts/UnusedContestRoom1/map.bin"
     },
     {
       "id": "LAYOUT_VERDANTURF_TOWN_WANDAS_HOUSE",
@@ -822,24 +822,24 @@
       "blockdata_filepath": "data/layouts/SlateportCity_SternsShipyard_2F/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082D05D8",
-      "name": "UnknownMap_082D05D8_Layout",
+      "id": "LAYOUT_UNUSED_CONTEST_ROOM2",
+      "name": "UnusedContestRoom2_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/UnknownMap_082D05D8/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082D05D8/map.bin"
+      "border_filepath": "data/layouts/UnusedContestRoom2/border.bin",
+      "blockdata_filepath": "data/layouts/UnusedContestRoom2/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082D05FC",
-      "name": "UnknownMap_082D05FC_Layout",
+      "id": "LAYOUT_UNUSED_CONTEST_ROOM3",
+      "name": "UnusedContestRoom3_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/UnknownMap_082D05FC/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082D05FC/map.bin"
+      "border_filepath": "data/layouts/UnusedContestRoom3/border.bin",
+      "blockdata_filepath": "data/layouts/UnusedContestRoom3/map.bin"
     },
     {
       "id": "LAYOUT_SLATEPORT_CITY_POKEMON_FAN_CLUB",
@@ -1702,144 +1702,144 @@
       "blockdata_filepath": "data/layouts/ShoalCave_HighTideInnerRoom/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082E55C8",
-      "name": "UnknownMap_082E55C8_Layout",
+      "id": "LAYOUT_UNUSED_CAVE1",
+      "name": "UnusedCave1_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnknownMap_082E55C8/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082E55C8/map.bin"
+      "border_filepath": "data/layouts/UnusedCave1/border.bin",
+      "blockdata_filepath": "data/layouts/UnusedCave1/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082E55EC",
-      "name": "UnknownMap_082E55EC_Layout",
+      "id": "LAYOUT_UNUSED_CAVE2",
+      "name": "UnusedCave2_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnknownMap_082E55EC/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082E55EC/map.bin"
+      "border_filepath": "data/layouts/UnusedCave2/border.bin",
+      "blockdata_filepath": "data/layouts/UnusedCave2/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082E5610",
-      "name": "UnknownMap_082E5610_Layout",
+      "id": "LAYOUT_UNUSED_CAVE3",
+      "name": "UnusedCave3_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnknownMap_082E5610/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082E5610/map.bin"
+      "border_filepath": "data/layouts/UnusedCave3/border.bin",
+      "blockdata_filepath": "data/layouts/UnusedCave3/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082E5634",
-      "name": "UnknownMap_082E5634_Layout",
+      "id": "LAYOUT_UNUSED_CAVE4",
+      "name": "UnusedCave4_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnknownMap_082E5634/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082E5634/map.bin"
+      "border_filepath": "data/layouts/UnusedCave4/border.bin",
+      "blockdata_filepath": "data/layouts/UnusedCave4/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082E5658",
-      "name": "UnknownMap_082E5658_Layout",
+      "id": "LAYOUT_UNUSED_CAVE5",
+      "name": "UnusedCave5_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnknownMap_082E5658/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082E5658/map.bin"
+      "border_filepath": "data/layouts/UnusedCave5/border.bin",
+      "blockdata_filepath": "data/layouts/UnusedCave5/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082E567C",
-      "name": "UnknownMap_082E567C_Layout",
+      "id": "LAYOUT_UNUSED_CAVE6",
+      "name": "UnusedCave6_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnknownMap_082E567C/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082E567C/map.bin"
+      "border_filepath": "data/layouts/UnusedCave6/border.bin",
+      "blockdata_filepath": "data/layouts/UnusedCave6/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082E56A0",
-      "name": "UnknownMap_082E56A0_Layout",
+      "id": "LAYOUT_UNUSED_CAVE7",
+      "name": "UnusedCave7_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnknownMap_082E56A0/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082E56A0/map.bin"
+      "border_filepath": "data/layouts/UnusedCave7/border.bin",
+      "blockdata_filepath": "data/layouts/UnusedCave7/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082E56C4",
-      "name": "UnknownMap_082E56C4_Layout",
+      "id": "LAYOUT_UNUSED_CAVE8",
+      "name": "UnusedCave8_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnknownMap_082E56C4/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082E56C4/map.bin"
+      "border_filepath": "data/layouts/UnusedCave8/border.bin",
+      "blockdata_filepath": "data/layouts/UnusedCave8/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082E56E8",
-      "name": "UnknownMap_082E56E8_Layout",
+      "id": "LAYOUT_UNUSED_CAVE9",
+      "name": "UnusedCave9_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnknownMap_082E56E8/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082E56E8/map.bin"
+      "border_filepath": "data/layouts/UnusedCave9/border.bin",
+      "blockdata_filepath": "data/layouts/UnusedCave9/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082E570C",
-      "name": "UnknownMap_082E570C_Layout",
+      "id": "LAYOUT_UNUSED_CAVE10",
+      "name": "UnusedCave10_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnknownMap_082E570C/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082E570C/map.bin"
+      "border_filepath": "data/layouts/UnusedCave10/border.bin",
+      "blockdata_filepath": "data/layouts/UnusedCave10/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082E5730",
-      "name": "UnknownMap_082E5730_Layout",
+      "id": "LAYOUT_UNUSED_CAVE11",
+      "name": "UnusedCave11_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnknownMap_082E5730/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082E5730/map.bin"
+      "border_filepath": "data/layouts/UnusedCave11/border.bin",
+      "blockdata_filepath": "data/layouts/UnusedCave11/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082E5754",
-      "name": "UnknownMap_082E5754_Layout",
+      "id": "LAYOUT_UNUSED_CAVE12",
+      "name": "UnusedCave12_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnknownMap_082E5754/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082E5754/map.bin"
+      "border_filepath": "data/layouts/UnusedCave12/border.bin",
+      "blockdata_filepath": "data/layouts/UnusedCave12/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082E5778",
-      "name": "UnknownMap_082E5778_Layout",
+      "id": "LAYOUT_UNUSED_CAVE13",
+      "name": "UnusedCave13_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnknownMap_082E5778/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082E5778/map.bin"
+      "border_filepath": "data/layouts/UnusedCave13/border.bin",
+      "blockdata_filepath": "data/layouts/UnusedCave13/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082E579C",
-      "name": "UnknownMap_082E579C_Layout",
+      "id": "LAYOUT_UNUSED_CAVE14",
+      "name": "UnusedCave14_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnknownMap_082E579C/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082E579C/map.bin"
+      "border_filepath": "data/layouts/UnusedCave14/border.bin",
+      "blockdata_filepath": "data/layouts/UnusedCave14/map.bin"
     },
     {
       "id": "LAYOUT_NEW_MAUVILLE_ENTRANCE",
@@ -2422,14 +2422,14 @@
       "blockdata_filepath": "data/layouts/SafariZone_South/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082EDF30",
-      "name": "UnknownMap_082EDF30_Layout",
+      "id": "LAYOUT_UNUSED_OUTDOOR_AREA",
+      "name": "UnusedOutdoorArea_Layout",
       "width": 58,
       "height": 26,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "0",
-      "border_filepath": "data/layouts/UnknownMap_082EDF30/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082EDF30/map.bin"
+      "border_filepath": "data/layouts/UnusedOutdoorArea/border.bin",
+      "blockdata_filepath": "data/layouts/UnusedOutdoorArea/map.bin"
     },
     {
       "id": "LAYOUT_ROUTE109_SEASHORE_HOUSE",
@@ -3262,14 +3262,14 @@
       "blockdata_filepath": "data/layouts/SkyPillar_4F/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_083041B4",
-      "name": "UnknownMap_083041B4_Layout",
+      "id": "LAYOUT_SEAFLOOR_CAVERN_ROOM9_LAVA",
+      "name": "SeafloorCavern_Room9_Lava_Layout",
       "width": 27,
       "height": 46,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnknownMap_083041B4/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_083041B4/map.bin"
+      "border_filepath": "data/layouts/SeafloorCavern_Room9_Lava/border.bin",
+      "blockdata_filepath": "data/layouts/SeafloorCavern_Room9_Lava/map.bin"
     },
     {
       "id": "LAYOUT_MOSSDEEP_CITY_STEVENS_HOUSE",
