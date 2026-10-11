@@ -3944,7 +3944,7 @@ static bool8 sub_804C29C(void)
             gSprites[gUnknown_03004828->monSpriteIds[1]].y = gMonFrontPicCoords[gUnknown_03004828->monSpecies[1]].y_offset + 60;
             gSprites[gUnknown_03004828->monSpriteIds[1]].x2 = 0;
             gSprites[gUnknown_03004828->monSpriteIds[1]].y2 = 0;
-            CreatePokeballSprite(gUnknown_03004828->monSpriteIds[1], gSprites[gUnknown_03004828->monSpriteIds[1]].oam.paletteNum, 0x78, 0x54, 2, 1, 0x14, 0xfffff);
+            CreatePokeballSpriteToReleaseMon(gUnknown_03004828->monSpriteIds[1], gSprites[gUnknown_03004828->monSpriteIds[1]].oam.paletteNum, 0x78, 0x54, 2, 1, 0x14, 0xfffff);
             FreeSpriteOamMatrix(&gSprites[gUnknown_03004828->bouncingPokeballSpriteId]);
             DestroySprite(&gSprites[gUnknown_03004828->bouncingPokeballSpriteId]);
             gUnknown_03004828->state ++;
