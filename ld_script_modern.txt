@@ -24,7 +24,7 @@ SECTIONS {
         *(.bss);
 
         /* .bss.code starts at 0x3000F60 */
-        src/libs/m4a.o(.bss.code);
+        src/m4a.o(.bss.code);
 
         /* COMMON starts at 0x3001760 */
         *(COMMON);
