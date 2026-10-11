@@ -40,7 +40,7 @@ static void SetDefaultOptions(void);
 static void ClearPokedexFlags(void);
 static void WarpToTruck(void);
 
-EWRAM_DATA u8 gDifferentSaveFile = 0;
+EWRAM_DATA bool8 gDifferentSaveFile = 0;
 EWRAM_DATA u8 gUnknown_020297ED = 0;
 
 
@@ -146,13 +146,13 @@ static void WarpToTruck(void)
     WarpIntoMap();
 }
 
-void ClearSav2(void)
+void Sav2_ClearSetDefault(void)
 {
     CpuFill16(0, &gSaveBlock2, sizeof(gSaveBlock2));
     SetDefaultOptions();
 }
 
-void sub_8052E4C(void)
+void ResetMenuAndMonGlobals(void)
 {
     gDifferentSaveFile = 0;
 #if DEBUG
