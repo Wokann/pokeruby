@@ -23,7 +23,7 @@ SeafloorCavern_Room9_EventScript_15DAFA:: @ 815DAFA
 	applymovement LOCALID_PLAYER, SeafloorCavern_Room9_Movement_Delay32
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B41B8, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieHoldItRightThere, MSGBOX_DEFAULT
 	.else
 	msgbox SeafloorCavern_Room9_Text_1B4850, MSGBOX_DEFAULT
 	.endif
@@ -34,31 +34,31 @@ SeafloorCavern_Room9_EventScript_15DAFA:: @ 815DAFA
 	applymovement VAR_0x8004, SeafloorCavern_Room9_Movement_15DD36
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B41D5, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieSoItWasYou, MSGBOX_DEFAULT
 	.else
 	msgbox SeafloorCavern_Room9_Text_1B486C, MSGBOX_DEFAULT
 	.endif
 	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B4201, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieBeholdKyogre, MSGBOX_DEFAULT
 	.else
 	msgbox SeafloorCavern_Room9_Text_1B4897, MSGBOX_DEFAULT
 	.endif
 	applymovement VAR_0x8004, Common_Movement_FacePlayer
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B4289, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieYouMustDisappear, MSGBOX_DEFAULT
 	.else
 	msgbox SeafloorCavern_Room9_Text_1B491F, MSGBOX_DEFAULT
 	.endif
 	.ifdef SAPPHIRE
-	trainerbattle_no_intro TRAINER_SEAFLOOR_CAVERN_GRUNT_5, UnknownString_81B4319
+	trainerbattle_no_intro TRAINER_SEAFLOOR_CAVERN_GRUNT_5, SeafloorCavern_Room9_Text_ArchieDefeat
 	.else
 	trainerbattle_no_intro TRAINER_SEAFLOOR_CAVERN_GRUNT_5, SeafloorCavern_Room9_Text_1B49AE
 	.endif
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B432C, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieWithThisRedOrb, MSGBOX_DEFAULT
 	.else
 	msgbox SeafloorCavern_Room9_Text_1B49C1, MSGBOX_DEFAULT
 	.endif
@@ -67,7 +67,7 @@ SeafloorCavern_Room9_EventScript_15DAFA:: @ 815DAFA
 	special Script_FadeOutMapMusic
 	waitstate
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B43C4, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_RedOrbShinesByItself, MSGBOX_DEFAULT
 	.else
 	msgbox SeafloorCavern_Room9_Text_1B4A5A, MSGBOX_DEFAULT
 	.endif
@@ -122,7 +122,7 @@ SeafloorCavern_Room9_EventScript_15DAFA:: @ 815DAFA
 	setvar VAR_0x8006, 4
 	setvar VAR_0x8007, 5
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B43F2, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieWhereDidKyogreGo, MSGBOX_DEFAULT
 	.else
 	msgbox SeafloorCavern_Room9_Text_1B4A89, MSGBOX_DEFAULT
 	.endif
@@ -130,7 +130,7 @@ SeafloorCavern_Room9_EventScript_15DAFA:: @ 815DAFA
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B4443, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieAMessageFromOutside, MSGBOX_DEFAULT
 	.else
 	msgbox SeafloorCavern_Room9_Text_1B4ADB, MSGBOX_DEFAULT
 	.endif
@@ -138,7 +138,7 @@ SeafloorCavern_Room9_EventScript_15DAFA:: @ 815DAFA
 	applymovement VAR_0x8004, SeafloorCavern_Room9_Movement_15DD41
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B447A, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieWhatRainingTooHard, MSGBOX_DEFAULT
 	.else
 	msgbox SeafloorCavern_Room9_Text_1B4B11, MSGBOX_DEFAULT
 	.endif
@@ -148,7 +148,7 @@ SeafloorCavern_Room9_EventScript_15DAFA:: @ 815DAFA
 	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B45C6, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieWhyDidKyogreDisappear, MSGBOX_DEFAULT
 	.else
 	msgbox SeafloorCavern_Room9_Text_1B4C79, MSGBOX_DEFAULT
 	.endif
@@ -163,7 +163,7 @@ SeafloorCavern_Room9_EventScript_15DAFA:: @ 815DAFA
 	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B464D, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_MaxieWhatHaveYouWrought, MSGBOX_DEFAULT
 	.else
 	msgbox SeafloorCavern_Room9_Text_1B4D02, MSGBOX_DEFAULT
 	.endif
@@ -178,7 +178,7 @@ SeafloorCavern_Room9_EventScript_15DAFA:: @ 815DAFA
 	msgbox SeafloorCavern_Room9_Text_1B4DD3, MSGBOX_DEFAULT
 	.endif
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B4786, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_MaxieWeDontHaveTimeToArgue, MSGBOX_DEFAULT
 	.else
 	msgbox SeafloorCavern_Room9_Text_1B4E37, MSGBOX_DEFAULT
 	.endif
@@ -187,7 +187,7 @@ SeafloorCavern_Room9_EventScript_15DAFA:: @ 815DAFA
 	applymovement VAR_0x8004, SeafloorCavern_Room9_Movement_15DD46
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B4818, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_MaxieComeOnPlayer, MSGBOX_DEFAULT
 	.else
 	msgbox SeafloorCavern_Room9_Text_1B4ECA, MSGBOX_DEFAULT
 	.endif

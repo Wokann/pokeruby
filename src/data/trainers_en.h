@@ -475,7 +475,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_Shelly2 }
     },
 
-    [TRAINER_ARCHIE_2] =
+    [TRAINER_ARCHIE] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_AQUA_LEADER,
@@ -486,7 +486,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 3,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Archie2 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_Archie }
     },
 
     [TRAINER_ARCHIE_3] =

@@ -422,7 +422,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_Shelly2[] = {
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_Archie2[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_Archie[] = {
     {
 	.iv = 150,
 	.level = 41,
