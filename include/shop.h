@@ -3,9 +3,9 @@
 
 extern struct ItemSlot gMartPurchaseHistory[3];
 
-void CreatePokemartMenu(u16 *itemsForSale);
-void CreateDecorationShop1Menu(u16 *itemsForSale);
-void CreateDecorationShop2Menu(u16 *itemsForSale);
+void CreatePokemartMenu(const u16 *itemsForSale);
+void CreateDecorationShop1Menu(const u16 *itemsForSale);
+void CreateDecorationShop2Menu(const u16 *itemsForSale);
 void Shop_RunExitSellMenuTask(u8 taskId);
 void MapPostLoadHook_ReturnToShopMenu(void);
 
