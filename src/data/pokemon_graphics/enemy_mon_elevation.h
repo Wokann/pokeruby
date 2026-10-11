@@ -1,41 +1,3 @@
-#include "global.h"
-#include "data.h"
-#include "battle_setup.h"
-#include "battle.h"
-#include "graphics.h"
-#include "gba/types.h"
-#include "constants/species.h"
-#include "constants/moves.h"
-#include "constants/items.h"
-#include "constants/opponents.h"
-#include "constants/trainers.h"
-
-const struct MonCoords gTrainerBackPicCoords[] = {
-    {8, 4},
-    {8, 4},
-    {8, 4},
-};
-
-extern const u8 gTrainerBackPic_Brendan[];
-extern const u8 gTrainerBackPic_May[];
-extern const u8 gTrainerBackPic_Wally[];
-
-const struct CompressedSpriteSheet gTrainerBackPicTable[] = {
-    {gTrainerBackPic_Brendan, 0x2000, 0},
-    {gTrainerBackPic_May, 0x2000, 1},
-    {gTrainerBackPic_Wally, 0x2000, 2}
-};
-
-extern const u8 gTrainerPalette_Brendan[];
-extern const u8 gTrainerPalette_May[];
-extern const u8 gTrainerPalette_Wally[];
-
-const struct CompressedSpritePalette gTrainerBackPicPaletteTable[] = {
-    {gTrainerPalette_Brendan, 0},
-    {gTrainerPalette_May, 1},
-    {gTrainerPalette_Wally, 2}
-};
-
 // This determines how much higher above the usual position the enemy Pokémon
 // is during battle. Species that float or fly have nonzero values.
 const u8 gEnemyMonElevation[] = {
@@ -452,19 +414,3 @@ const u8 gEnemyMonElevation[] = {
     [SPECIES_DEOXYS] =  4,
     [SPECIES_CHIMECHO] = 12,
 };
-
-#include "../data/trainer_parties.h"
-
-#if ENGLISH
-#include "../data/text/trainer_class_names_en.h"
-#include "../data/trainers_en.h"
-#include "../data/text/species_names_en.h"
-#include "../data/text/move_names_en.h"
-#elif GERMAN
-#include "../data/text/trainer_class_names_de.h"
-#include "../data/trainers_de.h"
-#include "../data/text/species_names_de.h"
-#include "../data/text/move_names_de.h"
-#endif
-
-const u32 gUnknown_81F9528 = 0x101;

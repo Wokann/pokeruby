@@ -1,15 +1,13 @@
 #include "global.h"
 #include "battle.h"
+#include "data.h"
 #include "battle_tower.h"
 #include "ewram.h"
 #include "constants/trainers.h"
 
 #if GERMAN
 
-extern u8 gTrainerClassNames[][13];
-extern struct Trainer gTrainers[];
-
-u8 *de_sub_8040FE0(u8 gender)
+const u8 *de_sub_8040FE0(u8 gender)
 {
     if (gender)
         gender++;
@@ -17,7 +15,7 @@ u8 *de_sub_8040FE0(u8 gender)
     return gTrainerClassNames[gender];
 }
 
-u8 *de_sub_8040FF4(u8 gender)
+const u8 *de_sub_8040FF4(u8 gender)
 {
     if (gender)
         gender++;
@@ -25,7 +23,7 @@ u8 *de_sub_8040FF4(u8 gender)
     return gTrainerClassNames[gender];
 }
 
-u8 *de_sub_804100C(u8 gender)
+const u8 *de_sub_804100C(u8 gender)
 {
     if (gender)
         gender++;
@@ -39,10 +37,10 @@ u8 de_sub_81364AC(void);
 u8 get_trainer_class_name_index(void);
 u8 de_sub_81364F8(void);
 
-u8 *de_sub_8041024(s32 arg0, u32 arg1)
+const u8 *de_sub_8041024(s32 arg0, u32 arg1)
 {
     u8 nameIndex, trainerClass, gender;
-    struct Trainer *trainer;
+    const struct Trainer *trainer;
     u8 local2;
 
     switch (arg0)

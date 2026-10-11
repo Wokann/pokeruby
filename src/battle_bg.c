@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "data.h"
 #include "battle_gfx_sfx_util.h"
 #include "battle_main.h"
 #include "decompress.h"
@@ -31,7 +32,6 @@ extern u8 gText_Draw[];
 
 extern const u8 gGameVersion;
 extern u16 gBattleTypeFlags;
-extern struct Trainer gTrainers[];
 extern u16 gTrainerBattleOpponent_A;
 
 extern u8 gBattleEnvironment;
