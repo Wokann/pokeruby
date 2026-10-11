@@ -1,7 +1,7 @@
 FallarborTown_ContestLobby_EventScript_BerryBlender2:: @ 81B7604
 	setvar VAR_0x8008, 4
 	setvar VAR_0x8009, 1
-	applymovement VAR_0x8008, FallarborTown_ContestLobby_Movement_1B7821
+	applymovement VAR_0x8008, BerryBlender_Movement_BlendLeaderWalkInPlace
 	waitmovement 0
 	goto FallarborTown_ContestLobby_EventScript_1B7681
 	end
@@ -10,7 +10,7 @@ SlateportCity_ContestLobby_EventScript_BerryBlender1:: @ 81B761E
 	setvar VAR_0x8008, 2
 	setvar VAR_0x8009, 2
 	applymovement 6, Common_Movement_FaceOriginalDirection
-	applymovement VAR_0x8008, SlateportCity_ContestLobby_Movement_1B7821
+	applymovement VAR_0x8008, BerryBlender_Movement_BlendLeaderWalkInPlace
 	waitmovement 0
 	goto SlateportCity_ContestLobby_EventScript_1B7681
 	end
@@ -18,7 +18,7 @@ SlateportCity_ContestLobby_EventScript_BerryBlender1:: @ 81B761E
 VerdanturfTown_ContestLobby_EventScript_1B763F:: @ 81B763F
 	setvar VAR_0x8008, 2
 	setvar VAR_0x8009, 1
-	applymovement VAR_0x8008, VerdanturfTown_ContestLobby_Movement_1B7821
+	applymovement VAR_0x8008, BerryBlender_Movement_BlendLeaderWalkInPlace
 	waitmovement 0
 	goto VerdanturfTown_ContestLobby_EventScript_1B7681
 	end
@@ -28,7 +28,7 @@ BerryBlender_EventScript_BerryBlender2:: @ 81B7659
 	setvar VAR_0x8009, 3
 	applymovement 9, Common_Movement_FaceOriginalDirection
 	applymovement 10, Common_Movement_FaceOriginalDirection
-	applymovement VAR_0x8008, LilycoveCity_ContestLobby_Movement_1B7821
+	applymovement VAR_0x8008, BerryBlender_Movement_BlendLeaderWalkInPlace
 	waitmovement 0
 	goto LilycoveCity_ContestLobby_EventScript_1B7681
 	end
@@ -76,7 +76,7 @@ FallarborTown_ContestLobby_EventScript_1B76EF:: @ 81B76EF
 FallarborTown_ContestLobby_EventScript_1B770E:: @ 81B770E
 	msgbox BerryBlender_Text_DontHaveAnyBerries, MSGBOX_DEFAULT
 	dotimebasedevents
-	goto_if_set FLAG_DAILY_RECEIVED_BERRY_FALLARBOR, FallarborTown_ContestLobby_EventScript_1B774F
+	goto_if_set FLAG_DAILY_CONTEST_LOBBY_RECEIVED_BERRY, FallarborTown_ContestLobby_EventScript_1B774F
 	goto FallarborTown_ContestLobby_EventScript_1B7759
 	end
 
@@ -87,10 +87,10 @@ FallarborTown_ContestLobby_EventScript_1B7726:: @ 81B7726
 
 FallarborTown_ContestLobby_EventScript_1B7734:: @ 81B7734
 	msgbox BerryBlender_Text_LetsBerryBlender, MSGBOX_DEFAULT
-	goto FallarborTown_ContestLobby_EventScript_1B7742
+	goto BerryBlender_EventScript_DoBerryBlending
 	end
 
-FallarborTown_ContestLobby_EventScript_1B7742:: @ 81B7742
+BerryBlender_EventScript_DoBerryBlending:: @ 81B7742
 	copyvar VAR_0x8004, VAR_0x8009
 	fadescreen FADE_TO_BLACK
 	special DoBerryBlending
@@ -106,7 +106,7 @@ FallarborTown_ContestLobby_EventScript_1B774F:: @ 81B774F
 FallarborTown_ContestLobby_EventScript_1B7759:: @ 81B7759
 	msgbox BerryBlender_Text_CanHaveOneOfMyBerries, MSGBOX_DEFAULT
 	giveitem ITEM_PECHA_BERRY
-	setflag FLAG_DAILY_RECEIVED_BERRY_FALLARBOR
+	setflag FLAG_DAILY_CONTEST_LOBBY_RECEIVED_BERRY
 	goto FallarborTown_ContestLobby_EventScript_1B76EF
 	end
 
@@ -158,7 +158,7 @@ FallarborTown_ContestLobby_EventScript_1B77DC:: @ 81B77DC
 
 FallarborTown_ContestLobby_EventScript_1B77E6:: @ 81B77E6
 	dotimebasedevents
-	goto_if_set FLAG_DAILY_RECEIVED_BERRY_FALLARBOR, FallarborTown_ContestLobby_EventScript_1B77F6
+	goto_if_set FLAG_DAILY_CONTEST_LOBBY_RECEIVED_BERRY, FallarborTown_ContestLobby_EventScript_1B77F6
 	goto FallarborTown_ContestLobby_EventScript_1B7800
 	end
 
@@ -170,101 +170,95 @@ FallarborTown_ContestLobby_EventScript_1B77F6:: @ 81B77F6
 FallarborTown_ContestLobby_EventScript_1B7800:: @ 81B7800
 	msgbox BerryBlender_Text_DontHaveAnyBerriesHaveOne, MSGBOX_DEFAULT
 	giveitem ITEM_PECHA_BERRY
-	setflag FLAG_DAILY_RECEIVED_BERRY_FALLARBOR
+	setflag FLAG_DAILY_CONTEST_LOBBY_RECEIVED_BERRY
 	msgbox BerryBlender_Text_UseItToMakePokeblocksTogether, MSGBOX_DEFAULT
 	release
 	end
 
-FallarborTown_ContestLobby_Movement_1B7821:: @ 81B7821
-LilycoveCity_ContestLobby_Movement_1B7821:: @ 81B7821
-SlateportCity_ContestLobby_Movement_1B7821:: @ 81B7821
-VerdanturfTown_ContestLobby_Movement_1B7821:: @ 81B7821
+BerryBlender_Movement_BlendLeaderWalkInPlace:: @ 81B7821
 	walk_in_place_faster_right
 	step_end
 
 FallarborTown_ContestLobby_EventScript_BerryBlender1:: @ 81B7823
-	goto FallarborTown_ContestLobby_EventScript_1B783B
+	goto BerryBlender_EventScript_BerryBlenderLink
 	end
 
 SlateportCity_ContestLobby_EventScript_BerryBlender0:: @ 81B7829
-	goto SlateportCity_ContestLobby_EventScript_1B783B
+	goto BerryBlender_EventScript_BerryBlenderLink
 	end
 
 VerdanturfTown_ContestLobby_EventScript_1B782F:: @ 81B782F
-	goto VerdanturfTown_ContestLobby_EventScript_1B783B
+	goto BerryBlender_EventScript_BerryBlenderLink
 	end
 
 BerryBlender_EventScript_BerryBlender1:: @ 81B7835
-	goto LilycoveCity_ContestLobby_EventScript_1B783B
+	goto BerryBlender_EventScript_BerryBlenderLink
 	end
 
-FallarborTown_ContestLobby_EventScript_1B783B:: @ 81B783B
-LilycoveCity_ContestLobby_EventScript_1B783B:: @ 81B783B
-SlateportCity_ContestLobby_EventScript_1B783B:: @ 81B783B
-VerdanturfTown_ContestLobby_EventScript_1B783B:: @ 81B783B
+BerryBlender_EventScript_BerryBlenderLink:: @ 81B783B
 	lockall
 	specialvar VAR_RESULT, PlayerHasBerries
 	compare VAR_RESULT, 0
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1B7897
+	goto_if_eq BerryBlender_EventScript_LinkBlenderNoBerries
 	checkitem ITEM_POKEBLOCK_CASE, 1
 	compare VAR_RESULT, 0
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1B7942
+	goto_if_eq BerryBlender_EventScript_LinkBlenderNoCase
 	specialvar VAR_RESULT, GetFirstFreePokeblockSlot
 	compare VAR_RESULT, -1
-	goto_if_ne FallarborTown_ContestLobby_EventScript_1B7878
+	goto_if_ne BerryBlender_EventScript_LinkBlenderSaveGame
 	compare VAR_RESULT, -1
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1B7938
+	goto_if_eq BerryBlender_EventScript_LinkBlenderCaseFull
 	end
 
-FallarborTown_ContestLobby_EventScript_1B7878:: @ 81B7878
+BerryBlender_EventScript_LinkBlenderSaveGame:: @ 81B7878
 	msgbox BerryBlender_Text_SaveGameBeforeBerryBlenderLink, MSGBOX_YESNO
 	compare VAR_RESULT, YES
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1B78A1
+	goto_if_eq BerryBlender_EventScript_TryDoLinkBlender
 	compare VAR_RESULT, NO
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1B7936
+	goto_if_eq BerryBlender_EventScript_CancelLinkBlender
 	end
 
-FallarborTown_ContestLobby_EventScript_1B7897:: @ 81B7897
+BerryBlender_EventScript_LinkBlenderNoBerries:: @ 81B7897
 	msgbox BerryBlender_Text_NoBerriesLink, MSGBOX_DEFAULT
 	releaseall
 	end
 
-FallarborTown_ContestLobby_EventScript_1B78A1:: @ 81B78A1
+BerryBlender_EventScript_TryDoLinkBlender:: @ 81B78A1
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1B7936
+	goto_if_eq BerryBlender_EventScript_CancelLinkBlender
 	message BerryBlender_Text_SearchingForFriends
 	waitmessage
 	special TryBerryBlenderLinkup
 	waitstate
 	compare VAR_RESULT, 1
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1B7980
+	goto_if_eq BerryBlender_EventScript_SpawnLinkPartners
 	compare VAR_RESULT, 2
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1B794C
+	goto_if_eq BerryBlender_EventScript_CloseLinkNotReady
 	compare VAR_RESULT, 3
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1B7959
+	goto_if_eq BerryBlender_EventScript_CloseLinkDifferentSelections
 	compare VAR_RESULT, 5
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1B7966
+	goto_if_eq BerryBlender_EventScript_CloseLink
 	compare VAR_RESULT, 6
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1B7973
+	goto_if_eq BerryBlender_EventScript_LinkError
 	end
 
-FallarborTown_ContestLobby_EventScript_1B78F3:: @ 81B78F3
+BerryBlender_EventScript_TwoPlayerLink:: @ 81B78F3
 	msgbox BerryBlender_Text_Player1Arrived, MSGBOX_DEFAULT
-	goto FallarborTown_ContestLobby_EventScript_1B791D
+	goto BerryBlender_EventScript_DoLinkBerryBlending
 	end
 
-FallarborTown_ContestLobby_EventScript_1B7901:: @ 81B7901
+BerryBlender_EventScript_ThreePlayerLink:: @ 81B7901
 	msgbox BerryBlender_Text_Player1And2Arrived, MSGBOX_DEFAULT
-	goto FallarborTown_ContestLobby_EventScript_1B791D
+	goto BerryBlender_EventScript_DoLinkBerryBlending
 	end
 
-FallarborTown_ContestLobby_EventScript_1B790F:: @ 81B790F
+BerryBlender_EventScript_FourPlayerLink:: @ 81B790F
 	msgbox BerryBlender_Text_AllPlayersArrived, MSGBOX_DEFAULT
-	goto FallarborTown_ContestLobby_EventScript_1B791D
+	goto BerryBlender_EventScript_DoLinkBerryBlending
 	end
 
-FallarborTown_ContestLobby_EventScript_1B791D:: @ 81B791D
+BerryBlender_EventScript_DoLinkBerryBlending:: @ 81B791D
 	setvar VAR_0x8004, 0
 	fadescreen FADE_TO_BLACK
 	removeobject 240
@@ -276,57 +270,57 @@ FallarborTown_ContestLobby_EventScript_1B791D:: @ 81B791D
 	releaseall
 	end
 
-FallarborTown_ContestLobby_EventScript_1B7936:: @ 81B7936
+BerryBlender_EventScript_CancelLinkBlender:: @ 81B7936
 	releaseall
 	end
 
-FallarborTown_ContestLobby_EventScript_1B7938:: @ 81B7938
+BerryBlender_EventScript_LinkBlenderCaseFull:: @ 81B7938
 	msgbox BerryBlender_Text_PokeblockCaseIsFullLink, MSGBOX_DEFAULT
 	releaseall
 	end
 
-FallarborTown_ContestLobby_EventScript_1B7942:: @ 81B7942
+BerryBlender_EventScript_LinkBlenderNoCase:: @ 81B7942
 	msgbox BerryBlender_Text_DontHavePokeblockCaseLink, MSGBOX_DEFAULT
 	releaseall
 	end
 
-FallarborTown_ContestLobby_EventScript_1B794C:: @ 81B794C
+BerryBlender_EventScript_CloseLinkNotReady:: @ 81B794C
 	special CloseLink
 	msgbox Text_SomeoneIsNotReadyToLink, MSGBOX_DEFAULT
 	releaseall
 	end
 
-FallarborTown_ContestLobby_EventScript_1B7959:: @ 81B7959
+BerryBlender_EventScript_CloseLinkDifferentSelections:: @ 81B7959
 	special CloseLink
 	msgbox Text_PlayersMadeDifferentSelections, MSGBOX_DEFAULT
 	releaseall
 	end
 
-FallarborTown_ContestLobby_EventScript_1B7966:: @ 81B7966
+BerryBlender_EventScript_CloseLink:: @ 81B7966
 	special CloseLink
 	msgbox gText_PokeblockLinkCanceled, MSGBOX_DEFAULT
 	releaseall
 	end
 
-FallarborTown_ContestLobby_EventScript_1B7973:: @ 81B7973
+BerryBlender_EventScript_LinkError:: @ 81B7973
 	special CloseLink
 	msgbox Text_LinkErrorPleaseReset, MSGBOX_DEFAULT
 	releaseall
 	end
 
-FallarborTown_ContestLobby_EventScript_1B7980:: @ 81B7980
+BerryBlender_EventScript_SpawnLinkPartners:: @ 81B7980
 	fadescreen FADE_TO_BLACK
 	specialvar VAR_RESULT, GetLinkPartnerNames
 	copyvar VAR_0x8008, VAR_RESULT
 	copyvar VAR_0x8004, VAR_0x8008
 	special SpawnBerryBlenderLinkPlayerSprites
-	goto FallarborTown_ContestLobby_EventScript_1B799A
+	goto BerryBlender_EventScript_LinkPlayersArrived
 	end
 
-FallarborTown_ContestLobby_EventScript_1B799A:: @ 81B799A
+BerryBlender_EventScript_LinkPlayersArrived:: @ 81B799A
 	fadescreen FADE_FROM_BLACK
 	switch VAR_0x8008
-	case 2, FallarborTown_ContestLobby_EventScript_1B78F3
-	case 3, FallarborTown_ContestLobby_EventScript_1B7901
-	case 4, FallarborTown_ContestLobby_EventScript_1B790F
+	case 2, BerryBlender_EventScript_TwoPlayerLink
+	case 3, BerryBlender_EventScript_ThreePlayerLink
+	case 4, BerryBlender_EventScript_FourPlayerLink
 	end
