@@ -160,7 +160,7 @@ SYMBOL(gTradeAnim, 4)
 SYMBOL(gUnknown_03004830, 4)
 SYMBOL(gInGameOpponentsNo, 4)
 SYMBOL(gUnknown_03004840, 20)
-SYMBOL(gBerryBlenderData, 4)
+SYMBOL(gBerryBlender, 4)
 
 // overworld.c
 SYMBOL(gHeldKeyCodeToSend, 4)

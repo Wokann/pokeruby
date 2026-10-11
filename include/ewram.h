@@ -112,7 +112,7 @@ extern u8 gSharedMem[];
 #define eCableCar1                      ((struct CableCarEwramStruct1 *)(gSharedMem + 0x17000))
 #define eCableCar2                      ((struct CableCarEwramStruct2 *)(gSharedMem + 0x19000))
 
-#define eBerryBlenderData               (struct BerryBlenderData*)(&gSharedMem[0x18000])
+#define eBerryBlenderData               (struct BerryBlender*)(&gSharedMem[0x18000])
 #define eEggHatchData                   (struct EggHatchData*)(&gSharedMem[0x18000])
 
 // pokemon_summary_screen.c
