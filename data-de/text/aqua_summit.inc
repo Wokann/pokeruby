@@ -36,7 +36,7 @@ MtPyre_Summit_Text_Grunt3PostBattle: @ 81B5248
 	.string "Der BOSS müsste mittlerweile haben, was\n"
 	.string "er besorgen wollte!$"
 
-UnknownString_81B52B0: @ 81B52B0
+MtPyre_Summit_Text_ArchieWeGotTheOrbLetsGo: @ 81B52B0
 	.string "ADRIAN: Nicht du schon wieder...\p"
 	.string "Du bist uns ja sehr schnell auf die Spur\n"
 	.string "gekommen, aber es ist schon zu spät.\p"
@@ -113,7 +113,7 @@ UnknownString_81B57BE: @ 81B57BE
 	.string "auch das Meer lebendig...\p"
 	.string "KYOGRE hat uns das gelehrt.$"
 
-UnknownString_81B586F: @ 81B586F
+MtPyre_Summit_Text_WillYouHearOutMyTale: @ 81B586F
 	.string "Am PYROBERG legen wir die Geister der\n"
 	.string "POKéMON, die von uns gegangen sind, zur\l"
 	.string "Ruhe...\p"
@@ -126,7 +126,7 @@ UnknownString_81B586F: @ 81B586F
 	.string "Eine lange, sehr alte Geschichte der\l"
 	.string "HOENN-Region?$"
 
-UnknownString_81B5992: @ 81B5992
+MtPyre_Summit_Text_GroudonKyogreTale: @ 81B5992
 	.string "Es geschah vor langer, langer Zeit...\p"
 	.string "Die Welt erbebte unter der Auseinander-\n"
 	.string "setzung der POKéMON des Meeres mit den\l"
@@ -147,7 +147,7 @@ UnknownString_81B5992: @ 81B5992
 	.string "in den Tiefen des Meeres und der Erde\l"
 	.string "und eines Tages verschwanden sie.$"
 
-UnknownString_81B5BD7: @ 81B5BD7
+MtPyre_Summit_Text_WellThatTooIsFine: @ 81B5BD7
 	.string "Ich verstehe...\n"
 	.string "Nun, das ist auch in Ordnung...$"
 

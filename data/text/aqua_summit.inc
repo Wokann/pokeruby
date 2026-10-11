@@ -36,7 +36,7 @@ MtPyre_Summit_Text_Grunt3PostBattle: @ 81B5248
 	.string "The BOSS should have snatched what\n"
 	.string "he was after!$"
 
-UnknownString_81B52B0: @ 81B52B0
+MtPyre_Summit_Text_ArchieWeGotTheOrbLetsGo: @ 81B52B0
 	.string "ARCHIE: Not you again...\p"
 	.string "You've impeded our plans repeatedly,\n"
 	.string "but this time you're too late.\p"
@@ -108,7 +108,7 @@ UnknownString_81B57BE: @ 81B57BE
 	.string "have life, the sea is alive...\p"
 	.string "KYOGRE has taught us that...$"
 
-UnknownString_81B586F: @ 81B586F
+MtPyre_Summit_Text_WillYouHearOutMyTale: @ 81B586F
 	.string "MT. PYRE is where we calm the spirits\n"
 	.string "of POKéMON that have passed on...\p"
 	.string "This is a high place where one can\n"
@@ -119,7 +119,7 @@ UnknownString_81B586F: @ 81B586F
 	.string "Will you hear out my tale? A tale long\n"
 	.string "told in the HOENN region?$"
 
-UnknownString_81B5992: @ 81B5992
+MtPyre_Summit_Text_GroudonKyogreTale: @ 81B5992
 	.string "It happened long, long ago...\p"
 	.string "The world was wracked by a ferocious\n"
 	.string "clash between the POKéMON of the sea\l"
@@ -139,7 +139,7 @@ UnknownString_81B5992: @ 81B5992
 	.string "the sea where eventually they\l"
 	.string "disappeared...$"
 
-UnknownString_81B5BD7: @ 81B5BD7
+MtPyre_Summit_Text_WellThatTooIsFine: @ 81B5BD7
 	.string "I see...\n"
 	.string "Well, that, too, is fine...$"
 

@@ -37,7 +37,7 @@ MtPyre_Summit_EventScript_15D4E1:: @ 815D4E1
 	compare VAR_0x8008, 2
 	call_if_eq MtPyre_Summit_EventScript_15D59F
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B52B0, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_ArchieWeGotTheOrbLetsGo, MSGBOX_DEFAULT
 	.else
 	msgbox MtPyre_Summit_Text_1B5EEC, MSGBOX_DEFAULT
 	.endif
@@ -139,7 +139,7 @@ MtPyre_Summit_EventScript_OldMan:: @ 815D5EF
 	lock
 	faceplayer
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B586F, MSGBOX_YESNO
+	msgbox MtPyre_Summit_Text_WillYouHearOutMyTale, MSGBOX_YESNO
 	.else
 	msgbox MtPyre_Summit_Text_1B64B3, MSGBOX_YESNO
 	.endif
@@ -152,7 +152,7 @@ MtPyre_Summit_EventScript_OldMan:: @ 815D5EF
 
 MtPyre_Summit_EventScript_OldManTale:: @ 815D611
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B5992, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_GroudonKyogreTale, MSGBOX_DEFAULT
 	.else
 	msgbox MtPyre_Summit_Text_1B65D6, MSGBOX_DEFAULT
 	.endif
@@ -160,7 +160,7 @@ MtPyre_Summit_EventScript_OldManTale:: @ 815D611
 
 MtPyre_Summit_EventScript_DeclineOldManTale:: @ 815D61A
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B5BD7, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_WellThatTooIsFine, MSGBOX_DEFAULT
 	.else
 	msgbox MtPyre_Summit_Text_1B6823, MSGBOX_DEFAULT
 	.endif
