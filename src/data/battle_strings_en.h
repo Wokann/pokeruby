@@ -1471,10 +1471,10 @@ const u16 gFutureMoveUsedStringIds[] =
 
 const u16 gBallEscapeStringIds[] =
 {
-    BATTLE_TEXT_BallBrokeOhNo,
-    BATTLE_TEXT_BallBrokeAppeared,
-    BATTLE_TEXT_BallBrokeAlmost,
-    BATTLE_TEXT_BallBrokeSoClose,
+    STRINGID_PKMNBROKEFREE,
+    STRINGID_ITAPPEAREDCAUGHT,
+    STRINGID_AARGHALMOSTHADIT,
+    STRINGID_SHOOTSOCLOSE,
 };
 
 const u16 gWeatherContinuesStringIds[] =
@@ -1507,15 +1507,15 @@ const u16 gInobedientStringIds[] =
 
 const u16 gSafariGetNearStringIds[] =
 {
-    BATTLE_TEXT_CreptCloser,
-    BATTLE_TEXT_CantGetCloser,
+    STRINGID_CREPTCLOSER,
+    STRINGID_CANTGETCLOSER,
 };
 
 const u16 gSafariPokeblockResultStringIds[] =
 {
-    BATTLE_TEXT_CuriousAbout,
-    BATTLE_TEXT_EnthralledBy,
-    BATTLE_TEXT_IgnoredThing,
+    STRINGID_PKMNCURIOUSABOUTX,
+    STRINGID_PKMNENTHRALLEDBYX,
+    STRINGID_PKMNIGNOREDX,
 };
 
 const u16 gTrainerItemCuredStatusStringIds[] =
