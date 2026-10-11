@@ -150,7 +150,7 @@ endif
 # Special configurations required for lib files
 ifeq ($(MODERN),0)
 %src/libs/siirtc.o:       CC1FLAGS := -mthumb-interwork
-%src/libs/agb_flash.o:    CC1FLAGS := -O1 -mthumb-interwork
+%src/agb_flash.o:         CC1FLAGS := -O1 -mthumb-interwork
 %src/libs/agb_flash_1m.o: CC1FLAGS := -O1 -mthumb-interwork
 %src/libs/agb_flash_mx.o: CC1FLAGS := -O1 -mthumb-interwork
 %src/m4a.o:               CC1 := tools/agbcc/bin/old_agbcc$(EXE)
