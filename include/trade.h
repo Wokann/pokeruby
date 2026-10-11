@@ -40,20 +40,21 @@ struct TradeEwramSubstruct2 {
     /*0x0118*/ u16 sXY;
     /*0x011a*/ u16 gbaScale;
     /*0x011c*/ u16 alpha;
-    /*0x011e*/ u8 isLinkTrade;
+    /*0x011e*/ bool8 isLinkTrade;
     /*0x0120*/ u16 monSpecies[2];
     /*0x0124*/ u16 cachedMapMusic;
 };
 
-extern struct TradeEwramSubstruct2 *gUnknown_03004828;
+extern struct TradeEwramSubstruct2 *gTradeAnim;
 extern struct Mail gTradeMail[6];
 extern u8 gSelectedTradeMonPositions[2];
 extern const u16 gTradePlatform_Tilemap[];
 
 void CB2_StartCreateTradeMenu(void);
+void CB2_LinkTrade(void);
 void CB2_InitInGameTrade(void);
 void sub_804E174(void);
 
-void sub_804E22C(void);
+void LoadTradeAnimGfx(void);
 
 #endif //POKERUBY_TRADE_H

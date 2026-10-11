@@ -303,8 +303,8 @@ const u8 gTradeMessageWindowRects[][4] = {
 };
 
 static const struct MenuAction2 sSelectTradeMonActions[] = {
-    {sText_Summary2, sub_804A9F4},
-    {sText_Trade2, sub_804AA00}
+    {sText_Summary2, Task_DrawSelectionSummary},
+    {sText_Trade2, Task_DrawSelectionTrade}
 };
 
 const u8 gUnknown_0820C330[][2] = {

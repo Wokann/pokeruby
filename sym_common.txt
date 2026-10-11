@@ -152,8 +152,8 @@ SYMBOL(gEggHatchData, 4)
 SYMBOL(gFlashMemoryPresent, 4)
 
 // trade.c
-SYMBOL(gUnknown_03004824, 4)
-SYMBOL(gUnknown_03004828, 4)
+SYMBOL(gTradeMenu, 4)
+SYMBOL(gTradeAnim, 4)
 . += 0x4;
 
 // berry_blender.c

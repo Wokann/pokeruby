@@ -363,13 +363,13 @@ static void CB2_TradeEvolutionSceneLoadGraphics(void)
         break;
     case 1:
         Text_LoadWindowTemplate(&gWindowTemplate_81E6F84);
-        Text_InitWindowWithTemplate(&gUnknown_03004828->window, &gWindowTemplate_81E6F84);
+        Text_InitWindowWithTemplate(&gTradeAnim->window, &gWindowTemplate_81E6F84);
         gMain.state++;
         break;
     case 2:
-        TextWindow_LoadStdFrameGraphics(&gUnknown_03004828->window);
-        gUnknown_03004828->textWindowBaseTileNum = TextWindow_SetBaseTileNum(2);
-        TextWindow_LoadStdFrameGraphics(&gUnknown_03004828->window);
+        TextWindow_LoadStdFrameGraphics(&gTradeAnim->window);
+        gTradeAnim->textWindowBaseTileNum = TextWindow_SetBaseTileNum(2);
+        TextWindow_LoadStdFrameGraphics(&gTradeAnim->window);
         Menu_EraseScreen();
         ResetPaletteFade();
         gMain.state++;
@@ -377,7 +377,7 @@ static void CB2_TradeEvolutionSceneLoadGraphics(void)
         SetVBlankCallback(VBlankCB_TradeEvolutionScene);
         break;
     case 3:
-        sub_804E22C();
+        LoadTradeAnimGfx();
         gMain.state++;
         break;
     case 4:
@@ -479,7 +479,7 @@ static void CB2_TradeEvolutionSceneUpdate(void)
 {
     AnimateSprites();
     BuildOamBuffer();
-    Text_UpdateWindow(&gUnknown_03004828->window);
+    Text_UpdateWindow(&gTradeAnim->window);
     UpdatePaletteFade();
     RunTasks();
 }
@@ -893,15 +893,15 @@ static void Task_TradeEvolutionScene(u8 taskId)
     {
     case 0:
         StringExpandPlaceholders(gStringVar4, gText_PkmnIsEvolving);
-        Contest_StartTextPrinter(&gUnknown_03004828->window,
+        Contest_StartTextPrinter(&gTradeAnim->window,
             gStringVar4,
-            gUnknown_03004828->textWindowBaseTileNum,
+            gTradeAnim->textWindowBaseTileNum,
             2,
             15);
         gTasks[taskId].tState++;
         break;
     case 1:
-        if (gUnknown_03004828->window.state == 0)
+        if (gTradeAnim->window.state == 0)
         {
             PlayCry_Normal(gTasks[taskId].tPreEvoSpecies, 0);
             gTasks[taskId].tState++;
@@ -985,9 +985,9 @@ static void Task_TradeEvolutionScene(u8 taskId)
         if (IsCryFinished() && !gPaletteFade.active)
         {
             StringExpandPlaceholders(gStringVar4, gText_CongratsPkmnEvolved);
-            Contest_StartTextPrinter(&gUnknown_03004828->window,
+            Contest_StartTextPrinter(&gTradeAnim->window,
                 gStringVar4,
-                gUnknown_03004828->textWindowBaseTileNum,
+                gTradeAnim->textWindowBaseTileNum,
                 2,
                 15);
             PlayFanfare(MUS_EVOLVED);
@@ -1001,7 +1001,7 @@ static void Task_TradeEvolutionScene(u8 taskId)
         }
         break;
     case 13:
-        if (gUnknown_03004828->window.state == 0 && IsFanfareTaskInactive() == TRUE)
+        if (gTradeAnim->window.state == 0 && IsFanfareTaskInactive() == TRUE)
         {
             var = MonTryLearningNewMove(mon, gTasks[taskId].tLearnsFirstMove);
             if (var != 0 && !gTasks[taskId].tEvoWasStopped)
@@ -1023,9 +1023,9 @@ static void Task_TradeEvolutionScene(u8 taskId)
             else
             {
                 PlayBGM(MUS_EVOLUTION);
-                Contest_StartTextPrinter(&gUnknown_03004828->window,
+                Contest_StartTextPrinter(&gTradeAnim->window,
                     gText_CommunicationStandby5,
-                    gUnknown_03004828->textWindowBaseTileNum,
+                    gTradeAnim->textWindowBaseTileNum,
                     2,
                     15);
                 gTasks[taskId].tState++;
@@ -1033,21 +1033,21 @@ static void Task_TradeEvolutionScene(u8 taskId)
         }
         break;
     case 14:
-        if (gUnknown_03004828->window.state == 0)
+        if (gTradeAnim->window.state == 0)
         {
             DestroyTask(taskId);
             SetMainCallback2(gCB2_AfterEvolution);
         }
         break;
     case 15:
-        if (gUnknown_03004828->window.state == 0 && !IsSEPlaying())
+        if (gTradeAnim->window.state == 0 && !IsSEPlaying())
         {
             BufferMoveToLearnIntoBattleTextBuff2();
             PlayFanfare(MUS_LEVEL_UP);
             BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[3]);
-            Contest_StartTextPrinter(&gUnknown_03004828->window,
+            Contest_StartTextPrinter(&gTradeAnim->window,
                 gDisplayedStringBattle,
-                gUnknown_03004828->textWindowBaseTileNum,
+                gTradeAnim->textWindowBaseTileNum,
                 2,
                 15);
             gTasks[taskId].tLearnsFirstMove = 0x40; // re-used as a counter
@@ -1055,46 +1055,46 @@ static void Task_TradeEvolutionScene(u8 taskId)
         }
         break;
     case 16:
-        if (gUnknown_03004828->window.state == 0 && IsFanfareTaskInactive() == TRUE && --gTasks[taskId].tLearnsFirstMove == 0)
+        if (gTradeAnim->window.state == 0 && IsFanfareTaskInactive() == TRUE && --gTasks[taskId].tLearnsFirstMove == 0)
             gTasks[taskId].tState = 13;
         break;
     case 17:
         switch (gTasks[taskId].tLearnMoveState)
         {
         case 0:
-            if (gUnknown_03004828->window.state == 0 && !IsSEPlaying())
+            if (gTradeAnim->window.state == 0 && !IsSEPlaying())
             {
                 BufferMoveToLearnIntoBattleTextBuff2();
                 BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[4]);
-                Contest_StartTextPrinter(&gUnknown_03004828->window,
+                Contest_StartTextPrinter(&gTradeAnim->window,
                     gDisplayedStringBattle,
-                    gUnknown_03004828->textWindowBaseTileNum,
+                    gTradeAnim->textWindowBaseTileNum,
                     2,
                     15);
                 gTasks[taskId].tLearnMoveState++;
             }
             break;
         case 1:
-            if (gUnknown_03004828->window.state == 0 && !IsSEPlaying())
+            if (gTradeAnim->window.state == 0 && !IsSEPlaying())
             {
                 BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[5]);
-                Contest_StartTextPrinter(&gUnknown_03004828->window,
+                Contest_StartTextPrinter(&gTradeAnim->window,
                     gDisplayedStringBattle,
-                    gUnknown_03004828->textWindowBaseTileNum,
+                    gTradeAnim->textWindowBaseTileNum,
                     2,
                     15);
                 gTasks[taskId].tLearnMoveState++;
             }
             break;
         case 2:
-            if (gUnknown_03004828->window.state != 0)
+            if (gTradeAnim->window.state != 0)
                 break;
             if (!IsSEPlaying())
             {
                 BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[6]);
-                Contest_StartTextPrinter(&gUnknown_03004828->window,
+                Contest_StartTextPrinter(&gTradeAnim->window,
                     gDisplayedStringBattle,
-                    gUnknown_03004828->textWindowBaseTileNum,
+                    gTradeAnim->textWindowBaseTileNum,
                     2,
                     15);
                 gTasks[taskId].tLearnMoveYesState = 5;
@@ -1102,12 +1102,12 @@ static void Task_TradeEvolutionScene(u8 taskId)
                 gTasks[taskId].tLearnMoveState++;
             }
         case 3:
-            if (gUnknown_03004828->window.state == 0 && !IsSEPlaying())
+            if (gTradeAnim->window.state == 0 && !IsSEPlaying())
             {
-                TextWindow_DrawStdFrame(&gUnknown_03004828->window, 24, 8, 29, 13);
+                TextWindow_DrawStdFrame(&gTradeAnim->window, 24, 8, 29, 13);
                 sEvoCursorPos = 0;
-                Text_InitWindow(&gUnknown_03004828->window, gText_YesNo, gUnknown_03004828->textWindowBaseTileNum + 128, 25, 9);
-                Text_PrintWindow8002F44(&gUnknown_03004828->window);
+                Text_InitWindow(&gTradeAnim->window, gText_YesNo, gTradeAnim->textWindowBaseTileNum + 128, 25, 9);
+                Text_PrintWindow8002F44(&gTradeAnim->window);
                 MenuCursor_Create814A5C0(0, 0xFFFF, 0xC, 0x2D9F, 0x20);
                 sub_81150D8();
                 gTasks[taskId].tLearnMoveState++;
@@ -1131,12 +1131,12 @@ static void Task_TradeEvolutionScene(u8 taskId)
             }
             if (JOY_NEW(A_BUTTON))
             {
-                Text_EraseWindowRect(&gUnknown_03004828->window, 0x18, 8, 0x1D, 0xD);
+                Text_EraseWindowRect(&gTradeAnim->window, 0x18, 8, 0x1D, 0xD);
                 DestroyMenuCursor();
                 BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[292]);
-                Contest_StartTextPrinter(&gUnknown_03004828->window,
+                Contest_StartTextPrinter(&gTradeAnim->window,
                     gDisplayedStringBattle,
-                    gUnknown_03004828->textWindowBaseTileNum,
+                    gTradeAnim->textWindowBaseTileNum,
                     2,
                     15);
                 PlaySE(SE_SELECT);
@@ -1151,12 +1151,12 @@ static void Task_TradeEvolutionScene(u8 taskId)
             }
             if (JOY_NEW(B_BUTTON))
             {
-                Text_EraseWindowRect(&gUnknown_03004828->window, 0x18, 8, 0x1D, 0xD);
+                Text_EraseWindowRect(&gTradeAnim->window, 0x18, 8, 0x1D, 0xD);
                 DestroyMenuCursor();
                 BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[292]);
-                Contest_StartTextPrinter(&gUnknown_03004828->window,
+                Contest_StartTextPrinter(&gTradeAnim->window,
                     gDisplayedStringBattle,
-                    gUnknown_03004828->textWindowBaseTileNum,
+                    gTradeAnim->textWindowBaseTileNum,
                     2,
                     15);
                 PlaySE(SE_SELECT);
@@ -1184,9 +1184,9 @@ static void Task_TradeEvolutionScene(u8 taskId)
                     if (IsHMMove2(move))
                     {
                         BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[307]);
-                        Contest_StartTextPrinter(&gUnknown_03004828->window,
+                        Contest_StartTextPrinter(&gTradeAnim->window,
                             gDisplayedStringBattle,
-                            gUnknown_03004828->textWindowBaseTileNum,
+                            gTradeAnim->textWindowBaseTileNum,
                             2,
                             15);
                         gTasks[taskId].tLearnMoveState = 11;
@@ -1201,9 +1201,9 @@ static void Task_TradeEvolutionScene(u8 taskId)
                         RemoveMonPPBonus(mon, var);
                         SetMonMoveSlot(mon, gMoveToLearn, var);
                         BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[207]);
-                        Contest_StartTextPrinter(&gUnknown_03004828->window,
+                        Contest_StartTextPrinter(&gTradeAnim->window,
                             gDisplayedStringBattle,
-                            gUnknown_03004828->textWindowBaseTileNum,
+                            gTradeAnim->textWindowBaseTileNum,
                             2,
                             15);
                         gTasks[taskId].tLearnMoveState++;
@@ -1212,24 +1212,24 @@ static void Task_TradeEvolutionScene(u8 taskId)
             }
             break;
         case 7:
-            if (gUnknown_03004828->window.state == 0 && !IsSEPlaying())
+            if (gTradeAnim->window.state == 0 && !IsSEPlaying())
             {
                 BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[7]);
-                Contest_StartTextPrinter(&gUnknown_03004828->window,
+                Contest_StartTextPrinter(&gTradeAnim->window,
                     gDisplayedStringBattle,
-                    gUnknown_03004828->textWindowBaseTileNum,
+                    gTradeAnim->textWindowBaseTileNum,
                     2,
                     15);
                 gTasks[taskId].tLearnMoveState++;
             }
             break;
         case 8:
-            if (gUnknown_03004828->window.state == 0 && !IsSEPlaying())
+            if (gTradeAnim->window.state == 0 && !IsSEPlaying())
             {
                 BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[208]);
-                Contest_StartTextPrinter(&gUnknown_03004828->window,
+                Contest_StartTextPrinter(&gTradeAnim->window,
                     gDisplayedStringBattle,
-                    gUnknown_03004828->textWindowBaseTileNum,
+                    gTradeAnim->textWindowBaseTileNum,
                     2,
                     15);
                 gTasks[taskId].tState = 15;
@@ -1237,9 +1237,9 @@ static void Task_TradeEvolutionScene(u8 taskId)
             break;
         case 9:
             BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[8]);
-            Contest_StartTextPrinter(&gUnknown_03004828->window,
+            Contest_StartTextPrinter(&gTradeAnim->window,
                 gDisplayedStringBattle,
-                gUnknown_03004828->textWindowBaseTileNum,
+                gTradeAnim->textWindowBaseTileNum,
                 2,
                 15);
             gTasks[taskId].tLearnMoveYesState = 10;
@@ -1248,15 +1248,15 @@ static void Task_TradeEvolutionScene(u8 taskId)
             break;
         case 10:
             BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[9]);
-            Contest_StartTextPrinter(&gUnknown_03004828->window,
+            Contest_StartTextPrinter(&gTradeAnim->window,
                 gDisplayedStringBattle,
-                gUnknown_03004828->textWindowBaseTileNum,
+                gTradeAnim->textWindowBaseTileNum,
                 2,
                 15);
             gTasks[taskId].tState = 13;
             break;
         case 11:
-            if (gUnknown_03004828->window.state == 0 && !IsSEPlaying())
+            if (gTradeAnim->window.state == 0 && !IsSEPlaying())
                 gTasks[taskId].tLearnMoveState = 5;
             break;
         }
