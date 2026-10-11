@@ -395,6 +395,14 @@
 	.4byte \destination
 	.endm
 
+	.macro if_used_combo_starter mon:req, destination:req
+	if_used_combo_starter_eq \mon, TRUE, \destination
+	.endm
+
+	.macro if_not_used_combo_starter mon:req, destination:req
+	if_used_combo_starter_eq \mon, FALSE, \destination
+	.endm
+
 @ whether the mon can make an appeal
 
 	.macro check_can_participate mon

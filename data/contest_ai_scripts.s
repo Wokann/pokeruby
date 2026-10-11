@@ -12,12 +12,12 @@
 
 	.align 2
 gContestAI_ScriptsTable:: @ 81DC118
-	.4byte AI_CheckForBadMove
-	.4byte AI_CheckForCombo
+	.4byte AI_CheckBadMove
+	.4byte AI_CheckCombo
 	.4byte AI_CheckBoring
 	.4byte AI_CheckExcitement
 	.4byte AI_CheckOrder
-	.4byte AI_CheckForGoodMove
+	.4byte AI_CheckGoodMove
 	.4byte AI_Erratic
 	.4byte AI_Nothing
 	.4byte AI_Nothing
@@ -48,809 +48,815 @@ gContestAI_ScriptsTable:: @ 81DC118
 @ Unreferenced AI routine to encourage moves that improve condition on the first
 @ turn. Additionally, it checks the appeal order of the user and the effect
 @ type, but the code is buggy and doesn't affect the score.
-	if_appeal_num_not_eq 0, ContestUnreferenced_80
-	if_effect_not_eq CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS, ContestUnreferenced_80
+AI_CheckTiming:
+	if_appeal_num_not_eq 0, AI_CheckTiming_SkipCondition
+	if_effect_not_eq CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS, AI_CheckTiming_SkipCondition
 	score +10
-ContestUnreferenced_80:
-	call ContestUnreferenced_0D
+AI_CheckTiming_SkipCondition:
+	call AI_CheckTiming_TryStartle
 	end
-ContestUnreferenced_0D:
-	if_user_order_more_than MON_2, ContestUnreferenced_end
-	if_effect_type_not_eq 2, ContestUnreferenced_end
-	if_effect_type_not_eq 3, ContestUnreferenced_end
+AI_CheckTiming_TryStartle:
+	if_user_order_more_than MON_2, AI_CheckTiming_End
+	if_effect_type_not_eq 2, AI_CheckTiming_End
+	if_effect_type_not_eq 3, AI_CheckTiming_End
 	score +10 @ unreachable
-ContestUnreferenced_end:
+AI_CheckTiming_End:
 	end
 
 @ Unreferenced AI routine that doesn't make much sense.
-	if_appeal_num_eq 0, ContestUnreferenced_0F_1
-	if_appeal_num_eq 1, ContestUnreferenced_0F_2
-	if_appeal_num_eq 2, ContestUnreferenced_0F_3
-	if_appeal_num_eq 3, ContestUnreferenced_0F_4
-	if_appeal_num_eq 4, ContestUnreferenced_0F_5
+AI_AvoidStartle:
+	if_appeal_num_eq 0, AI_AvoidStartle_1stAppeal
+	if_appeal_num_eq 1, AI_AvoidStartle_2ndAppeal
+	if_appeal_num_eq 2, AI_AvoidStartle_3rdAppeal
+	if_appeal_num_eq 3, AI_AvoidStartle_4thAppeal
+	if_appeal_num_eq 4, AI_AvoidStartle_LastAppeal
 	end
-ContestUnreferenced_0F_1:
-	if_user_order_not_eq MON_1, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_2, ContestUnreferenced_2B_2
-	if_user_order_not_eq MON_3, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_4, ContestUnreferenced_2B_1
+AI_AvoidStartle_1stAppeal:
+	if_user_order_not_eq MON_1, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_2, AI_AvoidStartle_EncourageIfAvoidMove2
+	if_user_order_not_eq MON_3, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_4, AI_AvoidStartle_EncourageIfAvoidMove
 	end
-ContestUnreferenced_2B_1:
-	if_effect_type_eq 1, ContestUnreferenced_score
+AI_AvoidStartle_EncourageIfAvoidMove:
+	if_effect_type_eq 1, AI_AvoidStartle_Encourage
 	end
-ContestUnreferenced_2B_2:
-	if_effect_type_eq 1, ContestUnreferenced_score
+AI_AvoidStartle_EncourageIfAvoidMove2:
+	if_effect_type_eq 1, AI_AvoidStartle_Encourage
 	end
-	if_effect_type_eq 1, ContestUnreferenced_score
+AI_AvoidStartle_EncourageIfAvoidMove3:
+	if_effect_type_eq 1, AI_AvoidStartle_Encourage
 	end
-ContestUnreferenced_0F_2:
-	if_user_order_not_eq MON_1, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_2, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_3, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_4, ContestUnreferenced_2B_1
+AI_AvoidStartle_2ndAppeal:
+	if_user_order_not_eq MON_1, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_2, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_3, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_4, AI_AvoidStartle_EncourageIfAvoidMove
 	end
-ContestUnreferenced_0F_3:
-	if_user_order_not_eq MON_1, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_2, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_3, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_4, ContestUnreferenced_2B_1
+AI_AvoidStartle_3rdAppeal:
+	if_user_order_not_eq MON_1, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_2, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_3, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_4, AI_AvoidStartle_EncourageIfAvoidMove
 	end
-ContestUnreferenced_0F_4:
-	if_user_order_not_eq MON_1, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_2, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_3, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_4, ContestUnreferenced_2B_1
+AI_AvoidStartle_4thAppeal:
+	if_user_order_not_eq MON_1, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_2, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_3, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_4, AI_AvoidStartle_EncourageIfAvoidMove
 	end
-ContestUnreferenced_0F_5:
-	if_user_order_not_eq MON_1, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_2, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_3, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_4, ContestUnreferenced_2B_1
+AI_AvoidStartle_LastAppeal:
+	if_user_order_not_eq MON_1, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_2, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_3, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_4, AI_AvoidStartle_EncourageIfAvoidMove
 	end
-ContestUnreferenced_score:
+AI_AvoidStartle_Encourage:
 	score +10
 	end
 
+AI_AvoidStartle_End:
 	end
 
 @ Unreferenced AI routine to encourage the most appealing move.
-	if_most_appealing_move ContestUnreferenced_score2
+AI_PreferMostAppealingMove:
+	if_most_appealing_move AI_PreferMostAppealingMove_Encourage
 	end
-ContestUnreferenced_score2:
+AI_PreferMostAppealingMove_Encourage:
 	score +10
 	end
 
 AI_CheckBoring:
-	if_effect_eq CONTEST_EFFECT_REPETITION_NOT_BORING, AI_end_081DC27F
-	if_move_used_count_eq 1, AI_score1_081DC27F
-	if_move_used_count_eq 2, AI_score2_081DC27F
-	if_move_used_count_eq 3, AI_score3_081DC27F
-	if_move_used_count_eq 4, AI_score4_081DC27F
+	if_effect_eq CONTEST_EFFECT_REPETITION_NOT_BORING, AI_CheckBoring_NotBoring
+	if_move_used_count_eq 1, AI_CheckBoring_1stRepeat
+	if_move_used_count_eq 2, AI_CheckBoring_2ndRepeat
+	if_move_used_count_eq 3, AI_CheckBoring_3rdRepeat
+	if_move_used_count_eq 4, AI_CheckBoring_4thRepeat
 	end
-AI_score1_081DC27F:
+AI_CheckBoring_1stRepeat:
 	score -5
 	end
-AI_score2_081DC27F:
+AI_CheckBoring_2ndRepeat:
 	score -15
 	end
-AI_score3_081DC27F:
+AI_CheckBoring_3rdRepeat:
 	score -20
 	end
-AI_score4_081DC27F:
+AI_CheckBoring_4thRepeat:
 	score -25
 	end
-AI_end_081DC27F:
+AI_CheckBoring_NotBoring:
 	end
 
 AI_CheckExcitement:
-	if_move_excitement_less_than 0, AI_contest09_081DC2AB
-	if_move_excitement_eq 0, AI_contest7D_4_081DC2AB
-	if_move_excitement_eq 1, AI_contest3D_081DC2AB
+	if_move_excitement_less_than 0, AI_CheckExcitement_Negative
+	if_move_excitement_eq 0, AI_CheckExcitement_Neutral
+	if_move_excitement_eq 1, AI_CheckExcitement_Positive
 	end
-AI_contest09_081DC2AB:
-	if_excitement_eq 4, AI_contest0F_1_081DC2AB
-	if_excitement_eq 3, AI_contest0F_2_081DC2AB
-	if_user_has_exciting_move AI_end_081DC2AB
+AI_CheckExcitement_Negative:
+	if_excitement_eq 4, AI_CheckExcitement_Negative_1AwayFromMax
+	if_excitement_eq 3, AI_CheckExcitement_Negative_2AwayFromMax
+	if_user_has_exciting_move AI_CheckExcitement_End
 	score +15
 	end
-AI_contest0F_1_081DC2AB:
-	if_user_order_not_eq MON_1, AI_contest7D_1_081DC2AB
-	if_random_less_than 51, AI_end_081DC2AB
+AI_CheckExcitement_Negative_1AwayFromMax:
+	if_user_order_not_eq MON_1, AI_CheckExcitement_Negative_1AwayFromMax_Not1stUp
+	if_random_less_than 51, AI_CheckExcitement_End
 	score +20
 	end
-AI_contest7D_1_081DC2AB:
-	if_random_less_than 127, AI_end_081DC2AB
+AI_CheckExcitement_Negative_1AwayFromMax_Not1stUp:
+	if_random_less_than 127, AI_CheckExcitement_End
 	score -10
 	end
-AI_contest0F_2_081DC2AB:
-	if_user_order_not_eq MON_1, AI_contest7D_3_081DC2AB
-	if_appeal_num_eq 4, AI_score_081DC2AB
+AI_CheckExcitement_Negative_2AwayFromMax:
+	if_user_order_not_eq MON_1, AI_CheckExcitement_Negative_2AwayFromMax_Not1stUp
+	if_appeal_num_eq 4, AI_CheckExcitement_Negative_2AwayFromMax_LastAppeal
 AI_contest7D_2_081DC2AB:
-	if_random_less_than 51, AI_end_081DC2AB
+	if_random_less_than 51, AI_CheckExcitement_End
 	score +10
 	end
-AI_score_081DC2AB:
+AI_CheckExcitement_Negative_2AwayFromMax_LastAppeal:
 	score +15
 	end
-AI_contest7D_3_081DC2AB:
-	if_random_less_than 127, AI_end_081DC2AB
+AI_CheckExcitement_Negative_2AwayFromMax_Not1stUp:
+	if_random_less_than 127, AI_CheckExcitement_End
 	score +10
 	end
-AI_contest7D_4_081DC2AB:
-	if_random_less_than 127, AI_end_081DC2AB
+AI_CheckExcitement_Neutral:
+	if_random_less_than 127, AI_CheckExcitement_End
 	score +10
 	end
-AI_contest3D_081DC2AB:
-	if_move_used_count_more_than 0, AI_contest29_081DC2AB
-	if_user_order_not_eq MON_1, AI_contest7D_5_081DC2AB
-	if_excitement_not_eq 4, AI_contest7D_5_081DC2AB
+AI_CheckExcitement_Positive:
+	if_move_used_count_more_than 0, AI_CheckExcitement_Positive_Repeat
+	if_user_order_not_eq MON_1, AI_CheckExcitement_Positive_Not1stUpForMax
+	if_excitement_not_eq 4, AI_CheckExcitement_Positive_Not1stUpForMax
 	score +30
 	end
-AI_contest7D_5_081DC2AB:
-	if_random_less_than 100, AI_end_081DC2AB
+AI_CheckExcitement_Positive_Not1stUpForMax:
+	if_random_less_than 100, AI_CheckExcitement_End
 	score +10
 	end
-AI_contest29_081DC2AB:
-	if_effect_not_eq CONTEST_EFFECT_REPETITION_NOT_BORING, AI_end_081DC2AB
-	if_user_order_not_eq MON_1, AI_contest7D_5_081DC2AB
-	if_excitement_not_eq 4, AI_contest7D_5_081DC2AB
+AI_CheckExcitement_Positive_Repeat:
+	if_effect_not_eq CONTEST_EFFECT_REPETITION_NOT_BORING, AI_CheckExcitement_End
+	if_user_order_not_eq MON_1, AI_CheckExcitement_Positive_Not1stUpForMax
+	if_excitement_not_eq 4, AI_CheckExcitement_Positive_Not1stUpForMax
 	score +30
 	end
-AI_end_081DC2AB:
+AI_CheckExcitement_End:
 	end
 
-AI_CheckForCombo:
-	if_would_finish_combo AI_score_081DC348
-	call AI_contest3F_081DC348
-	call AI_contest45_081DC348
+AI_CheckCombo:
+	if_would_finish_combo AI_CheckCombo_WouldFinish
+	call AI_CheckCombo_CheckStarter
+	call AI_CheckCombo_CheckFinisherWithoutStarter
 	end
-AI_contest3F_081DC348:
-	if_move_used_count_not_eq 0, AI_end_081DC348
-	if_not_combo_starter AI_end_081DC348
-	if_user_order_eq MON_1, AI_contest04_1_081DC348
-	if_user_order_eq MON_2, AI_contest04_2_081DC348
-	if_user_order_eq MON_3, AI_contest04_3_081DC348
-	if_user_order_eq MON_4, AI_contest04_4_081DC348
+AI_CheckCombo_CheckStarter:
+	if_move_used_count_not_eq 0, AI_CheckCombo_End
+	if_not_combo_starter AI_CheckCombo_End
+	if_user_order_eq MON_1, AI_CheckCombo_Starter1stUp
+	if_user_order_eq MON_2, AI_CheckCombo_Starter2ndUp
+	if_user_order_eq MON_3, AI_CheckCombo_Starter3rdUp
+	if_user_order_eq MON_4, AI_CheckCombo_StarterLast
 	end
-AI_contest45_081DC348:
-	if_not_combo_finisher AI_end_081DC348
+AI_CheckCombo_CheckFinisherWithoutStarter:
+	if_not_combo_finisher AI_CheckCombo_End
 	score -10
 	end
-AI_score_081DC348:
+AI_CheckCombo_WouldFinish:
 	score +25
 	end
-AI_contest04_1_081DC348:
-	if_appeal_num_eq 4, AI_contest7D_081DC348
-	if_random_less_than 150, AI_end_081DC348
+AI_CheckCombo_Starter1stUp:
+	if_appeal_num_eq 4, AI_CheckCombo_StarterOnLastAppeal
+	if_random_less_than 150, AI_CheckCombo_End
 	score +10
 	end
-AI_contest04_2_081DC348:
-	if_appeal_num_eq 4, AI_contest7D_081DC348
-	if_random_less_than 125, AI_end_081DC348
+AI_CheckCombo_Starter2ndUp:
+	if_appeal_num_eq 4, AI_CheckCombo_StarterOnLastAppeal
+	if_random_less_than 125, AI_CheckCombo_End
 	score +10
 	end
-AI_contest04_3_081DC348:
-	if_appeal_num_eq 4, AI_contest7D_081DC348
-	if_random_less_than 50, AI_end_081DC348
+AI_CheckCombo_Starter3rdUp:
+	if_appeal_num_eq 4, AI_CheckCombo_StarterOnLastAppeal
+	if_random_less_than 50, AI_CheckCombo_End
 	score +10
 	end
-AI_contest04_4_081DC348:
-	if_appeal_num_eq 4, AI_contest7D_081DC348
+AI_CheckCombo_StarterLast:
+	if_appeal_num_eq 4, AI_CheckCombo_StarterOnLastAppeal
 	score +10
 	end
-AI_contest7D_081DC348:
-	if_random_less_than 125, AI_end_081DC348
+AI_CheckCombo_StarterOnLastAppeal:
+	if_random_less_than 125, AI_CheckCombo_End
 	score -15
 	end
-AI_end_081DC348:
+AI_CheckCombo_End:
 	end
 
-AI_CheckForGoodMove:
-	if_effect_eq CONTEST_EFFECT_BETTER_WITH_GOOD_CONDITION, ContestEffect39
-	if_effect_eq CONTEST_EFFECT_NEXT_APPEAL_EARLIER, ContestEffect40
-	if_effect_eq CONTEST_EFFECT_NEXT_APPEAL_LATER, ContestEffect41
-	if_effect_eq CONTEST_EFFECT_REPETITION_NOT_BORING, ContestEffect3
-	if_effect_eq CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS, ContestEffect38
-	if_effect_eq CONTEST_EFFECT_DONT_EXCITE_AUDIENCE, ContestEffect47
-	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, ContestEffect31
-	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONE, ContestEffect32
-	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_AUDIENCE_EXCITED, ContestEffect46
-	if_effect_eq CONTEST_EFFECT_WORSEN_CONDITION_OF_PREV_MONS, ContestEffect27
-	if_effect_eq CONTEST_EFFECT_SHIFT_JUDGE_ATTENTION, ContestEffect16or17
-	if_effect_eq CONTEST_EFFECT_STARTLE_MON_WITH_JUDGES_ATTENTION, ContestEffect16or17
-	if_effect_eq CONTEST_EFFECT_MAKE_FOLLOWING_MONS_NERVOUS, ContestEffect_FollowingMonsNervous
-	if_effect_eq CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN, ContestEffect18
+AI_CheckGoodMove:
+	if_effect_eq CONTEST_EFFECT_BETTER_WITH_GOOD_CONDITION, AI_CGM_BetterWithGoodCondition
+	if_effect_eq CONTEST_EFFECT_NEXT_APPEAL_EARLIER, AI_CGM_NextAppealEarlier
+	if_effect_eq CONTEST_EFFECT_NEXT_APPEAL_LATER, AI_CGM_NextAppealLater
+	if_effect_eq CONTEST_EFFECT_REPETITION_NOT_BORING, AI_CGM_RepetitionNotBoring
+	if_effect_eq CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS, AI_CGM_ImproveCondition
+	if_effect_eq CONTEST_EFFECT_DONT_EXCITE_AUDIENCE, AI_CGM_DontExciteAudience
+	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, AI_CGM_AppealAsGoodAsPrevOnes
+	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONE, AI_CGM_AppealAsGoodAsPrevOne
+	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_AUDIENCE_EXCITED, AI_CGM_BetterWhenAudienceExcited
+	if_effect_eq CONTEST_EFFECT_WORSEN_CONDITION_OF_PREV_MONS, AI_CGM_WorsenConditionOfPrevMons
+	if_effect_eq CONTEST_EFFECT_SHIFT_JUDGE_ATTENTION, AI_CGM_TargetMonWithJudgesAttention
+	if_effect_eq CONTEST_EFFECT_STARTLE_MON_WITH_JUDGES_ATTENTION, AI_CGM_TargetMonWithJudgesAttention
+	if_effect_eq CONTEST_EFFECT_MAKE_FOLLOWING_MONS_NERVOUS, AI_CGM_MakeFollowingMonsNervous
+	if_effect_eq CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN, AI_CGM_JamsOthersButMissOneTurn
 	end
 
-ContestEffect39:
-	if_user_condition_eq 3, ContestEffect39_score1
-	if_user_condition_eq 2, ContestEffect39_score2
-	if_user_condition_eq 1, ContestEffect39_score3
-	if_user_condition_eq 0, ContestEffect39_score4
+AI_CGM_BetterWithGoodCondition:
+	if_user_condition_eq 3, AI_CGM_BetterWithGoodCondition_3
+	if_user_condition_eq 2, AI_CGM_BetterWithGoodCondition_2
+	if_user_condition_eq 1, AI_CGM_BetterWithGoodCondition_1
+	if_user_condition_eq 0, AI_CGM_BetterWithGoodCondition_0
 	end
-ContestEffect39_score1:
+AI_CGM_BetterWithGoodCondition_3:
 	score +20
 	end
-ContestEffect39_score2:
-	if_random_less_than 125, ContestEffectEnd
+AI_CGM_BetterWithGoodCondition_2:
+	if_random_less_than 125, AI_CGM_End
 	score +15
 	end
-ContestEffect39_score3:
-	if_random_less_than 125, ContestEffectEnd
+AI_CGM_BetterWithGoodCondition_1:
+	if_random_less_than 125, AI_CGM_End
 	score +5
 	end
-ContestEffect39_score4:
+AI_CGM_BetterWithGoodCondition_0:
 	score -20
 	end
 
-ContestEffect40:
-	if_user_doesnt_have_move CONTEST_EFFECT_BETTER_IF_FIRST, ContestEffectEnd
-	if_random_less_than 50, ContestEffectEnd
+AI_CGM_NextAppealEarlier:
+	if_user_doesnt_have_move CONTEST_EFFECT_BETTER_IF_FIRST, AI_CGM_End
+	if_random_less_than 50, AI_CGM_End
 	score +20
 	end
 
-ContestEffect41:
-	if_user_doesnt_have_move CONTEST_EFFECT_BETTER_IF_LAST, ContestEffectEnd
-	if_random_less_than 50, ContestEffectEnd
+AI_CGM_NextAppealLater:
+	if_user_doesnt_have_move CONTEST_EFFECT_BETTER_IF_LAST, AI_CGM_End
+	if_random_less_than 50, AI_CGM_End
 	score +20
 	end
 
-ContestEffect3:
-	if_user_order_not_eq MON_4, ContestEffectEnd
-	if_random_less_than 50, ContestEffectEnd
+AI_CGM_RepetitionNotBoring:
+	if_user_order_not_eq MON_4, AI_CGM_End
+	if_random_less_than 50, AI_CGM_End
 	score +15
 	end
-	if_appeal_num_eq 4, ContestEffect3_7D
-	if_random_less_than 220, ContestEffect3_score
+AI_CGM_Unused:
+	if_appeal_num_eq 4, AI_CGM_Unused_LastAppeal
+	if_random_less_than 220, AI_CGM_Unused_Discourage
 	score +10
 	end
-ContestEffect3_7D:
-	if_random_less_than 20, ContestEffectEnd
+AI_CGM_Unused_LastAppeal:
+	if_random_less_than 20, AI_CGM_End
 	score +15
 	end
-ContestEffect3_score:
+AI_CGM_Unused_Discourage:
 	score -20
 	end
 
-ContestEffect38:
-	if_user_doesnt_have_move CONTEST_EFFECT_BETTER_WITH_GOOD_CONDITION, ContestEffect38_contest04
-	if_user_condition_eq 3, ContestEffect38_score1
-	if_random_less_than 50, ContestEffectEnd
+AI_CGM_ImproveCondition:
+	if_user_doesnt_have_move CONTEST_EFFECT_BETTER_WITH_GOOD_CONDITION, AI_CGM_ImproveCondition_CheckAppealNum
+	if_user_condition_eq 3, AI_CGM_ImproveCondition_AtMax
+	if_random_less_than 50, AI_CGM_End
 	score +15
 	end
-ContestEffect38_score1:
+AI_CGM_ImproveCondition_AtMax:
 	score -10
 	end
-ContestEffect38_contest04:
-	if_appeal_num_eq 4, ContestEffect38_score2
-	if_appeal_num_eq 0, ContestEffect38_random
-	if_move_used_count_eq 1, ContestEffectEnd
-	if_random_less_than 125, ContestEffectEnd
+AI_CGM_ImproveCondition_CheckAppealNum:
+	if_appeal_num_eq 4, AI_CGM_ImproveCondition_LastAppeal
+	if_appeal_num_eq 0, AI_CGM_ImproveCondition_FirstAppeal
+	if_move_used_count_eq 1, AI_CGM_End
+	if_random_less_than 125, AI_CGM_End
 	score +10
 	end
-ContestEffect38_random:
-	if_random_less_than 100, ContestEffectEnd
+AI_CGM_ImproveCondition_FirstAppeal:
+	if_random_less_than 100, AI_CGM_End
 	score +10
 	end
-ContestEffect38_score2:
+AI_CGM_ImproveCondition_LastAppeal:
 	score -10
 	end
 
-ContestEffect47:
-	if_move_used_count_eq 1, ContestEffectEnd
-	if_user_order_eq MON_1, ContestEffect47_random
-	if_user_order_eq MON_2, ContestEffect47_random
-	if_appeal_num_not_eq 4, ContestEffectEnd
-	if_user_has_exciting_move ContestEffectEnd
-	if_excitement_less_than 1, ContestEffectEnd
+AI_CGM_DontExciteAudience:
+	if_move_used_count_eq 1, AI_CGM_End
+	if_user_order_eq MON_1, AI_CGM_DontExciteAudience_EarlyTurn
+	if_user_order_eq MON_2, AI_CGM_DontExciteAudience_EarlyTurn
+	if_appeal_num_not_eq 4, AI_CGM_End
+	if_user_has_exciting_move AI_CGM_End
+	if_excitement_less_than 1, AI_CGM_End
 	score +10
 	end
-ContestEffect47_random:
-	if_random_less_than 127, ContestEffectEnd
+AI_CGM_DontExciteAudience_EarlyTurn:
+	if_random_less_than 127, AI_CGM_End
 	score +10
 	end
 
-ContestEffect31:
-	if_user_order_eq MON_2, ContestEffect31_score1
-	if_user_order_eq MON_3, ContestEffect31_score2
-	if_user_order_eq MON_4, ContestEffect31_score3
+AI_CGM_AppealAsGoodAsPrevOnes:
+	if_user_order_eq MON_2, AI_CGM_AppealAsGoodAsPrevOnes_2ndUp
+	if_user_order_eq MON_3, AI_CGM_AppealAsGoodAsPrevOnes_3rdUp
+	if_user_order_eq MON_4, AI_CGM_AppealAsGoodAsPrevOnes_Last
 	end
-ContestEffect31_score1:
+AI_CGM_AppealAsGoodAsPrevOnes_2ndUp:
 	score +5
 	end
-ContestEffect31_score2:
+AI_CGM_AppealAsGoodAsPrevOnes_3rdUp:
 	score +15
 	end
-ContestEffect31_score3:
+AI_CGM_AppealAsGoodAsPrevOnes_Last:
 	score +20
 	end
 
-ContestEffect32:
-	if_user_order_eq MON_1, ContestEffect32_score1
-	if_user_order_eq MON_2, ContestEffect32_score2
-	if_user_order_eq MON_3, ContestEffect32_score3
-	if_user_order_eq MON_4, ContestEffect32_score5
+AI_CGM_AppealAsGoodAsPrevOne:
+	if_user_order_eq MON_1, AI_CGM_AppealAsGoodAsPrevOne_1stUp
+	if_user_order_eq MON_2, AI_CGM_AppealAsGoodAsPrevOne_2ndUp
+	if_user_order_eq MON_3, AI_CGM_AppealAsGoodAsPrevOne_3rdUp
+	if_user_order_eq MON_4, AI_CGM_AppealAsGoodAsPrevOne_Last
 	end
-ContestEffect32_score1:
+AI_CGM_AppealAsGoodAsPrevOne_1stUp:
 	score -10
 	end
-ContestEffect32_score2:
-	if_cannot_participate MON_1, ContestEffectEnd
+AI_CGM_AppealAsGoodAsPrevOne_2ndUp:
+	if_cannot_participate MON_1, AI_CGM_End
 	score +5
 	end
-ContestEffect32_score3:
-	if_cannot_participate MON_1, ContestEffect32_score4
+AI_CGM_AppealAsGoodAsPrevOne_3rdUp:
+	if_cannot_participate MON_1, AI_CGM_AppealAsGoodAsPrevOne_3rdUp_CheckMon2
 	score +5
-	goto ContestEffect32_score4
+	goto AI_CGM_AppealAsGoodAsPrevOne_3rdUp_CheckMon2
 	end
-ContestEffect32_score4:
-	if_cannot_participate MON_2, ContestEffectEnd
+AI_CGM_AppealAsGoodAsPrevOne_3rdUp_CheckMon2:
+	if_cannot_participate MON_2, AI_CGM_End
 	score +5
 	end
-ContestEffect32_score5:
-	if_cannot_participate MON_1, ContestEffect32_score6
+AI_CGM_AppealAsGoodAsPrevOne_Last:
+	if_cannot_participate MON_1, AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon2
 	score +5
-	goto ContestEffect32_score6
+	goto AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon2
 	end
-ContestEffect32_score6:
-	if_cannot_participate MON_2, ContestEffect32_score7
+AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon2:
+	if_cannot_participate MON_2, AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon3
 	score +5
-	goto ContestEffect32_score7
+	goto AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon3
 	end
-ContestEffect32_score7:
-	if_cannot_participate MON_3, ContestEffectEnd
+AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon3:
+	if_cannot_participate MON_3, AI_CGM_End
 	score +5
 	end
 
-ContestEffect46:
-	if_user_order_eq MON_1, ContestEffect46_05
-	if_user_order_more_than MON_1, ContestEffect46_score4
+AI_CGM_BetterWhenAudienceExcited:
+	if_user_order_eq MON_1, AI_CGM_BetterWhenAudienceExcited_1stUp
+	if_user_order_more_than MON_1, AI_CGM_BetterWhenAudienceExcited_Not1stUp
 	end
-ContestEffect46_05:
-	if_appeal_num_not_eq 0, ContestEffect46_score1
-	if_excitement_eq 4, ContestEffect46_score2
-	if_excitement_eq 3, ContestEffect46_score3
+AI_CGM_BetterWhenAudienceExcited_1stUp:
+	if_appeal_num_not_eq 0, AI_CGM_BetterWhenAudienceExcited_1stAppeal
+	if_excitement_eq 4, AI_CGM_BetterWhenAudienceExcited_1AwayFromMax
+	if_excitement_eq 3, AI_CGM_BetterWhenAudienceExcited_2AwayFromMax
 	end
-ContestEffect46_score1:
-	if_random_less_than 125, ContestEffectEnd
+AI_CGM_BetterWhenAudienceExcited_1stAppeal:
+	if_random_less_than 125, AI_CGM_End
 	score -15
 	end
-ContestEffect46_score2:
-	if_random_less_than 125, ContestEffectEnd
+AI_CGM_BetterWhenAudienceExcited_1AwayFromMax:
+	if_random_less_than 125, AI_CGM_End
 	score +20
 	end
-ContestEffect46_score3:
-	if_random_less_than 125, ContestEffectEnd
+AI_CGM_BetterWhenAudienceExcited_2AwayFromMax:
+	if_random_less_than 125, AI_CGM_End
 	score +15
 	end
-ContestEffect46_score4:
-	if_random_less_than 178, ContestEffectEnd
+AI_CGM_BetterWhenAudienceExcited_Not1stUp:
+	if_random_less_than 178, AI_CGM_End
 	score +10
 	end
 
-ContestEffect27:
-	if_user_order_eq MON_1, ContestEffectEnd
-	goto ContestEffect27_55_1
+AI_CGM_WorsenConditionOfPrevMons:
+	if_user_order_eq MON_1, AI_CGM_End
+	goto AI_CGM_WorsenConditionOfPrevMons_CheckMon1
 	end
-ContestEffect27_55_1:
-	if_cannot_participate MON_1, ContestEffect27_noscore
-	if_condition_eq MON_1, 0, ContestEffect27_noscore
-	if_condition_eq MON_1, 1, ContestEffect27_score1
-	if_condition_eq MON_1, 2, ContestEffect27_score2
-	if_condition_eq MON_1, 3, ContestEffect27_score3
+AI_CGM_WorsenConditionOfPrevMons_CheckMon1:
+	if_cannot_participate MON_1, AI_CGM_WorsenConditionOfPrevMons_TryCheckMon2
+	if_condition_eq MON_1, 0, AI_CGM_WorsenConditionOfPrevMons_TryCheckMon2
+	if_condition_eq MON_1, 1, AI_CGM_WorsenConditionOfPrevMons_Mon1Has1Star
+	if_condition_eq MON_1, 2, AI_CGM_WorsenConditionOfPrevMons_Mon1Has2Stars
+	if_condition_eq MON_1, 3, AI_CGM_WorsenConditionOfPrevMons_Mon1Has3Stars
 	end
-ContestEffect27_score1:
-	if_random_less_than 125, ContestEffect27_55_2
+AI_CGM_WorsenConditionOfPrevMons_Mon1Has1Star:
+	if_random_less_than 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	score +5
-	if_user_order_more_than MON_2, ContestEffect27_55_2
+	if_user_order_more_than MON_2, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	end
-ContestEffect27_score2:
-	if_random_less_than 125, ContestEffect27_55_2
+AI_CGM_WorsenConditionOfPrevMons_Mon1Has2Stars:
+	if_random_less_than 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	score +10
-	if_user_order_more_than MON_2, ContestEffect27_55_2
+	if_user_order_more_than MON_2, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	end
-ContestEffect27_score3:
-	if_random_less_than 125, ContestEffect27_55_2
+AI_CGM_WorsenConditionOfPrevMons_Mon1Has3Stars:
+	if_random_less_than 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	score +15
-	if_user_order_more_than MON_2, ContestEffect27_55_2
+	if_user_order_more_than MON_2, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	end
-ContestEffect27_noscore:
-	if_user_order_more_than MON_2, ContestEffect27_55_2
+AI_CGM_WorsenConditionOfPrevMons_TryCheckMon2:
+	if_user_order_more_than MON_2, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	end
-ContestEffect27_55_2:
-	if_cannot_participate MON_2, ContestEffect27_noscore2
-	if_condition_eq MON_2, 0, ContestEffect27_noscore2
-	if_condition_eq MON_2, 1, ContestEffect27_score4
-	if_condition_eq MON_2, 2, ContestEffect27_score5
-	if_condition_eq MON_2, 3, ContestEffect27_score6
+AI_CGM_WorsenConditionOfPrevMons_CheckMon2:
+	if_cannot_participate MON_2, AI_CGM_WorsenConditionOfPrevMons_TryCheckMon3
+	if_condition_eq MON_2, 0, AI_CGM_WorsenConditionOfPrevMons_TryCheckMon3
+	if_condition_eq MON_2, 1, AI_CGM_WorsenConditionOfPrevMons_Mon2Has1Star
+	if_condition_eq MON_2, 2, AI_CGM_WorsenConditionOfPrevMons_Mon2Has2Stars
+	if_condition_eq MON_2, 3, AI_CGM_WorsenConditionOfPrevMons_Mon2Has3Stars
 	end
-ContestEffect27_score4:
-	if_random_less_than 125, ContestEffect27_55_3
+AI_CGM_WorsenConditionOfPrevMons_Mon2Has1Star:
+	if_random_less_than 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	score +5
-	if_user_order_more_than MON_3, ContestEffect27_55_3
+	if_user_order_more_than MON_3, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	end
-ContestEffect27_score5:
-	if_random_less_than 125, ContestEffect27_55_3
+AI_CGM_WorsenConditionOfPrevMons_Mon2Has2Stars:
+	if_random_less_than 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	score +10
-	if_user_order_more_than MON_3, ContestEffect27_55_3
+	if_user_order_more_than MON_3, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	end
-ContestEffect27_score6:
-	if_random_less_than 125, ContestEffect27_55_3
+AI_CGM_WorsenConditionOfPrevMons_Mon2Has3Stars:
+	if_random_less_than 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	score +15
-	if_user_order_more_than MON_3, ContestEffect27_55_3
+	if_user_order_more_than MON_3, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	end
-ContestEffect27_noscore2:
-	if_user_order_more_than MON_3, ContestEffect27_55_3
+AI_CGM_WorsenConditionOfPrevMons_TryCheckMon3:
+	if_user_order_more_than MON_3, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	end
-ContestEffect27_55_3:
-	if_cannot_participate MON_3, ContestEffect27_end
-	if_condition_eq MON_3, 0, ContestEffect27_end
-	if_condition_eq MON_3, 1, ContestEffect27_score7
-	if_condition_eq MON_3, 2, ContestEffect27_score8
-	if_condition_eq MON_3, 3, ContestEffect27_score9
+AI_CGM_WorsenConditionOfPrevMons_CheckMon3:
+	if_cannot_participate MON_3, AI_CGM_WorsenConditionOfPrevMons_end
+	if_condition_eq MON_3, 0, AI_CGM_WorsenConditionOfPrevMons_end
+	if_condition_eq MON_3, 1, AI_CGM_WorsenConditionOfPrevMons_Mon3Has1Star
+	if_condition_eq MON_3, 2, AI_CGM_WorsenConditionOfPrevMons_Mon3Has2Stars
+	if_condition_eq MON_3, 3, AI_CGM_WorsenConditionOfPrevMons_Mon3Has3Stars
 	end
-ContestEffect27_score7:
-	if_random_less_than 125, ContestEffectEnd
+AI_CGM_WorsenConditionOfPrevMons_Mon3Has1Star:
+	if_random_less_than 125, AI_CGM_End
 	score +5
 	end
-ContestEffect27_score8:
-	if_random_less_than 125, ContestEffectEnd
+AI_CGM_WorsenConditionOfPrevMons_Mon3Has2Stars:
+	if_random_less_than 125, AI_CGM_End
 	score +10
 	end
-ContestEffect27_score9:
-	if_random_less_than 125, ContestEffectEnd
+AI_CGM_WorsenConditionOfPrevMons_Mon3Has3Stars:
+	if_random_less_than 125, AI_CGM_End
 	score +15
 	end
-ContestEffect27_end:
+AI_CGM_WorsenConditionOfPrevMons_end:
 	end
 
-ContestEffect16or17:
-	if_user_order_eq MON_1, ContestEffectEnd
-	goto ContestEffect16or17_55
+AI_CGM_TargetMonWithJudgesAttention:
+	if_user_order_eq MON_1, AI_CGM_End
+	goto AI_CGM_TargetMonWithJudgesAttention_CheckMon1
 	end
-ContestEffect16or17_55:
-	if_cannot_participate MON_1, ContestEffect16or17_0E_1
-	if_used_combo_starter_eq MON_1, TRUE, ContestEffect16or17_0E_1
-	if_random_less_than 125, ContestEffect16or17_0E_1
+AI_CGM_TargetMonWithJudgesAttention_CheckMon1:
+	if_cannot_participate MON_1, AI_CGM_TargetMonWithJudgesAttention_CheckMon2
+	if_used_combo_starter MON_1, AI_CGM_TargetMonWithJudgesAttention_CheckMon2
+	if_random_less_than 125, AI_CGM_TargetMonWithJudgesAttention_CheckMon2
 	score +2
-	if_not_completed_combo MON_1, ContestEffect16or17_0E_1
+	if_not_completed_combo MON_1, AI_CGM_TargetMonWithJudgesAttention_CheckMon2
 	score +8
 	end
-ContestEffect16or17_0E_1:
-	if_user_order_eq MON_2, ContestEffectEnd
-	if_cannot_participate MON_2, ContestEffect16or17_0E_2
-	if_used_combo_starter_eq MON_2, TRUE, ContestEffect16or17_0E_2
-	if_random_less_than 125, ContestEffect16or17_0E_2
+AI_CGM_TargetMonWithJudgesAttention_CheckMon2:
+	if_user_order_eq MON_2, AI_CGM_End
+	if_cannot_participate MON_2, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
+	if_used_combo_starter MON_2, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
+	if_random_less_than 125, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
 	score +2
-	if_not_completed_combo MON_2, ContestEffect16or17_0E_2
+	if_not_completed_combo MON_2, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
 	score +8
 	end
-ContestEffect16or17_0E_2:
-	if_user_order_eq MON_3, ContestEffectEnd
-	if_cannot_participate MON_3, ContestEffectEnd
-	if_used_combo_starter_eq MON_3, TRUE, ContestEffectEnd
-	if_random_less_than 125, ContestEffectEnd
+AI_CGM_TargetMonWithJudgesAttention_CheckMon3:
+	if_user_order_eq MON_3, AI_CGM_End
+	if_cannot_participate MON_3, AI_CGM_End
+	if_used_combo_starter MON_3, AI_CGM_End
+	if_random_less_than 125, AI_CGM_End
 	score +2
-	if_not_completed_combo MON_3, ContestEffectEnd
+	if_not_completed_combo MON_3, AI_CGM_End
 	score +8
 	end
 
-ContestEffect_FollowingMonsNervous:
-	if_user_order_eq MON_4, ContestEffectEnd
-	goto ContestEffect_FollowingMonsNervous_CheckMon4
+AI_CGM_MakeFollowingMonsNervous:
+	if_user_order_eq MON_4, AI_CGM_End
+	goto AI_CGM_MakeFollowingMonsNervous_CheckMon4
 	end
-ContestEffect_FollowingMonsNervous_CheckMon4:
-	if_cannot_participate MON_4, ContestEffect_FollowingMonsNervous_CheckMon3
-	if_used_combo_starter_eq MON_4, FALSE, ContestEffect_FollowingMonsNervous_CheckMon3
+AI_CGM_MakeFollowingMonsNervous_CheckMon4:
+	if_cannot_participate MON_4, AI_CGM_MakeFollowingMonsNervous_CheckMon3
+	if_not_used_combo_starter MON_4, AI_CGM_MakeFollowingMonsNervous_CheckMon3
 	score +5
-	if_random_less_than 125, ContestEffect16or17_0E_1
-	score +5
-	end
-ContestEffect_FollowingMonsNervous_CheckMon3:
-	if_user_order_eq MON_3, ContestEffectEnd
-	if_cannot_participate MON_3, ContestEffect_FollowingMonsNervous_CheckMon2
-	if_used_combo_starter_eq MON_3, FALSE, ContestEffect_FollowingMonsNervous_CheckMon2
-	score +5
-	if_random_less_than 125, ContestEffect16or17_0E_2
+	if_random_less_than 125, AI_CGM_TargetMonWithJudgesAttention_CheckMon2
 	score +5
 	end
-ContestEffect_FollowingMonsNervous_CheckMon2:
-	if_user_order_eq MON_2, ContestEffectEnd
-	if_cannot_participate MON_2, ContestEffectEnd
-	if_used_combo_starter_eq MON_2, FALSE, ContestEffectEnd
+AI_CGM_MakeFollowingMonsNervous_CheckMon3:
+	if_user_order_eq MON_3, AI_CGM_End
+	if_cannot_participate MON_3, AI_CGM_MakeFollowingMonsNervous_CheckMon2
+	if_not_used_combo_starter MON_3, AI_CGM_MakeFollowingMonsNervous_CheckMon2
 	score +5
-	if_random_less_than 125, ContestEffectEnd
+	if_random_less_than 125, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
+	score +5
+	end
+AI_CGM_MakeFollowingMonsNervous_CheckMon2:
+	if_user_order_eq MON_2, AI_CGM_End
+	if_cannot_participate MON_2, AI_CGM_End
+	if_not_used_combo_starter MON_2, AI_CGM_End
+	score +5
+	if_random_less_than 125, AI_CGM_End
 	score +5
 	end
 
-ContestEffect18:
-	if_appeal_num_eq 4, ContestEffect18_score1
-	goto ContestEffect18_0E
+AI_CGM_JamsOthersButMissOneTurn:
+	if_appeal_num_eq 4, AI_CGM_JamsOthersButMissOneTurn_LastAppeal
+	goto AI_CGM_JamsOthersButMissOneTurn_TurnOrder
 	end
-ContestEffect18_score1:
+AI_CGM_JamsOthersButMissOneTurn_LastAppeal:
 	score +5
-	goto ContestEffect18_0E
+	goto AI_CGM_JamsOthersButMissOneTurn_TurnOrder
 	end
-ContestEffect18_0E:
-	if_user_order_eq MON_1, ContestEffect18_score2
-	if_user_order_eq MON_2, ContestEffect18_random1
-	if_user_order_eq MON_3, ContestEffect18_random2
-	if_user_order_eq MON_4, ContestEffect18_random3
+AI_CGM_JamsOthersButMissOneTurn_TurnOrder:
+	if_user_order_eq MON_1, AI_CGM_JamsOthersButMissOneTurn_1stUp
+	if_user_order_eq MON_2, AI_CGM_JamsOthersButMissOneTurn_2ndUp
+	if_user_order_eq MON_3, AI_CGM_JamsOthersButMissOneTurn_3rdUp
+	if_user_order_eq MON_4, AI_CGM_JamsOthersButMissOneTurn_Last
 	end
-ContestEffect18_score2:
+AI_CGM_JamsOthersButMissOneTurn_1stUp:
 	score -15
 	end
-ContestEffect18_random1:
-	if_random_less_than 125, ContestEffectEnd
+AI_CGM_JamsOthersButMissOneTurn_2ndUp:
+	if_random_less_than 125, AI_CGM_End
 	score -10
 	end
-ContestEffect18_random2:
-	if_random_less_than 125, ContestEffectEnd
+AI_CGM_JamsOthersButMissOneTurn_3rdUp:
+	if_random_less_than 125, AI_CGM_End
 	score +5
 	end
-ContestEffect18_random3:
-	if_random_less_than 125, ContestEffectEnd
+AI_CGM_JamsOthersButMissOneTurn_Last:
+	if_random_less_than 125, AI_CGM_End
 	score +15
 	end
 
-ContestEffectEnd:
+AI_CGM_End:
 	end
 
 @ Randomly encourage moves in Cute, Smart, and Tough contests.
 AI_Erratic:
-	if_contest_type_eq CONTEST_CATEGORY_CUTE, Erratic_CuteSmartTough
-	if_contest_type_eq CONTEST_CATEGORY_SMART, Erratic_CuteSmartTough
-	if_contest_type_eq CONTEST_CATEGORY_TOUGH, Erratic_CuteSmartTough
+	if_contest_type_eq CONTEST_CATEGORY_CUTE, AI_Erratic_CuteSmartTough
+	if_contest_type_eq CONTEST_CATEGORY_SMART, AI_Erratic_CuteSmartTough
+	if_contest_type_eq CONTEST_CATEGORY_TOUGH, AI_Erratic_CuteSmartTough
 	end
-Erratic_CuteSmartTough:
-	if_random_less_than 125, Erratic_NoScoreIncrease
+AI_Erratic_CuteSmartTough:
+	if_random_less_than 125, AI_Erratic_End
 	score +10
 	end
-Erratic_NoScoreIncrease:
+AI_Erratic_End:
 	end
 
-AI_CheckForBadMove:
-	if_effect_eq CONTEST_EFFECT_STARTLE_FRONT_MON, ContestEffect2_8
-	if_effect_eq CONTEST_EFFECT_STARTLE_PREV_MON, ContestEffect2_8
-	if_effect_eq CONTEST_EFFECT_BADLY_STARTLE_FRONT_MON, ContestEffect2_8
-	if_effect_eq CONTEST_EFFECT_STARTLE_PREV_MON_2, ContestEffect2_8
-	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONE, ContestEffect2_8
-	if_effect_eq CONTEST_EFFECT_BETTER_IF_SAME_TYPE, ContestEffect2_8
-	if_effect_eq CONTEST_EFFECT_BETTER_IF_DIFF_TYPE, ContestEffect2_8
-	if_effect_eq CONTEST_EFFECT_AFFECTED_BY_PREV_APPEAL, ContestEffect2_8
-	if_effect_eq CONTEST_EFFECT_SLIGHTLY_STARTLE_PREV_MONS, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_STARTLE_PREV_MONS, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_BADLY_STARTLE_PREV_MONS, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_STARTLE_PREV_MONS_2, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_STARTLE_MON_WITH_JUDGES_ATTENTION, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_SHIFT_JUDGE_ATTENTION, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_SAME_TYPE_APPEAL, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_BADLY_STARTLE_MONS_WITH_GOOD_APPEALS, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_COOL_APPEAL, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_BEAUTY_APPEAL, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_CUTE_APPEAL, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_SMART_APPEAL, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_TOUGH_APPEAL, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_BADLY_STARTLES_MONS_IN_GOOD_CONDITION, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_WORSEN_CONDITION_OF_PREV_MONS, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_MAKE_FOLLOWING_MON_NERVOUS, ContestEffect2_25
-	if_effect_eq CONTEST_EFFECT_MAKE_FOLLOWING_MONS_NERVOUS, ContestEffect2_26
-	if_effect_eq CONTEST_EFFECT_DONT_EXCITE_AUDIENCE, ContestEffect2_26
-	if_effect_eq CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS, ContestEffect2_38
-	if_effect_eq CONTEST_EFFECT_AVOID_STARTLE_ONCE, ContestEffect2_4
-	if_effect_eq CONTEST_EFFECT_AVOID_STARTLE, ContestEffect2_4
-	if_effect_eq CONTEST_EFFECT_AVOID_STARTLE_SLIGHTLY, ContestEffect2_4
-	if_effect_eq CONTEST_EFFECT_GREAT_APPEAL_BUT_NO_MORE_MOVES, ContestEffect2_2
+AI_CheckBadMove:
+	if_effect_eq CONTEST_EFFECT_STARTLE_FRONT_MON, AI_CBM_DependsOnPrevMon
+	if_effect_eq CONTEST_EFFECT_STARTLE_PREV_MON, AI_CBM_DependsOnPrevMon
+	if_effect_eq CONTEST_EFFECT_BADLY_STARTLE_FRONT_MON, AI_CBM_DependsOnPrevMon
+	if_effect_eq CONTEST_EFFECT_STARTLE_PREV_MON_2, AI_CBM_DependsOnPrevMon
+	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONE, AI_CBM_DependsOnPrevMon
+	if_effect_eq CONTEST_EFFECT_BETTER_IF_SAME_TYPE, AI_CBM_DependsOnPrevMon
+	if_effect_eq CONTEST_EFFECT_BETTER_IF_DIFF_TYPE, AI_CBM_DependsOnPrevMon
+	if_effect_eq CONTEST_EFFECT_AFFECTED_BY_PREV_APPEAL, AI_CBM_DependsOnPrevMon
+	if_effect_eq CONTEST_EFFECT_SLIGHTLY_STARTLE_PREV_MONS, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_STARTLE_PREV_MONS, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_BADLY_STARTLE_PREV_MONS, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_STARTLE_PREV_MONS_2, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_STARTLE_MON_WITH_JUDGES_ATTENTION, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_SHIFT_JUDGE_ATTENTION, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_SAME_TYPE_APPEAL, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_BADLY_STARTLE_MONS_WITH_GOOD_APPEALS, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_COOL_APPEAL, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_BEAUTY_APPEAL, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_CUTE_APPEAL, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_SMART_APPEAL, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_TOUGH_APPEAL, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_BADLY_STARTLES_MONS_IN_GOOD_CONDITION, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_WORSEN_CONDITION_OF_PREV_MONS, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_MAKE_FOLLOWING_MON_NERVOUS, AI_CBM_DependsOnNextMon
+	if_effect_eq CONTEST_EFFECT_MAKE_FOLLOWING_MONS_NERVOUS, AI_CBM_DependsOnNextMons
+	if_effect_eq CONTEST_EFFECT_DONT_EXCITE_AUDIENCE, AI_CBM_DependsOnNextMons
+	if_effect_eq CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS, AI_CBM_ImproveCondition
+	if_effect_eq CONTEST_EFFECT_AVOID_STARTLE_ONCE, AI_CBM_AvoidStartle
+	if_effect_eq CONTEST_EFFECT_AVOID_STARTLE, AI_CBM_AvoidStartle
+	if_effect_eq CONTEST_EFFECT_AVOID_STARTLE_SLIGHTLY, AI_CBM_AvoidStartle
+	if_effect_eq CONTEST_EFFECT_GREAT_APPEAL_BUT_NO_MORE_MOVES, AI_CBM_NoMoreMoves
 	end
 
-ContestEffect2_8:
-	if_user_order_eq MON_1, ContestEffect2_8_score1
-	if_user_order_eq MON_2, ContestEffect2_8_score2
-	if_user_order_eq MON_3, ContestEffect2_8_score3
-	if_user_order_eq MON_4, ContestEffect2_8_score4
+AI_CBM_DependsOnPrevMon:
+	if_user_order_eq MON_1, AI_CBM_DependsOnPrevMon_1stUp
+	if_user_order_eq MON_2, AI_CBM_DependsOnPrevMon_2ndUp
+	if_user_order_eq MON_3, AI_CBM_DependsOnPrevMon_3rdUp
+	if_user_order_eq MON_4, AI_CBM_DependsOnPrevMon_Last
 	end
-ContestEffect2_8_score1:
+AI_CBM_DependsOnPrevMon_1stUp:
 	score -10
 	end
-ContestEffect2_8_score2:
-	if_can_participate MON_1, ContestEffectEnd2
+AI_CBM_DependsOnPrevMon_2ndUp:
+	if_can_participate MON_1, AI_CBM_End
 	score -10
 	end
-ContestEffect2_8_score3:
-	if_can_participate MON_2, ContestEffectEnd2
+AI_CBM_DependsOnPrevMon_3rdUp:
+	if_can_participate MON_2, AI_CBM_End
 	score -10
 	end
-ContestEffect2_8_score4:
-	if_can_participate MON_3, ContestEffectEnd2
+AI_CBM_DependsOnPrevMon_Last:
+	if_can_participate MON_3, AI_CBM_End
 	score -10
 	end
 
-ContestEffect2_9:
-	if_user_order_eq MON_1, ContestEffect2_9_score1
-	if_user_order_eq MON_2, ContestEffect2_9_score2
-	if_user_order_eq MON_3, ContestEffect2_9_score3
-	if_user_order_eq MON_4, ContestEffect2_9_score4
+AI_CBM_DependsOnPrevMons:
+	if_user_order_eq MON_1, AI_CBM_DependsOnPrevMons_1stUp
+	if_user_order_eq MON_2, AI_CBM_DependsOnPrevMons_2ndUp
+	if_user_order_eq MON_3, AI_CBM_DependsOnPrevMons_3rdUp
+	if_user_order_eq MON_4, AI_CBM_DependsOnPrevMons_Last
 	end
-ContestEffect2_9_score1:
+AI_CBM_DependsOnPrevMons_1stUp:
 	score -20
 	end
-ContestEffect2_9_score2:
-	if_can_participate MON_1, ContestEffectEnd2
+AI_CBM_DependsOnPrevMons_2ndUp:
+	if_can_participate MON_1, AI_CBM_End
 	score -15
 	end
-ContestEffect2_9_score3:
-	if_can_participate MON_1, ContestEffectEnd2
-	if_can_participate MON_2, ContestEffectEnd2
+AI_CBM_DependsOnPrevMons_3rdUp:
+	if_can_participate MON_1, AI_CBM_End
+	if_can_participate MON_2, AI_CBM_End
 	score -15
 	end
-ContestEffect2_9_score4:
-	if_can_participate MON_1, ContestEffectEnd2
-	if_can_participate MON_2, ContestEffectEnd2
-	if_can_participate MON_3, ContestEffectEnd2
+AI_CBM_DependsOnPrevMons_Last:
+	if_can_participate MON_1, AI_CBM_End
+	if_can_participate MON_2, AI_CBM_End
+	if_can_participate MON_3, AI_CBM_End
 	score -15
 	end
 
-ContestEffect2_25:
-	if_user_order_eq MON_1, ContestEffect2_25_score1
-	if_user_order_eq MON_2, ContestEffect2_25_score2
-	if_user_order_eq MON_3, ContestEffect2_25_score3
+AI_CBM_DependsOnNextMon:
+	if_user_order_eq MON_1, AI_CBM_DependsOnNextMon_1stUp
+	if_user_order_eq MON_2, AI_CBM_DependsOnNextMon_2ndUp
+	if_user_order_eq MON_3, AI_CBM_DependsOnNextMon_3rdUp
 	score -10
 	end
-ContestEffect2_25_score1:
-	if_can_participate MON_2, ContestEffectEnd2
+AI_CBM_DependsOnNextMon_1stUp:
+	if_can_participate MON_2, AI_CBM_End
 	score -10
 	end
-ContestEffect2_25_score2:
-	if_can_participate MON_3, ContestEffectEnd2
+AI_CBM_DependsOnNextMon_2ndUp:
+	if_can_participate MON_3, AI_CBM_End
 	score -10
 	end
-ContestEffect2_25_score3:
-	if_can_participate MON_4, ContestEffectEnd2
-	score -10
-	end
-
-ContestEffect2_26:
-	if_user_order_eq MON_1, ContestEffect2_26_score1
-	if_user_order_eq MON_2, ContestEffect2_26_score2
-	if_user_order_eq MON_3, ContestEffect2_26_score3
-	score -10
-	end
-ContestEffect2_26_score1:
-	if_can_participate MON_2, ContestEffectEnd2
-	if_can_participate MON_3, ContestEffectEnd2
-	if_can_participate MON_4, ContestEffectEnd2
-	score -10
-	end
-ContestEffect2_26_score2:
-	if_can_participate MON_3, ContestEffectEnd2
-	if_can_participate MON_4, ContestEffectEnd2
-	score -10
-	end
-ContestEffect2_26_score3:
-	if_can_participate MON_4, ContestEffectEnd2
+AI_CBM_DependsOnNextMon_3rdUp:
+	if_can_participate MON_4, AI_CBM_End
 	score -10
 	end
 
-ContestEffect2_38:
-	if_user_condition_less_than 3, ContestEffectEnd2
+AI_CBM_DependsOnNextMons:
+	if_user_order_eq MON_1, AI_CBM_DependsOnNextMons_1stUp
+	if_user_order_eq MON_2, AI_CBM_DependsOnNextMons_2ndUp
+	if_user_order_eq MON_3, AI_CBM_DependsOnNextMons_3rdUp
+	score -10
+	end
+AI_CBM_DependsOnNextMons_1stUp:
+	if_can_participate MON_2, AI_CBM_End
+	if_can_participate MON_3, AI_CBM_End
+	if_can_participate MON_4, AI_CBM_End
+	score -10
+	end
+AI_CBM_DependsOnNextMons_2ndUp:
+	if_can_participate MON_3, AI_CBM_End
+	if_can_participate MON_4, AI_CBM_End
+	score -10
+	end
+AI_CBM_DependsOnNextMons_3rdUp:
+	if_can_participate MON_4, AI_CBM_End
+	score -10
+	end
+
+AI_CBM_ImproveCondition:
+	if_user_condition_less_than 3, AI_CBM_End
 	score -20
 	end
 
-ContestEffect2_4:
-	if_user_order_eq MON_1, ContestEffect2_4_score1
-	if_user_order_eq MON_2, ContestEffect2_4_score2
-	if_user_order_eq MON_3, ContestEffect2_4_score3
+AI_CBM_AvoidStartle:
+	if_user_order_eq MON_1, AI_CBM_AvoidStartle_1stUp
+	if_user_order_eq MON_2, AI_CBM_AvoidStartle_2ndUp
+	if_user_order_eq MON_3, AI_CBM_AvoidStartle_3rdUp
 	score -10
 	end
-ContestEffect2_4_score1:
-	if_can_participate MON_2, ContestEffectEnd2
-	if_can_participate MON_3, ContestEffectEnd2
-	if_can_participate MON_4, ContestEffectEnd2
+AI_CBM_AvoidStartle_1stUp:
+	if_can_participate MON_2, AI_CBM_End
+	if_can_participate MON_3, AI_CBM_End
+	if_can_participate MON_4, AI_CBM_End
 	score -10
 	end
-ContestEffect2_4_score2:
-	if_can_participate MON_3, ContestEffectEnd2
-	if_can_participate MON_4, ContestEffectEnd2
+AI_CBM_AvoidStartle_2ndUp:
+	if_can_participate MON_3, AI_CBM_End
+	if_can_participate MON_4, AI_CBM_End
 	score -10
 	end
-ContestEffect2_4_score3:
-	if_can_participate MON_4, ContestEffectEnd2
+AI_CBM_AvoidStartle_3rdUp:
+	if_can_participate MON_4, AI_CBM_End
 	score -10
 	end
 
-ContestEffect2_2:
-	if_appeal_num_eq 0, ContestEffect2_2_score1
-	if_appeal_num_eq 1, ContestEffect2_2_score2
-	if_appeal_num_eq 2, ContestEffect2_2_score3
-	if_appeal_num_eq 3, ContestEffect2_2_score4
-	if_appeal_num_eq 4, ContestEffect2_2_score5
+AI_CBM_NoMoreMoves:
+	if_appeal_num_eq 0, AI_CBM_NoMoreMoves_1stAppeal
+	if_appeal_num_eq 1, AI_CBM_NoMoreMoves_2ndAppeal
+	if_appeal_num_eq 2, AI_CBM_NoMoreMoves_3rdAppeal
+	if_appeal_num_eq 3, AI_CBM_NoMoreMoves_4thAppeal
+	if_appeal_num_eq 4, AI_CBM_NoMoreMoves_LastAppeal
 	end
-ContestEffect2_2_score1:
-	if_random_less_than 20, ContestEffectEnd2
+AI_CBM_NoMoreMoves_1stAppeal:
+	if_random_less_than 20, AI_CBM_End
 	score -15
 	end
-ContestEffect2_2_score2:
-	if_random_less_than 40, ContestEffectEnd2
+AI_CBM_NoMoreMoves_2ndAppeal:
+	if_random_less_than 40, AI_CBM_End
 	score -15
 	end
-ContestEffect2_2_score3:
-	if_random_less_than 60, ContestEffectEnd2
+AI_CBM_NoMoreMoves_3rdAppeal:
+	if_random_less_than 60, AI_CBM_End
 	score -15
 	end
-ContestEffect2_2_score4:
-	if_random_less_than 80, ContestEffectEnd2
+AI_CBM_NoMoreMoves_4thAppeal:
+	if_random_less_than 80, AI_CBM_End
 	score -15
 	end
-ContestEffect2_2_score5:
-	if_random_less_than 20, ContestEffectEnd2
+AI_CBM_NoMoreMoves_LastAppeal:
+	if_random_less_than 20, AI_CBM_End
 	score +20
 	end
 
-ContestEffectEnd2:
+AI_CBM_End:
 	end
 
 AI_CheckOrder:
-	if_user_order_eq MON_1, AI_effectcheck1_081DCA4C
-	if_user_order_eq MON_2, AI_effectcheck2_081DCA4C
-	if_user_order_eq MON_3, AI_effectcheck3_081DCA4C
-	if_user_order_eq MON_4, AI_effectcheck4_081DCA4C
+	if_user_order_eq MON_1, AI_CheckOrder_1stUp
+	if_user_order_eq MON_2, AI_CheckOrder_2ndUp
+	if_user_order_eq MON_3, AI_CheckOrder_3rdUp
+	if_user_order_eq MON_4, AI_CheckOrder_Last
 	end
-AI_effectcheck1_081DCA4C:
-	if_effect_eq CONTEST_EFFECT_BETTER_IF_FIRST, AI_score1_081DCA4C
-	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_LATER, AI_score2_081DCA4C
-	if_effect_type_eq 1, AI_random1_081DCA4C
+AI_CheckOrder_1stUp:
+	if_effect_eq CONTEST_EFFECT_BETTER_IF_FIRST, AI_CheckOrder_1stUp_Encourage
+	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_LATER, AI_CheckOrder_1stUp_Discourage
+	if_effect_type_eq 1, AI_CheckOrder_1stUp_RandomEncourage
 	end
-AI_score1_081DCA4C:
+AI_CheckOrder_1stUp_Encourage:
 	score +15
 	end
-AI_score2_081DCA4C:
+AI_CheckOrder_1stUp_Discourage:
 	score -15
 	end
-AI_random1_081DCA4C:
-	if_random_less_than 100, ContestEffectEnd2
+AI_CheckOrder_1stUp_RandomEncourage:
+	if_random_less_than 100, AI_CBM_End
 	score +10
 	end
-AI_effectcheck2_081DCA4C:
-	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_LATER, AI_score3_081DCA4C
-	if_effect_type_eq 1, AI_random2_081DCA4C
+AI_CheckOrder_2ndUp:
+	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_LATER, AI_CheckOrder_2ndUp_Discourage
+	if_effect_type_eq 1, AI_CheckOrder_2ndUp_RandomEncourage
 	end
-AI_score3_081DCA4C:
+AI_CheckOrder_2ndUp_Discourage:
 	score -5
 	end
-AI_random2_081DCA4C:
-	if_random_less_than 125, ContestEffectEnd2
+AI_CheckOrder_2ndUp_RandomEncourage:
+	if_random_less_than 125, AI_CBM_End
 	score +10
 	end
-AI_effectcheck3_081DCA4C:
-	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_LATER, AI_score4_081DCA4C
-	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, AI_score4_081DCA4C
-	if_effect_eq CONTEST_EFFECT_USER_MORE_EASILY_STARTLED, AI_score4_081DCA4C
+AI_CheckOrder_3rdUp:
+	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_LATER, AI_CheckOrder_3rdUp_Encourage
+	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, AI_CheckOrder_3rdUp_Encourage
+	if_effect_eq CONTEST_EFFECT_USER_MORE_EASILY_STARTLED, AI_CheckOrder_3rdUp_Encourage
 	end
-AI_score4_081DCA4C:
+AI_CheckOrder_3rdUp_Encourage:
 	score +5
 	end
-AI_effectcheck4_081DCA4C:
-	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_LATER, AI_score5_081DCA4C
-	if_effect_eq CONTEST_EFFECT_BETTER_IF_LAST, AI_score5_081DCA4C
-	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, AI_score5_081DCA4C
-	if_effect_eq CONTEST_EFFECT_USER_MORE_EASILY_STARTLED, AI_score5_081DCA4C
-	if_effect_eq CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN, AI_score7_081DCA4C
-	if_effect_type_eq 1, AI_score6_081DCA4C
-	if_effect_type_eq 3, AI_random3_081DCA4C
+AI_CheckOrder_Last:
+	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_LATER, AI_CheckOrder_Last_StronglyEncourage
+	if_effect_eq CONTEST_EFFECT_BETTER_IF_LAST, AI_CheckOrder_Last_StronglyEncourage
+	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, AI_CheckOrder_Last_StronglyEncourage
+	if_effect_eq CONTEST_EFFECT_USER_MORE_EASILY_STARTLED, AI_CheckOrder_Last_StronglyEncourage
+	if_effect_eq CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN, AI_CheckOrder_Last_Encourage
+	if_effect_type_eq 1, AI_CheckOrder_Last_Discourage
+	if_effect_type_eq 3, AI_CheckOrder_Last_RandomEncourage
 	end
-AI_score5_081DCA4C:
+AI_CheckOrder_Last_StronglyEncourage:
 	score +15
 	end
-AI_score6_081DCA4C:
+AI_CheckOrder_Last_Discourage:
 	score -10
 	end
-AI_random3_081DCA4C:
-	if_random_less_than 125, ContestEffectEnd2
+AI_CheckOrder_Last_RandomEncourage:
+	if_random_less_than 125, AI_CBM_End
 	score +10
 	end
-AI_score7_081DCA4C:
+AI_CheckOrder_Last_Encourage:
 	score +5
 	end
 
