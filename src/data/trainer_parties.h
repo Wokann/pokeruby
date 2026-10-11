@@ -269,7 +269,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_Grunt21[] = {
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_Grunt22[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_GruntMtPyre1[] = {
     {
 	.iv = 0,
 	.level = 30,
@@ -287,7 +287,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_Grunt22[] = {
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_Grunt23[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_GruntMtPyre2[] = {
     {
 	.iv = 0,
 	.level = 31,
@@ -300,7 +300,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_Grunt23[] = {
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_Grunt24[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_GruntMtPyre3[] = {
     {
 	.iv = 0,
 	.level = 31,

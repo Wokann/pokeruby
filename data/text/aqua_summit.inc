@@ -1,36 +1,36 @@
-UnknownString_81B50C3: @ 81B50C3
+MtPyre_Summit_Text_Grunt1Intro: @ 81B50C3
 	.string "I'll show you exactly how scary\n"
 	.string "TEAM AQUA can be!$"
 
-UnknownString_81B50F5: @ 81B50F5
+MtPyre_Summit_Text_Grunt1Defeat: @ 81B50F5
 	.string "So you think you can stand up alone\n"
 	.string "to TEAM AQUA's might...$"
 
-UnknownString_81B5131: @ 81B5131
+MtPyre_Summit_Text_Grunt1PostBattle: @ 81B5131
 	.string "Yeah, so you are strong...\n"
 	.string "But there're a lot of us!$"
 
-UnknownString_81B5166: @ 81B5166
+MtPyre_Summit_Text_Grunt2Intro: @ 81B5166
 	.string "What's up with you?\n"
 	.string "What does a single kid expect to do?$"
 
-UnknownString_81B519F: @ 81B519F
+MtPyre_Summit_Text_Grunt2Defeat: @ 81B519F
 	.string "Dang...\n"
 	.string "Too strong...$"
 
-UnknownString_81B51B5: @ 81B51B5
+MtPyre_Summit_Text_Grunt2PostBattle: @ 81B51B5
 	.string "You don't know anything.\n"
 	.string "Quit messing around with us!$"
 
-UnknownString_81B51EB: @ 81B51EB
+MtPyre_Summit_Text_Grunt3Intro: @ 81B51EB
 	.string "Hey, I remember you from MT. CHIMNEY!\n"
 	.string "It's payback time!$"
 
-UnknownString_81B5224: @ 81B5224
+MtPyre_Summit_Text_Grunt3Defeat: @ 81B5224
 	.string "Urgggh...\n"
 	.string "Beaten by some kid again!$"
 
-UnknownString_81B5248: @ 81B5248
+MtPyre_Summit_Text_Grunt3PostBattle: @ 81B5248
 	.string "Heh, it doesn't matter!\n"
 	.string "We bought ourselves some time!\p"
 	.string "The BOSS should have snatched what\n"

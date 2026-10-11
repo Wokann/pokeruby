@@ -1,36 +1,36 @@
-UnknownString_81B50C3: @ 81B50C3
+MtPyre_Summit_Text_Grunt1Intro: @ 81B50C3
 	.string "Ich zeige dir, wie unheimlich gruselig\n"
 	.string "TEAM AQUA sein kann!$"
 
-UnknownString_81B50F5: @ 81B50F5
+MtPyre_Summit_Text_Grunt1Defeat: @ 81B50F5
 	.string "Und du glaubst wirklich, du bist der\n"
 	.string "Stärke TEAM AQUAS gewachsen?!?$"
 
-UnknownString_81B5131: @ 81B5131
+MtPyre_Summit_Text_Grunt1PostBattle: @ 81B5131
 	.string "Ja, du bist ganz schön stark...\n"
 	.string "Aber wir sind viele...$"
 
-UnknownString_81B5166: @ 81B5166
+MtPyre_Summit_Text_Grunt2Intro: @ 81B5166
 	.string "Was ist los mit dir? Was kann ein\n"
 	.string "kleines Kind schon ausrichten?$"
 
-UnknownString_81B519F: @ 81B519F
+MtPyre_Summit_Text_Grunt2Defeat: @ 81B519F
 	.string "Bumms...\n"
 	.string "Zu stark... Viel zu stark...$"
 
-UnknownString_81B51B5: @ 81B51B5
+MtPyre_Summit_Text_Grunt2PostBattle: @ 81B51B5
 	.string "Du weißt doch gar nichts! Misch dich\n"
 	.string "besser nicht in unsere Sachen ein!$"
 
-UnknownString_81B51EB: @ 81B51EB
+MtPyre_Summit_Text_Grunt3Intro: @ 81B51EB
 	.string "Hey, ich kenne dich vom SCHLOTBERG!\n"
 	.string "Der Tag der Abrechnung ist gekommen!$"
 
-UnknownString_81B5224: @ 81B5224
+MtPyre_Summit_Text_Grunt3Defeat: @ 81B5224
 	.string "Aaaaargh!\n"
 	.string "Schon wieder von einem Kind besiegt...$"
 
-UnknownString_81B5248: @ 81B5248
+MtPyre_Summit_Text_Grunt3PostBattle: @ 81B5248
 	.string "Ach, das spielt keine Rolle.\n"
 	.string "Wir haben Zeit herausgeschlagen!\p"
 	.string "Der BOSS müsste mittlerweile haben, was\n"

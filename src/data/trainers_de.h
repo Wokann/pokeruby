@@ -321,7 +321,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_Grunt21 }
     },
 
-    [TRAINER_GRUNT_22] =
+    [TRAINER_GRUNT_MT_PYRE_1] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
@@ -332,10 +332,10 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 3,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt22 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntMtPyre1 }
     },
 
-    [TRAINER_GRUNT_23] =
+    [TRAINER_GRUNT_MT_PYRE_2] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
@@ -346,10 +346,10 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 2,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt23 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntMtPyre2 }
     },
 
-    [TRAINER_GRUNT_24] =
+    [TRAINER_GRUNT_MT_PYRE_3] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
@@ -360,7 +360,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 2,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt24 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntMtPyre3 }
     },
 
     [TRAINER_GRUNT_25] =
