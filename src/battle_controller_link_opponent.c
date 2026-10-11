@@ -257,23 +257,23 @@ static void Intro_DelayAndEnd(void)
 
 void sub_8037680(void)
 {
-    bool8 r6 = FALSE;
+    bool8 healthboxAnimDone = FALSE;
 
     if (!IsDoubleBattle() || (IsDoubleBattle() && (gBattleTypeFlags & BATTLE_TYPE_MULTI)))
     {
         if (gSprites[gHealthboxSpriteIds[gActiveBattler]].callback == SpriteCallbackDummy)
-            r6 = TRUE;
+            healthboxAnimDone = TRUE;
     }
     else
     {
         if (gSprites[gHealthboxSpriteIds[gActiveBattler]].callback == SpriteCallbackDummy
          && gSprites[gHealthboxSpriteIds[gActiveBattler ^ 2]].callback == SpriteCallbackDummy)
-            r6 = TRUE;
+            healthboxAnimDone = TRUE;
     }
     if (IsCryPlayingOrClearCrySongs())
-        r6 = FALSE;
+        healthboxAnimDone = FALSE;
 
-    if (r6)
+    if (healthboxAnimDone)
     {
         if (GetBattlerPosition(gActiveBattler) == 1)
         {
