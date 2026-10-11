@@ -58,7 +58,7 @@ u16 gKeyRepeatStartDelay;
 bool8 gLinkTransferringData;
 struct Main gMain;
 u16 gKeyRepeatContinueDelay;
-u8 gSoftResetDisabled;
+bool8 gSoftResetDisabled;
 IntrFunc gIntrTable[INTR_COUNT];
 bool8 gLinkVSyncDisabled;
 u32 IntrMain_Buffer[0x200];
@@ -81,7 +81,7 @@ static void WaitForVBlank(void);
     #include <stdlib.h> // don't include if not needed.
 #endif
 
-void AgbMain()
+void AgbMain(void)
 {
 #if MODERN
     // Modern compilers are liberal with the stack on entry to this function,

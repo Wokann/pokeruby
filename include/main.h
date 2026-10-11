@@ -43,7 +43,7 @@ struct Main
     /*0x43D*/ u8 inBattle:1;
 };
 
-extern u8 gLinkTransferringData;
+extern bool8 gLinkTransferringData;
 extern struct Main gMain;
 extern bool8 gSoftResetDisabled;
 
