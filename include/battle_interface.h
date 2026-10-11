@@ -49,7 +49,7 @@ void DestoryHealthboxSprite(u8 healthboxSpriteId);
 void DummyBattleInterfaceFunc();
 void UpdateOamPriorityInAllHealthboxes(u8 priority);
 void SwapHpBarsWithHpText(void);
-u8 CreatePartyStatusSummarySprites(u8 battler, const struct HpAndStatus *partyInfo, u8 skipPlayer, u8 isBattleStart);
+u8 CreatePartyStatusSummarySprites(u8 battler, const struct HpAndStatus *partyInfo, bool8 skipPlayer, bool8 isBattleStart);
 void Task_HidePartyStatusSummary(u8 taskId);
 void UpdateHealthboxAttribute(u8 healthboxSpriteId, struct Pokemon *mon, u8 elementId);
 s32 MoveBattleBar(u8 battler, u8 healthboxSpriteId, u8 whichBar, u8 unused);
