@@ -181,7 +181,6 @@ extern void de_sub_8073110();
 extern struct MusicPlayerInfo gMPlayInfo_SE2;
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 extern u8 gUnknown_020297ED;
-extern u8 byte_3002A68;
 
 extern const struct WindowTemplate gWindowTemplate_81E6F68;
 
@@ -2738,7 +2737,7 @@ void unref_sub_80516F8(u8 taskID)
                 Menu_PrintText(sText_PleaseWaitAWhile, 3, 10);
             if (++task->data[0] > 120)
                 task->data[0] = 0;
-            if (byte_3002A68 > 4 && gReceivedRemoteLinkPlayers == 1)
+            if (gLinkDummy2 > 4 && gReceivedRemoteLinkPlayers == 1)
                 DestroyTask(taskID);
         }
     }

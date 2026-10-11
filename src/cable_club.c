@@ -109,36 +109,36 @@ void debug_sub_808A55C(u8 taskId)
         gTasks[taskId].data[1]++;
     }
 
-    PrintHex(gShouldAdvanceLinkState, 2, 0, 2);
-    PrintHex((u8)gBlockSendBuffer[0], 22, 5, 4);
+    LinkTest_PrintHex(gShouldAdvanceLinkState, 2, 0, 2);
+    LinkTest_PrintHex((u8)gBlockSendBuffer[0], 22, 5, 4);
     for (i = 0; i < 4; i++)
     {
-        PrintHex(gRemoteLinkPlayersNotReceived[i], 5 + i * 2, 0, 1);
-        PrintHex(gBlockRecvBuffer[i][0], 22, 6 + i, 4);
+        LinkTest_PrintHex(gRemoteLinkPlayersNotReceived[i], 5 + i * 2, 0, 1);
+        LinkTest_PrintHex(gBlockRecvBuffer[i][0], 22, 6 + i, 4);
     }
-    PrintHex(gLinkStatus, 15, 0, 8);
-    PrintHex(gLink.state, 2, 10, 2);
-    PrintHex(GetMultiplayerId(), 7, 12, 2);
-    PrintHex(GetBlockReceivedStatus(), 7, 10, 2);
-    PrintHex(gReceivedRemoteLinkPlayers, 2, 12, 1);
-    PrintHex(gSpecialVar_Result, 11, 8, 2);
-    PrintHex((gLinkStatus & 0x1C) >> 2, 11, 10, 2);
-    PrintHex(IsLinkConnectionEstablished(), 11, 12, 1);
-    PrintHex(IsLinkTaskFinished(), 15, 10, 1);
-    PrintHex(debug_sub_808A4D0(gTasks[gTasks[taskId].data[0]].func), 15, 12, 2);
-    PrintHex((uintptr_t)gLinkCallback, 2, 13, 8);
-    PrintHex(HasLinkErrorOccurred(), 2, 2, 1);
+    LinkTest_PrintHex(gLinkStatus, 15, 0, 8);
+    LinkTest_PrintHex(gLink.state, 2, 10, 2);
+    LinkTest_PrintHex(GetMultiplayerId(), 7, 12, 2);
+    LinkTest_PrintHex(GetBlockReceivedStatus(), 7, 10, 2);
+    LinkTest_PrintHex(gReceivedRemoteLinkPlayers, 2, 12, 1);
+    LinkTest_PrintHex(gSpecialVar_Result, 11, 8, 2);
+    LinkTest_PrintHex((gLinkStatus & 0x1C) >> 2, 11, 10, 2);
+    LinkTest_PrintHex(IsLinkConnectionEstablished(), 11, 12, 1);
+    LinkTest_PrintHex(IsLinkTaskFinished(), 15, 10, 1);
+    LinkTest_PrintHex(debug_sub_808A4D0(gTasks[gTasks[taskId].data[0]].func), 15, 12, 2);
+    LinkTest_PrintHex((uintptr_t)gLinkCallback, 2, 13, 8);
+    LinkTest_PrintHex(HasLinkErrorOccurred(), 2, 2, 1);
     for (i = 0; i < 4; i++)
-        PrintHex(gLinkPlayers[i].linkType, 2 + i * 6, 3, 4);
-    PrintHex(REG_SIOCNT, 2, 6, 4);
-    PrintHex(debug_sub_808B850(), 25, 3, 1);
+        LinkTest_PrintHex(gLinkPlayers[i].linkType, 2 + i * 6, 3, 4);
+    LinkTest_PrintHex(REG_SIOCNT, 2, 6, 4);
+    LinkTest_PrintHex(debug_sub_808B850(), 25, 3, 1);
 }
 #endif
 
 static void CreateLinkupTask(u8 minPlayers, u8 maxPlayers)
 {
 #if DEBUG
-    InitLinkTestBG_Unused(12, 0, 31, 2);
+    LoadLinkTestBgGfx(12, 0, 31, 2);
 #endif
     if (FindTaskIdByFunc(Task_LinkupStart) == 0xFF)
     {
@@ -198,7 +198,7 @@ static u32 ExchangeDataAndGetLinkupStatus(u8 minPlayers, u8 maxPlayers)
         return 4;
     case EXCHANGE_TIMED_OUT:
         return 0;
-    case EXCHANGE_IN_PROGRESS:
+    case EXCHANGE_DIFF_SELECTIONS:
         return 3;
     default:
         return 0;

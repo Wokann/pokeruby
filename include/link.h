@@ -45,7 +45,7 @@ enum
     EXCHANGE_NOT_STARTED,
     EXCHANGE_COMPLETE,
     EXCHANGE_TIMED_OUT,
-    EXCHANGE_IN_PROGRESS,
+    EXCHANGE_DIFF_SELECTIONS,
 };
 
 enum
@@ -132,6 +132,25 @@ struct BlockRequest {
 extern const struct BlockRequest sBlockRequests[5];
 
 extern struct Link gLink;
+extern u32 gLinkDebugSeed;
+extern u32 gLinkDebugFlags;
+extern bool8 gLinkErrorOccurred;
+extern u8 gLinkDummy2;
+extern bool8 gBlockReceivedStatus[MAX_LINK_PLAYERS];
+extern u16 gLinkHeldKeys;
+extern bool8 gReadyToExitStandby[MAX_LINK_PLAYERS];
+extern bool8 gReadyToCloseLink[MAX_LINK_PLAYERS];
+extern bool8 gSuppressLinkErrorMessage;
+extern u8 gSavedLinkPlayerCount;
+extern u8 gSavedMultiplayerId;
+extern struct LinkTestBGInfo gLinkTestBGInfo;
+extern u16 gLinkTestBlockChecksums[MAX_LINK_PLAYERS];
+extern u8 gBlockRequestType;
+extern u8 gLastSendQueueCount;
+extern u8 gLastRecvQueueCount;
+extern u16 gLinkSavedIme;
+extern struct LinkPlayer gLocalLinkPlayer;
+extern u32 gBerryBlenderKeySendAttempts;
 extern u16 gRecvCmds[CMD_LENGTH][MAX_LINK_PLAYERS];
 // TODO: Why is gBlockSendBuffer a u8 array, while gBlockRecvBuffer is a u16 array?
 extern u8 gBlockSendBuffer[BLOCK_BUFFER_SIZE];
@@ -153,11 +172,11 @@ extern bool8 gRemoteLinkPlayersNotReceived[MAX_LINK_PLAYERS];
 extern void (*gLinkCallback)(void);
 extern u8 gUnknown_Debug_30030E0;
 
-void Task_DestroySelf(u8);
+void Task_DestroySelf(u8 taskId);
 void SetLocalLinkPlayerId(u8 playerId);
 void OpenLink(void);
 void CloseLink(void);
-u16 LinkMain2(u16 *);
+u16 LinkMain2(u16 *heldKeys);
 void StartSendingKeysToLink(void);
 bool32 IsSendingKeysToLink(void);
 void ClearLinkCallback(void);
@@ -166,7 +185,7 @@ u8 GetLinkPlayerCount(void);
 void OpenLinkTimed(void);
 u8 GetLinkPlayerDataExchangeStatusTimed(void);
 bool8 IsLinkPlayerDataExchangeComplete(void);
-u32 GetLinkPlayerTrainerId(u8);
+u32 GetLinkPlayerTrainerId(u8 multiplayerId);
 void ResetLinkPlayers(void);
 void SetBerryBlenderLinkCallback(void);
 void SendBerryBlenderNoSpaceForPokeblocks(void);
@@ -177,9 +196,9 @@ bool8 SendBlockRequest(u8 blockReqType);
 bool8 IsLinkTaskFinished(void);
 u8 GetBlockReceivedStatus(void);
 void ResetBlockReceivedFlags(void);
-void ResetBlockReceivedFlag(u8);
+void ResetBlockReceivedFlag(u8 multiplayerId);
 void CheckShouldAdvanceLinkState(void);
-void SetLinkDebugValues(u32, u32);
+void SetLinkDebugValues(u32 seed, u32 flags);
 u8 GetSavedLinkPlayerCountAsBitFlags(void);
 void SaveLinkPlayers(u8 playerCount);
 u8 GetSavedPlayerCount(void);
@@ -193,12 +212,12 @@ void SetCloseLinkCallback(void);
 void SetCloseLinkCallbackHandleJP(void);
 void SetLinkStandbyCallback(void);
 void CB2_LinkError(void);
-u8 GetSioMultiSI(void);
+bool8 GetSioMultiSI(void);
 bool8 IsLinkConnectionEstablished(void);
 void SetSuppressLinkErrorMessage(bool8 flag);
 bool8 HasLinkErrorOccurred(void);
 void ResetSerial(void);
-u32 LinkMain1(u8 *, u16 *, u16[CMD_LENGTH][MAX_LINK_PLAYERS]);
+u32 LinkMain1(u8 *shouldAdvanceLinkState, u16 *sendCmd, u16 recvCmds[CMD_LENGTH][MAX_LINK_PLAYERS]);
 void LinkVSync(void);
 void Timer3Intr(void);
 void SerialCB(void);
@@ -206,7 +225,7 @@ void LinkTestScreen(void);
 void debug_sub_8008218(u16 *buffer, u32 arg1, u16 *arg2, u32 arg3);
 void debug_sub_8008264(u32 value, int left, int top, int r3, int sp0);
 u32 GetBerryBlenderKeySendAttempts(void);
-void PrintHex(u32, u8, u8, u8);
-void InitLinkTestBG_Unused(u8, u8, u8, u8);
+void LinkTest_PrintHex(u32 num, u8 x, u8 y, u8 maxDigits);
+void LoadLinkTestBgGfx(u8 paletteNum, u8 bgNum, u8 screenBaseBlock, u8 charBaseBlock);
 
 #endif // GUARD_LINK_H
