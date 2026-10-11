@@ -1896,7 +1896,7 @@ void InitObjectEventsLocal(void)
 
 void InitObjectEventsReturnToField(void)
 {
-    sub_805B710(0, 0);
+    SpawnObjectEventsOnReturnToField(0, 0);
     RotatingGate_InitPuzzleAndGraphics();
 }
 

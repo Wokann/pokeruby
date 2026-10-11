@@ -470,7 +470,7 @@ u8 (*const *const gMovementActionFuncs[])(struct ObjectEvent *, struct Sprite *)
     gMovementActionFuncs_InitAffineAnim,          // MOVEMENT_ACTION_INIT_AFFINE_ANIM
     gMovementActionFuncs_ClearAffineAnim,         // MOVEMENT_ACTION_CLEAR_AFFINE_ANIM
     gMovementActionFuncs_WalkDownStartAffine,         // MOVEMENT_ACTION_WALK_DOWN_START_AFFINE
-    gMovementActionFuncs_WalkDownAffine,         // MOVEMENT_ACTION_WALK_DOWN_AFFINE_1
+    gMovementActionFuncs_WalkDownAffine,         // MOVEMENT_ACTION_WALK_DOWN_AFFINE
     gMovementActionFuncs_AcroWheelieFaceDown,     // MOVEMENT_ACTION_ACRO_WHEELIE_FACE_DOWN
     gMovementActionFuncs_AcroWheelieFaceUp,       // MOVEMENT_ACTION_ACRO_WHEELIE_FACE_UP
     gMovementActionFuncs_AcroWheelieFaceLeft,     // MOVEMENT_ACTION_ACRO_WHEELIE_FACE_LEFT
@@ -1161,25 +1161,25 @@ u8 (*const gMovementActionFuncs_AcroEndWheelieFaceRight[])(struct ObjectEvent *,
     MovementAction_PauseSpriteAnim,
 };
 
-u8 (*const gMovementActionFuncs_UnusedAcroActionDown[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementActionFuncs_AcroUnusedAcroActionDown[])(struct ObjectEvent *, struct Sprite *) = {
     MovementAction_UnusedAcroActionDown_Step0,
     MovementAction_WaitSpriteAnim,
     MovementAction_PauseSpriteAnim,
 };
 
-u8 (*const gMovementActionFuncs_UnusedAcroActionUp[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementActionFuncs_AcroUnusedAcroActionUp[])(struct ObjectEvent *, struct Sprite *) = {
     MovementAction_UnusedAcroActionUp_Step0,
     MovementAction_WaitSpriteAnim,
     MovementAction_PauseSpriteAnim,
 };
 
-u8 (*const gMovementActionFuncs_UnusedAcroActionLeft[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementActionFuncs_AcroUnusedAcroActionLeft[])(struct ObjectEvent *, struct Sprite *) = {
     MovementAction_UnusedAcroActionLeft_Step0,
     MovementAction_WaitSpriteAnim,
     MovementAction_PauseSpriteAnim,
 };
 
-u8 (*const gMovementActionFuncs_UnusedAcroActionRight[])(struct ObjectEvent *, struct Sprite *) = {
+u8 (*const gMovementActionFuncs_AcroUnusedAcroActionRight[])(struct ObjectEvent *, struct Sprite *) = {
     MovementAction_UnusedAcroActionRight_Step0,
     MovementAction_WaitSpriteAnim,
     MovementAction_PauseSpriteAnim,

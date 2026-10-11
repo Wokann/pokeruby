@@ -393,7 +393,7 @@ u8 (*const gMovementTypeFuncs_CopyPlayer[])(struct ObjectEvent *, struct Sprite 
 u8 (*const gCopyPlayerMovementFuncs[])(struct ObjectEvent *, struct Sprite *, u8, bool8(u8)) = {
     CopyablePlayerMovement_None,
     CopyablePlayerMovement_FaceDirection,
-    CopyablePlayerMovement_GoSpeed0,
+    CopyablePlayerMovement_WalkNormal,
     CopyablePlayerMovement_WalkFast,
     CopyablePlayerMovement_WalkFaster,
     CopyablePlayerMovement_Slide,

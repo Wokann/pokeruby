@@ -437,7 +437,7 @@ $(OBJEVENTGFXDIR)/people/link_receptionist.4bpp: %.4bpp: %.png
 $(OBJEVENTGFXDIR)/people/woman_5.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/people/woman_8.4bpp: %.4bpp: %.png
+$(OBJEVENTGFXDIR)/people/unused_woman.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
 $(OBJEVENTGFXDIR)/people/youngster.4bpp: %.4bpp: %.png
