@@ -154,6 +154,12 @@ struct UCoords16
     u16 y;
 };
 
+struct UCoords32
+{
+    u32 x;
+    u32 y;
+};
+
 struct SecretBaseParty
 {
     /*0x1A3C*/ u32 personality[PARTY_SIZE];

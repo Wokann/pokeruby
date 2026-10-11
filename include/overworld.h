@@ -17,11 +17,6 @@ struct LinkPlayerObjectEvent
     u8 movementMode;
 };
 
-struct UCoords32
-{
-    u32 x, y;
-};
-
 extern const struct UCoords32 gDirectionToVectors[];
 extern u16 gHeldKeyCodeToSend;
 extern void (*gFieldCallback)(void);
@@ -40,7 +35,7 @@ void SetGameStat(u8 index, u32 value);
 // LoadSaveblockObjEventScripts
 void SetObjEventTemplateCoords(u8 localId, s16 x, s16 y);
 void SetObjEventTemplateMovementType(u8 localId, u8 movementType);
-// mapdata_load_assets_to_gpu_and_full_redraw
+// InitMapView
 // ApplyCurrentWarp
 // SetWarpData
 // warp_data_is_not_neg_1
@@ -69,7 +64,7 @@ void SetContinueGameWarpToDynamicWarp();
 bool8 SetDiveWarpEmerge(u16 x, u16 y);
 bool8 SetDiveWarpDive(u16 x, u16 y);
 void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum);
-// sub_8053994
+// LoadMapFromWarp
 void ResetInitialPlayerAvatarState(void);
 void StoreInitialPlayerAvatarState(void);
 bool32 Overworld_IsBikingAllowed(void);
@@ -86,7 +81,7 @@ void Overworld_ResetMapMusic(void);
 void Overworld_PlaySpecialMapMusic(void);
 void Overworld_SetSavedMusic(u16 songNum);
 void Overworld_ClearSavedMusic(void);
-void sub_8053F0C(void);
+void TransitionMapMusic(void);
 void Overworld_ChangeMusicToDefault(void);
 void Overworld_ChangeMusicTo(u16 newMusic);
 // GetMapMusicFadeoutSpeed
@@ -114,25 +109,25 @@ void CB2_OverworldBasic(void);
 void CB2_NewGame(void);
 void CB2_WhiteOut(void);
 void CB2_LoadMap(void);
-void sub_8054534(void);
-void sub_8054588(void);
+void CB2_ReturnToFieldContestHall(void);
+void CB2_ReturnToFieldCableClub(void);
 void CB2_ReturnToField(void);
 // sub_805465C
 void CB2_ReturnToFieldWithOpenMenu(void);
 // CB2_ReturnToFieldContinueScript
 void CB2_ReturnToFieldContinueScriptPlayMapMusic(void);
 void CB2_ReturnToFieldFadeFromBlack(void);
-// sub_805470C
+// FieldCB_FadeTryShowMapPopup
 void CB2_ContinueSavedGame(void);
-bool32 sub_805493C(u8 *, u32);
-bool32 sub_8054A4C(u8 *);
-bool32 sub_8054A9C(u8 *a1);
-void do_load_map_stuff_loop(u8 *state);
-void sub_8054BA8(void);
-void sub_8054C2C(void);
-void sub_8054D4C(u32 a1);
-void mli4_mapscripts_and_other(void);
-void sub_8054E20(void);
+bool32 LoadMapInStepsLocal(u8 *, bool32);
+bool32 ReturnToFieldLocal(u8 *);
+bool32 ReturnToFieldLink(u8 *state);
+void DoMapLoadLoop(u8 *state);
+void ResetScreenForMapLoad(void);
+void InitViewGraphics(void);
+void ResumeMap(bool32 a1);
+void InitObjectEventsLocal(void);
+void InitObjectEventsReturnToField(void);
 // sub_8055218
 // sub_8055280
 // sub_80553E0
@@ -144,9 +139,9 @@ u16 SetInCableClubSeat(void);
 u16 SetLinkWaitingForScript(void);
 u16 QueueExitLinkRoomKey(void);
 bool32 Overworld_IsRecvQueueAtMax(void);
-u32 sub_80558AC(void);
-u32 sub_8055910(void);
-u32 sub_8055940(void);
+bool32 Overworld_RecvKeysFromLinkIsRunning(void);
+bool32 Overworld_SendKeysToLinkIsRunning(void);
+bool32 IsSendingKeysOverCable(void);
 void ClearLinkPlayerObjectEvents(void);
 // ZeroObjectEvent
 void CB2_ReturnToFieldFromMultiplayer(void);
