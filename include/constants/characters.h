@@ -10,10 +10,10 @@
 #define CHAR_PERIOD         0xAD
 #define CHAR_HYPHEN         0xAE
 #define CHAR_ELLIPSIS       0xB0
-#define CHAR_DBL_QUOT_LEFT  0xB1
-#define CHAR_DBL_QUOT_RIGHT 0xB2
-#define CHAR_SGL_QUOT_LEFT  0xB3
-#define CHAR_SGL_QUOT_RIGHT 0xB4
+#define CHAR_DBL_QUOTE_LEFT  0xB1
+#define CHAR_DBL_QUOTE_RIGHT 0xB2
+#define CHAR_SGL_QUOTE_LEFT  0xB3
+#define CHAR_SGL_QUOTE_RIGHT 0xB4
 #define CHAR_MALE           0xB5
 #define CHAR_FEMALE         0xB6
 #define CHAR_CURRENCY       0xB7
@@ -102,8 +102,8 @@
 #define EXT_CTRL_CODE_SHADOW                 0x03
 #define EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW 0x04
 #define EXT_CTRL_CODE_PALETTE                0x05
-#define EXT_CTRL_CODE_SIZE                   0x06
-#define EXT_CTRL_CODE_RESET_SIZE             0x07
+#define EXT_CTRL_CODE_FONT                   0x06
+#define EXT_CTRL_CODE_RESET_FONT             0x07
 #define EXT_CTRL_CODE_PAUSE                  0x08
 #define EXT_CTRL_CODE_PAUSE_UNTIL_PRESS      0x09
 #define EXT_CTRL_CODE_WAIT_SE                0x0A
@@ -114,7 +114,7 @@
 #define EXT_CTRL_CODE_FILL_WINDOW            0x0F
 #define EXT_CTRL_CODE_PLAY_SE                0x10
 #define EXT_CTRL_CODE_CLEAR                  0x11
-#define EXT_CTRL_CODE_SKIP                   0x12
+#define EXT_CTRL_CODE_SKIP_TO                0x12
 #define EXT_CTRL_CODE_CLEAR_TO               0x13
 #define EXT_CTRL_CODE_MIN_LETTER_SPACING     0x14
 #define EXT_CTRL_CODE_JPN                    0x15

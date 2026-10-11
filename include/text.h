@@ -1,7 +1,7 @@
 #ifndef GUARD_TEXT_H
 #define GUARD_TEXT_H
 
-#include "characters.h"
+#include "constants/characters.h"
 
 struct WindowTemplate
 {
@@ -126,10 +126,6 @@ extern const struct WindowTemplate gWindowTemplate_81E7294;
 
 extern u16 gBGTilemapBuffers[4][0x400];
 
-extern u8 gStringVar1[];
-extern u8 gStringVar2[];
-extern u8 gStringVar3[];
-extern u8 gStringVar4[];
 extern u8 gTileBuffer[];
 
 void LoadFontDefaultPalette(const struct WindowTemplate *winConfig);
@@ -163,7 +159,6 @@ void Text_FillWindowRect(struct Window *win, u16 tilemapEntry, u8 left, u8 top, 
 void Text_FillWindowRectDefPalette(struct Window *win, u16 tileNum, u8 left, u8 top, u8 right, u8 bottom);
 void Text_EraseWindowRect(struct Window *win, u8 left, u8 top, u8 right, u8 bottom);
 void Text_BlankWindowRect(struct Window *win, u8 left, u8 top, u8 right, u8 bottom);
-u8 GetExtCtrlCodeLength(u8 code);
 u8 *AlignInt1(struct Window *win, u8 *dest, s32 value, u8 alignAmount, u8 alignType);
 u8 *AlignInt2(struct Window *win, u8 *dest, s32 value, u8 alignAmount, u8 alignType);
 u8 *AlignString(struct Window *win, u8 *dest, const u8 *src, u8 alignAmount, u8 alignType);
@@ -175,8 +170,6 @@ u8 Text_GetWindowPaletteNum(struct Window *win);
 void Text_GetTextColors(struct Window *win, u8 *foreground, u8 *background, u8 *shadow);
 void Text_InitWindow8004E3C(const struct WindowTemplate *winConfig, u8 *tileData, const u8 *text);
 u8 Text_GetStringWidthFromWindowTemplate(const struct WindowTemplate *winConfig, const u8 *s);
-void ConvertInternationalString(u8 *s, u8 language);
-s32 StringCompareWithoutExtCtrlCodes(const u8 *str1, const u8 *str2);
 u8 sub_8004FD0(struct Window *win, u8 *dest, const u8 *src, u16 tileDataStartOffset, u8 left, u16 top, u8 width, u32 a8);
 
 extern const u16 gUnknownPalette_81E6692[];

@@ -5,6 +5,7 @@
 #include "event_data.h"
 #include "link.h"
 #include "random.h"
+#include "string_util.h"
 #include "text.h"
 #include "ewram.h"
 

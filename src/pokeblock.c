@@ -5,6 +5,7 @@
 #include "strings.h"
 #include "task.h"
 #include "scanline_effect.h"
+#include "string_util.h"
 #include "text.h"
 #include "main.h"
 #include "menu.h"

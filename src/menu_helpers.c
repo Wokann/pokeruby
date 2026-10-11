@@ -12,6 +12,7 @@
 #include "sound.h"
 #include "sprite.h"
 #include "task.h"
+#include "string_util.h"
 #include "text.h"
 
 #define SCROLL_INDICATOR_PAL_TAG 6

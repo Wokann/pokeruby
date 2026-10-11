@@ -11,6 +11,7 @@
 #include "menu_helpers.h"
 #include "pokemon_summary_screen.h"
 #include "data.h"
+#include "string_util.h"
 #include "strings.h"
 #include "item_use.h"
 #include "item.h"

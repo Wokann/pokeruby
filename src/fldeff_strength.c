@@ -8,6 +8,7 @@
 #include "fldeff.h"
 #include "script.h"
 #include "task.h"
+#include "string_util.h"
 #include "text.h"
 #include "constants/field_effects.h"
 #include "constants/event_objects.h"

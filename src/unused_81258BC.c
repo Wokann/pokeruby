@@ -3,6 +3,7 @@
 #include "menu.h"
 #include "mystery_event_script.h"
 #include "sound.h"
+#include "string_util.h"
 #include "text.h"
 
 void sub_812AF10(void);

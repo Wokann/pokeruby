@@ -13,6 +13,7 @@
 #include "script.h"
 #include "sound.h"
 #include "sprite.h"
+#include "string_util.h"
 #include "strings.h"
 #include "task.h"
 #include "tv.h"

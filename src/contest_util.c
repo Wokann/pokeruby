@@ -23,6 +23,7 @@
 #include "pokedex.h"
 #include "pokemon.h"
 #include "random.h"
+#include "string_util.h"
 #include "task.h"
 #include "constants/event_objects.h"
 
