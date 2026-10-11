@@ -33,10 +33,10 @@ extern u8 gEnemyPartyCount;
 extern struct BattlePokemon gBattleMons[4];
 extern u8 gActiveBattler;
 extern struct BattleEnigmaBerry gEnigmaBerries[];
-extern u16 gSpeciesToHoennPokedexNum[];
-extern u16 gSpeciesToNationalPokedexNum[];
-extern u16 gHoennToNationalOrder[];
-extern u16 gSpeciesIdToCryId[];
+extern const u16 gSpeciesToHoennPokedexNum[];
+extern const u16 gSpeciesToNationalPokedexNum[];
+extern const u16 gHoennToNationalOrder[];
+extern const u16 gSpeciesIdToCryId[];
 extern u8 gBattleTextBuff1[];
 extern u8 gBattleTextBuff2[];
 extern u8 gDisplayedStringBattle[];
@@ -44,23 +44,14 @@ extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
 extern u8 gPotentialItemEffectBattler;
 extern u8 gBattlerInMenuId;
-extern s8 gNatureStatTable[][5];
 extern u16 gTrainerBattleOpponent_A;
 extern u16 gBattleTypeFlags;
-extern u32 gTMHMLearnsets[][2];
+extern const u32 gTMHMLearnsets[][2];
 extern u8 gBattleMonForms[];
-extern const u8 gText_BattleWallyName[];
 extern u8 gLastUsedAbility;
-extern const u8 gText_PkmnsXPreventsSwitching[];
 extern u16 gBattlerPartyIndexes[];
 
-extern u8 gText_StatRose[];
-extern u8 gText_DefendersStatRose[];
-extern u8 gText_PkmnShroudedInMist[];
-extern u8 gText_PkmnGettingPumped[];
-extern const u8 *const gStatNamesTable[];
-
-bool8 HealStatusConditions(struct Pokemon *mon, u32 unused, u32 healMask, u8 battler)
+bool8 HealStatusConditions(struct Pokemon *mon, u32 battlePartyId, u32 healMask, u8 battler)
 {
     u32 status = GetMonData(mon, MON_DATA_STATUS, 0);
 
@@ -193,7 +184,7 @@ u8 GetItemEffectParamOffset(u16 itemId, u8 effectByte, u8 effectBit)
 
 static const u8 sStatsToRaise[] = {1, 1, 3, 2, 4, 6};
 
-static void BufferStatRoseMessage(int statIdx)
+static void BufferStatRoseMessage(s32 statIdx)
 {
     gBattlerTarget = gBattlerInMenuId;
     StringCopy(gBattleTextBuff1, gStatNamesTable[sStatsToRaise[statIdx]]);
@@ -473,16 +464,16 @@ static void UNUSED DrawSpindaSpotsUnused(u16 species, u32 personality, u8 *dest)
 {
     if (species == SPECIES_SPINDA && dest != gMonSpriteGfx_Sprite_ptr[0] && dest != gMonSpriteGfx_Sprite_ptr[2])
     {
-        int i;
+        s32 i;
         for (i = 0; i < 4; i++)
         {
-            int row;
+            s32 row;
             u8 x = gSpindaSpotGraphics[i].x + ((personality & 0x0F) - 8);
             u8 y = gSpindaSpotGraphics[i].y + (((personality & 0xF0) >> 4) - 8);
 
             for (row = 0; row < 16; row++)
             {
-                int column;
+                s32 column;
                 s32 spotPixelRow = gSpindaSpotGraphics[i].image[row];
 
                 for (column = x; column < x + 16; column++)
@@ -514,20 +505,20 @@ static void UNUSED DrawSpindaSpotsUnused(u16 species, u32 personality, u8 *dest)
     }
 }
 
-void DrawSpindaSpots(u16 species, u32 personality, u8 *dest, u8 isFrontPic)
+void DrawSpindaSpots(u16 species, u32 personality, u8 *dest, bool8 isFrontPic)
 {
     if (species == SPECIES_SPINDA && isFrontPic)
     {
-        int i;
+        s32 i;
         for (i = 0; i < 4; i++)
         {
-            int row;
+            s32 row;
             u8 x = gSpindaSpotGraphics[i].x + ((personality & 0x0F) - 8);
             u8 y = gSpindaSpotGraphics[i].y + (((personality & 0xF0) >> 4) - 8);
 
             for (row = 0; row < 16; row++)
             {
-                int column;
+                s32 column;
                 s32 spotPixelRow = gSpindaSpotGraphics[i].image[row];
 
                 for (column = x; column < x + 16; column++)
@@ -1345,7 +1336,7 @@ bool8 IsShinyOtIdPersonality(u32 otId, u32 personality)
     return retVal;
 }
 
-u8 *sub_8040D08(void)
+const u8 *GetTrainerPartnerName(void)
 {
     u8 id = GetMultiplayerId();
     return gLinkPlayers[GetBattlerMultiplayerId(gLinkPlayers[id].id ^ 2)].name;

@@ -26,7 +26,6 @@ extern u8 sub_806BD58(u8, u8);
 extern void PartyMenuPrintMonsLevelOrStatus(void);
 extern void nullsub_13(void);
 extern void CB2_SetUpReshowBattleScreenAfterMenu(void);
-extern u8 *sub_8040D08();
 
 extern u8 gPlayerPartyCount;
 extern u8 gBattlersCount;
@@ -641,7 +640,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
     if (IsLinkDoubleBattle() == TRUE && (partySelection == 1 || partySelection == 4 || partySelection == 5))
     {
         PartyMenuEraseMsgBoxAndFrame();
-        StringCopy(gStringVar1, sub_8040D08());
+        StringCopy(gStringVar1, GetTrainerPartnerName());
         StringExpandPlaceholders(gStringVar4, gText_CantSwitchWithAlly);
         DisplayPartyMenuMessage(gStringVar4, 0);
         gTasks[taskId].func = Task_80954C0;
