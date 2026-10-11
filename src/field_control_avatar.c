@@ -64,9 +64,7 @@ extern u8 EventScript_UseWaterfall[];
 extern u8 EventScript_CannotUseWaterfall[];
 extern u8 EventScript_UseDive[];
 extern u8 EventScript_UseDiveUnderwater[];
-extern u8 EventScript_FallDownHole[];
 extern u8 SSTidalCorridor_EventScript_ReachedStepCount[];
-extern u8 EventScript_FallDownHoleMtPyre[];
 
 static void GetPlayerPosition(struct MapPosition *);
 static void GetInFrontOfPlayerPosition(struct MapPosition *);

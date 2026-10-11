@@ -27,6 +27,8 @@ extern const u8 EventScript_UseRockSmash[];
 extern const u8 EventScript_UseFlash[];
 extern const u8 EventScript_UseStrength[];
 extern const u8 EventScript_UseSurf[];
+extern const u8 EventScript_FallDownHole[];
+extern const u8 EventScript_FallDownHoleMtPyre[];
 extern u8 EventScript_FailSweetScent[];
 
 extern const u8 BerryTreeScript[];
