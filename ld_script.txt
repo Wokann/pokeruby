@@ -396,7 +396,7 @@ SECTIONS {
     ALIGN(4)
     {
         src/libgcnmultiboot.o(.text);
-        src/libs/m4a_1.o(.text);
+        src/m4a_1.o(.text);
         src/libs/m4a.o(.text);
         src/libs/agb_flash.o(.text);
         src/libs/agb_flash_1m.o(.text);
