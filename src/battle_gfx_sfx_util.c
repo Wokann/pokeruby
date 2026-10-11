@@ -87,12 +87,8 @@ static const struct SpritePalette sSpritePalettes_HealthBoxHealthBar[] =
     { gBattleInterface_BallDisplayPal, 0xD704 },
 };
 
-extern u8 IsBattlerSpritePresent(u8);
-extern u8 GetBattlerSpriteDefault_Y(u8);
-extern u8 GetSubstituteSpriteDefault_Y(u8);
-
 static void Task_ClearBitWhenBattleTableAnimDone(u8);
-static u8 ShouldAnimBeDoneRegardlessOfSubstitute(u8);
+static bool8 ShouldAnimBeDoneRegardlessOfSubstitute(u8 animId);
 static void Task_ClearBitWhenSpecialAnimDone(u8);
 static void ClearSpritesBattlerHealthboxAnimData(void);
 void SpriteCB_EnemyShadow(struct Sprite *);
@@ -135,7 +131,7 @@ void SpriteCB_TrainerSlideIn(struct Sprite *sprite)
     }
 }
 
-void InitAndLaunchChosenStatusAnimation(u8 isStatus2, u32 status)
+void InitAndLaunchChosenStatusAnimation(bool8 isStatus2, u32 status)
 {
     gBattleHealthBoxInfo[gActiveBattler].statusAnimActive = 1;
     if (isStatus2 == 0)
@@ -207,7 +203,7 @@ static void Task_ClearBitWhenBattleTableAnimDone(u8 taskId)
     }
 }
 
-static u8 ShouldAnimBeDoneRegardlessOfSubstitute(u8 animId)
+static bool8 ShouldAnimBeDoneRegardlessOfSubstitute(u8 animId)
 {
     switch (animId)
     {
@@ -245,7 +241,7 @@ static void Task_ClearBitWhenSpecialAnimDone(u8 taskId)
     }
 }
 
-u8 IsMoveWithoutAnimation(int unused1, int unused2)
+bool8 IsMoveWithoutAnimation(int move, int animationTurn)
 {
     return 0;
 }
@@ -378,7 +374,7 @@ static void UNUSED BattleGfxSfxDummy1(void)
 {
 }
 
-void BattleGfxSfxDummy2(u16 unused)
+void BattleGfxSfxDummy2(u16 species)
 {
 }
 
@@ -417,7 +413,7 @@ void DecompressTrainerBackPic(u16 backPicId, u8 battler)
     LoadCompressedPalette(gTrainerBackPicPaletteTable[backPicId].data, 0x100 + battler * 16, 32);
 }
 
-void BattleGfxSfxDummy3(int unused)
+void BattleGfxSfxDummy3(int gender)
 {
 }
 
@@ -511,7 +507,7 @@ void LoadBattleBarGfx(u8 unused)
     LZDecompressWram(gBattleInterfaceGfx_BattleBar, eBattleInterfaceGfxBuffer);
 }
 
-u8 BattleInitAllSprites(u8 *state1, u8 *battler)
+bool8 BattleInitAllSprites(u8 *state1, u8 *battler)
 {
     bool8 retVal = FALSE;
 
@@ -709,7 +705,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform)
     }
 }
 
-void BattleLoadSubstituteOrMonSpriteGfx(u8 battler, u8 loadMonSprite)
+void BattleLoadSubstituteOrMonSpriteGfx(u8 battler, bool8 loadMonSprite)
 {
     u8 position;
     u16 palOffset;
@@ -749,7 +745,7 @@ void BattleLoadSubstituteOrMonSpriteGfx(u8 battler, u8 loadMonSprite)
     }
 }
 
-void LoadBattleMonGfxAndAnimate(u8 battler, u8 loadMonSprite, u8 spriteId)
+void LoadBattleMonGfxAndAnimate(u8 battler, bool8 loadMonSprite, u8 spriteId)
 {
     BattleLoadSubstituteOrMonSpriteGfx(battler, loadMonSprite);
     StartSpriteAnim(&gSprites[spriteId], gBattleMonForms[battler]);
@@ -943,7 +939,7 @@ void FillAroundBattleWindows(void)
     }
 }
 
-void ClearTemporarySpeciesSpriteData(u8 battler, u8 dontClearSubstitute)
+void ClearTemporarySpeciesSpriteData(u8 battler, bool8 dontClearSubstitute)
 {
     gBattleSpriteInfo[battler].transformSpecies = 0;
     gBattleMonForms[battler] = 0;

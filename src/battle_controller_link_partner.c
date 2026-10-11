@@ -51,8 +51,6 @@ extern void StartAnimLinearTranslation(struct Sprite *);
 extern void SpriteCB_FaintSlideAnim(struct Sprite *);
 extern s32 GetBattlerMultiplayerId(u16);
 extern u8 GetBattlerSpriteDefault_Y();
-extern void BattleGfxSfxDummy3();
-extern void BattleGfxSfxDummy2(u16);
 
 // this file's functions
 

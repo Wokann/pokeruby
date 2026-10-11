@@ -567,10 +567,6 @@ void nullsub_8(u8);
 void CB2_SetUpReshowBattleScreenAfterMenu(void);
 void CB2_SetUpReshowBattleScreenAfterMenu2(void);
 
-// asm/battle_7.o
-void BattleGfxSfxDummy2(u16);
-void BattleGfxSfxDummy3(int);
-
 int GameClear(void);
 
 #endif // GUARD_BATTLE_H
