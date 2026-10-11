@@ -92,4 +92,24 @@
 #define STAT_CHANGE_MULTIPLE_STATS   (1 << 2)
 #define STAT_CHANGE_CANT_PREVENT     (1 << 3)
 
+// Ruby move-end order: item effects precede visibility updates.
+#define MOVEEND_RAGE                            0
+#define MOVEEND_DEFROST                         1
+#define MOVEEND_SYNCHRONIZE_TARGET              2
+#define MOVEEND_ON_DAMAGE_ABILITIES             3
+#define MOVEEND_IMMUNITY_ABILITIES              4
+#define MOVEEND_SYNCHRONIZE_ATTACKER            5
+#define MOVEEND_CHOICE_MOVE                     6
+#define MOVEEND_CHANGED_ITEMS                   7
+#define MOVEEND_ITEM_EFFECTS_ALL                8
+#define MOVEEND_KINGSROCK_SHELLBELL             9
+#define MOVEEND_ATTACKER_INVISIBLE              10
+#define MOVEEND_ATTACKER_VISIBLE                11
+#define MOVEEND_TARGET_VISIBLE                  12
+#define MOVEEND_SUBSTITUTE                      13
+#define MOVEEND_UPDATE_LAST_MOVES               14
+#define MOVEEND_MIRROR_MOVE                     15
+#define MOVEEND_NEXT_TARGET                     16
+#define MOVEEND_COUNT                           17
+
 #endif // GUARD_CONSTANTS_BATTLE_SCRIPT_COMMANDS_H

@@ -15,7 +15,7 @@ void BattleDestroyYesNoCursorAt(u8 cursorPosition);
 void BattleCreateYesNoCursorAt(u8 cursorPosition);
 void BufferMoveToLearnIntoBattleTextBuff2(void);
 void HandleBattleWindow(u8 xStart, u8 yStart, u8 xEnd, u8 yEnd, u8 flags);
-bool8 UproarWakeUpCheck(u8 bank);
+bool8 UproarWakeUpCheck(u8 battler);
 
 extern void (*const gBattleScriptingCommandsTable[])(void);
 

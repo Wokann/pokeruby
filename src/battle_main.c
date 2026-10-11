@@ -4047,7 +4047,7 @@ void BattleBeginFirstTurn(void)
         gBattleStruct->turnEffectsBattlerId = 0;
         gBattleStruct->wishPerishSongState = 0;
         gBattleStruct->wishPerishSongBattlerId = 0;
-        gBattleStruct->cmd49StateTracker = 0;
+        gBattleStruct->moveendState = 0;
         gBattleStruct->faintedActionsState = 0;
         gBattleStruct->turnCountersTracker = 0;
         gMoveResultFlags = 0;
@@ -4103,7 +4103,7 @@ void BattleTurnPassed(void)
     gHitMarker &= ~0x100000;
     gBattleStruct->animTurn = 0;
     gBattleStruct->animTargetsHit = 0;
-    gBattleStruct->cmd49StateTracker = 0;
+    gBattleStruct->moveendState = 0;
     gBattleMoveDamage = 0;
     gMoveResultFlags = 0;
     for (i = 0; i < 5; i++)
@@ -4444,8 +4444,8 @@ void sub_8012324(void)
                                     }
                                     else
                                     {
-                                        gSharedMem[BSTRUCT_OFF(ChosenMoveID) + gActiveBattler] = gBattleBufferB[gActiveBattler][2];
-                                        gChosenMoveByBattler[gActiveBattler] = gBattleMons[gActiveBattler].moves[gSharedMem[BSTRUCT_OFF(ChosenMoveID) + gActiveBattler]];
+                                        gSharedMem[BSTRUCT_OFF(chosenMovePositions) + gActiveBattler] = gBattleBufferB[gActiveBattler][2];
+                                        gChosenMoveByBattler[gActiveBattler] = gBattleMons[gActiveBattler].moves[gSharedMem[BSTRUCT_OFF(chosenMovePositions) + gActiveBattler]];
                                         gSharedMem[BSTRUCT_OFF(moveTarget) + gActiveBattler] = gBattleBufferB[gActiveBattler][3];
                                         gBattleCommunication[gActiveBattler]++;
                                     }
@@ -4692,7 +4692,7 @@ u8 GetWhoStrikesFirst(u8 bank1, u8 bank2, bool8 ignoreMovePriorities)
             if (gProtectStructs[bank1].noValidMoves)
                 bank1Move = MOVE_STRUGGLE;
             else
-                bank1Move = gBattleMons[bank1].moves[gSharedMem[BSTRUCT_OFF(ChosenMoveID) + bank1]];
+                bank1Move = gBattleMons[bank1].moves[gSharedMem[BSTRUCT_OFF(chosenMovePositions) + bank1]];
         }
         else
             bank1Move = MOVE_NONE;
@@ -4702,7 +4702,7 @@ u8 GetWhoStrikesFirst(u8 bank1, u8 bank2, bool8 ignoreMovePriorities)
             if (gProtectStructs[bank2].noValidMoves)
                 bank2Move = MOVE_STRUGGLE;
             else
-                bank2Move = gBattleMons[bank2].moves[gSharedMem[BSTRUCT_OFF(ChosenMoveID) + bank2]];
+                bank2Move = gBattleMons[bank2].moves[gSharedMem[BSTRUCT_OFF(chosenMovePositions) + bank2]];
         }
         else
             bank2Move = MOVE_NONE;
@@ -5196,7 +5196,7 @@ void HandleAction_UseMove(void)
     gMoveResultFlags = 0;
     gMultiHitCounter = 0;
     gBattleCommunication[6] = 0;
-    gCurrMovePos = gChosenMovePos = gSharedMem[BSTRUCT_OFF(ChosenMoveID) + gBattlerAttacker];
+    gCurrMovePos = gChosenMovePos = gSharedMem[BSTRUCT_OFF(chosenMovePositions) + gBattlerAttacker];
 
     // choose move
     if (gProtectStructs[gBattlerAttacker].noValidMoves)
@@ -5693,7 +5693,7 @@ void HandleAction_ActionFinished(void)
     gLastHitByType[gBattlerAttacker] = 0;
     gBattleStruct->dynamicMoveType = 0;
     gDynamicBasePower = 0;
-    gBattleStruct->cmd49StateTracker = 0;
+    gBattleStruct->moveendState = 0;
     gBattleCommunication[3] = 0;
     gBattleCommunication[4] = 0;
     gBattleStruct->multihitMoveEffect = 0;

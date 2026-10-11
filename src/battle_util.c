@@ -77,7 +77,7 @@ u8 GetBattlerAtPosition(u8 ID);
 u8 GetBattlerPosition(u8 bank);
 u8 GetBattlerSide(u8 bank);
 void SetMoveEffect(bool8 primary, u8 certainArg);
-bool8 UproarWakeUpCheck(u8 bank);
+bool8 UproarWakeUpCheck(u8 battler);
 bool8 sub_8018018(u8 bank, u8, u8);
 u8 GetMoveTarget(u16 move, u8 useMoveTarget);
 u8 GetBattlerMultiplayerId(u8 bank);

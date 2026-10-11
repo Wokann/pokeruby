@@ -120,7 +120,7 @@ struct SpecialStatus
     u32 intimidatedMon:1;
     u32 traced:1;
     u32 ppNotAffectedByPressure:1;
-    u32 flag40:1;
+    u32 faintedHasReplacement:1;
     u32 focusBanded:1;
     s32 shellBellDmg;
     s32 physicalDmg;
@@ -272,15 +272,15 @@ struct BattleStruct /* 0x2000000 */
     /*0x16002*/ u8 animTurn;
     /*0x16003*/ u8 battler;
     /*0x16004*/ u8 wrappedMove[MAX_BATTLERS_COUNT * 2];
-    /*0x1600C*/ u8 cmd49StateTracker;
+    /*0x1600C*/ u8 moveendState;
     /*0x1600D*/ u8 unk1600D; // unused
     /*0x1600E*/ u8 turnCountersTracker;
-    /*0x1600F*/ u8 getexpStateTracker;
+    /*0x1600F*/ u8 getexpState;
     /*0x16010*/ u8 moveTarget[MAX_BATTLERS_COUNT];
     /*0x16014*/ u32 painSplitHp;
     /*0x16018*/ u8 expGetterMonId;
     /*0x16019*/ u8 unk16019; // unused
-    /*0x1601A*/ u8 atk5A_StateTracker; //also atk5B, statetracker
+    /*0x1601A*/ u8 learnMoveState;
     /*0x1601B*/ u8 wildVictorySong;
     /*0x1601C*/ u8 dynamicMoveType;
     /*0x1601D*/ u8 focusPunchBattler;
@@ -295,7 +295,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x16058*/ u8 switchInAbilitiesCounter;
     /*0x16059*/ u8 faintedActionsState;
     /*0x1605A*/ u8 faintedActionsBattlerId;
-    /*0x1605C*/ u16 exp;
+    /*0x1605C*/ u16 expValue;
     /*0x1605E*/ u8 scriptPartyIdx;
     /*0x1605F*/ u8 sentInPokes;
     /*0x16060*/ u8 selectionScriptFinished[MAX_BATTLERS_COUNT];
@@ -312,12 +312,12 @@ struct BattleStruct /* 0x2000000 */
     /*0x16089*/ u8 safariCatchFactor;
     /*0x1608A*/ u8 linkBattleVsSpriteId_V;
     /*0x1608B*/ u8 linkBattleVsSpriteId_S;
-    /*0x1608C*/ u8 ChosenMoveID[MAX_BATTLERS_COUNT];
+    /*0x1608C*/ u8 chosenMovePositions[MAX_BATTLERS_COUNT];
     /*0x16090*/ s32 bideDmg;
     /*0x16094*/ u8 stateIdAfterSelScript[4];
     /*0x16098*/ u8 unk16098[3]; // unused
     /*0x1609B*/ u8 formToChangeInto;
-    /*0x1609C*/ u8 atk6C_statetracker;
+    /*0x1609C*/ u8 drawlvlupboxState;
     /*0x1609D*/ u8 prevSelectedPartySlot;
     /*0x1609E*/ u8 dbgAICycleMoveTracker[2]; // debug
     /*0x160A0*/ u8 stringMoveType;
