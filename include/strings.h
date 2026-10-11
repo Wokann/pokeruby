@@ -170,6 +170,16 @@ extern const u8 gText_BirchInTrouble[];
 extern const u8 gText_ConfirmStarterChoice[];
 extern const u8 gText_Pokemon4[];
 
+extern const u8 gText_Birch_Welcome[];
+extern const u8 gText_ThisIsAPokemon[];
+extern const u8 gText_Birch_MainSpeech[];
+extern const u8 gText_Birch_AndYouAre[];
+extern const u8 gText_Birch_BoyOrGirl[];
+extern const u8 gText_Birch_WhatsYourName[];
+extern const u8 gText_Birch_SoItsPlayer[];
+extern const u8 gText_Birch_YourePlayer[];
+extern const u8 gText_Birch_AreYouReady[];
+
 // start menu and save dialog text
 extern const u8 gText_MenuPokedex[];
 extern const u8 gText_MenuPokemon[];
