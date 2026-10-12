@@ -89,11 +89,11 @@ static const struct MenuAction MultichoiceList_YesNoInfo[] =
     {gText_Info2, NULL},
 };
 
-static const struct MenuAction MultichoiceList_18[] =
+static const struct MenuAction MultichoiceList_BattleMode[] =
 {
-    {OtherText_SingleBattle, NULL},
-    {OtherText_DoubleBattle, NULL},
-    {OtherText_MultiBattle, NULL},
+    {gText_SingleBattle, NULL},
+    {gText_DoubleBattle, NULL},
+    {gText_MultiBattle, NULL},
     {gText_Cancel2, NULL},
 };
 
@@ -101,7 +101,7 @@ static const struct MenuAction MultichoiceList_19[] =
 {
     {OtherText_Littleroot, NULL},
     {gText_Slateport, NULL},
-    {OtherText_Lilycove, NULL},
+    {gText_LilycoveCity, NULL},
 };
 
 static const struct MenuAction MultichoiceList_YesNoInfo2[] =
@@ -111,123 +111,123 @@ static const struct MenuAction MultichoiceList_YesNoInfo2[] =
     {gText_Info2, NULL},
 };
 
-static const struct MenuAction MultichoiceList_23[] =
+static const struct MenuAction MultichoiceList_ChallengeInfo[] =
 {
-    {OtherText_MakeAChallenge, NULL},
-    {OtherText_ObtainInformation, NULL},
+    {gText_Challenge, NULL},
+    {gText_Info3, NULL},
     {gText_Cancel2, NULL},
 };
 
-static const struct MenuAction MultichoiceList_24[] =
+static const struct MenuAction MultichoiceList_LevelMode[] =
 {
-    {OtherText_Lv50_2, NULL},
+    {gText_Lv50, NULL},
     {OtherText_Lv100_2, NULL},
     {gText_Cancel2, NULL},
 };
 
-static const struct MenuAction MultichoiceList_25[] =
+static const struct MenuAction MultichoiceList_Mechadoll1_Q1[] =
 {
     {OtherText_Zigzagoon, NULL},
     {OtherText_Nincada, NULL},
-    {OtherText_Poochyena, NULL},
+    {gTrickHouse_Mechadoll_Poochyena, NULL},
 };
 
-static const struct MenuAction MultichoiceList_26[] =
+static const struct MenuAction MultichoiceList_Mechadoll1_Q2[] =
 {
     {OtherText_Nincada2, NULL},
-    {OtherText_Lotad, NULL},
+    {gTrickHouse_Mechadoll_Lotad, NULL},
     {OtherText_Roselia, NULL},
 };
 
-static const struct MenuAction MultichoiceList_27[] =
+static const struct MenuAction MultichoiceList_Mechadoll1_Q3[] =
 {
     {OtherText_Shroomish, NULL},
-    {OtherText_Nincada3, NULL},
+    {gTrickHouse_Mechadoll_Nincada, NULL},
     {OtherText_Surskit, NULL},
 };
 
-static const struct MenuAction MultichoiceList_28[] =
+static const struct MenuAction MultichoiceList_Mechadoll2_Q1[] =
 {
     {OtherText_Treecko, NULL},
     {OtherText_Torchic, NULL},
     {OtherText_Mudkip, NULL},
 };
 
-static const struct MenuAction MultichoiceList_29[] =
+static const struct MenuAction MultichoiceList_Mechadoll2_Q2[] =
 {
     {OtherText_Seedot, NULL},
-    {OtherText_Shroomish2, NULL},
+    {gTrickHouse_Mechadoll_Shroomish, NULL},
     {OtherText_Spinda, NULL},
 };
 
-static const struct MenuAction MultichoiceList_30[] =
+static const struct MenuAction MultichoiceList_Mechadoll2_Q3[] =
 {
     {OtherText_Shroomish3, NULL},
     {OtherText_Zigzagoon2, NULL},
     {OtherText_Wurmple, NULL},
 };
 
-static const struct MenuAction MultichoiceList_31[] =
+static const struct MenuAction MultichoiceList_Mechadoll3_Q1[] =
 {
     {OtherText_PokeBall, NULL},
     {OtherText_SuperPotion, NULL},
-    {OtherText_SamePrice, NULL},
+    {gTrickHouse_Mechadoll_SamePrice, NULL},
 };
 
-static const struct MenuAction MultichoiceList_32[] =
+static const struct MenuAction MultichoiceList_Mechadoll3_Q2[] =
 {
     {OtherText_Yen135, NULL},
     {OtherText_Yen155, NULL},
     {OtherText_Yen175, NULL},
 };
 
-static const struct MenuAction MultichoiceList_33[] =
+static const struct MenuAction MultichoiceList_Mechadoll3_Q3[] =
 {
-    {OtherText_CostMore, NULL},
-    {OtherText_CostLess, NULL},
-    {OtherText_SamePrice2, NULL},
+    {gTrickHouse_Mechadoll_CostMore, NULL},
+    {gTrickHouse_Mechadoll_CostLess, NULL},
+    {gTrickHouse_Mechadoll_SamePrice2, NULL},
 };
 
-static const struct MenuAction MultichoiceList_34[] =
+static const struct MenuAction MultichoiceList_Mechadoll4_Q1[] =
 {
     {OtherText_MaleSymbol, NULL},
     {OtherText_FemaleSymbol, NULL},
-    {OtherText_Neither, NULL},
+    {gTrickHouse_Mechadoll_Neither, NULL},
 };
 
-static const struct MenuAction MultichoiceList_35[] =
+static const struct MenuAction MultichoiceList_Mechadoll4_Q2[] =
 {
     {OtherText_Males, NULL},
     {OtherText_Females, NULL},
-    {OtherText_SameNumber, NULL},
+    {gTrickHouse_Mechadoll_SameNumber, NULL},
 };
 
-static const struct MenuAction MultichoiceList_36[] =
+static const struct MenuAction MultichoiceList_Mechadoll4_Q3[] =
 {
     {OtherText_Male, NULL},
     {OtherText_Female, NULL},
     {OtherText_ItDepends, NULL},
 };
 
-static const struct MenuAction MultichoiceList_37[] =
+static const struct MenuAction MultichoiceList_Mechadoll5_Q1[] =
 {
     {OtherText_Six2, NULL},
     {OtherText_Eight2, NULL},
     {OtherText_Ten, NULL},
 };
 
-static const struct MenuAction MultichoiceList_38[] =
+static const struct MenuAction MultichoiceList_Mechadoll5_Q2[] =
 {
     {OtherText_One, NULL},
     {OtherText_Two, NULL},
     {OtherText_Three, NULL},
 };
 
-static const struct MenuAction MultichoiceList_39[] =
+static const struct MenuAction MultichoiceList_Mechadoll5_Q3[] =
 {
-    {OtherText_Six, NULL},
-    {OtherText_Seven, NULL},
-    {OtherText_Eight, NULL},
+    {gTrickHouse_Mechadoll_Six2, NULL},
+    {gTrickHouse_Mechadoll_Seven2, NULL},
+    {gTrickHouse_Mechadoll_Eight2, NULL},
 };
 
 static const struct MenuAction MultichoiceList_VendingMachine[] =
@@ -267,15 +267,15 @@ static const struct MenuAction MultichoiceList_SternDeepSea[] =
     {gText_Cancel2, NULL},
 };
 
-static const struct MenuAction MultichoiceList_47[] =
+static const struct MenuAction MultichoiceList_UnusedAshVendor[] =
 {
-    {OtherText_BlueFlute2, NULL},
-    {OtherText_YellowFlute2, NULL},
-    {OtherText_RedFlute2, NULL},
-    {OtherText_WhiteFlute2, NULL},
-    {OtherText_BlackFlute2, NULL},
-    {OtherText_GlassChair, NULL},
-    {OtherText_GlassDesk, NULL},
+    {gText_BlueFlute2, NULL},
+    {gText_YellowFlute2, NULL},
+    {gText_RedFlute2, NULL},
+    {gText_WhiteFlute2, NULL},
+    {gText_BlackFlute2, NULL},
+    {gText_GlassChair, NULL},
+    {gText_GlassDesk, NULL},
     {gText_Cancel2, NULL},
 };
 
@@ -312,7 +312,7 @@ static const struct MenuAction MultichoiceList_HowsFishing[] =
 
 static const struct MenuAction MultichoiceList_52[] =
 {
-    {OtherText_Lilycove, NULL},
+    {gText_LilycoveCity, NULL},
     {OtherText_BattleTower, NULL},
     {gText_Cancel2, NULL},
 };
@@ -320,7 +320,7 @@ static const struct MenuAction MultichoiceList_52[] =
 static const struct MenuAction MultichoiceList_53[] =
 {
     {gText_Slateport, NULL},
-    {OtherText_Lilycove, NULL},
+    {gText_LilycoveCity, NULL},
     {gText_Cancel2, NULL},
 };
 
@@ -337,7 +337,7 @@ static const struct MenuAction MultichoiceList_56[] =
     {gText_Cancel2, NULL},
 };
 
-static const struct MenuAction MultichoiceList_57[] =
+static const struct MenuAction MultichoiceList_Floors[] =
 {
     {OtherText_1F_2, NULL},
     {OtherText_2F_2, NULL},
@@ -484,28 +484,28 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     {MultichoiceList_Exit, ARRAY_COUNT(MultichoiceList_Exit)},
     {MultichoiceList_ViewedPaintings, ARRAY_COUNT(MultichoiceList_ViewedPaintings)},
     {MultichoiceList_YesNoInfo, ARRAY_COUNT(MultichoiceList_YesNoInfo)},
-    {MultichoiceList_18, ARRAY_COUNT(MultichoiceList_18)},
+    {MultichoiceList_BattleMode, ARRAY_COUNT(MultichoiceList_BattleMode)},
     {MultichoiceList_19, ARRAY_COUNT(MultichoiceList_19)},
     {MultichoiceList_YesNoInfo2, ARRAY_COUNT(MultichoiceList_YesNoInfo2)},
     {MultichoiceList_Exit, ARRAY_COUNT(MultichoiceList_Exit)},
     {MultichoiceList_Exit, ARRAY_COUNT(MultichoiceList_Exit)},
-    {MultichoiceList_23, ARRAY_COUNT(MultichoiceList_23)},
-    {MultichoiceList_24, ARRAY_COUNT(MultichoiceList_24)},
-    {MultichoiceList_25, ARRAY_COUNT(MultichoiceList_25)},
-    {MultichoiceList_26, ARRAY_COUNT(MultichoiceList_26)},
-    {MultichoiceList_27, ARRAY_COUNT(MultichoiceList_27)},
-    {MultichoiceList_28, ARRAY_COUNT(MultichoiceList_28)},
-    {MultichoiceList_29, ARRAY_COUNT(MultichoiceList_29)},
-    {MultichoiceList_30, ARRAY_COUNT(MultichoiceList_30)},
-    {MultichoiceList_31, ARRAY_COUNT(MultichoiceList_31)},
-    {MultichoiceList_32, ARRAY_COUNT(MultichoiceList_32)},
-    {MultichoiceList_33, ARRAY_COUNT(MultichoiceList_33)},
-    {MultichoiceList_34, ARRAY_COUNT(MultichoiceList_34)},
-    {MultichoiceList_35, ARRAY_COUNT(MultichoiceList_35)},
-    {MultichoiceList_36, ARRAY_COUNT(MultichoiceList_36)},
-    {MultichoiceList_37, ARRAY_COUNT(MultichoiceList_37)},
-    {MultichoiceList_38, ARRAY_COUNT(MultichoiceList_38)},
-    {MultichoiceList_39, ARRAY_COUNT(MultichoiceList_39)},
+    {MultichoiceList_ChallengeInfo, ARRAY_COUNT(MultichoiceList_ChallengeInfo)},
+    {MultichoiceList_LevelMode, ARRAY_COUNT(MultichoiceList_LevelMode)},
+    {MultichoiceList_Mechadoll1_Q1, ARRAY_COUNT(MultichoiceList_Mechadoll1_Q1)},
+    {MultichoiceList_Mechadoll1_Q2, ARRAY_COUNT(MultichoiceList_Mechadoll1_Q2)},
+    {MultichoiceList_Mechadoll1_Q3, ARRAY_COUNT(MultichoiceList_Mechadoll1_Q3)},
+    {MultichoiceList_Mechadoll2_Q1, ARRAY_COUNT(MultichoiceList_Mechadoll2_Q1)},
+    {MultichoiceList_Mechadoll2_Q2, ARRAY_COUNT(MultichoiceList_Mechadoll2_Q2)},
+    {MultichoiceList_Mechadoll2_Q3, ARRAY_COUNT(MultichoiceList_Mechadoll2_Q3)},
+    {MultichoiceList_Mechadoll3_Q1, ARRAY_COUNT(MultichoiceList_Mechadoll3_Q1)},
+    {MultichoiceList_Mechadoll3_Q2, ARRAY_COUNT(MultichoiceList_Mechadoll3_Q2)},
+    {MultichoiceList_Mechadoll3_Q3, ARRAY_COUNT(MultichoiceList_Mechadoll3_Q3)},
+    {MultichoiceList_Mechadoll4_Q1, ARRAY_COUNT(MultichoiceList_Mechadoll4_Q1)},
+    {MultichoiceList_Mechadoll4_Q2, ARRAY_COUNT(MultichoiceList_Mechadoll4_Q2)},
+    {MultichoiceList_Mechadoll4_Q3, ARRAY_COUNT(MultichoiceList_Mechadoll4_Q3)},
+    {MultichoiceList_Mechadoll5_Q1, ARRAY_COUNT(MultichoiceList_Mechadoll5_Q1)},
+    {MultichoiceList_Mechadoll5_Q2, ARRAY_COUNT(MultichoiceList_Mechadoll5_Q2)},
+    {MultichoiceList_Mechadoll5_Q3, ARRAY_COUNT(MultichoiceList_Mechadoll5_Q3)},
     {MultichoiceList_Exit, ARRAY_COUNT(MultichoiceList_Exit)},
     {MultichoiceList_Exit, ARRAY_COUNT(MultichoiceList_Exit)},
     {MultichoiceList_VendingMachine, ARRAY_COUNT(MultichoiceList_VendingMachine)},
@@ -513,7 +513,7 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     {MultichoiceList_AcroBikeInfo, ARRAY_COUNT(MultichoiceList_AcroBikeInfo)},
     {MultichoiceList_Satisfaction, ARRAY_COUNT(MultichoiceList_Satisfaction)},
     {MultichoiceList_SternDeepSea, ARRAY_COUNT(MultichoiceList_SternDeepSea)},
-    {MultichoiceList_47, ARRAY_COUNT(MultichoiceList_47)},
+    {MultichoiceList_UnusedAshVendor, ARRAY_COUNT(MultichoiceList_UnusedAshVendor)},
     {MultichoiceList_GameCornerDolls, ARRAY_COUNT(MultichoiceList_GameCornerDolls)},
     {MultichoiceList_GameCornerCoins, ARRAY_COUNT(MultichoiceList_GameCornerCoins)},
     {MultichoiceList_HowsFishing, ARRAY_COUNT(MultichoiceList_HowsFishing)},
@@ -523,7 +523,7 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     {MultichoiceList_RightLeft, ARRAY_COUNT(MultichoiceList_RightLeft)},
     {MultichoiceList_GameCornerTMs, ARRAY_COUNT(MultichoiceList_GameCornerTMs)},
     {MultichoiceList_56, ARRAY_COUNT(MultichoiceList_56)},
-    {MultichoiceList_57, ARRAY_COUNT(MultichoiceList_57)},
+    {MultichoiceList_Floors, ARRAY_COUNT(MultichoiceList_Floors)},
     {MultichoiceList_ShardsR, ARRAY_COUNT(MultichoiceList_ShardsR)},
     {MultichoiceList_ShardsY, ARRAY_COUNT(MultichoiceList_ShardsY)},
     {MultichoiceList_ShardsRY, ARRAY_COUNT(MultichoiceList_ShardsRY)},

@@ -19,7 +19,7 @@ static void Task_HandleMultichoiceInput(u8 taskId);
 static void Task_HandleYesNoInput(u8 taskId);
 static void Task_HandleMultichoiceGridInput(u8 taskId);
 static u16 GetStringWidthInTilesForScriptMenu(const u8 *str);
-static void DrawMultichoiceMenu(u8 left, u8 top, u8 count, const struct MenuAction *list, bool8 ignoreBPress, u8 cursorPos);
+static void DrawMultichoiceMenu(u8 left, u8 top, u8 count, const struct MenuAction *actions, bool8 ignoreBPress, u8 cursorPos);
 static void StartScriptMenuTask(u8 left, u8 top, u8 right, u8 bottom, u8 ignoreBPress, u8 count);
 static void sub_80B53B4(u8 left, u8 top, u8 count, const struct MenuAction *list, u8 ignoreBPress);
 static void CreatePCMultichoice(void);
@@ -59,9 +59,9 @@ static u16 GetStringWidthInTilesForScriptMenu(const u8 *str)
     return (Text_GetStringWidthFromWindowTemplate((struct WindowTemplate *)&gMenuTextWindowTemplate, str) + 7) / 8;
 }
 
-static void DrawMultichoiceMenu(u8 left, u8 top, u8 count, const struct MenuAction *list, bool8 ignoreBPress, u8 cursorPos)
+static void DrawMultichoiceMenu(u8 left, u8 top, u8 count, const struct MenuAction *actions, bool8 ignoreBPress, u8 cursorPos)
 {
-    u16 width = GetStringWidthInTilesForScriptMenu(list[0].text);
+    u16 width = GetStringWidthInTilesForScriptMenu(actions[0].text);
     u16 newWidth;
     u8 i;
     u8 right;
@@ -69,7 +69,7 @@ static void DrawMultichoiceMenu(u8 left, u8 top, u8 count, const struct MenuActi
 
     for (i = 1; i < count; i++)
     {
-        newWidth = GetStringWidthInTilesForScriptMenu(list[i].text);
+        newWidth = GetStringWidthInTilesForScriptMenu(actions[i].text);
         if (width < newWidth)
             width = newWidth;
     }
@@ -86,7 +86,7 @@ static void DrawMultichoiceMenu(u8 left, u8 top, u8 count, const struct MenuActi
     bottom = top + (2 * count + 1);
 
     Menu_DrawStdWindowFrame(left, top, right, bottom);
-    Menu_PrintItems(left + 1, top + 1, count, list);
+    Menu_PrintItems(left + 1, top + 1, count, actions);
     InitMenu(0, left + 1, top + 1, count, cursorPos, right - left - 1);
     StartScriptMenuTask(left, top, right, bottom, ignoreBPress, count);
 }
