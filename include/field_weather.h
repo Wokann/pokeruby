@@ -83,7 +83,7 @@ struct Weather
     u8 filler_701[3];
     u32 sandstormXOffset;
     u32 sandstormYOffset;
-    u8 filler_70C[2];
+    u8 sandstormUnused[2];
     u16 sandstormBaseSpritesX;
     u16 sandstormPosY;
     u16 sandstormWaveIndex;
@@ -116,7 +116,7 @@ struct Weather
     s16 droughtLastBrightnessStage;
     s16 droughtTimer;
     s16 droughtState;
-    u8 filler_744[0xD-4];
+    u8 droughtUnused[0xD-4];
     s8 loadDroughtPalsIndex;
     u8 loadDroughtPalsOffset;
 };
