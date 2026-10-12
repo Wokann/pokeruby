@@ -5,7 +5,7 @@ bool8 IsEnoughMoney(u32 budget, u32 cost);
 void AddMoney(u32 *moneyPtr, u32 toAdd);
 void RemoveMoney(u32 *moneyPtr, u32 toSub);
 void GetMoneyAmountText(u8 *buffer, u32 arg1, u8 arg2);
-void PrintMoneyAmount(u32 arg0, u8 arg1, u8 x, u8 y);
+void PrintMoneyAmount(u32 amount, u8 arg1, u8 x, u8 y);
 void sub_80B7AEC(u32, u8 right, u8 top);
 void Draw10000Sprite(u8, u8, s32);
 void ChangeAmountInMoneyBox(u32 amount, u8 x, u8 y);
