@@ -34,7 +34,7 @@ static void AnimStompFoot(struct Sprite *sprite);
 static void AnimDizzyPunchDuck(struct Sprite *sprite);
 static void AnimBrickBreakWall(struct Sprite *sprite);
 static void AnimBrickBreakWallShard(struct Sprite *sprite);
-static void sub_80D97CC(struct Sprite *sprite);
+static void AnimSuperpowerOrb(struct Sprite *sprite);
 static void AnimSuperpowerRock(struct Sprite *sprite);
 static void AnimSuperpowerFireball(struct Sprite *sprite);
 static void AnimArmThrustHit(struct Sprite *sprite);
@@ -289,7 +289,7 @@ const struct SpriteTemplate gSuperpowerOrbSpriteTemplate =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = sAffineAnims_SuperpowerOrb,
-    .callback = sub_80D97CC,
+    .callback = AnimSuperpowerOrb,
 };
 
 const struct SpriteTemplate gSuperpowerRockSpriteTemplate =
@@ -809,7 +809,7 @@ static void AnimBrickBreakWallShard_Step(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-static void sub_80D97CC(struct Sprite *sprite)
+static void AnimSuperpowerOrb(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[0] == 0)
     {
