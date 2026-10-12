@@ -44,14 +44,14 @@ void ReshowBattleScreenAfterMenu(void)
     SetHBlankCallback(0);
     SetVBlankCallback(0);
     REG_MOSAIC = 0;
-    gReshowState = 0;
-    gHelperState = 0;
+    gReshowMainState = 0;
+    gReshowHelperState = 0;
     SetMainCallback2(CB2_ReshowBattleScreenAfterMenu);
 }
 
 static void CB2_ReshowBattleScreenAfterMenu(void)
 {
-    switch (gReshowState)
+    switch (gReshowMainState)
     {
     case 0:
         ScanlineEffect_Clear();
@@ -74,13 +74,13 @@ static void CB2_ReshowBattleScreenAfterMenu(void)
         }
         break;
     case 2:
-        if (!LoadChosenBattleElement(gHelperState))
+        if (!LoadChosenBattleElement(gReshowHelperState))
         {
-            gHelperState++;
-            gReshowState--;
+            gReshowHelperState++;
+            gReshowMainState--;
         }
         else
-            gHelperState = 0;
+            gReshowHelperState = 0;
         break;
     case 3:
         ResetSpriteData();
@@ -93,29 +93,29 @@ static void CB2_ReshowBattleScreenAfterMenu(void)
         ClearSpritesHealthboxAnimData();
         break;
     case 6:
-        if (BattleLoadAllHealthBoxesGfx(gHelperState))
-            gHelperState = 0;
+        if (BattleLoadAllHealthBoxesGfx(gReshowHelperState))
+            gReshowHelperState = 0;
         else
         {
-            gHelperState++;
-            gReshowState--;
+            gReshowHelperState++;
+            gReshowMainState--;
         }
         break;
     case 7:
         if (!LoadBattlerSpriteGfx(0))
-            gReshowState--;
+            gReshowMainState--;
         break;
     case 8:
         if (!LoadBattlerSpriteGfx(1))
-            gReshowState--;
+            gReshowMainState--;
         break;
     case 9:
         if (!LoadBattlerSpriteGfx(2))
-            gReshowState--;
+            gReshowMainState--;
         break;
     case 10:
         if (!LoadBattlerSpriteGfx(3))
-            gReshowState--;
+            gReshowMainState--;
         break;
     case 11:
         CreateBattlerSprite(0);
@@ -170,7 +170,7 @@ static void CB2_ReshowBattleScreenAfterMenu(void)
         SetMainCallback2(BattleMainCB2);
         break;
     }
-    gReshowState++;
+    gReshowMainState++;
 }
 
 static void ClearBattleBgCntBaseBlocks(void)
@@ -200,7 +200,7 @@ static bool8 LoadBattlerSpriteGfx(u8 battler)
         else
             BattleLoadSubstituteOrMonSpriteGfx(battler, 0);
 
-        gHelperState = 0;
+        gReshowHelperState = 0;
     }
     return 1;
 }

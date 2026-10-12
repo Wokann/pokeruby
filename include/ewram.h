@@ -140,8 +140,8 @@ extern u8 gSharedMem[];
 #define sDecorationContext              (*(struct DecorationPCContext *)(gSharedMem + 0x1f000))
 
 // reshow_battle_screen.c
-#define gHelperState                    (gSharedMem[0x1FFFE])
-#define gReshowState                    (gSharedMem[0x1FFFF])
+#define gReshowHelperState              (gSharedMem[0x1FFFE])
+#define gReshowMainState                (gSharedMem[0x1FFFF])
 
 // item_menu.c
 #define ewramBagSetupStep               (gSharedMem[0x1FFFF])
