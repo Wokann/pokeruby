@@ -1088,12 +1088,12 @@ void sub_80E91D4(u8 a)
     switch (a)
     {
     case 0:
-        sub_80E91B0(gEasyChatStruct->unk9C80, 4, 15, 2);
-        sub_80E91B0(gEasyChatStruct->unk9CC9, 4, 17, 2);
+        sub_80E91B0(gEasyChatStruct->instructionsText1, 4, 15, 2);
+        sub_80E91B0(gEasyChatStruct->instructionsText2, 4, 17, 2);
         break;
     case 1:
-        sub_80E91B0(gEasyChatStruct->unk9D12, 4, 15, 2);
-        sub_80E91B0(gEasyChatStruct->unk9D5B, 4, 17, 2);
+        sub_80E91B0(gEasyChatStruct->confirmText1, 4, 15, 2);
+        sub_80E91B0(gEasyChatStruct->confirmText2, 4, 17, 2);
         break;
     case 2:
         sub_80E91B0(gOtherText_TextDeletedConfirmPage1, 4, 15, 2);

@@ -100,10 +100,10 @@ struct Shared1000
     u8 filler9C78[4];
     u16 unk9C7C;  // this is at 0x9FA8 in German
     s16 unk9C7E;
-    u8 unk9C80[0xC9-0x80];
-    u8 unk9CC9[0xD12-0xCC9];
-    u8 unk9D12[0x5B-0x12];
-    u8 unk9D5B[0xA4-0x5B];
+    u8 instructionsText1[0xC9-0x80];
+    u8 instructionsText2[0xD12-0xCC9];
+    u8 confirmText1[0x5B-0x12];
+    u8 confirmText2[0xA4-0x5B];
     u8 unk9DA4[0xC9-0xA4];
     u8 unk9DC9[0xE14 - 0xDC9];
     u8 unk9E14[0xE41 - 0xE14];

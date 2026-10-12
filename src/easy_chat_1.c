@@ -73,20 +73,20 @@ const struct EasyChatPrompt gUnknown_083DB6F4[] =
     {OtherText_MakeProfilePage1, OtherText_MakeProfilePage2, TRUE},
     {OtherText_MakeMessagePage1, OtherText_MakeMessagePage2, TRUE},
     {OtherText_CombineNinePhrasesPage1, OtherText_CombineNinePhrasesPage2, TRUE},
-    {OtherText_DescribeFeelingsPage1, OtherText_DescribeFeelingsPage2, TRUE},
-    {OtherText_ImproveBardSongPage1, OtherText_ImproveBardSongPage2, TRUE},
+    {gText_FindWordsThatDescribeYour, gText_FeelingsRightNow, TRUE},
+    {gText_ChangeJustOneWordOrPhrase, gText_AndImproveTheBardsSong, TRUE},
     {OtherText_CombineTwoPhrasesPage1, OtherText_CombineTwoPhrasesPage2, TRUE},
-    {OtherText_YourProfile, OtherText_ConfirmTrendyPage2, FALSE},
-    {OtherText_YourFeelingBattle, OtherText_ConfirmTrendyPage2, TRUE},
-    {OtherText_SetWinMessage, OtherText_ConfirmTrendyPage2, TRUE},
-    {OtherText_SetLossMessage, OtherText_ConfirmTrendyPage2, TRUE},
-    {OtherText_MailMessage, OtherText_ConfirmTrendyPage2, TRUE},
-    {OtherText_MailSalutation, OtherText_ConfirmTrendyPage2, TRUE},
-    {OtherText_NewSong, OtherText_ConfirmTrendyPage2, FALSE},
-    {OtherText_TheAnswer, OtherText_ConfirmTrendyPage2, FALSE},
-    {OtherText_ConfirmTrendyPage1, OtherText_ConfirmTrendyPage2, TRUE},
+    {OtherText_YourProfile, gText_IsAsShownOkay, FALSE},
+    {gText_YourFeelingAtTheBattlesStart, gText_IsAsShownOkay, TRUE},
+    {gText_WhatYouSayIfYouWin, gText_IsAsShownOkay, TRUE},
+    {gText_WhatYouSayIfYouLose, gText_IsAsShownOkay, TRUE},
+    {gText_TheMailMessage, gText_IsAsShownOkay, TRUE},
+    {gText_TheMailSalutation, gText_IsAsShownOkay, TRUE},
+    {gText_TheBardsSong2, gText_IsAsShownOkay, FALSE},
+    {gText_TheAnswer, gText_IsAsShownOkay, FALSE},
+    {gText_TheTrendySaying, gText_IsAsShownOkay, TRUE},
     {OtherText_HipsterPage1, OtherText_HipsterPage2, TRUE},
-    {OtherText_WithFourPhrases, OtherText_CombineNinePhrasesPage2, TRUE},
+    {gText_WithFourPhrases, OtherText_CombineNinePhrasesPage2, TRUE},
 };
 
 const u8 gUnknown_083DB7C0[][2] =
@@ -463,8 +463,8 @@ void sub_80E6690(void)
 {
     u8 *pointers[] =
     {
-        gEasyChatStruct->unk9C80, gEasyChatStruct->unk9CC9,
-        gEasyChatStruct->unk9D12, gEasyChatStruct->unk9D5B,
+        gEasyChatStruct->instructionsText1, gEasyChatStruct->instructionsText2,
+        gEasyChatStruct->confirmText1, gEasyChatStruct->confirmText2,
     };
     u8 *r3;
     u16 i;
