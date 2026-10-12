@@ -824,10 +824,10 @@ void sub_80E0A4C(u8 taskId)
     u8 newSpriteId;
     u16 paletteNum;
     struct BattleAnimBgData animBg;
-    int var0 = 0;
+    int priorityChanged = 0;
 
-    gBattle_WIN0H = var0;
-    gBattle_WIN0V = var0;
+    gBattle_WIN0H = priorityChanged;
+    gBattle_WIN0V = priorityChanged;
     REG_WININ = 0x3F3F;
     REG_WINOUT = 0x3F3D;
     REG_DISPCNT |= DISPCNT_OBJWIN_ON;
@@ -846,7 +846,7 @@ void sub_80E0A4C(u8 taskId)
             {
                 gSprites[gBattlerSpriteIds[gBattleAnimAttacker ^ 2]].oam.priority--;
                 REG_BG1CNT_BITFIELD.priority = 1;
-                var0 = 1;
+                priorityChanged = 1;
             }
         }
     }
@@ -885,7 +885,7 @@ void sub_80E0A4C(u8 taskId)
     gTasks[taskId].data[1] = gBattleAnimArgs[0];
     gTasks[taskId].data[2] = gBattleAnimArgs[1];
     gTasks[taskId].data[3] = gBattleAnimArgs[2];
-    gTasks[taskId].data[6] = var0;
+    gTasks[taskId].data[6] = priorityChanged;
     gTasks[taskId].func = sub_80E0CD0;
 }
 
