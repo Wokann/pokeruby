@@ -95,9 +95,9 @@ static const u8 sWallpaperTiles_Sky[] = INCBIN_U8("graphics/pokemon_storage/wall
 
 static const u8 sWallpaperTilemap_Sky[] = INCBIN_U8("graphics/pokemon_storage/wallpapers/sky/tilemap.bin.lz");
 
-const u16 gWallpaperPalettes_Polkadot[] = INCBIN_U16("graphics/pokemon_storage/box_bg2.gbapal");
-const u16 gWallpaperPalettes_Polkadot_2[] = INCBIN_U16("graphics/pokemon_storage/wallpapers/polkadot/frame.gbapal");
-const u16 gWallpaperPalettes_Polkadot_2_3[] = INCBIN_U16("graphics/pokemon_storage/wallpapers/polkadot/bg.gbapal");
+const u16 gWallpaperPalettes_PolkaDot[] = INCBIN_U16("graphics/pokemon_storage/box_bg2.gbapal");
+const u16 gWallpaperPalettes_PolkaDot_2[] = INCBIN_U16("graphics/pokemon_storage/wallpapers/polkadot/frame.gbapal");
+const u16 gWallpaperPalettes_PolkaDot_2_3[] = INCBIN_U16("graphics/pokemon_storage/wallpapers/polkadot/bg.gbapal");
 
 static const u8 sWallpaperTiles_PolkaDot[] = INCBIN_U8("graphics/pokemon_storage/wallpapers/polkadot/tiles.4bpp.lz");
 
@@ -161,7 +161,7 @@ static const struct Wallpaper sWallpapers[] = {
     {sWallpaperTiles_Seafloor, 0x2B4, sWallpaperTilemap_Seafloor, gWallpaperPalettes_Seafloor}, // Seafloor
     {sWallpaperTiles_River, 0x294, sWallpaperTilemap_River, gWallpaperPalettes_River}, // River
     {sWallpaperTiles_Sky, 0x298, sWallpaperTilemap_Sky, gWallpaperPalettes_Sky}, // Sky
-    {sWallpaperTiles_PolkaDot, 0x1FC, sWallpaperTilemap_PolkaDot, gWallpaperPalettes_Polkadot}, // Polkadot
+    {sWallpaperTiles_PolkaDot, 0x1FC, sWallpaperTilemap_PolkaDot, gWallpaperPalettes_PolkaDot}, // Polkadot
     {sWallpaperTiles_Pokecenter, 0x3A4, sWallpaperTilemap_Pokecenter, gWallpaperPalettes_Pokecenter}, // Pokecenter
     {sWallpaperTiles_Machine, 0x2F0, sWallpaperTilemap_Machine, gWallpaperPalettes_Machine}, // Machine
     {sWallpaperTiles_Plain, 0xFC, sWallpaperTilemap_Plain, gWallpaperPalettes_Plain} // Plain

@@ -441,15 +441,15 @@ static void ClearLowestWallpaperTiles(u16 *buffer)
     }
 }
 
-void sub_809A1BC(const u8 *a0, const u8 *text)
+void sub_809A1BC(const u8 *dst, const u8 *string)
 {
     u8 *r5 = gUnknown_083B6DB8;
     DmaClear16(3, r5, 0x200);
-    Text_InitWindow8004E3C(&gWindowTemplate_81E6D38, r5, text);
-    DmaCopy16(3, r5 + 0x000, a0 + 0x000, 0x80);
-    DmaCopy16(3, r5 + 0x100, a0 + 0x080, 0x80);
-    DmaCopy16(3, r5 + 0x080, a0 + 0x100, 0x80);
-    DmaCopy16(3, r5 + 0x180, a0 + 0x180, 0x80);
+    Text_InitWindow8004E3C(&gWindowTemplate_81E6D38, r5, string);
+    DmaCopy16(3, r5 + 0x000, dst + 0x000, 0x80);
+    DmaCopy16(3, r5 + 0x100, dst + 0x080, 0x80);
+    DmaCopy16(3, r5 + 0x080, dst + 0x100, 0x80);
+    DmaCopy16(3, r5 + 0x180, dst + 0x180, 0x80);
 }
 
 static const struct SpriteTemplate sSpriteTemplate_BoxTitle;
