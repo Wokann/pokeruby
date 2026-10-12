@@ -627,14 +627,14 @@ static void Task_ShowWinnerMonBanner(u8 taskId)
         case 1:
             if (++gTasks[taskId].data[3] == 1)
             {
-                u8 win0v;
+                u8 counter;
                 gTasks[taskId].data[3] = 0;
                 gTasks[taskId].data[2] += 2;
                 if (gTasks[taskId].data[2] > 0x20)
                     gTasks[taskId].data[2] = 0x20;
-                win0v = gTasks[taskId].data[2];
-                gBattle_WIN0V = ((0x50 - win0v) << 8) | (0x50 + win0v);
-                if (win0v == 0x20)
+                counter = gTasks[taskId].data[2];
+                gBattle_WIN0V = ((0x50 - counter) << 8) | (0x50 + counter);
+                if (counter == 0x20)
                 {
                     gTasks[taskId].data[0]++;
                 }
@@ -657,12 +657,12 @@ static void Task_ShowWinnerMonBanner(u8 taskId)
         case 4:
             if (eContestLink80C2020Struct2018000.winnerMonSlidingState == 2)
             {
-                u8 win0v = (gBattle_WIN0V >> 8);
-                win0v += 2;
-                if (win0v > 0x50)
-                    win0v = 0x50;
-                gBattle_WIN0V = (win0v << 8) | (0xa0 - win0v);
-                if (win0v == 0x50)
+                u8 top = (gBattle_WIN0V >> 8);
+                top += 2;
+                if (top > 0x50)
+                    top = 0x50;
+                gBattle_WIN0V = (top << 8) | (0xa0 - top);
+                if (top == 0x50)
                 {
                     gTasks[taskId].data[0]++;
                 }
@@ -2174,10 +2174,10 @@ static void UpdateContestResultBars(u8 isRound2, u8 numUpdates)
         u32 target;
         for (i = 0; i < 4; i++)
         {
-            u8 var1 = eContestLink80C2020Struct2018018[i].numStars;
-            if (numUpdates < var1)
+            u8 numStars = eContestLink80C2020Struct2018018[i].numStars;
+            if (numUpdates < numStars)
             {
-                int x = var1 + 19;
+                int x = numStars + 19;
                 x += 32 * (i * 3 + 5);
                 x -= numUpdates;
                 x--;
@@ -2200,11 +2200,11 @@ static void UpdateContestResultBars(u8 isRound2, u8 numUpdates)
         for (i = 0; i < 4; i++)
         {
             int tile;
-            s8 var1 = eContestLink80C2020Struct2018018[i].numHearts;
+            s8 numHearts = eContestLink80C2020Struct2018018[i].numHearts;
             tile = eContestLink80C2020Struct2018018[i].lostPoints ? 0x60A5 : 0x60A3;
-            if (numUpdates < var1)
+            if (numUpdates < numHearts)
             {
-                int x = var1 + 19;
+                int x = numHearts + 19;
                 x += 32 * (i * 3 + 6);
                 x -= numUpdates;
                 x--;
