@@ -168,30 +168,30 @@ const u8 gPokenavDeviceBgTilemap[] = INCBIN_U8("graphics/pokenav/device_outline_
 
 const u8 *const gUnknown_083E31B0[] = 
 {
-    PCText_CheckMap,
-    PCText_CheckPoke,
+    gText_CheckMapOfHoenn,
+    gText_CheckPokemonInDetail,
     PCText_CheckTrainer,
-    PCText_CheckRibbons,
-    PCText_PutAwayNav,
-    PCText_NoRibbonWin,
-    PCText_NoTrainers,
+    gText_CheckObtainedRibbons,
+    gText_PutAwayPokenav,
+    gText_NoRibbonWinners,
+    gText_NoTrainersRegistered,
 };
 
 const u8 *const gUnknown_083E31CC[] = 
 {
-    PCText_CheckParty,
-    PCText_CheckPokeAll,
-    PCText_ReturnToNav,
+    gText_CheckPartyPokemonInDetail,
+    gText_CheckAllPokemonInDetail,
+    gText_ReturnToPokenavMenu,
 };
 
 const u8 *const gUnknown_083E31D8[] = 
 {
-    PCText_FindCool,
-    PCText_FindBeauty,
-    PCText_FindCute,
-    PCText_FindSmart,
-    PCText_FindTough,
-    PCText_ReturnToCondition,
+    gText_FindCoolPokemon,
+    gText_FindBeautifulPokemon,
+    gText_FindCutePokemon,
+    gText_FindSmartPokemon,
+    gText_FindToughPokemon,
+    gText_ReturnToConditionMenu,
 };
 
 #include "data/region_map/city_map_entries.h"
@@ -823,7 +823,7 @@ const struct SpriteTemplate gSpriteTemplate_83E4660 =
 
 const u16 gUnknown_083E4678[] = INCBIN_U16("graphics/pokenav/83E4678.gbapal");
 
-const u16 gPokenavRibbonsIconGfx[][2] = 
+const u16 gRibbonGfxData[][2] =
 {
     {0, 0},
     {1, 0},

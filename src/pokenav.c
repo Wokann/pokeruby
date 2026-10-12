@@ -85,7 +85,7 @@ extern const u8 gRibbonIconsSmall_Gfx[];
 extern const u16 gPokenavRibbonView_Pal[];
 extern const u16 gUnknown_083E03A8[];
 extern const u16 gUnknown_083E3C60[][16];
-extern const u16 gPokenavRibbonsIconGfx[][2];
+extern const u16 gRibbonGfxData[][2];
 extern const u8 *const gRibbonDescriptionPointers[][2];
 extern const u8 *const gGiftRibbonDescriptionPointers[][2];
 extern const u8 gUnknown_08E9FF58[];
@@ -1568,8 +1568,8 @@ void DrawMonRibbonIcons(void)
     for (i = 0; i < var0; i++)
     {
         index = gPokenavStructPtr->unkBC4C[i];
-        palette = gPokenavRibbonsIconGfx[index][1] + 3;
-        tile = gPokenavRibbonsIconGfx[index][0] * 2 + 0x10;
+        palette = gRibbonGfxData[index][1] + 3;
+        tile = gRibbonGfxData[index][0] * 2 + 0x10;
         gPokenavStructPtr->unk934C[offset] = (palette << 12) | tile;
         gPokenavStructPtr->unk934C[offset + 1] = ((palette << 12) | 0x400) | tile;
         gPokenavStructPtr->unk934C[offset + 0x20] = (palette << 12) | (tile + 1);
@@ -1585,8 +1585,8 @@ void DrawMonRibbonIcons(void)
     for (i = 0; i < gPokenavStructPtr->numGiftRibbons; i++)
     {
         index = gPokenavStructPtr->unkBC4C[var0 + i];
-        palette = gPokenavRibbonsIconGfx[index][1] + 3;
-        tile = gPokenavRibbonsIconGfx[index][0] * 2 + 0x10;
+        palette = gRibbonGfxData[index][1] + 3;
+        tile = gRibbonGfxData[index][0] * 2 + 0x10;
         gPokenavStructPtr->unk934C[offset] = (palette << 12) | tile;
         gPokenavStructPtr->unk934C[offset + 1] = ((palette << 12) | 0x400) | tile;
         gPokenavStructPtr->unk934C[offset + 0x20] = (palette << 12) | (tile + 1);
@@ -3192,8 +3192,8 @@ struct Sprite *sub_80F3A3C(u16 arg0, u16 arg1)
 
     ribbon = gPokenavStructPtr->unkBC4C[var0];
     spriteTemplate = gSpriteTemplate_RibbonIconBig;
-    spriteTemplate.tileTag = gPokenavRibbonsIconGfx[ribbon][0] + 11;
-    spriteTemplate.paletteTag = gPokenavRibbonsIconGfx[ribbon][1] + 10;
+    spriteTemplate.tileTag = gRibbonGfxData[ribbon][0] + 11;
+    spriteTemplate.paletteTag = gRibbonGfxData[ribbon][1] + 10;
     spriteId = CreateSprite(&spriteTemplate, arg0 * 16 + 96, arg1 * 16 + 40, 2);
     if (spriteId != MAX_SPRITES)
         return &gSprites[spriteId];

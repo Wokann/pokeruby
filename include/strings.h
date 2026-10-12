@@ -845,22 +845,22 @@ extern const u8 gText_PartyFull[];
 extern const u8 gText_Box[];
 
 // pokenav
-extern const u8 PCText_CheckMap[];
-extern const u8 PCText_CheckPoke[];
+extern const u8 gText_CheckMapOfHoenn[];
+extern const u8 gText_CheckPokemonInDetail[];
 extern const u8 PCText_CheckTrainer[];
-extern const u8 PCText_CheckRibbons[];
-extern const u8 PCText_PutAwayNav[];
-extern const u8 PCText_NoRibbonWin[];
-extern const u8 PCText_NoTrainers[];
-extern const u8 PCText_CheckParty[];
-extern const u8 PCText_CheckPokeAll[];
-extern const u8 PCText_ReturnToNav[];
-extern const u8 PCText_FindCool[];
-extern const u8 PCText_FindBeauty[];
-extern const u8 PCText_FindCute[];
-extern const u8 PCText_FindSmart[];
-extern const u8 PCText_FindTough[];
-extern const u8 PCText_ReturnToCondition[];
+extern const u8 gText_CheckObtainedRibbons[];
+extern const u8 gText_PutAwayPokenav[];
+extern const u8 gText_NoRibbonWinners[];
+extern const u8 gText_NoTrainersRegistered[];
+extern const u8 gText_CheckPartyPokemonInDetail[];
+extern const u8 gText_CheckAllPokemonInDetail[];
+extern const u8 gText_ReturnToPokenavMenu[];
+extern const u8 gText_FindCoolPokemon[];
+extern const u8 gText_FindBeautifulPokemon[];
+extern const u8 gText_FindCutePokemon[];
+extern const u8 gText_FindSmartPokemon[];
+extern const u8 gText_FindToughPokemon[];
+extern const u8 gText_ReturnToConditionMenu[];
 
 extern const u8 gOtherText_NumberRegistered[];
 extern const u8 gOtherText_NumberBattles[];
