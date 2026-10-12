@@ -1293,12 +1293,12 @@ static void sub_80E3338(u8 taskId)
     u8 battler1, battler2;
     u16 species;
     u8 spriteId, spriteId2;
-    u16 var0;
+    u16 hidBattler2;
     struct BattleAnimBgData animBgData;
     s16 taskData[8];
 
     spriteId2 = 0;
-    var0 = 0;
+    hidBattler2 = 0;
 
     for (i = 0; i < 8; i++)
     {
@@ -1337,7 +1337,7 @@ static void sub_80E3338(u8 taskId)
             {
                 gSprites[gBattlerSpriteIds[battler2]].oam.priority -= 1;
                 REG_BG1CNT_BITFIELD.priority = 1;
-                var0 = 1;
+                hidBattler2 = 1;
             }
         }
     }
@@ -1413,7 +1413,7 @@ static void sub_80E3338(u8 taskId)
     gTasks[taskId].data[0] = spriteId;
     gTasks[taskId].data[2] = taskData[3];
     gTasks[taskId].data[3] = spriteId2;
-    gTasks[taskId].data[6] = var0;
+    gTasks[taskId].data[6] = hidBattler2;
     gTasks[taskId].data[7] = gBattlerSpriteIds[battler2];
     gTasks[taskId].func = sub_80E3704;
 
