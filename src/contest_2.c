@@ -1435,7 +1435,7 @@ void sub_80AF1E4(u8 a, u8 b)
     else
         r3 = 14;
     if (eContestantStatus[a].currMove == MOVE_NONE)
-        Contest_CopyStringWithColor(gDisplayedStringBattle, gUnknownText_MissedTurn, r3);
+        Contest_CopyStringWithColor(gDisplayedStringBattle, gTest_MissedTurn, r3);
     else
         Contest_CopyStringWithColor(
             gDisplayedStringBattle, gMoveNames[eContestantStatus[a].currMove], r3);
@@ -1755,7 +1755,7 @@ void ContestPrintLinkStandby(void)
     gBattle_BG0_Y = 0;
     gBattle_BG2_Y = 0;
     ContestClearGeneralTextWindow();
-    Text_InitWindowAndPrintText(&gMenuWindow, gUnknownText_LinkStandbyAndWinner, 776, 1, 15);
+    Text_InitWindowAndPrintText(&gMenuWindow, gText_LinkStandby4, 776, 1, 15);
 }
 
 UNUSED
@@ -3458,7 +3458,7 @@ UNUSED
 void unref_sub_80B19D0(void)
 {
     u8 str[20];
-    StringCopy(str, gUnknown_083CC2EC);
+    StringCopy(str, gText_Tension);
     Text_InitWindowAndPrintText(&gWindowTemplate_Contest_MoveDescription, str, 680, 0, 0);
 }
 
