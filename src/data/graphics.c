@@ -1144,9 +1144,9 @@ const u16 gMonMarkingsMenu_Pal[] = INCBIN_U16("graphics/interface/mon_markings_m
 
 const u16 gMonIconPalettes[][16] = 
 {
-    INCBIN_U16("graphics/pokemon_icon_palettes/0.gbapal"),
-    INCBIN_U16("graphics/pokemon_icon_palettes/1.gbapal"),
-    INCBIN_U16("graphics/pokemon_icon_palettes/2.gbapal"),
+    INCBIN_U16("graphics/pokemon/icon_palettes/icon_palette_0.gbapal"),
+    INCBIN_U16("graphics/pokemon/icon_palettes/icon_palette_1.gbapal"),
+    INCBIN_U16("graphics/pokemon/icon_palettes/icon_palette_2.gbapal"),
 };
 
 const u8 gPokedexList_Tilemap[] = INCBIN_U8("graphics/pokedex/list.bin.lz");
