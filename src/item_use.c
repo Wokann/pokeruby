@@ -54,8 +54,8 @@ extern u16 gBattleTypeFlags;
 
 static void SetUpItemUseCallback(u8);
 static void SetUpItemUseOnFieldCallback(u8);
-static void DisplayDadsAdviceCannotUseItemMessage(u8, u8);
-static void DisplayCannotDismountBikeMessage(u8, u8);
+static void DisplayDadsAdviceCannotUseItemMessage(u8, bool8);
+static void DisplayCannotDismountBikeMessage(u8, bool8);
 static void ItemUseOnFieldCB_Bike(u8);
 static bool32 CanFish(void);
 static void ItemUseOnFieldCB_Rod(u8);
@@ -144,7 +144,7 @@ static void SetUpItemUseOnFieldCallback(u8 taskId)
     }
 }
 
-static void DisplayCannotUseItemMessage(u8 taskId, u8 isUsingRegisteredKeyItemOnField, const u8 *str)
+static void DisplayCannotUseItemMessage(u8 taskId, bool8 isUsingRegisteredKeyItemOnField, const u8 *str)
 {
     StringExpandPlaceholders(gStringVar4, str);
 
@@ -160,12 +160,12 @@ static void DisplayCannotUseItemMessage(u8 taskId, u8 isUsingRegisteredKeyItemOn
     }
 }
 
-static void DisplayDadsAdviceCannotUseItemMessage(u8 taskId, u8 isUsingRegisteredKeyItemOnField)
+static void DisplayDadsAdviceCannotUseItemMessage(u8 taskId, bool8 isUsingRegisteredKeyItemOnField)
 {
     DisplayCannotUseItemMessage(taskId, isUsingRegisteredKeyItemOnField, gText_DadsAdvice);
 }
 
-static void DisplayCannotDismountBikeMessage(u8 taskId, u8 isUsingRegisteredKeyItemOnField)
+static void DisplayCannotDismountBikeMessage(u8 taskId, bool8 isUsingRegisteredKeyItemOnField)
 {
     DisplayCannotUseItemMessage(taskId, isUsingRegisteredKeyItemOnField, gText_CantDismountBike);
 }
