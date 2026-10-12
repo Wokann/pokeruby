@@ -73,33 +73,33 @@ static void Task_LinkContest_InitFlags(u8 taskId)
     }
 }
 
-u8 GetStringLanguage(const u8 *string)
+u8 GetMonNicknameLanguage(const u8 *nickname)
 {
     u8 language = GAME_LANGUAGE;
-    if (string[0] == EXT_CTRL_CODE_BEGIN && string[1] == 0x15)
+    if (nickname[0] == EXT_CTRL_CODE_BEGIN && nickname[1] == 0x15)
         return language;
-    if (StringLength(string) < OT_NAME_LENGTH - 1)
+    if (StringLength(nickname) < OT_NAME_LENGTH - 1)
     {
-        while (*string != EOS)
+        while (*nickname != EOS)
         {
-            if (((*string >= CHAR_A && *string <= CHAR_z) ||
-                    (*string >= CHAR_0 + 0 && *string <= CHAR_0 + 9) ||
-                    *string == CHAR_SPACE ||
-                    *string == CHAR_PERIOD ||
-                    *string == CHAR_COMMA ||
-                    *string == CHAR_EXCL_MARK ||
-                    *string == CHAR_QUESTION_MARK ||
-                    *string == CHAR_MALE ||
-                    *string == CHAR_FEMALE ||
-                    *string == CHAR_SLASH ||
-                    *string == CHAR_HYPHEN ||
-                    *string == CHAR_ELLIPSIS ||
-                    *string == CHAR_DBL_QUOTE_LEFT ||
-                    *string == CHAR_DBL_QUOTE_RIGHT ||
-                    *string == CHAR_SGL_QUOTE_LEFT ||
-                    *string == CHAR_DBL_QUOTE_LEFT)) // Most likely a typo, CHAR_SGL_QUOTE_RIGHT should be here instead.
+            if (((*nickname >= CHAR_A && *nickname <= CHAR_z) ||
+                    (*nickname >= CHAR_0 + 0 && *nickname <= CHAR_0 + 9) ||
+                    *nickname == CHAR_SPACE ||
+                    *nickname == CHAR_PERIOD ||
+                    *nickname == CHAR_COMMA ||
+                    *nickname == CHAR_EXCL_MARK ||
+                    *nickname == CHAR_QUESTION_MARK ||
+                    *nickname == CHAR_MALE ||
+                    *nickname == CHAR_FEMALE ||
+                    *nickname == CHAR_SLASH ||
+                    *nickname == CHAR_HYPHEN ||
+                    *nickname == CHAR_ELLIPSIS ||
+                    *nickname == CHAR_DBL_QUOTE_LEFT ||
+                    *nickname == CHAR_DBL_QUOTE_RIGHT ||
+                    *nickname == CHAR_SGL_QUOTE_LEFT ||
+                    *nickname == CHAR_DBL_QUOTE_LEFT)) // Most likely a typo, CHAR_SGL_QUOTE_RIGHT should be here instead.
             {
-                string++;
+                nickname++;
             }
             else
             {
@@ -165,7 +165,7 @@ void Task_LinkContest_CommunicateMonsRS(u8 taskId)
                     name = gContestMons[i].nickname;
                     if (gLinkPlayers[i].language == LANGUAGE_JAPANESE)
                     {
-                        ConvertInternationalString(name, GetStringLanguage(name));
+                        ConvertInternationalString(name, GetMonNicknameLanguage(name));
                     }
                     else if (name[10] == EXT_CTRL_CODE_BEGIN)
                     {

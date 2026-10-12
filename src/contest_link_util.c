@@ -2670,7 +2670,7 @@ void Contest_CopyAndConvertNicknameI_Intl(u8 * dest, u8 idx)
     {
         if (gLinkPlayers[idx].language == LANGUAGE_JAPANESE)
         {
-            ConvertInternationalString(dest, GetStringLanguage(dest));
+            ConvertInternationalString(dest, GetMonNicknameLanguage(dest));
         }
     }
 }
