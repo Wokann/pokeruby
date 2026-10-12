@@ -74,7 +74,7 @@ static EWRAM_DATA u8 sWhichToReshow = 0;
 void sub_8096884(void);
 static void VBlankCB_PokeStorage(void);
 static void CB2_PokeStorage(void);
-void SetPSSCallback(void (*func)(void));
+void SetPSSCallback(void (*newFunc)(void));
 void sub_8096BF0(void);
 void sub_8096C68(void);
 void sub_8096C84(void);
@@ -111,7 +111,7 @@ static void UpdateWaveformAnimation(void);
 static void InitSupplementalTilemaps(void);
 static void SetUpHidePartyMenu(void);
 static void SetPartySlotTilemaps(void);
-static void UpdateCloseBoxButtonTilemap(bool8 flag);
+static void UpdateCloseBoxButtonTilemap(bool8 normal);
 static bool8 HidePartyMenu(void);
 static void StartFlashingCloseBoxButton(void);
 static void StopFlashingCloseBoxButton(void);
@@ -119,11 +119,11 @@ static void UpdateCloseBoxButtonFlash(void);
 static void UpdatePartySlotColors(void);
 static void SetUpDoShowPartyMenu(void);
 static bool8 DoShowPartyMenu(void);
-static void PrintMessage(u8 index);
+static void PrintMessage(u8 id);
 static void ShowYesNoWindow(s8);
 static void ClearBottomWindow(void);
 static void AddWallpaperSetsMenu(void);
-static void AddWallpapersMenu(u8 a0);
+static void AddWallpapersMenu(u8 wallpaperSet);
 
 // .rodata
 
@@ -438,9 +438,9 @@ void sub_8096B5C(void)
     }
 }
 
-void SetPSSCallback(void (*func)(void))
+void SetPSSCallback(void (*newFunc)(void))
 {
-    gPokemonStorageSystemPtr->unk_0000 = func;
+    gPokemonStorageSystemPtr->unk_0000 = newFunc;
     gPokemonStorageSystemPtr->state = 0;
 }
 
@@ -927,7 +927,7 @@ void sub_8097390(void)
 
 void sub_809746C(void)
 {
-    u8 r4;
+    u8 boxId;
 
     switch (gPokemonStorageSystemPtr->state)
     {
@@ -938,9 +938,9 @@ void sub_809746C(void)
         gPokemonStorageSystemPtr->state++;
         break;
     case 1:
-        r4 = HandleChooseBoxMenuInput();
-        if (r4 == 200);
-        else if (r4 == 201)
+        boxId = HandleChooseBoxMenuInput();
+        if (boxId == 200);
+        else if (boxId == 201)
         {
             ClearBottomWindow();
             DestroyChooseBoxMenuSprites();
@@ -949,7 +949,7 @@ void sub_809746C(void)
         }
         else
         {
-            if (TryStorePartyMonInBox(r4))
+            if (TryStorePartyMonInBox(boxId))
             {
                 ClearBottomWindow();
                 DestroyChooseBoxMenuSprites();
@@ -961,7 +961,7 @@ void sub_809746C(void)
                 PrintMessage(MSG_BOX_IS_FULL);
                 gPokemonStorageSystemPtr->state = 4;
             }
-            sDepositBoxId = r4;
+            sDepositBoxId = boxId;
         }
         break;
     case 2:
@@ -1019,13 +1019,13 @@ void sub_8097594(void)
         {
             while (1)
             {
-                s8 r0 = RunCanReleaseMon();
-                if (r0 == 1)
+                s8 canRelease = RunCanReleaseMon();
+                if (canRelease == 1)
                 {
                     gPokemonStorageSystemPtr->state++;
                     break;
                 }
-                if (r0 == 0)
+                if (canRelease == 0)
                 {
                     gPokemonStorageSystemPtr->state = 8;
                     break;
@@ -1751,9 +1751,9 @@ static bool8 HidePartyMenu(void)
     return TRUE;
 }
 
-static void UpdateCloseBoxButtonTilemap(bool8 flag)
+static void UpdateCloseBoxButtonTilemap(bool8 normal)
 {
-    if (flag)
+    if (normal)
         sub_809D034(BG_SCREEN_ADDR(15), 21, 0, gPokemonStorageSystemPtr->unk_00a8, 12, 0, 9, 2);
     else
         sub_809D034(BG_SCREEN_ADDR(15), 21, 0, gPokemonStorageSystemPtr->unk_00a8, 12, 2, 9, 2);
@@ -1792,10 +1792,10 @@ static void SetPartySlotTilemaps(void)
     for (i = 1; i < PARTY_SIZE; i++)
     {
         u16 r1;
-        bool32 r0 = GetMonData(gPlayerParty + i, MON_DATA_SPECIES);
-        if (r0)
-            r0 = TRUE;
-        r1 = r0 ? 12 : 16;
+        bool32 hasMon = GetMonData(gPlayerParty + i, MON_DATA_SPECIES);
+        if (hasMon)
+            hasMon = TRUE;
+        r1 = hasMon ? 12 : 16;
         sub_809D104(gPokemonStorageSystemPtr->unk_00a8, 7, (i - 1) * 3 + 1, gPokemonStorageSystemPtr->unk_00a8, r1, 4, 4, 3);
     }
 }
