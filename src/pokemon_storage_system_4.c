@@ -238,7 +238,7 @@ static s8 DetermineBoxScrollDirection(u8 boxId)
 void SetWallpaperForCurrentBox(u8 wallpaperId)
 {
     u8 boxId = StorageGetCurrentBox();
-    gPokemonStorage.wallpaper[boxId] = wallpaperId;
+    gPokemonStorage.boxWallpapers[boxId] = wallpaperId;
     gPokemonStorageSystemPtr->wallpaperChangeState = 0;
 }
 
@@ -279,7 +279,7 @@ static void LoadWallpaperGfx(u8 boxId, s8 direction)
         gPokemonStorageSystemPtr->wallpaperOffset = gPokemonStorageSystemPtr->wallpaperOffset ? FALSE : TRUE;
         ClearLowestWallpaperTiles(BG_SCREEN_ADDR(26));
     }
-    wallpaper = sWallpapers +gPokemonStorage.wallpaper[boxId];
+    wallpaper = sWallpapers +gPokemonStorage.boxWallpapers[boxId];
     LoadPalette(wallpaper->palettes, gPokemonStorageSystemPtr->wallpaperOffset * 0x30 + 0x40, 0x60);
     LZ77UnCompWram(wallpaper->tilemap, gPokemonStorageSystemPtr->wallpaperTilemap);
     CopyWallpaperTilemap(BG_SCREEN_ADDR(26), gPokemonStorageSystemPtr->wallpaperTilemap, direction, gPokemonStorageSystemPtr->wallpaperOffset);
@@ -467,7 +467,7 @@ static void InitBoxTitle(u8 boxId)
         {}
     };
 
-    u16 wallpaperId = gPokemonStorage.wallpaper[boxId];
+    u16 wallpaperId = gPokemonStorage.boxWallpapers[boxId];
     gPokemonStorageSystemPtr->boxTitlePal[14] = sBoxTitleColors[wallpaperId][0];
     gPokemonStorageSystemPtr->boxTitlePal[15] = sBoxTitleColors[wallpaperId][1];
     LoadSpritePalettes(palettes);
@@ -514,7 +514,7 @@ static void CreateIncomingBoxTitle(u8 boxId, s8 direction)
     }
     sub_809A1BC(gPokemonStorageSystemPtr->boxTitleTiles, gPokemonStorage.boxNames[boxId]);
     LoadSpriteSheet(&spriteSheet);
-    LoadPalette(sBoxTitleColors[gPokemonStorage.wallpaper[boxId]], palOffset, 0x04);
+    LoadPalette(sBoxTitleColors[gPokemonStorage.boxWallpapers[boxId]], palOffset, 0x04);
     x = sub_809A6D0(GetStringWidthInMenuWindow(gPokemonStorage.boxNames[boxId]));
     adjustedX = x + direction * 192;
     for (i = 0; i < 2; i++)
@@ -566,7 +566,7 @@ static void SpriteCB_OutgoingBoxTitle(struct Sprite *sprite)
 static void CycleBoxTitleColor(void)
 {
     u8 boxId = StorageGetCurrentBox();
-    u8 wallpaperId = gPokemonStorage.wallpaper[boxId];
+    u8 wallpaperId = gPokemonStorage.boxWallpapers[boxId];
     if (gPokemonStorageSystemPtr->boxTitleCycleId == 0)
         CpuCopy16(sBoxTitleColors[wallpaperId], gPlttBufferUnfaded + gPokemonStorageSystemPtr->boxTitlePalOffset, 4);
     else

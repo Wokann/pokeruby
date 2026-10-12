@@ -360,14 +360,14 @@ void CB2_ExitPokeStorage(void)
 void ResetPokemonStorageSystem(void)
 {
     u16 boxId;
-    u16 boxMon;
+    u16 boxPosition;
 
     gPokemonStorage.currentBox = 0;
     for (boxId = 0; boxId < 14; boxId++)
     {
-        for (boxMon = 0; boxMon < 30; boxMon++)
+        for (boxPosition = 0; boxPosition < 30; boxPosition++)
         {
-            ZeroBoxMonData(gPokemonStorage.boxes[boxId] + boxMon);
+            ZeroBoxMonData(gPokemonStorage.boxes[boxId] + boxPosition);
         }
     }
     for (boxId = 0; boxId < 14; boxId++)
@@ -377,7 +377,7 @@ void ResetPokemonStorageSystem(void)
     }
     for (boxId = 0; boxId < 14; boxId++)
     {
-        gPokemonStorage.wallpaper[boxId] = boxId & 0x03;
+        gPokemonStorage.boxWallpapers[boxId] = boxId & 0x03;
     }
 }
 
