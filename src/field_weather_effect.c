@@ -808,29 +808,29 @@ static const struct SpriteTemplate sFogHorizontalSpriteTemplate =
 
 static bool8 CreateRainSprite(void)
 {
-    u8 spriteNum;
+    u8 spriteIndex;
     u8 spriteId;
 
     if (gWeatherPtr->rainSpriteCount == 24)
         return FALSE;
 
-    spriteNum = gWeatherPtr->rainSpriteCount;
+    spriteIndex = gWeatherPtr->rainSpriteCount;
     spriteId = CreateSpriteAtEnd(&sRainSpriteTemplate,
-      sRainSpriteCoords[spriteNum].x, sRainSpriteCoords[spriteNum].y, 78);
+      sRainSpriteCoords[spriteIndex].x, sRainSpriteCoords[spriteIndex].y, 78);
     if (spriteId != 64)
     {
         gSprites[spriteId].data[5] = 0;
-        gSprites[spriteId].data[1] = spriteNum * 145;
+        gSprites[spriteId].data[1] = spriteIndex * 145;
         while (gSprites[spriteId].data[1] >= 600)
             gSprites[spriteId].data[1] -= 600;
         StartRainSpriteFall(&gSprites[spriteId]);
-        InitRainSpriteMovement(&gSprites[spriteId], spriteNum * 9);
+        InitRainSpriteMovement(&gSprites[spriteId], spriteIndex * 9);
         gSprites[spriteId].invisible = TRUE;
-        gWeatherPtr->sprites.s1.rainSprites[spriteNum] = &gSprites[spriteId];
+        gWeatherPtr->sprites.s1.rainSprites[spriteIndex] = &gSprites[spriteId];
     }
     else
     {
-        gWeatherPtr->sprites.s1.rainSprites[spriteNum] = NULL;
+        gWeatherPtr->sprites.s1.rainSprites[spriteIndex] = NULL;
     }
 
     if (++gWeatherPtr->rainSpriteCount == 24)
