@@ -142,7 +142,7 @@ static void TrainerCard_InitScreenForPlayer(MainCallback callBack);
 static void TrainerCard_InitScreenForLinkPlayer(u8 arg1, MainCallback callBack);
 void TrainerCard_FillTrainerCardStruct(void);
 static void nullsub_60(u8);
-static u32 GetCappedGameStat(u8 index, u32 maxVal);
+static u32 GetCappedGameStat(u8 statId, u32 maxValue);
 static u8 GetRubyTrainerStars(struct TrainerCard *);
 static void sub_8093534(void);
 static void sub_8093550(void);
