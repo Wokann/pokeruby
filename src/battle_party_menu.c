@@ -633,7 +633,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
 {
     u8 partySelection;
     u8 i;
-    u8 r4;
+    u8 newSlot;
 
     ClosePartyPopupMenu(gTasks[taskId].data[4], sBattlePartyPopupMenus);
     partySelection = GetCursorSelectionMonId(taskId);
@@ -696,10 +696,10 @@ static void Task_BattlePartyMenuShift(u8 taskId)
     if (gUnknown_02038473 == 2)
     {
         u8 r0;
-        u8 r4 = gBattlerInMenuId;
+        u8 currBattler = gBattlerInMenuId;
 
         PartyMenuEraseMsgBoxAndFrame();
-        r0 = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[r4]);
+        r0 = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[currBattler]);
         GetMonNickname(&gPlayerParty[r0], gStringVar1);
         StringExpandPlaceholders(gStringVar4, gText_PkmnCantSwitchOut);
         DisplayPartyMenuMessage(gStringVar4, 0);
@@ -708,9 +708,9 @@ static void Task_BattlePartyMenuShift(u8 taskId)
     }
     gSelectedMonPartyId = GetPartyIdFromBattleSlot(partySelection);
     gUnknown_0202E8F4 = 1;
-    r4 = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[gBattlerInMenuId]);
-    SwitchPartyMonSlots(r4, partySelection);
-    SwapPokemon(&gPlayerParty[r4], &gPlayerParty[partySelection]);
+    newSlot = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[gBattlerInMenuId]);
+    SwitchPartyMonSlots(newSlot, partySelection);
+    SwapPokemon(&gPlayerParty[newSlot], &gPlayerParty[partySelection]);
     gTasks[taskId].func = Task_ClosePartyMenu;
 }
 
