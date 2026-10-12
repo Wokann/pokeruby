@@ -1682,13 +1682,13 @@ static void Task_BagMenu_HandleInput(u8 taskId)
     }
 }
 
-bool8 SellMenu_QuantityRoller(u8 taskId, u16 b)
+bool8 SellMenu_QuantityRoller(u8 taskId, u16 max)
 {
     s16 *taskData = gTasks[taskId].data;
 
     if (JOY_REPEAT(DPAD_ANY) == DPAD_UP)
     {
-        if (taskData[1] != b)
+        if (taskData[1] != max)
             taskData[1]++;
         else
             taskData[1] = 1;
@@ -1700,16 +1700,16 @@ bool8 SellMenu_QuantityRoller(u8 taskId, u16 b)
         if (taskData[1] != 1)
             taskData[1]--;
         else
-            taskData[1] = b;
+            taskData[1] = max;
         return TRUE;
     }
 
     if (JOY_REPEAT(DPAD_ANY) == DPAD_RIGHT)
     {
-        if (taskData[1] + 10 < b)
+        if (taskData[1] + 10 < max)
             taskData[1] += 10;
         else
-            taskData[1] = b;
+            taskData[1] = max;
         return TRUE;
     }
 
@@ -2387,12 +2387,12 @@ static void Task_ItemContext_Sell(u8 taskId)
     CopyItemName(gSpecialVar_ItemId, gStringVar2);
     if (GetItemPrice(gSpecialVar_ItemId) == 0)
     {
-        StringExpandPlaceholders(gStringVar4, gOtherText_CantBuyThat);
+        StringExpandPlaceholders(gStringVar4, gText_CantBuyKeyItem);
         DisplayCannotUseItemMessage(taskId, gStringVar4, sub_80A6444, 1);
     }
     else
     {
-        StringExpandPlaceholders(gStringVar4, gOtherText_HowManyToSell);
+        StringExpandPlaceholders(gStringVar4, gText_HowManyToSell);
         DisplayCannotUseItemMessage(taskId, gStringVar4, InitSellHowManyInput, 1);
     }
 }
@@ -2457,7 +2457,7 @@ static void ConfirmSell(u8 taskId)
     Menu_EraseWindowRect(7, 6, 13, 12);
     sub_80A36B8(gBGTilemapBuffers[1], 7, 6, 6, 6);
     CopyItemName(gSpecialVar_ItemId, gStringVar2);
-    StringExpandPlaceholders(gStringVar4, gOtherText_SoldItem);
+    StringExpandPlaceholders(gStringVar4, gText_TurnedOverVar1ForVar2);
     DisplayCannotUseItemMessage(taskId, gStringVar4, SellItem, 1);
     sub_80A3D5C(taskId);
 }
@@ -2488,7 +2488,7 @@ static void Task_ChooseHowManyToSell(u8 taskId)
         Menu_EraseWindowRect(0, 10, 13, 13);
         sub_80A36B8(gBGTilemapBuffers[1], 0, 10, 13, 3);
         ConvertIntToDecimalStringN(gStringVar1, GetItemPrice(gSpecialVar_ItemId) / 2 * gTasks[taskId].data[1], STR_CONV_MODE_LEFT_ALIGN, 6);
-        StringExpandPlaceholders(gStringVar4, gOtherText_CanPay);
+        StringExpandPlaceholders(gStringVar4, gText_ICanPayVar1);
         DisplayCannotUseItemMessage(taskId, gStringVar4, AskSellItems, 1);
     }
     else if (JOY_NEW(B_BUTTON))
@@ -3189,20 +3189,20 @@ static void sub_80A770C(void)
     gUnknown_02038544.unk0 = 0;
 }
 
-static void DisplayCannotUseItemMessage(int a, const u8 *b, TaskFunc func, int d)
+static void DisplayCannotUseItemMessage(int taskId, const u8 *string, TaskFunc callback, int d)
 {
     struct UnknownStruct4 *r4 = &gUnknown_02038544;
 
     switch (sub_80A7924())
     {
     case 0:
-        DisplayItemMessageOnField(a, b, func, d);
+        DisplayItemMessageOnField(taskId, string, callback, d);
         break;
     case 2:
         r4->unk0 = 1;
-        r4->unk1 = a;
-        r4->unk4 = b;
-        r4->unk8 = func;
+        r4->unk1 = taskId;
+        r4->unk4 = string;
+        r4->unk8 = callback;
         r4->unk2 = d;
         break;
     }

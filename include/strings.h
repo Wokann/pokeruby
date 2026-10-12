@@ -348,10 +348,10 @@ extern const u8 gText_SpaceForVar1Full[];
 extern const u8 gText_AnythingElseICanHelp[];
 extern const u8 gText_CanIHelpWithAnythingElse[];
 extern const u8 gText_ThrowInPremierBall[];
-extern const u8 gOtherText_CantBuyThat[];
-extern const u8 gOtherText_HowManyToSell[];
-extern const u8 gOtherText_CanPay[];
-extern const u8 gOtherText_SoldItem[];
+extern const u8 gText_CantBuyKeyItem[];
+extern const u8 gText_HowManyToSell[];
+extern const u8 gText_ICanPayVar1[];
+extern const u8 gText_TurnedOverVar1ForVar2[];
 
 extern const u8 OtherText_Money[];
 extern const u8 gText_Shift[];
