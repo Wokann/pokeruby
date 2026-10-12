@@ -2524,13 +2524,13 @@ static void Task_LoadInfoScreen(u8 taskId)
         break;
     case 6:
         {
-            u32 excludedPalettes = 0;
+            u32 preservedPalettes = 0;
 
             if (gTasks[taskId].data[2] != 0)
-                excludedPalettes = 0x14;
+                preservedPalettes = 0x14;
             if (gTasks[taskId].data[1] != 0)
-                excludedPalettes |= (1 << (gSprites[gTasks[taskId].data[4]].oam.paletteNum + 16));
-            BeginNormalPaletteFade(~excludedPalettes, 0, 16, 0, RGB(0, 0, 0));
+                preservedPalettes |= (1 << (gSprites[gTasks[taskId].data[4]].oam.paletteNum + 16));
+            BeginNormalPaletteFade(~preservedPalettes, 0, 16, 0, RGB(0, 0, 0));
             SetVBlankCallback(gPokedexVBlankCB);
             gMain.state++;
         }
@@ -4964,11 +4964,11 @@ static void SetDefaultSearchModeAndOrder(u8 taskId)
 
 static bool8 SearchParamCantScrollUp(u8 taskId)
 {
-    u8 val1 = gTasks[taskId].data[1];
-    const u16 *ptr = (const u16 *)&gTasks[taskId].data[sSearchOptions[val1].taskDataScrollOffset];
-    u16 val2 = sSearchOptions[val1].numOptions - 1;
+    u8 menuItem = gTasks[taskId].data[1];
+    const u16 *scrollOffset = (const u16 *)&gTasks[taskId].data[sSearchOptions[menuItem].taskDataScrollOffset];
+    u16 lastOption = sSearchOptions[menuItem].numOptions - 1;
 
-    if (val2 > 5 && *ptr != 0)
+    if (lastOption > 5 && *scrollOffset != 0)
         return FALSE;
     else
         return TRUE;
@@ -4976,11 +4976,11 @@ static bool8 SearchParamCantScrollUp(u8 taskId)
 
 static bool8 SearchParamCantScrollDown(u8 taskId)
 {
-    u8 val1 = gTasks[taskId].data[1];
-    const u16 *ptr = (const u16 *)&gTasks[taskId].data[sSearchOptions[val1].taskDataScrollOffset];
-    u16 val2 = sSearchOptions[val1].numOptions - 1;
+    u8 menuItem = gTasks[taskId].data[1];
+    const u16 *scrollOffset = (const u16 *)&gTasks[taskId].data[sSearchOptions[menuItem].taskDataScrollOffset];
+    u16 lastOption = sSearchOptions[menuItem].numOptions - 1;
 
-    if (val2 > 5 && *ptr < val2 - 5)
+    if (lastOption > 5 && *scrollOffset < lastOption - 5)
         return FALSE;
     else
         return TRUE;

@@ -122,7 +122,7 @@ const u8 *const gMonFootprintTable[] =
     gMonFootprint_Seaking,
     gMonFootprint_Staryu,
     gMonFootprint_Starmie,
-    gMonFootprint_Mrmime,
+    gMonFootprint_MrMime,
     gMonFootprint_Scyther,
     gMonFootprint_Jynx,
     gMonFootprint_Electabuzz,
