@@ -5,30 +5,19 @@
 
 extern u8 *const gTVStringVarPtrs[3];
 
+void DoTVShow(void);
+void InterviewBefore(void);
+void InterviewAfter(void);
 void ClearTVShowData(void);
 void StorePlayerIdInRecordMixShow(TVShow *show);
 void StorePlayerIdInNormalShow(TVShow *show);
-void sub_80BE188(void);
 void BravoTrainerPokemonProfile_BeforeInterview1(u16 move);
 void BravoTrainerPokemonProfile_BeforeInterview2(u8 contestStandingPlace);
-void sub_80BE320(void);
 void StartMassOutbreak(void);
-void sub_80BE5FC(void);
-void sub_80BE65C(void);
-void sub_80BE6A0(void);
-void nullsub_21(void);
 void RecordFishingAttemptForTV(bool8 caughtFish);
 void SetPokemonAnglerSpecies(u16 species);
 bool8 IsPokeNewsActive(u8 newsKind);
 size_t CountDigits(int value);
-void sub_80BF334(void);
-void sub_80BF3A4(void);
-void sub_80BF3DC(void);
-void sub_80BF46C(void);
-void sub_80BF478(void);
-void sub_80BF478(void);
-void sub_80BF484(void);
-void sub_80BF4BC(void);
 void CompactTVShowArray(TVShow shows[]);
 u32 GetPlayerIDAsU32(void);
 void ReceiveTvShowsData(u8 * src, u32 size, u8 playersLinkId);
