@@ -13,6 +13,7 @@
 #include "sound.h"
 #include "sprite.h"
 #include "string_util.h"
+#include "strings.h"
 #include "strings2.h"
 #include "task.h"
 #include "text.h"
@@ -189,7 +190,7 @@ static void sub_80B75B0(void);
 static void sub_80B7698(u16 *, const u16 *);
 static void sub_80B76E0();
 static void nullsub_20(u8, u8);
-static void PrintKeyboardCharacters(u8);
+static void PrintKeyboardKeys(u8);
 
 void DoNamingScreen(u8 templateNum, u8 *destBuffer, u16 speciesOrPlayerGender, u16 monGender, u32 monPersonality, MainCallback returnCallback)
 {
@@ -997,15 +998,15 @@ static bool8 PageSwapAnimState_Init(struct Task *task)
 
 static bool8 PageSwapAnimState_1(struct Task *task)
 {
-    u16 *const arr[] =
+    u16 *const vOffsets[] =
     {
         &sNamingScreen->bg2vOffset,
         &sNamingScreen->bg1vOffset
     };
 
     task->tFrameCount += 4;
-    *arr[sNamingScreen->bgToReveal] = Sin(task->tFrameCount, 40);
-    *arr[sNamingScreen->bgToHide] = Sin((task->tFrameCount + 128) & 0xFF, 40);
+    *vOffsets[sNamingScreen->bgToReveal] = Sin(task->tFrameCount, 40);
+    *vOffsets[sNamingScreen->bgToHide] = Sin((task->tFrameCount + 128) & 0xFF, 40);
     if (task->tFrameCount >= 64)
     {
         u8 temp = sNamingScreen->bg1Priority;
@@ -1018,11 +1019,11 @@ static bool8 PageSwapAnimState_1(struct Task *task)
 
 static bool8 PageSwapAnimState_2(struct Task *task)
 {
-    u16 *const arr[] = {&sNamingScreen->bg2vOffset, &sNamingScreen->bg1vOffset};
+    u16 *const vOffsets[] = {&sNamingScreen->bg2vOffset, &sNamingScreen->bg1vOffset};
 
     task->tFrameCount += 4;
-    *arr[sNamingScreen->bgToReveal] = Sin(task->tFrameCount, 40);
-    *arr[sNamingScreen->bgToHide] = Sin((task->tFrameCount + 128) & 0xFF, 40);
+    *vOffsets[sNamingScreen->bgToReveal] = Sin(task->tFrameCount, 40);
+    *vOffsets[sNamingScreen->bgToHide] = Sin((task->tFrameCount + 128) & 0xFF, 40);
     if (task->tFrameCount >= 128)
     {
         u8 temp = sNamingScreen->bgToReveal;
@@ -1856,20 +1857,20 @@ static void sub_80B77F8(void)
 
 static void sub_80B7838(void)
 {
-    PrintKeyboardCharacters(1);
+    PrintKeyboardKeys(1);
 }
 
 static void sub_80B7844(void)
 {
-    PrintKeyboardCharacters(0);
+    PrintKeyboardKeys(0);
 }
 
 static void sub_80B7850(void)
 {
-    PrintKeyboardCharacters(2);
+    PrintKeyboardKeys(2);
 }
 
-static void PrintKeyboardCharacters(u8 page)  //print letters on page
+static void PrintKeyboardKeys(u8 page)  //print letters on page
 {
     s16 i;
     s16 r5;
@@ -1938,7 +1939,7 @@ static const struct NamingScreenTemplate sPlayerNamingScreenTemplate =
     .iconFunction = 1,
     .addGenderIcon = 0,
     .initialPage = 0,
-    .title = OtherText_YourName,
+    .title = gText_YourName,
 };
 
 static const struct NamingScreenTemplate sPCBoxNamingTemplate =
@@ -1948,7 +1949,7 @@ static const struct NamingScreenTemplate sPCBoxNamingTemplate =
     .iconFunction = 2,
     .addGenderIcon = 0,
     .initialPage = 0,
-    .title = OtherText_BoxName,
+    .title = gText_BoxName,
 };
 
 static const struct NamingScreenTemplate sMonNamingScreenTemplate =
@@ -1958,7 +1959,7 @@ static const struct NamingScreenTemplate sMonNamingScreenTemplate =
     .iconFunction = 3,
     .addGenderIcon = 1,
     .initialPage = 0,
-    .title = OtherText_PokeName,
+    .title = gText_PkmnsNickname,
 };
 
 static const struct NamingScreenTemplate *const sNamingScreenTemplates[] =

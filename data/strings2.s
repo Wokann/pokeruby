@@ -256,11 +256,11 @@ gText_SavingTime:: @ 842C99A
 gOtherText_SentToPC:: @ 842C9A4
 	.string "{STR_VAR_1} was sent to\nthe PC.{PAUSE_UNTIL_PRESS}$"
 
-OtherText_YourName::
+gText_YourName::
 	.string "YOUR NAME?$"
-OtherText_BoxName::
+gText_BoxName::
 	.string "BOX NAME?$"
-OtherText_PokeName::
+gText_PkmnsNickname::
 	.string "{STR_VAR_1}'s nickname?$"
 
 gText_Marco:: @ 842C9E1

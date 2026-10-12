@@ -275,11 +275,11 @@ gOtherText_SentToPC:: @ 842C9A4
 	.string "{STR_VAR_1} wurde auf\n"
 	.string "den PC übertragen.{PAUSE_UNTIL_PRESS}$"
 
-OtherText_YourName::
+gText_YourName::
 	.string "DEIN NAME?$"
-OtherText_BoxName::
+gText_BoxName::
 	.string "NAME DER BOX?$"
-OtherText_PokeName::
+gText_PkmnsNickname::
 	.string "Kosename f. {STR_VAR_1}$"
 
 gText_Marco:: @ 842C9E1

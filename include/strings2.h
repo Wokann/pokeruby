@@ -94,9 +94,6 @@ extern const u8 gOtherText_Girl[];
 
 // naming_screen
 extern const u8 gOtherText_SentToPC[];
-extern const u8 OtherText_YourName[];
-extern const u8 OtherText_BoxName[];
-extern const u8 OtherText_PokeName[];
 
 // roulette
 extern const u8 gOtherText_Coins[];
