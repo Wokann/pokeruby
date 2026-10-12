@@ -4,18 +4,18 @@
 	.section .rodata
 
 	.align 2
-gSpriteAnim_839309C:: @ 839309C
+gAnim_WeatherBallNormal:: @ 839309C
 	obj_image_anim_frame 0, 3
 	obj_image_anim_jump 0
 
 	.align 2
-gSpriteAnimTable_83930A4:: @ 83930A4
-	.4byte gSpriteAnim_839309C
+gAnims_WeatherBallNormal:: @ 83930A4
+	.4byte gAnim_WeatherBallNormal
 
 	.align 2
 gWeatherBallUpSpriteTemplate:: @ 83930A8
-	spr_template 10283, 10283, gOamData_AffineOff_ObjNormal_32x32, gSpriteAnimTable_83930A4, NULL, gDummySpriteAffineAnimTable, AnimWeatherBallUp
+	spr_template 10283, 10283, gOamData_AffineOff_ObjNormal_32x32, gAnims_WeatherBallNormal, NULL, gDummySpriteAffineAnimTable, AnimWeatherBallUp
 
 	.align 2
 gWeatherBallNormalDownSpriteTemplate:: @ 83930C0
-	spr_template 10283, 10283, gOamData_AffineOff_ObjNormal_32x32, gSpriteAnimTable_83930A4, NULL, gDummySpriteAffineAnimTable, AnimWeatherBallDown
+	spr_template 10283, 10283, gOamData_AffineOff_ObjNormal_32x32, gAnims_WeatherBallNormal, NULL, gDummySpriteAffineAnimTable, AnimWeatherBallDown
