@@ -52,9 +52,9 @@ void SetContestTrainerGfxIds(void)
 void GetNpcContestantLocalId(void)
 {
     u16 localId;
-    u8 specialVar = gSpecialVar_0x8005;
+    u8 contestant = gSpecialVar_0x8005;
 
-    switch(specialVar)
+    switch(contestant)
     {
     case 0:
         localId = LOCALID_CONTESTANT_1;
