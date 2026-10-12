@@ -463,33 +463,33 @@ void sub_80EF58C(u8 a)
     }
 }
 
-void sub_80EF624(const u16 *a, const u16 *b, u8 c, u8 d, u16 *palettes)
+void sub_80EF624(const u16 *src, const u16 *dest, u8 c, u8 size, u16 *palettes)
 {
     u16 i;
     u16 j;
-    u16 * r3;
+    u16 *palette;
 
-    for (i = 0; i < d; i++)
+    for (i = 0; i < size; i++)
     {
-        s32 r1 = Q_24_8(GET_R(*a));
-        s32 g1 = Q_24_8(GET_G(*a));
-        s32 b1 = Q_24_8(GET_B(*a));
-        s32 r2 = Q_24_8(GET_R(*b));
-        s32 g2 = Q_24_8(GET_G(*b));
-        s32 b2 = Q_24_8(GET_B(*b));
+        s32 r1 = Q_24_8(GET_R(*src));
+        s32 g1 = Q_24_8(GET_G(*src));
+        s32 b1 = Q_24_8(GET_B(*src));
+        s32 r2 = Q_24_8(GET_R(*dest));
+        s32 g2 = Q_24_8(GET_G(*dest));
+        s32 b2 = Q_24_8(GET_B(*dest));
         s32 dr = (r2 - r1) / c;
         s32 dg = (g2 - g1) / c;
         s32 db = (b2 - b1) / c;
         u16 rf, gf, bf;
 
-        r3 = palettes;
+        palette = palettes;
         for (j = 0; j < c - 1; j++)
         {
             rf = Q_24_8_TO_INT(r1);
             gf = Q_24_8_TO_INT(g1);
             bf = Q_24_8_TO_INT(b1);
-            *r3 = RGB2(rf, gf, bf);
-            r3 += d;
+            *palette = RGB2(rf, gf, bf);
+            palette += size;
             r1 += dr;
             g1 += dg;
             b1 += db;
@@ -497,9 +497,9 @@ void sub_80EF624(const u16 *a, const u16 *b, u8 c, u8 d, u16 *palettes)
         rf = Q_24_8_TO_INT(r2);
         gf = Q_24_8_TO_INT(g2);
         bf = Q_24_8_TO_INT(b2);
-        *r3 = RGB2(rf, gf, bf);
-        a++;
-        b++;
+        *palette = RGB2(rf, gf, bf);
+        src++;
+        dest++;
         palettes++;
     }
 }
@@ -1175,7 +1175,7 @@ void sub_80F081C(u8 arg0)
     {
     case 0:
     case 1:
-        MenuPrint_RightAligned(gOtherText_NumberRegistered, 10, 9);
+        MenuPrint_RightAligned(gText_NumberRegistered, 10, 9);
         if (arg0 != 0)
             break;
         // fall through
@@ -1190,7 +1190,7 @@ void sub_80F081C(u8 arg0)
             break;
         // fall through
     case 3:
-        MenuPrint_RightAligned(gOtherText_NumberBattles, 10, 13);
+        MenuPrint_RightAligned(gText_NumberOfBattles, 10, 13);
         if (arg0 != 0)
             break;
         // fall through
@@ -1556,24 +1556,24 @@ void DrawMonRibbonIcons(void)
 {
     u16 i;
     u16 offset;
-    u8 index, palette, tile;
-    u8 var0;
+    u8 ribbonId, palNum, tileNum;
+    u8 numNormalRibbons;
 
     offset = 0x8B;
-    var0 = gPokenavStructPtr->unkBC8E - gPokenavStructPtr->numGiftRibbons;
+    numNormalRibbons = gPokenavStructPtr->unkBC8E - gPokenavStructPtr->numGiftRibbons;
 
     for (i = 0; i < 8; i++)
     CpuFill16(0x2000, &gPokenavStructPtr->unk934C[offset + i * 32], 0x24);
 
-    for (i = 0; i < var0; i++)
+    for (i = 0; i < numNormalRibbons; i++)
     {
-        index = gPokenavStructPtr->unkBC4C[i];
-        palette = gRibbonGfxData[index][1] + 3;
-        tile = gRibbonGfxData[index][0] * 2 + 0x10;
-        gPokenavStructPtr->unk934C[offset] = (palette << 12) | tile;
-        gPokenavStructPtr->unk934C[offset + 1] = ((palette << 12) | 0x400) | tile;
-        gPokenavStructPtr->unk934C[offset + 0x20] = (palette << 12) | (tile + 1);
-        gPokenavStructPtr->unk934C[offset + 0x21] = (palette << 12) | 0x400 | (tile + 1);
+        ribbonId = gPokenavStructPtr->unkBC4C[i];
+        palNum = gRibbonGfxData[ribbonId][1] + 3;
+        tileNum = gRibbonGfxData[ribbonId][0] * 2 + 0x10;
+        gPokenavStructPtr->unk934C[offset] = (palNum << 12) | tileNum;
+        gPokenavStructPtr->unk934C[offset + 1] = ((palNum << 12) | 0x400) | tileNum;
+        gPokenavStructPtr->unk934C[offset + 0x20] = (palNum << 12) | (tileNum + 1);
+        gPokenavStructPtr->unk934C[offset + 0x21] = (palNum << 12) | 0x400 | (tileNum + 1);
 
         if ((i + 1) % 9 == 0)
             offset += 0x30;
@@ -1584,13 +1584,13 @@ void DrawMonRibbonIcons(void)
     offset = 0x14B;
     for (i = 0; i < gPokenavStructPtr->numGiftRibbons; i++)
     {
-        index = gPokenavStructPtr->unkBC4C[var0 + i];
-        palette = gRibbonGfxData[index][1] + 3;
-        tile = gRibbonGfxData[index][0] * 2 + 0x10;
-        gPokenavStructPtr->unk934C[offset] = (palette << 12) | tile;
-        gPokenavStructPtr->unk934C[offset + 1] = ((palette << 12) | 0x400) | tile;
-        gPokenavStructPtr->unk934C[offset + 0x20] = (palette << 12) | (tile + 1);
-        gPokenavStructPtr->unk934C[offset + 0x21] = (palette << 12) | 0x400 | (tile + 1);
+        ribbonId = gPokenavStructPtr->unkBC4C[numNormalRibbons + i];
+        palNum = gRibbonGfxData[ribbonId][1] + 3;
+        tileNum = gRibbonGfxData[ribbonId][0] * 2 + 0x10;
+        gPokenavStructPtr->unk934C[offset] = (palNum << 12) | tileNum;
+        gPokenavStructPtr->unk934C[offset + 1] = ((palNum << 12) | 0x400) | tileNum;
+        gPokenavStructPtr->unk934C[offset + 0x20] = (palNum << 12) | (tileNum + 1);
+        gPokenavStructPtr->unk934C[offset + 0x21] = (palNum << 12) | 0x400 | (tileNum + 1);
 
         offset += 2;
     }
@@ -1667,7 +1667,7 @@ void sub_80F15A8(void)
 {
     u8 *buffer;
     Menu_EraseWindowRect(12, 13, 27, 16);
-    buffer = StringCopy(gPokenavStructPtr->unk8788, gOtherText_Ribbons);
+    buffer = StringCopy(gPokenavStructPtr->unk8788, gText_Ribbons);
     buffer[0] = CHAR_SPACE;
     buffer++;
     buffer = ConvertIntToDecimalStringN(
@@ -1791,7 +1791,7 @@ void sub_80F1934(void)
     if (gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].unk3_14)
     {
         u8 nature = GetNature(&gPlayerParty[GetPartyIdFromSelectionId_(gPokenavStructPtr->unk87DC)]);
-        buffer = StringCopy(buffer, gOtherText_Nature2);
+        buffer = StringCopy(buffer, gText_NatureSlash);
         AlignStringInMenuWindow(buffer, gNatureNamePointers[nature], 87, 0);
     }
     else
@@ -3182,7 +3182,7 @@ struct Sprite *sub_80F3A3C(u16 arg0, u16 arg1)
 {
     struct SpriteTemplate spriteTemplate;
     u16 var0;
-    u8 ribbon;
+    u8 ribbonId;
     u8 spriteId;
 
     if (arg1 < 3)
@@ -3190,10 +3190,10 @@ struct Sprite *sub_80F3A3C(u16 arg0, u16 arg1)
     else
         var0 = arg0 + (gPokenavStructPtr->unkBC8E - gPokenavStructPtr->numGiftRibbons);
 
-    ribbon = gPokenavStructPtr->unkBC4C[var0];
+    ribbonId = gPokenavStructPtr->unkBC4C[var0];
     spriteTemplate = gSpriteTemplate_RibbonIconBig;
-    spriteTemplate.tileTag = gRibbonGfxData[ribbon][0] + 11;
-    spriteTemplate.paletteTag = gRibbonGfxData[ribbon][1] + 10;
+    spriteTemplate.tileTag = gRibbonGfxData[ribbonId][0] + 11;
+    spriteTemplate.paletteTag = gRibbonGfxData[ribbonId][1] + 10;
     spriteId = CreateSprite(&spriteTemplate, arg0 * 16 + 96, arg1 * 16 + 40, 2);
     if (spriteId != MAX_SPRITES)
         return &gSprites[spriteId];
@@ -3636,9 +3636,9 @@ u8 *sub_80F4428(u8 *str, u16 listId, u8 arg2)
     return sub_80F6514(str, listId, arg2);
 }
 
-u8 *sub_80F443C(u8 *arg0, u16 arg1)
+u8 *sub_80F443C(u8 *dst, u16 num)
 {
-    return AlignInt1InMenuWindow(StringCopy(arg0, gOtherText_Number), arg1, 56, 1);
+    return AlignInt1InMenuWindow(StringCopy(dst, gText_Number2), num, 56, 1);
 }
 
 u8 *sub_80F445C(u8 *arg0, u16 arg1)
@@ -3693,7 +3693,7 @@ void sub_80F45A0(s16 listId, u8 loadId)
         sub_80F4428(gPokenavStructPtr->nameText[loadId], listId, 0);
         boxId = gPokenavStructPtr->unk893c[listId].unk1;
         if (boxId == 14)
-            AlignStringInMenuWindow(gPokenavStructPtr->locationText[loadId], gOtherText_InParty, 64, 0);
+            AlignStringInMenuWindow(gPokenavStructPtr->locationText[loadId], gText_InParty, 64, 0);
         else
             AlignStringInMenuWindow(gPokenavStructPtr->locationText[loadId], gPokemonStorage.boxNames[boxId], 64, 0);
 
