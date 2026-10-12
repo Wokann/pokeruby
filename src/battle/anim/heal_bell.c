@@ -46,7 +46,7 @@ const struct SpriteTemplate gBellSpriteTemplate =
     .callback = AnimSpriteOnMonPos,
 };
 
-const u16 gUnknown_083D7A5C[] =
+static const u16 sMusicNotePaletteTagsTable[] =
 {
     10206,
     9999,
@@ -97,7 +97,7 @@ void sub_80D1B80(u8 taskId)
     int i;
     for (i = 0; i < 5; i++)
     {
-        FreeSpritePaletteByTag(gUnknown_083D7A5C[i]);
+        FreeSpritePaletteByTag(sMusicNotePaletteTagsTable[i]);
     }
 
     DestroyAnimVisualTask(taskId);
@@ -109,7 +109,7 @@ static void SetMusicNotePalette(struct Sprite *sprite, u8 a, u8 b)
     tile = (b & 1);
     tile = ((-tile | tile) >> 31) & 32;
     sprite->oam.tileNum += tile + (a << 2);
-    sprite->oam.paletteNum = IndexOfSpritePaletteTag(gUnknown_083D7A5C[b >> 1]);
+    sprite->oam.paletteNum = IndexOfSpritePaletteTag(sMusicNotePaletteTagsTable[b >> 1]);
 }
 
 static void AnimHealBellMusicNote(struct Sprite *sprite)
