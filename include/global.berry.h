@@ -1,6 +1,8 @@
 #ifndef GUARD_GLOBAL_BERRY_H
 #define GUARD_GLOBAL_BERRY_H
 
+#define BERRY_NAME_LENGTH 6
+
 struct Berry
 {
     /*0x00*/ u8 name[7];
