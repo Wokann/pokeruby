@@ -479,19 +479,19 @@ gOtherText_FatefulEncounter:: @ 842D118
 gOtherText_Met2:: @ 842D12B
 	.string " (gef.)$"
 
-gOtherText_EggDayCare:: @ 842D133
+gText_OddEggFoundByCouple:: @ 842D133
 	.string "Seltsames POKéMON-EI, das\n"
 	.string "die PENSIONSLEITUNG fand.$"
 
-gOtherText_EggNicePlace:: @ 842D164
+gText_PeculiarEggNicePlace:: @ 842D164
 	.string "Kurioses POKéMON-EI an\n"
 	.string "hübschem Ort erhalten.$"
 
-gOtherText_EggObtainedInTrade:: @ 842D197
+gText_PeculiarEggTrade:: @ 842D197
 	.string "Kurioses POKéMON-EI im\n"
 	.string "Tausch erhalten.$"
 
-gOtherText_EggHotSprings:: @ 842D1C3
+gText_EggFromHotSprings:: @ 842D1C3
 	.string "Ein POKéMON-EI an den\n"
 	.string "Heißen Quellen erhalten.$"
 

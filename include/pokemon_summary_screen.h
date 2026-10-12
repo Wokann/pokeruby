@@ -61,8 +61,8 @@ struct PokemonSummaryScreenData
     /*0x84*/ TaskFunc unk84;
 };
 
-void ShowPokemonSummaryScreen(struct Pokemon *party, u8 monIndex, u8 maxMonIndex, MainCallback callback, u8 mode);
-void ShowSelectMovePokemonSummaryScreen(struct Pokemon *party, u8 monIndex, u8 maxMonIndex, MainCallback callback, u16 newMove);
+void ShowPokemonSummaryScreen(struct Pokemon *mons, u8 monIndex, u8 maxMonIndex, MainCallback callback, u8 mode);
+void ShowSelectMovePokemonSummaryScreen(struct Pokemon *mons, u8 monIndex, u8 maxMonIndex, MainCallback callback, u16 newMove);
 u8 GetMoveSlotToReplace(void);
 u8 *PokemonSummaryScreen_CopyPokemonLevel(u8 *dest, u8 level);
 

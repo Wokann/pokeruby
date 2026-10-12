@@ -184,10 +184,10 @@ extern const u8 gOtherText_Egg2[];
 extern const u8 gOtherText_ObtainedInTrade[];
 extern const u8 gOtherText_FatefulEncounter[];
 extern const u8 gOtherText_Met2[];
-extern const u8 gOtherText_EggDayCare[];
-extern const u8 gOtherText_EggNicePlace[];
-extern const u8 gOtherText_EggObtainedInTrade[];
-extern const u8 gOtherText_EggHotSprings[];
+extern const u8 gText_OddEggFoundByCouple[];
+extern const u8 gText_PeculiarEggNicePlace[];
+extern const u8 gText_PeculiarEggTrade[];
+extern const u8 gText_EggFromHotSprings[];
 
 // diploma
 extern const u8 gText_DexHoenn[];

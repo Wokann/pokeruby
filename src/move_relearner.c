@@ -964,14 +964,14 @@ void PrintMoveInfo(u16 moveId, const u8 *moveInfoCoords)
         break;
     case 2:
         if (gBattleMoves[moveId].power < 2)
-            AlignStringInMenuWindow(str, gOtherText_ThreeDashes2, 32, 2);
+            AlignStringInMenuWindow(str, gText_ThreeDashes, 32, 2);
         else
             AlignInt1InMenuWindow(str, gBattleMoves[moveId].power, 32, 2);
         Menu_PrintText(str, moveInfoCoords[0], moveInfoCoords[1]);
         break;
     case 4:
         if (gBattleMoves[moveId].accuracy == 0)
-            AlignStringInMenuWindow(str, gOtherText_ThreeDashes2, 32, 2);
+            AlignStringInMenuWindow(str, gText_ThreeDashes, 32, 2);
         else
             AlignInt1InMenuWindow(str, gBattleMoves[moveId].accuracy, 32, 2);
         Menu_PrintText(str, moveInfoCoords[0], moveInfoCoords[1]);

@@ -438,16 +438,16 @@ gOtherText_FatefulEncounter:: @ 842D118
 gOtherText_Met2:: @ 842D12B
 	.string " (met).$"
 
-gOtherText_EggDayCare:: @ 842D133
+gText_OddEggFoundByCouple:: @ 842D133
 	.string "An odd POKéMON EGG found\nby the DAY CARE couple.$"
 
-gOtherText_EggNicePlace:: @ 842D164
+gText_PeculiarEggNicePlace:: @ 842D164
 	.string "A peculiar POKéMON EGG\nobtained at the nice place.$"
 
-gOtherText_EggObtainedInTrade:: @ 842D197
+gText_PeculiarEggTrade:: @ 842D197
 	.string "A peculiar POKéMON EGG\nobtained in a trade.$"
 
-gOtherText_EggHotSprings:: @ 842D1C3
+gText_EggFromHotSprings:: @ 842D1C3
 	.string "A POKéMON EGG obtained\nat the hot springs.$"
 
 gText_CommunicationStandby5:: @ 842D1EE
