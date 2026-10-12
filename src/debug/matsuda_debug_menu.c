@@ -28,8 +28,8 @@ extern u8 (*gMenuCallback)(void);
 static bool8 sub_80A9B78(void);
 static void sub_80A9BE4(u8 taskId);
 static void sub_80A9C98(u8);
-static void sub_80A9CC0(u8);
-static void sub_80A9CDC(u8);
+static void Task_StartCommunicateRngRS(u8);
+static void Task_StartCommunicateLeaderIdsRS(u8);
 static void sub_80A9D58(u8);
 static void sub_80A9DBC(u8);
 static void sub_80A9DD8(u8);
@@ -144,15 +144,15 @@ u8 MatsudaDebugMenu_CommTest(void)
 static void sub_80A9C98(u8 taskId)
 {
     Contest_CreatePlayerMon(0);
-    SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateMonsRS, sub_80A9CC0);
+    SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateMonsRS, Task_StartCommunicateRngRS);
 }
 
-static void sub_80A9CC0(u8 taskId)
+static void Task_StartCommunicateRngRS(u8 taskId)
 {
-    SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateRngRS, sub_80A9CDC);
+    SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateRngRS, Task_StartCommunicateLeaderIdsRS);
 }
 
-static void sub_80A9CDC(u8 taskId)
+static void Task_StartCommunicateLeaderIdsRS(u8 taskId)
 {
     SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateLeaderIdsRS, sub_80A9D58);
 }
@@ -167,7 +167,7 @@ static void sub_80A9CF8(u8 taskId)
     }
 }
 
-static void sub_80A9D30(u8 taskId)
+static void Task_LinkContest_Disconnect(u8 taskId)
 {
     SetCloseLinkCallback();
     gTasks[taskId].func = sub_80A9CF8;
@@ -202,7 +202,7 @@ static void sub_80A9DD8(u8 taskId)
 static void sub_80A9E04(u8 taskId)
 {
     if (gMain.newKeys == B_BUTTON)
-        gTasks[(u8)gTasks[taskId].data[10]].func = sub_80A9D30;
+        gTasks[(u8)gTasks[taskId].data[10]].func = Task_LinkContest_Disconnect;
 }
 
 static void sub_80A9E3C(u8 taskId)
