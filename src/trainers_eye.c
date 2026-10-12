@@ -166,31 +166,31 @@ void sub_80F6FFC(void)
     REG_BLDY = 0;
 }
 
-void sub_80F700C(u8 *arg0, u16 arg1)
+void sub_80F700C(u8 *str, u16 arg1)
 {
     const struct Trainer *trainer = &gTrainers[gPokenavStructPtr->trainersEye[arg1].opponentId];
-    u8 *ptr = arg0;
+    u8 *str2 = str;
 
-    ptr = arg0;
+    str2 = str;
     if (arg1 < gPokenavStructPtr->unkD158)
     {
 #if ENGLISH
-        ptr = StringCopy(ptr, gTrainerClassNames[trainer->trainerClass]);
+        str2 = StringCopy(str2, gTrainerClassNames[trainer->trainerClass]);
 #elif GERMAN
-        ptr = StringCopy(ptr, de_sub_8041024(0, gPokenavStructPtr->trainersEye[arg1].opponentId));
+        str2 = StringCopy(str2, de_sub_8041024(0, gPokenavStructPtr->trainersEye[arg1].opponentId));
 #endif
 
-        ptr[0] = EXT_CTRL_CODE_BEGIN;
-        ptr[1] = 0x13;
-        ptr[2] = 0x4B;
-        ptr += 3;
-        ptr = StringCopy(ptr, trainer->trainerName);
+        str2[0] = EXT_CTRL_CODE_BEGIN;
+        str2[1] = 0x13;
+        str2[2] = 0x4B;
+        str2 += 3;
+        str2 = StringCopy(str2, trainer->trainerName);
     }
 
-    ptr[0] = EXT_CTRL_CODE_BEGIN;
-    ptr[1] = 0x13;
-    ptr[2] = 0x80;
-    ptr[3] = 0xFF;
+    str2[0] = EXT_CTRL_CODE_BEGIN;
+    str2[1] = 0x13;
+    str2[2] = 0x80;
+    str2[3] = 0xFF;
 }
 
 void sub_80F708C(s8 a0)
