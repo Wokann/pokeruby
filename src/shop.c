@@ -34,7 +34,7 @@ extern bool8 SellMenu_QuantityRoller(u8, u8);
 
 extern u8 gShopMenu_Gfx[];
 extern u16 gShopMenu_Tilemap[];
-extern u16 gMenuMoneyPal[16];
+extern u16 gShopMenu_Pal[16];
 
 enum
 {
@@ -306,7 +306,7 @@ static void CB2_InitBuyMenu(void)
     Dma3FillLarge32_(0, (void*)OAM, OAM_SIZE);
     LZDecompressVram(gShopMenu_Gfx, (void*)(VRAM + 0x7C00));
     LZDecompressWram(gShopMenu_Tilemap, ewram18000);
-    LoadCompressedPalette(gMenuMoneyPal, 0xC0, sizeof(gMenuMoneyPal));
+    LoadCompressedPalette(gShopMenu_Pal, 0xC0, sizeof(gShopMenu_Pal));
     FreeAllSpritePalettes();
     ResetPaletteFade();
     ResetSpriteData();

@@ -51,7 +51,7 @@ static const struct SpriteTemplate sSpriteTemplate_MoneyLabel =
 };
 
 static const struct CompressedSpriteSheet sSpriteSheet_MoneyLabel[] = {gShopMenuMoney_Gfx, 256, MONEY_LABEL_TAG};
-static const struct CompressedSpritePalette sSpritePalette_MoneyLabel[] = {gMenuMoneyPal, MONEY_LABEL_TAG};
+static const struct CompressedSpritePalette sSpritePalette_MoneyLabel[] = {gShopMenu_Pal, MONEY_LABEL_TAG};
 
 bool8 IsEnoughMoney(u32 budget, u32 cost)
 {
