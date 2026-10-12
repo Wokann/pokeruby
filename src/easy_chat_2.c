@@ -81,7 +81,7 @@ EWRAM_DATA u8 gUnknown_020388AC = 0;
 static u8 gUnknown_03000740;
 
 static const u16 sTriangleCursor_Pal[] = INCBIN_U16("graphics/easy_chat/triangle_cursor.gbapal");
-const u16 InterviewPalette_1[] = INCBIN_U16("graphics/misc/interview_pal1.gbapal");
+const u16 gEasyChatRectangleCursor_Pal[] = INCBIN_U16("graphics/easy_chat/rectangle_cursor.gbapal");
 static const u8 sScrollIndicator_Gfx[] = INCBIN_U8("graphics/easy_chat/scroll_indicator.4bpp");
 static const u8 sStartSelectButtons_Gfx[] = INCBIN_U8("graphics/easy_chat/start_select_buttons.4bpp");
 static const u16 sRSInterviewFrame_Pal[] = INCBIN_U16("graphics/easy_chat/interview_frame.gbapal");
@@ -101,7 +101,7 @@ void sub_80E8218(void)
     struct SpritePalette interviewSpritePalettes[] =
     {
         {sTriangleCursor_Pal, 0},
-        {InterviewPalette_1, 1},
+        {gEasyChatRectangleCursor_Pal, 1},
         {NULL, 0},
     };
 
@@ -595,7 +595,7 @@ void sub_80E8958(u8 animNum)
     gEasyChatStruct->unk9C70 = 1;
 }
 
-const struct OamData gOamData_83DBCE0 =
+static const struct OamData sOamData_ScrollIndicator =
 {
     .y = 0,
     .affineMode = 0,
@@ -654,7 +654,7 @@ void sub_80E8A7C(void)
     {
         .tileTag = 2,
         .paletteTag = 0,
-        .oam = &gOamData_83DBCE0,
+        .oam = &sOamData_ScrollIndicator,
         .anims = gSpriteAnimTable_83DBCF8,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -1096,69 +1096,69 @@ void sub_80E91D4(u8 a)
         sub_80E91B0(gEasyChatStruct->confirmText2, 4, 17, 2);
         break;
     case 2:
-        sub_80E91B0(gOtherText_TextDeletedConfirmPage1, 4, 15, 2);
-        sub_80E91B0(gOtherText_TextDeletedConfirmPage2, 4, 17, 2);
+        sub_80E91B0(gText_AllTextBeingEditedWill, 4, 15, 2);
+        sub_80E91B0(gText_BeDeletedThatOkay, 4, 17, 2);
         break;
     case 3:
         switch (gEasyChatStruct->type)
         {
         case 9:
-            sub_80E91B0(gOtherText_QuitGivingInfo, 4, 15, 4);
+            sub_80E91B0(gText_QuitGivingInfo, 4, 15, 4);
             break;
         case 4:
-            sub_80E91B0(gOtherText_StopGivingMail, 4, 15, 4);
+            sub_80E91B0(gText_StopGivingPkmnMail, 4, 15, 4);
             break;
         default:
-            sub_80E91B0(gOtherText_QuitEditing, 4, 15, 4);
+            sub_80E91B0(gText_QuitEditing, 4, 15, 4);
             break;
         }
         break;
     case 4:
-        sub_80E91B0(gOtherText_EditedTextNoSavePage1, 4, 15, 2);
-        sub_80E91B0(gOtherText_EditedTextNoSavePage2, 4, 17, 2);
+        sub_80E91B0(gText_EditedTextWillNotBeSaved, 4, 15, 2);
+        sub_80E91B0(gText_IsThatOkay, 4, 17, 2);
         break;
     case 5:
-        sub_80E91B0(gOtherText_EnterAPhraseOrWord, 4, 15, 4);
+        sub_80E91B0(gText_PleaseEnterPhraseOrWord, 4, 15, 4);
         break;
     case 6:
-        sub_80E91B0(gOtherText_TextNoDelete, 4, 15, 4);
+        sub_80E91B0(gText_EntireTextCantBeDeleted, 4, 15, 4);
         break;
     case 7:
-        sub_80E91B0(gOtherText_OnlyOnePhrase, 4, 15, 2);
+        sub_80E91B0(gText_OnlyOnePhrase, 4, 15, 2);
         sub_80E91B0(gOtherText_OriginalSongRestored, 4, 17, 2);
         break;
     case 8:
-        sub_80E91B0(gOtherText_TrendyAlready, 4, 15, 4);
+        sub_80E91B0(gText_ThatsTrendyAlready, 4, 15, 4);
         break;
     case 9:
-        sub_80E91B0(gOtherText_CombineTwoPhrases, 4, 15, 4);
+        sub_80E91B0(gText_CombineTwoWordsOrPhrases3, 4, 15, 4);
         break;
     }
 }
 
 void sub_80E9368(u8 a)
 {
-    const u8 *r4;
+    const u8 *titleText;
 
     switch (a)
     {
     case 0:
-        r4 = gOtherText_Profile;
+        titleText = gText_Profile;
         break;
     case 1:
-        r4 = gOtherText_AtBattleStart;
+        titleText = gOtherText_AtBattleStart;
         break;
     case 2:
-        r4 = gOtherText_UponWinningBattle;
+        titleText = gOtherText_UponWinningBattle;
         break;
     case 3:
-        r4 = gOtherText_UponLosingBattle;
+        titleText = gOtherText_UponLosingBattle;
         break;
     case 6:
-        r4 = gOtherText_TheBardsSong;
+        titleText = gText_TheBardsSong;
         break;
     case 9:
-        r4 = gOtherText_WhatsHipHappening;
+        titleText = gText_WhatsHipAndHappening;
         break;
     case 5:
     case 7:
@@ -1166,13 +1166,13 @@ void sub_80E9368(u8 a)
     case 10:
     case 11:
     case 12:
-        r4 = gOtherText_Interview;
+        titleText = gText_Interview;
         break;
     case 13:
-        r4 = gOtherText_GoodSaying;
+        titleText = gText_GoodSaying;
         break;
     default:
-        r4 = NULL;
+        titleText = NULL;
         break;
     }
 
@@ -1180,9 +1180,9 @@ void sub_80E9368(u8 a)
     gEasyChatStruct->unk9F8E[0] = EXT_CTRL_CODE_BEGIN;
     gEasyChatStruct->unk9F8E[1] = 5;
     gEasyChatStruct->unk9F8E[2] = 1;
-    if (r4 != NULL)
+    if (titleText != NULL)
     {
-        AlignStringInMenuWindow(gEasyChatStruct->unk9F8E + 3, r4, 240, 2);
+        AlignStringInMenuWindow(gEasyChatStruct->unk9F8E + 3, titleText, 240, 2);
         Menu_PrintText(gEasyChatStruct->unk9F8E, 0, 0);
     }
     else
@@ -2407,7 +2407,7 @@ void sub_80EB0B0(void)
     const u16 *sp0;
     u16 r7;
     u16 r9;
-    u16 r8;
+    u16 i;
 
     if (gEasyChatStruct->inAlphabetMode == 0)
     {
@@ -2417,11 +2417,11 @@ void sub_80EB0B0(void)
         r7 = 0;
         r9 = 0;
         sp0 = gEasyChatGroupOrders[groupId];
-        for (r8 = 0; r8 < gEasyChatGroupSizes[gEasyChatStruct->unk1B8]; r8++)
+        for (i = 0; i < gEasyChatGroupSizes[gEasyChatStruct->unk1B8]; i++)
         {
-            if (sub_80EADC0(groupId, sp0[r8]))
+            if (sub_80EADC0(groupId, sp0[i]))
             {
-                gEasyChatStruct->selectedGroupWords[r9][r7] = ((groupId & 0x7F) << 9) | (sp0[r8] & 0x1FF);
+                gEasyChatStruct->selectedGroupWords[r9][r7] = ((groupId & 0x7F) << 9) | (sp0[i] & 0x1FF);
                 gEasyChatStruct->unk4178[groupId]++;
                 r7++;
                 if (r7 > 1)
@@ -2434,14 +2434,14 @@ void sub_80EB0B0(void)
     }
     else
     {
-        u8 r2 = gEasyChatStruct->unk1B8;
+        u8 groupId = gEasyChatStruct->unk1B8;
         u16 r3 = 0;
         u16 r6 = 0;
-        u16 r5;
+        u16 i;
 
-        for (r5 = 0; r5 < gEasyChatStruct->numUnlockedAlphabetWords[r2]; r5++)
+        for (i = 0; i < gEasyChatStruct->numUnlockedAlphabetWords[groupId]; i++)
         {
-            gEasyChatStruct->selectedGroupWords[r6][r3] = gEasyChatStruct->unlockedAlphabetWords[r2][r5];
+            gEasyChatStruct->selectedGroupWords[r6][r3] = gEasyChatStruct->unlockedAlphabetWords[groupId][i];
             r3++;
             if (r3 > 1)
             {
