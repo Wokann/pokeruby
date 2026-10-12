@@ -4,7 +4,7 @@
 	.section .rodata
 
 	.align 2
-gSpriteAnim_8393054:: @ 8393054
+gAnim_FlickeringOrb:: @ 8393054
 	obj_image_anim_frame 0, 3
 	obj_image_anim_frame 4, 3
 	obj_image_anim_frame 8, 3
@@ -12,13 +12,13 @@ gSpriteAnim_8393054:: @ 8393054
 	obj_image_anim_jump 0
 
 	.align 2
-gSpriteAnimTable_8393068:: @ 8393068
-	.4byte gSpriteAnim_8393054
+gAnims_FlickeringOrb:: @ 8393068
+	.4byte gAnim_FlickeringOrb
 
 	.align 2
-gSpriteTemplate_839306C:: @ 839306C
-	spr_template 10004, 10004, gOamData_AffineOff_ObjNormal_16x16, gSpriteAnimTable_8393068, NULL, gDummySpriteAffineAnimTable, AnimTranslateLinearAndFlicker
+gFlickeringOrbSpriteTemplate:: @ 839306C
+	spr_template 10004, 10004, gOamData_AffineOff_ObjNormal_16x16, gAnims_FlickeringOrb, NULL, gDummySpriteAffineAnimTable, AnimTranslateLinearAndFlicker
 
 	.align 2
-gSpriteTemplate_8393084:: @ 8393084
-	spr_template 10004, 10004, gOamData_AffineOff_ObjNormal_16x16, gSpriteAnimTable_8393068, NULL, gDummySpriteAffineAnimTable, AnimTranslateLinearAndFlicker_Flipped
+gFlickeringOrbFlippedSpriteTemplate:: @ 8393084
+	spr_template 10004, 10004, gOamData_AffineOff_ObjNormal_16x16, gAnims_FlickeringOrb, NULL, gDummySpriteAffineAnimTable, AnimTranslateLinearAndFlicker_Flipped
