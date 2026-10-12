@@ -37,7 +37,7 @@ static u8 gUnknown_0300071C[4];
 static struct SecretBase *sSecretBasesSave = gSaveBlock1.secretBases;
 static TVShow *sTvShowsSave = gSaveBlock1.tvShows;
 static struct PokeNews *sPokeNewsSave = gSaveBlock1.pokeNews;
-static void *recordMixingMauvilleMan = &gSaveBlock1.oldMan;
+static void *sOldManSave = &gSaveBlock1.oldMan;
 static struct DewfordTrend *sDewfordTrendsSave = gSaveBlock1.dewfordTrends;
 static struct RecordMixingDaycareMail *sRecordMixMailSave = &sRecordMixMail;
 static struct RSBattleTowerRecord *sBattleTowerSave = &gSaveBlock2.battleTower.playerRecord;
@@ -97,7 +97,7 @@ static void PrepareExchangePacket(void)
     memcpy(eSentRecord.secretBases, sSecretBasesSave, sizeof(eSentRecord.secretBases));
     memcpy(eSentRecord.tvShows, sTvShowsSave, sizeof(eSentRecord.tvShows));
     memcpy(eSentRecord.pokeNews, sPokeNewsSave, sizeof(eSentRecord.pokeNews));
-    memcpy(&eSentRecord.oldMan, recordMixingMauvilleMan, sizeof(eSentRecord.oldMan));
+    memcpy(&eSentRecord.oldMan, sOldManSave, sizeof(eSentRecord.oldMan));
     memcpy(eSentRecord.dewfordTrends, sDewfordTrendsSave, sizeof(eSentRecord.dewfordTrends));
     sRecordMixMail.mail[0] = gSaveBlock1.daycare.misc.mail[0];
     sRecordMixMail.mail[1] = gSaveBlock1.daycare.misc.mail[1];
@@ -470,7 +470,7 @@ static void ReceiveOldManData(u8 *records, size_t recordSize, u8 multiplayerId)
 
     ShufflePlayerIndices(mixIndices);
     //Probably not how it was originally written, but this matches.
-    memcpy(records + multiplayerId * recordSize, (ptr = recordMixingMauvilleMan), 0x40);
+    memcpy(records + multiplayerId * recordSize, (ptr = sOldManSave), 0x40);
     memcpy(ptr, records + mixIndices[multiplayerId] * recordSize, 0x40);
     ResetMauvilleOldManFlag();
 }
