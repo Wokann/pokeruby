@@ -91,14 +91,14 @@ static bool8 CreateHofConfettiSprite(void);
 
 // data and gfx
 
-static const struct CompressedSpriteSheet sHallOfFame_ConfettiSpriteSheet =
+static const struct CompressedSpriteSheet sSpriteSheet_Confetti =
 {
       gConfetti_Gfx, 0x220, 1001
 };
 
 static const u8 sUnused0[8] = {};
 
-static const struct CompressedSpritePalette sHallOfFame_ConfettiSpritePalette =
+static const struct CompressedSpritePalette sSpritePalette_Confetti =
 {
       gConfetti_Pal, 1001
 };
@@ -1234,8 +1234,8 @@ static void LoadHofGfx(void)
     ResetSpriteData();
     FreeAllSpritePalettes();
     gReservedSpritePaletteCount = 8;
-    LoadCompressedObjectPic(&sHallOfFame_ConfettiSpriteSheet);
-    LoadCompressedObjectPalette(&sHallOfFame_ConfettiSpritePalette);
+    LoadCompressedObjectPic(&sSpriteSheet_Confetti);
+    LoadCompressedObjectPalette(&sSpritePalette_Confetti);
     Text_LoadWindowTemplate(&gWindowTemplate_81E71B4);
     InitMenuWindow(&gWindowTemplate_81E71B4);
 }
