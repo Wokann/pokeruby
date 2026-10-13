@@ -55,9 +55,32 @@ void PrintAgbHeader()
         "voicegroup_trumpet_keysplit",
         "voicegroup_tuba_keysplit",
         "voicegroup_french_horn_keysplit",
+        "voicegroup_route110",
+        "voicegroup_route101",
+        "voicegroup_fanfare",
+        "voicegroup_gym",
+        "voicegroup_route120",
+        "voicegroup_petalburg",
+        "voicegroup_petalburg_drumset",
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        "voicegroup_route101_drumset",
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        "voicegroup_route110_drumset",
     };
 
-    if (g_voiceGroup >= 0 && g_voiceGroup < static_cast<int>(sizeof(sVoiceGroupNames) / sizeof(sVoiceGroupNames[0])))
+    if (g_voiceGroup >= 0 && g_voiceGroup < static_cast<int>(sizeof(sVoiceGroupNames) / sizeof(sVoiceGroupNames[0]))
+        && sVoiceGroupNames[g_voiceGroup] != nullptr)
         std::fprintf(g_outputFile, "\t.equ\t%s_grp, %s\n", g_asmLabel.c_str(), sVoiceGroupNames[g_voiceGroup]);
     else
         std::fprintf(g_outputFile, "\t.equ\t%s_grp, voicegroup%03u\n", g_asmLabel.c_str(), g_voiceGroup);
