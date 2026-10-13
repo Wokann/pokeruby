@@ -150,7 +150,7 @@ const u8 gText_ConfirmStarterChoice[] = _("{HIGHLIGHT WHITE2}{COLOR DARK_GREY}Do
 const u8 gText_Pokemon4[] = _("POKéMON");
 
 const u8 gText_SaveError[] = _("Save error.\pPlease exchange the\nbackup memory.");
-const u8 gOtherText_FlyToWhere[] = _("FLY to where?");
+const u8 gText_FlyToWhere[] = _("FLY to where?");
 
 const u8 gMenuText_Use[] = _("USE");
 const u8 gMenuText_Toss[] = _("TOSS");
@@ -892,8 +892,8 @@ const u8 GiddyText_WhenYouSeeTheSettingSunDoesIt[] = _("When you see the setting
 const u8 GiddyText_LyingBackInTheGreenGrass[] = _("Lying back in the green grass...\nOh, it's so, so nice!");
 const u8 GiddyText_SecretBasesAreSoWonderful[] = _("SECRET BASES are so wonderful!\nCan't you feel the excitement?");
 
-const u8 OtherText_PokeLeague[] = _("POKéMON LEAGUE");
-const u8 OtherText_PokeCenter[] = _("POKéMON CENTER");
+const u8 gText_PokemonLeague[] = _("POKéMON LEAGUE");
+const u8 gText_PokemonCenter[] = _("POKéMON CENTER");
 
 const u8 gText_GetsAPokeBlockQuestion[] = _(" gets a {POKEBLOCK}?");
 
@@ -914,9 +914,9 @@ const u8 gText_CheckCompleted[] = _("Check completed.\nAttempting to save again.
 const u8 gText_SaveCompleteGameCannotContinue[] = _("Save completed.\n{COLOR RED}“Gameplay cannot be continued.\nReturning to the title screen.”");
 const u8 gText_SaveCompletePressA[] = _("Save completed.\n{COLOR RED}“Please press the A Button.”");
 
-const u8 gOtherText_Ferry[] = _("FERRY");
-const u8 gOtherText_SecretBase[] = _("SECRET BASE");
-const u8 gOtherText_Hideout[] = _("HIDEOUT");
+const u8 gText_Ferry[] = _("FERRY");
+const u8 gText_SecretBase[] = _("SECRET BASE");
+const u8 gText_Hideout[] = _("HIDEOUT");
 
 const u8 gText_ResetRTCConfirmCancel[] = _("Reset RTC?\nA: Confirm, B: Cancel");
 const u8 gText_PresentTime[] = _("Present time in game");
@@ -1078,7 +1078,7 @@ const u8 gText_ConfirmStarterChoice[] = _("{HIGHLIGHT WHITE2}{COLOR DARK_GREY}W�
 const u8 gText_Pokemon4[] = _("POKéMON");
 
 const u8 gText_SaveError[] = _("Fehler beim Speichern!\pBitte Backup Memory\naustauschen.");
-const u8 gOtherText_FlyToWhere[] = _("Wohin willst du FLIEGEN?");
+const u8 gText_FlyToWhere[] = _("Wohin willst du FLIEGEN?");
 
 const u8 gMenuText_Use[] = _("O.K.");
 const u8 gMenuText_Toss[] = _("MÜLL");
@@ -1817,8 +1817,8 @@ const u8 GiddyText_WhenYouSeeTheSettingSunDoesIt[] = _("Sehnst du dich beim Anbl
 const u8 GiddyText_LyingBackInTheGreenGrass[] = _("Einfach so im grünen Gras liegen...\nOh, das ist so was von angenehm!");
 const u8 GiddyText_SecretBasesAreSoWonderful[] = _("GEHEIMBASEN sind superklasse!\nFindest du das nicht auch aufregend?");
 
-const u8 OtherText_PokeLeague[] = _("POKéMON LIGA");
-const u8 OtherText_PokeCenter[] = _("POKéMON-CENTER");
+const u8 gText_PokemonLeague[] = _("POKéMON LIGA");
+const u8 gText_PokemonCenter[] = _("POKéMON-CENTER");
 
 const u8 gText_GetsAPokeBlockQuestion[] = _(" erhält einen {POKEBLOCK}?");
 
@@ -1839,9 +1839,9 @@ const u8 gText_CheckCompleted[] = _("Überprüfung beendet.\nNeuer Speicherversu
 const u8 gText_SaveCompleteGameCannotContinue[] = _("Speichern beendet.\n{COLOR RED}“Spiel fortsetzen nicht möglich.\nZurück zum Titelbildschirm.”");
 const u8 gText_SaveCompletePressA[] = _("Speichern beendet.\n{COLOR RED}“Bitte A-Knopf drücken.”");
 
-const u8 gOtherText_Ferry[] = _("FÄHRE");
-const u8 gOtherText_SecretBase[] = _("GEHEIMBASIS");
-const u8 gOtherText_Hideout[] = _("VERSTECK");
+const u8 gText_Ferry[] = _("FÄHRE");
+const u8 gText_SecretBase[] = _("GEHEIMBASIS");
+const u8 gText_Hideout[] = _("VERSTECK");
 
 const u8 gText_ResetRTCConfirmCancel[] = _("Echtzeituhr zurücksetzen?\nA: Bestätigen, B: Zurück");
 const u8 gText_PresentTime[] = _("Aktuelle Uhrzeit im Spiel");

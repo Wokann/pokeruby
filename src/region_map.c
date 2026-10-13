@@ -1122,9 +1122,9 @@ const u8 *GetMapNameGeneric(u8 *dest, u16 mapSecId)
     switch (mapSecId)
     {
     case MAPSEC_DYNAMIC:
-        return StringCopy(dest, gOtherText_Ferry);
+        return StringCopy(dest, gText_Ferry);
     case MAPSEC_SECRET_BASE:
-        return StringCopy(dest, gOtherText_SecretBase);
+        return StringCopy(dest, gText_SecretBase);
     default:
         return GetMapSectionName(dest, mapSecId, 0);
     }
@@ -1133,7 +1133,7 @@ const u8 *GetMapNameGeneric(u8 *dest, u16 mapSecId)
 const u8 *CopyLocationName(u8 *dest, u16 mapSecId)
 {
     if (mapSecId == MAPSEC_EVIL_TEAM_HIDEOUT)
-        return StringCopy(dest, gOtherText_Hideout);
+        return StringCopy(dest, gText_Hideout);
     else
         return GetMapNameGeneric(dest, mapSecId);
 }
@@ -1208,8 +1208,8 @@ static const u8 sMapHealLocations[][3] =
 
 static const u8 *const sEverGrandeCityNames[] =
 {
-    OtherText_PokeLeague,
-    OtherText_PokeCenter,
+    gText_PokemonLeague,
+    gText_PokemonCenter,
 };
 
 struct MultiNameFlyDest
@@ -1361,7 +1361,7 @@ void CB2_InitFlyRegionMap(void)
         break;
     case 6:
         LoadPalette(sRegionMapFramePal, 16, 32);
-        Menu_PrintTextPixelCoords(gOtherText_FlyToWhere, 1, 0x90, 1);
+        Menu_PrintTextPixelCoords(gText_FlyToWhere, 1, 0x90, 1);
         break;
     case 7:
         LoadFlyDestIcons();
@@ -1407,7 +1407,7 @@ static void PrintFlyTargetName(void)
 {
     if (gRegionMapState->regionMap.mapSecType == 2 || gRegionMapState->regionMap.mapSecType == 4)
     {
-        bool8 drawFrameDisabled = FALSE;
+        bool8 namePrinted = FALSE;
         u16 i;
 
         for (i = 0; i < ARRAY_COUNT(sMultiNameFlyDestinations); i++)
@@ -1419,13 +1419,13 @@ static void PrintFlyTargetName(void)
                     Menu_DrawStdWindowFrame(16, 14, 29, 19);
                     Menu_PrintText(gRegionMapState->regionMap.mapSecName, 17, 15);
                     MenuPrint_RightAligned(sMultiNameFlyDestinations[i].name[gRegionMapState->regionMap.posWithinMapSec], 29, 17);
-                    drawFrameDisabled = TRUE;
+                    namePrinted = TRUE;
                 }
                 break;
             }
         }
 
-        if (!drawFrameDisabled)
+        if (!namePrinted)
         {
             Menu_DrawStdWindowFrame(16, 16, 29, 19);
             Menu_PrintText(gRegionMapState->regionMap.mapSecName, 17, 17);

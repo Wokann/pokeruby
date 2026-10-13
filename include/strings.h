@@ -205,7 +205,7 @@ extern const u8 gText_PlayerSavedGame[];
 extern const u8 gText_DifferentSaveFile[];
 
 extern const u8 gText_SaveError[];
-extern const u8 gOtherText_FlyToWhere[];
+extern const u8 gText_FlyToWhere[];
 
 extern const u8 gMenuText_Use[];
 extern const u8 gMenuText_Toss[];
@@ -943,8 +943,8 @@ extern const u8 GiddyText_WhenYouSeeTheSettingSunDoesIt[];
 extern const u8 GiddyText_LyingBackInTheGreenGrass[];
 extern const u8 GiddyText_SecretBasesAreSoWonderful[];
 
-extern const u8 OtherText_PokeLeague[];
-extern const u8 OtherText_PokeCenter[];
+extern const u8 gText_PokemonLeague[];
+extern const u8 gText_PokemonCenter[];
 
 extern const u8 gText_GetsAPokeBlockQuestion[];
 
@@ -965,9 +965,9 @@ extern const u8 gText_CheckCompleted[];
 extern const u8 gText_SaveCompleteGameCannotContinue[];
 extern const u8 gText_SaveCompletePressA[];
 
-extern const u8 gOtherText_Ferry[];
-extern const u8 gOtherText_SecretBase[];
-extern const u8 gOtherText_Hideout[];
+extern const u8 gText_Ferry[];
+extern const u8 gText_SecretBase[];
+extern const u8 gText_Hideout[];
 
 extern const u8 gText_Day[];
 extern const u8 gText_Colon3[];
