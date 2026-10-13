@@ -847,9 +847,9 @@ static void ItemStorage_FinishItemSwap(u8 taskId, bool8 canceled)
     }
 }
 
-static void ItemStorage_DrawItemQuantity(u16 arg1, enum StringConvertMode arg2, u8 arg3, u8 arg4, int isSwapSelected)
+static void ItemStorage_DrawItemQuantity(u16 value, enum StringConvertMode mode, u8 arg3, u8 n, int isSwapSelected)
 {
-    sub_80A4164(gStringVar1, arg1, arg2, arg4);
+    sub_80A4164(gStringVar1, value, mode, n);
 
     if(isSwapSelected != FALSE)
         Menu_PrintText(gSelectedItemQuantityFormatText, 0x1A, arg3);
