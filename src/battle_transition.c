@@ -67,7 +67,7 @@ static void Task_Sidney(u8 taskId);
 static void Task_Phoebe(u8 taskId);
 static void Task_Glacia(u8 taskId);
 static void Task_Drake(u8 taskId);
-static void Phase2Task_Transition_Steven(u8 taskID);
+static void Phase2Task_Transition_Steven(u8 taskId);
 static bool8 Transition_StartIntro(struct Task* task);
 static bool8 Transition_WaitForIntro(struct Task* task);
 static bool8 Transition_StartMain(struct Task* task);
@@ -545,10 +545,10 @@ void BattleTransition_Start(u8 transitionId)
 
 bool8 IsBattleTransitionDone(void)
 {
-    u8 taskID = FindTaskIdByFunc(Task_BattleTransition);
-    if (gTasks[taskID].tTransitionDone)
+    u8 taskId = FindTaskIdByFunc(Task_BattleTransition);
+    if (gTasks[taskId].tTransitionDone)
     {
-        DestroyTask(taskID);
+        DestroyTask(taskId);
         return TRUE;
     }
     else
@@ -557,8 +557,8 @@ bool8 IsBattleTransitionDone(void)
 
 static void LaunchBattleTransitionTask(u8 transitionId)
 {
-    u8 taskID = CreateTask(Task_BattleTransition, 2);
-    gTasks[taskID].tTransitionId = transitionId;
+    u8 taskId = CreateTask(Task_BattleTransition, 2);
+    gTasks[taskId].tTransitionId = transitionId;
 }
 
 static void Task_BattleTransition(u8 taskId)
@@ -655,8 +655,8 @@ static bool8 Blur_End(struct Task* task)
 {
     if (!gPaletteFade.active)
     {
-        u8 taskID = FindTaskIdByFunc(Task_Blur);
-        DestroyTask(taskID);
+        u8 taskId = FindTaskIdByFunc(Task_Blur);
+        DestroyTask(taskId);
     }
     return FALSE;
 }
@@ -698,8 +698,8 @@ static bool8 Swirl_End(struct Task* task)
 
     if (!gPaletteFade.active)
     {
-        u8 taskID = FindTaskIdByFunc(Task_Swirl);
-        DestroyTask(taskID);
+        u8 taskId = FindTaskIdByFunc(Task_Swirl);
+        DestroyTask(taskId);
     }
 
     TRANSITION_STRUCT.VBlank_DMA++;
@@ -1015,14 +1015,14 @@ static bool8 PokeballsTrail_End(struct Task* task)
 
 bool8 FldEff_PokeballTrail(void)
 {
-    u8 spriteID = CreateSpriteAtEnd(&sSpriteTemplate_Pokeball, gFieldEffectArguments[0], gFieldEffectArguments[1], 0);
-    gSprites[spriteID].oam.priority = 0;
-    gSprites[spriteID].oam.affineMode = 1;
-    gSprites[spriteID].data[0] = gFieldEffectArguments[2];
-    gSprites[spriteID].data[1] = gFieldEffectArguments[3];
-    gSprites[spriteID].data[2] = -1;
-    InitSpriteAffineAnim(&gSprites[spriteID]);
-    StartSpriteAffineAnim(&gSprites[spriteID], gFieldEffectArguments[2]);
+    u8 spriteId = CreateSpriteAtEnd(&sSpriteTemplate_Pokeball, gFieldEffectArguments[0], gFieldEffectArguments[1], 0);
+    gSprites[spriteId].oam.priority = 0;
+    gSprites[spriteId].oam.affineMode = 1;
+    gSprites[spriteId].data[0] = gFieldEffectArguments[2];
+    gSprites[spriteId].data[1] = gFieldEffectArguments[3];
+    gSprites[spriteId].data[2] = -1;
+    InitSpriteAffineAnim(&gSprites[spriteId]);
+    StartSpriteAffineAnim(&gSprites[spriteId], gFieldEffectArguments[2]);
     return FALSE;
 }
 
@@ -1445,10 +1445,10 @@ static void Task_Drake(u8 taskId)
     DoMugshotTransition(taskId);
 }
 
-static void Phase2Task_Transition_Steven(u8 taskID)
+static void Phase2Task_Transition_Steven(u8 taskId)
 {
-    gTasks[taskID].tMugshotId = MUGSHOT_STEVEN;
-    DoMugshotTransition(taskID);
+    gTasks[taskId].tMugshotId = MUGSHOT_STEVEN;
+    DoMugshotTransition(taskId);
 }
 
 static void DoMugshotTransition(u8 taskId)
@@ -2273,13 +2273,13 @@ static void VBlankCB_AngledWipes(void)
 
 static void CreateIntroTask(s16 fadeToGrayDelay, s16 fadeFromGrayDelay, s16 numFades, s16 fadeToGrayIncrement, s16 fadeFromGrayIncrement)
 {
-    u8 taskID = CreateTask(Task_BattleTransition_Intro, 3);
-    gTasks[taskID].data[1] = fadeToGrayDelay;
-    gTasks[taskID].data[2] = fadeFromGrayDelay;
-    gTasks[taskID].data[3] = numFades;
-    gTasks[taskID].data[4] = fadeToGrayIncrement;
-    gTasks[taskID].data[5] = fadeFromGrayIncrement;
-    gTasks[taskID].data[6] = fadeToGrayDelay;
+    u8 taskId = CreateTask(Task_BattleTransition_Intro, 3);
+    gTasks[taskId].data[1] = fadeToGrayDelay;
+    gTasks[taskId].data[2] = fadeFromGrayDelay;
+    gTasks[taskId].data[3] = numFades;
+    gTasks[taskId].data[4] = fadeToGrayIncrement;
+    gTasks[taskId].data[5] = fadeFromGrayIncrement;
+    gTasks[taskId].data[6] = fadeToGrayDelay;
 }
 
 static bool8 IsIntroTaskDone(void)
