@@ -1047,7 +1047,7 @@ u8 CreateJudgeSpeechBubbleSprite(void)
     u8 spriteId;
 
     LoadCompressedObjectPic(&sSpriteSheet_JudgeSymbols);
-    LoadCompressedObjectPalette(&sSpritePalette_JudgeSymbols);
+    LoadCompressedSpritePalette(&sSpritePalette_JudgeSymbols);
     spriteId = CreateSprite(&sSpriteTemplate_JudgeSpeechBubble, 96, 10, 29);
     gSprites[spriteId].invisible = TRUE;
     gSprites[spriteId].data[0] = gSprites[spriteId].oam.tileNum;
@@ -2143,7 +2143,7 @@ void unref_sub_80B011C(void)
 
     LoadCompressedObjectPic(&gUnknown_083CC3AC);
     for (i = 0; i < 4; i++)
-        LoadCompressedObjectPalette(&gUnknown_083CC3B4[i]);
+        LoadCompressedSpritePalette(&gUnknown_083CC3B4[i]);
     for (i = 0; i < 4; i++)
     {
         u8 spriteId = CreateSprite(

@@ -572,7 +572,7 @@ static u8 CreatePokemonFrontSprite(u16 species, u8 x, u8 y)
       gMonFrontPicCoords[species].size, gMonFrontPicCoords[species].y_offset,
       gMonSpriteGfx_Sprite_ptr[0], gMonSpriteGfx_Sprite_ptr[1],
       species);
-    LoadCompressedObjectPalette(&gMonPaletteTable[species]);
+    LoadCompressedSpritePalette(&gMonPaletteTable[species]);
     SetMultiuseSpriteTemplateToPokemon(species, 1);
     spriteId = CreateSprite(&gMultiuseSpriteTemplate, x, y, 0);
     gSprites[spriteId].callback = nullsub_72;

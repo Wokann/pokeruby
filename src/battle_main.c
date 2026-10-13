@@ -1949,7 +1949,7 @@ extern const struct Pokeblock gUnknown_Debug_821F5AC[];
 
 extern u8 gUnknown_020297ED;
 
-extern void debug_sub_800D684(void);
+extern void UnusedBattleInit(void);
 
 void debug_sub_801174C(void)
 {
@@ -2124,7 +2124,7 @@ void debug_sub_801174C(void)
     }
 
     gMain.savedCallback = debug_sub_80108B8;
-    SetMainCallback2(debug_sub_800D684);
+    SetMainCallback2(UnusedBattleInit);
 
     ClearBag();
 

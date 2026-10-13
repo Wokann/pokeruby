@@ -353,7 +353,7 @@ static u8 EggHatchCreateMonSprite(u8 useAlt, u8 state, u8 partyId)
             u16 species = GetMonData(mon, MON_DATA_SPECIES);
             u32 pid = GetMonData(mon, MON_DATA_PERSONALITY);
             HandleLoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].size, gMonFrontPicCoords[species].y_offset, gSharedMem, gMonSpriteGfx_Sprite_ptr[2 * useAlt + 1], species, pid);
-            LoadCompressedObjectPalette(GetMonSpritePalStruct(mon));
+            LoadCompressedSpritePalette(GetMonSpritePalStruct(mon));
         }
         break;
     case 1:

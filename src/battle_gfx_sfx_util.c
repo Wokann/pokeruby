@@ -395,7 +395,7 @@ void DecompressTrainerFrontPic(u16 frontPicId, u8 battler)
     spriteSheet.size = gTrainerFrontPicTable[frontPicId].size;
     spriteSheet.tag = gTrainerFrontPicTable[frontPicId].tag;
     LoadCompressedObjectPic(&spriteSheet);
-    LoadCompressedObjectPalette(&gTrainerFrontPicPaletteTable[frontPicId]);
+    LoadCompressedSpritePalette(&gTrainerFrontPicPaletteTable[frontPicId]);
 }
 
 void DecompressTrainerBackPic(u16 backPicId, u8 battler)

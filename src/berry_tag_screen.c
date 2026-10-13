@@ -217,7 +217,7 @@ bool8 LoadBerryTagGfx(void)
         gSharedMem.gfxState += 1;
         break;
     case 6:
-        LoadCompressedObjectPalette(&gBerryCheckCirclePaletteTable);
+        LoadCompressedSpritePalette(&gBerryCheckCirclePaletteTable);
         gSharedMem.gfxState = 0;
         return TRUE;
     }

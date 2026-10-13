@@ -706,7 +706,7 @@ u8 AddNewGameBirchObject(s16 x, s16 y, u8 subpriority)
 u8 CreateMonSprite_PicBox(u16 species, s16 x, s16 y, u8 subpriority)
 {
     DecompressPicFromTable_2(&gMonFrontPicTable[species], gMonFrontPicCoords[species].size, gMonFrontPicCoords[species].y_offset, gMonSpriteGfx_Sprite_ptr[3], gMonSpriteGfx_Sprite_ptr[3], species);
-    LoadCompressedObjectPalette(&gMonPaletteTable[species]);
+    LoadCompressedSpritePalette(&gMonPaletteTable[species]);
     SetMultiuseSpriteTemplateToPokemon(species, 3);
     gMultiuseSpriteTemplate.paletteTag = gMonPaletteTable[0].tag;
     PreservePaletteInWeather(IndexOfSpritePaletteTag(gMonPaletteTable[0].tag) + 0x10);
@@ -719,7 +719,7 @@ u8 CreateMonSprite_FieldMove(u16 species, u32 otId, u32 personality, s16 x, s16 
 
     HandleLoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].size, gMonFrontPicCoords[species].y_offset, gMonSpriteGfx_Sprite_ptr[3] /* this is actually u8* or something, pointing to ewram */, gMonSpriteGfx_Sprite_ptr[3], species, personality);
     spritePalette = GetMonSpritePalStructFromOtIdPersonality(species, otId, personality);
-    LoadCompressedObjectPalette(spritePalette);
+    LoadCompressedSpritePalette(spritePalette);
     SetMultiuseSpriteTemplateToPokemon(species, 3);
     gMultiuseSpriteTemplate.paletteTag = spritePalette->tag;
     PreservePaletteInWeather(IndexOfSpritePaletteTag(spritePalette->tag) + 0x10);

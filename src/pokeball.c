@@ -936,7 +936,7 @@ void CreatePokeballSpriteToReleaseMon(u8 monSpriteId, u8 monPalNum, u8 x, u8 y, 
     u8 spriteId;
 
     LoadCompressedObjectPic(&gBallSpriteSheets[0]);
-    LoadCompressedObjectPalette(&gBallSpritePalettes[0]);
+    LoadCompressedSpritePalette(&gBallSpritePalettes[0]);
     spriteId = CreateSprite(&gBallSpriteTemplates[0], x, y, subpriority);
     gSprites[spriteId].data[0] = monSpriteId;
     gSprites[spriteId].data[5] = gSprites[monSpriteId].x;
@@ -1025,7 +1025,7 @@ u8 CreateTradePokeballSprite(u8 monSpriteId, u8 monPalNum, u8 x, u8 y, u8 oamPri
     u8 spriteId;
 
     LoadCompressedObjectPic(&gBallSpriteSheets[0]);
-    LoadCompressedObjectPalette(&gBallSpritePalettes[0]);
+    LoadCompressedSpritePalette(&gBallSpritePalettes[0]);
     spriteId = CreateSprite(&gBallSpriteTemplates[0], x, y, subPriority);
     gSprites[spriteId].data[0] = monSpriteId;
     gSprites[spriteId].data[1] = delay;
@@ -1168,7 +1168,7 @@ void LoadBallGfx(u8 ballId)
     if (GetSpriteTileStartByTag(gBallSpriteSheets[ballId].tag) == 0xFFFF)
     {
         LoadCompressedObjectPic(&gBallSpriteSheets[ballId]);
-        LoadCompressedObjectPalette(&gBallSpritePalettes[ballId]);
+        LoadCompressedSpritePalette(&gBallSpritePalettes[ballId]);
     }
 
     switch (ballId)

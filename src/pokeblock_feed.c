@@ -604,7 +604,7 @@ static bool8 LoadMonAndSceneGfx(struct Pokemon* mon)
             personality = GetMonData(mon, MON_DATA_PERSONALITY);
             trainerId = GetMonData(mon, MON_DATA_OT_ID);
             palette = GetMonSpritePalStructFromOtIdPersonality(species, trainerId, personality);
-            LoadCompressedObjectPalette(palette);
+            LoadCompressedSpritePalette(palette);
             SetMultiuseSpriteTemplateToPokemon(palette->tag, 1);
             ePokeblockGfxState++;
         }
@@ -614,7 +614,7 @@ static bool8 LoadMonAndSceneGfx(struct Pokemon* mon)
         ePokeblockGfxState++;
         break;
     case 3:
-        LoadCompressedObjectPalette(&gPokeblockCase_SpritePal);
+        LoadCompressedSpritePalette(&gPokeblockCase_SpritePal);
         ePokeblockGfxState++;
         break;
     case 4:
@@ -623,7 +623,7 @@ static bool8 LoadMonAndSceneGfx(struct Pokemon* mon)
         break;
     case 5:
         SetPokeblockSpritePal(gSpecialVar_ItemId);
-        LoadCompressedObjectPalette(&sPokeblockSpritePal);
+        LoadCompressedSpritePalette(&sPokeblockSpritePal);
         ePokeblockGfxState++;
         break;
     case 6:

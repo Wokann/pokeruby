@@ -880,10 +880,10 @@ static bool8 LoadPokemonSummaryScreenGraphics(void)
         LoadCompressedObjectPic(&sStatusIconsSpriteSheet);
         break;
     case 10:
-        LoadCompressedObjectPalette(&sStatusIconsSpritePalette);
+        LoadCompressedSpritePalette(&sStatusIconsSpritePalette);
         break;
     case 11:
-        LoadCompressedObjectPalette(&sMoveSelectorSpritePal);
+        LoadCompressedSpritePalette(&sMoveSelectorSpritePal);
         break;
     case 12:
         LoadCompressedPalette(gMoveTypes_Pal, 464, 96);
@@ -1850,7 +1850,7 @@ static u8 LoadMonGfxAndSprite(struct Pokemon *mon, u8 *state)
         otId = GetMonData(mon, MON_DATA_OT_ID);
 
         palette = GetMonSpritePalStructFromOtIdPersonality(species, otId, personality);
-        LoadCompressedObjectPalette(palette);
+        LoadCompressedSpritePalette(palette);
         SetMultiuseSpriteTemplateToPokemon(palette->tag, 1);
         *state += 1;
         return 0xFF;

@@ -406,7 +406,7 @@ static bool8 sub_810B998(void)
             ePokeblockGfxState++;
             break;
         case 4:
-            LoadCompressedObjectPalette(&gPokeblockCase_SpritePal);
+            LoadCompressedSpritePalette(&gPokeblockCase_SpritePal);
             ePokeblockGfxState = 0;
             return TRUE;
     }

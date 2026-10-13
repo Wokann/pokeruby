@@ -1235,7 +1235,7 @@ static void LoadHofGfx(void)
     FreeAllSpritePalettes();
     gReservedSpritePaletteCount = 8;
     LoadCompressedObjectPic(&sSpriteSheet_Confetti);
-    LoadCompressedObjectPalette(&sSpritePalette_Confetti);
+    LoadCompressedSpritePalette(&sSpritePalette_Confetti);
     Text_LoadWindowTemplate(&gWindowTemplate_81E71B4);
     InitMenuWindow(&gWindowTemplate_81E71B4);
 }

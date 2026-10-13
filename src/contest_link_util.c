@@ -611,7 +611,7 @@ static void Task_ShowWinnerMonBanner(u8 taskId)
             otId = gContestMons[i].otId;
             HandleLoadSpecialPokePic(gMonFrontPicTable + species, gMonFrontPicCoords[species].size, gMonFrontPicCoords[species].y_offset, (void *)gSharedMem, gMonSpriteGfx_Sprite_ptr[1], species, personality);
             pokePal = GetMonSpritePalStructFromOtIdPersonality(species, otId, personality);
-            LoadCompressedObjectPalette(pokePal);
+            LoadCompressedSpritePalette(pokePal);
             SetMultiuseSpriteTemplateToPokemon(species, 1);
             gMultiuseSpriteTemplate.paletteTag = pokePal->tag;
             spriteId = CreateSprite(&gMultiuseSpriteTemplate, 0x110, 0x50, 10);
@@ -620,7 +620,7 @@ static void Task_ShowWinnerMonBanner(u8 taskId)
             gSprites[spriteId].callback = SpriteCB_WinnerMonSlideIn;
             eContestLink80C2020Struct2018000.winnerMonSpriteId = spriteId;
             LoadCompressedObjectPic(&sSpriteSheet_Confetti);
-            LoadCompressedObjectPalette(&sSpritePalette_Confetti);
+            LoadCompressedSpritePalette(&sSpritePalette_Confetti);
             CreateTask(Task_CreateConfetti, 10);
             gTasks[taskId].data[0]++;
             break;

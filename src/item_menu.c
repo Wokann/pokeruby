@@ -518,7 +518,7 @@ static bool8 LoadBagMenu_Graphics(void)
         ewramBagSetupStep++;
         break;
     case 4:
-        LoadCompressedObjectPalette(&gBagPaletteTable);
+        LoadCompressedSpritePalette(&gBagPaletteTable);
         ewramBagSetupStep = 0;
         return TRUE;
     }
@@ -3896,7 +3896,7 @@ static void LoadBerryGfx(u8 berryId)
     {
         spritePal.data = (u16 *)sBerryPicTable[berryId].lzPalette;
         spritePal.tag = 0x7544;
-        LoadCompressedObjectPalette((struct CompressedSpritePalette *)&spritePal);
+        LoadCompressedSpritePalette((struct CompressedSpritePalette *)&spritePal);
         LZDecompressWram(sBerryPicTable[berryId].lzPic, ewramBerryPicTemp);
         ArrangeBerryGfx(ewramBerryPicTemp, ewramBerryPic);
     }

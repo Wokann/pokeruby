@@ -226,18 +226,18 @@ static const struct BattleBackground sBattleEnvironmentTable[] =
     },
 };
 
-static void sub_800D6C4(void);
+static void CB2_UnusedBattleInit(void);
 
-void debug_sub_800D684(void)
+void UnusedBattleInit(void)
 {
     u8 spriteId;
     ResetSpriteData();
     spriteId = CreateSprite(&gUnusedBattleInitSprite, 0, 0, 0);
     gSprites[spriteId].invisible = TRUE;
-    SetMainCallback2(sub_800D6C4);
+    SetMainCallback2(CB2_UnusedBattleInit);
 }
 
-static void sub_800D6C4(void)
+static void CB2_UnusedBattleInit(void)
 {
     AnimateSprites();
     BuildOamBuffer();

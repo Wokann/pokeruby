@@ -305,7 +305,7 @@ void DrawMoneyBox(u32 amount, u8 x, u8 y)
     ChangeAmountInMoneyBox(amount, x, y);
 
     LoadCompressedObjectPic(sSpriteSheet_MoneyLabel);
-    LoadCompressedObjectPalette(sSpritePalette_MoneyLabel);
+    LoadCompressedSpritePalette(sSpritePalette_MoneyLabel);
 
     sMoneyLabelSpriteId = CreateSprite(&sSpriteTemplate_MoneyLabel, x * 8 + 19, y * 8 + 11, 0);
 }

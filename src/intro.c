@@ -1239,7 +1239,7 @@ static void Task_IntroLoadPart3Streaks(u8 taskId)
     gReservedSpritePaletteCount = 8;
     LoadCompressedObjectPic(&gIntro3PokeballGfx_Table[0]);
     LoadCompressedObjectPic(&gIntro3MiscGfx_Table[0]);
-    LoadCompressedObjectPalette(&gInterfacePokeballPal_Table[0]);
+    LoadCompressedSpritePalette(&gInterfacePokeballPal_Table[0]);
     LoadSpritePalettes(gIntro3MiscPal_Table);
     gTasks[taskId].func = task_intro_14;
 }
