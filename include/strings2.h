@@ -84,9 +84,6 @@ extern const u8 gEasyChatGroupName_Move2[];
 extern const u8 gEasyChatGroupName_TrendySaying[];
 extern const u8 gEasyChatGroupName_Pokemon2[];
 
-// mail
-extern const u8 gOtherText_From[];
-
 // trainer_card
 extern const u8 gOtherText_TrainersTrainerCard[];
 extern const u8 gOtherText_Boy[];

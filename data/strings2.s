@@ -203,7 +203,7 @@ gOtherText_FourQuestions:: @ 842C7D6
 gText_ThreeQuestionMarks:: @ 842C890
 	.string "???$"
 
-gOtherText_From:: @ 842C894
+gText_FromSpace:: @ 842C894
 	.string "From $"
 
 gText_MixingRecords:: @ 842C89A

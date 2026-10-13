@@ -15,7 +15,7 @@
 #include "script.h"
 #include "sprite.h"
 #include "string_util.h"
-#include "strings2.h"
+#include "strings.h"
 #include "task.h"
 #include "text.h"
 #include "scanline_effect.h"
@@ -566,13 +566,13 @@ static void BufferMailText(void)
     if (sMailRead->international == 0)
     {
         ptr = sub_80F8D7C(ptr, sMailRead->mail->playerName);
-        StringCopy(ptr, gOtherText_From);
+        StringCopy(ptr, gText_FromSpace);
         sMailRead->varF9 = sMailRead->layout->var2 - StringLength(sMailRead->playerName);
 
     }
     else
     {
-        ptr = StringCopy(ptr, gOtherText_From);
+        ptr = StringCopy(ptr, gText_FromSpace);
         sub_80F8D7C(ptr, sMailRead->mail->playerName);
         sMailRead->varF9 = sMailRead->layout->var2;
     }
