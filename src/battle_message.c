@@ -189,8 +189,8 @@ extern struct BattleMsgData* gSelectedOrderFromParty;
 #define gBattleMsgDataPtr gSelectedOrderFromParty
 
 static void ChooseMoveUsedParticle(u8* textBuff);
-static void ChooseTypeOfMoveUsedString(u8* textBuff);
-static void ExpandBattleTextBuffPlaceholders(u8* src, u8* dst);
+static void ChooseTypeOfMoveUsedString(u8* dst);
+static void ExpandBattleTextBuffPlaceholders(const u8* src, u8* dst);
 
 u8 GetBattlerSide(u8 battler);
 s32 GetBattlerMultiplayerId(u16);
@@ -206,7 +206,7 @@ extern u8 *de_sub_804110C();
 
 void BufferStringBattle(u16 stringID)
 {
-    int i;
+    s32 i;
     const u8* stringPtr = NULL;
 
     gBattleMsgDataPtr = (struct BattleMsgData*)(&gBattleBufferA[gActiveBattler][4]);
@@ -828,7 +828,7 @@ u32 BattleStringExpandPlaceholders(const u8* src, u8* dst)
     return dstID;
 }
 
-static void ExpandBattleTextBuffPlaceholders(u8* src, u8* dst)
+static void ExpandBattleTextBuffPlaceholders(const u8* src, u8* dst)
 {
     u32 srcID = 1;
     u32 value = 0;

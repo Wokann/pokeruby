@@ -5686,8 +5686,8 @@ static void Cmd_atknameinbuff1(void)
 }
 
 extern const u8 gText_BattleSwitchWhich2[];
-extern const u8 BattleText_Dash[];
-extern const u8 BattleText_Plus[];
+extern const u8 gText_Dash[];
+extern const u8 gText_Plus[];
 extern const u8 *const gStatNamesTable2[];
 
 static void atk6C_drawlvlupbox(void)
@@ -5738,9 +5738,9 @@ static void atk6C_drawlvlupbox(void)
             r5[2] = ((i & 1) * 9 + 5) * 8 + 6;
             r5 += 3;
             if (sign)
-                r5 = StringCopy(r5, BattleText_Dash);
+                r5 = StringCopy(r5, gText_Dash);
             else
-                r5 = StringCopy(r5, BattleText_Plus);
+                r5 = StringCopy(r5, gText_Plus);
             r5[0] = EXT_CTRL_CODE_BEGIN;
             r5[1] = EXT_CTRL_CODE_MIN_LETTER_SPACING;
             r5[2] = 6;

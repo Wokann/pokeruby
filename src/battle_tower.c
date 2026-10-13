@@ -277,8 +277,8 @@ extern const u8 gText_CommaSpace[];
 extern const u8 gText_Space2[];
 extern const u8 gText_LineBreak[];
 extern const u8 gText_NewLine[];
-extern const u8 BattleText_Format8[];
-extern const u8 BattleText_Format9[];
+extern const u8 gText_Are[];
+extern const u8 gText_Are2[];
 extern u16 gSpecialVar_0x8004;
 extern u16 gTrainerBattleOpponent_A;
 extern u16 gBattleTypeFlags;
@@ -1003,7 +1003,7 @@ void CheckPartyBattleTowerBanlist(void)
         if (counter == 0)
         {
             StringAppend(gStringVar1, gText_Space2);
-            StringAppend(gStringVar1, BattleText_Format8);
+            StringAppend(gStringVar1, gText_Are);
             return;
         }
 
@@ -1012,7 +1012,7 @@ void CheckPartyBattleTowerBanlist(void)
         else
             StringAppend(gStringVar1, gText_Space2);
 
-        StringAppend(gStringVar1, BattleText_Format9);
+        StringAppend(gStringVar1, gText_Are2);
     }
     else
     {
