@@ -133,7 +133,7 @@ u8 GetBattlerAtPosition(u8 ID);
 u16 GiveMoveToBattleMon(struct BattlePokemon *mon, u16 move);
 void IncrementGameStat(u8 index);
 u8 GetScaledHPFraction(s16 hp, s16 maxhp, u8 scale);
-u8 MenuCursor_Create814A5C0(u8 a1, u16 a2, u8 a3, u16 a4, u8 a5);
+u8 MenuCursor_Create814A5C0(u8 subpriority, u16 paletteTag, u8 a3, u16 a4, u8 rowWidth);
 void DestroyMenuCursor(void);
 void sub_802BC6C(void);
 u8 GetMoveSlotToReplace(void);
@@ -144,7 +144,7 @@ u8 GetMoveTarget(u16 move, u8 targetbyte); //get target of move
 u8 GetCurrentMapType(void);
 u8 CalculatePlayerPartyCount(void);
 u16 Sqrt(u32 num);
-void MenuCursor_SetPos814A880(u8 a1, u8 a2);
+void MenuCursor_SetPos814A880(u8 x, u8 y);
 bool8 IsLinkDoubleBattle(void);
 
 //extern BattleScripts

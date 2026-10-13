@@ -172,8 +172,8 @@ struct BlenderDebug
 void m4aMPlayPitchControl(struct MusicPlayerInfo *mplayInfo, u16 trackBits, s16 pitch);
 void m4aMPlayTempoControl(struct MusicPlayerInfo *mplayInfo, u16 tempo);
 void m4aMPlayStop(struct MusicPlayerInfo *mplayInfo);
-void MenuCursor_SetPos814A880(u8 a1, u8 a2);
-u8 MenuCursor_Create814A5C0(u8 a1, u16 a2, u8 a3, u16 a4, u8 a5);
+void MenuCursor_SetPos814A880(u8 x, u8 y);
+u8 MenuCursor_Create814A5C0(u8 subpriority, u16 paletteTag, u8 a3, u16 a4, u8 rowWidth);
 #ifdef GERMAN
 extern void de_sub_8073110();
 #endif

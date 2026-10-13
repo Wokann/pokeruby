@@ -26,10 +26,10 @@ void sub_814A590(void)
     gUnknown_0203A3D4 = 0;
 }
 
-u8 MenuCursor_Create814A5C0(u8 subpriority, u16 paletteTag, u8 a3, u16 a4, u8 a5)
+u8 MenuCursor_Create814A5C0(u8 subpriority, u16 paletteTag, u8 a3, u16 a4, u8 rowWidth)
 {
     int v9;
-    struct Sprite *v10;
+    struct Sprite *sprite;
 
     if (gUnknown_0203A3D0 != 0x40 || gUnknown_0203A3D1 != 0x40)
         DestroyMenuCursor();
@@ -50,19 +50,19 @@ u8 MenuCursor_Create814A5C0(u8 subpriority, u16 paletteTag, u8 a3, u16 a4, u8 a5
     gUnknown_0203A3D1 = CreateSprite(&gSpriteTemplate_842F250[2], 0, 160, subpriority);
     if (gUnknown_0203A3D0 != 0x40)
     {
-        v10 = &gSprites[gUnknown_0203A3D0];
+        sprite = &gSprites[gUnknown_0203A3D0];
         if (paletteTag == 0xFFFF)
-            v10->oam.paletteNum = 0;
+            sprite->oam.paletteNum = 0;
         else
-            v10->oam.paletteNum = IndexOfSpritePaletteTag(paletteTag);
+            sprite->oam.paletteNum = IndexOfSpritePaletteTag(paletteTag);
     }
     if (gUnknown_0203A3D1 != 0x40)
     {
-        v10 = &gSprites[gUnknown_0203A3D1];
+        sprite = &gSprites[gUnknown_0203A3D1];
         if (paletteTag == 0xFFFF)
-            v10->oam.paletteNum = 0;
+            sprite->oam.paletteNum = 0;
         else
-            v10->oam.paletteNum = IndexOfSpritePaletteTag(paletteTag);
+            sprite->oam.paletteNum = IndexOfSpritePaletteTag(paletteTag);
 
         if (!(REG_DISPCNT & (DISPCNT_WIN0_ON | DISPCNT_WIN1_ON)))
             *(u8 *)(REG_ADDR_WINOUT) |= 0x1F;
@@ -71,41 +71,41 @@ u8 MenuCursor_Create814A5C0(u8 subpriority, u16 paletteTag, u8 a3, u16 a4, u8 a5
         REG_DISPCNT |= DISPCNT_OBJWIN_ON;
         *(u8 *)(REG_ADDR_WINOUT + 1) = 0x10;
     }
-    sub_814A958(a5);
+    sub_814A958(rowWidth);
     return gUnknown_0203A3D0;
 }
 
 // unused
-u8 sub_814A758(u8 subpriority, u8 a2, u8 a3, u8 a4)
+u8 sub_814A758(u8 subpriority, u8 palNum, u8 a3, u8 rowWidth)
 {
     u8 result;
-    struct Sprite *spr;
+    struct Sprite *sprite;
 
-    result = MenuCursor_Create814A5C0(subpriority, 0, a3, 0, a4);
+    result = MenuCursor_Create814A5C0(subpriority, 0, a3, 0, rowWidth);
     if (result != 0x40)
     {
-        spr = &gSprites[gUnknown_0203A3D0];
-        spr->oam.paletteNum = a2;
+        sprite = &gSprites[gUnknown_0203A3D0];
+        sprite->oam.paletteNum = palNum;
     }
     return result;
 }
 
-u8 unref_sub_814A7AC(u8 a1, u16 a2, u8 a3)
+u8 unref_sub_814A7AC(u8 subpriority, u16 a2, u8 rowWidth)
 {
     u16 i;
-    u8 val1 = 0;
+    u8 palNum = 0;
     u16 val2 = 0xF;
 
     for (i = 0; i <= 0xFF; i++)
     {
         if (gPlttBufferUnfaded[i] == a2)
         {
-            val1 = (u8)(i >> 4);
+            palNum = (u8)(i >> 4);
             val2 = i & 0xF;
         }
     }
 
-    return sub_814A758(a1, val1, val2, a3);
+    return sub_814A758(subpriority, palNum, val2, rowWidth);
 }
 
 void DestroyMenuCursor(void)
@@ -129,28 +129,28 @@ void DestroyMenuCursor(void)
     return;
 }
 
-void MenuCursor_SetPos814A880(u8 a1, u8 a2)
+void MenuCursor_SetPos814A880(u8 x, u8 y)
 {
-    struct Sprite *spr;
+    struct Sprite *sprite;
 
     if (gUnknown_0203A3D0 != 0x40)
     {
-        spr = &gSprites[gUnknown_0203A3D0];
-        spr->invisible = FALSE;
-        spr->centerToCornerVecX = 0;
-        spr->centerToCornerVecY = 0;
-        spr->x = a1;
-        spr->y = a2;
+        sprite = &gSprites[gUnknown_0203A3D0];
+        sprite->invisible = FALSE;
+        sprite->centerToCornerVecX = 0;
+        sprite->centerToCornerVecY = 0;
+        sprite->x = x;
+        sprite->y = y;
     }
 
     if (gUnknown_0203A3D1 != 0x40)
     {
-        spr = &gSprites[gUnknown_0203A3D1];
-        spr->invisible = FALSE;
-        spr->centerToCornerVecX = 0;
-        spr->centerToCornerVecY = 0;
-        spr->x = a1;
-        spr->y = a2;
+        sprite = &gSprites[gUnknown_0203A3D1];
+        sprite->invisible = FALSE;
+        sprite->centerToCornerVecX = 0;
+        sprite->centerToCornerVecY = 0;
+        sprite->x = x;
+        sprite->y = y;
     }
 
     return;
@@ -158,18 +158,18 @@ void MenuCursor_SetPos814A880(u8 a1, u8 a2)
 
 void sub_814A904(void)
 {
-    struct Sprite *spr;
+    struct Sprite *sprite;
 
     if (gUnknown_0203A3D0 != 0x40)
     {
-        spr = &gSprites[gUnknown_0203A3D0];
-        spr->invisible = TRUE;
+        sprite = &gSprites[gUnknown_0203A3D0];
+        sprite->invisible = TRUE;
     }
 
     if (gUnknown_0203A3D1 != 0x40)
     {
-        spr = &gSprites[gUnknown_0203A3D1];
-        spr->invisible = TRUE;
+        sprite = &gSprites[gUnknown_0203A3D1];
+        sprite->invisible = TRUE;
     }
 
     return;
@@ -178,66 +178,66 @@ void sub_814A904(void)
 #if ENGLISH
 #ifdef NONMATCHING
 // Fix pls
-void sub_814A958(u8 a)
+void sub_814A958(u8 rowWidth)
 {
-    u8 r7;
-    struct Subsprite *r4 = &gMenuCursorSubsprites[0];
+    u8 count;
+    struct Subsprite *subsprites = &gMenuCursorSubsprites[0];
     s16 r2 = -1;
-    s32 _a = a;
+    s32 _a = rowWidth;
     s16 r5;
     s16 i;
 
-    *r4 = (struct Subsprite){.x = 0, .y = 0, .shape = 2, .size = 0, .tileOffset = 0, .priority = 0};
-    r4->x = r2;
-    r4++;
-    r7 = 1;
+    *subsprites = (struct Subsprite){.x = 0, .y = 0, .shape = 2, .size = 0, .tileOffset = 0, .priority = 0};
+    subsprites->x = r2;
+    subsprites++;
+    count = 1;
     r2 = 1;
-    r5 = a;
+    r5 = rowWidth;
     i = r5;
     while ((i -= r2) >= 8)
     {
         if (i > 0x1F)
         {
-            *r4 = gUnknown_0842F780;
-            r4->x = r2;
+            *subsprites = gUnknown_0842F780;
+            subsprites->x = r2;
             r2 += 32;
-            r5 = a;
+            r5 = rowWidth;
         }
         //_0814A9D4
         else
         {
-            r5 = a;
+            r5 = rowWidth;
             if (_a > 0x27 && i > 8)
             {
-                *r4 = gUnknown_0842F780;
-                r4->x = (r2 - 32) + (i & ~7);
+                *subsprites = gUnknown_0842F780;
+                subsprites->x = (r2 - 32) + (i & ~7);
                 r2 += i & 0x18;
             }
             //_0814AA0A
             else
             {
-                *r4 = gUnknown_0842F788;
-                r4->x = r2;
+                *subsprites = gUnknown_0842F788;
+                subsprites->x = r2;
                 r2 += 8;
             }
         }
         //_0814AA20
-        r4++;
-        r7++;
+        subsprites++;
+        count++;
         i = r5;
     }
     //_0814AA3A
-    *r4 = gUnknown_0842F790;
-    r4->x = r2 - 7 + i;
-    r7++;
+    *subsprites = gUnknown_0842F790;
+    subsprites->x = r2 - 7 + i;
+    count++;
     if (gUnknown_0203A3D0 != 64)
-        SetSubspriteTables(&gSprites[gUnknown_0203A3D0], gSubspriteTables_842F5C0 + r7);
+        SetSubspriteTables(&gSprites[gUnknown_0203A3D0], gSubspriteTables_842F5C0 + count);
     if (gUnknown_0203A3D1 != 64)
-        SetSubspriteTables(&gSprites[gUnknown_0203A3D1], gSubspriteTables_842F5C0 + r7);
+        SetSubspriteTables(&gSprites[gUnknown_0203A3D1], gSubspriteTables_842F5C0 + count);
 }
 #else
 NAKED
-void sub_814A958(u8 a1)
+void sub_814A958(u8 rowWidth)
 {
     asm(".syntax unified\n\
     push {r4-r7,lr}\n\
@@ -420,7 +420,7 @@ _0814AAB8: .4byte gUnknown_0203A3D1\n\
 #endif
 #elif GERMAN
 NAKED
-void sub_814A958(u8 a1)
+void sub_814A958(u8 rowWidth)
 {
     asm(".syntax unified\n\
     push {r4-r7,lr}\n\
@@ -605,18 +605,18 @@ _0814AABC: .4byte gUnknown_0203A3D1\n\
 
 void sub_814AABC(void (*callback)(struct Sprite *))
 {
-    struct Sprite *spr;
+    struct Sprite *sprite;
 
     if (gUnknown_0203A3D0 != 0x40)
     {
-        spr = &gSprites[gUnknown_0203A3D0];
-        spr->callback = callback;
+        sprite = &gSprites[gUnknown_0203A3D0];
+        sprite->callback = callback;
     }
 
     if (gUnknown_0203A3D1 != 0x40)
     {
-        spr = &gSprites[gUnknown_0203A3D1];
-        spr->callback = callback;
+        sprite = &gSprites[gUnknown_0203A3D1];
+        sprite->callback = callback;
     }
 
     return;
@@ -624,25 +624,25 @@ void sub_814AABC(void (*callback)(struct Sprite *))
 
 void sub_814AAF8(u16 a1)
 {
-    struct Sprite *spr;
-    u8 v2;
+    struct Sprite *sprite;
+    u8 palNum;
     u8 v3;
     u16 v4;
 
     if (gUnknown_0203A3D0 != 0x40)
     {
-        spr = &gSprites[gUnknown_0203A3D0];
-        if (spr->template->paletteTag == 0xFFFF)
+        sprite = &gSprites[gUnknown_0203A3D0];
+        if (sprite->template->paletteTag == 0xFFFF)
         {
-            for (v2 = 0, v3 = 0xF, v4 = 0; v4 <= 0xFF; v4++)
+            for (palNum = 0, v3 = 0xF, v4 = 0; v4 <= 0xFF; v4++)
             {
                 if (gPlttBufferUnfaded[v4] == a1)
                 {
-                    v2 = v4 >> 4;
+                    palNum = v4 >> 4;
                     v3 = v4 & 0xF;
                 }
             }
-            spr->oam.paletteNum = v2;
+            sprite->oam.paletteNum = palNum;
             RequestSpriteSheetCopy(&gUnknown_0842F140[v3 & 0xF]);
         }
     }
@@ -651,13 +651,13 @@ void sub_814AAF8(u16 a1)
 
 void sub_814AB84(void)
 {
-    struct Sprite *spr;
+    struct Sprite *sprite;
 
     if (gUnknown_0203A3D1 != 0x40)
     {
-        spr = &gSprites[gUnknown_0203A3D1];
-        FreeSpriteOamMatrix(spr);
-        DestroySprite(spr);
+        sprite = &gSprites[gUnknown_0203A3D1];
+        FreeSpriteOamMatrix(sprite);
+        DestroySprite(sprite);
         gUnknown_0203A3D1 = 0x40;
 
         if (!gUnknown_0203A3D3)
@@ -669,19 +669,19 @@ void sub_814AB84(void)
 
 void unref_sub_814ABE4(int a1)
 {
-    struct Sprite *spr;
+    struct Sprite *sprite;
 
     CpuCopy16(gUnknown_0842F5BC[a1], &gMenuCursorSubsprites, 80);
 
     if (gUnknown_0203A3D0 != 0x40)
     {
-        spr = &gSprites[gUnknown_0203A3D0];
-        SetSubspriteTables(spr, &gUnknown_0842F758[a1]);
+        sprite = &gSprites[gUnknown_0203A3D0];
+        SetSubspriteTables(sprite, &gUnknown_0842F758[a1]);
     }
     if (gUnknown_0203A3D1 != 0x40)
     {
-        spr = &gSprites[gUnknown_0203A3D1];
-        SetSubspriteTables(spr, &gUnknown_0842F758[a1]);
+        sprite = &gSprites[gUnknown_0203A3D1];
+        SetSubspriteTables(sprite, &gUnknown_0842F758[a1]);
     }
     return;
 }
@@ -689,7 +689,7 @@ void unref_sub_814ABE4(int a1)
 u8 CreateBlendedOutlineCursor(u8 subpriority, u16 paletteTag, u8 a3, u16 a4, u8 a5)
 {
     int v8;
-    struct Sprite *spr;
+    struct Sprite *sprite;
 
     if (gUnknown_0203A3D2 != 0x40)
         MenuCursor_Destroy814AD44();
@@ -715,12 +715,12 @@ u8 CreateBlendedOutlineCursor(u8 subpriority, u16 paletteTag, u8 a3, u16 a4, u8 
 
     if (gUnknown_0203A3D2 != 0x40)
     {
-        spr = &gSprites[gUnknown_0203A3D2];
+        sprite = &gSprites[gUnknown_0203A3D2];
 
         if (paletteTag == 0xFFFF)
-            spr->oam.paletteNum = 0;
+            sprite->oam.paletteNum = 0;
         else
-            spr->oam.paletteNum = IndexOfSpritePaletteTag(paletteTag);
+            sprite->oam.paletteNum = IndexOfSpritePaletteTag(paletteTag);
     }
     sub_814ADF4(a5);
 
@@ -738,28 +738,28 @@ void MenuCursor_Destroy814AD44(void)
     return;
 }
 
-void MenuCursor_SetPos814AD7C(u8 a1, u8 a2)
+void MenuCursor_SetPos814AD7C(u8 x, u8 y)
 {
-    struct Sprite *spr;
+    struct Sprite *sprite;
     if (gUnknown_0203A3D2 != 0x40)
     {
-        spr = &gSprites[gUnknown_0203A3D2];
-        spr->invisible = FALSE;
-        spr->centerToCornerVecX = 0;
-        spr->centerToCornerVecY = 0;
-        spr->x = a1;
-        spr->y = a2;
+        sprite = &gSprites[gUnknown_0203A3D2];
+        sprite->invisible = FALSE;
+        sprite->centerToCornerVecX = 0;
+        sprite->centerToCornerVecY = 0;
+        sprite->x = x;
+        sprite->y = y;
     }
     return;
 }
 
 void sub_814ADC8()
 {
-    struct Sprite *spr;
+    struct Sprite *sprite;
     if (gUnknown_0203A3D2 != 0x40)
     {
-        spr = &gSprites[gUnknown_0203A3D2];
-        spr->invisible = TRUE;
+        sprite = &gSprites[gUnknown_0203A3D2];
+        sprite->invisible = TRUE;
     }
     return;
 }
