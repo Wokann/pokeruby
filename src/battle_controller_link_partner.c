@@ -58,11 +58,11 @@ static void LinkPartnerBufferRunCommand(void);
 static void sub_811E0A0(void);
 static void LinkPartnerBufferExecCompleted(void);
 static u32 CopyLinkPartnerMonData(u8 monId, u8 *dst);
-static void SetLinkPartnerMonData(u8);
-static void sub_811F864(u8, u8);
+static void SetLinkPartnerMonData(u8 monId);
+static void sub_811F864(u8 battler, bool8 dontClearSubstituteBit);
 static void DoSwitchOutAnimation(void);
 static void LinkPartnerDoMoveAnimation(void);
-static void Task_StartSendOutAnim(u8);
+static void Task_StartSendOutAnim(u8 taskId);
 static void EndDrawPartyStatusSummary(void);
 
 static void LinkPartnerHandleGetMonData(void);
@@ -1072,7 +1072,7 @@ static void LinkPartnerHandleSwitchInAnim(void)
     gBattlerControllerFuncs[gActiveBattler] = SwitchIn_TryShinyAnim;
 }
 
-static void sub_811F864(u8 battler, u8 dontClearSubstituteBit)
+static void sub_811F864(u8 battler, bool8 dontClearSubstituteBit)
 {
     u16 species;
 
