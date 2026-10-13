@@ -438,7 +438,7 @@ void sub_810BA7C(u8 caseId)
     }
 }
 
-void sub_810BADC(void)
+void OpenPokeblockCaseInBattle(void)
 {
     sub_810BA7C(2);
     SetMainCallback2(sub_810B96C);

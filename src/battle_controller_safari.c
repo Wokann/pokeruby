@@ -14,6 +14,7 @@
 #include "menu_cursor.h"
 #include "palette.h"
 #include "pokeball.h"
+#include "pokeblock.h"
 #include "sound.h"
 #include "text.h"
 #include "util.h"
@@ -40,11 +41,10 @@ extern u16 gBattlerPartyIndexes[];
 extern u16 gIntroSlideFlags;
 extern u8 gBattleOutcome;
 
-extern u8 GetBattlerSide(u8);
-extern u8 GetBattlerAtPosition(u8);
-extern u8 GetBattlerPosition(u8);
+extern u8 GetBattlerSide(u8 battler);
+extern u8 GetBattlerAtPosition(u8 position);
+extern u8 GetBattlerPosition(u8 battler);
 extern u8 GetBattlerSpriteSubpriority();
-extern void sub_810BADC(void);
 
 #if ENGLISH
 #define SUB_812BB10_TILE_DATA_OFFSET 440
@@ -312,7 +312,7 @@ static void SafariOpenPokeblockCase(void)
     if (!gPaletteFade.active)
     {
         gBattlerControllerFuncs[gActiveBattler] = CompleteWhenChosePokeblock;
-        sub_810BADC();
+        OpenPokeblockCaseInBattle();
     }
 }
 
@@ -471,7 +471,7 @@ static void SafariHandlePrintSelectionString(void)
 
 static void SafariHandleChooseAction(void)
 {
-    int i;
+    s32 i;
 
     gBattle_BG0_X = 0;
     gBattle_BG0_Y = 160;

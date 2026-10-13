@@ -44,6 +44,7 @@ u8 GetHighestPokeblocksFlavorLevel(struct Pokeblock *pokeblock);
 s16 GetPokeblockData(const struct Pokeblock *pokeblock, u8 field);
 u8 GetPokeblocksFeel(struct Pokeblock *pokeblock);
 void sub_810BA7C(u8 caseId);
+void OpenPokeblockCaseInBattle(void);
 void ClearPokeblocks(void);
 s8 GetFirstFreePokeblockSlot(void);
 bool8 PokeblockClearIfExists(u8 pokeblockIdx);
