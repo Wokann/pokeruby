@@ -41,17 +41,17 @@ extern const struct CompressedSpritePalette gPokeblockCase_SpritePal;
 void sub_810B96C(void);
 u8 CreatePokeblockCaseSprite(s16 x, s16 y, u8 subpriority);
 u8 GetHighestPokeblocksFlavorLevel(struct Pokeblock *pokeblock);
-s16 GetPokeblockData(const struct Pokeblock *, u8);
+s16 GetPokeblockData(const struct Pokeblock *pokeblock, u8 field);
 u8 GetPokeblocksFeel(struct Pokeblock *pokeblock);
-void sub_810BA7C(u8);
+void sub_810BA7C(u8 caseId);
 void ClearPokeblocks(void);
 s8 GetFirstFreePokeblockSlot(void);
-bool8 PokeblockClearIfExists(u8);
-s16 PokeblockGetGain(u8, const struct Pokeblock *);
+bool8 PokeblockClearIfExists(u8 pokeblockIdx);
+s16 PokeblockGetGain(u8 nature, const struct Pokeblock *pokeblock);
 bool8 CopyMonFavoritePokeblockName(u8 nature, u8 *dest);
 void PokeblockCopyName(struct Pokeblock *pokeblock, u8 *dest);
 void PreparePokeblockFeedScene(void);
-bool8 GivePokeblock(const struct Pokeblock *);
+bool8 GivePokeblock(const struct Pokeblock *pokeblock);
 
 #include "main.h"
 

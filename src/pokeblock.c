@@ -41,15 +41,15 @@ static EWRAM_DATA u8 sNumPokeblockActions = 0;
 // function declarations
 
 // sPokeblockMenuActions
-static void sub_810C508(u8);
-static void sub_810C5C0(u8);
-static void sub_810C748(u8);
-static void sub_810C788(u8);
-static void sub_810C854(u8);
+static void sub_810C508(u8 taskId);
+static void sub_810C5C0(u8 taskId);
+static void sub_810C748(u8 taskId);
+static void sub_810C788(u8 taskId);
+static void sub_810C854(u8 taskId);
 
 // sTossYesNoFuncTable
-static void sub_810C610(u8);
-static void sub_810C668(u8);
+static void sub_810C610(u8 taskId);
+static void sub_810C668(u8 taskId);
 
 // sub_810B6C0
 static bool8 sub_810B998(void);
@@ -60,31 +60,31 @@ static void sub_810BB30(void);
 static void sub_810BC84(u8);
 
 // sub_810B96C
-static void sub_810BF7C(u8);
+static void sub_810BF7C(u8 taskId);
 
 // sub_810BC84
 static void sub_810BDAC(bool8);
 
 // sub_810BF38
-static void SpriteCB_ShakePokeblockCase(struct Sprite *);
+static void SpriteCB_ShakePokeblockCase(struct Sprite *sprite);
 
 // sub_810BF7C
-static void sub_810C0C8(u8);
-static void sub_810C31C(u8);
-static void sub_810C368(u8);
+static void sub_810C0C8(u8 taskId);
+static void sub_810C31C(u8 taskId);
+static void sub_810C368(u8 taskId);
 
 // sub_810C0C8
 static void sub_810C1C8(u8, u8);
-static void sub_810C23C(u8);
+static void sub_810C23C(u8 taskId);
 
 // sub_810C368
-static void sub_810C40C(u8);
+static void sub_810C40C(u8 taskId);
 
 // sub_810C540
-static void sub_810C5EC(u8);
+static void sub_810C5EC(u8 taskId);
 
 // sub_810C610
-static void sub_810C704(u8);
+static void sub_810C704(u8 taskId);
 
 static const u8 *sPokeblockActionIds;
 
@@ -164,7 +164,7 @@ static const u8 sActionsOnPokeblockFeeder[] = {4, 2};
 
 static const struct YesNoFuncTable sTossYesNoFuncTable = {sub_810C610, sub_810C668};
 
-static const u8 sConditionToMonData[] = {0x16, 0x17, 0x18, 0x21, 0x2f};
+static const u8 sContestStatsMonData[] = {0x16, 0x17, 0x18, 0x21, 0x2f};
 
 static const struct OamData sOamData_PokeblockCase =
 {
@@ -418,9 +418,9 @@ u8 CreatePokeblockCaseSprite(s16 x, s16 y, u8 subpriority)
     return CreateSprite(&sSpriteTemplate_PokeblockCase, x, y, subpriority);
 }
 
-void sub_810BA7C(u8 a0)
+void sub_810BA7C(u8 caseId)
 {
-    gUnknown_02039244 = a0;
+    gUnknown_02039244 = caseId;
     switch (gUnknown_02039244)
     {
         default:
