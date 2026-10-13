@@ -35,7 +35,7 @@ asm(".include \"constants/gba_constants.inc\"");
 void *gUnknown_Debug_03005FB8;
 #endif
 
-void sub_81150FC(void);
+void CB2_Roulette(void);
 void sub_8115124(void);
 void sub_8115238(void);
 void sub_8115384(void);
@@ -90,7 +90,7 @@ static const u16 sWheel_Pal[] = INCBIN_U16("graphics/roulette/wheel.gbapal");
 static const u8 sGrid_Tilemap[] = INCBIN_U8("graphics/roulette/grid.bin.lz");
 static const u8 sWheel_Tilemap[] = INCBIN_U8("graphics/roulette/wheel.bin.lz");
 
-const struct GridSelection gUnknown_083F8C00[] = {
+const struct GridSelection gGridSelections[] = {
 	{255, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 0},
 	{12, 4, 1, 0, 17, 7, 0, 0, 0, 2, 0x10842, 0xe000, 0},
 	{13, 4, 2, 0, 20, 7, 0, 0, 0, 4, 0x21084, 0xe000, 0},
@@ -113,7 +113,7 @@ const struct GridSelection gUnknown_083F8C00[] = {
 	{11, 12, 4, 3, 26, 16, 9, 9, 0, 0x80000, 0x80000, 0x2800, 0},
 };
 
-const struct RouletteSlot gUnknown_083F8D90[] = {
+const struct RouletteSlot gRouletteSlots[] = {
     { 0,  1,  6, 64},
     { 1,  3, 12, 0x1000},
     { 2,  5, 18, 0x40000},
@@ -133,7 +133,7 @@ static const u8 sTableMinBets[] = {
     1, 6,
 };
 
-const struct RouletteTable gUnknown_083F8DF4[] = {
+const struct RouletteTable gRouletteTables[] = {
     {
         .minBet = 1,
         .randDistanceHigh = 60,
@@ -344,7 +344,7 @@ EWRAM_DATA u8 unk_2039560 = 0;
 #endif
 
 
-void sub_81150FC(void)
+void CB2_Roulette(void)
 {
 	RunTasks();
 	AnimateSprites();
@@ -396,7 +396,7 @@ void sub_8115238(void)
     eRoulette->tableId = (gSpecialVar_0x8004 & 1);
     if (gSpecialVar_0x8004 & 0x80)
         eRoulette->isSpecialRate = 1;
-    s0 = gUnknown_083F8DF4;
+    s0 = gRouletteTables;
     eRoulette->wheelSpeed   = s0[eRoulette->tableId].wheelSpeed;
     eRoulette->wheelDelay   = s0[eRoulette->tableId].wheelDelay;
     eRoulette->minBet = temp = sTableMinBets[eRoulette->tableId + eRoulette->isSpecialRate * 2];
@@ -505,7 +505,7 @@ void sub_8115384(void)
         gTasks[taskId].data[6] = 6;
         gTasks[taskId].data[13] = gSaveBlock1.coins;
         eRoulette->spinTaskId = CreateTask(sub_8115634, 1);
-        SetMainCallback2(sub_81150FC);
+        SetMainCallback2(CB2_Roulette);
         break;
     }
 }
@@ -635,13 +635,13 @@ static void Task_SelectFirstEmptySquare(u8 taskId)
     if (eRoulette->hitFlags & 0x20)
     {
         for (i = 11; (i < 14); i++)
-            if ((eRoulette->hitFlags & gUnknown_083F8C00[i].flag) == 0)
+            if ((eRoulette->hitFlags & gGridSelections[i].flag) == 0)
                 break;
     }
     else
     {
         for (i = 6; (i < 10); i++)
-            if ((eRoulette->hitFlags & gUnknown_083F8C00[i].flag) == 0)
+            if ((eRoulette->hitFlags & gGridSelections[i].flag) == 0)
                 break;
     }
     gTasks[taskId].data[4] = i;
@@ -733,7 +733,7 @@ void sub_8115B58(u8 taskId)
             gSprites[eRoulette->spriteIds[i + 41]].sheetTileStart
             + (*gSprites[eRoulette->spriteIds[i + 41]].anims)->type;
         }
-        if ((u16)(gTasks[taskId].data[4] - 1) < 4 && !(eRoulette->hitFlags & gUnknown_083F8C00[gTasks[taskId].data[4]].flag) )
+        if ((u16)(gTasks[taskId].data[4] - 1) < 4 && !(eRoulette->hitFlags & gGridSelections[gTasks[taskId].data[4]].flag) )
         {
             headerOffset = gTasks[taskId].data[4] - 1;
             gSprites[eRoulette->spriteIds[headerOffset + 41]].oam.tileNum =
@@ -787,7 +787,7 @@ void sub_8115E14(u8 taskId)
     }
     if (JOY_NEW(A_BUTTON))
     {
-        if ((eRoulette->hitFlags & gUnknown_083F8C00[gTasks[taskId].data[4]].flag))
+        if ((eRoulette->hitFlags & gGridSelections[gTasks[taskId].data[4]].flag))
             PlaySE(SE_BOO);
         else
         {
@@ -830,18 +830,18 @@ static u8 GetRandomForBallTravelDistance(u16 ballNum, u16 rand)
                 return 1;
             else
             {
-                const struct RouletteTable *p = gUnknown_083F8DF4;
+                const struct RouletteTable *p = gRouletteTables;
                 return p[eRoulette->tableId].randDistanceLow / 2;
             }
         }
         else if (!(rand & 3))
         {
-            const struct RouletteTable *p = gUnknown_083F8DF4;
+            const struct RouletteTable *p = gRouletteTables;
             return p[eRoulette->tableId].randDistanceLow / 2;
         }
         else
         {
-            const struct RouletteTable *p = gUnknown_083F8DF4;
+            const struct RouletteTable *p = gRouletteTables;
             return p[eRoulette->tableId].randDistanceLow;
         }
         break;
@@ -852,7 +852,7 @@ static u8 GetRandomForBallTravelDistance(u16 ballNum, u16 rand)
         {
             if (ballNum < 6 || (rand & 1))
             {
-                const struct RouletteTable *p = gUnknown_083F8DF4;
+                const struct RouletteTable *p = gRouletteTables;
                 return p[eRoulette->tableId].randDistanceLow / 2;
             }
             else
@@ -862,12 +862,12 @@ static u8 GetRandomForBallTravelDistance(u16 ballNum, u16 rand)
         }
         else if ((rand & 1) && !(ballNum < 7))
         {
-            const struct RouletteTable *p = gUnknown_083F8DF4;
+            const struct RouletteTable *p = gRouletteTables;
             return p[eRoulette->tableId].randDistanceLow / 4;
         }
         else
         {
-            const struct RouletteTable *p = gUnknown_083F8DF4;
+            const struct RouletteTable *p = gRouletteTables;
             return p[eRoulette->tableId].randDistanceLow / 2;
         }
         break;
@@ -883,7 +883,7 @@ static u8 GetRandomForBallTravelDistance(u16 ballNum, u16 rand)
             }
             else
             {
-                const struct RouletteTable *p = gUnknown_083F8DF4;
+                const struct RouletteTable *p = gRouletteTables;
                 return p[eRoulette->tableId].randDistanceLow / 2;
             }
         }
@@ -891,12 +891,12 @@ static u8 GetRandomForBallTravelDistance(u16 ballNum, u16 rand)
         {
             if (!(ballNum < 13))
             {
-                const struct RouletteTable *p = gUnknown_083F8DF4;
+                const struct RouletteTable *p = gRouletteTables;
                 return p[eRoulette->tableId].randDistanceLow / 2;
             }
             else
             {
-                const struct RouletteTable *p = gUnknown_083F8DF4;
+                const struct RouletteTable *p = gRouletteTables;
                 return p[eRoulette->tableId].randDistanceLow;
             }
         }
@@ -904,18 +904,18 @@ static u8 GetRandomForBallTravelDistance(u16 ballNum, u16 rand)
         {
             if (!(ballNum < 13))
             {
-                const struct RouletteTable *p = gUnknown_083F8DF4;
+                const struct RouletteTable *p = gRouletteTables;
                 return p[eRoulette->tableId].randDistanceLow;
             }
             else
             {
-                const struct RouletteTable *p = gUnknown_083F8DF4;
+                const struct RouletteTable *p = gRouletteTables;
                 return p[eRoulette->tableId].randDistanceHigh;
             }
         }
         else
         {
-            const struct RouletteTable *p = gUnknown_083F8DF4;
+            const struct RouletteTable *p = gRouletteTables;
             return p[eRoulette->tableId].randDistanceHigh * 2;
         }
     }
@@ -946,7 +946,7 @@ static void Task_InitBallRoll(u8 taskId)
         startAngleId *= 2;
     else
         startAngleId = (1 - startAngleId) * 2;
-    eRoulette->ballTravelDist = travelDist = gUnknown_083F8DF4[eRoulette->tableId].baseTravelDist + randTravelDist;
+    eRoulette->ballTravelDist = travelDist = gRouletteTables[eRoulette->tableId].baseTravelDist + randTravelDist;
     //
     travelDist = S16TOPOSFLOAT(travelDist) / 5.0f;
     eRoulette->ballTravelDistFast = travelDist * 3;
@@ -954,7 +954,7 @@ static void Task_InitBallRoll(u8 taskId)
     eRoulette->ballTravelDistSlow = travelDist;
     //
     eRoulette->ballAngle = S16TOPOSFLOAT(startAngles[(rand & 1) + startAngleId]);
-    eRoulette->ballAngleSpeed = S16TOPOSFLOAT(gUnknown_083F8DF4[eRoulette->tableId].ballSpeed);
+    eRoulette->ballAngleSpeed = S16TOPOSFLOAT(gRouletteTables[eRoulette->tableId].ballSpeed);
     eRoulette->ballAngleAccel = ((eRoulette->ballAngleSpeed * 0.5f) - eRoulette->ballAngleSpeed) / S16TOPOSFLOAT(travelDist * 3);
     eRoulette->ballDistToCenter = 68.0f;
     eRoulette->ballFallAccel = 0.0f;
@@ -1158,7 +1158,7 @@ static void Task_EndTurn(u8 taskId)
     eRoulette->flashUtil.palettes[15].available = 0;
     eRoulette->flashUtil.palettes[14].available = 0;
     eRoulette->flashUtil.palettes[13].available = 0;
-    gSprites[eRoulette->spriteIds[7 + gUnknown_083F8C00[gTasks[taskId].data[12]].spriteIdOffset]].invisible = TRUE;
+    gSprites[eRoulette->spriteIds[7 + gGridSelections[gTasks[taskId].data[12]].spriteIdOffset]].invisible = TRUE;
     gTasks[taskId].func = sub_8116880;
 }
 
@@ -1330,24 +1330,24 @@ static u8 RecordHit(u8 taskId, u8 slotId)
     {
         u8 i;
         u8 j;
-        eRoulette->hitSquares[gTasks[taskId].data[6] - 1] = gUnknown_083F8D90[slotId].gridSquare;
-        gTasks[taskId].data[12] = gUnknown_083F8D90[slotId].gridSquare;
-        eRoulette->hitFlags |= gUnknown_083F8D90[slotId].flag;
+        eRoulette->hitSquares[gTasks[taskId].data[6] - 1] = gRouletteSlots[slotId].gridSquare;
+        gTasks[taskId].data[12] = gRouletteSlots[slotId].gridSquare;
+        eRoulette->hitFlags |= gRouletteSlots[slotId].flag;
         for (i = 0; i < 4; i++)
         {
-            if (gUnknown_083F8D90[slotId].flag & columnFlags[i])
+            if (gRouletteSlots[slotId].flag & columnFlags[i])
                 eRoulette->pokeHits[i]++;
             if (eRoulette->pokeHits[i] > 2)
                 eRoulette->hitFlags |= columnFlags[i];
         }
         for (j = 0; j < 3; j++)
         {
-            if (gUnknown_083F8D90[slotId].flag & rowFlags[j])
+            if (gRouletteSlots[slotId].flag & rowFlags[j])
                 eRoulette->colorHits[j]++;
             if (eRoulette->colorHits[j] > 3)
                 eRoulette->hitFlags |= rowFlags[j];
         }
-        return gUnknown_083F8D90[slotId].gridSquare;
+        return gRouletteSlots[slotId].gridSquare;
     }
 }
 
@@ -1392,8 +1392,8 @@ static void FlashSelectionOnWheel(u8 selectionId)
     case 10:
     case 15:
         for (i = (selectionId + 1); i < (selectionId + 5); i++)
-            if (!(eRoulette->hitFlags & gUnknown_083F8C00[i].flag))
-                flashFlags |= gUnknown_083F8C00[i].flashFlags;
+            if (!(eRoulette->hitFlags & gGridSelections[i].flag))
+                flashFlags |= gGridSelections[i].flashFlags;
         RouletteFlash_Enable(&eRoulette->flashUtil, flashFlags &= 0xdfff);
         break;
     default:
@@ -1422,7 +1422,7 @@ static void FlashSelectionOnWheel(u8 selectionId)
         }
         if (numSelected == 1)
         {
-            if (!(eRoulette->hitFlags & gUnknown_083F8C00[selectionId].flag))
+            if (!(eRoulette->hitFlags & gGridSelections[selectionId].flag))
             {
                 iconFlash[selectionId / 5 - 1].paletteOffset += palOffset;
                 RouletteFlash_Add(&eRoulette->flashUtil, 13, &iconFlash[selectionId / 5 - 1]);
@@ -1435,19 +1435,19 @@ static void FlashSelectionOnWheel(u8 selectionId)
             for (i = 0; i < 3; i++)
             {
                 u8 columnSlotId = i * 5 + selectionId + 5;
-                if (!(eRoulette->hitFlags & gUnknown_083F8C00[columnSlotId].flag))
+                if (!(eRoulette->hitFlags & gGridSelections[columnSlotId].flag))
                 {
                     iconFlash[columnSlotId / 5 - 1].paletteOffset += palOffset;
                     RouletteFlash_Add(&eRoulette->flashUtil, i + 13, &iconFlash[columnSlotId / 5 - 1]);
                     if (numSelected == 3)
-                        flashFlags = gUnknown_083F8C00[columnSlotId].flashFlags;
+                        flashFlags = gGridSelections[columnSlotId].flashFlags;
                     numSelected--;
                 }
             }
             if (numSelected != 2)
                 flashFlags = 0;
         }
-        RouletteFlash_Enable(&eRoulette->flashUtil, flashFlags |= gUnknown_083F8C00[selectionId].flashFlags);
+        RouletteFlash_Enable(&eRoulette->flashUtil, flashFlags |= gGridSelections[selectionId].flashFlags);
         break;
     }
     }
@@ -1487,11 +1487,11 @@ static void DrawGridBackground(u8 selectionId)
     }
     for (i = 0; i < numSquares; i++)
     {
-        tilemapOffset = gUnknown_083F8C00[selectionIds[i]].tilemapOffset;
-        x = gUnknown_083F8C00[selectionIds[i]].x;
+        tilemapOffset = gGridSelections[selectionIds[i]].tilemapOffset;
+        x = gGridSelections[selectionIds[i]].x;
         for (j = 0; j < 3; j++)
         {
-            y = (gUnknown_083F8C00[selectionIds[i]].y + j) * 32;
+            y = (gGridSelections[selectionIds[i]].y + j) * 32;
             gBGTilemapBuffers[1][x + y + 0] = ewram18800[0xD0 + (tilemapOffset + j) * 3 + 0];
             gBGTilemapBuffers[1][x + y + 1] = ewram18800[0xD0 + (tilemapOffset + j) * 3 + 1];
             gBGTilemapBuffers[1][x + y + 2] = ewram18800[0xD0 + (tilemapOffset + j) * 3 + 2];
@@ -1504,7 +1504,7 @@ static u8 GetMultiplier(u8 selectionId)
     u8 multipliers[] = {0, 3, 4, 6, 12};
     if (selectionId > 19)
         selectionId = 0;
-    switch (gUnknown_083F8C00[selectionId].baseMultiplier)
+    switch (gGridSelections[selectionId].baseMultiplier)
     {
     case 3:
         selectionId = selectionId / 5 - 1;
@@ -1517,7 +1517,7 @@ static u8 GetMultiplier(u8 selectionId)
             return 0;
         return multipliers[eRoulette->pokeHits[selectionId] + 2];
     case 12:
-        if (eRoulette->hitFlags & gUnknown_083F8C00[selectionId].flag)
+        if (eRoulette->hitFlags & gGridSelections[selectionId].flag)
             return 0;
         return multipliers[4];
     }
@@ -1771,7 +1771,7 @@ void debug_sub_812CFE8(u8 taskId)
 
 void PlayRoulette(void)
 {
-    u8 taskid;
+    u8 taskId;
 
     LockPlayerFieldControls();
 #if DEBUG
@@ -1782,6 +1782,6 @@ void PlayRoulette(void)
 	    return;
     }
 #endif
-    taskid = CreateTask(Task_Roulette_0, 0);
-    gTasks[taskid].data[13] = gSaveBlock1.coins;
+    taskId = CreateTask(Task_Roulette_0, 0);
+    gTasks[taskId].data[13] = gSaveBlock1.coins;
 }

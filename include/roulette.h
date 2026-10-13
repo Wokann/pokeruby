@@ -107,9 +107,9 @@ struct RouletteSlot
     u32 flag;
 };
 
-extern const struct GridSelection gUnknown_083F8C00[];
-extern const struct RouletteSlot gUnknown_083F8D90[];
-extern const struct RouletteTable gUnknown_083F8DF4[];
+extern const struct GridSelection gGridSelections[];
+extern const struct RouletteSlot gRouletteSlots[];
+extern const struct RouletteTable gRouletteTables[];
 
 void PlayRoulette(void);
 
