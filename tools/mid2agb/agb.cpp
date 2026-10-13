@@ -105,6 +105,20 @@ void PrintAgbHeader()
         "voicegroup_underwater",
         "voicegroup_victory_trainer",
         "voicegroup_title",
+        "voicegroup_intro",
+        "voicegroup_encounter_may",
+        "voicegroup_encounter_intense",
+        "voicegroup_encounter_cool",
+        "voicegroup_route113",
+        "voicegroup_encounter_aqua",
+        "voicegroup_follow_me",
+        "voicegroup_encounter_brendan",
+        "voicegroup_ever_grande",
+        "voicegroup_encounter_suspicious",
+        "voicegroup_victory_aqua_magma",
+        "voicegroup_cable_car",
+        "voicegroup_game_corner",
+        "voicegroup_dewford",
     };
 
     if (g_voiceGroup >= 0 && g_voiceGroup < static_cast<int>(sizeof(sVoiceGroupNames) / sizeof(sVoiceGroupNames[0]))
