@@ -11,22 +11,22 @@
 #include "constants/field_effects.h"
 #include "constants/songs.h"
 
-static void UpdateObjectReflectionSprite(struct Sprite *);
-static void LoadObjectReflectionPalette(struct ObjectEvent *objectEvent, struct Sprite *sprite);
-static void LoadObjectHighBridgeReflectionPalette(struct ObjectEvent *, u8);
-static void LoadObjectRegularReflectionPalette(struct ObjectEvent *, u8);
-static void FadeFootprintsTireTracks_Step0(struct Sprite *);
-static void FadeFootprintsTireTracks_Step1(struct Sprite *);
-static void UpdateAshFieldEffect_Wait(struct Sprite *);
-static void UpdateAshFieldEffect_Show(struct Sprite *);
-static void UpdateAshFieldEffect_End(struct Sprite *);
-static void UpdateGrassFieldEffectSubpriority(struct Sprite *, u8, u8);
-static void UpdateFeetInFlowingWaterFieldEffect(struct Sprite *);
-static void SynchronizeSurfAnim(struct ObjectEvent *, struct Sprite *);
-static void SynchronizeSurfPosition(struct ObjectEvent *, struct Sprite *);
-static void UpdateBobbingEffect(struct ObjectEvent *, struct Sprite *, struct Sprite *);
-static void SpriteCB_UnderwaterSurfBlob(struct Sprite *);
-static u32 ShowDisguiseFieldEffect(u8, u8, u8);
+static void UpdateObjectReflectionSprite(struct Sprite *reflectionSprite);
+static void LoadObjectReflectionPalette(struct ObjectEvent *objectEvent, struct Sprite *reflectionSprite);
+static void LoadObjectHighBridgeReflectionPalette(struct ObjectEvent *objectEvent, u8 paletteNum);
+static void LoadObjectRegularReflectionPalette(struct ObjectEvent *objectEvent, u8 paletteIndex);
+static void FadeFootprintsTireTracks_Step0(struct Sprite *sprite);
+static void FadeFootprintsTireTracks_Step1(struct Sprite *sprite);
+static void UpdateAshFieldEffect_Wait(struct Sprite *sprite);
+static void UpdateAshFieldEffect_Show(struct Sprite *sprite);
+static void UpdateAshFieldEffect_End(struct Sprite *sprite);
+static void UpdateGrassFieldEffectSubpriority(struct Sprite *sprite, u8 elevation, u8 subpriority);
+static void UpdateFeetInFlowingWaterFieldEffect(struct Sprite *sprite);
+static void SynchronizeSurfAnim(struct ObjectEvent *playerObj, struct Sprite *sprite);
+static void SynchronizeSurfPosition(struct ObjectEvent *playerObj, struct Sprite *sprite);
+static void UpdateBobbingEffect(struct ObjectEvent *playerObj, struct Sprite *playerSprite, struct Sprite *sprite);
+static void SpriteCB_UnderwaterSurfBlob(struct Sprite *sprite);
+static u32 ShowDisguiseFieldEffect(u8 fldEff, u8 fldEffObj, u8 paletteNum);
 
 void SetUpReflection(struct ObjectEvent *objectEvent, struct Sprite *sprite, bool8 stillReflection)
 {
@@ -956,12 +956,12 @@ void SetSurfBlob_BobState(u8 spriteId, u8 state)
     gSprites[spriteId].data[0] = (gSprites[spriteId].data[0] & ~0xF) | (state & 0xF);
 }
 
-void SetSurfBlob_DontSyncAnim(u8 spriteId, u8 dontSync)
+void SetSurfBlob_DontSyncAnim(u8 spriteId, bool8 dontSync)
 {
     gSprites[spriteId].data[0] = (gSprites[spriteId].data[0] & ~0xF0) | ((dontSync & 0xF) << 4);
 }
 
-void SetSurfBlob_PlayerOffset(u8 spriteId, u8 hasOffset, s16 offset)
+void SetSurfBlob_PlayerOffset(u8 spriteId, bool8 hasOffset, s16 offset)
 {
     gSprites[spriteId].data[0] = (gSprites[spriteId].data[0] & ~0xF00) | ((hasOffset & 0xF) << 8);
     gSprites[spriteId].data[1] = offset;
