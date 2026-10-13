@@ -57,7 +57,7 @@ EWRAM_DATA u8 gUnknown_0203925A = 0;
 EWRAM_DATA u8 gUnknown_0203925B = 0;
 EWRAM_DATA u8 gUnknown_0203925C = 0;
 
-static void RecordCyclingRoadResults(u32, u8);
+static void RecordCyclingRoadResults(u32 numFrames, u8 numBikeCollisions);
 
 static struct ElevatorMenu gUnknown_03000760[20];
 
@@ -545,8 +545,8 @@ void MauvilleGymDeactivatePuzzle(void)
     }
 }
 
-static void Task_PetalburgGymSlideOpenRoomDoors(u8);
-static void PetalburgGymSetDoorMetatiles(u8, u16);
+static void Task_PetalburgGymSlideOpenRoomDoors(u8 taskId);
+static void PetalburgGymSetDoorMetatiles(u8 roomNumber, u16 metatileId);
 static const bool8 sSlidingDoorNextFrameDelay[] = {0, 1, 1, 1, 1};
 
 static const u16 sPetalburgGymSlidingDoorMetatiles[] = {
@@ -767,9 +767,9 @@ void FieldShowRegionMap(void)
     SetMainCallback2(CB2_FieldShowRegionMap);
 }
 
-static void Task_PCTurnOnEffect(u8);
-static void PCTurnOnEffect(struct Task *);
-static void PCTurnOnEffect_SetMetatile(s16, s8, s8);
+static void Task_PCTurnOnEffect(u8 taskId);
+static void PCTurnOnEffect(struct Task *task);
+static void PCTurnOnEffect_SetMetatile(s16 isScreenOn, s8 dx, s8 dy);
 static void PCTurnOffEffect(void);
 
 void DoPCTurnOnEffect(void)
@@ -907,8 +907,8 @@ static void PCTurnOffEffect(void)
     DrawWholeMapView();
 }
 
-static void Task_LotteryCornerComputerEffect(u8);
-static void LotteryCornerComputerEffect(struct Task *);
+static void Task_LotteryCornerComputerEffect(u8 taskId);
+static void LotteryCornerComputerEffect(struct Task *task);
 
 void DoLotteryCornerComputerEffect(void)
 {
@@ -1779,7 +1779,7 @@ bool8 IsPokerusInParty(void)
 }
 
 static void sub_810F7A8(u8);
-static void StopCameraShake(u8);
+static void StopCameraShake(u8 taskId);
 
 void ShakeCamera(void)
 {
