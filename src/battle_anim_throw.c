@@ -1634,7 +1634,7 @@ static void PremierBallOpenParticleAnimation_Step1(struct Sprite *sprite)
 
 static void DestroyBallOpenAnimationParticle(struct Sprite *sprite)
 {
-    int i;
+    int j;
     int temp;
 
     if (!gMain.inBattle)
@@ -1649,10 +1649,10 @@ static void DestroyBallOpenAnimationParticle(struct Sprite *sprite)
     {
         if (--gBattleAnimationInfo->unkA == 0)
         {
-            for (i = 0; i < 12; i++)
+            for (j = 0; j < 12; j++)
             {
-                FreeSpriteTilesByTag(sBallParticleSpriteSheets[i].tag);
-                FreeSpritePaletteByTag(sBallParticlePalettes[i].tag);
+                FreeSpriteTilesByTag(sBallParticleSpriteSheets[j].tag);
+                FreeSpritePaletteByTag(sBallParticlePalettes[j].tag);
             }
 
             DestroySprite(sprite);
