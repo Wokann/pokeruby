@@ -2782,7 +2782,7 @@ static void Task_LoadCryScreen(u8 taskId)
             cryMeter.paletteNo = 9;
             cryMeter.xPos = 0x12;
             cryMeter.yPos = 3;
-            if (ShowPokedexCryScreen(&cryMeter, 1) != 0)
+            if (LoadCryMeter(&cryMeter, 1) != 0)
                 gMain.state++;
         }
         break;

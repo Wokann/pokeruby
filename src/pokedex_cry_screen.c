@@ -442,7 +442,7 @@ static void ShiftWaveformOver(u8 bgId, s16 offset, u8 rsVertical)
     }
 }
 
-bool8 ShowPokedexCryScreen(struct CryScreenWindow *window, UNUSED u8 arg1) {
+bool8 LoadCryMeter(struct CryScreenWindow *window, UNUSED u8 arg1) {
     int finished = FALSE;
 
     switch (gDexCryScreenState)

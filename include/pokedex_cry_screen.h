@@ -12,7 +12,7 @@ struct CryScreenWindow
 
 extern u8 gDexCryScreenState;
 
-bool8 ShowPokedexCryScreen(struct CryScreenWindow *window, u8 arg1);
+bool8 LoadCryMeter(struct CryScreenWindow *window, u8 arg1);
 bool8 LoadCryWaveformWindow(struct CryScreenWindow *window, u8 bgId);
 void UpdateCryWaveformWindow(u8 bgId);
 void CryScreenPlayButton(u16 species);

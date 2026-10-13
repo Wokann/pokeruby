@@ -1237,7 +1237,7 @@ void Task_InitCryTest(u8 taskId)
     zero = 0; // wtf?
     gDexCryScreenState = 0;
 
-    while (ShowPokedexCryScreen(&cryStruct2, 2) == FALSE)
+    while (LoadCryMeter(&cryStruct2, 2) == FALSE)
         ;
 
     Menu_DrawStdWindowFrame(0, 16, 5, 19);
