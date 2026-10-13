@@ -1664,7 +1664,7 @@ static void DestroyBallOpenAnimationParticle(struct Sprite *sprite)
         DestroySprite(sprite);
 }
 
-u8 LaunchBallFadeMonTask(u8 unfadeLater, u8 spritePalNum, u32 selectedPalettes, u8 ballId)
+u8 LaunchBallFadeMonTask(bool8 unfadeLater, u8 spritePalNum, u32 selectedPalettes, u8 ballId)
 {
     u8 taskId;
 
