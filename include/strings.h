@@ -7,6 +7,13 @@ extern const u8 gText_PkmnsNickname[];
 
 extern const u8 gText_Hoenn[];
 
+// slot_machine
+extern const u8 gText_QuitTheGame[];
+extern const u8 gText_YouveGot9999Coins[];
+extern const u8 gText_YouveRunOutOfCoins[];
+extern const u8 gText_YouDontHaveThreeCoins[];
+extern const u8 gText_ReelTimeHelp[];
+
 extern const u8 gDaycareText_GetAlongVeryWell[];
 extern const u8 gDaycareText_GetAlong[];
 extern const u8 gDaycareText_DontLikeOther[];

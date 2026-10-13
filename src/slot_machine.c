@@ -1,6 +1,6 @@
 #include "global.h"
 #include "constants/songs.h"
-#include "strings2.h"
+#include "strings.h"
 #include "overworld.h"
 #include "menu_cursor.h"
 #include "field_effect.h"
@@ -121,8 +121,8 @@ struct DigitalDisplaySprite
 static void DestroyDigitalDisplayScene(void);
 static u8 CreateStdDigitalDisplaySprite(u8 templateIdx, u8 dispInfoId, s16 spriteId);
 static void CB2_SlotMachineSetup(void);
-static void CB2_SlotMachineLoop(void);
-static void PlaySlotMachine_Internal(u8 arg0, MainCallback cb);
+static void CB2_SlotMachine(void);
+static void PlaySlotMachine_Internal(u8 machineId, MainCallback exitCallback);
 static void SlotMachineDummyTask(u8 taskId);
 static void SlotMachineSetup_0_0(void);
 static void SlotMachineSetup_6_2(void);
@@ -179,18 +179,18 @@ static void CheckMatch(void);
 static void CheckMatch_CenterRow(void);
 static void CheckMatch_TopAndBottom(void);
 static void CheckMatch_Diagonals(void);
-static u8 GetMatchFromSymbols(u8 c1, u8 c2, u8 c3);
+static u8 GetMatchFromSymbols(u8 sym1, u8 sym2, u8 sym3);
 static void AwardPayout(void);
 static void Task_Payout(u8 taskId);
 static bool8 IsFinalTask_Task_Payout(void);
 static bool8 PayoutTask_Init(struct Task *task);
 static bool8 PayoutTask_GivePayout(struct Task *task);
 static bool8 PayoutTask_Free(struct Task *task);
-static u8 GetSymbolAtRest(u8 x, s16 y);
+static u8 GetSymbolAtRest(u8 reel, s16 offset);
 static void CreateReelTasks(void);
-static void SpinSlotReel(u8 a0);
-static void StopSlotReel(u8 a0);
-static bool8 IsSlotReelMoving(u8 a0);
+static void SpinSlotReel(u8 reelIndex);
+static void StopSlotReel(u8 reelIndex);
+static bool8 IsSlotReelMoving(u8 reelIndex);
 static void Task_Reel(u8 taskId);
 static bool8 ReelTask_StayStill(struct Task *task);
 static bool8 ReelTask_Spin(struct Task *task);
@@ -198,14 +198,14 @@ static bool8 ReelTask_DecideStop(struct Task *task);
 static bool8 ReelTask_MoveToStop(struct Task *task);
 static bool8 ReelTask_ShakingStop(struct Task *task);
 static bool8 DecideStop_Bias_Reel1(void);
-static bool8 DecideStop_Bias_Reel1_Bet1(u8 a0, u8 a1);
-static bool8 DecideStop_Bias_Reel1_Bet2or3(u8 a0, u8 a1);
+static bool8 DecideStop_Bias_Reel1_Bet1(u8 sym1, u8 sym2);
+static bool8 DecideStop_Bias_Reel1_Bet2or3(u8 sym1, u8 sym2);
 static bool8 DecideStop_Bias_Reel2(void);
 static bool8 DecideStop_Bias_Reel2_Bet1or2(void);
 static bool8 DecideStop_Bias_Reel2_Bet3(void);
 static bool8 DecideStop_Bias_Reel3(void);
-static bool8 DecideStop_Bias_Reel3_Bet1or2(u8 a0);
-static bool8 DecideStop_Bias_Reel3_Bet3(u8 a0);
+static bool8 DecideStop_Bias_Reel3_Bet1or2(u8 biasSymbol);
+static bool8 DecideStop_Bias_Reel3_Bet3(u8 biasSymbol);
 static void DecideStop_NoBias_Reel1(void);
 static void DecideStop_NoBias_Reel2(void);
 static void DecideStop_NoBias_Reel2_Bet1(void);
@@ -215,15 +215,15 @@ static void DecideStop_NoBias_Reel3(void);
 static void DecideStop_NoBias_Reel3_Bet1(void);
 static void DecideStop_NoBias_Reel3_Bet2(void);
 static void DecideStop_NoBias_Reel3_Bet3(void);
-static void PressStopReelButton(u8 a0);
+static void PressStopReelButton(u8 reelNum);
 static void Task_PressStopReelButton(u8 taskId);
-static void LightenBetTiles(u8 a0);
+static void LightenBetTiles(u8 betVal);
 static void StopReelButton_Press(struct Task *task, u8 taskId);
 static void StopReelButton_Wait(struct Task *task, u8 taskId);
 static void StopReelButton_Unpress(struct Task *task, u8 taskId);
-static void DarkenBetTiles(u8 a0);
+static void DarkenBetTiles(u8 betVal);
 static void CreateInvisibleFlashMatchLineSprites(void);
-static void FlashMatchLine(u8 a0);
+static void FlashMatchLine(u8 matchLineId);
 static bool8 IsMatchLineDoneFlashingBeforePayout(void);
 static bool8 TryStopMatchLinesFlashing(void);
 static bool8 TryStopMatchLineFlashing(u8 spriteId);
@@ -232,7 +232,7 @@ static void FlashSlotMachineLights(void);
 static bool8 TryStopSlotMachineLights(void);
 static void Task_FlashSlotMachineLights(u8 taskId);
 static void CreatePikaPowerBoltTask(void);
-static void AddPikaPowerBolt(u8 pikaPower);
+static void AddPikaPowerBolt(u8 bolts);
 static bool8 IsPikaPowerBoltAnimating(void);
 static void Task_CreatePikaPowerBolt(u8 taskId);
 static void PikaPowerBolt_Idle(struct Task *task);
@@ -240,7 +240,7 @@ static void PikaPowerBolt_AddBolt(struct Task *task);
 static void sub_8104144(struct Task *task);
 static void sub_81041AC(struct Task *task);
 static void ResetPikaPowerBoltTask(struct Task *task);
-static void sub_810423C(u8 pikaPower);
+static void sub_810423C(u8 bolts);
 static void BeginReelTime(void);
 static bool8 IsReelTimeTaskDone(void);
 static void Task_ReelTime(u8 taskId);
@@ -264,7 +264,7 @@ static void sub_81049C8(struct Task *task);
 static void sub_81049F8(struct Task *task);
 static void sub_8104A40(s16 a0, s16 a1);
 static void sub_8104A88(s16 a0);
-static void OpenInfoBox(u8 a0);
+static void OpenInfoBox(u8 digDisplayId);
 static bool8 IsInfoBoxClosed(void);
 static void Task_InfoBox(u8 taskId);
 static void InfoBox_FadeIn(struct Task *task);
@@ -274,13 +274,13 @@ static void sub_8104BC8(struct Task *task);
 static void sub_8104BFC(struct Task *task);
 static void InfoBox_FreeTask(struct Task *task);
 static void CreateDigitalDisplayTask(void);
-static void sub_8104CAC(u8 arg0);
+static void sub_8104CAC(u8 id);
 static bool8 IsDigitalDisplayAnimFinished(void);
 static void DigitalDisplay_Idle(struct Task *task);
 static void Task_DigitalDisplay(u8 taskId);
 static void CreateReelSymbolSprites(void);
 static void CreateCreditPayoutNumberSprites(void);
-static void CreateCoinNumberSprite(s16 x, s16 y, u8 a2, s16 a3);
+static void CreateCoinNumberSprite(s16 x, s16 y, u8 isPayout, s16 digitMult);
 static void CreateReelBackgroundSprite(void);
 static void sub_8105100(void);
 static void sub_810514C(void);
@@ -293,10 +293,10 @@ static void sub_81054B8(void);
 static void DestroyReelTimeShadowSprites(void);
 static void sub_8105554(void);
 static void CreateReelTimeBoltSprites(void);
-static void SetReelTimeBoltDelay(s16 a0);
+static void SetReelTimeBoltDelay(s16 delay);
 static void DestroyReelTimeBoltSprites(void);
 static void CreateReelTimePikachuAuraSprites(void);
-static void SetReelTimePikachuAuraFlashDelay(s16 a0);
+static void SetReelTimePikachuAuraFlashDelay(s16 delay);
 static void DestroyReelTimePikachuAuraSprites(void);
 static void CreateReelTimeExplosionSprite(void);
 static void DestroyReelTimeExplosionSprite(void);
@@ -307,12 +307,12 @@ static bool8 IsReelTimeSmokeAnimFinished(void);
 static void DestroyReelTimeSmokeSprite(void);
 static u8 CreatePikaPowerBoltSprite(s16 x, s16 y);
 static void DestroyPikaPowerBoltSprite(u8 spriteId);
-static u8 sub_8105BF8(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 a4);
+static u8 sub_8105BF8(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 internalSpriteId);
 static void sub_81063C0(void);
 static void sub_8106404(void);
 static void sub_8106448(void);
 static void sub_81064B8(void);
-static void sub_81065A8(s16 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4);
+static void sub_81065A8(s16 offset, u16 topLeft, u16 topRight, u16 bottomLeft, u16 bottomRight);
 static void sub_81065DC(void);
 
 #if DEBUG
@@ -394,12 +394,12 @@ static void CB2_SlotMachineSetup(void)
             CreateSlotMachineSprites();
             CreateGameplayTasks();
             SlotMachineSetup_6_2();
-            SetMainCallback2(CB2_SlotMachineLoop);
+            SetMainCallback2(CB2_SlotMachine);
             break;
     }
 }
 
-static void CB2_SlotMachineLoop(void)
+static void CB2_SlotMachine(void)
 {
     RunTasks();
     AnimateSprites();
@@ -743,7 +743,7 @@ static void sub_8101F2C(const u8 *str)
 
 static bool8 sub_8101F44(struct Task *task)
 {
-    sub_8101F2C(gOtherText_DontHaveThreeCoins);
+    sub_8101F2C(gText_YouDontHaveThreeCoins);
     sSlotMachine->state = 7;
     return FALSE;
 }
@@ -1054,7 +1054,7 @@ static bool8 SlotTask_NoMatches(struct Task *task)
 
 static bool8 sub_8102318(struct Task *task)
 {
-    sub_8101F2C(gOtherText_QuitGamePrompt);
+    sub_8101F2C(gText_QuitTheGame);
     DisplayYesNoMenu(21, 7, 1);
     sub_814AB84();
     sSlotMachine->state = 22;
@@ -1083,7 +1083,7 @@ static bool8 sub_8102344(struct Task *task)
 
 static bool8 sub_810239C(struct Task *task)
 {
-    sub_8101F2C(gOtherText_MaxCoins);
+    sub_8101F2C(gText_YouveGot9999Coins);
     sSlotMachine->state = 24;
     return FALSE;
 }
@@ -1100,7 +1100,7 @@ static bool8 sub_81023B8(struct Task *task)
 
 static bool8 sub_81023E0(struct Task *task)
 {
-    sub_8101F2C(gOtherText_OutOfCoins);
+    sub_8101F2C(gText_YouveRunOutOfCoins);
     sSlotMachine->state = 26;
     return FALSE;
 }
@@ -1755,7 +1755,7 @@ static bool8 ReelTask_ShakingStop(struct Task *task)
     return FALSE;
 }
 
-static bool8 (*const sDecideStop_Bias_Reel1_Bets[])(u8 a0, u8 a1) =
+static bool8 (*const sDecideStop_Bias_Reel1_Bets[])(u8 sym1, u8 sym2) =
 {
     DecideStop_Bias_Reel1_Bet1,
     DecideStop_Bias_Reel1_Bet2or3,
@@ -1924,7 +1924,7 @@ static bool8 DecideStop_Bias_Reel2_Bet3(void)
     return FALSE;
 }
 
-static bool8 (*const sDecideStop_Bias_Reel3_Bets[])(u8 a0) =
+static bool8 (*const sDecideStop_Bias_Reel3_Bets[])(u8 biasSymbol) =
 {
     DecideStop_Bias_Reel3_Bet1or2,
     DecideStop_Bias_Reel3_Bet1or2,
@@ -3030,7 +3030,7 @@ static void sub_8104B80(struct Task *task)
     DestroyDigitalDisplayScene();
     sub_81065DC();
     BasicInitMenuWindow(&gWindowTemplate_81E7144);
-    Menu_PrintTextPixelCoords(gOtherText_ReelTime, 10, 32, 1);
+    Menu_PrintTextPixelCoords(gText_ReelTimeHelp, 10, 32, 1);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
     task->data[0]++;
 }

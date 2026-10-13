@@ -101,13 +101,6 @@ extern const u8 gOtherText_FourDashes[];
 extern const u8 gOtherText_BattleTowerResults[];
 extern const u8 gOtherText_Lv100[];
 
-// slot_machine
-extern const u8 gOtherText_QuitGamePrompt[];
-extern const u8 gOtherText_MaxCoins[];
-extern const u8 gOtherText_OutOfCoins[];
-extern const u8 gOtherText_DontHaveThreeCoins[];
-extern const u8 gOtherText_ReelTime[];
-
 // daycare
 extern const u8 gOtherText_CancelAndLv[];
 

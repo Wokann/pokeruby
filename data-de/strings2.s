@@ -324,20 +324,20 @@ gText_Record:: @ 842CA83
 gText_Prev:: @ 842CA8A
 	.string "VORHER$"
 
-gOtherText_QuitGamePrompt:: @ 842CA90
+gText_QuitTheGame:: @ 842CA90
 	.string "Spiel beenden?$"
 
-gOtherText_MaxCoins:: @ 842CA9F
+gText_YouveGot9999Coins:: @ 842CA9F
 	.string "Du hast 9.999 MÜNZEN.$"
 
-gOtherText_OutOfCoins:: @ 842CAB7
+gText_YouveRunOutOfCoins:: @ 842CAB7
 	.string "Du hast keine MÜNZEN mehr.\n"
 	.string "Game over!$"
 
-gOtherText_DontHaveThreeCoins:: @ 842CADB
+gText_YouDontHaveThreeCoins:: @ 842CADB
 	.string "Du hast keine drei MÜNZEN.$"
 
-gOtherText_ReelTime:: @ 842CAF7
+gText_ReelTimeHelp:: @ 842CAF7
 	.string "REEL TIME\n"
 	.string "Hier hast du die Chance, in\n"
 	.string "Blitzesschnelle zu gewinnen!\n"

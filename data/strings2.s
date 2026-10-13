@@ -305,19 +305,19 @@ gText_Record:: @ 842CA83
 gText_Prev:: @ 842CA8A
 	.string "PREV.$"
 
-gOtherText_QuitGamePrompt:: @ 842CA90
+gText_QuitTheGame:: @ 842CA90
 	.string "Quit the game?$"
 
-gOtherText_MaxCoins:: @ 842CA9F
+gText_YouveGot9999Coins:: @ 842CA9F
 	.string "You've got 9,999 COINS.$"
 
-gOtherText_OutOfCoins:: @ 842CAB7
+gText_YouveRunOutOfCoins:: @ 842CAB7
 	.string "You've run out of COINS.\nGame over!$"
 
-gOtherText_DontHaveThreeCoins:: @ 842CADB
+gText_YouDontHaveThreeCoins:: @ 842CADB
 	.string "You don't have three COINS.$"
 
-gOtherText_ReelTime:: @ 842CAF7
+gText_ReelTimeHelp:: @ 842CAF7
 	.string "REEL TIME\nHere's your chance to take\naim and nail marks!\nThe Reel Time continues for\nas often as the drawn number.\nIt all ends on a Big Bonus.$"
 
 gDaycareText_GetAlongVeryWell::
