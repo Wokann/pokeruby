@@ -3996,7 +3996,7 @@ bool8 sub_80F5038(void)
     return graphUpdating || monUpdating;
 }
 
-void sub_80F5060(u8 moveUp)
+void sub_80F5060(bool8 moveUp)
 {
     u16 newLoadId;
     u8 wasNotLastMon;

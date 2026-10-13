@@ -24,7 +24,7 @@ struct UsePokeblockSession {
     /*0x53*/ u8 condition;
     /*0x54*/ u8 numEnhancements;
     /*0x55*/ u8 unk55;
-    /*0x56*/ u8 monInTopHalf;
+    /*0x56*/ bool8 monInTopHalf;
     /*0x57*/ u8 conditionsBeforeBlock[5];
     /*0x5c*/ u8 conditionsAfterBlock[5];
     /*0x61*/ u8 enhancements[5];
