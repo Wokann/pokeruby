@@ -781,8 +781,8 @@ static void Task_Scene3_SpinPokeball(u8);
 static void Task_IntroWaitToSetupPart3DoubleFight(u8);
 static void Task_IntroLoadPart3Streaks(u8);
 static void task_intro_14(u8);
-static void task_intro_15(u8);
-static void task_intro_16(u8);
+static void Task_Scene3_NarrowWindow(u8);
+static void Task_Scene3_EndNarrowWindow(u8);
 static void task_intro_17(u8);
 static void Task_IntroPokemonBattle(u8);
 static void Task_EndIntroMovie(u8);
@@ -1264,10 +1264,10 @@ static void task_intro_14(u8 taskId)
     gTasks[taskId].data[15] = CreateTask(task_intro_20, 0);
     gTasks[gTasks[taskId].data[15]].data[0] = 0;
     gTasks[taskId].data[0] = 0;
-    gTasks[taskId].func = task_intro_15;
+    gTasks[taskId].func = Task_Scene3_NarrowWindow;
 }
 
-static void task_intro_15(u8 taskId)
+static void Task_Scene3_NarrowWindow(u8 taskId)
 {
     u16 foo = gTasks[taskId].data[0];
 
@@ -1281,11 +1281,11 @@ static void task_intro_15(u8 taskId)
     else
     {
         REG_WIN0V = 0x2080;
-        gTasks[taskId].func = task_intro_16;
+        gTasks[taskId].func = Task_Scene3_EndNarrowWindow;
     }
 }
 
-static void task_intro_16(u8 taskId)
+static void Task_Scene3_EndNarrowWindow(u8 taskId)
 {
     gTasks[taskId].func = task_intro_17;
 }
