@@ -1318,7 +1318,7 @@ static const struct SpriteTemplate sFlyDestIconSpriteTemplate =
     .callback = SpriteCallbackDummy,
 };
 
-void CB2_InitFlyRegionMap(void)
+void CB2_OpenFlyMap(void)
 {
     switch (gMain.state)
     {
@@ -1752,7 +1752,7 @@ void debug_sub_8110D84(void)
 
 void debug_sub_8110F28(void)
 {
-    CB2_InitFlyRegionMap();
+    CB2_OpenFlyMap();
     
     if (gMain.callback2 == CB2_FlyRegionMap)
     {

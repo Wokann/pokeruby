@@ -98,7 +98,7 @@ void CreateRegionMapPlayerIcon(u16 tileTag, u16 paletteTag);
 const u8 *GetMapSectionName(u8 *dest, u16 regionMapId, u16 padLength);
 const u8 *GetMapNameGeneric(u8 *dest, u16 mapSecId);
 const u8 *CopyLocationName(u8 *dest, u16 mapSecId);
-void CB2_InitFlyRegionMap(void);
+void CB2_OpenFlyMap(void);
 void debug_sub_8110F28(void);
 u16 GetRegionMapSecIdAt(u16 x, u16 y);
 void TrySetPlayerIconBlink(void);

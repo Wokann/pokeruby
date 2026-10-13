@@ -59,7 +59,7 @@ extern TaskFunc gUnknown_03005CF0;
 
 static void CB2_ReturnToPartyMenuFromWritingMail(void);
 void sub_80A61D0(void);
-void CB2_InitFlyRegionMap(void);
+void CB2_OpenFlyMap(void);
 bool8 SetUpFieldMove_RockSmash(void);
 bool8 SetUpFieldMove_Strength(void);
 bool8 SetUpFieldMove_Dig(void);
@@ -767,7 +767,7 @@ static void sub_808AB34(u8 taskId)
         if (!IS_FLY(gTasks[taskId].tFieldMoveId) || ShouldDoBrailleFlyEffect())
             SetMainCallback2(CB2_ReturnToField);
         else
-            SetMainCallback2(CB2_InitFlyRegionMap);
+            SetMainCallback2(CB2_OpenFlyMap);
         DestroyTask(taskId);
     }
 }
