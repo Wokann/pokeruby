@@ -133,6 +133,20 @@ void PrintAgbHeader()
         "voicegroup_contest_winner",
         "voicegroup_contest",
         "voicegroup_encounter_magma",
+        "voicegroup_intro_battle",
+        "voicegroup_abnormal_weather",
+        "voicegroup_weather_groudon",
+        "voicegroup_sootopolis",
+        "voicegroup_contest_results",
+        "voicegroup_hall_of_fame_room",
+        "voicegroup_trick_house",
+        "voicegroup_encounter_twins",
+        "voicegroup_encounter_elite_four",
+        "voicegroup_encounter_hiker",
+        "voicegroup_contest_lobby",
+        "voicegroup_encounter_interviewer",
+        "voicegroup_encounter_champion",
+        "voicegroup_credits",
     };
 
     if (g_voiceGroup >= 0 && g_voiceGroup < static_cast<int>(sizeof(sVoiceGroupNames) / sizeof(sVoiceGroupNames[0]))

@@ -227,8 +227,8 @@ DirectSoundWaveData_sc88pro_xylophone:: @ 84A311C
 	.incbin "sound/direct_sound_samples/synth/sc88pro_xylophone.bin"
 
 	.align 2
-DirectSoundWaveData_84A3B50:: @ 84A3B50
-	.incbin "sound/direct_sound_samples/synth/84A3B50.bin"
+DirectSoundWaveData_unknown_10:: @ 84A3B50
+	.incbin "sound/direct_sound_samples/unknown_10.bin"
 
 	.align 2
 DirectSoundWaveData_84A5690:: @ 84A5690
