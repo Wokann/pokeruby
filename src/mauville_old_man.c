@@ -505,7 +505,7 @@ static void BardSing(struct Task *task, struct BardSong *song)
     case 2:  // Initialize word
         {
             u16 easyChatWord = song->lyrics[song->lyricsIndex];
-            const struct BardSound *sounds = GetWordSounds(EC_GROUP(easyChatWord), EC_INDEX(easyChatWord));
+            const struct BardSoundTemplate *sounds = GetWordSoundTemplates(EC_GROUP(easyChatWord), EC_INDEX(easyChatWord));
 
             song->length = 0;
             GetWordPhonemes(song, sounds, WORD_TO_PITCH_TABLE_INDEX(easyChatWord));
@@ -514,7 +514,7 @@ static void BardSing(struct Task *task, struct BardSong *song)
     case 3:
     case 4:
         {
-            struct BardPhoneme *phoneme = &song->sounds[song->soundIndex];
+            struct BardSound *phoneme = &song->sounds[song->soundIndex];
 
             switch (song->state)
             {

@@ -2,7 +2,7 @@
 #define GUARD_DATA_BARD_MUSIC_PEOPLE_H
 
 #if ENGLISH
-static const struct BardSound sBardSoundTemplates_People[][6] = {
+static const struct BardSoundTemplate sBardSoundTemplates_People[][6] = {
     { // OPPONENT
         {0x2C}, {0x1A}, {0x0B}, {0xFF}, {0xFF}, {0xFF}
     }, { // I
@@ -156,7 +156,7 @@ static const struct BardSound sBardSoundTemplates_People[][6] = {
     }
 };
 #elif GERMAN
-static const struct BardSound sBardSoundTemplates_People[][6] = {
+static const struct BardSoundTemplate sBardSoundTemplates_People[][6] = {
     { // OPPONENT
         {0x0B}, {0x11}, {0xFF}, {0xFF}, {0xFF}, {0xFF}
     }, { // I

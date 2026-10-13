@@ -2,7 +2,7 @@
 #define GUARD_DATA_BARD_MUSIC_POKEMON_2_H
 
 #if ENGLISH
-const struct BardSound gBardSounds_Pokemon2[][6] = {
+const struct BardSoundTemplate gBardSounds_Pokemon2[][6] = {
     { // EKANS
         {0x09}, {0x00}, {0x33}, {0xFF}, {0xFF}, {0xFF}
     }, { // ARBOK
@@ -508,7 +508,7 @@ const struct BardSound gBardSounds_Pokemon2[][6] = {
     }
 };
 #elif GERMAN
-const struct BardSound gBardSounds_Pokemon2[][6] = {
+const struct BardSoundTemplate gBardSounds_Pokemon2[][6] = {
     { // EKANS
         {0x0B}, {0x02}, {0xFF}, {0xFF}, {0xFF}, {0xFF}
     }, { // ARBOK

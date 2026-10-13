@@ -2,7 +2,7 @@
 #define GUARD_DATA_BARD_MUSIC_HOBBIES_H
 
 #if ENGLISH
-static const struct BardSound sBardSoundTemplates_Hobbies[][6] = {
+static const struct BardSoundTemplate sBardSoundTemplates_Hobbies[][6] = {
     { // IDOL
         {0x14}, {0x1A}, {0x33}, {0xFF}, {0xFF}, {0xFF}
     }, { // ANIME
@@ -114,7 +114,7 @@ static const struct BardSound sBardSoundTemplates_Hobbies[][6] = {
     }
 };
 #elif GERMAN
-static const struct BardSound sBardSoundTemplates_Hobbies[][6] = {
+static const struct BardSoundTemplate sBardSoundTemplates_Hobbies[][6] = {
     { // IDOL
         {0x11}, {0x1A}, {0xFF}, {0xFF}, {0xFF}, {0xFF}
     }, { // ANIME

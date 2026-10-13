@@ -2,7 +2,7 @@
 #define GUARD_DATA_BARD_MUSIC_STATUS_H
 
 #if ENGLISH
-static const struct BardSound sBardSoundTemplates_Status[][6] = {
+static const struct BardSoundTemplate sBardSoundTemplates_Status[][6] = {
     { // DARK
         {0x08}, {0x33}, {0x33}, {0xFF}, {0xFF}, {0xFF}
     }, { // STENCH
@@ -224,7 +224,7 @@ static const struct BardSound sBardSoundTemplates_Status[][6] = {
     }
 };
 #elif GERMAN
-static const struct BardSound sBardSoundTemplates_Status[][6] = {
+static const struct BardSoundTemplate sBardSoundTemplates_Status[][6] = {
     { // DARK
         {0x29}, {0x11}, {0xFF}, {0xFF}, {0xFF}, {0xFF}
     }, { // STENCH

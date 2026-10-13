@@ -25,7 +25,7 @@
 #include "trendysaying.h"
 #include "pokemon_2.h"
 
-static const struct BardSound (*const sBardSoundTemplatesTable[])[6] = {
+static const struct BardSoundTemplate (*const sBardSoundTemplatesTable[])[6] = {
     gBardSounds_Pokemon,
     sBardSoundTemplates_Trainer,
     sBardSoundTemplates_Status,

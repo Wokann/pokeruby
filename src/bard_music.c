@@ -12,23 +12,23 @@ static s16 GetWordPitch(int tableIndex, int pitchIndex)
 }
 
 #if ENGLISH
-const struct BardSound *GetWordSounds(u16 group, u16 word)
+const struct BardSoundTemplate *GetWordSoundTemplates(u16 group, u16 word)
 {
-    const struct BardSound (*sounds)[6] = sBardSoundTemplatesTable[group];
+    const struct BardSoundTemplate (*sounds)[6] = sBardSoundTemplatesTable[group];
 
     return sounds[word];
 }
 #elif GERMAN
-const struct BardSound *GetWordSounds(u16 group, u16 word)
+const struct BardSoundTemplate *GetWordSoundTemplates(u16 group, u16 word)
 {
-    const struct BardSound (*sounds)[6] = sBardSoundTemplatesTable[group];
+    const struct BardSoundTemplate (*sounds)[6] = sBardSoundTemplatesTable[group];
     u32 index = de_sub_80EB748(group, word);
 
     return sounds[index];
 }
 #endif
 
-s32 GetWordPhonemes(struct BardSong *song, const struct BardSound *soundTemplates, u16 pitchTableIndex)
+s32 GetWordPhonemes(struct BardSong *song, const struct BardSoundTemplate *soundTemplates, u16 pitchTableIndex)
 {
     s32 i;
     s32 j;

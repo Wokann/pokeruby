@@ -2,7 +2,7 @@
 #define GUARD_DATA_BARD_MUSIC_ADJECTIVES_H
 
 #if ENGLISH
-static const struct BardSound sBardSoundTemplates_Adjectives[][6] = {
+static const struct BardSoundTemplate sBardSoundTemplates_Adjectives[][6] = {
     { // WANDERING
         {0x1D}, {0x32}, {0x0C}, {0xFF}, {0xFF}, {0xFF}
     }, { // RICKETY
@@ -78,7 +78,7 @@ static const struct BardSound sBardSoundTemplates_Adjectives[][6] = {
     }
 };
 #elif GERMAN
-static const struct BardSound sBardSoundTemplates_Adjectives[][6] = {
+static const struct BardSoundTemplate sBardSoundTemplates_Adjectives[][6] = {
     { // WANDERING
         {0x02}, {0xFF}, {0xFF}, {0xFF}, {0xFF}, {0xFF}
     }, { // RICKETY

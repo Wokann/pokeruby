@@ -2,7 +2,7 @@
 #define GUARD_DATA_BARD_MUSIC_ACTIONS_H
 
 #if ENGLISH
-static const struct BardSound sBardSoundTemplates_Actions[][6] = {
+static const struct BardSoundTemplate sBardSoundTemplates_Actions[][6] = {
     { // MEETS
         {0x0E}, {0x33}, {0x33}, {0xFF}, {0xFF}, {0xFF}
     }, { // CONCEDE
@@ -162,7 +162,7 @@ static const struct BardSound sBardSoundTemplates_Actions[][6] = {
     }
 };
 #elif GERMAN
-static const struct BardSound sBardSoundTemplates_Actions[][6] = {
+static const struct BardSoundTemplate sBardSoundTemplates_Actions[][6] = {
     { // MEETS
         {0x11}, {0xFF}, {0xFF}, {0xFF}, {0xFF}, {0xFF}
     }, { // CONCEDE

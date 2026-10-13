@@ -2,7 +2,7 @@
 #define GUARD_DATA_BARD_MUSIC_TIME_H
 
 #if ENGLISH
-static const struct BardSound sBardSoundTemplates_Time[][6] = {
+static const struct BardSoundTemplate sBardSoundTemplates_Time[][6] = {
     { // FALL
         {0x1B}, {0x33}, {0x33}, {0xFF}, {0xFF}, {0xFF}
     }, { // MORNING
@@ -96,7 +96,7 @@ static const struct BardSound sBardSoundTemplates_Time[][6] = {
     }
 };
 #elif GERMAN
-static const struct BardSound sBardSoundTemplates_Time[][6] = {
+static const struct BardSoundTemplate sBardSoundTemplates_Time[][6] = {
     { // FALL
         {0x0B}, {0xFF}, {0xFF}, {0xFF}, {0xFF}, {0xFF}
     }, { // MORNING
