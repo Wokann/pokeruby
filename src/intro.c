@@ -1508,11 +1508,11 @@ static void sub_813CCE8(u8 taskId)
     case 1:
         if (gTasks[taskId].data[1] != 0)
         {
-            u8 foo;
+            u8 tmp;
 
             gTasks[taskId].data[1]--;
-            foo = gTasks[taskId].data[1] / 2;
-            REG_BLDALPHA = gTitleScreenAlphaBlend[foo];
+            tmp = gTasks[taskId].data[1] / 2;
+            REG_BLDALPHA = gTitleScreenAlphaBlend[tmp];
         }
         else
         {
@@ -1536,11 +1536,11 @@ static void sub_813CCE8(u8 taskId)
     case 3:
         if (gTasks[taskId].data[1] <= 0x3D)
         {
-            u8 foo;
+            u8 tmp;
 
             gTasks[taskId].data[1]++;
-            foo = gTasks[taskId].data[1] / 2;
-            REG_BLDALPHA = gTitleScreenAlphaBlend[foo];
+            tmp = gTasks[taskId].data[1] / 2;
+            REG_BLDALPHA = gTitleScreenAlphaBlend[tmp];
         }
         else
         {
