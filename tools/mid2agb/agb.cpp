@@ -147,6 +147,17 @@ void PrintAgbHeader()
         "voicegroup_encounter_interviewer",
         "voicegroup_encounter_champion",
         "voicegroup_credits",
+        "voicegroup_end",
+        "voicegroup_vs_wild",
+        "voicegroup_vs_aqua_magma",
+        "voicegroup_vs_trainer",
+        "voicegroup_vs_gym_leader",
+        "voicegroup_vs_champion",
+        "voicegroup_vs_regi",
+        "voicegroup_vs_kyogre_groudon",
+        "voicegroup_vs_rival",
+        "voicegroup_vs_elite_four",
+        "voicegroup_vs_aqua_magma_leader",
     };
 
     if (g_voiceGroup >= 0 && g_voiceGroup < static_cast<int>(sizeof(sVoiceGroupNames) / sizeof(sVoiceGroupNames[0]))
