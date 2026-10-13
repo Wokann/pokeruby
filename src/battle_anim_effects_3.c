@@ -3163,7 +3163,7 @@ static void AnimReversalOrb_Step(struct Sprite *sprite)
 // Copies the target mon's sprite, and makes a white silhouette that shrinks away.
 void AnimTask_RolePlaySilhouette(u8 taskId)
 {
-    u8 isBackPic;
+    bool8 isBackPic;
     u32 personality;
     u32 otId;
     u16 species;
@@ -3827,7 +3827,7 @@ static void AnimTask_FacadeColorBlend_Step(u8 taskId)
 
 void AnimTask_StatusClearedEffect(u8 taskId)
 {
-    sub_80E3C4C(
+    StartMonScrollingBgMask(
         taskId,
         0,
         0x1A0,

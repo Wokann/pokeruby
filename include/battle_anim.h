@@ -304,7 +304,7 @@ extern const union AnimCmd *const gAnims_SmallBubblePair[];
 
 // battle_anim_normal.c
 extern const struct SpriteTemplate gWaterHitSplatSpriteTemplate;
-void sub_80E3C4C(u8 taskId, int unused, u16 scrollSpeed, u8 battler, u8 includePartner, u8 numFadeSteps, u8 fadeStepDelay, u8 duration, const u8 *gfx, const u8 *tilemap, const u16 *palette);
+void StartMonScrollingBgMask(u8 taskId, int unused, u16 scrollSpeed, u8 battler, bool8 includePartner, u8 numFadeSteps, u8 fadeStepDelay, u8 duration, const u8 *gfx, const u8 *tilemap, const u16 *palette);
 
 // battle/anim/ground.c
 void AnimTask_HorizontalShake(u8 taskId);
