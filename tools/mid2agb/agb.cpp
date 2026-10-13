@@ -119,6 +119,20 @@ void PrintAgbHeader()
         "voicegroup_cable_car",
         "voicegroup_game_corner",
         "voicegroup_dewford",
+        "voicegroup_safari_zone",
+        "voicegroup_victory_road",
+        "voicegroup_aqua_magma_hideout",
+        "voicegroup_sailing",
+        "voicegroup_mt_pyre",
+        "voicegroup_slateport",
+        "voicegroup_mt_pyre_exterior",
+        "voicegroup_school",
+        "voicegroup_hall_of_fame",
+        "voicegroup_fallarbor",
+        "voicegroup_sealed_chamber",
+        "voicegroup_contest_winner",
+        "voicegroup_contest",
+        "voicegroup_encounter_magma",
     };
 
     if (g_voiceGroup >= 0 && g_voiceGroup < static_cast<int>(sizeof(sVoiceGroupNames) / sizeof(sVoiceGroupNames[0]))
