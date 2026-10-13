@@ -16,11 +16,11 @@ gText_234Players:: @ 842C30A
 	.string "3 SPIELER\n"
 	.string "4 SPIELER$"
 
-gMultiText_Saving:: @ 842C328
+gText_SavingDontTurnOff2:: @ 842C328
 	.string "SPEICHERVORGANG...\n"
 	.string "DAS GERÄT NICHT AUSSCHALTEN!$"
 
-gMultiText_LinkError:: @ 842C34C
+gText_CommErrorCheckConnections:: @ 842C34C
 	.string "{HIGHLIGHT TRANSPARENT}{COLOR WHITE2}Verbindungsfehler...\n"
 	.string "Die Kabelverbindungen überprüfen und\n"
 	.string "die Geräte aus- und wieder einschalten.$"
@@ -205,13 +205,13 @@ sText_IsThisTradeOkay:: @ 842C7B6
 gOtherText_Terminator2:: @ 842C7CA
 	.string "$"
 
-gOtherText_ControlAndMiscText:: @ 842C7CB
+sText_NewLine:: @ 842C7CB
 	.string "\n$"
 	.string "/$"
 	.string "Lv.$"
 	.string "---$"
 
-gOtherText_FourQuestions:: @ 842C7D6
+sText_FourQuestionMarks:: @ 842C7D6
 	.string "????$"
 
 @ 842C7DB
@@ -297,10 +297,10 @@ gText_TotalRecordWLD:: @ 842CA04
 gText_WinLoseDraw:: @ 842CA20
 	.string "SIEG      NIEDER.     PATT$"
 
-gOtherText_SevenDashes:: @ 842CA3C
+sText_DashesNoPlayer:: @ 842CA3C
 	.string "-------$"
 
-gOtherText_FourDashes:: @ 842CA44
+sText_DashesNoScore:: @ 842CA44
 	.string "----$"
 
 gOtherText_BattleTowerResults:: @ 842CA49
@@ -376,9 +376,9 @@ gText_MoveRelearnerBattleMoves::
 	.string "KAMPF$"
 gText_MoveRelearnerContestMovesTitle::
 	.string "WETTB.$"
-OtherText_Type::
+gText_MoveRelearnerType::
 	.string "TYP/$"
-OtherText_PP::
+gText_MoveRelearnerPP::
 	.string "AP/$"
 gText_MoveRelearnerPower::
 	.string "STÄRKE$"

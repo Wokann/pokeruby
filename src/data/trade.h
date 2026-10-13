@@ -320,6 +320,7 @@ const u8 gUnknown_0820C334[][2] = {
 };
 
 static const u8 sText_EmptyString[] = _("");
+extern const u8 sText_NewLine[];
 const u8 gText_MaleSymbol4[] = _("♂");
 const u8 gText_FemaleSymbol4[] = _("♀");
 const u8 gText_GenderlessSymbol[] = _("$");

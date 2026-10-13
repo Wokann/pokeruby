@@ -2048,13 +2048,13 @@ static void UNUSED BufferMovesString(u8 *str, u8 whichParty, u8 partyIdx)
             {
                 StringAppend(str, gMoveNames[moves[i]]);
             }
-            StringAppend(str, gOtherText_ControlAndMiscText);
+            StringAppend(str, sText_NewLine);
         }
     }
     else
     {
         StringCopy(str, sText_EmptyString);
-        StringAppend(str, gOtherText_FourQuestions);
+        StringAppend(str, sText_FourQuestionMarks);
     }
 }
 

@@ -5,10 +5,10 @@
 extern const u8 gOtherText_TopSpeed[];
 
 // berry_blender
-extern const u8 gMultiText_Saving[];
+extern const u8 gText_SavingDontTurnOff2[];
 
 // link
-extern const u8 gMultiText_LinkError[];
+extern const u8 gText_CommErrorCheckConnections[];
 
 // option_menu
 extern const u8 gText_Option[];
@@ -57,8 +57,7 @@ extern const u8 sText_WaitingForYourFriend[];
 extern const u8 sText_YourFriendWantsToTrade[];
 extern const u8 sText_IsThisTradeOkay[];
 extern const u8 gOtherText_Terminator2[];
-extern const u8 gOtherText_ControlAndMiscText[];
-extern const u8 gOtherText_FourQuestions[];
+extern const u8 sText_FourQuestionMarks[];
 
 // easy_chat
 extern const u8 gEasyChatGroupName_Pokemon[];
@@ -96,8 +95,8 @@ extern const u8 gOtherText_SentToPC[];
 extern const u8 gOtherText_Coins[];
 
 // battle_records
-extern const u8 gOtherText_SevenDashes[];
-extern const u8 gOtherText_FourDashes[];
+extern const u8 sText_DashesNoPlayer[];
+extern const u8 sText_DashesNoScore[];
 extern const u8 gOtherText_BattleTowerResults[];
 extern const u8 gOtherText_Lv100[];
 
@@ -110,8 +109,8 @@ extern const u8 gEggNickname[];
 // move_relearner
 
 // ???
-extern const u8 OtherText_Type[];
-extern const u8 OtherText_PP[];
+extern const u8 gText_MoveRelearnerType[];
+extern const u8 gText_MoveRelearnerPP[];
 
 // contest_link_80C2020
 extern const u8 gText_AnnouncingResults[];
@@ -121,43 +120,43 @@ extern const u8 gText_ContestantsMonWon[];
 extern const u8 gText_CommunicationStandby[];
 
 // landmark
-extern const u8 gLandmarkName_FlowerShop[];
-extern const u8 gLandmarkName_PetalburgWoods[];
-extern const u8 gLandmarkName_MrBrineysCottage[];
-extern const u8 gLandmarkName_AbandonedShip[];
-extern const u8 gLandmarkName_SeashoreHouse[];
-extern const u8 gLandmarkName_SlateportBeach[];
-extern const u8 gLandmarkName_CyclingRoad[];
-extern const u8 gLandmarkName_NewMauville[];
-extern const u8 gLandmarkName_TrickHouse[];
-extern const u8 gLandmarkName_OldLadysRestShop[];
-extern const u8 gLandmarkName_Desert[];
-extern const u8 gLandmarkName_WinstrateFamily[];
-extern const u8 gLandmarkName_CableCar[];
-extern const u8 gLandmarkName_GlassWorkshop[];
-extern const u8 gLandmarkName_WeatherInstitute[];
-extern const u8 gLandmarkName_MeteorFalls[];
-extern const u8 gLandmarkName_TunnelersRestHouse[];
-extern const u8 gLandmarkName_RusturfTunnel[];
-extern const u8 gLandmarkName_PokemonDayCare[];
-extern const u8 gLandmarkName_SafariZoneEntrance[];
-extern const u8 gLandmarkName_MtPyre[];
-extern const u8 gLandmarkName_ShoalCave[];
-extern const u8 gLandmarkName_SeafloorCavern[];
-extern const u8 gLandmarkName_GraniteCave[];
-extern const u8 gLandmarkName_OceanCurrent[];
-extern const u8 gLandmarkName_LanettesHouse[];
-extern const u8 gLandmarkName_FieryPath[];
-extern const u8 gLandmarkName_JaggedPass[];
-extern const u8 gLandmarkName_SkyPillar[];
-extern const u8 gLandmarkName_BerryMastersHouse[];
-extern const u8 gLandmarkName_IslandCave[];
-extern const u8 gLandmarkName_DesertRuins[];
-extern const u8 gLandmarkName_ScorchedSlab[];
-extern const u8 gLandmarkName_AncientTomb[];
-extern const u8 gLandmarkName_SealedChamber[];
-extern const u8 gLandmarkName_FossilManiacsHouse[];
-extern const u8 gLandmarkName_HuntersHouse[];
+extern const u8 LandmarkName_FlowerShop[];
+extern const u8 LandmarkName_PetalburgWoods[];
+extern const u8 LandmarkName_MrBrineysCottage[];
+extern const u8 LandmarkName_AbandonedShip[];
+extern const u8 LandmarkName_SeashoreHouse[];
+extern const u8 LandmarkName_SlateportBeach[];
+extern const u8 LandmarkName_CyclingRoad[];
+extern const u8 LandmarkName_NewMauville[];
+extern const u8 LandmarkName_TrickHouse[];
+extern const u8 LandmarkName_OldLadysRestShop[];
+extern const u8 LandmarkName_Desert[];
+extern const u8 LandmarkName_WinstrateFamily[];
+extern const u8 LandmarkName_CableCar[];
+extern const u8 LandmarkName_GlassWorkshop[];
+extern const u8 LandmarkName_WeatherInstitute[];
+extern const u8 LandmarkName_MeteorFalls[];
+extern const u8 LandmarkName_TunnelersRestHouse[];
+extern const u8 LandmarkName_RusturfTunnel[];
+extern const u8 LandmarkName_PokemonDayCare[];
+extern const u8 LandmarkName_SafariZoneEntrance[];
+extern const u8 LandmarkName_MtPyre[];
+extern const u8 LandmarkName_ShoalCave[];
+extern const u8 LandmarkName_SeafloorCavern[];
+extern const u8 LandmarkName_GraniteCave[];
+extern const u8 LandmarkName_OceanCurrent[];
+extern const u8 LandmarkName_LanettesHouse[];
+extern const u8 LandmarkName_FieryPath[];
+extern const u8 LandmarkName_JaggedPass[];
+extern const u8 LandmarkName_SkyPillar[];
+extern const u8 LandmarkName_BerryMastersHouse[];
+extern const u8 LandmarkName_IslandCave[];
+extern const u8 LandmarkName_DesertRuins[];
+extern const u8 LandmarkName_ScorchedSlab[];
+extern const u8 LandmarkName_AncientTomb[];
+extern const u8 LandmarkName_SealedChamber[];
+extern const u8 LandmarkName_FossilManiacsHouse[];
+extern const u8 LandmarkName_HuntersHouse[];
 
 // pokemon_summary_screen
 extern const u8 gOtherText_Terminator4[];

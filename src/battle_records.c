@@ -263,9 +263,9 @@ static void PrintLinkBattleRecord(struct LinkBattleRecord *record, u8 y)
         buffer[3] = EXT_CTRL_CODE_BEGIN;
         buffer[4] = 0x11;
         buffer[5] = 1;
-        StringCopy(buffer + 6, gOtherText_SevenDashes);
+        StringCopy(buffer + 6, sText_DashesNoPlayer);
         Menu_PrintText(buffer, 3, y);
-        StringCopy(buffer + 6, gOtherText_FourDashes);
+        StringCopy(buffer + 6, sText_DashesNoScore);
         Menu_PrintText(buffer, 11, y);
         Menu_PrintText(buffer, 17, y);
         Menu_PrintText(buffer, 23, y);

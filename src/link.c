@@ -1309,7 +1309,7 @@ static void CB2_PrintErrorMessage(void)
     switch (gMain.state)
     {
     case 0:
-        Menu_PrintTextPixelCoords(gMultiText_LinkError, 20, 56, 1);
+        Menu_PrintTextPixelCoords(gText_CommErrorCheckConnections, 20, 56, 1);
 #if DEBUG
         StringCopy(array, sColorCodes);
 

@@ -13,10 +13,10 @@ gText_BlenderMaxSpeedRecord:: @ 842C2E6
 gText_234Players:: @ 842C30A
 	.string "2 PLAYERS\n3 PLAYERS\n4 PLAYERS$"
 
-gMultiText_Saving:: @ 842C328
+gText_SavingDontTurnOff2:: @ 842C328
 	.string "SAVING...\nDON'T TURN OFF THE POWER.$"
 
-gMultiText_LinkError:: @ 842C34C
+gText_CommErrorCheckConnections:: @ 842C34C
 	.string "{HIGHLIGHT TRANSPARENT}{COLOR WHITE2}Link error...\nCheck your Game Link cable connection,\nand turn the power off and on.$"
 
 gText_Option:: @ 842C3A6
@@ -188,13 +188,13 @@ sText_IsThisTradeOkay:: @ 842C7B6
 gOtherText_Terminator2:: @ 842C7CA
 	.string "$"
 
-gOtherText_ControlAndMiscText:: @ 842C7CB
+sText_NewLine:: @ 842C7CB
 	.string "\n$"
 	.string "/$"
 	.string "Lv$"
 	.string "---$"
 
-gOtherText_FourQuestions:: @ 842C7D6
+sText_FourQuestionMarks:: @ 842C7D6
 	.string "????$"
 
 @ 842C7DB
@@ -278,10 +278,10 @@ gText_TotalRecordWLD:: @ 842CA04
 gText_WinLoseDraw:: @ 842CA20
 	.string "WIN        LOSE        DRAW$"
 
-gOtherText_SevenDashes:: @ 842CA3C
+sText_DashesNoPlayer:: @ 842CA3C
 	.string "-------$"
 
-gOtherText_FourDashes:: @ 842CA44
+sText_DashesNoScore:: @ 842CA44
 	.string "----$"
 
 gOtherText_BattleTowerResults:: @ 842CA49
@@ -349,9 +349,9 @@ gText_MoveRelearnerBattleMoves::
 	.string "BATTLE$"
 gText_MoveRelearnerContestMovesTitle::
 	.string "CONTEST$"
-OtherText_Type::
+gText_MoveRelearnerType::
 	.string "TYPE/$"
-OtherText_PP::
+gText_MoveRelearnerPP::
 	.string "PP/$"
 gText_MoveRelearnerPower::
 	.string "POWER$"

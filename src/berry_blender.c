@@ -2417,7 +2417,7 @@ static void CB2_CheckPlayAgainLink(void)
         break;
     case 5:
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
-        Menu_PrintText(gMultiText_Saving, 2, 15);
+        Menu_PrintText(gText_SavingDontTurnOff2, 2, 15);
         SetLinkStandbyCallback();
         gBerryBlender->gameEndState++;
         break;
