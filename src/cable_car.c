@@ -89,13 +89,13 @@ static void SpriteCB_Cable(struct Sprite *sprite);
 static void SpriteCB_CableCar(struct Sprite *sprite);
 static void SpriteCB_HikerGoingUp(struct Sprite *sprite);
 static void SpriteCB_HikerGoingDown(struct Sprite *sprite);
-static void SetBgRegs(u8);
+static void SetBgRegs(bool8 active);
 static void CreateCableCarSprites(void);
 static void AnimateGroundGoingUp(void);
 static void AnimateGroundGoingDown(void);
 static void DrawNextGroundSegmentGoingUp(void);
 static void DrawNextGroundSegmentGoingDown(void);
-static void InitGroundTilemapData(u8);
+static void InitGroundTilemapData(bool8 goingDown);
 
 // .rodata
 
@@ -1051,7 +1051,7 @@ static void DrawNextGroundSegmentGoingDown(void)
     }
 }
 
-static void InitGroundTilemapData(u8 goingDown)
+static void InitGroundTilemapData(bool8 goingDown)
 {
     switch (goingDown)
     {
