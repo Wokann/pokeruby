@@ -15,22 +15,22 @@ struct UnkSaveSection
     u32 signature;
 }; // size is 0xFF8
 
-static u8 HandleWriteSector(u16, const struct SaveSectorLocation *);
+static u8 HandleWriteSector(u16 sectorId, const struct SaveSectorLocation *locations);
 static u8 HandleWriteSectorNBytes(u8 sectorId, u8 *data, u16 size);
-static u8 TryWriteSector(u8, u8 *);
+static u8 TryWriteSector(u8 sector, u8 *data);
 static u32 RestoreSaveBackupVarsAndIncrement(const struct SaveSectorLocation *locations);
 static u32 RestoreSaveBackupVars(const struct SaveSectorLocation *locations);
 static u8 HandleWriteIncrementalSector(u16 numSectors, const struct SaveSectorLocation *locations);
 static u8 HandleReplaceSectorAndVerify(u16 sectorId, const struct SaveSectorLocation *locations);
-static u8 HandleReplaceSector(u16, const struct SaveSectorLocation *locations);
+static u8 HandleReplaceSector(u16 sectorId, const struct SaveSectorLocation *locations);
 static u8 CopySectorSignatureByte(u16 sectorId, const struct SaveSectorLocation *locations);
 static u8 WriteSectorSignatureByte(u16 sectorId, const struct SaveSectorLocation *locations);
 static u8 TryLoadSaveSlot(u16 sectorId, const struct SaveSectorLocation *locations);
-static u8 CopySaveSlotData(u16, const struct SaveSectorLocation *locations);
+static u8 CopySaveSlotData(u16 sectorId, const struct SaveSectorLocation *locations);
 static u8 GetSaveValidStatus(const struct SaveSectorLocation *locations);
 static u8 TryLoadSaveSector(u8 sectorId, u8 *data, u16 size);
-static u8 ReadFlashSector(u8, struct SaveSector *);
-static u16 CalculateChecksum(void *, u16);
+static bool8 ReadFlashSector(u8 sectorId, struct SaveSector *sector);
+static u16 CalculateChecksum(void *data, u16 size);
 bool8 unref_sub_8125F4C(struct UnkSaveSection *a1);
 u8 unref_sub_8125FA0(void);
 u8 unref_sub_8125FF0(u8 *data, u16 size);
@@ -619,7 +619,7 @@ static u8 TryLoadSaveSector(u8 sectorId, u8 *data, u16 size)
     }
 }
 
-static u8 ReadFlashSector(u8 sectorId, struct SaveSector *sector)
+static bool8 ReadFlashSector(u8 sectorId, struct SaveSector *sector)
 {
     ReadFlash(sectorId, 0, sector->data, sizeof(struct SaveSector));
     return 1;
@@ -732,7 +732,7 @@ u8 TrySavingData(u8 saveType) // TrySave
     return SAVE_STATUS_ERROR;
 }
 
-u8 LinkFullSave_Init(void) // trade.s save
+bool8 LinkFullSave_Init(void) // trade.s save
 {
     if (gFlashMemoryPresent != TRUE)
         return 1;
@@ -752,7 +752,7 @@ bool8 LinkFullSave_WriteSector(void) // trade.s save
         return 0;
 }
 
-u8 LinkFullSave_ReplaceLastSector(void) // trade.s save
+bool8 LinkFullSave_ReplaceLastSector(void) // trade.s save
 {
     HandleReplaceSectorAndVerify(ARRAY_COUNT(sSaveBlockChunks), sSaveBlockChunks);
     if (gDamagedSaveSectors)
@@ -760,7 +760,7 @@ u8 LinkFullSave_ReplaceLastSector(void) // trade.s save
     return 0;
 }
 
-u8 LinkFullSave_SetLastSectorSignature(void) // trade.s save
+bool8 LinkFullSave_SetLastSectorSignature(void) // trade.s save
 {
     CopySectorSignatureByte(ARRAY_COUNT(sSaveBlockChunks), sSaveBlockChunks);
     if (gDamagedSaveSectors)
@@ -768,7 +768,7 @@ u8 LinkFullSave_SetLastSectorSignature(void) // trade.s save
     return 0;
 }
 
-u8 WriteSaveBlock2(void)
+bool8 WriteSaveBlock2(void)
 {
     if (gFlashMemoryPresent != TRUE)
         return 1;
