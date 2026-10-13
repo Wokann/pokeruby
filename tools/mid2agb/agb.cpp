@@ -158,6 +158,8 @@ void PrintAgbHeader()
         "voicegroup_vs_rival",
         "voicegroup_vs_elite_four",
         "voicegroup_vs_aqua_magma_leader",
+        "voicegroup_rs_sfx_1",
+        "voicegroup_rs_sfx_2",
     };
 
     if (g_voiceGroup >= 0 && g_voiceGroup < static_cast<int>(sizeof(sVoiceGroupNames) / sizeof(sVoiceGroupNames[0]))
