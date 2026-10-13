@@ -1,6 +1,6 @@
 #include "global.h"
+#include "crt0.h"
 #include "gba/flash_internal.h"
-#include "gba/m4a_internal.h"
 #include "main.h"
 #include "battle_controllers.h"
 #include "intro.h"
@@ -14,9 +14,6 @@
 #include "siirtc.h"
 #include "sound.h"
 #include "scanline_effect.h"
-
-extern struct SoundInfo gSoundInfo;
-extern u32 IntrMain[];
 
 static void VBlankIntr(void);
 static void HBlankIntr(void);

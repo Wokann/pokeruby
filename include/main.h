@@ -45,9 +45,12 @@ struct Main
 
 extern bool8 gLinkTransferringData;
 extern struct Main gMain;
+extern u16 gKeyRepeatContinueDelay;
 extern bool8 gSoftResetDisabled;
+extern IntrFunc gIntrTable[];
 
 extern bool8 gLinkVSyncDisabled;
+extern u32 IntrMain_Buffer[];
 extern const u8 gGameVersion;
 extern const u8 gGameLanguage;
 
