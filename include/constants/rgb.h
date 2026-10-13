@@ -13,6 +13,8 @@
 #define RGB_ALPHA       (1 << 15)
 #define IS_ALPHA(color) ((color) & RGB_ALPHA)
 
+#define RGB_WHITEALPHA (RGB(31, 31, 31) | 0x8000)
+
 #define RGB2(r, g, b) (((b) << 10) | ((g) << 5) | (r))
 #define _RGB(r, g, b) ((((b) & 31) << 10) + (((g) & 31) << 5) + ((r) & 31))
 

@@ -247,7 +247,7 @@ bool8 DoWallpaperGfxChange(void)
     switch (gPokemonStorageSystemPtr->wallpaperChangeState)
     {
         case 0:
-            BeginNormalPaletteFade(gPokemonStorageSystemPtr->wallpaperPalBits, 1, 0, 16, FADE_COLOR_WHITE);
+            BeginNormalPaletteFade(gPokemonStorageSystemPtr->wallpaperPalBits, 1, 0, 16, RGB_WHITEALPHA);
             gPokemonStorageSystemPtr->wallpaperChangeState++;
             break;
         case 1:
@@ -256,7 +256,7 @@ bool8 DoWallpaperGfxChange(void)
                 u8 curBox = StorageGetCurrentBox();
                 LoadWallpaperGfx(curBox, 0);
                 CycleBoxTitleColor();
-                BeginNormalPaletteFade(gPokemonStorageSystemPtr->wallpaperPalBits, 1, 16, 0, FADE_COLOR_WHITE);
+                BeginNormalPaletteFade(gPokemonStorageSystemPtr->wallpaperPalBits, 1, 16, 0, RGB_WHITEALPHA);
                 gPokemonStorageSystemPtr->wallpaperChangeState++;
             }
             break;

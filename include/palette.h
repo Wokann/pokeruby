@@ -6,8 +6,6 @@
 #define gPaletteFade_delay            (gPaletteFade.multipurpose2) // normal and hardware fade
 #define gPaletteFade_submode          (gPaletteFade.multipurpose2) // fast fade
 
-#define FADE_COLOR_WHITE (RGB(31, 31, 31) | 0x8000)
-
 #define PALETTES_BG      0x0000FFFF
 #define PALETTES_OBJECTS 0xFFFF0000
 #define PALETTES_ALL     (PALETTES_BG | PALETTES_OBJECTS)

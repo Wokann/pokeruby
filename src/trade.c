@@ -3746,15 +3746,15 @@ static bool8 DoTradeAnim(void)
             }
             break;
         case 34:
-            BlendPalettes(0x1, 16, FADE_COLOR_WHITE);
+            BlendPalettes(0x1, 16, RGB_WHITEALPHA);
             gTradeAnim->state ++;
             break;
         case 35:
-            BlendPalettes(0x1,  0, FADE_COLOR_WHITE);
+            BlendPalettes(0x1,  0, RGB_WHITEALPHA);
             gTradeAnim->state ++;
             break;
         case 36:
-            BlendPalettes(0x1, 16, FADE_COLOR_WHITE);
+            BlendPalettes(0x1, 16, RGB_WHITEALPHA);
             gTradeAnim->state ++;
             break;
         case 37:
@@ -3792,7 +3792,7 @@ static bool8 DoTradeAnim(void)
                 gTradeAnim->state ++;
                 gSprites[gTradeAnim->monSpriteIds[0]].invisible = TRUE;
                 gSprites[gTradeAnim->monSpriteIds[1]].invisible = TRUE;
-                BlendPalettes(0x1, 0, FADE_COLOR_WHITE);
+                BlendPalettes(0x1, 0, RGB_WHITEALPHA);
             }
             break;
         case 39:
@@ -3924,12 +3924,12 @@ static bool8 DoTradeAnim(void)
             gSprites[gTradeAnim->bouncingPokeballSpriteId].callback = SpriteCB_BouncingPokeballArrive;
             StartSpriteAnim(&gSprites[gTradeAnim->bouncingPokeballSpriteId], 1);
             StartSpriteAffineAnim(&gSprites[gTradeAnim->bouncingPokeballSpriteId], 2);
-            BlendPalettes(1 << (16 + gSprites[gTradeAnim->bouncingPokeballSpriteId].oam.paletteNum), 16, FADE_COLOR_WHITE);
+            BlendPalettes(1 << (16 + gSprites[gTradeAnim->bouncingPokeballSpriteId].oam.paletteNum), 16, RGB_WHITEALPHA);
             gTradeAnim->state ++;
             gTradeAnim->timer = 0;
             break;
         case 64:
-            BeginNormalPaletteFade(1 << (16 + gSprites[gTradeAnim->bouncingPokeballSpriteId].oam.paletteNum), 1, 16, 0, FADE_COLOR_WHITE);
+            BeginNormalPaletteFade(1 << (16 + gSprites[gTradeAnim->bouncingPokeballSpriteId].oam.paletteNum), 1, 16, 0, RGB_WHITEALPHA);
             gTradeAnim->state ++;
             break;
         case 65:
@@ -4098,7 +4098,7 @@ static void SpriteCB_BouncingPokeballDepart(struct Sprite *sprite)
         PlaySE(SE_M_MEGA_KICK);
         sprite->callback = SpriteCB_BouncingPokeballDepartEnd;
         sprite->data[0] = 0;
-        BeginNormalPaletteFade(1 << (16 + sprite->oam.paletteNum), -1, 0, 16, FADE_COLOR_WHITE);
+        BeginNormalPaletteFade(1 << (16 + sprite->oam.paletteNum), -1, 0, 16, RGB_WHITEALPHA);
     }
 }
 

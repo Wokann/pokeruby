@@ -723,7 +723,7 @@ static void Task_CreditsTheEnd6(u8 taskId)
         if (gTasks[taskId].data[TDA_0] == 0)
         {
             FadeOutBGM(4);
-            BeginNormalPaletteFade(0xFFFFFFFF, 8, 0, 16, FADE_COLOR_WHITE);
+            BeginNormalPaletteFade(0xFFFFFFFF, 8, 0, 16, RGB_WHITEALPHA);
             gTasks[taskId].func = Task_CreditsSoftReset;
             return;
         }
@@ -731,7 +731,7 @@ static void Task_CreditsTheEnd6(u8 taskId)
         if (gMain.newKeys)
         {
             FadeOutBGM(4);
-            BeginNormalPaletteFade(0xFFFFFFFF, 8, 0, 16, FADE_COLOR_WHITE);
+            BeginNormalPaletteFade(0xFFFFFFFF, 8, 0, 16, RGB_WHITEALPHA);
             gTasks[taskId].func = Task_CreditsSoftReset;
             return;
         }

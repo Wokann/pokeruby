@@ -218,7 +218,7 @@ u32 InitMainMenu(bool8 returningFromOptionsMenu)
     if (returningFromOptionsMenu)
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
     else
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, FADE_COLOR_WHITE);
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_WHITEALPHA);
 
     REG_WIN0H = 0;
     REG_WIN0V = 0;
@@ -438,7 +438,7 @@ bool8 MainMenuProcessKeyInput(u8 taskId)
     else if (JOY_NEW(B_BUTTON))
     {
         PlaySE(SE_SELECT);
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, FADE_COLOR_WHITE);
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_WHITEALPHA);
         REG_WIN0H = WIN_RANGE(0, 240);
         REG_WIN0V = WIN_RANGE(0, 160);
         gTasks[taskId].func = Task_MainMenuPressedB;
@@ -1293,7 +1293,7 @@ static void Task_NewGameSpeech32(u8 taskId)
         u8 spriteId = gTasks[taskId].tPlayerSpriteId;
         gSprites[spriteId].callback = SpriteCB_Null;
         REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON;
-        BeginNormalPaletteFade(0xFFFF0000, 0, 0, 16, FADE_COLOR_WHITE);
+        BeginNormalPaletteFade(0xFFFF0000, 0, 0, 16, RGB_WHITEALPHA);
         gTasks[taskId].func = Task_NewGameSpeech33;
     }
 }

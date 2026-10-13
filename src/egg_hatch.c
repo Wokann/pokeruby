@@ -666,7 +666,7 @@ static void SpriteCB_Egg_Hatch(struct Sprite* sprite)
 {
     s16 i;
     if (sprite->data[0] == 0)
-        BeginNormalPaletteFade(0xFFFFFFFF, -1, 0, 16, FADE_COLOR_WHITE);
+        BeginNormalPaletteFade(0xFFFFFFFF, -1, 0, 16, RGB_WHITEALPHA);
     if (sprite->data[0] < 4u)
     {
         for (i = 0; i <= 3; i++)
@@ -690,7 +690,7 @@ static void SpriteCB_Egg_Reveal(struct Sprite* sprite)
         StartSpriteAffineAnim(&gSprites[gEggHatchData->monSpriteId], 1);
     }
     if (sprite->data[0] == 8)
-        BeginNormalPaletteFade(0xFFFFFFFF, -1, 16, 0, FADE_COLOR_WHITE);
+        BeginNormalPaletteFade(0xFFFFFFFF, -1, 16, 0, RGB_WHITEALPHA);
     if (sprite->data[0] <= 9)
         gSprites[gEggHatchData->monSpriteId].y -= 1;
     if (sprite->data[0] > 40)

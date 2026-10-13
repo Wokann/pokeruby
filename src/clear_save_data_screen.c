@@ -137,7 +137,7 @@ static u8 SetupClearSaveDataScreen(void)
 
         Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
         InitMenuWindow(&gMenuTextWindowTemplate);
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, FADE_COLOR_WHITE);
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_WHITEALPHA);
 
         ime = REG_IME;
         REG_IME = 0;
@@ -166,7 +166,7 @@ static void CB2_FadeAndDoReset(void)
     {
     case 0:
     default:
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, FADE_COLOR_WHITE);
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_WHITEALPHA);
         gMain.state = 1;
         break;
     case 1:

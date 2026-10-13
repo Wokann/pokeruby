@@ -84,7 +84,7 @@ bool8 sub_80C5DCC(void)
 {
     if (gUnknown_020387EC->unk08 == 0)
     {
-        BlendPalettes(gUnknown_020387EC->selectedPalettes, 16, FADE_COLOR_WHITE);
+        BlendPalettes(gUnknown_020387EC->selectedPalettes, 16, RGB_WHITEALPHA);
         HBlankIntrOn(sub_80C603C);
         gUnknown_020387EC->unk08++;
     }
@@ -180,7 +180,7 @@ bool8 sub_80C5F98(void)
             gUnknown_020387EC->unk0C -= gUnknown_020387EC->unk06;
             if (gUnknown_020387EC->unk0C < 2)
             {
-                BlendPalettes(gUnknown_020387EC->selectedPalettes, 16, FADE_COLOR_WHITE);
+                BlendPalettes(gUnknown_020387EC->selectedPalettes, 16, RGB_WHITEALPHA);
                 SetHBlankCallback(sub_80C603C);
                 gUnknown_020387EC->unk0C = 1;
                 gUnknown_020387EC->unk08++;
@@ -236,7 +236,7 @@ static void sub_80C60CC(struct Sprite *sprite)
         {
             FreeSpriteTilesByTag(gUnknown_020387EC->tileTag);
             FreeSpritePaletteByTag(gUnknown_020387EC->paletteTag);
-            BlendPalettes(gUnknown_020387EC->selectedPalettes, 0, FADE_COLOR_WHITE);
+            BlendPalettes(gUnknown_020387EC->selectedPalettes, 0, RGB_WHITEALPHA);
             SetHBlankCallback(sub_80C6078);
         }
     }

@@ -871,7 +871,7 @@ static u8 SetUpCopyrightScreen(void)
         ResetTasks();
         ResetSpriteData();
         FreeAllSpritePalettes();
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, FADE_COLOR_WHITE);
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_WHITEALPHA);
         REG_BG0CNT = BGCNT_PRIORITY(0)
                    | BGCNT_CHARBASE(0)
                    | BGCNT_SCREENBASE(7)
@@ -1048,7 +1048,7 @@ static void Task_Scene1_PanUp(u8 taskId)
         //fade to white
         if (gIntroFrameCounter > 1007)
         {
-            BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, FADE_COLOR_WHITE);
+            BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_WHITEALPHA);
             gTasks[taskId].func = Task_Scene1_End;
         }
     }
@@ -1105,7 +1105,7 @@ static void Task_Scene2_CreateSprites(u8 taskId)
 #endif
     gSprites[spriteId].callback = sub_813D880;
     gTasks[taskId].data[2] = spriteId;
-    BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, FADE_COLOR_WHITE);
+    BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_WHITEALPHA);
     SetVBlankCallback(VBlankCB_Intro);
 #ifdef SAPPHIRE
     gTasks[taskId].data[0] = CreateBicycleBgAnimationTask(0, 0x4000, 0x40, 0x10);
@@ -1124,7 +1124,7 @@ static void Task_Scene2_BikeRide(u8 taskId)
 
     if (gIntroFrameCounter > 1823)
     {
-        BeginNormalPaletteFade(0xFFFFFFFF, 16, 0, 16, FADE_COLOR_WHITE);
+        BeginNormalPaletteFade(0xFFFFFFFF, 16, 0, 16, RGB_WHITEALPHA);
         gTasks[taskId].func = Task_Scene2_End;
     }
     if (gIntroFrameCounter == 1109)
@@ -1175,7 +1175,7 @@ static void Task_Scene3_Load(u8 taskId)
     PanFadeAndZoomScreen(0x78, 0x50, 0, 0);
     ResetSpriteData();
     FreeAllSpritePalettes();
-    BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, FADE_COLOR_WHITE);
+    BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_WHITEALPHA);
     REG_BG2CNT = BGCNT_PRIORITY(3) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(8) | BGCNT_256COLOR | BGCNT_AFF256x256;
     REG_DISPCNT = DISPCNT_MODE_1 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG2_ON | DISPCNT_OBJ_ON;
     gTasks[taskId].func = Task_Scene3_SpinPokeball;
@@ -1197,7 +1197,7 @@ static void Task_Scene3_SpinPokeball(u8 taskId)
     }
     PanFadeAndZoomScreen(0x78, 0x50, 0x10000 / gTasks[taskId].data[1], gTasks[taskId].data[0]);
     if (gIntroFrameCounter == 44)
-        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, FADE_COLOR_WHITE);
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_WHITEALPHA);
 }
 
 static void Task_IntroWaitToSetupPart3DoubleFight(u8 taskId)
@@ -1400,7 +1400,7 @@ static void Task_IntroPokemonBattle(u8 taskId)
     if (gIntroFrameCounter == 800)
         PlaySE(SE_INTRO_BLAST);
     if (gIntroFrameCounter == 850)
-        BeginNormalPaletteFade(0xFFFFFFFF, 4, 0, 16, FADE_COLOR_WHITE);
+        BeginNormalPaletteFade(0xFFFFFFFF, 4, 0, 16, RGB_WHITEALPHA);
     if (gIntroFrameCounter == 946)
         gTasks[taskId].func = Task_EndIntroMovie;
 }
@@ -1425,7 +1425,7 @@ static void task_intro_20(u8 taskId)
         gTasks[taskId].data[0] = 0xFF;
         break;
     case 2:
-        BeginNormalPaletteFade(0x1, 0, 16, 0, FADE_COLOR_WHITE);
+        BeginNormalPaletteFade(0x1, 0, 16, 0, RGB_WHITEALPHA);
         REG_BG2CNT = BG2_FLAGS;
         REG_DISPCNT = DISPCNT_FLAGS;
         gTasks[taskId].data[1] = 0;
@@ -1439,7 +1439,7 @@ static void task_intro_20(u8 taskId)
         gTasks[taskId].data[2] -= 8;
         break;
     case 3:
-        BeginNormalPaletteFade(0x1, 0, 16, 0, FADE_COLOR_WHITE);
+        BeginNormalPaletteFade(0x1, 0, 16, 0, RGB_WHITEALPHA);
         REG_BG2CNT = BG2_FLAGS;
         REG_DISPCNT = DISPCNT_FLAGS;
         gTasks[taskId].data[1] = 0;
