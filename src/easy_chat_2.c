@@ -1146,13 +1146,13 @@ void sub_80E9368(u8 a)
         titleText = gText_Profile;
         break;
     case 1:
-        titleText = gOtherText_AtBattleStart;
+        titleText = gText_AtTheBattlesStart;
         break;
     case 2:
-        titleText = gOtherText_UponWinningBattle;
+        titleText = gText_UponWinningABattle;
         break;
     case 3:
-        titleText = gOtherText_UponLosingBattle;
+        titleText = gText_UponLosingABattle;
         break;
     case 6:
         titleText = gText_TheBardsSong;

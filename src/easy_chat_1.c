@@ -71,12 +71,12 @@ struct EasyChatPrompt
 const struct EasyChatPrompt gUnknown_083DB6F4[] =
 {
     {OtherText_MakeProfilePage1, OtherText_MakeProfilePage2, TRUE},
-    {OtherText_MakeMessagePage1, OtherText_MakeMessagePage2, TRUE},
-    {OtherText_CombineNinePhrasesPage1, OtherText_CombineNinePhrasesPage2, TRUE},
+    {gText_CombineSixWordsOrPhrases, OtherText_MakeMessagePage2, TRUE},
+    {gText_CombineNineWordsOrPhrases, gText_AndMakeAMessage2, TRUE},
     {gText_FindWordsThatDescribeYour, gText_FeelingsRightNow, TRUE},
     {gText_ChangeJustOneWordOrPhrase, gText_AndImproveTheBardsSong, TRUE},
-    {OtherText_CombineTwoPhrasesPage1, OtherText_CombineTwoPhrasesPage2, TRUE},
-    {OtherText_YourProfile, gText_IsAsShownOkay, FALSE},
+    {gText_CombineTwoWordsOrPhrases, gText_AndMakeATrendySaying, TRUE},
+    {gText_YourProfile, gText_IsAsShownOkay, FALSE},
     {gText_YourFeelingAtTheBattlesStart, gText_IsAsShownOkay, TRUE},
     {gText_WhatYouSayIfYouWin, gText_IsAsShownOkay, TRUE},
     {gText_WhatYouSayIfYouLose, gText_IsAsShownOkay, TRUE},
@@ -85,8 +85,8 @@ const struct EasyChatPrompt gUnknown_083DB6F4[] =
     {gText_TheBardsSong2, gText_IsAsShownOkay, FALSE},
     {gText_TheAnswer, gText_IsAsShownOkay, FALSE},
     {gText_TheTrendySaying, gText_IsAsShownOkay, TRUE},
-    {OtherText_HipsterPage1, OtherText_HipsterPage2, TRUE},
-    {gText_WithFourPhrases, OtherText_CombineNinePhrasesPage2, TRUE},
+    {gText_CombineTwoWordsOrPhrases2, OtherText_HipsterPage2, TRUE},
+    {gText_WithFourPhrases, gText_AndMakeAMessage2, TRUE},
 };
 
 const u8 gUnknown_083DB7C0[][2] =

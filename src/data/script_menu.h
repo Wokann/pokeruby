@@ -99,9 +99,9 @@ static const struct MenuAction MultichoiceList_BattleMode[] =
 
 static const struct MenuAction MultichoiceList_19[] =
 {
-    {OtherText_Littleroot, NULL},
+    {gText_Littleroot, NULL},
     {gText_Slateport, NULL},
-    {gText_LilycoveCity, NULL},
+    {gText_Lilycove, NULL},
 };
 
 static const struct MenuAction MultichoiceList_YesNoInfo2[] =
@@ -190,8 +190,8 @@ static const struct MenuAction MultichoiceList_Mechadoll3_Q3[] =
 
 static const struct MenuAction MultichoiceList_Mechadoll4_Q1[] =
 {
-    {OtherText_MaleSymbol, NULL},
-    {OtherText_FemaleSymbol, NULL},
+    {gTrickHouse_Mechadoll_Male, NULL},
+    {gTrickHouse_Mechadoll_Female, NULL},
     {gTrickHouse_Mechadoll_Neither, NULL},
 };
 
@@ -312,7 +312,7 @@ static const struct MenuAction MultichoiceList_HowsFishing[] =
 
 static const struct MenuAction MultichoiceList_52[] =
 {
-    {gText_LilycoveCity, NULL},
+    {gText_Lilycove, NULL},
     {OtherText_BattleTower, NULL},
     {gText_Cancel2, NULL},
 };
@@ -320,7 +320,7 @@ static const struct MenuAction MultichoiceList_52[] =
 static const struct MenuAction MultichoiceList_53[] =
 {
     {gText_Slateport, NULL},
-    {gText_LilycoveCity, NULL},
+    {gText_Lilycove, NULL},
     {gText_Cancel2, NULL},
 };
 

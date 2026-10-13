@@ -272,7 +272,7 @@ void Task_MainMenuCheckSave(u8 taskId)
         break;
     case 2:
         Menu_DrawStdWindowFrame(2, 14, 27, 19);
-        MenuPrintMessage(gSaveFileDeletedMessage, 3, 15);
+        MenuPrintMessage(gText_SaveFileErased, 3, 15);
         REG_WIN0H = WIN_RANGE(17, 223);
         REG_WIN0V = WIN_RANGE(113, 159);
         gTasks[taskId].tMenuType = HAS_NO_SAVED_GAME;
@@ -280,7 +280,7 @@ void Task_MainMenuCheckSave(u8 taskId)
         break;
     case SAVE_STATUS_ERROR:
         Menu_DrawStdWindowFrame(2, 14, 27, 19);
-        MenuPrintMessage(gSaveFileCorruptMessage, 3, 15);
+        MenuPrintMessage(gText_SaveFileCorrupted, 3, 15);
         REG_WIN0H = WIN_RANGE(17, 223);
         REG_WIN0V = WIN_RANGE(113, 159);
         gTasks[taskId].tMenuType = HAS_SAVED_GAME;
