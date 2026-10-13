@@ -169,7 +169,7 @@ u8 MoriDebugMenu_PokeblockCase(void)
     s32 loopCounter;
 
     for (loopCounter = 0; loopCounter <= 39; loopCounter++)
-        PokeblockClearIfExists(loopCounter);
+        TryClearPokeblock(loopCounter);
 
     CloseMenu();
     return 1;

@@ -47,7 +47,7 @@ void sub_810BA7C(u8 caseId);
 void OpenPokeblockCaseInBattle(void);
 void ClearPokeblocks(void);
 s8 GetFirstFreePokeblockSlot(void);
-bool8 PokeblockClearIfExists(u8 pokeblockIdx);
+bool8 TryClearPokeblock(u8 pokeblockIdx);
 s16 PokeblockGetGain(u8 nature, const struct Pokeblock *pokeblock);
 bool8 CopyMonFavoritePokeblockName(u8 nature, u8 *dest);
 void PokeblockCopyName(struct Pokeblock *pokeblock, u8 *dest);

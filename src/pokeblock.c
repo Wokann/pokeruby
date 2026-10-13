@@ -908,7 +908,7 @@ static void sub_810C5EC(u8 taskId)
 static void sub_810C610(u8 taskId)
 {
     Menu_EraseWindowRect(7, 6, 13, 11);
-    PokeblockClearIfExists((gUnknown_02039248.selectedRow + gUnknown_02039248.scrollOffset));
+    TryClearPokeblock((gUnknown_02039248.selectedRow + gUnknown_02039248.scrollOffset));
     StringExpandPlaceholders(gStringVar4, gText_Var1ThrownAway);
     DisplayItemMessageOnField(taskId, gStringVar4, sub_810C704, 0);
     CompactPokeblockSlots();
@@ -958,7 +958,7 @@ static void sub_810C788(u8 taskId)
 {
     s16 gain = PokeblockGetGain(GetNature(&gEnemyParty[0]), &gSaveBlock1.pokeblocks[gSpecialVar_ItemId]);
     StringCopy(gBattleTextBuff1, gPokeblockNames[gSaveBlock1.pokeblocks[gSpecialVar_ItemId].color]);
-    PokeblockClearIfExists(gSpecialVar_ItemId);
+    TryClearPokeblock(gSpecialVar_ItemId);
     gSpecialVar_ItemId = gSaveBlock1.pokeblocks[gSpecialVar_ItemId].color << 8;
     if (gain == 0)
     {
@@ -981,7 +981,7 @@ static void sub_810C854(u8 taskId)
     SafariZoneActivatePokeblockFeeder(gSpecialVar_ItemId);
     StringCopy(gStringVar1, gPokeblockNames[gSaveBlock1.pokeblocks[gSpecialVar_ItemId].color]);
     gSpecialVar_Result = gSpecialVar_ItemId;
-    PokeblockClearIfExists(gSpecialVar_ItemId);
+    TryClearPokeblock(gSpecialVar_ItemId);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
     gTasks[taskId].func = sub_810C2C8;
 }
@@ -1082,7 +1082,7 @@ bool8 GivePokeblock(const struct Pokeblock *pokeblock)
     return TRUE;
 }
 
-bool8 PokeblockClearIfExists(u8 pokeblockIdx)
+bool8 TryClearPokeblock(u8 pokeblockIdx)
 {
     if (gSaveBlock1.pokeblocks[pokeblockIdx].color == 0)
     {
