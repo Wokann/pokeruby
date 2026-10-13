@@ -33,8 +33,8 @@ voicegroup_route101_drumset:: @ 8433BAC
 	voice_programmable_wave_alt 60, 0, ProgrammableWaveData_7, 0, 7, 15, 1
 	voice_square_1_alt 60, 0, 0, 0, 0, 1, 7, 0
 	voice_programmable_wave_alt 60, 0, ProgrammableWaveData_7, 0, 7, 15, 0
-	voice_programmable_wave_alt 60, 0, ProgrammableWaveData_84553FC, 0, 7, 15, 0
-	voice_programmable_wave_alt 60, 0, ProgrammableWaveData_84553FC, 0, 7, 15, 1
+	voice_programmable_wave_alt 60, 0, ProgrammableWaveData_5, 0, 7, 15, 0
+	voice_programmable_wave_alt 60, 0, ProgrammableWaveData_5, 0, 7, 15, 1
 	voice_square_1_alt 60, 0, 0, 0, 0, 0, 7, 0
 	voice_directsound_no_resample 60, 192, DirectSoundWaveData_sc88pro_rnd_kick, 255, 0, 255, 242
 	voice_square_1 60, 0, 0, 2, 0, 0, 15, 0

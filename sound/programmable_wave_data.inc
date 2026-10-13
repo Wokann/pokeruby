@@ -10,8 +10,8 @@ ProgrammableWaveData_3:: @ 84553DC
 ProgrammableWaveData_84553EC:: @ 84553EC
 	.incbin "sound/programmable_wave_samples/84553EC.pcm"
 
-ProgrammableWaveData_84553FC:: @ 84553FC
-	.incbin "sound/programmable_wave_samples/84553FC.pcm"
+ProgrammableWaveData_5:: @ 84553FC
+	.incbin "sound/programmable_wave_samples/05.pcm"
 
 ProgrammableWaveData_6:: @ 845540C
 	.incbin "sound/programmable_wave_samples/06.pcm"
