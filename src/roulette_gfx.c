@@ -69,39 +69,39 @@ extern u8 unk_2039560;
 #endif //DEBUG
 
 #ifdef ENGLISH
-ALIGNED(4) const u16 RouletteSpritePalette_01[] = INCBIN_U16("graphics/roulette/shadow.gbapal");
-const u16 RouletteSpritePalette_02[] = INCBIN_U16("graphics/roulette/ball.gbapal");
-const u16 RouletteSpritePalette_03[] = INCBIN_U16("graphics/roulette/ball_counter.gbapal");
-const u16 RouletteSpritePalette_04[] = INCBIN_U16("graphics/roulette/cursor.gbapal");
-const u16 RouletteSpritePalette_05[] = INCBIN_U16("graphics/roulette/credit.gbapal");
-const u16 RouletteSpritePalette_06[] = INCBIN_U16("graphics/roulette/shroomish.gbapal");
-const u16 RouletteSpritePalette_07[] = INCBIN_U16("graphics/roulette/tailow.gbapal");
-const u16 RouletteSpritePalette_08[] = INCBIN_U16("graphics/roulette/grid_icons.gbapal");
-const u16 RouletteSpritePalette_09[] = INCBIN_U16("graphics/roulette/wynaut.gbapal");
-const u16 RouletteSpritePalette_10[] = INCBIN_U16("graphics/roulette/azurill.gbapal");
-const u16 RouletteSpritePalette_11[] = INCBIN_U16("graphics/roulette/skitty.gbapal");
-const u16 RouletteSpritePalette_12[] = INCBIN_U16("graphics/roulette/makuhita.gbapal");
-const u16 RouletteSpritePalette_13[] = INCBIN_U16("graphics/roulette/unused_1.gbapal");
-const u16 RouletteSpritePalette_14[] = INCBIN_U16("graphics/roulette/unused_2.gbapal");
-const u16 RouletteSpritePalette_15[] = INCBIN_U16("graphics/roulette/unused_3.gbapal");
-const u16 RouletteSpritePalette_16[] = INCBIN_U16("graphics/roulette/unused_4.gbapal");
+ALIGNED(4) const u16 gShadow_Pal[] = INCBIN_U16("graphics/roulette/shadow.gbapal");
+const u16 gBall_Pal[] = INCBIN_U16("graphics/roulette/ball.gbapal");
+const u16 gBallCounter_Pal[] = INCBIN_U16("graphics/roulette/ball_counter.gbapal");
+const u16 gCursor_Pal[] = INCBIN_U16("graphics/roulette/cursor.gbapal");
+const u16 gCredit_Pal[] = INCBIN_U16("graphics/roulette/credit.gbapal");
+const u16 gShroomish_Pal[] = INCBIN_U16("graphics/roulette/shroomish.gbapal");
+const u16 gTaillow_Pal[] = INCBIN_U16("graphics/roulette/tailow.gbapal");
+const u16 gGridIcons_Pal[] = INCBIN_U16("graphics/roulette/grid_icons.gbapal");
+const u16 gWynaut_Pal[] = INCBIN_U16("graphics/roulette/wynaut.gbapal");
+const u16 gAzurill_Pal[] = INCBIN_U16("graphics/roulette/azurill.gbapal");
+const u16 gSkitty_Pal[] = INCBIN_U16("graphics/roulette/skitty.gbapal");
+const u16 gMakuhita_Pal[] = INCBIN_U16("graphics/roulette/makuhita.gbapal");
+const u16 gUnused1_Pal[] = INCBIN_U16("graphics/roulette/unused_1.gbapal");
+const u16 gUnused2_Pal[] = INCBIN_U16("graphics/roulette/unused_2.gbapal");
+const u16 gUnused3_Pal[] = INCBIN_U16("graphics/roulette/unused_3.gbapal");
+const u16 gUnused4_Pal[] = INCBIN_U16("graphics/roulette/unused_4.gbapal");
 #else
-extern const u16 RouletteSpritePalette_01[];
-extern const u16 RouletteSpritePalette_02[];
-extern const u16 RouletteSpritePalette_03[];
-extern const u16 RouletteSpritePalette_04[];
-extern const u16 RouletteSpritePalette_05[];
-extern const u16 RouletteSpritePalette_06[];
-extern const u16 RouletteSpritePalette_07[];
-extern const u16 RouletteSpritePalette_08[];
-extern const u16 RouletteSpritePalette_09[];
-extern const u16 RouletteSpritePalette_10[];
-extern const u16 RouletteSpritePalette_11[];
-extern const u16 RouletteSpritePalette_12[];
-extern const u16 RouletteSpritePalette_13[];
-extern const u16 RouletteSpritePalette_14[];
-extern const u16 RouletteSpritePalette_15[];
-extern const u16 RouletteSpritePalette_16[];
+extern const u16 gShadow_Pal[];
+extern const u16 gBall_Pal[];
+extern const u16 gBallCounter_Pal[];
+extern const u16 gCursor_Pal[];
+extern const u16 gCredit_Pal[];
+extern const u16 gShroomish_Pal[];
+extern const u16 gTaillow_Pal[];
+extern const u16 gGridIcons_Pal[];
+extern const u16 gWynaut_Pal[];
+extern const u16 gAzurill_Pal[];
+extern const u16 gSkitty_Pal[];
+extern const u16 gMakuhita_Pal[];
+extern const u16 gUnused1_Pal[];
+extern const u16 gUnused2_Pal[];
+extern const u16 gUnused3_Pal[];
+extern const u16 gUnused4_Pal[];
 #endif //ENGLISH
 
 static const u8 sBall_Gfx[] = INCBIN_U8("graphics/roulette/ball.4bpp.lz");
@@ -113,22 +113,22 @@ static const u8 sShadow_Gfx[] = INCBIN_U8("graphics/roulette/shadow.4bpp.lz");
 static const u8 sCursor_Gfx[] = INCBIN_U8("graphics/roulette/cursor.4bpp.lz");
 
 static const struct SpritePalette sSpritePalettes[] = {
-    {RouletteSpritePalette_01, 1 },
-    {RouletteSpritePalette_02, 2 },
-    {RouletteSpritePalette_03, 3 },
-    {RouletteSpritePalette_04, 4 },
-    {RouletteSpritePalette_05, 5 },
-    {RouletteSpritePalette_06, 6 },
-    {RouletteSpritePalette_07, 7 },
-    {RouletteSpritePalette_08, 8 },
-    {RouletteSpritePalette_09, 9 },
-    {RouletteSpritePalette_10, 10},
-    {RouletteSpritePalette_11, 11},
-    {RouletteSpritePalette_12, 12},
-    {RouletteSpritePalette_13, 13},
-    {RouletteSpritePalette_14, 14},
-    {RouletteSpritePalette_15, 15},
-    {RouletteSpritePalette_16, 16},
+    {gShadow_Pal, 1 },
+    {gBall_Pal, 2 },
+    {gBallCounter_Pal, 3 },
+    {gCursor_Pal, 4 },
+    {gCredit_Pal, 5 },
+    {gShroomish_Pal, 6 },
+    {gTaillow_Pal, 7 },
+    {gGridIcons_Pal, 8 },
+    {gWynaut_Pal, 9 },
+    {gAzurill_Pal, 10},
+    {gSkitty_Pal, 11},
+    {gMakuhita_Pal, 12},
+    {gUnused1_Pal, 13},
+    {gUnused2_Pal, 14},
+    {gUnused3_Pal, 15},
+    {gUnused4_Pal, 16},
     {}
 };
 
