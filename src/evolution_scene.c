@@ -520,6 +520,9 @@ static void CreateShedinja(u16 preEvoSpecies, struct Pokemon* mon)
     }
 }
 
+// Task data from CycleEvolutionMonSprite
+#define tEvoStopped data[8]
+
 static void Task_EvolutionScene(u8 taskId)
 {
     u32 var;
@@ -530,7 +533,7 @@ static void Task_EvolutionScene(u8 taskId)
     {
         gTasks[taskId].tState = 16;
         if (gTasks[sEvoGraphicsTaskId].isActive)
-            gTasks[sEvoGraphicsTaskId].EvoGraphicsTaskEvoStop = TRUE;
+            gTasks[sEvoGraphicsTaskId].tEvoStopped = TRUE;
     }
     switch (gTasks[taskId].tState)
     {

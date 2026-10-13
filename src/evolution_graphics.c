@@ -258,7 +258,7 @@ void LoadEvoSparkleSpriteAndPal(void)
     LoadSpritePalettes(sEvoSparkleSpritePals);
 }
 
-#define tFrameCounter   data[15]
+#define tTimer   data[15]
 
 u8 EvolutionSparkles_SpiralUpward(u16 palNum)
 {
@@ -270,7 +270,7 @@ u8 EvolutionSparkles_SpiralUpward(u16 palNum)
 static void Task_Sparkles_SpiralUpward_Init(u8 taskId)
 {
     SetEvoSparklesMatrices();
-    gTasks[taskId].tFrameCounter = 0;
+    gTasks[taskId].tTimer = 0;
     BeginNormalPaletteFade(3 << gTasks[taskId].data[1], 10, 0, 16, RGB(31, 31, 31));
     gTasks[taskId].func = Task_Sparkles_SpiralUpward;
     PlaySE(SE_M_MEGA_KICK);
@@ -278,27 +278,27 @@ static void Task_Sparkles_SpiralUpward_Init(u8 taskId)
 
 static void Task_Sparkles_SpiralUpward(u8 taskId)
 {
-    if (gTasks[taskId].tFrameCounter < 64)
+    if (gTasks[taskId].tTimer < 64)
     {
-        if (!(gTasks[taskId].tFrameCounter & 7))
+        if (!(gTasks[taskId].tTimer & 7))
         {
             u8 i;
             for (i = 0; i < 4; i++)
-                CreateSparkle_SpiralUpward((0x78 & gTasks[taskId].tFrameCounter) * 2 + i * 64);
+                CreateSparkle_SpiralUpward((0x78 & gTasks[taskId].tTimer) * 2 + i * 64);
         }
-        gTasks[taskId].tFrameCounter++;
+        gTasks[taskId].tTimer++;
     }
     else
     {
-        gTasks[taskId].tFrameCounter = 96;
+        gTasks[taskId].tTimer = 96;
         gTasks[taskId].func = Task_Sparkles_SpiralUpward_End;
     }
 }
 
 static void Task_Sparkles_SpiralUpward_End(u8 taskId)
 {
-    if (gTasks[taskId].tFrameCounter != 0)
-        gTasks[taskId].tFrameCounter--;
+    if (gTasks[taskId].tTimer != 0)
+        gTasks[taskId].tTimer--;
     else
         DestroyTask(taskId);
 }
@@ -311,22 +311,22 @@ u8 EvolutionSparkles_ArcDown(void)
 static void Task_Sparkles_ArcDown_Init(u8 taskId)
 {
     SetEvoSparklesMatrices();
-    gTasks[taskId].tFrameCounter = 0;
+    gTasks[taskId].tTimer = 0;
     gTasks[taskId].func = Task_Sparkles_ArcDown;
     PlaySE(SE_M_BUBBLE_BEAM2);
 }
 
 static void Task_Sparkles_ArcDown(u8 taskId)
 {
-    if (gTasks[taskId].tFrameCounter < 96)
+    if (gTasks[taskId].tTimer < 96)
     {
-        if (gTasks[taskId].tFrameCounter < 6)
+        if (gTasks[taskId].tTimer < 6)
         {
             u8 i;
             for (i = 0; i < 9; i++)
                 CreateSparkle_ArcDown(i * 16);
         }
-        gTasks[taskId].tFrameCounter++;
+        gTasks[taskId].tTimer++;
     }
     else
         gTasks[taskId].func = Task_Sparkles_ArcDown_End;
@@ -345,28 +345,28 @@ u8 EvolutionSparkles_CircleInward(void)
 static void Task_Sparkles_CircleInward_Init(u8 taskId)
 {
     SetEvoSparklesMatrices();
-    gTasks[taskId].tFrameCounter = 0;
+    gTasks[taskId].tTimer = 0;
     gTasks[taskId].func = Task_Sparkles_CircleInward;
     PlaySE(SE_SHINY);
 }
 
 static void Task_Sparkles_CircleInward(u8 taskId)
 {
-    if (gTasks[taskId].tFrameCounter < 48)
+    if (gTasks[taskId].tTimer < 48)
     {
-        if (gTasks[taskId].tFrameCounter == 0)
+        if (gTasks[taskId].tTimer == 0)
         {
             u8 i;
             for (i = 0; i < 16; i++)
                 CreateSparkle_CircleInward(i * 16, 4);
         }
-        if (gTasks[taskId].tFrameCounter == 32)
+        if (gTasks[taskId].tTimer == 32)
         {
             u8 i;
             for (i = 0; i < 16; i++)
                 CreateSparkle_CircleInward(i * 16, 8);
         }
-        gTasks[taskId].tFrameCounter++;
+        gTasks[taskId].tTimer++;
     }
     else
         gTasks[taskId].func = Task_Sparkles_CircleInward_End;
@@ -387,7 +387,7 @@ u8 EvolutionSparkles_SprayAndFlash(u16 species)
 static void Task_Sparkles_SprayAndFlash_Init(u8 taskId)
 {
     SetEvoSparklesMatrices();
-    gTasks[taskId].tFrameCounter = 0;
+    gTasks[taskId].tTimer = 0;
     CpuSet(&gPlttBufferFaded[0x20], &gPlttBufferUnfaded[0x20], 0x30);
     BeginNormalPaletteFade(0xFFF9001C, 0, 0, 16, RGB(31, 31, 31));
     gTasks[taskId].func = Task_Sparkles_SprayAndFlash;
@@ -396,13 +396,13 @@ static void Task_Sparkles_SprayAndFlash_Init(u8 taskId)
 
 static void Task_Sparkles_SprayAndFlash(u8 taskId)
 {
-    if (gTasks[taskId].tFrameCounter < 128)
+    if (gTasks[taskId].tTimer < 128)
     {
         u8 i;
-        switch (gTasks[taskId].tFrameCounter)
+        switch (gTasks[taskId].tTimer)
         {
         default:
-            if (gTasks[taskId].tFrameCounter < 50)
+            if (gTasks[taskId].tTimer < 50)
                 CreateSparkle_Spray(Random() & 7);
             break;
         case 0:
@@ -413,7 +413,7 @@ static void Task_Sparkles_SprayAndFlash(u8 taskId)
             BeginNormalPaletteFade(0xFFFF001C, 16, 16, 0, RGB(31, 31, 31));
             break;
         }
-        gTasks[taskId].tFrameCounter++;
+        gTasks[taskId].tTimer++;
     }
     else
         gTasks[taskId].func = Task_Sparkles_SprayAndFlash_End;
@@ -435,7 +435,7 @@ u8 EvolutionSparkles_SprayAndFlash_Trade(u16 species)
 static void Task_Sparkles_SprayAndFlashTrade_Init(u8 taskId)
 {
     SetEvoSparklesMatrices();
-    gTasks[taskId].tFrameCounter = 0;
+    gTasks[taskId].tTimer = 0;
     CpuSet(&gPlttBufferFaded[0x20], &gPlttBufferUnfaded[0x20], 0x30);
     BeginNormalPaletteFade(0xFFF90001, 0, 0, 16, RGB(31, 31, 31));
     gTasks[taskId].func = Task_Sparkles_SprayAndFlashTrade;
@@ -444,13 +444,13 @@ static void Task_Sparkles_SprayAndFlashTrade_Init(u8 taskId)
 
 static void Task_Sparkles_SprayAndFlashTrade(u8 taskId)
 {
-    if (gTasks[taskId].tFrameCounter < 128)
+    if (gTasks[taskId].tTimer < 128)
     {
         u8 i;
-        switch (gTasks[taskId].tFrameCounter)
+        switch (gTasks[taskId].tTimer)
         {
         default:
-            if (gTasks[taskId].tFrameCounter < 50)
+            if (gTasks[taskId].tTimer < 50)
                 CreateSparkle_Spray(Random() & 7);
             break;
         case 0:
@@ -461,13 +461,13 @@ static void Task_Sparkles_SprayAndFlashTrade(u8 taskId)
             BeginNormalPaletteFade(0xFFFF0001, 16, 16, 0, RGB(31, 31, 31));
             break;
         }
-        gTasks[taskId].tFrameCounter++;
+        gTasks[taskId].tTimer++;
     }
     else
         gTasks[taskId].func = Task_Sparkles_SprayAndFlash_End;
 }
 
-#undef tFrameCounter
+#undef tTimer
 
 static void SpriteCB_EvolutionMonSprite(struct Sprite* sprite)
 {
