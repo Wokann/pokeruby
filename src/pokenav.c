@@ -47,7 +47,7 @@ extern const u8 gUnknown_083E0334[];
 extern const u16 gUnknown_083E02B4[];
 extern const u8 gPokenavConditionSearch2_Gfx[];
 extern const u8 gConditionGraphData_Pal[];
-extern const u8 gUnknown_08E9FEB4[];
+extern const u8 gGraphData_Tilemap[];
 extern const u8 gUnknown_083E01AC[];
 extern const u8 gUnknown_08E9AC4C[];
 extern const u8 gPokenavConditionMenu2_Pal[];
@@ -903,7 +903,7 @@ bool8 sub_80EFF68(void)
             sub_8095C8C((void *)VRAM + 0xF000, 0, 5, gUnknown_083E01AC, 0, 0, 9, 4, 9);
         break;
     case 10:
-        LZ77UnCompVram(gUnknown_08E9FEB4, (void *)VRAM + 0xB800);
+        LZ77UnCompVram(gGraphData_Tilemap, (void *)VRAM + 0xB800);
         break;
     case 11:
         LoadPalette(gConditionGraphData_Pal, 0x30, 0x20);
@@ -1758,7 +1758,7 @@ bool8 sub_80F1778(void)
         sub_8095C8C((void *)VRAM + 0xF000, 0, 13, gUnknown_083E01F4, 0, 0, 12, 4, 12);
         break;
     case 6:
-        LZ77UnCompVram(gUnknown_08E9FEB4, (void *)(VRAM + 0xB800));
+        LZ77UnCompVram(gGraphData_Tilemap, (void *)(VRAM + 0xB800));
         break;
     case 7:
         LoadPalette(gConditionGraphData_Pal, 0x30, 0x20);

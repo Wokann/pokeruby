@@ -1,7 +1,7 @@
 	.align 2
 gTrainerFrontPicTable:: @ 81EC53C
-	obj_tiles gTrainerFrontPic_Brendan, 0x800, 0
-	obj_tiles gTrainerFrontPic_May, 0x800, 1
+	obj_tiles gTrainerFrontPic_RubySapphireBrendan, 0x800, 0
+	obj_tiles gTrainerFrontPic_RubySapphireMay, 0x800, 1
 	obj_tiles gTrainerFrontPic_Lass, 0x800, 2
 	obj_tiles gTrainerFrontPic_Youngster, 0x800, 3
 	obj_tiles gTrainerFrontPic_Hiker, 0x800, 4
@@ -30,7 +30,7 @@ gTrainerFrontPicTable:: @ 81EC53C
 	obj_tiles gTrainerFrontPic_Guitarist, 0x800, 27
 	obj_tiles gTrainerFrontPic_Gentleman, 0x800, 28
 	obj_tiles gTrainerFrontPic_Steven, 0x800, 29
-	obj_tiles gTrainerFrontPic_Maxie, 0x800, 30
+	obj_tiles gTrainerFrontPic_MagmaLeaderMaxie, 0x800, 30
 	obj_tiles gTrainerFrontPic_RunningTriathleteF, 0x800, 31
 	obj_tiles gTrainerFrontPic_RunningTriathleteM, 0x800, 32
 	obj_tiles gTrainerFrontPic_BattleGirl, 0x1000, 33
@@ -70,16 +70,16 @@ gTrainerFrontPicTable:: @ 81EC53C
 	obj_tiles gTrainerFrontPic_AquaAdminM, 0x800, 67
 	obj_tiles gTrainerFrontPic_AquaAdminF, 0x800, 68
 	obj_tiles gTrainerFrontPic_UnusedAqua, 0x800, 69
-	obj_tiles gTrainerFrontPic_Archie, 0x800, 70
-	obj_tiles gTrainerFrontPic_Roxanne, 0x800, 71
-	obj_tiles gTrainerFrontPic_Brawly, 0x800, 72
-	obj_tiles gTrainerFrontPic_Wattson, 0x800, 73
-	obj_tiles gTrainerFrontPic_Flannery, 0x800, 74
-	obj_tiles gTrainerFrontPic_Norman, 0x800, 75
-	obj_tiles gTrainerFrontPic_Winona, 0x800, 76
-	obj_tiles gTrainerFrontPic_TateAndLiza, 0x800, 77
+	obj_tiles gTrainerFrontPic_AquaLeaderArchie, 0x800, 70
+	obj_tiles gTrainerFrontPic_LeaderRoxanne, 0x800, 71
+	obj_tiles gTrainerFrontPic_LeaderBrawly, 0x800, 72
+	obj_tiles gTrainerFrontPic_LeaderWattson, 0x800, 73
+	obj_tiles gTrainerFrontPic_LeaderFlannery, 0x800, 74
+	obj_tiles gTrainerFrontPic_LeaderNorman, 0x800, 75
+	obj_tiles gTrainerFrontPic_LeaderWinona, 0x800, 76
+	obj_tiles gTrainerFrontPic_LeaderTateAndLiza, 0x800, 77
 	obj_tiles gTrainerFrontPic_Wallace, 0x800, 78
-	obj_tiles gTrainerFrontPic_Sidney, 0x800, 79
-	obj_tiles gTrainerFrontPic_Phoebe, 0x800, 80
-	obj_tiles gTrainerFrontPic_Glacia, 0x800, 81
-	obj_tiles gTrainerFrontPic_Drake, 0x800, 82
+	obj_tiles gTrainerFrontPic_EliteFourSidney, 0x800, 79
+	obj_tiles gTrainerFrontPic_EliteFourPhoebe, 0x800, 80
+	obj_tiles gTrainerFrontPic_EliteFourGlacia, 0x800, 81
+	obj_tiles gTrainerFrontPic_EliteFourDrake, 0x800, 82

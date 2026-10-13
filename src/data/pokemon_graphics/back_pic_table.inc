@@ -122,7 +122,7 @@ gMonBackPicTable:: @ 81E97F4
 	obj_tiles gMonBackPic_Seaking, 0x800, SPECIES_SEAKING
 	obj_tiles gMonBackPic_Staryu, 0x800, SPECIES_STARYU
 	obj_tiles gMonBackPic_Starmie, 0x800, SPECIES_STARMIE
-	obj_tiles gMonBackPic_Mrmime, 0x800, SPECIES_MR_MIME
+	obj_tiles gMonBackPic_MrMime, 0x800, SPECIES_MR_MIME
 	obj_tiles gMonBackPic_Scyther, 0x800, SPECIES_SCYTHER
 	obj_tiles gMonBackPic_Jynx, 0x800, SPECIES_JYNX
 	obj_tiles gMonBackPic_Electabuzz, 0x800, SPECIES_ELECTABUZZ
@@ -252,31 +252,31 @@ gMonBackPicTable:: @ 81E97F4
 	obj_tiles gMonBackPic_Lugia, 0x800, SPECIES_LUGIA
 	obj_tiles gMonBackPic_HoOh, 0x800, SPECIES_HO_OH
 	obj_tiles gMonBackPic_Celebi, 0x800, SPECIES_CELEBI
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_B
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_C
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_D
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_E
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_F
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_G
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_H
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_I
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_J
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_K
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_L
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_M
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_N
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_O
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_P
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_Q
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_R
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_S
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_T
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_U
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_V
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_W
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_X
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_Y
-	obj_tiles gMonBackPic_QuestionMark, 0x800, SPECIES_OLD_UNOWN_Z
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_B
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_C
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_D
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_E
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_F
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_G
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_H
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_I
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_J
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_K
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_L
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_M
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_N
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_O
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_P
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_Q
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_R
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_S
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_T
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_U
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_V
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_W
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_X
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_Y
+	obj_tiles gMonBackPic_DoubleQuestionMark, 0x800, SPECIES_OLD_UNOWN_Z
 	obj_tiles gMonBackPic_Treecko, 0x800, SPECIES_TREECKO
 	obj_tiles gMonBackPic_Grovyle, 0x800, SPECIES_GROVYLE
 	obj_tiles gMonBackPic_Sceptile, 0x800, SPECIES_SCEPTILE
@@ -412,7 +412,7 @@ gMonBackPicTable:: @ 81E97F4
 	obj_tiles gMonBackPic_Jirachi, 0x800, SPECIES_JIRACHI
 	obj_tiles gMonBackPic_Deoxys, 0x800, SPECIES_DEOXYS
 	obj_tiles gMonBackPic_Chimecho, 0x800, SPECIES_CHIMECHO
-	obj_tiles gMonPic_Egg, 0x800, SPECIES_EGG
+	obj_tiles gMonStillFrontPic_Egg, 0x800, SPECIES_EGG
 	obj_tiles gMonBackPic_UnownB, 0x800, SPECIES_UNOWN_B
 	obj_tiles gMonBackPic_UnownC, 0x800, SPECIES_UNOWN_C
 	obj_tiles gMonBackPic_UnownD, 0x800, SPECIES_UNOWN_D

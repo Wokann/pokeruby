@@ -2,7 +2,7 @@
 #define POKERUBY_TRAINER_CLASS_LOOKUPS_H
 
 const u8 gFacilityClassToPicIndex[] = {
-    TRAINER_PIC_ARCHIE,                // AQUA_LEADER
+    TRAINER_PIC_AQUA_LEADER_ARCHIE,                // AQUA_LEADER
     TRAINER_PIC_AQUA_GRUNT_M,          // TEAM_AQUA_M
     TRAINER_PIC_AQUA_GRUNT_F,          // TEAM_AQUA_F
     TRAINER_PIC_AROMA_LADY,            // AROMA_LADY
@@ -10,8 +10,8 @@ const u8 gFacilityClassToPicIndex[] = {
     TRAINER_PIC_INTERVIEWER,           // INTERVIEWER
     TRAINER_PIC_TUBER_F,               // TUBER_F
     TRAINER_PIC_TUBER_M,               // TUBER_M
-    TRAINER_PIC_COOL_TRAINER_M,        // COOL_TRAINER_M
-    TRAINER_PIC_COOL_TRAINER_F,        // COOL_TRAINER_F
+    TRAINER_PIC_COOLTRAINER_M,        // COOL_TRAINER_M
+    TRAINER_PIC_COOLTRAINER_F,        // COOL_TRAINER_F
     TRAINER_PIC_HEX_MANIAC,            // HEX_MANIAC
     TRAINER_PIC_LADY,                  // LADY
     TRAINER_PIC_BEAUTY,                // BEAUTY
@@ -28,9 +28,9 @@ const u8 gFacilityClassToPicIndex[] = {
     TRAINER_PIC_GENTLEMAN,             // GENTLEMAN
     TRAINER_PIC_ELITE_FOUR_SIDNEY,                // ELITE_FOUR_M
     TRAINER_PIC_ELITE_FOUR_PHOEBE,                // ELITE_FOUR_F
-    TRAINER_PIC_ROXANNE,               // LEADER_F
-    TRAINER_PIC_BRAWLY,                // LEADER_M
-    TRAINER_PIC_TATE_AND_LIZA,         // LEADER_MF
+    TRAINER_PIC_LEADER_ROXANNE,               // LEADER_F
+    TRAINER_PIC_LEADER_BRAWLY,                // LEADER_M
+    TRAINER_PIC_LEADER_TATE_AND_LIZA,         // LEADER_MF
     TRAINER_PIC_SCHOOL_KID_M,          // SCHOOL_KID_M
     TRAINER_PIC_SCHOOL_KID_F,          // SCHOOL_KID_F
     TRAINER_PIC_SR_AND_JR,             // SR_AND_JR
@@ -60,17 +60,17 @@ const u8 gFacilityClassToPicIndex[] = {
     TRAINER_PIC_YOUNGSTER,             // BOARDER_2
     TRAINER_PIC_COLLECTOR,             // COLLECTOR
     TRAINER_PIC_WALLY,                 // WALLY
-    TRAINER_PIC_BRENDAN,               // BRENDAN_1
-    TRAINER_PIC_BRENDAN,               // BRENDAN_2
-    TRAINER_PIC_BRENDAN,               // BRENDAN_3
-    TRAINER_PIC_MAY,                   // MAY_1
-    TRAINER_PIC_MAY,                   // MAY_2
-    TRAINER_PIC_MAY,                   // MAY_3
+    TRAINER_PIC_RS_BRENDAN,               // BRENDAN_1
+    TRAINER_PIC_RS_BRENDAN,               // BRENDAN_2
+    TRAINER_PIC_RS_BRENDAN,               // BRENDAN_3
+    TRAINER_PIC_RS_MAY,                   // MAY_1
+    TRAINER_PIC_RS_MAY,                   // MAY_2
+    TRAINER_PIC_RS_MAY,                   // MAY_3
     TRAINER_PIC_POKEMON_BREEDER_M,     // POKEMON_BREEDER_M
     TRAINER_PIC_POKEMON_BREEDER_F,     // POKEMON_BREEDER_F
     TRAINER_PIC_POKEMON_RANGER_M,      // POKEMON_RANGER_M
     TRAINER_PIC_POKEMON_RANGER_F,      // POKEMON_RANGER_F
-    TRAINER_PIC_MAXIE,                 // MAGMA_LEADER
+    TRAINER_PIC_MAGMA_LEADER_MAXIE,                 // MAGMA_LEADER
     TRAINER_PIC_MAGMA_GRUNT_M,         // TEAM_MAGMA_M
     TRAINER_PIC_MAGMA_GRUNT_F,         // TEAM_MAGMA_F
     TRAINER_PIC_LASS,                  // LASS

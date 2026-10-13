@@ -4292,7 +4292,7 @@ static void Task_LoadSearchMenu(u8 taskId)
             sPokedexView->currentPage = 2;
             ResetOtherVideoRegisters(0);
             LZ77UnCompVram(gPokedexSearchMenu_Gfx, (void *)VRAM);
-            LZ77UnCompVram(gPokedexMenuSearch_Tilemap, (void *)(VRAM + 0x7800));
+            LZ77UnCompVram(gPokedexSearchMenuNational_Tilemap, (void *)(VRAM + 0x7800));
             LoadPalette(gPokedexSearchMenu_Pal + 1, 1, 0x7E);
             if (!IsNationalPokedexEnabled())
             {

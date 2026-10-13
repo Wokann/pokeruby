@@ -49,9 +49,9 @@ extern u16 gBattleEnvironmentPalette_StadiumGlacia[];
 extern u16 gBattleEnvironmentPalette_StadiumDrake[];
 extern u16 gBattleEnvironmentPalette_BattleTower[];
 
-extern u8 gVersusFrameGfx[];
-extern u16 gVersusFrameTilemap[];
-extern u16 gVersusFramePal[];
+extern u8 gBattleVSFrame_Gfx[];
+extern u16 gBattleVSFrame_Tilemap[];
+extern u16 gBattleVSFrame_Pal[];
 
 extern u16 gBattle_BG1_X;
 extern u16 gBattle_BG1_Y;
@@ -654,11 +654,11 @@ void DrawBattleEntryBackground(void)
 {
     if (gBattleTypeFlags & BATTLE_TYPE_LINK)
     {
-        LZDecompressVram(gVersusFrameGfx, (void *)(VRAM + 0x4000));
-        LZDecompressVram(gVersusFrameTilemap, (void *)(VRAM + 0xE000));
-        LZDecompressVram(gVersusFrameTilemap, (void *)(VRAM + 0xF000));
+        LZDecompressVram(gBattleVSFrame_Gfx, (void *)(VRAM + 0x4000));
+        LZDecompressVram(gBattleVSFrame_Tilemap, (void *)(VRAM + 0xE000));
+        LZDecompressVram(gBattleVSFrame_Tilemap, (void *)(VRAM + 0xF000));
         LZDecompressVram(gVsLettersGfx, (void *)(VRAM + 0x10000));
-        LoadCompressedPalette(gVersusFramePal, 0x60, 0x20);
+        LoadCompressedPalette(gBattleVSFrame_Pal, 0x60, 0x20);
         REG_BG1CNT = 0x5c04;
         REG_WININ = 0x36;
         REG_WINOUT = 0x36;

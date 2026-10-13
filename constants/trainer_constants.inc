@@ -76,8 +76,8 @@
 	.set FACILITY_CLASS_OLD_COUPLE,            75
 	.set FACILITY_CLASS_SIS_AND_BRO,           76
 
-	.set TRAINER_PIC_BRENDAN,                0
-	.set TRAINER_PIC_MAY,                    1
+	.set TRAINER_PIC_RS_BRENDAN,                0
+	.set TRAINER_PIC_RS_MAY,                    1
 	.set TRAINER_PIC_LASS,                   2
 	.set TRAINER_PIC_YOUNGSTER,              3
 	.set TRAINER_PIC_HIKER,                  4
@@ -106,7 +106,7 @@
 	.set TRAINER_PIC_GUITARIST,             27
 	.set TRAINER_PIC_GENTLEMAN,             28
 	.set TRAINER_PIC_STEVEN,                29
-	.set TRAINER_PIC_MAXIE,                 30
+	.set TRAINER_PIC_MAGMA_LEADER_MAXIE,                 30
 	.set TRAINER_PIC_RUNNING_TRIATHLETE_F,  31
 	.set TRAINER_PIC_RUNNING_TRIATHLETE_M,  32
 	.set TRAINER_PIC_BATTLE_GIRL,           33
@@ -131,8 +131,8 @@
 	.set TRAINER_PIC_MAGMA_ADMIN_F,         52
 	.set TRAINER_PIC_AROMA_LADY,            53
 	.set TRAINER_PIC_RUIN_MANIAC,           54
-	.set TRAINER_PIC_COOL_TRAINER_M,        55
-	.set TRAINER_PIC_COOL_TRAINER_F,        56
+	.set TRAINER_PIC_COOLTRAINER_M,        55
+	.set TRAINER_PIC_COOLTRAINER_F,        56
 	.set TRAINER_PIC_POKEMANIAC,            57
 	.set TRAINER_PIC_KINDLER,               58
 	.set TRAINER_PIC_CAMPER,                59
@@ -146,14 +146,14 @@
 	.set TRAINER_PIC_AQUA_ADMIN_M,          67
 	.set TRAINER_PIC_AQUA_ADMIN_F,          68
 	.set TRAINER_PIC_UNUSED_AQUA,           69
-	.set TRAINER_PIC_ARCHIE,                70
-	.set TRAINER_PIC_ROXANNE,               71
-	.set TRAINER_PIC_BRAWLY,                72
-	.set TRAINER_PIC_WATTSON,               73
-	.set TRAINER_PIC_FLANNERY,              74
-	.set TRAINER_PIC_NORMAN,                75
-	.set TRAINER_PIC_WINONA,                76
-	.set TRAINER_PIC_TATE_AND_LIZA,         77
+	.set TRAINER_PIC_AQUA_LEADER_ARCHIE,                70
+	.set TRAINER_PIC_LEADER_ROXANNE,               71
+	.set TRAINER_PIC_LEADER_BRAWLY,                72
+	.set TRAINER_PIC_LEADER_WATTSON,               73
+	.set TRAINER_PIC_LEADER_FLANNERY,              74
+	.set TRAINER_PIC_LEADER_NORMAN,                75
+	.set TRAINER_PIC_LEADER_WINONA,                76
+	.set TRAINER_PIC_LEADER_TATE_AND_LIZA,         77
 	.set TRAINER_PIC_WALLACE,               78
 	.set TRAINER_PIC_ELITE_FOUR_SIDNEY,    79
 	.set TRAINER_PIC_ELITE_FOUR_PHOEBE,    80
