@@ -308,8 +308,8 @@ EWRAM_DATA s16 gIntroCredits_MovingSceneryState = 0;
 
 extern u8 gReservedSpritePaletteCount;
 
-static void CreateCloudSprites();
-static void CreateTreeSprites();
+static void CreateCloudSprites(void);
+static void CreateTreeSprites(void);
 
 void LoadIntroPart2Graphics(u8 scenery)
 {
@@ -358,7 +358,7 @@ void SetIntroPart2BgCnt(u8 scenery)
     }
 }
 
-static void CreateHouseSprites();
+static void CreateHouseSprites(void);
 
 void LoadCreditsSceneGraphics(u8 scene)
 {
@@ -439,27 +439,27 @@ u8 CreateBicycleBgAnimationTask(u8 mode, u16 bg1Speed, u16 bg2Speed, u16 bg3Spee
 
 static void Task_BicycleBgAnimation(u8 taskId)
 {
-    s16 deltaBG1HOFS;
-    s16 deltaBG2HOFS;
-    s16 deltaBG3HOFS;
+    s16 bg1Speed;
+    s16 bg2Speed;
+    s16 bg3Speed;
     s32 offset;
 
-    deltaBG1HOFS = gTasks[taskId].data[1];
-    if (deltaBG1HOFS != 0)
+    bg1Speed = gTasks[taskId].data[1];
+    if (bg1Speed != 0)
     {
         offset = (gTasks[taskId].data[2] << 16) + (u16)gTasks[taskId].data[3];
-        offset -= 16 * (u16)deltaBG1HOFS;
+        offset -= 16 * (u16)bg1Speed;
         gTasks[taskId].data[2] = offset >> 16;
         gTasks[taskId].data[3] = offset;
         REG_BG1HOFS = gTasks[taskId].data[2];
         REG_BG1VOFS = gIntroCredits_MovingSceneryVBase + gIntroCredits_MovingSceneryVOffset;
     }
 
-    deltaBG2HOFS = gTasks[taskId].data[4];
-    if (deltaBG2HOFS != 0)
+    bg2Speed = gTasks[taskId].data[4];
+    if (bg2Speed != 0)
     {
         offset = (gTasks[taskId].data[5] << 16) + (u16)gTasks[taskId].data[6];
-        offset -= 16 * (u16)deltaBG2HOFS;
+        offset -= 16 * (u16)bg2Speed;
         gTasks[taskId].data[5] = offset >> 16;
         gTasks[taskId].data[6] = offset;
         REG_BG2HOFS = gTasks[taskId].data[5];
@@ -469,11 +469,11 @@ static void Task_BicycleBgAnimation(u8 taskId)
             REG_BG2VOFS = gIntroCredits_MovingSceneryVBase;
     }
 
-    deltaBG3HOFS = gTasks[taskId].data[7];
-    if (deltaBG3HOFS != 0)
+    bg3Speed = gTasks[taskId].data[7];
+    if (bg3Speed != 0)
     {
         offset = (gTasks[taskId].data[8] << 16) + (u16)gTasks[taskId].data[9];
-        offset -= 16 * (u16)deltaBG3HOFS;
+        offset -= 16 * (u16)bg3Speed;
         gTasks[taskId].data[8] = offset >> 16;
         gTasks[taskId].data[9] = offset;
         REG_BG3HOFS = gTasks[taskId].data[8];
@@ -549,7 +549,7 @@ static void SpriteCB_MovingScenery(struct Sprite *sprite)
     }
 }
 
-static void CreateMovingScenerySprites(u8 hasVerticalMove, const struct IntroCreditsSpriteMetadata *metadata, const union AnimCmd *const *anims, u8 numSprites)
+static void CreateMovingScenerySprites(bool8 hasVerticalMove, const struct IntroCreditsSpriteMetadata *metadata, const union AnimCmd *const *anims, u8 numSprites)
 {
     u8 i;
 
@@ -569,17 +569,17 @@ static void CreateMovingScenerySprites(u8 hasVerticalMove, const struct IntroCre
     }
 }
 
-static void CreateCloudSprites()
+static void CreateCloudSprites(void)
 {
     CreateMovingScenerySprites(0, sSpriteMetadata_Clouds, sAnims_Clouds, 9);
 }
 
-static void CreateTreeSprites()
+static void CreateTreeSprites(void)
 {
     CreateMovingScenerySprites(1, sSpriteMetadata_Trees, sAnims_Trees, 12);
 }
 
-static void CreateHouseSprites()
+static void CreateHouseSprites(void)
 {
     CreateMovingScenerySprites(1, sSpriteMetadata_HouseSilhouette, sAnims_HouseSilhouette, 6);
 }
