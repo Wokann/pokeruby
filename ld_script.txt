@@ -786,7 +786,7 @@ SECTIONS {
         src/menu_cursor.o(.rodata);
         src/mystery_event_msg.o(.rodata);
         data/debug_mystery_event_scripts.o(.rodata);
-        src/libs/m4a_tables.o(.rodata);
+        src/m4a_tables.o(.rodata);
         data/sound_data.o(.rodata);
     } =0
 
