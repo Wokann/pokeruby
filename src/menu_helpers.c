@@ -152,10 +152,10 @@ static void Task_ContinueTaskAfterMessagePrints(u8 taskId)
     }
 }
 
-void DisplayItemMessageOnField(u8 taskId, const u8 *str, TaskFunc callback, u16 tile)
+void DisplayItemMessageOnField(u8 taskId, const u8 *string, TaskFunc taskFunc, u16 tile)
 {
-    PrintMessage(str, tile);
-    sMessageNextTask = callback;
+    PrintMessage(string, tile);
+    sMessageNextTask = taskFunc;
     gTasks[taskId].func = Task_ContinueTaskAfterMessagePrints;
 }
 
