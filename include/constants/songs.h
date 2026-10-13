@@ -289,7 +289,7 @@
 #define MUS_ABANDONED_SHIP           381 // MUS_DAN02
 #define MUS_FORTREE                  382 // MUS_MACHI_S3
 #define MUS_BIRCH_LAB                383 // MUS_ODAMAKI
-#define MUS_B_TOWER                  384 // MUS_B_TOWER
+#define MUS_B_TOWER_RS               384 // MUS_B_TOWER
 #define MUS_ENCOUNTER_SWIMMER        385 // MUS_SWIMEYE
 #define MUS_CAVE_OF_ORIGIN           386 // MUS_DAN03
 #define MUS_OBTAIN_BERRY             387 // MUS_ME_KINOMI

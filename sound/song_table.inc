@@ -248,57 +248,57 @@ gSongTable:: @ 845548C
 	song se_m_stat_decrease, 1, 1
 	song se_m_haze, 1, 1
 	song se_m_hyper_beam2, 1, 1
-	song song_248, 2, 2
-	song song_249, 2, 2
-	song song_250, 2, 2
-	song song_251, 2, 2
-	song song_252, 2, 2
-	song song_253, 2, 2
-	song song_254, 2, 2
-	song song_255, 2, 2
-	song song_256, 2, 2
-	song song_257, 2, 2
-	song song_258, 2, 2
-	song song_259, 2, 2
-	song song_260, 2, 2
-	song song_261, 2, 2
-	song song_262, 2, 2
-	song song_263, 2, 2
-	song song_264, 2, 2
-	song song_265, 2, 2
-	song song_266, 2, 2
-	song song_267, 2, 2
-	song song_268, 2, 2
-	song song_269, 2, 2
-	song song_270, 2, 2
-	song song_271, 2, 2
-	song song_272, 2, 2
-	song song_273, 2, 2
-	song song_274, 2, 2
-	song song_275, 2, 2
-	song song_276, 2, 2
-	song song_277, 2, 2
-	song song_278, 2, 2
-	song song_279, 2, 2
-	song song_280, 2, 2
-	song song_281, 2, 2
-	song song_282, 2, 2
-	song song_283, 2, 2
-	song song_284, 2, 2
-	song song_285, 2, 2
-	song song_286, 2, 2
-	song song_287, 2, 2
-	song song_288, 2, 2
-	song song_289, 2, 2
-	song song_290, 2, 2
-	song song_291, 2, 2
-	song song_292, 2, 2
-	song song_293, 2, 2
-	song song_294, 2, 2
-	song song_295, 2, 2
-	song song_296, 2, 2
-	song song_297, 2, 2
-	song song_298, 2, 2
+	song ph_trap_blend, 2, 2
+	song ph_trap_held, 2, 2
+	song ph_trap_solo, 2, 2
+	song ph_face_blend, 2, 2
+	song ph_face_held, 2, 2
+	song ph_face_solo, 2, 2
+	song ph_cloth_blend, 2, 2
+	song ph_cloth_held, 2, 2
+	song ph_cloth_solo, 2, 2
+	song ph_dress_blend, 2, 2
+	song ph_dress_held, 2, 2
+	song ph_dress_solo, 2, 2
+	song ph_fleece_blend, 2, 2
+	song ph_fleece_held, 2, 2
+	song ph_fleece_solo, 2, 2
+	song ph_kit_blend, 2, 2
+	song ph_kit_held, 2, 2
+	song ph_kit_solo, 2, 2
+	song ph_price_blend, 2, 2
+	song ph_price_held, 2, 2
+	song ph_price_solo, 2, 2
+	song ph_lot_blend, 2, 2
+	song ph_lot_held, 2, 2
+	song ph_lot_solo, 2, 2
+	song ph_goat_blend, 2, 2
+	song ph_goat_held, 2, 2
+	song ph_goat_solo, 2, 2
+	song ph_thought_blend, 2, 2
+	song ph_thought_held, 2, 2
+	song ph_thought_solo, 2, 2
+	song ph_choice_blend, 2, 2
+	song ph_choice_held, 2, 2
+	song ph_choice_solo, 2, 2
+	song ph_mouth_blend, 2, 2
+	song ph_mouth_held, 2, 2
+	song ph_mouth_solo, 2, 2
+	song ph_foot_blend, 2, 2
+	song ph_foot_held, 2, 2
+	song ph_foot_solo, 2, 2
+	song ph_goose_blend, 2, 2
+	song ph_goose_held, 2, 2
+	song ph_goose_solo, 2, 2
+	song ph_strut_blend, 2, 2
+	song ph_strut_held, 2, 2
+	song ph_strut_solo, 2, 2
+	song ph_cure_blend, 2, 2
+	song ph_cure_held, 2, 2
+	song ph_cure_solo, 2, 2
+	song ph_nurse_blend, 2, 2
+	song ph_nurse_held, 2, 2
+	song ph_nurse_solo, 2, 2
 	song dummy_song_header, 0, 0
 	song dummy_song_header, 0, 0
 	song dummy_song_header, 0, 0
@@ -384,7 +384,7 @@ gSongTable:: @ 845548C
 	song mus_abandoned_ship, 0, 0
 	song mus_fortree, 0, 0
 	song mus_birch_lab, 0, 0
-	song mus_b_tower, 0, 0
+	song mus_b_tower_rs, 0, 0
 	song mus_encounter_swimmer, 0, 0
 	song mus_cave_of_origin, 0, 0
 	song mus_obtain_berry, 2, 2

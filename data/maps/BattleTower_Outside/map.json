@@ -2,7 +2,7 @@
   "id": "MAP_BATTLE_TOWER_OUTSIDE",
   "name": "BattleTower_Outside",
   "layout": "LAYOUT_BATTLE_TOWER_OUTSIDE",
-  "music": "MUS_B_TOWER",
+  "music": "MUS_B_TOWER_RS",
   "region_map_section": "MAPSEC_BATTLE_TOWER",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
