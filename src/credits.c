@@ -170,7 +170,7 @@ struct CreditsEntry
 static EWRAM_DATA s16 sUnkVar = 0;
 static EWRAM_DATA u16 sSavedTaskId = 0; // TASK A
 EWRAM_DATA bool8 gHasHallOfFameRecords = 0;
-static EWRAM_DATA u8 sUsedSpeedUp = 0;
+static EWRAM_DATA bool8 sUsedSpeedUp = 0;
 
 extern u8 gReservedSpritePaletteCount;
 
