@@ -10,8 +10,8 @@ void sub_812AF10(void);
 
 bool8 unref_sub_812AECC(u8 *script)
 {
-    u8 result = RunMysteryEventScript(script);
-    switch (result)
+    u8 status = RunMysteryEventScript(script);
+    switch (status)
     {
     case 0:
         return FALSE;
