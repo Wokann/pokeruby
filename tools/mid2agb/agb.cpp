@@ -91,6 +91,20 @@ void PrintAgbHeader()
         "voicegroup_encounter_rich",
         "voicegroup_verdanturf",
         "voicegroup_rustboro",
+        "voicegroup_poke_center",
+        "voicegroup_route104",
+        "voicegroup_route119",
+        "voicegroup_cycling",
+        "voicegroup_poke_mart",
+        "voicegroup_littleroot",
+        "voicegroup_mt_chimney",
+        "voicegroup_encounter_female",
+        "voicegroup_lilycove",
+        "voicegroup_route111",
+        "voicegroup_help",
+        "voicegroup_underwater",
+        "voicegroup_victory_trainer",
+        "voicegroup_title",
     };
 
     if (g_voiceGroup >= 0 && g_voiceGroup < static_cast<int>(sizeof(sVoiceGroupNames) / sizeof(sVoiceGroupNames[0]))
