@@ -7,7 +7,7 @@
 
 struct PlaceDecorationGraphicsDataBuffer;
 
-enum DecorPerm {
+enum DecorationPermission {
     /*
      * The nomenclature here describes collision and placement permissions, in that order.
      */
@@ -18,7 +18,7 @@ enum DecorPerm {
     DECORPERM_SPRITE
 };
 
-enum DecorShape {
+enum DecorationShape {
     /*
      * Width-x-height
      */
@@ -34,7 +34,7 @@ enum DecorShape {
     DECORSHAPE_3x2
 };
 
-enum DecoCat {
+enum DecorationCategory {
     /*
      * In which category you can find the decoration in the PC.
      */
