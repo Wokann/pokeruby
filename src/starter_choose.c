@@ -228,8 +228,8 @@ static void Task_StarterChoose4(u8 taskId);
 static void Task_StarterChoose5(u8 taskId);
 static void Task_DeclineStarter(u8 taskId);
 
-static void CreateStarterPokemonLabel(u8, u8);
-static u8 CreatePokemonFrontSprite(u16, u8, u8);
+static void CreateStarterPokemonLabel(u8, u8 selection);
+static u8 CreatePokemonFrontSprite(u16 species, u8 x, u8 y);
 
 //Position of the sprite of the selected starter Pokemon
 #define STARTER_PKMN_POS_X 120
