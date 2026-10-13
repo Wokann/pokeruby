@@ -24,13 +24,13 @@
 .endif @ GERMAN
 
 .ifdef SAPPHIRE
-    .set versionMask, 0x100
+    .set VERSION_MASK, 0x100
 .else @ RUBY
-    .set versionMask, 0x80
+    .set VERSION_MASK, 0x80
 .endif @ RUBY
 
 gUnknown_Debug_845DAE1::
-	me_checkcompat gUnknown_Debug_845DAE1, unkConstant, unkConstant, 0x4, versionMask
+	me_checkcompat gUnknown_Debug_845DAE1, unkConstant, unkConstant, 0x4, VERSION_MASK
 	me_crc 0x0, _0845DAFF, _0845DAFFEnd
 _0845DAFF:
 	me_initramscript MAP_PETALBURG_CITY_GYM, 0x1, _845DB56, _845DB56End
@@ -162,7 +162,7 @@ _0845DAFFEnd:
 gUnknown_Debug_845DAE1End::
 
 gUnknown_Debug_845DDB2::
-	me_checkcompat gUnknown_Debug_845DDB2, unkConstant, unkConstant, 0x4, versionMask
+	me_checkcompat gUnknown_Debug_845DDB2, unkConstant, unkConstant, 0x4, VERSION_MASK
 	me_checksum 0x0, _0845DDD0, _0845DDD0End
 _0845DDD0:
 	me_setenigmaberry gUnknown_Debug_845DDD6
@@ -175,7 +175,7 @@ _0845DDD0End:
 gUnknown_Debug_845DDB2End::
 
 gUnknown_Debug_845E306::
-	me_checkcompat gUnknown_Debug_845E306, unkConstant, unkConstant, 0x4, versionMask
+	me_checkcompat gUnknown_Debug_845E306, unkConstant, unkConstant, 0x4, VERSION_MASK
 	me_runscript _0845E329
 	me_setmsg 0x2, _0845E34F
 	me_setmsg 0x3, _0845E387
@@ -214,7 +214,7 @@ _0845E387:
 .endif @ GERMAN
 
 gUnknown_Debug_845E3E0::
-	me_checkcompat gUnknown_Debug_845E3E0, unkConstant, unkConstant, 0x4, versionMask
+	me_checkcompat gUnknown_Debug_845E3E0, unkConstant, unkConstant, 0x4, VERSION_MASK
 	me_crc 0x0, _0845E3FE, _0845E3FEEnd
 _0845E3FE:
 	me_giveribbon 0x0, 0x1
@@ -224,7 +224,7 @@ _0845E3FEEnd:
 gUnknown_Debug_845E3E0End::
 
 gUnknown_Debug_845E402::
-	me_checkcompat gUnknown_Debug_845E402, unkConstant, unkConstant, 0x4, versionMask
+	me_checkcompat gUnknown_Debug_845E402, unkConstant, unkConstant, 0x4, VERSION_MASK
 	me_crc 0x0, _0845E420, _0845E420End
 _0845E420:
 	me_givenationaldex
@@ -234,7 +234,7 @@ _0845E420End:
 gUnknown_Debug_845E402End::
 
 gUnknown_Debug_845E422::
-	me_checkcompat gUnknown_Debug_845E422, unkConstant, unkConstant, 0x4, versionMask
+	me_checkcompat gUnknown_Debug_845E422, unkConstant, unkConstant, 0x4, VERSION_MASK
 	me_crc 0x0, _0845E440, _0845E440End
 _0845E440:
 	me_addrareword 0x1
@@ -244,7 +244,7 @@ _0845E440End:
 gUnknown_Debug_845E422End::
 
 gUnknown_Debug_845E443::
-	me_checkcompat gUnknown_Debug_845E443, unkConstant, unkConstant, 0x4, versionMask
+	me_checkcompat gUnknown_Debug_845E443, unkConstant, unkConstant, 0x4, VERSION_MASK
 	me_crc 0x0, _0845E461, _0845E461End
 _0845E461:
 	me_givepokemon gUnknown_Debug_845E467
@@ -260,7 +260,7 @@ _0845E461End:
 gUnknown_Debug_845E443End::
 
 gUnknown_Debug_845E4EF::
-	me_checkcompat gUnknown_Debug_845E4EF, unkConstant, unkConstant, 0x4, versionMask
+	me_checkcompat gUnknown_Debug_845E4EF, unkConstant, unkConstant, 0x4, VERSION_MASK
 	me_addtrainer gUnknown_Debug_845E506
 	me_end
 
@@ -269,13 +269,13 @@ gUnknown_Debug_845E506::
 gUnknown_Debug_845E4EFEnd::
 
 gUnknown_Debug_845E606::
-	me_checkcompat gUnknown_Debug_845E606, unkConstant, unkConstant, 0x4, versionMask
+	me_checkcompat gUnknown_Debug_845E606, unkConstant, unkConstant, 0x4, VERSION_MASK
 	me_enableresetrtc
 	me_end
 gUnknown_Debug_845E606End::
 
 gUnknown_Debug_845E619::
-	me_checkcompat gUnknown_Debug_845E619, unkConstant, unkConstant, 0x4, versionMask
+	me_checkcompat gUnknown_Debug_845E619, unkConstant, unkConstant, 0x4, VERSION_MASK
 	me_checksum 0x0, _0845E637, _0845E637End
 _0845E637:
 	me_initramscript MAP_PETALBURG_CITY_GYM, 0x1, _0845E683, _0845E683End
@@ -333,7 +333,7 @@ _0845E683End:
 gUnknown_Debug_845E619End::
 
 gUnknown_Debug_845E712::
-	me_checkcompat gUnknown_Debug_845E712, unkConstant, unkConstant, 0x4, versionMask
+	me_checkcompat gUnknown_Debug_845E712, unkConstant, unkConstant, 0x4, VERSION_MASK
 	me_crc 0x0, _0845E730, _0845E730End
 _0845E730:
 	me_runscript _0845E736
@@ -373,7 +373,7 @@ _0845E730End:
 gUnknown_Debug_845E712End::
 
 gUnknown_Debug_845E797::
-	me_checkcompat gUnknown_Debug_845E797, unkConstant, unkConstant, 0x4, versionMask
+	me_checkcompat gUnknown_Debug_845E797, unkConstant, unkConstant, 0x4, VERSION_MASK
 	me_crc 0x0, gUnknown_Debug_845E7B5, gUnknown_Debug_845E7B5End
 gUnknown_Debug_845E7B5::
 	me_setrecordmixinggift 0x1, 0x3, ITEM_POTION
