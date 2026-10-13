@@ -26,8 +26,8 @@ extern u16 gSpecialVar_ContestRank;
 extern u8 (*gMenuCallback)(void);
 
 static bool8 sub_80A9B78(void);
-static void sub_80A9BE4(u8 taskId);
-static void sub_80A9C98(u8);
+static void Task_StartShowContestResults(u8 taskId);
+static void Task_StartCommunication(u8);
 static void Task_StartCommunicateRngRS(u8);
 static void Task_StartCommunicateLeaderIdsRS(u8);
 static void sub_80A9D58(u8);
@@ -98,11 +98,11 @@ static bool8 sub_80A9B78(void)
 u8 MatsudaDebugMenu_ContestResults(void)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-    CreateTask(sub_80A9BE4, 0xFF);
+    CreateTask(Task_StartShowContestResults, 0xFF);
     return 1;
 }
 
-static void sub_80A9BE4(u8 taskId)
+static void Task_StartShowContestResults(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
@@ -134,16 +134,16 @@ u8 MatsudaDebugMenu_CommTest(void)
     u8 newTaskId2;
 
     newTaskId = CreateTask(sub_80A9E3C, 0);
-    SetTaskFuncWithFollowupFunc(newTaskId, sub_80A9E3C, sub_80A9C98);
+    SetTaskFuncWithFollowupFunc(newTaskId, sub_80A9E3C, Task_StartCommunication);
     newTaskId2 = CreateTask(sub_80A9E04, 1);
     gTasks[newTaskId2].data[10] = newTaskId;
     gTasks[newTaskId].data[10] = newTaskId2;
     return 1;
 }
 
-static void sub_80A9C98(u8 taskId)
+static void Task_StartCommunication(u8 taskId)
 {
-    Contest_CreatePlayerMon(0);
+    CreateContestMonFromParty(0);
     SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateMonsRS, Task_StartCommunicateRngRS);
 }
 
@@ -157,7 +157,7 @@ static void Task_StartCommunicateLeaderIdsRS(u8 taskId)
     SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateLeaderIdsRS, sub_80A9D58);
 }
 
-static void sub_80A9CF8(u8 taskId)
+static void Task_LinkContest_WaitDisconnect(u8 taskId)
 {
     if (gReceivedRemoteLinkPlayers == FALSE)
     {
@@ -170,18 +170,18 @@ static void sub_80A9CF8(u8 taskId)
 static void Task_LinkContest_Disconnect(u8 taskId)
 {
     SetCloseLinkCallback();
-    gTasks[taskId].func = sub_80A9CF8;
+    gTasks[taskId].func = Task_LinkContest_WaitDisconnect;
 }
 
 static void sub_80A9D58(u8 taskId)
 {
    int i;
-   u8 dest[4];
+   u8 leaderIds[4];
 
    for (i = 0; i < 4; i++)
-       dest[i] = gTasks[taskId].data[5 + i];
+       leaderIds[i] = gTasks[taskId].data[5 + i];
 
-   gContestLinkLeaderIndex = LinkContest_GetLeaderIndex(dest);
+   gContestLinkLeaderIndex = LinkContest_GetLeaderIndex(leaderIds);
    CalculateRound1Points((u8)gSpecialVar_ContestCategory);
    SortContestants(0);
    SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateRound1Points, sub_80A9DBC);
@@ -505,9 +505,9 @@ static void sub_80AA10C(void)
     gContestMonPartyIndex = 0;
 
     if (!(gContestMons[0].nickname[0]))
-        Contest_InitAllPokemon(0, 0);
+        SetContestants(0, 0);
 
-    Contest_CreatePlayerMon(gContestMonPartyIndex);
+    CreateContestMonFromParty(gContestMonPartyIndex);
 
     for (i = 0; i < 6; i++)
     {
@@ -833,7 +833,7 @@ void sub_80AABF0(struct Sprite *sprite, s8 var2)
     sub_80AA5BC(r4);
     sprite->data[3] = r4;
     gSpecialVar_ContestCategory = sprite->data[3];
-    Contest_InitAllPokemon(sprite->data[3], gSpecialVar_ContestRank);
+    SetContestants(sprite->data[3], gSpecialVar_ContestRank);
     sub_80AA280(sprite->data[2]);
     sub_80AA658(sprite->data[2]);
 }
@@ -847,7 +847,7 @@ void sub_80AAC5C(struct Sprite *sprite, s8 var2)
     if (gSpecialVar_ContestRank > 3)
         gSpecialVar_ContestRank = 3;
     sub_80AA5E8(gSpecialVar_ContestRank);
-    Contest_InitAllPokemon(gSpecialVar_ContestCategory, gSpecialVar_ContestRank);
+    SetContestants(gSpecialVar_ContestCategory, gSpecialVar_ContestRank);
     sub_80AA280(sprite->data[2]);
     sub_80AA658(sprite->data[2]);
 }
@@ -943,7 +943,7 @@ void sub_80AAF30(void)
 
     gUnknown_0203856C = 1;
     gContestPlayerMonIndex = 3;
-    Contest_CreatePlayerMon(0);
+    CreateContestMonFromParty(0);
 
     for (i = 3; i > -1; i--)
         gContestFinalStandings[i] = 3 - i;
@@ -959,7 +959,7 @@ void sub_80AAF30(void)
     gContestMonRound1Points[3] = 0x12C;
     gContestMonAppealPointTotals[3] = 0x190;
     gContestMonTotalPoints[3] = 0x190;
-    Contest_SaveWinner(CONTEST_SAVE_FOR_ARTIST);
+    SaveContestWinner(CONTEST_SAVE_FOR_ARTIST);
 }
 
 u8 MatsudaDebugMenu_SetHighScore(void)
@@ -989,11 +989,11 @@ u8 MatsudaDebugMenu_SetArtMuseumItems(void)
     s32 i;
 
     gContestPlayerMonIndex = 3;
-    Contest_CreatePlayerMon(0);
+    CreateContestMonFromParty(0);
     for (i = 3; i > -1; i--)
         gContestFinalStandings[i] = 3 - i;
     for (gSpecialVar_ContestCategory = 0; gSpecialVar_ContestCategory < 5; gSpecialVar_ContestCategory++)
-        Contest_SaveWinner(0xFF);
+        SaveContestWinner(0xFF);
     CloseMenu();
     return 1;
 }

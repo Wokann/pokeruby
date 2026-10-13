@@ -111,7 +111,7 @@ void DoesContestCategoryHaveMuseumPainting(void)
 
 void SaveMuseumContestPainting(void)
 {
-    Contest_SaveWinner(CONTEST_SAVE_FOR_MUSEUM);
+    SaveContestWinner(CONTEST_SAVE_FOR_MUSEUM);
 }
 
 void ShouldReadyContestArtist(void)
@@ -236,7 +236,7 @@ void ShowContestPainting(void)
         sub_80AAF30();
         eCurContestWinnerIsForArtist = TRUE;
         eCurContestWinnerSaveIdx = GetContestWinnerSaveIdx(CONTEST_SAVE_FOR_ARTIST, 0);
-        Contest_SaveWinner(3);
+        SaveContestWinner(3);
         gUnknown_0203856C = 0;
     }
     SetMainCallback2(CB2_ContestPainting);

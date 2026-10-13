@@ -724,8 +724,8 @@ static void Task_TrySetContestInterviewData(u8 taskId)
 {
     BravoTrainerPokemonProfile_BeforeInterview2(gContestFinalStandings[gContestPlayerMonIndex]);
     TryGainNewFanFromCounter(2);
-    Contest_SaveWinner(gSpecialVar_ContestRank);
-    Contest_SaveWinner(0xFE);
+    SaveContestWinner(gSpecialVar_ContestRank);
+    SaveContestWinner(0xFE);
     eCurContestWinnerIsForArtist = TRUE;
     eCurContestWinnerSaveIdx = GetContestWinnerSaveIdx(0xfe, 0);
     BeginHardwarePaletteFade(0xff, 0, 0, 16, 0);
@@ -2566,7 +2566,7 @@ void TryEnterContestMon(void)
     u8 eligibility = GetContestEntryEligibility(&gPlayerParty[gContestMonPartyIndex]);
     if (eligibility != 0)
     {
-        Contest_InitAllPokemon(gSpecialVar_ContestCategory, gSpecialVar_ContestRank);
+        SetContestants(gSpecialVar_ContestCategory, gSpecialVar_ContestRank);
         CalculateRound1Points(gSpecialVar_ContestCategory);
     }
     gSpecialVar_Result = eligibility;
@@ -2806,7 +2806,7 @@ void ContestLinkTransfer(u8 category)
 
 static void Task_StartCommunication(u8 taskId)
 {
-    Contest_CreatePlayerMon(gContestMonPartyIndex);
+    CreateContestMonFromParty(gContestMonPartyIndex);
     SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateMonsRS, Task_StartCommunicateRngRS);
 }
 
