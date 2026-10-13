@@ -5,7 +5,6 @@
 #include "load_save.h"
 #include "overworld.h"
 #include "pokemon.h"
-#include "save_failed_screen.h"
 #include "ewram.h"
 
 // headless save section?

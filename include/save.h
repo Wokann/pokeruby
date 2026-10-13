@@ -65,4 +65,7 @@ bool8 WriteSaveBlock1Sector(void);
 u8 LoadGameSave(u8 saveType);
 void sub_813B79C(void);
 
+// save_failed_screen.c
+void DoSaveFailedScreen(u8 saveType);
+
 #endif // GUARD_SAVE_H

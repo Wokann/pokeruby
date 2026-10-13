@@ -1,6 +1,5 @@
 #include "global.h"
 #include "gba/flash_internal.h"
-#include "save_failed_screen.h"
 #include "m4a.h"
 #include "main.h"
 #include "menu.h"
@@ -247,7 +246,7 @@ static void CB2_ReturnToTitleScreen(void)
 
 static void VBlankCB_UpdateClockGraphics(void)
 {
-    unsigned int n = (gMain.vblankCounter2 >> 3) & 7;
+    u32 n = (gMain.vblankCounter2 >> 3) & 7;
 
     gMain.oamBuffer[0] = sClockOamData;
     gMain.oamBuffer[0].x = 112;
