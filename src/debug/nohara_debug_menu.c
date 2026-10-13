@@ -947,7 +947,7 @@ bool8 debug_sub_80901E4(void)
 
 bool8 debug_sub_80901F8(void)
 {
-    u8 r0 = sub_810FB9C();
+    u8 r0 = PlayerGainRandomTrainerFan();
     Menu_PrintText(gUnknown_Debug_083C4CA8[gUnknown_083F8408[r0] - 8], 14, 7);
     gMenuCallback = debug_sub_8090278;
     return FALSE;
@@ -955,7 +955,7 @@ bool8 debug_sub_80901F8(void)
 
 bool8 debug_sub_8090238(void)
 {
-    u8 r0 = sub_810FC18();
+    u8 r0 = PlayerLoseRandomTrainerFan();
     Menu_PrintText(gUnknown_Debug_083C4CA8[gUnknown_083F8410[r0] - 8], 14, 7);
     gMenuCallback = debug_sub_8090278;
     return FALSE;

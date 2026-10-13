@@ -30,7 +30,7 @@ u8 TryGainNewFanFromCounter(u8 incrementId);
 void UpdateTrainerFansAfterLinkBattle(void);
 u16 GetSlotMachineId(void);
 void UpdateTrainerFanClubGameClear(void);
-int sub_810FB9C(void);
-int sub_810FC18(void);
+int PlayerGainRandomTrainerFan(void);
+int PlayerLoseRandomTrainerFan(void);
 
 #endif // GUARD_FIELD_SPECIALS_H

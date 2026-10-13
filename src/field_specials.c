@@ -1939,7 +1939,7 @@ void TryLoseFansFromPlayTime(void);
 void SetPlayerGotFirstFans(void);
 static void SetInitialFansOfPlayer(void);
 u16 GetNumFansOfPlayerInTrainerFanClub(void);
-int sub_810FB9C(void);
+int PlayerGainRandomTrainerFan(void);
 
 void ResetFanClub(void)
 {
@@ -1979,7 +1979,7 @@ u8 TryGainNewFanFromCounter(u8 incrementId)
         {
             if (GetNumFansOfPlayerInTrainerFanClub() < 3)
             {
-                sub_810FB9C();
+                PlayerGainRandomTrainerFan();
                 gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] &= 0xff80;
             }
             else
@@ -1995,7 +1995,7 @@ u8 TryGainNewFanFromCounter(u8 incrementId)
     return gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] & 0x7f;
 }
 
-int sub_810FB9C(void)
+int PlayerGainRandomTrainerFan(void)
 {
     u8 i;
     int idx = 0;
@@ -2015,7 +2015,7 @@ int sub_810FB9C(void)
     return idx;
 }
 
-int sub_810FC18(void)
+int PlayerLoseRandomTrainerFan(void)
 {
     u8 i;
     int idx = 0;
@@ -2077,7 +2077,7 @@ void TryLoseFansFromPlayTime(void)
             {
                 return;
             }
-            sub_810FC18();
+            PlayerLoseRandomTrainerFan();
             gSaveBlock1.vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] += 12;
             i++;
         }
@@ -2182,11 +2182,11 @@ void UpdateTrainerFansAfterLinkBattle(void)
         TryLoseFansFromPlayTimeAfterLinkBattle();
         if (gBattleOutcome == 1)
         {
-            sub_810FB9C();
+            PlayerGainRandomTrainerFan();
         }
         else
         {
-            sub_810FC18();
+            PlayerLoseRandomTrainerFan();
         }
     }
 }
