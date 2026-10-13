@@ -30,10 +30,6 @@ extern const struct WindowTemplate gMenuTextWindowTemplate;
 extern const struct WindowTemplate gMoveTutorMenuFramesWindowTemplate;
 extern const u8 gTypeNames[][7];
 
-#ifdef GERMAN
-extern const u8 deuOtherText_ForgotAndLearned[];
-#endif
-
 static void Task_WaitForFadeOut(u8 taskId);
 static void CB2_InitLearnMove(void);
 static void CB2_MoveRelearnerMain(void);
@@ -594,11 +590,7 @@ static void DoMoveRelearnerMain(void)
     case 30:
         if (Menu_UpdateWindowText())
         {
-#ifdef GERMAN
-            PrintMessageWithPlaceholders(deuOtherText_ForgotAndLearned);
-#else
-            PrintMessageWithPlaceholders(gOtherText_ForgotOrDidNotLearnMove);
-#endif
+            PrintMessageWithPlaceholders(gText_MoveRelearnerPkmnForgotMoveAndLearnedNew);
             sMoveRelearnerStruct->state = 31;
             PlayFanfare(MUS_LEVEL_UP);
         }

@@ -1066,6 +1066,7 @@ extern const u8 gText_MoveRelearnerPkmnLearnedMove[];
 extern const u8 gText_MoveRelearnerPkmnTryingToLearnMove[];
 extern const u8 gText_MoveRelearnerStopTryingToTeachMove[];
 extern const u8 gText_MoveRelearnerAndPoof[];
+extern const u8 gText_MoveRelearnerPkmnForgotMoveAndLearnedNew[];
 extern const u8 gText_MoveRelearnerGiveUp[];
 extern const u8 gText_MoveRelearnerWhichMoveToForget[];
 

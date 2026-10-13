@@ -380,8 +380,10 @@ gText_MoveRelearnerStopTryingToTeachMove:: @ 842CD65
 gText_MoveRelearnerAndPoof:: @ 842CD77
 	.string "{PAUSE 32}1, {PAUSE 15}2 {PAUSE 15}...{PAUSE 15}...{PAUSE 15}...{PAUSE 15} {PLAY_SE 0x0038}Poof!\p$"
 
-gOtherText_ForgotOrDidNotLearnMove:: @ 842CDA3
+gText_MoveRelearnerPkmnForgotMoveAndLearnedNew:: @ 842CDA3
 	.string "{STR_VAR_1} forgot {STR_VAR_3}.\pAnd...\p{STR_VAR_1} learned {STR_VAR_2}.$"
+
+gText_MoveRelearnedPkmnDidNotLearnMove::
 	.string "{STR_VAR_1} did not learn\n{STR_VAR_2}.$"
 
 gText_MoveRelearnerGiveUp:: @ 842CDDC

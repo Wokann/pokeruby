@@ -412,12 +412,12 @@ gText_MoveRelearnerStopTryingToTeachMove:: @ 842CD65
 gText_MoveRelearnerAndPoof:: @ 842CD77
 	.string "{PAUSE 32}1, {PAUSE 15}2 {PAUSE 15}...{PAUSE 15}...{PAUSE 15}...{PAUSE 15} {PLAY_SE 0x38 0x00} Schwupp!\p$"
 
-deuOtherText_ForgotAndLearned:: @ 843912f
+gText_MoveRelearnerPkmnForgotMoveAndLearnedNew:: @ 843912f
 	.string "{STR_VAR_1} vergaß {STR_VAR_3}.\p"
 	.string "Und...\p"
 	.string "{STR_VAR_1} erlernt {STR_VAR_2}.$"
 
-gOtherText_ForgotOrDidNotLearnMove:: @ 842CDA3
+gText_MoveRelearnedPkmnDidNotLearnMove:: @ 842CDA3
 	.string "{STR_VAR_1} hat {STR_VAR_2}\n"
 	.string "nicht erlernt.$"
 

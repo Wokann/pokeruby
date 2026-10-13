@@ -113,9 +113,6 @@ extern const u8 gEggNickname[];
 extern const u8 OtherText_Type[];
 extern const u8 OtherText_PP[];
 
-// move_relearner
-extern const u8 gOtherText_ForgotOrDidNotLearnMove[];
-
 // contest_link_80C2020
 extern const u8 gText_AnnouncingResults[];
 extern const u8 gText_PreliminaryResults[];
@@ -208,9 +205,5 @@ extern const u8 sText_Dot2[];
 
 // reset_rtc_screen
 extern const u8 gOtherText_OK[];
-
-#if GERMAN
-extern const u8 deuOtherText_ForgotAndLearned[];
-#endif
 
 #endif // GUARD_STRINGS2_H
