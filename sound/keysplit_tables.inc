@@ -1,6 +1,6 @@
 @ Due to the way mks4agb (Nintendo's tool) works, key split table labels can
 @ appear before the actual start of the key split table data. If you look at
-@ the first keysplit table (KeySplitTable1), you'll notice it's offset backwards
+@ the first keysplit table (keysplit_piano), you'll notice it's offset backwards
 @ by 36 bytes. This is because the key split tables don't map instruments
 @ for the entire note range (0-127)--they only map subsets, and the upper
 @ and lower ranges aren't necessarily 0 or 127.
@@ -10,7 +10,7 @@
 @ begins. Therefore, the notes naturally map to the key split table without
 @ any extra offset calculation.
 
-.set KeySplitTable1, . - 36
+.set keysplit_piano, . - 36
 	.byte 0  @ 36
 	.byte 0  @ 37
 	.byte 0  @ 38
@@ -84,7 +84,7 @@
 	.byte 3  @ 106
 	.byte 3  @ 107
 
-.set KeySplitTable2, . - 36
+.set keysplit_strings, . - 36
 	.byte 0  @ 36
 	.byte 0  @ 37
 	.byte 0  @ 38
@@ -158,7 +158,7 @@
 	.byte 2  @ 106
 	.byte 2  @ 107
 
-.set KeySplitTable3, . - 36
+.set keysplit_trumpet, . - 36
 	.byte 0  @ 36
 	.byte 0  @ 37
 	.byte 0  @ 38
@@ -232,7 +232,7 @@
 	.byte 2  @ 106
 	.byte 2  @ 107
 
-.set KeySplitTable4, . - 24
+.set keysplit_tuba, . - 24
 	.byte 0  @ 24
 	.byte 0  @ 25
 	.byte 0  @ 26
@@ -318,7 +318,7 @@
 	.byte 1  @ 106
 	.byte 1  @ 107
 
-.set KeySplitTable5, . - 36
+.set keysplit_french_horn, . - 36
 	.byte 0  @ 36
 	.byte 0  @ 37
 	.byte 0  @ 38

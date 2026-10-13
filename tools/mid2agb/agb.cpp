@@ -46,8 +46,19 @@ static int s_memaccParam2;
 void PrintAgbHeader()
 {
     std::fprintf(g_outputFile, "\t.include \"MPlayDef.s\"\n\n");
-    if (g_voiceGroup == 0)
-        std::fprintf(g_outputFile, "\t.equ\t%s_grp, voicegroup_dummy\n", g_asmLabel.c_str());
+    static const char *const sVoiceGroupNames[] =
+    {
+        "voicegroup_dummy",
+        "voicegroup_rs_drumset",
+        "voicegroup_piano_keysplit",
+        "voicegroup_strings_keysplit",
+        "voicegroup_trumpet_keysplit",
+        "voicegroup_tuba_keysplit",
+        "voicegroup_french_horn_keysplit",
+    };
+
+    if (g_voiceGroup >= 0 && g_voiceGroup < static_cast<int>(sizeof(sVoiceGroupNames) / sizeof(sVoiceGroupNames[0])))
+        std::fprintf(g_outputFile, "\t.equ\t%s_grp, %s\n", g_asmLabel.c_str(), sVoiceGroupNames[g_voiceGroup]);
     else
         std::fprintf(g_outputFile, "\t.equ\t%s_grp, voicegroup%03u\n", g_asmLabel.c_str(), g_voiceGroup);
     std::fprintf(g_outputFile, "\t.equ\t%s_pri, %u\n", g_asmLabel.c_str(), g_priority);
