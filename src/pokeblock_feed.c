@@ -410,7 +410,7 @@ static const union AffineAnimCmd *const sAffineAnims_PokeblockCase_ThrowFromHori
     sAffineAnim_PokeblockCase_ThrowFromHorizontal
 };
 
-static const struct OamData sThrownPokeblockOamData =
+static const struct OamData sOamData_Pokeblock =
 {
     .y = 0,
     .affineMode = 3,
@@ -427,15 +427,15 @@ static const struct OamData sThrownPokeblockOamData =
     .affineParam = 0,
 };
 
-static const union AnimCmd sThrownPokeblockSpriteAnim[] =
+static const union AnimCmd sAnim_Pokeblock[] =
 {
     ANIMCMD_FRAME(0, 0),
     ANIMCMD_END
 };
 
-static const union AnimCmd *const sThrownPokeblockAnimTable[] =
+static const union AnimCmd *const sAnims_Pokeblock[] =
 {
-    sThrownPokeblockSpriteAnim,
+    sAnim_Pokeblock,
 };
 
 static const union AffineAnimCmd sAffineAnim_Pokeblock[] =
@@ -445,7 +445,7 @@ static const union AffineAnimCmd sAffineAnim_Pokeblock[] =
     AFFINEANIMCMD_JUMP(1)
 };
 
-static const union AffineAnimCmd *const sThrownPokeblockAffineAnimTable[] =
+static const union AffineAnimCmd *const sAffineAnims_Pokeblock[] =
 {
     sAffineAnim_Pokeblock
 };
@@ -455,14 +455,14 @@ static const struct CompressedSpriteSheet sSpriteSheet_Pokeblock =
     gPokeblock_Gfx, 0x20, 14818
 };
 
-static const struct SpriteTemplate sThrownPokeblockSpriteTemplate =
+static const struct SpriteTemplate sSpriteTemplate_Pokeblock =
 {
     .tileTag = 14818,
     .paletteTag = 14818,
-    .oam = &sThrownPokeblockOamData,
-    .anims = sThrownPokeblockAnimTable,
+    .oam = &sOamData_Pokeblock,
+    .anims = sAnims_Pokeblock,
     .images = NULL,
-    .affineAnims = sThrownPokeblockAffineAnimTable,
+    .affineAnims = sAffineAnims_Pokeblock,
     .callback = SpriteCB_ThrownPokeblock
 };
 
@@ -796,7 +796,7 @@ static void DoPokeblockCaseThrowEffect(u8 spriteId, bool8 horizontalThrow)
 
 static u8 CreatePokeblockSprite(void)
 {
-    u8 spriteId = CreateSprite(&sThrownPokeblockSpriteTemplate, 174, 84, 1);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_Pokeblock, 174, 84, 1);
     gSprites[spriteId].data[0] = -12;
     gSprites[spriteId].data[1] = 1;
     return spriteId;
