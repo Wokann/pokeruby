@@ -103,15 +103,23 @@ struct FacilityMon
     /*0x0D*/u8 nature;
 };
 
+extern const u8 gTowerMaleFacilityClasses[30];
+extern const u8 gTowerMaleTrainerGfxIds[30];
+extern const u8 gTowerFemaleFacilityClasses[20];
+extern const u8 gTowerFemaleTrainerGfxIds[20];
+
 void DoSpecialTrainerBattle(void);
+void SetEReaderTrainerGfxId(void);
 void CopyEReaderTrainerGreeting(void);
 void TryHideBattleTowerReporter(void);
 u16 GetCurrentBattleTowerWinStreak(u8 battleTowerLevelType);
 void PutNewBattleTowerRecord(struct RSBattleTowerRecord *record);
+void CalcRubyBattleTowerChecksum(struct RSBattleTowerRecord *record);
 void GetEreaderTrainerName(u8 *trainerName);
 u8 GetEreaderTrainerFrontSpriteId(void);
 u8 GetEreaderTrainerClassId(void);
 void ValidateEReaderTrainer(void);
+void ClearEReaderTrainer(struct BattleTowerEReaderTrainer *ereaderTrainer);
 void SetEReaderTrainerChecksum(struct BattleTowerEReaderTrainer *ereaderTrainer);
 
 #endif // GUARD_BATTLE_TOWER_H

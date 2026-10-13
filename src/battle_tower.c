@@ -105,7 +105,7 @@ static const u16 sBattleTowerHeldItems[] =
 #include "data/battle_tower/level_50_mons.h"
 #include "data/battle_tower/level_100_mons.h"
 
-static const u8 sMaleTrainerClasses[] =
+const u8 gTowerMaleFacilityClasses[30] =
 {
     FACILITY_CLASS_RUIN_MANIAC,
     FACILITY_CLASS_TUBER_M,
@@ -139,7 +139,7 @@ static const u8 sMaleTrainerClasses[] =
     FACILITY_CLASS_HIKER,
 };
 
-static const u8 sFemaleTrainerClasses[] =
+const u8 gTowerFemaleFacilityClasses[20] =
 {
     FACILITY_CLASS_AROMA_LADY,
     FACILITY_CLASS_TUBER_F,
@@ -163,7 +163,7 @@ static const u8 sFemaleTrainerClasses[] =
     FACILITY_CLASS_LASS,
 };
 
-static const u8 sMaleTrainerGfxIds[] =
+const u8 gTowerMaleTrainerGfxIds[30] =
 {
     OBJ_EVENT_GFX_HIKER,
     OBJ_EVENT_GFX_TUBER_M,
@@ -197,7 +197,7 @@ static const u8 sMaleTrainerGfxIds[] =
     OBJ_EVENT_GFX_HIKER,
 };
 
-static const u8 sFemaleTrainerGfxIds[] =
+const u8 gTowerFemaleTrainerGfxIds[20] =
 {
     OBJ_EVENT_GFX_WOMAN_2,
     OBJ_EVENT_GFX_TUBER_F,
@@ -268,8 +268,6 @@ extern void SetBattleTowerTrainerGfxId(u8);
 static void SaveCurrentWinStreak(void);
 static void SetTowerInterviewData(void);
 static void CheckMonBattleTowerBanlist(u16, u16, u16, u8, u8, u16 *, u16 *, u8 *);
-static void ClearEReaderTrainer(struct BattleTowerEReaderTrainer *);
-static void CalcRubyBattleTowerChecksum(struct RSBattleTowerRecord *);
 static void ClearBattleTowerRecord(struct RSBattleTowerRecord *);
 
 extern const u8 gText_SpaceAndSpace[];
@@ -527,24 +525,24 @@ void SetBattleTowerTrainerGfxId(u8 trainerId)
 
     for (i = 0; i < 30; i++)
     {
-        if (sMaleTrainerClasses[i] == facilityClass)
+        if (gTowerMaleFacilityClasses[i] == facilityClass)
             break;
     }
     if (i != 30)
     {
-        u8 trainerObjectGfxId = sMaleTrainerGfxIds[i];
+        u8 trainerObjectGfxId = gTowerMaleTrainerGfxIds[i];
         VarSet(VAR_OBJ_GFX_ID_0, trainerObjectGfxId);
         return;
     }
 
     for (i = 0; i < 20; i++)
     {
-        if (sFemaleTrainerClasses[i] == facilityClass)
+        if (gTowerFemaleFacilityClasses[i] == facilityClass)
             break;
     }
     if (i != 20)
     {
-        u8 trainerObjectGfxId = sFemaleTrainerGfxIds[i];
+        u8 trainerObjectGfxId = gTowerFemaleTrainerGfxIds[i];
         VarSet(VAR_OBJ_GFX_ID_0, trainerObjectGfxId);
         return;
     }
@@ -968,7 +966,7 @@ void CheckMonBattleTowerBanlist(u16 species, u16 heldItem, u16 hp, u8 battleTowe
 void CheckPartyBattleTowerBanlist(void)
 {
     s32 i;
-    u16 species2;
+    u16 species;
     u16 heldItem;
     u8 level;
     u16 hp;
@@ -981,12 +979,12 @@ void CheckPartyBattleTowerBanlist(void)
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        species2 = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
+        species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
         heldItem = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
         level = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);
         hp = GetMonData(&gPlayerParty[i], MON_DATA_HP);
 
-        CheckMonBattleTowerBanlist(species2, heldItem, hp, gSpecialVar_Result, level, validPartySpecies, validPartyHeldItems, &counter);
+        CheckMonBattleTowerBanlist(species, heldItem, hp, gSpecialVar_Result, level, validPartySpecies, validPartyHeldItems, &counter);
     }
 
     if (counter < 3)
@@ -1284,12 +1282,12 @@ static void SaveBattleTowerRecord(void)
 
     if (gSaveBlock2.playerGender != MALE)
     {
-        trainerClass = sFemaleTrainerClasses[(gSaveBlock2.playerTrainerId[0] + gSaveBlock2.playerTrainerId[1]
+        trainerClass = gTowerFemaleFacilityClasses[(gSaveBlock2.playerTrainerId[0] + gSaveBlock2.playerTrainerId[1]
                                     + gSaveBlock2.playerTrainerId[2] + gSaveBlock2.playerTrainerId[3]) % 20u];
     }
     else
     {
-        trainerClass = sMaleTrainerClasses[(gSaveBlock2.playerTrainerId[0] + gSaveBlock2.playerTrainerId[1]
+        trainerClass = gTowerMaleFacilityClasses[(gSaveBlock2.playerTrainerId[0] + gSaveBlock2.playerTrainerId[1]
                                     + gSaveBlock2.playerTrainerId[2] + gSaveBlock2.playerTrainerId[3]) % 30u];
     }
 
@@ -1476,12 +1474,12 @@ void FillEReaderTrainerWithPlayerData(void)
 
     if (gSaveBlock2.playerGender != MALE)
     {
-        ereaderTrainer->facilityClass = sFemaleTrainerClasses[(gSaveBlock2.playerTrainerId[0] + gSaveBlock2.playerTrainerId[1]
+        ereaderTrainer->facilityClass = gTowerFemaleFacilityClasses[(gSaveBlock2.playerTrainerId[0] + gSaveBlock2.playerTrainerId[1]
                                                         + gSaveBlock2.playerTrainerId[2] + gSaveBlock2.playerTrainerId[3]) % 20u];
     }
     else
     {
-        ereaderTrainer->facilityClass = sMaleTrainerClasses[(gSaveBlock2.playerTrainerId[0] + gSaveBlock2.playerTrainerId[1]
+        ereaderTrainer->facilityClass = gTowerMaleFacilityClasses[(gSaveBlock2.playerTrainerId[0] + gSaveBlock2.playerTrainerId[1]
                                                         + gSaveBlock2.playerTrainerId[2] + gSaveBlock2.playerTrainerId[3]) % 30u];
     }
 
