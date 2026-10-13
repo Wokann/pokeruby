@@ -382,7 +382,7 @@ bool8 ShouldBattleEReaderTrainer(u8 levelType, u16 winStreak)
 // Tower trainer opponent.
 bool8 ChooseSpecialBattleTowerTrainer(void)
 {
-    s32 recordIndex, i;
+    s32 recordIndex, j;
     u8 battleTowerLevelType;
     u16 winStreak;
     bool8 retVal;
@@ -407,10 +407,10 @@ bool8 ChooseSpecialBattleTowerTrainer(void)
             u32 recordHasData = 0;
             u32 checksum = 0;
 
-            for (i = 0; i < sizeof(struct RSBattleTowerRecord) / sizeof(u32) - 1; i++)
+            for (j = 0; j < sizeof(struct RSBattleTowerRecord) / sizeof(u32) - 1; j++)
             {
-                recordHasData |= ((u32 *)record)[i];
-                checksum += ((u32 *)record)[i];
+                recordHasData |= ((u32 *)record)[j];
+                checksum += ((u32 *)record)[j];
             }
 
             if (gSaveBlock2.battleTower.records[recordIndex].winStreak == winStreak
@@ -695,7 +695,7 @@ void get_trainer_name(u8* dest)
 
 void FillBattleTowerTrainerParty(void)
 {
-    s32 partyIndex, i;
+    s32 partyIndex, j;
     u16 chosenMonIndices[3];
     u8 friendship;
     u8 level;
@@ -804,37 +804,37 @@ void FillBattleTowerTrainerParty(void)
         if (teamFlags == 0 || (battleTowerMons[battleMonIndex].teamFlags & teamFlags) == teamFlags)
         {
             // Ensure this pokemon species isn't a duplicate.
-            for (i = 0; i < partyIndex; i++)
+            for (j = 0; j < partyIndex; j++)
             {
-                if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES, NULL) == battleTowerMons[battleMonIndex].species)
+                if (GetMonData(&gEnemyParty[j], MON_DATA_SPECIES, NULL) == battleTowerMons[battleMonIndex].species)
                     break;
             }
 
-            if (i != partyIndex)
+            if (j != partyIndex)
                 continue;
 
             // Ensure this pokemon's held item isn't a duplicate.
-            for (i = 0; i < partyIndex; i++)
+            for (j = 0; j < partyIndex; j++)
             {
-                if (GetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM, NULL) != 0
-                 && GetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM, NULL) == sBattleTowerHeldItems[battleTowerMons[battleMonIndex].itemTableId])
+                if (GetMonData(&gEnemyParty[j], MON_DATA_HELD_ITEM, NULL) != 0
+                 && GetMonData(&gEnemyParty[j], MON_DATA_HELD_ITEM, NULL) == sBattleTowerHeldItems[battleTowerMons[battleMonIndex].itemTableId])
                     break;
             }
 
-            if (i != partyIndex)
+            if (j != partyIndex)
                 continue;
 
             // Ensure this exact pokemon index isn't a duplicate. This check doesn't seem necessary
             // because the species and held items were already checked directly above. Perhaps this
             // is leftover code before the logic for duplicate species and held items was added.
-            //for (i = 0; i < partyIndex && chosenMonIndices[i] != battleMonIndex; i++);
-            for (i = 0; i < partyIndex; i++)
+            //for (j = 0; j < partyIndex && chosenMonIndices[j] != battleMonIndex; j++);
+            for (j = 0; j < partyIndex; j++)
             {
-                if (chosenMonIndices[i] == battleMonIndex)
+                if (chosenMonIndices[j] == battleMonIndex)
                     break;
             }
 
-            if (i != partyIndex)
+            if (j != partyIndex)
                 continue;
 
             chosenMonIndices[partyIndex] = battleMonIndex;
@@ -848,10 +848,10 @@ void FillBattleTowerTrainerParty(void)
                 battleTowerMons[battleMonIndex].evSpread);
 
             // Give the chosen pokemon its specified moves.
-            for (i = 0; i < 4; i++)
+            for (j = 0; j < 4; j++)
             {
-                SetMonMoveSlot(&gEnemyParty[partyIndex], battleTowerMons[battleMonIndex].moves[i], i);
-                if (battleTowerMons[battleMonIndex].moves[i] == MOVE_FRUSTRATION)
+                SetMonMoveSlot(&gEnemyParty[partyIndex], battleTowerMons[battleMonIndex].moves[j], j);
+                if (battleTowerMons[battleMonIndex].moves[j] == MOVE_FRUSTRATION)
                     friendship = 0;  // MOVE_FRUSTRATION is more powerful the lower the pokemon's friendship is.
             }
 
@@ -1339,14 +1339,14 @@ void BattleTower_SoftReset(void)
 
 void ValidateBattleTowerRecordChecksums(void)
 {
-    u32 i;
+    u32 j;
     s32 recordIndex;
     struct RSBattleTowerRecord *record;
     u32 checksum;
 
     checksum = 0;
-    for (i = 0; i < (sizeof(struct RSBattleTowerRecord) / sizeof(u32)) - 1; i++)
-        checksum += ((u32 *)&gSaveBlock2.battleTower.playerRecord)[i];
+    for (j = 0; j < (sizeof(struct RSBattleTowerRecord) / sizeof(u32)) - 1; j++)
+        checksum += ((u32 *)&gSaveBlock2.battleTower.playerRecord)[j];
 
     if (gSaveBlock2.battleTower.playerRecord.checksum != checksum)
         ClearBattleTowerRecord(&gSaveBlock2.battleTower.playerRecord);
@@ -1355,8 +1355,8 @@ void ValidateBattleTowerRecordChecksums(void)
     {
         record = &gSaveBlock2.battleTower.records[recordIndex];
         checksum = 0;
-        for (i = 0; i < (sizeof(struct RSBattleTowerRecord) / sizeof(u32)) - 1; i++)
-            checksum += ((u32 *)record)[i];
+        for (j = 0; j < (sizeof(struct RSBattleTowerRecord) / sizeof(u32)) - 1; j++)
+            checksum += ((u32 *)record)[j];
 
         if (gSaveBlock2.battleTower.records[recordIndex].checksum != checksum)
             ClearBattleTowerRecord(&gSaveBlock2.battleTower.records[recordIndex]);
