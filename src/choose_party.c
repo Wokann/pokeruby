@@ -429,11 +429,11 @@ static void sub_81225D4(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        u8 r4 = gSprites[gTasks[taskId].data[3] >> 8].data[0];
+        u8 slotId = gSprites[gTasks[taskId].data[3] >> 8].data[0];
 
         DestroyTask(taskId);
         ePartyMenu2.unk262 = 1;
-        ShowPokemonSummaryScreen(gPlayerParty, r4, gPlayerPartyCount - 1, sub_81225A4, PSS_MODE_NORMAL);
+        ShowPokemonSummaryScreen(gPlayerParty, slotId, gPlayerPartyCount - 1, sub_81225A4, PSS_MODE_NORMAL);
     }
 }
 
@@ -909,11 +909,11 @@ static void sub_8123034(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        u8 r4 = gSprites[gTasks[taskId].data[3] >> 8].data[0];
+        u8 slotId = gSprites[gTasks[taskId].data[3] >> 8].data[0];
 
         DestroyTask(taskId);
         ePartyMenu2.unk262 = 1;
-        ShowPokemonSummaryScreen(gPlayerParty, r4, gPlayerPartyCount - 1, sub_8123004, PSS_MODE_NORMAL);
+        ShowPokemonSummaryScreen(gPlayerParty, slotId, gPlayerPartyCount - 1, sub_8123004, PSS_MODE_NORMAL);
     }
 }
 
@@ -950,15 +950,15 @@ static void sub_8123170(u8 taskId)
 
 // Do these last two functions really belong in here?
 
-static void sub_81231C4(u8);
+static void Task_PartyMenuWaitForFade(u8 taskId);
 
 void sub_81231AC(void)
 {
     FadeInFromBlack();
-    CreateTask(sub_81231C4, 10);
+    CreateTask(Task_PartyMenuWaitForFade, 10);
 }
 
-static void sub_81231C4(u8 taskId)
+static void Task_PartyMenuWaitForFade(u8 taskId)
 {
     if (IsWeatherNotFadingIn() == TRUE)
     {
