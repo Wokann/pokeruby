@@ -64,7 +64,7 @@ struct PokemonStorageSystemData {
     u8 unk_08ac;
     u8 partyMenuMoveTimer;
     u8 showPartyMenuState;
-    u8 closeBoxFlashing;
+    bool8 closeBoxFlashing;
     u8 closeBoxFlashTimer;
     bool8 closeBoxFlashState;
     s16 newCurrBoxId;
@@ -141,10 +141,10 @@ struct PokemonStorageSystemData {
     u16 displayMonSpecies;
     u16 displayMonItemId;
     u8 filler_11f4[2];
-    u8 setMosaic;
+    bool8 setMosaic;
     u8 displayMonMarkings;
     u8 displayMonLevel;
-    u8 displayMonIsEgg;
+    bool8 displayMonIsEgg;
     u8 displayMonName[0x15];
     u8 displayMonNameText[0x25];
     u8 displayMonSpeciesName[0x25];

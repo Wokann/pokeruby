@@ -64,7 +64,7 @@ struct StorageMessage {
 
 // Static RAM declarations
 
-static EWRAM_DATA u8 sInPartyMenu = 0;
+static EWRAM_DATA bool8 sInPartyMenu = 0;
 static EWRAM_DATA u8 sCurrentBoxOption = 0;
 static EWRAM_DATA u8 sDepositBoxId = 0;
 static EWRAM_DATA u8 sWhichToReshow = 0;
