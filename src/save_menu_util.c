@@ -115,7 +115,7 @@ u8 GetBadgeCount(void)
     return badgeCount;
 }
 
-u16 GetCaughtMonsCount()
+u16 GetCaughtMonsCount(void)
 {
     u16 caughtMonsCount;
 
