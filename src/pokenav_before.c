@@ -483,7 +483,7 @@ const struct OamData gOamData_83E447C =
     .affineParam = 0,
 };
 
-void sub_80F2654(struct Sprite *);
+void SpriteCB_BlinkingBlueLight(struct Sprite *);
 
 const struct SpriteTemplate gSpriteTemplate_83E4484 = 
 {
@@ -493,7 +493,7 @@ const struct SpriteTemplate gSpriteTemplate_83E4484 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80F2654,
+    .callback = SpriteCB_BlinkingBlueLight,
 };
 
 extern const u16 gPokenavMenuOptions3_Pal[];
@@ -648,7 +648,7 @@ static const struct OamData sOam_ConditionMonPic =
 
 const struct SpriteSheet gUnknown_083E4568 = {NULL, 0x800, 6};
 
-void sub_80F2E00(struct Sprite *);
+void MonPicGfxSpriteCallback(struct Sprite *);
 
 const struct SpriteTemplate gSpriteTemplate_83E4570 = 
 {
@@ -658,7 +658,7 @@ const struct SpriteTemplate gSpriteTemplate_83E4570 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80F2E00,
+    .callback = MonPicGfxSpriteCallback,
 };
 
 const struct SpritePalette gUnknown_083E4588 = {NULL, 6};
@@ -692,7 +692,7 @@ const struct OamData gOamData_83E45B0 =
     .affineParam = 0,
 };
 
-void sub_80F3190(struct Sprite *);
+void SpriteCB_RightArrow(struct Sprite *);
 
 const struct SpriteTemplate gSpriteTemplate_83E45B8 = 
 {
@@ -702,7 +702,7 @@ const struct SpriteTemplate gSpriteTemplate_83E45B8 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80F3190,
+    .callback = SpriteCB_RightArrow,
 };
 
 const union AnimCmd gSpriteAnim_83E45D0[] = 
@@ -808,7 +808,7 @@ const struct SpritePalette gUnknown_083E4648[] =
     {NULL, 0},
 };
 
-void sub_80F3328(struct Sprite *);
+void SpriteCB_PartyPokeball(struct Sprite *);
 
 const struct SpriteTemplate gSpriteTemplate_83E4660 = 
 {
@@ -818,7 +818,7 @@ const struct SpriteTemplate gSpriteTemplate_83E4660 =
     .anims = sAnims_ConditionSelectionIcon,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80F3328,
+    .callback = SpriteCB_PartyPokeball,
 };
 
 const u16 gUnknown_083E4678[] = INCBIN_U16("graphics/pokenav/83E4678.gbapal");
@@ -972,7 +972,7 @@ static const union AnimCmd *const sAnims_ConditionSparkle[] =
     &sAnim_ConditionSparkle[12],
 };
 
-void sub_80F3E9C(struct Sprite *sprite);
+void SpriteCB_ConditionSparkle(struct Sprite *sprite);
 
 const struct SpriteTemplate gSpriteTemplate_ConditionSparkle =
 {
@@ -982,7 +982,7 @@ const struct SpriteTemplate gSpriteTemplate_ConditionSparkle =
     .anims = sAnims_ConditionSparkle,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80F3E9C,
+    .callback = SpriteCB_ConditionSparkle,
 };
 
 const struct SpritePalette gUnknown_083E4818 = {sSpinningPokenav_Pal, 16};
@@ -1085,7 +1085,7 @@ const u8 gConditionToLineLength[] =
     34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 35,
 };
 
-const struct ScanlineEffectParams gUnknown_083E4990 = 
+const struct ScanlineEffectParams gConditionGraphScanline =
 {
     (void *)REG_ADDR_WIN0H,
     ((DMA_ENABLE | DMA_START_HBLANK | DMA_32BIT | DMA_REPEAT | DMA_DEST_RELOAD) << 16) | 1,
@@ -1249,7 +1249,7 @@ void sub_80EBD4C()
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
-    sub_80F5BF0();
+    ConditionGraph_Draw();
     ScanlineEffect_InitHBlankDmaTransfer();
 }
 
@@ -1611,11 +1611,11 @@ void sub_80EC4A0()
 		}
         break;
     case 4:
-        sub_80F2620();
+        DestroyRematchBlueLightSprite();
         gPokenavStructPtr->unk304++;
         break;
     case 5:
-        sub_80EF814();
+        DestroyMovingDotsBgTask();
         gPokenavStructPtr->unk304++;
         break;
     case 6:
@@ -1924,19 +1924,19 @@ void sub_80ECC08()
             switch ((s8)gPokenavStructPtr->cursorPos)
             {
             case 0:
-                gPokenavStructPtr->unk87D8 = 22;
+                gPokenavStructPtr->conditionDataId = 22;
                 break;
             case 1:
-                gPokenavStructPtr->unk87D8 = 23;
+                gPokenavStructPtr->conditionDataId = 23;
                 break;
             case 2:
-                gPokenavStructPtr->unk87D8 = 24;
+                gPokenavStructPtr->conditionDataId = 24;
                 break;
             case 3:
-                gPokenavStructPtr->unk87D8 = 33;
+                gPokenavStructPtr->conditionDataId = 33;
                 break;
             case 4:
-                gPokenavStructPtr->unk87D8 = 47;
+                gPokenavStructPtr->conditionDataId = 47;
                 break;
             case 5:
                 sub_80EBDBC(&sub_80EC9A8);
@@ -2101,12 +2101,12 @@ void sub_80ED01C()
         {
 			SetVBlankCallback(NULL);
 			sub_80EED0C();
-			sub_80EF814();
+			DestroyMovingDotsBgTask();
 			gPokenavStructPtr->unk304++;
 		}
         break;
     case 4:
-        sub_80F2620();
+        DestroyRematchBlueLightSprite();
         gPokenavStructPtr->unk304++;
         break;
     case 5:
@@ -2370,13 +2370,13 @@ void sub_80ED620()
         {
 			SetVBlankCallback(NULL);
 			sub_80EED0C();
-			sub_80EF814();
+			DestroyMovingDotsBgTask();
 			gPokenavStructPtr->inSearchMode = 0;
 			gPokenavStructPtr->unk304++;
 		}
         break;
     case 4:
-        sub_80F2620();
+        DestroyRematchBlueLightSprite();
         gPokenavStructPtr->unk304++;
         break;
     case 5:
@@ -2438,40 +2438,40 @@ void sub_80ED620()
     }
 }
 
-void sub_80F4F78(void);
-void sub_80F0174(bool8);
-bool8 sub_80F4FB4(void);
+void DoConditionGraphEnterTransition(void);
+void ToggleGraphData(bool8);
+bool8 ConditionMenu_UpdateMonEnter(void);
 void sub_80F3668(void);
 void sub_80F3698(void);
-bool8 sub_80F5038(void);
+bool8 ConditionMenu_UpdateMonExit(void);
 void sub_80F2F48(void);
-void sub_80F3CE8(void);
+void FreeConditionSparkles(void);
 void sub_80F3614(void);
 void sub_80F357C(void);
-void sub_80F4FDC(void);
+void DoConditionGraphExitTransition(void);
 
 void sub_80ED858(void)
 {
     switch (gPokenavStructPtr->unk304)
     {
     case 0:
-        sub_80F4F78();
-        sub_80F5B38();
+        DoConditionGraphEnterTransition();
+        ConditionGraph_InitResetScanline();
         gPokenavStructPtr->unk304 = 1;
         break;
     case 1:
-        if (!sub_80F5B50())
+        if (!ConditionGraph_ResetScanline())
             gPokenavStructPtr->unk304 = 2;
         break;
     case 2:
-        sub_80F0174(1);
+        ToggleGraphData(1);
         gPokenavStructPtr->unk304 = 3;
         break;
     case 3:
-        if (!sub_80F4FB4())
+        if (!ConditionMenu_UpdateMonEnter())
         {
             sub_80F3C94();
-            sub_80F3D00();
+            CreateConditionSparkleSprites();
             gPokenavStructPtr->unk304 = 4;
         }
         break;
@@ -2507,7 +2507,7 @@ void sub_80ED858(void)
         if (JOY_NEW(B_BUTTON))
         {
             PlaySE(SE_SELECT);
-            sub_80F4FDC();
+            DoConditionGraphExitTransition();
             DestroyConditionSparkleSprites();
             gPokenavStructPtr->unk304 = 9;
             break;
@@ -2536,7 +2536,7 @@ void sub_80ED858(void)
     case 5:
         if (!gpu_sync_bg_show())
         {
-            sub_80F3D00();
+            CreateConditionSparkleSprites();
             gPokenavStructPtr->unk304 = 6;
         }
         break;
@@ -2558,9 +2558,9 @@ void sub_80ED858(void)
         }
         break;
     case 9:
-        if (!sub_80F5038())
+        if (!ConditionMenu_UpdateMonExit())
         {
-            sub_80F0174(0);
+            ToggleGraphData(0);
             sub_80F2F48();
             BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB_BLACK);
             gPokenavStructPtr->unk304 = 11;
@@ -2571,7 +2571,7 @@ void sub_80ED858(void)
     case 11:
         if (!gPaletteFade.active)
         {
-            sub_80F3CE8();
+            FreeConditionSparkles();
             sub_80F5BDC();
             if (!gPokenavStructPtr->inSearchMode)
             {
@@ -2623,12 +2623,12 @@ void sub_80EDB88()
         {
 			SetVBlankCallback(NULL);
 			sub_80EED0C();
-			sub_80EF814();
+			DestroyMovingDotsBgTask();
 			gPokenavStructPtr->unk304++;
 		}
         break;
     case 4:
-        sub_80F2620();
+        DestroyRematchBlueLightSprite();
         gPokenavStructPtr->unk304++;
         break;
     case 5:
@@ -2819,7 +2819,7 @@ void sub_80EDEE4()
 			gPokenavStructPtr->unk304++;
         break;
     case 10:
-        if (!sub_80F170C())
+        if (!MoveConditionMonOnscreen())
 			sub_80EBDBC(&sub_80EE06C);
         break;
     }
@@ -2998,13 +2998,13 @@ void sub_80EE3D8()
         {
 			SetVBlankCallback(NULL);
 			sub_80EED0C();
-			sub_80EF814();
+			DestroyMovingDotsBgTask();
 			sub_80EEE08();
 			gPokenavStructPtr->unk304++;
 		}
         break;
     case 4:
-        sub_80F2620();
+        DestroyRematchBlueLightSprite();
         gPokenavStructPtr->unk304++;
         break;
     case 5:

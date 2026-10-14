@@ -68,8 +68,8 @@ void sub_80F6C20(void)
         }
     }
 
-    gPokenavStructPtr->unk876C = 0;
-    gPokenavStructPtr->unk8770 = 0;
+    gPokenavStructPtr->selectedIndexOffset = 0;
+    gPokenavStructPtr->windowTopIndex = 0;
     gPokenavStructPtr->unk876E = 0;
     gPokenavStructPtr->unk8772 = gPokenavStructPtr->unkD158 <= 8 ? gPokenavStructPtr->unkD158 - 1 : 7;
     gPokenavStructPtr->unk8774 = gPokenavStructPtr->unkD158 - 1;

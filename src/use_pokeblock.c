@@ -290,7 +290,7 @@ static void LoadUsePokeblockMenu(void)
             sInfo->mainState++;
             break;
         case 14:
-            if (!sub_80F170C())
+            if (!MoveConditionMonOnscreen())
             {
                 sInfo->mainState++;
             }
@@ -308,11 +308,11 @@ static void LoadUsePokeblockMenu(void)
             break;
         case 17:
             sub_80F567C(gPokenavStructPtr->conditions[0], gPokenavStructPtr->savedPositions[0]);
-            sub_80F5B38();
+            ConditionGraph_InitResetScanline();
             sInfo->mainState++;
             break;
         case 18:
-            if (!sub_80F5B50())
+            if (!ConditionGraph_ResetScanline())
             {
                 sInfo->mainState++;
             }
@@ -363,7 +363,7 @@ static void ShowUsePokeblockMenu(void)
             if (!gPaletteFade.active)
             {
                 sub_80F3C94();
-                sub_80F3D00();
+                CreateConditionSparkleSprites();
                 SetUsePokeblockCallback(UsePokeblockMenu);
             }
             break;
@@ -417,7 +417,7 @@ static void UsePokeblockMenu(void)
             if (!Overworld_IsRecvQueueAtMax())
             {
                 sub_80F1934();
-                sub_80F3D00();
+                CreateConditionSparkleSprites();
                 sInfo->mainState = 0;
             }
             break;
@@ -526,7 +526,7 @@ static void ShowUsePokeblockMenuForResults(void)
             if (!gPaletteFade.active)
             {
                 sub_80F3C94();
-                sub_80F3D00();
+                CreateConditionSparkleSprites();
                 SetUsePokeblockCallback(ShowPokeblockResults);
                 SetMainCallback2(CB2_UsePokeblockMenu);
             }
@@ -540,7 +540,7 @@ static void ShowPokeblockResults(void)
     {
         case 0:
             sInfo->mon = &gPlayerParty[0];
-            sInfo->mon = &gPlayerParty[gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].partyIdx];
+            sInfo->mon = &gPlayerParty[gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].monId];
             DestroyConditionSparkleSprites();
             sInfo->mainState++;
             break;
@@ -559,7 +559,7 @@ static void ShowPokeblockResults(void)
             if (!sub_80F555C())
             {
                 CalculateNumAdditionalSparkles(GetPartyIdFromSelectionId(gPokenavStructPtr->unk87DC));
-                sub_80F3D00();
+                CreateConditionSparkleSprites();
                 sInfo->timer = 0;
                 sInfo->mainState++;
             }
@@ -746,7 +746,7 @@ static void CalculateConditionEnhancements(void)
 {
     u16 i;
     struct Pokemon *mon = gPlayerParty;
-    mon += gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].partyIdx;
+    mon += gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].monId;
     GetMonConditions(mon, sInfo->conditionsBeforeBlock);
     AddPokeblockToConditions(sInfo->pokeblock, mon);
     GetMonConditions(mon, sInfo->conditionsAfterBlock);
@@ -791,7 +791,7 @@ static void CalculatePokeblockEffectiveness(struct Pokeblock *pokeblock, struct 
 static bool8 IsSheenMaxed(void)
 {
     struct Pokemon *pokemon = gPlayerParty;
-    pokemon += gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].partyIdx;
+    pokemon += gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].monId;
     if (GetMonData(pokemon, MON_DATA_SHEEN) == 255)
         return TRUE;
     return FALSE;
