@@ -31,7 +31,7 @@ struct PaletteStruct
 {
     const struct PaletteStructTemplate *template;
     bool32 active:1;
-    u16 flag:1;
+    bool32 flag:1;
     u32 baseDestOffset:9;
     u16 destOffset:10;
     u16 srcIndex:7;
@@ -354,7 +354,7 @@ static void PaletteStruct_Reset(u8 paletteNum)
     sPaletteStructs[paletteNum].countdown2 = 0;
 }
 
-void ResetPaletteFadeControl()
+void ResetPaletteFadeControl(void)
 {
     gPaletteFade.multipurpose1 = 0;
     gPaletteFade.multipurpose2 = 0;
@@ -399,7 +399,7 @@ static u8 PaletteStruct_GetPalNum(u16 id)
     return 16;
 }
 
-static u8 UpdateNormalPaletteFade()
+static u8 UpdateNormalPaletteFade(void)
 {
     u16 paletteOffset;
     u16 selectedPalettes;
