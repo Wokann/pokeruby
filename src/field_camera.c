@@ -22,7 +22,7 @@ struct FieldCameraOffset
 static struct FieldCameraOffset sFieldCameraOffset;
 static u16 sHorizontalCameraPan;
 static s16 sVerticalCameraPan;
-static u8 sBikeCameraPanFlag;
+static bool8 sBikeCameraPanFlag;
 static void (*sFieldCameraPanningCallback)(void);
 
 struct CameraObject gFieldCamera;
