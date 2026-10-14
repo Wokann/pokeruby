@@ -846,9 +846,9 @@ static bool8 EggGroupsOverlap(u16 *eggGroups1, u16 *eggGroups2)
     // same egg groups.
     s32 i, j;
 
-    for (i = 0; i < DAYCARE_MON_COUNT; i++)
+    for (i = 0; i < EGG_GROUPS_PER_MON; i++)
     {
-        for (j = 0; j < DAYCARE_MON_COUNT; j++)
+        for (j = 0; j < EGG_GROUPS_PER_MON; j++)
         {
             if (eggGroups1[i] == eggGroups2[j])
             {

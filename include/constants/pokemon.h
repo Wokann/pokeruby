@@ -3,6 +3,8 @@
 
 #define NUM_BATTLE_STATS 8
 
+#define EGG_GROUPS_PER_MON            2
+
 #define MON_DATA_PERSONALITY        0
 #define MON_DATA_OT_ID              1
 #define MON_DATA_NICKNAME           2
