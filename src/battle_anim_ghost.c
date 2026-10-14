@@ -9,7 +9,6 @@
 #include "constants/battle.h"
 #include "constants/songs.h"
 
-extern u8 gBattlerSpriteIds[];
 
 static void sub_80DDB6C(struct Sprite *);
 static void AnimConfuseRayBallBounce_Step1(struct Sprite *);

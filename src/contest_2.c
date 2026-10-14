@@ -85,10 +85,8 @@ extern void Task_LinkContest_CommunicateAppealsState(u8 taskId);
 extern void Task_UpdateContestantBoxOrder(u8 taskId);
 
 extern struct MusicPlayerInfo gMPlayInfo_SE1;
-extern u8 gBattleMonForms[];
 extern u8 gDisplayedStringBattle[];
 extern u8 gBattlerTarget;
-extern u8 gBattlerSpriteIds[];
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern void (*const gContestEffectFuncs[])(void);
 

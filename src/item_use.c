@@ -48,7 +48,6 @@ extern u8 gPokemonItemUseType;
 extern u8 gLastFieldPokeMenuOpened;
 extern u8 gBattlerInMenuId;
 
-extern u16 gBattlerPartyIndexes[];
 
 extern u16 gBattleTypeFlags;
 

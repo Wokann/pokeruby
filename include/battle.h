@@ -522,6 +522,12 @@ extern u8 gLastHitBy[MAX_BATTLERS_COUNT];
 extern u8 gDisplayedStringBattle[];
 
 extern u16 gBattleTypeFlags;
+extern u8 gBattlersCount;
+extern u16 gBattlerPartyIndexes[MAX_BATTLERS_COUNT];
+extern u8 gBattlerPositions[MAX_BATTLERS_COUNT];
+extern u8 gBattlerSpriteIds[MAX_BATTLERS_COUNT];
+extern u32 gTransformedPersonalities[MAX_BATTLERS_COUNT];
+extern u8 gBattleMonForms[MAX_BATTLERS_COUNT];
 extern u8 gUnknown_02023A14_50;
 extern u8 gChosenMovePos;
 extern u16 gCalledMove;

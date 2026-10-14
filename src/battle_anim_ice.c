@@ -10,8 +10,6 @@
 #include "palette.h"
 #include "random.h"
 
-extern u8  gBattlerPositions[];
-extern u8  gBattlerSpriteIds[];
 
 extern u16 gBattle_BG1_X;
 extern u16 gBattle_BG1_Y;

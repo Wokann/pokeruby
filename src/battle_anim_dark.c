@@ -13,8 +13,6 @@
 #include "trig.h"
 #include "constants/battle.h"
 
-extern u8 gBattlerSpriteIds[];
-extern u16 gBattlerPartyIndexes[];
 
 static void AnimUnusedBagSteal(struct Sprite *);
 static void AnimBite(struct Sprite *);

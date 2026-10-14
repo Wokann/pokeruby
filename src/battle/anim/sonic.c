@@ -5,7 +5,6 @@
 #include "battle.h"
 #include "math_util.h"
 
-extern u8 gBattlerPositions[];
 extern u16 gBattleTypeFlags;
 
 static void AnimSonicBoomProjectile(struct Sprite *sprite);

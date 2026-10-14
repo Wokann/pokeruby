@@ -12,7 +12,6 @@
 #include "palette.h"
 #include "constants/battle_anim.h"
 
-extern u16 gBattlerPartyIndexes[];
 void PrepareBattlerSpriteForRotScale(u8, u8);
 void ResetSpriteRotScale(u8);
 void SetBattlerSpriteYOffsetFromYScale(u8);

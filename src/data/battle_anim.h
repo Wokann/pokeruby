@@ -1264,6 +1264,5 @@ const struct BattleAnimBackground gBattleAnimBackgroundTable[] =
 };
 
 extern u16 gBattlerPartyIndexes[4];
-extern u8 gBattlerSpriteIds[];
 extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;

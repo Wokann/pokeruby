@@ -29,7 +29,6 @@ extern void CB2_SetUpReshowBattleScreenAfterMenu(void);
 
 extern u8 gPlayerPartyCount;
 extern u8 gBattlersCount;
-extern u16 gBattlerPartyIndexes[];
 extern u8 gBattlerInMenuId;
 extern u8 gUnknown_0202E8F4;
 extern u8 gSelectedMonPartyId;

@@ -6,7 +6,6 @@
 #include "task.h"
 #include "trig.h"
 
-extern u8 gBattlerSpriteIds[];
 
 static void AnimBonemerangProjectile(struct Sprite *);
 static void AnimBonemerangProjectile_Step(struct Sprite *);

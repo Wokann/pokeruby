@@ -21,7 +21,6 @@ extern s32 gBattleMoveDamage;
 extern u8 gAbsentBattlerFlags;
 extern u8 gBattlerInMenuId;
 extern u8 gBattlersCount;
-extern u16 gBattlerPartyIndexes[];
 extern u8 gActiveBattler;
 extern u8 gPotentialItemEffectBattler;
 extern struct BattlePokemon gBattleMons[];

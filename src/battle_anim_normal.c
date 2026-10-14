@@ -16,9 +16,7 @@
 
 extern u8 gHealthboxSpriteIds[];
 extern u8 gBattlersCount;
-extern u8 gBattlerSpriteIds[];
 extern u8 gBattleEnvironment;
-extern u16 gBattlerPartyIndexes[];
 extern u8 gBattlerTarget;
 extern u8 gEffectBattler;
 extern u8 gBattlerAttacker;

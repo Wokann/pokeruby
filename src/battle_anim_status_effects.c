@@ -9,7 +9,6 @@
 #include "trig.h"
 #include "ewram.h"
 
-extern u8 gBattlerSpriteIds[];
 extern const u8 *const gBattleAnims_StatusConditions[];
 extern const struct OamData gOamData_AffineOff_ObjBlend_64x64;
 extern const struct OamData gOamData_AffineOff_ObjNormal_8x8;

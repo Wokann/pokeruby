@@ -103,10 +103,8 @@ extern u8 gBattleBufferB[][0x200];
 extern u8 gActiveBattler;
 extern u32 gBattleControllerExecFlags;
 extern u8 gBattlersCount;
-extern u16 gBattlerPartyIndexes[];
 extern u8 gCurrentActionFuncId;
 extern u8 gBattlerByTurnOrder[];
-extern u8 gBattlerSpriteIds[];
 extern u16 gCurrentMove;  // This is mis-named. It is a species, not a move ID.
 extern u8 gLastUsedAbility;
 extern u8 gPotentialItemEffectBattler;
@@ -145,7 +143,6 @@ extern u8 gReservedSpritePaletteCount;
 extern u16 gTrainerBattleOpponent_A;
 extern struct BattleEnigmaBerry gEnigmaBerries[];
 extern u16 gBlockRecvBuffer[MAX_LINK_PLAYERS][BLOCK_BUFFER_SIZE / 2];
-extern u8 gBattleMonForms[];
 extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
 extern u16 gBattleWeather;

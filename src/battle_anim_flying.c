@@ -6,7 +6,6 @@
 #include "main.h"
 #include "random.h"
 
-extern u8 gBattlerPositions[];
 extern const struct SpriteTemplate gFlashingHitSplatSpriteTemplate;
 
 static void AnimEllipticalGust(struct Sprite *sprite);

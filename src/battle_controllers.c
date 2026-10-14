@@ -43,8 +43,6 @@ extern u8 gBattleBufferB[][0x200];
 extern u8 gActiveBattler;
 extern u32 gBattleControllerExecFlags;
 extern u8 gBattlersCount;
-extern u16 gBattlerPartyIndexes[];
-extern u8 gBattlerPositions[];
 extern u16 gCurrentMove;
 extern u16 gChosenMove;
 extern u16 gLastUsedItem;

@@ -23,8 +23,6 @@ u16 gMonShrinkDelta;
 u16 gMonShrinkDistance;
 
 extern u8 gHealthboxSpriteIds[];
-extern u8 gBattlerSpriteIds[];
-extern u16 gBattlerPartyIndexes[];
 extern u16 gLastUsedItem;
 extern u8 gDoingBattleAnim;
 extern u8 gEffectBattler;

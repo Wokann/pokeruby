@@ -48,20 +48,7 @@ struct Struct_2017810
 #define BG2CNT (*(vBgCnt *)REG_ADDR_BG2CNT)
 #define BG3CNT (*(vBgCnt *)REG_ADDR_BG3CNT)
 
-extern const union AnimCmd *const gDummySpriteAnimTable[];
-extern const union AffineAnimCmd *const gDummySpriteAffineAnimTable[];
-
-extern u16 gBattlerPartyIndexes[];
-extern u16 gBattleTypeFlags;
-extern u32 gTransformedPersonalities[MAX_BATTLERS_COUNT];
-extern u8 gBattleMonForms[MAX_BATTLERS_COUNT];
-extern u8 gBattlerSpriteIds[MAX_BATTLERS_COUNT];
-extern u8 gBattlerPositions[MAX_BATTLERS_COUNT];
-extern u8 gBattlersCount; // gNumBattleMons?
 extern struct Struct_2017810 unk_2017810[];
-extern u8 gAnimFriendship;
-
-extern u8 UpdateMonIconFrame(struct Sprite *sprite);
 
 EWRAM_DATA static union AffineAnimCmd *sAnimTaskAffineAnim = NULL;
 EWRAM_DATA u32 filler_0202F7D8[3] = {0};

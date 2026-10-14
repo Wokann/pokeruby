@@ -20,8 +20,6 @@ extern struct MusicPlayerInfo gMPlayInfo_BGM;
 extern u16 gBattleTypeFlags;
 extern u8 gBattlerTarget;
 extern u8 gActiveBattler;
-extern u16 gBattlerPartyIndexes[];
-extern u8 gBattlerSpriteIds[];
 extern u8 gDoingBattleAnim;
 extern u8 gHealthboxSpriteIds[];
 

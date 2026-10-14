@@ -8,7 +8,6 @@
 #include "trig.h"
 #include "constants/songs.h"
 
-extern u8 gBattlerSpriteIds[];
 
 static void sub_80DB74C(struct Sprite *sprite);
 static void AnimWallSparkle(struct Sprite *sprite);

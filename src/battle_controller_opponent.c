@@ -29,16 +29,12 @@
 extern u8 gUnknown_02023A14_50;
 extern u8 gActiveBattler;
 extern u8 gBattleBufferA[][0x200];
-extern u16 gBattlerPartyIndexes[];
-extern u8 gBattlerSpriteIds[];
-extern u8 gBattleMonForms[];
 extern void (*gBattlerControllerFuncs[])(void);
 extern u8 gBattleControllerData[];
 extern u8 gHealthboxSpriteIds[];
 extern u16 gBattleTypeFlags;
 extern u16 gTrainerBattleOpponent_A;
 extern u8 gAnimFriendship;
-extern u32 gTransformedPersonalities[];
 extern u8 gAnimMoveTurn;
 extern void (*gAnimScriptCallback)(void);
 extern struct Window gWindowTemplate_Contest_MoveDescription;

@@ -8,7 +8,6 @@
 #define SPRITE gSprites[TASK.data[0]]
 
 
-extern u8 gBattlerSpriteIds[];
 
 static void AnimTask_ShakeMon_Step(u8 taskId);
 static void AnimTask_ShakeMon2_Step(u8 taskId);

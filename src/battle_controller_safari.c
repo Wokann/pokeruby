@@ -31,13 +31,11 @@ extern const u8 gText_SafariZoneMenu[];
 extern void *gBattlerControllerFuncs[];
 extern u8 gBattleBufferA[][0x200];
 extern bool8 gDoingBattleAnim;
-extern u8 gBattlerSpriteIds[];
 extern u16 gBattleTypeFlags;
 extern u32 gBattleControllerExecFlags;
 extern MainCallback gPreBattleCallback1;
 extern u8 gBattlerInMenuId;
 extern u8 gHealthboxSpriteIds[];
-extern u16 gBattlerPartyIndexes[];
 extern u16 gIntroSlideFlags;
 extern u8 gBattleOutcome;
 

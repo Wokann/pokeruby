@@ -47,9 +47,7 @@ extern u8 gBattlerInMenuId;
 extern u16 gTrainerBattleOpponent_A;
 extern u16 gBattleTypeFlags;
 extern const u32 gTMHMLearnsets[][2];
-extern u8 gBattleMonForms[];
 extern u8 gLastUsedAbility;
-extern u16 gBattlerPartyIndexes[];
 
 bool8 HealStatusConditions(struct Pokemon *mon, u32 battlePartyId, u32 healMask, u8 battler)
 {

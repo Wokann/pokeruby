@@ -34,9 +34,6 @@ extern const u16 gBattleAnimMaskPalette_LightBeam[];
 extern const u8 gCureBubblesGfx[];
 extern const u8 gCureBubblesTilemap[];
 extern const u16 gCureBubblesPal[];
-extern u8 gBattleMonForms[];
-extern u8 gBattlerSpriteIds[];
-extern u16 gBattlerPartyIndexes[];
 
 static void AnimBlackSmoke_Step(struct Sprite *sprite);
 static void AnimWhiteHalo_Step1(struct Sprite *sprite);

@@ -12,7 +12,6 @@
 
 extern u16 gBattleTypeFlags;
 extern u16 gIntroSlideFlags;
-extern u8 gBattleMonForms[];
 
 static void BattleIntroTask_ScrollScenery(u8);
 static void BattleIntroTask_FadeScenery(u8);

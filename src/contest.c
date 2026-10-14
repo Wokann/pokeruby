@@ -87,13 +87,10 @@ static void FieldCB_ContestReturnToField(void);
 
 extern u8 gUnknown_020297ED;
 
-extern u8 gBattleMonForms[];
 extern u8 gDisplayedStringBattle[];
 extern u16 gBattleTypeFlags;
 extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
-extern u8 gBattlerPositions[];
-extern u8 gBattlerSpriteIds[];
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 u32 gContestRngValue;
 
