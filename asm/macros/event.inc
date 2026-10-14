@@ -919,65 +919,65 @@
 	.endm
 
 	@ Writes the name of the Pokemon at index species to the specified buffer.
-	.macro bufferspeciesname out:req, species:req
+	.macro bufferspeciesname stringVarId:req, species:req
 	.byte 0x7d
-	.byte \out
+	.byte \stringVarId
 	.2byte \species
 	.endm
 
 	@ Writes the name of the species of the first Pokemon in the player's party to the specified buffer.
-	.macro bufferleadmonspeciesname out:req
+	.macro bufferleadmonspeciesname stringVarId:req
 	.byte 0x7e
-	.byte \out
+	.byte \stringVarId
 	.endm
 
 	@ Writes the nickname of the Pokemon in slot slot (zero-indexed) of the player's party to the specified buffer. If an empty or invalid slot is specified, ten spaces ("") are written to the buffer.
-	.macro bufferpartymonnick out:req, slot:req
+	.macro bufferpartymonnick stringVarId:req, slot:req
 	.byte 0x7f
-	.byte \out
+	.byte \stringVarId
 	.2byte \slot
 	.endm
 
 	@ Writes the name of the item at index item to the specified buffer. If the specified index is larger than the number of items in the game (0x176), the name of item 0 ("????????") is buffered instead.
-	.macro bufferitemname out:req, item:req
+	.macro bufferitemname stringVarId:req, item:req
 	.byte 0x80
-	.byte \out
+	.byte \stringVarId
 	.2byte \item
 	.endm
 
 	@ Writes the name of the decoration at index decoration to the specified buffer. In FireRed, this command is a nop.
-	.macro bufferdecorationname out:req, decoration:req
+	.macro bufferdecorationname stringVarId:req, decoration:req
 	.byte 0x81
-	.byte \out
+	.byte \stringVarId
 	.2byte \decoration
 	.endm
 
 	@ Writes the name of the move at index move to the specified buffer.
-	.macro buffermovename out:req, move:req
+	.macro buffermovename stringVarId:req, move:req
 	.byte 0x82
-	.byte \out
+	.byte \stringVarId
 	.2byte \move
 	.endm
 
 	@ Converts the value of input to a decimal string, and writes that string to the specified buffer.
-	.macro buffernumberstring out:req, input:req
+	.macro buffernumberstring stringVarId:req, input:req
 	.byte 0x83
-	.byte \out
+	.byte \stringVarId
 	.2byte \input
 	.endm
 
 	@ Writes the standard string identified by index to the specified buffer. This command has no protections in place at all, so specifying an invalid standard string (e.x. 0x2B) can and usually will cause data corruption.
-	.macro bufferstdstring out:req, index:req
+	.macro bufferstdstring stringVarId:req, index:req
 	.byte 0x84
-	.byte \out
+	.byte \stringVarId
 	.2byte \index
 	.endm
 
 	@ Copies the string at offset to the specified buffer.
-	.macro bufferstring out:req, offset:req
+	.macro bufferstring stringVarId:req, text:req
 	.byte 0x85
-	.byte \out
-	.4byte \offset
+	.byte \stringVarId
+	.4byte \text
 	.endm
 
 	@ Opens the Pokemart system, offering the specified products for sale.
@@ -1324,10 +1324,10 @@
 	.4byte \text
 	.endm
 
-	.macro vbufferstring byte:req, pointer:req
+	.macro vbufferstring stringVarIndex:req, text:req
 	.byte 0xbf
-	.byte \byte
-	.4byte \pointer
+	.byte \stringVarIndex
+	.4byte \text
 	.endm
 
 	@ Spawns a secondary box showing how many Coins the player has.
@@ -1372,9 +1372,9 @@
 	.endm
 
 	@ Writes the name of the specified (box) PC box to the specified buffer.
-	.macro bufferboxname out:req, box:req
+	.macro bufferboxname stringVarId:req, box:req
 	.byte 0xc6
-	.byte \out
+	.byte \stringVarId
 	.2byte \box
 	.endm
 
@@ -1385,9 +1385,9 @@
 	.endm
 
 	@ The exact purpose of this command is unknown, but it is related to the blue help-text box that appears on the bottom of the screen when the Main Menu is opened.
-	.macro loadhelp pointer:req
+	.macro loadhelp text:req
 	.byte 0xc8
-	.4byte \pointer
+	.4byte \text
 	.endm
 
 	@ The exact purpose of this command is unknown, but it is related to the blue help-text box that appears on the bottom of the screen when the Main Menu is opened.
