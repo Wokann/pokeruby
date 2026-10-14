@@ -857,13 +857,13 @@ static void DrawBlenderBg(void)
 
 void DoBerryBlending(void)
 {
-    u8* field6F; //this temp value is needed to match
+    u8* gameEndState; //this temp value is needed to match
 
     gBerryBlender = eBerryBlenderData;
 
-    field6F = &gBerryBlender->gameEndState;
+    gameEndState = &gBerryBlender->gameEndState;
     gBerryBlender->mainState = 0;
-    *field6F = 0;
+    *gameEndState = 0;
 
     InitLocalPlayers(gSpecialVar_0x8004);
     SetMainCallback2(CB2_LoadBerryBlender);
@@ -1049,7 +1049,7 @@ void StartBlender(void)
 
 static void CB2_StartBlenderLink(void)
 {
-    int i, j;
+    s32 i, j;
     switch (gBerryBlender->mainState)
     {
     case 0:
@@ -1336,7 +1336,7 @@ static void SetPlayerIdMaps(void)
 
 static void PrintPlayerNames(void)
 {
-    int i;
+    s32 i;
     for (i = 0; i < BLENDER_MAX_PLAYERS; i++)
     {
         if (gBerryBlender->arrowIdToPlayerId[i] != 0xFF)
