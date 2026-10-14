@@ -13,7 +13,7 @@ struct Item
     u8 holdEffectParam;
     const u8 *description;
     u8 importance;
-    u8 registrability; // unused
+    bool8 registrability; // unused
     u8 pocket;
     u8 type;
     ItemUseFunc fieldUseFunc;
