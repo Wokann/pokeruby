@@ -161,7 +161,7 @@ struct PokemonStorageSystemData {
     struct Pokemon movingMon;
     struct Pokemon tempMon;
     u8 canReleaseMon;
-    u8 releaseStatusResolved;
+    bool8 releaseStatusResolved;
     u8 unk_267e;
     u8 unk_267f;
     s8 releaseCheckBoxId;

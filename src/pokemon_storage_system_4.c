@@ -38,7 +38,7 @@ EWRAM_DATA static s8 sCursorPosition = 0;
 EWRAM_DATA static bool8 sIsMonBeingMoved = FALSE;
 EWRAM_DATA static u8 sMovingMonOrigBoxId = 0;
 EWRAM_DATA static u8 sMovingMonOrigBoxPos = 0;
-EWRAM_DATA static u8 sAutoActionOn = 0;
+EWRAM_DATA static bool8 sAutoActionOn = 0;
 EWRAM_DATA static u8 sSavedCursorPosition = 0;
 EWRAM_DATA static struct UnkUtil *sUnkUtil = NULL;
 
@@ -2287,7 +2287,7 @@ void AddMenu(void)
 
 s16 HandleMenuInput(void)
 {
-    int input = -2;
+    s32 input = -2;
 
     do
     {
