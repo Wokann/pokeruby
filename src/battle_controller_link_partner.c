@@ -41,7 +41,6 @@ extern void (*gBattlerControllerFuncs[])(void);
 extern u8 gHealthboxSpriteIds[];
 extern u8 gBattleControllerData[];
 extern u8 gBattleMonForms[];
-extern u8 gAnimScriptActive;
 extern void (*gAnimScriptCallback)(void);
 
 extern void Task_HidePartyStatusSummary(u8);

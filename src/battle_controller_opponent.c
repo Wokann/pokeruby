@@ -40,7 +40,6 @@ extern u16 gTrainerBattleOpponent_A;
 extern u8 gAnimFriendship;
 extern u32 gTransformedPersonalities[];
 extern u8 gAnimMoveTurn;
-extern u8 gAnimScriptActive;
 extern void (*gAnimScriptCallback)(void);
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern u8 gDisplayedStringBattle[];

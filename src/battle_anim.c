@@ -22,7 +22,7 @@ static EWRAM_DATA const u8 *sBattleAnimScriptPtr = NULL;
 static EWRAM_DATA const u8 *sBattleAnimScriptRetAddr = NULL;
 EWRAM_DATA void (*gAnimScriptCallback)(void) = NULL;
 static EWRAM_DATA s8 sAnimFramesToWait = 0;
-EWRAM_DATA u8 gAnimScriptActive = FALSE;
+EWRAM_DATA bool8 gAnimScriptActive = FALSE;
 EWRAM_DATA u8 gAnimVisualTaskCount = 0;
 EWRAM_DATA u8 gAnimSoundTaskCount = 0;
 EWRAM_DATA struct DisableStruct *gAnimDisableStructPtr = NULL;
@@ -60,12 +60,12 @@ static void Cmd_end(void);
 static void Cmd_playse(void);
 static void Cmd_monbg(void);
 static void FlipBattlerBgTiles(void);
-static void Task_UpdateMonBg(u8);
+static void Task_UpdateMonBg(u8 taskId);
 static void Cmd_clearmonbg(void);
-static void Task_ClearMonBg(u8);
+static void Task_ClearMonBg(u8 taskId);
 static void Cmd_monbg_static(void);
 static void Cmd_clearmonbg_static(void);
-static void Task_ClearMonBgStatic(u8);
+static void Task_ClearMonBgStatic(u8 taskId);
 static void Cmd_setalpha(void);
 static void Cmd_setbldcnt(void);
 static void Cmd_blendoff(void);
@@ -77,8 +77,8 @@ static void Cmd_jumpifmoveturn(void);
 static void Cmd_goto(void);
 static void Cmd_fadetobg(void);
 static void Cmd_fadetobgfromset(void);
-static void Task_FadeToBg(u8);
-static void LoadMoveBg(u16);
+static void Task_FadeToBg(u8 taskId);
+static void LoadMoveBg(u16 bgId);
 static void LoadDefaultBg(void);
 static void Cmd_restorebg(void);
 static void Cmd_waitbgfadeout(void);
@@ -87,13 +87,13 @@ static void Cmd_changebg(void);
 static void Cmd_playsewithpan(void);
 static void Cmd_setpan(void);
 static void Cmd_panse(void);
-static void Task_PanFromInitialToTarget(u8);
+static void Task_PanFromInitialToTarget(u8 taskId);
 static void Cmd_panse_adjustnone(void);
 static void Cmd_panse_adjustall(void);
 static void Cmd_loopsewithpan(void);
-static void Task_LoopAndPlaySE(u8);
+static void Task_LoopAndPlaySE(u8 taskId);
 static void Cmd_waitplaysewithpan(void);
-static void Task_WaitAndPlaySE(u8);
+static void Task_WaitAndPlaySE(u8 taskId);
 static void Cmd_createsoundtask(void);
 static void Cmd_waitsound(void);
 static void Cmd_jumpargeq(void);
@@ -196,7 +196,7 @@ void DoMoveAnim(u16 move)
     LaunchBattleAnimation(gBattleAnims_Moves, move, TRUE);
 }
 
-void LaunchBattleAnimation(const u8 *const animsTable[], u16 tableId, u8 isMoveAnim)
+void LaunchBattleAnimation(const u8 *const animsTable[], u16 tableId, bool8 isMoveAnim)
 {
     s32 i;
 
@@ -645,7 +645,7 @@ bool8 IsBattlerSpriteVisible(u8 battler)
     return FALSE;
 }
 
-void MoveBattlerSpriteToBG(u8 battler, u8 toBG_2)
+void MoveBattlerSpriteToBG(u8 battler, bool8 toBG_2)
 {
     u8 battlerSpriteId;
 
@@ -716,8 +716,8 @@ void MoveBattlerSpriteToBG(u8 battler, u8 toBG_2)
 
 static void FlipBattlerBgTiles(void)
 {
-    int i;
-    int j;
+    s32 i;
+    s32 j;
     struct BattleAnimBgData animBg;
     u16 *ptr;
 
@@ -743,7 +743,7 @@ static void FlipBattlerBgTiles(void)
     }
 }
 
-void RelocateBattleBgPal(u16 paletteNum, u16 *dest, u32 offset, u8 largeScreen)
+void RelocateBattleBgPal(u16 paletteNum, u16 *dest, u32 offset, bool8 largeScreen)
 {
     u8 i;
     u8 j;
@@ -761,7 +761,7 @@ void RelocateBattleBgPal(u16 paletteNum, u16 *dest, u32 offset, u8 largeScreen)
     }
 }
 
-void ResetBattleAnimBg(u8 toBG2)
+void ResetBattleAnimBg(bool8 toBG2)
 {
     volatile u8 pointlessZero;
     struct BattleAnimBgData animBg;
@@ -880,7 +880,7 @@ static void Cmd_monbg_static(void)
     u8 animBattlerId;
     u8 battler;
     u8 position;
-    u8 toBG_2;
+    bool8 toBG_2;
 
     sBattleAnimScriptPtr++;
     animBattlerId = T1_READ_8(sBattleAnimScriptPtr);
@@ -959,7 +959,7 @@ static void Task_ClearMonBgStatic(u8 taskId)
 {
     u8 position;
     u8 battler;
-    u8 toBG_2;
+    bool8 toBG_2;
 
     gTasks[taskId].data[1]++;
     if (gTasks[taskId].data[1] != 1)
@@ -1323,7 +1323,7 @@ s16 KeepPanInRange(s16 panArg, int oldPan)
 
 s16 CalculatePanIncrement(s16 sourcePan, s16 targetPan, s16 incrementPan)
 {
-    u16 ret;
+    s16 ret;
 
     if (sourcePan < targetPan)
         ret = ((incrementPan < 0) ? -incrementPan : incrementPan);

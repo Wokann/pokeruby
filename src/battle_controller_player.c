@@ -56,7 +56,6 @@ extern u8 gBattlerSpriteIds[];
 extern u16 gBattleTypeFlags;
 extern u8 gBattleOutcome;
 extern void (*gAnimScriptCallback)(void);
-extern bool8 gAnimScriptActive;
 extern u8 gAnimFriendship;
 extern u32 gTransformedPersonalities[];
 extern u8 gBattleMonForms[];

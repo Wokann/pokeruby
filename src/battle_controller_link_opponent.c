@@ -31,7 +31,6 @@ extern u8 gBattleMonForms[];
 extern void (*gBattlerControllerFuncs[])(void);
 extern u8 gAnimFriendship;
 extern u32 gTransformedPersonalities[];
-extern u8 gAnimScriptActive;
 extern void (*gAnimScriptCallback)(void);
 extern u8 gDisplayedStringBattle[];
 extern bool8 gDoingBattleAnim;

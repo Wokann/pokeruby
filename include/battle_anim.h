@@ -57,7 +57,7 @@ struct BattleAnimBackground
 };
 
 extern void (*gAnimScriptCallback)(void);
-extern u8 gAnimScriptActive;
+extern bool8 gAnimScriptActive;
 extern u8 gAnimFriendship;
 extern u8 gAnimMoveTurn;
 extern struct DisableStruct *gAnimDisableStructPtr;
@@ -149,19 +149,19 @@ extern const struct OamData gOamData_AffineDouble_ObjBlend_32x64;
 
 void DoMoveAnim(u16 move);
 void StoreSpriteCallbackInData6(struct Sprite *sprite, void (*callback)(struct Sprite *));
-void LaunchBattleAnimation(const u8 *const animsTable[], u16 tableId, u8 isMoveAnim);
-void MoveBattlerSpriteToBG(u8 battler, u8 toBG_2);
+void LaunchBattleAnimation(const u8 *const animsTable[], u16 tableId, bool8 isMoveAnim);
+void MoveBattlerSpriteToBG(u8 battler, bool8 toBG_2);
 bool8 IsContest(void);
 void ClearBattleAnimationVars(void);
 void DestroyAnimSprite(struct Sprite *sprite);
 void DestroyAnimVisualTask(u8 taskId);
 bool8 IsBattlerSpriteVisible(u8 battler);
 s8 BattleAnimAdjustPanning(s8 pan);
-void RelocateBattleBgPal(u16 paletteNum, u16 *dest, u32 offset, u8 largeScreen);
+void RelocateBattleBgPal(u16 paletteNum, u16 *dest, u32 offset, bool8 largeScreen);
 s16 CalculatePanIncrement(s16 sourcePan, s16 targetPan, s16 incrementPan);
 s16 KeepPanInRange(s16 panArg, int oldPan);
 void DestroyAnimSoundTask(u8 taskId);
-void ResetBattleAnimBg(u8 toBG2);
+void ResetBattleAnimBg(bool8 toBG2);
 s8 BattleAnimAdjustPanning2(s8 pan);
 
 // battle_anim_mons.c
