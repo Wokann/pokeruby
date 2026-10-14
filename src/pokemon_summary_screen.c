@@ -610,7 +610,7 @@ void ShowPokemonSummaryScreen(struct Pokemon *mons, u8 monIndex, u8 maxMonIndex,
         pssData.headerTextId = 1;
         pssData.headerActionTextId = 7;
         break;
-    case PSS_MODE_NO_MOVE_ORDER_EDIT:
+    case SUMMARY_MODE_LOCK_MOVES:
         pssData.minPageIndex = PSS_PAGE_INFO;
         pssData.maxPageIndex = PSS_PAGE_CONTEST_MOVES;
         pssData.unk77 = 0;
@@ -655,7 +655,7 @@ void sub_809DA1C(void)
     case PSS_MODE_PC_NORMAL:
         pssData.inputHandlingTaskId = CreateTask(Task_HandleInput, 0);
         break;
-    case PSS_MODE_NO_MOVE_ORDER_EDIT:
+    case SUMMARY_MODE_LOCK_MOVES:
         pssData.inputHandlingTaskId = CreateTask(Task_HandleInput, 0);
         break;
     case PSS_MODE_SELECT_MOVE:
@@ -1417,7 +1417,7 @@ static void PssScrollLeft(u8 taskId)
         }
         else
         {
-            if (pssData.currPageIndex >= PSS_PAGE_BATTLE_MOVES && (!pssData.lockMovesFlag || pssData.mode == PSS_MODE_NO_MOVE_ORDER_EDIT))
+            if (pssData.currPageIndex >= PSS_PAGE_BATTLE_MOVES && (!pssData.lockMovesFlag || pssData.mode == SUMMARY_MODE_LOCK_MOVES))
                 pssData.headerActionTextId = 6;
             else if (pssData.currPageIndex == PSS_PAGE_INFO)
                 pssData.headerActionTextId = 7;
@@ -1516,7 +1516,7 @@ static void PssScrollRight(u8 taskId)
         }
         else
         {
-            if (pssData.currPageIndex >= PSS_PAGE_BATTLE_MOVES && (!pssData.lockMovesFlag || pssData.mode == PSS_MODE_NO_MOVE_ORDER_EDIT))
+            if (pssData.currPageIndex >= PSS_PAGE_BATTLE_MOVES && (!pssData.lockMovesFlag || pssData.mode == SUMMARY_MODE_LOCK_MOVES))
                 pssData.headerActionTextId = 6;
             else if (pssData.currPageIndex == PSS_PAGE_INFO)
                 pssData.headerActionTextId = 7;

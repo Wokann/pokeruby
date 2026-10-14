@@ -132,7 +132,7 @@ static u8 gUnknown_03000508[8];
 
 struct UnkStructF {
     u8 filler_0000[9];
-    u8 unk_0009;
+    u8 curMonIndex;
     u8 filler_000a[0xff6];
 };
 
@@ -555,9 +555,9 @@ static void CB2_ReturnToTradeMenu(void)
             sub_8047E44();
             unkStructF = &ewram_2010000.unk_08000;
             if (gTradeMenu->cursorPosition < 6)
-                gTradeMenu->cursorPosition = unkStructF->unk_0009;
+                gTradeMenu->cursorPosition = unkStructF->curMonIndex;
             else
-                gTradeMenu->cursorPosition = unkStructF->unk_0009 + 6;
+                gTradeMenu->cursorPosition = unkStructF->curMonIndex + 6;
             gTradeMenu->cursorSpriteId = CreateSprite(&sSpriteTemplate_Cursor, sTradeMonSpriteCoords[gTradeMenu->cursorPosition][0] * 8 + 32, sTradeMonSpriteCoords[gTradeMenu->cursorPosition][1] * 8, 2);
             gMain.state = 15;
             nullsub_5(6, 0);
@@ -1204,11 +1204,11 @@ static void CB_ShowTradeMonSummaryScreen(void)
     {
         if (gTradeMenu->cursorPosition < PARTY_SIZE)
         {
-            ShowPokemonSummaryScreen(gPlayerParty, gTradeMenu->cursorPosition, gTradeMenu->partyCounts[0] - 1, CB2_ReturnToTradeMenu, PSS_MODE_NO_MOVE_ORDER_EDIT);
+            ShowPokemonSummaryScreen(gPlayerParty, gTradeMenu->cursorPosition, gTradeMenu->partyCounts[0] - 1, CB2_ReturnToTradeMenu, SUMMARY_MODE_LOCK_MOVES);
         }
         else
         {
-            ShowPokemonSummaryScreen(gEnemyParty, gTradeMenu->cursorPosition - 6, gTradeMenu->partyCounts[1] - 1, CB2_ReturnToTradeMenu, PSS_MODE_NO_MOVE_ORDER_EDIT);
+            ShowPokemonSummaryScreen(gEnemyParty, gTradeMenu->cursorPosition - 6, gTradeMenu->partyCounts[1] - 1, CB2_ReturnToTradeMenu, SUMMARY_MODE_LOCK_MOVES);
         }
     }
 }
@@ -2268,10 +2268,10 @@ void PrintLevelAndGender(u8 whichParty, u8 monIdx, u8 x, u8 y, u8 width, u8 heig
 
 static void PrintPartyLevelsAndGenders(u8 whichParty)
 {
-    int i;
+    s32 i;
     for (i = 0; i < gTradeMenu->partyCounts[whichParty]; i++)
     {
-        int j = i + whichParty * 6;
+        s32 j = i + whichParty * 6;
         PrintLevelAndGender(whichParty, i, sTradeMonLevelCoords[j][0], sTradeMonLevelCoords[j][1], sTradeMonBoxCoords[j][0], sTradeMonBoxCoords[j][1]);
     }
 }

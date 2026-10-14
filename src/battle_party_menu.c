@@ -618,7 +618,7 @@ static void Task_ShowSummaryScreen(u8 taskId)
     {
         DestroyTask(taskId);
         ePartyMenu2.unk262 = 1;
-        ShowPokemonSummaryScreen(gPlayerParty, partySelection, gPlayerPartyCount - 1, Task_809535C, PSS_MODE_NO_MOVE_ORDER_EDIT);
+        ShowPokemonSummaryScreen(gPlayerParty, partySelection, gPlayerPartyCount - 1, Task_809535C, SUMMARY_MODE_LOCK_MOVES);
     }
 }
 
