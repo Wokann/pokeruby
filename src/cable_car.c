@@ -332,7 +332,7 @@ static void CB2_LoadCableCar(void)
         case 2:
             for (i = 0; i < 3; i++)
             {
-                LoadCompressedObjectPic(&sSpriteSheets[i]);
+                LoadCompressedSpriteSheet(&sSpriteSheets[i]);
             }
             LoadSpritePalettes(sSpritePalettes);
             LZDecompressWram(sGround_Tilemap, eCableCar2->groundTilemap);

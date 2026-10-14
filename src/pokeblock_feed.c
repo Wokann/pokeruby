@@ -610,7 +610,7 @@ static bool8 LoadMonAndSceneGfx(struct Pokemon* mon)
         }
         break;
     case 2:
-        LoadCompressedObjectPic(&gPokeblockCase_SpriteSheet);
+        LoadCompressedSpriteSheet(&gPokeblockCase_SpriteSheet);
         ePokeblockGfxState++;
         break;
     case 3:
@@ -618,7 +618,7 @@ static bool8 LoadMonAndSceneGfx(struct Pokemon* mon)
         ePokeblockGfxState++;
         break;
     case 4:
-        LoadCompressedObjectPic(&sSpriteSheet_Pokeblock);
+        LoadCompressedSpriteSheet(&sSpriteSheet_Pokeblock);
         ePokeblockGfxState++;
         break;
     case 5:

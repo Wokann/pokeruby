@@ -20,7 +20,7 @@ u8 SmokescreenImpact(s16 x, s16 y, bool8 persist)
 
     if (GetSpriteTileStartByTag(sSmokescreenImpactSpriteSheet.tag) == 0xFFFF)
     {
-        LoadCompressedObjectPic(&sSmokescreenImpactSpriteSheet);
+        LoadCompressedSpriteSheet(&sSmokescreenImpactSpriteSheet);
         LoadCompressedSpritePalette(&sSmokescreenImpactSpritePalette);
     }
 

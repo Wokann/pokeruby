@@ -323,7 +323,7 @@ void LoadIntroPart2Graphics(u8 scenery)
         LZ77UnCompVram(&sCloudsBg_Gfx, (void *)(VRAM));
         LZ77UnCompVram(&sCloudsBg_Tilemap, (void *)(VRAM + 0x3000));
         LoadPalette(&sCloudsBg_Pal, 0, 96);
-        LoadCompressedObjectPic(sSpriteSheet_Clouds);
+        LoadCompressedSpriteSheet(sSpriteSheet_Clouds);
         LoadPalette(&sClouds_Pal, 256, 32);
         CreateCloudSprites();
         break;
@@ -331,7 +331,7 @@ void LoadIntroPart2Graphics(u8 scenery)
         LZ77UnCompVram(&sTrees_Gfx, (void *)(VRAM));
         LZ77UnCompVram(&sTrees_Tilemap, (void *)(VRAM + 0x3000));
         LoadPalette(&sTrees_Pal, 0, 32);
-        LoadCompressedObjectPic(sSpriteSheet_TreesSmall);
+        LoadCompressedSpriteSheet(sSpriteSheet_TreesSmall);
         LoadPalette(&sTreesSmall_Pal, 256, 32);
         CreateTreeSprites();
         break;
@@ -372,7 +372,7 @@ void LoadCreditsSceneGraphics(u8 scene)
         LZ77UnCompVram(&sCloudsBg_Gfx, (void *)(VRAM));
         LZ77UnCompVram(&sCloudsBg_Tilemap, (void *)(VRAM + 0x3000));
         LoadPalette(&sCloudsBg_Pal, 0, 96);
-        LoadCompressedObjectPic(sSpriteSheet_Clouds);
+        LoadCompressedSpriteSheet(sSpriteSheet_Clouds);
         LZ77UnCompVram(&sClouds_Gfx, (void *)(VRAM + 0x10000));
         LoadPalette(&sClouds_Pal, 256, 32);
         CreateCloudSprites();
@@ -382,7 +382,7 @@ void LoadCreditsSceneGraphics(u8 scene)
         LZ77UnCompVram(&sCloudsBg_Gfx, (void *)(VRAM));
         LZ77UnCompVram(&sCloudsBg_Tilemap, (void *)(VRAM + 0x3000));
         LoadPalette(&sCloudsBgSunset_Pal, 0, 96);
-        LoadCompressedObjectPic(sSpriteSheet_Clouds);
+        LoadCompressedSpriteSheet(sSpriteSheet_Clouds);
         LZ77UnCompVram(&sClouds_Gfx, (void *)(VRAM + 0x10000));
         LoadPalette(&sCloudsSunset_Pal, 256, 32);
         CreateCloudSprites();
@@ -393,7 +393,7 @@ void LoadCreditsSceneGraphics(u8 scene)
         LZ77UnCompVram(&sTrees_Gfx, (void *)(VRAM));
         LZ77UnCompVram(&sTrees_Tilemap, (void *)(VRAM + 0x3000));
         LoadPalette(&sTreesSunset_Pal, 0, 32);
-        LoadCompressedObjectPic(sSpriteSheet_TreesSmall);
+        LoadCompressedSpriteSheet(sSpriteSheet_TreesSmall);
         LoadPalette(&sTreesSunset_Pal, 256, 32);
         CreateTreeSprites();
         break;
@@ -402,7 +402,7 @@ void LoadCreditsSceneGraphics(u8 scene)
         LZ77UnCompVram(&sHouses_Gfx, (void *)(VRAM));
         LZ77UnCompVram(&sHouses_Tilemap, (void *)(VRAM + 0x3000));
         LoadPalette(&sHouses_Pal, 0, 64);
-        LoadCompressedObjectPic(sSpriteSheet_HouseSilhouette);
+        LoadCompressedSpriteSheet(sSpriteSheet_HouseSilhouette);
         LoadPalette(&sHouseSilhouette_Pal, 256, 32);
         CreateHouseSprites();
         break;

@@ -871,13 +871,13 @@ static bool8 LoadPokemonSummaryScreenGraphics(void)
         LoadCompressedPalette(gSummaryScreen_Pal, 0, 160);
         break;
     case 7:
-        LoadCompressedObjectPic(&sSpriteSheet_MoveTypes);
+        LoadCompressedSpriteSheet(&sSpriteSheet_MoveTypes);
         break;
     case 8:
-        LoadCompressedObjectPic(&sMoveSelectorSpriteSheet);
+        LoadCompressedSpriteSheet(&sMoveSelectorSpriteSheet);
         break;
     case 9:
-        LoadCompressedObjectPic(&sStatusIconsSpriteSheet);
+        LoadCompressedSpriteSheet(&sStatusIconsSpriteSheet);
         break;
     case 10:
         LoadCompressedSpritePalette(&sStatusIconsSpritePalette);

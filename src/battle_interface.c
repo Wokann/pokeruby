@@ -1131,7 +1131,7 @@ u8 CreatePartyStatusSummarySprites(u8 battler, const struct HpAndStatus *partyIn
             sp14++;
     }
 
-    LoadCompressedObjectPic(&gStatusSummaryBarSpriteSheets[isOpponent]);
+    LoadCompressedSpriteSheet(&gStatusSummaryBarSpriteSheets[isOpponent]);
     LoadSpriteSheet(&gStatusSummaryBallsSpriteSheets[isOpponent]);
     LoadSpritePalette(&gStatusSummaryBarSpritePals[isOpponent]);
     LoadSpritePalette(&gStatusSummaryBallsSpritePals[isOpponent]);

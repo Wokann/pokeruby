@@ -619,7 +619,7 @@ static void Task_ShowWinnerMonBanner(u8 taskId)
             gSprites[spriteId].oam.priority = 0;
             gSprites[spriteId].callback = SpriteCB_WinnerMonSlideIn;
             eContestLink80C2020Struct2018000.winnerMonSpriteId = spriteId;
-            LoadCompressedObjectPic(&sSpriteSheet_Confetti);
+            LoadCompressedSpriteSheet(&sSpriteSheet_Confetti);
             LoadCompressedSpritePalette(&sSpritePalette_Confetti);
             CreateTask(Task_CreateConfetti, 10);
             gTasks[taskId].data[0]++;

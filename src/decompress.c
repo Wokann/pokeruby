@@ -15,7 +15,7 @@ void LZDecompressVram(const void *src, void *dest)
     LZ77UnCompVram(src, dest);
 }
 
-void LoadCompressedObjectPic(const struct CompressedSpriteSheet *src)
+void LoadCompressedSpriteSheet(const struct CompressedSpriteSheet *src)
 {
     struct SpriteSheet dest;
 
@@ -66,27 +66,27 @@ void DecompressPicFromTable_2(const struct CompressedSpriteSheet *src, u8 coords
 }
 
 void HandleLoadSpecialPokePic(const struct CompressedSpriteSheet *src, u32 coords, u32 y_offset,
-    void *decompBuf, void *dest, s32 species, u32 pid)
+    void *decompBuf, void *dest, s32 species, u32 personality)
 {
-    u32 frontOrBack;
+    u32 isFrontPic;
 
     // gMonSpriteGfx_Sprite_ptr appears to be a list of pointers to locations to store poke pics for back and front pic here. the first and third pointers are used for back while the others are used for front.
     if (dest == gMonSpriteGfx_Sprite_ptr[0] || dest == gMonSpriteGfx_Sprite_ptr[2])
-        frontOrBack = 0; // backPic
+        isFrontPic = 0; // backPic
     else
-        frontOrBack = 1; // frontPic
+        isFrontPic = 1; // frontPic
 
-    LoadSpecialPokePic(src, coords, y_offset, decompBuf, dest, species, pid, frontOrBack);
+    LoadSpecialPokePic(src, coords, y_offset, decompBuf, dest, species, personality, isFrontPic);
 }
 
 void LoadSpecialPokePic(const struct CompressedSpriteSheet *src, u32 b, u32 c,
-    void *decompBuffer, void *dest, s32 species, u32 pid, u32 frontOrBack)
+    void *decompBuffer, void *dest, s32 species, u32 personality, u32 isFrontPic)
 {
-    u8 frontOrBack8 = frontOrBack;
+    u8 frontOrBack8 = isFrontPic;
 
     if (species == SPECIES_UNOWN)
     {
-        u16 i = (((pid & 0x3000000) >> 18) | ((pid & 0x30000) >> 12) | ((pid & 0x300) >> 6) | (pid & 3)) % 0x1C;
+        u16 i = (((personality & 0x3000000) >> 18) | ((personality & 0x30000) >> 12) | ((personality & 0x300) >> 6) | (personality & 3)) % 0x1C;
 
         // The other Unowns are separate from Unown A.
         if (i == 0)
@@ -104,7 +104,7 @@ void LoadSpecialPokePic(const struct CompressedSpriteSheet *src, u32 b, u32 c,
     else
         LZ77UnCompWram(src->data, dest);
 
-    DrawSpindaSpots(species, pid, dest, frontOrBack8);
+    DrawSpindaSpots(species, personality, dest, frontOrBack8);
 }
 
 void Unused_LZDecompressWramIndirect(const void **src, void *dest)

@@ -402,7 +402,7 @@ static bool8 sub_810B998(void)
             ePokeblockGfxState++;
             break;
         case 3:
-            LoadCompressedObjectPic(&gPokeblockCase_SpriteSheet);
+            LoadCompressedSpriteSheet(&gPokeblockCase_SpriteSheet);
             ePokeblockGfxState++;
             break;
         case 4:

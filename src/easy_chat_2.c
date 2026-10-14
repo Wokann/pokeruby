@@ -747,7 +747,7 @@ void sub_80E8BF4(u8 reporter, u8 frameId)
         break;
     }
 
-    LoadCompressedObjectPic(&gUnknown_083DBD30);
+    LoadCompressedSpriteSheet(&gUnknown_083DBD30);
     LoadSpritePalette(&gUnknown_083DBD38);
     CreateSprite(&gSpriteTemplate_83DBD48, x, y, 1);
 
@@ -887,7 +887,7 @@ void sub_80E8CEC(void)
 {
     u8 spriteId;
 
-    LoadCompressedObjectPic(&gUnknown_083DBD60);
+    LoadCompressedSpriteSheet(&gUnknown_083DBD60);
     LoadSpritePalette(&gUnknown_083DBD68);
 
     spriteId = CreateSprite(&sSpriteTemplate_ModeWindow, 224, 88, 0);

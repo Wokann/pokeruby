@@ -585,7 +585,7 @@ static void LoadWallClockGraphics(void)
     ResetSpriteData();
     ResetPaletteFade();
     FreeAllSpritePalettes();
-    LoadCompressedObjectPic(&sSpriteSheet_ClockHand[0]);
+    LoadCompressedSpriteSheet(&sSpriteSheet_ClockHand[0]);
     LoadSpritePalettes(sSpritePalettes_Clock);
     Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
     InitMenuWindow(&gMenuTextWindowTemplate);

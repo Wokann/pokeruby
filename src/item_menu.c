@@ -512,9 +512,9 @@ static bool8 LoadBagMenu_Graphics(void)
         break;
     case 3:
         if (gSaveBlock2.playerGender == MALE || sReturnLocation == ITEMMENULOCATION_WALLY)
-            LoadCompressedObjectPic(&gBagMaleSpriteSheet);
+            LoadCompressedSpriteSheet(&gBagMaleSpriteSheet);
         else
-            LoadCompressedObjectPic(&gBagFemaleSpriteSheet);
+            LoadCompressedSpriteSheet(&gBagFemaleSpriteSheet);
         ewramBagSetupStep++;
         break;
     case 4:

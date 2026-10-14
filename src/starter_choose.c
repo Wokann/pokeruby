@@ -289,8 +289,8 @@ void CB2_ChooseStarter(void)
     ResetPaletteFade();
     FreeAllSpritePalettes();
     LoadPalette(gBirchBagGrass_Pal, 0, sizeof(gBirchBagGrass_Pal));
-    LoadCompressedObjectPic(&sSpriteSheet_PokeballSelect[0]);
-    LoadCompressedObjectPic(&sSpriteSheet_StarterCircle[0]);
+    LoadCompressedSpriteSheet(&sSpriteSheet_PokeballSelect[0]);
+    LoadCompressedSpriteSheet(&sSpriteSheet_StarterCircle[0]);
     LoadSpritePalettes(sSpritePalettes_StarterChoose);
     Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
     InitMenuWindow(&gMenuTextWindowTemplate);

@@ -65,7 +65,7 @@ static u8 UNUSED Task_FlashingCircleImpacts(u8 battler, bool8 red)
     u8 spriteId;
     u8 i;
 
-    LoadCompressedObjectPic(&gBattleAnimPicTable[136]);
+    LoadCompressedSpriteSheet(&gBattleAnimPicTable[136]);
     LoadCompressedSpritePalette(&gBattleAnimPaletteTable[136]);
     gTasks[taskId].data[0] = battler;
     if (red != 0)
