@@ -24,13 +24,13 @@ struct BackupMapLayout gBackupMapLayout;
 
 static const struct ConnectionFlags sDummyConnectionFlags = {0};
 
-static void InitMapLayoutData(struct MapHeader *mapHeader);
+static void InitMapLayoutData(const struct MapHeader *mapHeader);
 static void InitBackupMapLayoutData(const u16 *map, u16 width, u16 height);
 static void FillSouthConnection(struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset);
 static void FillNorthConnection(struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset);
 static void FillWestConnection(struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset);
 static void FillEastConnection(struct MapHeader const *mapHeader, struct MapHeader const *connectedMapHeader, s32 offset);
-static void InitBackupMapLayoutConnections(struct MapHeader *mapHeader);
+static void InitBackupMapLayoutConnections(const struct MapHeader *mapHeader);
 static void LoadSavedMapView(void);
 static const struct MapConnection *GetIncomingConnection(u8 direction, s32 x, s32 y);
 static bool8 IsPosInIncomingConnectingMap(u8 direction, s32 x, s32 y, const struct MapConnection *connection);
@@ -73,7 +73,7 @@ void InitMapFromSavedGame(void)
     UpdateTVScreensOnMap(gBackupMapLayout.width, gBackupMapLayout.height);
 }
 
-static void InitMapLayoutData(struct MapHeader *mapHeader)
+static void InitMapLayoutData(const struct MapHeader *mapHeader)
 {
     struct MapLayout const *mapLayout;
     int width;
@@ -106,7 +106,7 @@ static void InitBackupMapLayoutData(const u16 *map, u16 width, u16 height)
     }
 }
 
-static void InitBackupMapLayoutConnections(struct MapHeader *mapHeader)
+static void InitBackupMapLayoutConnections(const struct MapHeader *mapHeader)
 {
     // BUG: This results in a null pointer dereference when mapHeader->connections
     // is NULL, causing count to be assigned a garbage value. This garbage value
@@ -469,13 +469,13 @@ static void MoveMapViewToBackup(u8 direction)
     s32 x2, y2;
     u16 *src, *dest;
     int srci, desti;
-    int r9, r8;
+    s32 i, j;
     s32 x, y;
-    int i, j;
+    int srcColumn, destColumn;
     mapView = gSaveBlock1.mapView;
     width = gBackupMapLayout.width;
-    r9 = 0;
-    r8 = 0;
+    i = 0;
+    j = 0;
     x0 = gSaveBlock1.pos.x;
     y0 = gSaveBlock1.pos.y;
     x2 = MAP_OFFSET_W;
@@ -487,7 +487,7 @@ static void MoveMapViewToBackup(u8 direction)
         y2 = MAP_OFFSET_H - 1;
         break;
     case CONNECTION_SOUTH:
-        r8 = 1;
+        j = 1;
         y2 = MAP_OFFSET_H - 1;
         break;
     case CONNECTION_WEST:
@@ -495,23 +495,23 @@ static void MoveMapViewToBackup(u8 direction)
         x2 = MAP_OFFSET_W - 1;
         break;
     case CONNECTION_EAST:
-        r9 = 1;
+        i = 1;
         x2 = MAP_OFFSET_W - 1;
         break;
     }
     for (y = 0; y < y2; y++)
     {
-        i = 0;
-        j = 0;
+        srcColumn = 0;
+        destColumn = 0;
         for (x = 0; x < x2; x++)
         {
             desti = width * (y + y0);
-            srci = (y + r8) * MAP_OFFSET_W + r9;
-            src = &mapView[srci + i];
-            dest = &sBackupMapData[x0 + desti + j];
+            srci = (y + j) * MAP_OFFSET_W + i;
+            src = &mapView[srci + srcColumn];
+            dest = &sBackupMapData[x0 + desti + destColumn];
             *dest = *src;
-            i++;
-            j++;
+            srcColumn++;
+            destColumn++;
         }
     }
     ClearSavedMapView();
