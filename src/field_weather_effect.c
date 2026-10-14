@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle_anim.h"
 #include "event_object_movement.h"
 #include "field_weather.h"
 #include "overworld.h"
@@ -2180,8 +2181,6 @@ static const union AnimCmd *const sBubbleSpriteAnimCmds[] =
 {
     sBubbleSpriteAnimCmd0,
 };
-
-extern const struct OamData gOamData_AffineOff_ObjNormal_8x8;
 
 static const struct SpriteTemplate sBubbleSpriteTemplate =
 {

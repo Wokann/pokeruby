@@ -67,10 +67,10 @@ struct Weather
     u8 targetSnowflakeSpriteCount;
     u16 thunderTimer;
     u16 thunderSETimer;
-    u8 thunderAllowEnd;
-    u8 thunderLongBolt;
+    bool8 thunderAllowEnd;
+    bool8 thunderLongBolt;
     u8 thunderShortBolts;
-    u8 thunderEnqueued;
+    bool8 thunderEnqueued;
     u16 fogHScrollPosX;
     u16 fogHScrollCounter;
     u16 fogHScrollOffset;
