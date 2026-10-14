@@ -7,5 +7,8 @@
 bool8 CheckForTrainersWantingBattle(void);
 void SetBuriedTrainerMovement(struct ObjectEvent *objEvent);
 void DoTrainerApproach(void);
+u8 FldEff_ExclamationMarkIcon(void);
+u8 FldEff_QuestionMarkIcon(void);
+u8 FldEff_HeartIcon(void);
 
 #endif // GUARD_TRAINER_SEE_H

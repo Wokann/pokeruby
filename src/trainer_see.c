@@ -15,9 +15,9 @@
 static bool8 CheckTrainer(u8 objectEventId);
 static void SetIconSpriteData(struct Sprite *sprite, u16 fldEffId, u8 spriteAnimNum);
 static void SpriteCB_TrainerIcons(struct Sprite *sprite);
-static bool8 GetTrainerApproachDistance(struct ObjectEvent *trainerObj);
+static u8 GetTrainerApproachDistance(struct ObjectEvent *trainerObj);
 static void InitTrainerApproachTask(struct ObjectEvent *trainerObj, u8 range);
-static bool8 CheckPathBetweenTrainerAndPlayer(struct ObjectEvent *trainerObj, u8 approachDistance, u8 direction);
+static u8 CheckPathBetweenTrainerAndPlayer(struct ObjectEvent *trainerObj, u8 approachDistance, u8 direction);
 static void Task_RunTrainerSeeFuncList(u8 taskId);
 
 static const u8 sEmotion_ExclamationMarkGfx[] = INCBIN_U8("graphics/field_effects/pics/emotion_exclamation.4bpp");
@@ -62,7 +62,7 @@ static bool8 CheckTrainer(u8 objectEventId)
     else
     {
         struct ObjectEvent *trainerObj = &gObjectEvents[objectEventId];
-        bool8 approachDistance = GetTrainerApproachDistance(trainerObj);
+        u8 approachDistance = GetTrainerApproachDistance(trainerObj);
 
         if (approachDistance)
         {
@@ -77,7 +77,7 @@ static bool8 CheckTrainer(u8 objectEventId)
     }
 }
 
-static bool8 GetTrainerApproachDistance(struct ObjectEvent *trainerObj)
+static u8 GetTrainerApproachDistance(struct ObjectEvent *trainerObj)
 {
     s16 x, y;
     u8 i;
@@ -151,7 +151,7 @@ static u8 GetTrainerApproachDistanceEast(struct ObjectEvent *trainerObj, s16 ran
 #define COLLISION_MASK 1
 #endif
 
-static bool8 CheckPathBetweenTrainerAndPlayer(struct ObjectEvent *trainerObj, u8 approachDistance, u8 direction)
+static u8 CheckPathBetweenTrainerAndPlayer(struct ObjectEvent *trainerObj, u8 approachDistance, u8 direction)
 {
     s16 x, y;
     u8 rangeX;
