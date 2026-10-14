@@ -383,7 +383,7 @@ struct ContestantStatus
           bool8 hasJudgesAttention:1;
           bool8 judgesAttentionWasRemoved:1;
           bool8 usedComboMove:1;
- /*0x16*/ u8 completedCombo;
+ /*0x16*/ bool8 completedCombo;
  /*0x17*/ u8 comboAppealBonus;
  /*0x18*/ u8 repeatJam;
  /*0x19*/ u8 nextTurnOrder;  // turn position

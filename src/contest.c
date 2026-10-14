@@ -44,7 +44,7 @@ static void Task_TryStartLinkContest(u8 taskId);
 static void Task_CommunicateMonIdxs(u8 taskId);
 static void Task_EndCommunicateMonIdxs(u8 taskId);
 static void Task_ReadyStartLinkContest(u8 taskId);
-static u8 SetupContestGraphics(u8 *stateVar);
+static bool8 SetupContestGraphics(u8 *stateVar);
 static void Task_WaitToRaiseCurtainAtStart(u8 taskId);
 static void Task_RaiseCurtainAtStart(u8 taskId);
 static void CB2_ContestMain(void);
@@ -87,10 +87,6 @@ static void FieldCB_ContestReturnToField(void);
 
 extern u8 gUnknown_020297ED;
 
-extern u8 gDisplayedStringBattle[];
-extern u16 gBattleTypeFlags;
-extern u8 gBattlerAttacker;
-extern u8 gBattlerTarget;
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 u32 gContestRngValue;
 
@@ -335,7 +331,7 @@ static void Task_ReadyStartLinkContest(u8 taskId)
     gRngValue = gContestRngValue;
 }
 
-static u8 SetupContestGraphics(u8 *stateVar)
+static bool8 SetupContestGraphics(u8 *stateVar)
 {
     u16 tempPalette1[16];
     u16 tempPalette2[16];
