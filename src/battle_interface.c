@@ -18,13 +18,13 @@
 #include "graphics.h"
 #include "pokemon_summary_screen.h"
 
-struct BattleBar
+struct BattleBarInfo
 {
     u8 healthboxSpriteId;
     u32 maxValue;
     u32 oldValue;
     u32 receivedValue;
-    int currValue;
+    s32 currValue;
 };
 
 static void SpriteCB_HealthBar(struct Sprite *sprite);
@@ -446,13 +446,13 @@ static void Task_HidePartyStatusSummary_DuringBattle(u8 taskId);
 static void Task_HidePartyStatusSummary_BattleStart_1(u8 taskId);
 static void Task_HidePartyStatusSummary_BattleStart_2(u8 taskId);
 static u8 GetStatusIconForBattlerId(u8 statusElementId, u8 battler);
-static int CalcNewBarValue(s32 maxValue, s32 oldValue, int receivedValue, int *currValue, u8 scale, u16 toAdd);
-static u8 GetScaledExpFraction(int oldValue, int receivedValue, int maxValue, u8 scale);
+static s32 CalcNewBarValue(s32 maxValue, s32 oldValue, s32 receivedValue, s32 *currValue, u8 scale, u16 toAdd);
+static u8 GetScaledExpFraction(s32 oldValue, s32 receivedValue, s32 maxValue, u8 scale);
 static void MoveBattleBarGraphically(u8 battler, u8 whichBar);
-static u8 CalcBarFilledPixels(int maxValue, int oldValue, int receivedValue, int *currValue, u8 *pixelsArray, u8 scale);
+static u8 CalcBarFilledPixels(s32 maxValue, s32 oldValue, s32 receivedValue, s32 *currValue, u8 *pixelsArray, u8 scale);
 static void sub_8046128(struct BattleInterfaceStruct1 *barInfo, int *currValue, u16 *dest);
 
-static int DummiedOutFunction(s16 unused1, s16 unused2, int unused3)
+static s32 DummiedOutFunction(s16 unused1, s16 unused2, s32 unused3)
 {
     return 9;
 }
@@ -706,7 +706,7 @@ void DestoryHealthboxSprite(u8 healthboxSpriteId)
     DestroySprite(&gSprites[healthboxSpriteId]);
 }
 
-void DummyBattleInterfaceFunc()
+void DummyBattleInterfaceFunc(u8 healthboxSpriteId, bool8 isDoubleBattleBattlerOnly)
 {
 }
 
@@ -1082,7 +1082,7 @@ u8 CreatePartyStatusSummarySprites(u8 battler, const struct HpAndStatus *partyIn
     s16 bar_pos2_X;
     s16 bar_data0;
 
-    int i, j;
+    s32 i, j;
     u8 ballIconSpritesIds[6];
     s8 sp14;
     u8 summaryBarSpriteId;
@@ -1921,14 +1921,14 @@ s32 MoveBattleBar(u8 battler, u8 healthboxSpriteId, u8 whichBar, u8 unused)
     else
     {
         u16 expFraction;
-        s32 r8;
+        s32 receivedValue;
 
         expFraction = GetScaledExpFraction(eBattleBars[battler].oldValue, eBattleBars[battler].receivedValue, eBattleBars[battler].maxValue, 8);
         if (expFraction == 0)
             expFraction = 1;
-        r8 = eBattleBars[battler].receivedValue;
-        expFraction = ABS(r8 / expFraction);
-        currentBarValue = CalcNewBarValue(eBattleBars[battler].maxValue, eBattleBars[battler].oldValue, r8, &eBattleBars[battler].currValue, 8, expFraction);
+        receivedValue = eBattleBars[battler].receivedValue;
+        expFraction = ABS(receivedValue / expFraction);
+        currentBarValue = CalcNewBarValue(eBattleBars[battler].maxValue, eBattleBars[battler].oldValue, receivedValue, &eBattleBars[battler].currValue, 8, expFraction);
     }
     if (whichBar == 1 || (whichBar == 0 && (!gBattleSpriteInfo[battler].hpNumbersNoBars)))
         MoveBattleBarGraphically(battler, whichBar);
@@ -1993,15 +1993,15 @@ static void MoveBattleBarGraphically(u8 battler, u8 whichBar)
     }
 }
 
-static int CalcNewBarValue(s32 maxValue, s32 oldValue, int receivedValue, int *currValue, u8 scale, u16 toAdd)
+static s32 CalcNewBarValue(s32 maxValue, s32 oldValue, s32 receivedValue, s32 *currValue, u8 scale, u16 toAdd)
 {
-    u8 r2 = scale << 3;
-    int r6;
-    int ret;
+    u8 totalPixels = scale << 3;
+    s32 r6;
+    s32 ret;
 
     if (*currValue == -32768)
     {
-        if (maxValue < r2)
+        if (maxValue < totalPixels)
             *currValue = oldValue << 8;
         else
             *currValue = oldValue;
@@ -2012,9 +2012,9 @@ static int CalcNewBarValue(s32 maxValue, s32 oldValue, int receivedValue, int *c
         oldValue = 0;
     else if (oldValue > maxValue)
         oldValue = maxValue;
-    if (maxValue < r2)
+    if (maxValue < totalPixels)
     {
-        int var = *currValue >> 8;
+        s32 var = *currValue >> 8;
 
         r6 = *currValue;
         if (oldValue == var && (r6 & 0xFF) == 0)
@@ -2027,9 +2027,9 @@ static int CalcNewBarValue(s32 maxValue, s32 oldValue, int receivedValue, int *c
             return -1;
     }
     //_08045FC4
-    if (maxValue < r2)
+    if (maxValue < totalPixels)
     {
-        int toAdd = (maxValue << 8) / r2;
+        s32 toAdd = (maxValue << 8) / totalPixels;
 
         if (receivedValue < 0)
         {
@@ -2077,7 +2077,7 @@ static int CalcNewBarValue(s32 maxValue, s32 oldValue, int receivedValue, int *c
     return ret;
 }
 
-static u8 CalcBarFilledPixels(int maxValue, int oldValue, int receivedValue, int *currValue, u8 *pixelsArray, u8 scale)
+static u8 CalcBarFilledPixels(s32 maxValue, s32 oldValue, s32 receivedValue, s32 *currValue, u8 *pixelsArray, u8 scale)
 {
     s32 newValue = oldValue - receivedValue;
     u8 r3;
@@ -2148,10 +2148,10 @@ static void sub_8046128(struct BattleInterfaceStruct1 *barInfo, int *currValue, 
     CpuCopy16(src, dest, sizeof(src));
 }
 
-static u8 GetScaledExpFraction(int oldValue, int receivedValue, int maxValue, u8 scale)
+static u8 GetScaledExpFraction(s32 oldValue, s32 receivedValue, s32 maxValue, u8 scale)
 {
-    u8 r7 = scale * 8;
-    int newVal = oldValue - receivedValue;
+    u8 totalPixels = scale * 8;
+    s32 newVal = oldValue - receivedValue;
     s8 oldToMax;
     s8 newToMax;
     s32 result;
@@ -2161,8 +2161,8 @@ static u8 GetScaledExpFraction(int oldValue, int receivedValue, int maxValue, u8
     else if (newVal > maxValue)
         newVal = maxValue;
 
-    oldToMax = oldValue * r7 / maxValue;
-    newToMax = newVal * r7 / maxValue;
+    oldToMax = oldValue * totalPixels / maxValue;
+    newToMax = newVal * totalPixels / maxValue;
     result = oldToMax - newToMax;
     return ABS(result);
 }

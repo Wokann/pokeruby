@@ -46,7 +46,7 @@ void SetBattleBarStruct(u8 battler, u8 healthboxSpriteId, u32 maxVal, u32 oldVal
 void SetHealthboxSpriteInvisible(u8 healthboxSpriteId);
 void SetHealthboxSpriteVisible(u8 healthboxSpriteId);
 void DestoryHealthboxSprite(u8 healthboxSpriteId);
-void DummyBattleInterfaceFunc();
+void DummyBattleInterfaceFunc(u8 healthboxSpriteId, bool8 isDoubleBattleBattlerOnly);
 void UpdateOamPriorityInAllHealthboxes(u8 priority);
 void SwapHpBarsWithHpText(void);
 u8 CreatePartyStatusSummarySprites(u8 battler, const struct HpAndStatus *partyInfo, bool8 skipPlayer, bool8 isBattleStart);
