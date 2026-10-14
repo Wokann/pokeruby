@@ -1561,7 +1561,7 @@ static void WallyHandleEndLinkBattle(void)
     BeginFastPaletteFade(3);
     WallyBufferExecCompleted();
 
-    if ((gBattleTypeFlags & BATTLE_TYPE_LINK) && !(gBattleTypeFlags & BATTLE_TYPE_WILD))
+    if ((gBattleTypeFlags & BATTLE_TYPE_LINK) && !(gBattleTypeFlags & BATTLE_TYPE_IS_MASTER))
         gBattlerControllerFuncs[gActiveBattler] = WallySetBattleEndCallbacks;
 }
 

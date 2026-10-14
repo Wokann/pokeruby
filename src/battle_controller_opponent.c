@@ -87,7 +87,7 @@ static void OpponentBufferExecCompleted(void);
 static void OpponentBufferRunCommand(void);
 static u32 GetOpponentMonData(u8 monId, u8 *dst);
 static void SetOpponentMonData(u8 monId);
-void sub_803495C(u8, u8);
+void sub_803495C(u8 battler, bool8 dontClearSubstituteBit);
 static void DoSwitchOutAnimation(void);
 static void OpponentDoMoveAnimation(void);
 void sub_8035C10(struct Sprite *);
@@ -1110,7 +1110,7 @@ void OpponentHandleSendOutPoke(void)
     gBattlerControllerFuncs[gActiveBattler] = SwitchIn_TryShinyAnim;
 }
 
-void sub_803495C(u8 battler, u8 dontClearSubstituteBit)
+void sub_803495C(u8 battler, bool8 dontClearSubstituteBit)
 {
     u16 species;
 
@@ -1875,7 +1875,7 @@ static void OpponentHandleResetActionMoveSelection(void)
 
 static void OpponentHandleEndLinkBattle(void)
 {
-    if ((gBattleTypeFlags & BATTLE_TYPE_LINK) && !(gBattleTypeFlags & BATTLE_TYPE_WILD))
+    if ((gBattleTypeFlags & BATTLE_TYPE_LINK) && !(gBattleTypeFlags & BATTLE_TYPE_IS_MASTER))
     {
         gMain.inBattle = FALSE;
         gMain.callback1 = gPreBattleCallback1;

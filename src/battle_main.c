@@ -468,7 +468,7 @@ static void CB2_HandleStartBattle(void)
         }
         else
         {
-            gBattleTypeFlags |= BATTLE_TYPE_WILD;
+            gBattleTypeFlags |= BATTLE_TYPE_IS_MASTER;
             gBattleCommunication[0] = 8;
             SetAllPlayersBerryData();
         }
