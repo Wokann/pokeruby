@@ -44,7 +44,7 @@ EWRAM_DATA bool8 gDifferentSaveFile = 0;
 EWRAM_DATA u8 gUnknown_020297ED = 0;
 
 
-extern u8 EventScript_ResetAllMapFlags[];
+extern const u8 EventScript_ResetAllMapFlags[];
 
 static const struct ContestWinner sEmptyMuseumPortrait =
 {
