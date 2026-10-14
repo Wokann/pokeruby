@@ -78,7 +78,7 @@ static u32 CopyLinkOpponentMonData(u8 monId, u8 *dst);
 static void LinkOpponentBufferRunCommand(void);
 void sub_8037D2C(void);
 static void SetLinkOpponentMonData(u8 monId);
-void sub_8039430(u8 battler, u8 dontClearSubstituteBit);
+void sub_8039430(u8 battler, bool8 dontClearSubstituteBit);
 static void DoSwitchOutAnimation(void);
 static void LinkOpponentDoMoveAnimation(void);
 static void Task_StartSendOutAnim(u8 taskId);
@@ -1139,7 +1139,7 @@ static void LinkOpponentHandleSwitchInAnim(void)
     gBattlerControllerFuncs[gActiveBattler] = SwitchIn_TryShinyAnim;
 }
 
-void sub_8039430(u8 battler, u8 dontClearSubstituteBit)
+void sub_8039430(u8 battler, bool8 dontClearSubstituteBit)
 {
     u16 species;
 
