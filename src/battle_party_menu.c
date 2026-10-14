@@ -22,19 +22,9 @@
 EWRAM_DATA u8 gBattlePartyCurrentOrder[3] = {};
 EWRAM_DATA u8 gUnknown_02038473 = 0;
 
-extern u8 sub_806BD58(u8, u8);
-extern void PartyMenuPrintMonsLevelOrStatus(void);
-extern void nullsub_13(void);
-extern void CB2_SetUpReshowBattleScreenAfterMenu(void);
-
-extern u8 gPlayerPartyCount;
-extern u8 gBattlersCount;
-extern u8 gBattlerInMenuId;
 extern u8 gUnknown_0202E8F4;
-extern u8 gSelectedMonPartyId;
 extern u8 gPartyMenuMessage_IsPrinting;
 extern void (*gPokemonItemUseCallback)();  //don't know types yet
-extern struct PokemonStorage gPokemonStorage;
 
 static void BufferBattlePartyOrder(u8[3], u8);
 static void BufferBattlePartyOrderBySide(u8[3], u8, u32);

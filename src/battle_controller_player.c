@@ -93,7 +93,6 @@ extern MainCallback gPreBattleCallback1;
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 extern u8 gBattleControllerData[];
 extern u8 gUnknown_0202E8F4;
-extern u8 gSelectedMonPartyId;
 extern u8 gDisplayedStringBattle[];
 extern const u8 gText_LinkStandby[];
 

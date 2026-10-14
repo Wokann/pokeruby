@@ -212,6 +212,7 @@ void TaughtMove(u8 taskId);
 void StopTryingToTeachMove_806F588(u8 taskId);
 bool8 IsMoveHm(u16 move);
 
+extern u8 gSelectedMonPartyId;
 extern u8 gBattlePartyCurrentOrder[3];
 
 void HandleBattlePartyMenu(u8 taskId);
