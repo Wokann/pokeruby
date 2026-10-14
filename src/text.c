@@ -435,7 +435,7 @@ static const struct Font sFonts[] =
     { 3, (u8 *)sBrailleGlyphs,  8,   0 },
 };
 
-static const u8 sTextSpeedDelays[] = { 6, 3, 1 }; // slow, mid, fast
+static const u8 sTextSpeedFrameDelays[] = { 6, 3, 1 }; // slow, mid, fast
 
 static const u8 sExtCtrlCodeLengths[] =
 {
@@ -1774,7 +1774,7 @@ u16 InitWindowTileData(struct Window *win, u16 startOffset)
         retVal = InitVariableWidthFontTileData(win, startOffset);
         break;
     case TEXT_MODE_MONOSPACE:
-        switch (win->template->fontNum)
+        switch (win->template->fontId)
         {
         case 0:
         case 3:
@@ -1806,20 +1806,20 @@ static u16 InitVariableWidthFontTileData(struct Window *win, u16 startOffset)
     win->tileDataOffset = 2;
     buffer =  win->tileData + 32 * win->tileDataStartOffset;
     CpuFastFill(0, buffer, 32);
-    ApplyColors_UnshadowedFont(sBlankTile, (u32 *)(buffer + 32), win->template->foregroundColor, win->template->backgroundColor);
+    ApplyColors_UnshadowedFont(sBlankTile, (u32 *)(buffer + 32), win->template->fgColor, win->template->bgColor);
     return win->tileDataStartOffset + win->tileDataOffset + win->width * win->height;
 }
 
 static u16 LoadFixedWidthFont(struct Window *win, u16 startOffset)
 {
-    s32 glyph;
+    s32 glyphId;
     u8 *buffer = win->tileData + 32 * startOffset;
-    for (glyph = 0; glyph < 256; glyph++)
+    for (glyphId = 0; glyphId < 256; glyphId++)
     {
-        LoadFixedWidthGlyph(win, glyph, buffer);
+        LoadFixedWidthGlyph(win, glyphId, buffer);
         buffer += 64;
     }
-    return 2 * glyph;
+    return 2 * glyphId;
 }
 
 static u16 LoadFixedWidthFont_Font1Latin(struct Window *win, u16 startOffset)
@@ -1828,7 +1828,7 @@ static u16 LoadFixedWidthFont_Font1Latin(struct Window *win, u16 startOffset)
     u8 *buffer = win->tileData + 32 * startOffset;
     for (i = 0; i < 256; i++)
     {
-        ApplyColors_UnshadowedFont(&sFont1LatinGlyphs[8 * i], (u32 *)buffer, win->foregroundColor, win->backgroundColor);
+        ApplyColors_UnshadowedFont(&sFont1LatinGlyphs[8 * i], (u32 *)buffer, win->fgColor, win->bgColor);
         buffer += 32;
     }
     return i;
@@ -1840,7 +1840,7 @@ static u16 LoadFixedWidthFont_Font4Latin(struct Window *win, u16 startOffset)
     u8 *buffer = win->tileData + 32 * startOffset;
     for (i = 0; i < 256; i++)
     {
-        ApplyColors_ShadowedFont(&gFont4LatinGlyphs[8 * i], buffer, win->foregroundColor, win->shadowColor, win->backgroundColor);
+        ApplyColors_ShadowedFont(&gFont4LatinGlyphs[8 * i], buffer, win->fgColor, win->shadowColor, win->bgColor);
         buffer += 32;
     }
     return i;
@@ -1852,7 +1852,7 @@ static u16 LoadFixedWidthFont_Braille(struct Window *win, u16 startOffset)
     u8 *buffer = win->tileData + 32 * startOffset;
     for (i = 0; i < 256; i++)
     {
-        ApplyColors_UnshadowedFont(&sBrailleGlyphs[8 * i], (u32 *)buffer, win->foregroundColor, win->backgroundColor);
+        ApplyColors_UnshadowedFont(&sBrailleGlyphs[8 * i], (u32 *)buffer, win->fgColor, win->bgColor);
         buffer += 32;
     }
     return i;
@@ -1874,8 +1874,8 @@ u32 MultistepInitWindowTileData(struct Window *win, u16 startOffset)
         break;
     case TEXT_MODE_MONOSPACE:
         retVal = 256;
-        if (win->template->fontNum == 0
-         || win->template->fontNum == 3)
+        if (win->template->fontId == 0
+         || win->template->fontId == 3)
             retVal *= 2;
         break;
     }
@@ -1903,35 +1903,35 @@ bool32 MultistepLoadFont(void)
     return retVal;
 }
 
-static void MultistepLoadFont_LoadGlyph(struct Window *win, u16 startOffset, u8 glyph)
+static void MultistepLoadFont_LoadGlyph(struct Window *win, u16 startOffset, u8 glyphId)
 {
     u8 *buffer;
 
-    switch (win->template->fontNum)
+    switch (win->template->fontId)
     {
     case 0:
     case 3:
-        buffer = win->tileData + 32 * startOffset + 64 * glyph;
-        LoadFixedWidthGlyph(win, glyph, buffer);
+        buffer = win->tileData + 32 * startOffset + 64 * glyphId;
+        LoadFixedWidthGlyph(win, glyphId, buffer);
         break;
     case 1:
     case 2:
-        buffer = win->tileData + 32 * (glyph + startOffset);
+        buffer = win->tileData + 32 * (glyphId + startOffset);
         ApplyColors_UnshadowedFont(
-            &sFont1LatinGlyphs[8 * glyph],
+            &sFont1LatinGlyphs[8 * glyphId],
             (u32 *)buffer,
-            win->foregroundColor,
-            win->backgroundColor);
+            win->fgColor,
+            win->bgColor);
         break;
     case 4:
     case 5:
-        buffer = win->tileData + 32 * (glyph + startOffset);
+        buffer = win->tileData + 32 * (glyphId + startOffset);
         ApplyColors_ShadowedFont(
-            &gFont4LatinGlyphs[8 * glyph],
+            &gFont4LatinGlyphs[8 * glyphId],
             buffer,
-            win->foregroundColor,
+            win->fgColor,
             win->shadowColor,
-            win->backgroundColor);
+            win->bgColor);
         break;
     }
 }
@@ -1946,7 +1946,7 @@ void Text_InitWindowWithTemplate(struct Window *win, const struct WindowTemplate
     win->template = (struct WindowTemplate *)winTemplate;
     win->textMode = winTemplate->textMode;
     win->spacing = winTemplate->spacing;
-    win->fontNum = winTemplate->fontNum;
+    win->fontId = winTemplate->fontId;
     win->paletteNum = winTemplate->paletteNum;
     win->tilemapLeft = winTemplate->tilemapLeft;
     win->tilemapTop = winTemplate->tilemapTop;
@@ -1955,16 +1955,16 @@ void Text_InitWindowWithTemplate(struct Window *win, const struct WindowTemplate
     win->tileData = winTemplate->tileData;
     win->tilemap = winTemplate->tilemap;
     SetWindowDefaultColors(win);
-    SetWindowBackgroundColor(win, winTemplate->backgroundColor);
+    SetWindowBackgroundColor(win, winTemplate->bgColor);
     SetWindowShadowColor(win, winTemplate->shadowColor);
-    SetWindowForegroundColor(win, winTemplate->foregroundColor);
+    SetWindowForegroundColor(win, winTemplate->fgColor);
 }
 
 void Text_InitWindow(struct Window *win, const u8 *text, u16 tileDataStartOffset, u8 left, u8 top)
 {
     const struct WindowTemplate *winTemplate = win->template;
     win->textMode = winTemplate->textMode;
-    win->fontNum = winTemplate->fontNum;
+    win->fontId = winTemplate->fontId;
     win->language = GAME_LANGUAGE;
     win->paletteNum = winTemplate->paletteNum;
     win->win_field_B = 0;
@@ -1989,9 +1989,9 @@ void Text_InitWindow(struct Window *win, const u8 *text, u16 tileDataStartOffset
     win->tileData = winTemplate->tileData;
     win->tilemap = winTemplate->tilemap;
     SetWindowDefaultColors(win);
-    SetWindowBackgroundColor(win, winTemplate->backgroundColor);
+    SetWindowBackgroundColor(win, winTemplate->bgColor);
     SetWindowShadowColor(win, winTemplate->shadowColor);
-    SetWindowForegroundColor(win, winTemplate->foregroundColor);
+    SetWindowForegroundColor(win, winTemplate->fgColor);
 }
 
 void Text_InitWindow8002E4C(struct Window *win, const u8 *text, u16 tileDataStartOffset, u8 left, u16 top, u32 a6)
@@ -2032,8 +2032,8 @@ void Contest_StartTextPrinter(struct Window *win, const u8 *text, u16 tileDataSt
     {
         u16 val = GetCursorTileNum(win, 0, 0);
         u8 *buffer = win->tileData + 32 * val;
-        ApplyColors_UnshadowedFont(sBlankTile, (u32 *)buffer, win->backgroundColor, win->backgroundColor);
-        ApplyColors_UnshadowedFont(&sFont1LatinGlyphs[8 * 0x6E], (u32 *)(buffer + 32), win->foregroundColor, win->backgroundColor);
+        ApplyColors_UnshadowedFont(sBlankTile, (u32 *)buffer, win->bgColor, win->bgColor);
+        ApplyColors_UnshadowedFont(&sFont1LatinGlyphs[8 * 0x6E], (u32 *)(buffer + 32), win->fgColor, win->bgColor);
         win->tileDataOffset = 2;
     }
 }
@@ -2164,13 +2164,13 @@ static u8 ExtCtrlCode_Palette(struct Window *win)
 
 static u8 ExtCtrlCode_Font(struct Window *win)
 {
-    win->fontNum = win->text[win->textIndex++];
+    win->fontId = win->text[win->textIndex++];
     return 2;
 }
 
 static u8 ExtCtrlCode_DefaultFont(struct Window *win)
 {
-    win->fontNum = win->template->fontNum;
+    win->fontId = win->template->fontId;
     return 2;
 }
 
@@ -2370,9 +2370,9 @@ u8 sub_8003490(struct Window *win, u8 c, u16 tileDataStartOffset, u8 left, u8 to
     return retVal;
 }
 
-void RenderTextHandleBold(u8 *tileData, const u8 *text)
+void RenderTextHandleBold(u8 *tileData, const u8 *str)
 {
-    Text_InitWindow8004E3C(&gWindowTemplate_81E6C74, tileData, text);
+    Text_InitWindow8004E3C(&gWindowTemplate_81E6C74, tileData, str);
 }
 
 u8 sub_80034EC(u8 *str)
@@ -2569,96 +2569,96 @@ u32 Text_UpdateWindowOverrideLineLength(struct Window *win, u8 lineLength)
     return retVal;
 }
 
-static void PrintGlyph_TextMode0(struct Window *win, u32 glyph)
+static void PrintGlyph_TextMode0(struct Window *win, u32 glyphId)
 {
-    AddToCursorX(win, DrawGlyph_TextMode0(win, glyph));
+    AddToCursorX(win, DrawGlyph_TextMode0(win, glyphId));
     if (win->win_field_B)
         ClipRight(win);
 }
 
-static u8 DrawGlyph_TextMode0(struct Window *win, u32 glyph)
+static u8 DrawGlyph_TextMode0(struct Window *win, u32 glyphId)
 {
-    u8 pixelsWidth = GetGlyphWidth(win, glyph);
-    u32 tilesWidth = DrawGlyphTiles(win, glyph, pixelsWidth);
+    u8 pixelsWidth = GetGlyphWidth(win, glyphId);
+    u32 tilesWidth = DrawGlyphTiles(win, glyphId, pixelsWidth);
     UpdateTilemap(win, tilesWidth);
     return pixelsWidth;
 }
 
-static void PrintGlyph_TextMode1(struct Window *win, u32 glyph)
+static void PrintGlyph_TextMode1(struct Window *win, u32 glyphId)
 {
-    sWriteGlyphTilemapFuncs[win->fontNum](win, glyph);
+    sWriteGlyphTilemapFuncs[win->fontId](win, glyphId);
     win->cursorX += 8;
 }
 
-static void WriteGlyphTilemap_Font0_Font3(struct Window *win, u32 glyph)
+static void WriteGlyphTilemap_Font0_Font3(struct Window *win, u32 glyphId)
 {
-    s16 val = win->tileDataStartOffset + 2 * glyph;
+    s16 val = win->tileDataStartOffset + 2 * glyphId;
     WriteGlyphTilemap(win, val, val + 1);
 }
 
-static void WriteGlyphTilemap_Font1_Font4(struct Window *win, u32 glyph)
+static void WriteGlyphTilemap_Font1_Font4(struct Window *win, u32 glyphId)
 {
-    u32 val = glyph * 2;
+    u32 val = glyphId * 2;
     WriteGlyphTilemap(
         win,
         win->tileDataStartOffset + sFontType1Map[val],
         win->tileDataStartOffset + sFontType1Map[val + 1]);
 }
 
-static void WriteGlyphTilemap_Font2_Font5(struct Window *win, u32 glyph)
+static void WriteGlyphTilemap_Font2_Font5(struct Window *win, u32 glyphId)
 {
     WriteGlyphTilemap(
         win,
         win->tileDataStartOffset + 212,
-        win->tileDataStartOffset + glyph);
+        win->tileDataStartOffset + glyphId);
 }
 
-static void WriteGlyphTilemap_Font6(struct Window *win, u32 glyph)
+static void WriteGlyphTilemap_Font6(struct Window *win, u32 glyphId)
 {
-    u32 val = glyph * 2;
+    u32 val = glyphId * 2;
     WriteGlyphTilemap(
         win,
         win->tileDataStartOffset + sFontType3Map[val],
         win->tileDataStartOffset + sFontType3Map[val + 1]);
 }
 
-static void PrintGlyph_TextMode2(struct Window *win, u32 glyph)
+static void PrintGlyph_TextMode2(struct Window *win, u32 glyphId)
 {
-    u8 width = GetGlyphWidth(win, glyph);
-    DrawGlyph_TextMode2(win, glyph);
+    u8 width = GetGlyphWidth(win, glyphId);
+    DrawGlyph_TextMode2(win, glyphId);
     AddToCursorX(win, width);
     if (win->win_field_B)
         ClipRight(win);
 }
 
-static void DrawGlyph_TextMode2(struct Window *win, u32 glyph)
+static void DrawGlyph_TextMode2(struct Window *win, u32 glyphId)
 {
-    u8 pixelsWidth = GetGlyphWidth(win, glyph);
-    u32 tilesWidth = DrawGlyphTiles(win, glyph, pixelsWidth);
+    u8 pixelsWidth = GetGlyphWidth(win, glyphId);
+    u32 tilesWidth = DrawGlyphTiles(win, glyphId, pixelsWidth);
     UpdateTilemap(win, tilesWidth);
 }
 
-static void LoadFixedWidthGlyph(struct Window *win, u32 glyph, u8 *dest)
+static void LoadFixedWidthGlyph(struct Window *win, u32 glyphId, u8 *dest)
 {
     u8 *upperTile;
     u8 *lowerTile;
 
-    GetGlyphTilePointers(win->fontNum, win->language, glyph, &upperTile, &lowerTile);
+    GetGlyphTilePointers(win->fontId, win->language, glyphId, &upperTile, &lowerTile);
 
-    switch (win->fontNum)
+    switch (win->fontId)
     {
     case 0:
     case 1:
     case 2:
     case 6:
-        ApplyColors_UnshadowedFont(upperTile, (u32 *)dest, win->foregroundColor, win->backgroundColor);
-        ApplyColors_UnshadowedFont(lowerTile, (u32 *)(dest + 32), win->foregroundColor, win->backgroundColor);
+        ApplyColors_UnshadowedFont(upperTile, (u32 *)dest, win->fgColor, win->bgColor);
+        ApplyColors_UnshadowedFont(lowerTile, (u32 *)(dest + 32), win->fgColor, win->bgColor);
         break;
     case 3:
     case 4:
     case 5:
-        ApplyColors_ShadowedFont(upperTile, dest, win->foregroundColor, win->shadowColor, win->backgroundColor);
-        ApplyColors_ShadowedFont(lowerTile, dest + 32, win->foregroundColor, win->shadowColor, win->backgroundColor);
+        ApplyColors_ShadowedFont(upperTile, dest, win->fgColor, win->shadowColor, win->bgColor);
+        ApplyColors_ShadowedFont(lowerTile, dest + 32, win->fgColor, win->shadowColor, win->bgColor);
         break;
     }
 }
@@ -2674,7 +2674,7 @@ static void WriteGlyphTilemap(struct Window *win, u16 upperTileNum, u16 lowerTil
     }
 }
 
-static void GetGlyphTilePointers(u8 fontNum, u8 language, u16 glyph, u8 **upperTilePtr, u8 **lowerTilePtr)
+static void GetGlyphTilePointers(u8 fontId, u8 language, u16 glyphId, u8 **upperTilePtr, u8 **lowerTilePtr)
 {
     u16 index;
     const struct Font *font;
@@ -2684,32 +2684,32 @@ static void GetGlyphTilePointers(u8 fontNum, u8 language, u16 glyph, u8 **upperT
     else
         language = 7;
 
-    font = &sFonts[language + fontNum];
+    font = &sFonts[language + fontId];
 
     switch (font->type)
     {
     case 0:
-        *upperTilePtr = font->glyphs + glyph * font->glyphSize;
+        *upperTilePtr = font->glyphs + glyphId * font->glyphSize;
         *lowerTilePtr = *upperTilePtr + font->lowerTileOffset;
         break;
     case 1:
-        index = 2 * glyph;
+        index = 2 * glyphId;
         *upperTilePtr = font->glyphs + sFontType1Map[index] * font->glyphSize;
         *lowerTilePtr = font->glyphs + sFontType1Map[index + 1] * font->glyphSize;
         break;
     case 2:
         *upperTilePtr = font->glyphs + 212 * font->glyphSize;
-        *lowerTilePtr = font->glyphs + glyph * font->glyphSize;
+        *lowerTilePtr = font->glyphs + glyphId * font->glyphSize;
         break;
     case 3:
-        index = 2 * glyph;
+        index = 2 * glyphId;
         *upperTilePtr = font->glyphs + sFontType3Map[index] * font->glyphSize;
         *lowerTilePtr = font->glyphs + sFontType3Map[index + 1] * font->glyphSize;
         break;
     case 4:
         *upperTilePtr = font->glyphs
-            + (glyph & 0xFFF0) * font->glyphSize
-            + (((glyph &= 0xF) * font->glyphSize) >> 1);
+            + (glyphId & 0xFFF0) * font->glyphSize
+            + (((glyphId &= 0xF) * font->glyphSize) >> 1);
         *lowerTilePtr = *upperTilePtr + font->lowerTileOffset;
         break;
     }
@@ -2727,14 +2727,14 @@ static u16 *GetCursorTilemapPointer(struct Window *win)
     return ptr;
 }
 
-static void ApplyColors_UnshadowedFont(const u8 *src, u32 *dest, u8 foreground, u8 background)
+static void ApplyColors_UnshadowedFont(const u8 *src, u32 *dest, u8 fgColor, u8 bgColor)
 {
     u32 a[2];
     s32 i;
     const u8 *srcRows = src;
 
-    a[0] = background;
-    a[1] = foreground;
+    a[0] = bgColor;
+    a[1] = fgColor;
 
     for (i = 0; i < 8; i++)
     {
@@ -2750,7 +2750,7 @@ static void ApplyColors_UnshadowedFont(const u8 *src, u32 *dest, u8 foreground, 
     }
 }
 
-static void ApplyColors_ShadowedFont(const void *src, void *dest, u8 foreground, u8 shadow, u8 background)
+static void ApplyColors_ShadowedFont(const void *src, void *dest, u8 fgColor, u8 shadowColor, u8 bgColor)
 {
     u32 a[0x10];
     s32 i;
@@ -2771,9 +2771,9 @@ static void ApplyColors_ShadowedFont(const void *src, void *dest, u8 foreground,
     a[0xB] = 0xB;
     a[0xC] = 0xC;
     a[0xD] = 0xD;
-    a[0x0] = background;
-    a[0xE] = shadow;
-    a[0xF] = foreground;
+    a[0x0] = bgColor;
+    a[0xE] = shadowColor;
+    a[0xF] = fgColor;
 
     colorMask = 0xF;
 
@@ -2833,7 +2833,7 @@ static void EraseAtCursor(struct Window *win)
         DrawGlyphTiles(win, 0, 8);
         break;
     case TEXT_MODE_MONOSPACE:
-        sWriteGlyphTilemapFuncs[win->fontNum](win, 0);
+        sWriteGlyphTilemapFuncs[win->fontId](win, 0);
         break;
     }
 }
@@ -2917,37 +2917,37 @@ static void SetWindowDefaultColors(struct Window *win)
 {
     u32 i;
 
-    win->backgroundColor = 0;
+    win->bgColor = 0;
     win->shadowColor = 14;
-    win->foregroundColor = 15;
+    win->fgColor = 15;
 
     for (i = 0; i < 16; i++)
         sGlyphBuffer.colors[i] = i;
 }
 
-static void SetWindowBackgroundColor(struct Window *win, u8 color)
+static void SetWindowBackgroundColor(struct Window *win, u8 bgColor)
 {
     u32 val1;
     u32 val2;
     u32 val3;
-    win->backgroundColor = color;
-    sGlyphBuffer.colors[0] = color;
-    val1 = color | (color << 4);
+    win->bgColor = bgColor;
+    sGlyphBuffer.colors[0] = bgColor;
+    val1 = bgColor | (bgColor << 4);
     val2 = val1 | (val1 << 8);
     val3 = val2 | (val2 << 16);
     sGlyphBuffer.background = val3;
 }
 
-static void SetWindowShadowColor(struct Window *win, u8 color)
+static void SetWindowShadowColor(struct Window *win, u8 shadowColor)
 {
-    win->shadowColor = color;
-    sGlyphBuffer.colors[14] = color;
+    win->shadowColor = shadowColor;
+    sGlyphBuffer.colors[14] = shadowColor;
 }
 
-static void SetWindowForegroundColor(struct Window *win, u8 color)
+static void SetWindowForegroundColor(struct Window *win, u8 fgColor)
 {
-    win->foregroundColor = color;
-    sGlyphBuffer.colors[15] = color;
+    win->fgColor = fgColor;
+    sGlyphBuffer.colors[15] = fgColor;
 }
 
 static u8 GetTextDelay(struct Window *win)
@@ -2955,7 +2955,7 @@ static u8 GetTextDelay(struct Window *win)
     if (!PlayerCanInterruptDelay(win))
         return 3;
 
-    return sTextSpeedDelays[gSaveBlock2.optionsTextSpeed];
+    return sTextSpeedFrameDelays[gSaveBlock2.optionsTextSpeed];
 }
 
 static bool8 PlayerCanInterruptDelay(struct Window *win)
@@ -3183,11 +3183,11 @@ static void DrawDownArrow(struct Window *win)
         {
             u8 *buffer;
             u16 tileNum = win->tileDataStartOffset + 254;
-            if (win->fontNum == 0 || win->fontNum == 3)
+            if (win->fontId == 0 || win->fontId == 3)
                 tileNum *= 2;
             buffer = win->tileData + 32 * tileNum;
-            ApplyColors_ShadowedFont(downArrowTiles, buffer, win->foregroundColor, win->shadowColor, win->backgroundColor);
-            ApplyColors_ShadowedFont(downArrowTiles + 8, buffer + 32, win->foregroundColor, win->shadowColor, win->backgroundColor);
+            ApplyColors_ShadowedFont(downArrowTiles, buffer, win->fgColor, win->shadowColor, win->bgColor);
+            ApplyColors_ShadowedFont(downArrowTiles + 8, buffer + 32, win->fgColor, win->shadowColor, win->bgColor);
             WriteGlyphTilemap(win, tileNum, tileNum + 1);
             break;
         }
@@ -3201,7 +3201,7 @@ static void DrawDownArrow(struct Window *win)
             {
                 u8 *upperTile;
                 u8 *lowerTile;
-                GetGlyphTilePointers(win->fontNum, win->language, 0, &upperTile, &lowerTile);
+                GetGlyphTilePointers(win->fontId, win->language, 0, &upperTile, &lowerTile);
                 glyphTileInfo.width = 8 - glyphTileInfo.startPixel;
                 glyphTileInfo.src = upperTile;
                 glyphTileInfo.dest = (u32 *)(win->tileData + 32 * GetCursorTileNum(win, 1, 0));
@@ -3382,7 +3382,7 @@ static u16 GetBlankTileNum(struct Window *win)
         retVal++;
         break;
     case TEXT_MODE_MONOSPACE:
-        switch (win->fontNum)
+        switch (win->fontId)
         {
         case 1:
         case 2:
@@ -3408,7 +3408,7 @@ static s32 Window_MoveCursor(struct Window *win, u8 x, u8 y)
     win->cursorY = y & 0xF8;
 }
 
-static u8 GetGlyphWidth(struct Window *win, u32 glyph)
+static u8 GetGlyphWidth(struct Window *win, u32 glyphId)
 {
     u8 width = 8;
 
@@ -3421,21 +3421,21 @@ static u8 GetGlyphWidth(struct Window *win, u32 glyph)
         width = win->spacing;
         if (!win->spacing)
         {
-            switch (win->fontNum)
+            switch (win->fontId)
             {
             case 3:
-                width = sFont3Widths[glyph];
+                width = sFont3Widths[glyphId];
                 break;
             case 4:
             case 5:
-                width = sFont4Widths[sFontType1Map[2 * glyph + 1]];
+                width = sFont4Widths[sFontType1Map[2 * glyphId + 1]];
                 break;
             case 0:
-                width = sFont0Widths[glyph];
+                width = sFont0Widths[glyphId];
                 break;
             case 1:
             case 2:
-                width = sFont1Widths[sFontType1Map[2 * glyph + 1]];
+                width = sFont1Widths[sFontType1Map[2 * glyphId + 1]];
                 break;
             case 6:
                 width = 8;
@@ -3607,17 +3607,17 @@ u8 *AlignString(struct Window *win, u8 *dest, const u8 *src, u8 alignAmount, u8 
     return dest;
 }
 
-u8 GetStringWidth(struct Window *win, const u8 *s)
+u8 GetStringWidth(struct Window *win, const u8 *str)
 {
     u8 width = 0;
-    u8 savedFontNum = win->fontNum;
+    u8 savedFontId = win->fontId;
     u8 savedLanguage = win->language;
     u8 savedSpacing = win->spacing;
     s32 i = 0;
 
-    while (s[i] != EOS)
+    while (str[i] != EOS)
     {
-        u8 c = s[i];
+        u8 c = str[i];
         switch (c)
         {
         case PLACEHOLDER_BEGIN:
@@ -3625,31 +3625,31 @@ u8 GetStringWidth(struct Window *win, const u8 *s)
             u8 temp;
             i++;
             temp = win->language;
-            width += GetStringWidth(win, GetExpandedPlaceholder(s[i]));
+            width += GetStringWidth(win, GetExpandedPlaceholder(str[i]));
             win->language = temp;
             i++;
             break;
         }
         case EXT_CTRL_CODE_BEGIN:
             i++;
-            switch (s[i])
+            switch (str[i])
             {
             case 6:
-                win->fontNum = s[i + 1];
+                win->fontId = str[i + 1];
                 break;
             case 7:
-                win->fontNum = win->template->fontNum;
+                win->fontId = win->template->fontId;
                 break;
             case 0x11:
-                width += s[i + 1];
+                width += str[i + 1];
                 break;
             case 0x12:
             case 0x13:
-                if (width < s[i + 1])
-                    width = s[i + 1];
+                if (width < str[i + 1])
+                    width = str[i + 1];
                 break;
             case 0x14:
-                win->spacing = s[i + 1];
+                win->spacing = str[i + 1];
                 break;
             case 0x15:
                 win->language = LANGUAGE_JAPANESE;
@@ -3659,7 +3659,7 @@ u8 GetStringWidth(struct Window *win, const u8 *s)
                 break;
             }
 
-            i += GetExtCtrlCodeLength(s[i]);
+            i += GetExtCtrlCodeLength(str[i]);
             break;
         default:
             i++;
@@ -3669,7 +3669,7 @@ u8 GetStringWidth(struct Window *win, const u8 *s)
 
     win->spacing = savedSpacing;
     win->language = savedLanguage;
-    win->fontNum = savedFontNum;
+    win->fontId = savedFontId;
 
     return width;
 }
@@ -3708,11 +3708,11 @@ u8 Text_GetWindowPaletteNum(struct Window *win)
     return win->paletteNum;
 }
 
-void Text_GetTextColors(struct Window *win, u8 *foreground, u8 *background, u8 *shadow)
+void Text_GetTextColors(struct Window *win, u8 *fgColor, u8 *bgColor, u8 *shadowColor)
 {
-    *foreground = win->foregroundColor;
-    *background = win->backgroundColor;
-    *shadow = win->shadowColor;
+    *fgColor = win->fgColor;
+    *bgColor = win->bgColor;
+    *shadowColor = win->shadowColor;
 }
 
 void Text_InitWindow8004E3C(const struct WindowTemplate *winTemplate, u8 *tileData, const u8 *text)
@@ -4319,14 +4319,14 @@ static void ShiftGlyphTile_ShadowedFont_Width8(struct GlyphBuffer *glyphBuffer, 
     SHIFT_GLYPH_WIDTH8_STEP(7)
 }
 
-static s32 DrawGlyphTiles(struct Window *win, u32 glyph, u32 glyphWidth)
+static s32 DrawGlyphTiles(struct Window *win, u32 glyphId, u32 glyphWidth)
 {
     struct GlyphTileInfo glyphTileInfo;
     u8 *upperTile;
     u8 *lowerTile;
     s32 retVal = 0;
 
-    GetGlyphTilePointers(win->fontNum, win->language, glyph, &upperTile, &lowerTile);
+    GetGlyphTilePointers(win->fontId, win->language, glyphId, &upperTile, &lowerTile);
     glyphTileInfo.textMode = win->textMode;
     glyphTileInfo.startPixel = (win->left + win->cursorX) & 7;
     glyphTileInfo.width = glyphWidth;
@@ -4334,7 +4334,7 @@ static s32 DrawGlyphTiles(struct Window *win, u32 glyph, u32 glyphWidth)
     glyphTileInfo.dest = (u32 *)(win->tileData + 32 * GetCursorTileNum(win, 0, 0));
     glyphTileInfo.colors = sGlyphBuffer.colors;
 
-    switch (win->fontNum)
+    switch (win->fontId)
     {
     case 0:
     case 1:

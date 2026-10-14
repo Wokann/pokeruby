@@ -10,10 +10,10 @@ struct WindowTemplate
     u8 screenBaseBlock;
     u8 priority;
     u8 paletteNum;
-    u8 foregroundColor;
-    u8 backgroundColor;
+    u8 fgColor;
+    u8 bgColor;
     u8 shadowColor;
-    u8 fontNum;
+    u8 fontId;
     u8 textMode;
     u8 spacing;
     u8 tilemapLeft;
@@ -28,10 +28,10 @@ struct WindowTemplate
 struct Window
 {
  /*0x00*/ u8 textMode;
- /*0x01*/ u8 fontNum;
+ /*0x01*/ u8 fontId;
  /*0x02*/ u8 language;
- /*0x03*/ u8 foregroundColor;
- /*0x04*/ u8 backgroundColor;
+ /*0x03*/ u8 fgColor;
+ /*0x04*/ u8 bgColor;
  /*0x05*/ u8 shadowColor;
  /*0x06*/ u8 paletteNum;
  /*0x07*/ u8 tilemapLeft;
@@ -142,7 +142,7 @@ u8 Text_PrintWindow8002F44(struct Window *win);
 u8 Text_PrintWindowSimple(struct Window *win);
 u8 Text_InitWindowAndPrintText(struct Window *win, const u8 *text, u16 tileDataStartOffset, u8 left, u8 top);
 u8 sub_8003490(struct Window *win, u8 c, u16 tileDataStartOffset, u8 left, u8 top);
-void RenderTextHandleBold(u8 *tileData, const u8 *text);
+void RenderTextHandleBold(u8 *tileData, const u8 *str);
 u8 sub_80034EC(u8 *str);
 u8 *sub_8003504(u8 *dest, s32 value, u8 alignAmount, u8 alignType);
 u8 *sub_8003558(u8 *dest, const u8 *src, u8 alignAmount, u8 alignType);
@@ -162,12 +162,12 @@ void Text_BlankWindowRect(struct Window *win, u8 left, u8 top, u8 right, u8 bott
 u8 *AlignInt1(struct Window *win, u8 *dest, s32 value, u8 alignAmount, u8 alignType);
 u8 *AlignInt2(struct Window *win, u8 *dest, s32 value, u8 alignAmount, u8 alignType);
 u8 *AlignString(struct Window *win, u8 *dest, const u8 *src, u8 alignAmount, u8 alignType);
-u8 GetStringWidth(struct Window *win, const u8 *s);
+u8 GetStringWidth(struct Window *win, const u8 *str);
 u8 Text_InitWindow8004D04(struct Window *win, const u8 *text, u16 tileDataStartOffset, u8 left, u16 top, u32 a6);
 u8 Text_InitWindow_RightAligned(struct Window *win, const u8 *text, u16 tileDataStartOffset, u8 right, u8 top);
 u8 Text_InitWindow_Centered(struct Window *win, const u8 *text, u16 tileDataStartOffset, u8 left, u8 top, u16 a6);
 u8 Text_GetWindowPaletteNum(struct Window *win);
-void Text_GetTextColors(struct Window *win, u8 *foreground, u8 *background, u8 *shadow);
+void Text_GetTextColors(struct Window *win, u8 *fgColor, u8 *bgColor, u8 *shadowColor);
 void Text_InitWindow8004E3C(const struct WindowTemplate *winConfig, u8 *tileData, const u8 *text);
 u8 Text_GetStringWidthFromWindowTemplate(const struct WindowTemplate *winConfig, const u8 *s);
 u8 sub_8004FD0(struct Window *win, u8 *dest, const u8 *src, u16 tileDataStartOffset, u8 left, u16 top, u8 width, u32 a8);
