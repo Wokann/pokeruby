@@ -148,7 +148,7 @@ static u8 CreateShopMenu(u8 martType)
     return CreateTask(Task_ShopMenu, 8);
 }
 
-static void SetShopMenuCallback(void *callback)
+static void SetShopMenuCallback(void (*callback)(void))
 {
     sMartInfo.callback = callback;
 }
@@ -369,7 +369,7 @@ static void BuyMenuDrawTextboxBG_Old(u16 *array, s16 offset1, s16 offset2)
     array[offset1 + offset2 + 1] = 0xC3E1;
 }
 
-static void BuyMenuDrawMapMetatileLayer(u16 *dest, s16 offset1, s16 offset2, u16 *src)
+static void BuyMenuDrawMapMetatileLayer(u16 *dest, s16 offset1, s16 offset2, const u16 *src)
 {
     // This function draws a whole 2x2 metatile.
     dest[offset1 + offset2] = src[0]; // top left
@@ -378,7 +378,7 @@ static void BuyMenuDrawMapMetatileLayer(u16 *dest, s16 offset1, s16 offset2, u16
     dest[offset1 + offset2 + 33] = src[3]; // bottom right
 }
 
-static void BuyMenuDrawMapMetatile(s16 x, s16 y, u16 *src, u8 metatileLayerType)
+static void BuyMenuDrawMapMetatile(s16 x, s16 y, const u16 *src, u8 metatileLayerType)
 {
     x <<= 1;
     y = (y <<6) + 0x40;
