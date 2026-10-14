@@ -548,8 +548,8 @@ static bool8 TryLinkTimeout(u8 taskId)
 
 void TryBattleLinkup(u8 arg0)
 {
-    u32 minPlayers = 2;
-    u32 maxPlayers = 2;
+    u8 minPlayers = 2;
+    u8 maxPlayers = 2;
 
     switch (gSpecialVar_0x8004)
     {
@@ -623,7 +623,7 @@ static void Task_ValidateMixingGameLanguage(u8 taskId)
 
 void ValidateMixingGameLanguage(void)
 {
-    int taskId = FindTaskIdByFunc(Task_ValidateMixingGameLanguage);
+    u32 taskId = FindTaskIdByFunc(Task_ValidateMixingGameLanguage);
 
     if (taskId == 0xFF)
     {
