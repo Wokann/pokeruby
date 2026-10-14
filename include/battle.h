@@ -522,6 +522,7 @@ extern u8 gLastHitBy[MAX_BATTLERS_COUNT];
 extern u8 gDisplayedStringBattle[];
 
 extern u16 gBattleTypeFlags;
+extern u8 gBattleOutcome;
 extern u8 gBattlersCount;
 extern u16 gBattlerPartyIndexes[MAX_BATTLERS_COUNT];
 extern u8 gBattlerPositions[MAX_BATTLERS_COUNT];

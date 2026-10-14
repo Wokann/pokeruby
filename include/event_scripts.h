@@ -2,6 +2,12 @@
 #define GUARD_EVENT_SCRIPTS_H
 
 extern const u8 EventScript_TestSignpostMsg[];
+extern const u8 EventScript_StartTrainerApproach[];
+extern const u8 EventScript_DoNoIntroTrainerBattle[];
+extern const u8 EventScript_TryDoDoubleTrainerBattle[];
+extern const u8 EventScript_TryDoNormalTrainerBattle[];
+extern const u8 EventScript_TryDoDoubleRematchBattle[];
+extern const u8 EventScript_TryDoRematchBattle[];
 extern const u8 EventScript_HiddenItemScript[];
 extern const u8 EventScript_PC[];
 extern const u8 EventScript_TV[];

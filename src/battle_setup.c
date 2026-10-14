@@ -48,19 +48,6 @@ EWRAM_DATA static u8 *sTrainerCannotBattleSpeech = NULL;
 EWRAM_DATA static u8 *sTrainerBattleEndScript = NULL;
 EWRAM_DATA static u8 *sTrainerABattleScriptRetAddr = NULL;
 
-extern u16 gSpecialVar_LastTalked;
-extern u8 gBattleOutcome;
-
-extern struct ObjectEvent gObjectEvents[];
-
-extern u8 EventScript_TryDoNormalTrainerBattle[];
-extern u8 EventScript_TryDoDoubleTrainerBattle[];
-extern u8 EventScript_DoNoIntroTrainerBattle[];
-extern u8 EventScript_TryDoRematchBattle[];
-extern u8 EventScript_TryDoDoubleRematchBattle[];
-
-extern u8 EventScript_StartTrainerApproach[];
-
 // The first transition is used if the enemy pokemon are lower level than our pokemon.
 // Otherwise, the second transition is used.
 static const u8 sBattleTransitionTable_Wild[][2] =
@@ -459,7 +446,7 @@ static void DoSafariBattle(void);
 static void DoTrainerBattle(void);
 static void CB2_EndWildBattle(void);
 static void CB2_EndScriptedWildBattle(void);
-static s8 GetBattleTransitionTypeByMap(void);
+static u8 GetBattleTransitionTypeByMap(void);
 static u16 GetSumOfPlayerPartyLevel(u8 numMons);
 static u8 GetSumOfEnemyPartyLevel(u16 opponentId, u8 numMons);
 static u8 GetWildBattleTransition(void);
@@ -485,8 +472,8 @@ static const u8 *GetTrainerCantBattleSpeech(void);
 static s32 FirstBattleTrainerIdToRematchTableId(const struct RematchTrainer *table, u16 trainerId);
 static s32 TrainerIdToRematchTableId(const struct RematchTrainer *table, u16 trainerId);
 static bool32 UpdateRandomTrainerRematches(const struct RematchTrainer *table, u16 mapGroup, u16 mapNum);
-static s32 DoesSomeoneWantRematchIn_(const struct RematchTrainer *table, u16 mapGroup, u16 mapNum);
-static s32 IsRematchTrainerIn_(const struct RematchTrainer *table, u16 mapGroup, u16 mapNum);
+static bool32 DoesSomeoneWantRematchIn_(const struct RematchTrainer *table, u16 mapGroup, u16 mapNum);
+static bool32 IsRematchTrainerIn_(const struct RematchTrainer *table, u16 mapGroup, u16 mapNum);
 static bool8 IsFirstTrainerIdReadyForRematch(const struct RematchTrainer *table, u16 firstBattleTrainerId);
 static bool8 IsTrainerReadyForRematch_(const struct RematchTrainer *table, u16 trainerId);
 static u16 GetRematchTrainerIdFromTable(const struct RematchTrainer *table, u16 firstBattleTrainerId);
@@ -731,7 +718,7 @@ s8 BattleSetup_GetEnvironmentId(void)
     return BATTLE_ENVIRONMENT_PLAIN;
 }
 
-static s8 GetBattleTransitionTypeByMap(void)
+static u8 GetBattleTransitionTypeByMap(void)
 {
     u16 tileBehavior;
     s16 x, y;
@@ -1029,7 +1016,7 @@ static void SetMapVarsToTrainer(void)
     }
 }
 
-u8 *BattleSetup_ConfigureTrainerBattle(const u8 *data)
+const u8 *BattleSetup_ConfigureTrainerBattle(const u8 *data)
 {
     InitTrainerBattleVariables();
     sTrainerBattleMode = TrainerBattleLoadArg8(data);
@@ -1272,7 +1259,7 @@ static const u8 *GetIntroSpeechOfApproachingTrainer(void)
     return ReturnEmptyStringIfNull(sTrainerAIntroSpeech);
 }
 
-u8 *GetTrainerALoseText(void)
+const u8 *GetTrainerALoseText(void)
 {
     const u8 *string;
 
@@ -1326,7 +1313,7 @@ static s32 TrainerIdToRematchTableId(const struct RematchTrainer *table, u16 tra
 
 static bool32 UpdateRandomTrainerRematches(const struct RematchTrainer *table, u16 mapGroup, u16 mapNum)
 {
-    int i;
+    s32 i;
     bool32 ret = FALSE;
 
     for (i = 0; i < REMATCH_TABLE_ENTRIES; i++)
@@ -1354,7 +1341,7 @@ static bool32 UpdateRandomTrainerRematches(const struct RematchTrainer *table, u
    return ret;
 }
 
-static s32 DoesSomeoneWantRematchIn_(const struct RematchTrainer *table, u16 mapGroup, u16 mapNum)
+static bool32 DoesSomeoneWantRematchIn_(const struct RematchTrainer *table, u16 mapGroup, u16 mapNum)
 {
     s32 i;
 
@@ -1366,7 +1353,7 @@ static s32 DoesSomeoneWantRematchIn_(const struct RematchTrainer *table, u16 map
     return 0;
 }
 
-static s32 IsRematchTrainerIn_(const struct RematchTrainer *table, u16 mapGroup, u16 mapNum)
+static bool32 IsRematchTrainerIn_(const struct RematchTrainer *table, u16 mapGroup, u16 mapNum)
 {
     s32 i;
 
@@ -1400,7 +1387,7 @@ static bool8 IsTrainerReadyForRematch_(const struct RematchTrainer *table, u16 t
 
 static u16 GetRematchTrainerIdFromTable(const struct RematchTrainer *table, u16 firstBattleTrainerId)
 {
-    int i;
+    s32 i;
     const struct RematchTrainer *trainerEntry;
     s32 tableId = FirstBattleTrainerIdToRematchTableId(table, firstBattleTrainerId);
 
@@ -1437,7 +1424,7 @@ static bool8 WasSecondRematchWon(const struct RematchTrainer *table, u16 firstBa
 
 static bool32 HasAtLeastFiveBadges(void)
 {
-    int count = 0;
+    s32 count = 0;
     u32 i;
 
     for (i = 0; i < 8; i++)
@@ -1479,12 +1466,12 @@ void TryUpdateRandomTrainerRematches(u16 mapGroup, u16 mapNum)
         gSaveBlock1.trainerRematchStepCounter = 0;
 }
 
-s32 DoesSomeoneWantRematchIn(u16 mapGroup, u16 mapNum)
+bool32 DoesSomeoneWantRematchIn(u16 mapGroup, u16 mapNum)
 {
     return DoesSomeoneWantRematchIn_(gRematchTable, mapGroup, mapNum);
 }
 
-s32 IsRematchTrainerIn(u16 mapGroup, u16 mapNum)
+bool32 IsRematchTrainerIn(u16 mapGroup, u16 mapNum)
 {
     return IsRematchTrainerIn_(gRematchTable, mapGroup, mapNum);
 }
