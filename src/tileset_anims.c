@@ -576,7 +576,7 @@ static void TilesetAnim_Building(u16 timer)
 
 static void QueueAnimTiles_General_Flower(u16 timer)
 {
-    int i;
+    u16 i;
     i = timer % 4;
     AppendTilesetAnimToBuffer(gTilesetAnims_General_Flower[i], BG_TILE_ADDR(127), 0x80);
 }
@@ -590,14 +590,14 @@ static void QueueAnimTiles_General_Water(u16 timer)
 
 static void QueueAnimTiles_General_SandWaterEdge(u16 timer)
 {
-    int i;
+    u16 i;
     i = timer % 8;
     AppendTilesetAnimToBuffer(gTilesetAnims_General_SandWaterEdge[i], BG_TILE_ADDR(116), 0x140);
 }
 
 static void QueueAnimTiles_General_Waterfall(u16 timer)
 {
-    int i;
+    u16 i;
     i = timer % 4;
     AppendTilesetAnimToBuffer(gTilesetAnims_General_Waterfall[i], BG_TILE_ADDR(124), 0xc0);
 }
@@ -813,7 +813,7 @@ static void TilesetAnim_Cave(u16 timer)
 
 static void QueueAnimTiles_General_LandWaterEdge(u16 timer)
 {
-    int i;
+    u16 i;
     i = timer % 4;
     AppendTilesetAnimToBuffer(gTilesetAnims_General_LandWaterEdge[i], BG_TILE_ADDR(120), 0x140);
 }
@@ -829,21 +829,21 @@ static void QueueAnimTiles_Lavaridge_Steam(u8 timer)
 
 static void QueueAnimTiles_Pacifidlog_LogBridges(u8 timer)
 {
-    int i;
+    u8 i;
     i = timer % 4;
     AppendTilesetAnimToBuffer(gTilesetAnims_Pacifidlog_LogBridges[i], BG_TILE_ADDR(244), 0x3c0);
 }
 
 static void QueueAnimTiles_Underwater_Seaweed(u8 timer)
 {
-    int i;
+    u8 i;
     i = timer % 4;
     AppendTilesetAnimToBuffer(gTilesetAnims_Underwater_Seaweed[i], BG_TILE_ADDR(252), 0x80);
 }
 
 static void QueueAnimTiles_Pacifidlog_WaterCurrents(u8 timer)
 {
-    int i;
+    u8 i;
     i = timer % 8;
     AppendTilesetAnimToBuffer(gTilesetAnims_Pacifidlog_WaterCurrents[i], BG_TILE_ADDR(252), 0x100);
 }
@@ -880,14 +880,14 @@ static void QueueAnimTiles_Rustboro_WindyWater(u16 timer_div, u8 timer_mod)
 
 static void QueueAnimTiles_Rustboro_Fountain(u16 timer)
 {
-    int i;
+    u16 i;
     i = timer % 2;
     AppendTilesetAnimToBuffer(gTilesetAnims_Rustboro_Fountain[i], BG_TILE_ADDR(240), 0x80);
 }
 
 static void QueueAnimTiles_Lavaridge_Lava(u16 timer)
 {
-    int i;
+    u16 i;
     i = timer % 4;
     AppendTilesetAnimToBuffer(gTilesetAnims_Lavaridge_Cave_Lava[i], BG_TILE_ADDR(168), 0x80);
 }
@@ -902,7 +902,7 @@ static void QueueAnimTiles_EverGrande_Flowers(u16 timer_div, u8 timer_mod)
 
 static void QueueAnimTiles_Cave_Lava(u16 timer)
 {
-    int i;
+    u16 i;
     i = timer % 4;
     AppendTilesetAnimToBuffer(gTilesetAnims_Lavaridge_Cave_Lava[i], BG_TILE_ADDR(232), 0x80);
 }
@@ -949,14 +949,14 @@ static void TilesetAnim_BikeShop(u16 timer)
 
 static void QueueAnimTiles_Building_TVTurnedOn(u16 timer)
 {
-    int i;
+    u16 i;
     i = timer % 2;
     AppendTilesetAnimToBuffer(gTilesetAnims_Building_TvTurnedOn[i], BG_TILE_ADDR(124), 0x80);
 }
 
 static void QueueAnimTiles_SootopolisGym_Waterfalls(u16 timer)
 {
-    int i;
+    u16 i;
     i = timer % 3;
     AppendTilesetAnimToBuffer(gTilesetAnims_SootopolisGym_SideWaterfall[i], BG_TILE_ADDR(252), 0x180);
     AppendTilesetAnimToBuffer(gTilesetAnims_SootopolisGym_FrontWaterfall[i], BG_TILE_ADDR(244), 0x280);
@@ -964,28 +964,28 @@ static void QueueAnimTiles_SootopolisGym_Waterfalls(u16 timer)
 
 static void QueueAnimTiles_EliteFour_WallLights(u16 timer)
 {
-    int i;
+    u16 i;
     i = timer % 4;
     AppendTilesetAnimToBuffer(gTilesetAnims_EliteFour_WallLights[i], BG_TILE_ADDR(254), 0x20);
 }
 
 static void QueueAnimTiles_EliteFour_GroundLights(u16 timer)
 {
-    int i;
+    u16 i;
     i = timer % 2;
     AppendTilesetAnimToBuffer(gTilesetAnims_EliteFour_FloorLight[i], BG_TILE_ADDR(248), 0x80);
 }
 
 static void QueueAnimTiles_MauvilleGym_ElectricGates(u16 timer)
 {
-    int i;
+    u16 i;
     i = timer % 2;
     AppendTilesetAnimToBuffer(gTilesetAnims_MauvilleGym_ElectricGates[i], BG_TILE_ADDR(164), 0x200);
 }
 
 static void QueueAnimTiles_BikeShop_BlinkingLights(u16 timer)
 {
-    int i;
+    u16 i;
     i = timer % 2;
     AppendTilesetAnimToBuffer(gTilesetAnims_BikeShop_BlinkingLights[i], BG_TILE_ADDR(252), 0x120);
 }
