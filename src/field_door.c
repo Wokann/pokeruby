@@ -456,9 +456,9 @@ static void DrawDoor(const struct DoorGraphics *gfx, const struct DoorAnimFrame 
 
 enum
 {
-    TD_FRAMELIST = 0,
-    TD_GFX = 2,
-    TD_FRAME = 4,
+    TD_FRAMES_HI = 0,
+    TD_GFX_HI = 2,
+    TD_FRAME_ID = 4,
     TD_COUNTER,
     TD_X,
     TD_Y
@@ -467,12 +467,12 @@ enum
 static bool32 AnimateDoorFrame(struct DoorGraphics *gfx, struct DoorAnimFrame *frames, s16 *data)
 {
     if (data[TD_COUNTER] == 0)
-        DrawDoor(gfx, &frames[data[TD_FRAME]], data[TD_X], data[TD_Y]);
-    if (data[TD_COUNTER] == frames[data[TD_FRAME]].time)
+        DrawDoor(gfx, &frames[data[TD_FRAME_ID]], data[TD_X], data[TD_Y]);
+    if (data[TD_COUNTER] == frames[data[TD_FRAME_ID]].time)
     {
         data[TD_COUNTER] = 0;
-        data[TD_FRAME]++;
-        if (frames[data[TD_FRAME]].time == 0)
+        data[TD_FRAME_ID]++;
+        if (frames[data[TD_FRAME_ID]].time == 0)
             return FALSE;
         else
             return TRUE;
@@ -484,8 +484,8 @@ static bool32 AnimateDoorFrame(struct DoorGraphics *gfx, struct DoorAnimFrame *f
 static void Task_AnimateDoor(u8 taskId)
 {
     u16 *data = gTasks[taskId].data;
-    struct DoorAnimFrame *frames = (struct DoorAnimFrame *)(data[TD_FRAMELIST] << 16 | data[TD_FRAMELIST + 1]);
-    struct DoorGraphics *gfx = (struct DoorGraphics *)(data[TD_GFX] << 16 | data[TD_GFX + 1]);
+    struct DoorAnimFrame *frames = (struct DoorAnimFrame *)(data[TD_FRAMES_HI] << 16 | data[TD_FRAMES_HI + 1]);
+    struct DoorGraphics *gfx = (struct DoorGraphics *)(data[TD_GFX_HI] << 16 | data[TD_GFX_HI + 1]);
 
     if (AnimateDoorFrame(gfx, frames, data) == FALSE)
         DestroyTask(taskId);
@@ -521,11 +521,11 @@ static s8 StartDoorAnimationTask(const struct DoorGraphics *gfx, const struct Do
         data[TD_X] = x;
         data[TD_Y] = y;
 
-        data[TD_FRAMELIST + 1] = (u32)frames;
-        data[TD_FRAMELIST] = (u32)frames >> 16;
+        data[TD_FRAMES_HI + 1] = (u32)frames;
+        data[TD_FRAMES_HI] = (u32)frames >> 16;
 
-        data[TD_GFX + 1] = (u32)gfx;
-        data[TD_GFX] = (u32)gfx >> 16;
+        data[TD_GFX_HI + 1] = (u32)gfx;
+        data[TD_GFX_HI] = (u32)gfx >> 16;
 
         return taskId;
     }
