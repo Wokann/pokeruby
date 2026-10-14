@@ -13,9 +13,9 @@ extern const u8 *const gNatureNamePointers[];
 // such as move re-ordering, are available in the different modes.
 enum PokemonSummaryScreenMode
 {
-    PSS_MODE_NORMAL,
+    SUMMARY_MODE_NORMAL,
     PSS_MODE_MOVES_ONLY,
-    PSS_MODE_SELECT_MOVE,
+    SUMMARY_MODE_SELECT_MOVE,
     PSS_MODE_MOVE_DELETER, // TODO: this mode might be used by pokemon_storage_system
     SUMMARY_MODE_LOCK_MOVES,
     PSS_MODE_PC_NORMAL,

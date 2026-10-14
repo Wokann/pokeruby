@@ -106,7 +106,7 @@ static void PositionAppealJamSlidingWindow(s8, u8);
 static void PositionPowerAccSlidingWindow(s8, u8);
 static void SummaryScreen_PrintPokemonInfo(struct Pokemon *);
 static void SummaryScreen_PrintPokemonSkills(struct Pokemon *);
-static void SetSpriteInvisibility(u8, u8);
+static void SetSpriteInvisibility(u8, bool8);
 static void KeepMoveSelectorVisible(u8 a);
 static void SetTypeSpritePosAndPal(u8, u8, u8, u8);
 static u16 GetMonMove(struct Pokemon *, u8);
@@ -127,7 +127,6 @@ static void SummaryScreen_PrintColoredText(const u8 *, u8, u8, u8);
 
 extern u8 AdvanceStorageMonIndex(struct BoxPokemon *, u8, u8, u8);
 
-extern struct MusicPlayerInfo gMPlayInfo_BGM;
 TaskFunc gUnknown_03005CF0;
 
 #define sSpriteIds (&gSharedMem[0x1A000])
@@ -145,7 +144,6 @@ extern const u8 gSummaryPage_InfoEgg_Tilemap[];
 extern const u16 gSummaryPage_Info_Tilemap[];
 extern const u8 gSummaryScreen_Gfx[];
 extern const u8 gFontDefaultPalette[];
-extern const u8 gAbilityNames[][13];
 extern const u16 gUnknown_08E94510[];
 extern const u16 gUnknown_08E94550[];
 extern const u16 gUnknown_08E94590[];
@@ -601,7 +599,7 @@ void ShowPokemonSummaryScreen(struct Pokemon *mons, u8 monIndex, u8 maxMonIndex,
 
     switch (mode)
     {
-    case PSS_MODE_NORMAL:
+    case SUMMARY_MODE_NORMAL:
     case PSS_MODE_PC_NORMAL:
         pssData.minPageIndex = PSS_PAGE_INFO;
         pssData.maxPageIndex = PSS_PAGE_CONTEST_MOVES;
@@ -619,7 +617,7 @@ void ShowPokemonSummaryScreen(struct Pokemon *mons, u8 monIndex, u8 maxMonIndex,
         pssData.headerActionTextId = 7;
         pssData.lockMovesFlag = TRUE;
         break;
-    case PSS_MODE_SELECT_MOVE:
+    case SUMMARY_MODE_SELECT_MOVE:
         pssData.minPageIndex = PSS_PAGE_BATTLE_MOVES;
         pssData.maxPageIndex = PSS_PAGE_CONTEST_MOVES;
         pssData.unk77 = 1;
@@ -643,7 +641,7 @@ void ShowPokemonSummaryScreen(struct Pokemon *mons, u8 monIndex, u8 maxMonIndex,
 
 void ShowSelectMovePokemonSummaryScreen(struct Pokemon *mons, u8 monIndex, u8 maxMonIndex, MainCallback callback, u16 newMove)
 {
-    ShowPokemonSummaryScreen(mons, monIndex, maxMonIndex, callback, PSS_MODE_SELECT_MOVE);
+    ShowPokemonSummaryScreen(mons, monIndex, maxMonIndex, callback, SUMMARY_MODE_SELECT_MOVE);
     pssData.newMove = newMove;
 }
 
@@ -651,14 +649,14 @@ void sub_809DA1C(void)
 {
     switch (pssData.mode)
     {
-    case PSS_MODE_NORMAL:
+    case SUMMARY_MODE_NORMAL:
     case PSS_MODE_PC_NORMAL:
         pssData.inputHandlingTaskId = CreateTask(Task_HandleInput, 0);
         break;
     case SUMMARY_MODE_LOCK_MOVES:
         pssData.inputHandlingTaskId = CreateTask(Task_HandleInput, 0);
         break;
-    case PSS_MODE_SELECT_MOVE:
+    case SUMMARY_MODE_SELECT_MOVE:
     case PSS_MODE_MOVE_DELETER:
         pssData.inputHandlingTaskId = CreateTask(Task_SetHandleReplaceMoveInput, 0);
         break;
@@ -3764,7 +3762,7 @@ static void DestroySpriteInArray(u8 spriteArrayId)
     }
 }
 
-static void SetSpriteInvisibility(u8 spriteArrayId, u8 invisible)
+static void SetSpriteInvisibility(u8 spriteArrayId, bool8 invisible)
 {
     gSprites[sSpriteIds[spriteArrayId]].invisible = invisible;
 }

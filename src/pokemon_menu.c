@@ -342,7 +342,7 @@ static void sub_8089F44(u8 taskId)
         u8 spriteID = gSprites[gTasks[taskId].data[3] >> 8].data[0];
         DestroyTask(taskId);
         ePartyMenu2.unk262 = 1;
-        ShowPokemonSummaryScreen(gPlayerParty, spriteID, gPlayerPartyCount - 1, CB2_ReturnToPartyMenuFromSummaryScreen, PSS_MODE_NORMAL);
+        ShowPokemonSummaryScreen(gPlayerParty, spriteID, gPlayerPartyCount - 1, CB2_ReturnToPartyMenuFromSummaryScreen, SUMMARY_MODE_NORMAL);
     }
 }
 
