@@ -105,8 +105,6 @@ static void sub_806BBEC(u8 a);
 
 void (*gPokemonItemUseCallback)(u8 taskId, u16 itemId, TaskFunc taskFunc);
 
-extern u16 Random();
-
 EWRAM_DATA u8 gUnknown_0202E8F4 = 0;
 EWRAM_DATA u8 gSelectedMonPartyId = 0;
 EWRAM_DATA u8 gPartyMenuMessage_IsPrinting = 0;
@@ -117,11 +115,7 @@ EWRAM_DATA u8 gPartyMenuType = 0;
 
 static void GetMedicineItemEffectMessage(u16);
 
-extern u16 gBattleTypeFlags;
 extern u8 gLastFieldPokeMenuOpened;
-extern u8 gPlayerPartyCount;
-extern s32 gBattleMoveDamage;
-extern u16 gMoveToLearn;
 
 extern u16 gUnknown_08E9A300[];
 extern struct Coords8 const gUnknown_08376738[12][6];
@@ -384,7 +378,7 @@ bool8 InitPartyMenu(void)
     return FALSE;
 }
 
-void CB2_InitPartyMenu(void)
+static void CB2_InitPartyMenu(void)
 {
     while (InitPartyMenu() != TRUE)
     {
@@ -2025,7 +2019,7 @@ static void SpriteCB_HeldItem(struct Sprite *sprite)
     }
 }
 
-static void CreateHeldItemSpriteForTrade(u8 spriteId, u8 isMail)
+static void CreateHeldItemSpriteForTrade(u8 spriteId, bool8 isMail)
 {
     u8 subpriority;
     u8 newSpriteId;
@@ -2537,7 +2531,7 @@ TaskFunc PartyMenuGetPopupMenuFunc(u8 menuIndex, const struct PartyPopupMenu *me
     return menuActions[action].func;
 }
 
-u8 DisplayPartyMenuMessage(const u8 *message, u8 noClearAfter)
+u8 DisplayPartyMenuMessage(const u8 *message, bool8 keepOpen)
 {
     u8 taskId;
 
@@ -2547,7 +2541,7 @@ u8 DisplayPartyMenuMessage(const u8 *message, u8 noClearAfter)
     MenuPrintMessage(message, WINDOW_LEFT + 1, 15);
 
     taskId = CreateTask(Task_PartyMenuPrintRun, 1);
-    gTasks[taskId].data[0] = noClearAfter;
+    gTasks[taskId].data[0] = keepOpen;
 
     return taskId;
 }
@@ -2697,7 +2691,7 @@ void Task_ConfirmGiveHeldItem(u8 taskId)
     }
 }
 
-void DisplayGiveHeldItemMessage(u8 a, u16 item, u8 keepOpen)
+void DisplayGiveHeldItemMessage(u8 a, u16 item, bool8 keepOpen)
 {
     GetMonNickname(&gPlayerParty[a], gStringVar1);
     CopyItemName(item, gStringVar2);
@@ -2766,7 +2760,7 @@ void PartyMenuTryGiveMonHeldItem_806ECE8(u8 taskId, TaskFunc func)
     }
 }
 
-void DisplayTakeHeldItemMessage(u8 a, u16 item, u8 keepOpen)
+void DisplayTakeHeldItemMessage(u8 a, u16 item, bool8 keepOpen)
 {
     GetMonNickname(&gPlayerParty[a], gStringVar1);
     CopyItemName(item, gStringVar2);

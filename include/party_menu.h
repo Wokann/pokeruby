@@ -157,12 +157,12 @@ void SetPartyPopupMenuOffsets(u8 menuIndex, u8 *left, u8 *top, const struct Part
 void ShowPartyPopupMenu(u8 menuIndex, const struct PartyPopupMenu *menu, const struct MenuAction2 *menuActions, u8 cursorPos);
 void ClosePartyPopupMenu(u8 index, const struct PartyPopupMenu *menu);
 TaskFunc PartyMenuGetPopupMenuFunc(u8 menuIndex, const struct PartyPopupMenu *menus, const struct MenuAction2 *menuActions, u8 itemIndex);
-u8 DisplayPartyMenuMessage(const u8 *message, u8 noClearAfter);
+u8 DisplayPartyMenuMessage(const u8 *message, bool8 keepOpen);
 void sub_806E8D0(u8 taskId, u16 b, TaskFunc c);
 void party_menu_link_mon_held_item_object(u8);
 void Task_ConfirmGiveHeldItem(u8);
-void DisplayGiveHeldItemMessage(u8, u16, u8);
-void DisplayTakeHeldItemMessage(u8, u16, u8);
+void DisplayGiveHeldItemMessage(u8, u16, bool8);
+void DisplayTakeHeldItemMessage(u8, u16, bool8);
 void Task_ConfirmTakeHeldMail(u8);
 u16 ItemIdToBattleMoveId(u16);
 bool8 MonKnowsMove(struct Pokemon *mon, u16 move);

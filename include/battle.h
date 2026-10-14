@@ -525,6 +525,8 @@ extern u16 gBattleTypeFlags;
 extern u8 gUnknown_02023A14_50;
 extern u8 gChosenMovePos;
 extern u16 gCalledMove;
+extern s32 gBattleMoveDamage;
+extern u16 gMoveToLearn;
 extern s32 gBideDmg[MAX_BATTLERS_COUNT];
 extern u8 gBideTarget[MAX_BATTLERS_COUNT];
 extern u8 gBattlerFainted;
