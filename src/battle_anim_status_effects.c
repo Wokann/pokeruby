@@ -10,8 +10,6 @@
 #include "ewram.h"
 
 extern const u8 *const gBattleAnims_StatusConditions[];
-extern const struct OamData gOamData_AffineOff_ObjBlend_64x64;
-extern const struct OamData gOamData_AffineOff_ObjNormal_8x8;
 
 static const struct Subsprite sFrozenIceCubeSubsprites[] =
 {
@@ -266,9 +264,9 @@ static void AnimTask_FrozenIceCube_Step4(u8 taskId)
 
 void AnimTask_StatsChange(u8 taskId)
 {
-    s16 goesDown;
+    bool16 goesDown;
     s16 animStatId;
-    s16 sharply = 0;
+    bool16 sharply = 0;
 
     switch (gBattleAnimationInfo->animArg)
     {
