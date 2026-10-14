@@ -25,6 +25,9 @@ bool8 SetUpFieldMove_Flash(void);
 bool8 GetMapPairFadeToType(u8 _fromType, u8 _toType);
 bool8 GetMapPairFadeFromType(u8 _fromType, u8 _toType);
 
+// strength
+bool8 SetUpFieldMove_Strength(void);
+
 // sweet scent
 bool8 SetUpFieldMove_SweetScent(void);
 bool8 FldEff_SweetScent(void);
@@ -33,9 +36,13 @@ bool8 FldEff_SweetScent(void);
 bool8 SetUpFieldMove_Teleport(void);
 bool8 FldEff_UseTeleport(void);
 
+// dig
+bool8 SetUpFieldMove_Dig(void);
+
 // rock smash
 bool8 CheckObjectGraphicsInFrontOfPlayer(u8 graphicsId);
 u8 CreateFieldMoveTask(void);
+bool8 SetUpFieldMove_RockSmash(void);
 
 // Ruby debug field moves
 void Debug_SetUpFieldMove_Cut(void);

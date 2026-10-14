@@ -20,7 +20,6 @@ static void FailSweetScentEncounter(u8 taskId);
 
 extern u8 gLastFieldPokeMenuOpened;
 extern void (*gFieldCallback)(void);
-extern void (*gPostMenuFieldCallback)(void);
 
 bool8 SetUpFieldMove_SweetScent(void)
 {

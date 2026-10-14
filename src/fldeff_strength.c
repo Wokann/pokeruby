@@ -20,7 +20,6 @@ static void sub_811AA9C(void);
 extern u8 gLastFieldPokeMenuOpened;
 extern u16 gSpecialVar_Result;
 extern void (*gFieldCallback)(void);
-extern void (*gPostMenuFieldCallback)(void);
 
 #if DEBUG
 void debug_sub_8130318(void)

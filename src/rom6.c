@@ -168,7 +168,7 @@ static void FieldMove_RockSmash(void)
     ScriptContext_Enable();
 }
 
-int SetUpFieldMove_Dig(void)
+bool8 SetUpFieldMove_Dig(void)
 {
     if (CanUseDigOrEscapeRopeOnCurMap() == TRUE)
     {

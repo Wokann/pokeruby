@@ -1,6 +1,7 @@
 #ifndef GUARD_POKEMON_MENU_H
 #define GUARD_POKEMON_MENU_H
 
+#include "main.h"
 #include "menu.h"
 
 #define MENU_FIELD_MOVES 10
@@ -34,7 +35,7 @@ enum
 };
 
 extern u8 gLastFieldPokeMenuOpened;
-extern void (*gPostMenuFieldCallback)(void);
+extern MainCallback gPostMenuFieldCallback;
 
 void HandleDefaultPartyMenu(u8 taskId);
 void sub_808B5B4(u32 taskId);

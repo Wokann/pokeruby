@@ -27,6 +27,7 @@
 #include "field_control_avatar.h"
 #include "metatile_behavior.h"
 #include "fieldmap.h"
+#include "region_map.h"
 #include "item_menu.h"
 #include "player_pc.h"
 #include "ewram.h"
@@ -59,10 +60,6 @@ extern TaskFunc gUnknown_03005CF0;
 
 static void CB2_ReturnToPartyMenuFromWritingMail(void);
 void sub_80A61D0(void);
-void CB2_OpenFlyMap(void);
-bool8 SetUpFieldMove_RockSmash(void);
-bool8 SetUpFieldMove_Strength(void);
-bool8 SetUpFieldMove_Dig(void);
 
 #define sFieldMovesTerminator 0xFF // note: should be changed to 0xFFFF, because currently it makes it impossible to add a field move with 0xFF index
 
@@ -112,7 +109,7 @@ EWRAM_DATA static u8 sPokeMenuOptionsOrder[8] = {0}; // 4 possible field moves a
 
 // iwram common
 u8 gLastFieldPokeMenuOpened;
-void (*gPostMenuFieldCallback)(void);
+MainCallback gPostMenuFieldCallback;
 
 // const data
 
@@ -1132,7 +1129,7 @@ static void sub_808B3A0(void)
 
 static void CB2_ReturnToPartyOrBagMenuFromWritingMail(void)
 {
-    IntrCallback callback;
+    MainCallback callback;
 
     gPaletteFade.bufferTransferDisabled = 1;
     if (gSpecialVar_Result == 0)
