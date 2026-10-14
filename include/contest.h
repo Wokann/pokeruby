@@ -277,15 +277,15 @@ void CB2_StartContest(void);
 void CreateContestMonFromParty(u8 partyIndex);
 void SetContestants(u8 contestType, u8 rank);
 u8 GetContestEntryEligibility(struct Pokemon *pkmn);
-u16 CalculateContestantRound1Points(u8, u8);
-void CalculateRound1Points(u8);
-u8 IsSpeciesNotUnown(u16);
+u16 CalculateContestantRound1Points(u8 who, u8 contestCategory);
+void CalculateRound1Points(u8 contestCategory);
+bool8 IsSpeciesNotUnown(u16 species);
 void CalculateFinalScores(void);
-void SortContestants(u8 useRanking);
+void SortContestants(bool8 useRanking);
 bool8 SaveContestWinner(u8 rank);
-u8 GetContestWinnerSaveIdx(u8, u8);
+u8 GetContestWinnerSaveIdx(u8 rank, bool8 shift);
 void Contest_ResetWinners(void);
-s8 Contest_GetMoveExcitement(u16);
+s8 Contest_GetMoveExcitement(u16 move);
 
 // Contest Shared EWRAM
 
@@ -446,7 +446,7 @@ void SetContestantEffectStringID2(u8 contestant, u8 effectStringId);
 void MakeContestantNervous(u8 p);
 bool8 Contest_IsMonsTurnDisabled(u8 contestant);
 bool8 IsContestantAllowedToCombo(u8 contestant);
-void SetStartledString(u8 a, u8 b);
+void SetStartledString(u8 contestant, u8 jam);
 
 // Ruby keeps its fixed shared-memory views instead of heap resources.
 #define eContest                        (*(struct Contest *)(gSharedMem + 0x19204))

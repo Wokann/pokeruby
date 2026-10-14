@@ -84,9 +84,6 @@ static void SetBattleTargetSpritePosition(void);
 extern void Task_LinkContest_CommunicateAppealsState(u8 taskId);
 extern void Task_UpdateContestantBoxOrder(u8 taskId);
 
-extern struct MusicPlayerInfo gMPlayInfo_SE1;
-extern u8 gDisplayedStringBattle[];
-extern u8 gBattlerTarget;
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern void (*const gContestEffectFuncs[])(void);
 
@@ -805,7 +802,7 @@ void CreateContestMonFromParty(u8 partyIndex)
 
 void SetContestants(u8 contestType, u8 rank)
 {
-    int i, j;
+    s32 i, j;
     u8 opponents[ARRAY_COUNT(gContestOpponents) + 1];
     u8 opponentsCount = 0;
     u8 uselessVar;
@@ -813,7 +810,7 @@ void SetContestants(u8 contestType, u8 rank)
     TryPutPlayerLast();
 
     // Find all suitable opponents
-    for (i = 0; i < (int)ARRAY_COUNT(gContestOpponents); i++)
+    for (i = 0; i < (s32)ARRAY_COUNT(gContestOpponents); i++)
     {
         uselessVar = 0;
         if (rank != gContestOpponents[i].whichRank)
@@ -1260,7 +1257,7 @@ static u16 GetStarTileOffset(u8 unused)
     return 0x2034;
 }
 
-bool8 UpdateConditionStars(u8 contestantIdx, u8 resetMod)
+bool8 UpdateConditionStars(u8 contestantIdx, bool8 resetMod)
 {
     u8 contestantOffset;
     u16 r8;
@@ -3026,7 +3023,7 @@ void unref_sub_80B0EE8(s32 *a, s32 b)
 }
 
 // something to do with contest NPC opponents, I think.
-void SortContestants(u8 useRanking)
+void SortContestants(bool8 useRanking)
 {
     u8 scratch[4];
     u16 randomOrdering[4] = {0};
@@ -3200,7 +3197,7 @@ void CalculateAppealMoveImpact(u8 contestant)
         eContestantStatus[contestant].usedComboMove = 0;
         if (IsContestantAllowedToCombo(contestant))
         {
-            u8 completedCombo = AreMovesContestCombo(eContestantStatus[contestant].prevMove, eContestantStatus[contestant].currMove);
+            bool8 completedCombo = AreMovesContestCombo(eContestantStatus[contestant].prevMove, eContestantStatus[contestant].currMove);
 
             if (completedCombo != 0 && eContestantStatus[contestant].hasJudgesAttention)
             {
@@ -4172,7 +4169,7 @@ bool8 SaveContestWinner(u8 rank)
 // Or one of two special IDs listed below (for saving winners to show in Museum, or from the artist)
 // If just retrieving the index where the winner *would* go, shift is FALSE
 // If actually preparing to insert the winner into the saveblock, shift is TRUE
-u8 GetContestWinnerSaveIdx(u8 rank, u8 shift)
+u8 GetContestWinnerSaveIdx(u8 rank, bool8 shift)
 {
     s32 i;
 
