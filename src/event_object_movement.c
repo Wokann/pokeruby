@@ -191,7 +191,7 @@ static void (*const sMovementTypeCallbacks[])(struct Sprite *) =
     [MOVEMENT_TYPE_INVISIBLE] = MovementType_Invisible,
 };
 
-const bool8 gMovementTypeHasRange[] = {
+static const bool8 sMovementTypeHasRange[] = {
     [MOVEMENT_TYPE_NONE] = 0,
     [MOVEMENT_TYPE_LOOK_AROUND] = 0,
     [MOVEMENT_TYPE_WANDER_AROUND] = 1,
@@ -1201,7 +1201,7 @@ static u8 InitObjectEventStateFromTemplate(const struct ObjectEventTemplate *tem
     SetObjectEventDirection(objectEvent, objectEvent->previousMovementDirection);
     SetObjectEventDynamicGraphicsId(objectEvent);
 
-    if (gMovementTypeHasRange[objectEvent->movementType])
+    if (sMovementTypeHasRange[objectEvent->movementType])
     {
         // Ensure a ranged movement type has at least 1 tile of room to move.
         if (objectEvent->range.as_nybbles.rangeX == 0)
@@ -1904,7 +1904,7 @@ void PatchObjectPalette(u16 paletteTag, u8 paletteSlot)
     LoadPalette(sObjectEventSpritePalettes[paletteIndex].data, 16 * paletteSlot + 0x100, 0x20);
 }
 
-static void PatchObjectPaletteRange(const u16 *paletteTags, u8 minSlot, u8 maxSlot)
+void PatchObjectPaletteRange(const u16 *paletteTags, u8 minSlot, u8 maxSlot)
 {
     while (minSlot < maxSlot)
     {
@@ -2294,7 +2294,7 @@ static const struct ObjectEventTemplate *FindObjectEventTemplateByLocalId(u8 loc
     return NULL;
 }
 
-static struct ObjectEventTemplate *GetBaseTemplateForObjectEvent(const struct ObjectEvent *objectEvent)
+struct ObjectEventTemplate *GetBaseTemplateForObjectEvent(const struct ObjectEvent *objectEvent)
 {
     s32 i;
 
@@ -4439,7 +4439,7 @@ void SetStepAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 anim
     }
 }
 
-static u8 GetDirectionToFace(s16 x, s16 y, s16 targetX, s16 targetY)
+u8 GetDirectionToFace(s16 x, s16 y, s16 targetX, s16 targetY)
 {
     if (x > targetX)
         return DIR_WEST;
@@ -4474,15 +4474,15 @@ static u8 GetCollisionInDirection(struct ObjectEvent *objectEvent, u8 direction)
     return GetCollisionAtCoords(objectEvent, x, y, direction);
 }
 
-u8 GetCollisionAtCoords(struct ObjectEvent *objectEvent, s16 x, s16 y, u32 dirn)
+u8 GetCollisionAtCoords(struct ObjectEvent *objectEvent, s16 x, s16 y, u32 direction)
 {
-    u8 direction;
-    direction = dirn;
+    u8 direction8;
+    direction8 = direction;
     if (IsCoordOutsideObjectEventMovementRange(objectEvent, x, y))
         return 1;
-    else if (MapGridGetCollisionAt(x, y) || GetMapBorderIdAt(x, y) == -1 || IsMetatileDirectionallyImpassable(objectEvent, x, y, direction))
+    else if (MapGridGetCollisionAt(x, y) || GetMapBorderIdAt(x, y) == -1 || IsMetatileDirectionallyImpassable(objectEvent, x, y, direction8))
         return 2;
-    else if (objectEvent->trackedByCamera && !CanCameraMoveInDirection(direction))
+    else if (objectEvent->trackedByCamera && !CanCameraMoveInDirection(direction8))
         return 2;
     else if (IsElevationMismatchAt(objectEvent->currentElevation, x, y))
         return 3;
@@ -4588,18 +4588,18 @@ static void UNUSED MoveCoordsInMapCoordIncrement(u8 direction, s16 *x, s16 *y)
     *y += sDirectionToVectors[direction].y << 4;
 }
 
-static void MoveCoordsInDirection(u32 dir, s16 *x, s16 *y, s16 deltaX, s16 deltaY)
+static void MoveCoordsInDirection(u32 direction, s16 *x, s16 *y, s16 deltaX, s16 deltaY)
 {
-    u8 direction = dir;
+    u8 direction8 = direction;
     s16 dx2 = (u16)deltaX;
     s16 dy2 = (u16)deltaY;
-    if (sDirectionToVectors[direction].x > 0)
+    if (sDirectionToVectors[direction8].x > 0)
         *x += dx2;
-    if (sDirectionToVectors[direction].x < 0)
+    if (sDirectionToVectors[direction8].x < 0)
         *x -= dx2;
-    if (sDirectionToVectors[direction].y > 0)
+    if (sDirectionToVectors[direction8].y > 0)
         *y += dy2;
-    if (sDirectionToVectors[direction].y < 0)
+    if (sDirectionToVectors[direction8].y < 0)
         *y -= dy2;
 }
 
