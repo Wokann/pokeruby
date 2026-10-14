@@ -48,8 +48,6 @@ struct TrainerCardData
     /*0x9C*/ u8 language; // 0x9C
 };
 
-extern struct LinkPlayerObjectEvent gLinkPlayerObjectEvents[];
-
 EWRAM_DATA struct TrainerCard gTrainerCards[4] = {0};
 
 static const u16 sHoennTrainerCardFemaleBg_Pal[];

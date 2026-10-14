@@ -30,11 +30,6 @@
 #include "constants/map_types.h"
 #include "constants/maps.h"
 
-extern u16 gSpecialVar_LastTalked;
-extern u16 gSpecialVar_Facing;
-extern struct LinkPlayerObjectEvent gLinkPlayerObjectEvents[];
-extern u16 gSpecialVar_0x8004;
-extern u16 gSpecialVar_0x8005;
 extern u8 gUnknown_020297ED;
 
 static EWRAM_DATA u8 sWildEncounterImmunitySteps = 0;
@@ -510,7 +505,7 @@ static bool8 TryStartStepBasedScript(struct MapPosition *position, u16 metatileB
     return FALSE;
 }
 
-bool8 TryStartCoordEventScript(struct MapPosition *position)
+static bool8 TryStartCoordEventScript(struct MapPosition *position)
 {
     const u8 *script = GetCoordEventScriptAtPosition(&gMapHeader, position->x - 7, position->y - 7, position->elevation);
 
@@ -530,7 +525,7 @@ bool8 TryStartCrackedFloorHoleScript(u16 metatileBehavior)
     return FALSE;
 }
 
-bool8 TryStartStepCountScript(void)
+static bool8 TryStartStepCountScript(void)
 {
     IncrementRematchStepCounter();
     UpdateFriendshipStepCounter();
@@ -648,7 +643,7 @@ static bool8 TryArrowWarp(struct MapPosition *position, u16 metatileBehavior, u8
     return FALSE;
 }
 
-bool8 TryStartWarpEventScript(struct MapPosition *position, u16 metatileBehavior)
+static bool8 TryStartWarpEventScript(struct MapPosition *position, u16 metatileBehavior)
 {
     s8 warpEventId = GetWarpEventAtMapPosition(&gMapHeader, position);
 

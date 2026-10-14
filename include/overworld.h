@@ -17,6 +17,7 @@ struct LinkPlayerObjectEvent
     u8 movementMode;
 };
 
+extern struct LinkPlayerObjectEvent gLinkPlayerObjectEvents[4];
 extern const struct UCoords32 gDirectionToVectors[];
 extern u16 gHeldKeyCodeToSend;
 extern void (*gFieldCallback)(void);

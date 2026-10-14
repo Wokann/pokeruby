@@ -1042,7 +1042,6 @@ static u8 sCurrentReflectionType;
 
 static u16 sCurrentSpecialObjectPaletteTag;
 
-extern struct LinkPlayerObjectEvent gLinkPlayerObjectEvents[];
 extern u8 gReservedSpritePaletteCount;
 extern struct Camera gCamera;
 struct ObjectEvent gObjectEvents[OBJECT_EVENTS_COUNT];

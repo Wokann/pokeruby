@@ -15,7 +15,6 @@ struct DebugStruct1
     u8 var1[10];
 };
 
-extern struct LinkPlayerObjectEvent gLinkPlayerObjectEvents[4];
 extern u8 gBattleOutcome;
 
 #if DEBUG
