@@ -83,12 +83,6 @@
 #define OPTIONS_BATTLE_STYLE_SHIFT 0
 #define OPTIONS_BATTLE_STYLE_SET 1
 
-#define BAG_ITEMS     1
-#define BAG_POKEBALLS 2
-#define BAG_TMsHMs    3
-#define BAG_BERRIES   4
-#define BAG_KEYITEMS  5
-
 #define CONNECTION_INVALID -1
 #define CONNECTION_NONE     0
 #define CONNECTION_SOUTH    1

@@ -2251,7 +2251,7 @@ static void CB2_EndBlenderGame(void)
         gSendCmd[0] = 0x2FFF;
         if (gBerryBlender->yesNoAnswer == 0)
         {
-            if (IsBagPocketNonEmpty(BAG_BERRIES) == FALSE) // is empty
+            if (IsBagPocketNonEmpty(POCKET_BERRIES) == FALSE) // is empty
             {
                 gBerryBlender->playAgainState = 2;
                 gSendCmd[1] = 0x9999;
