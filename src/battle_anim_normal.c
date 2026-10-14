@@ -14,7 +14,6 @@
 #include "constants/battle.h"
 #include "constants/songs.h"
 
-extern u8 gHealthboxSpriteIds[];
 extern u8 gBattlersCount;
 extern u8 gBattleEnvironment;
 extern u8 gBattlerTarget;

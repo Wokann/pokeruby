@@ -23,7 +23,6 @@
 
 extern u8 gActiveBattler;
 extern u8 gBattleBufferA[][0x200];
-extern u8 gHealthboxSpriteIds[];
 extern u16 gBattleTypeFlags;
 extern void (*gBattlerControllerFuncs[])(void);
 extern u8 gAnimFriendship;

@@ -22,7 +22,6 @@ int gMonShrinkDuration;
 u16 gMonShrinkDelta;
 u16 gMonShrinkDistance;
 
-extern u8 gHealthboxSpriteIds[];
 extern u16 gLastUsedItem;
 extern u8 gDoingBattleAnim;
 extern u8 gEffectBattler;

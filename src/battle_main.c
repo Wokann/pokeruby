@@ -128,7 +128,6 @@ extern u8 gBattleCommunication[];
 extern u8 gUnknown_02024D1F[];  // I don't actually know what type this is.
 extern u8 gBattleOutcome;
 extern u16 gIntroSlideFlags;
-extern u8 gActionSelectionCursor[];
 extern u8 gMoveSelectionCursor[];
 MainCallback gPreBattleCallback1;
 u8 gMultiUsePlayerCursor;

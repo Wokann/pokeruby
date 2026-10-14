@@ -32,7 +32,6 @@ extern u32 gBattleControllerExecFlags;
 extern u8 gBattleBufferA[][0x200];
 extern MainCallback gPreBattleCallback1;
 extern bool8 gDoingBattleAnim;
-extern u8 gHealthboxSpriteIds[];
 extern void (*gAnimScriptCallback)(void);
 extern u8 gBattlerInMenuId;
 extern u8 gBattleOutcome;

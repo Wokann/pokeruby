@@ -16,13 +16,6 @@
 #include "constants/trainers.h"
 
 extern struct Window gWindowTemplate_Contest_MoveDescription;
-extern u8 gActionSelectionCursor[4];
-extern u8 gBattlerInMenuId;
-extern u16 gBattlerPartyIndexes[4];
-extern u8 gBattlersCount;
-extern u8 gBattlerSpriteIds[4];
-extern u8 gBattleMonForms[4];
-extern u8 gHealthboxSpriteIds[4];
 
 bool8 LoadChosenBattleElement(u8 a0);
 

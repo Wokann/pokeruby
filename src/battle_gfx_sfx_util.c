@@ -31,7 +31,6 @@ extern u16 gIntroSlideFlags;
 extern u8 gDoingBattleAnim;
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern void (*gBattlerControllerFuncs[])(void);
-extern u8 gHealthboxSpriteIds[];
 extern u8 gBattleControllerData[];
 extern struct MusicPlayerInfo gMPlayInfo_SE1;
 extern struct MusicPlayerInfo gMPlayInfo_SE2;

@@ -22,7 +22,6 @@
 
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern u8 gDisplayedStringBattle[];
-extern u8 gActionSelectionCursor[];
 
 extern const u8 gText_WhatWillPkmnDo2[];
 extern u8 gActiveBattler;
@@ -35,7 +34,6 @@ extern u16 gBattleTypeFlags;
 extern u32 gBattleControllerExecFlags;
 extern MainCallback gPreBattleCallback1;
 extern u8 gBattlerInMenuId;
-extern u8 gHealthboxSpriteIds[];
 extern u16 gIntroSlideFlags;
 extern u8 gBattleOutcome;
 

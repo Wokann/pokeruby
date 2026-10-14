@@ -55,7 +55,6 @@ extern u8 gAbsentBattlerFlags;
 extern u8 gMultiHitCounter;
 extern u8 gUnusedFirstBattleVar2;
 extern u8 gBattleOutcome;
-extern u8 gActionSelectionCursor[];
 extern u8 gMoveSelectionCursor[];
 extern u8 gBattleTextBuff1[];
 extern u8 gBattleTextBuff2[];

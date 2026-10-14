@@ -35,7 +35,6 @@ extern u8 gAnimMoveTurn;
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern MainCallback gPreBattleCallback1;
 extern void (*gBattlerControllerFuncs[])(void);
-extern u8 gHealthboxSpriteIds[];
 extern u8 gBattleControllerData[];
 extern void (*gAnimScriptCallback)(void);
 

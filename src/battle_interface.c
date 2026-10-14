@@ -418,7 +418,6 @@ u8 *const gUnknown_0820A904[10] =
 
 extern u8 gDisplayedStringBattle[];
 extern u8 gBattlersCount;
-extern u8 gHealthboxSpriteIds[];
 
 extern u16 gBattleTypeFlags;
 
