@@ -384,6 +384,13 @@
 
 #define ITEM_TO_BERRY(itemId)(((itemId - FIRST_BERRY_INDEX) + 1))
 
+// Secondary IDs for rods
+enum {
+    OLD_ROD,
+    GOOD_ROD,
+    SUPER_ROD,
+};
+
 // Check if the item is one that can be used on a Pokemon.
 #define ITEM_HAS_EFFECT(item) ((item) >= ITEM_POTION && (item) <= ITEM_0B2)
 

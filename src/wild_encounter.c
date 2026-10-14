@@ -1,6 +1,7 @@
 #include "global.h"
 #include "wild_encounter.h"
 #include "constants/abilities.h"
+#include "constants/items.h"
 #include "battle_setup.h"
 #include "event_data.h"
 #include "field_player_avatar.h"
@@ -185,13 +186,6 @@ static u8 ChooseWildMonIndex_WaterRock(void)
     else
         return 4;
 }
-
-enum
-{
-    OLD_ROD,
-    GOOD_ROD,
-    SUPER_ROD
-};
 
 static u8 ChooseWildMonIndex_Fishing(u8 rod)
 {
