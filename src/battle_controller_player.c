@@ -2612,7 +2612,7 @@ static void PlayerHandlePrintSelectionString(void)
 
 void PlayerHandleChooseAction(void)
 {
-    int i;
+    s32 i;
 
     gBattle_BG0_X = 0;
     gBattle_BG0_Y = DISPLAY_HEIGHT;
