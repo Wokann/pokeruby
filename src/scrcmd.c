@@ -3,6 +3,7 @@
 #include "berry.h"
 #include "clock.h"
 #include "coins.h"
+#include "contest.h"
 #include "contest_link_util.h"
 #include "contest_painting.h"
 #include "contest_util.h"
@@ -55,15 +56,6 @@ static EWRAM_DATA u16 sMovingNpcId = 0;
 static EWRAM_DATA u16 sMovingNpcMapGroup = 0;
 static EWRAM_DATA u16 sMovingNpcMapNum = 0;
 static EWRAM_DATA u16 sFieldEffectScriptId = 0;
-
-extern u16 gSpecialVar_0x8000;
-extern u16 gSpecialVar_0x8001;
-extern u16 gSpecialVar_0x8002;
-extern u16 gSpecialVar_0x8004;
-
-extern u16 gSpecialVar_Result;
-
-extern u16 gSpecialVar_ContestCategory;
 
 extern const SpecialFunc gSpecials[];
 extern const u8 *gStdScripts[];
@@ -282,7 +274,7 @@ bool8 ScrCmd_callstd_if(struct ScriptContext *ctx)
 
 bool8 ScrCmd_returnram(struct ScriptContext *ctx)
 {
-    ScriptJump(ctx, (u8 *)gRamScriptRetAddr);
+    ScriptJump(ctx, gRamScriptRetAddr);
     return FALSE;
 }
 
