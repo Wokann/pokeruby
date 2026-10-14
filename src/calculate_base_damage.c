@@ -72,7 +72,7 @@ static const u8 sHoldEffectToType[][2] =
     {HOLD_EFFECT_NORMAL_POWER,   TYPE_NORMAL}
 };
 
-u8 GetBattlerSide(u8 bank);
+u8 GetBattlerSide(u8 battler);
 
 #define APPLY_STAT_MOD(var, mon, stat, statIndex)                                   \
 {                                                                                   \

@@ -121,7 +121,7 @@ static bool8 IsTwoTurnsMove(u16 move);
 static void TrySetDestinyBondToHappen(void);
 static void CheckWonderGuardAndLevitate(void);
 u8 GetBattlerPosition(u8 bank);
-u8 GetBattlerSide(u8 bank);
+u8 GetBattlerSide(u8 battler);
 static u8 AttacksThisTurn(u8 battler, u16 move); //Note: returns 1 if it's a charging turn, otherwise 2
 void UndoEffectsAfterFainting(void);
 void PlayBGM(u16 songID);

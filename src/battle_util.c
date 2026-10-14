@@ -77,7 +77,7 @@ extern const BattleCmdFunc gBattleScriptingCommandsTable[];
 
 u8 GetBattlerAtPosition(u8 ID);
 u8 GetBattlerPosition(u8 bank);
-u8 GetBattlerSide(u8 bank);
+u8 GetBattlerSide(u8 battler);
 void SetMoveEffect(bool8 primary, u8 certainArg);
 bool8 UproarWakeUpCheck(u8 battler);
 u8 GetBattlerMultiplayerId(u8 bank);
