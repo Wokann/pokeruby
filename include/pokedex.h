@@ -34,7 +34,8 @@ u16 GetHoennPokedexCount(u8 caseID);
 bool8 HasAllHoennMons(void);
 bool16 HasAllMons(void);
 
-extern bool8 gUnusedPokedexU8;
+extern u8 gUnusedPokedexU8;
+extern void (*gPokedexVBlankCB)(void);
 
 struct PokedexEntry
 {

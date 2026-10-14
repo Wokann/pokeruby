@@ -62,7 +62,7 @@ struct PokedexView
     u8 filler[8];
     u8 currentPage;
     u8 currentPageBackup;
-    u8 isSearchResults:1;
+    bool8 isSearchResults:1;
     u8 selectedScreen;
     u8 descriptionPageNum;
     u8 screenSwitchState;
@@ -113,9 +113,6 @@ struct SearchMenuItem
     u8 selectionBgY;
     u8 selectionBgWidth;
 };
-
-extern struct MusicPlayerInfo gMPlayInfo_BGM;
-extern u8 gReservedSpritePaletteCount;
 
 static EWRAM_DATA struct PokedexView *sPokedexView = NULL;
 static EWRAM_DATA u16 sLastSelectedPokemon = 0;
@@ -805,7 +802,7 @@ static void Task_SwitchScreensFromAreaScreen(u8 taskId);
 static void Task_LoadCryScreen(u8 taskId);
 static void Task_HandleCryScreenInput(u8 taskId);
 static void Task_SwitchScreensFromCryScreen(u8 taskId);
-static void LoadPlayArrowPalette(u8 cryPlaying);
+static void LoadPlayArrowPalette(bool8 cryPlaying);
 static void Task_LoadSizeScreen(u8 taskId);
 static void Task_HandleSizeScreenInput(u8 taskId);
 static void Task_SwitchScreensFromSizeScreen(u8 taskId);
@@ -823,8 +820,8 @@ static void PrintEntryScreenDexNum(u16 order, u8, u8);
 static u8 PrintEntryScreenSpeciesName(u16 num, u8, u8);
 static u8 PrintCryScreenSpeciesName(u16 num, u8, u8, u8);
 static void UnusedPrintMonName(const u8 *name, u8, u8);
-static void PrintMonHeight(u16 height, u8 i, u8 i1);
-static void PrintMonWeight(u16 weight, u8 i, u8 i1);
+static void PrintMonHeight(u16 height, u8 left, u8 top);
+static void PrintMonWeight(u16 weight, u8 left, u8 top);
 static void RS_DrawFootprint(u16 offset, u16 tileNum);
 static u16 GetNextPosition(u8 direction, u16 position, u16 min, u16 max);
 static void Task_LoadSearchMenu(u8 taskId);
@@ -2184,7 +2181,7 @@ static void CreateInterfaceSprites(u8 page)
 
     if (page == 0)
     {
-        u32 drawNextDigit;
+        bool32 drawNextDigit;
 
         CreateSprite(&sSeenOwnTextSpriteTemplate, 32, 40, 1);
 
@@ -2886,7 +2883,7 @@ static void Task_SwitchScreensFromCryScreen(u8 taskId)
     }
 }
 
-static void LoadPlayArrowPalette(u8 cryPlaying)
+static void LoadPlayArrowPalette(bool8 cryPlaying)
 {
     u16 color;
 
