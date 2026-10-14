@@ -2276,7 +2276,7 @@ static const struct ObjectEventTemplate *GetObjectEventTemplateByLocalIdAndMap(u
         return FindObjectEventTemplateByLocalId(localId, gSaveBlock1.objectEventTemplates, gMapHeader.events->objectEventCount);
     else
     {
-        struct MapHeader *mapHeader = Overworld_GetMapHeaderByGroupAndId(mapGroup, mapNum);
+        const struct MapHeader *mapHeader = Overworld_GetMapHeaderByGroupAndId(mapGroup, mapNum);
 
         return FindObjectEventTemplateByLocalId(localId, mapHeader->events->objectEvents, mapHeader->events->objectEventCount);
     }

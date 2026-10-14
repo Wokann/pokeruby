@@ -501,7 +501,7 @@ static u16 GetMapSecIdAt(u16 x, u16 y)
 
 static void InitializeCursorPosition(void)
 {
-    struct MapHeader *mapHeader;
+    const struct MapHeader *mapHeader;
     u16 mapWidth;
     u16 mapHeight;
     u16 x;
@@ -654,7 +654,7 @@ static void RegionMap_InitializeStateBasedOnSSTidalLocation(void)
     default:
     case 0:
         {
-            struct MapHeader *mapHeader = Overworld_GetMapHeaderByGroupAndId(mapGroup, mapNum);
+            const struct MapHeader *mapHeader = Overworld_GetMapHeaderByGroupAndId(mapGroup, mapNum);
             u16 dimensionScale;
 
             sRegionMap->mapSecId = mapHeader->regionMapSectionId;

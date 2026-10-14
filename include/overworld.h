@@ -39,14 +39,14 @@ void SetObjEventTemplateMovementType(u8 localId, u8 movementType);
 // ApplyCurrentWarp
 // SetWarpData
 // warp_data_is_not_neg_1
-struct MapHeader * const Overworld_GetMapHeaderByGroupAndId(u16 mapGroup, u16 mapNum);
-struct MapHeader * const GetDestinationWarpMapHeader(void);
+struct MapHeader const *const Overworld_GetMapHeaderByGroupAndId(u16 mapGroup, u16 mapNum);
+struct MapHeader const *const GetDestinationWarpMapHeader(void);
 // LoadSaveblockMapHeader
 void WarpIntoMap(void);
 void SetWarpDestination(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y);
 void SetWarpDestinationToMapWarp(s8 mapGroup, s8 mapNum, s8 warpId);
-void SetDynamicWarp(int unused, s8 mapGroup, s8 mapNum, s8 warpId);
-void SetDynamicWarpWithCoords(int unused, s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y);
+void SetDynamicWarp(s32 unused, s8 mapGroup, s8 mapNum, s8 warpId);
+void SetDynamicWarpWithCoords(s32 unused, s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y);
 void SetWarpDestinationToDynamicWarp(u8 unusedWarpId);
 void SetWarpDestinationToHealLocation(u8 healLocationId);
 void SetWarpDestinationToLastHealLocation(void);

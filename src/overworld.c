@@ -54,7 +54,7 @@
 static void SetKeyInterceptCallback(u16 (*func)(u32));
 static void SpawnLinkPlayers(void);
 static void CreateLinkPlayerSprites(void);
-static void UpdateAllLinkPlayers(u16 *keys, int selfId);
+static void UpdateAllLinkPlayers(u16 *keys, s32 selfId);
 static void UpdateHeldKeyCode(u16 key);
 static void CB1_OverworldLink(void);
 static u16 KeyInterCB_SelfIdle(u32 key);
@@ -97,11 +97,8 @@ static void RunTerminateLinkScript(void);
 #endif
 
 
-extern u8 EventScript_WhiteOut[];
-extern u8 EventScript_ResetMrBriney[];
-
-extern struct MapLayout * const gMapLayouts[];
-extern struct MapHeader * const * const gMapGroups[];
+extern const struct MapLayout *const gMapLayouts[];
+extern const struct MapHeader *const *const gMapGroups[];
 
 u16 gHeldKeyCodeToSend;
 void (*gFieldCallback)(void);
@@ -132,7 +129,7 @@ struct CableClubPlayer
 };
 
 static void HandleLinkPlayerKeyInput(u32 playerId, u16 key, struct CableClubPlayer *trainer, u16 *forceFacing);
-static void LoadCableClubPlayer(int linkPlayerId, int myPlayerId, struct CableClubPlayer *trainer);
+static void LoadCableClubPlayer(s32 linkPlayerId, s32 myPlayerId, struct CableClubPlayer *trainer);
 static bool32 IsCableClubPlayerUnfrozen(struct CableClubPlayer *player);
 static bool32 CanCableClubPlayerPressStart(struct CableClubPlayer *player);
 static const u8 *TryGetTileEventScript(struct CableClubPlayer *player);
@@ -394,7 +391,7 @@ static void InitMapView(void)
     InitTilesetAnimations();
 }
 
-static struct MapLayout *GetMapLayout(void)
+static const struct MapLayout *GetMapLayout(void)
 {
     u16 mapLayoutId = gSaveBlock1.mapLayoutId;
     if (mapLayoutId)
@@ -434,12 +431,12 @@ static bool32 IsDummyWarp(struct WarpData *warp)
     return TRUE;
 }
 
-struct MapHeader *const Overworld_GetMapHeaderByGroupAndId(u16 mapGroup, u16 mapNum)
+struct MapHeader const *const Overworld_GetMapHeaderByGroupAndId(u16 mapGroup, u16 mapNum)
 {
     return gMapGroups[mapGroup][mapNum];
 }
 
-struct MapHeader *const GetDestinationWarpMapHeader(void)
+struct MapHeader const *const GetDestinationWarpMapHeader(void)
 {
     return Overworld_GetMapHeaderByGroupAndId(sWarpDestination.mapGroup, sWarpDestination.mapNum);
 }
@@ -493,12 +490,12 @@ void SetWarpDestinationToMapWarp(s8 mapGroup, s8 mapNum, s8 warpId)
     SetWarpDestination(mapGroup, mapNum, warpId, -1, -1);
 }
 
-void SetDynamicWarp(int unused, s8 mapGroup, s8 mapNum, s8 warpId)
+void SetDynamicWarp(s32 unused, s8 mapGroup, s8 mapNum, s8 warpId)
 {
     SetWarpData(&gSaveBlock1.dynamicWarp, mapGroup, mapNum, warpId, gSaveBlock1.pos.x, gSaveBlock1.pos.y);
 }
 
-void SetDynamicWarpWithCoords(int unused, s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
+void SetDynamicWarpWithCoords(s32 unused, s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
 {
     SetWarpData(&gSaveBlock1.dynamicWarp, mapGroup, mapNum, warpId, x, y);
 }
@@ -1949,15 +1946,15 @@ static void CreateLinkPlayerSprites(void)
 
 static void ResetAllPlayerLinkStates(void)
 {
-    int i;
+    s32 i;
     for (i = 0; i < 4; i++)
         sPlayerLinkStates[i] = 0x80;
 }
 
 static bool32 AreAllPlayersInLinkState(u16 state)
 {
-    int i;
-    int count = gFieldLinkPlayerCount;
+    s32 i;
+    s32 count = gFieldLinkPlayerCount;
 
     for (i = 0; i < count; i++)
         if (sPlayerLinkStates[i] != state)
@@ -1967,8 +1964,8 @@ static bool32 AreAllPlayersInLinkState(u16 state)
 
 static bool32 IsAnyPlayerInLinkState(u16 state)
 {
-    int i;
-    int count = gFieldLinkPlayerCount;
+    s32 i;
+    s32 count = gFieldLinkPlayerCount;
 
     for (i = 0; i < count; i++)
         if (sPlayerLinkStates[i] == state)
@@ -2085,10 +2082,10 @@ static void HandleLinkPlayerKeyInput(u32 playerId, u16 key, struct CableClubPlay
     }
 }
 
-static void UpdateAllLinkPlayers(u16 *keys, int selfId)
+static void UpdateAllLinkPlayers(u16 *keys, s32 selfId)
 {
     struct CableClubPlayer trainer;
-    int i;
+    s32 i;
     for (i = 0; i < 4; i++)
     {
         u16 key = keys[i];
@@ -2160,7 +2157,7 @@ static u16 GetDirectionForDpadKey(u16 key)
 
 static void ResetPlayerHeldKeys(u16 *keys)
 {
-    int i;
+    s32 i;
     for (i = 0; i < 4; i++)
         keys[i] = 17;
 }
@@ -2315,7 +2312,7 @@ u16 QueueExitLinkRoomKey(void)
     return 0;
 }
 
-static void LoadCableClubPlayer(int linkPlayerId, int myPlayerId, struct CableClubPlayer *trainer)
+static void LoadCableClubPlayer(s32 linkPlayerId, s32 myPlayerId, struct CableClubPlayer *trainer)
 {
     s16 x, y;
 

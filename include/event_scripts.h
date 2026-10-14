@@ -48,6 +48,8 @@ extern const u8 BerryTree_EventScript_ItemUseWailmerPail[];
 extern const u8 EventScript_SelectWithoutRegisteredItem[];
 extern const u8 EventScript_FieldPoison[];
 extern const u8 EventScript_EggHatch[];
+extern const u8 EventScript_WhiteOut[];
+extern const u8 EventScript_ResetMrBriney[];
 extern const u8 SSTidalCorridor_EventScript_ReachedStepCount[];
 
 extern const u8 SecretBase_EventScript_CaveUseSecretPower[];
