@@ -27,8 +27,6 @@ struct ResetRtcInputMap
     /*0x8*/ u8 unk; // never read
 };
 
-extern u16 gSaveFileStatus;
-
 static void CB2_ResetRtcScreen(void);
 static void VBlankCB_ResetRtcScreen(void);
 static void Task_ResetRtcScreen(u8 taskId);
@@ -247,7 +245,7 @@ static void SpriteCB_Cursor_Down(struct Sprite *sprite)
 
 static void ResetRtcScreen_CreateCursor(u8 taskId)
 {
-    int spriteId;
+    u32 spriteId;
 
     LoadSpritePalette(&sSpritePalette_Arrow);
 
