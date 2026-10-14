@@ -204,18 +204,18 @@ void debug_sub_8075D9C(void)
 void debug_sub_8075DB4(struct BattleTowerEReaderTrainer *ereaderTrainer, const u8 *b, u32 trainerId)
 {
     s32 i;
-    s32 r3;
+    s32 j;
 
     ereaderTrainer->facilityClass = trainerId % 77;
     SetTrainerId(trainerId, ereaderTrainer->trainerId);
     StringCopy8(ereaderTrainer->name, b);
-    r3 = 7;
+    j = 7;
     for (i = 0; i < 6; i++)
     {
         ereaderTrainer->greeting[i] = gSaveBlock1.easyChats.easyChatBattleStart[i];
-        ereaderTrainer->farewellPlayerLost[i] = r3;
-        ereaderTrainer->farewellPlayerWon[i] = r3 + 6;
-        r3++;
+        ereaderTrainer->farewellPlayerLost[i] = j;
+        ereaderTrainer->farewellPlayerWon[i] = j + 6;
+        j++;
     }
     for (i = 0; i < 3; i++)
         ConvertPokemonToBattleTowerPokemon(&gPlayerParty[i], &ereaderTrainer->party[i]);
