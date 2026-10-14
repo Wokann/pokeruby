@@ -29,7 +29,7 @@ int GameClear(void)
     if (!GetGameStat(GAME_STAT_FIRST_HOF_PLAY_TIME))
         SetGameStat(GAME_STAT_FIRST_HOF_PLAY_TIME, (gSaveBlock2.playTimeHours << 16) | (gSaveBlock2.playTimeMinutes << 8) | gSaveBlock2.playTimeSeconds);
 
-    SetSecretBase2Field_9();
+    SetContinueGameWarpStatus();
 
     if (gSaveBlock2.playerGender == MALE)
         SetContinueGameWarpToHealLocation(HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F);

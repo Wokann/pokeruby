@@ -1516,9 +1516,9 @@ void CB2_ContinueSavedGame(void)
     PlayTimeCounter_Start();
     ScriptContext_Init();
     UnlockPlayerFieldControls();
-    if (GetSecretBase2Field_9() == 1)
+    if (UseContinueGameWarp() == 1)
     {
-        ClearSecretBase2Field_9();
+        ClearContinueGameWarpStatus();
         SetWarpDestinationToContinueGameWarp();
         WarpIntoMap();
         SetMainCallback2(CB2_LoadMap);

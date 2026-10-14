@@ -908,14 +908,14 @@ static void Task_SaveAfterLinkBattle(u8 taskId)
             (*state)++;
             break;
         case 1:
-            SetSecretBase2Field_9_AndHideBG();
+            SetContinueGameWarpStatusToDynamicWarp();
             WriteSaveBlock2();
             (*state)++;
             break;
         case 2:
             if (!WriteSaveBlock1Sector())
                 break;
-            ClearSecretBase2Field_9_2();
+            ClearContinueGameWarpStatus2();
             (*state)++;
             break;
         case 3:

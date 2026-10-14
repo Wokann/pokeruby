@@ -4316,7 +4316,7 @@ static void CB2_SaveAndEndTrade(void)
             Text_InitWindowAndPrintText(&gTradeAnim->window, gText_SavingDontTurnOffPower, gTradeAnim->textWindowBaseTileNum, 2, 15);
             break;
         case 50:
-            SetSecretBase2Field_9_AndHideBG();
+            SetContinueGameWarpStatusToDynamicWarp();
             IncrementGameStat(GAME_STAT_POKEMON_TRADES);
             LinkFullSave_Init();
             gMain.state ++;
@@ -4331,7 +4331,7 @@ static void CB2_SaveAndEndTrade(void)
         case 52:
             if (LinkFullSave_WriteSector())
             {
-                ClearSecretBase2Field_9_2();
+                ClearContinueGameWarpStatus2();
                 gMain.state = 4;
             }
             else
