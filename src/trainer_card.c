@@ -161,7 +161,7 @@ static void TrainerCard_CreatePrintPlayTimeTask(void);
 static void TrainerCard_DestoryPlayTimeTask(void);
 static void PrintTimeOnCard(u8 taskId);
 static void FlipTrainerCard(void);
-static u8 IsCardFlipTaskActive(void);
+static bool8 IsCardFlipTaskActive(void);
 static void Task_DoCardFlipTask(u8 taskId);
 static void HblankCb_TrainerCard(void);
 static void TrainerCard_DrawCard(void);
@@ -785,7 +785,7 @@ static void FlipTrainerCard(void)
     Task_DoCardFlipTask(taskId);
 }
 
-static u8 IsCardFlipTaskActive(void)
+static bool8 IsCardFlipTaskActive(void)
 {
     if (FindTaskIdByFunc(Task_DoCardFlipTask) == 0xFF)
         return TRUE;
