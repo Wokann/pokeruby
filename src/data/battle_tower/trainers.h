@@ -378,7 +378,7 @@ const struct BattleTowerTrainer gBattleTowerTrainers[] =
         },
     },
     {
-        .facilityClass = FACILITY_CLASS_POKEMON_BREEDER_F,
+        .facilityClass = FACILITY_CLASS_PKMN_BREEDER_F,
         .trainerName = _("COLETTE"),
         .teamFlags = 0x06,
         .speechBefore = {
@@ -443,7 +443,7 @@ const struct BattleTowerTrainer gBattleTowerTrainers[] =
         },
     },
     {
-        .facilityClass = FACILITY_CLASS_POKEMON_RANGER_F,
+        .facilityClass = FACILITY_CLASS_PKMN_RANGER_F,
         .trainerName = _("ELLEN"),
         .teamFlags = 0x04,
         .speechBefore = {
@@ -534,7 +534,7 @@ const struct BattleTowerTrainer gBattleTowerTrainers[] =
         },
     },
     {
-        .facilityClass = FACILITY_CLASS_POKEMON_RANGER_M,
+        .facilityClass = FACILITY_CLASS_PKMN_RANGER_M,
         .trainerName = _("HARRIS"),
         .teamFlags = 0x0C,
         .speechBefore = {
@@ -573,7 +573,7 @@ const struct BattleTowerTrainer gBattleTowerTrainers[] =
         },
     },
     {
-        .facilityClass = FACILITY_CLASS_POKEMON_BREEDER_M,
+        .facilityClass = FACILITY_CLASS_PKMN_BREEDER_M,
         .trainerName = _("BAILEY"),
         .teamFlags = 0x41,
         .speechBefore = {
@@ -664,7 +664,7 @@ const struct BattleTowerTrainer gBattleTowerTrainers[] =
         },
     },
     {
-        .facilityClass = FACILITY_CLASS_POKEMON_RANGER_F,
+        .facilityClass = FACILITY_CLASS_PKMN_RANGER_F,
         .trainerName = _("EDNA"),
         .teamFlags = 0x02,
         .speechBefore = {
@@ -1015,7 +1015,7 @@ const struct BattleTowerTrainer gBattleTowerTrainers[] =
         },
     },
     {
-        .facilityClass = FACILITY_CLASS_POKEMON_BREEDER_F,
+        .facilityClass = FACILITY_CLASS_PKMN_BREEDER_F,
         .trainerName = _("REENA"),
         .teamFlags = 0x12,
         .speechBefore = {
@@ -1054,7 +1054,7 @@ const struct BattleTowerTrainer gBattleTowerTrainers[] =
         },
     },
     {
-        .facilityClass = FACILITY_CLASS_POKEMON_RANGER_M,
+        .facilityClass = FACILITY_CLASS_PKMN_RANGER_M,
         .trainerName = _("ARNOLD"),
         .teamFlags = 0x08,
         .speechBefore = {
@@ -1184,7 +1184,7 @@ const struct BattleTowerTrainer gBattleTowerTrainers[] =
         },
     },
     {
-        .facilityClass = FACILITY_CLASS_POKEMON_BREEDER_M,
+        .facilityClass = FACILITY_CLASS_PKMN_BREEDER_M,
         .trainerName = _("TODD"),
         .teamFlags = 0x40,
         .speechBefore = {

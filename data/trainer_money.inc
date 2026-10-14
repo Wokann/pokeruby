@@ -10,7 +10,7 @@ gTrainerMoneyTable:: @ 81F98F0
 	.byte           TRAINER_CLASS_TUBER_F,  1, 0, 0
 	.byte           TRAINER_CLASS_TUBER_M,  1, 0, 0
 	.byte       TRAINER_CLASS_SIS_AND_BRO,  3, 0, 0
-	.byte      TRAINER_CLASS_COOL_TRAINER, 12, 0, 0
+	.byte       TRAINER_CLASS_COOLTRAINER, 12, 0, 0
 	.byte        TRAINER_CLASS_HEX_MANIAC,  6, 0, 0
 	.byte              TRAINER_CLASS_LADY, 50, 0, 0
 	.byte            TRAINER_CLASS_BEAUTY, 20, 0, 0
@@ -45,9 +45,9 @@ gTrainerMoneyTable:: @ 81F98F0
 	.byte             TRAINER_CLASS_TWINS,  3, 0, 0
 	.byte            TRAINER_CLASS_SAILOR,  8, 0, 0
 	.byte         TRAINER_CLASS_COLLECTOR, 15, 0, 0
-	.byte TRAINER_CLASS_POKEMON_TRAINER_3, 15, 0, 0
-	.byte   TRAINER_CLASS_POKEMON_BREEDER, 10, 0, 0
-	.byte    TRAINER_CLASS_POKEMON_RANGER, 12, 0, 0
+	.byte             TRAINER_CLASS_RIVAL, 15, 0, 0
+	.byte      TRAINER_CLASS_PKMN_BREEDER, 10, 0, 0
+	.byte       TRAINER_CLASS_PKMN_RANGER, 12, 0, 0
 	.byte        TRAINER_CLASS_TEAM_MAGMA,  5, 0, 0
 	.byte       TRAINER_CLASS_MAGMA_ADMIN, 10, 0, 0
 	.byte      TRAINER_CLASS_MAGMA_LEADER, 20, 0, 0

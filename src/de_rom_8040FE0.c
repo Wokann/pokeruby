@@ -19,7 +19,7 @@ const u8 *de_sub_8040FF4(u8 gender)
 {
     if (gender)
         gender++;
-    gender = TRAINER_CLASS_POKEMON_TRAINER_3;
+    gender = TRAINER_CLASS_RIVAL;
     return gTrainerClassNames[gender];
 }
 
