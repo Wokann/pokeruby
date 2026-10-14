@@ -22,8 +22,6 @@
 #include "constants/metatile_labels.h"
 #include "constants/songs.h"
 
-extern void (*gFieldCallback)(void);
-extern u8 gLastFieldPokeMenuOpened;
 
 #define sCutGrassSpriteArrayPtr (gSharedMem + 0x1FFF0) // 8 sprite IDs
 
