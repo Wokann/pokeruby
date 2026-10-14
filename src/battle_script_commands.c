@@ -2767,7 +2767,7 @@ void SetMoveEffect(bool8 primary, u8 certain)
                             | BATTLE_TYPE_BATTLE_TOWER
                             | BATTLE_TYPE_LINK)
                            || gTrainerBattleOpponent_A == TRAINER_SECRET_BASE)
-                         && (gWishFutureKnock.knockedOffPokes[side] & gBitTable[gBattlerPartyIndexes[gBattlerAttacker]]))
+                         && (gWishFutureKnock.knockedOffMons[side] & gBitTable[gBattlerPartyIndexes[gBattlerAttacker]]))
                 {
                     gBattlescriptCurrInstr++;
                 }
@@ -2887,7 +2887,7 @@ void SetMoveEffect(bool8 primary, u8 certain)
 
                     gLastUsedItem = gBattleMons[gEffectBattler].item;
                     gBattleMons[gEffectBattler].item = 0;
-                    gWishFutureKnock.knockedOffPokes[side] |= gBitTable[gBattlerPartyIndexes[gEffectBattler]];
+                    gWishFutureKnock.knockedOffMons[side] |= gBitTable[gBattlerPartyIndexes[gEffectBattler]];
 
                     BattleScriptPush(gBattlescriptCurrInstr + 1);
                     gBattlescriptCurrInstr = BattleScript_KnockedOff;
@@ -4578,7 +4578,7 @@ static void atk4D_switchindataupdate(void)
 
     // check knocked off item
     i = GetBattlerSide(gActiveBattler);
-    if (gWishFutureKnock.knockedOffPokes[i] & gBitTable[gBattlerPartyIndexes[gActiveBattler]])
+    if (gWishFutureKnock.knockedOffMons[i] & gBitTable[gBattlerPartyIndexes[gActiveBattler]])
     {
         gBattleMons[gActiveBattler].item = 0;
     }
@@ -8719,7 +8719,7 @@ static void atkD2_tryswapitems(void)
                                   | BATTLE_TYPE_EREADER_TRAINER
                                   | BATTLE_TYPE_BATTLE_TOWER))
             && gTrainerBattleOpponent_A != TRAINER_SECRET_BASE
-            && (gWishFutureKnock.knockedOffPokes[sideAttacker] & gBitTable[gBattlerPartyIndexes[gBattlerAttacker]]
+            && (gWishFutureKnock.knockedOffMons[sideAttacker] & gBitTable[gBattlerPartyIndexes[gBattlerAttacker]]
             )) {
             gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
         }
@@ -9579,15 +9579,15 @@ static void atkF3_trygivecaughtmonnick(void)
     case 2:
         if (!gPaletteFade.active)
         {
-            GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_NICKNAME, gBattleStruct->caughtNick);
-            DoNamingScreen(2, gBattleStruct->caughtNick, GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_SPECIES), GetMonGender(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]]), GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_PERSONALITY, 0), BattleMainCB2);
+            GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_NICKNAME, gBattleStruct->caughtMonNick);
+            DoNamingScreen(2, gBattleStruct->caughtMonNick, GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_SPECIES), GetMonGender(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]]), GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_PERSONALITY, 0), BattleMainCB2);
             gBattleCommunication[0]++;
         }
         break;
     case 3:
         if (gMain.callback2 == BattleMainCB2 && !gPaletteFade.active )
         {
-            SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_NICKNAME, gBattleStruct->caughtNick);
+            SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_NICKNAME, gBattleStruct->caughtMonNick);
             gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
         }
         break;

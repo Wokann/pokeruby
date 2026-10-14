@@ -155,7 +155,7 @@ struct WishFutureKnock
     u8 wishCounter[MAX_BATTLERS_COUNT];
     u8 wishMonId[MAX_BATTLERS_COUNT];
     u8 weatherDuration;
-    u8 knockedOffPokes[2];
+    u8 knockedOffMons[2];
 };
 
 struct AI_ThinkingStruct /* 0x2016800 */
@@ -298,12 +298,12 @@ struct BattleStruct /* 0x2000000 */
     /*0x1605C*/ u16 expValue;
     /*0x1605E*/ u8 scriptPartyIdx;
     /*0x1605F*/ u8 sentInPokes;
-    /*0x16060*/ u8 selectionScriptFinished[MAX_BATTLERS_COUNT];
+    /*0x16060*/ bool8 selectionScriptFinished[MAX_BATTLERS_COUNT];
     /*0x16064*/ u8 battlerPartyIndexes[MAX_BATTLERS_COUNT];
     /*0x16068*/ u8 monToSwitchIntoId[MAX_BATTLERS_COUNT];
     /*0x1606C*/ u8 battlerPartyOrders[MAX_BATTLERS_COUNT][3];
     /*0x16078*/ u8 runTries;
-    /*0x16079*/ u8 caughtNick[POKEMON_NAME_LENGTH + 1];
+    /*0x16079*/ u8 caughtMonNick[POKEMON_NAME_LENGTH + 1];
     /*0x16084*/ u8 battleStyle;
     /*0x16085*/ u8 unk16085;
     /*0x16086*/ u8 safariGoNearCounter;
@@ -358,7 +358,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x160DE*/ u8 unk160DE;
     /*0x160DF*/ u8 unk160DF;
     /*0x160E0*/ u8 multihitString[6];
-    /*0x160E6*/ u8 overworldWeatherDone;
+    /*0x160E6*/ bool8 overworldWeatherDone;
     /*0x160E7*/ u8 atkCancelerTracker;
     /*0x160E8*/ u16 choicedMove[MAX_BATTLERS_COUNT];
     /*0x160F0*/ u16 changedItems[MAX_BATTLERS_COUNT];
