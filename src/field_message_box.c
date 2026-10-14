@@ -93,14 +93,14 @@ bool8 ShowFieldAutoScrollMessage(const u8 *message)
     }
 }
 
-bool8 unref_sub_8064BB8(const u8 *message)
+bool8 ForceShowFieldAutoScrollMessage(const u8 *message)
 {
     sFieldMessageBoxMode = FIELD_MESSAGE_BOX_AUTO_SCROLL;
     PrintFieldMessage(message);
     return TRUE;
 }
 
-bool8 unref_sub_8064BD0(const u8 *message)
+bool8 ShowFieldMessageFromBuffer(const u8 *message)
 {
     if (sFieldMessageBoxMode != FIELD_MESSAGE_BOX_HIDDEN)
     {
