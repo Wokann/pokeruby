@@ -4,9 +4,6 @@
 #include "sprite.h"
 #include "task.h"
 
-extern const struct CompressedSpritePalette gTrainerFrontPicPaletteTable[2];
-extern const struct CompressedSpriteSheet gTrainerFrontPicTable[2];
-
 extern u8 gLastFieldPokeMenuOpened;
 
 u32 FieldEffectStart(u8 id);

@@ -43,7 +43,7 @@ static void HallOfFameRecordEffect_Init(struct Task *task);
 static void HallOfFameRecordEffect_WaitForBallPlacement(struct Task *task);
 static void HallOfFameRecordEffect_WaitForBallFlashing(struct Task *task);
 static void HallOfFameRecordEffect_WaitForSoundAndEnd(struct Task *task);
-static u8 CreateGlowingPokeballsEffect(s16 numMons, s16 x, s16 y, u16 playHealSe);
+static u8 CreateGlowingPokeballsEffect(s16 numMons, s16 x, s16 y, bool16 playHealSe);
 static void SpriteCB_PokeballGlowEffect(struct Sprite *sprite);
 static void PokeballGlowEffect_PlaceBalls(struct Sprite *sprite);
 static void PokeballGlowEffect_TryPlaySe(struct Sprite *sprite);
@@ -56,7 +56,7 @@ static void PokeballGlowEffect_Idle(struct Sprite *sprite);
 static void SpriteCB_PokeballGlow(struct Sprite *sprite);
 static u8 CreatePokecenterMonitorSprite(s16 x, s16 y);
 static void SpriteCB_PokecenterMonitor(struct Sprite *sprite);
-static void CreateHofMonitorSprite(s16 taskId, s16 x, s16 y, u8 isSmallMonitor);
+static void CreateHofMonitorSprite(s16 taskId, s16 x, s16 y, bool8 isSmallMonitor);
 static void SpriteCB_HallOfFameMonitor(struct Sprite *sprite);
 static void FieldCallback_UseFly(void);
 static void Task_UseFly(u8 taskId);
@@ -209,12 +209,12 @@ static const u16 sHofMonitor_Pal[16] = INCBIN_U16("graphics/field_effects/palett
 // Graphics for the lights streaking past your Pokemon when it uses a field move.
 static const u32 sFieldMoveStreaksOutdoors_Gfx[] = INCBIN_U32("graphics/field_effects/pics/field_move_streaks.4bpp");
 static const u16 sFieldMoveStreaksOutdoors_Pal[16] = INCBIN_U16("graphics/field_effects/pics/field_move_streaks.gbapal");
-static const u16 sFieldMoveStreaksOutdoors_Tilemap[] = INCBIN_U16("graphics/field_effects/pics/field_move_streaks.bin");
+static const u16 sFieldMoveStreaksOutdoors_Tilemap[320] = INCBIN_U16("graphics/field_effects/pics/field_move_streaks.bin");
 
 // The following light streaks effect is used when the map is indoors.
 static const u32 sFieldMoveStreaksIndoors_Gfx[] = INCBIN_U32("graphics/field_effects/pics/field_move_streaks_indoors.4bpp");
 static const u16 sFieldMoveStreaksIndoors_Pal[16] = INCBIN_U16("graphics/field_effects/pics/field_move_streaks_indoors.gbapal");
-static const u16 sFieldMoveStreaksIndoors_Tilemap[] = INCBIN_U16("graphics/field_effects/pics/field_move_streaks_indoors.bin");
+static const u16 sFieldMoveStreaksIndoors_Tilemap[320] = INCBIN_U16("graphics/field_effects/pics/field_move_streaks_indoors.bin");
 
 bool8 (*const gFieldEffectScriptFuncs[])(u8 **, u32 *) = {
     FieldEffectCmd_loadtiles,
@@ -898,7 +898,7 @@ static void HallOfFameRecordEffect_WaitForSoundAndEnd(struct Task *task)
 }
 
 
-static u8 CreateGlowingPokeballsEffect(s16 numMons, s16 x, s16 y, u16 playHealSe)
+static u8 CreateGlowingPokeballsEffect(s16 numMons, s16 x, s16 y, bool16 playHealSe)
 {
     u8 spriteId;
     struct Sprite *sprite;
@@ -1063,7 +1063,7 @@ static void SpriteCB_PokecenterMonitor(struct Sprite *sprite)
     }
 }
 
-static void CreateHofMonitorSprite(s16 taskId, s16 x, s16 y, u8 isSmallMonitor)
+static void CreateHofMonitorSprite(s16 taskId, s16 x, s16 y, bool8 isSmallMonitor)
 {
     u8 spriteId;
     if (!isSmallMonitor)
@@ -1174,9 +1174,6 @@ static void Task_FlyIntoMap(u8 taskId)
         DestroyTask(taskId);
     }
 }
-
-extern void CameraObjectFreeze(void);
-extern void CameraObjectReset(void);
 
 void FieldCB_FallWarpExit(void)
 {
@@ -1306,10 +1303,6 @@ static bool8 FallWarpEffect_End(struct Task *task)
     DestroyTask(FindTaskIdByFunc(Task_FallWarpFieldEffect));
     return FALSE;
 }
-
-extern void TryFadeOutOldMapMusic(void);
-
-bool8 BGMusicStopped(void);
 
 void StartEscalatorWarp(u8 metatileBehavior, u8 priority)
 {
@@ -1858,9 +1851,6 @@ static bool8 LavaridgeGymB1FWarpExitEffect_End(struct Task *task, struct ObjectE
     return FALSE;
 }
 
-extern void SetSpritePosToOffsetMapCoords(s16 *x, s16 *y, s16 dx, s16 dy);
-extern const struct SpriteTemplate *const gFieldEffectObjectTemplatePointers[36];
-
 u8 FldEff_AshLaunch(void)
 {
     u8 spriteId;
@@ -2297,7 +2287,7 @@ bool8 FldEff_FieldMoveShowMon(void)
 bool8 FldEff_FieldMoveShowMonInit(void)
 {
     struct Pokemon *pokemon;
-    u32 noDucking = gFieldEffectArguments[0] & 0x80000000;
+    bool32 noDucking = gFieldEffectArguments[0] & 0x80000000;
     pokemon = &gPlayerParty[(u8)gFieldEffectArguments[0]];
     gFieldEffectArguments[0] = GetMonData(pokemon, MON_DATA_SPECIES);
     gFieldEffectArguments[1] = GetMonData(pokemon, MON_DATA_OT_ID);
@@ -2634,7 +2624,7 @@ static bool8 SlideIndoorBannerOffscreen(struct Task *task)
 
 static u8 InitFieldMoveMonSprite(u32 species, u32 otId, u32 personality)
 {
-    u16 noDucking;
+    bool16 noDucking;
     u8 monSprite;
     struct Sprite *sprite;
     noDucking = (species & 0x80000000) >> 16;

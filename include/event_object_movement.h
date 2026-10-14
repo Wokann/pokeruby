@@ -370,6 +370,7 @@ u8 GetObjectEventIdByPosition(u16, u16, u8);
 void UpdateObjectEventsForCameraUpdate(s16, s16);
 u8 AddCameraObject(u8);
 void CameraObjectReset(void);
+void CameraObjectFreeze(void);
 const u8 *GetObjectEventScriptPointerByObjectEventId(u8);
 u8 GetObjectEventBerryTreeId(u8);
 void OverrideTemplateCoordsForObjectEvent(const struct ObjectEvent *objectEvent);
