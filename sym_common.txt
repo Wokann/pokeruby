@@ -186,7 +186,7 @@ gUnknown_Debug_03004BC0 = .;
 . += 0x4;
 #endif
 
-// event_object_lock.c
+// field_control_avatar.c
 SYMBOL(gSelectedObjectEvent, 4)
 
 // ???

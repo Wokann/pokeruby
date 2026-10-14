@@ -7,8 +7,6 @@
 #include "task.h"
 #include "constants/event_objects.h"
 
-u8 gSelectedObjectEvent;
-
 bool8 IsPlayerStandingStill(void)
 {
     if (gPlayerAvatar.tileTransitionState == T_TILE_TRANSITION)
