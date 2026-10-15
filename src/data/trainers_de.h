@@ -7318,7 +7318,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 3,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Brendan3 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_BrendanRoute119Mudkip }
     },
 
     [TRAINER_BRENDAN_ROUTE_103_TREECKO] =
@@ -7360,7 +7360,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 3,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Brendan6 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_BrendanRoute119Treecko }
     },
 
     [TRAINER_BRENDAN_ROUTE_103_TORCHIC] =
@@ -7402,7 +7402,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 3,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Brendan9 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_BrendanRoute119Torchic }
     },
 
     [TRAINER_MAY_ROUTE_103_MUDKIP] =
@@ -7444,7 +7444,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 3,
-        .party = {.NoItemDefaultMoves = gTrainerParty_May3 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_MayRoute119Mudkip }
     },
 
     [TRAINER_MAY_ROUTE_103_TREECKO] =
@@ -7486,7 +7486,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 3,
-        .party = {.NoItemDefaultMoves = gTrainerParty_May6 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_MayRoute119Treecko }
     },
 
     [TRAINER_MAY_ROUTE_103_TORCHIC] =
@@ -7528,7 +7528,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 3,
-        .party = {.NoItemDefaultMoves = gTrainerParty_May9 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_MayRoute119Torchic }
     },
 
     [TRAINER_ISAAC_1] =
@@ -9124,7 +9124,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x3,
         .partySize = 2,
-        .party = {.NoItemCustomMoves = gTrainerParty_Hideo2 }
+        .party = {.NoItemCustomMoves = gTrainerParty_Hideo }
     },
 
     [TRAINER_KEIGO] =

@@ -7058,7 +7058,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_BrendanRoute110Mudkip[] 
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_Brendan3[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_BrendanRoute119Mudkip[] = {
     {
 	.iv = 100,
 	.level = 29,
@@ -7102,7 +7102,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_BrendanRoute110Treecko[]
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_Brendan6[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_BrendanRoute119Treecko[] = {
     {
 	.iv = 100,
 	.level = 29,
@@ -7146,7 +7146,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_BrendanRoute110Torchic[]
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_Brendan9[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_BrendanRoute119Torchic[] = {
     {
 	.iv = 100,
 	.level = 29,
@@ -7190,7 +7190,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_MayRoute110Mudkip[] = {
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_May3[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_MayRoute119Mudkip[] = {
     {
 	.iv = 100,
 	.level = 29,
@@ -7234,7 +7234,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_MayRoute110Treecko[] = {
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_May6[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_MayRoute119Treecko[] = {
     {
 	.iv = 100,
 	.level = 29,
@@ -7278,7 +7278,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_MayRoute110Torchic[] = {
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_May9[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_MayRoute119Torchic[] = {
     {
 	.iv = 100,
 	.level = 29,
@@ -9031,7 +9031,7 @@ const struct TrainerMonNoItemCustomMoves gTrainerParty_Sadie[] = {
     }
 };
 
-const struct TrainerMonNoItemCustomMoves gTrainerParty_Hideo2[] = {
+const struct TrainerMonNoItemCustomMoves gTrainerParty_Hideo[] = {
     {
 	.iv = 0,
 	.level = 26,
