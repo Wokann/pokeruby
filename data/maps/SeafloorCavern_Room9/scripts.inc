@@ -225,7 +225,7 @@ SeafloorCavern_Room9_Movement_15DD36:: @ 815DD36
 	walk_right
 	step_end
 
-@ 815DD3E
+SeafloorCavern_Room9_Movement_Unused1: @ 815DD3E
 	walk_left
 	walk_left
 	step_end
@@ -235,7 +235,7 @@ SeafloorCavern_Room9_Movement_15DD41:: @ 815DD41
 	delay_16
 	step_end
 
-@ 815DD44
+SeafloorCavern_Room9_Movement_Unused2: @ 815DD44
 	walk_right
 	step_end
 
