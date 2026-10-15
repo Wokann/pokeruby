@@ -33,7 +33,7 @@ RS_MysteryEventsHouse_Text_SaveYourProgress:: @ 818E741
 RS_MysteryEventsHouse_Text_HopeToSeeAGoodMatch:: @ 818E777
 	.string "Ich hoffe, einen guten Kampf zu sehen!$"
 
-UnknownString_818E793: @ 818E793
+RS_MysteryEventsHouse_Text_StrVar1Tie: @ 818E793
 	.string "{STR_VAR_1}$"
 
 MossdeepCity_GameCorner_B1F_Text_MatchEndedUpDraw:: @ 818E796
@@ -44,7 +44,7 @@ RS_MysteryEventsHouse_Text_BattleTie:: @ 818E7B1
 	.string "Ein brillanter Kampf, in dem niemand\n"
 	.string "auch nur einen Schritt ausgewichen ist.$"
 
-UnknownString_818E80B: @ 818E80B
+RS_MysteryEventsHouse_Text_StrVar1Won: @ 818E80B
 	.string "{STR_VAR_1}$"
 
 RS_MysteryEventsHouse_Text_BattleWon:: @ 818E80E
@@ -52,7 +52,7 @@ RS_MysteryEventsHouse_Text_BattleWon:: @ 818E80E
 	.string "Ich habe mich wieder erkannt - mich in\n"
 	.string "meinen jungen Jahren!$"
 
-UnknownString_818E856: @ 818E856
+RS_MysteryEventsHouse_Text_StrVar1Lost: @ 818E856
 	.string "{STR_VAR_1}$"
 
 RS_MysteryEventsHouse_Text_BattleLost:: @ 818E859
