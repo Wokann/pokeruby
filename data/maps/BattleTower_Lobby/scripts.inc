@@ -1,11 +1,11 @@
 BattleTower_Lobby_MapScripts:: @ 816027E
-	map_script MAP_SCRIPT_ON_RESUME, BattleTower_Lobby_MapScript1_160293
-	map_script MAP_SCRIPT_ON_TRANSITION, BattleTower_Lobby_MapScript1_1602E8
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleTower_Lobby_MapScript2_160302
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleTower_Lobby_MapScript2_1602EE
+	map_script MAP_SCRIPT_ON_RESUME, BattleTower_Lobby_OnResume
+	map_script MAP_SCRIPT_ON_TRANSITION, BattleTower_Lobby_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleTower_Lobby_OnFrame
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleTower_Lobby_OnWarp
 	.byte 0
 
-BattleTower_Lobby_MapScript1_160293:: @ 8160293
+BattleTower_Lobby_OnResume:: @ 8160293
 	special TryHideBattleTowerReporter
 	call BattleTower_Lobby_EventScript_16029C
 	end
@@ -34,20 +34,20 @@ BattleTower_Lobby_EventScript_1602E4:: @ 81602E4
 	setflag FLAG_HIDE_AWARD_MAN_BATTLE_TOWER
 	return
 
-BattleTower_Lobby_MapScript1_1602E8:: @ 81602E8
+BattleTower_Lobby_OnTransition:: @ 81602E8
 	call BattleTower_Lobby_EventScript_1AE2ED
 	end
 
-BattleTower_Lobby_MapScript2_1602EE:: @ 81602EE
-	map_script_2 VAR_TEMP_1, 0, BattleTower_Lobby_EventScript_1602F8
+BattleTower_Lobby_OnWarp:: @ 81602EE
+	map_script_2 VAR_TEMP_1, 0, BattleTower_Lobby_EventScript_PlayerFaceNorth
 	.2byte 0
 
-BattleTower_Lobby_EventScript_1602F8:: @ 81602F8
+BattleTower_Lobby_EventScript_PlayerFaceNorth:: @ 81602F8
 	setvar VAR_TEMP_1, 1
 	turnobject LOCALID_PLAYER, 2
 	end
 
-BattleTower_Lobby_MapScript2_160302:: @ 8160302
+BattleTower_Lobby_OnFrame:: @ 8160302
 	map_script_2 VAR_TEMP_0, 0, BattleTower_Lobby_EventScript_16032C
 	map_script_2 VAR_TEMP_0, 1, BattleTower_Lobby_EventScript_160330
 	map_script_2 VAR_TEMP_0, 2, BattleTower_Lobby_EventScript_160342
@@ -218,12 +218,12 @@ BattleTower_Lobby_EventScript_1604FA:: @ 81604FA
 	special ChooseBattleTowerPlayerParty
 	waitstate
 	compare VAR_RESULT, 0
-	goto_if_eq BattleTower_Lobby_EventScript_16064F
+	goto_if_eq BattleTower_Lobby_EventScript_LoadPartyCancelChallenge
 	msgbox BattleTower_Lobby_Text_OkayToSaveBeforeEntering, MSGBOX_YESNO
 	switch VAR_RESULT
-	case NO, BattleTower_Lobby_EventScript_16064F
+	case NO, BattleTower_Lobby_EventScript_LoadPartyCancelChallenge
 	case YES, BattleTower_Lobby_EventScript_160587
-	case 127, BattleTower_Lobby_EventScript_16064F
+	case 127, BattleTower_Lobby_EventScript_LoadPartyCancelChallenge
 
 BattleTower_Lobby_EventScript_160587:: @ 8160587
 	setvar VAR_0x8004, 5
@@ -262,23 +262,23 @@ BattleTower_Lobby_EventScript_160600:: @ 8160600
 
 BattleTower_Lobby_EventScript_16060D:: @ 816060D
 	switch VAR_RESULT
-	case 0, BattleTower_Lobby_EventScript_160628
+	case 0, BattleTower_Lobby_EventScript_NotEnoughValidMonsLv50Singles
 	case 1, BattleTower_Lobby_EventScript_160635
 
-BattleTower_Lobby_EventScript_160628:: @ 8160628
+BattleTower_Lobby_EventScript_NotEnoughValidMonsLv50Singles:: @ 8160628
 	msgbox BattleTower_Lobby_Text_NotEnoughValidMonsLv50Singles, MSGBOX_DEFAULT
-	goto BattleTower_Lobby_EventScript_160662
+	goto BattleTower_Lobby_EventScript_EndCancelChallenge
 
 BattleTower_Lobby_EventScript_160635:: @ 8160635
 	msgbox BattleTower_Lobby_Text_19A32D, MSGBOX_DEFAULT
-	goto BattleTower_Lobby_EventScript_160662
+	goto BattleTower_Lobby_EventScript_EndCancelChallenge
 
 BattleTower_Lobby_EventScript_160642:: @ 8160642
 	setvar VAR_0x8004, 12
 	special SetBattleTowerProperty
 	goto BattleTower_Lobby_EventScript_160652
 
-BattleTower_Lobby_EventScript_16064F:: @ 816064F
+BattleTower_Lobby_EventScript_LoadPartyCancelChallenge:: @ 816064F
 	special LoadPlayerParty
 
 BattleTower_Lobby_EventScript_160652:: @ 8160652
@@ -286,41 +286,41 @@ BattleTower_Lobby_EventScript_160652:: @ 8160652
 	setvar VAR_0x8004, 11
 	special SetBattleTowerProperty
 
-BattleTower_Lobby_EventScript_160662:: @ 8160662
+BattleTower_Lobby_EventScript_EndCancelChallenge:: @ 8160662
 	release
 	end
 
 BattleTower_Lobby_EventScript_160664:: @ 8160664
-	applymovement 1, BattleTower_Lobby_Movement_160693
-	applymovement LOCALID_PLAYER, BattleTower_Lobby_Movement_160693
+	applymovement 1, BattleTower_Lobby_Movement_WalkToElevator
+	applymovement LOCALID_PLAYER, BattleTower_Lobby_Movement_WalkToElevator
 	waitmovement 0
 	opendoor 6, 1
 	waitdooranim
-	applymovement 1, BattleTower_Lobby_Movement_160697
-	applymovement LOCALID_PLAYER, BattleTower_Lobby_Movement_16069A
+	applymovement 1, BattleTower_Lobby_Movement_AttendantEnterElevator
+	applymovement LOCALID_PLAYER, BattleTower_Lobby_Movement_PlayerEnterElevator
 	waitmovement 0
 	closedoor 6, 1
 	waitdooranim
 	return
 
-BattleTower_Lobby_Movement_160693:: @ 8160693
+BattleTower_Lobby_Movement_WalkToElevator:: @ 8160693
 	walk_up
 	walk_up
 	walk_up
 	step_end
 
-BattleTower_Lobby_Movement_160697:: @ 8160697
+BattleTower_Lobby_Movement_AttendantEnterElevator:: @ 8160697
 	walk_up
 	set_invisible
 	step_end
 
-BattleTower_Lobby_Movement_16069A:: @ 816069A
+BattleTower_Lobby_Movement_PlayerEnterElevator:: @ 816069A
 	walk_up
 	walk_up
 	set_invisible
 	step_end
 
-@ 816069E
+BattleTower_Lobby_Movement_UnusedEnterElevator: @ 816069E
 	walk_fast_up
 	walk_fast_up
 	walk_fast_up
@@ -335,7 +335,7 @@ BattleTower_Lobby_EventScript_1606A5:: @ 81606A5
 	msgbox BattleTower_Lobby_Text_19A747, MSGBOX_YESNO
 	switch VAR_RESULT
 	case YES, BattleTower_Lobby_EventScript_1606CC
-	case NO, BattleTower_Lobby_EventScript_1606F7
+	case NO, BattleTower_Lobby_EventScript_FeelingsWontTell
 	release
 	end
 
@@ -346,22 +346,22 @@ BattleTower_Lobby_EventScript_1606CC:: @ 81606CC
 	lock
 	faceplayer
 	compare VAR_RESULT, 0
-	goto_if_eq BattleTower_Lobby_EventScript_160701
+	goto_if_eq BattleTower_Lobby_EventScript_CanceledEasyChat
 	compare VAR_RESULT, 1
-	goto_if_eq BattleTower_Lobby_EventScript_16070B
+	goto_if_eq BattleTower_Lobby_EventScript_SubmittedFeelings
 	end
 
-BattleTower_Lobby_EventScript_1606F7:: @ 81606F7
+BattleTower_Lobby_EventScript_FeelingsWontTell:: @ 81606F7
 	msgbox BattleTower_Lobby_Text_DontThinkMuchAboutIt, MSGBOX_DEFAULT
 	release
 	end
 
-BattleTower_Lobby_EventScript_160701:: @ 8160701
+BattleTower_Lobby_EventScript_CanceledEasyChat:: @ 8160701
 	msgbox BattleTower_Lobby_Text_ChangedYourMind, MSGBOX_DEFAULT
 	release
 	end
 
-BattleTower_Lobby_EventScript_16070B:: @ 816070B
+BattleTower_Lobby_EventScript_SubmittedFeelings:: @ 816070B
 	msgbox BattleTower_Lobby_Text_ThatsHowYouFeel, MSGBOX_DEFAULT
 	release
 	end
@@ -370,7 +370,7 @@ BattleTower_Lobby_EventScript_160715:: @ 8160715
 	msgbox BattleTower_Lobby_Text_19A8AE, MSGBOX_NPC
 	end
 
-BattleTower_Lobby_EventScript_16071E:: @ 816071E
+BattleTower_Lobby_EventScript_Boy:: @ 816071E
 	msgbox BattleTower_Lobby_Text_CanLeaveUntilLossOrSevenWins, MSGBOX_NPC
 	end
 
