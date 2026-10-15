@@ -9103,7 +9103,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_Kylee[] = {
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_Wally2[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_WallyMauville[] = {
     {
 	.iv = 30,
 	.level = 16,

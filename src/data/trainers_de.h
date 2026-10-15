@@ -9194,7 +9194,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Wally2 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_WallyMauville }
     },
 
     [TRAINER_WALLY_VR_2] =
