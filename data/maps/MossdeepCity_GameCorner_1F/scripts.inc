@@ -1,7 +1,7 @@
 MossdeepCity_GameCorner_1F_MapScripts:: @ 815AC52
 	map_script MAP_SCRIPT_ON_LOAD, MossdeepCity_GameCorner_1F_MapScript1_OnLoad
 	map_script MAP_SCRIPT_ON_TRANSITION, MossdeepCity_GameCorner_1F_MapScript1_OnTransition
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, MossdeepCity_GameCorner_1F_MapScript1_OnFrame
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, MossdeepCity_GameCorner_1F_OnFrame
 	.byte 0
 
 MossdeepCity_GameCorner_1F_MapScript1_OnLoad:: @ 815AC62
@@ -20,7 +20,7 @@ MossdeepCity_GameCorner_1F_MapScript1_OnTransition:: @ 815AC84
 	compare VAR_RESULT, 0
 	call_if_eq MossdeepCity_GameCorner_1F_EventScript_15AC9E
 	compare VAR_GAME_CORNER_STATE, 0
-	call_if_ne MossdeepCity_GameCorner_1F_EventScript_15ACAF
+	call_if_ne MossdeepCity_GameCorner_1F_EventScript_MoveOldManToDoor
 	end
 
 MossdeepCity_GameCorner_1F_EventScript_15AC9E:: @ 815AC9E
@@ -29,54 +29,54 @@ MossdeepCity_GameCorner_1F_EventScript_15AC9E:: @ 815AC9E
 	setobjectmovementtype 1, 8
 	return
 
-MossdeepCity_GameCorner_1F_EventScript_15ACAF:: @ 815ACAF
+MossdeepCity_GameCorner_1F_EventScript_MoveOldManToDoor:: @ 815ACAF
 	setobjectxyperm 1, 2, 2
 	setobjectmovementtype 1, 10
 	return
 
-MossdeepCity_GameCorner_1F_MapScript1_OnFrame:: @ 815ACBB
-	map_script_2 VAR_GAME_CORNER_STATE, 1, MossdeepCity_GameCorner_1F_EventScript_15ACD5
-	map_script_2 VAR_GAME_CORNER_STATE, 2, MossdeepCity_GameCorner_1F_EventScript_15ACD5
-	map_script_2 VAR_GAME_CORNER_STATE, 3, MossdeepCity_GameCorner_1F_EventScript_15ACD5
+MossdeepCity_GameCorner_1F_OnFrame:: @ 815ACBB
+	map_script_2 VAR_GAME_CORNER_STATE, 1, MossdeepCity_GameCorner_1F_EventScript_OldManCommentOnBattle
+	map_script_2 VAR_GAME_CORNER_STATE, 2, MossdeepCity_GameCorner_1F_EventScript_OldManCommentOnBattle
+	map_script_2 VAR_GAME_CORNER_STATE, 3, MossdeepCity_GameCorner_1F_EventScript_OldManCommentOnBattle
 	.2byte 0
 
-MossdeepCity_GameCorner_1F_EventScript_15ACD5:: @ 815ACD5
+MossdeepCity_GameCorner_1F_EventScript_OldManCommentOnBattle:: @ 815ACD5
 	lockall
-	applymovement LOCALID_PLAYER, MossdeepCity_GameCorner_1F_Movement_15AD3D
+	applymovement LOCALID_PLAYER, MossdeepCity_GameCorner_1F_Movement_PlayerExitStairs
 	waitmovement 0
-	applymovement 1, MossdeepCity_GameCorner_1F_Movement_15AD3F
+	applymovement 1, MossdeepCity_GameCorner_1F_Movement_OldManWalkBehindPlayer
 	waitmovement 0
 	copyobjectxytoperm 1
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	compare VAR_GAME_CORNER_STATE, 1
-	call_if_eq MossdeepCity_GameCorner_1F_EventScript_15AD22
+	call_if_eq MossdeepCity_GameCorner_1F_EventScript_BattleWonComment
 	compare VAR_GAME_CORNER_STATE, 2
-	call_if_eq MossdeepCity_GameCorner_1F_EventScript_15AD2B
+	call_if_eq MossdeepCity_GameCorner_1F_EventScript_BattleLostComment
 	compare VAR_GAME_CORNER_STATE, 3
-	call_if_eq MossdeepCity_GameCorner_1F_EventScript_15AD34
+	call_if_eq MossdeepCity_GameCorner_1F_EventScript_BattleTiedComment
 	special LoadPlayerParty
 	setvar VAR_GAME_CORNER_STATE, 0
 	releaseall
 	end
 
-MossdeepCity_GameCorner_1F_EventScript_15AD22:: @ 815AD22
+MossdeepCity_GameCorner_1F_EventScript_BattleWonComment:: @ 815AD22
 	msgbox RS_MysteryEventsHouse_Text_BattleWon, MSGBOX_DEFAULT
 	return
 
-MossdeepCity_GameCorner_1F_EventScript_15AD2B:: @ 815AD2B
+MossdeepCity_GameCorner_1F_EventScript_BattleLostComment:: @ 815AD2B
 	msgbox RS_MysteryEventsHouse_Text_BattleLost, MSGBOX_DEFAULT
 	return
 
-MossdeepCity_GameCorner_1F_EventScript_15AD34:: @ 815AD34
+MossdeepCity_GameCorner_1F_EventScript_BattleTiedComment:: @ 815AD34
 	msgbox RS_MysteryEventsHouse_Text_BattleTie, MSGBOX_DEFAULT
 	return
 
-MossdeepCity_GameCorner_1F_Movement_15AD3D:: @ 815AD3D
+MossdeepCity_GameCorner_1F_Movement_PlayerExitStairs:: @ 815AD3D
 	walk_down
 	step_end
 
-MossdeepCity_GameCorner_1F_Movement_15AD3F:: @ 815AD3F
+MossdeepCity_GameCorner_1F_Movement_OldManWalkBehindPlayer:: @ 815AD3F
 	walk_right
 	walk_in_place_faster_down
 	step_end
@@ -95,34 +95,34 @@ MossdeepCity_GameCorner_1F_EventScript_15AD59:: @ 815AD59
 	special BufferEReaderTrainerName
 	msgbox RS_MysteryEventsHouse_Text_ChallengeVisitingTrainer, MSGBOX_YESNO
 	compare VAR_RESULT, NO
-	goto_if_eq MossdeepCity_GameCorner_1F_EventScript_15ADE8
+	goto_if_eq MossdeepCity_GameCorner_1F_EventScript_DeclineBattle
 	call MossdeepCity_GameCorner_1F_EventScript_15ADF5
 	compare VAR_RESULT, 0
-	goto_if_eq MossdeepCity_GameCorner_1F_EventScript_15ADE8
+	goto_if_eq MossdeepCity_GameCorner_1F_EventScript_DeclineBattle
 	msgbox RS_MysteryEventsHouse_Text_SaveYourProgress, MSGBOX_YESNO
 	compare VAR_RESULT, NO
-	call_if_eq MossdeepCity_GameCorner_1F_EventScript_15ADE8
+	call_if_eq MossdeepCity_GameCorner_1F_EventScript_DeclineBattle
 	special LoadPlayerParty
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
-	goto_if_eq MossdeepCity_GameCorner_1F_EventScript_15ADE8
+	goto_if_eq MossdeepCity_GameCorner_1F_EventScript_DeclineBattle
 	erasebox 0, 0, 15, 10
 	special SavePlayerParty
 	special ReducePlayerPartyToSelectedMons
 	msgbox RS_MysteryEventsHouse_Text_HopeToSeeAGoodMatch, MSGBOX_DEFAULT
 	closemessage
 	compare VAR_FACING, 2
-	call_if_eq MossdeepCity_GameCorner_1F_EventScript_15AE04
+	call_if_eq MossdeepCity_GameCorner_1F_EventScript_EnterBasementNorth
 	compare VAR_FACING, 4
-	call_if_eq MossdeepCity_GameCorner_1F_EventScript_15AE16
+	call_if_eq MossdeepCity_GameCorner_1F_EventScript_EnterBasementEast
 	compare VAR_FACING, 3
-	call_if_eq MossdeepCity_GameCorner_1F_EventScript_15AE28
+	call_if_eq MossdeepCity_GameCorner_1F_EventScript_EnterBasementWest
 	warp MAP_MOSSDEEP_CITY_GAME_CORNER_B1F, 255, 3, 1
 	waitstate
 	release
 	end
 
-MossdeepCity_GameCorner_1F_EventScript_15ADE8:: @ 815ADE8
+MossdeepCity_GameCorner_1F_EventScript_DeclineBattle:: @ 815ADE8
 	special LoadPlayerParty
 	msgbox RS_MysteryEventsHouse_Text_YouWontBattle, MSGBOX_DEFAULT
 	release
@@ -135,48 +135,48 @@ MossdeepCity_GameCorner_1F_EventScript_15ADF5:: @ 815ADF5
 	waitstate
 	return
 
-MossdeepCity_GameCorner_1F_EventScript_15AE04:: @ 815AE04
-	applymovement VAR_LAST_TALKED, MossdeepCity_GameCorner_1F_Movement_15AE46
-	applymovement LOCALID_PLAYER, MossdeepCity_GameCorner_1F_Movement_15AE3A
+MossdeepCity_GameCorner_1F_EventScript_EnterBasementNorth:: @ 815AE04
+	applymovement VAR_LAST_TALKED, MossdeepCity_GameCorner_1F_Movement_OldManMoveAsideLeft
+	applymovement LOCALID_PLAYER, MossdeepCity_GameCorner_1F_Movement_PlayerEnterBasementNorth
 	waitmovement 0
 	return
 
-MossdeepCity_GameCorner_1F_EventScript_15AE16:: @ 815AE16
-	applymovement VAR_LAST_TALKED, MossdeepCity_GameCorner_1F_Movement_15AE49
-	applymovement LOCALID_PLAYER, MossdeepCity_GameCorner_1F_Movement_15AE3E
+MossdeepCity_GameCorner_1F_EventScript_EnterBasementEast:: @ 815AE16
+	applymovement VAR_LAST_TALKED, MossdeepCity_GameCorner_1F_Movement_OldManMoveAsideRight
+	applymovement LOCALID_PLAYER, MossdeepCity_GameCorner_1F_Movement_PlayerEnterBasementEast
 	waitmovement 0
 	return
 
-MossdeepCity_GameCorner_1F_EventScript_15AE28:: @ 815AE28
-	applymovement VAR_LAST_TALKED, MossdeepCity_GameCorner_1F_Movement_15AE46
-	applymovement LOCALID_PLAYER, MossdeepCity_GameCorner_1F_Movement_15AE42
+MossdeepCity_GameCorner_1F_EventScript_EnterBasementWest:: @ 815AE28
+	applymovement VAR_LAST_TALKED, MossdeepCity_GameCorner_1F_Movement_OldManMoveAsideLeft
+	applymovement LOCALID_PLAYER, MossdeepCity_GameCorner_1F_Movement_PlayerEnterBasementWest
 	waitmovement 0
 	return
 
-MossdeepCity_GameCorner_1F_Movement_15AE3A:: @ 815AE3A
+MossdeepCity_GameCorner_1F_Movement_PlayerEnterBasementNorth:: @ 815AE3A
 	delay_16
 	walk_up
 	walk_up
 	step_end
 
-MossdeepCity_GameCorner_1F_Movement_15AE3E:: @ 815AE3E
+MossdeepCity_GameCorner_1F_Movement_PlayerEnterBasementEast:: @ 815AE3E
 	delay_16
 	walk_right
 	walk_up
 	step_end
 
-MossdeepCity_GameCorner_1F_Movement_15AE42:: @ 815AE42
+MossdeepCity_GameCorner_1F_Movement_PlayerEnterBasementWest:: @ 815AE42
 	delay_16
 	walk_left
 	walk_up
 	step_end
 
-MossdeepCity_GameCorner_1F_Movement_15AE46:: @ 815AE46
+MossdeepCity_GameCorner_1F_Movement_OldManMoveAsideLeft:: @ 815AE46
 	walk_left
 	walk_in_place_faster_right
 	step_end
 
-MossdeepCity_GameCorner_1F_Movement_15AE49:: @ 815AE49
+MossdeepCity_GameCorner_1F_Movement_OldManMoveAsideRight:: @ 815AE49
 	walk_right
 	walk_in_place_faster_left
 	step_end

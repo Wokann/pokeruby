@@ -13,7 +13,7 @@ MossdeepCity_GameCorner_B1F_OnFrame:: @ 815AE64
 
 MossdeepCity_GameCorner_B1F_EventScript_15AE6E:: @ 815AE6E
 	lockall
-	applymovement LOCALID_PLAYER, MossdeepCity_GameCorner_B1F_Movement_15AEF9
+	applymovement LOCALID_PLAYER, MossdeepCity_GameCorner_B1F_Movement_PlayerEnterBasement
 	waitmovement 0
 	special CopyEReaderTrainerGreeting
 	msgbox gStringVar4, MSGBOX_DEFAULT
@@ -23,14 +23,14 @@ MossdeepCity_GameCorner_B1F_EventScript_15AE6E:: @ 815AE6E
 	special DoSpecialTrainerBattle
 	waitstate
 	compare VAR_RESULT, 3
-	call_if_eq MossdeepCity_GameCorner_B1F_EventScript_15AED5
+	call_if_eq MossdeepCity_GameCorner_B1F_EventScript_BattleTie
 	compare VAR_RESULT, 1
-	call_if_eq MossdeepCity_GameCorner_B1F_EventScript_15AEE3
+	call_if_eq MossdeepCity_GameCorner_B1F_EventScript_BattleWon
 	compare VAR_RESULT, 2
-	call_if_eq MossdeepCity_GameCorner_B1F_EventScript_15AEEE
+	call_if_eq MossdeepCity_GameCorner_B1F_EventScript_BattleLost
 	closemessage
 	special HealPlayerParty
-	applymovement LOCALID_PLAYER, MossdeepCity_GameCorner_B1F_Movement_15AEFF
+	applymovement LOCALID_PLAYER, MossdeepCity_GameCorner_B1F_Movement_PlayerExitBasement
 	waitmovement 0
 	special LoadPlayerParty
 	setvar VAR_TEMP_1, 1
@@ -39,26 +39,26 @@ MossdeepCity_GameCorner_B1F_EventScript_15AE6E:: @ 815AE6E
 	releaseall
 	end
 
-MossdeepCity_GameCorner_B1F_EventScript_15AED5:: @ 815AED5
+MossdeepCity_GameCorner_B1F_EventScript_BattleTie:: @ 815AED5
 	setvar VAR_GAME_CORNER_STATE, 3
 	msgbox MossdeepCity_GameCorner_B1F_Text_MatchEndedUpDraw, MSGBOX_DEFAULT
 	return
 
-MossdeepCity_GameCorner_B1F_EventScript_15AEE3:: @ 815AEE3
+MossdeepCity_GameCorner_B1F_EventScript_BattleWon:: @ 815AEE3
 	setvar VAR_GAME_CORNER_STATE, 1
 	special ShowFieldMessageStringVar4
 	waitmessage
 	waitbuttonpress
 	return
 
-MossdeepCity_GameCorner_B1F_EventScript_15AEEE:: @ 815AEEE
+MossdeepCity_GameCorner_B1F_EventScript_BattleLost:: @ 815AEEE
 	setvar VAR_GAME_CORNER_STATE, 2
 	special ShowFieldMessageStringVar4
 	waitmessage
 	waitbuttonpress
 	return
 
-MossdeepCity_GameCorner_B1F_Movement_15AEF9:: @ 815AEF9
+MossdeepCity_GameCorner_B1F_Movement_PlayerEnterBasement:: @ 815AEF9
 	walk_down
 	walk_down
 	walk_down
@@ -66,7 +66,7 @@ MossdeepCity_GameCorner_B1F_Movement_15AEF9:: @ 815AEF9
 	walk_right
 	step_end
 
-MossdeepCity_GameCorner_B1F_Movement_15AEFF:: @ 815AEFF
+MossdeepCity_GameCorner_B1F_Movement_PlayerExitBasement:: @ 815AEFF
 	walk_left
 	walk_left
 	walk_up
