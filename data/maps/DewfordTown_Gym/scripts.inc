@@ -96,7 +96,7 @@ DewfordTown_Gym_EventScript_StopCountingTrainers:: @ 8153151
 
 DewfordTown_Gym_EventScript_Brawly:: @ 8153152
 	trainerbattle_single TRAINER_BRAWLY, DewfordTown_Gym_Text_BrawlyIntro, DewfordTown_Gym_Text_BrawlyDefeat, DewfordTown_Gym_EventScript_BrawlyDefeated, NO_MUSIC
-	goto_if_unset FLAG_RECEIVED_TM_BULK_UP, DewfordTown_Gym_EventScript_GiveBulkUp
+	goto_if_unset FLAG_RECEIVED_TM_BULK_UP, DewfordTown_Gym_EventScript_GiveBulkUp2
 	msgbox DewfordTown_Gym_Text_BrawlyPostBattle, MSGBOX_DEFAULT
 	release
 	end
@@ -114,10 +114,10 @@ DewfordTown_Gym_EventScript_BrawlyDefeated:: @ 8153177
 	call_if_eq Common_EventScript_ReadyPetalburgGymForBattle
 	setvar VAR_0x8008, 2
 	call Common_EventScript_SetGymTrainers
-	goto DewfordTown_Gym_EventScript_GiveBulkUp
+	goto DewfordTown_Gym_EventScript_GiveBulkUp2
 	end
 
-DewfordTown_Gym_EventScript_GiveBulkUp:: @ 81531B5
+DewfordTown_Gym_EventScript_GiveBulkUp2:: @ 81531B5
 	giveitem ITEM_TM_BULK_UP
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull
