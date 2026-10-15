@@ -59,10 +59,10 @@ Route115_EventScript_RematchCyndy:: @ 8150A03
 
 Route115_EventScript_Hector:: @ 8150A1A
 .ifdef SAPPHIRE
-	trainerbattle_single TRAINER_514, UnknownString_81BCE47, UnknownString_81BCE7D
+	trainerbattle_single TRAINER_HECTOR, UnknownString_81BCE47, UnknownString_81BCE7D
 	msgbox UnknownString_81BCEA4, MSGBOX_AUTOCLOSE
 .else
-	trainerbattle_single TRAINER_514, Route115_Text_HectorIntro, Route115_Text_HectorDefeat
+	trainerbattle_single TRAINER_HECTOR, Route115_Text_HectorIntro, Route115_Text_HectorDefeat
 	msgbox Route115_Text_HectorPostBattle, MSGBOX_AUTOCLOSE
 .endc
 	end

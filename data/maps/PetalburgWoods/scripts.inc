@@ -30,7 +30,7 @@ PetalburgWoods_EventScript_DevonResearcherLeft:: @ 815CCA8
 	applymovement 3, PetalburgWoods_Movement_15CEC8
 	waitmovement 0
 	msgbox PetalburgWoods_Text_194EE8, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PETALBURG_WOODS_GRUNT, PetalburgWoods_Text_YoureKiddingMe
+	trainerbattle_no_intro TRAINER_GRUNT_PETALBURG_WOODS, PetalburgWoods_Text_YoureKiddingMe
 	applymovement 3, PetalburgWoods_Movement_15CEB3
 	waitmovement 0
 	call PetalburgWoods_EventScript_DevonResearcherPostBattle
@@ -65,7 +65,7 @@ PetalburgWoods_EventScript_DevonResearcherRight:: @ 815CD42
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox PetalburgWoods_Text_194EE8, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PETALBURG_WOODS_GRUNT, PetalburgWoods_Text_YoureKiddingMe
+	trainerbattle_no_intro TRAINER_GRUNT_PETALBURG_WOODS, PetalburgWoods_Text_YoureKiddingMe
 	applymovement 3, PetalburgWoods_Movement_15CEB3
 	waitmovement 0
 	call PetalburgWoods_EventScript_DevonResearcherPostBattle

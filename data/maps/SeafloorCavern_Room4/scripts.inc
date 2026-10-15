@@ -7,6 +7,6 @@ SeafloorCavern_Room4_MapScript1_15DAC5:: @ 815DAC5
 	end
 
 SeafloorCavern_Room4_EventScript_Grunt3:: @ 815DACB
-	trainerbattle_single TRAINER_SEAFLOOR_CAVERN_GRUNT_4, SeafloorCavern_Room4_Text_Grunt3Intro, SeafloorCavern_Room4_Text_Grunt3Defeat
+	trainerbattle_single TRAINER_GRUNT_SEAFLOOR_CAVERN_3, SeafloorCavern_Room4_Text_Grunt3Intro, SeafloorCavern_Room4_Text_Grunt3Defeat
 	msgbox SeafloorCavern_Room4_Text_Grunt3PostBattle, MSGBOX_AUTOCLOSE
 	end
