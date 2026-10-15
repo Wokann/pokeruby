@@ -1,7 +1,7 @@
 {
-  "id": "MAP_LINK_CONTEST_ROOM3",
-  "name": "LinkContestRoom3",
-  "layout": "LAYOUT_LINK_CONTEST_ROOM3",
+  "id": "MAP_CONTEST_HALL_CUTE",
+  "name": "ContestHallCute",
+  "layout": "LAYOUT_CONTEST_HALL_CUTE",
   "music": "MUS_CONTEST",
   "region_map_section": "MAPSEC_DYNAMIC",
   "requires_flash": false,
