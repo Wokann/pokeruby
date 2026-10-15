@@ -182,19 +182,19 @@ RusturfTunnel_Movement_WandaExit:: @ 815C951
 	walk_down
 	step_end
 
-@ 815C95D
+RusturfTunnel_Movement_Unused1: @ 815C95D
 	walk_left
 	walk_in_place_faster_right
 	step_end
 
-@ 815C960
+RusturfTunnel_Movement_Unused2: @ 815C960
 	walk_down
 	walk_in_place_faster_up
 	delay_8
 	walk_in_place_faster_right
 	step_end
 
-@ 815C965
+RusturfTunnel_Movement_Unused3: @ 815C965
 	walk_up
 	walk_in_place_faster_down
 	delay_8
