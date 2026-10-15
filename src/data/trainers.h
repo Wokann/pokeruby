@@ -7265,7 +7265,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_Edwin5 }
     },
 
-    [TRAINER_WALLY_1] =
+    [TRAINER_WALLY_VR_1] =
     {
         .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET,
         .trainerClass = TRAINER_CLASS_RIVAL,
@@ -7276,7 +7276,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 5,
-        .party = {.NoItemCustomMoves = gTrainerParty_Wally1 }
+        .party = {.NoItemCustomMoves = gTrainerParty_WallyVR1 }
     },
 
     [TRAINER_BRENDAN_ROUTE_103_MUDKIP] =
@@ -9197,7 +9197,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_Wally2 }
     },
 
-    [TRAINER_WALLY_3] =
+    [TRAINER_WALLY_VR_2] =
     {
         .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET,
         .trainerClass = TRAINER_CLASS_RIVAL,
@@ -9208,10 +9208,10 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 5,
-        .party = {.NoItemCustomMoves = gTrainerParty_Wally3 }
+        .party = {.NoItemCustomMoves = gTrainerParty_WallyVR2 }
     },
 
-    [TRAINER_WALLY_4] =
+    [TRAINER_WALLY_VR_3] =
     {
         .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET,
         .trainerClass = TRAINER_CLASS_RIVAL,
@@ -9222,10 +9222,10 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 5,
-        .party = {.NoItemCustomMoves = gTrainerParty_Wally4 }
+        .party = {.NoItemCustomMoves = gTrainerParty_WallyVR3 }
     },
 
-    [TRAINER_WALLY_5] =
+    [TRAINER_WALLY_VR_4] =
     {
         .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET,
         .trainerClass = TRAINER_CLASS_RIVAL,
@@ -9236,10 +9236,10 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 5,
-        .party = {.NoItemCustomMoves = gTrainerParty_Wally5 }
+        .party = {.NoItemCustomMoves = gTrainerParty_WallyVR4 }
     },
 
-    [TRAINER_WALLY_6] =
+    [TRAINER_WALLY_VR_5] =
     {
         .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET,
         .trainerClass = TRAINER_CLASS_RIVAL,
@@ -9250,7 +9250,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 5,
-        .party = {.NoItemCustomMoves = gTrainerParty_Wally6 }
+        .party = {.NoItemCustomMoves = gTrainerParty_WallyVR5 }
     },
 
     [TRAINER_BRENDAN_LILYCOVE_MUDKIP] =

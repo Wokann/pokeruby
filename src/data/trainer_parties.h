@@ -6999,7 +6999,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_Edwin5[] = {
     }
 };
 
-const struct TrainerMonNoItemCustomMoves gTrainerParty_Wally1[] = {
+const struct TrainerMonNoItemCustomMoves gTrainerParty_WallyVR1[] = {
     {
 	.iv = 150,
 	.level = 44,
@@ -9111,7 +9111,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_Wally2[] = {
     }
 };
 
-const struct TrainerMonNoItemCustomMoves gTrainerParty_Wally3[] = {
+const struct TrainerMonNoItemCustomMoves gTrainerParty_WallyVR2[] = {
     {
 	.iv = 150,
 	.level = 47,
@@ -9144,7 +9144,7 @@ const struct TrainerMonNoItemCustomMoves gTrainerParty_Wally3[] = {
     }
 };
 
-const struct TrainerMonNoItemCustomMoves gTrainerParty_Wally4[] = {
+const struct TrainerMonNoItemCustomMoves gTrainerParty_WallyVR3[] = {
     {
 	.iv = 150,
 	.level = 50,
@@ -9177,7 +9177,7 @@ const struct TrainerMonNoItemCustomMoves gTrainerParty_Wally4[] = {
     }
 };
 
-const struct TrainerMonNoItemCustomMoves gTrainerParty_Wally5[] = {
+const struct TrainerMonNoItemCustomMoves gTrainerParty_WallyVR4[] = {
     {
 	.iv = 150,
 	.level = 53,
@@ -9210,7 +9210,7 @@ const struct TrainerMonNoItemCustomMoves gTrainerParty_Wally5[] = {
     }
 };
 
-const struct TrainerMonNoItemCustomMoves gTrainerParty_Wally6[] = {
+const struct TrainerMonNoItemCustomMoves gTrainerParty_WallyVR5[] = {
     {
 	.iv = 150,
 	.level = 56,

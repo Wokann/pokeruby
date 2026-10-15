@@ -38,7 +38,7 @@ VictoryRoad_1F_EventScript_WallyApproachPlayer:: @ 815DED3
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	msgbox VictoryRoad_1F_Text_WallyNotGoingToLoseAnymore, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_WALLY_1, VictoryRoad_1F_Text_WallyEntranceDefeat
+	trainerbattle_no_intro TRAINER_WALLY_VR_1, VictoryRoad_1F_Text_WallyEntranceDefeat
 	msgbox VictoryRoad_1F_Text_WallyPostEntranceBattle, MSGBOX_DEFAULT
 	clearflag FLAG_HIDE_WALLY_BATTLE_VICTORY_ROAD
 	copyobjectxytoperm 4
@@ -91,7 +91,7 @@ VictoryRoad_1F_EventScript_WallyRematchPostBattle:: @ 815DF28
 	end
 
 VictoryRoad_1F_EventScript_Wally:: @ 815DF31
-	trainerbattle_single TRAINER_WALLY_3, VictoryRoad_1F_Text_WallyIntro, VictoryRoad_1F_Text_WallyDefeat
+	trainerbattle_single TRAINER_WALLY_VR_2, VictoryRoad_1F_Text_WallyIntro, VictoryRoad_1F_Text_WallyDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	compare VAR_RESULT, 1
 	goto_if_eq VictoryRoad_1F_EventScript_RematchWally
@@ -99,7 +99,7 @@ VictoryRoad_1F_EventScript_Wally:: @ 815DF31
 	end
 
 VictoryRoad_1F_EventScript_RematchWally:: @ 815DF58
-	trainerbattle_rematch TRAINER_WALLY_3, VictoryRoad_1F_Text_WallyIntro, VictoryRoad_1F_Text_WallyDefeat
+	trainerbattle_rematch TRAINER_WALLY_VR_2, VictoryRoad_1F_Text_WallyIntro, VictoryRoad_1F_Text_WallyDefeat
 	msgbox VictoryRoad_1F_Text_WallyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
