@@ -14,6 +14,6 @@ EventScript_FieldWhiteOut::
 	special Script_FadeOutMapMusic
 	waitstate
 	fadescreen FADE_TO_BLACK
-	special sp0C8_whiteout_maybe
+	special SetCB2WhiteOut
 	waitstate
 	end
