@@ -102,7 +102,7 @@ VerdanturfTown_ContestLobby_EventScript_AttractGiver:: @ 8153E47
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_TM_ATTRACT, VerdanturfTown_ContestLobby_EventScript_ReceivedAttract
-	msgbox VerdanturfTown_ContestLobby_Text_177DEC, MSGBOX_DEFAULT
+	msgbox VerdanturfTown_ContestLobby_Text_AttractionRunsDeep, MSGBOX_DEFAULT
 	giveitem ITEM_TM_ATTRACT
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull

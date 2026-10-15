@@ -5,7 +5,7 @@ VerdanturfTown_ContestLobby_Text_177D6C:: @ 8177D6C
 	.string "Wenn man da oben auf der riesigen Bühne\n"
 	.string "steht... Das muss Aufregung pur sein!$"
 
-VerdanturfTown_ContestLobby_Text_177DEC:: @ 8177DEC
+VerdanturfTown_ContestLobby_Text_AttractionRunsDeep:: @ 8177DEC
 	.string "Oh, die Liebe zu meinen POKéMON...\n"
 	.string "Diese Anziehungskraft...\p"
 	.string "Hups!\n"

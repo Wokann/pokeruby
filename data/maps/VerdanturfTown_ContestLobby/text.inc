@@ -4,7 +4,7 @@ VerdanturfTown_ContestLobby_Text_177D6C:: @ 8177D6C
 	.string "Getting up on that big stage...\n"
 	.string "It's going to be tense!$"
 
-VerdanturfTown_ContestLobby_Text_177DEC:: @ 8177DEC
+VerdanturfTown_ContestLobby_Text_AttractionRunsDeep:: @ 8177DEC
 	.string "Oh, my love for POKéMON...\n"
 	.string "The attraction they evoke in me...\p"
 	.string "Whoops!\n"
