@@ -85,11 +85,11 @@ Route128_EventScript_15213F:: @ 815213F
 	releaseall
 	end
 
-@ 815225E
+Route128_Movement_Unused1: @ 815225E
 	walk_fast_left
 	step_end
 
-@ 8152260
+Route128_Movement_Unused2: @ 8152260
 	walk_left
 	walk_left
 	walk_left
