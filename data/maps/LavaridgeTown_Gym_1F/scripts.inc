@@ -60,7 +60,7 @@ LavaridgeTown_Gym_1F_EventScript_EndCheckBuryTrainers:: @ 8153740
 
 LavaridgeTown_Gym_1F_EventScript_Flannery:: @ 8153741
 	trainerbattle_single TRAINER_FLANNERY, LavaridgeTown_Gym_1F_Text_FlanneryIntro, LavaridgeTown_Gym_1F_Text_FlanneryDefeat, LavaridgeTown_Gym_1F_EventScript_FlanneryDefeated, NO_MUSIC
-	goto_if_unset FLAG_RECEIVED_TM_OVERHEAT, LavaridgeTown_Gym_1F_EventScript_GiveOverheat
+	goto_if_unset FLAG_RECEIVED_TM_OVERHEAT, LavaridgeTown_Gym_1F_EventScript_GiveOverheat2
 	msgbox LavaridgeTown_Gym_1F_Text_FlanneryPostBattle, MSGBOX_DEFAULT
 	release
 	end
@@ -79,10 +79,10 @@ LavaridgeTown_Gym_1F_EventScript_FlanneryDefeated:: @ 8153766
 	call Common_EventScript_SetGymTrainers
 	setflag FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WALLY
 	setvar VAR_LAVARIDGE_RIVAL_STATE, 1
-	goto LavaridgeTown_Gym_1F_EventScript_GiveOverheat
+	goto LavaridgeTown_Gym_1F_EventScript_GiveOverheat2
 	end
 
-LavaridgeTown_Gym_1F_EventScript_GiveOverheat:: @ 81537A7
+LavaridgeTown_Gym_1F_EventScript_GiveOverheat2:: @ 81537A7
 	giveitem ITEM_TM_OVERHEAT
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull
