@@ -232,6 +232,7 @@ u8 GetPartyIdFromBattlePartyId(u8 battlePartyId);
 void ChooseContestMon(void);
 void ChoosePartyMon(void);
 void ChooseMonForMoveRelearner(void);
+void IsSelectedMonEgg(void);
 void MoveDeleterChooseMoveToForget(void);
 void GetNumMovesSelectedMonHas(void);
 void BufferMoveDeleterNicknameAndMove(void);

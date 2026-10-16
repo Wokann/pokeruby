@@ -2,10 +2,10 @@
 #include "choose_party.h"
 #include "contest.h"
 #include "data.h"
+#include "event_data.h"
 #include "party_menu.h"
 #include "field_screen_effect.h"
 #include "palette.h"
-#include "party_menu.h"
 #include "pokemon.h"
 #include "pokemon_summary_screen.h"
 #include "overworld.h"
@@ -18,14 +18,6 @@
 #include "text.h"
 #include "ewram.h"
 
-
-extern u8 gPlayerPartyCount;
-extern u16 gSpecialVar_0x8004;
-extern u16 gSpecialVar_0x8005;
-extern u8 gContestMonPartyIndex;
-extern u16 gSpecialVar_Result;
-
-extern void (*gFieldCallback)(void);
 
 void ChooseContestMon(void)
 {
@@ -134,20 +126,20 @@ bool8 SetupContestPartyMenu(void)
 
 void sub_80F9C00(void)
 {
-    u8 i;
+    u8 slot;
 
-    for (i = 0; i < gPlayerPartyCount; i++)
+    for (slot = 0; slot < gPlayerPartyCount; slot++)
     {
-        switch (GetContestEntryEligibility(&gPlayerParty[i]))
+        switch (GetContestEntryEligibility(&gPlayerParty[slot]))
         {
         case 0:
         case 3:
         case 4:
-            DrawMonDescriptorStatus(i, 0x7E);
+            DrawMonDescriptorStatus(slot, 0x7E);
             break;
         case 1:
         case 2:
-            DrawMonDescriptorStatus(i, 0x70);
+            DrawMonDescriptorStatus(slot, 0x70);
             break;
         }
     }
@@ -241,14 +233,14 @@ bool8 SetupMoveTutorPartyMenu(void)
 
 void sub_80F9E1C(void)
 {
-    u8 i;
+    u8 slot;
 
-    for (i = 0; i < gPlayerPartyCount; i++)
+    for (slot = 0; slot < gPlayerPartyCount; slot++)
     {
-        if (!GetNumberOfRelearnableMoves(&gPlayerParty[i]))
-            DrawMonDescriptorStatus(i, 0x9A);
+        if (!GetNumberOfRelearnableMoves(&gPlayerParty[slot]))
+            DrawMonDescriptorStatus(slot, 0x9A);
         else
-            DrawMonDescriptorStatus(i, 0x8C);
+            DrawMonDescriptorStatus(slot, 0x8C);
     }
 }
 
