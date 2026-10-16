@@ -9,6 +9,7 @@
 #include "constants/species.h"
 #include "contest_ai.h"
 #include "contest_effect.h"
+#include "contest_link.h"
 #include "data.h"
 #include "decompress.h"
 #include "ewram.h"
@@ -81,7 +82,6 @@ static void Task_WaitForSliderHeartAnim(u8 taskId);
 static u16 SanitizeSpecies(u16 species);
 static void SetBattleTargetSpritePosition(void);
 
-extern void Task_LinkContest_CommunicateAppealsState(u8 taskId);
 extern void Task_UpdateContestantBoxOrder(u8 taskId);
 
 extern struct Window gWindowTemplate_Contest_MoveDescription;
