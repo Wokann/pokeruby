@@ -2,7 +2,6 @@
 #include "event_data.h"
 #include "field_camera.h"
 #include "field_effect.h"
-#include "field_effect_helpers.h"
 #include "fldeff_misc.h"
 #include "event_object_movement.h"
 #include "field_player_avatar.h"

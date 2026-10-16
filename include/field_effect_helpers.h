@@ -1,8 +1,6 @@
 #ifndef GUARD_FIELD_EFFECT_HELPERS_H
 #define GUARD_FIELD_EFFECT_HELPERS_H
 
-extern const struct SpriteTemplate *const gFieldEffectObjectTemplatePointers[];
-
 void StartRevealDisguise(struct ObjectEvent *objectEvent);
 bool8 UpdateRevealDisguise(struct ObjectEvent *objectEvent);
 void UpdateShadowFieldEffect(struct Sprite *sprite);
