@@ -59,8 +59,6 @@ u16 gSoundTestCryNum;
 
 struct MusicPlayerInfo *gUnknown_03005D30;
 
-extern struct MusicPlayerInfo gMPlayInfo_BGM;
-
 void Task_InitSoundCheckMenu(u8);
 void sub_80BA384(u8);
 void sub_80BA65C(u8);
