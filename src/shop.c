@@ -32,9 +32,9 @@
 
 extern bool8 SellMenu_QuantityRoller(u8, u8);
 
-extern u8 gShopMenu_Gfx[];
-extern u16 gShopMenu_Tilemap[];
-extern u16 gShopMenu_Pal[16];
+extern const u8 gShopMenu_Gfx[];
+extern const u16 gShopMenu_Tilemap[];
+extern const u16 gShopMenu_Pal[16];
 
 enum
 {
