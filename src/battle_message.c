@@ -154,7 +154,6 @@ static const u8 sText_EmptyStatus[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
 
 extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
-extern u8 gEffectBattler;
 extern u8 gStringVar1[];
 extern u8 gStringVar2[];
 extern u8 gStringVar3[];

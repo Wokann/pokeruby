@@ -4,6 +4,7 @@
 #include "battle_main.h"
 #include "battle_ai_script_commands.h"
 #include "battle_util.h"
+#include "battle_script_commands.h"
 #include "battle_controllers.h"
 #include "battle_message.h"
 #include "data.h"
@@ -28,146 +29,11 @@
 #include "constants/species.h"
 #include "constants/weather.h"
 
-extern u8 gUnknown_02023A14_50;
-
 extern const u8* gBattlescriptCurrInstr;
-extern const u32 gBitTable[];
-extern u16 gBattleTypeFlags;
-extern u8 gBattlersCount;
-extern u8 gBattlerAttacker;
-extern u8 gBattlerTarget;
-extern u8 gBattleCommunication[];
-extern u8 gEffectBattler;
-extern s32 gBattleMoveDamage;
-extern u16 gBattlerPartyIndexes[4];
-extern s32 gBattleMoveDamage;
-extern u8 gSentPokesToOpponent[2];
 extern const u16 sSoundMovesTable[];
-extern const u8 gStatusConditionString_PoisonJpn[];
-extern const u8 gStatusConditionString_SleepJpn[];
-extern const u8 gStatusConditionString_ParalysisJpn[];
-extern const u8 gStatusConditionString_BurnJpn[];
-extern const u8 gStatusConditionString_IceJpn[];
-extern const u8 gStatusConditionString_ConfusionJpn[];
-extern const u8 gStatusConditionString_LoveJpn[];
-extern const BattleCmdFunc gBattleScriptingCommandsTable[];
 
-u8 GetBattlerAtPosition(u8 ID);
-u8 GetBattlerPosition(u8 bank);
-u8 GetBattlerSide(u8 battler);
-void SetMoveEffect(bool8 primary, u8 certainArg);
-bool8 UproarWakeUpCheck(u8 battler);
 u8 GetBattlerMultiplayerId(u8 id);
 u16 GetLinkTrainerFlankId(u8 linkPlayerId);
-
-extern u8 BattleScript_SelectingDisabledMove[];
-extern u8 BattleScript_SelectingTormentedMove[];
-extern u8 BattleScript_SelectingNotAllowedMoveTaunt[];
-extern u8 BattleScript_SelectingImprisonedMove[];
-extern u8 BattleScript_SelectingNotAllowedMoveChoiceItem[];
-extern u8 BattleScript_SelectingMoveWithNoPP[];
-extern u8 BattleScript_NoMovesLeft[];
-extern u8 BattleScript_WishComesTrue[];
-extern u8 BattleScript_IngrainTurnHeal[];
-extern u8 BattleScript_LeechSeedTurnDrain[];
-extern u8 BattleScript_PoisonTurnDmg[];
-extern u8 BattleScript_BurnTurnDmg[];
-extern u8 BattleScript_NightmareTurnDmg[];
-extern u8 BattleScript_CurseTurnDmg[];
-extern u8 BattleScript_WrapTurnDmg[];
-extern u8 BattleScript_WrapEnds[];
-extern u8 BattleScript_DisabledNoMore[];
-extern u8 BattleScript_EncoredNoMore[];
-
-extern u8 BattleScript_SideStatusWoreOff[];
-extern u8 BattleScript_RainContinuesOrEnds[];
-extern u8 BattleScript_SandStormHailEnds[];
-extern u8 BattleScript_DamagingWeatherContinues[];
-extern u8 BattleScript_SunlightFaded[];
-extern u8 BattleScript_SunlightContinues[];
-extern u8 BattleScript_SafeguardEnds[];
-extern u8 BattleScript_MonWokeUpInUproar[]; //uproar wakeup BS
-extern u8 BattleScript_PrintUproarOverTurns[]; //uproar BS
-extern u8 BattleScript_ThrashConfuses[];
-extern u8 BattleScript_YawnMakesAsleep[];
-extern u8 BattleScript_MonTookFutureAttack[];
-extern u8 BattleScript_PerishSongTakesLife[];
-extern u8 BattleScript_PerishSongCountGoesDown[];
-extern u8 BattleScript_GiveExp[];
-extern u8 BattleScript_HandleFaintedMon[];
-
-extern u8 BattleScript_MoveUsedIsAsleep[];
-extern u8 BattleScript_MoveUsedWokeUp[];
-extern u8 BattleScript_MoveUsedIsFrozen[];
-extern u8 BattleScript_MoveUsedUnfroze[];
-extern u8 BattleScript_MoveUsedLoafingAround[];
-extern u8 BattleScript_MoveUsedMustRecharge[];
-extern u8 BattleScript_MoveUsedFlinched[];
-extern u8 BattleScript_MoveUsedIsDisabled[];
-extern u8 BattleScript_MoveUsedIsTaunted[];
-extern u8 BattleScript_MoveUsedIsImprisoned[];
-extern u8 BattleScript_MoveUsedIsConfused[];
-extern u8 BattleScript_MoveUsedIsConfusedNoMore[];
-extern u8 BattleScript_MoveUsedIsParalyzed[];
-extern u8 BattleScript_MoveUsedIsInLoveCantAttack[];
-extern u8 BattleScript_MoveUsedIsInLove[];
-extern u8 BattleScript_BideStoringEnergy[];
-extern u8 BattleScript_BideAttack[];
-extern u8 BattleScript_BideNoEnergyToAttack[];
-
-extern u8 BattleScript_OverworldWeatherStarts[]; //load weather from overworld
-extern u8 BattleScript_DrizzleActivates[];
-extern u8 BattleScript_SandstreamActivates[];
-extern u8 BattleScript_DroughtActivates[];
-extern u8 BattleScript_RainDishActivates[];
-extern u8 BattleScript_ShedSkinActivates[];
-extern u8 BattleScript_SpeedBoostActivates[];
-extern u8 BattleScript_SoundproofProtected[];
-extern u8 BattleScript_MoveHPDrain[];
-extern u8 BattleScript_MoveHPDrain_PPLoss[];
-extern u8 BattleScript_FlashFireBoost[];
-extern u8 BattleScript_FlashFireBoost_PPLoss[];
-extern u8 BattleScript_MonMadeMoveUseless[];
-extern u8 BattleScript_MonMadeMoveUseless_PPLoss[];
-extern u8 BattleScript_ColorChangeActivates[];
-extern u8 BattleScript_RoughSkinActivates[];
-extern u8 BattleScript_ApplySecondaryEffect[];
-extern u8 BattleScript_CuteCharmActivates[];
-extern u8 BattleScript_AbilityCuredStatus[]; //ability status clear
-extern u8 BattleScript_SynchronizeActivates[];
-extern u8 BattleScript_IntimidateActivatesEnd3[]; //intimidate1
-extern u8 BattleScript_IntimidateActivates[]; //intimidate2
-extern u8 BattleScript_TraceActivates[];
-
-extern u8 BattleScript_WhiteHerbEnd2[];
-extern u8 BattleScript_WhiteHerbRet[];
-extern u8 BattleScript_ItemHealHP_RemoveItem[];
-extern u8 BattleScript_BerryPPHealEnd2[];
-extern u8 BattleScript_ItemHealHP_End2[];
-extern u8 BattleScript_BerryConfuseHealEnd2[];
-extern u8 BattleScript_BerryStatRaiseEnd2[];
-extern u8 BattleScript_BerryFocusEnergyEnd2[];
-extern u8 BattleScript_BerryCurePrlzEnd2[];
-extern u8 BattleScript_BerryCurePsnEnd2[];
-extern u8 BattleScript_BerryCureBrnEnd2[];
-extern u8 BattleScript_BerryCureFrzEnd2[];
-extern u8 BattleScript_BerryCureSlpEnd2[];
-extern u8 BattleScript_BerryCureConfusionEnd2[];
-extern u8 BattleScript_BerryCureChosenStatusEnd2[]; //berry cure any status end2
-extern u8 BattleScript_BerryCureParRet[];
-extern u8 BattleScript_BerryCurePsnRet[];
-extern u8 BattleScript_BerryCureBrnRet[];
-extern u8 BattleScript_BerryCureFrzRet[];
-extern u8 BattleScript_BerryCureSlpRet[];
-extern u8 BattleScript_BerryCureConfusionRet[];
-extern u8 BattleScript_BerryCureChosenStatusRet[]; //berry cure any status return
-
-extern u8 BattleScript_ItemHealHP_Ret[];
-
-extern u8 BattleScript_IgnoresWhileAsleep[]; //disobedient while asleep
-extern u8 BattleScript_IgnoresAndUsesRandomMove[]; //disobedient, uses a random move
-extern u8 BattleScript_IgnoresAndFallsAsleep[]; //disobedient, went to sleep
-extern u8 BattleScript_IgnoresAndHitsItself[]; //disobedient, hits itself
 
 u8 GetBattlerForBattleScript(u8 caseId)
 {

@@ -22,7 +22,6 @@ int gMonShrinkDuration;
 u16 gMonShrinkDelta;
 u16 gMonShrinkDistance;
 
-extern u8 gEffectBattler;
 
 extern const u16 gCureBubblesPal[];
 extern const struct SpriteTemplate gMiniTwinklingStarSpriteTemplate;

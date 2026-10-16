@@ -39,7 +39,6 @@ extern u32 gUnusedFirstBattleVar1;
 extern u8 gBattlersCount;
 extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
-extern u8 gEffectBattler;
 extern u8 gUnusedFirstBattleVar2;
 extern u8 gBattleOutcome;
 

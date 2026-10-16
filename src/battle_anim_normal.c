@@ -17,7 +17,6 @@
 extern u8 gBattlersCount;
 extern u8 gBattleEnvironment;
 extern u8 gBattlerTarget;
-extern u8 gEffectBattler;
 extern u8 gBattlerAttacker;
 
 static void AnimConfusionDuck(struct Sprite *);

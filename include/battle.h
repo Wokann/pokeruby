@@ -557,6 +557,7 @@ extern u8 gCritMultiplier;
 extern u16 gLastLandedMoves[];
 extern u8 gMoveResultFlags;
 extern u32 gStatuses3[MAX_BATTLERS_COUNT];
+extern u8 gSentPokesToOpponent[2];
 extern u16 gDynamicBasePower;
 extern u16 gMoveToLearn;
 extern s32 gBideDmg[MAX_BATTLERS_COUNT];
@@ -564,6 +565,7 @@ extern u8 gBideTarget[MAX_BATTLERS_COUNT];
 extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
 extern u8 gBattlerFainted;
+extern u8 gEffectBattler;
 extern u8 gChosenActionByBattler[MAX_BATTLERS_COUNT];
 extern u16 gChosenMoveByBattler[MAX_BATTLERS_COUNT];
 
