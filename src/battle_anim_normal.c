@@ -14,10 +14,7 @@
 #include "constants/battle.h"
 #include "constants/songs.h"
 
-extern u8 gBattlersCount;
 extern u8 gBattleEnvironment;
-extern u8 gBattlerTarget;
-extern u8 gBattlerAttacker;
 
 static void AnimConfusionDuck(struct Sprite *);
 static void AnimSimplePaletteBlend(struct Sprite *);
@@ -346,13 +343,13 @@ static void AnimSimplePaletteBlend(struct Sprite *sprite)
 //   6: BG palette 9
 u32 UnpackSelectedBattlePalettes(s16 selector)
 {
-    u8 battleBackground = selector & 1;
-    u8 attacker = (selector >> 1) & 1;
-    u8 target = (selector >> 2) & 1;
-    u8 attackerPartner = (selector >> 3) & 1;
-    u8 targetPartner = (selector >> 4) & 1;
-    u8 anim1 = (selector >> 5) & 1;
-    u8 anim2 = (selector >> 6) & 1;
+    bool8 battleBackground = selector & 1;
+    bool8 attacker = (selector >> 1) & 1;
+    bool8 target = (selector >> 2) & 1;
+    bool8 attackerPartner = (selector >> 3) & 1;
+    bool8 targetPartner = (selector >> 4) & 1;
+    bool8 anim1 = (selector >> 5) & 1;
+    bool8 anim2 = (selector >> 6) & 1;
     return GetBattlePalettesMask(battleBackground, attacker, target, attackerPartner, targetPartner, anim1, anim2);
 }
 
