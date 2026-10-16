@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle_scripts.h"
 #include "battle.h"
 #include "battle_main.h"
 #include "battle_ai_script_commands.h"
@@ -80,8 +81,8 @@ u8 GetBattlerPosition(u8 bank);
 u8 GetBattlerSide(u8 battler);
 void SetMoveEffect(bool8 primary, u8 certainArg);
 bool8 UproarWakeUpCheck(u8 battler);
-u8 GetBattlerMultiplayerId(u8 bank);
-u16 GetLinkTrainerFlankId(u8 a);
+u8 GetBattlerMultiplayerId(u8 id);
+u16 GetLinkTrainerFlankId(u8 linkPlayerId);
 
 extern u8 BattleScript_SelectingDisabledMove[];
 extern u8 BattleScript_SelectingTormentedMove[];
@@ -142,7 +143,6 @@ extern u8 BattleScript_OverworldWeatherStarts[]; //load weather from overworld
 extern u8 BattleScript_DrizzleActivates[];
 extern u8 BattleScript_SandstreamActivates[];
 extern u8 BattleScript_DroughtActivates[];
-extern u8 BattleScript_CastformChange[];
 extern u8 BattleScript_RainDishActivates[];
 extern u8 BattleScript_ShedSkinActivates[];
 extern u8 BattleScript_SpeedBoostActivates[];

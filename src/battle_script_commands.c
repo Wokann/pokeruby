@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle_scripts.h"
 #include "pokedex.h"
 #include "reshow_battle_screen.h"
 #include "battle.h"
@@ -9,6 +10,10 @@
 #include "battle_message.h"
 #include "constants/battle_string_ids.h"
 #include "battle_script_commands.h"
+#include "battle_interface.h"
+#include "money.h"
+#include "overworld.h"
+#include "menu_cursor.h"
 #include "battle_util.h"
 #include "constants/battle_move_effects.h"
 #include "constants/moves.h"
@@ -103,103 +108,23 @@ extern u16 gLastResultingMoves[4]; //last used moves by banks, another one
 extern u8 gCurrentTurnActionNumber;
 extern u16 gTrappingMoves[];
 
-extern u8 BattleScript_MoveEffectSleep[];
-extern u8 BattleScript_MoveEffectPoison[];
-extern u8 BattleScript_MoveEffectBurn[];
-extern u8 BattleScript_MoveEffectFreeze[];
-extern u8 BattleScript_MoveEffectParalysis[];
-extern u8 BattleScript_MoveEffectToxic[];
-extern u8 BattleScript_MoveEffectConfusion[];
-extern u8 BattleScript_MoveEffectUproar[];
-extern u8 BattleScript_MoveEffectWrap[];
-extern u8 BattleScript_MoveEffectPayDay[];
-extern u8 BattleScript_MoveEffectRecoil[];
 
 //extern functions
 static bool8 IsTwoTurnsMove(u16 move);
 static void TrySetDestinyBondToHappen(void);
 static void CheckWonderGuardAndLevitate(void);
-u8 GetBattlerPosition(u8 bank);
-u8 GetBattlerSide(u8 battler);
 static u8 AttacksThisTurn(u8 battler, u16 move); //Note: returns 1 if it's a charging turn, otherwise 2
 void UndoEffectsAfterFainting(void);
-void PlayBGM(u16 songID);
 extern u8 gBattleBufferB[4][0x200];
-u8 GetBattlerMultiplayerId(u8 bank);
-u16 GetLinkTrainerFlankId(u8 a);
-u8 GetBattlerAtPosition(u8 ID);
+u8 GetBattlerMultiplayerId(u8 id);
+u16 GetLinkTrainerFlankId(u8 linkPlayerId);
 //MonTryLearningNewMove teach poke a move
-u16 GiveMoveToBattleMon(struct BattlePokemon *mon, u16 move);
-void IncrementGameStat(u8 index);
-u8 GetScaledHPFraction(s16 hp, s16 maxhp, u8 scale);
-u8 MenuCursor_Create814A5C0(u8 subpriority, u16 paletteTag, u8 a3, u16 a4, u8 rowWidth);
-void DestroyMenuCursor(void);
 void sub_802BC6C(void);
-u8 GetMoveSlotToReplace(void);
 void sub_802BBD4(u8 xStart, u8 yStart, u8 xEnd, u8 yEnd, u8 sp0);
 void nullsub_6(void);
-void AddMoney(u32* moneySaveblock, u32 to_give);
-u8 GetMoveTarget(u16 move, u8 targetbyte); //get target of move
-u8 GetCurrentMapType(void);
-u8 CalculatePlayerPartyCount(void);
-u16 Sqrt(u32 num);
-void MenuCursor_SetPos814A880(u8 x, u8 y);
-bool8 IsLinkDoubleBattle(void);
 
 //extern BattleScripts
-extern u8 BattleScript_MoveEnd[];
-extern u8 BattleScript_NoPPForMove[];
-extern u8 BattleScript_MagicCoatBounce[];
-extern u8 BattleScript_TookAttack[];
-extern u8 BattleScript_SnatchedMove[];
-extern u8 BattleScript_Pausex20[];
-extern u8 BattleScript_SubstituteFade[];
-extern u8 BattleScript_FocusBandActivates[];
-extern u8 BattleScript_OneHitKOMsg[];
-extern u8 BattleScript_EnduredMsg[];
-extern u8 BattleScript_PSNPrevention[];
-extern u8 BattleScript_BRNPrevention[];
-extern u8 BattleScript_PRLZPrevention[];
-extern u8 BattleScript_FlinchPrevention[];
-extern u8 BattleScript_StatUp[];
-extern u8 BattleScript_StatDown[];
-extern u8 BattleScript_StickyHoldActivates[];
-extern u8 BattleScript_ItemSteal[];
-extern u8 BattleScript_RapidSpinAway[];
-extern u8 BattleScript_TargetPRLZHeal[];
-extern u8 BattleScript_KnockedOff[];
-extern u8 BattleScript_LevelUp[];
-extern u8 BattleScript_WrapFree[];
-extern u8 BattleScript_LeechSeedFree[];
-extern u8 BattleScript_SpikesFree[];
-extern u8 BattleScript_ButItFailed[];
-extern u8 BattleScript_ObliviousPreventsAttraction[];
-extern u8 BattleScript_MistProtected[];
-extern u8 BattleScript_AbilityNoStatLoss[];
-extern u8 BattleScript_AbilityNoSpecificStatLoss[];
-extern u8 BattleScript_TrainerBallBlock[];
-extern u8 BattleScript_WallyBallThrow[];
-extern u8 BattleScript_SuccessBallThrow[];
-extern u8 BattleScript_ShakeBallThrow[];
-extern u8 BattleScript_AllStatsUp[];
-extern u8 BattleScript_AtkDefDown[];
-extern u8 BattleScript_SAtkDown2[];
 
-extern u8 BattleScript_SpikesOnTarget[]; //spikes1
-extern u8 BattleScript_SpikesOnAttacker[]; //spikes2
-extern u8 BattleScript_SpikesOnFaintedBattler[]; //spikes3
-extern u8 BattleScript_HitFromCritCalc[]; //present dmg
-extern u8 BattleScript_AlreadyAtFullHp[]; //present full hp
-extern u8 BattleScript_PresentHealTarget[]; //present hp heal
-extern u8 BattleScript_MoveMissedPause[];
-extern u8 BattleScript_CastformChange[];
-extern u8 BattleScript_DampStopsExplosion[];
-extern u8 BattleScript_SuccessForceOut[]; //bs random switchout
-extern u8 BattleScript_PrintPayDayMoneyString[]; //bs payday money give
-extern u8 BattleScript_FaintAttacker[];
-extern u8 BattleScript_FaintTarget[];
-extern u8 BattleScript_DestinyBondTakesLife[];
-extern u8 BattleScript_GrudgeTakesPP[];
 
 // read via orr
 #define BSScriptRead32(ptr) ((ptr)[0] | (ptr)[1] << 8 | (ptr)[2] << 16 | (ptr)[3] << 24)
@@ -4175,9 +4100,6 @@ static void Cmd_playstatchangeanimation(void)
 
 
 
-extern u8 BattleScript_RageIsBuilding[];
-extern u8 BattleScript_DefrostedViaFireMove[];
-extern u8 BattleScript_FlushMessageBox[];
 
 // atk49, moveend cases
 void atk49_moveend(void)
