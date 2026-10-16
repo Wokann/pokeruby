@@ -22,9 +22,9 @@ struct DoorAnimFrame
 
 const u8 gDoorAnimTiles_Littleroot[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/04/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/04/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/04/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/littleroot/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/littleroot/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/littleroot/2.4bpp"),
 };
 
 // TODO: Make these blank palette includes?
@@ -32,43 +32,43 @@ asm(".space 32");
 
 const u8 gDoorAnimTiles_BirchsLab[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/05/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/05/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/05/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/birchs_lab/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/birchs_lab/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/birchs_lab/2.4bpp"),
 };
 
 const u8 gDoorAnimTiles_FallarborLightRoof[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/08/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/08/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/08/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/fallarbor_light_roof/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/fallarbor_light_roof/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/fallarbor_light_roof/2.4bpp"),
 };
 
 asm(".space 32");
 
 const u8 gDoorAnimTiles_Lilycove[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/15/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/15/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/15/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/lilycove/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/lilycove/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/lilycove/2.4bpp"),
 };
 
 asm(".space 32");
 
 const u8 gDoorAnimTiles_LilycoveWooden[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/16/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/16/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/16/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/lilycove_wooden/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/lilycove_wooden/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/lilycove_wooden/2.4bpp"),
 };
 
 asm(".space 32");
 
 const u8 gDoorAnimTiles_General[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/00/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/00/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/00/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/general/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/general/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/general/2.4bpp"),
 };
 
 static const u8 sDoorAnimTiles_PokeCenter[][0x100] =
@@ -94,59 +94,59 @@ static const u8 sDoorAnimTiles_PokeMart[][0x100] =
 
 const u8 gDoorAnimTiles_RustboroTan[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/06/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/06/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/06/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/rustboro_tan/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/rustboro_tan/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/rustboro_tan/2.4bpp"),
 };
 
 const u8 gDoorAnimTiles_RustboroGray[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/07/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/07/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/07/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/rustboro_gray/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/rustboro_gray/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/rustboro_gray/2.4bpp"),
 };
 
 const u8 gDoorAnimTiles_Oldale[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/09/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/09/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/09/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/oldale/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/oldale/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/oldale/2.4bpp"),
 };
 
 asm(".space 32");
 
 const u8 gDoorAnimTiles_Mauville[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/10/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/10/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/10/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/mauville/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/mauville/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/mauville/2.4bpp"),
 };
 
 asm(".space 32");
 
 const u8 gDoorAnimTiles_Verdanturf[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/11/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/11/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/11/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/verdanturf/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/verdanturf/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/verdanturf/2.4bpp"),
 };
 
 asm(".space 32");
 
 const u8 gDoorAnimTiles_Slateport[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/12/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/12/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/12/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/slateport/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/slateport/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/slateport/2.4bpp"),
 };
 
 asm(".space 32");
 
 const u8 gDoorAnimTiles_Dewford[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/13/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/13/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/13/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/dewford/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/dewford/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/dewford/2.4bpp"),
 };
 
 asm(".space 32");
@@ -162,18 +162,18 @@ asm(".space 32");
 
 const u8 gDoorAnimTiles_Mossdeep[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/17/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/17/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/17/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/mossdeep/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/mossdeep/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/mossdeep/2.4bpp"),
 };
 
 asm(".space 32");
 
 const u8 gDoorAnimTiles_SootopolisPeakedRoof[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/18/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/18/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/18/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/sootopolis_peaked_roof/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/sootopolis_peaked_roof/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/sootopolis_peaked_roof/2.4bpp"),
 };
 
 asm(".space 32");
@@ -198,54 +198,54 @@ asm(".space 32");
 
 const u8 gDoorAnimTiles_Pacifidlog[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/21/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/21/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/21/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/pacifidlog/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/pacifidlog/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/pacifidlog/2.4bpp"),
 };
 
 asm(".space 32");
 
 const u8 gDoorAnimTiles_PetalburgGym[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/22/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/22/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/22/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/petalburg_gym/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/petalburg_gym/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/petalburg_gym/2.4bpp"),
 };
 
 asm(".space 32");
 
 const u8 gDoorAnimTiles_CyclingRoad[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/23/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/23/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/23/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/cycling_road/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/cycling_road/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/cycling_road/2.4bpp"),
 };
 
 asm(".space 32");
 
 const u8 gDoorAnimTiles_LilycoveDeptStore[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/24/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/24/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/24/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/lilycove_dept_store/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/lilycove_dept_store/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/lilycove_dept_store/2.4bpp"),
 };
 
 asm(".space 32");
 
 const u8 gDoorAnimTiles_SafariZone[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/25/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/25/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/25/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/safari_zone/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/safari_zone/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/safari_zone/2.4bpp"),
 };
 
 asm(".space 32");
 
 const u8 gDoorAnimTiles_MossdeepSpaceCenter[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/26/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/26/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/26/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/mossdeep_space_center/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/mossdeep_space_center/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/mossdeep_space_center/2.4bpp"),
 };
 
 asm(".space 32");
@@ -270,9 +270,9 @@ asm(".space 32");
 
 const u8 gDoorAnimTiles_FallarborDarkRoof[][0x100] =
 {
-    INCBIN_U8("graphics/door_anims/29/0.4bpp"),
-    INCBIN_U8("graphics/door_anims/29/1.4bpp"),
-    INCBIN_U8("graphics/door_anims/29/2.4bpp"),
+    INCBIN_U8("graphics/door_anims/fallarbor_dark_roof/0.4bpp"),
+    INCBIN_U8("graphics/door_anims/fallarbor_dark_roof/1.4bpp"),
+    INCBIN_U8("graphics/door_anims/fallarbor_dark_roof/2.4bpp"),
 };
 
 asm(".space 32");
