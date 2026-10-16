@@ -1,11 +1,10 @@
 #include "global.h"
 #include "battle_anim.h"
+#include "battle.h"
 #include "util.h"
 #include "main.h"
 #include "task.h"
 #include "trig.h"
-
-extern u8 gBattlerSpriteIds[];
 
 static void AnimWillOWispFire(struct Sprite *sprite);
 static void AnimTask_MoveHeatWaveTargets_Step(u8 taskId);
