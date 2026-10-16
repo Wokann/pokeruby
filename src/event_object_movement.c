@@ -1043,7 +1043,6 @@ static u8 sCurrentReflectionType;
 static u16 sCurrentSpecialObjectPaletteTag;
 
 extern u8 gReservedSpritePaletteCount;
-extern struct Camera gCamera;
 struct ObjectEvent gObjectEvents[OBJECT_EVENTS_COUNT];
 #if DEBUG
 u8 gUnknown_Debug_03004BC0;

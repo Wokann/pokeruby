@@ -15,8 +15,6 @@ extern struct CameraObject gFieldCamera;
 extern u16 gTotalCameraPixelOffsetX;
 extern u16 gTotalCameraPixelOffsetY;
 
-extern struct Camera gCamera;
-
 void move_tilemap_camera_to_upper_left_corner(void);
 void sub_8057A58(void);
 void GetCameraOffsetWithPan(u16 *x, u16 *y);
