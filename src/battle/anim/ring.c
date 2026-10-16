@@ -1,11 +1,10 @@
 #include "global.h"
 #include "battle_anim.h"
+#include "battle.h"
 #include "trig.h"
 #include "sound.h"
 #include "main.h"
 #include "util.h"
-
-extern u8 gBattlerSpriteIds[];
 
 static void AnimBlendThinRing(struct Sprite *sprite);
 static void AnimHyperVoiceRing(struct Sprite *sprite);
