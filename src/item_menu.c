@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle.h"
 #include "battle_controllers.h"
 #include "event_scripts.h"
 #include "item_menu_icons.h"
@@ -122,7 +123,6 @@ static const u8 *sPopupMenuActionList;
 
 // common
 void (*gFieldItemUseCallback)(u8) = NULL;
-extern u16 gBattle_BG1_Y;
 struct PocketScrollState gBagPocketScrollStates[5];
 struct ItemSlot *gCurrentBagPocketItemSlots;  // selected pocket item slots
 
