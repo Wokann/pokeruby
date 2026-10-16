@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle.h"
 #include "daycare.h"
 #include "event_data.h"
 #include "field_effect.h"
@@ -29,8 +30,6 @@ static u16 sHatchedEggFatherMoves[4];
 static u16 sHatchedEggFinalMoves[4];
 static u16 sHatchedEggEggMoves[12];
 static u16 sHatchedEggMotherMoves[4];
-
-extern u16 gMoveToLearn;
 
 static void ClearDaycareMonMail(struct DaycareMail *mail);
 static void SetInitialEggData(struct Pokemon *mon, u16 species, struct DayCare *daycare);
