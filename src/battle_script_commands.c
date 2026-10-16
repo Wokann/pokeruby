@@ -46,57 +46,27 @@ extern u8 gUnknown_02023A14_50;
 extern s32 gBattleMoveDamage;
 extern u16 gBattleTypeFlags;
 extern const struct SpeciesInfo gSpeciesInfo[];
-extern struct BattleEnigmaBerry gEnigmaBerries[MAX_BATTLERS_COUNT];
 extern u8 gBattlersCount;
 extern u16 gBattlerPartyIndexes[MAX_BATTLERS_COUNT];
-extern u8 gBattlerByTurnOrder[MAX_BATTLERS_COUNT];
-extern u8 gActionsByTurnOrder[MAX_BATTLERS_COUNT];
-extern u16 gCurrentMove;
-extern u8 gLastUsedAbility;
-extern u16 gBattleWeather;
-extern u8 gPotentialItemEffectBattler;
 extern u8 gEffectBattler;
-extern u8 gMultiHitCounter;
-extern u16 gLastMoves[4];
-extern u16 gLockedMoves[4];
-extern u16 gSideStatuses[2];
-extern u16 gPauseCounterBattle;
-extern u16 gPaydayMoney;
-extern u16 gRandomTurnNumber;
 extern u8 gBattleOutcome;
 extern u8 gBattleEnvironment;
 extern u16 gTrainerBattleOpponent_A;
 extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
 extern const u8* gBattlescriptCurrInstr;
-extern u8 gCurrMovePos;
-extern u8 gCurrentActionFuncId;
-extern u32 gHitMarker;
 extern u8 gBattleCommunication[];
-extern u16 gLastHitByType[4];
-extern u8 gPotentialItemEffectBattler;
-extern u16 gLastUsedItem;
 extern u16 gBattleMovePower;
 extern s32 gHpDealt;
 extern const u16 gMissStringIds[];
 extern u8 gSentPokesToOpponent[2];
 extern u16 gExpShareExp;
-extern u8 gBattleTextBuff1[];
-extern u8 gBattleTextBuff2[];
-extern u8 gBattleTextBuff3[];
-extern u8 gLeveledUpInBattle;
-extern void (*gBattleMainFunc)(void);
 extern struct Window gWindowTemplate_Contest_MoveDescription;
-extern const u8 gText_BattleYesNoChoice[];
 extern u8 gPlayerPartyCount;
 extern u16 gMoveToLearn; //move to learn
 
 extern u8* gBattleScriptsForMoveEffects[];
-extern u16 gChosenMove; //last used move in battle
 extern u8 gBattlerInMenuId;
-extern u16 gLastPrintedMoves[4]; //last used moves 2, used by sketch
-extern u16 gLastResultingMoves[4]; //last used moves by banks, another one
-extern u8 gCurrentTurnActionNumber;
 extern u16 gTrappingMoves[];
 
 
@@ -106,7 +76,6 @@ static void TrySetDestinyBondToHappen(void);
 static void CheckWonderGuardAndLevitate(void);
 static u8 AttacksThisTurn(u8 battler, u16 move); //Note: returns 1 if it's a charging turn, otherwise 2
 void UndoEffectsAfterFainting(void);
-extern u8 gBattleBufferB[4][0x200];
 u8 GetBattlerMultiplayerId(u8 id);
 u16 GetLinkTrainerFlankId(u8 linkPlayerId);
 //MonTryLearningNewMove teach poke a move

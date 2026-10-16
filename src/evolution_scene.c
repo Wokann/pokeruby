@@ -68,7 +68,6 @@ extern u8 gBattleEnvironment;
 extern u8 gReservedSpritePaletteCount;
 extern u16 gMoveToLearn;
 extern u8 gDisplayedStringBattle[];
-extern u8 gBattleTextBuff2[];
 
 extern u8 gBattleCommunication[];
 #define sEvoCursorPos        gBattleCommunication[1] // when learning a new move

@@ -152,15 +152,9 @@ static const u16 sGrammarMoveUsedTable[] =
 
 static const u8 sText_EmptyStatus[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}; // empty flags
 
-extern u16 gLastUsedItem;
-extern u8 gLastUsedAbility;
 extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
-extern u8 gPotentialItemEffectBattler;
 extern u8 gEffectBattler;
-extern u8 gBattleTextBuff1[];
-extern u8 gBattleTextBuff2[];
-extern u8 gBattleTextBuff3[];
 extern u8 gStringVar1[];
 extern u8 gStringVar2[];
 extern u8 gStringVar3[];
@@ -171,7 +165,6 @@ extern u8 gStringVar1[];
 extern u8 gStringVar2[];
 extern u8 gStringVar3[];
 extern u16 gBattlerPartyIndexes[4];
-extern struct BattleEnigmaBerry gEnigmaBerries[4];
 
 static EWRAM_DATA u8 sBattlerAbilities[4] = {0};
 

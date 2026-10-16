@@ -68,4 +68,20 @@ extern u8 BattleScript_WallyBallThrow[];
 extern u8 BattleScript_ShakeBallThrow[];
 extern u8 BattleScript_TrainerBallBlock[];
 
+extern u8 BattleScript_LocalTrainerBattleWon[];
+extern u8 BattleScript_PayDayMoneyAndPickUpItems[];
+extern u8 BattleScript_LocalBattleLost[];
+extern u8 BattleScript_LinkBattleWonOrLost[];
+extern u8 BattleScript_SmokeBallEscape[];
+extern u8 BattleScript_RanAwayUsingMonAbility[];
+extern u8 BattleScript_GotAwaySafely[];
+extern u8 BattleScript_WildMonFled[];
+extern u8 BattleScript_PrintCantRunFromTrainer[];
+extern u8 BattleScript_PrintFailedToRunString[];
+extern u8 BattleScript_PrintCantEscapeFromBattle[];
+extern u8 BattleScript_PrintFullBox[];
+extern u8 BattleScript_ActionSwitch[];
+extern u8 BattleScript_FocusPunchSetUp[];
+extern u8 BattleScript_ActionSelectionItemsCantBeUsed[];
+
 #endif // GUARD_BATTLE_SCRIPTS_H

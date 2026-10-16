@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle_main.h"
 #include "event_data.h"
 #include "field_screen_effect.h"
 #include "main.h"
@@ -22,7 +23,6 @@
 
 extern u8 gPlayerPartyCount;
 extern u8 gLastFieldPokeMenuOpened;
-extern struct MultiBattlePokemonTx gMultiPartnerParty[3];
 extern u8 gPartyMenuMessage_IsPrinting;
 extern const u16 gBattleTowerBannedSpecies[];
 

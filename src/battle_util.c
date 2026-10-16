@@ -31,32 +31,15 @@
 extern u8 gUnknown_02023A14_50;
 
 extern const u8* gBattlescriptCurrInstr;
-extern u8 gBattleBufferB[4][0x200];
-extern u8* gSelectionBattleScripts[4]; //battlescript location when you try to choose a move you're not allowed to
-extern u16 gLastMoves[4];
-extern struct BattleEnigmaBerry gEnigmaBerries[4];
-extern u8 gPotentialItemEffectBattler;
-extern u16 gLastUsedItem;
-extern u16 gCurrentMove;
 extern const u32 gBitTable[];
 extern u16 gBattleTypeFlags;
 extern u8 gBattlersCount;
 extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
-extern u8 gBattlerByTurnOrder[4];
-extern u16 gSideStatuses[2];
-extern u16 gBattleWeather;
-extern void (*gBattleMainFunc)(void);
 extern u8 gBattleCommunication[];
-extern u32 gHitMarker;
 extern u8 gEffectBattler;
 extern s32 gBattleMoveDamage;
 extern u16 gBattlerPartyIndexes[4];
-extern u8 gLastUsedAbility;
-extern u8 gBattleTextBuff2[];
-extern u8 gCurrentActionFuncId;
-extern struct BattleEnigmaBerry gEnigmaBerries[4];
-extern u8 gCurrMovePos;
 extern s32 gBattleMoveDamage;
 extern u8 gSentPokesToOpponent[2];
 extern const u16 sSoundMovesTable[];

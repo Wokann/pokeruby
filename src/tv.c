@@ -148,7 +148,6 @@ extern u16 gSpecialVar_LastTalked;
 extern u16 gSpecialVar_ContestCategory;
 extern u16 gSpecialVar_ContestRank;
 extern u8 gBattleOutcome;
-extern u16 gLastUsedItem;
 
 static EWRAM_DATA u16 sPokemonAnglerSpecies = 0;
 static EWRAM_DATA u16 sPokemonAnglerAttemptCounters = 0;

@@ -30,30 +30,18 @@ static void UNUSED BtlController_EmitClearUnkFlag(u8 bufferId);
 static void UNUSED BtlController_EmitToggleUnkFlag(u8 bufferId);
 
 extern u16 gBattleTypeFlags;
-extern u16 gBattleWeather;
 
 static EWRAM_DATA u8 sLinkSendTaskId = 0;
 static EWRAM_DATA u8 sLinkReceiveTaskId = 0;
 static EWRAM_DATA u8 sUnused = 0;
 
 extern u32 gUnusedFirstBattleVar1;
-extern u8 gBattleBufferB[][0x200];
 extern u8 gBattlersCount;
-extern u16 gCurrentMove;
-extern u16 gChosenMove;
-extern u16 gLastUsedItem;
-extern u8 gLastUsedAbility;
 extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
 extern u8 gEffectBattler;
-extern u8 gPotentialItemEffectBattler;
-extern u8 gMultiHitCounter;
 extern u8 gUnusedFirstBattleVar2;
 extern u8 gBattleOutcome;
-extern u8 gBattleTextBuff1[];
-extern u8 gBattleTextBuff2[];
-extern u8 gBattleTextBuff3[];
-extern void (*gBattleMainFunc)(void);
 
 u8 gBattleBuffersTransferData[0x170];
 

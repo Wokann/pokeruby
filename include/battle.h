@@ -2,6 +2,7 @@
 #define GUARD_BATTLE_H
 
 #include "sprite.h"
+#include "battle_main.h"
 #include "constants/battle.h"
 #include "constants/battle_script_commands.h"
 #include "battle_setup.h"
@@ -247,7 +248,7 @@ struct LinkBattlerHeader
 union MultiBuffers
 {
     struct LinkBattlerHeader linkBattlerHeader;
-    struct MultiBattlePokemonTx multiBattleMons[3];
+    struct MultiPartnerMenuPokemon multiBattleMons[3];
 };
 
 // Used internally
@@ -502,8 +503,8 @@ extern struct UnusedControllerStruct gUnusedControllerStruct;
 typedef void (*BattleCmdFunc)(void);
 
 extern u8 gBattleTextBuff1[];
-
-extern u8 gBattleTextBuff1[];
+extern u8 gBattleTextBuff2[];
+extern u8 gBattleTextBuff3[];
 
 extern u16 gBattle_BG0_X;
 extern u16 gBattle_BG0_Y;
@@ -565,6 +566,34 @@ extern u8 gBattlerTarget;
 extern u8 gBattlerFainted;
 extern u8 gChosenActionByBattler[MAX_BATTLERS_COUNT];
 extern u16 gChosenMoveByBattler[MAX_BATTLERS_COUNT];
+
+extern u8 gBattleBufferB[4][0x200];
+extern u8 gActionsByTurnOrder[MAX_BATTLERS_COUNT];
+extern u8 gBattlerByTurnOrder[MAX_BATTLERS_COUNT];
+extern u8 gCurrentTurnActionNumber;
+extern u8 gCurrentActionFuncId;
+extern u8 gCurrMovePos;
+extern u16 gCurrentMove;
+extern u16 gChosenMove;
+extern u16 gLastUsedItem;
+extern u8 gLastUsedAbility;
+extern u8 gPotentialItemEffectBattler;
+extern u8 gMultiHitCounter;
+extern u8* gSelectionBattleScripts[4];
+extern u16 gLastPrintedMoves[4];
+extern u16 gLastMoves[MAX_BATTLERS_COUNT];
+extern u16 gLastHitByType[4];
+extern u16 gLastResultingMoves[4];
+extern u16 gLockedMoves[4];
+extern u32 gHitMarker;
+extern u16 gSideStatuses[2];
+extern u16 gPauseCounterBattle;
+extern u16 gPaydayMoney;
+extern u16 gRandomTurnNumber;
+extern u16 gBattleWeather;
+extern struct BattleEnigmaBerry gEnigmaBerries[MAX_BATTLERS_COUNT];
+extern void (*gBattleMainFunc)(void);
+extern u8 gLeveledUpInBattle;
 
 // src/battle_2.o
 void sub_800F104(void);

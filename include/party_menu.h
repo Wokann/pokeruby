@@ -5,6 +5,8 @@
 #include "constants/party_menu.h"
 #include "task.h"
 
+struct MultiPartnerMenuPokemon;
+
 
 enum
 {
@@ -134,7 +136,7 @@ void SetHeldItemIconVisibility(u8 a, u8 monIndex);
 void PartyMenuDoPrintMonNickname(u8 monIndex, int b, const u8 *nameBuffer);
 void PrintPartyMenuMonNickname(u8 monIndex, u8 b, struct Pokemon *pokemon);
 void PrintPartyMenuMonNicknames(void);
-void CreateMonIcon_LinkMultiBattle(u8 taskId, u8 monIndex, u8 menuType, struct MultiBattlePokemonTx *pokemon);
+void CreateMonIcon_LinkMultiBattle(u8 taskId, u8 monIndex, u8 menuType, struct MultiPartnerMenuPokemon *pokemon);
 u8 *GetMonNickname(struct Pokemon *mon, u8 *dest);
 u8 GetAilmentFromStatus(u32 status);
 u8 GetMonAilment(struct Pokemon *mon);

@@ -15,9 +15,6 @@
 #include "ewram.h"
 
 extern u16 gBattleTypeFlags;
-extern u16 gCurrentMove;
-extern u16 gBattleWeather;
-extern struct BattleEnigmaBerry gEnigmaBerries[];
 extern u16 gBattleMovePower;
 extern u16 gTrainerBattleOpponent_A;
 

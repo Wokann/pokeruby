@@ -10,6 +10,8 @@
 #include "battle.h"
 #include "battle_gfx_sfx_util.h"
 #include "battle_main.h"
+#include "battle_script_commands.h"
+#include "battle_scripts.h"
 #include "battle_ai_script_commands.h"
 #include "battle_ai_switch_items.h"
 #include "battle_controllers.h"
@@ -91,81 +93,29 @@ extern void HandleInputChooseAction(void);
 #endif
 
 extern const u8 Str_821F7B8[];
-extern u8 gUnknown_02023A14_50;
 extern const u16 gBattleTextboxPalette[];
 extern const struct MonCoords gCastformFrontSpriteCoords[];
 extern const u8 Str_821F7EA[];
 extern const u8 gUnknown_Debug_821F7F3[];
-extern const u8 gText_BattleYesNoChoice[];
-extern u8 gActionsByTurnOrder[4];
-extern struct MultiBattlePokemonTx gMultiPartnerParty[];
-extern u8 gBattleBufferB[][0x200];
-extern u8 gBattlersCount;
-extern u8 gCurrentActionFuncId;
-extern u8 gBattlerByTurnOrder[];
-extern u16 gCurrentMove;  // This is mis-named. It is a species, not a move ID.
-extern u8 gLastUsedAbility;
-extern u8 gPotentialItemEffectBattler;
-extern u8 gMultiHitCounter;
-extern u16 gLastPrintedMoves[];
-extern u16 gLastMoves[];
-extern u16 gLastHitByType[];
-extern u16 gLastResultingMoves[];
-extern u16 gLockedMoves[];
-extern u32 gHitMarker;
 extern u8 sUnusedBattlersArray[];
-extern u16 gSideStatuses[];
 //extern u8 gDisableStructs[][0x1C];
-extern u16 gPauseCounterBattle;
-extern u16 gPaydayMoney;
-extern u16 gRandomTurnNumber;
-extern u8 gBattleCommunication[];
 extern u8 gUnknown_02024D1F[];  // I don't actually know what type this is.
-extern u8 gBattleOutcome;
 MainCallback gPreBattleCallback1;
 u8 gMultiUsePlayerCursor;
 u8 gNumberOfMovesToChoose;
-extern void (*gBattleMainFunc)(void);
 u8 gLeveledUpInBattle;
 void (*gBattlerControllerFuncs[MAX_BATTLERS_COUNT])(void);
 u8 gHealthboxSpriteIds[MAX_BATTLERS_COUNT];
 u8 gBattleControllerData[MAX_BATTLERS_COUNT];
-extern u16 gBattleTypeFlags;
-extern u8 gReservedSpritePaletteCount;
-extern u16 gTrainerBattleOpponent_A;
-extern struct BattleEnigmaBerry gEnigmaBerries[];
-extern u16 gBlockRecvBuffer[MAX_LINK_PLAYERS][BLOCK_BUFFER_SIZE / 2];
-extern u8 gBattlerAttacker;
-extern u8 gBattlerTarget;
-extern u16 gBattleWeather;
-extern s32 gBattleMoveDamage;
-extern u8 BattleScript_FocusPunchSetUp[];
-extern u8 gCurrentTurnActionNumber;
 extern void (* const sTurnActionsFuncsTable[])(void);
 extern void (* const sEndTurnFuncsTable[])(void);
 extern u8* gBattlescriptCurrInstr;
-extern u8 BattleScript_LinkBattleWonOrLost[];
-extern u8 BattleScript_PayDayMoneyAndPickUpItems[];
 extern u8 gUnknown_081D8E0D[];
-extern u8 BattleScript_LocalTrainerBattleWon[];
-extern u8 BattleScript_LocalBattleLost[];
-extern u8 BattleScript_GotAwaySafely[];
-extern u8 BattleScript_SmokeBallEscape[];
-extern u8 BattleScript_RanAwayUsingMonAbility[];
-extern u8 BattleScript_WildMonFled[];
-extern u8 BattleScript_ActionSwitch[];
-extern u8 BattleScript_PrintFailedToRunString[];
-extern const BattleCmdFunc gBattleScriptingCommandsTable[];
-extern u8 gCurrMovePos;
-extern u16 gChosenMove;
 extern u8* gBattleScriptsForMoveEffects[];
-extern u16 gLastUsedItem;
 extern u8 * const gBattlescriptsForBallThrow[];
 extern u8 * const gBattlescriptsForRunningByItem[];
 extern u8 * const gBattlescriptsForUsingItem[];
 extern u8 * const gBattlescriptsForSafariActions[];
-extern u8 gBattleTextBuff2[];
-extern u8 gNumSafariBalls;
 extern u8 sPkblToEscapeFactor[][3];
 extern u8 sGoNearCounterToCatchFactor[];
 extern u8 sGoNearCounterToEscapeFactor[];
@@ -602,7 +552,7 @@ void PrepareOwnMultiPartnerBuffer(void)
         if (gMultiPartnerParty[i].language != 1)
             PadNameString(nickname, 0);
     }
-    memcpy(eMultiTxBuffer.multiBattleMons, gMultiPartnerParty, 3 * sizeof(struct MultiBattlePokemonTx));
+    memcpy(eMultiTxBuffer.multiBattleMons, gMultiPartnerParty, 3 * sizeof(struct MultiPartnerMenuPokemon));
 }
 
 void sub_800F104(void)
@@ -639,7 +589,7 @@ void sub_800F104(void)
             if (IsLinkTaskFinished())
             {
                 PrepareOwnMultiPartnerBuffer();
-                SendBlock(BitmaskAllOtherLinkPlayers(), eMultiTxBuffer.multiBattleMons, 3 * sizeof(struct MultiBattlePokemonTx));
+                SendBlock(BitmaskAllOtherLinkPlayers(), eMultiTxBuffer.multiBattleMons, 3 * sizeof(struct MultiPartnerMenuPokemon));
                 gBattleCommunication[0]++;
             }
         }
@@ -656,7 +606,7 @@ void sub_800F104(void)
                 {
                     if ((!(gLinkPlayers[i].id & 1) && !(gLinkPlayers[playerId].id & 1))
                      || ((gLinkPlayers[i].id & 1) && (gLinkPlayers[playerId].id & 1)))
-                        memcpy(gMultiPartnerParty, gBlockRecvBuffer[i], 3 * sizeof(struct MultiBattlePokemonTx));
+                        memcpy(gMultiPartnerParty, gBlockRecvBuffer[i], 3 * sizeof(struct MultiPartnerMenuPokemon));
                 }
             }
             gBattleCommunication[0]++;
@@ -4223,11 +4173,6 @@ enum
     STATE_SELECTION_SCRIPT_MAY_RUN
 };
 
-extern u8 * gSelectionBattleScripts[];
-extern u8 BattleScript_ActionSelectionItemsCantBeUsed[];
-extern u8 BattleScript_PrintFullBox[];
-extern u8 BattleScript_PrintCantRunFromTrainer[];
-extern u8 BattleScript_PrintCantEscapeFromBattle[];
 
 void sub_8012324(void)
 {

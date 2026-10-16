@@ -20,8 +20,6 @@
 extern s32 gBattleMoveDamage;
 extern u8 gBattlerInMenuId;
 extern u8 gBattlersCount;
-extern u8 gPotentialItemEffectBattler;
-extern struct BattleEnigmaBerry gEnigmaBerries[];
 
 static const u8 sGetMonDataEVConstants[] =
 {

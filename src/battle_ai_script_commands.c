@@ -19,14 +19,10 @@
 extern u8 gUnknown_02023A14_50;
 extern u32 gUnknown_02023A14_4C;
 extern u16 gBattleTypeFlags;
-extern u16 gBattleWeather;
 extern u16 gBattlerPartyIndexes[MAX_BATTLERS_COUNT];
-extern u16 gCurrentMove;
 extern int gBattleMoveDamage;
 extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
-extern u16 gLastMoves[MAX_BATTLERS_COUNT];
-extern u16 gSideStatuses[2];
 extern u16 gTrainerBattleOpponent_A;
 extern u8 *gBattleAI_ScriptsTable[];
 

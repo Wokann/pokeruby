@@ -27,13 +27,9 @@ extern u8 gPlayerPartyCount;
 extern u8 gEnemyPartyCount;
 
 extern u16 gBattleTypeFlags;
-extern u16 gCurrentMove;
-extern u8 gLastUsedAbility;
 extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
 extern u8 gXXX_CritRelated;
-extern u16 gBattleWeather;
-extern struct BattleEnigmaBerry gEnigmaBerries[];
 extern u16 gBattleMovePower;
 extern u16 gTrainerBattleOpponent_A;
 extern struct PokemonStorage gPokemonStorage;
