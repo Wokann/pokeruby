@@ -101,7 +101,6 @@ extern const struct ScanlineEffectParams sIntroScanlineParams16Bit;
 extern const u8 sText_ShedinjaJpnName[];
 extern u8 *const gMonSpriteGfx_Sprite_ptr[];
 //extern u8 (*const gMonSpriteGfx_Sprite_ptr[])[0x800];
-extern const struct BattleMove gBattleMoves[];
 
 // src/data/trainer_graphics/front_pic_coords.inc
 extern const struct MonCoords gTrainerFrontPicCoords[];

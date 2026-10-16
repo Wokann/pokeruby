@@ -364,6 +364,7 @@ extern struct Pokemon gEnemyParty[PARTY_SIZE];
 extern const u8 *const gItemEffectTable[];
 extern const u8 gFacilityClassToPicIndex[];
 extern const u8 gFacilityClassToTrainerClass[];
+extern const struct BattleMove gBattleMoves[];
 extern const struct SpeciesInfo gSpeciesInfo[];
 extern const struct SpindaSpot gSpindaSpotGraphics[];
 extern const u8 gPPUpGetMask[];
