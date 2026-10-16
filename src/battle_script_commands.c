@@ -43,9 +43,7 @@
 
 //extern needed variables
 extern u8 gUnknown_02023A14_50;
-extern u8 gCritMultiplier;
 extern s32 gBattleMoveDamage;
-extern u32 gStatuses3[MAX_BATTLERS_COUNT];
 extern u16 gBattleTypeFlags;
 extern const struct SpeciesInfo gSpeciesInfo[];
 extern struct BattleEnigmaBerry gEnigmaBerries[MAX_BATTLERS_COUNT];
@@ -74,12 +72,9 @@ extern const u8* gBattlescriptCurrInstr;
 extern u8 gCurrMovePos;
 extern u8 gCurrentActionFuncId;
 extern u32 gHitMarker;
-extern u8 gMoveResultFlags;
 extern u8 gBattleCommunication[];
-extern u16 gLastLandedMoves[4];
 extern u16 gLastHitByType[4];
 extern u8 gPotentialItemEffectBattler;
-extern u16 gDynamicBasePower;
 extern u16 gLastUsedItem;
 extern u16 gBattleMovePower;
 extern s32 gHpDealt;

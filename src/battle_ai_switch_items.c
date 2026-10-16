@@ -17,16 +17,6 @@
 #include "constants/species.h"
 #include "constants/item_effects.h"
 
-extern u8 gUnknown_02023A14_50;
-
-extern u16 gBattleTypeFlags;
-extern s32 gBattleMoveDamage;
-extern u8 gMoveResultFlags;
-extern u16 gDynamicBasePower;
-extern u8 gCritMultiplier;
-extern u16 gLastLandedMoves[];
-extern u32 gStatuses3[MAX_BATTLERS_COUNT];
-
 static bool8 HasSuperEffectiveMoveAgainstOpponents(bool8 noRng);
 static bool8 FindMonWithFlagsAndSuperEffective(u8 flags, u8 moduloPercent);
 static bool8 ShouldUseItem(void);

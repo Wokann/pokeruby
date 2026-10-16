@@ -25,12 +25,8 @@ extern u16 gCurrentMove;
 extern int gBattleMoveDamage;
 extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
-extern u8 gMoveResultFlags;
-extern u16 gDynamicBasePower;
 extern u16 gLastMoves[MAX_BATTLERS_COUNT];
-extern u32 gStatuses3[MAX_BATTLERS_COUNT];
 extern u16 gSideStatuses[2];
-extern u8 gCritMultiplier;
 extern u16 gTrainerBattleOpponent_A;
 extern u8 *gBattleAI_ScriptsTable[];
 

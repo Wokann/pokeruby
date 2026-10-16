@@ -16,7 +16,6 @@
 
 extern u16 gBattleTypeFlags;
 extern u16 gCurrentMove;
-extern u8 gCritMultiplier;
 extern u16 gBattleWeather;
 extern struct BattleEnigmaBerry gEnigmaBerries[];
 extern u16 gBattleMovePower;
