@@ -1,11 +1,9 @@
 #include "global.h"
 #include "battle_anim.h"
+#include "battle.h"
 #include "trig.h"
 #include "sound.h"
 #include "scanline_effect.h"
-
-extern u16 gBattle_BG2_X;
-extern u16 gBattle_BG1_X;
 
 static void AnimPencil(struct Sprite *sprite);
 static void AnimTask_SketchDrawMon_Step(u8 taskId);
