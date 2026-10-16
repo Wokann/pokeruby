@@ -1,6 +1,7 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_main.h"
+#include "battle_message.h"
 #include "battle_gfx_sfx_util.h"
 #include "battle_ai_script_commands.h"
 #include "battle_ai_switch_items.h"
@@ -26,42 +27,22 @@
 #include "ewram.h"
 #include "constants/moves.h"
 
-extern u8 gUnknown_02023A14_50;
-extern u16 gBattleTypeFlags;
-extern u16 gTrainerBattleOpponent_A;
-extern u8 gAnimFriendship;
-extern u8 gAnimMoveTurn;
-extern void (*gAnimScriptCallback)(void);
 extern struct Window gWindowTemplate_Contest_MoveDescription;
-extern u8 gDisplayedStringBattle[];
-extern u8 gBattlerTarget;
-extern struct MusicPlayerInfo gMPlayInfo_SE1;
-extern struct MusicPlayerInfo gMPlayInfo_SE2;
-extern struct MusicPlayerInfo gMPlayInfo_BGM;
 
-extern u8 GetBattlerSpriteDefault_Y();
 extern void sub_8033018(void);
-extern u8 GetBattlerPosition(u8);
 static void SwitchIn_TryShinyAnim(void);
 static void FreeMonSpriteAfterSwitchOutAnim(void);
 extern u8 get_trainer_class_pic_index(void);
 static void CompleteOnBattlerSpriteCallbackDummy(void);
 static void CompleteOnBankSpriteCallbackDummy2(void);
-extern void StartAnimLinearTranslation(struct Sprite *);
 extern void sub_8032BBC(void);
-extern void SetSpritePrimaryCoordsFromSecondaryCoords();
 static void HideHealthboxAfterMonFaint(void);
-extern void BufferStringBattle();
 extern void sub_80331D0(void);
-extern u8 GetBattlerAtPosition(u8);
 static void CompleteOnHealthbarDone(void);
 static void CompleteOnFinishedStatusAnimation(void);
 static void DoHitAnimBlinkSpriteEffect(void);
-extern u8 GetBattlerSide(u8);
-extern void Task_HidePartyStatusSummary(u8);
 static void OpponentDummy(void);
 extern void sub_8031B74();
-extern bool8 IsDoubleBattle(void);
 extern void sub_8032E2C(void);
 static void CompleteOnFinishedBattleAnimation(void);
 
