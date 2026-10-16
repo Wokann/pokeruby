@@ -2,6 +2,7 @@
 #include "mail.h"
 #include "data.h"
 #include "easy_chat.h"
+#include "event_data.h"
 #include "constants/items.h"
 #include "constants/species.h"
 #include "field_screen_effect.h"
@@ -14,14 +15,13 @@
 #include "overworld.h"
 #include "script.h"
 #include "sprite.h"
+#include "start_menu.h"
 #include "string_util.h"
 #include "strings.h"
 #include "task.h"
 #include "text.h"
 #include "scanline_effect.h"
 #include "ewram.h"
-
-extern bool8 (*gMenuCallback)(void);
 
 struct MailLineLayout
 {
@@ -47,7 +47,7 @@ struct MailRead
     /* 0xEC*/ MainCallback exitCallback;
     /* 0xF0*/ MainCallback callback;
     /* 0xF4*/ struct Mail *mail;
-    /* 0xF8*/ u8 hasText;
+    /* 0xF8*/ bool8 hasText;
     /* 0xF9*/ u8 varF9;
     /* 0xFA*/ u8 mailType;
     /* 0xFB*/ u8 iconType;
@@ -55,7 +55,7 @@ struct MailRead
     u8 padFD[1];
     /* 0xFE*/ u8 varFE;
     /* 0xFF*/ u8 language;
-    /*0x100*/ u8 international;
+    /*0x100*/ bool8 international;
     u8 pad101[3];
     /*0x104*/ u8 * (*unusedParserSingle)(u8 *dst, u16 word);
     /*0x108*/ u8 * (*unusedParserMultiple)(u8 *dst, u16* words, u16 arg2, u16 arg3);
@@ -292,7 +292,7 @@ const u8 Str_8411608[] = DTR("メールをけす", "Delete MAIL");
 // XXX: what is this?
 static struct MailRead *const sMailRead = (struct MailRead *)gSharedMem;
 
-static u8 MailReadBuildGraphics(void);
+static bool8 MailReadBuildGraphics(void);
 static void CB2_InitMailRead(void);
 static void BufferMailText(void);
 static void PrintMailText(void);
@@ -301,10 +301,6 @@ static void CB2_MailRead(void);
 static void CB2_WaitForPaletteExitOnKeyPress(void);
 static void CB2_ExitOnKeyPress(void);
 static void CB2_ExitMailReadFreeVars(void);
-
-extern u16 gSpecialVar_0x8004;
-extern u16 gSpecialVar_0x8005;
-extern u16 gSpecialVar_0x8006;
 
 #if DEBUG
 static u8 gUnknown_Debug_0300079C;
@@ -384,7 +380,7 @@ void ReadMail(struct Mail *mail, MainCallback exitCallback, bool8 hasText)
 #define RETURN_UP_STATE break
 #define RETURN_SKIP_STATE return FALSE
 
-static u8 MailReadBuildGraphics(void)
+static bool8 MailReadBuildGraphics(void)
 {
     switch (gMain.state)
     {
