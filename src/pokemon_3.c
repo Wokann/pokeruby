@@ -3,6 +3,7 @@
 #include "constants/items.h"
 #include "constants/moves.h"
 #include "battle.h"
+#include "battle_setup.h"
 #include "battle_message.h"
 #include "data.h"
 #include "event_data.h"
@@ -27,15 +28,6 @@
 #include "util.h"
 #include "ewram.h"
 #include "constants/trainers.h"
-
-extern u8 gPlayerPartyCount;
-extern u8 gEnemyPartyCount;
-extern u8 gDisplayedStringBattle[];
-extern u8 gBattlerAttacker;
-extern u8 gBattlerTarget;
-extern u8 gBattlerInMenuId;
-extern u16 gTrainerBattleOpponent_A;
-extern u16 gBattleTypeFlags;
 
 bool8 HealStatusConditions(struct Pokemon *mon, u32 battlePartyId, u32 healMask, u8 battler)
 {
