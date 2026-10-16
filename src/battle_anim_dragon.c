@@ -1,14 +1,11 @@
 #include "global.h"
+#include "battle.h"
 #include "battle_anim.h"
 #include "trig.h"
 #include "sound.h"
 #include "scanline_effect.h"
 
-extern u8 gBattlerAttacker;
-extern u16 gBattle_BG1_X;
-extern u16 gBattle_BG2_X;
 extern u16 gUnusedOverheatData[];
-extern u8 gBattlerSpriteIds[];
 
 static void AnimOutrageFlame(struct Sprite *);
 static void AnimDragonRageFirePlume(struct Sprite *);
