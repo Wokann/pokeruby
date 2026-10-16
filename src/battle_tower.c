@@ -19,6 +19,7 @@
 #include "main.h"
 #include "new_game.h"
 #include "overworld.h"
+#include "party_menu.h"
 #include "pokedex.h"
 #include "pokemon.h"
 #include "random.h"
@@ -280,7 +281,6 @@ extern const u8 gText_Are2[];
 extern u16 gSpecialVar_0x8004;
 extern u16 gTrainerBattleOpponent_A;
 extern u16 gBattleTypeFlags;
-extern u8 gSelectedOrderFromParty[];
 extern u8 gBattleOutcome;
 
 void sub_8134548(void)

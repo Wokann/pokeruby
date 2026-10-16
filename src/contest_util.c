@@ -20,6 +20,7 @@
 #include "main.h"
 #include "menu.h"
 #include "overworld.h"
+#include "party_menu.h"
 #include "pokedex.h"
 #include "pokemon.h"
 #include "random.h"
@@ -30,13 +31,6 @@
 #define CONTEST_ENTRY_PIC_LEFT 10
 #define CONTEST_ENTRY_PIC_TOP 3
 
-
-extern u8 gSelectedOrderFromParty[];
-
-extern u16 gSpecialVar_ContestCategory;
-extern u16 gSpecialVar_ContestRank;
-
-extern u8 gContestMonPartyIndex;
 extern u8 gUnknown_0203856C;
 
 static void Task_ShowContestEntryMonPic(u8 taskId);
