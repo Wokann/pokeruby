@@ -2437,12 +2437,9 @@ void sub_80ED620()
 
 void DoConditionGraphEnterTransition(void);
 void ToggleGraphData(bool8);
-bool8 ConditionMenu_UpdateMonEnter(void);
 void sub_80F3668(void);
 void sub_80F3698(void);
-bool8 ConditionMenu_UpdateMonExit(void);
 void sub_80F2F48(void);
-void FreeConditionSparkles(void);
 void sub_80F3614(void);
 void sub_80F357C(void);
 void DoConditionGraphExitTransition(void);

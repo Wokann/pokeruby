@@ -25,6 +25,7 @@
 #include "constants/flags.h"
 #include "constants/game_stat.h"
 #include "pokenav.h"
+#include "graphics.h"
 #include "constants/rgb.h"
 
 // Static type declarations
@@ -49,11 +50,8 @@ extern const u8 gPokenavConditionSearch2_Gfx[];
 extern const u8 gConditionGraphData_Pal[];
 extern const u8 gGraphData_Tilemap[];
 extern const u8 gUnknown_083E01AC[];
-extern const u8 gUnknown_08E9AC4C[];
 extern const u8 gPokenavConditionMenu2_Pal[];
 extern const u8 gPokenavConditionView_Gfx[];
-extern const u8 gUnknown_08E9ABB4[];
-extern const u8 gUnknown_08E9AC2C[];
 extern const u8 *const gPokenavCityMaps[][2];
 extern const u8 gPokenavHoennMapSquares_Pal[];
 extern const u8 gPokenavHoennMapSquares_Gfx[];
@@ -71,8 +69,6 @@ extern const u8 gPokenavDeviceBgPal[];
 extern const u8 gPokenavBgDotsPal[];
 extern const u8 gPokenavBgDotsTilemap[];
 extern const u8 gPokenavHoennMapMisc_Gfx[];
-extern const u8 gUnknown_08E99FB0[];
-extern const u8 gUnknown_08E9A100[];
 extern const u16 gPokenavHoennMap1_Pal[];
 extern void (*const gUnknown_083E3270[])(u16, u16);
 extern const u8 gUnknown_083E039C[];
@@ -144,8 +140,6 @@ extern const struct SpriteTemplate gSpriteTemplate_83E4878;
 
 // Static ROM declarations
 
-u8 PokenavList_MoveCursorUp(void);
-u8 PokenavList_MoveCursorDown(void);
 u8 sub_80F5FB4(void);
 u8 sub_80F6010(void);
 
@@ -3414,7 +3408,7 @@ void SpriteCB_ConditionSparkle(struct Sprite *sprite)
     }
 }
 
-void InitConditionSparkles(u8 count, u8 allowFirstShowAll)
+void InitConditionSparkles(u8 count, bool8 allowFirstShowAll)
 {
     u16 i;
 
@@ -3999,8 +3993,8 @@ bool8 ConditionMenu_UpdateMonExit(void)
 void sub_80F5060(bool8 moveUp)
 {
     u16 newLoadId;
-    u8 wasNotLastMon;
-    u8 isNotLastMon;
+    bool8 wasNotLastMon;
+    bool8 isNotLastMon;
 
     if (moveUp)
         newLoadId = gPokenavStructPtr->nextLoadIdUp;
@@ -4219,7 +4213,7 @@ void sub_80F567C(u8 *conditions, struct UCoords16 positions[])
     ConditionGraph_CalcPositions(conditions, positions);
 }
 
-static void ConditionGraph_CalcLine(u16 * scanline, struct UCoords16 * pos1, struct UCoords16 * pos2, u8 dir, u16 * overflowScanline)
+static void ConditionGraph_CalcLine(u16 * scanline, struct UCoords16 * pos1, struct UCoords16 * pos2, bool8 dir, u16 * overflowScanline)
 {
     u16 i, height, top, bottom, x2;
     u16 *ptr;

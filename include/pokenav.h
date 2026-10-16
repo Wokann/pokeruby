@@ -2,6 +2,7 @@
 #define GUARD_POKENAV_H
 
 #include "main.h"
+#include "menu_specialized.h"
 #include "region_map.h"
 #include "mon_markings.h"
 
@@ -41,19 +42,6 @@ struct UnkUsePokeblockSub {
     /*0x2*/ u16 monId:5;
     /*0x2*/ u16 unk2_5:9;
     /*0x3*/ u16 unk3_14:1;
-};
-
-struct ConditionGraph {
-    /*0x000*/ u8 conditions[4][5];
-    /*0x014*/ struct UCoords16 savedPositions[4][5];
-    /*0x064*/ struct UCoords16 newPositions[10][5];
-    /*0x12C*/ struct UCoords16 curPositions[5];
-    /*0x140*/ u16 scanlineRight[66][2];
-    /*0x248*/ u16 scanlineLeft[66][2];
-    /*0x350*/ u16 bottom;
-    /*0x352*/ u16 updateCounter;
-    /*0x354*/ bool8 needsDraw;
-    /*0x355*/ u8 scanlineResetState;
 };
 
 struct UnkPokenavStruct {
@@ -228,7 +216,6 @@ struct UnkPokenavStruct {
 
 extern struct UnkPokenavStruct *const gPokenavStructPtr;
 
-bool8 MoveConditionMonOnscreen(void);
 bool8 sub_80F1778(void);
 void sub_80F1934(void);
 void sub_80F2C80(u8);
@@ -238,17 +225,12 @@ bool8 sub_80F2CBC(u8);
 void sub_80F2E18(u8);
 void sub_80F33A8(void);
 void sub_80F3C94(void);
-void CreateConditionSparkleSprites(void);
 void sub_80F4BD0(void);
 void sub_80F556C(struct UCoords16*);
-void ConditionGraph_CalcPositions(u8 *conditions, struct UCoords16 positions[]);
 void sub_80F567C(u8 *, struct UCoords16 *);
-void ConditionGraph_InitResetScanline(void);
-bool8 ConditionGraph_ResetScanline(void);
 void sub_80F5CDC(u8);
 void sub_80EBA5C(void);
 void sub_80F5060(bool8);
-void DestroyConditionSparkleSprites(void);
 bool8 gpu_sync_bg_show(void);
 void sub_80F5550(struct UCoords16*, struct UCoords16*);
 bool8 sub_80F555C(void);
@@ -390,27 +372,22 @@ bool8 sub_80F3B58(void);
 void sub_80F3B94(void);
 bool8 sub_80F3BD4(void);
 void sub_80F3C2C(void);
-void InitConditionSparkles(u8, u8);
+void InitConditionSparkles(u8, bool8);
 void ShowAllConditionSparkles(void);
 void sub_80F3FF0(void);
 bool8 sub_80F4024(void);
 void sub_80F42C4(u8*);
 void sub_80F4394(void);
 u8 *sub_80F6514(u8*, u16, u8);
-u32 GetBoxOrPartyMonData(u16 boxId, u16 monId, int request, u8 *dst);
 u8 *sub_80F443C(u8 *, u16);
-void ConditionGraph_CalcPositions(u8*, struct UCoords16 *);
 void sub_80F4CF0(void);
 void sub_80F4D44(void);
 bool8 sub_80F4D88(void);
-void ConditionGraph_SetNewPositions(struct UCoords16*, struct UCoords16*);
-bool8 ConditionGraph_TryUpdate(void);
 bool8 sub_80F5264(void);
 bool8 sub_80F52F8(void);
 bool8 sub_80F5364(void);
 
 void sub_80F0900(void);
-void ConditionGraph_InitWindow(void);
 void sub_80EFD3C(void);
 void sub_8095C8C();
 void sub_80EFDA0(void);
@@ -463,7 +440,9 @@ void sub_80EBD90();
 void sub_80EBD18();
 void sub_80FB260();
 void sub_80EFE7C(void);
-void ConditionGraph_Draw();
 void sub_80F6F64();
+
+u8 PokenavList_MoveCursorUp(void);
+u8 PokenavList_MoveCursorDown(void);
 
 #endif // GUARD_POKENAV_H
