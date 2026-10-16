@@ -5,8 +5,6 @@
 #include "battle.h"
 #include "math_util.h"
 
-extern u16 gBattleTypeFlags;
-
 static void AnimSonicBoomProjectile(struct Sprite *sprite);
 static void AnimAirWaveProjectile(struct Sprite *sprite);
 
