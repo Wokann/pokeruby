@@ -10,7 +10,6 @@
 #include "task.h"
 #include "trig.h"
 
-extern u16 gBattleTypeFlags;
 
 static void BattleIntroTask_ScrollScenery(u8);
 static void BattleIntroTask_FadeScenery(u8);
