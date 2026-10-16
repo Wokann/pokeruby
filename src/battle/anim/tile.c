@@ -1,11 +1,9 @@
 #include "global.h"
 #include "battle_anim.h"
+#include "battle.h"
 #include "battle_interface.h"
 #include "trig.h"
 #include "sound.h"
-
-extern u8 gBattlersCount;
-extern u8 gHealthboxSpriteIds[];
 
 static void AnimConversion(struct Sprite *sprite);
 static void AnimConversion2(struct Sprite *sprite);
