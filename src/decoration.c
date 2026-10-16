@@ -7,6 +7,7 @@
 #include "constants/songs.h"
 #include "string_util.h"
 #include "menu.h"
+#include "item_menu.h"
 #include "menu_helpers.h"
 #include "strings.h"
 #include "script.h"

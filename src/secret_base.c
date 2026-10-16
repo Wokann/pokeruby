@@ -18,6 +18,7 @@
 #include "constants/maps.h"
 #include "map_name_popup.h"
 #include "menu.h"
+#include "item_menu.h"
 #include "menu_helpers.h"
 #include "metatile_behavior.h"
 #include "new_game.h"

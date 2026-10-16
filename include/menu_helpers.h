@@ -25,7 +25,6 @@ enum
 };
 
 void ClearBGTilemapBuffers(void);
-void DisplayItemMessageOnField(u8 taskId, const u8 *string, TaskFunc taskFunc, u16 tile);
 void DoYesNoFuncWithChoice(u8 taskId, const struct YesNoFuncTable *funcTable);
 void sub_80F914C(u8, const struct YesNoFuncTable *);
 u8 GetLRKeysPressed(void);

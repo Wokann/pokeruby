@@ -2,6 +2,7 @@
 #define GUARD_ITEM_MENU_H
 
 #include "item.h"
+#include "menu_helpers.h"
 #include "string_util.h"
 
 enum
@@ -57,6 +58,7 @@ void CB2_ChooseBerry(void);
 void ResetBagScrollPositions(void);
 void DoWallyTutorialBagMenu(void);
 void Task_CloseBagMenu(u8 taskId);
+void DisplayItemMessageOnField(u8 taskId, const u8 *string, TaskFunc taskFunc, u16 tile);
 void CloseItemMessage(u8 taskId);
 
 #endif // GUARD_ITEM_MENU_H

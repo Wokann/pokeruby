@@ -134,14 +134,14 @@ void ClearBGTilemapBuffers(void)
 }
 
 // display message box, fill box with tile if tile is not zero, print string
-static void PrintMessage(const u8 *str, u16 tile)
+static void PrintMessage(const u8 *string, u16 tile)
 {
     Menu_DisplayDialogueFrame();
     if (tile)
     {
         sub_80A3FA0(&gBGTilemapBuffers[1][0], 2, 15, 26, 4, tile);
     }
-    MenuPrintMessageDefaultCoords(str);
+    MenuPrintMessageDefaultCoords(string);
 }
 
 static void Task_ContinueTaskAfterMessagePrints(u8 taskId)
