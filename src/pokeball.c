@@ -16,10 +16,6 @@
 #include "util.h"
 #include "ewram.h"
 
-extern struct MusicPlayerInfo gMPlayInfo_BGM;
-extern u16 gBattleTypeFlags;
-extern u8 gBattlerTarget;
-
 #define GFX_TAG_POKE_BALL    55000
 #define GFX_TAG_GREAT_BALL   55001
 #define GFX_TAG_SAFARI_BALL  55002
