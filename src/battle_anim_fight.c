@@ -1,24 +1,11 @@
 #include "global.h"
 #include "battle_anim.h"
+#include "battle.h"
 #include "random.h"
 #include "sprite.h"
 #include "task.h"
 #include "trig.h"
 #include "constants/battle.h"
-
-extern u8 gBattlerAttacker;
-extern u8 gBattlerSpriteIds[];
-extern u8 gBattlerPositions[];
-extern u16 gBattle_BG1_X;
-extern u16 gBattle_BG1_Y;
-extern u16 gBattle_BG2_X;
-extern u16 gBattle_BG2_Y;
-extern u16 gBattle_BG3_X;
-extern u16 gBattle_BG3_Y;
-extern u16 gBattle_WIN0H;
-extern u16 gBattle_WIN0V;
-extern u16 gBattlerPartyIndexes[];
-extern u8 gAnimMoveTurn;
 
 extern const struct SpriteTemplate gBasicHitSplatSpriteTemplate;
 
