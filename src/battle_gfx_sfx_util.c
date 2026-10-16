@@ -24,18 +24,9 @@
 #include "ewram.h"
 #include "graphics.h"
 
-extern u8 gBattlersCount;
 extern struct Window gWindowTemplate_Contest_MoveDescription;
-extern struct MusicPlayerInfo gMPlayInfo_SE1;
-extern struct MusicPlayerInfo gMPlayInfo_SE2;
-extern struct MusicPlayerInfo gMPlayInfo_BGM;
-extern u16 gBattleTypeFlags;
-extern void (*gAnimScriptCallback)(void);
 extern const u8 *const gBattleAnims_General[];
 extern const u8 *const gBattleAnims_Special[];
-extern const struct CompressedSpriteSheet gTrainerFrontPicTable[];
-extern const struct MonCoords gTrainerFrontPicCoords[];
-extern const struct CompressedSpritePalette gTrainerFrontPicPaletteTable[];
 extern const struct CompressedSpriteSheet gSpriteSheet_EnemyShadow;
 extern const struct SpriteTemplate gSpriteTemplate_EnemyShadow;
 
