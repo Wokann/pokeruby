@@ -4,7 +4,6 @@
 #include "trig.h"
 
 static void AnimRazorLeafParticle(struct Sprite *sprite);
-void AnimMoveTwisterParticle(struct Sprite *sprite);
 static void AnimTranslateLinearSingleSineWave(struct Sprite *sprite);
 static void AnimRazorLeafParticle_Step1(struct Sprite *sprite);
 static void AnimRazorLeafParticle_Step2(struct Sprite *sprite);
