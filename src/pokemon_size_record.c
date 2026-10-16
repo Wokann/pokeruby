@@ -17,7 +17,6 @@ struct UnknownStruct
     u16 unk4;
 };
 
-extern u16 gSpecialVar_Result;
 extern const u8 gText_Marco[];
 
 static const struct UnknownStruct sBigMonSizeTable[] =
