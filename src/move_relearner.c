@@ -2,6 +2,7 @@
 #include "contest.h"
 #include "contest_effect.h"
 #include "data.h"
+#include "battle_main.h"
 #include "ewram.h"
 #include "field_screen_effect.h"
 #include "main.h"
@@ -28,7 +29,6 @@ extern u8 gTileBuffer[];
 
 extern const struct WindowTemplate gMenuTextWindowTemplate;
 extern const struct WindowTemplate gMoveTutorMenuFramesWindowTemplate;
-extern const u8 gTypeNames[][7];
 
 static void Task_WaitForFadeOut(u8 taskId);
 static void CB2_InitLearnMove(void);

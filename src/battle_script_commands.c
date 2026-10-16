@@ -79,7 +79,6 @@ extern u16 gLastLandedMoves[4];
 extern u16 gLastHitByType[4];
 extern u8 gPotentialItemEffectBattler;
 extern u16 gDynamicBasePower;
-extern const u8 gTypeEffectiveness[];
 extern u16 gLastUsedItem;
 extern u16 gBattleMovePower;
 extern s32 gHpDealt;

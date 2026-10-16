@@ -19,6 +19,7 @@
 #include "script.h"
 #include "overworld.h"
 #include "data.h"
+#include "battle_main.h"
 #include "fieldmap.h"
 #include "save.h"
 #include "sound.h"

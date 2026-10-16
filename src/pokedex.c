@@ -3,6 +3,7 @@
 #include "pokedex.h"
 #include "battle.h"
 #include "data.h"
+#include "battle_main.h"
 #include "decompress.h"
 #include "event_data.h"
 #include "graphics.h"

@@ -7,6 +7,7 @@
 #include "constants/items.h"
 #include "pokemon.h"
 #include "data.h"
+#include "battle_main.h"
 #include "text.h"
 #include "string_util.h"
 #include "link.h"

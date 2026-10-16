@@ -27,7 +27,6 @@ extern u8 gMoveResultFlags;
 extern u16 gDynamicBasePower;
 extern u8 gCritMultiplier;
 extern u16 gLastLandedMoves[];
-extern const u8 gTypeEffectiveness[];
 extern struct BattlePokemon gBattleMons[];
 extern u32 gStatuses3[MAX_BATTLERS_COUNT];
 

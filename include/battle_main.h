@@ -61,7 +61,10 @@ void VBlankCB_Battle(void);
 extern const struct SpriteTemplate gUnusedBattleInitSprite;
 extern const struct OamData gOamData_BattleSpritePlayerSide;
 extern const struct OamData gOamData_BattleSpriteOpponentSide;
+extern const u8 gTypeEffectiveness[];
+extern const u8 gTypeNames[][7];
 extern const struct TrainerMoney gTrainerMoneyTable[];
+extern const u8 gAbilityNames[][13];
 extern const u8 *const gAbilityDescriptionPointers[];
 
 #endif // GUARD_BATTLE_MAIN_H

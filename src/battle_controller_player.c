@@ -1617,7 +1617,6 @@ static void MoveSelectionDisplayPpNumber(void)
 }
 
 extern const u8 gText_WhichMoveToForget4[];
-extern const u8 gTypeNames[][7];
 
 static void MoveSelectionDisplayMoveType(void)
 {

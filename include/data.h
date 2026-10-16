@@ -97,8 +97,6 @@ extern const u8 gTrainerClassNames[][13];
 extern const struct Trainer gTrainers[];
 extern const u8 gSpeciesNames[][11];
 extern const u8 gMoveNames[][13];
-extern const u8 gAbilityNames[][13];
-extern const u8 gTypeNames[][7];
 extern const struct ScanlineEffectParams sIntroScanlineParams16Bit;
 extern const u8 sText_ShedinjaJpnName[];
 extern u8 *const gMonSpriteGfx_Sprite_ptr[];
