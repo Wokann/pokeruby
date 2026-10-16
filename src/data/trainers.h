@@ -38,7 +38,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 2,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt1 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntAquaHideout1 }
     },
 
     [TRAINER_GRUNT_2] =
@@ -52,7 +52,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 4,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt2 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntAquaHideout2 }
     },
 
     [TRAINER_GRUNT_3] =
@@ -66,7 +66,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 2,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt3 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntAquaHideout3 }
     },
 
     [TRAINER_GRUNT_4] =
@@ -80,7 +80,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt4 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntAquaHideout4 }
     },
 
     [TRAINER_GRUNT_5] =
@@ -94,7 +94,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 2,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt5 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntSeafloorCavern1 }
     },
 
     [TRAINER_GRUNT_6] =
@@ -108,7 +108,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt6 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntSeafloorCavern2 }
     },
 
     [TRAINER_GRUNT_7] =
@@ -122,7 +122,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 3,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt7 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntSeafloorCavern3 }
     },
 
     [TRAINER_GRUNT_8] =
@@ -150,7 +150,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt9 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntPetalburgWoods }
     },
 
     [TRAINER_GRUNT_10] =
@@ -234,7 +234,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt15 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntRusturfTunnel }
     },
 
     [TRAINER_GRUNT_16] =
@@ -248,7 +248,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 2,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt16 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntWeatherInst1 }
     },
 
     [TRAINER_GRUNT_17] =
@@ -262,7 +262,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 2,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt17 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntWeatherInst2 }
     },
 
     [TRAINER_GRUNT_18] =
@@ -276,7 +276,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 3,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt18 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntWeatherInst3 }
     },
 
     [TRAINER_GRUNT_19] =
@@ -290,7 +290,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt19 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntMuseum1 }
     },
 
     [TRAINER_GRUNT_20] =
@@ -304,7 +304,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 2,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt20 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntMuseum2 }
     },
 
     [TRAINER_GRUNT_21] =
@@ -374,7 +374,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt25 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntWeatherInst4 }
     },
 
     [TRAINER_GRUNT_26] =
@@ -388,7 +388,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 3,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt26 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntAquaHideout5 }
     },
 
     [TRAINER_GRUNT_27] =
@@ -402,7 +402,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Grunt27 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_GruntAquaHideout6 }
     },
 
     [TRAINER_ANONYMOUS_1] =
@@ -419,7 +419,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_Anonymous1 }
     },
 
-    [TRAINER_MATT_1] =
+    [TRAINER_MATT] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_AQUA_ADMIN,
@@ -430,7 +430,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 3,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Matt1 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_Matt }
     },
 
     [TRAINER_MATT_2] =
@@ -447,7 +447,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_Matt2 }
     },
 
-    [TRAINER_SHELLY_1] =
+    [TRAINER_SHELLY_WEATHER_INSTITUTE] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_AQUA_ADMIN,
@@ -458,10 +458,10 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 2,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Shelly1 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_ShellyWeatherInstitute }
     },
 
-    [TRAINER_SHELLY_2] =
+    [TRAINER_SHELLY_SEAFLOOR_CAVERN] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_AQUA_ADMIN,
@@ -472,7 +472,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 2,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Shelly2 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_ShellySeafloorCavern }
     },
 
     [TRAINER_ARCHIE] =
@@ -1651,7 +1651,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemCustomMoves = gTrainerParty_Cindy2 }
     },
 
-    [TRAINER_BRIANNA_2] =
+    [TRAINER_BRIANNA] =
     {
         .partyFlags = F_TRAINER_PARTY_HELD_ITEM,
         .trainerClass = TRAINER_CLASS_LADY,
@@ -1662,7 +1662,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x1,
         .partySize = 1,
-        .party = {.ItemDefaultMoves = gTrainerParty_Brianna2 }
+        .party = {.ItemDefaultMoves = gTrainerParty_Brianna }
     },
 
     [TRAINER_ANETTE] =
@@ -7290,7 +7290,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Brendan1 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_BrendanRoute103Mudkip }
     },
 
     [TRAINER_BRENDAN_ROUTE_110_MUDKIP] =
@@ -7332,7 +7332,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0xb,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Brendan4 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_BrendanRoute103Treecko }
     },
 
     [TRAINER_BRENDAN_ROUTE_110_TREECKO] =
@@ -7374,7 +7374,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Brendan7 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_BrendanRoute103Torchic }
     },
 
     [TRAINER_BRENDAN_ROUTE_110_TORCHIC] =
@@ -7416,7 +7416,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_May1 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_MayRoute103Mudkip }
     },
 
     [TRAINER_MAY_ROUTE_110_MUDKIP] =
@@ -7458,7 +7458,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_May4 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_MayRoute103Treecko }
     },
 
     [TRAINER_MAY_ROUTE_110_TREECKO] =
@@ -7500,7 +7500,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_May7 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_MayRoute103Torchic }
     },
 
     [TRAINER_MAY_ROUTE_110_TORCHIC] =
@@ -9264,7 +9264,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 4,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Brendan10 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_BrendanLilycoveMudkip }
     },
 
     [TRAINER_BRENDAN_LILYCOVE_TREECKO] =
@@ -9278,7 +9278,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 4,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Brendan11 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_BrendanLilycoveTreecko }
     },
 
     [TRAINER_BRENDAN_LILYCOVE_TORCHIC] =
@@ -9292,7 +9292,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 4,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Brendan12 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_BrendanLilycoveTorchic }
     },
 
     [TRAINER_MAY_LILYCOVE_MUDKIP] =
@@ -9306,7 +9306,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 4,
-        .party = {.NoItemDefaultMoves = gTrainerParty_May10 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_MayLilycoveMudkip }
     },
 
     [TRAINER_MAY_LILYCOVE_TREECKO] =
@@ -9320,7 +9320,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 4,
-        .party = {.NoItemDefaultMoves = gTrainerParty_May11 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_MayLilycoveTreecko }
     },
 
     [TRAINER_MAY_LILYCOVE_TORCHIC] =
@@ -9334,7 +9334,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 4,
-        .party = {.NoItemDefaultMoves = gTrainerParty_May12 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_MayLilycoveTorchic }
     },
 
     [TRAINER_JONAH] =

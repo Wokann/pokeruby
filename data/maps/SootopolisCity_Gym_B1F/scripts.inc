@@ -12,7 +12,7 @@ SootopolisCity_Gym_B1F_EventScript_Crissy:: @ 815B0EF
 	end
 
 SootopolisCity_Gym_B1F_EventScript_Brianna:: @ 815B106
-	trainerbattle_single TRAINER_BRIANNA_2, SootopolisCity_Gym_B1F_Text_BriannaIntro, SootopolisCity_Gym_B1F_Text_BriannaDefeat
+	trainerbattle_single TRAINER_BRIANNA, SootopolisCity_Gym_B1F_Text_BriannaIntro, SootopolisCity_Gym_B1F_Text_BriannaDefeat
 	msgbox SootopolisCity_Gym_B1F_Text_BriannaPostBattle, MSGBOX_AUTOCLOSE
 	end
 

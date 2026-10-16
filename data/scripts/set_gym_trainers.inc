@@ -65,7 +65,7 @@ MossdeepCity_Gym_SetGymTrainers:: @ 81A026F
 SootopolisCity_Gym_SetGymTrainers:: @ 81A0282
 	settrainerflag TRAINER_ANDREA
 	settrainerflag TRAINER_CRISSY
-	settrainerflag TRAINER_BRIANNA_2
+	settrainerflag TRAINER_BRIANNA
 	settrainerflag TRAINER_CONNIE
 	settrainerflag TRAINER_BRIDGET
 	settrainerflag TRAINER_OLIVIA
