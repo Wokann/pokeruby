@@ -1,5 +1,6 @@
 #include "global.h"
 #include "berry.h"
+#include "event_data.h"
 #include "event_object_movement.h"
 #include "event_scripts.h"
 #include "field_control_avatar.h"
@@ -976,10 +977,6 @@ const struct Berry gBerries[] =
 
 const struct BerryTree gBlankBerryTree = {0};
 
-extern u16 gSpecialVar_LastTalked;
-extern u16 gSpecialVar_0x8004;
-extern u16 gSpecialVar_0x8005;
-extern u16 gSpecialVar_0x8006;
 
 /*
     An enigma berry is a type of berry which functions
