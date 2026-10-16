@@ -9,6 +9,7 @@
 #include "graphics.h"
 #include "main.h"
 #include "menu.h"
+#include "overworld.h"
 #include "palette.h"
 #include "sound.h"
 #include "sprite.h"
@@ -18,8 +19,6 @@
 
 extern const struct WindowTemplate gWindowTemplate_81E6D54;
 extern const struct WindowTemplate gWindowTemplate_81E6DA8;
-
-extern void CB2_ReturnToFieldContinueScript(void);
 
 const u16 gMysteryEventPhrase[] = {EC_WORD_MYSTERY, EC_WORD_EVENT, EC_WORD_IS, EC_WORD_EXCITING};
 
