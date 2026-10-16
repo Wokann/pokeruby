@@ -21,11 +21,6 @@
 
 #define WORD_TO_PITCH_TABLE_INDEX(a) (((a) % 4) + (((a) / 8) & 1))
 
-extern struct MusicPlayerInfo gMPlayInfo_SE2;
-
-extern u16 gSpecialVar_Result;
-extern u16 gSpecialVar_0x8004;
-
 struct BardSong gBardSong;
 
 EWRAM_DATA static u16 sUnusedPitchTableIndex = 0;  // set but not used?
@@ -74,7 +69,7 @@ static const u8 *const sGiddyQuestions[] =
 };
 
 static void InitGiddyTaleList(void);
-static void Task_BardSong(u8);
+static void Task_BardSong(u8 taskId);
 static void StartBardSong(bool8 useNewSongLyrics);
 static void StorytellerSetup(void);
 static void Storyteller_ResetFlag(void);
