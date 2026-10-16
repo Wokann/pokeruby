@@ -23,7 +23,6 @@ u16 gMonShrinkDelta;
 u16 gMonShrinkDistance;
 
 extern u16 gLastUsedItem;
-extern u8 gDoingBattleAnim;
 extern u8 gEffectBattler;
 
 extern const u16 gCureBubblesPal[];

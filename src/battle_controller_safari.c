@@ -24,17 +24,10 @@ extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern u8 gDisplayedStringBattle[];
 
 extern const u8 gText_WhatWillPkmnDo2[];
-extern u8 gActiveBattler;
 extern const u8 gText_SafariZoneMenu[];
 
-extern void *gBattlerControllerFuncs[];
-extern u8 gBattleBufferA[][0x200];
-extern bool8 gDoingBattleAnim;
 extern u16 gBattleTypeFlags;
-extern u32 gBattleControllerExecFlags;
-extern MainCallback gPreBattleCallback1;
 extern u8 gBattlerInMenuId;
-extern u16 gIntroSlideFlags;
 extern u8 gBattleOutcome;
 
 extern u8 GetBattlerSide(u8 battler);

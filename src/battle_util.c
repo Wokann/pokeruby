@@ -31,11 +31,9 @@
 extern u8 gUnknown_02023A14_50;
 
 extern const u8* gBattlescriptCurrInstr;
-extern u8 gActiveBattler;
 extern u8 gBattleBufferB[4][0x200];
 extern u8* gSelectionBattleScripts[4]; //battlescript location when you try to choose a move you're not allowed to
 extern u16 gLastMoves[4];
-extern struct BattlePokemon gBattleMons[4];
 extern struct BattleEnigmaBerry gEnigmaBerries[4];
 extern u8 gPotentialItemEffectBattler;
 extern u16 gLastUsedItem;
@@ -50,7 +48,6 @@ extern u8 gBattlerByTurnOrder[4];
 extern u16 gSideStatuses[2];
 extern u16 gBattleWeather;
 extern void (*gBattleMainFunc)(void);
-extern u8 gAbsentBattlerFlags;
 extern u8 gBattleCommunication[];
 extern u32 gHitMarker;
 extern u8 gEffectBattler;
@@ -64,7 +61,6 @@ extern struct BattleEnigmaBerry gEnigmaBerries[4];
 extern u8 gCurrMovePos;
 extern s32 gBattleMoveDamage;
 extern u16 gDynamicBasePower;
-extern u32 gBattleControllerExecFlags;
 extern u8 gSentPokesToOpponent[2];
 extern const u16 sSoundMovesTable[];
 extern const u8 gStatusConditionString_PoisonJpn[];

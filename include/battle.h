@@ -522,6 +522,21 @@ extern u8 gLastHitBy[MAX_BATTLERS_COUNT];
 
 extern u8 gDisplayedStringBattle[];
 
+extern u8 gBattleBufferA[][0x200];
+extern u8 gActiveBattler;
+extern u32 gBattleControllerExecFlags;
+extern struct BattlePokemon gBattleMons[];
+extern u8 gAbsentBattlerFlags;
+extern u16 gIntroSlideFlags;
+extern u8 gMoveSelectionCursor[];
+extern u8 gBattlerStatusSummaryTaskId[];
+extern bool8 gDoingBattleAnim;
+extern MainCallback gPreBattleCallback1;
+extern void (*gBattlerControllerFuncs[])(void);
+extern u8 gMultiUsePlayerCursor;
+extern u8 gNumberOfMovesToChoose;
+extern u8 gBattleControllerData[];
+
 extern u16 gBattleTypeFlags;
 extern u8 gBattleOutcome;
 extern u8 gBattlersCount;
@@ -568,11 +583,7 @@ u8 TypeCalc(u16 move, u8 bank_atk, u8 bank_def);
 u8 GetBattlerTurnOrderNum(u8 bank);
 
 // asm/battle_5.o
-void BattleControllerDummy(void);
-void SetControllerToPlayer(void);
 void nullsub_8(u8);
-void CB2_SetUpReshowBattleScreenAfterMenu(void);
-void CB2_SetUpReshowBattleScreenAfterMenu2(void);
 
 int GameClear(void);
 

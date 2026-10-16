@@ -19,8 +19,6 @@
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 extern u16 gBattleTypeFlags;
 extern u8 gBattlerTarget;
-extern u8 gActiveBattler;
-extern u8 gDoingBattleAnim;
 
 #define GFX_TAG_POKE_BALL    55000
 #define GFX_TAG_GREAT_BALL   55001

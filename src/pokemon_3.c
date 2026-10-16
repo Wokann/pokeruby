@@ -30,8 +30,6 @@
 
 extern u8 gPlayerPartyCount;
 extern u8 gEnemyPartyCount;
-extern struct BattlePokemon gBattleMons[4];
-extern u8 gActiveBattler;
 extern struct BattleEnigmaBerry gEnigmaBerries[];
 extern const u16 gSpeciesToHoennPokedexNum[];
 extern const u16 gSpeciesToNationalPokedexNum[];

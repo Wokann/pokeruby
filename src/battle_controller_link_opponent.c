@@ -21,22 +21,13 @@
 #include "util.h"
 #include "ewram.h"
 
-extern u8 gActiveBattler;
-extern u8 gBattleBufferA[][0x200];
 extern u16 gBattleTypeFlags;
-extern void (*gBattlerControllerFuncs[])(void);
 extern u8 gAnimFriendship;
 extern void (*gAnimScriptCallback)(void);
 extern u8 gDisplayedStringBattle[];
-extern bool8 gDoingBattleAnim;
 extern u8 gBattleOutcome;
-extern u16 gIntroSlideFlags;
-extern u8 gBattlerStatusSummaryTaskId[];
 extern u8 gAnimMoveTurn;
 extern struct Window gWindowTemplate_Contest_MoveDescription;
-extern u8 gBattleControllerData[];
-extern u32 gBattleControllerExecFlags;
-extern MainCallback gPreBattleCallback1;
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 
 extern u8 GetBattlerSpriteDefault_Y();

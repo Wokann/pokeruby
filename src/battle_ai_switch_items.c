@@ -19,15 +19,12 @@
 
 extern u8 gUnknown_02023A14_50;
 
-extern u8 gActiveBattler;
 extern u16 gBattleTypeFlags;
-extern u8 gAbsentBattlerFlags;
 extern s32 gBattleMoveDamage;
 extern u8 gMoveResultFlags;
 extern u16 gDynamicBasePower;
 extern u8 gCritMultiplier;
 extern u16 gLastLandedMoves[];
-extern struct BattlePokemon gBattleMons[];
 extern u32 gStatuses3[MAX_BATTLERS_COUNT];
 
 static bool8 HasSuperEffectiveMoveAgainstOpponents(bool8 noRng);

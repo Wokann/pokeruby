@@ -203,8 +203,14 @@ void BufferStringBattle(u16 stringID);
 u32 BattleStringExpandPlaceholdersToDisplayedString(const u8* src);
 u32 BattleStringExpandPlaceholders(const u8* src, u8* dst);
 
+extern const u8 gText_WhatWillPkmnDo[];
 extern const u8 gText_WhatWillWallyDo[];
+extern const u8 gText_LinkStandby[];
 extern const u8 gText_BattleMenu[];
+extern const u8 gText_MoveInterfacePPType[];
+extern const u8 gText_MoveInterfaceDynamicColors[];
+extern const u8 gText_WhichMoveToForget4[];
+extern const u8 gText_BattleSwitchWhich[];
 extern const u8 gText_Are[];
 extern const u8 gText_Are2[];
 extern const u8 gText_BadEgg[];

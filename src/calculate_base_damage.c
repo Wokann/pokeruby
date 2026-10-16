@@ -15,7 +15,6 @@
 #include "ewram.h"
 
 extern u16 gBattleTypeFlags;
-extern struct BattlePokemon gBattleMons[4];
 extern u16 gCurrentMove;
 extern u8 gCritMultiplier;
 extern u16 gBattleWeather;

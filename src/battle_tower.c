@@ -282,7 +282,6 @@ extern u16 gTrainerBattleOpponent_A;
 extern u16 gBattleTypeFlags;
 extern u8 gSelectedOrderFromParty[];
 extern u8 gBattleOutcome;
-extern struct BattlePokemon gBattleMons[];
 
 void sub_8134548(void)
 {

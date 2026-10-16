@@ -243,8 +243,12 @@ void BtlController_EmitResetActionMoveSelection(u8 bufferId, u8 caseId);
 void BtlController_EmitCmd55(u8 bufferId, u8 battleOutcome);
 
 // player controller
+void SetControllerToPlayer(void);
+void BattleControllerDummy(void);
 void PlayerHandleGetRawMonData(void);
 void SpriteCB_FreePlayerSpriteLoadMonSprite(struct Sprite *sprite);
+void CB2_SetUpReshowBattleScreenAfterMenu(void);
+void CB2_SetUpReshowBattleScreenAfterMenu2(void);
 void Task_PlayerController_RestoreBgmAfterCry(u8 taskId);
 void InitMoveSelectionsVarsAndStrings(void);
 

@@ -23,26 +23,16 @@
 
 extern u16 gBattleTypeFlags;
 extern u8 gDisplayedStringBattle[];
-extern u8 gBattleBufferA[][0x200];
-extern u8 gActiveBattler;
-extern u32 gBattleControllerExecFlags;
 extern u8 gBattleOutcome;
-extern u16 gIntroSlideFlags;
-extern u8 gBattlerStatusSummaryTaskId[];
-extern u8 gDoingBattleAnim;
 extern u8 gAnimFriendship;
 extern u8 gAnimMoveTurn;
 extern struct Window gWindowTemplate_Contest_MoveDescription;
-extern MainCallback gPreBattleCallback1;
-extern void (*gBattlerControllerFuncs[])(void);
-extern u8 gBattleControllerData[];
 extern void (*gAnimScriptCallback)(void);
 
 extern void Task_HidePartyStatusSummary(u8);
 extern void BufferStringBattle();
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
 extern void StartAnimLinearTranslation(struct Sprite *);
-extern void SpriteCB_FaintSlideAnim(struct Sprite *);
 extern s32 GetBattlerMultiplayerId(u16);
 extern u8 GetBattlerSpriteDefault_Y();
 

@@ -154,7 +154,6 @@ static const u8 sText_EmptyStatus[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
 
 extern u16 gLastUsedItem;
 extern u8 gLastUsedAbility;
-extern u8 gActiveBattler;
 extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
 extern u8 gPotentialItemEffectBattler;
@@ -173,7 +172,6 @@ extern u8 gStringVar2[];
 extern u8 gStringVar3[];
 extern u16 gBattlerPartyIndexes[4];
 extern struct BattleEnigmaBerry gEnigmaBerries[4];
-extern u8 gBattleBufferA[4][0x200];
 
 static EWRAM_DATA u8 sBattlerAbilities[4] = {0};
 

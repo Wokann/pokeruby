@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle_controllers.h"
 #include "overworld.h"
 #include "sprite.h"
 #include "script.h"

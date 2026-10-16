@@ -26,19 +26,10 @@
 #include "constants/songs.h"
 #include "constants/trainers.h"
 
-extern u8 gActiveBattler;
-extern void (*gBattlerControllerFuncs[])(void);
-extern u32 gBattleControllerExecFlags;
-extern u8 gBattleBufferA[][0x200];
-extern MainCallback gPreBattleCallback1;
-extern bool8 gDoingBattleAnim;
 extern void (*gAnimScriptCallback)(void);
 extern u8 gBattlerInMenuId;
 extern u8 gBattleOutcome;
-extern u16 gIntroSlideFlags;
-extern u8 gBattlerStatusSummaryTaskId[];
 extern struct Window gWindowTemplate_Contest_MoveDescription;
-extern u8 gBattleControllerData[];
 
 // this file's functions
 static void WallyHandleGetMonData(void);

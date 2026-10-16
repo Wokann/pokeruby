@@ -27,13 +27,10 @@ extern u8 gPlayerPartyCount;
 extern u8 gEnemyPartyCount;
 
 extern u16 gBattleTypeFlags;
-extern u8 gActiveBattler;
-extern struct BattlePokemon gBattleMons[4];
 extern u16 gCurrentMove;
 extern u8 gLastUsedAbility;
 extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
-extern u8 gAbsentBattlerFlags;
 extern u8 gXXX_CritRelated;
 extern u16 gBattleWeather;
 extern struct BattleEnigmaBerry gEnigmaBerries[];

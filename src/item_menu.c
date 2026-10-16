@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle_controllers.h"
 #include "event_scripts.h"
 #include "item_menu_icons.h"
 #include "berry.h"

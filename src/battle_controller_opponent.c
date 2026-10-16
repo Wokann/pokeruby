@@ -27,10 +27,6 @@
 #include "constants/moves.h"
 
 extern u8 gUnknown_02023A14_50;
-extern u8 gActiveBattler;
-extern u8 gBattleBufferA[][0x200];
-extern void (*gBattlerControllerFuncs[])(void);
-extern u8 gBattleControllerData[];
 extern u16 gBattleTypeFlags;
 extern u16 gTrainerBattleOpponent_A;
 extern u8 gAnimFriendship;
@@ -39,15 +35,9 @@ extern void (*gAnimScriptCallback)(void);
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern u8 gDisplayedStringBattle[];
 extern u8 gBattlerTarget;
-extern u8 gAbsentBattlerFlags;
-extern bool8 gDoingBattleAnim;
-extern u16 gIntroSlideFlags;
-extern u8 gBattlerStatusSummaryTaskId[];
-extern MainCallback gPreBattleCallback1;
 extern struct MusicPlayerInfo gMPlayInfo_SE1;
 extern struct MusicPlayerInfo gMPlayInfo_SE2;
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
-extern u32 gBattleControllerExecFlags;
 
 extern u8 GetBattlerSpriteDefault_Y();
 extern void sub_8033018(void);

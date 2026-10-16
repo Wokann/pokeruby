@@ -24,14 +24,8 @@
 #include "ewram.h"
 #include "graphics.h"
 
-extern u8 gBattleBufferA[][0x200];
-extern u8 gActiveBattler;
 extern u8 gBattlersCount;
-extern u16 gIntroSlideFlags;
-extern u8 gDoingBattleAnim;
 extern struct Window gWindowTemplate_Contest_MoveDescription;
-extern void (*gBattlerControllerFuncs[])(void);
-extern u8 gBattleControllerData[];
 extern struct MusicPlayerInfo gMPlayInfo_SE1;
 extern struct MusicPlayerInfo gMPlayInfo_SE2;
 extern struct MusicPlayerInfo gMPlayInfo_BGM;

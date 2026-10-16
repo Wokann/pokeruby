@@ -37,69 +37,11 @@
 
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 
-extern void (*gBattlerControllerFuncs[])(void);
-
-extern u8 gBattlerAttacker;
-extern u8 gBattlerTarget;
 extern u32 gOamMatrixAllocBitmap;
 extern u8 gUnknown_020297ED;
-extern u8 gActiveBattler;
-extern u8 gDisplayedStringBattle[];
-extern u8 gMoveSelectionCursor[];
-extern u8 gBattleBufferA[][0x200];
-extern u8 gBattlerInMenuId;
-extern u8 gDoingBattleAnim;
-extern u16 gBattleTypeFlags;
-extern u8 gBattleOutcome;
-extern void (*gAnimScriptCallback)(void);
-extern u8 gAnimFriendship;
-extern u16 gIntroSlideFlags;
-extern u8 gBattlerStatusSummaryTaskId[];
-extern u8 gAnimMoveTurn;
-extern u8 gMultiUsePlayerCursor;
-extern u8 gBattleControllerData[];
 
-extern const u8 gText_WhatWillPkmnDo[];
-extern const u8 gText_BattleMenu[];
-extern const u8 gText_MoveInterfacePPType[];
-
-extern void BattleControllerDummy(void);
-extern u8 GetBattlerSide(u8);
-extern void SetSpritePrimaryCoordsFromSecondaryCoords();
-extern void StartAnimLinearTranslation(struct Sprite *);
-extern bool8 IsDoubleBattle(void);
-extern bool8 IsBattlerSpritePresent(u8);
-extern u8 GetBattlerAtPosition(u8);
-extern void SpriteCB_FaintSlideAnim(struct Sprite *);
-extern u8 GetBattlerPosition(u8);
-extern u8 GetBattlerSpriteSubpriority();
-extern u8 GetBattlerSpriteCoord();
-extern u8 GetBattlerSpriteDefault_Y();
-extern u8 gActiveBattler;
-extern void (*gBattlerControllerFuncs[])(void);
-extern bool8 gDoingBattleAnim;
-extern u16 gBattleTypeFlags;
-extern u32 gBattleControllerExecFlags;
-extern u8 gBattleBufferA[][0x200];
-extern u8 gMoveSelectionCursor[];
-extern u8 gAbsentBattlerFlags;
-extern u8 gMultiUsePlayerCursor;
-extern u8 gBattlersCount;
 extern struct Window gWindowTemplate_Contest_MoveDescription;
-extern const u8 gText_BattleSwitchWhich[];
-extern u8 gNumberOfMovesToChoose;
-extern struct BattlePokemon gBattleMons[];
-extern MainCallback gPreBattleCallback1;
-extern struct MusicPlayerInfo gMPlayInfo_BGM;
-extern u8 gBattleControllerData[];
 extern u8 gUnknown_0202E8F4;
-extern u8 gDisplayedStringBattle[];
-extern const u8 gText_LinkStandby[];
-
-extern u8 GetBattlerPosition(u8);
-extern u8 GetBattlerAtPosition(u8);
-extern void SpriteCB_HideAsMoveTarget(struct Sprite *);
-extern bool8 IsDoubleBattle();
 
 static void PlayerHandleGetMonData(void);
 static void PlayerHandleSetMonData(void);
@@ -717,8 +659,6 @@ static void HandleInputChooseMove(void)
     }
 #endif
 }
-
-extern const u8 gText_MoveInterfaceDynamicColors[];
 
 static void HandleMoveSwitching(void)
 {
@@ -1615,8 +1555,6 @@ static void MoveSelectionDisplayPpNumber(void)
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gDisplayedStringBattle, 0x2A2, 0x19, 0x37);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
 }
-
-extern const u8 gText_WhichMoveToForget4[];
 
 static void MoveSelectionDisplayMoveType(void)
 {
