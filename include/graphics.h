@@ -3368,6 +3368,7 @@ extern const u8 gBattleAnimBgTilemap_Cosmic[];
 extern const u8 gBattleAnimBgTilemap_InAir[];
 extern const u8 gBattleAnimBgTilemap_Aurora[];
 extern const u8 gBattleAnimBgTilemap_Fissure[];
+extern const u8 gBattleAnimFogTilemap[];
 
 extern const u8 gBattleAnimBgImage_Attract[];
 extern const u8 gBattleAnimBgPalette_Attract[];

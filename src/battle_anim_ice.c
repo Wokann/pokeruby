@@ -1,5 +1,6 @@
 #include "global.h"
 #include "field_weather.h"
+#include "graphics.h"
 #include "main.h"
 #include "trig.h"
 #include "battle_anim.h"
@@ -9,13 +10,6 @@
 #include "decompress.h"
 #include "palette.h"
 #include "random.h"
-
-
-extern u16 gBattle_BG1_X;
-extern u16 gBattle_BG1_Y;
-
-
-extern struct INCBIN_U8 gBattleAnimFogTilemap;
 
 static void AnimUnusedIceCrystalThrow(struct Sprite *sprite);
 static void AnimUnusedIceCrystalThrow_Step(struct Sprite *sprite);
