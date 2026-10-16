@@ -1,13 +1,11 @@
 #include "global.h"
 #include "battle_anim.h"
+#include "battle.h"
 #include "graphics.h"
 #include "trig.h"
 #include "sound.h"
 #include "decompress.h"
 #include "palette.h"
-
-extern u16 gBattle_BG1_Y;
-extern u16 gBattle_BG1_X;
 
 static void AnimTask_ScaryFace_Step(u8 taskId);
 
