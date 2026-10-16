@@ -122,7 +122,7 @@ void sub_80E62A0(u8 type, u16 *words, void (*exitCallback)(void), u8 displayedPe
 u16 GetRandomEasyChatWordFromGroup(u16 groupId);
 void InitializeEasyChatWordArray(u16 *words, u16 length);
 void InitEasyChatPhrases(void);
-u8 IsEasyChatGroupUnlocked(u8 groupId);
+bool8 IsEasyChatGroupUnlocked(u8 groupId);
 u16 sub_80EAE88(u8 groupId);
 u8 *CopyEasyChatWord(u8 *dest, u16 easyChatWord);
 u16 GetEasyChatWordStringLength(u16 easyChatWord);

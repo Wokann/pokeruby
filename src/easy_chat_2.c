@@ -73,7 +73,7 @@ static bool8 IsEasyChatWordInvalid(u16);
 static bool8 IsTrendySayingUnlocked(u8);
 static u8 GetNumTrendySayingsUnlocked(void);
 static u16 GetRandomUnlockedTrendySaying(void);
-static u8 EasyChatIsNationalPokedexEnabled(void);
+static bool8 EasyChatIsNationalPokedexEnabled(void);
 static u16 sub_80EB9D8(void);
 
 EWRAM_DATA u8 gUnknown_020388AC = 0;
@@ -714,7 +714,7 @@ void sub_80E8B78(struct Sprite *sprite)
 // defined below
 extern const struct SpriteTemplate gSpriteTemplate_83DBD48;
 
-void sub_80E8BF4(u8 reporter, u8 frameId)
+void sub_80E8BF4(u8 displayedPersonType, u8 frameId)
 {
     struct CompressedSpriteSheet gUnknown_083DBD30 = {sRSInterviewFrame_Gfx, 2048, 0x0006};
     struct SpritePalette gUnknown_083DBD38 = {sRSInterviewFrame_Pal, 0x0004};
@@ -736,13 +736,13 @@ void sub_80E8BF4(u8 reporter, u8 frameId)
         break;
     }
 
-    switch (reporter)
+    switch (displayedPersonType)
     {
-    case 0:  // Gabby
+    case 0:  // Male reporter
     default:
         gabbyTyGfxId = OBJ_EVENT_GFX_REPORTER_M;
         break;
-    case 1:  // Ty
+    case 1:  // Female reporter
         gabbyTyGfxId = OBJ_EVENT_GFX_REPORTER_F;
         break;
     }
@@ -2915,7 +2915,7 @@ void BufferRandomHobbyOrLifestyleString(void)
     CopyEasyChatWord(gStringVar2, easyChatWord);
 }
 
-static u8 IsTrendySayingUnlocked(u8 wordIndex)
+static bool8 IsTrendySayingUnlocked(u8 wordIndex)
 {
     int shift;
     int byteOffset;
@@ -2998,7 +2998,7 @@ static u16 GetRandomUnlockedTrendySaying(void)
     return -1;
 }
 
-static u8 EasyChatIsNationalPokedexEnabled(void)
+static bool8 EasyChatIsNationalPokedexEnabled(void)
 {
     return IsNationalPokedexEnabled();
 }
