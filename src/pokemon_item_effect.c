@@ -17,10 +17,6 @@
 #include "util.h"
 #include "constants/item_effects.h"
 
-extern s32 gBattleMoveDamage;
-extern u8 gBattlerInMenuId;
-extern u8 gBattlersCount;
-
 static const u8 sGetMonDataEVConstants[] =
 {
     MON_DATA_HP_EV,
