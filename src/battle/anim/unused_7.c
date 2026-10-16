@@ -1,9 +1,8 @@
 #include "global.h"
 #include "battle_anim.h"
+#include "battle.h"
 #include "trig.h"
 #include "sound.h"
-
-extern u8 gBattlerSpriteIds[];
 
 static void AnimVibrateBattlerBack(struct Sprite *sprite);
 
