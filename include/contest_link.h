@@ -9,9 +9,11 @@ void Task_LinkContest_CommunicateMonIdxs(u8 taskId);
 void Task_LinkContest_CommunicateLeaderIdsRS(u8 taskId);
 void Task_LinkContest_CommunicateRound1Points(u8 taskId);
 void Task_LinkContest_CommunicateTurnOrder(u8 taskId);
+void Task_LinkContest_FinalizeConnection(u8 taskId);
 void Task_LinkContest_CommunicateMoveSelections(u8 taskId);
 u8 GetMonNicknameLanguage(const u8 *nickname);
 void Task_LinkContest_Init(u8 taskId);
 void Task_LinkContest_CommunicateCategoryRS(u8 taskId);
+u8 LinkContest_GetLeaderIndex(u8 *ids);
 
 #endif // GUARD_CONTEST_LINK_H

@@ -1,5 +1,6 @@
 #include "global.h"
 #include "contest_link_util.h"
+#include "contest_util.h"
 #include "battle.h"
 #include "constants/songs.h"
 #include "contest.h"
@@ -122,7 +123,6 @@ static void Task_StartCommunicateLeaderIdsRS(u8 taskId);
 static void Task_StartCommunicateCategoryRS(u8 taskId);
 static void Task_LinkContest_SetUpContestRS(u8 taskId);
 static void Task_LinkContest_CalculateTurnOrderRS(u8 taskId);
-void Task_LinkContest_FinalizeConnection(u8 taskId);
 static void Task_LinkContest_Disconnect(u8 taskId);
 static void Task_LinkContest_WaitDisconnect(u8 taskId);
 
