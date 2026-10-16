@@ -1042,7 +1042,6 @@ static u8 sCurrentReflectionType;
 
 static u16 sCurrentSpecialObjectPaletteTag;
 
-extern u8 gReservedSpritePaletteCount;
 struct ObjectEvent gObjectEvents[OBJECT_EVENTS_COUNT];
 #if DEBUG
 u8 gUnknown_Debug_03004BC0;
@@ -5015,8 +5014,6 @@ void InitNpcForMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite, 
     sprite->data[2] = 1;
 }
 
-extern u8 (*const sDirectionAnimFuncsBySpeed[5])(u8);
-
 static void InitMovementNormal(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
 {
     u8 (*const functions[5])(u8);
@@ -5942,8 +5939,6 @@ bool8 MovementAction_StartAnimInDirection_Step0(struct ObjectEvent *objectEvent,
     StartSpriteAnimInDirection(objectEvent, sprite, objectEvent->movementDirection, sprite->animNum);
     return FALSE;
 }
-
-bool8 SpriteAnimEnded(struct Sprite *);
 
 bool8 MovementAction_WaitSpriteAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {

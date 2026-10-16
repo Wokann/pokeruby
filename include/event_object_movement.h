@@ -444,6 +444,7 @@ void UpdateObjectEventSpriteInvisibility(struct Sprite *sprite, bool8 invisible)
 void TurnVirtualObject(u8, u8);
 void UnfreezeObjectEvent(struct ObjectEvent *objectEvent);
 void SetAndStartSpriteAnim(struct Sprite *sprite, u8 animNum, u8 animCmdIndex);
+bool8 SpriteAnimEnded(struct Sprite *sprite);
 u8 GetLedgeJumpDirection(s16, s16, u8);
 u8 ElevationToPriority(u8);
 void ObjectEventUpdateElevation(struct ObjectEvent *objEvent);
