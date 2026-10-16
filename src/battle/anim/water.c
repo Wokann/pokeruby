@@ -12,9 +12,6 @@
 #include "palette.h"
 #include "constants/battle_anim.h"
 
-void PrepareBattlerSpriteForRotScale(u8, u8);
-void ResetSpriteRotScale(u8);
-void SetBattlerSpriteYOffsetFromYScale(u8);
 static void AnimWaterGunDroplet(struct Sprite *sprite);
 static void AnimSmallBubblePair(struct Sprite *sprite);
 static void sub_80D3B60(u8 taskId);
