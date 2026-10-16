@@ -41,15 +41,12 @@
 #include "constants/vars.h"
 
 extern void (*gFieldItemUseCallback)(u8);
-extern void (*gFieldCallback)(void);
 extern void (*gPokemonItemUseCallback)(u8, u16, TaskFunc);
 
 extern u8 gPokemonItemUseType;
 extern u8 gLastFieldPokeMenuOpened;
-extern u8 gBattlerInMenuId;
 
 
-extern u16 gBattleTypeFlags;
 
 static void SetUpItemUseCallback(u8);
 static void SetUpItemUseOnFieldCallback(u8);
