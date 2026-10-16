@@ -30,7 +30,6 @@ extern u16 gBattleTypeFlags;
 extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
 extern u8 gXXX_CritRelated;
-extern u16 gBattleMovePower;
 extern u16 gTrainerBattleOpponent_A;
 extern struct PokemonStorage gPokemonStorage;
 

@@ -6,6 +6,8 @@
 #include "constants/moves.h"
 #include "constants/species.h"
 #include "battle.h"
+#include "battle_anim.h"
+#include "battle_setup.h"
 #include "battle_util.h"
 #include "berry.h"
 #include "data.h"
@@ -13,10 +15,6 @@
 #include "item.h"
 #include "pokemon.h"
 #include "ewram.h"
-
-extern u16 gBattleTypeFlags;
-extern u16 gBattleMovePower;
-extern u16 gTrainerBattleOpponent_A;
 
 // Masks for getting PP Up count, also PP Max values
 const u8 gPPUpGetMask[] = {0x03, 0x0c, 0x30, 0xc0};
@@ -66,8 +64,6 @@ static const u8 sHoldEffectToType[][2] =
     {HOLD_EFFECT_DRAGON_POWER,   TYPE_DRAGON},
     {HOLD_EFFECT_NORMAL_POWER,   TYPE_NORMAL}
 };
-
-u8 GetBattlerSide(u8 battler);
 
 #define APPLY_STAT_MOD(var, mon, stat, statIndex)                                   \
 {                                                                                   \

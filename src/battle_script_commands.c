@@ -54,7 +54,6 @@ extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
 extern const u8* gBattlescriptCurrInstr;
 extern u8 gBattleCommunication[];
-extern u16 gBattleMovePower;
 extern s32 gHpDealt;
 extern const u16 gMissStringIds[];
 extern u16 gExpShareExp;

@@ -559,6 +559,7 @@ extern u8 gMoveResultFlags;
 extern u32 gStatuses3[MAX_BATTLERS_COUNT];
 extern u8 gSentPokesToOpponent[2];
 extern u16 gDynamicBasePower;
+extern u16 gBattleMovePower;
 extern u16 gMoveToLearn;
 extern s32 gBideDmg[MAX_BATTLERS_COUNT];
 extern u8 gBideTarget[MAX_BATTLERS_COUNT];
