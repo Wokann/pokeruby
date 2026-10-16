@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle.h"
 #include "data.h"
 #include "constants/abilities.h"
 #include "constants/items.h"
@@ -14,8 +15,6 @@
 #include "ewram.h"
 #include "util.h"
 #include "constants/trainers.h"
-
-extern u16 gMoveToLearn;
 
 static EWRAM_DATA u8 sLearningMoveTableID = 0;
 

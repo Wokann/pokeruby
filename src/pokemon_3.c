@@ -30,17 +30,12 @@
 
 extern u8 gPlayerPartyCount;
 extern u8 gEnemyPartyCount;
-extern const u16 gSpeciesToHoennPokedexNum[];
-extern const u16 gSpeciesToNationalPokedexNum[];
-extern const u16 gHoennToNationalOrder[];
-extern const u16 gSpeciesIdToCryId[];
 extern u8 gDisplayedStringBattle[];
 extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
 extern u8 gBattlerInMenuId;
 extern u16 gTrainerBattleOpponent_A;
 extern u16 gBattleTypeFlags;
-extern const u32 gTMHMLearnsets[][2];
 
 bool8 HealStatusConditions(struct Pokemon *mon, u32 battlePartyId, u32 healMask, u8 battler)
 {

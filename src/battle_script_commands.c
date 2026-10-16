@@ -45,7 +45,6 @@
 extern u8 gUnknown_02023A14_50;
 extern s32 gBattleMoveDamage;
 extern u16 gBattleTypeFlags;
-extern const struct SpeciesInfo gSpeciesInfo[];
 extern u8 gBattlersCount;
 extern u16 gBattlerPartyIndexes[MAX_BATTLERS_COUNT];
 extern u8 gBattleOutcome;
