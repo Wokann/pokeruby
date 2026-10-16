@@ -4,8 +4,6 @@
 #include "sound.h"
 #include "trig.h"
 
-extern u16 gBattleTypeFlags;
-
 static void AnimWillOWispOrb(struct Sprite *sprite);
 static void AnimWillOWispOrb_Step(struct Sprite *);
 
