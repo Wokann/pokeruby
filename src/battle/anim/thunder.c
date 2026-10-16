@@ -1,8 +1,6 @@
 #include "global.h"
 #include "battle_anim.h"
 
-extern u16 gBattleTypeFlags;
-
 static void AnimLightning(struct Sprite *sprite);
 static void AnimLightning_Step(struct Sprite *);
 
