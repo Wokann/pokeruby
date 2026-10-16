@@ -3450,6 +3450,7 @@ extern const u8 gBlankGfxCompressed[];
 extern const u8 gBattleInterface_BallStatusBarGfx[];
 extern const u16 gBattleInterface_BallStatusBarPal[];
 extern const u16 gBattleInterface_BallDisplayPal[];
+extern const u8 gHealthboxElementsGfxTable[][32];
 extern const u8 Tiles_D129AC[];
 
 extern const u8 gPokedexAreaScreenAreaUnknown_Gfx[];

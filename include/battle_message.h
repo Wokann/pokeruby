@@ -212,6 +212,8 @@ extern const u8 gText_MoveInterfaceDynamicColors[];
 extern const u8 gText_WhichMoveToForget4[];
 extern const u8 gText_BattleYesNoChoice[];
 extern const u8 gText_BattleSwitchWhich[];
+extern const u8 gText_SafariBalls[];
+extern const u8 gText_SafariBallLeft[];
 extern const u8 gText_Are[];
 extern const u8 gText_Are2[];
 extern const u8 gText_BadEgg[];

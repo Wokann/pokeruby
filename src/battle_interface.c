@@ -1,6 +1,7 @@
 #include "global.h"
 #include "battle_gfx_sfx_util.h"
 #include "battle.h"
+#include "battle_message.h"
 #include "battle_interface.h"
 #include "decompress.h"
 #include "palette.h"
@@ -416,16 +417,7 @@ u8 *const gUnknown_0820A904[10] =
     OBJ_VRAM0 + 32 * 35,
 };
 
-extern u8 gDisplayedStringBattle[];
-extern u8 gBattlersCount;
-
-extern u16 gBattleTypeFlags;
-
-extern const u8 gText_SafariBalls[];
-extern const u8 gText_SafariBallLeft[];
 extern const u8 BattleText_HighlightRed[];
-extern const u8 gHealthboxElementsGfxTable[][32];
-
 extern const u16 gBattleInterfaceStatusIcons_DynPal[];
 
 #define ABS(n) ((n) >= 0 ? (n) : -(n))
