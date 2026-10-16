@@ -45,7 +45,6 @@
 #define CHAR_DEC_SEPARATOR CHAR_COMMA
 #endif
 
-extern struct WarpData gLastUsedWarp;
 extern u8 gBattleOutcome;
 
 EWRAM_DATA bool8 gBikeCyclingChallenge = FALSE;

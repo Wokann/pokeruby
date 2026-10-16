@@ -9,6 +9,7 @@
 #include "graphics.h"
 #include "link.h"
 #include "main.h"
+#include "overworld.h"
 #include "palette.h"
 #include "task.h"
 #include "text.h"
@@ -27,9 +28,6 @@ extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern u8 gText_Win[];
 extern u8 gText_Loss[];
 extern u8 gText_Draw[];
-
-
-//extern u8 GetCurrentMapBattleScene(void);
 
 extern const u8 gGameVersion;
 extern u16 gBattleTypeFlags;
@@ -59,7 +57,6 @@ extern u16 gBattle_BG1_Y;
 extern u16 gBattle_BG2_X;
 extern u16 gBattle_BG2_Y;
 
-extern u8 GetCurrentMapBattleScene(void);
 
 struct LinkResultWindow {
     struct Window *window;

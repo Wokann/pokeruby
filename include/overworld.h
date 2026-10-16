@@ -1,6 +1,7 @@
 #ifndef GUARD_OVERWORLD_H
 #define GUARD_OVERWORLD_H
 
+#include "main.h"
 #include "sprite.h"
 
 struct InitialPlayerAvatarState
@@ -17,6 +18,7 @@ struct LinkPlayerObjectEvent
     u8 movementMode;
 };
 
+extern struct WarpData gLastUsedWarp;
 extern struct LinkPlayerObjectEvent gLinkPlayerObjectEvents[4];
 extern const struct UCoords32 gDirectionToVectors[];
 extern u16 gHeldKeyCodeToSend;
@@ -32,7 +34,7 @@ void ResetGameStats(void);
 void IncrementGameStat(u8 index);
 u32 GetGameStat(u8 index);
 void SetGameStat(u8 index, u32 value);
-// LoadObjEventTemplatesFromHeader
+void LoadObjEventTemplatesFromHeader(void);
 // LoadSaveblockObjEventScripts
 void SetObjEventTemplateCoords(u8 localId, s16 x, s16 y);
 void SetObjEventTemplateMovementType(u8 localId, u8 movementType);
@@ -61,7 +63,7 @@ void SetFixedHoleWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y);
 void SetWarpDestinationToFixedHoleWarp(s16 x, s16 y);
 void SetContinueGameWarpToHealLocation(u8 healLocationId);
 void SetContinueGameWarpToDynamicWarp();
-// GetMapConnection
+const struct MapConnection *GetMapConnection(u8 dir);
 bool8 SetDiveWarpEmerge(u16 x, u16 y);
 bool8 SetDiveWarpDive(u16 x, u16 y);
 void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum);
@@ -76,8 +78,8 @@ void SetCurrentMapLayout(u16 mapLayoutId);
 // sub_8053D30
 // sub_8053D6C
 // GetLocationMusic
-// GetCurrLocationDefaultMusic
-// GetWarpDestinationMusic
+u16 GetCurrLocationDefaultMusic(void);
+u16 GetWarpDestinationMusic(void);
 void Overworld_ResetMapMusic(void);
 void Overworld_PlaySpecialMapMusic(void);
 void Overworld_SetSavedMusic(u16 songNum);
@@ -85,27 +87,28 @@ void Overworld_ClearSavedMusic(void);
 void TransitionMapMusic(void);
 void Overworld_ChangeMusicToDefault(void);
 void Overworld_ChangeMusicTo(u16 newMusic);
-// GetMapMusicFadeoutSpeed
+u8 GetMapMusicFadeoutSpeed(void);
 void TryFadeOutOldMapMusic(void);
 bool8 BGMusicStopped(void);
 void Overworld_FadeOutMapMusic(void);
 // PlayAmbientCry
 void UpdateAmbientCry(s16 *state, u16 *delayCounter);
 u8 GetMapTypeByGroupAndId(s8 mapGroup, s8 mapNum);
-// GetMapTypeByWarpData
+u8 GetMapTypeByWarpData(struct WarpData *warp);
 u8 GetCurrentMapType(void);
 u8 GetLastUsedWarpMapType(void);
 bool8 IsMapTypeOutdoors(u8 mapType);
 bool8 Overworld_MapTypeAllowsTeleportAndFly(u8 mapType);
 u8 IsMapTypeIndoors(u8 mapType);
 u8 GetCurrentRegionMapSectionId();
+u8 GetCurrentMapBattleScene(void);
 // ResetSafariZoneFlag_
 bool32 IsOverworldLinkActive(void);
 // c1_overworld_normal
 // c1_overworld
 // OverworldBasic
 void CB2_OverworldBasic(void);
-// SetMainCallback1
+void SetMainCallback1(MainCallback cb);
 // sub_80543DC
 void CB2_NewGame(void);
 void CB2_WhiteOut(void);
