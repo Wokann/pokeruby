@@ -7,6 +7,7 @@
 #include "data.h"
 #include "easy_chat.h"
 #include "event_data.h"
+#include "event_scripts.h"
 #include "fieldmap.h"
 #include "field_message_box.h"
 #include "field_camera.h"
@@ -139,15 +140,10 @@ struct OutbreakPokemon
     /*0x0B*/ u8 location;
 };
 
-extern u8 gContestMonPartyIndex;
 
 struct UnkTvStruct sCurTVShowSlot;
 
-extern u16 gSpecialVar_LastTalked;
 
-extern u16 gSpecialVar_ContestCategory;
-extern u16 gSpecialVar_ContestRank;
-extern u8 gBattleOutcome;
 
 static EWRAM_DATA u16 sPokemonAnglerSpecies = 0;
 static EWRAM_DATA u16 sPokemonAnglerAttemptCounters = 0;
@@ -192,124 +188,6 @@ static const struct OutbreakPokemon sPokeOutbreakSpeciesList[5] =
     },
 };
 
-extern const u8 gPokeNewsTextSlateport_Upcoming[];
-extern const u8 gPokeNewsTextGameCorner_Upcoming[];
-extern const u8 gPokeNewsTextLilycove_Upcoming[];
-extern const u8 gPokeNewsTextSlateport_Ongoing[];
-extern const u8 gPokeNewsTextGameCorner_Ongoing[];
-extern const u8 gPokeNewsTextLilycove_Ongoing[];
-extern const u8 gPokeNewsTextSlateport_Ending[];
-extern const u8 gPokeNewsTextGameCorner_Ending[];
-extern const u8 gPokeNewsTextLilycove_Ending[];
-extern const u8 gTVFanClubText00[];
-extern const u8 gTVFanClubText01[];
-extern const u8 gTVFanClubText02[];
-extern const u8 gTVFanClubText03[];
-extern const u8 gTVFanClubText04[];
-extern const u8 gTVFanClubText05[];
-extern const u8 gTVFanClubText06[];
-extern const u8 gTVFanClubText07[];
-extern const u8 gTVRecentHappeningsText00[];
-extern const u8 gTVRecentHappeningsText01[];
-extern const u8 gTVRecentHappeningsText02[];
-extern const u8 gTVRecentHappeningsText03[];
-extern const u8 gTVRecentHappeningsText04[];
-extern const u8 gTVRecentHappeningsText05[];
-extern const u8 gTVFanClubOpinionsText00[];
-extern const u8 gTVFanClubOpinionsText01[];
-extern const u8 gTVFanClubOpinionsText02[];
-extern const u8 gTVFanClubOpinionsText03[];
-extern const u8 gTVFanClubOpinionsText04[];
-extern const u8 gTVMassOutbreakText00[];
-extern const u8 gTVPokemonTodaySuccessfulText00[];
-extern const u8 gTVPokemonTodaySuccessfulText01[];
-extern const u8 gTVPokemonTodaySuccessfulText02[];
-extern const u8 gTVPokemonTodaySuccessfulText03[];
-extern const u8 gTVPokemonTodaySuccessfulText04[];
-extern const u8 gTVPokemonTodaySuccessfulText05[];
-extern const u8 gTVPokemonTodaySuccessfulText06[];
-extern const u8 gTVPokemonTodaySuccessfulText07[];
-extern const u8 gTVPokemonTodaySuccessfulText08[];
-extern const u8 gTVPokemonTodaySuccessfulText09[];
-extern const u8 gTVPokemonTodaySuccessfulText10[];
-extern const u8 gTVPokemonTodaySuccessfulText11[];
-extern const u8 SmartShopper_Text_Intro[];
-extern const u8 SmartShopper_Text_ClerkNormal[];
-extern const u8 SmartShopper_Text_RandomComment1[];
-extern const u8 SmartShopper_Text_RandomComment2[];
-extern const u8 SmartShopper_Text_RandomComment3[];
-extern const u8 SmartShopper_Text_RandomComment4[];
-extern const u8 SmartShopper_Text_SecondItem[];
-extern const u8 SmartShopper_Text_ThirdItem[];
-extern const u8 SmartShopper_Text_DuringSale[];
-extern const u8 SmartShopper_Text_OutroNormal[];
-extern const u8 SmartShopper_Text_IsVIP[];
-extern const u8 SmartShopper_Text_ClerkMax[];
-extern const u8 SmartShopper_Text_OutroMax[];
-extern const u8 gTVBravoTrainerText00[];
-extern const u8 gTVBravoTrainerText01[];
-extern const u8 gTVBravoTrainerText02[];
-extern const u8 gTVBravoTrainerText03[];
-extern const u8 gTVBravoTrainerText04[];
-extern const u8 gTVBravoTrainerText05[];
-extern const u8 gTVBravoTrainerText06[];
-extern const u8 gTVBravoTrainerText07[];
-extern const u8 gTVBravoTrainerText08[];
-extern const u8 BravoTrainerBattleTower_Text_Intro[];
-extern const u8 BravoTrainerBattleTower_Text_NewRecord[];
-extern const u8 BravoTrainerBattleTower_Text_Lost[];
-extern const u8 BravoTrainerBattleTower_Text_Won[];
-extern const u8 BravoTrainerBattleTower_Text_LostFinal[];
-extern const u8 BravoTrainerBattleTower_Text_Satisfied[];
-extern const u8 BravoTrainerBattleTower_Text_Unsatisfied[];
-extern const u8 BravoTrainerBattleTower_Text_None1[];
-extern const u8 BravoTrainerBattleTower_Text_None2[];
-extern const u8 BravoTrainerBattleTower_Text_None3[];
-extern const u8 BravoTrainerBattleTower_Text_None4[];
-extern const u8 BravoTrainerBattleTower_Text_Response[];
-extern const u8 BravoTrainerBattleTower_Text_ResponseSatisfied[];
-extern const u8 BravoTrainerBattleTower_Text_ResponseUnsatisfied[];
-extern const u8 BravoTrainerBattleTower_Text_Outro[];
-extern const u8 gTVNameRaterText00[];
-extern const u8 gTVNameRaterText01[];
-extern const u8 gTVNameRaterText02[];
-extern const u8 gTVNameRaterText03[];
-extern const u8 gTVNameRaterText04[];
-extern const u8 gTVNameRaterText05[];
-extern const u8 gTVNameRaterText06[];
-extern const u8 gTVNameRaterText07[];
-extern const u8 gTVNameRaterText08[];
-extern const u8 gTVNameRaterText09[];
-extern const u8 gTVNameRaterText10[];
-extern const u8 gTVNameRaterText11[];
-extern const u8 gTVNameRaterText12[];
-extern const u8 gTVNameRaterText13[];
-extern const u8 gTVNameRaterText14[];
-extern const u8 gTVNameRaterText15[];
-extern const u8 gTVNameRaterText16[];
-extern const u8 gTVNameRaterText17[];
-extern const u8 gTVNameRaterText18[];
-extern const u8 gTVPokemonTodayFailedText00[];
-extern const u8 gTVPokemonTodayFailedText01[];
-extern const u8 gTVPokemonTodayFailedText02[];
-extern const u8 gTVPokemonTodayFailedText03[];
-extern const u8 gTVPokemonTodayFailedText04[];
-extern const u8 gTVPokemonTodayFailedText05[];
-extern const u8 gTVPokemonTodayFailedText06[];
-extern const u8 gTVPokemonAnglerText00[];
-extern const u8 gTVPokemonAnglerText01[];
-extern const u8 gTVWorldOfMastersText00[];
-extern const u8 gTVWorldOfMastersText01[];
-extern const u8 gTVWorldOfMastersText02[];
-extern const u8 gTVInSearchOfTrainersText00[];
-extern const u8 gTVInSearchOfTrainersText01[];
-extern const u8 gTVInSearchOfTrainersText02[];
-extern const u8 gTVInSearchOfTrainersText03[];
-extern const u8 gTVInSearchOfTrainersText04[];
-extern const u8 gTVInSearchOfTrainersText05[];
-extern const u8 gTVInSearchOfTrainersText06[];
-extern const u8 gTVInSearchOfTrainersText07[];
-extern const u8 gTVInSearchOfTrainersText08[];
 
 static const u8 *const sPokeNewsTextGroup_Upcoming[] =
 {
@@ -529,7 +407,6 @@ static void InterviewBefore_BravoTrainerPkmnProfile(void);
 static void InterviewBefore_BravoTrainerBTProfile(void);
 
 
-u8 GetTVGroupByShowId(u8);
 
 
 static void InterviewAfter_FanClubLetter(void);
@@ -600,10 +477,8 @@ u8 FindAnyTVShowOnTheAir(void)
     return slot;
 }
 
-u8 CheckForPlayersHouseNews(void);
 static void SetTVMetatilesOnMap(int, int, u16);
 static bool8 FindAnyPokeNewsOnTheAir(void);
-bool8 IsGabbyAndTyShowOnTheAir(void);
 
 void UpdateTVScreensOnMap(int width, int height)
 {

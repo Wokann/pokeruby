@@ -6,6 +6,7 @@
 extern u8 *const gTVStringVarPtrs[3];
 
 void DoTVShow(void);
+void DoTVShowInSearchOfTrainers(void);
 void InterviewBefore(void);
 void InterviewAfter(void);
 void ClearTVShowData(void);
@@ -24,6 +25,8 @@ void ReceiveTvShowsData(u8 * src, u32 size, u8 playersLinkId);
 void TVShowConvertInternationalString(u8 *dest, u8 *src, u8 language);
 void UpdateTVScreensOnMap(int width, int height);
 void ResetGabbyAndTy(void);
+u8 CheckForPlayersHouseNews(void);
+bool8 IsGabbyAndTyShowOnTheAir(void);
 u8 GabbyAndTyGetBattleNum(void);
 void ReceivePokeNewsData(void * src, u32 size, u8 playersLinkId);
 void TryPutSmartShopperOnAir(void);
