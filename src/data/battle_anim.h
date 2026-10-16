@@ -1262,7 +1262,3 @@ const struct BattleAnimBackground gBattleAnimBackgroundTable[] =
     &gBattleAnimBgImage_Impact, &gBattleAnimBgPalette_SolarBeam, &gBattleAnimBgTilemap_ImpactPlayer,
     &gBattleAnimBgImage_Impact, &gBattleAnimBgPalette_SolarBeam, &gBattleAnimBgTilemap_ImpactContests,
 };
-
-extern u16 gBattlerPartyIndexes[4];
-extern u8 gBattlerAttacker;
-extern u8 gBattlerTarget;
