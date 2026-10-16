@@ -12,9 +12,8 @@
 #include "region_map.h"
 #include "script.h"
 #include "slot_machine.h"
+#include "start_menu.h"
 #include "trainer_card.h"
-
-extern bool8 (*gMenuCallback)(void);
 
 void InitKagayaDebugMenu_B(void);
 u8 debug_sub_80B061C(void);
