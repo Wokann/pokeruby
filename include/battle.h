@@ -5,6 +5,7 @@
 #include "constants/battle.h"
 #include "constants/battle_script_commands.h"
 #include "battle_setup.h"
+#include "battle_bg.h"
 #include "main.h"
 
 #define GET_BATTLER_POSITION(battler)     (gBattlerPositions[battler])
@@ -544,14 +545,6 @@ extern u8 gBattlerTarget;
 extern u8 gBattlerFainted;
 extern u8 gChosenActionByBattler[MAX_BATTLERS_COUNT];
 extern u16 gChosenMoveByBattler[MAX_BATTLERS_COUNT];
-
-// src/battle_bg.o
-void sub_800D6D4();
-void ApplyPlayerChosenFrameToBattleMenu();
-void DrawMainBattleBackground(void);
-void LoadBattleTextboxAndBackground();
-void InitLinkBattleVsScreen(u8);
-void DrawBattleEntryBackground();
 
 // src/battle_2.o
 void sub_800F104(void);

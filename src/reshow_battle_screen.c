@@ -17,7 +17,7 @@
 
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 
-bool8 LoadChosenBattleElement(u8 a0);
+bool8 LoadChosenBattleElement(u8 caseId);
 
 // this file's functions
 static void CB2_ReshowBattleScreenAfterMenu(void);
