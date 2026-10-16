@@ -19,9 +19,6 @@
 #include "text.h"
 
 extern u8 gUnknown_0203856C;
-extern u8 gContestMonPartyIndex;
-extern u16 gSpecialVar_ContestCategory;
-extern u16 gSpecialVar_ContestRank;
 
 static bool8 sub_80A9B78(void);
 static void Task_StartShowContestResults(u8 taskId);
