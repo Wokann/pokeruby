@@ -23,8 +23,6 @@ extern u8 gContestMonPartyIndex;
 extern u16 gSpecialVar_ContestCategory;
 extern u16 gSpecialVar_ContestRank;
 
-extern u8 (*gMenuCallback)(void);
-
 static bool8 sub_80A9B78(void);
 static void Task_StartShowContestResults(u8 taskId);
 static void Task_StartCommunication(u8);

@@ -54,11 +54,7 @@ static u8 (*sSaveDialogCallback)(void);
 static u8 sSaveDialogTimer;    //Number of frames to keep the window on screen after save was completed
 static bool8 sSavingComplete;
 
-extern u16 gSaveFileStatus;
-extern u16 gSpecialVar_Result;
-
-
-u8 (*gMenuCallback)(void);
+bool8 (*gMenuCallback)(void);
 
 EWRAM_DATA static u8 sStartMenuCursorPos = 0;
 EWRAM_DATA static u8 sNumStartMenuActions = 0;

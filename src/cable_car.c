@@ -21,7 +21,7 @@
 #include "constants/event_objects.h"
 #include "constants/weather.h"
 
-extern u8 (*gMenuCallback)(void);
+extern bool8 (*gMenuCallback)(void);
 
 // Static type declarations
 

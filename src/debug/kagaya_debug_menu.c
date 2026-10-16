@@ -14,7 +14,7 @@
 #include "slot_machine.h"
 #include "trainer_card.h"
 
-extern u8 (*gMenuCallback)(void);
+extern bool8 (*gMenuCallback)(void);
 
 void InitKagayaDebugMenu_B(void);
 u8 debug_sub_80B061C(void);

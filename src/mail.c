@@ -21,7 +21,7 @@
 #include "scanline_effect.h"
 #include "ewram.h"
 
-extern u8 (*gMenuCallback)(void);
+extern bool8 (*gMenuCallback)(void);
 
 struct MailLineLayout
 {

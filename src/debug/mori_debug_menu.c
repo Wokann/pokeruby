@@ -10,8 +10,6 @@
 #include "start_menu.h"
 #include "string_util.h"
 
-extern u8 (*gMenuCallback)(void);
-
 u8 gUnknown_03004DA0[0x20];
 
 const u8 gUnknown_0839B22C[][3] =

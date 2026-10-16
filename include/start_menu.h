@@ -3,7 +3,7 @@
 
 #include "task.h"
 
-extern u8 (*gMenuCallback)(void);
+extern bool8 (*gMenuCallback)(void);
 
 //Public functions
 void SetDexPokemonPokenavFlags(void);
