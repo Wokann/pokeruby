@@ -7,6 +7,7 @@
 #include "de_rom_8040FE0.h"
 #include "decompress.h"
 #include "event_data.h"
+#include "graphics.h"
 #include "constants/flags.h"
 #include "landmark.h"
 #include "link.h"
@@ -101,8 +102,6 @@ struct PokenavRibbonIconGfx {
 static void (*gUnknown_03000744)(void);
 
 struct UnkPokenavStruct *const gPokenavStructPtr = (struct UnkPokenavStruct *)gSharedMem;
-
-extern u16 gKeyRepeatStartDelay;
 
 // rodata?
 const u8 *const gUnknown_083DFEC8 = gTileBuffer;
@@ -787,8 +786,6 @@ static const union AnimCmd *const sAnims_ConditionSelectionIcon[] =
     sAnim_ConditionSelectionIcon_Selected,
     sAnim_ConditionSelectionIcon_Unselected,
 };
-
-extern const u8 gPokenavConditionCancel_Gfx[];
 
 const struct SpriteSheet gUnknown_083E4628[] = 
 {

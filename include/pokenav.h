@@ -52,7 +52,7 @@ struct ConditionGraph {
     /*0x248*/ u16 scanlineLeft[66][2];
     /*0x350*/ u16 bottom;
     /*0x352*/ u16 updateCounter;
-    /*0x354*/ u8 needsDraw;
+    /*0x354*/ bool8 needsDraw;
     /*0x355*/ u8 scanlineResetState;
 };
 
@@ -117,7 +117,7 @@ struct UnkPokenavStruct {
     /*0x769D*/ u8 unk769D;
     /*0x769E*/ u8 unk769E;
     /*0x769F*/ u8 filler769F[0xB];
-    /*0x76AA*/ u8 inSearchMode;
+    /*0x76AA*/ bool8 inSearchMode;
     /*0x76AC*/ struct Sprite *monMarksSprite;
     /*0x76B0*/ struct MonMarkingsMenu marksMenu;
     /*0x8764*/ u16 unk8764;
@@ -177,7 +177,7 @@ struct UnkPokenavStruct {
     /*0x9238*/ u16 scanlineLeft[66][2];
     /*0x9340*/ u16 bottom;
     /*0x9342*/ u16 updateCounter;
-    /*0x9344*/ u8 needsDraw;
+    /*0x9344*/ bool8 needsDraw;
     /*0x9345*/ u8 scanlineResetState;
 
     /*0x9348*/ struct Sprite *bigRibbonSprite;

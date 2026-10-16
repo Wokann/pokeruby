@@ -3564,6 +3564,7 @@ extern const u8 gPokeblockGold_Pal[];
 extern const u8 gPokeblock_Gfx[];
 extern const u8 gPokeblockFeedBg_Tilemap[];
 
+extern const u8 gPokenavConditionCancel_Gfx[];
 extern const u8 gUsePokeblockUpDown_Gfx[];
 extern const u16 gUsePokeblockUpDown_Pal[];
 
