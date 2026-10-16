@@ -5,8 +5,7 @@
 #include "ewram.h"
 #include "palette.h"
 #include "decompress.h"
-
-extern const u8 gBattleAnimSpritePal_MusicNotes2[];
+#include "graphics.h"
 
 static void AnimHealBellMusicNote(struct Sprite *sprite);
 
