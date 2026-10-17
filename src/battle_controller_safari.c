@@ -21,16 +21,6 @@
 #include "constants/songs.h"
 
 extern struct Window gWindowTemplate_Contest_MoveDescription;
-extern u8 gDisplayedStringBattle[];
-
-extern u16 gBattleTypeFlags;
-extern u8 gBattlerInMenuId;
-extern u8 gBattleOutcome;
-
-extern u8 GetBattlerSide(u8 battler);
-extern u8 GetBattlerAtPosition(u8 position);
-extern u8 GetBattlerPosition(u8 battler);
-extern u8 GetBattlerSpriteSubpriority();
 
 #if ENGLISH
 #define SUB_812BB10_TILE_DATA_OFFSET 440
