@@ -3279,6 +3279,8 @@ extern const u8 gBattleAnimSpritePal_GreenStar[];
 extern const u8 gBattleAnimSpritePal_PinkCloud[];
 extern const u8 gBattleAnimSpritePal_SweatDrop[];
 extern const u8 gBattleAnimSpritePal_GuardRing[];
+extern const u8 gCureBubblesGfx[];
+extern const u8 gCureBubblesTilemap[];
 extern const u8 gBattleAnimSpritePal_PurpleScratch[];
 extern const u8 gBattleAnimSpritePal_SmallRedEye[];
 extern const u8 gBattleAnimSpritePal_HollowOrb[];

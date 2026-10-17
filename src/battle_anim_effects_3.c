@@ -7,6 +7,7 @@
 #include "data.h"
 #include "decompress.h"
 #include "ewram.h"
+#include "graphics.h"
 #include "palette.h"
 #include "random.h"
 #include "scanline_effect.h"
@@ -15,24 +16,10 @@
 #include "constants/songs.h"
 #include "constants/species.h"
 
-extern u8 gAnimFriendship;
-extern u16 gBattle_WIN0H;
-extern u16 gBattle_WIN0V;
-extern u16 gBattle_WIN1H;
-extern u16 gBattle_WIN1V;
-extern u16 gBattle_BG1_X;
-extern u16 gBattle_BG1_Y;
-extern u16 gBattle_BG2_X;
-extern u16 gBattle_BG2_Y;
-
 extern const struct SpriteTemplate gThoughtBubbleSpriteTemplate;
-extern const union AffineAnimCmd *const gAffineAnims_BattleSpriteContest[];
-extern const union AffineAnimCmd *const gAffineAnims_BattleSpriteOpponentSide[];
 extern const u32 gBattleAnimMaskTilemap_LightBeam[];
 extern const u32 gBattleAnimMaskImage_LightBeam[];
 extern const u16 gBattleAnimMaskPalette_LightBeam[];
-extern const u8 gCureBubblesGfx[];
-extern const u8 gCureBubblesTilemap[];
 extern const u16 gCureBubblesPal[];
 
 static void AnimBlackSmoke_Step(struct Sprite *sprite);
@@ -4910,7 +4897,7 @@ void AnimTask_SnatchOpposingMonMove(u8 taskId)
     u32 otId;
     u16 species;
     u8 subpriority;
-    u8 isBackPic;
+    bool8 isBackPic;
     s16 x;	
 
     switch (gTasks[taskId].data[0])
