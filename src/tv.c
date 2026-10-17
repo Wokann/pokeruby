@@ -1,5 +1,6 @@
 #include "global.h"
 #include "tv.h"
+#include "international_string_util.h"
 #include "shop.h"
 #include "battle_tower.h"
 #include "contest.h"
@@ -2600,7 +2601,7 @@ void DoTVShow(void)
     }
 }
 
-void TVShowConvertInternationalString(u8 *dest, u8 *src, u8 language)
+void TVShowConvertInternationalString(u8 *dest, const u8 *src, u8 language)
 {
     StringCopy(dest, src);
     if (language < LANGUAGE_ENGLISH)

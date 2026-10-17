@@ -22,7 +22,6 @@ size_t CountDigits(int value);
 void CompactTVShowArray(TVShow shows[]);
 u32 GetPlayerIDAsU32(void);
 void ReceiveTvShowsData(u8 * src, u32 size, u8 playersLinkId);
-void TVShowConvertInternationalString(u8 *dest, u8 *src, u8 language);
 void UpdateTVScreensOnMap(int width, int height);
 void ResetGabbyAndTy(void);
 u8 CheckForPlayersHouseNews(void);
