@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle_records.h"
+#include "battle.h"
 #include "constants/game_stat.h"
 #include "link.h"
 #include "menu.h"
@@ -14,8 +15,6 @@ struct DebugStruct1
     u16 var0;
     u8 var1[10];
 };
-
-extern u8 gBattleOutcome;
 
 #if DEBUG
 const struct DebugStruct1 gUnknown_Debug_4245CC[] =
