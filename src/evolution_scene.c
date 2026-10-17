@@ -1,5 +1,6 @@
 #include "global.h"
 #include "task.h"
+#include "sprite.h"
 #include "evolution_scene.h"
 #include "evolution_graphics.h"
 #include "palette.h"
@@ -65,15 +66,10 @@ void nullsub_6(void);
 
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern u8 gBattleEnvironment;
-extern u8 gReservedSpritePaletteCount;
-extern u16 gMoveToLearn;
-extern u8 gDisplayedStringBattle[];
 
-extern u8 gBattleCommunication[];
 #define sEvoCursorPos        gBattleCommunication[1] // when learning a new move
 #define sEvoGraphicsTaskId   gBattleCommunication[2]
 
-extern const u8 *const gBattleStringsTable[];
 
 // this file's functions
 static void Task_EvolutionScene(u8 taskId);
