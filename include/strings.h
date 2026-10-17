@@ -7,6 +7,24 @@ extern const u8 gText_PkmnsNickname[];
 
 extern const u8 gText_Hoenn[];
 
+// battle_message
+extern const u8 gText_Sleep[];
+extern const u8 gText_Poison[];
+extern const u8 gText_Burn[];
+extern const u8 gText_Paralysis[];
+extern const u8 gText_Ice[];
+extern const u8 gText_Confusion[];
+extern const u8 gText_Love[];
+extern const u8 gText_SpaceAndSpace[];
+extern const u8 gText_CommaSpace[];
+extern const u8 gText_Space2[];
+extern const u8 gText_LineBreak[];
+extern const u8 gText_NewLine[];
+extern const u8 gText_Are[];
+extern const u8 gText_Are2[];
+extern const u8 gText_Plus[];
+extern const u8 gText_Dash[];
+
 // slot_machine
 extern const u8 gText_QuitTheGame[];
 extern const u8 gText_YouveGot9999Coins[];

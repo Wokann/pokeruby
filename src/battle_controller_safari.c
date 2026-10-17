@@ -23,9 +23,6 @@
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern u8 gDisplayedStringBattle[];
 
-extern const u8 gText_WhatWillPkmnDo2[];
-extern const u8 gText_SafariZoneMenu[];
-
 extern u16 gBattleTypeFlags;
 extern u8 gBattlerInMenuId;
 extern u8 gBattleOutcome;

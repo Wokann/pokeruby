@@ -1,6 +1,7 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_bg.h"
+#include "battle_message.h"
 #include "data.h"
 #include "battle_gfx_sfx_util.h"
 #include "battle_main.h"
@@ -24,10 +25,6 @@ extern u16 gBattleTypeFlags;
 extern u8 gBattleOutcome;
 
 extern struct Window gWindowTemplate_Contest_MoveDescription;
-
-extern u8 gText_Win[];
-extern u8 gText_Loss[];
-extern u8 gText_Draw[];
 
 extern const u8 gGameVersion;
 extern u16 gBattleTypeFlags;

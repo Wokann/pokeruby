@@ -36,6 +36,7 @@
 #include "task.h"
 #include "decompress.h"
 #include "string_util.h"
+#include "strings.h"
 #include "pokemon_summary_screen.h"
 #include "naming_screen.h"
 #include "ewram.h"
@@ -55,7 +56,6 @@ extern u8 gBattlerTarget;
 extern const u8* gBattlescriptCurrInstr;
 extern u8 gBattleCommunication[];
 extern s32 gHpDealt;
-extern const u16 gMissStringIds[];
 extern u16 gExpShareExp;
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern u8 gPlayerPartyCount;
@@ -63,7 +63,6 @@ extern u16 gMoveToLearn; //move to learn
 
 extern u8* gBattleScriptsForMoveEffects[];
 extern u8 gBattlerInMenuId;
-extern u16 gTrappingMoves[];
 
 
 //extern functions
@@ -5563,9 +5562,6 @@ static void Cmd_atknameinbuff1(void)
     gBattlescriptCurrInstr++;
 }
 
-extern const u8 gText_BattleSwitchWhich2[];
-extern const u8 gText_Dash[];
-extern const u8 gText_Plus[];
 extern const u8 *const gStatNamesTable2[];
 
 static void atk6C_drawlvlupbox(void)

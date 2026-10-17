@@ -2,6 +2,7 @@
 #include "battle_tower.h"
 #include "battle.h"
 #include "battle_main.h"
+#include "battle_message.h"
 #include "battle_setup.h"
 #include "battle_transition.h"
 #include "constants/easy_chat.h"
@@ -271,13 +272,6 @@ static void SetTowerInterviewData(void);
 static void CheckMonBattleTowerBanlist(u16, u16, u16, u8, u8, u16 *, u16 *, u8 *);
 static void ClearBattleTowerRecord(struct RSBattleTowerRecord *);
 
-extern const u8 gText_SpaceAndSpace[];
-extern const u8 gText_CommaSpace[];
-extern const u8 gText_Space2[];
-extern const u8 gText_LineBreak[];
-extern const u8 gText_NewLine[];
-extern const u8 gText_Are[];
-extern const u8 gText_Are2[];
 extern u16 gSpecialVar_0x8004;
 extern u16 gTrainerBattleOpponent_A;
 extern u16 gBattleTypeFlags;

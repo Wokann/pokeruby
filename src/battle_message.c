@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_anim.h"
 #include "battle_message.h"
 #include "battle_tower.h"
 #include "item.h"
@@ -152,19 +153,6 @@ static const u16 sGrammarMoveUsedTable[] =
 
 static const u8 sText_EmptyStatus[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}; // empty flags
 
-extern u8 gBattlerAttacker;
-extern u8 gBattlerTarget;
-extern u8 gStringVar1[];
-extern u8 gStringVar2[];
-extern u8 gStringVar3[];
-extern u16 gBattleTypeFlags;
-extern u16 gTrainerBattleOpponent_A;
-extern u8 gDisplayedStringBattle[];
-extern u8 gStringVar1[];
-extern u8 gStringVar2[];
-extern u8 gStringVar3[];
-extern u16 gBattlerPartyIndexes[4];
-
 static EWRAM_DATA u8 sBattlerAbilities[4] = {0};
 
 struct StatusFlagString
@@ -183,14 +171,9 @@ static void ChooseMoveUsedParticle(u8* textBuff);
 static void ChooseTypeOfMoveUsedString(u8* dst);
 static void ExpandBattleTextBuffPlaceholders(const u8* src, u8* dst);
 
-u8 GetBattlerSide(u8 battler);
-s32 GetBattlerMultiplayerId(u16);
+s32 GetBattlerMultiplayerId(u16 id);
 void get_trainer_name(u8* dst);
 u8 get_trainer_class_name_index(void);
-u8 GetMultiplayerId(void);
-u8 GetBattlerAtPosition(u8 position);
-u8 GetBattlerSide(u8 battler);
-u8 GetBattlerPosition(u8 battler);
 #ifdef GERMAN
 extern u8 *de_sub_804110C();
 #endif
@@ -982,7 +965,7 @@ static void ChooseMoveUsedParticle(u8* textBuff)
 }
 
 // Appends "!" to the text buffer `dst`. In the original Japanese this looked
-// into the table of moves at gUnknown_084016BC and varied the line accordingly.
+// into the table of moves at sGrammarMoveUsedTable and varied the line accordingly.
 // 
 // sText_ExclamationMark was a plain "!", used for any attack not on the list.
 // It resulted in the translation "<NAME>'s <ATTACK>!".
