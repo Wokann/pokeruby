@@ -4,6 +4,7 @@
 #include "field_screen_effect.h"
 #include "main.h"
 #include "menu.h"
+#include "menu_helpers.h"
 #include "international_string_util.h"
 #include "palette.h"
 #include "party_menu.h"
@@ -21,35 +22,29 @@
 #include "text.h"
 #include "ewram.h"
 
-extern u8 gPlayerPartyCount;
-extern u8 gLastFieldPokeMenuOpened;
 extern u8 gPartyMenuMessage_IsPrinting;
 extern const u16 gBattleTowerBannedSpecies[];
 
 EWRAM_DATA u8 gSelectedOrderFromParty[3] = {0};
 
-extern u8 sub_806BD58(u8, u8);
-extern void PartyMenuPrintMonsLevelOrStatus(void);
-extern void DrawMonDescriptorStatus(u8, u8);
 extern void PartyMenuPrintHP();
-extern bool8 MenuHelpers_IsLinkActive(void);
 
 static void ClearSelectedPartyOrder(void);
-static bool8 IsMonAllowedInBattleTower(struct Pokemon *);
-static void sub_812238C(u8);
-static void sub_8122450(u8);
-static void sub_81224A8(u8);
-static void sub_8122728(u8);
-static void BattleTowerEntryMenuCallback_Exit(u8);
+static bool8 IsMonAllowedInBattleTower(struct Pokemon *mon);
+static void sub_812238C(u8 taskId);
+static void sub_8122450(u8 taskId);
+static void sub_81224A8(u8 taskId);
+static void sub_8122728(u8 taskId);
+static void BattleTowerEntryMenuCallback_Exit(u8 taskId);
 static void sub_81228E8(u8);
 static void sub_8122950(u8);
 static void sub_81229B8(void);
-static void sub_8122AB8(u8);
-static void sub_8122B10(u8);
-static void sub_8122C18(u8);
-static void Task_DaycareStorageMenu8122EAC(u8);
-void sub_8123138(u8);
-static void sub_8123170(u8);
+static void sub_8122AB8(u8 taskId);
+static void sub_8122B10(u8 taskId);
+static void sub_8122C18(u8 taskId);
+static void Task_DaycareStorageMenu8122EAC(u8 taskId);
+void sub_8123138(u8 taskId);
+static void sub_8123170(u8 taskId);
 static void sub_81231AC(void);
 
 void sub_8121E10(void)
@@ -220,10 +215,10 @@ static u8 sub_81220C8(void)
 // Battle Tower Entry Menu
 //------------------------------------------------------------------------------
 
-static void BattleTowerEntryMenuCallback_Summary(u8);
-static void BattleTowerEntryMenuCallback_Enter(u8);
-static void BattleTowerEntryMenuCallback_NoEntry(u8);
-static void BattleTowerEntryMenuCallback_Exit(u8);
+static void BattleTowerEntryMenuCallback_Summary(u8 taskId);
+static void BattleTowerEntryMenuCallback_Enter(u8 taskId);
+static void BattleTowerEntryMenuCallback_NoEntry(u8 taskId);
+static void BattleTowerEntryMenuCallback_Exit(u8 taskId);
 
 static const struct MenuAction2 sBattleTowerEntryMenuItems[] =
 {
@@ -773,9 +768,9 @@ bool8 unref_sub_8122C60(void)
 // Daycare Pokemon Storage Menu
 //------------------------------------------------------------------------------
 
-static void DaycareStorageMenuCallback_Store(u8);
-static void DaycareStorageMenuCallback_Summary(u8);
-static void DaycareStorageMenuCallback_Exit(u8);
+static void DaycareStorageMenuCallback_Store(u8 taskId);
+static void DaycareStorageMenuCallback_Summary(u8 taskId);
+static void DaycareStorageMenuCallback_Exit(u8 taskId);
 
 static const struct MenuAction2 sDaycareStorageMenuItems[] =
 {
