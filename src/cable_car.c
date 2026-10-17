@@ -10,6 +10,7 @@
 #include "script.h"
 #include "task.h"
 #include "sound.h"
+#include "start_menu.h"
 #include "graphics.h"
 #include "constants/songs.h"
 #include "decompress.h"
@@ -20,8 +21,6 @@
 #include "cable_car_util.h"
 #include "constants/event_objects.h"
 #include "constants/weather.h"
-
-extern bool8 (*gMenuCallback)(void);
 
 // Static type declarations
 
@@ -35,10 +34,10 @@ struct CableCarEwramStruct1
     u16 timer;
     u8 bg0HorizontalOffset;
     u8 bg0VerticalOffset;
-    u8 filler_000a[2];
+    u8 unused0[2];
     u8 bg1HorizontalOffset;
     u8 bg1VerticalOffset;
-    u8 filler_0000e[6];
+    u8 unused1[6];
     u8 bg3HorizontalOffset;
     u8 bg3VerticalOffset;
     u8 unk_0016;
@@ -53,7 +52,7 @@ struct CableCarEwramStruct1
     u8 groundXBase;
     u8 groundYBase;
     u16 groundTileBuffer[9][12];
-    u8 filler_00fa[2];
+    u8 unused3[2];
     u16 unk_00fc[0x20][0x20];
     u16 unk_08fc[0x20][0x20];
 }; // size 0x10FC
