@@ -1,4 +1,5 @@
 #include "global.h"
+#include "event_scripts.h"
 #include "strings.h"
 
 #if ENGLISH

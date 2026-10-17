@@ -83,6 +83,27 @@ extern const u8 SecretBase_Text_Trainer7Defeated[];
 extern const u8 SecretBase_Text_Trainer8Defeated[];
 extern const u8 SecretBase_Text_Trainer9Defeated[];
 
+// Mauville Old Man (Giddy)
+extern const u8 GiddyText_Is[];
+extern const u8 GiddyText_DontYouAgree[];
+extern const u8 GiddyText_SoPretty[];
+extern const u8 GiddyText_SoDarling[];
+extern const u8 GiddyText_SoRelaxed[];
+extern const u8 GiddyText_SoSunny[];
+extern const u8 GiddyText_SoDesirable[];
+extern const u8 GiddyText_SoExciting[];
+extern const u8 GiddyText_SoAmusing[];
+extern const u8 GiddyText_SoMagical[];
+extern const u8 GiddyText_ISoWantToGoOnAVacation[];
+extern const u8 GiddyText_IBoughtCrayonsWith120Colors[];
+extern const u8 GiddyText_WouldntItBeNiceIfWeCouldFloat[];
+extern const u8 GiddyText_WhenYouWriteOnASandyBeach[];
+extern const u8 GiddyText_WhatsTheBottomOfTheSeaLike[];
+extern const u8 GiddyText_WhenYouSeeTheSettingSunDoesIt[];
+extern const u8 GiddyText_LyingBackInTheGreenGrass[];
+extern const u8 GiddyText_SecretBasesAreSoWonderful[];
+
+// Mauville Old Man (storyteller)
 extern const u8 MauvilleCity_PokemonCenter_1F_Text_SavedGameTitle[];
 extern const u8 MauvilleCity_PokemonCenter_1F_Text_SavedGameAction[];
 extern const u8 MauvilleCity_PokemonCenter_1F_Text_SavedGameStory[];
