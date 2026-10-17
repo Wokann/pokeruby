@@ -207,6 +207,7 @@ s16 GetFirstFreeBoxSpot(u8 boxId);
 u8 CountPartyAliveNonEggMonsExcept(u8 slotToIgnore);
 u8 CountPartyAliveNonEggMons_IgnoreVar0x8004Slot(void);
 u8 CountMonsInBox(u8 boxId);
+bool8 CheckFreePokemonStorageSpace(void);
 u8 *StringCopyAndFillWithSpaces(u8 *dst, const u8 *src, u16 n);
 void LoadChooseBoxMenuGfx(struct ChooseBoxMenu *menu, u16 tileTag, u16 palTag, u8 subpriority);
 void CreateChooseBoxMenuSprites(u8 curBox);

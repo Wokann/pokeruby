@@ -31,6 +31,7 @@
 #include "menu_helpers.h"
 #include "battle_tower.h"
 #include "field_weather.h"
+#include "pokemon_storage_system.h"
 #include "pokemon_summary_screen.h"
 #include "random.h"
 #include "constants/abilities.h"
