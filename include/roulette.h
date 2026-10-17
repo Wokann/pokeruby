@@ -113,11 +113,11 @@ extern const struct RouletteTable gRouletteTables[];
 
 void PlayRoulette(void);
 
-void sub_8117838(u8 free);
+void sub_8117838(bool8 free);
 void CreateGridSprites(void);
-void ShowHideGridIcons(u8 hideAll, u8 hideSquare);
+void ShowHideGridIcons(bool8 hideAll, u8 hideSquare);
 void CreateGridBallSprites(void);
-void ShowHideGridBalls(u8 hideAll, u8 hideBallId);
+void ShowHideGridBalls(bool8 hideAll, u8 hideBallId);
 void ShowHideWinSlotCursor(u8 selectionId);
 void CreateWheelIconSprites(void);
 void CreateInterfaceSprites(void);

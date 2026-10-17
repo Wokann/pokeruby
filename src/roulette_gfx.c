@@ -696,7 +696,7 @@ static const struct SpriteTemplate sSpriteTemplate_ShroomishShadow[] = {
 
 static const struct SpriteTemplate sSpriteTemplate_TaillowShadow = {0xffff, 1, &sOam_TaillowShadow, gSpriteAnimTable_83F9ED8, gSpriteImageTable_83FA55C, sAffineAnims_TaillowShadow, SpriteCB_Taillow};
 
-void sub_8117838(u8 free)
+void sub_8117838(bool8 free)
 {
     if (!free)
     {
@@ -777,7 +777,7 @@ static void UNUSED DestroyGridSprites(void) //destroy all sprites at 29
         DestroySprite(&gSprites[eRoulette->spriteIds[29 + i]]);
 }
 
-void ShowHideGridIcons(u8 hideAll, u8 hideSquare)
+void ShowHideGridIcons(bool8 hideAll, u8 hideSquare)
 {
     u8 i;
     switch (hideAll)
@@ -816,7 +816,7 @@ void CreateGridBallSprites(void)
     }
 }
 
-void ShowHideGridBalls(u8 hideAll, u8 hideBallId)
+void ShowHideGridBalls(bool8 hideAll, u8 hideBallId)
 {
     u8 i = 0;
     if (hideAll)
