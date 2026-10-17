@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle.h"
 #include "item_menu_icons.h"
 #include "berry_tag_screen.h"
 #include "berry.h"
@@ -30,7 +31,6 @@ struct Struct2000000
 };
 
 extern struct Struct2000000 gSharedMem;
-extern u16 gBattle_BG1_Y;
 
 static EWRAM_DATA u8 sBerrySpriteId = 0;
 static EWRAM_DATA s16 sFlavorCircleIds[5] = {0};
