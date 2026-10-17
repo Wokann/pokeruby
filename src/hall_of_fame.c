@@ -1,4 +1,6 @@
 #include "global.h"
+#include "sprite.h"
+#include "graphics.h"
 #include "main.h"
 #include "task.h"
 #include "palette.h"
@@ -26,11 +28,7 @@
 static EWRAM_DATA u32 sHofFadePalettes = 0;
 
 extern void (*gGameContinueCallback)(void);
-extern struct MusicPlayerInfo gMPlayInfo_BGM;
-extern u8 gReservedSpritePaletteCount;
 
-extern const u8 gConfetti_Gfx[];
-extern const u8 gConfetti_Pal[];
 extern const u8 gHallOfFame_Gfx[];
 extern const u16 gHallOfFame_Pal[];
 
