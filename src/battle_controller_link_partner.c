@@ -5,6 +5,7 @@
 #include "battle_anim.h"
 #include "battle_controllers.h"
 #include "battle_interface.h"
+#include "battle_message.h"
 #include "data.h"
 #include "link.h"
 #include "m4a.h"
@@ -21,20 +22,9 @@
 #include "util.h"
 #include "ewram.h"
 
-extern u16 gBattleTypeFlags;
-extern u8 gDisplayedStringBattle[];
-extern u8 gBattleOutcome;
-extern u8 gAnimFriendship;
-extern u8 gAnimMoveTurn;
 extern struct Window gWindowTemplate_Contest_MoveDescription;
-extern void (*gAnimScriptCallback)(void);
 
-extern void Task_HidePartyStatusSummary(u8);
-extern void BufferStringBattle();
-extern void SetSpritePrimaryCoordsFromSecondaryCoords();
-extern void StartAnimLinearTranslation(struct Sprite *);
-extern s32 GetBattlerMultiplayerId(u16);
-extern u8 GetBattlerSpriteDefault_Y();
+extern s32 GetBattlerMultiplayerId(u16 id);
 
 // this file's functions
 
