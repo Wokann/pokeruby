@@ -1,5 +1,6 @@
 #include "global.h"
 #include "field_specials.h"
+#include "battle.h"
 #include "diploma.h"
 #include "fieldmap.h"
 #include "event_data.h"
@@ -44,8 +45,6 @@
 #elif GERMAN
 #define CHAR_DEC_SEPARATOR CHAR_COMMA
 #endif
-
-extern u8 gBattleOutcome;
 
 EWRAM_DATA bool8 gBikeCyclingChallenge = FALSE;
 EWRAM_DATA u8 gBikeCollisions = 0;
@@ -1777,7 +1776,7 @@ bool8 IsPokerusInParty(void)
     return TRUE;
 }
 
-static void sub_810F7A8(u8);
+static void sub_810F7A8(u8 taskId);
 static void StopCameraShake(u8 taskId);
 
 void ShakeCamera(void)
@@ -2095,7 +2094,7 @@ static void SetInitialFansOfPlayer(void)
     gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] |= 0x400;
 }
 
-void sub_810FE1C(void *, u8, u8);
+void sub_810FE1C(void *linkRecords, u8 whichLinkTrainer, u8 whichNPCTrainer);
 
 void BufferStreakTrainerText(void)
 {
