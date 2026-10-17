@@ -1,6 +1,8 @@
 #ifndef GUARD_GBA_FLASH_INTERNAL_H
 #define GUARD_GBA_FLASH_INTERNAL_H
 
+#include "agb_flash.h"
+
 #define FLASH_BASE ((u8 *)0xE000000)
 
 #define FLASH_WRITE(addr, data) ((*(vu8 *)(FLASH_BASE + (addr))) = (data))
@@ -65,8 +67,6 @@ u16 ReadFlashId(void);
 void StartFlashTimer(u8 phase);
 void SetReadFlash1(u16 *dest);
 void StopFlashTimer(void);
-u16 SetFlashTimerIntr(u8 timerNum, void (**intrFunc)(void));
-u32 ProgramFlashSectorAndVerify(u16 sectorNum, u8 *src);
 void ReadFlash(u16 sectorNum, u32 offset, void *dest, u32 size);
 u32 ProgramFlashSectorAndVerifyNBytes(u16 sectorNum, void *dataSrc, u32 n);
 
