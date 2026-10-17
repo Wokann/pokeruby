@@ -60,9 +60,7 @@ struct EvoInfo
 };
 
 void sub_8023A80(void);
-void sub_802BC6C(void);
 void sub_8023AD8(void);
-void nullsub_6(void);
 
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern u8 gBattleEnvironment;

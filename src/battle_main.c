@@ -87,7 +87,6 @@ struct UnknownStruct8
     u8 unk1A;
 };
 
-extern void sub_802BBD4(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0);
 #if DEBUG
 extern void HandleInputChooseAction(void);
 #endif

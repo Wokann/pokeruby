@@ -7,6 +7,7 @@
 #include "constants/battle_script_commands.h"
 #include "battle_setup.h"
 #include "battle_bg.h"
+#include "battle_script_commands.h"
 #include "main.h"
 
 #define GET_BATTLER_POSITION(battler)     (gBattlerPositions[battler])
@@ -613,11 +614,6 @@ void BattleBeginFirstTurn(void);
 void sub_8012324(void);
 
 void debug_sub_8010800(void);
-
-// asm/battle_4.o
-void AI_CalcDmg(u8, u8);
-u8 TypeCalc(u16 move, u8 bank_atk, u8 bank_def);
-u8 GetBattlerTurnOrderNum(u8 bank);
 
 // asm/battle_5.o
 void nullsub_8(u8);

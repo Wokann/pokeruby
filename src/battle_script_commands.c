@@ -74,9 +74,6 @@ void UndoEffectsAfterFainting(void);
 u8 GetBattlerMultiplayerId(u8 id);
 u16 GetLinkTrainerFlankId(u8 linkPlayerId);
 //MonTryLearningNewMove teach poke a move
-void sub_802BC6C(void);
-void sub_802BBD4(u8 xStart, u8 yStart, u8 xEnd, u8 yEnd, u8 sp0);
-void nullsub_6(void);
 
 //extern BattleScripts
 
