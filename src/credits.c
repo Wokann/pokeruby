@@ -1,4 +1,5 @@
 #include "global.h"
+#include "sprite.h"
 #include "credits.h"
 #include "data.h"
 #include "decompress.h"
@@ -173,7 +174,6 @@ static EWRAM_DATA u16 sSavedTaskId = 0; // TASK A
 EWRAM_DATA bool8 gHasHallOfFameRecords = 0;
 static EWRAM_DATA bool8 sUsedSpeedUp = 0;
 
-extern u8 gReservedSpritePaletteCount;
 
 // data/hall_of_fame
 extern void *gUnknown_0840B5A0[];
