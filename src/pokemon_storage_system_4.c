@@ -1,6 +1,7 @@
 
 // Includes
 #include "global.h"
+#include "load_save.h"
 #include "dma3.h"
 #include "ewram.h"
 #include "data.h"

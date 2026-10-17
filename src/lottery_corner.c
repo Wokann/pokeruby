@@ -1,4 +1,5 @@
 #include "global.h"
+#include "load_save.h"
 #include "lottery_corner.h"
 #include "event_data.h"
 #include "pokemon.h"

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "load_save.h"
 #include "dma3.h"
 #include "palette.h"
 #include "constants/songs.h"

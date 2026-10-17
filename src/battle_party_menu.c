@@ -1,4 +1,5 @@
 #include "global.h"
+#include "load_save.h"
 #include "battle_controllers.h"
 #include "reshow_battle_screen.h"
 #include "battle.h"

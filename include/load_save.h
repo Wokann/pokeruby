@@ -1,6 +1,9 @@
 #ifndef GUARD_LOAD_SAVE_H
 #define GUARD_LOAD_SAVE_H
 
+#include "pokemon_storage_system.h"
+
+extern struct PokemonStorage gPokemonStorage;
 extern bool32 gFlashMemoryPresent;
 
 void CheckForFlashMemory(void);

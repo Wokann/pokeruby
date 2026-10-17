@@ -1,4 +1,5 @@
 #include "global.h"
+#include "load_save.h"
 #include "constants/hold_effects.h"
 #include "constants/moves.h"
 #include "battle.h"

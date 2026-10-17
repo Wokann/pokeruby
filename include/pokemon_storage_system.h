@@ -4,6 +4,14 @@
 #include "pc_screen_effect.h"
 #include "mon_markings.h"
 
+struct PokemonStorage
+{
+    /*0x0000*/ u8 currentBox;
+    /*0x0004*/ struct BoxPokemon boxes[14][30];
+    /*0x8344*/ u8 boxNames[14][9];
+    /*0x83c2*/ u8 boxWallpapers[14];
+};
+
 struct PokemonStorageSystemFunc
 {
     u8 (*func)(void);

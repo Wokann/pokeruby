@@ -1,6 +1,7 @@
 
 // Includes
 #include "global.h"
+#include "load_save.h"
 #include "ewram.h"
 #include "main.h"
 #include "palette.h"

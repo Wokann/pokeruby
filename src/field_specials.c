@@ -1,4 +1,5 @@
 #include "global.h"
+#include "load_save.h"
 #include "field_specials.h"
 #include "battle.h"
 #include "diploma.h"

@@ -1,6 +1,7 @@
 
 // Includes
 #include "global.h"
+#include "load_save.h"
 #include "constants/species.h"
 #include "sprite.h"
 #include "trig.h"

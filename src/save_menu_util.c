@@ -1,4 +1,5 @@
 #include "global.h"
+#include "load_save.h"
 #include "save_menu_util.h"
 #include "event_data.h"
 #include "menu.h"

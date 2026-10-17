@@ -1,6 +1,7 @@
 
 // Includes
 #include "global.h"
+#include "load_save.h"
 #include "decompress.h"
 #include "constants/songs.h"
 #include "constants/species.h"
