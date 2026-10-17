@@ -18,7 +18,7 @@
 #include "ewram.h"
 
 extern u32 gUnknown_02023A14_4C;
-extern u8 *gBattleAI_ScriptsTable[];
+extern const u8 *const gBattleAI_ScriptsTable[];
 
 /*
 gAIScriptPtr is a pointer to the next battle AI cmd command to read.
@@ -27,7 +27,7 @@ the number of bytes that the current command had reserved for arguments
 in order to read the next command correctly. refer to battle_ai_scripts.s for the
 AI scripts.
 */
-EWRAM_DATA u8 *gAIScriptPtr = NULL;
+EWRAM_DATA const u8 *gAIScriptPtr = NULL;
 
 // AI states
 enum
@@ -39,7 +39,7 @@ enum
 };
 
 static void BattleAI_DoAIProcessing(void);
-static void AIStackPushVar(u8 *var);
+static void AIStackPushVar(const u8 *var);
 static bool8 AIStackPop(void);
 
 static void Cmd_if_random_less_than(void);
@@ -1469,7 +1469,7 @@ static void Cmd_if_cant_faint(void)
 static void BattleAICmd_if_has_move(void)
 {
     int i;
-    u16 *movePtr = (u16 *)(gAIScriptPtr + 2);
+    const u16 *movePtr = (u16 *)(gAIScriptPtr + 2);
 
     switch (gAIScriptPtr[1])
     {
@@ -1503,7 +1503,7 @@ static void BattleAICmd_if_has_move(void)
 static void BattleAICmd_if_dont_have_move(void)
 {
     int i;
-    u16 *movePtr = (u16 *)(gAIScriptPtr + 2);
+    const u16 *movePtr = (u16 *)(gAIScriptPtr + 2);
 
     switch (gAIScriptPtr[1])
     {
@@ -1877,7 +1877,7 @@ static void Cmd_if_target_not_taunted(void)
         gAIScriptPtr += 5;
 }
 
-static void AIStackPushVar(u8 *var)
+static void AIStackPushVar(const u8 *var)
 {
     AI_STACK->ptr[AI_STACK->size++] = var;
 }

@@ -5,10 +5,8 @@
 #include "contest_effect.h"
 #include "ewram.h"
 
-extern u16 gSpecialVar_ContestCategory;
-
-extern u8 *gAIScriptPtr;
-extern u8 *gContestAI_ScriptsTable[];
+extern const u8 *gAIScriptPtr;
+extern const u8 *gContestAI_ScriptsTable[];
 
 static void ContestAICmd_score(void);
 static void ContestAICmd_get_appeal_num(void);
@@ -291,7 +289,7 @@ static const ContestAICmdFunc sContestAICmdTable[] =
 
 static void ContestAI_DoAIProcessing(void);
 static bool8 GetContestantIdByTurn(u8 turn);
-static void AIStackPushVar(u8 *ptr);
+static void AIStackPushVar(const u8 *ptr);
 static bool8 AIStackPop(void);
 
 void ContestAI_ResetAI(u8 contestantAI)
@@ -1657,7 +1655,7 @@ static void ContestAICmd_end(void)
 }
 
 // push stack?
-static void AIStackPushVar(u8 *ptr)
+static void AIStackPushVar(const u8 *ptr)
 {
     u8 unk40 = eContestAI->stackSize++;
     eContestAI->stack[unk40] = (u32)ptr;

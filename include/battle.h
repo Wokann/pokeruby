@@ -232,7 +232,7 @@ struct BattleResults
 
 struct AI_Stack
 {
-    u8 *ptr[8];
+    const u8 *ptr[8];
     u8 size;
 };
 
