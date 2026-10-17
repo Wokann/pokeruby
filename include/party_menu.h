@@ -1,6 +1,7 @@
 #ifndef GUARD_PARTY_MENU_H
 #define GUARD_PARTY_MENU_H
 
+#include "main.h"
 #include "menu.h"
 #include "constants/party_menu.h"
 #include "task.h"
@@ -97,6 +98,10 @@ struct PartyMenu
     /*0x14*/ TaskFunc unk14;
 };
 
+void CB2_PartyMenuFromStartMenu(void);
+void CB2_ReturnToPartyMenuFromFlyMap(void);
+void CB2_ShowPartyMenuForItemUse(void);
+void FieldCallback_PrepareFadeInFromMenu(void);
 void CB2_PartyMenuMain(void);
 void ChangeBattleTowerPartyMenuSelection(u8 taskId, s8 directionPressed);
 void SetPartyMenuSettings(u8 menuType, u8 battleTypeFlags, TaskFunc menuHandlerFunc, u8 textId);
@@ -214,6 +219,7 @@ void TaughtMove(u8 taskId);
 void StopTryingToTeachMove_806F588(u8 taskId);
 bool8 IsMoveHm(u16 move);
 
+extern MainCallback gPostMenuFieldCallback;
 extern u8 gSelectedMonPartyId;
 extern u8 gSelectedOrderFromParty[3];
 extern u8 gBattlePartyCurrentOrder[3];

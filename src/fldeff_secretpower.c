@@ -6,6 +6,7 @@
 #include "field_player_avatar.h"
 #include "metatile_behavior.h"
 #include "overworld.h"
+#include "party_menu.h"
 #include "pokemon_menu.h"
 #include "fldeff.h"
 #include "fldeff_misc.h"

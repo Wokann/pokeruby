@@ -35,16 +35,11 @@ enum
 };
 
 extern u8 gLastFieldPokeMenuOpened;
-extern MainCallback gPostMenuFieldCallback;
 
 void HandleDefaultPartyMenu(u8 taskId);
 void sub_808B5B4(u32 taskId);
-void CB2_PartyMenuFromStartMenu(void);
 void sub_8089C50(u8 arg0, u8 arg1, u8 arg2, u8 noOfOptions, const struct MenuAction2 *menuActions, const u8 *order);
 void DoPokemonMenu_Switch(u8 taskId);
-void FieldCallback_PrepareFadeInFromMenu(void);
-void CB2_ReturnToPartyMenuFromFlyMap(void);
-void CB2_ShowPartyMenuForItemUse(void);
 void sub_808B0C0(u8 taskId);
 void sub_808B508(u8 taskId);
 void CB2_ReturnToPartyMenuWhileLearningMove(void);

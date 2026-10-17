@@ -8,6 +8,7 @@
 #include "constants/maps.h"
 #include "menu.h"
 #include "palette.h"
+#include "party_menu.h"
 #include "pokemon_menu.h"
 #include "region_map.h"
 #include "overworld.h"

@@ -5,6 +5,7 @@
 #include "task.h"
 
 extern u8 gLastFieldPokeMenuOpened;
+extern void (*gPostMenuFieldCallback)(void);
 
 u32 FieldEffectStart(u8 id);
 bool8 FieldEffectCmd_loadtiles(u8 **script, u32 *val);

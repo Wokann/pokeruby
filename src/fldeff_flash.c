@@ -4,6 +4,7 @@
 #include "field_effect.h"
 #include "main.h"
 #include "palette.h"
+#include "party_menu.h"
 #include "pokemon_menu.h"
 #include "overworld.h"
 #include "fldeff.h"

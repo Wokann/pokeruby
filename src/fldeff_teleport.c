@@ -1,6 +1,7 @@
 #include "global.h"
 #include "field_effect.h"
 #include "field_player_avatar.h"
+#include "party_menu.h"
 #include "pokemon_menu.h"
 #include "overworld.h"
 #include "fldeff.h"

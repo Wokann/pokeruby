@@ -7,6 +7,7 @@
 #include "field_player_avatar.h"
 #include "item_use.h"
 #include "overworld.h"
+#include "party_menu.h"
 #include "pokemon_menu.h"
 #include "fldeff.h"
 #include "script.h"

@@ -15,6 +15,7 @@
 #include "option_menu.h"
 #include "palette.h"
 #include "pokedex.h"
+#include "party_menu.h"
 #include "pokemon_menu.h"
 #include "pokenav.h"
 #include "overworld.h"

@@ -7,6 +7,7 @@
 #include "fieldmap.h"
 #include "event_object_lock.h"
 #include "metatile_behavior.h"
+#include "party_menu.h"
 #include "pokemon_menu.h"
 #include "overworld.h"
 #include "fldeff.h"

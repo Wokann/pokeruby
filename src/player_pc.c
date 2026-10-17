@@ -10,6 +10,7 @@
 #include "menu.h"
 #include "menu_helpers.h"
 #include "palette.h"
+#include "party_menu.h"
 #include "pokemon_menu.h"
 #include "script.h"
 #include "sound.h"
