@@ -4,6 +4,7 @@
 #include "data.h"
 #include "battle_main.h"
 #include "ewram.h"
+#include "event_data.h"
 #include "field_screen_effect.h"
 #include "main.h"
 #include "menu.h"
@@ -23,8 +24,6 @@
 #include "trig.h"
 #include "constants/songs.h"
 
-extern u16 gSpecialVar_0x8004;
-extern u16 gSpecialVar_0x8005;
 extern u8 gTileBuffer[];
 
 extern const struct WindowTemplate gMenuTextWindowTemplate;
