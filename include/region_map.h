@@ -21,7 +21,7 @@ struct RegionMapLocation
 struct RegionMap
 {
     u8 mapSecName[20];
-    /*0x14*/ u16 mapSecId;
+    /*0x14*/ mapsec_u16_t mapSecId;
     /*0x16*/ u8 mapSecType;
     /*0x17*/ u8 posWithinMapSec;
     /*0x18*/ u8 (*inputCallback)(void);
@@ -74,7 +74,7 @@ struct RegionMapState
 {
     void (*callback)(void);
     u16 state;
-    u16 mapSecId;
+    mapsec_u16_t mapSecId;
     struct RegionMap regionMap;
     u16 unk_888[0xE0];
     u8 blankMapName[0x26];
@@ -89,18 +89,18 @@ bool8 sub_80FA940(void);
 void FreeRegionMapIconResources(void);
 u8 DoRegionMapInputCallback(void);
 void SetRegionMapDataForZoom(void);
-u8 UpdateRegionMapZoom(void);
+bool8 UpdateRegionMapZoom(void);
 void UpdateRegionMapVideoRegs(void);
 void PokedexAreaScreen_UpdateRegionMapVariablesAndVideoRegs(s16 x, s16 y);
-u16 GetOverworldMapFromUnderwaterMap(u16 mapSecId);
+mapsec_u16_t GetOverworldMapFromUnderwaterMap(mapsec_u16_t mapSecId);
 void CreateRegionMapCursor(u16 tileTag, u16 paletteTag);
 void CreateRegionMapPlayerIcon(u16 tileTag, u16 paletteTag);
-const u8 *GetMapSectionName(u8 *dest, u16 regionMapId, u16 padLength);
-const u8 *GetMapNameGeneric(u8 *dest, u16 mapSecId);
-const u8 *CopyLocationName(u8 *dest, u16 mapSecId);
+const u8 *GetMapSectionName(u8 *dest, mapsec_u16_t regionMapId, u16 padLength);
+const u8 *GetMapNameGeneric(u8 *dest, mapsec_u16_t mapSecId);
+const u8 *CopyLocationName(u8 *dest, mapsec_u16_t mapSecId);
 void CB2_OpenFlyMap(void);
 void debug_sub_8110F28(void);
-u16 GetRegionMapSecIdAt(u16 x, u16 y);
+mapsec_u16_t GetRegionMapSecIdAt(u16 x, u16 y);
 void TrySetPlayerIconBlink(void);
 
 extern const struct RegionMapLocation gRegionMapEntries[];
