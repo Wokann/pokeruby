@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle_transition.h"
+#include "event_object_movement.h"
 #include "main.h"
 #include "overworld.h"
 #include "task.h"
@@ -16,10 +17,6 @@
 #include "constants/songs.h"
 #include "constants/field_effects.h"
 #include "constants/trainers.h"
-
-void ScanlineEffect_Clear(void);
-
-extern const struct OamData gObjectEventBaseOam_32x32;
 
 struct TransitionData
 {
