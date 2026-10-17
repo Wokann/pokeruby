@@ -18,7 +18,7 @@
 static u8 sHoldState;
 static u16 sMosaicVal;
 static u16 sFadeCounter;
-static u8 sVarsInitialized;
+static bool8 sVarsInitialized;
 
 u16 (*gContestMonPixels)[][32];
 struct ImageProcessingContext gImageProcessingContext;
@@ -103,7 +103,7 @@ static const struct OamData sContestPaintingMonOamData =
 
 static const u16 sBgPalette[] = {RGB_BLACK, RGB_BLACK};
 
-static void ShowContestPainting();
+static void ShowContestPainting(void);
 static void CB2_HoldContestPainting(void);
 static void HoldContestPainting(void);
 static void InitContestPaintingWindow(bool8 isForArtist);
@@ -212,13 +212,13 @@ static void HoldContestPainting(void)
     }
 }
 
-static void InitContestPaintingWindow(u8 isForArtist)
+static void InitContestPaintingWindow(bool8 isForArtist)
 {
     InitMenuWindow(&gWindowTemplate_ContestPainting);
     Text_LoadWindowTemplate(&gWindowTemplate_ContestPainting);
 }
 
-static void PrintContestPaintingCaption(u8 contestType, u8 isForArtist)
+static void PrintContestPaintingCaption(u8 contestType, bool8 isForArtist)
 {
     u8 xPos, yPos;
     u8 *ptr;
@@ -314,7 +314,7 @@ static void VBlankCB_ContestPainting(void)
     TransferPlttBuffer();
 }
 
-static void InitContestMonPixels(u16 species, u8 backPic)
+static void InitContestMonPixels(u16 species, bool8 backPic)
 {
     const void *pal;
 
@@ -398,7 +398,7 @@ static void _InitContestMonPixels(u8 *spriteGfx, u16 *palette, u16 *destPixels)
     }
 }
 
-static void LoadContestPaintingFrame(u8 contestWinnerId, u8 isForArtist)
+static void LoadContestPaintingFrame(u8 contestWinnerId, bool8 isForArtist)
 {
     u8 x, y;
 
@@ -571,7 +571,7 @@ static void DoContestPaintingImageProcessing(u8 imageEffect)
     LoadPalette(gContestPaintingMonPalette, 256, 256 * 2);
 }
 
-static void CreateContestPaintingPicture(u8 contestWinnerId, u8 isForArtist)
+static void CreateContestPaintingPicture(u8 contestWinnerId, bool8 isForArtist)
 {
     AllocPaintingResources();
     InitContestMonPixels(gContestPaintingWinner->species, 0);
