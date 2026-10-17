@@ -9,13 +9,13 @@ struct Roulette /* ewram + 0x19000 */
     u8 unk0;
     u8 shroomishShadowTimer;
     u8 partySpeciesFlags;
-    u8 useTaillow:5;
-    u8 ballStuck:1;
-    u8 ballUnstuck:1;
-    u8 ballRolling:1;
+    bool8 useTaillow:5;
+    bool8 ballStuck:1;
+    bool8 ballUnstuck:1;
+    bool8 ballRolling:1;
     u8 tableId:2;
     u8 unused:5;
-    u8 isSpecialRate:1;
+    bool8 isSpecialRate:1;
     u32 hitFlags;
     u8 hitSquares[6];
     u8 pokeHits[4];

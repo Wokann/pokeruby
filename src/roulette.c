@@ -3,6 +3,7 @@
 #include "random.h"
 #include "graphics.h"
 #include "ewram.h"
+#include "event_data.h"
 #include "field_screen_effect.h"
 #include "constants/game_stat.h"
 #include "m4a.h"
@@ -39,52 +40,52 @@ void CB2_Roulette(void);
 void sub_8115124(void);
 void sub_8115238(void);
 void sub_8115384(void);
-void sub_8115634(u8);
-void sub_81156BC(u8);
-void sub_8115734(u8);
-void sub_811577C(u8);
-static void Task_StopPlaying(u8);
-static void UpdateGridSelectionRect(u8);
-void sub_8115928(u8, u8);
-static void Task_StartHandleBetGridInput(u8);
-static void Task_SelectFirstEmptySquare(u8);
-static u8 CanMoveSelectionInDir(s16 *, u8);
-void sub_8115B58(u8);
-static void Task_PlaceBet(u8);
-void sub_8115E14(u8);
-static void Task_SlideGridOffscreen(u8);
-static u8 GetRandomForBallTravelDistance(u16, u16);
-static void Task_InitBallRoll(u8);
-static void Task_RollBall(u8);
-static void Task_RecordBallHit(u8);
-static void Task_SlideGridOnscreen(u8);
-static void Task_FlashBallOnWinningSquare(u8);
-static void Task_TryIncrementWins(u8);
-void sub_8116638(u8);
-static void Task_GivePayout(u8);
-void sub_811677C(u8);
-static void Task_EndTurn(u8);
-void sub_8116880(u8);
-void dp01t_12_3_battle_menu(u8);
-void sub_8116AB0(u8);
-void sub_8116B40(u8);
-static void Task_WaitForNextTask(u8);
-static void StartTaskAfterDelayOrInput(u8, TaskFunc, u16, u16);
-static void ResetBallDataForNewSpin(u8);
+void sub_8115634(u8 taskId);
+void sub_81156BC(u8 taskId);
+void sub_8115734(u8 taskId);
+void sub_811577C(u8 taskId);
+static void Task_StopPlaying(u8 taskId);
+static void UpdateGridSelectionRect(u8 selectionId);
+void sub_8115928(u8 taskId, u8 r1);
+static void Task_StartHandleBetGridInput(u8 taskId);
+static void Task_SelectFirstEmptySquare(u8 taskId);
+static bool8 CanMoveSelectionInDir(s16 *selectionId, u8 dir);
+void sub_8115B58(u8 taskId);
+static void Task_PlaceBet(u8 taskId);
+void sub_8115E14(u8 taskId);
+static void Task_SlideGridOffscreen(u8 taskId);
+static u8 GetRandomForBallTravelDistance(u16 ballNum, u16 rand);
+static void Task_InitBallRoll(u8 taskId);
+static void Task_RollBall(u8 taskId);
+static void Task_RecordBallHit(u8 taskId);
+static void Task_SlideGridOnscreen(u8 taskId);
+static void Task_FlashBallOnWinningSquare(u8 taskId);
+static void Task_TryIncrementWins(u8 taskId);
+void sub_8116638(u8 taskId);
+static void Task_GivePayout(u8 taskId);
+void sub_811677C(u8 taskId);
+static void Task_EndTurn(u8 taskId);
+void sub_8116880(u8 taskId);
+void dp01t_12_3_battle_menu(u8 taskId);
+void sub_8116AB0(u8 taskId);
+void sub_8116B40(u8 taskId);
+static void Task_WaitForNextTask(u8 taskId);
+static void StartTaskAfterDelayOrInput(u8 taskId, TaskFunc task, u16 delay, u16 key);
+static void ResetBallDataForNewSpin(u8 taskId);
 static void ResetHits(void);
-static u8 RecordHit(u8, u8);
-static u8 IsHitInBetSelection(u8, u8);
-static void FlashSelectionOnWheel(u8);
-static void DrawGridBackground(u8);
-static u8 GetMultiplier(u8);
+static u8 RecordHit(u8 taskId, u8 slotId);
+static bool8 IsHitInBetSelection(u8 gridSquare, u8 betSelection);
+static void FlashSelectionOnWheel(u8 selectionId);
+static void DrawGridBackground(u8 selectionId);
+static u8 GetMultiplier(u8 selectionId);
 static void UpdateWheelPosition(void);
-void sub_81174F8(u8);
-static void Task_FadeToRouletteGame(u8);
-void sub_811755C(u8);
-void sub_81175C0(u8);
-void sub_81175DC(u8);
-void sub_8117630(u8);
-void Task_Roulette_0(u8);
+void sub_81174F8(u8 taskId);
+static void Task_FadeToRouletteGame(u8 taskId);
+void sub_811755C(u8 taskId);
+void sub_81175C0(u8 taskId);
+void sub_81175DC(u8 taskId);
+void sub_8117630(u8 taskId);
+void Task_Roulette_0(u8 taskId);
 
 static const u16 sWheel_Pal[] = INCBIN_U16("graphics/roulette/wheel.gbapal");
 static const u8 sGrid_Tilemap[] = INCBIN_U8("graphics/roulette/grid.bin.lz");
@@ -330,9 +331,6 @@ static const struct YesNoFuncTable sYesNoTable_KeepPlaying = {
 };
 
 extern u8 gUnknown_02019000[];
-extern u16 gSpecialVar_0x8004;
-extern u16 gPlttBufferFaded[];
-extern u16 gPlttBufferUnfaded[];
 extern const u16 gUnknown_083F8ECE;
 const extern u8 gUnknown_083F8ECA[];
 extern const u32 gUnknown_083F8ED8[];
@@ -653,7 +651,7 @@ static void Task_SelectFirstEmptySquare(u8 taskId)
     gTasks[taskId].func = Task_StartHandleBetGridInput;
 }
 
-static u8 CanMoveSelectionInDir(s16 *selectionId, u8 dir)
+static bool8 CanMoveSelectionInDir(s16 *selectionId, u8 dir)
 {
     s8 temp1 = 0;
     s8 temp = 0;
@@ -993,7 +991,7 @@ static void Task_RecordBallHit(u8 taskId)
         {
             if (!gTasks[taskId].data[1])
             {
-                u8 won = IsHitInBetSelection(RecordHit(taskId, eRoulette->hitSlot), eRoulette->betSelection[eRoulette->curBallNum]);
+                bool8 won = IsHitInBetSelection(RecordHit(taskId, eRoulette->hitSlot), eRoulette->betSelection[eRoulette->curBallNum]);
                 gTasks[taskId].data[5] = won;
                 if (won == 1)
                     RouletteFlash_Enable((&eRoulette->flashUtil), 0x1000);
@@ -1351,7 +1349,7 @@ static u8 RecordHit(u8 taskId, u8 slotId)
     }
 }
 
-static u8 IsHitInBetSelection(u8 gridSquare, u8 betSelection)
+static bool8 IsHitInBetSelection(u8 gridSquare, u8 betSelection)
 {
     u8 hit = gridSquare;
     if (--gridSquare < 19)
