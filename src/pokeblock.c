@@ -75,7 +75,7 @@ static void sub_810C31C(u8 taskId);
 static void sub_810C368(u8 taskId);
 
 // sub_810C0C8
-static void sub_810C1C8(u8, u8);
+static void sub_810C1C8(u8 taskId, u8 flag);
 static void sub_810C23C(u8 taskId);
 
 // sub_810C368
