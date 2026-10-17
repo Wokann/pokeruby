@@ -429,12 +429,6 @@ struct BattleAnimationInfo
     u16 ballSubpx;
 };
 
-struct UnusedControllerStruct
-{
-    u8 unk:7;
-    u8 flag:1;
-};
-
 #define GET_MOVE_TYPE(move, typeArg)                        \
 {                                                           \
     if (gBattleStruct->dynamicMoveType)                     \
@@ -473,7 +467,6 @@ extern struct SpecialStatus gSpecialStatuses[MAX_BATTLERS_COUNT];
 extern struct SideTimer gSideTimers[2];
 extern struct WishFutureKnock gWishFutureKnock;
 extern struct AI_ThinkingStruct gAIThinkingSpace;
-extern struct UnusedControllerStruct gUnusedControllerStruct;
 
 // used in many battle files, it seems as though Hisashi Sogabe wrote
 // some sort of macro to replace the use of actually calling memset.

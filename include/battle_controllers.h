@@ -105,6 +105,12 @@ enum {
 // Special return values in gBattleBufferB from Battle Controller functions.
 #define RET_VALUE_LEVELED_UP   11
 
+struct UnusedControllerStruct
+{
+    u8 unk:7;
+    u8 flag:1;
+};
+
 struct HpAndStatus
 {
     u16 hp;
@@ -193,6 +199,8 @@ enum
 
 struct DisableStruct;
 struct Sprite;
+
+extern struct UnusedControllerStruct gUnusedControllerStruct;
 
 // emitters
 void HandleLinkBattleSetup(void);
