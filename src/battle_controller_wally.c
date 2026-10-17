@@ -26,9 +26,6 @@
 #include "constants/songs.h"
 #include "constants/trainers.h"
 
-extern void (*gAnimScriptCallback)(void);
-extern u8 gBattlerInMenuId;
-extern u8 gBattleOutcome;
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 
 // this file's functions
