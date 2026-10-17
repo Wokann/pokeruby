@@ -266,16 +266,11 @@ static const u16 sLongStreakPrizes[] =
 static void ResetBattleTowerStreak(u8 levelType);
 static void ValidateBattleTowerRecordChecksums(void);
 static void CopyEReaderTrainerFarewellMessage(void);
-extern void SetBattleTowerTrainerGfxId(u8);
+extern void SetBattleTowerTrainerGfxId(u8 trainerId);
 static void SaveCurrentWinStreak(void);
 static void SetTowerInterviewData(void);
-static void CheckMonBattleTowerBanlist(u16, u16, u16, u8, u8, u16 *, u16 *, u8 *);
-static void ClearBattleTowerRecord(struct RSBattleTowerRecord *);
-
-extern u16 gSpecialVar_0x8004;
-extern u16 gTrainerBattleOpponent_A;
-extern u16 gBattleTypeFlags;
-extern u8 gBattleOutcome;
+static void CheckMonBattleTowerBanlist(u16 species, u16 heldItem, u16 hp, u8 battleTowerLevelType, u8 monLevel, u16 *validPartySpecies, u16 *validPartyHeldItems, u8 *numValid);
+static void ClearBattleTowerRecord(struct RSBattleTowerRecord *record);
 
 void sub_8134548(void)
 {
@@ -872,7 +867,7 @@ u32 CountBattleTowerBanlistCaught(void)
     return numCaught;
 }
 
-u8 AppendBattleTowerBannedSpeciesName(u16 species, u8 curIndexToAppend, s32 numToAppend)
+u8 AppendBattleTowerBannedSpeciesName(u16 species, u8 curIndexToAppend, s32 numBannedMonsCaught)
 {
     if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_CAUGHT))
     {
@@ -885,13 +880,13 @@ u8 AppendBattleTowerBannedSpeciesName(u16 species, u8 curIndexToAppend, s32 numT
         case 6:
         case 8:
         case 10:
-            if (numToAppend == curIndexToAppend)
+            if (numBannedMonsCaught == curIndexToAppend)
                 StringAppend(gStringVar1, gText_SpaceAndSpace);
-            else if (numToAppend > curIndexToAppend)
+            else if (numBannedMonsCaught > curIndexToAppend)
                 StringAppend(gStringVar1, gText_CommaSpace);
             break;
         case 1:
-            if (curIndexToAppend == numToAppend)
+            if (curIndexToAppend == numBannedMonsCaught)
                 StringAppend(gStringVar1, gText_SpaceAndSpace);
             else
                 StringAppend(gStringVar1, gText_CommaSpace);
@@ -902,7 +897,7 @@ u8 AppendBattleTowerBannedSpeciesName(u16 species, u8 curIndexToAppend, s32 numT
         case 7:
         case 9:
         default:
-            if (curIndexToAppend == numToAppend)
+            if (curIndexToAppend == numBannedMonsCaught)
                 StringAppend(gStringVar1, gText_SpaceAndSpace);
             else
                 StringAppend(gStringVar1, gText_CommaSpace);
@@ -963,7 +958,7 @@ void CheckPartyBattleTowerBanlist(void)
     u16 heldItem;
     u8 level;
     u16 hp;
-    u32 numBanlistCaught;
+    u32 caughtBannedMons;
     u16 validPartySpecies[6];
     u16 validPartyHeldItems[6];
     u8 counter;
@@ -986,10 +981,10 @@ void CheckPartyBattleTowerBanlist(void)
         gSpecialVar_0x8004 = 1;
         counter = 0;
 
-        numBanlistCaught = CountBattleTowerBanlistCaught();
+        caughtBannedMons = CountBattleTowerBanlistCaught();
 
         for (i = 0; gBattleTowerBannedSpecies[i] != 0xFFFF; i++)
-            counter = AppendBattleTowerBannedSpeciesName(gBattleTowerBannedSpecies[i], counter, numBanlistCaught);
+            counter = AppendBattleTowerBannedSpeciesName(gBattleTowerBannedSpecies[i], counter, caughtBannedMons);
 
         if (counter == 0)
         {
