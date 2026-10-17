@@ -3,6 +3,7 @@
 #include "data.h"
 #include "decompress.h"
 #include "event_data.h"
+#include "graphics.h"
 #include "hall_of_fame.h"
 #include "intro_credits_graphics.h"
 #include "m4a.h"
@@ -391,7 +392,6 @@ static const struct SpriteTemplate sSpriteTemplate_CreditsMonBg =
 
 // graphics
 extern u8 gCreditsCopyrightEnd_Gfx[];
-extern u16 gIntroCopyright_Pal[16];
 
 static void Task_WaitPaletteFade(u8 taskId);
 static void Task_CreditsMain(u8 taskId);

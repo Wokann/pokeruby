@@ -3570,4 +3570,7 @@ extern const u8 gPokenavConditionCancel_Gfx[];
 extern const u8 gUsePokeblockUpDown_Gfx[];
 extern const u16 gUsePokeblockUpDown_Pal[];
 
+extern const u8 gIntroCopyright_Gfx[];
+extern const u16 gIntroCopyright_Pal[16];
+
 #endif  // GUARD_GRAPHICS_H

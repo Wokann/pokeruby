@@ -23,8 +23,6 @@
 #include "scanline_effect.h"
 #include "ewram.h"
 
-extern const u8 gIntroCopyright_Gfx[];
-extern const u16 gIntroCopyright_Pal[];
 extern const u16 gIntroCopyright_Tilemap[];
 extern void *const gUnknown_0840B5A0[];
 
@@ -767,39 +765,39 @@ const struct SpritePalette gIntro3MiscPal_Table[] =
 u8 (*const ewram0arr)[32] = (u8 (*)[32])gSharedMem;
 
 static void MainCB2_EndIntro(void);
-static void Task_Scene1_Load(u8);
-static void Task_Scene1_FadeIn(u8);
-static void Task_Scene1_WaterDrops(u8);
-static void Task_Scene1_PanUp(u8);
-static void Task_Scene1_End(u8);
-static void Task_Scene2_Load(u8);
-static void Task_Scene2_CreateSprites(u8);
-static void Task_Scene2_BikeRide(u8);
-static void Task_Scene2_End(u8);
-static void Task_Scene3_Load(u8);
-static void Task_Scene3_SpinPokeball(u8);
+static void Task_Scene1_Load(u8 taskId);
+static void Task_Scene1_FadeIn(u8 taskId);
+static void Task_Scene1_WaterDrops(u8 taskId);
+static void Task_Scene1_PanUp(u8 taskId);
+static void Task_Scene1_End(u8 taskId);
+static void Task_Scene2_Load(u8 taskId);
+static void Task_Scene2_CreateSprites(u8 taskId);
+static void Task_Scene2_BikeRide(u8 taskId);
+static void Task_Scene2_End(u8 taskId);
+static void Task_Scene3_Load(u8 taskId);
+static void Task_Scene3_SpinPokeball(u8 taskId);
 static void Task_IntroWaitToSetupPart3DoubleFight(u8);
 static void Task_IntroLoadPart3Streaks(u8);
 static void task_intro_14(u8);
-static void Task_Scene3_NarrowWindow(u8);
-static void Task_Scene3_EndNarrowWindow(u8);
+static void Task_Scene3_NarrowWindow(u8 taskId);
+static void Task_Scene3_EndNarrowWindow(u8 taskId);
 static void task_intro_17(u8);
 static void Task_IntroPokemonBattle(u8);
-static void Task_EndIntroMovie(u8);
+static void Task_EndIntroMovie(u8 taskId);
 static void task_intro_20(u8);
 static void IntroResetGpuRegs(void);
 static void sub_813CCE8(u8);
 static u16 sub_813CE88(u16, s16, s16, u16, u8);
 static u8 sub_813CFA8(u16, u16, u16, u16);
 static void sub_813D084(u8);
-static void SpriteCB_WaterDrop_Slide(struct Sprite *);
-static void SpriteCB_WaterDrop_ReachLeafEnd(struct Sprite *);
-static void SpriteCB_WaterDrop_DangleFromLeaf(struct Sprite *);
-static void SpriteCB_WaterDrop_Fall(struct Sprite *);
-static u8 CreateWaterDrop(s16, s16, u16, u16, u16, u8);
-static void SpriteCB_PlayerOnBicycle(struct Sprite *);
+static void SpriteCB_WaterDrop_Slide(struct Sprite *sprite);
+static void SpriteCB_WaterDrop_ReachLeafEnd(struct Sprite *sprite);
+static void SpriteCB_WaterDrop_DangleFromLeaf(struct Sprite *sprite);
+static void SpriteCB_WaterDrop_Fall(struct Sprite *sprite);
+static u8 CreateWaterDrop(s16 x, s16 y, u16 c, u16 d, u16 e, u8 fallImmediately);
+static void SpriteCB_PlayerOnBicycle(struct Sprite *sprite);
 static void sub_813D880(struct Sprite *);
-static u8 CreateGameFreakLogoSprites(s16, s16, u8);
+static u8 CreateGameFreakLogoSprites(s16 x, s16 y, u8 c);
 static void sub_813DB9C(struct Sprite *);
 static void sub_813DE70(struct Sprite *);
 static void sub_813E10C(struct Sprite *);
