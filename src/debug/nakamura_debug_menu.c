@@ -1201,47 +1201,47 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
     u8 numNeutralFlavors = 0;
     u8 i;
     u8 numLowFlavors;
-    s16 pkblk[6];
+    s16 flavors[6];
 
     for (i = 0; i < 6; i++)
     {
-        pkblk[i] = GetPokeblockData(pokeblock, i + PBLOCK_SPICY);
+        flavors[i] = GetPokeblockData(pokeblock, i + PBLOCK_SPICY);
         if (i != PBLOCK_FEEL - 1)
         {
-            if (pkblk[i] > 0)
+            if (flavors[i] > 0)
                 numGoodFlavors++;
-            if (pkblk[i] < 0)
+            if (flavors[i] < 0)
                 numBadFlavors++;
-            if (pkblk[i] == 0)
+            if (flavors[i] == 0)
                 numNeutralFlavors++;
         }
     }
 
-    if (pkblk[0] >= 50)
+    if (flavors[0] >= 50)
     {
         StringCopy(dest, gText_GoldPokeblock);
         return PBLOCK_CLR_GOLD;
     }
 
-    if (pkblk[1] >= 50)
+    if (flavors[1] >= 50)
     {
         StringCopy(dest, gText_GoldPokeblock);
         return PBLOCK_CLR_GOLD;
     }
 
-    if (pkblk[2] >= 50)
+    if (flavors[2] >= 50)
     {
         StringCopy(dest, gText_GoldPokeblock);
         return PBLOCK_CLR_GOLD;
     }
 
-    if (pkblk[3] >= 50)
+    if (flavors[3] >= 50)
     {
         StringCopy(dest, gText_GoldPokeblock);
         return PBLOCK_CLR_GOLD;
     }
 
-    if (pkblk[4] >= 50)
+    if (flavors[4] >= 50)
     {
         StringCopy(dest, gText_GoldPokeblock);
         return PBLOCK_CLR_GOLD;
@@ -1256,7 +1256,7 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
     numLowFlavors = 0;
     for (i = 0; i < 5; i++)
     {
-        if (pkblk[i] == 2)
+        if (flavors[i] == 2)
             numLowFlavors++;
     }
     if (numLowFlavors == 3 || numNeutralFlavors == 5 || numBadFlavors == 4)
@@ -1277,7 +1277,7 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         u8 lastNonzeroFlavor = 0;
         for (i = 0; i < 5; i++)
         {
-            if (pkblk[i] != 0)
+            if (flavors[i] != 0)
             {
                 if (firstNonzeroFlavor == 6)
                     firstNonzeroFlavor = i;
@@ -1285,7 +1285,7 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
                     lastNonzeroFlavor = i;
             }
         }
-        if (pkblk[firstNonzeroFlavor] >= pkblk[lastNonzeroFlavor])
+        if (flavors[firstNonzeroFlavor] >= flavors[lastNonzeroFlavor])
             // Suspiciously looks like a temp could've been here.
             lastNonzeroFlavor = firstNonzeroFlavor;
 
@@ -1322,31 +1322,31 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
 
     if (numGoodFlavors == 1 || numBadFlavors == 1)
     {
-        if (pkblk[0] != 0)
+        if (flavors[0] != 0)
         {
             StringCopy(dest, gText_RedPokeblock);
             return PBLOCK_CLR_RED;
         }
 
-        if (pkblk[1] != 0)
+        if (flavors[1] != 0)
         {
             StringCopy(dest, gText_BluePokeblock);
             return PBLOCK_CLR_BLUE;
         }
 
-        if (pkblk[2] != 0)
+        if (flavors[2] != 0)
         {
             StringCopy(dest, gText_PinkPokeblock);
             return PBLOCK_CLR_PINK;
         }
 
-        if (pkblk[3] != 0)
+        if (flavors[3] != 0)
         {
             StringCopy(dest, gText_GreenPokeblock);
             return PBLOCK_CLR_GREEN;
         }
 
-        if (pkblk[4] != 0)
+        if (flavors[4] != 0)
         {
             StringCopy(dest, gText_YellowPokeblock);
             return PBLOCK_CLR_YELLOW;
