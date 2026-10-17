@@ -3,6 +3,7 @@
 #include "constants/abilities.h"
 #include "constants/battle_ai.h"
 #include "battle.h"
+#include "battle_setup.h"
 #include "battle_util.h"
 #include "battle_main.h"
 #include "constants/battle_move_effects.h"
@@ -16,14 +17,7 @@
 #include "util.h"
 #include "ewram.h"
 
-extern u8 gUnknown_02023A14_50;
 extern u32 gUnknown_02023A14_4C;
-extern u16 gBattleTypeFlags;
-extern u16 gBattlerPartyIndexes[MAX_BATTLERS_COUNT];
-extern int gBattleMoveDamage;
-extern u8 gBattlerAttacker;
-extern u8 gBattlerTarget;
-extern u16 gTrainerBattleOpponent_A;
 extern u8 *gBattleAI_ScriptsTable[];
 
 /*
