@@ -24,7 +24,6 @@
 #define TAG_UP_DOWN 0
 
 #ifdef GERMAN
-extern const u16 gUsePokeblockUpDown_Pal[16];
 extern const u8 gUsePokeblockUpDown_Gfx[0x200];
 #else
 const u16 gUsePokeblockUpDown_Pal[] = INCBIN_U16("graphics/pokeblock/use_screen/updown.gbapal");
@@ -108,7 +107,7 @@ EWRAM_DATA u8 gPokeblockMonId = 0;
 EWRAM_DATA s16 gPokeblockGain = 0;
 
 
-static void SetUsePokeblockCallback(void (*const)(void));
+static void SetUsePokeblockCallback(void (*const func)(void));
 static void CB2_ReturnToUsePokeblockMenu(void);
 static void CB2_ShowUsePokeblockMenuForResults(void);
 static void CB2_UsePokeblockMenu(void);
@@ -119,23 +118,23 @@ static void ShowUsePokeblockMenu(void);
 static void UsePokeblockMenu(void);
 static void ShowUsePokeblockMenuForResults(void);
 static void CloseUsePokeblockMenu(void);
-static u8 GetSelectionIdFromPartyId(u8);
+static u8 GetSelectionIdFromPartyId(u8 partyId);
 static void AskUsePokeblock(void);
 static s8 HandleAskUsePokeblockInput(void);
 static bool8 IsSheenMaxed(void);
 static void PrintWontEatAnymore(void);
 static void FeedPokeblockToMon(void);
 static void EraseMenuWindow(void);
-static u8 GetPartyIdFromSelectionId(u8);
+static u8 GetPartyIdFromSelectionId(u8 selectionId);
 static void ShowPokeblockResults(void);
 static void CalculateConditionEnhancements(void);
 static void LoadAndCreateUpDownSprites(void);
 static void PrintFirstEnhancement(void);
 static bool8 TryPrintNextEnhancement(void);
-static void BufferEnhancedText(u8 *, u8, s16);
-static void PrintMenuWindowText(const u8 *);
-static void CalculatePokeblockEffectiveness(struct Pokeblock *, struct Pokemon *);
-static void SpriteCB_UpDown(struct Sprite *);
+static void BufferEnhancedText(u8 *dest, u8 condition, s16 enhancement);
+static void PrintMenuWindowText(const u8 *message);
+static void CalculatePokeblockEffectiveness(struct Pokeblock *pokeblock, struct Pokemon *mon);
+static void SpriteCB_UpDown(struct Sprite *sprite);
 
 void ChooseMonToGivePokeblock(struct Pokeblock *pokeblock, MainCallback callback)
 {
