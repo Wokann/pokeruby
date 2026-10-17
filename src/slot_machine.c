@@ -48,10 +48,10 @@ struct SlotMachineEwramStruct
     /*0x00*/ u8 state;
     /*0x01*/ u8 machineId;
     /*0x02*/ u8 pikaPowerBolts;
-    /*0x03*/ u8 luckyGame;
+    /*0x03*/ bool8 luckyGame;
     /*0x04*/ u8 machineBias;
     /*0x05*/ u8 reelTimeDraw;
-    /*0x06*/ u8 didNotFailBias;
+    /*0x06*/ bool8 didNotFailBias;
     /*0x07*/ u8 biasSymbol;
     /*0x08*/ u16 matches;
     /*0x0A*/ u8 reelTimeSpinsLeft;
@@ -280,7 +280,7 @@ static void DigitalDisplay_Idle(struct Task *task);
 static void Task_DigitalDisplay(u8 taskId);
 static void CreateReelSymbolSprites(void);
 static void CreateCreditPayoutNumberSprites(void);
-static void CreateCoinNumberSprite(s16 x, s16 y, u8 isPayout, s16 digitMult);
+static void CreateCoinNumberSprite(s16 x, s16 y, bool8 isPayout, s16 digitMult);
 static void CreateReelBackgroundSprite(void);
 static void sub_8105100(void);
 static void sub_810514C(void);
@@ -3204,7 +3204,7 @@ static void CreateCreditPayoutNumberSprites(void)
 
 static const struct SpriteTemplate sSpriteTemplate_CoinNumber;
 
-static void CreateCoinNumberSprite(s16 x, s16 y, u8 isPayout, s16 digitMult)
+static void CreateCoinNumberSprite(s16 x, s16 y, bool8 isPayout, s16 digitMult)
 {
     struct Sprite *sprite = gSprites + CreateSprite(&sSpriteTemplate_CoinNumber, x, y, 13);
     sprite->oam.priority = 2;
