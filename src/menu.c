@@ -1,5 +1,6 @@
 #include "global.h"
 #include "menu.h"
+#include "start_menu.h"
 #include "main.h"
 #include "event_object_lock.h"
 #include "menu_cursor.h"
