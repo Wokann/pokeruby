@@ -3,6 +3,7 @@
 #include "event_object_lock.h"
 #include "event_object_movement.h"
 #include "field_player_avatar.h"
+#include "field_screen_effect.h"
 #include "script_movement.h"
 #include "task.h"
 #include "constants/event_objects.h"
