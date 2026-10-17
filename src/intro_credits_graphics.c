@@ -20,6 +20,7 @@
 #include "title_screen.h"
 #include "trig.h"
 #include "scanline_effect.h"
+#include "sprite.h"
 
 // define register constants for the inline asm
 asm(".include \"constants/gba_constants.inc\"\n");
@@ -306,7 +307,6 @@ EWRAM_DATA u16 gIntroCredits_MovingSceneryVBase = 0;
 EWRAM_DATA s16 gIntroCredits_MovingSceneryVOffset = 0;
 EWRAM_DATA s16 gIntroCredits_MovingSceneryState = 0;
 
-extern u8 gReservedSpritePaletteCount;
 
 static void CreateCloudSprites(void);
 static void CreateTreeSprites(void);
