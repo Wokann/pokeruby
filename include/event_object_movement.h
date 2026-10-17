@@ -419,7 +419,6 @@ u8 GetJump2MovementAction(u32);
 u8 GetJumpInPlaceMovementAction(u32);
 u8 GetJumpInPlaceTurnAroundMovementAction(u32);
 u8 GetJumpMovementAction(u32);
-u8 GetJumpSpecialMovementAction(u32);
 u8 GetWalkInPlaceSlowMovementAction(u32);
 u8 GetWalkInPlaceNormalMovementAction(u32);
 u8 GetWalkInPlaceFastMovementAction(u32);

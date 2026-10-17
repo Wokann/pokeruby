@@ -39,6 +39,7 @@ void CancelPlayerForcedMovement(void);
 void StopPlayerAvatar(void);
 u8 GetRivalAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender);
 u8 GetPlayerAvatarGraphicsIdByStateId(u8 state);
+u8 GetJumpSpecialMovementAction(u32);
 u8 GetPlayerAvatarGenderByGraphicsId(u8 gfxId);
 bool8 PartyHasMonWithSurf(void);
 bool8 IsPlayerSurfingNorth(void);
