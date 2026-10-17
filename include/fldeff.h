@@ -38,11 +38,13 @@ bool8 FldEff_UseTeleport(void);
 
 // dig
 bool8 SetUpFieldMove_Dig(void);
+int FldEff_UseDig(void);
 
 // rock smash
 bool8 CheckObjectGraphicsInFrontOfPlayer(u8 graphicsId);
 u8 CreateFieldMoveTask(void);
 bool8 SetUpFieldMove_RockSmash(void);
+int FldEff_UseRockSmash(void);
 
 // Ruby debug field moves
 void Debug_SetUpFieldMove_Cut(void);
