@@ -29,6 +29,10 @@ extern const struct OamData gObjectEventBaseOam_32x32;
 extern const struct SpriteTemplate *const gFieldEffectObjectTemplatePointers[];
 extern const u8 gReflectionEffectPaletteMap[];
 
+extern const u8 *const gBerryTreeObjectEventGraphicsIdTablePointers[];
+extern const struct SpriteFrameImage *const gBerryTreePicTablePointers[];
+extern const u8 *const gBerryTreePaletteSlotTablePointers[];
+
 #define movement_type_def(setup, table) \
 static u8 setup##_callback(struct ObjectEvent *, struct Sprite *);\
 void setup(struct Sprite *sprite)\

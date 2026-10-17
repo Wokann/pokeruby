@@ -3573,4 +3573,8 @@ extern const u16 gUsePokeblockUpDown_Pal[];
 extern const u8 gIntroCopyright_Gfx[];
 extern const u16 gIntroCopyright_Pal[16];
 
+// Object event pals
+extern const u16 gObjectEventPal_Brendan[];
+extern const u16 gObjectEventPal_May[];
+
 #endif  // GUARD_GRAPHICS_H

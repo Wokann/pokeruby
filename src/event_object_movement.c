@@ -7,6 +7,7 @@
 #include "field_effect_helpers.h"
 #include "field_player_avatar.h"
 #include "fieldmap.h"
+#include "graphics.h"
 #include "metatile_behavior.h"
 #include "overworld.h"
 #include "palette.h"
