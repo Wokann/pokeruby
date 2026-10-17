@@ -82,7 +82,6 @@ static const struct CompressedSpriteSheet sBallParticleSpriteSheets[] =
     {gBattleAnimSpriteGfx_Particles, 0x100, 0xD6F7},
 };
 
-extern const u8 gBattleAnimSpritePal_CircleImpact[];
 static const struct CompressedSpritePalette sBallParticlePalettes[] =
 {
     {gBattleAnimSpritePal_CircleImpact, 0xD6EC},
@@ -167,18 +166,18 @@ static const u8 sBallParticleAnimNums[] =
     4,
 };
 
-static void PokeBallOpenParticleAnimation(u8);
-static void GreatBallOpenParticleAnimation(u8);
-static void SafariBallOpenParticleAnimation(u8);
-static void UltraBallOpenParticleAnimation(u8);
-static void MasterBallOpenParticleAnimation(u8);
-static void SafariBallOpenParticleAnimation(u8);
-static void DiveBallOpenParticleAnimation(u8);
-static void UltraBallOpenParticleAnimation(u8);
-static void RepeatBallOpenParticleAnimation(u8);
-static void TimerBallOpenParticleAnimation(u8);
-static void GreatBallOpenParticleAnimation(u8);
-static void PremierBallOpenParticleAnimation(u8);
+static void PokeBallOpenParticleAnimation(u8 taskId);
+static void GreatBallOpenParticleAnimation(u8 taskId);
+static void SafariBallOpenParticleAnimation(u8 taskId);
+static void UltraBallOpenParticleAnimation(u8 taskId);
+static void MasterBallOpenParticleAnimation(u8 taskId);
+static void SafariBallOpenParticleAnimation(u8 taskId);
+static void DiveBallOpenParticleAnimation(u8 taskId);
+static void UltraBallOpenParticleAnimation(u8 taskId);
+static void RepeatBallOpenParticleAnimation(u8 taskId);
+static void TimerBallOpenParticleAnimation(u8 taskId);
+static void GreatBallOpenParticleAnimation(u8 taskId);
+static void PremierBallOpenParticleAnimation(u8 taskId);
 
 static const TaskFunc sBallParticleAnimationFuncs[] =
 {
