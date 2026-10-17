@@ -13,6 +13,7 @@
 #include "script.h"
 #include "event_scripts.h"
 #include "palette.h"
+#include "player_pc.h"
 #include "field_player_avatar.h"
 #include "field_camera.h"
 #include "field_screen_effect.h"
@@ -23,6 +24,7 @@
 #include "decoration.h"
 #include "decoration_inventory.h"
 #include "shop.h"
+#include "trader.h"
 #include "ewram.h"
 
 struct DecorationPCContext

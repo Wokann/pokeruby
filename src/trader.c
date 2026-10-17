@@ -13,6 +13,7 @@
 #include "string_util.h"
 #include "strings.h"
 #include "task.h"
+#include "trader.h"
 
 static const u8 * const sDefaultTraderNames[] =
 {

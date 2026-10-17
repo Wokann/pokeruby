@@ -89,10 +89,6 @@ extern u8 gUnknown_020388F7[];
 extern const struct YesNoFuncTable gUnknown_083EC634[];
 extern const u8 gUnknown_083EC65A[];
 
-extern void sub_8109DAC(u8); // src/trader
-extern void ReshowPlayerPC(u8); // src/player_pc
-void DoSecretBaseDecorationMenu(u8);
-
 void DoSecretBaseDecorationMenu(u8 taskId);
 void sub_80FE2B4(void);
 void Task_DecorationPCProcessMenuInput(u8);
@@ -139,7 +135,6 @@ void sub_8101518(u8);
 void sub_810156C(u8);
 void sub_8101678(void);
 void sub_8101824(u8);
-void sub_8109A30(u8);
 
 void sub_80FF160(u8);
 void sub_80FF5BC(u8);
@@ -147,7 +142,6 @@ void sub_80FF058(u8);
 void sub_8100A0C(u8);
 void sub_8101700(u8);
 void sub_81017A0(u8);
-void sub_8109D04(u8);
 
 void sub_80FED3C(u8);
 void sub_80FFB08(u8);
