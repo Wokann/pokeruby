@@ -8,8 +8,6 @@
 #include "trig.h"
 #include "sound.h"
 
-extern struct SoundInfo gSoundInfo;
-extern struct MusicPlayerInfo gMPlayInfo_BGM;
 
 struct PokedexCryMeterNeedle {
     s8 rotation;
@@ -37,7 +35,7 @@ static void DrawWaveformFlatline(void);
 static void AdvancePlayhead(u8 bgId);
 static void DrawWaveformSegment(u8 position, u8 amplitude);
 static void DrawWaveformWindow(void);
-static void ShiftWaveformOver(u8 bgId, s16 offset, u8 rsVertical);
+static void ShiftWaveformOver(u8 bgId, s16 offset, bool8 rsVertical);
 static void SpriteCB_CryMeterNeedle(struct Sprite * sprite);
 static void SetCryMeterNeedleTarget(s8 offset);
 
@@ -411,7 +409,7 @@ static void DrawWaveformWindow(void)
     DmaCopy16(3, sCryWaveformWindowTiledata, VRAM + sDexCryScreen->charBase, 0x1c00);
 }
 
-static void ShiftWaveformOver(u8 bgId, s16 offset, u8 rsVertical)
+static void ShiftWaveformOver(u8 bgId, s16 offset, bool8 rsVertical)
 {
     switch (bgId)
     {
