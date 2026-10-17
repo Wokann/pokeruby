@@ -25,7 +25,7 @@
 #include "script.h"
 #include "sound.h"
 #include "string_util.h"
-#include "strings2.h"
+#include "strings.h"
 #include "text.h"
 #include "trig.h"
 #include "tv.h"

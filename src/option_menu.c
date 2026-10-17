@@ -6,7 +6,7 @@
 #include "scanline_effect.h"
 #include "sprite.h"
 #include "string_util.h"
-#include "strings2.h"
+#include "strings.h"
 #include "task.h"
 #include "gba/m4a_internal.h"
 

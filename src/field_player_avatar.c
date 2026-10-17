@@ -16,7 +16,7 @@
 #include "rotating_gate.h"
 #include "script.h"
 #include "sound.h"
-#include "strings2.h"
+#include "strings.h"
 #include "task.h"
 #include "tv.h"
 #include "wild_encounter.h"

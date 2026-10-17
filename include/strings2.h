@@ -4,42 +4,6 @@
 // ???
 extern const u8 gOtherText_TopSpeed[];
 
-// berry_blender
-extern const u8 gText_SavingDontTurnOff2[];
-
-// link
-extern const u8 gText_CommErrorCheckConnections[];
-
-// option_menu
-extern const u8 gText_Option[];
-extern const u8 gText_TextSpeed[];
-extern const u8 gText_BattleScene[];
-extern const u8 gText_BattleStyle[];
-extern const u8 gText_Sound[];
-extern const u8 gText_Frame[];
-extern const u8 gText_OptionMenuCancel[];
-extern const u8 gText_ButtonMode[];
-extern const u8 gText_TextSpeedSlow[];
-extern const u8 gText_TextSpeedMid[];
-extern const u8 gText_TextSpeedFast[];
-extern const u8 gText_BattleSceneOn[];
-extern const u8 gText_BattleSceneOff[];
-extern const u8 gText_BattleStyleShift[];
-extern const u8 gText_BattleStyleSet[];
-extern const u8 gText_SoundMono[];
-extern const u8 gText_SoundStereo[];
-extern const u8 gText_FrameType[];
-extern const u8 gText_FrameTypeNumber[];
-extern const u8 gText_ButtonTypeNormal[];
-extern const u8 gText_ButtonTypeLR[];
-extern const u8 gText_ButtonTypeLEqualsA[];
-
-// field_player_avatar
-extern const u8 gText_OhABite[];
-extern const u8 gText_PokemonOnHook[];
-extern const u8 gText_NotEvenANibble[];
-extern const u8 gText_ItGotAway[];
-
 // trade
 extern const u8 sText_Cancel[];
 extern const u8 sText_ChooseAPkmn[];
@@ -58,30 +22,6 @@ extern const u8 sText_YourFriendWantsToTrade[];
 extern const u8 sText_IsThisTradeOkay[];
 extern const u8 gOtherText_Terminator2[];
 extern const u8 sText_FourQuestionMarks[];
-
-// easy_chat
-extern const u8 gEasyChatGroupName_Pokemon[];
-extern const u8 gEasyChatGroupName_Trainer[];
-extern const u8 gEasyChatGroupName_Status[];
-extern const u8 gEasyChatGroupName_Battle[];
-extern const u8 gEasyChatGroupName_Greetings[];
-extern const u8 gEasyChatGroupName_People[];
-extern const u8 gEasyChatGroupName_Voices[];
-extern const u8 gEasyChatGroupName_Speech[];
-extern const u8 gEasyChatGroupName_Endings[];
-extern const u8 gEasyChatGroupName_Feelings[];
-extern const u8 gEasyChatGroupName_Conditions[];
-extern const u8 gEasyChatGroupName_Actions[];
-extern const u8 gEasyChatGroupName_Lifestyle[];
-extern const u8 gEasyChatGroupName_Hobbies[];
-extern const u8 gEasyChatGroupName_Time[];
-extern const u8 gEasyChatGroupName_Misc[];
-extern const u8 gEasyChatGroupName_Adjectives[];
-extern const u8 gEasyChatGroupName_Events[];
-extern const u8 gEasyChatGroupName_Move1[];
-extern const u8 gEasyChatGroupName_Move2[];
-extern const u8 gEasyChatGroupName_TrendySaying[];
-extern const u8 gEasyChatGroupName_Pokemon2[];
 
 // trainer_card
 extern const u8 gOtherText_TrainersTrainerCard[];
@@ -110,14 +50,6 @@ extern const u8 gEggNickname[];
 
 // ???
 extern const u8 gText_MoveRelearnerType[];
-extern const u8 gText_MoveRelearnerPP[];
-
-// contest_link_80C2020
-extern const u8 gText_AnnouncingResults[];
-extern const u8 gText_PreliminaryResults[];
-extern const u8 gText_Round2Results[];
-extern const u8 gText_ContestantsMonWon[];
-extern const u8 gText_CommunicationStandby[];
 
 // landmark
 extern const u8 LandmarkName_FlowerShop[];
@@ -167,10 +99,6 @@ extern const u8 gOtherText_Egg2[];
 extern const u8 gOtherText_ObtainedInTrade[];
 extern const u8 gOtherText_FatefulEncounter[];
 extern const u8 gOtherText_Met2[];
-extern const u8 gText_OddEggFoundByCouple[];
-extern const u8 gText_PeculiarEggNicePlace[];
-extern const u8 gText_PeculiarEggTrade[];
-extern const u8 gText_EggFromHotSprings[];
 
 // diploma
 extern const u8 gText_DexHoenn[];

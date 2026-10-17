@@ -15,7 +15,6 @@
 #include "sprite.h"
 #include "string_util.h"
 #include "strings.h"
-#include "strings2.h"
 #include "trig.h"
 #include "scanline_effect.h"
 

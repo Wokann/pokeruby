@@ -17,7 +17,7 @@
 #include "sound.h"
 #include "sprite.h"
 #include "string_util.h"
-#include "strings2.h"
+#include "strings.h"
 #include "task.h"
 #include "text.h"
 #include "ewram.h"
