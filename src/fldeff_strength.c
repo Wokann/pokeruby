@@ -1,7 +1,9 @@
 #include "global.h"
 #include "braille_puzzles.h"
+#include "event_data.h"
 #include "event_scripts.h"
 #include "field_effect.h"
+#include "overworld.h"
 #include "party_menu.h"
 #include "pokemon.h"
 #include "pokemon_menu.h"
@@ -16,10 +18,6 @@
 static void FieldCallback_Strength(void);
 static void sub_811AA38(void);
 static void sub_811AA9C(void);
-
-extern u8 gLastFieldPokeMenuOpened;
-extern u16 gSpecialVar_Result;
-extern void (*gFieldCallback)(void);
 
 #if DEBUG
 void debug_sub_8130318(void)
