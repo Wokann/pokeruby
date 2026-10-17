@@ -10,6 +10,7 @@
 #include "menu.h"
 #include "menu_helpers.h"
 #include "palette.h"
+#include "pokemon_menu.h"
 #include "script.h"
 #include "sound.h"
 #include "string_util.h"
@@ -66,8 +67,6 @@ enum
     PC_QUANTITY
 };
 
-extern void CB2_ShowPartyMenuForItemUse(void);
-
 static EWRAM_DATA const u8 *sTopMenuOptionOrder = NULL;
 
 static u8 sTopMenuNumOptions;
@@ -78,61 +77,59 @@ extern u8 gPokemonItemUseType;
 extern u8 LittlerootTown_BrendansHouse_2F_EventScript_TurnOffPlayerPC[];
 extern u8 LittlerootTown_MaysHouse_2F_EventScript_TurnOffPlayerPC[];
 
-extern void (*gFieldCallback)(void);
-
 static void InitPlayerPCMenu(u8 taskId);
 static void PlayerPCProcessMenuInput(u8 taskId);
-static void InitItemStorageMenu(u8);
-static void ItemStorageMenuPrint(const u8 *);
-static void ItemStorageMenuProcessInput(u8);
-static void ItemStorage_ProcessInput(u8);
-static void SetPlayerPCListCount(u8);
-static void ItemStorage_DoItemAction(u8);
-static void ItemStorage_ExitItemList(u8);
-static void ItemStorage_HandleQuantityRolling(u8);
-static void ItemStorage_DoItemWithdraw(u8);
-static void ItemStorage_DoItemToss(u8);
-static void ItemStorage_HandleRemoveItem(u8);
-static void ItemStorage_HandleErrorMessageInput(u8);
-static void ItemStorage_ReturnToListInput(u8);
-static void ItemStorage_FinishItemSwap(u8, bool8);
+static void InitItemStorageMenu(u8 var);
+static void ItemStorageMenuPrint(const u8 *textPtr);
+static void ItemStorageMenuProcessInput(u8 taskId);
+static void ItemStorage_ProcessInput(u8 taskId);
+static void SetPlayerPCListCount(u8 taskId);
+static void ItemStorage_DoItemAction(u8 taskId);
+static void ItemStorage_ExitItemList(u8 taskId);
+static void ItemStorage_HandleQuantityRolling(u8 taskId);
+static void ItemStorage_DoItemWithdraw(u8 taskId);
+static void ItemStorage_DoItemToss(u8 taskId);
+static void ItemStorage_HandleRemoveItem(u8 taskId);
+static void ItemStorage_HandleErrorMessageInput(u8 taskId);
+static void ItemStorage_ReturnToListInput(u8 taskId);
+static void ItemStorage_FinishItemSwap(u8 taskId, bool8 canceled);
 static void ItemStorage_DrawItemList(u8);
 static void ItemStorage_PrintItemPcResponse(u16);
 static void ItemStorage_DrawBothListAndDescription(u8);
-static void ItemStorage_CreateListMenu(u8, u8);
+static void ItemStorage_CreateListMenu(u8 taskId, u8 var);
 static void ItemStorage_LoadPalette(void);
 static u8 GetMailboxMailCount(void);
 static void Mailbox_CompactMailList(void);
-static void Mailbox_DrawMailboxMenu(u8);
-static void Mailbox_ProcessInput(u8);
+static void Mailbox_DrawMailboxMenu(u8 taskId);
+static void Mailbox_ProcessInput(u8 taskId);
 static void Mailbox_CloseScrollIndicators(void);
-static void Mailbox_PrintWhatToDoWithPlayerMailText(u8);
+static void Mailbox_PrintWhatToDoWithPlayerMailText(u8 taskId);
 static void Mailbox_TurnOff(u8);
-static void Mailbox_PrintMailOptions(u8);
-static void Mailbox_MailOptionsProcessInput(u8);
-static void Mailbox_FadeAndReadMail(u8);
+static void Mailbox_PrintMailOptions(u8 taskId);
+static void Mailbox_MailOptionsProcessInput(u8 taskId);
+static void Mailbox_FadeAndReadMail(u8 taskId);
 static void Mailbox_ReturnToFieldFromReadMail(void);
-static void Mailbox_AskConfirmMoveToBag(u8);
-static void Mailbox_DoGiveMailPokeMenu(u8);
-static void Mailbox_NoPokemonForMail(u8);
-static void Mailbox_Cancel(u8);
+static void Mailbox_AskConfirmMoveToBag(u8 taskId);
+static void Mailbox_DoGiveMailPokeMenu(u8 taskId);
+static void Mailbox_NoPokemonForMail(u8 taskId);
+static void Mailbox_Cancel(u8 taskId);
 static void Mailbox_DrawMailMenuAndDoProcessInput(u8);
 static void PlayerPC_ItemStorage(u8 taskId);
 static void PlayerPC_Mailbox(u8 taskId);
 static void PlayerPC_Decoration(u8 taskId);
 static void PlayerPC_TurnOff(u8 taskId);
-static void ItemStorage_Withdraw(u8);
-static void ItemStorage_Deposit(u8);
-static void ItemStorage_Toss(u8);
-static void ItemStorage_Exit(u8);
-static void ItemStorage_TossItemYes(u8);
-static void ItemStorage_TossItemNo(u8);
-static void Mailbox_DoMailMoveToBag(u8);
-static void Mailbox_CancelMoveToBag(u8);
-static void Mailbox_DoMailRead(u8);
-static void Mailbox_MoveToBag(u8);
-static void Mailbox_Give(u8);
-static void Mailbox_Cancel(u8);
+static void ItemStorage_Withdraw(u8 taskId);
+static void ItemStorage_Deposit(u8 taskId);
+static void ItemStorage_Toss(u8 taskId);
+static void ItemStorage_Exit(u8 taskId);
+static void ItemStorage_TossItemYes(u8 taskId);
+static void ItemStorage_TossItemNo(u8 taskId);
+static void Mailbox_DoMailMoveToBag(u8 taskId);
+static void Mailbox_CancelMoveToBag(u8 taskId);
+static void Mailbox_DoMailRead(u8 taskId);
+static void Mailbox_MoveToBag(u8 taskId);
+static void Mailbox_Give(u8 taskId);
+static void Mailbox_Cancel(u8 taskId);
 
 static const u8 *const sItemStorage_OptionDescriptions[] =
 {
