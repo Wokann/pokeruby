@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/trainers.h"
 #include "battle_ai_script_commands.h"
 #include "constants/abilities.h"
 #include "constants/battle_ai.h"
@@ -16,7 +17,6 @@
 #include "constants/species.h"
 #include "util.h"
 #include "ewram.h"
-
 extern u32 gUnknown_02023A14_4C;
 extern const u8 *const gBattleAI_ScriptsTable[];
 

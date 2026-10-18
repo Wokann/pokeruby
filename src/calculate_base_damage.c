@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/trainers.h"
 #include "constants/abilities.h"
 #include "constants/battle_move_effects.h"
 #include "constants/hold_effects.h"
@@ -15,7 +16,6 @@
 #include "item.h"
 #include "pokemon.h"
 #include "ewram.h"
-
 // Masks for getting PP Up count, also PP Max values
 const u8 gPPUpGetMask[] = {0x03, 0x0c, 0x30, 0xc0};
 

@@ -1,5 +1,6 @@
 #if DEBUG
 #include "global.h"
+#include "constants/trainers.h"
 #include "constants/rgb.h"
 #include "decompress.h"
 #include "ewram.h"
@@ -39,7 +40,6 @@ struct WatanabeDebugMenuItemSubstruct {
     u8 random;
     u8 unk9;
 };
-
 struct WatanabeDebugMenuItem {
     const u8 * text;
     union {

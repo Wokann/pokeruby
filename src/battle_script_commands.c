@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/trainers.h"
 #include "constants/rgb.h"
 #include "battle_scripts.h"
 #include "pokedex.h"
@@ -60,7 +61,6 @@ extern u16 gExpShareExp;
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern u8 gPlayerPartyCount;
 extern u16 gMoveToLearn; //move to learn
-
 extern u8* gBattleScriptsForMoveEffects[];
 extern u8 gBattlerInMenuId;
 

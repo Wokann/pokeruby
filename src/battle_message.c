@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/trainers.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_message.h"
@@ -17,7 +18,6 @@
 #include "constants/flags.h"
 #include "ewram.h"
 #include "constants/battle_string_ids.h"
-
 #define BATTLESTRINGS_NO    351
 #define BATTLESTRINGS_MAX   BATTLESTRINGS_NO + BATTLESTRINGS_TABLE_START
 

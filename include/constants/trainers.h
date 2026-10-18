@@ -1,6 +1,8 @@
 #ifndef GUARD_TRAINERS_H
 #define GUARD_TRAINERS_H
 
+#define TRAINER_SECRET_BASE 0x400
+
 #define TRAINER_ENCOUNTER_MUSIC_MALE         0 // standard male encounter music
 #define TRAINER_ENCOUNTER_MUSIC_FEMALE       1 // standard female encounter music
 #define TRAINER_ENCOUNTER_MUSIC_GIRL         2 // used for male Tubers and Young Couples too

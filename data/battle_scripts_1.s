@@ -5,6 +5,7 @@
 #include "constants/moves.h"
 #include "constants/songs.h"
 #include "constants/pokemon.h"
+#include "constants/trainers.h"
 	.include "asm/macros.inc"
 	.include "asm/macros/battle_script.inc"
 	.include "constants/constants.inc"
