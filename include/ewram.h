@@ -22,7 +22,6 @@ extern u8 gSharedMem[];
 // This overlaps with so many things it's not even funny
 // The actual data starts at 0x02014000
 #define eMultiTxBuffer                  (*(union MultiBuffers *)gSharedMem)
-#define gBattleStruct                   ((struct BattleStruct *)     (gSharedMem + 0x0))
 // This macro ensures that any changes to the battle struct
 // definition will not horribly break things in battle.
 #define BSTRUCT_OFF(member)             (offsetof(struct BattleStruct, member) + ((u8 *)gBattleStruct - gSharedMem))

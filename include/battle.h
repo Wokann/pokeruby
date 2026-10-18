@@ -377,6 +377,8 @@ struct BattleStruct /* 0x2000000 */
     /*0x16113*/ u8 givenExpMons;
 };
 
+#define gBattleStruct                   ((struct BattleStruct *)     (gSharedMem + 0x0))
+
 struct ResourceFlags
 {
     u32 flags[4];
