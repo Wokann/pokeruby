@@ -292,10 +292,6 @@
 #define B_WAIT_TIME_MED   48
 #define B_WAIT_TIME_SHORT 32
 
-#define AI_ACTION_DONE          0x0001
-#define AI_ACTION_FLEE          0x0002
-#define AI_ACTION_WATCH         0x0004
-#define AI_ACTION_DO_NOT_ATTACK 0x0008
 #define AI_ACTION_UNK5          0x0010
 #define AI_ACTION_UNK6          0x0020
 #define AI_ACTION_UNK7          0x0040

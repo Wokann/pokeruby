@@ -35,8 +35,6 @@
 #define B_ACTION_NOTHING_FAINTED        13 // when choosing an action
 #define B_ACTION_NONE                   0xFF
 
-#define MAX_TRAINER_ITEMS 4
-
 #define MOVE_TARGET_SELECTED            0x0
 #define MOVE_TARGET_DEPENDS             0x1
 #define MOVE_TARGET_USER_OR_SELECTED    0x2

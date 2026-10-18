@@ -1,6 +1,8 @@
 #ifndef GUARD_DATA_H
 #define GUARD_DATA_H
 
+#define MAX_TRAINER_ITEMS 4
+
 #include "sprite.h"
 #include "battle.h"
 

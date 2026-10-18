@@ -17,6 +17,14 @@
 #include "constants/species.h"
 #include "util.h"
 #include "ewram.h"
+
+#define AI_ACTION_DONE          0x0001
+#define AI_ACTION_FLEE          0x0002
+#define AI_ACTION_WATCH         0x0004
+#define AI_ACTION_DO_NOT_ATTACK 0x0008
+
+#define AI_THINKING_STRUCT                ((struct AI_ThinkingStruct *)(gSharedMem + 0x16800))
+
 extern u32 gUnknown_02023A14_4C;
 extern const u8 *const gBattleAI_ScriptsTable[];
 
