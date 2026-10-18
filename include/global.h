@@ -445,6 +445,7 @@ struct ExternalEventFlags
 // there should be enough flags for all 412 slots
 // each slot takes up 8 flags
 // if the value is not divisible by 8, we need to account for the reminder as well
+#define NUM_FLAG_BYTES 288
 #define NUM_DEX_FLAG_BYTES ((NUM_SPECIES / 8) + ((NUM_SPECIES % 8) ? 1 : 0))
 
 struct SaveBlock1 /* 0x02025734 */
@@ -480,7 +481,7 @@ struct SaveBlock1 /* 0x02025734 */
     /*0x97A*/ u8 trainerRematches[MAX_REMATCH_ENTRIES];
     /*0x9E0*/ struct ObjectEvent objectEvents[OBJECT_EVENTS_COUNT];
     /*0xC20*/ struct ObjectEventTemplate objectEventTemplates[OBJECT_EVENT_TEMPLATES_COUNT];
-    /*0x1220*/ u8 flags[FLAGS_COUNT];
+    /*0x1220*/ u8 flags[NUM_FLAG_BYTES];
     /*0x1340*/ u16 vars[VARS_COUNT];
     /*0x1540*/ u32 gameStats[NUM_GAME_STATS];
     /*0x1608*/ struct BerryTree berryTrees[BERRY_TREES_COUNT];
