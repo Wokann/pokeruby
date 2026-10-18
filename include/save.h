@@ -42,6 +42,8 @@ struct SaveSector
     u32 counter;
 }; // size is 0x1000
 
+#define gSaveDataBuffer                 (struct SaveSector *)(gSharedMem + 0x0)
+
 extern u16 gLastWrittenSector;
 extern u32 gLastSaveCounter;
 extern u16 gLastKnownGoodSector;
