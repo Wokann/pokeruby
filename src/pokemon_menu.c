@@ -176,7 +176,7 @@ static const struct PokeMenuFieldMoveFunc sFieldMoveCursorCallbacks[] =
 void CB2_PartyMenuFromStartMenu(void)
 {
     gPaletteFade.bufferTransferDisabled = 1;
-    OpenPartyMenu(PARTY_MENU_TYPE_STANDARD, 0);
+    OpenPartyMenu(PARTY_MENU_TYPE_FIELD, 0);
 }
 
 static void SetPartyMonFieldSelectionActions(void)
@@ -332,7 +332,7 @@ static void sub_8089EBC(void)
 static void CB2_ReturnToPartyMenuFromSummaryScreen(void)
 {
     gPaletteFade.bufferTransferDisabled = 1;
-    SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0xFF, Task_HandleSelectionMenuInput, 5);
+    SetPartyMenuSettings(PARTY_MENU_TYPE_FIELD, 0xFF, Task_HandleSelectionMenuInput, 5);
     SetMainCallback2(sub_8089EBC);
 }
 
@@ -518,12 +518,12 @@ void sub_808A3F8(void)
     gPaletteFade.bufferTransferDisabled = 1;
     if (gSpecialVar_ItemId)
     {
-        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0xFF, sub_808A2AC, 0xFF);
+        SetPartyMenuSettings(PARTY_MENU_TYPE_FIELD, 0xFF, sub_808A2AC, 0xFF);
         SetMainCallback2(sub_808A358);
     }
     else
     {
-        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0xFF, Task_HandleSelectionMenuInput, 5);
+        SetPartyMenuSettings(PARTY_MENU_TYPE_FIELD, 0xFF, Task_HandleSelectionMenuInput, 5);
         SetMainCallback2(sub_808A3A4);
     }
 }
@@ -554,10 +554,10 @@ static void CB2_ReturnToPartyMenuFromWritingMail(void)
         AddBagItem(GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_HELD_ITEM), 1);
         TakeMailFromMon(&gPlayerParty[gLastFieldPokeMenuOpened]);
         SetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_HELD_ITEM, (void*) &gUnknown_0202E8F8);
-        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0xFF, HandleDefaultPartyMenu, 0);
+        SetPartyMenuSettings(PARTY_MENU_TYPE_FIELD, 0xFF, HandleDefaultPartyMenu, 0);
     }
     else
-        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0xFF, Task_DisplayGaveMailFromPartyMessage, 0xFF);
+        SetPartyMenuSettings(PARTY_MENU_TYPE_FIELD, 0xFF, Task_DisplayGaveMailFromPartyMessage, 0xFF);
     SetMainCallback2(sub_808A4D4);
 }
 
@@ -856,7 +856,7 @@ static void sub_808AD0C(void)
 void CB2_ReturnToPartyMenuFromFlyMap(void)
 {
     gPaletteFade.bufferTransferDisabled = 1;
-    SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0xFF, HandleDefaultPartyMenu, 0);
+    SetPartyMenuSettings(PARTY_MENU_TYPE_FIELD, 0xFF, HandleDefaultPartyMenu, 0);
     SetMainCallback2(sub_808AD0C);
 }
 
@@ -996,16 +996,16 @@ void CB2_ShowPartyMenuForItemUse(void)
     {
     case ITEM_USE_SINGLE_MON:
         if (CheckIfItemIsTMHMOrEvolutionStone(gSpecialVar_ItemId) == 1)
-            SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, sub_808B0C0, 20);
+            SetPartyMenuSettings(PARTY_MENU_TYPE_FIELD, 0, sub_808B0C0, 20);
         else
-            SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, sub_808B0C0, 3);
+            SetPartyMenuSettings(PARTY_MENU_TYPE_FIELD, 0, sub_808B0C0, 3);
         break;
     case ITEM_USE_ALL_MONS:
-        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, sub_808B1EC, 0xFF);
+        SetPartyMenuSettings(PARTY_MENU_TYPE_FIELD, 0, sub_808B1EC, 0xFF);
         break;
     case ITEM_USE_GIVE_ITEM:
     case ITEM_USE_GIVE_MAIL:
-        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, sub_808B0C0, 4);
+        SetPartyMenuSettings(PARTY_MENU_TYPE_FIELD, 0, sub_808B0C0, 4);
         break;
     }
     SetMainCallback2(sub_808AF80);
@@ -1145,7 +1145,7 @@ static void CB2_ReturnToPartyOrBagMenuFromWritingMail(void)
     }
     else
     {
-        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, Task_DisplayGaveMailFromBagMessage, 0xFF);
+        SetPartyMenuSettings(PARTY_MENU_TYPE_FIELD, 0, Task_DisplayGaveMailFromBagMessage, 0xFF);
         callback = sub_808B3A0;
     }
     SetMainCallback2(callback);
@@ -1191,9 +1191,9 @@ void CB2_ReturnToPartyMenuWhileLearningMove(void)
 {
     gPaletteFade.bufferTransferDisabled = 1;
     if (GetMoveSlotToReplace() != 4)
-        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, TaughtMove, 0xFF);
+        SetPartyMenuSettings(PARTY_MENU_TYPE_FIELD, 0, TaughtMove, 0xFF);
     else
-        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, StopTryingToTeachMove_806F588, 0xFF);
+        SetPartyMenuSettings(PARTY_MENU_TYPE_FIELD, 0, StopTryingToTeachMove_806F588, 0xFF);
     SetMainCallback2(sub_808B518);
 }
 

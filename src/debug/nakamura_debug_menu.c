@@ -124,7 +124,7 @@ static void Task_SwitchToPkmnListMenu(u8 taskId)
     if (!gPaletteFade.active)
     {
         Debug_CopyLastThreePartyMonsToMultiPartnerParty();
-        OpenPartyMenu(PARTY_MENU_TYPE_LINK_MULTI_BATTLE, 0);
+        OpenPartyMenu(PARTY_MENU_TYPE_MULTI_SHOWCASE, 0);
         DestroyTask(taskId);
     }
 }

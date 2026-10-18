@@ -316,7 +316,7 @@ void OpenPartyMenuInBattle(u8 partyAction)
     gUnknown_02038473 = partyAction;
     ReshowBattleScreenDummy();
     UpdatePartyToBattleOrder();
-    OpenPartyMenu(PARTY_MENU_TYPE_BATTLE, 0xFF);
+    OpenPartyMenu(PARTY_MENU_TYPE_IN_BATTLE, 0xFF);
 }
 
 void ChooseMonForInBattleItem(void)
@@ -536,7 +536,7 @@ static void Task_8095330(u8 taskId)
 static void Task_809535C(void)
 {
     gPaletteFade.bufferTransferDisabled = TRUE;
-    SetPartyMenuSettings(PARTY_MENU_TYPE_BATTLE, 0xFF, HandleBattlePartyMenu, 5);
+    SetPartyMenuSettings(PARTY_MENU_TYPE_IN_BATTLE, 0xFF, HandleBattlePartyMenu, 5);
     SetMainCallback2(Task_809538C);
 }
 

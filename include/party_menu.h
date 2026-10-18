@@ -8,38 +8,6 @@
 
 struct MultiPartnerMenuPokemon;
 
-
-enum
-{
-    PARTY_MENU_TYPE_STANDARD,
-    PARTY_MENU_TYPE_BATTLE,
-    PARTY_MENU_TYPE_CONTEST,
-    PARTY_MENU_TYPE_CHOOSE_MON,
-    PARTY_MENU_TYPE_BATTLE_TOWER,
-    PARTY_MENU_TYPE_LINK_MULTI_BATTLE,
-    PARTY_MENU_TYPE_DAYCARE,
-    PARTY_MENU_TYPE_MOVE_RELEARNER,
-};
-
-enum
-{
-    PARTY_CHOOSE_MON,
-    PARTY_MUST_CHOOSE_MON,
-    PARTY_CANT_SWITCH,
-    PARTY_USE_ITEM_ON,
-    PARTY_ABILITY_PREVENTS,
-    PARTY_GIVE_ITEM,
-};
-
-// The party menu screen is presented differently depending on which menu layout is set.
-enum
-{
-    PARTY_MENU_LAYOUT_STANDARD,
-    PARTY_MENU_LAYOUT_DOUBLE_BATTLE,
-    PARTY_MENU_LAYOUT_LINK_DOUBLE_BATTLE,
-    PARTY_MENU_LAYOUT_MULTI_BATTLE,
-};
-
 struct PartyPopupMenu
 {
     /*0x0*/u8 numChoices; // number of menu choices

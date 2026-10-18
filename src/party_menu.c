@@ -301,8 +301,8 @@ bool8 InitPartyMenu(void)
         gMain.state++;
         break;
     case 4:
-        if (ePartyMenu2.menuType != PARTY_MENU_TYPE_BATTLE &&
-            ePartyMenu2.menuType != PARTY_MENU_TYPE_LINK_MULTI_BATTLE)
+        if (ePartyMenu2.menuType != PARTY_MENU_TYPE_IN_BATTLE &&
+            ePartyMenu2.menuType != PARTY_MENU_TYPE_MULTI_SHOWCASE)
             ResetTasks();
         gMain.state++;
         break;
@@ -386,7 +386,7 @@ static void CB2_InitPartyMenu(void)
             return;
     }
 
-    if (ePartyMenu2.menuType != PARTY_MENU_TYPE_LINK_MULTI_BATTLE)
+    if (ePartyMenu2.menuType != PARTY_MENU_TYPE_MULTI_SHOWCASE)
         ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
 
     SetMainCallback2(CB2_PartyMenuMain);
