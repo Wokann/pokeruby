@@ -1,0 +1,14 @@
+#ifndef GUARD_CONSTANTS_BATTLE_FRONTIER_H
+#define GUARD_CONSTANTS_BATTLE_FRONTIER_H
+
+enum
+{
+    F_EV_SPREAD_HP         = 1 << 0,
+    F_EV_SPREAD_ATTACK     = 1 << 1,
+    F_EV_SPREAD_DEFENSE    = 1 << 2,
+    F_EV_SPREAD_SPEED      = 1 << 3,
+    F_EV_SPREAD_SP_ATTACK  = 1 << 4,
+    F_EV_SPREAD_SP_DEFENSE = 1 << 5,
+};
+
+#endif // GUARD_CONSTANTS_BATTLE_FRONTIER_H

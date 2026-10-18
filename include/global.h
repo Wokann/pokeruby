@@ -611,6 +611,8 @@ struct BattleTowerEReaderTrainer
 
 #include "battle_tower.h"
 
+#define BATTLE_TOWER_RECORD_COUNT 5
+
 struct BattleTowerData
 {
     /*0x0000, 0x00A8*/ struct RSBattleTowerRecord playerRecord;

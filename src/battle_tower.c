@@ -5,6 +5,7 @@
 #include "battle_message.h"
 #include "battle_setup.h"
 #include "battle_transition.h"
+#include "constants/battle_frontier.h"
 #include "constants/easy_chat.h"
 #include "constants/event_objects.h"
 #include "constants/items.h"
@@ -542,8 +543,6 @@ void SetEReaderTrainerGfxId(void)
 {
     SetBattleTowerTrainerGfxId(BATTLE_TOWER_EREADER_TRAINER_ID);
 }
-
-#define BATTLE_TOWER_RECORD_COUNT 5
 
 void PutNewBattleTowerRecord(struct RSBattleTowerRecord *record)
 {
