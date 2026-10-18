@@ -818,7 +818,7 @@ const struct SpriteTemplate gSpriteTemplate_83E4660 =
     .callback = SpriteCB_PartyPokeball,
 };
 
-const u16 gUnknown_083E4678[] = INCBIN_U16("graphics/pokenav/83E4678.gbapal");
+const u16 gMonMarkings_Pal[] = INCBIN_U16("graphics/pokenav/condition/mon_markings.gbapal");
 
 const u16 gRibbonGfxData[][2] =
 {

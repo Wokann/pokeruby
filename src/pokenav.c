@@ -126,7 +126,7 @@ extern const struct SpriteTemplate gSpriteTemplate_83E45F0;
 extern const struct SpriteSheet gUnknown_083E4628[4];
 extern const struct SpritePalette gUnknown_083E4648[3];
 extern const struct SpriteTemplate gSpriteTemplate_83E4660;
-extern const u16 gUnknown_083E4678[];
+extern const u16 gMonMarkings_Pal[];
 extern const u8 gRibbonIconsBig_Gfx[];
 extern const struct SpriteTemplate gSpriteTemplate_RibbonIconBig;
 extern const struct SpriteSheet gUnknown_083E4784;
@@ -2990,7 +2990,7 @@ void sub_80F35B4(void)
     gPokenavStructPtr->marksMenu.basePaletteTag = 0x13;
     InitMonMarkingsMenu(&gPokenavStructPtr->marksMenu);
     BufferMonMarkingsMenuTiles();
-    sprite = CreateMonMarkingAllCombosSprite(27, 21, gUnknown_083E4678);
+    sprite = CreateMonMarkingAllCombosSprite(27, 21, gMonMarkings_Pal);
     sprite->oam.priority = 3;
     sprite->x = 192;
     sprite->y = 32;
