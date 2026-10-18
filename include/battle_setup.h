@@ -1,7 +1,7 @@
 #ifndef GUARD_BATTLE_SETUP_H
 #define GUARD_BATTLE_SETUP_H
 
-#define REMATCH_TABLE_ENTRIES 56
+#include "constants/rematches.h"
 
 struct RematchTrainer
 {
