@@ -66,7 +66,6 @@ extern u8 gSharedMem[];
 #define ePartyMenu                      (*(struct Unk2001000 *)(gSharedMem + 0x1000))
 #define eMoveTutorMenu                  (struct MoveTutorMenu *)(gSharedMem + 0x17000)
 #define ePartyMenu2                     (*(struct Unk201B000 *)(gSharedMem + 0x1B000))
-#define gPartyMenu                      (*(struct PartyMenu *)(gSharedMem + 0x1C000))
 
 // player_pc.c, party_menu.c
 #define eMailboxInfo                    (*(struct MailboxStruct *)(gSharedMem + 0x1FE00))

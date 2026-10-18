@@ -66,6 +66,8 @@ struct PartyMenu
     /*0x14*/ TaskFunc unk14;
 };
 
+#define gPartyMenu                      (*(struct PartyMenu *)(gSharedMem + 0x1C000))
+
 void CB2_PartyMenuFromStartMenu(void);
 void CB2_ReturnToPartyMenuFromFlyMap(void);
 void CB2_ShowPartyMenuForItemUse(void);
