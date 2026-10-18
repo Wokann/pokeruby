@@ -574,5 +574,5 @@ $(FIELDEFFGFXDIR)/unused_sand.4bpp: %.4bpp: %.png
 $(FIELDEFFGFXDIR)/water_surfacing.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
 
-graphics/field_effect_objects/pics/unused_grass.4bpp: %.4bpp: %.png
+$(FIELDEFFGFXDIR)/unused_grass_3.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
