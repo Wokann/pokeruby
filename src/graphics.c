@@ -1192,7 +1192,7 @@ const u8 gFont4JapaneseGlyphs[] = INCBIN_U8("graphics/fonts/font4_jpn.4bpp");
 #ifdef GERMAN
 const u8 gSummaryScreenTextTiles[] = INCBIN_U8("graphics/summary_screen/text.4bpp");
 const u8 sCaughtBall_Gfx[] = INCBIN_U8("graphics/pokedex/caught_ball.4bpp.lz");
-const u8 gIntroTiles[] = INCBIN_U8("graphics/intro/intro.4bpp.lz");
+const u8 gIntroDropsLogo_Gfx[] = INCBIN_U8("graphics/intro/scene_1/drops_logo.4bpp.lz");
 
 const u8 gUsePokeblockUpDown_Gfx[] = INCBIN_U8("graphics/pokeblock/use_screen/updown.4bpp");
 const u16 gUsePokeblockUpDown_Pal[] = INCBIN_U16("graphics/pokeblock/use_screen/updown.gbapal");

@@ -39,34 +39,34 @@ struct GcmbStruct gMultibootProgramStruct;
 static const u16 sIntroDrops_Pal[] = INCBIN_U16("graphics/intro/scene_1/drops.gbapal");
 static const u16 sIntroLogo_Pal[] = INCBIN_U16("graphics/intro/scene_1/logo.gbapal");
 #if ENGLISH
-static const u8 gIntroTiles[] = INCBIN_U8("graphics/intro/intro.4bpp.lz");
+static const u8 gIntroDropsLogo_Gfx[] = INCBIN_U8("graphics/intro/scene_1/drops_logo.4bpp.lz");
 #elif GERMAN
-extern const u8 gIntroTiles[];
+extern const u8 gIntroDropsLogo_Gfx[];
 #endif
 static const u16 sIntro1Bg_Pal[][16] =
 {
-    INCBIN_U16("graphics/intro/intro1_bgpal1.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal2.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal3.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal4.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal5.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal6.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal7.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal8.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal9.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal10.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal11.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal12.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal13.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal14.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal15.gbapal"),
-    INCBIN_U16("graphics/intro/intro1_bgpal16.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_pal1.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_pal2.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_pal3.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_pal4.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_pal5.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_pal6.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_pal7.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_pal8.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_pal9.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_pal10.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_pal11.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_pal12.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_pal13.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_pal14.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_pal15.gbapal"),
+    INCBIN_U16("graphics/intro/scene_1/bg_pal16.gbapal"),
 };
 static const u8 sIntro1Bg0_Tilemap[] = INCBIN_U8("graphics/intro/scene_1/bg0_map.bin.lz");
 static const u8 sIntro1Bg1_Tilemap[] = INCBIN_U8("graphics/intro/scene_1/bg1_map.bin.lz");
 static const u8 sIntro1Bg2_Tilemap[] = INCBIN_U8("graphics/intro/scene_1/bg2_map.bin.lz");
 static const u8 sIntro1Bg3_Tilemap[] = INCBIN_U8("graphics/intro/scene_1/bg3_map.bin.lz");
-static const u8 sIntro1Bg_Gfx[] = INCBIN_U8("graphics/intro/introgfx.4bpp.lz");
+static const u8 sIntro1Bg_Gfx[] = INCBIN_U8("graphics/intro/scene_1/bg.4bpp.lz");
 static const u16 sIntroPokeball_Pal[] = INCBIN_U16("graphics/intro/scene_3/pokeball.gbapal");
 static const u8 sIntroPokeball_Tilemap[] = INCBIN_U8("graphics/intro/scene_3/pokeball_map.bin.lz");
 static const u8 sIntroPokeball_Gfx[] = INCBIN_U8("graphics/intro/scene_3/pokeball.8bpp.lz");
@@ -412,7 +412,7 @@ static const struct SpriteTemplate gSpriteTemplate_840AFF0 =
 };
 static const struct CompressedSpriteSheet sSpriteSheet_WaterDropsAndLogo[] =
 {
-    {gIntroTiles, 0x1400, 2000},
+    {gIntroDropsLogo_Gfx, 0x1400, 2000},
     {NULL},
 };
 const struct CompressedSpriteSheet gUnknown_0840B018[] =
