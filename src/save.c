@@ -2,6 +2,7 @@
 #include "gba/gba.h"
 #include "gba/flash_internal.h"
 #include "save.h"
+#include "decompress.h"
 #include "load_save.h"
 #include "overworld.h"
 #include "pokemon.h"

@@ -7,7 +7,6 @@ extern u8 gSharedMem[];
 // regions overlap others but have different definitions. Until some
 // dupes can be determined to be the same, they will be deliberate
 // seperated.
-#define gDecompressionBuffer            (gSharedMem + 0x1E000)
 
 // battle_interface.c
 #define eBattleInterfaceGfxBuffer       ((u8 *)EWRAM)

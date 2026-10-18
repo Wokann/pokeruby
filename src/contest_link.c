@@ -3,6 +3,7 @@
 #include "random.h"
 #include "task.h"
 #include "contest.h"
+#include "decompress.h"
 #include "contest_link.h"
 #include "text.h"
 #include "string_util.h"

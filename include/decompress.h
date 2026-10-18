@@ -3,6 +3,8 @@
 
 #include "sprite.h"
 
+#define gDecompressionBuffer            (gSharedMem + 0x1E000)
+
 void LZDecompressWram(const void *src, void *dest);
 void LZDecompressVram(const void *src, void *dest);
 void LoadCompressedSpriteSheet(const struct CompressedSpriteSheet *src);
