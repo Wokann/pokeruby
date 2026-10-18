@@ -1,6 +1,8 @@
 #ifndef GUARD_CONSTANTS_TV_H
 #define GUARD_CONSTANTS_TV_H
 
+#define TV_SHOWS_COUNT 25
+
 enum
 {
     TVSHOW_FAN_CLUB_LETTER = 1,

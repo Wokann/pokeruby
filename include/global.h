@@ -8,8 +8,13 @@
 #include "gba/gba.h"
 #include "gametypes.h"
 #include "constants/global.h"
+#include "constants/vars.h"
 #include "constants/species.h"
 #include "constants/pokedex.h"
+#include "constants/berry.h"
+#include "constants/pokemon.h"
+
+#define NAKED __attribute__((naked))
 
 // IDE support
 #if defined(__APPLE__) || defined(__CYGWIN__) || defined(__INTELLISENSE__)

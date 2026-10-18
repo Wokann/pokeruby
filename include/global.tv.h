@@ -1,6 +1,8 @@
 #ifndef GUARD_GLOBAL_TV_H
 #define GUARD_GLOBAL_TV_H
 
+#include "constants/tv.h"
+
 struct TVShowCommon
 {
     /*0x00*/ u8 kind;

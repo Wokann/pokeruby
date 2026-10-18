@@ -171,6 +171,7 @@
 #define VAR_OLDALE_RIVAL_STATE                  0x40C7
 
 #define VARS_END                          0x40FF
+#define VARS_COUNT                        256
 
 #define SPECIAL_VARS_START 0x8000
 // special vars

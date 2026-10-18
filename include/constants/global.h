@@ -42,12 +42,9 @@
 #define DAYCARE_MON_COUNT   2
 #define POKEBLOCKS_COUNT    40
 #define OBJECT_EVENTS_COUNT 16
-#define BERRY_TREES_COUNT   128
 #define FLAGS_COUNT         288
-#define VARS_COUNT          256
 #define MAIL_COUNT          16
 #define SECRET_BASES_COUNT  20
-#define TV_SHOWS_COUNT      25
 #define POKE_NEWS_COUNT     16
 #define PC_ITEMS_COUNT      50
 #define BAG_ITEMS_COUNT     20
@@ -67,7 +64,6 @@
 
 #define TRAINER_ID_LENGTH 4
 #define MAX_MON_MOVES 4
-#define NUM_STATS 6
 #define PARTY_SIZE 6
 
 #define MALE 0
