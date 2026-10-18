@@ -190,7 +190,7 @@ void debug_sub_813C6AC(struct Pokemon *mon, struct Mail *mail)
             mail->words[i] = i + 1;
 
         GetMonData(mon, MON_DATA_OT_NAME, nameBuf);
-        StringCopyN(name, nameBuf, OT_NAME_LENGTH + 1);
+        StringCopyN(name, nameBuf, PLAYER_NAME_LENGTH + 1);
 
         SetTrainerId(GetMonData(mon, MON_DATA_OT_ID), id);
 

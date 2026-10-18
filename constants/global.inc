@@ -3,7 +3,6 @@
 
 	.set NULL, 0
 
-	.set POKEMON_NAME_LENGTH, 11
 	.set MOVE_NAME_LENGTH,    13
 
 	.set SPRITE_SIZE_8x8,   (OAM_SIZE_0 >> 28) | (OAM_SQUARE >> 14)

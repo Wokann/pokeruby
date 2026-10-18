@@ -8,6 +8,7 @@
 #include "gba/gba.h"
 #include "gametypes.h"
 #include "constants/global.h"
+#include "constants/species.h"
 
 // IDE support
 #if defined(__APPLE__) || defined(__CYGWIN__) || defined(__INTELLISENSE__)
@@ -53,11 +54,6 @@
 #define asm_unified(x) asm(".syntax unified\n" x "\n.syntax divided\n")
 
 #define ARRAY_COUNT(array) (sizeof(array) / sizeof((array)[0]))
-
-#define POKEMON_SLOTS_NUMBER 412
-#define POKEMON_NAME_LENGTH 10
-#define POKEMON_NAME_BUFFER_SIZE max(20, POKEMON_NAME_LENGTH + 1) // Frequently used buffer size. Larger than necessary
-#define OT_NAME_LENGTH 7
 
 #define min(a, b) ((a) < (b) ? (a) : (b))
 #define max(a, b) ((a) >= (b) ? (a) : (b))
@@ -183,7 +179,7 @@ struct SecretBase
     /*0x1A09*/ u8 gender:1;
     /*0x1A09*/ u8 battledOwnerToday:1;
     /*0x1A09*/ u8 registryStatus:2;
-    /*0x1A0A*/ u8 trainerName[OT_NAME_LENGTH];
+    /*0x1A0A*/ u8 trainerName[PLAYER_NAME_LENGTH];
     /*0x1A11*/ u8 trainerId[4]; // byte 0 is used for determining trainer class
     /*0x1A16*/ u16 numSecretBasesReceived;
     /*0x1A18*/ u8 numTimesEntered;
@@ -443,7 +439,7 @@ struct ExternalEventFlags
 // there should be enough flags for all 412 slots
 // each slot takes up 8 flags
 // if the value is not divisible by 8, we need to account for the reminder as well
-#define DEX_FLAGS_NO ((POKEMON_SLOTS_NUMBER / 8) + ((POKEMON_SLOTS_NUMBER % 8) ? 1 : 0))
+#define NUM_DEX_FLAG_BYTES ((NUM_SPECIES / 8) + ((NUM_SPECIES % 8) ? 1 : 0))
 
 struct SaveBlock1 /* 0x02025734 */
 {
@@ -471,7 +467,7 @@ struct SaveBlock1 /* 0x02025734 */
     /*0x640*/ struct ItemSlot bagPocket_TMHM[BAG_TMHM_COUNT];
     /*0x740*/ struct ItemSlot bagPocket_Berries[BAG_BERRIES_COUNT];
     /*0x7F8*/ struct Pokeblock pokeblocks[POKEBLOCKS_COUNT];
-    /*0x938*/ u8 dexSeen2[DEX_FLAGS_NO];
+    /*0x938*/ u8 dexSeen2[NUM_DEX_FLAG_BYTES];
     /*0x96C*/ u16 berryBlenderRecords[3];
     /*0x972*/ u8 filler_972[0x6];
     /*0x978*/ u16 trainerRematchStepCounter;
@@ -530,7 +526,7 @@ struct SaveBlock1 /* 0x02025734 */
     /*0x3160*/ struct EnigmaBerry enigmaBerry;
     /*0x3690*/ struct RamScript ramScript;
     /*0x3A7C*/ struct RecordMixingGift recordMixingGift;
-    /*0x3A8C*/ u8 dexSeen3[DEX_FLAGS_NO];
+    /*0x3A8C*/ u8 dexSeen3[NUM_DEX_FLAG_BYTES];
 };
 
 extern struct SaveBlock1 gSaveBlock1;
@@ -552,8 +548,8 @@ struct Pokedex
     /*0x04*/ u32 unownPersonality; // set when you first see Unown
     /*0x08*/ u32 spindaPersonality; // set when you first see Spinda
     /*0x0C*/ u32 unknown3;
-    /*0x10*/ u8 owned[DEX_FLAGS_NO];
-    /*0x44*/ u8 seen[DEX_FLAGS_NO];
+    /*0x10*/ u8 owned[NUM_DEX_FLAG_BYTES];
+    /*0x44*/ u8 seen[NUM_DEX_FLAG_BYTES];
 };
 
 struct BattleTowerPokemon

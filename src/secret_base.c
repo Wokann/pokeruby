@@ -166,7 +166,7 @@ static void ClearSecretBase(struct SecretBase *secretBase)
     u16 j;
 
     secretBase->secretBaseId = 0;
-    for (i = 0; i < OT_NAME_LENGTH; i++)
+    for (i = 0; i < PLAYER_NAME_LENGTH; i++)
         secretBase->trainerName[i] = 0xff;
     for (i = 0; i < 4; i++)
         secretBase->trainerId[i] = 0x00;
@@ -341,7 +341,7 @@ void SetPlayerSecretBase(void)
         gSaveBlock1.secretBases[0].trainerId[i] = gSaveBlock2.playerTrainerId[i];
     VarSet(VAR_CURRENT_SECRET_BASE, 0);
     nameLength = GetNameLength(gSaveBlock2.playerName);
-    memset(gSaveBlock1.secretBases[0].trainerName, 0xFF, OT_NAME_LENGTH);
+    memset(gSaveBlock1.secretBases[0].trainerName, 0xFF, PLAYER_NAME_LENGTH);
     StringCopyN(gSaveBlock1.secretBases[0].trainerName, gSaveBlock2.playerName, nameLength);
     gSaveBlock1.secretBases[0].gender = gSaveBlock2.playerGender;
     VarSet(VAR_SECRET_BASE_MAP, gMapHeader.regionMapSectionId);
@@ -1125,7 +1125,7 @@ static void GoToSecretBasePCRegisterMenu(u8 taskId)
 
 static u8 GetSecretBaseOwnerType(u8 secretBaseIdx)
 {
-    return (gSaveBlock1.secretBases[secretBaseIdx].trainerName[OT_NAME_LENGTH] % 5)
+    return (gSaveBlock1.secretBases[secretBaseIdx].trainerName[PLAYER_NAME_LENGTH] % 5)
         + gSaveBlock1.secretBases[secretBaseIdx].gender * 5;
 }
 
@@ -1251,7 +1251,7 @@ static bool8 SecretBasesHaveSameTrainerName(struct SecretBase *sbr1, struct Secr
 {
     u8 i;
 
-    for (i = 0; i < OT_NAME_LENGTH && (sbr1->trainerName[i] != 0xFF || sbr2->trainerName[i] != 0xFF); i++)
+    for (i = 0; i < PLAYER_NAME_LENGTH && (sbr1->trainerName[i] != 0xFF || sbr2->trainerName[i] != 0xFF); i++)
     {
         if (sbr1->trainerName[i] != sbr2->trainerName[i])
             return FALSE;
@@ -1398,7 +1398,7 @@ static bool8 SecretBaseBelongsToPlayer(struct SecretBase *secretBase)
             return FALSE;
     }
 
-    for (i = 0; i < OT_NAME_LENGTH && (secretBase->trainerName[i] != 0xFF || gSaveBlock2.playerName[i] != 0xFF); i++)
+    for (i = 0; i < PLAYER_NAME_LENGTH && (secretBase->trainerName[i] != 0xFF || gSaveBlock2.playerName[i] != 0xFF); i++)
     {
         if (secretBase->trainerName[i] != gSaveBlock2.playerName[i])
             return FALSE;

@@ -60,6 +60,11 @@
 #define DECOR_MAX_PLAYERS_HOUSE 12
 #define MAX_REMATCH_ENTRIES 100 
 
+// string lengths
+#define POKEMON_NAME_LENGTH 10
+#define POKEMON_NAME_BUFFER_SIZE max(20, POKEMON_NAME_LENGTH + 1) // Frequently used buffer size. Larger than necessary
+#define PLAYER_NAME_LENGTH 7
+
 #define TRAINER_ID_LENGTH 4
 #define MAX_MON_MOVES 4
 #define NUM_STATS 6

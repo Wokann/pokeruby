@@ -564,7 +564,7 @@ void PutNewBattleTowerRecord(struct RSBattleTowerRecord *record)
         }
         if (j == 4)
         {
-            for (k = 0; k < OT_NAME_LENGTH; k++)
+            for (k = 0; k < PLAYER_NAME_LENGTH; k++)
             {
 #ifdef BUGFIX
                 if (gSaveBlock2.battleTower.records[i].name[k] != newRecord->name[k])
@@ -576,13 +576,13 @@ void PutNewBattleTowerRecord(struct RSBattleTowerRecord *record)
                 if (newRecord->name[j] == EOS)
 #endif
                 {
-                    k = OT_NAME_LENGTH;
+                    k = PLAYER_NAME_LENGTH;
                     break;
                 }
             }
         }
 
-        if (k == OT_NAME_LENGTH)
+        if (k == PLAYER_NAME_LENGTH)
             break;
     }
     if (i < BATTLE_TOWER_RECORD_COUNT)

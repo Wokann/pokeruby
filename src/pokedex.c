@@ -862,7 +862,7 @@ void ResetPokedex(void)
     gSaveBlock2.pokedex.spindaPersonality = 0;
     gSaveBlock2.pokedex.unknown3 = 0;
     DisableNationalPokedex();
-    for (i = 0; i < DEX_FLAGS_NO; i++)
+    for (i = 0; i < NUM_DEX_FLAG_BYTES; i++)
     {
         gSaveBlock2.pokedex.owned[i] = 0;
         gSaveBlock2.pokedex.seen[i] = 0;
@@ -1590,7 +1590,7 @@ static void CreatePokedexList(u8 dexMode, u8 order)
         }
         break;
     case 1:
-        for (i = 0; i < POKEMON_SLOTS_NUMBER - 1; i++)
+        for (i = 0; i < NUM_SPECIES - 1; i++)
         {
             vars[2] = gPokedexOrder_Alphabetical[i];
 

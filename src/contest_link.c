@@ -78,7 +78,7 @@ u8 GetMonNicknameLanguage(const u8 *nickname)
     u8 language = GAME_LANGUAGE;
     if (nickname[0] == EXT_CTRL_CODE_BEGIN && nickname[1] == 0x15)
         return language;
-    if (StringLength(nickname) < OT_NAME_LENGTH - 1)
+    if (StringLength(nickname) < PLAYER_NAME_LENGTH - 1)
     {
         while (*nickname != EOS)
         {
