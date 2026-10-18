@@ -228,8 +228,8 @@ void ShowContestPainting(void)
     if(gUnknown_0203856C)
     {
         sub_80AAF30();
-        eCurContestWinnerIsForArtist = TRUE;
-        eCurContestWinnerSaveIdx = GetContestWinnerSaveIdx(CONTEST_SAVE_FOR_ARTIST, 0);
+        gCurContestWinnerIsForArtist = TRUE;
+        gCurContestWinnerSaveIdx = GetContestWinnerSaveIdx(CONTEST_SAVE_FOR_ARTIST, 0);
         SaveContestWinner(3);
         gUnknown_0203856C = 0;
     }

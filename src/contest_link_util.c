@@ -726,8 +726,8 @@ static void Task_TrySetContestInterviewData(u8 taskId)
     TryGainNewFanFromCounter(2);
     SaveContestWinner(gSpecialVar_ContestRank);
     SaveContestWinner(0xFE);
-    eCurContestWinnerIsForArtist = TRUE;
-    eCurContestWinnerSaveIdx = GetContestWinnerSaveIdx(0xfe, 0);
+    gCurContestWinnerIsForArtist = TRUE;
+    gCurContestWinnerSaveIdx = GetContestWinnerSaveIdx(0xfe, 0);
     BeginHardwarePaletteFade(0xff, 0, 0, 16, 0);
     gTasks[taskId].func = Task_EndShowContestResults;
 }

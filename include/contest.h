@@ -311,6 +311,9 @@ bool8 IsContestantAllowedToCombo(u8 contestant);
 void SetStartledString(u8 contestant, u8 jam);
 
 // Ruby keeps its fixed shared-memory views instead of heap resources.
+#define gCurContestWinner               ((*(struct ContestWinner*)(gSharedMem + 0x15DE0)))
+#define gCurContestWinnerIsForArtist    (gSharedMem[0x15DDF])
+#define gCurContestWinnerSaveIdx        (gSharedMem[0x15DDE])
 #define eContest                        (*(struct Contest *)(gSharedMem + 0x19204))
 #define eContestantStatus               ((struct ContestantStatus *)(gSharedMem + 0x19260))
 #define eContestAppealResults           (*(struct ContestAppealMoveResults *)(gSharedMem + 0x192D0))

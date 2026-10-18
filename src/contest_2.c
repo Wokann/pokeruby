@@ -4152,15 +4152,15 @@ bool8 SaveContestWinner(u8 rank)
     }
     else
     {
-        eCurContestWinner.personality = gContestMons[i].personality;
-        eCurContestWinner.trainerId = gContestMons[i].otId;
-        eCurContestWinner.species = gContestMons[i].species;
-        StringCopy(eCurContestWinner.monName, gContestMons[i].nickname);
+        gCurContestWinner.personality = gContestMons[i].personality;
+        gCurContestWinner.trainerId = gContestMons[i].otId;
+        gCurContestWinner.species = gContestMons[i].species;
+        StringCopy(gCurContestWinner.monName, gContestMons[i].nickname);
         if (gLinkContestFlags & 1)
-            StringCopy(eCurContestWinner.trainerName, gLinkPlayers[i].name);
+            StringCopy(gCurContestWinner.trainerName, gLinkPlayers[i].name);
         else
-            StringCopy(eCurContestWinner.trainerName, gContestMons[i].trainerName);
-        eCurContestWinner.contestCategory = captionId;
+            StringCopy(gCurContestWinner.trainerName, gContestMons[i].trainerName);
+        gCurContestWinner.contestCategory = captionId;
     }
     return TRUE;
 }

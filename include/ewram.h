@@ -52,9 +52,6 @@ extern u8 gSharedMem[];
 
 // Contest
 #define eBattleAnimPalBackup_Contest    ((u16 *)(gSharedMem + 0x14800))
-#define eCurContestWinnerSaveIdx        (gSharedMem[0x15DDE])
-#define eCurContestWinnerIsForArtist    (gSharedMem[0x15DDF])
-#define eCurContestWinner               ((*(struct ContestWinner*)(gSharedMem + 0x15DE0)))
 #define eContestPaintingBuffers         ((*(struct ContestPaintingBuffers*)(gSharedMem + 0x15E00)))
 #define gContestResources__moveAnim     (*(struct ContestMoveAnimData *)(gSharedMem + 0x19348))
 

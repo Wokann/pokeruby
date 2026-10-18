@@ -117,9 +117,9 @@ static void CreateContestPaintingPicture(u8 contestWinnerId, bool8 isForArtist);
 void SetContestWinnerForPainting(u32 contestWinnerId)
 {
     // probably fakematching
-    struct ContestWinner *curWinner = &eCurContestWinner;
-    u8 *saveIdx = (u8*)&eCurContestWinnerSaveIdx;
-    u8 *isForArtist = (u8*)&eCurContestWinnerIsForArtist;
+    struct ContestWinner *curWinner = &gCurContestWinner;
+    u8 *saveIdx = (u8*)&gCurContestWinnerSaveIdx;
+    u8 *isForArtist = (u8*)&gCurContestWinnerIsForArtist;
     *curWinner = gSaveBlock1.contestWinners[contestWinnerId - 1];
 	*saveIdx = contestWinnerId - 1;
 	*isForArtist = FALSE;
@@ -137,7 +137,7 @@ static void ShowContestPainting(void)
     case 0:
         ScanlineEffect_Stop();
         SetVBlankCallback(NULL);
-        gContestPaintingWinner = &eCurContestWinner;
+        gContestPaintingWinner = &gCurContestWinner;
         InitContestPaintingVars(TRUE);
         InitContestPaintingBg();
         gMain.state++;
@@ -153,15 +153,15 @@ static void ShowContestPainting(void)
     case 2:
         SeedRng(gMain.vblankCounter1);
         InitKeys();
-        InitContestPaintingWindow(eCurContestWinnerIsForArtist);
+        InitContestPaintingWindow(gCurContestWinnerIsForArtist);
         gMain.state++;
         break;
     case 3:
-        CreateContestPaintingPicture(eCurContestWinnerSaveIdx, eCurContestWinnerIsForArtist);
+        CreateContestPaintingPicture(gCurContestWinnerSaveIdx, gCurContestWinnerIsForArtist);
         gMain.state++;
         break;
     case 4:
-        PrintContestPaintingCaption(eCurContestWinnerSaveIdx, eCurContestWinnerIsForArtist);
+        PrintContestPaintingCaption(gCurContestWinnerSaveIdx, gCurContestWinnerIsForArtist);
         LoadPalette(sBgPalette, 0, 1 * 2);
         DmaClear32(3, PLTT, 0x400);
         BeginFastPaletteFade(2);
