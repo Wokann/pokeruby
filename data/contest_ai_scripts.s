@@ -1,3 +1,4 @@
+#include "constants/global.h"
 	.include "asm/macros.inc"
 	.include "asm/macros/contest_ai_script.inc"
 	.include "constants/constants.inc"

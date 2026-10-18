@@ -1,4 +1,3 @@
-	.include "constants/global.h"
 	.include "constants/gba_constants.inc"
 	.include "constants/global.inc"
 	.include "constants/version.inc"
