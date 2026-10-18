@@ -17,6 +17,8 @@
 
 #include "data/battle_anim.h"
 
+#define ANIM_SPRITE_INDEX_COUNT 8
+
 // sBattleAnimScriptPtr is a pointer to the next set of battle script commands.
 static EWRAM_DATA const u8 *sBattleAnimScriptPtr = NULL;
 static EWRAM_DATA const u8 *sBattleAnimScriptRetAddr = NULL;

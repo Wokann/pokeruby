@@ -1,9 +1,6 @@
 #ifndef GUARD_CONSTANTS_BATTLE_ANIM_H
 #define GUARD_CONSTANTS_BATTLE_ANIM_H
 
-#define ANIM_SPRITE_INDEX_COUNT 8
-#define ANIM_ARGS_COUNT 8
-
 // Sprites start at 10000 and thus must be subtracted of 10000 to account for the true index.
 #define GET_TRUE_SPRITE_INDEX(i) ((i - ANIM_SPRITES_START))
 

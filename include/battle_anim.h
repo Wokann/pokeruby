@@ -56,6 +56,8 @@ struct BattleAnimBackground
     void *tilemap;
 };
 
+#define ANIM_ARGS_COUNT 8
+
 extern void (*gAnimScriptCallback)(void);
 extern bool8 gAnimScriptActive;
 extern u8 gAnimFriendship;
