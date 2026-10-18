@@ -2908,6 +2908,8 @@ extern const u8 gUnknown_08E9AB60[];
 extern const u8 gUnknown_08E9ABB4[];
 extern const u8 gUnknown_08E9AC2C[];
 extern const u8 gPokenavCondition_Tilemap[];
+extern const u8 gPokenavOptions_Tilemap[];
+extern const u8 gUsePokeblockNatureWin_Tilemap[];
 extern const u8 gPokenavLeftHeaderMainMenu_Gfx[];
 extern const u8 gPokenavLeftHeaderHoennMap_Gfx[];
 extern const u8 gPokenavLeftHeaderCondition_Gfx[];

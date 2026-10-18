@@ -114,18 +114,18 @@ const u16 gUnknown_083E003C[] = INCBIN_U16("graphics/pokenav/83E003C.gbapal");
 
 const u8 gUnknown_083E005C[] = INCBIN_U8("graphics/pokenav/83E005C.4bpp");
 const u8 gUnknown_083E007C[] = INCBIN_U8("graphics/pokenav/83E007C.bin.lz");
-const u16 gUnknown_083E0124[] = INCBIN_U16("graphics/pokenav/83E0124_pal.bin");
+const u16 gMonFrame_Pal[] = INCBIN_U16("graphics/pokeblock/use_screen/mon_frame_pal.bin");
 
 const u16 gUnknown_083E0144[] = INCBIN_U16("graphics/pokenav/83E0144_pal.bin");
 
 const u16 gUnknown_083E0164[] = INCBIN_U16("graphics/pokenav/83E0164.bin");//?
 
-const u8 gUnknown_083E01AC[] = INCBIN_U8("graphics/pokenav/83E01AC.bin");
-const u8 gUnknown_083E01F4[] = INCBIN_U8("graphics/pokenav/83E01F4.bin");
+const u8 gPokenavOptions_Tilemap[] = INCBIN_U8("graphics/pokenav/options/options.bin");
+const u8 gUsePokeblockNatureWin_Tilemap[] = INCBIN_U8("graphics/pokeblock/use_screen/nature.bin");
 const u8 gConditionGraphData_Pal[] = INCBIN_U8("graphics/pokenav/condition/graph_data.gbapal");
-const u16 gUnknown_083E0274[] = INCBIN_U16("graphics/pokenav/83E0274.gbapal");
+const u16 gMonRibbonListFramePal[] = INCBIN_U16("graphics/pokenav/ribbons/list_bg.gbapal");
 
-const u16 gPokenavConditionSearch2_Pal[] = INCBIN_U16("graphics/pokenav/condition_search2.gbapal");
+const u16 gConditionSearchResultFramePal[] = INCBIN_U16("graphics/pokenav/condition/search_results.gbapal");
 
 const u16 gUnknown_083E02B4[] = INCBIN_U16("graphics/pokenav/83E02B4.gbapal");
 

@@ -38,19 +38,18 @@ EWRAM_DATA u16 gUnknown_020388B4 = 0;
 
 extern const u8 gUnknown_083E0314[];
 extern const u16 gUnknown_08E9F9E8[];
-extern const u16 gUnknown_083E0274[];
+extern const u16 gMonRibbonListFramePal[];
 extern const u8 gUnknown_08E9FC64[];
 extern const u8 gUnknown_083E0354[];
 extern const u8 gUnknown_08E9FD64[];
 extern const u8 gUnknown_08E9FE54[];
 extern const u8 gUnknown_08E9FD1C[];
-extern const u16 gPokenavConditionSearch2_Pal[];
+extern const u16 gConditionSearchResultFramePal[];
 extern const u8 gUnknown_083E0334[];
 extern const u16 gUnknown_083E02B4[];
 extern const u8 gPokenavConditionSearch2_Gfx[];
 extern const u8 gConditionGraphData_Pal[];
 extern const u8 gGraphData_Tilemap[];
-extern const u8 gUnknown_083E01AC[];
 extern const u8 *const gPokenavCityMaps[][2];
 extern const u8 gRegionMapCityZoomTiles_Pal[];
 extern const u8 gRegionMapCityZoomTiles_Gfx[];
@@ -72,7 +71,6 @@ extern const u16 gPokenavHoennMap1_Pal[];
 extern void (*const gUnknown_083E3270[])(u16, u16);
 extern const u8 gUnknown_083E039C[];
 extern const u8 gUnknown_083E03A0[];
-extern const u8 gUnknown_083E01F4[];
 extern const u8 *const gTrainerEyeDescriptions[];
 extern const u8 gRibbonIconsSmall_Gfx[];
 extern const u16 gPokenavRibbonsSummaryBg_Pal[];
@@ -83,7 +81,7 @@ extern const u8 *const gRibbonDescriptionPointers[][2];
 extern const u8 *const gGiftRibbonDescriptionPointers[][2];
 extern const u8 gUnknown_08E9FF58[];
 extern const u8 gPokenavRibbonPokeView_Gfx[];
-extern const u16 gUnknown_083E0124[];
+extern const u16 gMonFrame_Pal[];
 extern const u16 gUnknown_083E0144[];
 extern const u8 gPokenavMenuOptions_Gfx[];
 extern const u8 gPokenavConditionMenu_Gfx[];
@@ -887,7 +885,7 @@ bool8 sub_80EFF68(void)
         break;
     case 9:
         if (gPokenavStructPtr->inSearchMode == 1)
-            sub_8095C8C((void *)VRAM + 0xF000, 0, 5, gUnknown_083E01AC, 0, 0, 9, 4, 9);
+            sub_8095C8C((void *)VRAM + 0xF000, 0, 5, gPokenavOptions_Tilemap, 0, 0, 9, 4, 9);
         break;
     case 10:
         LZ77UnCompVram(gGraphData_Tilemap, (void *)VRAM + 0xB800);
@@ -999,21 +997,21 @@ bool8 sub_80F02A0(void)
 
         if (gPokenavStructPtr->unk87CA == 0)
         {
-            LoadPalette(gPokenavConditionSearch2_Pal, 0x30, 0x20);
-            gPlttBufferUnfaded[0] = gPokenavConditionSearch2_Pal[5];
+            LoadPalette(gConditionSearchResultFramePal, 0x30, 0x20);
+            gPlttBufferUnfaded[0] = gConditionSearchResultFramePal[5];
             LoadPalette(gUnknownPalette_81E6692, 0xB0, 0x20);
             LoadPalette(&gUnknown_083E02B4[1], 0xB1, 0x2);
             LoadPalette(&gUnknown_083E02B4[8], 0xB5, 0x2);
-            LoadPalette(&gPokenavConditionSearch2_Pal[5], 0xBF, 0x2);
+            LoadPalette(&gConditionSearchResultFramePal[5], 0xBF, 0x2);
         }
         else if (gPokenavStructPtr->unk87CA == 1)
         {
-            LoadPalette(gUnknown_083E0274, 0x30, 0x20);
-            gPlttBufferUnfaded[0] = gUnknown_083E0274[5];
+            LoadPalette(gMonRibbonListFramePal, 0x30, 0x20);
+            gPlttBufferUnfaded[0] = gMonRibbonListFramePal[5];
             LoadPalette(gUnknownPalette_81E6692, 0xB0, 0x20);
             LoadPalette(&gUnknown_083E02B4[1], 0xB1, 0x2);
             LoadPalette(&gUnknown_083E02B4[8], 0xB5, 0x2);
-            LoadPalette(&gUnknown_083E0274[5], 0xBF, 0x2);
+            LoadPalette(&gMonRibbonListFramePal[5], 0xBF, 0x2);
         }
         else
         {
@@ -1685,7 +1683,7 @@ bool8 sub_80F162C(u8 arg0)
         break;
     case 3:
         if (!arg0)
-            LoadPalette(gUnknown_083E0124, 0xD0, 0x20);
+            LoadPalette(gMonFrame_Pal, 0xD0, 0x20);
         else
             LoadPalette(gUnknown_083E0144, 0xD0, 0x20);
 
@@ -1742,7 +1740,7 @@ bool8 sub_80F1778(void)
         LoadPalette(gPokenavCondition_Pal, 0x20, 0x20);
         break;
     case 5:
-        sub_8095C8C((void *)VRAM + 0xF000, 0, 13, gUnknown_083E01F4, 0, 0, 12, 4, 12);
+        sub_8095C8C((void *)VRAM + 0xF000, 0, 13, gUsePokeblockNatureWin_Tilemap, 0, 0, 12, 4, 12);
         break;
     case 6:
         LZ77UnCompVram(gGraphData_Tilemap, (void *)(VRAM + 0xB800));
