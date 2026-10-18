@@ -302,41 +302,4 @@
 #define AI_ACTION_UNK7          0x0040
 #define AI_ACTION_UNK8          0x0080
 
-// status animation table
-#define B_ANIM_STATUS_PSN               0x0
-#define B_ANIM_STATUS_CONFUSION         0x1
-#define B_ANIM_STATUS_BRN               0x2
-#define B_ANIM_STATUS_INFATUATION       0x3
-#define B_ANIM_STATUS_SLP               0x4
-#define B_ANIM_STATUS_PRZ               0x5
-#define B_ANIM_STATUS_FRZ               0x6
-#define B_ANIM_STATUS_CURSED            0x7
-#define B_ANIM_STATUS_NIGHTMARE         0x8
-#define B_ANIM_STATUS_WRAPPED           0x9
-
-// general animation table
-#define B_ANIM_CASTFORM_CHANGE          0x0
-#define B_ANIM_STATS_CHANGE             0x1
-#define B_ANIM_SUBSTITUTE_FADE          0x2
-#define B_ANIM_SUBSTITUTE_APPEAR        0x3
-#define B_ANIM_POKEBLOCK_THROW          0x4
-#define B_ANIM_ITEM_KNOCKOFF            0x5
-#define B_ANIM_TURN_TRAP                0x6
-#define B_ANIM_HELD_ITEM_EFFECT         0x7
-#define B_ANIM_SMOKEBALL_ESCAPE         0x8
-#define B_ANIM_FOCUS_BAND               0x9
-#define B_ANIM_RAIN_CONTINUES           0xA
-#define B_ANIM_SUN_CONTINUES            0xB
-#define B_ANIM_SANDSTORM_CONTINUES      0xC
-#define B_ANIM_HAIL_CONTINUES           0xD
-#define B_ANIM_LEECH_SEED_DRAIN         0xE
-#define B_ANIM_MON_HIT                  0xF
-#define B_ANIM_ITEM_STEAL               0x10
-#define B_ANIM_SNATCH_MOVE              0x11
-#define B_ANIM_FUTURE_SIGHT_HIT         0x12
-#define B_ANIM_DOOM_DESIRE_HIT          0x13
-#define B_ANIM_FOCUS_PUNCH_SETUP        0x14
-#define B_ANIM_INGRAIN_HEAL             0x15
-#define B_ANIM_WISH_HEAL                0x16
-
 #endif // GUARD_CONSTANTS_BATTLE_CONSTANTS_H

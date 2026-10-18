@@ -21,6 +21,7 @@
 #include "util.h"
 #include "constants/abilities.h"
 #include "constants/berry.h"
+#include "constants/battle_anim.h"
 #include "constants/battle_move_effects.h"
 #include "constants/flags.h"
 #include "constants/hold_effects.h"
