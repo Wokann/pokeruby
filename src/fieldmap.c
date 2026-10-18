@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "fieldmap.h"
 #include "palette.h"
 #include "overworld.h"
@@ -6,7 +7,6 @@
 #include "secret_base.h"
 #include "tv.h"
 #include "constants/metatile_behaviors.h"
-
 struct ConnectionFlags
 {
     u8 south:1;

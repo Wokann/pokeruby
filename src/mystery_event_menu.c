@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "mystery_event_menu.h"
 #include "link.h"
 #include "main.h"
@@ -16,7 +17,6 @@
 #include "title_screen.h"
 #include "ewram.h"
 #include "debug.h"
-
 static EWRAM_DATA u8 sUnused = 0;
 
 static void VBlankCB(void);

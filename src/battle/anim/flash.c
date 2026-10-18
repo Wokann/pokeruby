@@ -1,9 +1,9 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle_anim.h"
 #include "trig.h"
 #include "sound.h"
 #include "palette.h"
-
 extern const struct SpriteTemplate gMoonSpriteTemplate;
 extern const struct SpriteTemplate gMoonlightSparkleSpriteTemplate;
 

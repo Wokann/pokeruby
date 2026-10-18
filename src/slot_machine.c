@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "constants/songs.h"
 #include "strings.h"
 #include "overworld.h"
@@ -17,7 +18,6 @@
 #include "text.h"
 #include "menu.h"
 #include "ewram.h"
-
 enum
 {
     SYMBOL_7_RED,

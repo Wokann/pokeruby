@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "sprite.h"
 #include "palette.h"
 #include "task.h"
@@ -10,7 +11,6 @@
 #include "title_screen.h"
 #include "sound.h"
 #include "pokedex_cry_screen.h"
-
 // local task defines
 #define tWindowSelected data[0]
 #define tBgmIndex data[1]

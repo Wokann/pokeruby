@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle_main.h"
 #include "event_data.h"
 #include "field_screen_effect.h"
@@ -21,7 +22,6 @@
 #include "task.h"
 #include "text.h"
 #include "ewram.h"
-
 extern u8 gPartyMenuMessage_IsPrinting;
 extern const u16 gBattleTowerBannedSpecies[];
 

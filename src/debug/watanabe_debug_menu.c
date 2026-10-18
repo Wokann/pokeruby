@@ -1,5 +1,6 @@
 #if DEBUG
 #include "global.h"
+#include "constants/rgb.h"
 #include "decompress.h"
 #include "ewram.h"
 #include "random.h"
@@ -32,7 +33,6 @@
 #include "pokemon_summary_screen.h"
 #include "pokemon_icon.h"
 #include "field_effect.h"
-
 struct WatanabeDebugMenuItemSubstruct {
     u32 totalPoints;
     u32 round1Points;

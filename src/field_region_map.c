@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "fieldmap.h"
 #include "main.h"
 #include "menu.h"
@@ -8,7 +9,6 @@
 #include "strings.h"
 #include "text.h"
 #include "ewram.h"
-
 static void MCB2_InitRegionMapRegisters(void);
 static void VBCB_FieldUpdateRegionMap(void);
 static void MCB2_FieldUpdateRegionMap(void);

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "contest.h"
 #include "battle.h"
 #include "battle_anim.h"
@@ -13,7 +14,6 @@
 #include "trig.h"
 #include "constants/battle.h"
 #include "constants/songs.h"
-
 extern u8 gBattleEnvironment;
 
 static void AnimConfusionDuck(struct Sprite *);

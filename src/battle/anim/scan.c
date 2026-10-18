@@ -1,9 +1,9 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle_anim.h"
 #include "trig.h"
 #include "sound.h"
 #include "palette.h"
-
 static void AnimLockOnTarget(struct Sprite *sprite);
 static void AnimLockOnMoveTarget(struct Sprite *sprite);
 static void AnimLockOnTarget_Step1(struct Sprite *sprite);

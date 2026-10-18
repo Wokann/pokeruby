@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "matsuda_debug_menu.h"
 #include "battle.h"
 #include "contest.h"
@@ -17,7 +18,6 @@
 #include "string_util.h"
 #include "task.h"
 #include "text.h"
-
 extern u8 gUnknown_0203856C;
 
 static bool8 sub_80A9B78(void);

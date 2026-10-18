@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "task.h"
 #include "sprite.h"
 #include "evolution_scene.h"
@@ -28,7 +29,6 @@
 #include "menu_cursor.h"
 #include "strings.h"
 #include "ewram.h"
-
 struct EvoInfo
 {
     u8 preEvoSpriteId;

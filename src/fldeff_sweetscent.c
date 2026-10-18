@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "event_scripts.h"
 #include "field_effect.h"
 #include "field_player_avatar.h"
@@ -13,7 +14,6 @@
 #include "wild_encounter.h"
 #include "constants/field_effects.h"
 #include "constants/songs.h"
-
 static void FieldCallback_SweetScent(void);
 static void StartSweetScentFieldEffect(void);
 static void TrySweetScentEncounter(u8 taskId);

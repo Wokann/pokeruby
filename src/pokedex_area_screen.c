@@ -1,5 +1,6 @@
 // Includes
 #include "global.h"
+#include "constants/rgb.h"
 #include "gametypes.h"
 #include "pokedex_area_screen.h"
 #include "constants/species.h"
@@ -21,7 +22,6 @@
 #include "event_data.h"
 #include "trig.h"
 #include "graphics.h"
-
 // Static type declarations
 
 struct OverworldArea

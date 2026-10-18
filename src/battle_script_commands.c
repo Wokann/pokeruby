@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle_scripts.h"
 #include "pokedex.h"
 #include "reshow_battle_screen.h"
@@ -41,7 +42,6 @@
 #include "naming_screen.h"
 #include "ewram.h"
 #include "util.h"
-
 //extern needed variables
 extern u8 gUnknown_02023A14_50;
 extern s32 gBattleMoveDamage;

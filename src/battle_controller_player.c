@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "item_menu.h"
 #include "dma3.h"
 #include "reshow_battle_screen.h"
@@ -28,7 +29,6 @@
 #include "constants/items.h"
 #include "constants/moves.h"
 #include "constants/songs.h"
-
 #if ENGLISH
 #define SUB_803037C_TILE_DATA_OFFSET 440
 #elif GERMAN

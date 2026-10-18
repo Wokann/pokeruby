@@ -1,9 +1,9 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle_anim.h"
 #include "trig.h"
 #include "sound.h"
 #include "util.h"
-
 // shimmer
 // Used by Magical Leaf.
 

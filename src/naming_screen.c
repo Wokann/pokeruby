@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "naming_screen.h"
 #include "data.h"
 #include "graphics.h"
@@ -20,7 +21,6 @@
 #include "trig.h"
 #include "util.h"
 #include "ewram.h"
-
 #ifdef ENGLISH
 #define COLUMN_COUNT 9
 #elif GERMAN

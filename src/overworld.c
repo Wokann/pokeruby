@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "overworld.h"
 #include "battle_setup.h"
 #include "berry.h"
@@ -50,7 +51,6 @@
 #include "time_events.h"
 #include "tv.h"
 #include "wild_encounter.h"
-
 static void SetKeyInterceptCallback(u16 (*func)(u32));
 static void SpawnLinkPlayers(void);
 static void CreateLinkPlayerSprites(void);

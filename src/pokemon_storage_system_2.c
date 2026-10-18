@@ -1,6 +1,7 @@
 
 // Includes
 #include "global.h"
+#include "constants/rgb.h"
 #include "load_save.h"
 #include "decompress.h"
 #include "constants/songs.h"
@@ -19,7 +20,6 @@
 #include "mail.h"
 #include "naming_screen.h"
 #include "pokemon_storage_system.h"
-
 // Static type declarations
 
 enum {

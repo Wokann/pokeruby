@@ -1,9 +1,9 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle_anim.h"
 #include "trig.h"
 #include "sound.h"
 #include "palette.h"
-
 static void AnimWavyMusicNotes(struct Sprite *sprite);
 static void AnimFlyingMusicNotes(struct Sprite *sprite);
 static void AnimBellyDrumHand(struct Sprite *sprite);

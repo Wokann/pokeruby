@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle_controllers.h"
 #include "overworld.h"
 #include "sprite.h"
@@ -26,7 +27,6 @@
 #include "event_data.h"
 #include "pokeblock.h"
 #include "ewram.h"
-
 struct UnkPokeblockStruct
 {
     u8 selectedRow;

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/species.h"
 #include "main_menu.h"
@@ -24,7 +25,6 @@
 #include "title_screen.h"
 #include "scanline_effect.h"
 #include "ewram.h"
-
 #define BirchSpeechUpdateWindowText() ((u8)Menu_UpdateWindowTextOverrideLineLength(24))
 
 extern struct PaletteFadeControl gPaletteFade;

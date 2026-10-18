@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "main.h"
 #include "pokenav.h"
 #include "ewram.h"
@@ -27,7 +28,6 @@
 #include "pokemon_summary_screen.h"
 #include "constants/game_stat.h"
 #include "pokemon.h"
-
 struct UnknownPokenav0
 {
     /* 0x0000 */ u8 var0[0x0300];

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "item_menu.h"
 #include "reshow_battle_screen.h"
 #include "battle.h"
@@ -25,7 +26,6 @@
 #include "ewram.h"
 #include "constants/songs.h"
 #include "constants/trainers.h"
-
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 
 // this file's functions

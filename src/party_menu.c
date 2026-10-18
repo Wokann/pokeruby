@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle_gfx_sfx_util.h"
 #include "constants/items.h"
 #include "constants/item_effects.h"
@@ -38,7 +39,6 @@
 #include "util.h"
 #include "script_pokemon_80F9.h"
 #include "ewram.h"
-
 struct Coords8
 {
     u8 x;

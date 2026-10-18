@@ -4,6 +4,7 @@
 //
 
 #include "global.h"
+#include "constants/rgb.h"
 #include "item_menu.h"
 #include "main.h"
 #include "overworld.h"
@@ -20,7 +21,6 @@
 #include "sound.h"
 #include "constants/songs.h"
 #include "pokeblock.h"
-
 #define TAG_UP_DOWN 0
 
 #ifdef GERMAN

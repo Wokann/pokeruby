@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle.h"
 #include "item_menu_icons.h"
 #include "berry_tag_screen.h"
@@ -21,7 +22,6 @@
 #include "strings.h"
 #include "task.h"
 #include "text.h"
-
 #define OFFSET_7B (123)
 
 struct Struct2000000

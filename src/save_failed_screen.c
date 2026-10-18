@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "gba/flash_internal.h"
 #include "m4a.h"
 #include "main.h"
@@ -11,7 +12,6 @@
 #include "task.h"
 #include "text.h"
 #include "ewram.h"
-
 // In English 1.0, the text window is too small, causing text to overflow.
 
 #ifdef BUGFIX_SAVEFAILEDSCREEN1

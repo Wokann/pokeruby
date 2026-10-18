@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "mail.h"
 #include "data.h"
 #include "easy_chat.h"
@@ -22,7 +23,6 @@
 #include "text.h"
 #include "scanline_effect.h"
 #include "ewram.h"
-
 struct MailLineLayout
 {
     u8 unk_0_0:2;

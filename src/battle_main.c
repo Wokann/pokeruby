@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "constants/abilities.h"
 #include "constants/battle_move_effects.h"
 #include "constants/hold_effects.h"
@@ -52,7 +53,6 @@
 #include "ewram.h"
 #include "constants/battle_string_ids.h"
 #include "constants/trainers.h"
-
 void SpriteCB_UnusedBattleInit_Main(struct Sprite *);
 void SpriteCB_Flicker(struct Sprite *);
 void SpriteCB_MoveWildMonToRight(struct Sprite *sprite);

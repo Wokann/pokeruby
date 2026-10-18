@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "item_menu.h"
 #include "battle_anim.h"
 #include "battle_controllers.h"
@@ -19,7 +20,6 @@
 #include "text.h"
 #include "util.h"
 #include "constants/songs.h"
-
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 
 #if ENGLISH

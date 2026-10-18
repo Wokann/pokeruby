@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "diploma.h"
 #include "main.h"
 #include "menu.h"
@@ -11,7 +12,6 @@
 #include "task.h"
 #include "text.h"
 #include "scanline_effect.h"
-
 static void VBlankCB(void);
 static void MainCB2(void);
 static void Task_DiplomaFadeIn(u8);

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "option_menu.h"
 #include "main.h"
 #include "menu.h"
@@ -9,7 +10,6 @@
 #include "strings.h"
 #include "task.h"
 #include "gba/m4a_internal.h"
-
 // Menu items
 enum
 {

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "pokedex.h"
 #include "field_screen_effect.h"
 #include "graphics.h"
@@ -26,7 +27,6 @@
 #include "text_window.h"
 #include "trig.h"
 #include "trade.h"
-
 
 struct EggHatchData
 {

@@ -1,9 +1,9 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "main.h"
 #include "palette.h"
 #include "sprite.h"
 #include "pc_screen_effect.h"
-
 static void sub_80C603C(void);
 static void sub_80C6078(void);
 static void sub_80C60CC(struct Sprite *);

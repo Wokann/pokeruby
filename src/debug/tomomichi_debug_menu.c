@@ -1,5 +1,6 @@
 #if DEBUG
 #include "global.h"
+#include "constants/rgb.h"
 #include "ewram.h"
 #include "string_util.h"
 #include "palette.h"
@@ -16,7 +17,6 @@
 #include "contest.h"
 #include "contest_painting.h"
 #include "sound.h"
-
 // TRN: If anyone wants to translate the dummy options, they are welcome to :P
 
 static u16 sPicTest_Species;

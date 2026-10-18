@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "item_menu.h"
 #include "task.h"
 #include "palette.h"
@@ -22,7 +23,6 @@
 #include "sound.h"
 #include "trig.h"
 #include "ewram.h"
-
 extern const u8 gBattleEnvironmentPalette_BattleTower[];
 
 // this file's functions

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "graphics.h"
 #include "gba/m4a_internal.h"
 #include "intro.h"
@@ -22,7 +23,6 @@
 #include "trig.h"
 #include "scanline_effect.h"
 #include "ewram.h"
-
 extern const u16 gIntroCopyright_Tilemap[];
 extern void *const gUnknown_0840B5A0[];
 

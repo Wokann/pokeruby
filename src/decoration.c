@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "constants/decorations.h"
 #include "main.h"
 #include "constants/event_objects.h"
@@ -26,7 +27,6 @@
 #include "shop.h"
 #include "trader.h"
 #include "ewram.h"
-
 struct DecorationPCContext
 {
     /* 0x00 */ u8 *items;

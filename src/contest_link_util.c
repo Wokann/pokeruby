@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "contest_link_util.h"
 #include "contest_util.h"
 #include "battle.h"
@@ -30,7 +31,6 @@
 #include "trig.h"
 #include "tv.h"
 #include "util.h"
-
 #define ABS(x) ((x) < 0 ? -(x) : (x))
 
 #define GET_CONTEST_WINNER_ID(var) {           \

@@ -1,5 +1,6 @@
 #if DEBUG
 #include "global.h"
+#include "constants/rgb.h"
 #include "constants/items.h"
 #include "constants/species.h"
 #include "constants/songs.h"
@@ -24,7 +25,6 @@
 #include "menu.h"
 #include "menu_helpers.h"
 #include "pokeblock.h"
-
 static bool8 TopMenu_HandleJoypad(void);
 static bool8 SwitchToPkmnListMenu(void);
 static bool8 MakeBasesToMax(void);

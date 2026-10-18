@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "constants/easy_chat.h"
 #include "constants/event_objects.h"
 #include "data.h"
@@ -17,7 +18,6 @@
 #include "strings.h"
 #include "trig.h"
 #include "scanline_effect.h"
-
 #include "data/text/easy_chat/group_words.h"
 #include "data/text/easy_chat/words_by_letter.h"
 #include "data/text/easy_chat/group_sizes.h"

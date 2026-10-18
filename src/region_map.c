@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "constants/region_map_sections.h"
 #include "event_data.h"
 #include "field_effect.h"
@@ -22,7 +23,6 @@
 #include "ewram.h"
 #include "heal_location.h"
 #include "constants/heal_locations.h"
-
 #define MAP_WIDTH 28
 #define MAP_HEIGHT 15
 #define MAPCURSOR_X_MIN 1

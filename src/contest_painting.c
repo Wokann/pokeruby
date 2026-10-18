@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "contest.h"
 #include "contest_painting.h"
 #include "data.h"
@@ -14,7 +15,6 @@
 #include "string_util.h"
 #include "strings.h"
 #include "text.h"
-
 static u8 sHoldState;
 static u16 sMosaicVal;
 static u16 sFadeCounter;

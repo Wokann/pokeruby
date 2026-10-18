@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle.h"
 #include "battle_gfx_sfx_util.h"
 #include "battle_anim.h"
@@ -17,7 +18,6 @@
 #include "util.h"
 #include "constants/items.h"
 #include "constants/songs.h"
-
 int gMonShrinkDuration;
 u16 gMonShrinkDelta;
 u16 gMonShrinkDistance;

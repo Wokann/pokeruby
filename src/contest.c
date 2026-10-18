@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "contest.h"
 #include "battle.h"
 #include "battle_anim.h"
@@ -31,7 +32,6 @@
 #include "text.h"
 #include "tv.h"
 #include "util.h"
-
 #include "contest_internal.h"
 
 static void TaskDummy1(u8 taskId);

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "item_menu_icons.h"
 #include "item_menu.h"
 #include "berry.h"
@@ -28,7 +29,6 @@
 #include "constants/songs.h"
 #include "constants/items.h"
 #include "constants/berry.h"
-
 #define SCORE_BEST      0
 #define SCORE_GOOD      1
 #define SCORE_MISS      2

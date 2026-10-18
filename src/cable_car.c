@@ -1,6 +1,7 @@
 
 // Includes
 #include "global.h"
+#include "constants/rgb.h"
 #include "ewram.h"
 #include "overworld.h"
 #include "palette.h"
@@ -21,7 +22,6 @@
 #include "cable_car_util.h"
 #include "constants/event_objects.h"
 #include "constants/weather.h"
-
 // Static type declarations
 
 struct CableCarEwramStruct1

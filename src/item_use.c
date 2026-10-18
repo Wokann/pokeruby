@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "item_use.h"
 #include "battle.h"
 #include "berry.h"
@@ -39,7 +40,6 @@
 #include "constants/map_types.h"
 #include "constants/species.h"
 #include "constants/vars.h"
-
 extern void (*gFieldItemUseCallback)(u8);
 extern void (*gPokemonItemUseCallback)(u8, u16, TaskFunc);
 

@@ -1,10 +1,10 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle_anim.h"
 #include "trig.h"
 #include "sound.h"
 #include "palette.h"
 #include "util.h"
-
 static void AnimTask_DoubleTeam_Step(u8 taskId);
 static void AnimDoubleTeam(struct Sprite *sprite);
 

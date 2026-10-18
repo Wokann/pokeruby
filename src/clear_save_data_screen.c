@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "clear_save_data_menu.h"
 #include "main.h"
 #include "menu.h"
@@ -8,7 +9,6 @@
 #include "sound.h"
 #include "sprite.h"
 #include "task.h"
-
 extern const u8 gText_ClearAllSaveData[];
 extern const u8 gText_ClearingData[];
 

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "sprite.h"
 #include "graphics.h"
 #include "main.h"
@@ -24,7 +25,6 @@
 #include "credits.h"
 #include "pc_screen_effect.h"
 #include "ewram.h"
-
 static EWRAM_DATA u32 sHofFadePalettes = 0;
 
 extern void (*gGameContinueCallback)(void);

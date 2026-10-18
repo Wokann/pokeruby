@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "reset_rtc_screen.h"
 #include "event_data.h"
 #include "main.h"
@@ -16,7 +17,6 @@
 #include "task.h"
 #include "text.h"
 #include "scanline_effect.h"
-
 struct ResetRtcInputMap
 {
     /*0x0*/ u8 dataIndex;

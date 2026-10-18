@@ -1,6 +1,7 @@
 
 // Includes
 #include "global.h"
+#include "constants/rgb.h"
 #include "load_save.h"
 #include "dma3.h"
 #include "ewram.h"
@@ -16,7 +17,6 @@
 #include "pokemon_storage_system.h"
 #include "sound.h"
 #include "constants/songs.h"
-
 // Static type declarations
 
 struct Wallpaper {

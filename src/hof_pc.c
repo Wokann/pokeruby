@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "hall_of_fame.h"
 #include "main.h"
 #include "palette.h"
@@ -6,7 +7,6 @@
 #include "script.h"
 #include "script_menu.h"
 #include "task.h"
-
 static void ReshowPCMenuAfterHallOfFamePC(void);
 static void Task_WaitForPaletteFade(u8);
 

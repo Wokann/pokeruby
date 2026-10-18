@@ -1,8 +1,7 @@
-#ifndef GUARD_GBA_DEFINES
-#define GUARD_GBA_DEFINES
+#ifndef GUARD_GBA_DEFINES_H
+#define GUARD_GBA_DEFINES_H
 
 #include <stddef.h>
-#include "constants/rgb.h"
 
 #define TRUE  1
 #define FALSE 0
@@ -65,4 +64,4 @@
 #define PLTT_OFFSET_4BPP(n) ((n) * PLTT_SIZE_4BPP)
 
 
-#endif // GUARD_GBA_DEFINES
+#endif // GUARD_GBA_DEFINES_H

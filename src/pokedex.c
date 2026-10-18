@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "gba/m4a_internal.h"
 #include "pokedex.h"
 #include "battle.h"
@@ -26,7 +27,6 @@
 #include "trig.h"
 #include "scanline_effect.h"
 #include "ewram.h"
-
 struct PokedexListItem
 {
     u16 dexNum;

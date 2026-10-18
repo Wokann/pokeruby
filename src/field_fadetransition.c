@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "cable_club.h"
 #include "fieldmap.h"
 #include "field_door.h"
@@ -23,7 +24,6 @@
 #include "constants/event_object_movement.h"
 #include "constants/event_objects.h"
 #include "constants/songs.h"
-
 static void FillPalBufferWhite(void);
 static void FillPalBufferBlack(void);
 static void SetPlayerVisibility(bool8 visible);

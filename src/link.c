@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "item_menu.h"
 #include "cable_club.h"
 #include "link.h"
@@ -21,7 +22,6 @@
 #include "task.h"
 #include "text.h"
 #include "ewram.h"
-
 struct BlockTransfer
 {
     u16 pos;

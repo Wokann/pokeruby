@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "util.h"
@@ -8,7 +9,6 @@
 #include "trig.h"
 #include "constants/battle.h"
 #include "constants/songs.h"
-
 
 static void sub_80DDB6C(struct Sprite *);
 static void AnimConfuseRayBallBounce_Step1(struct Sprite *);

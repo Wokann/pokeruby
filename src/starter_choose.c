@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "starter_choose.h"
 #include "data.h"
 #include "decompress.h"
@@ -16,7 +17,6 @@
 #include "task.h"
 #include "trig.h"
 #include "scanline_effect.h"
-
 //--------------------------------------------------
 // Graphics Data
 //--------------------------------------------------

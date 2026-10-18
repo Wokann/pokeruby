@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "contest.h"
 #include "contest_effect.h"
 #include "data.h"
@@ -23,7 +24,6 @@
 #include "task.h"
 #include "trig.h"
 #include "constants/songs.h"
-
 extern u8 gTileBuffer[];
 
 extern const struct WindowTemplate gMenuTextWindowTemplate;

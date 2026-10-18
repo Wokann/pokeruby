@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle_tower.h"
 #include "start_menu.h"
 #include "event_data.h"
@@ -31,7 +32,6 @@
 #include "task.h"
 #include "trainer_card.h"
 #include "scanline_effect.h"
-
 //Menu actions
 enum {
     MENU_ACTION_POKEDEX,

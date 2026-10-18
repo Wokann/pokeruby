@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle.h"
 #include "battle_gfx_sfx_util.h"
 #include "battle_controllers.h"
@@ -23,7 +24,6 @@
 #include "gba/m4a_internal.h"
 #include "ewram.h"
 #include "graphics.h"
-
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern const u8 *const gBattleAnims_General[];
 extern const u8 *const gBattleAnims_Special[];

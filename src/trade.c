@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle_anim.h"
 #include "international_string_util.h"
 #include "string_util.h"
@@ -40,7 +41,6 @@
 #include "battle_interface.h"
 #include "trade.h"
 #include "ewram.h"
-
 #ifndef NONMATCHING
 asm(".include \"constants/gba_constants.inc\"");
 #endif

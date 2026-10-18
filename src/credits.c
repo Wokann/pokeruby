@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "sprite.h"
 #include "credits.h"
 #include "data.h"
@@ -20,7 +21,6 @@
 #include "task.h"
 #include "trig.h"
 #include "ewram.h"
-
 asm(".set REG_BASE, 0x4000000");
 asm(".set OFFSET_REG_BLDCNT,      0x50");
 asm(".set OFFSET_REG_BLDALPHA,    0x52");

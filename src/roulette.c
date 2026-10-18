@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "math_util.h"
 #include "random.h"
 #include "graphics.h"
@@ -29,7 +30,6 @@
 #include "text.h"
 #include "trig.h"
 #include "scanline_effect.h"
-
 asm(".include \"constants/gba_constants.inc\"");
 
 #if DEBUG

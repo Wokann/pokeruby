@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "dma3.h"
 #include "shop.h"
 #include "decompress.h"
@@ -29,7 +30,6 @@
 #include "decoration_inventory.h"
 #include "field_camera.h"
 #include "ewram.h"
-
 extern bool8 SellMenu_QuantityRoller(u8, u8);
 
 extern const u8 gShopMenu_Gfx[];

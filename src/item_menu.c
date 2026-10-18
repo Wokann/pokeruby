@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle.h"
 #include "battle_controllers.h"
 #include "event_scripts.h"
@@ -46,7 +47,6 @@
 #include "field_weather.h"
 #include "pokemon_storage_system.h"
 #include "event_object_lock.h"
-
 struct UnknownStruct2
 {
     u8 unk0;

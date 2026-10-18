@@ -1,6 +1,7 @@
 #if DEBUG
 
 #include "global.h"
+#include "constants/rgb.h"
 #include "field_effect.h"
 #include "field_control_avatar.h"
 #include "field_player_avatar.h"
@@ -14,7 +15,6 @@
 #include "slot_machine.h"
 #include "start_menu.h"
 #include "trainer_card.h"
-
 void InitKagayaDebugMenu_B(void);
 u8 debug_sub_80B061C(void);
 u8 KagayaDebugMenu_TrainerCard(void);

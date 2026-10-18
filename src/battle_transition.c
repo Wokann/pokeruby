@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle_transition.h"
 #include "event_object_movement.h"
 #include "main.h"
@@ -17,7 +18,6 @@
 #include "constants/songs.h"
 #include "constants/field_effects.h"
 #include "constants/trainers.h"
-
 struct TransitionData
 {
     vs8 VBlank_DMA;

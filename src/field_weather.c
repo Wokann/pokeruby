@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/weather.h"
 #include "util.h"
@@ -16,7 +17,6 @@
 #include "trig.h"
 #include "ewram.h"
 #include "constants/field_weather.h"
-
 #define DROUGHT_COLOR_INDEX(color) ((((color) >> 1) & 0xF) | (((color) >> 2) & 0xF0) | (((color) >> 3) & 0xF00))
 
 enum

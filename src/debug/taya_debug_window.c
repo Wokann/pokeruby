@@ -1,5 +1,6 @@
 #if DEBUG
 #include "global.h"
+#include "constants/rgb.h"
 #include "load_save.h"
 #include "constants/species.h"
 #include "constants/opponents.h"
@@ -19,7 +20,6 @@
 #include "battle_setup.h"
 #include "region_map.h"
 #include "overworld.h"
-
 bool8 debug_sub_8090808(void);
 bool8 debug_sub_808560C(void);
 bool8 TayaDebugMenu_LanettesPC(void);

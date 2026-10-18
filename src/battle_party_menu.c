@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "load_save.h"
 #include "battle_controllers.h"
 #include "reshow_battle_screen.h"
@@ -20,7 +21,6 @@
 #include "task.h"
 #include "text.h"
 #include "ewram.h"
-
 EWRAM_DATA u8 gBattlePartyCurrentOrder[3] = {};
 EWRAM_DATA u8 gUnknown_02038473 = 0;
 

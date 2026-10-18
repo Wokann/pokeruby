@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "evolution_graphics.h"
 #include "sprite.h"
 #include "trig.h"
@@ -8,7 +9,6 @@
 #include "sound.h"
 #include "constants/songs.h"
 #include "palette.h"
-
 // this file's functions
 static void SpriteCB_Sparkle_Dummy(struct Sprite* sprite);
 static void Task_Sparkles_SpiralUpward_Init(u8 taskId);

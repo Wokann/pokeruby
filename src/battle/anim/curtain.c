@@ -1,9 +1,9 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle_anim.h"
 #include "trig.h"
 #include "sound.h"
 #include "palette.h"
-
 extern u16 gBattle_WIN0V;
 extern u16 gBattle_WIN0H;
 

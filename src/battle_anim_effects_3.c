@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle.h"
 #include "battle_gfx_sfx_util.h"
 #include "battle_anim.h"
@@ -15,7 +16,6 @@
 #include "trig.h"
 #include "constants/songs.h"
 #include "constants/species.h"
-
 extern const struct SpriteTemplate gThoughtBubbleSpriteTemplate;
 extern const u32 gBattleAnimMaskTilemap_LightBeam[];
 extern const u32 gBattleAnimMaskImage_LightBeam[];

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "easy_chat.h"
 #include "pokemon.h"
 #include "pokemon_menu.h"
@@ -36,7 +37,6 @@
 #include "constants/field_effects.h"
 #include "constants/moves.h"
 #include "constants/songs.h"
-
 /*
 Pokemon menu:
     The menu that appears when you

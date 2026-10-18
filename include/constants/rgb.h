@@ -1,5 +1,5 @@
-#ifndef POKERUBY_CONSTANTS_RGB_H
-#define POKERUBY_CONSTANTS_RGB_H
+#ifndef GUARD_RGB_H
+#define GUARD_RGB_H
 
 #define GET_R(color) ((color) & 0x1F)
 #define GET_G(color) (((color) >> 5) & 0x1F)
@@ -18,4 +18,4 @@
 #define RGB2(r, g, b) (((b) << 10) | ((g) << 5) | (r))
 #define _RGB(r, g, b) ((((b) & 31) << 10) + (((g) & 31) << 5) + ((r) & 31))
 
-#endif // POKERUBY_CONSTANTS_RGB_H
+#endif // GUARD_RGB_H

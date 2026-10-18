@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_main.h"
@@ -36,7 +37,6 @@
 #include "constants/songs.h"
 #include "constants/species.h"
 #include "constants/region_map_sections.h"
-
 static void SummaryScreen_PrintPokemonInfoLabels(void);
 static void SummaryScreen_PrintPokemonSkillsLabels(void);
 static void sub_809F63C(struct Pokemon *);

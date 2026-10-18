@@ -1,8 +1,8 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "palette.h"
 #include "util.h"
 #include "decompress.h"
-
 enum
 {
     NORMAL_FADE,

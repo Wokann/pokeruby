@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "decompress.h"
 #include "event_data.h"
 #include "graphics.h"
@@ -13,7 +14,6 @@
 #include "trig.h"
 #include "wallclock.h"
 #include "constants/songs.h"
-
 static void WallClockMainCallback(void);
 static void WallClockInit(void);
 static void Task_SetClock_WaitFadeIn(u8 taskId);

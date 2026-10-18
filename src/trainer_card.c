@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "trainer_card.h"
 #include "constants/songs.h"
 #include "contest_util.h"
@@ -23,7 +24,6 @@
 #include "strings.h"
 #include "task.h"
 #include "util.h"
-
 struct TrainerCardData
 {
     /*0x00*/ u8 mainState;

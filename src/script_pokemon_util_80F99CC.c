@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "choose_party.h"
 #include "contest.h"
 #include "data.h"
@@ -17,7 +18,6 @@
 #include "task.h"
 #include "text.h"
 #include "ewram.h"
-
 
 void ChooseContestMon(void)
 {

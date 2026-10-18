@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "constants/easy_chat.h"
 #include "constants/songs.h"
 #include "constants/species.h"
@@ -16,7 +17,6 @@
 #include "string_util.h"
 #include "strings.h"
 #include "scanline_effect.h"
-
 extern const struct WindowTemplate gWindowTemplate_81E6D54;
 extern const struct WindowTemplate gWindowTemplate_81E6DA8;
 
