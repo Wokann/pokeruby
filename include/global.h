@@ -9,6 +9,7 @@
 #include "gametypes.h"
 #include "constants/global.h"
 #include "constants/species.h"
+#include "constants/pokedex.h"
 
 // IDE support
 #if defined(__APPLE__) || defined(__CYGWIN__) || defined(__INTELLISENSE__)

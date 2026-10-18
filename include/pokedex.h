@@ -3,9 +3,6 @@
 
 #include "sprite.h"
 
-#define HOENN_DEX_COUNT 202
-#define NATIONAL_DEX_COUNT 386
-
 enum
 {
     DEX_MODE_HOENN,
