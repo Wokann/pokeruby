@@ -22,6 +22,17 @@
 
 // this file was known as evobjmv.c in Game Freak's original source
 
+#define movement_type_def(setup, table) \
+static u8 setup##_callback(struct ObjectEvent *, struct Sprite *);\
+void setup(struct Sprite *sprite)\
+{\
+    UpdateObjectEventCurrentMovement(&gObjectEvents[sprite->data[0]], sprite, setup##_callback);\
+}\
+static u8 setup##_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)\
+{\
+    return table[sprite->data[1]](objectEvent, sprite);\
+}
+
 static bool8 ObjectEventCB2_BerryTree(struct ObjectEvent*, struct Sprite*);
 static bool8 MovementType_Disguise_Callback(struct ObjectEvent*, struct Sprite*);
 static bool8 MovementType_Buried_Callback(struct ObjectEvent*, struct Sprite*);
