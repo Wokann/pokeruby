@@ -2,14 +2,7 @@
 #define GUARD_WEATHER_H
 
 #include "sprite.h"
-
-// Controls how the weather should be changing the screen palettes.
-enum {
-    WEATHER_PAL_STATE_CHANGING_WEATHER,
-    WEATHER_PAL_STATE_SCREEN_FADING_IN,
-    WEATHER_PAL_STATE_SCREEN_FADING_OUT,
-    WEATHER_PAL_STATE_IDLE,
-};
+#include "constants/field_weather.h"
 
 struct Weather
 {
@@ -119,14 +112,6 @@ struct Weather
     u8 droughtUnused[0xD-4];
     s8 loadDroughtPalsIndex;
     u8 loadDroughtPalsOffset;
-};
-
-enum
-{
-    FADE_FROM_BLACK,
-    FADE_TO_BLACK,
-    FADE_FROM_WHITE,
-    FADE_TO_WHITE,
 };
 
 // field_weather.c

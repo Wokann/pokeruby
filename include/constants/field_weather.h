@@ -10,15 +10,20 @@
 #define NUM_SWIRL_SANDSTORM_SPRITES  5
 
 // Controls how the weather should be changing the screen palettes.
-#define WEATHER_PAL_STATE_CHANGING_WEATHER   0
-#define WEATHER_PAL_STATE_SCREEN_FADING_IN   1
-#define WEATHER_PAL_STATE_SCREEN_FADING_OUT  2
-#define WEATHER_PAL_STATE_IDLE               3
+enum {
+    WEATHER_PAL_STATE_CHANGING_WEATHER,
+    WEATHER_PAL_STATE_SCREEN_FADING_IN,
+    WEATHER_PAL_STATE_SCREEN_FADING_OUT,
+    WEATHER_PAL_STATE_IDLE,
+};
 
 // Modes for FadeScreen
-#define FADE_FROM_BLACK  0
-#define FADE_TO_BLACK    1
-#define FADE_FROM_WHITE  2
-#define FADE_TO_WHITE    3
+enum
+{
+    FADE_FROM_BLACK,
+    FADE_TO_BLACK,
+    FADE_FROM_WHITE,
+    FADE_TO_WHITE,
+};
 
 #endif // GUARD_CONSTANTS_FIELD_WEATHER_H
