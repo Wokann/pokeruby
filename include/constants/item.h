@@ -1,5 +1,5 @@
-#ifndef GUARD_CONSTANTS_ITEM_H
-#define GUARD_CONSTANTS_ITEM_H
+#ifndef GUARD_ITEM_CONSTANTS_H
+#define GUARD_ITEM_CONSTANTS_H
 
 // These constants are used in gItems
 enum
@@ -22,4 +22,4 @@ enum
 
 #define POCKETS_COUNT 5
 
-#endif // GUARD_CONSTANTS_ITEM_H
+#endif // GUARD_ITEM_CONSTANTS_H

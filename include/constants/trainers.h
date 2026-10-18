@@ -1,5 +1,5 @@
-#ifndef GUARD_TRAINER_H
-#define GUARD_TRAINER_H
+#ifndef GUARD_TRAINERS_H
+#define GUARD_TRAINERS_H
 
 #define TRAINER_ENCOUNTER_MUSIC_MALE         0 // standard male encounter music
 #define TRAINER_ENCOUNTER_MUSIC_FEMALE       1 // standard female encounter music
@@ -257,4 +257,4 @@ enum {
     TRAINER_CLASS_SIS_AND_BRO
 };
 
-#endif // GUARD_TRAINER_H
+#endif // GUARD_TRAINERS_H

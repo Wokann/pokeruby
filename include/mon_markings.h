@@ -1,5 +1,5 @@
-#ifndef POKERUBY_MON_MARKINGS_H
-#define POKERUBY_MON_MARKINGS_H
+#ifndef MON_MARKINGS_H
+#define MON_MARKINGS_H
 
 struct MonMarkingsMenu
 {
@@ -29,4 +29,4 @@ struct Sprite *CreateMonMarkingAllCombosSprite(u16 tileTag, u16 paletteTag, cons
 struct Sprite *CreateMonMarkingComboSprite(u16 tileTag, u16 paletteTag, const u16 *palette);
 void UpdateMonMarkingTiles(u8 markings, void *dest);
 
-#endif //POKERUBY_MON_MARKINGS_H
+#endif //MON_MARKINGS_H
