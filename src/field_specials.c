@@ -42,12 +42,6 @@
 #include "constants/species.h"
 #include "constants/weather.h"
 
-#if ENGLISH
-#define CHAR_DEC_SEPARATOR CHAR_PERIOD
-#elif GERMAN
-#define CHAR_DEC_SEPARATOR CHAR_COMMA
-#endif
-
 EWRAM_DATA bool8 gBikeCyclingChallenge = FALSE;
 EWRAM_DATA u8 gBikeCollisions = 0;
 static EWRAM_DATA u32 sBikeCyclingTimer = 0;

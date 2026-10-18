@@ -55,6 +55,12 @@
 #define UNITS_METRIC
 #endif
 
+#if ENGLISH
+#define CHAR_DEC_SEPARATOR CHAR_PERIOD
+#elif GERMAN
+#define CHAR_DEC_SEPARATOR CHAR_COMMA
+#endif
+
 // An option to use fuller translations for debug ROMs.
 // #define DEBUG_FIX 1 // Unsupported languages default to English text.
 
