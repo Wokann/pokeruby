@@ -23,10 +23,12 @@
 	.set OBJ_IMAGE_ANIM_H_FLIP, 1 << 6
 	.set OBJ_IMAGE_ANIM_V_FLIP, 1 << 7
 
+	.ifndef DIR_SOUTH
 	.equiv DIR_SOUTH, 1
 	.equiv DIR_NORTH, 2
 	.equiv DIR_WEST,  3
 	.equiv DIR_EAST,  4
+	.endif
 
 	.ifdef ENGLISH
 	.equiv GAME_LANGUAGE, 2
