@@ -49,12 +49,3 @@
 .equiv AI_WEATHER_RAIN,              1
 .equiv AI_WEATHER_SANDSTORM,         2
 .equiv AI_WEATHER_HAIL,              3
-
-	enum_start 1
-	enum STAT_ATK
-	enum STAT_DEF
-	enum STAT_SPEED
-	enum STAT_SPATK
-	enum STAT_SPDEF
-	enum STAT_ACC
-	enum STAT_EVASION

@@ -6,53 +6,6 @@
 
 struct BattleTowerPokemon;
 
-enum {
-    EGG_GROUP_NONE,
-    EGG_GROUP_MONSTER,
-    EGG_GROUP_WATER_1,
-    EGG_GROUP_BUG,
-    EGG_GROUP_FLYING,
-    EGG_GROUP_FIELD,
-    EGG_GROUP_FAIRY,
-    EGG_GROUP_GRASS,
-    EGG_GROUP_HUMAN_LIKE,
-    EGG_GROUP_WATER_3,
-    EGG_GROUP_MINERAL,
-    EGG_GROUP_AMORPHOUS,
-    EGG_GROUP_WATER_2,
-    EGG_GROUP_DITTO,
-    EGG_GROUP_DRAGON,
-    EGG_GROUP_NO_EGGS_DISCOVERED
-};
-
-enum {
-    NATURE_HARDY,
-    NATURE_LONELY,
-    NATURE_BRAVE,
-    NATURE_ADAMANT,
-    NATURE_NAUGHTY,
-    NATURE_BOLD,
-    NATURE_DOCILE,
-    NATURE_RELAXED,
-    NATURE_IMPISH,
-    NATURE_LAX,
-    NATURE_TIMID,
-    NATURE_HASTY,
-    NATURE_SERIOUS,
-    NATURE_JOLLY,
-    NATURE_NAIVE,
-    NATURE_MODEST,
-    NATURE_MILD,
-    NATURE_QUIET,
-    NATURE_BASHFUL,
-    NATURE_RASH,
-    NATURE_CALM,
-    NATURE_GENTLE,
-    NATURE_SASSY,
-    NATURE_CAREFUL,
-    NATURE_QUIRKY,
-};
-
 struct PokemonSubstruct0
 {
     u16 species;
@@ -207,18 +160,6 @@ struct BattlePokemon
     /*0x54*/ u32 otId;
 };
 
-enum
-{
-    STAT_HP,       // 0
-    STAT_ATK,      // 1
-    STAT_DEF,      // 2
-    STAT_SPEED,    // 3
-    STAT_SPATK,    // 4
-    STAT_SPDEF,    // 5
-    STAT_ACC,      // 6
-    STAT_EVASION,  // 7
-};
-
 struct SpeciesInfo
 {
     /*0x00*/ u8 baseHP;
@@ -274,28 +215,6 @@ struct SpindaSpot
 struct __attribute__((packed)) LevelUpMove {
     u16 move:9;
     u16 level:7;
-};
-
-enum {
-    GROWTH_MEDIUM_FAST,
-    GROWTH_ERRATIC,
-    GROWTH_FLUCTUATING,
-    GROWTH_MEDIUM_SLOW,
-    GROWTH_FAST,
-    GROWTH_SLOW
-};
-
-enum {
-    BODY_COLOR_RED,
-    BODY_COLOR_BLUE,
-    BODY_COLOR_YELLOW,
-    BODY_COLOR_GREEN,
-    BODY_COLOR_BLACK,
-    BODY_COLOR_BROWN,
-    BODY_COLOR_PURPLE,
-    BODY_COLOR_GRAY,
-    BODY_COLOR_WHITE,
-    BODY_COLOR_PINK
 };
 
 #define GET_UNOWN_LETTER(personality) ((\
