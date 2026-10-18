@@ -1179,7 +1179,7 @@ Common_EventScript_NopReturn:: @ 81A14DC
 	.include "data/scripts/players_house.inc"
 
 	.include "data/text/pokeblocks.inc"
-	.include "data/scripts/pokeblocks.inc"
+	.include "data/scripts/berry_blender.inc"
 
 	.include "data/text/trainers.inc"
 
