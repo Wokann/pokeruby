@@ -98,9 +98,6 @@ $(TITLEGFXDIR)/press_start.4bpp: GFX_OPTS := -num_tiles 41
 
 MENUGFXDIR := graphics/interface
 
-$(MENUGFXDIR)/menu.gbapal: $(MENUGFXDIR)/menu_0.gbapal $(MENUGFXDIR)/menu_1.gbapal
-	@cat $(MENUGFXDIR)/menu_0.gbapal $(MENUGFXDIR)/menu_1.gbapal >$@
-
 $(MENUGFXDIR)/wordgroup_frame.4bpp: GFX_OPTS := -num_tiles 65
 
 $(MENUGFXDIR)/party_menu_misc.4bpp: GFX_OPTS := -num_tiles 116
@@ -129,11 +126,11 @@ $(PKNAVGFXDIR)/region_map/map.8bpp: GFX_OPTS := -num_tiles 233
 
 $(PKNAVGFXDIR)/device_outline.4bpp: GFX_OPTS := -num_tiles 43
 
-$(PKNAVGFXDIR)/menu_options.4bpp: $(PKNAVGFXDIR)/menu_hoennmap.4bpp $(PKNAVGFXDIR)/menu_condition.4bpp $(PKNAVGFXDIR)/menu_eyes.4bpp $(PKNAVGFXDIR)/menu_ribbons.4bpp $(PKNAVGFXDIR)/menu_off.4bpp
-	@cat $(PKNAVGFXDIR)/menu_hoennmap.4bpp $(PKNAVGFXDIR)/menu_condition.4bpp $(PKNAVGFXDIR)/menu_eyes.4bpp $(PKNAVGFXDIR)/menu_ribbons.4bpp $(PKNAVGFXDIR)/menu_off.4bpp >$@
+$(PKNAVGFXDIR)/menu_options.4bpp: $(PKNAVGFXDIR)/options/hoenn_map.4bpp $(PKNAVGFXDIR)/options/condition.4bpp $(PKNAVGFXDIR)/menu_eyes.4bpp $(PKNAVGFXDIR)/options/ribbons.4bpp $(PKNAVGFXDIR)/options/switch_off.4bpp
+	@cat $(PKNAVGFXDIR)/options/hoenn_map.4bpp $(PKNAVGFXDIR)/options/condition.4bpp $(PKNAVGFXDIR)/menu_eyes.4bpp $(PKNAVGFXDIR)/options/ribbons.4bpp $(PKNAVGFXDIR)/options/switch_off.4bpp >$@
 
-$(PKNAVGFXDIR)/condition_search.4bpp: $(PKNAVGFXDIR)/condition_search_cool.4bpp $(PKNAVGFXDIR)/condition_search_beauty.4bpp $(PKNAVGFXDIR)/condition_search_cute.4bpp $(PKNAVGFXDIR)/condition_search_smart.4bpp $(PKNAVGFXDIR)/condition_search_tough.4bpp $(PKNAVGFXDIR)/condition_search_cancel.4bpp
-	@cat $(PKNAVGFXDIR)/condition_search_cool.4bpp $(PKNAVGFXDIR)/condition_search_beauty.4bpp $(PKNAVGFXDIR)/condition_search_cute.4bpp $(PKNAVGFXDIR)/condition_search_smart.4bpp $(PKNAVGFXDIR)/condition_search_tough.4bpp $(PKNAVGFXDIR)/condition_search_cancel.4bpp >$@
+$(PKNAVGFXDIR)/condition_search.4bpp: $(PKNAVGFXDIR)/options/cool.4bpp $(PKNAVGFXDIR)/options/beauty.4bpp $(PKNAVGFXDIR)/options/cute.4bpp $(PKNAVGFXDIR)/options/smart.4bpp $(PKNAVGFXDIR)/options/tough.4bpp $(PKNAVGFXDIR)/options/cancel.4bpp
+	@cat $(PKNAVGFXDIR)/options/cool.4bpp $(PKNAVGFXDIR)/options/beauty.4bpp $(PKNAVGFXDIR)/options/cute.4bpp $(PKNAVGFXDIR)/options/smart.4bpp $(PKNAVGFXDIR)/options/tough.4bpp $(PKNAVGFXDIR)/options/cancel.4bpp >$@
 
 
 #### Trade ####
@@ -224,7 +221,7 @@ MISCGFXDIR := graphics/misc
 
 $(MISCGFXDIR)/hof.4bpp: GFX_OPTS := -num_tiles 37
 
-$(MISCGFXDIR)/end_copyright.4bpp: GFX_OPTS := -num_tiles 90
+graphics/credits/the_end_copyright.4bpp: GFX_OPTS := -num_tiles 90
 
 STARTERCHOOSEGFXDIR := graphics/starter_choose
 

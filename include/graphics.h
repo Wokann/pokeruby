@@ -2907,7 +2907,15 @@ extern const u8 gUnknown_08E9AB40[];
 extern const u8 gUnknown_08E9AB60[];
 extern const u8 gUnknown_08E9ABB4[];
 extern const u8 gUnknown_08E9AC2C[];
-extern const u8 gUnknown_08E9AC4C[];
+extern const u8 gPokenavCondition_Tilemap[];
+extern const u8 gPokenavLeftHeaderMainMenu_Gfx[];
+extern const u8 gPokenavLeftHeaderHoennMap_Gfx[];
+extern const u8 gPokenavLeftHeaderCondition_Gfx[];
+extern const u8 gPokenavLeftHeaderRibbons_Gfx[];
+extern const u8 gPokenavCondition_Gfx[];
+extern const u8 gPokenavCondition_Pal[];
+extern const u8 gPokenavRibbonsSummaryBg_Gfx[];
+extern const u8 gPokenavRibbonsSummaryBg_Tilemap[];
 
 extern const u8 gInterviewOutlineCursorTiles[];
 extern const u8 gTitleScreenPressStartGfx[];
