@@ -1735,10 +1735,10 @@ const struct WindowTemplate gWindowTemplate_81E7294 =
 
 static void UpdateBGRegs(const struct WindowTemplate *winTemplate)
 {
-    u8 bgNum = winTemplate->bgNum;
+    u8 bgNum = winTemplate->bg;
     *gBGHOffsetRegs[bgNum] = 0;
     *gBGVOffsetRegs[bgNum] = 0;
-    *gBGControlRegs[bgNum] = winTemplate->priority | (winTemplate->screenBaseBlock << 8) | (winTemplate->charBaseBlock << 2);
+    *gBGControlRegs[bgNum] = winTemplate->priority | (winTemplate->mapBaseIndex << 8) | (winTemplate->charBaseIndex << 2);
 }
 
 static void ClearBGMem(const struct WindowTemplate *winTemplate)

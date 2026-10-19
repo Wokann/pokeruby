@@ -5,9 +5,9 @@
 
 struct WindowTemplate
 {
-    u8 bgNum;
-    u8 charBaseBlock;
-    u8 screenBaseBlock;
+    u8 bg;
+    u8 charBaseIndex;
+    u8 mapBaseIndex;
     u8 priority;
     u8 paletteNum;
     u8 fgColor;
