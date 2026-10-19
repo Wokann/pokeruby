@@ -182,12 +182,12 @@ static const u32 sShrinkingBoxTileset[] = INCBIN_U32("graphics/battle_transition
 
 static struct TransitionData * const sTransitionData = &TRANSITION_STRUCT;
 
-static const TaskFunc sTasks_Intro[TRANSITIONS_NO] =
+static const TaskFunc sTasks_Intro[B_TRANSITION_COUNT] =
 {
-    [0 ... TRANSITIONS_NO - 1] = &Task_Intro
+    [0 ... B_TRANSITION_COUNT - 1] = &Task_Intro
 };
 
-static const TaskFunc sTasks_Main[TRANSITIONS_NO] =
+static const TaskFunc sTasks_Main[B_TRANSITION_COUNT] =
 {
     Task_Blur,                        // 0
     Task_Swirl,                       // 1

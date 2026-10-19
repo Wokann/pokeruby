@@ -8,7 +8,7 @@ bool8 FldEff_PokeballTrail(void);
 
 extern const struct SpritePalette gSpritePalette_Pokeball;
 
-#define TRANSITIONS_NO         17
+#define B_TRANSITION_COUNT         17
 
 enum // TRANSITION_MUGSHOT
 {
