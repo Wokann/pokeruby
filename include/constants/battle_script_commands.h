@@ -49,10 +49,10 @@
 #define BS_ATTACKER_SIDE            8 // for Cmd_jumpifability
 #define BS_NOT_ATTACKER_SIDE        9 // for Cmd_jumpifability
 #define BS_SCRIPTING                10
-#define BS_GET_PLAYER1              11
-#define BS_GET_OPPONENT1            12
-#define BS_GET_PLAYER2              13
-#define BS_GET_OPPONENT2            14
+#define BS_PLAYER1                  11
+#define BS_OPPONENT1                12
+#define BS_PLAYER2                  13
+#define BS_OPPONENT2                14
 
 #define NO_ACC_CALC 0xFFFE
 #define NO_ACC_CALC_CHECK_LOCK_ON 0xFFFF

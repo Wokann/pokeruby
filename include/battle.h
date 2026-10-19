@@ -289,7 +289,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x16020*/ u8 wrappedBy[MAX_BATTLERS_COUNT];
     /*0x16024*/ u16 assistPossibleMoves[PARTY_SIZE * MAX_MON_MOVES];
     /*0x16054*/ u8 battlerPreventingSwitchout;
-    /*0x16055*/ u8 unk16055; // unused
+    /*0x16055*/ u8 twoTurnsMoveStringId;
     /*0x16056*/ u8 moneyMultiplier;
     /*0x16057*/ u8 savedTurnActionNumber;
     /*0x16058*/ u8 switchInAbilitiesCounter;
@@ -353,7 +353,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x160D4*/ u16 chosenItem[2];
     /*0x160D8*/ u8 AI_itemType[2];
     /*0x160DA*/ u8 AI_itemFlags[2];
-    /*0x160DC*/ u8 statAnimPlayed;
+    /*0x160DC*/ bool8 statAnimPlayed;
     /*0x160DD*/ u8 intimidateBattler;
     /*0x160DE*/ u8 unk160DE;
     /*0x160DF*/ u8 unk160DF;
