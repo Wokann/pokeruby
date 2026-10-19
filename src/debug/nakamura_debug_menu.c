@@ -1870,7 +1870,7 @@ static void SetPokeblock_GivePokeblock(void)
         }
     }
 
-    GivePokeblock(pkblk);
+    AddPokeblock(pkblk);
     SetPokeblock_RecomputeAndPrintColor();
 
     for (i = 0; i < 6; i++)

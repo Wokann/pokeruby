@@ -38,7 +38,7 @@ extern const u8 *const gPokeblockNames[];
 extern const struct CompressedSpriteSheet gPokeblockCase_SpriteSheet;
 extern const struct CompressedSpritePalette gPokeblockCase_SpritePal;
 
-void sub_810B96C(void);
+void CB2_InitPokeblockMenu(void);
 u8 CreatePokeblockCaseSprite(s16 x, s16 y, u8 subpriority);
 u8 GetHighestPokeblocksFlavorLevel(struct Pokeblock *pokeblock);
 s16 GetPokeblockData(const struct Pokeblock *pokeblock, u8 field);
@@ -53,7 +53,7 @@ s16 PokeblockGetGain(u8 nature, const struct Pokeblock *pokeblock);
 bool8 CopyMonFavoritePokeblockName(u8 nature, u8 *dest);
 void PokeblockCopyName(struct Pokeblock *pokeblock, u8 *dest);
 void PreparePokeblockFeedScene(void);
-bool8 GivePokeblock(const struct Pokeblock *pokeblock);
+bool8 AddPokeblock(const struct Pokeblock *pokeblock);
 
 #include "main.h"
 

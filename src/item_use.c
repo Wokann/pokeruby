@@ -90,7 +90,7 @@ static const MainCallback sItemUseCallbacks[] =
 {
     CB2_ShowPartyMenuForItemUse,
     CB2_ReturnToField,
-    sub_810B96C,
+    CB2_InitPokeblockMenu,
 };
 
 static const u8 sClockwiseDirections[] = { DIR_NORTH, DIR_EAST, DIR_SOUTH, DIR_WEST };

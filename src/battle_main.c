@@ -2092,7 +2092,7 @@ void debug_sub_801174C(void)
     AddBagItem(ITEM_POKE_DOLL, 99);
 
     for (i = 0; i < 15; i++)
-        GivePokeblock(&gUnknown_Debug_821F5AC[i]);
+        AddPokeblock(&gUnknown_Debug_821F5AC[i]);
 }
 
 void debug_sub_8011D40(void)

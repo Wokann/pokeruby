@@ -3067,7 +3067,7 @@ bool8 PrintBlendingResults(void)
 #endif
         MenuPrintMessage(gBerryBlender->stringVar, 1, 15);
         RemoveBagItem(gSpecialVar_ItemId, 1);
-        GivePokeblock(&pokeblock);
+        AddPokeblock(&pokeblock);
         gBerryBlender->mainState++;
         break;
     case 6:
