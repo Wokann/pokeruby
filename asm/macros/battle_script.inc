@@ -1244,8 +1244,8 @@
 	various \battler, VARIOUS_GET_MOVE_TARGET
 	.endm
 
-	.macro various4 bank
-	various \bank, 4
+	.macro getbattlerfainted battler
+	various \battler, 4
 	.endm
 
 	.macro resetintimidatetracebits battler
@@ -1280,8 +1280,8 @@
 	various \bank, 12
 	.endm
 
-	.macro forfeityesnobox bank
-	various \bank, VARIOUS_EMIT_YESNOBOX
+	.macro forfeityesnobox battler
+	various \battler, VARIOUS_EMIT_YESNOBOX
 	.endm
 
 	.macro various14 bank
@@ -1300,16 +1300,16 @@
 	various \bank, 17
 	.endm
 
-	.macro waitcry bank
-	various \bank, VARIOUS_WAIT_CRY
+	.macro waitcry battler
+	various \battler, VARIOUS_WAIT_CRY
 	.endm
 
-	.macro returnopponentmon1toball bank
-	various \bank, VARIOUS_RETURN_OPPONENT_MON1
+	.macro returnopponentmon1toball battler
+	various \battler, VARIOUS_RETURN_OPPONENT_MON1
 	.endm
 
-	.macro returnopponentmon2toball bank
-	various \bank, VARIOUS_RETURN_OPPONENT_MON2
+	.macro returnopponentmon2toball battler
+	various \battler, VARIOUS_RETURN_OPPONENT_MON2
 	.endm
 
 	.macro various21 bank
@@ -1328,12 +1328,12 @@
 	various \bank, 24
 	.endm
 
-	.macro setoutcomeonteleport bank
-	various \bank, VARIOUS_SET_TELEPORT_OUTCOME
+	.macro setoutcomeonteleport battler
+	various \battler, VARIOUS_SET_TELEPORT_OUTCOME
 	.endm
 
-	.macro playtrainerdefeatbgm bank
-	various \bank, VARIOUS_PLAY_TRAINER_DEFEATED_MUSIC
+	.macro playtrainerdefeatbgm battler
+	various \battler, VARIOUS_PLAY_TRAINER_DEFEATED_MUSIC
 	.endm
 
 @ helpful macros
@@ -1345,8 +1345,8 @@
 	setbyte cEFFECT_CHOOSER, \effect
 	.endm
 	
-	.macro chosenstatus1animation bank, status
-	chosenstatusanimation \bank 0x0 \status
+	.macro chosenstatus1animation battler, status
+	chosenstatusanimation \battler 0x0 \status
 	.endm
 	
 	.macro chosenstatus2animation battler, status
