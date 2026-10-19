@@ -331,8 +331,8 @@ static bool8 sub_810B6C0(void)
         case 12:
             ClearVerticalScrollIndicatorPalettes();
             LoadScrollIndicatorPalette();
-            CreateVerticalScrollIndicators(TOP_ARROW, 0xb0, 0x08);
-            CreateVerticalScrollIndicators(BOTTOM_ARROW, 0xb0, 0x98);
+            CreateVerticalScrollIndicators(SCROLL_ARROW_UP, 0xb0, 0x08);
+            CreateVerticalScrollIndicators(SCROLL_ARROW_DOWN, 0xb0, 0x98);
             gMain.state++;
             break;
         case 13:
@@ -578,19 +578,19 @@ static void sub_810BDAC(bool8 flag)
     }
     if (gUnknown_02039248.scrollOffset)
     {
-        SetVerticalScrollIndicators(TOP_ARROW, VISIBLE);
+        SetVerticalScrollIndicators(SCROLL_ARROW_UP, VISIBLE);
     }
     else
     {
-        SetVerticalScrollIndicators(TOP_ARROW, INVISIBLE);
+        SetVerticalScrollIndicators(SCROLL_ARROW_UP, INVISIBLE);
     }
     if (gUnknown_02039248.unk2 > gUnknown_02039248.unk3 && gUnknown_02039248.scrollOffset + gUnknown_02039248.unk3 != gUnknown_02039248.unk2)
     {
-        SetVerticalScrollIndicators(BOTTOM_ARROW, VISIBLE);
+        SetVerticalScrollIndicators(SCROLL_ARROW_DOWN, VISIBLE);
     }
     else
     {
-        SetVerticalScrollIndicators(BOTTOM_ARROW, INVISIBLE);
+        SetVerticalScrollIndicators(SCROLL_ARROW_DOWN, INVISIBLE);
     }
     for (i=0; i<5; i++)
     {
@@ -794,8 +794,8 @@ static void sub_810C23C(u8 taskId)
 
 static void sub_810C2B0(void)
 {
-    DestroyVerticalScrollIndicator(TOP_ARROW);
-    DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+    DestroyVerticalScrollIndicator(SCROLL_ARROW_UP);
+    DestroyVerticalScrollIndicator(SCROLL_ARROW_DOWN);
     BuyMenuFreeMemory();
 }
 
@@ -828,8 +828,8 @@ static void sub_810C368(u8 taskId)
     int v0 = 0;
     if (gUnknown_02039244 > 1)
         v0 = 2;
-    StopVerticalScrollIndicators(TOP_ARROW);
-    StopVerticalScrollIndicators(BOTTOM_ARROW);
+    StopVerticalScrollIndicators(SCROLL_ARROW_UP);
+    StopVerticalScrollIndicators(SCROLL_ARROW_DOWN);
     BasicInitMenuWindow(&gWindowTemplate_81E6E50);
     Menu_DrawStdWindowFrame(7, v0 + 4, 13, 11);
     Menu_PrintItemsReordered(8, v0 + 5, sNumPokeblockActions, sPokeblockMenuActions, sPokeblockActionIds);
@@ -896,7 +896,7 @@ static void sub_810C540(u8 taskId)
 
 static void sub_810C5C0(u8 taskId)
 {
-    SetVerticalScrollIndicators(BOTTOM_ARROW, INVISIBLE);
+    SetVerticalScrollIndicators(SCROLL_ARROW_DOWN, INVISIBLE);
     gTasks[taskId].func = sub_810C540;
 }
 
@@ -918,11 +918,11 @@ static void sub_810C610(u8 taskId)
 
 static void sub_810C668(u8 taskId)
 {
-    StartVerticalScrollIndicators(TOP_ARROW);
-    StartVerticalScrollIndicators(BOTTOM_ARROW);
+    StartVerticalScrollIndicators(SCROLL_ARROW_UP);
+    StartVerticalScrollIndicators(SCROLL_ARROW_DOWN);
     if (gUnknown_02039248.unk2 > gUnknown_02039248.unk3 && gUnknown_02039248.scrollOffset + gUnknown_02039248.unk3 != gUnknown_02039248.unk2)
     {
-        SetVerticalScrollIndicators(BOTTOM_ARROW, VISIBLE);
+        SetVerticalScrollIndicators(SCROLL_ARROW_DOWN, VISIBLE);
     }
     BasicInitMenuWindow(&gWindowTemplate_81E6E50);
     Menu_EraseWindowRect(7, 6, 13, 11);
@@ -942,14 +942,14 @@ static void sub_810C704(u8 taskId)
 {
     BasicInitMenuWindow(&gWindowTemplate_81E6E34);
     sub_810BC84(gUnknown_02039248.scrollOffset);
-    SetVerticalScrollIndicators(BOTTOM_ARROW, INVISIBLE);
+    SetVerticalScrollIndicators(SCROLL_ARROW_DOWN, INVISIBLE);
     gTasks[taskId].func = sub_810C6DC;
 }
 
 static void sub_810C748(u8 taskId)
 {
-    StartVerticalScrollIndicators(TOP_ARROW);
-    StartVerticalScrollIndicators(BOTTOM_ARROW);
+    StartVerticalScrollIndicators(SCROLL_ARROW_UP);
+    StartVerticalScrollIndicators(SCROLL_ARROW_DOWN);
     Menu_DestroyCursor();
     Menu_EraseWindowRect(7, 4, 13, 11);
     gTasks[taskId].func = sub_810BF7C;

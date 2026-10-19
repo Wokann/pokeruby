@@ -392,18 +392,18 @@ static bool8 SetupBagMenu(void)
     case 10:
         ClearVerticalScrollIndicatorPalettes();
         LoadScrollIndicatorPalette();
-        CreateVerticalScrollIndicators(TOP_ARROW, 172, 12);
-        CreateVerticalScrollIndicators(BOTTOM_ARROW, 172, 148);
-        CreateVerticalScrollIndicators(LEFT_ARROW, 28, 88);
-        CreateVerticalScrollIndicators(RIGHT_ARROW, 100, 88);
-        SetVerticalScrollIndicatorPriority(TOP_ARROW, 2);
-        SetVerticalScrollIndicatorPriority(BOTTOM_ARROW, 2);
-        SetVerticalScrollIndicatorPriority(LEFT_ARROW, 2);
-        SetVerticalScrollIndicatorPriority(RIGHT_ARROW, 2);
+        CreateVerticalScrollIndicators(SCROLL_ARROW_UP, 172, 12);
+        CreateVerticalScrollIndicators(SCROLL_ARROW_DOWN, 172, 148);
+        CreateVerticalScrollIndicators(SCROLL_ARROW_LEFT, 28, 88);
+        CreateVerticalScrollIndicators(SCROLL_ARROW_RIGHT, 100, 88);
+        SetVerticalScrollIndicatorPriority(SCROLL_ARROW_UP, 2);
+        SetVerticalScrollIndicatorPriority(SCROLL_ARROW_DOWN, 2);
+        SetVerticalScrollIndicatorPriority(SCROLL_ARROW_LEFT, 2);
+        SetVerticalScrollIndicatorPriority(SCROLL_ARROW_RIGHT, 2);
         if (sReturnLocation == ITEMMENULOCATION_BERRY_TREE || sReturnLocation == RETURN_TO_FIELD_5)
         {
-            SetVerticalScrollIndicators(LEFT_ARROW, INVISIBLE);
-            SetVerticalScrollIndicators(RIGHT_ARROW, INVISIBLE);
+            SetVerticalScrollIndicators(SCROLL_ARROW_LEFT, INVISIBLE);
+            SetVerticalScrollIndicators(SCROLL_ARROW_RIGHT, INVISIBLE);
         }
         gMain.state++;
         break;
@@ -653,10 +653,10 @@ static void sub_80A3770(void)
 static void ReturnToItemList(u8 taskId)
 {
     gTasks[taskId].func = Task_BagMenu_HandleInput;
-    StartVerticalScrollIndicators(TOP_ARROW);
-    StartVerticalScrollIndicators(BOTTOM_ARROW);
-    StartVerticalScrollIndicators(LEFT_ARROW);
-    StartVerticalScrollIndicators(RIGHT_ARROW);
+    StartVerticalScrollIndicators(SCROLL_ARROW_UP);
+    StartVerticalScrollIndicators(SCROLL_ARROW_DOWN);
+    StartVerticalScrollIndicators(SCROLL_ARROW_LEFT);
+    StartVerticalScrollIndicators(SCROLL_ARROW_RIGHT);
 }
 
 static void Task_SwitchBagPocket(u8 taskId)
@@ -698,8 +698,8 @@ static void Task_SwitchBagPocket(u8 taskId)
         ReturnToItemList(FindTaskIdByFunc(sub_80A4F68));
         DestroyTask(taskId);
         ItemListMenu_InitMenu();
-        SetVerticalScrollIndicators(LEFT_ARROW, VISIBLE);
-        SetVerticalScrollIndicators(RIGHT_ARROW, VISIBLE);
+        SetVerticalScrollIndicators(SCROLL_ARROW_LEFT, VISIBLE);
+        SetVerticalScrollIndicators(SCROLL_ARROW_RIGHT, VISIBLE);
     }
 }
 
@@ -1287,14 +1287,14 @@ static void sub_80A47E8(u16 taskId, int topItemOffset, int bottomItemOffset, int
         break;
     }
     if (gBagPocketScrollStates[sCurrentBagPocket].scrollPosition != 0)
-        SetVerticalScrollIndicators(TOP_ARROW, VISIBLE);
+        SetVerticalScrollIndicators(SCROLL_ARROW_UP, VISIBLE);
     else
-        SetVerticalScrollIndicators(TOP_ARROW, INVISIBLE);
+        SetVerticalScrollIndicators(SCROLL_ARROW_UP, INVISIBLE);
     if ((sReturnLocation != RETURN_TO_FIELD_5 && gBagPocketScrollStates[sCurrentBagPocket].scrollPosition + 8 < gBagPocketScrollStates[sCurrentBagPocket].numSlots + 1)
      || (sReturnLocation == RETURN_TO_FIELD_5 && gBagPocketScrollStates[sCurrentBagPocket].scrollPosition + 8 < gBagPocketScrollStates[sCurrentBagPocket].numSlots))
-        SetVerticalScrollIndicators(BOTTOM_ARROW, VISIBLE);
+        SetVerticalScrollIndicators(SCROLL_ARROW_DOWN, VISIBLE);
     else
-        SetVerticalScrollIndicators(BOTTOM_ARROW, INVISIBLE);
+        SetVerticalScrollIndicators(SCROLL_ARROW_DOWN, INVISIBLE);
 }
 
 static void sub_80A48E8(u16 taskId, int topItemOffset, int bottomItemOffset)
@@ -1489,14 +1489,14 @@ static void sub_80A4DD8(u8 taskId, u8 b, u8 c, u8 d, u8 e, u8 digits)
 static void sub_80A4E8C(s8 delta, u8 b)
 {
     PlaySE(SE_SELECT);
-    SetVerticalScrollIndicators(TOP_ARROW, INVISIBLE);
-    SetVerticalScrollIndicators(BOTTOM_ARROW, INVISIBLE);
-    SetVerticalScrollIndicators(LEFT_ARROW, INVISIBLE);
-    SetVerticalScrollIndicators(RIGHT_ARROW, INVISIBLE);
-    PauseVerticalScrollIndicator(TOP_ARROW);
-    PauseVerticalScrollIndicator(BOTTOM_ARROW);
-    PauseVerticalScrollIndicator(LEFT_ARROW);
-    PauseVerticalScrollIndicator(RIGHT_ARROW);
+    SetVerticalScrollIndicators(SCROLL_ARROW_UP, INVISIBLE);
+    SetVerticalScrollIndicators(SCROLL_ARROW_DOWN, INVISIBLE);
+    SetVerticalScrollIndicators(SCROLL_ARROW_LEFT, INVISIBLE);
+    SetVerticalScrollIndicators(SCROLL_ARROW_RIGHT, INVISIBLE);
+    PauseVerticalScrollIndicator(SCROLL_ARROW_UP);
+    PauseVerticalScrollIndicator(SCROLL_ARROW_DOWN);
+    PauseVerticalScrollIndicator(SCROLL_ARROW_LEFT);
+    PauseVerticalScrollIndicator(SCROLL_ARROW_RIGHT);
     ChangePocket(gBGTilemapBuffers[2], delta);
     DrawPocketIndicatorDots(gBGTilemapBuffers[2], sCurrentBagPocket);
     sub_80A3770();
@@ -1648,10 +1648,10 @@ static void Task_BagMenu_HandleInput(u8 taskId)
                     gCurSelectedItemSlotIndex = gBagPocketScrollStates[sCurrentBagPocket].scrollPosition + gBagPocketScrollStates[sCurrentBagPocket].cursorPosition;
                     gSpecialVar_ItemId = gCurrentBagPocketItemSlots[gCurSelectedItemSlotIndex].itemId;
                     sItemSelectFuncs[sReturnLocation].onItemSelect(taskId);
-                    StopVerticalScrollIndicators(TOP_ARROW);
-                    StopVerticalScrollIndicators(BOTTOM_ARROW);
-                    StopVerticalScrollIndicators(LEFT_ARROW);
-                    StopVerticalScrollIndicators(RIGHT_ARROW);
+                    StopVerticalScrollIndicators(SCROLL_ARROW_UP);
+                    StopVerticalScrollIndicators(SCROLL_ARROW_DOWN);
+                    StopVerticalScrollIndicators(SCROLL_ARROW_LEFT);
+                    StopVerticalScrollIndicators(SCROLL_ARROW_RIGHT);
                     sub_80A797C();
                 }
                 else
@@ -2925,8 +2925,8 @@ static void Task_WallyTutorialBagMenu(u8 taskId)
         break;
     case 204:
         PlaySE(SE_SELECT);
-        StopVerticalScrollIndicators(LEFT_ARROW);
-        StopVerticalScrollIndicators(RIGHT_ARROW);
+        StopVerticalScrollIndicators(SCROLL_ARROW_LEFT);
+        StopVerticalScrollIndicators(SCROLL_ARROW_RIGHT);
         gSpecialVar_ItemId = ITEM_POKE_BALL;
         sPopupMenuActionList = sContextMenuItems_BattleUse;
         gUnknown_02038564 = 2;

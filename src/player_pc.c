@@ -596,8 +596,8 @@ static void ItemStorage_ProcessInput(u8 taskId)
 static void ItemStorage_ExitItemList(u8 taskId)
 {
     BuyMenuFreeMemory();
-    DestroyVerticalScrollIndicator(TOP_ARROW);
-    DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+    DestroyVerticalScrollIndicator(SCROLL_ARROW_UP);
+    DestroyVerticalScrollIndicator(SCROLL_ARROW_DOWN);
     Menu_EraseWindowRect(0, 0, 29, 19);
     Menu_DisplayDialogueFrame();
     InitItemStorageMenu(TASK.CURRENT_ITEM_STORAGE_MENU);
@@ -609,8 +609,8 @@ static void ItemStorage_DoItemAction(u8 taskId)
     s16 *data = TASK.data;
     u8 trueIndex = PAGE_INDEX + ITEMS_ABOVE_TOP;
 
-    PauseVerticalScrollIndicator(TOP_ARROW);
-    PauseVerticalScrollIndicator(BOTTOM_ARROW);
+    PauseVerticalScrollIndicator(SCROLL_ARROW_UP);
+    PauseVerticalScrollIndicator(SCROLL_ARROW_DOWN);
 
     if(CURRENT_ITEM_STORAGE_MENU == MENU_WITHDRAW)
     {
@@ -696,8 +696,8 @@ static void ItemStorage_HandleQuantityRolling(u8 taskId)
     {
         PlaySE(SE_SELECT);
         Menu_EraseWindowRect(6, 6, 0xD, 0xB);
-        StartVerticalScrollIndicators(TOP_ARROW);
-        StartVerticalScrollIndicators(BOTTOM_ARROW);
+        StartVerticalScrollIndicators(SCROLL_ARROW_UP);
+        StartVerticalScrollIndicators(SCROLL_ARROW_DOWN);
         ItemStorage_PrintItemPcResponse(gSaveBlock1.pcItems[ITEMS_ABOVE_TOP + PAGE_INDEX].itemId); // why not use trueIndex?
         TASK.FUNC = ItemStorage_ProcessInput;
     }
@@ -757,8 +757,8 @@ static void ItemStorage_TossItemNo(u8 taskId)
 
     Menu_EraseWindowRect(0x6, 0x6, 0xD, 0xB);
     InitMenu(0, 16, 2, NUM_PAGE_ITEMS, PAGE_INDEX, 0xD);
-    StartVerticalScrollIndicators(TOP_ARROW);
-    StartVerticalScrollIndicators(BOTTOM_ARROW);
+    StartVerticalScrollIndicators(SCROLL_ARROW_UP);
+    StartVerticalScrollIndicators(SCROLL_ARROW_DOWN);
     ItemStorage_PrintItemPcResponse(gSaveBlock1.pcItems[ITEMS_ABOVE_TOP + PAGE_INDEX].itemId);
     TASK.FUNC = ItemStorage_ProcessInput;
 }
@@ -790,8 +790,8 @@ static void ItemStorage_HandleErrorMessageInput(u8 taskId)
     if (JOY_NEW(A_BUTTON) || gMain.newKeys == B_BUTTON)
     {
         ItemStorage_PrintItemPcResponse(gSaveBlock1.pcItems[ITEMS_ABOVE_TOP + PAGE_INDEX].itemId);
-        StartVerticalScrollIndicators(TOP_ARROW);
-        StartVerticalScrollIndicators(BOTTOM_ARROW);
+        StartVerticalScrollIndicators(SCROLL_ARROW_UP);
+        StartVerticalScrollIndicators(SCROLL_ARROW_DOWN);
         TASK.FUNC = ItemStorage_ProcessInput;
     }
 }
@@ -799,8 +799,8 @@ static void ItemStorage_HandleErrorMessageInput(u8 taskId)
 static void ItemStorage_ReturnToListInput(u8 taskId)
 {
     Menu_EraseWindowRect(0x6, 0x6, 0xD, 0xB);
-    StartVerticalScrollIndicators(TOP_ARROW);
-    StartVerticalScrollIndicators(BOTTOM_ARROW);
+    StartVerticalScrollIndicators(SCROLL_ARROW_UP);
+    StartVerticalScrollIndicators(SCROLL_ARROW_DOWN);
     ItemStorage_DrawBothListAndDescription(taskId);
     TASK.FUNC = ItemStorage_ProcessInput;
 }
@@ -936,14 +936,14 @@ static void ItemStorage_DrawItemList(u8 taskId)
         Menu_BlankWindowRect(16, yCoord + 4, 0x1C, 0x12);
 
     if (ITEMS_ABOVE_TOP != 0)
-        CreateVerticalScrollIndicators(TOP_ARROW, 0xB8, 8);
+        CreateVerticalScrollIndicators(SCROLL_ARROW_UP, 0xB8, 8);
     else
-        DestroyVerticalScrollIndicator(TOP_ARROW);
+        DestroyVerticalScrollIndicator(SCROLL_ARROW_UP);
 
     if (ITEMS_ABOVE_TOP + NUM_PAGE_ITEMS <= tUsedSlots)
-        CreateVerticalScrollIndicators(BOTTOM_ARROW, 0xB8, 0x98);
+        CreateVerticalScrollIndicators(SCROLL_ARROW_DOWN, 0xB8, 0x98);
     else
-        DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+        DestroyVerticalScrollIndicator(SCROLL_ARROW_DOWN);
 }
 
 static void ItemStorage_PrintItemPcResponse(u16 itemId)
@@ -1088,14 +1088,14 @@ static void Mailbox_DrawMailList(u8 taskId) // taskId is unused
         Menu_BlankWindowRect(0x15, yCoord + 4, 0x1C, 0x12);
 
     if (eMailboxInfo.itemsAbove != 0)
-        CreateVerticalScrollIndicators(TOP_ARROW, 0xC8, 8);
+        CreateVerticalScrollIndicators(SCROLL_ARROW_UP, 0xC8, 8);
     else
-        DestroyVerticalScrollIndicator(TOP_ARROW);
+        DestroyVerticalScrollIndicator(SCROLL_ARROW_UP);
 
     if (eMailboxInfo.itemsAbove + eMailboxInfo.pageItems <= eMailboxInfo.count)
-        CreateVerticalScrollIndicators(BOTTOM_ARROW, 0xC8, 0x98);
+        CreateVerticalScrollIndicators(SCROLL_ARROW_DOWN, 0xC8, 0x98);
     else
-        DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+        DestroyVerticalScrollIndicator(SCROLL_ARROW_DOWN);
 }
 
 static void Mailbox_DrawMailboxMenu(u8 taskId)
@@ -1170,8 +1170,8 @@ static void Mailbox_ProcessInput(u8 taskId)
 static void Mailbox_CloseScrollIndicators(void)
 {
     BuyMenuFreeMemory();
-    DestroyVerticalScrollIndicator(TOP_ARROW);
-    DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+    DestroyVerticalScrollIndicator(SCROLL_ARROW_UP);
+    DestroyVerticalScrollIndicator(SCROLL_ARROW_DOWN);
 }
 
 static void Mailbox_PrintWhatToDoWithPlayerMailText(u8 taskId)

@@ -214,8 +214,8 @@ void sub_8109D04(u8 taskId)
 {
     Menu_DestroyCursor();
     Menu_EraseWindowRect(0, 0, 29, 19);
-    DestroyVerticalScrollIndicator(TOP_ARROW);
-    DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+    DestroyVerticalScrollIndicator(SCROLL_ARROW_UP);
+    DestroyVerticalScrollIndicator(SCROLL_ARROW_DOWN);
     sub_80F9520(gUnknown_020388F7, 8);
     BuyMenuFreeMemory();
     if (IsSelectedDecorInThePC() == TRUE)

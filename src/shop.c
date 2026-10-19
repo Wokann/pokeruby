@@ -343,23 +343,23 @@ static void BuyMenuAddScrollIndicatorArrows(void)
 
     if (sMartInfo.itemCount >= 8)
     {
-        CreateVerticalScrollIndicators(TOP_ARROW, 172, 12);
-        CreateVerticalScrollIndicators(BOTTOM_ARROW, 172, 148);
-        SetVerticalScrollIndicators(TOP_ARROW, INVISIBLE);
+        CreateVerticalScrollIndicators(SCROLL_ARROW_UP, 172, 12);
+        CreateVerticalScrollIndicators(SCROLL_ARROW_DOWN, 172, 148);
+        SetVerticalScrollIndicators(SCROLL_ARROW_UP, INVISIBLE);
     }
 }
 
 static void Shop_TryDrawVerticalScrollIndicators(void)
 {
     if (sMartInfo.scrollOffset == 0)
-        SetVerticalScrollIndicators(TOP_ARROW, INVISIBLE);
+        SetVerticalScrollIndicators(SCROLL_ARROW_UP, INVISIBLE);
     else
-        SetVerticalScrollIndicators(TOP_ARROW, VISIBLE);
+        SetVerticalScrollIndicators(SCROLL_ARROW_UP, VISIBLE);
 
     if (sMartInfo.scrollOffset + 7 >= sMartInfo.itemCount)
-        SetVerticalScrollIndicators(BOTTOM_ARROW, INVISIBLE);
+        SetVerticalScrollIndicators(SCROLL_ARROW_DOWN, INVISIBLE);
     else
-        SetVerticalScrollIndicators(BOTTOM_ARROW, VISIBLE);
+        SetVerticalScrollIndicators(SCROLL_ARROW_DOWN, VISIBLE);
 }
 
 // what is the point of this function? the tiles always get overwritten by BuyMenuDrawTextboxBG.
@@ -1115,9 +1115,9 @@ static void Task_BuyMenu(u8 taskId)
 
             if (sMartInfo.scrollOffset + sMartInfo.cursor != sMartInfo.itemCount) // did you not hit CANCEL?
             {
-                PauseVerticalScrollIndicator(TOP_ARROW);
-                PauseVerticalScrollIndicator(BOTTOM_ARROW);
-                SetVerticalScrollIndicators(BOTTOM_ARROW, INVISIBLE);
+                PauseVerticalScrollIndicator(SCROLL_ARROW_UP);
+                PauseVerticalScrollIndicator(SCROLL_ARROW_DOWN);
+                SetVerticalScrollIndicators(SCROLL_ARROW_DOWN, INVISIBLE);
                 Shop_DisplayPriceInList(sMartInfo.cursor, sMartInfo.cursor, 1);
                 Menu_DestroyCursor();
                 Menu_EraseWindowRect(0, 0xC, 0xD, 0x13);
@@ -1178,8 +1178,8 @@ static void BuyMenuReturnToItemList(u8 taskId)
     BuyMenuDrawMapBg();
     Shop_InitMenus(6, 7);
     Shop_PrintItemDesc();
-    StartVerticalScrollIndicators(TOP_ARROW);
-    StartVerticalScrollIndicators(BOTTOM_ARROW);
+    StartVerticalScrollIndicators(SCROLL_ARROW_UP);
+    StartVerticalScrollIndicators(SCROLL_ARROW_DOWN);
     Shop_TryDrawVerticalScrollIndicators();
     gTasks[taskId].func = Task_BuyMenu;
 }

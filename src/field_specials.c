@@ -1184,7 +1184,7 @@ void sub_810EB90(u8 newPos, u8 maxItems)
     if (newPos == 0)
     {
         gUnknown_0203925C ^= 0x02;
-        DestroyVerticalScrollIndicator(TOP_ARROW);
+        DestroyVerticalScrollIndicator(SCROLL_ARROW_UP);
     }
     else
     {
@@ -1197,7 +1197,7 @@ void sub_810EB90(u8 newPos, u8 maxItems)
     else if (newPos + maxItems == gUnknown_0203925A)
     {
         gUnknown_0203925C ^= 0x01;
-        DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+        DestroyVerticalScrollIndicator(SCROLL_ARROW_DOWN);
     }
 }
 
@@ -1248,7 +1248,7 @@ void sub_810ECB0(void)
     if (gUnknown_0203925C >> 1 != 1)
     {
         gUnknown_0203925C |= 0x2;
-        CreateVerticalScrollIndicators(TOP_ARROW, 0x24, 0x08);
+        CreateVerticalScrollIndicators(SCROLL_ARROW_UP, 0x24, 0x08);
     }
 }
 
@@ -1257,7 +1257,7 @@ void sub_810ECD4(void)
     if ((gUnknown_0203925C & 1) == 0)
     {
         gUnknown_0203925C |= 0x1;
-        CreateVerticalScrollIndicators(BOTTOM_ARROW, 0x24, 0x48);
+        CreateVerticalScrollIndicators(SCROLL_ARROW_DOWN, 0x24, 0x48);
     }
 }
 
@@ -1329,11 +1329,11 @@ void sub_810EEDC(void)
 {
     if ((gUnknown_0203925C & 1) != 0)
     {
-        DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+        DestroyVerticalScrollIndicator(SCROLL_ARROW_DOWN);
     }
     if ((gUnknown_0203925C >> 1) == 1)
     {
-        DestroyVerticalScrollIndicator(TOP_ARROW);
+        DestroyVerticalScrollIndicator(SCROLL_ARROW_UP);
     }
     BuyMenuFreeMemory();
 }
@@ -1542,7 +1542,7 @@ void sub_810F290(void)
     if (gUnknown_0203925C >> 1 != 1)
     {
         gUnknown_0203925C |= 0x02;
-        CreateVerticalScrollIndicators(TOP_ARROW, 0x2c, 0x08);
+        CreateVerticalScrollIndicators(SCROLL_ARROW_UP, 0x2c, 0x08);
     }
 }
 
@@ -1551,7 +1551,7 @@ void sub_810F2B4(void)
     if (!(gUnknown_0203925C & 0x01))
     {
         gUnknown_0203925C |= 0x01;
-        CreateVerticalScrollIndicators(BOTTOM_ARROW, 0x2c, 0x58);
+        CreateVerticalScrollIndicators(SCROLL_ARROW_DOWN, 0x2c, 0x58);
     }
 }
 
@@ -1560,7 +1560,7 @@ void GlassWorkshopUpdateScrollIndicators(u8 newPos, u8 maxItems)
     if (newPos == 0)
     {
         gUnknown_0203925C ^= 0x02;
-        DestroyVerticalScrollIndicator(TOP_ARROW);
+        DestroyVerticalScrollIndicator(SCROLL_ARROW_UP);
     }
     else
     {
@@ -1573,7 +1573,7 @@ void GlassWorkshopUpdateScrollIndicators(u8 newPos, u8 maxItems)
     else if (newPos + maxItems == gUnknown_0203925A)
     {
         gUnknown_0203925C ^= 0x01;
-        DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+        DestroyVerticalScrollIndicator(SCROLL_ARROW_DOWN);
     }
 }
 

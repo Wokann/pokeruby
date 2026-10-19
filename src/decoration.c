@@ -547,17 +547,17 @@ void sub_80FEABC(u8 taskId, u8 dummy1)
     u16 i;
     u16 j;
     u8 ni;
-    if (sDecorationsScrollOffset != 0 || (DestroyVerticalScrollIndicator(TOP_ARROW), sDecorationsScrollOffset != 0))
+    if (sDecorationsScrollOffset != 0 || (DestroyVerticalScrollIndicator(SCROLL_ARROW_UP), sDecorationsScrollOffset != 0))
     {
-        CreateVerticalScrollIndicators(TOP_ARROW, 0x3c, 0x08);
+        CreateVerticalScrollIndicators(SCROLL_ARROW_UP, 0x3c, 0x08);
     }
     if (sDecorationsScrollOffset + 7 == sNumOwnedDecorationsInCurCategory)
     {
-        DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+        DestroyVerticalScrollIndicator(SCROLL_ARROW_DOWN);
     }
     if (sDecorationsScrollOffset + 7 < sNumOwnedDecorationsInCurCategory)
     {
-        CreateVerticalScrollIndicators(BOTTOM_ARROW, 0x3c, 0x98);
+        CreateVerticalScrollIndicators(SCROLL_ARROW_DOWN, 0x3c, 0x98);
     }
     for (i=sDecorationsScrollOffset; i<sDecorationsScrollOffset+8; i++)
     {
@@ -732,8 +732,8 @@ void sub_80FEF50(u8 taskId)
 void sub_80FEF74(void)
 {
     sub_80F9520(gUnknown_020388F7, 8);
-    DestroyVerticalScrollIndicator(TOP_ARROW);
-    DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+    DestroyVerticalScrollIndicator(SCROLL_ARROW_UP);
+    DestroyVerticalScrollIndicator(SCROLL_ARROW_DOWN);
     Menu_DestroyCursor();
     Menu_EraseWindowRect(0, 0, 14, 19);
 }
@@ -772,8 +772,8 @@ void sub_80FF034(u8 taskId)
 void sub_80FF058(u8 taskId)
 {
     sub_80F9520(gUnknown_020388F7, 8);
-    DestroyVerticalScrollIndicator(TOP_ARROW);
-    DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+    DestroyVerticalScrollIndicator(SCROLL_ARROW_UP);
+    DestroyVerticalScrollIndicator(SCROLL_ARROW_DOWN);
     BuyMenuFreeMemory();
     gTasks[taskId].func = sub_80FF034;
 }
@@ -996,8 +996,8 @@ void sub_80FF6AC(u8 taskId)
             if (!gPaletteFade.active)
             {
                 SetInitialPositions(taskId);
-                DestroyVerticalScrollIndicator(TOP_ARROW);
-                DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+                DestroyVerticalScrollIndicator(SCROLL_ARROW_UP);
+                DestroyVerticalScrollIndicator(SCROLL_ARROW_DOWN);
                 sub_80F9520(gUnknown_020388F7, 8);
                 BuyMenuFreeMemory();
                 gTasks[taskId].data[2] = 1;

@@ -12,10 +12,10 @@ struct YesNoFuncTable
 // SetVerticalScrollIndicators enums
 enum
 {
-    TOP_ARROW,
-    BOTTOM_ARROW,
-    LEFT_ARROW, // Bag arrows
-    RIGHT_ARROW
+    SCROLL_ARROW_UP,
+    SCROLL_ARROW_DOWN,
+    SCROLL_ARROW_LEFT, // Bag arrows
+    SCROLL_ARROW_RIGHT
 };
 
 enum

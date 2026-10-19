@@ -385,70 +385,70 @@ void CreateVerticalScrollIndicators(u8 id, u16 x, u16 y)
 
     switch (id)
     {
-    case TOP_ARROW:
-        if (gVerticalScrollIndicatorIds[TOP_ARROW] == 0xFF)
+    case SCROLL_ARROW_UP:
+        if (gVerticalScrollIndicatorIds[SCROLL_ARROW_UP] == 0xFF)
         {
-            gVerticalScrollIndicatorIds[TOP_ARROW] = CreateSprite(&gSpriteTemplate_83E59D0, x, y, 0);
-            gSprites[gVerticalScrollIndicatorIds[TOP_ARROW]].data[2] = -1;
-            if (gVerticalScrollIndicatorIds[BOTTOM_ARROW] != 0xFF)
+            gVerticalScrollIndicatorIds[SCROLL_ARROW_UP] = CreateSprite(&gSpriteTemplate_83E59D0, x, y, 0);
+            gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_UP]].data[2] = -1;
+            if (gVerticalScrollIndicatorIds[SCROLL_ARROW_DOWN] != 0xFF)
             {
-                gSprites[gVerticalScrollIndicatorIds[TOP_ARROW]].y2 = gSprites[gVerticalScrollIndicatorIds[BOTTOM_ARROW]].y2 * -1;
-                gSprites[gVerticalScrollIndicatorIds[TOP_ARROW]].data[3] = gSprites[gVerticalScrollIndicatorIds[BOTTOM_ARROW]].data[3];
+                gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_UP]].y2 = gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_DOWN]].y2 * -1;
+                gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_UP]].data[3] = gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_DOWN]].data[3];
             }
             else
             {
-                gSprites[gVerticalScrollIndicatorIds[TOP_ARROW]].data[3] = 0;
+                gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_UP]].data[3] = 0;
             }
         }
         break;
 
-    case BOTTOM_ARROW:
-        if (gVerticalScrollIndicatorIds[BOTTOM_ARROW] == 0xFF)
+    case SCROLL_ARROW_DOWN:
+        if (gVerticalScrollIndicatorIds[SCROLL_ARROW_DOWN] == 0xFF)
         {
-            gVerticalScrollIndicatorIds[BOTTOM_ARROW] = CreateSprite(&gSpriteTemplate_83E59D0, x, y, 0);
-            gSprites[gVerticalScrollIndicatorIds[BOTTOM_ARROW]].data[2] = 1;
-            if (gVerticalScrollIndicatorIds[TOP_ARROW] != 0xFF)
+            gVerticalScrollIndicatorIds[SCROLL_ARROW_DOWN] = CreateSprite(&gSpriteTemplate_83E59D0, x, y, 0);
+            gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_DOWN]].data[2] = 1;
+            if (gVerticalScrollIndicatorIds[SCROLL_ARROW_UP] != 0xFF)
             {
-                gSprites[gVerticalScrollIndicatorIds[BOTTOM_ARROW]].y2 = gSprites[gVerticalScrollIndicatorIds[TOP_ARROW]].y2 * -1;
-                gSprites[gVerticalScrollIndicatorIds[BOTTOM_ARROW]].data[3] = gSprites[gVerticalScrollIndicatorIds[TOP_ARROW]].data[3];
+                gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_DOWN]].y2 = gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_UP]].y2 * -1;
+                gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_DOWN]].data[3] = gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_UP]].data[3];
             }
             else
             {
-                gSprites[gVerticalScrollIndicatorIds[BOTTOM_ARROW]].data[3] = 0;
+                gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_DOWN]].data[3] = 0;
             }
         }
         break;
 
-     case LEFT_ARROW:
-        if (gVerticalScrollIndicatorIds[LEFT_ARROW] == 0xFF)
+     case SCROLL_ARROW_LEFT:
+        if (gVerticalScrollIndicatorIds[SCROLL_ARROW_LEFT] == 0xFF)
         {
-            gVerticalScrollIndicatorIds[LEFT_ARROW] = CreateSprite(&gSpriteTemplate_83E59E8, x, y, 0);
-            gSprites[gVerticalScrollIndicatorIds[LEFT_ARROW]].data[0] = -1;
-            if (gVerticalScrollIndicatorIds[RIGHT_ARROW] != 0xFF)
+            gVerticalScrollIndicatorIds[SCROLL_ARROW_LEFT] = CreateSprite(&gSpriteTemplate_83E59E8, x, y, 0);
+            gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_LEFT]].data[0] = -1;
+            if (gVerticalScrollIndicatorIds[SCROLL_ARROW_RIGHT] != 0xFF)
             {
-                gSprites[gVerticalScrollIndicatorIds[LEFT_ARROW]].x2 = gSprites[gVerticalScrollIndicatorIds[RIGHT_ARROW]].x2 * -1;
-                gSprites[gVerticalScrollIndicatorIds[LEFT_ARROW]].data[1] = gSprites[gVerticalScrollIndicatorIds[RIGHT_ARROW]].data[1];
+                gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_LEFT]].x2 = gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_RIGHT]].x2 * -1;
+                gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_LEFT]].data[1] = gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_RIGHT]].data[1];
             }
             else
             {
-                gSprites[gVerticalScrollIndicatorIds[LEFT_ARROW]].data[1] = 0;
+                gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_LEFT]].data[1] = 0;
             }
         }
         break;
 
-    case RIGHT_ARROW:
-        if (gVerticalScrollIndicatorIds[RIGHT_ARROW] == 0xFF)
+    case SCROLL_ARROW_RIGHT:
+        if (gVerticalScrollIndicatorIds[SCROLL_ARROW_RIGHT] == 0xFF)
         {
-            gVerticalScrollIndicatorIds[RIGHT_ARROW] = CreateSprite(&gSpriteTemplate_83E59E8, x, y, 0);
-            gSprites[gVerticalScrollIndicatorIds[RIGHT_ARROW]].data[0] = 1;
-            if (gVerticalScrollIndicatorIds[LEFT_ARROW] != 0xFF)
+            gVerticalScrollIndicatorIds[SCROLL_ARROW_RIGHT] = CreateSprite(&gSpriteTemplate_83E59E8, x, y, 0);
+            gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_RIGHT]].data[0] = 1;
+            if (gVerticalScrollIndicatorIds[SCROLL_ARROW_LEFT] != 0xFF)
             {
-                gSprites[gVerticalScrollIndicatorIds[RIGHT_ARROW]].x2 = gSprites[gVerticalScrollIndicatorIds[LEFT_ARROW]].x2 * -1;
-                gSprites[gVerticalScrollIndicatorIds[RIGHT_ARROW]].data[1] = gSprites[gVerticalScrollIndicatorIds[LEFT_ARROW]].data[1];
+                gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_RIGHT]].x2 = gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_LEFT]].x2 * -1;
+                gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_RIGHT]].data[1] = gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_LEFT]].data[1];
             }
             else
             {
-                gSprites[gVerticalScrollIndicatorIds[RIGHT_ARROW]].data[1] = 0;
+                gSprites[gVerticalScrollIndicatorIds[SCROLL_ARROW_RIGHT]].data[1] = 0;
             }
         }
         break;
