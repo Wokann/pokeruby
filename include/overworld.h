@@ -99,8 +99,8 @@ u8 GetCurrentMapType(void);
 u8 GetLastUsedWarpMapType(void);
 bool8 IsMapTypeOutdoors(u8 mapType);
 bool8 Overworld_MapTypeAllowsTeleportAndFly(u8 mapType);
-u8 IsMapTypeIndoors(u8 mapType);
-u8 GetCurrentRegionMapSectionId();
+bool8 IsMapTypeIndoors(u8 mapType);
+mapsec_u8_t GetCurrentRegionMapSectionId(void);
 u8 GetCurrentMapBattleScene(void);
 // ResetSafariZoneFlag_
 bool32 IsOverworldLinkActive(void);
@@ -156,6 +156,6 @@ void CB2_ReturnToFieldContinueScript(void);
 
 void SetContinueGameWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y);
 
-u8 GetSavedWarpRegionMapSectionId(void);
+mapsec_u8_t GetSavedWarpRegionMapSectionId(void);
 
 #endif // GUARD_OVERWORLD_H
