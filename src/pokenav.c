@@ -4822,7 +4822,7 @@ u8 * sub_80F6514(u8 * str, u16 listId, u8 sp4)
         }
         dest[0] = EXT_CTRL_CODE_BEGIN;
         dest[1] = 0x01; // COLOR
-        dest[2] = TEXT_COLOR_DARK_GREY;
+        dest[2] = TEXT_COLOR_DARK_GRAY;
         dest[3] = EXT_CTRL_CODE_BEGIN;
         dest[4] = 0x03; // SHADOW
         dest[5] = TEXT_COLOR_YELLOW;

@@ -169,17 +169,17 @@ sText_Summary2::
 sText_Trade2::
 	.string "TRADE$"
 sText_CommunicationStandby::
-	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Link standby...\nPlease wait.$"
+	.string "{COLOR DARK_GRAY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GRAY}Link standby...\nPlease wait.$"
 sText_TheTradeHasBeenCanceled::
-	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}The trade has\nbeen canceled.$"
+	.string "{COLOR DARK_GRAY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GRAY}The trade has\nbeen canceled.$"
 sText_OnlyPkmnForBattle::
-	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}That's your only\nPOKéMON for battle.$"
+	.string "{COLOR DARK_GRAY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GRAY}That's your only\nPOKéMON for battle.$"
 TradeText_NonTradablePoke::
-	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Your friend can't\ntrade that one.$"
+	.string "{COLOR DARK_GRAY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GRAY}Your friend can't\ntrade that one.$"
 sText_WaitingForYourFriend::
-	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Waiting for your\nfriend to finish...$"
+	.string "{COLOR DARK_GRAY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GRAY}Waiting for your\nfriend to finish...$"
 sText_YourFriendWantsToTrade::
-	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Your friend wants\nto trade POKéMON.$"
+	.string "{COLOR DARK_GRAY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GRAY}Your friend wants\nto trade POKéMON.$"
 	.string "$"
 
 sText_IsThisTradeOkay:: @ 842C7B6
@@ -340,10 +340,10 @@ gEggNickname:: @ 842CC34
 	.string "EGG$"
 
 gText_HatchedFromEgg:: @ 842CC38
-	.string "{COLOR WHITE2}{HIGHLIGHT TRANSPARENT}{SHADOW DARK_GREY}{STR_VAR_1} hatched from the EGG!$"
+	.string "{COLOR WHITE2}{HIGHLIGHT TRANSPARENT}{SHADOW DARK_GRAY}{STR_VAR_1} hatched from the EGG!$"
 
 gText_NicknameHatchPrompt:: @ 842CC5A
-	.string "{COLOR WHITE2}{HIGHLIGHT TRANSPARENT}{SHADOW DARK_GREY}Would you like to nickname the newly\nhatched {STR_VAR_1}?$"
+	.string "{COLOR WHITE2}{HIGHLIGHT TRANSPARENT}{SHADOW DARK_GRAY}Would you like to nickname the newly\nhatched {STR_VAR_1}?$"
 
 gText_MoveRelearnerBattleMoves::
 	.string "BATTLE$"
@@ -456,7 +456,7 @@ gText_CommunicationStandby5:: @ 842D1EE
 	.string "Link standby...$"
 
 gText_YesNo:: @ 842D1FE
-	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}YES\nNO$"
+	.string "{COLOR DARK_GRAY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GRAY}YES\nNO$"
 	.string "{HIGHLIGHT TRANSPARENT}PLAYER$"
 	.string "{HIGHLIGHT TRANSPARENT}$"
 
@@ -467,7 +467,7 @@ gText_DexNational:: @ 842D222
 	.string "NATIONAL$"
 
 gText_PokedexDiploma:: @ 842D22B
-	.string "{HIGHLIGHT TRANSPARENT}Player: {CLEAR 0x10}{COLOR RED}{PLAYER}\n\n{COLOR DARK_GREY}{STR_VAR_1} POKéDEX\nThis document certifies\nthat you have successfully\ncompleted your POKéDEX.\n\n{CLEAR_TO 0x42}{COLOR RED}GAME FREAK$"
+	.string "{HIGHLIGHT TRANSPARENT}Player: {CLEAR 0x10}{COLOR RED}{PLAYER}\n\n{COLOR DARK_GRAY}{STR_VAR_1} POKéDEX\nThis document certifies\nthat you have successfully\ncompleted your POKéDEX.\n\n{CLEAR_TO 0x42}{COLOR RED}GAME FREAK$"
 	.string "{COLOR RED}{HIGHLIGHT TRANSPARENT}GAME FREAK$"
 
 gText_NumPlayerLink:: @ 842D2BC

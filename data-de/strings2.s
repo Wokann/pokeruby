@@ -180,22 +180,22 @@ sText_Summary2::
 sText_Trade2::
 	.string "TAUSCH$"
 sText_CommunicationStandby::
-	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Verbindung...\n"
+	.string "{COLOR DARK_GRAY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GRAY}Verbindung...\n"
 	.string "Bitte warten...$"
 sText_TheTradeHasBeenCanceled::
-	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Der Tausch\n"
+	.string "{COLOR DARK_GRAY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GRAY}Der Tausch\n"
 	.string "wurde abgebrochen.$"
 sText_OnlyPkmnForBattle::
-	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Das ist das einzige\n"
+	.string "{COLOR DARK_GRAY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GRAY}Das ist das einzige\n"
 	.string "POKéMON zum Kampf.$"
 TradeText_NonTradablePoke::
-	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Dein Freund kann\n"
+	.string "{COLOR DARK_GRAY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GRAY}Dein Freund kann\n"
 	.string "das nicht senden.$"
 sText_WaitingForYourFriend::
-	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Dein Freund ist\n"
+	.string "{COLOR DARK_GRAY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GRAY}Dein Freund ist\n"
 	.string "noch nicht fertig...$"
 sText_YourFriendWantsToTrade::
-	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}Dein Freund möchte\n"
+	.string "{COLOR DARK_GRAY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GRAY}Dein Freund möchte\n"
 	.string "POKéMON tauschen.$"
 	.string "$"
 
@@ -366,10 +366,10 @@ gEggNickname:: @ 842CC34
 	.string "EI$"
 
 gText_HatchedFromEgg:: @ 842CC38
-	.string "{COLOR WHITE2}{HIGHLIGHT TRANSPARENT}{SHADOW DARK_GREY}{STR_VAR_1} schlüpfte aus dem EI!$"
+	.string "{COLOR WHITE2}{HIGHLIGHT TRANSPARENT}{SHADOW DARK_GRAY}{STR_VAR_1} schlüpfte aus dem EI!$"
 
 gText_NicknameHatchPrompt:: @ 842CC5A
-	.string "{COLOR WHITE2}{HIGHLIGHT TRANSPARENT}{SHADOW DARK_GREY}Möchtest du dem geschlüpften\n"
+	.string "{COLOR WHITE2}{HIGHLIGHT TRANSPARENT}{SHADOW DARK_GRAY}Möchtest du dem geschlüpften\n"
 	.string "{STR_VAR_1} einen Kosenamen geben?$"
 
 gText_MoveRelearnerBattleMoves::
@@ -499,7 +499,7 @@ gText_CommunicationStandby5:: @ 842D1EE
 	.string "Verbindung...$"
 
 gText_YesNo:: @ 842D1FE
-	.string "{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}JA\n"
+	.string "{COLOR DARK_GRAY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GRAY}JA\n"
 	.string "NEIN$"
 
 	.string "{HIGHLIGHT TRANSPARENT}SPIELER$"
@@ -515,7 +515,7 @@ gText_DexNational:: @ 842D222
 gText_PokedexDiploma:: @ 842D22B
 	.string "{HIGHLIGHT TRANSPARENT}Spieler: {CLEAR 16}{COLOR RED}{PLAYER}\n"
 	.string "\n"
-	.string "{COLOR DARK_GREY}{STR_VAR_1} POKéDEX\n"
+	.string "{COLOR DARK_GRAY}{STR_VAR_1} POKéDEX\n"
 	.string "Dies Dokument bescheinigt\n"
 	.string "die erfolgreiche Vervoll-\n"
 	.string "ständigung des POKéDEX.\n"

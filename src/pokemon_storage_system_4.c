@@ -1583,7 +1583,7 @@ static void SetDisplayMonData(void *pokemon, u8 mode)
         txtPtr[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
         txtPtr[2] = 0x0F; // WHITE2
         txtPtr[3] = 0x00; // TRANSPARENT
-        txtPtr[4] = 0x01; // DARK_GREY
+        txtPtr[4] = 0x01; // DARK_GRAY
         txtPtr = gPokemonStorageSystemPtr->displayMonNameText + 5;
         txtPtr = StringCopy(txtPtr, gPokemonStorageSystemPtr->displayMonName);
         gPokemonStorageSystemPtr->displayMonSpeciesName[0] = EOS;
@@ -1599,7 +1599,7 @@ static void SetDisplayMonData(void *pokemon, u8 mode)
         txtPtr[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
         txtPtr[2] = 0x0F; // WHITE2
         txtPtr[3] = 0x00; // TRANSPARENT
-        txtPtr[4] = 0x01; // DARK_GREY
+        txtPtr[4] = 0x01; // DARK_GRAY
         txtPtr = gPokemonStorageSystemPtr->displayMonNameText + 5;
         txtPtr = StringCopy(txtPtr, gPokemonStorageSystemPtr->displayMonName);
         txtPtr = gPokemonStorageSystemPtr->displayMonSpeciesName;
@@ -1607,7 +1607,7 @@ static void SetDisplayMonData(void *pokemon, u8 mode)
         txtPtr[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
         txtPtr[2] = 0x0F; // WHITE2
         txtPtr[3] = 0x00; // TRANSPARENT
-        txtPtr[4] = 0x01; // DARK_GREY
+        txtPtr[4] = 0x01; // DARK_GRAY
         txtPtr[5] = EXT_CTRL_CODE_BEGIN;
         txtPtr[6] = 0x13; // CLEAR_TO
         txtPtr[7] = 7;
@@ -1623,7 +1623,7 @@ static void SetDisplayMonData(void *pokemon, u8 mode)
         txtPtr[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
         txtPtr[2] = 0x0F; // WHITE2
         txtPtr[3] = 0x00; // TRANSPARENT
-        txtPtr[4] = 0x01; // DARK_GREY
+        txtPtr[4] = 0x01; // DARK_GRAY
         txtPtr[5] = EXT_CTRL_CODE_BEGIN;
         txtPtr[6] = 0x13; // CLEAR_TO
         txtPtr[7] = 8;
@@ -1664,7 +1664,7 @@ static void SetDisplayMonData(void *pokemon, u8 mode)
             txtPtr[1] = 0x04; // COLOR_HIGHLIGHT_SHADOW
             txtPtr[2] = 0x0F; // WHITE2
             txtPtr[3] = 0x00; // TRANSPARENT
-            txtPtr[4] = 0x01; // DARK_GREY
+            txtPtr[4] = 0x01; // DARK_GRAY
             txtPtr = gPokemonStorageSystemPtr->displayMonItemName + 5;
             txtPtr[0] = EXT_CTRL_CODE_BEGIN;
             txtPtr[1] = 0x06; // size

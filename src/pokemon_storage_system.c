@@ -714,7 +714,7 @@ static void ChooseBoxMenu_PrintInfo(void)
     stringVar[0] = EXT_CTRL_CODE_BEGIN;
     stringVar[1] = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
     stringVar[2] = 0x0F; // TEXT_COLOR_WHITE2
-    stringVar[3] = 0x01; // TEXT_COLOR_DARK_GREY
+    stringVar[3] = 0x01; // TEXT_COLOR_DARK_GRAY
     stringVar[4] = 0x0E; // TEXT_COLOR_LIGHT_BLUE
     stringVar += 5;
 

@@ -326,7 +326,7 @@ u8 *const gUnknown_0820A814[2] =
     OBJ_VRAM0 + 32 * 43,
 };
 
-const u8 gUnknown_0820A81C[] = __("{COLOR DARK_GREY}{HIGHLIGHT RED}                        ");
+const u8 gUnknown_0820A81C[] = __("{COLOR DARK_GRAY}{HIGHLIGHT RED}                        ");
 
 u8 *const gUnknown_0820A83C[3] =
 {
@@ -354,7 +354,7 @@ u8 *const gUnknown_0820A85C[2] =
     OBJ_VRAM0 + 32 * 50,
 };
 
-static const u8 sEmptyWhiteText_GrayHighlight[] = _("{COLOR DARK_GREY}{HIGHLIGHT RED}              /");
+static const u8 sEmptyWhiteText_GrayHighlight[] = _("{COLOR DARK_GRAY}{HIGHLIGHT RED}              /");
 
 u8 *const gUnknown_0820A87C[6] =
 {
@@ -372,7 +372,7 @@ u8 *const gUnknown_0820A894[2] =
     OBJ_VRAM0 + 32 * 7,
 };
 
-const u8 gUnknown_0820A89C[] = __("{COLOR DARK_GREY}{HIGHLIGHT TRANSPARENT}              ");
+const u8 gUnknown_0820A89C[] = __("{COLOR DARK_GRAY}{HIGHLIGHT TRANSPARENT}              ");
 const u8 gUnknown_0820A8B0[] = _("{HIGHLIGHT RED}");
 
 u8 *const gUnknown_0820A8B4[10] =

@@ -146,8 +146,8 @@ const u8 gText_Level[] = _("Lv. ");
 const u8 gText_IdNumberSlash[] = _("IDNo. /");
 const u8 gText_Name[] = _("NAME /");
 const u8 gText_IDNumber[] = _("IDNo. /");
-const u8 gText_BirchInTrouble[] = _("{HIGHLIGHT WHITE2}{COLOR DARK_GREY}PROF. BIRCH is in trouble!\nRelease a POKéMON and rescue him!");
-const u8 gText_ConfirmStarterChoice[] = _("{HIGHLIGHT WHITE2}{COLOR DARK_GREY}Do you choose this POKéMON?");
+const u8 gText_BirchInTrouble[] = _("{HIGHLIGHT WHITE2}{COLOR DARK_GRAY}PROF. BIRCH is in trouble!\nRelease a POKéMON and rescue him!");
+const u8 gText_ConfirmStarterChoice[] = _("{HIGHLIGHT WHITE2}{COLOR DARK_GRAY}Do you choose this POKéMON?");
 const u8 gText_Pokemon4[] = _("POKéMON");
 
 const u8 gText_SaveError[] = _("Save error.\pPlease exchange the\nbackup memory.");
@@ -1074,8 +1074,8 @@ const u8 gText_Level[] = _("Lv.");
 const u8 gText_IdNumberSlash[] = _("ID.Nr. /");
 const u8 gText_Name[] = _("NAME /");
 const u8 gText_IDNumber[] = _("ID.Nr. /");
-const u8 gText_BirchInTrouble[] = _("{HIGHLIGHT WHITE2}{COLOR DARK_GREY}PROF. BIRK ist in Schwierigkeiten!\nSchnapp' dir ein POKéMON und hilf ihm!");
-const u8 gText_ConfirmStarterChoice[] = _("{HIGHLIGHT WHITE2}{COLOR DARK_GREY}Wählst du dieses POKéMON?");
+const u8 gText_BirchInTrouble[] = _("{HIGHLIGHT WHITE2}{COLOR DARK_GRAY}PROF. BIRK ist in Schwierigkeiten!\nSchnapp' dir ein POKéMON und hilf ihm!");
+const u8 gText_ConfirmStarterChoice[] = _("{HIGHLIGHT WHITE2}{COLOR DARK_GRAY}Wählst du dieses POKéMON?");
 const u8 gText_Pokemon4[] = _("POKéMON");
 
 const u8 gText_SaveError[] = _("Fehler beim Speichern!\pBitte Backup Memory\naustauschen.");

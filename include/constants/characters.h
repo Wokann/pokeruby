@@ -81,14 +81,14 @@
 #define EOS                 0xFF // end of string
 
 #define TEXT_COLOR_TRANSPARENT 0x00
-#define TEXT_COLOR_DARK_GREY   0x01
+#define TEXT_COLOR_DARK_GRAY   0x01
 #define TEXT_COLOR_RED         0x02
 #define TEXT_COLOR_GREEN       0x03
 #define TEXT_COLOR_BLUE        0x04
 #define TEXT_COLOR_YELLOW      0x05
 #define TEXT_COLOR_CYAN        0x06
 #define TEXT_COLOR_MAGENTA     0x07
-#define TEXT_COLOR_LIGHT_GREY  0x08
+#define TEXT_COLOR_LIGHT_GRAY  0x08
 #define TEXT_COLOR_BLACK       0x09
 #define TEXT_COLOR_BLACK2      0x0A
 #define TEXT_COLOR_SILVER      0x0B

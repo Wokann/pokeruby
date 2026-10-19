@@ -333,7 +333,7 @@ static const struct SpriteTemplate sSpriteTemplate_JudgeSpeechBubble = {
 UNUSED
 const u8 ALIGNED(2) _unk_83CC3BE[] = __("ピラ");
 const u8 gUnknownText_UnknownFormatting2[] = _("{COLOR GREEN}{SHADOW RED}");
-const u8 gUnknownText_UnknownFormatting3[] = _("{COLOR LIGHT_GREY}");
+const u8 gUnknownText_UnknownFormatting3[] = _("{COLOR LIGHT_GRAY}");
 
 const struct CompressedSpriteSheet gUnknown_083CC3AC = {
     .data = gContestNumbers_UnusedGfx,

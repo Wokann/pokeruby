@@ -85,7 +85,7 @@ MainCallback gCB2_AfterEvolution;
 
 // const data
 static const u8 sText_ShedinjaJapaneseName[] = _("ヌケニン");
-static const u8 sUnusedString0[] = _("{COLOR DARK_GREY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GREY}");
+static const u8 sUnusedString0[] = _("{COLOR DARK_GRAY}{HIGHLIGHT WHITE2}{SHADOW LIGHT_GRAY}");
 static const u8 sUnusedString1[] = _("▶\n ");
 static const u8 sUnusedString2[] = _("       \n▶");
 static const u8 sUnusedString3[] = _("       \n ");

@@ -186,7 +186,7 @@ static const struct CompressedSpritePalette sSpritePalette_Confetti = {gConfetti
 
 const u8 gUnknown_083D17DC[] = _("{COLOR RED}");
 const u8 gUnknown_083D17E0[] = _("/");
-const u8 gUnknown_083D17E2[] = _("{SIZE 3}{COLOR_HIGHLIGHT_SHADOW WHITE2 DARK_GREY LIGHT_BLUE}");
+const u8 gUnknown_083D17E2[] = _("{SIZE 3}{COLOR_HIGHLIGHT_SHADOW WHITE2 DARK_GRAY LIGHT_BLUE}");
 
 static void InitContestResultsDisplay(void)
 {
