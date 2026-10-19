@@ -92,7 +92,7 @@ void sub_80E8218(void)
     struct SpriteSheet interviewSpriteSheets[] =
     {
         {sTriangleCursor_Gfx, 0x20, 0},
-        {gInterviewOutlineCursorTiles, 0x700, 1},
+        {gEasyChatRectangleCursor_Gfx, 0x700, 1},
         {sScrollIndicator_Gfx, 0x100, 2},
         {sStartSelectButtons_Gfx, 0x100, 3},
         {NULL, 0, 0},

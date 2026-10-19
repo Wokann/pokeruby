@@ -2837,6 +2837,7 @@ extern const u8 gNamingScreenBackground_Tilemap[];
 extern const u8 gEasyChatMode_Gfx[];
 extern const u8 gMenuWordGroupFrame_Gfx[];
 extern const u16 gEasyChatMode_Pal[];
+extern const u8 gEasyChatRectangleCursor_Gfx[];
 extern const u16 gEasyChatRectangleCursor_Pal[];
 extern const u16 gMenuWordGroupFrame1_Pal[];
 extern const u16 gMenuWordGroupFrame2_Pal[];
@@ -2920,7 +2921,6 @@ extern const u8 gPokenavCondition_Pal[];
 extern const u8 gPokenavRibbonsSummaryBg_Gfx[];
 extern const u8 gPokenavRibbonsSummaryBg_Tilemap[];
 
-extern const u8 gInterviewOutlineCursorTiles[];
 extern const u8 gTitleScreenPressStartGfx[];
 extern const u16 gTitleScreenPressStartPal[];
 extern const u8 gTitleScreenPokemonLogoGfx[];
