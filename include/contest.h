@@ -126,7 +126,7 @@ void CalculateFinalScores(void);
 void SortContestants(bool8 useRanking);
 bool8 SaveContestWinner(u8 rank);
 u8 GetContestWinnerSaveIdx(u8 rank, bool8 shift);
-void Contest_ResetWinners(void);
+void ClearContestWinnerPicsInContestHall(void);
 s8 Contest_GetMoveExcitement(u16 move);
 
 // Contest Shared EWRAM

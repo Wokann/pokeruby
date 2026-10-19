@@ -106,7 +106,7 @@ void ResetContestAndMuseumWinners(void)
 {
     s32 i;
 
-    Contest_ResetWinners();
+    ClearContestWinnerPicsInContestHall();
     for (i = 0; i < 5; i++)
         gSaveBlock1.museumPortraits[i] = sEmptyMuseumPortrait;
 }
