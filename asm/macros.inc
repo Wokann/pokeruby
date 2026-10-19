@@ -3,6 +3,7 @@
 	.include "asm/macros/movement.inc"
 	.include "include/macros/pokemon_data.inc"
 	.include "asm/macros/map.inc"
+	.include "asm/macros/field_effect_script.inc"
 	.include "include/macros/mystery_event_script.inc"
 
 	.macro region_map_location x, y, width, height, name
