@@ -45,10 +45,10 @@
 #define KANA(txt) _(txt)
 #endif
 
-#define SWAP(x,y,t) {\
-    t = x;           \
-    x = y;           \
-    y = t;           \
+#define SWAP(a, b, temp) {\
+    temp = a;             \
+    a = b;                \
+    b = temp;             \
 }
 
 // Prevent cross-jump optimization.
@@ -122,7 +122,7 @@ enum
 #define Q_24_8(n)        ((s32)((n) * 256))
 
 // Converts a number from Q24.8 fixed-point format to integer
-#define Q_24_8_TO_INT(x) ((s32)((x) >> 8))
+#define Q_24_8_TO_INT(n) ((s32)((n) >> 8))
 
 // Credits to Made (dolphin emoji)
 #define S16TOPOSFLOAT(val)   \
@@ -133,7 +133,7 @@ enum
     f;                       \
 })
 
-#define TEST_BUTTON(value, button) ((value) & (button))
+#define TEST_BUTTON(field, button) ((field) & (button))
 #define JOY_NEW(button) (TEST_BUTTON(gMain.newKeys, button))
 #define JOY_HELD(button) (TEST_BUTTON(gMain.heldKeys, button))
 #define JOY_REPEAT(button) (TEST_BUTTON(gMain.newAndRepeatedKeys, button))
@@ -181,7 +181,7 @@ struct SecretBaseParty
 struct SecretBase
 {
     /*0x1A08*/ u8 secretBaseId;
-    /*0x1A09*/ u8 toRegister:4;
+    /*0x1A09*/ bool8 toRegister:4;
     /*0x1A09*/ u8 gender:1;
     /*0x1A09*/ u8 battledOwnerToday:1;
     /*0x1A09*/ u8 registryStatus:2;
@@ -474,7 +474,7 @@ struct SaveBlock1 /* 0x02025734 */
     /*0x640*/ struct ItemSlot bagPocket_TMHM[BAG_TMHM_COUNT];
     /*0x740*/ struct ItemSlot bagPocket_Berries[BAG_BERRIES_COUNT];
     /*0x7F8*/ struct Pokeblock pokeblocks[POKEBLOCKS_COUNT];
-    /*0x938*/ u8 dexSeen2[NUM_DEX_FLAG_BYTES];
+    /*0x938*/ u8 seen1[NUM_DEX_FLAG_BYTES];
     /*0x96C*/ u16 berryBlenderRecords[3];
     /*0x972*/ u8 filler_972[0x6];
     /*0x978*/ u16 trainerRematchStepCounter;
@@ -533,7 +533,7 @@ struct SaveBlock1 /* 0x02025734 */
     /*0x3160*/ struct EnigmaBerry enigmaBerry;
     /*0x3690*/ struct RamScript ramScript;
     /*0x3A7C*/ struct RecordMixingGift recordMixingGift;
-    /*0x3A8C*/ u8 dexSeen3[NUM_DEX_FLAG_BYTES];
+    /*0x3A8C*/ u8 seen2[NUM_DEX_FLAG_BYTES];
 };
 
 extern struct SaveBlock1 gSaveBlock1;
