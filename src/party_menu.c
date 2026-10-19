@@ -437,11 +437,11 @@ bool8 DrawPartyMonBackground(u8 monIndex)
     const u8 *arr;
 
     if (!IsDoubleBattle())
-        gPartyMenuType = PARTY_MENU_LAYOUT_STANDARD;
+        gPartyMenuType = PARTY_LAYOUT_SINGLE;
     else if (IsLinkDoubleBattle() == TRUE)
-        gPartyMenuType = PARTY_MENU_LAYOUT_LINK_DOUBLE_BATTLE;
+        gPartyMenuType = PARTY_LAYOUT_MULTI;
     else
-        gPartyMenuType = PARTY_MENU_LAYOUT_DOUBLE_BATTLE;
+        gPartyMenuType = PARTY_LAYOUT_DOUBLE;
 
     arr = &gUnknown_083769A8[gPartyMenuType * 12];
 
@@ -1002,8 +1002,8 @@ void ChangePartyMenuSelection(u8 taskId, s8 directionPressed)
 
         ePartyMenu2.unk261 = 2;
 
-        gSprites[spriteId].x = gUnknown_083768B8[PARTY_MENU_LAYOUT_LINK_DOUBLE_BATTLE][gSprites[spriteId].data[0]].x;
-        gSprites[spriteId].y = gUnknown_083768B8[PARTY_MENU_LAYOUT_LINK_DOUBLE_BATTLE][gSprites[spriteId].data[0]].y;
+        gSprites[spriteId].x = gUnknown_083768B8[PARTY_LAYOUT_MULTI][gSprites[spriteId].data[0]].x;
+        gSprites[spriteId].y = gUnknown_083768B8[PARTY_LAYOUT_MULTI][gSprites[spriteId].data[0]].y;
     }
     else
     {
@@ -1329,8 +1329,8 @@ void ChangeBattleTowerPartyMenuSelection(u8 taskId, s8 directionPressed)
         break;
     }
 
-    gSprites[spriteId].x = gUnknown_083768B8[PARTY_MENU_LAYOUT_STANDARD][gSprites[spriteId].data[0]].x;
-    gSprites[spriteId].y = gUnknown_083768B8[PARTY_MENU_LAYOUT_STANDARD][gSprites[spriteId].data[0]].y;
+    gSprites[spriteId].x = gUnknown_083768B8[PARTY_LAYOUT_SINGLE][gSprites[spriteId].data[0]].x;
+    gSprites[spriteId].y = gUnknown_083768B8[PARTY_LAYOUT_SINGLE][gSprites[spriteId].data[0]].y;
 
 
     newMenuIndex = gSprites[spriteId].data[0];
@@ -1367,8 +1367,8 @@ void SelectBattleTowerOKButton(u8 taskId)
 
         gSprites[spriteId].data[1] = 0;
         gSprites[spriteId].data[0] = 6;
-        gSprites[spriteId].x = gUnknown_083768B8[PARTY_MENU_LAYOUT_STANDARD][6].x;
-        gSprites[spriteId].y = gUnknown_083768B8[PARTY_MENU_LAYOUT_STANDARD][6].y;
+        gSprites[spriteId].x = gUnknown_083768B8[PARTY_LAYOUT_SINGLE][6].x;
+        gSprites[spriteId].y = gUnknown_083768B8[PARTY_LAYOUT_SINGLE][6].y;
 
         sub_806BB9C(2);
 
@@ -1938,7 +1938,7 @@ void TryCreatePartyMenuMonIcon(u8 taskId, u8 monIndex, struct Pokemon *pokemon)
     if (GetMonData(pokemon, MON_DATA_SPECIES))
     {
         if (IsLinkDoubleBattle() == TRUE)
-            CreatePartyMenuMonIcon(taskId, monIndex, PARTY_MENU_LAYOUT_LINK_DOUBLE_BATTLE, pokemon);
+            CreatePartyMenuMonIcon(taskId, monIndex, PARTY_LAYOUT_MULTI, pokemon);
         else
             CreatePartyMenuMonIcon(taskId, monIndex, IsDoubleBattle(), pokemon);
     }
@@ -2242,7 +2242,7 @@ void TryPrintPartyMenuMonNickname(u8 monIndex, struct Pokemon *pokemon)
     if (GetMonData(pokemon, MON_DATA_SPECIES))
     {
         if (IsLinkDoubleBattle() == TRUE)
-            PrintPartyMenuMonNickname(monIndex, PARTY_MENU_LAYOUT_LINK_DOUBLE_BATTLE, pokemon);
+            PrintPartyMenuMonNickname(monIndex, PARTY_LAYOUT_MULTI, pokemon);
         else
             PrintPartyMenuMonNickname(monIndex, IsDoubleBattle(), pokemon);
     }
@@ -2283,7 +2283,7 @@ static void PartyMenuClearLevelStatusTilemap(u8 monIndex)
     u8 i;
 
     if (IsLinkDoubleBattle() == TRUE)
-        menuLayout = PARTY_MENU_LAYOUT_LINK_DOUBLE_BATTLE;
+        menuLayout = PARTY_LAYOUT_MULTI;
     else
         menuLayout = IsDoubleBattle();
 
@@ -2335,7 +2335,7 @@ void PartyMenuPrintMonLevelOrStatus(u8 monIndex, struct Pokemon *pokemon)
         u8 menuLayout;
 
         if (IsLinkDoubleBattle() == TRUE)
-            menuLayout = PARTY_MENU_LAYOUT_LINK_DOUBLE_BATTLE;
+            menuLayout = PARTY_LAYOUT_MULTI;
         else
             menuLayout = IsDoubleBattle();
 
@@ -2411,7 +2411,7 @@ void PartyMenuTryPrintHP(u8 monIndex, struct Pokemon *pokemon)
     if (GetMonData(pokemon, MON_DATA_SPECIES) && !GetMonData(pokemon, MON_DATA_IS_EGG))
     {
         if (IsLinkDoubleBattle() == TRUE)
-            PartyMenuPrintHP(monIndex, PARTY_MENU_LAYOUT_LINK_DOUBLE_BATTLE, pokemon);
+            PartyMenuPrintHP(monIndex, PARTY_LAYOUT_MULTI, pokemon);
         else
             PartyMenuPrintHP(monIndex, IsDoubleBattle(), pokemon);
     }
@@ -2473,7 +2473,7 @@ void PartyMenuTryDrawHPBar(u8 monIndex, struct Pokemon *pokemon)
     if (GetMonData(pokemon, MON_DATA_SPECIES) && !GetMonData(pokemon, MON_DATA_IS_EGG))
     {
         if (IsLinkDoubleBattle() == TRUE)
-            PartyMenuDrawHPBar(monIndex, PARTY_MENU_LAYOUT_LINK_DOUBLE_BATTLE, pokemon);
+            PartyMenuDrawHPBar(monIndex, PARTY_LAYOUT_MULTI, pokemon);
         else
             PartyMenuDrawHPBar(monIndex, IsDoubleBattle(), pokemon);
     }

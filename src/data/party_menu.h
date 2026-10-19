@@ -173,15 +173,15 @@ static const struct Coords8 gUnknown_08376738[12][6] = {
 
 static u16 *const gUnknown_08376858[4][6] = {
     {(u16*)(BG_VRAM + 0xF1C8), (u16*)(BG_VRAM + 0xF0AE), (u16*)(BG_VRAM + 0xF16E), (u16*)(BG_VRAM + 0xF22E), (u16*)(BG_VRAM + 0xF2EE), (u16*)(BG_VRAM + 0xF3AE)}, // PARTY_MENU_STANDARD
-    {(u16*)(BG_VRAM + 0xF148), (u16*)(BG_VRAM + 0xF308), (u16*)(BG_VRAM + 0xF0AE), (u16*)(BG_VRAM + 0xF1AE), (u16*)(BG_VRAM + 0xF2AE), (u16*)(BG_VRAM + 0xF3AE)}, // PARTY_MENU_LAYOUT_DOUBLE_BATTLE
-    {(u16*)(BG_VRAM + 0xF148), (u16*)(BG_VRAM + 0xF308), (u16*)(BG_VRAM + 0xF0EE), (u16*)(BG_VRAM + 0xF1AE), (u16*)(BG_VRAM + 0xF2AE), (u16*)(BG_VRAM + 0xF36E)}, // PARTY_MENU_LAYOUT_LINK_DOUBLE_BATTLE
-    {(u16*)(BG_VRAM + 0xF148), (u16*)(BG_VRAM + 0xF0EE), (u16*)(BG_VRAM + 0xF1AE), (u16*)(BG_VRAM + 0xF308), (u16*)(BG_VRAM + 0xF2AE), (u16*)(BG_VRAM + 0xF36E)}, // PARTY_MENU_LAYOUT_MULTI_BATTLE
+    {(u16*)(BG_VRAM + 0xF148), (u16*)(BG_VRAM + 0xF308), (u16*)(BG_VRAM + 0xF0AE), (u16*)(BG_VRAM + 0xF1AE), (u16*)(BG_VRAM + 0xF2AE), (u16*)(BG_VRAM + 0xF3AE)}, // PARTY_LAYOUT_DOUBLE
+    {(u16*)(BG_VRAM + 0xF148), (u16*)(BG_VRAM + 0xF308), (u16*)(BG_VRAM + 0xF0EE), (u16*)(BG_VRAM + 0xF1AE), (u16*)(BG_VRAM + 0xF2AE), (u16*)(BG_VRAM + 0xF36E)}, // PARTY_LAYOUT_MULTI
+    {(u16*)(BG_VRAM + 0xF148), (u16*)(BG_VRAM + 0xF0EE), (u16*)(BG_VRAM + 0xF1AE), (u16*)(BG_VRAM + 0xF308), (u16*)(BG_VRAM + 0xF2AE), (u16*)(BG_VRAM + 0xF36E)}, // PARTY_LAYOUT_MULTI_SHOWCASE
 };
 
 static const struct Coords8 gUnknown_083768B8[3][8] = {
-    {{8,  44}, {92,  22}, {92,  46}, {92,  70}, {92,  94}, {92, 118}, {196, 136}, {196, 152}}, // PARTY_MENU_LAYOUT_STANDARD
-    {{8,  28}, { 8,  84}, {92,  22}, {92,  54}, {92,  86}, {92, 118}, {196, 136}, {196, 152}}, // PARTY_MENU_LAYOUT_DOUBLE_BATTLE
-    {{8,  28}, { 8,  84}, {92,  30}, {92,  54}, {92,  86}, {92, 110}, {196, 136}, {196, 152}}, // PARTY_MENU_LAYOUT_LINK_DOUBLE_BATTLE
+    {{8,  44}, {92,  22}, {92,  46}, {92,  70}, {92,  94}, {92, 118}, {196, 136}, {196, 152}}, // PARTY_LAYOUT_SINGLE
+    {{8,  28}, { 8,  84}, {92,  22}, {92,  54}, {92,  86}, {92, 118}, {196, 136}, {196, 152}}, // PARTY_LAYOUT_DOUBLE
+    {{8,  28}, { 8,  84}, {92,  30}, {92,  54}, {92,  86}, {92, 110}, {196, 136}, {196, 152}}, // PARTY_LAYOUT_MULTI
 };
 
 static u16 *const gUnknown_08376918[2][PARTY_SIZE] = {
@@ -290,7 +290,7 @@ static const u16 PartyMonOAMSettings_RightColumn[] = {
 // Controls where and how the mons' text appears in the party menu screen (nickname, HP, and level).
 static struct PartyMonTextSettingsStruct const PartyMonTextSettings[4][6] =
 {
-    { // PARTY_MENU_LAYOUT_STANDARD
+    { // PARTY_LAYOUT_SINGLE
         { 1,  4, PartyMonOAMSettings_LeftColumn},
         {12,  1, PartyMonOAMSettings_RightColumn},
         {12,  4, PartyMonOAMSettings_RightColumn},
@@ -298,7 +298,7 @@ static struct PartyMonTextSettingsStruct const PartyMonTextSettings[4][6] =
         {12, 10, PartyMonOAMSettings_RightColumn},
         {12, 13, PartyMonOAMSettings_RightColumn},
     },
-    { // PARTY_MENU_LAYOUT_DOUBLE_BATTLE
+    { // PARTY_LAYOUT_DOUBLE
         { 1,  2, PartyMonOAMSettings_LeftColumn},
         { 1,  9, PartyMonOAMSettings_LeftColumn},
         {12,  1, PartyMonOAMSettings_RightColumn},
@@ -306,7 +306,7 @@ static struct PartyMonTextSettingsStruct const PartyMonTextSettings[4][6] =
         {12,  9, PartyMonOAMSettings_RightColumn},
         {12, 13, PartyMonOAMSettings_RightColumn},
     },
-    { // PARTY_MENU_LAYOUT_LINK_DOUBLE_BATTLE
+    { // PARTY_LAYOUT_MULTI
         { 1,  2, PartyMonOAMSettings_LeftColumn},
         { 1,  9, PartyMonOAMSettings_LeftColumn},
         {12,  2, PartyMonOAMSettings_RightColumn},
@@ -314,7 +314,7 @@ static struct PartyMonTextSettingsStruct const PartyMonTextSettings[4][6] =
         {12,  9, PartyMonOAMSettings_RightColumn},
         {12, 12, PartyMonOAMSettings_RightColumn},
     },
-    { // PARTY_MENU_LAYOUT_MULTI_BATTLE
+    { // PARTY_LAYOUT_MULTI_SHOWCASE
         { 1,  2, PartyMonOAMSettings_LeftColumn},
         {12,  2, PartyMonOAMSettings_RightColumn},
         {12,  5, PartyMonOAMSettings_RightColumn},

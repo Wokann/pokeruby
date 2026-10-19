@@ -4292,16 +4292,16 @@ void sub_8012324(void)
                                      || ((i = AbilityBattleEffects(ABILITYEFFECT_CHECK_FIELD_EXCEPT_BATTLER, gActiveBattler, ABILITY_MAGNET_PULL, 0, 0))
                                          && IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_STEEL)))
                             {
-                                BtlController_EmitChoosePokemon(0, ((i - 1) << 4) | PARTY_ABILITY_PREVENTS, 6, gLastUsedAbility, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0]);
+                                BtlController_EmitChoosePokemon(0, ((i - 1) << 4) | PARTY_ACTION_ABILITY_PREVENTS, 6, gLastUsedAbility, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0]);
                             }
                             else
                             {
                                 if (gActiveBattler == 2 && gChosenActionByBattler[0] == B_ACTION_SWITCH)
-                                    BtlController_EmitChoosePokemon(0, PARTY_CHOOSE_MON, gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + 0], ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0]);
+                                    BtlController_EmitChoosePokemon(0, PARTY_ACTION_CHOOSE_MON, gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + 0], ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0]);
                                 else if (gActiveBattler == 3 && gChosenActionByBattler[1] == B_ACTION_SWITCH)
-                                    BtlController_EmitChoosePokemon(0, PARTY_CHOOSE_MON, gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + 1], ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0]);
+                                    BtlController_EmitChoosePokemon(0, PARTY_ACTION_CHOOSE_MON, gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + 1], ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0]);
                                 else
-                                    BtlController_EmitChoosePokemon(0, PARTY_CHOOSE_MON, 6, ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0]);
+                                    BtlController_EmitChoosePokemon(0, PARTY_ACTION_CHOOSE_MON, 6, ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0]);
                             }
                             MarkBattlerForControllerExec(gActiveBattler);
                             break;
