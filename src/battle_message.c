@@ -287,7 +287,7 @@ void BufferStringBattle(u16 stringID)
         }
         else
         {
-            if (gTrainerBattleOpponent_A == LINK_BATTLE_OPPONENT)
+            if (gTrainerBattleOpponent_A == TRAINER_LINK_OPPONENT)
             {
                 if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
                     stringPtr = sText_LinkTrainer2WithdrewPkmn;

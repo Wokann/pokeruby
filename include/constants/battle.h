@@ -49,7 +49,7 @@
 #define BATTLE_TYPE_IS_MASTER       0x0004
 #define BATTLE_TYPE_TRAINER         0x0008
 #define BATTLE_TYPE_FIRST_BATTLE    0x0010
-#define BATTLE_TYPE_20              0x0020
+#define BATTLE_TYPE_LINK_IN_BATTLE  0x0020
 #define BATTLE_TYPE_MULTI           0x0040
 #define BATTLE_TYPE_SAFARI          0x0080
 #define BATTLE_TYPE_BATTLE_TOWER    0x0100
@@ -60,8 +60,6 @@
 #define BATTLE_TYPE_LEGENDARY       0x2000
 #define BATTLE_TYPE_REGI            0x4000
 #define BATTLE_TYPE_LINK_DOUBLE     (BATTLE_TYPE_MULTI | BATTLE_TYPE_TRAINER | BATTLE_TYPE_LINK | BATTLE_TYPE_DOUBLE)
-
-#define LINK_BATTLE_OPPONENT        0x800
 
 // Battle Outcome defines
 #define B_OUTCOME_WON                  0x1

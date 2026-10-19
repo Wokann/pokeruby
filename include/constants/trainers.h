@@ -2,6 +2,7 @@
 #define GUARD_TRAINERS_H
 
 #define TRAINER_SECRET_BASE 0x400
+#define TRAINER_LINK_OPPONENT 0x800
 
 #define TRAINER_ENCOUNTER_MUSIC_MALE         0 // standard male encounter music
 #define TRAINER_ENCOUNTER_MUSIC_FEMALE       1 // standard female encounter music
