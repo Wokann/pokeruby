@@ -1087,7 +1087,7 @@ const u16 gKOFailedStringIds[] =
     STRINGID_PKMNSXINFATUATEDY,
 };
 
-const u16 gLeechSeedDrainStringIds[] =
+const u16 gAbsorbDrainStringIds[] =
 {
     STRINGID_PKMNENERGYDRAINED,
     STRINGID_ITSUCKEDLIQUIDOOZE,
@@ -1122,7 +1122,7 @@ const u16 gBallEscapeStringIds[] =
     STRINGID_SHOOTSOCLOSE,
 };
 
-const u16 gWeatherContinuesStringIds[] =
+const u16 gWeatherStartsStringIds[] =
 {
     STRINGID_ITISRAINING,
     STRINGID_ITISRAINING,

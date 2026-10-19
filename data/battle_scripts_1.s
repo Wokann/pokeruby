@@ -384,7 +384,7 @@ BattleScript_AbsorbUpdateHp: @ 81D703F
 	healthbarupdate BS_ATTACKER
 	datahpupdate BS_ATTACKER
 	jumpifmovehadnoeffect BattleScript_AbsorbTryFainting
-	printfromtable gLeechSeedDrainStringIds
+	printfromtable gAbsorbDrainStringIds
 	waitmessage 64
 
 BattleScript_AbsorbTryFainting: @ 81D7056
@@ -3292,7 +3292,7 @@ BattleScript_SunlightFaded:: @ 81D9016
 	end2
 
 BattleScript_OverworldWeatherStarts:: @ 81D901D
-	printfromtable gWeatherContinuesStringIds
+	printfromtable gWeatherStartsStringIds
 	waitmessage 64
 	playanimation_var BS_ATTACKER, sB_ANIM_ARG1, NULL
 	end3
