@@ -81,10 +81,10 @@ extern const u8 gBoardNotInstalledMessage[];
 extern const u8 gText_BatteryRunDry[];
 
 // main menu text 2
-extern const u8 gText_Player[];
-extern const u8 gText_Pokedex[];
+extern const u8 gText_ContinueMenuPlayer[];
+extern const u8 gText_ContinueMenuPokedex[];
 extern const u8 gText_Time[];
-extern const u8 gText_Badges[];
+extern const u8 gText_ContinueMenuBadges[];
 
 // birch text
 extern const u8 gText_BirchBoy[];

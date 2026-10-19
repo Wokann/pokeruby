@@ -44,10 +44,10 @@ const u8 gBoardNotInstalledMessage[] = _("The 1M sub-circuit board is\nnot insta
 const u8 gText_BatteryRunDry[] = _("The internal battery has run dry.\nThe game can be played.\pHowever, clock-based events will\nno longer occur.");
 
 // main menu text 2
-const u8 gText_Player[] = _("PLAYER");
-const u8 gText_Pokedex[] = _("POKéDEX");
+const u8 gText_ContinueMenuPlayer[] = _("PLAYER");
+const u8 gText_ContinueMenuPokedex[] = _("POKéDEX");
 const u8 gText_Time[] = _("TIME");
-const u8 gText_Badges[] = _("BADGES");
+const u8 gText_ContinueMenuBadges[] = _("BADGES");
 
 // birch text
 const u8 gText_BirchBoy[] = _("BOY");
@@ -972,10 +972,10 @@ const u8 gBoardNotInstalledMessage[] = _("Das ‘1M Sub-circuit Board'\nist nich
 const u8 gText_BatteryRunDry[] = _("Interne Batterie ist verbraucht.\nSpiel kann fortgesetzt werden.\pAber zeitbasierende Spiel-Events\nwerden nicht mehr initiiert.");
 
 // main menu text 2
-const u8 gText_Player[] = _("SPIELER");
-const u8 gText_Pokedex[] = _("POKéDEX");
+const u8 gText_ContinueMenuPlayer[] = _("SPIELER");
+const u8 gText_ContinueMenuPokedex[] = _("POKéDEX");
 const u8 gText_Time[] = _("SPIELZEIT");
-const u8 gText_Badges[] = _("ORDEN");
+const u8 gText_ContinueMenuBadges[] = _("ORDEN");
 
 // birch text
 const u8 gText_BirchBoy[] = _("JUNGE");

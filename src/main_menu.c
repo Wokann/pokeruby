@@ -672,7 +672,7 @@ void PrintSaveFileInfo(void)
 
 void PrintPlayerName(void)
 {
-    Menu_PrintText(gText_Player, 2, 3);
+    Menu_PrintText(gText_ContinueMenuPlayer, 2, 3);
     Menu_PrintText(gSaveBlock2.playerName, 9, 3);
 }
 
@@ -698,7 +698,7 @@ void PrintPokedexCount(void)
 {
     u8 buffer[16];
 
-    Menu_PrintText(gText_Pokedex, 2, 5);
+    Menu_PrintText(gText_ContinueMenuPokedex, 2, 5);
     AlignInt1InMenuWindow(buffer, GetCaughtMonsCount(), 18, 0);
     Menu_PrintText(buffer, 9, 5);
 }
@@ -708,9 +708,9 @@ void PrintBadgeCount(void)
     u8 buffer[16];
 
 #if defined(ENGLISH)
-    Menu_PrintText(gText_Badges, 16, 5);
+    Menu_PrintText(gText_ContinueMenuBadges, 16, 5);
 #elif defined(GERMAN)
-    Menu_PrintTextPixelCoords(gText_Badges, 124, 40, TRUE);
+    Menu_PrintTextPixelCoords(gText_ContinueMenuBadges, 124, 40, TRUE);
 #endif
     ConvertIntToDecimalStringSimple(buffer, GetBadgeCount());
     Menu_PrintTextPixelCoords(buffer, 205, 40, 1);
