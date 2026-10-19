@@ -4,6 +4,7 @@
 extern const u8 gMessageBox_Gfx[];
 
 extern const u8 gVsLettersGfx[];
+extern const u8 gBattleVSFrame_Gfx[];
 
 
 // data/graphics.s
@@ -2810,9 +2811,9 @@ extern const u16 gTradeMenu_Pal[];
 extern const u16 gTradeMenu_Gfx[];
 extern const u16 gTradeMenu_Tilemap[];
 extern const u16 gTradeMenuMonBox_Tilemap[];
-extern const u8 gBattleTextboxTiles[];
+extern const u16 gBattleTextboxTiles[];
 extern const u16 gBattleTextboxTilemap[];
-extern const u8 gBattleTextboxPalette[];
+extern const u16 gBattleTextboxPalette[];
 
 extern const u8 gNamingScreenBackButton_Gfx[];
 extern const u8 gNamingScreenOKButton_Gfx[];

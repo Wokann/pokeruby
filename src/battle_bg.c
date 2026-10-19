@@ -45,7 +45,6 @@ extern u16 gBattleEnvironmentPalette_StadiumGlacia[];
 extern u16 gBattleEnvironmentPalette_StadiumDrake[];
 extern u16 gBattleEnvironmentPalette_BattleTower[];
 
-extern u8 gBattleVSFrame_Gfx[];
 extern u16 gBattleVSFrame_Tilemap[];
 extern u16 gBattleVSFrame_Pal[];
 
