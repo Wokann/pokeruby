@@ -377,14 +377,14 @@ u8 (*const *const gMovementActionFuncs[])(struct ObjectEvent *, struct Sprite *)
     gMovementActionFuncs_FaceUp,                  // MOVEMENT_ACTION_FACE_UP
     gMovementActionFuncs_FaceLeft,                // MOVEMENT_ACTION_FACE_LEFT
     gMovementActionFuncs_FaceRight,               // MOVEMENT_ACTION_FACE_RIGHT
-    gMovementActionFuncs_WalkSlowDown,            // MOVEMENT_ACTION_WALK_DOWN_SLOW
-    gMovementActionFuncs_WalkSlowUp,              // MOVEMENT_ACTION_WALK_UP_SLOW
-    gMovementActionFuncs_WalkSlowLeft,            // MOVEMENT_ACTION_WALK_LEFT_SLOW
-    gMovementActionFuncs_WalkSlowRight,           // MOVEMENT_ACTION_WALK_RIGHT_SLOW
-    gMovementActionFuncs_WalkNormalDown,          // MOVEMENT_ACTION_WALK_DOWN_NORMAL
-    gMovementActionFuncs_WalkNormalUp,            // MOVEMENT_ACTION_WALK_UP_NORMAL
-    gMovementActionFuncs_WalkNormalLeft,          // MOVEMENT_ACTION_WALK_LEFT_NORMAL
-    gMovementActionFuncs_WalkNormalRight,         // MOVEMENT_ACTION_WALK_RIGHT_NORMAL
+    gMovementActionFuncs_WalkSlowDown,            // MOVEMENT_ACTION_WALK_SLOW_DOWN
+    gMovementActionFuncs_WalkSlowUp,              // MOVEMENT_ACTION_WALK_SLOW_UP
+    gMovementActionFuncs_WalkSlowLeft,            // MOVEMENT_ACTION_WALK_SLOW_LEFT
+    gMovementActionFuncs_WalkSlowRight,           // MOVEMENT_ACTION_WALK_SLOW_RIGHT
+    gMovementActionFuncs_WalkNormalDown,          // MOVEMENT_ACTION_WALK_NORMAL_DOWN
+    gMovementActionFuncs_WalkNormalUp,            // MOVEMENT_ACTION_WALK_NORMAL_UP
+    gMovementActionFuncs_WalkNormalLeft,          // MOVEMENT_ACTION_WALK_NORMAL_LEFT
+    gMovementActionFuncs_WalkNormalRight,         // MOVEMENT_ACTION_WALK_NORMAL_RIGHT
     gMovementActionFuncs_Jump2Down,               // MOVEMENT_ACTION_JUMP_2_DOWN
     gMovementActionFuncs_Jump2Up,                 // MOVEMENT_ACTION_JUMP_2_UP
     gMovementActionFuncs_Jump2Left,               // MOVEMENT_ACTION_JUMP_2_LEFT
@@ -410,18 +410,18 @@ u8 (*const *const gMovementActionFuncs[])(struct ObjectEvent *, struct Sprite *)
     gMovementActionFuncs_WalkInPlaceFastUp,       // MOVEMENT_ACTION_WALK_IN_PLACE_FAST_UP
     gMovementActionFuncs_WalkInPlaceFastLeft,     // MOVEMENT_ACTION_WALK_IN_PLACE_FAST_LEFT
     gMovementActionFuncs_WalkInPlaceFastRight,    // MOVEMENT_ACTION_WALK_IN_PLACE_FAST_RIGHT
-    gMovementActionFuncs_WalkInPlaceFasterDown,  // MOVEMENT_ACTION_WALK_IN_PLACE_FASTEST_DOWN
-    gMovementActionFuncs_WalkInPlaceFasterUp,    // MOVEMENT_ACTION_WALK_IN_PLACE_FASTEST_UP
-    gMovementActionFuncs_WalkInPlaceFasterLeft,  // MOVEMENT_ACTION_WALK_IN_PLACE_FASTEST_LEFT
-    gMovementActionFuncs_WalkInPlaceFasterRight, // MOVEMENT_ACTION_WALK_IN_PLACE_FASTEST_RIGHT
+    gMovementActionFuncs_WalkInPlaceFasterDown,  // MOVEMENT_ACTION_WALK_IN_PLACE_FASTER_DOWN
+    gMovementActionFuncs_WalkInPlaceFasterUp,    // MOVEMENT_ACTION_WALK_IN_PLACE_FASTER_UP
+    gMovementActionFuncs_WalkInPlaceFasterLeft,  // MOVEMENT_ACTION_WALK_IN_PLACE_FASTER_LEFT
+    gMovementActionFuncs_WalkInPlaceFasterRight, // MOVEMENT_ACTION_WALK_IN_PLACE_FASTER_RIGHT
     gMovementActionFuncs_RideWaterCurrentDown,    // MOVEMENT_ACTION_RIDE_WATER_CURRENT_DOWN
     gMovementActionFuncs_RideWaterCurrentUp,      // MOVEMENT_ACTION_RIDE_WATER_CURRENT_UP
     gMovementActionFuncs_RideWaterCurrentLeft,    // MOVEMENT_ACTION_RIDE_WATER_CURRENT_LEFT
     gMovementActionFuncs_RideWaterCurrentRight,   // MOVEMENT_ACTION_RIDE_WATER_CURRENT_RIGHT
-    gMovementActionFuncs_WalkFasterDown,         // MOVEMENT_ACTION_WALK_FASTEST_DOWN
-    gMovementActionFuncs_WalkFasterUp,           // MOVEMENT_ACTION_WALK_FASTEST_UP
-    gMovementActionFuncs_WalkFasterLeft,         // MOVEMENT_ACTION_WALK_FASTEST_LEFT
-    gMovementActionFuncs_WalkFasterRight,        // MOVEMENT_ACTION_WALK_FASTEST_RIGHT
+    gMovementActionFuncs_WalkFasterDown,         // MOVEMENT_ACTION_WALK_FASTER_DOWN
+    gMovementActionFuncs_WalkFasterUp,           // MOVEMENT_ACTION_WALK_FASTER_UP
+    gMovementActionFuncs_WalkFasterLeft,         // MOVEMENT_ACTION_WALK_FASTER_LEFT
+    gMovementActionFuncs_WalkFasterRight,        // MOVEMENT_ACTION_WALK_FASTER_RIGHT
     gMovementActionFuncs_SlideDown,               // MOVEMENT_ACTION_SLIDE_DOWN
     gMovementActionFuncs_SlideUp,                 // MOVEMENT_ACTION_SLIDE_UP
     gMovementActionFuncs_SlideLeft,               // MOVEMENT_ACTION_SLIDE_LEFT
