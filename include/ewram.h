@@ -93,7 +93,7 @@ extern u8 gSharedMem[];
 #define ewram_2010000                   (*(struct TradeEwramStruct *)(gSharedMem + 0x10000))
 #define eBerryBlenderGfxBuffer          (&gSharedMem[0x10000])
 #define eSlotMachineGfxBuffer           (void *)(gSharedMem + 0x10000) // slot machine
-#define eSlotMachineReelTimeGfxBuffer   (&gSharedMem[0x13200])
+#define sReelTimeGfxPtr                 (&gSharedMem[0x13200])
 #define sEvoInfo                        ((*(struct EvoInfo*)(gSharedMem + 0x14800)))
 
 // roulette_gfx.c
@@ -108,17 +108,17 @@ extern u8 gSharedMem[];
 #define eEggHatchData                   (struct EggHatchData*)(&gSharedMem[0x18000])
 
 // pokemon_summary_screen.c
-#define pssData                         (*(struct PokemonSummaryScreenData *)(gSharedMem + 0x18000))
+#define sMonSummaryScreen               (*(struct PokemonSummaryScreenData *)(gSharedMem + 0x18000))
 
 // roulette.c
 #define ewram18800                      ((u16 *)(gSharedMem + 0x18800))
-#define eRoulette                       ((struct Roulette *)(gSharedMem + 0x19000))
+#define sRoulette                       ((struct Roulette *)(gSharedMem + 0x19000))
 
 #define sCreditsData                    (*(struct CreditsData *)(gSharedMem + 0x1C000))
 
 // hall_of_fame.c
 #define eHofGfxPtr                      (gSharedMem + 0x8000)
-#define eHofMonPtr                      (struct HallofFameTeam*)(&gSharedMem[0x1C000])
+#define sHofMonPtr                      (struct HallofFameTeam*)(&gSharedMem[0x1C000])
 #define eHOFPCScreenEffect              (*(struct PCScreenEffectStruct *)(gSharedMem + 0x1c000))
 
 #define eMultiBattleSetupPartySendBuffer \

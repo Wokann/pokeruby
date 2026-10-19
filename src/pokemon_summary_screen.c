@@ -581,88 +581,88 @@ void ShowPokemonSummaryScreen(struct Pokemon *mons, u8 monIndex, u8 maxMonIndex,
 {
     gPaletteFade.bufferTransferDisabled = 1;
 
-    pssData.monList.mons = mons;
-    pssData.mode = mode;
-    pssData.curMonIndex = monIndex;
-    pssData.maxMonIndex = maxMonIndex;
-    pssData.callback = callback;
-    pssData.loadGfxState = 0;
-    pssData.firstMoveIndex = 4;
-    pssData.newMove = 0;
-    pssData.bgDisplayOrder = 0;
-    pssData.lockMovesFlag = FALSE;
+    sMonSummaryScreen.monList.mons = mons;
+    sMonSummaryScreen.mode = mode;
+    sMonSummaryScreen.curMonIndex = monIndex;
+    sMonSummaryScreen.maxMonIndex = maxMonIndex;
+    sMonSummaryScreen.callback = callback;
+    sMonSummaryScreen.loadGfxState = 0;
+    sMonSummaryScreen.firstMoveIndex = 4;
+    sMonSummaryScreen.newMove = 0;
+    sMonSummaryScreen.bgDisplayOrder = 0;
+    sMonSummaryScreen.lockMovesFlag = FALSE;
 
     if (mode >= PSS_MODE_PC_NORMAL)
-        pssData.isBoxMon = TRUE;
+        sMonSummaryScreen.isBoxMon = TRUE;
     else
-        pssData.isBoxMon = FALSE;
+        sMonSummaryScreen.isBoxMon = FALSE;
 
     switch (mode)
     {
     case SUMMARY_MODE_NORMAL:
     case PSS_MODE_PC_NORMAL:
-        pssData.minPageIndex = PSS_PAGE_INFO;
-        pssData.maxPageIndex = PSS_PAGE_CONTEST_MOVES;
-        pssData.unk77 = 0;
-        pssData.unk78 = 0;
-        pssData.headerTextId = 1;
-        pssData.headerActionTextId = 7;
+        sMonSummaryScreen.minPageIndex = PSS_PAGE_INFO;
+        sMonSummaryScreen.maxPageIndex = PSS_PAGE_CONTEST_MOVES;
+        sMonSummaryScreen.unk77 = 0;
+        sMonSummaryScreen.unk78 = 0;
+        sMonSummaryScreen.headerTextId = 1;
+        sMonSummaryScreen.headerActionTextId = 7;
         break;
     case SUMMARY_MODE_LOCK_MOVES:
-        pssData.minPageIndex = PSS_PAGE_INFO;
-        pssData.maxPageIndex = PSS_PAGE_CONTEST_MOVES;
-        pssData.unk77 = 0;
-        pssData.unk78 = 0;
-        pssData.headerTextId = 1;
-        pssData.headerActionTextId = 7;
-        pssData.lockMovesFlag = TRUE;
+        sMonSummaryScreen.minPageIndex = PSS_PAGE_INFO;
+        sMonSummaryScreen.maxPageIndex = PSS_PAGE_CONTEST_MOVES;
+        sMonSummaryScreen.unk77 = 0;
+        sMonSummaryScreen.unk78 = 0;
+        sMonSummaryScreen.headerTextId = 1;
+        sMonSummaryScreen.headerActionTextId = 7;
+        sMonSummaryScreen.lockMovesFlag = TRUE;
         break;
     case SUMMARY_MODE_SELECT_MOVE:
-        pssData.minPageIndex = PSS_PAGE_BATTLE_MOVES;
-        pssData.maxPageIndex = PSS_PAGE_CONTEST_MOVES;
-        pssData.unk77 = 1;
-        pssData.unk78 = 1;
-        pssData.headerTextId = 3;
-        pssData.headerActionTextId = 0;
-        pssData.firstMoveIndex = 0;
+        sMonSummaryScreen.minPageIndex = PSS_PAGE_BATTLE_MOVES;
+        sMonSummaryScreen.maxPageIndex = PSS_PAGE_CONTEST_MOVES;
+        sMonSummaryScreen.unk77 = 1;
+        sMonSummaryScreen.unk78 = 1;
+        sMonSummaryScreen.headerTextId = 3;
+        sMonSummaryScreen.headerActionTextId = 0;
+        sMonSummaryScreen.firstMoveIndex = 0;
         break;
     case PSS_MODE_MOVES_ONLY:
     case PSS_MODE_PC_MOVES_ONLY:
-        pssData.minPageIndex = PSS_PAGE_BATTLE_MOVES;
-        pssData.maxPageIndex = PSS_PAGE_CONTEST_MOVES;
-        pssData.unk77 = 1;
-        pssData.unk78 = 1;
+        sMonSummaryScreen.minPageIndex = PSS_PAGE_BATTLE_MOVES;
+        sMonSummaryScreen.maxPageIndex = PSS_PAGE_CONTEST_MOVES;
+        sMonSummaryScreen.unk77 = 1;
+        sMonSummaryScreen.unk78 = 1;
         break;
     }
 
-    pssData.currPageIndex = pssData.minPageIndex;
+    sMonSummaryScreen.currPageIndex = sMonSummaryScreen.minPageIndex;
     SetMainCallback2(CB2_InitSummaryScreen);
 }
 
 void ShowSelectMovePokemonSummaryScreen(struct Pokemon *mons, u8 monIndex, u8 maxMonIndex, MainCallback callback, u16 newMove)
 {
     ShowPokemonSummaryScreen(mons, monIndex, maxMonIndex, callback, SUMMARY_MODE_SELECT_MOVE);
-    pssData.newMove = newMove;
+    sMonSummaryScreen.newMove = newMove;
 }
 
 void sub_809DA1C(void)
 {
-    switch (pssData.mode)
+    switch (sMonSummaryScreen.mode)
     {
     case SUMMARY_MODE_NORMAL:
     case PSS_MODE_PC_NORMAL:
-        pssData.inputHandlingTaskId = CreateTask(Task_HandleInput, 0);
+        sMonSummaryScreen.inputHandlingTaskId = CreateTask(Task_HandleInput, 0);
         break;
     case SUMMARY_MODE_LOCK_MOVES:
-        pssData.inputHandlingTaskId = CreateTask(Task_HandleInput, 0);
+        sMonSummaryScreen.inputHandlingTaskId = CreateTask(Task_HandleInput, 0);
         break;
     case SUMMARY_MODE_SELECT_MOVE:
     case PSS_MODE_MOVE_DELETER:
-        pssData.inputHandlingTaskId = CreateTask(Task_SetHandleReplaceMoveInput, 0);
+        sMonSummaryScreen.inputHandlingTaskId = CreateTask(Task_SetHandleReplaceMoveInput, 0);
         break;
     case PSS_MODE_MOVES_ONLY:
     case PSS_MODE_PC_MOVES_ONLY:
-        pssData.inputHandlingTaskId = CreateTask(Task_HandleInput_MoveSelect, 0);
+        sMonSummaryScreen.inputHandlingTaskId = CreateTask(Task_HandleInput_MoveSelect, 0);
         break;
     }
 }
@@ -711,13 +711,13 @@ static bool8 LoadGraphics(void)
     case 9:
         DmaCopy16Defvars(3, gSummaryScreenTextTiles, (void *)(VRAM + 0xD000), 320);
         DmaCopy16Defvars(3, sButtons_Gfx, (void *)(VRAM + 0xD140), 256);
-        pssData.loadGfxState = 0;
+        sMonSummaryScreen.loadGfxState = 0;
         gMain.state++;
         break;
     case 10:
         if (LoadPokemonSummaryScreenGraphics())
         {
-            pssData.loadGfxState = 0;
+            sMonSummaryScreen.loadGfxState = 0;
             gMain.state++;
         }
         break;
@@ -726,28 +726,28 @@ static bool8 LoadGraphics(void)
         gMain.state++;
         break;
     case 12:
-        CopyMonToSummaryStruct(&pssData.currentMon);
-        if (!GetMonAilment(&pssData.currentMon))
+        CopyMonToSummaryStruct(&sMonSummaryScreen.currentMon);
+        if (!GetMonAilment(&sMonSummaryScreen.currentMon))
             PositionStatusSlidingWindow(0);
         else
             PositionStatusSlidingWindow(10);
-        DrawPokerusCuredSymbol(&pssData.currentMon);
+        DrawPokerusCuredSymbol(&sMonSummaryScreen.currentMon);
         gMain.state++;
         break;
     case 13:
         CreateMoveTypeIcons();
-        CreateMonMarkingsSprite(&pssData.currentMon);
+        CreateMonMarkingsSprite(&sMonSummaryScreen.currentMon);
         gMain.state++;
         break;
     case 14:
-        CreateCaughtBallSprite(&pssData.currentMon);
-        pssData.loadGfxState = 0;
+        CreateCaughtBallSprite(&sMonSummaryScreen.currentMon);
+        sMonSummaryScreen.loadGfxState = 0;
         gMain.state++;
         break;
     case 15:
-        if ((pssData.monSpriteId = LoadMonGfxAndSprite(&pssData.currentMon, &pssData.loadGfxState)) != 0xFF)
+        if ((sMonSummaryScreen.monSpriteId = LoadMonGfxAndSprite(&sMonSummaryScreen.currentMon, &sMonSummaryScreen.loadGfxState)) != 0xFF)
         {
-            pssData.loadGfxState = 0;
+            sMonSummaryScreen.loadGfxState = 0;
             gMain.state++;
         }
         break;
@@ -757,20 +757,20 @@ static bool8 LoadGraphics(void)
         gMain.state++;
         break;
     case 17:
-        if (pssData.currPageIndex <= PSS_PAGE_SKILLS)
-            sUnknown_083C1580[pssData.currPageIndex]();
+        if (sMonSummaryScreen.currPageIndex <= PSS_PAGE_SKILLS)
+            sUnknown_083C1580[sMonSummaryScreen.currPageIndex]();
         gMain.state++;
         break;
     case 18:
-        PrintMonInfo(&pssData.currentMon);
+        PrintMonInfo(&sMonSummaryScreen.currentMon);
         gMain.state++;
         break;
     case 19:
-        sTextPrinterFunctions[pssData.currPageIndex](&pssData.currentMon);
+        sTextPrinterFunctions[sMonSummaryScreen.currPageIndex](&sMonSummaryScreen.currentMon);
         gMain.state++;
         break;
     case 20:
-        if (GetMonData(&pssData.currentMon, MON_DATA_IS_EGG))
+        if (GetMonData(&sMonSummaryScreen.currentMon, MON_DATA_IS_EGG))
             gBattle_BG3_X = 256;
         else
             gBattle_BG3_X = 0;
@@ -778,7 +778,7 @@ static bool8 LoadGraphics(void)
         break;
     case 21:
         SetDefaultTilemaps();
-        if (pssData.firstMoveIndex != 0)
+        if (sMonSummaryScreen.firstMoveIndex != 0)
         {
             PositionPowerAccSlidingWindow(0, 0);
             PositionAppealJamSlidingWindow(0, 0);
@@ -845,7 +845,7 @@ static void InitBGs(void)
 
 static bool8 LoadPokemonSummaryScreenGraphics(void)
 {
-    switch (pssData.loadGfxState)
+    switch (sMonSummaryScreen.loadGfxState)
     {
     case 0:
         LZDecompressVram(gSummaryScreen_Gfx, (void *)VRAM + 0);
@@ -885,11 +885,11 @@ static bool8 LoadPokemonSummaryScreenGraphics(void)
         break;
     case 12:
         LoadCompressedPalette(gMoveTypes_Pal, 464, 96);
-        pssData.loadGfxState = 0;
+        sMonSummaryScreen.loadGfxState = 0;
         return TRUE;
     }
 
-    pssData.loadGfxState++;
+    sMonSummaryScreen.loadGfxState++;
     return FALSE;
 }
 
@@ -923,13 +923,13 @@ static void CloseSummaryScreen(u8 taskId)
 {
     if (Overworld_IsRecvQueueAtMax() != TRUE && !gPaletteFade.active)
     {
-        gLastViewedMonIndex = pssData.curMonIndex;
+        gLastViewedMonIndex = sMonSummaryScreen.curMonIndex;
 
         ResetSpriteData();
         FreeAllSpritePalettes();
         StopCryAndClearCrySongs();
         m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFFFF, 0x100);
-        SetMainCallback2(pssData.callback);
+        SetMainCallback2(sMonSummaryScreen.callback);
         DestroyTask(taskId);
     }
 }
@@ -957,9 +957,9 @@ static void Task_HandleInput(u8 taskId)
     }
     else if (JOY_NEW(A_BUTTON))
     {
-        if (pssData.currPageIndex >= PSS_PAGE_BATTLE_MOVES)
+        if (sMonSummaryScreen.currPageIndex >= PSS_PAGE_BATTLE_MOVES)
             SwitchToMoveSelection(taskId);
-        if (pssData.currPageIndex == PSS_PAGE_INFO)
+        if (sMonSummaryScreen.currPageIndex == PSS_PAGE_INFO)
             BeginCloseSummaryScreen(taskId);
     }
     else if (JOY_NEW(B_BUTTON))
@@ -976,46 +976,46 @@ static void Task_HandleReplaceMoveInput(u8 taskId)
     if (JOY_NEW(DPAD_UP))
     {
         gTasks[taskId].data[0] = 4;
-        ChangeSelectedMove(taskId, -1, &pssData.firstMoveIndex);
+        ChangeSelectedMove(taskId, -1, &sMonSummaryScreen.firstMoveIndex);
     }
     else if (JOY_NEW(DPAD_DOWN))
     {
         gTasks[taskId].data[0] = 4;
-        ChangeSelectedMove(taskId, 1, &pssData.firstMoveIndex);
+        ChangeSelectedMove(taskId, 1, &sMonSummaryScreen.firstMoveIndex);
     }
     else if (JOY_NEW(DPAD_LEFT) || GetLRKeysPressed() == 1)
     {
-        if (pssData.currPageIndex == PSS_PAGE_CONTEST_MOVES && (pssData.firstMoveIndex != 4 || pssData.newMove != 0))
+        if (sMonSummaryScreen.currPageIndex == PSS_PAGE_CONTEST_MOVES && (sMonSummaryScreen.firstMoveIndex != 4 || sMonSummaryScreen.newMove != 0))
             Menu_EraseWindowRect(0, 14, 9, 18);
         SummaryScreenHandleLeftRightInput(taskId, -1);
     }
     else if (JOY_NEW(DPAD_RIGHT) || GetLRKeysPressed() == 2)
     {
-        if (pssData.currPageIndex != pssData.maxPageIndex)
+        if (sMonSummaryScreen.currPageIndex != sMonSummaryScreen.maxPageIndex)
         {
-            if (pssData.currPageIndex == PSS_PAGE_BATTLE_MOVES && (pssData.firstMoveIndex != 4 || pssData.newMove != 0))
+            if (sMonSummaryScreen.currPageIndex == PSS_PAGE_BATTLE_MOVES && (sMonSummaryScreen.firstMoveIndex != 4 || sMonSummaryScreen.newMove != 0))
                 Menu_EraseWindowRect(0, 14, 9, 18);
             SummaryScreenHandleLeftRightInput(taskId, 1);
         }
     }
     else if (JOY_NEW(A_BUTTON))
     {
-        if (CanReplaceMove(taskId) == TRUE || pssData.firstMoveIndex == 4)
+        if (CanReplaceMove(taskId) == TRUE || sMonSummaryScreen.firstMoveIndex == 4)
         {
-            pssData.secondMoveIndex = pssData.firstMoveIndex;
-            gSpecialVar_0x8005 = pssData.secondMoveIndex;
+            sMonSummaryScreen.secondMoveIndex = sMonSummaryScreen.firstMoveIndex;
+            gSpecialVar_0x8005 = sMonSummaryScreen.secondMoveIndex;
             BeginCloseSummaryScreen(taskId);
         }
         else
         {
             PlaySE(SE_FAILURE);
-            ShowCantForgetHMsWindow(taskId, pssData.firstMoveIndex);
+            ShowCantForgetHMsWindow(taskId, sMonSummaryScreen.firstMoveIndex);
         }
     }
     else if (JOY_NEW(B_BUTTON))
     {
-        pssData.secondMoveIndex = 4;
-        gSpecialVar_0x8005 = pssData.secondMoveIndex;
+        sMonSummaryScreen.secondMoveIndex = 4;
+        gSpecialVar_0x8005 = sMonSummaryScreen.secondMoveIndex;
         BeginCloseSummaryScreen(taskId);
     }
 }
@@ -1028,18 +1028,18 @@ static void Task_HandleInput_MoveSelect(u8 taskId)
     if (JOY_NEW(DPAD_UP))
     {
         gTasks[taskId].data[0] = 4;
-        ChangeSelectedMove(taskId, -1, &pssData.firstMoveIndex);
+        ChangeSelectedMove(taskId, -1, &sMonSummaryScreen.firstMoveIndex);
     }
     else if (JOY_NEW(DPAD_DOWN))
     {
         gTasks[taskId].data[0] = 4;
-        ChangeSelectedMove(taskId, 1, &pssData.firstMoveIndex);
+        ChangeSelectedMove(taskId, 1, &sMonSummaryScreen.firstMoveIndex);
     }
     else if (JOY_NEW(A_BUTTON))
     {
-        if (pssData.firstMoveIndex != 4 && !pssData.lockMovesFlag)
+        if (sMonSummaryScreen.firstMoveIndex != 4 && !sMonSummaryScreen.lockMovesFlag)
         {
-            if (!HasMoreThanOneMove(&pssData.currentMon))
+            if (!HasMoreThanOneMove(&sMonSummaryScreen.currentMon))
             {
                 PlaySE(SE_FAILURE);
             }
@@ -1047,7 +1047,7 @@ static void Task_HandleInput_MoveSelect(u8 taskId)
             {
                 PlaySE(SE_SELECT);
 
-                pssData.secondMoveIndex = pssData.firstMoveIndex;
+                sMonSummaryScreen.secondMoveIndex = sMonSummaryScreen.firstMoveIndex;
                 SetMainMoveSelectorColor(1);
                 CreateMoveSelectorSprites(19);
 
@@ -1086,12 +1086,12 @@ static void Task_HandleInput_MovePositionSwitch(u8 taskId)
     if (JOY_NEW(DPAD_UP))
     {
         gTasks[taskId].data[0] = 3;
-        ChangeSelectedMove(taskId, -1, &pssData.secondMoveIndex);
+        ChangeSelectedMove(taskId, -1, &sMonSummaryScreen.secondMoveIndex);
     }
     else if (JOY_NEW(DPAD_DOWN))
     {
         gTasks[taskId].data[0] = 3;
-        ChangeSelectedMove(taskId, 1, &pssData.secondMoveIndex);
+        ChangeSelectedMove(taskId, 1, &sMonSummaryScreen.secondMoveIndex);
     }
     else if (JOY_NEW(A_BUTTON))
     {
@@ -1105,10 +1105,10 @@ static void Task_HandleInput_MovePositionSwitch(u8 taskId)
 
 static void SwapMonMoves(void)
 {
-    struct Pokemon *party = pssData.monList.mons;
-    struct Pokemon *mon = &party[pssData.curMonIndex];
-    u8 moveIndex1 = pssData.firstMoveIndex;
-    u8 moveIndex2 = pssData.secondMoveIndex;
+    struct Pokemon *party = sMonSummaryScreen.monList.mons;
+    struct Pokemon *mon = &party[sMonSummaryScreen.curMonIndex];
+    u8 moveIndex1 = sMonSummaryScreen.firstMoveIndex;
+    u8 moveIndex2 = sMonSummaryScreen.secondMoveIndex;
 
     u16 move1 = GetMonData(mon, MON_DATA_MOVE1 + moveIndex1);
     u16 move2 = GetMonData(mon, MON_DATA_MOVE1 + moveIndex2);
@@ -1135,10 +1135,10 @@ static void SwapMonMoves(void)
 
 static void SwapBoxMonMoves(void)
 {
-    struct BoxPokemon *boxMons = pssData.monList.boxMons;
-    struct BoxPokemon *mon = &boxMons[pssData.curMonIndex];
-    u8 moveIndex1 = pssData.firstMoveIndex;
-    u8 moveIndex2 = pssData.secondMoveIndex;
+    struct BoxPokemon *boxMons = sMonSummaryScreen.monList.boxMons;
+    struct BoxPokemon *mon = &boxMons[sMonSummaryScreen.curMonIndex];
+    u8 moveIndex1 = sMonSummaryScreen.firstMoveIndex;
+    u8 moveIndex2 = sMonSummaryScreen.secondMoveIndex;
 
     u16 move1 = GetBoxMonData(mon, MON_DATA_MOVE1 + moveIndex1);
     u16 move2 = GetBoxMonData(mon, MON_DATA_MOVE1 + moveIndex2);
@@ -1167,8 +1167,8 @@ void sub_809E7F0(u8 taskId)
 {
     if (sub_809F5F8())
     {
-        pssData.loadGfxState = 0;
-        PrintMoveDetails(&pssData.currentMon, &pssData.firstMoveIndex);
+        sMonSummaryScreen.loadGfxState = 0;
+        PrintMoveDetails(&sMonSummaryScreen.currentMon, &sMonSummaryScreen.firstMoveIndex);
         gTasks[taskId].func = Task_HandleInput_MoveSelect;
         sub_80A2078(taskId);
     }
@@ -1183,16 +1183,16 @@ static void ExitMovePositionSwitchMode(u8 taskId, s8 swapMoves)
 
     if (swapMoves == 1)
     {
-        if (pssData.firstMoveIndex != pssData.secondMoveIndex)
+        if (sMonSummaryScreen.firstMoveIndex != sMonSummaryScreen.secondMoveIndex)
         {
-            if (pssData.isBoxMon == FALSE)
+            if (sMonSummaryScreen.isBoxMon == FALSE)
                 SwapMonMoves();
             else
                 SwapBoxMonMoves();
 
-            pssData.firstMoveIndex = pssData.secondMoveIndex;
-            CopyMonToSummaryStruct(&pssData.currentMon);
-            pssData.loadGfxState = 1;
+            sMonSummaryScreen.firstMoveIndex = sMonSummaryScreen.secondMoveIndex;
+            CopyMonToSummaryStruct(&sMonSummaryScreen.currentMon);
+            sMonSummaryScreen.loadGfxState = 1;
 
             gTasks[taskId].func = sub_809E7F0;
             return;
@@ -1200,7 +1200,7 @@ static void ExitMovePositionSwitchMode(u8 taskId, s8 swapMoves)
     }
     else
     {
-        PrintMoveDetails(&pssData.currentMon, &pssData.firstMoveIndex);
+        PrintMoveDetails(&sMonSummaryScreen.currentMon, &sMonSummaryScreen.firstMoveIndex);
     }
 
     gTasks[taskId].func = Task_HandleInput_MoveSelect;
@@ -1226,13 +1226,13 @@ static void ChangeSelectedMove(u8 taskId, s8 direction, u8 *moveIndexPtr)
         else if (newMoveIndex < 0)
             newMoveIndex = var;
 
-        if (GetMonMove(&pssData.currentMon, newMoveIndex) != 0 || newMoveIndex == MAX_MON_MOVES)
+        if (GetMonMove(&sMonSummaryScreen.currentMon, newMoveIndex) != 0 || newMoveIndex == MAX_MON_MOVES)
             break;
     }
 
     if ((*moveIndexPtr == MAX_MON_MOVES
          && newMoveIndex != MAX_MON_MOVES
-         && pssData.newMove == 0)
+         && sMonSummaryScreen.newMove == 0)
          || gTasks[taskId].data[13] == 1)
     {
         PositionPowerAccSlidingWindow(2, newMoveIndex);
@@ -1242,7 +1242,7 @@ static void ChangeSelectedMove(u8 taskId, s8 direction, u8 *moveIndexPtr)
     }
     if (*moveIndexPtr != MAX_MON_MOVES
         && newMoveIndex == MAX_MON_MOVES
-        && pssData.newMove == 0)
+        && sMonSummaryScreen.newMove == 0)
     {
         PositionPowerAccSlidingWindow(-2, newMoveIndex);
         PositionAppealJamSlidingWindow(-2, newMoveIndex);
@@ -1250,13 +1250,13 @@ static void ChangeSelectedMove(u8 taskId, s8 direction, u8 *moveIndexPtr)
 
     *moveIndexPtr = newMoveIndex;
     // Get rid of the 'flicker' effect(while idle) when scrolling.
-    if (moveIndexPtr == &pssData.firstMoveIndex)
+    if (moveIndexPtr == &sMonSummaryScreen.firstMoveIndex)
         KeepMoveSelectorVisible(0);
     else
         KeepMoveSelectorVisible(1);
 
     if (bln)
-        PrintMoveDetails(&pssData.currentMon, moveIndexPtr);
+        PrintMoveDetails(&sMonSummaryScreen.currentMon, moveIndexPtr);
     sub_80A2078(taskId);
 }
 
@@ -1264,18 +1264,18 @@ static void SwitchToMoveSelection(u8 taskId)
 {
     PlaySE(SE_SELECT);
 
-    pssData.firstMoveIndex = 0;
+    sMonSummaryScreen.firstMoveIndex = 0;
     PositionPowerAccSlidingWindow(2, 0);
     PositionAppealJamSlidingWindow(2, 0);
 
-    if (!pssData.lockMovesFlag)
+    if (!sMonSummaryScreen.lockMovesFlag)
     {
-        pssData.headerActionTextId = 5;
+        sMonSummaryScreen.headerActionTextId = 5;
         PrintSummaryWindowHeaderText();
     }
 
     TilemapFiveMovesDisplay(0);
-    PrintNewMoveDetailsOrCancelText(&pssData.currentMon);
+    PrintNewMoveDetailsOrCancelText(&sMonSummaryScreen.currentMon);
     CreateMoveSelectorSprites(9);
 
     gTasks[taskId].func = Task_HandleInput_MoveSelect;
@@ -1284,7 +1284,7 @@ static void SwitchToMoveSelection(u8 taskId)
 
 static void CloseMoveSelectMode(u8 taskId)
 {
-    if (pssData.firstMoveIndex != 4)
+    if (sMonSummaryScreen.firstMoveIndex != 4)
     {
         PositionPowerAccSlidingWindow(-2, 0);
         PositionAppealJamSlidingWindow(-2, 0);
@@ -1296,7 +1296,7 @@ static void CloseMoveSelectMode(u8 taskId)
     Menu_EraseWindowRect(15, 12, 28, 13);
     Menu_EraseWindowRect(11, 15, 28, 18);
 
-    pssData.headerActionTextId = 6;
+    sMonSummaryScreen.headerActionTextId = 6;
     PrintSummaryWindowHeaderText();
 
     gTasks[taskId].func = Task_HandleInput;
@@ -1312,15 +1312,15 @@ static void Task_SetHandleReplaceMoveInput(u8 taskId)
         gTasks[taskId].func = Task_HandleReplaceMoveInput;
         break;
     case 0:
-        pssData.firstMoveIndex = 0;
-        if (pssData.newMove != 0)
+        sMonSummaryScreen.firstMoveIndex = 0;
+        if (sMonSummaryScreen.newMove != 0)
         {
             PositionPowerAccSlidingWindow(10, 0);
-            PositionAppealJamSlidingWindow(10, pssData.firstMoveIndex);
+            PositionAppealJamSlidingWindow(10, sMonSummaryScreen.firstMoveIndex);
         }
 
         TilemapFiveMovesDisplay(0);
-        PrintNewMoveDetailsOrCancelText(&pssData.currentMon);
+        PrintNewMoveDetailsOrCancelText(&sMonSummaryScreen.currentMon);
         // fall through
     default:
         gTasks[taskId].data[0]++;
@@ -1330,18 +1330,18 @@ static void Task_SetHandleReplaceMoveInput(u8 taskId)
 
 static void SetDefaultTilemaps(void)
 {
-    if (pssData.currPageIndex != PSS_PAGE_INFO)
+    if (sMonSummaryScreen.currPageIndex != PSS_PAGE_INFO)
     {
         DrawSummaryScreenNavigationDots();
         gBattle_BG1_X = 0x100;
 
-        if (pssData.currPageIndex == PSS_PAGE_SKILLS)
+        if (sMonSummaryScreen.currPageIndex == PSS_PAGE_SKILLS)
             REG_BG1CNT = (REG_BG1CNT & 0xE0FF) + 0x800;
 
-        if (pssData.currPageIndex == PSS_PAGE_BATTLE_MOVES)
+        if (sMonSummaryScreen.currPageIndex == PSS_PAGE_BATTLE_MOVES)
             REG_BG1CNT = (REG_BG1CNT & 0xE0FF) + 0xA00;
 
-        if (pssData.currPageIndex == PSS_PAGE_CONTEST_MOVES)
+        if (sMonSummaryScreen.currPageIndex == PSS_PAGE_CONTEST_MOVES)
             REG_BG1CNT = (REG_BG1CNT & 0xE0FF) + 0xC00;
     }
 }
@@ -1354,33 +1354,33 @@ static void PssScrollLeft(u8 taskId)
     switch (taskData[0])
     {
     case 0:
-        if (pssData.bgDisplayOrder == 0)
+        if (sMonSummaryScreen.bgDisplayOrder == 0)
         {
-            if (pssData.currPageIndex != PSS_PAGE_INFO)
+            if (sMonSummaryScreen.currPageIndex != PSS_PAGE_INFO)
                 gBattle_BG2_X = 0x100;
 
-            if (pssData.currPageIndex == PSS_PAGE_SKILLS)
+            if (sMonSummaryScreen.currPageIndex == PSS_PAGE_SKILLS)
                 REG_BG2CNT = (REG_BG2CNT & 0xE0FF) + 0x800;
 
-            if (pssData.currPageIndex == PSS_PAGE_BATTLE_MOVES)
+            if (sMonSummaryScreen.currPageIndex == PSS_PAGE_BATTLE_MOVES)
                 REG_BG2CNT = (REG_BG2CNT & 0xE0FF) + 0xA00;
         }
         else
         {
-            if (pssData.currPageIndex != PSS_PAGE_INFO)
+            if (sMonSummaryScreen.currPageIndex != PSS_PAGE_INFO)
                 gBattle_BG1_X = 0x100;
 
-            if (pssData.currPageIndex == PSS_PAGE_SKILLS)
+            if (sMonSummaryScreen.currPageIndex == PSS_PAGE_SKILLS)
                 REG_BG1CNT = (REG_BG1CNT & 0xE0FF) + 0x800;
 
-            if (pssData.currPageIndex == PSS_PAGE_BATTLE_MOVES)
+            if (sMonSummaryScreen.currPageIndex == PSS_PAGE_BATTLE_MOVES)
                 REG_BG1CNT = (REG_BG1CNT & 0xE0FF) + 0xA00;
         }
 
         taskData[0]++;
         break;
     case 1:
-        if (pssData.bgDisplayOrder == 0)
+        if (sMonSummaryScreen.bgDisplayOrder == 0)
         {
             int var2 = gBattle_BG1_X - 0x20;
             gBattle_BG1_X = var2;
@@ -1404,23 +1404,23 @@ static void PssScrollLeft(u8 taskId)
         }
         break;
     case 2:
-        pssData.headerTextId = pssData.currPageIndex + 1;
-        minus2 = pssData.mode - 2;
+        sMonSummaryScreen.headerTextId = sMonSummaryScreen.currPageIndex + 1;
+        minus2 = sMonSummaryScreen.mode - 2;
         if (minus2 < 2)
         {
-            pssData.headerActionTextId = 0;
-            PrintNewMoveDetailsOrCancelText(&pssData.currentMon);
-            PrintMoveDetails(&pssData.currentMon, &pssData.firstMoveIndex);
-            sub_80A00F4(pssData.firstMoveIndex);
+            sMonSummaryScreen.headerActionTextId = 0;
+            PrintNewMoveDetailsOrCancelText(&sMonSummaryScreen.currentMon);
+            PrintMoveDetails(&sMonSummaryScreen.currentMon, &sMonSummaryScreen.firstMoveIndex);
+            sub_80A00F4(sMonSummaryScreen.firstMoveIndex);
         }
         else
         {
-            if (pssData.currPageIndex >= PSS_PAGE_BATTLE_MOVES && (!pssData.lockMovesFlag || pssData.mode == SUMMARY_MODE_LOCK_MOVES))
-                pssData.headerActionTextId = 6;
-            else if (pssData.currPageIndex == PSS_PAGE_INFO)
-                pssData.headerActionTextId = 7;
+            if (sMonSummaryScreen.currPageIndex >= PSS_PAGE_BATTLE_MOVES && (!sMonSummaryScreen.lockMovesFlag || sMonSummaryScreen.mode == SUMMARY_MODE_LOCK_MOVES))
+                sMonSummaryScreen.headerActionTextId = 6;
+            else if (sMonSummaryScreen.currPageIndex == PSS_PAGE_INFO)
+                sMonSummaryScreen.headerActionTextId = 7;
             else
-                pssData.headerActionTextId = 0;
+                sMonSummaryScreen.headerActionTextId = 0;
         }
         taskData[0]++;
         break;
@@ -1430,8 +1430,8 @@ static void PssScrollLeft(u8 taskId)
         taskData[0]++;
         break;
     case 4:
-        sTextPrinterFunctions[pssData.currPageIndex](&pssData.currentMon);
-        pssData.bgDisplayOrder ^= 1;
+        sTextPrinterFunctions[sMonSummaryScreen.currPageIndex](&sMonSummaryScreen.currentMon);
+        sMonSummaryScreen.bgDisplayOrder ^= 1;
         taskData[0]++;
         break;
     case 5:
@@ -1448,7 +1448,7 @@ static void PssScrollRight(u8 taskId)
     switch (taskData[0])
     {
     case 0:
-        if (pssData.bgDisplayOrder == 0)
+        if (sMonSummaryScreen.bgDisplayOrder == 0)
         {
             gBattle_BG2_X = 0;
             taskData[0]++;
@@ -1460,28 +1460,28 @@ static void PssScrollRight(u8 taskId)
         }
         break;
     case 1:
-        if (pssData.bgDisplayOrder == 0)
+        if (sMonSummaryScreen.bgDisplayOrder == 0)
         {
-            if (pssData.currPageIndex == PSS_PAGE_SKILLS)
+            if (sMonSummaryScreen.currPageIndex == PSS_PAGE_SKILLS)
                 REG_BG2CNT = (REG_BG2CNT & 0xE0FC) + 0x801;
 
-            if (pssData.currPageIndex == PSS_PAGE_BATTLE_MOVES)
+            if (sMonSummaryScreen.currPageIndex == PSS_PAGE_BATTLE_MOVES)
                 REG_BG2CNT = (REG_BG2CNT & 0xE0FC) + 0xA01;
 
-            if (pssData.currPageIndex == PSS_PAGE_CONTEST_MOVES)
+            if (sMonSummaryScreen.currPageIndex == PSS_PAGE_CONTEST_MOVES)
                 REG_BG2CNT = (REG_BG2CNT & 0xE0FC) + 0xC01;
 
             REG_BG1CNT = (REG_BG1CNT & 0xFFFC) + 2;
         }
         else
         {
-            if (pssData.currPageIndex == PSS_PAGE_SKILLS)
+            if (sMonSummaryScreen.currPageIndex == PSS_PAGE_SKILLS)
                 REG_BG1CNT = (REG_BG1CNT & 0xE0FC) + 0x801;
 
-            if (pssData.currPageIndex == PSS_PAGE_BATTLE_MOVES)
+            if (sMonSummaryScreen.currPageIndex == PSS_PAGE_BATTLE_MOVES)
                 REG_BG1CNT = (REG_BG1CNT & 0xE0FC) + 0xA01;
 
-            if (pssData.currPageIndex == PSS_PAGE_CONTEST_MOVES)
+            if (sMonSummaryScreen.currPageIndex == PSS_PAGE_CONTEST_MOVES)
                 REG_BG1CNT = (REG_BG1CNT & 0xE0FC) + 0xC01;
 
             REG_BG2CNT = (REG_BG2CNT & 0xFFFC) + 2;
@@ -1490,7 +1490,7 @@ static void PssScrollRight(u8 taskId)
         taskData[0]++;
         break;
     case 2:
-        if (pssData.bgDisplayOrder == 0)
+        if (sMonSummaryScreen.bgDisplayOrder == 0)
         {
             gBattle_BG2_X += 32;
             if (gBattle_BG2_X == 0x100)
@@ -1504,22 +1504,22 @@ static void PssScrollRight(u8 taskId)
         }
         break;
     case 3:
-        pssData.headerTextId = pssData.currPageIndex + 1;
-        if (pssData.mode == 2 || pssData.mode == 3)
+        sMonSummaryScreen.headerTextId = sMonSummaryScreen.currPageIndex + 1;
+        if (sMonSummaryScreen.mode == 2 || sMonSummaryScreen.mode == 3)
         {
-            pssData.headerActionTextId = 0;
-            PrintNewMoveDetailsOrCancelText(&pssData.currentMon);
-            PrintMoveDetails(&pssData.currentMon, &pssData.firstMoveIndex);
-            sub_80A00F4(pssData.firstMoveIndex);
+            sMonSummaryScreen.headerActionTextId = 0;
+            PrintNewMoveDetailsOrCancelText(&sMonSummaryScreen.currentMon);
+            PrintMoveDetails(&sMonSummaryScreen.currentMon, &sMonSummaryScreen.firstMoveIndex);
+            sub_80A00F4(sMonSummaryScreen.firstMoveIndex);
         }
         else
         {
-            if (pssData.currPageIndex >= PSS_PAGE_BATTLE_MOVES && (!pssData.lockMovesFlag || pssData.mode == SUMMARY_MODE_LOCK_MOVES))
-                pssData.headerActionTextId = 6;
-            else if (pssData.currPageIndex == PSS_PAGE_INFO)
-                pssData.headerActionTextId = 7;
+            if (sMonSummaryScreen.currPageIndex >= PSS_PAGE_BATTLE_MOVES && (!sMonSummaryScreen.lockMovesFlag || sMonSummaryScreen.mode == SUMMARY_MODE_LOCK_MOVES))
+                sMonSummaryScreen.headerActionTextId = 6;
+            else if (sMonSummaryScreen.currPageIndex == PSS_PAGE_INFO)
+                sMonSummaryScreen.headerActionTextId = 7;
             else
-                pssData.headerActionTextId = 0;
+                sMonSummaryScreen.headerActionTextId = 0;
         }
         taskData[0]++;
         break;
@@ -1529,8 +1529,8 @@ static void PssScrollRight(u8 taskId)
         taskData[0]++;
         break;
     case 5:
-        sTextPrinterFunctions[pssData.currPageIndex](&pssData.currentMon);
-        pssData.bgDisplayOrder ^= 1;
+        sTextPrinterFunctions[sMonSummaryScreen.currPageIndex](&sMonSummaryScreen.currentMon);
+        sMonSummaryScreen.bgDisplayOrder ^= 1;
         taskData[0]++;
         break;
     case 6:
@@ -1542,7 +1542,7 @@ static void PssScrollRight(u8 taskId)
 
 static void ChangePage(u8 taskId, s8 direction)
 {
-    pssData.currPageIndex += direction;
+    sMonSummaryScreen.currPageIndex += direction;
     gUnknown_03005CF0 = gTasks[taskId].func;
     HidePageSpecificSprites();
     gTasks[taskId].data[0] = 0;
@@ -1560,11 +1560,11 @@ static void ChangePage(u8 taskId, s8 direction)
 
 static void SummaryScreenHandleLeftRightInput(u8 taskId, s8 direction)
 {
-    if (!GetMonData(&pssData.currentMon, MON_DATA_IS_EGG))
+    if (!GetMonData(&sMonSummaryScreen.currentMon, MON_DATA_IS_EGG))
     {
-        if (direction == -1 && pssData.currPageIndex == pssData.minPageIndex)
+        if (direction == -1 && sMonSummaryScreen.currPageIndex == sMonSummaryScreen.minPageIndex)
             return;
-        if (direction ==  1 && pssData.currPageIndex == pssData.maxPageIndex)
+        if (direction ==  1 && sMonSummaryScreen.currPageIndex == sMonSummaryScreen.maxPageIndex)
             return;
         if (FindTaskIdByFunc(Task_SlidePowerAccWindow) == 0xFF && FindTaskIdByFunc(Task_SlideAppealJamWindow) == 0xFF)
         {
@@ -1578,9 +1578,9 @@ static void ChangeSummaryPokemon(u8 taskId, s8 delta)
 {
     s8 monId;
 
-    if (pssData.isBoxMon == TRUE)
+    if (sMonSummaryScreen.isBoxMon == TRUE)
     {
-        if (pssData.currPageIndex != PSS_PAGE_INFO)
+        if (sMonSummaryScreen.currPageIndex != PSS_PAGE_INFO)
         {
             if (delta == 1)
                 delta = 0;
@@ -1595,7 +1595,7 @@ static void ChangeSummaryPokemon(u8 taskId, s8 delta)
                 delta = 3;
         }
 
-        monId = AdvanceStorageMonIndex(pssData.monList.boxMons, pssData.curMonIndex, pssData.maxMonIndex, delta);
+        monId = AdvanceStorageMonIndex(sMonSummaryScreen.monList.boxMons, sMonSummaryScreen.curMonIndex, sMonSummaryScreen.maxMonIndex, delta);
     }
     else
     {
@@ -1612,39 +1612,39 @@ static void ChangeSummaryPokemon(u8 taskId, s8 delta)
     if (monId != -1)
     {
         PlaySE(SE_SELECT);
-        if (GetMonAilment(&pssData.currentMon))
+        if (GetMonAilment(&sMonSummaryScreen.currentMon))
         {
             PositionStatusSlidingWindow(-2);
         }
 
-        pssData.curMonIndex = monId;
-        pssData.unk84 = gTasks[taskId].func;
+        sMonSummaryScreen.curMonIndex = monId;
+        sMonSummaryScreen.unk84 = gTasks[taskId].func;
         gTasks[taskId].func = Task_ChangeSummaryMon;
     }
 }
 
 static s8 AdvanceMonIndex(s8 delta)
 {
-    struct Pokemon *mons = pssData.monList.mons;
+    struct Pokemon *mons = sMonSummaryScreen.monList.mons;
     s8 r6 = 0;
     
-    if (pssData.currPageIndex == PSS_PAGE_INFO)
+    if (sMonSummaryScreen.currPageIndex == PSS_PAGE_INFO)
     {
-        if (delta == -1 && pssData.curMonIndex == 0)
+        if (delta == -1 && sMonSummaryScreen.curMonIndex == 0)
             return -1;
-        if (delta == 1 && pssData.curMonIndex >= pssData.maxMonIndex)
+        if (delta == 1 && sMonSummaryScreen.curMonIndex >= sMonSummaryScreen.maxMonIndex)
             return -1;
-        return pssData.curMonIndex + delta;
+        return sMonSummaryScreen.curMonIndex + delta;
     }
 
     // unlike Emerald, the do while needs to be inversed in order to match
     while (1)
     {
         r6 += delta;
-        if (pssData.curMonIndex + r6 < 0 || pssData.curMonIndex + r6 > pssData.maxMonIndex)
+        if (sMonSummaryScreen.curMonIndex + r6 < 0 || sMonSummaryScreen.curMonIndex + r6 > sMonSummaryScreen.maxMonIndex)
             return -1;
-        if (GetMonData(&mons[pssData.curMonIndex + r6], MON_DATA_IS_EGG) == 0)
-            return pssData.curMonIndex + r6;
+        if (GetMonData(&mons[sMonSummaryScreen.curMonIndex + r6], MON_DATA_IS_EGG) == 0)
+            return sMonSummaryScreen.curMonIndex + r6;
     }
 }
 
@@ -1652,7 +1652,7 @@ static bool8 IsValidToViewInMulti(struct Pokemon *mon)
 {
     if (GetMonData(mon, MON_DATA_SPECIES))
     {
-        if (pssData.currPageIndex != PSS_PAGE_INFO || !GetMonData(mon, MON_DATA_IS_EGG))
+        if (sMonSummaryScreen.currPageIndex != PSS_PAGE_INFO || !GetMonData(mon, MON_DATA_IS_EGG))
             return TRUE;
     }
     return FALSE;
@@ -1689,7 +1689,7 @@ static s8 AdvanceMultiBattleMonIndex(s8 delta)
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        if (sMultiBattleOrder[i] == pssData.curMonIndex)
+        if (sMultiBattleOrder[i] == sMonSummaryScreen.curMonIndex)
         {
             arrId = i;
             break;
@@ -1715,30 +1715,30 @@ static void Task_ChangeSummaryMon(u8 taskId)
         gMain.state++;
         break;
     case 1:
-        DestroySpriteAndFreeResources(&gSprites[pssData.monSpriteId]);
+        DestroySpriteAndFreeResources(&gSprites[sMonSummaryScreen.monSpriteId]);
         gMain.state++;
         break;
     case 2:
-        DestroySpriteAndFreeResources(&gSprites[pssData.ballSpriteId]);
+        DestroySpriteAndFreeResources(&gSprites[sMonSummaryScreen.ballSpriteId]);
         gMain.state++;
         break;
     case 3:
-        pssData.loadGfxState = 0;
-        pssData.firstMoveIndex = 0;
+        sMonSummaryScreen.loadGfxState = 0;
+        sMonSummaryScreen.firstMoveIndex = 0;
         gMain.state++;
         break;
     case 4:
-        CopyMonToSummaryStruct(&pssData.currentMon);
-        if (GetMonAilment(&pssData.currentMon))
+        CopyMonToSummaryStruct(&sMonSummaryScreen.currentMon);
+        if (GetMonAilment(&sMonSummaryScreen.currentMon))
             PositionStatusSlidingWindow(2);
-        DrawPokerusCuredSymbol(&pssData.currentMon);
+        DrawPokerusCuredSymbol(&sMonSummaryScreen.currentMon);
         gMain.state++;
         break;
     case 5:
-        if ((pssData.monSpriteId = LoadMonGfxAndSprite(&pssData.currentMon, &pssData.loadGfxState)) != 0xFF)
+        if ((sMonSummaryScreen.monSpriteId = LoadMonGfxAndSprite(&sMonSummaryScreen.currentMon, &sMonSummaryScreen.loadGfxState)) != 0xFF)
         {
-            pssData.loadGfxState = 0;
-            if (GetMonData(&pssData.currentMon, MON_DATA_IS_EGG))
+            sMonSummaryScreen.loadGfxState = 0;
+            if (GetMonData(&sMonSummaryScreen.currentMon, MON_DATA_IS_EGG))
                 gBattle_BG3_X = 256;
             else
                 gBattle_BG3_X = 0;
@@ -1746,17 +1746,17 @@ static void Task_ChangeSummaryMon(u8 taskId)
         }
         break;
     case 6:
-        RemoveAndCreateMonMarkingsSprite(&pssData.currentMon);
+        RemoveAndCreateMonMarkingsSprite(&sMonSummaryScreen.currentMon);
         gMain.state++;
         break;
     case 7:
-        CreateCaughtBallSprite(&pssData.currentMon);
+        CreateCaughtBallSprite(&sMonSummaryScreen.currentMon);
         gMain.state++;
         break;
     case 8:
         if (sub_809F5F8())
         {
-            pssData.loadGfxState = 0;
+            sMonSummaryScreen.loadGfxState = 0;
             gMain.state++;
         }
         break;
@@ -1764,7 +1764,7 @@ static void Task_ChangeSummaryMon(u8 taskId)
         if (Overworld_IsRecvQueueAtMax() != TRUE)
         {
             gMain.state = 0;
-            gTasks[taskId].func = pssData.unk84;
+            gTasks[taskId].func = sMonSummaryScreen.unk84;
         }
         break;
     }
@@ -1772,15 +1772,15 @@ static void Task_ChangeSummaryMon(u8 taskId)
 
 static bool8 sub_809F5F8(void)
 {
-    if (pssData.loadGfxState == 0)
+    if (sMonSummaryScreen.loadGfxState == 0)
     {
-        PrintMonInfo(&pssData.currentMon);
-        pssData.loadGfxState++;
+        PrintMonInfo(&sMonSummaryScreen.currentMon);
+        sMonSummaryScreen.loadGfxState++;
         return FALSE;
     }
     else
     {
-        sUnknown_083C1588[pssData.currPageIndex](&pssData.currentMon);
+        sUnknown_083C1588[sMonSummaryScreen.currPageIndex](&sMonSummaryScreen.currentMon);
         return TRUE;
     }
 }
@@ -1805,15 +1805,15 @@ static void sub_809F664(struct Pokemon *mon)
 
 static void CopyMonToSummaryStruct(struct Pokemon *mon)
 {
-    if (!pssData.isBoxMon)
+    if (!sMonSummaryScreen.isBoxMon)
     {
-        struct Pokemon *partyMon = pssData.monList.mons;
-        *mon = partyMon[pssData.curMonIndex];
+        struct Pokemon *partyMon = sMonSummaryScreen.monList.mons;
+        *mon = partyMon[sMonSummaryScreen.curMonIndex];
     }
     else
     {
-        struct BoxPokemon *boxMon = pssData.monList.boxMons;
-        BoxMonToMon(&boxMon[pssData.curMonIndex], mon);
+        struct BoxPokemon *boxMon = sMonSummaryScreen.monList.boxMons;
+        BoxMonToMon(&boxMon[sMonSummaryScreen.curMonIndex], mon);
     }
 }
 
@@ -1891,8 +1891,8 @@ static bool8 CanReplaceMove(u8 taskId)
     u16 move;
 
     CopyMonToSummaryStruct(&mon);
-    move = GetMonMove(&mon, pssData.firstMoveIndex);
-    if (IsMoveHm(move) == TRUE && pssData.mode != PSS_MODE_MOVE_DELETER)
+    move = GetMonMove(&mon, sMonSummaryScreen.firstMoveIndex);
+    if (IsMoveHm(move) == TRUE && sMonSummaryScreen.mode != PSS_MODE_MOVE_DELETER)
         return FALSE;
     return TRUE;
 }
@@ -1910,22 +1910,22 @@ static void Task_HandleInputCantForgetHMsMoves(u8 taskId)
         gTasks[taskId].func = Task_HandleReplaceMoveInput;
         taskData[0] = 4;
         taskData[13] = 1;
-        pssData.firstMoveIndex = taskData[15];
-        ChangeSelectedMove(taskId, -1, &pssData.firstMoveIndex);
+        sMonSummaryScreen.firstMoveIndex = taskData[15];
+        ChangeSelectedMove(taskId, -1, &sMonSummaryScreen.firstMoveIndex);
     }
     else if (JOY_NEW(DPAD_DOWN))
     {
         gTasks[taskId].func = Task_HandleReplaceMoveInput;
         taskData[0] = 4;
         taskData[13] = 1;
-        pssData.firstMoveIndex = taskData[15];
-        ChangeSelectedMove(taskId, 1, &pssData.firstMoveIndex);
+        sMonSummaryScreen.firstMoveIndex = taskData[15];
+        ChangeSelectedMove(taskId, 1, &sMonSummaryScreen.firstMoveIndex);
     }
     else if (JOY_NEW(DPAD_LEFT) || GetLRKeysPressed() == 1)
     {
-        if (pssData.currPageIndex != PSS_PAGE_BATTLE_MOVES)
+        if (sMonSummaryScreen.currPageIndex != PSS_PAGE_BATTLE_MOVES)
         {
-            if (pssData.currPageIndex == PSS_PAGE_CONTEST_MOVES && (pssData.firstMoveIndex != 4 || pssData.newMove != 0))
+            if (sMonSummaryScreen.currPageIndex == PSS_PAGE_CONTEST_MOVES && (sMonSummaryScreen.firstMoveIndex != 4 || sMonSummaryScreen.newMove != 0))
                 Menu_EraseWindowRect(0, 14, 9, 18);
 
             gTasks[taskId].func = Task_HandleReplaceMoveInput;
@@ -1937,9 +1937,9 @@ static void Task_HandleInputCantForgetHMsMoves(u8 taskId)
     }
     else if (JOY_NEW(DPAD_RIGHT) || GetLRKeysPressed() == 2)
     {
-        if (pssData.currPageIndex != pssData.maxPageIndex)
+        if (sMonSummaryScreen.currPageIndex != sMonSummaryScreen.maxPageIndex)
         {
-            if (pssData.currPageIndex == PSS_PAGE_BATTLE_MOVES && (pssData.firstMoveIndex != 4 || pssData.newMove != 0))
+            if (sMonSummaryScreen.currPageIndex == PSS_PAGE_BATTLE_MOVES && (sMonSummaryScreen.firstMoveIndex != 4 || sMonSummaryScreen.newMove != 0))
                 Menu_EraseWindowRect(0, 14, 9, 18);
 
             gTasks[taskId].func = Task_HandleReplaceMoveInput;
@@ -1974,7 +1974,7 @@ static void ShowCantForgetHMsWindow(u8 taskId, u8 moveIndex)
 
 u8 GetMoveSlotToReplace(void)
 {
-    return pssData.secondMoveIndex;
+    return sMonSummaryScreen.secondMoveIndex;
 }
 
 static void SummaryScreen_PlaceTextTile(u8 tile, u8 palette, u8 x, u8 y)
@@ -2234,9 +2234,9 @@ static void sub_80A00A4(void)
 
 static void sub_80A00F4(u8 a)
 {
-    if (pssData.newMove != 0 || a != 4)
+    if (sMonSummaryScreen.newMove != 0 || a != 4)
     {
-        if (pssData.currPageIndex == PSS_PAGE_BATTLE_MOVES)
+        if (sMonSummaryScreen.currPageIndex == PSS_PAGE_BATTLE_MOVES)
         {
             SummaryScreen_PrintColoredText(gText_Power, 13, 1, 15);
             SummaryScreen_PrintColoredText(gText_Accuracy2, 13, 1, 17);
@@ -2271,7 +2271,7 @@ static void sub_80A015C(struct Pokemon *mon)
         }
         else
         {
-            if (pssData.currPageIndex == PSS_PAGE_BATTLE_MOVES)
+            if (sMonSummaryScreen.currPageIndex == PSS_PAGE_BATTLE_MOVES)
                 SetTypeSpritePosAndPal(gBattleMoves[move].type, 87, ((2 * i) + 4) * 8, i);
             else
                 SetTypeSpritePosAndPal(gContestMoves[move].contestCategory + 18, 87, ((2 * i) + 4) * 8, i);
@@ -2297,20 +2297,20 @@ static void PrintNewMoveDetailsOrCancelText(struct Pokemon *mon)
     u16 move;
     u8 pp;
 
-    if (pssData.newMove == 0)
+    if (sMonSummaryScreen.newMove == 0)
     {
         SummaryScreen_PrintColoredText(gText_Cancel2, 13, 15, 12);
         return;
     }
 
-    move = pssData.newMove;
+    move = sMonSummaryScreen.newMove;
 
-    if (pssData.currPageIndex == PSS_PAGE_BATTLE_MOVES)
+    if (sMonSummaryScreen.currPageIndex == PSS_PAGE_BATTLE_MOVES)
         SetTypeSpritePosAndPal(gBattleMoves[move].type, 87, 96, 4);
     else
         SetTypeSpritePosAndPal(gContestMoves[move].contestCategory + 18, 87, 96, 4);
 
-    if (pssData.currPageIndex == PSS_PAGE_BATTLE_MOVES)
+    if (sMonSummaryScreen.currPageIndex == PSS_PAGE_BATTLE_MOVES)
         SummaryScreen_PrintColoredText(gMoveNames[move], 10, 15, 12);
     else
         SummaryScreen_PrintColoredText(gMoveNames[move], 9, 15, 12);
@@ -2343,8 +2343,8 @@ u16 sub_80A03BC(struct Pokemon *mon, u8 selectedMoveIndex)
     }
     else
     {
-        if (pssData.newMove != 0)
-            move = pssData.newMove;
+        if (sMonSummaryScreen.newMove != 0)
+            move = sMonSummaryScreen.newMove;
         else
             move = 0xFFFF;
     }
@@ -2356,7 +2356,7 @@ void sub_80A03F0(struct Pokemon *mon, u8 *selectedMoveIndex)
 {
     u16 move = sub_80A03BC(mon, *selectedMoveIndex);
 
-    if (pssData.currPageIndex == PSS_PAGE_BATTLE_MOVES)
+    if (sMonSummaryScreen.currPageIndex == PSS_PAGE_BATTLE_MOVES)
     {
         PrintMovePowerAndAccuracy(move);
         DrawContestMoveHearts(0xFFFF);
@@ -2372,7 +2372,7 @@ static void PrintMoveDetails(struct Pokemon *mon, u8 *selectedMoveIndex)
     u16 move = sub_80A03BC(mon, *selectedMoveIndex);
     Menu_EraseWindowRect(11, 15, 28, 18);
 
-    if (pssData.currPageIndex == PSS_PAGE_BATTLE_MOVES)
+    if (sMonSummaryScreen.currPageIndex == PSS_PAGE_BATTLE_MOVES)
         sub_80A046C(move);
     else
         PrintContestMoveDescription(move);
@@ -2476,7 +2476,7 @@ static bool8 DoesMonOTMatchOwner(struct Pokemon *mon)
 {
     u32 trainerId;
 
-    if (pssData.monList.mons == gEnemyParty)
+    if (sMonSummaryScreen.monList.mons == gEnemyParty)
     {
         u8 multiID = GetMultiplayerId() ^ 1;
         trainerId = gLinkPlayers[multiID].trainerId & 0xFFFF;
@@ -2765,7 +2765,7 @@ static void PrintHeldItemName(u16 itemId, u8 left, u8 top)
     if (itemId == ITEM_ENIGMA_BERRY
      && MenuHelpers_IsLinkActive() == TRUE
      && IsLinkDoubleBattle() == TRUE
-     && (pssData.curMonIndex == 1 || pssData.curMonIndex == 4 || pssData.curMonIndex == 5))
+     && (sMonSummaryScreen.curMonIndex == 1 || sMonSummaryScreen.curMonIndex == 4 || sMonSummaryScreen.curMonIndex == 5))
         StringCopy(gStringVar1, GetItemName(itemId));
     else if (itemId == 0)
         StringCopy(gStringVar1, gText_None);
@@ -2851,7 +2851,7 @@ static void PrintSummaryWindowHeaderText(void)
 
     buffer += 3;
     buffer = SummaryScreen_SetTextColor(buffer, 13);
-    buffer = StringCopy(buffer, sPageHeaderTexts[pssData.headerTextId]);
+    buffer = StringCopy(buffer, sPageHeaderTexts[sMonSummaryScreen.headerTextId]);
 
     buffer[0] = EXT_CTRL_CODE_BEGIN;
     buffer[1] = 0x13;
@@ -2860,7 +2860,7 @@ static void PrintSummaryWindowHeaderText(void)
 
     Menu_PrintText(gStringVar1, 0, 0);
 
-    if (pssData.headerActionTextId != 0)
+    if (sMonSummaryScreen.headerActionTextId != 0)
     {
         SummaryScreen_PlaceTextTile_White(5, 23, 0);
         SummaryScreen_PlaceTextTile_White(6, 24, 0);
@@ -2872,7 +2872,7 @@ static void PrintSummaryWindowHeaderText(void)
 
     buffer = gStringVar1;
     buffer = SummaryScreen_SetTextColor(buffer, 13);
-    buffer = StringCopy(buffer, sPageHeaderTexts[pssData.headerActionTextId]);
+    buffer = StringCopy(buffer, sPageHeaderTexts[sMonSummaryScreen.headerActionTextId]);
 
     buffer[0] = EXT_CTRL_CODE_BEGIN;
     buffer[1] = 0x13;
@@ -2910,27 +2910,27 @@ void DrawSummaryScreenNavigationDots(void)
     // Shifting 1 bit instead of multiplying by 2 is required to match.
     for (i = 0; i < 4; i++)
     {
-        if (i < pssData.minPageIndex)
+        if (i < sMonSummaryScreen.minPageIndex)
         {
             tilemap[i << 1] = 0x4040;
             tilemap[(i << 1) + 1] = 0x4040;
         }
-        else if (i > pssData.maxPageIndex)
+        else if (i > sMonSummaryScreen.maxPageIndex)
         {
             tilemap[i << 1] = 0x404A;
             tilemap[(i << 1) + 1] = 0x404A;
         }
         else
         {
-            if (i < pssData.currPageIndex)
+            if (i < sMonSummaryScreen.currPageIndex)
             {
                 tilemap[i << 1] = 0x4046;
                 tilemap[(i << 1) + 1] = 0x4046 + 1;
             }
 
-            if (i == pssData.currPageIndex)
+            if (i == sMonSummaryScreen.currPageIndex)
             {
-                if (i != pssData.maxPageIndex)
+                if (i != sMonSummaryScreen.maxPageIndex)
                 {
                     tilemap[i << 1] = 0x4041;
                     tilemap[(i << 1) + 1] = 0x4041 + 1;
@@ -2942,9 +2942,9 @@ void DrawSummaryScreenNavigationDots(void)
                 }
             }
 
-            if (i > pssData.currPageIndex)
+            if (i > sMonSummaryScreen.currPageIndex)
             {
-                if (i != pssData.maxPageIndex)
+                if (i != sMonSummaryScreen.maxPageIndex)
                 {
                     tilemap[i << 1] = 0x4043;
                     tilemap[(i << 1) + 1] = 0x4043 + 1;
@@ -3079,12 +3079,12 @@ static void PositionStatusSlidingWindow(s8 speed)
 
 //     if (gTasks[taskId].data[0] == 0 || gTasks[taskId].data[1] < 0)
 //     {
-//         if (pssData.currPageIndex == PSS_PAGE_BATTLE_MOVES)
+//         if (sMonSummaryScreen.currPageIndex == PSS_PAGE_BATTLE_MOVES)
 //         {
 //             Menu_EraseWindowRect(0, 14, 9, 18);
-//             sub_80A0958(pssData.currentMon);
+//             sub_80A0958(sMonSummaryScreen.currentMon);
 
-//             if (GetMonAilment(pssData.currentMon))
+//             if (GetMonAilment(sMonSummaryScreen.currentMon))
 //             {
 //                 SummaryScreen_PrintColoredText(gText_Status, 13, 1, 18);
 //             }
@@ -3095,12 +3095,12 @@ static void PositionStatusSlidingWindow(s8 speed)
 
 //     if (gTasks[taskId].data[1] > 9)
 //     {
-//         if (pssData.currPageIndex == PSS_PAGE_BATTLE_MOVES)
+//         if (sMonSummaryScreen.currPageIndex == PSS_PAGE_BATTLE_MOVES)
 //         {
 //             sub_80A00F4(gTasks[taskId].data[3]);
 //         }
 
-//         sub_80A0428(pssData.currentMon, &gTasks[taskId].data[3]);
+//         sub_80A0428(sMonSummaryScreen.currentMon, &gTasks[taskId].data[3]);
 //         DestroyTask(taskId);
 //     }
 // }
@@ -3282,7 +3282,7 @@ static void PositionPowerAccSlidingWindow(s8 speed, u8 b)
 {
     u8 taskId;
 
-    if (pssData.currPageIndex == PSS_PAGE_BATTLE_MOVES)
+    if (sMonSummaryScreen.currPageIndex == PSS_PAGE_BATTLE_MOVES)
         Menu_EraseWindowRect(0, 14, 9, 19);
 
     taskId = FindTaskIdByFunc(Task_SlidePowerAccWindow);
@@ -3476,7 +3476,7 @@ static void PositionAppealJamSlidingWindow(s8 speed, u8 b)
 {
     u8 taskId;
 
-    if (pssData.currPageIndex == PSS_PAGE_CONTEST_MOVES)
+    if (sMonSummaryScreen.currPageIndex == PSS_PAGE_CONTEST_MOVES)
         Menu_EraseWindowRect(0, 14, 9, 19);
 
     taskId = FindTaskIdByFunc(Task_SlideAppealJamWindow);
@@ -3740,7 +3740,7 @@ static void SummaryScreen_SpritePlayCry(struct Sprite *sprite)
     {
         sprite->callback = SpriteCallbackDummy;
 
-        if (!GetMonData(&pssData.currentMon, MON_DATA_IS_EGG))
+        if (!GetMonData(&sMonSummaryScreen.currentMon, MON_DATA_IS_EGG))
             PlayCry_Normal(sprite->data[0], 0);
     }
 }
@@ -3797,7 +3797,7 @@ static void CreateMoveSelectorSprites(u8 idArrayStart)
     s16 x;
     u8 subpriority = 0;
 
-    if (pssData.currPageIndex >= PSS_PAGE_BATTLE_MOVES)
+    if (sMonSummaryScreen.currPageIndex >= PSS_PAGE_BATTLE_MOVES)
     {
         if (idArrayStart == 9)
             subpriority = 1;
@@ -3860,9 +3860,9 @@ static void SpriteCB_MoveSelector(struct Sprite *sprite)
     }
 
     if (sprite->data[0] == 9)
-        sprite->y2 = pssData.firstMoveIndex * 16;
+        sprite->y2 = sMonSummaryScreen.firstMoveIndex * 16;
     else
-        sprite->y2 = pssData.secondMoveIndex * 16;
+        sprite->y2 = sMonSummaryScreen.secondMoveIndex * 16;
 }
 
 #define shared1A009 ((u8 *)(gSharedMem + 0x1A009))
@@ -3966,9 +3966,9 @@ static void CreateCaughtBallSprite(struct Pokemon *mon)
     u8 ball = ItemIdToBallId(GetMonData(mon, MON_DATA_POKEBALL));
     LoadBallGfx(ball);
 
-    pssData.ballSpriteId = CreateSprite(&gBallSpriteTemplates[ball], 6, 136, 0);
-    gSprites[pssData.ballSpriteId].callback = SpriteCallbackDummy;
-    gSprites[pssData.ballSpriteId].oam.priority = 3;
+    sMonSummaryScreen.ballSpriteId = CreateSprite(&gBallSpriteTemplates[ball], 6, 136, 0);
+    gSprites[sMonSummaryScreen.ballSpriteId].callback = SpriteCallbackDummy;
+    gSprites[sMonSummaryScreen.ballSpriteId].oam.priority = 3;
 }
 
 static u8 *SummaryScreen_SetTextColor(u8 *text, u8 id)

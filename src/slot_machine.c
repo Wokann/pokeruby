@@ -4041,7 +4041,7 @@ static void sub_81063C0(void)
 {
     sub_8106404();
     LZDecompressWram(gSlotMachineDigitalDisplay_Gfx, eSlotMachineGfxBuffer);
-    LZDecompressWram(sReelTimeGfx, eSlotMachineReelTimeGfxBuffer);
+    LZDecompressWram(sReelTimeGfx, sReelTimeGfxPtr);
     LoadSpriteSheets(sSlotMachineSpriteSheets);
     LoadSpritePalettes(sSlotMachineSpritePalettes);
 }
@@ -4600,23 +4600,23 @@ static const struct OamData sOam_64x64 = {
 };
 
 static const struct SpriteFrameImage sImageTable_ReelTimePikachu[] = {
-    {eSlotMachineReelTimeGfxBuffer + 0x0000, 0x800},
-    {eSlotMachineReelTimeGfxBuffer + 0x0800, 0x800},
-    {eSlotMachineReelTimeGfxBuffer + 0x1000, 0x800},
-    {eSlotMachineReelTimeGfxBuffer + 0x1800, 0x800},
-    {eSlotMachineReelTimeGfxBuffer + 0x2000, 0x800}
+    {sReelTimeGfxPtr + 0x0000, 0x800},
+    {sReelTimeGfxPtr + 0x0800, 0x800},
+    {sReelTimeGfxPtr + 0x1000, 0x800},
+    {sReelTimeGfxPtr + 0x1800, 0x800},
+    {sReelTimeGfxPtr + 0x2000, 0x800}
 };
 
 static const struct SpriteFrameImage sImageTable_ReelTimeMachineAntennae[] = {
-    {eSlotMachineReelTimeGfxBuffer + 0x2800, 0x300}
+    {sReelTimeGfxPtr + 0x2800, 0x300}
 };
 
 static const struct SpriteFrameImage sImageTable_ReelTimeMachine[] = {
-    {eSlotMachineReelTimeGfxBuffer + 0x2B00, 0x500}
+    {sReelTimeGfxPtr + 0x2B00, 0x500}
 };
 
 static const struct SpriteFrameImage sImageTable_BrokenReelTimeMachine[] = {
-    {eSlotMachineReelTimeGfxBuffer + 0x3000, 0x600}
+    {sReelTimeGfxPtr + 0x3000, 0x600}
 };
 
 static const struct SpriteFrameImage sImageTable_ReelTimeNumbers[] = {

@@ -476,7 +476,7 @@ void CB2_DoHallOfFameScreenDontSaveData(void)
 static void Task_Hof_InitMonData(u8 taskId)
 {
     u16 i, j;
-    struct HallofFameTeam* fameMons = eHofMonPtr;
+    struct HallofFameTeam* fameMons = sHofMonPtr;
 
     gTasks[taskId].tMonNumber = 0; // valid pokes
     for (i = 0; i < 6; i++)
@@ -520,7 +520,7 @@ static void Task_Hof_InitMonData(u8 taskId)
 static void Task_Hof_InitTeamSaveData(u8 taskId)
 {
     u16 i;
-    struct HallofFameTeam* fameMons = eHofMonPtr;
+    struct HallofFameTeam* fameMons = sHofMonPtr;
     struct HallofFameTeam* lastSavedTeam = (struct HallofFameTeam *)gDecompressionBuffer;
 
     if (gHasHallOfFameRecords == FALSE)
@@ -582,7 +582,7 @@ static void Task_Hof_DisplayMon(u8 taskId)
     u8 spriteId;
     s16 startX, startY, destX, destY;
 
-    struct HallofFameTeam* fameMons = eHofMonPtr;
+    struct HallofFameTeam* fameMons = sHofMonPtr;
     u16 currMonId = gTasks[taskId].tDisplayedMonId;
     struct HallofFameMon* currMon = &fameMons->mon[currMonId];
 
@@ -613,7 +613,7 @@ static void Task_Hof_DisplayMon(u8 taskId)
 
 static void Task_Hof_PrintMonInfoAfterAnimating(u8 taskId)
 {
-    struct HallofFameTeam* fameMons = eHofMonPtr;
+    struct HallofFameTeam* fameMons = sHofMonPtr;
     u16 currMonId = gTasks[taskId].tDisplayedMonId;
     struct HallofFameMon* currMon = &fameMons->mon[currMonId];
 
@@ -629,7 +629,7 @@ static void Task_Hof_PrintMonInfoAfterAnimating(u8 taskId)
 
 static void Task_Hof_TryDisplayAnotherMon(u8 taskId)
 {
-    struct HallofFameTeam* fameMons = eHofMonPtr;
+    struct HallofFameTeam* fameMons = sHofMonPtr;
     u16 currPokeID = gTasks[taskId].tDisplayedMonId;
     struct HallofFameMon* currMon = &fameMons->mon[currPokeID];
 

@@ -1416,7 +1416,7 @@ void SetSelectionAfterSummaryScreen(void)
     if (sIsMonBeingMoved)
         LoadSavedMovingMon();
     else
-        sCursorPosition = pssData.curMonIndex;
+        sCursorPosition = sMonSummaryScreen.curMonIndex;
 }
 
 s16 CompactPartySlots(void)
