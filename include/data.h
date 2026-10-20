@@ -10,6 +10,12 @@
 #include "sprite.h"
 #include "battle.h"
 
+enum {
+    BATTLER_AFFINE_NORMAL,
+    BATTLER_AFFINE_EMERGE,
+    BATTLER_AFFINE_RETURN,
+};
+
 struct ScanlineEffectParams;
 
 struct MonCoords
