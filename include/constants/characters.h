@@ -97,6 +97,9 @@
 #define TEXT_COLOR_LIGHT_BLUE  0x0E
 #define TEXT_COLOR_WHITE2      0x0F
 
+#define TEXT_DYNAMIC_COLOR_1    0x0A
+#define TEXT_DYNAMIC_COLOR_2    0x0B
+
 #define EXT_CTRL_CODE_COLOR                  0x01
 #define EXT_CTRL_CODE_HIGHLIGHT              0x02
 #define EXT_CTRL_CODE_SHADOW                 0x03
