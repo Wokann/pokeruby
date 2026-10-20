@@ -8894,7 +8894,7 @@ static void Cmd_docastformchangeanimation(void)
 {
     gActiveBattler = gBattleStruct->battler;
     if (gBattleMons[gActiveBattler].status2 & STATUS2_SUBSTITUTE)
-        gBattleStruct->formToChangeInto |= 0x80;
+        gBattleStruct->formToChangeInto |= CASTFORM_SUBSTITUTE;
     BtlController_EmitBattleAnimation(B_COMM_TO_CONTROLLER, B_ANIM_CASTFORM_CHANGE, gBattleStruct->formToChangeInto);
     MarkBattlerForControllerExec(gActiveBattler);
     gBattlescriptCurrInstr++;

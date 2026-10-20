@@ -311,6 +311,8 @@ enum BattlerId
 #define B_WAIT_TIME_MED   48
 #define B_WAIT_TIME_SHORT 32
 
+#define CASTFORM_SUBSTITUTE (1 << 7)
+
 #define AI_ACTION_UNK5          0x0010
 #define AI_ACTION_UNK6          0x0020
 #define AI_ACTION_UNK7          0x0040
