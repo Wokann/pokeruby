@@ -1,6 +1,10 @@
 #ifndef GUARD_BATTLE_AI_SCRIPT_COMMANDS_H
 #define GUARD_BATTLE_AI_SCRIPT_COMMANDS_H
 
+// Return values for BattleAI_GetAIActionToUse; 0 - 3 are move indices.
+#define AI_CHOICE_FLEE 4
+#define AI_CHOICE_WATCH 5
+
 // battle_ai
 void BattleAI_SetupAIData(void);
 u8 BattleAI_GetAIActionToUse(void);
