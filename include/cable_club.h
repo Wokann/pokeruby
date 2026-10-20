@@ -2,6 +2,7 @@
 #define GUARD_CABLE_CLUB_H
 
 #include "task.h"
+#include "constants/cable_club.h"
 
 void TryBattleLinkup(u8 arg0);
 void TryTradeLinkup(void);

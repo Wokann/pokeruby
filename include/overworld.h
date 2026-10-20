@@ -4,6 +4,28 @@
 #include "main.h"
 #include "sprite.h"
 
+#define LINK_KEY_CODE_EMPTY 0x11
+#define LINK_KEY_CODE_DPAD_DOWN 0x12
+#define LINK_KEY_CODE_DPAD_UP 0x13
+#define LINK_KEY_CODE_DPAD_LEFT 0x14
+#define LINK_KEY_CODE_DPAD_RIGHT 0x15
+#define LINK_KEY_CODE_READY 0x16
+#define LINK_KEY_CODE_EXIT_ROOM 0x17
+#define LINK_KEY_CODE_START_BUTTON 0x18
+#define LINK_KEY_CODE_A_BUTTON 0x19
+#define LINK_KEY_CODE_IDLE 0x1A
+
+// These two are a hack to stop user input until link stuff can be
+// resolved.
+#define LINK_KEY_CODE_HANDLE_RECV_QUEUE 0x1B
+#define LINK_KEY_CODE_HANDLE_SEND_QUEUE 0x1C
+#define LINK_KEY_CODE_EXIT_SEAT 0x1D
+#define LINK_KEY_CODE_UNK_8 0x1E
+
+#define MOVEMENT_MODE_FREE 0
+#define MOVEMENT_MODE_FROZEN 1
+#define MOVEMENT_MODE_SCRIPTED 2
+
 struct InitialPlayerAvatarState
 {
     u8 transitionFlags;

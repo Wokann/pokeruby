@@ -15,4 +15,6 @@
 #define CRY_MODE_WEAK         11 // Used when a Pokémon is unhealthy
 #define CRY_MODE_WEAK_DOUBLES 12 // Equivalent to CRY_MODE_DOUBLES for CRY_MODE_WEAK
 
+#define CRY_PRIORITY_AMBIENT 1
+
 #endif // GUARD_CONSTANTS_SOUND_H
