@@ -176,13 +176,13 @@ sp_irq: .word IWRAM_END - 0x60
 	.global IntrMain
 IntrMain:
 	mov r3, REG_BASE
-	add r3, r3, 0x200
-	ldr r2, [r3, OFFSET_REG_IE - 0x200]
-	ldrh r1, [r3, OFFSET_REG_IME - 0x200]
+	add r3, r3, OFFSET_REG_IE
+	ldr r2, [r3, OFFSET_REG_IE - OFFSET_REG_IE]
+	ldrh r1, [r3, OFFSET_REG_IME - OFFSET_REG_IE]
 	mrs r0, spsr
 	stmdb sp!, {r0-r3,lr}
 	mov r0, 1
-	strh r0, [r3, OFFSET_REG_IME - 0x200]
+	strh r0, [r3, OFFSET_REG_IME - OFFSET_REG_IE]
 	and r1, r2, r2, lsr 16
 	mov r12, 0
 	ands r0, r1, INTR_FLAG_SERIAL
@@ -225,15 +225,15 @@ IntrMain:
 	bne IntrMain_FoundIntr
 	add r12, r12, 0x4
 	ands r0, r1, INTR_FLAG_GAMEPAK
-	strbne r0, [r3, OFFSET_REG_SOUNDCNT_X - 0x200]
+	strbne r0, [r3, OFFSET_REG_SOUNDCNT_X - OFFSET_REG_IE]
 IntrMain_Loop:
 	bne IntrMain_Loop
 IntrMain_FoundIntr:
-	strh r0, [r3, OFFSET_REG_IF - 0x200]
+	strh r0, [r3, OFFSET_REG_IF - OFFSET_REG_IE]
 	mov r1, INTR_FLAG_SERIAL | INTR_FLAG_TIMER3 | INTR_FLAG_HBLANK
 	bic r2, r2, r0
 	and r1, r1, r2
-	strh r1, [r3, OFFSET_REG_IE - 0x200]
+	strh r1, [r3, OFFSET_REG_IE - OFFSET_REG_IE]
 	mrs r3, cpsr
 	bic r3, r3, PSR_I_BIT | PSR_F_BIT | PSR_MODE_MASK
 	orr r3, r3, PSR_SYS_MODE
@@ -251,8 +251,8 @@ IntrMain_RetAddr:
 	orr r3, r3, PSR_I_BIT | PSR_IRQ_MODE
 	msr cpsr_cf, r3
 	ldmia sp!, {r0-r3,lr}
-	strh r2, [r3, OFFSET_REG_IE - 0x200]
-	strh r1, [r3, OFFSET_REG_IME - 0x200]
+	strh r2, [r3, OFFSET_REG_IE - OFFSET_REG_IE]
+	strh r1, [r3, OFFSET_REG_IME - OFFSET_REG_IE]
 	msr spsr_cf, r0
 	bx lr
 
