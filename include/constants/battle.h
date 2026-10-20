@@ -24,6 +24,7 @@
  */
 
 #define MAX_BATTLERS_COUNT  4
+#define NUM_BATTLE_SIDES  2
 
 enum BattlerId
 {
@@ -281,6 +282,16 @@ enum BattlerId
 #define MOVE_EFFECT_NOTHING_3F          0x3F
 #define MOVE_EFFECT_AFFECTS_USER        0x40
 #define MOVE_EFFECT_CERTAIN             0x80
+
+#define FLEE_ITEM    1
+#define FLEE_ABILITY 2
+
+// Return value for IsRunningFromBattleImpossible.
+#define BATTLE_RUN_SUCCESS        0
+#define BATTLE_RUN_FORBIDDEN      1
+#define BATTLE_RUN_FAILURE        2
+
+#define HP_EMPTY_SLOT 0xFFFF
 
 // Battle environment defines for gBattleEnvironment.
 #define BATTLE_ENVIRONMENT_GRASS        0

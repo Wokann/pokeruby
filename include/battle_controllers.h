@@ -70,6 +70,15 @@ enum {
 #define MARK_BATTLE_CONTROLLER_IDLE_FOR_PLAYER(battler, playerId) \
    gBattleControllerExecFlags &= ~(gBitTable[battler] << ((playerId) * 4))
 
+#define IS_BATTLE_CONTROLLER_ACTIVE_OR_PENDING_SYNC_ANYWHERE(battler) \
+   (gBattleControllerExecFlags & ( \
+      (gBitTable[battler])       \
+    | (0xF << 28)                  \
+    | (gBitTable[battler] << 4)  \
+    | (gBitTable[battler] << 8)  \
+    | (gBitTable[battler] << 12) \
+   ))
+
 #define PARTY_SUMM_SKIP_DRAW_DELAY (1 << 7)
 
 enum {

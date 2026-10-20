@@ -11,7 +11,7 @@ struct MultiPartnerMenuPokemon
 {
     /*0x00*/ u16 species;
     /*0x02*/ u16 heldItem;
-    /*0x04*/ u8 nickname[11];
+    /*0x04*/ u8 nickname[POKEMON_NAME_LENGTH + 1];
     /*0x0F*/ u8 level;
     /*0x10*/ u16 hp;
     /*0x12*/ u16 maxhp;
@@ -74,7 +74,7 @@ void BeginBattleIntro(void);
 void HBlankCB_Battle(void);
 void VBlankCB_Battle(void);
 
-extern struct MultiPartnerMenuPokemon gMultiPartnerParty[3];
+extern struct MultiPartnerMenuPokemon gMultiPartnerParty[MULTI_PARTY_SIZE];
 
 extern const struct SpriteTemplate gUnusedBattleInitSprite;
 extern const struct OamData gOamData_BattleSpritePlayerSide;

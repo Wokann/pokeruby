@@ -70,6 +70,7 @@ enum
 #define MAX_PER_STAT_IVS 31
 #define USE_RANDOM_IVS (MAX_PER_STAT_IVS + 1)
 #define OT_ID_PLAYER_ID       0
+#define OT_ID_RANDOM_NO_SHINY 2
 
 #define LEVEL_UP_END 0xffff
 
@@ -166,5 +167,9 @@ enum {
 #define EVO_LEVEL_NINJASK    0x000d // Pokémon reaches the specified level (special value for Ninjask)
 #define EVO_LEVEL_SHEDINJA   0x000e // Pokémon reaches the specified level (special value for Shedinja)
 #define EVO_BEAUTY           0x000f // Pokémon levels up with beauty ≥ specified value
+
+#define MON_PIC_WIDTH 64
+#define MON_PIC_HEIGHT 64
+#define MON_PIC_SIZE (MON_PIC_WIDTH * MON_PIC_HEIGHT / 2)
 
 #endif // GUARD_CONSTANTS_POKEMON_H

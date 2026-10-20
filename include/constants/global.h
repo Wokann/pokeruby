@@ -64,6 +64,7 @@
 #define TRAINER_ID_LENGTH 4
 #define MAX_MON_MOVES 4
 #define PARTY_SIZE 6
+#define MULTI_PARTY_SIZE (PARTY_SIZE / 2)
 
 #define MALE 0
 #define FEMALE 1

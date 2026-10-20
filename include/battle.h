@@ -44,6 +44,8 @@
 #define MOVE_TARGET_FOES_AND_ALLY       0x20
 #define MOVE_TARGET_OPPONENTS_FIELD     0x40
 
+#define NO_TARGET_OVERRIDE 0
+
 struct DisableStruct
 {
     /*0x00*/ u32 transformedMonPersonality;
@@ -213,17 +215,17 @@ struct BattleResults
     u8 playerMonWasDamaged:1; // 0x5
     u8 usedMasterBall:1;      // 0x5
     u16 playerMon1Species;         // 0x6
-    u8 playerMon1Name[10];       // 0x8
+    u8 playerMon1Name[POKEMON_NAME_LENGTH];       // 0x8
     u8 unk12; // unused
     u8 battleTurnCounter;     // 0x13
-    u8 playerMon2Name[10];       // 0x14
+    u8 playerMon2Name[POKEMON_NAME_LENGTH];       // 0x14
     u8 filler1E[2];
     u16 lastOpponentSpecies;  // 0x20
     u16 lastUsedMovePlayer;         // 0x22
     u16 lastUsedMoveOpponent;         // 0x24
     u16 playerMon2Species;      // 0x26
     u16 caughtMonSpecies;           // 0x28
-    u8 caughtMonNick[10];        // 0x2A
+    u8 caughtMonNick[POKEMON_NAME_LENGTH];        // 0x2A
     u8 filler34[2];
     u8 catchAttempts[11];
 };
@@ -335,7 +337,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x160AA*/ u8 wallyWaitFrames;
     /*0x160AB*/ u8 wallyMoveFrames;
     /*0x160AC*/ u16 lastTakenMove[2 * 2 * 2];
-    /*0x160BC*/ u16 hpOnSwitchout[2];
+    /*0x160BC*/ u16 hpOnSwitchout[NUM_BATTLE_SIDES];
     /*0x160C0*/ u8 abilityPreventingSwitchout;
     /*0x160C1*/ u8 hpScale;
     /*0x160C2*/ u16 savedBattleTypeFlags;
@@ -465,7 +467,7 @@ extern struct DisableStruct gDisableStructs[MAX_BATTLERS_COUNT];
 extern struct BattleResults gBattleResults;
 extern struct ProtectStruct gProtectStructs[MAX_BATTLERS_COUNT];
 extern struct SpecialStatus gSpecialStatuses[MAX_BATTLERS_COUNT];
-extern struct SideTimer gSideTimers[2];
+extern struct SideTimer gSideTimers[NUM_BATTLE_SIDES];
 extern struct WishFutureKnock gWishFutureKnock;
 extern struct AI_ThinkingStruct gAIThinkingSpace;
 
@@ -565,7 +567,7 @@ extern u8 gEffectBattler;
 extern u8 gChosenActionByBattler[MAX_BATTLERS_COUNT];
 extern u16 gChosenMoveByBattler[MAX_BATTLERS_COUNT];
 
-extern u8 gBattleBufferB[4][0x200];
+extern u8 gBattleBufferB[MAX_BATTLERS_COUNT][0x200];
 extern u8 gActionsByTurnOrder[MAX_BATTLERS_COUNT];
 extern u8 gBattlerByTurnOrder[MAX_BATTLERS_COUNT];
 extern u8 gCurrentTurnActionNumber;
@@ -577,14 +579,14 @@ extern u16 gLastUsedItem;
 extern u8 gLastUsedAbility;
 extern u8 gPotentialItemEffectBattler;
 extern u8 gMultiHitCounter;
-extern u8* gSelectionBattleScripts[4];
-extern u16 gLastPrintedMoves[4];
+extern u8* gSelectionBattleScripts[MAX_BATTLERS_COUNT];
+extern u16 gLastPrintedMoves[MAX_BATTLERS_COUNT];
 extern u16 gLastMoves[MAX_BATTLERS_COUNT];
-extern u16 gLastHitByType[4];
-extern u16 gLastResultingMoves[4];
-extern u16 gLockedMoves[4];
+extern u16 gLastHitByType[MAX_BATTLERS_COUNT];
+extern u16 gLastResultingMoves[MAX_BATTLERS_COUNT];
+extern u16 gLockedMoves[MAX_BATTLERS_COUNT];
 extern u32 gHitMarker;
-extern u16 gSideStatuses[2];
+extern u16 gSideStatuses[NUM_BATTLE_SIDES];
 extern u16 gPauseCounterBattle;
 extern u16 gPaydayMoney;
 extern u16 gRandomTurnNumber;

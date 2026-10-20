@@ -1,6 +1,8 @@
 #ifndef GUARD_BATTLE_BG_H
 #define GUARD_BATTLE_BG_H
 
+#define TAG_VS_LETTERS 10000
+
 void UnusedBattleInit(void);
 void sub_800D6D4(void);
 void ApplyPlayerChosenFrameToBattleMenu(void);
