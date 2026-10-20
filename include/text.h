@@ -3,6 +3,11 @@
 
 #include "constants/characters.h"
 
+enum
+{
+    FONT_BRAILLE = 6,
+};
+
 struct WindowTemplate
 {
     u8 bg;

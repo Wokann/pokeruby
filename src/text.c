@@ -374,7 +374,7 @@ static const WriteGlyphTilemapFunc sWriteGlyphTilemapFuncs[] =
     WriteGlyphTilemap_Font0_Font3,
     WriteGlyphTilemap_Font1_Font4,
     WriteGlyphTilemap_Font2_Font5,
-    WriteGlyphTilemap_Font6,
+    [FONT_BRAILLE] = WriteGlyphTilemap_Font6,
 };
 
 static const struct Window sDefaultWindow = { .language = GAME_LANGUAGE };
@@ -424,7 +424,7 @@ static const struct Font sFonts[] =
     { 4, (u8 *)gFont3JapaneseGlyphs, 64, 512 },
     { 1, (u8 *)gFont4JapaneseGlyphs, 32,   0 },
     { 2, (u8 *)gFont4JapaneseGlyphs, 32,   0 },
-    { 3, (u8 *)sBrailleGlyphs,  8,   0 },
+    [FONT_BRAILLE] = { 3, (u8 *)sBrailleGlyphs,  8,   0 },
     // Latin
     { 0, (u8 *)sFont0LatinGlyphs, 16,   8 },
     { 1, (u8 *)sFont1LatinGlyphs,  8,   0 },
@@ -432,7 +432,7 @@ static const struct Font sFonts[] =
     { 0, (u8 *)gFont3LatinGlyphs, 64,  32 },
     { 1, (u8 *)gFont4LatinGlyphs, 32,   0 },
     { 2, (u8 *)gFont4LatinGlyphs, 32,   0 },
-    { 3, (u8 *)sBrailleGlyphs,  8,   0 },
+    [7 + FONT_BRAILLE] = { 3, (u8 *)sBrailleGlyphs,  8,   0 },
 };
 
 static const u8 sTextSpeedFrameDelays[] =
@@ -1793,7 +1793,7 @@ u16 InitWindowTileData(struct Window *win, u16 startOffset)
         case 5:
             retVal = LoadFixedWidthFont_Font4Latin(win, startOffset);
             break;
-        case 6:
+        case FONT_BRAILLE:
             retVal = LoadFixedWidthFont_Braille(win, startOffset);
             break;
         }
@@ -2655,7 +2655,7 @@ static void LoadFixedWidthGlyph(struct Window *win, u32 glyphId, u8 *dest)
     case 0:
     case 1:
     case 2:
-    case 6:
+    case FONT_BRAILLE:
         ApplyColors_UnshadowedFont(upperTile, (u32 *)dest, win->fgColor, win->bgColor);
         ApplyColors_UnshadowedFont(lowerTile, (u32 *)(dest + TILE_SIZE_4BPP), win->fgColor, win->bgColor);
         break;
@@ -3396,7 +3396,7 @@ static u16 GetBlankTileNum(struct Window *win)
             retVal += 212;
         case 0:
         case 3:
-        case 6:
+        case FONT_BRAILLE:
             break;
         default:
             retVal = 0;
@@ -3442,7 +3442,7 @@ static u8 GetGlyphWidth(struct Window *win, u32 glyphId)
             case 2:
                 width = sFont1Widths[sFontType1Map[2 * glyphId + 1]];
                 break;
-            case 6:
+            case FONT_BRAILLE:
                 width = TILE_WIDTH;
                 break;
             default:
@@ -4344,7 +4344,7 @@ static s32 DrawGlyphTiles(struct Window *win, u32 glyphId, u32 glyphWidth)
     case 0:
     case 1:
     case 2:
-    case 6:
+    case FONT_BRAILLE:
         DrawGlyphTile_UnshadowedFont(&glyphTileInfo);
         glyphTileInfo.src = lowerTile;
         glyphTileInfo.dest = (u32 *)(win->tileData + TILE_SIZE_4BPP * GetCursorTileNum(win, 0, 1));

@@ -27,7 +27,7 @@ static const s32 sPowersOfTen[] =
 u8 *StringCopy_Nickname(u8 *dest, const u8 *src)
 {
     u8 i;
-    u32 limit = 10;
+    u32 limit = POKEMON_NAME_LENGTH;
 
     for (i = 0; i < limit; i++)
     {
@@ -44,7 +44,7 @@ u8 *StringCopy_Nickname(u8 *dest, const u8 *src)
 u8 *StringGet_Nickname(u8 *str)
 {
     u8 i;
-    u32 limit = 10;
+    u32 limit = POKEMON_NAME_LENGTH;
 
     for (i = 0; i < limit; i++)
         if (str[i] == EOS)
@@ -230,7 +230,7 @@ u8 *ConvertIntToDecimalStringN_DigitWidth6(u8 *dest, s32 value, enum StringConve
     s32 largestPowerOfTen = sPowersOfTen[n - 1];
 
     *dest++ = EXT_CTRL_CODE_BEGIN;
-    *dest++ = 0x14;
+    *dest++ = EXT_CTRL_CODE_MIN_LETTER_SPACING;
     *dest++ = 6;
 
     state = WAITING_FOR_NONZERO_DIGIT;
@@ -280,7 +280,7 @@ u8 *ConvertIntToDecimalStringN_DigitWidth6(u8 *dest, s32 value, enum StringConve
     }
 
     *dest++ = EXT_CTRL_CODE_BEGIN;
-    *dest++ = 0x14;
+    *dest++ = EXT_CTRL_CODE_MIN_LETTER_SPACING;
     *dest++ = 0x00;
 
     *dest = EOS;
@@ -396,9 +396,9 @@ u8 *StringExpandPlaceholders(u8 *dest, const u8 *src)
         case EOS:
             *dest = EOS;
             return dest;
-        case 0xFA:
-        case 0xFB:
-        case 0xFE:
+        case CHAR_PROMPT_SCROLL:
+        case CHAR_PROMPT_CLEAR:
+        case CHAR_NEWLINE:
         default:
             *dest++ = c;
         }
@@ -407,8 +407,19 @@ u8 *StringExpandPlaceholders(u8 *dest, const u8 *src)
 
 u8 *StringBraille(u8 *dest, const u8 *src)
 {
-    u8 setBrailleFont[] = { 0xFC, 0x06, 0x06, 0xFF };
-    u8 gotoLine2[] = { 0xFE, 0xFC, 0x0E, 0x02, 0xFF };
+    u8 setBrailleFont[] = {
+        EXT_CTRL_CODE_BEGIN,
+        EXT_CTRL_CODE_FONT,
+        FONT_BRAILLE,
+        EOS
+    };
+    u8 gotoLine2[] = {
+        CHAR_NEWLINE,
+        EXT_CTRL_CODE_BEGIN,
+        EXT_CTRL_CODE_SHIFT_DOWN,
+        2,
+        EOS
+    };
 
     dest = StringCopy(dest, setBrailleFont);
 
@@ -421,12 +432,12 @@ u8 *StringBraille(u8 *dest, const u8 *src)
         case EOS:
             *dest = c;
             return dest;
-        case 0xFE:
+        case CHAR_NEWLINE:
             dest = StringCopy(dest, gotoLine2);
             break;
         default:
             *dest++ = c;
-            *dest++ = c + 0x40;
+            *dest++ = c + NUM_BRAILLE_CHARS;
             break;
         }
     }
@@ -500,14 +511,14 @@ const u8 *GetExpandedPlaceholder(u32 id)
 
     static const ExpandPlaceholderFunc funcs[] =
     {
-        ExpandPlaceholder_UnknownStringVar,
-        ExpandPlaceholder_PlayerName,
-        ExpandPlaceholder_StringVar1,
-        ExpandPlaceholder_StringVar2,
-        ExpandPlaceholder_StringVar3,
-        ExpandPlaceholder_KunChan,
-        ExpandPlaceholder_RivalName,
-        ExpandPlaceholder_Version,
+        [PLACEHOLDER_ID_UNKNOWN]        = ExpandPlaceholder_UnknownStringVar,
+        [PLACEHOLDER_ID_PLAYER]         = ExpandPlaceholder_PlayerName,
+        [PLACEHOLDER_ID_STRING_VAR_1]   = ExpandPlaceholder_StringVar1,
+        [PLACEHOLDER_ID_STRING_VAR_2]   = ExpandPlaceholder_StringVar2,
+        [PLACEHOLDER_ID_STRING_VAR_3]   = ExpandPlaceholder_StringVar3,
+        [PLACEHOLDER_ID_KUN]            = ExpandPlaceholder_KunChan,
+        [PLACEHOLDER_ID_RIVAL]          = ExpandPlaceholder_RivalName,
+        [PLACEHOLDER_ID_VERSION]        = ExpandPlaceholder_Version,
         ExpandPlaceholder_EvilTeam,
         ExpandPlaceholder_GoodTeam,
         ExpandPlaceholder_EvilLeader,

@@ -120,6 +120,15 @@
 #define EXT_CTRL_CODE_JPN                    0x15
 #define EXT_CTRL_CODE_ENG                    0x16
 
+#define PLACEHOLDER_ID_UNKNOWN       0x0
+#define PLACEHOLDER_ID_PLAYER        0x1
+#define PLACEHOLDER_ID_STRING_VAR_1  0x2
+#define PLACEHOLDER_ID_STRING_VAR_2  0x3
+#define PLACEHOLDER_ID_STRING_VAR_3  0x4
+#define PLACEHOLDER_ID_KUN           0x5
+#define PLACEHOLDER_ID_RIVAL         0x6
+#define PLACEHOLDER_ID_VERSION       0x7
+
 // Note that while all dot combinations are represented in
 // the Braille font, they are not all meaningful characters.
 // Only those that have direct single-character translations are listed.
