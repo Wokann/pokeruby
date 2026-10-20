@@ -1,4 +1,5 @@
 #include "global.h"
+#include "list_menu.h"
 #include "secret_base.h"
 #include "decoration.h"
 #include "event_data.h"

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "list_menu.h"
 #include "item_menu.h"
 #include "constants/items.h"
 #include "link.h"

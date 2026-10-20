@@ -1,4 +1,5 @@
 #include "global.h"
+#include "list_menu.h"
 #include "load_save.h"
 #include "field_specials.h"
 #include "battle.h"

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "list_menu.h"
 #include "constants/decorations.h"
 #include "constants/mauville_old_man.h"
 #include "decoration.h"

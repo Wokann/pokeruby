@@ -1,4 +1,5 @@
 #include "global.h"
+#include "list_menu.h"
 #include "constants/rgb.h"
 #include "battle_controllers.h"
 #include "overworld.h"

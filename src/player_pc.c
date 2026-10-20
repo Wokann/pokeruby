@@ -1,4 +1,5 @@
 #include "global.h"
+#include "list_menu.h"
 #include "player_pc.h"
 #include "decoration.h"
 #include "field_screen_effect.h"

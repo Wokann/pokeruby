@@ -9,15 +9,6 @@ struct YesNoFuncTable
     TaskFunc noFunc;
 };
 
-// SetVerticalScrollIndicators enums
-enum
-{
-    SCROLL_ARROW_UP,
-    SCROLL_ARROW_DOWN,
-    SCROLL_ARROW_LEFT, // Bag arrows
-    SCROLL_ARROW_RIGHT
-};
-
 enum
 {
     VISIBLE,
