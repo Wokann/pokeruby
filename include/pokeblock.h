@@ -3,6 +3,7 @@
 
 enum
 {
+    PBLOCK_CLR_NONE,
     PBLOCK_CLR_RED = 1,
     PBLOCK_CLR_BLUE,
     PBLOCK_CLR_PINK,
