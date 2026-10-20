@@ -124,7 +124,7 @@ extern const struct WindowTemplate gWindowTemplate_81E725C;
 extern const struct WindowTemplate gWindowTemplate_81E7278;
 extern const struct WindowTemplate gWindowTemplate_81E7294;
 
-extern u16 gBGTilemapBuffers[4][0x400];
+extern u16 gBGTilemapBuffers[NUM_BACKGROUNDS][BG_SCREEN_SIZE / sizeof(u16)];
 
 extern u8 gTileBuffer[];
 

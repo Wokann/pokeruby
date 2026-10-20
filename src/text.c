@@ -52,7 +52,7 @@ struct GlyphBuffer
 {
     // 0-7  left tile
     // 8-15 right tile (if it exists)
-    u32 pixelRows[16];
+    u32 pixelRows[2 * TILE_HEIGHT];
 
     // pixel row filled with BG color
     u32 background;
@@ -190,7 +190,7 @@ static u8 sWaitType;
 static u8 sLineLength;
 static struct GlyphBuffer sGlyphBuffer;
 
-EWRAM_DATA u16 gBGTilemapBuffers[4][0x400] = {0};
+EWRAM_DATA u16 gBGTilemapBuffers[NUM_BACKGROUNDS][BG_SCREEN_SIZE / sizeof(u16)] = {0};
 
 EWRAM_DATA u8 gStringVar1[0x100] = {0};
 EWRAM_DATA u8 gStringVar2[0x100] = {0};
@@ -224,9 +224,9 @@ vu16 *const gBGVOffsetRegs[] =
     &REG_BG3VOFS,
 };
 
-const u16 gUnknown_081E29D8[] = { 0x100, 0x200, 0x400, 0x800 };
-const u16 gOverworldBackgroundLayerFlags[] = { 0x100, 0x200, 0x400, 0x800 };
-const u16 gOrbEffectBackgroundLayerFlags[] = { 1, 2, 4, 8 };
+const u16 gUnknown_081E29D8[] = { DISPCNT_BG0_ON, DISPCNT_BG1_ON, DISPCNT_BG2_ON, DISPCNT_BG3_ON };
+const u16 gOverworldBackgroundLayerFlags[] = { BLDCNT_TGT2_BG0, BLDCNT_TGT2_BG1, BLDCNT_TGT2_BG2, BLDCNT_TGT2_BG3 };
+const u16 gOrbEffectBackgroundLayerFlags[] = { BLDCNT_TGT1_BG0, BLDCNT_TGT1_BG1, BLDCNT_TGT1_BG2, BLDCNT_TGT1_BG3 };
 
 static const u8 sFont0LatinGlyphs[] = INCBIN_U8("graphics/fonts/font0_lat.1bpp");
 static const u8 sFont1LatinGlyphs[] = INCBIN_U8("graphics/fonts/font1_lat.1bpp");
@@ -247,9 +247,9 @@ static const u32 sDownArrowTiles[] = INCBIN_U32("graphics/fonts/down_arrow.4bpp"
 const u16 gUnknownPalette_81E6692[] = INCBIN_U16("graphics/fonts/unknown_81E6692.gbapal");
 const u16 gFontDefaultPalette[] = INCBIN_U16("graphics/fonts/default.gbapal");
 
-const u8 sBlankTile[8] = { 0, 0, 0, 0, 0, 0, 0, 0, };
+const u8 sBlankTile[TILE_SIZE_1BPP] = { 0, 0, 0, 0, 0, 0, 0, 0, };
 
-static const u32 sGlyphMasks[9][8][3] =
+static const u32 sGlyphMasks[TILE_WIDTH + 1][TILE_WIDTH][3] =
 {
     {
         { 0xFFFFFFFF,0xFFFFFFFF,0x00000000, },
@@ -343,7 +343,7 @@ static const u32 sGlyphMasks[9][8][3] =
     },
 };
 
-static const struct ShiftAmount sGlyphShiftAmounts[8] =
+static const struct ShiftAmount sGlyphShiftAmounts[TILE_WIDTH] =
 {
     {  0, 32 },
     {  4, 28 },
@@ -383,29 +383,29 @@ typedef u8 (*ExtCtrlCodeFunc)(struct Window *);
 
 static const ExtCtrlCodeFunc sExtCtrlCodeFuncs[] =
 {
-    ExtCtrlCode_Nop,
-    ExtCtrlCode_ForegroundColor,
-    ExtCtrlCode_BackgroundColor,
-    ExtCtrlCode_ShadowColor,
-    ExtCtrlCode_AllColors,
-    ExtCtrlCode_Palette,
-    ExtCtrlCode_Font,
-    ExtCtrlCode_DefaultFont,
-    ExtCtrlCode_Pause,
-    ExtCtrlCode_WaitButton,
-    ExtCtrlCode_WaitSound,
-    ExtCtrlCode_PlayBGM,
-    ExtCtrlCode_Escape,
-    ExtCtrlCode_Nop2,
-    ExtCtrlCode_SetCursorY,
-    ExtCtrlCode_ClearWindowTextLines,
-    ExtCtrlCode_PlaySE,
-    ExtCtrlCode_Skip,
-    ExtCtrlCode_SetCursorX,
-    ExtCtrlCode_SkipTo,
-    ExtCtrlCode_Spacing,
-    ExtCtrlCode_Japanese,
-    ExtCtrlCode_Latin,
+    [0]                                      = ExtCtrlCode_Nop,
+    [EXT_CTRL_CODE_COLOR]                    = ExtCtrlCode_ForegroundColor,
+    [EXT_CTRL_CODE_HIGHLIGHT]                = ExtCtrlCode_BackgroundColor,
+    [EXT_CTRL_CODE_SHADOW]                   = ExtCtrlCode_ShadowColor,
+    [EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW]   = ExtCtrlCode_AllColors,
+    [EXT_CTRL_CODE_PALETTE]                  = ExtCtrlCode_Palette,
+    [EXT_CTRL_CODE_FONT]                     = ExtCtrlCode_Font,
+    [EXT_CTRL_CODE_RESET_FONT]               = ExtCtrlCode_DefaultFont,
+    [EXT_CTRL_CODE_PAUSE]                    = ExtCtrlCode_Pause,
+    [EXT_CTRL_CODE_PAUSE_UNTIL_PRESS]        = ExtCtrlCode_WaitButton,
+    [EXT_CTRL_CODE_WAIT_SE]                  = ExtCtrlCode_WaitSound,
+    [EXT_CTRL_CODE_PLAY_BGM]                 = ExtCtrlCode_PlayBGM,
+    [EXT_CTRL_CODE_ESCAPE]                   = ExtCtrlCode_Escape,
+    [0x0D]                                   = ExtCtrlCode_Nop2,
+    [EXT_CTRL_CODE_SHIFT_DOWN]               = ExtCtrlCode_SetCursorY,
+    [EXT_CTRL_CODE_FILL_WINDOW]              = ExtCtrlCode_ClearWindowTextLines,
+    [EXT_CTRL_CODE_PLAY_SE]                  = ExtCtrlCode_PlaySE,
+    [EXT_CTRL_CODE_CLEAR]                    = ExtCtrlCode_Skip,
+    [EXT_CTRL_CODE_SKIP_TO]                  = ExtCtrlCode_SetCursorX,
+    [EXT_CTRL_CODE_CLEAR_TO]                 = ExtCtrlCode_SkipTo,
+    [EXT_CTRL_CODE_MIN_LETTER_SPACING]       = ExtCtrlCode_Spacing,
+    [EXT_CTRL_CODE_JPN]                      = ExtCtrlCode_Japanese,
+    [EXT_CTRL_CODE_ENG]                      = ExtCtrlCode_Latin,
 };
 
 extern const u32 gFont3LatinGlyphs[];
@@ -435,33 +435,38 @@ static const struct Font sFonts[] =
     { 3, (u8 *)sBrailleGlyphs,  8,   0 },
 };
 
-static const u8 sTextSpeedFrameDelays[] = { 6, 3, 1 }; // slow, mid, fast
+static const u8 sTextSpeedFrameDelays[] =
+{
+    [OPTIONS_TEXT_SPEED_SLOW] = 6,
+    [OPTIONS_TEXT_SPEED_MID] = 3,
+    [OPTIONS_TEXT_SPEED_FAST] = 1,
+};
 
 static const u8 sExtCtrlCodeLengths[] =
 {
-    1,
-    2,
-    2,
-    2,
-    4,
-    2,
-    2,
-    1,
-    2,
-    1,
-    1,
-    3,
-    2,
-    2,
-    2,
-    1,
-    3,
-    2,
-    2,
-    2,
-    2,
-    1,
-    1,
+    [0]                                      = 1,
+    [EXT_CTRL_CODE_COLOR]                    = 2,
+    [EXT_CTRL_CODE_HIGHLIGHT]                = 2,
+    [EXT_CTRL_CODE_SHADOW]                   = 2,
+    [EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW]   = 4,
+    [EXT_CTRL_CODE_PALETTE]                  = 2,
+    [EXT_CTRL_CODE_FONT]                     = 2,
+    [EXT_CTRL_CODE_RESET_FONT]               = 1,
+    [EXT_CTRL_CODE_PAUSE]                    = 2,
+    [EXT_CTRL_CODE_PAUSE_UNTIL_PRESS]        = 1,
+    [EXT_CTRL_CODE_WAIT_SE]                  = 1,
+    [EXT_CTRL_CODE_PLAY_BGM]                 = 3,
+    [EXT_CTRL_CODE_ESCAPE]                   = 2,
+    [0x0D]                                   = 2,
+    [EXT_CTRL_CODE_SHIFT_DOWN]               = 2,
+    [EXT_CTRL_CODE_FILL_WINDOW]              = 1,
+    [EXT_CTRL_CODE_PLAY_SE]                  = 3,
+    [EXT_CTRL_CODE_CLEAR]                    = 2,
+    [EXT_CTRL_CODE_SKIP_TO]                  = 2,
+    [EXT_CTRL_CODE_CLEAR_TO]                 = 2,
+    [EXT_CTRL_CODE_MIN_LETTER_SPACING]       = 2,
+    [EXT_CTRL_CODE_JPN]                      = 1,
+    [EXT_CTRL_CODE_ENG]                      = 1,
 };
 
 typedef void (*ShiftGlyphTileUnshadowedFunc)(struct GlyphBuffer *, u8 *, u32 *, u8);
@@ -509,8 +514,8 @@ const struct WindowTemplate gWindowTemplate_81E6C3C =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(31), // tilemap
 };
@@ -531,7 +536,7 @@ const struct WindowTemplate gWindowTemplate_81E6C58 =
     0, // tilemap left coordinate
     0, // tilemap top coordinate
     26, // width
-    20, // height
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(24), // tilemap
 };
@@ -544,15 +549,15 @@ const struct WindowTemplate gWindowTemplate_81E6C74 =
     0, // BG priority
     0, // palette number
     1, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     3, // shadow color
     4, // font
     0, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     OBJ_VRAM0, // tile data
     NULL, // tilemap
 };
@@ -565,15 +570,15 @@ const struct WindowTemplate gWindowTemplate_81E6C90 =
     2, // BG priority
     31, // palette number
     15, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     1, // shadow color
     4, // font
     2, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(1), // tile data
     BG_SCREEN_ADDR(30), // tilemap
 };
@@ -586,7 +591,7 @@ const struct WindowTemplate gWindowTemplate_81E6CAC =
     0, // BG priority
     0, // palette number
     15, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     1, // shadow color
     4, // font
     2, // text mode
@@ -614,8 +619,8 @@ const struct WindowTemplate gWindowTemplate_81E6CC8 =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(15), // tilemap
 };
@@ -635,8 +640,8 @@ const struct WindowTemplate gMenuTextWindowTemplate =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(31), // tilemap
 };
@@ -656,8 +661,8 @@ const struct WindowTemplate gWindowTemplate_81E6D00 =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(31), // tilemap
 };
@@ -677,8 +682,8 @@ const struct WindowTemplate gWindowTemplate_81E6D1C =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(31), // tilemap
 };
@@ -691,7 +696,7 @@ const struct WindowTemplate gWindowTemplate_81E6D38 =
     0, // BG priority
     0, // palette number
     15, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     14, // shadow color
     3, // font
     2, // text mode
@@ -719,8 +724,8 @@ const struct WindowTemplate gWindowTemplate_81E6D54 =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(3), // tile data
     BG_SCREEN_ADDR(15), // tilemap
 };
@@ -740,8 +745,8 @@ const struct WindowTemplate gWindowTemplate_81E6D70 =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(3), // tile data
     BG_SCREEN_ADDR(15), // tilemap
 };
@@ -761,8 +766,8 @@ const struct WindowTemplate gWindowTemplate_81E6D8C =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(14), // tilemap
 };
@@ -782,8 +787,8 @@ const struct WindowTemplate gWindowTemplate_81E6DA8 =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(11), // tilemap
 };
@@ -796,15 +801,15 @@ const struct WindowTemplate gWindowTemplate_TrainerCard_Back_Values =
     0, // BG priority
     15, // palette number
     1, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     8, // shadow color
     3, // font
     2, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(30), // tilemap
 };
@@ -817,15 +822,15 @@ const struct WindowTemplate gWindowTemplate_TrainerCard_Back_Labels =
     0, // BG priority
     14, // palette number
     1, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     8, // shadow color
     3, // font
     2, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(30), // tilemap
 };
@@ -838,15 +843,15 @@ const struct WindowTemplate gWindowTemplate_81E6DFC =
     0, // BG priority
     15, // palette number
     1, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     8, // shadow color
     3, // font
     2, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(31), // tilemap
 };
@@ -859,15 +864,15 @@ const struct WindowTemplate gWindowTemplate_81E6E18 =
     1, // BG priority
     15, // palette number
     1, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     8, // shadow color
     3, // font
     2, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(31), // tilemap
 };
@@ -880,15 +885,15 @@ const struct WindowTemplate gWindowTemplate_81E6E34 =
     1, // BG priority
     15, // palette number
     1, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     8, // shadow color
     3, // font
     2, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(31), // tilemap
 };
@@ -908,8 +913,8 @@ const struct WindowTemplate gWindowTemplate_81E6E50 =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(28), // tilemap
 };
@@ -922,15 +927,15 @@ const struct WindowTemplate gWindowTemplate_81E6E6C =
     0, // BG priority
     13, // palette number
     15, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     10, // shadow color
     3, // font
     2, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(30), // tilemap
 };
@@ -950,8 +955,8 @@ const struct WindowTemplate gWindowTemplate_81E6E88 =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(31), // tilemap
 };
@@ -971,8 +976,8 @@ const struct WindowTemplate gWindowTemplate_81E6EA4 =
     8, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(28), // tilemap
 };
@@ -992,8 +997,8 @@ const struct WindowTemplate gWindowTemplate_81E6EC0 =
     8, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(29), // tilemap
 };
@@ -1013,8 +1018,8 @@ const struct WindowTemplate gWindowTemplate_81E6EDC =
     8, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(28), // tilemap
 };
@@ -1034,8 +1039,8 @@ const struct WindowTemplate gWindowTemplate_81E6EF8 =
     8, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(29), // tilemap
 };
@@ -1055,8 +1060,8 @@ const struct WindowTemplate gWindowTemplate_81E6F14 =
     8, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(28), // tilemap
 };
@@ -1076,8 +1081,8 @@ const struct WindowTemplate gWindowTemplate_81E6F30 =
     8, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(29), // tilemap
 };
@@ -1097,8 +1102,8 @@ const struct WindowTemplate gWindowTemplate_81E6F4C =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(30), // tilemap
 };
@@ -1118,8 +1123,8 @@ const struct WindowTemplate gWindowTemplate_81E6F68 =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(13), // tilemap
 };
@@ -1132,15 +1137,15 @@ const struct WindowTemplate gWindowTemplate_81E6F84 =
     0, // BG priority
     15, // palette number
     15, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     1, // shadow color
     3, // font
     0, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(31), // tilemap
 };
@@ -1153,15 +1158,15 @@ const struct WindowTemplate gWindowTemplate_81E6FA0 =
     3, // BG priority
     15, // palette number
     1, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     8, // shadow color
     3, // font
     0, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(24), // tilemap
 };
@@ -1174,15 +1179,15 @@ const struct WindowTemplate gWindowTemplate_81E6FBC =
     0, // BG priority
     15, // palette number
     15, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     8, // shadow color
     3, // font
     0, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(30), // tilemap
 };
@@ -1195,15 +1200,15 @@ const struct WindowTemplate gWindowTemplate_81E6FD8 =
     0, // BG priority
     15, // palette number
     15, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     8, // shadow color
     3, // font
     0, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(24), // tilemap
 };
@@ -1216,15 +1221,15 @@ const struct WindowTemplate gWindowTemplate_81E6FF4 =
     0, // BG priority
     15, // palette number
     1, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     8, // shadow color
     3, // font
     0, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(24), // tilemap
 };
@@ -1237,15 +1242,15 @@ const struct WindowTemplate gWindowTemplate_81E7010 =
     0, // BG priority
     15, // palette number
     1, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     8, // shadow color
     3, // font
     0, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(30), // tilemap
 };
@@ -1265,8 +1270,8 @@ const struct WindowTemplate gWindowTemplate_81E702C =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(15), // tilemap
 };
@@ -1279,7 +1284,7 @@ const struct WindowTemplate gWindowTemplate_81E7048 =
     2, // BG priority
     15, // palette number
     1, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     8, // shadow color
     3, // font
     2, // text mode
@@ -1300,15 +1305,15 @@ const struct WindowTemplate gWindowTemplate_81E7064 =
     2, // BG priority
     15, // palette number
     1, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     8, // shadow color
     3, // font
     2, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(14), // tilemap
 };
@@ -1328,8 +1333,8 @@ const struct WindowTemplate gWindowTemplate_81E7080 =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(30), // tilemap
 };
@@ -1349,8 +1354,8 @@ const struct WindowTemplate gWindowTemplate_81E709C =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(31), // tilemap
 };
@@ -1363,15 +1368,15 @@ const struct WindowTemplate gWindowTemplate_81E70B8 =
     2, // BG priority
     11, // palette number
     1, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     5, // shadow color
     3, // font
     2, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(30), // tilemap
 };
@@ -1391,8 +1396,8 @@ const struct WindowTemplate gWindowTemplate_81E70D4 =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(30), // tilemap
 };
@@ -1426,15 +1431,15 @@ const struct WindowTemplate gWindowTemplate_81E710C =
     1, // BG priority
     15, // palette number
     1, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     8, // shadow color
     3, // font
     2, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(31), // tilemap
 };
@@ -1454,8 +1459,8 @@ const struct WindowTemplate gWindowTemplate_81E7128 =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(31), // tilemap
 };
@@ -1468,15 +1473,15 @@ const struct WindowTemplate gWindowTemplate_81E7144 =
     0, // BG priority
     13, // palette number
     1, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     8, // shadow color
     3, // font
     2, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(31), // tilemap
 };
@@ -1489,15 +1494,15 @@ const struct WindowTemplate gWindowTemplate_ContestPainting =
     1, // BG priority
     14, // palette number
     1, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     8, // shadow color
     3, // font
     0, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(1), // tile data
     BG_SCREEN_ADDR(10), // tilemap
 };
@@ -1510,15 +1515,15 @@ const struct WindowTemplate gWindowTemplate_81E717C =
     0, // BG priority
     15, // palette number
     15, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     8, // shadow color
     3, // font
     0, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(3), // tile data
     BG_SCREEN_ADDR(31), // tilemap
 };
@@ -1531,15 +1536,15 @@ const struct WindowTemplate gWindowTemplate_81E7198 =
     0, // BG priority
     15, // palette number
     15, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     8, // shadow color
     3, // font
     2, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(15), // tilemap
 };
@@ -1559,8 +1564,8 @@ const struct WindowTemplate gWindowTemplate_81E71B4 =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(15), // tilemap
 };
@@ -1580,8 +1585,8 @@ const struct WindowTemplate gWindowTemplate_81E71D0 =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(1), // tile data
     BG_SCREEN_ADDR(28), // tilemap
 };
@@ -1601,8 +1606,8 @@ const struct WindowTemplate gWindowTemplate_81E71EC =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(1), // tile data
     BG_SCREEN_ADDR(30), // tilemap
 };
@@ -1615,15 +1620,15 @@ const struct WindowTemplate gWindowTemplate_81E7208 =
     0, // BG priority
     8, // palette number
     1, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     2, // shadow color
     3, // font
     2, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(28), // tilemap
 };
@@ -1643,8 +1648,8 @@ const struct WindowTemplate gWindowTemplate_81E7224 =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(0), // tile data
     BG_SCREEN_ADDR(31), // tilemap
 };
@@ -1664,8 +1669,8 @@ const struct WindowTemplate gMoveTutorMenuFramesWindowTemplate =
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     BG_CHAR_ADDR(2), // tile data
     BG_SCREEN_ADDR(30), // tilemap
 };
@@ -1678,15 +1683,15 @@ const struct WindowTemplate gWindowTemplate_81E725C =
     0, // BG priority
     0, // palette number
     15, // foreground color
-    0, // background color
+    TEXT_COLOR_TRANSPARENT, // background color
     14, // shadow color
     3, // font
     2, // text mode
     0, // spacing
     0, // tilemap left coordinate
     0, // tilemap top coordinate
-    30, // width
-    20, // height
+    DISPLAY_TILE_WIDTH, // width
+    DISPLAY_TILE_HEIGHT, // height
     OBJ_VRAM0, // tile data
     NULL, // tilemap
 };
@@ -1738,20 +1743,20 @@ static void UpdateBGRegs(const struct WindowTemplate *winTemplate)
     u8 bgNum = winTemplate->bg;
     *gBGHOffsetRegs[bgNum] = 0;
     *gBGVOffsetRegs[bgNum] = 0;
-    *gBGControlRegs[bgNum] = winTemplate->priority | (winTemplate->mapBaseIndex << 8) | (winTemplate->charBaseIndex << 2);
+    *gBGControlRegs[bgNum] = BGCNT_PRIORITY(winTemplate->priority) | BGCNT_SCREENBASE(winTemplate->mapBaseIndex) | BGCNT_CHARBASE(winTemplate->charBaseIndex);
 }
 
 static void ClearBGMem(const struct WindowTemplate *winTemplate)
 {
-    CpuFastFill(0, winTemplate->tileData, 32);
+    CpuFastFill(0, winTemplate->tileData, TILE_SIZE_4BPP);
 
     if (winTemplate->tilemap)
-        CpuFastFill(0, winTemplate->tilemap, 0x800);
+        CpuFastFill(0, winTemplate->tilemap, BG_SCREEN_SIZE);
 }
 
 void LoadFontDefaultPalette(const struct WindowTemplate *winTemplate)
 {
-    LoadPalette(gFontDefaultPalette, 16 * winTemplate->paletteNum, 32);
+    LoadPalette(gFontDefaultPalette, PLTT_ID(winTemplate->paletteNum), PLTT_SIZE_4BPP);
 }
 
 void Text_LoadWindowTemplate(const struct WindowTemplate *winTemplate)
@@ -1804,20 +1809,20 @@ static u16 InitVariableWidthFontTileData(struct Window *win, u16 startOffset)
 
     win->tileDataStartOffset = startOffset;
     win->tileDataOffset = 2;
-    buffer =  win->tileData + 32 * win->tileDataStartOffset;
-    CpuFastFill(0, buffer, 32);
-    ApplyColors_UnshadowedFont(sBlankTile, (u32 *)(buffer + 32), win->template->fgColor, win->template->bgColor);
+    buffer =  win->tileData + TILE_SIZE_4BPP * win->tileDataStartOffset;
+    CpuFastFill(0, buffer, TILE_SIZE_4BPP);
+    ApplyColors_UnshadowedFont(sBlankTile, (u32 *)(buffer + TILE_SIZE_4BPP), win->template->fgColor, win->template->bgColor);
     return win->tileDataStartOffset + win->tileDataOffset + win->width * win->height;
 }
 
 static u16 LoadFixedWidthFont(struct Window *win, u16 startOffset)
 {
     s32 glyphId;
-    u8 *buffer = win->tileData + 32 * startOffset;
+    u8 *buffer = win->tileData + TILE_SIZE_4BPP * startOffset;
     for (glyphId = 0; glyphId < 256; glyphId++)
     {
         LoadFixedWidthGlyph(win, glyphId, buffer);
-        buffer += 64;
+        buffer += 2 * TILE_SIZE_4BPP;
     }
     return 2 * glyphId;
 }
@@ -1825,11 +1830,11 @@ static u16 LoadFixedWidthFont(struct Window *win, u16 startOffset)
 static u16 LoadFixedWidthFont_Font1Latin(struct Window *win, u16 startOffset)
 {
     s32 i;
-    u8 *buffer = win->tileData + 32 * startOffset;
+    u8 *buffer = win->tileData + TILE_SIZE_4BPP * startOffset;
     for (i = 0; i < 256; i++)
     {
-        ApplyColors_UnshadowedFont(&sFont1LatinGlyphs[8 * i], (u32 *)buffer, win->fgColor, win->bgColor);
-        buffer += 32;
+        ApplyColors_UnshadowedFont(&sFont1LatinGlyphs[TILE_SIZE_1BPP * i], (u32 *)buffer, win->fgColor, win->bgColor);
+        buffer += TILE_SIZE_4BPP;
     }
     return i;
 }
@@ -1837,11 +1842,11 @@ static u16 LoadFixedWidthFont_Font1Latin(struct Window *win, u16 startOffset)
 static u16 LoadFixedWidthFont_Font4Latin(struct Window *win, u16 startOffset)
 {
     s32 i;
-    u8 *buffer = win->tileData + 32 * startOffset;
+    u8 *buffer = win->tileData + TILE_SIZE_4BPP * startOffset;
     for (i = 0; i < 256; i++)
     {
         ApplyColors_ShadowedFont(&gFont4LatinGlyphs[8 * i], buffer, win->fgColor, win->shadowColor, win->bgColor);
-        buffer += 32;
+        buffer += TILE_SIZE_4BPP;
     }
     return i;
 }
@@ -1849,11 +1854,11 @@ static u16 LoadFixedWidthFont_Font4Latin(struct Window *win, u16 startOffset)
 static u16 LoadFixedWidthFont_Braille(struct Window *win, u16 startOffset)
 {
     s32 i;
-    u8 *buffer = win->tileData + 32 * startOffset;
+    u8 *buffer = win->tileData + TILE_SIZE_4BPP * startOffset;
     for (i = 0; i < 256; i++)
     {
-        ApplyColors_UnshadowedFont(&sBrailleGlyphs[8 * i], (u32 *)buffer, win->fgColor, win->bgColor);
-        buffer += 32;
+        ApplyColors_UnshadowedFont(&sBrailleGlyphs[TILE_SIZE_1BPP * i], (u32 *)buffer, win->fgColor, win->bgColor);
+        buffer += TILE_SIZE_4BPP;
     }
     return i;
 }
@@ -1911,21 +1916,21 @@ static void MultistepLoadFont_LoadGlyph(struct Window *win, u16 startOffset, u8 
     {
     case 0:
     case 3:
-        buffer = win->tileData + 32 * startOffset + 64 * glyphId;
+        buffer = win->tileData + TILE_SIZE_4BPP * startOffset + 2 * TILE_SIZE_4BPP * glyphId;
         LoadFixedWidthGlyph(win, glyphId, buffer);
         break;
     case 1:
     case 2:
-        buffer = win->tileData + 32 * (glyphId + startOffset);
+        buffer = win->tileData + TILE_SIZE_4BPP * (glyphId + startOffset);
         ApplyColors_UnshadowedFont(
-            &sFont1LatinGlyphs[8 * glyphId],
+            &sFont1LatinGlyphs[TILE_SIZE_1BPP * glyphId],
             (u32 *)buffer,
             win->fgColor,
             win->bgColor);
         break;
     case 4:
     case 5:
-        buffer = win->tileData + 32 * (glyphId + startOffset);
+        buffer = win->tileData + TILE_SIZE_4BPP * (glyphId + startOffset);
         ApplyColors_ShadowedFont(
             &gFont4LatinGlyphs[8 * glyphId],
             buffer,
@@ -1980,9 +1985,9 @@ void Text_InitWindow(struct Window *win, const u8 *text, u16 tileDataStartOffset
     win->textIndex = 0;
     win->tileDataStartOffset = tileDataStartOffset;
     win->tileDataOffset = 0;
-    win->left = 8 * left;
+    win->left = TILE_WIDTH * left;
     win->cursorX = 0;
-    win->top = 8 * top;
+    win->top = TILE_HEIGHT * top;
     win->cursorY = 0;
     win->state = WIN_STATE_BEGIN;
     win->downArrowCounter = 0;
@@ -2023,7 +2028,7 @@ void Text_SetWindowText(struct Window *win, const u8 *text)
 void Contest_StartTextPrinter(struct Window *win, const u8 *text, u16 tileDataStartOffset, u8 left, u8 top)
 {
     gMain.watchedKeysMask = A_BUTTON | B_BUTTON;
-    gMain.watchedKeysPressed = 0;
+    gMain.watchedKeysPressed = FALSE;
     sWaitType = WAIT_TYPE_NORMAL;
     sLineLength = 26;
     Text_InitWindow(win, text, tileDataStartOffset, left, top);
@@ -2031,9 +2036,9 @@ void Contest_StartTextPrinter(struct Window *win, const u8 *text, u16 tileDataSt
     if (win->textMode == TEXT_MODE_UNKNOWN0)
     {
         u16 val = GetCursorTileNum(win, 0, 0);
-        u8 *buffer = win->tileData + 32 * val;
+        u8 *buffer = win->tileData + TILE_SIZE_4BPP * val;
         ApplyColors_UnshadowedFont(sBlankTile, (u32 *)buffer, win->bgColor, win->bgColor);
-        ApplyColors_UnshadowedFont(&sFont1LatinGlyphs[8 * 0x6E], (u32 *)(buffer + 32), win->fgColor, win->bgColor);
+        ApplyColors_UnshadowedFont(&sFont1LatinGlyphs[TILE_SIZE_1BPP * 0x6E], (u32 *)(buffer + TILE_SIZE_4BPP), win->fgColor, win->bgColor);
         win->tileDataOffset = 2;
     }
 }
@@ -2218,7 +2223,7 @@ u8 ExtCtrlCode_Nop2(struct Window *win)
 static u8 ExtCtrlCode_SetCursorY(struct Window *win)
 {
     ClipRight(win);
-    AddToCursorY(win, 8 * win->text[win->textIndex++]);
+    AddToCursorY(win, TILE_HEIGHT * win->text[win->textIndex++]);
     return 1;
 }
 
@@ -2238,15 +2243,15 @@ static u8 ExtCtrlCode_PlaySE(struct Window *win)
 
 static void DrawSpace(struct Window *win)
 {
-    if (win->textMode == TEXT_MODE_MONOSPACE || (win->left + win->cursorX) & 7 || win->spacing <= 7)
+    if (win->textMode == TEXT_MODE_MONOSPACE || (win->left + win->cursorX) & (TILE_WIDTH - 1) || win->spacing <= TILE_WIDTH - 1)
     {
-        sPrintGlyphFuncs[win->textMode](win, 0);
+        sPrintGlyphFuncs[win->textMode](win, CHAR_SPACE);
     }
     else
     {
         u32 val = sGlyphBuffer.background;
         u16 index = GetCursorTileNum(win, 0, 0);
-        u32 *buffer = (u32 *)(win->tileData + 32 * index);
+        u32 *buffer = (u32 *)(win->tileData + TILE_SIZE_4BPP * index);
         buffer[0] = val;
         buffer[1] = val;
         buffer[2] = val;
@@ -2256,7 +2261,7 @@ static void DrawSpace(struct Window *win)
         buffer[6] = val;
         buffer[7] = val;
         index = GetCursorTileNum(win, 0, 1);
-        buffer = (u32 *)(win->tileData + 32 * index);
+        buffer = (u32 *)(win->tileData + TILE_SIZE_4BPP * index);
         buffer[0] = val;
         buffer[1] = val;
         buffer[2] = val;
@@ -2266,7 +2271,7 @@ static void DrawSpace(struct Window *win)
         buffer[6] = val;
         buffer[7] = val;
         UpdateTilemap(win, 1);
-        AddToCursorX(win, 8);
+        AddToCursorX(win, TILE_WIDTH);
     }
 }
 
@@ -2274,18 +2279,18 @@ static void sub_8003344(struct Window *win, u8 newX)
 {
     u8 savedSpacing = win->spacing;
 
-    if (newX - win->cursorX <= 8)
+    if (newX - win->cursorX <= TILE_WIDTH)
         win->spacing = newX - win->cursorX;
     else
-        win->spacing = 8 - ((win->left + win->cursorX) & 7);
+        win->spacing = TILE_WIDTH - ((win->left + win->cursorX) & (TILE_WIDTH - 1));
 
     while (win->cursorX < newX)
     {
         s32 spacing;
         DrawSpace(win);
         spacing = newX - win->cursorX;
-        if (spacing >= 8)
-            spacing = 8;
+        if (spacing >= TILE_WIDTH)
+            spacing = TILE_WIDTH;
         win->spacing = spacing;
     }
 
@@ -2383,7 +2388,7 @@ u8 sub_80034EC(u8 *str)
 u8 *sub_8003504(u8 *dest, s32 value, u8 alignAmount, u8 alignType)
 {
     sTempWindow.template = (struct WindowTemplate *)&gWindowTemplate_81E6C74;
-    Text_InitWindow(&sTempWindow, 0, 0, 0, 0);
+    Text_InitWindow(&sTempWindow, NULL, 0, 0, 0);
     return AlignInt2(&sTempWindow, dest, value, alignAmount, alignType);
 }
 
@@ -2502,7 +2507,7 @@ static u8 UpdateWindowText(struct Window *win)
     case WIN_STATE_WAIT_CLEAR:
     case WIN_STATE_WAIT_SCROLL:
         if (PlayerCanInterruptDelay(win))
-            return 0;
+            return FALSE;
         win->delayCounter = 60;
         break;
     case WIN_STATE_PAUSE:
@@ -2515,7 +2520,7 @@ static u8 UpdateWindowText(struct Window *win)
         break;
     }
 
-    return 0;
+    return FALSE;
 }
 
 #if defined(ENGLISH)
@@ -2587,7 +2592,7 @@ static u8 DrawGlyph_TextMode0(struct Window *win, u32 glyphId)
 static void PrintGlyph_TextMode1(struct Window *win, u32 glyphId)
 {
     sWriteGlyphTilemapFuncs[win->fontId](win, glyphId);
-    win->cursorX += 8;
+    win->cursorX += TILE_WIDTH;
 }
 
 static void WriteGlyphTilemap_Font0_Font3(struct Window *win, u32 glyphId)
@@ -2652,13 +2657,13 @@ static void LoadFixedWidthGlyph(struct Window *win, u32 glyphId, u8 *dest)
     case 2:
     case 6:
         ApplyColors_UnshadowedFont(upperTile, (u32 *)dest, win->fgColor, win->bgColor);
-        ApplyColors_UnshadowedFont(lowerTile, (u32 *)(dest + 32), win->fgColor, win->bgColor);
+        ApplyColors_UnshadowedFont(lowerTile, (u32 *)(dest + TILE_SIZE_4BPP), win->fgColor, win->bgColor);
         break;
     case 3:
     case 4:
     case 5:
         ApplyColors_ShadowedFont(upperTile, dest, win->fgColor, win->shadowColor, win->bgColor);
-        ApplyColors_ShadowedFont(lowerTile, dest + 32, win->fgColor, win->shadowColor, win->bgColor);
+        ApplyColors_ShadowedFont(lowerTile, dest + TILE_SIZE_4BPP, win->fgColor, win->shadowColor, win->bgColor);
         break;
     }
 }
@@ -2736,7 +2741,7 @@ static void ApplyColors_UnshadowedFont(const u8 *src, u32 *dest, u8 fgColor, u8 
     a[0] = bgColor;
     a[1] = fgColor;
 
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < TILE_HEIGHT; i++)
     {
         u32 destRow = a[srcRows[i] & 1]
                     | (a[(srcRows[i] >> 1) & 1] << 4)
@@ -2780,7 +2785,7 @@ static void ApplyColors_ShadowedFont(const void *src, void *dest, u8 fgColor, u8
     curSrc = src;
     curDest = dest;
 
-    for (i = 7; i >= 0; i--)
+    for (i = TILE_HEIGHT - 1; i >= 0; i--)
     {
         u32 row = *curSrc++;
         u32 recoloredRow = a[row & colorMask]
@@ -2797,7 +2802,7 @@ static void ApplyColors_ShadowedFont(const void *src, void *dest, u8 fgColor, u8
 
 static void SetCursorX(struct Window *win, u8 x)
 {
-    if (win->textMode == TEXT_MODE_UNKNOWN0 && ((win->left + win->cursorX) & 7))
+    if (win->textMode == TEXT_MODE_UNKNOWN0 && ((win->left + win->cursorX) & (TILE_WIDTH - 1)))
         win->tileDataOffset += 2;
     win->cursorX = x;
 }
@@ -2819,7 +2824,7 @@ static void AddToCursorX(struct Window *win, u8 deltaX)
 
 static void AddToCursorY(struct Window *win, u8 deltaY)
 {
-    if (win->textMode == TEXT_MODE_UNKNOWN0 && ((win->left + win->cursorX) & 7))
+    if (win->textMode == TEXT_MODE_UNKNOWN0 && ((win->left + win->cursorX) & (TILE_WIDTH - 1)))
         win->tileDataOffset += 2;
     win->cursorY += deltaY;
 }
@@ -2830,26 +2835,26 @@ static void EraseAtCursor(struct Window *win)
     {
     case TEXT_MODE_UNKNOWN0:
     case TEXT_MODE_UNKNOWN2:
-        DrawGlyphTiles(win, 0, 8);
+        DrawGlyphTiles(win, CHAR_SPACE, TILE_WIDTH);
         break;
     case TEXT_MODE_MONOSPACE:
-        sWriteGlyphTilemapFuncs[win->fontId](win, 0);
+        sWriteGlyphTilemapFuncs[win->fontId](win, CHAR_SPACE);
         break;
     }
 }
 
 static void ClipLeft(struct Window *win)
 {
-    u32 pixel = win->left & 7;
+    u32 pixel = win->left & (TILE_WIDTH - 1);
 
     if (win->textMode != TEXT_MODE_MONOSPACE && pixel)
     {
-        const u32 *masks = sGlyphMasks[8][pixel];
+        const u32 *masks = sGlyphMasks[TILE_WIDTH][pixel];
         u32 outsideMask = masks[0];
         u32 insideMask = ~outsideMask;
         u32 outside = sGlyphBuffer.background & outsideMask;
         u16 tileNum = GetCursorTileNum(win, 0, 0);
-        u32 *buffer = (u32 *)(win->tileData + 32 * tileNum);
+        u32 *buffer = (u32 *)(win->tileData + TILE_SIZE_4BPP * tileNum);
         buffer[0] = (buffer[0] & insideMask) | outside;
         buffer[1] = (buffer[1] & insideMask) | outside;
         buffer[2] = (buffer[2] & insideMask) | outside;
@@ -2859,7 +2864,7 @@ static void ClipLeft(struct Window *win)
         buffer[6] = (buffer[6] & insideMask) | outside;
         buffer[7] = (buffer[7] & insideMask) | outside;
         tileNum = GetCursorTileNum(win, 0, 1);
-        buffer = (u32 *)(win->tileData + 32 * tileNum);
+        buffer = (u32 *)(win->tileData + TILE_SIZE_4BPP * tileNum);
         buffer[0] = (buffer[0] & insideMask) | outside;
         buffer[1] = (buffer[1] & insideMask) | outside;
         buffer[2] = (buffer[2] & insideMask) | outside;
@@ -2875,18 +2880,18 @@ static void ClipRight(struct Window *win)
 {
     register u8 cursorX asm("r0") = win->cursorX;
     u8 left = win->left;
-    u32 pixelX = (cursorX + left) & 7;
+    u32 pixelX = (cursorX + left) & (TILE_WIDTH - 1);
 
     if (win->textMode != TEXT_MODE_MONOSPACE && pixelX != 0)
     {
-        const u32 *masks = sGlyphMasks[8 - pixelX][pixelX];
+        const u32 *masks = sGlyphMasks[TILE_WIDTH - pixelX][pixelX];
         u32 insideMask = masks[0];
         u32 outside = (sGlyphBuffer.background & ~insideMask);
         u16 tileNum; 
         u32 *tileData;
 
         tileNum = GetCursorTileNum(win, 0, 0);
-        tileData = (u32 *)(win->tileData + 32 * tileNum);
+        tileData = (u32 *)(win->tileData + TILE_SIZE_4BPP * tileNum);
 
         tileData[0] = (tileData[0] & insideMask) | outside;
         tileData[1] = (tileData[1] & insideMask) | outside;
@@ -2898,7 +2903,7 @@ static void ClipRight(struct Window *win)
         tileData[7] = (tileData[7] & insideMask) | outside;
 
         tileNum = GetCursorTileNum(win, 0, 1);
-        tileData = (u32 *)(win->tileData + 32 * tileNum);
+        tileData = (u32 *)(win->tileData + TILE_SIZE_4BPP * tileNum);
 
         tileData[0] = (tileData[0] & insideMask) | outside;
         tileData[1] = (tileData[1] & insideMask) | outside;
@@ -2917,7 +2922,7 @@ static void SetWindowDefaultColors(struct Window *win)
 {
     u32 i;
 
-    win->bgColor = 0;
+    win->bgColor = TEXT_COLOR_TRANSPARENT;
     win->shadowColor = 14;
     win->fgColor = 15;
 
@@ -3083,17 +3088,17 @@ static void ScrollWindowTextLines_TextMode2(struct Window *win)
 static void DoScroll_TextMode2(struct Window *win, u8 lineLength)
 {
     u8 i;
-    u8 *buf1 = win->tileData + 32 * GetCursorTileNum(win, 0, -2);
-    u8 *buf2 = win->tileData + 32 * GetCursorTileNum(win, 0, 0);
+    u8 *buf1 = win->tileData + TILE_SIZE_4BPP * GetCursorTileNum(win, 0, -2);
+    u8 *buf2 = win->tileData + TILE_SIZE_4BPP * GetCursorTileNum(win, 0, 0);
     u8 *buf4;
     u16 *buf3;
     u16 a[4];
 
-    CpuFastCopy(buf2, buf1, 32 * lineLength);
-    CpuFastFill(sGlyphBuffer.background, buf2, 32 * lineLength);
-    buf4 = buf2 + 32 * win->width;
-    CpuFastCopy(buf4, buf1 + 32 * win->width, 32 * lineLength);
-    CpuFastFill(sGlyphBuffer.background, buf4, 32 * lineLength);
+    CpuFastCopy(buf2, buf1, TILE_SIZE_4BPP * lineLength);
+    CpuFastFill(sGlyphBuffer.background, buf2, TILE_SIZE_4BPP * lineLength);
+    buf4 = buf2 + TILE_SIZE_4BPP * win->width;
+    CpuFastCopy(buf4, buf1 + TILE_SIZE_4BPP * win->width, TILE_SIZE_4BPP * lineLength);
+    CpuFastFill(sGlyphBuffer.background, buf4, TILE_SIZE_4BPP * lineLength);
 
     buf3 = GetCursorTilemapPointer(win) - 64;
 
@@ -3161,14 +3166,14 @@ static void ClearWindowTextLines_TextMode2(struct Window *win, u8 lineLength)
     win->cursorY = 0;
     win->win_field_C = 0;
 
-    buffer = win->tileData + 32 * GetCursorTileNum(win, 0, 0);
-    CpuFastFill(sGlyphBuffer.background, buffer, 32 * lineLength);
-    buffer += 32 * win->width;
-    CpuFastFill(sGlyphBuffer.background, buffer, 32 * lineLength);
-    buffer += 32 * win->width;
-    CpuFastFill(sGlyphBuffer.background, buffer, 32 * lineLength);
-    buffer += 32 * win->width;
-    CpuFastFill(sGlyphBuffer.background, buffer, 32 * lineLength);
+    buffer = win->tileData + TILE_SIZE_4BPP * GetCursorTileNum(win, 0, 0);
+    CpuFastFill(sGlyphBuffer.background, buffer, TILE_SIZE_4BPP * lineLength);
+    buffer += TILE_SIZE_4BPP * win->width;
+    CpuFastFill(sGlyphBuffer.background, buffer, TILE_SIZE_4BPP * lineLength);
+    buffer += TILE_SIZE_4BPP * win->width;
+    CpuFastFill(sGlyphBuffer.background, buffer, TILE_SIZE_4BPP * lineLength);
+    buffer += TILE_SIZE_4BPP * win->width;
+    CpuFastFill(sGlyphBuffer.background, buffer, TILE_SIZE_4BPP * lineLength);
 }
 
 static void DrawDownArrow(struct Window *win)
@@ -3185,9 +3190,9 @@ static void DrawDownArrow(struct Window *win)
             u16 tileNum = win->tileDataStartOffset + 254;
             if (win->fontId == 0 || win->fontId == 3)
                 tileNum *= 2;
-            buffer = win->tileData + 32 * tileNum;
+            buffer = win->tileData + TILE_SIZE_4BPP * tileNum;
             ApplyColors_ShadowedFont(downArrowTiles, buffer, win->fgColor, win->shadowColor, win->bgColor);
-            ApplyColors_ShadowedFont(downArrowTiles + 8, buffer + 32, win->fgColor, win->shadowColor, win->bgColor);
+            ApplyColors_ShadowedFont(downArrowTiles + 8, buffer + TILE_SIZE_4BPP, win->fgColor, win->shadowColor, win->bgColor);
             WriteGlyphTilemap(win, tileNum, tileNum + 1);
             break;
         }
@@ -3196,28 +3201,28 @@ static void DrawDownArrow(struct Window *win)
         {
             struct GlyphTileInfo glyphTileInfo;
             glyphTileInfo.textMode = win->textMode;
-            glyphTileInfo.startPixel = (win->left + win->cursorX) & 7;
+            glyphTileInfo.startPixel = (win->left + win->cursorX) & (TILE_WIDTH - 1);
             if (glyphTileInfo.startPixel != 0)
             {
                 u8 *upperTile;
                 u8 *lowerTile;
-                GetGlyphTilePointers(win->fontId, win->language, 0, &upperTile, &lowerTile);
-                glyphTileInfo.width = 8 - glyphTileInfo.startPixel;
+                GetGlyphTilePointers(win->fontId, win->language, CHAR_SPACE, &upperTile, &lowerTile);
+                glyphTileInfo.width = TILE_WIDTH - glyphTileInfo.startPixel;
                 glyphTileInfo.src = upperTile;
-                glyphTileInfo.dest = (u32 *)(win->tileData + 32 * GetCursorTileNum(win, 1, 0));
+                glyphTileInfo.dest = (u32 *)(win->tileData + TILE_SIZE_4BPP * GetCursorTileNum(win, 1, 0));
                 glyphTileInfo.colors = sGlyphBuffer.colors;
                 DrawGlyphTile_ShadowedFont(&glyphTileInfo);
                 glyphTileInfo.src = lowerTile;
-                glyphTileInfo.dest = (u32 *)(win->tileData + 32 * GetCursorTileNum(win, 1, 1));
+                glyphTileInfo.dest = (u32 *)(win->tileData + TILE_SIZE_4BPP * GetCursorTileNum(win, 1, 1));
                 DrawGlyphTile_ShadowedFont(&glyphTileInfo);
             }
-            glyphTileInfo.width = 8;
+            glyphTileInfo.width = TILE_WIDTH;
             glyphTileInfo.src = (u8 *)downArrowTiles;
-            glyphTileInfo.dest = (u32 *)(win->tileData + 32 * GetCursorTileNum(win, 0, 0));
+            glyphTileInfo.dest = (u32 *)(win->tileData + TILE_SIZE_4BPP * GetCursorTileNum(win, 0, 0));
             glyphTileInfo.colors = sGlyphBuffer.colors;
             DrawGlyphTile_ShadowedFont(&glyphTileInfo);
-            glyphTileInfo.src += 32;
-            glyphTileInfo.dest = (u32 *)(win->tileData + 32 * GetCursorTileNum(win, 0, 1));
+            glyphTileInfo.src += TILE_SIZE_4BPP;
+            glyphTileInfo.dest = (u32 *)(win->tileData + TILE_SIZE_4BPP * GetCursorTileNum(win, 0, 1));
             DrawGlyphTile_ShadowedFont(&glyphTileInfo);
             if (glyphTileInfo.startPixel != 0)
                 UpdateTilemap(win, 2);
@@ -3410,7 +3415,7 @@ static s32 Window_MoveCursor(struct Window *win, u8 x, u8 y)
 
 static u8 GetGlyphWidth(struct Window *win, u32 glyphId)
 {
-    u8 width = 8;
+    u8 width = TILE_WIDTH;
 
 #ifdef BUGFIX_GLYPHWIDTH
     if (win->language != LANGUAGE_JAPANESE)
@@ -3438,10 +3443,10 @@ static u8 GetGlyphWidth(struct Window *win, u32 glyphId)
                 width = sFont1Widths[sFontType1Map[2 * glyphId + 1]];
                 break;
             case 6:
-                width = 8;
+                width = TILE_WIDTH;
                 break;
             default:
-                width = 8;
+                width = TILE_WIDTH;
             }
         }
     }
@@ -3452,7 +3457,7 @@ static u8 GetGlyphWidth(struct Window *win, u32 glyphId)
 u8 GetExtCtrlCodeLength(u8 code)
 {
     u8 length = 0;
-    if (code <= 0x16)
+    if (code < ARRAY_COUNT(sExtCtrlCodeLengths))
         length = sExtCtrlCodeLengths[code];
     return length;
 }
@@ -3467,10 +3472,10 @@ u8 *AlignInt1(struct Window *win, u8 *dest, s32 value, u8 alignAmount, u8 alignT
         ConvertIntToDecimalStringSimple(temp, value);
         dest = StringCopy(dest, temp);
         dest[0] = EXT_CTRL_CODE_BEGIN;
-        dest[1] = 19;
+        dest[1] = EXT_CTRL_CODE_CLEAR_TO;
         dest[2] = alignAmount;
         dest += 3;
-        *dest = 0xFF;
+        *dest = EOS;
         break;
     case 1:
         ConvertIntToDecimalStringSimple(temp, value);
@@ -3478,7 +3483,7 @@ u8 *AlignInt1(struct Window *win, u8 *dest, s32 value, u8 alignAmount, u8 alignT
         if (alignAmount > width)
         {
             dest[0] = EXT_CTRL_CODE_BEGIN;
-            dest[1] = 19;
+            dest[1] = EXT_CTRL_CODE_CLEAR_TO;
             dest[2] = alignAmount - width;
             dest += 3;
         }
@@ -3490,7 +3495,7 @@ u8 *AlignInt1(struct Window *win, u8 *dest, s32 value, u8 alignAmount, u8 alignT
         if (alignAmount > width)
         {
             dest[0] = EXT_CTRL_CODE_BEGIN;
-            dest[1] = 19;
+            dest[1] = EXT_CTRL_CODE_CLEAR_TO;
             dest[2] = (alignAmount - width) / 2;
             dest += 3;
         }
@@ -3498,10 +3503,10 @@ u8 *AlignInt1(struct Window *win, u8 *dest, s32 value, u8 alignAmount, u8 alignT
         if (alignAmount > width)
         {
             dest[0] = EXT_CTRL_CODE_BEGIN;
-            dest[1] = 19;
+            dest[1] = EXT_CTRL_CODE_CLEAR_TO;
             dest[2] = alignAmount;
             dest += 3;
-            *dest = 0xFF;
+            *dest = EOS;
         }
         break;
     }
@@ -3519,10 +3524,10 @@ u8 *AlignInt2(struct Window *win, u8 *dest, s32 value, u8 alignAmount, u8 alignT
         width = GetStringWidth(win, temp);
         dest = StringCopy(dest, temp);
         dest[0] = EXT_CTRL_CODE_BEGIN;
-        dest[1] = 17;
+        dest[1] = EXT_CTRL_CODE_CLEAR;
         dest[2] = alignAmount - width;
         dest += 3;
-        *dest = 0xFF;
+        *dest = EOS;
         break;
     case 1:
         ConvertIntToDecimalStringSimple(temp, value);
@@ -3530,7 +3535,7 @@ u8 *AlignInt2(struct Window *win, u8 *dest, s32 value, u8 alignAmount, u8 alignT
         if (alignAmount > width)
         {
             dest[0] = EXT_CTRL_CODE_BEGIN;
-            dest[1] = 17;
+            dest[1] = EXT_CTRL_CODE_CLEAR;
             dest[2] = alignAmount - width;
             dest += 3;
         }
@@ -3542,7 +3547,7 @@ u8 *AlignInt2(struct Window *win, u8 *dest, s32 value, u8 alignAmount, u8 alignT
         if (alignAmount > width)
         {
             dest[0] = EXT_CTRL_CODE_BEGIN;
-            dest[1] = 17;
+            dest[1] = EXT_CTRL_CODE_CLEAR;
             dest[2] = (alignAmount - width) / 2;
             dest += 3;
         }
@@ -3550,10 +3555,10 @@ u8 *AlignInt2(struct Window *win, u8 *dest, s32 value, u8 alignAmount, u8 alignT
         if (alignAmount > width)
         {
             dest[0] = EXT_CTRL_CODE_BEGIN;
-            dest[1] = 17;
+            dest[1] = EXT_CTRL_CODE_CLEAR;
             dest[2] = (alignAmount - width) / 2;
             dest += 3;
-            *dest = 0xFF;
+            *dest = EOS;
         }
         break;
     }
@@ -3568,17 +3573,17 @@ u8 *AlignString(struct Window *win, u8 *dest, const u8 *src, u8 alignAmount, u8 
     case 0:
         dest = StringCopy(dest, src);
         dest[0] = EXT_CTRL_CODE_BEGIN;
-        dest[1] = 19;
+        dest[1] = EXT_CTRL_CODE_CLEAR_TO;
         dest[2] = alignAmount;
         dest += 3;
-        *dest = 0xFF;
+        *dest = EOS;
         break;
     case 1:
         width = GetStringWidth(win, src);
         if (alignAmount > width)
         {
             dest[0] = EXT_CTRL_CODE_BEGIN;
-            dest[1] = 19;
+            dest[1] = EXT_CTRL_CODE_CLEAR_TO;
             dest[2] = alignAmount - width;
             dest += 3;
         }
@@ -3589,7 +3594,7 @@ u8 *AlignString(struct Window *win, u8 *dest, const u8 *src, u8 alignAmount, u8 
         if (alignAmount > width)
         {
             dest[0] = EXT_CTRL_CODE_BEGIN;
-            dest[1] = 19;
+            dest[1] = EXT_CTRL_CODE_CLEAR_TO;
             dest[2] = (alignAmount - width) / 2;
             dest += 3;
         }
@@ -3597,10 +3602,10 @@ u8 *AlignString(struct Window *win, u8 *dest, const u8 *src, u8 alignAmount, u8 
         if (alignAmount > width)
         {
             dest[0] = EXT_CTRL_CODE_BEGIN;
-            dest[1] = 19;
+            dest[1] = EXT_CTRL_CODE_CLEAR_TO;
             dest[2] = alignAmount;
             dest += 3;
-            *dest = 0xFF;
+            *dest = EOS;
         }
         break;
     }
@@ -3634,27 +3639,27 @@ u8 GetStringWidth(struct Window *win, const u8 *str)
             i++;
             switch (str[i])
             {
-            case 6:
+            case EXT_CTRL_CODE_FONT:
                 win->fontId = str[i + 1];
                 break;
-            case 7:
+            case EXT_CTRL_CODE_RESET_FONT:
                 win->fontId = win->template->fontId;
                 break;
-            case 0x11:
+            case EXT_CTRL_CODE_CLEAR:
                 width += str[i + 1];
                 break;
-            case 0x12:
-            case 0x13:
+            case EXT_CTRL_CODE_SKIP_TO:
+            case EXT_CTRL_CODE_CLEAR_TO:
                 if (width < str[i + 1])
                     width = str[i + 1];
                 break;
-            case 0x14:
+            case EXT_CTRL_CODE_MIN_LETTER_SPACING:
                 win->spacing = str[i + 1];
                 break;
-            case 0x15:
+            case EXT_CTRL_CODE_JPN:
                 win->language = LANGUAGE_JAPANESE;
                 break;
-            case 0x16:
+            case EXT_CTRL_CODE_ENG:
                 win->language = GAME_LANGUAGE;
                 break;
             }
@@ -3683,11 +3688,11 @@ u8 Text_InitWindow8004D04(struct Window *win, const u8 *text, u16 tileDataStartO
 u8 Text_InitWindow_RightAligned(struct Window *win, const u8 *text, u16 tileDataStartOffset, u8 right, u8 top)
 {
     u8 width = GetStringWidth(win, text);
-    Text_InitWindow(win, text, tileDataStartOffset, right - ((u32)(width + 7) >> 3), top);
+    Text_InitWindow(win, text, tileDataStartOffset, right - ((u32)(width + (TILE_WIDTH - 1)) >> 3), top);
     EraseAtCursor(win);
-    width &= 7;
+    width &= (TILE_WIDTH - 1);
     if (width)
-        width = 8 - width;
+        width = TILE_WIDTH - width;
     Window_MoveCursor(win, width, 0);
     return Text_PrintWindow8002F44(win);
 }
@@ -3695,10 +3700,10 @@ u8 Text_InitWindow_RightAligned(struct Window *win, const u8 *text, u16 tileData
 u8 Text_InitWindow_Centered(struct Window *win, const u8 *text, u16 tileDataStartOffset, u8 left, u8 top, u16 width)
 {
     width = (u8)(width / 2 - GetStringWidth(win, text) / 2);
-    left += (u8)width / 8;
+    left += (u8)width / TILE_WIDTH;
     Text_InitWindow(win, text, tileDataStartOffset, left, top);
     EraseAtCursor(win);
-    width &= 7;
+    width &= (TILE_WIDTH - 1);
     Window_MoveCursor(win, width, 0);
     return Text_PrintWindow8002F44(win);
 }
@@ -3739,7 +3744,7 @@ void ConvertInternationalString(u8 *s, u8 language)
         StripExtCtrlCodes(s);
         i = StringLength(s);
         s[i++] = EXT_CTRL_CODE_BEGIN;
-        s[i++] = 22;
+        s[i++] = EXT_CTRL_CODE_ENG;
         s[i++] = EOS;
 
         i--;
@@ -3751,7 +3756,7 @@ void ConvertInternationalString(u8 *s, u8 language)
         }
 
         s[0] = EXT_CTRL_CODE_BEGIN;
-        s[1] = 21;
+        s[1] = EXT_CTRL_CODE_JPN;
     }
 }
 
@@ -3800,11 +3805,11 @@ s32 StringCompareWithoutExtCtrlCodes(const u8 *str1, const u8 *str2)
         if (*str1 < *str2)
         {
             retVal = -1;
-            if (*str2 == 0xFF)
+            if (*str2 == EOS)
                 retVal = 1;
         }
 
-        if (*str1 == 0xFF)
+        if (*str1 == EOS)
             return retVal;
 
         str1++;
@@ -3813,7 +3818,7 @@ s32 StringCompareWithoutExtCtrlCodes(const u8 *str1, const u8 *str2)
 
     retVal = 1;
 
-    if (*str1 == 0xFF)
+    if (*str1 == EOS)
         retVal = -1;
 
     return retVal;
@@ -3832,7 +3837,7 @@ u8 sub_8004FD0(struct Window *win, u8 *dest, const u8 *src, u16 tileDataStartOff
     start = dest;
     endsWithoutNewline = FALSE;
 
-    while (*src != 0xFF)
+    while (*src != EOS)
     {
         switch (*src)
         {
@@ -3842,17 +3847,17 @@ u8 sub_8004FD0(struct Window *win, u8 *dest, const u8 *src, u16 tileDataStartOff
             src++;
             endsWithoutNewline = TRUE;
             break;
-        case 0xFC:
+        case EXT_CTRL_CODE_BEGIN:
             extCtrlCodeLength = GetExtCtrlCodeLength(src[1]) + 1;
             memcpy(dest, src, extCtrlCodeLength);
             dest += extCtrlCodeLength;
             src += extCtrlCodeLength;
             break;
-        case 0xFE:
-            dest[0] = 0xFC;
-            dest[1] = 19;
+        case CHAR_NEWLINE:
+            dest[0] = EXT_CTRL_CODE_BEGIN;
+            dest[1] = EXT_CTRL_CODE_CLEAR_TO;
             dest[2] = width;
-            dest[3] = 0xFE;
+            dest[3] = CHAR_NEWLINE;
             dest += 4;
             src++;
             newlineCount++;
@@ -3861,10 +3866,10 @@ u8 sub_8004FD0(struct Window *win, u8 *dest, const u8 *src, u16 tileDataStartOff
         }
     }
 
-    dest[0] = 0xFC;
-    dest[1] = 19;
+    dest[0] = EXT_CTRL_CODE_BEGIN;
+    dest[1] = EXT_CTRL_CODE_CLEAR_TO;
     dest[2] = width;
-    dest[3] = 0xFF;
+    dest[3] = EOS;
 
     if (endsWithoutNewline)
         newlineCount++;
@@ -3892,7 +3897,7 @@ static s32 DrawGlyphTile_UnshadowedFont(struct GlyphTileInfo *glyphTileInfo)
     glyphBuffer->pixelRows[6] = buffer[6] & mask1;
     glyphBuffer->pixelRows[7] = buffer[7] & mask1;
 
-    if (glyphTileInfo->startPixel + glyphTileInfo->width > 8)
+    if (glyphTileInfo->startPixel + glyphTileInfo->width > TILE_WIDTH)
     {
         u32 mask2 = masks[1];
         if (glyphTileInfo->textMode == TEXT_MODE_UNKNOWN2)
@@ -3933,7 +3938,7 @@ static s32 DrawGlyphTile_UnshadowedFont(struct GlyphTileInfo *glyphTileInfo)
     buffer[6] = glyphBuffer->pixelRows[6];
     buffer[7] = glyphBuffer->pixelRows[7];
 
-    if (glyphTileInfo->startPixel + glyphTileInfo->width > 8)
+    if (glyphTileInfo->startPixel + glyphTileInfo->width > TILE_WIDTH)
     {
         if (glyphTileInfo->textMode != TEXT_MODE_UNKNOWN2)
             buffer += 8;
@@ -3947,7 +3952,7 @@ static s32 DrawGlyphTile_UnshadowedFont(struct GlyphTileInfo *glyphTileInfo)
         buffer[15] = glyphBuffer->pixelRows[15];
     }
 
-    return (glyphTileInfo->startPixel + glyphTileInfo->width) / 8;
+    return (glyphTileInfo->startPixel + glyphTileInfo->width) / TILE_WIDTH;
 }
 
 static void ShiftGlyphTile_UnshadowedFont_Width0(struct GlyphBuffer *glyphBuffer, u8 *src, u32 *a3, u8 startPixel)
@@ -3958,7 +3963,7 @@ static void ShiftGlyphTile_UnshadowedFont_Width1(struct GlyphBuffer *glyphBuffer
 {
     const struct ShiftAmount *shiftAmount = &sGlyphShiftAmounts[startPixel];
     u8 i;
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < TILE_HEIGHT; i++)
     {
         u32 val = colors[src[i] >> 7];
         u32 *dest = &glyphBuffer->pixelRows[i];
@@ -3971,7 +3976,7 @@ static void ShiftGlyphTile_UnshadowedFont_Width2(struct GlyphBuffer *glyphBuffer
 {
     const struct ShiftAmount *shiftAmount = &sGlyphShiftAmounts[startPixel];
     u8 i;
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < TILE_HEIGHT; i++)
     {
         u32 val = (colors[(src[i] >> 7) & 1] << 0)
                 | (colors[(src[i] >> 6) & 1] << 4);
@@ -3985,7 +3990,7 @@ static void ShiftGlyphTile_UnshadowedFont_Width3(struct GlyphBuffer *glyphBuffer
 {
     const struct ShiftAmount *shiftAmount = &sGlyphShiftAmounts[startPixel];
     u8 i;
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < TILE_HEIGHT; i++)
     {
         // XXX: why 4?
         u32 val = (colors[(src[i] >> 7) & 1] <<  0)
@@ -4002,7 +4007,7 @@ static void ShiftGlyphTile_UnshadowedFont_Width4(struct GlyphBuffer *glyphBuffer
 {
     const struct ShiftAmount *shiftAmount = &sGlyphShiftAmounts[startPixel];
     u8 i;
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < TILE_HEIGHT; i++)
     {
         u32 val = (colors[(src[i] >> 7) & 1] <<  0)
                 | (colors[(src[i] >> 6) & 1] <<  4)
@@ -4018,7 +4023,7 @@ static void ShiftGlyphTile_UnshadowedFont_Width5(struct GlyphBuffer *glyphBuffer
 {
     const struct ShiftAmount *shiftAmount = &sGlyphShiftAmounts[startPixel];
     u8 i;
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < TILE_HEIGHT; i++)
     {
         u32 val = (colors[(src[i] >> 7) & 1] <<  0)
                 | (colors[(src[i] >> 6) & 1] <<  4)
@@ -4035,7 +4040,7 @@ static void ShiftGlyphTile_UnshadowedFont_Width6(struct GlyphBuffer *glyphBuffer
 {
     const struct ShiftAmount *shiftAmount = &sGlyphShiftAmounts[startPixel];
     u8 i;
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < TILE_HEIGHT; i++)
     {
         u32 val = (colors[(src[i] >> 7) & 1] <<  0)
                 | (colors[(src[i] >> 6) & 1] <<  4)
@@ -4053,7 +4058,7 @@ static void ShiftGlyphTile_UnshadowedFont_Width7(struct GlyphBuffer *glyphBuffer
 {
     const struct ShiftAmount *shiftAmount = &sGlyphShiftAmounts[startPixel];
     u8 i;
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < TILE_HEIGHT; i++)
     {
         u32 val = (colors[(src[i] >> 7) & 1] <<  0)
                 | (colors[(src[i] >> 6) & 1] <<  4)
@@ -4072,7 +4077,7 @@ static void ShiftGlyphTile_UnshadowedFont_Width8(struct GlyphBuffer *glyphBuffer
 {
     const struct ShiftAmount *shiftAmount = &sGlyphShiftAmounts[startPixel];
     u8 i;
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < TILE_HEIGHT; i++)
     {
         u32 val = (colors[(src[i] >> 7) & 1] <<  0)
                 | (colors[(src[i] >> 6) & 1] <<  4)
@@ -4104,7 +4109,7 @@ static s32 DrawGlyphTile_ShadowedFont(struct GlyphTileInfo *glyphTileInfo)
     glyphBuffer->pixelRows[6] = buffer[6] & mask1;
     glyphBuffer->pixelRows[7] = buffer[7] & mask1;
 
-    if (glyphTileInfo->startPixel + glyphTileInfo->width > 8)
+    if (glyphTileInfo->startPixel + glyphTileInfo->width > TILE_WIDTH)
     {
         u32 mask2 = masks[1];
         if (glyphTileInfo->textMode == TEXT_MODE_UNKNOWN2)
@@ -4142,7 +4147,7 @@ static s32 DrawGlyphTile_ShadowedFont(struct GlyphTileInfo *glyphTileInfo)
     buffer[6] = glyphBuffer->pixelRows[6];
     buffer[7] = glyphBuffer->pixelRows[7];
 
-    if (glyphTileInfo->startPixel + glyphTileInfo->width > 8)
+    if (glyphTileInfo->startPixel + glyphTileInfo->width > TILE_WIDTH)
     {
         if (glyphTileInfo->textMode != TEXT_MODE_UNKNOWN2)
             buffer += 8;
@@ -4156,7 +4161,7 @@ static s32 DrawGlyphTile_ShadowedFont(struct GlyphTileInfo *glyphTileInfo)
         buffer[15] = glyphBuffer->pixelRows[15];
     }
 
-    return (glyphTileInfo->startPixel + glyphTileInfo->width) / 8;
+    return (glyphTileInfo->startPixel + glyphTileInfo->width) / TILE_WIDTH;
 }
 
 static void ShiftGlyphTile_ShadowedFont_Width0(struct GlyphBuffer *glyphBuffer, u32 *src, u32 *colors, u8 startPixel)
@@ -4167,7 +4172,7 @@ static void ShiftGlyphTile_ShadowedFont_Width1(struct GlyphBuffer *glyphBuffer, 
 {
     const struct ShiftAmount *shiftAmount = &sGlyphShiftAmounts[startPixel];
     u8 i;
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < TILE_HEIGHT; i++)
     {
         u32 val = colors[src[i] & 0xF];
         u32 *dest = &glyphBuffer->pixelRows[i];
@@ -4180,7 +4185,7 @@ static void ShiftGlyphTile_ShadowedFont_Width2(struct GlyphBuffer *glyphBuffer, 
 {
     const struct ShiftAmount *shiftAmount = &sGlyphShiftAmounts[startPixel];
     u8 i;
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < TILE_HEIGHT; i++)
     {
         u32 val = (colors[(src[i] >> 0) & 0xF] << 0)
                 | (colors[(src[i] >> 4) & 0xF] << 4);
@@ -4194,7 +4199,7 @@ static void ShiftGlyphTile_ShadowedFont_Width3(struct GlyphBuffer *glyphBuffer, 
 {
     const struct ShiftAmount *shiftAmount = &sGlyphShiftAmounts[startPixel];
     u8 i;
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < TILE_HEIGHT; i++)
     {
         u32 val = (colors[(src[i] >> 0) & 0xF] << 0)
                 | (colors[(src[i] >> 4) & 0xF] << 4)
@@ -4209,7 +4214,7 @@ static void ShiftGlyphTile_ShadowedFont_Width4(struct GlyphBuffer *glyphBuffer, 
 {
     const struct ShiftAmount *shiftAmount = &sGlyphShiftAmounts[startPixel];
     u8 i;
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < TILE_HEIGHT; i++)
     {
         u32 val = (colors[(src[i] >>  0) & 0xF] <<  0)
                 | (colors[(src[i] >>  4) & 0xF] <<  4)
@@ -4328,10 +4333,10 @@ static s32 DrawGlyphTiles(struct Window *win, u32 glyphId, u32 glyphWidth)
 
     GetGlyphTilePointers(win->fontId, win->language, glyphId, &upperTile, &lowerTile);
     glyphTileInfo.textMode = win->textMode;
-    glyphTileInfo.startPixel = (win->left + win->cursorX) & 7;
+    glyphTileInfo.startPixel = (win->left + win->cursorX) & (TILE_WIDTH - 1);
     glyphTileInfo.width = glyphWidth;
     glyphTileInfo.src = upperTile;
-    glyphTileInfo.dest = (u32 *)(win->tileData + 32 * GetCursorTileNum(win, 0, 0));
+    glyphTileInfo.dest = (u32 *)(win->tileData + TILE_SIZE_4BPP * GetCursorTileNum(win, 0, 0));
     glyphTileInfo.colors = sGlyphBuffer.colors;
 
     switch (win->fontId)
@@ -4342,7 +4347,7 @@ static s32 DrawGlyphTiles(struct Window *win, u32 glyphId, u32 glyphWidth)
     case 6:
         DrawGlyphTile_UnshadowedFont(&glyphTileInfo);
         glyphTileInfo.src = lowerTile;
-        glyphTileInfo.dest = (u32 *)(win->tileData + 32 * GetCursorTileNum(win, 0, 1));
+        glyphTileInfo.dest = (u32 *)(win->tileData + TILE_SIZE_4BPP * GetCursorTileNum(win, 0, 1));
         retVal = DrawGlyphTile_UnshadowedFont(&glyphTileInfo);
         break;
     case 3:
@@ -4350,7 +4355,7 @@ static s32 DrawGlyphTiles(struct Window *win, u32 glyphId, u32 glyphWidth)
     case 5:
         DrawGlyphTile_ShadowedFont(&glyphTileInfo);
         glyphTileInfo.src = lowerTile;
-        glyphTileInfo.dest = (u32 *)(win->tileData + 32 * GetCursorTileNum(win, 0, 1));
+        glyphTileInfo.dest = (u32 *)(win->tileData + TILE_SIZE_4BPP * GetCursorTileNum(win, 0, 1));
         retVal = DrawGlyphTile_ShadowedFont(&glyphTileInfo);
         break;
     }
