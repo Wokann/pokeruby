@@ -34,14 +34,15 @@
 #include "start_menu.h"
 #include "text.h"
 #include "tv.h"
+#include "constants/items.h"
 
 static void InitPlayerTrainerId(void);
 static void SetDefaultOptions(void);
 static void ClearPokedexFlags(void);
 static void WarpToTruck(void);
 
-EWRAM_DATA bool8 gDifferentSaveFile = 0;
-EWRAM_DATA u8 gUnknown_020297ED = 0;
+EWRAM_DATA bool8 gDifferentSaveFile = FALSE;
+EWRAM_DATA u8 gUnknown_020297ED = FALSE;
 
 
 extern const u8 EventScript_ResetAllMapFlags[];
@@ -53,6 +54,8 @@ static const struct ContestWinner sEmptyMuseumPortrait =
 };
 
 #if DEBUG
+#define MAX_MONEY 999999
+
 const s8 gUnknown_Debug_0823C788[][2] =
 {
     { MAP_GROUP(MAP_INSIDE_OF_TRUCK),                   MAP_NUM(MAP_INSIDE_OF_TRUCK) },
@@ -75,7 +78,7 @@ void SetTrainerId(u32 trainerId, u8 *dst)
 void CopyTrainerId(u8 *dst, u8 *src)
 {
     s32 i;
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < TRAINER_ID_LENGTH; i++)
         dst[i] = src[i];
 }
 
@@ -107,7 +110,7 @@ void ResetContestAndMuseumWinners(void)
     s32 i;
 
     ClearContestWinnerPicsInContestHall();
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < (int)ARRAY_COUNT(gSaveBlock1.museumPortraits); i++)
         gSaveBlock1.museumPortraits[i] = sEmptyMuseumPortrait;
 }
 
@@ -121,7 +124,7 @@ void debug_sub_8052E04()
 {
     u8 i;
 
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < (int)ARRAY_COUNT(gUnknown_Debug_0823C788); i++)
     {
         if (gUnknown_Debug_0823C788[i][0] == gSaveBlock1.location.mapGroup &&
             gUnknown_Debug_0823C788[i][1] == gSaveBlock1.location.mapNum)
@@ -131,18 +134,18 @@ void debug_sub_8052E04()
     }
 
     i++;
-    if (i >= 4)
+    if (i >= (int)ARRAY_COUNT(gUnknown_Debug_0823C788))
     {
         i = 0;
     }
 
-    SetWarpDestination(gUnknown_Debug_0823C788[i][0], gUnknown_Debug_0823C788[i][1], -1, -1, -1);
+    SetWarpDestination(gUnknown_Debug_0823C788[i][0], gUnknown_Debug_0823C788[i][1], WARP_ID_NONE, -1, -1);
 }
 #endif
 
 static void WarpToTruck(void)
 {
-    SetWarpDestination(MAP_GROUP(MAP_INSIDE_OF_TRUCK), MAP_NUM(MAP_INSIDE_OF_TRUCK), -1, -1, -1);
+    SetWarpDestination(MAP_GROUP(MAP_INSIDE_OF_TRUCK), MAP_NUM(MAP_INSIDE_OF_TRUCK), WARP_ID_NONE, -1, -1);
     WarpIntoMap();
 }
 
@@ -154,9 +157,9 @@ void Sav2_ClearSetDefault(void)
 
 void ResetMenuAndMonGlobals(void)
 {
-    gDifferentSaveFile = 0;
+    gDifferentSaveFile = FALSE;
 #if DEBUG
-    gUnknown_020297ED = 0;
+    gUnknown_020297ED = FALSE;
 #endif
     ResetPokedexScrollPositions();
     ZeroPlayerPartyMons();
@@ -166,17 +169,17 @@ void ResetMenuAndMonGlobals(void)
 
 void NewGameInitData(void)
 {
-    if (gSaveFileStatus == 0 || gSaveFileStatus == 2)
+    if (gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_CORRUPT)
         RtcReset();
 
-    gDifferentSaveFile = 1;
+    gDifferentSaveFile = TRUE;
     ZeroPlayerPartyMons();
     ZeroEnemyPartyMons();
     ResetPokedex();
     ZeroBattleTowerData();
     memset(&gSaveBlock1, 0, sizeof(gSaveBlock1));
     ClearAllMail();
-    gSaveBlock2.specialSaveWarp = 0;
+    gSaveBlock2.specialSaveWarp = FALSE;
     InitPlayerTrainerId();
     PlayTimeCounter_Reset();
     ClearPokedexFlags();
@@ -197,7 +200,7 @@ void NewGameInitData(void)
     ResetPokemonStorageSystem();
     ClearRoamerData();
     ClearRoamerLocationData();
-    gSaveBlock1.registeredItem = 0;
+    gSaveBlock1.registeredItem = ITEM_NONE;
     ClearBag();
     NewGameInitPCItems();
     ClearPokeblocks();
@@ -218,14 +221,14 @@ extern void debug_sub_8120F98(void);
 
 void debug_sub_8057508(bool32 arg0)
 {
-    gUnknown_020297ED = 1;
+    gUnknown_020297ED = TRUE;
     NewGameInitData();
-    gSaveBlock1.money = 999999;
+    gSaveBlock1.money = MAX_MONEY;
     FlagSet(FLAG_SYS_POKEMON_GET);
     FlagSet(FLAG_SYS_POKEDEX_GET);
     FlagSet(FLAG_SYS_POKENAV_GET);
     FlagSet(FLAG_SYS_B_DASH);
-    ScriptGiveMon(SPECIES_TREECKO, 99, 0, 0, 0, 0);
+    ScriptGiveMon(SPECIES_TREECKO, 99, ITEM_NONE, 0, 0, 0);
 
     if (arg0 == TRUE)
         SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, gUnknown_Debug_0823C790);
