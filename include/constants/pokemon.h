@@ -76,6 +76,10 @@ enum
 #define OT_ID_PRESET          1
 #define OT_ID_RANDOM_NO_SHINY 2
 
+#define MON_GIVEN_TO_PARTY      0
+#define MON_GIVEN_TO_PC         1
+#define MON_CANT_GIVE           2
+
 #define LEVEL_UP_MOVE_ID   0x01FF
 #define LEVEL_UP_MOVE_LV   0xFE00
 #define LEVEL_UP_END       0xFFFF
@@ -87,6 +91,9 @@ enum
 
 // Shiny odds
 #define SHINY_ODDS 8 // Actual probability is SHINY_ODDS/65536
+
+// Number of bits used to store each contest ribbon (the highest rank achieved)
+#define CONTEST_RIBBON_BITS 3
 
 #define MON_MALE       0x00
 #define MON_FEMALE     0xFE
@@ -194,6 +201,7 @@ enum {
 #define MAX_MON_PIC_FRAMES 4
 
 #define BATTLE_ALIVE_EXCEPT_ACTIVE  0
+#define BATTLE_ALIVE_ATK_SIDE       1
 #define BATTLE_ALIVE_DEF_SIDE       2
 
 #endif // GUARD_CONSTANTS_POKEMON_H

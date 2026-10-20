@@ -147,11 +147,11 @@ struct PokemonSubstruct3
     /*0x07*/ u32 isEgg:1;
     /*0x07*/ u32 abilityNum:1;
 
-    /*0x08*/ u32 coolRibbon:3;
-    /*0x08*/ u32 beautyRibbon:3;
-    /*0x08*/ u32 cuteRibbon:3;
-    /*0x09*/ u32 smartRibbon:3;
-    /*0x09*/ u32 toughRibbon:3;
+    /*0x08*/ u32 coolRibbon:CONTEST_RIBBON_BITS;
+    /*0x08*/ u32 beautyRibbon:CONTEST_RIBBON_BITS;
+    /*0x08*/ u32 cuteRibbon:CONTEST_RIBBON_BITS;
+    /*0x09*/ u32 smartRibbon:CONTEST_RIBBON_BITS;
+    /*0x09*/ u32 toughRibbon:CONTEST_RIBBON_BITS;
     /*0x09*/ u32 championRibbon:1;
     /*0x0A*/ u32 winningRibbon:1;
     /*0x0A*/ u32 victoryRibbon:1;
