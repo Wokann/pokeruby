@@ -50,28 +50,28 @@ static const struct SpriteTemplate sInvisibleSpriteTemplate =
 
 static const u8 sSpriteDimensions[3][4][2] =
 {
-    // square
+    [ST_OAM_SQUARE] =
     {
-        {1, 1},
-        {2, 2},
-        {4, 4},
-        {8, 8},
+        [ST_OAM_SIZE_0] = {1, 1},
+        [ST_OAM_SIZE_1] = {2, 2},
+        [ST_OAM_SIZE_2] = {4, 4},
+        [ST_OAM_SIZE_3] = {8, 8},
     },
 
-    // horizontal rectangle
+    [ST_OAM_H_RECTANGLE] =
     {
-        {2, 1},
-        {4, 1},
-        {4, 2},
-        {8, 4},
+        [ST_OAM_SIZE_0] = {2, 1},
+        [ST_OAM_SIZE_1] = {4, 1},
+        [ST_OAM_SIZE_2] = {4, 2},
+        [ST_OAM_SIZE_3] = {8, 4},
     },
 
-    // vertical rectangle
+    [ST_OAM_V_RECTANGLE] =
     {
-        {1, 2},
-        {1, 4},
-        {2, 4},
-        {4, 8},
+        [ST_OAM_SIZE_0] = {1, 2},
+        [ST_OAM_SIZE_1] = {1, 4},
+        [ST_OAM_SIZE_2] = {2, 4},
+        [ST_OAM_SIZE_3] = {4, 8},
     },
 };
 
@@ -116,7 +116,7 @@ const u8 gMiscBlank_Gfx[] = INCBIN_U8("graphics/interface/blank.4bpp");
 
 u8 CreateInvisibleSpriteWithCallback(void (*callback)(struct Sprite *))
 {
-    u8 sprite = CreateSprite(&sInvisibleSpriteTemplate, 248, 168, 14);
+    u8 sprite = CreateSprite(&sInvisibleSpriteTemplate, DISPLAY_WIDTH + 8, DISPLAY_HEIGHT + 8, 14);
     gSprites[sprite].invisible = TRUE;
     gSprites[sprite].callback = callback;
     return sprite;
@@ -156,7 +156,7 @@ void CopySpriteTiles(u8 shape, u8 size, u8 *tiles, u16 *tilemap, u8 *output)
 {
     u8 x, y;
     s8 i, j;
-    u8 xflip[32];
+    u8 xflip[TILE_SIZE_4BPP];
     u8 h = sSpriteDimensions[shape][size][1];
     u8 w = sSpriteDimensions[shape][size][0];
 
@@ -166,51 +166,51 @@ void CopySpriteTiles(u8 shape, u8 size, u8 *tiles, u16 *tilemap, u8 *output)
 
         for (x = 0; x < w; x++)
         {
-            u16 tile = (*tilemap & 0x3ff) * 32;
-            int attr = *tilemap & 0xc00;
+            u16 tile = (*tilemap & 0x3ff) * TILE_SIZE_4BPP;
+            int attr = *tilemap & BG_TILE_H_FLIP(BG_TILE_V_FLIP(0));
 
             if (attr == 0)
             {
-                DmaCopy32Defvars(3, tiles + tile, output, 32);
+                DmaCopy32Defvars(3, tiles + tile, output, TILE_SIZE_4BPP);
             }
-            else if (attr == 0x800)  // yflip
+            else if (attr == BG_TILE_V_FLIP(0))  // yflip
             {
-                for (i = 0; i < 8; i++)
+                for (i = 0; i < TILE_HEIGHT; i++)
                 {
                     u8 requiredForMatching = 0;
 
                     ++requiredForMatching;
                     --requiredForMatching;
-                    DmaCopy32Defvars(3, tile + (7 - i) * 4 + tiles, output + i * 4, 4);
+                    DmaCopy32Defvars(3, tile + (TILE_HEIGHT - 1 - i) * (TILE_WIDTH / 2) + tiles, output + i * (TILE_WIDTH / 2), TILE_WIDTH / 2);
                 }
             }
             else  // xflip
             {
-                for (i = 0; i < 8; i++)
+                for (i = 0; i < TILE_HEIGHT; i++)
                 {
-                    for (j = 0; j < 4; j++)
+                    for (j = 0; j < TILE_WIDTH / 2; j++)
                     {
-                        u8 i2 = i * 4;
-                        xflip[i2 + (3 - j)] = (tiles[tile + i2 + j] & 0xf) << 4;
-                        xflip[i2 + (3 - j)] |= tiles[tile + i2 + j] >> 4;
+                        u8 i2 = i * (TILE_WIDTH / 2);
+                        xflip[i2 + (TILE_WIDTH / 2 - 1 - j)] = (tiles[tile + i2 + j] & 0xf) << 4;
+                        xflip[i2 + (TILE_WIDTH / 2 - 1 - j)] |= tiles[tile + i2 + j] >> 4;
                     }
                 }
-                if (*tilemap & 0x800)  // yflip
+                if (*tilemap & BG_TILE_V_FLIP(0))  // yflip
                 {
-                    for (i = 0; i < 8; i++)
+                    for (i = 0; i < TILE_HEIGHT; i++)
                     {
                         ++tile;
                         --tile;
-                        DmaCopy32Defvars(3, (7 - i) * 4 + xflip, output + i * 4, 4);
+                        DmaCopy32Defvars(3, (TILE_HEIGHT - 1 - i) * (TILE_WIDTH / 2) + xflip, output + i * (TILE_WIDTH / 2), TILE_WIDTH / 2);
                     }
                 }
                 else
                 {
-                    DmaCopy32Defvars(3, xflip, output, 32);
+                    DmaCopy32Defvars(3, xflip, output, TILE_SIZE_4BPP);
                 }
             }
             tilemap++;
-            output += 32;
+            output += TILE_SIZE_4BPP;
         }
         tilemap += filler;
     }
