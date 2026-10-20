@@ -49,6 +49,8 @@
 #define IGNORE_SHELL_BELL 0xFFFF
 #define RESOURCE_FLAG_FLASH_FIRE 1
 #define DYNAMIC_TYPE_MASK                 ((1 << 6) - 1)
+#define F_DYNAMIC_TYPE_IGNORE_PHYSICALITY  (1 << 6) // If set, the dynamic type's physicality won't be used for certain move effects.
+#define F_DYNAMIC_TYPE_SET                 (1 << 7) // Set for all dynamic types to distinguish a dynamic type of Normal (0) from no dynamic type.
 
 struct DisableStruct
 {

@@ -76,6 +76,9 @@ enum
 
 #define MAX_LEVEL_UP_MOVES 20
 
+#define MON_ALREADY_KNOWS_MOVE  0xFFFE
+#define MON_HAS_MAX_MOVES       0xFFFF
+
 #define MON_MALE       0x00
 #define MON_FEMALE     0xFE
 #define MON_GENDERLESS 0xFF
@@ -121,6 +124,8 @@ enum {
     BODY_COLOR_WHITE,
     BODY_COLOR_PINK
 };
+
+#define MAX_FRIENDSHIP  255
 
 #define FRIENDSHIP_EVENT_GROW_LEVEL           0x0
 #define FRIENDSHIP_EVENT_VITAMIN              0x1 // unused

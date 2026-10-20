@@ -79,7 +79,7 @@ extern struct MultiPartnerMenuPokemon gMultiPartnerParty[MULTI_PARTY_SIZE];
 extern const struct SpriteTemplate gUnusedBattleInitSprite;
 extern const struct OamData gOamData_BattleSpritePlayerSide;
 extern const struct OamData gOamData_BattleSpriteOpponentSide;
-extern const u8 gTypeEffectiveness[];
+extern const u8 gTypeEffectiveness[336];
 extern const u8 gTypeNames[][7];
 extern const struct TrainerMoney gTrainerMoneyTable[];
 extern const u8 gAbilityNames[][13];

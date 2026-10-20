@@ -280,6 +280,8 @@ enum BattlerId
 #define MOVE_EFFECT_NOTHING_3D          0x3D
 #define MOVE_EFFECT_NOTHING_3E          0x3E
 #define MOVE_EFFECT_NOTHING_3F          0x3F
+#define NUM_MOVE_EFFECTS                60
+
 #define MOVE_EFFECT_AFFECTS_USER        0x40
 #define MOVE_EFFECT_CERTAIN             0x80
 
