@@ -11,12 +11,12 @@ bool32 gFlashMemoryPresent;
 
 struct LoadedSaveData
 {
-    struct ItemSlot items[20];
-    struct ItemSlot keyItems[20];
-    struct ItemSlot pokeBalls[16];
-    struct ItemSlot TMsHMs[64];
-    struct ItemSlot berries[46];
-    struct Mail mail[16];
+    struct ItemSlot items[BAG_ITEMS_COUNT];
+    struct ItemSlot keyItems[BAG_KEYITEMS_COUNT];
+    struct ItemSlot pokeBalls[BAG_POKEBALLS_COUNT];
+    struct ItemSlot TMsHMs[BAG_TMHM_COUNT];
+    struct ItemSlot berries[BAG_BERRIES_COUNT];
+    struct Mail mail[MAIL_COUNT];
 };
 
 EWRAM_DATA struct SaveBlock2 gSaveBlock2 = {0};
@@ -42,23 +42,23 @@ bool32 UseContinueGameWarp(void)
 
 void ClearContinueGameWarpStatus(void)
 {
-    gSaveBlock2.specialSaveWarp = 0;
+    gSaveBlock2.specialSaveWarp = FALSE;
 }
 
 void SetContinueGameWarpStatus(void)
 {
-    gSaveBlock2.specialSaveWarp = 1;
+    gSaveBlock2.specialSaveWarp = TRUE;
 }
 
 void SetContinueGameWarpStatusToDynamicWarp(void) // note: no other function sets specialSaveWarp to values other than 0 or 1, hence clear and set distinctions.
 {
     SetContinueGameWarpToDynamicWarp(0); // the function doesn't use the parameter passed to it, but this is necessary to match.
-    gSaveBlock2.specialSaveWarp = 1;
+    gSaveBlock2.specialSaveWarp = TRUE;
 }
 
 void ClearContinueGameWarpStatus2(void) // duplicate function
 {
-    gSaveBlock2.specialSaveWarp = 0;
+    gSaveBlock2.specialSaveWarp = FALSE;
 }
 
 void SavePlayerParty(void)
