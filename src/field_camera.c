@@ -2,6 +2,7 @@
 #include "field_camera.h"
 #include "berry.h"
 #include "bike.h"
+#include "event_object_movement.h"
 #include "field_player_avatar.h"
 #include "fieldmap.h"
 #include "rotating_gate.h"
@@ -66,9 +67,9 @@ static void AddCameraPixelOffset(struct FieldCameraOffset *cameraOffset, u32 xOf
 void move_tilemap_camera_to_upper_left_corner(void)
 {
     ResetCameraOffset(&sFieldCameraOffset);
-    CpuFill16(0, gBGTilemapBuffers[2], 0x800);
-    CpuFill16(0, gBGTilemapBuffers[1], 0x800);
-    CpuFill16(0x3014, gBGTilemapBuffers[3], 0x800);
+    CpuFill16(0, gBGTilemapBuffers[2], BG_SCREEN_SIZE);
+    CpuFill16(0, gBGTilemapBuffers[1], BG_SCREEN_SIZE);
+    CpuFill16(0x3014, gBGTilemapBuffers[3], BG_SCREEN_SIZE);
 }
 
 void sub_8057A58(void)
@@ -82,9 +83,9 @@ void sub_8057A58(void)
 
     if (sFieldCameraOffset.copyBGToVRAM)
     {
-        DmaCopy16(3, gBGTilemapBuffers[1], (void *)(VRAM + 0xE800), 0x800);
-        DmaCopy16(3, gBGTilemapBuffers[2], (void *)(VRAM + 0xE000), 0x800);
-        DmaCopy16(3, gBGTilemapBuffers[3], (void *)(VRAM + 0xF000), 0x800);
+        DmaCopy16(3, gBGTilemapBuffers[1], BG_SCREEN_ADDR(29), BG_SCREEN_SIZE);
+        DmaCopy16(3, gBGTilemapBuffers[2], BG_SCREEN_ADDR(28), BG_SCREEN_SIZE);
+        DmaCopy16(3, gBGTilemapBuffers[3], BG_SCREEN_ADDR(30), BG_SCREEN_SIZE);
         sFieldCameraOffset.copyBGToVRAM = FALSE;
     }
 }
@@ -222,7 +223,7 @@ void DrawDoorMetatileAt(int x, int y, u16 *tiles)
 
     if (offset >= 0)
     {
-        DrawMetatile(1, tiles, offset);
+        DrawMetatile(METATILE_LAYER_TYPE_COVERED, tiles, offset);
         sFieldCameraOffset.copyBGToVRAM = TRUE;
     }
 }
@@ -245,14 +246,14 @@ static void DrawMetatileAt(const struct MapLayout *mapLayout, u16 offset, int x,
         metatileId -= NUM_METATILES_IN_PRIMARY;
     }
 
-    DrawMetatile(MapGridGetMetatileLayerTypeAt(x, y), metatiles + metatileId * 8, offset);
+    DrawMetatile(MapGridGetMetatileLayerTypeAt(x, y), metatiles + metatileId * NUM_TILES_PER_METATILE, offset);
 }
 
 static void DrawMetatile(s32 metatileLayerType, const u16 *tiles, u16 offset)
 {
     switch (metatileLayerType)
     {
-    case 2: // LAYER_TYPE_
+    case METATILE_LAYER_TYPE_SPLIT:
         // Draw metatile's bottom layer to the bottom background layer.
         gBGTilemapBuffers[3][offset] = tiles[0];
         gBGTilemapBuffers[3][offset + 1] = tiles[1];
@@ -271,7 +272,7 @@ static void DrawMetatile(s32 metatileLayerType, const u16 *tiles, u16 offset)
         gBGTilemapBuffers[1][offset + 0x20] = tiles[6];
         gBGTilemapBuffers[1][offset + 0x21] = tiles[7];
         break;
-    case 1: // LAYER_TYPE_COVERED_BY_OBJECTS
+    case METATILE_LAYER_TYPE_COVERED:
         // Draw metatile's bottom layer to the bottom background layer.
         gBGTilemapBuffers[3][offset] = tiles[0];
         gBGTilemapBuffers[3][offset + 1] = tiles[1];
@@ -290,7 +291,7 @@ static void DrawMetatile(s32 metatileLayerType, const u16 *tiles, u16 offset)
         gBGTilemapBuffers[1][offset + 0x20] = 0;
         gBGTilemapBuffers[1][offset + 0x21] = 0;
         break;
-    case 0: // LAYER_TYPE_NORMAL
+    case METATILE_LAYER_TYPE_NORMAL:
         // Draw garbage to the bottom background layer.
         gBGTilemapBuffers[3][offset] = 0x3014;
         gBGTilemapBuffers[3][offset + 1] = 0x3014;
@@ -336,8 +337,8 @@ static void CameraUpdateCallback(struct CameraObject *fieldCamera)
 {
     if (fieldCamera->spriteId != 0)
     {
-        fieldCamera->movementSpeedX = gSprites[fieldCamera->spriteId].data[2];
-        fieldCamera->movementSpeedY = gSprites[fieldCamera->spriteId].data[3];
+        fieldCamera->movementSpeedX = gSprites[fieldCamera->spriteId].sCamera_MoveX;
+        fieldCamera->movementSpeedY = gSprites[fieldCamera->spriteId].sCamera_MoveY;
     }
 }
 
@@ -452,7 +453,7 @@ void SetCameraPanning(s16 horizontal, s16 vertical)
 void InstallCameraPanAheadCallback(void)
 {
     sFieldCameraPanningCallback = CameraPanningCB_PanAhead;
-    sBikeCameraPanFlag = 0;
+    sBikeCameraPanFlag = FALSE;
     sHorizontalCameraPan = 0;
     sVerticalCameraPan = 32;
 }
@@ -480,21 +481,21 @@ static void CameraPanningCB_PanAhead(void)
         if (gPlayerAvatar.tileTransitionState == T_TILE_TRANSITION)
         {
             sBikeCameraPanFlag ^= 1;
-            if (sBikeCameraPanFlag == 0)
+            if (sBikeCameraPanFlag == FALSE)
                 return;
         }
         else
         {
-            sBikeCameraPanFlag = 0;
+            sBikeCameraPanFlag = FALSE;
         }
 
         var = GetPlayerMovementDirection();
-        if (var == 2)
+        if (var == DIR_NORTH)
         {
             if (sVerticalCameraPan > -8)
                 sVerticalCameraPan -= 2;
         }
-        else if (var == 1)
+        else if (var == DIR_SOUTH)
         {
             if (sVerticalCameraPan < 72)
                 sVerticalCameraPan += 2;
