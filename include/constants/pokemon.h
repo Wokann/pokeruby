@@ -157,6 +157,7 @@ enum {
 #define FRIENDSHIP_EVENT_FAINT_LARGE          0x8
 
 #define MAX_TOTAL_EVS 510
+#define EV_ITEM_RAISE_LIMIT 100
 #define NUM_STATS 6
 
 // Battle move flags
@@ -193,6 +194,9 @@ enum {
 #define EVO_BEAUTY           0x000f // Pokémon levels up with beauty ≥ specified value
 
 #define EVOS_PER_MON 5
+
+// Evolution 'modes,' for GetEvolutionTargetSpecies
+#define EVO_MODE_ITEM_USE   2
 
 #define MON_PIC_WIDTH 64
 #define MON_PIC_HEIGHT 64
