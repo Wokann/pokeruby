@@ -44,7 +44,7 @@ static bool8 IsCoordInIncomingConnectingMap(s32 coord, s32 srcMax, s32 destMax, 
     i = (x + 1) & 1;                                                                               \
     i += ((y + 1) & 1) * 2;                                                                        \
                                                                                                    \
-    block = gMapHeader.mapLayout->border[i] | MAPGRID_COLLISION_MASK;                              \
+    block = gMapHeader.mapLayout->border[i] | MAPGRID_IMPASSABLE;                              \
 })
 
 #define AreCoordsWithinMapGridBounds(x, y) (x >= 0 && x < gBackupMapLayout.width && y >= 0 && y < gBackupMapLayout.height)
@@ -97,10 +97,10 @@ static void InitBackupMapLayoutData(const u16 *map, u16 width, u16 height)
     u16 *dest;
     s32 y;
     dest = gBackupMapLayout.map;
-    dest += gBackupMapLayout.width * 7 + MAP_OFFSET;
+    dest += gBackupMapLayout.width * MAP_OFFSET + MAP_OFFSET;
     for (y = 0; y < height; y++)
     {
-        CpuCopy16(map, dest, width * 2);
+        CpuCopy16(map, dest, width * (int)sizeof(*dest));
         dest += width + MAP_OFFSET_W;
         map += width;
     }
@@ -157,7 +157,7 @@ static void FillConnection(s32 x, s32 y, struct MapHeader const *connectedMapHea
 
     for (i = 0; i < height; i++)
     {
-        CpuCopy16(src, dest, width * 2);
+        CpuCopy16(src, dest, width * (int)sizeof(*dest));
         dest += gBackupMapLayout.width;
         src += mapWidth;
     }
@@ -237,7 +237,7 @@ static void FillNorthConnection(struct MapHeader const *mapHeader, struct MapHea
             x, /*y*/ 0,
             connectedMapHeader,
             x2, y2,
-            width, /*height*/ 7);
+            width, /*height*/ MAP_OFFSET);
 
     }
 }
@@ -323,9 +323,9 @@ u8 MapGridGetElevationAt(s32 x, s32 y)
     u16 block = GetMapGridBlockAt(x, y);
 
     if (block == MAPGRID_UNDEFINED)
-        return 0;
+        return ELEVATION_TRANSITION;
 
-    return block >> MAPGRID_ELEVATION_SHIFT;
+    return UNPACK_ELEVATION(block);
 }
 
 u8 MapGridGetCollisionAt(s32 x, s32 y)
@@ -335,7 +335,7 @@ u8 MapGridGetCollisionAt(s32 x, s32 y)
     if (block == MAPGRID_UNDEFINED)
         return TRUE;
 
-    return (block & MAPGRID_COLLISION_MASK) >> MAPGRID_COLLISION_SHIFT;
+    return UNPACK_COLLISION(block);
 }
 
 u32 MapGridGetMetatileIdAt(s32 x, s32 y)
@@ -343,21 +343,21 @@ u32 MapGridGetMetatileIdAt(s32 x, s32 y)
     u16 block = GetMapGridBlockAt(x, y);
 
     if (block == MAPGRID_UNDEFINED)
-        return GetBorderBlockAt(x, y) & MAPGRID_METATILE_ID_MASK;
+        return UNPACK_METATILE(GetBorderBlockAt(x, y));
 
-    return block & MAPGRID_METATILE_ID_MASK;
+    return UNPACK_METATILE(block);
 }
 
 u32 MapGridGetMetatileBehaviorAt(s32 x, s32 y)
 {
     u16 metatile = MapGridGetMetatileIdAt(x, y);
-    return GetMetatileAttributesById(metatile) & METATILE_ATTR_BEHAVIOR_MASK;
+    return UNPACK_BEHAVIOR(GetMetatileAttributesById(metatile));
 }
 
 u8 MapGridGetMetatileLayerTypeAt(s32 x, s32 y)
 {
     u16 metatile = MapGridGetMetatileIdAt(x, y);
-    return (GetMetatileAttributesById(metatile) & METATILE_ATTR_LAYER_MASK) >> METATILE_ATTR_LAYER_SHIFT;
+    return UNPACK_LAYER_TYPE(GetMetatileAttributesById(metatile));
 }
 
 void MapGridSetMetatileIdAt(s32 x, s32 y, u16 metatile)
@@ -422,8 +422,8 @@ static bool32 SavedMapViewIsEmpty(void)
     u32 marker = 0;
 
 #ifndef UBFIX
-    // BUG: This loop extends past the bounds of the mapView array. Its size is only 0x100.
-    for (i = 0; i < 0x200; i++)
+    // BUG: This loop uses the mapView byte size as an element count (0x200, not 0x100).
+    for (i = 0; i < (int)sizeof(gSaveBlock1.mapView); i++)
 #else
     for (i = 0; i < ARRAY_COUNT(gSaveBlock1.mapView); i++)
 #endif
@@ -769,7 +769,7 @@ static void CopyTilesetToVram(const struct Tileset *tileset, void *dest)
     if (tileset)
     {
         if (!tileset->isCompressed)
-            CpuFastCopy(tileset->tiles, dest, 512 * TILE_SIZE_4BPP); // Number of primary and secondary tiles are assumed to be the same
+            CpuFastCopy(tileset->tiles, dest, NUM_TILES_IN_PRIMARY * TILE_SIZE_4BPP); // Number of primary and secondary tiles are assumed to be the same
         else
             LZ77UnCompVram(tileset->tiles, dest);
     }
