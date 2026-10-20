@@ -25,6 +25,14 @@
 
 #define MAX_BATTLERS_COUNT  4
 
+enum BattlerId
+{
+    B_BATTLER_0,
+    B_BATTLER_1,
+    B_BATTLER_2,
+    B_BATTLER_3,
+};
+
 #define B_POSITION_PLAYER_LEFT        0
 #define B_POSITION_OPPONENT_LEFT      1
 #define B_POSITION_PLAYER_RIGHT       2

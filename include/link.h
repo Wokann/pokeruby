@@ -54,6 +54,7 @@
 #define LINKCMD_NONE                    0xEFFF
 
 #define LINKTYPE_TRADE                 0x1111
+#define LINKTYPE_BATTLE                0x2211
 
 enum
 {

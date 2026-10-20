@@ -64,6 +64,14 @@ enum {
     REQUEST_TOUGH_RIBBON_BATTLE,
 };
 
+#define IS_BATTLE_CONTROLLER_ACTIVE_ON_LOCAL(battler) \
+   (gBattleControllerExecFlags & gBitTable[battler])
+
+#define MARK_BATTLE_CONTROLLER_IDLE_FOR_PLAYER(battler, playerId) \
+   gBattleControllerExecFlags &= ~(gBitTable[battler] << ((playerId) * 4))
+
+#define PARTY_SUMM_SKIP_DRAW_DELAY (1 << 7)
+
 enum {
    // For commands sent from the core battle engine to a controller.
    B_COMM_TO_CONTROLLER, // gBattleBufferA
@@ -126,9 +134,9 @@ struct MovePPInfo
 
 struct ChooseMoveStruct
 {
-    u16 moves[4];
-    u8 currentPP[4];
-    u8 maxPP[4];
+    u16 moves[MAX_MON_MOVES];
+    u8 currentPP[MAX_MON_MOVES];
+    u8 maxPP[MAX_MON_MOVES];
     u16 species;
     u8 monType1;
     u8 monType2;

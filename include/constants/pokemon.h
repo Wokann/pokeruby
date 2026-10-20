@@ -67,6 +67,10 @@ enum
 #define MIN_LEVEL 1
 #define MAX_LEVEL 100
 
+#define MAX_PER_STAT_IVS 31
+#define USE_RANDOM_IVS (MAX_PER_STAT_IVS + 1)
+#define OT_ID_PLAYER_ID       0
+
 #define LEVEL_UP_END 0xffff
 
 #define MAX_LEVEL_UP_MOVES 20

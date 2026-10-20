@@ -1,6 +1,8 @@
 #ifndef GUARD_BATTLE_MESSAGE_H
 #define GUARD_BATTLE_MESSAGE_H
 
+#include "constants/battle.h"
+
 #define TEXT_BUFF_ARRAY_COUNT   16
 
 struct BattleMsgData
@@ -14,8 +16,8 @@ struct BattleMsgData
     u8 hpScale;
     u8 itemEffectBattler;
     u8 moveType;
-    u8 abilities[4];
-    u8 textBuffs[3][0x10];
+    u8 abilities[MAX_BATTLERS_COUNT];
+    u8 textBuffs[3][TEXT_BUFF_ARRAY_COUNT];
 };
 
 #define B_TXT_BUFF1 0x0

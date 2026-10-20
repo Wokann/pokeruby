@@ -249,6 +249,8 @@ union MultiBuffers
     struct MultiPartnerMenuPokemon multiBattleMons[3];
 };
 
+#define BATTLE_BUFFER_LINK_SIZE 0x1000
+
 // Used internally
 struct LinkBattleCommunicationHeader
 {
@@ -265,8 +267,8 @@ struct LinkBattleCommunicationHeader
 struct BattleStruct /* 0x2000000 */
 {
     u8 filler00000[0x14000];
-    /*0x14000*/ u8 linkSend[0x1000];
-    /*0x15000*/ u8 linkRecv[0x1000];
+    /*0x14000*/ u8 linkSend[BATTLE_BUFFER_LINK_SIZE];
+    /*0x15000*/ u8 linkRecv[BATTLE_BUFFER_LINK_SIZE];
     /*0x16000*/ u8 turnEffectsTracker;
     /*0x16001*/ u8 turnEffectsBattlerId;
     /*0x16002*/ u8 animTurn;
