@@ -271,9 +271,9 @@ struct DewfordTrend
 
 struct Mail
 {
-    /*0x00*/ u16 words[9];
-    /*0x12*/ u8 playerName[8];
-    /*0x1A*/ u8 trainerId[4];
+    /*0x00*/ u16 words[MAIL_WORDS_COUNT];
+    /*0x12*/ u8 playerName[PLAYER_NAME_LENGTH + 1];
+    /*0x1A*/ u8 trainerId[TRAINER_ID_LENGTH];
     /*0x1E*/ u16 species;
     /*0x20*/ u16 itemId;
 };
@@ -527,7 +527,7 @@ struct SaveBlock1 /* 0x02025734 */
     /*0x2F9C*/ struct DayCare daycare;
     /*0x30B8*/ struct LinkBattleRecord linkBattleRecords[5];
     /*0x3108*/ u8 filler_3108[8];
-    /*0x3110*/ u8 giftRibbons[11];
+    /*0x3110*/ u8 giftRibbons[GIFT_RIBBONS_COUNT];
     /*0x311B*/ struct ExternalEventData externalEventData;
     /*0x312F*/ struct ExternalEventFlags externalEventFlags;
     /*0x3144*/ struct Roamer roamer;

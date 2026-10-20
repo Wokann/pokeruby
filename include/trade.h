@@ -2,6 +2,8 @@
 #ifndef GUARD_TRADE_H
 #define GUARD_TRADE_H
 
+#include "constants/trade.h"
+
 struct TradeEwramSubstruct2 {
     /*0x0000*/ u8 filler_0000;
     /*0x0004*/ struct Window window;
@@ -46,7 +48,7 @@ struct TradeEwramSubstruct2 {
 };
 
 extern struct TradeEwramSubstruct2 *gTradeAnim;
-extern struct Mail gTradeMail[6];
+extern struct Mail gTradeMail[PARTY_SIZE];
 extern u8 gSelectedTradeMonPositions[2];
 extern const u16 gTradePlatform_Tilemap[];
 

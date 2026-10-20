@@ -43,6 +43,8 @@
 #define POKEBLOCKS_COUNT    40
 #define OBJECT_EVENTS_COUNT 16
 #define MAIL_COUNT          16
+#define GIFT_RIBBONS_COUNT   11
+#define MAIL_WORDS_COUNT     9
 #define SECRET_BASES_COUNT  20
 #define POKE_NEWS_COUNT     16
 #define PC_ITEMS_COUNT      50
@@ -60,6 +62,7 @@
 #define POKEMON_NAME_LENGTH 10
 #define POKEMON_NAME_BUFFER_SIZE max(20, POKEMON_NAME_LENGTH + 1) // Frequently used buffer size. Larger than necessary
 #define PLAYER_NAME_LENGTH 7
+#define TRAINER_NAME_LENGTH 10
 
 #define TRAINER_ID_LENGTH 4
 #define MAX_MON_MOVES 4

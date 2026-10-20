@@ -1,3 +1,17 @@
+#define GFXTAG_MENU_TEXT       200 // Used as a base tag in CB2_CreateTradeMenu and CB2_ReturnToTradeMenu
+#define GFXTAG_CURSOR          300
+#define GFXTAG_LINK_MON_GLOW   5550
+#define GFXTAG_LINK_MON_SHADOW 5552
+#define GFXTAG_CABLE_END       5554
+#define GFXTAG_GBA_SCREEN      5556
+#define GFXTAG_POKEBALL        5557
+
+#define PALTAG_CURSOR    2345
+#define PALTAG_MENU_TEXT 4925
+#define PALTAG_LINK_MON  5551
+#define PALTAG_GBA       5555
+#define PALTAG_POKEBALL  5558
+
 static const u32 UNUSED sUnusedStructSizes[] =
 {
     0x00000890,
@@ -15,8 +29,8 @@ static const u16 sTradeStripesBG2Tilemap[] = INCBIN_U16("graphics/trade/stripes_
 static const u16 sTradeStripesBG3Tilemap[] = INCBIN_U16("graphics/trade/stripes_bg3_map.bin");
 
 static const struct OamData sOamData_MenuText = {
-    .shape = ST_OAM_H_RECTANGLE,
-    .size = 2,
+    .shape = SPRITE_SHAPE(32x16),
+    .size = SPRITE_SIZE(32x16),
     .priority = 1
 };
 
@@ -63,38 +77,39 @@ static const u16 sMenuText_Pal[] = INCBIN_U16("graphics/trade/text.gbapal");
 const u16 UnrefTradeScreenTextPalette[] = INCBIN_U16("graphics/trade/text2.gbapal");
 
 const struct SpriteSheet gUnknown_0820C07C[] = {
-    {ewram_2010000.tileBuffers[ 0], 256, 200},
-    {ewram_2010000.tileBuffers[ 1], 256, 201},
-    {ewram_2010000.tileBuffers[ 2], 256, 202},
-    {ewram_2010000.tileBuffers[ 3], 256, 203},
-    {ewram_2010000.tileBuffers[ 4], 256, 204},
-    {ewram_2010000.tileBuffers[ 5], 256, 205},
-    {ewram_2010000.tileBuffers[ 6], 256, 206},
-    {ewram_2010000.tileBuffers[ 7], 256, 207},
-    {ewram_2010000.tileBuffers[ 8], 256, 208},
-    {ewram_2010000.tileBuffers[ 9], 256, 209},
-    {ewram_2010000.tileBuffers[10], 256, 210},
-    {ewram_2010000.tileBuffers[11], 256, 211},
-    {ewram_2010000.tileBuffers[12], 256, 212},
+    {ewram_2010000.tileBuffers[ GFXTAG_PLAYER_NAME_L], 256, GFXTAG_MENU_TEXT + GFXTAG_PLAYER_NAME_L},
+    {ewram_2010000.tileBuffers[ GFXTAG_PLAYER_NAME_M], 256, GFXTAG_MENU_TEXT + GFXTAG_PLAYER_NAME_M},
+    {ewram_2010000.tileBuffers[ GFXTAG_PLAYER_NAME_R], 256, GFXTAG_MENU_TEXT + GFXTAG_PLAYER_NAME_R},
+    {ewram_2010000.tileBuffers[ GFXTAG_PARTNER_NAME_L], 256, GFXTAG_MENU_TEXT + GFXTAG_PARTNER_NAME_L},
+    {ewram_2010000.tileBuffers[ GFXTAG_PARTNER_NAME_M], 256, GFXTAG_MENU_TEXT + GFXTAG_PARTNER_NAME_M},
+    {ewram_2010000.tileBuffers[ GFXTAG_PARTNER_NAME_R], 256, GFXTAG_MENU_TEXT + GFXTAG_PARTNER_NAME_R},
+    {ewram_2010000.tileBuffers[ GFXTAG_CANCEL_L], 256, GFXTAG_MENU_TEXT + GFXTAG_CANCEL_L},
+    {ewram_2010000.tileBuffers[ GFXTAG_CANCEL_R], 256, GFXTAG_MENU_TEXT + GFXTAG_CANCEL_R},
+    {ewram_2010000.tileBuffers[ GFXTAG_CHOOSE_PKMN_L], 256, GFXTAG_MENU_TEXT + GFXTAG_CHOOSE_PKMN_L},
+    {ewram_2010000.tileBuffers[ GFXTAG_CHOOSE_PKMN_M], 256, GFXTAG_MENU_TEXT + GFXTAG_CHOOSE_PKMN_M},
+    {ewram_2010000.tileBuffers[GFXTAG_CHOOSE_PKMN_R], 256, GFXTAG_MENU_TEXT + GFXTAG_CHOOSE_PKMN_R},
+    {ewram_2010000.tileBuffers[GFXTAG_CHOOSE_PKMN_EMPTY_1], 256, GFXTAG_MENU_TEXT + GFXTAG_CHOOSE_PKMN_EMPTY_1},
+    {ewram_2010000.tileBuffers[GFXTAG_CHOOSE_PKMN_EMPTY_2], 256, GFXTAG_MENU_TEXT + GFXTAG_CHOOSE_PKMN_EMPTY_2},
 };
 
 static const struct SpritePalette sSpritePalette_MenuText = {
-    sMenuText_Pal, 4925
+    .data = sMenuText_Pal,
+    .tag = PALTAG_MENU_TEXT,
 };
 
 static const struct SpriteTemplate sSpriteTemplate_MenuText = {
-    200,
-    4925,
-    &sOamData_MenuText,
-    sAnims_MenuText,
-    NULL,
-    gDummySpriteAffineAnimTable,
-    SpriteCallbackDummy
+    .tileTag = GFXTAG_MENU_TEXT,
+    .paletteTag = PALTAG_MENU_TEXT,
+    .oam = &sOamData_MenuText,
+    .anims = sAnims_MenuText,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
 };
 
 static const struct OamData sOamData_Cursor = {
-    .shape = ST_OAM_H_RECTANGLE,
-    .size = 3,
+    .shape = SPRITE_SHAPE(64x32),
+    .size = SPRITE_SIZE(64x32),
     .priority = 1
 };
 
@@ -108,35 +123,43 @@ static const union AnimCmd sAnim_Cursor_OnCancel[] = {
     ANIMCMD_END
 };
 
+enum {
+    CURSOR_ANIM_NORMAL,
+    CURSOR_ANIM_ON_CANCEL,
+};
+
 static const union AnimCmd *const sAnims_Cursor[] = {
-    sAnim_Cursor_Normal,
-    sAnim_Cursor_OnCancel
+    [CURSOR_ANIM_NORMAL] = sAnim_Cursor_Normal,
+    [CURSOR_ANIM_ON_CANCEL] = sAnim_Cursor_OnCancel
 };
 
 static const struct SpriteSheet sCursor_SpriteSheet = {
-    gTradeCursor_Gfx, 0x800, 300
+    .data = gTradeCursor_Gfx,
+    .size = 0x800,
+    .tag = GFXTAG_CURSOR,
 };
 
 static const struct SpritePalette sCursor_SpritePalette = {
-    gTradeCursor_Pal, 2345
+    .data = gTradeCursor_Pal,
+    .tag = PALTAG_CURSOR,
 };
 
 static const struct SpriteTemplate sSpriteTemplate_Cursor = {
-    300,
-    2345,
-    &sOamData_Cursor,
-    sAnims_Cursor,
-    NULL,
-    gDummySpriteAffineAnimTable,
-    SpriteCallbackDummy
+    .tileTag = GFXTAG_CURSOR,
+    .paletteTag = PALTAG_CURSOR,
+    .oam = &sOamData_Cursor,
+    .anims = sAnims_Cursor,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
 };
 
 static const u8 *const sActionTexts[] = {
-    sText_Cancel,
-    sText_ChooseAPkmn,
-    sText_Summary,
-    sText_Trade,
-    sText_CancelTrade,
+    [TEXT_CANCEL] = sText_Cancel,
+    [TEXT_CHOOSE_MON] = sText_ChooseAPkmn,
+    [TEXT_SUMMARY] = sText_Summary,
+    [TEXT_TRADE] = sText_Trade,
+    [TEXT_CANCEL_TRADE] = sText_CancelTrade,
     TradeText_PressBToExit
 };
 
@@ -150,7 +173,7 @@ static const u8 *const sActionTexts[] = {
 //  4  5 10 11
 //          12
 
-static const u8 sCursorMoveDestinations[][4][6] = {
+static const u8 sCursorMoveDestinations[PARTY_SIZE * 2 + 1][4][PARTY_SIZE] = {
     {
         { 4,  2, 12, 12,  0,  0},
         { 2,  4, 12, 12,  0,  0},
@@ -219,27 +242,36 @@ static const u8 sCursorMoveDestinations[][4][6] = {
     }
 };
 
-static const u8 sTradeMonSpriteCoords[][2] = {
+#define COL0_X 1
+#define COL1_X 8
+#define COL2_X 16
+#define COL3_X 23
+#define ROW0_Y 5
+#define ROW1_Y 10
+#define ROW2_Y 15
+#define ROW3_Y 18
+
+static const u8 sTradeMonSpriteCoords[PARTY_SIZE * 2 + 1][2] = {
     // Your party
-    {1, 5},
-    {8, 5},
-    {1, 10},
-    {8, 10},
-    {1, 15},
-    {8, 15},
+    {COL0_X, ROW0_Y},
+    {COL1_X, ROW0_Y},
+    {COL0_X, ROW1_Y},
+    {COL1_X, ROW1_Y},
+    {COL0_X, ROW2_Y},
+    {COL1_X, ROW2_Y},
 
     // Friend's party
-    {16, 5},
-    {23, 5},
-    {16, 10},
-    {23, 10},
-    {16, 15},
-    {23, 15},
+    {COL2_X, ROW0_Y},
+    {COL3_X, ROW0_Y},
+    {COL2_X, ROW1_Y},
+    {COL3_X, ROW1_Y},
+    {COL2_X, ROW2_Y},
+    {COL3_X, ROW2_Y},
 
-    {23, 18} // CANCEL
+    {COL3_X, ROW3_Y} // CANCEL
 };
 
-static const u8 sTradeMonLevelCoords[][2] = {
+static const u8 sTradeMonLevelCoords[PARTY_SIZE * 2][2] = {
     // Your party
     {5, 4},
     {12, 4},
@@ -256,7 +288,7 @@ static const u8 sTradeMonLevelCoords[][2] = {
     {27, 14}
 };
 
-static const u8 sTradeMonBoxCoords[][2] = {
+static const u8 sTradeMonBoxCoords[PARTY_SIZE * 2][2] = {
     // Your party
     {1, 3},
     {8, 3},
@@ -285,21 +317,21 @@ const u8 gTradeUnknownSpriteCoords[][2][2] = {
 };
 
 static const u8 *const sMessages[] = {
-    sText_CommunicationStandby,
-    sText_TheTradeHasBeenCanceled,
-    sText_OnlyPkmnForBattle,
+    [MSG_STANDBY] = sText_CommunicationStandby,
+    [MSG_CANCELED] = sText_TheTradeHasBeenCanceled,
+    [MSG_ONLY_MON1] = sText_OnlyPkmnForBattle,
     TradeText_NonTradablePoke,
-    sText_WaitingForYourFriend,
-    sText_YourFriendWantsToTrade
+    [MSG_WAITING_FOR_FRIEND] = sText_WaitingForYourFriend,
+    [MSG_FRIEND_WANTS_TO_TRADE] = sText_YourFriendWantsToTrade
 };
 
 const u8 gTradeMessageWindowRects[][4] = {
-    {8, 7, 22, 12},
-    {8, 7, 22, 12},
+    [MSG_STANDBY] = {8, 7, 22, 12},
+    [MSG_CANCELED] = {8, 7, 22, 12},
+    [MSG_ONLY_MON1] = {6, 7, 24, 12},
     {6, 7, 24, 12},
-    {6, 7, 24, 12},
-    {8, 7, 22, 12},
-    {7, 7, 23, 12}
+    [MSG_WAITING_FOR_FRIEND] = {8, 7, 22, 12},
+    [MSG_FRIEND_WANTS_TO_TRADE] = {7, 7, 23, 12}
 };
 
 static const struct MenuAction2 sSelectTradeMonActions[] = {
@@ -376,8 +408,8 @@ static const u32 sGbaAffine_Gfx[] = INCBIN_U32("graphics/trade/gba_affine.8bpp")
 static const u16 sGbaAffineMapCable[] = INCBIN_U16("graphics/trade/gba_affine_map_cable.bin");
 
 static const struct OamData sOamData_Pokeball = {
-    .affineMode = 1,
-    .size = 1
+    .affineMode = ST_OAM_AFFINE_NORMAL,
+    .size = SPRITE_SIZE(16x16)
 };
 
 static const union AnimCmd sAnim_Pokeball_SpinOnce[] = {
@@ -432,7 +464,7 @@ static const union AffineAnimCmd sAffineAnim_Pokeball_Squish[] = {
 };
 
 static const union AffineAnimCmd sAffineAnim_Pokeball_Unsquish[] = {
-    AFFINEANIMCMD_FRAME(0x60, 0x100, 0,  0),
+    AFFINEANIMCMD_FRAME(Q_8_8(0.375), Q_8_8(1), 0,  0),
     AFFINEANIMCMD_FRAME(   0,     0, 0,  5),
     AFFINEANIMCMD_FRAME(   8,     0, 0, 20),
     AFFINEANIMCMD_END
@@ -445,27 +477,30 @@ static const union AffineAnimCmd *const sAffineAnims_Pokeball[] = {
 };
 
 static const struct SpriteSheet sPokeBallSpriteSheet = {
-    (const u8 *)sPokeball_Gfx, 0x600, 5557
+    .data = (const u8 *)sPokeball_Gfx,
+    .size = sizeof(sPokeball_Gfx),
+    .tag = GFXTAG_POKEBALL,
 };
 
 static const struct SpritePalette sPokeBallSpritePalette = {
-    sPokeball_Pal, 5558
+    .data = sPokeball_Pal,
+    .tag = PALTAG_POKEBALL,
 };
 
 static const struct SpriteTemplate sSpriteTemplate_Pokeball = {
-    5557,
-    5558,
-    &sOamData_Pokeball,
-    sAnims_Pokeball,
-    NULL,
-    sAffineAnims_Pokeball,
-    SpriteCB_BouncingPokeball
+    .tileTag = GFXTAG_POKEBALL,
+    .paletteTag = PALTAG_POKEBALL,
+    .oam = &sOamData_Pokeball,
+    .anims = sAnims_Pokeball,
+    .images = NULL,
+    .affineAnims = sAffineAnims_Pokeball,
+    .callback = SpriteCB_BouncingPokeball,
 };
 
 static const struct OamData sOamData_LinkMonGlow = {
-    .affineMode = 1,
-    .objMode = 1,
-    .size = 2,
+    .affineMode = ST_OAM_AFFINE_NORMAL,
+    .objMode = ST_OAM_OBJ_BLEND,
+    .size = SPRITE_SIZE(32x32),
     .priority = 1
 };
 
@@ -489,30 +524,34 @@ static const union AffineAnimCmd *const sAffineAnims_LinkMonGlow[] = {
 };
 
 static const struct SpriteSheet sSpriteSheet_LinkMonGlow = {
-    (const u8 *)sLinkMonGlow_Gfx, 0x200, 5550
+    .data = (const u8 *)sLinkMonGlow_Gfx,
+    .size = sizeof(sLinkMonGlow_Gfx),
+    .tag = GFXTAG_LINK_MON_GLOW,
 };
 
 static const struct SpritePalette sSpritePalette_LinkMon = {
-    sLinkMon_Pal, 5551
+    .data = sLinkMon_Pal,
+    .tag = PALTAG_LINK_MON,
 };
 
 static const struct SpritePalette sSpritePalette_Gba = {
-    sGba_Pal, 5555
+    .data = sGba_Pal,
+    .tag = PALTAG_GBA,
 };
 
 static const struct SpriteTemplate sSpriteTemplate_LinkMonGlow = {
-    5550,
-    5551,
-    &sOamData_LinkMonGlow,
-    sAnims_LinkMonGlow,
-    NULL,
-    sAffineAnims_LinkMonGlow,
-    SpriteCB_LinkMonGlow
+    .tileTag = GFXTAG_LINK_MON_GLOW,
+    .paletteTag = PALTAG_LINK_MON,
+    .oam = &sOamData_LinkMonGlow,
+    .anims = sAnims_LinkMonGlow,
+    .images = NULL,
+    .affineAnims = sAffineAnims_LinkMonGlow,
+    .callback = SpriteCB_LinkMonGlow,
 };
 
 static const struct OamData sOamData_LinkMonShadow = {
-    .shape = ST_OAM_V_RECTANGLE,
-    .size = 2,
+    .shape = SPRITE_SHAPE(16x32),
+    .size = SPRITE_SIZE(16x32),
     .priority = 1
 };
 
@@ -526,28 +565,35 @@ static const union AnimCmd sAnim_LinkMonShadow_Small[] = {
     ANIMCMD_END
 };
 
+enum {
+    ANIM_LINKMON_BIG,
+    ANIM_LINKMON_SMALL,
+};
+
 static const union AnimCmd *const sAnims_LinkMonShadow[] = {
-    sAnim_LinkMonShadow_Big,
-    sAnim_LinkMonShadow_Small
+    [ANIM_LINKMON_BIG] = sAnim_LinkMonShadow_Big,
+    [ANIM_LINKMON_SMALL] = sAnim_LinkMonShadow_Small
 };
 
 static const struct SpriteSheet sSpriteSheet_LinkMonShadow = {
-    (const u8 *)sLinkMonShadow_Gfx, 0x300, 5552
+    .data = (const u8 *)sLinkMonShadow_Gfx,
+    .size = 0x300,
+    .tag = GFXTAG_LINK_MON_SHADOW,
 };
 
 static const struct SpriteTemplate sSpriteTemplate_LinkMonShadow = {
-    5552,
-    5551,
-    &sOamData_LinkMonShadow,
-    sAnims_LinkMonShadow,
-    NULL,
-    gDummySpriteAffineAnimTable,
-    SpriteCB_LinkMonShadow
+    .tileTag = GFXTAG_LINK_MON_SHADOW,
+    .paletteTag = PALTAG_LINK_MON,
+    .oam = &sOamData_LinkMonShadow,
+    .anims = sAnims_LinkMonShadow,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_LinkMonShadow,
 };
 
 static const struct OamData sOamData_CableEnd = {
-    .shape = ST_OAM_V_RECTANGLE,
-    .size = 2,
+    .shape = SPRITE_SHAPE(16x32),
+    .size = SPRITE_SIZE(16x32),
     .priority = 1
 };
 
@@ -561,22 +607,24 @@ static const union AnimCmd *const sAnims_CableEnd[] = {
 };
 
 static const struct SpriteSheet sSpriteSheet_CableEnd = {
-    (const u8 *)sCableEnd_Gfx, 0x100, 5554
+    .data = (const u8 *)sCableEnd_Gfx,
+    .size = 0x100,
+    .tag = GFXTAG_CABLE_END,
 };
 
 static const struct SpriteTemplate sSpriteTemplate_CableEnd = {
-    5554,
-    5555,
-    &sOamData_CableEnd,
-    sAnims_CableEnd,
-    NULL,
-    gDummySpriteAffineAnimTable,
-    SpriteCB_CableEndSending
+    .tileTag = GFXTAG_CABLE_END,
+    .paletteTag = PALTAG_GBA,
+    .oam = &sOamData_CableEnd,
+    .anims = sAnims_CableEnd,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_CableEndSending,
 };
 
 static const struct OamData sOamData_GbaScreen = {
-    .shape = ST_OAM_H_RECTANGLE,
-    .size = 3,
+    .shape = SPRITE_SHAPE(64x32),
+    .size = SPRITE_SIZE(64x32),
     .priority = 1
 };
 
@@ -597,17 +645,19 @@ static const union AnimCmd *const sAnims_GbaScreen_Long[] = {
 };
 
 static const struct SpriteSheet sSpriteSheet_GbaScreen = {
-    (const u8 *)sGbaScreen_Gfx, 0x1000, 5556
+    .data = (const u8 *)sGbaScreen_Gfx,
+    .size = sizeof(sGbaScreen_Gfx),
+    .tag = GFXTAG_GBA_SCREEN,
 };
 
 static const struct SpriteTemplate sSpriteTemplate_GbaScreenFlash_Long = {
-    5556,
-    5555,
-    &sOamData_GbaScreen,
-    sAnims_GbaScreen_Long,
-    NULL,
-    gDummySpriteAffineAnimTable,
-    SpriteCB_GbaScreen
+    .tileTag = GFXTAG_GBA_SCREEN,
+    .paletteTag = PALTAG_GBA,
+    .oam = &sOamData_GbaScreen,
+    .anims = sAnims_GbaScreen_Long,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_GbaScreen,
 };
 
 static const u16 sLinkMonShadow_Pal[] = {
@@ -626,7 +676,7 @@ static const u16 sLinkMonShadow_Pal[] = {
 };
 
 static const union AffineAnimCmd sAffineAnim_CrossingMonPic[] = {
-    AFFINEANIMCMD_FRAME(-0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(Q_8_8(-1), Q_8_8(1), 0, 0),
     AFFINEANIMCMD_JUMP(0)
 };
 
@@ -637,68 +687,96 @@ static const union AffineAnimCmd *const sAffineAnims_CrossingMonPics[] = {
 static const struct InGameTrade sIngameTrades[] = {
 #if ENGLISH
     {
-        _("MAKIT"), SPECIES_MAKUHITA,
-        5, 5, 4, 4, 4, 4,
-        TRUE, 49562,
-        5, 5, 5, 5, 30,
-        0x9C40,
-        ITEM_X_ATTACK, -1,
-        _("ELYSSA"), MALE, 10,
-        SPECIES_SLAKOTH
+        .nickname = _("MAKIT"),
+        .species = SPECIES_MAKUHITA,
+        .ivs = {5, 5, 4, 4, 4, 4},
+        .abilityNum = TRUE,
+        .otId = 49562,
+        .conditions = {5, 5, 5, 5, 30},
+        .personality = 0x9C40,
+        .heldItem = ITEM_X_ATTACK,
+        .mailNum = -1,
+        .otName = _("ELYSSA"),
+        .otGender = MALE,
+        .sheen = 10,
+        .requestedSpecies = SPECIES_SLAKOTH,
     }, {
-        _("SKITIT"), SPECIES_SKITTY,
-        5, 4, 4, 5, 4, 4,
-        FALSE, 2259,
-        5, 5, 30, 5, 5,
-        0x498A2E17,
-        ITEM_GLITTER_MAIL, 0,
-        _("DARRELL"), FEMALE, 10,
-        SPECIES_PIKACHU
+        .nickname = _("SKITIT"),
+        .species = SPECIES_SKITTY,
+        .ivs = {5, 4, 4, 5, 4, 4},
+        .abilityNum = FALSE,
+        .otId = 2259,
+        .conditions = {5, 5, 30, 5, 5},
+        .personality = 0x498A2E17,
+        .heldItem = ITEM_GLITTER_MAIL,
+        .mailNum = 0,
+        .otName = _("DARRELL"),
+        .otGender = FEMALE,
+        .sheen = 10,
+        .requestedSpecies = SPECIES_PIKACHU,
     }, {
-        _("COROSO"),
-        SPECIES_CORSOLA,
-        4, 4, 5, 4, 4, 5,
-        TRUE, 50183,
-        5, 30, 5, 5, 5,
-        0x4C970B7F,
-        ITEM_TROPIC_MAIL, 1,
-        _("LANE"), FEMALE, 10,
-        SPECIES_BELLOSSOM
+        .nickname = _("COROSO"),
+        .species = SPECIES_CORSOLA,
+        .ivs = {4, 4, 5, 4, 4, 5},
+        .abilityNum = TRUE,
+        .otId = 50183,
+        .conditions = {5, 30, 5, 5, 5},
+        .personality = 0x4C970B7F,
+        .heldItem = ITEM_TROPIC_MAIL,
+        .mailNum = 1,
+        .otName = _("LANE"),
+        .otGender = FEMALE,
+        .sheen = 10,
+        .requestedSpecies = SPECIES_BELLOSSOM,
     }
 #elif GERMAN
     {
-        _("MAKIT"), SPECIES_MAKUHITA,
-        5, 5, 4, 4, 4, 4,
-        TRUE, 49562,
-        5, 5, 5, 5, 30,
-        0x9C40,
-        ITEM_X_ATTACK, -1,
-        _("MAIK"), MALE, 10,
-        SPECIES_SLAKOTH
+        .nickname = _("MAKIT"),
+        .species = SPECIES_MAKUHITA,
+        .ivs = {5, 5, 4, 4, 4, 4},
+        .abilityNum = TRUE,
+        .otId = 49562,
+        .conditions = {5, 5, 5, 5, 30},
+        .personality = 0x9C40,
+        .heldItem = ITEM_X_ATTACK,
+        .mailNum = -1,
+        .otName = _("MAIK"),
+        .otGender = MALE,
+        .sheen = 10,
+        .requestedSpecies = SPECIES_SLAKOTH,
     }, {
-        _("CONEC"), SPECIES_SKITTY,
-        5, 4, 4, 5, 4, 4,
-        FALSE, 2259,
-        5, 5, 30, 5, 5,
-        0x498A2E17,
-        ITEM_GLITTER_MAIL, 0,
-        _("MADINA"), FEMALE, 10,
-        SPECIES_PIKACHU
+        .nickname = _("CONEC"),
+        .species = SPECIES_SKITTY,
+        .ivs = {5, 4, 4, 5, 4, 4},
+        .abilityNum = FALSE,
+        .otId = 2259,
+        .conditions = {5, 5, 30, 5, 5},
+        .personality = 0x498A2E17,
+        .heldItem = ITEM_GLITTER_MAIL,
+        .mailNum = 0,
+        .otName = _("MADINA"),
+        .otGender = FEMALE,
+        .sheen = 10,
+        .requestedSpecies = SPECIES_PIKACHU,
     }, {
-        _("CORASO"),
-        SPECIES_CORSOLA,
-        4, 4, 5, 4, 4, 5,
-        TRUE, 50183,
-        5, 30, 5, 5, 5,
-        0x4C970B7F,
-        ITEM_TROPIC_MAIL, 1,
-        _("LIANA"), FEMALE, 10,
-        SPECIES_BELLOSSOM
+        .nickname = _("CORASO"),
+        .species = SPECIES_CORSOLA,
+        .ivs = {4, 4, 5, 4, 4, 5},
+        .abilityNum = TRUE,
+        .otId = 50183,
+        .conditions = {5, 30, 5, 5, 5},
+        .personality = 0x4C970B7F,
+        .heldItem = ITEM_TROPIC_MAIL,
+        .mailNum = 1,
+        .otName = _("LIANA"),
+        .otGender = FEMALE,
+        .sheen = 10,
+        .requestedSpecies = SPECIES_BELLOSSOM,
     }
 #endif
 };
 
-static const u16 sIngameTradeMail[][10] = {
+static const u16 sIngameTradeMail[][MAIL_WORDS_COUNT + 1] = {
 #if ENGLISH
     {
         EC_POKEMON(PIKACHU),
@@ -731,7 +809,7 @@ static const u16 sIngameTradeMail[][10] = {
         EC_WORD_MY,
         EC_POKEMON(SKITTY),
         EC_WORD_EATS,
-        0xFFFF,
+        EC_EMPTY_WORD,
         EC_WORD_A_LOT,
         EC_WORD_EXCL,
         0
