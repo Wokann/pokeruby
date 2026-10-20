@@ -1,5 +1,6 @@
 #include "global.h"
 #include "play_time.h"
+#include "siirtc.h"
 
 enum
 {
@@ -44,12 +45,12 @@ void PlayTimeCounter_Update(void)
             gSaveBlock2.playTimeVBlanks = 0;
             gSaveBlock2.playTimeSeconds++;
 
-            if (gSaveBlock2.playTimeSeconds > 59)
+            if (gSaveBlock2.playTimeSeconds > SECONDS_PER_MINUTE - 1)
             {
                 gSaveBlock2.playTimeSeconds = 0;
                 gSaveBlock2.playTimeMinutes++;
 
-                if (gSaveBlock2.playTimeMinutes > 59)
+                if (gSaveBlock2.playTimeMinutes > MINUTES_PER_HOUR - 1)
                 {
                     gSaveBlock2.playTimeMinutes = 0;
                     gSaveBlock2.playTimeHours++;
@@ -67,7 +68,7 @@ void PlayTimeCounter_SetToMax(void)
     sPlayTimeCounterState = MAXED_OUT;
 
     gSaveBlock2.playTimeHours = 999;
-    gSaveBlock2.playTimeMinutes = 59;
-    gSaveBlock2.playTimeSeconds = 59;
+    gSaveBlock2.playTimeMinutes = MINUTES_PER_HOUR - 1;
+    gSaveBlock2.playTimeSeconds = SECONDS_PER_MINUTE - 1;
     gSaveBlock2.playTimeVBlanks = 59;
 }
