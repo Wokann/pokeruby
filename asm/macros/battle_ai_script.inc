@@ -28,87 +28,87 @@
 	.byte \score
 	.endm
 
-	.macro if_hp_less_than target, percent, address
+	.macro if_hp_less_than battler, percent, address
 	.byte 0x05
-	.byte \target
+	.byte \battler
 	.byte \percent
 	.4byte \address
 	.endm
 
-	.macro if_hp_more_than target, percent, address
+	.macro if_hp_more_than battler, percent, address
 	.byte 0x06
-	.byte \target
+	.byte \battler
 	.byte \percent
 	.4byte \address
 	.endm
 
-	.macro if_hp_equal target, percent, address
+	.macro if_hp_equal battler, percent, address
 	.byte 0x07
-	.byte \target
+	.byte \battler
 	.byte \percent
 	.4byte \address
 	.endm
 
-	.macro if_hp_not_equal target, percent, address
+	.macro if_hp_not_equal battler, percent, address
 	.byte 0x08
-	.byte \target
+	.byte \battler
 	.byte \percent
 	.4byte \address
 	.endm
 
-	.macro if_status target, status, address
+	.macro if_status battler, status1, address
 	.byte 0x09
-	.byte \target
-	.4byte \status
+	.byte \battler
+	.4byte \status1
 	.4byte \address
 	.endm
 
-	.macro if_not_status target, status, address
+	.macro if_not_status battler, status1, address
 	.byte 0x0a
-	.byte \target
-	.4byte \status
+	.byte \battler
+	.4byte \status1
 	.4byte \address
 	.endm
 
-	.macro if_status2 target, status, address
+	.macro if_status2 battler, status2, address
 	.byte 0x0b
-	.byte \target
-	.4byte \status
+	.byte \battler
+	.4byte \status2
 	.4byte \address
 	.endm
 
-	.macro if_not_status2 target, status, address
+	.macro if_not_status2 battler, status2, address
 	.byte 0x0c
-	.byte \target
-	.4byte \status
+	.byte \battler
+	.4byte \status2
 	.4byte \address
 	.endm
 
-	.macro if_status3 target, status, address
+	.macro if_status3 battler, status3, address
 	.byte 0x0d
-	.byte \target
-	.4byte \status
+	.byte \battler
+	.4byte \status3
 	.4byte \address
 	.endm
 
-	.macro if_not_status3 target, status, address
+	.macro if_not_status3 battler, status3, address
 	.byte 0x0e
-	.byte \target
-	.4byte \status
+	.byte \battler
+	.4byte \status3
 	.4byte \address
 	.endm
 
-	.macro if_side_affecting target, status, address
+	.macro if_side_affecting battler, sidestatus, address
 	.byte 0x0f
-	.byte \target
-	.4byte \status
+	.byte \battler
+	.4byte \sidestatus
 	.4byte \address
 	.endm
 
-	.macro if_not_side_affecting target, status, address
+	.macro if_not_side_affecting battler, sidestatus, address
 	.byte 0x10
-	.byte \target
-	.4byte \status
+	.byte \battler
+	.4byte \sidestatus
 	.4byte \address
 	.endm
 
@@ -224,9 +224,9 @@
 	.byte 0x24
 	.endm
 
-	.macro get_last_used_bank_move target
+	.macro get_last_used_bank_move battler
 	.byte 0x25
-	.byte \target
+	.byte \battler
 	.endm
 
 	.macro if_equal_ type, address
@@ -264,9 +264,9 @@
 	.byte 0x2b
 	.endm
 
-	.macro count_usable_party_mons target
+	.macro count_usable_party_mons battler
 	.byte 0x2c
-	.byte \target
+	.byte \battler
 	.endm
 
 	@ unused
@@ -278,9 +278,9 @@
 	.byte 0x2e
 	.endm
 
-	.macro get_ability target
+	.macro get_ability battler
 	.byte 0x2f
-	.byte \target
+	.byte \battler
 	.endm
 
 	@ unused
@@ -304,18 +304,18 @@
 	.byte 0x33
 	.endm
 
-	.macro if_status_in_party target, status, address
+	.macro if_status_in_party battler, status1, address
 	.byte 0x34
-	.byte \target
-	.4byte \status
+	.byte \battler
+	.4byte \status1
 	.4byte \address
 	.endm
 
 	@ bugged
-	.macro if_status_not_in_party target, status, address
+	.macro if_status_not_in_party battler, status1, address
 	.byte 0x35
-	.byte \target
-	.4byte \status
+	.byte \battler
+	.4byte \status1
 	.4byte \address
 	.endm
 
@@ -335,33 +335,33 @@
 	.4byte \address
 	.endm
 
-	.macro if_stat_level_less_than target, stat, level, address
+	.macro if_stat_level_less_than battler, stat, level, address
 	.byte 0x39
-	.byte \target
+	.byte \battler
 	.byte \stat
 	.byte \level
 	.4byte \address
 	.endm
 
-	.macro if_stat_level_more_than target, stat, level, address
+	.macro if_stat_level_more_than battler, stat, level, address
 	.byte 0x3a
-	.byte \target
+	.byte \battler
 	.byte \stat
 	.byte \level
 	.4byte \address
 	.endm
 
-	.macro if_stat_level_equal target, stat, level, address
+	.macro if_stat_level_equal battler, stat, level, address
 	.byte 0x3b
-	.byte \target
+	.byte \battler
 	.byte \stat
 	.byte \level
 	.4byte \address
 	.endm
 
-	.macro if_stat_level_not_equal target, stat, level, address
+	.macro if_stat_level_not_equal battler, stat, level, address
 	.byte 0x3c
-	.byte \target
+	.byte \battler
 	.byte \stat
 	.byte \level
 	.4byte \address
@@ -378,38 +378,38 @@
 	.endm
 
 	@ unused
-	.macro if_has_move, target, move, address
+	.macro if_has_move, battler, move, address
 	.byte 0x3f
-	.byte \target
+	.byte \battler
 	.2byte \move
 	.4byte \address
 	.endm
 
 	@ unused
-	.macro if_doesnt_have_move, target, move, address
+	.macro if_doesnt_have_move, battler, move, address
 	.byte 0x40
-	.byte \target
+	.byte \battler
 	.2byte \move
 	.4byte \address
 	.endm
 
-	.macro if_has_move_with_effect target, effect, address
+	.macro if_has_move_with_effect battler, effect, address
 	.byte 0x41
-	.byte \target
+	.byte \battler
 	.byte \effect
 	.4byte \address
 	.endm
 
-	.macro if_doesnt_have_move_with_effect target, effect, address
+	.macro if_doesnt_have_move_with_effect battler, effect, address
 	.byte 0x42
-	.byte \target
+	.byte \battler
 	.byte \effect
 	.4byte \address
 	.endm
 
-	.macro if_any_move_disabled_or_encored target, byte, address
+	.macro if_any_move_disabled_or_encored battler, byte, address
 	.byte 0x43
-	.byte \target
+	.byte \battler
 	.byte \byte
 	.4byte \address
 	.endm
@@ -433,33 +433,33 @@
 	.byte 0x47
 	.endm
 
-	.macro get_hold_effect target
+	.macro get_hold_effect battler
 	.byte 0x48
-	.byte \target
+	.byte \battler
 	.endm
 
-	.macro get_gender target
+	.macro get_gender battler
 	.byte 0x49
-	.byte \target
+	.byte \battler
 	.endm
 
-	.macro is_first_turn_for target
+	.macro is_first_turn_for battler
 	.byte 0x4a
-	.byte \target
+	.byte \battler
 	.endm
 
-	.macro get_stockpile_count target
+	.macro get_stockpile_count battler
 	.byte 0x4b
-	.byte \target
+	.byte \battler
 	.endm
 
 	.macro is_double_battle
 	.byte 0x4c
 	.endm
 
-	.macro get_used_held_item target
+	.macro get_used_held_item battler
 	.byte 0x4d
-	.byte \target
+	.byte \battler
 	.endm
 
 	.macro get_move_type_from_result
@@ -474,9 +474,9 @@
 	.byte 0x50
 	.endm
 
-	.macro get_protect_count target
+	.macro get_protect_count battler
 	.byte 0x51
-	.byte \target
+	.byte \battler
 	.endm
 
 	@ nullsub
