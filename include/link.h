@@ -6,6 +6,9 @@
 #define QUEUE_CAPACITY 50
 #define BLOCK_BUFFER_SIZE 0x100
 
+#define LINK_SLAVE 0
+#define LINK_MASTER 8
+
 #define LINK_STAT_LOCAL_ID               0x00000003
 #define LINK_STAT_PLAYER_COUNT           0x0000001C
 #define LINK_STAT_PLAYER_COUNT_SHIFT     2
@@ -17,6 +20,14 @@
 #define LINK_STAT_RECEIVED_NOTHING_SHIFT 8
 #define LINK_STAT_ERRORS                 0x0007F000
 
+#define LINK_STAT_UNK_FLAG_9_SHIFT       9
+#define LINK_STAT_ERROR_HARDWARE_SHIFT   12
+#define LINK_STAT_ERROR_CHECKSUM_SHIFT   13
+#define LINK_STAT_ERROR_QUEUE_FULL_SHIFT 14
+#define LINK_STAT_ERROR_LAG_MASTER       0x00010000
+#define LINK_STAT_ERROR_INVALID_ID       0x00020000
+#define LINK_STAT_ERROR_LAG_SLAVE        0x00040000
+
 #define EXTRACT_PLAYER_COUNT(status) \
 (((status) & LINK_STAT_PLAYER_COUNT) >> LINK_STAT_PLAYER_COUNT_SHIFT)
 #define EXTRACT_MASTER(status) \
@@ -25,6 +36,33 @@
 (((status) >> LINK_STAT_CONN_ESTABLISHED_SHIFT) & 1)
 #define EXTRACT_RECEIVED_NOTHING(status) \
 (((status) >> LINK_STAT_RECEIVED_NOTHING_SHIFT) & 1)
+
+#define LINKCMD_SEND_LINK_TYPE          0x2222
+#define LINKCMD_READY_EXIT_STANDBY      0x2FFE
+#define LINKCMD_BLENDER_SEND_KEYS       0x4444
+#define LINKCMD_DUMMY_1                 0x5555
+#define LINKCMD_DUMMY_2                 0x5566
+#define LINKCMD_READY_CLOSE_LINK        0x5FFF
+#define LINKCMD_SEND_EMPTY              0x6666
+#define LINKCMD_SEND_0xEE               0x7777
+#define LINKCMD_CONT_BLOCK              0x8888
+#define LINKCMD_BLENDER_NO_PBLOCK_SPACE 0xAAAA
+#define LINKCMD_SEND_ITEM               0xAAAB
+#define LINKCMD_INIT_BLOCK              0xBBBB
+#define LINKCMD_SEND_HELD_KEYS          0xCAFE
+#define LINKCMD_SEND_BLOCK_REQ          0xCCCC
+#define LINKCMD_NONE                    0xEFFF
+
+#define LINKTYPE_TRADE                 0x1111
+
+enum
+{
+    BLOCK_REQ_SIZE_NONE, // Identical to 200
+    BLOCK_REQ_SIZE_200,
+    BLOCK_REQ_SIZE_100,
+    BLOCK_REQ_SIZE_220,
+    BLOCK_REQ_SIZE_40,
+};
 
 #define MASTER_HANDSHAKE 0x8FFF
 #define SLAVE_HANDSHAKE  0xB9A0
@@ -103,7 +141,7 @@ struct Link
     u8 state;
     u8 localId; // local multi-player ID
     u8 playerCount;
-    u16 handshakeBuffer[4];
+    u16 handshakeBuffer[MAX_LINK_PLAYERS];
     bool8 receivedNothing;
     s8 serialIntrCounter;
     bool8 handshakeAsMaster;
@@ -154,7 +192,7 @@ extern u32 gBerryBlenderKeySendAttempts;
 extern u16 gRecvCmds[CMD_LENGTH][MAX_LINK_PLAYERS];
 // TODO: Why is gBlockSendBuffer a u8 array, while gBlockRecvBuffer is a u16 array?
 extern u8 gBlockSendBuffer[BLOCK_BUFFER_SIZE];
-extern u16 gBlockRecvBuffer[MAX_LINK_PLAYERS][BLOCK_BUFFER_SIZE / 2];
+extern u16 gBlockRecvBuffer[MAX_LINK_PLAYERS][BLOCK_BUFFER_SIZE / sizeof(u16)];
 extern u16 gLinkType;
 extern u32 gLinkStatus;
 extern u16 gSendCmd[CMD_LENGTH];
