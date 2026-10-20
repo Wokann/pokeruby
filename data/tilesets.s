@@ -3,6 +3,6 @@
 
 	.section .rodata
 
-	.include "data/tilesets/graphics.inc"
-	.include "data/tilesets/metatiles.inc"
-	.include "data/tilesets/headers.inc"
+	.include "src/data/tilesets/graphics.inc"
+	.include "src/data/tilesets/metatiles.inc"
+	.include "src/data/tilesets/headers.inc"
