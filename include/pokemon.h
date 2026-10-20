@@ -308,13 +308,6 @@ struct __attribute__((packed)) LevelUpMove {
     u16 level:7;
 };
 
-#define GET_UNOWN_LETTER(personality) ((\
-      (((personality & 0x03000000) >> 24) << 6) \
-    | (((personality & 0x00030000) >> 16) << 4) \
-    | (((personality & 0x00000300) >> 8) << 2) \
-    | (((personality & 0x00000003) >> 0) << 0) \
-) % 28)
-
 struct Evolution
 {
     u16 method;
@@ -323,6 +316,13 @@ struct Evolution
 };
 
 #define NUM_UNOWN_FORMS 28
+
+#define GET_UNOWN_LETTER(personality) ((   \
+      (((personality) & 0x03000000) >> 18) \
+    | (((personality) & 0x00030000) >> 12) \
+    | (((personality) & 0x00000300) >> 6)  \
+    | (((personality) & 0x00000003) >> 0)  \
+) % NUM_UNOWN_FORMS)
 
 struct EvolutionData
 {

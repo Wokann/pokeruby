@@ -1,5 +1,6 @@
 #include "global.h"
 #include "decompress.h"
+#include "pokemon.h"
 #include "data.h"
 #include "constants/species.h"
 #include "text.h"
@@ -72,9 +73,9 @@ void HandleLoadSpecialPokePic(const struct CompressedSpriteSheet *src, u32 coord
 
     // gMonSpriteGfx_Sprite_ptr appears to be a list of pointers to locations to store poke pics for back and front pic here. the first and third pointers are used for back while the others are used for front.
     if (dest == gMonSpriteGfx_Sprite_ptr[0] || dest == gMonSpriteGfx_Sprite_ptr[2])
-        isFrontPic = 0; // backPic
+        isFrontPic = FALSE; // backPic
     else
-        isFrontPic = 1; // frontPic
+        isFrontPic = TRUE; // frontPic
 
     LoadSpecialPokePic(src, coords, y_offset, decompBuf, dest, species, personality, isFrontPic);
 }
@@ -86,7 +87,7 @@ void LoadSpecialPokePic(const struct CompressedSpriteSheet *src, u32 b, u32 c,
 
     if (species == SPECIES_UNOWN)
     {
-        u16 i = (((personality & 0x3000000) >> 18) | ((personality & 0x30000) >> 12) | ((personality & 0x300) >> 6) | (personality & 3)) % 0x1C;
+        u16 i = GET_UNOWN_LETTER(personality);
 
         // The other Unowns are separate from Unown A.
         if (i == 0)
@@ -94,7 +95,7 @@ void LoadSpecialPokePic(const struct CompressedSpriteSheet *src, u32 b, u32 c,
         else
             i += SPECIES_UNOWN_B - 1;
 
-        if (frontOrBack8 == 0)
+        if (frontOrBack8 == FALSE)
             LZ77UnCompWram(gMonBackPicTable[i].data, dest);
         else
             LZ77UnCompWram(gMonFrontPicTable[i].data, dest);
@@ -159,7 +160,7 @@ static void UNUSED StitchObjectsOn8x8Canvas(s32 object_size, s32 object_count, u
             {
                 for (i = 0; i < 8; i++)
                 {
-                    for (k = 0; k < 32; k++)
+                    for (k = 0; k < TILE_SIZE_4BPP; k++)
                     {
                         // Left side
                         ((dest+k) + (i << 8))[(j << 5)] = 0;
@@ -170,7 +171,7 @@ static void UNUSED StitchObjectsOn8x8Canvas(s32 object_size, s32 object_count, u
             }
 
             // Skip the top row and first tile on the second row for objects of size 5
-            if (object_size == 5) dest += 0x120;
+            if (object_size == 5) dest += 9 * TILE_SIZE_4BPP;
 
             // Copy tile data
             for (j = 0; j < object_size; j++)
@@ -190,18 +191,18 @@ static void UNUSED StitchObjectsOn8x8Canvas(s32 object_size, s32 object_count, u
                         (dest + (i << 2))[288] = (src + (i << 2))[18];
                         (dest + (i << 2))[289] = (src + (i << 2))[19];
                     }
-                    src += 32;
-                    dest += 32;
+                    src += TILE_SIZE_4BPP;
+                    dest += TILE_SIZE_4BPP;
                 }
 
                 // At the end of a row, skip enough tiles to get to the beginning of the next row
-                if (object_size == 7) dest += 0x20;
-                else if (object_size == 5) dest += 0x60;
+                if (object_size == 7) dest += TILE_SIZE_4BPP;
+                else if (object_size == 5) dest += 3 * TILE_SIZE_4BPP;
             }
 
             // Skip remaining unused space to go to the beginning of the next object
-            if (object_size == 7) dest += 0x100;
-            else if (object_size == 5) dest += 0x1e0;
+            if (object_size == 7) dest += 8 * TILE_SIZE_4BPP;
+            else if (object_size == 5) dest += 15 * TILE_SIZE_4BPP;
         }
     }
     else
@@ -213,7 +214,7 @@ static void UNUSED StitchObjectsOn8x8Canvas(s32 object_size, s32 object_count, u
             // While the remaining space will be filled with actual data
             if (object_size == 6)
             {
-                for (k = 0; k < 256; k++) {
+                for (k = 0; k < 8 * TILE_SIZE_4BPP; k++) {
                     *dest = 0;
                     dest++;
                 }
@@ -223,14 +224,14 @@ static void UNUSED StitchObjectsOn8x8Canvas(s32 object_size, s32 object_count, u
             {
                 if (object_size == 6)
                 {
-                    for (k = 0; k < 32; k++) {
+                    for (k = 0; k < TILE_SIZE_4BPP; k++) {
                         *dest = 0;
                         dest++;
                     }
                 }
 
                 // Copy tile data
-                for (k = 0; k < 32 * object_size; k++) {
+                for (k = 0; k < TILE_SIZE_4BPP * object_size; k++) {
                     *dest = *src;
                     src++;
                     dest++;
@@ -238,7 +239,7 @@ static void UNUSED StitchObjectsOn8x8Canvas(s32 object_size, s32 object_count, u
 
                 if (object_size == 6)
                 {
-                    for (k = 0; k < 32; k++) {
+                    for (k = 0; k < TILE_SIZE_4BPP; k++) {
                         *dest = 0;
                         dest++;
                     }
@@ -247,7 +248,7 @@ static void UNUSED StitchObjectsOn8x8Canvas(s32 object_size, s32 object_count, u
 
             if (object_size == 6)
             {
-                for (k = 0; k < 256; k++) {
+                for (k = 0; k < 8 * TILE_SIZE_4BPP; k++) {
                     *dest = 0;
                     dest++;
                 }
