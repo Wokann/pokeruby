@@ -9,6 +9,7 @@
 
 #define RGB_BLACK RGB(0, 0, 0)
 #define RGB_WHITE RGB(31, 31, 31)
+#define RGB_CYAN       RGB(0, 31, 31)
 
 #define RGB_ALPHA       (1 << 15)
 #define IS_ALPHA(color) ((color) & RGB_ALPHA)
