@@ -3,6 +3,7 @@
 
 #define HEAD_SENTINEL 0xFE
 #define TAIL_SENTINEL 0xFF
+#define TASK_NONE TAIL_SENTINEL
 
 #define NUM_TASKS 16
 

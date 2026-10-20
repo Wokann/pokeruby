@@ -4,6 +4,7 @@
 // gTileset_BattleTower
 #define METATILE_BattleTower_CorridorOpenDoor_Bottom  0x20F
 #define METATILE_BattleTower_CorridorOpenDoor_Top     0x207
+#define METATILE_BattleTower_Door_Elevator            0x20E
 #define METATILE_BattleTower_Elevator_Bottom0         0x278
 #define METATILE_BattleTower_Elevator_Bottom1         0x279
 #define METATILE_BattleTower_Elevator_Bottom2         0x27A
@@ -74,6 +75,10 @@
 #define METATILE_Contest_FloorShadow         0x261
 #define METATILE_Contest_WallShadow          0x221
 
+// gTileset_Dewford
+#define METATILE_Dewford_Door              0x225
+#define METATILE_Dewford_Door_BattleTower  0x25D
+
 // gTileset_EliteFour
 #define METATILE_EliteFour_EntryDoor_ClosedBottom    0x20E
 #define METATILE_EliteFour_EntryDoor_ClosedTop       0x206
@@ -83,6 +88,9 @@
 #define METATILE_EliteFour_OpenDoor_Frame            0x344
 #define METATILE_EliteFour_OpenDoor_Opening          0x345
 #define METATILE_EliteFour_RightSpotlightOff         0x2DE
+
+// gTileset_EverGrande
+#define METATILE_EverGrande_Door_PokemonLeague  0x21D
 
 // gTileset_Facility
 #define METATILE_Facility_DataPad                       0x3E4
@@ -102,6 +110,8 @@
 // gTileset_Fallarbor
 #define METATILE_Fallarbor_AshField     0x218
 #define METATILE_Fallarbor_AshGrass     0x20A
+#define METATILE_Fallarbor_Door_DarkRoof   0x2F7
+#define METATILE_Fallarbor_Door_LightRoof  0x2A5
 #define METATILE_Fallarbor_NormalGrass  0x212
 
 // gTileset_Fortree
@@ -123,6 +133,11 @@
 #define METATILE_General_CalmWater            0x170
 #define METATILE_General_CaveEntrance_Bottom  0x0A7
 #define METATILE_General_CaveEntrance_Top     0x09F
+#define METATILE_General_Door                 0x021
+#define METATILE_General_Door_Contest         0x1DB
+#define METATILE_General_Door_Gym             0x1CD
+#define METATILE_General_Door_PokeCenter      0x061
+#define METATILE_General_Door_PokeMart        0x041
 #define METATILE_General_Grass                0x001
 #define METATILE_General_Grass_TreeLeft       0x1CE
 #define METATILE_General_Grass_TreeRight      0x1CF
@@ -166,6 +181,7 @@
 // gTileset_InsideShip
 #define METATILE_InsideShip_DoorIndent_Locked           0x234
 #define METATILE_InsideShip_DoorIndent_Unlocked         0x21A
+#define METATILE_InsideShip_IntactDoor_Bottom_Interior  0x297
 #define METATILE_InsideShip_IntactDoor_Bottom_Locked    0x233
 #define METATILE_InsideShip_IntactDoor_Bottom_Unlocked  0x22B
 
@@ -181,6 +197,10 @@
 #define METATILE_Lilycove_AquaHideout_Entrance_TopLeft      0x2A8
 #define METATILE_Lilycove_AquaHideout_Entrance_TopMid       0x2A9
 #define METATILE_Lilycove_AquaHideout_Entrance_TopRight     0x2AA
+#define METATILE_Lilycove_Door                              0x246
+#define METATILE_Lilycove_Door_DeptStore                    0x30C
+#define METATILE_Lilycove_Door_SafariZone                   0x32D
+#define METATILE_Lilycove_Door_Wooden                       0x28E
 #define METATILE_Lilycove_Wailmer0                          0x290
 #define METATILE_Lilycove_Wailmer0_Alt                      0x298
 #define METATILE_Lilycove_Wailmer1                          0x291
@@ -199,6 +219,11 @@
 #define METATILE_LilycoveMuseum_Painting3_Right  0x261
 #define METATILE_LilycoveMuseum_Painting4_Left   0x262
 #define METATILE_LilycoveMuseum_Painting4_Right  0x263
+
+// gTileset_Mauville
+#define METATILE_Mauville_Door              0x2AC
+#define METATILE_Mauville_Door_CyclingRoad  0x289
+#define METATILE_Mauville_Door_Verdanturf   0x3A1
 
 // gTileset_MauvilleGym
 #define METATILE_MauvilleGym_FloorTile        0x21A
@@ -229,6 +254,10 @@
 #define METATILE_MauvilleGym_RedBeamV1_On     0x241
 #define METATILE_MauvilleGym_RedBeamV2_On     0x249
 
+// gTileset_Mossdeep
+#define METATILE_Mossdeep_Door              0x2A1
+#define METATILE_Mossdeep_Door_SpaceCenter  0x2ED
+
 // gTileset_MossdeepGym
 #define METATILE_RSMossdeepGym_RedArrow_Down   0x205
 #define METATILE_RSMossdeepGym_RedArrow_Left   0x20C
@@ -238,6 +267,7 @@
 #define METATILE_RSMossdeepGym_Switch_Up       0x238
 
 // gTileset_Pacifidlog
+#define METATILE_Pacifidlog_Door                               0x21A
 #define METATILE_Pacifidlog_FloatingLogs_HorizontalLeft        0x250
 #define METATILE_Pacifidlog_FloatingLogs_HorizontalRight       0x251
 #define METATILE_Pacifidlog_FloatingLogs_VerticalTop           0x258
@@ -251,7 +281,13 @@
 #define METATILE_Pacifidlog_SubmergedLogs_VerticalTop          0x25A
 #define METATILE_Pacifidlog_SubmergedLogs_VerticalBottom       0x262
 
+// gTileset_Petalburg
+#define METATILE_Petalburg_Door_BirchsLab   0x249
+#define METATILE_Petalburg_Door_Littleroot  0x248
+#define METATILE_Petalburg_Door_Oldale      0x287
+
 // gTileset_PetalburgGym
+#define METATILE_PetalburgGym_Door                0x224
 #define METATILE_PetalburgGym_RoomEntrance_Left   0x210
 #define METATILE_PetalburgGym_RoomEntrance_Right  0x211
 #define METATILE_PetalburgGym_SlidingDoor_Frame0  0x218
@@ -262,6 +298,7 @@
 
 // gTileset_PokemonCenter
 #define METATILE_PokemonCenter_CounterBarrier            0x25D
+#define METATILE_PokemonCenter_Door_CableClub            0x264
 #define METATILE_PokemonCenter_Escalator1F_Tile0_Frame0  0x280
 #define METATILE_PokemonCenter_Escalator1F_Tile0_Frame1  0x282
 #define METATILE_PokemonCenter_Escalator1F_Tile0_Frame2  0x284
@@ -285,14 +322,24 @@
 #define METATILE_PokemonCenter_Escalator2F_Tile2_Frame2  0x2AC
 #define METATILE_PokemonCenter_Floor_Plain_Alt           0x202
 
+// gTileset_Rustboro
+#define METATILE_Rustboro_Door_Gray  0x21F
+#define METATILE_Rustboro_Door_Tan   0x22F
+
 // gTileset_Shop
+#define METATILE_Shop_Door_Elevator   0x285
 #define METATILE_Shop_Laptop1_Flash   0x258
 #define METATILE_Shop_Laptop1_Normal  0x29D
 #define METATILE_Shop_Laptop2_Flash   0x260
 #define METATILE_Shop_Laptop2_Normal  0x2A5
 
+// gTileset_Slateport
+#define METATILE_Slateport_Door  0x2DC
+
 // gTileset_Sootopolis
+#define METATILE_Sootopolis_Door             0x21E
 #define METATILE_Sootopolis_Door_Closed     0x248
+#define METATILE_Sootopolis_Door_PeakedRoof  0x21C
 #define METATILE_Sootopolis_GymDoor_Closed  0x250
 #define METATILE_Sootopolis_RoughWater      0x290
 

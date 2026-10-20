@@ -71,6 +71,8 @@
 #define TILE_SIZE_4BPP 32
 #define TILE_SIZE_8BPP 64
 
+#define TILE_OFFSET_4BPP(n) ((n) * TILE_SIZE_4BPP)
+
 #define TOTAL_OBJ_TILE_COUNT 1024
 
 #define PLTT_SIZEOF(n) ((n) * sizeof(u16))
