@@ -131,11 +131,11 @@ void AgbMain(void)
         ReadKeys();
 
         if (gSoftResetDisabled == FALSE
-         && (gMain.heldKeysRaw & A_BUTTON)
-         && (gMain.heldKeysRaw & B_START_SELECT) == B_START_SELECT)
+         && JOY_HELD_RAW(A_BUTTON)
+         && JOY_HELD_RAW(B_START_SELECT) == B_START_SELECT)
             DoSoftReset();
 
-        if (gLink.sendQueue.count > 1 && Overworld_SendKeysToLinkIsRunning() == 1)
+        if (gLink.sendQueue.count > 1 && Overworld_SendKeysToLinkIsRunning() == TRUE)
         {
             gLinkTransferringData = TRUE;
             UpdateLinkAndCallCallbacks();
@@ -148,7 +148,7 @@ void AgbMain(void)
 
             if (gLink.recvQueue.count > 1)
             {
-                if (Overworld_RecvKeysFromLinkIsRunning() == 1)
+                if (Overworld_RecvKeysFromLinkIsRunning() == TRUE)
                 {
                     gMain.newKeys = 0;
                     gLinkTransferringData = TRUE;
@@ -168,7 +168,7 @@ static void UpdateLinkAndCallCallbacks(void)
 {
     gLinkStatus = LinkMain1(&gShouldAdvanceLinkState, gSendCmd, gRecvCmds);
     LinkMain2(&gMain.heldKeys);
-    if (!(gLinkStatus & LINK_STAT_RECEIVED_NOTHING) || IsSendingKeysOverCable() != 1)
+    if (!(gLinkStatus & LINK_STAT_RECEIVED_NOTHING) || IsSendingKeysOverCable() != TRUE)
         CallCallbacks();
 }
 
@@ -245,7 +245,7 @@ static void ReadKeys(void)
     gMain.heldKeys = gMain.heldKeysRaw;
 
     // Remap L to A if the L=A option is enabled.
-    if (gSaveBlock2.optionsButtonMode == 2)
+    if (gSaveBlock2.optionsButtonMode == OPTIONS_BUTTON_MODE_L_EQUALS_A)
     {
         if (JOY_NEW(L_BUTTON))
             gMain.newKeys |= A_BUTTON;
