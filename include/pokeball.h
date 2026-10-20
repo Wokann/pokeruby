@@ -3,6 +3,31 @@
 
 #include "sprite.h"
 
+enum
+{
+    BALL_POKE,
+    BALL_GREAT,
+    BALL_SAFARI,
+    BALL_ULTRA,
+    BALL_MASTER,
+    BALL_NET,
+    BALL_DIVE,
+    BALL_NEST,
+    BALL_REPEAT,
+    BALL_TIMER,
+    BALL_LUXURY,
+    BALL_PREMIER,
+    POKEBALL_COUNT
+};
+
+enum {
+    BALL_AFFINE_ANIM_0,
+    BALL_ROTATE_RIGHT,
+    BALL_ROTATE_LEFT,
+    BALL_AFFINE_ANIM_3,
+    BALL_AFFINE_ANIM_4
+};
+
 extern const struct CompressedSpriteSheet gBallSpriteSheets[];
 extern const struct CompressedSpritePalette gBallSpritePalettes[];
 extern const struct SpriteTemplate gBallSpriteTemplates[];

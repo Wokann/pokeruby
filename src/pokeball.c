@@ -1,6 +1,7 @@
 #include "global.h"
 #include "gba/m4a_internal.h"
 #include "battle.h"
+#include "data.h"
 #include "decompress.h"
 #include "graphics.h"
 #include "m4a.h"
@@ -29,49 +30,49 @@
 #define GFX_TAG_LUXURY_BALL  55010
 #define GFX_TAG_PREMIER_BALL 55011
 
-const struct CompressedSpriteSheet gBallSpriteSheets[] =
+const struct CompressedSpriteSheet gBallSpriteSheets[POKEBALL_COUNT] =
 {
-    {gBallGfx_Poke,    384, GFX_TAG_POKE_BALL},
-    {gBallGfx_Great,   384, GFX_TAG_GREAT_BALL},
-    {gBallGfx_Safari,  384, GFX_TAG_SAFARI_BALL},
-    {gBallGfx_Ultra,   384, GFX_TAG_ULTRA_BALL},
-    {gBallGfx_Master,  384, GFX_TAG_MASTER_BALL},
-    {gBallGfx_Net,     384, GFX_TAG_NET_BALL},
-    {gBallGfx_Dive,    384, GFX_TAG_DIVE_BALL},
-    {gBallGfx_Nest,    384, GFX_TAG_NEST_BALL},
-    {gBallGfx_Repeat,  384, GFX_TAG_REPEAT_BALL},
-    {gBallGfx_Timer,   384, GFX_TAG_TIMER_BALL},
-    {gBallGfx_Luxury,  384, GFX_TAG_LUXURY_BALL},
-    {gBallGfx_Premier, 384, GFX_TAG_PREMIER_BALL},
+    [BALL_POKE]    = {gBallGfx_Poke,    384, GFX_TAG_POKE_BALL},
+    [BALL_GREAT]   = {gBallGfx_Great,   384, GFX_TAG_GREAT_BALL},
+    [BALL_SAFARI]  = {gBallGfx_Safari,  384, GFX_TAG_SAFARI_BALL},
+    [BALL_ULTRA]   = {gBallGfx_Ultra,   384, GFX_TAG_ULTRA_BALL},
+    [BALL_MASTER]  = {gBallGfx_Master,  384, GFX_TAG_MASTER_BALL},
+    [BALL_NET]     = {gBallGfx_Net,     384, GFX_TAG_NET_BALL},
+    [BALL_DIVE]    = {gBallGfx_Dive,    384, GFX_TAG_DIVE_BALL},
+    [BALL_NEST]    = {gBallGfx_Nest,    384, GFX_TAG_NEST_BALL},
+    [BALL_REPEAT]  = {gBallGfx_Repeat,  384, GFX_TAG_REPEAT_BALL},
+    [BALL_TIMER]   = {gBallGfx_Timer,   384, GFX_TAG_TIMER_BALL},
+    [BALL_LUXURY]  = {gBallGfx_Luxury,  384, GFX_TAG_LUXURY_BALL},
+    [BALL_PREMIER] = {gBallGfx_Premier, 384, GFX_TAG_PREMIER_BALL},
 };
 
-const struct CompressedSpritePalette gBallSpritePalettes[] =
+const struct CompressedSpritePalette gBallSpritePalettes[POKEBALL_COUNT] =
 {
-    {gBallPal_Poke,    GFX_TAG_POKE_BALL},
-    {gBallPal_Great,   GFX_TAG_GREAT_BALL},
-    {gBallPal_Safari,  GFX_TAG_SAFARI_BALL},
-    {gBallPal_Ultra,   GFX_TAG_ULTRA_BALL},
-    {gBallPal_Master,  GFX_TAG_MASTER_BALL},
-    {gBallPal_Net,     GFX_TAG_NET_BALL},
-    {gBallPal_Dive,    GFX_TAG_DIVE_BALL},
-    {gBallPal_Nest,    GFX_TAG_NEST_BALL},
-    {gBallPal_Repeat,  GFX_TAG_REPEAT_BALL},
-    {gBallPal_Timer,   GFX_TAG_TIMER_BALL},
-    {gBallPal_Luxury,  GFX_TAG_LUXURY_BALL},
-    {gBallPal_Premier, GFX_TAG_PREMIER_BALL},
+    [BALL_POKE]    = {gBallPal_Poke,    GFX_TAG_POKE_BALL},
+    [BALL_GREAT]   = {gBallPal_Great,   GFX_TAG_GREAT_BALL},
+    [BALL_SAFARI]  = {gBallPal_Safari,  GFX_TAG_SAFARI_BALL},
+    [BALL_ULTRA]   = {gBallPal_Ultra,   GFX_TAG_ULTRA_BALL},
+    [BALL_MASTER]  = {gBallPal_Master,  GFX_TAG_MASTER_BALL},
+    [BALL_NET]     = {gBallPal_Net,     GFX_TAG_NET_BALL},
+    [BALL_DIVE]    = {gBallPal_Dive,    GFX_TAG_DIVE_BALL},
+    [BALL_NEST]    = {gBallPal_Nest,    GFX_TAG_NEST_BALL},
+    [BALL_REPEAT]  = {gBallPal_Repeat,  GFX_TAG_REPEAT_BALL},
+    [BALL_TIMER]   = {gBallPal_Timer,   GFX_TAG_TIMER_BALL},
+    [BALL_LUXURY]  = {gBallPal_Luxury,  GFX_TAG_LUXURY_BALL},
+    [BALL_PREMIER] = {gBallPal_Premier, GFX_TAG_PREMIER_BALL},
 };
 
 static const struct OamData sBallOamData =
 {
     .y = 0,
-    .affineMode = 3,
-    .objMode = 0,
-    .mosaic = 0,
-    .bpp = 0,
-    .shape = 0,
+    .affineMode = ST_OAM_AFFINE_DOUBLE,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
     .x = 0,
     .matrixNum = 0,
-    .size = 1,
+    .size = SPRITE_SIZE(16x16),
     .tileNum = 0,
     .priority = 2,
     .paletteNum = 0,
@@ -155,7 +156,7 @@ static const union AffineAnimCmd sAffineAnim_BallRotate_Left[] =
 
 static const union AffineAnimCmd sAffineAnim_BallRotate_3[] =
 {
-    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_FRAME(Q_8_8(1), Q_8_8(1), 0, 0),
     AFFINEANIMCMD_END,
 };
 
@@ -167,16 +168,17 @@ static const union AffineAnimCmd sAffineAnim_BallRotate_4[] =
 
 static const union AffineAnimCmd *const sAffineAnim_BallRotate[] =
 {
-    sAffineAnim_BallRotate_0,
-    sAffineAnim_BallRotate_Right,
-    sAffineAnim_BallRotate_Left,
-    sAffineAnim_BallRotate_3,
-    sAffineAnim_BallRotate_4,
+    [BALL_AFFINE_ANIM_0] = sAffineAnim_BallRotate_0,
+    [BALL_ROTATE_RIGHT]  = sAffineAnim_BallRotate_Right,
+    [BALL_ROTATE_LEFT]   = sAffineAnim_BallRotate_Left,
+    [BALL_AFFINE_ANIM_3] = sAffineAnim_BallRotate_3,
+    [BALL_AFFINE_ANIM_4] = sAffineAnim_BallRotate_4,
 };
 
 static void SpriteCB_BallThrow(struct Sprite *sprite);
-const struct SpriteTemplate gBallSpriteTemplates[] =
+const struct SpriteTemplate gBallSpriteTemplates[POKEBALL_COUNT] =
 {
+    [BALL_POKE] =
     {
         .tileTag = GFX_TAG_POKE_BALL,
         .paletteTag = GFX_TAG_POKE_BALL,
@@ -186,6 +188,7 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .affineAnims = sAffineAnim_BallRotate,
         .callback = SpriteCB_BallThrow,
     },
+    [BALL_GREAT] =
     {
         .tileTag = GFX_TAG_GREAT_BALL,
         .paletteTag = GFX_TAG_GREAT_BALL,
@@ -195,6 +198,7 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .affineAnims = sAffineAnim_BallRotate,
         .callback = SpriteCB_BallThrow,
     },
+    [BALL_SAFARI] =
     {
         .tileTag = GFX_TAG_SAFARI_BALL,
         .paletteTag = GFX_TAG_SAFARI_BALL,
@@ -204,6 +208,7 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .affineAnims = sAffineAnim_BallRotate,
         .callback = SpriteCB_BallThrow,
     },
+    [BALL_ULTRA] =
     {
         .tileTag = GFX_TAG_ULTRA_BALL,
         .paletteTag = GFX_TAG_ULTRA_BALL,
@@ -213,6 +218,7 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .affineAnims = sAffineAnim_BallRotate,
         .callback = SpriteCB_BallThrow,
     },
+    [BALL_MASTER] =
     {
         .tileTag = GFX_TAG_MASTER_BALL,
         .paletteTag = GFX_TAG_MASTER_BALL,
@@ -222,6 +228,7 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .affineAnims = sAffineAnim_BallRotate,
         .callback = SpriteCB_BallThrow,
     },
+    [BALL_NET] =
     {
         .tileTag = GFX_TAG_NET_BALL,
         .paletteTag = GFX_TAG_NET_BALL,
@@ -231,6 +238,7 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .affineAnims = sAffineAnim_BallRotate,
         .callback = SpriteCB_BallThrow,
     },
+    [BALL_DIVE] =
     {
         .tileTag = GFX_TAG_DIVE_BALL,
         .paletteTag = GFX_TAG_DIVE_BALL,
@@ -240,6 +248,7 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .affineAnims = sAffineAnim_BallRotate,
         .callback = SpriteCB_BallThrow,
     },
+    [BALL_NEST] =
     {
         .tileTag = GFX_TAG_NEST_BALL,
         .paletteTag = GFX_TAG_NEST_BALL,
@@ -249,6 +258,7 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .affineAnims = sAffineAnim_BallRotate,
         .callback = SpriteCB_BallThrow,
     },
+    [BALL_REPEAT] =
     {
         .tileTag = GFX_TAG_REPEAT_BALL,
         .paletteTag = GFX_TAG_REPEAT_BALL,
@@ -258,6 +268,7 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .affineAnims = sAffineAnim_BallRotate,
         .callback = SpriteCB_BallThrow,
     },
+    [BALL_TIMER] =
     {
         .tileTag = GFX_TAG_TIMER_BALL,
         .paletteTag = GFX_TAG_TIMER_BALL,
@@ -267,6 +278,7 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .affineAnims = sAffineAnim_BallRotate,
         .callback = SpriteCB_BallThrow,
     },
+    [BALL_LUXURY] =
     {
         .tileTag = GFX_TAG_LUXURY_BALL,
         .paletteTag = GFX_TAG_LUXURY_BALL,
@@ -276,6 +288,7 @@ const struct SpriteTemplate gBallSpriteTemplates[] =
         .affineAnims = sAffineAnim_BallRotate,
         .callback = SpriteCB_BallThrow,
     },
+    [BALL_PREMIER] =
     {
         .tileTag = GFX_TAG_PREMIER_BALL,
         .paletteTag = GFX_TAG_PREMIER_BALL,
@@ -313,18 +326,26 @@ static void SpriteCB_HealthboxSlideIn(struct Sprite *);
 static void SpriteCB_HitAnimHealthoxEffect(struct Sprite *);
 static u16 GetBattlerPokeballItemId(u8);
 
+#define tFrames          data[0]
+#define tPan             data[1]
+#define tThrowId         data[2]
+#define tBattler         data[3]
+#define tOpponentBattler data[4]
+
 u8 DoPokeballSendOutAnimation(u16 pan, u8 kindOfThrow)
 {
     u8 taskId;
 
     gDoingBattleAnim = TRUE;
-    gBattleHealthBoxInfo[gActiveBattler].ballAnimActive = 1;
+    gBattleHealthBoxInfo[gActiveBattler].ballAnimActive = TRUE;
     taskId = CreateTask(Task_DoPokeballSendOutAnim, 5);
-    gTasks[taskId].data[1] = pan;
-    gTasks[taskId].data[2] = kindOfThrow;
-    gTasks[taskId].data[3] = gActiveBattler;
+    gTasks[taskId].tPan = pan;
+    gTasks[taskId].tThrowId = kindOfThrow;
+    gTasks[taskId].tBattler = gActiveBattler;
     return 0;
 }
+
+#define sBattler data[6]
 
 static void Task_DoPokeballSendOutAnim(u8 taskId)
 {
@@ -335,14 +356,14 @@ static void Task_DoPokeballSendOutAnim(u8 taskId)
     u8 ballId;
     u8 ballSpriteId;
 
-    if (gTasks[taskId].data[0] == 0)
+    if (gTasks[taskId].tFrames == 0)
     {
-        gTasks[taskId].data[0]++;
+        gTasks[taskId].tFrames++;
         return;
     }
 
-    throwCaseId = gTasks[taskId].data[2];
-    battler = gTasks[taskId].data[3];
+    throwCaseId = gTasks[taskId].tThrowId;
+    battler = gTasks[taskId].tBattler;
     if (GetBattlerSide(battler) != B_SIDE_PLAYER)
         itemId = GetMonData(&gEnemyParty[gBattlerPartyIndexes[battler]], MON_DATA_POKEBALL);
     else
@@ -357,26 +378,26 @@ static void Task_DoPokeballSendOutAnim(u8 taskId)
 
     switch (throwCaseId)
     {
-    case 0xFF: // Player's side
+    case POKEBALL_PLAYER_SENDOUT: // Player's side
         gBattlerTarget = battler;
         gSprites[ballSpriteId].x = 24;
         gSprites[ballSpriteId].y = 68;
         gSprites[ballSpriteId].callback = SpriteCB_PlayerMonSendOut_1;
         break;
-    case 0xFE: // Opponent's side
-        gSprites[ballSpriteId].x = GetBattlerSpriteCoord(battler, 0);
-        gSprites[ballSpriteId].y = GetBattlerSpriteCoord(battler, 1) + 24;
+    case POKEBALL_OPPONENT_SENDOUT: // Opponent's side
+        gSprites[ballSpriteId].x = GetBattlerSpriteCoord(battler, BATTLER_COORD_X);
+        gSprites[ballSpriteId].y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y) + 24;
         gBattlerTarget = battler;
         gSprites[ballSpriteId].data[0] = 0;
         gSprites[ballSpriteId].callback = SpriteCB_OpponentMonSendOut;
         break;
     default:
-        gBattlerTarget = GetBattlerAtPosition(1);
+        gBattlerTarget = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
         notSendOut = TRUE;
         break;
     }
 
-    gSprites[ballSpriteId].data[6] = gBattlerTarget;
+    gSprites[ballSpriteId].sBattler = gBattlerTarget;
     if (!notSendOut)
     {
         DestroyTask(taskId);
@@ -384,12 +405,12 @@ static void Task_DoPokeballSendOutAnim(u8 taskId)
     }
 
     gSprites[ballSpriteId].data[0] = 0x22;
-    gSprites[ballSpriteId].data[2] = GetBattlerSpriteCoord(gBattlerTarget, 0);
-    gSprites[ballSpriteId].data[4] = GetBattlerSpriteCoord(gBattlerTarget, 1) - 16;
+    gSprites[ballSpriteId].data[2] = GetBattlerSpriteCoord(gBattlerTarget, BATTLER_COORD_X);
+    gSprites[ballSpriteId].data[4] = GetBattlerSpriteCoord(gBattlerTarget, BATTLER_COORD_Y) - 16;
     gSprites[ballSpriteId].data[5] = -40;
     InitAnimArcTranslation(&gSprites[ballSpriteId]);
     gSprites[ballSpriteId].oam.affineParam = taskId;
-    gTasks[taskId].data[4] = gBattlerTarget;
+    gTasks[taskId].tOpponentBattler = gBattlerTarget;
     gTasks[taskId].func = TaskDummy;
     PlaySE(SE_BALL_THROW);
 }
@@ -399,8 +420,8 @@ static void SpriteCB_BallThrow(struct Sprite *sprite)
     if (TranslateAnimHorizontalArc(sprite))
     {
         u8 taskId = sprite->oam.affineParam;
-        u8 opponentBattler = gTasks[taskId].data[4];
-        u8 noOfShakes = gTasks[taskId].data[2];
+        u8 opponentBattler = gTasks[taskId].tOpponentBattler;
+        u8 noOfShakes = gTasks[taskId].tThrowId;
         u32 ballId;  // not sure of this type
 
         StartSpriteAnim(sprite, 1);
@@ -412,13 +433,19 @@ static void SpriteCB_BallThrow(struct Sprite *sprite)
         sprite->data[5] = 0;
         ballId = ItemIdToBallId(GetBattlerPokeballItemId(opponentBattler));
         AnimateBallOpenParticles(sprite->x, sprite->y - 5, 1, 0x1C, ballId);
-        sprite->data[0] = LaunchBallFadeMonTask(0, opponentBattler, 14, ballId);
-        sprite->data[6] = opponentBattler;
+        sprite->data[0] = LaunchBallFadeMonTask(FALSE, opponentBattler, 14, ballId);
+        sprite->sBattler = opponentBattler;
         sprite->data[7] = noOfShakes;
         DestroyTask(taskId);
         sprite->callback = SpriteCB_BallThrow_ReachMon;
     }
 }
+
+#undef tFrames
+#undef tPan
+#undef tThrowId
+#undef tBattler
+#undef tOpponentBattler
 
 static void SpriteCB_BallThrow_ReachMon(struct Sprite *sprite)
 {
@@ -432,9 +459,9 @@ static void SpriteCB_BallThrow_StartShrinkMon(struct Sprite *sprite)
     {
         sprite->data[5] = 0;
         sprite->callback = SpriteCB_BallThrow_ShrinkMon;
-        StartSpriteAffineAnim(&gSprites[gBattlerSpriteIds[sprite->data[6]]], 2);
-        AnimateSprite(&gSprites[gBattlerSpriteIds[sprite->data[6]]]);
-        gSprites[gBattlerSpriteIds[sprite->data[6]]].data[1] = 0;
+        StartSpriteAffineAnim(&gSprites[gBattlerSpriteIds[sprite->sBattler]], BATTLER_AFFINE_RETURN);
+        AnimateSprite(&gSprites[gBattlerSpriteIds[sprite->sBattler]]);
+        gSprites[gBattlerSpriteIds[sprite->sBattler]].data[1] = 0;
     }
 }
 
@@ -443,17 +470,17 @@ static void SpriteCB_BallThrow_ShrinkMon(struct Sprite *sprite)
     sprite->data[5]++;
     if (sprite->data[5] == 11)
         PlaySE(SE_BALL_TRADE);
-    if (gSprites[gBattlerSpriteIds[sprite->data[6]]].affineAnimEnded)
+    if (gSprites[gBattlerSpriteIds[sprite->sBattler]].affineAnimEnded)
     {
         StartSpriteAnim(sprite, 2);
-        gSprites[gBattlerSpriteIds[sprite->data[6]]].invisible = TRUE;
+        gSprites[gBattlerSpriteIds[sprite->sBattler]].invisible = TRUE;
         sprite->data[5] = 0;
         sprite->callback = SpriteCB_BallThrow_Close;
     }
     else
     {
-        gSprites[gBattlerSpriteIds[sprite->data[6]]].data[1] += 0x60;
-        gSprites[gBattlerSpriteIds[sprite->data[6]]].y2 = -gSprites[gBattlerSpriteIds[sprite->data[6]]].data[1] >> 8;
+        gSprites[gBattlerSpriteIds[sprite->sBattler]].data[1] += Q_8_8(0.375);
+        gSprites[gBattlerSpriteIds[sprite->sBattler]].y2 = Q_8_8_TO_INT(-gSprites[gBattlerSpriteIds[sprite->sBattler]].data[1]);
     }
 }
 
@@ -541,7 +568,7 @@ static void SpriteCB_BallThrow_StartShakes(struct Sprite *sprite)
     {
         sprite->data[3] = 0;
         sprite->affineAnimPaused = TRUE;
-        StartSpriteAffineAnim(sprite, 1);
+        StartSpriteAffineAnim(sprite, BALL_ROTATE_RIGHT);
         sprite->callback = SpriteCB_BallThrow_Shake;
         PlaySE(SE_BALL);
     }
@@ -571,9 +598,9 @@ static void SpriteCB_BallThrow_Shake(struct Sprite *sprite)
             sprite->data[3]++;
             sprite->affineAnimPaused = FALSE;
             if (sprite->data[4] < 0)
-                ChangeSpriteAffineAnim(sprite, 2);
+                ChangeSpriteAffineAnim(sprite, BALL_ROTATE_LEFT);
             else
-                ChangeSpriteAffineAnim(sprite, 1);
+                ChangeSpriteAffineAnim(sprite, BALL_ROTATE_RIGHT);
         }
         else
         {
@@ -607,31 +634,37 @@ static void SpriteCB_BallThrow_Shake(struct Sprite *sprite)
         {
             sprite->data[5] = 0;
             sprite->data[3] &= 0xFF00;
-            StartSpriteAffineAnim(sprite, 3);
+            StartSpriteAffineAnim(sprite, BALL_AFFINE_ANIM_3);
             if (sprite->data[4] < 0)
-                StartSpriteAffineAnim(sprite, 2);
+                StartSpriteAffineAnim(sprite, BALL_ROTATE_LEFT);
             else
-                StartSpriteAffineAnim(sprite, 1);
+                StartSpriteAffineAnim(sprite, BALL_ROTATE_RIGHT);
             PlaySE(SE_BALL);
         }
         break;
     }
 }
 
+#define tCryTaskSpecies         data[0]
+#define tCryTaskPan             data[1]
+#define tCryTaskWantedCry       data[2]
+#define tCryTaskFrames          data[10]
+#define tCryTaskState           data[15]
+
 static void Task_PlayCryWhenReleasedFromBall(u8 taskId)
 {
-    u8 wantedCry = gTasks[taskId].data[2];
-    u8 pan = gTasks[taskId].data[1];
-    u16 species = gTasks[taskId].data[0];
+    u8 wantedCry = gTasks[taskId].tCryTaskWantedCry;
+    u8 pan = gTasks[taskId].tCryTaskPan;
+    u16 species = gTasks[taskId].tCryTaskSpecies;
 
-    switch (gTasks[taskId].data[15])
+    switch (gTasks[taskId].tCryTaskState)
     {
     case 0:
     default:
         if (gTasks[taskId].data[8] < 3)
             gTasks[taskId].data[8]++;
         else
-            gTasks[taskId].data[15] = wantedCry + 1;
+            gTasks[taskId].tCryTaskState = wantedCry + 1;
         break;
     case 1:
         PlayCry_Normal(species, pan);
@@ -639,45 +672,45 @@ static void Task_PlayCryWhenReleasedFromBall(u8 taskId)
         break;
     case 2:
         StopCryAndClearCrySongs();
-        gTasks[taskId].data[10] = 3;
-        gTasks[taskId].data[15] = 20;
+        gTasks[taskId].tCryTaskFrames = 3;
+        gTasks[taskId].tCryTaskState = 20;
         break;
     case 20:
-        if (gTasks[taskId].data[10] != 0)
+        if (gTasks[taskId].tCryTaskFrames != 0)
         {
-            gTasks[taskId].data[10]--;
+            gTasks[taskId].tCryTaskFrames--;
             break;
         }
-        PlayCry_ReleaseDouble(species, pan, 1);
+        PlayCry_ReleaseDouble(species, pan, CRY_MODE_DOUBLES);
         DestroyTask(taskId);
         break;
     case 3:
-        gTasks[taskId].data[10] = 6;
-        gTasks[taskId].data[15] = 30;
+        gTasks[taskId].tCryTaskFrames = 6;
+        gTasks[taskId].tCryTaskState = 30;
         break;
     case 30:
-        if (gTasks[taskId].data[10] != 0)
+        if (gTasks[taskId].tCryTaskFrames != 0)
         {
-            gTasks[taskId].data[10]--;
+            gTasks[taskId].tCryTaskFrames--;
             break;
         }
-        gTasks[taskId].data[15]++;
+        gTasks[taskId].tCryTaskState++;
         // fall through
     case 31:
         if (!IsCryPlayingOrClearCrySongs())
         {
             StopCryAndClearCrySongs();
-            gTasks[taskId].data[10] = 3;
-            gTasks[taskId].data[15]++;
+            gTasks[taskId].tCryTaskFrames = 3;
+            gTasks[taskId].tCryTaskState++;
         }
         break;
     case 32:
-        if (gTasks[taskId].data[10] != 0)
+        if (gTasks[taskId].tCryTaskFrames != 0)
         {
-            gTasks[taskId].data[10]--;
+            gTasks[taskId].tCryTaskFrames--;
             break;
         }
-        PlayCry_ReleaseDouble(species, pan, 0);
+        PlayCry_ReleaseDouble(species, pan, CRY_MODE_NORMAL);
         DestroyTask(taskId);
         break;
     }
@@ -686,12 +719,12 @@ static void Task_PlayCryWhenReleasedFromBall(u8 taskId)
 static void SpriteCB_ReleaseMonFromBall(struct Sprite *sprite)
 {
     int ballId;
-    u8 battler = sprite->data[6];
+    u8 battler = sprite->sBattler;
 
     StartSpriteAnim(sprite, 1);
     ballId = ItemIdToBallId(GetBattlerPokeballItemId(battler));
     AnimateBallOpenParticles(sprite->x, sprite->y - 5, 1, 28, ballId);
-    sprite->data[0] = LaunchBallFadeMonTask(1, sprite->data[6], 14, ballId);
+    sprite->data[0] = LaunchBallFadeMonTask(TRUE, sprite->sBattler, 14, ballId);
     sprite->callback = HandleBallAnimEnd;
     if (gMain.inBattle)
     {
@@ -701,7 +734,7 @@ static void SpriteCB_ReleaseMonFromBall(struct Sprite *sprite)
         u16 wantedCryCase;
         u8 taskId;
 
-        if (GetBattlerSide(battler) != 0)
+        if (GetBattlerSide(battler) != B_SIDE_PLAYER)
         {
             mon = &gEnemyParty[gBattlerPartyIndexes[battler]];
             cryPanning = 25;
@@ -713,7 +746,7 @@ static void SpriteCB_ReleaseMonFromBall(struct Sprite *sprite)
         }
 
         species = GetMonData(mon, MON_DATA_SPECIES);
-        if ((battler == GetBattlerAtPosition(0) || battler == GetBattlerAtPosition(1))
+        if ((battler == GetBattlerAtPosition(B_POSITION_PLAYER_LEFT) || battler == GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT))
          && IsDoubleBattle() && gBattleAnimationInfo->introAnimActive)
         {
             if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
@@ -723,28 +756,34 @@ static void SpriteCB_ReleaseMonFromBall(struct Sprite *sprite)
             }
             else
             {
-                m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFFFF, 128);
+                m4aMPlayVolumeControl(&gMPlayInfo_BGM, TRACKS_ALL, 128);
             }
         }
 
         if (!IsDoubleBattle() || !gBattleAnimationInfo->introAnimActive)
             wantedCryCase = 0;
-        else if (battler == GetBattlerAtPosition(0) || battler == GetBattlerAtPosition(1))
+        else if (battler == GetBattlerAtPosition(B_POSITION_PLAYER_LEFT) || battler == GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT))
             wantedCryCase = 1;
         else
             wantedCryCase = 2;
 
         taskId = CreateTask(Task_PlayCryWhenReleasedFromBall, 3);
-        gTasks[taskId].data[0] = species;
-        gTasks[taskId].data[1] = cryPanning;
-        gTasks[taskId].data[2] = wantedCryCase;
-        gTasks[taskId].data[15] = 0;
+        gTasks[taskId].tCryTaskSpecies = species;
+        gTasks[taskId].tCryTaskPan = cryPanning;
+        gTasks[taskId].tCryTaskWantedCry = wantedCryCase;
+        gTasks[taskId].tCryTaskState = 0;
     }
 
-    StartSpriteAffineAnim(&gSprites[gBattlerSpriteIds[sprite->data[6]]], 1);
-    AnimateSprite(&gSprites[gBattlerSpriteIds[sprite->data[6]]]);
-    gSprites[gBattlerSpriteIds[sprite->data[6]]].data[1] = 0x1000;
+    StartSpriteAffineAnim(&gSprites[gBattlerSpriteIds[sprite->sBattler]], BATTLER_AFFINE_EMERGE);
+    AnimateSprite(&gSprites[gBattlerSpriteIds[sprite->sBattler]]);
+    gSprites[gBattlerSpriteIds[sprite->sBattler]].data[1] = Q_8_8(16);
 }
+
+#undef tCryTaskSpecies
+#undef tCryTaskPan
+#undef tCryTaskWantedCry
+#undef tCryTaskFrames
+#undef tCryTaskState
 
 static void SpriteCB_BallThrow_StartCaptureMon(struct Sprite *sprite)
 {
@@ -758,20 +797,20 @@ static void SpriteCB_BallThrow_StartCaptureMon(struct Sprite *sprite)
 static void HandleBallAnimEnd(struct Sprite *sprite)
 {
     bool8 affineAnimEnded = FALSE;
-    u8 battler = sprite->data[6];
+    u8 battler = sprite->sBattler;
 
     gSprites[gBattlerSpriteIds[battler]].invisible = FALSE;
     if (sprite->animEnded)
         sprite->invisible = TRUE;
     if (gSprites[gBattlerSpriteIds[battler]].affineAnimEnded)
     {
-        StartSpriteAffineAnim(&gSprites[gBattlerSpriteIds[battler]], 0);
+        StartSpriteAffineAnim(&gSprites[gBattlerSpriteIds[battler]], BATTLER_AFFINE_NORMAL);
         affineAnimEnded = TRUE;
     }
     else
     {
-        gSprites[gBattlerSpriteIds[battler]].data[1] -= 288;
-        gSprites[gBattlerSpriteIds[battler]].y2 = gSprites[gBattlerSpriteIds[battler]].data[1] >> 8;
+        gSprites[gBattlerSpriteIds[battler]].data[1] -= Q_8_8(1.125);
+        gSprites[gBattlerSpriteIds[battler]].y2 = Q_8_8_TO_INT(gSprites[gBattlerSpriteIds[battler]].data[1]);
     }
     if (sprite->animEnded && affineAnimEnded)
     {
@@ -780,17 +819,17 @@ static void HandleBallAnimEnd(struct Sprite *sprite)
 
         gSprites[gBattlerSpriteIds[battler]].y2 = 0;
         gDoingBattleAnim = FALSE;
-        gBattleHealthBoxInfo[battler].ballAnimActive = 0;
+        gBattleHealthBoxInfo[battler].ballAnimActive = FALSE;
         FreeSpriteOamMatrix(sprite);
         DestroySprite(sprite);
-        for (doneBattlers = 0, i = 0; i < 4; i++)
+        for (doneBattlers = 0, i = 0; i < MAX_BATTLERS_COUNT; i++)
         {
-            if (gBattleHealthBoxInfo[i].ballAnimActive == 0)
+            if (gBattleHealthBoxInfo[i].ballAnimActive == FALSE)
                 doneBattlers++;
         }
-        if (doneBattlers == 4)
+        if (doneBattlers == MAX_BATTLERS_COUNT)
         {
-            for (i = 0; i < 12; i++)
+            for (i = 0; i < POKEBALL_COUNT; i++)
                 FreeBallGfx(i);
         }
     }
@@ -798,7 +837,7 @@ static void HandleBallAnimEnd(struct Sprite *sprite)
 
 static void SpriteCB_BallThrow_CaptureMon(struct Sprite *sprite)
 {
-    u8 battler = sprite->data[6];
+    u8 battler = sprite->sBattler;
 
     sprite->data[4]++;
     if (sprite->data[4] == 40)
@@ -813,21 +852,21 @@ static void SpriteCB_BallThrow_CaptureMon(struct Sprite *sprite)
     }
     else if (sprite->data[4] == 315)
     {
-        FreeOamMatrix(gSprites[gBattlerSpriteIds[sprite->data[6]]].oam.matrixNum);
-        DestroySprite(&gSprites[gBattlerSpriteIds[sprite->data[6]]]);
+        FreeOamMatrix(gSprites[gBattlerSpriteIds[sprite->sBattler]].oam.matrixNum);
+        DestroySprite(&gSprites[gBattlerSpriteIds[sprite->sBattler]]);
         DestroySpriteAndFreeResources(sprite);
         if (gMain.inBattle)
-            gBattleHealthBoxInfo[battler].ballAnimActive = 0;
+            gBattleHealthBoxInfo[battler].ballAnimActive = FALSE;
     }
 }
 
 static void SpriteCB_PlayerMonSendOut_1(struct Sprite *sprite)
 {
     sprite->data[0] = 25;
-    sprite->data[2] = GetBattlerSpriteCoord(sprite->data[6], 2);
-    sprite->data[4] = GetBattlerSpriteCoord(sprite->data[6], 3) + 24;
+    sprite->data[2] = GetBattlerSpriteCoord(sprite->sBattler, BATTLER_COORD_X_2);
+    sprite->data[4] = GetBattlerSpriteCoord(sprite->sBattler, BATTLER_COORD_Y_PIC_OFFSET) + 24;
     sprite->data[5] = -30;
-    sprite->oam.affineParam = sprite->data[6];
+    sprite->oam.affineParam = sprite->sBattler;
     InitAnimArcTranslation(sprite);
     sprite->callback = SpriteCB_PlayerMonSendOut_2;
 }
@@ -849,7 +888,7 @@ static void SpriteCB_PlayerMonSendOut_2(struct Sprite *sprite)
             r7 = sprite->data[2] & 1;
             sprite->data[1] = ((sprite->data[1] / 3) & ~1) | r6;
             sprite->data[2] = ((sprite->data[2] / 3) & ~1) | r7;
-            StartSpriteAffineAnim(sprite, 4);
+            StartSpriteAffineAnim(sprite, BALL_AFFINE_ANIM_4);
         }
 
         r4 = sprite->data[0];
@@ -878,14 +917,14 @@ static void SpriteCB_PlayerMonSendOut_2(struct Sprite *sprite)
             sprite->y += sprite->y2;
             sprite->y2 = 0;
             sprite->x2 = 0;
-            sprite->data[6] = sprite->oam.affineParam & 0xFF;
+            sprite->sBattler = sprite->oam.affineParam & 0xFF;
             sprite->data[0] = 0;
-            if (IsDoubleBattle() && gBattleAnimationInfo->introAnimActive && sprite->data[6] == GetBattlerAtPosition(2))
+            if (IsDoubleBattle() && gBattleAnimationInfo->introAnimActive && sprite->sBattler == GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT))
                 sprite->callback = SpriteCB_ReleaseMon2FromBall;
             else
                 sprite->callback = SpriteCB_ReleaseMonFromBall;
 
-            StartSpriteAffineAnim(sprite, 0);
+            StartSpriteAffineAnim(sprite, BALL_AFFINE_ANIM_0);
         }
     }
 }
@@ -905,39 +944,50 @@ static void SpriteCB_OpponentMonSendOut(struct Sprite *sprite)
     if (sprite->data[0] > 15)
     {
         sprite->data[0] = 0;
-        if (IsDoubleBattle() && gBattleAnimationInfo->introAnimActive && sprite->data[6] == GetBattlerAtPosition(3))
+        if (IsDoubleBattle() && gBattleAnimationInfo->introAnimActive && sprite->sBattler == GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT))
             sprite->callback = SpriteCB_ReleaseMon2FromBall;
         else
             sprite->callback = SpriteCB_ReleaseMonFromBall;
     }
 }
 
+#undef sBattler
+
 static u8 AnimateBallOpenParticlesForPokeball(u8 x, u8 y, u8 priority, u8 subpriority)
 {
-    return AnimateBallOpenParticles(x, y, priority, subpriority, 0);
+    return AnimateBallOpenParticles(x, y, priority, subpriority, BALL_POKE);
 }
 
 static u8 LaunchBallFadeMonTaskForPokeball(bool8 unFadeLater, u8 spritePalNum, u32 selectedPalettes)
 {
-    return LaunchBallFadeMonTask(unFadeLater, spritePalNum, selectedPalettes, 0);
+    return LaunchBallFadeMonTask(unFadeLater, spritePalNum, selectedPalettes, BALL_POKE);
 }
+
+#define sMonSpriteId data[0]
+#define sDelay       data[1]
+#define sMonPalNum   data[2]
+#define sFadePalsLo  data[3]
+#define sFadePalsHi  data[4]
+#define sFinalMonX   data[5]
+#define sFinalMonY   data[6]
+#define sTrigIdx     data[7]
 
 void CreatePokeballSpriteToReleaseMon(u8 monSpriteId, u8 monPalNum, u8 x, u8 y, u8 oamPriority, u8 subpriority, u8 delay, u32 fadePalettes)
 {
     u8 spriteId;
 
-    LoadCompressedSpriteSheet(&gBallSpriteSheets[0]);
-    LoadCompressedSpritePalette(&gBallSpritePalettes[0]);
-    spriteId = CreateSprite(&gBallSpriteTemplates[0], x, y, subpriority);
-    gSprites[spriteId].data[0] = monSpriteId;
-    gSprites[spriteId].data[5] = gSprites[monSpriteId].x;
-    gSprites[spriteId].data[6] = gSprites[monSpriteId].y;
+    LoadCompressedSpriteSheet(&gBallSpriteSheets[BALL_POKE]);
+    LoadCompressedSpritePalette(&gBallSpritePalettes[BALL_POKE]);
+    spriteId = CreateSprite(&gBallSpriteTemplates[BALL_POKE], x, y, subpriority);
+    gSprites[spriteId].sMonSpriteId = monSpriteId;
+    gSprites[spriteId].sFinalMonX = gSprites[monSpriteId].x;
+    gSprites[spriteId].sFinalMonY = gSprites[monSpriteId].y;
     gSprites[monSpriteId].x = x;
     gSprites[monSpriteId].y = y;
-    gSprites[spriteId].data[1] = delay;
-    gSprites[spriteId].data[2] = monPalNum;
-    gSprites[spriteId].data[3] = fadePalettes;
-    gSprites[spriteId].data[4] = fadePalettes >> 16;
+    gSprites[spriteId].sDelay = delay;
+    gSprites[spriteId].sMonPalNum = monPalNum;
+    gSprites[spriteId].sFadePalsLo = fadePalettes;
+    gSprites[spriteId].sFadePalsHi = fadePalettes >> 16;
     gSprites[spriteId].oam.priority = oamPriority;
     gSprites[spriteId].callback = SpriteCB_PokeballReleaseMon;
     gSprites[monSpriteId].invisible = TRUE;
@@ -945,12 +995,12 @@ void CreatePokeballSpriteToReleaseMon(u8 monSpriteId, u8 monPalNum, u8 x, u8 y, 
 
 static void SpriteCB_PokeballReleaseMon(struct Sprite *sprite)
 {
-    if (sprite->data[1] == 0)
+    if (sprite->sDelay == 0)
     {
         u8 subpriority;
-        u8 spriteId = sprite->data[0];
-        u8 monPalNum = sprite->data[2];
-        u32 selectedPalettes = (u16)sprite->data[3] | ((u16)sprite->data[4] << 16);
+        u8 spriteId = sprite->sMonSpriteId;
+        u8 monPalNum = sprite->sMonPalNum;
+        u32 selectedPalettes = (u16)sprite->sFadePalsLo | ((u16)sprite->sFadePalsHi << 16);
 
         if (sprite->subpriority != 0)
             subpriority = sprite->subpriority - 1;
@@ -958,17 +1008,17 @@ static void SpriteCB_PokeballReleaseMon(struct Sprite *sprite)
             subpriority = 0;
         StartSpriteAnim(sprite, 1);
         AnimateBallOpenParticlesForPokeball(sprite->x, sprite->y - 5, sprite->oam.priority, subpriority);
-        sprite->data[1] = LaunchBallFadeMonTaskForPokeball(1, monPalNum, selectedPalettes);
+        sprite->sDelay = LaunchBallFadeMonTaskForPokeball(TRUE, monPalNum, selectedPalettes);
         sprite->callback = SpriteCB_ReleasedMonFlyOut;
         gSprites[spriteId].invisible = FALSE;
-        StartSpriteAffineAnim(&gSprites[spriteId], 1);
+        StartSpriteAffineAnim(&gSprites[spriteId], BATTLER_AFFINE_EMERGE);
         AnimateSprite(&gSprites[spriteId]);
-        gSprites[spriteId].data[1] = 0x1000;
-        sprite->data[7] = 0;
+        gSprites[spriteId].data[1] = Q_8_8(16);
+        sprite->sTrigIdx = 0;
     }
     else
     {
-        sprite->data[1]--;
+        sprite->sDelay--;
     }
 }
 
@@ -976,7 +1026,7 @@ static void SpriteCB_ReleasedMonFlyOut(struct Sprite *sprite)
 {
     bool8 emergeAnimFinished = FALSE;
     bool8 atFinalPosition = FALSE;
-    u8 monSpriteId = sprite->data[0];
+    u8 monSpriteId = sprite->sMonSpriteId;
     u16 x;
     u16 y;
 
@@ -984,25 +1034,25 @@ static void SpriteCB_ReleasedMonFlyOut(struct Sprite *sprite)
         sprite->invisible = TRUE;
     if (gSprites[monSpriteId].affineAnimEnded)
     {
-        StartSpriteAffineAnim(&gSprites[monSpriteId], 0);
+        StartSpriteAffineAnim(&gSprites[monSpriteId], BATTLER_AFFINE_NORMAL);
         emergeAnimFinished = TRUE;
     }
-    x = (sprite->data[5] - sprite->x) * sprite->data[7] / 128 + sprite->x;
-    y = (sprite->data[6] - sprite->y) * sprite->data[7] / 128 + sprite->y;
+    x = (sprite->sFinalMonX - sprite->x) * sprite->sTrigIdx / 128 + sprite->x;
+    y = (sprite->sFinalMonY - sprite->y) * sprite->sTrigIdx / 128 + sprite->y;
     gSprites[monSpriteId].x = x;
     gSprites[monSpriteId].y = y;
-    if (sprite->data[7] < 128)
+    if (sprite->sTrigIdx < 128)
     {
-        s16 sine = -(gSineTable[(u8)sprite->data[7]] / 8);
+        s16 sine = -(gSineTable[(u8)sprite->sTrigIdx] / 8);
 
-        sprite->data[7] += 4;
+        sprite->sTrigIdx += 4;
         gSprites[monSpriteId].x2 = sine;
         gSprites[monSpriteId].y2 = sine;
     }
     else
     {
-        gSprites[monSpriteId].x = sprite->data[5];
-        gSprites[monSpriteId].y = sprite->data[6];
+        gSprites[monSpriteId].x = sprite->sFinalMonX;
+        gSprites[monSpriteId].y = sprite->sFinalMonY;
         gSprites[monSpriteId].x2 = 0;
         gSprites[monSpriteId].y2 = 0;
         atFinalPosition = TRUE;
@@ -1011,18 +1061,24 @@ static void SpriteCB_ReleasedMonFlyOut(struct Sprite *sprite)
         DestroySpriteAndFreeResources(sprite);
 }
 
+#undef sFinalMonX
+#undef sFinalMonY
+#undef sTrigIdx
+
+#define sTimer data[5]
+
 u8 CreateTradePokeballSprite(u8 monSpriteId, u8 monPalNum, u8 x, u8 y, u8 oamPriority, u8 subPriority, u8 delay, u32 fadePalettes)
 {
     u8 spriteId;
 
-    LoadCompressedSpriteSheet(&gBallSpriteSheets[0]);
-    LoadCompressedSpritePalette(&gBallSpritePalettes[0]);
-    spriteId = CreateSprite(&gBallSpriteTemplates[0], x, y, subPriority);
-    gSprites[spriteId].data[0] = monSpriteId;
-    gSprites[spriteId].data[1] = delay;
-    gSprites[spriteId].data[2] = monPalNum;
-    gSprites[spriteId].data[3] = fadePalettes;
-    gSprites[spriteId].data[4] = fadePalettes >> 16;
+    LoadCompressedSpriteSheet(&gBallSpriteSheets[BALL_POKE]);
+    LoadCompressedSpritePalette(&gBallSpritePalettes[BALL_POKE]);
+    spriteId = CreateSprite(&gBallSpriteTemplates[BALL_POKE], x, y, subPriority);
+    gSprites[spriteId].sMonSpriteId = monSpriteId;
+    gSprites[spriteId].sDelay = delay;
+    gSprites[spriteId].sMonPalNum = monPalNum;
+    gSprites[spriteId].sFadePalsLo = fadePalettes;
+    gSprites[spriteId].sFadePalsHi = fadePalettes >> 16;
     gSprites[spriteId].oam.priority = oamPriority;
     gSprites[spriteId].callback = SpriteCB_TradePokeball;
     return spriteId;
@@ -1030,12 +1086,12 @@ u8 CreateTradePokeballSprite(u8 monSpriteId, u8 monPalNum, u8 x, u8 y, u8 oamPri
 
 static void SpriteCB_TradePokeball(struct Sprite *sprite)
 {
-    if (sprite->data[1] == 0)
+    if (sprite->sDelay == 0)
     {
         u8 subpriority;
-        u8 monSpriteId = sprite->data[0];
-        u8 monPalNum = sprite->data[2];
-        u32 selectedPalettes = (u16)sprite->data[3] | ((u16)sprite->data[4] << 16);
+        u8 monSpriteId = sprite->sMonSpriteId;
+        u8 monPalNum = sprite->sMonPalNum;
+        u32 selectedPalettes = (u16)sprite->sFadePalsLo | ((u16)sprite->sFadePalsHi << 16);
 
         if (sprite->subpriority != 0)
             subpriority = sprite->subpriority - 1;
@@ -1043,15 +1099,15 @@ static void SpriteCB_TradePokeball(struct Sprite *sprite)
             subpriority = 0;
         StartSpriteAnim(sprite, 1);
         AnimateBallOpenParticlesForPokeball(sprite->x, sprite->y - 5, sprite->oam.priority, subpriority);
-        sprite->data[1] = LaunchBallFadeMonTaskForPokeball(1, monPalNum, selectedPalettes);
+        sprite->sDelay = LaunchBallFadeMonTaskForPokeball(TRUE, monPalNum, selectedPalettes);
         sprite->callback = SpriteCB_TradePokeballSendOff;
-        StartSpriteAffineAnim(&gSprites[monSpriteId], 2);
+        StartSpriteAffineAnim(&gSprites[monSpriteId], BATTLER_AFFINE_RETURN);
         AnimateSprite(&gSprites[monSpriteId]);
         gSprites[monSpriteId].data[1] = 0;
     }
     else
     {
-        sprite->data[1]--;
+        sprite->sDelay--;
     }
 }
 
@@ -1059,21 +1115,21 @@ static void SpriteCB_TradePokeballSendOff(struct Sprite *sprite)
 {
     u8 monSpriteId;
 
-    sprite->data[5]++;
-    if (sprite->data[5] == 11)
+    sprite->sTimer++;
+    if (sprite->sTimer == 11)
         PlaySE(SE_BALL_TRADE);
-    monSpriteId = sprite->data[0];
+    monSpriteId = sprite->sMonSpriteId;
     if (gSprites[monSpriteId].affineAnimEnded)
     {
         StartSpriteAnim(sprite, 2);
         gSprites[monSpriteId].invisible = TRUE;
-        sprite->data[5] = 0;
+        sprite->sTimer = 0;
         sprite->callback = SpriteCB_TradePokeballEnd;
     }
     else
     {
-        gSprites[monSpriteId].data[1] += 96;
-        gSprites[monSpriteId].y2 = -gSprites[monSpriteId].data[1] >> 8;
+        gSprites[monSpriteId].data[1] += Q_8_8(0.375);
+        gSprites[monSpriteId].y2 = Q_8_8_TO_INT(-gSprites[monSpriteId].data[1]);
     }
 }
 
@@ -1083,49 +1139,65 @@ static void SpriteCB_TradePokeballEnd(struct Sprite *sprite)
         sprite->callback = SpriteCallbackDummy;
 }
 
+#undef sMonSpriteId
+#undef sDelay
+#undef sMonPalNum
+#undef sFadePalsLo
+#undef sFadePalsHi
+#undef sTimer
+
 static void UNUSED DestroySpriteAndFreeResources_Ball(struct Sprite *sprite)
 {
     DestroySpriteAndFreeResources(sprite);
 }
 
+#define sSpeedX data[0]
+#define sSpeedY data[1]
+
+#define sDelayTimer data[1]
+
 void StartHealthboxSlideIn(u8 battler)
 {
     struct Sprite *healthboxSprite = &gSprites[gHealthboxSpriteIds[battler]];
 
-    healthboxSprite->data[0] = 5;
-    healthboxSprite->data[1] = 0;
+    healthboxSprite->sSpeedX = 5;
+    healthboxSprite->sSpeedY = 0;
     healthboxSprite->x2 = 0x73;
     healthboxSprite->y2 = 0;
     healthboxSprite->callback = SpriteCB_HealthboxSlideIn;
-    if (GetBattlerSide(battler) != 0)
+    if (GetBattlerSide(battler) != B_SIDE_PLAYER)
     {
-        healthboxSprite->data[0] = -healthboxSprite->data[0];
-        healthboxSprite->data[1] = -healthboxSprite->data[1];
+        healthboxSprite->sSpeedX = -healthboxSprite->sSpeedX;
+        healthboxSprite->sSpeedY = -healthboxSprite->sSpeedY;
         healthboxSprite->x2 = -healthboxSprite->x2;
         healthboxSprite->y2 = -healthboxSprite->y2;
     }
     gSprites[healthboxSprite->data[5]].callback(&gSprites[healthboxSprite->data[5]]);
-    if (GetBattlerPosition(battler) == 2)
+    if (GetBattlerPosition(battler) == B_POSITION_PLAYER_RIGHT)
         healthboxSprite->callback = SpriteCB_HealthboxSlideInDelayed;
 }
 
 static void SpriteCB_HealthboxSlideInDelayed(struct Sprite *sprite)
 {
-    sprite->data[1]++;
-    if (sprite->data[1] == 20)
+    sprite->sDelayTimer++;
+    if (sprite->sDelayTimer == 20)
     {
-        sprite->data[1] = 0;
+        sprite->sDelayTimer = 0;
         sprite->callback = SpriteCB_HealthboxSlideIn;
     }
 }
 
 static void SpriteCB_HealthboxSlideIn(struct Sprite *sprite)
 {
-    sprite->x2 -= sprite->data[0];
-    sprite->y2 -= sprite->data[1];
+    sprite->x2 -= sprite->sSpeedX;
+    sprite->y2 -= sprite->sSpeedY;
     if (sprite->x2 == 0 && sprite->y2 == 0)
         sprite->callback = SpriteCallbackDummy;
 }
+
+#undef sSpeedX
+#undef sSpeedY
+#undef sDelayTimer
 
 void DoHitAnimHealthboxEffect(u8 battler)
 {
@@ -1164,13 +1236,13 @@ void LoadBallGfx(u8 ballId)
 
     switch (ballId)
     {
-    case 6:
-    case 10:
-    case 11:
+    case BALL_DIVE:
+    case BALL_LUXURY:
+    case BALL_PREMIER:
         break;
     default:
         tileStart = GetSpriteTileStartByTag(gBallSpriteSheets[ballId].tag);
-        LZDecompressVram(gOpenPokeballGfx, (void *)(VRAM + 0x10100 + tileStart * 32));
+        LZDecompressVram(gOpenPokeballGfx, (void *)(OBJ_VRAM0 + 0x100 + tileStart * TILE_SIZE_4BPP));
         break;
     }
 }
