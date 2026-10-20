@@ -64,6 +64,18 @@ enum {
     REQUEST_TOUGH_RIBBON_BATTLE,
 };
 
+#define MARK_BATTLE_CONTROLLER_ACTIVE_ON_LOCAL(battler) \
+   gBattleControllerExecFlags |= gBitTable[battler]
+
+#define MARK_BATTLE_CONTROLLER_MESSAGE_OUTBOUND_OVER_LINK(battler) \
+   gBattleControllerExecFlags |= gBitTable[battler] << (32 - MAX_BATTLERS_COUNT)
+
+#define MARK_BATTLE_CONTROLLER_MESSAGE_SYNCHRONIZED_OVER_LINK(battler) \
+   gBattleControllerExecFlags &= ~((1 << 28) << (battler))
+
+#define MARK_BATTLE_CONTROLLER_ACTIVE_FOR_PLAYER(battler, playerId) \
+   gBattleControllerExecFlags |= gBitTable[battler] << ((playerId) << 2)
+
 #define IS_BATTLE_CONTROLLER_ACTIVE_ON_LOCAL(battler) \
    (gBattleControllerExecFlags & gBitTable[battler])
 

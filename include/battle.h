@@ -46,6 +46,10 @@
 
 #define NO_TARGET_OVERRIDE 0
 
+#define IGNORE_SHELL_BELL 0xFFFF
+#define RESOURCE_FLAG_FLASH_FIRE 1
+#define DYNAMIC_TYPE_MASK                 ((1 << 6) - 1)
+
 struct DisableStruct
 {
     /*0x00*/ u32 transformedMonPersonality;
@@ -459,7 +463,7 @@ struct BattleAnimationInfo
 
 #define SET_STAT_BUFF_VALUE(n)(((s8)(((s8)(n) << 4)) & 0xF0))
 
-#define SET_STATCHANGER(statId, stage, goesDown)(gBattleScripting.statChanger = (statId) + (stage << 4) + (goesDown << 7))
+#define SET_STATCHANGER(statId, stage, goesDown) (gBattleStruct->statChanger = (statId) + (stage << 4) + (goesDown << 7))
 
 extern u8 gBattleCommunication[];
 extern struct BattleHistory unk_2016A00;

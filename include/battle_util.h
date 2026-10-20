@@ -9,6 +9,7 @@
 #define MOVE_LIMITATION_TORMENTED               (1 << 3)
 #define MOVE_LIMITATION_TAUNT                   (1 << 4)
 #define MOVE_LIMITATION_IMPRISON                (1 << 5)
+#define MOVE_LIMITATIONS_ALL                    0xFF
 
 #define ABILITYEFFECT_ON_SWITCHIN                0x0
 #define ABILITYEFFECT_ENDTURN                    0x1
@@ -30,6 +31,8 @@
 #define ABILITYEFFECT_COUNT_BATTLER_SIDE         0x11
 #define ABILITYEFFECT_COUNT_ON_FIELD             0x12
 #define ABILITYEFFECT_CHECK_ON_FIELD             0x13
+#define ABILITYEFFECT_MUD_SPORT                  253
+#define ABILITYEFFECT_WATER_SPORT                254
 #define ABILITYEFFECT_SWITCH_IN_WEATHER          0xFF
 
 #define ABILITY_ON_OPPOSING_FIELD(battlerId, abilityId)(AbilityBattleEffects(ABILITYEFFECT_CHECK_OTHER_SIDE, battlerId, abilityId, 0, 0))
@@ -37,11 +40,17 @@
 #define ABILITY_ON_FIELD2(abilityId)(AbilityBattleEffects(ABILITYEFFECT_FIELD_SPORT, 0, abilityId, 0, 0))
 
 #define ITEMEFFECT_ON_SWITCH_IN                 0x0
+#define ITEMEFFECT_NORMAL                       1
+#define ITEMEFFECT_DUMMY                        2 // Unused, empty
 #define ITEMEFFECT_MOVE_END                     0x3
 #define ITEMEFFECT_KINGSROCK_SHELLBELL          0x4
 
 #define WEATHER_HAS_EFFECT ((!AbilityBattleEffects(ABILITYEFFECT_CHECK_ON_FIELD, 0, ABILITY_CLOUD_NINE, 0, 0) && !AbilityBattleEffects(ABILITYEFFECT_CHECK_ON_FIELD, 0, ABILITY_AIR_LOCK, 0, 0)))
 #define WEATHER_HAS_EFFECT2 ((!ABILITY_ON_FIELD2(ABILITY_CLOUD_NINE) && !ABILITY_ON_FIELD2(ABILITY_AIR_LOCK)))
+
+#define DISOBEDIENCE_OBEDIENT 0
+#define DISOBEDIENCE_IGNORED  1 // command is ignored
+#define DISOBEDIENCE_OTHER    2 // random move or self-hit
 
 void HandleAction_UseMove(void);
 void HandleAction_Switch(void);
