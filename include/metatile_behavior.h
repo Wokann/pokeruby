@@ -1,6 +1,14 @@
 #ifndef GUARD_METATILE_BEHAVIOR_H
 #define GUARD_METATILE_BEHAVIOR_H
 
+// Return values for MetatileBehavior_GetBridgeType
+enum {
+    BRIDGE_TYPE_OCEAN, // For log bridges over 'ocean' style water (Routes 110/119 use this).
+    BRIDGE_TYPE_POND_LOW,
+    BRIDGE_TYPE_POND_MED,
+    BRIDGE_TYPE_POND_HIGH,
+};
+
 bool8 MetatileBehavior_IsATile(u8 metatileBehavior);
 bool8 MetatileBehavior_IsEncounterTile(u8 metatileBehavior);
 bool8 MetatileBehavior_IsJumpEast(u8 metatileBehavior);
