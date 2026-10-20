@@ -514,13 +514,13 @@ const s16 gSineDegreeTable[] =
 // amplitude * sin(index*(π/128))
 s16 Sin(s16 index, s16 amplitude)
 {
-    return (amplitude * gSineTable[index]) >> 8;
+    return Q_8_8_TO_INT(amplitude * gSineTable[index]);
 }
 
 // amplitude * cos(index*(π/128))
 s16 Cos(s16 index, s16 amplitude)
 {
-    return (amplitude * gSineTable[index + 64]) >> 8;
+    return Q_8_8_TO_INT(amplitude * gSineTable[index + 64]);
 }
 
 // angle in degrees
