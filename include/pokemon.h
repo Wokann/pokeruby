@@ -297,6 +297,7 @@ struct BattleMove
     u8 flags;
 };
 
+#define SPINDA_SPOT_WIDTH 16
 #define SPINDA_SPOT_HEIGHT 16
 
 struct SpindaSpot
@@ -342,7 +343,7 @@ extern const u8 gFacilityClassToPicIndex[];
 extern const u8 gFacilityClassToTrainerClass[];
 extern const struct BattleMove gBattleMoves[];
 extern const struct SpeciesInfo gSpeciesInfo[];
-extern const struct SpindaSpot gSpindaSpotGraphics[];
+extern const struct SpindaSpot gSpindaSpotGraphics[4];
 extern const u16 gSpeciesToHoennPokedexNum[];
 extern const u16 gSpeciesToNationalPokedexNum[];
 extern const u16 gHoennToNationalOrder[];

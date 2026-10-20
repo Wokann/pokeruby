@@ -156,6 +156,7 @@ enum {
 #define FRIENDSHIP_EVENT_FAINT_FIELD_PSN      0x7
 #define FRIENDSHIP_EVENT_FAINT_LARGE          0x8
 
+#define MAX_PER_STAT_EVS 255
 #define MAX_TOTAL_EVS 510
 #define EV_ITEM_RAISE_LIMIT 100
 #define NUM_STATS 6
@@ -196,7 +197,10 @@ enum {
 #define EVOS_PER_MON 5
 
 // Evolution 'modes,' for GetEvolutionTargetSpecies
+#define EVO_MODE_NORMAL     0
+#define EVO_MODE_TRADE      1
 #define EVO_MODE_ITEM_USE   2
+#define EVO_MODE_ITEM_CHECK 3 // If an Everstone is being held, still want to show that the stone *could* be used on that Pokémon to evolve
 
 #define MON_PIC_WIDTH 64
 #define MON_PIC_HEIGHT 64
