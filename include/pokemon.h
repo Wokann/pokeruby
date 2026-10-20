@@ -351,7 +351,7 @@ extern const u32 gTMHMLearnsets[][2];
 extern const u8 gPPUpGetMask[];
 extern const u8 gPPUpClearMask[];
 extern const u8 gPPUpAddValues[];
-extern const u8 gStatStageRatios[][2];
+extern const u8 gStatStageRatios[MAX_STAT_STAGE + 1][2];
 extern const s8 gNatureStatTable[][NUM_NATURE_STATS];
 extern const u32 gExperienceTables[][MAX_LEVEL + 1];
 extern const u16 *gLevelUpLearnsets[];
