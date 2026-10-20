@@ -346,7 +346,7 @@ union OldMan
 struct DaycareMail
 {
     /*0x00*/ struct Mail message;
-    /*0x24*/ u8 names[19];
+    /*0x24*/ u8 names[PLAYER_NAME_LENGTH + POKEMON_NAME_LENGTH + 2];
 };
 
 struct DayCareStepCountersEtc {
