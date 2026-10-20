@@ -3,6 +3,7 @@
 
 #define OAM_MATRIX_COUNT 32
 #define MAX_SPRITES 64
+#define TAG_NONE 0xFFFF
 
 struct SpriteSheet
 {
