@@ -1,6 +1,17 @@
 #ifndef GUARD_FIELD_EFFECT_HELPERS_H
 #define GUARD_FIELD_EFFECT_HELPERS_H
 
+// States for bobbing up and down while surfing
+enum {
+    // No bobbing
+    BOB_NONE,
+    // Both the surf blob/mon should bob up and down
+    BOB_PLAYER_AND_MON,
+    // Only the surf blob/mon should bob up and down
+    // For when the player has jumped/flown off
+    BOB_JUST_MON,
+};
+
 void StartRevealDisguise(struct ObjectEvent *objectEvent);
 bool8 UpdateRevealDisguise(struct ObjectEvent *objectEvent);
 void UpdateShadowFieldEffect(struct Sprite *sprite);
