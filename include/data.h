@@ -3,6 +3,10 @@
 
 #define MAX_TRAINER_ITEMS 4
 
+#define TRAINER_PIC_WIDTH 64
+#define TRAINER_PIC_HEIGHT 64
+#define TRAINER_PIC_SIZE (TRAINER_PIC_WIDTH * TRAINER_PIC_HEIGHT / 2)
+
 #include "sprite.h"
 #include "battle.h"
 

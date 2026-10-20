@@ -4,6 +4,8 @@
 #include "task.h"
 #include "text.h"
 
+#define MENU_B_PRESSED -1
+
 typedef bool8 (*MenuFunc)();
 
 struct MenuAction
