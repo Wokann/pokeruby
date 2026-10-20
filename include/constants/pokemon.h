@@ -48,6 +48,7 @@ enum {
     NATURE_SASSY,
     NATURE_CAREFUL,
     NATURE_QUIRKY,
+    NUM_NATURES,
 };
 
 enum
@@ -62,22 +63,30 @@ enum
     STAT_EVASION,  // 7
 };
 
+#define NUM_NATURE_STATS (NUM_STATS - 1) // excludes HP
 #define NUM_BATTLE_STATS 8
 
 #define MIN_LEVEL 1
 #define MAX_LEVEL 100
 
 #define MAX_PER_STAT_IVS 31
+#define MAX_IV_MASK 31
 #define USE_RANDOM_IVS (MAX_PER_STAT_IVS + 1)
 #define OT_ID_PLAYER_ID       0
+#define OT_ID_PRESET          1
 #define OT_ID_RANDOM_NO_SHINY 2
 
-#define LEVEL_UP_END 0xffff
+#define LEVEL_UP_MOVE_ID   0x01FF
+#define LEVEL_UP_MOVE_LV   0xFE00
+#define LEVEL_UP_END       0xFFFF
 
 #define MAX_LEVEL_UP_MOVES 20
 
 #define MON_ALREADY_KNOWS_MOVE  0xFFFE
 #define MON_HAS_MAX_MOVES       0xFFFF
+
+// Shiny odds
+#define SHINY_ODDS 8 // Actual probability is SHINY_ODDS/65536
 
 #define MON_MALE       0x00
 #define MON_FEMALE     0xFE
@@ -124,6 +133,9 @@ enum {
     BODY_COLOR_WHITE,
     BODY_COLOR_PINK
 };
+
+// Friendship value that the majority of species use.
+#define STANDARD_FRIENDSHIP 70
 
 #define MAX_FRIENDSHIP  255
 
@@ -172,6 +184,8 @@ enum {
 #define EVO_LEVEL_NINJASK    0x000d // Pokémon reaches the specified level (special value for Ninjask)
 #define EVO_LEVEL_SHEDINJA   0x000e // Pokémon reaches the specified level (special value for Shedinja)
 #define EVO_BEAUTY           0x000f // Pokémon levels up with beauty ≥ specified value
+
+#define EVOS_PER_MON 5
 
 #define MON_PIC_WIDTH 64
 #define MON_PIC_HEIGHT 64

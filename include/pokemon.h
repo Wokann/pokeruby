@@ -297,10 +297,12 @@ struct BattleMove
     u8 flags;
 };
 
+#define SPINDA_SPOT_HEIGHT 16
+
 struct SpindaSpot
 {
     u8 x, y;
-    u16 image[16];
+    u16 image[SPINDA_SPOT_HEIGHT];
 };
 
 struct __attribute__((packed)) LevelUpMove {
@@ -323,6 +325,8 @@ struct Evolution
     | (((personality) & 0x00000300) >> 6)  \
     | (((personality) & 0x00000003) >> 0)  \
 ) % NUM_UNOWN_FORMS)
+
+#define GET_SHINY_VALUE(otId, personality) (HIHALF(otId) ^ LOHALF(otId) ^ HIHALF(personality) ^ LOHALF(personality))
 
 struct EvolutionData
 {
@@ -348,10 +352,10 @@ extern const u8 gPPUpGetMask[];
 extern const u8 gPPUpClearMask[];
 extern const u8 gPPUpAddValues[];
 extern const u8 gStatStageRatios[][2];
-extern const s8 gNatureStatTable[][5];
-extern const u32 gExperienceTables[][101];
+extern const s8 gNatureStatTable[][NUM_NATURE_STATS];
+extern const u32 gExperienceTables[][MAX_LEVEL + 1];
 extern const u16 *gLevelUpLearnsets[];
-extern struct Evolution gEvolutionTable[][5];
+extern struct Evolution gEvolutionTable[][EVOS_PER_MON];
 extern struct SpriteTemplate gMultiuseSpriteTemplate;
 extern const struct SpriteTemplate gBattlerSpriteTemplates[];
 

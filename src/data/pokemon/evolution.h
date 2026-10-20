@@ -1,7 +1,7 @@
 #ifndef POKERUBY_EVOLUTION_H
 #define POKERUBY_EVOLUTION_H
 
-struct Evolution gEvolutionTable[NUM_SPECIES][5] =
+struct Evolution gEvolutionTable[NUM_SPECIES][EVOS_PER_MON] =
 {
     [SPECIES_BULBASAUR]  = {{EVO_LEVEL, 16, SPECIES_IVYSAUR}},
     [SPECIES_IVYSAUR]    = {{EVO_LEVEL, 32, SPECIES_VENUSAUR}},
