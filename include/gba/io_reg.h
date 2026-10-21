@@ -547,6 +547,7 @@
 #define WININ_WIN0_BG_ALL   (WININ_WIN0_BG0 | WININ_WIN0_BG1 | WININ_WIN0_BG2 | WININ_WIN0_BG3)
 #define WININ_WIN0_OBJ      (1 << 4)
 #define WININ_WIN0_CLR      (1 << 5)
+#define WININ_WIN0_ALL      (WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR)
 #define WININ_WIN1_BG0      (1 << 8)
 #define WININ_WIN1_BG1      (1 << 9)
 #define WININ_WIN1_BG2      (1 << 10)
@@ -554,6 +555,7 @@
 #define WININ_WIN1_BG_ALL   (WININ_WIN1_BG0 | WININ_WIN1_BG1 | WININ_WIN1_BG2 | WININ_WIN1_BG3)
 #define WININ_WIN1_OBJ      (1 << 12)
 #define WININ_WIN1_CLR      (1 << 13)
+#define WININ_WIN1_ALL      (WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR)
 
 #define WINOUT_WIN01_BG0    (1 << 0)
 #define WINOUT_WIN01_BG1    (1 << 1)
