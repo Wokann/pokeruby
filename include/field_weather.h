@@ -4,28 +4,36 @@
 #include "sprite.h"
 #include "constants/field_weather.h"
 
+#define TAG_WEATHER_START 0x1200
+enum {
+    PALTAG_WEATHER = TAG_WEATHER_START,
+    PALTAG_WEATHER_2
+};
+
+#define NUM_WEATHER_COLOR_MAPS 19
+
 struct Weather
 {
     union
     {
         struct
         {
-            struct Sprite *rainSprites[24];
+            struct Sprite *rainSprites[MAX_RAIN_SPRITES];
             struct Sprite *snowflakeSprites[101];
-            struct Sprite *cloudSprites[3];
+            struct Sprite *cloudSprites[NUM_CLOUD_SPRITES];
         } s1;
         struct
         {
             u8 filler0[0xA0];
-            struct Sprite *fogHSprites[20];
-            struct Sprite *ashSprites[20];
-            struct Sprite *fogDSprites[20];
-            struct Sprite *sandstormSprites1[20];
-            struct Sprite *sandstormSprites2[5];
+            struct Sprite *fogHSprites[NUM_FOG_HORIZONTAL_SPRITES];
+            struct Sprite *ashSprites[NUM_ASH_SPRITES];
+            struct Sprite *fogDSprites[NUM_FOG_DIAGONAL_SPRITES];
+            struct Sprite *sandstormSprites1[NUM_SANDSTORM_SPRITES];
+            struct Sprite *sandstormSprites2[NUM_SWIRL_SANDSTORM_SPRITES];
         } s2;
     } sprites;
-    u8 darkenedContrastColorMaps[19][32];
-    u8 contrastColorMaps[19][32];
+    u8 darkenedContrastColorMaps[NUM_WEATHER_COLOR_MAPS][32];
+    u8 contrastColorMaps[NUM_WEATHER_COLOR_MAPS][32];
     s8 colorMapIndex;
     s8 targetColorMapIndex;
     u8 colorMapStepDelay;
