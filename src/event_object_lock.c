@@ -44,21 +44,24 @@ void FreezeObjects_WaitForPlayer(void)
     CreateTask(Task_FreezePlayer, 80);
 }
 
+#define tPlayerFrozen data[0]
+#define tObjectFrozen data[1]
+
 static void Task_FreezeSelectedObjectAndPlayer(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
-    if (!task->data[0] && IsPlayerStandingStill() == TRUE)
+    if (!task->tPlayerFrozen && IsPlayerStandingStill() == TRUE)
     {
         PlayerFreeze();
-        task->data[0] = 1;
+        task->tPlayerFrozen = TRUE;
     }
-    if (!task->data[1] && !gObjectEvents[gSelectedObjectEvent].singleMovementActive)
+    if (!task->tObjectFrozen && !gObjectEvents[gSelectedObjectEvent].singleMovementActive)
     {
         FreezeObjectEvent(&gObjectEvents[gSelectedObjectEvent]);
-        task->data[1] = 1;
+        task->tObjectFrozen = TRUE;
     }
-    if (task->data[0] && task->data[1])
+    if (task->tPlayerFrozen && task->tObjectFrozen)
         DestroyTask(taskId);
 }
 
@@ -83,9 +86,12 @@ void FreezeObjects_WaitForPlayerAndSelected(void)
     if (!gObjectEvents[gSelectedObjectEvent].singleMovementActive)
     {
         FreezeObjectEvent(&gObjectEvents[gSelectedObjectEvent]);
-        gTasks[taskId].data[1] = 1;
+        gTasks[taskId].tObjectFrozen = TRUE;
     }
 }
+
+#undef tPlayerFrozen
+#undef tObjectFrozen
 
 void ScriptUnfreezeObjectEvents(void)
 {
