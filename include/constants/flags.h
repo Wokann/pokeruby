@@ -5,37 +5,40 @@
 // These temporary flags are are cleared every time a map is loaded. They are used
 // for things like shortening an NPCs introduction text if the player already spoke
 // to them once.
-#define FLAG_TEMP_1   0x1
-#define FLAG_TEMP_2   0x2
-#define FLAG_TEMP_3   0x3
-#define FLAG_TEMP_4   0x4
-#define FLAG_TEMP_5   0x5
-#define FLAG_TEMP_6   0x6
-#define FLAG_TEMP_7   0x7
-#define FLAG_TEMP_8   0x8
-#define FLAG_TEMP_9   0x9
-#define FLAG_TEMP_A   0xA
-#define FLAG_TEMP_B   0xB
-#define FLAG_TEMP_C   0xC
-#define FLAG_TEMP_D   0xD
-#define FLAG_TEMP_E   0xE
-#define FLAG_TEMP_F   0xF
-#define FLAG_TEMP_10  0x10
-#define FLAG_TEMP_11  0x11
-#define FLAG_TEMP_12  0x12
-#define FLAG_TEMP_13  0x13
-#define FLAG_TEMP_14  0x14
-#define FLAG_TEMP_15  0x15
-#define FLAG_TEMP_16  0x16
-#define FLAG_TEMP_17  0x17
-#define FLAG_TEMP_18  0x18
-#define FLAG_TEMP_19  0x19
-#define FLAG_TEMP_1A  0x1A
-#define FLAG_TEMP_1B  0x1B
-#define FLAG_TEMP_1C  0x1C
-#define FLAG_TEMP_1D  0x1D
-#define FLAG_TEMP_1E  0x1E
-#define FLAG_TEMP_1F  0x1F
+#define TEMP_FLAGS_START 0x0
+#define FLAG_TEMP_1      (TEMP_FLAGS_START + 0x1)
+#define FLAG_TEMP_2      (TEMP_FLAGS_START + 0x2)
+#define FLAG_TEMP_3      (TEMP_FLAGS_START + 0x3)
+#define FLAG_TEMP_4      (TEMP_FLAGS_START + 0x4)
+#define FLAG_TEMP_5      (TEMP_FLAGS_START + 0x5)
+#define FLAG_TEMP_6      (TEMP_FLAGS_START + 0x6)
+#define FLAG_TEMP_7      (TEMP_FLAGS_START + 0x7)
+#define FLAG_TEMP_8      (TEMP_FLAGS_START + 0x8)
+#define FLAG_TEMP_9      (TEMP_FLAGS_START + 0x9)
+#define FLAG_TEMP_A      (TEMP_FLAGS_START + 0xA)
+#define FLAG_TEMP_B      (TEMP_FLAGS_START + 0xB)
+#define FLAG_TEMP_C      (TEMP_FLAGS_START + 0xC)
+#define FLAG_TEMP_D      (TEMP_FLAGS_START + 0xD)
+#define FLAG_TEMP_E      (TEMP_FLAGS_START + 0xE)
+#define FLAG_TEMP_F      (TEMP_FLAGS_START + 0xF)
+#define FLAG_TEMP_10     (TEMP_FLAGS_START + 0x10)
+#define FLAG_TEMP_11     (TEMP_FLAGS_START + 0x11)
+#define FLAG_TEMP_12     (TEMP_FLAGS_START + 0x12)
+#define FLAG_TEMP_13     (TEMP_FLAGS_START + 0x13)
+#define FLAG_TEMP_14     (TEMP_FLAGS_START + 0x14)
+#define FLAG_TEMP_15     (TEMP_FLAGS_START + 0x15)
+#define FLAG_TEMP_16     (TEMP_FLAGS_START + 0x16)
+#define FLAG_TEMP_17     (TEMP_FLAGS_START + 0x17)
+#define FLAG_TEMP_18     (TEMP_FLAGS_START + 0x18)
+#define FLAG_TEMP_19     (TEMP_FLAGS_START + 0x19)
+#define FLAG_TEMP_1A     (TEMP_FLAGS_START + 0x1A)
+#define FLAG_TEMP_1B     (TEMP_FLAGS_START + 0x1B)
+#define FLAG_TEMP_1C     (TEMP_FLAGS_START + 0x1C)
+#define FLAG_TEMP_1D     (TEMP_FLAGS_START + 0x1D)
+#define FLAG_TEMP_1E     (TEMP_FLAGS_START + 0x1E)
+#define FLAG_TEMP_1F     (TEMP_FLAGS_START + 0x1F)
+#define TEMP_FLAGS_END   FLAG_TEMP_1F
+#define NUM_TEMP_FLAGS   (TEMP_FLAGS_END - TEMP_FLAGS_START + 1)
 // FLAG_TEMP_20 was supposed to be used as a temporary flag (see above), but there
 // was either an oversight or off-by-one error.
 #define FLAG_TEMP_20  0x20
@@ -884,24 +887,28 @@
 // Daily Flags. These 64 flags are cleared once per day.
 #define DAILY_FLAGS_START (SYSTEM_FLAGS + 0xC0)
 
-#define FLAG_DAILY_CONTEST_LOBBY_RECEIVED_BERRY   (SYSTEM_FLAGS + 0xC1)
-#define FLAG_DAILY_SECRET_BASE                (SYSTEM_FLAGS + 0xC2)
+#define FLAG_DAILY_CONTEST_LOBBY_RECEIVED_BERRY      (DAILY_FLAGS_START + 0x1)
+#define FLAG_DAILY_SECRET_BASE                       (DAILY_FLAGS_START + 0x2)
 
-#define FLAG_DAILY_PICKED_LOTO_TICKET        (SYSTEM_FLAGS + 0xCA)
-#define FLAG_DAILY_ROUTE_114_RECEIVED_BERRY    (SYSTEM_FLAGS + 0xCB)
-#define FLAG_DAILY_ROUTE_111_RECEIVED_BERRY    (SYSTEM_FLAGS + 0xCC)
-#define FLAG_DAILY_BERRY_MASTER_RECEIVED_BERRY (SYSTEM_FLAGS + 0xCD)
-#define FLAG_DAILY_ROUTE_120_RECEIVED_BERRY    (SYSTEM_FLAGS + 0xCE)
-#define FLAG_DAILY_LILYCOVE_RECEIVED_BERRY    (SYSTEM_FLAGS + 0xCF)
-#define FLAG_DAILY_FLOWER_SHOP_RECEIVED_BERRY (SYSTEM_FLAGS + 0xD0)
-#define FLAG_DAILY_BERRY_MASTERS_WIFE (SYSTEM_FLAGS + 0xD1)
-#define FLAG_DAILY_SOOTOPOLIS_RECEIVED_BERRY  (SYSTEM_FLAGS + 0xD2)
-// Daily flags end at 0x8FF
+#define FLAG_DAILY_PICKED_LOTO_TICKET                (DAILY_FLAGS_START + 0xA)
+#define FLAG_DAILY_ROUTE_114_RECEIVED_BERRY          (DAILY_FLAGS_START + 0xB)
+#define FLAG_DAILY_ROUTE_111_RECEIVED_BERRY          (DAILY_FLAGS_START + 0xC)
+#define FLAG_DAILY_BERRY_MASTER_RECEIVED_BERRY       (DAILY_FLAGS_START + 0xD)
+#define FLAG_DAILY_ROUTE_120_RECEIVED_BERRY          (DAILY_FLAGS_START + 0xE)
+#define FLAG_DAILY_LILYCOVE_RECEIVED_BERRY           (DAILY_FLAGS_START + 0xF)
+#define FLAG_DAILY_FLOWER_SHOP_RECEIVED_BERRY        (DAILY_FLAGS_START + 0x10)
+#define FLAG_DAILY_BERRY_MASTERS_WIFE                (DAILY_FLAGS_START + 0x11)
+#define FLAG_DAILY_SOOTOPOLIS_RECEIVED_BERRY         (DAILY_FLAGS_START + 0x12)
+#define DAILY_FLAGS_END (SYSTEM_FLAGS + 0xFF)
+#define NUM_DAILY_FLAGS (DAILY_FLAGS_END - DAILY_FLAGS_START + 1)
 
-// SPECIAL FLAGS
+// Special Flags (Stored in EWRAM (sSpecialFlags), not in the SaveBlock)
+#define SPECIAL_FLAGS_START                     0x4000
+#define FLAG_HIDE_MAP_NAME_POPUP                (SPECIAL_FLAGS_START + 0x0)
+#define FLAG_DONT_TRANSITION_MUSIC              (SPECIAL_FLAGS_START + 0x1)
 
-#define FLAG_HIDE_MAP_NAME_POPUP 0x4000
-#define FLAG_DONT_TRANSITION_MUSIC 0x4001
+#define SPECIAL_FLAGS_END                       (SPECIAL_FLAGS_START + 0x7F)
+#define NUM_SPECIAL_FLAGS                       (SPECIAL_FLAGS_END - SPECIAL_FLAGS_START + 1)
 
 // Temp flag aliases
 #define FLAG_TEMP_SKIP_GABBY_INTERVIEW          FLAG_TEMP_1

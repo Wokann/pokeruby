@@ -2,9 +2,10 @@
 #include "event_data.h"
 #include "pokedex.h"
 
-#define TEMP_FLAGS_SIZE 0x4
-#define DAILY_FLAGS_SIZE 0x8
-#define TEMP_VARS_SIZE 0x20
+#define SPECIAL_FLAGS_SIZE  (NUM_SPECIAL_FLAGS / 8)  // 8 flags per byte
+#define TEMP_FLAGS_SIZE     (NUM_TEMP_FLAGS / 8)
+#define DAILY_FLAGS_SIZE    (NUM_DAILY_FLAGS / 8)
+#define TEMP_VARS_SIZE      (NUM_TEMP_VARS * sizeof(u16))
 
 EWRAM_DATA u16 gSpecialVar_0x8000 = 0;
 EWRAM_DATA u16 gSpecialVar_0x8001 = 0;
@@ -21,7 +22,7 @@ EWRAM_DATA u16 gSpecialVar_0x800B = 0;
 EWRAM_DATA u16 gSpecialVar_Result = 0;
 EWRAM_DATA u16 gSpecialVar_LastTalked = 0;
 EWRAM_DATA u16 gSpecialVar_Facing = 0;
-EWRAM_DATA static u8 sSpecialFlags[16] = {0};
+EWRAM_DATA static u8 sSpecialFlags[SPECIAL_FLAGS_SIZE] = {0};
 
 extern u16 *const gSpecialVars[];
 
@@ -34,8 +35,8 @@ void InitEventData(void)
 
 void ClearTempFieldEventData(void)
 {
-    memset(gSaveBlock1.flags, 0, TEMP_FLAGS_SIZE);
-    memset(gSaveBlock1.vars, 0, TEMP_VARS_SIZE);
+    memset(&gSaveBlock1.flags[TEMP_FLAGS_START / 8], 0, TEMP_FLAGS_SIZE);
+    memset(&gSaveBlock1.vars[TEMP_VARS_START - VARS_START], 0, TEMP_VARS_SIZE);
     FlagClear(FLAG_SYS_ENC_UP_ITEM);
     FlagClear(FLAG_SYS_ENC_DOWN_ITEM);
     FlagClear(FLAG_SYS_USE_STRENGTH);
@@ -62,7 +63,7 @@ void EnableNationalPokedex(void)
     gSaveBlock2.pokedex.nationalMagic = 0xDA;
     *nationalDexVar = 0x302;
     FlagSet(FLAG_SYS_NATIONAL_DEX);
-    gSaveBlock2.pokedex.mode = 1;
+    gSaveBlock2.pokedex.mode = DEX_MODE_NATIONAL;
     gSaveBlock2.pokedex.order = 0;
     ResetPokedexScrollPositions();
 }
@@ -144,12 +145,12 @@ u8 VarGetObjectEventGraphicsId(u8 id)
 u8 *GetFlagPointer(u16 id)
 {
     if (id == 0)
-        return 0;
+        return NULL;
 
-    if (id < 0x4000)
+    if (id < SPECIAL_FLAGS_START)
         return &gSaveBlock1.flags[id / 8];
 
-    return &sSpecialFlags[(id - 0x4000) / 8];
+    return &sSpecialFlags[(id - SPECIAL_FLAGS_START) / 8];
 }
 
 u8 FlagSet(u16 id)
