@@ -3,14 +3,16 @@
 
 #include "constants/rematches.h"
 
+#define REMATCHES_COUNT 5
+
 struct RematchTrainer
 {
-    u16 trainerIds[5];  // Each of these trainers has 5 increasingly stronger teams.
+    u16 trainerIds[REMATCHES_COUNT];
     u16 mapGroup;
     u16 mapNum;
 };
 
-extern const struct RematchTrainer gRematchTable[56];
+extern const struct RematchTrainer gRematchTable[REMATCH_TABLE_ENTRIES];
 extern u16 gTrainerBattleOpponent_A;
 
 void BattleSetup_StartWildBattle(void);

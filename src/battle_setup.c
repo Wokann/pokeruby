@@ -11,6 +11,8 @@
 #include "constants/opponents.h"
 #include "constants/songs.h"
 #include "constants/species.h"
+#include "constants/weather.h"
+#include "constants/rgb.h"
 #include "script_pokemon_util.h"
 #include "data.h"
 #include "event_data.h"
@@ -38,9 +40,16 @@
 #include "text.h"
 #include "constants/trainers.h"
 
-EWRAM_DATA static u16 sTrainerBattleMode = 0;
-EWRAM_DATA u16 gTrainerBattleOpponent_A = 0;
-EWRAM_DATA static u16 sTrainerObjectEventLocalId = 0;
+enum {
+    TRANSITION_TYPE_NORMAL,
+    TRANSITION_TYPE_CAVE,
+    TRANSITION_TYPE_FLASH,
+    TRANSITION_TYPE_WATER,
+};
+
+EWRAM_DATA static u16 sTrainerBattleMode = TRAINER_BATTLE_SINGLE;
+EWRAM_DATA u16 gTrainerBattleOpponent_A = TRAINER_NONE;
+EWRAM_DATA static u16 sTrainerObjectEventLocalId = LOCALID_NONE;
 EWRAM_DATA static u8 *sTrainerAIntroSpeech = NULL;
 EWRAM_DATA static u8 *sTrainerADefeatSpeech = NULL;
 EWRAM_DATA static u8 *sTrainerVictorySpeech = NULL;
@@ -52,17 +61,17 @@ EWRAM_DATA static u8 *sTrainerABattleScriptRetAddr = NULL;
 // Otherwise, the second transition is used.
 static const u8 sBattleTransitionTable_Wild[][2] =
 {
-    {B_TRANSITION_SLICE,          B_TRANSITION_WHITE_BARS_FADE},  // Normal
-    {B_TRANSITION_CLOCKWISE_WIPE, B_TRANSITION_GRID_SQUARES},     // Cave
-    {B_TRANSITION_BLUR,           B_TRANSITION_GRID_SQUARES},     // Cave with flash used
-    {B_TRANSITION_WAVE,           B_TRANSITION_RIPPLE},           // Water
+    [TRANSITION_TYPE_NORMAL] = {B_TRANSITION_SLICE,          B_TRANSITION_WHITE_BARS_FADE},
+    [TRANSITION_TYPE_CAVE]   = {B_TRANSITION_CLOCKWISE_WIPE, B_TRANSITION_GRID_SQUARES},
+    [TRANSITION_TYPE_FLASH]  = {B_TRANSITION_BLUR,           B_TRANSITION_GRID_SQUARES},
+    [TRANSITION_TYPE_WATER]  = {B_TRANSITION_WAVE,           B_TRANSITION_RIPPLE},
 };
 static const u8 sBattleTransitionTable_Trainer[][2] =
 {
-    {B_TRANSITION_POKEBALLS_TRAIL, B_TRANSITION_ANGLED_WIPES},     // Normal
-    {B_TRANSITION_SHUFFLE,        B_TRANSITION_BIG_POKEBALL},     // Cave
-    {B_TRANSITION_BLUR,           B_TRANSITION_GRID_SQUARES},     // Cave with flash used
-    {B_TRANSITION_SWIRL,          B_TRANSITION_RIPPLE},           // Water
+    [TRANSITION_TYPE_NORMAL] = {B_TRANSITION_POKEBALLS_TRAIL, B_TRANSITION_ANGLED_WIPES},
+    [TRANSITION_TYPE_CAVE]   = {B_TRANSITION_SHUFFLE,         B_TRANSITION_BIG_POKEBALL},
+    [TRANSITION_TYPE_FLASH]  = {B_TRANSITION_BLUR,            B_TRANSITION_GRID_SQUARES},
+    [TRANSITION_TYPE_WATER]  = {B_TRANSITION_SWIRL,           B_TRANSITION_RIPPLE},
 };
 
 enum
@@ -143,291 +152,74 @@ static const struct TrainerBattleParameter sContinueScriptDoubleBattleParams[] =
     {&sTrainerBattleEndScript,      TRAINER_PARAM_LOAD_SCRIPT_RET_ADDR},
 };
 
-const struct RematchTrainer gRematchTable[] =
+#define REMATCH(trainer1, trainer2, trainer3, trainer4, trainer5, map)  \
+{                                                                       \
+    .trainerIds = {trainer1, trainer2, trainer3, trainer4, trainer5},   \
+    .mapGroup = MAP_GROUP(map),                                         \
+    .mapNum = MAP_NUM(map),                                             \
+}
+
+const struct RematchTrainer gRematchTable[REMATCH_TABLE_ENTRIES] =
 {
-    {
-        {TRAINER_ROSE_1, TRAINER_ROSE_2, TRAINER_ROSE_3, TRAINER_ROSE_4, TRAINER_ROSE_5},
-        MAP_GROUP(MAP_ROUTE118),
-        MAP_NUM(MAP_ROUTE118),
-    },
-    {
-        {TRAINER_DUSTY_1, TRAINER_DUSTY_2, TRAINER_DUSTY_3, TRAINER_DUSTY_4, TRAINER_DUSTY_5},
-        MAP_GROUP(MAP_ROUTE111),
-        MAP_NUM(MAP_ROUTE111),
-    },
-    {
-        {TRAINER_LOLA_1, TRAINER_LOLA_2, TRAINER_LOLA_3, TRAINER_LOLA_4, TRAINER_LOLA_5},
-        MAP_GROUP(MAP_ROUTE109),
-        MAP_NUM(MAP_ROUTE109),
-    },
-    {
-        {TRAINER_RICKY_1, TRAINER_RICKY_2, TRAINER_RICKY_3, TRAINER_RICKY_4, TRAINER_RICKY_5},
-        MAP_GROUP(MAP_ROUTE109),
-        MAP_NUM(MAP_ROUTE109),
-    },
-    {
-        {TRAINER_RITA_AND_SAM_1, TRAINER_RITA_AND_SAM_2, TRAINER_RITA_AND_SAM_3, TRAINER_RITA_AND_SAM_4, TRAINER_RITA_AND_SAM_5},
-        MAP_GROUP(MAP_ROUTE124),
-        MAP_NUM(MAP_ROUTE124),
-    },
-    {
-        {TRAINER_BROOKE_1, TRAINER_BROOKE_2, TRAINER_BROOKE_3, TRAINER_BROOKE_4, TRAINER_BROOKE_5},
-        MAP_GROUP(MAP_ROUTE111),
-        MAP_NUM(MAP_ROUTE111),
-    },
-    {
-        {TRAINER_WILTON_1, TRAINER_WILTON_2, TRAINER_WILTON_3, TRAINER_WILTON_4, TRAINER_WILTON_5},
-        MAP_GROUP(MAP_ROUTE111),
-        MAP_NUM(MAP_ROUTE111),
-    },
-    {
-        {TRAINER_VALERIE_1, TRAINER_VALERIE_2, TRAINER_VALERIE_3, TRAINER_VALERIE_4, TRAINER_VALERIE_5},
-        MAP_GROUP(MAP_MT_PYRE_6F),
-        MAP_NUM(MAP_MT_PYRE_6F),
-    },
-    {
-        {TRAINER_CINDY_1, TRAINER_CINDY_3, TRAINER_CINDY_4, TRAINER_CINDY_5, TRAINER_CINDY_6},
-        MAP_GROUP(MAP_ROUTE104),
-        MAP_NUM(MAP_ROUTE104),
-    },
-    {
-        {TRAINER_JESSICA_1, TRAINER_JESSICA_2, TRAINER_JESSICA_3, TRAINER_JESSICA_4, TRAINER_JESSICA_5},
-        MAP_GROUP(MAP_ROUTE121),
-        MAP_NUM(MAP_ROUTE121),
-    },
-    {
-        {TRAINER_WINSTON_1, TRAINER_WINSTON_2, TRAINER_WINSTON_3, TRAINER_WINSTON_4, TRAINER_WINSTON_5},
-        MAP_GROUP(MAP_ROUTE104),
-        MAP_NUM(MAP_ROUTE104),
-    },
-    {
-        {TRAINER_STEVE_1, TRAINER_STEVE_2, TRAINER_STEVE_3, TRAINER_STEVE_4, TRAINER_STEVE_5},
-        MAP_GROUP(MAP_ROUTE114),
-        MAP_NUM(MAP_ROUTE114),
-    },
-    {
-        {TRAINER_TONY_1, TRAINER_TONY_2, TRAINER_TONY_3, TRAINER_TONY_4, TRAINER_TONY_5},
-        MAP_GROUP(MAP_ROUTE107),
-        MAP_NUM(MAP_ROUTE107),
-    },
-    {
-        {TRAINER_NOB_1, TRAINER_NOB_2, TRAINER_NOB_3, TRAINER_NOB_4, TRAINER_NOB_5},
-        MAP_GROUP(MAP_ROUTE115),
-        MAP_NUM(MAP_ROUTE115),
-    },
-    {
-        {TRAINER_DALTON_1, TRAINER_DALTON_2, TRAINER_DALTON_3, TRAINER_DALTON_4, TRAINER_DALTON_5},
-        MAP_GROUP(MAP_ROUTE118),
-        MAP_NUM(MAP_ROUTE118),
-    },
-    {
-        {TRAINER_BERNIE_1, TRAINER_BERNIE_2, TRAINER_BERNIE_3, TRAINER_BERNIE_4, TRAINER_BERNIE_5},
-        MAP_GROUP(MAP_ROUTE114),
-        MAP_NUM(MAP_ROUTE114),
-    },
-    {
-        {TRAINER_ETHAN_1, TRAINER_ETHAN_2, TRAINER_ETHAN_3, TRAINER_ETHAN_4, TRAINER_ETHAN_5},
-        MAP_GROUP(MAP_JAGGED_PASS),
-        MAP_NUM(MAP_JAGGED_PASS),
-    },
-    {
-        {TRAINER_JOHN_AND_JAY_1, TRAINER_JOHN_AND_JAY_2, TRAINER_JOHN_AND_JAY_3, TRAINER_JOHN_AND_JAY_4, TRAINER_JOHN_AND_JAY_5},
-        MAP_GROUP(MAP_METEOR_FALLS_1F_2R),
-        MAP_NUM(MAP_METEOR_FALLS_1F_2R),
-    },
-    {
-        {TRAINER_BRANDON_1, TRAINER_BRANDON_2, TRAINER_BRANDON_3, TRAINER_BRANDON_4, TRAINER_BRANDON_5},
-        MAP_GROUP(MAP_ROUTE120),
-        MAP_NUM(MAP_ROUTE120),
-    },
-    {
-        {TRAINER_CAMERON_1, TRAINER_CAMERON_2, TRAINER_CAMERON_3, TRAINER_CAMERON_4, TRAINER_CAMERON_5},
-        MAP_GROUP(MAP_ROUTE123),
-        MAP_NUM(MAP_ROUTE123),
-    },
-    {
-        {TRAINER_JACKI_1, TRAINER_JACKI_2, TRAINER_JACKI_3, TRAINER_JACKI_4, TRAINER_JACKI_5},
-        MAP_GROUP(MAP_ROUTE123),
-        MAP_NUM(MAP_ROUTE123),
-    },
-    {
-        {TRAINER_WALTER_1, TRAINER_WALTER_2, TRAINER_WALTER_3, TRAINER_WALTER_4, TRAINER_WALTER_5},
-        MAP_GROUP(MAP_ROUTE121),
-        MAP_NUM(MAP_ROUTE121),
-    },
-    {
-        {TRAINER_KAREN_1, TRAINER_KAREN_2, TRAINER_KAREN_3, TRAINER_KAREN_4, TRAINER_KAREN_5},
-        MAP_GROUP(MAP_ROUTE116),
-        MAP_NUM(MAP_ROUTE116),
-    },
-    {
-        {TRAINER_JERRY_1, TRAINER_JERRY_2, TRAINER_JERRY_3, TRAINER_JERRY_4, TRAINER_JERRY_5},
-        MAP_GROUP(MAP_ROUTE116),
-        MAP_NUM(MAP_ROUTE116),
-    },
-    {
-        {TRAINER_ANNA_AND_MEG_1, TRAINER_ANNA_AND_MEG_2, TRAINER_ANNA_AND_MEG_3, TRAINER_ANNA_AND_MEG_4, TRAINER_ANNA_AND_MEG_5},
-        MAP_GROUP(MAP_ROUTE117),
-        MAP_NUM(MAP_ROUTE117),
-    },
-    {
-        {TRAINER_ISABEL_1, TRAINER_ISABEL_2, TRAINER_ISABEL_3, TRAINER_ISABEL_4, TRAINER_ISABEL_5},
-        MAP_GROUP(MAP_ROUTE110),
-        MAP_NUM(MAP_ROUTE110),
-    },
-    {
-        {TRAINER_MIGUEL_1, TRAINER_MIGUEL_2, TRAINER_MIGUEL_3, TRAINER_MIGUEL_4, TRAINER_MIGUEL_5},
-        MAP_GROUP(MAP_ROUTE103),
-        MAP_NUM(MAP_ROUTE103),
-    },
-    {
-        {TRAINER_TIMOTHY_1, TRAINER_TIMOTHY_2, TRAINER_TIMOTHY_3, TRAINER_TIMOTHY_4, TRAINER_TIMOTHY_5},
-        MAP_GROUP(MAP_ROUTE115),
-        MAP_NUM(MAP_ROUTE115),
-    },
-    {
-        {TRAINER_SHELBY_1, TRAINER_SHELBY_2, TRAINER_SHELBY_3, TRAINER_SHELBY_4, TRAINER_SHELBY_5},
-        MAP_GROUP(MAP_MT_CHIMNEY),
-        MAP_NUM(MAP_MT_CHIMNEY),
-    },
-    {
-        {TRAINER_CALVIN_1, TRAINER_CALVIN_2, TRAINER_CALVIN_3, TRAINER_CALVIN_4, TRAINER_CALVIN_5},
-        MAP_GROUP(MAP_ROUTE102),
-        MAP_NUM(MAP_ROUTE102),
-    },
-    {
-        {TRAINER_ELLIOT_1, TRAINER_ELLIOT_2, TRAINER_ELLIOT_3, TRAINER_ELLIOT_4, TRAINER_ELLIOT_5},
-        MAP_GROUP(MAP_ROUTE106),
-        MAP_NUM(MAP_ROUTE106),
-    },
-    {
-        {TRAINER_ABIGAIL_1, TRAINER_ABIGAIL_2, TRAINER_ABIGAIL_3, TRAINER_ABIGAIL_4, TRAINER_ABIGAIL_5},
-        MAP_GROUP(MAP_ROUTE110),
-        MAP_NUM(MAP_ROUTE110),
-    },
-    {
-        {TRAINER_BENJAMIN_1, TRAINER_BENJAMIN_2, TRAINER_BENJAMIN_3, TRAINER_BENJAMIN_4, TRAINER_BENJAMIN_5},
-        MAP_GROUP(MAP_ROUTE110),
-        MAP_NUM(MAP_ROUTE110),
-    },
-    {
-        {TRAINER_ISAIAH_1, TRAINER_ISAIAH_2, TRAINER_ISAIAH_3, TRAINER_ISAIAH_4, TRAINER_ISAIAH_5},
-        MAP_GROUP(MAP_ROUTE128),
-        MAP_NUM(MAP_ROUTE128),
-    },
-    {
-        {TRAINER_KATELYN_1, TRAINER_KATELYN_2, TRAINER_KATELYN_3, TRAINER_KATELYN_4, TRAINER_KATELYN_5},
-        MAP_GROUP(MAP_ROUTE128),
-        MAP_NUM(MAP_ROUTE128),
-    },
-    {
-        {TRAINER_MARIA_1, TRAINER_MARIA_2, TRAINER_MARIA_3, TRAINER_MARIA_4, TRAINER_MARIA_5},
-        MAP_GROUP(MAP_ROUTE117),
-        MAP_NUM(MAP_ROUTE117),
-    },
-    {
-        {TRAINER_DYLAN_1, TRAINER_DYLAN_2, TRAINER_DYLAN_3, TRAINER_DYLAN_4, TRAINER_DYLAN_5},
-        MAP_GROUP(MAP_ROUTE117),
-        MAP_NUM(MAP_ROUTE117),
-    },
-    {
-        {TRAINER_NICOLAS_1, TRAINER_NICOLAS_2, TRAINER_NICOLAS_3, TRAINER_NICOLAS_4, TRAINER_NICOLAS_5},
-        MAP_GROUP(MAP_METEOR_FALLS_1F_2R),
-        MAP_NUM(MAP_METEOR_FALLS_1F_2R),
-    },
-    {
-        {TRAINER_ROBERT_1, TRAINER_ROBERT_2, TRAINER_ROBERT_3, TRAINER_ROBERT_4, TRAINER_ROBERT_5},
-        MAP_GROUP(MAP_ROUTE120),
-        MAP_NUM(MAP_ROUTE120),
-    },
-    {
-        {TRAINER_LAO_1, TRAINER_LAO_2, TRAINER_LAO_3, TRAINER_LAO_4, TRAINER_LAO_5},
-        MAP_GROUP(MAP_ROUTE113),
-        MAP_NUM(MAP_ROUTE113),
-    },
-    {
-        {TRAINER_CYNDY_1, TRAINER_CYNDY_2, TRAINER_CYNDY_3, TRAINER_CYNDY_4, TRAINER_CYNDY_5},
-        MAP_GROUP(MAP_ROUTE115),
-        MAP_NUM(MAP_ROUTE115),
-    },
-    {
-        {TRAINER_MADELINE_1, TRAINER_MADELINE_2, TRAINER_MADELINE_3, TRAINER_MADELINE_4, TRAINER_MADELINE_5},
-        MAP_GROUP(MAP_ROUTE113),
-        MAP_NUM(MAP_ROUTE113),
-    },
-    {
-        {TRAINER_JENNY_1, TRAINER_JENNY_2, TRAINER_JENNY_3, TRAINER_JENNY_4, TRAINER_JENNY_5},
-        MAP_GROUP(MAP_ROUTE124),
-        MAP_NUM(MAP_ROUTE124),
-    },
-    {
-        {TRAINER_DIANA_1, TRAINER_DIANA_2, TRAINER_DIANA_3, TRAINER_DIANA_4, TRAINER_DIANA_5},
-        MAP_GROUP(MAP_JAGGED_PASS),
-        MAP_NUM(MAP_JAGGED_PASS),
-    },
-    {
-        {TRAINER_AMY_AND_LIV_1, TRAINER_AMY_AND_LIV_2, TRAINER_AMY_AND_LIV_4, TRAINER_AMY_AND_LIV_5, TRAINER_AMY_AND_LIV_6},
-        MAP_GROUP(MAP_ROUTE103),
-        MAP_NUM(MAP_ROUTE103),
-    },
-    {
-        {TRAINER_ERNEST_1, TRAINER_ERNEST_2, TRAINER_ERNEST_3, TRAINER_ERNEST_4, TRAINER_ERNEST_5},
-        MAP_GROUP(MAP_ROUTE125),
-        MAP_NUM(MAP_ROUTE125),
-    },
-    {
-        {TRAINER_EDWIN_1, TRAINER_EDWIN_2, TRAINER_EDWIN_3, TRAINER_EDWIN_4, TRAINER_EDWIN_5},
-        MAP_GROUP(MAP_ROUTE110),
-        MAP_NUM(MAP_ROUTE110),
-    },
-    {
-        {TRAINER_LYDIA_1, TRAINER_LYDIA_2, TRAINER_LYDIA_3, TRAINER_LYDIA_4, TRAINER_LYDIA_5},
-        MAP_GROUP(MAP_ROUTE117),
-        MAP_NUM(MAP_ROUTE117),
-    },
-    {
-        {TRAINER_ISAAC_1, TRAINER_ISAAC_2, TRAINER_ISAAC_3, TRAINER_ISAAC_4, TRAINER_ISAAC_5},
-        MAP_GROUP(MAP_ROUTE117),
-        MAP_NUM(MAP_ROUTE117),
-    },
-    {
-        {TRAINER_CATHERINE_1, TRAINER_CATHERINE_2, TRAINER_CATHERINE_3, TRAINER_CATHERINE_4, TRAINER_CATHERINE_5},
-        MAP_GROUP(MAP_ROUTE119),
-        MAP_NUM(MAP_ROUTE119),
-    },
-    {
-        {TRAINER_JACKSON_1, TRAINER_JACKSON_2, TRAINER_JACKSON_3, TRAINER_JACKSON_4, TRAINER_JACKSON_5},
-        MAP_GROUP(MAP_ROUTE119),
-        MAP_NUM(MAP_ROUTE119),
-    },
-    {
-        {TRAINER_HALEY_1, TRAINER_HALEY_2, TRAINER_HALEY_3, TRAINER_HALEY_4, TRAINER_HALEY_5},
-        MAP_GROUP(MAP_ROUTE104),
-        MAP_NUM(MAP_ROUTE104),
-    },
-    {
-        {TRAINER_JAMES_1, TRAINER_JAMES_2, TRAINER_JAMES_3, TRAINER_JAMES_4, TRAINER_JAMES_5},
-        MAP_GROUP(MAP_PETALBURG_WOODS),
-        MAP_NUM(MAP_PETALBURG_WOODS),
-    },
-    {
-        {TRAINER_TRENT_1, TRAINER_TRENT_2, TRAINER_TRENT_3, TRAINER_TRENT_4, TRAINER_TRENT_5},
-        MAP_GROUP(MAP_ROUTE112),
-        MAP_NUM(MAP_ROUTE112),
-    },
-    {
-        {TRAINER_LOIS_AND_HAL_1, TRAINER_LOIS_AND_HAL_2, TRAINER_LOIS_AND_HAL_3, TRAINER_LOIS_AND_HAL_4, TRAINER_LOIS_AND_HAL_5},
-        MAP_GROUP(MAP_ABANDONED_SHIP_ROOMS2_1F),
-        MAP_NUM(MAP_ABANDONED_SHIP_ROOMS2_1F),
-    },
-    {
-        {TRAINER_WALLY_VR_2, TRAINER_WALLY_VR_3, TRAINER_WALLY_VR_4, TRAINER_WALLY_VR_5, TRAINER_NONE},
-        MAP_GROUP(MAP_VICTORY_ROAD_1F),
-        MAP_NUM(MAP_VICTORY_ROAD_1F),
-    },
+    REMATCH(TRAINER_ROSE_1, TRAINER_ROSE_2, TRAINER_ROSE_3, TRAINER_ROSE_4, TRAINER_ROSE_5, MAP_ROUTE118),
+    REMATCH(TRAINER_DUSTY_1, TRAINER_DUSTY_2, TRAINER_DUSTY_3, TRAINER_DUSTY_4, TRAINER_DUSTY_5, MAP_ROUTE111),
+    REMATCH(TRAINER_LOLA_1, TRAINER_LOLA_2, TRAINER_LOLA_3, TRAINER_LOLA_4, TRAINER_LOLA_5, MAP_ROUTE109),
+    REMATCH(TRAINER_RICKY_1, TRAINER_RICKY_2, TRAINER_RICKY_3, TRAINER_RICKY_4, TRAINER_RICKY_5, MAP_ROUTE109),
+    REMATCH(TRAINER_RITA_AND_SAM_1, TRAINER_RITA_AND_SAM_2, TRAINER_RITA_AND_SAM_3, TRAINER_RITA_AND_SAM_4, TRAINER_RITA_AND_SAM_5, MAP_ROUTE124),
+    REMATCH(TRAINER_BROOKE_1, TRAINER_BROOKE_2, TRAINER_BROOKE_3, TRAINER_BROOKE_4, TRAINER_BROOKE_5, MAP_ROUTE111),
+    REMATCH(TRAINER_WILTON_1, TRAINER_WILTON_2, TRAINER_WILTON_3, TRAINER_WILTON_4, TRAINER_WILTON_5, MAP_ROUTE111),
+    REMATCH(TRAINER_VALERIE_1, TRAINER_VALERIE_2, TRAINER_VALERIE_3, TRAINER_VALERIE_4, TRAINER_VALERIE_5, MAP_MT_PYRE_6F),
+    REMATCH(TRAINER_CINDY_1, TRAINER_CINDY_3, TRAINER_CINDY_4, TRAINER_CINDY_5, TRAINER_CINDY_6, MAP_ROUTE104),
+    REMATCH(TRAINER_JESSICA_1, TRAINER_JESSICA_2, TRAINER_JESSICA_3, TRAINER_JESSICA_4, TRAINER_JESSICA_5, MAP_ROUTE121),
+    REMATCH(TRAINER_WINSTON_1, TRAINER_WINSTON_2, TRAINER_WINSTON_3, TRAINER_WINSTON_4, TRAINER_WINSTON_5, MAP_ROUTE104),
+    REMATCH(TRAINER_STEVE_1, TRAINER_STEVE_2, TRAINER_STEVE_3, TRAINER_STEVE_4, TRAINER_STEVE_5, MAP_ROUTE114),
+    REMATCH(TRAINER_TONY_1, TRAINER_TONY_2, TRAINER_TONY_3, TRAINER_TONY_4, TRAINER_TONY_5, MAP_ROUTE107),
+    REMATCH(TRAINER_NOB_1, TRAINER_NOB_2, TRAINER_NOB_3, TRAINER_NOB_4, TRAINER_NOB_5, MAP_ROUTE115),
+    REMATCH(TRAINER_DALTON_1, TRAINER_DALTON_2, TRAINER_DALTON_3, TRAINER_DALTON_4, TRAINER_DALTON_5, MAP_ROUTE118),
+    REMATCH(TRAINER_BERNIE_1, TRAINER_BERNIE_2, TRAINER_BERNIE_3, TRAINER_BERNIE_4, TRAINER_BERNIE_5, MAP_ROUTE114),
+    REMATCH(TRAINER_ETHAN_1, TRAINER_ETHAN_2, TRAINER_ETHAN_3, TRAINER_ETHAN_4, TRAINER_ETHAN_5, MAP_JAGGED_PASS),
+    REMATCH(TRAINER_JOHN_AND_JAY_1, TRAINER_JOHN_AND_JAY_2, TRAINER_JOHN_AND_JAY_3, TRAINER_JOHN_AND_JAY_4, TRAINER_JOHN_AND_JAY_5, MAP_METEOR_FALLS_1F_2R),
+    REMATCH(TRAINER_BRANDON_1, TRAINER_BRANDON_2, TRAINER_BRANDON_3, TRAINER_BRANDON_4, TRAINER_BRANDON_5, MAP_ROUTE120),
+    REMATCH(TRAINER_CAMERON_1, TRAINER_CAMERON_2, TRAINER_CAMERON_3, TRAINER_CAMERON_4, TRAINER_CAMERON_5, MAP_ROUTE123),
+    REMATCH(TRAINER_JACKI_1, TRAINER_JACKI_2, TRAINER_JACKI_3, TRAINER_JACKI_4, TRAINER_JACKI_5, MAP_ROUTE123),
+    REMATCH(TRAINER_WALTER_1, TRAINER_WALTER_2, TRAINER_WALTER_3, TRAINER_WALTER_4, TRAINER_WALTER_5, MAP_ROUTE121),
+    REMATCH(TRAINER_KAREN_1, TRAINER_KAREN_2, TRAINER_KAREN_3, TRAINER_KAREN_4, TRAINER_KAREN_5, MAP_ROUTE116),
+    REMATCH(TRAINER_JERRY_1, TRAINER_JERRY_2, TRAINER_JERRY_3, TRAINER_JERRY_4, TRAINER_JERRY_5, MAP_ROUTE116),
+    REMATCH(TRAINER_ANNA_AND_MEG_1, TRAINER_ANNA_AND_MEG_2, TRAINER_ANNA_AND_MEG_3, TRAINER_ANNA_AND_MEG_4, TRAINER_ANNA_AND_MEG_5, MAP_ROUTE117),
+    REMATCH(TRAINER_ISABEL_1, TRAINER_ISABEL_2, TRAINER_ISABEL_3, TRAINER_ISABEL_4, TRAINER_ISABEL_5, MAP_ROUTE110),
+    REMATCH(TRAINER_MIGUEL_1, TRAINER_MIGUEL_2, TRAINER_MIGUEL_3, TRAINER_MIGUEL_4, TRAINER_MIGUEL_5, MAP_ROUTE103),
+    REMATCH(TRAINER_TIMOTHY_1, TRAINER_TIMOTHY_2, TRAINER_TIMOTHY_3, TRAINER_TIMOTHY_4, TRAINER_TIMOTHY_5, MAP_ROUTE115),
+    REMATCH(TRAINER_SHELBY_1, TRAINER_SHELBY_2, TRAINER_SHELBY_3, TRAINER_SHELBY_4, TRAINER_SHELBY_5, MAP_MT_CHIMNEY),
+    REMATCH(TRAINER_CALVIN_1, TRAINER_CALVIN_2, TRAINER_CALVIN_3, TRAINER_CALVIN_4, TRAINER_CALVIN_5, MAP_ROUTE102),
+    REMATCH(TRAINER_ELLIOT_1, TRAINER_ELLIOT_2, TRAINER_ELLIOT_3, TRAINER_ELLIOT_4, TRAINER_ELLIOT_5, MAP_ROUTE106),
+    REMATCH(TRAINER_ABIGAIL_1, TRAINER_ABIGAIL_2, TRAINER_ABIGAIL_3, TRAINER_ABIGAIL_4, TRAINER_ABIGAIL_5, MAP_ROUTE110),
+    REMATCH(TRAINER_BENJAMIN_1, TRAINER_BENJAMIN_2, TRAINER_BENJAMIN_3, TRAINER_BENJAMIN_4, TRAINER_BENJAMIN_5, MAP_ROUTE110),
+    REMATCH(TRAINER_ISAIAH_1, TRAINER_ISAIAH_2, TRAINER_ISAIAH_3, TRAINER_ISAIAH_4, TRAINER_ISAIAH_5, MAP_ROUTE128),
+    REMATCH(TRAINER_KATELYN_1, TRAINER_KATELYN_2, TRAINER_KATELYN_3, TRAINER_KATELYN_4, TRAINER_KATELYN_5, MAP_ROUTE128),
+    REMATCH(TRAINER_MARIA_1, TRAINER_MARIA_2, TRAINER_MARIA_3, TRAINER_MARIA_4, TRAINER_MARIA_5, MAP_ROUTE117),
+    REMATCH(TRAINER_DYLAN_1, TRAINER_DYLAN_2, TRAINER_DYLAN_3, TRAINER_DYLAN_4, TRAINER_DYLAN_5, MAP_ROUTE117),
+    REMATCH(TRAINER_NICOLAS_1, TRAINER_NICOLAS_2, TRAINER_NICOLAS_3, TRAINER_NICOLAS_4, TRAINER_NICOLAS_5, MAP_METEOR_FALLS_1F_2R),
+    REMATCH(TRAINER_ROBERT_1, TRAINER_ROBERT_2, TRAINER_ROBERT_3, TRAINER_ROBERT_4, TRAINER_ROBERT_5, MAP_ROUTE120),
+    REMATCH(TRAINER_LAO_1, TRAINER_LAO_2, TRAINER_LAO_3, TRAINER_LAO_4, TRAINER_LAO_5, MAP_ROUTE113),
+    REMATCH(TRAINER_CYNDY_1, TRAINER_CYNDY_2, TRAINER_CYNDY_3, TRAINER_CYNDY_4, TRAINER_CYNDY_5, MAP_ROUTE115),
+    REMATCH(TRAINER_MADELINE_1, TRAINER_MADELINE_2, TRAINER_MADELINE_3, TRAINER_MADELINE_4, TRAINER_MADELINE_5, MAP_ROUTE113),
+    REMATCH(TRAINER_JENNY_1, TRAINER_JENNY_2, TRAINER_JENNY_3, TRAINER_JENNY_4, TRAINER_JENNY_5, MAP_ROUTE124),
+    REMATCH(TRAINER_DIANA_1, TRAINER_DIANA_2, TRAINER_DIANA_3, TRAINER_DIANA_4, TRAINER_DIANA_5, MAP_JAGGED_PASS),
+    REMATCH(TRAINER_AMY_AND_LIV_1, TRAINER_AMY_AND_LIV_2, TRAINER_AMY_AND_LIV_4, TRAINER_AMY_AND_LIV_5, TRAINER_AMY_AND_LIV_6, MAP_ROUTE103),
+    REMATCH(TRAINER_ERNEST_1, TRAINER_ERNEST_2, TRAINER_ERNEST_3, TRAINER_ERNEST_4, TRAINER_ERNEST_5, MAP_ROUTE125),
+    REMATCH(TRAINER_EDWIN_1, TRAINER_EDWIN_2, TRAINER_EDWIN_3, TRAINER_EDWIN_4, TRAINER_EDWIN_5, MAP_ROUTE110),
+    REMATCH(TRAINER_LYDIA_1, TRAINER_LYDIA_2, TRAINER_LYDIA_3, TRAINER_LYDIA_4, TRAINER_LYDIA_5, MAP_ROUTE117),
+    REMATCH(TRAINER_ISAAC_1, TRAINER_ISAAC_2, TRAINER_ISAAC_3, TRAINER_ISAAC_4, TRAINER_ISAAC_5, MAP_ROUTE117),
+    REMATCH(TRAINER_CATHERINE_1, TRAINER_CATHERINE_2, TRAINER_CATHERINE_3, TRAINER_CATHERINE_4, TRAINER_CATHERINE_5, MAP_ROUTE119),
+    REMATCH(TRAINER_JACKSON_1, TRAINER_JACKSON_2, TRAINER_JACKSON_3, TRAINER_JACKSON_4, TRAINER_JACKSON_5, MAP_ROUTE119),
+    REMATCH(TRAINER_HALEY_1, TRAINER_HALEY_2, TRAINER_HALEY_3, TRAINER_HALEY_4, TRAINER_HALEY_5, MAP_ROUTE104),
+    REMATCH(TRAINER_JAMES_1, TRAINER_JAMES_2, TRAINER_JAMES_3, TRAINER_JAMES_4, TRAINER_JAMES_5, MAP_PETALBURG_WOODS),
+    REMATCH(TRAINER_TRENT_1, TRAINER_TRENT_2, TRAINER_TRENT_3, TRAINER_TRENT_4, TRAINER_TRENT_5, MAP_ROUTE112),
+    REMATCH(TRAINER_LOIS_AND_HAL_1, TRAINER_LOIS_AND_HAL_2, TRAINER_LOIS_AND_HAL_3, TRAINER_LOIS_AND_HAL_4, TRAINER_LOIS_AND_HAL_5, MAP_ABANDONED_SHIP_ROOMS2_1F),
+    REMATCH(TRAINER_WALLY_VR_2, TRAINER_WALLY_VR_3, TRAINER_WALLY_VR_4, TRAINER_WALLY_VR_5, TRAINER_NONE, MAP_VICTORY_ROAD_1F),
 };
 
-static const u16 sBadgeFlags[] =
+static const u16 sBadgeFlags[NUM_BADGES] =
 {
     FLAG_BADGE01_GET,
     FLAG_BADGE02_GET,
@@ -637,8 +429,8 @@ void StartRegiBattle(void)
 
 static void CB2_EndWildBattle(void)
 {
-    CpuFill16(0, (void *)BG_PLTT, BG_PLTT_SIZE);
-    ResetOamRange(0, 128);
+    CpuFill16(RGB_BLACK, (void *)BG_PLTT, BG_PLTT_SIZE);
+    ResetOamRange(0, ARRAY_COUNT(gMain.oamBuffer));
 
     if (IsPlayerDefeated(gBattleOutcome) == TRUE)
     {
@@ -653,8 +445,8 @@ static void CB2_EndWildBattle(void)
 
 static void CB2_EndScriptedWildBattle(void)
 {
-    CpuFill16(0, (void *)BG_PLTT, BG_PLTT_SIZE);
-    ResetOamRange(0, 128);
+    CpuFill16(RGB_BLACK, (void *)BG_PLTT, BG_PLTT_SIZE);
+    ResetOamRange(0, ARRAY_COUNT(gMain.oamBuffer));
 
     if (IsPlayerDefeated(gBattleOutcome) == TRUE)
         SetMainCallback2(CB2_WhiteOut);
@@ -706,14 +498,14 @@ s8 BattleSetup_GetEnvironmentId(void)
         return BATTLE_ENVIRONMENT_MOUNTAIN;
     if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING))
     {
-        if (MetatileBehavior_GetBridgeType(tileBehavior))
+        if (MetatileBehavior_GetBridgeType(tileBehavior) != BRIDGE_TYPE_OCEAN)
             return BATTLE_ENVIRONMENT_POND;
         if (MetatileBehavior_IsBridgeOverWaterNoEdge(tileBehavior) == TRUE)
             return BATTLE_ENVIRONMENT_WATER;
     }
     if (gSaveBlock1.location.mapGroup == MAP_GROUP(MAP_ROUTE113) && gSaveBlock1.location.mapNum == MAP_NUM(MAP_ROUTE113))
         return BATTLE_ENVIRONMENT_SAND;
-    if (GetSavedWeather() == 8)
+    if (GetSavedWeather() == WEATHER_SANDSTORM)
         return BATTLE_ENVIRONMENT_SAND;
     return BATTLE_ENVIRONMENT_PLAIN;
 }
@@ -726,20 +518,20 @@ static u8 GetBattleTransitionTypeByMap(void)
     PlayerGetDestCoords(&x, &y);
     tileBehavior = MapGridGetMetatileBehaviorAt(x, y);
     if (GetFlashLevel())
-        return 2;
+        return TRANSITION_TYPE_FLASH;
     if (!MetatileBehavior_IsSurfableWaterOrUnderwater(tileBehavior))
     {
         switch (gMapHeader.mapType)
         {
         case MAP_TYPE_UNDERGROUND:
-            return 1;
+            return TRANSITION_TYPE_CAVE;
         case MAP_TYPE_UNDERWATER:
-            return 3;
+            return TRANSITION_TYPE_WATER;
         default:
-            return 0;
+            return TRANSITION_TYPE_NORMAL;
         }
     }
-    return 3;
+    return TRANSITION_TYPE_WATER;
 }
 
 static u16 GetSumOfPlayerPartyLevel(u8 numMons)
@@ -747,7 +539,7 @@ static u16 GetSumOfPlayerPartyLevel(u8 numMons)
     u8 sum = 0;
     int i;
 
-    for (i = 0; i < 6; i++)
+    for (i = 0; i < PARTY_SIZE; i++)
     {
         u32 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
 
@@ -894,7 +686,7 @@ static void CB2_GiveStarter(void)
     ResetTasks();
     PlayBattleBGM();
     SetMainCallback2(CB2_StartFirstBattle);
-    BattleTransition_Start(0);
+    BattleTransition_Start(B_TRANSITION_BLUR);
 }
 
 static void CB2_StartFirstBattle(void)
@@ -961,34 +753,34 @@ static bool32 IsPlayerDefeated(u32 battleOutcome)
 
 static void InitTrainerBattleVariables(void)
 {
-    sTrainerBattleMode = 0;
-    gTrainerBattleOpponent_A = 0;
+    sTrainerBattleMode = TRAINER_BATTLE_SINGLE;
+    gTrainerBattleOpponent_A = TRAINER_NONE;
     sTrainerObjectEventLocalId = LOCALID_NONE;
-    sTrainerAIntroSpeech = 0;
-    sTrainerADefeatSpeech = 0;
-    sTrainerVictorySpeech = 0;
-    sTrainerCannotBattleSpeech = 0;
-    sTrainerBattleEndScript = 0;
-    sTrainerABattleScriptRetAddr = 0;
+    sTrainerAIntroSpeech = NULL;
+    sTrainerADefeatSpeech = NULL;
+    sTrainerVictorySpeech = NULL;
+    sTrainerCannotBattleSpeech = NULL;
+    sTrainerBattleEndScript = NULL;
+    sTrainerABattleScriptRetAddr = NULL;
 }
 
 static void TrainerBattleLoadArgs(const struct TrainerBattleParameter *specs, const u8 *data)
 {
-    while (1)
+    while (TRUE)
     {
         switch (specs->ptrType)
         {
         case TRAINER_PARAM_LOAD_VAL_8BIT:
             *(u8 *)specs->varPtr = TrainerBattleLoadArg8(data);
-            data += 1;
+            data += sizeof(u8);
             break;
         case TRAINER_PARAM_LOAD_VAL_16BIT:
             *(u16 *)specs->varPtr = TrainerBattleLoadArg16(data);
-            data += 2;
+            data += sizeof(u16);
             break;
         case TRAINER_PARAM_LOAD_VAL_32BIT:
             *(u32 *)specs->varPtr = TrainerBattleLoadArg32(data);
-            data += 4;
+            data += sizeof(u32);
             break;
         case TRAINER_PARAM_CLEAR_VAL_8BIT:
             *(u8 *)specs->varPtr = 0;
@@ -1195,7 +987,8 @@ void PlayTrainerEncounterMusic(void)
 {
     u16 music;
 
-    if (sTrainerBattleMode != 1 && sTrainerBattleMode != 8)
+    if (sTrainerBattleMode != TRAINER_BATTLE_CONTINUE_SCRIPT_NO_MUSIC
+        && sTrainerBattleMode != TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE_NO_MUSIC)
     {
         switch (GetTrainerEncounterMusicId(gTrainerBattleOpponent_A))
         {
@@ -1301,9 +1094,9 @@ static s32 TrainerIdToRematchTableId(const struct RematchTrainer *table, u16 tra
 
     for (i = 0; i < REMATCH_TABLE_ENTRIES; i++)
     {
-        for (j = 0; j < 5; j++)
+        for (j = 0; j < REMATCHES_COUNT; j++)
         {
-            if (table[i].trainerIds[j] == 0) break; // one-line required to match with -g
+            if (table[i].trainerIds[j] == TRAINER_NONE) break; // one-line required to match with -g
             if (table[i].trainerIds[j] == trainerId)
                 return i;
         }
@@ -1330,7 +1123,7 @@ static bool32 UpdateRandomTrainerRematches(const struct RematchTrainer *table, u
             {
                 int rematches = 1;
 
-                while (rematches < 5 && table[i].trainerIds[rematches] != 0
+                while (rematches < REMATCHES_COUNT && table[i].trainerIds[rematches] != TRAINER_NONE
                  && HasTrainerBeenFought(table[i].trainerIds[rematches]))
                     rematches++;
                 gSaveBlock1.trainerRematches[i] = rematches;
@@ -1348,9 +1141,9 @@ static bool32 DoesSomeoneWantRematchIn_(const struct RematchTrainer *table, u16 
     for (i = 0; i < REMATCH_TABLE_ENTRIES; i++)
     {
         if (table[i].mapGroup == mapGroup && table[i].mapNum == mapNum && gSaveBlock1.trainerRematches[i])
-            return 1;
+            return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
 static bool32 IsRematchTrainerIn_(const struct RematchTrainer *table, u16 mapGroup, u16 mapNum)
@@ -1360,9 +1153,9 @@ static bool32 IsRematchTrainerIn_(const struct RematchTrainer *table, u16 mapGro
     for (i = 0; i < REMATCH_TABLE_ENTRIES; i++)
     {
         if (table[i].mapGroup == mapGroup && table[i].mapNum == mapNum)
-            return 1;
+            return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
 static bool8 IsFirstTrainerIdReadyForRematch(const struct RematchTrainer *table, u16 firstBattleTrainerId)
@@ -1392,16 +1185,16 @@ static u16 GetRematchTrainerIdFromTable(const struct RematchTrainer *table, u16 
     s32 tableId = FirstBattleTrainerIdToRematchTableId(table, firstBattleTrainerId);
 
     if (tableId == -1)
-        return 0;
+        return TRAINER_NONE;
     trainerEntry = &table[tableId];
-    for (i = 1; i < 5; i++)
+    for (i = 1; i < REMATCHES_COUNT; i++)
     {
-        if (!trainerEntry->trainerIds[i])
+        if (trainerEntry->trainerIds[i] == TRAINER_NONE)
             return trainerEntry->trainerIds[i - 1];
         if (!HasTrainerBeenFought(trainerEntry->trainerIds[i]))
             return trainerEntry->trainerIds[i];
     }
-    return trainerEntry->trainerIds[4];
+    return trainerEntry->trainerIds[REMATCHES_COUNT - 1];
 }
 
 static void ClearTrainerWantRematchState(const struct RematchTrainer *table, u16 firstBattleTrainerId)
@@ -1427,7 +1220,7 @@ static bool32 HasAtLeastFiveBadges(void)
     s32 count = 0;
     u32 i;
 
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < ARRAY_COUNT(sBadgeFlags); i++)
     {
         if (FlagGet(sBadgeFlags[i]) == TRUE)
         {
@@ -1484,7 +1277,7 @@ static u16 GetRematchTrainerId(u16 trainerId)
 bool8 ShouldTryRematchBattle(void)
 {
     if (IsFirstTrainerIdReadyForRematch(gRematchTable, gTrainerBattleOpponent_A))
-        return 1;
+        return TRUE;
     else
         return WasSecondRematchWon(gRematchTable, gTrainerBattleOpponent_A);
 }
