@@ -17,6 +17,36 @@
 #include "task.h"
 #include "text.h"
 #include "scanline_effect.h"
+
+#define PALTAG_ARROW 0x1000
+
+// Task data for the Task_ResetRtc_* series of tasks, when setting the time on the clock
+// Data from these tasks is also used by the cursors and the main task (Task_ResetRtcScreen)
+enum {
+    DATAIDX_DAYS = 3,
+    DATAIDX_HOURS,
+    DATAIDX_MINS,
+    DATAIDX_SECS,
+    DATAIDX_CONFIRM,
+};
+#define tFinished  data[0]
+#define tSetTime   data[1]
+#define tSelection data[2]
+#define tDays      data[DATAIDX_DAYS]
+#define tHours     data[DATAIDX_HOURS]
+#define tMinutes   data[DATAIDX_MINS]
+#define tSeconds   data[DATAIDX_SECS]
+#define tConfirm   data[DATAIDX_CONFIRM]
+
+enum {
+    SELECTION_DAYS = 1,
+    SELECTION_HOURS,
+    SELECTION_MINS,
+    SELECTION_SECS,
+    SELECTION_CONFIRM,
+    SELECTION_NONE
+};
+
 struct ResetRtcInputMap
 {
     /*0x0*/ u8 dataIndex;
@@ -31,45 +61,45 @@ static void CB2_ResetRtcScreen(void);
 static void VBlankCB_ResetRtcScreen(void);
 static void Task_ResetRtcScreen(u8 taskId);
 
-static const struct ResetRtcInputMap sInputMap[5] =
+static const struct ResetRtcInputMap sInputMap[] =
 {
-    {
-        .dataIndex = 3,
+    [SELECTION_DAYS - 1] = {
+        .dataIndex = DATAIDX_DAYS,
         .minVal = 1,
         .maxVal = 9999,
         .left = 0,
-        .right = 2,
+        .right = SELECTION_HOURS,
         .unk = 0,
     },
-    {
-        .dataIndex = 4,
+    [SELECTION_HOURS - 1] = {
+        .dataIndex = DATAIDX_HOURS,
         .minVal = 0,
-        .maxVal = 23,
-        .left = 1,
-        .right = 3,
+        .maxVal = HOURS_PER_DAY - 1,
+        .left = SELECTION_DAYS,
+        .right = SELECTION_MINS,
         .unk = 0,
     },
-    {
-        .dataIndex = 5,
+    [SELECTION_MINS - 1] = {
+        .dataIndex = DATAIDX_MINS,
         .minVal = 0,
-        .maxVal = 59,
-        .left = 2,
-        .right = 4,
+        .maxVal = MINUTES_PER_HOUR - 1,
+        .left = SELECTION_HOURS,
+        .right = SELECTION_SECS,
         .unk = 0,
     },
-    {
-        .dataIndex = 6,
+    [SELECTION_SECS - 1] = {
+        .dataIndex = DATAIDX_SECS,
         .minVal = 0,
-        .maxVal = 59,
-        .left = 3,
-        .right = 5,
+        .maxVal = SECONDS_PER_MINUTE - 1,
+        .left = SELECTION_MINS,
+        .right = SELECTION_CONFIRM,
         .unk = 0,
     },
-    {
-        .dataIndex = 7,
+    [SELECTION_CONFIRM - 1] = {
+        .dataIndex = DATAIDX_CONFIRM,
         .minVal = 0,
         .maxVal = 0,
-        .left = 4,
+        .left = SELECTION_SECS,
         .right = 0,
         .unk = 6,
     },
@@ -78,14 +108,14 @@ static const struct ResetRtcInputMap sInputMap[5] =
 static const struct OamData sOamData_Arrow =
 {
     .y = 0,
-    .affineMode = 0,
-    .objMode = 0,
-    .mosaic = 0,
-    .bpp = 0,
-    .shape = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
     .x = 0,
     .matrixNum = 0,
-    .size = 0,
+    .size = SPRITE_SIZE(8x8),
     .tileNum = 0,
     .priority = 0,
     .paletteNum = 0,
@@ -99,14 +129,14 @@ static const u16 sArrow_Pal[] = INCBIN_U16("graphics/reset_rtc_screen/arrow.gbap
 
 static const struct SpriteFrameImage sPicTable_Arrow[] =
 {
-    { sArrowDown_Gfx, 0x20 },
-    { sArrowRight_Gfx, 0x20 },
+    obj_frame_tiles(sArrowDown_Gfx),
+    obj_frame_tiles(sArrowRight_Gfx),
 };
 
 static const struct SpritePalette sSpritePalette_Arrow =
 {
     .data = sArrow_Pal,
-    .tag = 0x1000,
+    .tag = PALTAG_ARROW,
 };
 
 static const union AnimCmd sAnim_Arrow_Down[] =
@@ -127,17 +157,23 @@ static const union AnimCmd sAnim_Arrow_Right[] =
     ANIMCMD_JUMP(0),
 };
 
+enum {
+    ARROW_DOWN,
+    ARROW_UP,
+    ARROW_RIGHT,
+};
+
 static const union AnimCmd *const sAnims_Arrow[] =
 {
-    sAnim_Arrow_Down,
-    sAnim_Arrow_Up,
-    sAnim_Arrow_Right,
+    [ARROW_DOWN]  = sAnim_Arrow_Down,
+    [ARROW_UP]    = sAnim_Arrow_Up,
+    [ARROW_RIGHT] = sAnim_Arrow_Right,
 };
 
 static const struct SpriteTemplate sSpriteTemplate_Arrow =
 {
-    .tileTag = 0xFFFF,
-    .paletteTag = 0x1000,
+    .tileTag = TAG_NONE,
+    .paletteTag = PALTAG_ARROW,
     .oam = &sOamData_Arrow,
     .anims = sAnims_Arrow,
     .images = sPicTable_Arrow,
@@ -147,50 +183,53 @@ static const struct SpriteTemplate sSpriteTemplate_Arrow =
 
 const u8 gText_Colon3[] = _(" : ");
 
+#define sTaskId data[0]
+#define sState  data[1]
+
 static void SpriteCB_Cursor_UpOrRight(struct Sprite *sprite)
 {
-    int state = gTasks[sprite->data[0]].data[2];
-    if (state != sprite->data[1])
+    int state = gTasks[sprite->sTaskId].tSelection;
+    if (state != sprite->sState)
     {
-        sprite->data[1] = state;
+        sprite->sState = state;
         switch (state)
         {
-        case 1:
+        case SELECTION_DAYS:
             sprite->invisible = FALSE;
-            sprite->animNum = 1;
+            sprite->animNum = ARROW_UP;
             sprite->animDelayCounter = 0;
             sprite->x = 53;
             sprite->y = 68;
             break;
-        case 2:
+        case SELECTION_HOURS:
             sprite->invisible = FALSE;
-            sprite->animNum = 1;
+            sprite->animNum = ARROW_UP;
             sprite->animDelayCounter = 0;
             sprite->x = 86;
             sprite->y = 68;
             break;
-        case 3:
+        case SELECTION_MINS:
             sprite->invisible = FALSE;
-            sprite->animNum = 1;
+            sprite->animNum = ARROW_UP;
             sprite->animDelayCounter = 0;
             sprite->x = 107;
             sprite->y = 68;
             break;
-        case 4:
+        case SELECTION_SECS:
             sprite->invisible = FALSE;
-            sprite->animNum = 1;
+            sprite->animNum = ARROW_UP;
             sprite->animDelayCounter = 0;
             sprite->x = 128;
             sprite->y = 68;
             break;
-        case 5:
+        case SELECTION_CONFIRM:
             sprite->invisible = FALSE;
-            sprite->animNum = 2;
+            sprite->animNum = ARROW_RIGHT;
             sprite->animDelayCounter = 0;
             sprite->x = 155;
             sprite->y = 80;
             break;
-        case 6:
+        case SELECTION_NONE:
             DestroySprite(sprite);
             break;
         }
@@ -199,44 +238,44 @@ static void SpriteCB_Cursor_UpOrRight(struct Sprite *sprite)
 
 static void SpriteCB_Cursor_Down(struct Sprite *sprite)
 {
-    int state = gTasks[sprite->data[0]].data[2];
-    if (state != sprite->data[1])
+    int state = gTasks[sprite->sTaskId].tSelection;
+    if (state != sprite->sState)
     {
-        sprite->data[1] = state;
+        sprite->sState = state;
         switch (state)
         {
-        case 1:
+        case SELECTION_DAYS:
             sprite->invisible = FALSE;
-            sprite->animNum = 0;
+            sprite->animNum = ARROW_DOWN;
             sprite->animDelayCounter = 0;
             sprite->x = 53;
             sprite->y = 92;
             break;
-        case 2:
+        case SELECTION_HOURS:
             sprite->invisible = FALSE;
-            sprite->animNum = 0;
+            sprite->animNum = ARROW_DOWN;
             sprite->animDelayCounter = 0;
             sprite->x = 86;
             sprite->y = 92;
             break;
-        case 3:
+        case SELECTION_MINS:
             sprite->invisible = FALSE;
-            sprite->animNum = 0;
+            sprite->animNum = ARROW_DOWN;
             sprite->animDelayCounter = 0;
             sprite->x = 107;
             sprite->y = 92;
             break;
-        case 4:
+        case SELECTION_SECS:
             sprite->invisible = FALSE;
-            sprite->animNum = 0;
+            sprite->animNum = ARROW_DOWN;
             sprite->animDelayCounter = 0;
             sprite->x = 128;
             sprite->y = 92;
             break;
-        case 5:
+        case SELECTION_CONFIRM:
             sprite->invisible = TRUE;
             break;
-        case 6:
+        case SELECTION_NONE:
             DestroySprite(sprite);
             break;
         }
@@ -251,13 +290,13 @@ static void ResetRtcScreen_CreateCursor(u8 taskId)
 
     spriteId = CreateSpriteAtEnd(&sSpriteTemplate_Arrow, 53, 68, 0);
     gSprites[spriteId].callback = SpriteCB_Cursor_UpOrRight;
-    gSprites[spriteId].data[0] = taskId;
-    gSprites[spriteId].data[1] = -1;
+    gSprites[spriteId].sTaskId = taskId;
+    gSprites[spriteId].sState = -1;
 
     spriteId = CreateSpriteAtEnd(&sSpriteTemplate_Arrow, 53, 68, 0);
     gSprites[spriteId].callback = SpriteCB_Cursor_Down;
-    gSprites[spriteId].data[0] = taskId;
-    gSprites[spriteId].data[1] = -1;
+    gSprites[spriteId].sTaskId = taskId;
+    gSprites[spriteId].sState = -1;
 }
 
 static void ResetRtcScreen_FreeCursorPalette(void)
@@ -274,9 +313,9 @@ static void ResetRtcScreen_PrintTime(u8 x, u8 y, u16 days, u8 hours, u8 minutes,
 {
     u8 *dest = gStringVar4;
     days %= 10000;
-    hours %= 24;
-    minutes %= 60;
-    seconds %= 60;
+    hours %= HOURS_PER_DAY;
+    minutes %= MINUTES_PER_HOUR;
+    seconds %= SECONDS_PER_MINUTE;
     AlignInt2InMenuWindow(gStringVar1, days, 24, 1);
     dest = StringCopy(dest, gStringVar1);
     dest = StringCopy(dest, gText_Day);
@@ -332,7 +371,7 @@ static bool32 ResetRtcScreen_MoveTimeUpDown(s16 *val, int minVal, int maxVal, u1
 
 static void Task_ResetRtc_SetFinished(u8 taskId)
 {
-    gTasks[taskId].data[0] = 1;
+    gTasks[taskId].tFinished = TRUE;
 }
 
 static void Task_ResetRtc_Exit(u8 taskId)
@@ -345,14 +384,14 @@ static void Task_ResetRtc_Exit(u8 taskId)
 static void Task_ResetRtc_HandleInput(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
-    u8 selection = data[2];
+    u8 selection = tSelection;
     const struct ResetRtcInputMap *selectionInfo = &sInputMap[selection - 1];
 
     if (JOY_NEW(B_BUTTON))
     {
         gTasks[taskId].func = Task_ResetRtc_Exit;
-        data[1] = 0;
-        data[2] = 6;
+        tSetTime = FALSE;
+        tSelection = SELECTION_NONE;
         PlaySE(SE_SELECT);
         return;
     }
@@ -361,7 +400,7 @@ static void Task_ResetRtc_HandleInput(u8 taskId)
     {
         if (selectionInfo->right)
         {
-            data[2] = selectionInfo->right;
+            tSelection = selectionInfo->right;
             PlaySE(SE_SELECT);
             return;
         }
@@ -371,44 +410,44 @@ static void Task_ResetRtc_HandleInput(u8 taskId)
     {
         if (selectionInfo->left)
         {
-            data[2] = selectionInfo->left;
+            tSelection = selectionInfo->left;
             PlaySE(SE_SELECT);
             return;
         }
     }
 
-    if (selection == 5)
+    if (selection == SELECTION_CONFIRM)
     {
         if (JOY_NEW(A_BUTTON))
         {
-            gLocalTime.days = data[3];
-            gLocalTime.hours = data[4];
-            gLocalTime.minutes = data[5];
-            gLocalTime.seconds = data[6];
+            gLocalTime.days = tDays;
+            gLocalTime.hours = tHours;
+            gLocalTime.minutes = tMinutes;
+            gLocalTime.seconds = tSeconds;
             PlaySE(SE_SELECT);
             gTasks[taskId].func = Task_ResetRtc_Exit;
-            data[1] = 1;
-            data[2] = 6;
+            tSetTime = TRUE;
+            tSelection = SELECTION_NONE;
         }
     }
     else if (ResetRtcScreen_MoveTimeUpDown(&data[selectionInfo->dataIndex], selectionInfo->minVal, selectionInfo->maxVal, JOY_REPEAT(DPAD_UP | DPAD_DOWN)))
     {
         PlaySE(SE_SELECT);
-        ResetRtcScreen_PrintTime(4, 9, data[3], data[4], data[5], data[6]);
+        ResetRtcScreen_PrintTime(4, 9, tDays, tHours, tMinutes, tSeconds);
     }
 }
 
 static void Task_ResetRtc_Init(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
-    data[0] = 0;
-    data[3] = gLocalTime.days;
-    data[4] = gLocalTime.hours;
-    data[5] = gLocalTime.minutes;
-    data[6] = gLocalTime.seconds;
-    ResetRtcScreen_ShowChooseTimeWindow(data[3], data[4], data[5], data[6]);
+    tFinished = FALSE;
+    tDays = gLocalTime.days;
+    tHours = gLocalTime.hours;
+    tMinutes = gLocalTime.minutes;
+    tSeconds = gLocalTime.seconds;
+    ResetRtcScreen_ShowChooseTimeWindow(tDays, tHours, tMinutes, tSeconds);
     ResetRtcScreen_CreateCursor(taskId);
-    data[2] = 2;
+    tSelection = SELECTION_HOURS;
     gTasks[taskId].func = Task_ResetRtc_HandleInput;
 }
 
@@ -417,7 +456,7 @@ void CB2_InitResetRtcScreen(void)
     REG_DISPCNT = 0;
     SetVBlankCallback(NULL);
     DmaClear16(3, PLTT, PLTT_SIZE);
-    DmaFill16Large(3, 0, (u8 *)VRAM, 0x18000, 0x1000);
+    DmaFill16Large(3, 0, (u8 *)VRAM, VRAM_SIZE, 0x1000);
     ResetOamRange(0, 128);
     LoadOam();
     ScanlineEffect_Stop();
@@ -427,7 +466,7 @@ void CB2_InitResetRtcScreen(void)
     ResetPaletteFade();
     Text_LoadWindowTemplate(&gMenuTextWindowTemplate);
     InitMenuWindow(&gMenuTextWindowTemplate);
-    REG_DISPCNT = 4352;
+    REG_DISPCNT = DISPCNT_BG0_ON | DISPCNT_OBJ_ON;
     SetVBlankCallback(VBlankCB_ResetRtcScreen);
     SetMainCallback2(CB2_ResetRtcScreen);
     CreateTask(Task_ResetRtcScreen, 80);
@@ -454,11 +493,13 @@ static void ResetRtcScreen_ShowMessage(const u8 *str)
     Menu_PrintText(str, 2, 15);
 }
 
+#define tState data[0]
+
 static void Task_ShowResetRtcPrompt(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
-    switch (data[0])
+    switch (tState)
     {
     case 0:
         Menu_EraseScreen();
@@ -480,7 +521,7 @@ static void Task_ShowResetRtcPrompt(u8 taskId)
             gSaveBlock2.lastBerryTreeUpdate.minutes,
             gSaveBlock2.lastBerryTreeUpdate.seconds);
         ResetRtcScreen_ShowMessage(gText_ResetRTCConfirmCancel);
-        data[0]++;
+        tState++;
     case 1:
         if (JOY_NEW(B_BUTTON))
         {
@@ -496,53 +537,68 @@ static void Task_ShowResetRtcPrompt(u8 taskId)
     }
 }
 
+#undef tState
+
+enum {
+    MAINSTATE_FADE_IN,
+    MAINSTATE_CHECK_SAVE,
+    MAINSTATE_START_SET_TIME,
+    MAINSTATE_WAIT_SET_TIME,
+    MAINSTATE_SAVE,
+    MAINSTATE_WAIT_EXIT,
+    MAINSTATE_EXIT,
+};
+
+#define tState data[0]
+#define tSubTaskId data[1]
+
 static void Task_ResetRtcScreen(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
-    switch (data[0])
+    switch (tState)
     {
-    case 0:
-        BeginNormalPaletteFade(0xFFFFFFFF, 1, 16, 0, RGB_WHITEALPHA);
-        data[0] = 1;
+    case MAINSTATE_FADE_IN:
+        BeginNormalPaletteFade(PALETTES_ALL, 1, 16, 0, RGB_WHITEALPHA);
+        tState = MAINSTATE_CHECK_SAVE;
         break;
-    case 1:
+    case MAINSTATE_CHECK_SAVE:
         if (!gPaletteFade.active)
         {
-            if (gSaveFileStatus == 0 || gSaveFileStatus == 2)
+            if (gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_CORRUPT)
             {
                 ResetRtcScreen_ShowMessage(gText_NoSaveFileCantSetTime);
-                data[0] = 5;
+                tState = MAINSTATE_WAIT_EXIT;
             }
             else
             {
                 RtcCalcLocalTime();
-                data[1] = CreateTask(Task_ShowResetRtcPrompt, 80);
-                data[0] = 2;
+                tSubTaskId = CreateTask(Task_ShowResetRtcPrompt, 80);
+                tState = MAINSTATE_START_SET_TIME;
             }
         }
         break;
-    case 2:
-        if (gTasks[data[1]].isActive != TRUE)
+    case MAINSTATE_START_SET_TIME:
+        if (gTasks[tSubTaskId].isActive != TRUE)
         {
             Menu_EraseScreen();
             ResetRtcScreen_ShowMessage(gText_PleaseResetTime);
             gLocalTime = gSaveBlock2.lastBerryTreeUpdate;
-            data[1] = CreateTask(Task_ResetRtc_Init, 80);
-            data[0] = 3;
+            tSubTaskId = CreateTask(Task_ResetRtc_Init, 80);
+            tState = MAINSTATE_WAIT_SET_TIME;
         }
         break;
-    case 3:
-        if (gTasks[data[1]].data[0])
+    case MAINSTATE_WAIT_SET_TIME:
+        if (gTasks[tSubTaskId].tFinished)
         {
-            if (!gTasks[data[1]].data[1])
+            if (!gTasks[tSubTaskId].tSetTime)
             {
-                DestroyTask(data[1]);
-                data[0] = 2;
+                DestroyTask(tSubTaskId);
+                tState = MAINSTATE_START_SET_TIME;
             }
             else
             {
-                DestroyTask(data[1]);
+                DestroyTask(tSubTaskId);
                 RtcReset();
                 RtcCalcLocalTimeOffset(
                     gLocalTime.days,
@@ -553,12 +609,12 @@ static void Task_ResetRtcScreen(u8 taskId)
                 VarSet(VAR_DAYS, gLocalTime.days);
                 DisableResetRTC();
                 ResetRtcScreen_ShowMessage(gText_ClockHasBeenReset);
-                data[0] = 4;
+                tState = MAINSTATE_SAVE;
             }
         }
         break;
-    case 4:
-        if (TrySavingData(0) == SAVE_STATUS_OK)
+    case MAINSTATE_SAVE:
+        if (TrySavingData(SAVE_NORMAL) == SAVE_STATUS_OK)
         {
             ResetRtcScreen_ShowMessage(gText_SaveCompleted);
             PlaySE(SE_DING_DONG);
@@ -568,20 +624,20 @@ static void Task_ResetRtcScreen(u8 taskId)
             ResetRtcScreen_ShowMessage(gText_SaveFailed);
             PlaySE(SE_BOO);
         }
-        data[0] = 5;
+        tState = MAINSTATE_WAIT_EXIT;
         // fall through
-    case 5:
+    case MAINSTATE_WAIT_EXIT:
         if (JOY_NEW(A_BUTTON))
         {
-            BeginNormalPaletteFade(0xFFFFFFFF, 1, 0, 16, RGB_WHITEALPHA);
-            data[0] = 6;
+            BeginNormalPaletteFade(PALETTES_ALL, 1, 0, 16, RGB_WHITEALPHA);
+            tState = MAINSTATE_EXIT;
         }
         else
         {
             break;
         }
         // fall through
-    case 6:
+    case MAINSTATE_EXIT:
         if (!gPaletteFade.active)
         {
             DestroyTask(taskId);
@@ -589,6 +645,9 @@ static void Task_ResetRtcScreen(u8 taskId)
         }
     }
 }
+
+#undef tState
+#undef tSubTaskId
 
 #if DEBUG
 void debug_sub_806F8F8(void)
@@ -607,9 +666,9 @@ void debug_sub_806F908(u8 taskId)
         data[0]++;
         break;
     case 1:
-        if (gTasks[data[1]].data[0] != 0)
+        if (gTasks[data[1]].tFinished != FALSE)
         {
-            if (gTasks[data[1]].data[1] == 1)
+            if (gTasks[data[1]].tSetTime == TRUE)
                 RtcCalcLocalTimeOffset(gLocalTime.days, gLocalTime.hours, gLocalTime.minutes, gLocalTime.seconds);
             DestroyTask(data[1]);
             Menu_EraseScreen();
@@ -651,7 +710,7 @@ void debug_sub_806F9E4(u8 taskId)
         break;
     case 1:
         Menu_DrawStdWindowFrame(0, 9, 29, 19);
-        ConvertIntToHexStringN(str + 80, RtcGetErrorStatus(), 2, 4);
+        ConvertIntToHexStringN(str + 80, RtcGetErrorStatus(), STR_CONV_MODE_LEADING_ZEROS, 4);
         Menu_PrintText(str + 80, 2, 10);
         Menu_PrintText(sDebugText_Days, 12, 12);
         Menu_PrintText(sDebugText_Time, 20, 12);
@@ -664,7 +723,7 @@ void debug_sub_806F9E4(u8 taskId)
         FormatHexRtcTime(str);
         debug_sub_8009894(str + 20);
         FormatDecimalTime(str + 40, gLocalTime.hours, gLocalTime.minutes, gLocalTime.seconds);
-        ConvertIntToDecimalStringN(str + 60, gLocalTime.days, 1, 4);
+        ConvertIntToDecimalStringN(str + 60, gLocalTime.days, STR_CONV_MODE_RIGHT_ALIGN, 4);
         if (gSaveBlock2.playTimeVBlanks == 0)
         {
             Menu_PrintText(str, 20, 14);
