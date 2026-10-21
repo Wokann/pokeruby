@@ -6,6 +6,13 @@
 #define gPaletteFade_delay            (gPaletteFade.multipurpose2) // normal and hardware fade
 #define gPaletteFade_submode          (gPaletteFade.multipurpose2) // fast fade
 
+#define PLTT_BUFFER_SIZE (PLTT_SIZE / sizeof(u16))
+
+#define PALETTE_FADE_STATUS_DELAY 2
+#define PALETTE_FADE_STATUS_ACTIVE 1
+#define PALETTE_FADE_STATUS_DONE 0
+#define PALETTE_FADE_STATUS_LOADING 0xFF
+
 #define PALETTES_BG      0x0000FFFF
 #define PALETTES_OBJECTS 0xFFFF0000
 #define PALETTES_ALL     (PALETTES_BG | PALETTES_OBJECTS)
