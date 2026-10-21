@@ -8,15 +8,44 @@
 #include "task.h"
 #include "trig.h"
 #include "ewram.h"
+#include "constants/rgb.h"
 
 extern const u8 *const gBattleAnims_StatusConditions[];
 
 static const struct Subsprite sFrozenIceCubeSubsprites[] =
 {
-    {.x = -16, .y = -16, .shape = ST_OAM_SQUARE,      .size = 3, .tileOffset =   0, .priority = 2},
-    {.x = -16, .y =  48, .shape = ST_OAM_H_RECTANGLE, .size = 3, .tileOffset =  64, .priority = 2},
-    {.x =  48, .y = -16, .shape = ST_OAM_V_RECTANGLE, .size = 3, .tileOffset =  96, .priority = 2},
-    {.x =  48, .y =  48, .shape = ST_OAM_SQUARE,      .size = 2, .tileOffset = 128, .priority = 2},
+    {
+        .x = -16,
+        .y = -16,
+        .shape = SPRITE_SHAPE(64x64),
+        .size = SPRITE_SIZE(64x64),
+        .tileOffset = 0,
+        .priority = 2
+    },
+    {
+        .x = -16,
+        .y =  48,
+        .shape = SPRITE_SHAPE(64x32),
+        .size = SPRITE_SIZE(64x32),
+        .tileOffset = 64,
+        .priority = 2
+    },
+    {
+        .x =  48,
+        .y = -16,
+        .shape = SPRITE_SHAPE(32x64),
+        .size = SPRITE_SIZE(32x64),
+        .tileOffset = 96,
+        .priority = 2
+    },
+    {
+        .x =  48,
+        .y =  48,
+        .shape = SPRITE_SHAPE(32x32),
+        .size = SPRITE_SIZE(32x32),
+        .tileOffset = 128,
+        .priority = 2
+    },
 };
 
 static const struct SubspriteTable sFrozenIceCubeSubspriteTable[] =
@@ -62,12 +91,12 @@ static u8 UNUSED Task_FlashingCircleImpacts(u8 battler, bool8 red)
     u8 spriteId;
     u8 i;
 
-    LoadCompressedSpriteSheet(&gBattleAnimPicTable[136]);
-    LoadCompressedSpritePalette(&gBattleAnimPaletteTable[136]);
+    LoadCompressedSpriteSheet(&gBattleAnimPicTable[GET_TRUE_SPRITE_INDEX(ANIM_TAG_CIRCLE_IMPACT)]);
+    LoadCompressedSpritePalette(&gBattleAnimPaletteTable[GET_TRUE_SPRITE_INDEX(ANIM_TAG_CIRCLE_IMPACT)]);
     gTasks[taskId].data[0] = battler;
-    if (red != 0)
+    if (red != FALSE)
     {
-        gTasks[taskId].data[1] = 0x1F;
+        gTasks[taskId].data[1] = RGB_RED;
         for (i = 0; i < 10; i++)
         {
             spriteId = CreateSprite(&sFlashingCircleImpactSpriteTemplate, gSprites[battlerSpriteId].x, gSprites[battlerSpriteId].y + 32, 0);
@@ -80,7 +109,7 @@ static u8 UNUSED Task_FlashingCircleImpacts(u8 battler, bool8 red)
     }
     else
     {
-        gTasks[taskId].data[1] = 0x7C00;
+        gTasks[taskId].data[1] = RGB_BLUE;
         for (i = 0; i < 10; i++)
         {
             spriteId = CreateSprite(&sFlashingCircleImpactSpriteTemplate, gSprites[battlerSpriteId].x, gSprites[battlerSpriteId].y - 32, 0);
@@ -91,7 +120,7 @@ static u8 UNUSED Task_FlashingCircleImpacts(u8 battler, bool8 red)
                 gSprites[spriteId].data[6] = 21;
         }
     }
-    gSprites[spriteId].data[7] = 1;
+    gSprites[spriteId].data[7] = TRUE;
     return taskId;
 }
 
@@ -100,12 +129,12 @@ static void Task_UpdateFlashingCircleImpacts(u8 taskId)
     if (gTasks[taskId].data[2] == 2)
     {
         gTasks[taskId].data[2] = 0;
-        BlendPalette(0x100 + gTasks[taskId].data[0] * 16, 16, gTasks[taskId].data[4], gTasks[taskId].data[1]);
-        if (gTasks[taskId].data[5] == 0)
+        BlendPalette(OBJ_PLTT_ID(gTasks[taskId].data[0]), PLTT_ID(1), gTasks[taskId].data[4], gTasks[taskId].data[1]);
+        if (gTasks[taskId].data[5] == FALSE)
         {
             gTasks[taskId].data[4]++;
             if (gTasks[taskId].data[4] > 8)
-                gTasks[taskId].data[5] ^= 1;
+                gTasks[taskId].data[5] ^= TRUE;
         }
         else
         {
@@ -115,7 +144,7 @@ static void Task_UpdateFlashingCircleImpacts(u8 taskId)
             if (gTasks[taskId].data[4] < 0)
             {
                 gTasks[taskId].data[4] = var;
-                gTasks[taskId].data[5] ^= 1;
+                gTasks[taskId].data[5] ^= TRUE;
                 gTasks[taskId].data[3]++;
                 if (gTasks[taskId].data[3] == 2)
                     DestroyTask(taskId);
@@ -156,7 +185,7 @@ static void AnimFlashingCircleImpact_Step(struct Sprite *sprite)
     sprite->data[2]++;
     if (sprite->data[2] == 52)
     {
-        if (sprite->data[7] != 0)
+        if (sprite->data[7] != FALSE)
             DestroySpriteAndFreeResources(sprite);
         else
             DestroySprite(sprite);
@@ -165,14 +194,14 @@ static void AnimFlashingCircleImpact_Step(struct Sprite *sprite)
 
 void AnimTask_FrozenIceCube(u8 taskId)
 {
-    s16 x = GetBattlerSpriteCoord(gBattleAnimTarget, 2) - 32;
-    s16 y = GetBattlerSpriteCoord(gBattleAnimTarget, 3) - 36;
+    s16 x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) - 32;
+    s16 y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) - 36;
     u8 spriteId;
 
     if (IsContest())
         x -= 6;
-    REG_BLDCNT = 0x3F40;
-    REG_BLDALPHA = 0x1000;
+    REG_BLDCNT = BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_ALL;
+    REG_BLDALPHA = BLDALPHA_BLEND(0, 16);
     spriteId = CreateSprite(&sFrozenIceCubeSpriteTemplate, x, y, 4);
     SetSubspriteTables(&gSprites[spriteId], sFrozenIceCubeSubspriteTable);
     gTasks[taskId].data[15] = spriteId;
@@ -191,13 +220,13 @@ static void AnimTask_FrozenIceCube_Step1(u8 taskId)
     {
         u8 var = gTasks[taskId].data[1];
 
-        REG_BLDALPHA = ((16 - var) << 8) | var;
+        REG_BLDALPHA = BLDALPHA_BLEND(var, 16 - var);
     }
 }
 
 static void AnimTask_FrozenIceCube_Step2(u8 taskId)
 {
-    u8 palIndex = IndexOfSpritePaletteTag(0x271A);
+    u8 palIndex = IndexOfSpritePaletteTag(ANIM_TAG_ICE_CUBE);
 
     if (gTasks[taskId].data[1]++ > 13)
     {
@@ -206,10 +235,10 @@ static void AnimTask_FrozenIceCube_Step2(u8 taskId)
         {
             u16 temp;
 
-            temp = gPlttBufferFaded[0x100 + palIndex * 16 + 13];
-            gPlttBufferFaded[0x100 + palIndex * 16 + 13] = gPlttBufferFaded[0x100 + palIndex * 16 + 14];
-            gPlttBufferFaded[0x100 + palIndex * 16 + 14] = gPlttBufferFaded[0x100 + palIndex * 16 + 15];
-            gPlttBufferFaded[0x100 + palIndex * 16 + 15] = temp;
+            temp = gPlttBufferFaded[OBJ_PLTT_ID(palIndex) + 13];
+            gPlttBufferFaded[OBJ_PLTT_ID(palIndex) + 13] = gPlttBufferFaded[OBJ_PLTT_ID(palIndex) + 14];
+            gPlttBufferFaded[OBJ_PLTT_ID(palIndex) + 14] = gPlttBufferFaded[OBJ_PLTT_ID(palIndex) + 15];
+            gPlttBufferFaded[OBJ_PLTT_ID(palIndex) + 15] = temp;
 
             gTasks[taskId].data[2] = 0;
             gTasks[taskId].data[3]++;
@@ -240,7 +269,7 @@ static void AnimTask_FrozenIceCube_Step3(u8 taskId)
     {
         u8 var = gTasks[taskId].data[1];
 
-        REG_BLDALPHA = ((16 - var) << 8) | var;
+        REG_BLDALPHA = BLDALPHA_BLEND(var, 16 - var);
     }
 }
 
@@ -266,42 +295,47 @@ void AnimTask_StatsChange(u8 taskId)
 {
     bool16 goesDown;
     s16 animStatId;
-    bool16 sharply = 0;
+    bool16 sharply = FALSE;
 
+    // Ruby's single-stat bases already include the first stat (STAT_ATK).
     switch (gBattleAnimationInfo->animArg)
     {
-    case 15:  goesDown = 0;  animStatId = 0;  break;
-    case 16:  goesDown = 0;  animStatId = 1;  break;
-    case 17:  goesDown = 0;  animStatId = 3;  break;
-    case 18:  goesDown = 0;  animStatId = 5;  break;
-    case 19:  goesDown = 0;  animStatId = 6;  break;
-    case 20:  goesDown = 0;  animStatId = 2;  break;
-    case 21:  goesDown = 0;  animStatId = 4;  break;
-    case 22:  goesDown = 1;  animStatId = 0;  break;
-    case 23:  goesDown = 1;  animStatId = 1;  break;
-    case 24:  goesDown = 1;  animStatId = 3;  break;
-    case 25:  goesDown = 1;  animStatId = 5;  break;
-    case 26:  goesDown = 1;  animStatId = 6;  break;
-    case 27:  goesDown = 1;  animStatId = 2;  break;
-    case 28:  goesDown = 1;  animStatId = 4;  break;
-    case 39:  goesDown = 0;  animStatId = 0;     sharply = 1;  break;
-    case 40:  goesDown = 0;  animStatId = 1;     sharply = 1;  break;
-    case 41:  goesDown = 0;  animStatId = 3;     sharply = 1;  break;
-    case 42:  goesDown = 0;  animStatId = 5;     sharply = 1;  break;
-    case 43:  goesDown = 0;  animStatId = 6;     sharply = 1;  break;
-    case 44:  goesDown = 0;  animStatId = 2;     sharply = 1;  break;
-    case 45:  goesDown = 0;  animStatId = 4;     sharply = 1;  break;
-    case 46:  goesDown = 1;  animStatId = 0;     sharply = 1;  break;
-    case 47:  goesDown = 1;  animStatId = 1;     sharply = 1;  break;
-    case 48:  goesDown = 1;  animStatId = 3;     sharply = 1;  break;
-    case 49:  goesDown = 1;  animStatId = 5;     sharply = 1;  break;
-    case 50:  goesDown = 1;  animStatId = 6;     sharply = 1;  break;
-    case 51:  goesDown = 1;  animStatId = 2;     sharply = 1;  break;
-    case 52:  goesDown = 1;  animStatId = 4;     sharply = 1;  break;
-    case 55:  goesDown = 0;  animStatId = 0xFF;  sharply = 0;  break;
-    case 56:  goesDown = 0;  animStatId = 0xFF;  sharply = 1;  break;
-    case 57:  goesDown = 1;  animStatId = 0xFF;  sharply = 0;  break;
-    case 58:  goesDown = 1;  animStatId = 0xFF;  sharply = 1;  break;
+    case STAT_ANIM_PLUS1:                             goesDown = FALSE;  animStatId = STAT_ANIM_PAL_ATK;        break;
+    case STAT_ANIM_PLUS1 + STAT_DEF - STAT_ATK:       goesDown = FALSE;  animStatId = STAT_ANIM_PAL_DEF;        break;
+    case STAT_ANIM_PLUS1 + STAT_SPEED - STAT_ATK:     goesDown = FALSE;  animStatId = STAT_ANIM_PAL_SPEED;      break;
+    case STAT_ANIM_PLUS1 + STAT_SPATK - STAT_ATK:     goesDown = FALSE;  animStatId = STAT_ANIM_PAL_SPATK;      break;
+    case STAT_ANIM_PLUS1 + STAT_SPDEF - STAT_ATK:     goesDown = FALSE;  animStatId = STAT_ANIM_PAL_SPDEF;      break;
+    case STAT_ANIM_PLUS1 + STAT_ACC - STAT_ATK:       goesDown = FALSE;  animStatId = STAT_ANIM_PAL_ACC;        break;
+    case STAT_ANIM_PLUS1 + STAT_EVASION - STAT_ATK:   goesDown = FALSE;  animStatId = STAT_ANIM_PAL_EVASION;    break;
+
+    case STAT_ANIM_MINUS1:                            goesDown = TRUE;   animStatId = STAT_ANIM_PAL_ATK;        break;
+    case STAT_ANIM_MINUS1 + STAT_DEF - STAT_ATK:      goesDown = TRUE;   animStatId = STAT_ANIM_PAL_DEF;        break;
+    case STAT_ANIM_MINUS1 + STAT_SPEED - STAT_ATK:    goesDown = TRUE;   animStatId = STAT_ANIM_PAL_SPEED;      break;
+    case STAT_ANIM_MINUS1 + STAT_SPATK - STAT_ATK:    goesDown = TRUE;   animStatId = STAT_ANIM_PAL_SPATK;      break;
+    case STAT_ANIM_MINUS1 + STAT_SPDEF - STAT_ATK:    goesDown = TRUE;   animStatId = STAT_ANIM_PAL_SPDEF;      break;
+    case STAT_ANIM_MINUS1 + STAT_ACC - STAT_ATK:      goesDown = TRUE;   animStatId = STAT_ANIM_PAL_ACC;        break;
+    case STAT_ANIM_MINUS1 + STAT_EVASION - STAT_ATK:  goesDown = TRUE;   animStatId = STAT_ANIM_PAL_EVASION;    break;
+
+    case STAT_ANIM_PLUS2:                             goesDown = FALSE;  animStatId = STAT_ANIM_PAL_ATK;        sharply = TRUE;  break;
+    case STAT_ANIM_PLUS2 + STAT_DEF - STAT_ATK:       goesDown = FALSE;  animStatId = STAT_ANIM_PAL_DEF;        sharply = TRUE;  break;
+    case STAT_ANIM_PLUS2 + STAT_SPEED - STAT_ATK:     goesDown = FALSE;  animStatId = STAT_ANIM_PAL_SPEED;      sharply = TRUE;  break;
+    case STAT_ANIM_PLUS2 + STAT_SPATK - STAT_ATK:     goesDown = FALSE;  animStatId = STAT_ANIM_PAL_SPATK;      sharply = TRUE;  break;
+    case STAT_ANIM_PLUS2 + STAT_SPDEF - STAT_ATK:     goesDown = FALSE;  animStatId = STAT_ANIM_PAL_SPDEF;      sharply = TRUE;  break;
+    case STAT_ANIM_PLUS2 + STAT_ACC - STAT_ATK:       goesDown = FALSE;  animStatId = STAT_ANIM_PAL_ACC;        sharply = TRUE;  break;
+    case STAT_ANIM_PLUS2 + STAT_EVASION - STAT_ATK:   goesDown = FALSE;  animStatId = STAT_ANIM_PAL_EVASION;    sharply = TRUE;  break;
+
+    case STAT_ANIM_MINUS2:                            goesDown = TRUE;   animStatId = STAT_ANIM_PAL_ATK;        sharply = TRUE;  break;
+    case STAT_ANIM_MINUS2 + STAT_DEF - STAT_ATK:      goesDown = TRUE;   animStatId = STAT_ANIM_PAL_DEF;        sharply = TRUE;  break;
+    case STAT_ANIM_MINUS2 + STAT_SPEED - STAT_ATK:    goesDown = TRUE;   animStatId = STAT_ANIM_PAL_SPEED;      sharply = TRUE;  break;
+    case STAT_ANIM_MINUS2 + STAT_SPATK - STAT_ATK:    goesDown = TRUE;   animStatId = STAT_ANIM_PAL_SPATK;      sharply = TRUE;  break;
+    case STAT_ANIM_MINUS2 + STAT_SPDEF - STAT_ATK:    goesDown = TRUE;   animStatId = STAT_ANIM_PAL_SPDEF;      sharply = TRUE;  break;
+    case STAT_ANIM_MINUS2 + STAT_ACC - STAT_ATK:      goesDown = TRUE;   animStatId = STAT_ANIM_PAL_ACC;        sharply = TRUE;  break;
+    case STAT_ANIM_MINUS2 + STAT_EVASION - STAT_ATK:  goesDown = TRUE;   animStatId = STAT_ANIM_PAL_EVASION;    sharply = TRUE;  break;
+
+    case STAT_ANIM_MULTIPLE_PLUS1:                    goesDown = FALSE;  animStatId = STAT_ANIM_PAL_MULTIPLE;   sharply = FALSE;  break;
+    case STAT_ANIM_MULTIPLE_PLUS2:                    goesDown = FALSE;  animStatId = STAT_ANIM_PAL_MULTIPLE;   sharply = TRUE;  break;
+    case STAT_ANIM_MULTIPLE_MINUS1:                   goesDown = TRUE;   animStatId = STAT_ANIM_PAL_MULTIPLE;   sharply = FALSE;  break;
+    case STAT_ANIM_MULTIPLE_MINUS2:                   goesDown = TRUE;   animStatId = STAT_ANIM_PAL_MULTIPLE;   sharply = TRUE;  break;
 
     default:
         DestroyAnimVisualTask(taskId);
@@ -310,8 +344,8 @@ void AnimTask_StatsChange(u8 taskId)
 
     gBattleAnimArgs[0] = goesDown;
     gBattleAnimArgs[1] = animStatId;
-    gBattleAnimArgs[2] = 0;
-    gBattleAnimArgs[3] = 0;
+    gBattleAnimArgs[2] = FALSE;
+    gBattleAnimArgs[3] = FALSE;
     gBattleAnimArgs[4] = sharply;
     gTasks[taskId].func = InitStatsChangeAnimation;
     InitStatsChangeAnimation(taskId);
@@ -323,7 +357,7 @@ void LaunchStatusAnimation(u8 battler, u8 statusAnimId)
 
     gBattleAnimAttacker = battler;
     gBattleAnimTarget = battler;
-    LaunchBattleAnimation(gBattleAnims_StatusConditions, statusAnimId, 0);
+    LaunchBattleAnimation(gBattleAnims_StatusConditions, statusAnimId, FALSE);
     taskId = CreateTask(Task_DoStatusAnimation, 10);
     gTasks[taskId].data[0] = battler;
 }
@@ -333,7 +367,7 @@ static void Task_DoStatusAnimation(u8 taskId)
     gAnimScriptCallback();
     if (!gAnimScriptActive)
     {
-        gBattleHealthBoxInfo[gTasks[taskId].data[0]].statusAnimActive = 0;
+        gBattleHealthBoxInfo[gTasks[taskId].data[0]].statusAnimActive = FALSE;
         DestroyTask(taskId);
     }
 }
