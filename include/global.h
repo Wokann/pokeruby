@@ -70,6 +70,8 @@
 // Extracts the lower 16 bits of a 32-bit number
 #define LOHALF(n) ((n) & 0xFFFF)
 
+#define DIV_ROUND_UP(val, roundBy) (((val) / (roundBy)) + (((val) % (roundBy)) ? 1 : 0))
+
 // why does GF hate 2d arrays
 #define MULTI_DIM_ARR(x, dim, y) ((x) * dim + (y))
 
