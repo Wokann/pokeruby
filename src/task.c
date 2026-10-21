@@ -159,8 +159,8 @@ void TaskDummy(u8 taskId)
 
 void SetTaskFuncWithFollowupFunc(u8 taskId, TaskFunc func, TaskFunc followupFunc)
 {
-    TASK_DATA_OP(taskId, 28, *((u16 *)addr) = (u32)followupFunc)
-    TASK_DATA_OP(taskId, 30, *((u16 *)addr) = (u32)followupFunc >> 16)
+    TASK_DATA_OP(taskId, sizeof(s16) * (NUM_TASK_DATA - 2), *((u16 *)addr) = (u32)followupFunc)
+    TASK_DATA_OP(taskId, sizeof(s16) * (NUM_TASK_DATA - 1), *((u16 *)addr) = (u32)followupFunc >> 16)
     gTasks[taskId].func = func;
 }
 
@@ -170,8 +170,8 @@ void SwitchTaskToFollowupFunc(u8 taskId)
 
     gTasks[taskId].func = NULL;
 
-    TASK_DATA_OP(taskId, 28, func = *((u16 *)addr))
-    TASK_DATA_OP(taskId, 30, func |= *((s16 *)addr) << 16)
+    TASK_DATA_OP(taskId, sizeof(s16) * (NUM_TASK_DATA - 2), func = *((u16 *)addr))
+    TASK_DATA_OP(taskId, sizeof(s16) * (NUM_TASK_DATA - 1), func |= *((s16 *)addr) << 16)
 
     gTasks[taskId].func = (TaskFunc)func;
 }
@@ -195,7 +195,7 @@ u8 FindTaskIdByFunc(TaskFunc func)
         if (gTasks[i].isActive == TRUE && gTasks[i].func == func)
             return (u8)i;
 
-    return 0xFF;
+    return TASK_NONE;
 }
 
 u8 GetTaskCount(void)
