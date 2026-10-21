@@ -42,6 +42,7 @@
 #include "sound.h"
 #include "string_util.h"
 #include "tv.h"
+#include "constants/comparison_operators.h"
 #include "constants/event_objects.h"
 #include "constants/maps.h"
 
@@ -65,15 +66,15 @@ extern const u8 *gStdScripts_End[];
 // script.c.
 void * const gNullScriptPtr = NULL;
 
-static const u8 sScriptConditionTable[6][3] =
+static const u8 sScriptConditionTable[COMPARISON_OPERATORS_COUNT][3] =
 {
-//  <  =  >
-    1, 0, 0, // <
-    0, 1, 0, // =
-    0, 0, 1, // >
-    1, 1, 0, // <=
-    0, 1, 1, // >=
-    1, 0, 1, // !=
+//                              <  =  >
+    [LESS_THAN] =              {1, 0, 0},
+    [EQUAL] =                  {0, 1, 0},
+    [GREATER_THAN] =           {0, 0, 1},
+    [LESS_THAN_OR_EQUAL] =     {1, 1, 0},
+    [GREATER_THAN_OR_EQUAL] =  {0, 1, 1},
+    [NOT_EQUAL] =              {1, 0, 1},
 };
 
 static u8 * const sScriptStringVars[] =
@@ -759,9 +760,9 @@ bool8 ScrCmd_warphole(struct ScriptContext *ctx)
 
     PlayerGetDestCoords(&x, &y);
     if (mapGroup == MAP_GROUP(MAP_UNDEFINED) && mapNum == MAP_NUM(MAP_UNDEFINED))
-        SetWarpDestinationToFixedHoleWarp(x - 7, y - 7);
+        SetWarpDestinationToFixedHoleWarp(x - MAP_OFFSET, y - MAP_OFFSET);
     else
-        SetWarpDestination(mapGroup, mapNum, -1, x - 7, y - 7);
+        SetWarpDestination(mapGroup, mapNum, WARP_ID_NONE, x - MAP_OFFSET, y - MAP_OFFSET);
     DoFallWarp();
     ResetInitialPlayerAvatarState();
     return TRUE;
@@ -1071,7 +1072,7 @@ bool8 ScrCmd_showobjectat(struct ScriptContext *ctx)
     u8 mapGroup = ScriptReadByte(ctx);
     u8 mapNum = ScriptReadByte(ctx);
 
-    SetObjectInvisibility(localId, mapNum, mapGroup, 0);
+    SetObjectInvisibility(localId, mapNum, mapGroup, FALSE);
     return FALSE;
 }
 
@@ -1081,7 +1082,7 @@ bool8 ScrCmd_hideobjectat(struct ScriptContext *ctx)
     u8 mapGroup = ScriptReadByte(ctx);
     u8 mapNum = ScriptReadByte(ctx);
 
-    SetObjectInvisibility(localId, mapNum, mapGroup, 1);
+    SetObjectInvisibility(localId, mapNum, mapGroup, TRUE);
     return FALSE;
 }
 
@@ -1402,7 +1403,7 @@ bool8 ScrCmd_showcontestpainting(struct ScriptContext *ctx)
 {
     u8 contestWinnerId = ScriptReadByte(ctx);
 
-    if (contestWinnerId)
+    if (contestWinnerId != CONTEST_WINNER_ARTIST)
         SetContestWinnerForPainting(contestWinnerId);
     ShowContestPainting();
     ScriptContext_Stop();
@@ -1496,7 +1497,7 @@ bool8 ScrCmd_buffernumberstring(struct ScriptContext *ctx)
     u16 num = VarGet(ScriptReadHalfword(ctx));
     u8 numDigits = CountDigits(num);
 
-    ConvertIntToDecimalStringN(sScriptStringVars[stringVarIndex], num, 0, numDigits);
+    ConvertIntToDecimalStringN(sScriptStringVars[stringVarIndex], num, STR_CONV_MODE_LEFT_ALIGN, numDigits);
     return FALSE;
 }
 
@@ -1573,7 +1574,7 @@ bool8 ScrCmd_checkpartymove(struct ScriptContext *ctx)
     u8 i;
     u16 moveId = ScriptReadHalfword(ctx);
 
-    gSpecialVar_Result = 6;
+    gSpecialVar_Result = PARTY_SIZE;
     for (i = 0; i < PARTY_SIZE; i++)
     {
         u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL);
@@ -1785,8 +1786,8 @@ bool8 ScrCmd_setberrytree(struct ScriptContext *ctx)
     u8 berry = ScriptReadByte(ctx);
     u8 growthStage = ScriptReadByte(ctx);
 
-    if (berry == 0)
-        PlantBerryTree(treeId, 0, growthStage, FALSE);
+    if (berry == BERRY_NONE)
+        PlantBerryTree(treeId, BERRY_NONE, growthStage, FALSE);
     else
         PlantBerryTree(treeId, berry, growthStage, FALSE);
     return FALSE;
@@ -1896,12 +1897,12 @@ bool8 ScrCmd_setmetatile(struct ScriptContext *ctx)
     u16 metatileId = VarGet(ScriptReadHalfword(ctx));
     bool16 isImpassable = VarGet(ScriptReadHalfword(ctx));
 
-    x += 7;
-    y += 7;
+    x += MAP_OFFSET;
+    y += MAP_OFFSET;
     if (!isImpassable)
         MapGridSetMetatileIdAt(x, y, metatileId);
     else
-        MapGridSetMetatileIdAt(x, y, metatileId | MAPGRID_COLLISION_MASK);
+        MapGridSetMetatileIdAt(x, y, metatileId | MAPGRID_IMPASSABLE);
     return FALSE;
 }
 
@@ -1910,8 +1911,8 @@ bool8 ScrCmd_opendoor(struct ScriptContext *ctx)
     u16 x = VarGet(ScriptReadHalfword(ctx));
     u16 y = VarGet(ScriptReadHalfword(ctx));
 
-    x += 7;
-    y += 7;
+    x += MAP_OFFSET;
+    y += MAP_OFFSET;
     PlaySE(GetDoorSoundEffect(x, y));
     FieldAnimateDoorOpen(x, y);
     return FALSE;
@@ -1922,8 +1923,8 @@ bool8 ScrCmd_closedoor(struct ScriptContext *ctx)
     u16 x = VarGet(ScriptReadHalfword(ctx));
     u16 y = VarGet(ScriptReadHalfword(ctx));
 
-    x += 7;
-    y += 7;
+    x += MAP_OFFSET;
+    y += MAP_OFFSET;
     FieldAnimateDoorClose(x, y);
     return FALSE;
 }
@@ -1947,8 +1948,8 @@ bool8 ScrCmd_setdooropen(struct ScriptContext *ctx)
     u16 x = VarGet(ScriptReadHalfword(ctx));
     u16 y = VarGet(ScriptReadHalfword(ctx));
 
-    x += 7;
-    y += 7;
+    x += MAP_OFFSET;
+    y += MAP_OFFSET;
     FieldSetDoorOpened(x, y);
     return FALSE;
 }
@@ -1958,8 +1959,8 @@ bool8 ScrCmd_setdoorclosed(struct ScriptContext *ctx)
     u16 x = VarGet(ScriptReadHalfword(ctx));
     u16 y = VarGet(ScriptReadHalfword(ctx));
 
-    x += 7;
-    y += 7;
+    x += MAP_OFFSET;
+    y += MAP_OFFSET;
     FieldSetDoorClosed(x, y);
     return FALSE;
 }
@@ -1994,9 +1995,9 @@ bool8 ScrCmd_addcoins(struct ScriptContext *ctx)
     u16 coins = VarGet(ScriptReadHalfword(ctx));
 
     if (AddCoins(coins) == TRUE)
-        gSpecialVar_Result = 0;
+        gSpecialVar_Result = FALSE;
     else
-        gSpecialVar_Result = 1;
+        gSpecialVar_Result = TRUE;
     return FALSE;
 }
 
@@ -2005,8 +2006,8 @@ bool8 ScrCmd_removecoins(struct ScriptContext *ctx)
     u16 coins = VarGet(ScriptReadHalfword(ctx));
 
     if (RemoveCoins(coins) == TRUE)
-        gSpecialVar_Result = 0;
+        gSpecialVar_Result = FALSE;
     else
-        gSpecialVar_Result = 1;
+        gSpecialVar_Result = TRUE;
     return FALSE;
 }
