@@ -5,6 +5,7 @@
 #include "event_object_lock.h"
 #include "menu_cursor.h"
 #include "script.h"
+#include "constants/rgb.h"
 #include "constants/songs.h"
 #include "sound.h"
 #include "strings.h"
@@ -90,7 +91,7 @@ bool32 MultistepInitMenuWindowContinue(void)
     {
     case 0:
         gMenuMultistepInitState++;
-        return 0;
+        return FALSE;
     case 1:
         gMenuTextWindowTileOffset = MultistepInitWindowTileData(gMenuWindowPtr, gMenuTextTileOffset);
         goto next;
@@ -102,14 +103,14 @@ bool32 MultistepInitMenuWindowContinue(void)
         gMenuTextWindowContentTileOffset = TextWindow_SetBaseTileNum(gMenuTextWindowTileOffset);
     next:
         gMenuMultistepInitState++;
-        return 0;
+        return FALSE;
     case 4:
         TextWindow_LoadStdFrameGraphics(gMenuWindowPtr);
         gMenuMessageBoxContentTileOffset = TextWindow_SetDlgFrameBaseTileNum(gMenuTextWindowContentTileOffset);
-        return 1;
+        return TRUE;
     default:
     fail:
-        return 0;
+        return FALSE;
     }
 }
 
@@ -169,7 +170,7 @@ void Menu_BlankWindowRect(u8 left, u8 top, u8 right, u8 bottom)
 
 void Menu_EraseScreen(void)
 {
-    Menu_EraseWindowRect(0, 0, 29, 19);
+    Menu_EraseWindowRect(0, 0, DISPLAY_TILE_WIDTH - 1, DISPLAY_TILE_HEIGHT - 1);
 }
 
 void Menu_DrawStdWindowFrame(u8 left, u8 top, u8 right, u8 bottom)
@@ -179,7 +180,7 @@ void Menu_DrawStdWindowFrame(u8 left, u8 top, u8 right, u8 bottom)
 
 void sub_8071F40(const u8 *str)
 {
-    Menu_DrawStdWindowFrame(2, 14, 28, 19);
+    Menu_DrawStdWindowFrame(2, 14, 28, DISPLAY_TILE_HEIGHT - 1);
     Menu_PrintText(str, 3, 15);
 }
 
@@ -282,23 +283,23 @@ s8 Menu_ProcessInput(void)
     {
         if (sMenu.menu_field_7)
             Menu_DestroyCursor();
-        return -1;
+        return MENU_B_PRESSED;
     }
 
     if (JOY_NEW(DPAD_UP))
     {
         PlaySE(SE_SELECT);
-        Menu_MoveCursor(-1);
-        return -2;
+        Menu_MoveCursor(MENU_CURSOR_DELTA_UP);
+        return MENU_NOTHING_CHOSEN;
     }
     else if (JOY_NEW(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
-        Menu_MoveCursor(1);
-        return -2;
+        Menu_MoveCursor(MENU_CURSOR_DELTA_DOWN);
+        return MENU_NOTHING_CHOSEN;
     }
 
-    return -2;
+    return MENU_NOTHING_CHOSEN;
 }
 
 s8 Menu_ProcessInputNoWrap(void)
@@ -317,24 +318,24 @@ s8 Menu_ProcessInputNoWrap(void)
     {
         if (sMenu.menu_field_7)
             Menu_DestroyCursor();
-        return -1;
+        return MENU_B_PRESSED;
     }
 
     if (JOY_NEW(DPAD_UP))
     {
-        if (oldPos != Menu_MoveCursorNoWrapAround(-1))
+        if (oldPos != Menu_MoveCursorNoWrapAround(MENU_CURSOR_DELTA_UP))
             PlaySE(SE_SELECT);
-        return -2;
+        return MENU_NOTHING_CHOSEN;
     }
     else if (JOY_NEW(DPAD_DOWN))
     {
-        if (oldPos != Menu_MoveCursorNoWrapAround(1))
+        if (oldPos != Menu_MoveCursorNoWrapAround(MENU_CURSOR_DELTA_DOWN))
             PlaySE(SE_SELECT);
-        return -2;
+        return MENU_NOTHING_CHOSEN;
     }
 
-    Menu_MoveCursorNoWrapAround(0);
-    return -2;
+    Menu_MoveCursorNoWrapAround(MENU_CURSOR_DELTA_NONE);
+    return MENU_NOTHING_CHOSEN;
 }
 
 u8 MoveMenuCursor3(s8 delta)
@@ -442,7 +443,7 @@ static u8 sub_80724F4(u8 left, u8 top, u8 itemCount, const struct MenuAction men
     maxWidth = 0;
     for (i = 0; i < itemCount; i++)
     {
-        u8 width = (GetStringWidthInMenuWindow(menuActions[i].text) + 7) / 8;
+        u8 width = (GetStringWidthInMenuWindow(menuActions[i].text) + (TILE_WIDTH - 1)) / TILE_WIDTH;
 
         if (width > maxWidth)
             maxWidth = width;
@@ -499,7 +500,7 @@ static void sub_8072620(u8 left, u8 top, u8 itemCount, const struct MenuAction m
     maxWidth = 0;
     for (i = 0; i < itemCount; i++)
     {
-        u8 width = (GetStringWidthInMenuWindow(menuActions[i].text) + 7) / 8;
+        u8 width = (GetStringWidthInMenuWindow(menuActions[i].text) + (TILE_WIDTH - 1)) / TILE_WIDTH;
 
         if (width > maxWidth)
             maxWidth = width;
@@ -544,7 +545,7 @@ s8 Menu_ProcessInputGridLayout(void)
     {
         if (sMenu.menu_field_7)
             Menu_DestroyCursor();
-        return -1;
+        return MENU_B_PRESSED;
     }
 
     if (JOY_NEW(DPAD_UP))
@@ -552,29 +553,29 @@ s8 Menu_ProcessInputGridLayout(void)
         PlaySE(SE_SELECT);
         // Move up one whole row
         MoveMenuCursorGridLayout(-sMenu.columns);
-        return -2;
+        return MENU_NOTHING_CHOSEN;
     }
     else if (JOY_NEW(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
         // Move down one whole column
         MoveMenuCursorGridLayout(sMenu.columns);
-        return -2;
+        return MENU_NOTHING_CHOSEN;
     }
     else if (JOY_NEW(DPAD_LEFT))
     {
         PlaySE(SE_SELECT);
-        MoveMenuCursorGridLayout(-1);
-        return -2;
+        MoveMenuCursorGridLayout(MENU_CURSOR_DELTA_LEFT);
+        return MENU_NOTHING_CHOSEN;
     }
     else if (JOY_NEW(DPAD_RIGHT))
     {
         PlaySE(SE_SELECT);
-        MoveMenuCursorGridLayout(1);
-        return -2;
+        MoveMenuCursorGridLayout(MENU_CURSOR_DELTA_RIGHT);
+        return MENU_NOTHING_CHOSEN;
     }
 
-    return -2;
+    return MENU_NOTHING_CHOSEN;
 }
 
 u8 Menu_GetColumnXCoord(u8 column)
@@ -600,8 +601,8 @@ void Menu_PrintItemsReordered(u8 left, u8 top, u8 itemCount, const void * menuAc
 
 void InitYesNoMenu(u8 left, u8 top, u8 a3)
 {
-    Menu_PrintItems(left + 1, top + 1, 2, gMenuYesNoItems);
-    InitMenu(0, left + 1, top + 1, 2, 0, a3);
+    Menu_PrintItems(left + 1, top + 1, ARRAY_COUNT(gMenuYesNoItems), gMenuYesNoItems);
+    InitMenu(0, left + 1, top + 1, ARRAY_COUNT(gMenuYesNoItems), 0, a3);
 }
 
 void DisplayYesNoMenu(u8 left, u8 top, u32 a3)
@@ -623,7 +624,7 @@ u8 Menu_PrintTextPixelCoords(const u8 *text, u8 left, u16 top, u8 a4)
 
 u8 sub_8072A18(const u8 *text, u8 left, u16 top, u8 width, u32 a5)
 {
-    return sub_8004FD0(gMenuWindowPtr, 0, text, gMenuTextTileOffset, left, top, width, a5);
+    return sub_8004FD0(gMenuWindowPtr, NULL, text, gMenuTextTileOffset, left, top, width, a5);
 }
 
 u8 unref_sub_8072A5C(u8 *dest, u8 *src, u8 left, u16 top, u8 width, u32 a6)
@@ -636,24 +637,24 @@ int sub_8072AB0(const u8 *str, u8 left, u16 top, u8 width, u8 height, u32 a6)
     u8 newlineCount = sub_8004FD0(gMenuWindowPtr, NULL, str, gMenuTextTileOffset, left, top, width, a6);
 
 #if ENGLISH
-    left /= 8;
-    top /= 8;
-    width = (width + 7) / 8;
-    height = (height + 7) / 8;
+    left /= TILE_WIDTH;
+    top /= TILE_HEIGHT;
+    width = (width + (TILE_WIDTH - 1)) / TILE_WIDTH;
+    height = (height + (TILE_HEIGHT - 1)) / TILE_HEIGHT;
 
     if (newlineCount < height)
         Menu_BlankWindowRect(left, top + 2 * newlineCount, left + width - 1, height + top - 1);
 #elif GERMAN
     // This looks suspiciously macro-like
     u8 r1;
-    if ((left & 7) == 0)
-        r1 = (width + 7) / 8 - 1;
+    if ((left & (TILE_WIDTH - 1)) == 0)
+        r1 = (width + (TILE_WIDTH - 1)) / TILE_WIDTH - 1;
     else
-        r1 = (width + (left & 7) - 1) / 8;
+        r1 = (width + (left & (TILE_WIDTH - 1)) - 1) / TILE_WIDTH;
     width = r1;
-    left /= 8;
-    height = (height + 7) / 8;
-    top /= 8;
+    left /= TILE_WIDTH;
+    height = (height + (TILE_HEIGHT - 1)) / TILE_HEIGHT;
+    top /= TILE_HEIGHT;
     if (newlineCount < height)
         Menu_BlankWindowRect(left, top + 2 * newlineCount, left + width, height + top - 1);
 #endif
@@ -719,7 +720,7 @@ struct Window *unref_sub_8072D0C(void)
 
 static void sub_8072D18(u8 a1, u8 a2)
 {
-    MenuCursor_Create814A5C0(a1, 0xFFFF, 12, 11679, 8 * a2);
+    MenuCursor_Create814A5C0(a1, TAG_NONE, 12, RGB(31, 12, 11), TILE_WIDTH * a2);
 }
 
 u8 InitMenu(u8 cursorSubpriority, u8 left, u8 top, u8 numChoices, u8 initialCursorPos, u8 cursorWidth)
@@ -741,14 +742,14 @@ u8 InitMenu(u8 cursorSubpriority, u8 left, u8 top, u8 numChoices, u8 initialCurs
         pos = 0;
 
     sMenu.cursorPos = pos;
-    Menu_MoveCursor(0);
+    Menu_MoveCursor(MENU_CURSOR_DELTA_NONE);
 
     return pos;
 }
 
 static void RedrawMenuCursor(u8 x, u8 y)
 {
-    MenuCursor_SetPos814A880((x + 1) * 8, 8 * y);
+    MenuCursor_SetPos814A880((x + 1) * TILE_WIDTH, TILE_HEIGHT * y);
 }
 
 void unref_sub_8072DC0()
@@ -763,7 +764,7 @@ void sub_8072DCC(u8 a1)
 
 void sub_8072DDC(u8 a1)
 {
-    sub_8072DCC(8 * a1);
+    sub_8072DCC(TILE_WIDTH * a1);
 }
 
 void Menu_DestroyCursor(void)
@@ -784,7 +785,7 @@ void de_sub_8073110(u8 * buffer, u8 * name) {
         if (*ptr2 == EOS)
             break;
 
-        if (*ptr2 == 0xFD)
+        if (*ptr2 == PLACEHOLDER_BEGIN)
         {
 
             *ptr3 = EOS;
