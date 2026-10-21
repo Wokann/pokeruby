@@ -3,6 +3,46 @@
 
 #include "sprite.h"
 
+enum {
+    PALSLOT_PLAYER,
+    PALSLOT_PLAYER_REFLECTION,
+    PALSLOT_NPC_1,
+    PALSLOT_NPC_2,
+    PALSLOT_NPC_3,
+    PALSLOT_NPC_4,
+    PALSLOT_NPC_1_REFLECTION,
+    PALSLOT_NPC_2_REFLECTION,
+    PALSLOT_NPC_3_REFLECTION,
+    PALSLOT_NPC_4_REFLECTION,
+    PALSLOT_NPC_SPECIAL,
+    PALSLOT_NPC_SPECIAL_REFLECTION,
+    OBJ_PALSLOT_COUNT
+    // the remaining sprite palette slots (12-15) are used by field effects, the interface, etc.
+};
+
+enum SpinnerRunnerFollowPatterns
+{
+    RUNFOLLOW_ANY,
+    RUNFOLLOW_NORTH_SOUTH,
+    RUNFOLLOW_EAST_WEST,
+    RUNFOLLOW_NORTH_WEST,
+    RUNFOLLOW_NORTH_EAST,
+    RUNFOLLOW_SOUTH_WEST,
+    RUNFOLLOW_SOUTH_EAST,
+    RUNFOLLOW_NORTH_SOUTH_WEST,
+    RUNFOLLOW_NORTH_SOUTH_EAST,
+    RUNFOLLOW_NORTH_EAST_WEST,
+    RUNFOLLOW_SOUTH_EAST_WEST
+};
+
+enum ReflectionTypes
+{
+    REFL_TYPE_NONE,
+    REFL_TYPE_ICE,
+    REFL_TYPE_WATER,
+    NUM_REFLECTION_TYPES
+};
+
 #define GROUND_EFFECT_FLAG_TALL_GRASS_ON_SPAWN   (1 << 0)
 #define GROUND_EFFECT_FLAG_TALL_GRASS_ON_MOVE    (1 << 1)
 #define GROUND_EFFECT_FLAG_LONG_GRASS_ON_SPAWN   (1 << 2)
@@ -25,6 +65,8 @@
 #define GROUND_EFFECT_FLAG_SEAWEED               (1 << 19)
 
 // Sprite data for the CameraObject functions
+#define sCamera_FollowSpriteId data[0]
+#define sCamera_State          data[1]
 #define sCamera_MoveX          data[2]
 #define sCamera_MoveY          data[3]
 

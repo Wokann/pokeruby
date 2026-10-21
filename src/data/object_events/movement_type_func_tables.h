@@ -14,17 +14,17 @@ u8 (*const gMovementTypeFuncs_WanderAround[])(struct ObjectEvent *, struct Sprit
 const u8 gStandardDirections[] = {DIR_SOUTH, DIR_NORTH, DIR_WEST, DIR_EAST};
 
 u8 (*const gGetVectorDirectionFuncs[])(s16, s16, s16, s16) = {
-    GetVectorDirection,
-    GetLimitedVectorDirection_SouthNorth,
-    GetLimitedVectorDirection_WestEast,
-    GetLimitedVectorDirection_WestNorth,
-    GetLimitedVectorDirection_EastNorth,
-    GetLimitedVectorDirection_WestSouth,
-    GetLimitedVectorDirection_EastSouth,
-    GetLimitedVectorDirection_SouthNorthWest,
-    GetLimitedVectorDirection_SouthNorthEast,
-    GetLimitedVectorDirection_NorthWestEast,
-    GetLimitedVectorDirection_SouthWestEast
+    [RUNFOLLOW_ANY] = GetVectorDirection,
+    [RUNFOLLOW_NORTH_SOUTH] = GetLimitedVectorDirection_SouthNorth,
+    [RUNFOLLOW_EAST_WEST] = GetLimitedVectorDirection_WestEast,
+    [RUNFOLLOW_NORTH_WEST] = GetLimitedVectorDirection_WestNorth,
+    [RUNFOLLOW_NORTH_EAST] = GetLimitedVectorDirection_EastNorth,
+    [RUNFOLLOW_SOUTH_WEST] = GetLimitedVectorDirection_WestSouth,
+    [RUNFOLLOW_SOUTH_EAST] = GetLimitedVectorDirection_EastSouth,
+    [RUNFOLLOW_NORTH_SOUTH_WEST] = GetLimitedVectorDirection_SouthNorthWest,
+    [RUNFOLLOW_NORTH_SOUTH_EAST] = GetLimitedVectorDirection_SouthNorthEast,
+    [RUNFOLLOW_NORTH_EAST_WEST] = GetLimitedVectorDirection_NorthWestEast,
+    [RUNFOLLOW_SOUTH_EAST_WEST] = GetLimitedVectorDirection_SouthWestEast,
 };
 
 u8 (*const gMovementTypeFuncs_LookAround[])(struct ObjectEvent *, struct Sprite *) = {
@@ -66,11 +66,11 @@ u8 (*const gMovementTypeFuncs_FaceDirection[])(struct ObjectEvent *, struct Spri
 };
 
 u8 (*const gMovementTypeFuncs_BerryTreeGrowth[])(struct ObjectEvent *, struct Sprite *) = {
-    MovementType_BerryTreeGrowth_Normal,
-    MovementType_BerryTreeGrowth_Move,
-    MovementType_BerryTreeGrowth_SparkleStart,
-    MovementType_BerryTreeGrowth_Sparkle,
-    MovementType_BerryTreeGrowth_SparkleEnd,
+    [BERRYTREEFUNC_NORMAL] = MovementType_BerryTreeGrowth_Normal,
+    [BERRYTREEFUNC_MOVE] = MovementType_BerryTreeGrowth_Move,
+    [BERRYTREEFUNC_SPARKLE_START] = MovementType_BerryTreeGrowth_SparkleStart,
+    [BERRYTREEFUNC_SPARKLE] = MovementType_BerryTreeGrowth_Sparkle,
+    [BERRYTREEFUNC_SPARKLE_END] = MovementType_BerryTreeGrowth_SparkleEnd,
 };
 
 u8 (*const gMovementTypeFuncs_FaceDownAndUp[])(struct ObjectEvent *, struct Sprite *) = {
@@ -391,17 +391,17 @@ u8 (*const gMovementTypeFuncs_CopyPlayer[])(struct ObjectEvent *, struct Sprite 
 };
 
 u8 (*const gCopyPlayerMovementFuncs[])(struct ObjectEvent *, struct Sprite *, u8, bool8(u8)) = {
-    CopyablePlayerMovement_None,
-    CopyablePlayerMovement_FaceDirection,
-    CopyablePlayerMovement_WalkNormal,
-    CopyablePlayerMovement_WalkFast,
-    CopyablePlayerMovement_WalkFaster,
-    CopyablePlayerMovement_Slide,
-    CopyablePlayerMovement_JumpInPlace,
-    CopyablePlayerMovement_Jump,
-    CopyablePlayerMovement_Jump2,
-    CopyablePlayerMovement_None,
-    CopyablePlayerMovement_None
+    [COPY_MOVE_NONE] = CopyablePlayerMovement_None,
+    [COPY_MOVE_FACE] = CopyablePlayerMovement_FaceDirection,
+    [COPY_MOVE_WALK] = CopyablePlayerMovement_WalkNormal,
+    [COPY_MOVE_WALK_FAST] = CopyablePlayerMovement_WalkFast,
+    [COPY_MOVE_WALK_FASTER] = CopyablePlayerMovement_WalkFaster,
+    [COPY_MOVE_SLIDE] = CopyablePlayerMovement_Slide,
+    [COPY_MOVE_JUMP_IN_PLACE] = CopyablePlayerMovement_JumpInPlace,
+    [COPY_MOVE_JUMP] = CopyablePlayerMovement_Jump,
+    [COPY_MOVE_JUMP2] = CopyablePlayerMovement_Jump2,
+    [COPY_MOVE_EMPTY_1] = CopyablePlayerMovement_None,
+    [COPY_MOVE_EMPTY_2] = CopyablePlayerMovement_None,
 };
 
 u8 (*const gMovementTypeFuncs_CopyPlayerInGrass[])(struct ObjectEvent *, struct Sprite *) = {
