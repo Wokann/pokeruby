@@ -3705,7 +3705,7 @@ void DoRareCandyItemEffect(u8 taskId, u16 item, TaskFunc c)
         u8 level;
 
         gUnknown_0202E8F4 = 1;
-        PlayFanfareByFanfareNum(0);
+        PlayFanfareByFanfareNum(FANFARE_LEVEL_UP);
         RedrawPokemonInfoInMenu(gPartyMenu.primarySelectedMonIndex, gPartyMenu.pokemon);
         RemoveBagItem(item, 1);
         GetMonNickname(gPartyMenu.pokemon, gStringVar1);
