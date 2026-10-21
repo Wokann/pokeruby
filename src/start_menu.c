@@ -74,16 +74,16 @@ static bool8 StartMenuLinkModePlayerNameCallback(void);
 
 static const struct MenuAction sStartMenuItems[] =
 {
-    { gText_MenuPokedex, StartMenuPokedexCallback },
-    { gText_MenuPokemon, StartMenuPokemonCallback },
-    { gText_MenuBag, StartMenuBagCallback },
-    { gText_MenuPokenav, StartMenuPokeNavCallback },
-    { gText_MenuPlayer, StartMenuPlayerNameCallback },
-    { gText_MenuSave, StartMenuSaveCallback },
-    { gText_MenuOption, StartMenuOptionCallback },
-    { gText_MenuExit, StartMenuExitCallback },
-    { gText_MenuRetire, StartMenuSafariZoneRetireCallback },
-    { gText_MenuPlayer, StartMenuLinkModePlayerNameCallback },
+    [MENU_ACTION_POKEDEX]          = { gText_MenuPokedex, StartMenuPokedexCallback },
+    [MENU_ACTION_POKEMON]          = { gText_MenuPokemon, StartMenuPokemonCallback },
+    [MENU_ACTION_BAG]              = { gText_MenuBag, StartMenuBagCallback },
+    [MENU_ACTION_POKENAV]          = { gText_MenuPokenav, StartMenuPokeNavCallback },
+    [MENU_ACTION_PLAYER]           = { gText_MenuPlayer, StartMenuPlayerNameCallback },
+    [MENU_ACTION_SAVE]             = { gText_MenuSave, StartMenuSaveCallback },
+    [MENU_ACTION_OPTION]           = { gText_MenuOption, StartMenuOptionCallback },
+    [MENU_ACTION_EXIT]             = { gText_MenuExit, StartMenuExitCallback },
+    [MENU_ACTION_RETIRE_SAFARI]    = { gText_MenuRetire, StartMenuSafariZoneRetireCallback },
+    [MENU_ACTION_PLAYER_LINK]      = { gText_MenuPlayer, StartMenuLinkModePlayerNameCallback },
 };
 
 //Private functions
@@ -155,7 +155,7 @@ void debug_sub_8075C40(u8 taskId)
         savedIme = REG_IME;
         REG_IME = 0;
         REG_TM2CNT_L = 0;
-        REG_TM2CNT = 0x830000;
+        REG_TM2CNT = (TIMER_ENABLE | TIMER_1024CLK) << 16;
         for (i = 0; i < 0xC350; i++)
         {
             DmaSet(
@@ -174,9 +174,9 @@ void debug_sub_8075C40(u8 taskId)
         data[0]++;
         break;
     case 2:
-        PlaySE(0x15);
-        ConvertIntToDecimalStringN(gStringVar1, _debugStartMenu_1, 1, 8);
-        ConvertIntToDecimalStringN(gStringVar2, _debugStartMenu_0, 1, 8);
+        PlaySE(SE_PIN);
+        ConvertIntToDecimalStringN(gStringVar1, _debugStartMenu_1, STR_CONV_MODE_RIGHT_ALIGN, 8);
+        ConvertIntToDecimalStringN(gStringVar2, _debugStartMenu_0, STR_CONV_MODE_RIGHT_ALIGN, 8);
         Menu_DisplayDialogueFrame();
         Menu_PrintText(gUnknown_Debug_839B6D8, 2, 15);
         data[0]++;
@@ -207,14 +207,14 @@ void debug_sub_8075DB4(struct BattleTowerEReaderTrainer *ereaderTrainer, const u
     SetTrainerId(trainerId, ereaderTrainer->trainerId);
     StringCopy8(ereaderTrainer->name, b);
     j = 7;
-    for (i = 0; i < 6; i++)
+    for (i = 0; i < (s32)ARRAY_COUNT(ereaderTrainer->greeting); i++)
     {
         ereaderTrainer->greeting[i] = gSaveBlock1.easyChats.easyChatBattleStart[i];
         ereaderTrainer->farewellPlayerLost[i] = j;
         ereaderTrainer->farewellPlayerWon[i] = j + 6;
         j++;
     }
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < (s32)ARRAY_COUNT(ereaderTrainer->party); i++)
         ConvertPokemonToBattleTowerPokemon(&gPlayerParty[i], &ereaderTrainer->party[i]);
     SetEReaderTrainerChecksum(ereaderTrainer);
 }
@@ -321,7 +321,7 @@ static bool32 InitStartMenuStep(s16 *step, s16 *index)
         (*step)++;
         break;
     case 2:
-        Menu_DrawStdWindowFrame(22, 0, 29, sNumStartMenuActions * 2 + 3);
+        Menu_DrawStdWindowFrame(22, 0, DISPLAY_TILE_WIDTH - 1, sNumStartMenuActions * 2 + 3);
         *index = 0;
         (*step)++;
         break;
@@ -382,7 +382,7 @@ void Task_ShowStartMenu(u8 taskId)
         task->data[0]++;
         break;
     case 1:
-        if (gMenuCallback() == 1)
+        if (gMenuCallback() == TRUE)
             DestroyTask(taskId);
         break;
     }
@@ -417,22 +417,22 @@ static bool8 HandleStartMenuInput(void)
         PlaySE(SE_SELECT);
         if (sStartMenuItems[sCurrentStartMenuActions[sStartMenuCursorPos]].func == StartMenuPokedexCallback)
         {
-            if (GetNationalPokedexCount(0) == 0)
-                return 0;
+            if (GetNationalPokedexCount(FLAG_GET_SEEN) == 0)
+                return FALSE;
         }
         gMenuCallback = sStartMenuItems[sCurrentStartMenuActions[sStartMenuCursorPos]].func;
         if (gMenuCallback != StartMenuSaveCallback &&
            gMenuCallback != StartMenuExitCallback &&
            gMenuCallback != StartMenuSafariZoneRetireCallback)
-            FadeScreen(1, 0);
-        return 0;
+            FadeScreen(FADE_TO_BLACK, 0);
+        return FALSE;
     }
     if (JOY_NEW(START_BUTTON | B_BUTTON))
     {
         CloseMenu();
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
 //When player selects POKEDEX
@@ -443,9 +443,9 @@ static bool8 StartMenuPokedexCallback(void)
         IncrementGameStat(GAME_STAT_CHECKED_POKEDEX);
         PlayRainStoppingSoundEffect();
         SetMainCallback2(CB2_OpenPokedex);
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
 //When player selects POKEMON
@@ -455,9 +455,9 @@ static bool8 StartMenuPokemonCallback(void)
     {
         PlayRainStoppingSoundEffect();
         SetMainCallback2(CB2_PartyMenuFromStartMenu);
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
 //When player selects BAG
@@ -467,9 +467,9 @@ static bool8 StartMenuBagCallback(void)
     {
         PlayRainStoppingSoundEffect();
         SetMainCallback2(CB2_BagMenuFromStartMenu);
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
 //When player selects POKENAV
@@ -479,9 +479,9 @@ static bool8 StartMenuPokeNavCallback(void)
     {
         PlayRainStoppingSoundEffect();
         SetMainCallback2(sub_80EBA5C);
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
 //When player selects his/her name
@@ -491,9 +491,9 @@ static bool8 StartMenuPlayerNameCallback(void)
     {
         PlayRainStoppingSoundEffect();
         ShowPlayerTrainerCard(CB2_ReturnToFieldWithOpenMenu);
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
 //When player selects SAVE
@@ -501,7 +501,7 @@ static bool8 StartMenuSaveCallback(void)
 {
     Menu_DestroyCursor();
     gMenuCallback = SaveStartCallback;
-    return 0;
+    return FALSE;
 }
 
 //When player selects OPTION
@@ -512,16 +512,16 @@ static bool8 StartMenuOptionCallback(void)
         PlayRainStoppingSoundEffect();
         SetMainCallback2(CB2_InitOptionMenu);
         gMain.savedCallback = CB2_ReturnToFieldWithOpenMenu;
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
 //When player selects EXIT
 static bool8 StartMenuExitCallback(void)
 {
     CloseMenu();
-    return 1;
+    return TRUE;
 }
 
 //When player selects RETIRE
@@ -529,7 +529,7 @@ static bool8 StartMenuSafariZoneRetireCallback(void)
 {
     CloseMenu();
     SafariZoneRetirePrompt();
-    return 1;
+    return TRUE;
 }
 
 //When player selects their name in multiplayer mode
@@ -539,9 +539,9 @@ static bool8 StartMenuLinkModePlayerNameCallback(void)
     {
         PlayRainStoppingSoundEffect();
         ShowTrainerCardInLink(gLocalLinkPlayerId, CB2_ReturnToFieldWithOpenMenu);
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
 //Save dialog status
@@ -594,7 +594,7 @@ static u8 RunSaveCallback(void)
     if (sSavingComplete)
     {
         if (!Menu_UpdateWindowText())
-            return 0;
+            return SAVE_IN_PROGRESS;
     }
     sSavingComplete = FALSE;
     return sSaveDialogCallback();
@@ -695,8 +695,8 @@ static u8 SaveConfirmInputCallback(void)
         HideSaveMessageWindow();
         switch (gSaveFileStatus)
         {
-        case 0:
-        case 2:
+        case SAVE_STATUS_EMPTY:
+        case SAVE_STATUS_CORRUPT:
             if (gDifferentSaveFile == FALSE)
             {
                 sSaveDialogCallback = SaveFileExistsCallback;
@@ -709,7 +709,7 @@ static u8 SaveConfirmInputCallback(void)
             return SAVE_IN_PROGRESS;
         }
         break;
-    case -1:    //B button
+    case MENU_B_PRESSED:    //B button
     case 1:     //NO
         HideSaveMessageWindow();
         HideSaveInfoWindow();
@@ -741,7 +741,7 @@ static u8 SaveOverwriteInputCallback(void)
         HideSaveMessageWindow();
         sSaveDialogCallback = SaveSavingMessageCallback;
         break;
-    case -1:    //B button
+    case MENU_B_PRESSED:    //B button
     case 1:     //NO
         HideSaveMessageWindow();
         HideSaveInfoWindow();
@@ -839,11 +839,11 @@ static bool32 InitSaveWindowAfterLinkBattle(u8 *state)
     switch (*state)
     {
     case 0:
-        REG_DISPCNT = 0;
+        REG_DISPCNT = DISPCNT_MODE_0;
         SetVBlankCallback(NULL);
         ScanlineEffect_Stop();
         DmaClear16(3, PLTT, PLTT_SIZE);
-        DmaFill16Large(3, 0, (void *)(VRAM + 0x0), 0x18000, 0x1000);
+        DmaFill16Large(3, 0, (void *)(VRAM + 0x0), VRAM_SIZE, 0x1000);
         break;
     case 1:
         ResetSpriteData();
@@ -860,11 +860,11 @@ static bool32 InitSaveWindowAfterLinkBattle(u8 *state)
     {
         u32 savedIme;
 
-        BlendPalettes(0xFFFFFFFF, 16, RGB(0, 0, 0));
+        BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
         SetVBlankCallback(VBlankCB_LinkBattleSave);
         savedIme = REG_IME;
         REG_IME = 0;
-        REG_IE |= 1;
+        REG_IE |= INTR_FLAG_VBLANK;
         REG_IME = savedIme;
         break;
     }
@@ -901,7 +901,7 @@ static void Task_SaveAfterLinkBattle(u8 taskId)
         case 0:
             Menu_DisplayDialogueFrame();
             Menu_PrintText(gText_SavingDontTurnOffPower, 2, 15);
-            BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
             (*state)++;
             break;
         case 1:
@@ -916,7 +916,7 @@ static void Task_SaveAfterLinkBattle(u8 taskId)
             (*state)++;
             break;
         case 3:
-            BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
             (*state)++;
             break;
         case 4:
