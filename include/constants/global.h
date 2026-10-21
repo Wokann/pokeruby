@@ -74,6 +74,8 @@
 #define FEMALE 1
 #define GENDER_COUNT 2
 
+#define CONTESTANT_COUNT 4
+
 enum
 {
     CONTEST_CATEGORY_COOL,

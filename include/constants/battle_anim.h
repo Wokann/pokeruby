@@ -394,6 +394,9 @@
 // Most tasks return a value to gBattleAnimArgs[7].
 #define ARG_RET_ID 0x7
 
+// For createsprite macro to use internally
+#define ANIMSPRITE_IS_TARGET (1 << 7)
+
 // Trapping Wrap-like moves end turn animation.
 #define TRAP_ANIM_BIND 0
 #define TRAP_ANIM_WRAP 0

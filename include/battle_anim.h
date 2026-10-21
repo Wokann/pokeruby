@@ -1,6 +1,7 @@
 #ifndef GUARD_BATTLE_ANIM_H
 #define GUARD_BATTLE_ANIM_H
 
+#include "constants/battle.h"
 #include "constants/battle_anim.h"
 
 #include "sprite.h"
@@ -71,7 +72,7 @@ extern u16 gWeatherMoveAnim;
 extern s16 gBattleAnimArgs[ANIM_ARGS_COUNT];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
-extern u16 gAnimBattlerSpecies[4];
+extern u16 gAnimBattlerSpecies[MAX_BATTLERS_COUNT];
 extern u8 gAnimCustomPanning;
 extern const struct CompressedSpriteSheet gBattleAnimPicTable[];
 extern const struct CompressedSpritePalette gBattleAnimPaletteTable[];
