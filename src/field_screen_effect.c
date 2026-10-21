@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "field_screen_effect.h"
 #include "event_data.h"
 #include "field_camera.h"
@@ -13,20 +14,23 @@
 
 static void Task_EnableScriptAfterMusicFade(u8 taskId);
 
+// data[0] is used universally by tasks in this file as a state for switches
+#define tState       data[0]
+
 static const u16 sFlashLevelToRadius[] = { 200, 72, 56, 40, 24, 0 };
 
 const s32 gMaxFlashLevel = 4;
 
 static const struct ScanlineEffectParams sFlashEffectParams =
 {
-    (void *)REG_ADDR_WIN0H,
-    ((DMA_ENABLE | DMA_START_HBLANK | DMA_REPEAT | DMA_DEST_RELOAD) << 16) | 1,
-    1
+    .dmaDest = (void *)REG_ADDR_WIN0H,
+    .dmaControl = SCANLINE_EFFECT_DMACNT_16BIT,
+    .initState = 1
 };
 
 static void SetFlashScanlineEffectWindowBoundary(u16 *dest, u32 y, s32 left, s32 right)
 {
-    if (y <= 160)
+    if (y <= DISPLAY_HEIGHT)
     {
         if (left < 0)
             left = 0;
@@ -36,7 +40,7 @@ static void SetFlashScanlineEffectWindowBoundary(u16 *dest, u32 y, s32 left, s32
             right = 0;
         if (right > 255)
             right = 255;
-        dest[y] = (left << 8) | right;
+        dest[y] = WIN_RANGE(left, right);
     }
 }
 
@@ -72,22 +76,22 @@ static void UpdateFlashLevelEffect(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
-    switch (data[0])
+    switch (tState)
     {
     case 0:
         SetFlashScanlineEffectWindowBoundaries(gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer], tFlashCenterX, tFlashCenterY, tCurFlashRadius);
-        data[0] = 1;
+        tState = 1;
         break;
     case 1:
         SetFlashScanlineEffectWindowBoundaries(gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer], tFlashCenterX, tFlashCenterY, tCurFlashRadius);
-        data[0] = 0;
+        tState = 0;
         tCurFlashRadius += tFlashRadiusDelta;
         if (tCurFlashRadius > tDestFlashRadius)
         {
-            if (tClearScanlineEffect == 1)
+            if (tClearScanlineEffect == TRUE)
             {
                 ScanlineEffect_Stop();
-                data[0] = 2;
+                tState = 2;
             }
             else
             {
@@ -144,10 +148,10 @@ static u8 StartUpdateFlashLevelEffect(s32 centerX, s32 centerY, s32 initialFlash
 void AnimateFlash(u8 newFlashLevel)
 {
     u8 curFlashLevel = GetFlashLevel();
-    bool8 fullBrightness = 0;
+    bool8 fullBrightness = FALSE;
     if (!newFlashLevel)
-        fullBrightness = 1;
-    StartUpdateFlashLevelEffect(120, 80, sFlashLevelToRadius[curFlashLevel], sFlashLevelToRadius[newFlashLevel], fullBrightness, 1);
+        fullBrightness = TRUE;
+    StartUpdateFlashLevelEffect(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, sFlashLevelToRadius[curFlashLevel], sFlashLevelToRadius[newFlashLevel], fullBrightness, 1);
     StartWaitForFlashUpdate();
     LockPlayerFieldControls();
 }
@@ -156,8 +160,8 @@ void WriteFlashScanlineEffectBuffer(u8 flashLevel)
 {
     if (flashLevel)
     {
-        SetFlashScanlineEffectWindowBoundaries(&gScanlineEffectRegBuffers[0][0], 120, 80, sFlashLevelToRadius[flashLevel]);
-        CpuFastSet(&gScanlineEffectRegBuffers[0], &gScanlineEffectRegBuffers[1], 480);
+        SetFlashScanlineEffectWindowBoundaries(&gScanlineEffectRegBuffers[0][0], DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, sFlashLevelToRadius[flashLevel]);
+        CpuFastCopy(&gScanlineEffectRegBuffers[0], &gScanlineEffectRegBuffers[1], sizeof(gScanlineEffectRegBuffers[0]));
     }
 }
 
@@ -167,13 +171,13 @@ static void LoadOrbEffectPalette(bool8 blueOrb)
     u16 color[1];
 
     if (!blueOrb)
-        color[0] = 0x1F;
+        color[0] = RGB_RED;
     else
-        color[0] = 0x7C00;
+        color[0] = RGB_BLUE;
 
     for (i = 0; i < 16; i++)
     {
-        LoadPalette(color, 0xF0 + i, 2);
+        LoadPalette(color, BG_PLTT_ID(15) + i, PLTT_SIZEOF(1));
     }
 }
 
@@ -191,15 +195,15 @@ static bool8 UpdateOrbEffectBlend(u16 shakeDir)
     }
     else
     {
-        if (hi < 0x10)
+        if (hi < 16)
         {
             hi++;
         }
     }
 
-    REG_BLDALPHA = (hi << 8) | lo;
+    REG_BLDALPHA = BLDALPHA_BLEND(lo, hi);
 
-    if (lo == 0 && hi == 0x10)
+    if (lo == 0 && hi == 16)
     {
         return TRUE;
     }
@@ -207,56 +211,67 @@ static bool8 UpdateOrbEffectBlend(u16 shakeDir)
     return FALSE;
 }
 
+#define tBlueOrb     data[1]
+#define tCenterX     data[2]
+#define tCenterY     data[3]
+#define tShakeDelay  data[4]
+#define tShakeDir    data[5]
+#define tDispCnt     data[6]
+#define tBldCnt      data[7]
+#define tBldAlpha    data[8]
+#define tWinIn       data[9]
+#define tWinOut      data[10]
+
 static void Task_OrbEffect(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
-    switch (data[0])
+    switch (tState)
     {
     case 0:
-        data[6] = REG_DISPCNT;
-        data[7] = REG_BLDCNT;
-        data[8] = REG_BLDALPHA;
-        data[9] = REG_WININ;
-        data[10] = REG_WINOUT;
-        REG_DISPCNT &= 0xBFFF;
+        tDispCnt = REG_DISPCNT;
+        tBldCnt = REG_BLDCNT;
+        tBldAlpha = REG_BLDALPHA;
+        tWinIn = REG_WININ;
+        tWinOut = REG_WINOUT;
+        REG_DISPCNT &= ~DISPCNT_WIN1_ON;
         REG_BLDCNT |= gOrbEffectBackgroundLayerFlags[0];
-        REG_BLDALPHA = 1804;
-        REG_WININ = 63;
-        REG_WINOUT = 30;
-        SetFlashScanlineEffectWindowBoundaries(&gScanlineEffectRegBuffers[0][0], data[2], data[3], 1);
-        CpuFastSet(&gScanlineEffectRegBuffers[0], &gScanlineEffectRegBuffers[1], 480);
+        REG_BLDALPHA = BLDALPHA_BLEND(12, 7);
+        REG_WININ = WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR;
+        REG_WINOUT = WINOUT_WIN01_BG1 | WINOUT_WIN01_BG2 | WINOUT_WIN01_BG3 | WINOUT_WIN01_OBJ;
+        SetFlashScanlineEffectWindowBoundaries(&gScanlineEffectRegBuffers[0][0], tCenterX, tCenterY, 1);
+        CpuFastCopy(&gScanlineEffectRegBuffers[0], &gScanlineEffectRegBuffers[1], sizeof(gScanlineEffectRegBuffers[0]));
         ScanlineEffect_SetParams(sFlashEffectParams);
-        data[0] = 1;
+        tState = 1;
         break;
     case 1:
-        Menu_BlankWindowRect(0, 0, 29, 19);
-        LoadOrbEffectPalette(data[1]);
-        StartUpdateFlashLevelEffect(data[2], data[3], 1, 160, 1, 2);
-        data[0] = 2;
+        Menu_BlankWindowRect(0, 0, DISPLAY_TILE_WIDTH - 1, DISPLAY_TILE_HEIGHT - 1);
+        LoadOrbEffectPalette(tBlueOrb);
+        StartUpdateFlashLevelEffect(tCenterX, tCenterY, 1, 160, TRUE, 2);
+        tState = 2;
         break;
     case 2:
         if (!FuncIsActiveTask(UpdateFlashLevelEffect))
         {
             ScriptContext_Enable();
-            data[0] = 3;
+            tState = 3;
         }
         break;
     case 3:
         InstallCameraPanAheadCallback();
         SetCameraPanningCallback(NULL);
-        data[5] = 0;
-        data[4] = 4;
-        data[0] = 4;
+        tShakeDir = 0;
+        tShakeDelay = 4;
+        tState = 4;
         break;
     case 4:
-        data[4]--;
-        if (!data[4])
+        tShakeDelay--;
+        if (!tShakeDelay)
         {
             s32 panning;
-            data[4] = 4;
-            data[5] ^= 1;
-            if (data[5])
+            tShakeDelay = 4;
+            tShakeDir ^= 1;
+            if (tShakeDir)
                 panning = 4;
             else
                 panning = -4;
@@ -265,28 +280,28 @@ static void Task_OrbEffect(u8 taskId)
         break;
     case 6:
         InstallCameraPanAheadCallback();
-        data[4] = 8;
-        data[0] = 7;
+        tShakeDelay = 8;
+        tState = 7;
         break;
     case 7:
-        data[4]--;
-        if (!data[4])
+        tShakeDelay--;
+        if (!tShakeDelay)
         {
-            data[4] = 8;
-            data[5] ^= 1;
-            if (UpdateOrbEffectBlend(data[5]) == TRUE)
-                data[0] = 5;
+            tShakeDelay = 8;
+            tShakeDir ^= 1;
+            if (UpdateOrbEffectBlend(tShakeDir) == TRUE)
+                tState = 5;
         }
         break;
     case 5:
-        Menu_EraseWindowRect(0, 0, 29, 19);
+        Menu_EraseWindowRect(0, 0, DISPLAY_TILE_WIDTH - 1, DISPLAY_TILE_HEIGHT - 1);
         LoadFontDefaultPalette(&gMenuTextWindowTemplate);
-        REG_WIN0H = 255;
-        REG_DISPCNT = data[6];
-        REG_BLDCNT = data[7];
-        REG_BLDALPHA = data[8];
-        REG_WININ = data[9];
-        REG_WINOUT = data[10];
+        REG_WIN0H = WIN_RANGE(0, 255);
+        REG_DISPCNT = tDispCnt;
+        REG_BLDCNT = tBldCnt;
+        REG_BLDALPHA = tBldAlpha;
+        REG_WININ = tWinIn;
+        REG_WINOUT = tWinOut;
         ScriptContext_Enable();
         DestroyTask(taskId);
         break;
@@ -300,33 +315,44 @@ void DoOrbEffect(void)
 
     if (gSpecialVar_Result == 0)
     {
-        data[1] = 0;
-        data[2] = 104;
+        tBlueOrb = FALSE;
+        tCenterX = 104;
     }
     else if (gSpecialVar_Result == 1)
     {
-        data[1] = 1;
-        data[2] = 104;
+        tBlueOrb = TRUE;
+        tCenterX = 104;
     }
     else if (gSpecialVar_Result == 2)
     {
-        data[1] = 0;
-        data[2] = 120;
+        tBlueOrb = FALSE;
+        tCenterX = DISPLAY_WIDTH / 2;
     }
     else
     {
-        data[1] = 1;
-        data[2] = 120;
+        tBlueOrb = TRUE;
+        tCenterX = DISPLAY_WIDTH / 2;
     }
 
-    data[3] = 80;
+    tCenterY = DISPLAY_HEIGHT / 2;
 }
 
 void FadeOutOrbEffect(void)
 {
     u8 taskId = FindTaskIdByFunc(Task_OrbEffect);
-    gTasks[taskId].data[0] = 6;
+    gTasks[taskId].tState = 6;
 }
+
+#undef tBlueOrb
+#undef tCenterX
+#undef tCenterY
+#undef tShakeDelay
+#undef tShakeDir
+#undef tDispCnt
+#undef tBldCnt
+#undef tBldAlpha
+#undef tWinIn
+#undef tWinOut
 
 void Script_FadeOutMapMusic(void)
 {
