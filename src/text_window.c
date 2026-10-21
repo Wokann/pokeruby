@@ -62,7 +62,7 @@ extern const u16 gTextWindowFrame18_Pal[];
 extern const u16 gTextWindowFrame19_Pal[];
 extern const u16 gTextWindowFrame20_Pal[];
 
-static const struct TilesPal sWindowFrames[20] =
+static const struct TilesPal sWindowFrames[WINDOW_FRAMES_COUNT] =
 {
     {gTextWindowFrame1_Gfx, gTextWindowFrame1_Pal},
     {gTextWindowFrame2_Gfx, gTextWindowFrame2_Pal},
@@ -89,10 +89,10 @@ static const struct TilesPal sWindowFrames[20] =
 static const u16 sDialogueFrameTilemap[5][7] =
 {
     {1,      3,      4,      4,      5,      6,      9},
-    {11,     9,      9,      9,      9,      0x040B, 9},
+    {11,     9,      9,      9,      9,      BG_TILE_H_FLIP(11), 9},
     {7,      9,      9,      9,      9,      10,     9},
-    {0x080B, 9,      9,      9,      9,      0x0C0B, 9},
-    {0x0801, 0x0803, 0x0804, 0x0804, 0x0805, 0x0806, 9},
+    {BG_TILE_V_FLIP(11), 9,      9,      9,      9,      BG_TILE_H_FLIP(BG_TILE_V_FLIP(11)), 9},
+    {BG_TILE_V_FLIP(1), BG_TILE_V_FLIP(3), BG_TILE_V_FLIP(4), BG_TILE_V_FLIP(4), BG_TILE_V_FLIP(5), BG_TILE_V_FLIP(6), 9},
 };
 
 u16 TextWindow_SetBaseTileNum(u16 baseTileNum)
@@ -133,7 +133,7 @@ void TextWindow_DrawStdFrame(struct Window *win, u8 left, u8 top, u8 right, u8 b
 // Returns the tile data and palette for the specified frame type
 const struct TilesPal *GetWindowFrameTilesPal(u8 frameType)
 {
-    if (frameType > 19)
+    if (frameType >= WINDOW_FRAMES_COUNT)
         return &sWindowFrames[0];
     else
         return &sWindowFrames[frameType];
@@ -148,7 +148,7 @@ static void LoadTextWindowTiles(u8 frameType, void *dest)
 static void LoadTextWindowPalette(u8 frameType, u8 palSlot)
 {
     const struct TilesPal *frameGraphics = GetWindowFrameTilesPal(frameType);
-    LoadPalette(frameGraphics->pal, 16 * palSlot, 0x20);
+    LoadPalette(frameGraphics->pal, BG_PLTT_ID(palSlot), PLTT_SIZE_4BPP);
 }
 
 // Draws a standard window frame
@@ -226,7 +226,7 @@ static u16 GetDialogueFrameTilemapEntry(u16 baseTilemapEntry, u8 x, u8 y, u8 wid
     else if (x > 2)
         x = 3;
 
-    if (x < 7 && y < 5)
+    if (x < ARRAY_COUNT(sDialogueFrameTilemap[0]) && y < ARRAY_COUNT(sDialogueFrameTilemap))
         tilemapEntry = sDialogueFrameTilemap[y][x];
 
     tilemapEntry += baseTilemapEntry;
@@ -257,7 +257,7 @@ void TextWindow_DrawDialogueFrame(struct Window *win)
 void TextWindow_LoadDialogueFrameTiles(struct Window *win)
 {
     u8 *tileData = win->template->tileData;
-    CpuFastCopy(gMessageBox_Gfx, tileData + 32 * sDialogueFrameBaseTileNum, 14 * TILE_SIZE_4BPP);
+    CpuFastCopy(gMessageBox_Gfx, tileData + TILE_SIZE_4BPP * sDialogueFrameBaseTileNum, 14 * TILE_SIZE_4BPP);
 }
 
 // Erases a dialogue window frame
