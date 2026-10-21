@@ -3,6 +3,9 @@
 
 #include "task.h"
 
+#define MENU_L_PRESSED 1
+#define MENU_R_PRESSED 2
+
 struct YesNoFuncTable
 {
     TaskFunc yesFunc;

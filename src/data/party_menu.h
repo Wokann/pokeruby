@@ -67,28 +67,27 @@ u8 *const gTileBufferPtr = gTileBuffer;
 static const u8 sHeldItemGfx[] = INCBIN_U8("graphics/party_menu/hold_icons.4bpp");
 static const u16 sHeldItemPalette[] = INCBIN_U16("graphics/party_menu/hold_icons.gbapal");
 
-static const struct SpriteSheet sSpriteSheet_HeldItem = {
-    sHeldItemGfx,
-    sizeof sHeldItemGfx,
-    0xd750
+static const struct SpriteSheet sSpriteSheet_HeldItem =
+{
+    .data = sHeldItemGfx, .size = sizeof(sHeldItemGfx), .tag = TAG_HELD_ITEM
 };
 
-static const struct SpritePalette sSpritePalette_HeldItem = {
-    sHeldItemPalette,
-    0xd750
+static const struct SpritePalette sSpritePalette_HeldItem =
+{
+    .data = sHeldItemPalette, .tag = TAG_HELD_ITEM
 };
 
 static const struct OamData sOamData_HeldItem =
 {
     .y = 0,
-    .affineMode = 0,
-    .objMode = 0,
-    .mosaic = 0,
-    .bpp = 0,
-    .shape = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
     .x = 0,
     .matrixNum = 0,
-    .size = 0,
+    .size = SPRITE_SIZE(8x8),
     .tileNum = 0,
     .priority = 1,
     .paletteNum = 0,
@@ -111,52 +110,52 @@ static const union AnimCmd *const sSpriteAnimTable_HeldItem[] = {
 };
 
 static const struct SpriteTemplate sSpriteTemplate_HeldItem = {
-    55120,
-    55120,
-    &sOamData_HeldItem,
-    sSpriteAnimTable_HeldItem,
-    NULL,
-    gDummySpriteAffineAnimTable,
-    SpriteCB_UpdateHeldItemIconPosition
+    .tileTag = TAG_HELD_ITEM,
+    .paletteTag = TAG_HELD_ITEM,
+    .oam = &sOamData_HeldItem,
+    .anims = sSpriteAnimTable_HeldItem,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_UpdateHeldItemIconPosition
 };
 
 // Texts that can be displayed in the bottom of the party menu.
 static const u8 *const PartyMenuPromptTexts[] = {
-    gText_ChoosePokemon,
-    gText_MoveToWhere,
-    gText_TeachWhichPokemon2,
-    gText_UseOnWhichPokemon,
-    gText_GiveToWhichPokemon,
-    gText_DoWhatWithPokemon,
-    gText_NothingToCut,
-    gText_CantSurfHere,
-    gText_AlreadySurfing,
-    gText_CantUseHere,
-    gText_RestoreWhichMove,
-    gText_BoostPP,
-    gOtherText_CancelWithTerminator,
-    gText_DoWhatWithItem,
-    gText_NoPokemonForBattle,
-    gText_ChoosePokemon2,
-    gText_NotEnoughHp,
-    OtherText_ThreePokeNeeded,
-    gText_PokemonCantBeSame,
-    gText_NoIdenticalHoldItems,
-    gText_TeachWhichPokemon,
+    [PARTY_MSG_CHOOSE_MON] = gText_ChoosePokemon,
+    [PARTY_MSG_MOVE_TO_WHERE] = gText_MoveToWhere,
+    [2] = gText_TeachWhichPokemon2,
+    [PARTY_MSG_USE_ON_WHICH_MON] = gText_UseOnWhichPokemon,
+    [PARTY_MSG_GIVE_TO_WHICH_MON] = gText_GiveToWhichPokemon,
+    [PARTY_MSG_DO_WHAT_WITH_MON] = gText_DoWhatWithPokemon,
+    [PARTY_MSG_NOTHING_TO_CUT] = gText_NothingToCut,
+    [PARTY_MSG_CANT_SURF_HERE] = gText_CantSurfHere,
+    [PARTY_MSG_ALREADY_SURFING] = gText_AlreadySurfing,
+    [PARTY_MSG_CANT_USE_HERE] = gText_CantUseHere,
+    [PARTY_MSG_RESTORE_WHICH_MOVE] = gText_RestoreWhichMove,
+    [PARTY_MSG_BOOST_PP_WHICH_MOVE] = gText_BoostPP,
+    [12] = gOtherText_CancelWithTerminator,
+    [PARTY_MSG_DO_WHAT_WITH_ITEM] = gText_DoWhatWithItem,
+    [PARTY_MSG_NO_MON_FOR_BATTLE] = gText_NoPokemonForBattle,
+    [PARTY_MSG_CHOOSE_MON_2] = gText_ChoosePokemon2,
+    [PARTY_MSG_NOT_ENOUGH_HP] = gText_NotEnoughHp,
+    [17] = OtherText_ThreePokeNeeded,
+    [PARTY_MSG_MONS_CANT_BE_SAME] = gText_PokemonCantBeSame,
+    [PARTY_MSG_NO_SAME_HOLD_ITEMS] = gText_NoIdenticalHoldItems,
+    [PARTY_MSG_TEACH_WHICH_MON] = gText_TeachWhichPokemon,
 };
 
-static const struct Coords8 gUnknown_08376678[8][6] = {
-    {{16, 40}, {104, 18}, {104, 42}, {104, 66}, {104, 90}, {104, 114}}, // PARTY_MENU_TYPE_FIELD
-    {{16, 24}, { 16, 80}, {104, 18}, {104, 50}, {104, 82}, {104, 114}}, // PARTY_MENU_TYPE_IN_BATTLE
-    {{16, 24}, { 16, 80}, {104, 26}, {104, 50}, {104, 82}, {104, 106}}, // PARTY_MENU_TYPE_CONTEST
-    {{16, 24}, {104, 26}, {104, 50}, { 16, 80}, {104, 82}, {104, 106}}, // PARTY_MENU_TYPE_CHOOSE_MON
-    {{ 5,  4}, { 16,  1}, { 16,  4}, { 16,  7}, { 16, 10}, { 16,  13}}, // PARTY_MENU_TYPE_BATTLE_TOWER
-    {{ 5,  2}, {  5,  9}, { 16,  1}, { 16,  5}, { 16,  9}, { 16,  13}}, // PARTY_MENU_TYPE_MULTI_SHOWCASE
-    {{ 5,  2}, {  5,  9}, { 16,  2}, { 16,  5}, { 16,  9}, { 16,  12}}, // PARTY_MENU_TYPE_DAYCARE
-    {{ 5,  2}, { 16,  2}, { 16,  5}, {  5,  9}, { 16,  9}, { 16,  12}}, // PARTY_MENU_TYPE_MOVE_RELEARNER
+static const struct Coords8 gUnknown_08376678[8][PARTY_SIZE] = {
+    {{16, 40}, {104, 18}, {104, 42}, {104, 66}, {104, 90}, {104, 114}}, // PARTY_LAYOUT_SINGLE
+    {{16, 24}, { 16, 80}, {104, 18}, {104, 50}, {104, 82}, {104, 114}}, // PARTY_LAYOUT_DOUBLE
+    {{16, 24}, { 16, 80}, {104, 26}, {104, 50}, {104, 82}, {104, 106}}, // PARTY_LAYOUT_MULTI
+    {{16, 24}, {104, 26}, {104, 50}, { 16, 80}, {104, 82}, {104, 106}}, // PARTY_LAYOUT_MULTI_SHOWCASE
+    {{ 5,  4}, { 16,  1}, { 16,  4}, { 16,  7}, { 16, 10}, { 16,  13}},
+    {{ 5,  2}, {  5,  9}, { 16,  1}, { 16,  5}, { 16,  9}, { 16,  13}},
+    {{ 5,  2}, {  5,  9}, { 16,  2}, { 16,  5}, { 16,  9}, { 16,  12}},
+    {{ 5,  2}, { 16,  2}, { 16,  5}, {  5,  9}, { 16,  9}, { 16,  12}},
 };
 
-static const struct Coords8 gUnknown_08376738[12][6] = {
+static const struct Coords8 gUnknown_08376738[12][PARTY_SIZE] = {
     {{6,  5}, {17,  2}, {17,  5}, {17,  8}, {17, 11}, {17, 14}},
     {{6,  3}, { 6, 10}, {17,  2}, {17,  6}, {17, 10}, {17, 14}},
     {{6,  3}, { 6, 10}, {17,  3}, {17,  6}, {17, 10}, {17, 13}},
@@ -171,14 +170,14 @@ static const struct Coords8 gUnknown_08376738[12][6] = {
     {{7,  5}, {26,  3}, {26,  6}, { 7, 12}, {26, 10}, {26, 13}},
 };
 
-static u16 *const gUnknown_08376858[4][6] = {
-    {(u16*)(BG_VRAM + 0xF1C8), (u16*)(BG_VRAM + 0xF0AE), (u16*)(BG_VRAM + 0xF16E), (u16*)(BG_VRAM + 0xF22E), (u16*)(BG_VRAM + 0xF2EE), (u16*)(BG_VRAM + 0xF3AE)}, // PARTY_MENU_STANDARD
+static u16 *const gUnknown_08376858[PARTY_LAYOUT_COUNT][PARTY_SIZE] = {
+    {(u16*)(BG_VRAM + 0xF1C8), (u16*)(BG_VRAM + 0xF0AE), (u16*)(BG_VRAM + 0xF16E), (u16*)(BG_VRAM + 0xF22E), (u16*)(BG_VRAM + 0xF2EE), (u16*)(BG_VRAM + 0xF3AE)}, // PARTY_LAYOUT_SINGLE
     {(u16*)(BG_VRAM + 0xF148), (u16*)(BG_VRAM + 0xF308), (u16*)(BG_VRAM + 0xF0AE), (u16*)(BG_VRAM + 0xF1AE), (u16*)(BG_VRAM + 0xF2AE), (u16*)(BG_VRAM + 0xF3AE)}, // PARTY_LAYOUT_DOUBLE
     {(u16*)(BG_VRAM + 0xF148), (u16*)(BG_VRAM + 0xF308), (u16*)(BG_VRAM + 0xF0EE), (u16*)(BG_VRAM + 0xF1AE), (u16*)(BG_VRAM + 0xF2AE), (u16*)(BG_VRAM + 0xF36E)}, // PARTY_LAYOUT_MULTI
     {(u16*)(BG_VRAM + 0xF148), (u16*)(BG_VRAM + 0xF0EE), (u16*)(BG_VRAM + 0xF1AE), (u16*)(BG_VRAM + 0xF308), (u16*)(BG_VRAM + 0xF2AE), (u16*)(BG_VRAM + 0xF36E)}, // PARTY_LAYOUT_MULTI_SHOWCASE
 };
 
-static const struct Coords8 gUnknown_083768B8[3][8] = {
+static const struct Coords8 gUnknown_083768B8[3][PARTY_SIZE + 2] = {
     {{8,  44}, {92,  22}, {92,  46}, {92,  70}, {92,  94}, {92, 118}, {196, 136}, {196, 152}}, // PARTY_LAYOUT_SINGLE
     {{8,  28}, { 8,  84}, {92,  22}, {92,  54}, {92,  86}, {92, 118}, {196, 136}, {196, 152}}, // PARTY_LAYOUT_DOUBLE
     {{8,  28}, { 8,  84}, {92,  30}, {92,  54}, {92,  86}, {92, 110}, {196, 136}, {196, 152}}, // PARTY_LAYOUT_MULTI
@@ -189,12 +188,12 @@ static u16 *const gUnknown_08376918[2][PARTY_SIZE] = {
     {(u16*)(BG_VRAM + 0xF148), (u16*)(BG_VRAM + 0xF308), (u16*)(BG_VRAM + 0xF0AE), (u16*)(BG_VRAM + 0xF1AE), (u16*)(BG_VRAM + 0xF2AE), (u16*)(BG_VRAM + 0xF3AE)},
 };
 
-static const struct PartyMenuWindowCoords gUnknown_08376948[2][6] = {
+static const struct PartyMenuWindowCoords gUnknown_08376948[2][PARTY_SIZE] = {
     {{2, 4, 10, 9}, {16, 1, 29,  3}, {16, 4, 29, 6}, {16, 7, 29, 9}, {16, 10, 29, 12}, {16, 13, 29, 15}},
     {{2, 2, 10, 7}, { 2, 9, 10, 14}, {16, 1, 29, 3}, {16, 5, 29, 7}, {16,  9, 29, 11}, {16, 13, 29, 15}},
 };
 
-static const struct PartyMenuWindowCoords gUnknown_08376978[2][6] = {
+static const struct PartyMenuWindowCoords gUnknown_08376978[2][PARTY_SIZE] = {
     {{2, 7, 10,  9}, {21, 1, 29,  3}, {21, 4, 29,  6}, {21, 7, 29, 9}, {21, 10, 29, 12}, {21, 13, 29, 15}},
     {{2, 2, 10,  7}, { 2, 9, 10, 14}, {16, 1, 29,  3}, {16, 5, 29, 7}, {16,  9, 29, 11}, {16, 13, 29, 15}},
 };
@@ -266,31 +265,31 @@ static const TaskFunc gUnknown_08376B54[] = {
     ((palette) << 12) | ((priority) << 10) | (tileOffset)
 
 static const u16 PartyMonOAMSettings_LeftColumn[] = {
-    PartyMonOAMSettings(24,  0, 15, ST_OAM_H_RECTANGLE, 1, 1,  0),
-    PartyMonOAMSettings(56,  0, 15, ST_OAM_H_RECTANGLE, 1, 1,  4),
-    PartyMonOAMSettings(24,  8, 15, ST_OAM_H_RECTANGLE, 1, 1,  8),
-    PartyMonOAMSettings(56,  8, 15, ST_OAM_H_RECTANGLE, 1, 1, 12),
-    PartyMonOAMSettings(32, 16, 15, ST_OAM_H_RECTANGLE, 1, 1, 16),
-    PartyMonOAMSettings(37, 32, 15, ST_OAM_H_RECTANGLE, 1, 1, 24),
-    PartyMonOAMSettings(69, 32, 15, ST_OAM_H_RECTANGLE, 1, 1, 28),
+    PartyMonOAMSettings(24,  0, 15, ST_OAM_H_RECTANGLE, SPRITE_SIZE(32x8), 1,  0),
+    PartyMonOAMSettings(56,  0, 15, ST_OAM_H_RECTANGLE, SPRITE_SIZE(32x8), 1,  4),
+    PartyMonOAMSettings(24,  8, 15, ST_OAM_H_RECTANGLE, SPRITE_SIZE(32x8), 1,  8),
+    PartyMonOAMSettings(56,  8, 15, ST_OAM_H_RECTANGLE, SPRITE_SIZE(32x8), 1, 12),
+    PartyMonOAMSettings(32, 16, 15, ST_OAM_H_RECTANGLE, SPRITE_SIZE(32x8), 1, 16),
+    PartyMonOAMSettings(37, 32, 15, ST_OAM_H_RECTANGLE, SPRITE_SIZE(32x8), 1, 24),
+    PartyMonOAMSettings(69, 32, 15, ST_OAM_H_RECTANGLE, SPRITE_SIZE(32x8), 1, 28),
     0xFFFF,
 };
 
 static const u16 PartyMonOAMSettings_RightColumn[] = {
-    PartyMonOAMSettings( 24,  0, 15, ST_OAM_H_RECTANGLE, 1, 1,  0),
-    PartyMonOAMSettings( 56,  0, 15, ST_OAM_H_RECTANGLE, 1, 1,  4),
-    PartyMonOAMSettings( 24,  8, 15, ST_OAM_H_RECTANGLE, 1, 1,  8),
-    PartyMonOAMSettings( 56,  8, 15, ST_OAM_H_RECTANGLE, 1, 1, 12),
-    PartyMonOAMSettings( 32, 16, 15, ST_OAM_H_RECTANGLE, 1, 1, 16),
-    PartyMonOAMSettings(101, 16, 15, ST_OAM_H_RECTANGLE, 1, 1, 24),
-    PartyMonOAMSettings(133, 16, 15, ST_OAM_H_RECTANGLE, 1, 1, 28),
+    PartyMonOAMSettings( 24,  0, 15, ST_OAM_H_RECTANGLE, SPRITE_SIZE(32x8), 1,  0),
+    PartyMonOAMSettings( 56,  0, 15, ST_OAM_H_RECTANGLE, SPRITE_SIZE(32x8), 1,  4),
+    PartyMonOAMSettings( 24,  8, 15, ST_OAM_H_RECTANGLE, SPRITE_SIZE(32x8), 1,  8),
+    PartyMonOAMSettings( 56,  8, 15, ST_OAM_H_RECTANGLE, SPRITE_SIZE(32x8), 1, 12),
+    PartyMonOAMSettings( 32, 16, 15, ST_OAM_H_RECTANGLE, SPRITE_SIZE(32x8), 1, 16),
+    PartyMonOAMSettings(101, 16, 15, ST_OAM_H_RECTANGLE, SPRITE_SIZE(32x8), 1, 24),
+    PartyMonOAMSettings(133, 16, 15, ST_OAM_H_RECTANGLE, SPRITE_SIZE(32x8), 1, 28),
     0xFFFF,
 };
 
 // Controls where and how the mons' text appears in the party menu screen (nickname, HP, and level).
-static struct PartyMonTextSettingsStruct const PartyMonTextSettings[4][6] =
+static struct PartyMonTextSettingsStruct const PartyMonTextSettings[PARTY_LAYOUT_COUNT][PARTY_SIZE] =
 {
-    { // PARTY_LAYOUT_SINGLE
+    [PARTY_LAYOUT_SINGLE] = {
         { 1,  4, PartyMonOAMSettings_LeftColumn},
         {12,  1, PartyMonOAMSettings_RightColumn},
         {12,  4, PartyMonOAMSettings_RightColumn},
@@ -298,7 +297,7 @@ static struct PartyMonTextSettingsStruct const PartyMonTextSettings[4][6] =
         {12, 10, PartyMonOAMSettings_RightColumn},
         {12, 13, PartyMonOAMSettings_RightColumn},
     },
-    { // PARTY_LAYOUT_DOUBLE
+    [PARTY_LAYOUT_DOUBLE] = {
         { 1,  2, PartyMonOAMSettings_LeftColumn},
         { 1,  9, PartyMonOAMSettings_LeftColumn},
         {12,  1, PartyMonOAMSettings_RightColumn},
@@ -306,7 +305,7 @@ static struct PartyMonTextSettingsStruct const PartyMonTextSettings[4][6] =
         {12,  9, PartyMonOAMSettings_RightColumn},
         {12, 13, PartyMonOAMSettings_RightColumn},
     },
-    { // PARTY_LAYOUT_MULTI
+    [PARTY_LAYOUT_MULTI] = {
         { 1,  2, PartyMonOAMSettings_LeftColumn},
         { 1,  9, PartyMonOAMSettings_LeftColumn},
         {12,  2, PartyMonOAMSettings_RightColumn},
@@ -314,7 +313,7 @@ static struct PartyMonTextSettingsStruct const PartyMonTextSettings[4][6] =
         {12,  9, PartyMonOAMSettings_RightColumn},
         {12, 12, PartyMonOAMSettings_RightColumn},
     },
-    { // PARTY_LAYOUT_MULTI_SHOWCASE
+    [PARTY_LAYOUT_MULTI_SHOWCASE] = {
         { 1,  2, PartyMonOAMSettings_LeftColumn},
         {12,  2, PartyMonOAMSettings_RightColumn},
         {12,  5, PartyMonOAMSettings_RightColumn},

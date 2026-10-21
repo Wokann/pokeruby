@@ -17,6 +17,7 @@ enum
     PARTY_LAYOUT_DOUBLE,
     PARTY_LAYOUT_MULTI,
     PARTY_LAYOUT_MULTI_SHOWCASE,
+    PARTY_LAYOUT_COUNT,
 };
 
 enum
@@ -40,5 +41,26 @@ enum
     PARTY_ACTION_ABILITY_PREVENTS,
     PARTY_ACTION_GIVE_ITEM,
 };
+
+// Ruby/Sapphire party message IDs differ from Emerald's table positions.
+#define PARTY_MSG_CHOOSE_MON              0
+#define PARTY_MSG_MOVE_TO_WHERE           1
+#define PARTY_MSG_USE_ON_WHICH_MON        3
+#define PARTY_MSG_GIVE_TO_WHICH_MON       4
+#define PARTY_MSG_DO_WHAT_WITH_MON        5
+#define PARTY_MSG_NOTHING_TO_CUT          6
+#define PARTY_MSG_CANT_SURF_HERE          7
+#define PARTY_MSG_ALREADY_SURFING         8
+#define PARTY_MSG_CANT_USE_HERE           9
+#define PARTY_MSG_RESTORE_WHICH_MOVE      10
+#define PARTY_MSG_BOOST_PP_WHICH_MOVE     11
+#define PARTY_MSG_DO_WHAT_WITH_ITEM       13
+#define PARTY_MSG_NO_MON_FOR_BATTLE       14
+#define PARTY_MSG_CHOOSE_MON_2            15
+#define PARTY_MSG_NOT_ENOUGH_HP           16
+#define PARTY_MSG_MONS_CANT_BE_SAME       18
+#define PARTY_MSG_NO_SAME_HOLD_ITEMS      19
+#define PARTY_MSG_TEACH_WHICH_MON         20
+#define PARTY_MSG_NONE                    0xFF
 
 #endif // GUARD_CONSTANTS_PARTY_MENU_H
