@@ -23,18 +23,20 @@ void InitFieldMessageBox(void)
     Text_InitWindowWithTemplate(&gFieldMessageBoxWindow, &gMenuTextWindowTemplate);
 }
 
+#define tState data[0]
+
 static void Task_FieldMessageBox(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
-    switch (task->data[0])
+    switch (task->tState)
     {
     case 0:
         TextWindow_LoadDialogueFrameTiles(&gFieldMessageBoxWindow);
-        task->data[0]++;
+        task->tState++;
         break;
     case 1:
         TextWindow_DrawDialogueFrame(&gFieldMessageBoxWindow);
-        task->data[0]++;
+        task->tState++;
         break;
     case 2:
         switch (sFieldMessageBoxMode)
@@ -53,6 +55,8 @@ static void Task_FieldMessageBox(u8 taskId)
     }
 }
 
+#undef tState
+
 static void CreateTask_DrawFieldMessage(void)
 {
     CreateTask(Task_FieldMessageBox, 80);
@@ -61,7 +65,7 @@ static void CreateTask_DrawFieldMessage(void)
 static void DestroyTask_DrawFieldMessage(void)
 {
     u8 taskId = FindTaskIdByFunc(Task_FieldMessageBox);
-    if (taskId != 0xFF)
+    if (taskId != TASK_NONE)
         DestroyTask(taskId);
 }
 
