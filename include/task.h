@@ -6,6 +6,7 @@
 #define TASK_NONE TAIL_SENTINEL
 
 #define NUM_TASKS 16
+#define NUM_TASK_DATA 16
 
 // general task defines
 #define TASK gTasks[taskId]
@@ -20,7 +21,7 @@ struct Task
     /*0x05*/ u8 prev;
     /*0x06*/ u8 next;
     /*0x07*/ u8 priority;
-    /*0x08*/ s16 data[16];
+    /*0x08*/ s16 data[NUM_TASK_DATA];
 };
 
 extern struct Task gTasks[];
