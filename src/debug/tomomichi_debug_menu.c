@@ -26,7 +26,7 @@ static u8 sPicTest_ContestType;
 static u8 sPicTest_MuseumArtTitleType;
 static u8 sPicTest_PreviewType;
 static u8 sFlagAndVarTest_WhichSubmenu;
-static u8 sPicTest_StringBuffer[13];
+static u8 sPicTest_StringBuffer[POKEMON_NAME_LENGTH + 3];
 static u8 sTopMenuCursorPos;
 static u8 sTrickRelatedMenuCursorPos;
 static u8 sControlEventsCursorPos;
@@ -476,8 +476,8 @@ static const struct MenuAction sMenuActions_ControlFlags_FH_OBJ09_15[] = {
 static const u8 sControlFlags_FH_OBJ_CountsArray[] = {9, 7};
 
 static const u16 sControlFlags_FH_OBJ_FlagsArrays[][9] = {
-    {0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19},
-    {0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f, 0x20}
+    {FLAG_TEMP_11, FLAG_TEMP_12, FLAG_TEMP_13, FLAG_TEMP_14, FLAG_TEMP_15, FLAG_TEMP_16, FLAG_TEMP_17, FLAG_TEMP_18, FLAG_TEMP_19},
+    {FLAG_TEMP_1A, FLAG_TEMP_1B, FLAG_TEMP_1C, FLAG_TEMP_1D, FLAG_TEMP_1E, FLAG_TEMP_1F, 0x20}
 };
 
 static const u8 gUnknown_Debug_083C11BA[] = _("FH-00-08");
@@ -535,8 +535,8 @@ static const struct MenuAction gUnknown_Debug_083C1288[] = {
 static const u8 gUnknown_Debug_083C12D0[] = {9, 7};
 
 static const u16 gUnknown_Debug_083C12D2[][9] = {
-    {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09},
-    {0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10}
+    {FLAG_TEMP_1, FLAG_TEMP_2, FLAG_TEMP_3, FLAG_TEMP_4, FLAG_TEMP_5, FLAG_TEMP_6, FLAG_TEMP_7, FLAG_TEMP_8, FLAG_TEMP_9},
+    {FLAG_TEMP_A, FLAG_TEMP_B, FLAG_TEMP_C, FLAG_TEMP_D, FLAG_TEMP_E, FLAG_TEMP_F, FLAG_TEMP_10}
 };
 
 static const u8 gUnknown_Debug_083C12F6[] = DTR("BATCH", "BADGE");
@@ -1965,12 +1965,12 @@ static bool8 TopMenu_HandleInput(void)
     if (JOY_NEW(DPAD_UP))
     {
         PlaySE(SE_SELECT);
-        sTopMenuCursorPos = Menu_MoveCursor(-1);
+        sTopMenuCursorPos = Menu_MoveCursor(MENU_CURSOR_DELTA_UP);
     }
     if (JOY_NEW(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
-        sTopMenuCursorPos = Menu_MoveCursor(+1);
+        sTopMenuCursorPos = Menu_MoveCursor(MENU_CURSOR_DELTA_DOWN);
     }
     if (JOY_NEW(A_BUTTON))
     {
@@ -1996,7 +1996,7 @@ static bool8 ContestGraphics(void)
     sPicTest_Species = SPECIES_BULBASAUR;
     sPicTest_OTID = 28467;
     sPicTest_Personality = 0;
-    sPicTest_ContestType = 1;
+    sPicTest_ContestType = CONTEST_CATEGORY_COOL + 1;
     return FALSE;
 }
 
@@ -2089,9 +2089,9 @@ static bool8 ContestGraphics_HandleInput(void)
             break;
     }
     PicTest_Redraw(0);
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -2122,9 +2122,9 @@ static bool8 ArtMusGraphics_HandleInput(void)
             break;
     }
     PicTest_Redraw(1);
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -2155,9 +2155,9 @@ static bool8 PreviewData_HandleInput(void)
             break;
     }
     PicTest_Redraw(2);
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -2175,12 +2175,12 @@ static bool8 TrickHouse_HandleInput(void)
     if (JOY_NEW(DPAD_UP))
     {
         PlaySE(SE_SELECT);
-        sTrickRelatedMenuCursorPos = Menu_MoveCursor(-1);
+        sTrickRelatedMenuCursorPos = Menu_MoveCursor(MENU_CURSOR_DELTA_UP);
     }
     if (JOY_NEW(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
-        sTrickRelatedMenuCursorPos = Menu_MoveCursor(+1);
+        sTrickRelatedMenuCursorPos = Menu_MoveCursor(MENU_CURSOR_DELTA_DOWN);
     }
     if (JOY_NEW(A_BUTTON))
     {
@@ -2200,12 +2200,12 @@ static bool8 ControlEvents_HandleInput(void)
     if (JOY_NEW(DPAD_UP))
     {
         PlaySE(SE_SELECT);
-        sControlEventsCursorPos = Menu_MoveCursor(-1);
+        sControlEventsCursorPos = Menu_MoveCursor(MENU_CURSOR_DELTA_UP);
     }
     if (JOY_NEW(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
-        sControlEventsCursorPos = Menu_MoveCursor(+1);
+        sControlEventsCursorPos = Menu_MoveCursor(MENU_CURSOR_DELTA_DOWN);
     }
     if (JOY_NEW(A_BUTTON))
     {
@@ -2225,12 +2225,12 @@ static bool8 ControlFlags_HandleInput(void)
     if (JOY_NEW(DPAD_UP))
     {
         PlaySE(SE_SELECT);
-        sControlFlagsCursorPos = Menu_MoveCursor(-1);
+        sControlFlagsCursorPos = Menu_MoveCursor(MENU_CURSOR_DELTA_UP);
     }
     if (JOY_NEW(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
-        sControlFlagsCursorPos = Menu_MoveCursor(+1);
+        sControlFlagsCursorPos = Menu_MoveCursor(MENU_CURSOR_DELTA_DOWN);
     }
     if (JOY_NEW(A_BUTTON))
     {
@@ -2250,12 +2250,12 @@ static bool8 ControlWorks_HandleInput(void)
     if (JOY_NEW(DPAD_UP))
     {
         PlaySE(SE_SELECT);
-        sControlWORKCursorPos = Menu_MoveCursor(-1);
+        sControlWORKCursorPos = Menu_MoveCursor(MENU_CURSOR_DELTA_UP);
     }
     if (JOY_NEW(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
-        sControlWORKCursorPos = Menu_MoveCursor(+1);
+        sControlWORKCursorPos = Menu_MoveCursor(MENU_CURSOR_DELTA_DOWN);
     }
     if (JOY_NEW(A_BUTTON))
     {
@@ -2294,9 +2294,9 @@ static bool8 ControlEvents_Events1_HandleInput(void)
 {
     s8 input = Menu_ProcessInput();
 
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -2309,9 +2309,9 @@ static bool8 ControlEvents_Events2_HandleInput(void)
 {
     s8 input = Menu_ProcessInput();
 
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -2427,7 +2427,7 @@ static bool8 CallScript_GiveShroomishEgg(void)
 
 static bool8 ContestGraphics_Show(void)
 {
-    BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
     gMenuCallback = debug_sub_808C280;
     return FALSE;
 }
@@ -2447,7 +2447,7 @@ static bool8 debug_sub_808C280(void)
 
 static bool8 MuseumGraphics_Show(void)
 {
-    BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
     gMenuCallback = debug_sub_808C2E4;
     return FALSE;
 }
@@ -2479,9 +2479,9 @@ static bool8 debug_sub_808C36C(void)
 {
     s8 input = Menu_ProcessInput();
 
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -2596,9 +2596,9 @@ static bool8 debug_sub_808C6C8(void)
 
     debug_sub_808C714(sFlagAndVarTest_WhichSubmenu, cursorPos);
     debug_sub_808C764(sFlagAndVarTest_WhichSubmenu);
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -2623,7 +2623,7 @@ static void debug_sub_808C764(u8 whichMenu)
 
     for (i = 0; i < gUnknown_Debug_083C31DC[whichMenu]; i++)
     {
-        PrintBool(28, 2 * i + 1, FlagGet(gUnknown_Debug_83C31E6[whichMenu][i]) ? 1 : 0);
+        PrintBool(28, 2 * i + 1, FlagGet(gUnknown_Debug_83C31E6[whichMenu][i]) ? TRUE : FALSE);
     }
 }
 
@@ -2641,9 +2641,9 @@ static bool8 debug_sub_808C818(void)
 {
     s8 input = Menu_ProcessInput();
 
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -2758,9 +2758,9 @@ static bool8 debug_sub_808CB74(void)
 
     debug_sub_808CBC0(sFlagAndVarTest_WhichSubmenu, cursorPos);
     debug_sub_808CC10(sFlagAndVarTest_WhichSubmenu);
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -2785,7 +2785,7 @@ static void debug_sub_808CC10(u8 whichMenu)
 
     for (i = 0; i < gUnknown_Debug_083C2710[whichMenu]; i++)
     {
-        PrintBool(28, 2 * i + 1, FlagGet(gUnknown_Debug_083C271A[whichMenu][i]) ? 1 : 0);
+        PrintBool(28, 2 * i + 1, FlagGet(gUnknown_Debug_083C271A[whichMenu][i]) ? TRUE : FALSE);
     }
 }
 
@@ -2803,9 +2803,9 @@ static bool8 debug_sub_808CCC4(void)
 {
     s8 input = Menu_ProcessInput();
 
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -2854,9 +2854,9 @@ static bool8 debug_sub_808CE10(void)
 
     debug_sub_808CE5C(sFlagAndVarTest_WhichSubmenu, cursorPos);
     debug_sub_808CEAC(sFlagAndVarTest_WhichSubmenu);
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -2881,7 +2881,7 @@ static void debug_sub_808CEAC(u8 whichMenu)
 
     for (i = 0; i < gUnknown_Debug_083C1C34[whichMenu]; i++)
     {
-        PrintBool(28, 2 * i + 1, FlagGet(gUnknown_Debug_083C1C38[whichMenu][i]) ? 1 : 0);
+        PrintBool(28, 2 * i + 1, FlagGet(gUnknown_Debug_083C1C38[whichMenu][i]) ? TRUE : FALSE);
     }
 }
 
@@ -2899,9 +2899,9 @@ static bool8 debug_sub_808CF60(void)
 {
     s8 input = Menu_ProcessInput();
 
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -3016,9 +3016,9 @@ static bool8 debug_sub_808D2BC(void)
 
     debug_sub_808D308(sFlagAndVarTest_WhichSubmenu, cursorPos);
     debug_sub_808D358(sFlagAndVarTest_WhichSubmenu);
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -3043,7 +3043,7 @@ static void debug_sub_808D358(u8 whichMenu)
 
     for (i = 0; i < gUnknown_Debug_083C19BC[whichMenu]; i++)
     {
-        PrintBool(28, 2 * i + 1, FlagGet(gUnknown_Debug_083C19C6[whichMenu][i]) ? 1 : 0);
+        PrintBool(28, 2 * i + 1, FlagGet(gUnknown_Debug_083C19C6[whichMenu][i]) ? TRUE : FALSE);
     }
 }
 
@@ -3061,9 +3061,9 @@ static bool8 ControlFlags_FH_OBJ_HandleInput(void)
 {
     s8 input = Menu_ProcessInput();
 
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -3101,9 +3101,9 @@ static bool8 ControlFlags_FH_OBJ_Subsubmenu_HandleInput(void)
 
     ControlFlags_FH_OBJ_FlagToggle(sFlagAndVarTest_WhichSubmenu, cursorPos);
     ControlFlags_FH_OBJ_UpdateDisplay(sFlagAndVarTest_WhichSubmenu);
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -3128,7 +3128,7 @@ static void ControlFlags_FH_OBJ_UpdateDisplay(u8 whichMenu)
 
     for (i = 0; i < sControlFlags_FH_OBJ_CountsArray[whichMenu]; i++)
     {
-        PrintBool(28, 2 * i + 1, FlagGet(sControlFlags_FH_OBJ_FlagsArrays[whichMenu][i]) ? 1 : 0);
+        PrintBool(28, 2 * i + 1, FlagGet(sControlFlags_FH_OBJ_FlagsArrays[whichMenu][i]) ? TRUE : FALSE);
     }
 }
 
@@ -3146,9 +3146,9 @@ static bool8 debug_sub_808D650(void)
 {
     s8 input = Menu_ProcessInput();
 
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -3186,9 +3186,9 @@ static bool8 debug_sub_808D744(void)
 
     debug_sub_808D790(sFlagAndVarTest_WhichSubmenu, cursorPos);
     debug_sub_808D7E0(sFlagAndVarTest_WhichSubmenu);
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -3213,7 +3213,7 @@ static void debug_sub_808D7E0(u8 whichMenu)
 
     for (i = 0; i < gUnknown_Debug_083C12D0[whichMenu]; i++)
     {
-        PrintBool(28, 2 * i + 1, FlagGet(gUnknown_Debug_083C12D2[whichMenu][i]) ? 1 : 0);
+        PrintBool(28, 2 * i + 1, FlagGet(gUnknown_Debug_083C12D2[whichMenu][i]) ? TRUE : FALSE);
     }
 }
 
@@ -3231,9 +3231,9 @@ static bool8 debug_sub_808D894(void)
 {
     s8 input = Menu_ProcessInput();
 
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -3260,9 +3260,9 @@ static bool8 debug_sub_808D930(void)
 
     debug_sub_808D97C(sFlagAndVarTest_WhichSubmenu, cursorPos);
     debug_sub_808D9CC(sFlagAndVarTest_WhichSubmenu);
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -3287,7 +3287,7 @@ static void debug_sub_808D9CC(u8 whichMenu)
 
     for (i = 0; i < gUnknown_Debug_083C1AAC[whichMenu]; i++)
     {
-        PrintBool(28, 2 * i + 1, FlagGet(gUnknown_Debug_083C1AAE[whichMenu][i]) ? 1 : 0);
+        PrintBool(28, 2 * i + 1, FlagGet(gUnknown_Debug_083C1AAE[whichMenu][i]) ? TRUE : FALSE);
     }
 }
 
@@ -3308,9 +3308,9 @@ static bool8 ControlWorks_AnsWork_HandleInput(void)
 
     ControlWorks_AnsWork_AdjustRESULT();
     ControlWorks_AnsWork_PrintRESULT();
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -3354,9 +3354,9 @@ static bool8 ControlWorks_SaveWork_HandleInput(void)
 {
     s8 input = Menu_ProcessInput();
 
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -3471,9 +3471,9 @@ static bool8 ControlWorks_SaveWork_Subsubmenu_HandleInput(void)
 
     debug_sub_808DF64(sFlagAndVarTest_WhichSubmenu, cursorPos);
     debug_sub_808DF04(sFlagAndVarTest_WhichSubmenu);
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -3518,9 +3518,9 @@ static bool8 ControlWorks_SaveWorkPart2_HandleInput(void)
 {
     s8 input = Menu_ProcessInput();
 
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -3602,9 +3602,9 @@ static bool8 debug_sub_808E264(void)
 
     debug_sub_808E310(sFlagAndVarTest_WhichSubmenu, cursorPos);
     debug_sub_808E2B0(sFlagAndVarTest_WhichSubmenu);
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -3649,9 +3649,9 @@ static bool8 debug_sub_808E3BC(void)
 {
     s8 input = Menu_ProcessInput();
 
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -3722,9 +3722,9 @@ static bool8 debug_sub_808E5B8(void)
 
     debug_sub_808E604(sFlagAndVarTest_WhichSubmenu, cursorPos);
     debug_sub_808E660(sFlagAndVarTest_WhichSubmenu);
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -3769,9 +3769,9 @@ static bool8 debug_sub_808E710(void)
 {
     s8 input = Menu_ProcessInput();
 
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -3809,9 +3809,9 @@ static bool8 debug_sub_808E804(void)
 
     debug_sub_808E850(sFlagAndVarTest_WhichSubmenu, cursorPos);
     debug_sub_808E8AC(sFlagAndVarTest_WhichSubmenu);
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -3856,9 +3856,9 @@ static bool8 debug_sub_808E95C(void)
 {
     s8 input = Menu_ProcessInput();
 
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -3896,9 +3896,9 @@ static bool8 debug_sub_808EA50(void)
 
     debug_sub_808EAFC(sFlagAndVarTest_WhichSubmenu, cursorPos);
     debug_sub_808EA9C(sFlagAndVarTest_WhichSubmenu);
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
         return FALSE;
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         CloseMenu();
         return TRUE;
@@ -3956,11 +3956,11 @@ static bool8 debug_sub_808EC10(void)
     s8 input = Menu_ProcessInput();
     s8 cursorPos = Menu_GetCursorPos();
 
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
     {
         return FALSE;
     }
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         return FALSE;
     }
@@ -3974,11 +3974,11 @@ static bool8 debug_sub_808EC5C(void)
     s8 input = Menu_ProcessInput();
     s8 cursorPos = Menu_GetCursorPos();
 
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
     {
         return FALSE;
     }
-    if (input == -1)
+    if (input == MENU_B_PRESSED)
     {
         return FALSE;
     }
@@ -3989,7 +3989,7 @@ static bool8 debug_sub_808EC5C(void)
 
 static bool8 PreviewGraphics_Show(void)
 {
-    BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
     gMenuCallback = debug_sub_808ECD0;
     return FALSE;
 }
@@ -4180,8 +4180,8 @@ static void PicTest_Redraw(u8 a0)
         sPicTest_StringBuffer[i + 1] = gSpeciesNames[species][i];
     }
 
-    sPicTest_StringBuffer[0] = 0xB1;
-    sPicTest_StringBuffer[POKEMON_NAME_LENGTH + 1] = 0xB2;
+    sPicTest_StringBuffer[0] = CHAR_DBL_QUOTE_LEFT;
+    sPicTest_StringBuffer[POKEMON_NAME_LENGTH + 1] = CHAR_DBL_QUOTE_RIGHT;
     sPicTest_StringBuffer[POKEMON_NAME_LENGTH + 2] = EOS;
     switch (a0)
     {
