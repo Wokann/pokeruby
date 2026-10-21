@@ -1300,12 +1300,12 @@ static void CB_ProcessSelectedMonInput(void)
     if (JOY_REPEAT(DPAD_UP))
     {
         PlaySE(SE_SELECT);
-        gTradeMenu->unk_007c = Menu_MoveCursor(-1);
+        gTradeMenu->unk_007c = Menu_MoveCursor(MENU_CURSOR_DELTA_UP);
     }
     else if (JOY_REPEAT(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
-        gTradeMenu->unk_007c = Menu_MoveCursor(+1);
+        gTradeMenu->unk_007c = Menu_MoveCursor(MENU_CURSOR_DELTA_DOWN);
     }
     if (JOY_NEW(A_BUTTON))
     {
@@ -1401,12 +1401,12 @@ static void CB_ProcessConfirmTradeInput(void)
     if (JOY_REPEAT(DPAD_UP))
     {
         PlaySE(SE_SELECT);
-        gTradeMenu->unk_007c = Menu_MoveCursor(-1);
+        gTradeMenu->unk_007c = Menu_MoveCursor(MENU_CURSOR_DELTA_UP);
     }
     else if (JOY_REPEAT(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
-        gTradeMenu->unk_007c = Menu_MoveCursor(+1);
+        gTradeMenu->unk_007c = Menu_MoveCursor(MENU_CURSOR_DELTA_DOWN);
     }
     if (JOY_NEW(A_BUTTON))
     {
@@ -1431,7 +1431,7 @@ static void CB_ProcessConfirmTradeInput(void)
         QueueAction(QUEUE_DELAY_MSG, QUEUE_STANDBY);
         if (Menu_GetCursorPos() == 0)
         {
-            gTradeMenu->unk_007c = Menu_MoveCursor(+1);
+            gTradeMenu->unk_007c = Menu_MoveCursor(MENU_CURSOR_DELTA_DOWN);
         }
         gTradeMenu->linkData[0] = LINKCMD_READY_CANCEL_TRADE;
         Trade_SendData(gTradeMenu);
@@ -1444,12 +1444,12 @@ static void CB_ProcessCancelTradeInput(void)
     if (JOY_REPEAT(DPAD_UP))
     {
         PlaySE(SE_SELECT);
-        gTradeMenu->unk_007c = Menu_MoveCursor(-1);
+        gTradeMenu->unk_007c = Menu_MoveCursor(MENU_CURSOR_DELTA_UP);
     }
     else if (JOY_REPEAT(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
-        gTradeMenu->unk_007c = Menu_MoveCursor(+1);
+        gTradeMenu->unk_007c = Menu_MoveCursor(MENU_CURSOR_DELTA_DOWN);
     }
     if (JOY_NEW(A_BUTTON))
     {

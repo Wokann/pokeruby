@@ -399,8 +399,8 @@ void debug_sub_8076AC8(u8 a)
     gUnknown_030006C4 = gMenuOrders_839BD14[a];
     for (r4 = 0; gUnknown_030006C4[r4] != 0xFF; r4++)
         ;
-    Menu_EraseWindowRect(16, 0, 29, 19);
-    Menu_DrawStdWindowFrame(16, 0, 29, r4 * 2 + 1);
+    Menu_EraseWindowRect(16, 0, DISPLAY_TILE_WIDTH - 1, DISPLAY_TILE_HEIGHT - 1);
+    Menu_DrawStdWindowFrame(16, 0, DISPLAY_TILE_WIDTH - 1, r4 * 2 + 1);
     Menu_PrintItemsReordered(17, 1, r4, (struct MenuAction2 *)gDebug_TestMenuItems, gUnknown_030006C4);
     InitMenu(0, 17, 1, r4, 0, 12);
 }
@@ -409,7 +409,7 @@ void debug_sub_8076B4C(void)
 {
     u8 taskId = FindTaskIdByFunc(debug_sub_8076BB4);
 
-    if (taskId != 0xFF)
+    if (taskId != TASK_NONE)
         DestroyTask(taskId);
 }
 
@@ -443,11 +443,11 @@ void debug_sub_8076BB4(u8 taskId)
     default:
         gDebug_TestMenuItems[gUnknown_030006C4[cursorPos]].func();
         break;
-    case -2:
+    case MENU_NOTHING_CHOSEN:
         if (JOY_NEW(DPAD_LEFT))
         {
             if (data[0] == 0)
-                data[0] = 1;
+                data[0] = (s32)ARRAY_COUNT(gMenuOrders_839BD14) - 1;
             else
                 data[0]--;
             debug_sub_8076AC8(data[0]);
@@ -455,7 +455,7 @@ void debug_sub_8076BB4(u8 taskId)
         }
         else if (JOY_NEW(DPAD_RIGHT))
         {
-            if (data[0] == 1)
+            if (data[0] == (s32)ARRAY_COUNT(gMenuOrders_839BD14) - 1)
                 data[0] = 0;
             else
                 data[0]++;
@@ -463,7 +463,7 @@ void debug_sub_8076BB4(u8 taskId)
             PlaySE(SE_SELECT);
         }
         break;
-    case -1:
+    case MENU_B_PRESSED:
         DoSoftReset();
         break;
     }
@@ -472,93 +472,93 @@ void debug_sub_8076BB4(u8 taskId)
 u8 DebugMenu_8076C6C(void)
 {
     SetMainCallback2(debug_sub_8010800);
-    return 0;
+    return FALSE;
 }
 
 u8 DebugMenu_8076C80(void)
 {
     debug_sub_8076B4C();
     DebugMenu_8076FEC();
-    return 0;
+    return FALSE;
 }
 
 u8 DebugMenu_8076C90(void)
 {
     if (gSaveFileStatus == SAVE_STATUS_ERROR)
     {
-        PlaySE(0x16);
+        PlaySE(SE_BOO);
     }
     else
     {
         debug_sub_8076B4C();
         SetMainCallback2(CB2_ContinueSavedGame);
     }
-    return 0;
+    return FALSE;
 }
 
 u8 DebugMenu_8076CBC(void)
 {
-    return 0;
+    return FALSE;
 }
 
 u8 DebugMenu_8076CC0(void)
 {
     SetMainCallback2(debug_nullsub_66);
-    return 0;
+    return FALSE;
 }
 
 u8 DebugMenu_8076CD4(void)
 {
-    return 0;
+    return FALSE;
 }
 
 u8 DebugMenu_8076CD8(void)
 {
     SetMainCallback2(debug_sub_80524BC);
-    return 0;
+    return FALSE;
 }
 
 u8 DebugMenu_8076CEC(void)
 {
     SetMainCallback2(CB2_InitMysteryEventMenu);
-    return 0;
+    return FALSE;
 }
 
 u8 DebugMenu_8076D00(void)
 {
     SetMainCallback2(debug_sub_815D15C);
-    return 0;
+    return FALSE;
 }
 
 u8 DebugMenu_8076D14(void)
 {
     SetMainCallback2(CB2_InitInGameTrade);
-    return 0;
+    return FALSE;
 }
 
 u8 DebugMenu_8076D28(void)
 {
     SetMainCallback2(LinkTestScreen);
-    return 0;
+    return FALSE;
 }
 
 u8 DebugMenu_8076D3C(void)
 {
     SetMainCallback2(CB2_StartSoundCheckMenu);
-    return 0;
+    return FALSE;
 }
 
 u8 DebugMenu_8076D50(void)
 {
     ClearSaveData();
-    return 0;
+    return FALSE;
 }
 
 u8 DebugMenu_8076D5C(void)
 {
     debug_sub_8076B4C();
     debug_sub_806F8F8();
-    return 0;
+    return FALSE;
 }
 
 void DebugMenu_8076D6C(u8 taskId)
@@ -577,7 +577,7 @@ void DebugMenu_8076D6C(u8 taskId)
         {
             Menu_DisplayDialogueFrame();
             Menu_PrintText(Str_839BD4C, 2, 15);
-            PlaySE(0x49);
+            PlaySE(SE_DING_DONG);
             RtcReset();
             data[0]++;
         }
@@ -601,7 +601,7 @@ u8 DebugMenu_8076E18(void)
 {
     debug_sub_8076B4C();
     CreateTask(DebugMenu_8076D6C, 10);
-    return 0;
+    return FALSE;
 }
 
 void DebugMenu_8076E30(u8 taskId)
@@ -644,7 +644,7 @@ u8 DebugMenu_8076EDC(void)
 {
     debug_sub_8076B4C();
     CreateTask(DebugMenu_8076E30, 10);
-    return 0;
+    return FALSE;
 }
 
 // A list of preset player names
@@ -691,9 +691,9 @@ void DebugMenu_8076F60(u8 taskId)
 
     switch (input)
     {
-        case -2:
+        case MENU_NOTHING_CHOSEN:
             break;
-        case -1:
+        case MENU_B_PRESSED:
             Menu_EraseScreen();
             debug_sub_8076B68();
             DestroyTask(taskId);
@@ -759,18 +759,18 @@ u8 DebugMenu_807709C(void)
     if (JOY_NEW(DPAD_UP))
     {
         PlaySE(SE_SELECT);
-        gUnknown_030006C0 = Menu_MoveCursor(-1);
+        gUnknown_030006C0 = Menu_MoveCursor(MENU_CURSOR_DELTA_UP);
     }
     if (JOY_NEW(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
-        gUnknown_030006C0 = Menu_MoveCursor(+1);
+        gUnknown_030006C0 = Menu_MoveCursor(MENU_CURSOR_DELTA_DOWN);
     }
     if (JOY_NEW(DPAD_LEFT))
     {
         PlaySE(SE_SELECT);
         if (gUnknown_030006C1 == 0)
-            gUnknown_030006C1 = 7;
+            gUnknown_030006C1 = (s32)ARRAY_COUNT(gUnknown_Debug_839BB64) / 8 - 1;
         else
             gUnknown_030006C1--;
         DebugMenu_8077004();
@@ -779,7 +779,7 @@ u8 DebugMenu_807709C(void)
     if (JOY_NEW(DPAD_RIGHT))
     {
         PlaySE(SE_SELECT);
-        if (gUnknown_030006C1 == 7)
+        if (gUnknown_030006C1 == (s32)ARRAY_COUNT(gUnknown_Debug_839BB64) / 8 - 1)
             gUnknown_030006C1 = 0;
         else
             gUnknown_030006C1++;
@@ -792,7 +792,7 @@ u8 DebugMenu_807709C(void)
         actionRet = gDebug0x839B9BC[gUnknown_030006C4[gUnknown_030006C0]].func();
 // TODO: see if this is in rev1+
 #if (ENGLISH && REVISION == 0)
-        if (actionRet == 1)
+        if (actionRet == TRUE)
             gUnknown_Debug_Murakawa2 = 0;
 #endif
         return actionRet;
@@ -824,7 +824,7 @@ void DebugMenu_80771EC(void)
     buf = StringCopy(buf, Str_839BE04);
     buf = ConvertIntToDecimalStringN(buf, gSaveBlock1.location.mapGroup, STR_CONV_MODE_RIGHT_ALIGN, 3);
     buf = ConvertIntToDecimalStringN(buf, gSaveBlock1.location.mapNum, STR_CONV_MODE_RIGHT_ALIGN, 3);
-    Menu_DrawStdWindowFrame(19, 12, 29, 15);
+    Menu_DrawStdWindowFrame(19, 12, DISPLAY_TILE_WIDTH - 1, 15);
     Menu_PrintText(gStringVar4, 20, 13);
 }
 
@@ -842,8 +842,8 @@ void DebugMenu_8077238(void)
 
     PlayerGetDestCoords(&x, &y);
     z = MapGridGetElevationAt(x, y);
-    x -= 7;
-    y -= 7;
+    x -= MAP_OFFSET;
+    y -= MAP_OFFSET;
 
     StringCopy(gStringVar4, sp00);
     ConvertIntToDecimalStringN(sp0c, x, STR_CONV_MODE_LEFT_ALIGN, 3);
@@ -858,7 +858,7 @@ void DebugMenu_8077238(void)
     for (sp14 = 0; gStringVar4[sp14] != EOS; sp14++)
         ;
 
-    Menu_DrawStdWindowFrame(28 - sp14, 16, 29, 19);
+    Menu_DrawStdWindowFrame(28 - sp14, 16, DISPLAY_TILE_WIDTH - 1, DISPLAY_TILE_HEIGHT - 1);
     Menu_PrintText(gStringVar4, 29 - sp14, 17);
 }
 
@@ -1009,10 +1009,10 @@ u8 DebugMenu_NationalDex(void)
 {
     u16 i;
 
-    for (i = 0; i < 386; i++)
+    for (i = 0; i < NATIONAL_DEX_COUNT; i++)
     {
-        GetSetPokedexFlag(i + 1, 2);
-        GetSetPokedexFlag(i + 1, 3);
+        GetSetPokedexFlag(i + 1, FLAG_SET_SEEN);
+        GetSetPokedexFlag(i + 1, FLAG_SET_CAUGHT);
     }
     gUnusedPokedexU8 = TRUE;
     CloseMenu();
@@ -1023,11 +1023,11 @@ u8 DebugMenu_HoennDex(void)
 {
     u16 i;
 
-    for (i = 0; i < 202; i++)
+    for (i = 0; i < HOENN_DEX_COUNT; i++)
     {
         u16 nati = HoennToNationalOrder(i + 1);
-        GetSetPokedexFlag(nati, 2);
-        GetSetPokedexFlag(nati, 3);
+        GetSetPokedexFlag(nati, FLAG_SET_SEEN);
+        GetSetPokedexFlag(nati, FLAG_SET_CAUGHT);
     }
     gUnusedPokedexU8 = TRUE;
     CloseMenu();
@@ -1109,7 +1109,7 @@ void DebugMenu_80776B4(u8 bgNum)
 {
     u8 sp00[] = __("OFF$"
                    "ON$");
-    Menu_BlankWindowRect(25, bgNum * 2, 29, bgNum * 2 + 1);
+    Menu_BlankWindowRect(25, bgNum * 2, DISPLAY_TILE_WIDTH - 1, bgNum * 2 + 1);
     Menu_PrintText(sp00 + 4 * ((gUnknown_030006C8 >> bgNum) & 1), 25, bgNum * 2);
 }
 
@@ -1119,9 +1119,9 @@ void DebugMenu_8077704(void)
                   "BG1\n"
                   "BG2\n"
                   "BG3\n");
-    Menu_BlankWindowRect(19, 0, 29, 8);
+    Menu_BlankWindowRect(19, 0, DISPLAY_TILE_WIDTH - 1, 8);
     Menu_PrintText(sp00, 21, 0);
-    gUnknown_030006C8 = (REG_DISPCNT >> 8) & 0x0F;
+    gUnknown_030006C8 = (REG_DISPCNT >> 8) & (DISPCNT_BG_ALL_ON >> 8);
     DebugMenu_80776B4(0);
     DebugMenu_80776B4(1);
     DebugMenu_80776B4(2);
@@ -1133,17 +1133,17 @@ u8 DebugMenu_8077760(void)
     if (JOY_NEW(DPAD_UP))
     {
         PlaySE(SE_SELECT);
-        Menu_MoveCursor(-1);
+        Menu_MoveCursor(MENU_CURSOR_DELTA_UP);
         if (gUnknown_030006B8 != 0)
             gUnknown_030006B8--;
         else
-            gUnknown_030006B8 = 3;
+            gUnknown_030006B8 = NUM_BACKGROUNDS - 1;
     }
     if (JOY_NEW(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
-        Menu_MoveCursor(+1);
-        if (gUnknown_030006B8 != 3)
+        Menu_MoveCursor(MENU_CURSOR_DELTA_DOWN);
+        if (gUnknown_030006B8 != NUM_BACKGROUNDS - 1)
             gUnknown_030006B8++;
         else
             gUnknown_030006B8 = 0;
@@ -1156,7 +1156,7 @@ u8 DebugMenu_8077760(void)
     }
     if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
     {
-        REG_DISPCNT = (REG_DISPCNT & 0xF0FF) + (gUnknown_030006C8 << 8);
+        REG_DISPCNT = (REG_DISPCNT & (u16)~DISPCNT_BG_ALL_ON) + (gUnknown_030006C8 << 8);
         CloseMenu();
         return TRUE;
     }
@@ -1167,7 +1167,7 @@ u8 DebugMenu_SwitchBG(void)
 {
     Menu_EraseScreen();
     DebugMenu_8077704();
-    InitMenu(0, 20, 0, 4, 0, 6);
+    InitMenu(0, 20, 0, NUM_BACKGROUNDS, 0, 6);
     gMenuCallback = DebugMenu_8077760;
     return FALSE;
 }
@@ -1177,7 +1177,7 @@ void DebugMenu_807786C(u8 a0)
     u8 sp00[] = __("ON$"
                    "OFF$");
 
-    Menu_DrawStdWindowFrame(25, 0, 29, 3);
+    Menu_DrawStdWindowFrame(25, 0, DISPLAY_TILE_WIDTH - 1, 3);
     Menu_PrintText(sp00 + 3 * a0, 26, 1);
 }
 
@@ -1494,7 +1494,7 @@ void DebugMenu_ConvertBuildDate(const u8 *buildDateStr, u8 *out)
     gDebugBuildDate = gDebugBuildDateInfo;
     *out++ = CHAR_SPACE;
     *out++ = CHAR_SPACE;
-    for (i = 0; i < 2; i++, gDebugBuildDate++)
+    for (i = 0; i < (s32)ARRAY_COUNT(gDebugBuildDateInfo); i++, gDebugBuildDate++)
     {
         s32 j;
         s32 mul;
@@ -1543,9 +1543,9 @@ u8 DebugMenu_8077D78(const struct MenuAction *menuActions)
             Menu_EraseScreen();
             gMenuCallback = menuActions[input].func;
             return FALSE;
-        case -2:
+        case MENU_NOTHING_CHOSEN:
             return FALSE;
-        case -1:
+        case MENU_B_PRESSED:
             CloseMenu();
             return TRUE;
     }
@@ -1605,12 +1605,12 @@ int DebugMenu_8077E40(int flag)
         if (flag)
         {
             DebugMenu_807786C(1);
-            return 0;
+            return FALSE;
         }
         else
         {
             DebugMenu_807786C(0);
-            return 1;
+            return TRUE;
         }
     }
     return flag;
@@ -1628,7 +1628,7 @@ void DebugMenu_8077EAC(void)
 {
     u8 taskId = CreateTask(DebugMenu_8077F40, 80);
     Menu_EraseScreen();
-    gTasks[taskId].data[1] = 1;
+    gTasks[taskId].data[1] = ITEM_MASTER_BALL;
     gTasks[taskId].data[2] = 1;
 }
 
@@ -1669,7 +1669,7 @@ void DebugMenu_8077F7C(u8 taskId)
     {
         task->func = DebugMenu_807806C;
     }
-    else if (DebugMenu_8077DD8(task->data + 1, 1, ITEM_15C, gMain.newAndRepeatedKeys) == TRUE)
+    else if (DebugMenu_8077DD8(task->data + 1, ITEM_MASTER_BALL, ITEMS_COUNT - 1, gMain.newAndRepeatedKeys) == TRUE)
     {
         DebugMenu_8077EE0(task->data[1], task->data[2]);
     }
@@ -1900,7 +1900,7 @@ bool8 DebugMenu_80783C8(void)
 u8 DebugMenu_ToggleClearFlag(void)
 {
     Menu_EraseScreen();
-    DebugMenu_807786C(FlagGet(FLAG_SYS_GAME_CLEAR) ^ 1);
+    DebugMenu_807786C(FlagGet(FLAG_SYS_GAME_CLEAR) ^ TRUE);
     gMenuCallback = DebugMenu_80783C8;
     return FALSE;
 }
@@ -1909,10 +1909,10 @@ bool8 DebugMenu_8078464(void)
 {
     switch (DebugMenu_8077E40(FlagGet(FLAG_SYS_WEATHER_CTRL)))
     {
-        case 0:
+        case FALSE:
             FlagClear(FLAG_SYS_WEATHER_CTRL);
             return FALSE;
-        case 1:
+        case TRUE:
             FlagSet(FLAG_SYS_WEATHER_CTRL);
             return FALSE;
         case -1:
@@ -1933,10 +1933,10 @@ bool8 DebugMenu_80784E8(void)
 {
     switch (DebugMenu_8077E40(IsMysteryEventEnabled()))
     {
-        case 0:
+        case FALSE:
             DisableMysteryEvent();
             return FALSE;
-        case 1:
+        case TRUE:
             EnableMysteryEvent();
             return FALSE;
         case -1:
@@ -2014,57 +2014,57 @@ const u8 Str_839C25F[] = DTR("おんせん　はいった", "HOT SPRING uses");
 const struct {
     u32 maxVal;
     const u8 * name;
-} gUnknown_Debug_839C26C[] = {
-    {0xFFFFFF, Str_839C0B0},
-    {65485627, Str_839C0B5},
-    {0xFFFFFF, Str_839C0BD},
-    {0xFFFFFF, Str_839C0C8},
-    {0xFFFFFF, Str_839C0D5},
-    {0xFFFFFF, Str_839C0DF},
-    {0xFFFFFF, Str_839C0E3},
-    {0xFFFFFF, Str_839C0EA},
-    {0xFFFFFF, Str_839C0EE},
-    {0xFFFFFF, Str_839C0F5},
-    {999,      Str_839C0FE},
-    {0xFFFFFF, Str_839C105},
-    {0xFFFFFF, Str_839C10D},
-    {0xFFFFFF, Str_839C116},
-    {0xFFFFFF, Str_839C11E},
-    {0xFFFFFF, Str_839C124},
-    {0xFFFFFF, Str_839C12E},
-    {0xFFFFFF, Str_839C137},
-    {0xFFFFFF, Str_839C140},
-    {0xFFFFFF, Str_839C14A},
-    {0xFFFFFF, Str_839C154},
-    {0xFFFFFF, Str_839C15C},
-    {0xFFFFFF, Str_839C165},
-    {9999,     Str_839C16E},
-    {9999,     Str_839C176},
-    {9999,     Str_839C17E},
-    {0xFFFFFF, Str_839C188},
-    {0xFFFFFF, Str_839C18F},
-    {0xFFFFFF, Str_839C198},
-    {0xFFFFFF, Str_839C1A6},
-    {0xFFFFFF, Str_839C1B2},
-    {0x0,      Str_839C1B9},
-    {0x0,      Str_839C1C2},
-    {0xFFFFFF, Str_839C1CE},
-    {0xFFFFFF, Str_839C1D7},
-    {0xFFFFFF, Str_839C1E5},
-    {0xFFFFFF, Str_839C1F1},
-    {0xFFFFFF, Str_839C1FD},
-    {0xFFFFFF, Str_839C208},
-    {0xFFFFFF, Str_839C20D},
-    {0xFFFFFF, Str_839C216},
-    {0xFFFFFF, Str_839C21B},
-    {0xFFFFFF, Str_839C222},
-    {0xFFFFFF, Str_839C22B},
-    {0xFFFFFF, Str_839C234},
-    {0xFFFFFF, Str_839C23B},
-    {0xFFFFFF, Str_839C243},
-    {0xFFFFFF, Str_839C24C},
-    {0xFFFFFF, Str_839C255},
-    {0xFFFFFF, Str_839C25F}
+} gUnknown_Debug_839C26C[NUM_GAME_STATS] = {
+    [GAME_STAT_SAVED_GAME]                = {0xFFFFFF, Str_839C0B0},
+    [GAME_STAT_FIRST_HOF_PLAY_TIME]       = {(999 << 16) | ((MINUTES_PER_HOUR - 1) << 8) | (SECONDS_PER_MINUTE - 1), Str_839C0B5},
+    [GAME_STAT_STARTED_TRENDS]            = {0xFFFFFF, Str_839C0BD},
+    [GAME_STAT_PLANTED_BERRIES]           = {0xFFFFFF, Str_839C0C8},
+    [GAME_STAT_TRADED_BIKES]              = {0xFFFFFF, Str_839C0D5},
+    [GAME_STAT_STEPS]                     = {0xFFFFFF, Str_839C0DF},
+    [GAME_STAT_GOT_INTERVIEWED]           = {0xFFFFFF, Str_839C0E3},
+    [GAME_STAT_TOTAL_BATTLES]             = {0xFFFFFF, Str_839C0EA},
+    [GAME_STAT_WILD_BATTLES]              = {0xFFFFFF, Str_839C0EE},
+    [GAME_STAT_TRAINER_BATTLES]           = {0xFFFFFF, Str_839C0F5},
+    [GAME_STAT_ENTERED_HOF]               = {     999, Str_839C0FE},
+    [GAME_STAT_POKEMON_CAPTURES]          = {0xFFFFFF, Str_839C105},
+    [GAME_STAT_FISHING_ENCOUNTERS]        = {0xFFFFFF, Str_839C10D},
+    [GAME_STAT_HATCHED_EGGS]              = {0xFFFFFF, Str_839C116},
+    [GAME_STAT_EVOLVED_POKEMON]           = {0xFFFFFF, Str_839C11E},
+    [GAME_STAT_USED_POKECENTER]           = {0xFFFFFF, Str_839C124},
+    [GAME_STAT_RESTED_AT_HOME]            = {0xFFFFFF, Str_839C12E},
+    [GAME_STAT_ENTERED_SAFARI_ZONE]       = {0xFFFFFF, Str_839C137},
+    [GAME_STAT_USED_CUT]                  = {0xFFFFFF, Str_839C140},
+    [GAME_STAT_USED_ROCK_SMASH]           = {0xFFFFFF, Str_839C14A},
+    [GAME_STAT_MOVED_SECRET_BASE]         = {0xFFFFFF, Str_839C154},
+    [GAME_STAT_POKEMON_TRADES]            = {0xFFFFFF, Str_839C15C},
+    [GAME_STAT_UNKNOWN_22]                = {0xFFFFFF, Str_839C165},
+    [GAME_STAT_LINK_BATTLE_WINS]          = {    9999, Str_839C16E},
+    [GAME_STAT_LINK_BATTLE_LOSSES]        = {    9999, Str_839C176},
+    [GAME_STAT_LINK_BATTLE_DRAWS]         = {    9999, Str_839C17E},
+    [GAME_STAT_USED_SPLASH]               = {0xFFFFFF, Str_839C188},
+    [GAME_STAT_USED_STRUGGLE]             = {0xFFFFFF, Str_839C18F},
+    [GAME_STAT_SLOT_JACKPOTS]             = {0xFFFFFF, Str_839C198},
+    [GAME_STAT_CONSECUTIVE_ROULETTE_WINS] = {0xFFFFFF, Str_839C1A6},
+    [GAME_STAT_ENTERED_BATTLE_TOWER]      = {0xFFFFFF, Str_839C1B2},
+    [GAME_STAT_UNKNOWN_31]                = {     0x0, Str_839C1B9},
+    [GAME_STAT_BATTLE_TOWER_BEST_STREAK]  = {     0x0, Str_839C1C2},
+    [GAME_STAT_POKEBLOCKS]                = {0xFFFFFF, Str_839C1CE},
+    [GAME_STAT_POKEBLOCKS_WITH_FRIENDS]   = {0xFFFFFF, Str_839C1D7},
+    [GAME_STAT_WON_LINK_CONTEST]          = {0xFFFFFF, Str_839C1E5},
+    [GAME_STAT_ENTERED_CONTEST]           = {0xFFFFFF, Str_839C1F1},
+    [GAME_STAT_WON_CONTEST]               = {0xFFFFFF, Str_839C1FD},
+    [GAME_STAT_SHOPPED]                   = {0xFFFFFF, Str_839C208},
+    [GAME_STAT_USED_ITEMFINDER]           = {0xFFFFFF, Str_839C20D},
+    [GAME_STAT_GOT_RAINED_ON]             = {0xFFFFFF, Str_839C216},
+    [GAME_STAT_CHECKED_POKEDEX]           = {0xFFFFFF, Str_839C21B},
+    [GAME_STAT_RECEIVED_RIBBONS]          = {0xFFFFFF, Str_839C222},
+    [GAME_STAT_JUMPED_DOWN_LEDGES]        = {0xFFFFFF, Str_839C22B},
+    [GAME_STAT_WATCHED_TV]                = {0xFFFFFF, Str_839C234},
+    [GAME_STAT_CHECKED_CLOCK]             = {0xFFFFFF, Str_839C23B},
+    [GAME_STAT_WON_POKEMON_LOTTERY]       = {0xFFFFFF, Str_839C243},
+    [GAME_STAT_USED_DAYCARE]              = {0xFFFFFF, Str_839C24C},
+    [GAME_STAT_RODE_CABLE_CAR]            = {0xFFFFFF, Str_839C255},
+    [GAME_STAT_ENTERED_HOT_SPRINGS]       = {0xFFFFFF, Str_839C25F},
 };
 
 void DebugMenu_8078550(u16 gameStat)
@@ -2079,7 +2079,7 @@ void DebugMenu_8078550(u16 gameStat)
         ConvertIntToDecimalStringN(gStringVar3, value, STR_CONV_MODE_RIGHT_ALIGN, 10);
     else
     {
-        ConvertIntToDecimalStringN(gStringVar3, value >> 16, STR_CONV_MODE_RIGHT_ALIGN, 3);
+        ConvertIntToDecimalStringN(gStringVar3, HIHALF(value), STR_CONV_MODE_RIGHT_ALIGN, 3);
         gStringVar3[3] = CHAR_COLON;
         ConvertIntToDecimalStringN(gStringVar3 + 4, (value >> 8) & 0xff, STR_CONV_MODE_LEADING_ZEROS, 2);
         gStringVar3[6] = CHAR_COLON;
@@ -2263,7 +2263,7 @@ u8 DebugMenu_OpenBerryInfo(void)
     const u8 * berryInfo = DebugOpenBerryInfo();
     if (berryInfo != NULL)
     {
-        Menu_DrawStdWindowFrame(0, 0, 19, 19);
+        Menu_DrawStdWindowFrame(0, 0, 19, DISPLAY_TILE_HEIGHT - 1);
         Menu_PrintText(berryInfo, 1, 1);
         gMenuCallback = DebugMenu_8077DB4;
         return FALSE;
@@ -2407,7 +2407,7 @@ const struct Pokeblock gUnknown_Debug_839C444[] = {
     {PBLOCK_CLR_BLACK, 0x03, 0x03, 0x03, 0x03, 0x1e, 0x00},
     {PBLOCK_CLR_BLACK, 0x03, 0x03, 0x03, 0x03, 0x1e, 0x00},
     {PBLOCK_CLR_BLACK, 0x03, 0x03, 0x03, 0x03, 0x1e, 0x00},
-    {}
+    {PBLOCK_CLR_NONE}
 };
 
 void DebugMenu_8078B94(void)
@@ -2416,7 +2416,7 @@ void DebugMenu_8078B94(void)
 
     for (i = 0; i < ARRAY_COUNT(gSaveBlock1.pokeblocks); i++)
     {
-        if (gUnknown_Debug_839C444[i].color == 0) break;
+        if (gUnknown_Debug_839C444[i].color == PBLOCK_CLR_NONE) break;
         gSaveBlock1.pokeblocks[i] = gUnknown_Debug_839C444[i];
     }
 }
@@ -2503,7 +2503,7 @@ const u8 Str_839C5E9[] = DTR("よみこみ　しっぱい", "Reading failed");
 
 bool8 DebugMenu_8078CE4(void)
 {
-    if (DebugMenu_8078E40(0, gSharedMem, 0x20000) == TRUE)
+    if (DebugMenu_8078E40(0, gSharedMem, SECTORS_COUNT * SECTOR_SIZE) == TRUE)
         StringCopy(gStringVar4, Str_839C5CC);
     else
         StringCopy(gStringVar4, Str_839C5DF);
@@ -2516,10 +2516,10 @@ bool8 DebugMenu_8078D30(void)
     u8 * data = gSharedMem;
     u8 i;
 
-    for (i = 0; i < 32; i++)
+    for (i = 0; i < SECTORS_COUNT; i++)
     {
-        DebugMenu_8078E68(i, data, 0x1000);
-        data += 0x1000;
+        DebugMenu_8078E68(i, data, SECTOR_SIZE);
+        data += SECTOR_SIZE;
     }
     StringCopy(gStringVar4, Str_839C5D6);
     gMenuCallback = DebugMenu_8078D7C;
@@ -2559,14 +2559,14 @@ bool8 DebugMenu_8078DF0()
 
 bool32 DebugMenu_8078E04(u16 a0, u8 * a1, u32 a2)
 {
-    while (1)
+    while (TRUE)
     {
         if (ProgramFlashSectorAndVerify(a0, a1))
             return FALSE;
-        if (a2 <= 0x1000)
+        if (a2 <= SECTOR_SIZE)
             break;
-        a2 -= 0x1000;
-        a1 += 0x1000;
+        a2 -= SECTOR_SIZE;
+        a1 += SECTOR_SIZE;
         a0++;
     }
     return TRUE;
@@ -2595,24 +2595,24 @@ struct GameTimeDebugMenuStruct {
 
 const struct GameTimeDebugMenuStruct gUnknown_Debug_839C5F4[] = {
     {0, 999, 2, 1},
-    {0,  59, 6, 2},
-    {0,  59, 9, 3}
+    {0, MINUTES_PER_HOUR - 1, 6, 2},
+    {0, SECONDS_PER_MINUTE - 1, 9, 3}
 };
 
 void DebugMenu_8078E80(s16 * a0)
 {
     Menu_BlankWindowRect(2, 15, 22, 16);
-    sub_8071F60(0xd0, gUnknown_Debug_839C5F4[*a0].round1Points, 15);
+    sub_8071F60(CHAR_V, gUnknown_Debug_839C5F4[*a0].round1Points, 15);
 }
 
 void DebugMenu_8078EB0(s16 * a0)
 {
     ConvertIntToDecimalStringN(gStringVar1, a0[1], STR_CONV_MODE_RIGHT_ALIGN, 3);
     Menu_PrintText(gStringVar1, 2, 17);
-    sub_8071F60(0xf0, 5, 17);
+    sub_8071F60(CHAR_COLON, 5, 17);
     ConvertIntToDecimalStringN(gStringVar1, a0[2], STR_CONV_MODE_LEADING_ZEROS, 2);
     Menu_PrintText(gStringVar1, 6, 17);
-    sub_8071F60(0xf0, 8, 17);
+    sub_8071F60(CHAR_COLON, 8, 17);
     ConvertIntToDecimalStringN(gStringVar1, a0[3], STR_CONV_MODE_LEADING_ZEROS, 2);
     Menu_PrintText(gStringVar1, 9, 17);
 }
@@ -2658,7 +2658,7 @@ void DebugMenu_8078F68(u8 taskId)
     }
     else if (JOY_NEW(DPAD_RIGHT))
     {
-        if ((u16)data[0] < 2)
+        if ((u16)data[0] < (s32)ARRAY_COUNT(gUnknown_Debug_839C5F4) - 1)
         {
             data[0]++;
             DebugMenu_8078E80(data);
@@ -2714,7 +2714,7 @@ void DebugMenu_8079058(u8 taskId)
         case 2:
             switch (Menu_ProcessInputNoWrap_())
             {
-                case -2:
+                case MENU_NOTHING_CHOSEN:
                     return;
                 case 0:
                     gUnknown_Debug_03004BD0 = 1;

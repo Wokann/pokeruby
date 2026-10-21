@@ -3546,12 +3546,12 @@ void Task_HandleItemUseMoveMenuInput(u8 taskId)
     if (JOY_NEW(DPAD_UP))
     {
         PlaySE(SE_SELECT);
-        Menu_MoveCursor(MENU_DIR_UP);
+        Menu_MoveCursor(MENU_CURSOR_DELTA_UP);
     }
     else if (JOY_NEW(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
-        Menu_MoveCursor(MENU_DIR_DOWN);
+        Menu_MoveCursor(MENU_CURSOR_DELTA_DOWN);
     }
     else if (JOY_NEW(A_BUTTON))
     {

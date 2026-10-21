@@ -1026,7 +1026,7 @@ static void Task_HandleDaycareLevelMenuInput(u8 taskId)
         if (gTasks[taskId].data[0] != 0)
         {
             gTasks[taskId].data[0] --;
-            Menu_MoveCursor(-1);
+            Menu_MoveCursor(MENU_CURSOR_DELTA_UP);
             PlaySE(SE_SELECT);
         }
     }
@@ -1035,7 +1035,7 @@ static void Task_HandleDaycareLevelMenuInput(u8 taskId)
         if (gTasks[taskId].data[0] != DAYCARE_MON_COUNT)
         {
             gTasks[taskId].data[0]++;
-            Menu_MoveCursor(+1);
+            Menu_MoveCursor(MENU_CURSOR_DELTA_DOWN);
             PlaySE(SE_SELECT);
         }
     }

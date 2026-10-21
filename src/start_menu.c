@@ -134,7 +134,7 @@ u8 debug_sub_8075C30(void)
 {
     CloseMenu();
     debug_sub_8075D9C();
-    return 1;
+    return TRUE;
 }
 
 extern const u8 gUnknown_Debug_839B6D8[];
@@ -405,12 +405,12 @@ static bool8 HandleStartMenuInput(void)
     if (JOY_NEW(DPAD_UP))
     {
         PlaySE(SE_SELECT);
-        sStartMenuCursorPos = Menu_MoveCursor(-1);
+        sStartMenuCursorPos = Menu_MoveCursor(MENU_CURSOR_DELTA_UP);
     }
     if (JOY_NEW(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
-        sStartMenuCursorPos = Menu_MoveCursor(1);
+        sStartMenuCursorPos = Menu_MoveCursor(MENU_CURSOR_DELTA_DOWN);
     }
     if (JOY_NEW(A_BUTTON))
     {
