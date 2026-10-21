@@ -1,9 +1,12 @@
 #if DEBUG
 #include "global.h"
+#include <stddef.h>
 #include "constants/flags.h"
+#include "constants/field_specials.h"
 #include "constants/songs.h"
 #include "constants/species.h"
 #include "constants/items.h"
+#include "constants/region_map_sections.h"
 #include "main.h"
 #include "menu.h"
 #include "start_menu.h"
@@ -12,6 +15,17 @@
 #include "string_util.h"
 #include "field_specials.h"
 #include "sound.h"
+
+#define LAST_TVSHOW_IDX (TV_SHOWS_COUNT - 1)
+#define FANCLUB_COUNTER    0x007F
+
+enum {
+    TVGROUP_NONE,
+    TVGROUP_UNUSED,
+    TVGROUP_NORMAL,
+    TVGROUP_RECORD_MIX,
+    TVGROUP_OUTBREAK,
+};
 
 static u8 gDebug_03000724;
 static u8 gDebug_03000725;
@@ -96,9 +110,9 @@ bool8 debug_sub_808F414(void)
         default:
             gMenuCallback = gUnknown_Debug_083C4938[input].func;
             return FALSE;
-        case -2:
+        case MENU_NOTHING_CHOSEN:
             return FALSE;
-        case -1:
+        case MENU_B_PRESSED:
             CloseMenu();
             return TRUE;
     }
@@ -168,7 +182,7 @@ const u8 gDebugText_BigSale[] = _("BIG SALE");
 
 const u8 gUnknown_Debug_083C4B05[] = _("SERVICE DAY");
 const u8 gUnknown_Debug_083C4B11[] = _("CLEAR-OUT SALE");
-const u8 gUnknown_Debug_083C4B20[] = {1, 2, 3};
+const u8 gUnknown_Debug_083C4B20[] = {POKENEWS_SLATEPORT, POKENEWS_GAME_CORNER, POKENEWS_LILYCOVE};
 
 const u8 *const gUnknown_Debug_083C4B24[] = {
     gDebugText_BigSale,
@@ -222,9 +236,9 @@ bool8 debug_sub_808F4AC(void)
         default:
             gMenuCallback = (MenuFunc)gUnknown_Debug_083C4B8C[input].func;
             return FALSE;
-        case -2:
+        case MENU_NOTHING_CHOSEN:
             return FALSE;
-        case -1:
+        case MENU_B_PRESSED:
             CloseMenu();
             return TRUE;
     }
@@ -242,7 +256,7 @@ void debug_sub_808F518(void)
 {
     u8 i;
 
-    for (i = 0; i < 24; i++)
+    for (i = 0; i < LAST_TVSHOW_IDX; i++)
     {
         if (gSaveBlock1.tvShows[i].common.kind >= TVSHOW_POKEMON_TODAY_CAUGHT &&
             gSaveBlock1.tvShows[i].common.kind < TVSHOW_MASS_OUTBREAK &&
@@ -255,7 +269,7 @@ bool8 debug_sub_808F560(void)
 {
     u8 i;
 
-    for (i = 0; i < 24; i++)
+    for (i = 0; i < LAST_TVSHOW_IDX; i++)
         gSaveBlock1.tvShows[i].common.active = FALSE;
     CloseMenu();
     return TRUE;
@@ -265,9 +279,9 @@ bool8 debug_sub_808F594(void)
 {
     u8 i;
 
-    for (i = 0; i < 24; i++)
+    for (i = 0; i < LAST_TVSHOW_IDX; i++)
     {
-        if (gSaveBlock1.tvShows[i].common.kind != 0)
+        if (gSaveBlock1.tvShows[i].common.kind != TVSHOW_OFF_AIR)
             gSaveBlock1.tvShows[i].common.active = TRUE;
     }
     CloseMenu();
@@ -293,7 +307,7 @@ bool8 debug_sub_808F5D8(void)
 {
     u8 i;
 
-    for (i = 0; i < 12; i++)
+    for (i = 0; i < ARRAY_COUNT(gUnknown_Debug_083C4BD4); i++)
     {
         gSpecialVar_0x8004 = i;
         ConvertIntToDecimalStringN(gStringVar1, GetSlotMachineId(), STR_CONV_MODE_LEFT_ALIGN, 1);
@@ -321,12 +335,12 @@ bool8 debug_sub_808F648(void)
         s8 input = Menu_ProcessInputNoWrap_();
         switch (input)
         {
-            case -2:
+            case MENU_NOTHING_CHOSEN:
                 return FALSE;
             case 0:
                 debug_sub_808F518();
                 // fallthrough
-            case -1:
+            case MENU_B_PRESSED:
             default:
                 CloseMenu();
                 return TRUE;
@@ -338,13 +352,13 @@ void debug_sub_808F6BC(void)
 {
     u8 i;
 
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < NUM_NORMAL_TVSHOW_SLOTS; i++)
     {
         ConvertIntToDecimalStringN(gStringVar1, gSaveBlock1.tvShows[i].common.kind, STR_CONV_MODE_LEFT_ALIGN, 2);
         Menu_PrintText(gStringVar1, i * 2 + 10, 0);
     }
 
-    for (i = 5; i < 24; i++)
+    for (i = NUM_NORMAL_TVSHOW_SLOTS; i < LAST_TVSHOW_IDX; i++)
     {
         ConvertIntToDecimalStringN(gStringVar1, gSaveBlock1.tvShows[i].common.kind, STR_CONV_MODE_LEFT_ALIGN, 2);
         if (i < 15)
@@ -353,7 +367,7 @@ void debug_sub_808F6BC(void)
             Menu_PrintText(gStringVar1, i * 2 - 20, 6);
     }
 
-    for (i = 0; i < 16; i++)
+    for (i = 0; i < POKE_NEWS_COUNT; i++)
     {
         ConvertIntToDecimalStringN(gStringVar1, gSaveBlock1.pokeNews[i].kind, STR_CONV_MODE_LEFT_ALIGN, 2);
         if (i < 8)
@@ -367,13 +381,13 @@ void debug_sub_808F7B4(void)
 {
     u8 i;
 
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < NUM_NORMAL_TVSHOW_SLOTS; i++)
     {
         ConvertIntToDecimalStringN(gStringVar1, gSaveBlock1.tvShows[i].common.active, STR_CONV_MODE_LEFT_ALIGN, 2);
         Menu_PrintText(gStringVar1, i * 2 + 10, 0);
     }
 
-    for (i = 5; i < 24; i++)
+    for (i = NUM_NORMAL_TVSHOW_SLOTS; i < LAST_TVSHOW_IDX; i++)
     {
         ConvertIntToDecimalStringN(gStringVar1, gSaveBlock1.tvShows[i].common.active, STR_CONV_MODE_LEFT_ALIGN, 2);
         if (i < 15)
@@ -382,7 +396,7 @@ void debug_sub_808F7B4(void)
             Menu_PrintText(gStringVar1, i * 2 - 20, 6);
     }
 
-    for (i = 0; i < 16; i++)
+    for (i = 0; i < POKE_NEWS_COUNT; i++)
     {
         ConvertIntToDecimalStringN(gStringVar1, gSaveBlock1.pokeNews[i].state, STR_CONV_MODE_LEFT_ALIGN, 2);
         if (i < 8)
@@ -418,7 +432,7 @@ bool8 debug_sub_808F93C(void)
     if (JOY_NEW(DPAD_UP))
     {
         gDebug_03000725++;
-        if (gDebug_03000725 == 24)
+        if (gDebug_03000725 == LAST_TVSHOW_IDX)
             gDebug_03000725 = 0;
         PlaySE(SE_SELECT);
         updateDisplay = TRUE;
@@ -426,7 +440,7 @@ bool8 debug_sub_808F93C(void)
     if (JOY_NEW(DPAD_DOWN))
     {
         if (gDebug_03000725 == 0)
-            gDebug_03000725 = 24;
+            gDebug_03000725 = LAST_TVSHOW_IDX;
         gDebug_03000725--;
         PlaySE(SE_SELECT);
         updateDisplay = TRUE;
@@ -434,7 +448,7 @@ bool8 debug_sub_808F93C(void)
     if (JOY_NEW(DPAD_RIGHT))
     {
         gDebug_03000724++;
-        if (gDebug_03000724 == 12)
+        if (gDebug_03000724 == ARRAY_COUNT(gUnknown_Debug_083C4ABD))
             gDebug_03000724 = 0;
         PlaySE(SE_SELECT);
         updateDisplay = TRUE;
@@ -442,7 +456,7 @@ bool8 debug_sub_808F93C(void)
     if (JOY_NEW(DPAD_LEFT))
     {
         if (gDebug_03000724 == 0)
-            gDebug_03000724 = 12;
+            gDebug_03000724 = ARRAY_COUNT(gUnknown_Debug_083C4ABD);
         gDebug_03000724--;
         PlaySE(SE_SELECT);
         updateDisplay = TRUE;
@@ -482,17 +496,18 @@ void debug_sub_808FA88(u8 a0, u8 a1)
 
     gSaveBlock1.tvShows[a0].common.kind = a1;
     gSaveBlock1.tvShows[a0].common.active = TRUE;
-    for (i = 0; i < 0x22; i++)
+    // Keep the original full-record write, including bytes beyond pad02.
+    for (i = 0; i < sizeof(TVShow) - offsetof(struct TVShowCommon, pad02); i++)
         gSaveBlock1.tvShows[a0].common.pad02[i] = 1;
 
     channel = GetTVGroupByShowId(a1);
     switch (channel)
     {
-        case 2:
-        case 4:
+        case TVGROUP_NORMAL:
+        case TVGROUP_OUTBREAK:
             StorePlayerIdInNormalShow(&gSaveBlock1.tvShows[a0]);
             break;
-        case 3:
+        case TVGROUP_RECORD_MIX:
             StorePlayerIdInRecordMixShow(&gSaveBlock1.tvShows[a0]);
             break;
     }
@@ -510,7 +525,7 @@ void debug_sub_808FA88(u8 a0, u8 a1)
         }
         case TVSHOW_PKMN_FAN_CLUB_OPINIONS:
         {
-            GF_ACCESS(TVShowFanclubOpinions)->species = 1;
+            GF_ACCESS(TVShowFanclubOpinions)->species = SPECIES_BULBASAUR;
             StringCopy(GF_ACCESS(TVShowFanclubOpinions)->playerName, gSaveBlock2.playerName);
             GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_NICKNAME, GF_ACCESS(TVShowFanclubOpinions)->nickname);
             GF_ACCESS(TVShowFanclubOpinions)->language = GAME_LANGUAGE;
@@ -524,7 +539,7 @@ void debug_sub_808FA88(u8 a0, u8 a1)
         case TVSHOW_NAME_RATER_SHOW:
         {
             GF_ACCESS(TVShowNameRaterShow)->species = GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_SPECIES);
-            GF_ACCESS(TVShowNameRaterShow)->randomSpecies = 1;
+            GF_ACCESS(TVShowNameRaterShow)->randomSpecies = SPECIES_BULBASAUR;
             StringCopy(GF_ACCESS(TVShowNameRaterShow)->trainerName, gSaveBlock2.playerName);
             GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_NICKNAME, GF_ACCESS(TVShowNameRaterShow)->pokemonName);
             GF_ACCESS(TVShowNameRaterShow)->language = GAME_LANGUAGE;
@@ -614,7 +629,7 @@ void debug_sub_808FA88(u8 a0, u8 a1)
         {
             DECLARE_TERU_POINTER;
             
-            GF_ACCESS(TVShowFanclubOpinions)->species = 1;
+            GF_ACCESS(TVShowFanclubOpinions)->species = SPECIES_BULBASAUR;
             StringCopy(GF_ACCESS(TVShowFanclubOpinions)->playerName, gSaveBlock2.playerName);
             GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_NICKNAME, GF_ACCESS(TVShowFanclubOpinions)->nickname);
             TERU_ACCESS(fanclubOpinions).language = GAME_LANGUAGE;
@@ -631,7 +646,7 @@ void debug_sub_808FA88(u8 a0, u8 a1)
             DECLARE_TERU_POINTER;
             
             GF_ACCESS(TVShowNameRaterShow)->species = species;
-            GF_ACCESS(TVShowNameRaterShow)->randomSpecies = 1;
+            GF_ACCESS(TVShowNameRaterShow)->randomSpecies = SPECIES_BULBASAUR;
             StringCopy(GF_ACCESS(TVShowNameRaterShow)->trainerName, gSaveBlock2.playerName);
             GetMonData(&gPlayerParty[leadMonIndex], MON_DATA_NICKNAME, GF_ACCESS(TVShowNameRaterShow)->pokemonName);
             TERU_ACCESS(nameRaterShow).language = GAME_LANGUAGE;
@@ -687,11 +702,11 @@ void debug_sub_808FA88(u8 a0, u8 a1)
             u8 gUnknown_Debug_083C4C64[] = _("TERUKUN");
             int ii;
 
-            for (ii = 0; ii < 3; ii++)
+            for (ii = 0; ii < SMARTSHOPPER_NUM_ITEMS; ii++)
                 TERU_ACCESS(smartshopperShow).itemAmounts[ii] = 254;
             TERU_ACCESS(smartshopperShow).priceReduced = TRUE;
-            TERU_ACCESS(smartshopperShow).shopLocation = 40;
-            for (ii = 0; ii < 3; ii++)
+            TERU_ACCESS(smartshopperShow).shopLocation = MAPSEC_ROUTE_125;
+            for (ii = 0; ii < SMARTSHOPPER_NUM_ITEMS; ii++)
                 TERU_ACCESS(smartshopperShow).itemIds[ii] = ITEM_ENERGY_POWDER;
             StringCopy(TERU_ACCESS(smartshopperShow).playerName, gUnknown_Debug_083C4C64);
             TERU_ACCESS(smartshopperShow).language = GAME_LANGUAGE;
@@ -704,7 +719,7 @@ void debug_sub_808FA88(u8 a0, u8 a1)
 
             TERU_ACCESS(pokemonTodayFailed).species = SPECIES_WIGGLYTUFF;
             TERU_ACCESS(pokemonTodayFailed).species2 = SPECIES_WIGGLYTUFF;
-            TERU_ACCESS(pokemonTodayFailed).location = 3;
+            TERU_ACCESS(pokemonTodayFailed).location = MAPSEC_LAVARIDGE_TOWN;
             TERU_ACCESS(pokemonTodayFailed).nBallsUsed = 0xff;
             TERU_ACCESS(pokemonTodayFailed).outcome = 1;
             StringCopy(TERU_ACCESS(pokemonTodayFailed).playerName, gUnknown_Debug_083C4C64);
@@ -718,7 +733,7 @@ void debug_sub_808FA88(u8 a0, u8 a1)
 
             TERU_ACCESS(pokemonAngler).nBites = 0xff;
             TERU_ACCESS(pokemonAngler).nFails = 0;
-            TERU_ACCESS(pokemonAngler).species = 40;
+            TERU_ACCESS(pokemonAngler).species = SPECIES_WIGGLYTUFF;
             StringCopy(TERU_ACCESS(pokemonAngler).playerName, gUnknown_Debug_083C4C64);
             TERU_ACCESS(pokemonAngler).language = GAME_LANGUAGE;
             break;
@@ -730,9 +745,9 @@ void debug_sub_808FA88(u8 a0, u8 a1)
 
             TERU_ACCESS(worldOfMasters).numPokeCaught = 0xffff;
             TERU_ACCESS(worldOfMasters).steps = 0xffff;
-            TERU_ACCESS(worldOfMasters).caughtPoke = 40;
-            TERU_ACCESS(worldOfMasters).species = 40;
-            TERU_ACCESS(worldOfMasters).location = 3;
+            TERU_ACCESS(worldOfMasters).caughtPoke = SPECIES_WIGGLYTUFF;
+            TERU_ACCESS(worldOfMasters).species = SPECIES_WIGGLYTUFF;
+            TERU_ACCESS(worldOfMasters).location = MAPSEC_LAVARIDGE_TOWN;
             StringCopy(TERU_ACCESS(worldOfMasters).playerName, gUnknown_Debug_083C4C64);
             TERU_ACCESS(worldOfMasters).language = GAME_LANGUAGE;
             break;
@@ -767,7 +782,7 @@ bool8 debug_sub_808FF3C(void)
     if (JOY_NEW(DPAD_UP))
     {
         gDebug_03000725++;
-        if (gDebug_03000725 == 16)
+        if (gDebug_03000725 == POKE_NEWS_COUNT)
             gDebug_03000725 = 0;
         PlaySE(SE_SELECT);
         updateDisplay = TRUE;
@@ -776,7 +791,7 @@ bool8 debug_sub_808FF3C(void)
     if (JOY_NEW(DPAD_DOWN))
     {
         if (gDebug_03000725 == 0)
-            gDebug_03000725 = 16;
+            gDebug_03000725 = POKE_NEWS_COUNT;
         gDebug_03000725--;
         PlaySE(SE_SELECT);
         updateDisplay = TRUE;
@@ -785,7 +800,7 @@ bool8 debug_sub_808FF3C(void)
     if (JOY_NEW(DPAD_RIGHT))
     {
         gDebug_03000724++;
-        if (gDebug_03000724 == 3)
+        if (gDebug_03000724 == ARRAY_COUNT(gUnknown_Debug_083C4B20))
             gDebug_03000724 = 0;
         PlaySE(SE_SELECT);
         updateDisplay = TRUE;
@@ -794,7 +809,7 @@ bool8 debug_sub_808FF3C(void)
     if (JOY_NEW(DPAD_LEFT))
     {
         if (gDebug_03000724 == 0)
-            gDebug_03000724 = 3;
+            gDebug_03000724 = ARRAY_COUNT(gUnknown_Debug_083C4B20);
         gDebug_03000724--;
         PlaySE(SE_SELECT);
         updateDisplay = TRUE;
@@ -828,8 +843,8 @@ bool8 debug_sub_808FF3C(void)
 void debug_sub_8090080(u8 a0, u8 a1)
 {
     gSaveBlock1.pokeNews[a0].kind = a1;
-    gSaveBlock1.pokeNews[a0].state = 1;
-    gSaveBlock1.pokeNews[a0].dayCountdown = 4;
+    gSaveBlock1.pokeNews[a0].state = POKENEWS_STATE_UPCOMING;
+    gSaveBlock1.pokeNews[a0].dayCountdown = POKENEWS_COUNTDOWN;
 }
 
 bool8 debug_sub_80900AC(void)
@@ -838,11 +853,11 @@ bool8 debug_sub_80900AC(void)
     u8 j;
 
     j = 0;
-    for (i = 0; i < 24; i++)
+    for (i = 0; i < LAST_TVSHOW_IDX; i++)
     {
-        if (gSaveBlock1.tvShows[i].common.kind == 0)
+        if (gSaveBlock1.tvShows[i].common.kind == TVSHOW_OFF_AIR)
         {
-            if (j == 12)
+            if (j == ARRAY_COUNT(gUnknown_Debug_083C4ABD))
                 j = 0;
             debug_sub_808FA88(i, gUnknown_Debug_083C4ABD[j]);
             gSaveBlock1.tvShows[i].common.active = FALSE;
@@ -851,11 +866,11 @@ bool8 debug_sub_80900AC(void)
     }
 
     j = 0;
-    for (i = 0; i < 16; i++)
+    for (i = 0; i < POKE_NEWS_COUNT; i++)
     {
-        if (gSaveBlock1.pokeNews[i].kind == 0)
+        if (gSaveBlock1.pokeNews[i].kind == POKENEWS_NONE)
         {
-            if (j == 3)
+            if (j == ARRAY_COUNT(gUnknown_Debug_083C4B20))
                 j = 0;
             debug_sub_8090080(i, gUnknown_Debug_083C4B20[j]);
             j++;
@@ -929,9 +944,9 @@ bool8 debug_sub_80901A4(void)
         default:
             gMenuCallback = gUnknown_Debug_083C4D28[input].func;
             return FALSE;
-        case -2:
+        case MENU_NOTHING_CHOSEN:
             return FALSE;
-        case -1:
+        case MENU_B_PRESSED:
             CloseMenu();
             return TRUE;
     }
@@ -948,7 +963,7 @@ bool8 debug_sub_80901E4(void)
 bool8 debug_sub_80901F8(void)
 {
     u8 r0 = PlayerGainRandomTrainerFan();
-    Menu_PrintText(gUnknown_Debug_083C4CA8[gUnknown_083F8408[r0] - 8], 14, 7);
+    Menu_PrintText(gUnknown_Debug_083C4CA8[gUnknown_083F8408[r0] - FANCLUB_MEMBER1], 14, 7);
     gMenuCallback = debug_sub_8090278;
     return FALSE;
 }
@@ -956,7 +971,7 @@ bool8 debug_sub_80901F8(void)
 bool8 debug_sub_8090238(void)
 {
     u8 r0 = PlayerLoseRandomTrainerFan();
-    Menu_PrintText(gUnknown_Debug_083C4CA8[gUnknown_083F8410[r0] - 8], 14, 7);
+    Menu_PrintText(gUnknown_Debug_083C4CA8[gUnknown_083F8410[r0] - FANCLUB_MEMBER1], 14, 7);
     gMenuCallback = debug_sub_8090278;
     return FALSE;
 }
@@ -974,7 +989,7 @@ bool8 debug_sub_8090278(void)
 
 bool8 debug_sub_809029C(void)
 {
-    ConvertIntToDecimalStringN(gStringVar1, gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] & 0x7F, STR_CONV_MODE_LEFT_ALIGN, 2);
+    ConvertIntToDecimalStringN(gStringVar1, gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] & FANCLUB_COUNTER, STR_CONV_MODE_LEFT_ALIGN, 2);
     Menu_PrintText(gStringVar1, 16, 7);
     gMenuCallback = debug_sub_8090278;
     return FALSE;
@@ -989,28 +1004,28 @@ bool8 debug_sub_80902E4(void)
 
 bool8 debug_sub_80902FC(void)
 {
-    TryGainNewFanFromCounter(0);
+    TryGainNewFanFromCounter(FANCOUNTER_DEFEATED_DRAKE);
     CloseMenu();
     return TRUE;
 }
 
 bool8 debug_sub_8090310(void)
 {
-    TryGainNewFanFromCounter(1);
+    TryGainNewFanFromCounter(FANCOUNTER_BATTLED_AT_BASE);
     CloseMenu();
     return TRUE;
 }
 
 bool8 debug_sub_8090324(void)
 {
-    TryGainNewFanFromCounter(2);
+    TryGainNewFanFromCounter(FANCOUNTER_FINISHED_CONTEST);
     CloseMenu();
     return TRUE;
 }
 
 bool8 debug_sub_8090338(void)
 {
-    TryGainNewFanFromCounter(3);
+    TryGainNewFanFromCounter(FANCOUNTER_USED_BATTLE_TOWER);
     CloseMenu();
     return TRUE;
 }
